@@ -7,7 +7,8 @@ var paths = {
   scripts: [
     'vendor/**/*.js',
     'lib/**/*.js',
-    'components/**/*.jsx',
+    'mixins/**/*.js',
+    'visualizations/**/*.jsx',
     'index.jsx']
 };
 
