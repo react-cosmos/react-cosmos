@@ -7,7 +7,7 @@ var Timeline = React.createClass({
     return (
       <ul className="Timeline">
         {this.state.data.map(function(item, index) {
-          return itemWidget($.extend({key: index}, item));
+          return <li key={index}>{itemWidget(item)}</li>
         })}
       </ul>
     );
