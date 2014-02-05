@@ -5,6 +5,7 @@ var gulp = require('gulp'),
 
 var paths = {
   scripts: [
+    'vendor/**/*.js',
     'lib/**/*.js',
     'components/**/*.jsx',
     'index.jsx']
