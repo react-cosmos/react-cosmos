@@ -3,12 +3,12 @@
 var Timeline = React.createClass({
   mixins: [SetIntervalMixin, DataManagerMixin],
   render: function() {
-    var listNodes = this.state.data.map(function (item) {
-      return <li>{item.name}</li>;
-    });
+    var itemWidget = window[this.props.item];
     return (
       <ul className="Timeline">
-        {listNodes}
+        {this.state.data.map(function(item, index) {
+          return itemWidget($.extend({key: index}, item));
+        })}
       </ul>
     );
   }
