@@ -1,0 +1,15 @@
+{
+  "name": "fresh",
+  "version": "0.0.1",
+  "description": "Zero bootstrap, everything is a widget",
+  "main": "index.jsx",
+  "peerDependencies": {
+    "gulp": "~3.5.1"
+  },
+  "devDependencies": {
+    "gulp-concat": "~2.1.7",
+    "gulp-uglify": "~0.2.0",
+    "gulp-react": "~0.1.2"
+  },
+  "author": "Ovidiu Chereches"
+}
