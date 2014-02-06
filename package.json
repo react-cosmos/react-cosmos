@@ -1,7 +1,7 @@
 {
   "name": "fresh",
   "version": "0.0.1",
-  "description": "Zero bootstrap, everything is a widget",
+  "description": "Data exploration framework",
   "peerDependencies": {
     "gulp": "~3.5.1"
   },
