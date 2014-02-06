@@ -1,5 +1,5 @@
 {
-  "name": "fresh",
+  "name": "fresh-js",
   "version": "0.0.1",
   "description": "Data exploration framework",
   "peerDependencies": {
@@ -10,5 +10,6 @@
     "gulp-uglify": "~0.2.0",
     "gulp-react": "~0.1.2"
   },
-  "author": "Ovidiu Chereches"
+  "author": "Ovidiu Chereches",
+  "main": "./node-module.js"
 }
