@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var fresh = {
   getWidgetByName: function(widgetName) {
     return window[widgetName];
