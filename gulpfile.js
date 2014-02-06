@@ -16,7 +16,7 @@ gulp.task('scripts', function() {
   return gulp.src(paths.scripts)
     .pipe(react())
     //.pipe(uglify())
-    .pipe(concat('browser-bundle.js'))
+    .pipe(concat('fresh-bundle.js'))
     .pipe(gulp.dest('.'));
 });
 
