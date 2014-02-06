@@ -4,8 +4,10 @@ var gulp = require('gulp'),
     react = require('gulp-react');
 
 var paths = {
+  dependencies: [
+    'vendor/**/*.js'
+  ],
   scripts: [
-    'vendor/**/*.js',
     'fresh.js',
     'lib/**/*.js',
     'mixins/**/*.js',
@@ -13,10 +15,15 @@ var paths = {
 };
 
 gulp.task('scripts', function() {
-  return gulp.src(paths.scripts)
+  // Node bundle
+  gulp.src(paths.scripts)
     .pipe(react())
-    //.pipe(uglify())
     .pipe(concat('fresh-bundle.js'))
+    .pipe(gulp.dest('.'));
+  // Bundle bundle
+  gulp.src(paths.dependencies.concat(paths.scripts))
+    .pipe(react())
+    .pipe(concat('fresh-bundle-with-dependencies.js'))
     .pipe(gulp.dest('.'));
 });
 
