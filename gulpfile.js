@@ -9,8 +9,7 @@ var paths = {
     'fresh.js',
     'lib/**/*.js',
     'mixins/**/*.js',
-    'visualizations/**/*.jsx',
-    'start.js']
+    'visualizations/**/*.jsx']
 };
 
 gulp.task('scripts', function() {
