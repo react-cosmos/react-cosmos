@@ -10,7 +10,7 @@ var Timeline = React.createClass({
    */
   mixins: [SetIntervalMixin, DataManagerMixin],
   render: function() {
-    var itemWidget = window[this.props.item];
+    var itemWidget = fresh.getWidgetByName(this.props.item);
     return (
       <ul className="Timeline">
         {this.state.data.map(function(item, index) {

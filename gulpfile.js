@@ -6,10 +6,11 @@ var gulp = require('gulp'),
 var paths = {
   scripts: [
     'vendor/**/*.js',
+    'fresh.js',
     'lib/**/*.js',
     'mixins/**/*.js',
     'visualizations/**/*.jsx',
-    'index.jsx']
+    'start.js']
 };
 
 gulp.task('scripts', function() {
