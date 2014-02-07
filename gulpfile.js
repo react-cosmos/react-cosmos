@@ -11,7 +11,7 @@ var paths = {
     'fresh.js',
     'lib/**/*.js',
     'mixins/**/*.js',
-    'visualizations/**/*.jsx']
+    'widgets/**/*.jsx']
 };
 
 gulp.task('scripts', function() {

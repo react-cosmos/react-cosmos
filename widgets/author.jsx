@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-var Author = React.createClass({
+fresh.widgets.Author = React.createClass({
   /**
    * Input: {
    *   widget: 'Author',

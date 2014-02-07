@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-var Timeline = React.createClass({
+fresh.widgets.Timeline = React.createClass({
   /**
    * Input: {
    *   widget: 'Timeline',
@@ -8,7 +8,8 @@ var Timeline = React.createClass({
    *   data: 'http://localhost/static/users.json'
    * }
    */
-  mixins: [SetIntervalMixin, DataManagerMixin],
+  mixins: [fresh.mixins.SetIntervalMixin,
+           fresh.mixins.DataManagerMixin],
   render: function() {
     var itemWidget = fresh.getWidgetByName(this.props.item);
     return (
