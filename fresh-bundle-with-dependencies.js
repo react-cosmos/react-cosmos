@@ -25842,8 +25842,10 @@ module.exports = traverseAllChildren;
 });
 ;
 var fresh = {
+  mixins: {},
+  widgets: {},
   getWidgetByName: function(widgetName) {
-    return window[widgetName];
+    return this.widgets[widgetName];
   },
   start: function(rootProps, container) {
     var widget = this.getWidgetByName(rootProps.widget),
@@ -25871,7 +25873,7 @@ fresh.url = {
   }
 };
 
-var DataManagerMixin = {
+fresh.mixins.DataManagerMixin = {
   loadCommentsFromServer: function() {
     var url = this.props.data;
     $.ajax({
@@ -25902,7 +25904,7 @@ var DataManagerMixin = {
   }
 };
 
-var SetIntervalMixin = {
+fresh.mixins.SetIntervalMixin = {
   componentWillMount: function() {
     this.intervals = [];
   },
@@ -25916,7 +25918,7 @@ var SetIntervalMixin = {
 
 /** @jsx React.DOM */
 
-var Author = React.createClass({displayName: 'Author',
+fresh.widgets.Author = React.createClass({
   /**
    * Input: {
    *   widget: 'Author',
@@ -25932,7 +25934,7 @@ var Author = React.createClass({displayName: 'Author',
 
 /** @jsx React.DOM */
 
-var Timeline = React.createClass({displayName: 'Timeline',
+fresh.widgets.Timeline = React.createClass({
   /**
    * Input: {
    *   widget: 'Timeline',
@@ -25940,7 +25942,8 @@ var Timeline = React.createClass({displayName: 'Timeline',
    *   data: 'http://localhost/static/users.json'
    * }
    */
-  mixins: [SetIntervalMixin, DataManagerMixin],
+  mixins: [fresh.mixins.SetIntervalMixin,
+           fresh.mixins.DataManagerMixin],
   render: function() {
     var itemWidget = fresh.getWidgetByName(this.props.item);
     return (
