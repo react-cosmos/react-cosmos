@@ -13,3 +13,9 @@ var fresh = {
     React.renderComponent(widget(rootProps), container);
   }
 };
+
+// Enable Node.js compatibility
+if (typeof module !== 'undefined' && module.exports) {
+  var React = require('react-tools').React;
+  module.exports = fresh;
+}
