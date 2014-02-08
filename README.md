@@ -20,7 +20,7 @@ fresh.js is a versatile framework and can be installed in more than one way.
 
 Include `fresh-bundle.js` if you already have the
 [external dependencies](https://github.com/skidding/fresh/blob/master/package.json#L8)
-included in your project or `fresh-bundle-with-dependencies.js` if to include
+included in your project or `fresh-bundle-with-dependencies.js` to include
 them as well.
 
 ```js
