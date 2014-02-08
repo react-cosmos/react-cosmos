@@ -39,7 +39,7 @@ var fresh = require('fresh-js');
 #### Development
 
 ```bash
-git checkout https://github.com/skidding/fresh.git && cd fresh
+git clone https://github.com/skidding/fresh.git && cd fresh
 npm install
 ./node_modules/.bin/gulp
 ```
