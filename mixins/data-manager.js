@@ -14,8 +14,8 @@ fresh.mixins.DataManagerMixin = {
   },
   getDefaultProps: function() {
     return {
-      // Set pollInterval to 0 to disable polling
-      pollInterval: 2000
+      // Enable polling by setting a value bigger than zero, in ms
+      pollInterval: 0
     };
   },
   getInitialState: function() {
