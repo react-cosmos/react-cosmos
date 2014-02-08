@@ -2,14 +2,12 @@
   "name": "fresh-js",
   "version": "0.0.1",
   "description": "Data exploration framework",
-  "peerDependencies": {
-    "gulp": "~3.5.1"
-  },
   "dependencies": {
     "jquery": "~1.11.0",
     "react-tools": "~0.8.0"
   },
   "devDependencies": {
+    "gulp": "~3.5.1",
     "gulp-concat": "~2.1.7",
     "gulp-uglify": "~0.2.0",
     "gulp-react": "~0.1.2"
