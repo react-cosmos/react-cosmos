@@ -1,10 +1,9 @@
 /** @jsx React.DOM */
 
-fresh.widgets.Timeline = React.createClass({
+fresh.widgets.List = React.createClass({
   /**
    * Input: {
-   *   widget: 'Timeline',
-   *   item: 'Author',
+   *   widget: 'List',
    *   data: 'http://localhost/static/users.json'
    * }
    */
@@ -12,7 +11,7 @@ fresh.widgets.Timeline = React.createClass({
            fresh.mixins.DataManagerMixin],
   render: function() {
     return (
-      <ul className="Timeline">
+      <ul className="List">
         {this.state.data.map(function(item, index) {
           var itemWidget = fresh.getWidgetByName(item.widget);
           return <li key={index}>{itemWidget(item)}</li>
