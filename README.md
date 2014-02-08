@@ -16,18 +16,14 @@ Data exploration framework
 
 fresh.js is a versatile framework and can be installed in more than one way.
 
-### Existing framework
+#### Existing framework
 
-Include `fresh-bundle.js` if you already have the
+Include [**`fresh-bundle.js`**](fresh-bundle.js) if you already have the
 [external dependencies](https://github.com/skidding/fresh/blob/master/package.json#L8)
-included in your project or `fresh-bundle-with-dependencies.js` to include
+included in your project or [**`fresh-bundle-with-dependencies.js`**](fresh-bundle-with-dependencies.js) to include
 them as well.
 
-```js
-fresh.start(fresh.url.getParams(), document.body);
-```
-
-### Node module
+#### Node module
 
 ```bash
 npm install fresh-js
@@ -40,7 +36,7 @@ like [browserify.](http://browserify.org/)
 var fresh = require('fresh-js');
 ```
 
-### Development
+#### Development
 
 ```bash
 git checkout https://github.com/skidding/fresh.git && cd fresh
