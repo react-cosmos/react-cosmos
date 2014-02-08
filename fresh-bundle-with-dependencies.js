@@ -25952,23 +25952,21 @@ fresh.widgets.Author = React.createClass({
 
 /** @jsx React.DOM */
 
-fresh.widgets.Timeline = React.createClass({
+fresh.widgets.List = React.createClass({
   /**
    * Input: {
-   *   widget: 'Timeline',
-   *   item: 'Author',
+   *   widget: 'List',
    *   data: 'http://localhost/static/users.json'
    * }
    */
   mixins: [fresh.mixins.SetIntervalMixin,
            fresh.mixins.DataManagerMixin],
   render: function() {
-    var itemWidget = fresh.getWidgetByName(this.props.item);
     return (
-      React.DOM.ul( {className:"Timeline"}, 
+      React.DOM.ul( {className:"List"}, 
         this.state.data.map(function(item, index) {
-          var props = {state: {data: item}};
-          return React.DOM.li( {key:index}, itemWidget(props))
+          var itemWidget = fresh.getWidgetByName(item.widget);
+          return React.DOM.li( {key:index}, itemWidget(item))
         })
       )
     );
