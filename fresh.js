@@ -1,4 +1,4 @@
-var fresh = {
+var Fresh = {
   mixins: {},
   widgets: {},
   getWidgetByName: function(widgetName) {
@@ -18,5 +18,5 @@ var fresh = {
 if (typeof module !== 'undefined' && module.exports) {
   var React = require('react-tools').React,
       $ = require('jquery');
-  module.exports = fresh;
+  module.exports = Fresh;
 }

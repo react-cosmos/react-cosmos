@@ -1,4 +1,4 @@
-fresh.js
+Fresh
 ===
 Data exploration framework
 
@@ -18,7 +18,7 @@ implementing a uniform Widget component model.
 
 ## Install
 
-fresh.js is a versatile framework and can be installed in more than one way.
+Fresh is a versatile framework and can be installed in more than one way.
 
 #### Existing framework
 
@@ -37,7 +37,7 @@ You can require fresh.js as a Node module, using a client-side package manager
 like [browserify.](http://browserify.org/)
 
 ```js
-var fresh = require('fresh-js');
+var Fresh = require('fresh-js');
 ```
 
 #### Development

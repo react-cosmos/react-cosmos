@@ -1,4 +1,4 @@
-var fresh = {
+var Fresh = {
   mixins: {},
   widgets: {},
   getWidgetByName: function(widgetName) {
@@ -18,10 +18,10 @@ var fresh = {
 if (typeof module !== 'undefined' && module.exports) {
   var React = require('react-tools').React,
       $ = require('jquery');
-  module.exports = fresh;
+  module.exports = Fresh;
 }
 
-fresh.url = {
+Fresh.url = {
   getParams: function () {
     var str = window.location.search.substr(1),
         params = {};
@@ -44,7 +44,7 @@ fresh.url = {
   }
 };
 
-fresh.mixins.DataManagerMixin = {
+Fresh.mixins.DataManagerMixin = {
   loadCommentsFromServer: function() {
     var url = this.props.data;
     $.ajax({
@@ -84,7 +84,7 @@ fresh.mixins.DataManagerMixin = {
   }
 };
 
-fresh.mixins.SetIntervalMixin = {
+Fresh.mixins.SetIntervalMixin = {
   componentWillMount: function() {
     this.intervals = [];
   },
@@ -98,15 +98,15 @@ fresh.mixins.SetIntervalMixin = {
 
 /** @jsx React.DOM */
 
-fresh.widgets.Author = React.createClass({
+Fresh.widgets.Author = React.createClass({
   /**
    * Input: {
    *   widget: 'Author',
    *   name: 'Dan Ciotu'
    * }
    */
-  mixins: [fresh.mixins.SetIntervalMixin,
-           fresh.mixins.DataManagerMixin],
+  mixins: [Fresh.mixins.SetIntervalMixin,
+           Fresh.mixins.DataManagerMixin],
   render: function() {
     return (
       React.DOM.div(null, this.state.data.name)
@@ -116,20 +116,20 @@ fresh.widgets.Author = React.createClass({
 
 /** @jsx React.DOM */
 
-fresh.widgets.List = React.createClass({
+Fresh.widgets.List = React.createClass({
   /**
    * Input: {
    *   widget: 'List',
    *   data: 'http://localhost/static/users.json'
    * }
    */
-  mixins: [fresh.mixins.SetIntervalMixin,
-           fresh.mixins.DataManagerMixin],
+  mixins: [Fresh.mixins.SetIntervalMixin,
+           Fresh.mixins.DataManagerMixin],
   render: function() {
     return (
       React.DOM.ul( {className:"List"}, 
         this.state.data.map(function(item, index) {
-          var itemWidget = fresh.getWidgetByName(item.widget);
+          var itemWidget = Fresh.getWidgetByName(item.widget);
           return React.DOM.li( {key:index}, itemWidget(item))
         })
       )

@@ -1,19 +1,19 @@
 /** @jsx React.DOM */
 
-fresh.widgets.List = React.createClass({
+Fresh.widgets.List = React.createClass({
   /**
    * Input: {
    *   widget: 'List',
    *   data: 'http://localhost/static/users.json'
    * }
    */
-  mixins: [fresh.mixins.SetIntervalMixin,
-           fresh.mixins.DataManagerMixin],
+  mixins: [Fresh.mixins.SetIntervalMixin,
+           Fresh.mixins.DataManagerMixin],
   render: function() {
     return (
       <ul className="List">
         {this.state.data.map(function(item, index) {
-          var itemWidget = fresh.getWidgetByName(item.widget);
+          var itemWidget = Fresh.getWidgetByName(item.widget);
           return <li key={index}>{itemWidget(item)}</li>
         })}
       </ul>

@@ -1,4 +1,4 @@
-fresh.mixins.DataManagerMixin = {
+Fresh.mixins.DataManagerMixin = {
   loadCommentsFromServer: function() {
     var url = this.props.data;
     $.ajax({
