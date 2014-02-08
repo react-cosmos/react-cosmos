@@ -25857,6 +25857,12 @@ var fresh = {
   }
 };
 
+// Enable Node.js compatibility
+if (typeof module !== 'undefined' && module.exports) {
+  var React = require('react-tools').React;
+  module.exports = fresh;
+}
+
 fresh.url = {
   getParams: function () {
     var str = window.location.search.substr(1),
