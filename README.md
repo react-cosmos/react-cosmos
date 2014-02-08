@@ -71,11 +71,10 @@ that are reserved by convention:
              will be set inside the widget's _state_, under the `data` key, and
              will cause a reactive re-render.
 
-- **state** - An object that will be poured inside the initial `state` of the
-              widget as soon as it loads (replacing any default state.)
-              Stringifying this as a JSON object can **persist any widget
-              state.** This also means the root widget can have a URI that
-              includes a given state.
+- **state** - An object that will be poured inside the initial widget _state_
+              as soon as it loads (replacing any default state.) Stringifying
+              this as a JSON object can **persist any widget state.** This also
+              means the root widget can have a URI that includes a given state.
 
 \* The **root widget** is the first widget loaded inside a page, normally
 pulling its configuration from the URL query string params.
