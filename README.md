@@ -8,7 +8,8 @@ Data exploration framework
 - Can be plugged into any other framework
 - Everything is a widget
 - Widgets are oblivious of ancestors
-- Any widget has a uri and can be loaded at root level
+- The state of a widget can be serialized at any given point in time
+- Any widget configuration can be represented by a URI
 - Widgets can implement any data mechanism
 
 ## Running
