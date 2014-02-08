@@ -25859,7 +25859,8 @@ var fresh = {
 
 // Enable Node.js compatibility
 if (typeof module !== 'undefined' && module.exports) {
-  var React = require('react-tools').React;
+  var React = require('react-tools').React,
+      $ = require('jquery');
   module.exports = fresh;
 }
 
