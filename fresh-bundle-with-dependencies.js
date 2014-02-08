@@ -25863,10 +25863,17 @@ fresh.url = {
         params = {};
     if (str) {
       var pairs = str.split('&'),
-          parts;
+          parts,
+          key,
+          value;
       for (var i = 0; i < pairs.length; i++) {
         parts = pairs[i].split('=');
-        params[parts[0]] = decodeURIComponent(parts[1]);
+        key = parts[0];
+        value = parts[1];
+        if (key == 'state') {
+          value = JSON.parse(decodeURIComponent(value));
+        }
+        params[key] = value;
       }
     }
     return params;
@@ -25889,14 +25896,23 @@ fresh.mixins.DataManagerMixin = {
   },
   getDefaultProps: function() {
     return {
-      // Set pollInterval to 0 to disable polling
-      pollInterval: 2000
+      // Enable polling by setting a value bigger than zero, in ms
+      pollInterval: 0
     };
   },
   getInitialState: function() {
     return {data: []};
   },
   componentWillMount: function() {
+    // Allow passing a serialized snapshot of a state through the props
+    if (this.props.state) {
+      this.replaceState(this.props.state);
+    }
+    // The data prop points to a source of data than will extend the initial
+    // state of the widget, once it will be fetched
+    if (!this.props.data) {
+      return;
+    }
     this.loadCommentsFromServer();
     if (this.props.pollInterval) {
       this.setInterval(this.loadCommentsFromServer, this.props.pollInterval);
@@ -25925,9 +25941,11 @@ fresh.widgets.Author = React.createClass({
    *   name: 'Dan Ciotu'
    * }
    */
+  mixins: [fresh.mixins.SetIntervalMixin,
+           fresh.mixins.DataManagerMixin],
   render: function() {
     return (
-      React.DOM.div(null, this.props.name)
+      React.DOM.div(null, this.state.data.name)
     );
   }
 });
@@ -25949,7 +25967,8 @@ fresh.widgets.Timeline = React.createClass({
     return (
       React.DOM.ul( {className:"Timeline"}, 
         this.state.data.map(function(item, index) {
-          return React.DOM.li( {key:index}, itemWidget(item))
+          var props = {state: {data: item}};
+          return React.DOM.li( {key:index}, itemWidget(props))
         })
       )
     );
