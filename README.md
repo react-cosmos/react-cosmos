@@ -48,3 +48,5 @@ npm install
 ./node_modules/.bin/gulp
 ```
 
+Pop up `index.html` in your browser of choice to load the app skeleton from the
+repo.
