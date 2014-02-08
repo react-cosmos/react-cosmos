@@ -2,6 +2,10 @@ fresh.js
 ===
 Data exploration framework
 
+Built on top of the great [React](http://facebook.github.io/react/),
+emphasizing on seamless data exploration through drill down actions,
+implementing a uniform Widget component model.
+
 ## Manifesto
 
 - Zero bootstrap
