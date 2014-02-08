@@ -22,6 +22,15 @@ fresh.mixins.DataManagerMixin = {
     return {data: []};
   },
   componentWillMount: function() {
+    // Allow passing a serialized snapshot of a state through the props
+    if (this.props.state) {
+      this.replaceState(this.props.state);
+    }
+    // The data prop points to a source of data than will extend the initial
+    // state of the widget, once it will be fetched
+    if (!this.props.data) {
+      return;
+    }
     this.loadCommentsFromServer();
     if (this.props.pollInterval) {
       this.setInterval(this.loadCommentsFromServer, this.props.pollInterval);

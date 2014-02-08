@@ -15,7 +15,8 @@ fresh.widgets.Timeline = React.createClass({
     return (
       <ul className="Timeline">
         {this.state.data.map(function(item, index) {
-          return <li key={index}>{itemWidget(item)}</li>
+          var props = {state: {data: item}};
+          return <li key={index}>{itemWidget(props)}</li>
         })}
       </ul>
     );
