@@ -10,13 +10,14 @@ var Fresh = {
     if (!widget) {
       return;
     }
-    React.renderComponent(widget(rootProps), container);
+    React.renderComponent(widget(_.clone(rootProps)), container);
   }
 };
 
 // Enable Node.js compatibility
 if (typeof module !== 'undefined' && module.exports) {
   var React = require('react-tools').React,
+      _ = require('underscore'),
       $ = require('jquery');
   module.exports = Fresh;
 }
@@ -44,19 +45,22 @@ Fresh.url = {
   }
 };
 
-Fresh.mixins.DataManagerMixin = {
-  loadCommentsFromServer: function() {
+Fresh.mixins.DataManager = {
+  fetchDataFromServer: function() {
     var url = this.props.data;
     $.ajax({
       url: url,
       dataType: 'json',
       success: function(data) {
-        this.setState({data: data});
+        this.receiveDataFromServer(data);
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(url, status, err.toString());
       }.bind(this)
     });
+  },
+  receiveDataFromServer: function(data) {
+    this.setState({data: data});
   },
   getDefaultProps: function() {
     return {
@@ -64,27 +68,74 @@ Fresh.mixins.DataManagerMixin = {
       pollInterval: 0
     };
   },
-  getInitialState: function() {
-    return {data: []};
-  },
   componentWillMount: function() {
-    // Allow passing a serialized snapshot of a state through the props
-    if (this.props.state) {
-      this.replaceState(this.props.state);
-    }
     // The data prop points to a source of data than will extend the initial
     // state of the widget, once it will be fetched
+    // TODO: Fetch data again when props change at componentWillReceiveProps
     if (!this.props.data) {
       return;
     }
-    this.loadCommentsFromServer();
+    this.fetchDataFromServer();
     if (this.props.pollInterval) {
-      this.setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+      this.setInterval(this.fetchDataFromServer, this.props.pollInterval);
     }
   }
 };
 
-Fresh.mixins.SetIntervalMixin = {
+Fresh.mixins.PersistState = {
+  generateConfigurationSnapshot: function() {
+    var defaultProps = this.getDefaultProps ? this.getDefaultProps() : {},
+        props = {},
+        value,
+        state;
+    for (var key in this.props) {
+      value = this.props[key];
+      // Ignore "system" props
+      if (key == '__owner__' ||
+        // Current state should be used instead of initial one
+        key == 'state') {
+        continue;
+      }
+      // No point in embedding default props
+      if (defaultProps.hasOwnProperty(key) && defaultProps[key] == value) {
+        continue;
+      }
+      props[key] = value;
+    }
+    state = _.clone(this.state);
+    // No need to embed data if we have an URL to fetch it from
+    if (state && state.data && props.data) {
+      delete state.data;
+    }
+    if (!_.isEmpty(state)) {
+      props.state = state;
+    }
+    return props;
+  },
+  getUriQueryString: function() {
+    var props = this.generateConfigurationSnapshot(),
+        parts = [],
+        value;
+    for (var key in props) {
+      value = props[key];
+      // Objects can be embedded in a URL query string as well
+      if (typeof value == 'object') {
+        value = encodeURIComponent(JSON.stringify(value));
+      }
+      parts.push(key + '=' + value);
+    }
+    return parts.join('&');
+  },
+  componentWillMount: function() {
+    // Allow passing a serialized snapshot of a state through the props
+    // TODO: Replace state when props change at componentWillReceiveProps
+    if (this.props.state) {
+      this.replaceState(this.props.state);
+    }
+  }
+};
+
+Fresh.mixins.SetInterval = {
   componentWillMount: function() {
     this.intervals = [];
   },
@@ -105,8 +156,9 @@ Fresh.widgets.Author = React.createClass({
    *   name: 'Dan Ciotu'
    * }
    */
-  mixins: [Fresh.mixins.SetIntervalMixin,
-           Fresh.mixins.DataManagerMixin],
+  mixins: [Fresh.mixins.SetInterval,
+           Fresh.mixins.PersistState,
+           Fresh.mixins.DataManager],
   render: function() {
     return (
       React.DOM.div(null, this.state.data.name)
@@ -123,14 +175,18 @@ Fresh.widgets.List = React.createClass({
    *   data: 'http://localhost/static/users.json'
    * }
    */
-  mixins: [Fresh.mixins.SetIntervalMixin,
-           Fresh.mixins.DataManagerMixin],
+  mixins: [Fresh.mixins.SetInterval,
+           Fresh.mixins.PersistState,
+           Fresh.mixins.DataManager],
+  getInitialState: function() {
+    return {data: []};
+  },
   render: function() {
     return (
       React.DOM.ul( {className:"List"}, 
         this.state.data.map(function(item, index) {
           var itemWidget = Fresh.getWidgetByName(item.widget);
-          return React.DOM.li( {key:index}, itemWidget(item))
+          return React.DOM.li( {key:index}, itemWidget(_.clone(item)))
         })
       )
     );
