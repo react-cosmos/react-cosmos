@@ -8,6 +8,7 @@ Fresh.widgets.Author = React.createClass({
    * }
    */
   mixins: [Fresh.mixins.SetInterval,
+           Fresh.mixins.PersistState,
            Fresh.mixins.DataManager],
   render: function() {
     return (

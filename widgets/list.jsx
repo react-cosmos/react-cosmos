@@ -8,6 +8,7 @@ Fresh.widgets.List = React.createClass({
    * }
    */
   mixins: [Fresh.mixins.SetInterval,
+           Fresh.mixins.PersistState,
            Fresh.mixins.DataManager],
   getInitialState: function() {
     return {data: []};
