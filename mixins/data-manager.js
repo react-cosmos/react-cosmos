@@ -24,6 +24,7 @@ Fresh.mixins.DataManager = {
   componentWillMount: function() {
     // The data prop points to a source of data than will extend the initial
     // state of the widget, once it will be fetched
+    // TODO: Fetch data again when props change at componentWillReceiveProps
     if (!this.props.data) {
       return;
     }
