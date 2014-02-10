@@ -39,9 +39,7 @@ describe("Widget configuration", function() {
       var initialProps = {widget: 'TestWidget', foo: 'bar'},
                          initialPropsClone = _.clone(initialProps);
       Fresh.widgets.TestWidget = React.createClass({
-        render: function() {
-          return '<span>nada</span>';
-        }
+        render: function() {}
       });
       spyOn(React, 'renderComponent');
       Fresh.start(initialProps, '<asdf>');
