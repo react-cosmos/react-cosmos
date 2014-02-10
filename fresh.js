@@ -10,7 +10,7 @@ var Fresh = {
     if (!widget) {
       return;
     }
-    React.renderComponent(widget(rootProps), container);
+    React.renderComponent(widget(_.clone(rootProps)), container);
   }
 };
 
