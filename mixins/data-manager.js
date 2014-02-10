@@ -1,4 +1,4 @@
-Fresh.mixins.DataManagerMixin = {
+Fresh.mixins.DataManager = {
   fetchDataFromServer: function() {
     var url = this.props.data;
     $.ajax({

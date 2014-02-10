@@ -7,8 +7,8 @@ Fresh.widgets.Author = React.createClass({
    *   name: 'Dan Ciotu'
    * }
    */
-  mixins: [Fresh.mixins.SetIntervalMixin,
-           Fresh.mixins.DataManagerMixin],
+  mixins: [Fresh.mixins.SetInterval,
+           Fresh.mixins.DataManager],
   render: function() {
     return (
       <div>{this.state.data.name}</div>

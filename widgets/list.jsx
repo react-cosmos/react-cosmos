@@ -7,8 +7,8 @@ Fresh.widgets.List = React.createClass({
    *   data: 'http://localhost/static/users.json'
    * }
    */
-  mixins: [Fresh.mixins.SetIntervalMixin,
-           Fresh.mixins.DataManagerMixin],
+  mixins: [Fresh.mixins.SetInterval,
+           Fresh.mixins.DataManager],
   getInitialState: function() {
     return {data: []};
   },

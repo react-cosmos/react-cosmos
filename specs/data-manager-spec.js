@@ -5,7 +5,7 @@ var Fresh = require('../fresh-bundle.js'),
 describe("Widgets implementing the DataManager mixin", function() {
 
   var DataManagerSpec = {
-    mixins: [Fresh.mixins.DataManagerMixin],
+    mixins: [Fresh.mixins.DataManager],
     render: function() {
       return React.DOM.span(null, 'nada');
     }
@@ -14,26 +14,26 @@ describe("Widgets implementing the DataManager mixin", function() {
   it("should fetch data if a 'data' prop is set", function() {
     // The fetching method should do nothing, we only care that it is called
     // before the widget gets mounted
-    spyOn(Fresh.mixins.DataManagerMixin, 'fetchDataFromServer');
+    spyOn(Fresh.mixins.DataManager, 'fetchDataFromServer');
     var DataManagerWidget = React.createClass(DataManagerSpec),
         widgetInstance = DataManagerWidget({data: 'url?query=string'});
 
     // React Components need to be rendered to mount
     React.renderComponentToString(widgetInstance, function() {});
-    expect(Fresh.mixins.DataManagerMixin
+    expect(Fresh.mixins.DataManager
            .fetchDataFromServer.callCount).toEqual(1);
   });
 
   it("shouldn't fetch data if a 'data' prop isn't set", function() {
     // The fetching method should do nothing, we only care that it is called
     // before the widget gets mounted
-    spyOn(Fresh.mixins.DataManagerMixin, 'fetchDataFromServer');
+    spyOn(Fresh.mixins.DataManager, 'fetchDataFromServer');
     var DataManagerWidget = React.createClass(DataManagerSpec),
         widgetInstance = DataManagerWidget({});
 
     // React Components need to be rendered to mount
     React.renderComponentToString(widgetInstance, function() {});
-    expect(Fresh.mixins.DataManagerMixin
+    expect(Fresh.mixins.DataManager
            .fetchDataFromServer.callCount).toEqual(0);
   });
 

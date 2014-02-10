@@ -1,4 +1,4 @@
-Fresh.mixins.SetIntervalMixin = {
+Fresh.mixins.SetInterval = {
   componentWillMount: function() {
     this.intervals = [];
   },
