@@ -20,14 +20,14 @@ implementing a uniform Widget component model.
 
 Fresh is a versatile framework and can be installed in more than one way.
 
-#### Existing framework
+### Existing framework
 
 Include `fresh-bundle.js` if you already have the
 [external dependencies](https://github.com/skidding/fresh/blob/master/package.json#L8)
 included in your project or `fresh-bundle-with-dependencies.js` to include
 them as well.
 
-#### Node module
+### Node module
 
 ```bash
 npm install fresh-js
@@ -40,7 +40,7 @@ like [browserify.](http://browserify.org/)
 var Fresh = require('fresh-js');
 ```
 
-#### Development
+### Development
 
 ```bash
 git clone https://github.com/skidding/fresh.git && cd fresh
@@ -50,6 +50,16 @@ npm install
 
 Pop up `index.html` in your browser of choice to load the app skeleton from the
 repo.
+
+#### Running tests
+
+Behavior tests are written for [Jasmine](https://github.com/pivotal/jasmine)
+and ran with [jasmine-node](https://github.com/mhevery/jasmine-node) in a
+DOM-less environment.
+
+```bash
+./node_modules/.bin/jasmine-node --verbose spec/
+```
 
 ## Specs
 
