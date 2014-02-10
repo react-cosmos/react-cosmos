@@ -58,7 +58,7 @@ and ran with [jasmine-node](https://github.com/mhevery/jasmine-node) in a
 DOM-less environment.
 
 ```bash
-./node_modules/.bin/jasmine-node --verbose spec/
+./node_modules/.bin/jasmine-node --verbose specs
 ```
 
 ## Specs
