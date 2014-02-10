@@ -17,6 +17,7 @@ var Fresh = {
 // Enable Node.js compatibility
 if (typeof module !== 'undefined' && module.exports) {
   var React = require('react-tools').React,
+      _ = require('underscore'),
       $ = require('jquery');
   module.exports = Fresh;
 }
