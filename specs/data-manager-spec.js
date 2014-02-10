@@ -1,6 +1,5 @@
 var Fresh = require('../fresh-bundle.js'),
-    React = require('react-tools').React,
-    $ = require('jquery');
+    React = require('react-tools').React;
 
 describe("Widgets implementing the DataManager mixin", function() {
 
@@ -19,7 +18,7 @@ describe("Widgets implementing the DataManager mixin", function() {
         widgetInstance = DataManagerWidget({data: 'url?query=string'});
 
     // React Components need to be rendered to mount
-    React.renderComponentToString(widgetInstance, function() {});
+    React.renderComponentToString(widgetInstance, function(){});
     expect(Fresh.mixins.DataManager
            .fetchDataFromServer.callCount).toEqual(1);
   });
@@ -32,7 +31,7 @@ describe("Widgets implementing the DataManager mixin", function() {
         widgetInstance = DataManagerWidget({});
 
     // React Components need to be rendered to mount
-    React.renderComponentToString(widgetInstance, function() {});
+    React.renderComponentToString(widgetInstance, function(){});
     expect(Fresh.mixins.DataManager
            .fetchDataFromServer.callCount).toEqual(0);
   });
@@ -42,7 +41,7 @@ describe("Widgets implementing the DataManager mixin", function() {
         widgetInstance = DataManagerWidget({});
 
     // React Components need to be rendered to mount
-    React.renderComponentToString(widgetInstance, function() {});
+    React.renderComponentToString(widgetInstance, function(){});
     widgetInstance.receiveDataFromServer({
       name: 'John Doe',
       age: 42

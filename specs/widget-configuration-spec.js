@@ -38,9 +38,7 @@ describe("Widget configuration", function() {
     it("should not alter props object sent to Fresh.start", function() {
       var initialProps = {widget: 'TestWidget', foo: 'bar'},
                          initialPropsClone = _.clone(initialProps);
-      Fresh.widgets.TestWidget = React.createClass({
-        render: function() {}
-      });
+      Fresh.widgets.TestWidget = React.createClass({render: function(){}});
       spyOn(React, 'renderComponent');
       Fresh.start(initialProps, '<asdf>');
       expect(initialProps).toEqual(initialPropsClone);
