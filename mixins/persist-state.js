@@ -20,7 +20,7 @@ Fresh.mixins.PersistState = {
     }
     state = _.clone(this.state);
     // No need to embed data if we have an URL to fetch it from
-    if (state.data && props.data) {
+    if (state && state.data && props.data) {
       delete state.data;
     }
     if (!_.isEmpty(state)) {
