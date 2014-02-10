@@ -9,6 +9,9 @@ Fresh.widgets.List = React.createClass({
    */
   mixins: [Fresh.mixins.SetIntervalMixin,
            Fresh.mixins.DataManagerMixin],
+  getInitialState: function() {
+    return {data: []};
+  },
   render: function() {
     return (
       <ul className="List">

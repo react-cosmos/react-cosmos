@@ -1,16 +1,19 @@
 Fresh.mixins.DataManagerMixin = {
-  loadCommentsFromServer: function() {
+  fetchDataFromServer: function() {
     var url = this.props.data;
     $.ajax({
       url: url,
       dataType: 'json',
       success: function(data) {
-        this.setState({data: data});
+        this.receiveDataFromServer(data);
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(url, status, err.toString());
       }.bind(this)
     });
+  },
+  receiveDataFromServer: function(data) {
+    this.setState({data: data});
   },
   getDefaultProps: function() {
     return {
@@ -18,22 +21,15 @@ Fresh.mixins.DataManagerMixin = {
       pollInterval: 0
     };
   },
-  getInitialState: function() {
-    return {data: []};
-  },
   componentWillMount: function() {
-    // Allow passing a serialized snapshot of a state through the props
-    if (this.props.state) {
-      this.replaceState(this.props.state);
-    }
     // The data prop points to a source of data than will extend the initial
     // state of the widget, once it will be fetched
     if (!this.props.data) {
       return;
     }
-    this.loadCommentsFromServer();
+    this.fetchDataFromServer();
     if (this.props.pollInterval) {
-      this.setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+      this.setInterval(this.fetchDataFromServer, this.props.pollInterval);
     }
   }
 };
