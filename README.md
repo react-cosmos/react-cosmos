@@ -6,7 +6,7 @@ Built on top of the great [**React**](http://facebook.github.io/react/),
 emphasizing on seamless data exploration through drill down actions,
 implementing a uniform Component* model.
 
-\* A **Component** is the smallest, self-contained, UI entity.
+\* The **Component** is a self-contained, UI building block.
 See [React Component.](http://facebook.github.io/react/docs/component-api.html)
 
 ## Manifesto
