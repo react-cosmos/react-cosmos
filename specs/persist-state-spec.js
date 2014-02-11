@@ -2,7 +2,7 @@ var Fresh = require('../fresh-bundle.js'),
     React = require('react-tools').React,
     _ = require('underscore');
 
-describe("Widgets implementing the PersistState mixin", function() {
+describe("Components implementing the PersistState mixin", function() {
 
   var PersistStateSpec = {
     mixins: [Fresh.mixins.PersistState],
@@ -12,29 +12,29 @@ describe("Widgets implementing the PersistState mixin", function() {
   };
 
   it("should load their state from the 'state' prop", function() {
-    var PersistStateWidget = React.createClass(PersistStateSpec),
-        widgetInstance = PersistStateWidget({state: {foo: 'bar'}});
+    var PersistStateComponent = React.createClass(PersistStateSpec),
+        componentInstance = PersistStateComponent({state: {foo: 'bar'}});
     // React Components need to be rendered to mount
-    React.renderComponentToString(widgetInstance, function(){});
-    expect(widgetInstance.state).toEqual({foo: 'bar'});
+    React.renderComponentToString(componentInstance, function(){});
+    expect(componentInstance.state).toEqual({foo: 'bar'});
   });
 
   it("should generate snapshot with exact props and state", function() {
-    var PersistStateWidget = React.createClass(PersistStateSpec),
-        widgetInstance = PersistStateWidget({
+    var PersistStateComponent = React.createClass(PersistStateSpec),
+        componentInstance = PersistStateComponent({
           players: 5,
           state: {speed: 1}
         }),
         snapshot;
     // React Components need to be rendered to mount
-    React.renderComponentToString(widgetInstance, function(){});
-    expect(widgetInstance.generateConfigurationSnapshot())
+    React.renderComponentToString(componentInstance, function(){});
+    expect(componentInstance.generateConfigurationSnapshot())
       .toEqual({players: 5, state: {speed: 1}});
 
     // Let's ensure changes are also reflected in the snapshot
-    widgetInstance.setProps({players: 10});
-    widgetInstance.setState({speed: 3});
-    expect(widgetInstance.generateConfigurationSnapshot())
+    componentInstance.setProps({players: 10});
+    componentInstance.setState({speed: 3});
+    expect(componentInstance.generateConfigurationSnapshot())
       .toEqual({players: 10, state: {speed: 3}});
   });
 
@@ -42,26 +42,26 @@ describe("Widgets implementing the PersistState mixin", function() {
     var CustomPersistStateSpec = _.extend({getDefaultProps: function() {
           return {hidden: true};
         }}, PersistStateSpec),
-        PersistStateWidget = React.createClass(CustomPersistStateSpec),
-        widgetInstance = PersistStateWidget({
+        PersistStateComponent = React.createClass(CustomPersistStateSpec),
+        componentInstance = PersistStateComponent({
           visible: true
         });
     // React Components need to be rendered to mount
-    React.renderComponentToString(widgetInstance, function(){});
-    expect(widgetInstance.generateConfigurationSnapshot())
+    React.renderComponentToString(componentInstance, function(){});
+    expect(componentInstance.generateConfigurationSnapshot())
       .toEqual({visible: true});
   });
 
   it("should generate URI with escaped props and state", function() {
-    var PersistStateWidget = React.createClass(PersistStateSpec),
-        widgetInstance = PersistStateWidget({
+    var PersistStateComponent = React.createClass(PersistStateSpec),
+        componentInstance = PersistStateComponent({
           players: 5,
           state: {speed: 1}
         }),
         snapshot;
     // React Components need to be rendered to mount
-    React.renderComponentToString(widgetInstance, function(){});
-    expect(widgetInstance.getUriQueryString())
+    React.renderComponentToString(componentInstance, function(){});
+    expect(componentInstance.getUriQueryString())
       // encodeURIComponent(JSON.stringify({speed:1}))
       .toEqual('players=5&state=%7B%22speed%22%3A1%7D');
   });

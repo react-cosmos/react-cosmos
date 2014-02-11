@@ -1,16 +1,16 @@
 var Fresh = {
   mixins: {},
-  widgets: {},
-  getWidgetByName: function(widgetName) {
-    return this.widgets[widgetName];
+  components: {},
+  getComponentByName: function(name) {
+    return this.components[name];
   },
   start: function(rootProps, container) {
-    var widget = this.getWidgetByName(rootProps.widget),
+    var component = this.getComponentByName(rootProps.component),
         content;
-    if (!widget) {
+    if (!component) {
       return;
     }
-    React.renderComponent(widget(_.clone(rootProps)), container);
+    React.renderComponent(component(_.clone(rootProps)), container);
   }
 };
 

@@ -1,9 +1,9 @@
 /** @jsx React.DOM */
 
-Fresh.widgets.Author = React.createClass({
+Fresh.components.Author = React.createClass({
   /**
    * Input: {
-   *   widget: 'Author',
+   *   component: 'Author',
    *   name: 'Dan Ciotu'
    * }
    */

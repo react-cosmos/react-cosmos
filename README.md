@@ -2,19 +2,27 @@ Fresh
 ===
 Data exploration framework
 
-Built on top of the great [React](http://facebook.github.io/react/),
+Built on top of the great [**React**](http://facebook.github.io/react/),
 emphasizing on seamless data exploration through drill down actions,
-implementing a uniform Widget component model.
+implementing a uniform Component* model.
+
+\* A **Component** is the smallest, self-contained, UI entity.
+See [React Component.](http://facebook.github.io/react/docs/component-api.html)
 
 ## Manifesto
 
 - Zero bootstrap
 - Can be plugged into any other framework
-- Everything is a widget
-- Widgets are oblivious of ancestors
-- The state of a widget can be serialized at any given point in time
-- Any widget configuration can be represented by a URI
-- Widgets can implement any data mechanism
+- Everything is a Component
+- Components are oblivious of ancestors
+- The state of a Component can be serialized at any given point in time
+- Any Component configuration can be represented by a URI
+- Components can implement any data mechanism*
+
+\* A custom data mechanism can be easily implemented for the
+[DataManager interface](mixins/data-manager.js) (it defaults to Ajax requests.)
+**Fresh is to data visualization what
+[Backbone](https://github.com/jashkenas/backbone) is to data modeling.**
 
 ## Install
 
@@ -67,24 +75,27 @@ You should really read the
 [React](http://facebook.github.io/react/docs/getting-started.html) docs before,
 Fresh is merely a standarization on top of React's Component model.
 
-A widget configuration consists of the _props_ object for that React component.
-It's up to that widget to implement most properties, besides a few special ones
-that are reserved by convention:
+A Component configuration consists of the
+[props](http://facebook.github.io/react/docs/tutorial.html#using-props) object
+for that React Component. It's up to that Component to implement most
+properties, besides a few special ones that are reserved by convention:
 
-- **widget** - The name of the widget to load. Usually we already have a widget
-               class when setting its properties, but there are two main cases
-               when this property is relevant:
-  - 1. When loading the root widget using `Fresh.start`
-  - 2. When a List widget receives a list of children to load
+- **component** - The name of the Component to load. Usually we already have a
+                  Component class when setting its properties, but there are
+                  two main cases when this property is relevant:
+  - 1. When loading the Root Component* using `Fresh.start`
+  - 2. When a List Component receives a list of children to load
 
-- **data** - A URL for fetching data for that widget. Once data is received it
-             will be set inside the widget's _state_, under the `data` key, and
-             will cause a reactive re-render.
+- **data** - A URL for fetching data for that Component. Once data is received
+             it will be set inside the Component's
+             [state](http://facebook.github.io/react/docs/tutorial.html#reactive-state),
+             under the `data` key, and will cause a reactive re-render.
 
-- **state** - An object that will be poured inside the initial widget _state_
-              as soon as it loads (replacing any default state.) Stringifying
-              this as a JSON object can **persist any widget state.** This also
-              means the root widget can have a URI that includes a given state.
+- **state** - An object that will be poured inside the initial Component
+              state as soon as it loads (replacing any default state.)
+              Stringifying this as a JSON object can **persist any Component
+              state.** This also means the Root Component can have a URI that
+              includes a given state.
 
-\* The **root widget** is the first widget loaded inside a page, normally
+\* The **Root Component** is the first Component loaded inside a page, normally
 pulling its configuration from the URL query string params.

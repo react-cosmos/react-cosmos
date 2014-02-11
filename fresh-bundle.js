@@ -1,16 +1,16 @@
 var Fresh = {
   mixins: {},
-  widgets: {},
-  getWidgetByName: function(widgetName) {
-    return this.widgets[widgetName];
+  components: {},
+  getComponentByName: function(name) {
+    return this.components[name];
   },
   start: function(rootProps, container) {
-    var widget = this.getWidgetByName(rootProps.widget),
+    var component = this.getComponentByName(rootProps.component),
         content;
-    if (!widget) {
+    if (!component) {
       return;
     }
-    React.renderComponent(widget(_.clone(rootProps)), container);
+    React.renderComponent(component(_.clone(rootProps)), container);
   }
 };
 
@@ -70,7 +70,7 @@ Fresh.mixins.DataManager = {
   },
   componentWillMount: function() {
     // The data prop points to a source of data than will extend the initial
-    // state of the widget, once it will be fetched
+    // state of the component, once it will be fetched
     // TODO: Fetch data again when props change at componentWillReceiveProps
     if (!this.props.data) {
       return;
@@ -149,10 +149,10 @@ Fresh.mixins.SetInterval = {
 
 /** @jsx React.DOM */
 
-Fresh.widgets.Author = React.createClass({
+Fresh.components.Author = React.createClass({
   /**
    * Input: {
-   *   widget: 'Author',
+   *   component: 'Author',
    *   name: 'Dan Ciotu'
    * }
    */
@@ -168,10 +168,10 @@ Fresh.widgets.Author = React.createClass({
 
 /** @jsx React.DOM */
 
-Fresh.widgets.List = React.createClass({
+Fresh.components.List = React.createClass({
   /**
    * Input: {
-   *   widget: 'List',
+   *   component: 'List',
    *   data: 'http://localhost/static/users.json'
    * }
    */
@@ -185,8 +185,8 @@ Fresh.widgets.List = React.createClass({
     return (
       React.DOM.ul( {className:"List"}, 
         this.state.data.map(function(item, index) {
-          var itemWidget = Fresh.getWidgetByName(item.widget);
-          return React.DOM.li( {key:index}, itemWidget(_.clone(item)))
+          var itemComponent = Fresh.getComponentByName(item.component);
+          return React.DOM.li( {key:index}, itemComponent(_.clone(item)))
         })
       )
     );
