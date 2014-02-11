@@ -94,8 +94,8 @@ properties, besides a few special ones that are reserved by convention:
 - **state** - An object that will be poured inside the initial Component
               state as soon as it loads (replacing any default state.)
               Stringifying this as a JSON object can **persist any Component
-              state.** This also means the Root Component can have a URI that
-              includes a given state.
+              state.** This also means that any possible state of every 
+              Component has a unique URL.
 
 \* The **Root Component** is the first Component loaded inside a page, normally
 pulling its configuration from the URL query string params.
