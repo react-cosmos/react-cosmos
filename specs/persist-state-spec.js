@@ -28,13 +28,13 @@ describe("Components implementing the PersistState mixin", function() {
         snapshot;
     // React Components need to be rendered to mount
     React.renderComponentToString(componentInstance, function(){});
-    expect(componentInstance.generateConfigurationSnapshot())
+    expect(componentInstance.generatePropsSnapshot())
       .toEqual({players: 5, state: {speed: 1}});
 
     // Let's ensure changes are also reflected in the snapshot
     componentInstance.setProps({players: 10});
     componentInstance.setState({speed: 3});
-    expect(componentInstance.generateConfigurationSnapshot())
+    expect(componentInstance.generatePropsSnapshot())
       .toEqual({players: 10, state: {speed: 3}});
   });
 
@@ -48,7 +48,7 @@ describe("Components implementing the PersistState mixin", function() {
         });
     // React Components need to be rendered to mount
     React.renderComponentToString(componentInstance, function(){});
-    expect(componentInstance.generateConfigurationSnapshot())
+    expect(componentInstance.generatePropsSnapshot())
       .toEqual({visible: true});
   });
 

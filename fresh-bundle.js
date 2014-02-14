@@ -102,7 +102,7 @@ Fresh.mixins.DataManager = {
 };
 
 Fresh.mixins.PersistState = {
-  generateConfigurationSnapshot: function() {
+  generatePropsSnapshot: function() {
     var defaultProps = this.getDefaultProps ? this.getDefaultProps() : {},
         props = {},
         value,
@@ -133,7 +133,7 @@ Fresh.mixins.PersistState = {
   },
   getUriQueryString: function() {
     return Fresh.serialize.getQueryStringFromProps(
-      this.generateConfigurationSnapshot());
+      this.generatePropsSnapshot());
   },
   componentWillMount: function() {
     // Allow passing a serialized snapshot of a state through the props
