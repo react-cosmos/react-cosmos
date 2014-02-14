@@ -22,12 +22,11 @@ if (typeof module !== 'undefined' && module.exports) {
   module.exports = Fresh;
 }
 
-Fresh.url = {
-  getParams: function () {
-    var str = window.location.search.substr(1),
-        params = {};
-    if (str) {
-      var pairs = str.split('&'),
+Fresh.serialize = {
+  getPropsFromQueryString: function(queryString) {
+    var props = {};
+    if (queryString.length) {
+      var pairs = queryString.split('&'),
           parts,
           key,
           value;
@@ -38,10 +37,30 @@ Fresh.url = {
         if (key == 'state') {
           value = JSON.parse(decodeURIComponent(value));
         }
-        params[key] = value;
+        props[key] = value;
       }
     }
-    return params;
+    return props;
+  },
+  getQueryStringFromProps: function(props) {
+    var parts = [],
+        value;
+    for (var key in props) {
+      value = props[key];
+      // Objects can be embedded in a query string as well
+      if (typeof value == 'object') {
+        value = encodeURIComponent(JSON.stringify(value));
+      }
+      parts.push(key + '=' + value);
+    }
+    return parts.join('&');
+  }
+};
+
+Fresh.url = {
+  getParams: function () {
+    return Fresh.serialize.getPropsFromQueryString(
+      window.location.search.substr(1));
   }
 };
 
@@ -113,18 +132,8 @@ Fresh.mixins.PersistState = {
     return props;
   },
   getUriQueryString: function() {
-    var props = this.generateConfigurationSnapshot(),
-        parts = [],
-        value;
-    for (var key in props) {
-      value = props[key];
-      // Objects can be embedded in a URL query string as well
-      if (typeof value == 'object') {
-        value = encodeURIComponent(JSON.stringify(value));
-      }
-      parts.push(key + '=' + value);
-    }
-    return parts.join('&');
+    return Fresh.serialize.getQueryStringFromProps(
+      this.generateConfigurationSnapshot());
   },
   componentWillMount: function() {
     // Allow passing a serialized snapshot of a state through the props
