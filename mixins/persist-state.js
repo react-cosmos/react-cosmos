@@ -29,18 +29,8 @@ Fresh.mixins.PersistState = {
     return props;
   },
   getUriQueryString: function() {
-    var props = this.generateConfigurationSnapshot(),
-        parts = [],
-        value;
-    for (var key in props) {
-      value = props[key];
-      // Objects can be embedded in a URL query string as well
-      if (typeof value == 'object') {
-        value = encodeURIComponent(JSON.stringify(value));
-      }
-      parts.push(key + '=' + value);
-    }
-    return parts.join('&');
+    return Fresh.serialize.getQueryStringFromProps(
+      this.generateConfigurationSnapshot());
   },
   componentWillMount: function() {
     // Allow passing a serialized snapshot of a state through the props
