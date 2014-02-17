@@ -30,9 +30,9 @@ Fresh is a versatile framework and can be installed in more than one way.
 
 ### Existing framework
 
-Include `fresh-bundle.js` if you already have the
+Include `build/fresh.js` if you already have the
 [external dependencies](https://github.com/skidding/fresh/blob/master/package.json#L8)
-included in your project or `fresh-bundle-with-dependencies.js` to include
+included in your project or `build/fresh-with-dependencies.js` to include
 them as well.
 
 ### Node module
@@ -94,7 +94,7 @@ properties, besides a few special ones that are reserved by convention:
 - **state** - An object that will be poured inside the initial Component
               state as soon as it loads (replacing any default state.)
               Stringifying this as a JSON object can **persist any Component
-              state.** This also means that any possible state of every 
+              state.** This also means that any possible state of every
               Component has a unique URL.
 
 \* The **Root Component** is the first Component loaded inside a page, normally

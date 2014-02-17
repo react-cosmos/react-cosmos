@@ -1,4 +1,4 @@
-var Fresh = require('../fresh-bundle.js'),
+var Fresh = require('../build/fresh.js'),
     React = require('react-tools').React;
 
 describe("Components implementing the DataManager mixin", function() {

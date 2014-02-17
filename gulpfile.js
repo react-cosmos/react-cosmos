@@ -18,12 +18,12 @@ gulp.task('scripts', function() {
   // Node bundle
   gulp.src(paths.scripts)
     .pipe(react())
-    .pipe(concat('fresh-bundle.js'))
+    .pipe(concat('build/fresh.js'))
     .pipe(gulp.dest('.'));
   // Bundle bundle
   gulp.src(paths.dependencies.concat(paths.scripts))
     .pipe(react())
-    .pipe(concat('fresh-bundle-with-dependencies.js'))
+    .pipe(concat('build/fresh-with-dependencies.js'))
     .pipe(gulp.dest('.'));
 });
 

@@ -15,5 +15,5 @@
     "jasmine-node": "~1.13.1"
   },
   "author": "Ovidiu Chereches",
-  "main": "./fresh-bundle.js"
+  "main": "./build/fresh.js"
 }
