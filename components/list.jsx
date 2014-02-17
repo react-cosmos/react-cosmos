@@ -2,7 +2,7 @@
 
 Fresh.components.List = React.createClass({
   /**
-   * Input: {
+   * {
    *   component: 'List',
    *   data: 'http://localhost/static/users.json'
    * }
