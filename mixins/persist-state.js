@@ -28,7 +28,7 @@ Fresh.mixins.PersistState = {
     }
     return props;
   },
-  getUriQueryString: function() {
+  getQueryString: function() {
     return Fresh.serialize.getQueryStringFromProps(
       this.generatePropsSnapshot());
   },

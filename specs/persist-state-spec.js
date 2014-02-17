@@ -61,7 +61,7 @@ describe("Components implementing the PersistState mixin", function() {
         snapshot;
     // React Components need to be rendered to mount
     React.renderComponentToString(componentInstance, function(){});
-    expect(componentInstance.getUriQueryString())
+    expect(componentInstance.getQueryString())
       // encodeURIComponent(JSON.stringify({speed:1}))
       .toEqual('players=5&state=%7B%22speed%22%3A1%7D');
   });
