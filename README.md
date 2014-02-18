@@ -83,7 +83,7 @@ properties, besides a few special ones that are reserved by convention:
 - **component** - The name of the Component to load. Usually we already have a
                   Component class when setting its properties, but there are
                   two main cases when this property is relevant:
-  - 1. When loading the Root Component* using `Fresh.start`
+  - 1. When loading the Root Component*
   - 2. When a List Component receives a list of children to load
 
 - **data** - A URL for fetching data for that Component. Once data is received

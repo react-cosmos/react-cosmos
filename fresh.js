@@ -4,13 +4,12 @@ var Fresh = {
   getComponentByName: function(name) {
     return this.components[name];
   },
-  start: function(rootProps, container) {
-    var component = this.getComponentByName(rootProps.component),
-        content;
+  render: function(props, container) {
+    var component = this.getComponentByName(props.component);
     if (!component) {
-      return;
+      throw new Error('Invalid component: ' + props.component);
     }
-    React.renderComponent(component(_.clone(rootProps)), container);
+    React.renderComponent(component(_.clone(props)), container);
   }
 };
 

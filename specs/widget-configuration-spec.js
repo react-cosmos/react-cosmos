@@ -12,20 +12,20 @@ describe("Component configuration", function() {
 
   describe("for the root-level component", function() {
 
-    it("should render correct component using Fresh.start", function() {
+    it("should render correct component using Fresh.render", function() {
       var fakeComponentInstance = {};
       Fresh.components.FakeComponent = jasmine.createSpy('FakeComponent')
                                         .andReturn(fakeComponentInstance);
       // No need to interact with React at this point
       spyOn(React, 'renderComponent');
-      Fresh.start({component: 'FakeComponent'});
+      Fresh.render({component: 'FakeComponent'});
       expect(React.renderComponent.mostRecentCall.args[0]).toBe(fakeComponentInstance);
     });
 
-    it("should create component with correct props using Fresh.start", function() {
+    it("should create component with correct props using Fresh.render", function() {
       Fresh.components.FakeComponent = jasmine.createSpy('FakeComponent');
       spyOn(React, 'renderComponent');
-      Fresh.start({
+      Fresh.render({
         component: 'FakeComponent',
         foo: 'bar'
       });
@@ -35,12 +35,12 @@ describe("Component configuration", function() {
       });
     });
 
-    it("should not alter props object sent to Fresh.start", function() {
+    it("should not alter props object sent to Fresh.render", function() {
       var initialProps = {component: 'TestComponent', foo: 'bar'},
                          initialPropsClone = _.clone(initialProps);
       Fresh.components.TestComponent = React.createClass({render: function(){}});
       spyOn(React, 'renderComponent');
-      Fresh.start(initialProps, '<asdf>');
+      Fresh.render(initialProps, '<asdf>');
       expect(initialProps).toEqual(initialPropsClone);
       expect(React.renderComponent.mostRecentCall.args[0].props)
         .not.toBe(initialProps);
