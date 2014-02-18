@@ -1,5 +1,5 @@
 var Fresh = require('../build/fresh.js'),
-    React = require('react-tools').React,
+    React = require('react'),
     _ = require('underscore');
 
 describe("Components implementing the PersistState mixin", function() {
@@ -15,7 +15,7 @@ describe("Components implementing the PersistState mixin", function() {
     var PersistStateComponent = React.createClass(PersistStateSpec),
         componentInstance = PersistStateComponent({state: {foo: 'bar'}});
     // React Components need to be rendered to mount
-    React.renderComponentToString(componentInstance, function(){});
+    React.renderComponentToString(componentInstance);
     expect(componentInstance.state).toEqual({foo: 'bar'});
   });
 
@@ -27,7 +27,7 @@ describe("Components implementing the PersistState mixin", function() {
         }),
         snapshot;
     // React Components need to be rendered to mount
-    React.renderComponentToString(componentInstance, function(){});
+    React.renderComponentToString(componentInstance);
     expect(componentInstance.generatePropsSnapshot())
       .toEqual({players: 5, state: {speed: 1}});
 
@@ -47,7 +47,7 @@ describe("Components implementing the PersistState mixin", function() {
           visible: true
         });
     // React Components need to be rendered to mount
-    React.renderComponentToString(componentInstance, function(){});
+    React.renderComponentToString(componentInstance);
     expect(componentInstance.generatePropsSnapshot())
       .toEqual({visible: true});
   });
@@ -60,7 +60,7 @@ describe("Components implementing the PersistState mixin", function() {
         }),
         snapshot;
     // React Components need to be rendered to mount
-    React.renderComponentToString(componentInstance, function(){});
+    React.renderComponentToString(componentInstance);
     expect(componentInstance.getQueryString())
       // encodeURIComponent(JSON.stringify({speed:1}))
       .toEqual('players=5&state=%7B%22speed%22%3A1%7D');

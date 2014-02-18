@@ -1,5 +1,5 @@
 var Fresh = require('../build/fresh.js'),
-    React = require('react-tools').React,
+    React = require('react'),
     _ = require('underscore');
 
 describe("Component configuration", function() {
