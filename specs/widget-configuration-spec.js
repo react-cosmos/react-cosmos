@@ -12,11 +12,28 @@ describe("Component configuration", function() {
 
   describe("Fresh.render", function() {
 
+    it("should render to DOM if received a container", function() {
+      Fresh.components.FakeComponent = jasmine.createSpy('FakeComponent');
+      spyOn(React, 'renderComponent');
+      spyOn(React, 'renderComponentToString');
+      Fresh.render({component: 'FakeComponent'}, '<div>');
+      expect(React.renderComponent.callCount).toBe(1);
+      expect(React.renderComponentToString.callCount).toBe(0);
+    });
+
+    it("should render to string if didn't receive a container", function() {
+      Fresh.components.FakeComponent = jasmine.createSpy('FakeComponent');
+      spyOn(React, 'renderComponent');
+      spyOn(React, 'renderComponentToString');
+      Fresh.render({component: 'FakeComponent'});
+      expect(React.renderComponent.callCount).toBe(0);
+      expect(React.renderComponentToString.callCount).toBe(1);
+    });
+
     it("should render correct Component", function() {
       var fakeComponentInstance = {};
       Fresh.components.FakeComponent = jasmine.createSpy('FakeComponent')
                                         .andReturn(fakeComponentInstance);
-      // No need to interact with React at this point
       spyOn(React, 'renderComponentToString');
       Fresh.render({component: 'FakeComponent'});
       expect(React.renderComponentToString.mostRecentCall.args[0])
