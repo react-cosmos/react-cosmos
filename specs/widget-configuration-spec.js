@@ -4,27 +4,28 @@ var Fresh = require('../build/fresh.js'),
 
 describe("Component configuration", function() {
 
-  it("should draw its components from the fresh.components namespace", function() {
+  it("should draw its components from the Fresh.components namespace", function() {
     var EmptyComponent = {};
     Fresh.components.EmptyComponent = EmptyComponent;
     expect(Fresh.getComponentByName('EmptyComponent')).toBe(EmptyComponent);
   });
 
-  describe("for the root-level component", function() {
+  describe("Fresh.render", function() {
 
-    it("should render correct component using Fresh.render", function() {
+    it("should render correct Component", function() {
       var fakeComponentInstance = {};
       Fresh.components.FakeComponent = jasmine.createSpy('FakeComponent')
                                         .andReturn(fakeComponentInstance);
       // No need to interact with React at this point
-      spyOn(React, 'renderComponent');
+      spyOn(React, 'renderComponentToString');
       Fresh.render({component: 'FakeComponent'});
-      expect(React.renderComponent.mostRecentCall.args[0]).toBe(fakeComponentInstance);
+      expect(React.renderComponentToString.mostRecentCall.args[0])
+            .toBe(fakeComponentInstance);
     });
 
-    it("should create component with correct props using Fresh.render", function() {
+    it("should create component with correct props", function() {
       Fresh.components.FakeComponent = jasmine.createSpy('FakeComponent');
-      spyOn(React, 'renderComponent');
+      spyOn(React, 'renderComponentToString');
       Fresh.render({
         component: 'FakeComponent',
         foo: 'bar'
@@ -35,14 +36,14 @@ describe("Component configuration", function() {
       });
     });
 
-    it("should not alter props object sent to Fresh.render", function() {
+    it("should not alter props object received", function() {
       var initialProps = {component: 'TestComponent', foo: 'bar'},
                          initialPropsClone = _.clone(initialProps);
       Fresh.components.TestComponent = React.createClass({render: function(){}});
-      spyOn(React, 'renderComponent');
-      Fresh.render(initialProps, '<asdf>');
+      spyOn(React, 'renderComponentToString');
+      Fresh.render(initialProps);
       expect(initialProps).toEqual(initialPropsClone);
-      expect(React.renderComponent.mostRecentCall.args[0].props)
+      expect(React.renderComponentToString.mostRecentCall.args[0].props)
         .not.toBe(initialProps);
     });
   });

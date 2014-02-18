@@ -9,7 +9,12 @@ var Fresh = {
     if (!component) {
       throw new Error('Invalid component: ' + props.component);
     }
-    React.renderComponent(component(_.clone(props)), container);
+    var componentInstance = component(_.clone(props));
+    if (container) {
+      return React.renderComponent(componentInstance, container);
+    } else {
+      return React.renderComponentToString(componentInstance);
+    }
   }
 };
 
