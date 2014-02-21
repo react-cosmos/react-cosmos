@@ -22,6 +22,7 @@ var Fresh = {
       container: document.body
     }, options);
     this.render(options.props, options.container);
+    this.router = new this.Router(options);
   }
 };
 
