@@ -64,4 +64,44 @@ describe("Component configuration", function() {
         .not.toBe(initialProps);
     });
   });
+
+  describe("Fresh.start", function() {
+
+    beforeEach(function() {
+      // Mock global objects in a browser
+      global.window = {location: {search: '?component=List&data=users.json'}};
+      global.document = {body: {}};
+    });
+    afterEach(function() {
+      delete global.window;
+      delete global.location;
+    });
+
+    it("should default to URL query string", function() {
+      spyOn(Fresh, 'render');
+      Fresh.start();
+      expect(Fresh.render.callCount).toBe(1);
+      expect(Fresh.render.mostRecentCall.args[0]).toEqual(
+        Fresh.url.getParams());
+    });
+
+    it("should default to document.body as container", function() {
+      spyOn(Fresh, 'render');
+      Fresh.start();
+      expect(Fresh.render.callCount).toBe(1);
+      expect(Fresh.render.mostRecentCall.args[1]).toBe(document.body);
+    });
+
+    it("should call Fresh.render with props and container", function() {
+      spyOn(Fresh, 'render');
+      Fresh.start({
+        props: {component: 'MissingComponent'},
+        container: '<div>'
+      });
+      expect(Fresh.render.callCount).toBe(1);
+      expect(Fresh.render.mostRecentCall.args[0]).toEqual({
+        component: 'MissingComponent'});
+      expect(Fresh.render.mostRecentCall.args[1]).toEqual('<div>');
+    });
+  });
 });

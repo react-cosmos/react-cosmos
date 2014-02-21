@@ -15,6 +15,13 @@ var Fresh = {
     } else {
       return React.renderComponentToString(componentInstance);
     }
+  },
+  start: function(options) {
+    options = _.extend({
+      props: Fresh.url.getParams(),
+      container: document.body
+    }, options);
+    this.render(options.props, options.container);
   }
 };
 
