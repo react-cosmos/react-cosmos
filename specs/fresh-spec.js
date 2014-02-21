@@ -2,7 +2,7 @@ var Fresh = require('../build/fresh.js'),
     React = require('react'),
     _ = require('underscore');
 
-describe("Component configuration", function() {
+describe("Fresh", function() {
 
   it("should draw its components from the Fresh.components namespace", function() {
     var EmptyComponent = {};
@@ -10,7 +10,7 @@ describe("Component configuration", function() {
     expect(Fresh.getComponentByName('EmptyComponent')).toBe(EmptyComponent);
   });
 
-  describe("Fresh.render", function() {
+  describe(".render", function() {
 
     it("should render to DOM if received a container", function() {
       Fresh.components.FakeComponent = jasmine.createSpy('FakeComponent');
@@ -65,7 +65,7 @@ describe("Component configuration", function() {
     });
   });
 
-  describe("Fresh.start", function() {
+  describe(".start", function() {
 
     beforeEach(function() {
       // Mock global objects in a browser
