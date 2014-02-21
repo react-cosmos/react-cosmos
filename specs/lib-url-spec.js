@@ -15,5 +15,4 @@ describe("Fresh.url", function() {
       data: 'users.json'
     });
   });
-
 });
