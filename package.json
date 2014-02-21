@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Data exploration framework",
   "dependencies": {
-    "react": "~0.9.0-rc1",
+    "react": "~0.9.0",
     "underscore": "~1.5.2",
     "jquery": "~1.11.0"
   },
