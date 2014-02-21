@@ -68,6 +68,8 @@ describe("Fresh", function() {
   describe(".start", function() {
 
     beforeEach(function() {
+      spyOn(Fresh, 'render');
+      spyOn(Fresh, 'Router');
       // Mock global objects in a browser
       global.window = {location: {search: '?component=List&data=users.json'}};
       global.document = {body: {}};
@@ -78,7 +80,6 @@ describe("Fresh", function() {
     });
 
     it("should default to URL query string", function() {
-      spyOn(Fresh, 'render');
       Fresh.start();
       expect(Fresh.render.callCount).toBe(1);
       expect(Fresh.render.mostRecentCall.args[0]).toEqual(
@@ -86,14 +87,12 @@ describe("Fresh", function() {
     });
 
     it("should default to document.body as container", function() {
-      spyOn(Fresh, 'render');
       Fresh.start();
       expect(Fresh.render.callCount).toBe(1);
       expect(Fresh.render.mostRecentCall.args[1]).toBe(document.body);
     });
 
     it("should call Fresh.render with props and container", function() {
-      spyOn(Fresh, 'render');
       Fresh.start({
         props: {component: 'MissingComponent'},
         container: '<div>'
@@ -102,6 +101,12 @@ describe("Fresh", function() {
       expect(Fresh.render.mostRecentCall.args[0]).toEqual({
         component: 'MissingComponent'});
       expect(Fresh.render.mostRecentCall.args[1]).toEqual('<div>');
+    });
+
+    it("should create a global Fresh.Router instance", function() {
+      Fresh.start({});
+      expect(Fresh.Router.callCount).toBe(1);
+      expect(Fresh.router).toEqual(jasmine.any(Fresh.Router));
     });
   });
 });
