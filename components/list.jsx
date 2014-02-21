@@ -8,8 +8,8 @@ Fresh.components.List = React.createClass({
    * }
    */
   mixins: [Fresh.mixins.SetInterval,
-           Fresh.mixins.PersistState,
-           Fresh.mixins.DataManager],
+           Fresh.mixins.DataManager,
+           Fresh.mixins.PersistState],
   getInitialState: function() {
     return {data: []};
   },
