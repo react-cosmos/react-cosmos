@@ -38,4 +38,31 @@ describe("Fresh.Router", function() {
       expect(Fresh.render.mostRecentCall.args[1]).toEqual('<body>');
     });
   });
+
+  describe("on PopState event", function() {
+
+    it("should call Fresh.render with props from event state", function() {
+      spyOn(Fresh, 'render');
+      var router = new Fresh.Router({});
+      router._onPopState({
+        state: {
+          component: 'List',
+          data: 'users.json'
+        }
+      });
+      expect(Fresh.render.callCount).toEqual(1);
+      expect(Fresh.render.mostRecentCall.args[0]).toEqual({
+        component: 'List',
+        data: 'users.json'
+      });
+    });
+
+    it("should call Fresh.render with original container", function() {
+      spyOn(Fresh, 'render');
+      var router = new Fresh.Router({container: '<body>'});
+      router._onPopState({state: {}});
+      expect(Fresh.render.callCount).toEqual(1);
+      expect(Fresh.render.mostRecentCall.args[1]).toEqual('<body>');
+    });
+  });
 });
