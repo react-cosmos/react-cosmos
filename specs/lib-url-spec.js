@@ -9,11 +9,10 @@ describe("Fresh.url", function() {
     delete global.window;
   });
 
-  it(".getParams extracts the query string from the URL", function() {
+  it(".getParams should extract the query string from the URL", function() {
     expect(Fresh.url.getParams()).toEqual({
       component: 'List',
       data: 'users.json'
     });
   });
-
 });
