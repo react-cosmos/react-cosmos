@@ -10,7 +10,8 @@ Fresh.components.Item = React.createClass({
    */
   mixins: [Fresh.mixins.SetInterval,
            Fresh.mixins.DataManager,
-           Fresh.mixins.PersistState],
+           Fresh.mixins.PersistState,
+           Fresh.mixins.UrlRouter],
   getInitialState: function() {
     return {data: {}};
   },
@@ -21,6 +22,7 @@ Fresh.components.Item = React.createClass({
     }
     return (
       <div>
+        <a href={'?' + this.getQueryString()} onClick={this.goToLink}>Open</a>
         {itemNodes}
       </div>
     );
