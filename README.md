@@ -71,31 +71,45 @@ DOM-less environment.
 
 ## Specs
 
-You should really read the
-[React](http://facebook.github.io/react/docs/getting-started.html) docs before,
+You should read the
+[React docs](http://facebook.github.io/react/docs/getting-started.html) before,
 Fresh is merely a standarization on top of React's Component model.
 
-A Component configuration consists of the
-[props](http://facebook.github.io/react/docs/tutorial.html#using-props) object
-for that React Component. It's up to that Component to implement most
-properties, besides a few special ones that are reserved by convention:
+Since one of the Fresh mantras is _The state of a Component can be serialized
+at any given point in time_ (see [Manifesto](#manifesto)), __any component in
+any state can be represented and reproduced by a persistent JSON.__ This goes
+hand in hand with React's **declarative** nature. The JSON configuration of a
+Component is simply the [Component **props**](http://facebook.github.io/react/docs/tutorial.html#using-props)—the
+__input data.__ This input configuration is picked up by the Component,
+interpreted based on what that Component implements, and exported into an
+__HTML output.__ Easy to follow and assert behavior.
 
-- **component** - The name of the Component to load. Usually we already have a
-                  Component class when setting its properties, but there are
-                  two main cases when this property is relevant:
+```js
+// This could be the configuraton for Component that renders a list of users
+{
+  "component": "List",
+  "class": "users",
+  "data": "/api/users.json"
+}
+```
+
+__The behavior of a Component is determined by the
+[Mixins](http://facebook.github.io/react/docs/reusable-components.html#mixins)
+it implements.__ Each Mixin can support a set of input _props,_ make new
+methods available and interfere with the [lifecycle methods](http://facebook.github.io/react/docs/component-specs.html#lifecycle-methods)
+of a component. While mixins can optionally profit from other mixins when
+combined, they are independent by nature and should have an isolated assertable
+behavior.
+
+Before adding any Mixin to a Component class, it's up to that Component to
+implement any _prop_ received from its configuration, except for one reserved
+by convention:
+
+- **component** - The name of the Component to load. Normally we should already
+                  have a Component class when instantiating it, but there are
+                  two main cases when this prop is relevant:
   - 1. When loading the Root Component*
   - 2. When a List Component receives a list of children to load
 
-- **data** - A URL for fetching data for that Component. Once data is received
-             it will be set inside the Component's
-             [state](http://facebook.github.io/react/docs/tutorial.html#reactive-state),
-             under the `data` key, and will cause a reactive re-render.
-
-- **state** - An object that will be poured inside the initial Component
-              state as soon as it loads (replacing any default state.)
-              Stringifying this as a JSON object can **persist any Component
-              state.** This also means that any possible state of every
-              Component has a unique URL.
-
-\* The **Root Component** is the first Component loaded inside a page, normally
-pulling its configuration from the URL query string params.
+\* The **Root Component** is the first Component loaded inside a page, usually
+pulling its configuration from the URL query string.
