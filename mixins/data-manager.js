@@ -30,7 +30,13 @@ Fresh.mixins.DataManager = {
     }
     this.fetchDataFromServer();
     if (this.props.pollInterval) {
-      this.setInterval(this.fetchDataFromServer, this.props.pollInterval);
+      this.pollInterval =
+        setInterval(this.fetchDataFromServer, this.props.pollInterval);
+    }
+  },
+  componentWillUnmount: function() {
+    if (this.pollInterval) {
+      clearInterval(this.pollInterval);
     }
   }
 };

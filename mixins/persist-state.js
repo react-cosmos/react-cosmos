@@ -1,5 +1,5 @@
 Fresh.mixins.PersistState = {
-  generatePropsSnapshot: function() {
+  generateSnapshot: function() {
     var defaultProps = this.getDefaultProps ? this.getDefaultProps() : {},
         props = {},
         value,
@@ -19,18 +19,14 @@ Fresh.mixins.PersistState = {
       props[key] = value;
     }
     state = _.clone(this.state);
-    // No need to embed data if we have an URL to fetch it from
-    if (state && state.data && props.data) {
-      delete state.data;
-    }
     if (!_.isEmpty(state)) {
       props.state = state;
     }
     return props;
   },
-  getQueryString: function() {
+  generateQueryString: function() {
     return Fresh.serialize.getQueryStringFromProps(
-      this.generatePropsSnapshot());
+      this.generateSnapshot());
   },
   componentWillMount: function() {
     // Allow passing a serialized snapshot of a state through the props
