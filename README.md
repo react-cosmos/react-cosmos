@@ -135,7 +135,6 @@ Props:
 - **data** - A URL to fetch data from. Once data is received it will be set
              inside the Component's _state_, under the `data` key, and will
              cause a reactive re-render.
-
 - **pollInterval** - An interval in milliseconds for polling the data URL.
                      Defaults to 0, which means no polling.
 
@@ -162,7 +161,6 @@ Methods:
                          (including current _state_.) It excludes internal
                          props set by React during run-time and props with
                          [default values.](http://facebook.github.io/react/docs/component-specs.html#getdefaultprops)
-
 - **generateQueryString** - Generate a stringified snapshot of the Component
                             (see generateSnapshot.) It can serve as a URI or be
                             persisted in any way. Each value from the query
