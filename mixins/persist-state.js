@@ -1,5 +1,5 @@
 Fresh.mixins.PersistState = {
-  generatePropsSnapshot: function() {
+  generateSnapshot: function() {
     var defaultProps = this.getDefaultProps ? this.getDefaultProps() : {},
         props = {},
         value,
@@ -28,9 +28,9 @@ Fresh.mixins.PersistState = {
     }
     return props;
   },
-  getQueryString: function() {
+  generateQueryString: function() {
     return Fresh.serialize.getQueryStringFromProps(
-      this.generatePropsSnapshot());
+      this.generateSnapshot());
   },
   componentWillMount: function() {
     // Allow passing a serialized snapshot of a state through the props

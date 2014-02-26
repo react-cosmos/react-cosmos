@@ -28,13 +28,13 @@ describe("Components implementing the PersistState mixin", function() {
         snapshot;
     // React Components need to be rendered to mount
     React.renderComponentToString(componentInstance);
-    expect(componentInstance.generatePropsSnapshot())
+    expect(componentInstance.generateSnapshot())
       .toEqual({players: 5, state: {speed: 1}});
 
     // Let's ensure changes are also reflected in the snapshot
     componentInstance.setProps({players: 10});
     componentInstance.setState({speed: 3});
-    expect(componentInstance.generatePropsSnapshot())
+    expect(componentInstance.generateSnapshot())
       .toEqual({players: 10, state: {speed: 3}});
   });
 
@@ -48,7 +48,7 @@ describe("Components implementing the PersistState mixin", function() {
         });
     // React Components need to be rendered to mount
     React.renderComponentToString(componentInstance);
-    expect(componentInstance.generatePropsSnapshot())
+    expect(componentInstance.generateSnapshot())
       .toEqual({visible: true});
   });
 
@@ -61,7 +61,7 @@ describe("Components implementing the PersistState mixin", function() {
         snapshot;
     // React Components need to be rendered to mount
     React.renderComponentToString(componentInstance);
-    expect(componentInstance.getQueryString())
+    expect(componentInstance.generateQueryString())
       // encodeURIComponent(JSON.stringify({speed:1}))
       .toEqual('players=5&state=%7B%22speed%22%3A1%7D');
   });

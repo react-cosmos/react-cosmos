@@ -20,8 +20,8 @@ Fresh.components.Item = React.createClass({
       itemNodes.push(<p>{key + ': '}<strong>{this.state.data[key]}</strong></p>);
     }
     return (
-      <div>
-        <a href={'?' + this.getQueryString()} onClick={this.goToLink}>Open</a>
+      <div className={this.getClassName()}>
+        <a href={'?' + this.generateQueryString()} onClick={this.goToLink}>Open</a>
         {itemNodes}
       </div>
     );
