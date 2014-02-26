@@ -73,23 +73,25 @@ DOM-less environment.
 
 You should read the
 [React docs](http://facebook.github.io/react/docs/getting-started.html) before,
-Fresh is merely a standarization on top of React's Component model.
+Fresh is merely a standarization on top of React's Component model. You need
+to grasp the [Component **props**](http://facebook.github.io/react/docs/tutorial.html#using-props)
+and [reactive **state**](http://facebook.github.io/react/docs/tutorial.html#reactive-state)
+concepts before diving into Fresh.
 
 Since one of the Fresh mantras is _The state of a Component can be serialized
 at any given point in time_ (see [Manifesto](#manifesto)), __any component in
 any state can be represented and reproduced by a persistent JSON.__ This goes
 hand in hand with React's **declarative** nature. The JSON configuration of a
-Component is simply the [Component **props**](http://facebook.github.io/react/docs/tutorial.html#using-props)—the
-__input data.__ This input configuration is picked up by the Component,
-interpreted based on what that Component implements, and exported into an
-__HTML output.__ Easy to follow and assert behavior.
+Component is simply its _props_—the __input data.__ This input configuration is
+picked up by the Component, interpreted based on what that Component
+implements, and exported into an __HTML output.__ Easy to follow and assert
+behavior.
 
 ```js
-// This could be the configuraton for Component that renders a list of users
+// This could be the configuraton for a Component that renders a list of users
 {
   "component": "List",
-  "class": "users",
-  "data": "/api/users.json"
+  "class": "users"
 }
 ```
 
@@ -113,3 +115,56 @@ by convention:
 
 \* The **Root Component** is the first Component loaded inside a page, usually
 pulling its configuration from the URL query string.
+
+### DataManager Mixin
+
+```js
+{
+  "component": "List",
+  "data": "/api/users.json",
+  // Refresh users every 5 seconds
+  "pollInterval": 5000
+}
+```
+
+Bare functionality for fetching server-side JSON data inside a Component. Uses
+basic Ajax requests and setInterval for polling.
+
+Props:
+
+- **data** - A URL to fetch data from. Once data is received it will be set
+             inside the Component's _state_, under the `data` key, and will
+             cause a reactive re-render.
+
+- **pollInterval** - An interval in milliseconds for polling the data URL.
+                     Defaults to 0, which means no polling.
+
+### PersistState Mixin
+
+```js
+{
+  "component": "Item",
+  "state": {"name": "John Doe", "age": "24"}
+}
+```
+
+Heart of the Fresh framework. Enables dumping a state object into a Component
+and exporting the current state.
+
+Props:
+
+- **state** - An object that will be poured inside the initial Component
+              _state_ as soon as it loads (replacing any default state.)
+
+Methods:
+
+- **generateSnapshot** - Generate a snapshot of the Component _props_
+                         (including current _state_.) It excludes internal
+                         props set by React during run-time and props with
+                         [default values.](http://facebook.github.io/react/docs/component-specs.html#getdefaultprops)
+
+- **generateQueryString** - Generate a stringified snapshot of the Component
+                            (see generateSnapshot.) It can serve as a URI or be
+                            persisted in any way. Each value from the query
+                            string generated is encoded using
+                            _encodeURIComponent._
