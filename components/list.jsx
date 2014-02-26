@@ -7,14 +7,16 @@ Fresh.components.List = React.createClass({
    *   data: 'http://localhost/static/users.json'
    * }
    */
-  mixins: [Fresh.mixins.DataManager,
+  mixins: [Fresh.mixins.ClassName,
+           Fresh.mixins.DataManager,
            Fresh.mixins.PersistState],
+  defaultClass: 'list',
   getInitialState: function() {
     return {data: []};
   },
   render: function() {
     return (
-      <ul className="List">
+      <ul className={this.getClassName()}>
         {this.state.data.map(function(item, index) {
           var itemComponent = Fresh.getComponentByName(item.component);
           return <li key={index}>{itemComponent(_.clone(item))}</li>

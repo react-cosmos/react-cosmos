@@ -8,7 +8,8 @@ Fresh.components.Item = React.createClass({
    *   age: '26'
    * }
    */
-  mixins: [Fresh.mixins.DataManager,
+  mixins: [Fresh.mixins.ClassName,
+           Fresh.mixins.DataManager,
            Fresh.mixins.PersistState,
            Fresh.mixins.UrlRouter],
   getInitialState: function() {
