@@ -12,9 +12,6 @@ Fresh.components.Item = React.createClass({
            Fresh.mixins.DataManager,
            Fresh.mixins.PersistState,
            Fresh.mixins.UrlRouter],
-  getInitialState: function() {
-    return {data: {}};
-  },
   render: function() {
     var itemNodes = [];
     for (var key in this.state.data) {

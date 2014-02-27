@@ -11,9 +11,7 @@ Fresh.components.List = React.createClass({
            Fresh.mixins.DataManager,
            Fresh.mixins.PersistState],
   defaultClass: 'list',
-  getInitialState: function() {
-    return {data: []};
-  },
+  initialData: [],
   render: function() {
     return (
       <ul className={this.getClassName()}>

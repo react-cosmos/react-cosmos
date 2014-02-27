@@ -138,6 +138,12 @@ Props:
 - **pollInterval** - An interval in milliseconds for polling the data URL.
                      Defaults to 0, which means no polling.
 
+Context properties:
+
+- **initialData** - The initial value of `state.data`, before receiving and
+                    data from the server (see _data_ prop.) Defaults to an
+                    empty object `{}`
+
 ### PersistState Mixin
 
 ```js
