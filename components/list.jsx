@@ -8,7 +8,7 @@ Fresh.components.List = React.createClass({
    * }
    */
   mixins: [Fresh.mixins.ClassName,
-           Fresh.mixins.DataManager,
+           Fresh.mixins.DataFetch,
            Fresh.mixins.PersistState],
   defaultClass: 'list',
   initialData: [],

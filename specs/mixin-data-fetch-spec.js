@@ -2,10 +2,10 @@ var Fresh = require('../build/fresh.js'),
     React = require('react'),
     _ = require('underscore');
 
-describe("Components implementing the DataManager mixin", function() {
+describe("Components implementing the DataFetch mixin", function() {
 
-  var DataManagerSpec = {
-    mixins: [Fresh.mixins.DataManager],
+  var DataFetchSpec = {
+    mixins: [Fresh.mixins.DataFetch],
     render: function() {
       return React.DOM.span(null, 'nada');
     }
@@ -14,9 +14,9 @@ describe("Components implementing the DataManager mixin", function() {
   it("should default initial data to an empty object", function() {
     // The fetching method should do nothing, we only care that it is called
     // before the components gets mounted
-    spyOn(Fresh.mixins.DataManager, 'fetchDataFromServer');
-    var DataManagerComponent = React.createClass(DataManagerSpec),
-        componentInstance = DataManagerComponent();
+    spyOn(Fresh.mixins.DataFetch, 'fetchDataFromServer');
+    var DataFetchComponent = React.createClass(DataFetchSpec),
+        componentInstance = DataFetchComponent();
 
     // React Components need to be rendered to mount
     React.renderComponentToString(componentInstance);
@@ -29,10 +29,10 @@ describe("Components implementing the DataManager mixin", function() {
   it("should override initial data to an empty array", function() {
     // The fetching method should do nothing, we only care that it is called
     // before the components gets mounted
-    spyOn(Fresh.mixins.DataManager, 'fetchDataFromServer');
-    var InitialDataSpec = _.extend({initialData: []}, DataManagerSpec),
-        DataManagerComponent = React.createClass(InitialDataSpec),
-        componentInstance = DataManagerComponent();
+    spyOn(Fresh.mixins.DataFetch, 'fetchDataFromServer');
+    var InitialDataSpec = _.extend({initialData: []}, DataFetchSpec),
+        DataFetchComponent = React.createClass(InitialDataSpec),
+        componentInstance = DataFetchComponent();
 
     // React Components need to be rendered to mount
     React.renderComponentToString(componentInstance);
@@ -45,46 +45,46 @@ describe("Components implementing the DataManager mixin", function() {
   it("should override initial data with non-empty value", function() {
     // The fetching method should do nothing, we only care that it is called
     // before the components gets mounted
-    spyOn(Fresh.mixins.DataManager, 'fetchDataFromServer');
+    spyOn(Fresh.mixins.DataFetch, 'fetchDataFromServer');
     var initialData = {name: 'Guest'},
-        InitialDataSpec = _.extend({initialData: initialData}, DataManagerSpec),
-        DataManagerComponent = React.createClass(InitialDataSpec),
-        componentInstance = DataManagerComponent();
+        InitialDataSpec = _.extend({initialData: initialData}, DataFetchSpec),
+        DataFetchComponent = React.createClass(InitialDataSpec),
+        componentInstance = DataFetchComponent();
 
     // React Components need to be rendered to mount
     React.renderComponentToString(componentInstance);
     expect(componentInstance.state.data).toEqual({name: 'Guest'});
   });
 
-  it("should fetch data if a 'data' prop is set", function() {
+  it("should fetch data if a 'dataUrl' prop is set", function() {
     // The fetching method should do nothing, we only care that it is called
     // before the components gets mounted
-    spyOn(Fresh.mixins.DataManager, 'fetchDataFromServer');
-    var DataManagerComponent = React.createClass(DataManagerSpec),
-        componentInstance = DataManagerComponent({data: 'url?query=string'});
+    spyOn(Fresh.mixins.DataFetch, 'fetchDataFromServer');
+    var DataFetchComponent = React.createClass(DataFetchSpec),
+        componentInstance = DataFetchComponent({dataUrl: 'url?query=string'});
 
     // React Components need to be rendered to mount
     React.renderComponentToString(componentInstance);
-    expect(Fresh.mixins.DataManager
+    expect(Fresh.mixins.DataFetch
            .fetchDataFromServer.callCount).toEqual(1);
   });
 
-  it("shouldn't fetch data if a 'data' prop isn't set", function() {
+  it("shouldn't fetch data if a 'dataUrl' prop isn't set", function() {
     // The fetching method should do nothing, we only care that it is called
     // before the components gets mounted
-    spyOn(Fresh.mixins.DataManager, 'fetchDataFromServer');
-    var DataManagerComponent = React.createClass(DataManagerSpec),
-        componentInstance = DataManagerComponent({});
+    spyOn(Fresh.mixins.DataFetch, 'fetchDataFromServer');
+    var DataFetchComponent = React.createClass(DataFetchSpec),
+        componentInstance = DataFetchComponent({});
 
     // React Components need to be rendered to mount
     React.renderComponentToString(componentInstance);
-    expect(Fresh.mixins.DataManager
+    expect(Fresh.mixins.DataFetch
            .fetchDataFromServer.callCount).toEqual(0);
   });
 
   it("should populate state.data with fetched data", function() {
-    var DataManagerComponent = React.createClass(DataManagerSpec),
-        componentInstance = DataManagerComponent({});
+    var DataFetchComponent = React.createClass(DataFetchSpec),
+        componentInstance = DataFetchComponent({});
 
     // React Components need to be rendered to mount
     React.renderComponentToString(componentInstance);
@@ -95,11 +95,11 @@ describe("Components implementing the DataManager mixin", function() {
   it("should replace initial data after data is fetched", function() {
     // The fetching method should do nothing, we only care that it is called
     // before the components gets mounted
-    spyOn(Fresh.mixins.DataManager, 'fetchDataFromServer');
+    spyOn(Fresh.mixins.DataFetch, 'fetchDataFromServer');
     var initialData = {guest: true, name: 'Guest'},
-        InitialDataSpec = _.extend({initialData: initialData}, DataManagerSpec),
-        DataManagerComponent = React.createClass(InitialDataSpec),
-        componentInstance = DataManagerComponent();
+        InitialDataSpec = _.extend({initialData: initialData}, DataFetchSpec),
+        DataFetchComponent = React.createClass(InitialDataSpec),
+        componentInstance = DataFetchComponent();
 
     // React Components need to be rendered to mount
     React.renderComponentToString(componentInstance);

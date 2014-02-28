@@ -9,7 +9,7 @@ Fresh.components.Item = React.createClass({
    * }
    */
   mixins: [Fresh.mixins.ClassName,
-           Fresh.mixins.DataManager,
+           Fresh.mixins.DataFetch,
            Fresh.mixins.PersistState,
            Fresh.mixins.UrlRouter],
   render: function() {

@@ -1,4 +1,19 @@
-Fresh.mixins.DataManager = {
+Fresh.mixins.DataFetch = {
+  /**
+   * Bare functionality for fetching server-side JSON data inside a Component.
+   *
+   * Props:
+   *   - dataUrl: A URL to fetch data from. Once data is received it will be
+   *              set inside the Component's state, under the data key, and
+   *              will cause a reactive re-render.
+   *   - pollInterval: An interval in milliseconds for polling the data URL.
+   *                   Defaults to 0, which means no polling.
+   *
+   * Context properties:
+   *  - initialData: The initial value of state.data, before receiving and data
+   *                 from the server (see dataUrl prop.) Defaults to an empty
+   *                 object `{}`
+   */
   fetchDataFromServer: function(url) {
     this.xhrRequest = $.ajax({
       url: url,
@@ -29,11 +44,11 @@ Fresh.mixins.DataManager = {
     // Clear any on-going polling when data is reset. Even if polling is still
     // enabled, we need to reset the interval to start from now
     this.clearDataRequests();
-    if (props.data) {
-      this.fetchDataFromServer(props.data);
+    if (props.dataUrl) {
+      this.fetchDataFromServer(props.dataUrl);
       if (props.pollInterval) {
         this.pollInterval = setInterval(function() {
-          this.fetchDataFromServer(props.data);
+          this.fetchDataFromServer(props.dataUrl);
         }.bind(this), props.pollInterval);
       }
     }
@@ -54,13 +69,13 @@ Fresh.mixins.DataManager = {
     };
   },
   componentWillMount: function() {
-    // The data prop points to a source of data than will extend the initial
+    // The dataUrl prop points to a source of data than will extend the initial
     // state of the component, once it will be fetched
     this.resetData(this.props);
   },
   componentWillReceiveProps: function(nextProps) {
-    // A DataManager Component can have its configuration replaced at any time
-    if (nextProps.data != this.props.data) {
+    // A DataFetch Component can have its configuration replaced at any time
+    if (nextProps.dataUrl != this.props.dataUrl) {
       this.resetData(nextProps);
     }
   },

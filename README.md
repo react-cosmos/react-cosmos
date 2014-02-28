@@ -19,8 +19,8 @@ See [React Component.](http://facebook.github.io/react/docs/component-api.html)
 - Any Component configuration can be represented by a URI
 - Components can implement any data mechanism*
 
-\* A custom data mechanism can be easily implemented for the
-[DataManager interface](mixins/data-manager.js) (it defaults to Ajax requests.)
+\* All Fresh core mixins are agnostic on how data is populated inside a
+Component (see default [DataFetch](mixins/data-fetch.js) Ajax implementation.)
 **Fresh is to data visualization what
 [Backbone](https://github.com/jashkenas/backbone) is to data modeling.**
 
@@ -116,12 +116,12 @@ by convention:
 \* The **Root Component** is the first Component loaded inside a page, usually
 pulling its configuration from the URL query string.
 
-### DataManager Mixin
+### DataFetch Mixin
 
 ```js
 {
   "component": "List",
-  "data": "/api/users.json",
+  "dataUrl": "/api/users.json",
   // Refresh users every 5 seconds
   "pollInterval": 5000
 }
@@ -132,9 +132,9 @@ basic Ajax requests and setInterval for polling.
 
 Props:
 
-- **data** - A URL to fetch data from. Once data is received it will be set
-             inside the Component's _state_, under the `data` key, and will
-             cause a reactive re-render.
+- **dataUrl** - A URL to fetch data from. Once data is received it will be set
+                inside the Component's _state_, under the `data` key, and will
+                cause a reactive re-render.
 - **pollInterval** - An interval in milliseconds for polling the data URL.
                      Defaults to 0, which means no polling.
 
