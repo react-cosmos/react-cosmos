@@ -118,6 +118,9 @@ pulling its configuration from the URL query string.
 
 ### DataFetch Mixin
 
+Bare functionality for fetching server-side JSON data inside a Component. Uses
+basic Ajax requests and setInterval for polling.
+
 ```js
 {
   "component": "List",
@@ -126,9 +129,6 @@ pulling its configuration from the URL query string.
   "pollInterval": 5000
 }
 ```
-
-Bare functionality for fetching server-side JSON data inside a Component. Uses
-basic Ajax requests and setInterval for polling.
 
 Props:
 
@@ -146,15 +146,15 @@ Context properties:
 
 ### PersistState Mixin
 
+Heart of the Fresh framework. Enables dumping a state object into a Component
+and exporting the current state.
+
 ```js
 {
   "component": "Item",
   "state": {"name": "John Doe", "age": "24"}
 }
 ```
-
-Heart of the Fresh framework. Enables dumping a state object into a Component
-and exporting the current state.
 
 Props:
 
