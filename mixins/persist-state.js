@@ -1,4 +1,18 @@
 Fresh.mixins.PersistState = {
+  /**
+   * Heart of the Fresh framework. Enables dumping a state object into a
+   * Component and exporting the current state.
+   *
+   * Props:
+   *   - state: An object that will be poured inside the initial Component
+   *            state as soon as it loads (replacing any default state.)
+   *
+   * Methods:
+   *   - generateSnapshot: Generate a snapshot of the Component props
+   *                       (including current state.) It excludes internal
+   *                       props set by React during run-time and props with
+   *                       default values.
+   */
   generateSnapshot: function() {
     var defaultProps = this.getDefaultProps ? this.getDefaultProps() : {},
         props = {},
