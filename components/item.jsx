@@ -11,7 +11,7 @@ Fresh.components.Item = React.createClass({
   mixins: [Fresh.mixins.ClassName,
            Fresh.mixins.DataFetch,
            Fresh.mixins.PersistState,
-           Fresh.mixins.UrlRouter],
+           Fresh.mixins.Url],
   render: function() {
     var itemNodes = [];
     for (var key in this.state.data) {
@@ -19,7 +19,8 @@ Fresh.components.Item = React.createClass({
     }
     return (
       <div className={this.getClassName()}>
-        <a href={'?' + this.generateQueryString()} onClick={this.goToLink}>Open</a>
+        <a href={this.getUrlFromProps(this.generateSnapshot())}
+           onClick={this.routeLink}>Maximize</a>
         {itemNodes}
       </div>
     );
