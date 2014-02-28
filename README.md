@@ -167,3 +167,35 @@ Methods:
                          (including current _state_.) It excludes internal
                          props set by React during run-time and props with
                          [default values.](http://facebook.github.io/react/docs/component-specs.html#getdefaultprops)
+
+### Url Mixin
+
+Enables basic linking between Components, with optional use of the minimal
+built-in Router.
+
+```js
+React.createComponent({
+  mixins: [Fresh.mixins.PersistState,
+           Fresh.mixins.Url],
+  render: function() {
+    return React.DOM.a({
+      href: this.getUrlFromProps(this.generateSnapshot()),
+      onClick: this.routeLink
+    }, "Maximize");
+  }
+});
+```
+
+Methods:
+
+  - **getUrlFromProps** - Serializes a props object into a browser-complient
+                          URL. The URL generated can be simply put inside the
+                          _href_ attribute of an `<a>` tag, and can be combined
+                          with the generateSnapshot method of the PersistState
+                          Mixin to create a link that opens the current
+                          Component at root level (full window.)
+  - **routeLink** - Any `<a>` tag can have this method bound to its onClick
+                    event to have their corresponding _href_ location picked up
+                    by the built-in Router implementation, which uses
+                    _pushState_ to switch between Components instead of
+                    reloading pages.
