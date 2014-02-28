@@ -19,8 +19,8 @@ See [React Component.](http://facebook.github.io/react/docs/component-api.html)
 - Any Component configuration can be represented by a URI
 - Components can implement any data mechanism*
 
-\* A custom data mechanism can be easily implemented for the
-[DataManager interface](mixins/data-manager.js) (it defaults to Ajax requests.)
+\* All Fresh core mixins are agnostic on how data is populated inside a
+Component (see default [DataFetch](mixins/data-fetch.js) Ajax implementation.)
 **Fresh is to data visualization what
 [Backbone](https://github.com/jashkenas/backbone) is to data modeling.**
 
@@ -116,25 +116,25 @@ by convention:
 \* The **Root Component** is the first Component loaded inside a page, usually
 pulling its configuration from the URL query string.
 
-### DataManager Mixin
+### DataFetch Mixin
+
+Bare functionality for fetching server-side JSON data inside a Component. Uses
+basic Ajax requests and setInterval for polling.
 
 ```js
 {
   "component": "List",
-  "data": "/api/users.json",
+  "dataUrl": "/api/users.json",
   // Refresh users every 5 seconds
   "pollInterval": 5000
 }
 ```
 
-Bare functionality for fetching server-side JSON data inside a Component. Uses
-basic Ajax requests and setInterval for polling.
-
 Props:
 
-- **data** - A URL to fetch data from. Once data is received it will be set
-             inside the Component's _state_, under the `data` key, and will
-             cause a reactive re-render.
+- **dataUrl** - A URL to fetch data from. Once data is received it will be set
+                inside the Component's _state_, under the `data` key, and will
+                cause a reactive re-render.
 - **pollInterval** - An interval in milliseconds for polling the data URL.
                      Defaults to 0, which means no polling.
 
@@ -146,15 +146,15 @@ Context properties:
 
 ### PersistState Mixin
 
+Heart of the Fresh framework. Enables dumping a state object into a Component
+and exporting the current state.
+
 ```js
 {
   "component": "Item",
   "state": {"name": "John Doe", "age": "24"}
 }
 ```
-
-Heart of the Fresh framework. Enables dumping a state object into a Component
-and exporting the current state.
 
 Props:
 
@@ -167,8 +167,35 @@ Methods:
                          (including current _state_.) It excludes internal
                          props set by React during run-time and props with
                          [default values.](http://facebook.github.io/react/docs/component-specs.html#getdefaultprops)
-- **generateQueryString** - Generate a stringified snapshot of the Component
-                            (see generateSnapshot.) It can serve as a URI or be
-                            persisted in any way. Each value from the query
-                            string generated is encoded using
-                            _encodeURIComponent._
+
+### Url Mixin
+
+Enables basic linking between Components, with optional use of the minimal
+built-in Router.
+
+```js
+React.createComponent({
+  mixins: [Fresh.mixins.PersistState,
+           Fresh.mixins.Url],
+  render: function() {
+    return React.DOM.a({
+      href: this.getUrlFromProps(this.generateSnapshot()),
+      onClick: this.routeLink
+    }, "Maximize");
+  }
+});
+```
+
+Methods:
+
+  - **getUrlFromProps** - Serializes a props object into a browser-complient
+                          URL. The URL generated can be simply put inside the
+                          _href_ attribute of an `<a>` tag, and can be combined
+                          with the generateSnapshot method of the PersistState
+                          Mixin to create a link that opens the current
+                          Component at root level (full window.)
+  - **routeLink** - Any `<a>` tag can have this method bound to its onClick
+                    event to have their corresponding _href_ location picked up
+                    by the built-in Router implementation, which uses
+                    _pushState_ to switch between Components instead of
+                    reloading pages.
