@@ -24,10 +24,6 @@ Fresh.mixins.PersistState = {
     }
     return props;
   },
-  generateQueryString: function() {
-    return Fresh.serialize.getQueryStringFromProps(
-      this.generateSnapshot());
-  },
   componentWillMount: function() {
     // Allow passing a serialized snapshot of a state through the props
     // TODO: Replace state when props change at componentWillReceiveProps

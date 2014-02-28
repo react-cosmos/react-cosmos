@@ -167,8 +167,3 @@ Methods:
                          (including current _state_.) It excludes internal
                          props set by React during run-time and props with
                          [default values.](http://facebook.github.io/react/docs/component-specs.html#getdefaultprops)
-- **generateQueryString** - Generate a stringified snapshot of the Component
-                            (see generateSnapshot.) It can serve as a URI or be
-                            persisted in any way. Each value from the query
-                            string generated is encoded using
-                            _encodeURIComponent._

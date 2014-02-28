@@ -51,18 +51,4 @@ describe("Components implementing the PersistState mixin", function() {
     expect(componentInstance.generateSnapshot())
       .toEqual({visible: true});
   });
-
-  it("should generate URI with escaped props and state", function() {
-    var PersistStateComponent = React.createClass(PersistStateSpec),
-        componentInstance = PersistStateComponent({
-          players: 5,
-          state: {speed: 1}
-        }),
-        snapshot;
-    // React Components need to be rendered to mount
-    React.renderComponentToString(componentInstance);
-    expect(componentInstance.generateQueryString())
-      // encodeURIComponent(JSON.stringify({speed:1}))
-      .toEqual('players=5&state=%7B%22speed%22%3A1%7D');
-  });
 });
