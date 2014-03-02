@@ -13,7 +13,7 @@ describe("Fresh.RouterHistory", function() {
       component: 'List',
       dataUrl: 'users.json'
     });
-    expect(transition).toEqual(history.transitionTypes.INITIAL);
+    expect(transition).toEqual(Fresh.RouterHistory.transitionTypes.INITIAL);
     expect(history.length).toEqual(1);
     expect(history[0].props).toEqual({
       component: 'List',
@@ -70,7 +70,7 @@ describe("Fresh.RouterHistory", function() {
       component: 'User',
       dataUrl: 'user.json'
     });
-    expect(transition).toEqual(history.transitionTypes.NOOP);
+    expect(transition).toEqual(Fresh.RouterHistory.transitionTypes.NOOP);
     expect(history.index).toEqual(0);
     expect(history.length).toEqual(1);
   });
@@ -159,7 +159,7 @@ describe("Fresh.RouterHistory", function() {
       component: 'List',
       dataUrl: 'users.json'
     });
-    expect(transition).toEqual(history.transitionTypes.BACK);
+    expect(transition).toEqual(Fresh.RouterHistory.transitionTypes.BACK);
     expect(history.length).toEqual(2);
     expect(history.index).toEqual(0);
   });
@@ -184,7 +184,7 @@ describe("Fresh.RouterHistory", function() {
       component: 'User',
       dataUrl: 'user.json'
     });
-    expect(transition).toEqual(history.transitionTypes.FORWARD);
+    expect(transition).toEqual(Fresh.RouterHistory.transitionTypes.FORWARD);
     expect(history.length).toEqual(2);
     expect(history.index).toEqual(1);
   });
