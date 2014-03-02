@@ -11,13 +11,13 @@ describe("Fresh.RouterHistory", function() {
     var history = new Fresh.RouterHistory(),
         transition = history.push({
       component: 'List',
-      data: 'users.json'
+      dataUrl: 'users.json'
     });
     expect(transition).toEqual(history.transitionTypes.INITIAL);
     expect(history.length).toEqual(1);
     expect(history[0].props).toEqual({
       component: 'List',
-      data: 'users.json'
+      dataUrl: 'users.json'
     });
   });
 
@@ -26,12 +26,12 @@ describe("Fresh.RouterHistory", function() {
     expect(history.length).toBe(0);
     history.push({
       component: 'List',
-      data: 'users.json'
+      dataUrl: 'users.json'
     });
     expect(history.length).toBe(1);
     history.push({
       component: 'User',
-      data: 'user.json'
+      dataUrl: 'user.json'
     });
     expect(history.length).toBe(2);
   });
@@ -41,12 +41,12 @@ describe("Fresh.RouterHistory", function() {
     expect(history.index).toBe(undefined);
     history.push({
       component: 'List',
-      data: 'users.json'
+      dataUrl: 'users.json'
     });
     expect(history.index).toBe(0);
     history.push({
       component: 'User',
-      data: 'user.json'
+      dataUrl: 'user.json'
     });
     expect(history.index).toBe(1);
   });
@@ -55,20 +55,20 @@ describe("Fresh.RouterHistory", function() {
     var history = new Fresh.RouterHistory();
     history.push({
       component: 'List',
-      data: 'users.json'
+      dataUrl: 'users.json'
     });
-    expect(history[0].queryString).toEqual('component=List&data=users.json');
+    expect(history[0].queryString).toEqual('component=List&dataUrl=users.json');
   });
 
   it("should ignore when pushing same entry", function() {
     var history = new Fresh.RouterHistory();
     history.push({
       component: 'User',
-      data: 'user.json'
+      dataUrl: 'user.json'
     });
     var transition = history.push({
       component: 'User',
-      data: 'user.json'
+      dataUrl: 'user.json'
     });
     expect(transition).toEqual(history.transitionTypes.NOOP);
     expect(history.index).toEqual(0);
@@ -79,29 +79,29 @@ describe("Fresh.RouterHistory", function() {
     var history = new Fresh.RouterHistory();
     history.push({
       component: 'List',
-      data: 'users.json'
+      dataUrl: 'users.json'
     });
     history.push({
       component: 'User',
-      data: 'user.json'
+      dataUrl: 'user.json'
     });
     transition = history.push({
       component: 'Picture',
-      data: 'picture.jpg'
+      dataUrl: 'picture.jpg'
     });
     expect(history.length).toEqual(3);
     expect(history.index).toEqual(2);
     expect(history[0].props).toEqual({
       component: 'List',
-      data: 'users.json'
+      dataUrl: 'users.json'
     });
     expect(history[1].props).toEqual({
       component: 'User',
-      data: 'user.json'
+      dataUrl: 'user.json'
     });
     expect(history[2].props).toEqual({
       component: 'Picture',
-      data: 'picture.jpg'
+      dataUrl: 'picture.jpg'
     });
   });
 
@@ -109,38 +109,38 @@ describe("Fresh.RouterHistory", function() {
     var history = new Fresh.RouterHistory();
     history.push({
       component: 'List',
-      data: 'users.json'
+      dataUrl: 'users.json'
     });
     history.push({
       component: 'User',
-      data: 'user.json'
+      dataUrl: 'user.json'
     });
     history.push({
       component: 'Picture',
-      data: 'picture.jpg'
+      dataUrl: 'picture.jpg'
     });
     // Going back to first entry
     history.push({
       component: 'User',
-      data: 'user.json'
+      dataUrl: 'user.json'
     });
     history.push({
       component: 'List',
-      data: 'users.json'
+      dataUrl: 'users.json'
     });
     expect(history.length).toEqual(3);
     expect(history.index).toEqual(0);
     expect(history[0].props).toEqual({
       component: 'List',
-      data: 'users.json'
+      dataUrl: 'users.json'
     });
     expect(history[1].props).toEqual({
       component: 'User',
-      data: 'user.json'
+      dataUrl: 'user.json'
     });
     expect(history[2].props).toEqual({
       component: 'Picture',
-      data: 'picture.jpg'
+      dataUrl: 'picture.jpg'
     });
   });
 
@@ -148,16 +148,16 @@ describe("Fresh.RouterHistory", function() {
     var history = new Fresh.RouterHistory();
     history.push({
       component: 'List',
-      data: 'users.json'
+      dataUrl: 'users.json'
     });
     history.push({
       component: 'User',
-      data: 'user.json'
+      dataUrl: 'user.json'
     });
     // Go back
     var transition = history.push({
       component: 'List',
-      data: 'users.json'
+      dataUrl: 'users.json'
     });
     expect(transition).toEqual(history.transitionTypes.BACK);
     expect(history.length).toEqual(2);
@@ -168,21 +168,21 @@ describe("Fresh.RouterHistory", function() {
     var history = new Fresh.RouterHistory();
     history.push({
       component: 'List',
-      data: 'users.json'
+      dataUrl: 'users.json'
     });
     history.push({
       component: 'User',
-      data: 'user.json'
+      dataUrl: 'user.json'
     });
     // Go back...
     history.push({
       component: 'List',
-      data: 'users.json'
+      dataUrl: 'users.json'
     });
     // and go forward again
     var transition = history.push({
       component: 'User',
-      data: 'user.json'
+      dataUrl: 'user.json'
     });
     expect(transition).toEqual(history.transitionTypes.FORWARD);
     expect(history.length).toEqual(2);
@@ -193,24 +193,24 @@ describe("Fresh.RouterHistory", function() {
     var history = new Fresh.RouterHistory();
     history.push({
       component: 'List',
-      data: 'users.json'
+      dataUrl: 'users.json'
     });
     history.push({
       component: 'User',
-      data: 'user.json'
+      dataUrl: 'user.json'
     });
     history.push({
       component: 'Picture',
-      data: 'picture.jpg'
+      dataUrl: 'picture.jpg'
     });
     // Go back...
     history.push({
       component: 'User',
-      data: 'user.json'
+      dataUrl: 'user.json'
     });
     history.push({
       component: 'List',
-      data: 'users.json'
+      dataUrl: 'users.json'
     });
     // Embed some property in the farthest entry to make sure it won't be
     // replaced
@@ -218,11 +218,11 @@ describe("Fresh.RouterHistory", function() {
     // and go forward again
     history.push({
       component: 'User',
-      data: 'user.json'
+      dataUrl: 'user.json'
     });
     var transition = history.push({
       component: 'Picture',
-      data: 'picture.jpg'
+      dataUrl: 'picture.jpg'
     });
     expect(history.length).toEqual(3);
     expect(history.index).toEqual(2);
@@ -233,30 +233,30 @@ describe("Fresh.RouterHistory", function() {
     var history = new Fresh.RouterHistory();
     history.push({
       component: 'List',
-      data: 'users.json'
+      dataUrl: 'users.json'
     });
     history.push({
       component: 'User',
-      data: 'user.json'
+      dataUrl: 'user.json'
     });
     history.push({
       component: 'Picture',
-      data: 'picture.jpg'
+      dataUrl: 'picture.jpg'
     });
     // Go back...
     history.push({
       component: 'User',
-      data: 'user.json'
+      dataUrl: 'user.json'
     });
     history.push({
       component: 'List',
-      data: 'users.json'
+      dataUrl: 'users.json'
     });
     // This is a different user so we'll replace the first one visited and the
     // next Picture entry
     history.push({
       component: 'User',
-      data: 'user2.json'
+      dataUrl: 'user2.json'
     });
     expect(history.length).toEqual(2);
     expect(history.index).toEqual(1);

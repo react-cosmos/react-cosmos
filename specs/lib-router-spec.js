@@ -31,21 +31,21 @@ describe("Fresh.Router", function() {
 
     it("should be called with constructor props and container", function() {
       var router = new Fresh.Router({
-        props: {component: 'List', data: 'users.json'},
+        props: {component: 'List', dataUrl: 'users.json'},
         container: '<body>'
       });
       expect(Fresh.Router.prototype.render.callCount).toEqual(1);
       expect(Fresh.Router.prototype.render.mostRecentCall.args[0]).toEqual({
-        component: 'List', data: 'users.json'});
+        component: 'List', dataUrl: 'users.json'});
     });
 
     it("should be called with props extracted from query string on .goTo", function() {
       var router = new Fresh.Router({});
-      router.goTo('?component=List&data=users.json');
+      router.goTo('?component=List&dataUrl=users.json');
       expect(Fresh.Router.prototype.render.callCount).toEqual(2);
       expect(Fresh.Router.prototype.render.mostRecentCall.args[0]).toEqual({
         component: 'List',
-        data: 'users.json'
+        dataUrl: 'users.json'
       });
     });
 
@@ -54,13 +54,13 @@ describe("Fresh.Router", function() {
       router._onPopState({
         state: {
           component: 'List',
-          data: 'users.json'
+          dataUrl: 'users.json'
         }
       });
       expect(Fresh.Router.prototype.render.callCount).toEqual(2);
       expect(Fresh.Router.prototype.render.mostRecentCall.args[0]).toEqual({
         component: 'List',
-        data: 'users.json'
+        dataUrl: 'users.json'
       });
     });
   });
