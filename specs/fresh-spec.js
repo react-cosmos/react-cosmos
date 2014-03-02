@@ -68,7 +68,6 @@ describe("Fresh", function() {
   describe(".start", function() {
 
     beforeEach(function() {
-      spyOn(Fresh, 'render');
       spyOn(Fresh, 'Router');
       // Mock global objects in a browser
       global.window = {location: {search: '?component=List&data=users.json'}};
@@ -81,26 +80,26 @@ describe("Fresh", function() {
 
     it("should default to URL query string", function() {
       Fresh.start();
-      expect(Fresh.render.callCount).toBe(1);
-      expect(Fresh.render.mostRecentCall.args[0]).toEqual(
+      expect(Fresh.Router.callCount).toBe(1);
+      expect(Fresh.Router.mostRecentCall.args[0].props).toEqual(
         Fresh.url.getParams());
     });
 
     it("should default to document.body as container", function() {
       Fresh.start();
-      expect(Fresh.render.callCount).toBe(1);
-      expect(Fresh.render.mostRecentCall.args[1]).toBe(document.body);
+      expect(Fresh.Router.callCount).toBe(1);
+      expect(Fresh.Router.mostRecentCall.args[0].container).toBe(document.body);
     });
 
-    it("should call Fresh.render with props and container", function() {
+    it("should call Fresh.Router with props and container", function() {
       Fresh.start({
         props: {component: 'MissingComponent'},
         container: '<div>'
       });
-      expect(Fresh.render.callCount).toBe(1);
-      expect(Fresh.render.mostRecentCall.args[0]).toEqual({
+      expect(Fresh.Router.callCount).toBe(1);
+      expect(Fresh.Router.mostRecentCall.args[0].props).toEqual({
         component: 'MissingComponent'});
-      expect(Fresh.render.mostRecentCall.args[1]).toEqual('<div>');
+      expect(Fresh.Router.mostRecentCall.args[0].container).toEqual('<div>');
     });
 
     it("should create a global Fresh.Router instance", function() {
