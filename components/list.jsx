@@ -4,7 +4,7 @@ Fresh.components.List = React.createClass({
   /**
    * {
    *   component: 'List',
-   *   data: 'http://localhost/static/users.json'
+   *   dataUrl: 'http://localhost/static/users.json'
    * }
    */
   mixins: [Fresh.mixins.ClassName,
