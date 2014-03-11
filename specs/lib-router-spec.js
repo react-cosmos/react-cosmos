@@ -76,4 +76,107 @@ describe("Fresh.Router", function() {
       });
     });
   });
+
+  describe("on PopState events", function() {
+
+    beforeEach(function() {
+      spyOn(Fresh, 'render');
+    });
+
+    it("should reset history if not in current history", function() {
+      var router = new Fresh.Router({
+        props: {
+          component: 'List',
+          dataUrl: 'users.json'
+        }
+      });
+      router._onPopState({
+        state: {
+          component: 'User',
+          dataUrl: 'user.json'
+        }
+      });
+      expect(router.history.length).toBe(1);
+      expect(router.history[router.history.index].props).toEqual({
+        component: 'User',
+        dataUrl: 'user.json'
+      });
+    });
+
+    it("should reset history if not direct neighbor of current history entry", function() {
+      var router = new Fresh.Router({
+        props: {
+          component: 'List',
+          dataUrl: 'users.json'
+        }
+      });
+      router.goTo('?component=User&dataUrl=user.json');
+      router.goTo('?component=Picture&dataUrl=picture.jpg');
+      router._onPopState({
+        state: {
+          component: 'List',
+          dataUrl: 'users.json'
+        }
+      });
+      expect(router.history.length).toBe(1);
+      expect(router.history[router.history.index].props).toEqual({
+        component: 'List',
+        dataUrl: 'users.json'
+      });
+    });
+
+    it("should not alter history if same as current history entry", function() {
+      var router = new Fresh.Router({
+        props: {
+          component: 'List',
+          dataUrl: 'users.json'
+        }
+      });
+      router._onPopState({
+        state: {
+          component: 'List',
+          dataUrl: 'users.json'
+        }
+      });
+      expect(router.history.length).toBe(1);
+    });
+
+    it("should continue history if left of current history entry", function() {
+      var router = new Fresh.Router({
+        props: {
+          component: 'List',
+          dataUrl: 'users.json'
+        }
+      });
+      router.goTo('?component=User&dataUrl=user.json');
+      router._onPopState({
+        state: {
+          component: 'List',
+          dataUrl: 'users.json'
+        }
+      });
+      expect(router.history.length).toBe(2);
+      expect(router.history.index).toBe(0);
+    });
+
+    it("should continue history if right of current history entry", function() {
+      var router = new Fresh.Router({
+        props: {
+          component: 'List',
+          dataUrl: 'users.json'
+        }
+      });
+      router.goTo('?component=User&dataUrl=user.json');
+      // Move router history to first entry
+      router.history.index = 0;
+      router._onPopState({
+        state: {
+          component: 'User',
+          dataUrl: 'user.json'
+        }
+      });
+      expect(router.history.length).toBe(2);
+      expect(router.history.index).toBe(1);
+    });
+  });
 });
