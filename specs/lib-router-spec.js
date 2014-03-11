@@ -31,9 +31,9 @@ describe("Fresh.Router", function() {
     expect(router.history).toEqual(jasmine.any(Fresh.RouterHistory));
   });
 
-  describe("rendering new Components", function() {
+  describe("should render new Components", function() {
 
-    it("should use constructor props and container", function() {
+    it("with constructor props and container", function() {
       var router = new Fresh.Router({
             props: {component: 'List', dataUrl: 'users.json'},
             container: '<body>'
@@ -44,7 +44,7 @@ describe("Fresh.Router", function() {
       });
     });
 
-    it("should use props extracted from query string on .goTo", function() {
+    it("with props extracted from query string on .goTo", function() {
       var router = new Fresh.Router({});
       router.goTo('?component=List&dataUrl=users.json');
       expect(Fresh.render.callCount).toEqual(2);
@@ -54,7 +54,7 @@ describe("Fresh.Router", function() {
       });
     });
 
-    it("should use props from event state on PopState event", function() {
+    it("with props from event state on PopState event", function() {
       var router = new Fresh.Router({});
       router._onPopState({
         state: {
