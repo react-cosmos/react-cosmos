@@ -3,53 +3,58 @@ var Fresh = require('../build/fresh.js');
 describe("Fresh.Router", function() {
 
   beforeEach(function() {
+    // Uses window event binding
     spyOn(Fresh.Router.prototype, '_bindPopStateEvent');
+    // Use window.history
+    spyOn(Fresh.Router.prototype, '_replaceHistoryState');
+    spyOn(Fresh.Router.prototype, '_pushHistoryState');
+    // Uses window.location
     spyOn(Fresh.Router.prototype, '_replaceInitialState');
-    spyOn(Fresh.Router.prototype, '_pushState');
+    // Methods using jQuery
+    spyOn(Fresh.Router.prototype, '_resetContainer');
+    spyOn(Fresh.Router.prototype, '_getPreviousContainer');
+    spyOn(Fresh.Router.prototype, '_createComponentContainer');
+    // TODO: Mock narrower methods
+    spyOn(Fresh.Router.prototype, '_transitionComponentContainers');
+    // Out of Router scope
+    spyOn(Fresh, 'render');
     spyOn(Fresh.url, 'isPushStateSupported').andReturn(true);
   });
 
   it("should save a reference to the DOM container", function() {
-    // Ignore initial rendering in this test
-    spyOn(Fresh.Router.prototype, 'render');
     var router = new Fresh.Router({container: '<body>'});
     expect(router.container).toEqual('<body>');
   });
 
   it("should create a new RouterHistory instance", function() {
-    // Ignore initial rendering in this test
-    spyOn(Fresh.Router.prototype, 'render');
     var router = new Fresh.Router({});
     expect(router.history).toEqual(jasmine.any(Fresh.RouterHistory));
   });
 
-  describe("Router.render", function() {
+  describe("rendering new Components", function() {
 
-    beforeEach(function() {
-      spyOn(Fresh.Router.prototype, 'render');
-    });
-
-    it("should be called with constructor props and container", function() {
+    it("should use constructor props and container", function() {
       var router = new Fresh.Router({
-        props: {component: 'List', dataUrl: 'users.json'},
-        container: '<body>'
+            props: {component: 'List', dataUrl: 'users.json'},
+            container: '<body>'
+          });
+      expect(Fresh.render.callCount).toEqual(1);
+      expect(Fresh.render.mostRecentCall.args[0]).toEqual({
+        component: 'List', dataUrl: 'users.json'
       });
-      expect(Fresh.Router.prototype.render.callCount).toEqual(1);
-      expect(Fresh.Router.prototype.render.mostRecentCall.args[0]).toEqual({
-        component: 'List', dataUrl: 'users.json'});
     });
 
-    it("should be called with props extracted from query string on .goTo", function() {
+    it("should use props extracted from query string on .goTo", function() {
       var router = new Fresh.Router({});
       router.goTo('?component=List&dataUrl=users.json');
-      expect(Fresh.Router.prototype.render.callCount).toEqual(2);
-      expect(Fresh.Router.prototype.render.mostRecentCall.args[0]).toEqual({
+      expect(Fresh.render.callCount).toEqual(2);
+      expect(Fresh.render.mostRecentCall.args[0]).toEqual({
         component: 'List',
         dataUrl: 'users.json'
       });
     });
 
-    it("should be called with with props from event state on PopState event", function() {
+    it("should use props from event state on PopState event", function() {
       var router = new Fresh.Router({});
       router._onPopState({
         state: {
@@ -57,8 +62,8 @@ describe("Fresh.Router", function() {
           dataUrl: 'users.json'
         }
       });
-      expect(Fresh.Router.prototype.render.callCount).toEqual(2);
-      expect(Fresh.Router.prototype.render.mostRecentCall.args[0]).toEqual({
+      expect(Fresh.render.callCount).toEqual(2);
+      expect(Fresh.render.mostRecentCall.args[0]).toEqual({
         component: 'List',
         dataUrl: 'users.json'
       });
