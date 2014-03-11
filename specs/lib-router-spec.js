@@ -17,21 +17,28 @@ describe("Fresh.Router", function() {
     // TODO: Mock narrower methods
     spyOn(Fresh.Router.prototype, '_transitionComponentContainers');
     // Out of Router scope
-    spyOn(Fresh, 'render');
     spyOn(Fresh.url, 'isPushStateSupported').andReturn(true);
   });
 
   it("should save a reference to the DOM container", function() {
+    // Ignore Initial rendering
+    spyOn(Fresh, 'render');
     var router = new Fresh.Router({container: '<body>'});
     expect(router.container).toEqual('<body>');
   });
 
   it("should create a new RouterHistory instance", function() {
+    // Ignore Initial rendering
+    spyOn(Fresh, 'render');
     var router = new Fresh.Router({});
     expect(router.history).toEqual(jasmine.any(Fresh.RouterHistory));
   });
 
   describe("should render new Components", function() {
+
+    beforeEach(function() {
+      spyOn(Fresh, 'render');
+    });
 
     it("with constructor props and container", function() {
       var router = new Fresh.Router({
