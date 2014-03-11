@@ -1,4 +1,5 @@
-var Fresh = require('../build/fresh.js');
+var Fresh = require('../build/fresh.js'),
+    React = require('react');
 
 describe("Fresh.Router", function() {
 
@@ -177,6 +178,39 @@ describe("Fresh.Router", function() {
       });
       expect(router.history.length).toBe(2);
       expect(router.history.index).toBe(1);
+    });
+  });
+
+  it("should cache latest snapshot of previous Component", function() {
+    var ComponentSpec = {
+          mixins: [Fresh.mixins.PersistState],
+          render: function() {
+            return React.DOM.span(null, 'nada');
+          }
+        },
+        ComponentClass = React.createClass(ComponentSpec),
+        props = {component: 'List', dataUrl: 'users.json'},
+        componentInstance = ComponentClass(props);
+    // React Components need to be rendered to mount
+    React.renderComponentToString(componentInstance);
+    spyOn(Fresh, 'render').andCallFake(function(props) {
+      return componentInstance;
+    });
+    var router = new Fresh.Router({props: props});
+    // We alter the current instance while it's bound to the current history
+    // entry
+    componentInstance.setProps({dataUrl: null, someNumber: 555});
+    componentInstance.setState({amIState: true});
+    // Before routing to a new Component configuration, the previous one
+    // shouldn't been update with our changes
+    router.goTo('?component=User&dataUrl=user.json');
+    expect(router.history[0].props).toEqual({
+      component: 'List',
+      dataUrl: null,
+      someNumber: 555,
+      state: {
+        amIState: true
+      }
     });
   });
 });
