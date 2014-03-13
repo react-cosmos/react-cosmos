@@ -13,10 +13,8 @@ describe("Fresh.Router", function() {
     spyOn(Fresh.Router.prototype, '_replaceInitialState');
     // Methods using jQuery
     spyOn(Fresh.Router.prototype, '_resetContainer');
-    spyOn(Fresh.Router.prototype, '_getPreviousContainer');
     spyOn(Fresh.Router.prototype, '_createComponentContainer');
-    // TODO: Mock narrower methods
-    spyOn(Fresh.Router.prototype, '_transitionComponentContainers');
+    spyOn(Fresh.Router.prototype, '_transitionComponentContainer');
     // Out of Router scope
     spyOn(Fresh.url, 'isPushStateSupported').andReturn(true);
   });
