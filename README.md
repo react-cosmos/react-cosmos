@@ -21,6 +21,7 @@ See [React Component.](http://facebook.github.io/react/docs/component-api.html)
 
 \* All Fresh core mixins are agnostic on how data is populated inside a
 Component (see default [DataFetch](mixins/data-fetch.js) Ajax implementation.)
+
 **Fresh is to data visualization what
 [Backbone](https://github.com/jashkenas/backbone) is to data modeling.**
 
@@ -79,33 +80,24 @@ and [reactive **state**](http://facebook.github.io/react/docs/tutorial.html#reac
 concepts before diving into Fresh.
 
 Since one of the Fresh mantras is _The state of a Component can be serialized
-at any given point in time_ (see [Manifesto](#manifesto)), __any component in
+at any given point in time_ (see [Manifesto](#manifesto)), __any Component in
 any state can be represented and reproduced by a persistent JSON.__ This goes
-hand in hand with React's **declarative** nature. The JSON configuration of a
-Component is simply its _props_—the __input data.__ This input configuration is
-picked up by the Component, interpreted based on what that Component
-implements, and exported into an __HTML output.__ Easy to follow and assert
-behavior.
+hand in hand with React's **declarative** nature. The input data of a Component
+is a JSON object. This input configuration is picked up by the Component,
+interpreted based on what that Component implements, and exported into an
+__HTML output.__ Easy to follow and assert behavior.
 
 ```js
 // This could be the configuraton for a Component that renders a list of users
 {
   "component": "List",
-  "class": "users"
+  "class": "users",
+  "dataUrl": "users.json"
 }
 ```
 
-__The behavior of a Component is determined by the
-[Mixins](http://facebook.github.io/react/docs/reusable-components.html#mixins)
-it implements.__ Each Mixin can support a set of input _props,_ make new
-methods available and interfere with the [lifecycle methods](http://facebook.github.io/react/docs/component-specs.html#lifecycle-methods)
-of a component. While mixins can optionally profit from other mixins when
-combined, they are independent by nature and should have an isolated assertable
-behavior.
-
-Before adding any Mixin to a Component class, it's up to that Component to
-implement any _prop_ received from its configuration, except for one reserved
-by convention:
+It's up a Component (or the mixins it uses) to implement any _prop_ received
+from its input configuration, except for one reserved by convention:
 
 - **component** - The name of the Component to load. Normally we should already
                   have a Component class when instantiating it, but there are
@@ -114,9 +106,19 @@ by convention:
   - 2. When a List Component receives a list of children to load
 
 \* The **Root Component** is the first Component loaded inside a page, usually
-pulling its configuration from the URL query string.
+pulling its input configuration from the URL query string.
 
-### DataFetch Mixin
+### Mixins
+
+__The behavior of a Component is determined by its
+[Mixins.](http://facebook.github.io/react/docs/reusable-components.html#mixins)__
+Each mixin can support a set of input _props,_ make new methods
+available and interfere with the [lifecycle methods](http://facebook.github.io/react/docs/component-specs.html#lifecycle-methods)
+of a Component. While mixins can optionally profit from other mixins when
+combined, they are independent by nature and should have an isolated assertable
+behavior.
+
+#### DataFetch Mixin
 
 Bare functionality for fetching server-side JSON data inside a Component. Uses
 basic Ajax requests and setInterval for polling.
@@ -144,7 +146,7 @@ Context properties:
                     data from the server (see _data_ prop.) Defaults to an
                     empty object `{}`
 
-### PersistState Mixin
+#### PersistState Mixin
 
 Heart of the Fresh framework. Enables dumping a state object into a Component
 and exporting the current state.
@@ -168,7 +170,7 @@ Methods:
                          props set by React during run-time and props with
                          [default values.](http://facebook.github.io/react/docs/component-specs.html#getdefaultprops)
 
-### Url Mixin
+#### Url Mixin
 
 Enables basic linking between Components, with optional use of the minimal
 built-in Router.
@@ -192,7 +194,7 @@ Methods:
                           URL. The URL generated can be simply put inside the
                           _href_ attribute of an `<a>` tag, and can be combined
                           with the generateSnapshot method of the PersistState
-                          Mixin to create a link that opens the current
+                          mixin to create a link that opens the current
                           Component at root level (full window.)
   - **routeLink** - Any `<a>` tag can have this method bound to its onClick
                     event to have their corresponding _href_ location picked up
