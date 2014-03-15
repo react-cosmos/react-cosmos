@@ -5,7 +5,8 @@
   "dependencies": {
     "react": "~0.9.0",
     "underscore": "~1.5.2",
-    "jquery": "~1.11.0"
+    "jquery": "~1.11.0",
+    "jquery.transit": "~0.9.9"
   },
   "devDependencies": {
     "gulp": "~3.5.1",
