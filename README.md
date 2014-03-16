@@ -32,12 +32,33 @@ Component (see default [DataFetch](mixins/data-fetch.js) Ajax implementation.)
 
 Cosmos is a versatile framework and can be installed in more than one way.
 
-### Existing framework
+### Minified script
 
 Include `build/cosmos.js` if you already have the
 [external dependencies](https://github.com/skidding/cosmos/blob/master/package.json#L8)
 included in your project or `build/cosmos-with-dependencies.js` to include
 them as well.
+
+### Development
+
+```bash
+git clone https://github.com/skidding/cosmos.git && cd cosmos
+npm install
+./node_modules/.bin/gulp
+```
+
+Pop up `index.html` in your browser of choice to load the app skeleton from the
+repo. The build is generated in the `build/` folder.
+
+#### Running tests
+
+Behavior tests are written for [Jasmine](https://github.com/pivotal/jasmine)
+and ran with [jasmine-node](https://github.com/mhevery/jasmine-node) in a
+DOM-less environment.
+
+```bash
+./node_modules/.bin/jasmine-node --verbose specs
+```
 
 ### Node module
 
@@ -50,27 +71,6 @@ like [browserify.](http://browserify.org/)
 
 ```js
 var Cosmos = require('cosmos-js');
-```
-
-### Development
-
-```bash
-git clone https://github.com/skidding/cosmos.git && cd cosmos
-npm install
-./node_modules/.bin/gulp
-```
-
-Pop up `index.html` in your browser of choice to load the app skeleton from the
-repo.
-
-#### Running tests
-
-Behavior tests are written for [Jasmine](https://github.com/pivotal/jasmine)
-and ran with [jasmine-node](https://github.com/mhevery/jasmine-node) in a
-DOM-less environment.
-
-```bash
-./node_modules/.bin/jasmine-node --verbose specs
 ```
 
 ## Specs
