@@ -1,4 +1,4 @@
-Fresh.mixins.Url = {
+Cosmos.mixins.Url = {
   /**
    * Enables basic linking between Components, with optional use of the minimal
    * built-in Router.
@@ -11,7 +11,7 @@ Fresh.mixins.Url = {
      * Mixin to create a link that opens the current Component at root level
      * (full window.)
      */
-    return '?' + Fresh.serialize.getQueryStringFromProps(props);
+    return '?' + Cosmos.serialize.getQueryStringFromProps(props);
   },
   routeLink: function(e) {
     /**
@@ -22,16 +22,16 @@ Fresh.mixins.Url = {
      */
     e.preventDefault();
     var anchor = e.currentTarget;
-    Fresh.router.goTo($(anchor).attr('href'), this._getOriginBounds(anchor));
+    Cosmos.router.goTo($(anchor).attr('href'), this._getOriginBounds(anchor));
   },
   _getOriginBounds: function(anchorElement) {
     // Get the closest Component ancestor of anchor element
     var $parentComponent = $(this.getDOMNode()),
         $parentContainer =
-          $parentComponent.closest('.' + Fresh.Router.CONTAINER_CLASS),
+          $parentComponent.closest('.' + Cosmos.Router.CONTAINER_CLASS),
         componentOffset = $parentComponent.offset(),
         containerOffset = $parentContainer.offset();
-    // Fresh doesn't need to run in the body element directly, so we need to
+    // Cosmos doesn't need to run in the body element directly, so we need to
     // calculate relative offsets
     if (containerOffset) {
       componentOffset.left -= containerOffset.left;

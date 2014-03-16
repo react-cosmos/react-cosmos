@@ -1,6 +1,6 @@
-Fresh.mixins.PersistState = {
+Cosmos.mixins.PersistState = {
   /**
-   * Heart of the Fresh framework. Enables dumping a state object into a
+   * Heart of the Cosmos framework. Enables dumping a state object into a
    * Component and exporting the current state.
    *
    * Props:

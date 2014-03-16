@@ -1,4 +1,4 @@
-Fresh.mixins.ClassName = {
+Cosmos.mixins.ClassName = {
   getClassName: function() {
     var classes = [];
     if (this.defaultClass) {

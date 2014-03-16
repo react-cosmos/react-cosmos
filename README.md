@@ -1,4 +1,4 @@
-Fresh
+Cosmos
 ===
 Data exploration framework
 
@@ -6,10 +6,16 @@ Built on top of the great [**React**](http://facebook.github.io/react/),
 emphasizing on seamless data exploration through drill down actions,
 implementing a uniform Component* model.
 
+**Cosmos is to data visualization what
+[Backbone](https://github.com/jashkenas/backbone) is to data modeling.**
+
 \* The **Component** is a self-contained, UI building block.
 See [React Component.](http://facebook.github.io/react/docs/component-api.html)
 
 ## Manifesto
+
+_cos·mos<sup>1</sup> `/ˈkäzməs,-ˌmōs,-ˌmäs/` noun — 1. The universe seen as
+a well-ordered whole._
 
 - Zero bootstrap
 - Can be plugged into any other framework
@@ -19,46 +25,30 @@ See [React Component.](http://facebook.github.io/react/docs/component-api.html)
 - Any Component configuration can be represented by a URI
 - Components can implement any data mechanism*
 
-\* All Fresh core mixins are agnostic on how data is populated inside a
+\* All Cosmos core mixins are agnostic on how data is populated inside a
 Component (see default [DataFetch](mixins/data-fetch.js) Ajax implementation.)
-
-**Fresh is to data visualization what
-[Backbone](https://github.com/jashkenas/backbone) is to data modeling.**
 
 ## Install
 
-Fresh is a versatile framework and can be installed in more than one way.
+Cosmos is a versatile framework and can be installed in more than one way.
 
-### Existing framework
+### Minified script
 
-Include `build/fresh.js` if you already have the
-[external dependencies](https://github.com/skidding/fresh/blob/master/package.json#L8)
-included in your project or `build/fresh-with-dependencies.js` to include
+Include `build/cosmos.js` if you already have the
+[external dependencies](https://github.com/skidding/cosmos/blob/master/package.json#L8)
+included in your project or `build/cosmos-with-dependencies.js` to include
 them as well.
-
-### Node module
-
-```bash
-npm install fresh-js
-```
-
-You can require fresh.js as a Node module, using a client-side package manager
-like [browserify.](http://browserify.org/)
-
-```js
-var Fresh = require('fresh-js');
-```
 
 ### Development
 
 ```bash
-git clone https://github.com/skidding/fresh.git && cd fresh
+git clone https://github.com/skidding/cosmos.git && cd cosmos
 npm install
 ./node_modules/.bin/gulp
 ```
 
 Pop up `index.html` in your browser of choice to load the app skeleton from the
-repo.
+repo. The build is generated in the `build/` folder.
 
 #### Running tests
 
@@ -70,16 +60,29 @@ DOM-less environment.
 ./node_modules/.bin/jasmine-node --verbose specs
 ```
 
+### Node module
+
+```bash
+npm install cosmos-js
+```
+
+You can require cosmos.js as a Node module, using a client-side package manager
+like [browserify.](http://browserify.org/)
+
+```js
+var Cosmos = require('cosmos-js');
+```
+
 ## Specs
 
 You should read the
 [React docs](http://facebook.github.io/react/docs/getting-started.html) before,
-Fresh is merely a standarization on top of React's Component model. You need
+Cosmos is merely a standarization on top of React's Component model. You need
 to grasp the [Component **props**](http://facebook.github.io/react/docs/tutorial.html#using-props)
 and [reactive **state**](http://facebook.github.io/react/docs/tutorial.html#reactive-state)
-concepts before diving into Fresh.
+concepts before diving into Cosmos.
 
-Since one of the Fresh mantras is _The state of a Component can be serialized
+Since one of the Cosmos mantras is _The state of a Component can be serialized
 at any given point in time_ (see [Manifesto](#manifesto)), __any Component in
 any state can be represented and reproduced by a persistent JSON.__ This goes
 hand in hand with React's **declarative** nature. The input data of a Component
@@ -148,7 +151,7 @@ Context properties:
 
 #### PersistState Mixin
 
-Heart of the Fresh framework. Enables dumping a state object into a Component
+Heart of the Cosmos framework. Enables dumping a state object into a Component
 and exporting the current state.
 
 ```js
@@ -177,8 +180,8 @@ built-in Router.
 
 ```js
 React.createComponent({
-  mixins: [Fresh.mixins.PersistState,
-           Fresh.mixins.Url],
+  mixins: [Cosmos.mixins.PersistState,
+           Cosmos.mixins.Url],
   render: function() {
     return React.DOM.a({
       href: this.getUrlFromProps(this.generateSnapshot()),

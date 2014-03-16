@@ -1,19 +1,19 @@
-var Fresh = require('../build/fresh.js');
+var Cosmos = require('../build/cosmos.js');
 
-describe("Fresh.RouterHistory", function() {
+describe("Cosmos.RouterHistory", function() {
 
   it("should start empty", function() {
-    var history = new Fresh.RouterHistory();
+    var history = new Cosmos.RouterHistory();
     expect(history.length).toEqual(0);
   });
 
   it("should initialize with first entry", function() {
-    var history = new Fresh.RouterHistory(),
+    var history = new Cosmos.RouterHistory(),
         transition = history.push({props: {
       component: 'List',
       dataUrl: 'users.json'
     }});
-    expect(transition).toEqual(Fresh.RouterHistory.transitionTypes.INITIAL);
+    expect(transition).toEqual(Cosmos.RouterHistory.transitionTypes.INITIAL);
     expect(history.length).toEqual(1);
     expect(history[0].props).toEqual({
       component: 'List',
@@ -22,7 +22,7 @@ describe("Fresh.RouterHistory", function() {
   });
 
   it("should create new entry if not in history", function() {
-    var history = new Fresh.RouterHistory();
+    var history = new Cosmos.RouterHistory();
     history.push({props: {
       component: 'List',
       dataUrl: 'users.json'
@@ -31,11 +31,11 @@ describe("Fresh.RouterHistory", function() {
       component: 'User',
       dataUrl: 'user.json'
     }});
-    expect(transition).toEqual(Fresh.RouterHistory.transitionTypes.NEW);
+    expect(transition).toEqual(Cosmos.RouterHistory.transitionTypes.NEW);
   });
 
   it("should update length when pushing entries", function() {
-    var history = new Fresh.RouterHistory();
+    var history = new Cosmos.RouterHistory();
     expect(history.length).toBe(0);
     history.push({props: {
       component: 'List',
@@ -50,7 +50,7 @@ describe("Fresh.RouterHistory", function() {
   });
 
   it("should update index when pushing entries", function() {
-    var history = new Fresh.RouterHistory();
+    var history = new Cosmos.RouterHistory();
     expect(history.index).toBe(undefined);
     history.push({props: {
       component: 'List',
@@ -65,7 +65,7 @@ describe("Fresh.RouterHistory", function() {
   });
 
   it("should cache query string from props when pushing an entry", function() {
-    var history = new Fresh.RouterHistory();
+    var history = new Cosmos.RouterHistory();
     history.push({props: {
       component: 'List',
       dataUrl: 'users.json'
@@ -74,7 +74,7 @@ describe("Fresh.RouterHistory", function() {
   });
 
   it("should ignore when pushing same entry", function() {
-    var history = new Fresh.RouterHistory();
+    var history = new Cosmos.RouterHistory();
     history.push({props: {
       component: 'User',
       dataUrl: 'user.json'
@@ -83,13 +83,13 @@ describe("Fresh.RouterHistory", function() {
       component: 'User',
       dataUrl: 'user.json'
     }});
-    expect(transition).toEqual(Fresh.RouterHistory.transitionTypes.NOOP);
+    expect(transition).toEqual(Cosmos.RouterHistory.transitionTypes.NOOP);
     expect(history.index).toEqual(0);
     expect(history.length).toEqual(1);
   });
 
   it("should preserve more than one past entry", function() {
-    var history = new Fresh.RouterHistory();
+    var history = new Cosmos.RouterHistory();
     history.push({props: {
       component: 'List',
       dataUrl: 'users.json'
@@ -119,7 +119,7 @@ describe("Fresh.RouterHistory", function() {
   });
 
   it("should preserve more than one future entry", function() {
-    var history = new Fresh.RouterHistory();
+    var history = new Cosmos.RouterHistory();
     history.push({props: {
       component: 'List',
       dataUrl: 'users.json'
@@ -158,7 +158,7 @@ describe("Fresh.RouterHistory", function() {
   });
 
   it("should go back when pushing a previous entry", function() {
-    var history = new Fresh.RouterHistory();
+    var history = new Cosmos.RouterHistory();
     history.push({props: {
       component: 'List',
       dataUrl: 'users.json'
@@ -172,13 +172,13 @@ describe("Fresh.RouterHistory", function() {
       component: 'List',
       dataUrl: 'users.json'
     }});
-    expect(transition).toEqual(Fresh.RouterHistory.transitionTypes.BACK);
+    expect(transition).toEqual(Cosmos.RouterHistory.transitionTypes.BACK);
     expect(history.length).toEqual(2);
     expect(history.index).toEqual(0);
   });
 
   it("should go forward when pushing an entry we went back from", function() {
-    var history = new Fresh.RouterHistory();
+    var history = new Cosmos.RouterHistory();
     history.push({props: {
       component: 'List',
       dataUrl: 'users.json'
@@ -197,13 +197,13 @@ describe("Fresh.RouterHistory", function() {
       component: 'User',
       dataUrl: 'user.json'
     }});
-    expect(transition).toEqual(Fresh.RouterHistory.transitionTypes.FORWARD);
+    expect(transition).toEqual(Cosmos.RouterHistory.transitionTypes.FORWARD);
     expect(history.length).toEqual(2);
     expect(history.index).toEqual(1);
   });
 
   it("should reuse future entries if returning the same way", function() {
-    var history = new Fresh.RouterHistory();
+    var history = new Cosmos.RouterHistory();
     history.push({props: {
       component: 'List',
       dataUrl: 'users.json'
@@ -243,7 +243,7 @@ describe("Fresh.RouterHistory", function() {
   });
 
   it("should clear future entries if branching out to a new entry", function() {
-    var history = new Fresh.RouterHistory();
+    var history = new Cosmos.RouterHistory();
     history.push({props: {
       component: 'List',
       dataUrl: 'users.json'
