@@ -60,19 +60,6 @@ DOM-less environment.
 ./node_modules/.bin/jasmine-node --verbose specs
 ```
 
-### Node module
-
-```bash
-npm install cosmos-js
-```
-
-You can require cosmos.js as a Node module, using a client-side package manager
-like [browserify.](http://browserify.org/)
-
-```js
-var Cosmos = require('cosmos-js');
-```
-
 ## Specs
 
 You should read the
