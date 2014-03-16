@@ -1,6 +1,6 @@
-var Fresh = require('../build/fresh.js');
+var Cosmos = require('../build/cosmos.js');
 
-describe("Fresh.url", function() {
+describe("Cosmos.url", function() {
 
   beforeEach(function() {
     global.window = {location: {search: '?component=List&dataUrl=users.json'}};
@@ -10,7 +10,7 @@ describe("Fresh.url", function() {
   });
 
   it(".getParams should extract the query string from the URL", function() {
-    expect(Fresh.url.getParams()).toEqual({
+    expect(Cosmos.url.getParams()).toEqual({
       component: 'List',
       dataUrl: 'users.json'
     });

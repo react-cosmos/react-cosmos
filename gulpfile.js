@@ -8,7 +8,7 @@ var paths = {
     'vendor/**/*.js'
   ],
   scripts: [
-    'fresh.js',
+    'cosmos.js',
     'lib/**/*.js',
     'mixins/**/*.js',
     'components/**/*.jsx']
@@ -18,12 +18,12 @@ gulp.task('scripts', function() {
   // Node bundle
   gulp.src(paths.scripts)
     .pipe(react())
-    .pipe(concat('build/fresh.js'))
+    .pipe(concat('build/cosmos.js'))
     .pipe(gulp.dest('.'));
   // Bundle bundle
   gulp.src(paths.dependencies.concat(paths.scripts))
     .pipe(react())
-    .pipe(concat('build/fresh-with-dependencies.js'))
+    .pipe(concat('build/cosmos-with-dependencies.js'))
     .pipe(gulp.dest('.'));
 });
 

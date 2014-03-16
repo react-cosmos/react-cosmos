@@ -1,53 +1,53 @@
-var Fresh = require('../build/fresh.js'),
+var Cosmos = require('../build/cosmos.js'),
     React = require('react'),
     _ = require('underscore');
 
-describe("Fresh", function() {
+describe("Cosmos", function() {
 
-  it("should draw its components from the Fresh.components namespace", function() {
+  it("should draw its components from the Cosmos.components namespace", function() {
     var EmptyComponent = {};
-    Fresh.components.EmptyComponent = EmptyComponent;
-    expect(Fresh.getComponentByName('EmptyComponent')).toBe(EmptyComponent);
+    Cosmos.components.EmptyComponent = EmptyComponent;
+    expect(Cosmos.getComponentByName('EmptyComponent')).toBe(EmptyComponent);
   });
 
   describe(".render", function() {
 
     it("should render to DOM if received a container", function() {
-      Fresh.components.FakeComponent = jasmine.createSpy('FakeComponent');
+      Cosmos.components.FakeComponent = jasmine.createSpy('FakeComponent');
       spyOn(React, 'renderComponent');
       spyOn(React, 'renderComponentToString');
-      Fresh.render({component: 'FakeComponent'}, '<div>');
+      Cosmos.render({component: 'FakeComponent'}, '<div>');
       expect(React.renderComponent.callCount).toBe(1);
       expect(React.renderComponentToString.callCount).toBe(0);
     });
 
     it("should render to string if didn't receive a container", function() {
-      Fresh.components.FakeComponent = jasmine.createSpy('FakeComponent');
+      Cosmos.components.FakeComponent = jasmine.createSpy('FakeComponent');
       spyOn(React, 'renderComponent');
       spyOn(React, 'renderComponentToString');
-      Fresh.render({component: 'FakeComponent'});
+      Cosmos.render({component: 'FakeComponent'});
       expect(React.renderComponent.callCount).toBe(0);
       expect(React.renderComponentToString.callCount).toBe(1);
     });
 
     it("should render correct Component", function() {
       var fakeComponentInstance = {};
-      Fresh.components.FakeComponent = jasmine.createSpy('FakeComponent')
+      Cosmos.components.FakeComponent = jasmine.createSpy('FakeComponent')
                                         .andReturn(fakeComponentInstance);
       spyOn(React, 'renderComponentToString');
-      Fresh.render({component: 'FakeComponent'});
+      Cosmos.render({component: 'FakeComponent'});
       expect(React.renderComponentToString.mostRecentCall.args[0])
             .toBe(fakeComponentInstance);
     });
 
     it("should create component with correct props", function() {
-      Fresh.components.FakeComponent = jasmine.createSpy('FakeComponent');
+      Cosmos.components.FakeComponent = jasmine.createSpy('FakeComponent');
       spyOn(React, 'renderComponentToString');
-      Fresh.render({
+      Cosmos.render({
         component: 'FakeComponent',
         foo: 'bar'
       });
-      expect(Fresh.components.FakeComponent.mostRecentCall.args[0]).toEqual({
+      expect(Cosmos.components.FakeComponent.mostRecentCall.args[0]).toEqual({
         component: 'FakeComponent',
         foo: 'bar'
       });
@@ -56,9 +56,9 @@ describe("Fresh", function() {
     it("should not alter props object received", function() {
       var initialProps = {component: 'TestComponent', foo: 'bar'},
                          initialPropsClone = _.clone(initialProps);
-      Fresh.components.TestComponent = React.createClass({render: function(){}});
+      Cosmos.components.TestComponent = React.createClass({render: function(){}});
       spyOn(React, 'renderComponentToString');
-      Fresh.render(initialProps);
+      Cosmos.render(initialProps);
       expect(initialProps).toEqual(initialPropsClone);
       expect(React.renderComponentToString.mostRecentCall.args[0].props)
         .not.toBe(initialProps);
@@ -68,7 +68,7 @@ describe("Fresh", function() {
   describe(".start", function() {
 
     beforeEach(function() {
-      spyOn(Fresh, 'Router');
+      spyOn(Cosmos, 'Router');
       // Mock global objects in a browser
       global.window = {location: {search: '?component=List&data=users.json'}};
       global.document = {body: {}};
@@ -79,33 +79,33 @@ describe("Fresh", function() {
     });
 
     it("should default to URL query string", function() {
-      Fresh.start();
-      expect(Fresh.Router.callCount).toBe(1);
-      expect(Fresh.Router.mostRecentCall.args[0].props).toEqual(
-        Fresh.url.getParams());
+      Cosmos.start();
+      expect(Cosmos.Router.callCount).toBe(1);
+      expect(Cosmos.Router.mostRecentCall.args[0].props).toEqual(
+        Cosmos.url.getParams());
     });
 
     it("should default to document.body as container", function() {
-      Fresh.start();
-      expect(Fresh.Router.callCount).toBe(1);
-      expect(Fresh.Router.mostRecentCall.args[0].container).toBe(document.body);
+      Cosmos.start();
+      expect(Cosmos.Router.callCount).toBe(1);
+      expect(Cosmos.Router.mostRecentCall.args[0].container).toBe(document.body);
     });
 
-    it("should call Fresh.Router with props and container", function() {
-      Fresh.start({
+    it("should call Cosmos.Router with props and container", function() {
+      Cosmos.start({
         props: {component: 'MissingComponent'},
         container: '<div>'
       });
-      expect(Fresh.Router.callCount).toBe(1);
-      expect(Fresh.Router.mostRecentCall.args[0].props).toEqual({
+      expect(Cosmos.Router.callCount).toBe(1);
+      expect(Cosmos.Router.mostRecentCall.args[0].props).toEqual({
         component: 'MissingComponent'});
-      expect(Fresh.Router.mostRecentCall.args[0].container).toEqual('<div>');
+      expect(Cosmos.Router.mostRecentCall.args[0].container).toEqual('<div>');
     });
 
-    it("should create a global Fresh.Router instance", function() {
-      Fresh.start({});
-      expect(Fresh.Router.callCount).toBe(1);
-      expect(Fresh.router).toEqual(jasmine.any(Fresh.Router));
+    it("should create a global Cosmos.Router instance", function() {
+      Cosmos.start({});
+      expect(Cosmos.Router.callCount).toBe(1);
+      expect(Cosmos.router).toEqual(jasmine.any(Cosmos.Router));
     });
   });
 });

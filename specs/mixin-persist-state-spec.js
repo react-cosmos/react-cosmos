@@ -1,11 +1,11 @@
-var Fresh = require('../build/fresh.js'),
+var Cosmos = require('../build/cosmos.js'),
     React = require('react'),
     _ = require('underscore');
 
 describe("Components implementing the PersistState mixin", function() {
 
   var PersistStateSpec = {
-    mixins: [Fresh.mixins.PersistState],
+    mixins: [Cosmos.mixins.PersistState],
     render: function() {
       return React.DOM.span(null, 'nada');
     }

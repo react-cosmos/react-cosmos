@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-Fresh.components.Item = React.createClass({
+Cosmos.components.Item = React.createClass({
   /**
    * {
    *   component: 'Item',
@@ -8,10 +8,10 @@ Fresh.components.Item = React.createClass({
    *   age: '26'
    * }
    */
-  mixins: [Fresh.mixins.ClassName,
-           Fresh.mixins.DataFetch,
-           Fresh.mixins.PersistState,
-           Fresh.mixins.Url],
+  mixins: [Cosmos.mixins.ClassName,
+           Cosmos.mixins.DataFetch,
+           Cosmos.mixins.PersistState,
+           Cosmos.mixins.Url],
   render: function() {
     var itemNodes = [];
     for (var key in this.state.data) {

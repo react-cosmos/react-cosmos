@@ -1,22 +1,22 @@
 /** @jsx React.DOM */
 
-Fresh.components.List = React.createClass({
+Cosmos.components.List = React.createClass({
   /**
    * {
    *   component: 'List',
    *   dataUrl: 'http://localhost/static/users.json'
    * }
    */
-  mixins: [Fresh.mixins.ClassName,
-           Fresh.mixins.DataFetch,
-           Fresh.mixins.PersistState],
+  mixins: [Cosmos.mixins.ClassName,
+           Cosmos.mixins.DataFetch,
+           Cosmos.mixins.PersistState],
   defaultClass: 'list',
   initialData: [],
   render: function() {
     return (
       <ul className={this.getClassName()}>
         {this.state.data.map(function(item, index) {
-          var itemComponent = Fresh.getComponentByName(item.component);
+          var itemComponent = Cosmos.getComponentByName(item.component);
           return <li key={index}>{itemComponent(_.clone(item))}</li>
         })}
       </ul>

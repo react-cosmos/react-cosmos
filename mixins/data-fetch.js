@@ -1,4 +1,4 @@
-Fresh.mixins.DataFetch = {
+Cosmos.mixins.DataFetch = {
   /**
    * Bare functionality for fetching server-side JSON data inside a Component.
    *

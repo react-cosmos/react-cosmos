@@ -1,11 +1,11 @@
-var Fresh = require('../build/fresh.js'),
+var Cosmos = require('../build/cosmos.js'),
     React = require('react'),
     _ = require('underscore');
 
 describe("Components implementing the DataFetch mixin", function() {
 
   var DataFetchSpec = {
-    mixins: [Fresh.mixins.DataFetch],
+    mixins: [Cosmos.mixins.DataFetch],
     render: function() {
       return React.DOM.span(null, 'nada');
     }
@@ -14,7 +14,7 @@ describe("Components implementing the DataFetch mixin", function() {
   it("should default initial data to an empty object", function() {
     // The fetching method should do nothing, we only care that it is called
     // before the components gets mounted
-    spyOn(Fresh.mixins.DataFetch, 'fetchDataFromServer');
+    spyOn(Cosmos.mixins.DataFetch, 'fetchDataFromServer');
     var DataFetchComponent = React.createClass(DataFetchSpec),
         componentInstance = DataFetchComponent();
 
@@ -29,7 +29,7 @@ describe("Components implementing the DataFetch mixin", function() {
   it("should override initial data to an empty array", function() {
     // The fetching method should do nothing, we only care that it is called
     // before the components gets mounted
-    spyOn(Fresh.mixins.DataFetch, 'fetchDataFromServer');
+    spyOn(Cosmos.mixins.DataFetch, 'fetchDataFromServer');
     var InitialDataSpec = _.extend({initialData: []}, DataFetchSpec),
         DataFetchComponent = React.createClass(InitialDataSpec),
         componentInstance = DataFetchComponent();
@@ -45,7 +45,7 @@ describe("Components implementing the DataFetch mixin", function() {
   it("should override initial data with non-empty value", function() {
     // The fetching method should do nothing, we only care that it is called
     // before the components gets mounted
-    spyOn(Fresh.mixins.DataFetch, 'fetchDataFromServer');
+    spyOn(Cosmos.mixins.DataFetch, 'fetchDataFromServer');
     var initialData = {name: 'Guest'},
         InitialDataSpec = _.extend({initialData: initialData}, DataFetchSpec),
         DataFetchComponent = React.createClass(InitialDataSpec),
@@ -59,26 +59,26 @@ describe("Components implementing the DataFetch mixin", function() {
   it("should fetch data if a 'dataUrl' prop is set", function() {
     // The fetching method should do nothing, we only care that it is called
     // before the components gets mounted
-    spyOn(Fresh.mixins.DataFetch, 'fetchDataFromServer');
+    spyOn(Cosmos.mixins.DataFetch, 'fetchDataFromServer');
     var DataFetchComponent = React.createClass(DataFetchSpec),
         componentInstance = DataFetchComponent({dataUrl: 'url?query=string'});
 
     // React Components need to be rendered to mount
     React.renderComponentToString(componentInstance);
-    expect(Fresh.mixins.DataFetch
+    expect(Cosmos.mixins.DataFetch
            .fetchDataFromServer.callCount).toEqual(1);
   });
 
   it("shouldn't fetch data if a 'dataUrl' prop isn't set", function() {
     // The fetching method should do nothing, we only care that it is called
     // before the components gets mounted
-    spyOn(Fresh.mixins.DataFetch, 'fetchDataFromServer');
+    spyOn(Cosmos.mixins.DataFetch, 'fetchDataFromServer');
     var DataFetchComponent = React.createClass(DataFetchSpec),
         componentInstance = DataFetchComponent({});
 
     // React Components need to be rendered to mount
     React.renderComponentToString(componentInstance);
-    expect(Fresh.mixins.DataFetch
+    expect(Cosmos.mixins.DataFetch
            .fetchDataFromServer.callCount).toEqual(0);
   });
 
@@ -95,7 +95,7 @@ describe("Components implementing the DataFetch mixin", function() {
   it("should replace initial data after data is fetched", function() {
     // The fetching method should do nothing, we only care that it is called
     // before the components gets mounted
-    spyOn(Fresh.mixins.DataFetch, 'fetchDataFromServer');
+    spyOn(Cosmos.mixins.DataFetch, 'fetchDataFromServer');
     var initialData = {guest: true, name: 'Guest'},
         InitialDataSpec = _.extend({initialData: initialData}, DataFetchSpec),
         DataFetchComponent = React.createClass(InitialDataSpec),

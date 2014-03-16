@@ -1,75 +1,75 @@
-var Fresh = require('../build/fresh.js'),
+var Cosmos = require('../build/cosmos.js'),
     React = require('react');
 
-describe("Fresh.Router", function() {
+describe("Cosmos.Router", function() {
 
   beforeEach(function() {
     // Uses window event binding
-    spyOn(Fresh.Router.prototype, '_bindPopStateEvent');
+    spyOn(Cosmos.Router.prototype, '_bindPopStateEvent');
     // Use window.history
-    spyOn(Fresh.Router.prototype, '_replaceHistoryState');
-    spyOn(Fresh.Router.prototype, '_pushHistoryState');
+    spyOn(Cosmos.Router.prototype, '_replaceHistoryState');
+    spyOn(Cosmos.Router.prototype, '_pushHistoryState');
     // Uses window.location
-    spyOn(Fresh.Router.prototype, '_replaceInitialState');
+    spyOn(Cosmos.Router.prototype, '_replaceInitialState');
     // Methods using jQuery
-    spyOn(Fresh.Router.prototype, '_resetContainer');
-    spyOn(Fresh.Router.prototype, '_createComponentContainer');
-    spyOn(Fresh.Router.prototype, '_transitionComponentContainer');
+    spyOn(Cosmos.Router.prototype, '_resetContainer');
+    spyOn(Cosmos.Router.prototype, '_createComponentContainer');
+    spyOn(Cosmos.Router.prototype, '_transitionComponentContainer');
     // Out of Router scope
-    spyOn(Fresh.url, 'isPushStateSupported').andReturn(true);
+    spyOn(Cosmos.url, 'isPushStateSupported').andReturn(true);
   });
 
   it("should save a reference to the DOM container", function() {
     // Ignore Initial rendering
-    spyOn(Fresh, 'render');
-    var router = new Fresh.Router({container: '<body>'});
+    spyOn(Cosmos, 'render');
+    var router = new Cosmos.Router({container: '<body>'});
     expect(router.container).toEqual('<body>');
   });
 
   it("should create a new RouterHistory instance", function() {
     // Ignore Initial rendering
-    spyOn(Fresh, 'render');
-    var router = new Fresh.Router({});
-    expect(router.history).toEqual(jasmine.any(Fresh.RouterHistory));
+    spyOn(Cosmos, 'render');
+    var router = new Cosmos.Router({});
+    expect(router.history).toEqual(jasmine.any(Cosmos.RouterHistory));
   });
 
   describe("should render new Components", function() {
 
     beforeEach(function() {
-      spyOn(Fresh, 'render');
+      spyOn(Cosmos, 'render');
     });
 
     it("with constructor props and container", function() {
-      var router = new Fresh.Router({
+      var router = new Cosmos.Router({
             props: {component: 'List', dataUrl: 'users.json'},
             container: '<body>'
           });
-      expect(Fresh.render.callCount).toEqual(1);
-      expect(Fresh.render.mostRecentCall.args[0]).toEqual({
+      expect(Cosmos.render.callCount).toEqual(1);
+      expect(Cosmos.render.mostRecentCall.args[0]).toEqual({
         component: 'List', dataUrl: 'users.json'
       });
     });
 
     it("with props extracted from query string on .goTo", function() {
-      var router = new Fresh.Router({});
+      var router = new Cosmos.Router({});
       router.goTo('?component=List&dataUrl=users.json');
-      expect(Fresh.render.callCount).toEqual(2);
-      expect(Fresh.render.mostRecentCall.args[0]).toEqual({
+      expect(Cosmos.render.callCount).toEqual(2);
+      expect(Cosmos.render.mostRecentCall.args[0]).toEqual({
         component: 'List',
         dataUrl: 'users.json'
       });
     });
 
     it("with props from event state on PopState event", function() {
-      var router = new Fresh.Router({});
+      var router = new Cosmos.Router({});
       router._onPopState({
         state: {
           component: 'List',
           dataUrl: 'users.json'
         }
       });
-      expect(Fresh.render.callCount).toEqual(2);
-      expect(Fresh.render.mostRecentCall.args[0]).toEqual({
+      expect(Cosmos.render.callCount).toEqual(2);
+      expect(Cosmos.render.mostRecentCall.args[0]).toEqual({
         component: 'List',
         dataUrl: 'users.json'
       });
@@ -79,11 +79,11 @@ describe("Fresh.Router", function() {
   describe("on PopState events", function() {
 
     beforeEach(function() {
-      spyOn(Fresh, 'render');
+      spyOn(Cosmos, 'render');
     });
 
     it("should reset history if not in current history", function() {
-      var router = new Fresh.Router({
+      var router = new Cosmos.Router({
         props: {
           component: 'List',
           dataUrl: 'users.json'
@@ -103,7 +103,7 @@ describe("Fresh.Router", function() {
     });
 
     it("should reset history if not direct neighbor of current history entry", function() {
-      var router = new Fresh.Router({
+      var router = new Cosmos.Router({
         props: {
           component: 'List',
           dataUrl: 'users.json'
@@ -125,7 +125,7 @@ describe("Fresh.Router", function() {
     });
 
     it("should not alter history if same as current history entry", function() {
-      var router = new Fresh.Router({
+      var router = new Cosmos.Router({
         props: {
           component: 'List',
           dataUrl: 'users.json'
@@ -141,7 +141,7 @@ describe("Fresh.Router", function() {
     });
 
     it("should continue history if left of current history entry", function() {
-      var router = new Fresh.Router({
+      var router = new Cosmos.Router({
         props: {
           component: 'List',
           dataUrl: 'users.json'
@@ -159,7 +159,7 @@ describe("Fresh.Router", function() {
     });
 
     it("should continue history if right of current history entry", function() {
-      var router = new Fresh.Router({
+      var router = new Cosmos.Router({
         props: {
           component: 'List',
           dataUrl: 'users.json'
@@ -181,7 +181,7 @@ describe("Fresh.Router", function() {
 
   it("should cache latest snapshot of previous Component", function() {
     var ComponentSpec = {
-          mixins: [Fresh.mixins.PersistState],
+          mixins: [Cosmos.mixins.PersistState],
           render: function() {
             return React.DOM.span(null, 'nada');
           }
@@ -191,10 +191,10 @@ describe("Fresh.Router", function() {
         componentInstance = ComponentClass(props);
     // React Components need to be rendered to mount
     React.renderComponentToString(componentInstance);
-    spyOn(Fresh, 'render').andCallFake(function(props) {
+    spyOn(Cosmos, 'render').andCallFake(function(props) {
       return componentInstance;
     });
-    var router = new Fresh.Router({props: props});
+    var router = new Cosmos.Router({props: props});
     // We alter the current instance while it's bound to the current history
     // entry
     componentInstance.setProps({dataUrl: null, someNumber: 555});

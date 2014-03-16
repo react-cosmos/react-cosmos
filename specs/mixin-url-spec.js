@@ -1,11 +1,11 @@
-var Fresh = require('../build/fresh.js'),
+var Cosmos = require('../build/cosmos.js'),
     React = require('react');
 
 describe("Components implementing the Url mixin", function() {
 
   var UrlSpec = {
-    mixins: [Fresh.mixins.PersistState,
-             Fresh.mixins.Url],
+    mixins: [Cosmos.mixins.PersistState,
+             Cosmos.mixins.Url],
     render: function() {
       return React.DOM.span(null, 'nada');
     }

@@ -1,4 +1,4 @@
-var Fresh = {
+var Cosmos = {
   mixins: {},
   components: {},
   getComponentByName: function(name) {
@@ -18,7 +18,7 @@ var Fresh = {
   },
   start: function(options) {
     options = _.extend({
-      props: Fresh.url.getParams(),
+      props: Cosmos.url.getParams(),
       container: document.body
     }, options);
     this.router = new this.Router(options);
@@ -30,5 +30,5 @@ if (typeof module !== 'undefined' && module.exports) {
   var React = require('react'),
       _ = require('underscore'),
       $ = require('jquery');
-  module.exports = Fresh;
+  module.exports = Cosmos;
 }

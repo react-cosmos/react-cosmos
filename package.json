@@ -1,5 +1,5 @@
 {
-  "name": "fresh-js",
+  "name": "cosmos-js",
   "version": "0.0.1",
   "description": "Data exploration framework",
   "dependencies": {
@@ -16,5 +16,5 @@
     "jasmine-node": "~1.13.1"
   },
   "author": "Ovidiu Chereches",
-  "main": "./build/fresh.js"
+  "main": "./build/cosmos.js"
 }
