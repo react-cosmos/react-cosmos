@@ -6,10 +6,16 @@ Built on top of the great [**React**](http://facebook.github.io/react/),
 emphasizing on seamless data exploration through drill down actions,
 implementing a uniform Component* model.
 
+**Cosmos is to data visualization what
+[Backbone](https://github.com/jashkenas/backbone) is to data modeling.**
+
 \* The **Component** is a self-contained, UI building block.
 See [React Component.](http://facebook.github.io/react/docs/component-api.html)
 
 ## Manifesto
+
+_cos·mos<sup>1</sup> `/ˈkäzməs,-ˌmōs,-ˌmäs/` noun — 1. The universe seen as
+a well-ordered whole._
 
 - Zero bootstrap
 - Can be plugged into any other framework
@@ -21,9 +27,6 @@ See [React Component.](http://facebook.github.io/react/docs/component-api.html)
 
 \* All Cosmos core mixins are agnostic on how data is populated inside a
 Component (see default [DataFetch](mixins/data-fetch.js) Ajax implementation.)
-
-**Cosmos is to data visualization what
-[Backbone](https://github.com/jashkenas/backbone) is to data modeling.**
 
 ## Install
 
