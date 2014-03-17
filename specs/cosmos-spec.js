@@ -92,6 +92,24 @@ describe("Cosmos", function() {
         Cosmos.url.getParams());
     });
 
+    it("should use default props when props are empty", function() {
+      spyOn(Cosmos.url, 'getParams').andReturn({});
+      Cosmos.start({defaultProps: {
+        component: 'DefaultComponent'
+      }});
+      expect(Cosmos.Router.mostRecentCall.args[0].props).toEqual({
+        component: 'DefaultComponent'
+      });
+    });
+
+    it("shouldn't use default props when props aren't empty", function() {
+      Cosmos.start({defaultProps: {
+        component: 'DefaultComponent'
+      }});
+      expect(Cosmos.Router.mostRecentCall.args[0].props).toEqual(
+        Cosmos.url.getParams());
+    });
+
     it("should default to document.body as container", function() {
       Cosmos.start();
       expect(Cosmos.Router.callCount).toBe(1);

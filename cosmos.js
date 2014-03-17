@@ -22,6 +22,9 @@ _.extend(Cosmos, {
       props: Cosmos.url.getParams(),
       container: document.body
     }, options);
+    if (_.isEmpty(options.props) && options.defaultProps) {
+      options.props = options.defaultProps;
+    }
     this.router = new this.Router(options);
   },
   render: function(props, container) {
