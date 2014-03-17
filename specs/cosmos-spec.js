@@ -10,6 +10,13 @@ describe("Cosmos", function() {
     expect(Cosmos.getComponentByName('EmptyComponent')).toBe(EmptyComponent);
   });
 
+  it("should instantiate correct Component", function() {
+    var fakeComponentInstance = {};
+    Cosmos.components.FakeComponent = jasmine.createSpy('FakeComponent')
+                                      .andReturn(fakeComponentInstance);
+    expect(Cosmos({component: 'FakeComponent'})).toBe(fakeComponentInstance);
+  });
+
   describe(".render", function() {
 
     it("should render to DOM if received a container", function() {
