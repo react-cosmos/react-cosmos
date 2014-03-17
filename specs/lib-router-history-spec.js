@@ -274,4 +274,47 @@ describe("Cosmos.RouterHistory", function() {
     expect(history.length).toEqual(2);
     expect(history.index).toEqual(1);
   });
+
+  it("should preserve updated props when pushing a previous entry", function() {
+    var history = new Cosmos.RouterHistory();
+    history.push({props: {
+      component: 'List',
+      dataUrl: 'users.json'
+    }});
+    history[history.index].laterProp = true;
+    history.push({props: {
+      component: 'User',
+      dataUrl: 'user.json'
+    }});
+    // Go back
+    history.push({props: {
+      component: 'List',
+      dataUrl: 'users.json'
+    }});
+    expect(history[history.index].laterProp).toEqual(true);
+  });
+
+  it("should preserve updated props when pushing an entry we went back from", function() {
+    var history = new Cosmos.RouterHistory();
+    history.push({props: {
+      component: 'List',
+      dataUrl: 'users.json'
+    }});
+    history.push({props: {
+      component: 'User',
+      dataUrl: 'user.json'
+    }});
+    history[history.index].laterProp = true;
+    // Go back...
+    history.push({props: {
+      component: 'List',
+      dataUrl: 'users.json'
+    }});
+    // and go forward again
+    history.push({props: {
+      component: 'User',
+      dataUrl: 'user.json'
+    }});
+    expect(history[history.index].laterProp).toEqual(true);
+  });
 });
