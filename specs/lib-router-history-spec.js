@@ -317,4 +317,59 @@ describe("Cosmos.RouterHistory", function() {
     }});
     expect(history[history.index].laterProp).toEqual(true);
   });
+
+  it("shouldn't overwrite meta data when pushing a previous entry", function() {
+    var history = new Cosmos.RouterHistory();
+    history.push({
+      props: {
+        component: 'List',
+        dataUrl: 'users.json'
+      },
+      foreverYoung: true
+    });
+    history.push({props: {
+      component: 'User',
+      dataUrl: 'user.json'
+    }});
+    // Go back
+    history.push({
+      props: {
+        component: 'List',
+        dataUrl: 'users.json'
+      },
+      foreverYoung: false
+    });
+    expect(history[history.index].foreverYoung).toEqual(true);
+  });
+
+  it("should overwrite meta data when pushing an entry we went back from", function() {
+    var history = new Cosmos.RouterHistory();
+    history.push({props: {
+      component: 'List',
+      dataUrl: 'users.json'
+    }});
+    history.push({
+      props: {
+        component: 'User',
+        dataUrl: 'user.json'
+      },
+      foreverYoung: true,
+      foreverLonely: true
+    });
+    // Go back...
+    history.push({props: {
+      component: 'List',
+      dataUrl: 'users.json'
+    }});
+    // and go forward again
+    history.push({
+      props: {
+        component: 'User',
+        dataUrl: 'user.json'
+      },
+      foreverYoung: false
+    });
+    expect(history[history.index].foreverYoung).toEqual(false);
+    expect(history[history.index].foreverLonely).toEqual(true);
+  });
 });
