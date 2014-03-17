@@ -85,9 +85,13 @@ describe("Cosmos", function() {
       delete global.location;
     });
 
-    it("should default to URL query string", function() {
+    it("should call Cosmos.Router", function() {
       Cosmos.start();
       expect(Cosmos.Router.callCount).toBe(1);
+    });
+
+    it("should default to URL query string", function() {
+      Cosmos.start();
       expect(Cosmos.Router.mostRecentCall.args[0].props).toEqual(
         Cosmos.url.getParams());
     });
@@ -112,7 +116,6 @@ describe("Cosmos", function() {
 
     it("should default to document.body as container", function() {
       Cosmos.start();
-      expect(Cosmos.Router.callCount).toBe(1);
       expect(Cosmos.Router.mostRecentCall.args[0].container).toBe(document.body);
     });
 
@@ -121,7 +124,6 @@ describe("Cosmos", function() {
         props: {component: 'MissingComponent'},
         container: '<div>'
       });
-      expect(Cosmos.Router.callCount).toBe(1);
       expect(Cosmos.Router.mostRecentCall.args[0].props).toEqual({
         component: 'MissingComponent'});
       expect(Cosmos.Router.mostRecentCall.args[0].container).toEqual('<div>');
@@ -129,7 +131,6 @@ describe("Cosmos", function() {
 
     it("should create a global Cosmos.Router instance", function() {
       Cosmos.start({});
-      expect(Cosmos.Router.callCount).toBe(1);
       expect(Cosmos.router).toEqual(jasmine.any(Cosmos.Router));
     });
   });
