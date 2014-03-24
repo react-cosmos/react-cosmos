@@ -14,20 +14,19 @@ Cosmos.mixins.DataFetch = {
    *                 from the server (see dataUrl prop.) Defaults to an empty
    *                 object `{}`
    */
-  fetchDataFromServer: function(url) {
-    this.xhrRequest = $.ajax({
+  fetchDataFromServer: function(url, onSuccess) {
+    var request = $.ajax({
       url: url,
       dataType: 'json',
       complete: function() {
-        this.xhrRequest = null;
+        this.xhrRequests = _.without(this.xhrRequests, request);
       }.bind(this),
-      success: function(data) {
-        this.receiveDataFromServer(data);
-      }.bind(this),
+      success: onSuccess,
       error: function(xhr, status, err) {
         console.error(url, status, err.toString());
       }.bind(this)
     });
+    this.xhrRequests.push(request);
   },
   receiveDataFromServer: function(data) {
     this.setState({data: data});
@@ -45,18 +44,18 @@ Cosmos.mixins.DataFetch = {
     // enabled, we need to reset the interval to start from now
     this.clearDataRequests();
     if (props.dataUrl) {
-      this.fetchDataFromServer(props.dataUrl);
+      this.fetchDataFromServer(props.dataUrl, this.receiveDataFromServer);
       if (props.pollInterval) {
         this.pollInterval = setInterval(function() {
-          this.fetchDataFromServer(props.dataUrl);
+          this.fetchDataFromServer(props.dataUrl, this.receiveDataFromServer);
         }.bind(this), props.pollInterval);
       }
     }
   },
   clearDataRequests: function() {
     // Cancel any on-going request and future polling
-    if (this.xhrRequest) {
-      this.xhrRequest.abort();
+    while (!_.isEmpty(this.xhrRequests)) {
+      this.xhrRequests.pop().abort();
     }
     if (this.pollInterval) {
       clearInterval(this.pollInterval);
@@ -69,12 +68,13 @@ Cosmos.mixins.DataFetch = {
     };
   },
   componentWillMount: function() {
+    this.xhrRequests = [];
     // The dataUrl prop points to a source of data than will extend the initial
     // state of the component, once it will be fetched
     this.resetData(this.props);
   },
   componentWillReceiveProps: function(nextProps) {
-    // A DataFetch Component can have its configuration replaced at any time
+    // A Component can have its configuration replaced at any time
     if (nextProps.dataUrl != this.props.dataUrl) {
       this.resetData(nextProps);
     }

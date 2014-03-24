@@ -39,9 +39,14 @@ Cosmos.mixins.PersistState = {
   },
   componentWillMount: function() {
     // Allow passing a serialized snapshot of a state through the props
-    // TODO: Replace state when props change at componentWillReceiveProps
     if (this.props.state) {
       this.replaceState(this.props.state);
+    }
+  },
+  componentWillReceiveProps: function(nextProps) {
+    // A Component can have its configuration replaced at any time
+    if (nextProps.state) {
+      this.replaceState(nextProps.state);
     }
   }
 };
