@@ -5,6 +5,16 @@
   </head>
   <body>
     <h1>404</h1>
-    <script>Cosmos.start();</script>
+    <script>
+var App = {
+  MOVIEDB_API_ROOT: 'http://api.themoviedb.org/3',
+  MOVIEDB_IMG_ROOT: 'http://image.tmdb.org/t/p',
+  MOVIEDB_API_KEY: '6cca1ecbcf2b6eec3644b802773e6feb'
+};
+Cosmos.start({defaultProps: {
+  component: 'Person',
+  dataUrl: App.MOVIEDB_API_ROOT + '/person/5655?api_key=' + App.MOVIEDB_API_KEY
+}});
+    </script>
   </body>
 </html>
