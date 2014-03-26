@@ -18,14 +18,7 @@ _.extend(Cosmos, {
   mixins: {},
   components: {},
   start: function(options) {
-    options = _.extend({
-      props: Cosmos.url.getParams(),
-      container: document.body
-    }, options);
-    if (_.isEmpty(options.props) && options.defaultProps) {
-      options.props = options.defaultProps;
-    }
-    this.router = new this.Router(options);
+    return new this.Router(options);
   },
   render: function(props, container) {
     var componentInstance = this(props);

@@ -4,6 +4,9 @@ var Cosmos = require('../build/cosmos.js'),
 describe("Cosmos.Router", function() {
 
   beforeEach(function() {
+    // Mock global objects in a browser
+    global.window = {location: {search: '?component=List&data=users.json'}};
+    global.document = {body: {}};
     // Uses window event binding
     spyOn(Cosmos.Router.prototype, '_bindPopStateEvent');
     // Use window.history
@@ -19,18 +22,53 @@ describe("Cosmos.Router", function() {
     spyOn(Cosmos.url, 'isPushStateSupported').andReturn(true);
   });
 
-  it("should save a reference to the DOM container", function() {
-    // Ignore Initial rendering
-    spyOn(Cosmos, 'render');
-    var router = new Cosmos.Router({container: '<body>'});
-    expect(router.container).toEqual('<body>');
+  afterEach(function() {
+    delete global.window;
+    delete global.location;
   });
 
-  it("should create a new RouterHistory instance", function() {
-    // Ignore Initial rendering
-    spyOn(Cosmos, 'render');
-    var router = new Cosmos.Router({});
-    expect(router.history).toEqual(jasmine.any(Cosmos.RouterHistory));
+  describe("new instance", function() {
+
+      beforeEach(function() {
+        spyOn(Cosmos, 'render');
+      });
+
+      it("should default to URL query string", function() {
+        var router = new Cosmos.Router();
+        expect(router.options.props).toEqual(Cosmos.url.getParams());
+      });
+
+      it("should use default props when props are empty", function() {
+        spyOn(Cosmos.url, 'getParams').andReturn({});
+        var router = new Cosmos.Router({defaultProps: {
+          component: 'DefaultComponent'
+        }});
+        expect(router.options.props).toEqual({
+          component: 'DefaultComponent'
+        });
+      });
+
+      it("shouldn't use default props when props aren't empty", function() {
+        var router = new Cosmos.Router({defaultProps: {
+          component: 'DefaultComponent'
+        }});
+        expect(router.options.props).toEqual(Cosmos.url.getParams());
+      });
+
+      it("should default to document.body as container", function() {
+        var router = new Cosmos.Router();
+        expect(router.options.container).toBe(document.body);
+      });
+
+      it("should save a reference to the DOM container", function() {
+        var router = new Cosmos.Router({container: '<body>'});
+        expect(router.container).toEqual('<body>');
+      });
+
+      it("should create a new RouterHistory instance", function() {
+        var router = new Cosmos.Router();
+        expect(router.history).toEqual(jasmine.any(Cosmos.RouterHistory));
+      });
   });
 
   describe("should render new Components", function() {

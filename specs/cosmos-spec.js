@@ -76,13 +76,6 @@ describe("Cosmos", function() {
 
     beforeEach(function() {
       spyOn(Cosmos, 'Router');
-      // Mock global objects in a browser
-      global.window = {location: {search: '?component=List&data=users.json'}};
-      global.document = {body: {}};
-    });
-    afterEach(function() {
-      delete global.window;
-      delete global.location;
     });
 
     it("should call Cosmos.Router", function() {
@@ -90,48 +83,20 @@ describe("Cosmos", function() {
       expect(Cosmos.Router.callCount).toBe(1);
     });
 
-    it("should default to URL query string", function() {
-      Cosmos.start();
-      expect(Cosmos.Router.mostRecentCall.args[0].props).toEqual(
-        Cosmos.url.getParams());
-    });
-
-    it("should use default props when props are empty", function() {
-      spyOn(Cosmos.url, 'getParams').andReturn({});
-      Cosmos.start({defaultProps: {
-        component: 'DefaultComponent'
-      }});
-      expect(Cosmos.Router.mostRecentCall.args[0].props).toEqual({
-        component: 'DefaultComponent'
-      });
-    });
-
-    it("shouldn't use default props when props aren't empty", function() {
-      Cosmos.start({defaultProps: {
-        component: 'DefaultComponent'
-      }});
-      expect(Cosmos.Router.mostRecentCall.args[0].props).toEqual(
-        Cosmos.url.getParams());
-    });
-
-    it("should default to document.body as container", function() {
-      Cosmos.start();
-      expect(Cosmos.Router.mostRecentCall.args[0].container).toBe(document.body);
-    });
-
-    it("should call Cosmos.Router with props and container", function() {
+    it("should create Cosmos.Router instance with same options", function() {
       Cosmos.start({
         props: {component: 'MissingComponent'},
         container: '<div>'
       });
-      expect(Cosmos.Router.mostRecentCall.args[0].props).toEqual({
-        component: 'MissingComponent'});
-      expect(Cosmos.Router.mostRecentCall.args[0].container).toEqual('<div>');
+      expect(Cosmos.Router.mostRecentCall.args[0]).toEqual({
+        props: {component: 'MissingComponent'},
+        container: '<div>'
+      });
     });
 
-    it("should create a global Cosmos.Router instance", function() {
-      Cosmos.start({});
-      expect(Cosmos.router).toEqual(jasmine.any(Cosmos.Router));
+    it("should return a Cosmos.Router instance", function() {
+      var router = Cosmos.start();
+      expect(router).toEqual(jasmine.any(Cosmos.Router));
     });
   });
 });
