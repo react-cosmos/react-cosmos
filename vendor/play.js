@@ -1,5 +1,29 @@
-;(function(root) {
-
+(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(factory);
+  } else {
+    // Browser globals
+    root.Play = factory();
+  }
+}(this, function() {
+  var extend = function(obj) {
+    var sources = Array.prototype.slice.call(arguments, 1),
+        source,
+        i;
+    for (i = 0; i < sources.length; i++) {
+      source = sources[i];
+      if (source) {
+        for (var prop in source) {
+          obj[prop] = source[prop];
+        }
+      }
+    }
+    return obj;
+  };
+  var now = function() {
+    return new Date().getTime();
+  };
   var Play = function(id, options) {
     /**
      * Performs an abstract transition for a fixed amount of time, regardless
@@ -7,48 +31,53 @@
      * callback with a 0-to-1 float ratio (representing the progress of the
      * transition) as often as the browser can perform.
      *
-     * A custom transition formula can be set using the "transition" option,
+     * A custom transition easing can be set using the "easing" option,
      * otherwise it defaults to linear.
      *
      * WARNING: This lib doesn't have tests!
      * TODO: Add polyfill for requestAnimationFrame
      */
     this.id = id;
-    this.options = $.extend({}, this.defaults, options || {});
+    this.options = extend({}, this.defaults, options || {});
     // Validate that we have a callback function (nothing to do otherwise)
     if (typeof(this.options.onFrame) != 'function') {
       throw new Error('Play instance is missing an onFrame callback');
     }
-    // A custom transition is optional, but if one is present it needs to be a
-    // Function object
-    if (this.options.transition &&
-        typeof(this.options.transition) != 'function') {
-      throw new Error('Play transition must be a Function');
+    // A custom easing function is optional, linear is the default
+    if (this.options.easing &&
+        typeof(this.options.easing) != 'function') {
+      throw new Error('Play easing must be a Function');
     }
     this.init();
   };
-
-  _.extend(Play, {
+  extend(Play, {
     // Global stack for keeping references to instances
     stack: [],
     // Each new instance receives a unique numeric id, incremented one by one
     lastId: 0,
 
     start: function(options) {
-      var id = ++this.lastId,
-          instance = new Play(id, options);
+      if (options.id === undefined) {
+        options.id = ++this.lastId;
+      }
+      var instance = this.getInstanceById(options.id);
+      // You can run two transitions at the same type for the same id
+      if (instance) {
+        this.end(instance);
+      }
+      instance = new Play(options.id, options);
       // Ignore instance if it has invalid time params
       if (instance.t2 < instance.t1) {
         return;
       }
-      var now = Date.now();
+      var time = now();
       // Run the onFrame callback on the instance for the first time, manually
       // (in order for it to have synchronous effect, and have its initial
       // state applied immediately)
-      instance.onFrame(now);
+      instance.onFrame(time);
       // No need to push an instance into the animation loop if its finishing
       // time isn't in the future
-      if (instance.t2 > now) {
+      if (instance.t2 > time) {
         Play.push(instance);
       }
       return instance;
@@ -82,6 +111,13 @@
       }
       this.stack.push(instance);
     },
+    getInstanceById: function(id) {
+      for (var i = 0; i < this.stack.length; i++) {
+        if (this.stack[i].id == id) {
+          return this.stack[i];
+        }
+      }
+    },
     startAnimationLoop: function() {
       // Don't create new interval if one is already running
       if (this.interval) {
@@ -89,12 +125,12 @@
       }
       var _this = this;
       // Set interval with a 13-millisecond refresh time - socially acceptable :)
-      this.interval = window.setInterval(function() {
-        _this.onFrame(Date.now());
+      this.interval = setInterval(function() {
+        _this.onFrame(now());
       }, 13);
     },
     stopAnimationLoop: function() {
-      window.clearInterval(this.interval);
+      clearInterval(this.interval);
       this.interval = null;
     },
     onFrame: function(time, deleteIndex) {
@@ -138,7 +174,7 @@
         ratio: 0
       },
       init: function() {
-        this.t1 = Date.now();
+        this.t1 = now();
         this.t2 = this.t1 + (this.options.time * 1000);
         // If a starting ratio is specified along with the constructor options,
         // we need to shift this instance's entire timeframe along the timeline,
@@ -170,17 +206,14 @@
         }
         // Apply user-defined transition formula, if specified. Not having one
         // simply renders the transition linear
-        if (this.options.transition) {
-          ratio = this.options.transition(ratio);
+        if (this.options.easing) {
+          ratio = this.options.easing.call(this, ratio);
         }
         // Call user-defined callback with the current progress of the
         // transition as the only parameter
-        this.options.onFrame(ratio);
+        this.options.onFrame.call(this, ratio);
       }
     }
   });
-
-  // Add global reference
-  root.Play = Play;
-
-})(Cosmos);
+  return Play;
+}));

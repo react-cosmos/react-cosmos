@@ -22,7 +22,7 @@ Cosmos.mixins.Url = {
      */
     e.preventDefault();
     var anchor = e.currentTarget;
-    Cosmos.router.goTo($(anchor).attr('href'), this._getOriginBounds(anchor));
+    App.router.goTo($(anchor).attr('href'), this._getOriginBounds(anchor));
   },
   _getOriginBounds: function(anchorElement) {
     // Get the closest Component ancestor of anchor element
