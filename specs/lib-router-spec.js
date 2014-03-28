@@ -17,7 +17,6 @@ describe("Cosmos.Router", function() {
     // Methods using jQuery
     spyOn(Cosmos.Router.prototype, '_resetContainer');
     spyOn(Cosmos.Router.prototype, '_createComponentContainer');
-    spyOn(Cosmos.Router.prototype, '_transitionComponentContainer');
     // Out of Router scope
     spyOn(Cosmos.url, 'isPushStateSupported').andReturn(true);
   });

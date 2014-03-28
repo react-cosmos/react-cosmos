@@ -18,6 +18,7 @@ if (typeof module !== 'undefined' && module.exports) {
 _.extend(Cosmos, {
   mixins: {},
   components: {},
+  transitions: {},
   start: function(options) {
     return new this.Router(options);
   },
