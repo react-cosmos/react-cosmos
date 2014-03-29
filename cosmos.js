@@ -10,22 +10,17 @@ var Cosmos = function(props) {
 if (typeof module !== 'undefined' && module.exports) {
   var React = require('react'),
       _ = require('underscore'),
-      $ = require('jquery');
+      $ = require('jquery'),
+      Play = require('play-js').Play;
   module.exports = Cosmos;
 }
 
 _.extend(Cosmos, {
   mixins: {},
   components: {},
+  transitions: {},
   start: function(options) {
-    options = _.extend({
-      props: Cosmos.url.getParams(),
-      container: document.body
-    }, options);
-    if (_.isEmpty(options.props) && options.defaultProps) {
-      options.props = options.defaultProps;
-    }
-    this.router = new this.Router(options);
+    return new this.Router(options);
   },
   render: function(props, container) {
     var componentInstance = this(props);

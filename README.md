@@ -2,15 +2,14 @@ Cosmos
 ===
 Data exploration framework
 
+Cosmos emphasizes on **data-driven navigation, full-screen visualizations and
+seamless routing**, powered by an effective state-caching time machine.
+
 Built on top of the great [**React**](http://facebook.github.io/react/),
-emphasizing on seamless data exploration through drill down actions,
-implementing a uniform Component* model.
+implementing a **uniform Component model.** The Component is a self-contained,
+UI building block. See [React Component.](http://facebook.github.io/react/docs/component-api.html)
 
-**Cosmos is to data visualization what
-[Backbone](https://github.com/jashkenas/backbone) is to data modeling.**
-
-\* The **Component** is a self-contained, UI building block.
-See [React Component.](http://facebook.github.io/react/docs/component-api.html)
+> Cosmos is to data visualization what Backbone is to data modeling.
 
 ## Manifesto
 
