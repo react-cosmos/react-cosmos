@@ -11,7 +11,10 @@ var paths = {
     'cosmos.js',
     'lib/**/*.js',
     'mixins/**/*.js',
-    'components/**/*.jsx']
+    'components/**/*.jsx'],
+  demo: [
+    'demo/components/**/*.jsx'
+  ]
 };
 
 gulp.task('scripts', function() {
@@ -26,6 +29,11 @@ gulp.task('scripts', function() {
     .pipe(react())
     .pipe(uglify())
     .pipe(concat('build/cosmos-with-dependencies.js'))
+    .pipe(gulp.dest('.'));
+  gulp.src(paths.demo)
+    .pipe(react())
+    .pipe(uglify())
+    .pipe(concat('build/demo.js'))
     .pipe(gulp.dest('.'));
 });
 
