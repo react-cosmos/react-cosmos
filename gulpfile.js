@@ -39,7 +39,7 @@ gulp.task('scripts', function() {
 
 // Rerun the task when a file changes
 gulp.task('watch', function () {
-  gulp.watch(paths.dependencies.concat(paths.scripts), ['scripts']);
+  gulp.watch(paths.dependencies.concat(paths.scripts, paths.demo), ['scripts']);
 });
 
 gulp.task('default', ['scripts', 'watch']);
