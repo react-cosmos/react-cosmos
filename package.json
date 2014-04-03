@@ -1,6 +1,6 @@
 {
   "name": "cosmos-js",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Data exploration framework",
   "dependencies": {
     "react": "~0.9.0",
@@ -17,6 +17,8 @@
     "gulp-react": "~0.1.2",
     "jasmine-node": "~1.13.1"
   },
-  "author": "Ovidiu Chereches",
-  "main": "./build/cosmos.js"
+  "main": "./build/cosmos.js",
+  "scripts": {
+    "test": "node_modules/jasmine-node/bin/jasmine-node --verbose specs"
+  }
 }
