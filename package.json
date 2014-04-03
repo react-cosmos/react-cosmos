@@ -12,6 +12,7 @@
   "devDependencies": {
     "gulp": "~3.5.1",
     "gulp-concat": "~2.1.7",
+    "gulp-rename": "~1.2.0",
     "gulp-uglify": "~0.2.0",
     "gulp-react": "~0.1.2",
     "jasmine-node": "~1.13.1"
