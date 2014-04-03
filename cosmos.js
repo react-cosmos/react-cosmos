@@ -22,10 +22,10 @@ _.extend(Cosmos, {
   start: function(options) {
     return new this.Router(options);
   },
-  render: function(props, container) {
+  render: function(props, container, callback) {
     var componentInstance = this(props);
     if (container) {
-      return React.renderComponent(componentInstance, container);
+      return React.renderComponent(componentInstance, container, callback);
     } else {
       return React.renderComponentToString(componentInstance);
     }
