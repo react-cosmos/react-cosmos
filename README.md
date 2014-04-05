@@ -65,13 +65,29 @@ object and the role of a Component is to transform its input data into HTML
 output. Easy to follow and assert behavior.
 
 ```js
-// This could be the configuraton for a Component that renders a list of users
-{
-  "component": "List",
-  "class": "users",
-  "dataUrl": "users.json"
-}
+// Registering Cosmos Components is as easy as referencing them in the
+// components namespace
+Cosmos.components.Intro = React.createClass({
+  render: function() {
+    return React.DOM.p(null,
+      "My name is ", this.props.name, " and I'm from ", this.props.hometown, ".");
+  }
+});
+// This is how you load and render Component input in Cosmos
+Cosmos.render({
+  component: 'Intro',
+  name: 'Johnny',
+  hometown: 'Minnesota'
+});
+// Since we didn't specify a DOM container to render this component in, an HTML
+// string will be returned instead
+"<p>My name is Johnny and I'm from Minnesota.</p>"
 ```
+
+_[JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) improves the
+readability of React Components a lot, but unfortunately
+[GFM](http://github.github.com/github-flavored-markdown/) doesn't support it
+yet, so vanilla JS is used in code snippets._
 
 #### Component input (props)
 
