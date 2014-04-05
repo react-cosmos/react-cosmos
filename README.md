@@ -52,11 +52,6 @@ node_modules/.bin/gulp
 
 ## Specs
 
-_Disclaimer: Cosmos sits on top of React's Component model and you should grasp
-the [Component **props**](http://facebook.github.io/react/docs/tutorial.html#using-props)
-and [reactive **state**](http://facebook.github.io/react/docs/tutorial.html#reactive-state)
-concepts before diving in._
-
 One of the Cosmos [mantras](#manifesto) is "The state of a Component can be
 serialized at any given point in time," therefore __any Component in any state
 can be represented and reproduced by a persistent JSON.__ This goes hand in
@@ -70,7 +65,8 @@ output. Easy to follow and assert behavior.
 Cosmos.components.Intro = React.createClass({
   render: function() {
     return React.DOM.p(null,
-      "My name is ", this.props.name, " and I'm from ", this.props.hometown, ".");
+      "My name is ", this.props.name, " and I'm from ", this.props.hometown, "."
+    );
   }
 });
 // This is how you load and render Component input in Cosmos
@@ -102,6 +98,73 @@ as input, except for one reserved by convention:
 
 \* The **Root Component** is the first Component loaded inside a page, usually
 pulling its input from the URL query string.
+
+### Top-level API
+
+Cosmos can be used as the main router for a web app, but also just for
+rendering parts of an existent application. Here are the main API methods that
+should make you feel at home with Cosmos.
+
+#### Cosmos(props)
+
+The _Cosmos_ namespace itself is a function. It's how you instantiate a
+Component from the Cosmos namespace.
+
+```js
+Cosmos.render({
+  component: 'Intro',
+  name: 'Johnny',
+  hometown: 'Minnesota'
+});
+// is the equivalent of
+Cosmos.components.Intro({
+  name: 'Johny',
+  hometown: 'Minnesota'
+});
+```
+
+It's counter-intuitive to have the Component name embedded in its input data,
+but this is part of the Component serialization concept. Think of the
+Component input data as a database entry and it will start making sense.
+
+Here's how rendering a Component inside another one looks like in JSX syntax:
+
+```html
+<Cosmos component="Intro"
+        name="Johnny"
+        hometown="Minnesota" />
+```
+
+#### Cosmos.render(props, container, callback)
+
+Renders a React Component from the Cosmos namespace (_component_ prop is
+required.) The _container_ and _callback_ params are optional.
+
+#### Cosmos.start(options)
+
+Entry point for a Cosmos Router-powered app. Uses the HTML5 history.pushState
+API to cache Component snapshots and listen to state changes, rendering
+previous Components in an instant when going back through history.
+
+The options are as follows:
+
+- **props** - Initial Component input, defaults to the URL query string
+- **defaultProps** - Default Component input to load when the given  _props_
+                     are empty. This is useful when the initial Component input
+                     is loaded from the URL and you need a default Component
+                     input for the `/` home path
+- **container** - DOM container to render Components in, defaults to
+                  `document.body`
+
+Here's how a standard URL for an app powered by the Cosmos Router would look
+like:
+
+```
+http://localhost/?component=Intro&name=Johnny&hometown=Minnesota
+```
+
+The [URL mixin](https://github.com/skidding/cosmos/wiki/Mixins#url) is used for
+routing links using the Cosmos Router.
 
 ### Mixins
 
