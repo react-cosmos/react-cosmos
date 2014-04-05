@@ -21,27 +21,6 @@ Cosmos.mixins.Url = {
      * instead of reloading pages.
      */
     e.preventDefault();
-    var anchor = e.currentTarget;
-    App.router.goTo($(anchor).attr('href'), this._getOriginBounds(anchor));
-  },
-  _getOriginBounds: function(anchorElement) {
-    // Get the closest Component ancestor of anchor element
-    var $parentComponent = $(this.getDOMNode()),
-        $parentContainer =
-          $parentComponent.closest('.' + Cosmos.Router.CONTAINER_CLASS),
-        componentOffset = $parentComponent.offset(),
-        containerOffset = $parentContainer.offset();
-    // Cosmos doesn't need to run in the body element directly, so we need to
-    // calculate relative offsets
-    if (containerOffset) {
-      componentOffset.left -= containerOffset.left;
-      componentOffset.top -= containerOffset.top;
-    }
-    return {
-      width: $parentComponent.outerWidth(),
-      height: $parentComponent.outerHeight(),
-      x: componentOffset.left,
-      y: componentOffset.top
-    };
+    App.router.goTo(e.currentTarget.getAttribute('href'));
   }
 };
