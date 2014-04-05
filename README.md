@@ -177,5 +177,5 @@ of a Component. While mixins can optionally profit from other mixins when
 combined, they are independent by nature and should follow the **Single
 Responsibility Principle.**
 
-Core mixins are be placed under the `Cosmos.mixins` namespace. Read more inside
+Core mixins are placed under the `Cosmos.mixins` namespace. Read more inside
 the [Mixins wiki page.](https://github.com/skidding/cosmos/wiki/Mixins)
