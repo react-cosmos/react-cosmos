@@ -89,94 +89,14 @@ pulling its input from the URL query string.
 
 ### Mixins
 
-__The behavior of a Component is determined by its
-[Mixins.](http://facebook.github.io/react/docs/reusable-components.html#mixins)__
+Mixins are meant to be responsible for all behavior that isn't specific to a
+single Component.
+
 Each mixin can support a set of input _props,_ make new methods
 available and interfere with the [lifecycle methods](http://facebook.github.io/react/docs/component-specs.html#lifecycle-methods)
 of a Component. While mixins can optionally profit from other mixins when
-combined, they are independent by nature and should have an isolated assertable
-behavior.
+combined, they are independent by nature and should follow the Single
+Responsibility Principle.
 
-#### DataFetch Mixin
-
-Bare functionality for fetching server-side JSON data inside a Component. Uses
-basic Ajax requests and setInterval for polling.
-
-```js
-{
-  "component": "List",
-  "dataUrl": "/api/users.json",
-  // Refresh users every 5 seconds
-  "pollInterval": 5000
-}
-```
-
-Props:
-
-- **dataUrl** - A URL to fetch data from. Once data is received it will be set
-                inside the Component's _state_, under the `data` key, and will
-                cause a reactive re-render.
-- **pollInterval** - An interval in milliseconds for polling the data URL.
-                     Defaults to 0, which means no polling.
-
-Context properties:
-
-- **initialData** - The initial value of `state.data`, before receiving and
-                    data from the server (see _data_ prop.) Defaults to an
-                    empty object `{}`
-
-#### PersistState Mixin
-
-Heart of the Cosmos framework. Enables dumping a state object into a Component
-and exporting the current state.
-
-```js
-{
-  "component": "Item",
-  "state": {"name": "John Doe", "age": "24"}
-}
-```
-
-Props:
-
-- **state** - An object that will be poured inside the initial Component
-              _state_ as soon as it loads (replacing any default state.)
-
-Methods:
-
-- **generateSnapshot** - Generate a snapshot of the Component _props_
-                         (including current _state_.) It excludes internal
-                         props set by React during run-time and props with
-                         [default values.](http://facebook.github.io/react/docs/component-specs.html#getdefaultprops)
-
-#### Url Mixin
-
-Enables basic linking between Components, with optional use of the minimal
-built-in Router.
-
-```js
-React.createComponent({
-  mixins: [Cosmos.mixins.PersistState,
-           Cosmos.mixins.Url],
-  render: function() {
-    return React.DOM.a({
-      href: this.getUrlFromProps(this.generateSnapshot()),
-      onClick: this.routeLink
-    }, "Maximize");
-  }
-});
-```
-
-Methods:
-
-  - **getUrlFromProps** - Serializes a props object into a browser-complient
-                          URL. The URL generated can be simply put inside the
-                          _href_ attribute of an `<a>` tag, and can be combined
-                          with the generateSnapshot method of the PersistState
-                          mixin to create a link that opens the current
-                          Component at root level (full window.)
-  - **routeLink** - Any `<a>` tag can have this method bound to its onClick
-                    event to have their corresponding _href_ location picked up
-                    by the built-in Router implementation, which uses
-                    _pushState_ to switch between Components instead of
-                    reloading pages.
+Core mixins are be placed under the `Cosmos.mixins` namespace. Read more about
+them inside the [Mixins wiki page.](https://github.com/skidding/cosmos/wiki/Mixins)
