@@ -21,7 +21,7 @@ a well-ordered whole._
 - Everything is a Component
 - Components are oblivious of ancestors
 - The state of a Component can be serialized at any given point in time
-- Any Component configuration can be represented by a URI
+- Any Component input can be represented by a URI
 - Components can implement any data mechanism*
 
 \* All Cosmos core mixins are agnostic on how data is populated inside a
@@ -52,20 +52,17 @@ node_modules/.bin/gulp
 
 ## Specs
 
-You should read the
-[React docs](http://facebook.github.io/react/docs/getting-started.html) before,
-Cosmos is merely a standarization on top of React's Component model. You need
-to grasp the [Component **props**](http://facebook.github.io/react/docs/tutorial.html#using-props)
+_Disclaimer: Cosmos sits on top of React's Component model and you should grasp
+the [Component **props**](http://facebook.github.io/react/docs/tutorial.html#using-props)
 and [reactive **state**](http://facebook.github.io/react/docs/tutorial.html#reactive-state)
-concepts before diving into Cosmos.
+concepts before diving in._
 
-Since one of the Cosmos mantras is _The state of a Component can be serialized
-at any given point in time_ (see [Manifesto](#manifesto)), __any Component in
-any state can be represented and reproduced by a persistent JSON.__ This goes
-hand in hand with React's **declarative** nature. The input data of a Component
-is a JSON object. This input configuration is picked up by the Component,
-interpreted based on what that Component implements, and exported into an
-__HTML output.__ Easy to follow and assert behavior.
+One of the Cosmos [mantras](#manifesto) is "The state of a Component can be
+serialized at any given point in time," therefore __any Component in any state
+can be represented and reproduced by a persistent JSON.__ This goes hand in
+hand with React's declarative nature. The input data of a Component is a JSON
+object and the role of a Component is to transform its input data into HTML
+output. Easy to follow and assert behavior.
 
 ```js
 // This could be the configuraton for a Component that renders a list of users
@@ -76,8 +73,10 @@ __HTML output.__ Easy to follow and assert behavior.
 }
 ```
 
-It's up a Component (or the mixins it uses) to implement any _prop_ received
-from its input configuration, except for one reserved by convention:
+#### Component input (props)
+
+It's up a Component (or the mixins it uses) to implement any _props_ received
+as input, except for one reserved by convention:
 
 - **component** - The name of the Component to load. Normally we should already
                   have a Component class when instantiating it, but there are
@@ -86,7 +85,7 @@ from its input configuration, except for one reserved by convention:
   - 2. When a List Component receives a list of children to load
 
 \* The **Root Component** is the first Component loaded inside a page, usually
-pulling its input configuration from the URL query string.
+pulling its input from the URL query string.
 
 ### Mixins
 
