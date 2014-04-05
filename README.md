@@ -27,36 +27,27 @@ a well-ordered whole._
 \* All Cosmos core mixins are agnostic on how data is populated inside a
 Component (see default [DataFetch](mixins/data-fetch.js) Ajax implementation.)
 
-## Install
+## Installation
 
-Cosmos is a versatile framework and can be installed in more than one way.
+Include either the development or the production build in your project.
 
-### Minified script
+```html
+<script src="http://skidding.github.io/cosmos/build/cosmos.js"></script>
+<script src="http://skidding.github.io/cosmos/build/cosmos.min.js"></script>
+```
 
-Include `build/cosmos.js` if you already have the
-[external dependencies](https://github.com/skidding/cosmos/blob/master/package.json#L8)
-included in your project or `build/cosmos-with-dependencies.js` to include
-them as well.
+Cosmos only depends on `React ~0.9.0` and `Underscore.js ~1.5.2`
 
 ### Development
+
+The demo skeleton is present in all branches and can be opened in any browser,
+without any web server, simply check doing a git checkout of the repository and
+generating a build using [gulp.](https://github.com/gulpjs/gulp)
 
 ```bash
 git clone https://github.com/skidding/cosmos.git && cd cosmos
 npm install
-./node_modules/.bin/gulp
-```
-
-Pop up `index.html` in your browser of choice to load the app skeleton from the
-repo. The build is generated in the `build/` folder.
-
-#### Running tests
-
-Behavior tests are written for [Jasmine](https://github.com/pivotal/jasmine)
-and ran with [jasmine-node](https://github.com/mhevery/jasmine-node) in a
-DOM-less environment.
-
-```bash
-./node_modules/.bin/jasmine-node --verbose specs
+node_modules/.bin/gulp
 ```
 
 ## Specs
