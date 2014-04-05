@@ -3,7 +3,7 @@ Cosmos
 Data exploration framework
 
 Cosmos emphasizes on **data-driven navigation, full-screen visualizations and
-seamless routing**, powered by an effective state-caching time machine.
+blazing fast routing**, powered by an effective state-caching time machine.
 
 Built on top of the great [**React**](http://facebook.github.io/react/),
 implementing a **uniform Component model.** The Component is a self-contained,
@@ -21,72 +21,74 @@ a well-ordered whole._
 - Everything is a Component
 - Components are oblivious of ancestors
 - The state of a Component can be serialized at any given point in time
-- Any Component configuration can be represented by a URI
+- Any Component input can be represented by a URI
 - Components can implement any data mechanism*
 
 \* All Cosmos core mixins are agnostic on how data is populated inside a
 Component (see default [DataFetch](mixins/data-fetch.js) Ajax implementation.)
 
-## Install
+## Installation
 
-Cosmos is a versatile framework and can be installed in more than one way.
+Include either the development or the production build in your project.
 
-### Minified script
+```html
+<script src="http://skidding.github.io/cosmos/build/cosmos.js"></script>
+<script src="http://skidding.github.io/cosmos/build/cosmos.min.js"></script>
+```
 
-Include `build/cosmos.js` if you already have the
-[external dependencies](https://github.com/skidding/cosmos/blob/master/package.json#L8)
-included in your project or `build/cosmos-with-dependencies.js` to include
-them as well.
+Cosmos only depends on `React ~0.9.0` and `Underscore.js ~1.5.2`
 
 ### Development
+
+The demo skeleton is present in all branches and can be opened in any browser,
+without any web server, simply check doing a git checkout of the repository and
+generating a build using [gulp.](https://github.com/gulpjs/gulp)
 
 ```bash
 git clone https://github.com/skidding/cosmos.git && cd cosmos
 npm install
-./node_modules/.bin/gulp
-```
-
-Pop up `index.html` in your browser of choice to load the app skeleton from the
-repo. The build is generated in the `build/` folder.
-
-#### Running tests
-
-Behavior tests are written for [Jasmine](https://github.com/pivotal/jasmine)
-and ran with [jasmine-node](https://github.com/mhevery/jasmine-node) in a
-DOM-less environment.
-
-```bash
-./node_modules/.bin/jasmine-node --verbose specs
+node_modules/.bin/gulp
 ```
 
 ## Specs
 
-You should read the
-[React docs](http://facebook.github.io/react/docs/getting-started.html) before,
-Cosmos is merely a standarization on top of React's Component model. You need
-to grasp the [Component **props**](http://facebook.github.io/react/docs/tutorial.html#using-props)
-and [reactive **state**](http://facebook.github.io/react/docs/tutorial.html#reactive-state)
-concepts before diving into Cosmos.
-
-Since one of the Cosmos mantras is _The state of a Component can be serialized
-at any given point in time_ (see [Manifesto](#manifesto)), __any Component in
-any state can be represented and reproduced by a persistent JSON.__ This goes
-hand in hand with React's **declarative** nature. The input data of a Component
-is a JSON object. This input configuration is picked up by the Component,
-interpreted based on what that Component implements, and exported into an
-__HTML output.__ Easy to follow and assert behavior.
+One of the Cosmos [mantras](#manifesto) is "The state of a Component can be
+serialized at any given point in time," therefore __any Component in any state
+can be represented and reproduced by a persistent JSON.__ This goes hand in
+hand with React's declarative nature. The input data of a Component is a JSON
+object and the role of a Component is to transform its input data into HTML
+output. Easy to follow and assert behavior.
 
 ```js
-// This could be the configuraton for a Component that renders a list of users
-{
-  "component": "List",
-  "class": "users",
-  "dataUrl": "users.json"
-}
+// Registering Cosmos Components is as easy as referencing them in the
+// components namespace
+Cosmos.components.Intro = React.createClass({
+  render: function() {
+    return React.DOM.p(null,
+      "My name is ", this.props.name, " and I'm from ", this.props.hometown, "."
+    );
+  }
+});
+// This is how you load and render Component input in Cosmos
+Cosmos.render({
+  component: 'Intro',
+  name: 'Johnny',
+  hometown: 'Minnesota'
+});
+// Since we didn't specify a DOM container to render this component in, an HTML
+// string will be returned instead
+"<p>My name is Johnny and I'm from Minnesota.</p>"
 ```
 
-It's up a Component (or the mixins it uses) to implement any _prop_ received
-from its input configuration, except for one reserved by convention:
+_[JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) improves the
+readability of React Components a lot, but unfortunately
+[GFM](http://github.github.com/github-flavored-markdown/) doesn't support it
+yet, so vanilla JS is used in code snippets._
+
+#### Component input (props)
+
+It's up a Component (or the mixins it uses) to implement any _props_ received
+as input, except for one reserved by convention:
 
 - **component** - The name of the Component to load. Normally we should already
                   have a Component class when instantiating it, but there are
@@ -95,98 +97,85 @@ from its input configuration, except for one reserved by convention:
   - 2. When a List Component receives a list of children to load
 
 \* The **Root Component** is the first Component loaded inside a page, usually
-pulling its input configuration from the URL query string.
+pulling its input from the URL query string.
 
-### Mixins
+### Top-level API
 
-__The behavior of a Component is determined by its
-[Mixins.](http://facebook.github.io/react/docs/reusable-components.html#mixins)__
-Each mixin can support a set of input _props,_ make new methods
-available and interfere with the [lifecycle methods](http://facebook.github.io/react/docs/component-specs.html#lifecycle-methods)
-of a Component. While mixins can optionally profit from other mixins when
-combined, they are independent by nature and should have an isolated assertable
-behavior.
+Cosmos can be used as the main router for a web app, but also just for
+rendering parts of an existent application. Here are the main API methods that
+should make you feel at home with Cosmos.
 
-#### DataFetch Mixin
+#### Cosmos(props)
 
-Bare functionality for fetching server-side JSON data inside a Component. Uses
-basic Ajax requests and setInterval for polling.
+The _Cosmos_ namespace itself is a function. It's how you instantiate a
+Component from the Cosmos namespace.
 
 ```js
-{
-  "component": "List",
-  "dataUrl": "/api/users.json",
-  // Refresh users every 5 seconds
-  "pollInterval": 5000
-}
-```
-
-Props:
-
-- **dataUrl** - A URL to fetch data from. Once data is received it will be set
-                inside the Component's _state_, under the `data` key, and will
-                cause a reactive re-render.
-- **pollInterval** - An interval in milliseconds for polling the data URL.
-                     Defaults to 0, which means no polling.
-
-Context properties:
-
-- **initialData** - The initial value of `state.data`, before receiving and
-                    data from the server (see _data_ prop.) Defaults to an
-                    empty object `{}`
-
-#### PersistState Mixin
-
-Heart of the Cosmos framework. Enables dumping a state object into a Component
-and exporting the current state.
-
-```js
-{
-  "component": "Item",
-  "state": {"name": "John Doe", "age": "24"}
-}
-```
-
-Props:
-
-- **state** - An object that will be poured inside the initial Component
-              _state_ as soon as it loads (replacing any default state.)
-
-Methods:
-
-- **generateSnapshot** - Generate a snapshot of the Component _props_
-                         (including current _state_.) It excludes internal
-                         props set by React during run-time and props with
-                         [default values.](http://facebook.github.io/react/docs/component-specs.html#getdefaultprops)
-
-#### Url Mixin
-
-Enables basic linking between Components, with optional use of the minimal
-built-in Router.
-
-```js
-React.createComponent({
-  mixins: [Cosmos.mixins.PersistState,
-           Cosmos.mixins.Url],
-  render: function() {
-    return React.DOM.a({
-      href: this.getUrlFromProps(this.generateSnapshot()),
-      onClick: this.routeLink
-    }, "Maximize");
-  }
+Cosmos.render({
+  component: 'Intro',
+  name: 'Johnny',
+  hometown: 'Minnesota'
+});
+// is the equivalent of
+Cosmos.components.Intro({
+  name: 'Johny',
+  hometown: 'Minnesota'
 });
 ```
 
-Methods:
+It's counter-intuitive to have the Component name embedded in its input data,
+but this is part of the Component serialization concept. Think of the
+Component input data as a database entry and it will start making sense.
 
-  - **getUrlFromProps** - Serializes a props object into a browser-complient
-                          URL. The URL generated can be simply put inside the
-                          _href_ attribute of an `<a>` tag, and can be combined
-                          with the generateSnapshot method of the PersistState
-                          mixin to create a link that opens the current
-                          Component at root level (full window.)
-  - **routeLink** - Any `<a>` tag can have this method bound to its onClick
-                    event to have their corresponding _href_ location picked up
-                    by the built-in Router implementation, which uses
-                    _pushState_ to switch between Components instead of
-                    reloading pages.
+Here's how rendering a Component inside another one looks like in JSX syntax:
+
+```html
+<Cosmos component="Intro"
+        name="Johnny"
+        hometown="Minnesota" />
+```
+
+#### Cosmos.render(props, container, callback)
+
+Renders a React Component from the Cosmos namespace (_component_ prop is
+required.) The _container_ and _callback_ params are optional.
+
+#### Cosmos.start(options)
+
+Entry point for a Cosmos Router-powered app. Uses the HTML5 history.pushState
+API to cache Component snapshots and listen to state changes, rendering
+previous Components in an instant when going back through history.
+
+The options are as follows:
+
+- **props** - Initial Component input, defaults to the URL query string
+- **defaultProps** - Default Component input to load when the given  _props_
+                     are empty. This is useful when the initial Component input
+                     is loaded from the URL and you need a default Component
+                     input for the `/` home path
+- **container** - DOM container to render Components in, defaults to
+                  `document.body`
+
+Here's how a standard URL for an app powered by the Cosmos Router would look
+like:
+
+```
+http://localhost/?component=Intro&name=Johnny&hometown=Minnesota
+```
+
+The [URL mixin](https://github.com/skidding/cosmos/wiki/Mixins#url) is used for
+routing links using the Cosmos Router.
+
+### Mixins
+
+Mixins are meant to be responsible for all behavior that isn't specific to a
+single Component.
+
+Each mixin can support a set of input _props,_ make new methods
+available and interfere with the [lifecycle methods](http://facebook.github.io/react/docs/component-specs.html#lifecycle-methods)
+of a Component. While mixins can optionally profit from other mixins when
+combined, they are independent by nature and should follow the **Single
+Responsibility Principle.**
+
+Core mixins are be placed under the `Cosmos.mixins` namespace. Read more inside
+the [Mixins wiki page.](https://github.com/skidding/cosmos/wiki/Mixins)

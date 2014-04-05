@@ -18,22 +18,14 @@ var paths = {
   ]
 };
 
-gulp.task('scripts', function() {
-  // Node bundle
+gulp.task('build', function() {
+  // Cosmos bundle
   gulp.src(paths.scripts)
     .pipe(react())
     .pipe(concat('cosmos.js'))
     .pipe(gulp.dest('build'))
     .pipe(uglify())
     .pipe(rename('cosmos.min.js'))
-    .pipe(gulp.dest('build'));
-  // Bundle bundle
-  gulp.src(paths.dependencies.concat(paths.scripts))
-    .pipe(react())
-    .pipe(concat('cosmos-with-dependencies.js'))
-    .pipe(gulp.dest('build'))
-    .pipe(uglify())
-    .pipe(rename('cosmos-with-dependencies.min.js'))
     .pipe(gulp.dest('build'));
   // Demo bundle
   gulp.src(paths.demo)
@@ -47,7 +39,7 @@ gulp.task('scripts', function() {
 
 // Rerun the task when a file changes
 gulp.task('watch', function () {
-  gulp.watch(paths.dependencies.concat(paths.scripts, paths.demo), ['scripts']);
+  gulp.watch(paths.dependencies.concat(paths.scripts, paths.demo), ['build']);
 });
 
-gulp.task('default', ['scripts', 'watch']);
+gulp.task('default', ['build', 'watch']);

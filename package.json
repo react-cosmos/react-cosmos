@@ -15,8 +15,8 @@
     "gulp-react": "~0.1.2",
     "jasmine-node": "~1.13.1"
   },
-  "main": "./build/cosmos.js",
+  "main": "build/cosmos.js",
   "scripts": {
-    "test": "node_modules/jasmine-node/bin/jasmine-node --verbose specs"
+    "test": "node_modules/.bin/gulp build && node_modules/jasmine-node/bin/jasmine-node --verbose specs"
   }
 }
