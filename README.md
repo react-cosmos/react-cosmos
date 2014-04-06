@@ -55,9 +55,11 @@ node_modules/.bin/gulp
 One of the Cosmos [mantras](#manifesto) is "The state of a Component can be
 serialized at any given point in time," therefore __any Component in any state
 can be represented and reproduced by a persistent JSON.__ This goes hand in
-hand with React's declarative nature. The input data of a Component is a JSON
-object and the role of a Component is to transform its input data into HTML
-output. Easy to follow and assert behavior.
+hand with React's declarative nature.
+
+The input data of a Component is a JSON object and the role of a Component is
+to transform its input data into HTML output. Easy to follow and assert
+behavior.
 
 ```js
 // Registering Cosmos Components is as easy as referencing them in the
@@ -87,17 +89,21 @@ yet, so vanilla JS is used in code snippets._
 
 #### Component input (props)
 
+```js
+{
+  component: 'Intro',
+  name: 'Johnny',
+  hometown: 'Minnesota'
+}
+```
+
 It's up a Component (or the mixins it uses) to implement any _props_ received
-as input, except for one reserved by convention:
+as input, except for one reserved by convention: **component**, the name of the
+Component to load (from the Cosmos.components namespace.)
 
-- **component** - The name of the Component to load. Normally we should already
-                  have a Component class when instantiating it, but there are
-                  two main cases when this prop is relevant:
-  - 1. When loading the Root Component*
-  - 2. When a List Component receives a list of children to load
-
-\* The **Root Component** is the first Component loaded inside a page, usually
-pulling its input from the URL query string.
+It's counter-intuitive to have the Component name embedded in its input data,
+but this is part of the Component serialization concept. Think of the
+Component input data as a database entry and it will start making sense.
 
 ### Top-level API
 
@@ -111,7 +117,7 @@ The _Cosmos_ namespace itself is a function. It's how you instantiate a
 Component from the Cosmos namespace.
 
 ```js
-Cosmos.render({
+Cosmos({
   component: 'Intro',
   name: 'Johnny',
   hometown: 'Minnesota'
@@ -122,10 +128,6 @@ Cosmos.components.Intro({
   hometown: 'Minnesota'
 });
 ```
-
-It's counter-intuitive to have the Component name embedded in its input data,
-but this is part of the Component serialization concept. Think of the
-Component input data as a database entry and it will start making sense.
 
 Here's how rendering a Component inside another one looks like in JSX syntax:
 
