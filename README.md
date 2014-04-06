@@ -36,7 +36,7 @@ Include either the development or the production build in your project.
 <script src="http://skidding.github.io/cosmos/build/cosmos.min.js"></script>
 ```
 
-Cosmos only depends on `React ~0.9.0` and `Underscore.js ~1.5.2`
+Cosmos only depends on `React ~0.9.0` and `Underscore.js ~1.6.0`
 
 ### Development
 
