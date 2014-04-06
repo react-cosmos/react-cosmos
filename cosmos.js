@@ -9,9 +9,7 @@ var Cosmos = function(props) {
 // Enable Node.js compatibility
 if (typeof module !== 'undefined' && module.exports) {
   var React = require('react'),
-      _ = require('underscore'),
-      $ = require('jquery'),
-      Play = require('play-js').Play;
+      _ = require('underscore')
   module.exports = Cosmos;
 }
 
