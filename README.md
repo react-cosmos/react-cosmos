@@ -114,7 +114,7 @@ should make you feel at home with Cosmos.
 #### Cosmos(props)
 
 The _Cosmos_ namespace itself is a function. It's how you instantiate a
-Component from the Cosmos namespace.
+Component from the Cosmos.components namespace.
 
 ```js
 Cosmos({
