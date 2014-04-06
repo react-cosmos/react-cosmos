@@ -2,17 +2,17 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     rename = require('gulp-rename'),
     uglify = require('gulp-uglify'),
+    gulpif = require('gulp-if'),
     react = require('gulp-react');
 
 var paths = {
-  dependencies: [
-    'vendor/**/*.js'
-  ],
-  scripts: [
+  core: [
+    'wrapper-header.js',
     'cosmos.js',
     'lib/**/*.js',
     'mixins/**/*.js',
-    'components/**/*.jsx'],
+    'components/**/*.jsx',
+    'wrapper-footer.js'],
   demo: [
     'demo/components/**/*.jsx'
   ]
@@ -20,8 +20,8 @@ var paths = {
 
 gulp.task('build', function() {
   // Cosmos bundle
-  gulp.src(paths.scripts)
-    .pipe(react())
+  gulp.src(paths.core)
+    .pipe(gulpif(/\.jsx$/, react()))
     .pipe(concat('cosmos.js'))
     .pipe(gulp.dest('build'))
     .pipe(uglify())
@@ -39,7 +39,7 @@ gulp.task('build', function() {
 
 // Rerun the task when a file changes
 gulp.task('watch', function () {
-  gulp.watch(paths.dependencies.concat(paths.scripts, paths.demo), ['build']);
+  gulp.watch(paths.core.concat(paths.demo), ['build']);
 });
 
 gulp.task('default', ['build', 'watch']);
