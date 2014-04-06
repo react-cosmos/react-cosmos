@@ -152,8 +152,8 @@ The options are as follows:
 
 - **props** - Initial Component input, defaults to the URL query string
 - **defaultProps** - Default Component input to load when the given  _props_
-                     are empty. This is useful when the initial Component input
-                     is loaded from the URL and you need a default Component
+                     are empty. Useful when the initial Component input is
+                     loaded from the URL and you need a default Component
                      input for the `/` home path
 - **container** - DOM container to render Components in, defaults to
                   `document.body`
