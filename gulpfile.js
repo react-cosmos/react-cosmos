@@ -5,10 +5,7 @@ var gulp = require('gulp'),
     react = require('gulp-react');
 
 var paths = {
-  dependencies: [
-    'vendor/**/*.js'
-  ],
-  scripts: [
+  core: [
     'cosmos.js',
     'lib/**/*.js',
     'mixins/**/*.js',
@@ -20,7 +17,7 @@ var paths = {
 
 gulp.task('build', function() {
   // Cosmos bundle
-  gulp.src(paths.scripts)
+  gulp.src(paths.core)
     .pipe(react())
     .pipe(concat('cosmos.js'))
     .pipe(gulp.dest('build'))
@@ -39,7 +36,7 @@ gulp.task('build', function() {
 
 // Rerun the task when a file changes
 gulp.task('watch', function () {
-  gulp.watch(paths.dependencies.concat(paths.scripts, paths.demo), ['build']);
+  gulp.watch(paths.core.concat(paths.demo), ['build']);
 });
 
 gulp.task('default', ['build', 'watch']);
