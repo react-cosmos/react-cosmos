@@ -6,13 +6,6 @@ var Cosmos = function(props) {
   return component(_.clone(props));
 };
 
-// Enable Node.js compatibility
-if (typeof module !== 'undefined' && module.exports) {
-  var React = require('react'),
-      _ = require('underscore')
-  module.exports = Cosmos;
-}
-
 _.extend(Cosmos, {
   mixins: {},
   components: {},
