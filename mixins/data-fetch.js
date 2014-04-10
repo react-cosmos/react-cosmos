@@ -12,7 +12,13 @@ Cosmos.mixins.DataFetch = {
    * Context properties:
    *  - initialData: The initial value of state.data, before receiving and data
    *                 from the server (see dataUrl prop.) Defaults to an empty
-   *                 object `{}`
+   *                 object `{}` - TODO: make this a method with props at hand
+   * Context methods:
+   *  - getDataUrl: The data URL can be generated dynamically by composing it
+   *                using other props, inside a custom method that receives
+   *                the next props as arguments and returns the data URL. The
+   *                expected method name is "getDataUrl" and overrides the
+   *                dataUrl prop when implemented.
    */
   fetchDataFromServer: function(url, onSuccess) {
     var request = $.ajax({
