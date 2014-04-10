@@ -73,6 +73,58 @@ describe("Components implementing the DataFetch mixin", function() {
            .fetchDataFromServer.callCount).toEqual(0);
   });
 
+  it("should fetch data with `dataUrl` prop if set", function() {
+    var DataFetchComponent = React.createClass(DataFetchSpec),
+        componentInstance = DataFetchComponent({dataUrl: 'http://happiness.com'});
+
+    // React Components need to be rendered to mount
+    React.renderComponentToString(componentInstance);
+    expect(Cosmos.mixins.DataFetch.fetchDataFromServer.mostRecentCall.args[0])
+          .toEqual('http://happiness.com');
+  });
+
+  it("should fetch data with `getDataUrl` method if set", function() {
+    var DataFetchComponent = React.createClass(_.extend({}, DataFetchSpec, {
+          getDataUrl: function() {
+            return 'http://euphoria.org';
+          }
+        })),
+        componentInstance = DataFetchComponent();
+
+    // React Components need to be rendered to mount
+    React.renderComponentToString(componentInstance);
+    expect(Cosmos.mixins.DataFetch.fetchDataFromServer.mostRecentCall.args[0])
+          .toEqual('http://euphoria.org');
+  });
+
+  it("should choose `getDataUrl` method over `dataUrl` prop if both set", function() {
+    var DataFetchComponent = React.createClass(_.extend({}, DataFetchSpec, {
+          getDataUrl: function() {
+            return 'http://euphoria.org';
+          }
+        })),
+        componentInstance = DataFetchComponent({dataUrl: 'http://happiness.com'});
+
+    // React Components need to be rendered to mount
+    React.renderComponentToString(componentInstance);
+    expect(Cosmos.mixins.DataFetch.fetchDataFromServer.mostRecentCall.args[0])
+          .toEqual('http://euphoria.org');
+  });
+
+  it("should use props in `getDataUrl` method", function() {
+    var DataFetchComponent = React.createClass(_.extend({}, DataFetchSpec, {
+          getDataUrl: function(props) {
+            return 'http://desertedblog.com?id=' + props.id;
+          }
+        })),
+        componentInstance = DataFetchComponent({id: 3});
+
+    // React Components need to be rendered to mount
+    React.renderComponentToString(componentInstance);
+    expect(Cosmos.mixins.DataFetch.fetchDataFromServer.mostRecentCall.args[0])
+          .toEqual('http://desertedblog.com?id=3');
+  });
+
   it("should populate state.data with fetched data", function() {
     var DataFetchComponent = React.createClass(DataFetchSpec),
         componentInstance = DataFetchComponent({});
