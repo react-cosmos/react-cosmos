@@ -12,7 +12,13 @@ Cosmos.mixins.DataFetch = {
    * Context properties:
    *  - initialData: The initial value of state.data, before receiving and data
    *                 from the server (see dataUrl prop.) Defaults to an empty
-   *                 object `{}`
+   *                 object `{}` - TODO: make this a method with props at hand
+   * Context methods:
+   *  - getDataUrl: The data URL can be generated dynamically by composing it
+   *                using other props, inside a custom method that receives
+   *                the next props as arguments and returns the data URL. The
+   *                expected method name is "getDataUrl" and overrides the
+   *                dataUrl prop when implemented.
    */
   fetchDataFromServer: function(url, onSuccess) {
     var request = $.ajax({
@@ -40,14 +46,24 @@ Cosmos.mixins.DataFetch = {
   resetData: function(props) {
     // Previous data must be cleared before new one arrives
     this.setState({data: this.getInitialData()});
+    // The data URL can be generated dynamically by composing it through other
+    // props, inside a custom method that receives the next props as arguments
+    // and returns the data URL. The expected method name is "getDataUrl" and
+    // overrides the dataUrl prop when implemented
+    var dataUrl = typeof(this.getDataUrl) == 'function' ?
+                  this.getDataUrl(props) : this.props.dataUrl;
+    if (dataUrl == this.dataUrl) {
+      return;
+    }
+    this.dataUrl = dataUrl;
     // Clear any on-going polling when data is reset. Even if polling is still
     // enabled, we need to reset the interval to start from now
     this.clearDataRequests();
-    if (props.dataUrl) {
-      this.fetchDataFromServer(props.dataUrl, this.receiveDataFromServer);
+    if (dataUrl) {
+      this.fetchDataFromServer(dataUrl, this.receiveDataFromServer);
       if (props.pollInterval) {
         this.pollInterval = setInterval(function() {
-          this.fetchDataFromServer(props.dataUrl, this.receiveDataFromServer);
+          this.fetchDataFromServer(dataUrl, this.receiveDataFromServer);
         }.bind(this), props.pollInterval);
       }
     }
@@ -75,9 +91,7 @@ Cosmos.mixins.DataFetch = {
   },
   componentWillReceiveProps: function(nextProps) {
     // A Component can have its configuration replaced at any time
-    if (nextProps.dataUrl != this.props.dataUrl) {
-      this.resetData(nextProps);
-    }
+    this.resetData(nextProps);
   },
   componentWillUnmount: function() {
     this.clearDataRequests();
