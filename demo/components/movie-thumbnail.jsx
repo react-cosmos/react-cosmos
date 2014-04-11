@@ -1,31 +1,29 @@
 /** @jsx React.DOM */
 
 Cosmos.components.MovieThumbnail = React.createClass({
-  mixins: [Cosmos.mixins.ClassName,
-           Cosmos.mixins.PersistState,
+  /**
+   * Expected input:
+   * {
+   *   component: "MovieThumbnail",
+   *   title: "The Dark Knight",
+   *   year: 2008,
+   *   posterPath: "http://image.tmdb.org/t/p/w342/1hRoyzDtpgMU7Dz4JF22RANzQO7.jpg,
+   *   movieProps: {
+   *     component: "Movie",
+   *     id: 155
+   *   }
+   * }
+   */
+  mixins: [Cosmos.mixins.PersistState,
            Cosmos.mixins.Url],
-  defaultClass: 'movie-thumbnail',
   render: function() {
     return (
-      <a className={this.getClassName()}
-         href={this.getUrlFromProps(this.getPropsForMovie())}
-         onClick={this.routeLink}
-         style={{
-           backgroundImage: 'url(' + this.getUrlForPosterImage() + ')'
-         }}>
+      <a href={this.getUrlFromProps(this.props.movieProps)}
+         onClick={this.routeLink}>
+        <img className="thumbnail"
+             src={this.props.posterPath}
+             alt="" />
       </a>
     );
-  },
-  getPropsForMovie: function() {
-    return {
-      component: 'Movie',
-      posterPath: this.props.poster_path,
-      dataUrl: App.MOVIEDB_API_ROOT + '/movie/' + this.props.id +
-               '?append_to_response=credits,similar_movies' +
-               '&api_key=' + App.MOVIEDB_API_KEY
-    };
-  },
-  getUrlForPosterImage: function() {
-    return App.MOVIEDB_IMG_ROOT + '/w154' + this.props.poster_path;
   }
 });

@@ -1,57 +1,97 @@
 /** @jsx React.DOM */
 
 Cosmos.components.Movie = React.createClass({
-  mixins: [Cosmos.mixins.ClassName,
-           Cosmos.mixins.DataFetch,
+  /**
+   * Expected input:
+   * {
+   *   component: "Movie",
+   *   id: 155
+   * }
+   * Expected state:
+   * {
+   *   data: {
+   *     id: 155,
+   *     title: "The Dark Knight",
+   *     release_date: "2008-07-18",
+   *     poster_path: "/1hRoyzDtpgMU7Dz4JF22RANzQO7.jpg",
+   *     credits: {
+   *       crew: [...],
+   *       cast: [...]
+   *     },
+   *     genres: [{
+   *       id: 28,
+   *       name: "Action"
+   *     }],
+   *     similar_movies: {
+   *       results: [{
+   *         id: 272,
+   *         title: "Batman Begins",
+   *         poster_path: "/zfVFOo2XCHbeA0mXbst42TAGhfC.jpg",
+   *         vote_average: 7,
+   *         vote_count: 2492
+   *       }]
+   *     },
+   *     imdb_id: "tt0468569"
+   *   }
+   * }
+   */
+  mixins: [Cosmos.mixins.DataFetch,
            Cosmos.mixins.PersistState],
-  defaultClass: 'movie full-background',
   render: function() {
-    var backgroundStyle = this.getBackgroundStyle();
+    if (_.isEmpty(this.state.data)) {
+      return (<div className="movie"></div>);
+    }
     return (
-      <div className={this.getClassName()} style={backgroundStyle}>
-        <div className="full-background-content">
-          {this.getContentDOM()}
+      <div className="movie">
+        <Cosmos component="MovieHeader"
+                title={this.state.data.title}
+                year={this.getReleaseYear(this.state.data.release_date)}
+                posterPath={this.getPosterPath(this.state.data.poster_path, 342)}
+                credits={this.state.data.credits} />
+        <p className="movie-plot">
+          {this.getGenreNames(this.state.data.genres) + ' --- '}
+          <em>{this.state.data.overview}</em>
+        </p>
+        <div className="related-movies">
+          <p className="related-movies-headline">
+            If you liked <em>{this.state.data.title}</em> you would also like...
+          </p>
+          <Cosmos component="List"
+                  state={{data: this.getPropsForRelatedComponent()}} />
         </div>
       </div>
     );
   },
-  getContentDOM: function() {
-    if (_.isEmpty(this.state.data)) {
-      return null;
-    }
-    return (
-      <div className="content-wrapper">
-        <h1 className="movie-title">
-          {this.state.data.title + ' '}
-          <span className="year">({this.getReleaseYear()})</span>
-        </h1>
-        <Cosmos component="MovieCredits"
-                cast={this.state.data.credits.cast}
-                crew={this.state.data.credits.crew} />
-        <p className="movie-plot">{this.state.data.overview}</p>
-        <p className="similar-to">similar to...</p>
-        <Cosmos component="List"
-                itemComponent="MovieThumbnail"
-                class="movie-list"
-                state={{data: this.getSimilarMovies()}} />
-      </div>
-    );
+  getDataUrl: function(props) {
+    return App.getApiPath('movie', props.id, 'credits,similar_movies');
   },
-  getBackgroundStyle: function() {
-    if (!this.getPosterPath()) {
-      return {};
-    }
-    return {
-      // We load the SD version first, since we already have it in cache
-      // from the thumbnail leading to this movie
-      backgroundImage: 'url(' + this.getUrlForBackgroundImage(780) + '),' +
-                       'url(' + this.getUrlForBackgroundImage(154) + ')'
-    }
+  getReleaseYear: function(releaseDate) {
+    return new Date(releaseDate).getFullYear();
   },
-  getReleaseYear: function() {
-    return new Date(this.state.data.release_date).getFullYear();
+  getPosterPath: function(posterPath, size) {
+    return App.getImagePath(posterPath, size);
+  },
+  getGenreNames: function(genres) {
+    return _.pluck(genres, 'name').join(', ');
+  },
+  getPropsForRelatedComponent: function() {
+    return _.map(this.getSimilarMovies(), function(movie) {
+      return {
+        component: "MovieThumbnail",
+        title: movie.title,
+        year: this.getReleaseYear(movie.release_date),
+        posterPath: this.getPosterPath(movie.poster_path, 154),
+        movieProps: {
+          component: "Movie",
+          id: movie.id
+        }
+      };
+    }.bind(this));
   },
   getSimilarMovies: function() {
+    if (_.isEmpty(this.state.data)) {
+      return [];
+    }
     var movies = this.state.data.similar_movies.results || [];
     // Can't show thumbnails without images
     movies = _.filter(movies, function(movie) {
@@ -64,13 +104,5 @@ Cosmos.components.Movie = React.createClass({
       return -average;
     });
     return movies;
-  },
-  getUrlForBackgroundImage: function(size) {
-    return App.MOVIEDB_IMG_ROOT + '/w' + size + this.getPosterPath();
-  },
-  getPosterPath: function() {
-    // The poster path can be sent directly through props to load an already
-    // cached image
-    return this.props.posterPath || this.state.data.poster_path;
   }
 });
