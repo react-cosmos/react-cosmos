@@ -47,11 +47,11 @@ Cosmos.components.Movie = React.createClass({
       <div className="movie">
         <Cosmos component="MovieHeader"
                 title={this.state.data.title}
-                year={this.getReleaseYear(this.state.data.release_date)}
+                year={App.getReleaseYear(this.state.data.release_date)}
                 posterPath={App.getImagePath(this.state.data.poster_path, 342)}
                 credits={App.groupCreditsPerDepartments(this.state.data.credits)} />
         <p className="overview">
-          <strong>{this.getGenreNames(this.state.data.genres)}</strong>
+          <strong>{App.getGenreNames(this.state.data.genres)}</strong>
           <em>{' --- ' + this.state.data.overview}</em>
         </p>
         <div className="related">
@@ -67,17 +67,11 @@ Cosmos.components.Movie = React.createClass({
   getDataUrl: function(props) {
     return App.getApiPath('movie', props.id, 'credits,similar_movies');
   },
-  getReleaseYear: function(releaseDate) {
-    return new Date(releaseDate).getFullYear();
-  },
-  getGenreNames: function(genres) {
-    return _.pluck(genres, 'name').join(', ');
-  },
   getPropsForRelatedComponents: function() {
     return _.map(this.getSimilarMovies(), function(movie) {
       return {
         component: "Thumbnail",
-        name: movie.title + ' (' + this.getReleaseYear(movie.release_date) + ')',
+        name: movie.title + ' (' + App.getReleaseYear(movie.release_date) + ')',
         image: App.getImagePath(movie.poster_path, 154),
         linkProps: {
           component: "Movie",

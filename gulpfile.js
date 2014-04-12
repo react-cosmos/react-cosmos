@@ -14,7 +14,8 @@ var paths = {
     'components/**/*.jsx',
     'wrapper-footer.js'],
   demo: [
-    'demo/components/**/*.jsx'
+    'demo/components/**/*.jsx',
+    'demo/app.js'
   ]
 };
 

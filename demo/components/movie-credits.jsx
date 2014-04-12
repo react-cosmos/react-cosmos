@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-var departmentTitleMappings = {
+var departmentRoleMappings = {
   directing: 'Director',
   writing: 'Writer',
   production: 'Producer',
@@ -68,7 +68,7 @@ Cosmos.components.MovieCredits = React.createClass({
     return (
       <li key={department}>
         <span className="credit-label">
-          {this.getItemPrefix(departmentTitleMappings[department], people.length)}
+          {this.getItemPrefix(departmentRoleMappings[department], people.length)}
         </span>
         <ul className="credit-value">
           {creditsWithLinks}
