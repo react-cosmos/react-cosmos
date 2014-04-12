@@ -43,6 +43,8 @@ Cosmos.components.Movie = React.createClass({
     if (_.isEmpty(this.state.data)) {
       return (<div className="movie"></div>);
     }
+    var filteredSimilarMovies =
+          this.filterSimilarMovies(this.state.data.similar_movies.results);
     return (
       <div className="movie">
         <Cosmos component="MovieHeader"
@@ -59,7 +61,7 @@ Cosmos.components.Movie = React.createClass({
             If you liked <em>{this.state.data.title}</em> you might also like...
           </p>
           <Cosmos component="List"
-                  state={{data: this.getPropsForRelatedComponents()}} />
+                  state={{data: this.getPropsForSimilarMovies(filteredSimilarMovies)}} />
         </div>
       </div>
     );
@@ -67,8 +69,8 @@ Cosmos.components.Movie = React.createClass({
   getDataUrl: function(props) {
     return App.getApiPath('movie', props.id, 'credits,similar_movies');
   },
-  getPropsForRelatedComponents: function() {
-    return _.map(this.getSimilarMovies(), function(movie) {
+  getPropsForSimilarMovies: function(similarMovies) {
+    return _.map(similarMovies, function(movie) {
       return {
         component: "Thumbnail",
         name: movie.title + ' (' + App.getReleaseYear(movie.release_date) + ')',
@@ -80,11 +82,7 @@ Cosmos.components.Movie = React.createClass({
       };
     }.bind(this));
   },
-  getSimilarMovies: function() {
-    if (_.isEmpty(this.state.data)) {
-      return [];
-    }
-    var movies = this.state.data.similar_movies.results || [];
+  filterSimilarMovies: function(movies) {
     // Can't show thumbnails without images
     movies = _.filter(movies, function(movie) {
       return !!movie.poster_path;
