@@ -18,7 +18,7 @@ p {
 .movie-poster {
   float: left;
   width: 185px;
-  margin: 0 15px 15px 0;
+  margin: 0 15px 0 0;
 }
 .movie-title {
   margin: 0 0 15px 0;
@@ -50,7 +50,7 @@ p {
     }
 
 .movie-plot {
-  margin: 15px 0;
+  margin: 15px 0 0 0;
   padding: 0 0 0 200px;
   font-size: 18px;
   line-height: 24px;
@@ -60,12 +60,12 @@ p {
   clear: both;
   overflow: hidden;
 }
+  .related-movies .list {
+    margin: -15px 0 0 -15px;
+  }
   .related-movies .list li {
     float: left;
-    margin: 15px 15px 0 0;
-  }
-  .related-movies-headline {
-    margin: 0;
+    margin: 15px 0 0 15px;
   }
 
 .thumbnail {
