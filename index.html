@@ -24,6 +24,24 @@ var App = {
   },
   getImagePath: function(path, size) {
     return App.MOVIEDB_IMG_ROOT + '/w' + size + path;
+  },
+  groupCreditsPerDepartments: function(credits) {
+    return {
+      directing: this.filterCrewByDepartment(credits.crew, 'Directing'),
+      writing: this.filterCrewByDepartment(credits.crew, 'Writing'),
+      production: this.filterCrewByDepartment(credits.crew, 'Production'),
+      acting: credits.cast
+    };
+  },
+  filterCrewByDepartment: function(crew, department) {
+    var filteredCrew = _.filter(crew, function(person) {
+      return person.department == department;
+    });
+    // Remove duplicate entries when a person has more than one role in the
+    // same department
+    return _.uniq(filteredCrew, false, function(person) {
+      return person.id;
+    });
   }
 };
 App.router = Cosmos.start({

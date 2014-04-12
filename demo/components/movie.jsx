@@ -48,8 +48,8 @@ Cosmos.components.Movie = React.createClass({
         <Cosmos component="MovieHeader"
                 title={this.state.data.title}
                 year={this.getReleaseYear(this.state.data.release_date)}
-                posterPath={this.getPosterPath(this.state.data.poster_path, 342)}
-                credits={this.getCredits(this.state.data.credits)} />
+                posterPath={App.getImagePath(this.state.data.poster_path, 342)}
+                credits={App.groupCreditsPerDepartments(this.state.data.credits)} />
         <p className="overview">
           <strong>{this.getGenreNames(this.state.data.genres)}</strong>
           <em>{' --- ' + this.state.data.overview}</em>
@@ -70,33 +70,6 @@ Cosmos.components.Movie = React.createClass({
   getReleaseYear: function(releaseDate) {
     return new Date(releaseDate).getFullYear();
   },
-  getPosterPath: function(posterPath, size) {
-    return App.getImagePath(posterPath, size);
-  },
-  getCredits: function(credits) {
-    return {
-      crew: _.map(credits.crew, function(person) {
-        return {
-          name: person.name,
-          department: person.department,
-          personProps: {
-            component: "Person",
-            id: person.id
-          }
-        };
-      }),
-      cast: _.map(credits.cast, function(person) {
-        return {
-          name: person.name,
-          order: person.order,
-          personProps: {
-            component: "Person",
-            id: person.id
-          }
-        };
-      })
-    };
-  },
   getGenreNames: function(genres) {
     return _.pluck(genres, 'name').join(', ');
   },
@@ -105,7 +78,7 @@ Cosmos.components.Movie = React.createClass({
       return {
         component: "Thumbnail",
         name: movie.title + ' (' + this.getReleaseYear(movie.release_date) + ')',
-        image: this.getPosterPath(movie.poster_path, 154),
+        image: App.getImagePath(movie.poster_path, 154),
         linkProps: {
           component: "Movie",
           id: movie.id

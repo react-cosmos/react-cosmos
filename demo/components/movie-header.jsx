@@ -8,10 +8,7 @@ Cosmos.components.MovieHeader = React.createClass({
    *   title: "The Dark Knight",
    *   year: 2008,
    *   posterPath: "http://image.tmdb.org/t/p/w342/1hRoyzDtpgMU7Dz4JF22RANzQO7.jpg",
-   *   credits: {
-   *     crew: [...],
-   *     cast: [...]
-   *   }
+   *   credits: {...}
    * }
    */
   render: function() {
@@ -27,8 +24,7 @@ Cosmos.components.MovieHeader = React.createClass({
           </h1>
         </div>
         <Cosmos component="MovieCredits"
-                cast={this.props.credits.cast}
-                crew={this.props.credits.crew} />
+                credits={this.props.credits} />
       </div>
     );
   }
