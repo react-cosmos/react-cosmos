@@ -103,11 +103,10 @@ Cosmos.components.Movie = React.createClass({
   getPropsForRelatedComponent: function() {
     return _.map(this.getSimilarMovies(), function(movie) {
       return {
-        component: "MovieThumbnail",
-        title: movie.title,
-        year: this.getReleaseYear(movie.release_date),
-        posterPath: this.getPosterPath(movie.poster_path, 154),
-        movieProps: {
+        component: "Thumbnail",
+        name: movie.title + ' (' + this.getReleaseYear(movie.release_date) + ')',
+        image: this.getPosterPath(movie.poster_path, 154),
+        linkProps: {
           component: "Movie",
           id: movie.id
         }
