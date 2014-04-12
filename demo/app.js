@@ -27,6 +27,15 @@ var App = {
   getGenreNames: function(genres) {
     return _.pluck(genres, 'name').join(', ');
   },
+  getTextExcerpt: function(text, limit) {
+    // Get text excerpt while not breaking sentences.
+    var sentences = text.split('.'),
+        excerpt = '';
+    while (sentences.length && excerpt.length < limit) {
+      excerpt += sentences.shift() + '.';
+    }
+    return excerpt;
+  },
   groupCreditsPerDepartments: function(credits) {
     return {
       directing: this.filterCrewByDepartment(credits.crew, 'Directing'),

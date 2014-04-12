@@ -54,7 +54,7 @@ Cosmos.components.Movie = React.createClass({
                 credits={App.groupCreditsPerDepartments(this.state.data.credits)} />
         <p className="overview">
           <strong>{App.getGenreNames(this.state.data.genres)}</strong>
-          <em>{' --- ' + this.state.data.overview}</em>
+          <em>{' --- ' + App.getTextExcerpt(this.state.data.overview, 1000)}</em>
         </p>
         <div className="related">
           <p className="related-headline">

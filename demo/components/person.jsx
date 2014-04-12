@@ -49,7 +49,7 @@ Cosmos.components.Person = React.createClass({
                 birthday={App.getBirthDay(this.state.data.birthday)}
                 birthplace={this.state.data.place_of_birth} />
         <p className="overview">
-          <em>{this.state.data.biography}</em>
+          <em>{App.getTextExcerpt(this.state.data.biography, 600)}</em>
         </p>
         <div className="related">
           <p className="related-headline">
