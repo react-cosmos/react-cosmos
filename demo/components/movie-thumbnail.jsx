@@ -18,11 +18,12 @@ Cosmos.components.MovieThumbnail = React.createClass({
            Cosmos.mixins.Url],
   render: function() {
     return (
-      <a href={this.getUrlFromProps(this.props.movieProps)}
+      <a className="thumbnail"
+         href={this.getUrlFromProps(this.props.movieProps)}
          onClick={this.routeLink}>
-        <img className="thumbnail"
-             src={this.props.posterPath}
+        <img src={this.props.posterPath}
              alt="" />
+        {this.props.title + ' (' + this.props.year + ')'}
       </a>
     );
   }

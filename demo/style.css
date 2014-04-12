@@ -60,6 +60,15 @@ p {
   }
 
 .thumbnail {
-  width: 92px;
-  height: 138px;
+  display: block;
+  width: 154px;
+  /* 231 + 3px margin + 3*22px line-height */
+  height: 300px;
+  overflow: hidden;
 }
+  .thumbnail img {
+    display: block;
+    width: 154px;
+    height: 231px;
+    margin: 0 0 3px 0;
+  }

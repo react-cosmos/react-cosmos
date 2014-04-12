@@ -54,7 +54,7 @@ Cosmos.components.Movie = React.createClass({
         </p>
         <div className="related-movies">
           <p className="related-movies-headline">
-            If you liked <em>{this.state.data.title}</em> you would also like...
+            If you liked <em>{this.state.data.title}</em> you might also like...
           </p>
           <Cosmos component="List"
                   state={{data: this.getPropsForRelatedComponent()}} />
@@ -103,6 +103,8 @@ Cosmos.components.Movie = React.createClass({
       var average = movie.vote_count > 5 ? movie.vote_average : 0;
       return -average;
     });
+    // Limit similar movies to max 12 items
+    movies = movies.slice(0, 12);
     return movies;
   }
 });
