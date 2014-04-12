@@ -40,7 +40,8 @@ Cosmos.components.Person = React.createClass({
     var groupedCredits =
           App.groupCreditsPerDepartments(this.state.data.movie_credits),
         relevantDepartment = this.getRelevantDepartment(groupedCredits),
-        relevantCredits = groupedCredits[relevantDepartment];
+        relevantCredits =
+          this.filterRelevantCredits(groupedCredits[relevantDepartment]);
     return (
       <div className="person">
         <Cosmos component="PersonHeader"
@@ -53,7 +54,7 @@ Cosmos.components.Person = React.createClass({
         </p>
         <div className="related">
           <p className="related-headline">
-            <em>{this.state.data.name}</em> is best known for
+            <em>{this.state.data.name}</em> is known for
             {departmentActionMapping[relevantDepartment]}...
           </p>
           <Cosmos component="List"
@@ -77,6 +78,21 @@ Cosmos.components.Person = React.createClass({
         }
       };
     }.bind(this));
+  },
+  filterRelevantCredits: function(movies) {
+    // Can't show thumbnails without images
+    movies = _.filter(movies, function(movie) {
+      return !!movie.poster_path;
+    });
+    // Don't show movies from the future (can't be known by them...)
+    movies = _.filter(movies, function(movie) {
+      return new Date(movie.release_date).getTime() < Date.now();
+    });
+    // Sort them by date, newest first
+    movies = _.sortBy(movies, function(movie) {
+      return -(new Date(movie.release_date).getTime());
+    });
+    return movies;
   },
   getRelevantDepartment: function(groupedCredits) {
     var departments = _.keys(groupedCredits);
