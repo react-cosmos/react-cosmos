@@ -41,12 +41,12 @@ Cosmos.components.Movie = React.createClass({
            Cosmos.mixins.PersistState],
   render: function() {
     if (_.isEmpty(this.state.data)) {
-      return (<div className="movie"></div>);
+      return <div></div>;
     }
     var filteredSimilarMovies =
           this.filterSimilarMovies(this.state.data.similar_movies.results);
     return (
-      <div className="movie">
+      <div>
         <Cosmos component="MovieHeader"
                 title={this.state.data.title}
                 year={App.getReleaseYear(this.state.data.release_date)}

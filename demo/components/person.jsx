@@ -35,7 +35,7 @@ Cosmos.components.Person = React.createClass({
            Cosmos.mixins.PersistState],
   render: function() {
     if (_.isEmpty(this.state.data)) {
-      return (<div className="movie"></div>);
+      return <div></div>;
     }
     var groupedCredits =
           App.groupCreditsPerDepartments(this.state.data.movie_credits),
@@ -43,7 +43,7 @@ Cosmos.components.Person = React.createClass({
         relevantCredits =
           this.filterRelevantCredits(groupedCredits[relevantDepartment]);
     return (
-      <div className="person">
+      <div>
         <Cosmos component="PersonHeader"
                 name={this.state.data.name}
                 profilePath={App.getImagePath(this.state.data.profile_path, 342)}
