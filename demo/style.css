@@ -37,8 +37,17 @@ p {
     content: ': ';
   }
   .movie-credit-value {
-    font-weight: bold;
+    display: inline;
   }
+    .movie-credit-value li {
+      display: inline;
+    }
+    .movie-credit-value li:after {
+      content: ', ';
+    }
+    .movie-credit-value li:last-child:after {
+      content: none;
+    }
 
 .movie-plot {
   margin: 15px 0;
@@ -62,8 +71,8 @@ p {
 .thumbnail {
   display: block;
   width: 154px;
-  /* 231 + 3px margin + 3*22px line-height */
-  height: 300px;
+  /* 231 + 3px margin + 2*22px line-height */
+  height: 278px;
   overflow: hidden;
 }
   .thumbnail img {

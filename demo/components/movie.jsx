@@ -47,10 +47,10 @@ Cosmos.components.Movie = React.createClass({
                 title={this.state.data.title}
                 year={this.getReleaseYear(this.state.data.release_date)}
                 posterPath={this.getPosterPath(this.state.data.poster_path, 342)}
-                credits={this.state.data.credits} />
+                credits={this.getCredits(this.state.data.credits)} />
         <p className="movie-plot">
-          {this.getGenreNames(this.state.data.genres) + ' --- '}
-          <em>{this.state.data.overview}</em>
+          <strong>{this.getGenreNames(this.state.data.genres)}</strong>
+          <em>{' --- ' + this.state.data.overview}</em>
         </p>
         <div className="related-movies">
           <p className="related-movies-headline">
@@ -70,6 +70,30 @@ Cosmos.components.Movie = React.createClass({
   },
   getPosterPath: function(posterPath, size) {
     return App.getImagePath(posterPath, size);
+  },
+  getCredits: function(credits) {
+    return {
+      crew: _.map(credits.crew, function(person) {
+        return {
+          name: person.name,
+          department: person.department,
+          personProps: {
+            component: "Person",
+            id: person.id
+          }
+        };
+      }),
+      cast: _.map(credits.cast, function(person) {
+        return {
+          name: person.name,
+          order: person.order,
+          personProps: {
+            component: "Person",
+            id: person.id
+          }
+        };
+      })
+    };
   },
   getGenreNames: function(genres) {
     return _.pluck(genres, 'name').join(', ');

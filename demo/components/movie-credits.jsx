@@ -7,52 +7,74 @@ Cosmos.components.MovieCredits = React.createClass({
    *   component: "MovieCredits",
    *   crew: [{
    *     name: "Christopher Nolan",
-   *     department: "Directing"
+   *     department: "Directing",
+   *     personProps: {
+   *       component: "Person",
+   *       id: 525
+   *     }
    *   }, {
    *     name: "Jonathan Nolan",
-   *     department: "Writing"
+   *     department: "Writing",
+   *     personProps: {
+   *       component: "Person",
+   *       id: 527
+   *     }
    *   }],
    *   cast: [{
    *     name: "Christian Bale",
-   *     order: 0
+   *     order: 0,
+   *     personProps: {
+   *       component: "Person",
+   *       id: 3894
+   *     }
    *   }, {
    *     name: "Heath Ledger",
-   *     order: 1
+   *     order: 1,
+   *     personProps: {
+   *       component: "Person",
+   *       id: 1810
+   *     }
    *   }]
    * }
    */
-  mixins: [Cosmos.mixins.PersistState],
+  mixins: [Cosmos.mixins.PersistState,
+           Cosmos.mixins.Url],
   render: function() {
-    var directors = this.getCrewFromDepartment('Directing'),
-        writers = this.getCrewFromDepartment('Writing'),
-        actors = this.getActors();
+    var credits = {
+      Director: this.getCrewFromDepartment('Directing'),
+      Writer: this.getCrewFromDepartment('Writing'),
+      Actor: this.getActors()
+    };
     return (
       <ul className="movie-credits">
-        <li>
-          <span className="movie-credit-label">
-            {this.getItemPrefix('Director', directors.length)}
-          </span>
-          <span className="movie-credit-value">
-            {directors.join(', ')}
-          </span>
-        </li>
-        <li>
-          <span className="movie-credit-label">
-            {this.getItemPrefix('Writer', writers.length)}
-          </span>
-          <span className="movie-credit-value">
-            {writers.join(', ')}
-            </span>
-        </li>
-        <li>
-          <span className="movie-credit-label">
-            {this.getItemPrefix('Actor', actors.length)}
-          </span>
-          <span className="movie-credit-value">
-            {actors.join(', ')}
-          </span>
-        </li>
+        {_.map(credits, function(people, type) {
+          if (!_.isEmpty(people)) {
+            return this.renderPeopleLinksForDepartment(type, people);
+          }
+        }.bind(this))}
       </ul>
+    );
+  },
+  renderPeopleLinksForDepartment: function(name, people) {
+    // Add links around people's names
+    var creditsWithLinks = _.map(people, function(person) {
+      return (
+        <li>
+          <a href={this.getUrlFromProps(person.personProps)}>
+            {person.name}
+          </a>
+        </li>
+      );
+    }.bind(this));
+    return (
+      <li>
+        <span className="movie-credit-label">
+          {this.getItemPrefix(name, people.length)}
+        </span>
+        <ul className="movie-credit-value">
+          {creditsWithLinks}
+        </ul>
+      </li>
     );
   },
   getCrewFromDepartment: function(department) {
@@ -60,7 +82,7 @@ Cosmos.components.MovieCredits = React.createClass({
         return member.department == department;
     });
     return _.map(crew, function(member) {
-      return member.name;
+      return member;
     });
   },
   getActors: function() {
@@ -68,7 +90,7 @@ Cosmos.components.MovieCredits = React.createClass({
       return actor.order;
     });
     return _.map(actors.slice(0, 4), function(actor) {
-      return actor.name;
+      return actor;
     });
   },
   getItemPrefix: function(singular, itemLength) {
