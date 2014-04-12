@@ -14,6 +14,8 @@ Cosmos.components.Movie = React.createClass({
    *     title: "The Dark Knight",
    *     release_date: "2008-07-18",
    *     poster_path: "/1hRoyzDtpgMU7Dz4JF22RANzQO7.jpg",
+   *     genres: [{id: 28, name: "Action"}, {id: 80, name: "Crime"}],
+   *     overview: "Batman raises the stakes in his war on crime...",
    *     credits: {
    *       crew: [...],
    *       cast: [...]
@@ -48,12 +50,12 @@ Cosmos.components.Movie = React.createClass({
                 year={this.getReleaseYear(this.state.data.release_date)}
                 posterPath={this.getPosterPath(this.state.data.poster_path, 342)}
                 credits={this.getCredits(this.state.data.credits)} />
-        <p className="movie-plot">
+        <p className="overview">
           <strong>{this.getGenreNames(this.state.data.genres)}</strong>
           <em>{' --- ' + this.state.data.overview}</em>
         </p>
-        <div className="related-movies">
-          <p className="related-movies-headline">
+        <div className="related">
+          <p className="related-headline">
             If you liked <em>{this.state.data.title}</em> you might also like...
           </p>
           <Cosmos component="List"

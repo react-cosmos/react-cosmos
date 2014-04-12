@@ -15,55 +15,55 @@ p {
   margin: 15px 0;
 }
 
-.movie-poster {
+.poster {
   float: left;
   width: 185px;
   margin: 0 15px 0 0;
 }
-.movie-title {
+.title {
   margin: 0 0 15px 0;
   font-size: 30px;
   font-weight: bold;
   line-height: 1em;
 }
-  .movie-title .year {
+  .title .year {
     font-weight: normal;
   }
 
-.movie-credits {
+.credits {
   margin: 15px 0;
 }
-  .movie-credit-label:after {
+  .credit-label:after {
     content: ': ';
   }
-  .movie-credit-value {
+  .credit-value {
     display: inline;
   }
-    .movie-credit-value li {
+    .credit-value li {
       display: inline;
     }
-    .movie-credit-value li:after {
+    .credit-value li:after {
       content: ', ';
     }
-    .movie-credit-value li:last-child:after {
+    .credit-value li:last-child:after {
       content: none;
     }
 
-.movie-plot {
+.overview {
   margin: 15px 0 0 0;
   padding: 0 0 0 200px;
   font-size: 18px;
   line-height: 24px;
 }
 
-.related-movies {
+.related {
   clear: both;
   overflow: hidden;
 }
-  .related-movies .list {
+  .related .list {
     margin: -15px 0 0 -15px;
   }
-  .related-movies .list li {
+  .related .list li {
     float: left;
     margin: 15px 0 0 15px;
   }

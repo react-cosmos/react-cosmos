@@ -46,7 +46,7 @@ Cosmos.components.MovieCredits = React.createClass({
       Actor: this.getActors()
     };
     return (
-      <ul className="movie-credits">
+      <ul className="credits">
         {_.map(credits, function(people, type) {
           if (!_.isEmpty(people)) {
             return this.renderPeopleLinksForDepartment(type, people);
@@ -68,10 +68,10 @@ Cosmos.components.MovieCredits = React.createClass({
     }.bind(this));
     return (
       <li>
-        <span className="movie-credit-label">
+        <span className="credit-label">
           {this.getItemPrefix(name, people.length)}
         </span>
-        <ul className="movie-credit-value">
+        <ul className="credit-value">
           {creditsWithLinks}
         </ul>
       </li>

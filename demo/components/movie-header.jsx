@@ -16,12 +16,12 @@ Cosmos.components.MovieHeader = React.createClass({
    */
   render: function() {
     return (
-      <div className="movie-header">
-        <div className="movie-title-wrapper">
-          <img className="movie-poster"
+      <div className="header">
+        <div className="title-wrapper">
+          <img className="poster"
                src={this.props.posterPath}
                alt="" />
-          <h1 className="movie-title">
+          <h1 className="title">
             {this.props.title + ' '}
             <span className="year">({this.props.year})</span>
           </h1>
