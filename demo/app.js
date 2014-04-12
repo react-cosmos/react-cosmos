@@ -15,6 +15,15 @@ var App = {
   getReleaseYear: function(date) {
     return new Date(date).getFullYear();
   },
+  getBirthDay: function(date) {
+    var date = new Date(date);
+    return this.getMonthName(date.getMonth()) + ' ' + date.getDate() + ', ' +
+           date.getFullYear();
+  },
+  getMonthName: function(monthNumber) {
+    return ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+      'August', 'September', 'October', 'November', 'December'][monthNumber];
+  },
   getGenreNames: function(genres) {
     return _.pluck(genres, 'name').join(', ');
   },
