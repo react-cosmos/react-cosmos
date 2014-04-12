@@ -39,16 +39,14 @@ Cosmos.components.MovieCredits = React.createClass({
     return (
       <ul className="credits">
         {_.map(this.props.credits, function(people, department) {
-          if (!_.isEmpty(people)) {
-            return this.renderPeopleLinksForDepartment(people, department);
-          }
+          return this.renderPeopleLinksForDepartment(people, department);
         }.bind(this))}
       </ul>
     );
   },
   renderPeopleLinksForDepartment: function(people, department) {
-    // Ignore producers
-    if (department == 'production') {
+    // Ignore empty departments and producers
+    if (_.isEmpty(people) || department == 'production') {
       return;
     }
     // Only show first 4 actors

@@ -59,7 +59,7 @@ Cosmos.components.Movie = React.createClass({
             If you liked <em>{this.state.data.title}</em> you might also like...
           </p>
           <Cosmos component="List"
-                  state={{data: this.getPropsForRelatedComponent()}} />
+                  state={{data: this.getPropsForRelatedComponents()}} />
         </div>
       </div>
     );
@@ -73,7 +73,7 @@ Cosmos.components.Movie = React.createClass({
   getGenreNames: function(genres) {
     return _.pluck(genres, 'name').join(', ');
   },
-  getPropsForRelatedComponent: function() {
+  getPropsForRelatedComponents: function() {
     return _.map(this.getSimilarMovies(), function(movie) {
       return {
         component: "Thumbnail",
