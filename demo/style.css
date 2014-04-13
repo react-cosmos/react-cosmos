@@ -58,22 +58,19 @@ p {
 
 .related {
   clear: both;
-  overflow: hidden;
 }
   .related .list {
     margin: -15px 0 0 -15px;
   }
   .related .list li {
-    float: left;
+    display: inline-block;
     margin: 15px 0 0 15px;
+    vertical-align: top;
   }
 
 .thumbnail {
   display: block;
   width: 154px;
-  /* 231 + 3px margin + 2*22px line-height */
-  height: 278px;
-  overflow: hidden;
 }
   .thumbnail img {
     display: block;
