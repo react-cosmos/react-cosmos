@@ -72,9 +72,11 @@ p {
   display: block;
   width: 154px;
 }
-  .thumbnail img {
+  .thumbnail .image {
     display: block;
     width: 154px;
     height: 231px;
     margin: 0 0 3px 0;
+    background-repeat: repeat;
+    background-position: 0 0;
   }

@@ -20,8 +20,9 @@ Cosmos.components.Thumbnail = React.createClass({
       <a className="thumbnail"
          href={this.getUrlFromProps(this.props.linkProps)}
          onClick={this.routeLink}>
-        <img src={this.props.image}
-             alt="" />
+        <span className="image"
+              style={{backgroundImage: 'url(' + this.props.image + ')'}}>
+        </span>
         {this.props.name}
       </a>
     );
