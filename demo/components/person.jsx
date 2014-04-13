@@ -53,7 +53,7 @@ Cosmos.components.Person = React.createClass({
           <em>{App.getTextExcerpt(this.state.data.biography, 600)}</em>
         </p>
         <div className="related">
-          <p className="related-headline">
+          <p>
             <em>{this.state.data.name}</em> is known for
             {departmentActionMapping[relevantDepartment]}...
           </p>

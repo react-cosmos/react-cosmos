@@ -57,7 +57,7 @@ Cosmos.components.Movie = React.createClass({
           <em>{' --- ' + App.getTextExcerpt(this.state.data.overview, 1000)}</em>
         </p>
         <div className="related">
-          <p className="related-headline">
+          <p>
             If you liked <em>{this.state.data.title}</em> you might also like...
           </p>
           <Cosmos component="List"

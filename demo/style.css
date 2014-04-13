@@ -3,16 +3,25 @@
   padding: 0;
 }
 body {
+  margin: 15px;
+  background: #fff;
+  color: #383838;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 22px;
-  margin: 15px;
 }
 ul {
   list-style-type: none;
 }
 p {
   margin: 15px 0;
+}
+a {
+  color: #1e0fbe;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
 }
 
 .poster {
@@ -58,6 +67,7 @@ p {
 
 .related {
   clear: both;
+  padding: 15px 0 0 0;
 }
   .related .list {
     margin: -15px 0 0 -15px;
