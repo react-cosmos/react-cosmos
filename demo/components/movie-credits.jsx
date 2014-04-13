@@ -1,42 +1,80 @@
 /** @jsx React.DOM */
 
+var departmentRoleMappings = {
+  directing: 'Director',
+  writing: 'Writer',
+  production: 'Producer',
+  acting: 'Actor'
+};
+
 Cosmos.components.MovieCredits = React.createClass({
-  mixins: [Cosmos.mixins.ClassName,
-           Cosmos.mixins.PersistState],
-  defaultClass: 'movie-credits',
+  /**
+   * Expected input:
+   * {
+   *   component: "MovieCredits",
+   *   credits: {
+   *     acting: [{
+   *       id: 3894,
+   *       name: "Christian Bale"
+   *       order: 0
+   *     }],
+   *     directing: [{
+   *       id: 525,
+   *       name: "Christopher Nolan"
+   *     }],
+   *     production: [{
+   *       id: 525,
+   *       name: "Christopher Nolan"
+   *     }],
+   *     writing: [{
+   *       id: 527,
+   *       name: "Jonathan Nolan"
+   *     }]
+   *   }
+   * }
+   */
+  mixins: [Cosmos.mixins.PersistState,
+           Cosmos.mixins.Url],
   render: function() {
-    var directors = this.getCrewFromDepartment('Directing'),
-        writers = this.getCrewFromDepartment('Writing'),
-        actors = this.getActors();
     return (
-      <ul className="movie-credits">
-        <li className="directors">
-          {this.getItemPrefix('Director', directors.length)}:
-          <strong>{directors.join(', ')}</strong>
-        </li>
-        <li className="writers">
-          {this.getItemPrefix('Writer', writers.length)}:
-          <strong>{writers.join(', ')}</strong>
-        </li>
-        <li className="actors">
-          {this.getItemPrefix('Actor', actors.length)}:
-          <strong>{actors.join(', ')}</strong>
-        </li>
+      <ul className="credits">
+        {_.map(this.props.credits, function(people, department) {
+          return this.renderPeopleLinksForDepartment(people, department);
+        }.bind(this))}
       </ul>
     );
   },
-  getCrewFromDepartment: function(department) {
-    var crew = _.filter(this.props.crew, function(member) {
-        return member.department == department;
-    });
-    return _.map(crew, function(member) {
-      return member.name;
-    });
-  },
-  getActors: function() {
-    return _.map(this.props.cast.slice(0, 4), function(actor) {
-      return actor.name;
-    });
+  renderPeopleLinksForDepartment: function(people, department) {
+    // Ignore empty departments and producers
+    if (_.isEmpty(people) || department == 'production') {
+      return;
+    }
+    // Only show first 4 actors
+    if (department == 'acting') {
+      people = _.sortBy(people, function(actor) {
+        return actor.order;
+      }).slice(0, 4);
+    }
+    // Add links around people's names
+    var creditsWithLinks = _.map(people, function(person) {
+      return (
+        <li key={person.id}>
+          <a href={this.getUrlFromProps({component: 'Person', id: person.id})}>
+            {person.name}
+          </a>
+        </li>
+      );
+    }.bind(this));
+    return (
+      <li key={department}>
+        <span className="credit-label">
+          {this.getItemPrefix(departmentRoleMappings[department], people.length)}
+        </span>
+        <ul className="credit-value">
+          {creditsWithLinks}
+        </ul>
+      </li>
+    );
   },
   getItemPrefix: function(singular, itemLength) {
     return itemLength > 1 ? singular + 's' : singular;
