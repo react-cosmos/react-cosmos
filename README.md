@@ -9,7 +9,23 @@ Built on top of the great [**React**](http://facebook.github.io/react/),
 implementing a **uniform Component model.** The Component is a self-contained,
 UI building block. See [React Component.](http://facebook.github.io/react/docs/component-api.html)
 
-> Cosmos is to data visualization what Backbone is to data modeling.
+## Problem
+
+Most web frameworks start out clean and friendly, but as soon as you build an actual real-life application on top of them they become these giants assholes that you don't even know where to begin with when trying to change something. Finding an honorable route for solving a problem is now a luxury, workarounds are the norm.
+
+This can happen over and over. Slick at first, unmaintainable in 2 years. But why is that, why is complexity proportional to the number of features added?
+
+Two reasons: **State and Interdependence.** Tie a number of units together, rely on one to change the state of another and you successfully gave birth to an unpredictable ecosystem.
+
+Working with so many entities builds complex relationships. Models, Controllers, Views, Helpers, etc., they're all connected to each other in various ways. **Your application is the outcome of all sorts of objects with different roles and behaviors depending on one another.**
+
+## Solution
+
+Scaling you app linearly requires a flat infrastructure. **Responsibilities should translate into domain logic instead of low-level roles (data modeling, rendering, etc.)**
+
+This is where Components come in. Components are autonomous, have end-to-end capabilities and each can function as a complete application by itself, excluding inter-dependency from the start. Because they can describe their output without relying on any external logic, Components are declarative and predictable.
+
+Isolating a problem just went from O(?) to O(1) :)
 
 ## Manifesto
 
