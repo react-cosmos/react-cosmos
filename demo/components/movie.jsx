@@ -87,14 +87,14 @@ Cosmos.components.Movie = React.createClass({
     movies = _.filter(movies, function(movie) {
       return !!movie.poster_path;
     });
+    // Remove unknown or bad movies
+    movies = _.filter(movies, function(movie) {
+      return movie.vote_count >= 5 && movie.vote_average >= 5;
+    });
     // Sort them by vote_average, descending
     movies = _.sortBy(movies, function(movie) {
-      // Movies with less than 5 votes go to right
-      var average = movie.vote_count > 5 ? movie.vote_average : 0;
-      return -average;
+      return -movie.vote_average;
     });
-    // Limit similar movies to max 12 items
-    movies = movies.slice(0, 12);
     return movies;
   }
 });
