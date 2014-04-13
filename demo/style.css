@@ -90,3 +90,69 @@ a:hover {
     background-repeat: repeat;
     background-position: 0 0;
   }
+
+@media (min-width: 1000px) {
+
+  body {
+    margin: 30px;
+    padding: 0 0 0 342px;
+    font-size: 18px;
+    line-height: 24px;
+  }
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 342px;
+    height: 100%;
+    background: #e8e9e9;
+    color: rgba(0, 0, 0, 0.5);
+    overflow: auto;
+  }
+    .title-wrapper {
+      position: relative;
+    }
+      .poster {
+        float: none;
+        display: block;
+        margin: 0;
+        width: 342px;
+      }
+      .title {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: 0;
+        padding: 15px;
+        background: rgba(0, 0, 0, 0.6);
+        color: #fff;
+        font-size: 36px;
+      }
+
+    .credits,
+    .person-bio {
+      margin: 0;
+      padding: 15px;
+    }
+      .credits li {
+        margin: 0 0 10px 0;
+      }
+      .credits li:last-child {
+        margin: 0;
+      }
+      .credit-label {
+        text-transform: uppercase;
+      }
+      .credit-label:after {
+        content: none;
+      }
+      .credit-label,
+      .credit-value {
+        display: block;
+      }
+
+  .overview {
+    padding: 0;
+  }
+}
