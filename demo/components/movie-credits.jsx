@@ -33,8 +33,7 @@ Cosmos.components.MovieCredits = React.createClass({
    *   }
    * }
    */
-  mixins: [Cosmos.mixins.PersistState,
-           Cosmos.mixins.Url],
+  mixins: [Cosmos.mixins.Url],
   render: function() {
     return (
       <ul className="credits">
