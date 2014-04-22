@@ -10,12 +10,15 @@ var App = {
            '&api_key=' + App.MOVIEDB_API_KEY;
   },
   getImagePath: function(path, size) {
-    return App.MOVIEDB_IMG_ROOT + '/w' + size + path;
+    return path ? App.MOVIEDB_IMG_ROOT + '/w' + size + path : null;
   },
   getReleaseYear: function(date) {
-    return new Date(date).getFullYear();
+    return date ? new Date(date).getFullYear() : null;
   },
   getBirthDay: function(date) {
+    if (!date) {
+      return null;
+    }
     var date = new Date(date);
     return this.getMonthName(date.getMonth()) + ' ' + date.getDate() + ', ' +
            date.getFullYear();
@@ -28,6 +31,9 @@ var App = {
     return _.pluck(genres, 'name').join(', ');
   },
   getTextExcerpt: function(text, limit) {
+    if (!text) {
+      return '';
+    }
     // Get text excerpt while not breaking sentences.
     var sentences = text.split('.'),
         excerpt = '';

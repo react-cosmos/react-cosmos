@@ -23,7 +23,7 @@ Cosmos.components.Person = React.createClass({
    *     place_of_birth: "London, England, UK",
    *     profile_path: "/7OGmfDF4VHLLgbjxuEwTj3ga0uQ.jpg",
    *     biography: "Christopher Jonathan James Nolan is a British/American...",
-   *     credits: {
+   *     movie_credits: {
    *       crew: [...],
    *       cast: [...]
    *     }
@@ -33,10 +33,13 @@ Cosmos.components.Person = React.createClass({
    */
   mixins: [Cosmos.mixins.DataFetch,
            Cosmos.mixins.PersistState],
-  render: function() {
-    if (_.isEmpty(this.state.data)) {
-      return <div></div>;
+  initialData: {
+    movie_credits: {
+      crew: [],
+      cast: []
     }
+  },
+  render: function() {
     var groupedCredits =
           App.groupCreditsPerDepartments(this.state.data.movie_credits),
         relevantDepartment = this.getRelevantDepartment(groupedCredits),
@@ -45,7 +48,7 @@ Cosmos.components.Person = React.createClass({
     return (
       <div>
         <Cosmos component="PersonHeader"
-                name={this.state.data.name}
+                name={this.state.data.name || ''}
                 profilePath={App.getImagePath(this.state.data.profile_path, 342)}
                 birthday={App.getBirthDay(this.state.data.birthday)}
                 birthplace={this.state.data.place_of_birth} />
@@ -53,10 +56,9 @@ Cosmos.components.Person = React.createClass({
           <em>{App.getTextExcerpt(this.state.data.biography, 600)}</em>
         </p>
         <div className="related">
-          <p>
-            <em>{this.state.data.name}</em> is known for
-            {departmentActionMapping[relevantDepartment]}...
-          </p>
+          {relevantCredits.length ?
+            <p><em>{this.state.data.name}</em> is known for
+               {departmentActionMapping[relevantDepartment]}...</p> : ''}
           <Cosmos component="List"
                   state={{data: this.getPropsForRelevantCredits(relevantCredits)}} />
         </div>

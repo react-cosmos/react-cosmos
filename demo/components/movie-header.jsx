@@ -20,12 +20,15 @@ Cosmos.components.MovieHeader = React.createClass({
                alt="" />
           <h1 className="title">
             {this.props.title + ' '}
-            <span className="year">({this.props.year})</span>
+            <span className="year">{this.getYear()}</span>
           </h1>
         </div>
         <Cosmos component="MovieCredits"
                 credits={this.props.credits} />
       </div>
     );
+  },
+  getYear: function() {
+    return this.props.year ? '(' + this.props.year + ')' : null;
   }
 });
