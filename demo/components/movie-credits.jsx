@@ -58,7 +58,8 @@ Cosmos.components.MovieCredits = React.createClass({
     var creditsWithLinks = _.map(people, function(person) {
       return (
         <li key={person.id}>
-          <a href={this.getUrlFromProps({component: 'Person', id: person.id})}>
+          <a href={this.getUrlFromProps({component: 'Person', id: person.id})}
+             onClick={this.routeLink}>
             {person.name}
           </a>
         </li>
