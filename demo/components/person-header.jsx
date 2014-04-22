@@ -22,9 +22,11 @@ Cosmos.components.PersonHeader = React.createClass({
             {this.props.name + ' '}
           </h1>
         </div>
-        <p className="person-bio">
-          Born {this.props.birthday} in <strong>{this.props.birthplace}.</strong>
-        </p>
+        {this.props.birthday ?
+          <p className="person-bio">
+            Born {this.props.birthday} in
+            <strong>{this.props.birthplace}.</strong>
+          </p> : ''}
       </div>
     );
   }

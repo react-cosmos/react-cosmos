@@ -39,29 +39,35 @@ Cosmos.components.Movie = React.createClass({
    */
   mixins: [Cosmos.mixins.DataFetch,
            Cosmos.mixins.PersistState],
-  render: function() {
-    if (_.isEmpty(this.state.data)) {
-      return <div></div>;
+  initialData: {
+    credits: {
+      crew: [],
+      cast: []
+    },
+    genres: [],
+    similar_movies: {
+      results: []
     }
-    var filteredSimilarMovies =
-          this.filterSimilarMovies(this.state.data.similar_movies.results);
+  },
+  render: function() {
     return (
       <div>
         <Cosmos component="MovieHeader"
-                title={this.state.data.title}
+                title={this.state.data.title || ''}
                 year={App.getReleaseYear(this.state.data.release_date)}
                 posterPath={App.getImagePath(this.state.data.poster_path, 342)}
                 credits={App.groupCreditsPerDepartments(this.state.data.credits)} />
         <p className="overview">
           <strong>{App.getGenreNames(this.state.data.genres)}</strong>
-          <em>{' --- ' + App.getTextExcerpt(this.state.data.overview, 1000)}</em>
+          <em>{this.getMovieOverview(this.state.data.overview)}</em>
         </p>
         <div className="related">
-          <p>
-            If you liked <em>{this.state.data.title}</em> you might also like...
-          </p>
+          {this.state.data.similar_movies.results.length ?
+            <p>If you liked <em>{this.state.data.title}</em>
+               you might also like...</p> : ''}
           <Cosmos component="List"
-                  state={{data: this.getPropsForSimilarMovies(filteredSimilarMovies)}} />
+                  state={{data: this.getPropsForSimilarMoviesList(
+                                  this.state.data.similar_movies.results)}} />
         </div>
       </div>
     );
@@ -69,7 +75,11 @@ Cosmos.components.Movie = React.createClass({
   getDataUrl: function(props) {
     return App.getApiPath('movie', props.id, 'credits,similar_movies');
   },
-  getPropsForSimilarMovies: function(similarMovies) {
+  getMovieOverview: function(overview) {
+    return overview ? ' — ' + App.getTextExcerpt(overview, 1000) : '';
+  },
+  getPropsForSimilarMoviesList: function(movies) {
+    var similarMovies = this.filterSimilarMovies(movies);
     return _.map(similarMovies, function(movie) {
       return {
         component: "Thumbnail",

@@ -13,8 +13,7 @@ Cosmos.components.Thumbnail = React.createClass({
    *   }
    * }
    */
-  mixins: [Cosmos.mixins.PersistState,
-           Cosmos.mixins.Url],
+  mixins: [Cosmos.mixins.Url],
   render: function() {
     return (
       <a className="thumbnail"
