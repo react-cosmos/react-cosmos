@@ -206,3 +206,9 @@ Responsibility Principle.**
 
 Core mixins are placed under the `Cosmos.mixins` namespace. Read more inside
 the [Mixins wiki page.](https://github.com/skidding/cosmos/wiki/Mixins)
+
+## Contributing
+
+This is a proof of concept and code pull requests aren’t expected until the specifications are validated. For this reason, this project is an open discussion and any feedback is greatly appreciated. 
+
+Thank you for your interest!
