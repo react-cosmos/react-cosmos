@@ -19,7 +19,6 @@ Two reasons: **State and Interdependence.** Tie a number of units together, rely
 
 Working with so many entities builds complex relationships. Models, Controllers, Views, Helpers, etc., they're all connected to each other in various ways. **Your application is the outcome of all sorts of objects with different roles and behaviors depending on one another.**
 
-
 ### Vertical encapsulation
 
 Scaling you app linearly requires a flat infrastructure. **Responsibilities should translate into domain logic instead of low-level roles (data modeling, rendering, etc.)**
@@ -27,6 +26,15 @@ Scaling you app linearly requires a flat infrastructure. **Responsibilities shou
 This is where Components come in. Components are autonomous, have end-to-end capabilities and each can function as a complete application by itself, excluding inter-dependency from the start. Because they can describe their output without relying on any external logic, Components are declarative and predictable.
 
 Isolating a problem just went from O(?) to O(1) :)
+
+### Data structures
+
+> Bad programmers worry about the code. Good programmers 
+worry about data structures and their relationships.
+
+Cosmos is partly inspired by a Linus Torvalds [comment](http://lwn.net/Articles/193245/) about __designing your code around your data and not the other way around.__ Seeing software go south in more instances because of a growing gap between data and the end product, Linus’ statement makes a lot of sense.
+
+But Cosmos does not impose any specific data structures. Instead, it makes them surface by providing a framework driven by the data it consumes, exposing and enforcing awareness of data structures and their relationships.
 
 ## Manifesto
 
