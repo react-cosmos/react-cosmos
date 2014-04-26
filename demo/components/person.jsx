@@ -47,6 +47,7 @@ Cosmos.components.Person = React.createClass({
           this.filterRelevantCredits(groupedCredits[relevantDepartment]);
     return (
       <div>
+        <Cosmos component="DemoHeader" />
         <Cosmos component="PersonHeader"
                 name={this.state.data.name || ''}
                 profilePath={App.getImagePath(this.state.data.profile_path, 342)}

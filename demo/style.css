@@ -91,6 +91,15 @@ a:hover {
     background-position: 0 0;
   }
 
+.demo-header {
+  background: #fefd90;
+  margin-bottom: 30px;
+  padding: 15px;
+}
+  .github-link {
+    white-space: nowrap;
+  }
+
 @media (min-width: 1000px) {
 
   body {
