@@ -9,6 +9,14 @@ Built on top of the great [**React**](http://facebook.github.io/react/),
 implementing a **uniform Component model.** The Component is a self-contained,
 UI building block. See [React Component.](http://facebook.github.io/react/docs/component-api.html)
 
+Jump to:
+
+- [Problem](#problem)
+- [Manifesto](#manifesto)
+- [Installation](#installation)
+- [Specs](#specs)
+- [Contributing](#contributing)
+
 ## Problem
 
 Most web frameworks start out clean and friendly, but as soon as you build an actual real-life application on top of them they become these giants assholes that you don't even know where to begin with when trying to change something. Finding an honorable route for solving a problem is now a luxury, workarounds are the norm.
