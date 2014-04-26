@@ -19,7 +19,8 @@ Two reasons: **State and Interdependence.** Tie a number of units together, rely
 
 Working with so many entities builds complex relationships. Models, Controllers, Views, Helpers, etc., they're all connected to each other in various ways. **Your application is the outcome of all sorts of objects with different roles and behaviors depending on one another.**
 
-## Solution
+
+### Vertical encapsulation
 
 Scaling you app linearly requires a flat infrastructure. **Responsibilities should translate into domain logic instead of low-level roles (data modeling, rendering, etc.)**
 
