@@ -54,7 +54,7 @@ Cosmos.components.Movie = React.createClass({
       <div>
         <Cosmos component="DemoHeader" />
         <Cosmos component="MovieHeader"
-                title={this.state.data.title || ''}
+                title={this.state.data.title || '...'}
                 year={App.getReleaseYear(this.state.data.release_date)}
                 posterPath={App.getImagePath(this.state.data.poster_path, 342)}
                 credits={App.groupCreditsPerDepartments(this.state.data.credits)} />

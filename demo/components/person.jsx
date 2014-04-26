@@ -49,7 +49,7 @@ Cosmos.components.Person = React.createClass({
       <div>
         <Cosmos component="DemoHeader" />
         <Cosmos component="PersonHeader"
-                name={this.state.data.name || ''}
+                name={this.state.data.name || '...'}
                 profilePath={App.getImagePath(this.state.data.profile_path, 342)}
                 birthday={App.getBirthDay(this.state.data.birthday)}
                 birthplace={this.state.data.place_of_birth} />

@@ -120,6 +120,9 @@ a:hover {
   }
     .title-wrapper {
       position: relative;
+      height: 513px;
+      background: #383838;
+      overflow: hidden;
     }
       .poster {
         float: none;
