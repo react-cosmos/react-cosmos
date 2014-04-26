@@ -52,6 +52,7 @@ Cosmos.components.Movie = React.createClass({
   render: function() {
     return (
       <div>
+        <Cosmos component="DemoHeader" />
         <Cosmos component="MovieHeader"
                 title={this.state.data.title || ''}
                 year={App.getReleaseYear(this.state.data.release_date)}
