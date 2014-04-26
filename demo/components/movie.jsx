@@ -100,7 +100,7 @@ Cosmos.components.Movie = React.createClass({
     });
     // Remove unknown or bad movies
     movies = _.filter(movies, function(movie) {
-      return movie.vote_count >= 5 && movie.vote_average >= 5;
+      return movie.vote_count >= 3 && movie.vote_average >= 5;
     });
     // Sort them by vote_average, descending
     movies = _.sortBy(movies, function(movie) {
