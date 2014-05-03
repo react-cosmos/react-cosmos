@@ -138,6 +138,14 @@ Cosmos.components.Intro = React.createClass({
     );
   }
 });
+```
+
+_[JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) improves the
+readability of React Components a lot, but unfortunately
+[GFM](http://github.github.com/github-flavored-markdown/) doesn't support it
+yet, so vanilla JS is used in code snippets._
+
+```js
 // This is how you load and render Component input in Cosmos
 Cosmos.render({
   component: 'Intro',
@@ -148,11 +156,6 @@ Cosmos.render({
 // string will be returned instead
 "<p>My name is Johnny and I'm from Minnesota.</p>"
 ```
-
-_[JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) improves the
-readability of React Components a lot, but unfortunately
-[GFM](http://github.github.com/github-flavored-markdown/) doesn't support it
-yet, so vanilla JS is used in code snippets._
 
 #### Component input (props)
 
