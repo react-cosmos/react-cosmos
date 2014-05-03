@@ -19,30 +19,64 @@ Jump to:
 
 ## Problem
 
-Most web frameworks start out clean and friendly, but as soon as you build an actual real-life application on top of them they become these giants assholes that you don't even know where to begin with when trying to change something. Finding an honorable route for solving a problem is now a luxury, workarounds are the norm.
+Most web frameworks start out clean and friendly, but as soon as you build an
+actual real-life application on top of them they become these giant assholes
+that you don't even know where to begin with when trying to change something.
+Finding an honorable route for solving a problem is now a luxury, workarounds
+are the norm.
 
-This can happen over and over. Slick at first, unmaintainable in 2 years. But why is that, why is complexity proportional to the number of features added?
+This can happen over and over. Slick at first, unmaintainable in 2 years. But
+why is that, why is complexity proportional to the number of features added?
 
-Two reasons: **State and Interdependence.** Tie a number of units together, rely on one to change the state of another and you successfully gave birth to an unpredictable ecosystem.
+Two reasons:
 
-Working with so many entities builds complex relationships. Models, Controllers, Views, Helpers, etc., they're all connected to each other in various ways. **Your application is the outcome of all sorts of objects with different roles and behaviors depending on one another.**
+1. **Interdependence.** Tie a number of units together, rely on one to change
+                        the state of another and you successfully gave birth to
+                        an unpredictable ecosystem
+1. **Data obscurity.** Mixing data with logic turns any transparent river of
+                       data into a muddy sewage network and generates a big
+                       pile of opinionated, disposable code.
+
+Avoiding these pitfalls upfront is difficult. They occur only after you've
+reached a certain maturity in a program. Easy to notice once the code is no
+longer pleasant to work with, but very hard to predict.
+
+Cosmos fights against this uncertainty by surfacing the elements that don't
+benefit from a natural tendency to scale.
 
 ### Vertical encapsulation
 
-Scaling you app linearly requires a flat infrastructure. **Responsibilities should translate into domain logic instead of low-level roles (data modeling, rendering, etc.)**
+Working with so many entities builds complex relationships. Models, Controllers,
+Views, Helpers, etc., they're all connected to each other in various ways. Your
+application is the outcome of all sorts of objects with different roles and
+behaviors depending on one another.
 
-This is where Components come in. Components are autonomous, have end-to-end capabilities and each can function as a complete application by itself, excluding inter-dependency from the start. Because they can describe their output without relying on any external logic, Components are declarative and predictable.
+Scaling you app linearly requires a flat infrastructure. **Responsibilities
+should translate into domain logic instead of low-level roles (data modeling,
+rendering, etc.)**
 
-Isolating a problem just went from O(?) to O(1) :)
+This is where Components come in. Components are autonomous, have end-to-end
+capabilities and each can function as a complete application by itself,
+excluding interdependence from the start. Because they can describe their
+output without relying on any external logic, Components are declarative and
+predictable.
 
-### Data structures
+Isolating the source of a bug now has O(1) complexity.
 
-> Bad programmers worry about the code. Good programmers 
-worry about data structures and their relationships.
+### Data-driven development
 
-Cosmos is partly inspired by a Linus Torvalds [comment](http://lwn.net/Articles/193245/) about __designing your code around your data and not the other way around.__ Seeing software go south in more instances because of a growing gap between data and the end product, Linus’ statement makes a lot of sense.
+> Bad programmers worry about the code. Good programmers
+> worry about data structures and their relationships.
 
-But Cosmos does not impose any specific data structures. Instead, it makes them surface by providing a framework driven by the data it consumes, exposing and enforcing awareness of data structures and their relationships.
+Cosmos is partly inspired by a Linus Torvalds
+[comment](http://lwn.net/Articles/193245/) about __designing your code around
+your data and not the other way around.__ Think of how times you witnessed
+software go south because of a growing gap between data and the end product and
+see if Linus’ statement makes any sense.
+
+But Cosmos does not impose any specific data structures. Instead, it makes them
+surface by providing a framework driven by the data it consumes, exposing and
+enforcing awareness of data structures and their relationships.
 
 ## Manifesto
 
@@ -217,6 +251,8 @@ the [Mixins wiki page.](https://github.com/skidding/cosmos/wiki/Mixins)
 
 ## Contributing
 
-This is a proof of concept and code pull requests aren’t expected until the specifications are validated. For this reason, this project is an open discussion and any feedback is greatly appreciated. 
+This is a proof of concept and code pull requests aren’t expected until the
+specifications are validated. For this reason, this project is an open
+discussion and any feedback is greatly appreciated.
 
 Thank you for your interest!
