@@ -70,9 +70,9 @@ Isolating the source of a bug now has O(1) complexity.
 
 Cosmos is partly inspired by a Linus Torvalds
 [comment](http://lwn.net/Articles/193245/) about __designing your code around
-your data and not the other way around.__ Think of how times you saw software go
-south because of a growing gap between data and the end product and see if
-Linus’ statement makes any sense.
+your data and not the other way around.__ Think of how times you witnessed
+software go south because of a growing gap between data and the end product and
+see if Linus’ statement makes any sense.
 
 But Cosmos does not impose any specific data structures. Instead, it makes them
 surface by providing a framework driven by the data it consumes, exposing and
