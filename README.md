@@ -8,6 +8,8 @@ Built on top of Facebook's great [**React**](http://facebook.github.io/react/),
 implementing a **uniform Component model.** The Component is a self-contained,
 UI building block.
 
+Check out a working example at http://skidding.github.io/cosmos/
+
 Jump to:
 
 - [Problem](#problem)
