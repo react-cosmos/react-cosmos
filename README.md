@@ -1,4 +1,4 @@
-Cosmos
+Cosmos [![Build Status](https://travis-ci.org/skidding/cosmos.svg)](https://travis-ci.org/skidding/cosmos)
 ===
 Data exploration framework
 
