@@ -2,12 +2,11 @@ Cosmos
 ===
 Data exploration framework
 
-Cosmos emphasizes on **data-driven navigation, full-screen visualizations and
-blazing fast routing**, powered by an effective state-caching time machine.
+**Cosmos provides a flat infrastructure for scaling user interfaces through autonomous, data-driven Components.** It prevents scaling complexity by enforcing a zero-bootstrap policy and by having data structures dictate code logic and not the other way around.
 
-Built on top of the great [**React**](http://facebook.github.io/react/),
+Built on top of Facebook's great [**React**](http://facebook.github.io/react/),
 implementing a **uniform Component model.** The Component is a self-contained,
-UI building block. See [React Component.](http://facebook.github.io/react/docs/component-api.html)
+UI building block.
 
 Jump to:
 
@@ -127,6 +126,9 @@ hand with React's declarative nature.
 The input data of a Component is a JSON object and the role of a Component is
 to transform its input data into HTML output. Easy to follow and assert
 behavior.
+
+See [React Component](http://facebook.github.io/react/docs/component-api.html)
+for in-depth specs and detailed API.
 
 ```js
 // Registering Cosmos Components is as easy as referencing them in the
