@@ -13,11 +13,27 @@ UI building block.
 
 Jump to:
 
-- [Problem](#problem)
 - [Manifesto](#manifesto)
+- [Problem](#problem)
 - [Installation](#installation)
 - [Specs](#specs)
 - [Contributing](#contributing)
+
+## Manifesto
+
+_cos·mos<sup>1</sup> `/ˈkäzməs,-ˌmōs,-ˌmäs/` noun — 1. The universe seen as
+a well-ordered whole._
+
+- Zero bootstrap
+- Can be plugged into any other framework
+- Everything is a Component
+- Components are oblivious of ancestors
+- The state of a Component can be serialized at any given point in time
+- Any Component input can be represented by a URI
+- Components can implement any data mechanism*
+
+\* All Cosmos core mixins are agnostic on how data is populated inside a
+Component (see default [DataFetch](mixins/data-fetch.js) Ajax implementation.)
 
 ## Problem
 
@@ -79,22 +95,6 @@ see if Linus’ statement makes any sense.
 But Cosmos does not impose any specific data structures. Instead, it makes them
 surface by providing a framework driven by the data it consumes, exposing and
 enforcing awareness of data structures and their relationships.
-
-## Manifesto
-
-_cos·mos<sup>1</sup> `/ˈkäzməs,-ˌmōs,-ˌmäs/` noun — 1. The universe seen as
-a well-ordered whole._
-
-- Zero bootstrap
-- Can be plugged into any other framework
-- Everything is a Component
-- Components are oblivious of ancestors
-- The state of a Component can be serialized at any given point in time
-- Any Component input can be represented by a URI
-- Components can implement any data mechanism*
-
-\* All Cosmos core mixins are agnostic on how data is populated inside a
-Component (see default [DataFetch](mixins/data-fetch.js) Ajax implementation.)
 
 ## Installation
 
