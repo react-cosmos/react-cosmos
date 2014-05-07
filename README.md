@@ -69,7 +69,7 @@ Isolating the source of a bug now has O(1) complexity.
 
 Cosmos is partly inspired by a Linus Torvalds
 [comment](http://lwn.net/Articles/193245/) about __designing your code around
-your data and not the other way around.__ Think of how times you witnessed
+your data and not the other way around.__ Think of many how times you witnessed
 software go south because of a growing gap between data and the end product and
 see if Linus’ statement makes any sense.
 
@@ -169,7 +169,7 @@ Cosmos.render({
 }
 ```
 
-It's up a Component (or the mixins it uses) to implement any _props_ received
+It's up to a Component (or the mixins it uses) to implement any _props_ received
 as input, except for one reserved by convention: **component**, the name of the
 Component to load (from the Cosmos.components namespace.)
 
