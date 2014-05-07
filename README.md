@@ -2,7 +2,10 @@ Cosmos [![Build Status](https://travis-ci.org/skidding/cosmos.svg)](https://trav
 ===
 Data exploration framework
 
-**Cosmos provides a flat infrastructure for scaling user interfaces through autonomous, data-driven Components.** It prevents scaling complexity by enforcing a zero-bootstrap policy and by having data structures dictate code logic and not the other way around.
+**Cosmos provides a flat infrastructure for scaling user interfaces through
+autonomous Components.** It prevents scaling complexity by enforcing a
+zero-bootstrap policy and by having data structures dictate code logic and not
+the other way around.
 
 Built on top of Facebook's great [**React**](http://facebook.github.io/react/),
 implementing a **uniform Component model.** The Component is a self-contained,
