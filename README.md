@@ -2,10 +2,10 @@ Cosmos [![Build Status](https://travis-ci.org/skidding/cosmos.svg)](https://trav
 ===
 Data exploration framework
 
-**Cosmos provides a flat infrastructure for scaling user interfaces through
-autonomous Components.** It prevents scaling complexity by enforcing a
-zero-bootstrap policy and by having data structures dictate code logic and not
-the other way around.
+**Cosmos provides a flat infrastructure of autonomous Components for scaling
+user interfaces.** It prevents scaling complexity by enforcing a zero-bootstrap
+policy and by having data structures dictate code logic and not the other way
+around.
 
 Built on top of Facebook's great [**React**](http://facebook.github.io/react/),
 implementing a **uniform Component model.** The Component is a self-contained,
@@ -15,35 +15,18 @@ Check out a working example at http://skidding.github.io/cosmos/
 
 Jump to:
 
-- [Manifesto](#manifesto)
 - [Problem](#problem)
+- [Manifesto](#manifesto)
 - [Installation](#installation)
 - [Specs](#specs)
 - [Contributing](#contributing)
 
-## Manifesto
-
-_cos·mos<sup>1</sup> `/ˈkäzməs,-ˌmōs,-ˌmäs/` noun — 1. The universe seen as
-a well-ordered whole._
-
-- Zero bootstrap
-- Can be plugged into any other framework
-- Everything is a Component
-- Components are oblivious of ancestors
-- The state of a Component can be serialized at any given point in time
-- Any Component input can be represented by a URI
-- Components can implement any data mechanism*
-
-\* All Cosmos core mixins are agnostic on how data is populated inside a
-Component (see default [DataFetch](mixins/data-fetch.js) Ajax implementation.)
-
 ## Problem
 
-Most web frameworks start out clean and friendly, but as soon as you build an
-actual real-life application on top of them they become these giant assholes
-that you don't even know where to begin with when trying to change something.
-Finding an honorable route for solving a problem is now a luxury, workarounds
-are the norm.
+Most web frameworks start out clean and friendly, but at some point after you
+go on to build a real-life application on them they stop cooperating and start
+turning against you. Finding an honorable route for solving a problem is now a
+luxury, workarounds are the norm.
 
 This can happen over and over. Slick at first, unmaintainable in 2 years. But
 why is that, why is complexity proportional to the number of features added?
@@ -75,7 +58,7 @@ Scaling you app linearly requires a flat infrastructure. **Responsibilities
 should translate into domain logic instead of low-level roles (data modeling,
 rendering, etc.)**
 
-This is where Components come in. Components are autonomous, have end-to-end
+Cosmos only has one entity: The Component. They are autonomous, have end-to-end
 capabilities and each can function as a complete application by itself,
 excluding interdependence from the start. Because they can describe their
 output without relying on any external logic, Components are declarative and
@@ -83,7 +66,7 @@ predictable.
 
 Isolating the source of a bug now has O(1) complexity.
 
-### Data-driven development
+### Transparent data structures
 
 > Bad programmers worry about the code. Good programmers
 > worry about data structures and their relationships.
@@ -94,9 +77,26 @@ your data and not the other way around.__ Think of many how times you witnessed
 software go south because of a growing gap between data and the end product and
 see if Linus’ statement makes any sense.
 
-But Cosmos does not impose any specific data structures. Instead, it makes them
-surface by providing a framework driven by the data it consumes, exposing and
-enforcing awareness of data structures and their relationships.
+But Cosmos does not impose any specific data structures, it simply makes them
+surface and hard to miss. All Component logic wraps around a single JSON
+object, which starts as the Component input and updates along with state
+changes. That object will always be a visible, persistent data structure.
+
+## Manifesto
+
+_cos·mos<sup>1</sup> `/ˈkäzməs,-ˌmōs,-ˌmäs/` noun — 1. The universe seen as
+a well-ordered whole._
+
+- Zero bootstrap
+- Can be plugged into any other framework
+- Everything is a Component
+- Components are oblivious of ancestors
+- The state of a Component can be serialized at any given point in time
+- Any Component input can be represented by a URI
+- Components can implement any data mechanism*
+
+\* All Cosmos core mixins are agnostic on how data is populated inside a
+Component (see default [DataFetch](mixins/data-fetch.js) Ajax implementation.)
 
 ## Installation
 
