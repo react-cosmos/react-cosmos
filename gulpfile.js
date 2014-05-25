@@ -15,7 +15,7 @@ var paths = {
     'wrapper-footer.js'],
   demo: [
     'demo/components/**/*.jsx',
-    'demo/app.js'
+    'demo/tetris.js'
   ]
 };
 
