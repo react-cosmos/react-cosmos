@@ -52,7 +52,7 @@ Cosmos.components.Tetrimino = React.createClass({
       for (col = 0; col < cols; col++) {
         if (this.state.grid[row][col]) {
           blocks.push(
-            <li className="positioned-square-block"
+            <li className="grid-square-block"
                 style={{
                   top: (row * 25) + '%',
                   left: (col * 25) + '%'
