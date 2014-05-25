@@ -5,7 +5,7 @@ Cosmos.components.Tetrimino = React.createClass({
    * A tetromino is a geometric shape composed of four squares, connected
    * orthogonally. Read more at http://en.wikipedia.org/wiki/Tetromino
    */
-  mixins: [Cosmos.mixins.PeristState],
+  mixins: [Cosmos.mixins.PersistState],
   getDefaultProps: function() {
     return {
       color: 'red'
@@ -53,6 +53,7 @@ Cosmos.components.Tetrimino = React.createClass({
         if (this.state.grid[row][col]) {
           blocks.push(
             <li className="grid-square-block"
+                key={row + '-' + col}
                 style={{
                   top: (row * 25) + '%',
                   left: (col * 25) + '%'
