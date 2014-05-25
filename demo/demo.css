@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: #fff;
+  color: #383838;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 22px;
+}
+ul {
+  list-style-type: none;
+}
+p {
+  margin: 15px 0;
+}
+a {
+  color: #1e0fbe;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
