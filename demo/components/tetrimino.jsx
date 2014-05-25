@@ -28,6 +28,7 @@ Cosmos.components.Tetrimino = React.createClass({
     );
   },
   rotate: function() {
+    // Function inspired by http://stackoverflow.com/a/2800033/128816
     var matrix = [],
         rows = this.state.matrix.length,
         cols = this.state.matrix[0].length,
@@ -42,7 +43,6 @@ Cosmos.components.Tetrimino = React.createClass({
     this.setState({matrix: matrix});
   },
   renderSquareBlocks: function() {
-    // Function inspired by http://stackoverflow.com/a/2800033/128816
     var blocks = [],
         rows = this.state.matrix.length,
         cols = this.state.matrix[0].length,
