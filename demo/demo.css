@@ -33,3 +33,14 @@ a:hover {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+
+.tetrimino {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+  .tetrimino .positioned-square-block {
+    position: absolute;
+    width: 25%;
+    height: 25%;
+  }
