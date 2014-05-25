@@ -5,6 +5,7 @@ Cosmos.components.Tetrimino = React.createClass({
    * A tetromino is a geometric shape composed of four squares, connected
    * orthogonally. Read more at http://en.wikipedia.org/wiki/Tetromino
    */
+  mixins: [Cosmos.mixins.PeristState],
   getDefaultProps: function() {
     return {
       color: 'red'
@@ -19,7 +20,6 @@ Cosmos.components.Tetrimino = React.createClass({
       ]
     };
   },
-  mixins: [Cosmos.mixins.PeristState],
   render: function() {
     return (
       <ul className="tetrimino">
