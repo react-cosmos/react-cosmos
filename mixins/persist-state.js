@@ -50,13 +50,18 @@ Cosmos.mixins.PersistState = {
     return props;
   },
   loadChild: function(ref) {
-    return Cosmos(this.getChildProps(ref));
+    var childProps = this.getChildProps(ref);
+    // Children are optional
+    return childProps ? Cosmos(childProps) : null;
   },
   getChildProps: function(ref) {
     // The .children object on a Component class contains a hash of functions.
     // Keys in this hash correspond with *refs* of child Components and their
     // values are functions that return props for each of those child Components.
     var props = this.children[ref].call(this);
+    if (!props) {
+      return;
+    }
     // A tree of states can be embeded inside a single (root) Component input,
     // trickling down recursively all the way to the tree leaves. Child states
     // are set inside the .children key of the parent Component's state, as a
