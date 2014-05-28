@@ -21,11 +21,9 @@ Cosmos.components.Well = React.createClass({
       grid: this.generateEmptyMatrix(),
       activeTetrimino: null,
       // The active Tetrimino position will be reset whenever a new Tetrimino
-      // is inserted in the Well, using the getTetriminoInitialPosition method
-      activeTetriminoPosition: {
-        x: 0,
-        y: 0
-      }
+      // is inserted in the Well, using the getInitialPositionForTetriminoType
+      // method
+      activeTetriminoPosition: {x: 0, y: 0},
     };
   },
   children: {
@@ -40,15 +38,15 @@ Cosmos.components.Well = React.createClass({
     }
   },
   loadTetrimino: function(type) {
-    this.setState({activeTetrimino: type});
-    if (type) {
-      var tetriminoGrid = Tetris.SHAPES[type];
+    this.setState({
+      activeTetrimino: type,
       // Reset position to place new Tetrimino at the top entrance point
-      this.setState({activeTetriminoPosition:
-                     this.getTetriminoInitialPosition(tetriminoGrid)});
+      activeTetriminoPosition: this.getInitialPositionForTetriminoType(type)
+    });
+    if (type) {
       // Child state should only be touched imperatively, it is managed
       // internally inside Tetrimino Component afterwards
-      this.refs.activeTetrimino.setState({grid: tetriminoGrid});
+      this.refs.activeTetrimino.setState({grid: Tetris.SHAPES[type]});
     }
   },
   render: function() {
@@ -116,13 +114,17 @@ Cosmos.components.Well = React.createClass({
       left: 100 / this.props.cols * this.state.activeTetriminoPosition.x + '%'
     }
   },
-  getTetriminoInitialPosition: function(grid) {
+  getInitialPositionForTetriminoType: function(type) {
     /**
      * Generates positions a Tetrimino entering the Well. The I Tetrimino
      * occupies columns 4, 5, 6 and 7, the O Tetrimino occupies columns 5 and
      * 6, and the remaining 5 Tetriminos occupy columns 4, 5 and 6. Pieces
      * spawn above the visible playfield (that's why y is -2)
      */
+    if (!type) {
+      return {x: 0, y: 0};
+    }
+    var grid = Tetris.SHAPES[type];
     return {
       x: Math.round(this.props.cols / 2) - Math.round(grid[0].length / 2),
       y: -2
