@@ -12,8 +12,8 @@ Cosmos.components.Well = React.createClass({
   mixins: [Cosmos.mixins.PersistState],
   getDefaultProps: function() {
     return {
-      rows: 20,
-      cols: 10
+      rows: Tetris.WELL_ROWS,
+      cols: Tetris.WELL_COLS
     };
   },
   getInitialState: function() {

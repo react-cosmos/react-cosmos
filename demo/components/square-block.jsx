@@ -7,7 +7,7 @@ Cosmos.components.SquareBlock = React.createClass({
    */
   getDefaultProps: function() {
     return {
-      color: 'red'
+      color: Tetris.COLORS.L
     };
   },
   render: function() {

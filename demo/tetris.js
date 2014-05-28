@@ -46,5 +46,7 @@ var Tetris = {
       [0, 1, 1],
       [0, 0, 0],
     ]
-  }
+  },
+  WELL_ROWS: 20,
+  WELL_COLS: 10,
 };
