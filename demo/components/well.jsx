@@ -28,10 +28,10 @@ Cosmos.components.Well = React.createClass({
     };
   },
   children: {
-    activeTetrimino: function(props) {
-      return _.extend(props, {
+    activeTetrimino: function() {
+      return {
         component: 'Tetrimino'
-      });
+      };
     }
   },
   loadTetrimino: function(type) {
