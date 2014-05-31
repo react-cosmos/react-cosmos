@@ -1,53 +1,78 @@
-var Cosmos = require('../build/cosmos.js'),
-    React = require('react'),
-    _ = require('underscore');
-
 describe("Components implementing the PersistState mixin", function() {
 
-  var PersistStateSpec = {
-        mixins: [Cosmos.mixins.PersistState],
-        render: function() {
-          return React.DOM.span(null, 'nada');
-        }
-      },
-      ParentPersistStateSpec = {
-        mixins: [Cosmos.mixins.PersistState],
-        render: function() {
-          return this.loadChild('childRef');
-        }
-      };
+  var _ = require('underscore'),
+      jsdom = require('jsdom');
+
+  // jsdom creates a fresh new window object for every test case and React needs
+  // to be required *after* the window and document globals are available. The
+  // var references however must be declared globally in order to be accessible
+  // in test cases as well.
+  var React,
+      utils,
+      Cosmos;
+
+  beforeEach(function() {
+    global.window = jsdom.jsdom().createWindow('<html><body></body></html>');
+    global.document = global.window.document;
+    global.navigator = global.window.navigator;
+
+    React = require('react/addons');
+    utils = React.addons.TestUtils;
+    Cosmos = require('../build/cosmos.js');
+  });
+
+  // In order to avoid any sort of state between tests, even the component class
+  // generated for every test case
+  var generateComponentClass = function(attributes) {
+    return React.createClass(_.extend({}, attributes, {
+      mixins: [Cosmos.mixins.PersistState],
+      render: function() {
+        return React.DOM.span();
+      }
+    }));
+  };
+  var generateParentComponentClass = function(attributes) {
+    return React.createClass(_.extend({}, attributes, {
+      mixins: [Cosmos.mixins.PersistState],
+      render: function() {
+        return this.loadChild('childRef');
+      }
+    }));
+  };
+
+  var ComponentClass,
+      componentInstance;
 
   it("should load their state from the 'state' prop", function() {
-    var PersistStateComponent = React.createClass(PersistStateSpec),
-        componentInstance = PersistStateComponent({state: {foo: 'bar'}});
-    // React Components need to be rendered to mount
-    React.renderComponentToString(componentInstance);
+    ComponentClass = generateComponentClass();
+    componentInstance = utils.renderIntoDocument(ComponentClass({
+      state: {foo: 'bar'}
+    }));
     expect(componentInstance.state).toEqual({foo: 'bar'});
+
   });
 
   describe("child", function() {
 
     beforeEach(function() {
-      Cosmos.components.ChildComponent = React.createClass(PersistStateSpec);
+      Cosmos.components.ChildComponent = generateComponentClass();
     });
     afterEach(function() {
       delete Cosmos.components.ChildComponent;
     });
 
     it("props should be read from .children class handlers", function() {
-      var ComponentClass = React.createClass(_.extend({
-            children: {
-              childRef: function() {
-                return {
-                  component: 'ChildComponent',
-                  foo: 'bar'
-                };
-              }
-            }
-          }, ParentPersistStateSpec)),
-          componentInstance = ComponentClass({});
-      // React Components need to be rendered to mount
-      React.renderComponentToString(componentInstance);
+      ComponentClass = generateParentComponentClass({
+        children: {
+          childRef: function() {
+            return {
+              component: 'ChildComponent',
+              foo: 'bar'
+            };
+          }
+        }
+      });
+      componentInstance = utils.renderIntoDocument(ComponentClass());
       expect(componentInstance.refs.childRef.props).toEqual({
         ref: 'childRef',
         component: 'ChildComponent',
@@ -56,56 +81,52 @@ describe("Components implementing the PersistState mixin", function() {
     });
 
     it("state should be read from embedded .children state", function() {
-      var ComponentClass = React.createClass(_.extend({
-            children: {
-              childRef: function() {
-                return {
-                  component: 'ChildComponent',
-                  foo: 'bar'
-                };
-              }
+      ComponentClass = generateParentComponentClass({
+        children: {
+          childRef: function() {
+            return {
+              component: 'ChildComponent',
+              foo: 'bar'
+            };
+          }
+        }
+      });
+      componentInstance = utils.renderIntoDocument(ComponentClass({
+        state: {
+          children: {
+            childRef: {
+              isThisTheLife: true
             }
-          }, ParentPersistStateSpec)),
-          componentInstance = ComponentClass({
-            state: {
-              children: {
-                childRef: {
-                  isThisTheLife: true
-                }
-              }
-            }
-          });
-      // React Components need to be rendered to mount
-      React.renderComponentToString(componentInstance);
+          }
+        }
+      }));
       expect(componentInstance.refs.childRef.state).toEqual({
         isThisTheLife: true
       });
     });
 
     it("should use embedded .children state first and then ignore it", function() {
-      var ComponentClass = React.createClass(_.extend({
-            children: {
-              childRef: function() {
-                return {
-                  component: 'ChildComponent',
-                  foo: this.props.foo
-                };
-              }
+      ComponentClass = generateParentComponentClass({
+        children: {
+          childRef: function() {
+            return {
+              component: 'ChildComponent',
+              foo: this.props.foo
+            };
+          }
+        }
+      });
+      componentInstance = utils.renderIntoDocument(ComponentClass({
+        foo: 'bar',
+        state: {
+          children: {
+            childRef: {
+              isThisTheLife: true,
+              isThisLove: false
             }
-          }, ParentPersistStateSpec)),
-          componentInstance = ComponentClass({
-            foo: 'bar',
-            state: {
-              children: {
-                childRef: {
-                  isThisTheLife: true,
-                  isThisLove: false
-                }
-              }
-            }
-          });
-      // React Components need to be rendered to mount
-      React.renderComponentToString(componentInstance);
+          }
+        }
+      }));
       expect(componentInstance.refs.childRef.props).toEqual({
         ref: 'childRef',
         component: 'ChildComponent',
@@ -137,34 +158,30 @@ describe("Components implementing the PersistState mixin", function() {
   });
 
   it("should generate snapshot with exact props and state", function() {
-    var PersistStateComponent = React.createClass(PersistStateSpec),
-        componentInstance = PersistStateComponent({
-          players: 5,
-          state: {speed: 1}
-        }),
-        snapshot;
-    // React Components need to be rendered to mount
-    React.renderComponentToString(componentInstance);
+    ComponentClass = generateComponentClass();
+    componentInstance = utils.renderIntoDocument(ComponentClass({
+      players: 5,
+      state: {speed: 1}
+    }));
     expect(componentInstance.generateSnapshot())
-      .toEqual({players: 5, state: {speed: 1}});
+          .toEqual({players: 5, state: {speed: 1}});
 
     // Let's ensure changes are also reflected in the snapshot
     componentInstance.setProps({players: 10});
     componentInstance.setState({speed: 3});
     expect(componentInstance.generateSnapshot())
-      .toEqual({players: 10, state: {speed: 3}});
+          .toEqual({players: 10, state: {speed: 3}});
   });
 
   it("should ignore default props when generating snapshot", function() {
-    var CustomPersistStateSpec = _.extend({getDefaultProps: function() {
-          return {hidden: true};
-        }}, PersistStateSpec),
-        PersistStateComponent = React.createClass(CustomPersistStateSpec),
-        componentInstance = PersistStateComponent({
-          visible: true
-        });
-    // React Components need to be rendered to mount
-    React.renderComponentToString(componentInstance);
+    ComponentClass = generateComponentClass({
+      getDefaultProps: function() {
+        return {hidden: true};
+      }
+    });
+    componentInstance = utils.renderIntoDocument(ComponentClass({
+      visible: true
+    }));
     expect(componentInstance.generateSnapshot()).toEqual({
       visible: true,
       state: {}
@@ -172,20 +189,18 @@ describe("Components implementing the PersistState mixin", function() {
   });
 
   it("should generate snapshot recursively", function() {
-    Cosmos.components.ChildComponent = React.createClass(PersistStateSpec);
-    var ComponentClass = React.createClass(_.extend({
-          children: {
-            childRef: function() {
-              return {
-                component: 'ChildComponent',
-                foo: 'bar'
-              };
-            }
-          }
-        }, ParentPersistStateSpec)),
-        componentInstance = ComponentClass({});
-    // React Components need to be rendered to mount
-    React.renderComponentToString(componentInstance);
+    Cosmos.components.ChildComponent = generateComponentClass();
+    ComponentClass = generateParentComponentClass({
+      children: {
+        childRef: function() {
+          return {
+            component: 'ChildComponent',
+            foo: 'bar'
+          };
+        }
+      }
+    });
+    componentInstance = utils.renderIntoDocument(ComponentClass());
     componentInstance.refs.childRef.setState({updated: true});
     expect(componentInstance.generateSnapshot(true)).toEqual({
       state: {

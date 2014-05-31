@@ -2,8 +2,12 @@
   "name": "cosmos-js",
   "version": "0.1.0",
   "description": "Data exploration framework",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skidding/cosmos.git"
+  },
   "dependencies": {
-    "react": "~0.9.0",
+    "react": "~0.10.0",
     "underscore": "~1.6.0"
   },
   "devDependencies": {
@@ -13,6 +17,7 @@
     "gulp-uglify": "~0.3.0",
     "gulp-if": "~1.2.1",
     "gulp-react": "~0.3.3",
+    "jsdom": "~0.10.6",
     "jasmine-node": "~1.14.3"
   },
   "main": "build/cosmos.js",
