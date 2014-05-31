@@ -1,24 +1,31 @@
-var Cosmos = require('../build/cosmos.js'),
-    React = require('react');
-
 describe("Cosmos.Router", function() {
 
+  var jsdom = require('jsdom');
+
+  // jsdom creates a fresh new window object for every test case and React needs
+  // to be required *after* the window and document globals are available. The
+  // var references however must be declared globally in order to be accessible
+  // in test cases as well.
+  var React,
+      utils,
+      Cosmos;
+
   beforeEach(function() {
-    // Mock global objects in a browser
-    global.window = {location: {search: '?component=List&data=users.json'}};
-    global.document = {body: {}};
-    // Uses window event binding
+    global.window = jsdom.jsdom().createWindow('<html><body></body></html>');
+    global.document = global.window.document;
+    global.navigator = global.window.navigator;
+    // We're mocking the URL query string of the window
+    global.window.location = {search: '?component=List&data=users.json'};
+
+    React = require('react/addons');
+    utils = React.addons.TestUtils;
+    Cosmos = require('../build/cosmos.js');
+
+    // Ignore out of scope methods
     spyOn(Cosmos.Router.prototype, '_bindPopStateEvent');
-    // Use window.history
     spyOn(Cosmos.Router.prototype, '_replaceHistoryState');
     spyOn(Cosmos.Router.prototype, '_pushHistoryState');
-    // Out of Router scope
     spyOn(Cosmos.url, 'isPushStateSupported').andReturn(true);
-  });
-
-  afterEach(function() {
-    delete global.window;
-    delete global.location;
   });
 
   describe("new instance", function() {
@@ -55,8 +62,9 @@ describe("Cosmos.Router", function() {
       });
 
       it("should save a reference to the DOM container", function() {
-        var router = new Cosmos.Router({container: '<body>'});
-        expect(router.container).toEqual('<body>');
+        var container = React.DOM.span();
+            router = new Cosmos.Router({container: '<span>'});
+        expect(router.container).toEqual('<span>');
       });
   });
 
@@ -68,13 +76,14 @@ describe("Cosmos.Router", function() {
 
     it("with constructor props and container", function() {
       var router = new Cosmos.Router({
-            props: {component: 'List', dataUrl: 'users.json'},
-            container: '<body>'
-          });
+        props: {component: 'List', dataUrl: 'users.json'},
+        container: '<span>'
+      });
       expect(Cosmos.render.callCount).toEqual(1);
       expect(Cosmos.render.mostRecentCall.args[0]).toEqual({
         component: 'List', dataUrl: 'users.json'
       });
+      expect(Cosmos.render.mostRecentCall.args[1]).toEqual('<span>');
     });
 
     it("with props extracted from query string on .goTo", function() {
@@ -104,25 +113,27 @@ describe("Cosmos.Router", function() {
   });
 
   it("should cache latest snapshot of previous Component", function() {
-    var ComponentSpec = {
+    var ComponentClass = React.createClass({
           mixins: [Cosmos.mixins.PersistState],
           render: function() {
-            return React.DOM.span(null, 'nada');
+            return React.DOM.span();
           }
-        },
-        ComponentClass = React.createClass(ComponentSpec),
+        }),
         props = {component: 'List', dataUrl: 'users.json'},
-        componentInstance = ComponentClass(props);
-    // React Components need to be rendered to mount
-    React.renderComponentToString(componentInstance);
+        componentInstance = utils.renderIntoDocument(ComponentClass(props));
+
+    // We just want a valid instance to work with, there Router props won't
+    // be taken into consideration
     spyOn(Cosmos, 'render').andCallFake(function(props) {
       return componentInstance;
     });
-    var router = new Cosmos.Router({props: props});
+
+    var router = new Cosmos.Router();
     // We alter the current instance while it's bound to the current history
     // entry
     componentInstance.setProps({dataUrl: null, someNumber: 555});
     componentInstance.setState({amIState: true});
+
     // Before routing to a new Component configuration, the previous one
     // shouldn't been update with our changes
     router.goTo('?component=User&dataUrl=user.json');
