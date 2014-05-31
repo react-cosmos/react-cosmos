@@ -25,7 +25,7 @@ describe("Cosmos.Router", function() {
     spyOn(Cosmos.Router.prototype, '_bindPopStateEvent');
     spyOn(Cosmos.Router.prototype, '_replaceHistoryState');
     spyOn(Cosmos.Router.prototype, '_pushHistoryState');
-    spyOn(Cosmos.url, 'isPushStateSupported').andReturn(true);
+    spyOn(Cosmos.url, 'isPushStateSupported').and.returnValue(true);
   });
 
   describe("new instance", function() {
@@ -40,7 +40,7 @@ describe("Cosmos.Router", function() {
       });
 
       it("should use default props when props are empty", function() {
-        spyOn(Cosmos.url, 'getParams').andReturn({});
+        spyOn(Cosmos.url, 'getParams').and.returnValue({});
         var router = new Cosmos.Router({defaultProps: {
           component: 'DefaultComponent'
         }});
@@ -79,18 +79,18 @@ describe("Cosmos.Router", function() {
         props: {component: 'List', dataUrl: 'users.json'},
         container: '<span>'
       });
-      expect(Cosmos.render.callCount).toEqual(1);
-      expect(Cosmos.render.mostRecentCall.args[0]).toEqual({
+      expect(Cosmos.render.calls.count()).toEqual(1);
+      expect(Cosmos.render.calls.mostRecent().args[0]).toEqual({
         component: 'List', dataUrl: 'users.json'
       });
-      expect(Cosmos.render.mostRecentCall.args[1]).toEqual('<span>');
+      expect(Cosmos.render.calls.mostRecent().args[1]).toEqual('<span>');
     });
 
     it("with props extracted from query string on .goTo", function() {
       var router = new Cosmos.Router({});
       router.goTo('?component=List&dataUrl=users.json');
-      expect(Cosmos.render.callCount).toEqual(2);
-      expect(Cosmos.render.mostRecentCall.args[0]).toEqual({
+      expect(Cosmos.render.calls.count()).toEqual(2);
+      expect(Cosmos.render.calls.mostRecent().args[0]).toEqual({
         component: 'List',
         dataUrl: 'users.json'
       });
@@ -104,8 +104,8 @@ describe("Cosmos.Router", function() {
           dataUrl: 'users.json'
         }
       });
-      expect(Cosmos.render.callCount).toEqual(2);
-      expect(Cosmos.render.mostRecentCall.args[0]).toEqual({
+      expect(Cosmos.render.calls.count()).toEqual(2);
+      expect(Cosmos.render.calls.mostRecent().args[0]).toEqual({
         component: 'List',
         dataUrl: 'users.json'
       });
@@ -124,7 +124,7 @@ describe("Cosmos.Router", function() {
 
     // We just want a valid instance to work with, there Router props won't
     // be taken into consideration
-    spyOn(Cosmos, 'render').andCallFake(function(props) {
+    spyOn(Cosmos, 'render').and.callFake(function(props) {
       return componentInstance;
     });
 
@@ -137,8 +137,8 @@ describe("Cosmos.Router", function() {
     // Before routing to a new Component configuration, the previous one
     // shouldn't been update with our changes
     router.goTo('?component=User&dataUrl=user.json');
-    expect(router._replaceHistoryState.callCount).toEqual(1);
-    expect(router._replaceHistoryState.mostRecentCall.args[0]).toEqual({
+    expect(router._replaceHistoryState.calls.count()).toEqual(1);
+    expect(router._replaceHistoryState.calls.mostRecent().args[0]).toEqual({
       component: 'List',
       dataUrl: null,
       someNumber: 555,

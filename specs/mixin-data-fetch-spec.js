@@ -70,13 +70,13 @@ describe("Components implementing the DataFetch mixin", function() {
     componentInstance = utils.renderIntoDocument(ComponentClass({
       dataUrl: 'url?query=string'
     }));
-    expect(Cosmos.mixins.DataFetch.fetchDataFromServer.callCount).toEqual(1);
+    expect(Cosmos.mixins.DataFetch.fetchDataFromServer.calls.count()).toEqual(1);
   });
 
   it("shouldn't fetch data if a 'dataUrl' prop isn't set", function() {
     ComponentClass = generateComponentClass();
     componentInstance = utils.renderIntoDocument(ComponentClass());
-    expect(Cosmos.mixins.DataFetch.fetchDataFromServer.callCount).toEqual(0);
+    expect(Cosmos.mixins.DataFetch.fetchDataFromServer.calls.count()).toEqual(0);
   });
 
   it("should fetch data with `dataUrl` prop if set", function() {
@@ -84,7 +84,7 @@ describe("Components implementing the DataFetch mixin", function() {
     componentInstance = utils.renderIntoDocument(ComponentClass({
       dataUrl: 'http://happiness.com'
     }));
-    expect(Cosmos.mixins.DataFetch.fetchDataFromServer.mostRecentCall.args[0])
+    expect(Cosmos.mixins.DataFetch.fetchDataFromServer.calls.mostRecent().args[0])
           .toEqual('http://happiness.com');
   });
 
@@ -95,7 +95,7 @@ describe("Components implementing the DataFetch mixin", function() {
       }
     });
     componentInstance = utils.renderIntoDocument(ComponentClass());
-    expect(Cosmos.mixins.DataFetch.fetchDataFromServer.mostRecentCall.args[0])
+    expect(Cosmos.mixins.DataFetch.fetchDataFromServer.calls.mostRecent().args[0])
           .toEqual('http://euphoria.org');
   });
 
@@ -108,7 +108,7 @@ describe("Components implementing the DataFetch mixin", function() {
     componentInstance = utils.renderIntoDocument(ComponentClass({
       dataUrl: 'http://happiness.com'
     }));
-    expect(Cosmos.mixins.DataFetch.fetchDataFromServer.mostRecentCall.args[0])
+    expect(Cosmos.mixins.DataFetch.fetchDataFromServer.calls.mostRecent().args[0])
           .toEqual('http://euphoria.org');
   });
 
@@ -119,7 +119,7 @@ describe("Components implementing the DataFetch mixin", function() {
       }
     });
     componentInstance = utils.renderIntoDocument(ComponentClass({id: 3}));
-    expect(Cosmos.mixins.DataFetch.fetchDataFromServer.mostRecentCall.args[0])
+    expect(Cosmos.mixins.DataFetch.fetchDataFromServer.calls.mostRecent().args[0])
           .toEqual('http://desertedblog.com?id=3');
   });
 

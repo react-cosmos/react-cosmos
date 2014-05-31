@@ -30,7 +30,7 @@ describe("Cosmos", function() {
   it("should instantiate correct Component", function() {
     var fakeComponentInstance = {};
     Cosmos.components.FakeComponent = jasmine.createSpy('FakeComponent')
-                                      .andReturn(fakeComponentInstance);
+                                      .and.returnValue(fakeComponentInstance);
     expect(Cosmos({component: 'FakeComponent'})).toBe(fakeComponentInstance);
   });
 
@@ -41,8 +41,8 @@ describe("Cosmos", function() {
       spyOn(React, 'renderComponent');
       spyOn(React, 'renderComponentToString');
       Cosmos.render({component: 'FakeComponent'}, '<div>');
-      expect(React.renderComponent.callCount).toBe(1);
-      expect(React.renderComponentToString.callCount).toBe(0);
+      expect(React.renderComponent.calls.count()).toBe(1);
+      expect(React.renderComponentToString.calls.count()).toBe(0);
     });
 
     it("should render to string if didn't receive a container", function() {
@@ -50,17 +50,17 @@ describe("Cosmos", function() {
       spyOn(React, 'renderComponent');
       spyOn(React, 'renderComponentToString');
       Cosmos.render({component: 'FakeComponent'});
-      expect(React.renderComponent.callCount).toBe(0);
-      expect(React.renderComponentToString.callCount).toBe(1);
+      expect(React.renderComponent.calls.count()).toBe(0);
+      expect(React.renderComponentToString.calls.count()).toBe(1);
     });
 
     it("should render correct Component", function() {
       var fakeComponentInstance = {};
       Cosmos.components.FakeComponent = jasmine.createSpy('FakeComponent')
-                                        .andReturn(fakeComponentInstance);
+                                        .and.returnValue(fakeComponentInstance);
       spyOn(React, 'renderComponentToString');
       Cosmos.render({component: 'FakeComponent'});
-      expect(React.renderComponentToString.mostRecentCall.args[0])
+      expect(React.renderComponentToString.calls.mostRecent().args[0])
             .toBe(fakeComponentInstance);
     });
 
@@ -71,7 +71,7 @@ describe("Cosmos", function() {
         component: 'FakeComponent',
         foo: 'bar'
       });
-      expect(Cosmos.components.FakeComponent.mostRecentCall.args[0]).toEqual({
+      expect(Cosmos.components.FakeComponent.calls.mostRecent().args[0]).toEqual({
         component: 'FakeComponent',
         foo: 'bar'
       });
@@ -84,7 +84,7 @@ describe("Cosmos", function() {
       spyOn(React, 'renderComponentToString');
       Cosmos.render(initialProps);
       expect(initialProps).toEqual(initialPropsClone);
-      expect(React.renderComponentToString.mostRecentCall.args[0].props)
+      expect(React.renderComponentToString.calls.mostRecent().args[0].props)
             .not.toBe(initialProps);
     });
   });
@@ -97,7 +97,7 @@ describe("Cosmos", function() {
 
     it("should call Cosmos.Router", function() {
       Cosmos.start();
-      expect(Cosmos.Router.callCount).toBe(1);
+      expect(Cosmos.Router.calls.count()).toBe(1);
     });
 
     it("should create Cosmos.Router instance with same options", function() {
@@ -105,7 +105,7 @@ describe("Cosmos", function() {
         props: {component: 'MissingComponent'},
         container: '<div>'
       });
-      expect(Cosmos.Router.mostRecentCall.args[0]).toEqual({
+      expect(Cosmos.Router.calls.mostRecent().args[0]).toEqual({
         props: {component: 'MissingComponent'},
         container: '<div>'
       });
