@@ -18,7 +18,7 @@
     "gulp-if": "~1.2.1",
     "gulp-react": "~0.3.3",
     "jsdom": "~0.10.6",
-    "jasmine-node": "~1.14.3"
+    "jasmine-node": "~2.0.0"
   },
   "main": "build/cosmos.js",
   "scripts": {
