@@ -1,47 +1,69 @@
-var Cosmos = require('../build/cosmos.js'),
-    React = require('react'),
-    _ = require('underscore');
-
 describe("Components implementing the ClassName mixin", function() {
 
-  var ClassNameSpec = {
-    mixins: [Cosmos.mixins.ClassName],
-    render: function() {
-      return React.DOM.span(null, 'nada');
-    }
+  var _ = require('underscore'),
+      jsdom = require('jsdom');
+
+  // jsdom creates a fresh new window object for every test case and React needs
+  // to be required *after* the window and document globals are available. The
+  // var references however must be declared globally in order to be accessible
+  // in test cases as well.
+  var React,
+      utils,
+      Cosmos;
+
+  beforeEach(function() {
+    global.window = jsdom.jsdom().createWindow('<html><body></body></html>');
+    global.document = global.window.document;
+    global.navigator = global.window.navigator;
+
+    React = require('react/addons');
+    utils = React.addons.TestUtils;
+    Cosmos = require('../build/cosmos.js');
+  });
+
+  // In order to avoid any sort of state between tests, even the component class
+  // generated for every test case
+  var generateComponentClass = function(attributes) {
+    return React.createClass(_.extend({}, attributes, {
+      mixins: [Cosmos.mixins.ClassName],
+      render: function() {
+        return React.DOM.span();
+      }
+    }));
   };
 
+  var ComponentClass,
+      componentInstance;
+
   it("should not return a class name when none is specified", function() {
-    var ClassNameComponent = React.createClass(ClassNameSpec),
-        componentInstance = ClassNameComponent();
-    // React Components need to be rendered to mount
-    React.renderComponentToString(componentInstance);
+    ComponentClass = generateComponentClass();
+    componentInstance = utils.renderIntoDocument(ComponentClass());
     expect(componentInstance.getClassName()).toEqual(null);
   });
 
   it("should return a class name when 'class' prop is set", function() {
-    var ClassNameComponent = React.createClass(ClassNameSpec),
-        componentInstance = ClassNameComponent({class: 'my-class'});
-    // React Components need to be rendered to mount
-    React.renderComponentToString(componentInstance);
+    ComponentClass = generateComponentClass();
+    componentInstance = utils.renderIntoDocument(ComponentClass({
+      class: 'my-class'
+    }));
     expect(componentInstance.getClassName()).toEqual('my-class');
   });
 
   it("should return default class name when defined", function() {
-    var DefaultClassSpec = _.extend({defaultClass: 'default-class'}, ClassNameSpec),
-        ClassNameComponent = React.createClass(DefaultClassSpec),
-        componentInstance = ClassNameComponent();
-    // React Components need to be rendered to mount
-    React.renderComponentToString(componentInstance);
+    ComponentClass = generateComponentClass({
+      defaultClass: 'default-class'
+    });
+    componentInstance = utils.renderIntoDocument(ComponentClass());
     expect(componentInstance.getClassName()).toEqual('default-class');
   });
 
   it("should return both default class and 'class' prop", function() {
-    var DefaultClassSpec = _.extend({defaultClass: 'default-class'}, ClassNameSpec),
-        ClassNameComponent = React.createClass(DefaultClassSpec),
-        componentInstance = ClassNameComponent({class: 'my-class'});
-    // React Components need to be rendered to mount
-    React.renderComponentToString(componentInstance);
+    ComponentClass = generateComponentClass({
+      defaultClass: 'default-class'
+    });
+    componentInstance = utils.renderIntoDocument(ComponentClass({
+      class: 'my-class'
+    }));
     expect(componentInstance.getClassName()).toEqual('default-class my-class');
   });
 });

@@ -1,13 +1,30 @@
-var Cosmos = require('../build/cosmos.js'),
-    React = require('react'),
-    _ = require('underscore');
-
 describe("Cosmos", function() {
 
+  var _ = require('underscore'),
+      jsdom = require('jsdom');
+
+  // jsdom creates a fresh new window object for every test case and React needs
+  // to be required *after* the window and document globals are available. The
+  // var references however must be declared globally in order to be accessible
+  // in test cases as well.
+  var React,
+      utils,
+      Cosmos;
+
+  beforeEach(function() {
+    global.window = jsdom.jsdom().createWindow('<html><body></body></html>');
+    global.document = global.window.document;
+    global.navigator = global.window.navigator;
+
+    React = require('react/addons');
+    utils = React.addons.TestUtils;
+    Cosmos = require('../build/cosmos.js');
+  });
+
   it("should draw its components from the Cosmos.components namespace", function() {
-    var EmptyComponent = {};
-    Cosmos.components.EmptyComponent = EmptyComponent;
-    expect(Cosmos.getComponentByName('EmptyComponent')).toBe(EmptyComponent);
+    var FakeComponent = {};
+    Cosmos.components.FakeComponent = FakeComponent;
+    expect(Cosmos.getComponentByName('FakeComponent')).toBe(FakeComponent);
   });
 
   it("should instantiate correct Component", function() {
@@ -61,14 +78,14 @@ describe("Cosmos", function() {
     });
 
     it("should not alter props object received", function() {
-      var initialProps = {component: 'TestComponent', foo: 'bar'},
-                         initialPropsClone = _.clone(initialProps);
-      Cosmos.components.TestComponent = React.createClass({render: function(){}});
+      var initialProps = {component: 'EmptyComponent', foo: 'bar'},
+          initialPropsClone = _.clone(initialProps);
+      Cosmos.components.EmptyComponent = React.createClass({render: function(){}});
       spyOn(React, 'renderComponentToString');
       Cosmos.render(initialProps);
       expect(initialProps).toEqual(initialPropsClone);
       expect(React.renderComponentToString.mostRecentCall.args[0].props)
-        .not.toBe(initialProps);
+            .not.toBe(initialProps);
     });
   });
 
