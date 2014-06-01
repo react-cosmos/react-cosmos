@@ -9,7 +9,8 @@ Cosmos.components.Well = React.createClass({
    * line it will be cleared, emptying up space and allowing more pieces to
    * enter afterwards.
    */
-  mixins: [Cosmos.mixins.PersistState],
+  mixins: [Cosmos.mixins.PersistState,
+           Cosmos.mixins.AnimationLoop],
   getDefaultProps: function() {
     return {
       rows: Tetris.WELL_ROWS,
@@ -24,6 +25,7 @@ Cosmos.components.Well = React.createClass({
       // is inserted in the Well, using the getInitialPositionForTetriminoType
       // method
       activeTetriminoPosition: {x: 0, y: 0},
+      dropFrames: Tetris.DROP_FRAMES_DEFAULT
     };
   },
   children: {
@@ -48,6 +50,19 @@ Cosmos.components.Well = React.createClass({
       // internally inside Tetrimino Component afterwards
       this.refs.activeTetrimino.setState({grid: Tetris.SHAPES[type]});
     }
+  },
+  increaseSpeed: function() {
+    this.setState({dropFrames: this.state.dropFrames -
+                               Tetris.DROP_FRAMES_DECREMENT});
+  },
+  onFrame: function(frames) {
+    if (!this.state.activeTetrimino) {
+      return;
+    }
+    var dropStep = frames / this.state.dropFrames,
+        position = this.state.activeTetriminoPosition;
+    position.y += dropStep;
+    this.setState({activeTetriminoPosition: position});
   },
   render: function() {
     return (
@@ -109,9 +124,10 @@ Cosmos.components.Well = React.createClass({
     };
   },
   getTetriminoPosition: function() {
+    var position = this.state.activeTetriminoPosition;
     return {
-      top: 100 / this.props.rows * this.state.activeTetriminoPosition.y + '%',
-      left: 100 / this.props.cols * this.state.activeTetriminoPosition.x + '%'
+      top: 100 / this.props.rows * Math.floor(position.y) + '%',
+      left: 100 / this.props.cols * Math.floor(position.x) + '%'
     }
   },
   getInitialPositionForTetriminoType: function(type) {

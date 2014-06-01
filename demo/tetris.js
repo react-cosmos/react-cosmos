@@ -49,4 +49,6 @@ var Tetris = {
   },
   WELL_ROWS: 20,
   WELL_COLS: 10,
+  DROP_FRAMES_DEFAULT: 48,
+  DROP_FRAMES_DECREMENT: 1.5,
 };
