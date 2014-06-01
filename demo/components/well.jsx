@@ -25,7 +25,8 @@ Cosmos.components.Well = React.createClass({
       // is inserted in the Well, using the getInitialPositionForTetriminoType
       // method
       activeTetriminoPosition: {x: 0, y: 0},
-      dropFrames: Tetris.DROP_FRAMES_DEFAULT
+      dropFrames: Tetris.DROP_FRAMES_DEFAULT,
+      dropAcceleration: null
     };
   },
   children: {
@@ -51,6 +52,34 @@ Cosmos.components.Well = React.createClass({
       this.refs.activeTetrimino.setState({grid: Tetris.SHAPES[type]});
     }
   },
+  rotateTetrimino: function() {
+    if (this.state.activeTetrimino) {
+      var tetriminoGrid = this.refs.activeTetrimino.getRotatedGrid(),
+          tetriminoPosition = this.state.activeTetriminoPosition;
+      if (this.isPositionAvailableForTetriminoGrid(tetriminoGrid,
+                                                   tetriminoPosition)) {
+        this.refs.activeTetrimino.setState({grid: tetriminoGrid});
+      }
+    }
+  },
+  moveTetriminoToLeft: function() {
+    this.moveTetrimino(-1);
+  },
+  moveTetriminoToRight: function() {
+    this.moveTetrimino(1);
+  },
+  moveTetrimino: function(offset) {
+    if (!this.state.activeTetrimino) {
+      return;
+    }
+    var tetriminoGrid = this.refs.activeTetrimino.state.grid,
+        tetriminoPosition = _.clone(this.state.activeTetriminoPosition);
+    tetriminoPosition.x += offset;
+    if (this.isPositionAvailableForTetriminoGrid(tetriminoGrid,
+                                                 tetriminoPosition)) {
+      this.setState({activeTetriminoPosition: tetriminoPosition});
+    }
+  },
   increaseSpeed: function() {
     this.setState({dropFrames: this.state.dropFrames -
                                Tetris.DROP_FRAMES_DECREMENT});
@@ -59,13 +88,18 @@ Cosmos.components.Well = React.createClass({
     if (!this.state.activeTetrimino) {
       return;
     }
-    var dropStep = frames / this.state.dropFrames,
-        nextPosition = _.clone(this.state.activeTetriminoPosition);
-    nextPosition.y += dropStep;
-    if (this.isGridPositionAvailableForTetrimino(this.refs.activeTetrimino,
-                                                 nextPosition)) {
-      this.setState({activeTetriminoPosition: nextPosition});
+    var tetriminoGrid = this.refs.activeTetrimino.state.grid,
+        tetriminoPosition = _.clone(this.state.activeTetriminoPosition),
+        dropFrames = this.state.dropAcceleration ?
+                     Tetris.DROP_FRAMES_ACCELERATED : this.state.dropFrames,
+        dropStep = frames / dropFrames;
+    tetriminoPosition.y += dropStep;
+    if (this.isPositionAvailableForTetriminoGrid(tetriminoGrid,
+                                                 tetriminoPosition)) {
+      this.setState({activeTetriminoPosition: tetriminoPosition});
     } else {
+      // This is when the active Tetrimino hit the bottom of the Well and can
+      // no longer be controlled
       this.transferActiveTetriminoBlocksToGrid();
       // Unload Tetrimino after landing it
       this.loadTetrimino(null);
@@ -162,28 +196,34 @@ Cosmos.components.Well = React.createClass({
       y: -2
     };
   },
-  isGridPositionAvailableForTetrimino: function(tetrimino, position) {
+  isPositionAvailableForTetriminoGrid: function(tetriminoGrid, position) {
     var tetriminoPositionInGrid = this.getGridPosition(position),
-        rows = tetrimino.state.grid.length,
-        cols = tetrimino.state.grid[0].length,
+        tetriminoRows = tetriminoGrid.length,
+        tetriminoCols = tetriminoGrid[0].length,
+        wellRows = this.state.grid.length,
+        wellCols = this.state.grid[0].length,
         row,
         col,
         relativeRow,
         relativeCol;
-    for (row = 0; row < rows; row++) {
-      for (col = 0; col < cols; col++) {
+    for (row = 0; row < tetriminoRows; row++) {
+      for (col = 0; col < tetriminoCols; col++) {
         // Ignore blank squares from the Tetrimino grid
-        if (!tetrimino.state.grid[row][col]) {
+        if (!tetriminoGrid[row][col]) {
           continue;
         }
         relativeRow = tetriminoPositionInGrid.y + row;
         relativeCol = tetriminoPositionInGrid.x + col;
+        // Ensure Tetrimino block is within the horizontal bounds
+        if (relativeCol < 0 || relativeCol >= wellCols) {
+          return false;
+        }
         // Tetriminos are accepted on top of the Well (it's how they enter)
         if (relativeRow < 0) {
           continue;
         }
-        // Check check if position is outside the grid
-        if (relativeRow > this.state.grid.length - 1) {
+        // Check check if Tetrimino hit the bottom of the Well
+        if (relativeRow >= wellRows) {
           return false;
         }
         // Then if the position is not already taken inside the grid
