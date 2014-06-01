@@ -75,8 +75,8 @@ Cosmos.components.Well = React.createClass({
     return (
       <div className="well">
         <div className="active-tetrimino"
-             style={_.extend(this.getTetriminoSize(),
-                             this.getTetriminoPosition())}>
+             style={_.extend(this.getTetriminoCSSSize(),
+                             this.getActiveTetriminoCSSPosition())}>
           {this.loadChild('activeTetrimino')}
         </div>
         <ul className="well-grid">
@@ -124,18 +124,27 @@ Cosmos.components.Well = React.createClass({
     }
     return matrix;
   },
-  getTetriminoSize: function() {
+  getTetriminoCSSSize: function() {
     return {
       width: 100 / this.props.cols * 4 + '%',
       height: 100 / this.props.rows * 4 + '%'
     };
   },
-  getTetriminoPosition: function() {
-    var position = this.state.activeTetriminoPosition;
+  getActiveTetriminoCSSPosition: function() {
+    var position =
+      this.getGridPosition(this.state.activeTetriminoPosition);
     return {
-      top: 100 / this.props.rows * Math.floor(position.y) + '%',
-      left: 100 / this.props.cols * Math.floor(position.x) + '%'
+      top: 100 / this.props.rows * position.y + '%',
+      left: 100 / this.props.cols * position.x + '%'
     }
+  },
+  getGridPosition: function(floatingPosition) {
+    // The position has floating numbers because of how gravity is incremented
+    // with each frame
+    return {
+      x: Math.floor(floatingPosition.x),
+      y: Math.floor(floatingPosition.y)
+    };
   },
   getInitialPositionForTetriminoType: function(type) {
     /**
@@ -154,12 +163,7 @@ Cosmos.components.Well = React.createClass({
     };
   },
   isGridPositionAvailableForTetrimino: function(tetrimino, position) {
-    // The position is a floating number because of how gravity is incremented
-    // with each frame
-    var tetriminoPositionInWellGrid = {
-          x: Math.floor(position.x),
-          y: Math.floor(position.y)
-        },
+    var tetriminoPositionInGrid = this.getGridPosition(position),
         rows = tetrimino.state.grid.length,
         cols = tetrimino.state.grid[0].length,
         row,
@@ -172,8 +176,8 @@ Cosmos.components.Well = React.createClass({
         if (!tetrimino.state.grid[row][col]) {
           continue;
         }
-        relativeRow = tetriminoPositionInWellGrid.y + row;
-        relativeCol = tetriminoPositionInWellGrid.x + col;
+        relativeRow = tetriminoPositionInGrid.y + row;
+        relativeCol = tetriminoPositionInGrid.x + col;
         // Tetriminos are accepted on top of the Well (it's how they enter)
         if (relativeRow < 0) {
           continue;
@@ -191,13 +195,9 @@ Cosmos.components.Well = React.createClass({
     return true;
   },
   transferActiveTetriminoBlocksToGrid: function() {
-    // The position is a floating number because of how gravity is incremented
-    // with each frame
     var tetrimino = this.refs.activeTetrimino,
-        tetriminoPositionInWellGrid = {
-          x: Math.floor(this.state.activeTetriminoPosition.x),
-          y: Math.floor(this.state.activeTetriminoPosition.y)
-        },
+        tetriminoPositionInGrid =
+          this.getGridPosition(this.state.activeTetriminoPosition),
         rows = tetrimino.state.grid.length,
         cols = tetrimino.state.grid[0].length,
         row,
@@ -210,8 +210,8 @@ Cosmos.components.Well = React.createClass({
         if (!tetrimino.state.grid[row][col]) {
           continue;
         }
-        relativeRow = tetriminoPositionInWellGrid.y + row;
-        relativeCol = tetriminoPositionInWellGrid.x + col;
+        relativeRow = tetriminoPositionInGrid.y + row;
+        relativeCol = tetriminoPositionInGrid.x + col;
         this.state.grid[relativeRow][relativeCol] = tetrimino.props.color;
       }
     }
