@@ -16,14 +16,10 @@ Cosmos.components.Tetrimino = React.createClass({
       grid: Tetris.SHAPES.T
     };
   },
-  render: function() {
-    return (
-      <ul className="tetrimino">
-        {this.renderGridBlocks()}
-      </ul>
-    );
-  },
   rotate: function() {
+    this.setState({grid: this.getRotatedGrid()});
+  },
+  getRotatedGrid: function() {
     // Function inspired by http://stackoverflow.com/a/2800033/128816
     var matrix = [],
         rows = this.state.grid.length,
@@ -36,7 +32,14 @@ Cosmos.components.Tetrimino = React.createClass({
         matrix[row][col] = this.state.grid[cols-1-col][row];
       }
     }
-    this.setState({grid: matrix});
+    return matrix;
+  },
+  render: function() {
+    return (
+      <ul className="tetrimino">
+        {this.renderGridBlocks()}
+      </ul>
+    );
   },
   renderGridBlocks: function() {
     var blocks = [],
