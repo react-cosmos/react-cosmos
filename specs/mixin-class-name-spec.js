@@ -24,12 +24,12 @@ describe("Components implementing the ClassName mixin", function() {
   // In order to avoid any sort of state between tests, even the component class
   // generated for every test case
   var generateComponentClass = function(attributes) {
-    return React.createClass(_.extend({}, attributes, {
+    return React.createClass(_.extend({}, {
       mixins: [Cosmos.mixins.ClassName],
       render: function() {
         return React.DOM.span();
       }
-    }));
+    }, attributes));
   };
 
   var ComponentClass,
