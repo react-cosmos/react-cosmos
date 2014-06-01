@@ -60,9 +60,16 @@ Cosmos.components.Well = React.createClass({
       return;
     }
     var dropStep = frames / this.state.dropFrames,
-        position = this.state.activeTetriminoPosition;
-    position.y += dropStep;
-    this.setState({activeTetriminoPosition: position});
+        nextPosition = _.clone(this.state.activeTetriminoPosition);
+    nextPosition.y += dropStep;
+    if (this.isGridPositionAvailableForTetrimino(this.refs.activeTetrimino,
+                                                 nextPosition)) {
+      this.setState({activeTetriminoPosition: nextPosition});
+    } else {
+      this.transferActiveTetriminoBlocksToGrid();
+      // Unload Tetrimino after landing it
+      this.loadTetrimino(null);
+    }
   },
   render: function() {
     return (
@@ -145,5 +152,70 @@ Cosmos.components.Well = React.createClass({
       x: Math.round(this.props.cols / 2) - Math.round(grid[0].length / 2),
       y: -2
     };
+  },
+  isGridPositionAvailableForTetrimino: function(tetrimino, position) {
+    // The position is a floating number because of how gravity is incremented
+    // with each frame
+    var tetriminoPositionInWellGrid = {
+          x: Math.floor(position.x),
+          y: Math.floor(position.y)
+        },
+        rows = tetrimino.state.grid.length,
+        cols = tetrimino.state.grid[0].length,
+        row,
+        col,
+        relativeRow,
+        relativeCol;
+    for (row = 0; row < rows; row++) {
+      for (col = 0; col < cols; col++) {
+        // Ignore blank squares from the Tetrimino grid
+        if (!tetrimino.state.grid[row][col]) {
+          continue;
+        }
+        relativeRow = tetriminoPositionInWellGrid.y + row;
+        relativeCol = tetriminoPositionInWellGrid.x + col;
+        // Tetriminos are accepted on top of the Well (it's how they enter)
+        if (relativeRow < 0) {
+          continue;
+        }
+        // Check check if position is outside the grid
+        if (relativeRow > this.state.grid.length - 1) {
+          return false;
+        }
+        // Then if the position is not already taken inside the grid
+        if (this.state.grid[relativeRow][relativeCol]) {
+          return false;
+        }
+      }
+    }
+    return true;
+  },
+  transferActiveTetriminoBlocksToGrid: function() {
+    // The position is a floating number because of how gravity is incremented
+    // with each frame
+    var tetrimino = this.refs.activeTetrimino,
+        tetriminoPositionInWellGrid = {
+          x: Math.floor(this.state.activeTetriminoPosition.x),
+          y: Math.floor(this.state.activeTetriminoPosition.y)
+        },
+        rows = tetrimino.state.grid.length,
+        cols = tetrimino.state.grid[0].length,
+        row,
+        col,
+        relativeRow,
+        relativeCol;
+    for (row = 0; row < rows; row++) {
+      for (col = 0; col < cols; col++) {
+        // Ignore blank squares from the Tetrimino grid
+        if (!tetrimino.state.grid[row][col]) {
+          continue;
+        }
+        relativeRow = tetriminoPositionInWellGrid.y + row;
+        relativeCol = tetriminoPositionInWellGrid.x + col;
+        this.state.grid[relativeRow][relativeCol] = tetrimino.props.color;
+      }
+    }
+    // Push grid updates reactively
+    this.setState({grid: this.state.grid});
   }
 });
