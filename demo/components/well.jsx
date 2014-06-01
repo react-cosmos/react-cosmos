@@ -55,7 +55,8 @@ Cosmos.components.Well = React.createClass({
   rotateTetrimino: function() {
     if (this.state.activeTetrimino) {
       var tetriminoGrid = this.refs.activeTetrimino.getRotatedGrid(),
-          tetriminoPosition = this.state.activeTetriminoPosition;
+          tetriminoPosition = this.fitTetriminoGridPositionInWellBounds(
+            tetriminoGrid, this.state.activeTetriminoPosition);
       if (this.isPositionAvailableForTetriminoGrid(tetriminoGrid,
                                                    tetriminoPosition)) {
         this.refs.activeTetrimino.setState({grid: tetriminoGrid});
@@ -233,6 +234,33 @@ Cosmos.components.Well = React.createClass({
       }
     }
     return true;
+  },
+  fitTetriminoGridPositionInWellBounds: function(tetriminoGrid, position) {
+    var tetriminoRows = tetriminoGrid.length,
+        tetriminoCols = tetriminoGrid[0].length,
+        wellCols = this.state.grid[0].length,
+        row,
+        col,
+        relativeRow,
+        relativeCol;
+    for (row = 0; row < tetriminoRows; row++) {
+      for (col = 0; col < tetriminoCols; col++) {
+        // Ignore blank squares from the Tetrimino grid
+        if (!tetriminoGrid[row][col]) {
+          continue;
+        }
+        relativeRow = position.y + row;
+        relativeCol = position.x + col;
+        // Wall kick: A Tetrimino grid that steps outside of the Well grid will
+        // be shifted slightly to slide back inside the Well grid
+        if (relativeCol < 0) {
+          position.x -= relativeCol;
+        } else if (relativeCol >= wellCols) {
+          position.x -= relativeCol-wellCols+1;
+        }
+      }
+    }
+    return position;
   },
   transferActiveTetriminoBlocksToGrid: function() {
     var tetrimino = this.refs.activeTetrimino,
