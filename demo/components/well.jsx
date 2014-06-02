@@ -114,6 +114,8 @@ Cosmos.components.Well = React.createClass({
       this.transferActiveTetriminoBlocksToGrid();
       // Unload Tetrimino after landing it
       this.loadTetrimino(null);
+      // Clear lines created after landing this Tetrimino
+      var linesCleared = this.clearLines();
     }
   },
   render: function() {
@@ -164,7 +166,7 @@ Cosmos.components.Well = React.createClass({
     for (row = 0; row < this.props.rows; row++) {
       matrix[row] = [];
       for (col = 0; col < this.props.cols; col++) {
-        matrix[row][col] = false;
+        matrix[row][col] = null;
       }
     }
     return matrix;
@@ -305,5 +307,46 @@ Cosmos.components.Well = React.createClass({
     }
     // Push grid updates reactively
     this.setState({grid: this.state.grid});
+  },
+  clearLines: function() {
+    /**
+     * Clear all rows that form a complete line, from one left to right, inside
+     * the Well grid. Gravity is applied to fill in the cleared lines with the
+     * ones above, thus freeing up the Well for more Tetriminos to enter.
+     */
+    var linesCleared = 0,
+        isLine,
+        row,
+        col;
+    for (row = this.props.rows - 1; row >= 0; row--) {
+      isLine = true;
+      for (col = this.props.cols - 1; col >= 0; col--) {
+        if (!this.state.grid[row][col]) {
+          isLine = false;
+        }
+      }
+      if (isLine) {
+        this.removeGridRow(row);
+        linesCleared++;
+        // Go once more through the same row
+        row++;
+      }
+    }
+    // Push grid updates reactively
+    this.setState({grid: this.state.grid});
+    return linesCleared;
+  },
+  removeGridRow: function(rowToRemove) {
+    /**
+     * Remove a row from the Well grid by descending all rows above, thus
+     * overriding it with the previous row.
+     */
+    var row,
+        col;
+    for (row = rowToRemove; row >= 0; row--) {
+      for (col = this.props.cols - 1; col >= 0; col--) {
+        this.state.grid[row][col] = row ? this.state.grid[row - 1][col] : null;
+      }
+    }
   }
 });
