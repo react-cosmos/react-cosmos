@@ -99,6 +99,12 @@ Cosmos.components.Well = React.createClass({
                                                  tetriminoPosition)) {
       this.setState({activeTetriminoPosition: tetriminoPosition});
     } else {
+      // A big frame skip could cause the Tetrimino to jump more than one row.
+      // We need to ensure it ends up in the bottom-most one in case the jump
+      // caused the Tetrimino to land
+      this.setState({activeTetriminoPosition:
+        this.getBottomMostPositionForTetriminoGrid(tetriminoGrid,
+                                                   tetriminoPosition)});
       // This is when the active Tetrimino hit the bottom of the Well and can
       // no longer be controlled
       this.transferActiveTetriminoBlocksToGrid();
@@ -259,6 +265,14 @@ Cosmos.components.Well = React.createClass({
           position.x -= relativeCol-wellCols+1;
         }
       }
+    }
+    return position;
+  },
+  getBottomMostPositionForTetriminoGrid: function(tetriminoGrid, position) {
+    // Snap vertical position to grid
+    position.y = Math.floor(position.y);
+    while (!this.isPositionAvailableForTetriminoGrid(tetriminoGrid, position)) {
+      position.y -= 1;
     }
     return position;
   },
