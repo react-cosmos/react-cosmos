@@ -44,11 +44,11 @@ describe("Components implementing the AnimationLoop mixin", function() {
       jasmine.clock().uninstall();
     });
 
-    it("should call onFrame method after calling start()", function() {
+    it("should call onFrame method after starting animation loop", function() {
       var onFrameSpy = jasmine.createSpy('onFrame');
       ComponentClass = generateComponentClass({onFrame: onFrameSpy});
       componentInstance = utils.renderIntoDocument(ComponentClass());
-      componentInstance.start();
+      componentInstance.startAnimationLoop();
       jasmine.clock().tick(1000 / 60);
       expect(onFrameSpy.calls.count()).toBe(1);
     });
@@ -57,17 +57,17 @@ describe("Components implementing the AnimationLoop mixin", function() {
       var onFrameSpy = jasmine.createSpy('onFrame');
       ComponentClass = generateComponentClass({onFrame: onFrameSpy});
       componentInstance = utils.renderIntoDocument(ComponentClass());
-      componentInstance.start();
+      componentInstance.startAnimationLoop();
       jasmine.clock().tick(1000);
       expect(onFrameSpy.calls.count()).toBe(60);
     });
 
-    it("shouldn't call onFrame after calling stop()", function() {
+    it("shouldn't call onFrame after stopping animation loop", function() {
       var onFrameSpy = jasmine.createSpy('onFrame');
       ComponentClass = generateComponentClass({onFrame: onFrameSpy});
       componentInstance = utils.renderIntoDocument(ComponentClass());
-      componentInstance.start();
-      componentInstance.stop();
+      componentInstance.startAnimationLoop();
+      componentInstance.stopAnimationLoop();
       // Simulate one second before checking if calls were made after stopping
       jasmine.clock().tick(1000);
       expect(onFrameSpy.calls.count()).toBe(0);
@@ -79,7 +79,7 @@ describe("Components implementing the AnimationLoop mixin", function() {
       ComponentClass = generateComponentClass({onFrame: onFrameSpy});
       componentInstance = React.renderComponent(ComponentClass(),
                                                 componentContainer);
-      componentInstance.start();
+      componentInstance.startAnimationLoop();
       React.unmountComponentAtNode(componentContainer);
       // Simulate one second before checking if calls were made after
       // unmounting
@@ -96,9 +96,9 @@ describe("Components implementing the AnimationLoop mixin", function() {
         onFrame: onFrameSpy
       });
       componentInstance = utils.renderIntoDocument(ComponentClass());
-      componentInstance.start();
+      componentInstance.startAnimationLoop();
       snapshot = componentInstance.generateSnapshot();
-      componentInstance.stop();
+      componentInstance.stopAnimationLoop();
 
       // Make sure calls weren't from the 1st Component
       jasmine.clock().tick(1000);
@@ -124,7 +124,7 @@ describe("Components implementing the AnimationLoop mixin", function() {
     // This will delay tests with real time (0.1 seconds);
     setTimeout(function() {
       componentInstance._animationCallback();
-      componentInstance.stop();
+      componentInstance.stopAnimationLoop();
       expect(onFrameSpy.calls.mostRecent().args[0]).toBeCloseTo(6, 0);
       done();
     }, 100);
