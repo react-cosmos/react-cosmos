@@ -55,8 +55,12 @@ Cosmos.components.Well = React.createClass({
   rotateTetrimino: function() {
     if (this.state.activeTetrimino) {
       var tetriminoGrid = this.refs.activeTetrimino.getRotatedGrid(),
+          // If the rotation causes the active Tetrimino to go outside of the
+          // Well bounds, its position will be adjusted to fit inside
           tetriminoPosition = this.fitTetriminoGridPositionInWellBounds(
             tetriminoGrid, this.state.activeTetriminoPosition);
+      // If the rotation causes a collision with landed Tetriminos than it won't
+      // be applied
       if (this.isPositionAvailableForTetriminoGrid(tetriminoGrid,
                                                    tetriminoPosition)) {
         this.refs.activeTetrimino.setState({grid: tetriminoGrid});
@@ -76,6 +80,8 @@ Cosmos.components.Well = React.createClass({
     var tetriminoGrid = this.refs.activeTetrimino.state.grid,
         tetriminoPosition = _.clone(this.state.activeTetriminoPosition);
     tetriminoPosition.x += offset;
+    // Attempting to move the Tetrimino outside the Well bounds or over landed
+    // Tetriminos will be ignored
     if (this.isPositionAvailableForTetriminoGrid(tetriminoGrid,
                                                  tetriminoPosition)) {
       this.setState({activeTetriminoPosition: tetriminoPosition});
@@ -92,6 +98,7 @@ Cosmos.components.Well = React.createClass({
     var tetriminoGrid = this.refs.activeTetrimino.state.grid,
         tetriminoPosition = _.clone(this.state.activeTetriminoPosition);
     tetriminoPosition.y += this.getDropStepForFrames(frames);
+    // The active Tetrimino keeps falling down until it hits something
     if (this.isPositionAvailableForTetriminoGrid(tetriminoGrid,
                                                  tetriminoPosition)) {
       this.setState({activeTetriminoPosition: tetriminoPosition});
