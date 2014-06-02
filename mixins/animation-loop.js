@@ -14,12 +14,12 @@ Cosmos.mixins.AnimationLoop = {
    * TODO: shouldComponentUpdate should return false when only
    * state.animationRequestId changed
    */
-  start: function() {
+  startAnimationLoop: function() {
     // Prevent running more callbacks at the same time
-    this.stop();
+    this.stopAnimationLoop();
     this._nextFrame();
   },
-  stop: function() {
+  stopAnimationLoop: function() {
     this._clearAnimation();
     this.setState({animationRequestId: null});
   },
@@ -27,7 +27,7 @@ Cosmos.mixins.AnimationLoop = {
     // If the Component state was frozen with an on-going animation it will
     // resume as soon as a Component is mounted with the same state
     if (this.state && this.state.animationRequestId) {
-      this.start();
+      this.startAnimationLoop();
     }
   },
   componentWillUnmount: function() {
@@ -37,7 +37,7 @@ Cosmos.mixins.AnimationLoop = {
     this._prevTime = Date.now();
     this.setState({
       // Keep a reference to the animation request for two reasons:
-      // - To be able to clear it on stop()
+      // - To be able to clear it on stopAnimationLoop()
       // - To be reflected in the state of the Component, which will resume
       //   animating when loaded in a mounting Component later on
       animationRequestId: requestAnimationFrame(this._animationCallback)
