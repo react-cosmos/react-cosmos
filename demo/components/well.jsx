@@ -216,8 +216,6 @@ Cosmos.components.Well = React.createClass({
     var tetriminoPositionInGrid = this.getGridPosition(position),
         tetriminoRows = tetriminoGrid.length,
         tetriminoCols = tetriminoGrid[0].length,
-        wellRows = this.state.grid.length,
-        wellCols = this.state.grid[0].length,
         row,
         col,
         relativeRow,
@@ -231,7 +229,7 @@ Cosmos.components.Well = React.createClass({
         relativeRow = tetriminoPositionInGrid.y + row;
         relativeCol = tetriminoPositionInGrid.x + col;
         // Ensure Tetrimino block is within the horizontal bounds
-        if (relativeCol < 0 || relativeCol >= wellCols) {
+        if (relativeCol < 0 || relativeCol >= this.props.cols) {
           return false;
         }
         // Tetriminos are accepted on top of the Well (it's how they enter)
@@ -239,7 +237,7 @@ Cosmos.components.Well = React.createClass({
           continue;
         }
         // Check check if Tetrimino hit the bottom of the Well
-        if (relativeRow >= wellRows) {
+        if (relativeRow >= this.props.rows) {
           return false;
         }
         // Then if the position is not already taken inside the grid
@@ -253,7 +251,6 @@ Cosmos.components.Well = React.createClass({
   fitTetriminoGridPositionInWellBounds: function(tetriminoGrid, position) {
     var tetriminoRows = tetriminoGrid.length,
         tetriminoCols = tetriminoGrid[0].length,
-        wellCols = this.state.grid[0].length,
         row,
         col,
         relativeRow,
@@ -270,8 +267,8 @@ Cosmos.components.Well = React.createClass({
         // be shifted slightly to slide back inside the Well grid
         if (relativeCol < 0) {
           position.x -= relativeCol;
-        } else if (relativeCol >= wellCols) {
-          position.x -= relativeCol-wellCols+1;
+        } else if (relativeCol >= this.props.cols) {
+          position.x -= relativeCol-this.props.cols+1;
         }
       }
     }
