@@ -90,11 +90,8 @@ Cosmos.components.Well = React.createClass({
       return;
     }
     var tetriminoGrid = this.refs.activeTetrimino.state.grid,
-        tetriminoPosition = _.clone(this.state.activeTetriminoPosition),
-        dropFrames = this.state.dropAcceleration ?
-                     Tetris.DROP_FRAMES_ACCELERATED : this.state.dropFrames,
-        dropStep = frames / dropFrames;
-    tetriminoPosition.y += dropStep;
+        tetriminoPosition = _.clone(this.state.activeTetriminoPosition);
+    tetriminoPosition.y += this.getDropStepForFrames(frames);
     if (this.isPositionAvailableForTetriminoGrid(tetriminoGrid,
                                                  tetriminoPosition)) {
       this.setState({activeTetriminoPosition: tetriminoPosition});
@@ -202,6 +199,11 @@ Cosmos.components.Well = React.createClass({
       x: Math.round(this.props.cols / 2) - Math.round(grid[0].length / 2),
       y: -2
     };
+  },
+  getDropStepForFrames: function(frames) {
+    var dropFrames = this.state.dropAcceleration ?
+                     Tetris.DROP_FRAMES_ACCELERATED : this.state.dropFrames;
+    return frames / dropFrames;
   },
   isPositionAvailableForTetriminoGrid: function(tetriminoGrid, position) {
     var tetriminoPositionInGrid = this.getGridPosition(position),
