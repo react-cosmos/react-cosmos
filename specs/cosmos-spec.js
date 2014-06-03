@@ -1,6 +1,6 @@
 describe("Cosmos", function() {
 
-  var _ = require('underscore'),
+  var _ = require('lodash'),
       jsdom = require('jsdom');
 
   // jsdom creates a fresh new window object for every test case and React needs
