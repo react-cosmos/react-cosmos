@@ -116,6 +116,11 @@ Cosmos.components.Well = React.createClass({
       this.loadTetrimino(null);
       // Clear lines created after landing this Tetrimino
       var linesCleared = this.clearLines();
+      // Notify any listening parent about Tetrimino drops, with regard to the
+      // likelihood of one or more resulting line clears 
+      if (typeof(this.props.onTetriminoLanding) == 'function') {
+        this.props.onTetriminoLanding(linesCleared);
+      }
     }
   },
   render: function() {
