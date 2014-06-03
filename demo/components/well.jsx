@@ -40,6 +40,13 @@ Cosmos.components.Well = React.createClass({
       };
     }
   },
+  reset: function() {
+    this.setState({
+      grid: this.generateEmptyMatrix(),
+      dropFrames: Tetris.DROP_FRAMES_DEFAULT
+    });
+    this.loadTetrimino(null);
+  },
   loadTetrimino: function(type) {
     this.setState({
       activeTetrimino: type,
