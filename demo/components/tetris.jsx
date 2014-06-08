@@ -11,6 +11,12 @@ Cosmos.components.Tetris = React.createClass({
       gamePlaying: false
     };
   },
+  getGameDefaults: function() {
+    return {
+      gamePlaying: true,
+      nextTetrimino: this.getRandomTetriminoType()
+    };
+  },
   mixins: [Cosmos.mixins.PersistState],
   children: {
     well: function() {
@@ -25,9 +31,9 @@ Cosmos.components.Tetris = React.createClass({
     /**
      * Start or restart a Tetris session from scratch.
      */
-    this.setState({gamePlaying: true});
+    this.setState(this.getGameDefaults());
     this.refs.well.reset();
-    this.insertRandomTetriminoInWell();
+    this.insertNextTetriminoInWell();
     this.resume();
   },
   pause: function() {
@@ -76,13 +82,14 @@ Cosmos.components.Tetris = React.createClass({
     if (!this.state.gamePlaying) {
       return;
     }
-    this.insertRandomTetriminoInWell();
+    this.insertNextTetriminoInWell();
   },
   onFullWell: function() {
     this.setState({gamePlaying: false});
   },
-  insertRandomTetriminoInWell: function() {
-    this.refs.well.loadTetrimino(this.getRandomTetriminoType());
+  insertNextTetriminoInWell: function() {
+    this.refs.well.loadTetrimino(this.state.nextTetrimino);
+    this.setState({nextTetrimino: this.getRandomTetriminoType()});
   },
   getRandomTetriminoType: function() {
     return _.sample(_.keys(Tetris.SHAPES));
