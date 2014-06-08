@@ -11,9 +11,10 @@ Cosmos.components.Tetris = React.createClass({
       gamePlaying: false
     };
   },
-  getGameDefaults: function() {
+  getNewGameDefaults: function() {
     return {
       gamePlaying: true,
+      gamePaused: false,
       nextTetrimino: this.getRandomTetriminoType()
     };
   },
@@ -25,27 +26,44 @@ Cosmos.components.Tetris = React.createClass({
         onTetriminoLanding: this.onTetriminoLanding,
         onFullWell: this.onFullWell
       };
+    },
+    gamePanel: function() {
+      return {
+        component: 'GamePanel',
+        gamePlaying: this.state.gamePlaying,
+        gamePaused: this.state.gamePaused,
+        nextTetrimino: this.state.nextTetrimino,
+        onPressStart: this.start,
+        onPressPause: this.pause,
+        onPressResume: this.resume
+      };
     }
   },
   start: function() {
     /**
      * Start or restart a Tetris session from scratch.
      */
-    this.setState(this.getGameDefaults());
+    var newGameDefaults = this.getNewGameDefaults();
+    this.setState(newGameDefaults);
     this.refs.well.reset();
-    this.insertNextTetriminoInWell();
+    // setState is always synchronous so we can't read the next Tetrimino from
+    // .state.nextTetrimino at this point
+    this.insertNextTetriminoInWell(newGameDefaults.nextTetrimino);
     this.resume();
   },
   pause: function() {
+    this.setState({gamePaused: true});
     this.refs.well.stopAnimationLoop();
   },
   resume: function() {
+    this.setState({gamePaused: false});
     this.refs.well.startAnimationLoop();
   },
   render: function() {
     return (
       <div className="tetris">
         {this.loadChild('well')}
+        {this.loadChild('gamePanel')}
       </div>
     );
   },
@@ -82,13 +100,13 @@ Cosmos.components.Tetris = React.createClass({
     if (!this.state.gamePlaying) {
       return;
     }
-    this.insertNextTetriminoInWell();
+    this.insertNextTetriminoInWell(this.state.nextTetrimino);
   },
   onFullWell: function() {
     this.setState({gamePlaying: false});
   },
-  insertNextTetriminoInWell: function() {
-    this.refs.well.loadTetrimino(this.state.nextTetrimino);
+  insertNextTetriminoInWell: function(nextTetrimino) {
+    this.refs.well.loadTetrimino(nextTetrimino);
     this.setState({nextTetrimino: this.getRandomTetriminoType()});
   },
   getRandomTetriminoType: function() {

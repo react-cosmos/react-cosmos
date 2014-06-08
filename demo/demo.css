@@ -26,9 +26,9 @@ a:hover {
 .square-block {
   width: 100%;
   height: 100%;
-  border: 5px solid rgba(0, 0, 0, 0.1);
-  border-top-color: rgba(255, 255, 255, 0.7);
-  border-bottom-color: rgba(0, 0, 0, 0.5);
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top-color: rgba(255, 255, 255, 0.6);
+  border-bottom-color: rgba(0, 0, 0, 0.3);
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -62,3 +62,42 @@ a:hover {
   .active-tetrimino {
     position: absolute;
   }
+
+/* Tetris expects a 480x600px viewport */
+.tetris {
+  position: relative;
+  width: 480px;
+  height: 600px;
+}
+  .tetris .well {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    background: rgb(245, 245, 245);
+  }
+    .tetris .well .square-block {
+      border-top-color: rgba(245, 245, 245, 0.6);
+    }
+
+  .tetris .game-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 100%;
+    padding: 0 30px;
+  }
+    .tetris .game-panel .next-tetrimino {
+      width: 120px;
+      height: 120px;
+      margin: 30px 0;
+    }
+    .tetris .game-panel .game-controls {
+      position: absolute;
+      bottom: 30px;
+    }
+      .tetris .game-panel .game-controls button {
+        font-size: 20px;
+        padding: 10px;
+      }
