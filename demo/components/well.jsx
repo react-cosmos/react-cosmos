@@ -20,6 +20,10 @@ Cosmos.components.Well = React.createClass({
   getInitialState: function() {
     return {
       grid: this.generateEmptyMatrix(),
+      // Grid blocks need unique IDs to be used as React keys in order to tie
+      // them to DOM nodes and prevent reusing them between rows when clearing
+      // lines. DOM nodes need to stay the same to animate them when "falling"
+      gridBlockCount: 0,
       activeTetrimino: null,
       // The active Tetrimino position will be reset whenever a new Tetrimino
       // is inserted in the Well, using the getInitialPositionForTetriminoType
@@ -155,24 +159,27 @@ Cosmos.components.Well = React.createClass({
         widthPercent = 100 / this.props.cols,
         heightPercent = 100 / this.props.rows,
         row,
-        col;
+        col,
+        blockValue;
     for (row = 0; row < this.props.rows; row++) {
       for (col = 0; col < this.props.cols; col++) {
-        if (this.state.grid[row][col]) {
-          blocks.push(
-            <li className="grid-square-block"
-                key={row + '-' + col}
-                style={{
-                  width: widthPercent + '%',
-                  height: heightPercent + '%',
-                  top: (row * heightPercent) + '%',
-                  left: (col * widthPercent) + '%'
-                }}>
-              <Cosmos component="SquareBlock"
-                      color={this.state.grid[row][col]} />
-            </li>
-          );
+        if (!this.state.grid[row][col]) {
+          continue;
         }
+        blockValue = this.state.grid[row][col];
+        blocks.push(
+          <li className="grid-square-block"
+              key={this.getIdFromBlockValue(blockValue)}
+              style={{
+                width: widthPercent + '%',
+                height: heightPercent + '%',
+                top: (row * heightPercent) + '%',
+                left: (col * widthPercent) + '%'
+              }}>
+            <Cosmos component="SquareBlock"
+                    color={this.getColorFromBlockValue(blockValue)} />
+          </li>
+        );
       }
     }
     return blocks;
@@ -312,6 +319,7 @@ Cosmos.components.Well = React.createClass({
         col,
         relativeRow,
         relativeCol,
+        blockCount = this.state.gridBlockCount,
         tetriminoLandedOutsideWell = false;
     for (row = 0; row < rows; row++) {
       for (col = 0; col < cols; col++) {
@@ -326,12 +334,16 @@ Cosmos.components.Well = React.createClass({
         if (!this.state.grid[relativeRow]) {
           tetriminoLandedOutsideWell = true;
         } else {
-          this.state.grid[relativeRow][relativeCol] = tetrimino.props.color;
+          this.state.grid[relativeRow][relativeCol] =
+            tetrimino.props.color + '.' + ++blockCount;
         }
       }
     }
     // Push grid updates reactively
-    this.setState({grid: this.state.grid});
+    this.setState({
+      grid: this.state.grid,
+      gridBlockCount: blockCount
+    });
     // Notify any listening parent when Well is full, it should stop
     // inserting any new Tetriminos from this point on (until the Well is
     // reset at least)
@@ -381,5 +393,11 @@ Cosmos.components.Well = React.createClass({
         this.state.grid[row][col] = row ? this.state.grid[row - 1][col] : null;
       }
     }
+  },
+  getIdFromBlockValue: function(blockValue) {
+    return blockValue.split('.')[1];
+  },
+  getColorFromBlockValue: function(blockValue) {
+    return blockValue.split('.')[0];
   }
 });

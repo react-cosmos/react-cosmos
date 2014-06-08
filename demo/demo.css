@@ -26,9 +26,7 @@ a:hover {
 .square-block {
   width: 100%;
   height: 100%;
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  border-top-color: rgba(255, 255, 255, 0.6);
-  border-bottom-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -36,6 +34,9 @@ a:hover {
 
 .grid-square-block {
   position: absolute;
+  -webkit-transition: top 0.1s linear;
+  -moz-transition: top 0.1s linear;
+  transition: top 0.1s linear;
 }
 
 .tetrimino {
@@ -76,9 +77,6 @@ a:hover {
     width: 300px;
     background: rgb(245, 245, 245);
   }
-    .tetris .well .square-block {
-      border-top-color: rgba(245, 245, 245, 0.6);
-    }
 
   .tetris .game-panel {
     position: absolute;
