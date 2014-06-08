@@ -53,11 +53,6 @@ Cosmos.components.Well = React.createClass({
       // Reset position to place new Tetrimino at the top entrance point
       activeTetriminoPosition: this.getInitialPositionForTetriminoType(type)
     });
-    if (type) {
-      // Child state should only be touched imperatively, it is managed
-      // internally inside Tetrimino Component afterwards
-      this.refs.activeTetrimino.setState({grid: Tetris.SHAPES[type]});
-    }
   },
   rotateTetrimino: function() {
     if (this.state.activeTetrimino) {
@@ -128,6 +123,17 @@ Cosmos.components.Well = React.createClass({
       if (typeof(this.props.onTetriminoLanding) == 'function') {
         this.props.onTetriminoLanding(linesCleared);
       }
+    }
+  },
+  componentDidUpdate: function(prevProps, prevState) {
+    // Populate grid of active Tetrimino only after a new one has been set
+    if (this.state.activeTetrimino &&
+        this.state.activeTetrimino != prevState.activeTetrimino) {
+      // Child state should only be touched imperatively, it is managed
+      // internally inside Tetrimino Component afterwards
+      this.refs.activeTetrimino.setState({
+        grid: Tetris.SHAPES[this.state.activeTetrimino]
+      });
     }
   },
   render: function() {
