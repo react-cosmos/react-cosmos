@@ -24,14 +24,31 @@ Cosmos.mixins.AnimationLoop = {
     this.setState({animationRequestId: null});
   },
   componentDidMount: function() {
-    // If the Component state was frozen with an on-going animation it will
-    // resume as soon as a Component is mounted with the same state
-    if (this.state && this.state.animationRequestId) {
-      this.startAnimationLoop();
+    this._loadAnimationState(this.state);
+  },
+  componentWillReceiveProps: function(nextProps) {
+    // This is a feature that only works in conjunction with the PersistState
+    // mixin. Animations will be resumed or stopped based on previous states
+    // loaded using setProps({state: ...})
+    if (nextProps.state) {
+      this._loadAnimationState(nextProps.state);
     }
   },
   componentWillUnmount: function() {
     this._clearAnimation();
+  },
+  _loadAnimationState: function(state) {
+    // If the Component state had an on-going animation it will resume as soon
+    // as a Component is mounted with the same state.
+    // If the Componene state had a stopped animation it will stop any current
+    // animation when overwriting state
+    if (state && state.animationRequestId !== undefined) {
+      if (state.animationRequestId) {
+        this.startAnimationLoop();
+      } else {
+        this.stopAnimationLoop();
+      }
+    }
   },
   _nextFrame: function() {
     this._prevTime = Date.now();

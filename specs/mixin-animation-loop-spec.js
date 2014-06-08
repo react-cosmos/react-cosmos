@@ -110,6 +110,28 @@ describe("Components implementing the AnimationLoop mixin", function() {
       jasmine.clock().tick(1001);
       expect(onFrameSpy.calls.count()).toBe(60);
     });
+
+    it("should stop animation when mounting previously stopped state", function() {
+      var onFrameSpy = jasmine.createSpy('onFrame'),
+          snapshot;
+      ComponentClass = generateComponentClass({
+        mixins: [Cosmos.mixins.PersistState,
+                 Cosmos.mixins.AnimationLoop],
+        onFrame: onFrameSpy
+      });
+      componentInstance = utils.renderIntoDocument(ComponentClass());
+      componentInstance.stopAnimationLoop();
+      snapshot = componentInstance.generateSnapshot();
+      componentInstance.startAnimationLoop();
+
+      // Make sure animation runs until loading stopped state
+      jasmine.clock().tick(1000);
+      expect(onFrameSpy.calls.count()).toBe(60);
+      // Load the state of the stopping animation inside the same component
+      componentInstance.setProps({state: snapshot.state});
+      jasmine.clock().tick(1000);
+      expect(onFrameSpy.calls.count()).toBe(60);
+    });
   });
 
   it("should return frames proportional to time passed", function(done) {
