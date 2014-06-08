@@ -6,12 +6,18 @@ Cosmos.components.Tetris = React.createClass({
    * It was released on June 6, 1984 and has since become a world-wide
    * phenomenon. Read more about the game at http://en.wikipedia.org/wiki/Tetris
    */
+  getInitialState: function() {
+    return {
+      gamePlaying: false
+    };
+  },
   mixins: [Cosmos.mixins.PersistState],
   children: {
     well: function() {
       return {
         component: 'Well',
-        onTetriminoLanding: this.onTetriminoLanding
+        onTetriminoLanding: this.onTetriminoLanding,
+        onFullWell: this.onFullWell
       };
     }
   },
@@ -19,6 +25,7 @@ Cosmos.components.Tetris = React.createClass({
     /**
      * Start or restart a Tetris session from scratch.
      */
+    this.setState({gamePlaying: true});
     this.refs.well.reset();
     this.insertRandomTetriminoInWell();
     this.resume();
@@ -65,7 +72,14 @@ Cosmos.components.Tetris = React.createClass({
     }
   },
   onTetriminoLanding: function(linesCleared) {
+    // Stop inserting Tetriminos and awarding bonuses after game is over
+    if (!this.state.gamePlaying) {
+      return;
+    }
     this.insertRandomTetriminoInWell();
+  },
+  onFullWell: function() {
+    this.setState({gamePlaying: false});
   },
   insertRandomTetriminoInWell: function() {
     this.refs.well.loadTetrimino(this.getRandomTetriminoType());
