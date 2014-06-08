@@ -124,7 +124,7 @@ Cosmos.components.Well = React.createClass({
       // Clear lines created after landing this Tetrimino
       var linesCleared = this.clearLines();
       // Notify any listening parent about Tetrimino drops, with regard to the
-      // likelihood of one or more resulting line clears 
+      // one or more possible resulting line clears
       if (typeof(this.props.onTetriminoLanding) == 'function') {
         this.props.onTetriminoLanding(linesCleared);
       }
@@ -305,7 +305,8 @@ Cosmos.components.Well = React.createClass({
         row,
         col,
         relativeRow,
-        relativeCol;
+        relativeCol,
+        tetriminoLandedOutsideWell = false;
     for (row = 0; row < rows; row++) {
       for (col = 0; col < cols; col++) {
         // Ignore blank squares from the Tetrimino grid
@@ -314,11 +315,25 @@ Cosmos.components.Well = React.createClass({
         }
         relativeRow = tetriminoPositionInGrid.y + row;
         relativeCol = tetriminoPositionInGrid.x + col;
-        this.state.grid[relativeRow][relativeCol] = tetrimino.props.color;
+        // When the Well is full the Tetrimino will land before it enters the
+        // top of the Well
+        if (!this.state.grid[relativeRow]) {
+          tetriminoLandedOutsideWell = true;
+        } else {
+          this.state.grid[relativeRow][relativeCol] = tetrimino.props.color;
+        }
       }
     }
     // Push grid updates reactively
     this.setState({grid: this.state.grid});
+    // Notify any listening parent when Well is full, it should stop
+    // inserting any new Tetriminos from this point on (until the Well is
+    // reset at least)
+    if (tetriminoLandedOutsideWell) {
+      if (typeof(this.props.onFullWell) == 'function') {
+        this.props.onFullWell();
+      }
+    }
   },
   clearLines: function() {
     /**
