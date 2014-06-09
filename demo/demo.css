@@ -1,0 +1,136 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: #fff;
+  color: #383838;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 14px;
+}
+ul {
+  list-style-type: none;
+}
+p {
+  margin: 15px 0;
+}
+a {
+  color: #1e0fbe;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+.square-block {
+  width: 100%;
+  height: 100%;
+}
+
+.grid-square-block {
+  position: absolute;
+  -webkit-transition: top 0.1s linear;
+  -moz-transition: top 0.1s linear;
+  transition: top 0.1s linear;
+}
+
+.tetrimino {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+  .tetrimino .grid-square-block {
+    width: 25%;
+    height: 25%;
+  }
+
+.well {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+  .well-grid {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .active-tetrimino {
+    position: absolute;
+  }
+
+/* Tetris expects a 480x600px viewport */
+.tetris {
+  position: relative;
+  width: 480px;
+  height: 600px;
+  color: #bdc3c7;
+  font-weight: 300;
+}
+  .tetris .well {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    background: #ecf0f1;
+  }
+
+  .tetris .game-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 100%;
+    padding: 0 30px;
+  }
+    .tetris .game-panel p {
+      line-height: 1em;
+    }
+    .tetris .game-panel .title {
+      margin: 30px 0 0 0;
+      color: #34495f;
+      font-size: 40px;
+      font-weight: normal;
+      line-height: 60px;
+    }
+    .tetris .game-panel .label {
+      margin: 30px 0 0 0;
+    }
+    .tetris .game-panel .count {
+      margin: 5px 0 0 0;
+      color: #3993d0;
+      font-size: 30px;
+      font-weight: normal;
+    }
+    .tetris .game-panel .next-tetrimino {
+      width: 120px;
+      height: 120px;
+      margin: 10px 0 0 0;
+    }
+      .tetris .game-panel .next-tetrimino .square-block {
+        background-color: #ecf0f1 !important;
+      }
+      /* The I Tetrimino needs to be lifted a bit because it has an empty row
+      in its default position */
+      .tetris .game-panel .next-tetrimino-I {
+        margin-top: -20px;
+      }
+
+    .tetris .game-panel button {
+      position: absolute;
+      bottom: 30px;
+      left: 30px;
+      right: 30px;
+      display: block;
+      width: 120px;
+      height: 30px;
+      padding: 0 10px;
+      border: 0;
+      background: #34495f;
+      color: #fff;
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 30px;
+      outline: none;
+    }
