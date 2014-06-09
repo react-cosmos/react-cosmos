@@ -102,7 +102,10 @@ Cosmos.components.Well = React.createClass({
       return;
     }
     var tetriminoGrid = this.refs.activeTetrimino.state.grid,
-        tetriminoPosition = _.clone(this.state.activeTetriminoPosition);
+        tetriminoPosition = _.clone(this.state.activeTetriminoPosition),
+        drop = {
+          hardDrop: this.state.dropAcceleration
+        };
     tetriminoPosition.y += this.getDropStepForFrames(frames);
     // The active Tetrimino keeps falling down until it hits something
     if (this.isPositionAvailableForTetriminoGrid(tetriminoGrid,
@@ -117,15 +120,15 @@ Cosmos.components.Well = React.createClass({
                                                    tetriminoPosition)});
       // This is when the active Tetrimino hit the bottom of the Well and can
       // no longer be controlled
-      this.transferActiveTetriminoBlocksToGrid();
+      drop.cells = this.transferActiveTetriminoBlocksToGrid();
       // Unload Tetrimino after landing it
       this.loadTetrimino(null);
       // Clear lines created after landing this Tetrimino
-      var linesCleared = this.clearLines();
+      drop.lines = this.clearLines();
       // Notify any listening parent about Tetrimino drops, with regard to the
       // one or more possible resulting line clears
       if (typeof(this.props.onTetriminoLanding) == 'function') {
-        this.props.onTetriminoLanding(linesCleared);
+        this.props.onTetriminoLanding(drop);
       }
     }
   },
@@ -320,6 +323,7 @@ Cosmos.components.Well = React.createClass({
         relativeRow,
         relativeCol,
         blockCount = this.state.gridBlockCount,
+        droppedCells = 0,
         tetriminoLandedOutsideWell = false;
     for (row = 0; row < rows; row++) {
       for (col = 0; col < cols; col++) {
@@ -336,6 +340,7 @@ Cosmos.components.Well = React.createClass({
         } else {
           this.state.grid[relativeRow][relativeCol] =
             tetrimino.props.color + '.' + ++blockCount;
+          droppedCells++;
         }
       }
     }
@@ -352,6 +357,7 @@ Cosmos.components.Well = React.createClass({
         this.props.onFullWell();
       }
     }
+    return droppedCells;
   },
   clearLines: function() {
     /**

@@ -15,6 +15,8 @@ Cosmos.components.Tetris = React.createClass({
     return {
       gamePlaying: true,
       gamePaused: false,
+      score: 0,
+      lines: 0,
       nextTetrimino: this.getRandomTetriminoType()
     };
   },
@@ -32,6 +34,8 @@ Cosmos.components.Tetris = React.createClass({
         component: 'GamePanel',
         gamePlaying: this.state.gamePlaying,
         gamePaused: this.state.gamePaused,
+        score: this.state.score,
+        lines: this.state.lines,
         nextTetrimino: this.state.nextTetrimino,
         onPressStart: this.start,
         onPressPause: this.pause,
@@ -95,11 +99,34 @@ Cosmos.components.Tetris = React.createClass({
       this.refs.well.setState({dropAcceleration: false});
     }
   },
-  onTetriminoLanding: function(linesCleared) {
+  onTetriminoLanding: function(drop) {
     // Stop inserting Tetriminos and awarding bonuses after game is over
     if (!this.state.gamePlaying) {
       return;
     }
+    var score = this.state.score,
+        lines = this.state.lines,
+        level = Math.floor(lines / 10) + 1;
+
+    // Rudimentary scoring logic, no T-Spin and combo bonuses. Read more at
+    // http://tetris.wikia.com/wiki/Scoring
+    score += drop.hardDrop ? drop.cells * 2 : drop.cells;
+    if (drop.lines) {
+      score += Tetris.LINE_CLEAR_BONUSES[drop.lines - 1] * level;
+      lines += drop.lines;
+    }
+
+    // Increase speed with every ten lines cleared (aka level)
+    if (Math.floor(lines / 10) + 1 > level &&
+        this.refs.well.state.dropFrames > Tetris.DROP_FRAMES_ACCELERATED) {
+      this.refs.well.increaseSpeed();
+      console.log('SPEED');
+    }
+
+    this.setState({
+      score: score,
+      lines: lines
+    });
     this.insertNextTetriminoInWell(this.state.nextTetrimino);
   },
   onFullWell: function() {

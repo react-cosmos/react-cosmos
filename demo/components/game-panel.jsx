@@ -11,6 +11,8 @@ Cosmos.components.GamePanel = React.createClass({
     return {
       gamePlaying: false,
       gamePaused: false,
+      score: 0,
+      lines: 0,
       nextTetrimino: null
     };
   },
