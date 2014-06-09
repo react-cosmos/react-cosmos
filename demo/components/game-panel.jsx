@@ -9,8 +9,8 @@ Cosmos.components.GamePanel = React.createClass({
    */
   getDefaultProps: function() {
     return {
-      gamePlaying: false,
-      gamePaused: false,
+      playing: false,
+      paused: false,
       score: 0,
       lines: 0,
       nextTetrimino: null
@@ -46,12 +46,12 @@ Cosmos.components.GamePanel = React.createClass({
     );
   },
   renderGameButton: function() {
-    if (!this.props.gamePlaying) {
+    if (!this.props.playing) {
       return (
         <button onClick={this.props.onPressStart}>New game</button>
       );
     }
-    if (this.props.gamePaused) {
+    if (this.props.paused) {
       return (
         <button onClick={this.props.onPressResume}>Resume</button>
       );

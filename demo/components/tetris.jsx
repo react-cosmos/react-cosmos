@@ -8,13 +8,13 @@ Cosmos.components.Tetris = React.createClass({
    */
   getInitialState: function() {
     return {
-      gamePlaying: false
+      playing: false
     };
   },
   getNewGameDefaults: function() {
     return {
-      gamePlaying: true,
-      gamePaused: false,
+      playing: true,
+      paused: false,
       score: 0,
       lines: 0,
       nextTetrimino: this.getRandomTetriminoType()
@@ -27,19 +27,6 @@ Cosmos.components.Tetris = React.createClass({
         component: 'Well',
         onTetriminoLanding: this.onTetriminoLanding,
         onFullWell: this.onFullWell
-      };
-    },
-    gamePanel: function() {
-      return {
-        component: 'GamePanel',
-        gamePlaying: this.state.gamePlaying,
-        gamePaused: this.state.gamePaused,
-        score: this.state.score,
-        lines: this.state.lines,
-        nextTetrimino: this.state.nextTetrimino,
-        onPressStart: this.start,
-        onPressPause: this.pause,
-        onPressResume: this.resume
       };
     }
   },
@@ -56,20 +43,33 @@ Cosmos.components.Tetris = React.createClass({
     this.resume();
   },
   pause: function() {
-    this.setState({gamePaused: true});
+    this.setState({paused: true});
     this.refs.well.stopAnimationLoop();
   },
   resume: function() {
-    this.setState({gamePaused: false});
+    this.setState({paused: false});
     this.refs.well.startAnimationLoop();
   },
   render: function() {
     return (
       <div className="tetris">
         {this.loadChild('well')}
-        {this.loadChild('gamePanel')}
+        {Cosmos(this.getGamePanelProps())}
       </div>
     );
+  },
+  getGamePanelProps: function() {
+    return {
+      component: 'GamePanel',
+      playing: this.state.playing,
+      paused: this.state.paused,
+      score: this.state.score,
+      lines: this.state.lines,
+      nextTetrimino: this.state.nextTetrimino,
+      onPressStart: this.start,
+      onPressPause: this.pause,
+      onPressResume: this.resume
+    };
   },
   componentDidMount: function() {
     $(window).on('keydown', this.onKeyDown);
@@ -101,7 +101,7 @@ Cosmos.components.Tetris = React.createClass({
   },
   onTetriminoLanding: function(drop) {
     // Stop inserting Tetriminos and awarding bonuses after game is over
-    if (!this.state.gamePlaying) {
+    if (!this.state.playing) {
       return;
     }
     var score = this.state.score,
@@ -120,7 +120,6 @@ Cosmos.components.Tetris = React.createClass({
     if (Math.floor(lines / 10) + 1 > level &&
         this.refs.well.state.dropFrames > Tetris.DROP_FRAMES_ACCELERATED) {
       this.refs.well.increaseSpeed();
-      console.log('SPEED');
     }
 
     this.setState({
@@ -130,7 +129,7 @@ Cosmos.components.Tetris = React.createClass({
     this.insertNextTetriminoInWell(this.state.nextTetrimino);
   },
   onFullWell: function() {
-    this.setState({gamePlaying: false});
+    this.setState({playing: false});
   },
   insertNextTetriminoInWell: function(nextTetrimino) {
     this.refs.well.loadTetrimino(nextTetrimino);
