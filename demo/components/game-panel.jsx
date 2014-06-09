@@ -19,12 +19,16 @@ Cosmos.components.GamePanel = React.createClass({
   render: function() {
     return (
       <div className="game-panel">
+        <p className="title">Flatris</p>
+        <p className="label">Score</p>
+        <p className="count">{this.props.score}</p>
+        <p className="label">Lines Cleared</p>
+        <p className="count">{this.props.lines}</p>
+        <p className="label">Next Shape</p>
         <div className="next-tetrimino">
           {this.renderNextTetrimino()}
         </div>
-        <div className="game-controls">
-          {this.renderGameButton()}
-        </div>
+        {this.renderGameButton()}
       </div>
     );
   },

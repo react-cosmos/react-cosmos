@@ -6,8 +6,7 @@ body {
   background: #fff;
   color: #383838;
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 22px;
+  font-size: 14px;
 }
 ul {
   list-style-type: none;
@@ -26,10 +25,6 @@ a:hover {
 .square-block {
   width: 100%;
   height: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
 }
 
 .grid-square-block {
@@ -69,13 +64,15 @@ a:hover {
   position: relative;
   width: 480px;
   height: 600px;
+  color: #bdc3c7;
+  font-weight: 300;
 }
   .tetris .well {
     position: absolute;
     top: 0;
     left: 0;
     width: 300px;
-    background: rgb(245, 245, 245);
+    background: #ecf0f1;
   }
 
   .tetris .game-panel {
@@ -86,16 +83,49 @@ a:hover {
     height: 100%;
     padding: 0 30px;
   }
+    .tetris .game-panel p {
+      line-height: 1em;
+    }
+    .tetris .game-panel .title {
+      margin: 30px 0 0 0;
+      color: #34495f;
+      font-size: 40px;
+      font-weight: normal;
+      line-height: 60px;
+    }
+    .tetris .game-panel .label {
+      margin: 30px 0 0 0;
+    }
+    .tetris .game-panel .count {
+      margin: 5px 0 0 0;
+      color: #3993d0;
+      font-size: 30px;
+      font-weight: normal;
+    }
     .tetris .game-panel .next-tetrimino {
       width: 120px;
       height: 120px;
-      margin: 30px 0;
+      margin: 10px 0 0 0;
     }
-    .tetris .game-panel .game-controls {
+      .tetris .game-panel .next-tetrimino .square-block {
+        background-color: #ecf0f1 !important;
+      }
+
+    .tetris .game-panel button {
       position: absolute;
       bottom: 30px;
+      left: 30px;
+      right: 30px;
+      display: block;
+      width: 100%;
+      height: 30px;
+      padding: 0 10px;
+      border: 0;
+      background: #34495f;
+      color: #fff;
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 30px;
+      outline: none;
     }
-      .tetris .game-panel .game-controls button {
-        font-size: 20px;
-        padding: 10px;
-      }

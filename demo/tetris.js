@@ -1,12 +1,12 @@
 var Tetris = {
   COLORS: {
-    I: '#6febec',
-    O: '#f3e92f',
-    T: '#8c4eee',
-    J: '#0044ed',
-    L: '#e6a130',
-    S: '#78e400',
-    Z: '#db3a2f'
+    I: '#3cc7d6',
+    O: '#fbb414',
+    T: '#b04497',
+    J: '#3993d0',
+    L: '#ed652f',
+    S: '#95c43d',
+    Z: '#e84138'
   },
   // The Shapes and their rotation was inspired from
   // http://tetris.wikia.com/wiki/SRS
