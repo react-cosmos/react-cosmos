@@ -49,7 +49,6 @@ describe("Components implementing the PersistState mixin", function() {
       state: {foo: 'bar'}
     }));
     expect(componentInstance.state).toEqual({foo: 'bar'});
-
   });
 
   describe("child", function() {
@@ -212,5 +211,42 @@ describe("Components implementing the PersistState mixin", function() {
       }
     });
     delete Cosmos.components.ChildComponent;
+  });
+
+  it("should deep clone when generated snapshot", function() {
+    var snapshot,
+        nested;
+
+    ComponentClass = generateComponentClass();
+    componentInstance = utils.renderIntoDocument(ComponentClass({
+      state: {
+        nested: {foo: 'bar'}
+      }
+    }));
+
+    snapshot = componentInstance.generateSnapshot();
+    nested = componentInstance.state.nested;
+    nested.foo = 'barbar';
+
+    componentInstance.setState({nested: nested});
+    expect(snapshot.state.nested.foo).toEqual('bar');
+  });
+
+  it("should deep clone when loading snapshot", function() {
+    var snapshot = {
+          state: {
+            nested: {foo: 'bar'}
+          }
+        },
+        nested;
+
+    ComponentClass = generateComponentClass(),
+    componentInstance = utils.renderIntoDocument(ComponentClass(snapshot));
+
+    nested = componentInstance.state.nested;
+    nested.foo = 'barbar';
+
+    componentInstance.setState({nested: nested});
+    expect(snapshot.state.nested.foo).toEqual('bar');
   });
 });

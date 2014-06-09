@@ -32,7 +32,7 @@ Cosmos.mixins.PersistState = {
       }
       props[key] = value;
     }
-    props.state = _.clone(this.state) || {};
+    props.state = _.cloneDeep(this.state) || {};
     if (recursive) {
       _.each(this.refs, function(instance, ref) {
         // The child component needs to implement the PeristState mixin to be
@@ -40,7 +40,7 @@ Cosmos.mixins.PersistState = {
         if (typeof(instance.generateSnapshot) == 'function') {
           children[ref] = instance.generateSnapshot(true).state;
         } else {
-          children[ref] = _.clone(instance.state) || {};
+          children[ref] = _.cloneDeep(instance.state) || {};
         }
       });
       if (!_.isEmpty(children)) {
@@ -81,7 +81,8 @@ Cosmos.mixins.PersistState = {
       this._childSnapshots = state.children;
       delete state.children;
     }
-    this.replaceState(state);
+    // Don't alter initial object when changing state
+    this.replaceState(_.cloneDeep(state));
   },
   componentWillMount: function() {
     // Allow passing a serialized snapshot of a state through the props
