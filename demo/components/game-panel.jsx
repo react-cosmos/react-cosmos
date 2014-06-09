@@ -25,7 +25,7 @@ Cosmos.components.GamePanel = React.createClass({
         <p className="label">Lines Cleared</p>
         <p className="count">{this.props.lines}</p>
         <p className="label">Next Shape</p>
-        <div className="next-tetrimino">
+        <div className={this.getNextTetriminoClass()}>
           {this.renderNextTetrimino()}
         </div>
         {this.renderGameButton()}
@@ -39,10 +39,10 @@ Cosmos.components.GamePanel = React.createClass({
     }
     return (
       <Cosmos component="Tetrimino"
-           color={Tetris.COLORS[nextTetrimino]}
-           state={{
-             grid: Tetris.SHAPES[nextTetrimino]
-           }} />
+              color={Tetris.COLORS[nextTetrimino]}
+              state={{
+                 grid: Tetris.SHAPES[nextTetrimino]
+              }} />
     );
   },
   renderGameButton: function() {
@@ -60,5 +60,14 @@ Cosmos.components.GamePanel = React.createClass({
         <button onClick={this.props.onPressPause}>Pause</button>
       );
     }
+  },
+  getNextTetriminoClass: function() {
+    var classes = ['next-tetrimino'];
+    // We use this extra class to position tetriminos differently from CSS
+    // based on their type
+    if (this.props.nextTetrimino) {
+      classes.push('next-tetrimino-' + this.props.nextTetrimino);
+    }
+    return classes.join(' ');
   }
 });

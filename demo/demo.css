@@ -110,6 +110,11 @@ a:hover {
       .tetris .game-panel .next-tetrimino .square-block {
         background-color: #ecf0f1 !important;
       }
+      /* The I Tetrimino needs to be lifted a bit because it has an empty row
+      in its default position */
+      .tetris .game-panel .next-tetrimino-I {
+        margin-top: -20px;
+      }
 
     .tetris .game-panel button {
       position: absolute;
