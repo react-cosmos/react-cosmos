@@ -3,7 +3,8 @@ var Cosmos = function(props) {
   if (!component) {
     throw new Error('Invalid component: ' + props.component);
   }
-  return component(_.clone(props));
+  // Preserive received props object
+  return component(_.cloneDeep(props));
 };
 
 _.extend(Cosmos, {

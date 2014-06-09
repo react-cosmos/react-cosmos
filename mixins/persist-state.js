@@ -81,7 +81,7 @@ Cosmos.mixins.PersistState = {
       this._childSnapshots = state.children;
       delete state.children;
     }
-    // Don't alter initial object when changing state
+    // Don't alter initial state object when changing state in the future
     this.replaceState(_.cloneDeep(state));
   },
   componentWillMount: function() {
