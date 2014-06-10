@@ -7,9 +7,11 @@ Cosmos.components.Tetris = React.createClass({
    * phenomenon. Read more about the game at http://en.wikipedia.org/wiki/Tetris
    */
   getInitialState: function() {
-    return {
-      playing: false
-    };
+    return _.extend(this.getNewGameDefaults(), {
+      // Game is stopped by default and there's no Tetrimino to follow
+      playing: false,
+      nextTetrimino: null
+    });
   },
   getNewGameDefaults: function() {
     return {
