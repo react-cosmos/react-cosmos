@@ -23,7 +23,9 @@ Cosmos.mixins.PersistState = {
       // Ignore "system" props
       if (key == '__owner__' ||
         // Current state should be used instead of initial one
-        key == 'state') {
+        key == 'state' ||
+        // No reason to include parent reference
+        key == 'ref') {
         continue;
       }
       // No point in embedding default props
