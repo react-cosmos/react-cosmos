@@ -339,7 +339,7 @@ Cosmos.components.Well = React.createClass({
           tetriminoLandedOutsideWell = true;
         } else {
           this.state.grid[relativeRow][relativeCol] =
-            tetrimino.props.color + '.' + ++blockCount;
+            ++blockCount + tetrimino.props.color;
           droppedCells++;
         }
       }
@@ -401,9 +401,9 @@ Cosmos.components.Well = React.createClass({
     }
   },
   getIdFromBlockValue: function(blockValue) {
-    return blockValue.split('.')[1];
+    return blockValue.split('#')[0];
   },
   getColorFromBlockValue: function(blockValue) {
-    return blockValue.split('.')[0];
+    return '#' + blockValue.split('#')[1];
   }
 });
