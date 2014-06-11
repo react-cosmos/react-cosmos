@@ -353,6 +353,8 @@ Cosmos.components.Well = React.createClass({
     // inserting any new Tetriminos from this point on (until the Well is
     // reset at least)
     if (tetriminoLandedOutsideWell) {
+      // Stop any on-going acceleration
+      this.setState({dropAcceleration: false});
       if (typeof(this.props.onFullWell) == 'function') {
         this.props.onFullWell();
       }
