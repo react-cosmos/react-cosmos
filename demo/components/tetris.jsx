@@ -86,6 +86,10 @@ Cosmos.components.Tetris = React.createClass({
     if (!this.state.playing || this.state.paused) {
       return;
     }
+    // Prevent page from scrolling when pressing UP and DOWN
+    if (_.values(Tetris.KEYS).indexOf(e.keyCode) != -1) {
+      e.preventDefault();
+    }
     switch (e.keyCode) {
     case Tetris.KEYS.DOWN:
       this.refs.well.setState({dropAcceleration: true});
