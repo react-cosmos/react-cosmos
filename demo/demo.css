@@ -4,9 +4,10 @@
 }
 body {
   background: #fff;
-  color: #383838;
+  color: #34495f;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 14px;
+  line-height: 20px;
 }
 ul {
   list-style-type: none;
@@ -15,7 +16,8 @@ p {
   margin: 15px 0;
 }
 a {
-  color: #1e0fbe;
+  color: #34495f;
+  font-weight: bold;
   text-decoration: none;
 }
 a:hover {
@@ -64,7 +66,6 @@ a:hover {
   position: relative;
   width: 480px;
   height: 600px;
-  color: #bdc3c7;
   font-weight: 300;
 }
   .tetris .well {
@@ -95,6 +96,7 @@ a:hover {
     }
     .tetris .game-panel .label {
       margin: 30px 0 0 0;
+      color: #bdc3c7;
     }
     .tetris .game-panel .count {
       margin: 5px 0 0 0;
@@ -134,3 +136,28 @@ a:hover {
       line-height: 30px;
       outline: none;
     }
+
+.landing-page {
+  position: relative;
+  min-width: 1020px;
+}
+  .landing-page .content-wrapper {
+    width: 50%;
+    padding: 30px 0 0 0;
+  }
+    .landing-page .content-wrapper .tetris {
+      margin: 0 0 0 30px;
+    }
+
+  .landing-page .data-snapshot {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    right: 0;
+    padding: 30px;
+    background: #34495f;
+    color: #ecf0f1;
+    font-family: Monaco, "Lucida Console", monospace;
+    font-size: 14px;
+    overflow: scroll;
+  }
