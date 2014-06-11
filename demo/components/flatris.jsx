@@ -16,7 +16,7 @@ Cosmos.components.Flatris = React.createClass({
   getNewGameDefaults: function() {
     return {
       playing: true,
-      paused: false,
+      paused: true,
       score: 0,
       lines: 0,
       nextTetrimino: this.getRandomTetriminoType()
@@ -143,6 +143,7 @@ Cosmos.components.Flatris = React.createClass({
     this.insertNextTetriminoInWell(this.state.nextTetrimino);
   },
   onFullWell: function() {
+    this.pause();
     this.setState({playing: false});
   },
   insertNextTetriminoInWell: function(nextTetrimino) {
