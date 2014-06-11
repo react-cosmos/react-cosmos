@@ -1,4 +1,4 @@
-var Tetris = {
+var Flatris = {
   COLORS: {
     I: '#3cc7d6',
     O: '#fbb414',

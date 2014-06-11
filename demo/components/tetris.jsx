@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-Cosmos.components.Tetris = React.createClass({
+Cosmos.components.Flatris = React.createClass({
   /**
    * The Tetris game was originally designed and programmed by Alexey Pajitnov.
    * It was released on June 6, 1984 and has since become a world-wide
@@ -34,7 +34,7 @@ Cosmos.components.Tetris = React.createClass({
   },
   start: function() {
     /**
-     * Start or restart a Tetris session from scratch.
+     * Start or restart a Flatris session from scratch.
      */
     var newGameDefaults = this.getNewGameDefaults();
     this.setState(newGameDefaults);
@@ -54,7 +54,7 @@ Cosmos.components.Tetris = React.createClass({
   },
   render: function() {
     return (
-      <div className="tetris">
+      <div className="flatris">
         {this.loadChild('well')}
         {Cosmos(this.getGamePanelProps())}
       </div>
@@ -87,20 +87,20 @@ Cosmos.components.Tetris = React.createClass({
       return;
     }
     // Prevent page from scrolling when pressing UP and DOWN
-    if (_.values(Tetris.KEYS).indexOf(e.keyCode) != -1) {
+    if (_.values(Flatris.KEYS).indexOf(e.keyCode) != -1) {
       e.preventDefault();
     }
     switch (e.keyCode) {
-    case Tetris.KEYS.DOWN:
+    case Flatris.KEYS.DOWN:
       this.refs.well.setState({dropAcceleration: true});
       break;
-    case Tetris.KEYS.UP:
+    case Flatris.KEYS.UP:
       this.refs.well.rotateTetrimino();
       break;
-    case Tetris.KEYS.LEFT:
+    case Flatris.KEYS.LEFT:
       this.refs.well.moveTetriminoToLeft();
       break;
-    case Tetris.KEYS.RIGHT:
+    case Flatris.KEYS.RIGHT:
       this.refs.well.moveTetriminoToRight();
     }
   },
@@ -109,7 +109,7 @@ Cosmos.components.Tetris = React.createClass({
     if (!this.state.playing || this.state.paused) {
       return;
     }
-    if (e.keyCode == Tetris.KEYS.DOWN) {
+    if (e.keyCode == Flatris.KEYS.DOWN) {
       this.refs.well.setState({dropAcceleration: false});
     }
   },
@@ -126,13 +126,13 @@ Cosmos.components.Tetris = React.createClass({
     // http://tetris.wikia.com/wiki/Scoring
     score += drop.hardDrop ? drop.cells * 2 : drop.cells;
     if (drop.lines) {
-      score += Tetris.LINE_CLEAR_BONUSES[drop.lines - 1] * level;
+      score += Flatris.LINE_CLEAR_BONUSES[drop.lines - 1] * level;
       lines += drop.lines;
     }
 
     // Increase speed with every ten lines cleared (aka level)
     if (Math.floor(lines / 10) + 1 > level &&
-        this.refs.well.state.dropFrames > Tetris.DROP_FRAMES_ACCELERATED) {
+        this.refs.well.state.dropFrames > Flatris.DROP_FRAMES_ACCELERATED) {
       this.refs.well.increaseSpeed();
     }
 
@@ -150,6 +150,6 @@ Cosmos.components.Tetris = React.createClass({
     this.setState({nextTetrimino: this.getRandomTetriminoType()});
   },
   getRandomTetriminoType: function() {
-    return _.sample(_.keys(Tetris.SHAPES));
+    return _.sample(_.keys(Flatris.SHAPES));
   }
 });

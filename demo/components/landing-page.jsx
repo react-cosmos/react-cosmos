@@ -2,7 +2,7 @@
 
 Cosmos.components.LandingPage = React.createClass({
   /**
-   * Landing page for Cosmos framework with data alongside.
+   * Landing page for Cosmos framework with Flatris and data alongside.
    */
   getInitialState: function() {
     return {
@@ -13,7 +13,7 @@ Cosmos.components.LandingPage = React.createClass({
     return (
       <div className="landing-page">
         <div className="content-wrapper">
-          <Cosmos component="Tetris" ref="tetris" />
+          <Cosmos component="Flatris" ref="flatris" />
         </div>
         <pre className="data-snapshot">{this.getSerializedState()}</pre>
       </div>
@@ -32,7 +32,7 @@ Cosmos.components.LandingPage = React.createClass({
   },
   refreshSnapshot: function() {
     this.setState({
-      snapshot: this.refs.tetris.generateSnapshot(true)
+      snapshot: this.refs.flatris.generateSnapshot(true)
     });
   },
   getSerializedState: function() {

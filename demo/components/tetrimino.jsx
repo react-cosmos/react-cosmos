@@ -8,12 +8,12 @@ Cosmos.components.Tetrimino = React.createClass({
   mixins: [Cosmos.mixins.PersistState],
   getDefaultProps: function() {
     return {
-      color: Tetris.COLORS.T
+      color: Flatris.COLORS.T
     };
   },
   getInitialState: function() {
     return {
-      grid: Tetris.SHAPES.T
+      grid: Flatris.SHAPES.T
     };
   },
   rotate: function() {

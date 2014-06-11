@@ -39,9 +39,9 @@ Cosmos.components.GamePanel = React.createClass({
     }
     return (
       <Cosmos component="Tetrimino"
-              color={Tetris.COLORS[nextTetrimino]}
+              color={Flatris.COLORS[nextTetrimino]}
               state={{
-                 grid: Tetris.SHAPES[nextTetrimino]
+                 grid: Flatris.SHAPES[nextTetrimino]
               }} />
     );
   },

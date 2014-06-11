@@ -2,7 +2,7 @@
 
 Cosmos.components.Well = React.createClass({
   /**
-   * A rectangular vertical shaft, where Tetriminos fall into during a Tetris
+   * A rectangular vertical shaft, where Tetriminos fall into during a Flatris
    * game. The Well has configurable size, speed. Tetrimino pieces can be
    * inserted inside the well and they will fall until they hit the bottom,
    * continuously filling it. Whenever the pieces form a straight horizontal
@@ -13,8 +13,8 @@ Cosmos.components.Well = React.createClass({
            Cosmos.mixins.AnimationLoop],
   getDefaultProps: function() {
     return {
-      rows: Tetris.WELL_ROWS,
-      cols: Tetris.WELL_COLS
+      rows: Flatris.WELL_ROWS,
+      cols: Flatris.WELL_COLS
     };
   },
   getInitialState: function() {
@@ -29,7 +29,7 @@ Cosmos.components.Well = React.createClass({
       // is inserted in the Well, using the getInitialPositionForTetriminoType
       // method
       activeTetriminoPosition: {x: 0, y: 0},
-      dropFrames: Tetris.DROP_FRAMES_DEFAULT,
+      dropFrames: Flatris.DROP_FRAMES_DEFAULT,
       dropAcceleration: null
     };
   },
@@ -40,14 +40,14 @@ Cosmos.components.Well = React.createClass({
       }
       return {
         component: 'Tetrimino',
-        color: Tetris.COLORS[this.state.activeTetrimino]
+        color: Flatris.COLORS[this.state.activeTetrimino]
       };
     }
   },
   reset: function() {
     this.setState({
       grid: this.generateEmptyMatrix(),
-      dropFrames: Tetris.DROP_FRAMES_DEFAULT
+      dropFrames: Flatris.DROP_FRAMES_DEFAULT
     });
     this.loadTetrimino(null);
   },
@@ -95,7 +95,7 @@ Cosmos.components.Well = React.createClass({
   },
   increaseSpeed: function() {
     this.setState({dropFrames: this.state.dropFrames -
-                               Tetris.DROP_FRAMES_DECREMENT});
+                               Flatris.DROP_FRAMES_DECREMENT});
   },
   onFrame: function(frames) {
     if (!this.state.activeTetrimino) {
@@ -139,7 +139,7 @@ Cosmos.components.Well = React.createClass({
       // Child state should only be touched imperatively, it is managed
       // internally inside Tetrimino Component afterwards
       this.refs.activeTetrimino.setState({
-        grid: Tetris.SHAPES[this.state.activeTetrimino]
+        grid: Flatris.SHAPES[this.state.activeTetrimino]
       });
     }
   },
@@ -231,7 +231,7 @@ Cosmos.components.Well = React.createClass({
     if (!type) {
       return {x: 0, y: 0};
     }
-    var grid = Tetris.SHAPES[type];
+    var grid = Flatris.SHAPES[type];
     return {
       x: Math.round(this.props.cols / 2) - Math.round(grid[0].length / 2),
       y: -2
@@ -239,7 +239,7 @@ Cosmos.components.Well = React.createClass({
   },
   getDropStepForFrames: function(frames) {
     var dropFrames = this.state.dropAcceleration ?
-                     Tetris.DROP_FRAMES_ACCELERATED : this.state.dropFrames;
+                     Flatris.DROP_FRAMES_ACCELERATED : this.state.dropFrames;
     return frames / dropFrames;
   },
   isPositionAvailableForTetriminoGrid: function(tetriminoGrid, position) {
