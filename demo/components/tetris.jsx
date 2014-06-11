@@ -82,6 +82,10 @@ Cosmos.components.Tetris = React.createClass({
     $(window).off('keyup', this.onKeyUp);
   },
   onKeyDown: function(e) {
+    // Ignore key events when game is stopped or paused
+    if (!this.state.playing || this.state.paused) {
+      return;
+    }
     switch (e.keyCode) {
     case Tetris.KEYS.DOWN:
       this.refs.well.setState({dropAcceleration: true});
@@ -97,6 +101,10 @@ Cosmos.components.Tetris = React.createClass({
     }
   },
   onKeyUp: function(e) {
+    // Ignore key events when game is stopped or paused
+    if (!this.state.playing || this.state.paused) {
+      return;
+    }
     if (e.keyCode == Tetris.KEYS.DOWN) {
       this.refs.well.setState({dropAcceleration: false});
     }
