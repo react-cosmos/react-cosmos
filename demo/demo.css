@@ -4,9 +4,10 @@
 }
 body {
   background: #fff;
-  color: #383838;
+  color: #34495f;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 14px;
+  line-height: 20px;
 }
 ul {
   list-style-type: none;
@@ -15,7 +16,8 @@ p {
   margin: 15px 0;
 }
 a {
-  color: #1e0fbe;
+  color: #34495f;
+  font-weight: bold;
   text-decoration: none;
 }
 a:hover {
@@ -59,15 +61,14 @@ a:hover {
     position: absolute;
   }
 
-/* Tetris expects a 480x600px viewport */
-.tetris {
+/* Flatris expects a 480x600px viewport */
+.flatris {
   position: relative;
   width: 480px;
   height: 600px;
-  color: #bdc3c7;
   font-weight: 300;
 }
-  .tetris .well {
+  .flatris .well {
     position: absolute;
     top: 0;
     left: 0;
@@ -75,7 +76,7 @@ a:hover {
     background: #ecf0f1;
   }
 
-  .tetris .game-panel {
+  .flatris .game-panel {
     position: absolute;
     top: 0;
     right: 0;
@@ -83,40 +84,41 @@ a:hover {
     height: 100%;
     padding: 0 30px;
   }
-    .tetris .game-panel p {
+    .flatris .game-panel p {
       line-height: 1em;
     }
-    .tetris .game-panel .title {
+    .flatris .game-panel .title {
       margin: 30px 0 0 0;
       color: #34495f;
       font-size: 40px;
       font-weight: normal;
       line-height: 60px;
     }
-    .tetris .game-panel .label {
+    .flatris .game-panel .label {
       margin: 30px 0 0 0;
+      color: #bdc3c7;
     }
-    .tetris .game-panel .count {
+    .flatris .game-panel .count {
       margin: 5px 0 0 0;
       color: #3993d0;
       font-size: 30px;
       font-weight: normal;
     }
-    .tetris .game-panel .next-tetrimino {
+    .flatris .game-panel .next-tetrimino {
       width: 120px;
       height: 120px;
       margin: 10px 0 0 0;
     }
-      .tetris .game-panel .next-tetrimino .square-block {
+      .flatris .game-panel .next-tetrimino .square-block {
         background-color: #ecf0f1 !important;
       }
       /* The I Tetrimino needs to be lifted a bit because it has an empty row
       in its default position */
-      .tetris .game-panel .next-tetrimino-I {
+      .flatris .game-panel .next-tetrimino-I {
         margin-top: -20px;
       }
 
-    .tetris .game-panel button {
+    .flatris .game-panel button {
       position: absolute;
       bottom: 30px;
       left: 30px;
@@ -134,3 +136,28 @@ a:hover {
       line-height: 30px;
       outline: none;
     }
+
+.landing-page {
+  position: relative;
+  min-width: 1020px;
+}
+  .landing-page .content-wrapper {
+    width: 50%;
+    padding: 30px 0 0 0;
+  }
+    .landing-page .content-wrapper .flatris {
+      margin: 0 0 0 30px;
+    }
+
+  .landing-page .data-snapshot {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    right: 0;
+    padding: 30px;
+    background: #34495f;
+    color: #ecf0f1;
+    font-family: Monaco, "Lucida Console", monospace;
+    font-size: 14px;
+    overflow: scroll;
+  }

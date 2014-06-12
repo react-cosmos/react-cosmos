@@ -1,20 +1,22 @@
 /** @jsx React.DOM */
 
-Cosmos.components.Tetris = React.createClass({
+Cosmos.components.Flatris = React.createClass({
   /**
    * The Tetris game was originally designed and programmed by Alexey Pajitnov.
    * It was released on June 6, 1984 and has since become a world-wide
    * phenomenon. Read more about the game at http://en.wikipedia.org/wiki/Tetris
    */
   getInitialState: function() {
-    return {
-      gamePlaying: false
-    };
+    return _.extend(this.getNewGameDefaults(), {
+      // Game is stopped by default and there's no Tetrimino to follow
+      playing: false,
+      nextTetrimino: null
+    });
   },
   getNewGameDefaults: function() {
     return {
-      gamePlaying: true,
-      gamePaused: false,
+      playing: true,
+      paused: true,
       score: 0,
       lines: 0,
       nextTetrimino: this.getRandomTetriminoType()
@@ -28,24 +30,11 @@ Cosmos.components.Tetris = React.createClass({
         onTetriminoLanding: this.onTetriminoLanding,
         onFullWell: this.onFullWell
       };
-    },
-    gamePanel: function() {
-      return {
-        component: 'GamePanel',
-        gamePlaying: this.state.gamePlaying,
-        gamePaused: this.state.gamePaused,
-        score: this.state.score,
-        lines: this.state.lines,
-        nextTetrimino: this.state.nextTetrimino,
-        onPressStart: this.start,
-        onPressPause: this.pause,
-        onPressResume: this.resume
-      };
     }
   },
   start: function() {
     /**
-     * Start or restart a Tetris session from scratch.
+     * Start or restart a Flatris session from scratch.
      */
     var newGameDefaults = this.getNewGameDefaults();
     this.setState(newGameDefaults);
@@ -56,20 +45,33 @@ Cosmos.components.Tetris = React.createClass({
     this.resume();
   },
   pause: function() {
-    this.setState({gamePaused: true});
+    this.setState({paused: true});
     this.refs.well.stopAnimationLoop();
   },
   resume: function() {
-    this.setState({gamePaused: false});
+    this.setState({paused: false});
     this.refs.well.startAnimationLoop();
   },
   render: function() {
     return (
-      <div className="tetris">
+      <div className="flatris">
         {this.loadChild('well')}
-        {this.loadChild('gamePanel')}
+        {Cosmos(this.getGamePanelProps())}
       </div>
     );
+  },
+  getGamePanelProps: function() {
+    return {
+      component: 'GamePanel',
+      playing: this.state.playing,
+      paused: this.state.paused,
+      score: this.state.score,
+      lines: this.state.lines,
+      nextTetrimino: this.state.nextTetrimino,
+      onPressStart: this.start,
+      onPressPause: this.pause,
+      onPressResume: this.resume
+    };
   },
   componentDidMount: function() {
     $(window).on('keydown', this.onKeyDown);
@@ -80,28 +82,40 @@ Cosmos.components.Tetris = React.createClass({
     $(window).off('keyup', this.onKeyUp);
   },
   onKeyDown: function(e) {
+    // Ignore key events when game is stopped or paused
+    if (!this.state.playing || this.state.paused) {
+      return;
+    }
+    // Prevent page from scrolling when pressing UP and DOWN
+    if (_.values(Flatris.KEYS).indexOf(e.keyCode) != -1) {
+      e.preventDefault();
+    }
     switch (e.keyCode) {
-    case Tetris.KEYS.DOWN:
+    case Flatris.KEYS.DOWN:
       this.refs.well.setState({dropAcceleration: true});
       break;
-    case Tetris.KEYS.UP:
+    case Flatris.KEYS.UP:
       this.refs.well.rotateTetrimino();
       break;
-    case Tetris.KEYS.LEFT:
+    case Flatris.KEYS.LEFT:
       this.refs.well.moveTetriminoToLeft();
       break;
-    case Tetris.KEYS.RIGHT:
+    case Flatris.KEYS.RIGHT:
       this.refs.well.moveTetriminoToRight();
     }
   },
   onKeyUp: function(e) {
-    if (e.keyCode == Tetris.KEYS.DOWN) {
+    // Ignore key events when game is stopped or paused
+    if (!this.state.playing || this.state.paused) {
+      return;
+    }
+    if (e.keyCode == Flatris.KEYS.DOWN) {
       this.refs.well.setState({dropAcceleration: false});
     }
   },
   onTetriminoLanding: function(drop) {
     // Stop inserting Tetriminos and awarding bonuses after game is over
-    if (!this.state.gamePlaying) {
+    if (!this.state.playing) {
       return;
     }
     var score = this.state.score,
@@ -112,15 +126,14 @@ Cosmos.components.Tetris = React.createClass({
     // http://tetris.wikia.com/wiki/Scoring
     score += drop.hardDrop ? drop.cells * 2 : drop.cells;
     if (drop.lines) {
-      score += Tetris.LINE_CLEAR_BONUSES[drop.lines - 1] * level;
+      score += Flatris.LINE_CLEAR_BONUSES[drop.lines - 1] * level;
       lines += drop.lines;
     }
 
     // Increase speed with every ten lines cleared (aka level)
     if (Math.floor(lines / 10) + 1 > level &&
-        this.refs.well.state.dropFrames > Tetris.DROP_FRAMES_ACCELERATED) {
+        this.refs.well.state.dropFrames > Flatris.DROP_FRAMES_ACCELERATED) {
       this.refs.well.increaseSpeed();
-      console.log('SPEED');
     }
 
     this.setState({
@@ -130,13 +143,14 @@ Cosmos.components.Tetris = React.createClass({
     this.insertNextTetriminoInWell(this.state.nextTetrimino);
   },
   onFullWell: function() {
-    this.setState({gamePlaying: false});
+    this.pause();
+    this.setState({playing: false});
   },
   insertNextTetriminoInWell: function(nextTetrimino) {
     this.refs.well.loadTetrimino(nextTetrimino);
     this.setState({nextTetrimino: this.getRandomTetriminoType()});
   },
   getRandomTetriminoType: function() {
-    return _.sample(_.keys(Tetris.SHAPES));
+    return _.sample(_.keys(Flatris.SHAPES));
   }
 });

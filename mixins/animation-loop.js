@@ -10,18 +10,16 @@ Cosmos.mixins.AnimationLoop = {
    * *frames* value as a multiplier for a transition step.
    *
    * A requestAnimationFrame>setTimeout polyfill is used for the callbacks.
-   *
-   * TODO: shouldComponentUpdate should return false when only
-   * state.animationRequestId changed
    */
   startAnimationLoop: function() {
     // Prevent running more callbacks at the same time
-    this.stopAnimationLoop();
+    this._clearAnimation();
     this._nextFrame();
+    this.setState({animationLoopRunning: true});
   },
   stopAnimationLoop: function() {
     this._clearAnimation();
-    this.setState({animationRequestId: null});
+    this.setState({animationLoopRunning: false});
   },
   componentDidMount: function() {
     this._loadAnimationState(this.state);
@@ -42,8 +40,8 @@ Cosmos.mixins.AnimationLoop = {
     // as a Component is mounted with the same state.
     // If the Componene state had a stopped animation it will stop any current
     // animation when overwriting state
-    if (state && state.animationRequestId !== undefined) {
-      if (state.animationRequestId) {
+    if (state && state.animationLoopRunning !== undefined) {
+      if (state.animationLoopRunning) {
         this.startAnimationLoop();
       } else {
         this.stopAnimationLoop();
@@ -52,17 +50,14 @@ Cosmos.mixins.AnimationLoop = {
   },
   _nextFrame: function() {
     this._prevTime = Date.now();
-    this.setState({
-      // Keep a reference to the animation request for two reasons:
-      // - To be able to clear it on stopAnimationLoop()
-      // - To be reflected in the state of the Component, which will resume
-      //   animating when loaded in a mounting Component later on
-      animationRequestId: requestAnimationFrame(this._animationCallback)
-    });
+    // Keep a reference to the animation request to be able to clear it on
+    // stopAnimationLoop()
+    this._animationRequestId = requestAnimationFrame(this._animationCallback);
   },
   _clearAnimation: function() {
-    if (this.state && this.state.animationRequestId) {
-      cancelAnimationFrame(this.state.animationRequestId);
+    if (this._animationRequestId) {
+      cancelAnimationFrame(this._animationRequestId);
+      this._animationRequestId = null;
     }
   },
   _animationCallback: function() {
@@ -72,9 +67,13 @@ Cosmos.mixins.AnimationLoop = {
     var now = Date.now(),
         timePassed = now - this._prevTime,
         timeExpected = 1000 / 60;
-
     this.onFrame(timePassed / timeExpected);
-    this._nextFrame();
+
+    // Sometimes the next frame is still called even after it was canceled, so
+    // we need to make sure we don't continue with the animation loop
+    if (this._animationRequestId) {
+      this._nextFrame();
+    }
   }
 };
 
