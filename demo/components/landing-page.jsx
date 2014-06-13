@@ -4,18 +4,26 @@ Cosmos.components.LandingPage = React.createClass({
   /**
    * Landing page for Cosmos framework with Flatris and data alongside.
    */
+  mixins: [Cosmos.mixins.PersistState],
   getInitialState: function() {
     return {
-      snapshot: {}
+      snapshot: ''
     };
+  },
+  children: {
+    flatris: function() {
+      return {
+        component: 'Flatris'
+      };
+    }
   },
   render: function() {
     return (
       <div className="landing-page">
         <div className="content-wrapper">
-          <Cosmos component="Flatris" ref="flatris" />
+          {this.loadChild('flatris')}
         </div>
-        <pre className="data-snapshot">{this.getSerializedState()}</pre>
+        <pre className="data-snapshot">{this.state.snapshot}</pre>
       </div>
     );
   },
@@ -27,16 +35,15 @@ Cosmos.components.LandingPage = React.createClass({
     clearInterval(this._intervalId);
   },
   shouldComponentUpdate: function(nextProps, nextState) {
-    return JSON.stringify(nextState.snapshot) !=
-           JSON.stringify(this.state.snapshot);
+    return nextState.snapshot != this.state.snapshot;
   },
   refreshSnapshot: function() {
     this.setState({
-      snapshot: this.refs.flatris.generateSnapshot(true)
+      snapshot: this.serializeState(this.refs.flatris.generateSnapshot(true))
     });
   },
-  getSerializedState: function() {
-    var snapshot = JSON.stringify(this.state.snapshot, null, '  ');
+  serializeState: function(snapshot) {
+    var snapshot = JSON.stringify(snapshot, null, '  ');
     // Style the Well and the active Tetrimino grid with one row per line
     snapshot = snapshot.replace(/\n([\s]+)"grid"\: ([\s\S]+?)\]([\s]+)\]/g,
       function(match, indent, grid, after) {
