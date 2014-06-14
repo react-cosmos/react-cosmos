@@ -143,10 +143,22 @@ Cosmos.components.Flatris = React.createClass({
       lines: lines
     });
     this.insertNextTetriminoInWell(this.state.nextTetrimino);
+
+    // Flatris allows its ancestors to listen to Well events as well, to add
+    // extra logic on top of the game behavior
+    if (typeof(this.props.onTetriminoLanding) == 'function') {
+      this.props.onTetriminoLanding(drop);
+    }
   },
   onFullWell: function() {
     this.pause();
     this.setState({playing: false});
+
+    // Flatris allows its ancestors to listen to Well events as well, to add
+    // extra logic on top of the game behavior
+    if (typeof(this.props.onFullWell) == 'function') {
+      this.props.onFullWell();
+    }
   },
   insertNextTetriminoInWell: function(nextTetrimino) {
     this.refs.well.loadTetrimino(nextTetrimino);
