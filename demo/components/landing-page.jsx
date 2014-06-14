@@ -24,7 +24,7 @@ Cosmos.components.LandingPage = React.createClass({
           {this.loadChild('flatris')}
           <div className="introduction">
             <p className="title">Meet <strong>Cosmos</strong>,</p>
-            <p className="description">a JavaScript user interface framework that cares about data structures and behavior encapsulation.</p>
+            <p className="description">a JavaScript user interface framework that cares about <strong>data clarity and component autonomy.</strong></p>
             <p>Built on top of Facebook's React, Cosmos is what glues components together and provides a uniform structure between them.</p>
             <p>Explore project on <a href="https://github.com/skidding/cosmos">GitHub.</a></p>
           </div>
