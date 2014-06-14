@@ -109,12 +109,36 @@ a:hover {
       margin: 10px 0 0 0;
     }
       .flatris .game-panel .next-tetrimino .square-block {
+        /* Override any color the next Tetrimino has for a gray shape */
         background-color: #ecf0f1 !important;
       }
       /* The I Tetrimino needs to be lifted a bit because it has an empty row
       in its default position */
       .flatris .game-panel .next-tetrimino-I {
         margin-top: -20px;
+      }
+
+    .flatris .game-panel .hint-arrow {
+      position: absolute;
+      left: 60px;
+      bottom: 75px;
+      width: 0;
+      height: 0;
+      border-top: 30px solid #ecf0f1;
+      border-left: 30px solid transparent;
+      border-right: 30px solid transparent;
+    }
+    .flatris .playing .hint-arrow {
+      display: none;
+    }
+      .flatris .game-panel .hint-arrow:before {
+        content: '';
+        position: absolute;
+        bottom: 30px;
+        left: -15px;
+        width: 30px;
+        height: 45px;
+        background-color: #ecf0f1;
       }
 
     .flatris .game-panel button {
@@ -165,7 +189,7 @@ a:hover {
           /* Firefox apparently does adaptive weight with <strong> by default */
           font-weight: bold;
         }
-        
+
       .landing-page .content-wrapper .introduction .description {
         margin-top: 0;
       }

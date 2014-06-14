@@ -17,8 +17,12 @@ Cosmos.components.GamePanel = React.createClass({
     };
   },
   render: function() {
+    var classes = ['game-panel'];
+    if (this.props.playing) {
+      classes.push('playing');
+    }
     return (
-      <div className="game-panel">
+      <div className={classes.join(' ')}>
         <p className="title">Flatris</p>
         <p className="label">Score</p>
         <p className="count">{this.props.score}</p>
@@ -28,6 +32,7 @@ Cosmos.components.GamePanel = React.createClass({
         <div className={this.getNextTetriminoClass()}>
           {this.renderNextTetrimino()}
         </div>
+        <div className="hint-arrow"></div>
         {this.renderGameButton()}
       </div>
     );
@@ -47,18 +52,12 @@ Cosmos.components.GamePanel = React.createClass({
   },
   renderGameButton: function() {
     if (!this.props.playing) {
-      return (
-        <button onClick={this.props.onPressStart}>New game</button>
-      );
+      return <button onClick={this.props.onPressStart}>New game</button>;
     }
     if (this.props.paused) {
-      return (
-        <button onClick={this.props.onPressResume}>Resume</button>
-      );
+      return <button onClick={this.props.onPressResume}>Resume</button>;
     } else {
-      return (
-        <button onClick={this.props.onPressPause}>Pause</button>
-      );
+      return <button onClick={this.props.onPressPause}>Pause</button>;
     }
   },
   getNextTetriminoClass: function() {
