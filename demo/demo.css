@@ -7,7 +7,6 @@ body {
   color: #34495f;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 14px;
-  line-height: 20px;
 }
 ul {
   list-style-type: none;
@@ -148,6 +147,23 @@ a:hover {
     .landing-page .content-wrapper .flatris {
       margin: 0 0 0 30px;
     }
+    .landing-page .content-wrapper .introduction {
+      width: 450px;
+      margin: 30px;
+      font-size: 18px;
+    }
+      .landing-page .content-wrapper .introduction p {
+        margin: 30px 0;
+      }
+      .landing-page .content-wrapper .introduction .title {
+        margin: 60px 0 0 0;
+        font-size: 40px;
+        font-weight: 300;
+        line-height: 60px;
+      }
+      .landing-page .content-wrapper .introduction .description {
+        margin-top: 0;
+      }
 
   .landing-page .data-snapshot {
     position: absolute;
