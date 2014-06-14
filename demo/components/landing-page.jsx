@@ -31,7 +31,10 @@ Cosmos.components.LandingPage = React.createClass({
     );
   },
   getIntroText: function() {
-    if (!this.state.revealedInfo) {
+    if (!this.state.revealedInfo &&
+        // XXX Reveal framework info directly for mobile users as Flatris
+        // doesn't yet support browser events
+        !Flatris.isMobileUser()) {
       return;
     }
     return (
@@ -40,8 +43,13 @@ Cosmos.components.LandingPage = React.createClass({
         <p className="description">a JavaScript user interface framework that cares about <strong>data clarity and component autonomy.</strong></p>
         <p>Built on top of Facebook's React, Cosmos is what glues components together and provides a uniform structure between them.</p>
         <p>Explore project on <a href="https://github.com/skidding/cosmos">GitHub.</a></p>
+        {Flatris.isMobileUser() ? this.getMobileDisclaimer() : ''}
       </div>
     );
+  },
+  getMobileDisclaimer: function() {
+    // TODO Remove this once Flatris supports keyboard events
+    return <p><em>Flatris only works with keyboard events for now. Sorry.</em></p>;
   },
   componentDidMount: function() {
     this.refreshSnapshot();

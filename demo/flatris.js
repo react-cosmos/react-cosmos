@@ -58,5 +58,9 @@ var Flatris = {
     DOWN: 40,
     LEFT: 37,
     RIGHT: 39
+  },
+  // XXX Temporary utility function for mobile users
+  isMobileUser: function() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   }
 };
