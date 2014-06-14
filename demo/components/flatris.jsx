@@ -84,13 +84,13 @@ Cosmos.components.Flatris = React.createClass({
     $(window).off('keyup', this.onKeyUp);
   },
   onKeyDown: function(e) {
+    // Prevent page from scrolling when pressing arrow keys
+    if (_.values(Flatris.KEYS).indexOf(e.keyCode) != -1) {
+      e.preventDefault();
+    }
     // Ignore key events when game is stopped or paused
     if (!this.state.playing || this.state.paused) {
       return;
-    }
-    // Prevent page from scrolling when pressing UP and DOWN
-    if (_.values(Flatris.KEYS).indexOf(e.keyCode) != -1) {
-      e.preventDefault();
     }
     switch (e.keyCode) {
     case Flatris.KEYS.DOWN:
