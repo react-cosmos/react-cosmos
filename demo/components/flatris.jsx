@@ -47,6 +47,8 @@ Cosmos.components.Flatris = React.createClass({
   pause: function() {
     this.setState({paused: true});
     this.refs.well.stopAnimationLoop();
+    // Stop any on-going acceleration inside the Well
+    this.refs.well.setState({dropAcceleration: false});
   },
   resume: function() {
     this.setState({paused: false});
