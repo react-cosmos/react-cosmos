@@ -7,13 +7,15 @@ Cosmos.components.LandingPage = React.createClass({
   mixins: [Cosmos.mixins.PersistState],
   getInitialState: function() {
     return {
+      revealedInfo: false,
       snapshot: ''
     };
   },
   children: {
     flatris: function() {
       return {
-        component: 'Flatris'
+        component: 'Flatris',
+        onTetriminoLanding: this.onTetriminoLanding
       };
     }
   },
@@ -22,14 +24,22 @@ Cosmos.components.LandingPage = React.createClass({
       <div className="landing-page">
         <div className="content-wrapper">
           {this.loadChild('flatris')}
-          <div className="introduction">
-            <p className="title">Meet <strong>Cosmos</strong>,</p>
-            <p className="description">a JavaScript user interface framework that cares about <strong>data clarity and component autonomy.</strong></p>
-            <p>Built on top of Facebook's React, Cosmos is what glues components together and provides a uniform structure between them.</p>
-            <p>Explore project on <a href="https://github.com/skidding/cosmos">GitHub.</a></p>
-          </div>
+          {this.getIntroText()}
         </div>
         <pre className="data-snapshot">{this.state.snapshot}</pre>
+      </div>
+    );
+  },
+  getIntroText: function() {
+    if (!this.state.revealedInfo) {
+      return;
+    }
+    return (
+      <div className="introduction">
+        <p className="title">Meet <strong>Cosmos</strong>,</p>
+        <p className="description">a JavaScript user interface framework that cares about <strong>data clarity and component autonomy.</strong></p>
+        <p>Built on top of Facebook's React, Cosmos is what glues components together and provides a uniform structure between them.</p>
+        <p>Explore project on <a href="https://github.com/skidding/cosmos">GitHub.</a></p>
       </div>
     );
   },
@@ -41,7 +51,24 @@ Cosmos.components.LandingPage = React.createClass({
     clearInterval(this._intervalId);
   },
   shouldComponentUpdate: function(nextProps, nextState) {
-    return nextState.snapshot != this.state.snapshot;
+    // No need to render for an identical snapshot
+    return _.without(_.keys(nextState), 'snapshot').length ||
+           nextState.snapshot != this.state.snapshot;
+  },
+  componentDidUpdate: function(prevProps, prevState) {
+    // Pause game and scroll down to the framework info once revealed
+    if (this.state.revealedInfo && !prevState.revealedInfo) {
+      this.refs.flatris.pause();
+      this.revealCosmosInfo();
+    }
+  },
+  onTetriminoLanding: function(drop) {
+    // Reveal info about Cosmos the first time a line is cleared
+    if (drop.lines) {
+      this.setState({revealedInfo: true});
+      // Refresh snapshot synchronously for better UI feedback
+      this.refreshSnapshot();
+    }
   },
   refreshSnapshot: function() {
     this.setState({
@@ -60,5 +87,15 @@ Cosmos.components.LandingPage = React.createClass({
       }
     );
     return snapshot;
+  },
+  revealCosmosInfo: function() {
+    // Transition Cosmos text when showing it for the first time
+    var $introduction = $(this.getDOMNode()).find('.introduction');
+    $('html,body').animate({
+      scrollTop: $introduction.offset().top
+    }, 1000, 'linear');
+    $introduction.css({opacity: 0}).animate({
+      opacity: 1
+    }, 1000, 'linear');
   }
 });
