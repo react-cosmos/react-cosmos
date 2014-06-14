@@ -7,15 +7,13 @@ Cosmos.components.LandingPage = React.createClass({
   mixins: [Cosmos.mixins.PersistState],
   getInitialState: function() {
     return {
-      revealedInfo: false,
       snapshot: ''
     };
   },
   children: {
     flatris: function() {
       return {
-        component: 'Flatris',
-        onTetriminoLanding: this.onTetriminoLanding
+        component: 'Flatris'
       };
     }
   },
@@ -31,12 +29,6 @@ Cosmos.components.LandingPage = React.createClass({
     );
   },
   getIntroText: function() {
-    if (!this.state.revealedInfo &&
-        // XXX Reveal framework info directly for mobile users as Flatris
-        // doesn't yet support browser events
-        !Flatris.isMobileUser()) {
-      return;
-    }
     return (
       <div className="introduction">
         <p className="title">Meet <strong>Cosmos</strong>,</p>
@@ -63,21 +55,6 @@ Cosmos.components.LandingPage = React.createClass({
     return _.without(_.keys(nextState), 'snapshot').length ||
            nextState.snapshot != this.state.snapshot;
   },
-  componentDidUpdate: function(prevProps, prevState) {
-    // Pause game and scroll down to the framework info once revealed
-    if (this.state.revealedInfo && !prevState.revealedInfo) {
-      this.refs.flatris.pause();
-      this.revealCosmosInfo();
-    }
-  },
-  onTetriminoLanding: function(drop) {
-    // Reveal info about Cosmos the first time a line is cleared
-    if (drop.lines) {
-      this.setState({revealedInfo: true});
-      // Refresh snapshot synchronously for better UI feedback
-      this.refreshSnapshot();
-    }
-  },
   refreshSnapshot: function() {
     this.setState({
       snapshot: this.serializeState(this.refs.flatris.generateSnapshot(true))
@@ -95,15 +72,5 @@ Cosmos.components.LandingPage = React.createClass({
       }
     );
     return snapshot;
-  },
-  revealCosmosInfo: function() {
-    // Transition Cosmos text when showing it for the first time
-    var $introduction = $(this.getDOMNode()).find('.introduction');
-    $('html,body').animate({
-      scrollTop: $introduction.offset().top
-    }, 1000, 'linear');
-    $introduction.css({opacity: 0}).animate({
-      opacity: 1
-    }, 1000, 'linear');
   }
 });
