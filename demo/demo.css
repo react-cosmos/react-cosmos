@@ -7,7 +7,6 @@ body {
   color: #34495f;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 14px;
-  line-height: 20px;
 }
 ul {
   list-style-type: none;
@@ -110,12 +109,36 @@ a:hover {
       margin: 10px 0 0 0;
     }
       .flatris .game-panel .next-tetrimino .square-block {
+        /* Override any color the next Tetrimino has for a gray shape */
         background-color: #ecf0f1 !important;
       }
       /* The I Tetrimino needs to be lifted a bit because it has an empty row
       in its default position */
       .flatris .game-panel .next-tetrimino-I {
         margin-top: -20px;
+      }
+
+    .flatris .game-panel .hint-arrow {
+      position: absolute;
+      left: 60px;
+      bottom: 75px;
+      width: 0;
+      height: 0;
+      border-top: 30px solid #ecf0f1;
+      border-left: 30px solid transparent;
+      border-right: 30px solid transparent;
+    }
+    .flatris .playing .hint-arrow {
+      display: none;
+    }
+      .flatris .game-panel .hint-arrow:before {
+        content: '';
+        position: absolute;
+        bottom: 30px;
+        left: -15px;
+        width: 30px;
+        height: 45px;
+        background-color: #ecf0f1;
       }
 
     .flatris .game-panel button {
@@ -148,6 +171,28 @@ a:hover {
     .landing-page .content-wrapper .flatris {
       margin: 0 0 0 30px;
     }
+    .landing-page .content-wrapper .introduction {
+      width: 450px;
+      margin: 30px;
+      font-size: 18px;
+    }
+      .landing-page .content-wrapper .introduction p {
+        margin: 30px 0;
+      }
+      .landing-page .content-wrapper .introduction .title {
+        margin: 60px 0 0 0;
+        font-size: 40px;
+        font-weight: 300;
+        line-height: 60px;
+      }
+        .landing-page .content-wrapper .introduction .title strong {
+          /* Firefox apparently does adaptive weight with <strong> by default */
+          font-weight: bold;
+        }
+
+      .landing-page .content-wrapper .introduction .description {
+        margin-top: 0;
+      }
 
   .landing-page .data-snapshot {
     position: absolute;

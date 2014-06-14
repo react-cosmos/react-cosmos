@@ -47,6 +47,8 @@ Cosmos.components.Flatris = React.createClass({
   pause: function() {
     this.setState({paused: true});
     this.refs.well.stopAnimationLoop();
+    // Stop any on-going acceleration inside the Well
+    this.refs.well.setState({dropAcceleration: false});
   },
   resume: function() {
     this.setState({paused: false});
@@ -82,13 +84,13 @@ Cosmos.components.Flatris = React.createClass({
     $(window).off('keyup', this.onKeyUp);
   },
   onKeyDown: function(e) {
+    // Prevent page from scrolling when pressing arrow keys
+    if (_.values(Flatris.KEYS).indexOf(e.keyCode) != -1) {
+      e.preventDefault();
+    }
     // Ignore key events when game is stopped or paused
     if (!this.state.playing || this.state.paused) {
       return;
-    }
-    // Prevent page from scrolling when pressing UP and DOWN
-    if (_.values(Flatris.KEYS).indexOf(e.keyCode) != -1) {
-      e.preventDefault();
     }
     switch (e.keyCode) {
     case Flatris.KEYS.DOWN:
@@ -141,10 +143,26 @@ Cosmos.components.Flatris = React.createClass({
       lines: lines
     });
     this.insertNextTetriminoInWell(this.state.nextTetrimino);
+
+    // Flatris allows its ancestors to listen to Well events as well, to add
+    // extra logic on top of the game behavior
+    if (typeof(this.props.onTetriminoLanding) == 'function') {
+      this.props.onTetriminoLanding(drop);
+    }
   },
   onFullWell: function() {
     this.pause();
-    this.setState({playing: false});
+    this.setState({
+      playing: false,
+      // There won't be any next Tetrimino when the game is over
+      nextTetrimino: null
+    });
+
+    // Flatris allows its ancestors to listen to Well events as well, to add
+    // extra logic on top of the game behavior
+    if (typeof(this.props.onFullWell) == 'function') {
+      this.props.onFullWell();
+    }
   },
   insertNextTetriminoInWell: function(nextTetrimino) {
     this.refs.well.loadTetrimino(nextTetrimino);
