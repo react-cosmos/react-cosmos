@@ -161,6 +161,11 @@ a:hover {
         font-weight: 300;
         line-height: 60px;
       }
+        .landing-page .content-wrapper .introduction .title strong {
+          /* Firefox apparently does adaptive weight with <strong> by default */
+          font-weight: bold;
+        }
+        
       .landing-page .content-wrapper .introduction .description {
         margin-top: 0;
       }
