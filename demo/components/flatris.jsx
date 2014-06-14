@@ -152,7 +152,11 @@ Cosmos.components.Flatris = React.createClass({
   },
   onFullWell: function() {
     this.pause();
-    this.setState({playing: false});
+    this.setState({
+      playing: false,
+      // There won't be any next Tetrimino when the game is over
+      nextTetrimino: null
+    });
 
     // Flatris allows its ancestors to listen to Well events as well, to add
     // extra logic on top of the game behavior
