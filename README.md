@@ -11,7 +11,7 @@ Built on top of Facebook's [**React**](http://facebook.github.io/react/),
 Cosmos glues components together and provides a uniform structure between them.
 Components are self-contained, UI building blocks.
 
-See Cosmos in action by [playing a game of **Flatris.**](http://skidding.github.io/cosmos/)
+**See Cosmos in action by [playing a game of Flatris.](http://skidding.github.io/flatris/)**
 
 Jump to:
 
