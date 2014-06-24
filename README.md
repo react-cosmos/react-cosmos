@@ -155,11 +155,11 @@ yet._
 Cosmos.render({
   component: 'Intro',
   name: 'Johnny',
-  hometown: 'Minnesota'
+  hometown: 'Minneapolis'
 });
 // Since we didn't specify a DOM container to render this component in, an HTML
 // string will be returned instead
-"<p>My name is Johnny and I am from Minnesota.</p>"
+"<p>My name is Johnny and I am from Minneapolis.</p>"
 ```
 
 #### Component input (props)
@@ -168,7 +168,7 @@ Cosmos.render({
 {
   component: 'Intro',
   name: 'Johnny',
-  hometown: 'Minnesota'
+  hometown: 'Minneapolis'
 }
 ```
 
@@ -195,12 +195,12 @@ Component from the Cosmos.components namespace.
 Cosmos({
   component: 'Intro',
   name: 'Johnny',
-  hometown: 'Minnesota'
+  hometown: 'Minneapolis'
 });
 // is the equivalent of
 Cosmos.components.Intro({
   name: 'Johny',
-  hometown: 'Minnesota'
+  hometown: 'Minneapolis'
 });
 ```
 
@@ -209,7 +209,7 @@ Here's how rendering a Component inside another one looks like in JSX syntax:
 ```html
 <Cosmos component="Intro"
         name="Johnny"
-        hometown="Minnesota" />
+        hometown="Minneapolis" />
 ```
 
 #### Cosmos.render(props, container, callback)
@@ -237,7 +237,7 @@ Here's how a standard URL for an app powered by the Cosmos Router would look
 like:
 
 ```
-http://localhost/?component=Intro&name=Johnny&hometown=Minnesota
+http://localhost/?component=Intro&name=Johnny&hometown=Minneapolis
 ```
 
 The [URL mixin](https://github.com/skidding/cosmos/wiki/Mixins#url) is used for
