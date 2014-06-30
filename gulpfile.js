@@ -26,7 +26,7 @@ gulp.task('build', function() {
 
 // Rerun the task when a file changes
 gulp.task('watch', function () {
-  gulp.watch(paths.core, ['build']);
+  gulp.watch(paths, ['build']);
 });
 
 gulp.task('default', ['build', 'watch']);
