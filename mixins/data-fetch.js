@@ -23,6 +23,9 @@ Cosmos.mixins.DataFetch = {
   fetchDataFromServer: function(url, onSuccess) {
     var request = $.ajax({
       url: url,
+      // Even though not recommended, some $.ajaxSettings might default to POST 
+      // requests. See http://api.jquery.com/jquery.ajaxsetup/
+      type: 'GET',
       dataType: 'json',
       complete: function() {
         this.xhrRequests = _.without(this.xhrRequests, request);
