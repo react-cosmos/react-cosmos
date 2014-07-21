@@ -32,12 +32,12 @@ describe("Components implementing the PersistState mixin", function() {
     }, attributes));
   };
   var generateParentComponentClass = function(attributes) {
-    return React.createClass(_.extend({}, attributes, {
+    return React.createClass(_.extend({}, {
       mixins: [Cosmos.mixins.PersistState],
       render: function() {
         return this.loadChild('childRef');
       }
-    }));
+    }, attributes));
   };
 
   var ComponentClass,
@@ -153,6 +153,39 @@ describe("Components implementing the PersistState mixin", function() {
         isThisTheLife: true,
         isThisLove: true
       });
+    });
+
+    it("should not interfere with other refs", function() {
+      ComponentClass = generateParentComponentClass({
+        children: {
+          childRef: function() {
+            return {
+              component: 'ChildComponent',
+              foo: this.props.foo
+            };
+          }
+        },
+        render: function() {
+          return React.DOM.div(null,
+          	React.DOM.div(null, this.loadChild('childRef')),
+            React.DOM.div({ref: 'straightRef'}, this.props.foo)
+          );
+        }
+      });
+      componentInstance = utils.renderIntoDocument(ComponentClass({
+        foo: 'bar'
+      }));
+      // Dynamic child is OK
+      expect(componentInstance.refs.childRef.props).toEqual({
+        ref: 'childRef',
+        component: 'ChildComponent',
+        foo: 'bar'
+      });
+      // Static child is OK
+      expect(componentInstance.refs.straightRef)
+            .toEqual(jasmine.any(Object));
+      expect(componentInstance.refs.straightRef.getDOMNode().innerHTML)
+            .toEqual('bar');
     });
   });
 
