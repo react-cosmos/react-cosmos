@@ -1,5 +1,6 @@
 var Cosmos = function(props) {
-  var component = Cosmos.getComponentByName(props.component);
+  var component = Cosmos.getComponentByName(props.component,
+                                            props.componentLookup);
   if (!component) {
     throw new Error('Invalid component: ' + props.component);
   }
@@ -11,7 +12,6 @@ _.extend(Cosmos, {
   mixins: {},
   components: {},
   transitions: {},
-  componentLookups: [],
   start: function(options) {
     return new this.Router(options);
   },
@@ -23,20 +23,10 @@ _.extend(Cosmos, {
       return React.renderComponentToString(componentInstance);
     }
   },
-  getComponentByName: function(name) {
-    // The order of calling the lookups is last to first registered
-    var i = this.componentLookups.length,
-        componentFound;
-    while (--i >= 0) {
-      // The context of the callback is irrelevant for now
-      componentFound = this.componentLookups[i].call(this, name);
-      if (componentFound) {
-        return componentFound;
-      }
+  getComponentByName: function(name, componentLookup) {
+    if (typeof(componentLookup) == 'function') {
+      return componentLookup(name);
     }
     return this.components[name];
-  },
-  registerComponentLookup: function(callback) {
-    this.componentLookups.push(callback);
   }
 });
