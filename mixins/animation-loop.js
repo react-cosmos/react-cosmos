@@ -95,4 +95,4 @@ var cancelAnimationFrame =
     window.clearTimeout(requestId);
   };
 
-})(Cosmos, window);
+})(Cosmos, this);
