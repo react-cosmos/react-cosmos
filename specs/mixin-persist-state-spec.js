@@ -167,7 +167,7 @@ describe("Components implementing the PersistState mixin", function() {
         },
         render: function() {
           return React.DOM.div(null,
-          	React.DOM.div(null, this.loadChild('childRef')),
+            React.DOM.div(null, this.loadChild('childRef')),
             React.DOM.div({ref: 'straightRef'}, this.props.foo)
           );
         }
