@@ -221,6 +221,29 @@ describe("Components implementing the PersistState mixin", function() {
       expect(componentInstance.refs.childRef.refs.LordOfTheRefs.getDOMNode().innerHTML)
             .toEqual('two');
     });
+
+    it("should propagate component lookup to children", function() {
+      var customComponents = {
+        StepChildComponent: generateComponentClass()
+      };
+      ComponentClass = generateParentComponentClass({
+        children: {
+          childRef: function() {
+            return {
+              component: 'StepChildComponent'
+            };
+          }
+        }
+      });
+      componentInstance = utils.renderIntoDocument(ComponentClass({
+        componentLookup: function(name) {
+          expect(name).toBe('StepChildComponent');
+          return customComponents[name];
+        }
+      }));
+      // Child was found
+      expect(componentInstance.refs.childRef).toEqual(jasmine.any(Object));
+    });
   });
 
   it("should generate snapshot with exact props and state", function() {
