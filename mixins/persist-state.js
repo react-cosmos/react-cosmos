@@ -13,8 +13,7 @@ Cosmos.mixins.PersistState = {
      * It excludes internal props set by React during run-time and props with
      * default values.
      */
-    var defaultProps = this.getDefaultProps ? this.getDefaultProps() : {},
-        props = {},
+    var props = {},
         value,
         state,
         children = {};
@@ -26,10 +25,6 @@ Cosmos.mixins.PersistState = {
         key == 'state' ||
         // No reason to include parent reference
         key == 'ref') {
-        continue;
-      }
-      // No point in embedding default props
-      if (defaultProps.hasOwnProperty(key) && defaultProps[key] == value) {
         continue;
       }
       props[key] = value;
