@@ -27,37 +27,19 @@ describe("Cosmos", function() {
     expect(Cosmos.getComponentByName('FakeComponent')).toBe(FakeComponent);
   });
 
-  it("should draw its components from registered lookup callback", function() {
-    var FakeComponent = {};
-    Cosmos.registerComponentLookup(function(name) {
-      expect(name).toBe('FakeComponent');
-      return FakeComponent;
-    });
-    expect(Cosmos.getComponentByName('FakeComponent')).toBe(FakeComponent);
-    // Revert Cosmos to initial state
-    Cosmos.componentLookups = [];
-  });
-
-  it("should prefer components from lookups registered last", function() {
-    var namespace1 = {
-      FakeComponent: {},
-      FakerComponent: {}
-    };
-    var namespace2 = {
-      FakeComponent: {}
-    };
-    Cosmos.registerComponentLookup(function(name) {
-      return namespace1[name];
-    });
-    Cosmos.registerComponentLookup(function(name) {
-      return namespace2[name];
-    });
-    expect(Cosmos.getComponentByName('FakeComponent'))
-          .toBe(namespace2.FakeComponent);
-    expect(Cosmos.getComponentByName('FakerComponent'))
-          .toBe(namespace1.FakerComponent);
-    // Revert Cosmos to initial state
-    Cosmos.componentLookups = [];
+  it("should draw its components from lookup callback", function() {
+    var fakeComponentInstance = {};
+        FakeComponent = jasmine.createSpy('FakeComponent')
+                        .and.returnValue(fakeComponentInstance),
+        componentLookup = function(name) {
+          expect(name).toBe('FakeComponent');
+          return FakeComponent;
+        },
+        props = {
+          component: 'FakeComponent',
+          componentLookup: componentLookup
+        };
+    expect(Cosmos(props)).toBe(fakeComponentInstance);
   });
 
   it("should instantiate correct Component", function() {

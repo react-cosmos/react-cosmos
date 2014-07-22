@@ -76,6 +76,9 @@ Cosmos.mixins.PersistState = {
       delete this._childSnapshots[ref];
     }
     props.ref = ref;
+    if (this.props.componentLookup) {
+      props.componentLookup = this.props.componentLookup;
+    }
     return props;
   },
   loadStateSnapshot: function(state) {

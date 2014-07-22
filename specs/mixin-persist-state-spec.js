@@ -32,12 +32,12 @@ describe("Components implementing the PersistState mixin", function() {
     }, attributes));
   };
   var generateParentComponentClass = function(attributes) {
-    return React.createClass(_.extend({}, attributes, {
+    return React.createClass(_.extend({}, {
       mixins: [Cosmos.mixins.PersistState],
       render: function() {
         return this.loadChild('childRef');
       }
-    }));
+    }, attributes));
   };
 
   var ComponentClass,
@@ -153,6 +153,96 @@ describe("Components implementing the PersistState mixin", function() {
         isThisTheLife: true,
         isThisLove: true
       });
+    });
+
+    it("should not interfere with sibling refs", function() {
+      ComponentClass = generateParentComponentClass({
+        children: {
+          childRef: function() {
+            return {
+              component: 'ChildComponent',
+              foo: this.props.foo
+            };
+          }
+        },
+        render: function() {
+          return React.DOM.div(null,
+            React.DOM.div(null, this.loadChild('childRef')),
+            React.DOM.div({ref: 'straightRef'}, this.props.foo)
+          );
+        }
+      });
+      componentInstance = utils.renderIntoDocument(ComponentClass({
+        foo: 'bar'
+      }));
+      // Dynamic child is OK
+      expect(componentInstance.refs.childRef.props).toEqual({
+        ref: 'childRef',
+        component: 'ChildComponent',
+        foo: 'bar'
+      });
+      // Static child is OK
+      expect(componentInstance.refs.straightRef)
+            .toEqual(jasmine.any(Object));
+      expect(componentInstance.refs.straightRef.getDOMNode().innerHTML)
+            .toEqual('bar');
+    });
+
+    it("should not interfere with child refs", function() {
+      Cosmos.components.ChildComponent = generateComponentClass({
+        render: function() {
+          return React.DOM.div(null,
+            React.DOM.div({ref: 'Refception'}, 'one'),
+            React.DOM.div({ref: 'LordOfTheRefs'}, 'two')
+          );
+        }
+      });
+
+      ComponentClass = generateParentComponentClass({
+        children: {
+          childRef: function() {
+            return {
+              component: 'ChildComponent'
+            };
+          }
+        }
+      });
+      componentInstance = utils.renderIntoDocument(ComponentClass());
+      // Ref to child
+      expect(componentInstance.refs.childRef).toEqual(jasmine.any(Object));
+      // Refs of child
+      expect(componentInstance.refs.childRef.refs.Refception)
+            .toEqual(jasmine.any(Object));
+      expect(componentInstance.refs.childRef.refs.LordOfTheRefs)
+            .toEqual(jasmine.any(Object));
+      // Child refs contain references to DOM nodes
+      expect(componentInstance.refs.childRef.refs.Refception.getDOMNode().innerHTML)
+            .toEqual('one');
+      expect(componentInstance.refs.childRef.refs.LordOfTheRefs.getDOMNode().innerHTML)
+            .toEqual('two');
+    });
+
+    it("should propagate component lookup to children", function() {
+      var customComponents = {
+        StepChildComponent: generateComponentClass()
+      };
+      ComponentClass = generateParentComponentClass({
+        children: {
+          childRef: function() {
+            return {
+              component: 'StepChildComponent'
+            };
+          }
+        }
+      });
+      componentInstance = utils.renderIntoDocument(ComponentClass({
+        componentLookup: function(name) {
+          expect(name).toBe('StepChildComponent');
+          return customComponents[name];
+        }
+      }));
+      // Child was found
+      expect(componentInstance.refs.childRef).toEqual(jasmine.any(Object));
     });
   });
 
