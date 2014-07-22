@@ -155,7 +155,7 @@ describe("Components implementing the PersistState mixin", function() {
       });
     });
 
-    it("should not interfere with other refs", function() {
+    it("should not interfere with sibling refs", function() {
       ComponentClass = generateParentComponentClass({
         children: {
           childRef: function() {
@@ -186,6 +186,40 @@ describe("Components implementing the PersistState mixin", function() {
             .toEqual(jasmine.any(Object));
       expect(componentInstance.refs.straightRef.getDOMNode().innerHTML)
             .toEqual('bar');
+    });
+
+    it("should not interfere with child refs", function() {
+      Cosmos.components.ChildComponent = generateComponentClass({
+        render: function() {
+          return React.DOM.div(null,
+            React.DOM.div({ref: 'Refception'}, 'one'),
+            React.DOM.div({ref: 'LordOfTheRefs'}, 'two')
+          );
+        }
+      });
+
+      ComponentClass = generateParentComponentClass({
+        children: {
+          childRef: function() {
+            return {
+              component: 'ChildComponent'
+            };
+          }
+        }
+      });
+      componentInstance = utils.renderIntoDocument(ComponentClass());
+      // Ref to child
+      expect(componentInstance.refs.childRef).toEqual(jasmine.any(Object));
+      // Refs of child
+      expect(componentInstance.refs.childRef.refs.Refception)
+            .toEqual(jasmine.any(Object));
+      expect(componentInstance.refs.childRef.refs.LordOfTheRefs)
+            .toEqual(jasmine.any(Object));
+      // Child refs contain references to DOM nodes
+      expect(componentInstance.refs.childRef.refs.Refception.getDOMNode().innerHTML)
+            .toEqual('one');
+      expect(componentInstance.refs.childRef.refs.LordOfTheRefs.getDOMNode().innerHTML)
+            .toEqual('two');
     });
   });
 
