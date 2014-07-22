@@ -262,21 +262,6 @@ describe("Components implementing the PersistState mixin", function() {
           .toEqual({players: 10, state: {speed: 3}});
   });
 
-  it("should ignore default props when generating snapshot", function() {
-    ComponentClass = generateComponentClass({
-      getDefaultProps: function() {
-        return {hidden: true};
-      }
-    });
-    componentInstance = utils.renderIntoDocument(ComponentClass({
-      visible: true
-    }));
-    expect(componentInstance.generateSnapshot()).toEqual({
-      visible: true,
-      state: {}
-    });
-  });
-
   it("should generate snapshot recursively", function() {
     Cosmos.components.ChildComponent = generateComponentClass();
     ComponentClass = generateParentComponentClass({
