@@ -40,12 +40,6 @@ Cosmos.mixins.DataFetch = {
   receiveDataFromServer: function(data) {
     this.setState({data: data});
   },
-  getInitialData: function() {
-    // The default data object is an empty Object. A List Component would
-    // override initialData with an empty Array and other Components might want
-    // some defaults inside the initial data
-    return this.initialData !== undefined ? this.initialData : {};
-  },
   resetData: function(props) {
     // The data URL can be generated dynamically by composing it through other
     // props, inside a custom method that receives the next props as arguments
