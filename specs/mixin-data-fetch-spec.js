@@ -39,28 +39,16 @@ describe("Components implementing the DataFetch mixin", function() {
   var ComponentClass,
       componentInstance;
 
-  it("should default initial data to an empty object", function() {
-    ComponentClass = generateComponentClass();
-    componentInstance = utils.renderIntoDocument(ComponentClass());
-    expect(componentInstance.state.data).toEqual({});
-    // Since expect([]).toEqual({}) returns true we had to know for sure that
-    // the data object is a plain one
-    expect(JSON.stringify(componentInstance.state.data)).toEqual('{}');
-  });
-
-  it("should override initial data to an empty array", function() {
-    ComponentClass = generateComponentClass({initialData: []});
-    componentInstance = utils.renderIntoDocument(ComponentClass());
-    expect(componentInstance.state.data).toEqual([]);
-    // Since expect([]).toEqual({}) returns true we had to know for sure that
-    // the data object is an Array
-    expect(JSON.stringify(componentInstance.state.data)).toEqual('[]');
-  });
-
-  it("should override initial data with non-empty value", function() {
-    ComponentClass = generateComponentClass({initialData: {
-      name: 'Guest'
-    }});
+  it("should not touch initial data when no dataUrl prop is set", function() {
+    ComponentClass = generateComponentClass({
+      getInitialState: function() {
+        return {
+          data: {
+            name: 'Guest'
+          }
+        };
+      }
+    });
     componentInstance = utils.renderIntoDocument(ComponentClass());
     expect(componentInstance.state.data).toEqual({name: 'Guest'});
   });
@@ -132,8 +120,13 @@ describe("Components implementing the DataFetch mixin", function() {
 
   it("should replace initial data after data is fetched", function() {
     ComponentClass = generateComponentClass({
-      initialData: {
-        guest: true, name: 'Guest'
+      getInitialState: function() {
+        return {
+          data: {
+            guest: true,
+            name: 'Guest'
+          }
+        }
       }
     });
     componentInstance = utils.renderIntoDocument(ComponentClass());
@@ -141,4 +134,28 @@ describe("Components implementing the DataFetch mixin", function() {
     componentInstance.receiveDataFromServer({name: 'John Doe', age: 42});
     expect(componentInstance.state.data).toEqual({name: 'John Doe', age: 42});
   });
+
+  it("shouldn't fetch data when receiving the same dataUrl prop", function() {
+    ComponentClass = generateComponentClass();
+    componentInstance = utils.renderIntoDocument(ComponentClass({
+      dataUrl: 'http://happiness.com'
+    }));
+    componentInstance.setProps({
+      dataUrl: 'http://happiness.com'
+    });
+    expect(Cosmos.mixins.DataFetch.fetchDataFromServer.calls.count()).toBe(1);
+  });
+
+  it("shouldn't modify state.data when receiving the same dataUrl prop", function() {
+    ComponentClass = generateComponentClass();
+    componentInstance = utils.renderIntoDocument(ComponentClass({
+      dataUrl: 'http://happiness.com'
+    }));
+    componentInstance.receiveDataFromServer({foo: 'bar'});
+    componentInstance.setProps({
+      dataUrl: 'http://happiness.com'
+    });
+    expect(componentInstance.state.data).toEqual({foo: 'bar'});
+  });
 });
+

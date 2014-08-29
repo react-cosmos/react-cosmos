@@ -9,10 +9,6 @@ Cosmos.mixins.DataFetch = {
    *   - pollInterval: An interval in milliseconds for polling the data URL.
    *                   Defaults to 0, which means no polling.
    *
-   * Context properties:
-   *  - initialData: The initial value of state.data, before receiving and data
-   *                 from the server (see dataUrl prop.) Defaults to an empty
-   *                 object `{}` - TODO: make this a method with props at hand
    * Context methods:
    *  - getDataUrl: The data URL can be generated dynamically by composing it
    *                using other props, inside a custom method that receives
@@ -23,7 +19,7 @@ Cosmos.mixins.DataFetch = {
   fetchDataFromServer: function(url, onSuccess) {
     var request = $.ajax({
       url: url,
-      // Even though not recommended, some $.ajaxSettings might default to POST 
+      // Even though not recommended, some $.ajaxSettings might default to POST
       // requests. See http://api.jquery.com/jquery.ajaxsetup/
       type: 'GET',
       dataType: 'json',
@@ -40,15 +36,7 @@ Cosmos.mixins.DataFetch = {
   receiveDataFromServer: function(data) {
     this.setState({data: data});
   },
-  getInitialData: function() {
-    // The default data object is an empty Object. A List Component would
-    // override initialData with an empty Array and other Components might want
-    // some defaults inside the initial data
-    return this.initialData !== undefined ? this.initialData : {};
-  },
   resetData: function(props) {
-    // Previous data must be cleared before new one arrives
-    this.setState({data: this.getInitialData()});
     // The data URL can be generated dynamically by composing it through other
     // props, inside a custom method that receives the next props as arguments
     // and returns the data URL. The expected method name is "getDataUrl" and
