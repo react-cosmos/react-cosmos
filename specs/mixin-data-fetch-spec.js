@@ -39,7 +39,7 @@ describe("Components implementing the DataFetch mixin", function() {
   var ComponentClass,
       componentInstance;
 
-  it("should override initial data with non-empty value", function() {
+  it("should not touch initial data when no dataUrl prop is set", function() {
     ComponentClass = generateComponentClass({
       getInitialState: function() {
         return {
