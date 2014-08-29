@@ -47,8 +47,6 @@ Cosmos.mixins.DataFetch = {
     return this.initialData !== undefined ? this.initialData : {};
   },
   resetData: function(props) {
-    // Previous data must be cleared before new one arrives
-    this.setState({data: this.getInitialData()});
     // The data URL can be generated dynamically by composing it through other
     // props, inside a custom method that receives the next props as arguments
     // and returns the data URL. The expected method name is "getDataUrl" and
