@@ -134,4 +134,28 @@ describe("Components implementing the DataFetch mixin", function() {
     componentInstance.receiveDataFromServer({name: 'John Doe', age: 42});
     expect(componentInstance.state.data).toEqual({name: 'John Doe', age: 42});
   });
+
+  it("shouldn't fetch data when receiving the same dataUrl prop", function() {
+    ComponentClass = generateComponentClass();
+    componentInstance = utils.renderIntoDocument(ComponentClass({
+      dataUrl: 'http://happiness.com'
+    }));
+    componentInstance.setProps({
+      dataUrl: 'http://happiness.com'
+    });
+    expect(Cosmos.mixins.DataFetch.fetchDataFromServer.calls.count()).toBe(1);
+  });
+
+  it("shouldn't modify state.data when receiving the same dataUrl prop", function() {
+    ComponentClass = generateComponentClass();
+    componentInstance = utils.renderIntoDocument(ComponentClass({
+      dataUrl: 'http://happiness.com'
+    }));
+    componentInstance.receiveDataFromServer({foo: 'bar'});
+    componentInstance.setProps({
+      dataUrl: 'http://happiness.com'
+    });
+    expect(componentInstance.state.data).toEqual({foo: 'bar'});
+  });
 });
+
