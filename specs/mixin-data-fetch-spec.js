@@ -40,9 +40,15 @@ describe("Components implementing the DataFetch mixin", function() {
       componentInstance;
 
   it("should override initial data with non-empty value", function() {
-    ComponentClass = generateComponentClass({initialData: {
-      name: 'Guest'
-    }});
+    ComponentClass = generateComponentClass({
+      getInitialState: function() {
+        return {
+          data: {
+            name: 'Guest'
+          }
+        };
+      }
+    });
     componentInstance = utils.renderIntoDocument(ComponentClass());
     expect(componentInstance.state.data).toEqual({name: 'Guest'});
   });
@@ -114,8 +120,13 @@ describe("Components implementing the DataFetch mixin", function() {
 
   it("should replace initial data after data is fetched", function() {
     ComponentClass = generateComponentClass({
-      initialData: {
-        guest: true, name: 'Guest'
+      getInitialState: function() {
+        return {
+          data: {
+            guest: true,
+            name: 'Guest'
+          }
+        }
       }
     });
     componentInstance = utils.renderIntoDocument(ComponentClass());
