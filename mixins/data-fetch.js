@@ -9,10 +9,6 @@ Cosmos.mixins.DataFetch = {
    *   - pollInterval: An interval in milliseconds for polling the data URL.
    *                   Defaults to 0, which means no polling.
    *
-   * Context properties:
-   *  - initialData: The initial value of state.data, before receiving and data
-   *                 from the server (see dataUrl prop.) Defaults to an empty
-   *                 object `{}` - TODO: make this a method with props at hand
    * Context methods:
    *  - getDataUrl: The data URL can be generated dynamically by composing it
    *                using other props, inside a custom method that receives
