@@ -39,24 +39,6 @@ describe("Components implementing the DataFetch mixin", function() {
   var ComponentClass,
       componentInstance;
 
-  it("should default initial data to an empty object", function() {
-    ComponentClass = generateComponentClass();
-    componentInstance = utils.renderIntoDocument(ComponentClass());
-    expect(componentInstance.state.data).toEqual({});
-    // Since expect([]).toEqual({}) returns true we had to know for sure that
-    // the data object is a plain one
-    expect(JSON.stringify(componentInstance.state.data)).toEqual('{}');
-  });
-
-  it("should override initial data to an empty array", function() {
-    ComponentClass = generateComponentClass({initialData: []});
-    componentInstance = utils.renderIntoDocument(ComponentClass());
-    expect(componentInstance.state.data).toEqual([]);
-    // Since expect([]).toEqual({}) returns true we had to know for sure that
-    // the data object is an Array
-    expect(JSON.stringify(componentInstance.state.data)).toEqual('[]');
-  });
-
   it("should override initial data with non-empty value", function() {
     ComponentClass = generateComponentClass({initialData: {
       name: 'Guest'
