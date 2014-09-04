@@ -11,7 +11,9 @@ Cosmos.components.List = React.createClass({
            Cosmos.mixins.DataFetch,
            Cosmos.mixins.PersistState],
   defaultClass: 'list',
-  initialData: [],
+  getInitialState: function() {
+    return {data: []};
+  },
   render: function() {
     return (
       <ul className={this.getClassName()}>
