@@ -7,7 +7,7 @@
     // environments that support module.exports, like Node
     module.exports = factory(require('react'),
                              require('lodash'),
-                             require('query'));
+                             require('jquery'));
   } else {
     // Browser globals (root is window)
     root.Cosmos = factory(root.React, root._, root.$);
