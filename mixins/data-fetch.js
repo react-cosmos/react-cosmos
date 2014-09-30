@@ -52,7 +52,7 @@ Cosmos.mixins.DataFetch = {
      */
 
     var dataUrl = typeof(this.getDataUrl) == 'function' ?
-                  this.getDataUrl(props) : this.props.dataUrl;
+                  this.getDataUrl(props) : props.dataUrl;
 
     // Clear any on-going polling when data is reset. Even if polling is still
     // enabled, we need to reset the interval to start from now
