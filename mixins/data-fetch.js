@@ -36,11 +36,23 @@ Cosmos.mixins.DataFetch = {
   receiveDataFromServer: function(data) {
     this.setState({data: data});
   },
-  resetData: function(props) {
-    // The data URL can be generated dynamically by composing it through other
-    // props, inside a custom method that receives the next props as arguments
-    // and returns the data URL. The expected method name is "getDataUrl" and
-    // overrides the dataUrl prop when implemented
+  refreshData: function(props) {
+    /**
+     * Hit the dataUrl and fetch data.
+     *
+     * Before starting to fetch data we reset any ongoing requests. We also
+     * reset the polling interval.
+     *
+     * @param {Object} [props=this.props]
+     * @param {String} props.dataUrl The URL that will be hit for data. The URL
+     *     can be generated dynamically by composing it through other props,
+     *     inside a custom method that receives the next props as arguments and
+     *     returns the data URL. The expected method name is "getDataUrl" and
+     *     overrides the dataUrl prop when implemented
+     */
+
+    props = props || this.props;
+
     var dataUrl = typeof(this.getDataUrl) == 'function' ?
                   this.getDataUrl(props) : this.props.dataUrl;
 
@@ -75,7 +87,7 @@ Cosmos.mixins.DataFetch = {
     this.xhrRequests = [];
     // The dataUrl prop points to a source of data than will extend the initial
     // state of the component, once it will be fetched
-    this.resetData(this.props);
+    this.refreshData(this.props);
   },
   componentWillReceiveProps: function(nextProps) {
     /**
@@ -86,7 +98,7 @@ Cosmos.mixins.DataFetch = {
      */
 
     if (this.props.dataUrl !== nextProps.dataUrl) {
-      this.resetData(nextProps);
+      this.refreshData(nextProps);
     }
   },
   componentWillUnmount: function() {
