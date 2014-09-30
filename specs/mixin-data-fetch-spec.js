@@ -157,5 +157,14 @@ describe("Components implementing the DataFetch mixin", function() {
     });
     expect(componentInstance.state.data).toEqual({foo: 'bar'});
   });
+
+  it("should fetch data when the refresh method is called", function() {
+    ComponentClass = generateComponentClass();
+    componentInstance = utils.renderIntoDocument(ComponentClass({
+      dataUrl: 'http://happiness.com'
+    }));
+    componentInstance.refreshData();
+    expect(Cosmos.mixins.DataFetch.fetchDataFromServer.calls.count()).toBe(2);
+  });
 });
 
