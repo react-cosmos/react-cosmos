@@ -43,10 +43,7 @@ Cosmos.mixins.DataFetch = {
     // overrides the dataUrl prop when implemented
     var dataUrl = typeof(this.getDataUrl) == 'function' ?
                   this.getDataUrl(props) : this.props.dataUrl;
-    if (dataUrl == this.dataUrl) {
-      return;
-    }
-    this.dataUrl = dataUrl;
+
     // Clear any on-going polling when data is reset. Even if polling is still
     // enabled, we need to reset the interval to start from now
     this.clearDataRequests();
@@ -81,8 +78,16 @@ Cosmos.mixins.DataFetch = {
     this.resetData(this.props);
   },
   componentWillReceiveProps: function(nextProps) {
-    // A Component can have its configuration replaced at any time
-    this.resetData(nextProps);
+    /**
+     * A Component can have its configuration replaced at any time so we need to
+     * fetch data again.
+     *
+     * Only fetch data if the dataUrl has changed.
+     */
+
+    if (this.props.dataUrl !== nextProps.dataUrl) {
+      this.resetData(nextProps);
+    }
   },
   componentWillUnmount: function() {
     this.clearDataRequests();
