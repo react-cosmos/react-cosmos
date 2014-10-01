@@ -36,17 +36,24 @@ Cosmos.mixins.DataFetch = {
   receiveDataFromServer: function(data) {
     this.setState({data: data});
   },
-  resetData: function(props) {
-    // The data URL can be generated dynamically by composing it through other
-    // props, inside a custom method that receives the next props as arguments
-    // and returns the data URL. The expected method name is "getDataUrl" and
-    // overrides the dataUrl prop when implemented
+  _resetData: function(props) {
+    /**
+     * Hit the dataUrl and fetch data.
+     *
+     * Before starting to fetch data we reset any ongoing requests. We also
+     * reset the polling interval.
+     *
+     * @param {Object} props
+     * @param {String} props.dataUrl The URL that will be hit for data. The URL
+     *     can be generated dynamically by composing it through other props,
+     *     inside a custom method that receives the next props as arguments and
+     *     returns the data URL. The expected method name is "getDataUrl" and
+     *     overrides the dataUrl prop when implemented
+     */
+
     var dataUrl = typeof(this.getDataUrl) == 'function' ?
-                  this.getDataUrl(props) : this.props.dataUrl;
-    if (dataUrl == this.dataUrl) {
-      return;
-    }
-    this.dataUrl = dataUrl;
+                  this.getDataUrl(props) : props.dataUrl;
+
     // Clear any on-going polling when data is reset. Even if polling is still
     // enabled, we need to reset the interval to start from now
     this.clearDataRequests();
@@ -58,6 +65,13 @@ Cosmos.mixins.DataFetch = {
         }.bind(this), props.pollInterval);
       }
     }
+  },
+  refreshData: function() {
+    /**
+     * Hit the same data URL again.
+     */
+
+    this._resetData(this.props);
   },
   clearDataRequests: function() {
     // Cancel any on-going request and future polling
@@ -78,11 +92,19 @@ Cosmos.mixins.DataFetch = {
     this.xhrRequests = [];
     // The dataUrl prop points to a source of data than will extend the initial
     // state of the component, once it will be fetched
-    this.resetData(this.props);
+    this._resetData(this.props);
   },
   componentWillReceiveProps: function(nextProps) {
-    // A Component can have its configuration replaced at any time
-    this.resetData(nextProps);
+    /**
+     * A Component can have its configuration replaced at any time so we need to
+     * fetch data again.
+     *
+     * Only fetch data if the dataUrl has changed.
+     */
+
+    if (this.props.dataUrl !== nextProps.dataUrl) {
+      this._resetData(nextProps);
+    }
   },
   componentWillUnmount: function() {
     this.clearDataRequests();
