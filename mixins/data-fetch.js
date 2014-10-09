@@ -32,6 +32,9 @@ Cosmos.mixins.DataFetch = {
       }.bind(this),
       success: onSuccess,
       error: function(xhr, status, err) {
+        this.setState({
+          fetchingData: false
+        });
         console.error(url, status, err.toString());
       }.bind(this)
     });
