@@ -17,6 +17,10 @@ Cosmos.mixins.DataFetch = {
    *                dataUrl prop when implemented.
    */
   fetchDataFromServer: function(url, onSuccess) {
+    this.setState({
+      fetchingData: true
+    });
+
     var request = $.ajax({
       url: url,
       // Even though not recommended, some $.ajaxSettings might default to POST
