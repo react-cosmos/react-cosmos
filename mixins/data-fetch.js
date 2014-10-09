@@ -38,7 +38,10 @@ Cosmos.mixins.DataFetch = {
     this.xhrRequests.push(request);
   },
   receiveDataFromServer: function(data) {
-    this.setState({data: data});
+    this.setState({
+      fetchingData: false,
+      data: data
+    });
   },
   _resetData: function(props) {
     /**
