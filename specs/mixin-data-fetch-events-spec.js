@@ -65,6 +65,10 @@ describe("Components implementing the DataFetch mixin", function() {
       options.error(null, 503, "foobar");
     });
 
+    // Mock the console.error function so we don't get extra output running the
+    // tests.
+    spyOn(console, 'error');
+
     ComponentClass = generateComponentClass();
     componentInstance = utils.renderIntoDocument(ComponentClass({
       dataUrl: 'http://happiness.com'
