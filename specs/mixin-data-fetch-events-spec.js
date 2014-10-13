@@ -45,7 +45,7 @@ describe("Components implementing the DataFetch mixin", function() {
     componentInstance = utils.renderIntoDocument(ComponentClass({
       dataUrl: 'http://happiness.com'
     }));
-    expect(componentInstance.state.fetchingData).toBe(true);
+    expect(componentInstance.state.isFetchingData).toBe(true);
   });
 
   it("should mark the end of a data fetch", function() {
@@ -57,7 +57,7 @@ describe("Components implementing the DataFetch mixin", function() {
       dataUrl: 'http://happiness.com'
     }));
 
-    expect(componentInstance.state.fetchingData).toBe(false);
+    expect(componentInstance.state.isFetchingData).toBe(false);
   });
 
   it("should mark the end of data fetch if the request errors", function() {
@@ -74,7 +74,7 @@ describe("Components implementing the DataFetch mixin", function() {
       dataUrl: 'http://happiness.com'
     }));
 
-    expect(componentInstance.state.fetchingData).toBe(false);
+    expect(componentInstance.state.isFetchingData).toBe(false);
   });
 });
 

@@ -18,7 +18,7 @@ Cosmos.mixins.DataFetch = {
    */
   fetchDataFromServer: function(url, onSuccess) {
     this.setState({
-      fetchingData: true
+      isFetchingData: true
     });
 
     var request = $.ajax({
@@ -33,7 +33,7 @@ Cosmos.mixins.DataFetch = {
       success: onSuccess,
       error: function(xhr, status, err) {
         this.setState({
-          fetchingData: false
+          isFetchingData: false
         });
         console.error(url, status, err.toString());
       }.bind(this)
@@ -42,7 +42,7 @@ Cosmos.mixins.DataFetch = {
   },
   receiveDataFromServer: function(data) {
     this.setState({
-      fetchingData: false,
+      isFetchingData: false,
       data: data
     });
   },
