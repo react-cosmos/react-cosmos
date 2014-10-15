@@ -17,6 +17,10 @@ Cosmos.mixins.DataFetch = {
    *                dataUrl prop when implemented.
    */
   fetchDataFromServer: function(url, onSuccess) {
+    this.setState({
+      isFetchingData: true
+    });
+
     var request = $.ajax({
       url: url,
       // Even though not recommended, some $.ajaxSettings might default to POST
@@ -28,13 +32,19 @@ Cosmos.mixins.DataFetch = {
       }.bind(this),
       success: onSuccess,
       error: function(xhr, status, err) {
+        this.setState({
+          isFetchingData: false
+        });
         console.error(url, status, err.toString());
       }.bind(this)
     });
     this.xhrRequests.push(request);
   },
   receiveDataFromServer: function(data) {
-    this.setState({data: data});
+    this.setState({
+      isFetchingData: false,
+      data: data
+    });
   },
   _resetData: function(props) {
     /**
