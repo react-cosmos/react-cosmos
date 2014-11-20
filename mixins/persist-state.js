@@ -46,16 +46,21 @@ Cosmos.mixins.PersistState = {
     }
     return props;
   },
-  loadChild: function(ref) {
-    var childProps = this.getChildProps(ref);
+  loadChild: function() {
+    var childProps = this.getChildProps.apply(this, arguments);
     // Children are optional
     return childProps ? Cosmos(childProps) : null;
   },
-  getChildProps: function(ref) {
+  getChildProps: function(name) {
     // The .children object on a Component class contains a hash of functions.
     // Keys in this hash correspond with *refs* of child Components and their
     // values are functions that return props for each of those child Components.
-    var props = this.children[ref].call(this);
+    var args = [];
+    for (var i = 1; i < arguments.length; ++i) {
+      args[i-1] = arguments[i];
+    }
+
+    var props = this.children[name].apply(this, args);
     if (!props) {
       return;
     }
@@ -64,13 +69,15 @@ Cosmos.mixins.PersistState = {
     // are set inside the .children key of the parent Component's state, as a
     // hash with keys corresponding to Component *refs*. These preset states
     // will be overriden with those generated at run-time.
-    if (this._childSnapshots && this._childSnapshots[ref]) {
-      props.state = this._childSnapshots[ref];
+    if (!props.ref) {
+      props.ref = name;
+    }
+    if (this._childSnapshots && this._childSnapshots[name]) {
+      props.state = this._childSnapshots[name];
       // Child snapshots are only used for first render after which organic
       // states are formed
-      delete this._childSnapshots[ref];
+      delete this._childSnapshots[name];
     }
-    props.ref = ref;
     if (this.props.componentLookup) {
       props.componentLookup = this.props.componentLookup;
     }
