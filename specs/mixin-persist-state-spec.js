@@ -324,4 +324,70 @@ describe("Components implementing the PersistState mixin", function() {
     componentInstance.setState({nested: nested});
     expect(snapshot.state.nested.foo).toEqual('bar');
   });
+
+
+  describe("PersistState: dynamic children", function() {
+    var generateComponentClass, spyFoo;
+
+    beforeEach(function() {
+      var attributes = {
+        children: {
+          foo: function(newRef) {
+            return {
+              component: 'ChildComponent',
+              foo: 'bar',
+              ref: newRef
+            };
+          }
+        }
+      };
+
+      spyFoo = spyOn(attributes.children, 'foo').and.callThrough();
+      Cosmos.components.ChildComponent = React.createClass({
+        render: function() {
+          return React.DOM.span();
+        }
+      });
+
+      generateParentComponentClass = function(loadChildArgs) {
+        var args = loadChildArgs ? ['foo'].concat(loadChildArgs) : ['foo'];
+
+        return React.createClass(_.extend({}, {
+          mixins: [Cosmos.mixins.PersistState],
+          render: function() {
+            return this.loadChild.apply(this, args);
+          }
+        }, attributes));
+      };
+    });
+
+    it("should pass in the correct number of arguments", function() {
+      var ComponentClass = generateParentComponentClass();
+
+      componentInstance = utils.renderIntoDocument(ComponentClass());
+
+      expect(spyFoo).toHaveBeenCalledWith();
+    });
+    it("should pass in the correct number of arguments", function() {
+      var ComponentClass = generateParentComponentClass(['bar', 'baz']);
+
+      componentInstance = utils.renderIntoDocument(ComponentClass());
+
+      expect(spyFoo).toHaveBeenCalledWith('bar', 'baz');
+    });
+    it("should set the correct ref when it is passed in", function() {
+      var ComponentClass = generateParentComponentClass(['newRefName', 'baz']);
+
+      componentInstance = utils.renderIntoDocument(ComponentClass());
+
+      expect(componentInstance.refs.newRefName.props.ref).toBe('newRefName');
+    });
+    it("should set the correct ref when it is not passed in", function() {
+      var ComponentClass = generateParentComponentClass();
+
+      componentInstance = utils.renderIntoDocument(ComponentClass());
+
+      expect(componentInstance.refs.foo.props.ref).toBe('foo');
+    });
+  });
 });
