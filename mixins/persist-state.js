@@ -51,13 +51,20 @@ Cosmos.mixins.PersistState = {
     // Children are optional
     return childProps ? Cosmos(childProps) : null;
   },
+  /**
+   * @param {string} name - Key that corresponds to the child Component we want
+   *                        to get the props for
+   * @param {...*} [arguments] - Optional extra arguments get passed to the
+   *                             function that returns the Component props
+   */
   getChildProps: function(name) {
     // The .children object on a Component class contains a hash of functions.
-    // Keys in this hash correspond with *refs* of child Components and their
+    // Keys in this hash represent the name and by default the *refs* of child
+    // Components (unless changed via optional arguments passed in) and their
     // values are functions that return props for each of those child Components.
     var args = [];
     for (var i = 1; i < arguments.length; ++i) {
-      args[i-1] = arguments[i];
+      args[i - 1] = arguments[i];
     }
 
     var props = this.children[name].apply(this, args);
