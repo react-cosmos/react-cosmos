@@ -379,14 +379,14 @@ describe("Components implementing the PersistState mixin", function() {
 
       componentInstance = utils.renderIntoDocument(ComponentClass());
 
-      expect(spyComp.calls.argsFor(0)).toEqual([{foo: 'bar', ref: 'newRefName'}]);
+      expect(spyComp).toHaveBeenCalledWith({foo: 'bar', ref: 'newRefName'});
     });
     it("should set the correct ref when it is not passed in", function() {
       var ComponentClass = generateParentComponentClass();
 
       componentInstance = utils.renderIntoDocument(ComponentClass());
 
-      expect(spyComp.calls.argsFor(0)).toEqual([{foo: 'bar', ref: 'foo'}]);
+      expect(spyComp).toHaveBeenCalledWith({foo: 'bar', ref: 'foo'});
     });
   });
 });
