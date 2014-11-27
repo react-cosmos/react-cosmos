@@ -327,14 +327,13 @@ describe("Components implementing the PersistState mixin", function() {
 
 
   describe("PersistState: dynamic children", function() {
-    var generateComponentClass, spyFoo;
+    var generateComponentClass, spyFoo, spyComp;
 
     beforeEach(function() {
       var attributes = {
         children: {
           foo: function(newRef) {
             return {
-              component: 'ChildComponent',
               foo: 'bar',
               ref: newRef
             };
@@ -342,12 +341,12 @@ describe("Components implementing the PersistState mixin", function() {
         }
       };
 
+      spyComp = jasmine.createSpy('spyComp').and
+                    .returnValue(React.DOM.div({}, ""));
+
+      spyOn(Cosmos, 'getComponentByName').and.returnValue(spyComp);
+
       spyFoo = spyOn(attributes.children, 'foo').and.callThrough();
-      Cosmos.components.ChildComponent = React.createClass({
-        render: function() {
-          return React.DOM.span();
-        }
-      });
 
       generateParentComponentClass = function(loadChildArgs) {
         var args = loadChildArgs ? ['foo'].concat(loadChildArgs) : ['foo'];
@@ -380,14 +379,14 @@ describe("Components implementing the PersistState mixin", function() {
 
       componentInstance = utils.renderIntoDocument(ComponentClass());
 
-      expect(componentInstance.refs.newRefName.props.ref).toBe('newRefName');
+      expect(spyComp.calls.argsFor(0)).toEqual([{foo: 'bar', ref: 'newRefName'}]);
     });
     it("should set the correct ref when it is not passed in", function() {
       var ComponentClass = generateParentComponentClass();
 
       componentInstance = utils.renderIntoDocument(ComponentClass());
 
-      expect(componentInstance.refs.foo.props.ref).toBe('foo');
+      expect(spyComp.calls.argsFor(0)).toEqual([{foo: 'bar', ref: 'foo'}]);
     });
   });
 });
