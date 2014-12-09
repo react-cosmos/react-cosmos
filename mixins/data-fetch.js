@@ -32,6 +32,11 @@ Cosmos.mixins.DataFetch = {
       }.bind(this),
       success: onSuccess,
       error: function(xhr, status, err) {
+        // Requests are aborted on unmount, but this callback will be fired
+        // when as well
+        if (!this.isMounted()) {
+          return;
+        }
         this.setState({
           isFetchingData: false
         });
