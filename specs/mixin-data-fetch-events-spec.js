@@ -70,11 +70,41 @@ describe("Components implementing the DataFetch mixin", function() {
     spyOn(console, 'error');
 
     ComponentClass = generateComponentClass();
-    componentInstance = utils.renderIntoDocument(ComponentClass({
+    componentInstance = utils.renderIntoDocument(ComponentClass());
+
+    // Set dataUrl after after component mounts to make sure the component is
+    // mounted when the ajax callback is called
+    componentInstance.setProps({
       dataUrl: 'http://happiness.com'
-    }));
+    });
 
     expect(componentInstance.state.isFetchingData).toBe(false);
   });
-});
 
+  it("should not set state on unmounted components when aborting request", function() {
+    $.ajax.and.callFake(function(options) {
+      // Unmounting functionality is outside the scope of this unit test
+      spyOn(componentInstance, 'isMounted').and.returnValue(false);
+
+      // Used to throw: "Invariant Violation: replaceState(...): Can only
+      // update a mounted or mounting component.."
+      // https://github.com/skidding/cosmos/issues/67
+      expect(function() {
+        options.error(null, 503, "foobar");
+      }).not.toThrow();
+    });
+
+    // Mock the console.error function so we don't get extra output running the
+    // tests.
+    spyOn(console, 'error');
+
+    ComponentClass = generateComponentClass();
+    componentInstance = utils.renderIntoDocument(ComponentClass());
+
+    // Set dataUrl after after component mounts to make sure the component is
+    // mounted when the ajax callback is called
+    componentInstance.setProps({
+      dataUrl: 'http://happiness.com'
+    });
+  });
+});
