@@ -367,6 +367,7 @@ describe("Components implementing the PersistState mixin", function() {
 
       expect(spyFoo).toHaveBeenCalledWith();
     });
+
     it("should pass in the correct number of arguments", function() {
       var ComponentClass = generateParentComponentClass(['bar', 'baz']);
 
@@ -374,6 +375,7 @@ describe("Components implementing the PersistState mixin", function() {
 
       expect(spyFoo).toHaveBeenCalledWith('bar', 'baz');
     });
+
     it("should set the correct ref when it is passed in", function() {
       var ComponentClass = generateParentComponentClass(['newRefName', 'baz']);
 
@@ -381,6 +383,7 @@ describe("Components implementing the PersistState mixin", function() {
 
       expect(spyComp).toHaveBeenCalledWith({foo: 'bar', ref: 'newRefName'});
     });
+
     it("should set the correct ref when it is not passed in", function() {
       var ComponentClass = generateParentComponentClass();
 
