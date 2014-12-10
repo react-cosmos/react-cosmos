@@ -32,6 +32,9 @@ Cosmos.mixins.DataFetch = {
       }.bind(this),
       success: onSuccess,
       error: function(xhr, status, err) {
+        if (this._ignoreXhrRequestCallbacks) {
+          return;
+        };
         this.setState({
           isFetchingData: false
         });
@@ -117,6 +120,11 @@ Cosmos.mixins.DataFetch = {
     }
   },
   componentWillUnmount: function() {
+    // We abort any on-going requests when unmounting to make sure their
+    // callbacks will no longer be called. The error callback will still be
+    // called because of the abort action itself, so we use this flag to know
+    // to ignore it altogether from this point on
+    this._ignoreXhrRequestCallbacks = true;
     this.clearDataRequests();
   }
 };
