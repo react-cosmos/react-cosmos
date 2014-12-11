@@ -76,5 +76,38 @@ describe("Components implementing the DataFetch mixin", function() {
 
     expect(componentInstance.state.isFetchingData).toBe(false);
   });
-});
 
+  it("should not throw exception when unmounting component with on-going" +
+     " request", function() {
+    var componentContainer = document.createElement('div'),
+        errorCallback;
+
+    $.ajax.and.callFake(function(options) {
+      // Expose error callback in test scope
+      errorCallback = options.error;
+
+      // An abort function is expected from the Ajax object
+      return {
+        abort: function() {
+          // Used to throw: "Invariant Violation: replaceState(...): Can only
+          // update a mounted or mounting component.."
+          // https://github.com/skidding/cosmos/issues/67
+          expect(function() {
+            errorCallback(null, 503, "foobar");
+          }).not.toThrow();
+        }
+      }
+    });
+
+    // Mock the console.error function so we don't get extra output running the
+    // tests.
+    spyOn(console, 'error');
+
+    ComponentClass = generateComponentClass();
+    componentInstance = React.renderComponent(ComponentClass({
+      dataUrl: 'http://happiness.com'
+    }), componentContainer);
+
+    React.unmountComponentAtNode(componentContainer);
+  });
+});
