@@ -88,7 +88,14 @@ describe("Components implementing the DataFetch mixin", function() {
 
       // An abort function is expected from the Ajax object
       return {
-        abort: function() {}
+        abort: function() {
+          // Used to throw: "Invariant Violation: replaceState(...): Can only
+          // update a mounted or mounting component.."
+          // https://github.com/skidding/cosmos/issues/67
+          expect(function() {
+            errorCallback(null, 503, "foobar");
+          }).not.toThrow();
+        }
       }
     });
 
@@ -102,13 +109,5 @@ describe("Components implementing the DataFetch mixin", function() {
     }), componentContainer);
 
     React.unmountComponentAtNode(componentContainer);
-
-    // Used to throw: "Invariant Violation: replaceState(...): Can only
-    // update a mounted or mounting component.."
-    // https://github.com/skidding/cosmos/issues/67
-    expect(function() {
-      // The mocked abort function would've fired this, so we call it by hand
-      errorCallback(null, 503, "foobar");
-    }).not.toThrow();
   });
 });
