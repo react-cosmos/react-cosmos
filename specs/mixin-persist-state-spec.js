@@ -73,7 +73,6 @@ describe("Components implementing the PersistState mixin", function() {
       });
       componentInstance = utils.renderIntoDocument(ComponentClass());
       expect(componentInstance.refs.childRef.props).toEqual({
-        ref: 'childRef',
         component: 'ChildComponent',
         foo: 'bar'
       });
@@ -127,7 +126,6 @@ describe("Components implementing the PersistState mixin", function() {
         }
       }));
       expect(componentInstance.refs.childRef.props).toEqual({
-        ref: 'childRef',
         component: 'ChildComponent',
         foo: 'bar',
         state: {
@@ -145,7 +143,6 @@ describe("Components implementing the PersistState mixin", function() {
       componentInstance.setProps({foo: 'barbar'});
       // Child state is no longer embedded when re-rendered by the parent
       expect(componentInstance.refs.childRef.props).toEqual({
-        ref: 'childRef',
         component: 'ChildComponent',
         foo: 'barbar'
       });
@@ -177,7 +174,6 @@ describe("Components implementing the PersistState mixin", function() {
       }));
       // Dynamic child is OK
       expect(componentInstance.refs.childRef.props).toEqual({
-        ref: 'childRef',
         component: 'ChildComponent',
         foo: 'bar'
       });
