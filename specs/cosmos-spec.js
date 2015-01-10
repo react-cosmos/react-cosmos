@@ -34,12 +34,12 @@ describe("Cosmos", function() {
   });
 
   it("should draw its components from lookup callback", function() {
-    Cosmos.components.Dummy = DummyComponentClass;
-
-    expect(Cosmos.getComponentByName('Dummy', function(name) {
+    var componentLookup = function(name) {
       expect(name).toBe('Dummy');
       return DummyComponentClass;
-    })).toBe(DummyComponentClass);
+    };
+    expect(Cosmos.getComponentByName('Dummy', componentLookup))
+          .toBe(DummyComponentClass);
   });
 
   it("should create React element for component class", function() {
