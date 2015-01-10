@@ -46,7 +46,7 @@ describe("Cosmos", function() {
     spyOn(React, 'createElement')
          .and.returnValue(function(){});
 
-    Cosmos({
+    Cosmos.createElement({
       component: 'Dummy',
       componentLookup: function(name) {
         expect(name).toBe('Dummy');
@@ -69,7 +69,7 @@ describe("Cosmos", function() {
         return DummyComponentClass;
       }
     };
-    Cosmos(props);
+    Cosmos.createElement(props);
 
     expect(React.createElement.calls.count()).toBe(1);
     expect(React.createElement.calls.mostRecent().args[1])
