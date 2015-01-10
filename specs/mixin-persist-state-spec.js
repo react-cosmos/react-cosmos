@@ -41,13 +41,16 @@ describe("Components implementing the PersistState mixin", function() {
   };
 
   var ComponentClass,
+      componentElement,
       componentInstance;
 
   it("should load their state from the 'state' prop", function() {
     ComponentClass = generateComponentClass();
-    componentInstance = utils.renderIntoDocument(ComponentClass({
+    componentElement = React.createElement(ComponentClass, {
       state: {foo: 'bar'}
-    }));
+    });
+    componentInstance = utils.renderIntoDocument(componentElement);
+
     expect(componentInstance.state).toEqual({foo: 'bar'});
   });
 
@@ -71,9 +74,10 @@ describe("Components implementing the PersistState mixin", function() {
           }
         }
       });
-      componentInstance = utils.renderIntoDocument(ComponentClass());
+      componentElement = React.createElement(ComponentClass);
+      componentInstance = utils.renderIntoDocument(componentElement);
+
       expect(componentInstance.refs.childRef.props).toEqual({
-        ref: 'childRef',
         component: 'ChildComponent',
         foo: 'bar'
       });
@@ -90,7 +94,7 @@ describe("Components implementing the PersistState mixin", function() {
           }
         }
       });
-      componentInstance = utils.renderIntoDocument(ComponentClass({
+      componentElement = React.createElement(ComponentClass, {
         state: {
           children: {
             childRef: {
@@ -98,7 +102,9 @@ describe("Components implementing the PersistState mixin", function() {
             }
           }
         }
-      }));
+      });
+      componentInstance = utils.renderIntoDocument(componentElement);
+
       expect(componentInstance.refs.childRef.state).toEqual({
         isThisTheLife: true
       });
@@ -115,7 +121,7 @@ describe("Components implementing the PersistState mixin", function() {
           }
         }
       });
-      componentInstance = utils.renderIntoDocument(ComponentClass({
+      componentElement = React.createElement(ComponentClass, {
         foo: 'bar',
         state: {
           children: {
@@ -125,9 +131,10 @@ describe("Components implementing the PersistState mixin", function() {
             }
           }
         }
-      }));
+      });
+      componentInstance = utils.renderIntoDocument(componentElement);
+
       expect(componentInstance.refs.childRef.props).toEqual({
-        ref: 'childRef',
         component: 'ChildComponent',
         foo: 'bar',
         state: {
@@ -145,7 +152,6 @@ describe("Components implementing the PersistState mixin", function() {
       componentInstance.setProps({foo: 'barbar'});
       // Child state is no longer embedded when re-rendered by the parent
       expect(componentInstance.refs.childRef.props).toEqual({
-        ref: 'childRef',
         component: 'ChildComponent',
         foo: 'barbar'
       });
@@ -172,12 +178,13 @@ describe("Components implementing the PersistState mixin", function() {
           );
         }
       });
-      componentInstance = utils.renderIntoDocument(ComponentClass({
+      componentElement = React.createElement(ComponentClass, {
         foo: 'bar'
-      }));
+      });
+      componentInstance = utils.renderIntoDocument(componentElement);
+
       // Dynamic child is OK
       expect(componentInstance.refs.childRef.props).toEqual({
-        ref: 'childRef',
         component: 'ChildComponent',
         foo: 'bar'
       });
@@ -207,7 +214,9 @@ describe("Components implementing the PersistState mixin", function() {
           }
         }
       });
-      componentInstance = utils.renderIntoDocument(ComponentClass());
+      componentElement = React.createElement(ComponentClass);
+      componentInstance = utils.renderIntoDocument(componentElement);
+
       // Ref to child
       expect(componentInstance.refs.childRef).toEqual(jasmine.any(Object));
       // Refs of child
@@ -235,12 +244,14 @@ describe("Components implementing the PersistState mixin", function() {
           }
         }
       });
-      componentInstance = utils.renderIntoDocument(ComponentClass({
+      componentElement = React.createElement(ComponentClass, {
         componentLookup: function(name) {
           expect(name).toBe('StepChildComponent');
           return customComponents[name];
         }
-      }));
+      });
+      componentInstance = utils.renderIntoDocument(componentElement);
+
       // Child was found
       expect(componentInstance.refs.childRef).toEqual(jasmine.any(Object));
     });
@@ -248,10 +259,12 @@ describe("Components implementing the PersistState mixin", function() {
 
   it("should generate snapshot with exact props and state", function() {
     ComponentClass = generateComponentClass();
-    componentInstance = utils.renderIntoDocument(ComponentClass({
+    componentElement = React.createElement(ComponentClass, {
       players: 5,
       state: {speed: 1}
-    }));
+    });
+    componentInstance = utils.renderIntoDocument(componentElement);
+
     expect(componentInstance.generateSnapshot())
           .toEqual({players: 5, state: {speed: 1}});
 
@@ -274,8 +287,10 @@ describe("Components implementing the PersistState mixin", function() {
         }
       }
     });
-    componentInstance = utils.renderIntoDocument(ComponentClass());
+    componentElement = React.createElement(ComponentClass);
+    componentInstance = utils.renderIntoDocument(componentElement);
     componentInstance.refs.childRef.setState({updated: true});
+
     expect(componentInstance.generateSnapshot(true)).toEqual({
       state: {
         children: {
@@ -293,11 +308,12 @@ describe("Components implementing the PersistState mixin", function() {
         nested;
 
     ComponentClass = generateComponentClass();
-    componentInstance = utils.renderIntoDocument(ComponentClass({
+    componentElement = React.createElement(ComponentClass, {
       state: {
         nested: {foo: 'bar'}
       }
-    }));
+    });
+    componentInstance = utils.renderIntoDocument(componentElement);
 
     snapshot = componentInstance.generateSnapshot();
     nested = componentInstance.state.nested;
@@ -316,7 +332,8 @@ describe("Components implementing the PersistState mixin", function() {
         nested;
 
     ComponentClass = generateComponentClass(),
-    componentInstance = utils.renderIntoDocument(ComponentClass(snapshot));
+    componentElement = React.createElement(ComponentClass, snapshot);
+    componentInstance = utils.renderIntoDocument(componentElement);
 
     nested = componentInstance.state.nested;
     nested.foo = 'barbar';
@@ -327,69 +344,78 @@ describe("Components implementing the PersistState mixin", function() {
 
 
   describe("PersistState: dynamic children", function() {
-    var generateComponentClass, spyFoo, spyComp;
+    var chidren, childSpy;
 
     beforeEach(function() {
-      var attributes = {
-        children: {
-          foo: function(newRef) {
-            return {
-              foo: 'bar',
-              ref: newRef
-            };
-          }
+      children = {
+        childRef: function(customRef) {
+          return {
+            foo: 'bar',
+            ref: customRef
+          };
         }
       };
+      childSpy = spyOn(children, 'childRef').and.callThrough();
 
-      spyComp = jasmine.createSpy('spyComp').and
-                    .returnValue(React.DOM.div({}, ""));
-
-      spyOn(Cosmos, 'getComponentByName').and.returnValue(spyComp);
-
-      spyFoo = spyOn(attributes.children, 'foo').and.callThrough();
-
-      generateParentComponentClass = function(loadChildArgs) {
-        var args = loadChildArgs ? ['foo'].concat(loadChildArgs) : ['foo'];
-
-        return React.createClass(_.extend({}, {
-          mixins: [Cosmos.mixins.PersistState],
-          render: function() {
-            return this.loadChild.apply(this, args);
-          }
-        }, attributes));
-      };
+      spyOn(Cosmos, 'createElement').and.returnValue(React.createElement('div'));
     });
 
-    it("should pass in the correct number of arguments", function() {
-      var ComponentClass = generateParentComponentClass();
+    it("should pass in empty arguments", function() {
+      ComponentClass = generateParentComponentClass({
+        children: children,
+        render: function() {
+          return this.loadChild('childRef');
+        }
+      });
+      componentElement = React.createElement(ComponentClass);
+      componentInstance = utils.renderIntoDocument(componentElement);
 
-      componentInstance = utils.renderIntoDocument(ComponentClass());
-
-      expect(spyFoo).toHaveBeenCalledWith();
+      expect(childSpy).toHaveBeenCalledWith();
     });
 
-    it("should pass in the correct number of arguments", function() {
-      var ComponentClass = generateParentComponentClass(['bar', 'baz']);
+    it("should pass in the correct arguments", function() {
+      ComponentClass = generateParentComponentClass({
+        children: children,
+        render: function() {
+          return this.loadChild('childRef', 'bar', 'baz');
+        }
+      });
+      componentElement = React.createElement(ComponentClass);
+      componentInstance = utils.renderIntoDocument(componentElement);
 
-      componentInstance = utils.renderIntoDocument(ComponentClass());
-
-      expect(spyFoo).toHaveBeenCalledWith('bar', 'baz');
+      expect(childSpy).toHaveBeenCalledWith('bar', 'baz');
     });
 
     it("should set the correct ref when it is passed in", function() {
-      var ComponentClass = generateParentComponentClass(['newRefName', 'baz']);
+      ComponentClass = generateParentComponentClass({
+        children: children,
+        render: function() {
+          return this.loadChild('childRef', 'newRefName', 'baz');
+        }
+      });
+      componentElement = React.createElement(ComponentClass);
+      componentInstance = utils.renderIntoDocument(componentElement);
 
-      componentInstance = utils.renderIntoDocument(ComponentClass());
-
-      expect(spyComp).toHaveBeenCalledWith({foo: 'bar', ref: 'newRefName'});
+      expect(Cosmos.createElement).toHaveBeenCalledWith({
+        foo: 'bar',
+        ref: 'newRefName'
+      });
     });
 
     it("should set the correct ref when it is not passed in", function() {
-      var ComponentClass = generateParentComponentClass();
+      ComponentClass = generateParentComponentClass({
+        children: children,
+        render: function() {
+          return this.loadChild('childRef');
+        }
+      });
+      componentElement = React.createElement(ComponentClass);
+      componentInstance = utils.renderIntoDocument(componentElement);
 
-      componentInstance = utils.renderIntoDocument(ComponentClass());
-
-      expect(spyComp).toHaveBeenCalledWith({foo: 'bar', ref: 'foo'});
+      expect(Cosmos.createElement).toHaveBeenCalledWith({
+        foo: 'bar',
+        ref: 'childRef'
+      });
     });
   });
 });

@@ -33,6 +33,7 @@ describe("Components implementing the AnimationLoop mixin", function() {
   };
 
   var ComponentClass,
+      componentElement,
       componentInstance;
 
   describe("[with fake clock]", function() {
@@ -47,7 +48,8 @@ describe("Components implementing the AnimationLoop mixin", function() {
     it("should call onFrame method after starting animation loop", function() {
       var onFrameSpy = jasmine.createSpy('onFrame');
       ComponentClass = generateComponentClass({onFrame: onFrameSpy});
-      componentInstance = utils.renderIntoDocument(ComponentClass());
+      componentElement = React.createElement(ComponentClass);
+      componentInstance = utils.renderIntoDocument(componentElement);
       componentInstance.startAnimationLoop();
       jasmine.clock().tick(1000 / 60);
       expect(onFrameSpy.calls.count()).toBe(1);
@@ -56,7 +58,8 @@ describe("Components implementing the AnimationLoop mixin", function() {
     it("should call onFrame with 60fps", function() {
       var onFrameSpy = jasmine.createSpy('onFrame');
       ComponentClass = generateComponentClass({onFrame: onFrameSpy});
-      componentInstance = utils.renderIntoDocument(ComponentClass());
+      componentElement = React.createElement(ComponentClass);
+      componentInstance = utils.renderIntoDocument(componentElement);
       componentInstance.startAnimationLoop();
       jasmine.clock().tick(1000);
       expect(onFrameSpy.calls.count()).toBe(60);
@@ -65,7 +68,8 @@ describe("Components implementing the AnimationLoop mixin", function() {
     it("shouldn't call onFrame after stopping animation loop", function() {
       var onFrameSpy = jasmine.createSpy('onFrame');
       ComponentClass = generateComponentClass({onFrame: onFrameSpy});
-      componentInstance = utils.renderIntoDocument(ComponentClass());
+      componentElement = React.createElement(ComponentClass);
+      componentInstance = utils.renderIntoDocument(componentElement);
       componentInstance.startAnimationLoop();
       componentInstance.stopAnimationLoop();
       // Simulate one second before checking if calls were made after stopping
@@ -77,13 +81,15 @@ describe("Components implementing the AnimationLoop mixin", function() {
       var onFrameSpy = jasmine.createSpy('onFrame'),
           componentContainer = document.createElement('div');
       ComponentClass = generateComponentClass({onFrame: onFrameSpy});
-      componentInstance = React.renderComponent(ComponentClass(),
-                                                componentContainer);
+      componentElement = React.createElement(ComponentClass);
+      componentInstance = React.render(componentElement, componentContainer);
+
       componentInstance.startAnimationLoop();
       React.unmountComponentAtNode(componentContainer);
       // Simulate one second before checking if calls were made after
       // unmounting
       jasmine.clock().tick(1000);
+
       expect(onFrameSpy.calls.count()).toBe(0);
     });
 
@@ -95,7 +101,8 @@ describe("Components implementing the AnimationLoop mixin", function() {
                  Cosmos.mixins.AnimationLoop],
         onFrame: onFrameSpy
       });
-      componentInstance = utils.renderIntoDocument(ComponentClass());
+      componentElement = React.createElement(ComponentClass);
+      componentInstance = utils.renderIntoDocument(componentElement);
       componentInstance.startAnimationLoop();
       snapshot = componentInstance.generateSnapshot();
       componentInstance.stopAnimationLoop();
@@ -105,7 +112,9 @@ describe("Components implementing the AnimationLoop mixin", function() {
       expect(onFrameSpy.calls.count()).toBe(0);
 
       // Load state into a 2nd Component
-      componentInstance = utils.renderIntoDocument(ComponentClass(snapshot));
+      componentElement = React.createElement(ComponentClass, snapshot);
+      componentInstance = utils.renderIntoDocument(componentElement);
+
       // It appers we need to add an extra millisecond for the Component to mount
       jasmine.clock().tick(1001);
       expect(onFrameSpy.calls.count()).toBe(60);
@@ -119,7 +128,8 @@ describe("Components implementing the AnimationLoop mixin", function() {
                  Cosmos.mixins.AnimationLoop],
         onFrame: onFrameSpy
       });
-      componentInstance = utils.renderIntoDocument(ComponentClass());
+      componentElement = React.createElement(ComponentClass);
+      componentInstance = utils.renderIntoDocument(componentElement);
       componentInstance.stopAnimationLoop();
       snapshot = componentInstance.generateSnapshot();
       componentInstance.startAnimationLoop();
@@ -137,7 +147,8 @@ describe("Components implementing the AnimationLoop mixin", function() {
   it("should return frames proportional to time passed", function(done) {
     var onFrameSpy = jasmine.createSpy('onFrame');
     ComponentClass = generateComponentClass({onFrame: onFrameSpy});
-    componentInstance = utils.renderIntoDocument(ComponentClass());
+    componentElement = React.createElement(ComponentClass);
+    componentInstance = utils.renderIntoDocument(componentElement);
 
     // Instad of using the public methods, we're calling the internal animation
     // callback as if the browser were lagging and we're receiving 6 frames at

@@ -34,14 +34,17 @@ describe("Components implementing the Url mixin", function() {
   };
 
   var ComponentClass,
+      componentElement,
       componentInstance;
 
   it("should generate url with escaped props and state", function() {
     ComponentClass = generateComponentClass();
-    componentInstance = utils.renderIntoDocument(ComponentClass({
+    componentElement = React.createElement(ComponentClass, {
       players: 5,
       state: {speed: 1}
-    }));
+    });
+    componentInstance = utils.renderIntoDocument(componentElement);
+
     expect(componentInstance.getUrlFromProps(componentInstance.generateSnapshot()))
           // encodeURIComponent(JSON.stringify({speed:1}))
           .toEqual('?players=5&state=%7B%22speed%22%3A1%7D');

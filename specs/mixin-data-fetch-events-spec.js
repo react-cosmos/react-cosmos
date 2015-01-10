@@ -38,13 +38,15 @@ describe("Components implementing the DataFetch mixin", function() {
   };
 
   var ComponentClass,
+      componentElement,
       componentInstance;
 
   it("should mark the start of a data fetch", function() {
     ComponentClass = generateComponentClass();
-    componentInstance = utils.renderIntoDocument(ComponentClass({
+    componentElement = React.createElement(ComponentClass, {
       dataUrl: 'http://happiness.com'
-    }));
+    });
+    componentInstance = utils.renderIntoDocument(componentElement);
     expect(componentInstance.state.isFetchingData).toBe(true);
   });
 
@@ -53,9 +55,10 @@ describe("Components implementing the DataFetch mixin", function() {
       options.success({foo: "bar"});
     });
     ComponentClass = generateComponentClass();
-    componentInstance = utils.renderIntoDocument(ComponentClass({
+    componentElement = React.createElement(ComponentClass, {
       dataUrl: 'http://happiness.com'
-    }));
+    });
+    componentInstance = utils.renderIntoDocument(componentElement);
 
     expect(componentInstance.state.isFetchingData).toBe(false);
   });
@@ -70,10 +73,11 @@ describe("Components implementing the DataFetch mixin", function() {
     spyOn(console, 'error');
 
     ComponentClass = generateComponentClass();
-    componentInstance = utils.renderIntoDocument(ComponentClass({
+    componentElement = React.createElement(ComponentClass, {
       dataUrl: 'http://happiness.com'
-    }));
-
+    });
+    componentInstance = utils.renderIntoDocument(componentElement);
+    
     expect(componentInstance.state.isFetchingData).toBe(false);
   });
 
@@ -104,9 +108,10 @@ describe("Components implementing the DataFetch mixin", function() {
     spyOn(console, 'error');
 
     ComponentClass = generateComponentClass();
-    componentInstance = React.renderComponent(ComponentClass({
+    componentElement = React.createElement(ComponentClass, {
       dataUrl: 'http://happiness.com'
-    }), componentContainer);
+    });
+    componentInstance = React.render(componentElement, componentContainer);
 
     React.unmountComponentAtNode(componentContainer);
   });

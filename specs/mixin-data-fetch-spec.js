@@ -37,6 +37,7 @@ describe("Components implementing the DataFetch mixin", function() {
   };
 
   var ComponentClass,
+      componentElement,
       componentInstance;
 
   it("should not touch initial data when no dataUrl prop is set", function() {
@@ -49,29 +50,37 @@ describe("Components implementing the DataFetch mixin", function() {
         };
       }
     });
-    componentInstance = utils.renderIntoDocument(ComponentClass());
+    componentElement = React.createElement(ComponentClass);
+    componentInstance = utils.renderIntoDocument(componentElement);
+
     expect(componentInstance.state.data).toEqual({name: 'Guest'});
   });
 
   it("should fetch data if a 'dataUrl' prop is set", function() {
     ComponentClass = generateComponentClass();
-    componentInstance = utils.renderIntoDocument(ComponentClass({
+    componentElement = React.createElement(ComponentClass, {
       dataUrl: 'url?query=string'
-    }));
+    });
+    componentInstance = utils.renderIntoDocument(componentElement);
+
     expect(Cosmos.mixins.DataFetch.fetchDataFromServer.calls.count()).toEqual(1);
   });
 
   it("shouldn't fetch data if a 'dataUrl' prop isn't set", function() {
     ComponentClass = generateComponentClass();
-    componentInstance = utils.renderIntoDocument(ComponentClass());
+    componentElement = React.createElement(ComponentClass);
+    componentInstance = utils.renderIntoDocument(componentElement);
+
     expect(Cosmos.mixins.DataFetch.fetchDataFromServer.calls.count()).toEqual(0);
   });
 
   it("should fetch data with `dataUrl` prop if set", function() {
     ComponentClass = generateComponentClass();
-    componentInstance = utils.renderIntoDocument(ComponentClass({
+    componentElement = React.createElement(ComponentClass, {
       dataUrl: 'http://happiness.com'
-    }));
+    });
+    componentInstance = utils.renderIntoDocument(componentElement);
+
     expect(Cosmos.mixins.DataFetch.fetchDataFromServer.calls.mostRecent().args[0])
           .toEqual('http://happiness.com');
   });
@@ -82,7 +91,9 @@ describe("Components implementing the DataFetch mixin", function() {
         return 'http://euphoria.org';
       }
     });
-    componentInstance = utils.renderIntoDocument(ComponentClass());
+    componentElement = React.createElement(ComponentClass);
+    componentInstance = utils.renderIntoDocument(componentElement);
+
     expect(Cosmos.mixins.DataFetch.fetchDataFromServer.calls.mostRecent().args[0])
           .toEqual('http://euphoria.org');
   });
@@ -93,9 +104,11 @@ describe("Components implementing the DataFetch mixin", function() {
         return 'http://euphoria.org';
       }
     });
-    componentInstance = utils.renderIntoDocument(ComponentClass({
+    componentElement = React.createElement(ComponentClass, {
       dataUrl: 'http://happiness.com'
-    }));
+    });
+    componentInstance = utils.renderIntoDocument(componentElement);
+
     expect(Cosmos.mixins.DataFetch.fetchDataFromServer.calls.mostRecent().args[0])
           .toEqual('http://euphoria.org');
   });
@@ -106,15 +119,19 @@ describe("Components implementing the DataFetch mixin", function() {
         return 'http://desertedblog.com?id=' + props.id;
       }
     });
-    componentInstance = utils.renderIntoDocument(ComponentClass({id: 3}));
+    componentElement = React.createElement(ComponentClass, {id: 3});
+    componentInstance = utils.renderIntoDocument(componentElement);
+
     expect(Cosmos.mixins.DataFetch.fetchDataFromServer.calls.mostRecent().args[0])
           .toEqual('http://desertedblog.com?id=3');
   });
 
   it("should populate state.data with fetched data", function() {
     ComponentClass = generateComponentClass();
-    componentInstance = utils.renderIntoDocument(ComponentClass());
+    componentElement = React.createElement(ComponentClass);
+    componentInstance = utils.renderIntoDocument(componentElement);
     componentInstance.receiveDataFromServer({name: 'John Doe', age: 42});
+
     expect(componentInstance.state.data).toEqual({name: 'John Doe', age: 42});
   });
 
@@ -129,42 +146,50 @@ describe("Components implementing the DataFetch mixin", function() {
         }
       }
     });
-    componentInstance = utils.renderIntoDocument(ComponentClass());
+    componentElement = React.createElement(ComponentClass);
+    componentInstance = utils.renderIntoDocument(componentElement);
+
     expect(componentInstance.state.data).toEqual({name: 'Guest', guest: true});
     componentInstance.receiveDataFromServer({name: 'John Doe', age: 42});
+
     expect(componentInstance.state.data).toEqual({name: 'John Doe', age: 42});
   });
 
   it("shouldn't fetch data when receiving the same dataUrl prop", function() {
     ComponentClass = generateComponentClass();
-    componentInstance = utils.renderIntoDocument(ComponentClass({
+    componentElement = React.createElement(ComponentClass, {
       dataUrl: 'http://happiness.com'
-    }));
+    });
+    componentInstance = utils.renderIntoDocument(componentElement);
     componentInstance.setProps({
       dataUrl: 'http://happiness.com'
     });
+
     expect(Cosmos.mixins.DataFetch.fetchDataFromServer.calls.count()).toBe(1);
   });
 
   it("shouldn't modify state.data when receiving the same dataUrl prop", function() {
     ComponentClass = generateComponentClass();
-    componentInstance = utils.renderIntoDocument(ComponentClass({
+    componentElement = React.createElement(ComponentClass, {
       dataUrl: 'http://happiness.com'
-    }));
+    });
+    componentInstance = utils.renderIntoDocument(componentElement);
     componentInstance.receiveDataFromServer({foo: 'bar'});
     componentInstance.setProps({
       dataUrl: 'http://happiness.com'
     });
+
     expect(componentInstance.state.data).toEqual({foo: 'bar'});
   });
 
   it("should fetch data when the refresh method is called", function() {
     ComponentClass = generateComponentClass();
-    componentInstance = utils.renderIntoDocument(ComponentClass({
+    componentElement = React.createElement(ComponentClass, {
       dataUrl: 'http://happiness.com'
-    }));
+    });
+    componentInstance = utils.renderIntoDocument(componentElement);
     componentInstance.refreshData();
+
     expect(Cosmos.mixins.DataFetch.fetchDataFromServer.calls.count()).toBe(2);
   });
 });
-

@@ -1,11 +1,6 @@
 var Cosmos = function(props) {
-  var component = Cosmos.getComponentByName(props.component,
-                                            props.componentLookup);
-  if (!component) {
-    throw new Error('Invalid component: ' + props.component);
-  }
-  // Preserive received props object
-  return component(_.cloneDeep(props));
+  // XXX: Deprecated, remove in future versions
+  return Cosmos.createElement(props);
 };
 
 _.extend(Cosmos, {
@@ -16,12 +11,23 @@ _.extend(Cosmos, {
     return new this.Router(options);
   },
   render: function(props, container, callback) {
-    var componentInstance = this(props);
+    var componentInstance = this.createElement(props);
     if (container) {
-      return React.renderComponent(componentInstance, container, callback);
+      return React.render(componentInstance, container, callback);
     } else {
-      return React.renderComponentToString(componentInstance);
+      return React.renderToString(componentInstance);
     }
+  },
+  createElement: function(props) {
+    var ComponentClass = this.getComponentByName(props.component,
+                                                 props.componentLookup);
+    if (!ComponentClass) {
+      throw new Error('Invalid component: ' + props.component);
+    }
+    // Preserve received props object
+    var clonedProps = _.cloneDeep(props);
+
+    return React.createElement(ComponentClass, clonedProps);
   },
   getComponentByName: function(name, componentLookup) {
     if (typeof(componentLookup) == 'function') {

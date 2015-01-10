@@ -120,7 +120,8 @@ describe("Cosmos.Router", function() {
           }
         }),
         props = {component: 'List', dataUrl: 'users.json'},
-        componentInstance = utils.renderIntoDocument(ComponentClass(props));
+        componentElement = React.createElement(ComponentClass, props)
+        componentInstance = utils.renderIntoDocument(componentElement);
 
     // We just want a valid instance to work with, there Router props won't
     // be taken into consideration

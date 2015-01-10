@@ -9,7 +9,8 @@ describe("Cosmos", function() {
   // in test cases as well.
   var React,
       utils,
-      Cosmos;
+      Cosmos,
+      DummyComponentClass;
 
   beforeEach(function() {
     global.window = jsdom.jsdom().createWindow('<html><body></body></html>');
@@ -19,88 +20,102 @@ describe("Cosmos", function() {
     React = require('react/addons');
     utils = React.addons.TestUtils;
     Cosmos = require('../build/cosmos.js');
+
+    DummyComponentClass = React.createClass({
+      render: function() {
+        return;
+      }
+    });
   });
 
   it("should draw its components from the Cosmos.components namespace", function() {
-    var FakeComponent = {};
-    Cosmos.components.FakeComponent = FakeComponent;
-    expect(Cosmos.getComponentByName('FakeComponent')).toBe(FakeComponent);
+    Cosmos.components.Dummy = DummyComponentClass;
+    expect(Cosmos.getComponentByName('Dummy')).toBe(DummyComponentClass);
   });
 
   it("should draw its components from lookup callback", function() {
-    var fakeComponentInstance = {};
-        FakeComponent = jasmine.createSpy('FakeComponent')
-                        .and.returnValue(fakeComponentInstance),
-        componentLookup = function(name) {
-          expect(name).toBe('FakeComponent');
-          return FakeComponent;
-        },
-        props = {
-          component: 'FakeComponent',
-          componentLookup: componentLookup
-        };
-    expect(Cosmos(props)).toBe(fakeComponentInstance);
+    var componentLookup = function(name) {
+      expect(name).toBe('Dummy');
+      return DummyComponentClass;
+    };
+    expect(Cosmos.getComponentByName('Dummy', componentLookup))
+          .toBe(DummyComponentClass);
   });
 
-  it("should instantiate correct Component", function() {
-    var fakeComponentInstance = {};
-    Cosmos.components.FakeComponent = jasmine.createSpy('FakeComponent')
-                                      .and.returnValue(fakeComponentInstance);
-    expect(Cosmos({component: 'FakeComponent'})).toBe(fakeComponentInstance);
+  it("should create React element for component class", function() {
+    spyOn(React, 'createElement')
+         .and.returnValue(function(){});
+
+    Cosmos.createElement({
+      component: 'Dummy',
+      componentLookup: function(name) {
+        expect(name).toBe('Dummy');
+        return DummyComponentClass;
+      }
+    });
+
+    expect(React.createElement.calls.count()).toBe(1);
+    expect(React.createElement.calls.mostRecent().args[0])
+          .toBe(DummyComponentClass);
+  });
+
+  it("should create component element with cloned props", function() {
+    spyOn(React, 'createElement')
+          .and.returnValue(function(){});
+
+    var props = {
+      component: 'Dummy',
+      componentLookup: function(name) {
+        return DummyComponentClass;
+      }
+    };
+    Cosmos.createElement(props);
+
+    expect(React.createElement.calls.count()).toBe(1);
+    expect(React.createElement.calls.mostRecent().args[1])
+          .toEqual(props);
+    expect(React.createElement.calls.mostRecent().args[1])
+          .not.toBe(props);
   });
 
   describe(".render", function() {
 
     it("should render to DOM if received a container", function() {
-      Cosmos.components.FakeComponent = jasmine.createSpy('FakeComponent');
-      spyOn(React, 'renderComponent');
-      spyOn(React, 'renderComponentToString');
-      Cosmos.render({component: 'FakeComponent'}, '<div>');
-      expect(React.renderComponent.calls.count()).toBe(1);
-      expect(React.renderComponentToString.calls.count()).toBe(0);
+      Cosmos.components.Dummy = DummyComponentClass;
+
+      spyOn(React, 'render');
+      spyOn(React, 'renderToString');
+
+      Cosmos.render({component: 'Dummy'}, '<div>');
+
+      expect(React.render.calls.count()).toBe(1);
+      expect(React.renderToString.calls.count()).toBe(0);
     });
 
     it("should render to string if didn't receive a container", function() {
-      Cosmos.components.FakeComponent = jasmine.createSpy('FakeComponent');
-      spyOn(React, 'renderComponent');
-      spyOn(React, 'renderComponentToString');
-      Cosmos.render({component: 'FakeComponent'});
-      expect(React.renderComponent.calls.count()).toBe(0);
-      expect(React.renderComponentToString.calls.count()).toBe(1);
+      Cosmos.components.Dummy = DummyComponentClass;
+
+      spyOn(React, 'render');
+      spyOn(React, 'renderToString');
+
+      Cosmos.render({component: 'Dummy'});
+
+      expect(React.render.calls.count()).toBe(0);
+      expect(React.renderToString.calls.count()).toBe(1);
     });
 
-    it("should render correct Component", function() {
-      var fakeComponentInstance = {};
-      Cosmos.components.FakeComponent = jasmine.createSpy('FakeComponent')
-                                        .and.returnValue(fakeComponentInstance);
-      spyOn(React, 'renderComponentToString');
-      Cosmos.render({component: 'FakeComponent'});
-      expect(React.renderComponentToString.calls.mostRecent().args[0])
-            .toBe(fakeComponentInstance);
-    });
+    it("should create element with the same props", function() {
+      spyOn(Cosmos, 'createElement');
+      spyOn(React, 'renderToString');
 
-    it("should create component with correct props", function() {
-      Cosmos.components.FakeComponent = jasmine.createSpy('FakeComponent');
-      spyOn(React, 'renderComponentToString');
-      Cosmos.render({
+      var props = {
         component: 'FakeComponent',
         foo: 'bar'
-      });
-      expect(Cosmos.components.FakeComponent.calls.mostRecent().args[0]).toEqual({
-        component: 'FakeComponent',
-        foo: 'bar'
-      });
-    });
+      };
+      Cosmos.render(props);
 
-    it("should not alter props object received", function() {
-      var initialProps = {component: 'EmptyComponent', foo: 'bar'},
-          initialPropsClone = _.clone(initialProps);
-      Cosmos.components.EmptyComponent = React.createClass({render: function(){}});
-      spyOn(React, 'renderComponentToString');
-      Cosmos.render(initialProps);
-      expect(initialProps).toEqual(initialPropsClone);
-      expect(React.renderComponentToString.calls.mostRecent().args[0].props)
-            .not.toBe(initialProps);
+      expect(Cosmos.createElement.calls.count()).toBe(1);
+      expect(Cosmos.createElement.calls.mostRecent().args[0]).toBe(props);
     });
   });
 
@@ -120,6 +135,7 @@ describe("Cosmos", function() {
         props: {component: 'MissingComponent'},
         container: '<div>'
       });
+
       expect(Cosmos.Router.calls.mostRecent().args[0]).toEqual({
         props: {component: 'MissingComponent'},
         container: '<div>'
