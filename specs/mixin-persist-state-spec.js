@@ -360,7 +360,7 @@ describe("Components implementing the PersistState mixin", function() {
       spyOn(Cosmos, 'createElement').and.returnValue(React.createElement('div'));
     });
 
-    it("should pass in the correct number of arguments", function() {
+    it("should pass in empty arguments", function() {
       ComponentClass = generateParentComponentClass({
         children: children,
         render: function() {
@@ -373,7 +373,7 @@ describe("Components implementing the PersistState mixin", function() {
       expect(childSpy).toHaveBeenCalledWith();
     });
 
-    it("should pass in the correct number of arguments", function() {
+    it("should pass in the correct arguments", function() {
       ComponentClass = generateParentComponentClass({
         children: children,
         render: function() {
