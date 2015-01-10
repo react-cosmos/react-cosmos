@@ -33,19 +33,24 @@ describe("Components implementing the ClassName mixin", function() {
   };
 
   var ComponentClass,
+      componentElement,
       componentInstance;
 
   it("should not return a class name when none is specified", function() {
     ComponentClass = generateComponentClass();
-    componentInstance = utils.renderIntoDocument(ComponentClass());
+    componentElement = React.createElement(ComponentClass)
+    componentInstance = utils.renderIntoDocument(componentElement);
+
     expect(componentInstance.getClassName()).toEqual(null);
   });
 
   it("should return a class name when 'class' prop is set", function() {
     ComponentClass = generateComponentClass();
-    componentInstance = utils.renderIntoDocument(ComponentClass({
+    componentElement = React.createElement(ComponentClass, {
       class: 'my-class'
-    }));
+    });
+    componentInstance = utils.renderIntoDocument(componentElement);
+
     expect(componentInstance.getClassName()).toEqual('my-class');
   });
 
@@ -53,7 +58,9 @@ describe("Components implementing the ClassName mixin", function() {
     ComponentClass = generateComponentClass({
       defaultClass: 'default-class'
     });
-    componentInstance = utils.renderIntoDocument(ComponentClass());
+    componentElement = React.createElement(ComponentClass)
+    componentInstance = utils.renderIntoDocument(componentElement);
+
     expect(componentInstance.getClassName()).toEqual('default-class');
   });
 
@@ -61,9 +68,11 @@ describe("Components implementing the ClassName mixin", function() {
     ComponentClass = generateComponentClass({
       defaultClass: 'default-class'
     });
-    componentInstance = utils.renderIntoDocument(ComponentClass({
+    componentElement = React.createElement(ComponentClass, {
       class: 'my-class'
-    }));
+    });
+    componentInstance = utils.renderIntoDocument(componentElement);
+
     expect(componentInstance.getClassName()).toEqual('default-class my-class');
   });
 });
