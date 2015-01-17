@@ -1,17 +1,17 @@
 Cosmos [![Build Status](https://travis-ci.org/skidding/cosmos.svg)](https://travis-ci.org/skidding/cosmos)
 ===
-Data exploration framework
+A foundation for maintainable web applications.
 
-**Cosmos is a JavaScript user interface framework that cares about data clarity
-and component autonomy.** It prevents scaling complexity by enforcing a
-zero-bootstrap policy and by having data structures dictate code logic and not
-the other way around.
+Cosmos glues [React](http://facebook.github.io/react/) components together and
+creates a uniform relationship between them.
 
-Built on top of Facebook's [**React**](http://facebook.github.io/react/),
-Cosmos glues components together and provides a uniform structure between them.
-Components are self-contained, UI building blocks.
+There's no such thing as *controllers* or *pages* in Cosmos, just *components.*
+The UI is a tree of components consisting of a root component and its
+descendants. Any component can be loaded full-screen as the root element and
+a route is just an alias to component _props._
 
-**See Cosmos in action by [playing a game of Flatris.](http://skidding.github.io/flatris/)**
+Check out [**Flatris**](http://skidding.github.io/flatris/), a demo app built
+with Cosmos.
 
 Jump to:
 
