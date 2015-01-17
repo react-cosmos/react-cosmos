@@ -210,38 +210,36 @@ benefit from a natural tendency to scale.
 
 ### Vertical encapsulation
 
-Working with so many entities builds complex relationships. Models, Controllers,
-Views, Helpers, etc., they're all connected to each other in various ways. Your
-application is the outcome of all sorts of objects with different roles and
-behaviors depending on one another.
+Working with so many entities builds complex relationships. Models,
+Controllers, Views, Helpers, etc., they're all connected to each other in
+various ways. Your application is the outcome of all sorts of objects with
+different roles and behaviors depending on one another.
 
 Scaling you app linearly requires a flat infrastructure. **Responsibilities
-should translate into domain logic instead of low-level roles (data modeling,
-  rendering, etc.)**
+should translate into domain logic instead of low-level roles (data
+modeling, rendering, etc.)**
 
-  Cosmos only has one entity: The Component. They are autonomous, have end-to-end
-  capabilities and each can function as a complete application by itself,
-  excluding interdependence from the start. Because they can describe their
-  output without relying on any external logic, Components are declarative and
-  predictable.
+Cosmos only has one entity: The Component. They are autonomous, have end-to-end
+capabilities and each can function as a complete application by itself,
+excluding interdependence from the start. Because they can describe their
+output without relying on any external logic, components are declarative and
+predictable.
 
-  Isolating the source of a bug now has O(1) complexity.
+Isolating the source of a bug now has O(1) complexity.
 
-  ### Transparent data structures
+### Transparent data structures
 
-  > Bad programmers worry about the code. Good programmers
-  > worry about data structures and their relationships.
+> Bad programmers worry about the code. Good programmers
+> worry about data structures and their relationships.
 
-  Cosmos is partly inspired by a Linus Torvalds
-  [comment](http://lwn.net/Articles/193245/) about __designing your code around
-  your data and not the other way around.__ Think of many how times you witnessed
-  software go south because of a growing gap between data and the end product and
-  see if Linus’ statement makes any sense.
+Cosmos is partly inspired by a Linus Torvalds
+[comment](http://lwn.net/Articles/193245/) about **designing your code
+around your data and not the other way around.**
 
-  But Cosmos does not impose any specific data structures, it simply makes them
-  surface and hard to miss. All Component logic wraps around a single JSON
-  object, which starts as the Component input and updates along with state
-  changes. That object will always be a visible, persistent data structure.
+But Cosmos does not impose any specific data structures, it simply makes them
+surface and hard to miss. All component logic wraps around a single JSON
+object, which starts as the component input and updates along with state
+changes. That object will always be a visible, persistent data structure.
 
 ## Contributing
 
