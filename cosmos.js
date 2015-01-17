@@ -24,10 +24,7 @@ _.extend(Cosmos, {
     if (!ComponentClass) {
       throw new Error('Invalid component: ' + props.component);
     }
-    // Preserve received props object
-    var clonedProps = _.cloneDeep(props);
-
-    return React.createElement(ComponentClass, clonedProps);
+    return React.createElement(ComponentClass, props);
   },
   getComponentByName: function(name, componentLookup) {
     if (typeof(componentLookup) == 'function') {
