@@ -59,7 +59,7 @@ describe("Cosmos", function() {
           .toBe(DummyComponentClass);
   });
 
-  it("should create component element with cloned props", function() {
+  it("should create component element with props", function() {
     spyOn(React, 'createElement')
           .and.returnValue(function(){});
 
@@ -74,8 +74,6 @@ describe("Cosmos", function() {
     expect(React.createElement.calls.count()).toBe(1);
     expect(React.createElement.calls.mostRecent().args[1])
           .toEqual(props);
-    expect(React.createElement.calls.mostRecent().args[1])
-          .not.toBe(props);
   });
 
   describe(".render", function() {
