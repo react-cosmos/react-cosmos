@@ -30,12 +30,9 @@ a well-ordered whole._
 - Can be plugged into any other framework
 - Everything is a Component
 - Components are oblivious of ancestors
-- The state of a Component can be serialized at any given point in time
-- Any Component input can be represented by a URI
-- Components can implement any data mechanism*
-
-\* All Cosmos core mixins are agnostic on how data is populated inside a
-Component (see default [DataFetch](mixins/data-fetch.js) Ajax implementation.)
+- Any component can be represented by a URI
+- The state of the entire UI can be serialized at any given point in time
+- Components can implement any data sync mechanism
 
 ## Installation
 
