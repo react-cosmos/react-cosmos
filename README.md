@@ -15,72 +15,11 @@ Components are self-contained, UI building blocks.
 
 Jump to:
 
-- [Problem](#problem)
 - [Manifesto](#manifesto)
 - [Installation](#installation)
 - [Specs](#specs)
+- [Problem](#problem)
 - [Contributing](#contributing)
-
-## Problem
-
-Most web frameworks start out clean and friendly, but at some point after you
-go on to build a real-life application on them they stop cooperating and start
-turning against you. Finding an honorable route for solving a problem is now a
-luxury, workarounds are the norm.
-
-This can happen over and over. Slick at first, unmaintainable in 2 years. But
-why is that, why is complexity proportional to the number of features added?
-
-Two reasons:
-
-1. **Interdependence.** Tie a number of units together, rely on one to change
-                        the state of another and you successfully gave birth to
-                        an unpredictable ecosystem
-1. **Data obscurity.** Mixing data with logic turns any transparent river of
-                       data into a muddy sewage network and generates a big
-                       pile of opinionated, disposable code.
-
-Avoiding these pitfalls upfront is difficult. They occur only after you've
-reached a certain maturity in a program. Easy to notice once the code is no
-longer pleasant to work with, but very hard to predict.
-
-Cosmos fights against this uncertainty by surfacing the elements that don't
-benefit from a natural tendency to scale.
-
-### Vertical encapsulation
-
-Working with so many entities builds complex relationships. Models, Controllers,
-Views, Helpers, etc., they're all connected to each other in various ways. Your
-application is the outcome of all sorts of objects with different roles and
-behaviors depending on one another.
-
-Scaling you app linearly requires a flat infrastructure. **Responsibilities
-should translate into domain logic instead of low-level roles (data modeling,
-rendering, etc.)**
-
-Cosmos only has one entity: The Component. They are autonomous, have end-to-end
-capabilities and each can function as a complete application by itself,
-excluding interdependence from the start. Because they can describe their
-output without relying on any external logic, Components are declarative and
-predictable.
-
-Isolating the source of a bug now has O(1) complexity.
-
-### Transparent data structures
-
-> Bad programmers worry about the code. Good programmers
-> worry about data structures and their relationships.
-
-Cosmos is partly inspired by a Linus Torvalds
-[comment](http://lwn.net/Articles/193245/) about __designing your code around
-your data and not the other way around.__ Think of many how times you witnessed
-software go south because of a growing gap between data and the end product and
-see if Linus’ statement makes any sense.
-
-But Cosmos does not impose any specific data structures, it simply makes them
-surface and hard to miss. All Component logic wraps around a single JSON
-object, which starts as the Component input and updates along with state
-changes. That object will always be a visible, persistent data structure.
 
 ## Manifesto
 
@@ -256,6 +195,67 @@ Responsibility Principle.**
 
 Core mixins are placed under the `Cosmos.mixins` namespace. Read more inside
 the [Mixins wiki page.](https://github.com/skidding/cosmos/wiki/Mixins)
+
+## Problem
+
+Most web frameworks start out clean and friendly, but at some point after you
+go on to build a real-life application on them they stop cooperating and start
+turning against you. Finding an honorable route for solving a problem is now a
+luxury, workarounds are the norm.
+
+This can happen over and over. Slick at first, unmaintainable in 2 years. But
+why is that, why is complexity proportional to the number of features added?
+
+Two reasons:
+
+1. **Interdependence.** Tie a number of units together, rely on one to change
+the state of another and you successfully gave birth to
+an unpredictable ecosystem
+1. **Data obscurity.** Mixing data with logic turns any transparent river of
+data into a muddy sewage network and generates a big
+pile of opinionated, disposable code.
+
+Avoiding these pitfalls upfront is difficult. They occur only after you've
+reached a certain maturity in a program. Easy to notice once the code is no
+longer pleasant to work with, but very hard to predict.
+
+Cosmos fights against this uncertainty by surfacing the elements that don't
+benefit from a natural tendency to scale.
+
+### Vertical encapsulation
+
+Working with so many entities builds complex relationships. Models, Controllers,
+Views, Helpers, etc., they're all connected to each other in various ways. Your
+application is the outcome of all sorts of objects with different roles and
+behaviors depending on one another.
+
+Scaling you app linearly requires a flat infrastructure. **Responsibilities
+should translate into domain logic instead of low-level roles (data modeling,
+  rendering, etc.)**
+
+  Cosmos only has one entity: The Component. They are autonomous, have end-to-end
+  capabilities and each can function as a complete application by itself,
+  excluding interdependence from the start. Because they can describe their
+  output without relying on any external logic, Components are declarative and
+  predictable.
+
+  Isolating the source of a bug now has O(1) complexity.
+
+  ### Transparent data structures
+
+  > Bad programmers worry about the code. Good programmers
+  > worry about data structures and their relationships.
+
+  Cosmos is partly inspired by a Linus Torvalds
+  [comment](http://lwn.net/Articles/193245/) about __designing your code around
+  your data and not the other way around.__ Think of many how times you witnessed
+  software go south because of a growing gap between data and the end product and
+  see if Linus’ statement makes any sense.
+
+  But Cosmos does not impose any specific data structures, it simply makes them
+  surface and hard to miss. All Component logic wraps around a single JSON
+  object, which starts as the Component input and updates along with state
+  changes. That object will always be a visible, persistent data structure.
 
 ## Contributing
 
