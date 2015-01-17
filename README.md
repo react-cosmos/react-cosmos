@@ -170,15 +170,6 @@ routing links using the Cosmos Router.
 
 ### Mixins
 
-Mixins are meant to be responsible for all behavior that isn't specific to a
-single Component.
-
-Each mixin can support a set of input _props,_ make new methods
-available and interfere with the [lifecycle methods](http://facebook.github.io/react/docs/component-specs.html#lifecycle-methods)
-of a Component. While mixins can optionally profit from other mixins when
-combined, they are independent by nature and should follow the **Single
-Responsibility Principle.**
-
 Core mixins are placed under the `Cosmos.mixins` namespace. Read more inside
 the [Mixins wiki page.](https://github.com/skidding/cosmos/wiki/Mixins)
 
