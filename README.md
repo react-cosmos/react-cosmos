@@ -245,10 +245,9 @@ should translate into domain logic instead of low-level roles (data modeling,
 
 ## Contributing
 
-This is a proof of concept and code pull requests aren’t expected until the
-specifications receive more feedback. Instead, I urge you to imagine what
-impact would Cosmos have in any past experience of building a web application
-that encountered a scaling impediment at some point. Attempt to answer this
+Until the Cosmos project becomes more solid and concrete, I urge you to recall
+a past experience of building a web application that became harder and harder
+to work on as time passed and development progressed. Attempt to answer this
 question: If you enforced the Cosmos principles onto the infrastructure you're
 picturing, would it: a) improve, b) complicate or c) not influence the
 situation?
