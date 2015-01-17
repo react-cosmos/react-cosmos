@@ -36,25 +36,14 @@ a well-ordered whole._
 
 ## Installation
 
-Include either the development or the production build in your project.
+Either install the `cosmos-js` [npm package](https://www.npmjs.org/package/cosmos-js)
+or include the build directly in your project.
 
 ```html
+<!-- Development build -->
 <script src="http://skidding.github.io/cosmos/build/cosmos.js"></script>
+<!-- Production build -->
 <script src="http://skidding.github.io/cosmos/build/cosmos.min.js"></script>
-```
-
-Cosmos only depends on `React ~0.9.0` and `Lo-Dash ~2.4.1`
-
-### Development
-
-The demo skeleton is present in all branches and can be opened in any browser,
-without any web server, simply check doing a git checkout of the repository and
-generating a build using [gulp.](https://github.com/gulpjs/gulp)
-
-```bash
-git clone https://github.com/skidding/cosmos.git && cd cosmos
-npm install
-node_modules/.bin/gulp
 ```
 
 ## Specs
