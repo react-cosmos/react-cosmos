@@ -48,94 +48,79 @@ or include the build directly in your project.
 
 ## Specs
 
-One of the Cosmos [mantras](#manifesto) is "The state of a Component can be
-serialized at any given point in time," therefore __any Component in any state
-can be represented and reproduced by a persistent JSON.__ This goes hand in
-hand with React's declarative nature.
+In Cosmos, any component in any state can be represented and reproduced by a
+persistent JSON. This goes hand in hand with React's declarative nature.
 
-The input data of a Component is a JSON object and the role of a Component is
+The input data of a component is a JSON object and the role of a component is
 to transform its input data into HTML output. Easy to follow and assert
-behavior.
+behavior. See [React Component](http://facebook.github.io/react/docs/component-api.html)
+for in-depth specs.
 
-See [React Component](http://facebook.github.io/react/docs/component-api.html)
-for in-depth specs and detailed API.
+### Core concepts
+
+Reserved props when working with Cosmos: `component`, `componentLookup` and
+`state`.
+
+#### Component lookup
+
+In order to make component definitions serializable, Cosmos doesn't work with
+classes directly. The `component` prop holds the name of the component, while
+the `componentLookup` prop is used for passing a mapping function that returns
+corresponding component classes.
+
+Working with the component lookup also results in cleaner component files,
+especially when using CommonJS modules with relative paths.
 
 ```js
-// Registering Cosmos Components is as easy as referencing them in the
-// components namespace
-Cosmos.components.Intro = React.createClass({
-  render: function() {
-    return <p>My name is {this.props.name} and I am from {this.props.hometown}.</p>
+var myComponent = Cosmos.render({
+  component: 'my-component',
+  componentLookup: function(name) {
+    // The component classes can be drawn from any global namespace or require
+    // mechanism
+    return require('components/' + name + '.jsx');
   }
 });
 ```
 
-_[JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) improves the
-readability of React Components a lot, but unfortunately
-[GFM](http://github.github.com/github-flavored-markdown/) doesn't support it
-yet._
+#### Component snapshot
+
+The props and state of a component can be joined into a unified snapshot. The
+`state` prop holds the state of the component.
 
 ```js
-// This is how you load and render Component input in Cosmos
-Cosmos.render({
-  component: 'Intro',
-  name: 'Johnny',
-  hometown: 'Minneapolis'
-});
-// Since we didn't specify a DOM container to render this component in, an HTML
-// string will be returned instead
-"<p>My name is Johnny and I am from Minneapolis.</p>"
+// Alter the state of the component
+myComponent.setState({isDisabled: true});
+
+// Serialize the state of a component into a JSON object
+var componentSnapshot = myComponent.generateSnapshot());
 ```
 
-#### Component input (props)
+This is what `componentSnapshot` would look like:
 
 ```js
 {
-  component: 'Intro',
-  name: 'Johnny',
-  hometown: 'Minneapolis'
+  component: 'my-component',
+  state: {
+    isDisabled: true
+  }
 }
 ```
 
-It's up to a Component (or the mixins it uses) to implement any _props_ received
-as input, except for one reserved by convention: **component**, the name of the
-Component to load (from the Cosmos.components namespace.)
+#### State injection
 
-It's counter-intuitive to have the Component name embedded in its input data,
-but this is part of the Component serialization concept. Think of the
-Component input data as a database entry and it will start making sense.
+Serializing the state of component is no fun if we can't load it back later.
+
+```js
+// The clone will be created with the identical state of the original component
+var clonedComponent = Cosmos.render(componentSnapshot);
+```
+
 
 ### Top-level API
 
 Cosmos can be used as the main router for a web app, but also just for
 rendering parts of an existent application. Here are the main API methods that
 should make you feel at home with Cosmos.
-
-#### Cosmos(props)
-
-The _Cosmos_ namespace itself is a function. It's how you instantiate a
-Component from the Cosmos.components namespace.
-
-```js
-Cosmos({
-  component: 'Intro',
-  name: 'Johnny',
-  hometown: 'Minneapolis'
-});
-// is the equivalent of
-Cosmos.components.Intro({
-  name: 'Johny',
-  hometown: 'Minneapolis'
-});
-```
-
-Here's how rendering a Component inside another one looks like in JSX syntax:
-
-```html
-<Cosmos component="Intro"
-        name="Johnny"
-        hometown="Minneapolis" />
-```
 
 #### Cosmos.render(props, container, callback)
 
