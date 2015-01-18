@@ -38,6 +38,7 @@ describe("Cosmos", function() {
       expect(name).toBe('Dummy');
       return DummyComponentClass;
     };
+    
     expect(Cosmos.getComponentByName('Dummy', componentLookup))
           .toBe(DummyComponentClass);
   });
@@ -64,11 +65,9 @@ describe("Cosmos", function() {
           .and.returnValue(function(){});
 
     var props = {
-      component: 'Dummy',
-      componentLookup: function(name) {
-        return DummyComponentClass;
-      }
+      component: 'Dummy'
     };
+    // No need for a componentLookup since we're only asserting props
     Cosmos.createElement(props);
 
     expect(React.createElement.calls.count()).toBe(1);
