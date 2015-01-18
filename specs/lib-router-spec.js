@@ -36,14 +36,17 @@ describe("Cosmos.Router", function() {
 
       it("should default to URL query string", function() {
         var router = new Cosmos.Router();
+
         expect(router.options.props).toEqual(Cosmos.url.getParams());
       });
 
       it("should use default props when props are empty", function() {
         spyOn(Cosmos.url, 'getParams').and.returnValue({});
+
         var router = new Cosmos.Router({defaultProps: {
           component: 'DefaultComponent'
         }});
+
         expect(router.options.props).toEqual({
           component: 'DefaultComponent'
         });
@@ -53,17 +56,20 @@ describe("Cosmos.Router", function() {
         var router = new Cosmos.Router({defaultProps: {
           component: 'DefaultComponent'
         }});
+
         expect(router.options.props).toEqual(Cosmos.url.getParams());
       });
 
       it("should default to document.body as container", function() {
         var router = new Cosmos.Router();
+
         expect(router.options.container).toBe(document.body);
       });
 
       it("should save a reference to the DOM container", function() {
         var container = React.DOM.span();
             router = new Cosmos.Router({container: '<span>'});
+
         expect(router.container).toEqual('<span>');
       });
   });
@@ -79,6 +85,7 @@ describe("Cosmos.Router", function() {
         props: {component: 'List', dataUrl: 'users.json'},
         container: '<span>'
       });
+
       expect(Cosmos.render.calls.count()).toEqual(1);
       expect(Cosmos.render.calls.mostRecent().args[0]).toEqual({
         component: 'List', dataUrl: 'users.json'
@@ -89,6 +96,7 @@ describe("Cosmos.Router", function() {
     it("with props extracted from query string on .goTo", function() {
       var router = new Cosmos.Router({});
       router.goTo('?component=List&dataUrl=users.json');
+
       expect(Cosmos.render.calls.count()).toEqual(2);
       expect(Cosmos.render.calls.mostRecent().args[0]).toEqual({
         component: 'List',
@@ -104,6 +112,7 @@ describe("Cosmos.Router", function() {
           dataUrl: 'users.json'
         }
       });
+
       expect(Cosmos.render.calls.count()).toEqual(2);
       expect(Cosmos.render.calls.mostRecent().args[0]).toEqual({
         component: 'List',
@@ -123,8 +132,8 @@ describe("Cosmos.Router", function() {
         componentElement = React.createElement(ComponentClass, props)
         componentInstance = utils.renderIntoDocument(componentElement);
 
-    // We just want a valid instance to work with, there Router props won't
-    // be taken into consideration
+    // We just want a valid instance to work with, the Router props won't be
+    // taken into consideration
     spyOn(Cosmos, 'render').and.callFake(function(props) {
       return componentInstance;
     });
@@ -136,7 +145,7 @@ describe("Cosmos.Router", function() {
     componentInstance.setState({amIState: true});
 
     // Before routing to a new Component configuration, the previous one
-    // shouldn't been update with our changes
+    // shouldn't been updated with our changes
     router.goTo('?component=User&dataUrl=user.json');
     expect(router._replaceHistoryState.calls.count()).toEqual(1);
     expect(router._replaceHistoryState.calls.mostRecent().args[0]).toEqual({
