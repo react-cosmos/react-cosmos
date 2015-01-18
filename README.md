@@ -116,47 +116,11 @@ var clonedComponent = Cosmos.render(componentSnapshot);
 ```
 
 
-### Top-level API
-
-Cosmos can be used as the main router for a web app, but also just for
-rendering parts of an existent application. Here are the main API methods that
-should make you feel at home with Cosmos.
-
-#### Cosmos.render(props, container, callback)
-
-Renders a React Component from the Cosmos namespace (_component_ prop is
-required.) The _container_ and _callback_ params are optional.
-
-#### Cosmos.start(options)
-
-Entry point for a Cosmos Router-powered app. Uses the HTML5 history.pushState
-API to cache Component snapshots and listen to state changes, rendering
-previous Components in an instant when going back through history.
-
-The options are as follows:
-
-- **props** - Initial Component input, defaults to the URL query string
-- **defaultProps** - Default Component input to load when the given  _props_
-                     are empty. Useful when the initial Component input is
-                     loaded from the URL and you need a default Component
-                     input for the `/` home path
-- **container** - DOM container to render Components in, defaults to
-                  `document.body`
-
-Here's how a standard URL for an app powered by the Cosmos Router would look
-like:
-
-```
-http://localhost/?component=Intro&name=Johnny&hometown=Minneapolis
-```
-
-The [URL mixin](https://github.com/skidding/cosmos/wiki/Mixins#url) is used for
-routing links using the Cosmos Router.
 
 ### Mixins
 
-Core mixins are placed under the `Cosmos.mixins` namespace. Read more inside
-the [Mixins wiki page.](https://github.com/skidding/cosmos/wiki/Mixins)
+Core mixins are placed under the `Cosmos.mixins` namespace. Read more in the
+[Mixins wiki page.](https://github.com/skidding/cosmos/wiki/Mixins)
 
 ## Problem
 
