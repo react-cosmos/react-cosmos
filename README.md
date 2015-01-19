@@ -83,7 +83,7 @@ var componentLookup = function(name) {
 };
 ```
 
-Then, we can register components into that namespace.
+Then, we attach components to that namespace.
 
 ```js
 components.Boy = React.createClass({
@@ -101,7 +101,8 @@ components.Boy = React.createClass({
 });
 ```
 
-Once that is in place, we are able to render our components.
+Once that is in place, we are able to render components without holding
+references to their class object.
 
 ```js
 var props = {
