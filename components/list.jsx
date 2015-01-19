@@ -10,13 +10,12 @@ Cosmos.components.List = React.createClass({
   mixins: [Cosmos.mixins.ClassName,
            Cosmos.mixins.DataFetch,
            Cosmos.mixins.PersistState],
-  defaultClass: 'list',
   getInitialState: function() {
     return {data: []};
   },
   render: function() {
     return (
-      <ul className={this.getClassName()}>
+      <ul className={this.getClassName('list')}>
         {this.state.data.map(function(item, index) {
           var itemComponent = Cosmos.getComponentByName(
             this._getComponentClassForItem(item));
