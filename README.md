@@ -132,7 +132,7 @@ This is what `boySnapshot` will look like:
 
 ```js
 {
-  component: 'my-component',
+  component: 'Boy',
   componentLookup: [function Function]
   eyes: 'blue'
   state: {
@@ -149,10 +149,90 @@ Serializing the state of component is no fun if we can't load it back later.
 
 ```js
 // The clone will be created in the identical state of the original component
+// (with a "curious" mood)
 var boyClone = Cosmos.render(boySnapshot);
 ```
 
+#### Children
 
+Cosmos gets interesting when dealing with nested components. The entire state
+of a component tree can be serialized recursively, as well as injected top-down
+from the root component to the tree leaves.
+
+This is achieved through the `loadChild` API of the `PersistState` mixin.
+
+```js
+components.Father = React.createClass({
+  mixins: [Cosmos.mixins.PersistState],
+
+  children: {
+    son: function() {
+      return {
+        component: 'Boy',
+        eyes: this.props.eyes,
+        initialMood: this.props.mood,
+      };
+    }
+  },
+
+  render: function() {
+    return <p>I am the {this.props.mood} father of {this.loadChild('son')}.</p>;
+  }
+});
+```
+
+The parent's props will propagate to its child upon rendering.
+
+```js
+var props = {
+  component: 'Father',
+  componentLookup: componentLookup,
+  eyes: 'blue',
+  mood: 'happy'
+};
+
+var father = Cosmos.render(props, document.body);
+```
+
+> "I am the happy father of a happy blue-eyed boy."
+
+However, the child manages its own state from that point on.
+
+```js
+var son = father.refs.son;
+
+// We missed the icecream truck :(
+son.setState({mood: 'sad'});
+```
+
+> "I am the happy father of a sad blue-eyed boy."
+
+We can now generate a recursive snapshot and take a capture the nested state.
+
+```js
+var familySnapshot = father.generateSnapshot(true);
+```
+
+This is what the nested snapshot will look like:
+
+```js
+{
+  component: 'Father',
+  componentLookup: [function Function]
+  eyes: 'blue'
+  mood: 'happy'
+  state: {
+    children: {
+      son: {
+        mood: 'sad'
+      }
+    }
+  }
+}
+```
+
+This makes is possible to capture the entire state of an application, persist
+it and then resume it in a different session.
 
 ### Mixins
 
