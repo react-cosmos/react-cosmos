@@ -35,35 +35,37 @@ describe("Components implementing the ClassName mixin", function() {
   var ComponentClass,
       componentInstance;
 
-  it("should not return a class name when none is specified", function() {
+  it("should not return a class name when none is received", function() {
     ComponentClass = generateComponentClass();
     componentInstance = utils.renderIntoDocument(ComponentClass());
-    expect(componentInstance.getClassName()).toEqual(null);
+
+    expect(componentInstance.getClassName()).toBe(undefined);
   });
 
-  it("should return a class name when 'class' prop is set", function() {
+  it("should return a class name when class prop is passed", function() {
     ComponentClass = generateComponentClass();
     componentInstance = utils.renderIntoDocument(ComponentClass({
-      class: 'my-class'
+      className: 'my-class'
     }));
+
     expect(componentInstance.getClassName()).toEqual('my-class');
   });
 
-  it("should return default class name when defined", function() {
-    ComponentClass = generateComponentClass({
-      defaultClass: 'default-class'
-    });
+  it("should return default class name when passed", function() {
+    ComponentClass = generateComponentClass();
     componentInstance = utils.renderIntoDocument(ComponentClass());
-    expect(componentInstance.getClassName()).toEqual('default-class');
+
+    expect(componentInstance.getClassName('default-class'))
+          .toEqual('default-class');
   });
 
-  it("should return both default class and 'class' prop", function() {
-    ComponentClass = generateComponentClass({
-      defaultClass: 'default-class'
-    });
+  it("should override default class with class from props", function() {
+    ComponentClass = generateComponentClass();
     componentInstance = utils.renderIntoDocument(ComponentClass({
-      class: 'my-class'
+      className: 'my-class'
     }));
-    expect(componentInstance.getClassName()).toEqual('default-class my-class');
+
+    expect(componentInstance.getClassName('default-class'))
+          .toEqual('my-class');
   });
 });
