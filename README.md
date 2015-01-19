@@ -71,16 +71,50 @@ corresponding component classes.
 Working with the component lookup also results in cleaner component files,
 especially when using CommonJS modules with relative paths.
 
+First, we need a component namespace.
+
 ```js
-var myComponent = Cosmos.render({
-  component: 'my-component',
-  componentLookup: function(name) {
-    // The component classes can be drawn from any global namespace or require
-    // mechanism
-    return require('components/' + name + '.jsx');
+var components = {};
+
+// The component classes can be drawn from any global namespace or
+// require() mechanism
+var componentLookup = function(name) {
+  return components[name];
+};
+```
+
+Then, we can register components into that namespace.
+
+```js
+components.Boy = React.createClass({
+  mixins: [Cosmos.mixins.PersistState],
+
+  getInitialState: function() {
+    return {
+      mood: this.props.initialMood
+    };
+  },
+
+  render: function() {
+    return <span>a {this.state.mood} {this.props.eyes}-eyed boy</span>;
   }
 });
 ```
+
+Once that is in place, we are able to render our components.
+
+```js
+var props = {
+  component: 'Boy',
+  componentLookup: componentLookup,
+  eyes: 'blue',
+  initialMood: 'happy'
+};
+
+var boy = Cosmos.render(props, document.body);
+```
+
+> "a happy blue-eyed boy"
 
 #### Component snapshot
 
@@ -88,31 +122,34 @@ The props and state of a component can be joined into a unified snapshot. The
 `state` prop holds the state of the component.
 
 ```js
-// Alter the state of the component
-myComponent.setState({isDisabled: true});
+// Why do people sleep at night?
+boy.setState({mood: 'curious'});
 
-// Serialize the state of a component into a JSON object
-var componentSnapshot = myComponent.generateSnapshot());
+var boySnapshot = boy.generateSnapshot();
 ```
 
-This is what `componentSnapshot` would look like:
+This is what `boySnapshot` will look like:
 
 ```js
 {
   component: 'my-component',
+  componentLookup: [function Function]
+  eyes: 'blue'
   state: {
-    isDisabled: true
+    mood: 'curious'
   }
 }
 ```
+
+Serializing the snapshot is as easy as excluding the `componentLookup` key.
 
 #### State injection
 
 Serializing the state of component is no fun if we can't load it back later.
 
 ```js
-// The clone will be created with the identical state of the original component
-var clonedComponent = Cosmos.render(componentSnapshot);
+// The clone will be created in the identical state of the original component
+var boyClone = Cosmos.render(boySnapshot);
 ```
 
 
