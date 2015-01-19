@@ -1,12 +1,8 @@
 Cosmos.mixins.ClassName = {
-  getClassName: function() {
-    var classes = [];
-    if (this.defaultClass) {
-      classes.push(this.defaultClass);
+  getClassName: function(defaultClassName) {
+    if (this.props.className !== undefined) {
+      return this.props.className;
     }
-    if (this.props.class) {
-      classes.push(this.props.class);
-    }
-    return classes.length ? classes.join(' ') : null;
+    return defaultClassName;
   }
 };
