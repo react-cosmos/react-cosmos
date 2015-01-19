@@ -145,7 +145,7 @@ Serializing the snapshot is as easy as excluding the `componentLookup` key.
 
 #### State injection
 
-Serializing the state of component is no fun if we can't load it back later.
+Serializing the state of components is no fun if we can't load it back later.
 
 ```js
 // The clone will be created in the identical state of the original component
