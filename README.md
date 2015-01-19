@@ -232,7 +232,7 @@ This is what the nested snapshot will look like:
 ```
 
 This makes is possible to capture the entire state of an application, persist
-it and then resume it in a different session.
+it and then reproduce it in a different session.
 
 ### Mixins
 
