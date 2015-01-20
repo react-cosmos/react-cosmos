@@ -134,8 +134,9 @@ This is what `boySnapshot` will look like:
 ```js
 {
   component: 'Boy',
-  componentLookup: [function Function]
-  eyes: 'blue'
+  componentLookup: [function Function],
+  eyes: 'blue',
+  initialMood: 'happy',
   state: {
     mood: 'curious'
   }
@@ -208,7 +209,8 @@ son.setState({mood: 'sad'});
 
 > "I am the happy father of a sad blue-eyed boy."
 
-We can now generate a recursive snapshot and take a capture the nested state.
+We can now generate a recursive snapshot and take a of the capture the nested 
+state.
 
 ```js
 var familySnapshot = father.generateSnapshot(true);
@@ -219,9 +221,9 @@ This is what the nested snapshot will look like:
 ```js
 {
   component: 'Father',
-  componentLookup: [function Function]
-  eyes: 'blue'
-  mood: 'happy'
+  componentLookup: [function Function],
+  eyes: 'blue',
+  mood: 'happy',
   state: {
     children: {
       son: {
@@ -232,7 +234,7 @@ This is what the nested snapshot will look like:
 }
 ```
 
-This makes is possible to capture the entire state of an application, persist
+This makes it possible to capture the entire state of an application, persist
 it and then reproduce it in a different session.
 
 ### Mixins
