@@ -209,7 +209,7 @@ son.setState({mood: 'sad'});
 
 > "I am the happy father of a sad blue-eyed boy."
 
-We can now generate a recursive snapshot and take a of the capture the nested 
+We can now generate a recursive snapshot and take a capture of the nested
 state.
 
 ```js
