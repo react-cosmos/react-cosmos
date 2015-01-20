@@ -1,25 +1,246 @@
 Cosmos [![Build Status](https://travis-ci.org/skidding/cosmos.svg)](https://travis-ci.org/skidding/cosmos)
 ===
-Data exploration framework
+A foundation for maintainable web applications.
 
-**Cosmos is a JavaScript user interface framework that cares about data clarity
-and component autonomy.** It prevents scaling complexity by enforcing a
-zero-bootstrap policy and by having data structures dictate code logic and not
-the other way around.
+Cosmos glues [React](http://facebook.github.io/react/) components together and
+creates a uniform relationship between them.
 
-Built on top of Facebook's [**React**](http://facebook.github.io/react/),
-Cosmos glues components together and provides a uniform structure between them.
-Components are self-contained, UI building blocks.
+There's no such thing as *controllers* or *pages* in Cosmos, just *components.*
+The UI is a tree of components consisting of a root component and its
+descendants. Any component can be loaded full-screen as the root element and
+a route is just an alias to component _props._
 
-**See Cosmos in action by [playing a game of Flatris.](http://skidding.github.io/flatris/)**
+Check out [**Flatris**](http://skidding.github.io/flatris/), a demo app built
+with Cosmos.
 
 Jump to:
 
-- [Problem](#problem)
 - [Manifesto](#manifesto)
 - [Installation](#installation)
 - [Specs](#specs)
+- [Problem](#problem)
 - [Contributing](#contributing)
+
+## Manifesto
+
+_cos·mos<sup>1</sup> `/ˈkäzməs,-ˌmōs,-ˌmäs/` noun — 1. The universe seen as
+a well-ordered whole._
+
+- Zero bootstrap
+- Can be plugged into any other framework
+- Everything is a Component
+- Components are oblivious of ancestors
+- Any component can be represented by a URI
+- The state of the entire UI can be serialized at any given point in time
+- Components can implement any data sync mechanism
+
+## Installation
+
+Either install the `cosmos-js` [npm package](https://www.npmjs.org/package/cosmos-js)
+or include the build directly in your project.
+
+```html
+<!-- Development build -->
+<script src="http://skidding.github.io/cosmos/build/cosmos.js"></script>
+<!-- Production build -->
+<script src="http://skidding.github.io/cosmos/build/cosmos.min.js"></script>
+```
+
+## Specs
+
+In Cosmos, any component in any state can be represented and reproduced by a
+persistent JSON. This goes hand in hand with React's declarative nature.
+
+The input data of a component is a JSON object and the role of a component is
+to transform its input data into HTML output. Easy to follow and assert
+behavior. See [React Component](http://facebook.github.io/react/docs/component-api.html)
+for in-depth specs.
+
+### Core concepts
+
+Reserved props when working with Cosmos: `component`, `componentLookup` and
+`state`.
+
+#### Component lookup
+
+In order to make component definitions serializable, Cosmos doesn't work with
+classes directly. The `component` prop holds the name of the component, while
+the `componentLookup` prop is used for passing a mapping function that returns
+corresponding component classes.
+
+Working with the component lookup also results in cleaner component files,
+especially when using CommonJS modules with relative paths.
+
+First, we need a component namespace.
+
+```js
+var components = {};
+
+// The component classes can be drawn from any global namespace or
+// require() mechanism
+var componentLookup = function(name) {
+  return components[name];
+};
+```
+
+Then, we attach components to that namespace.
+
+```js
+components.Boy = React.createClass({
+  mixins: [Cosmos.mixins.PersistState],
+
+  getInitialState: function() {
+    return {
+      mood: this.props.initialMood
+    };
+  },
+
+  render: function() {
+    return <span>a {this.state.mood} {this.props.eyes}-eyed boy</span>;
+  }
+});
+```
+
+Once that is in place, we are able to render components without holding
+references to their class object.
+
+```js
+var props = {
+  component: 'Boy',
+  componentLookup: componentLookup,
+  eyes: 'blue',
+  initialMood: 'happy'
+};
+
+var boy = Cosmos.render(props, document.body);
+```
+
+> "a happy blue-eyed boy"
+
+#### Component snapshot
+
+The props and state of a component can be joined into a unified snapshot. The
+`state` prop holds the state of the component.
+
+```js
+// Why do people sleep at night?
+boy.setState({mood: 'curious'});
+
+var boySnapshot = boy.generateSnapshot();
+```
+
+This is what `boySnapshot` will look like:
+
+```js
+{
+  component: 'Boy',
+  componentLookup: [function Function],
+  eyes: 'blue',
+  initialMood: 'happy',
+  state: {
+    mood: 'curious'
+  }
+}
+```
+
+Serializing the snapshot is as easy as excluding the `componentLookup` key.
+
+#### State injection
+
+Serializing the state of components is no fun if we can't load it back later.
+
+```js
+// The clone will be created in the identical state of the original component
+// (with a "curious" mood)
+var boyClone = Cosmos.render(boySnapshot);
+```
+
+#### Children
+
+Cosmos gets interesting when dealing with nested components. The entire state
+of a component tree can be serialized recursively, as well as injected top-down
+from the root component to the tree leaves.
+
+This is achieved through the `loadChild` API of the `PersistState` mixin.
+
+```js
+components.Father = React.createClass({
+  mixins: [Cosmos.mixins.PersistState],
+
+  children: {
+    son: function() {
+      return {
+        component: 'Boy',
+        eyes: this.props.eyes,
+        initialMood: this.props.mood,
+      };
+    }
+  },
+
+  render: function() {
+    return <p>I am the {this.props.mood} father of {this.loadChild('son')}.</p>;
+  }
+});
+```
+
+The parent's props will propagate to its child upon rendering.
+
+```js
+var props = {
+  component: 'Father',
+  componentLookup: componentLookup,
+  eyes: 'blue',
+  mood: 'happy'
+};
+
+var father = Cosmos.render(props, document.body);
+```
+
+> "I am the happy father of a happy blue-eyed boy."
+
+However, the child manages its own state from that point on.
+
+```js
+var son = father.refs.son;
+
+// We missed the icecream truck :(
+son.setState({mood: 'sad'});
+```
+
+> "I am the happy father of a sad blue-eyed boy."
+
+We can now generate a recursive snapshot and take a capture of the nested
+state.
+
+```js
+var familySnapshot = father.generateSnapshot(true);
+```
+
+This is what the nested snapshot will look like:
+
+```js
+{
+  component: 'Father',
+  componentLookup: [function Function],
+  eyes: 'blue',
+  mood: 'happy',
+  state: {
+    children: {
+      son: {
+        mood: 'sad'
+      }
+    }
+  }
+}
+```
+
+This makes it possible to capture the entire state of an application, persist
+it and then reproduce it in a different session.
+
+### Mixins
+
+Core mixins are placed under the `Cosmos.mixins` namespace. Read more in the
+[Mixins wiki page.](https://github.com/skidding/cosmos/wiki/Mixins)
 
 ## Problem
 
@@ -34,11 +255,11 @@ why is that, why is complexity proportional to the number of features added?
 Two reasons:
 
 1. **Interdependence.** Tie a number of units together, rely on one to change
-                        the state of another and you successfully gave birth to
-                        an unpredictable ecosystem
+the state of another and you successfully gave birth to
+an unpredictable ecosystem
 1. **Data obscurity.** Mixing data with logic turns any transparent river of
-                       data into a muddy sewage network and generates a big
-                       pile of opinionated, disposable code.
+data into a muddy sewage network and generates a big
+pile of opinionated, disposable code.
 
 Avoiding these pitfalls upfront is difficult. They occur only after you've
 reached a certain maturity in a program. Easy to notice once the code is no
@@ -49,19 +270,19 @@ benefit from a natural tendency to scale.
 
 ### Vertical encapsulation
 
-Working with so many entities builds complex relationships. Models, Controllers,
-Views, Helpers, etc., they're all connected to each other in various ways. Your
-application is the outcome of all sorts of objects with different roles and
-behaviors depending on one another.
+Working with so many entities builds complex relationships. Models,
+Controllers, Views, Helpers, etc., they're all connected to each other in
+various ways. Your application is the outcome of all sorts of objects with
+different roles and behaviors depending on one another.
 
 Scaling you app linearly requires a flat infrastructure. **Responsibilities
-should translate into domain logic instead of low-level roles (data modeling,
-rendering, etc.)**
+should translate into domain logic instead of low-level roles (data
+modeling, rendering, etc.)**
 
 Cosmos only has one entity: The Component. They are autonomous, have end-to-end
 capabilities and each can function as a complete application by itself,
 excluding interdependence from the start. Because they can describe their
-output without relying on any external logic, Components are declarative and
+output without relying on any external logic, components are declarative and
 predictable.
 
 Isolating the source of a bug now has O(1) complexity.
@@ -72,197 +293,19 @@ Isolating the source of a bug now has O(1) complexity.
 > worry about data structures and their relationships.
 
 Cosmos is partly inspired by a Linus Torvalds
-[comment](http://lwn.net/Articles/193245/) about __designing your code around
-your data and not the other way around.__ Think of many how times you witnessed
-software go south because of a growing gap between data and the end product and
-see if Linus’ statement makes any sense.
+[comment](http://lwn.net/Articles/193245/) about **designing your code
+around your data and not the other way around.**
 
 But Cosmos does not impose any specific data structures, it simply makes them
-surface and hard to miss. All Component logic wraps around a single JSON
-object, which starts as the Component input and updates along with state
+surface and hard to miss. All component logic wraps around a single JSON
+object, which starts as the component input and updates along with state
 changes. That object will always be a visible, persistent data structure.
-
-## Manifesto
-
-_cos·mos<sup>1</sup> `/ˈkäzməs,-ˌmōs,-ˌmäs/` noun — 1. The universe seen as
-a well-ordered whole._
-
-- Zero bootstrap
-- Can be plugged into any other framework
-- Everything is a Component
-- Components are oblivious of ancestors
-- The state of a Component can be serialized at any given point in time
-- Any Component input can be represented by a URI
-- Components can implement any data mechanism*
-
-\* All Cosmos core mixins are agnostic on how data is populated inside a
-Component (see default [DataFetch](mixins/data-fetch.js) Ajax implementation.)
-
-## Installation
-
-Include either the development or the production build in your project.
-
-```html
-<script src="http://skidding.github.io/cosmos/build/cosmos.js"></script>
-<script src="http://skidding.github.io/cosmos/build/cosmos.min.js"></script>
-```
-
-Cosmos only depends on `React ~0.9.0` and `Lo-Dash ~2.4.1`
-
-### Development
-
-The demo skeleton is present in all branches and can be opened in any browser,
-without any web server, simply check doing a git checkout of the repository and
-generating a build using [gulp.](https://github.com/gulpjs/gulp)
-
-```bash
-git clone https://github.com/skidding/cosmos.git && cd cosmos
-npm install
-node_modules/.bin/gulp
-```
-
-## Specs
-
-One of the Cosmos [mantras](#manifesto) is "The state of a Component can be
-serialized at any given point in time," therefore __any Component in any state
-can be represented and reproduced by a persistent JSON.__ This goes hand in
-hand with React's declarative nature.
-
-The input data of a Component is a JSON object and the role of a Component is
-to transform its input data into HTML output. Easy to follow and assert
-behavior.
-
-See [React Component](http://facebook.github.io/react/docs/component-api.html)
-for in-depth specs and detailed API.
-
-```js
-// Registering Cosmos Components is as easy as referencing them in the
-// components namespace
-Cosmos.components.Intro = React.createClass({
-  render: function() {
-    return <p>My name is {this.props.name} and I am from {this.props.hometown}.</p>
-  }
-});
-```
-
-_[JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) improves the
-readability of React Components a lot, but unfortunately
-[GFM](http://github.github.com/github-flavored-markdown/) doesn't support it
-yet._
-
-```js
-// This is how you load and render Component input in Cosmos
-Cosmos.render({
-  component: 'Intro',
-  name: 'Johnny',
-  hometown: 'Minneapolis'
-});
-// Since we didn't specify a DOM container to render this component in, an HTML
-// string will be returned instead
-"<p>My name is Johnny and I am from Minneapolis.</p>"
-```
-
-#### Component input (props)
-
-```js
-{
-  component: 'Intro',
-  name: 'Johnny',
-  hometown: 'Minneapolis'
-}
-```
-
-It's up to a Component (or the mixins it uses) to implement any _props_ received
-as input, except for one reserved by convention: **component**, the name of the
-Component to load (from the Cosmos.components namespace.)
-
-It's counter-intuitive to have the Component name embedded in its input data,
-but this is part of the Component serialization concept. Think of the
-Component input data as a database entry and it will start making sense.
-
-### Top-level API
-
-Cosmos can be used as the main router for a web app, but also just for
-rendering parts of an existent application. Here are the main API methods that
-should make you feel at home with Cosmos.
-
-#### Cosmos(props)
-
-The _Cosmos_ namespace itself is a function. It's how you instantiate a
-Component from the Cosmos.components namespace.
-
-```js
-Cosmos({
-  component: 'Intro',
-  name: 'Johnny',
-  hometown: 'Minneapolis'
-});
-// is the equivalent of
-Cosmos.components.Intro({
-  name: 'Johny',
-  hometown: 'Minneapolis'
-});
-```
-
-Here's how rendering a Component inside another one looks like in JSX syntax:
-
-```html
-<Cosmos component="Intro"
-        name="Johnny"
-        hometown="Minneapolis" />
-```
-
-#### Cosmos.render(props, container, callback)
-
-Renders a React Component from the Cosmos namespace (_component_ prop is
-required.) The _container_ and _callback_ params are optional.
-
-#### Cosmos.start(options)
-
-Entry point for a Cosmos Router-powered app. Uses the HTML5 history.pushState
-API to cache Component snapshots and listen to state changes, rendering
-previous Components in an instant when going back through history.
-
-The options are as follows:
-
-- **props** - Initial Component input, defaults to the URL query string
-- **defaultProps** - Default Component input to load when the given  _props_
-                     are empty. Useful when the initial Component input is
-                     loaded from the URL and you need a default Component
-                     input for the `/` home path
-- **container** - DOM container to render Components in, defaults to
-                  `document.body`
-
-Here's how a standard URL for an app powered by the Cosmos Router would look
-like:
-
-```
-http://localhost/?component=Intro&name=Johnny&hometown=Minneapolis
-```
-
-The [URL mixin](https://github.com/skidding/cosmos/wiki/Mixins#url) is used for
-routing links using the Cosmos Router.
-
-### Mixins
-
-Mixins are meant to be responsible for all behavior that isn't specific to a
-single Component.
-
-Each mixin can support a set of input _props,_ make new methods
-available and interfere with the [lifecycle methods](http://facebook.github.io/react/docs/component-specs.html#lifecycle-methods)
-of a Component. While mixins can optionally profit from other mixins when
-combined, they are independent by nature and should follow the **Single
-Responsibility Principle.**
-
-Core mixins are placed under the `Cosmos.mixins` namespace. Read more inside
-the [Mixins wiki page.](https://github.com/skidding/cosmos/wiki/Mixins)
 
 ## Contributing
 
-This is a proof of concept and code pull requests aren’t expected until the
-specifications receive more feedback. Instead, I urge you to imagine what
-impact would Cosmos have in any past experience of building a web application
-that encountered a scaling impediment at some point. Attempt to answer this
+Until the Cosmos project becomes more solid and concrete, I urge you to recall
+a past experience of building a web application that became harder and harder
+to work on as time passed and development progressed. Attempt to answer this
 question: If you enforced the Cosmos principles onto the infrastructure you're
 picturing, would it: a) improve, b) complicate or c) not influence the
 situation?
