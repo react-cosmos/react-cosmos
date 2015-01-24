@@ -13,15 +13,15 @@ Cosmos.mixins.Url = {
      */
     return '?' + Cosmos.serialize.getQueryStringFromProps(props);
   },
-  
-  routeLink: function(e) {
+
+  routeLink: function(event) {
     /**
      * Any <a> tag can have this method bound to its onClick event to have
      * their corresponding href location picked up by the built-in Router
      * implementation, which uses pushState to switch between Components
      * instead of reloading pages.
      */
-    e.preventDefault();
-    App.router.goTo(e.currentTarget.getAttribute('href'));
+    event.preventDefault();
+    this.props.router.goTo(event.currentTarget.getAttribute('href'));
   }
 };

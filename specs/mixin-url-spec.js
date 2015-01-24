@@ -19,10 +19,6 @@ describe("Components implementing the Url mixin", function() {
     React = require('react/addons');
     utils = React.addons.TestUtils;
     Cosmos = require('../build/cosmos.js');
-
-    // The Cosmos.serialize lib is already tested in isolation
-    spyOn(Cosmos.serialize, 'getQueryStringFromProps')
-         .and.returnValue('players=5&state=%7B%22speed%22%3A1%7D');
   });
 
   // In order to avoid any sort of state between tests, even the component class
@@ -42,6 +38,10 @@ describe("Components implementing the Url mixin", function() {
       componentInstance;
 
   it("should generate url with escaped props and state", function() {
+    // The Cosmos.serialize lib is already tested in isolation
+    spyOn(Cosmos.serialize, 'getQueryStringFromProps')
+         .and.returnValue('players=5&state=%7B%22speed%22%3A1%7D');
+
     ComponentClass = generateComponentClass();
     componentElement = React.createElement(ComponentClass, {
       players: 5,
@@ -61,5 +61,29 @@ describe("Components implementing the Url mixin", function() {
         speed: 1
       }
     });
+  });
+
+  it("should call props instance from props", function() {
+    var goToSpy = jasmine.createSpy();
+
+    ComponentClass = generateComponentClass();
+    componentElement = React.createElement(ComponentClass, {
+      router: {
+        goTo: goToSpy
+      }
+    });
+    componentInstance = utils.renderIntoDocument(componentElement);
+
+    // Fake the structure of an event
+    componentInstance.routeLink({
+      preventDefault: function() {},
+      currentTarget: {
+        getAttribute: function() {
+          return '?component=NextComponent';
+        }
+      }
+    });
+
+    expect(goToSpy).toHaveBeenCalledWith('?component=NextComponent');
   });
 });
