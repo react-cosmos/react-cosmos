@@ -9,7 +9,6 @@ describe("Cosmos.Router", function() {
   var React,
       utils,
       Cosmos,
-      propsFromQueryString,
       ComponentClass,
       componentElement,
       componentInstance,
@@ -30,11 +29,10 @@ describe("Cosmos.Router", function() {
     spyOn(Cosmos.Router.prototype, '_pushHistoryState');
 
     // The Cosmos.url lib is already tested in isolation
-    propsFromQueryString = {
+    spyOn(Cosmos.url, 'getParams').and.returnValue({
       component: 'List',
-      data: 'users.json'
-    };
-    spyOn(Cosmos.url, 'getParams').and.returnValue(propsFromQueryString);
+      dataUrl: 'users.json'
+    });
     spyOn(Cosmos.url, 'isPushStateSupported').and.returnValue(true);
 
     // We just want a valid instance to work with, the Router props won't be
@@ -53,8 +51,9 @@ describe("Cosmos.Router", function() {
   it("should use props from URL query string", function() {
     var router = new Cosmos.Router();
 
-    expect(Cosmos.render.calls.mostRecent().args[0])
-          .toEqual(propsFromQueryString);
+    var propsSent = Cosmos.render.calls.mostRecent().args[0];
+    expect(propsSent.component).toEqual('List');
+    expect(propsSent.dataUrl).toEqual('users.json');
   });
 
   it("should extend default props", function() {
@@ -63,12 +62,10 @@ describe("Cosmos.Router", function() {
       defaultProp: true
     });
 
-    expect(Cosmos.render.calls.mostRecent().args[0]).toEqual({
-      component: 'List',
-      data: 'users.json',
-      // The props for the url didn't override this prop
-      defaultProp: true
-    });
+    var propsSent = Cosmos.render.calls.mostRecent().args[0];
+    expect(propsSent.component).toEqual('List');
+    expect(propsSent.dataUrl).toEqual('users.json');
+    expect(propsSent.defaultProp).toEqual(true);
   });
 
   it("should default to document.body as container", function() {
@@ -77,15 +74,43 @@ describe("Cosmos.Router", function() {
     expect(Cosmos.render.calls.mostRecent().args[1]).toBe(document.body);
   });
 
+  it("should attach router reference to component props on init", function() {
+    var router = new Cosmos.Router();
+
+    var propsSent = Cosmos.render.calls.mostRecent().args[0];
+    expect(propsSent.router).toEqual(router);
+  });
+
+  it("should attach router reference to component on .goTo method", function() {
+    var router = new Cosmos.Router();
+    router.goTo('?component=List&dataUrl=users.json');
+
+    var propsSent = Cosmos.render.calls.mostRecent().args[0];
+    expect(propsSent.router).toEqual(router);
+  });
+
+  it("should attach router reference to component from PopState event", function() {
+    var router = new Cosmos.Router();
+    router.onPopState({
+      state: {
+        component: 'List',
+        dataUrl: 'users.json'
+      }
+    });
+
+    var propsSent = Cosmos.render.calls.mostRecent().args[0];
+    expect(propsSent.router).toEqual(router);
+  });
+
   it("should use props from .goTo method", function() {
     var router = new Cosmos.Router();
     router.goTo('?component=List&dataUrl=users.json');
 
     expect(Cosmos.render.calls.count()).toEqual(2);
-    expect(Cosmos.render.calls.mostRecent().args[0]).toEqual({
-      component: 'List',
-      dataUrl: 'users.json'
-    });
+
+    var propsSent = Cosmos.render.calls.mostRecent().args[0];
+    expect(propsSent.component).toEqual('List');
+    expect(propsSent.dataUrl).toEqual('users.json');
   });
 
   it("should extend default props when using .goTo method", function() {
@@ -96,12 +121,11 @@ describe("Cosmos.Router", function() {
     router.goTo('?component=List&dataUrl=users.json');
 
     expect(Cosmos.render.calls.count()).toEqual(2);
-    expect(Cosmos.render.calls.mostRecent().args[0]).toEqual({
-      component: 'List',
-      dataUrl: 'users.json',
-      // The props for the url didn't override this prop
-      defaultProp: true
-    });
+
+    var propsSent = Cosmos.render.calls.mostRecent().args[0];
+    expect(propsSent.component).toEqual('List');
+    expect(propsSent.dataUrl).toEqual('users.json');
+    expect(propsSent.defaultProp).toEqual(true);
   });
 
   it("should push component snapshot to state when using .goTo method",
@@ -162,10 +186,10 @@ describe("Cosmos.Router", function() {
     });
 
     expect(Cosmos.render.calls.count()).toEqual(2);
-    expect(Cosmos.render.calls.mostRecent().args[0]).toEqual({
-      component: 'List',
-      dataUrl: 'users.json'
-    });
+
+    var propsSent = Cosmos.render.calls.mostRecent().args[0];
+    expect(propsSent.component).toEqual('List');
+    expect(propsSent.dataUrl).toEqual('users.json');
   });
 
   it("shouldn't extend default props when using PopState event", function() {
@@ -180,11 +204,10 @@ describe("Cosmos.Router", function() {
       }
     });
 
-    expect(Cosmos.render.calls.count()).toEqual(2);
-    expect(Cosmos.render.calls.mostRecent().args[0]).toEqual({
-      component: 'List',
-      dataUrl: 'users.json'
-    });
+    var propsSent = Cosmos.render.calls.mostRecent().args[0];
+    expect(propsSent.component).toEqual('List');
+    expect(propsSent.dataUrl).toEqual('users.json');
+    expect(propsSent.defaultProp).toEqual(undefined);
   });
 
   it("should cache latest snapshot of previous Component", function() {
