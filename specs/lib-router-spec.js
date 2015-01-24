@@ -40,18 +40,6 @@ describe("Cosmos.Router", function() {
         expect(router.options.props).toEqual(Cosmos.url.getParams());
       });
 
-      it("should use default props when props are empty", function() {
-        spyOn(Cosmos.url, 'getParams').and.returnValue({});
-
-        var router = new Cosmos.Router({defaultProps: {
-          component: 'DefaultComponent'
-        }});
-
-        expect(router.options.props).toEqual({
-          component: 'DefaultComponent'
-        });
-      });
-
       it("shouldn't use default props when props aren't empty", function() {
         var router = new Cosmos.Router({defaultProps: {
           component: 'DefaultComponent'
