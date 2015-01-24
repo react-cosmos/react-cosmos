@@ -19,6 +19,10 @@ describe("Components implementing the Url mixin", function() {
     React = require('react/addons');
     utils = React.addons.TestUtils;
     Cosmos = require('../build/cosmos.js');
+
+    // The Cosmos.serialize lib is already tested in isolation
+    spyOn(Cosmos.serialize, 'getQueryStringFromProps')
+         .and.returnValue('players=5&state=%7B%22speed%22%3A1%7D');
   });
 
   // In order to avoid any sort of state between tests, even the component class
@@ -41,12 +45,21 @@ describe("Components implementing the Url mixin", function() {
     ComponentClass = generateComponentClass();
     componentElement = React.createElement(ComponentClass, {
       players: 5,
-      state: {speed: 1}
+      state: {
+        speed: 1
+      }
     });
     componentInstance = utils.renderIntoDocument(componentElement);
 
     expect(componentInstance.getUrlFromProps(componentInstance.generateSnapshot()))
-          // encodeURIComponent(JSON.stringify({speed:1}))
+          // state=encodeURIComponent(JSON.stringify({speed:1}))
           .toEqual('?players=5&state=%7B%22speed%22%3A1%7D');
+
+    expect(Cosmos.serialize.getQueryStringFromProps).toHaveBeenCalledWith({
+      players: 5,
+      state: {
+        speed: 1
+      }
+    });
   });
 });
