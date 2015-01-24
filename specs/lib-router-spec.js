@@ -14,18 +14,22 @@ describe("Cosmos.Router", function() {
     global.window = jsdom.jsdom().createWindow('<html><body></body></html>');
     global.document = global.window.document;
     global.navigator = global.window.navigator;
-    // We're mocking the URL query string of the window
-    global.window.location = {search: '?component=List&data=users.json'};
 
     React = require('react/addons');
     utils = React.addons.TestUtils;
     Cosmos = require('../build/cosmos.js');
 
-    // Ignore out of scope methods
+    // Ignore external methods
     spyOn(Cosmos.Router.prototype, '_bindPopStateEvent');
     spyOn(Cosmos.Router.prototype, '_replaceHistoryState');
     spyOn(Cosmos.Router.prototype, '_pushHistoryState');
     spyOn(Cosmos.url, 'isPushStateSupported').and.returnValue(true);
+
+    // The Cosmos.url lib is already tested in isolation
+    spyOn(Cosmos.url, 'getParams').and.returnValue({
+      component: 'List',
+      data: 'users.json'
+    });
   });
 
   describe("new instance", function() {
@@ -135,7 +139,7 @@ describe("Cosmos.Router", function() {
     // Before routing to a new Component configuration, the previous one
     // shouldn't been updated with our changes
     router.goTo('?component=User&dataUrl=user.json');
-    
+
     expect(router._replaceHistoryState.calls.count()).toEqual(1);
     expect(router._replaceHistoryState.calls.mostRecent().args[0]).toEqual({
       component: 'List',
