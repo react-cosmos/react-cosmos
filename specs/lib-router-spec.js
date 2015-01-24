@@ -106,8 +106,6 @@ describe("Cosmos.Router", function() {
     var router = new Cosmos.Router();
     router.goTo('?component=List&dataUrl=users.json');
 
-    expect(Cosmos.render.calls.count()).toEqual(2);
-
     var propsSent = Cosmos.render.calls.mostRecent().args[0];
     expect(propsSent.component).toEqual('List');
     expect(propsSent.dataUrl).toEqual('users.json');
@@ -119,8 +117,6 @@ describe("Cosmos.Router", function() {
       defaultProp: true
     });
     router.goTo('?component=List&dataUrl=users.json');
-
-    expect(Cosmos.render.calls.count()).toEqual(2);
 
     var propsSent = Cosmos.render.calls.mostRecent().args[0];
     expect(propsSent.component).toEqual('List');
@@ -159,14 +155,11 @@ describe("Cosmos.Router", function() {
     // Simulate React.render callback call
     componentCallback.call(componentInstance, 'testx');
 
-    // The snapshot shouldn't been extracted from the component two times
-    // 1. For previous component
-    // 2. For just loaded component
-    expect(componentInstance.generateSnapshot.calls.count()).toEqual(2);
+    // The snapshot should've been extracted from the component
+    expect(componentInstance.generateSnapshot).toHaveBeenCalled();
 
     // It's a bit difficult to mock the native functions so we mocked the
     // private methods that wrap those calls
-    expect(router._pushHistoryState.calls.count()).toEqual(1);
     expect(router._pushHistoryState.calls.mostRecent().args[0]).toEqual({
       component: 'List',
       dataUrl: 'users.json',
@@ -184,8 +177,6 @@ describe("Cosmos.Router", function() {
         dataUrl: 'users.json'
       }
     });
-
-    expect(Cosmos.render.calls.count()).toEqual(2);
 
     var propsSent = Cosmos.render.calls.mostRecent().args[0];
     expect(propsSent.component).toEqual('List');
@@ -237,7 +228,6 @@ describe("Cosmos.Router", function() {
 
     // It's a bit difficult to mock the native functions so we mocked the
     // private methods that wrap those calls
-    expect(router._replaceHistoryState.calls.count()).toEqual(1);
     expect(router._replaceHistoryState.calls.mostRecent().args[0]).toEqual({
       component: 'List',
       dataUrl: null,
