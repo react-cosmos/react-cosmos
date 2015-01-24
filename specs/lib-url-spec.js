@@ -20,10 +20,21 @@ describe("Cosmos.url", function() {
     React = require('react/addons');
     utils = React.addons.TestUtils;
     Cosmos = require('../build/cosmos.js');
+
+    // The Cosmos.serialize lib is already tested in isolation
+    spyOn(Cosmos.serialize, 'getPropsFromQueryString').and.returnValue({
+      component: 'List',
+      data: 'users.json'
+    });
   });
 
   it(".getParams should extract the query string from the URL", function() {
-    expect(Cosmos.url.getParams()).toEqual({
+    var props = Cosmos.url.getParams();
+
+    expect(Cosmos.serialize.getPropsFromQueryString)
+          .toHaveBeenCalledWith('component=List&data=users.json');
+
+    expect(props).toEqual({
       component: 'List',
       data: 'users.json'
     });
