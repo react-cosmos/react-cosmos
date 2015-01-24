@@ -13,6 +13,7 @@ Cosmos.mixins.Url = {
      */
     return '?' + Cosmos.serialize.getQueryStringFromProps(props);
   },
+  
   routeLink: function(e) {
     /**
      * Any <a> tag can have this method bound to its onClick event to have

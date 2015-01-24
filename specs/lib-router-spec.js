@@ -147,6 +147,7 @@ describe("Cosmos.Router", function() {
     // Before routing to a new Component configuration, the previous one
     // shouldn't been updated with our changes
     router.goTo('?component=User&dataUrl=user.json');
+    
     expect(router._replaceHistoryState.calls.count()).toEqual(1);
     expect(router._replaceHistoryState.calls.mostRecent().args[0]).toEqual({
       component: 'List',
