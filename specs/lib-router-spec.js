@@ -48,193 +48,201 @@ describe("Cosmos.Router", function() {
     componentInstance = null;
   });
 
-  it("should use props from URL query string", function() {
-    var router = new Cosmos.Router();
+  describe("new instance", function() {
 
-    var propsSent = Cosmos.render.calls.mostRecent().args[0];
-    expect(propsSent.component).toEqual('List');
-    expect(propsSent.dataUrl).toEqual('users.json');
-  });
+    it("should use props from URL query string", function() {
+      var router = new Cosmos.Router();
 
-  it("should extend default props", function() {
-    var router = new Cosmos.Router({
-      component: 'DefaultComponent',
-      defaultProp: true
+      var propsSent = Cosmos.render.calls.mostRecent().args[0];
+      expect(propsSent.component).toEqual('List');
+      expect(propsSent.dataUrl).toEqual('users.json');
     });
 
-    var propsSent = Cosmos.render.calls.mostRecent().args[0];
-    expect(propsSent.component).toEqual('List');
-    expect(propsSent.dataUrl).toEqual('users.json');
-    expect(propsSent.defaultProp).toEqual(true);
+    it("should extend default props", function() {
+      var router = new Cosmos.Router({
+        component: 'DefaultComponent',
+        defaultProp: true
+      });
+
+      var propsSent = Cosmos.render.calls.mostRecent().args[0];
+      expect(propsSent.component).toEqual('List');
+      expect(propsSent.dataUrl).toEqual('users.json');
+      expect(propsSent.defaultProp).toEqual(true);
+    });
+
+    it("should attach router reference to props", function() {
+      var router = new Cosmos.Router();
+
+      var propsSent = Cosmos.render.calls.mostRecent().args[0];
+      expect(propsSent.router).toEqual(router);
+    });
+
+    it("should default to document.body as container", function() {
+      var router = new Cosmos.Router();
+
+      expect(Cosmos.render.calls.mostRecent().args[1]).toBe(document.body);
+    });
   });
 
-  it("should default to document.body as container", function() {
-    var router = new Cosmos.Router();
+  describe(".goTo method", function() {
 
-    expect(Cosmos.render.calls.mostRecent().args[1]).toBe(document.body);
-  });
+    it("should use props param", function() {
+      var router = new Cosmos.Router();
+      router.goTo('?component=List&dataUrl=users.json');
 
-  it("should attach router reference to component props on init", function() {
-    var router = new Cosmos.Router();
+      var propsSent = Cosmos.render.calls.mostRecent().args[0];
+      expect(propsSent.component).toEqual('List');
+      expect(propsSent.dataUrl).toEqual('users.json');
+    });
 
-    var propsSent = Cosmos.render.calls.mostRecent().args[0];
-    expect(propsSent.router).toEqual(router);
-  });
+    it("should extend default props", function() {
+      var router = new Cosmos.Router({
+        component: 'DefaultComponent',
+        defaultProp: true
+      });
+      router.goTo('?component=List&dataUrl=users.json');
 
-  it("should attach router reference to component on .goTo method", function() {
-    var router = new Cosmos.Router();
-    router.goTo('?component=List&dataUrl=users.json');
+      var propsSent = Cosmos.render.calls.mostRecent().args[0];
+      expect(propsSent.component).toEqual('List');
+      expect(propsSent.dataUrl).toEqual('users.json');
+      expect(propsSent.defaultProp).toEqual(true);
+    });
 
-    var propsSent = Cosmos.render.calls.mostRecent().args[0];
-    expect(propsSent.router).toEqual(router);
-  });
+    it("should attach router reference to props", function() {
+      var router = new Cosmos.Router();
+      router.goTo('?component=List&dataUrl=users.json');
 
-  it("should attach router reference to component from PopState event", function() {
-    var router = new Cosmos.Router();
-    router.onPopState({
-      state: {
+      var propsSent = Cosmos.render.calls.mostRecent().args[0];
+      expect(propsSent.router).toEqual(router);
+    });
+
+    it("should push component snapshot to browser history", function() {
+      ComponentClass = React.createClass({
+        mixins: [Cosmos.mixins.PersistState],
+        render: function() {
+          return React.DOM.span();
+        }
+      });
+      componentElement = React.createElement(ComponentClass, {
         component: 'List',
         dataUrl: 'users.json'
-      }
-    });
+      });
+      componentInstance = utils.renderIntoDocument(componentElement);
 
-    var propsSent = Cosmos.render.calls.mostRecent().args[0];
-    expect(propsSent.router).toEqual(router);
-  });
+      // Simulate some state addition in the component
+      spyOn(componentInstance, 'generateSnapshot').and.callFake(function() {
+        return {
+          component: 'List',
+          dataUrl: 'users.json',
+          state: {
+            haveISeenThings: 'yes'
+          }
+        };
+      });
 
-  it("should use props from .goTo method", function() {
-    var router = new Cosmos.Router();
-    router.goTo('?component=List&dataUrl=users.json');
+      var router = new Cosmos.Router();
+      router.goTo('?component=List&dataUrl=users.json');
 
-    var propsSent = Cosmos.render.calls.mostRecent().args[0];
-    expect(propsSent.component).toEqual('List');
-    expect(propsSent.dataUrl).toEqual('users.json');
-  });
+      // Simulate React.render callback call
+      componentCallback.call(componentInstance, 'testx');
 
-  it("should extend default props when using .goTo method", function() {
-    var router = new Cosmos.Router({
-      component: 'DefaultComponent',
-      defaultProp: true
-    });
-    router.goTo('?component=List&dataUrl=users.json');
+      // The snapshot should've been extracted from the component
+      expect(componentInstance.generateSnapshot).toHaveBeenCalled();
 
-    var propsSent = Cosmos.render.calls.mostRecent().args[0];
-    expect(propsSent.component).toEqual('List');
-    expect(propsSent.dataUrl).toEqual('users.json');
-    expect(propsSent.defaultProp).toEqual(true);
-  });
-
-  it("should push component snapshot to state when using .goTo method",
-     function() {
-    ComponentClass = React.createClass({
-      mixins: [Cosmos.mixins.PersistState],
-      render: function() {
-        return React.DOM.span();
-      }
-    });
-    componentElement = React.createElement(ComponentClass, {
-      component: 'List',
-      dataUrl: 'users.json'
-    });
-    componentInstance = utils.renderIntoDocument(componentElement);
-
-    // Simulate some state addition in the component
-    spyOn(componentInstance, 'generateSnapshot').and.callFake(function() {
-      return {
+      // It's a bit difficult to mock the native functions so we mocked the
+      // private methods that wrap those calls
+      expect(router._pushHistoryState.calls.mostRecent().args[0]).toEqual({
         component: 'List',
         dataUrl: 'users.json',
         state: {
           haveISeenThings: 'yes'
         }
-      };
+      });
     });
 
-    var router = new Cosmos.Router();
-    router.goTo('?component=List&dataUrl=users.json');
-
-    // Simulate React.render callback call
-    componentCallback.call(componentInstance, 'testx');
-
-    // The snapshot should've been extracted from the component
-    expect(componentInstance.generateSnapshot).toHaveBeenCalled();
-
-    // It's a bit difficult to mock the native functions so we mocked the
-    // private methods that wrap those calls
-    expect(router._pushHistoryState.calls.mostRecent().args[0]).toEqual({
-      component: 'List',
-      dataUrl: 'users.json',
-      state: {
-        haveISeenThings: 'yes'
-      }
-    });
-  });
-
-  it("should use props from PopState event state", function() {
-    var router = new Cosmos.Router();
-    router.onPopState({
-      state: {
+    it("should update browser history for previous component", function() {
+      /* Note: This is not a pure unit test, it depends on the internal logic
+      of React components */
+      ComponentClass = React.createClass({
+        mixins: [Cosmos.mixins.PersistState],
+        render: function() {
+          return React.DOM.span();
+        }
+      });
+      componentElement = React.createElement(ComponentClass, {
         component: 'List',
         dataUrl: 'users.json'
-      }
-    });
+      });
+      componentInstance = utils.renderIntoDocument(componentElement);
 
-    var propsSent = Cosmos.render.calls.mostRecent().args[0];
-    expect(propsSent.component).toEqual('List');
-    expect(propsSent.dataUrl).toEqual('users.json');
-  });
+      var router = new Cosmos.Router();
+      // We alter the current instance while it's bound to the current history
+      // entry
+      componentInstance.setProps({dataUrl: null, someNumber: 555});
+      componentInstance.setState({amIState: true});
 
-  it("shouldn't extend default props when using PopState event", function() {
-    var router = new Cosmos.Router({
-      component: 'DefaultComponent',
-      defaultProp: true
-    });
-    router.onPopState({
-      state: {
+      // Before routing to a new Component configuration, the previous one
+      // shouldn't been updated with our changes
+      router.goTo('?component=User&dataUrl=user.json');
+
+      // It's a bit difficult to mock the native functions so we mocked the
+      // private methods that wrap those calls
+      expect(router._replaceHistoryState.calls.mostRecent().args[0]).toEqual({
         component: 'List',
-        dataUrl: 'users.json'
-      }
+        dataUrl: null,
+        someNumber: 555,
+        state: {
+          amIState: true
+        }
+      });
     });
-
-    var propsSent = Cosmos.render.calls.mostRecent().args[0];
-    expect(propsSent.component).toEqual('List');
-    expect(propsSent.dataUrl).toEqual('users.json');
-    expect(propsSent.defaultProp).toEqual(undefined);
   });
 
-  it("should cache latest snapshot of previous Component", function() {
-    /* Note: This is not a pure unit test, it depends on the internal logic
-       of React components */
-    ComponentClass = React.createClass({
-      mixins: [Cosmos.mixins.PersistState],
-      render: function() {
-        return React.DOM.span();
-      }
+  describe(".PopState event", function() {
+
+    it("should use props from event state", function() {
+      var router = new Cosmos.Router();
+      router.onPopState({
+        state: {
+          component: 'List',
+          dataUrl: 'users.json'
+        }
+      });
+
+      var propsSent = Cosmos.render.calls.mostRecent().args[0];
+      expect(propsSent.component).toEqual('List');
+      expect(propsSent.dataUrl).toEqual('users.json');
     });
-    componentElement = React.createElement(ComponentClass, {
-      component: 'List',
-      dataUrl: 'users.json'
+
+    it("shouldn't extend default props", function() {
+      var router = new Cosmos.Router({
+        component: 'DefaultComponent',
+        defaultProp: true
+      });
+      router.onPopState({
+        state: {
+          component: 'List',
+          dataUrl: 'users.json'
+        }
+      });
+
+      var propsSent = Cosmos.render.calls.mostRecent().args[0];
+      expect(propsSent.component).toEqual('List');
+      expect(propsSent.dataUrl).toEqual('users.json');
+      expect(propsSent.defaultProp).toEqual(undefined);
     });
-    componentInstance = utils.renderIntoDocument(componentElement);
 
-    var router = new Cosmos.Router();
-    // We alter the current instance while it's bound to the current history
-    // entry
-    componentInstance.setProps({dataUrl: null, someNumber: 555});
-    componentInstance.setState({amIState: true});
+    it("should attach router reference to props", function() {
+      var router = new Cosmos.Router();
+      router.onPopState({
+        state: {
+          component: 'List',
+          dataUrl: 'users.json'
+        }
+      });
 
-    // Before routing to a new Component configuration, the previous one
-    // shouldn't been updated with our changes
-    router.goTo('?component=User&dataUrl=user.json');
-
-    // It's a bit difficult to mock the native functions so we mocked the
-    // private methods that wrap those calls
-    expect(router._replaceHistoryState.calls.mostRecent().args[0]).toEqual({
-      component: 'List',
-      dataUrl: null,
-      someNumber: 555,
-      state: {
-        amIState: true
-      }
+      var propsSent = Cosmos.render.calls.mostRecent().args[0];
+      expect(propsSent.router).toEqual(router);
     });
   });
 });
