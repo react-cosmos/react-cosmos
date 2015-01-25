@@ -200,6 +200,37 @@ describe("Cosmos.Router", function() {
       });
     });
 
+    it("shouldn't push router instance to browser history", function() {
+      ComponentClass = React.createClass({
+        mixins: [Cosmos.mixins.PersistState],
+        render: function() {
+          return React.DOM.span();
+        }
+      });
+      componentElement = React.createElement(ComponentClass);
+      componentInstance = utils.renderIntoDocument(componentElement);
+
+      var router = new Cosmos.Router();
+
+      spyOn(componentInstance, 'generateSnapshot').and.callFake(function() {
+        return {
+          component: 'List',
+          dataUrl: 'users.json',
+          router: router
+        };
+      });
+
+      router.goTo('?component=List&dataUrl=users.json');
+
+      // Simulate React.render callback call
+      componentCallback.call(componentInstance);
+
+      // It's a bit difficult to mock the native functions so we mocked the
+      // private methods that wrap those calls
+      var propsSent = router._pushHistoryState.calls.mostRecent().args[0];
+      expect(propsSent.router).toBe(undefined);
+    });
+
     it("should update browser history for previous component", function() {
       /* Note: This is not a pure unit test, it depends on the internal logic
       of React components */
