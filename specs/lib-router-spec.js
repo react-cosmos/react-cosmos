@@ -171,7 +171,6 @@ describe("Cosmos.Router", function() {
         // This won't be called because Cosmos.render is mocked
       };
 
-      // Simulate some state addition in the component
       spyOn(componentInstance, 'generateSnapshot').and.callFake(function() {
         return {
           component: 'List',
