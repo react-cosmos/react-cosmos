@@ -38,15 +38,52 @@ describe("Components implementing the Url mixin", function() {
       componentInstance;
 
   it("should generate url with escaped props and state", function() {
+    // The Cosmos.serialize lib is already tested in isolation
+    spyOn(Cosmos.serialize, 'getQueryStringFromProps')
+         .and.returnValue('players=5&state=%7B%22speed%22%3A1%7D');
+
     ComponentClass = generateComponentClass();
     componentElement = React.createElement(ComponentClass, {
       players: 5,
-      state: {speed: 1}
+      state: {
+        speed: 1
+      }
     });
     componentInstance = utils.renderIntoDocument(componentElement);
 
     expect(componentInstance.getUrlFromProps(componentInstance.generateSnapshot()))
-          // encodeURIComponent(JSON.stringify({speed:1}))
+          // state=encodeURIComponent(JSON.stringify({speed:1}))
           .toEqual('?players=5&state=%7B%22speed%22%3A1%7D');
+
+    expect(Cosmos.serialize.getQueryStringFromProps).toHaveBeenCalledWith({
+      players: 5,
+      state: {
+        speed: 1
+      }
+    });
+  });
+
+  it("should call props instance from props", function() {
+    var goToSpy = jasmine.createSpy();
+
+    ComponentClass = generateComponentClass();
+    componentElement = React.createElement(ComponentClass, {
+      router: {
+        goTo: goToSpy
+      }
+    });
+    componentInstance = utils.renderIntoDocument(componentElement);
+
+    // Fake the structure of an event
+    componentInstance.routeLink({
+      preventDefault: function() {},
+      currentTarget: {
+        getAttribute: function() {
+          return '?component=NextComponent';
+        }
+      }
+    });
+
+    expect(goToSpy).toHaveBeenCalledWith('?component=NextComponent');
   });
 });
