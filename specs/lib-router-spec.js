@@ -123,10 +123,7 @@ describe("Cosmos.Router", function() {
           return React.DOM.span();
         }
       });
-      componentElement = React.createElement(ComponentClass, {
-        component: 'List',
-        dataUrl: 'users.json'
-      });
+      componentElement = React.createElement(ComponentClass);
       componentInstance = utils.renderIntoDocument(componentElement);
 
       // Simulate some state addition in the component
