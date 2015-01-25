@@ -157,6 +157,50 @@ describe("Cosmos.Router", function() {
       });
     });
 
+    it("shouldn't push default props to browser history", function() {
+      ComponentClass = React.createClass({
+        mixins: [Cosmos.mixins.PersistState],
+        render: function() {
+          return React.DOM.span();
+        }
+      });
+      componentElement = React.createElement(ComponentClass);
+      componentInstance = utils.renderIntoDocument(componentElement);
+
+      var componentLookup = function() {
+        // This won't be called because Cosmos.render is mocked
+      };
+
+      // Simulate some state addition in the component
+      spyOn(componentInstance, 'generateSnapshot').and.callFake(function() {
+        return {
+          component: 'List',
+          componentLookup: componentLookup,
+          dataUrl: 'users.json',
+          defaultProp: true
+        };
+      });
+
+      var router = new Cosmos.Router({
+        component: 'DefaultComponent',
+        componentLookup: componentLookup,
+        defaultProp: true
+      });
+      router.goTo('?component=List&dataUrl=users.json');
+
+      // Simulate React.render callback call
+      componentCallback.call(componentInstance);
+
+      // It's a bit difficult to mock the native functions so we mocked the
+      // private methods that wrap those calls
+      expect(router._pushHistoryState.calls.mostRecent().args[0]).toEqual({
+        // Overridden prop
+        component: 'List',
+        // New prop
+        dataUrl: 'users.json'
+      });
+    });
+
     it("should update browser history for previous component", function() {
       /* Note: This is not a pure unit test, it depends on the internal logic
       of React components */
@@ -211,7 +255,7 @@ describe("Cosmos.Router", function() {
       expect(propsSent.dataUrl).toEqual('users.json');
     });
 
-    it("shouldn't extend default props", function() {
+    it("should extend default props", function() {
       var router = new Cosmos.Router({
         component: 'DefaultComponent',
         defaultProp: true
@@ -226,7 +270,7 @@ describe("Cosmos.Router", function() {
       var propsSent = Cosmos.render.calls.mostRecent().args[0];
       expect(propsSent.component).toEqual('List');
       expect(propsSent.dataUrl).toEqual('users.json');
-      expect(propsSent.defaultProp).toEqual(undefined);
+      expect(propsSent.defaultProp).toEqual(true);
     });
 
     it("should attach router reference to props", function() {
