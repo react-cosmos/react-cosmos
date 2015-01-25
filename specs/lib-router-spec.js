@@ -144,7 +144,7 @@ describe("Cosmos.Router", function() {
       router.goTo('?component=List&dataUrl=users.json');
 
       // Simulate React.render callback call
-      componentCallback.call(componentInstance, 'testx');
+      componentCallback.call(componentInstance);
 
       // The snapshot should've been extracted from the component
       expect(componentInstance.generateSnapshot).toHaveBeenCalled();
