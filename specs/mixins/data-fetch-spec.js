@@ -18,7 +18,7 @@ describe("Components implementing the DataFetch mixin", function() {
 
     React = require('react/addons');
     utils = React.addons.TestUtils;
-    Cosmos = require('../build/cosmos.js');
+    Cosmos = require('../../build/cosmos.js');
 
     // The fetching method should do nothing, we only care that it is called
     // before the components gets mounted

@@ -19,7 +19,7 @@ describe("Components implementing the DataFetch mixin", function() {
 
     React = require('react/addons');
     utils = React.addons.TestUtils;
-    Cosmos = require('../build/cosmos.js');
+    Cosmos = require('../../build/cosmos.js');
     $ = require('jquery');
 
     // Mock the $.ajax call so we can control the requests ourselves.

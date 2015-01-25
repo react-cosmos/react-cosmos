@@ -1,4 +1,4 @@
-describe("Components implementing the Url mixin", function() {
+describe("Components implementing the ClassName mixin", function() {
 
   var _ = require('lodash'),
       jsdom = require('jsdom');
@@ -18,15 +18,14 @@ describe("Components implementing the Url mixin", function() {
 
     React = require('react/addons');
     utils = React.addons.TestUtils;
-    Cosmos = require('../build/cosmos.js');
+    Cosmos = require('../../build/cosmos.js');
   });
 
   // In order to avoid any sort of state between tests, even the component class
   // generated for every test case
   var generateComponentClass = function(attributes) {
     return React.createClass(_.extend({}, {
-      mixins: [Cosmos.mixins.PersistState,
-               Cosmos.mixins.Url],
+      mixins: [Cosmos.mixins.ClassName],
       render: function() {
         return React.DOM.span();
       }
@@ -37,53 +36,41 @@ describe("Components implementing the Url mixin", function() {
       componentElement,
       componentInstance;
 
-  it("should generate url with escaped props and state", function() {
-    // The Cosmos.serialize lib is already tested in isolation
-    spyOn(Cosmos.serialize, 'getQueryStringFromProps')
-         .and.returnValue('players=5&state=%7B%22speed%22%3A1%7D');
-
+  it("should not return a class name when none is received", function() {
     ComponentClass = generateComponentClass();
-    componentElement = React.createElement(ComponentClass, {
-      players: 5,
-      state: {
-        speed: 1
-      }
-    });
+    componentElement = React.createElement(ComponentClass)
     componentInstance = utils.renderIntoDocument(componentElement);
 
-    expect(componentInstance.getUrlFromProps(componentInstance.generateSnapshot()))
-          // state=encodeURIComponent(JSON.stringify({speed:1}))
-          .toEqual('?players=5&state=%7B%22speed%22%3A1%7D');
-
-    expect(Cosmos.serialize.getQueryStringFromProps).toHaveBeenCalledWith({
-      players: 5,
-      state: {
-        speed: 1
-      }
-    });
+    expect(componentInstance.getClassName()).toBe(undefined);
   });
 
-  it("should call props instance from props", function() {
-    var goToSpy = jasmine.createSpy();
-
+  it("should return a class name when class prop is passed", function() {
     ComponentClass = generateComponentClass();
     componentElement = React.createElement(ComponentClass, {
-      router: {
-        goTo: goToSpy
-      }
+      className: 'my-class'
     });
     componentInstance = utils.renderIntoDocument(componentElement);
 
-    // Fake the structure of an event
-    componentInstance.routeLink({
-      preventDefault: function() {},
-      currentTarget: {
-        getAttribute: function() {
-          return '?component=NextComponent';
-        }
-      }
-    });
+    expect(componentInstance.getClassName()).toEqual('my-class');
+  });
 
-    expect(goToSpy).toHaveBeenCalledWith('?component=NextComponent');
+  it("should return default class name when passed", function() {
+    ComponentClass = generateComponentClass();
+    componentElement = React.createElement(ComponentClass)
+    componentInstance = utils.renderIntoDocument(componentElement);
+
+    expect(componentInstance.getClassName('default-class'))
+          .toEqual('default-class');
+  });
+
+  it("should override default class with class from props", function() {
+    ComponentClass = generateComponentClass();
+    componentElement = React.createElement(ComponentClass, {
+      className: 'my-class'
+    });
+    componentInstance = utils.renderIntoDocument(componentElement);
+
+    expect(componentInstance.getClassName('default-class'))
+          .toEqual('my-class');
   });
 });

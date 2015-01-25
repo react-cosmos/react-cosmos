@@ -18,7 +18,7 @@ describe("Components implementing the AnimationLoop mixin", function() {
 
     React = require('react/addons');
     utils = React.addons.TestUtils;
-    Cosmos = require('../build/cosmos.js');
+    Cosmos = require('../../build/cosmos.js');
   });
 
   // In order to avoid any sort of state between tests, even the component class

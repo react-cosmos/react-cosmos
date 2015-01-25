@@ -19,7 +19,7 @@ describe("Cosmos.serialize", function() {
 
     React = require('react/addons');
     utils = React.addons.TestUtils;
-    Cosmos = require('../build/cosmos.js');
+    Cosmos = require('../../build/cosmos.js');
   });
 
   it("should generate props object from query string", function() {
