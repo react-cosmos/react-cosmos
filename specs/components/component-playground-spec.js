@@ -13,7 +13,8 @@ describe("ComponentPlayground component", function() {
       Cosmos,
       ComponentPlayground,
       componentElement,
-      componentInstance;
+      componentInstance,
+      createElementSpy;
 
   beforeEach(function() {
     global.window = jsdom.jsdom().createWindow('<html><body></body></html>');
@@ -33,6 +34,9 @@ describe("ComponentPlayground component", function() {
     // Clean up previous component setup
     componentElement = null;
     componentInstance = null;
+
+    // Children are out of scope
+    createElementSpy = spyOn(Cosmos, 'createElement');
   });
 
   describe("render", function() {
@@ -147,12 +151,6 @@ describe("ComponentPlayground component", function() {
 
   describe("children", function() {
 
-    var createElementSpy;
-
-    beforeEach(function() {
-      createElementSpy = spyOn(Cosmos, 'createElement');
-    });
-
     it("should pass down fixture contents to preview child", function() {
       var referencedObj = {};
 
@@ -218,11 +216,6 @@ describe("ComponentPlayground component", function() {
   });
 
   describe("state", function() {
-
-    beforeEach(function() {
-      // Children shouldn't be rendered
-      spyOn(Cosmos, 'createElement');
-    });
 
     it("should default to no expanded components", function() {
       var props = {
