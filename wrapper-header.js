@@ -5,7 +5,7 @@
   } else if (typeof exports === 'object') {
     // Node. Does not work with strict CommonJS, but only CommonJS-like
     // environments that support module.exports, like Node
-    module.exports = factory(require('react'),
+    module.exports = factory(require('react/addons'),
                              require('lodash'),
                              require('jquery'));
   } else {
