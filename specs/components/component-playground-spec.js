@@ -113,8 +113,7 @@ describe("ComponentPlayground component", function() {
       componentElement = React.createElement(ComponentPlayground, props);
       componentInstance = utils.renderIntoDocument(componentElement);
 
-      var expandedComponents = findWithClass(componentInstance,
-                                             'expanded-component');
+      var expandedComponents = findWithClass(componentInstance, 'expanded');
 
       expect(expandedComponents.length).toBe(2);
 

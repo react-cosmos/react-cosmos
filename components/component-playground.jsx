@@ -59,7 +59,7 @@ Cosmos.components.ComponentPlayground = React.createClass({
 
         var classes = classSet({
           'component': true,
-          'expanded-component':
+          'expanded':
             this.state.expandedComponents.indexOf(componentName) !== -1
         });
 
