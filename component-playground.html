@@ -1,0 +1,48 @@
+<html>
+<head>
+  <title>React Component Playground</title>
+
+  <meta charset="utf-8">
+  <meta name="description" content="A foundation for maintainable web applications. Powered by React.">
+
+  <link href="build/component-playground.css" rel="stylesheet" type="text/css">
+
+  <script src="vendor/react-with-addons-0.12.2.js"></script>
+  <script src="vendor/lodash-2.4.1.js"></script>
+  <script src="vendor/jquery-1.11.0.js"></script>
+  <script src="build/cosmos.js"></script>
+</head>
+<body>
+  <script>
+
+// The Component Playground inside itself might not be the best example :)
+var fixtures = {
+  ComponentPlayground: {
+    'without-fixture-selected': {
+      fixtures: {
+        ComponentPlayground: {
+          'without-fixture-selected': {},
+          'with-fixture-selected': {}
+        }
+      }
+    },
+    'with-fixture-selected': {
+      fixtures: {
+        ComponentPlayground: {
+          'without-fixture-selected': {},
+          'with-fixture-selected': {}
+        }
+      },
+      fixturePath: 'ComponentPlayground/with-fixture-selected'
+    }
+  }
+};
+
+var router = Cosmos.start({
+  component: 'ComponentPlayground',
+  fixtures: fixtures
+});
+
+  </script>
+</body>
+</html>
