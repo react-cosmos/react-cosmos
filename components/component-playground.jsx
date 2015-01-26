@@ -51,7 +51,7 @@ Cosmos.components.ComponentPlayground = React.createClass({
       <div className={classes}>
         <div className="header">
           {this.renderFullScreenButton()}
-          <h1>Component Playground</h1>
+          <h1><span className="react">React</span> Component Playground</h1>
         </div>
         <div className="fixtures">
           {this.renderFixtures()}
