@@ -98,7 +98,7 @@ describe("ComponentPlayground component", function() {
       expect($second.find('li:nth-child(1)').text()).toBe('simple state');
     });
 
-    it("should add class (only) to expanded components", function() {
+    it("should add class to expanded components", function() {
       var props = {
         fixtures: {
           FirstComponent: {},
@@ -124,6 +124,31 @@ describe("ComponentPlayground component", function() {
       expect($(name2.getDOMNode()).text()).toBe('ThirdComponent');
     });
 
+    it("should add class to selected fixture", function() {
+      var props = {
+        fixtures: {
+          FirstComponent: {
+            'blank-state': {},
+            'error-state': {},
+            'available-state': {}
+          },
+          SecondComponent: {
+            'simple-state': {}
+          }
+        },
+        fixturePath: 'FirstComponent/error-state'
+      };
+
+      componentElement = React.createElement(ComponentPlayground, props);
+      componentInstance = utils.renderIntoDocument(componentElement);
+
+      var $selectedFixture = $(componentInstance.getDOMNode())
+                             .find('.component-fixture.selected');
+
+      expect($selectedFixture.length).toBe(1);
+      expect($selectedFixture.text()).toBe('error state');
+    });
+
     it("should add full-screen class when prop is present", function() {
       var props = {
         fixtures: {
@@ -139,7 +164,7 @@ describe("ComponentPlayground component", function() {
 
       var $componentDOMNode = $(componentInstance.getDOMNode());
       expect($componentDOMNode.hasClass('full-screen')).toBe(true);
-    })
+    });
 
     it("should generate urls with fixture paths", function() {
       var props = {

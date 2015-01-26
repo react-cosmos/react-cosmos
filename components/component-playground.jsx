@@ -96,7 +96,8 @@ Cosmos.components.ComponentPlayground = React.createClass({
           fixturePath: componentName + '/' + fixtureName
         });
 
-        return <li key={fixtureName}>
+        return <li className={this._getFixtureClasses(fixtureName)}
+                   key={fixtureName}>
           <a href={url} onClick={this.routeLink}>
             {fixtureName.replace(/-/g, ' ')}
           </a>
@@ -136,6 +137,20 @@ Cosmos.components.ComponentPlayground = React.createClass({
     }
 
     this.setState({expandedComponents: toBeExpanded});
+  },
+
+  _getFixtureClasses: function(fixtureName) {
+    var classes = {
+      'component-fixture': true
+    };
+
+    var fixturePath = this.props.fixturePath;
+    if (fixturePath) {
+      var selectedFixtureName = this._getFixtureNameFromPath(fixturePath);
+      classes['selected'] = fixtureName === selectedFixtureName;
+    }
+
+    return classSet(classes);
   },
 
   _getFixtureContentsFromPath: function(fixturePath) {
