@@ -18,11 +18,12 @@
     "gulp-uglify": "~0.3.0",
     "gulp-if": "~1.2.1",
     "gulp-react": "~0.3.3",
+    "gulp-less": "~2.0.1",
     "jsdom": "~0.10.6",
     "jasmine-node": "~2.0.0"
   },
   "main": "build/cosmos.js",
   "scripts": {
-    "test": "gulp build && jasmine-node --verbose specs"
+    "test": "gulp build-js && jasmine-node --verbose specs"
   }
 }
