@@ -8,7 +8,8 @@ Cosmos.components.ComponentPlayground = React.createClass({
 
   propTypes: {
     fixtures: React.PropTypes.object.isRequired,
-    fixturePath: React.PropTypes.string
+    fixturePath: React.PropTypes.string,
+    fullScreen: React.PropTypes.bool
   },
 
   getInitialState: function() {
@@ -41,8 +42,17 @@ Cosmos.components.ComponentPlayground = React.createClass({
   },
 
   render: function() {
+    var classes = classSet({
+      'component-playground': true,
+      'full-screen': this.props.fullScreen
+    });
+
     return (
-      <div className="component-playground">
+      <div className={classes}>
+        <div className="header">
+          {this.renderFullScreenButton()}
+          <h1>Component Playground</h1>
+        </div>
         <div className="fixtures">
           {this.renderFixtures()}
         </div>
@@ -94,6 +104,21 @@ Cosmos.components.ComponentPlayground = React.createClass({
 
       }.bind(this))}
     </ul>;
+  },
+
+  renderFullScreenButton: function() {
+    if (!this.props.fixturePath) {
+      return;
+    }
+
+    var fullScreenUrl = this.getUrlFromProps({
+      fixturePath: this.props.fixturePath,
+      fullScreen: true
+    });
+
+    return <a href={fullScreenUrl}
+              className="full-screen-button"
+              ref="fullScreenButton">Fullscreen</a>;
   },
 
   handleComponentClick: function(componentName, event) {

@@ -124,6 +124,23 @@ describe("ComponentPlayground component", function() {
       expect($(name2.getDOMNode()).text()).toBe('ThirdComponent');
     });
 
+    it("should add full-screen class when prop is present", function() {
+      var props = {
+        fixtures: {
+          MyComponent: {
+            'here-i-am': {}
+          }
+        },
+        fullScreen: true
+      };
+
+      componentElement = React.createElement(ComponentPlayground, props);
+      componentInstance = utils.renderIntoDocument(componentElement);
+
+      var $componentDOMNode = $(componentInstance.getDOMNode());
+      expect($componentDOMNode.hasClass('full-screen')).toBe(true);
+    })
+
     it("should generate urls with fixture paths", function() {
       var props = {
         fixtures: {
@@ -144,6 +161,29 @@ describe("ComponentPlayground component", function() {
 
       expect(props).toEqual({
         fixturePath: 'MyComponent/here-i-am'
+      });
+    });
+
+    it("should generate full-screen url", function() {
+      var props = {
+        fixtures: {
+          MyComponent: {
+            'here-i-am': {}
+          }
+        },
+        fixturePath: 'MyComponent/here-i-am'
+      };
+
+      componentElement = React.createElement(ComponentPlayground, props);
+      componentInstance = utils.renderIntoDocument(componentElement);
+
+      var fullScreenButton = componentInstance.refs.fullScreenButton,
+          href = $(fullScreenButton.getDOMNode()).attr('href'),
+          props = Cosmos.serialize.getPropsFromQueryString(href.substr(1));
+
+      expect(props).toEqual({
+        fixturePath: 'MyComponent/here-i-am',
+        fullScreen: true
       });
     });
   });
