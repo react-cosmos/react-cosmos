@@ -15,9 +15,9 @@ var jsPaths = [
   'wrapper-footer.js'
 ];
 
-var lessPath = 'component-playground.less';
+var componentPlaygroundStyle = 'component-playground.less';
 
-gulp.task('build-js', function() {
+gulp.task('build', function() {
   gulp.src(jsPaths)
     .pipe(gulpif(/\.jsx$/, react()))
     .pipe(concat('cosmos.js'))
@@ -27,16 +27,16 @@ gulp.task('build-js', function() {
     .pipe(gulp.dest('build'));
 });
 
-gulp.task('build-css', function () {
-  gulp.src(lessPath)
+gulp.task('generate-playground-style', function () {
+  gulp.src(componentPlaygroundStyle)
     .pipe(less())
-    .pipe(gulp.dest('build'));
+    .pipe(gulp.dest('.'));
 });
 
 // Rerun the task when a file changes
 gulp.task('watch', function () {
-  gulp.watch(jsPaths, ['build-js']);
-  gulp.watch(lessPath, ['build-css']);
+  gulp.watch(jsPaths, ['build']);
+  gulp.watch(componentPlaygroundStyle, ['generate-playground-style']);
 });
 
-gulp.task('default', ['build-js', 'build-css', 'watch']);
+gulp.task('default', ['build', 'generate-playground-style', 'watch']);
