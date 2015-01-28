@@ -9,7 +9,8 @@ Cosmos.components.ComponentPlayground = React.createClass({
   propTypes: {
     fixtures: React.PropTypes.object.isRequired,
     fixturePath: React.PropTypes.string,
-    fullScreen: React.PropTypes.bool
+    fullScreen: React.PropTypes.bool,
+    containerClassName: React.PropTypes.string
   },
 
   getInitialState: function() {
@@ -60,7 +61,7 @@ Cosmos.components.ComponentPlayground = React.createClass({
         <div className="fixtures">
           {this.renderFixtures()}
         </div>
-        <div className="preview">
+        <div ref="preview" className={this._getPreviewClasses()}>
           {this.props.fixturePath ? this.loadChild('preview') : null}
         </div>
       </div>
@@ -141,6 +142,18 @@ Cosmos.components.ComponentPlayground = React.createClass({
     }
 
     this.setState({expandedComponents: toBeExpanded});
+  },
+
+  _getPreviewClasses: function() {
+    var classes = {
+      'preview': true
+    };
+
+    if (this.props.containerClassName) {
+      classes[this.props.containerClassName] = true;
+    }
+
+    return classSet(classes);
   },
 
   _getFixtureClasses: function(fixtureName) {

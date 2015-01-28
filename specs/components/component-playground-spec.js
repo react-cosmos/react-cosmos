@@ -211,6 +211,24 @@ describe("ComponentPlayground component", function() {
         fullScreen: true
       });
     });
+
+    it("should add container class on preview element", function() {
+      var props = {
+        fixtures: {
+          MyComponent: {
+            'here-i-am': {}
+          }
+        },
+        fixturePath: 'MyComponent/here-i-am',
+        containerClassName: 'my-app-namespace'
+      };
+
+      componentElement = React.createElement(ComponentPlayground, props);
+      componentInstance = utils.renderIntoDocument(componentElement);
+
+      var $previewDOMNode = $(componentInstance.refs.preview.getDOMNode());
+      expect($previewDOMNode.hasClass('my-app-namespace')).toBe(true);
+    });
   });
 
   describe("children", function() {
