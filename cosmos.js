@@ -1,10 +1,10 @@
 var Cosmos = function(props) {
   var component = Cosmos.getComponentByName(props.component,
                                             props.componentLookup);
-  if (!component) {
+  if (!_.isFunction(component)) {
     throw new Error('Invalid component: ' + props.component);
   }
-  
+
   return component(props);
 };
 
