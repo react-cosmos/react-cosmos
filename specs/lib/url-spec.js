@@ -19,7 +19,7 @@ describe("Cosmos.url", function() {
 
     React = require('react/addons');
     utils = React.addons.TestUtils;
-    Cosmos = require('../build/cosmos.js');
+    Cosmos = require('../../build/cosmos.js');
 
     // The Cosmos.serialize lib is already tested in isolation
     spyOn(Cosmos.serialize, 'getPropsFromQueryString').and.returnValue({

@@ -21,7 +21,7 @@ describe("Cosmos.Router", function() {
 
     React = require('react/addons');
     utils = React.addons.TestUtils;
-    Cosmos = require('../build/cosmos.js');
+    Cosmos = require('../../build/cosmos.js');
 
     // Ignore native APIs
     spyOn(Cosmos.Router.prototype, '_bindPopStateEvent');
