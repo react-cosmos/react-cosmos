@@ -48,8 +48,16 @@ Cosmos.mixins.PersistState = {
   },
   loadChild: function() {
     var childProps = this.getChildProps.apply(this, arguments);
-    // Children are optional
-    return childProps ? Cosmos(childProps) : null;
+
+    if (childProps) {
+      try {
+        return Cosmos(childProps);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    return null;
   },
   /**
    * @param {string} name - Key that corresponds to the child Component we want
