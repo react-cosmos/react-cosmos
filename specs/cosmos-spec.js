@@ -56,6 +56,20 @@ describe("Cosmos", function() {
            .toBe(DummyComponentClass);
   });
 
+  it("should fall back to Cosmos namespace after componentLookup", function() {
+    Cosmos.components.Dumber = {};
+
+    var componentLookup = function(name) {
+      // Return nothing, let Cosmos fall back
+      return;
+    };
+
+    expect(Cosmos.getComponentByName('Dumber', componentLookup))
+           .toBe(Cosmos.components.Dumber);
+
+    delete Cosmos.components.Dumber;
+  });
+
   describe(".createElement", function() {
 
     beforeEach(function() {

@@ -28,9 +28,16 @@ _.extend(Cosmos, {
     return React.createElement(ComponentClass, props);
   },
   getComponentByName: function(name, componentLookup) {
-    if (typeof(componentLookup) == 'function') {
-      return componentLookup(name);
+    if (_.isFunction(componentLookup)) {
+      var ComponentClass = componentLookup(name);
+
+      // Fall back to the Cosmos.components namespace if the lookup doesn't
+      // return anything. Needed for exposing built-in components in Cosmos
+      if (ComponentClass) {
+        return ComponentClass;
+      };
     }
+
     return this.components[name];
   }
 });
