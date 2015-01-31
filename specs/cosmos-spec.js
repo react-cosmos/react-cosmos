@@ -23,125 +23,134 @@ describe("Cosmos", function() {
 
     DummyComponentClass = React.createClass({
       render: function() {
-        return;
+        return React.DOM.span();
       }
     });
   });
 
   it("should draw its components from the Cosmos.components namespace", function() {
     Cosmos.components.Dummy = DummyComponentClass;
+
     expect(Cosmos.getComponentByName('Dummy')).toBe(DummyComponentClass);
+
+    delete Cosmos.components.Dummy;
+  });
+
+  it("should call component lookup callback with name", function() {
+    var calledWithName,
+    componentLookup = function(name) {
+      calledWithName = name;
+    };
+
+    Cosmos.getComponentByName('Dummy', componentLookup);
+
+    expect(calledWithName).toBe('Dummy');
   });
 
   it("should draw its components from lookup callback", function() {
     var componentLookup = function(name) {
-      expect(name).toBe('Dummy');
       return DummyComponentClass;
     };
-    
+
     expect(Cosmos.getComponentByName('Dummy', componentLookup))
-          .toBe(DummyComponentClass);
+           .toBe(DummyComponentClass);
   });
 
-  it("should create React element for component class", function() {
-    spyOn(React, 'createElement')
-         .and.returnValue(function(){});
+  describe(".createElement", function() {
 
-    Cosmos.createElement({
-      component: 'Dummy',
-      componentLookup: function(name) {
-        expect(name).toBe('Dummy');
-        return DummyComponentClass;
-      }
+    beforeEach(function() {
+      spyOn(React, 'createElement');
+      spyOn(Cosmos, 'getComponentByName').and.returnValue(DummyComponentClass);
     });
 
-    expect(React.createElement.calls.count()).toBe(1);
-    expect(React.createElement.calls.mostRecent().args[0])
-          .toBe(DummyComponentClass);
-  });
+    it("should create React element for component class", function() {
+      // No need for a component lookup since we mocked
+      // Cosmos.getComponentByName
+      Cosmos.createElement({
+        component: 'Dummy'
+      });
 
-  it("should create component element with props", function() {
-    spyOn(React, 'createElement')
-          .and.returnValue(function(){});
+      expect(React.createElement.calls.mostRecent().args[0])
+             .toBe(DummyComponentClass);
+    });
 
-    var props = {
-      component: 'Dummy'
-    };
-    // No need for a componentLookup since we're only asserting props
-    Cosmos.createElement(props);
+    it("should create component element with props", function() {
+      // No need for a component lookup since we mocked
+      // Cosmos.getComponentByName
+      var props = {
+        component: 'Dummy'
+      };
+      Cosmos.createElement(props);
 
-    expect(React.createElement.calls.count()).toBe(1);
-    expect(React.createElement.calls.mostRecent().args[1])
-          .toEqual(props);
-  });
+      expect(React.createElement.calls.mostRecent().args[1])
+             .toEqual(props);
+    });
+  })
 
   describe(".render", function() {
 
-    it("should render to DOM if received a container", function() {
-      Cosmos.components.Dummy = DummyComponentClass;
-
+    beforeEach(function() {
+      spyOn(Cosmos, 'createElement');
       spyOn(React, 'render');
       spyOn(React, 'renderToString');
+    });
 
+    it("should render to DOM if received a container", function() {
       Cosmos.render({component: 'Dummy'}, '<div>');
 
       expect(React.render.calls.count()).toBe(1);
-      expect(React.renderToString.calls.count()).toBe(0);
+    });
+
+    it("should pass DOM container to React.render", function() {
+      var container = document.createElement('div');
+      Cosmos.render({component: 'Dummy'}, container);
+
+      expect(React.render.calls.mostRecent().args[1]).toBe(container);
     });
 
     it("should render to string if didn't receive a container", function() {
-      Cosmos.components.Dummy = DummyComponentClass;
-
-      spyOn(React, 'render');
-      spyOn(React, 'renderToString');
-
       Cosmos.render({component: 'Dummy'});
 
-      expect(React.render.calls.count()).toBe(0);
       expect(React.renderToString.calls.count()).toBe(1);
     });
 
     it("should create element with the same props", function() {
-      spyOn(Cosmos, 'createElement');
-      spyOn(React, 'renderToString');
-
       var props = {
         component: 'FakeComponent',
         foo: 'bar'
       };
       Cosmos.render(props);
 
-      expect(Cosmos.createElement.calls.count()).toBe(1);
       expect(Cosmos.createElement.calls.mostRecent().args[0]).toBe(props);
     });
   });
 
   describe(".start", function() {
 
+    var routerInstance = {};
+
     beforeEach(function() {
-      spyOn(Cosmos, 'Router');
+      spyOn(Cosmos, 'Router').and.returnValue(routerInstance);
     });
 
-    it("should call Cosmos.Router", function() {
+    it("should instantiate the Router", function() {
       Cosmos.start();
+
       expect(Cosmos.Router.calls.count()).toBe(1);
     });
 
-    it("should create Cosmos.Router instance with same options", function() {
-      Cosmos.start({
-        props: {component: 'MissingComponent'},
-        container: '<div>'
-      });
+    it("should pass args to Router constructor", function() {
+      var args = [{component: 'MyComponent'}, {container: '<div>'}];
 
-      expect(Cosmos.Router.calls.mostRecent().args[0]).toEqual({
-        props: {component: 'MissingComponent'},
-        container: '<div>'
-      });
+      Cosmos.start(args);
+
+      expect(Cosmos.Router.calls.mostRecent().args).toBe(args);
     });
 
-    it("should return a Cosmos.Router instance", function() {
+    it("should return the Router instance", function() {
       var router = Cosmos.start();
-      expect(router).toEqual(jasmine.any(Cosmos.Router));
+
+      expect(router).toBe(routerInstance);
     });
   });
 });
