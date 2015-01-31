@@ -82,6 +82,15 @@ describe("Cosmos.Router", function() {
 
       expect(Cosmos.render.calls.mostRecent().args[1]).toBe(document.body);
     });
+
+    it("should use container node received in options", function() {
+      var container = document.createElement('div');
+      var router = new Cosmos.Router({}, {
+        container: container
+      });
+
+      expect(Cosmos.render.calls.mostRecent().args[1]).toBe(container);
+    });
   });
 
   describe(".goTo method", function() {
