@@ -38,9 +38,22 @@ var fixtures = {
   }
 };
 
-var router = Cosmos.start({
+var props = {
   component: 'ComponentPlayground',
   fixtures: fixtures
+};
+
+var router = Cosmos.start(props, {
+  onChange: function(props) {
+    var title = 'React Component Playground';
+
+    // Set document title to the name of the selected fixture
+    if (props.fixturePath) {
+      title = props.fixturePath + ' – ' + title;
+    }
+
+    document.title = title;
+  }
 });
 
   </script>

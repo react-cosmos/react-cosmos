@@ -185,7 +185,7 @@ describe("Cosmos", function() {
     });
 
     it("should pass args to Router constructor", function() {
-      var args = [{component: 'MyComponent'}, '<div>'];
+      var args = [{component: 'MyComponent'}, {container: '<div>'}];
 
       Cosmos.start.apply(Cosmos, args);
 
