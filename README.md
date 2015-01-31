@@ -103,8 +103,8 @@ Component (see default [DataFetch](mixins/data-fetch.js) Ajax implementation.)
 Include either the development or the production build in your project.
 
 ```html
-<script src="http://skidding.github.io/cosmos/build/cosmos.js"></script>
-<script src="http://skidding.github.io/cosmos/build/cosmos.min.js"></script>
+<script src="http://skidding.github.io/cosmos/release/cosmos-0.2.3.js"></script>
+<script src="http://skidding.github.io/cosmos/release/cosmos-0.2.3.min.js"></script>
 ```
 
 Cosmos only depends on `React ~0.9.0` and `Lo-Dash ~2.4.1`
