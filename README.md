@@ -56,6 +56,56 @@ to transform its input data into HTML output. Easy to follow and assert
 behavior. See [React Component](http://facebook.github.io/react/docs/component-api.html)
 for in-depth specs.
 
+Jump to:
+
+- [Top-level API](#top-level-api)
+- [Core concepts](#core-concepts)
+  - [Component lookup](#component-lookup)
+  - [State serialization](#state-serialization)
+  - [State injection](#state-injection)
+  - [Component tree](#component-tree)
+
+### Top-level API
+
+Cosmos can be used as the main router for a web app, but also just for
+rendering parts of an existent application.
+
+#### Cosmos.render(props, container, callback)
+
+Mere wrapper for React.render (or React.renderToString, if the `container`
+argument is missing), with the extra benefit of the
+[componentLookup.](#component-lookup)
+
+#### Cosmos.start(defaultProps, options)
+
+Entry point for a Cosmos Router-powered app. Uses the HTML5 history.pushState
+API to cache component snapshots and listen to state changes, rendering
+previous components in an instant when going back through history.
+
+The `defaultProps` are extended by the URL query string params. The `options`
+are as follows:
+
+- **container** - DOM container to render components in, defaults to
+                  `document.body`
+- **onChange(props)** - Called whenever the route changes (also initially),
+                        receiving the new props every time
+
+
+Here's how a standard URL for an app powered by the Cosmos Router would look
+like:
+
+```
+http://mydomain.com/?component=Father&eyes=blue&mood=happy
+```
+
+The [URL mixin](https://github.com/skidding/cosmos/wiki/Mixins#url) is used for
+routing links using the Cosmos Router.
+
+#### Mixins
+
+See the [Mixins wiki page](https://github.com/skidding/cosmos/wiki/Mixins) for
+information on the built-in mixins in Cosmos.
+
 ### Core concepts
 
 Reserved props when working with Cosmos: `component`, `componentLookup` and
@@ -117,7 +167,7 @@ var boy = Cosmos.render(props, document.body);
 
 > "a happy blue-eyed boy"
 
-#### Component snapshot
+#### State serialization
 
 The props and state of a component can be joined into a unified snapshot. The
 `state` prop holds the state of the component.
@@ -155,7 +205,7 @@ Serializing the state of components is no fun if we can't load it back later.
 var boyClone = Cosmos.render(boySnapshot);
 ```
 
-#### Children
+#### Component tree
 
 Cosmos gets interesting when dealing with nested components. The entire state
 of a component tree can be serialized recursively, as well as injected top-down
@@ -236,47 +286,6 @@ This is what the nested snapshot will look like:
 
 This makes it possible to capture the entire state of an application, persist
 it and then reproduce it in a different session.
-
-### Top-level API
-
-Cosmos can be used as the main router for a web app, but also just for
-rendering parts of an existent application.
-
-#### Cosmos.render(props, container, callback)
-
-Mere wrapper for React.render (or React.renderToString, if the `container`
-argument is missing), with the extra benefit of the
-[componentLookup.](#component-lookup)
-
-#### Cosmos.start(defaultProps, options)
-
-Entry point for a Cosmos Router-powered app. Uses the HTML5 history.pushState
-API to cache component snapshots and listen to state changes, rendering
-previous components in an instant when going back through history.
-
-The `defaultProps` are extended by the URL query string params. The `options`
-are as follows:
-
-- **container** - DOM container to render components in, defaults to
-                  `document.body`
-- **onChange(props)** - Called whenever the route changes (also initially),
-                        receiving the new props every time
-
-
-Here's how a standard URL for an app powered by the Cosmos Router would look
-like:
-
-```
-http://mydomain.com/?component=Father&eyes=blue&mood=happy
-```
-
-The [URL mixin](https://github.com/skidding/cosmos/wiki/Mixins#url) is used for
-routing links using the Cosmos Router.
-
-### Mixins
-
-Core mixins are placed under the `Cosmos.mixins` namespace. Read more in the
-[Mixins wiki page.](https://github.com/skidding/cosmos/wiki/Mixins)
 
 ## Problem
 
