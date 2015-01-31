@@ -22,7 +22,7 @@ _.extend(Cosmos, {
   createElement: function(props) {
     var ComponentClass = this.getComponentByName(props.component,
                                                  props.componentLookup);
-    if (!ComponentClass) {
+    if (!_.isFunction(ComponentClass)) {
       throw new Error('Invalid component: ' + props.component);
     }
     return React.createElement(ComponentClass, props);

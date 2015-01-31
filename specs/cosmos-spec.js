@@ -60,10 +60,11 @@ describe("Cosmos", function() {
 
     beforeEach(function() {
       spyOn(React, 'createElement');
-      spyOn(Cosmos, 'getComponentByName').and.returnValue(DummyComponentClass);
     });
 
     it("should create React element for component class", function() {
+      spyOn(Cosmos, 'getComponentByName').and.returnValue(DummyComponentClass);
+
       // No need for a component lookup since we mocked
       // Cosmos.getComponentByName
       Cosmos.createElement({
@@ -75,6 +76,8 @@ describe("Cosmos", function() {
     });
 
     it("should create component element with props", function() {
+      spyOn(Cosmos, 'getComponentByName').and.returnValue(DummyComponentClass);
+
       // No need for a component lookup since we mocked
       // Cosmos.getComponentByName
       var props = {
@@ -84,6 +87,34 @@ describe("Cosmos", function() {
 
       expect(React.createElement.calls.mostRecent().args[1])
              .toEqual(props);
+    });
+
+    it("shouldn't instantiate component that's not a function", function() {
+      Cosmos.components.NotAFunction1 = 5;
+      Cosmos.components.NotAFunction2 = "string";
+      Cosmos.components.NotAFunction3 = [1, 2, 3];
+      Cosmos.components.NotAFunction4 = {x: true};
+
+      expect(function() {
+        Cosmos.createElement({component: 'NotAFunction1'});
+      }).toThrow();
+
+      expect(function() {
+        Cosmos.createElement({component: 'NotAFunction2'});
+      }).toThrow();
+
+      expect(function() {
+        Cosmos.createElement({component: 'NotAFunction3'});
+      }).toThrow();
+
+      expect(function() {
+        Cosmos.createElement({component: 'NotAFunction4'});
+      }).toThrow();
+
+      delete Cosmos.components.NotAFunction1;
+      delete Cosmos.components.NotAFunction2;
+      delete Cosmos.components.NotAFunction3;
+      delete Cosmos.components.NotAFunction4;
     });
   })
 
