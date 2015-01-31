@@ -7,8 +7,9 @@ _.extend(Cosmos, {
   mixins: {},
   components: {},
   transitions: {},
-  start: function(options) {
-    return new this.Router(options);
+
+  start: function(defaultProps, container) {
+    return new this.Router(defaultProps, container);
   },
   render: function(props, container, callback) {
     var componentInstance = this.createElement(props);

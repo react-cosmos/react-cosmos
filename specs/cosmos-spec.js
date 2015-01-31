@@ -140,11 +140,12 @@ describe("Cosmos", function() {
     });
 
     it("should pass args to Router constructor", function() {
-      var args = [{component: 'MyComponent'}, {container: '<div>'}];
+      var args = [{component: 'MyComponent'}, '<div>'];
 
-      Cosmos.start(args);
+      Cosmos.start.apply(Cosmos, args);
 
-      expect(Cosmos.Router.calls.mostRecent().args).toBe(args);
+      expect(Cosmos.Router.calls.mostRecent().args[0]).toBe(args[0]);
+      expect(Cosmos.Router.calls.mostRecent().args[1]).toBe(args[1]);
     });
 
     it("should return the Router instance", function() {
