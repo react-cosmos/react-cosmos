@@ -54,8 +54,17 @@ Cosmos.mixins.PersistState = {
 
   loadChild: function() {
     var childProps = this.getChildProps.apply(this, arguments);
-    // Children are optional
-    return childProps ? Cosmos.createElement(childProps) : null;
+
+    if (childProps) {
+      try {
+        return Cosmos.createElement(childProps);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    // Return null won't render any node
+    return null;
   },
 
   getChildProps: function(name) {
@@ -91,7 +100,7 @@ Cosmos.mixins.PersistState = {
     // will be overriden with those generated at run-time.
     if (this._childSnapshots && this._childSnapshots[name]) {
       props.state = this._childSnapshots[name];
-      
+
       // Child snapshots are only used for first render after which organic
       // states are formed
       delete this._childSnapshots[name];

@@ -54,11 +54,12 @@ describe("Components implementing the PersistState mixin", function() {
     expect(componentInstance.state).toEqual({foo: 'bar'});
   });
 
-  describe("child", function() {
+  describe("children", function() {
 
     beforeEach(function() {
       Cosmos.components.ChildComponent = generateComponentClass();
     });
+
     afterEach(function() {
       delete Cosmos.components.ChildComponent;
     });
@@ -342,8 +343,47 @@ describe("Components implementing the PersistState mixin", function() {
     expect(snapshot.state.nested.foo).toEqual('bar');
   });
 
+  it("should not throw error when child component is missing", function() {
+    spyOn(console, 'error');
 
-  describe("PersistState: dynamic children", function() {
+    ComponentClass = generateParentComponentClass({
+      children: {
+        childRef: function() {
+          return {
+            component: 'MissingChildComponent',
+            foo: 'bar'
+          };
+        }
+      }
+    });
+    componentElement = React.createElement(ComponentClass);
+
+    expect(function() {
+      componentInstance = utils.renderIntoDocument(componentElement);
+    }).not.toThrow();
+  });
+
+  it("should call console.error when child component is missing", function() {
+    spyOn(console, 'error');
+
+    ComponentClass = generateParentComponentClass({
+      children: {
+        childRef: function() {
+          return {
+            component: 'MissingChildComponent',
+            foo: 'bar'
+          };
+        }
+      }
+    });
+    componentElement = React.createElement(ComponentClass);
+    componentInstance = utils.renderIntoDocument(componentElement);
+
+    var error = new Error('Invalid component: MissingChildComponent');
+    expect(console.error).toHaveBeenCalledWith(error);
+  });
+
+  describe("dynamic children", function() {
     var chidren, childSpy;
 
     beforeEach(function() {
