@@ -1,6 +1,11 @@
 var classSet = React.addons.classSet;
 
 Cosmos.components.ComponentPlayground = React.createClass({
+  /**
+   * The Component Playground provides a minimal frame for loading React
+   * components in isolation. It can either render the component full-screen or
+   * with the navigation pane on the side.
+   */
   mixins: [Cosmos.mixins.PersistState,
            Cosmos.mixins.Url],
 
