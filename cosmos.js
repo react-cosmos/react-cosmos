@@ -8,8 +8,8 @@ _.extend(Cosmos, {
   components: {},
   transitions: {},
 
-  start: function(defaultProps, container) {
-    return new this.Router(defaultProps, container);
+  start: function(defaultProps, options) {
+    return new this.Router(defaultProps, options);
   },
 
   render: function(props, container, callback) {
