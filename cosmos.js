@@ -7,29 +7,43 @@ _.extend(Cosmos, {
   mixins: {},
   components: {},
   transitions: {},
-  start: function(options) {
-    return new this.Router(options);
+
+  start: function(defaultProps, container) {
+    return new this.Router(defaultProps, container);
   },
+
   render: function(props, container, callback) {
     var componentInstance = this.createElement(props);
+
     if (container) {
       return React.render(componentInstance, container, callback);
     } else {
       return React.renderToString(componentInstance);
     }
   },
+
   createElement: function(props) {
     var ComponentClass = this.getComponentByName(props.component,
                                                  props.componentLookup);
-    if (!ComponentClass) {
+
+    if (!_.isFunction(ComponentClass)) {
       throw new Error('Invalid component: ' + props.component);
     }
+
     return React.createElement(ComponentClass, props);
   },
+
   getComponentByName: function(name, componentLookup) {
-    if (typeof(componentLookup) == 'function') {
-      return componentLookup(name);
+    if (_.isFunction(componentLookup)) {
+      var ComponentClass = componentLookup(name);
+
+      // Fall back to the Cosmos.components namespace if the lookup doesn't
+      // return anything. Needed for exposing built-in components in Cosmos
+      if (ComponentClass) {
+        return ComponentClass;
+      };
     }
+
     return this.components[name];
   }
 });
