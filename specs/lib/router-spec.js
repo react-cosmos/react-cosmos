@@ -91,6 +91,18 @@ describe("Cosmos.Router", function() {
 
       expect(Cosmos.render.calls.mostRecent().args[1]).toBe(container);
     });
+
+    it("should call onChange callback", function() {
+      var onChangeSpy = jasmine.createSpy();
+      var router = new Cosmos.Router({}, {
+        onChange: onChangeSpy
+      });
+
+      var propsSent = onChangeSpy.calls.mostRecent().args[0];
+      // Mocked url props, tested above
+      expect(propsSent.component).toEqual('List');
+      expect(propsSent.dataUrl).toEqual('users.json');
+    });
   });
 
   describe(".goTo method", function() {
@@ -276,6 +288,18 @@ describe("Cosmos.Router", function() {
         }
       });
     });
+
+    it("should call onChange callback", function() {
+      var onChangeSpy = jasmine.createSpy();
+      var router = new Cosmos.Router({}, {
+        onChange: onChangeSpy
+      });
+      router.goTo('?component=MyComponent&myProp=true');
+
+      var propsSent = onChangeSpy.calls.mostRecent().args[0];
+      expect(propsSent.component).toEqual('MyComponent');
+      expect(propsSent.myProp).toEqual(true);
+    });
   });
 
   describe(".PopState event", function() {
@@ -323,6 +347,23 @@ describe("Cosmos.Router", function() {
 
       var propsSent = Cosmos.render.calls.mostRecent().args[0];
       expect(propsSent.router).toEqual(router);
+    });
+
+    it("should call onChange callback", function() {
+      var onChangeSpy = jasmine.createSpy();
+      var router = new Cosmos.Router({}, {
+        onChange: onChangeSpy
+      });
+      router.onPopState({
+        state: {
+          component: 'MyComponent',
+          myProp: true
+        }
+      });
+
+      var propsSent = onChangeSpy.calls.mostRecent().args[0];
+      expect(propsSent.component).toEqual('MyComponent');
+      expect(propsSent.myProp).toEqual(true);
     });
   });
 });
