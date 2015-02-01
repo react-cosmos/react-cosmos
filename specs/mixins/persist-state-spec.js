@@ -21,23 +21,33 @@ describe("Components implementing the PersistState mixin", function() {
     Cosmos = require('../../build/cosmos.js');
   });
 
-  // In order to avoid any sort of state between tests, even the component class
-  // generated for every test case
-  var generateComponentClass = function(attributes) {
-    return React.createClass(_.extend({}, {
+  // Generate a new class from scratch for every test in order to avoid any
+  // on test affecting the other
+  var generateComponentClass = function(customAttributes) {
+    var defaultAttributes = {
       mixins: [Cosmos.mixins.PersistState],
+
       render: function() {
         return React.DOM.span();
       }
-    }, attributes));
+    };
+
+    return React.createClass(_.extend({},
+                                      defaultAttributes,
+                                      customAttributes));
   };
+
+  // This generator is helpful for parents with a generic child
   var generateParentComponentClass = function(attributes) {
-    return React.createClass(_.extend({}, {
-      mixins: [Cosmos.mixins.PersistState],
+    var defaultParentAttributes = {
       render: function() {
-        return this.loadChild('childRef');
+        return this.loadChild('myChild');
       }
-    }, attributes));
+    }
+
+    return generateComponentClass(_.extend({},
+                                           defaultParentAttributes,
+                                           attributes));
   };
 
   var ComponentClass,
@@ -76,7 +86,7 @@ describe("Components implementing the PersistState mixin", function() {
     Cosmos.components.ChildComponent = generateComponentClass();
     ComponentClass = generateParentComponentClass({
       children: {
-        childRef: function() {
+        myChild: function() {
           return {
             component: 'ChildComponent',
             foo: 'bar'
@@ -86,12 +96,12 @@ describe("Components implementing the PersistState mixin", function() {
     });
     componentElement = React.createElement(ComponentClass);
     componentInstance = utils.renderIntoDocument(componentElement);
-    componentInstance.refs.childRef.setState({updated: true});
+    componentInstance.refs.myChild.setState({updated: true});
 
     expect(componentInstance.generateSnapshot(true)).toEqual({
       state: {
         children: {
-          childRef: {
+          myChild: {
             updated: true
           }
         }
@@ -144,7 +154,7 @@ describe("Components implementing the PersistState mixin", function() {
 
     ComponentClass = generateParentComponentClass({
       children: {
-        childRef: function() {
+        myChild: function() {
           return {
             component: 'MissingChildComponent',
             foo: 'bar'
@@ -164,7 +174,7 @@ describe("Components implementing the PersistState mixin", function() {
 
     ComponentClass = generateParentComponentClass({
       children: {
-        childRef: function() {
+        myChild: function() {
           return {
             component: 'MissingChildComponent',
             foo: 'bar'
@@ -192,7 +202,7 @@ describe("Components implementing the PersistState mixin", function() {
     it("props should be read from .children class handlers", function() {
       ComponentClass = generateParentComponentClass({
         children: {
-          childRef: function() {
+          myChild: function() {
             return {
               component: 'ChildComponent',
               foo: 'bar'
@@ -203,7 +213,7 @@ describe("Components implementing the PersistState mixin", function() {
       componentElement = React.createElement(ComponentClass);
       componentInstance = utils.renderIntoDocument(componentElement);
 
-      expect(componentInstance.refs.childRef.props).toEqual({
+      expect(componentInstance.refs.myChild.props).toEqual({
         component: 'ChildComponent',
         foo: 'bar'
       });
@@ -212,7 +222,7 @@ describe("Components implementing the PersistState mixin", function() {
     it("state should be read from embedded .children state", function() {
       ComponentClass = generateParentComponentClass({
         children: {
-          childRef: function() {
+          myChild: function() {
             return {
               component: 'ChildComponent',
               foo: 'bar'
@@ -223,7 +233,7 @@ describe("Components implementing the PersistState mixin", function() {
       componentElement = React.createElement(ComponentClass, {
         state: {
           children: {
-            childRef: {
+            myChild: {
               isThisTheLife: true
             }
           }
@@ -231,7 +241,7 @@ describe("Components implementing the PersistState mixin", function() {
       });
       componentInstance = utils.renderIntoDocument(componentElement);
 
-      expect(componentInstance.refs.childRef.state).toEqual({
+      expect(componentInstance.refs.myChild.state).toEqual({
         isThisTheLife: true
       });
     });
@@ -239,7 +249,7 @@ describe("Components implementing the PersistState mixin", function() {
     it("should use embedded .children state first and then ignore it", function() {
       ComponentClass = generateParentComponentClass({
         children: {
-          childRef: function() {
+          myChild: function() {
             return {
               component: 'ChildComponent',
               foo: this.props.foo
@@ -251,7 +261,7 @@ describe("Components implementing the PersistState mixin", function() {
         foo: 'bar',
         state: {
           children: {
-            childRef: {
+            myChild: {
               isThisTheLife: true,
               isThisLove: false
             }
@@ -260,7 +270,7 @@ describe("Components implementing the PersistState mixin", function() {
       });
       componentInstance = utils.renderIntoDocument(componentElement);
 
-      expect(componentInstance.refs.childRef.props).toEqual({
+      expect(componentInstance.refs.myChild.props).toEqual({
         component: 'ChildComponent',
         foo: 'bar',
         state: {
@@ -268,20 +278,20 @@ describe("Components implementing the PersistState mixin", function() {
           isThisLove: false
         }
       });
-      expect(componentInstance.refs.childRef.state).toEqual({
+      expect(componentInstance.refs.myChild.state).toEqual({
         isThisTheLife: true,
         isThisLove: false
       });
       // Child state should be preserved even after re-rendering parent
-      componentInstance.refs.childRef.setState({isThisLove: true});
+      componentInstance.refs.myChild.setState({isThisLove: true});
       // Re-render parent and child implicitly
       componentInstance.setProps({foo: 'barbar'});
       // Child state is no longer embedded when re-rendered by the parent
-      expect(componentInstance.refs.childRef.props).toEqual({
+      expect(componentInstance.refs.myChild.props).toEqual({
         component: 'ChildComponent',
         foo: 'barbar'
       });
-      expect(componentInstance.refs.childRef.state).toEqual({
+      expect(componentInstance.refs.myChild.state).toEqual({
         isThisTheLife: true,
         isThisLove: true
       });
@@ -290,7 +300,7 @@ describe("Components implementing the PersistState mixin", function() {
     it("should not interfere with sibling refs", function() {
       ComponentClass = generateParentComponentClass({
         children: {
-          childRef: function() {
+          myChild: function() {
             return {
               component: 'ChildComponent',
               foo: this.props.foo
@@ -299,8 +309,8 @@ describe("Components implementing the PersistState mixin", function() {
         },
         render: function() {
           return React.DOM.div(null,
-            React.DOM.div(null, this.loadChild('childRef')),
-            React.DOM.div({ref: 'straightRef'}, this.props.foo)
+            React.DOM.div(null, this.loadChild('myChild')),
+            React.DOM.div({ref: 'regularChild'}, this.props.foo)
           );
         }
       });
@@ -310,14 +320,15 @@ describe("Components implementing the PersistState mixin", function() {
       componentInstance = utils.renderIntoDocument(componentElement);
 
       // Dynamic child is OK
-      expect(componentInstance.refs.childRef.props).toEqual({
+      expect(componentInstance.refs.myChild.props).toEqual({
         component: 'ChildComponent',
         foo: 'bar'
       });
-      // Static child is OK
-      expect(componentInstance.refs.straightRef)
+
+      // Reg child is OK
+      expect(componentInstance.refs.regularChild)
             .toEqual(jasmine.any(Object));
-      expect(componentInstance.refs.straightRef.getDOMNode().innerHTML)
+      expect(componentInstance.refs.regularChild.getDOMNode().innerHTML)
             .toEqual('bar');
     });
 
@@ -333,7 +344,7 @@ describe("Components implementing the PersistState mixin", function() {
 
       ComponentClass = generateParentComponentClass({
         children: {
-          childRef: function() {
+          myChild: function() {
             return {
               component: 'ChildComponent'
             };
@@ -344,16 +355,16 @@ describe("Components implementing the PersistState mixin", function() {
       componentInstance = utils.renderIntoDocument(componentElement);
 
       // Ref to child
-      expect(componentInstance.refs.childRef).toEqual(jasmine.any(Object));
+      expect(componentInstance.refs.myChild).toEqual(jasmine.any(Object));
       // Refs of child
-      expect(componentInstance.refs.childRef.refs.Refception)
+      expect(componentInstance.refs.myChild.refs.Refception)
             .toEqual(jasmine.any(Object));
-      expect(componentInstance.refs.childRef.refs.LordOfTheRefs)
+      expect(componentInstance.refs.myChild.refs.LordOfTheRefs)
             .toEqual(jasmine.any(Object));
       // Child refs contain references to DOM nodes
-      expect(componentInstance.refs.childRef.refs.Refception.getDOMNode().innerHTML)
+      expect(componentInstance.refs.myChild.refs.Refception.getDOMNode().innerHTML)
             .toEqual('one');
-      expect(componentInstance.refs.childRef.refs.LordOfTheRefs.getDOMNode().innerHTML)
+      expect(componentInstance.refs.myChild.refs.LordOfTheRefs.getDOMNode().innerHTML)
             .toEqual('two');
     });
 
@@ -363,7 +374,7 @@ describe("Components implementing the PersistState mixin", function() {
       };
       ComponentClass = generateParentComponentClass({
         children: {
-          childRef: function() {
+          myChild: function() {
             return {
               component: 'StepChildComponent'
             };
@@ -379,7 +390,7 @@ describe("Components implementing the PersistState mixin", function() {
       componentInstance = utils.renderIntoDocument(componentElement);
 
       // Child was found
-      expect(componentInstance.refs.childRef).toEqual(jasmine.any(Object));
+      expect(componentInstance.refs.myChild).toEqual(jasmine.any(Object));
     });
   });
 
@@ -388,14 +399,14 @@ describe("Components implementing the PersistState mixin", function() {
 
     beforeEach(function() {
       children = {
-        childRef: function(customRef) {
+        myChild: function(customRef) {
           return {
             foo: 'bar',
             ref: customRef
           };
         }
       };
-      childSpy = spyOn(children, 'childRef').and.callThrough();
+      childSpy = spyOn(children, 'myChild').and.callThrough();
 
       spyOn(Cosmos, 'createElement').and.returnValue(React.createElement('div'));
     });
@@ -404,7 +415,7 @@ describe("Components implementing the PersistState mixin", function() {
       ComponentClass = generateParentComponentClass({
         children: children,
         render: function() {
-          return this.loadChild('childRef');
+          return this.loadChild('myChild');
         }
       });
       componentElement = React.createElement(ComponentClass);
@@ -417,7 +428,7 @@ describe("Components implementing the PersistState mixin", function() {
       ComponentClass = generateParentComponentClass({
         children: children,
         render: function() {
-          return this.loadChild('childRef', 'bar', 'baz');
+          return this.loadChild('myChild', 'bar', 'baz');
         }
       });
       componentElement = React.createElement(ComponentClass);
@@ -430,7 +441,7 @@ describe("Components implementing the PersistState mixin", function() {
       ComponentClass = generateParentComponentClass({
         children: children,
         render: function() {
-          return this.loadChild('childRef', 'newRefName', 'baz');
+          return this.loadChild('myChild', 'customChildRef', 'baz');
         }
       });
       componentElement = React.createElement(ComponentClass);
@@ -438,7 +449,7 @@ describe("Components implementing the PersistState mixin", function() {
 
       expect(Cosmos.createElement).toHaveBeenCalledWith({
         foo: 'bar',
-        ref: 'newRefName'
+        ref: 'customChildRef'
       });
     });
 
@@ -446,7 +457,7 @@ describe("Components implementing the PersistState mixin", function() {
       ComponentClass = generateParentComponentClass({
         children: children,
         render: function() {
-          return this.loadChild('childRef');
+          return this.loadChild('myChild');
         }
       });
       componentElement = React.createElement(ComponentClass);
@@ -454,7 +465,7 @@ describe("Components implementing the PersistState mixin", function() {
 
       expect(Cosmos.createElement).toHaveBeenCalledWith({
         foo: 'bar',
-        ref: 'childRef'
+        ref: 'myChild'
       });
     });
   });
