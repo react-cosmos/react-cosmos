@@ -54,6 +54,131 @@ describe("Components implementing the PersistState mixin", function() {
     expect(componentInstance.state).toEqual({foo: 'bar'});
   });
 
+  it("should generate snapshot with exact props and state", function() {
+    ComponentClass = generateComponentClass();
+    componentElement = React.createElement(ComponentClass, {
+      players: 5,
+      state: {speed: 1}
+    });
+    componentInstance = utils.renderIntoDocument(componentElement);
+
+    expect(componentInstance.generateSnapshot())
+          .toEqual({players: 5, state: {speed: 1}});
+
+    // Let's ensure changes are also reflected in the snapshot
+    componentInstance.setProps({players: 10});
+    componentInstance.setState({speed: 3});
+    expect(componentInstance.generateSnapshot())
+          .toEqual({players: 10, state: {speed: 3}});
+  });
+
+  it("should generate snapshot recursively", function() {
+    Cosmos.components.ChildComponent = generateComponentClass();
+    ComponentClass = generateParentComponentClass({
+      children: {
+        childRef: function() {
+          return {
+            component: 'ChildComponent',
+            foo: 'bar'
+          };
+        }
+      }
+    });
+    componentElement = React.createElement(ComponentClass);
+    componentInstance = utils.renderIntoDocument(componentElement);
+    componentInstance.refs.childRef.setState({updated: true});
+
+    expect(componentInstance.generateSnapshot(true)).toEqual({
+      state: {
+        children: {
+          childRef: {
+            updated: true
+          }
+        }
+      }
+    });
+    delete Cosmos.components.ChildComponent;
+  });
+
+  it("should deep clone when generated snapshot", function() {
+    var snapshot,
+        nested;
+
+    ComponentClass = generateComponentClass();
+    componentElement = React.createElement(ComponentClass, {
+      state: {
+        nested: {foo: 'bar'}
+      }
+    });
+    componentInstance = utils.renderIntoDocument(componentElement);
+
+    snapshot = componentInstance.generateSnapshot();
+    nested = componentInstance.state.nested;
+    nested.foo = 'barbar';
+
+    componentInstance.setState({nested: nested});
+    expect(snapshot.state.nested.foo).toEqual('bar');
+  });
+
+  it("should deep clone when loading snapshot", function() {
+    var snapshot = {
+          state: {
+            nested: {foo: 'bar'}
+          }
+        },
+        nested;
+
+    ComponentClass = generateComponentClass(),
+    componentElement = React.createElement(ComponentClass, snapshot);
+    componentInstance = utils.renderIntoDocument(componentElement);
+
+    nested = componentInstance.state.nested;
+    nested.foo = 'barbar';
+
+    componentInstance.setState({nested: nested});
+    expect(snapshot.state.nested.foo).toEqual('bar');
+  });
+
+  it("should not throw error when child component is missing", function() {
+    spyOn(console, 'error');
+
+    ComponentClass = generateParentComponentClass({
+      children: {
+        childRef: function() {
+          return {
+            component: 'MissingChildComponent',
+            foo: 'bar'
+          };
+        }
+      }
+    });
+    componentElement = React.createElement(ComponentClass);
+
+    expect(function() {
+      componentInstance = utils.renderIntoDocument(componentElement);
+    }).not.toThrow();
+  });
+
+  it("should call console.error when child component is missing", function() {
+    spyOn(console, 'error');
+
+    ComponentClass = generateParentComponentClass({
+      children: {
+        childRef: function() {
+          return {
+            component: 'MissingChildComponent',
+            foo: 'bar'
+          };
+        }
+      }
+    });
+    componentElement = React.createElement(ComponentClass);
+    componentInstance = utils.renderIntoDocument(componentElement);
+
+    var error = new Error('Invalid component: MissingChildComponent');
+    expect(console.error).toHaveBeenCalledWith(error);
+  });
+
   describe("children", function() {
 
     beforeEach(function() {
@@ -256,131 +381,6 @@ describe("Components implementing the PersistState mixin", function() {
       // Child was found
       expect(componentInstance.refs.childRef).toEqual(jasmine.any(Object));
     });
-  });
-
-  it("should generate snapshot with exact props and state", function() {
-    ComponentClass = generateComponentClass();
-    componentElement = React.createElement(ComponentClass, {
-      players: 5,
-      state: {speed: 1}
-    });
-    componentInstance = utils.renderIntoDocument(componentElement);
-
-    expect(componentInstance.generateSnapshot())
-          .toEqual({players: 5, state: {speed: 1}});
-
-    // Let's ensure changes are also reflected in the snapshot
-    componentInstance.setProps({players: 10});
-    componentInstance.setState({speed: 3});
-    expect(componentInstance.generateSnapshot())
-          .toEqual({players: 10, state: {speed: 3}});
-  });
-
-  it("should generate snapshot recursively", function() {
-    Cosmos.components.ChildComponent = generateComponentClass();
-    ComponentClass = generateParentComponentClass({
-      children: {
-        childRef: function() {
-          return {
-            component: 'ChildComponent',
-            foo: 'bar'
-          };
-        }
-      }
-    });
-    componentElement = React.createElement(ComponentClass);
-    componentInstance = utils.renderIntoDocument(componentElement);
-    componentInstance.refs.childRef.setState({updated: true});
-
-    expect(componentInstance.generateSnapshot(true)).toEqual({
-      state: {
-        children: {
-          childRef: {
-            updated: true
-          }
-        }
-      }
-    });
-    delete Cosmos.components.ChildComponent;
-  });
-
-  it("should deep clone when generated snapshot", function() {
-    var snapshot,
-        nested;
-
-    ComponentClass = generateComponentClass();
-    componentElement = React.createElement(ComponentClass, {
-      state: {
-        nested: {foo: 'bar'}
-      }
-    });
-    componentInstance = utils.renderIntoDocument(componentElement);
-
-    snapshot = componentInstance.generateSnapshot();
-    nested = componentInstance.state.nested;
-    nested.foo = 'barbar';
-
-    componentInstance.setState({nested: nested});
-    expect(snapshot.state.nested.foo).toEqual('bar');
-  });
-
-  it("should deep clone when loading snapshot", function() {
-    var snapshot = {
-          state: {
-            nested: {foo: 'bar'}
-          }
-        },
-        nested;
-
-    ComponentClass = generateComponentClass(),
-    componentElement = React.createElement(ComponentClass, snapshot);
-    componentInstance = utils.renderIntoDocument(componentElement);
-
-    nested = componentInstance.state.nested;
-    nested.foo = 'barbar';
-
-    componentInstance.setState({nested: nested});
-    expect(snapshot.state.nested.foo).toEqual('bar');
-  });
-
-  it("should not throw error when child component is missing", function() {
-    spyOn(console, 'error');
-
-    ComponentClass = generateParentComponentClass({
-      children: {
-        childRef: function() {
-          return {
-            component: 'MissingChildComponent',
-            foo: 'bar'
-          };
-        }
-      }
-    });
-    componentElement = React.createElement(ComponentClass);
-
-    expect(function() {
-      componentInstance = utils.renderIntoDocument(componentElement);
-    }).not.toThrow();
-  });
-
-  it("should call console.error when child component is missing", function() {
-    spyOn(console, 'error');
-
-    ComponentClass = generateParentComponentClass({
-      children: {
-        childRef: function() {
-          return {
-            component: 'MissingChildComponent',
-            foo: 'bar'
-          };
-        }
-      }
-    });
-    componentElement = React.createElement(ComponentClass);
-    componentInstance = utils.renderIntoDocument(componentElement);
-
-    var error = new Error('Invalid component: MissingChildComponent');
-    expect(console.error).toHaveBeenCalledWith(error);
   });
 
   describe("dynamic children", function() {
