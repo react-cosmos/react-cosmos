@@ -177,7 +177,7 @@ The props and state of a component can be joined into a unified snapshot. The
 // Why do people sleep at night?
 boy.setState({mood: 'curious'});
 
-var boySnapshot = boy.generateSnapshot();
+var boySnapshot = boy.serialize();
 ```
 
 This is what `boySnapshot` will look like:
@@ -264,7 +264,7 @@ We can now generate a recursive snapshot and take a capture of the nested
 state.
 
 ```js
-var familySnapshot = father.generateSnapshot(true);
+var familySnapshot = father.serialize(true);
 ```
 
 This is what the nested snapshot will look like:

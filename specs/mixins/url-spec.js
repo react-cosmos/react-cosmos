@@ -51,7 +51,7 @@ describe("Components implementing the Url mixin", function() {
     });
     componentInstance = utils.renderIntoDocument(componentElement);
 
-    expect(componentInstance.getUrlFromProps(componentInstance.generateSnapshot()))
+    expect(componentInstance.getUrlFromProps(componentInstance.serialize()))
           // state=encodeURIComponent(JSON.stringify({speed:1}))
           .toEqual('?players=5&state=%7B%22speed%22%3A1%7D');
 

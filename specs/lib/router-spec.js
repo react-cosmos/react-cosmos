@@ -148,7 +148,7 @@ describe("Cosmos.Router", function() {
       componentInstance = utils.renderIntoDocument(componentElement);
 
       // Simulate some state addition in the component
-      spyOn(componentInstance, 'generateSnapshot').and.callFake(function() {
+      spyOn(componentInstance, 'serialize').and.callFake(function() {
         return {
           component: 'List',
           dataUrl: 'users.json',
@@ -165,7 +165,7 @@ describe("Cosmos.Router", function() {
       componentCallback.call(componentInstance);
 
       // The snapshot should've been extracted from the component
-      expect(componentInstance.generateSnapshot).toHaveBeenCalled();
+      expect(componentInstance.serialize).toHaveBeenCalled();
 
       // It's a bit difficult to mock the native functions so we mocked the
       // private methods that wrap those calls
@@ -192,7 +192,7 @@ describe("Cosmos.Router", function() {
         // This won't be called because Cosmos.render is mocked
       };
 
-      spyOn(componentInstance, 'generateSnapshot').and.callFake(function() {
+      spyOn(componentInstance, 'serialize').and.callFake(function() {
         return {
           component: 'List',
           componentLookup: componentLookup,
@@ -233,7 +233,7 @@ describe("Cosmos.Router", function() {
 
       var router = new Cosmos.Router();
 
-      spyOn(componentInstance, 'generateSnapshot').and.callFake(function() {
+      spyOn(componentInstance, 'serialize').and.callFake(function() {
         return {
           component: 'List',
           dataUrl: 'users.json',

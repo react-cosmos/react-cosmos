@@ -7,16 +7,14 @@ Cosmos.mixins.PersistState = {
    *   - state: An object that will be poured inside the initial component
    *            state as soon as it loads (replacing any default state.)
    */
-  generateSnapshot: function(recursive) {
+  serialize: function(recursive) {
     /**
      * Generate a snapshot of the component props (including current state.)
      * It excludes internal props set by React during run-time and props with
      * default values.
      */
-    var props = {},
-        value,
-        state,
-        children = {};
+    var snapshot = {},
+        value;
 
     for (var key in this.props) {
       value = this.props[key];
@@ -28,28 +26,38 @@ Cosmos.mixins.PersistState = {
         continue;
       }
 
-      props[key] = value;
+      snapshot[key] = value;
     }
 
-    props.state = _.cloneDeep(this.state) || {};
+    var state = _.clone(this.state) || {},
+        children = {},
+        childSnapshot;
 
     if (recursive) {
       _.each(this.refs, function(instance, ref) {
         // The child component needs to implement the PeristState mixin to be
         // able to serialize its children recursively as well
-        if (typeof(instance.generateSnapshot) == 'function') {
-          children[ref] = instance.generateSnapshot(true).state;
-        } else {
-          children[ref] = _.cloneDeep(instance.state) || {};
+        if (typeof(instance.serialize) == 'function') {
+          childSnapshot = instance.serialize(true);
+
+          if (!_.isEmpty(childSnapshot.state)) {
+            children[ref] = childSnapshot.state;
+          }
         }
       });
 
       if (!_.isEmpty(children)) {
-        props.state.children = children;
+        state.children = children;
       }
     }
 
-    return props;
+    // There's no point in attaching the state key if the component nor its
+    // children have any state
+    if (!_.isEmpty(state)) {
+      snapshot.state = state;
+    }
+
+    return snapshot;
   },
 
   loadChild: function() {
@@ -98,10 +106,6 @@ Cosmos.mixins.PersistState = {
     // will be overriden with those generated at run-time.
     if (this._childSnapshots && this._childSnapshots[name]) {
       props.state = this._childSnapshots[name];
-
-      // Child snapshots are only used for first render after which organic
-      // states are formed
-      delete this._childSnapshots[name];
     }
 
     if (this.props.componentLookup) {
@@ -111,27 +115,51 @@ Cosmos.mixins.PersistState = {
     return props;
   },
 
-  loadStateSnapshot: function(state) {
-    if (state.children) {
-      this._childSnapshots = state.children;
-      delete state.children;
+  componentWillMount: function() {
+    // Allow passing of a serialized state snapshot through props
+    if (this.props.state) {
+      this._loadStateSnapshot(this.props.state);
     }
-
-    // Don't alter initial state object when changing state in the future
-    this.replaceState(_.cloneDeep(state));
   },
 
-  componentWillMount: function() {
-    // Allow passing a serialized snapshot of a state through the props
-    if (this.props.state) {
-      this.loadStateSnapshot(this.props.state);
-    }
+  componentDidMount: function() {
+    this._clearChildSnapshots();
   },
 
   componentWillReceiveProps: function(nextProps) {
-    // A component can have its configuration replaced at any time
+    // A component can have its state replaced at any time
     if (nextProps.state) {
-      this.loadStateSnapshot(nextProps.state);
+      this._loadStateSnapshot(nextProps.state);
+    }
+  },
+
+  componentDidUpdate: function() {
+    this._clearChildSnapshots();
+  },
+
+  _loadStateSnapshot: function(newState) {
+    // Child snapshots are read and flushed on every render (through the
+    // .children functions)
+    if (newState.children) {
+      this._childSnapshots = newState.children;
+    }
+
+    var defaultState = {};
+
+    // Allowing the new state to extend the initial set improves the brevity
+    // of component fixtures
+    if (_.isFunction(this.getInitialState)) {
+      _.extend(defaultState, this.getInitialState());
+    }
+
+    this.replaceState(_.merge(defaultState, newState));
+  },
+
+  _clearChildSnapshots: function() {
+    // Child snapshots are only used for first render after which organic
+    // states are formed
+    if (this._childSnapshots !== undefined) {
+      this._childSnapshots = undefined;
     }
   }
 };
