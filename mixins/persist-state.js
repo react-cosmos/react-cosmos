@@ -74,10 +74,8 @@ Cosmos.mixins.PersistState = {
      * @param {...*} [arguments] Optional extra arguments get passed to the
      *                           function that returns the component props
      */
-    var args = [];
-    for (var i = 1; i < arguments.length; ++i) {
-      args[i - 1] = arguments[i];
-    }
+    // The first argument is the child name, the rest are splat params
+    var args = Array.prototype.splice.call(arguments, 1);
 
     // The .children object on a component class contains a hash of functions.
     // Keys in this hash represent the name and by default the *refs* of child
