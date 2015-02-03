@@ -37,7 +37,7 @@ Cosmos.mixins.PersistState = {
       _.each(this.refs, function(instance, ref) {
         // The child component needs to implement the PeristState mixin to be
         // able to serialize its children recursively as well
-        if (typeof(instance.serialize) == 'function') {
+        if (_.isFunction(instance.serialize)) {
           childSnapshot = instance.serialize(true);
 
           if (!_.isEmpty(childSnapshot.state)) {
