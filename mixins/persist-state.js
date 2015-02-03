@@ -82,6 +82,7 @@ Cosmos.mixins.PersistState = {
      * @param {...*} [arguments] Optional extra arguments get passed to the
      *                           function that returns the component props
      */
+    // https://github.com/petkaantonov/bluebird/wiki/Optimization-killers#32-leaking-arguments
     var args = [];
     for (var i = 1; i < arguments.length; ++i) {
       args[i - 1] = arguments[i];
