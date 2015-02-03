@@ -126,17 +126,6 @@ Cosmos.mixins.PersistState = {
     this._clearChildSnapshots();
   },
 
-  componentWillReceiveProps: function(nextProps) {
-    // A component can have its state replaced at any time
-    if (nextProps.state) {
-      this._loadStateSnapshot(nextProps.state);
-    }
-  },
-
-  componentDidUpdate: function() {
-    this._clearChildSnapshots();
-  },
-
   _loadStateSnapshot: function(newState) {
     // Child snapshots are read and flushed on every render (through the
     // .children functions)

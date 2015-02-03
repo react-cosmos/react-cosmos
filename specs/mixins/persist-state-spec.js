@@ -184,24 +184,6 @@ describe("Components implementing the PersistState mixin", function() {
       expect(componentInstance.state.nevermind).toBe(true);
     });
 
-    it("should replace their state from the state prop", function() {
-      renderComponent();
-
-      componentInstance.setState({
-        mood: 'indiferent',
-        nevermind: true
-      });
-
-      componentInstance.setProps({
-        state: {
-          mood: 'interested'
-        }
-      });
-
-      expect(componentInstance.state.mood).toBe('interested');
-      expect(componentInstance.state.nevermind).toBe(undefined);
-    });
-
     it("should extend received state with initial state", function() {
       componentClassSpec.getInitialState = function() {
         return {
