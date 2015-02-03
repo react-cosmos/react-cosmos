@@ -107,8 +107,8 @@ Cosmos.mixins.PersistState = {
     // are set inside the .children key of the parent component's state, as a
     // hash with keys corresponding to component *refs*. These preset states
     // will be overriden with those generated at run-time.
-    if (this._childSnapshots && this._childSnapshots[name]) {
-      props.state = this._childSnapshots[name];
+    if (this._childSnapshots && this._childSnapshots[props.ref]) {
+      props.state = this._childSnapshots[props.ref];
     }
 
     if (this.props.componentLookup) {

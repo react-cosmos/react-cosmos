@@ -237,6 +237,37 @@ describe("Components implementing the PersistState mixin", function() {
         expect(createElementProps.state).toBe(undefined);
       });
     });
+
+    it("should inject state into children with dynamic refs", function() {
+      componentClassSpec.children = {
+        son: function(nr) {
+          return {
+            ref: 'son' + nr
+          };
+        }
+      };
+      componentClassSpec.render = function() {
+        return React.DOM.div({}, [this.loadChild('son', 1),
+                                  this.loadChild('son', 2)]);
+      };
+
+      componentProps.state = {
+        children: {
+          son1: {
+            witty: true
+          },
+          son2: {
+            witty: false
+          }
+        }
+      };
+
+      renderComponent();
+
+      var createElementCalls = Cosmos.createElement.calls.allArgs();
+      expect(createElementCalls[0][0].state.witty).toBe(true);
+      expect(createElementCalls[1][0].state.witty).toBe(false);
+    });
   });
 
   describe("serializing", function() {
