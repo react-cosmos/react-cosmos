@@ -25,7 +25,7 @@ Cosmos.mixins.AnimationLoop = {
     this._loadAnimationState(this.state);
   },
   componentWillReceiveProps: function(nextProps) {
-    // This is a feature that only works in conjunction with the PersistState
+    // This is a feature that only works in conjunction with the ComponentTree
     // mixin. Animations will be resumed or stopped based on previous states
     // loaded using setProps({state: ...})
     if (nextProps.state) {

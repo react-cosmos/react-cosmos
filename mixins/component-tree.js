@@ -1,4 +1,4 @@
-Cosmos.mixins.PersistState = {
+Cosmos.mixins.ComponentTree = {
   /**
    * Heart of the Cosmos framework. Enables dumping a state object into a
    * component and exporting the current state.

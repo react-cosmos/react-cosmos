@@ -97,7 +97,7 @@ describe("Components implementing the AnimationLoop mixin", function() {
       var onFrameSpy = jasmine.createSpy('onFrame'),
           snapshot;
       ComponentClass = generateComponentClass({
-        mixins: [Cosmos.mixins.PersistState,
+        mixins: [Cosmos.mixins.ComponentTree,
                  Cosmos.mixins.AnimationLoop],
         onFrame: onFrameSpy
       });
@@ -124,7 +124,7 @@ describe("Components implementing the AnimationLoop mixin", function() {
       var onFrameSpy = jasmine.createSpy('onFrame'),
           snapshot;
       ComponentClass = generateComponentClass({
-        mixins: [Cosmos.mixins.PersistState,
+        mixins: [Cosmos.mixins.ComponentTree,
                  Cosmos.mixins.AnimationLoop],
         onFrame: onFrameSpy
       });

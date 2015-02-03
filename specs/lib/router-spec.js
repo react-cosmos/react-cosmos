@@ -139,7 +139,7 @@ describe("Cosmos.Router", function() {
 
     it("should push component snapshot to browser history", function() {
       ComponentClass = React.createClass({
-        mixins: [Cosmos.mixins.PersistState],
+        mixins: [Cosmos.mixins.ComponentTree],
         render: function() {
           return React.DOM.span();
         }
@@ -180,7 +180,7 @@ describe("Cosmos.Router", function() {
 
     it("shouldn't push default props to browser history", function() {
       ComponentClass = React.createClass({
-        mixins: [Cosmos.mixins.PersistState],
+        mixins: [Cosmos.mixins.ComponentTree],
         render: function() {
           return React.DOM.span();
         }
@@ -223,7 +223,7 @@ describe("Cosmos.Router", function() {
 
     it("shouldn't push router instance to browser history", function() {
       ComponentClass = React.createClass({
-        mixins: [Cosmos.mixins.PersistState],
+        mixins: [Cosmos.mixins.ComponentTree],
         render: function() {
           return React.DOM.span();
         }
@@ -256,7 +256,7 @@ describe("Cosmos.Router", function() {
       /* Note: This is not a pure unit test, it depends on the internal logic
       of React components */
       ComponentClass = React.createClass({
-        mixins: [Cosmos.mixins.PersistState],
+        mixins: [Cosmos.mixins.ComponentTree],
         render: function() {
           return React.DOM.span();
         }

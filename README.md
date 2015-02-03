@@ -138,7 +138,7 @@ Then, we attach components to that namespace.
 
 ```js
 components.Boy = React.createClass({
-  mixins: [Cosmos.mixins.PersistState],
+  mixins: [Cosmos.mixins.ComponentTree],
 
   getInitialState: function() {
     return {
@@ -212,11 +212,11 @@ Cosmos gets interesting when dealing with nested components. The entire state
 of a component tree can be serialized recursively, as well as injected top-down
 from the root component to the tree leaves.
 
-This is achieved through the `loadChild` API of the `PersistState` mixin.
+This is achieved through the `loadChild` API of the `ComponentTree` mixin.
 
 ```js
 components.Father = React.createClass({
-  mixins: [Cosmos.mixins.PersistState],
+  mixins: [Cosmos.mixins.ComponentTree],
 
   children: {
     son: function() {

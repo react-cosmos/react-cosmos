@@ -1,4 +1,4 @@
-describe("Components implementing the PersistState mixin", function() {
+describe("Components implementing the ComponentTree mixin", function() {
 
   var _ = require('lodash'),
       jsdom = require('jsdom');
@@ -33,7 +33,7 @@ describe("Components implementing the PersistState mixin", function() {
 
     // The class spec and props will be extended or overriden in each test
     componentClassSpec = {
-      mixins: [Cosmos.mixins.PersistState],
+      mixins: [Cosmos.mixins.ComponentTree],
 
       render: function() {
         return React.DOM.span();

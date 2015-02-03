@@ -25,7 +25,7 @@ describe("Components implementing the Url mixin", function() {
   // generated for every test case
   var generateComponentClass = function(attributes) {
     return React.createClass(_.extend({}, {
-      mixins: [Cosmos.mixins.PersistState,
+      mixins: [Cosmos.mixins.ComponentTree,
                Cosmos.mixins.Url],
       render: function() {
         return React.DOM.span();
