@@ -1,17 +1,13 @@
 Cosmos.mixins.ComponentTree = {
   /**
-   * Heart of the Cosmos framework. Enables dumping a state object into a
-   * component and exporting the current state.
-   *
-   * Props:
-   *   - state: An object that will be poured inside the initial component
-   *            state as soon as it loads (replacing any default state.)
+   * Heart of the Cosmos framework. Links components with their children
+   * recursively. This makes it possible to inject nested state intro a tree of
+   * compoents, as well as serializing them into a single snapshot.
    */
   serialize: function(recursive) {
     /**
-     * Generate a snapshot of the component props (including current state.)
-     * It excludes internal props set by React during run-time and props with
-     * default values.
+     * Generate a snapshot with the the props and state of a component
+     * combined, including the state of all nested child components.
      */
     var snapshot = {},
         value;
@@ -33,8 +29,8 @@ Cosmos.mixins.ComponentTree = {
 
     if (recursive) {
       _.each(this.refs, function(child, ref) {
-        // The child component needs to implement the PeristState mixin to be
-        // able to serialize its children recursively as well
+        // We can only nest child state if the child component also uses the
+        // ComponentTree mixin
         if (_.isFunction(child.serialize)) {
           childSnapshot = child.serialize(true);
 
