@@ -6,7 +6,7 @@ Cosmos.components.ComponentPlayground = React.createClass({
    * components in isolation. It can either render the component full-screen or
    * with the navigation pane on the side.
    */
-  mixins: [Cosmos.mixins.PersistState,
+  mixins: [Cosmos.mixins.ComponentTree,
            Cosmos.mixins.Url],
 
   displayName: 'ComponentPlayground',

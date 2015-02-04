@@ -138,7 +138,7 @@ Then, we attach components to that namespace.
 
 ```js
 components.Boy = React.createClass({
-  mixins: [Cosmos.mixins.PersistState],
+  mixins: [Cosmos.mixins.ComponentTree],
 
   getInitialState: function() {
     return {
@@ -177,7 +177,7 @@ The props and state of a component can be joined into a unified snapshot. The
 // Why do people sleep at night?
 boy.setState({mood: 'curious'});
 
-var boySnapshot = boy.generateSnapshot();
+var boySnapshot = boy.serialize();
 ```
 
 This is what `boySnapshot` will look like:
@@ -212,11 +212,11 @@ Cosmos gets interesting when dealing with nested components. The entire state
 of a component tree can be serialized recursively, as well as injected top-down
 from the root component to the tree leaves.
 
-This is achieved through the `loadChild` API of the `PersistState` mixin.
+This is achieved through the `loadChild` API of the `ComponentTree` mixin.
 
 ```js
 components.Father = React.createClass({
-  mixins: [Cosmos.mixins.PersistState],
+  mixins: [Cosmos.mixins.ComponentTree],
 
   children: {
     son: function() {
@@ -264,7 +264,7 @@ We can now generate a recursive snapshot and take a capture of the nested
 state.
 
 ```js
-var familySnapshot = father.generateSnapshot(true);
+var familySnapshot = father.serialize(true);
 ```
 
 This is what the nested snapshot will look like:

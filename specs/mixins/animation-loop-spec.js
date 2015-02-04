@@ -97,14 +97,14 @@ describe("Components implementing the AnimationLoop mixin", function() {
       var onFrameSpy = jasmine.createSpy('onFrame'),
           snapshot;
       ComponentClass = generateComponentClass({
-        mixins: [Cosmos.mixins.PersistState,
+        mixins: [Cosmos.mixins.ComponentTree,
                  Cosmos.mixins.AnimationLoop],
         onFrame: onFrameSpy
       });
       componentElement = React.createElement(ComponentClass);
       componentInstance = utils.renderIntoDocument(componentElement);
       componentInstance.startAnimationLoop();
-      snapshot = componentInstance.generateSnapshot();
+      snapshot = componentInstance.serialize();
       componentInstance.stopAnimationLoop();
 
       // Make sure calls weren't from the 1st Component
@@ -124,14 +124,14 @@ describe("Components implementing the AnimationLoop mixin", function() {
       var onFrameSpy = jasmine.createSpy('onFrame'),
           snapshot;
       ComponentClass = generateComponentClass({
-        mixins: [Cosmos.mixins.PersistState,
+        mixins: [Cosmos.mixins.ComponentTree,
                  Cosmos.mixins.AnimationLoop],
         onFrame: onFrameSpy
       });
       componentElement = React.createElement(ComponentClass);
       componentInstance = utils.renderIntoDocument(componentElement);
       componentInstance.stopAnimationLoop();
-      snapshot = componentInstance.generateSnapshot();
+      snapshot = componentInstance.serialize();
       componentInstance.startAnimationLoop();
 
       // Make sure animation runs until loading stopped state
