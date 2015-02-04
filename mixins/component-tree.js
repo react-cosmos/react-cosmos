@@ -19,10 +19,8 @@ Cosmos.mixins.ComponentTree = {
     for (var key in this.props) {
       value = this.props[key];
 
-      // Ignore "system" props
-      if (key == '__owner__' ||
-          // Current state should be used instead of initial one
-          key == 'state') {
+      // Current state should be used instead of initial one
+      if (key == 'state') {
         continue;
       }
 
