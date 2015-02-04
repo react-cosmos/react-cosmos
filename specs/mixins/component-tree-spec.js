@@ -80,7 +80,7 @@ describe("Components implementing the ComponentTree mixin", function() {
       expect(createElementProps.ref).toBe('son');
     });
 
-    it("should ref from .children function when specified", function() {
+    it("should use ref from .children function when specified", function() {
       componentClassSpec.children = {
         son: function() {
           return {
