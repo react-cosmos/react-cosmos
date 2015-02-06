@@ -34,16 +34,19 @@ Cosmos.components.ComponentPlayground = React.createClass({
 
   children: {
     preview: function() {
+      var fixturePath = this.props.fixturePath;
+
       var props = {
-        component: this._getComponentNameFromPath(this.props.fixturePath)
+        component: this._getComponentNameFromPath(fixturePath),
+        key: fixturePath
       };
 
       if (this.props.router) {
         props.router = this.props.router;
       }
 
-      var fixture = this._getFixtureContentsFromPath(this.props.fixturePath);
-      return _.extend(props, fixture);
+      var fixture = this._getFixtureContentsFromPath(fixturePath);
+      return _.merge(props, fixture);
     }
   },
 

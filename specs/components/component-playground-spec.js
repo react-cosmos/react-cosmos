@@ -234,14 +234,11 @@ describe("ComponentPlayground component", function() {
   describe("children", function() {
 
     it("should pass down fixture contents to preview child", function() {
-      var referencedObj = {};
-
       var props = {
         fixtures: {
           MyComponent: {
             'here-i-am': {
-              shineBrightLikeA: 'diamond',
-              myPrecious: referencedObj
+              shineBrightLikeA: 'diamond'
             }
           }
         },
@@ -254,7 +251,6 @@ describe("ComponentPlayground component", function() {
       var childProps = createElementSpy.calls.mostRecent().args[0];
 
       expect(childProps.shineBrightLikeA).toBe('diamond');
-      expect(childProps.myPrecious).toBe(referencedObj);
     });
 
     it("should pass down component name to preview child", function() {
@@ -294,6 +290,46 @@ describe("ComponentPlayground component", function() {
       var childProps = createElementSpy.calls.mostRecent().args[0];
 
       expect(childProps.router).toBe(routerInstance);
+    });
+
+    it("should pass down fixture path as key to preview child", function() {
+      var props = {
+        fixtures: {
+          MyComponent: {
+            'here-i-am': {}
+          }
+        },
+        fixturePath: 'MyComponent/here-i-am'
+      };
+
+      componentElement = React.createElement(ComponentPlayground, props);
+      componentInstance = utils.renderIntoDocument(componentElement);
+
+      var childProps = createElementSpy.calls.mostRecent().args[0];
+
+      expect(childProps.key).toBe("MyComponent/here-i-am");
+    });
+
+    it("should clone fixture contents sent to child", function() {
+      var myObject = {};
+
+      var props = {
+        fixtures: {
+          MyComponent: {
+            'here-i-am': {
+              shouldBeCloned: myObject
+            }
+          }
+        },
+        fixturePath: 'MyComponent/here-i-am'
+      };
+
+      componentElement = React.createElement(ComponentPlayground, props);
+      componentInstance = utils.renderIntoDocument(componentElement);
+
+      var childProps = createElementSpy.calls.mostRecent().args[0];
+
+      expect(childProps.shouldBeCloned).not.toBe(myObject);
     });
   });
 
