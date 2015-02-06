@@ -295,6 +295,24 @@ describe("ComponentPlayground component", function() {
 
       expect(childProps.router).toBe(routerInstance);
     });
+
+    it("should pass down fixture path as key to preview child", function() {
+      var props = {
+        fixtures: {
+          MyComponent: {
+            'here-i-am': {}
+          }
+        },
+        fixturePath: 'MyComponent/here-i-am'
+      };
+
+      componentElement = React.createElement(ComponentPlayground, props);
+      componentInstance = utils.renderIntoDocument(componentElement);
+
+      var childProps = createElementSpy.calls.mostRecent().args[0];
+
+      expect(childProps.key).toBe("MyComponent/here-i-am");
+    });
   });
 
   describe("state", function() {
