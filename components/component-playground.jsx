@@ -45,8 +45,8 @@ Cosmos.components.ComponentPlayground = React.createClass({
         props.router = this.props.router;
       }
 
-      var fixture = this._getFixtureContentsFromPath(this.props.fixturePath);
-      return _.extend(props, fixture);
+      var fixture = this._getFixtureContentsFromPath(fixturePath);
+      return _.merge(props, fixture);
     }
   },
 
