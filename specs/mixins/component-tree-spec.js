@@ -286,6 +286,16 @@ describe("Components implementing the ComponentTree mixin", function() {
       expect(snapshot.players).toBe(5);
     });
 
+    it("should omit state prop", function() {
+      renderComponent();
+      componentInstance.setProps({
+        state: {}
+      });
+
+      var snapshot = componentInstance.serialize();
+      expect(snapshot.state).toBe(undefined);
+    });
+
     it("should generate snapshot with state", function() {
       renderComponent();
       componentInstance.setState({
