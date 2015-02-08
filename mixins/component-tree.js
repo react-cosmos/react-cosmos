@@ -138,7 +138,7 @@ Cosmos.mixins.ComponentTree = {
       _.extend(defaultState, this.getInitialState());
     }
 
-    this.replaceState(_.merge(defaultState, newState));
+    this.replaceState(_.extend(defaultState, newState));
   },
 
   _clearChildSnapshots: function() {
