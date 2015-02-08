@@ -18,6 +18,8 @@ describe("Cosmos.Router", function() {
     global.window = jsdom.jsdom().createWindow('<html><body></body></html>');
     global.document = global.window.document;
     global.navigator = global.window.navigator;
+    // We're mocking the URL of the window
+    global.window.location = {href: 'mocked-location-href'};
 
     React = require('react/addons');
     utils = React.addons.TestUtils;
@@ -75,6 +77,13 @@ describe("Cosmos.Router", function() {
 
       var propsSent = Cosmos.render.calls.mostRecent().args[0];
       expect(propsSent.router).toEqual(router);
+    });
+
+    it("should set key to current window location href", function() {
+      var router = new Cosmos.Router();
+
+      var propsSent = Cosmos.render.calls.mostRecent().args[0];
+      expect(propsSent.key).toEqual('mocked-location-href');
     });
 
     it("should default to document.body as container", function() {
@@ -135,6 +144,14 @@ describe("Cosmos.Router", function() {
 
       var propsSent = Cosmos.render.calls.mostRecent().args[0];
       expect(propsSent.router).toEqual(router);
+    });
+
+    it("should set key to sent href value", function() {
+      var router = new Cosmos.Router();
+      router.goTo('my-page?component=List&dataUrl=users.json');
+
+      var propsSent = Cosmos.render.calls.mostRecent().args[0];
+      expect(propsSent.key).toEqual('my-page?component=List&dataUrl=users.json');
     });
 
     it("should push component snapshot to browser history", function() {
@@ -348,6 +365,16 @@ describe("Cosmos.Router", function() {
 
       var propsSent = Cosmos.render.calls.mostRecent().args[0];
       expect(propsSent.router).toEqual(router);
+    });
+
+    it("should set key to current window location href", function() {
+      var router = new Cosmos.Router();
+      router.onPopState({
+        state: {}
+      });
+
+      var propsSent = Cosmos.render.calls.mostRecent().args[0];
+      expect(propsSent.key).toEqual('mocked-location-href');
     });
 
     it("should call onChange callback", function() {
