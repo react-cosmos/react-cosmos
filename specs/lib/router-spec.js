@@ -164,8 +164,9 @@ describe("Cosmos.Router", function() {
       // Simulate React.render callback call
       componentCallback.call(componentInstance);
 
-      // The snapshot should've been extracted from the component
-      expect(componentInstance.serialize).toHaveBeenCalled();
+      // The recursive snapshot should've been extracted from the component
+      expect(componentInstance.serialize.calls.mostRecent().args[0])
+             .toBe(true);
 
       // It's a bit difficult to mock the native functions so we mocked the
       // private methods that wrap those calls
