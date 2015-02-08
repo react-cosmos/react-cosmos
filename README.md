@@ -110,7 +110,7 @@ information on the built-in mixins in Cosmos.
 ### Core concepts
 
 Reserved props when working with Cosmos: `component`, `componentLookup` and
-`state`.
+`state`. The `children` state key is also _magical,_ so it shouldn't be used.
 
 #### Component lookup
 

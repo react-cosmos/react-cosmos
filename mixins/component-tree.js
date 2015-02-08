@@ -9,21 +9,10 @@ Cosmos.mixins.ComponentTree = {
      * Generate a snapshot with the the props and state of a component
      * combined, including the state of all nested child components.
      */
-    var snapshot = {},
-        value;
-
-    for (var key in this.props) {
-      value = this.props[key];
-
-      // Current state should be used instead of initial one
-      if (key == 'state') {
-        continue;
-      }
-
-      snapshot[key] = value;
-    }
-
-    var state = _.clone(this.state) || {},
+    // Current state should be used instead of initial one
+    var snapshot = _.omit(this.props, 'state'),
+        // Omit any child state that was previously passed through props
+        state = _.omit(this.state, 'children'),
         children = {},
         childSnapshot;
 
