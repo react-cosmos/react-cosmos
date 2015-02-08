@@ -118,7 +118,7 @@ describe("Cosmos.Router", function() {
 
     it("should use props param", function() {
       var router = new Cosmos.Router();
-      router.goTo('?component=List&dataUrl=users.json');
+      router.goTo('my-page?component=List&dataUrl=users.json');
 
       var propsSent = Cosmos.render.calls.mostRecent().args[0];
       expect(propsSent.component).toEqual('List');
@@ -130,7 +130,7 @@ describe("Cosmos.Router", function() {
         component: 'DefaultComponent',
         defaultProp: true
       });
-      router.goTo('?component=List&dataUrl=users.json');
+      router.goTo('my-page?component=List&dataUrl=users.json');
 
       var propsSent = Cosmos.render.calls.mostRecent().args[0];
       expect(propsSent.component).toEqual('List');
@@ -140,7 +140,7 @@ describe("Cosmos.Router", function() {
 
     it("should attach router reference to props", function() {
       var router = new Cosmos.Router();
-      router.goTo('?component=List&dataUrl=users.json');
+      router.goTo('my-page?component=List&dataUrl=users.json');
 
       var propsSent = Cosmos.render.calls.mostRecent().args[0];
       expect(propsSent.router).toEqual(router);
@@ -176,7 +176,7 @@ describe("Cosmos.Router", function() {
       });
 
       var router = new Cosmos.Router();
-      router.goTo('?component=List&dataUrl=users.json');
+      router.goTo('my-page?component=List&dataUrl=users.json');
 
       // Simulate React.render callback call
       componentCallback.call(componentInstance);
@@ -224,7 +224,7 @@ describe("Cosmos.Router", function() {
         componentLookup: componentLookup,
         defaultProp: true
       });
-      router.goTo('?component=List&dataUrl=users.json');
+      router.goTo('my-page?component=List&dataUrl=users.json');
 
       // Simulate React.render callback call
       componentCallback.call(componentInstance);
@@ -259,7 +259,7 @@ describe("Cosmos.Router", function() {
         };
       });
 
-      router.goTo('?component=List&dataUrl=users.json');
+      router.goTo('my-page?component=List&dataUrl=users.json');
 
       // Simulate React.render callback call
       componentCallback.call(componentInstance);
@@ -293,7 +293,7 @@ describe("Cosmos.Router", function() {
 
       // Before routing to a new Component configuration, the previous one
       // shouldn't been updated with our changes
-      router.goTo('?component=User&dataUrl=user.json');
+      router.goTo('my-page?component=User&dataUrl=user.json');
 
       // It's a bit difficult to mock the native functions so we mocked the
       // private methods that wrap those calls
@@ -312,7 +312,7 @@ describe("Cosmos.Router", function() {
       var router = new Cosmos.Router({}, {
         onChange: onChangeSpy
       });
-      router.goTo('?component=MyComponent&myProp=true');
+      router.goTo('my-page?component=MyComponent&myProp=true');
 
       var propsSent = onChangeSpy.calls.mostRecent().args[0];
       expect(propsSent.component).toEqual('MyComponent');

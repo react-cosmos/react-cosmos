@@ -22,6 +22,6 @@ Cosmos.mixins.Url = {
      * instead of reloading pages.
      */
     event.preventDefault();
-    this.props.router.goTo(event.currentTarget.getAttribute('href'));
+    this.props.router.goTo(event.currentTarget.href);
   }
 };
