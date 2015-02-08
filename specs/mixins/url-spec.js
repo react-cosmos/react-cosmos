@@ -78,12 +78,10 @@ describe("Components implementing the Url mixin", function() {
     componentInstance.routeLink({
       preventDefault: function() {},
       currentTarget: {
-        getAttribute: function() {
-          return '?component=NextComponent';
-        }
+        href: 'my-page?component=NextComponent'
       }
     });
 
-    expect(goToSpy).toHaveBeenCalledWith('?component=NextComponent');
+    expect(goToSpy).toHaveBeenCalledWith('my-page?component=NextComponent');
   });
 });
