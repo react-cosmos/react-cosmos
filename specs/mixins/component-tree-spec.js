@@ -306,6 +306,17 @@ describe("Components implementing the ComponentTree mixin", function() {
       expect(snapshot.state.speed).toBe(1);
     });
 
+    it("should omit children state key", function() {
+      renderComponent();
+      componentInstance.setState({
+        speed: 1,
+        children: {}
+      });
+
+      var snapshot = componentInstance.serialize();
+      expect(snapshot.state.children).toBe(undefined);
+    });
+
     it("should generate snapshot with nested child state", function() {
       componentClassSpec.children = {
         son: function() {
