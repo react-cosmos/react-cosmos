@@ -286,6 +286,16 @@ describe("Components implementing the ComponentTree mixin", function() {
       expect(snapshot.players).toBe(5);
     });
 
+    it("should omit state prop", function() {
+      renderComponent();
+      componentInstance.setProps({
+        state: {}
+      });
+
+      var snapshot = componentInstance.serialize();
+      expect(snapshot.state).toBe(undefined);
+    });
+
     it("should generate snapshot with state", function() {
       renderComponent();
       componentInstance.setState({
@@ -294,6 +304,17 @@ describe("Components implementing the ComponentTree mixin", function() {
 
       var snapshot = componentInstance.serialize();
       expect(snapshot.state.speed).toBe(1);
+    });
+
+    it("should omit children state key", function() {
+      renderComponent();
+      componentInstance.setState({
+        speed: 1,
+        children: {}
+      });
+
+      var snapshot = componentInstance.serialize();
+      expect(snapshot.state.children).toBe(undefined);
     });
 
     it("should generate snapshot with nested child state", function() {
