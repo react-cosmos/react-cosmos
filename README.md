@@ -363,11 +363,13 @@ changes. That object will always be a visible, persistent data structure.
 
 ## Contributing
 
-Until the Cosmos project becomes more solid and concrete, I urge you to recall
-a past experience of building a web application that became harder and harder
-to work on as time passed and development progressed. Attempt to answer this
-question: If you enforced the Cosmos principles onto the infrastructure you're
-picturing, would it: a) improve, b) complicate or c) not influence the
-situation?
+Cosmos has been built alongside a bigger UI project for over six months, but
+is still is the process of being defined. A few things from the current roadmap:
+
+- Add props editor to ComponentPlayground
+- Enhance Router with customizable routes
+- Migrate tests from jsdom to running under PhantomJS
+- Remove jQuery dependency (only DataFetch mixin uses it for XHR calls)
+- Define scope better, maybe move some mixins in separate repos
 
 Thank you for your interest!
