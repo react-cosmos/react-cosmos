@@ -366,10 +366,12 @@ changes. That object will always be a visible, persistent data structure.
 Cosmos has been built alongside a bigger UI project for over six months, but
 is still is the process of being defined. A few things from the current roadmap:
 
+- Define scope better, maybe move some mixins in separate repos
+  - ~~Remove AnimationLoop mixin from project~~ #99
+  - Remove DataFetch mixin from project
+- Remove jQuery dependency (only DataFetch mixin uses it for XHR calls)
 - Add props editor to ComponentPlayground
 - Enhance Router with customizable routes
-- Migrate tests from jsdom to running under PhantomJS
-- Remove jQuery dependency (only DataFetch mixin uses it for XHR calls)
-- Define scope better, maybe move some mixins in separate repos
+- Migrate tests from jsdom to either PhantomJS or plain Node
 
 Thank you for your interest!
