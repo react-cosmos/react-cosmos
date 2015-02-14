@@ -26,12 +26,21 @@ body {
   font-weight: 400;
   line-height: 50px;
 }
-.component-playground .header h1 a {
+.component-playground .header h1 .home-link {
   color: #fafafa;
   text-decoration: none;
 }
-.component-playground .header h1 .react {
+.component-playground .header h1 .home-link .react {
   color: #00d8ff;
+}
+.component-playground .header h1 .cosmos-plug {
+  margin-left: 10px;
+  color: #aaa;
+  font-size: 18px;
+}
+.component-playground .header h1 .cosmos-plug a {
+  color: #cc7a6f;
+  text-decoration: none;
 }
 .component-playground .header .full-screen-button {
   position: absolute;

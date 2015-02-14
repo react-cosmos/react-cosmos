@@ -61,9 +61,15 @@ Cosmos.components.ComponentPlayground = React.createClass({
         <div className="header">
           {this.renderFullScreenButton()}
           <h1>
-            <a href="?" onClick={this.routeLink}>
+            <a href="?"
+               className="home-link"
+               onClick={this.routeLink}>
               <span className="react">React</span> Component Playground
             </a>
+            <span className="cosmos-plug">
+              {"powered by "}
+              <a href="https://github.com/skidding/cosmos">Cosmos</a>
+            </span>
           </h1>
         </div>
         <div className="fixtures">
