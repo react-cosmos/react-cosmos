@@ -1,6 +1,6 @@
 {
   "name": "cosmos-js",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "A foundation for maintainable web applications",
   "repository": {
     "type": "git",
@@ -11,19 +11,32 @@
     "react": "~0.12.2"
   },
   "devDependencies": {
+    "chai": "^1.10.0",
     "gulp": "~3.8.10",
     "gulp-concat": "~2.4.3",
+    "gulp-if": "~1.2.5",
+    "gulp-less": "~2.0.1",
+    "gulp-react": "~2.0.0",
     "gulp-rename": "~1.2.0",
     "gulp-uglify": "~1.1.0",
-    "gulp-if": "~1.2.5",
-    "gulp-react": "~2.0.0",
-    "gulp-less": "~2.0.1",
-    "jsdom": "~0.11.1",
+    "jasmine-node": "~2.0.0",
     "jquery": "~1.11.1",
-    "jasmine-node": "~2.0.0"
+    "jsdom": "~0.11.1",
+    "jsx-loader": "^0.12.2",
+    "karma": "^0.12.31",
+    "karma-chai": "^0.1.0",
+    "karma-cli": "0.0.4",
+    "karma-mocha": "^0.1.10",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-sinon-chai": "^0.3.0",
+    "karma-webpack": "^1.5.0",
+    "mocha": "^2.1.0",
+    "sinon": "^1.12.2",
+    "sinon-chai": "^2.6.0",
+    "webpack": "^1.5.3"
   },
   "main": "build/cosmos.js",
   "scripts": {
-    "test": "gulp build && jasmine-node --verbose specs"
+    "test": "karma start --single-run"
   }
 }

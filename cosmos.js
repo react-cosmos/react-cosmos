@@ -1,15 +1,15 @@
-var Cosmos = function(props) {
-  // XXX: Deprecated, remove in future versions
-  return Cosmos.createElement(props);
-};
+var React = require('react/addons'),
+    router = require('./lib/router');
 
-_.extend(Cosmos, {
+
+module.exports = {
   mixins: {},
   components: {},
-  transitions: {},
 
-  start: function(defaultProps, options) {
-    return new this.Router(defaultProps, options);
+  start: function(options) {
+    return new router.Router(_.extend({
+      onRender: this.render.bind(this)
+    }, options));
   },
 
   render: function(props, container, callback) {
@@ -46,4 +46,4 @@ _.extend(Cosmos, {
 
     return this.components[name];
   }
-});
+};
