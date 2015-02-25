@@ -1,6 +1,8 @@
 module.exports = {
-  entry: './cosmos.js',
+  entry: './cosmos-entry.js',
   output: {
+    libraryTarget: 'umd',
+    library: 'Cosmos',
     // TODO: Rename once gulp builds are deleted
     filename: './build/cosmos.webpack.js'
   },
@@ -9,5 +11,9 @@ module.exports = {
       test: /\.jsx$/,
       loader: 'jsx-loader'
     }]
+  },
+  externals: {
+    'lodash': '_',
+    'react/addons': 'React'
   }
 };
