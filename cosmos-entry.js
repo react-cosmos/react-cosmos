@@ -1,6 +1,5 @@
 var _ = require('lodash'),
-    Cosmos = require('./cosmos.js'),
-    router = require('./lib/router.js');
+    Cosmos = require('./cosmos.js');
 
 
 _.extend(Cosmos.mixins, {
