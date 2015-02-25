@@ -9,10 +9,12 @@ module.exports = function(config) {
       '**/*.js': ['webpack']
     },
     webpack: {
-      loaders: [{
-        test: /\.jsx$/,
-        loader: 'jsx-loader'
-      }]
+      module: {
+        loaders: [{
+          test: /\.jsx$/,
+          loader: 'jsx-loader'
+        }]
+      }
     },
     webpackMiddleware: {
       noInfo: true
