@@ -27,6 +27,7 @@
     "karma-chai": "^0.1.0",
     "karma-cli": "0.0.4",
     "karma-mocha": "^0.1.10",
+    "karma-mocha-reporter": "^1.0.0",
     "karma-phantomjs-launcher": "^0.1.4",
     "karma-sinon-chai": "^0.3.0",
     "karma-webpack": "^1.5.0",
