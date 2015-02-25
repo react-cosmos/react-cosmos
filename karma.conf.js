@@ -1,10 +1,13 @@
 module.exports = function(config) {
   config.set({
-    frameworks: ['mocha', 'chai', 'sinon-chai'],
     basePath: 'tests/',
+    browsers: [
+      'PhantomJS'
+    ],
     files: [
       '**/*.js'
     ],
+    frameworks: ['mocha', 'chai', 'sinon-chai'],
     preprocessors: {
       '**/*.js': ['webpack']
     },
@@ -19,9 +22,6 @@ module.exports = function(config) {
     },
     webpackMiddleware: {
       noInfo: true
-    },
-    browsers: [
-      'PhantomJS'
-    ]
+    }
   });
 };
