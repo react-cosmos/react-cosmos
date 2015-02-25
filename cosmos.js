@@ -1,4 +1,5 @@
-var React = require('react/addons'),
+var _ = require('lodash'),
+    React = require('react/addons'),
     router = require('./lib/router');
 
 

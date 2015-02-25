@@ -1,4 +1,5 @@
-var Cosmos = require('../cosmos.js');
+var _ = require('lodash'),
+    Cosmos = require('../cosmos.js');
 
 
 module.exports = {
