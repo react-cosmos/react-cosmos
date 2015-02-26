@@ -4,7 +4,7 @@ var serialize = require('../../../lib/serialize.js'),
     Router = router.Router;
 
 
-describe("Router lib class", function() {
+describe("Router class", function() {
 
   var componentInstance = {},
       onRenderSpy = sinon.spy(function() {
