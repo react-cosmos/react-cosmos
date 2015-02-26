@@ -38,6 +38,6 @@
   },
   "main": "build/cosmos.js",
   "scripts": {
-    "test": "karma start --single-run"
+    "test": "karma start --single-run --reporters mocha"
   }
 }
