@@ -9,7 +9,7 @@
 
   <script src="vendor/react-with-addons-0.12.2.min.js"></script>
   <script src="vendor/lodash-2.4.1.min.js"></script>
-  <script src="../../build/cosmos.js"></script>
+  <script src="../../build/cosmos.webpack.js"></script>
 </head>
 <body>
   <script>
@@ -42,7 +42,8 @@ var props = {
   fixtures: fixtures
 };
 
-var router = Cosmos.start(props, {
+var router = Cosmos.start({
+  defaultProps: props,
   onChange: function(props) {
     var title = 'React Component Playground';
 
