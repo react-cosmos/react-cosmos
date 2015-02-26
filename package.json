@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "chai": "^1.10.0",
+    "css-loader": "^0.9.1",
     "gulp": "~3.8.10",
     "gulp-concat": "~2.4.3",
     "gulp-if": "~1.2.5",
@@ -31,9 +32,12 @@
     "karma-phantomjs-launcher": "^0.1.4",
     "karma-sinon-chai": "^0.3.0",
     "karma-webpack": "^1.5.0",
+    "less": "^2.4.0",
+    "less-loader": "^2.0.0",
     "mocha": "^2.1.0",
     "sinon": "^1.12.2",
     "sinon-chai": "^2.6.0",
+    "style-loader": "^0.8.3",
     "webpack": "^1.5.3"
   },
   "main": "build/cosmos.js",

@@ -1,3 +1,5 @@
+require('./component-playground.less');
+
 var _ = require('lodash'),
     React = require('react/addons'),
     classSet = React.addons.classSet,
