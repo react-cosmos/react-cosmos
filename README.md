@@ -369,8 +369,8 @@ is still is the process of being defined. A few things from the current roadmap:
 - ~~Remove AnimationLoop mixin from project~~ [#99](https://github.com/skidding/cosmos/pull/99)
 - ~~Remove DataFetch mixin from project~~ [#100](https://github.com/skidding/cosmos/pull/100)
 - ~~Remove jQuery dependency (only DataFetch mixin uses it for XHR calls)~~ [#100](https://github.com/skidding/cosmos/pull/100)
+- ~~Migrate tests from jsdom to either PhantomJS or plain Node~~ [#101](https://github.com/skidding/cosmos/pull/101)
 - Add props editor to ComponentPlayground
 - Enhance Router with customizable routes
-- Migrate tests from jsdom to either PhantomJS or plain Node
 
 Thank you for your interest!
