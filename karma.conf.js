@@ -5,7 +5,11 @@ module.exports = function(config) {
       'PhantomJS'
     ],
     files: [
-      '**/*.js'
+      'bind-polyfill.js',
+      'cosmos.js',
+      'lib/**/*.js',
+      'mixins/**/*.js',
+      'components/**/*.js'
     ],
     frameworks: ['mocha', 'chai', 'sinon-chai'],
     preprocessors: {
