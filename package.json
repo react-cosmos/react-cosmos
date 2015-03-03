@@ -13,13 +13,6 @@
   "devDependencies": {
     "chai": "^1.10.0",
     "css-loader": "^0.9.1",
-    "gulp": "~3.8.10",
-    "gulp-concat": "~2.4.3",
-    "gulp-if": "~1.2.5",
-    "gulp-less": "~2.0.1",
-    "gulp-react": "~2.0.0",
-    "gulp-rename": "~1.2.0",
-    "gulp-uglify": "~1.1.0",
     "jquery": "~1.11.1",
     "jsx-loader": "^0.12.2",
     "karma": "^0.12.31",
@@ -40,6 +33,7 @@
   },
   "main": "build/cosmos.js",
   "scripts": {
-    "test": "karma start --single-run --reporters mocha"
+    "test": "karma start --single-run --reporters mocha",
+    "build-prod": "webpack -p --output-file build/cosmos.min.js"
   }
 }

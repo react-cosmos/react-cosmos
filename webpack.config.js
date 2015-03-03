@@ -16,7 +16,6 @@ module.exports = {
   output: {
     libraryTarget: 'umd',
     library: 'Cosmos',
-    // TODO: Rename once gulp builds are deleted
-    filename: './build/cosmos.webpack.js'
+    filename: './build/cosmos.js'
   }
 };
