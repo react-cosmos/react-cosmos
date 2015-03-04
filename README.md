@@ -310,7 +310,7 @@ easier to debug down the road.
 node_modules/.bin/webpack
 
 # Created prod bundle in build/cosmos.min.js
-npm run-script build-prod
+npm run build-prod
 
 # Run tests once
 npm test
