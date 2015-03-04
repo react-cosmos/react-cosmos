@@ -41,9 +41,9 @@ or include the build directly in your project.
 
 ```html
 <!-- Development build -->
-<script src="http://skidding.github.io/cosmos/release/cosmos-0.3.0.js"></script>
+<script src="http://skidding.github.io/cosmos/release/cosmos-0.4.0.js"></script>
 <!-- Production build -->
-<script src="http://skidding.github.io/cosmos/release/cosmos-0.3.0.min.js"></script>
+<script src="http://skidding.github.io/cosmos/release/cosmos-0.4.0.min.js"></script>
 ```
 
 ## Specs
