@@ -18,6 +18,7 @@ Jump to:
 - [Manifesto](#manifesto)
 - [Installation](#installation)
 - [Specs](#specs)
+- [Development](#development)
 - [Problem](#problem)
 - [Contributing](#contributing)
 
@@ -301,6 +302,22 @@ Working with the Component Playground improves the component design because
 it surfaces any implicit dependencies. It also forces us to define sane inputs
 for every component, no matter how small, making them more predictable and
 easier to debug down the road.
+
+## Development
+
+```bash
+# Created dev bundle in build/cosmos.js
+node_modules/.bin/webpack
+
+# Created prod bundle in build/cosmos.min.js
+npm run-script build-prod
+
+# Run tests once
+npm test
+
+# Run tests continuously
+node_modules/.bin/karma start
+```
 
 ## Problem
 
