@@ -1,4 +1,8 @@
-Cosmos.mixins.ComponentTree = {
+var _ = require('lodash'),
+    Cosmos = require('../cosmos.js');
+
+
+module.exports = {
   /**
    * Heart of the Cosmos framework. Links components with their children
    * recursively. This makes it possible to inject nested state intro a tree of

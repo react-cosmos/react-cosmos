@@ -1,15 +1,21 @@
-var classSet = React.addons.classSet;
+require('./component-playground.less');
 
-Cosmos.components.ComponentPlayground = React.createClass({
+var _ = require('lodash'),
+    React = require('react/addons'),
+    classSet = React.addons.classSet,
+    ComponentTree = require('../mixins/component-tree.js'),
+    RouterMixin = require('../mixins/router.js');
+
+
+module.exports = React.createClass({
   /**
    * The Component Playground provides a minimal frame for loading React
    * components in isolation. It can either render the component full-screen or
    * with the navigation pane on the side.
    */
-  mixins: [Cosmos.mixins.ComponentTree,
-           Cosmos.mixins.Url],
-
   displayName: 'ComponentPlayground',
+
+  mixins: [ComponentTree, RouterMixin],
 
   propTypes: {
     fixtures: React.PropTypes.object.isRequired,

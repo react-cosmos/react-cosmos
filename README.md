@@ -18,6 +18,7 @@ Jump to:
 - [Manifesto](#manifesto)
 - [Installation](#installation)
 - [Specs](#specs)
+- [Development](#development)
 - [Problem](#problem)
 - [Contributing](#contributing)
 
@@ -302,6 +303,22 @@ it surfaces any implicit dependencies. It also forces us to define sane inputs
 for every component, no matter how small, making them more predictable and
 easier to debug down the road.
 
+## Development
+
+```bash
+# Created dev bundle in build/cosmos.js
+node_modules/.bin/webpack
+
+# Created prod bundle in build/cosmos.min.js
+npm run build-prod
+
+# Run tests once
+npm test
+
+# Run tests continuously
+node_modules/.bin/karma start
+```
+
 ## Problem
 
 Most web frameworks start out clean and friendly, but at some point after you
@@ -369,8 +386,8 @@ is still is the process of being defined. A few things from the current roadmap:
 - ~~Remove AnimationLoop mixin from project~~ [#99](https://github.com/skidding/cosmos/pull/99)
 - ~~Remove DataFetch mixin from project~~ [#100](https://github.com/skidding/cosmos/pull/100)
 - ~~Remove jQuery dependency (only DataFetch mixin uses it for XHR calls)~~ [#100](https://github.com/skidding/cosmos/pull/100)
+- ~~Migrate tests from jsdom to either PhantomJS or plain Node~~ [#101](https://github.com/skidding/cosmos/pull/101)
 - Add props editor to ComponentPlayground
 - Enhance Router with customizable routes
-- Migrate tests from jsdom to either PhantomJS or plain Node
 
 Thank you for your interest!

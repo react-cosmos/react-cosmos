@@ -1,4 +1,7 @@
-Cosmos.mixins.Url = {
+var serialize = require('../lib/serialize.js');
+
+
+module.exports = {
   /**
    * Enables basic linking between Components, with optional use of the minimal
    * built-in Router.
@@ -11,7 +14,7 @@ Cosmos.mixins.Url = {
      * create a link that opens the current Component at root level
      * (full window.)
      */
-    return '?' + Cosmos.serialize.getQueryStringFromProps(props);
+    return '?' + serialize.getQueryStringFromProps(props);
   },
 
   routeLink: function(event) {

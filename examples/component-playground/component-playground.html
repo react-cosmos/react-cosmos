@@ -5,7 +5,13 @@
   <meta charset="utf-8">
   <meta name="description" content="A foundation for maintainable web applications. Powered by React.">
 
-  <link href="component-playground.css" rel="stylesheet" type="text/css">
+  <style type="text/css">
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+  </style>
 
   <script src="vendor/react-with-addons-0.12.2.min.js"></script>
   <script src="vendor/lodash-2.4.1.min.js"></script>
@@ -42,7 +48,8 @@ var props = {
   fixtures: fixtures
 };
 
-var router = Cosmos.start(props, {
+var router = Cosmos.start({
+  defaultProps: props,
   onChange: function(props) {
     var title = 'React Component Playground';
 
