@@ -31,9 +31,11 @@
     "style-loader": "^0.8.3",
     "webpack": "^1.5.3"
   },
-  "main": "build/cosmos.js",
+  "main": "build/cosmos.commonjs.js",
   "scripts": {
     "test": "karma start --single-run --reporters mocha",
-    "build-prod": "webpack -p --output-file build/cosmos.min.js"
+    "build-commonjs": "webpack -p --config webpack/commonjs.config.js",
+    "build-dev": "webpack --config webpack/browser.config.js",
+    "build-prod": "webpack -p --config webpack/browser.config.js --output-file build/cosmos.min.js"
   }
 }
