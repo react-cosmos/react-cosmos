@@ -306,11 +306,14 @@ easier to debug down the road.
 ## Development
 
 ```bash
-# Created dev bundle in build/cosmos.js
-node_modules/.bin/webpack
+# Create browser bundle in build/cosmos.js
+npm run build-dev
 
-# Created prod bundle in build/cosmos.min.js
+# Create minified browser bundle in build/cosmos.min.js
 npm run build-prod
+
+# Create CommonJS bundle in build/cosmos.commonjs.js
+npm run build-commonjs
 
 # Run tests once
 npm test

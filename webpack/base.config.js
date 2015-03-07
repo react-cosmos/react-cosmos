@@ -1,9 +1,5 @@
 module.exports = {
   entry: './cosmos-entry.js',
-  externals: {
-    'lodash': '_',
-    'react/addons': 'React'
-  },
   module: {
     loaders: [{
       test: /\.jsx$/,
@@ -12,10 +8,5 @@ module.exports = {
       test: /\.less$/,
       loader: 'style-loader!css-loader!less-loader'
     }]
-  },
-  output: {
-    libraryTarget: 'umd',
-    library: 'Cosmos',
-    filename: './build/cosmos.js'
   }
 };
