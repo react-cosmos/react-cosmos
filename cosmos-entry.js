@@ -1,7 +1,6 @@
 var _ = require('lodash'),
     Cosmos = require('./cosmos.js');
 
-
 _.extend(Cosmos.mixins, {
   ClassName: require('./mixins/class-name.js'),
   ComponentTree: require('./mixins/component-tree.js'),

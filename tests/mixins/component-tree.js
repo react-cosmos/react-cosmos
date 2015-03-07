@@ -2,9 +2,7 @@ var _ = require('lodash'),
     Cosmos = require('../../cosmos.js'),
     ComponentTreeMixin = require('../../mixins/component-tree.js');
 
-
-describe("ComponentTree mixin", function() {
-
+describe('ComponentTree mixin', function() {
   var fakeComponent;
 
   beforeEach(function() {
@@ -16,8 +14,7 @@ describe("ComponentTree mixin", function() {
     fakeComponent.replaceState = sinon.spy();
   });
 
-  describe("loading children", function() {
-
+  describe('loading children', function() {
     beforeEach(function() {
       sinon.stub(Cosmos, 'createElement');
     });
@@ -26,7 +23,7 @@ describe("ComponentTree mixin", function() {
       Cosmos.createElement.restore();
     });
 
-    it("should use props from .children function", function() {
+    it('should use props from .children function', function() {
       fakeComponent.children = {
         son: function() {
           return {
@@ -43,7 +40,7 @@ describe("ComponentTree mixin", function() {
       expect(createElementProps.age).to.equal(13);
     });
 
-    it("should use ref from .children function when specified", function() {
+    it('should use ref from .children function when specified', function() {
       fakeComponent.children = {
         son: function() {
           return {
@@ -59,7 +56,7 @@ describe("ComponentTree mixin", function() {
       expect(createElementProps.ref).to.equal('junior');
     });
 
-    it("should pass on component lookup to children", function() {
+    it('should pass on component lookup to children', function() {
       fakeComponent.children = {
         son: function() {
           return {};
@@ -74,7 +71,7 @@ describe("ComponentTree mixin", function() {
             .to.equal(fakeComponent.props.componentLookup);
     });
 
-    it("should pass extra loadChild args to children function", function() {
+    it('should pass extra loadChild args to children function', function() {
       fakeComponent.children = {
         son: sinon.spy()
       };
@@ -86,8 +83,7 @@ describe("ComponentTree mixin", function() {
     });
   });
 
-  describe("loading missing children", function() {
-
+  describe('loading missing children', function() {
     beforeEach(function() {
       sinon.stub(console, 'error');
 
@@ -95,7 +91,7 @@ describe("ComponentTree mixin", function() {
         throw new Error('Invalid component');
       });
 
-      fakeComponent.children ={
+      fakeComponent.children = {
         son: function() {
           return {
             component: 'MissingChild'
@@ -110,21 +106,20 @@ describe("ComponentTree mixin", function() {
       Cosmos.createElement.restore();
     });
 
-    it("should not throw error", function() {
+    it('should not throw error', function() {
       expect(function whereAreYouSon() {
         fakeComponent.loadChild('son');
       }).to.not.throw();
     });
 
-    it("should call console.error", function() {
+    it('should call console.error', function() {
       fakeComponent.loadChild('son');
 
       expect(console.error.lastCall.args[0]).to.be.an.instanceof(Error);
     });
   });
 
-  describe("injecting state", function() {
-
+  describe('injecting state', function() {
     beforeEach(function() {
       sinon.stub(Cosmos, 'createElement');
     });
@@ -133,7 +128,7 @@ describe("ComponentTree mixin", function() {
       Cosmos.createElement.restore();
     });
 
-    it("should load their state from the state prop", function() {
+    it('should load their state from the state prop', function() {
       fakeComponent.props.state = {
         mood: 'indifferent',
         nevermind: true
@@ -146,7 +141,7 @@ describe("ComponentTree mixin", function() {
       expect(replaceStateArgs.nevermind).to.equal(true);
     });
 
-    it("should extend received state with initial state", function() {
+    it('should extend received state with initial state', function() {
       fakeComponent.getInitialState = function() {
         return {
           always: 'curious'
@@ -163,8 +158,7 @@ describe("ComponentTree mixin", function() {
       expect(replaceStateArgs.always).to.equal('curious');
     });
 
-    describe("recursively", function() {
-
+    describe('recursively', function() {
       beforeEach(function() {
         fakeComponent.children = {
           son: function() {
@@ -181,14 +175,14 @@ describe("ComponentTree mixin", function() {
         fakeComponent.componentWillMount();
       });
 
-      it("should inject state into children recursively", function() {
+      it('should inject state into children recursively', function() {
         fakeComponent.loadChild('son');
 
         var createElementProps = Cosmos.createElement.lastCall.args[0];
         expect(createElementProps.state.witty).to.equal(true);
       });
 
-      it("shouldn't send state to children after the first time", function() {
+      it('should not send state to children after the first time', function() {
         fakeComponent.componentDidMount();
         fakeComponent.loadChild('son');
 
@@ -197,7 +191,7 @@ describe("ComponentTree mixin", function() {
       });
     });
 
-    it("should inject state into children with dynamic refs", function() {
+    it('should inject state into children with dynamic refs', function() {
       fakeComponent.children = {
         son: function(nr) {
           return {
@@ -226,8 +220,7 @@ describe("ComponentTree mixin", function() {
     });
   });
 
-  describe("serializing", function() {
-
+  describe('serializing', function() {
     beforeEach(function() {
       sinon.stub(Cosmos, 'createElement');
     });
@@ -236,28 +229,28 @@ describe("ComponentTree mixin", function() {
       Cosmos.createElement.restore();
     });
 
-    it("should generate snapshot with props", function() {
+    it('should generate snapshot with props', function() {
       fakeComponent.props.players = 5;
 
       var snapshot = fakeComponent.serialize();
       expect(snapshot.players).to.equal(5);
     });
 
-    it("should omit state prop", function() {
+    it('should omit state prop', function() {
       fakeComponent.props.state = {};
 
       var snapshot = fakeComponent.serialize();
       expect(snapshot.state).to.equal(undefined);
     });
 
-    it("should generate snapshot with state", function() {
+    it('should generate snapshot with state', function() {
       fakeComponent.state.speed = 1;
 
       var snapshot = fakeComponent.serialize();
       expect(snapshot.state.speed).to.equal(1);
     });
 
-    it("should omit children state key", function() {
+    it('should omit children state key', function() {
       fakeComponent.state = {
         speed: 1,
         children: {}
@@ -267,7 +260,7 @@ describe("ComponentTree mixin", function() {
       expect(snapshot.state.children).to.equal(undefined);
     });
 
-    it("should generate snapshot with nested child state", function() {
+    it('should generate snapshot with nested child state', function() {
       fakeComponent.refs = {
         son: {
           serialize: function() {

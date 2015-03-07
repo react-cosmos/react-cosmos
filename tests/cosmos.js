@@ -2,11 +2,8 @@ var React = require('react/addons'),
     Cosmos = require('../cosmos.js'),
     router = require('../lib/router');
 
-
-describe("Cosmos", function() {
-
-  describe("component lookup", function() {
-
+describe('Cosmos', function() {
+  describe('component lookup', function() {
     beforeEach(function() {
       Cosmos.components.CoreComponent = {};
     });
@@ -15,12 +12,12 @@ describe("Cosmos", function() {
       delete Cosmos.components.CoreComponent;
     });
 
-    it("should draw components from the .components namespace", function() {
+    it('should draw components from the .components namespace', function() {
       expect(Cosmos.getComponentByName('CoreComponent'))
             .to.equal(Cosmos.components.CoreComponent);
     });
 
-    it("should call component lookup callback with name", function() {
+    it('should call component lookup callback with name', function() {
       var wantedComponentName,
           componentLookup = function(name) {
             wantedComponentName = name;
@@ -31,7 +28,7 @@ describe("Cosmos", function() {
       expect(wantedComponentName).to.equal('MyComponent');
     });
 
-    it("should draw components from lookup callback", function() {
+    it('should draw components from lookup callback', function() {
       var MyComponent = {},
           componentLookup = function(name) {
             return MyComponent;
@@ -41,7 +38,8 @@ describe("Cosmos", function() {
             .to.equal(MyComponent);
     });
 
-    it("should fall back to Cosmos namespace after componentLookup", function() {
+    it('should fall back to Cosmos namespace after componentLookup',
+       function() {
       var componentLookup = function(name) {
         // Return nothing, let Cosmos fall back
         return;
@@ -52,8 +50,7 @@ describe("Cosmos", function() {
     });
   });
 
-  describe(".createElement", function() {
-
+  describe('.createElement', function() {
     var MyComponent = function() {};
 
     beforeEach(function() {
@@ -70,7 +67,7 @@ describe("Cosmos", function() {
       Cosmos.getComponentByName.restore();
     });
 
-    it("should create React element for component class", function() {
+    it('should create React element for component class', function() {
       Cosmos.createElement({
         component: 'MyComponent'
       });
@@ -78,7 +75,7 @@ describe("Cosmos", function() {
       expect(React.createElement.lastCall.args[0]).to.equal(MyComponent);
     });
 
-    it("should create component element with props", function() {
+    it('should create component element with props', function() {
       var props = {
         component: 'MyComponent'
       };
@@ -87,7 +84,7 @@ describe("Cosmos", function() {
       expect(React.createElement.lastCall.args[1]).to.equal(props);
     });
 
-    it("shouldn't instantiate component that's a number", function() {
+    it('should not instantiate component that is a number', function() {
       MyComponent = 5;
 
       expect(function() {
@@ -95,15 +92,15 @@ describe("Cosmos", function() {
       }).to.throw();
     });
 
-    it("shouldn't instantiate component that's a string", function() {
-      MyComponent = "string";
+    it('should not instantiate component that is a string', function() {
+      MyComponent = 'string';
 
       expect(function() {
         Cosmos.createElement({component: 'MyComponent'});
       }).to.throw();
     });
 
-    it("shouldn't instantiate component that's an array", function() {
+    it('should not instantiate component that is an array', function() {
       MyComponent = [1, 2, 3];
 
       expect(function() {
@@ -111,7 +108,7 @@ describe("Cosmos", function() {
       }).to.throw();
     });
 
-    it("shouldn't instantiate component that's an object", function() {
+    it('should not instantiate component that is an object', function() {
       MyComponent = {x: true};
 
       expect(function() {
@@ -120,8 +117,7 @@ describe("Cosmos", function() {
     });
   })
 
-  describe(".render", function() {
-
+  describe('.render', function() {
     beforeEach(function() {
       sinon.stub(Cosmos, 'createElement');
 
@@ -136,26 +132,26 @@ describe("Cosmos", function() {
       React.renderToString.restore();
     });
 
-    it("should render to DOM if received a container", function() {
+    it('should render to DOM if received a container', function() {
       Cosmos.render({component: 'MyComponent'}, '<div>');
 
       expect(React.render.callCount).to.equal(1);
     });
 
-    it("should pass DOM container to React.render", function() {
+    it('should pass DOM container to React.render', function() {
       var container = document.createElement('div');
       Cosmos.render({component: 'MyComponent'}, container);
 
       expect(React.render.lastCall.args[1]).to.equal(container);
     });
 
-    it("should render to string if didn't receive a container", function() {
+    it('should render to string if did not receive a container', function() {
       Cosmos.render({component: 'MyComponent'});
 
       expect(React.renderToString.callCount).to.equal(1);
     });
 
-    it("should create element with the same props", function() {
+    it('should create element with the same props', function() {
       var props = {
         component: 'MyComponent',
         foo: 'bar'
@@ -166,7 +162,7 @@ describe("Cosmos", function() {
     });
   });
 
-  describe(".start", function() {
+  describe('.start', function() {
 
     var routerInstance = {};
 
@@ -182,13 +178,13 @@ describe("Cosmos", function() {
       router.Router.restore();
     });
 
-    it("should instantiate the Router", function() {
+    it('should instantiate the Router', function() {
       Cosmos.start();
 
       expect(router.Router.callCount).to.equal(1);
     });
 
-    it("should pass options to Router constructor", function() {
+    it('should pass options to Router constructor', function() {
       var args = [{defaultProps: {prop: true}, container: '<div>'}];
 
       Cosmos.start.apply(Cosmos, args);
@@ -197,7 +193,7 @@ describe("Cosmos", function() {
       expect(router.Router.lastCall.args[0].container).to.equal('<div>');
     });
 
-    it("should attach onRender to Router options", function() {
+    it('should attach onRender to Router options', function() {
       Cosmos.start();
 
       var options = router.Router.lastCall.args[0];
@@ -206,7 +202,7 @@ describe("Cosmos", function() {
       expect(Cosmos.render).to.have.been.called;
     });
 
-    it("should return the Router instance", function() {
+    it('should return the Router instance', function() {
       var router = Cosmos.start();
 
       expect(router).to.equal(routerInstance);

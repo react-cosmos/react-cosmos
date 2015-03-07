@@ -1,6 +1,5 @@
 var serialize = require('../lib/serialize.js');
 
-
 module.exports = {
   /**
    * Enables basic linking between Components, with optional use of the minimal
