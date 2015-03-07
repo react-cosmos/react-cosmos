@@ -1,11 +1,10 @@
 var $ = require('jquery'),
     Cosmos = require('../../../cosmos.js'),
     renderComponent = require('../../helpers/render-component.js'),
-    ComponentPlayground = require('../../../components/component-playground.jsx');
+    ComponentPlayground =
+      require('../../../components/component-playground.jsx');
 
-
-describe("ComponentPlayground component", function() {
-
+describe('ComponentPlayground component', function() {
   var component,
       $component,
       props,
@@ -43,9 +42,8 @@ describe("ComponentPlayground component", function() {
     Cosmos.createElement.restore();
   })
 
-  describe("children", function() {
-
-    it("should not render child if no fixture is selected", function() {
+  describe('children', function() {
+    it('should not render child if no fixture is selected', function() {
       delete props.fixturePath;
 
       render();
@@ -53,20 +51,20 @@ describe("ComponentPlayground component", function() {
       expect(Cosmos.createElement).to.not.have.been.called;
     });
 
-    it("should send down component name to preview child", function() {
+    it('should send down component name to preview child', function() {
       render();
 
       expect(childProps.component).to.equal('MyComponent');
     });
 
-    it("should send fixture contents to preview child", function() {
+    it('should send fixture contents to preview child', function() {
       render();
 
       expect(childProps.width).to.equal(200);
       expect(childProps.height).to.equal(100);
     });
 
-    it("should send (Cosmos) router instance to preview child", function() {
+    it('should send (Cosmos) router instance to preview child', function() {
       props.router = {};
 
       render();
@@ -74,13 +72,13 @@ describe("ComponentPlayground component", function() {
       expect(childProps.router).to.equal(props.router);
     });
 
-    it("should use fixture path as key to preview child", function() {
+    it('should use fixture path as key to preview child', function() {
       render();
 
       expect(childProps.key).to.equal(props.fixturePath);
     });
 
-    it("should clone fixture contents sent to child", function() {
+    it('should clone fixture contents sent to child', function() {
       var obj = {};
       props.fixtures.MyComponent['small-size'].shouldBeCloned = obj;
 

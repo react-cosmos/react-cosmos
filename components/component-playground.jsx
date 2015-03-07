@@ -6,7 +6,6 @@ var _ = require('lodash'),
     ComponentTree = require('../mixins/component-tree.js'),
     RouterMixin = require('../mixins/router.js');
 
-
 module.exports = React.createClass({
   /**
    * The Component Playground provides a minimal frame for loading React

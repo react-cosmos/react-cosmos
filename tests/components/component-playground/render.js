@@ -1,11 +1,10 @@
 var $ = require('jquery'),
     Cosmos = require('../../../cosmos.js'),
     renderComponent = require('../../helpers/render-component.js'),
-    ComponentPlayground = require('../../../components/component-playground.jsx');
+    ComponentPlayground =
+      require('../../../components/component-playground.jsx');
 
-
-describe("ComponentPlayground component", function() {
-
+describe('ComponentPlayground component', function() {
   var component,
       $component,
       props;
@@ -39,9 +38,8 @@ describe("ComponentPlayground component", function() {
     Cosmos.createElement.restore();
   })
 
-  describe("render", function() {
-
-    it("should render each component", function() {
+  describe('render', function() {
+    it('should render each component', function() {
       render();
 
       var $components = $component.find('.component');
@@ -49,7 +47,7 @@ describe("ComponentPlayground component", function() {
       expect($components.length).to.equal(2);
     });
 
-    it("should render component names", function() {
+    it('should render component names', function() {
       render();
 
       var $names = $component.find('.component-name');
@@ -58,7 +56,7 @@ describe("ComponentPlayground component", function() {
       expect($names.eq(1).text()).to.equal('SecondComponent');
     });
 
-    it("should render nested fixtures", function() {
+    it('should render nested fixtures', function() {
       render();
 
       var $component1 = $component.find('.component:eq(0)'),
@@ -68,7 +66,7 @@ describe("ComponentPlayground component", function() {
       expect($component2.find('.component-fixtures li').length).to.equal(1);
     });
 
-    it("should add spaces from hypens in fixture names", function() {
+    it('should add spaces from hypens in fixture names', function() {
       render();
 
       var $component1 = $component.find('.component:eq(0)'),
@@ -80,7 +78,7 @@ describe("ComponentPlayground component", function() {
             .to.equal('simple state');
     });
 
-    it("should add class to expanded components", function() {
+    it('should add class to expanded components', function() {
       props.fixturePath = 'FirstComponent/error-state';
 
       render();
@@ -91,7 +89,7 @@ describe("ComponentPlayground component", function() {
       expect($selectedFixture.text()).to.equal('error state');
     });
 
-    it("should not add full-screen class when prop is false", function() {
+    it('should not add full-screen class when prop is false', function() {
       props.fullScreen = false;
 
       render();
@@ -99,7 +97,7 @@ describe("ComponentPlayground component", function() {
       expect($component.hasClass('full-screen')).to.equal(false);
     });
 
-    it("should add full-screen class when prop is true", function() {
+    it('should add full-screen class when prop is true', function() {
       props.fullScreen = true;
 
       render();
@@ -107,7 +105,7 @@ describe("ComponentPlayground component", function() {
       expect($component.hasClass('full-screen')).to.equal(true);
     });
 
-    it("should generate url with fixture path", function() {
+    it('should generate url with fixture path', function() {
       render();
 
       var firstHref = $component.find('.component-fixture a').attr('href');
@@ -115,13 +113,14 @@ describe("ComponentPlayground component", function() {
       expect(firstHref).to.equal('?fixturePath=FirstComponent%2Fblank-state');
     });
 
-    it("should not render full-screen button w/out fixture selected", function() {
+    it('should not render full-screen button w/out fixture selected',
+       function() {
       render();
 
       expect(component.refs.fullScreenButton).to.not.exist;
     });
 
-    it("should generate full-screen url", function() {
+    it('should generate full-screen url', function() {
       props.fixturePath = 'SecondComponent/simple-state';
 
       render();
@@ -132,7 +131,7 @@ describe("ComponentPlayground component", function() {
                             '&fullScreen=true');
     });
 
-    it("should add container class on preview element", function() {
+    it('should add container class on preview element', function() {
       props.containerClassName = 'my-app-namespace';
 
       render();

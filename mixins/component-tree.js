@@ -1,7 +1,6 @@
 var _ = require('lodash'),
     Cosmos = require('../cosmos.js');
 
-
 module.exports = {
   /**
    * Heart of the Cosmos framework. Links components with their children
