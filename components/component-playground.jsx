@@ -64,7 +64,7 @@ module.exports = React.createClass({
     return (
       <div className={classes}>
         <div className="header">
-          {this._renderFullScreenButton()}
+          {this.props.fixturePath ? this._renderFullScreenButton() : null}
           <h1>
             <a href="?"
                className="home-link"
@@ -132,10 +132,6 @@ module.exports = React.createClass({
   },
 
   _renderFullScreenButton: function() {
-    if (!this.props.fixturePath) {
-      return;
-    }
-
     var fullScreenUrl = this.getUrlFromProps({
       fixturePath: this.props.fixturePath,
       fullScreen: true
