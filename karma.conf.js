@@ -5,7 +5,7 @@ module.exports = function(config) {
       'PhantomJS'
     ],
     coverageReporter: {
-      type: 'html',
+      type: 'lcov',
       dir: 'coverage/'
     },
     files: [

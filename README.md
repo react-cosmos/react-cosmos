@@ -312,6 +312,9 @@ npm test
 # Run tests continuously
 node_modules/.bin/karma start --reporters progress
 
+# Send code coverage report to coveralls.io
+npm run coveralls
+
 # Lint code
 npm run lint
 
