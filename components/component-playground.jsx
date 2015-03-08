@@ -64,7 +64,7 @@ module.exports = React.createClass({
     return (
       <div className={classes}>
         <div className="header">
-          {this.renderFullScreenButton()}
+          {this._renderFullScreenButton()}
           <h1>
             <a href="?"
                className="home-link"
@@ -78,7 +78,7 @@ module.exports = React.createClass({
           </h1>
         </div>
         <div className="fixtures">
-          {this.renderFixtures()}
+          {this._renderFixtures()}
         </div>
         <div ref="preview" className={this._getPreviewClasses()}>
           {this.props.fixturePath ? this.loadChild('preview') : null}
@@ -87,7 +87,7 @@ module.exports = React.createClass({
     );
   },
 
-  renderFixtures: function() {
+  _renderFixtures: function() {
     return <ul className="components">
       {_.map(this.props.fixtures, function(fixtures, componentName) {
 
@@ -105,14 +105,14 @@ module.exports = React.createClass({
               {componentName}
             </a>
           </p>
-          {this.renderComponentFixtures(componentName, fixtures)}
+          {this._renderComponentFixtures(componentName, fixtures)}
         </li>;
 
       }.bind(this))}
     </ul>
   },
 
-  renderComponentFixtures: function(componentName, fixtures) {
+  _renderComponentFixtures: function(componentName, fixtures) {
     return <ul className="component-fixtures">
       {_.map(fixtures, function(props, fixtureName) {
 
@@ -131,7 +131,7 @@ module.exports = React.createClass({
     </ul>;
   },
 
-  renderFullScreenButton: function() {
+  _renderFullScreenButton: function() {
     if (!this.props.fixturePath) {
       return;
     }
