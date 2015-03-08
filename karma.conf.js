@@ -4,6 +4,10 @@ module.exports = function(config) {
     browsers: [
       'PhantomJS'
     ],
+    coverageReporter: {
+      type: 'lcov',
+      dir: 'coverage/'
+    },
     files: [
       'bind-polyfill.js',
       'cosmos.js',
@@ -15,6 +19,7 @@ module.exports = function(config) {
     preprocessors: {
       '**/*.js': ['webpack']
     },
+    reporters: ['mocha', 'coverage'],
     webpack: {
       module: {
         loaders: [{
@@ -23,6 +28,11 @@ module.exports = function(config) {
         }, {
           test: /\.less$/,
           loader: 'style-loader!css-loader!less-loader'
+        }],
+        postLoaders: [{
+          test: /\.jsx?$/,
+          exclude: /(node_modules|tests)\//,
+          loader: 'istanbul-instrumenter'
         }]
       }
     },

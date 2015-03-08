@@ -306,6 +306,15 @@ easier to debug down the road.
 ## Development
 
 ```bash
+# Run tests once
+npm test
+
+# Run tests continuously
+node_modules/.bin/karma start --reporters progress
+
+# Send code coverage report to coveralls.io
+npm run coveralls
+
 # Lint code
 npm run lint
 
@@ -317,12 +326,6 @@ npm run build-prod
 
 # Create CommonJS bundle in build/cosmos.commonjs.js
 npm run build-commonjs
-
-# Run tests once
-npm test
-
-# Run tests continuously
-node_modules/.bin/karma start
 ```
 
 ## Problem
