@@ -2,7 +2,8 @@
   "excludeFiles": [
     "build/**",
     "examples/**",
-    "node_modules/**"
+    "node_modules/**",
+    "tests/coverage/**"
   ],
   "fileExtensions": [".js"],
   "preset": "google",
