@@ -1,7 +1,4 @@
-Cosmos
-===
-[![Build Status](https://travis-ci.org/skidding/cosmos.svg?branch=master)](https://travis-ci.org/skidding/cosmos)
-[![Coverage Status](https://coveralls.io/repos/skidding/cosmos/badge.svg?branch=master)](https://coveralls.io/r/skidding/cosmos?branch=master)
+# Cosmos [![Build Status](https://travis-ci.org/skidding/cosmos.svg?branch=master)](https://travis-ci.org/skidding/cosmos) [![Coverage Status](https://coveralls.io/repos/skidding/cosmos/badge.svg?branch=master)](https://coveralls.io/r/skidding/cosmos?branch=master)
 
 A foundation for maintainable web applications.
 
