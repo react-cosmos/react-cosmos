@@ -92,7 +92,7 @@ module.exports = React.createClass({
         return <li className={classes} key={componentName}>
           <p className="component-name">
             <a href="#toggle-component"
-               onClick={_.partial(this.handleComponentClick, componentName)}
+               onClick={_.partial(this.onComponentClick, componentName)}
                ref={componentName + "Button"}>
               {componentName}
             </a>
@@ -134,7 +134,7 @@ module.exports = React.createClass({
               ref="fullScreenButton">Fullscreen</a>;
   },
 
-  handleComponentClick: function(componentName, event) {
+  onComponentClick: function(componentName, event) {
     event.preventDefault();
 
     var currentlyExpanded = this.state.expandedComponents,
