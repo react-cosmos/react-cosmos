@@ -19,7 +19,7 @@ module.exports = function(config) {
     preprocessors: {
       '**/*.js': ['webpack']
     },
-    reporters: ['progress', 'coverage'],
+    reporters: ['mocha', 'coverage'],
     webpack: {
       module: {
         loaders: [{

@@ -37,7 +37,7 @@
   },
   "main": "build/cosmos.commonjs.js",
   "scripts": {
-    "test": "karma start --single-run --reporters mocha",
+    "test": "karma start --single-run",
     "lint": "jscs ./",
     "build-commonjs": "webpack -p --config webpack/commonjs.config.js",
     "build-dev": "webpack --config webpack/browser.config.js",
