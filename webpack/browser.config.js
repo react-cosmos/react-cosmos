@@ -1,7 +1,6 @@
 var _ = require('lodash'),
     baseConfig = require('./base.config.js');
 
-
 module.exports = _.merge({}, baseConfig, {
   externals: {
     'lodash': '_',

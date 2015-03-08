@@ -306,6 +306,9 @@ easier to debug down the road.
 ## Development
 
 ```bash
+# Lint code
+npm run lint
+
 # Create browser bundle in build/cosmos.js
 npm run build-dev
 

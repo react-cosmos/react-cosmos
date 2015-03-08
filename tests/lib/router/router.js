@@ -1,11 +1,9 @@
 var serialize = require('../../../lib/serialize.js'),
     router = require('../../../lib/router'),
-    url = router.url;
+    url = router.url,
     Router = router.Router;
 
-
-describe("Router class", function() {
-
+describe('Router class', function() {
   var componentInstance = {},
       onRenderSpy = sinon.spy(function() {
         return componentInstance;
@@ -29,15 +27,14 @@ describe("Router class", function() {
     onRenderSpy.reset();
   });
 
-  describe("new instance", function() {
-
-    it("should request URL params", function() {
+  describe('new instance', function() {
+    it('should request URL params', function() {
       new Router({onRender: onRenderSpy});
 
       expect(url.getParams).to.have.been.called;
     });
 
-    it("should render using URL params as props", function() {
+    it('should render using URL params as props', function() {
       new Router({onRender: onRenderSpy});
 
       var propsSent = onRenderSpy.lastCall.args[0];
@@ -45,7 +42,7 @@ describe("Router class", function() {
       expect(propsSent.dataUrl).to.equal('users.json');
     });
 
-    it("should extend default props", function() {
+    it('should extend default props', function() {
       new Router({
         onRender: onRenderSpy,
         defaultProps: {
@@ -60,27 +57,27 @@ describe("Router class", function() {
       expect(propsSent.defaultProp).to.equal(true);
     });
 
-    it("should attach router reference to props", function() {
+    it('should attach router reference to props', function() {
       var routerInstance = new Router({onRender: onRenderSpy});
 
       var propsSent = onRenderSpy.lastCall.args[0];
       expect(propsSent.router).to.equal(routerInstance);
     });
 
-    it("should set key to current window location href", function() {
+    it('should set key to current window location href', function() {
       new Router({onRender: onRenderSpy});
 
       var propsSent = onRenderSpy.lastCall.args[0];
       expect(propsSent.key).to.equal(window.location.href);
     });
 
-    it("should default to document.body as container", function() {
+    it('should default to document.body as container', function() {
       new Router({onRender: onRenderSpy});
 
       expect(onRenderSpy.lastCall.args[1]).to.equal(document.body);
     });
 
-    it("should use container node received in options", function() {
+    it('should use container node received in options', function() {
       var container = document.createElement('div');
       new Router({
         onRender: onRenderSpy,
@@ -90,13 +87,13 @@ describe("Router class", function() {
       expect(onRenderSpy.lastCall.args[1]).to.equal(container);
     });
 
-    it("should expose reference to root component", function() {
+    it('should expose reference to root component', function() {
       var router = new Router({onRender: onRenderSpy});
 
       expect(router.rootComponent).to.equal(componentInstance);
     });
 
-    it("should call onChange callback", function() {
+    it('should call onChange callback', function() {
       var onChangeSpy = sinon.spy();
       new Router({
         onRender: onRenderSpy,
@@ -110,8 +107,7 @@ describe("Router class", function() {
     });
   });
 
-  describe(".goTo method", function() {
-
+  describe('.goTo method', function() {
     beforeEach(function() {
       // Fake the API of the ComponentTree mixin
       componentInstance = {
@@ -145,7 +141,7 @@ describe("Router class", function() {
       Router.prototype._pushHistoryState.restore();
     });
 
-    it("should check if pushState is supported", function() {
+    it('should check if pushState is supported', function() {
       var router = new Router({onRender: onRenderSpy});
 
       router.goTo('');
@@ -153,7 +149,7 @@ describe("Router class", function() {
       expect(url.isPushStateSupported).to.have.been.called;
     });
 
-    it("should send query string to URL lib", function() {
+    it('should send query string to URL lib', function() {
       var router = new Router({onRender: onRenderSpy});
 
       router.goTo('my-page?component=User&dataUrl=user.json');
@@ -162,7 +158,7 @@ describe("Router class", function() {
             .to.have.been.calledWith('component=User&dataUrl=user.json');
     });
 
-    it("should render using props returned by URL lib", function() {
+    it('should render using props returned by URL lib', function() {
       var router = new Router({onRender: onRenderSpy});
 
       router.goTo('my-page?component=User&dataUrl=user.json');
@@ -172,7 +168,7 @@ describe("Router class", function() {
       expect(propsSent.dataUrl).to.equal('user.json');
     });
 
-    it("should extend default props", function() {
+    it('should extend default props', function() {
       var router = new Router({
         onRender: onRenderSpy,
         defaultProps: {
@@ -189,7 +185,7 @@ describe("Router class", function() {
       expect(propsSent.defaultProp).to.equal(true);
     });
 
-    it("should attach router reference to props", function() {
+    it('should attach router reference to props', function() {
       var router = new Router({onRender: onRenderSpy});
 
       router.goTo('');
@@ -198,16 +194,17 @@ describe("Router class", function() {
       expect(propsSent.router).to.equal(router);
     });
 
-    it("should set key to sent href value", function() {
+    it('should set key to sent href value', function() {
       var router = new Router({onRender: onRenderSpy});
 
       router.goTo('my-page?component=User&dataUrl=user.json');
 
       var propsSent = onRenderSpy.lastCall.args[0];
-      expect(propsSent.key).to.equal('my-page?component=User&dataUrl=user.json');
+      expect(propsSent.key)
+            .to.equal('my-page?component=User&dataUrl=user.json');
     });
 
-    it("should push new props to browser history", function() {
+    it('should push new props to browser history', function() {
       var router = new Router({onRender: onRenderSpy});
 
       router.goTo('my-page?component=User&dataUrl=user.json');
@@ -219,7 +216,7 @@ describe("Router class", function() {
       expect(propsSent.dataUrl).to.equal('user.json');
     });
 
-    it("should generate snapshot of previous component", function() {
+    it('should generate snapshot of previous component', function() {
       var router = new Router({onRender: onRenderSpy});
 
       router.goTo('my-page?component=User&dataUrl=user.json');
@@ -227,7 +224,7 @@ describe("Router class", function() {
       expect(componentInstance.serialize).to.have.been.called;
     });
 
-    it("should update browser history for previous component", function() {
+    it('should update browser history for previous component', function() {
       var router = new Router({onRender: onRenderSpy});
 
       router.goTo('my-page?component=User&dataUrl=user.json');
@@ -240,7 +237,7 @@ describe("Router class", function() {
       expect(propsSent.state.somethingHappened).to.equal(true);
     });
 
-    it("shouldn't push default props to browser history", function() {
+    it('should not push default props to browser history', function() {
       var router = new Router({
         onRender: onRenderSpy,
         defaultProps: {
@@ -256,7 +253,7 @@ describe("Router class", function() {
       expect(propsSent.component).to.equal(undefined);
     });
 
-    it("shouldn't push router instance to browser history", function() {
+    it('should not push router instance to browser history', function() {
       var router = new Router({onRender: onRenderSpy});
 
       router.goTo('my-page?component=User&dataUrl=user.json');
@@ -267,7 +264,7 @@ describe("Router class", function() {
       expect(propsSent.router).to.equal(undefined);
     });
 
-    it("should call onChange callback", function() {
+    it('should call onChange callback', function() {
       var onChangeSpy = sinon.spy(),
           router = new Router({
             onRender: onRenderSpy,
@@ -282,9 +279,8 @@ describe("Router class", function() {
     });
   });
 
-  describe(".PopState event", function() {
-
-    it("should use props from event state", function() {
+  describe('.PopState event', function() {
+    it('should use props from event state', function() {
       var router = new Router({onRender: onRenderSpy});
 
       router.onPopState({
@@ -299,7 +295,7 @@ describe("Router class", function() {
       expect(propsSent.dataUrl).to.equal('user.json');
     });
 
-    it("should extend default props", function() {
+    it('should extend default props', function() {
       var router = new Router({
         onRender: onRenderSpy,
         defaultProps: {
@@ -321,7 +317,7 @@ describe("Router class", function() {
       expect(propsSent.defaultProp).to.equal(true);
     });
 
-    it("should attach router reference to props", function() {
+    it('should attach router reference to props', function() {
       var router = new Router({onRender: onRenderSpy});
 
       router.onPopState({
@@ -335,7 +331,7 @@ describe("Router class", function() {
       expect(propsSent.router).to.equal(router);
     });
 
-    it("should set key to current window location href", function() {
+    it('should set key to current window location href', function() {
       var router = new Router({onRender: onRenderSpy});
 
       router.onPopState({
@@ -346,7 +342,7 @@ describe("Router class", function() {
       expect(propsSent.key).to.equal(window.location.href);
     });
 
-    it("should call onChange callback", function() {
+    it('should call onChange callback', function() {
       var onChangeSpy = sinon.spy();
       var router = new Router({
         onRender: onRenderSpy,

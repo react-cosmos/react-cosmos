@@ -16,6 +16,7 @@
     "istanbul": "^0.3.7",
     "istanbul-instrumenter-loader": "^0.1.2",
     "jquery": "~1.11.1",
+    "jscs": "^1.11.3",
     "jsx-loader": "^0.12.2",
     "karma": "^0.12.31",
     "karma-chai": "^0.1.0",
@@ -37,6 +38,7 @@
   "main": "build/cosmos.commonjs.js",
   "scripts": {
     "test": "karma start --single-run --reporters mocha",
+    "lint": "jscs ./",
     "build-commonjs": "webpack -p --config webpack/commonjs.config.js",
     "build-dev": "webpack --config webpack/browser.config.js",
     "build-prod": "webpack -p --config webpack/browser.config.js --output-file build/cosmos.min.js"

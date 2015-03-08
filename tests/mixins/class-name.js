@@ -1,9 +1,7 @@
 var _ = require('lodash'),
     ClassNameMixin = require('../../mixins/class-name.js');
 
-
-describe("ClassName mixin", function() {
-
+describe('ClassName mixin', function() {
   var fakeComponent;
 
   beforeEach(function() {
@@ -13,22 +11,22 @@ describe("ClassName mixin", function() {
     fakeComponent.props = {};
   });
 
-  it("should not return a class name when none is received", function() {
+  it('should not return a class name when none is received', function() {
     expect(fakeComponent.getClassName()).to.equal(undefined);
   });
 
-  it("should return a class name when class prop is passed", function() {
+  it('should return a class name when class prop is passed', function() {
     fakeComponent.props.className = 'my-class';
 
     expect(fakeComponent.getClassName()).to.equal('my-class');
   });
 
-  it("should return default class name when passed", function() {
+  it('should return default class name when passed', function() {
     expect(fakeComponent.getClassName('default-class'))
           .to.equal('default-class');
   });
 
-  it("should override default class with class from props", function() {
+  it('should override default class with class from props', function() {
     fakeComponent.props.className = 'my-class';
 
     expect(fakeComponent.getClassName('default-class'))

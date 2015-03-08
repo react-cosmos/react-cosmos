@@ -1,9 +1,7 @@
 var serialize = require('../../lib/serialize.js');
 
-
-describe("Serialize lib", function() {
-
-  it("should generate props object from query string", function() {
+describe('Serialize lib', function() {
+  it('should generate props object from query string', function() {
     queryString = 'component=List&dataUrl=users.json';
     props = serialize.getPropsFromQueryString(queryString);
 
@@ -11,7 +9,7 @@ describe("Serialize lib", function() {
     expect(props.dataUrl).to.equal('users.json');
   });
 
-  it("should decode encoded params from query string", function() {
+  it('should decode encoded params from query string', function() {
     queryString = 'component=List&prop=words%20with%20spaces';
     props = serialize.getPropsFromQueryString(queryString);
 
@@ -19,7 +17,7 @@ describe("Serialize lib", function() {
     expect(props.prop).to.equal('words with spaces');
   });
 
-  it("should parse stringified JSON from query string", function() {
+  it('should parse stringified JSON from query string', function() {
     queryString = 'component=List&prop=' +
                   '%7B%22iam%22%3A%7B%22nested%22%3Atrue%7D%7D';
     props = serialize.getPropsFromQueryString(queryString);
@@ -28,7 +26,7 @@ describe("Serialize lib", function() {
     expect(props.prop.iam.nested).to.equal(true);
   });
 
-  it("should generate query string from props", function() {
+  it('should generate query string from props', function() {
     props = {
       component: 'List',
       dataUrl: 'users.json'
@@ -38,7 +36,7 @@ describe("Serialize lib", function() {
     expect(queryString).to.equal('component=List&dataUrl=users.json');
   });
 
-  it("should encode params in query string", function() {
+  it('should encode params in query string', function() {
     props = {
       component: 'List',
       prop: 'word with spaces'
@@ -48,7 +46,7 @@ describe("Serialize lib", function() {
     expect(queryString).to.equal('component=List&prop=word%20with%20spaces');
   });
 
-  it("should stringify JSON in query string", function() {
+  it('should stringify JSON in query string', function() {
     props = {
       component: 'List',
       prop: {

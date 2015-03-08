@@ -1,0 +1,11 @@
+{
+  "excludeFiles": [
+    "build/**",
+    "examples/**",
+    "node_modules/**"
+  ],
+  "fileExtensions": [".js"],
+  "preset": "google",
+
+  "disallowMultipleVarDecl": null
+}

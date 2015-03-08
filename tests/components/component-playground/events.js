@@ -2,11 +2,10 @@ var React = require('react/addons'),
     $ = require('jquery'),
     Cosmos = require('../../../cosmos.js'),
     renderComponent = require('../../helpers/render-component.js'),
-    ComponentPlayground = require('../../../components/component-playground.jsx');
+    ComponentPlayground =
+      require('../../../components/component-playground.jsx');
 
-
-describe("ComponentPlayground component", function() {
-
+describe('ComponentPlayground component', function() {
   var utils = React.addons.TestUtils,
       component,
       $component,
@@ -35,9 +34,8 @@ describe("ComponentPlayground component", function() {
     Cosmos.createElement.restore();
   })
 
-  describe("events", function() {
-
-    it("should expand component on click", function() {
+  describe('events', function() {
+    it('should expand component on click', function() {
       render();
 
       utils.Simulate.click(component.refs.SecondComponentButton);
@@ -46,7 +44,7 @@ describe("ComponentPlayground component", function() {
       expect(component.state.expandedComponents[0]).to.equal('SecondComponent');
     });
 
-    it("should contract expanded component on click", function() {
+    it('should contract expanded component on click', function() {
       props.state = {
         expandedComponents: ['FirstComponent', 'SecondComponent']
       };
