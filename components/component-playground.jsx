@@ -24,16 +24,8 @@ module.exports = React.createClass({
   },
 
   getInitialState: function() {
-    var expandedComponents = [];
-
-    // Expand the relevant component when a fixture is selected
-    if (this.props.fixturePath) {
-      expandedComponents.push(
-        this._getComponentNameFromPath(this.props.fixturePath));
-    }
-
     return {
-      expandedComponents: expandedComponents
+      expandedComponents: this._getInitialExpandedComponents()
     };
   },
 
@@ -157,6 +149,17 @@ module.exports = React.createClass({
     }
 
     this.setState({expandedComponents: toBeExpanded});
+  },
+
+  _getInitialExpandedComponents: function() {
+    var components = [];
+
+    // Expand the relevant component when a fixture is selected
+    if (this.props.fixturePath) {
+      components.push(this._getComponentNameFromPath(this.props.fixturePath));
+    }
+
+    return components;
   },
 
   _getPreviewClasses: function() {
