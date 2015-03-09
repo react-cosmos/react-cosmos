@@ -139,12 +139,20 @@
     }
   }
 
-  .preview {
+  .content-frame {
     position: absolute;
     top: 50px;
     bottom: 0;
     left: 300px;
     right: 0;
+
+    .preview {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
   }
 
   &.full-screen {
@@ -157,7 +165,7 @@
       display: none;
     }
 
-    > .preview {
+    > .content-frame {
       top: 0;
       left: 0;
     }

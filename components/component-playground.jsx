@@ -72,9 +72,7 @@ module.exports = React.createClass({
         <div className="fixtures">
           {this._renderFixtures()}
         </div>
-        <div ref="preview" className={this._getPreviewClasses()}>
-          {this.props.fixturePath ? this.loadChild('preview') : null}
-        </div>
+        {this.props.fixturePath ? this._renderContentFrame() : null}
       </div>
     );
   },
@@ -121,6 +119,14 @@ module.exports = React.createClass({
 
       }.bind(this))}
     </ul>;
+  },
+
+  _renderContentFrame: function() {
+    return <div className="content-frame">
+      <div ref="preview" className={this._getPreviewClasses()}>
+        {this.loadChild('preview')}
+      </div>
+    </div>
   },
 
   _renderFullScreenButton: function() {
