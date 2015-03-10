@@ -13,6 +13,8 @@ a route is just an alias to component _props._
 Check out [**Flatris**](http://skidding.github.io/flatris/), a demo app built
 with Cosmos.
 
+[![Join the chat at https://gitter.im/skidding/cosmos](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/skidding/cosmos?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Jump to:
 
 - [Manifesto](#manifesto)
