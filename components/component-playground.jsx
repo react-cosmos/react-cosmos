@@ -123,7 +123,7 @@ module.exports = React.createClass({
 
   _renderContentFrame: function() {
     return <div className="content-frame">
-      <div ref="preview" className={this._getPreviewClasses()}>
+      <div ref="previewContainer" className={this._getPreviewClasses()}>
         {this.loadChild('preview')}
       </div>
     </div>

@@ -138,7 +138,7 @@ describe('ComponentPlayground component', function() {
 
       render();
 
-      var $previewDOMNode = $(component.refs.preview.getDOMNode());
+      var $previewDOMNode = $(component.refs.previewContainer.getDOMNode());
 
       expect($previewDOMNode.hasClass('my-app-namespace')).to.equal(true);
     });
