@@ -24,7 +24,9 @@ describe('ComponentPlayground component', function() {
       fixtures: {
         FirstComponent: {},
         SecondComponent: {
-          'simple-state': {}
+          'simple-state': {
+            myProp: true
+          }
         }
       }
     };
@@ -48,6 +50,25 @@ describe('ComponentPlayground component', function() {
 
       expect(component.state.expandedComponents.length).to.equal(1);
       expect(component.state.expandedComponents[0]).to.equal('SecondComponent');
+    });
+
+    it('should populate state with fixture contents', function() {
+      props.fixturePath = 'SecondComponent/simple-state';
+
+      render();
+
+      expect(component.state.fixtureContents.myProp).to.equal(true);
+    });
+
+    it('should populate user input with stringified fixture contents',
+       function() {
+      props.fixturePath = 'SecondComponent/simple-state';
+
+      render();
+
+      var fixtureContents = component.state.fixtureContents;
+      expect(component.state.fixtureUserInput)
+            .to.equal(JSON.stringify(fixtureContents, null, 2));
     });
   });
 });

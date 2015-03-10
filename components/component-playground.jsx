@@ -25,7 +25,10 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     return {
-      expandedComponents: this._getInitialExpandedComponents()
+      expandedComponents: this._getInitialExpandedComponents(),
+      fixtureContents: this._getInitialFixtureContents(),
+      fixtureUserInput: this._getInitialFixtureUserInput(),
+      isFixtureUserInputValid: true
     };
   },
 
@@ -35,15 +38,15 @@ module.exports = React.createClass({
 
       var props = {
         component: this._getComponentNameFromPath(fixturePath),
-        key: fixturePath
+        // Child should re-render whenever fixture changes
+        key: JSON.stringify(this.state.fixtureContents)
       };
 
       if (this.props.router) {
         props.router = this.props.router;
       }
 
-      var fixture = this._getFixtureContentsFromPath(fixturePath);
-      return _.merge(props, fixture);
+      return _.merge(props, this.state.fixtureContents);
     }
   },
 
@@ -126,7 +129,23 @@ module.exports = React.createClass({
       <div ref="previewContainer" className={this._getPreviewClasses()}>
         {this.loadChild('preview')}
       </div>
+      {this._renderFixtureEditor()}
     </div>
+  },
+
+  _renderFixtureEditor: function() {
+    var editorClasses = classSet({
+      'fixture-editor': true,
+      'invalid-syntax': !this.state.isFixtureUserInputValid
+    });
+
+    return <div className="fixture-editor-outer">
+      <textarea ref="fixtureEditor"
+                className={editorClasses}
+                defaultValue={this.state.fixtureUserInput}
+                onChange={this.onFixtureChange}>
+      </textarea>
+    </div>;
   },
 
   _renderFullScreenButton: function() {
@@ -157,6 +176,21 @@ module.exports = React.createClass({
     this.setState({expandedComponents: toBeExpanded});
   },
 
+  onFixtureChange: function(event) {
+    var userInput = event.target.value,
+        newState = {fixtureUserInput: userInput};
+
+    try {
+      newState.fixtureContents = JSON.parse(userInput);
+      newState.isFixtureUserInputValid = true;
+    } catch (e) {
+      newState.isFixtureUserInputValid = false;
+      console.error(e);
+    }
+
+    this.setState(newState);
+  },
+
   _getInitialExpandedComponents: function() {
     var components = [];
 
@@ -166,6 +200,23 @@ module.exports = React.createClass({
     }
 
     return components;
+  },
+
+  _getInitialFixtureContents: function() {
+    if (!this.props.fixturePath) {
+      return null;
+    }
+
+    return this._getFixtureContentsFromPath(this.props.fixturePath);
+  },
+
+  _getInitialFixtureUserInput: function() {
+    if (!this.props.fixturePath) {
+      return '';
+    }
+
+    var contents = this._getFixtureContentsFromPath(this.props.fixturePath);
+    return JSON.stringify(contents, null, 2);
   },
 
   _getPreviewClasses: function() {

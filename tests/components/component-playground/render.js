@@ -142,5 +142,43 @@ describe('ComponentPlayground component', function() {
 
       expect($previewDOMNode.hasClass('my-app-namespace')).to.equal(true);
     });
+
+    it('should not render fixture editor w/out selected fixture', function() {
+      render();
+
+      expect(component.refs.fixtureEditor).to.not.exist;
+    })
+
+    it('should render fixture editor when fixture is selected', function() {
+      props.fixturePath = 'SecondComponent/simple-state';
+
+      render();
+
+      expect(component.refs.fixtureEditor).to.exist;
+    })
+
+    it('should populate fixture editor textarea from state', function() {
+      props.fixturePath = 'SecondComponent/simple-state';
+      props.state = {
+        fixtureUserInput: 'lorem ipsum'
+      };
+
+      render();
+
+      expect(component.refs.fixtureEditor.getDOMNode().value)
+             .to.equal('lorem ipsum');
+    });
+
+    it('should add invalid class on fixture editor on state flag', function() {
+      props.fixturePath = 'SecondComponent/simple-state';
+      props.state = {
+        isFixtureUserInputValid: false
+      };
+
+      render();
+
+      expect($(component.refs.fixtureEditor.getDOMNode())
+             .hasClass('invalid-syntax')).to.be.true;
+    });
   });
 });

@@ -60,8 +60,9 @@ describe('ComponentPlayground component', function() {
     it('should send fixture contents to preview child', function() {
       render();
 
-      expect(childProps.width).to.equal(200);
-      expect(childProps.height).to.equal(100);
+      var fixtureContents = component.state.fixtureContents;
+      expect(childProps.width).to.equal(fixtureContents.width);
+      expect(childProps.height).to.equal(fixtureContents.height);
     });
 
     it('should send (Cosmos) router instance to preview child', function() {
@@ -72,10 +73,12 @@ describe('ComponentPlayground component', function() {
       expect(childProps.router).to.equal(props.router);
     });
 
-    it('should use fixture path as key to preview child', function() {
+    it('should use fixture contents as key for preview child', function() {
       render();
 
-      expect(childProps.key).to.equal(props.fixturePath);
+      var fixtureContents = component.state.fixtureContents,
+          stringifiedFixtureContents = JSON.stringify(fixtureContents);
+      expect(childProps.key).to.equal(stringifiedFixtureContents);
     });
 
     it('should clone fixture contents sent to child', function() {
@@ -85,6 +88,6 @@ describe('ComponentPlayground component', function() {
       render();
 
       expect(childProps.shouldBeCloned).to.not.equal(obj);
-    })
+    });
   });
 });

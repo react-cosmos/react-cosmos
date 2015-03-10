@@ -147,12 +147,35 @@
     left: 300px;
     right: 0;
 
-    .preview {
+    .fixture-editor-outer {
       position: absolute;
       top: 0;
       bottom: 0;
       left: 0;
+      right: 50%;
+
+      .fixture-editor {
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+        border: 1px solid rgba(16, 16, 16, 0.1);
+        background: rgb(248, 245, 236);
+        color: #637c84;
+        font-family: Menlo, Consolas, 'Courier New', monospace;
+        font-size: 13px;
+        line-height: 1.5em;
+        resize: none;
+        outline: none;
+      }
+    }
+
+    .preview {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
       right: 0;
+      overflow: hidden;
     }
   }
 
