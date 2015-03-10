@@ -2,9 +2,10 @@
   "excludeFiles": [
     "build/**",
     "examples/**",
+    ".git/**",
     "node_modules/**"
   ],
-  "fileExtensions": [".js"],
+  "fileExtensions": [".js", ".jsx"],
   "preset": "google",
 
   "disallowMultipleVarDecl": null

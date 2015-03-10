@@ -14,6 +14,7 @@
     "chai": "^1.10.0",
     "coveralls": "^2.11.2",
     "css-loader": "^0.9.1",
+    "esprima-fb": "^12001.1.0-dev-harmony-fb",
     "istanbul": "^0.3.7",
     "istanbul-instrumenter-loader": "^0.1.2",
     "jquery": "~1.11.1",
@@ -40,7 +41,7 @@
   "scripts": {
     "test": "karma start --single-run",
     "coveralls": "cat tests/coverage/*/lcov.info | node_modules/coveralls/bin/coveralls.js",
-    "lint": "jscs ./",
+    "lint": "jscs --esprima=esprima-fb ./",
     "build-commonjs": "webpack -p --config webpack/commonjs.config.js",
     "build-dev": "webpack --config webpack/browser.config.js",
     "build-prod": "webpack -p --config webpack/browser.config.js --output-file build/cosmos.min.js"

@@ -72,7 +72,7 @@ module.exports = React.createClass({
               <span className="react">React</span> Component Playground
             </a>
             <span className="cosmos-plug">
-              {"powered by "}
+              {'powered by '}
               <a href="https://github.com/skidding/cosmos">Cosmos</a>
             </span>
           </h1>
@@ -101,7 +101,7 @@ module.exports = React.createClass({
           <p className="component-name">
             <a href="#toggle-component"
                onClick={_.partial(this.handleComponentClick, componentName)}
-               ref={componentName + "Button"}>
+               ref={componentName + 'Button'}>
               {componentName}
             </a>
           </p>
