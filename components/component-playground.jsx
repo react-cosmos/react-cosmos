@@ -222,7 +222,8 @@ module.exports = React.createClass({
 
   _getPreviewClasses: function() {
     var classes = {
-      'preview': true
+      'preview': true,
+      'aside-fixture-editor': this.state.isFixtureEditorOpen
     };
 
     if (this.props.containerClassName) {

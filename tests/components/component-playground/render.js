@@ -163,6 +163,18 @@ describe('ComponentPlayground component', function() {
       expect(component.refs.fixtureEditor).to.exist;
     })
 
+    it('should add class on preview when fixture editor is open', function() {
+      props.fixturePath = 'SecondComponent/simple-state';
+      props.state = {
+        isFixtureEditorOpen: true
+      };
+
+      render();
+
+      expect($(component.refs.previewContainer.getDOMNode())
+             .hasClass('aside-fixture-editor')).to.be.true;
+    });
+
     it('should populate fixture editor textarea from state', function() {
       props.state = {
         isFixtureEditorOpen: true,
