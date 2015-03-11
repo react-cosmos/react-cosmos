@@ -133,8 +133,6 @@ describe('ComponentPlayground component', function() {
 
     it('should add container class on preview element', function() {
       props.containerClassName = 'my-app-namespace';
-      // The preview container won't be rendered without a fixture selected
-      props.fixturePath = 'SecondComponent/simple-state';
 
       render();
 
