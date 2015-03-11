@@ -28,6 +28,7 @@ module.exports = React.createClass({
       expandedComponents: this._getInitialExpandedComponents(),
       fixtureContents: this._getInitialFixtureContents(),
       fixtureUserInput: this._getInitialFixtureUserInput(),
+      isFixtureEditorOpen: false,
       isFixtureUserInputValid: true
     };
   },
@@ -75,7 +76,7 @@ module.exports = React.createClass({
         <div className="fixtures">
           {this._renderFixtures()}
         </div>
-        {this.props.fixturePath ? this._renderContentFrame() : null}
+        {this._renderContentFrame()}
       </div>
     );
   },
@@ -127,9 +128,9 @@ module.exports = React.createClass({
   _renderContentFrame: function() {
     return <div className="content-frame">
       <div ref="previewContainer" className={this._getPreviewClasses()}>
-        {this.loadChild('preview')}
+        {this.props.fixturePath ? this.loadChild('preview') : null}
       </div>
-      {this._renderFixtureEditor()}
+      {this.state.isFixtureEditorOpen ? this._renderFixtureEditor() : null}
     </div>
   },
 

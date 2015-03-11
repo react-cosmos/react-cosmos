@@ -27,11 +27,7 @@ describe('ComponentPlayground component', function() {
     props = {
       fixtures: {
         FirstComponent: {},
-        SecondComponent: {
-          'simple-state': {
-            myProp: true
-          }
-        }
+        SecondComponent: {}
       }
     };
   });
@@ -71,8 +67,13 @@ describe('ComponentPlayground component', function() {
                               {target: {value: value}});
       };
 
+      var initialFixtureContents = {};
+
       beforeEach(function() {
-        props.fixturePath = 'SecondComponent/simple-state';
+        props.state = {
+          fixtureContents: initialFixtureContents,
+          isFixtureEditorOpen: true
+        };
 
         render();
       });
@@ -92,8 +93,8 @@ describe('ComponentPlayground component', function() {
       it('should not update fixture contents on invalid change', function() {
         triggerChange('lorem ipsum');
 
-        // We're expecting the initial fixture to be used
-        expect(component.state.fixtureContents.myProp).to.equal(true);
+        expect(component.state.fixtureContents)
+               .to.equal(initialFixtureContents);
       });
 
       it('should call console.error on invalid change', function() {

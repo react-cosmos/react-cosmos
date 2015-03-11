@@ -143,14 +143,20 @@ describe('ComponentPlayground component', function() {
       expect($previewDOMNode.hasClass('my-app-namespace')).to.equal(true);
     });
 
-    it('should not render fixture editor w/out selected fixture', function() {
+    it('should not render fixture editor when closed', function() {
+      props.state = {
+        isFixtureEditorOpen: false
+      };
+
       render();
 
       expect(component.refs.fixtureEditor).to.not.exist;
     })
 
-    it('should render fixture editor when fixture is selected', function() {
-      props.fixturePath = 'SecondComponent/simple-state';
+    it('should render fixture editor when open', function() {
+      props.state = {
+        isFixtureEditorOpen: true
+      };
 
       render();
 
@@ -158,8 +164,8 @@ describe('ComponentPlayground component', function() {
     })
 
     it('should populate fixture editor textarea from state', function() {
-      props.fixturePath = 'SecondComponent/simple-state';
       props.state = {
+        isFixtureEditorOpen: true,
         fixtureUserInput: 'lorem ipsum'
       };
 
@@ -170,8 +176,8 @@ describe('ComponentPlayground component', function() {
     });
 
     it('should add invalid class on fixture editor on state flag', function() {
-      props.fixturePath = 'SecondComponent/simple-state';
       props.state = {
+        isFixtureEditorOpen: true,
         isFixtureUserInputValid: false
       };
 
