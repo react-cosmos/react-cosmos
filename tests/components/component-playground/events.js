@@ -69,7 +69,9 @@ describe('ComponentPlayground component', function() {
                               {target: {value: value}});
       };
 
-      var initialFixtureContents = {};
+      var initialFixtureContents = {
+        myProp: 'dolor sit'
+      };
 
       beforeEach(function() {
         render({
@@ -95,8 +97,8 @@ describe('ComponentPlayground component', function() {
       it('should not update fixture contents on invalid change', function() {
         triggerChange('lorem ipsum');
 
-        expect(component.state.fixtureContents)
-               .to.equal(initialFixtureContents);
+        expect(component.state.fixtureContents.myProp)
+               .to.equal(initialFixtureContents.myProp);
       });
 
       it('should call console.error on invalid change', function() {
