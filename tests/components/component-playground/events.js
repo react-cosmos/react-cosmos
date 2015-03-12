@@ -12,7 +12,9 @@ describe('ComponentPlayground component', function() {
       props;
 
   // Alow tests to extend fixture before rendering
-  function render() {
+  function render(extraProps) {
+    _.merge(props, extraProps);
+
     component = renderComponent(ComponentPlayground, props);
     $component = $(component.getDOMNode());
   };
@@ -49,11 +51,11 @@ describe('ComponentPlayground component', function() {
     });
 
     it('should contract expanded component on click', function() {
-      props.state = {
-        expandedComponents: ['FirstComponent', 'SecondComponent']
-      };
-
-      render();
+      render({
+        state: {
+          expandedComponents: ['FirstComponent', 'SecondComponent']
+        }
+      });
 
       utils.Simulate.click(component.refs.SecondComponentButton.getDOMNode());
 
@@ -70,12 +72,12 @@ describe('ComponentPlayground component', function() {
       var initialFixtureContents = {};
 
       beforeEach(function() {
-        props.state = {
-          fixtureContents: initialFixtureContents,
-          isFixtureEditorOpen: true
-        };
-
-        render();
+        render({
+          state: {
+            fixtureContents: initialFixtureContents,
+            isFixtureEditorOpen: true
+          }
+        });
       });
 
       it('should update fixture user input on change', function() {

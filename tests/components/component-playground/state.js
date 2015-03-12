@@ -10,7 +10,9 @@ describe('ComponentPlayground component', function() {
       props;
 
   // Alow tests to extend fixture before rendering
-  function render() {
+  function render(extraProps) {
+    _.merge(props, extraProps);
+
     component = renderComponent(ComponentPlayground, props);
     $component = $(component.getDOMNode());
   };
@@ -44,27 +46,27 @@ describe('ComponentPlayground component', function() {
     });
 
     it('should expand component from selected fixture', function() {
-      props.fixturePath = 'SecondComponent/simple-state';
-
-      render();
+      render({
+        fixturePath: 'SecondComponent/simple-state'
+      });
 
       expect(component.state.expandedComponents.length).to.equal(1);
       expect(component.state.expandedComponents[0]).to.equal('SecondComponent');
     });
 
     it('should populate state with fixture contents', function() {
-      props.fixturePath = 'SecondComponent/simple-state';
-
-      render();
+      render({
+        fixturePath: 'SecondComponent/simple-state'
+      });
 
       expect(component.state.fixtureContents.myProp).to.equal(true);
     });
 
     it('should populate user input with stringified fixture contents',
        function() {
-      props.fixturePath = 'SecondComponent/simple-state';
-
-      render();
+      render({
+        fixturePath: 'SecondComponent/simple-state'
+      });
 
       var fixtureContents = component.state.fixtureContents;
       expect(component.state.fixtureUserInput)

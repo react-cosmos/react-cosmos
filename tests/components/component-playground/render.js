@@ -10,7 +10,9 @@ describe('ComponentPlayground component', function() {
       props;
 
   // Alow tests to extend fixture before rendering
-  function render() {
+  function render(extraProps) {
+    _.merge(props, extraProps);
+
     component = renderComponent(ComponentPlayground, props);
     $component = $(component.getDOMNode());
   };
@@ -79,9 +81,9 @@ describe('ComponentPlayground component', function() {
     });
 
     it('should add class to expanded components', function() {
-      props.fixturePath = 'FirstComponent/error-state';
-
-      render();
+      render({
+        fixturePath: 'FirstComponent/error-state'
+      });
 
       var $selectedFixture = $component.find('.component-fixture.selected');
 
@@ -90,17 +92,17 @@ describe('ComponentPlayground component', function() {
     });
 
     it('should not add full-screen class when prop is false', function() {
-      props.fullScreen = false;
-
-      render();
+      render({
+        fullScreen: false
+      });
 
       expect($component.hasClass('full-screen')).to.equal(false);
     });
 
     it('should add full-screen class when prop is true', function() {
-      props.fullScreen = true;
-
-      render();
+      render({
+        fullScreen: true
+      });
 
       expect($component.hasClass('full-screen')).to.equal(true);
     });
@@ -121,9 +123,9 @@ describe('ComponentPlayground component', function() {
     });
 
     it('should generate full-screen url', function() {
-      props.fixturePath = 'SecondComponent/simple-state';
-
-      render();
+      render({
+        fixturePath: 'SecondComponent/simple-state'
+      });
 
       var href = $(component.refs.fullScreenButton.getDOMNode()).attr('href');
 
@@ -132,9 +134,9 @@ describe('ComponentPlayground component', function() {
     });
 
     it('should add container class on preview element', function() {
-      props.containerClassName = 'my-app-namespace';
-
-      render();
+      render({
+        containerClassName: 'my-app-namespace'
+      });
 
       var $previewDOMNode = $(component.refs.previewContainer.getDOMNode());
 
@@ -142,56 +144,56 @@ describe('ComponentPlayground component', function() {
     });
 
     it('should not render fixture editor when closed', function() {
-      props.state = {
-        isFixtureEditorOpen: false
-      };
-
-      render();
+      render({
+        state: {
+          isFixtureEditorOpen: false
+        }
+      });
 
       expect(component.refs.fixtureEditor).to.not.exist;
     })
 
     it('should render fixture editor when open', function() {
-      props.state = {
-        isFixtureEditorOpen: true
-      };
-
-      render();
+      render({
+        state: {
+          isFixtureEditorOpen: true
+        }
+      });
 
       expect(component.refs.fixtureEditor).to.exist;
     })
 
     it('should add class on preview when fixture editor is open', function() {
-      props.fixturePath = 'SecondComponent/simple-state';
-      props.state = {
-        isFixtureEditorOpen: true
-      };
-
-      render();
+      render({
+        fixturePath: 'SecondComponent/simple-state',
+        state: {
+          isFixtureEditorOpen: true
+        }
+      });
 
       expect($(component.refs.previewContainer.getDOMNode())
              .hasClass('aside-fixture-editor')).to.be.true;
     });
 
     it('should populate fixture editor textarea from state', function() {
-      props.state = {
-        isFixtureEditorOpen: true,
-        fixtureUserInput: 'lorem ipsum'
-      };
-
-      render();
+      render({
+        state: {
+          isFixtureEditorOpen: true,
+          fixtureUserInput: 'lorem ipsum'
+        }
+      });
 
       expect(component.refs.fixtureEditor.getDOMNode().value)
              .to.equal('lorem ipsum');
     });
 
     it('should add invalid class on fixture editor on state flag', function() {
-      props.state = {
-        isFixtureEditorOpen: true,
-        isFixtureUserInputValid: false
-      };
-
-      render();
+      render({
+        state: {
+          isFixtureEditorOpen: true,
+          isFixtureUserInputValid: false
+        }
+      });
 
       expect($(component.refs.fixtureEditor.getDOMNode())
              .hasClass('invalid-syntax')).to.be.true;

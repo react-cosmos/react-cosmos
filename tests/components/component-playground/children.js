@@ -11,7 +11,9 @@ describe('ComponentPlayground component', function() {
       childProps;
 
   // Alow tests to extend fixture before rendering
-  function render() {
+  function render(extraProps) {
+    _.merge(props, extraProps);
+
     component = renderComponent(ComponentPlayground, props);
     $component = $(component.getDOMNode());
 
@@ -66,9 +68,9 @@ describe('ComponentPlayground component', function() {
     });
 
     it('should send (Cosmos) router instance to preview child', function() {
-      props.router = {};
-
-      render();
+      render({
+        router: {}
+      });
 
       expect(childProps.router).to.equal(props.router);
     });
@@ -83,9 +85,16 @@ describe('ComponentPlayground component', function() {
 
     it('should clone fixture contents sent to child', function() {
       var obj = {};
-      props.fixtures.MyComponent['small-size'].shouldBeCloned = obj;
 
-      render();
+      render({
+        fixtures: {
+          MyComponent: {
+            'small-size': {
+              shouldBeCloned: obj
+            }
+          }
+        }
+      });
 
       expect(childProps.shouldBeCloned).to.not.equal(obj);
     });
