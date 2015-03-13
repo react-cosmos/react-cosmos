@@ -41,21 +41,36 @@
       }
     }
 
-    .full-screen-button {
+    ul.buttons {
       position: absolute;
       top: 0;
       right: 0;
-      height: 50px;
-      padding: 0 10px;
-      background: #222;
-      color: #aaa;
-      line-height: 50px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      text-decoration: none;
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
 
-      &:hover {
-        color: #fafafa;
+      li {
+        float: left;
+        height: 50px;
+        padding: 0 10px;
+        background: #222;
+        line-height: 50px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        text-decoration: none;
+
+        &.selected-button {
+          background: #000;
+        }
+
+        a {
+          color: #aaa;
+          text-decoration: none;
+
+          &:hover {
+            color: #fafafa;
+          }
+        }
       }
     }
   }

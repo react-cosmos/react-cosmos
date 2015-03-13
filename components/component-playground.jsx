@@ -67,7 +67,7 @@ module.exports = React.createClass({
     return (
       <div className={classes}>
         <div className="header">
-          {this.props.fixturePath ? this._renderFullScreenButton() : null}
+          {this.props.fixturePath ? this._renderButtons() : null}
           <h1>
             <a href="?"
                className="home-link"
@@ -156,15 +156,42 @@ module.exports = React.createClass({
     </div>;
   },
 
+  _renderButtons: function() {
+    return <ul className="buttons">
+      {this._renderFixtureEditorButton()}
+      {this._renderFullScreenButton()}
+    </ul>;
+  },
+
+  _renderFixtureEditorButton: function() {
+    var classes = classSet({
+      'fixture-editor-button': true,
+      'selected-button': this.props.fixtureEditor
+    });
+
+    var fixtureEditorUrl = this.getUrlFromProps({
+      fixturePath: this.props.fixturePath,
+      fixtureEditor: !this.props.fixtureEditor
+    });
+
+    return <li className={classes}>
+      <a href={fixtureEditorUrl}
+         ref="fixtureEditorButton"
+         onClick={this.routeLink}>Editor</a>
+    </li>;
+  },
+
   _renderFullScreenButton: function() {
     var fullScreenUrl = this.getUrlFromProps({
       fixturePath: this.props.fixturePath,
       fullScreen: true
     });
 
-    return <a href={fullScreenUrl}
-              className="full-screen-button"
-              ref="fullScreenButton">Fullscreen</a>;
+    return <li className="full-screen-button">
+      <a href={fullScreenUrl}
+         ref="fullScreenButton"
+         onClick={this.routeLink}>Fullscreen</a>
+    </li>;
   },
 
   onComponentClick: function(componentName, event) {

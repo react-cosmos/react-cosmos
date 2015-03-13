@@ -115,22 +115,18 @@ describe('ComponentPlayground component', function() {
       expect(firstHref).to.equal('?fixturePath=FirstComponent%2Fblank-state');
     });
 
-    it('should not render full-screen button w/out fixture selected',
+    it('should not render full screen button w/out fixture selected',
        function() {
       render();
 
       expect(component.refs.fullScreenButton).to.not.exist;
     });
 
-    it('should generate full-screen url', function() {
-      render({
-        fixturePath: 'SecondComponent/simple-state'
-      });
+    it('should not render fixture editor button w/out fixture selected',
+       function() {
+      render();
 
-      var href = $(component.refs.fullScreenButton.getDOMNode()).attr('href');
-
-      expect(href).to.equal('?fixturePath=SecondComponent%2Fsimple-state' +
-                            '&fullScreen=true');
+      expect(component.refs.fixtureEditorButton).to.not.exist;
     });
 
     it('should add container class on preview element', function() {
@@ -149,45 +145,89 @@ describe('ComponentPlayground component', function() {
       expect(component.refs.fixtureEditor).to.not.exist;
     });
 
-    describe('with fixture editor open', function() {
+    describe('with fixture path selected', function() {
       beforeEach(function() {
-        props.fixtureEditor = true;
+        props.fixturePath = 'SecondComponent/simple-state';
       });
 
-      it('should render fixture editor', function() {
+      it('should generate full-screen url', function() {
         render();
 
-        expect(component.refs.fixtureEditor).to.exist;
+        var href = $(component.refs.fullScreenButton.getDOMNode())
+                   .attr('href');
+
+        expect(href).to.equal('?fixturePath=SecondComponent%2Fsimple-state' +
+                              '&fullScreen=true');
       });
 
-      it('should add class on preview container', function() {
+      it('should generate url for opening fixture editor', function() {
         render();
 
-        expect($(component.refs.previewContainer.getDOMNode())
-               .hasClass('aside-fixture-editor')).to.be.true;
+        var href = $(component.refs.fixtureEditorButton.getDOMNode())
+                   .attr('href');
+
+        expect(href).to.equal('?fixturePath=SecondComponent%2Fsimple-state' +
+                              '&fixtureEditor=true');
       });
 
-      it('should populate fixture editor textarea from state', function() {
-        render({
-          state: {
-            fixtureUserInput: 'lorem ipsum'
-          }
+      describe('with fixture editor open', function() {
+        beforeEach(function() {
+          props.fixtureEditor = true;
         });
 
-        expect(component.refs.fixtureEditor.getDOMNode().value)
-               .to.equal(component.state.fixtureUserInput);
-      });
+        it('should render fixture editor', function() {
+          render();
 
-      it('should add invalid class on fixture editor on state flag',
-         function() {
-        render({
-          state: {
-            isFixtureUserInputValid: false
-          }
+          expect(component.refs.fixtureEditor).to.exist;
         });
 
-        expect($(component.refs.fixtureEditor.getDOMNode())
-               .hasClass('invalid-syntax')).to.be.true;
+        it('should add class on preview container', function() {
+          render();
+
+          expect($(component.refs.previewContainer.getDOMNode())
+                 .hasClass('aside-fixture-editor')).to.be.true;
+        });
+
+        it('should populate fixture editor textarea from state', function() {
+          render({
+            state: {
+              fixtureUserInput: 'lorem ipsum'
+            }
+          });
+
+          expect(component.refs.fixtureEditor.getDOMNode().value)
+                 .to.equal(component.state.fixtureUserInput);
+        });
+
+        it('should generate selected fixture editor button', function() {
+          render();
+
+          expect($(component.getDOMNode())
+                 .find('.fixture-editor-button')
+                 .hasClass('selected-button')).to.be.true;
+        });
+
+        it('should generate url for closing fixture editor', function() {
+          render();
+
+          var href = $(component.refs.fixtureEditorButton.getDOMNode())
+                     .attr('href');
+
+          expect(href).to.equal('?fixturePath=SecondComponent%2Fsimple-state' +
+                                '&fixtureEditor=false');
+        });
+
+        it('should add invalid class on fixture editor on state flag',
+           function() {
+          render({
+            state: {
+              isFixtureUserInputValid: false
+            }
+          });
+
+          expect($(component.refs.fixtureEditor.getDOMNode())
+                 .hasClass('invalid-syntax')).to.be.true;
+        });
       });
     });
   });
