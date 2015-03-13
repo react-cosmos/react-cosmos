@@ -147,7 +147,7 @@ describe('ComponentPlayground component', function() {
       render();
 
       expect(component.refs.fixtureEditor).to.not.exist;
-    })
+    });
 
     describe('with fixture editor open', function() {
       beforeEach(function() {
@@ -161,9 +161,7 @@ describe('ComponentPlayground component', function() {
       });
 
       it('should add class on preview container', function() {
-        render({
-          fixturePath: 'SecondComponent/simple-state'
-        });
+        render();
 
         expect($(component.refs.previewContainer.getDOMNode())
                .hasClass('aside-fixture-editor')).to.be.true;
@@ -180,7 +178,8 @@ describe('ComponentPlayground component', function() {
                .to.equal(component.state.fixtureUserInput);
       });
 
-      it('should add invalid class on fixture editor on state flag', function() {
+      it('should add invalid class on fixture editor on state flag',
+         function() {
         render({
           state: {
             isFixtureUserInputValid: false
