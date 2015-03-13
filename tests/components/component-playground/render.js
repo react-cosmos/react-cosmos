@@ -143,60 +143,53 @@ describe('ComponentPlayground component', function() {
       expect($previewDOMNode.hasClass('my-app-namespace')).to.equal(true);
     });
 
-    it('should not render fixture editor when closed', function() {
-      render({
-        state: {
-          isFixtureEditorOpen: false
-        }
-      });
+    it('should not render fixture editor by default', function() {
+      render();
 
       expect(component.refs.fixtureEditor).to.not.exist;
     })
 
-    it('should render fixture editor when open', function() {
-      render({
-        state: {
-          isFixtureEditorOpen: true
-        }
+    describe('with fixture editor open', function() {
+      beforeEach(function() {
+        props.fixtureEditor = true;
       });
 
-      expect(component.refs.fixtureEditor).to.exist;
-    })
+      it('should render fixture editor', function() {
+        render();
 
-    it('should add class on preview when fixture editor is open', function() {
-      render({
-        fixturePath: 'SecondComponent/simple-state',
-        state: {
-          isFixtureEditorOpen: true
-        }
+        expect(component.refs.fixtureEditor).to.exist;
       });
 
-      expect($(component.refs.previewContainer.getDOMNode())
-             .hasClass('aside-fixture-editor')).to.be.true;
-    });
+      it('should add class on preview container', function() {
+        render({
+          fixturePath: 'SecondComponent/simple-state'
+        });
 
-    it('should populate fixture editor textarea from state', function() {
-      render({
-        state: {
-          isFixtureEditorOpen: true,
-          fixtureUserInput: 'lorem ipsum'
-        }
+        expect($(component.refs.previewContainer.getDOMNode())
+               .hasClass('aside-fixture-editor')).to.be.true;
       });
 
-      expect(component.refs.fixtureEditor.getDOMNode().value)
-             .to.equal('lorem ipsum');
-    });
+      it('should populate fixture editor textarea from state', function() {
+        render({
+          state: {
+            fixtureUserInput: 'lorem ipsum'
+          }
+        });
 
-    it('should add invalid class on fixture editor on state flag', function() {
-      render({
-        state: {
-          isFixtureEditorOpen: true,
-          isFixtureUserInputValid: false
-        }
+        expect(component.refs.fixtureEditor.getDOMNode().value)
+               .to.equal(component.state.fixtureUserInput);
       });
 
-      expect($(component.refs.fixtureEditor.getDOMNode())
-             .hasClass('invalid-syntax')).to.be.true;
+      it('should add invalid class on fixture editor on state flag', function() {
+        render({
+          state: {
+            isFixtureUserInputValid: false
+          }
+        });
+
+        expect($(component.refs.fixtureEditor.getDOMNode())
+               .hasClass('invalid-syntax')).to.be.true;
+      });
     });
   });
 });

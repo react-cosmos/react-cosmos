@@ -19,12 +19,14 @@ module.exports = React.createClass({
   propTypes: {
     fixtures: React.PropTypes.object.isRequired,
     fixturePath: React.PropTypes.string,
+    fixtureEditor: React.PropTypes.bool,
     fullScreen: React.PropTypes.bool,
     containerClassName: React.PropTypes.string
   },
 
   getDefaultProps: function() {
     return {
+      fixtureEditor: false,
       fullScreen: false
     };
   },
@@ -34,7 +36,6 @@ module.exports = React.createClass({
       expandedComponents: this._getInitialExpandedComponents(),
       fixtureContents: this._getInitialFixtureContents(),
       fixtureUserInput: this._getInitialFixtureUserInput(),
-      isFixtureEditorOpen: false,
       isFixtureUserInputValid: true
     };
   },
@@ -136,7 +137,7 @@ module.exports = React.createClass({
       <div ref="previewContainer" className={this._getPreviewClasses()}>
         {this.props.fixturePath ? this.loadChild('preview') : null}
       </div>
-      {this.state.isFixtureEditorOpen ? this._renderFixtureEditor() : null}
+      {this.props.fixtureEditor ? this._renderFixtureEditor() : null}
     </div>
   },
 
@@ -229,7 +230,7 @@ module.exports = React.createClass({
   _getPreviewClasses: function() {
     var classes = {
       'preview': true,
-      'aside-fixture-editor': this.state.isFixtureEditorOpen
+      'aside-fixture-editor': this.props.fixtureEditor
     };
 
     if (this.props.containerClassName) {

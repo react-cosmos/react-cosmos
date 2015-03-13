@@ -29,7 +29,9 @@ describe('ComponentPlayground component', function() {
     props = {
       fixtures: {
         FirstComponent: {},
-        SecondComponent: {}
+        SecondComponent: {
+          'simple-state': {}
+        }
       }
     };
   });
@@ -75,9 +77,9 @@ describe('ComponentPlayground component', function() {
 
       beforeEach(function() {
         render({
+          fixtureEditor: true,
           state: {
-            fixtureContents: initialFixtureContents,
-            isFixtureEditorOpen: true
+            fixtureContents: initialFixtureContents
           }
         });
       });
