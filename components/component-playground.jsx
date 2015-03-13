@@ -117,13 +117,18 @@ module.exports = React.createClass({
     return <ul className="component-fixtures">
       {_.map(fixtures, function(props, fixtureName) {
 
-        var url = this.getUrlFromProps({
+        var fixtureProps = {
           fixturePath: componentName + '/' + fixtureName
-        });
+        };
+
+        if (this.props.fixtureEditor) {
+          fixtureProps.fixtureEditor = true;
+        }
 
         return <li className={this._getFixtureClasses(fixtureName)}
                    key={fixtureName}>
-          <a href={url} onClick={this.routeLink}>
+          <a href={this.getUrlFromProps(fixtureProps)}
+             onClick={this.routeLink}>
             {fixtureName.replace(/-/g, ' ')}
           </a>
         </li>;

@@ -199,6 +199,16 @@ describe('ComponentPlayground component', function() {
                  .to.equal(component.state.fixtureUserInput);
         });
 
+        it('should generate url with fixture path and fixture editor',
+          function() {
+          render();
+
+          var firstHref = $component.find('.component-fixture a').attr('href');
+
+          expect(firstHref).to.equal(
+              '?fixturePath=FirstComponent%2Fblank-state&fixtureEditor=true');
+        });
+
         it('should generate selected fixture editor button', function() {
           render();
 
