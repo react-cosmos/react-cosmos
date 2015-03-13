@@ -23,6 +23,12 @@ module.exports = React.createClass({
     containerClassName: React.PropTypes.string
   },
 
+  getDefaultProps: function() {
+    return {
+      fullScreen: false
+    };
+  },
+
   getInitialState: function() {
     return {
       expandedComponents: this._getInitialExpandedComponents(),
