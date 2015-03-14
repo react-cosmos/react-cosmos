@@ -125,7 +125,8 @@ module.exports = React.createClass({
           fixtureProps.fixtureEditor = true;
         }
 
-        return <li className={this._getFixtureClasses(fixtureName)}
+        return <li className={this._getFixtureClasses(componentName,
+                                                      fixtureName)}
                    key={fixtureName}>
           <a href={this.getUrlFromProps(fixtureProps)}
              onClick={this.routeLink}>
@@ -272,15 +273,17 @@ module.exports = React.createClass({
     return classSet(classes);
   },
 
-  _getFixtureClasses: function(fixtureName) {
+  _getFixtureClasses: function(componentName, fixtureName) {
     var classes = {
       'component-fixture': true
     };
 
     var fixturePath = this.props.fixturePath;
     if (fixturePath) {
-      var selectedFixtureName = this._getFixtureNameFromPath(fixturePath);
-      classes['selected'] = fixtureName === selectedFixtureName;
+      var selectedComponentName = this._getComponentNameFromPath(fixturePath),
+          selectedFixtureName = this._getFixtureNameFromPath(fixturePath);
+      classes['selected'] = componentName === selectedComponentName &&
+                            fixtureName === selectedFixtureName;
     }
 
     return classSet(classes);

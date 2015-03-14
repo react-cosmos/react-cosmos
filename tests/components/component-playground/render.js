@@ -27,7 +27,7 @@ describe('ComponentPlayground component', function() {
         FirstComponent: {
           'blank-state': {},
           'error-state': {},
-          'available-state': {}
+          'simple-state': {}
         },
         SecondComponent: {
           'simple-state': {}
@@ -80,15 +80,27 @@ describe('ComponentPlayground component', function() {
             .to.equal('simple state');
     });
 
-    it('should add class to expanded components', function() {
+    it('should add class to expanded components (only)', function() {
       render({
         fixturePath: 'FirstComponent/error-state'
+      });
+
+      var $expandedComponent = $component.find('.component.expanded');
+
+      expect($expandedComponent.length).to.equal(1);
+      expect($expandedComponent.find('.component-name').text())
+            .to.equal('FirstComponent');
+    });
+
+    it('should add class to selected fixture (only)', function() {
+      render({
+        fixturePath: 'FirstComponent/simple-state'
       });
 
       var $selectedFixture = $component.find('.component-fixture.selected');
 
       expect($selectedFixture.length).to.equal(1);
-      expect($selectedFixture.text()).to.equal('error state');
+      expect($selectedFixture.text()).to.equal('simple state');
     });
 
     it('should not add full-screen class when prop is false', function() {
