@@ -246,6 +246,13 @@ module.exports = React.createClass({
     </li>;
   },
 
+  componentWillReceiveProps: function(nextProps) {
+    if (nextProps.fixturePath !== this.props.fixturePath) {
+      this.setState(this.constructor.getInitialState(nextProps.fixtures,
+                                                     nextProps.fixturePath));
+    }
+  },
+
   onComponentClick: function(componentName, event) {
     event.preventDefault();
 
