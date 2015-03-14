@@ -24,6 +24,56 @@ module.exports = React.createClass({
     containerClassName: React.PropTypes.string
   },
 
+  statics: {
+    getInitialState: function(fixtures, fixturePath) {
+      return {
+        expandedComponents: this.getExpandedComponents(fixturePath),
+        fixtureContents: this.getFixtureContents(fixtures, fixturePath),
+        fixtureUserInput: this.getFixtureUserInput(fixtures, fixturePath),
+        isFixtureUserInputValid: true
+      };
+    },
+
+    getExpandedComponents: function(fixturePath) {
+      var components = [];
+
+      // Expand the relevant component when a fixture is selected
+      if (fixturePath) {
+        components.push(this.getComponentName(fixturePath));
+      }
+
+      return components;
+    },
+
+    getFixtureUserInput: function(fixtures, fixturePath) {
+      if (!fixturePath) {
+        return '';
+      }
+
+      var contents = this.getFixtureContents(fixtures, fixturePath);
+      return JSON.stringify(contents, null, 2);
+    },
+
+    getFixtureContents: function(fixtures, fixturePath) {
+      if (!fixturePath) {
+        return null;
+      }
+
+      var componentName = this.getComponentName(fixturePath),
+          fixtureName = this.getFixtureName(fixturePath);
+
+      return fixtures[componentName][fixtureName];
+    },
+
+    getComponentName: function(fixturePath) {
+      return fixturePath.split('/')[0];
+    },
+
+    getFixtureName: function(fixturePath) {
+      return fixturePath.substr(fixturePath.indexOf('/') + 1);
+    }
+  },
+
   getDefaultProps: function() {
     return {
       fixtureEditor: false,
@@ -32,12 +82,8 @@ module.exports = React.createClass({
   },
 
   getInitialState: function() {
-    return {
-      expandedComponents: this._getInitialExpandedComponents(),
-      fixtureContents: this._getInitialFixtureContents(),
-      fixtureUserInput: this._getInitialFixtureUserInput(),
-      isFixtureUserInputValid: true
-    };
+    return this.constructor.getInitialState(this.props.fixtures,
+                                            this.props.fixturePath);
   },
 
   children: {
@@ -45,7 +91,7 @@ module.exports = React.createClass({
       var fixturePath = this.props.fixturePath;
 
       var props = {
-        component: this._getComponentNameFromPath(fixturePath),
+        component: this.constructor.getComponentName(fixturePath),
         // Child should re-render whenever fixture changes
         key: JSON.stringify(this.state.fixtureContents)
       };
@@ -156,7 +202,7 @@ module.exports = React.createClass({
     return <div className="fixture-editor-outer">
       <textarea ref="fixtureEditor"
                 className={editorClasses}
-                defaultValue={this.state.fixtureUserInput}
+                value={this.state.fixtureUserInput}
                 onChange={this.onFixtureChange}>
       </textarea>
     </div>;
@@ -200,6 +246,13 @@ module.exports = React.createClass({
     </li>;
   },
 
+  componentWillReceiveProps: function(nextProps) {
+    if (nextProps.fixturePath !== this.props.fixturePath) {
+      this.setState(this.constructor.getInitialState(nextProps.fixtures,
+                                                     nextProps.fixturePath));
+    }
+  },
+
   onComponentClick: function(componentName, event) {
     event.preventDefault();
 
@@ -232,34 +285,6 @@ module.exports = React.createClass({
     this.setState(newState);
   },
 
-  _getInitialExpandedComponents: function() {
-    var components = [];
-
-    // Expand the relevant component when a fixture is selected
-    if (this.props.fixturePath) {
-      components.push(this._getComponentNameFromPath(this.props.fixturePath));
-    }
-
-    return components;
-  },
-
-  _getInitialFixtureContents: function() {
-    if (!this.props.fixturePath) {
-      return null;
-    }
-
-    return this._getFixtureContentsFromPath(this.props.fixturePath);
-  },
-
-  _getInitialFixtureUserInput: function() {
-    if (!this.props.fixturePath) {
-      return '';
-    }
-
-    var contents = this._getFixtureContentsFromPath(this.props.fixturePath);
-    return JSON.stringify(contents, null, 2);
-  },
-
   _getPreviewClasses: function() {
     var classes = {
       'preview': true,
@@ -280,27 +305,14 @@ module.exports = React.createClass({
 
     var fixturePath = this.props.fixturePath;
     if (fixturePath) {
-      var selectedComponentName = this._getComponentNameFromPath(fixturePath),
-          selectedFixtureName = this._getFixtureNameFromPath(fixturePath);
+      var selectedComponentName =
+              this.constructor.getComponentName(fixturePath),
+          selectedFixtureName = this.constructor.getFixtureName(fixturePath);
+
       classes['selected'] = componentName === selectedComponentName &&
                             fixtureName === selectedFixtureName;
     }
 
     return classSet(classes);
-  },
-
-  _getFixtureContentsFromPath: function(fixturePath) {
-    var componentName = this._getComponentNameFromPath(fixturePath),
-        fixtureName = this._getFixtureNameFromPath(fixturePath);
-
-    return this.props.fixtures[componentName][fixtureName];
-  },
-
-  _getComponentNameFromPath: function(fixturePath) {
-    return fixturePath.split('/')[0];
-  },
-
-  _getFixtureNameFromPath: function(fixturePath) {
-    return fixturePath.substr(fixturePath.indexOf('/') + 1);
   }
 });

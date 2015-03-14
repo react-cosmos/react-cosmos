@@ -64,13 +64,6 @@ describe('Router class', function() {
       expect(propsSent.router).to.equal(routerInstance);
     });
 
-    it('should set key to current window location href', function() {
-      new Router({onRender: onRenderSpy});
-
-      var propsSent = onRenderSpy.lastCall.args[0];
-      expect(propsSent.key).to.equal(window.location.href);
-    });
-
     it('should default to document.body as container', function() {
       new Router({onRender: onRenderSpy});
 
@@ -192,16 +185,6 @@ describe('Router class', function() {
 
       var propsSent = onRenderSpy.lastCall.args[0];
       expect(propsSent.router).to.equal(router);
-    });
-
-    it('should set key to sent href value', function() {
-      var router = new Router({onRender: onRenderSpy});
-
-      router.goTo('my-page?component=User&dataUrl=user.json');
-
-      var propsSent = onRenderSpy.lastCall.args[0];
-      expect(propsSent.key)
-            .to.equal('my-page?component=User&dataUrl=user.json');
     });
 
     it('should push new props to browser history', function() {
@@ -329,17 +312,6 @@ describe('Router class', function() {
 
       var propsSent = onRenderSpy.lastCall.args[0];
       expect(propsSent.router).to.equal(router);
-    });
-
-    it('should set key to current window location href', function() {
-      var router = new Router({onRender: onRenderSpy});
-
-      router.onPopState({
-        state: {}
-      });
-
-      var propsSent = onRenderSpy.lastCall.args[0];
-      expect(propsSent.key).to.equal(window.location.href);
     });
 
     it('should call onChange callback', function() {
