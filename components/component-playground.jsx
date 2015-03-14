@@ -19,21 +19,24 @@ module.exports = React.createClass({
   propTypes: {
     fixtures: React.PropTypes.object.isRequired,
     fixturePath: React.PropTypes.string,
+    fixtureEditor: React.PropTypes.bool,
     fullScreen: React.PropTypes.bool,
     containerClassName: React.PropTypes.string
   },
 
-  getInitialState: function() {
-    var expandedComponents = [];
-
-    // Expand the relevant component when a fixture is selected
-    if (this.props.fixturePath) {
-      expandedComponents.push(
-        this._getComponentNameFromPath(this.props.fixturePath));
-    }
-
+  getDefaultProps: function() {
     return {
-      expandedComponents: expandedComponents
+      fixtureEditor: false,
+      fullScreen: false
+    };
+  },
+
+  getInitialState: function() {
+    return {
+      expandedComponents: this._getInitialExpandedComponents(),
+      fixtureContents: this._getInitialFixtureContents(),
+      fixtureUserInput: this._getInitialFixtureUserInput(),
+      isFixtureUserInputValid: true
     };
   },
 
@@ -43,15 +46,15 @@ module.exports = React.createClass({
 
       var props = {
         component: this._getComponentNameFromPath(fixturePath),
-        key: fixturePath
+        // Child should re-render whenever fixture changes
+        key: JSON.stringify(this.state.fixtureContents)
       };
 
       if (this.props.router) {
         props.router = this.props.router;
       }
 
-      var fixture = this._getFixtureContentsFromPath(fixturePath);
-      return _.merge(props, fixture);
+      return _.merge(props, this.state.fixtureContents);
     }
   },
 
@@ -64,7 +67,7 @@ module.exports = React.createClass({
     return (
       <div className={classes}>
         <div className="header">
-          {this.renderFullScreenButton()}
+          {this.props.fixturePath ? this._renderButtons() : null}
           <h1>
             <a href="?"
                className="home-link"
@@ -78,16 +81,14 @@ module.exports = React.createClass({
           </h1>
         </div>
         <div className="fixtures">
-          {this.renderFixtures()}
+          {this._renderFixtures()}
         </div>
-        <div ref="preview" className={this._getPreviewClasses()}>
-          {this.props.fixturePath ? this.loadChild('preview') : null}
-        </div>
+        {this._renderContentFrame()}
       </div>
     );
   },
 
-  renderFixtures: function() {
+  _renderFixtures: function() {
     return <ul className="components">
       {_.map(this.props.fixtures, function(fixtures, componentName) {
 
@@ -100,29 +101,35 @@ module.exports = React.createClass({
         return <li className={classes} key={componentName}>
           <p className="component-name">
             <a href="#toggle-component"
-               onClick={_.partial(this.handleComponentClick, componentName)}
+               onClick={_.partial(this.onComponentClick, componentName)}
                ref={componentName + 'Button'}>
               {componentName}
             </a>
           </p>
-          {this.renderComponentFixtures(componentName, fixtures)}
+          {this._renderComponentFixtures(componentName, fixtures)}
         </li>;
 
       }.bind(this))}
     </ul>
   },
 
-  renderComponentFixtures: function(componentName, fixtures) {
+  _renderComponentFixtures: function(componentName, fixtures) {
     return <ul className="component-fixtures">
       {_.map(fixtures, function(props, fixtureName) {
 
-        var url = this.getUrlFromProps({
+        var fixtureProps = {
           fixturePath: componentName + '/' + fixtureName
-        });
+        };
 
-        return <li className={this._getFixtureClasses(fixtureName)}
+        if (this.props.fixtureEditor) {
+          fixtureProps.fixtureEditor = true;
+        }
+
+        return <li className={this._getFixtureClasses(componentName,
+                                                      fixtureName)}
                    key={fixtureName}>
-          <a href={url} onClick={this.routeLink}>
+          <a href={this.getUrlFromProps(fixtureProps)}
+             onClick={this.routeLink}>
             {fixtureName.replace(/-/g, ' ')}
           </a>
         </li>;
@@ -131,22 +138,69 @@ module.exports = React.createClass({
     </ul>;
   },
 
-  renderFullScreenButton: function() {
-    if (!this.props.fixturePath) {
-      return;
-    }
+  _renderContentFrame: function() {
+    return <div className="content-frame">
+      <div ref="previewContainer" className={this._getPreviewClasses()}>
+        {this.props.fixturePath ? this.loadChild('preview') : null}
+      </div>
+      {this.props.fixtureEditor ? this._renderFixtureEditor() : null}
+    </div>
+  },
 
+  _renderFixtureEditor: function() {
+    var editorClasses = classSet({
+      'fixture-editor': true,
+      'invalid-syntax': !this.state.isFixtureUserInputValid
+    });
+
+    return <div className="fixture-editor-outer">
+      <textarea ref="fixtureEditor"
+                className={editorClasses}
+                defaultValue={this.state.fixtureUserInput}
+                onChange={this.onFixtureChange}>
+      </textarea>
+    </div>;
+  },
+
+  _renderButtons: function() {
+    return <ul className="buttons">
+      {this._renderFixtureEditorButton()}
+      {this._renderFullScreenButton()}
+    </ul>;
+  },
+
+  _renderFixtureEditorButton: function() {
+    var classes = classSet({
+      'fixture-editor-button': true,
+      'selected-button': this.props.fixtureEditor
+    });
+
+    var fixtureEditorUrl = this.getUrlFromProps({
+      fixturePath: this.props.fixturePath,
+      fixtureEditor: !this.props.fixtureEditor
+    });
+
+    return <li className={classes}>
+      <a href={fixtureEditorUrl}
+         ref="fixtureEditorButton"
+         onClick={this.routeLink}>Editor</a>
+    </li>;
+  },
+
+  _renderFullScreenButton: function() {
     var fullScreenUrl = this.getUrlFromProps({
       fixturePath: this.props.fixturePath,
       fullScreen: true
     });
 
-    return <a href={fullScreenUrl}
-              className="full-screen-button"
-              ref="fullScreenButton">Fullscreen</a>;
+    return <li className="full-screen-button">
+      <a href={fullScreenUrl}
+         ref="fullScreenButton"
+         onClick={this.routeLink}>Fullscreen</a>
+    </li>;
   },
 
-  handleComponentClick: function(componentName, event) {
+  onComponentClick: function(componentName, event) {
     event.preventDefault();
 
     var currentlyExpanded = this.state.expandedComponents,
@@ -163,9 +217,53 @@ module.exports = React.createClass({
     this.setState({expandedComponents: toBeExpanded});
   },
 
+  onFixtureChange: function(event) {
+    var userInput = event.target.value,
+        newState = {fixtureUserInput: userInput};
+
+    try {
+      newState.fixtureContents = JSON.parse(userInput);
+      newState.isFixtureUserInputValid = true;
+    } catch (e) {
+      newState.isFixtureUserInputValid = false;
+      console.error(e);
+    }
+
+    this.setState(newState);
+  },
+
+  _getInitialExpandedComponents: function() {
+    var components = [];
+
+    // Expand the relevant component when a fixture is selected
+    if (this.props.fixturePath) {
+      components.push(this._getComponentNameFromPath(this.props.fixturePath));
+    }
+
+    return components;
+  },
+
+  _getInitialFixtureContents: function() {
+    if (!this.props.fixturePath) {
+      return null;
+    }
+
+    return this._getFixtureContentsFromPath(this.props.fixturePath);
+  },
+
+  _getInitialFixtureUserInput: function() {
+    if (!this.props.fixturePath) {
+      return '';
+    }
+
+    var contents = this._getFixtureContentsFromPath(this.props.fixturePath);
+    return JSON.stringify(contents, null, 2);
+  },
+
   _getPreviewClasses: function() {
     var classes = {
-      'preview': true
+      'preview': true,
+      'aside-fixture-editor': this.props.fixtureEditor
     };
 
     if (this.props.containerClassName) {
@@ -175,15 +273,17 @@ module.exports = React.createClass({
     return classSet(classes);
   },
 
-  _getFixtureClasses: function(fixtureName) {
+  _getFixtureClasses: function(componentName, fixtureName) {
     var classes = {
       'component-fixture': true
     };
 
     var fixturePath = this.props.fixturePath;
     if (fixturePath) {
-      var selectedFixtureName = this._getFixtureNameFromPath(fixturePath);
-      classes['selected'] = fixtureName === selectedFixtureName;
+      var selectedComponentName = this._getComponentNameFromPath(fixturePath),
+          selectedFixtureName = this._getFixtureNameFromPath(fixturePath);
+      classes['selected'] = componentName === selectedComponentName &&
+                            fixtureName === selectedFixtureName;
     }
 
     return classSet(classes);

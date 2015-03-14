@@ -43,7 +43,7 @@
     "coveralls": "cat tests/coverage/*/lcov.info | node_modules/coveralls/bin/coveralls.js",
     "lint": "jscs --esprima=esprima-fb ./",
     "build-commonjs": "webpack -p --config webpack/commonjs.config.js",
-    "build-dev": "webpack --config webpack/browser.config.js",
+    "build-dev": "webpack --config webpack/browser.config.js --watch",
     "build-prod": "webpack -p --config webpack/browser.config.js --output-file build/cosmos.min.js"
   }
 }

@@ -31,6 +31,17 @@ var fixtures = {
         }
       }
     },
+    'with-expanded-component': {
+      fixtures: {
+        ComponentPlayground: {
+          'without-fixture-selected': {},
+          'with-fixture-selected': {}
+        }
+      },
+      state: {
+        expandedComponents: ['ComponentPlayground']
+      }
+    },
     'with-fixture-selected': {
       fixtures: {
         ComponentPlayground: {
@@ -39,6 +50,30 @@ var fixtures = {
         }
       },
       fixturePath: 'ComponentPlayground/with-fixture-selected'
+    },
+    'with-fixture-editor-open': {
+      fixtures: {
+        ComponentPlayground: {
+          'only-fixture': {
+            fixtures: {
+              ComponentPlayground: {
+                'recurring-fixture': {}
+              }
+            }
+          }
+        }
+      },
+      fixturePath: 'ComponentPlayground/only-fixture',
+      fixtureEditor: true
+    },
+    'full-screen': {
+      fixtures: {
+        ComponentPlayground: {
+          'only-fixture': {}
+        }
+      },
+      fixturePath: 'ComponentPlayground/only-fixture',
+      fullScreen: true
     }
   }
 };
