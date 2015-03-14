@@ -202,7 +202,7 @@ module.exports = React.createClass({
     return <div className="fixture-editor-outer">
       <textarea ref="fixtureEditor"
                 className={editorClasses}
-                defaultValue={this.state.fixtureUserInput}
+                value={this.state.fixtureUserInput}
                 onChange={this.onFixtureChange}>
       </textarea>
     </div>;
