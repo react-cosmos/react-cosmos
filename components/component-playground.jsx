@@ -120,10 +120,7 @@ module.exports = React.createClass({
                onClick={this.routeLink}>
               <span className="react">React</span> Component Playground
             </a>
-            <span className="cosmos-plug">
-              {'powered by '}
-              <a href="https://github.com/skidding/cosmos">Cosmos</a>
-            </span>
+            {!this.props.fixturePath ? this._renderCosmosPlug() : null}
           </h1>
         </div>
         <div className="fixtures">
@@ -132,6 +129,13 @@ module.exports = React.createClass({
         {this._renderContentFrame()}
       </div>
     );
+  },
+
+  _renderCosmosPlug: function() {
+    return <span ref="cosmosPlug" className="cosmos-plug">
+      {'powered by '}
+      <a href="https://github.com/skidding/cosmos">Cosmos</a>
+    </span>;
   },
 
   _renderFixtures: function() {

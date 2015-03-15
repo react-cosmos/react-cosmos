@@ -157,9 +157,21 @@ describe('ComponentPlayground component', function() {
       expect(component.refs.fixtureEditor).to.not.exist;
     });
 
+    it('should render cosmos plug by default', function() {
+      render();
+
+      expect(component.refs.cosmosPlug).to.exist;
+    });
+
     describe('with fixture path selected', function() {
       beforeEach(function() {
         props.fixturePath = 'SecondComponent/simple-state';
+      });
+
+      it('should not render cosmos plug', function() {
+        render();
+
+        expect(component.refs.cosmosPlug).to.not.exist;
       });
 
       it('should generate full-screen url', function() {
