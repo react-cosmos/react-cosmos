@@ -11,8 +11,8 @@ describe('ComponentPlayground component', function() {
       $component,
       props;
 
-  // Alow tests to extend fixture before rendering
   function render(extraProps) {
+    // Alow tests to extend fixture before rendering
     _.merge(props, extraProps);
 
     component = renderComponent(ComponentPlayground, props);
@@ -25,14 +25,8 @@ describe('ComponentPlayground component', function() {
     // Don't render any children
     sinon.stub(Cosmos, 'createElement');
 
-    // Allow tests to extend the base fixture
     props = {
-      fixtures: {
-        FirstComponent: {},
-        SecondComponent: {
-          'simple-state': {}
-        }
-      }
+      fixtures: {}
     };
   });
 
@@ -43,26 +37,54 @@ describe('ComponentPlayground component', function() {
   })
 
   describe('events', function() {
-    it('should expand component on click', function() {
-      render();
-
-      utils.Simulate.click(component.refs.SecondComponentButton.getDOMNode());
-
-      expect(component.state.expandedComponents.length).to.equal(1);
-      expect(component.state.expandedComponents[0]).to.equal('SecondComponent');
-    });
-
-    it('should contract expanded component on click', function() {
-      render({
-        state: {
-          expandedComponents: ['FirstComponent', 'SecondComponent']
-        }
+    describe('clicking on components', function() {
+      beforeEach(function() {
+        props.fixtures = {
+          FirstComponent: {},
+          SecondComponent: {
+            'simple-state': {}
+          }
+        };
       });
 
-      utils.Simulate.click(component.refs.SecondComponentButton.getDOMNode());
+      it('should expand component on click', function() {
+        render();
 
-      expect(component.state.expandedComponents.length).to.equal(1);
-      expect(component.state.expandedComponents[0]).to.equal('FirstComponent');
+        utils.Simulate.click(component.refs.SecondComponentButton.getDOMNode());
+
+        var expandedComponents = component.state.expandedComponents;
+        expect(expandedComponents.length).to.equal(1);
+        expect(expandedComponents[0]).to.equal('SecondComponent');
+      });
+
+      it('should keep expanding components click', function() {
+        render({
+          state: {
+            expandedComponents: ['FirstComponent']
+          }
+        });
+
+        utils.Simulate.click(component.refs.SecondComponentButton.getDOMNode());
+
+        var expandedComponents = component.state.expandedComponents;
+        expect(expandedComponents.length).to.equal(2);
+        expect(expandedComponents[0]).to.equal('FirstComponent');
+        expect(expandedComponents[1]).to.equal('SecondComponent');
+      });
+
+      it('should contract expanded component on click', function() {
+        render({
+          state: {
+            expandedComponents: ['FirstComponent', 'SecondComponent']
+          }
+        });
+
+        utils.Simulate.click(component.refs.SecondComponentButton.getDOMNode());
+
+        var expandedComponents = component.state.expandedComponents;
+        expect(expandedComponents.length).to.equal(1);
+        expect(expandedComponents[0]).to.equal('FirstComponent');
+      });
     });
 
     describe('editing fixture', function() {

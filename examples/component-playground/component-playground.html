@@ -49,7 +49,8 @@ var fixtures = {
           'with-fixture-selected': {}
         }
       },
-      fixturePath: 'ComponentPlayground/with-fixture-selected'
+      selectedComponent: 'ComponentPlayground',
+      selectedFixture: 'with-fixture-selected'
     },
     'with-fixture-editor-open': {
       fixtures: {
@@ -63,7 +64,8 @@ var fixtures = {
           }
         }
       },
-      fixturePath: 'ComponentPlayground/only-fixture',
+      selectedComponent: 'ComponentPlayground',
+      selectedFixture: 'only-fixture',
       fixtureEditor: true
     },
     'full-screen': {
@@ -72,7 +74,8 @@ var fixtures = {
           'only-fixture': {}
         }
       },
-      fixturePath: 'ComponentPlayground/only-fixture',
+      selectedComponent: 'ComponentPlayground',
+      selectedFixture: 'only-fixture',
       fullScreen: true
     }
   }
@@ -89,8 +92,10 @@ var router = Cosmos.start({
     var title = 'React Component Playground';
 
     // Set document title to the name of the selected fixture
-    if (props.fixturePath) {
-      title = props.fixturePath + ' – ' + title;
+    if (props.selectedComponent && props.selectedFixture) {
+      title = props.selectedComponent + ':' +
+              props.selectedFixture + ' – ' +
+              title;
     }
 
     document.title = title;
