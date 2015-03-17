@@ -24,12 +24,12 @@ describe('ComponentPlayground component', function() {
     props = {
       fixtures: {
         FirstComponent: {
-          'blank-state': {
+          'blank state': {
             myProp: false
           }
         },
         SecondComponent: {
-          'simple-state': {
+          'simple state': {
             myProp: true
           }
         }
@@ -52,7 +52,7 @@ describe('ComponentPlayground component', function() {
       beforeEach(function() {
         _.extend(props, {
           selectedComponent: 'FirstComponent',
-          selectedFixture: 'blank-state'
+          selectedFixture: 'blank state'
         });
       });
 
@@ -91,7 +91,7 @@ describe('ComponentPlayground component', function() {
 
           component.setProps({
             selectedComponent: 'SecondComponent',
-            selectedFixture: 'simple-state'
+            selectedFixture: 'simple state'
           });
         });
 
@@ -108,7 +108,7 @@ describe('ComponentPlayground component', function() {
         });
 
         it('should reset fixture user input', function() {
-          var fixtureContents = props.fixtures.FirstComponent['blank-state'];
+          var fixtureContents = props.fixtures.FirstComponent['blank state'];
 
           expect(JSON.parse(component.state.fixtureUserInput).myProp)
                 .to.equal(true);

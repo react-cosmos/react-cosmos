@@ -42,7 +42,7 @@ describe('ComponentPlayground component', function() {
         props.fixtures = {
           FirstComponent: {},
           SecondComponent: {
-            'simple-state': {}
+            'simple state': {}
           }
         };
       });
@@ -123,6 +123,12 @@ describe('ComponentPlayground component', function() {
 
         expect(component.state.fixtureContents.myProp)
                .to.equal(initialFixtureContents.myProp);
+      });
+
+      it('should empty fixture contents on empty input', function() {
+        triggerChange('');
+
+        expect(component.state.fixtureContents).to.equal(null);
       });
 
       it('should call console.error on invalid change', function() {

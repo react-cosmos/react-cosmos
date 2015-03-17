@@ -32,12 +32,12 @@ describe('ComponentPlayground component', function() {
     props = {
       fixtures: {
         FirstComponent: {
-          'blank-state': {},
-          'error-state': {},
-          'simple-state': {}
+          'blank state': {},
+          'error state': {},
+          'simple state': {}
         },
         SecondComponent: {
-          'simple-state': {}
+          'simple state': {}
         }
       }
     };
@@ -48,6 +48,22 @@ describe('ComponentPlayground component', function() {
   })
 
   describe('render', function() {
+    it('should render cosmos plug by default', function() {
+      render();
+
+      expect(component.refs.cosmosPlug).to.exist;
+    });
+
+    it('should not render cosmos plug with preview loaded', function() {
+      render({
+        state: {
+          fixtureContents: {}
+        }
+      });
+
+      expect(component.refs.cosmosPlug).to.not.exist;
+    });
+
     it('should render each component', function() {
       render();
 
@@ -75,7 +91,7 @@ describe('ComponentPlayground component', function() {
       expect($component2.find('.component-fixtures li').length).to.equal(1);
     });
 
-    it('should add spaces from hypens in fixture names', function() {
+    it('should render fixture names', function() {
       render();
 
       var $component1 = $component.find('.component:eq(0)'),
@@ -94,7 +110,7 @@ describe('ComponentPlayground component', function() {
           urlProps = getUrlProps(firstFixtureLink);
 
       expect(urlProps.selectedComponent).to.equal('FirstComponent');
-      expect(urlProps.selectedFixture).to.equal('blank-state');
+      expect(urlProps.selectedFixture).to.equal('blank state');
     });
 
     it('should not add full-screen class when prop is false', function() {
@@ -150,7 +166,7 @@ describe('ComponentPlayground component', function() {
       beforeEach(function() {
         _.extend(props, {
           selectedComponent: 'FirstComponent',
-          selectedFixture: 'simple-state'
+          selectedFixture: 'simple state'
         })
       });
 
@@ -180,7 +196,7 @@ describe('ComponentPlayground component', function() {
             urlProps = getUrlProps(element);
 
         expect(urlProps.selectedComponent).to.equal('FirstComponent');
-        expect(urlProps.selectedFixture).to.equal('simple-state');
+        expect(urlProps.selectedFixture).to.equal('simple state');
         expect(urlProps.fullScreen).to.equal(true);
       });
 
@@ -192,7 +208,7 @@ describe('ComponentPlayground component', function() {
             urlProps = getUrlProps(element);
 
         expect(urlProps.selectedComponent).to.equal('FirstComponent');
-        expect(urlProps.selectedFixture).to.equal('simple-state');
+        expect(urlProps.selectedFixture).to.equal('simple state');
         expect(urlProps.fixtureEditor).to.equal(true);
       });
     });
@@ -248,7 +264,7 @@ describe('ComponentPlayground component', function() {
             urlProps = getUrlProps(firstFixtureLink);
 
         expect(urlProps.selectedComponent).to.equal('FirstComponent');
-        expect(urlProps.selectedFixture).to.equal('blank-state');
+        expect(urlProps.selectedFixture).to.equal('blank state');
         expect(urlProps.fixtureEditor).to.equal(true);
       });
 
@@ -268,7 +284,7 @@ describe('ComponentPlayground component', function() {
     it('should generate url for closing editor with fixture', function() {
       render({
         selectedComponent: 'FirstComponent',
-        selectedFixture: 'simple-state',
+        selectedFixture: 'simple state',
         fixtureEditor: true
       });
 
@@ -276,7 +292,7 @@ describe('ComponentPlayground component', function() {
           urlProps = getUrlProps(element);
 
       expect(urlProps.selectedComponent).to.equal('FirstComponent');
-      expect(urlProps.selectedFixture).to.equal('simple-state');
+      expect(urlProps.selectedFixture).to.equal('simple state');
       expect(urlProps.fixtureEditor).to.equal(false);
     });
   });

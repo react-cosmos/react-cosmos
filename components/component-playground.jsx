@@ -117,10 +117,7 @@ module.exports = React.createClass({
                onClick={this.routeLink}>
               <span className="react">React</span> Component Playground
             </a>
-            <span className="cosmos-plug">
-              {'powered by '}
-              <a href="https://github.com/skidding/cosmos">Cosmos</a>
-            </span>
+            {!this.state.fixtureContents ? this._renderCosmosPlug() : null}
           </h1>
         </div>
         <div className="fixtures">
@@ -129,6 +126,13 @@ module.exports = React.createClass({
         {this._renderContentFrame()}
       </div>
     );
+  },
+
+  _renderCosmosPlug: function() {
+    return <span ref="cosmosPlug" className="cosmos-plug">
+      {'powered by '}
+      <a href="https://github.com/skidding/cosmos">Cosmos</a>
+    </span>;
   },
 
   _renderFixtures: function() {
@@ -142,9 +146,10 @@ module.exports = React.createClass({
 
         return <li className={classes} key={componentName}>
           <p className="component-name">
-            <a href="#toggle-component"
-               onClick={_.partial(this.onComponentClick, componentName)}
-               ref={componentName + 'Button'}>
+            <a ref={componentName + 'Button'}
+               href="#toggle-component"
+               title={componentName}
+               onClick={_.partial(this.onComponentClick, componentName)}>
               {componentName}
             </a>
           </p>
@@ -169,8 +174,9 @@ module.exports = React.createClass({
                                                       fixtureName)}
                    key={fixtureName}>
           <a href={this.getUrlFromProps(fixtureProps)}
+             title={fixtureName}
              onClick={this.routeLink}>
-            {fixtureName.replace(/-/g, ' ')}
+            {fixtureName}
           </a>
         </li>;
 
@@ -279,7 +285,7 @@ module.exports = React.createClass({
         newState = {fixtureUserInput: userInput};
 
     try {
-      newState.fixtureContents = JSON.parse(userInput);
+      newState.fixtureContents = userInput ? JSON.parse(userInput) : null;
       newState.isFixtureUserInputValid = true;
     } catch (e) {
       newState.isFixtureUserInputValid = false;
