@@ -91,16 +91,16 @@ describe('ComponentPlayground component', function() {
       expect($component2.find('.component-fixtures li').length).to.equal(1);
     });
 
-    it('should add spaces from hypens in fixture names', function() {
+    it('should render fixture names', function() {
       render();
 
       var $component1 = $component.find('.component:eq(0)'),
           $component2 = $component.find('.component:eq(1)');
 
       expect($component1.find('.component-fixtures li:first').text())
-            .to.equal('blank state');
+            .to.equal('blank-state');
       expect($component2.find('.component-fixtures li:first').text())
-            .to.equal('simple state');
+            .to.equal('simple-state');
     });
 
     it('should generate url with fixture path', function() {

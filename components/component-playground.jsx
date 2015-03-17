@@ -174,7 +174,7 @@ module.exports = React.createClass({
                    key={fixtureName}>
           <a href={this.getUrlFromProps(fixtureProps)}
              onClick={this.routeLink}>
-            {fixtureName.replace(/-/g, ' ')}
+            {fixtureName}
           </a>
         </li>;
 
