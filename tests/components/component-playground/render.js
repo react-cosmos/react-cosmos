@@ -54,6 +54,16 @@ describe('ComponentPlayground component', function() {
       expect(component.refs.cosmosPlug).to.exist;
     });
 
+    it('should not render cosmos plug with preview loaded', function() {
+      render({
+        state: {
+          fixtureContents: {}
+        }
+      });
+
+      expect(component.refs.cosmosPlug).to.not.exist;
+    });
+
     it('should render each component', function() {
       render();
 
@@ -158,12 +168,6 @@ describe('ComponentPlayground component', function() {
           selectedComponent: 'FirstComponent',
           selectedFixture: 'simple-state'
         })
-      });
-
-      it('should not render cosmos plug', function() {
-        render();
-
-        expect(component.refs.cosmosPlug).to.not.exist;
       });
 
       it('should add expanded class to selected component', function() {

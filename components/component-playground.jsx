@@ -107,8 +107,6 @@ module.exports = React.createClass({
       fixtureEditor: this.props.fixtureEditor
     };
 
-    var isFixtureSelected = this.constructor.isFixtureSelected(this.props);
-
     return (
       <div className={classes}>
         <div className="header">
@@ -119,7 +117,7 @@ module.exports = React.createClass({
                onClick={this.routeLink}>
               <span className="react">React</span> Component Playground
             </a>
-            {!isFixtureSelected ? this._renderCosmosPlug() : null}
+            {!this.state.fixtureContents ? this._renderCosmosPlug() : null}
           </h1>
         </div>
         <div className="fixtures">
