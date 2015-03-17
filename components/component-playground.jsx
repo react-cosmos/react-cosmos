@@ -146,9 +146,10 @@ module.exports = React.createClass({
 
         return <li className={classes} key={componentName}>
           <p className="component-name">
-            <a href="#toggle-component"
-               onClick={_.partial(this.onComponentClick, componentName)}
-               ref={componentName + 'Button'}>
+            <a ref={componentName + 'Button'}
+               href="#toggle-component"
+               title={componentName}
+               onClick={_.partial(this.onComponentClick, componentName)}>
               {componentName}
             </a>
           </p>
@@ -173,6 +174,7 @@ module.exports = React.createClass({
                                                       fixtureName)}
                    key={fixtureName}>
           <a href={this.getUrlFromProps(fixtureProps)}
+             title={fixtureName}
              onClick={this.routeLink}>
             {fixtureName}
           </a>
