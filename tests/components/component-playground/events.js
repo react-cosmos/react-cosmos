@@ -42,7 +42,7 @@ describe('ComponentPlayground component', function() {
         props.fixtures = {
           FirstComponent: {},
           SecondComponent: {
-            'simple-state': {}
+            'simple state': {}
           }
         };
       });

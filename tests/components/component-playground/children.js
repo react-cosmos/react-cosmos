@@ -89,7 +89,7 @@ describe('ComponentPlayground component', function() {
         render({
           fixtures: {
             MyComponent: {
-              'small-size': {
+              'small size': {
                 shouldBeCloned: obj
               }
             }
