@@ -9,8 +9,8 @@ describe('ComponentPlayground component', function() {
       $component,
       props;
 
-  // Alow tests to extend fixture before rendering
   function render(extraProps) {
+    // Alow tests to extend fixture before rendering
     _.merge(props, extraProps);
 
     component = renderComponent(ComponentPlayground, props);
@@ -21,7 +21,6 @@ describe('ComponentPlayground component', function() {
     // Don't render any children
     sinon.stub(Cosmos, 'createElement');
 
-    // Allow tests to extend the base fixture
     props = {
       fixtures: {
         FirstComponent: {
@@ -49,80 +48,75 @@ describe('ComponentPlayground component', function() {
       expect(component.state.expandedComponents.length).to.equal(0);
     });
 
-    it('should expand component from selected fixture', function() {
-      render({
-        fixturePath: 'SecondComponent/simple-state'
-      });
-
-      expect(component.state.expandedComponents.length).to.equal(1);
-      expect(component.state.expandedComponents[0]).to.equal('SecondComponent');
-    });
-
-    it('should populate state with fixture contents', function() {
-      render({
-        fixturePath: 'SecondComponent/simple-state'
-      });
-
-      expect(component.state.fixtureContents.myProp).to.equal(true);
-    });
-
-    it('should populate user input with stringified fixture contents',
-       function() {
-      render({
-        fixturePath: 'SecondComponent/simple-state'
-      });
-
-      var fixtureContents = component.state.fixtureContents;
-      expect(component.state.fixtureUserInput)
-            .to.equal(JSON.stringify(fixtureContents, null, 2));
-    });
-
-    describe('on fixture transition', function() {
-      it('should reset expanded components', function() {
-        render({
-          fixturePath: 'SecondComponent/simple-state'
+    describe('with fixture selected', function() {
+      beforeEach(function() {
+        _.extend(props, {
+          selectedComponent: 'FirstComponent',
+          selectedFixture: 'blank-state'
         });
-
-        component.setProps({fixturePath: 'FirstComponent/blank-state'});
-
-        expect(component.state.expandedComponents.length).to.equal(1);
-        expect(component.state.expandedComponents[0])
-              .to.equal('FirstComponent');
       });
 
-      it('should reset fixture contents', function() {
-        render({
-          fixturePath: 'SecondComponent/simple-state'
-        });
+      it('should expand component from selected fixture', function() {
+        render();
 
-        component.setProps({fixturePath: 'FirstComponent/blank-state'});
+        var expandedComponents = component.state.expandedComponents;
+
+        expect(expandedComponents.length).to.equal(1);
+        expect(expandedComponents[0]).to.equal('FirstComponent');
+      });
+
+      it('should populate state with fixture contents', function() {
+        render();
 
         expect(component.state.fixtureContents.myProp).to.equal(false);
       });
 
-      it('should reset fixture user input', function() {
-        render({
-          fixturePath: 'SecondComponent/simple-state'
-        });
+      it('should populate user input with stringified fixture contents',
+         function() {
+        render();
 
-        component.setProps({fixturePath: 'FirstComponent/blank-state'});
+        var fixtureContents = component.state.fixtureContents;
 
-        var fixtureContents = props.fixtures.FirstComponent['blank-state'];
         expect(component.state.fixtureUserInput)
               .to.equal(JSON.stringify(fixtureContents, null, 2));
       });
 
-      it('should reset valid user input flag', function() {
-        render({
-          fixturePath: 'SecondComponent/simple-state',
-          state: {
-            isFixtureUserInputValid: false
-          }
+      describe('on fixture transition', function() {
+        beforeEach(function() {
+          render({
+            state: {
+              isFixtureUserInputValid: false
+            }
+          });
+
+          component.setProps({
+            selectedComponent: 'SecondComponent',
+            selectedFixture: 'simple-state'
+          });
         });
 
-        component.setProps({fixturePath: 'FirstComponent/blank-state'});
+        it('should expand both prev and new components', function() {
+          var expandedComponents = component.state.expandedComponents;
 
-        expect(component.state.isFixtureUserInputValid).to.be.true;
+          expect(expandedComponents.length).to.equal(2);
+          expect(expandedComponents[0]).to.equal('FirstComponent');
+          expect(expandedComponents[1]).to.equal('SecondComponent');
+        });
+
+        it('should reset fixture contents', function() {
+          expect(component.state.fixtureContents.myProp).to.equal(true);
+        });
+
+        it('should reset fixture user input', function() {
+          var fixtureContents = props.fixtures.FirstComponent['blank-state'];
+
+          expect(JSON.parse(component.state.fixtureUserInput).myProp)
+                .to.equal(true);
+        });
+
+        it('should reset valid user input flag', function() {
+          expect(component.state.isFixtureUserInputValid).to.be.true;
+        });
       });
     });
   });

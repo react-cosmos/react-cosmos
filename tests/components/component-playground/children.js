@@ -10,8 +10,8 @@ describe('ComponentPlayground component', function() {
       props,
       childProps;
 
-  // Alow tests to extend fixture before rendering
   function render(extraProps) {
+    // Alow tests to extend fixture before rendering
     _.merge(props, extraProps);
 
     component = renderComponent(ComponentPlayground, props);
@@ -26,17 +26,8 @@ describe('ComponentPlayground component', function() {
     // Don't render any children
     sinon.stub(Cosmos, 'createElement');
 
-    // Allow tests to extend the base fixture
     props = {
-      fixtures: {
-        MyComponent: {
-          'small-size': {
-            width: 200,
-            height: 100
-          }
-        }
-      },
-      fixturePath: 'MyComponent/small-size'
+      fixtures: {}
     };
   });
 
@@ -45,58 +36,68 @@ describe('ComponentPlayground component', function() {
   })
 
   describe('children', function() {
-    it('should not render child if no fixture is selected', function() {
-      delete props.fixturePath;
-
+    it('should not render child without fixture contents', function() {
       render();
 
       expect(Cosmos.createElement).to.not.have.been.called;
     });
 
-    it('should send down component name to preview child', function() {
-      render();
-
-      expect(childProps.component).to.equal('MyComponent');
-    });
-
-    it('should send fixture contents to preview child', function() {
-      render();
-
-      var fixtureContents = component.state.fixtureContents;
-      expect(childProps.width).to.equal(fixtureContents.width);
-      expect(childProps.height).to.equal(fixtureContents.height);
-    });
-
-    it('should send (Cosmos) router instance to preview child', function() {
-      render({
-        router: {}
-      });
-
-      expect(childProps.router).to.equal(props.router);
-    });
-
-    it('should use fixture contents as key for preview child', function() {
-      render();
-
-      var fixtureContents = component.state.fixtureContents,
-          stringifiedFixtureContents = JSON.stringify(fixtureContents);
-      expect(childProps.key).to.equal(stringifiedFixtureContents);
-    });
-
-    it('should clone fixture contents sent to child', function() {
-      var obj = {};
-
-      render({
-        fixtures: {
-          MyComponent: {
-            'small-size': {
-              shouldBeCloned: obj
+    describe('with fixture contents', function() {
+      beforeEach(function() {
+        _.extend(props, {
+          // Children draw their props from state.fixtureContents. Generating
+          // state from props is tested in the state.js suite
+          state: {
+            fixtureContents: {
+              component: 'MyComponent',
+              width: 200,
+              height: 100
             }
           }
-        }
+        });
       });
 
-      expect(childProps.shouldBeCloned).to.not.equal(obj);
+      it('should send fixture contents to preview child', function() {
+        render();
+
+        var fixtureContents = component.state.fixtureContents;
+        expect(childProps.component).to.equal(fixtureContents.component);
+        expect(childProps.width).to.equal(fixtureContents.width);
+        expect(childProps.height).to.equal(fixtureContents.height);
+      });
+
+      it('should send (Cosmos) router instance to preview child', function() {
+        render({
+          router: {}
+        });
+
+        expect(childProps.router).to.equal(props.router);
+      });
+
+      it('should use fixture contents as key for preview child', function() {
+        render();
+
+        var fixtureContents = component.state.fixtureContents,
+            stringifiedFixtureContents = JSON.stringify(fixtureContents);
+
+        expect(childProps.key).to.equal(stringifiedFixtureContents);
+      });
+
+      it('should clone fixture contents sent to child', function() {
+        var obj = {};
+
+        render({
+          fixtures: {
+            MyComponent: {
+              'small-size': {
+                shouldBeCloned: obj
+              }
+            }
+          }
+        });
+
+        expect(childProps.shouldBeCloned).to.not.equal(obj);
+      });
     });
   });
 });
