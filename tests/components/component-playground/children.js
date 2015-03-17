@@ -87,11 +87,9 @@ describe('ComponentPlayground component', function() {
         var obj = {};
 
         render({
-          fixtures: {
-            MyComponent: {
-              'small size': {
-                shouldBeCloned: obj
-              }
+          state: {
+            fixtureContents: {
+              shouldBeCloned: obj
             }
           }
         });
