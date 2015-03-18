@@ -39,7 +39,7 @@ module.exports = React.createClass({
       return props.selectedComponent && props.selectedFixture;
     },
 
-    getFixtureContents: function(props) {
+    getSelectedFixtureContents: function(props) {
       if (!this.isFixtureSelected(props)) {
         return {};
       }
@@ -52,20 +52,20 @@ module.exports = React.createClass({
       }, fixture);
     },
 
-    getFixtureUserInput: function(props) {
+    getSelectedFixtureUserInput: function(props) {
       if (!this.isFixtureSelected(props)) {
         return '{}';
       }
 
-      return JSON.stringify(this.getFixtureContents(props), null, 2);
+      return JSON.stringify(this.getSelectedFixtureContents(props), null, 2);
     },
 
     getFixtureState: function(props, expandedComponents) {
       return {
         expandedComponents: this.getExpandedComponents(props,
                                                        expandedComponents),
-        fixtureContents: this.getFixtureContents(props),
-        fixtureUserInput: this.getFixtureUserInput(props),
+        fixtureContents: this.getSelectedFixtureContents(props),
+        fixtureUserInput: this.getSelectedFixtureUserInput(props),
         isFixtureUserInputValid: true
       };
     }
