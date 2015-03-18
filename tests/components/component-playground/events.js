@@ -19,6 +19,11 @@ describe('ComponentPlayground component', function() {
     $component = $(component.getDOMNode());
   };
 
+  var triggerChange = function(value) {
+    utils.Simulate.change(component.refs.fixtureEditor.getDOMNode(),
+                          {target: {value: value}});
+  };
+
   beforeEach(function() {
     sinon.stub(console, 'error');
 
@@ -88,11 +93,6 @@ describe('ComponentPlayground component', function() {
     });
 
     describe('editing fixture', function() {
-      var triggerChange = function(value) {
-        utils.Simulate.change(component.refs.fixtureEditor.getDOMNode(),
-                              {target: {value: value}});
-      };
-
       var initialFixtureContents = {
         myProp: 'dolor sit'
       };
@@ -147,6 +147,30 @@ describe('ComponentPlayground component', function() {
         triggerChange('lorem ipsum');
 
         expect(component.state.isFixtureUserInputValid).to.equal(false);
+      });
+    });
+
+    describe("editing fixture with selected fixture", function() {
+      beforeEach(function() {
+        render({
+          fixtures: {
+            MyComponent: {
+              'simple state': {
+                defaultProp: true
+              }
+            }
+          },
+          selectedComponent: 'MyComponent',
+          selectedFixture: 'simple state',
+          fixtureEditor: true
+        });
+      });
+
+      it('should extend fixture contents with user input', function() {
+        triggerChange('{"customProp": true}');
+
+        expect(component.state.fixtureContents.customProp).to.equal(true);
+        expect(component.state.fixtureContents.defaultProp).to.equal(true);
       });
     });
   });

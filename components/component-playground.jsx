@@ -287,7 +287,14 @@ module.exports = React.createClass({
         newState = {fixtureUserInput: userInput};
 
     try {
-      newState.fixtureContents = userInput ? JSON.parse(userInput) : {};
+      var fixtureContents =
+        this.constructor.getSelectedFixtureContents(this.props);
+
+      if (userInput) {
+        _.merge(fixtureContents, JSON.parse(userInput));
+      }
+
+      newState.fixtureContents = fixtureContents;
       newState.isFixtureUserInputValid = true;
     } catch (e) {
       newState.isFixtureUserInputValid = false;
