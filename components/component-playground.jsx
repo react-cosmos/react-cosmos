@@ -47,7 +47,7 @@ module.exports = React.createClass({
       var fixture = props.fixtures[props.selectedComponent]
                                   [props.selectedFixture];
 
-      return _.extend({
+      return _.merge({
         component: props.selectedComponent
       }, fixture);
     },

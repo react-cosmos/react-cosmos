@@ -151,19 +151,26 @@ describe('ComponentPlayground component', function() {
     });
 
     describe("editing fixture with selected fixture", function() {
-      beforeEach(function() {
-        render({
-          fixtures: {
-            MyComponent: {
-              'simple state': {
-                defaultProp: true
-              }
+      var fixtures = {
+        MyComponent: {
+          'simple state': {
+            defaultProp: true,
+            nested: {
+              nestedProp: true
             }
-          },
+          }
+        }
+      };
+
+      beforeEach(function() {
+        _.extend(props, {
+          fixtures: fixtures,
           selectedComponent: 'MyComponent',
           selectedFixture: 'simple state',
           fixtureEditor: true
         });
+
+        render();
       });
 
       it('should extend fixture contents with user input', function() {
@@ -171,6 +178,13 @@ describe('ComponentPlayground component', function() {
 
         expect(component.state.fixtureContents.customProp).to.equal(true);
         expect(component.state.fixtureContents.defaultProp).to.equal(true);
+      });
+
+      it('should not alter the original fixture contents', function() {
+        triggerChange('{"nested": {"nestedProp": false}}');
+
+        expect(fixtures.MyComponent['simple state'].nested.nestedProp)
+              .to.be.true;
       });
     });
   });
