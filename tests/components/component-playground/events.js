@@ -19,6 +19,11 @@ describe('ComponentPlayground component', function() {
     $component = $(component.getDOMNode());
   };
 
+  var triggerChange = function(value) {
+    utils.Simulate.change(component.refs.fixtureEditor.getDOMNode(),
+                          {target: {value: value}});
+  };
+
   beforeEach(function() {
     sinon.stub(console, 'error');
 
@@ -88,11 +93,6 @@ describe('ComponentPlayground component', function() {
     });
 
     describe('editing fixture', function() {
-      var triggerChange = function(value) {
-        utils.Simulate.change(component.refs.fixtureEditor.getDOMNode(),
-                              {target: {value: value}});
-      };
-
       var initialFixtureContents = {
         myProp: 'dolor sit'
       };
@@ -128,7 +128,7 @@ describe('ComponentPlayground component', function() {
       it('should empty fixture contents on empty input', function() {
         triggerChange('');
 
-        expect(component.state.fixtureContents).to.equal(null);
+        expect(component.state.fixtureContents).to.deep.equal({});
       });
 
       it('should call console.error on invalid change', function() {
@@ -147,6 +147,44 @@ describe('ComponentPlayground component', function() {
         triggerChange('lorem ipsum');
 
         expect(component.state.isFixtureUserInputValid).to.equal(false);
+      });
+    });
+
+    describe("editing fixture with selected fixture", function() {
+      var fixtures = {
+        MyComponent: {
+          'simple state': {
+            defaultProp: true,
+            nested: {
+              nestedProp: true
+            }
+          }
+        }
+      };
+
+      beforeEach(function() {
+        _.extend(props, {
+          fixtures: fixtures,
+          selectedComponent: 'MyComponent',
+          selectedFixture: 'simple state',
+          fixtureEditor: true
+        });
+
+        render();
+      });
+
+      it('should extend fixture contents with user input', function() {
+        triggerChange('{"customProp": true}');
+
+        expect(component.state.fixtureContents.customProp).to.equal(true);
+        expect(component.state.fixtureContents.defaultProp).to.equal(true);
+      });
+
+      it('should not alter the original fixture contents', function() {
+        triggerChange('{"nested": {"nestedProp": false}}');
+
+        expect(fixtures.MyComponent['simple state'].nested.nestedProp)
+              .to.be.true;
       });
     });
   });

@@ -57,7 +57,9 @@ describe('ComponentPlayground component', function() {
     it('should not render cosmos plug with preview loaded', function() {
       render({
         state: {
-          fixtureContents: {}
+          fixtureContents: {
+            myProp: true
+          }
         }
       });
 

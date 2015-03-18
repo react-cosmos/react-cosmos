@@ -39,33 +39,33 @@ module.exports = React.createClass({
       return props.selectedComponent && props.selectedFixture;
     },
 
-    getFixtureContents: function(props) {
+    getSelectedFixtureContents: function(props) {
       if (!this.isFixtureSelected(props)) {
-        return null;
+        return {};
       }
 
       var fixture = props.fixtures[props.selectedComponent]
                                   [props.selectedFixture];
 
-      return _.extend({
+      return _.merge({
         component: props.selectedComponent
       }, fixture);
     },
 
-    getFixtureUserInput: function(props) {
+    getSelectedFixtureUserInput: function(props) {
       if (!this.isFixtureSelected(props)) {
-        return '';
+        return '{}';
       }
 
-      return JSON.stringify(this.getFixtureContents(props), null, 2);
+      return JSON.stringify(this.getSelectedFixtureContents(props), null, 2);
     },
 
     getFixtureState: function(props, expandedComponents) {
       return {
         expandedComponents: this.getExpandedComponents(props,
                                                        expandedComponents),
-        fixtureContents: this.getFixtureContents(props),
-        fixtureUserInput: this.getFixtureUserInput(props),
+        fixtureContents: this.getSelectedFixtureContents(props),
+        fixtureUserInput: this.getSelectedFixtureUserInput(props),
         isFixtureUserInputValid: true
       };
     }
@@ -117,7 +117,8 @@ module.exports = React.createClass({
                onClick={this.routeLink}>
               <span className="react">React</span> Component Playground
             </a>
-            {!this.state.fixtureContents ? this._renderCosmosPlug() : null}
+            {_.isEmpty(this.state.fixtureContents) ? this._renderCosmosPlug()
+                                                   : null}
           </h1>
         </div>
         <div className="fixtures">
@@ -187,7 +188,8 @@ module.exports = React.createClass({
   _renderContentFrame: function() {
     return <div className="content-frame">
       <div ref="previewContainer" className={this._getPreviewClasses()}>
-        {this.state.fixtureContents ? this.loadChild('preview') : null}
+        {!_.isEmpty(this.state.fixtureContents) ? this.loadChild('preview')
+                                                : null}
       </div>
       {this.props.fixtureEditor ? this._renderFixtureEditor() : null}
     </div>
@@ -285,7 +287,14 @@ module.exports = React.createClass({
         newState = {fixtureUserInput: userInput};
 
     try {
-      newState.fixtureContents = userInput ? JSON.parse(userInput) : null;
+      var fixtureContents =
+        this.constructor.getSelectedFixtureContents(this.props);
+
+      if (userInput) {
+        _.merge(fixtureContents, JSON.parse(userInput));
+      }
+
+      newState.fixtureContents = fixtureContents;
       newState.isFixtureUserInputValid = true;
     } catch (e) {
       newState.isFixtureUserInputValid = false;
