@@ -41,7 +41,7 @@ module.exports = React.createClass({
 
     getFixtureContents: function(props) {
       if (!this.isFixtureSelected(props)) {
-        return null;
+        return {};
       }
 
       var fixture = props.fixtures[props.selectedComponent]
@@ -54,7 +54,7 @@ module.exports = React.createClass({
 
     getFixtureUserInput: function(props) {
       if (!this.isFixtureSelected(props)) {
-        return '';
+        return '{}';
       }
 
       return JSON.stringify(this.getFixtureContents(props), null, 2);
@@ -117,7 +117,8 @@ module.exports = React.createClass({
                onClick={this.routeLink}>
               <span className="react">React</span> Component Playground
             </a>
-            {!this.state.fixtureContents ? this._renderCosmosPlug() : null}
+            {_.isEmpty(this.state.fixtureContents) ? this._renderCosmosPlug()
+                                                   : null}
           </h1>
         </div>
         <div className="fixtures">
@@ -187,7 +188,8 @@ module.exports = React.createClass({
   _renderContentFrame: function() {
     return <div className="content-frame">
       <div ref="previewContainer" className={this._getPreviewClasses()}>
-        {this.state.fixtureContents ? this.loadChild('preview') : null}
+        {!_.isEmpty(this.state.fixtureContents) ? this.loadChild('preview')
+                                                : null}
       </div>
       {this.props.fixtureEditor ? this._renderFixtureEditor() : null}
     </div>
@@ -285,7 +287,7 @@ module.exports = React.createClass({
         newState = {fixtureUserInput: userInput};
 
     try {
-      newState.fixtureContents = userInput ? JSON.parse(userInput) : null;
+      newState.fixtureContents = userInput ? JSON.parse(userInput) : {};
       newState.isFixtureUserInputValid = true;
     } catch (e) {
       newState.isFixtureUserInputValid = false;

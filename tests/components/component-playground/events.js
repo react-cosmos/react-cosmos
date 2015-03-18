@@ -128,7 +128,7 @@ describe('ComponentPlayground component', function() {
       it('should empty fixture contents on empty input', function() {
         triggerChange('');
 
-        expect(component.state.fixtureContents).to.equal(null);
+        expect(component.state.fixtureContents).to.deep.equal({});
       });
 
       it('should call console.error on invalid change', function() {
