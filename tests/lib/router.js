@@ -236,6 +236,27 @@ describe('Router class', function() {
       expect(stateSent.somethingHappened).to.equal(true);
     });
 
+    it('should omit unserializable fields for browser state', function() {
+      componentInstance.serialize.returns({
+        component: 'List',
+        dataUrl: 'users.json',
+        state: {
+          somethingHappened: true,
+          somethingElseHappened: true,
+          somethingUgly: function() {}
+        }
+      });
+
+      createRouter();
+
+      routerInstance.goTo(queryString);
+
+      var stateSent = routerInstance._replaceHistoryState.lastCall.args[0];
+      expect(stateSent.somethingHappened).to.equal(true);
+      expect(stateSent.somethingElseHappened).to.equal(true);
+      expect(stateSent.somethingUgly).to.equal(undefined);
+    });
+
     it('should call onChange callback', function() {
       var onChangeSpy = sinon.spy();
       createRouter({
