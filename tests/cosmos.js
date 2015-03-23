@@ -1,6 +1,6 @@
 var React = require('react/addons'),
     Cosmos = require('../cosmos.js'),
-    router = require('../lib/router');
+    router = require('../lib/router.js');
 
 describe('Cosmos', function() {
   describe('component lookup', function() {
