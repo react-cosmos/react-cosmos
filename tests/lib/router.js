@@ -273,7 +273,7 @@ describe('Router class', function() {
           'component=User&dataUrl=user.json');
     });
 
-    it('should use props from event state', function() {
+    it('should use state from event state', function() {
       createRouter();
 
       routerInstance.onPopState({
