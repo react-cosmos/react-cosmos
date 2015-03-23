@@ -1,6 +1,6 @@
 var _ = require('lodash'),
     React = require('react/addons'),
-    router = require('./lib/router');
+    router = require('./lib/router.js');
 
 module.exports = {
   mixins: {},

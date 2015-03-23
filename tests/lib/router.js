@@ -1,6 +1,5 @@
-var serialize = require('../../../lib/serialize.js'),
-    router = require('../../../lib/router'),
-    Router = router.Router;
+var serialize = require('../../lib/serialize.js'),
+    Router = require('../../lib/router.js').Router;
 
 describe('Router class', function() {
   var componentInstance = {},
