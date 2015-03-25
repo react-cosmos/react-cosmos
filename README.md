@@ -8,7 +8,7 @@ creates a uniform relationship between them.
 There's no such thing as *controllers* or *pages* in Cosmos, just *components.*
 The UI is a tree of components consisting of a root component and its
 descendants. Any component can be loaded full-screen as the root element and
-a route is just an alias to component _props._
+routes are just *props as query string.*
 
 Check out [**Flatris**](http://skidding.github.io/flatris/), a demo app built
 with Cosmos.
