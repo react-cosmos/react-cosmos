@@ -150,7 +150,7 @@ describe('ComponentPlayground component', function() {
       });
     });
 
-    describe("editing fixture with selected fixture", function() {
+    describe('editing fixture with selected fixture', function() {
       var fixtures = {
         MyComponent: {
           'simple state': {
