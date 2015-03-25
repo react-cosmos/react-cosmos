@@ -7,7 +7,7 @@
     "url": "https://github.com/skidding/cosmos.git"
   },
   "dependencies": {
-    "lodash": "~2.4.1",
+    "lodash": "~3.5.0",
     "react": "~0.12.2"
   },
   "devDependencies": {
