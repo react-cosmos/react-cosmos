@@ -1,13 +1,13 @@
 {
   "name": "cosmos-js",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "A foundation for maintainable web applications",
   "repository": {
     "type": "git",
     "url": "https://github.com/skidding/cosmos.git"
   },
   "dependencies": {
-    "lodash": "~2.4.1",
+    "lodash": "~3.5.0",
     "react": "~0.12.2"
   },
   "devDependencies": {
