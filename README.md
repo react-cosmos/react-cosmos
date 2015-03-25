@@ -394,11 +394,17 @@ changes. That object will always be a visible, persistent data structure.
 Cosmos has been built alongside a bigger UI project for over six months, but
 is still is the process of being defined. A few things from the current roadmap:
 
-- ~~Remove AnimationLoop mixin from project~~ [#99](https://github.com/skidding/cosmos/pull/99)
-- ~~Remove DataFetch mixin from project~~ [#100](https://github.com/skidding/cosmos/pull/100)
+- ~~Remove AnimationLoop and DataFetch mixins from project~~ [#99](https://github.com/skidding/cosmos/pull/99)
+[#100](https://github.com/skidding/cosmos/pull/100)
 - ~~Remove jQuery dependency (only DataFetch mixin uses it for XHR calls)~~ [#100](https://github.com/skidding/cosmos/pull/100)
 - ~~Migrate tests from jsdom to either PhantomJS or plain Node~~ [#101](https://github.com/skidding/cosmos/pull/101)
-- Add props editor to ComponentPlayground
-- Enhance Router with customizable routes
+- ~~Add props editor to ComponentPlayground~~
+[#105](https://github.com/skidding/cosmos/pull/105)
+- Keep Component Playground editor in sync with component state
+- Add dummy components to Component Playground example
+- Integrate hot reloading of components inside Component Playground
+- Serve Component Playground via cli command or webpack plugin
+- Add fixture search to Component Playground
+- Add component/fixture metrics to first page of ComponentPlayground
 
 Thank you for your interest!
