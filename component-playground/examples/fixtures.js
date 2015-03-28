@@ -1,27 +1,5 @@
-<html>
-<head>
-  <title>React Component Playground</title>
-
-  <meta charset="utf-8">
-  <meta name="description" content="A foundation for maintainable web applications. Powered by React.">
-
-  <style type="text/css">
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
-  </style>
-
-  <script src="vendor/react-with-addons-0.12.2.min.js"></script>
-  <script src="vendor/lodash-2.4.1.min.js"></script>
-  <script src="../../build/cosmos.js"></script>
-</head>
-<body>
-  <script>
-
 // The Component Playground inside itself might not be the best example :)
-var fixtures = {
+module.exports = {
   ComponentPlayground: {
     'without fixture selected': {
       fixtures: {
@@ -80,28 +58,3 @@ var fixtures = {
     }
   }
 };
-
-var props = {
-  component: 'ComponentPlayground',
-  fixtures: fixtures
-};
-
-var router = Cosmos.start({
-  defaultProps: props,
-  onChange: function(props) {
-    var title = 'React Component Playground';
-
-    // Set document title to the name of the selected fixture
-    if (props.selectedComponent && props.selectedFixture) {
-      title = props.selectedComponent + ':' +
-              props.selectedFixture + ' – ' +
-              title;
-    }
-
-    document.title = title;
-  }
-});
-
-  </script>
-</body>
-</html>
