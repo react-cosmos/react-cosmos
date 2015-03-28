@@ -8,7 +8,8 @@ _.extend(Cosmos.mixins, {
 });
 
 _.extend(Cosmos.components, {
-  ComponentPlayground: require('./components/component-playground.jsx')
+  ComponentPlayground:
+      require('./component-playground/component-playground.jsx')
 });
 
 module.exports = Cosmos;
