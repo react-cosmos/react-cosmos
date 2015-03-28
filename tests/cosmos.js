@@ -3,81 +3,33 @@ var React = require('react/addons'),
     router = require('../lib/router.js');
 
 describe('Cosmos', function() {
-  describe('component lookup', function() {
-    beforeEach(function() {
-      Cosmos.components.CoreComponent = {};
-    });
-
-    afterEach(function() {
-      delete Cosmos.components.CoreComponent;
-    });
-
-    it('should draw components from the .components namespace', function() {
-      expect(Cosmos.getComponentByName('CoreComponent'))
-            .to.equal(Cosmos.components.CoreComponent);
-    });
-
-    it('should call component lookup callback with name', function() {
-      var wantedComponentName,
-          componentLookup = function(name) {
-            wantedComponentName = name;
-          };
-
-      Cosmos.getComponentByName('MyComponent', componentLookup);
-
-      expect(wantedComponentName).to.equal('MyComponent');
-    });
-
-    it('should draw components from lookup callback', function() {
-      var MyComponent = {},
-          componentLookup = function(name) {
-            return MyComponent;
-          };
-
-      expect(Cosmos.getComponentByName('MyComponent', componentLookup))
-            .to.equal(MyComponent);
-    });
-
-    it('should fall back to Cosmos namespace after componentLookup',
-       function() {
-      var componentLookup = function(name) {
-        // Return nothing, let Cosmos fall back
-        return;
-      };
-
-      expect(Cosmos.getComponentByName('CoreComponent', componentLookup))
-            .to.equal(Cosmos.components.CoreComponent);
-    });
-  });
-
   describe('.createElement', function() {
-    var MyComponent = function() {};
+    var MyComponent = function() {},
+        componentLookup = sinon.spy(function() {
+          return MyComponent;
+        });
 
     beforeEach(function() {
       sinon.stub(React, 'createElement');
-
-      sinon.stub(Cosmos, 'getComponentByName', function() {
-        return MyComponent;
-      });
     });
 
     afterEach(function() {
       React.createElement.restore();
-
-      Cosmos.getComponentByName.restore();
     });
 
-    it('should create React element for component class', function() {
+    it('should call component lookup with component name', function() {
       Cosmos.createElement({
-        component: 'MyComponent'
+        component: 'MyComponent',
+        componentLookup: componentLookup
       });
 
-      expect(React.createElement.lastCall.args[0]).to.equal(MyComponent);
+      expect(componentLookup).to.have.been.calledWith('MyComponent');
     });
 
     it('should create component element with props', function() {
       var props = {
-        component: 'MyComponent'
+        component: 'MyComponent',
+        componentLookup: componentLookup
       };
       Cosmos.createElement(props);
 
@@ -88,7 +40,10 @@ describe('Cosmos', function() {
       MyComponent = 5;
 
       expect(function() {
-        Cosmos.createElement({component: 'MyComponent'});
+        Cosmos.createElement({
+          component: 'MyComponent',
+          componentLookup: componentLookup
+        });
       }).to.throw();
     });
 
@@ -96,7 +51,10 @@ describe('Cosmos', function() {
       MyComponent = 'string';
 
       expect(function() {
-        Cosmos.createElement({component: 'MyComponent'});
+        Cosmos.createElement({
+          component: 'MyComponent',
+          componentLookup: componentLookup
+        });
       }).to.throw();
     });
 
@@ -104,7 +62,10 @@ describe('Cosmos', function() {
       MyComponent = [1, 2, 3];
 
       expect(function() {
-        Cosmos.createElement({component: 'MyComponent'});
+        Cosmos.createElement({
+          component: 'MyComponent',
+          componentLookup: componentLookup
+        });
       }).to.throw();
     });
 
@@ -112,10 +73,13 @@ describe('Cosmos', function() {
       MyComponent = {x: true};
 
       expect(function() {
-        Cosmos.createElement({component: 'MyComponent'});
+        Cosmos.createElement({
+          component: 'MyComponent',
+          componentLookup: componentLookup
+        });
       }).to.throw();
     });
-  })
+  });
 
   describe('.render', function() {
     beforeEach(function() {
