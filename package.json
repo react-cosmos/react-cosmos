@@ -39,9 +39,9 @@
   },
   "main": "build/cosmos.commonjs.js",
   "scripts": {
-    "test": "karma start --single-run",
-    "coveralls": "cat tests/coverage/*/lcov.info | node_modules/coveralls/bin/coveralls.js",
     "lint": "jscs --esprima=esprima-fb ./",
+    "test": "npm run lint && karma start --single-run",
+    "coveralls": "cat tests/coverage/*/lcov.info | node_modules/coveralls/bin/coveralls.js",
     "build-commonjs": "webpack -p --config webpack/commonjs.config.js",
     "build-dev": "webpack --config webpack/browser.config.js --watch",
     "build-prod": "webpack -p --config webpack/browser.config.js --output-file build/cosmos.min.js"
