@@ -12,6 +12,15 @@ fs.writeFileSync(path.join(PLAYGROUND_PATH, 'config.js'),
 
 var compiler = webpack({
   entry: PLAYGROUND_PATH + '/entry.js',
+  module: {
+    loaders: [{
+      test: /\.jsx$/,
+      loader: 'jsx-loader'
+    }, {
+      test: /\.less$/,
+      loader: 'style-loader!css-loader!less-loader'
+    }]
+  },
   output: {
     path: path.join(PLAYGROUND_PATH, 'build'),
     libraryTarget: 'var',

@@ -1,4 +1,5 @@
 var Cosmos = require('../build/cosmos.commonjs.js'),
+    ComponentPlayground = require('./component-playground.jsx'),
     config = require('./config.js');
 
 var getTitleForFixture = function(props) {
@@ -19,7 +20,12 @@ module.exports = Cosmos.start({
 
   defaultProps: {
     component: 'ComponentPlayground',
-    componentLookup: config.componentLookup,
+    componentLookup: function(name) {
+      if (name == 'ComponentPlayground') {
+        return ComponentPlayground;
+      }
+      return config.componentLookup(name);
+    },
     fixtures: config.fixtures
   },
 
