@@ -1,5 +1,5 @@
 module.exports = {
-  entry: './cosmos-entry.js',
+  entry: './entry.js',
   module: {
     loaders: [{
       test: /\.jsx$/,
