@@ -1,6 +1,6 @@
 {
   "name": "cosmos-js",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "A foundation for maintainable web applications",
   "repository": {
     "type": "git",
@@ -45,6 +45,6 @@
     "build-commonjs": "webpack -p --config webpack/commonjs.config.js",
     "build-dev": "webpack --config webpack/browser.config.js --watch",
     "build-prod": "webpack -p --config webpack/browser.config.js --output-file build/cosmos.min.js",
-    "publish": "npm run build-commonjs && npm publish ."
+    "prepublish": "npm run build-commonjs"
   }
 }
