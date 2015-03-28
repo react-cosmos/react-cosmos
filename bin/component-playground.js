@@ -3,7 +3,6 @@ var path = require('path'),
     WebpackDevServer = require('webpack-dev-server'),
     webpack = require('webpack');
 
-
 var PLAYGROUND_PATH = path.join(__dirname, '..', 'component-playground'),
     CONFIG_PATH = path.resolve('./component-playground.config.js');
 
