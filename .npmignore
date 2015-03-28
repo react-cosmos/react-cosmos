@@ -1,3 +1,5 @@
+build/cosmos.js
+build/cosmos.min.js
 examples
 node_modules
 tests/coverage
