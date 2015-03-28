@@ -1,6 +1,5 @@
 var Cosmos = require('../build/cosmos.commonjs.js'),
-    // TODO: Receive as arg through bin/component-playground.js
-    fixtures = require('./examples/fixtures.js');
+    config = require('./config.js');
 
 var getTitleForFixture = function(props) {
   var title = 'React Component Playground';
@@ -20,7 +19,8 @@ module.exports = Cosmos.start({
 
   defaultProps: {
     component: 'ComponentPlayground',
-    fixtures: fixtures
+    componentLookup: config.componentLookup,
+    fixtures: config.fixtures
   },
 
   onChange: function(props) {

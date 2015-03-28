@@ -1,8 +1,15 @@
 var path = require('path'),
+    fs = require('fs'),
     WebpackDevServer = require('webpack-dev-server'),
     webpack = require('webpack');
 
-var PLAYGROUND_PATH = path.resolve('./component-playground');
+
+var PLAYGROUND_PATH = path.join(__dirname, '..', 'component-playground'),
+    CONFIG_PATH = path.resolve('./component-playground.config.js');
+
+// Link playground config to user config from current folder
+fs.writeFileSync(path.join(PLAYGROUND_PATH, 'config.js'),
+                 'module.exports = require("' + CONFIG_PATH + '");')
 
 var compiler = webpack({
   entry: PLAYGROUND_PATH + '/entry.js',
