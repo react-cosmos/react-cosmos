@@ -1,3 +1,5 @@
+require('./global-reset.css');
+
 var Cosmos = require('../build/cosmos.commonjs.js'),
     ComponentPlayground = require('./component-playground.jsx'),
     config = require('./config.js');
