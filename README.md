@@ -400,11 +400,11 @@ is still is the process of being defined. A few things from the current roadmap:
 - ~~Migrate tests from jsdom to either PhantomJS or plain Node~~ [#101](https://github.com/skidding/cosmos/pull/101)
 - ~~Add props editor to ComponentPlayground~~
 [#105](https://github.com/skidding/cosmos/pull/105)
-- Keep Component Playground editor in sync with component state
-- Add dummy components to Component Playground example
+- ~~Serve Component Playground via cli command or webpack plugin~~ [#114](https://github.com/skidding/cosmos/pull/114)
 - Integrate hot reloading of components inside Component Playground
-- Serve Component Playground via cli command or webpack plugin
+- Keep Component Playground editor in sync with component state
 - Add fixture search to Component Playground
+[#119](https://github.com/skidding/cosmos/pull/119)
 - Add component/fixture metrics to first page of ComponentPlayground
 
 Thank you for your interest!
