@@ -48,5 +48,8 @@
     "build-dev": "webpack --config webpack/browser.config.js --watch",
     "build-prod": "webpack -p --config webpack/browser.config.js --output-file build/cosmos.min.js",
     "prepublish": "npm run build-commonjs"
+  },
+  "bin": {
+    "component-playground": "./bin/component-playground.js"
   }
 }
