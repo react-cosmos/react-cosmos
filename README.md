@@ -67,7 +67,7 @@ Jump to:
   - [State serialization](#state-serialization)
   - [State injection](#state-injection)
   - [Component tree](#component-tree)
-  - [Component Playground](#component-playground)
+  - [ComponentPlayground](#component-playground)
 
 ### Top-level API
 
@@ -291,19 +291,19 @@ This is what the nested snapshot will look like:
 This makes it possible to capture the entire state of an application, persist
 it and then reproduce it in a different session.
 
-#### Component Playground
+#### ComponentPlayground
 
-The [Component Playground](components/component-playground.jsx) provides a
+[ComponentPlayground](component-playground/component-playground.jsx) provides a
 minimal frame for loading React components in isolation. It can either render
 the component full-screen or with the navigation pane on the side.
 
 It receives a list of fixtures to load, grouped by component name. The fixture
 format is identical to a [component snapshot](#state-serialization) in Cosmos.
 
-Working with the Component Playground improves the component design because
-it surfaces any implicit dependencies. It also forces us to define sane inputs
-for every component, no matter how small, making them more predictable and
-easier to debug down the road.
+Working with ComponentPlayground improves the component design because it
+surfaces any implicit dependencies. It also forces us to define sane inputs for
+every component, no matter how small, making them more predictable and easier
+to debug down the road.
 
 ## Development
 
@@ -400,10 +400,10 @@ is still is the process of being defined. A few things from the current roadmap:
 - ~~Migrate tests from jsdom to either PhantomJS or plain Node~~ [#101](https://github.com/skidding/cosmos/pull/101)
 - ~~Add props editor to ComponentPlayground~~
 [#105](https://github.com/skidding/cosmos/pull/105)
-- ~~Serve Component Playground via cli command or webpack plugin~~ [#114](https://github.com/skidding/cosmos/pull/114)
-- Integrate hot reloading of components inside Component Playground
-- Keep Component Playground editor in sync with component state
-- Add fixture search to Component Playground
+- ~~Serve ComponentPlayground via cli command or webpack plugin~~ [#114](https://github.com/skidding/cosmos/pull/114)
+- Integrate hot reloading of components inside ComponentPlayground
+- Keep ComponentPlayground editor in sync with component state
+- Add fixture search to ComponentPlayground
 [#119](https://github.com/skidding/cosmos/pull/119)
 - Add component/fixture metrics to first page of ComponentPlayground
 
