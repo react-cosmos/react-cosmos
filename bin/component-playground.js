@@ -2,13 +2,19 @@ var path = require('path'),
     WebpackDevServer = require('webpack-dev-server'),
     webpack = require('webpack');
 
-var PLAYGROUND_PATH = path.join(__dirname, '..', 'component-playground');
+var rootPath = path.join(__dirname, '..'),
+    modulesPath = path.join(rootPath, 'node_modules'),
+    playgroundPath = path.join(rootPath, 'component-playground');
 
 var compiler = webpack({
-  entry: path.join(PLAYGROUND_PATH, 'entry.js'),
+  entry: path.join(playgroundPath, 'entry.js'),
   resolve: {
-    // Draw components and fixtures from the current folder
-    root: process.cwd()
+    // Draw components and fixtures from the current folder...
+    root: process.cwd(),
+    fallback: modulesPath
+  },
+  resolveLoader: {
+    root: modulesPath
   },
   module: {
     loaders: [{
@@ -23,7 +29,7 @@ var compiler = webpack({
     }]
   },
   output: {
-    path: path.join(PLAYGROUND_PATH, 'build'),
+    path: path.join(playgroundPath, 'build'),
     libraryTarget: 'var',
     library: 'cosmosRouter',
     filename: 'bundle.js'
@@ -31,7 +37,7 @@ var compiler = webpack({
 });
 
 var server = new WebpackDevServer(compiler, {
-  contentBase: path.join(PLAYGROUND_PATH, 'public'),
+  contentBase: path.join(playgroundPath, 'public'),
   publicPath: '/assets/',
 });
 
