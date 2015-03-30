@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var path = require('path'),
     WebpackDevServer = require('webpack-dev-server'),
     webpack = require('webpack');
