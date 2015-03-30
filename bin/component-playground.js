@@ -1,5 +1,4 @@
-var fs = require('fs'),
-    path = require('path'),
+var path = require('path'),
     WebpackDevServer = require('webpack-dev-server'),
     webpack = require('webpack');
 
