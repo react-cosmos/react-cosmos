@@ -1,6 +1,5 @@
 build/cosmos.js
 build/cosmos.min.js
-component-playground/config.js
-component-playground/example
+examples
 node_modules
 tests/coverage

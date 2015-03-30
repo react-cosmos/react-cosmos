@@ -2,21 +2,21 @@ require('./global-reset.css');
 
 var Cosmos = require('../build/cosmos.commonjs.js'),
     ComponentPlayground = require('./component-playground.jsx'),
-    getTitleForFixture = require('./lib/get-title-for-fixture.js'),
-    config = require('./config.js');
+    getFixtureTree = require('./lib/get-fixture-tree.js'),
+    getTitleForFixture = require('./lib/get-title-for-fixture.js');
 
 module.exports = Cosmos.start({
   container: document.getElementById('component-playground'),
 
   defaultProps: {
     component: 'ComponentPlayground',
-    componentLookup: function(name) {
-      if (name == 'ComponentPlayground') {
+    componentLookup: function(componentName) {
+      if (componentName == 'ComponentPlayground') {
         return ComponentPlayground;
       }
-      return config.componentLookup(name);
+      return require('components/' + componentName + '.jsx');
     },
-    fixtures: config.fixtures
+    fixtures: getFixtureTree()
   },
 
   onChange: function(props) {
