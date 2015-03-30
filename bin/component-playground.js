@@ -5,7 +5,7 @@ var path = require('path'),
 var PLAYGROUND_PATH = path.join(__dirname, '..', 'component-playground');
 
 var compiler = webpack({
-  entry: PLAYGROUND_PATH + '/entry.js',
+  entry: path.join(PLAYGROUND_PATH, 'entry.js'),
   resolve: {
     // Draw components and fixtures from the current folder
     root: process.cwd()
