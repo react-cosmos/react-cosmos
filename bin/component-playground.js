@@ -36,4 +36,4 @@ var server = new WebpackDevServer(compiler, {
   publicPath: '/assets/',
 });
 
-server.listen(8080, 'localhost', function() {});
+server.listen(8989, 'localhost', function() {});
