@@ -67,7 +67,7 @@ Jump to:
   - [State serialization](#state-serialization)
   - [State injection](#state-injection)
   - [Component tree](#component-tree)
-  - [ComponentPlayground](#component-playground)
+  - [ComponentPlayground](#componentplayground)
 
 ### Top-level API
 
