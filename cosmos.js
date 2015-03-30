@@ -3,9 +3,6 @@ var _ = require('lodash'),
     router = require('./lib/router.js');
 
 module.exports = {
-  mixins: {},
-  components: {},
-
   start: function(options) {
     return new router.Router(_.extend({
       onRender: this.render.bind(this)
@@ -23,27 +20,12 @@ module.exports = {
   },
 
   createElement: function(props) {
-    var ComponentClass = this.getComponentByName(props.component,
-                                                 props.componentLookup);
+    var ComponentClass = props.componentLookup(props.component);
 
     if (!_.isFunction(ComponentClass)) {
       throw new Error('Invalid component: ' + props.component);
     }
 
     return React.createElement(ComponentClass, props);
-  },
-
-  getComponentByName: function(name, componentLookup) {
-    if (_.isFunction(componentLookup)) {
-      var ComponentClass = componentLookup(name);
-
-      // Fall back to the Cosmos.components namespace if the lookup doesn't
-      // return anything. Needed for exposing built-in components in Cosmos
-      if (ComponentClass) {
-        return ComponentClass;
-      };
-    }
-
-    return this.components[name];
   }
 };

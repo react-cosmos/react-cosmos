@@ -1,25 +1,30 @@
 {
   "name": "cosmos-js",
-  "version": "0.5.4",
+  "version": "0.5.11",
   "description": "A foundation for maintainable web applications",
   "repository": {
     "type": "git",
     "url": "https://github.com/skidding/cosmos.git"
   },
   "dependencies": {
+    "css-loader": "^0.9.1",
+    "jsx-loader": "^0.12.2",
+    "less": "^2.4.0",
+    "less-loader": "^2.2.0",
     "lodash": "~3.5.0",
-    "react": "~0.12.2"
+    "react": "~0.12.2",
+    "style-loader": "^0.9.0",
+    "webpack": "^1.7.3",
+    "webpack-dev-server": "^1.8.0"
   },
   "devDependencies": {
     "chai": "^1.10.0",
     "coveralls": "^2.11.2",
-    "css-loader": "^0.9.1",
     "esprima-fb": "^12001.1.0-dev-harmony-fb",
     "istanbul": "^0.3.7",
     "istanbul-instrumenter-loader": "^0.1.2",
     "jquery": "~1.11.1",
     "jscs": "^1.11.3",
-    "jsx-loader": "^0.12.2",
     "karma": "^0.12.31",
     "karma-chai": "^0.1.0",
     "karma-cli": "0.0.4",
@@ -29,21 +34,22 @@
     "karma-phantomjs-launcher": "^0.1.4",
     "karma-sinon-chai": "^0.3.0",
     "karma-webpack": "^1.5.0",
-    "less": "^2.4.0",
-    "less-loader": "^2.0.0",
     "mocha": "^2.1.0",
     "sinon": "^1.12.2",
-    "sinon-chai": "^2.6.0",
-    "style-loader": "^0.8.3",
-    "webpack": "^1.5.3"
+    "sinon-chai": "^2.6.0"
   },
   "main": "build/cosmos.commonjs.js",
   "scripts": {
+    "lint": "jscs --esprima=esprima-fb ./",
+    "pretest": "npm run lint",
     "test": "karma start --single-run",
     "coveralls": "cat tests/coverage/*/lcov.info | node_modules/coveralls/bin/coveralls.js",
-    "lint": "jscs --esprima=esprima-fb ./",
     "build-commonjs": "webpack -p --config webpack/commonjs.config.js",
     "build-dev": "webpack --config webpack/browser.config.js --watch",
-    "build-prod": "webpack -p --config webpack/browser.config.js --output-file build/cosmos.min.js"
+    "build-prod": "webpack -p --config webpack/browser.config.js --output-file build/cosmos.min.js",
+    "prepublish": "npm run build-commonjs"
+  },
+  "bin": {
+    "component-playground": "./bin/component-playground.js"
   }
 }

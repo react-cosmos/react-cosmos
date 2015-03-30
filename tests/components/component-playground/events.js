@@ -3,7 +3,7 @@ var React = require('react/addons'),
     Cosmos = require('../../../cosmos.js'),
     renderComponent = require('../../helpers/render-component.js'),
     ComponentPlayground =
-      require('../../../components/component-playground.jsx');
+      require('../../../component-playground/component-playground.jsx');
 
 describe('ComponentPlayground component', function() {
   var utils = React.addons.TestUtils,

@@ -2,7 +2,6 @@
   "excludeFiles": [
     ".git/**",
     "build/**",
-    "examples/**",
     "node_modules/**",
     "tests/coverage/**"
   ],
