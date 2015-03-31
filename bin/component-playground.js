@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var path = require('path'),
+    argv = require('yargs').argv,
     WebpackDevServer = require('webpack-dev-server'),
     webpack = require('webpack');
 
@@ -13,7 +14,11 @@ var compiler = webpack({
   resolve: {
     // Draw components and fixtures from the current folder...
     root: process.cwd(),
-    fallback: modulesPath
+    fallback: modulesPath,
+    alias: {
+      components: argv.componentsPath || 'components',
+      fixtures: argv.fixturesPath || 'fixtures'
+    }
   },
   resolveLoader: {
     root: modulesPath
