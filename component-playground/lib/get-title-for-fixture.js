@@ -1,10 +1,10 @@
-module.exports = function(props) {
+module.exports = function(params) {
   var title = 'React Component Playground';
 
   // Set document title to the name of the selected fixture
-  if (props.selectedComponent && props.selectedFixture) {
-    title = props.selectedComponent + ':' +
-            props.selectedFixture + ' – ' +
+  if (params.selectedComponent && params.selectedFixture) {
+    title = params.selectedComponent + ':' +
+            params.selectedFixture + ' – ' +
             title;
   }
 

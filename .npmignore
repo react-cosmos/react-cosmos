@@ -1,5 +1,4 @@
-build/cosmos.js
-build/cosmos.min.js
+component-playground/public/build
 examples
 node_modules
-tests/coverage
+tests
