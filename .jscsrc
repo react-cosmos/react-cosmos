@@ -1,7 +1,6 @@
 {
   "excludeFiles": [
     ".git/**",
-    "component-playground/public/build/**",
     "node_modules/**",
     "tests/coverage/**"
   ],

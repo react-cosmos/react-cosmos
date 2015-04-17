@@ -41,13 +41,10 @@
     "sinon": "^1.14.1",
     "sinon-chai": "^2.7.0"
   },
-  "main": "component-playground/public/build/bundle.js",
   "scripts": {
     "pretest": "jscs --esprima=esprima-fb ./",
     "test": "karma start --single-run",
-    "coveralls": "cat tests/coverage/*/lcov.info | node_modules/coveralls/bin/coveralls.js",
-    "build": "webpack -p --config component-playground/webpack.config.js",
-    "prepublish": "npm run build"
+    "coveralls": "cat tests/coverage/*/lcov.info | node_modules/coveralls/bin/coveralls.js"
   },
   "bin": {
     "component-playground": "./bin/component-playground.js"
