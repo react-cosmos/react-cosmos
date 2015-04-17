@@ -2,7 +2,6 @@ module.exports = function() {
   var requireFixture = require.context('fixtures', true, /\.js$/),
       fixtures = {};
 
-  // XXX: Doesn't work when calling Webpack by hand
   requireFixture.keys().forEach(function(fixturePath) {
     // './my-component/my-state.js' => ('my-component', 'my-state')
     var pathParts = fixturePath.match(/^\.\/(.+)\/(.+)\.js$/),
@@ -11,10 +10,13 @@ module.exports = function() {
 
     // Fixtures are grouped per component
     if (!fixtures[componentName]) {
-      fixtures[componentName] = {};
+      fixtures[componentName] = {
+        class: require('components/' + componentName + '.jsx'),
+        fixtures: {}
+      };
     }
 
-    fixtures[componentName][fixtureName] = requireFixture(fixturePath);
+    fixtures[componentName].fixtures[fixtureName] = requireFixture(fixturePath);
   });
 
   return fixtures;
