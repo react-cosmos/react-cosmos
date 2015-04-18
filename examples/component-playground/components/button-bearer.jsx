@@ -1,4 +1,4 @@
-var React = require('react/addons'),
+var React = require('react'),
     SimpleButton = require('./simple-button.jsx');
 
 module.exports = React.createClass({
