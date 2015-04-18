@@ -1,5 +1,7 @@
 var React = require('react');
 
+require('./SimpleButton.less');
+
 class SimpleButton extends React.Component {
   constructor() {
     super();
@@ -11,6 +13,7 @@ class SimpleButton extends React.Component {
   render() {
     return <button type="button"
                    disabled={this.props.disabled}
+                   className="SimpleButton"
                    onClick={this.onClick}>
       {this.state.clicks == 0 ? 'Click and let click' :
            this.state.clicks === 1 ? 'Clicked once' :

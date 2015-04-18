@@ -1,5 +1,5 @@
 var React = require('react'),
-    ButtonBearer = require('./button-bearer.jsx');
+    ButtonBearer = require('./ButtonBearer.jsx');
 
 class ButtonBearers extends React.Component {
   render() {

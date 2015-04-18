@@ -1,5 +1,5 @@
 var React = require('react'),
-    SimpleButton = require('./simple-button.jsx');
+    SimpleButton = require('./SimpleButton.jsx');
 
 module.exports = React.createClass({
   render: function() {
