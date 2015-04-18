@@ -1,7 +1,5 @@
 # Cosmos [![Build Status](https://travis-ci.org/skidding/cosmos.svg?branch=master)](https://travis-ci.org/skidding/cosmos) [![Coverage Status](https://coveralls.io/repos/skidding/cosmos/badge.svg?branch=master)](https://coveralls.io/r/skidding/cosmos?branch=master)
 
-A foundation for maintainable web applications.
-
 Cosmos is a [React](http://facebook.github.io/react/) development utility built
 on top of:
 
@@ -10,12 +8,7 @@ Serialize and reproduce the state of an entire tree of React components
 2. [ComponentPlayground](https://github.com/skidding/react-component-playground)
 — Minimal frame for loading and testing React components in isolation
 
-There's no such thing as *controllers* or *pages* when working with Cosmos,
-just *components.* The UI is a tree of components consisting of a root
-component and its descendants. Moreover, any component can be loaded
-full-screen as the root element.
-
-[![Join the chat at https://gitter.im/skidding/cosmos](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/skidding/cosmos?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+![Component Playground](https://cloud.githubusercontent.com/assets/250750/7215709/7991ed62-e5ec-11e4-89db-25bab48f22b2.png)
 
 ### How do I use it?
 
@@ -63,6 +56,8 @@ component-playground --components-path src/components --fixtures-path tests/fixt
 ```
 
 ### Thank you for your interest!
+
+[![Join the chat at https://gitter.im/skidding/cosmos](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/skidding/cosmos?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Explore the [wiki](https://github.com/skidding/cosmos/wiki) for more info on
 the Cosmos project.
