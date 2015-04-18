@@ -1,10 +1,11 @@
+var parseFixturePath = require('./parse-fixture-path.js');
+
 module.exports = function() {
   var requireFixture = require.context('fixtures', true, /\.js$/),
       fixtures = {};
 
   requireFixture.keys().forEach(function(fixturePath) {
-    // './my-component/my-state.js' => ('my-component', 'my-state')
-    var pathParts = fixturePath.match(/^\.\/(.+)\/(.+)\.js$/),
+    var pathParts = parseFixturePath(fixturePath),
         componentName = pathParts[1],
         fixtureName = pathParts[2];
 
