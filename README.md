@@ -8,6 +8,11 @@ Serialize and reproduce the state of an entire tree of React components
 2. [ComponentPlayground](https://github.com/skidding/react-component-playground)
 — Minimal frame for loading and testing React components in isolation
 
+There's no such thing as *controllers* or *pages* when working with Cosmos,
+just *components.* The UI is a tree of components consisting of a root
+component and its descendants. Moreover, any component can be loaded
+full-screen as the root element.
+
 ![Component Playground](https://cloud.githubusercontent.com/assets/250750/7215709/7991ed62-e5ec-11e4-89db-25bab48f22b2.png)
 
 ### How do I use it?
