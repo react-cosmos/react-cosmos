@@ -1,13 +1,14 @@
-var React = require('react/addons');
+var React = require('react');
 
-module.exports = React.createClass({
-  getInitialState: function() {
-    return {
+class SimpleButton extends React.Component {
+  constructor() {
+    super();
+    this.onClick = this.onClick.bind(this);
+    this.state = {
       clicks: 0
     };
-  },
-
-  render: function() {
+  }
+  render() {
     return <button type="button"
                    disabled={this.props.disabled}
                    onClick={this.onClick}>
@@ -15,9 +16,10 @@ module.exports = React.createClass({
            this.state.clicks === 1 ? 'Clicked once' :
                'Clicked ' + this.state.clicks + ' times'}
     </button>;
-  },
-
-  onClick: function() {
+  }
+  onClick() {
     this.setState({clicks: ++this.state.clicks});
   }
-});
+}
+
+module.exports = SimpleButton;

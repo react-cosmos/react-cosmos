@@ -11,7 +11,7 @@ module.exports = function() {
     // Fixtures are grouped per component
     if (!fixtures[componentName]) {
       fixtures[componentName] = {
-        class: require('components/' + componentName + '.jsx'),
+        class: require('components/' + componentName),
         fixtures: {}
       };
     }

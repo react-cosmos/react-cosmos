@@ -14,20 +14,28 @@ module.exports = {
     alias: {
       components: argv.componentsPath || 'components',
       fixtures: argv.fixturesPath || 'fixtures'
-    }
+    },
+    extensions: ['', '.js', '.jsx']
   },
   resolveLoader: {
     root: modulesPath
   },
   module: {
     loaders: [{
+      test: /\.js$/,
+      exclude: /node_modules/,
+      loader: 'babel-loader'
+    }, {
       test: /\.jsx$/,
-      loader: 'jsx-loader'
+      exclude: /node_modules/,
+      loader: 'babel-loader!jsx-loader'
     }, {
       test: /\.css$/,
+      exclude: /node_modules/,
       loader: 'style-loader!css-loader'
     }, {
       test: /\.less$/,
+      exclude: /node_modules/,
       loader: 'style-loader!css-loader!less-loader'
     }]
   },
