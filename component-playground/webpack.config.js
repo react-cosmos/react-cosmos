@@ -2,23 +2,20 @@ var path = require('path'),
     argv = require('yargs').argv;
 
 var playgroundPath = __dirname,
-    rootPath = path.join(playgroundPath, '..'),
-    modulesPath = path.join(rootPath, 'node_modules');
+    cwd = process.cwd();
+
+var getAbsPath = function(relativePath) {
+  return path.join(cwd, relativePath);
+};
 
 module.exports = {
   entry: path.join(playgroundPath, 'entry.js'),
   resolve: {
-    // Draw components and fixtures from the current folder...
-    root: process.cwd(),
-    fallback: modulesPath,
     alias: {
-      components: argv.componentsPath || 'components',
-      fixtures: argv.fixturesPath || 'fixtures'
+      components: getAbsPath(argv.componentsPath || 'components'),
+      fixtures: getAbsPath(argv.fixturesPath || 'fixtures')
     },
     extensions: ['', '.js', '.jsx']
-  },
-  resolveLoader: {
-    root: modulesPath
   },
   module: {
     loaders: [{
@@ -27,11 +24,9 @@ module.exports = {
       loader: 'jsx-loader?harmony'
     }, {
       test: /\.css$/,
-      exclude: /node_modules/,
       loader: 'style-loader!css-loader'
     }, {
       test: /\.less$/,
-      exclude: /node_modules/,
       loader: 'style-loader!css-loader!less-loader'
     }]
   },
