@@ -2,6 +2,8 @@ var path = require('path'),
     argv = require('yargs').argv;
 
 var playgroundPath = __dirname,
+    rootPath = path.join(playgroundPath, '..'),
+    modulesPath = path.join(rootPath, 'node_modules'),
     cwd = process.cwd();
 
 var getAbsPath = function(relativePath) {
@@ -16,6 +18,9 @@ module.exports = {
       fixtures: getAbsPath(argv.fixturesPath || 'fixtures')
     },
     extensions: ['', '.js', '.jsx']
+  },
+  resolveLoader: {
+    root: modulesPath
   },
   module: {
     loaders: [{
