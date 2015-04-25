@@ -29,7 +29,8 @@ dependencies and rely exclusively on _props_ for input. Including styles, which
 means you need to be using [style-loader](https://github.com/webpack/style-loader).
 - [x] You must create component fixtures for ComponentPlayground to load. The
 component and fixture files should be nested as in the folder structure below.
-See the [example repo](github.com/skidding/cosmos-example) for a better picture.
+See the [example repo](https://github.com/skidding/cosmos-example) for a better
+picture.
 
 ### Installing
 
@@ -41,8 +42,8 @@ See the [example repo](github.com/skidding/cosmos-example) for a better picture.
 
 Running the ComponentPlayground executable will:
 
-1. Start a [webpack](http://webpack.github.io/) dev server, serving an instance
-of ComponentPlayground at `localhost:8989`
+1. Start a [webpack dev server](http://webpack.github.io/docs/webpack-dev-server.html),
+serving an instance of ComponentPlayground at `localhost:8989`
 2. Scan the current folder for components and fixtures and feed them to
 ComponentPlayground
 
