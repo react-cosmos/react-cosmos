@@ -6,16 +6,16 @@ var playgroundPath = __dirname,
     modulesPath = path.join(rootPath, 'node_modules'),
     cwd = process.cwd();
 
-var getAbsPath = function(relativePath) {
-  return path.join(cwd, relativePath);
+var resolvePath = function(userPath) {
+  return path.resolve(cwd, userPath);
 };
 
 module.exports = {
   entry: path.join(playgroundPath, 'entry.js'),
   resolve: {
     alias: {
-      components: getAbsPath(argv.componentsPath || 'components'),
-      fixtures: getAbsPath(argv.fixturesPath || 'fixtures')
+      components: resolvePath(argv.componentsPath || 'components'),
+      fixtures: resolvePath(argv.fixturesPath || 'fixtures')
     },
     extensions: ['', '.js', '.jsx']
   },
