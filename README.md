@@ -8,6 +8,11 @@ Serialize and reproduce the state of an entire tree of React components
 2. [ComponentPlayground](https://github.com/skidding/react-component-playground)
 — Minimal frame for loading and testing React components in isolation
 
+> Working with ComponentPlayground improves the component design because it
+surfaces any implicit dependencies. It also forces you to define sane inputs
+for every component, making them more predictable and easier to debug down the
+road.
+
 There's no such thing as *controllers* or *pages* when working with Cosmos,
 just *components.* The UI is a tree of components consisting of a root
 component and its descendants. Moreover, any component can be loaded
@@ -15,16 +20,26 @@ full-screen as the root element.
 
 ![Component Playground](https://cloud.githubusercontent.com/assets/250750/7215709/7991ed62-e5ec-11e4-89db-25bab48f22b2.png)
 
-### How do I use it?
+### Requirements
 
-```bash
-npm install -g cosmos-js
+- [x] You should already be using CommonJS modules to structure your code and
+[webpack](http://webpack.github.io/) to bundle your modules for the browser
+- [x] Your components should be fully encapsulated. They should have no global
+dependencies and rely exclusively on _props_ for input. Including styles, which
+means you need to be using [style-loader](https://github.com/webpack/style-loader).
+- [x] You must create component fixtures for ComponentPlayground to load. The
+component and fixture files should be nested as in the folder structure below.
+See the [example repo](github.com/skidding/cosmos-example) for a better picture.
 
-cd /path/to/my/project
-component-playground
-```
+### Installing
 
-Running the `component-playground` executable will:
+- Install the Cosmos package through npm `npm install cosmos-js`
+- Run the ComponentPlayground executable `node_modules/.bin/component-playground`
+- Open [localhost:8989](http://localhost:8989)
+
+### Under the hood
+
+Running the ComponentPlayground executable will:
 
 1. Start a [webpack](http://webpack.github.io/) dev server, serving an instance
 of ComponentPlayground at `localhost:8989`
@@ -57,7 +72,7 @@ If the _components_ and _fixtures_ folders are not siblings, their paths can be
 specified via cli args:
 
 ```bash
-component-playground --components-path src/components --fixtures-path tests/fixtures
+node_modules/.bin/component-playground --components-path src/components --fixtures-path tests/fixtures
 ```
 
 ### Thank you for your interest!
