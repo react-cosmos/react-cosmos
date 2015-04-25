@@ -24,9 +24,10 @@ full-screen as the root element.
 
 - [x] You should already be using CommonJS modules to structure your code and
 [webpack](http://webpack.github.io/) to bundle your modules for the browser
-- [x] Your components should be fully encapsulated. They should have no global
-dependencies and rely exclusively on _props_ for input. Including styles, which
-means you need to be using [style-loader](https://github.com/webpack/style-loader).
+- [x] Your React components should be fully encapsulated. They should have no
+global dependencies and rely exclusively on _props_ for input. Including styles,
+which means you need to be using
+[style-loader](https://github.com/webpack/style-loader).
 - [x] You must create component fixtures for ComponentPlayground to load. The
 component and fixture files should be nested as in the folder structure below.
 See the [example repo](https://github.com/skidding/cosmos-example) for a better
