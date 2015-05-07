@@ -77,6 +77,10 @@ specified via cli args:
 node_modules/.bin/component-playground --components-path src/components --fixtures-path tests/fixtures
 ```
 
+Finally, Cosmos includes [React Hot Loader](http://gaearon.github.io/react-hot-loader/) and has webpack's [hot module replacement](http://webpack.github.io/docs/hot-module-replacement.html) enabled so you can tweak the components and their styles without refreshing the browser:
+
+![React Hot Loader in Cosmos](https://cloud.githubusercontent.com/assets/250750/7522175/2e839f04-f4fc-11e4-890c-e60505c50f57.gif)
+
 ### Thank you for your interest!
 
 [![Join the chat at https://gitter.im/skidding/cosmos](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/skidding/cosmos?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
