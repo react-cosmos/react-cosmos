@@ -1,5 +1,6 @@
 var path = require('path'),
-    argv = require('yargs').argv;
+    argv = require('yargs').argv,
+    webpack = require('webpack');
 
 var playgroundPath = __dirname,
     rootPath = path.join(playgroundPath, '..'),
@@ -11,7 +12,12 @@ var resolvePath = function(userPath) {
 };
 
 module.exports = {
-  entry: path.join(playgroundPath, 'entry.js'),
+  context: playgroundPath,
+  entry: [
+    'webpack-dev-server/client?http://localhost:8989',
+    'webpack/hot/dev-server',
+    './entry'
+  ],
   resolve: {
     alias: {
       components: resolvePath(argv.componentsPath || 'components'),
@@ -26,7 +32,7 @@ module.exports = {
     loaders: [{
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      loader: 'jsx-loader?harmony'
+      loaders: ['react-hot-loader', 'jsx-loader?harmony']
     }, {
       test: /\.css$/,
       loader: 'style-loader!css-loader'
@@ -39,6 +45,11 @@ module.exports = {
     libraryTarget: 'umd',
     library: 'cosmosRouter',
     path: path.join(playgroundPath, 'public', 'build'),
-    filename: 'bundle.js'
-  }
+    filename: 'bundle.js',
+    publicPath: '/build/'
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin()
+  ]
 };

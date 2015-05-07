@@ -12,6 +12,7 @@ var compiler = webpack(require(path.join(playgroundPath, 'webpack.config.js')));
 var server = new WebpackDevServer(compiler, {
   contentBase: path.join(playgroundPath, 'public'),
   publicPath: '/build/',
+  hot: true
 });
 
 server.listen(8989, 'localhost', function() {});
