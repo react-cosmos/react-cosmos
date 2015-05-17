@@ -18,7 +18,7 @@ just *components.* The UI is a tree of components consisting of a root
 component and its descendants. Moreover, any component can be loaded
 full-screen as the root element.
 
-![Component Playground](https://cloud.githubusercontent.com/assets/250750/7422140/0670e9f4-ef93-11e4-9647-7757793a1da5.png)
+![Component Playground](https://cloud.githubusercontent.com/assets/250750/7670876/dd2be808-fcbe-11e4-8c46-ca37f5b1424a.gif)
 
 ### Requirements
 
