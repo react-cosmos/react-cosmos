@@ -1,22 +1,15 @@
 # Cosmos [![Build Status](https://travis-ci.org/skidding/cosmos.svg?branch=master)](https://travis-ci.org/skidding/cosmos) [![Coverage Status](https://coveralls.io/repos/skidding/cosmos/badge.svg?branch=master)](https://coveralls.io/r/skidding/cosmos?branch=master)
 
-Cosmos is a [React](http://facebook.github.io/react/) development utility built
-on top of:
+Cosmos is a JavaScript development tool for designing and maintaining 
+[React](http://facebook.github.io/react/) components.
 
-1. [ComponentTree](https://github.com/skidding/react-component-tree) —
-Serialize and reproduce the state of an entire tree of React components
-2. [ComponentPlayground](https://github.com/skidding/react-component-playground)
-— Minimal frame for loading and testing React components in isolation
+It scans your project for React component 
+[_fixtures_](http://en.wikipedia.org/wiki/Test_fixture) and loads them inside [ComponentPlayground](https://github.com/skidding/react-component-playground).
 
 > Working with ComponentPlayground improves the component design because it
 surfaces any implicit dependencies. It also forces you to define sane inputs
 for every component, making them more predictable and easier to debug down the
 road.
-
-There's no such thing as *controllers* or *pages* when working with Cosmos,
-just *components.* The UI is a tree of components consisting of a root
-component and its descendants. Moreover, any component can be loaded
-full-screen as the root element.
 
 ![Component Playground](https://cloud.githubusercontent.com/assets/250750/7670876/dd2be808-fcbe-11e4-8c46-ca37f5b1424a.gif)
 
