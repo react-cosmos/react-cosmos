@@ -1,10 +1,15 @@
 # Cosmos [![Build Status](https://travis-ci.org/skidding/cosmos.svg?branch=master)](https://travis-ci.org/skidding/cosmos) [![Coverage Status](https://coveralls.io/repos/skidding/cosmos/badge.svg?branch=master)](https://coveralls.io/r/skidding/cosmos?branch=master)
 
-Cosmos is a JavaScript development tool for designing and maintaining 
+Cosmos is a JavaScript development tool for designing and maintaining
 [React](http://facebook.github.io/react/) components.
 
-It scans your project for React component 
-[_fixtures_](http://en.wikipedia.org/wiki/Test_fixture) and loads them inside [ComponentPlayground](https://github.com/skidding/react-component-playground).
+It scans your project for React component
+[_fixtures_](http://en.wikipedia.org/wiki/Test_fixture) and loads them inside [ComponentPlayground](https://github.com/skidding/react-component-playground),
+enabling you to:
+
+1. Render your components under any combination of props and state
+2. See component states evolve in real-time as you interact with running
+instances
 
 > Working with ComponentPlayground improves the component design because it
 surfaces any implicit dependencies. It also forces you to define sane inputs
