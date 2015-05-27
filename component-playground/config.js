@@ -11,7 +11,17 @@ var resolvePath = function(userPath) {
   return path.resolve(cwd, userPath);
 };
 
-module.exports = {
+var config;
+
+try {
+  config = require(
+    resolvePath(argv.configPath || 'component-playground.config')
+  );
+} catch (e) {
+  config = {};
+}
+
+var webpackConfig = {
   context: playgroundPath,
   entry: [
     'webpack-dev-server/client?http://localhost:8989',
@@ -52,4 +62,8 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ]
+};
+
+module.exports = {
+  webpack: config.webpack ? config.webpack(webpackConfig) : webpackConfig
 };
