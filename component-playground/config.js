@@ -11,14 +11,17 @@ var resolvePath = function(userPath) {
   return path.resolve(cwd, userPath);
 };
 
-var config;
+var userConfig;
 
 try {
-  config = require(
-    resolvePath(argv.configPath || 'component-playground.config')
-  );
+  userConfig = require(
+    resolvePath(argv.configPath || 'component-playground.config'));
 } catch (e) {
-  config = {};
+    if (e instanceof Error && e.code === 'MODULE_NOT_FOUND') {
+        userConfig = {};
+    } else {
+        throw e;
+    }
 }
 
 var webpackConfig = {
@@ -65,5 +68,6 @@ var webpackConfig = {
 };
 
 module.exports = {
-  webpack: config.webpack ? config.webpack(webpackConfig) : webpackConfig
+  webpack: userConfig.webpack ?
+           userConfig.webpack(webpackConfig) : webpackConfig
 };
