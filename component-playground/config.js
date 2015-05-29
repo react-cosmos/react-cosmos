@@ -17,11 +17,11 @@ try {
   userConfig = require(
     resolvePath(argv.configPath || 'component-playground.config'));
 } catch (e) {
-    if (e instanceof Error && e.code === 'MODULE_NOT_FOUND') {
-        userConfig = {};
-    } else {
-        throw e;
-    }
+  if (e instanceof Error && e.code === 'MODULE_NOT_FOUND') {
+    userConfig = {};
+  } else {
+    throw e;
+  }
 }
 
 var webpackConfig = {
