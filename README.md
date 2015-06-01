@@ -1,6 +1,6 @@
 # Cosmos [![Build Status](https://travis-ci.org/skidding/cosmos.svg?branch=master)](https://travis-ci.org/skidding/cosmos) [![Coverage Status](https://coveralls.io/repos/skidding/cosmos/badge.svg?branch=master)](https://coveralls.io/r/skidding/cosmos?branch=master)
 
-Cosmos is a JavaScript development tool for designing and maintaining
+Cosmos is a JavaScript development tool for designing truly encapsulated
 [React](http://facebook.github.io/react/) components.
 
 It scans your project for React component
@@ -46,10 +46,7 @@ serving an instance of ComponentPlayground at `localhost:8989`
 2. Scan the current folder for components and fixtures and feed them to
 ComponentPlayground
 
-The webpack build bundles modules from both the current folder and the Cosmos
-package. It is currently compatible with React classes, ES6 classes, JSX and
-CSS/LESS modules. In the future the [webpack config](component-playground/webpack.config.js)
-should be configurable.
+#### File structure
 
 This is the file structure Cosmos expects:
 ```
@@ -75,7 +72,27 @@ specified via cli args:
 node_modules/.bin/component-playground --components-path src/components --fixtures-path tests/fixtures
 ```
 
-Finally, Cosmos includes [React Hot Loader](http://gaearon.github.io/react-hot-loader/) and has webpack's [hot module replacement](http://webpack.github.io/docs/hot-module-replacement.html) enabled so you can tweak the components and their styles without refreshing the browser:
+#### webpack config
+
+The webpack build bundles modules from both the current folder and the Cosmos
+package. It is compatible with React classes, ES6 classes, JSX and CSS/LESS
+modules [out of the box](component-playground/config.js#L27-L68), but you can
+customize the webpack config to support additional loaders and settings by
+creating a `component-playground.config.js` file in the project root. E.g.
+
+```js
+module.exports.webpack = function(config) {
+  config.module.loaders.push(/*...*/);
+  return config;
+};
+```
+
+#### Hot loading
+
+Cosmos includes [React Hot Loader](http://gaearon.github.io/react-hot-loader/)
+and has webpack's [hot module replacement](http://webpack.github.io/docs/hot-module-replacement.html)
+enabled so you can tweak the components and their styles without refreshing the
+browser:
 
 ![React Hot Loader in Cosmos](https://cloud.githubusercontent.com/assets/250750/7526576/5c725b16-f51b-11e4-95ef-312c6fd7bcc7.gif)
 
