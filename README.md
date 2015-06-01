@@ -1,6 +1,6 @@
 # Cosmos [![Build Status](https://travis-ci.org/skidding/cosmos.svg?branch=master)](https://travis-ci.org/skidding/cosmos) [![Coverage Status](https://coveralls.io/repos/skidding/cosmos/badge.svg?branch=master)](https://coveralls.io/r/skidding/cosmos?branch=master)
 
-Cosmos is a JavaScript development tool for designing and maintaining
+Cosmos is a JavaScript development tool for designing truly encapsulated 
 [React](http://facebook.github.io/react/) components.
 
 It scans your project for React component
