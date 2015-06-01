@@ -1,7 +1,7 @@
 {
   "name": "cosmos-js",
-  "version": "0.6.3",
-  "description": "A development tool for designing and maintaining React components",
+  "version": "0.6.4",
+  "description": "A development tool for designing truly encapsulated React components",
   "repository": {
     "type": "git",
     "url": "https://github.com/skidding/cosmos.git"
