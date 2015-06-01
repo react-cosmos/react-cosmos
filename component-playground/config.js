@@ -11,7 +11,20 @@ var resolvePath = function(userPath) {
   return path.resolve(cwd, userPath);
 };
 
-module.exports = {
+var userConfig;
+
+try {
+  userConfig = require(
+    resolvePath(argv.configPath || 'component-playground.config'));
+} catch (e) {
+  if (e instanceof Error && e.code === 'MODULE_NOT_FOUND') {
+    userConfig = {};
+  } else {
+    throw e;
+  }
+}
+
+var webpackConfig = {
   context: playgroundPath,
   entry: [
     'webpack-dev-server/client?http://localhost:8989',
@@ -52,4 +65,9 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ]
+};
+
+module.exports = {
+  webpack: userConfig.webpack ?
+           userConfig.webpack(webpackConfig) : webpackConfig
 };
