@@ -100,5 +100,4 @@ browser:
 
 [![Join the chat at https://gitter.im/skidding/cosmos](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/skidding/cosmos?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Explore the [wiki](https://github.com/skidding/cosmos/wiki) for more info on
-the Cosmos project.
+Explore [Contributing Guide](CONTRIBUTING.md) for more information.
