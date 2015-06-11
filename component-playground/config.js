@@ -1,5 +1,6 @@
 var path = require('path'),
     argv = require('yargs').argv,
+    _ = require('lodash'),
     webpack = require('webpack');
 
 var playgroundPath = __dirname,
@@ -68,6 +69,7 @@ var webpackConfig = {
 };
 
 module.exports = {
+  server: _.extend({port: 8989, hostname: 'localhost'}, userConfig.server),
   webpack: userConfig.webpack ?
            userConfig.webpack(webpackConfig) : webpackConfig
 };
