@@ -31,7 +31,7 @@ The `cosmos-js` package is the top layer, responsible for offering a minimum con
 
 ## Design
 
-[The Best Code is No Code At All.](http://blog.codinghorror.com/the-best-code-is-no-code-at-all/) Start with this before adding any new line of code.
+[The Best Code is No Code At All.](http://blog.codinghorror.com/the-best-code-is-no-code-at-all/) Start with this in mind before adding any new line of code.
 
 1. When thinking of adding or changing something, make sure it is in line with the project [mission.](#mission)
 2. Once the value added is clear, strive for the simplest, most obvious solution.
