@@ -1,6 +1,6 @@
 {
   "name": "cosmos-js",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "A development tool for designing truly encapsulated React components",
   "repository": {
     "type": "git",
