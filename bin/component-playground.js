@@ -8,7 +8,7 @@ var rootPath = path.join(__dirname, '..'),
     playgroundPath = path.join(rootPath, 'component-playground');
 
 var config = require(path.join(playgroundPath, 'config'));
-var compiler = webpack(userConfig.webpack);
+var compiler = webpack(config.webpack);
 
 var server = new WebpackDevServer(compiler, {
   contentBase: path.join(playgroundPath, 'public'),
