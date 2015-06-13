@@ -26,7 +26,11 @@ try {
   }
 }
 
-config.server = _.extend({port: 8989, hostname: 'localhost'}, userConfig.server);
+config.server = _.extend({
+  port: 8989,
+  hostname: 'localhost'
+}, userConfig.server);
+
 config.webpack = {
   context: playgroundPath,
   entry: [
