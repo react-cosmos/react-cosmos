@@ -34,7 +34,8 @@ config.server = _.extend({
 config.webpack = {
   context: playgroundPath,
   entry: [
-    'webpack-dev-server/client?http://localhost:' + config.server.port,
+    'webpack-dev-server/client?http://' + config.server.hostname + ':' +
+                                          config.server.port,
     'webpack/hot/dev-server',
     './entry'
   ],
