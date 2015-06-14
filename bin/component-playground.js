@@ -7,7 +7,8 @@ var path = require('path'),
 var rootPath = path.join(__dirname, '..'),
     playgroundPath = path.join(rootPath, 'component-playground');
 
-var compiler = webpack(require(path.join(playgroundPath, 'config')).webpack);
+var config = require(path.join(playgroundPath, 'config'));
+var compiler = webpack(config.webpack);
 
 var server = new WebpackDevServer(compiler, {
   contentBase: path.join(playgroundPath, 'public'),
@@ -15,4 +16,4 @@ var server = new WebpackDevServer(compiler, {
   hot: true
 });
 
-server.listen(8989, 'localhost', function() {});
+server.listen(config.server.port, config.server.hostname, function() {});

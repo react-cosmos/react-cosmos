@@ -1,5 +1,6 @@
 var path = require('path'),
     argv = require('yargs').argv,
+    _ = require('lodash'),
     webpack = require('webpack');
 
 var playgroundPath = __dirname,
@@ -11,7 +12,8 @@ var resolvePath = function(userPath) {
   return path.resolve(cwd, userPath);
 };
 
-var userConfig;
+var config = {},
+    userConfig;
 
 try {
   userConfig = require(
@@ -24,10 +26,16 @@ try {
   }
 }
 
-var webpackConfig = {
+config.server = _.extend({
+  port: 8989,
+  hostname: 'localhost'
+}, userConfig.server);
+
+config.webpack = {
   context: playgroundPath,
   entry: [
-    'webpack-dev-server/client?http://localhost:8989',
+    'webpack-dev-server/client?http://' + config.server.hostname + ':' +
+                                          config.server.port,
     'webpack/hot/dev-server',
     './entry'
   ],
@@ -67,7 +75,8 @@ var webpackConfig = {
   ]
 };
 
-module.exports = {
-  webpack: userConfig.webpack ?
-           userConfig.webpack(webpackConfig) : webpackConfig
-};
+if (userConfig.webpack) {
+  config.webpack = userConfig.webpack(config.webpack);
+}
+
+module.exports = config;
