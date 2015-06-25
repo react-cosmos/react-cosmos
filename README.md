@@ -16,7 +16,7 @@ surfaces any implicit dependencies. It also forces you to define sane inputs
 for every component, making them more predictable and easier to debug down the
 road.
 
-![Component Playground](https://cloud.githubusercontent.com/assets/250750/7670876/dd2be808-fcbe-11e4-8c46-ca37f5b1424a.gif)
+![Component Playground](https://cloud.githubusercontent.com/assets/250750/8364852/d7c7a9e6-1b91-11e5-8142-ee435611235d.gif)
 
 ### Requirements
 
