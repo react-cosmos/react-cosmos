@@ -1,6 +1,6 @@
 # Cosmos [![Build Status](https://travis-ci.org/skidding/cosmos.svg?branch=master)](https://travis-ci.org/skidding/cosmos) [![Coverage Status](https://coveralls.io/repos/skidding/cosmos/badge.svg?branch=master)](https://coveralls.io/r/skidding/cosmos?branch=master)
 
-Cosmos is a JavaScript development tool for designing truly encapsulated
+Cosmos is a JavaScript DX* tool for designing truly encapsulated
 [React](http://facebook.github.io/react/) components.
 
 It scans your project for React component
@@ -17,6 +17,8 @@ for every component, making them more predictable and easier to debug down the
 road.
 
 ![Component Playground](https://cloud.githubusercontent.com/assets/250750/8532005/e6d3b3bc-2433-11e5-9fc3-39a9288198e9.gif)
+
+_\*DX stands for Developer Experience, the counterpart of UX in building a product, system or service._
 
 ### Requirements
 
