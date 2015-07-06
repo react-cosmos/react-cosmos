@@ -87,6 +87,12 @@ module.exports.webpack = function(config) {
 };
 ```
 
+You can use this functionality to inject external styles or scripts if your
+components need e.g. Bootstrap to work.
+```js
+config.entry.push('../../../injectStyleTag.js');
+```
+
 #### Hot loading
 
 Cosmos includes [React Hot Loader](http://gaearon.github.io/react-hot-loader/)
