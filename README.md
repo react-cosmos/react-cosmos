@@ -90,7 +90,7 @@ module.exports.webpack = function(config) {
 You can use this functionality to inject external styles or scripts if your
 components need e.g. Bootstrap to work.
 ```js
-config.entry.push('../../../injectStyleTag.js');
+config.entry.push(path.join(process.cwd(), 'injectBootstrapTags.js'));
 ```
 
 #### Hot loading
