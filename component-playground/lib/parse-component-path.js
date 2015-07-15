@@ -1,4 +1,6 @@
 module.exports = function(componentPath) {
+  // './component-group/my-component.jsx' => ('my-component-name')
   // './my-component.js' => ('my-component-name')
-  return componentPath.match(/^\.\/(.+)\.jsx?$/);
+  var parts = componentPath.match(/^\.\/(.*\/)?(.+)\.jsx?$/);
+  return parts[parts.length - 1];
 };
