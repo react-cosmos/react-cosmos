@@ -13,6 +13,8 @@ module.exports = function() {
     if (!fixtures[componentName]) {
       fixtures[componentName] = {
         class: require('components/' + componentName),
+        docs: require('!!html!markdown!./docs-loader!components/' +
+          componentName),
         fixtures: {}
       };
     }
