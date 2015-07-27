@@ -23,7 +23,8 @@ module.exports = function() {
   });
 
   requireComponent.keys().forEach(function(componentPath) {
-    var componentName = parseComponentPath(componentPath);
+    var pathParts =  parseComponentPath(componentPath),
+      componentName = pathParts[1];
 
     if (!fixtures[componentName]) {
       fixtures[componentName] = {
