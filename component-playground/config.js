@@ -42,7 +42,7 @@ config.webpack = {
   resolve: {
     alias: {
       components: resolvePath(argv.componentsPath || 'components'),
-      fixtures: resolvePath(argv.fixturesPath || 'fixtures')
+      fixtures: resolvePath(argv.fixturesPath || 'components')
     },
     extensions: ['', '.js', '.jsx']
   },
