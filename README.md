@@ -78,7 +78,7 @@ node_modules/.bin/component-playground --components-path src/components --fixtur
 
 The webpack build bundles modules from both the current folder and the Cosmos
 package. It is compatible with React classes, ES6 classes, JSX and CSS/LESS
-modules [out of the box](component-playground/config.js#L27-L68), but you can
+modules [out of the box](component-playground/config.js#L34-L76), but you can
 customize the webpack config to support additional loaders and settings by
 creating a `component-playground.config.js` file in the project root. E.g.
 
