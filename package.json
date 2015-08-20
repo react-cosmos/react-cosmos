@@ -9,14 +9,14 @@
   "dependencies": {
     "babel-core": "^5.2.17",
     "babel-loader": "^5.0.0",
-    "css-loader": "^0.9.1",
-    "less": "^2.4.0",
+    "css-loader": "^0.15.6",
+    "less": "^2.5.1",
     "less-loader": "^2.2.0",
     "lodash": "^3.5.0",
     "react-component-playground": "^0.3.0",
     "react-hot-loader": "^1.2.7",
     "react-querystring-router": "^0.2.0",
-    "style-loader": "^0.9.0",
+    "style-loader": "^0.12.3",
     "webpack": "^1.7.3",
     "webpack-dev-server": "^1.8.0",
     "yargs": "^3.6.0"
