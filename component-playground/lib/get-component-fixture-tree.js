@@ -1,7 +1,7 @@
 var parseFixturePath = require('./parse-fixture-path.js');
 
 module.exports = function() {
-  var requireFixture = require.context('__cosmos_fixtures', true, /\.js$/),
+  var requireFixture = require.context('COSMOS_FIXTURES', true, /\.js$/),
       fixtures = {};
 
   requireFixture.keys().forEach(function(fixturePath) {
@@ -12,7 +12,7 @@ module.exports = function() {
     // Fixtures are grouped per component
     if (!fixtures[componentName]) {
       fixtures[componentName] = {
-        class: require('__cosmos_components/' + componentName),
+        class: require('COSMOS_COMPONENTS/' + componentName),
         fixtures: {}
       };
     }

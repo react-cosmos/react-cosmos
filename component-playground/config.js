@@ -41,8 +41,8 @@ config.webpack = {
   ],
   resolve: {
     alias: {
-      __cosmos_components: resolvePath(argv.componentsPath || 'components'),
-      __cosmos_fixtures: resolvePath(argv.fixturesPath || 'fixtures')
+      COSMOS_COMPONENTS: resolvePath(argv.componentsPath || 'components'),
+      COSMOS_FIXTURES: resolvePath(argv.fixturesPath || 'fixtures')
     },
     extensions: ['', '.js', '.jsx']
   },
