@@ -13,9 +13,9 @@
     "less": "^2.5.1",
     "less-loader": "^2.2.0",
     "lodash": "^3.5.0",
-    "react-component-playground": "^0.3.0",
+    "react-component-playground": "git@github.com:rrarunan/react-component-playground.git#32f74454a21560c7546c30a7499fb5e3f81e4fe1",
     "react-hot-loader": "^1.2.7",
-    "react-querystring-router": "^0.2.0",
+    "react-querystring-router": "git@github.com:rrarunan/react-querystring-router.git#85f54b5985164ae58ba066a33b16364c43a97fa2",
     "style-loader": "^0.12.3",
     "webpack": "^1.7.3",
     "webpack-dev-server": "^1.8.0",
@@ -42,7 +42,7 @@
     "sinon-chai": "^2.7.0"
   },
   "peerDependencies": {
-    "react": "^0.13.1"
+    "react": "^0.14.0-beta1"
   },
   "scripts": {
     "pretest": "jscs --esprima=esprima-fb ./",
