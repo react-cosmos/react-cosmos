@@ -8,8 +8,8 @@ module.exports = function() {
 
   requireFixture.keys().forEach(function(fixturePath) {
     var pathParts = parseFixturePath(fixturePath),
-      componentName = pathParts[1],
-      fixtureName = pathParts[2];
+        componentName = pathParts[1],
+        fixtureName = pathParts[2];
 
     // Fixtures are grouped per component
     if (!fixtures[componentName]) {
@@ -24,7 +24,7 @@ module.exports = function() {
 
   requireComponent.keys().forEach(function(componentPath) {
     var pathParts =  parseComponentPath(componentPath),
-      componentName = pathParts[1];
+        componentName = pathParts[1];
 
     if (!fixtures[componentName]) {
       fixtures[componentName] = {
