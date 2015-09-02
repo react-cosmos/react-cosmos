@@ -9,10 +9,15 @@ module.exports = function() {
         componentName = pathParts[1],
         fixtureName = pathParts[2];
 
+    var componentFileExport = require('components/' + componentName + '/index.jsx');
+    // hack – fixes problem where using ES6 named export from component .jsx file breaks webpack require.
+    if (!(typeof(componentFileExport) == 'function') && componentFileExport.default) {
+      componentFileExport = componentFileExport.default;
+    }
     // Fixtures are grouped per component
     if (!fixtures[componentName]) {
       fixtures[componentName] = {
-        class: require('components/' + componentName + '/index.jsx'),
+        class: componentFileExport,
         fixtures: {}
       };
     }
