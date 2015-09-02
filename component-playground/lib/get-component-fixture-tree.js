@@ -22,7 +22,7 @@ module.exports = function() {
       };
     }
 
-    fixtures[componentName].fixtures[fixtureName] = requireFixture(fixturePath);
+    fixtures[componentName].fixtures[fixtureName] = requireFixture(fixturePath).default;
   });
 
   return fixtures;
