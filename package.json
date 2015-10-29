@@ -1,9 +1,0 @@
-{
-  "name": "cosmos",
-  "version": "0.7.0",
-  "description": "A development tool for designing truly encapsulated React components",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/skidding/cosmos.git"
-  }
-}

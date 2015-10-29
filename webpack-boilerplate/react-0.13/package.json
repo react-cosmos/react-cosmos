@@ -1,7 +1,7 @@
 {
   "name": "cosmos-webpack-boilerplate",
   "version": "1.0.0",
-  "description": "Webpack integration with Component Playground in React 0.13",
+  "description": "A development tool for designing truly encapsulated React components",
   "repository": {
     "type": "git",
     "url": "https://github.com/skidding/cosmos.git"
