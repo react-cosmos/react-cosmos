@@ -1,0 +1,35 @@
+{
+  "name": "cosmos-webpack-boilerplate",
+  "version": "1.0.0",
+  "description": "Webpack integration with Component Playground in React 0.13",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skidding/cosmos.git"
+  },
+  "dependencies": {
+    "lodash": "^3.10.1",
+    "react": "^0.13.1"
+  },
+  "devDependencies": {
+    "babel-core": "^5.2.17",
+    "babel-loader": "^5.0.0",
+    "babel-plugin-react-transform": "^1.0.5",
+    "css-loader": "^0.15.6",
+    "express": "^4.13.3",
+    "postcss-loader": "^0.7.0",
+    "postcss-nested": "^1.0.0",
+    "react-component-playground": "^0.3.0",
+    "react-querystring-router": "^0.2.0",
+    "react-transform-catch-errors": "^1.0.0",
+    "react-transform-hmr": "^1.0.1",
+    "react-transform-webpack-hmr": "^0.1.6",
+    "redbox-react": "^1.1.0",
+    "style-loader": "^0.12.3",
+    "webpack": "^1.12.2",
+    "webpack-dev-middleware": "^1.2.0",
+    "webpack-hot-middleware": "^2.2.0"
+  },
+  "scripts": {
+    "playground": "node playground.js"
+  }
+}
