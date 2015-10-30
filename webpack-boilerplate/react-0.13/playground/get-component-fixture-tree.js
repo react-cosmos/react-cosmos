@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 var getFixturesForComponent = function(componentName) {
   var requireFixture = require.context('COSMOS_FIXTURES', true, /\.js$/),
       isFixtureOfComponent = new RegExp('./' + componentName + '/([^/]+).js'),
@@ -30,6 +32,11 @@ module.exports = function() {
       class: requireComponent(componentPath),
       fixtures: getFixturesForComponent(componentName)
     };
+
+    // Allow users to browse components before creating fixtures
+    if (_.isEmpty(components[componentName].fixtures)) {
+      components[componentName].fixtures['auto-empty'] = {};
+    }
   });
 
   return components;
