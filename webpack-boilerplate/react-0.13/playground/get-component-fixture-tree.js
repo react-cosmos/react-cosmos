@@ -1,7 +1,7 @@
 var _ = require('lodash');
 
 var getFixturesForComponent = function(componentName) {
-  var requireFixture = require.context('COSMOS_FIXTURES', true, /\.js$/),
+  var requireFixture = require.context('COSMOS_FIXTURES', true),
       isFixtureOfComponent = new RegExp('./' + componentName + '/([^/]+).js'),
       fixtures = {};
 
