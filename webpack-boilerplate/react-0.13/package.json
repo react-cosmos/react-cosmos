@@ -27,9 +27,11 @@
     "style-loader": "^0.12.3",
     "webpack": "^1.12.2",
     "webpack-dev-middleware": "^1.2.0",
-    "webpack-hot-middleware": "^2.2.0"
+    "webpack-hot-middleware": "^2.2.0",
+    "yargs": "^3.29.0"
   },
   "scripts": {
-    "playground": "node playground.js"
+    "start": "node devServer.js --env dev",
+    "playground": "node devServer.js --env playground"
   }
 }

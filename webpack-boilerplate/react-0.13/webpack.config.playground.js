@@ -1,11 +1,11 @@
 var path = require('path'),
-    webpack = require('webpack');
+    _ = require('lodash'),
+    devConfig = require('./webpack.config.dev');
 
-module.exports = {
-  devtool: 'eval',
+module.exports = _.extend(devConfig, {
   entry: [
     'webpack-hot-middleware/client',
-    path.join(__dirname, 'playground/client')
+    './playground/index'
   ],
   resolve: {
     alias: {
@@ -13,29 +13,5 @@ module.exports = {
       COSMOS_FIXTURES: path.join(__dirname, 'fixtures')
     },
     extensions: ['', '.js', '.jsx']
-  },
-  module: {
-    loaders: [{
-      test: /\.jsx?$/,
-      exclude: /node_modules/,
-      loaders: ['babel-loader']
-    }, {
-      test: /\.css$/,
-      loader: 'style-loader!css-loader!postcss-loader'
-    }]
-  },
-  output: {
-    libraryTarget: 'umd',
-    library: 'cosmosRouter',
-    path: path.join(__dirname, 'dist'),
-    filename: 'cosmos-bundle.js',
-    publicPath: '/static/'
-  },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
-  ],
-  postcss: function() {
-    return [require('postcss-nested')];
   }
-};
+});

@@ -1,13 +1,17 @@
-#!/usr/bin/env node
-
 var path = require('path'),
     express = require('express'),
-    webpack = require('webpack');
+    webpack = require('webpack'),
+    argv = require('yargs').argv;
 
-var hostname = 'localhost',
-    port = 8989;
+var ports = {
+  dev: 3000,
+  playground: 8989
+};
 
-var webpackConfig = require('./webpack.config.playground'),
+var env = argv.env || 'dev',
+    port = ports[env];
+
+var webpackConfig = require('./webpack.config.' + env),
     compiler = webpack(webpackConfig),
     app = express();
 
@@ -19,14 +23,14 @@ app.use(require('webpack-dev-middleware')(compiler, {
 app.use(require('webpack-hot-middleware')(compiler));
 
 app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname, 'playground/index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.listen(port, hostname, function(err) {
+app.listen(port, 'localhost', function(err) {
   if (err) {
     console.log(err);
     return;
   }
 
-  console.log('Listening at ' + hostname + ':' + port);
+  console.log('Listening at localhost:' + port);
 });
