@@ -11,7 +11,6 @@ module.exports = _.extend(devConfig, {
     alias: {
       COSMOS_COMPONENTS: path.join(__dirname, 'src/components'),
       COSMOS_FIXTURES: path.join(__dirname, 'fixtures')
-    },
-    extensions: ['', '.js', '.jsx']
+    }
   }
 });

@@ -2,8 +2,7 @@ require('./global-reset.css');
 
 var ReactQuerystringRouter = require('react-querystring-router'),
     ComponentPlayground = require('react-component-playground'),
-    getComponentFixtureTree =
-        require('./webpack/get-component-fixture-tree.js');
+    getComponentFixtureTree = require('./get-component-fixture-tree.js');
 
 var getTitleForFixture = function(params) {
   var title = 'React Component Playground';
