@@ -28,7 +28,7 @@ module.exports = {
     libraryTarget: 'umd',
     library: 'cosmosRouter',
     path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: 'cosmos-bundle.js',
     publicPath: '/static/'
   },
   plugins: [
