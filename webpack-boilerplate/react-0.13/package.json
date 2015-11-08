@@ -22,7 +22,6 @@
     "react-querystring-router": "^0.2.0",
     "react-transform-catch-errors": "^1.0.0",
     "react-transform-hmr": "^1.0.1",
-    "react-transform-webpack-hmr": "^0.1.6",
     "redbox-react": "^1.1.0",
     "style-loader": "^0.12.3",
     "webpack": "^1.12.2",
