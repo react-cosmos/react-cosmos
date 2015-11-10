@@ -60,6 +60,9 @@ config.webpack = {
     }, {
       test: /\.less$/,
       loader: 'style-loader!css-loader!less-loader'
+    }, {
+      test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+      loader: 'url-loader?limit=100000'
     }]
   },
   output: {
