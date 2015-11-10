@@ -38,7 +38,8 @@ module.exports = {
       }
     }, {
       test: /\.css$/,
-      loader: 'style-loader!css-loader!postcss-loader'
+      loader: 'style-loader!css-loader!postcss-loader',
+      include: path.join(__dirname, 'src')
     }]
   },
   postcss: function() {
