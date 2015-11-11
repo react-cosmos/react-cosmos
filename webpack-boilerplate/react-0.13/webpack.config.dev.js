@@ -21,7 +21,7 @@ module.exports = {
       test: /\.jsx?$/,
       loader: 'babel',
       include: path.join(__dirname, 'src'),
-        query: {
+      query: {
         plugins: ['react-transform'],
         extra: {
           'react-transform': {
