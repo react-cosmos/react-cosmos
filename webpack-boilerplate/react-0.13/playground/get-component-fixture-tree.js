@@ -1,20 +1,29 @@
 var _ = require('lodash');
 
-var getFixturesForComponent = function(componentName) {
-  var requireFixture = require.context('COSMOS_FIXTURES', true),
-      isFixtureOfComponent = new RegExp('./' + componentName + '/([^/]+).js'),
-      fixtures = {};
-
-  requireFixture.keys().forEach(function(fixturePath) {
-    var match = fixturePath.match(isFixtureOfComponent);
-    if (match) {
-      fixtures[match[1]] = requireFixture(fixturePath);
-    }
-  });
-
-  return fixtures;
-};
-
+/**
+  * This file holds the logic for aggregating all the component and fixture
+  * paths from the drive for the Component Playground. It could easily be a
+  * separate module, but since the file structure differs from project to
+  * project, it's useful to be able to alter this file as needed.
+  *
+  * Output example:
+  * {
+  *   "SimpleButton": {
+  *     "class": [ReactClass],
+  *     "fixtures": {
+  *       "disabled": {
+  *         "disabled": true
+  *       },
+  *       "with-100-clicks": {
+  *         "disabled": false,
+  *         "state": {
+  *           "clicks": 100
+  *         }
+  *       }
+  *     }
+  *   }
+  * }
+  */
 module.exports = function() {
   var requireComponent = require.context('COSMOS_COMPONENTS', true),
       isComponent = /^\.\/(.+)\.jsx?$/,
@@ -40,4 +49,19 @@ module.exports = function() {
   });
 
   return components;
+};
+
+var getFixturesForComponent = function(componentName) {
+  var requireFixture = require.context('COSMOS_FIXTURES', true),
+      isFixtureOfComponent = new RegExp('./' + componentName + '/([^/]+).js'),
+      fixtures = {};
+
+  requireFixture.keys().forEach(function(fixturePath) {
+    var match = fixturePath.match(isFixtureOfComponent);
+    if (match) {
+      fixtures[match[1]] = requireFixture(fixturePath);
+    }
+  });
+
+  return fixtures;
 };
