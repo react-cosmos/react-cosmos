@@ -27,7 +27,7 @@ Cosmos is split into smaller repositories for modularity and ease of development
 - [ReactComponentPlayground](https://github.com/skidding/react-component-playground) – Minimal frame for loading and testing React components in isolation
 - [ReactQuerystringRouter](https://github.com/skidding/react-querystring-router) – Bare router for React components, using query string as props
 
-The `cosmos-js` package is the top layer, responsible for offering a minimum configuration ComponentPlayground setup for projects powered by React components.
+The `cosmos` repo is the top layer, responsible for offering a minimum configuration ComponentPlayground boilerplate.
 
 ## Design
 
@@ -46,12 +46,9 @@ Unit tests both keep the project sane and define its specs. Providing test cover
 
 Repo | Build | Status
 --- | --- | ---
-[Cosmos](https://github.com/skidding/cosmos/tree/master/tests) | [![Build Status](https://travis-ci.org/skidding/cosmos.svg?branch=master)](https://travis-ci.org/skidding/cosmos) | [![Coverage Status](https://coveralls.io/repos/skidding/cosmos/badge.svg?branch=master)](https://coveralls.io/r/skidding/cosmos?branch=master)
 [ReactComponentTree](https://github.com/skidding/react-component-tree/tree/master/tests) | [![Build Status](https://travis-ci.org/skidding/react-component-tree.svg?branch=master)](https://travis-ci.org/skidding/react-component-tree) | [![Coverage Status](https://coveralls.io/repos/skidding/react-component-tree/badge.svg?branch=master)](https://coveralls.io/r/skidding/react-component-tree?branch=master)
 [ReactComponentPlayground](https://github.com/skidding/react-component-playground/tree/master/tests) | [![Build Status](https://travis-ci.org/skidding/react-component-playground.svg?branch=master)](https://travis-ci.org/skidding/react-component-playground) | [![Coverage Status](https://coveralls.io/repos/skidding/react-component-playground/badge.svg?branch=master)](https://coveralls.io/r/skidding/react-component-playground?branch=master)
 [ReactQuerystringRouter](https://github.com/skidding/react-querystring-router/tree/master/tests) | [![Build Status](https://travis-ci.org/skidding/react-querystring-router.svg?branch=master)](https://travis-ci.org/skidding/react-querystring-router) | [![Coverage Status](https://coveralls.io/repos/skidding/react-querystring-router/badge.svg?branch=master)](https://coveralls.io/r/skidding/react-querystring-router?branch=master)
-
-The only untested sections are the [webpack config](component-playground/config.js) and the [dev runner](bin/component-playground.js), which are also the parts most likely to change in the future.
 
 ## Git flow
 
