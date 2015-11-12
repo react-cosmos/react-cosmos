@@ -30,7 +30,7 @@
     "yargs": "^3.29.0"
   },
   "scripts": {
-    "start": "node devServer.js --env dev",
+    "start": "node devServer.js",
     "playground": "node devServer.js --env playground"
   }
 }
