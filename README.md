@@ -30,7 +30,7 @@ _\*DX stands for Developer Experience, the counterpart of UX in building a produ
 
 Cosmos used to be dev dependency binary, but has been transformed into a
 webpack boilerplate. This makes it more customizable and easier to understand.
-Check out the [webpack-boilerplate](webpack-boilerplate) folder for
+Check out the [webpack-boilerplate](webpack-boilerplate/react-0.13) folder for
 instructions.
 
 ### Thank you for your interest!
