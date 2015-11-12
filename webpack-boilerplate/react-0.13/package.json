@@ -8,25 +8,25 @@
   },
   "dependencies": {
     "lodash": "^3.10.1",
-    "react": "^0.13.1"
+    "react": "^0.13.3"
   },
   "devDependencies": {
-    "babel-core": "^5.2.17",
-    "babel-loader": "^5.0.0",
-    "babel-plugin-react-transform": "^1.0.5",
-    "css-loader": "^0.15.6",
+    "babel-core": "^5.8.34",
+    "babel-loader": "^5.3.3",
+    "babel-plugin-react-transform": "^1.1.1",
+    "css-loader": "^0.22.0",
     "express": "^4.13.3",
-    "postcss-loader": "^0.7.0",
+    "postcss-loader": "^0.8.0",
     "postcss-nested": "^1.0.0",
-    "react-component-playground": "^0.3.0",
+    "react-component-playground": "^0.3.7",
     "react-querystring-router": "^0.2.0",
     "react-transform-catch-errors": "^1.0.0",
     "react-transform-hmr": "^1.0.1",
-    "redbox-react": "^1.1.0",
-    "style-loader": "^0.12.3",
-    "webpack": "^1.12.2",
+    "redbox-react": "^1.1.1",
+    "style-loader": "^0.13.0",
+    "webpack": "^1.12.4",
     "webpack-dev-middleware": "^1.2.0",
-    "webpack-hot-middleware": "^2.2.0",
+    "webpack-hot-middleware": "^2.5.0",
     "yargs": "^3.29.0"
   },
   "scripts": {
