@@ -24,85 +24,14 @@ _\*DX stands for Developer Experience, the counterpart of UX in building a produ
 
 - [x] You should already be using CommonJS modules to structure your code and
 [webpack](http://webpack.github.io/) to bundle your modules for the browser
-- [x] Your React components should be fully encapsulated. They should have no
-global dependencies and rely exclusively on _props_ for input. Including styles,
-which means you need to be using
-[style-loader](https://github.com/webpack/style-loader).
-- [x] You must create component fixtures for ComponentPlayground to load. The
-component and fixture files should be nested as in the folder structure below.
-See the [example repo](https://github.com/skidding/cosmos-example) for a better
-picture.
+- [x] You need to create fixtures for each set of props and states you want to load your components with.
 
 ### Installing
 
-- Install the Cosmos package through npm `npm install cosmos-js`
-- Run the ComponentPlayground executable `node_modules/.bin/component-playground`
-- Open [localhost:8989](http://localhost:8989)
-
-### Under the hood
-
-Running the ComponentPlayground executable will:
-
-1. Start a [webpack dev server](http://webpack.github.io/docs/webpack-dev-server.html),
-serving an instance of ComponentPlayground at `localhost:8989`
-2. Scan the current folder for components and fixtures and feed them to
-ComponentPlayground
-
-#### File structure
-
-This is the file structure Cosmos expects:
-```
-|
-+-- components
-|   +-- FooComponent.jsx
-|   +-- namespace
-|   |   +-- BarComponent.jsx
-+-- fixtures
-|   +-- FooComponent
-|   |   +-- default.js
-|   |   +-- active.js
-|   +-- namespace
-|   |   +-- BarComponent
-|   |       +-- default.js
-|   |       +-- paused.js
-```
-
-If the _components_ and _fixtures_ folders are not siblings, their paths can be
-specified via cli args:
-
-```bash
-node_modules/.bin/component-playground --components-path src/components --fixtures-path tests/fixtures
-```
-
-#### webpack config
-
-The webpack build bundles modules from both the current folder and the Cosmos
-package. It is compatible with React classes, ES6 classes, JSX and CSS/LESS
-modules [out of the box](component-playground/config.js#L34-L76), but you can
-customize the webpack config to support additional loaders and settings by
-creating a `component-playground.config.js` file in the project root. E.g.
-
-```js
-module.exports.webpack = function(config) {
-  config.module.loaders.push(/*...*/);
-  return config;
-};
-```
-
-You can use this functionality to inject external styles or scripts if your
-components need e.g. Bootstrap to work.
-```js
-config.entry.push(path.join(process.cwd(), 'injectBootstrapTags.js'));
-```
-
-#### Hot loading
-
-Cosmos includes [React Hot Loader](http://gaearon.github.io/react-hot-loader/)
-and has webpack's [hot module replacement](http://webpack.github.io/docs/hot-module-replacement.html)
-enabled so you can tweak the components and their styles without refreshing the
-browser:
-
-![React Hot Loader in Cosmos](https://cloud.githubusercontent.com/assets/250750/7526576/5c725b16-f51b-11e4-95ef-312c6fd7bcc7.gif)
+Cosmos used to be dev dependency binary, but has been transformed into a
+webpack boilerplate. This makes it more customizable and easier to understand.
+Check out the [webpack-boilerplate](webpack-boilerplate) folder for
+instructions.
 
 ### Thank you for your interest!
 
