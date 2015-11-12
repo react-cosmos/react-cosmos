@@ -133,4 +133,4 @@ Useful shortcuts for firing up development.
 
 ### index.html
 
-Finally, make sure the JS bundle path from [`index.html`](index.html) matches the `ouput` section from your webpack config.
+Finally, make sure the JS bundle path from [`index.html`](index.html) matches the `output` section from your webpack config.
