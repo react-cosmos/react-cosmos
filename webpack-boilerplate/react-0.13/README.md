@@ -4,6 +4,8 @@ A webpack boilerplate with:
 - [@gaearon](https://github.com/gaearon)'s [react-transform-boilerplate](https://github.com/gaearon/react-transform-boilerplate)
 - [react-component-playground](https://github.com/skidding/react-component-playground) setup
 
+Run `npm install && npm run playground` and have some fun on [localhost:8989](http://localhost:8989)!
+
 ## Installing
 
 Integrating this boilerplate into your codebase should be fairly straightforward if you're familiar with webpack and the React ecosystem. However, it's a lengthy process with many small pieces that need to be put together. Here's a breakdown of all the required steps:
