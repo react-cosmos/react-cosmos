@@ -53,7 +53,7 @@ config.webpack = {
     loaders: [{
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      loaders: ['react-hot-loader', 'babel-loader']
+      loaders: ['react-hot-loader', 'babel-loader?stage=1']
     }, {
       test: /\.css$/,
       loader: 'style-loader!css-loader'
