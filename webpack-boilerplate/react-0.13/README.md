@@ -18,7 +18,7 @@ npm install --save react@0.13 lodash
 npm install --save-dev babel-core@5 babel-loader@5 babel-plugin-react-transform@1 express react-component-playground@0.3 react-querystring-router@0.2 react-transform-catch-errors@1 react-transform-hmr@1 redbox-react@1 webpack-dev-middleware webpack-hot-middleware webpack yargs
 
 # Optional, used in this example
-npm install --save-dev css-loader postcss-loader postcss-nested style-loader
+npm install --save-dev babel-eslint css-loader eslint eslint-plugin-react postcss-loader postcss-nested style-loader
 ```
 
 ### webpack config
