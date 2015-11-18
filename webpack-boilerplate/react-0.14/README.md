@@ -31,7 +31,7 @@ These options are set in [`webpack.config.dev.js`](webpack.config.dev.js) to be 
 
 ```js
 entry: [
-  'webpack-hot-middleware/client',
+  'webpack-hot-middleware/client?reload=true',
 //...
 ```
 ```js
