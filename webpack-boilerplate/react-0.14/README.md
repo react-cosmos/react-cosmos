@@ -6,7 +6,7 @@ A webpack boilerplate with:
 
 Run `npm install && npm run playground` and have some fun on [localhost:8989](http://localhost:8989)!
 
-**Note: Hot reloading is not yet supported for Stateless Components and changes them will only be reflected after full reloading. Contribute or follow progress [here.](https://github.com/gaearon/babel-plugin-react-transform/pull/34)**
+**Note: Hot reloading is not yet supported for Stateless Components and changes to them will only be reflected after full reloading. Contribute or follow progress [here.](https://github.com/gaearon/babel-plugin-react-transform/pull/34)**
 
 ## Installing
 
