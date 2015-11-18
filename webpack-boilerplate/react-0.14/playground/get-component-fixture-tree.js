@@ -30,7 +30,7 @@ module.exports = function() {
       components = {};
 
   requireComponent.keys().forEach(function(componentPath) {
-    var match = componentPath.match(/^\.\/(.+)\.jsx?$/);
+    var match = componentPath.match(isComponent);
     if (!match) {
       return;
     }
