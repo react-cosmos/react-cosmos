@@ -16,7 +16,7 @@ Integrating this boilerplate into your codebase should be fairly straightforward
 
 You can see all dependencies inside [`package.json`](package.json), but here's some handy copy-paste commands:
 ```
-npm install --save react@0.14 lodash
+npm install --save react@0.14 react-dom@0.14 lodash
 npm install --save-dev babel-core@5 babel-loader@5 babel-plugin-react-transform@1 cosmos-js@0.7 express react-transform-catch-errors@1 react-transform-hmr@1 redbox-react@1 webpack-dev-middleware webpack-hot-middleware webpack yargs
 
 # Optional, used in this example
