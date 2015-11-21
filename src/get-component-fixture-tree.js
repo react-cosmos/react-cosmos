@@ -1,5 +1,3 @@
-var _ = require('lodash');
-
 /**
   * This file holds the logic for aggregating all the component and fixture
   * paths from the drive for the Component Playground. It could easily be a
@@ -43,7 +41,7 @@ module.exports = function() {
     };
 
     // Allow users to browse components before creating fixtures
-    if (_.isEmpty(components[componentName].fixtures)) {
+    if (!Object.keys(components[componentName].fixtures).length) {
       components[componentName].fixtures['auto-empty'] = {};
     }
   });

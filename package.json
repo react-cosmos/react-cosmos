@@ -9,7 +9,6 @@
   "license": "MIT",
   "main": "src/index.js",
   "dependencies": {
-    "lodash": "^3.5.0",
     "react-component-playground": "^0.4.0",
     "react-querystring-router": "^0.3.0"
   }
