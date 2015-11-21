@@ -75,7 +75,7 @@ ComponentPlayground uses a different entry point and needs two aliases to be abl
 
 ```js
 entry: [
-  'webpack-hot-middleware/client',
+  'webpack-hot-middleware/client?reload=true',
   'cosmos-js'
 ],
 ```
