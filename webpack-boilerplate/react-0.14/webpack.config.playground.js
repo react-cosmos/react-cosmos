@@ -5,7 +5,7 @@ var path = require('path'),
 module.exports = _.extend(devConfig, {
   entry: [
     'webpack-hot-middleware/client?reload=true',
-    './playground/index'
+    'cosmos-js'
   ],
   resolve: {
     alias: {
