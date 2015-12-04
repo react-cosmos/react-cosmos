@@ -42,7 +42,7 @@
     "sinon-chai": "^2.7.0"
   },
   "peerDependencies": {
-    "react": "^0.13.3"
+    "react": ">=0.14.0"
   },
   "scripts": {
     "pretest": "jscs --esprima=esprima-fb ./",
