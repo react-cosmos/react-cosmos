@@ -51,7 +51,7 @@ module.exports = function() {
 
 var getFixturesForComponent = function(componentName) {
   var requireFixture = require.context('COSMOS_FIXTURES', true),
-      isFixtureOfComponent = new RegExp('./' + componentName + '/([^/]+).js'),
+      isFixtureOfComponent = new RegExp('./' + componentName + '/([^/]+).js$'),
       fixtures = {};
 
   requireFixture.keys().forEach(function(fixturePath) {
