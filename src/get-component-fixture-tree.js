@@ -36,7 +36,7 @@ module.exports = function() {
     // Fixtures are grouped per component
     var componentName = match[1];
     components[componentName] = {
-      class: requireComponent(componentPath),
+      class: requireComponent(componentPath).default ? requireComponent(componentPath).default: requireComponent(componentPath),
       fixtures: getFixturesForComponent(componentName)
     };
 
