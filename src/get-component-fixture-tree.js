@@ -22,6 +22,10 @@
   *   }
   * }
   */
+ 
+var normalizeModule = function (module) {
+    return (module.default) ? module.default : module;
+};
 module.exports = function() {
   var requireComponent = require.context('COSMOS_COMPONENTS', true),
       isComponent = /^\.\/(.+)\.jsx?$/,
@@ -36,7 +40,7 @@ module.exports = function() {
     // Fixtures are grouped per component
     var componentName = match[1];
     components[componentName] = {
-      class: requireComponent(componentPath).default ? requireComponent(componentPath).default: requireComponent(componentPath),
+      class: normalizeModule(requireComponent(componentPath)),
       fixtures: getFixturesForComponent(componentName)
     };
 
@@ -57,7 +61,7 @@ var getFixturesForComponent = function(componentName) {
   requireFixture.keys().forEach(function(fixturePath) {
     var match = fixturePath.match(isFixtureOfComponent);
     if (match) {
-      fixtures[match[1]] = requireFixture(fixturePath);
+      fixtures[match[1]] = normalizeModule(requireFixture(fixturePath));
     }
   });
 
