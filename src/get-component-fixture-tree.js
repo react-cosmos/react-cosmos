@@ -38,7 +38,9 @@ module.exports = function() {
     var component = requireComponent(componentPath)
 
     if (component.__esModule) {
-      component = component[componentName] || component.default
+      var parts = componentName.split('/')
+      var name = parts[parts.length - 1]
+      component = component[name] || component.default
     }
 
     if (!component || !isReactClass(component)) {
