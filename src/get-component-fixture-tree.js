@@ -35,8 +35,19 @@ module.exports = function() {
 
     // Fixtures are grouped per component
     var componentName = match[1];
+    var component = requireComponent(componentPath)
+
+    if (component.__esmodule) {
+      component = component[componentName] || component.default
+    }
+
+    if (!component || !isReactClass(component)) {
+      // Invalid Component provided.
+      return;
+    }
+
     components[componentName] = {
-      class: requireComponent(componentPath),
+      class: component,
       fixtures: getFixturesForComponent(componentName)
     };
 
@@ -48,6 +59,10 @@ module.exports = function() {
 
   return components;
 };
+
+var isReactClass = function(component) {
+  return typeof component === 'string' || typeof component === 'function'
+}
 
 var getFixturesForComponent = function(componentName) {
   var requireFixture = require.context('COSMOS_FIXTURES', true),
