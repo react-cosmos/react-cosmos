@@ -37,7 +37,7 @@ module.exports = function() {
     var componentName = match[1];
     var component = requireComponent(componentPath)
 
-    if (component.__esmodule) {
+    if (component.__esModule) {
       component = component[componentName] || component.default
     }
 
