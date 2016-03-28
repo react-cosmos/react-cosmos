@@ -35,12 +35,12 @@ module.exports = function() {
 
     // Fixtures are grouped per component
     var componentName = match[1];
-    var component = requireComponent(componentPath)
+    var component = requireComponent(componentPath);
 
     if (component.__esModule) {
-      var parts = componentName.split('/')
-      var name = parts[parts.length - 1]
-      component = component[name] || component.default
+      var parts = componentName.split('/');
+      var name = parts[parts.length - 1];
+      component = component[name] || component.default;
     }
 
     if (!component || !isReactClass(component)) {
@@ -63,7 +63,7 @@ module.exports = function() {
 };
 
 var isReactClass = function(component) {
-  return typeof component === 'string' || typeof component === 'function'
+  return typeof component === 'string' || typeof component === 'function';
 }
 
 var getFixturesForComponent = function(componentName) {
