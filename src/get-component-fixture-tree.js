@@ -37,6 +37,9 @@ module.exports = function() {
     var componentName = match[1];
     var component = requireComponent(componentPath);
 
+    // This is an implementation detail of Babel:
+    // https://medium.com/@kentcdodds/misunderstanding-es6-modules-upgrading-babel-tears-and-a-solution-ad2d5ab93ce0#.skvldbg39
+    // It looks like to be a "standard": https://github.com/esnext/es6-module-transpiler/issues/86 **for now**.
     if (component.__esModule) {
       var parts = componentName.split('/');
       var name = parts[parts.length - 1];
