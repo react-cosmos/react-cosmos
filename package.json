@@ -7,8 +7,6 @@
     "url": "https://github.com/skidding/cosmos.git"
   },
   "dependencies": {
-    "babel-core": "^5.2.17",
-    "babel-loader": "^5.0.0",
     "css-loader": "^0.15.5",
     "less": "^2.4.0",
     "less-loader": "^2.2.0",
@@ -42,6 +40,9 @@
     "sinon-chai": "^2.7.0"
   },
   "peerDependencies": {
+    "babel-core": ">=6.7.0",
+    "babel-eslint": ">=6.0.0",
+    "babel-loader": ">=6.2.4",
     "react": ">=0.14.0"
   },
   "scripts": {
