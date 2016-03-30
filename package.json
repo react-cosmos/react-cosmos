@@ -7,15 +7,13 @@
     "url": "https://github.com/skidding/cosmos.git"
   },
   "dependencies": {
-    "babel-core": "^5.2.17",
-    "babel-loader": "^5.0.0",
     "css-loader": "^0.15.5",
     "less": "^2.4.0",
     "less-loader": "^2.2.0",
     "lodash": "^3.5.0",
-    "react-component-playground": "^0.3.0",
-    "react-hot-loader": "^1.2.7",
-    "react-querystring-router": "^0.2.0",
+    "react-component-playground": "^0.4.0",
+    "react-hot-loader": "^1.3.0",
+    "react-querystring-router": "^0.3.0",
     "style-loader": "^0.12.3",
     "webpack": "^1.7.3",
     "webpack-dev-server": "^1.8.0",
@@ -42,7 +40,10 @@
     "sinon-chai": "^2.7.0"
   },
   "peerDependencies": {
-    "react": "^0.13.3"
+    "babel-core": ">=6.7.0",
+    "babel-eslint": ">=6.0.0",
+    "babel-loader": ">=6.2.4",
+    "react": ">=0.14.0"
   },
   "scripts": {
     "pretest": "jscs --esprima=esprima-fb ./",
