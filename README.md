@@ -3,6 +3,8 @@
 Cosmos is a JavaScript DX* tool for designing truly encapsulated
 [React](http://facebook.github.io/react/) components.
 
+![Cosmos](cosmos-150.png)
+
 It scans your project for React component
 [_fixtures_](http://en.wikipedia.org/wiki/Test_fixture) and loads them inside [ComponentPlayground](https://github.com/skidding/react-component-playground),
 enabling you to:
@@ -38,3 +40,5 @@ instructions.
 [![Join the chat at https://gitter.im/skidding/cosmos](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/skidding/cosmos?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Explore the [Contributing Guide](CONTRIBUTING.md) for more information.
+
+*Thanks to [Kreativa Studio](http://www.kreativa-studio.com/) for the Cosmos logo.*

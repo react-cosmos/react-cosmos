@@ -16,8 +16,8 @@ Integrating this boilerplate into your codebase should be fairly straightforward
 
 You can see all dependencies inside [`package.json`](package.json), but here's some handy copy-paste commands:
 ```
-npm install --save react@0.14 lodash
-npm install --save-dev babel-core@5 babel-loader@5 babel-plugin-react-transform@1 express react-component-playground@0.4 react-querystring-router@0.3 react-transform-catch-errors@1 react-transform-hmr@1 redbox-react@1 webpack-dev-middleware webpack-hot-middleware webpack yargs
+npm install --save react@0.14 react-dom@0.14 lodash
+npm install --save-dev babel-core@5 babel-loader@5 babel-plugin-react-transform@1 cosmos-js@0.7 express react-transform-catch-errors@1 react-transform-hmr@1 redbox-react@1 webpack-dev-middleware webpack-hot-middleware webpack yargs
 
 # Optional, used in this example
 npm install --save-dev babel-eslint css-loader eslint eslint-plugin-react postcss-loader postcss-nested style-loader
@@ -75,8 +75,8 @@ ComponentPlayground uses a different entry point and needs two aliases to be abl
 
 ```js
 entry: [
-  'webpack-hot-middleware/client',
-  './playground/index'
+  'webpack-hot-middleware/client?reload=true',
+  'cosmos-js'
 ],
 ```
 
@@ -91,17 +91,13 @@ resolve: {
 
 Adjust the paths these aliases point to based on the folders in your codebase.
 
-### Playground files
+### Custom entry point
 
-Other files you need to copy in your codebase:
+A custom setup can be created by replacing the `cosmos-js` entry in the webpack config with a local file, similar to [`index.js`](../../src/index.js). This allows you to setup any global environment that your components depend on. Just keep in mind your components are meant to be encapsulated.
 
-1. [`playground/index.js`](playground/index.js)
-2. [`playground/get-component-fixture-tree.js`](playground/get-component-fixture-tree.js)
+### File structure
 
-`index.js` allows you to setup any global environment that your components depend on. Just keep in mind your components are meant to be encapsulated.
-
-You need to adjust `get-component-fixture-tree.js` in order to make this setup
-work for a different nesting structure. This is the file structure expected by default:
+This is the file structure expected by default:
 ```
 |
 +-- components
@@ -117,6 +113,9 @@ work for a different nesting structure. This is the file structure expected by d
 |   |       +-- default.js
 |   |       +-- paused.js
 ```
+
+If you choose to customize the entry point, you can also tweak [`get-component-fixture-tree.js`](../../src/get-component-fixture-tree.js) in order to make this setup
+work for a different nesting structure.
 
 ### Dev server
 

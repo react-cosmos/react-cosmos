@@ -8,21 +8,21 @@
   },
   "dependencies": {
     "lodash": "^3.10.1",
-    "react": "^0.14.2"
+    "react": "^0.14.2",
+    "react-dom": "^0.14.3"
   },
   "devDependencies": {
     "babel-core": "^5.8.34",
     "babel-eslint": "^4.1.5",
     "babel-loader": "^5.4.0",
     "babel-plugin-react-transform": "^1.1.1",
+    "cosmos-js": "^0.7.2",
     "css-loader": "^0.23.0",
     "eslint": "^1.9.0",
     "eslint-plugin-react": "^3.8.0",
     "express": "^4.13.3",
     "postcss-loader": "^0.8.0",
     "postcss-nested": "^1.0.0",
-    "react-component-playground": "^0.4.0",
-    "react-querystring-router": "^0.3.0",
     "react-transform-catch-errors": "^1.0.0",
     "react-transform-hmr": "^1.0.1",
     "redbox-react": "^1.1.1",
