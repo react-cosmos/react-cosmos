@@ -17,7 +17,7 @@ Integrating this boilerplate into your codebase should be fairly straightforward
 You can see all dependencies inside [`package.json`](package.json), but here's some handy copy-paste commands:
 ```
 npm install --save react@0.14 react-dom@0.14 lodash
-npm install --save-dev babel-core babel-eslint babel-loader babel-preset-es2015 babel-preset-react babel-preset-react-hmre babel-preset-stage-0 cosmos-js express webpack webpack-dev-middleware webpack-hot-middleware yargs
+npm install --save-dev babel-core babel-loader babel-preset-es2015 babel-preset-react babel-preset-react-hmre babel-preset-stage-0 cosmos-js express webpack webpack-dev-middleware webpack-hot-middleware yargs
 
 # Optional, used in this example
 npm install --save-dev babel-eslint css-loader eslint eslint-plugin-react postcss-loader postcss-nested style-loader
