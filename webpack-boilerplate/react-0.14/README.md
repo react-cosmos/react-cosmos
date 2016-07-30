@@ -17,7 +17,7 @@ Integrating this boilerplate into your codebase should be fairly straightforward
 You can see all dependencies inside [`package.json`](package.json), but here's some handy copy-paste commands:
 ```
 npm install --save react@0.14 react-dom@0.14 lodash
-npm install --save-dev babel-core@5 babel-loader@5 babel-plugin-react-transform@1 cosmos-js@0.7 express react-transform-catch-errors@1 react-transform-hmr@1 redbox-react@1 webpack-dev-middleware webpack-hot-middleware webpack yargs
+npm install --save-dev babel-core babel-loader babel-preset-es2015 babel-preset-react babel-preset-react-hmre babel-preset-stage-0 cosmos-js express webpack webpack-dev-middleware webpack-hot-middleware yargs
 
 # Optional, used in this example
 npm install --save-dev babel-eslint css-loader eslint eslint-plugin-react postcss-loader postcss-nested style-loader
@@ -31,7 +31,7 @@ These options are set in [`webpack.config.dev.js`](webpack.config.dev.js) to be 
 
 ```js
 entry: [
-  'webpack-hot-middleware/client?reload=true',
+  'webpack-hot-middleware/client',
 //...
 ```
 ```js
@@ -47,17 +47,10 @@ module: {
     loader: 'babel',
     include: path.join(__dirname, 'src'),
     query: {
-      plugins: ['react-transform'],
-      extra: {
-        'react-transform': {
-          transforms: [{
-            transform: 'react-transform-hmr',
-            imports: ['react'],
-            locals: ['module']
-          }, {
-            transform: 'react-transform-catch-errors',
-            imports: ['react', 'redbox-react']
-          }]
+      presets: ['es2015', 'stage-0', 'react'],
+      env: {
+        development: {
+          presets: ['react-hmre']
         }
       }
     }
@@ -75,7 +68,7 @@ ComponentPlayground uses a different entry point and needs two aliases to be abl
 
 ```js
 entry: [
-  'webpack-hot-middleware/client?reload=true',
+  'webpack-hot-middleware/client',
   'cosmos-js'
 ],
 ```
