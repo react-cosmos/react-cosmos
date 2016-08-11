@@ -1,6 +1,6 @@
 {
   "name": "cosmos-js",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "A development tool for designing truly encapsulated React components",
   "repository": {
     "type": "git",
@@ -9,7 +9,7 @@
   "license": "MIT",
   "main": "src/index.js",
   "dependencies": {
-    "react-component-playground": "^0.4.0",
-    "react-querystring-router": "^0.3.0"
+    "react-component-playground": "^0.4.1",
+    "react-querystring-router": "^0.4.0"
   }
 }
