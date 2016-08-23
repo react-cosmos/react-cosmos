@@ -1,15 +1,55 @@
 {
-  "name": "cosmos-js",
-  "version": "0.7.3",
-  "description": "A development tool for designing truly encapsulated React components",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/skidding/cosmos.git"
-  },
+  "repository": "https://github.com/skidding/cosmos",
   "license": "MIT",
-  "main": "src/index.js",
-  "dependencies": {
-    "react-component-playground": "^0.4.1",
-    "react-querystring-router": "^0.4.0"
+  "scripts": {
+    "prune-react-copies": "rm -rf ./packages/*/node_modules/react{,-dom,-addons-test-utils}",
+    "bootstrap": "lerna bootstrap && npm run prune-react-copies",
+    "install-react": "rm -rf node_modules/react{,-dom,-addons-test-utils} && npm install",
+    "install-react:0.12": "npm run install-react -- react@0.12",
+    "install-react:0.13": "npm run install-react -- react@0.13",
+    "install-react:0.14": "npm run install-react -- react@0.14 react-dom@0.14 react-addons-test-utils@0.14",
+    "install-react:15": "npm run install-react -- react@15 react-dom@15 react-addons-test-utils@15",
+    "build-package": "babel -D packages/$PACKAGE/src -d packages/$PACKAGE/lib",
+    "build:component-playground": "PACKAGE=react-component-playground npm run build-package",
+    "build:component-tree": "PACKAGE=react-component-tree npm run build-package",
+    "build:cosmos": "PACKAGE=react-cosmos npm run build-package",
+    "build:dom-polyfill": "PACKAGE=react-dom-polyfill npm run build-package",
+    "build:querystring-router": "PACKAGE=react-querystring-router npm run build-package",
+    "build": "npm run build:component-playground && npm run build:component-tree && npm run build:cosmos && npm run build:dom-polyfill && npm run build:querystring-router",
+    "prepublish": "rm -rf ./packages/*/lib && npm run build",
+    "test": "karma start test/karma.conf.js --single-run"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.11.4",
+    "babel-core": "^6.13.2",
+    "babel-loader": "^6.2.5",
+    "babel-plugin-istanbul": "^2.0.0",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-preset-react": "^6.11.1",
+    "chai": "^3.5.0",
+    "css-loader": "^0.23.1",
+    "jquery": "^3.1.0",
+    "karma": "^1.2.0",
+    "karma-chai": "^0.1.0",
+    "karma-cli": "^1.0.1",
+    "karma-coverage": "^1.1.1",
+    "karma-mocha": "^1.1.1",
+    "karma-mocha-reporter": "^2.1.0",
+    "karma-phantomjs-launcher": "^1.0.1",
+    "karma-sinon": "^1.0.5",
+    "karma-sinon-chai": "^1.2.3",
+    "karma-webpack": "^1.8.0",
+    "less": "^2.7.1",
+    "less-loader": "^2.2.3",
+    "mocha": "^3.0.2",
+    "react": ">=0.12 <16",
+    "sinon": "^1.17.5",
+    "sinon-chai": "^2.8.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.2"
+  },
+  "optionalDependencies": {
+    "react-dom": "<16",
+    "react-addons-test-utils": "<16"
   }
 }

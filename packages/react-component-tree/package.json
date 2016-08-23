@@ -1,0 +1,18 @@
+{
+  "name": "react-component-tree",
+  "version": "1.0.0-beta.0",
+  "description": "Serialize and reproduce the state of an entire tree of React components",
+  "repository": "https://github.com/skidding/cosmos/tree/master/packages/react-component-tree",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "dependencies": {
+    "lodash": "^3.6.0",
+    "react-dom-polyfill": "^1.0.0-beta.0"
+  },
+  "peerDependencies": {
+    "react": ">=0.12 <16"
+  },
+  "optionalDependencies": {
+    "react-dom": "<16"
+  }
+}

@@ -1,3 +1,0 @@
-- Check out the [annotated React 0.13 boilerplate](react-0.13)
-- Check out the [annotated React 0.14 boilerplate](react-0.14)
-- For a more complete example, see [Flatris](https://github.com/skidding/flatris)
