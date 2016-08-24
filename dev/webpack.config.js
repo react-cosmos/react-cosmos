@@ -36,11 +36,6 @@ module.exports = {
       test: /\.css$/,
       loader: 'style-loader!css-loader!postcss-loader',
       include: __dirname
-    }, {
-      test: /\.less$/,
-      include: /component-playground\.less/,
-      loader: 'style!css?modules&importLoaders=1' +
-              '&localIdentName=[name]__[local]___[hash:base64:5]!less'
     }]
   },
   plugins: [
