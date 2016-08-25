@@ -2,7 +2,7 @@
   "repository": "https://github.com/skidding/cosmos",
   "license": "MIT",
   "scripts": {
-    "prune-react-copies": "rm -rf ./packages/*/node_modules/react{,-dom,-addons-test-utils}",
+    "prune-react-copies": "node ./scripts/prune-react-copies.js",
     "bootstrap": "lerna bootstrap && npm run prune-react-copies",
     "install-react": "rm -rf node_modules/react{,-dom,-addons-test-utils} && npm install",
     "install-react:0.12": "npm run install-react -- react@0.12",
