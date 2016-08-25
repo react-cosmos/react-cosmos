@@ -19,6 +19,7 @@
     "build": "npm run build:component-playground && npm run build:component-tree && npm run build:cosmos && npm run build:dom-polyfill && npm run build:querystring-router",
     "prepublish": "rm -rf ./packages/*/lib && npm run build",
     "test": "karma start test/karma.conf.js --single-run",
+    "coveralls": "cat test/coverage/*/lcov.info | node_modules/coveralls/bin/coveralls.js",
     "start": "node dev/server.js"
   },
   "devDependencies": {
@@ -30,6 +31,7 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-react-hmre": "^1.1.1",
     "chai": "^3.5.0",
+    "coveralls": "^2.11.12",
     "css-loader": "^0.23.1",
     "express": "^4.14.0",
     "jquery": "^3.1.0",
