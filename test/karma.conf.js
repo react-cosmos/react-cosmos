@@ -4,6 +4,7 @@ module.exports = function(config) {
   config.set({
     basePath: '../',
     browsers: ['PhantomJS'],
+    browserNoActivityTimeout: 30000,
     coverageReporter: {
       type: 'lcov',
       dir: 'test/coverage/'
