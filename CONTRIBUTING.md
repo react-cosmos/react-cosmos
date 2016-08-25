@@ -27,7 +27,7 @@ React Cosmos is split into smaller repositories for modularity and ease of devel
 - [React Component Playground](packages/react-component-playground) – Minimal frame for loading and testing React components in isolation
 - [React Querystring Router](packages/react-querystring-router) – Bare router for React components, using query string as props
 
-The `react-cosmos` repo is the top layer, responsible for offering a minimum configuration ComponentPlayground entry point.
+The `react-cosmos` repo is the top layer, responsible for offering a minimum configuration Component Playground entry point.
 
 ## Design
 
