@@ -2,7 +2,7 @@
 
 **How to design components that are truly encapsulated?**
 
-[Read more.](https://github.com/skidding/cosmos/wiki/Problem)
+[Read more.](https://github.com/skidding/react-cosmos/wiki/Problem)
 
 ## Manifesto
 
@@ -52,7 +52,7 @@ Make sure you're familiar with the [Github flow.](https://guides.github.com/intr
 
 Use the imperative mood to express verbs and add a hashtag with the corresponding issue number at the end of each commit message. The Github UI will generate links to the referenced issues.
 
-> Adapt fixture mapping to new Component Playground format [#115](https://github.com/skidding/cosmos/issues/115)
+> Adapt fixture mapping to new Component Playground format [#115](https://github.com/skidding/react-cosmos/issues/115)
 
 ### Review
 

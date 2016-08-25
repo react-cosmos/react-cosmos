@@ -1,4 +1,4 @@
-# React Cosmos [![Build Status](https://travis-ci.org/skidding/cosmos.svg?branch=master)](https://travis-ci.org/skidding/cosmos) [![Coverage Status](https://coveralls.io/repos/skidding/cosmos/badge.svg?branch=master)](https://coveralls.io/r/skidding/cosmos?branch=master)
+# React Cosmos [![Build Status](https://travis-ci.org/skidding/react-cosmos.svg?branch=master)](https://travis-ci.org/skidding/react-cosmos) [![Coverage Status](https://coveralls.io/repos/skidding/react-cosmos/badge.svg?branch=master)](https://coveralls.io/r/skidding/react-cosmos?branch=master)
 
 DX* tool for designing truly encapsulated
 [React](http://facebook.github.io/react/) components.
@@ -63,7 +63,7 @@ npm test
 
 ### Thank you for your interest!
 
-[![Join the chat at https://gitter.im/skidding/cosmos](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/skidding/cosmos?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/skidding/react-cosmos](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/skidding/react-cosmos?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Explore the [Contributing Guide](CONTRIBUTING.md) for more information.
 

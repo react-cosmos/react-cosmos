@@ -1,5 +1,5 @@
 {
-  "repository": "https://github.com/skidding/cosmos",
+  "repository": "https://github.com/skidding/react-cosmos",
   "license": "MIT",
   "scripts": {
     "prune-react-copies": "node ./scripts/prune-react-copies.js",
