@@ -1,19 +1,18 @@
-# Cosmos
+# React Cosmos [![Build Status](https://travis-ci.org/skidding/cosmos.svg?branch=master)](https://travis-ci.org/skidding/cosmos) [![Coverage Status](https://coveralls.io/repos/skidding/cosmos/badge.svg?branch=master)](https://coveralls.io/r/skidding/cosmos?branch=master)
 
-Cosmos is a JavaScript DX* tool for designing truly encapsulated
+DX* tool for designing truly encapsulated
 [React](http://facebook.github.io/react/) components.
 
 ![Cosmos](cosmos-150.png)
 
-It scans your project for React component
-[_fixtures_](http://en.wikipedia.org/wiki/Test_fixture) and loads them inside [ComponentPlayground](https://github.com/skidding/react-component-playground),
+Cosmos scans your project for React components and loads them inside the [Component Playground](packages/react-component-playground),
 enabling you to:
 
 1. Render your components under any combination of props and state
 2. See component states evolve in real-time as you interact with running
 instances
 
-> Working with ComponentPlayground improves the component design because it
+> Working with Cosmos improves the component design because it
 surfaces any implicit dependencies. It also forces you to define sane inputs
 for every component, making them more predictable and easier to debug down the
 road.
@@ -24,16 +23,43 @@ _\*DX stands for Developer Experience, the counterpart of UX in building a produ
 
 ### Requirements
 
-- [x] You should already be using CommonJS modules to structure your code and
-[webpack](http://webpack.github.io/) to bundle your modules for the browser
-- [x] You need to create fixtures for each set of props and states you want to load your components with.
+- [x] You should already be using CommonJS modules to structure your code and [webpack](http://webpack.github.io/) to bundle your modules for the browser.
+- [ ] You need to create [fixtures](http://en.wikipedia.org/wiki/Test_fixture) for each set of props and states you want to load your components with. You can do this after you get started.
 
-### Installing
+### Usage
 
-Cosmos used to be dev dependency binary, but has been transformed into a
-webpack boilerplate. This makes it more customizable and easier to understand.
-Check out the [webpack-boilerplate](webpack-boilerplate) folder for
-instructions.
+See [Flatris](https://github.com/skidding/flatris) for a complete example. In the meantime you can toy with the dev setup from this repo to get started. Better docs coming soon.
+
+### Development
+
+Prerequisites:
+```bash
+npm install
+npm install -g lerna@^2.0.0beta
+npm run bootstrap
+```
+
+Start playground instance, built from source:
+```bash
+npm start
+```
+
+Work on a specific module (with playground re-bundling on file change):
+```bash
+npm run build:component-tree -- -- -w
+npm start
+```
+
+Build everything with an older React version: 👌
+```bash
+npm run install-react:0.13
+npm start
+```
+
+Run tests from all packages:
+```bash
+npm test
+```
 
 ### Thank you for your interest!
 

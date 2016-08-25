@@ -17,17 +17,17 @@ a well-ordered whole._
 - The state of the entire UI can be serialized at any given point in time
 - Components can implement any data sync mechanism
 
-These set of principles were defined before any code was written and have guided the evolution of Cosmos to present.
+These set of principles were defined before any code was written and have guided the evolution of the Cosmos project to present.
 
 ## Packaging
 
-Cosmos is split into smaller repositories for modularity and ease of development. This contributing guide applies to all included packages.
+React Cosmos is split into smaller repositories for modularity and ease of development. This contributing guide applies to all included packages.
 
-- [ReactComponentTree](https://github.com/skidding/react-component-tree) – Serialize and reproduce the state of an entire tree of React components
-- [ReactComponentPlayground](https://github.com/skidding/react-component-playground) – Minimal frame for loading and testing React components in isolation
-- [ReactQuerystringRouter](https://github.com/skidding/react-querystring-router) – Bare router for React components, using query string as props
+- [React Component Tree](packages/react-component-tree) – Serialize and reproduce the state of an entire tree of React components
+- [React Component Playground](packages/react-component-playground) – Minimal frame for loading and testing React components in isolation
+- [React Querystring Router](packages/react-querystring-router) – Bare router for React components, using query string as props
 
-The `cosmos` repo is the top layer, responsible for offering a minimum configuration ComponentPlayground boilerplate.
+The `react-cosmos` repo is the top layer, responsible for offering a minimum configuration Component Playground entry point.
 
 ## Design
 
@@ -44,25 +44,15 @@ Unless explicitly overridden, all rules from the [Google JavaScript Style Guide]
 
 Unit tests both keep the project sane and define its specs. Providing test coverage for every contribution is mandatory.
 
-Repo | Build | Status
---- | --- | ---
-[ReactComponentTree](https://github.com/skidding/react-component-tree/tree/master/tests) | [![Build Status](https://travis-ci.org/skidding/react-component-tree.svg?branch=master)](https://travis-ci.org/skidding/react-component-tree) | [![Coverage Status](https://coveralls.io/repos/skidding/react-component-tree/badge.svg?branch=master)](https://coveralls.io/r/skidding/react-component-tree?branch=master)
-[ReactComponentPlayground](https://github.com/skidding/react-component-playground/tree/master/tests) | [![Build Status](https://travis-ci.org/skidding/react-component-playground.svg?branch=master)](https://travis-ci.org/skidding/react-component-playground) | [![Coverage Status](https://coveralls.io/repos/skidding/react-component-playground/badge.svg?branch=master)](https://coveralls.io/r/skidding/react-component-playground?branch=master)
-[ReactQuerystringRouter](https://github.com/skidding/react-querystring-router/tree/master/tests) | [![Build Status](https://travis-ci.org/skidding/react-querystring-router.svg?branch=master)](https://travis-ci.org/skidding/react-querystring-router) | [![Coverage Status](https://coveralls.io/repos/skidding/react-querystring-router/badge.svg?branch=master)](https://coveralls.io/r/skidding/react-querystring-router?branch=master)
-
 ## Git flow
 
 Make sure you're familiar with the [Github flow.](https://guides.github.com/introduction/flow/)
-
-### Branches
-
-Prefix branch names with the corresponding issue number. E.g. `137-contributing-guide`
 
 ### Commits
 
 Use the imperative mood to express verbs and add a hashtag with the corresponding issue number at the end of each commit message. The Github UI will generate links to the referenced issues.
 
-> Adapt fixture mapping to new ComponentPlayground format [#115](https://github.com/skidding/cosmos/issues/115)
+> Adapt fixture mapping to new Component Playground format [#115](https://github.com/skidding/cosmos/issues/115)
 
 ### Review
 

@@ -1,0 +1,12 @@
+{
+  "name": "react-cosmos",
+  "version": "1.0.0-beta.1",
+  "description": "A development tool for designing truly encapsulated React components",
+  "repository": "https://github.com/skidding/cosmos/tree/master/packages/react-cosmos",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "dependencies": {
+    "react-component-playground": "^1.0.0-beta.1",
+    "react-querystring-router": "^1.0.0-beta.0"
+  }
+}

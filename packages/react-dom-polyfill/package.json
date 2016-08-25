@@ -1,0 +1,14 @@
+{
+  "name": "react-dom-polyfill",
+  "version": "1.0.0-beta.0",
+  "description": "Build React libs pre and post react-dom (0.14)",
+  "repository": "https://github.com/skidding/cosmos/tree/master/packages/react-dom-polyfill",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "peerDependencies": {
+    "react": ">=0.12 <16"
+  },
+  "optionalDependencies": {
+    "react-dom": "<16"
+  }
+}
