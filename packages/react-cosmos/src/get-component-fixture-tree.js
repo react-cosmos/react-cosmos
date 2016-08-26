@@ -33,9 +33,16 @@ module.exports = function() {
       return;
     }
 
+    // Class components crash when loaded with React <=0.12
+    var component;
+    try {
+      component = requireComponent(componentPath);
+    } catch (e) {
+      return;
+    }
+
     // Fixtures are grouped per component
     var componentName = match[1];
-    var component = requireComponent(componentPath);
 
     // This is an implementation detail of Babel:
     // https://medium.com/@kentcdodds/misunderstanding-es6-modules-upgrading-babel-tears-and-a-solution-ad2d5ab93ce0#.skvldbg39
