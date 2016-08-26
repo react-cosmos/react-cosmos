@@ -76,4 +76,8 @@ describe(`ComponentPlayground (${FIXTURE}) Render DOM`, function() {
     expect($(component.refs.filterInput)
            .hasClass(style['filter-input'])).to.be.true;
   });
+
+  it('should not render a splitpane', function() {
+    expect(component.refs.splitPane).to.not.exist;
+  });
 });

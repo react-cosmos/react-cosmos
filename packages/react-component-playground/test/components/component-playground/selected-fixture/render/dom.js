@@ -15,13 +15,6 @@ describe(`ComponentPlayground (${FIXTURE}) Render DOM`, function() {
     ({container, component, $component} = render(fixture));
   });
 
-  it('should add orientation class on content frame element', function() {
-    var $contentFrame = $(component.refs.contentFrame);
-
-    expect($contentFrame.hasClass(
-        style['orientation-' + component.state.orientation])).to.be.true;
-  });
-
   it('should add container class on preview element', function() {
     var $previewContainer = $(component.refs.previewContainer);
 

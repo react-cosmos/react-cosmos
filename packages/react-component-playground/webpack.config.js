@@ -22,6 +22,7 @@ module.exports = {
     'react-component-tree': 'react-component-tree',
     'react-dom-polyfill': 'react-dom-polyfill',
     'react-querystring-router': 'react-querystring-router',
+    'ubervu-react-split-pane': 'ubervu-react-split-pane',
     'react': 'react',
     'react-dom': 'react-dom'
   },
