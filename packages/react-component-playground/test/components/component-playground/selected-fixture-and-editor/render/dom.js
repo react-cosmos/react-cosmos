@@ -41,11 +41,11 @@ describe(`ComponentPlayground (${FIXTURE}) Render DOM`, function() {
            .hasClass(style['invalid-syntax'])).to.be.true;
   });
 
-  it('should render a splitpane ', function() {
+  it('should render a split-pane', function() {
     expect(component.refs.splitPane).to.exist;
   });
 
-  it('should have proper split orientation on SplitPane', function() {
+  it('should have proper split orientation on split-pane', function() {
     var splitByOrientation = {
       portrait: 'horizontal',
       landscape: 'vertical'

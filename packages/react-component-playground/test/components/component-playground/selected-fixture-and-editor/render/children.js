@@ -21,7 +21,7 @@ describe(`ComponentPlayground (${FIXTURE}) Render Children`, function() {
     expect(loadChild.loadChild).to.have.been.calledWith(component, 'preview');
   });
 
-  it('should load splitpane child', function() {
+  it('should load split-pane child', function() {
     expect(loadChild.loadChild).to.have.been.calledWith(component, 'splitPane');
   });
 });
