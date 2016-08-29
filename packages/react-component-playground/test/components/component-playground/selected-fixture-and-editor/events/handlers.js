@@ -62,11 +62,13 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, function() {
     });
   });
 
-  it('should have split-pane position in local storage on change', function() {
-    var size = 10;
+  it('should save split-pane position in local storage on change', function() {
+    expect(component.refs.splitPane.props.onChange())
+      .to.equal(localStorageLib.set('splitPos'));
+  });
 
-    component.refs.splitPane.props.onChange(size);
-
-    expect(localStorageLib.get('splitPos')).to.equal(size);
-  })
+  it('should get split-pane default size from local storage', function() {
+    expect(component.refs.splitPane.props.defaultSize)
+      .to.equal(localStorageLib.get('splitPos'));
+  });
 });
