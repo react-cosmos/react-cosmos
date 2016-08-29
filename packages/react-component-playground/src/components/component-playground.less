@@ -23,6 +23,11 @@
 @play-button-electron-color: #61dafb;
 @play-button-electron-duration: 5s;
 
+@resizer-size: 1px;
+@resizer-color: fade(#aaa, 80%);
+@resizer-border-size: 5px;
+@resizer-border-hover-color: fade(#000, 15%);
+
 .stretch() {
   position: absolute;
   top: 0;
@@ -213,12 +218,12 @@
     }
   }
 
-  > .content-frame {
+  .content-frame {
     .stretch();
 
     left: @left-nav-width;
 
-    > .fixture-editor-outer {
+    .fixture-editor-outer {
       .stretch();
 
       border: 1px solid @editor-border-color;
@@ -244,7 +249,7 @@
       }
     }
 
-    > .preview {
+    .preview {
       .stretch();
 
       overflow: auto;
@@ -267,38 +272,11 @@
       background-position: 0 0,
                            @checkerboard-square-size @checkerboard-square-size;
     }
-
-    &.with-editor {
-      &.orientation-landscape {
-        > .fixture-editor-outer {
-          right: 50%;
-        }
-
-        > .preview {
-          left: 50%;
-        }
-      }
-
-      &.orientation-portrait {
-        > .fixture-editor-outer {
-          bottom: 50%;
-        }
-
-        > .preview {
-          top: 50%;
-        }
-      }
-    }
   }
 
   &.full-screen {
     > .left-nav {
       display: none;
-    }
-
-    > .content-frame {
-      top: 0;
-      left: 0;
     }
   }
 }
@@ -337,5 +315,38 @@
   &:focus, &:active {
     outline: none;
     background-color: @left-nav-bgcolor-selected;
+  }
+}
+
+.resizer {
+  background: @resizer-color;
+  z-index: 5;
+  background-clip: padding-box;
+  border: solid transparent;
+
+  &.horizontal {
+    height: @resizer-size;
+    border-width: @resizer-border-size 0;
+    margin: -@resizer-border-size 0;
+    cursor: row-resize;
+  }
+
+  &.vertical {
+    width: @resizer-size;
+    border-width: 0 @resizer-border-size;
+    margin: 0 -@resizer-border-size;
+    cursor: col-resize;
+  }
+
+  &:hover {
+    border-color: @resizer-border-hover-color;
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+
+    &:hover {
+      border-color: transparent;
+    }
   }
 }

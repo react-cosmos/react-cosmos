@@ -3,6 +3,7 @@ var FIXTURE = 'selected-fixture-and-editor';
 describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, function() {
   var ComponentTree = require('react-component-tree'),
       render = require('helpers/render-component.js'),
+      localStorageLib = require('component-playground/lib/local-storage.js'),
       fixture = require(`fixtures/component-playground/${FIXTURE}.js`);
 
   var component,
@@ -14,7 +15,7 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, function() {
     ({container, component, $component} = render(fixture));
   });
 
-  define('on fixture update', function() {
+  describe('on fixture update', function() {
     var stateSet;
 
     beforeEach(function() {
@@ -59,5 +60,15 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, function() {
       expect(stateSet.fixtureUserInput)
             .to.equal(JSON.stringify(fixture.state.fixtureContents, null, 2));
     });
+  });
+
+  it('should save split-pane position in local storage on change', function() {
+    expect(component.refs.splitPane.props.onChange())
+      .to.equal(localStorageLib.set('splitPos'));
+  });
+
+  it('should get split-pane default size from local storage', function() {
+    expect(component.refs.splitPane.props.defaultSize)
+      .to.equal(localStorageLib.get('splitPos'));
   });
 });

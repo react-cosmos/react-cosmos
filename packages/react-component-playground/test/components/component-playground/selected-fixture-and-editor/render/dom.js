@@ -19,11 +19,6 @@ describe(`ComponentPlayground (${FIXTURE}) Render DOM`, function() {
     expect(component.refs.editor).to.exist;
   });
 
-  it('should add editor class on content frame node', function() {
-    expect($(component.refs.contentFrame)
-           .hasClass(style['with-editor'])).to.be.true;
-  });
-
   it('should add selected class on editor button', function() {
     expect($(component.refs.editorButton)
            .hasClass(style['selected-button'])).to.be.true;
@@ -44,5 +39,19 @@ describe(`ComponentPlayground (${FIXTURE}) Render DOM`, function() {
 
     expect($(component.refs.editor)
            .hasClass(style['invalid-syntax'])).to.be.true;
+  });
+
+  it('should render a split-pane', function() {
+    expect(component.refs.splitPane).to.exist;
+  });
+
+  it('should have proper split orientation on split-pane', function() {
+    var splitByOrientation = {
+      portrait: 'horizontal',
+      landscape: 'vertical'
+    }
+
+    expect(component.refs.splitPane.props.split)
+      .to.equal(splitByOrientation[component.state.orientation]);
   });
 });

@@ -11,7 +11,8 @@
     "lodash": "^3.6.0",
     "react-component-tree": "^1.0.0-beta.0",
     "react-dom-polyfill": "^1.0.0-beta.0",
-    "react-querystring-router": "^1.0.0-beta.0"
+    "react-querystring-router": "^1.0.0-beta.0",
+    "ubervu-react-split-pane": "^0.1.14"
   },
   "peerDependencies": {
     "react": ">=0.12 <16"
