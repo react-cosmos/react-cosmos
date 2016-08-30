@@ -28,7 +28,7 @@ Notes:
     "react-dom": "<16"
   }
   ```
-- Even though calling `findDOMNode` on DOM element refs is no longer required in newer versions of React, you must always use it to account for older Reacts. This makes this polyfill somewhat *special*. E.g.
+- Even though calling `findDOMNode` on DOM element refs is not required in newer versions of React, you must always do it to account for older Reacts. This makes this polyfill somewhat *special*. E.g.
 
   ```js
   // Polyfill will simply return this.refs.searchInput with newer React versions,
