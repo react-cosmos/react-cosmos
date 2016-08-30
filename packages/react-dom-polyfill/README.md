@@ -12,9 +12,9 @@ var ReactDOM = require('react-dom-polyfill')(React);
 
 // ES6
 import React from 'react';
-import ReactDOMPolyfill from 'react-dom-polyfill';
+import reactDOMPolyfill from 'react-dom-polyfill';
 
-const ReactDOM = ReactDOMPolyfill(React);
+const ReactDOM = reactDOMPolyfill(React);
 ```
 
 Notes:
