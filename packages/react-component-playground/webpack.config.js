@@ -17,8 +17,10 @@ module.exports = {
     // on the consumer side. The purpose of this bundle is to embed the styles
     // not require users to add CSS & LESS webpack loaders to their build.
     'classnames': 'classnames',
+    'codemirror': 'codemirror',
     'fuzzaldrin-plus': 'fuzzaldrin-plus',
     'lodash': 'lodash',
+    'react-codemirror': 'react-codemirror',
     'react-component-tree': 'react-component-tree',
     'react-dom-polyfill': 'react-dom-polyfill',
     'react-querystring-router': 'react-querystring-router',
@@ -39,6 +41,9 @@ module.exports = {
       include: src,
       loader: 'style!css?modules&importLoaders=1' +
               '&localIdentName=[name]__[local]___[hash:base64:5]!less'
+    }, {
+      test: /\.css$/,
+      loader: 'style!css'
     }]
   }
 };

@@ -7,8 +7,10 @@
   "main": "lib/index.js",
   "dependencies": {
     "classnames": "^2.2.5",
+    "codemirror": "^5.18.2",
     "fuzzaldrin-plus": "^0.3.1",
     "lodash": "^3.6.0",
+    "react-codemirror": "git://github.com/skidding/react-codemirror#use-react-dom-polyfill",
     "react-component-tree": "^1.0.0-beta.0",
     "react-dom-polyfill": "^1.0.0-beta.0",
     "react-querystring-router": "^1.0.0-beta.0",
