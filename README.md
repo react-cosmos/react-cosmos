@@ -41,9 +41,9 @@ npm run bootstrap
 
 Start playground instance, built from source:
 ```bash
+npm start
+# webpack is default, but you can also switch to Browserify
 npm run start:browserify
-# or
-npm run start:webpack
 ```
 
 Work on a specific module (with playground re-bundling on file change):
