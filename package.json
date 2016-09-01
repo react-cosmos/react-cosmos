@@ -33,6 +33,7 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-react-hmre": "^1.1.1",
     "babelify": "^7.3.0",
+    "browserify-optional": "^1.0.0",
     "browserify-postcss": "^0.3.2",
     "budo": "^9.0.0",
     "chai": "^3.5.0",
