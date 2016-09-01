@@ -51,9 +51,7 @@
 @fixture-line-height: 30px;
 @fixture-component-font-size: 16px;
 
-@editor-font-family: Menlo, Consolas, 'Courier New', monospace;
 @editor-font-size: 13px;
-@editor-line-height: 1.5em;
 @editor-border-color: rgba(16, 16, 16, 0.1);
 
 @checkerboard-square-size: 25px;
@@ -228,25 +226,6 @@
 
       border: 1px solid @editor-border-color;
       background: #f8f5ec;
-
-      .fixture-editor {
-        width: 100%;
-        height: 100%;
-        padding: @default-spacing;
-        box-sizing: border-box;
-        border: none;
-        background: transparent;
-        color: #637c84;
-        font-family: @editor-font-family;
-        font-size: @editor-font-size;
-        line-height: @editor-line-height;
-        resize: none;
-        outline: none;
-
-        &.invalid-syntax {
-          color: #cc7a6f;
-        }
-      }
     }
 
     .preview {
