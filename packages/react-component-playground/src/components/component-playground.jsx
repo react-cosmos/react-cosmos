@@ -20,9 +20,9 @@ require('codemirror/theme/solarized.css');
 require('./codemirror.css');
 
 require('codemirror/mode/javascript/javascript');
-require('codemirror/addon/fold/foldcode.js');
-require('codemirror/addon/fold/foldgutter.js');
-require('codemirror/addon/fold/brace-fold.js');
+require('codemirror/addon/fold/foldcode');
+require('codemirror/addon/fold/foldgutter');
+require('codemirror/addon/fold/brace-fold');
 
 module.exports = React.createClass({
   /**

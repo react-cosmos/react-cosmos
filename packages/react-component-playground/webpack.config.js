@@ -3,7 +3,7 @@ var path = require('path'),
 
 var src = path.join(__dirname, 'src');
 var lib = path.join(__dirname, 'lib');
-var node_modules = path.join(__dirname, 'node_modules');
+var nodeModules = path.join(__dirname, 'node_modules');
 
 module.exports = {
   entry: src,
@@ -48,7 +48,7 @@ module.exports = {
               '&localIdentName=[name]__[local]___[hash:base64:5]!less'
     }, {
       test: /\.css$/,
-      include: node_modules,
+      include: nodeModules,
       loader: 'style!css'
     }]
   }
