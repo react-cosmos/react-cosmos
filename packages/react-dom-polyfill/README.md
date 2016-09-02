@@ -35,3 +35,5 @@ Notes:
   // but will call this.refs.searchInput.getDOMNode() with older versions
   ReactDOM.findDOMNode(this.refs.searchInput)
   ```
+
+- Make sure you have the [browserify-optional](https://github.com/devongovett/browserify-optional) transform installed in your devDependencies when building via Browserify.
