@@ -397,14 +397,13 @@ module.exports = React.createClass({
     });
   },
 
-  onFixtureChange: function(event) {
-    var userInput = event,
-        newState = {fixtureUserInput: userInput};
+  onFixtureChange: function(editorValue) {
+    var newState = {fixtureUserInput: editorValue};
     try {
       var fixtureContents = {};
 
-      if (userInput) {
-        _.merge(fixtureContents, JSON.parse(userInput));
+      if (editorValue) {
+        _.merge(fixtureContents, JSON.parse(editorValue));
       }
 
       _.assign(newState, {
