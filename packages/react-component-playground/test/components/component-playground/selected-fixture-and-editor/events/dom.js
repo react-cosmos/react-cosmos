@@ -22,8 +22,11 @@ describe(`ComponentPlayground (${FIXTURE}) Events DOM`, function() {
       var editor = component.refs.editor.getCodeMirror();
       sinon.spy(component, 'setState');
 
-      if (event === 'change') {;
-        editor.setValue(eventData);
+      if (event === 'change') {
+        // Fully replace editor text (from the beginning to the end)
+        // with the given string.
+        editor.replaceRange(eventData, {line: 0, ch: 0},
+          CodeMirror.Pos(editor.lastLine()),  '+input');
       } else {
         CodeMirror.signal(editor, event, eventData);
       }

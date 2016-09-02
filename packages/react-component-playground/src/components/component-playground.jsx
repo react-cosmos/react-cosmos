@@ -19,6 +19,11 @@ require('codemirror/addon/fold/foldgutter.css');
 require('codemirror/theme/solarized.css');
 require('./codemirror.css');
 
+require('codemirror/mode/javascript/javascript');
+require('codemirror/addon/fold/foldcode.js');
+require('codemirror/addon/fold/foldgutter.js');
+require('codemirror/addon/fold/brace-fold.js');
+
 module.exports = React.createClass({
   /**
    * ComponentPlayground provides a minimal frame for loading React components
