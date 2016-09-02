@@ -3,6 +3,7 @@ var path = require('path'),
 
 var src = path.join(__dirname, 'src');
 var lib = path.join(__dirname, 'lib');
+var node_modules = path.join(__dirname, 'node_modules');
 
 module.exports = {
   entry: src,
@@ -37,12 +38,13 @@ module.exports = {
       loader: 'babel',
       include: src,
     }, {
-      test: /\.less$/,
+      test: /\.(css|less)$/,
       include: src,
       loader: 'style!css?modules&importLoaders=1' +
               '&localIdentName=[name]__[local]___[hash:base64:5]!less'
     }, {
       test: /\.css$/,
+      include: node_modules,
       loader: 'style!css'
     }]
   }
