@@ -26,10 +26,9 @@ describe(`ComponentPlayground (${FIXTURE}) Render DOM`, function() {
 
   it('should populate editor textarea from state', function() {
     component.setState({
-      fixtureUserInput: '{}'
+      fixtureUserInput: 'lorem ipsum'
     });
-
-    expect(component.refs.editor.getCodeMirror().getValue()).to.equal('{}');
+    expect(component.refs.editor.props.value).to.equal('lorem ipsum');
   });
 
   it('should render a split-pane', function() {
