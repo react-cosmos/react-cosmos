@@ -2,6 +2,7 @@ var FIXTURE = 'selected-fixture-and-editor';
 
 describe(`ComponentPlayground (${FIXTURE}) Events DOM`, function() {
   var utils = require('react-addons-test-utils'),
+      CodeMirror = require('codemirror'),
       render = require('helpers/render-component.js'),
       fixture = require(`fixtures/component-playground/${FIXTURE}.js`);
 
@@ -14,30 +15,25 @@ describe(`ComponentPlayground (${FIXTURE}) Events DOM`, function() {
     ({container, component, $component} = render(fixture));
   });
 
-  it('should focus on editor on fixture click', function() {
-    var editorNode = component.refs.editor;
-    sinon.spy(editorNode, 'focus');
-
-    utils.Simulate.click(
-        component.refs['fixtureButton-SecondComponent-index']);
-
-    expect(editorNode.focus).to.have.been.called;
-  });
-
   describe('Editor events', function() {
     var stateSet;
 
     function triggerEditorEvent(event, eventData) {
+      var editor = component.refs.editor.getCodeMirror();
       sinon.spy(component, 'setState');
 
-      utils.Simulate[event](component.refs.editor, eventData);
+      if (event === 'change') {
+        // Fully replace editor text (from the beginning to the end)
+        // with the given string.
+        editor.replaceRange(eventData, {line: 0, ch: 0},
+          CodeMirror.Pos(editor.lastLine()),  '+input');
+      } else {
+        CodeMirror.signal(editor, event, eventData);
+      }
+
       stateSet = component.setState.lastCall.args[0];
 
       component.setState.restore();
-    }
-
-    function triggerEditorChange(value) {
-      triggerEditorEvent('change', {target: {value: value}});
     }
 
     it('should set state flag on editor focus', function() {
@@ -53,19 +49,19 @@ describe(`ComponentPlayground (${FIXTURE}) Events DOM`, function() {
     });
 
     it('should update fixture user input on change', function() {
-      triggerEditorChange('{"foo":"bar"}');
+      triggerEditorEvent('change', '{"foo":"bar"}');
 
       expect(stateSet.fixtureUserInput).to.equal('{"foo":"bar"}');
     });
 
     it('should empty fixture contents on empty input', function() {
-      triggerEditorChange('');
+      triggerEditorEvent('change', '');
 
       expect(stateSet.fixtureContents).to.deep.equal({});
     });
 
     it('should not alter the original fixture contents', function() {
-      triggerEditorChange('{"nested": {"foo": "foo"}}');
+      triggerEditorEvent('change', '{"nested": {"foo": "foo"}}');
 
       expect(fixture.components.FirstComponent
              .fixtures['default'].nested.foo).to.equal('bar');
@@ -73,7 +69,7 @@ describe(`ComponentPlayground (${FIXTURE}) Events DOM`, function() {
 
     describe('Valid editor input', function() {
       beforeEach(function() {
-        triggerEditorChange('{"lorem": "ipsum"}');
+        triggerEditorEvent('change', '{"lorem": "ipsum"}');
       });
 
       it('should update fixture contents', function() {
@@ -94,7 +90,7 @@ describe(`ComponentPlayground (${FIXTURE}) Events DOM`, function() {
       beforeEach(function() {
         sinon.stub(console, 'error');
 
-        triggerEditorChange('lorem ipsum');
+        triggerEditorEvent('change', 'lorem ipsum');
       });
 
       afterEach(function() {

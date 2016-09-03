@@ -28,17 +28,7 @@ describe(`ComponentPlayground (${FIXTURE}) Render DOM`, function() {
     component.setState({
       fixtureUserInput: 'lorem ipsum'
     });
-
-    expect(component.refs.editor.value).to.equal('lorem ipsum');
-  });
-
-  it('should add invalid class on editor on state flag', function() {
-    component.setState({
-      isFixtureUserInputValid: false
-    });
-
-    expect($(component.refs.editor)
-           .hasClass(style['invalid-syntax'])).to.be.true;
+    expect(component.refs.editor.props.value).to.equal('lorem ipsum');
   });
 
   it('should render a split-pane', function() {
