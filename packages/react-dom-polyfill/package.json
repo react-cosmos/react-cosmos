@@ -1,7 +1,7 @@
 {
   "name": "react-dom-polyfill",
   "version": "1.0.0-beta.0",
-  "description": "Build React libs pre and post react-dom (0.14)",
+  "description": "Publish React libs that work with all React versions (0.12+)",
   "repository": "https://github.com/skidding/react-cosmos/tree/master/packages/react-dom-polyfill",
   "license": "MIT",
   "main": "lib/index.js",
@@ -10,5 +10,8 @@
   },
   "optionalDependencies": {
     "react-dom": "<16"
+  },
+  "browserify": {
+    "transform": "browserify-optional"
   }
 }

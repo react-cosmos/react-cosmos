@@ -1,12 +1,13 @@
 var path = require('path'),
     webpack = require('webpack');
 
+const rootDir = path.join(__dirname, '..');
+
 module.exports = {
   devtool: 'eval',
   entry: [
     'webpack-hot-middleware/client',
-    // Replace with 'react-cosmos' in real life
-    './packages/react-cosmos'
+    path.join(__dirname, 'index')
   ],
   output: {
     path: path.join(__dirname),
@@ -15,15 +16,15 @@ module.exports = {
   },
   resolve: {
     alias: {
-      COSMOS_COMPONENTS: path.join(__dirname, 'components'),
-      COSMOS_FIXTURES: path.join(__dirname, 'fixtures')
+      COSMOS_COMPONENTS_PATH: path.join(rootDir, 'components'),
+      COSMOS_FIXTURES_PATH: path.join(rootDir, 'fixtures')
     }
   },
   module: {
     loaders: [{
       test: /\.jsx?$/,
       loader: 'babel',
-      include: __dirname,
+      include: rootDir,
       query: {
         presets: ['es2015', 'react'],
         env: {
@@ -35,7 +36,7 @@ module.exports = {
     }, {
       test: /\.css$/,
       loader: 'style-loader!css-loader!postcss-loader',
-      include: __dirname
+      include: rootDir
     }]
   },
   plugins: [

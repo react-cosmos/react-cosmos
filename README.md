@@ -23,7 +23,7 @@ _\*DX stands for Developer Experience, the counterpart of UX in building a produ
 
 ### Requirements
 
-- [x] You should already be using CommonJS modules to structure your code and [webpack](http://webpack.github.io/) to bundle your modules for the browser.
+- [x] You should already be using CommonJS modules to structure your code and [webpack](http://webpack.github.io/) or [Browserify](http://browserify.org/) to bundle your modules for the browser.
 - [ ] You need to create [fixtures](http://en.wikipedia.org/wiki/Test_fixture) for each set of props and states you want to load your components with. You can do this after you get started.
 
 ### Usage
@@ -42,6 +42,8 @@ npm run bootstrap
 Start playground instance, built from source:
 ```bash
 npm start
+# webpack is default, but you can also switch to Browserify
+npm run start:browserify
 ```
 
 Work on a specific module (with playground re-bundling on file change):

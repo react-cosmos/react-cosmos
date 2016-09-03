@@ -57,6 +57,13 @@
 @checkerboard-square-size: 25px;
 @checkerboard-color: #f1f1f1;
 
+:global {
+  body {
+    // Running under the assumption that CP will take up the entire window surface
+    margin: 0;
+  }
+}
+
 .component-playground {
   position: absolute;
   width: 100%;
