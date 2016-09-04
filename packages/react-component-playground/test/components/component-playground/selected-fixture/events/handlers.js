@@ -33,19 +33,19 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, function() {
     it('should be set to landscape on width > height', function() {
       simulateWindowResize(300, 200);
 
-      expect(component.setState.args[0][0].orientation).to.equal('landscape');
+      expect(component.setState.lastCall.args[0].orientation).to.equal('landscape');
     });
 
     it('should be set to landscape on width == height', function() {
       simulateWindowResize(300, 300);
 
-      expect(component.setState.args[0][0].orientation).to.equal('landscape');
+      expect(component.setState.lastCall.args[0].orientation).to.equal('landscape');
     });
 
     it('should be set to portrait on width < height', function() {
       simulateWindowResize(200, 300);
 
-      expect(component.setState.args[0][0].orientation).to.equal('portrait');
+      expect(component.setState.lastCall.args[0].orientation).to.equal('portrait');
     });
   });
 });
