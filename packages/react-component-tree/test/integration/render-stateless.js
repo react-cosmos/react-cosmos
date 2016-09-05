@@ -1,44 +1,50 @@
-var React = require('react'),
-    ReactDOM = require('react-dom-polyfill')(React),
-    render = require('../../src/render.js').render;
+/* eslint-env node, mocha, browser */
+/* global expect, sinon */
 
-describe('INTEGRATION Render stateless component', function() {
-  var domContainer,
-      children = [React.createElement('span', {
-        key: '1',
-        children: 'test child'
-      })];
+import React from 'react';
+import { render } from '../../src/render.js';
 
-  var StatelessComponent = (props) =>
+const ReactDOM = require('react-dom-polyfill')(React);
+
+describe('INTEGRATION Render stateless component', () => {
+  const children = [React.createElement('span', {
+    key: '1',
+    children: 'test child',
+  })];
+
+  let domContainer;
+
+  const StatelessComponent = (props) =>
+    // eslint-disable-next-line react/jsx-filename-extension, react/prop-types
     <div>{props.children ? props.children : props.foo}</div>;
 
-  beforeEach(function() {
+  beforeEach(() => {
     domContainer = document.createElement('div');
   });
 
-  afterEach(function() {
+  afterEach(() => {
     ReactDOM.unmountComponentAtNode(domContainer);
   });
 
-  it('should render component using correct props', function() {
+  it('should render component using correct props', () => {
     render({
       component: StatelessComponent,
       snapshot: {
-        foo: 'bar'
+        foo: 'bar',
       },
-      container: domContainer
+      container: domContainer,
     });
 
     expect(domContainer.innerText).to.equal('bar');
   });
 
-  it('should receive children through props', function() {
+  it('should receive children through props', () => {
     render({
       component: StatelessComponent,
       snapshot: {
-        children: children
+        children,
       },
-      container: domContainer
+      container: domContainer,
     });
 
     expect(domContainer.innerText).to.equal('test child');

@@ -9,6 +9,7 @@
     "install-react:0.13": "npm run install-react -- react@0.13",
     "install-react:0.14": "npm run install-react -- react@0.14 react-dom@0.14 react-addons-test-utils@0.14",
     "install-react:15": "npm run install-react -- react@15 react-dom@15 react-addons-test-utils@15",
+    "lint": "eslint --ext '.jsx,.js' ./",
     "build-babel": "babel -D packages/$PACKAGE/src -d packages/$PACKAGE/lib",
     "build-webpack": "webpack -p --config packages/$PACKAGE/webpack.config.js",
     "build:component-playground": "PACKAGE=react-component-playground npm run build-webpack",
@@ -40,6 +41,11 @@
     "coveralls": "^2.11.12",
     "css-loader": "^0.23.1",
     "css-modulesify": "^0.25.1",
+    "eslint": "^3.4.0",
+    "eslint-config-airbnb": "^10.0.1",
+    "eslint-plugin-import": "^1.14.0",
+    "eslint-plugin-jsx-a11y": "^2.2.1",
+    "eslint-plugin-react": "^6.2.0",
     "express": "^4.14.0",
     "glob": "^7.0.6",
     "inject-loader": "^2.0.1",
@@ -60,6 +66,8 @@
     "postcss-loader": "^0.10.1",
     "postcss-nested": "^1.0.0",
     "react": ">=0.12 <16",
+    "react-addons-test-utils": "<16",
+    "react-dom": "<16",
     "require-globify": "^1.4.1",
     "sinon": "^1.17.5",
     "sinon-chai": "^2.8.0",
@@ -67,9 +75,5 @@
     "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.12.2"
-  },
-  "optionalDependencies": {
-    "react-dom": "<16",
-    "react-addons-test-utils": "<16"
   }
 }

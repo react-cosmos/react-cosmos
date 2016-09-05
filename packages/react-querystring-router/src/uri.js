@@ -1,24 +1,23 @@
 module.exports = {
-  parseLocation: function(location) {
-    var params = {};
+  parseLocation: (location) => {
+    const params = {};
 
     if (location.indexOf('?') === -1) {
       return params;
     }
 
-    var queryString = location.split('?').pop();
-
+    const queryString = location.split('?').pop();
     if (!queryString.length) {
       return params;
     }
 
-    var pairs = queryString.split('&'),
-        parts,
-        key,
-        value;
+    const pairs = queryString.split('&');
+    let parts;
+    let key;
+    let value;
 
-    for (var i = 0; i < pairs.length; i++) {
-      parts = pairs[i].split('=');
+    pairs.forEach((pair) => {
+      parts = pair.split('=');
       key = parts[0];
       value = decodeURIComponent(parts[1]);
 
@@ -30,35 +29,35 @@ module.exports = {
       }
 
       params[key] = value;
-    }
+    });
 
     return params;
   },
 
-  stringifyParams: function(params) {
+  stringifyParams: (params) => {
     /**
      * Serializes JSON params into a browser-complient URL. The URL
      * generated can be simply put inside the href attribute of an <a> tag
      */
-    var parts = [],
-        value;
+    const parts = [];
+    let value;
 
-    for (var key in params) {
+    Object.keys(params).forEach((key) => {
       value = params[key];
 
       // Objects can be embedded in a query string as well
-      if (typeof value == 'object') {
+      if (typeof value === 'object') {
         try {
           value = JSON.stringify(value);
         } catch (e) {
           // Params that can't be stringified should be ignored
-          continue;
+          return;
         }
       }
 
-      parts.push(key + '=' + encodeURIComponent(value));
-    }
+      parts.push(`${key}=${encodeURIComponent(value)}`);
+    });
 
-    return '?' + parts.join('&');
-  }
+    return `?${parts.join('&')}`;
+  },
 };

@@ -1,11 +1,15 @@
-var React = require('react'),
-    ReactDOM = require('react-dom-polyfill')(React),
-    TestUtils = require('react-addons-test-utils'),
-    renderIntoDocument = TestUtils.renderIntoDocument,
-    render = require('../../src/render.js').render;
+/* eslint-env node, mocha */
+/* global expect, sinon */
 
-describe('UNIT Render and inject state', function() {
-  var component;
+import React from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { renderIntoDocument } from 'react-addons-test-utils';
+import { render } from '../../src/render.js';
+
+const ReactDOM = require('react-dom-polyfill')(React);
+
+describe('UNIT Render and inject state', () => {
+  let component;
 
   class ChildComponent extends React.Component {
     render() {
@@ -13,19 +17,21 @@ describe('UNIT Render and inject state', function() {
     }
   }
 
+  // eslint-disable-next-line react/prefer-stateless-function, react/no-multi-comp
   class ParentComponent extends React.Component {
     render() {
-      return React.createElement(ChildComponent, {ref: 'child'});
+      return React.createElement(ChildComponent, { ref: 'child' });
     }
   }
 
+  // eslint-disable-next-line react/prefer-stateless-function, react/no-multi-comp
   class GrandparentComponent extends React.Component {
     render() {
-      return React.createElement(ParentComponent, {ref: 'child'});
+      return React.createElement(ParentComponent, { ref: 'child' });
     }
   }
 
-  beforeEach(function() {
+  beforeEach(() => {
     component = renderIntoDocument(React.createElement(GrandparentComponent));
 
     sinon.spy(component, 'setState');
@@ -35,39 +41,39 @@ describe('UNIT Render and inject state', function() {
     sinon.stub(ReactDOM, 'render').returns(component);
   });
 
-  afterEach(function() {
+  afterEach(() => {
     ReactDOM.render.restore();
   });
 
-  it('should set state on root component', function() {
+  it('should set state on root component', () => {
     render({
       component: GrandparentComponent,
       snapshot: {
-        state: {foo: 'bar'}
-      }
+        state: { foo: 'bar' },
+      },
     });
 
-    var stateSet = component.setState.lastCall.args[0];
+    const stateSet = component.setState.lastCall.args[0];
     expect(stateSet.foo).to.equal('bar');
   });
 
-  it('should set state on child component', function() {
+  it('should set state on child component', () => {
     render({
       component: GrandparentComponent,
       snapshot: {
         state: {
           children: {
-            child: {foo: 'bar'}
-          }
-        }
-      }
+            child: { foo: 'bar' },
+          },
+        },
+      },
     });
 
-    var stateSet = component.refs.child.setState.lastCall.args[0];
+    const stateSet = component.refs.child.setState.lastCall.args[0];
     expect(stateSet.foo).to.equal('bar');
   });
 
-  it('should set state on grandchild component', function() {
+  it('should set state on grandchild component', () => {
     render({
       component: GrandparentComponent,
       snapshot: {
@@ -75,15 +81,15 @@ describe('UNIT Render and inject state', function() {
           children: {
             child: {
               children: {
-                child: {foo: 'bar'}
-              }
-            }
-          }
-        }
-      }
+                child: { foo: 'bar' },
+              },
+            },
+          },
+        },
+      },
     });
 
-    var stateSet = component.refs.child.refs.child.setState.lastCall.args[0];
+    const stateSet = component.refs.child.refs.child.setState.lastCall.args[0];
     expect(stateSet.foo).to.equal('bar');
   });
 });

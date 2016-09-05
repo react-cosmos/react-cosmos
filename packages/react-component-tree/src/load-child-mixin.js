@@ -1,7 +1,7 @@
-var loadChild = require('./load-child.js');
+import { loadChild } from './load-child.js';
 
 module.exports = {
-  loadChild: function(childName, a, b, c, d, e, f) {
-    return loadChild.loadChild(this, childName, a, b, c, d, e, f);
-  }
+  loadChild: function loadComponentChild(childName, a, b, c, d, e, f) {
+    return loadChild(this, childName, a, b, c, d, e, f);
+  },
 };

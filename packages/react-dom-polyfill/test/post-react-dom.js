@@ -1,3 +1,8 @@
+/* eslint-env node, mocha */
+/* eslint-disable react/no-find-dom-node */
+/* global expect, sinon */
+
+// eslint-disable-next-line import/no-unresolved, import/no-extraneous-dependencies
 const reactDOMPolyfillInjector = require('inject?react-dom!../src');
 
 describe('DOMPolyfill Post React DOM (>=0.14)', () => {
@@ -9,7 +14,7 @@ describe('DOMPolyfill Post React DOM (>=0.14)', () => {
     const ReactDOMMock = {
       findDOMNode: sinon.spy(),
       render: sinon.spy(),
-      unmountComponentAtNode: sinon.spy()
+      unmountComponentAtNode: sinon.spy(),
     };
 
     let ReactDOM;
@@ -17,7 +22,7 @@ describe('DOMPolyfill Post React DOM (>=0.14)', () => {
     beforeEach(() => {
       const reactDOMPolyfill = reactDOMPolyfillInjector({ 'react-dom': ReactDOMMock });
       ReactDOM = reactDOMPolyfill(ReactMock);
-    })
+    });
 
     it(`${version} should render using React DOM`, () => {
       const reactElement = {};

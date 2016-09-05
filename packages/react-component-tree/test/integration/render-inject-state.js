@@ -1,10 +1,14 @@
-var React = require('react'),
-    ReactDOM = require('react-dom-polyfill')(React),
-    render = require('../../src/render.js').render;
+/* eslint-env node, mocha, browser */
+/* global expect, sinon */
 
-describe('INTEGRATION Render and inject state', function() {
-  var domContainer,
-      component;
+import React from 'react';
+import { render } from '../../src/render.js';
+
+const ReactDOM = require('react-dom-polyfill')(React);
+
+describe('INTEGRATION Render and inject state', () => {
+  let domContainer;
+  let component;
 
   class ChildComponent extends React.Component {
     render() {
@@ -12,55 +16,57 @@ describe('INTEGRATION Render and inject state', function() {
     }
   }
 
+  // eslint-disable-next-line react/prefer-stateless-function, react/no-multi-comp
   class ParentComponent extends React.Component {
     render() {
-      return React.createElement(ChildComponent, {ref: 'child'});
+      return React.createElement(ChildComponent, { ref: 'child' });
     }
   }
 
+  // eslint-disable-next-line react/prefer-stateless-function, react/no-multi-comp
   class GrandparentComponent extends React.Component {
     render() {
-      return React.createElement(ParentComponent, {ref: 'child'});
+      return React.createElement(ParentComponent, { ref: 'child' });
     }
   }
 
-  beforeEach(function() {
+  beforeEach(() => {
     domContainer = document.createElement('div');
   });
 
-  afterEach(function() {
+  afterEach(() => {
     ReactDOM.unmountComponentAtNode(domContainer);
   });
 
-  it('should set state on root component', function() {
+  it('should set state on root component', () => {
     component = render({
       component: GrandparentComponent,
       snapshot: {
-        state: {foo: 'bar'}
+        state: { foo: 'bar' },
       },
-      container: domContainer
+      container: domContainer,
     });
 
     expect(component.state.foo).to.equal('bar');
   });
 
-  it('should set state on child component', function() {
+  it('should set state on child component', () => {
     component = render({
       component: GrandparentComponent,
       snapshot: {
         state: {
           children: {
-            child: {foo: 'bar'}
-          }
-        }
+            child: { foo: 'bar' },
+          },
+        },
       },
-      container: domContainer
+      container: domContainer,
     });
 
     expect(component.refs.child.state.foo).to.equal('bar');
   });
 
-  it('should set state on grandchild component', function() {
+  it('should set state on grandchild component', () => {
     component = render({
       component: GrandparentComponent,
       snapshot: {
@@ -68,13 +74,13 @@ describe('INTEGRATION Render and inject state', function() {
           children: {
             child: {
               children: {
-                child: {foo: 'bar'}
-              }
-            }
-          }
-        }
+                child: { foo: 'bar' },
+              },
+            },
+          },
+        },
       },
-      container: domContainer
+      container: domContainer,
     });
 
     expect(component.refs.child.refs.child.state.foo).to.equal('bar');

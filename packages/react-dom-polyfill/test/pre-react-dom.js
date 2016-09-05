@@ -1,3 +1,7 @@
+/* eslint-env node, mocha */
+/* eslint-disable react/no-find-dom-node */
+/* global expect, sinon */
+
 const reactDOMPolyfill = require('../src');
 
 describe('DOMPolyfill Pre React DOM (<0.14)', () => {
@@ -13,7 +17,7 @@ describe('DOMPolyfill Pre React DOM (<0.14)', () => {
 
     beforeEach(() => {
       ReactDOM = reactDOMPolyfill(ReactMock);
-    })
+    });
 
     it(`${version} should render using React`, () => {
       const reactElement = {};
@@ -34,7 +38,7 @@ describe('DOMPolyfill Pre React DOM (<0.14)', () => {
     it(`${version} should find DOM node of React Element`, () => {
       const domElement = {};
       const element = {
-        getDOMNode: sinon.stub().returns(domElement)
+        getDOMNode: sinon.stub().returns(domElement),
       };
 
       expect(ReactDOM.findDOMNode(element)).to.equal(domElement);

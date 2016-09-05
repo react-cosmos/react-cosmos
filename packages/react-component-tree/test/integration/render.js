@@ -1,14 +1,20 @@
-var React = require('react'),
-    ReactDOM = require('react-dom-polyfill')(React),
-    render = require('../../src/render.js').render;
+/* eslint-env node, mocha, browser */
+/* eslint-disable react/no-find-dom-node */
+/* global expect, sinon */
 
-describe('INTEGRATION Render', function() {
-  var domContainer,
-      children = [React.createElement('span', {
-        key: '1',
-        children: 'test child'
-      })],
-      component;
+import React from 'react';
+import { render } from '../../src/render.js';
+
+const ReactDOM = require('react-dom-polyfill')(React);
+
+describe('INTEGRATION Render', () => {
+  const children = [React.createElement('span', {
+    key: '1',
+    children: 'test child',
+  })];
+
+  let domContainer;
+  let component;
 
   class Component extends React.Component {
     render() {
@@ -16,32 +22,32 @@ describe('INTEGRATION Render', function() {
     }
   }
 
-  beforeEach(function() {
+  beforeEach(() => {
     domContainer = document.createElement('div');
 
     component = render({
       component: Component,
       snapshot: {
         foo: 'bar',
-        children: children
+        children,
       },
-      container: domContainer
+      container: domContainer,
     });
   });
 
-  afterEach(function() {
+  afterEach(() => {
     ReactDOM.unmountComponentAtNode(domContainer);
   });
 
-  it('should create component with correct props', function() {
+  it('should create component with correct props', () => {
     expect(component.props.foo).to.equal('bar');
   });
 
-  it('should receive children through props', function() {
+  it('should receive children through props', () => {
     expect(component.props.children).to.be.equal(children);
   });
 
-  it('should render in given container', function() {
+  it('should render in given container', () => {
     expect(ReactDOM.findDOMNode(component).parentNode).to.equal(domContainer);
   });
 });
