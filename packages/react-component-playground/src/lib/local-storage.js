@@ -1,3 +1,5 @@
+/* eslint-env browser */
+
 module.exports = {
   get(option) {
     let stringifiedValue;

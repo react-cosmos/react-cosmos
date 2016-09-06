@@ -1,3 +1,5 @@
+/* eslint-disable react/no-multi-comp */
+
 const React = require('react');
 
 class FirstComponent extends React.Component {
@@ -17,7 +19,7 @@ module.exports = {
     FirstComponent: {
       class: FirstComponent,
       fixtures: {
-        'default': {
+        default: {
           myProp: false,
           nested: {
             foo: 'bar',
@@ -34,13 +36,13 @@ module.exports = {
             somethingHappened: false,
           },
         },
-        'error': {},
+        error: {},
       },
     },
     SecondComponent: {
       class: SecondComponent,
       fixtures: {
-        'index': {
+        index: {
           myProp: true,
           state: {
             somethingHappened: true,

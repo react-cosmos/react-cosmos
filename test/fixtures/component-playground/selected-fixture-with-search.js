@@ -1,5 +1,5 @@
-let _ = require('lodash'),
-  selectedFixture = require('./selected-fixture.js');
+import _ from 'lodash';
+import selectedFixture from './selected-fixture.js';
 
 module.exports = _.merge({}, selectedFixture, {
   state: {

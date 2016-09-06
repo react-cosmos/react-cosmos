@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
 
 const src = path.join(__dirname, 'src');
 const lib = path.join(__dirname, 'lib');
@@ -17,20 +16,20 @@ module.exports = {
     // No need to bundle JS deps in the lib. They'll be downloaded & bundled
     // on the consumer side. The purpose of this bundle is to embed the styles
     // not require users to add CSS & LESS webpack loaders to their build.
-    'classnames': 'classnames',
-    'codemirror': 'codemirror',
+    classnames: 'classnames',
+    codemirror: 'codemirror',
     'codemirror/mode/javascript/javascript': 'codemirror/mode/javascript/javascript',
     'codemirror/addon/fold/foldcode': 'codemirror/addon/fold/foldcode',
     'codemirror/addon/fold/foldgutter': 'codemirror/addon/fold/foldgutter',
     'codemirror/addon/fold/brace-fold': 'codemirror/addon/fold/brace-fold',
     'fuzzaldrin-plus': 'fuzzaldrin-plus',
-    'lodash': 'lodash',
+    lodash: 'lodash',
     'react-codemirror': 'react-codemirror',
     'react-component-tree': 'react-component-tree',
     'react-dom-polyfill': 'react-dom-polyfill',
     'react-querystring-router': 'react-querystring-router',
     'ubervu-react-split-pane': 'ubervu-react-split-pane',
-    'react': 'react',
+    react: 'react',
     'react-dom': 'react-dom',
   },
   resolve: {

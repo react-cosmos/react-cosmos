@@ -1,24 +1,35 @@
+/* eslint-env browser, mocha */
+/* eslint-disable
+  global-require,
+  no-unused-vars,
+  no-unused-expressions,
+  import/no-unresolved,
+  import/no-extraneous-dependencies
+*/
+/* global expect, sinon */
+
 const FIXTURE = 'selected-fixture-and-editor';
 
-describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, function () {
-  var ComponentTree = require('react-component-tree'),
-    render = require('helpers/render-component.js'),
-    localStorageLib = require('component-playground/lib/local-storage.js'),
-    fixture = require(`fixtures/component-playground/${FIXTURE}.js`);
+describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, () => {
+  const _ = require('lodash');
+  const ComponentTree = require('react-component-tree');
+  const render = require('helpers/render-component');
+  const localStorageLib = require('component-playground/lib/local-storage');
 
-  var component,
-    $component,
-    container,
-    fixture;
+  const fixture = require(`fixtures/component-playground/${FIXTURE}`);
 
-  beforeEach(function () {
+  let component;
+  let $component;
+  let container;
+
+  beforeEach(() => {
     ({ container, component, $component } = render(fixture));
   });
 
-  describe('on fixture update', function () {
+  describe('on fixture update', () => {
     let stateSet;
 
-    beforeEach(function () {
+    beforeEach(() => {
       sinon.stub(ComponentTree, 'serialize').returns(_.merge({},
         fixture.state.fixtureContents,
         fixture.state.fixtureUnserializableProps));
@@ -29,45 +40,45 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, function () {
       stateSet = component.setState.lastCall.args[0];
     });
 
-    afterEach(function () {
+    afterEach(() => {
       ComponentTree.serialize.restore();
       component.setState.restore();
     });
 
-    it('should mark user input state as valid', function () {
+    it('should mark user input state as valid', () => {
       expect(stateSet.isFixtureUserInputValid).to.equal(true);
     });
 
-    it('should serialize preview child', function () {
+    it('should serialize preview child', () => {
       expect(ComponentTree.serialize)
             .to.have.been.calledWith(component.refs.preview);
     });
 
-    it('should put serializable child state in fixture contents', function () {
-      for (const key in fixture.state.fixtureContents) {
+    it('should put serializable child state in fixture contents', () => {
+      Object.keys(fixture.state.fixtureContents).forEach((key) => {
         expect(stateSet.fixtureContents[key])
-              .to.deep.equal(fixture.state.fixtureContents[key]);
-      }
+        .to.deep.equal(fixture.state.fixtureContents[key]);
+      });
     });
 
-    it('should ignore unserializable child state', function () {
-      for (const key in fixture.state.fixtureUnserializableProps) {
+    it('should ignore unserializable child state', () => {
+      Object.keys(fixture.state.fixtureUnserializableProps).forEach((key) => {
         expect(stateSet.fixtureContents[key]).to.be.undefined;
-      }
+      });
     });
 
-    it('should update stringified child snapshot state', function () {
+    it('should update stringified child snapshot state', () => {
       expect(stateSet.fixtureUserInput)
             .to.equal(JSON.stringify(fixture.state.fixtureContents, null, 2));
     });
   });
 
-  it('should save split-pane position in local storage on change', function () {
+  it('should save split-pane position in local storage on change', () => {
     expect(component.refs.splitPane.props.onChange())
       .to.equal(localStorageLib.set('splitPos'));
   });
 
-  it('should get split-pane default size from local storage', function () {
+  it('should get split-pane default size from local storage', () => {
     expect(component.refs.splitPane.props.defaultSize)
       .to.equal(localStorageLib.get('splitPos'));
   });

@@ -1,6 +1,6 @@
-let React = require('react'),
-  _ = require('lodash'),
-  defaultFixture = require('./default.js');
+import React from 'react';
+import _ from 'lodash';
+import defaultFixture from './default.js';
 
 module.exports = _.merge({}, defaultFixture, {
   component: 'FirstComponent',

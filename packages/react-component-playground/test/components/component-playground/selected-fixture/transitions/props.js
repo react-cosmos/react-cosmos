@@ -1,19 +1,29 @@
+/* eslint-env browser, mocha */
+/* eslint-disable
+  global-require,
+  no-unused-vars,
+  no-unused-expressions,
+  import/no-unresolved,
+  import/no-extraneous-dependencies
+*/
+/* global expect, sinon */
+
 const FIXTURE = 'selected-fixture';
 
-describe(`ComponentPlayground (${FIXTURE}) Transitions Props`, function () {
-  var _ = require('lodash'),
-    ComponentTree = require('react-component-tree'),
-    render = require('helpers/render-component.js'),
-    fixture = require(`fixtures/component-playground/${FIXTURE}.js`);
+describe(`ComponentPlayground (${FIXTURE}) Transitions Props`, () => {
+  const _ = require('lodash');
+  const ComponentTree = require('react-component-tree');
+  const render = require('helpers/render-component');
 
-  var component,
-    $component,
-    container,
-    fixture,
-    stateSet,
-    stateInjected;
+  const fixture = require(`fixtures/component-playground/${FIXTURE}`);
 
-  beforeEach(function () {
+  let component;
+  let $component;
+  let container;
+  let stateSet;
+  let stateInjected;
+
+  beforeEach(() => {
     ({ container, component, $component } = render(fixture));
 
     sinon.stub(ComponentTree, 'injectState');
@@ -32,28 +42,28 @@ describe(`ComponentPlayground (${FIXTURE}) Transitions Props`, function () {
     stateInjected = ComponentTree.injectState.lastCall.args;
   });
 
-  afterEach(function () {
+  afterEach(() => {
     ComponentTree.injectState.restore();
     component.setState.restore();
   });
 
-  it('should replace fixture contents', function () {
+  it('should replace fixture contents', () => {
     expect(stateSet.fixtureContents.myProp).to.equal(true);
   });
 
-  it('should reset unserializable fixture props', function () {
+  it('should reset unserializable fixture props', () => {
     expect(stateSet.fixtureUnserializableProps).to.deep.equal({});
   });
 
-  it('should replace fixture user input', function () {
+  it('should replace fixture user input', () => {
     expect(JSON.parse(stateSet.fixtureUserInput).myProp).to.equal(true);
   });
 
-  it('should reset valid user input flag', function () {
+  it('should reset valid user input flag', () => {
     expect(stateSet.isFixtureUserInputValid).to.be.true;
   });
 
-  it('should inject new state to preview child', function () {
+  it('should inject new state to preview child', () => {
     expect(stateInjected[0]).to.equal(component.refs.preview);
     expect(stateInjected[1].somethingHappened).to.equal(true);
   });

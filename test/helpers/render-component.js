@@ -1,21 +1,21 @@
-let React = require('react'),
-  ReactDOM = require('../../packages/react-dom-polyfill')(React),
-  $ = require('jquery'),
-  ComponentTree = require('../../packages/react-component-tree'),
-  ComponentPlayground = require('../../packages/react-component-playground/src');
+/* eslint-env browser */
+/* eslint-disable react/no-find-dom-node */
 
-module.exports = function (fixture, container) {
-  var container = container || document.createElement('div'),
-    component,
-    $component;
+import React from 'react';
+import $ from 'jquery';
+import ComponentTree from '../../packages/react-component-tree';
+import ComponentPlayground from '../../packages/react-component-playground/src';
 
-  component = ComponentTree.render({
+const ReactDOM = require('../../packages/react-dom-polyfill')(React);
+
+module.exports = (fixture, container = document.createElement('div')) => {
+  const component = ComponentTree.render({
     component: ComponentPlayground,
     snapshot: fixture,
     container,
   });
 
-  $component = $(ReactDOM.findDOMNode(component));
+  const $component = $(ReactDOM.findDOMNode(component));
 
   return {
     container,

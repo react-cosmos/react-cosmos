@@ -1,41 +1,51 @@
+/* eslint-env browser, mocha */
+/* eslint-disable
+  global-require,
+  no-unused-vars,
+  no-unused-expressions,
+  import/no-unresolved,
+  import/no-extraneous-dependencies
+*/
+/* global expect, sinon */
+
 const FIXTURE = 'selected-fixture-and-editor';
 const style = require('component-playground/components/component-playground.less');
 
-describe(`ComponentPlayground (${FIXTURE}) Render DOM`, function () {
-  var $ = require('jquery'),
-    render = require('helpers/render-component.js'),
-    fixture = require(`fixtures/component-playground/${FIXTURE}.js`);
+describe(`ComponentPlayground (${FIXTURE}) Render DOM`, () => {
+  const $ = require('jquery');
+  const render = require('helpers/render-component');
 
-  var component,
-    $component,
-    container,
-    fixture;
+  const fixture = require(`fixtures/component-playground/${FIXTURE}`);
 
-  beforeEach(function () {
+  let component;
+  let $component;
+  let container;
+
+  beforeEach(() => {
     ({ container, component, $component } = render(fixture));
   });
 
-  it('should render fixture editor', function () {
+  it('should render fixture editor', () => {
     expect(component.refs.editor).to.exist;
   });
 
-  it('should add selected class on editor button', function () {
+  it('should add selected class on editor button', () => {
     expect($(component.refs.editorButton)
            .hasClass(style['selected-button'])).to.be.true;
   });
 
-  it('should populate editor textarea from state', function () {
+  it('should populate editor textarea from state', () => {
     component.setState({
       fixtureUserInput: 'lorem ipsum',
     });
     expect(component.refs.editor.props.value).to.equal('lorem ipsum');
   });
 
-  it('should render a split-pane', function () {
+  it('should render a split-pane', () => {
     expect(component.refs.splitPane).to.exist;
   });
 
-  it('should have proper split orientation on split-pane', function () {
+  it('should have proper split orientation on split-pane', () => {
     const splitByOrientation = {
       portrait: 'horizontal',
       landscape: 'vertical',

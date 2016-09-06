@@ -1,11 +1,14 @@
+/* eslint-env mocha */
+/* global sinon */
+
 const ComponentTree = require('../../packages/react-component-tree');
 
-module.exports = function () {
-  beforeEach(function () {
+module.exports = () => {
+  beforeEach(() => {
     sinon.spy(ComponentTree.loadChild, 'loadChild');
   });
 
-  afterEach(function () {
+  afterEach(() => {
     ComponentTree.loadChild.loadChild.restore();
   });
 };

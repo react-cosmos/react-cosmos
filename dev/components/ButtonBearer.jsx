@@ -1,5 +1,5 @@
-let React = require('react'),
-  SimpleButton = require('./SimpleButton.jsx');
+const React = require('react');
+const SimpleButton = require('./SimpleButton.jsx');
 
 export default class ButtonBearers extends React.Component {
   render() {

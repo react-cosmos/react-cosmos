@@ -1,6 +1,6 @@
 const path = require('path');
 
-module.exports = function (config) {
+module.exports = function setKarmaConfig(config) {
   config.set({
     basePath: '../',
     browsers: ['PhantomJS'],
@@ -24,7 +24,8 @@ module.exports = function (config) {
         alias: {
           helpers: path.join(__dirname, 'helpers'),
           fixtures: path.join(__dirname, 'fixtures'),
-          'component-playground': path.join(__dirname, '../packages/react-component-playground/src'),
+          'component-playground':
+              path.join(__dirname, '../packages/react-component-playground/src'),
         },
       },
       module: {

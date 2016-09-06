@@ -1,27 +1,37 @@
+/* eslint-env browser, mocha */
+/* eslint-disable
+  global-require,
+  no-unused-vars,
+  no-unused-expressions,
+  import/no-unresolved,
+  import/no-extraneous-dependencies
+*/
+/* global expect, sinon */
+
 const FIXTURE = 'selected-fixture-and-editor';
 
-describe(`ComponentPlayground (${FIXTURE}) Render Children`, function () {
-  var loadChild = require('react-component-tree').loadChild,
-    render = require('helpers/render-component.js'),
-    spyLoadChild = require('helpers/spy-load-child.js'),
-    fixture = require(`fixtures/component-playground/${FIXTURE}.js`);
+describe(`ComponentPlayground (${FIXTURE}) Render Children`, () => {
+  const loadChild = require('react-component-tree').loadChild;
+  const render = require('helpers/render-component');
+  const spyLoadChild = require('helpers/spy-load-child');
 
-  var component,
-    $component,
-    container,
-    fixture;
+  const fixture = require(`fixtures/component-playground/${FIXTURE}`);
+
+  let component;
+  let $component;
+  let container;
 
   spyLoadChild();
 
-  beforeEach(function () {
+  beforeEach(() => {
     ({ container, component, $component } = render(fixture));
   });
 
-  it('should load preview child', function () {
+  it('should load preview child', () => {
     expect(loadChild.loadChild).to.have.been.calledWith(component, 'preview');
   });
 
-  it('should load split-pane child', function () {
+  it('should load split-pane child', () => {
     expect(loadChild.loadChild).to.have.been.calledWith(component, 'splitPane');
   });
 });

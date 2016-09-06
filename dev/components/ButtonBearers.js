@@ -1,5 +1,5 @@
-let React = require('react'),
-  ButtonBearer = require('./ButtonBearer.jsx').default;
+const React = require('react');
+const ButtonBearer = require('./ButtonBearer.jsx').default;
 
 class ButtonBearers extends React.Component {
   render() {

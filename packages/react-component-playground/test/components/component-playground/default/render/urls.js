@@ -1,33 +1,43 @@
+/* eslint-env browser, mocha */
+/* eslint-disable
+  global-require,
+  no-unused-vars,
+  no-unused-expressions,
+  import/no-unresolved,
+  import/no-extraneous-dependencies
+*/
+/* global expect, sinon */
+
 const FIXTURE = 'default';
 
-describe(`ComponentPlayground (${FIXTURE}) Render URLs`, function () {
-  var render = require('helpers/render-component.js'),
-    getUrlProps = require('helpers/get-url-props.js'),
-    fixture = require(`fixtures/component-playground/${FIXTURE}.js`);
+describe(`ComponentPlayground (${FIXTURE}) Render URLs`, () => {
+  const render = require('helpers/render-component');
+  const getUrlProps = require('helpers/get-url-props');
 
-  var component,
-    $component,
-    container,
-    fixture;
+  const fixture = require(`fixtures/component-playground/${FIXTURE}`);
 
-  beforeEach(function () {
+  let component;
+  let $component;
+  let container;
+
+  beforeEach(() => {
     ({ container, component, $component } = render(fixture));
   });
 
-  it('should generate urls with component and fixture names', function () {
-    for (const componentName in fixture.components) {
+  it('should generate urls with component and fixture names', () => {
+    Object.keys(fixture.components).forEach((componentName) => {
       const fixtures = fixture.components[componentName].fixtures;
 
-      for (const fixtureName in fixtures) {
+      Object.keys(fixtures).forEach((fixtureName) => {
         const fixtureButton = component.refs[
-            'fixtureButton-' + componentName + '-' + fixtureName];
+            `fixtureButton-${componentName}-${fixtureName}`];
         const urlProps = getUrlProps(fixtureButton);
 
         expect(urlProps).to.deep.equal({
           component: componentName,
           fixture: fixtureName,
         });
-      }
-    }
+      });
+    });
   });
 });

@@ -1,20 +1,30 @@
+/* eslint-env browser, mocha */
+/* eslint-disable
+  global-require,
+  no-unused-vars,
+  no-unused-expressions,
+  import/no-unresolved,
+  import/no-extraneous-dependencies
+*/
+/* global expect, sinon */
+
 const FIXTURE = 'selected-fixture';
 
-describe(`ComponentPlayground (${FIXTURE}) Render URLs`, function () {
-  var render = require('helpers/render-component.js'),
-    getUrlProps = require('helpers/get-url-props.js'),
-    fixture = require(`fixtures/component-playground/${FIXTURE}.js`);
+describe(`ComponentPlayground (${FIXTURE}) Render URLs`, () => {
+  const render = require('helpers/render-component');
+  const getUrlProps = require('helpers/get-url-props');
 
-  var component,
-    $component,
-    container,
-    fixture;
+  const fixture = require(`fixtures/component-playground/${FIXTURE}`);
 
-  beforeEach(function () {
+  let component;
+  let $component;
+  let container;
+
+  beforeEach(() => {
     ({ container, component, $component } = render(fixture));
   });
 
-  it('should generate open full-screen url', function () {
+  it('should generate open full-screen url', () => {
     const urlProps = getUrlProps(component.refs.fullScreenButton);
 
     expect(urlProps).to.deep.equal({
@@ -24,7 +34,7 @@ describe(`ComponentPlayground (${FIXTURE}) Render URLs`, function () {
     });
   });
 
-  it('should generate open fixture editor url', function () {
+  it('should generate open fixture editor url', () => {
     const urlProps = getUrlProps(component.refs.editorButton);
 
     expect(urlProps).to.deep.equal({

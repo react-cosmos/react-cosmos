@@ -1,15 +1,25 @@
+/* eslint-env browser, mocha */
+/* eslint-disable
+  global-require,
+  no-unused-vars,
+  no-unused-expressions,
+  import/no-unresolved,
+  import/no-extraneous-dependencies
+*/
+/* global expect, sinon */
+
 const FIXTURE = 'selected-fixture';
 
-describe(`ComponentPlayground (${FIXTURE}) Events DOM`, function () {
-  var utils = require('react-addons-test-utils'),
-    _ = require('lodash'),
-    render = require('helpers/render-component.js'),
-    fixture = require(`fixtures/component-playground/${FIXTURE}.js`);
+describe(`ComponentPlayground (${FIXTURE}) Events DOM`, () => {
+  const utils = require('react-addons-test-utils');
+  const _ = require('lodash');
+  const render = require('helpers/render-component');
 
-  var component,
-    $component,
-    container,
-    fixture;
+  const fixture = require(`fixtures/component-playground/${FIXTURE}`);
+
+  let component;
+  let $component;
+  let container;
 
   const stubbedFixture = _.assign({}, fixture, {
     router: {
@@ -18,44 +28,44 @@ describe(`ComponentPlayground (${FIXTURE}) Events DOM`, function () {
     },
   });
 
-  beforeEach(function () {
+  beforeEach(() => {
     ({ container, component, $component } = render(stubbedFixture));
   });
 
-  afterEach(function () {
+  afterEach(() => {
     stubbedFixture.router.goTo.reset();
     stubbedFixture.router.routeLink.reset();
   });
 
-  it('should route link on home button', function () {
+  it('should route link on home button', () => {
     utils.Simulate.click(component.refs.homeButton);
 
     expect(component.props.router.routeLink).to.have.been.called;
   });
 
-  it('should route link on editor button', function () {
+  it('should route link on editor button', () => {
     utils.Simulate.click(component.refs.editorButton);
 
     expect(component.props.router.routeLink).to.have.been.called;
   });
 
-  it('should route link on full screen button', function () {
+  it('should route link on full screen button', () => {
     utils.Simulate.click(component.refs.fullScreenButton);
 
     expect(component.props.router.routeLink).to.have.been.called;
   });
 
-  it('should route link on new fixture button', function () {
+  it('should route link on new fixture button', () => {
     utils.Simulate.click(
         component.refs['fixtureButton-FirstComponent-error']);
 
     expect(component.props.router.goTo).to.have.been.called;
   });
 
-  describe('Clicking button of already selected fixture', function () {
+  describe('Clicking button of already selected fixture', () => {
     let stateSet;
 
-    beforeEach(function () {
+    beforeEach(() => {
       sinon.spy(component, 'setState');
 
       utils.Simulate.click(
@@ -64,17 +74,17 @@ describe(`ComponentPlayground (${FIXTURE}) Events DOM`, function () {
       stateSet = component.setState.lastCall.args[0];
     });
 
-    beforeEach(function () {
+    beforeEach(() => {
       component.setState.restore();
     });
 
-    it('should not route link', function () {
+    it('should not route link', () => {
       expect(component.props.router.goTo).to.not.have.been.called;
     });
 
-    it('should reset state', function () {
+    it('should reset state', () => {
       const fixtureContents = _.omit(
-          fixture.components.FirstComponent.fixtures['default'],
+          fixture.components.FirstComponent.fixtures.default,
           _.keys(component.state.fixtureUnserializableProps));
 
       expect(stateSet.fixtureContents).to.deep.equal(fixtureContents);
@@ -83,7 +93,7 @@ describe(`ComponentPlayground (${FIXTURE}) Events DOM`, function () {
       expect(stateSet.isFixtureUserInputValid).to.equal(true);
     });
 
-    it('should bump fixture change', function () {
+    it('should bump fixture change', () => {
       expect(stateSet.fixtureChange).to.equal(fixture.state.fixtureChange + 1);
     });
   });
