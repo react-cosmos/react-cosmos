@@ -1,18 +1,19 @@
-var style = require('./component-playground.less');
+/* eslint-env browser */
+/* eslint-disable react/no-string-refs, react/no-find-dom-node, react/sort-comp */
 
-var _ = require('lodash'),
-    React = require('react'),
-    ReactDOM = require('react-dom-polyfill')(React),
-    findDOMNode = ReactDOM.findDOMNode,
-    classNames = require('classnames'),
-    ComponentTree = require('react-component-tree'),
-    stringifyParams = require('react-querystring-router').uri.stringifyParams,
-    parseLocation = require('react-querystring-router').uri.parseLocation,
-    isSerializable = require('../lib/is-serializable.js').isSerializable,
-    SplitPane = require('ubervu-react-split-pane'),
-    localStorageLib = require('../lib/local-storage.js'),
-    CodeMirror = require('react-codemirror'),
-    fuzzaldrinPlus = require('fuzzaldrin-plus');
+import _ from 'lodash';
+import React from 'react';
+import classNames from 'classnames';
+import ComponentTree from 'react-component-tree';
+import ReactQuerystringRouter from 'react-querystring-router';
+import CodeMirror from 'react-codemirror';
+import fuzzaldrinPlus from 'fuzzaldrin-plus';
+import SplitPane from 'ubervu-react-split-pane';
+import localStorageLib from '../lib/local-storage.js';
+import { isSerializable } from '../lib/is-serializable.js';
+
+const { findDOMNode } = require('react-dom-polyfill')(React);
+const style = require('./component-playground.less');
 
 require('codemirror/lib/codemirror.css');
 require('codemirror/addon/fold/foldgutter.css');
@@ -24,6 +25,9 @@ require('codemirror/addon/fold/foldcode');
 require('codemirror/addon/fold/foldgutter');
 require('codemirror/addon/fold/brace-fold');
 
+const { stringifyParams, parseLocation } = ReactQuerystringRouter.uri;
+
+// eslint-disable-next-line react/prefer-es6-class
 module.exports = React.createClass({
   /**
    * ComponentPlayground provides a minimal frame for loading React components
@@ -32,8 +36,6 @@ module.exports = React.createClass({
    */
   displayName: 'ComponentPlayground',
 
-  mixins: [ComponentTree.Mixin],
-
   propTypes: {
     components: React.PropTypes.object.isRequired,
     component: React.PropTypes.string,
@@ -41,49 +43,52 @@ module.exports = React.createClass({
     editor: React.PropTypes.bool,
     fixture: React.PropTypes.string,
     fullScreen: React.PropTypes.bool,
+    router: React.PropTypes.object,
   },
 
+  mixins: [ComponentTree.Mixin],
+
   statics: {
-    isFixtureSelected: function(props) {
+    isFixtureSelected(props) {
       return !!(props.component && props.fixture);
     },
 
-    didFixtureChange: function(prevProps, nextProps) {
+    didFixtureChange(prevProps, nextProps) {
       return prevProps.component !== nextProps.component ||
              prevProps.fixture !== nextProps.fixture;
     },
 
-    getSelectedComponentClass: function(props) {
+    getSelectedComponentClass(props) {
       return props.components[props.component].class;
     },
 
-    getSelectedFixtureContents: function(props) {
+    getSelectedFixtureContents(props) {
       return props.components[props.component]
                   .fixtures[props.fixture];
     },
 
-    getStringifiedFixtureContents: function(fixtureContents) {
+    getStringifiedFixtureContents(fixtureContents) {
       return JSON.stringify(fixtureContents, null, 2);
     },
 
-    getFixtureState: function(props) {
-      var state = {
+    getFixtureState(props) {
+      const state = {
         fixtureContents: {},
         fixtureUnserializableProps: {},
         fixtureUserInput: '{}',
-        isFixtureUserInputValid: true
+        isFixtureUserInputValid: true,
       };
 
       if (this.isFixtureSelected(props)) {
-        var originalFixtureContents = this.getSelectedFixtureContents(props),
-            fixtureContents = {},
-            fixtureUnserializableProps = {};
+        const originalFixtureContents = this.getSelectedFixtureContents(props);
+        const fixtureContents = {};
+        const fixtureUnserializableProps = {};
 
         // Unserializable props are stored separately from serializable ones
         // because the serializable props can be overriden by the user using
         // the editor, while the unserializable props are always attached
         // behind the scenes
-        _.forEach(originalFixtureContents, function(value, key) {
+        _.forEach(originalFixtureContents, (value, key) => {
           if (isSerializable(value)) {
             fixtureContents[key] = value;
           } else {
@@ -92,40 +97,40 @@ module.exports = React.createClass({
         });
 
         _.assign(state, {
-          fixtureContents: fixtureContents,
-          fixtureUnserializableProps: fixtureUnserializableProps,
-          fixtureUserInput: this.getStringifiedFixtureContents(fixtureContents)
+          fixtureContents,
+          fixtureUnserializableProps,
+          fixtureUserInput: this.getStringifiedFixtureContents(fixtureContents),
         });
       }
 
       return state;
-    }
+    },
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       editor: false,
       fullScreen: false,
     };
   },
 
-  getInitialState: function() {
-    var defaultState = {
+  getInitialState() {
+    const defaultState = {
       fixtureChange: 0,
       isEditorFocused: false,
       orientation: 'landscape',
-      searchText: ''
+      searchText: '',
     };
 
     return _.assign(defaultState, this.constructor.getFixtureState(this.props));
   },
 
   children: {
-    preview: function() {
-      var params = {
+    preview() {
+      const params = {
         component: this.constructor.getSelectedComponentClass(this.props),
         // Child should re-render whenever fixture changes
-        key: this._getPreviewComponentKey()
+        key: this.getPreviewComponentKey(),
       };
 
       // Shallow apply unserializable props
@@ -134,23 +139,23 @@ module.exports = React.createClass({
       return _.merge(params, _.omit(this.state.fixtureContents, 'state'));
     },
 
-    splitPane: function() {
+    splitPane() {
       return {
         component: SplitPane,
         key: 'editorPreviewSplitPane',
-        split: this._getOrientationDirection(),
+        split: this.getOrientationDirection(),
         defaultSize: localStorageLib.get('splitPos'),
-        onChange: (size => {localStorageLib.set('splitPos', size)}),
+        onChange: (size => localStorageLib.set('splitPos', size)),
         minSize: 20,
-        resizerClassName: this._getSplitPaneClasses('resizer'),
+        resizerClassName: this.getSplitPaneClasses('resizer'),
         children: [
-          this._renderFixtureEditor(),
-          this._renderPreview()
-        ]
+          this.renderFixtureEditor(),
+          this.renderPreview(),
+        ],
       };
     },
 
-    editor: function() {
+    editor() {
       return {
         component: CodeMirror,
         key: 'editor',
@@ -162,28 +167,28 @@ module.exports = React.createClass({
           foldGutter: true,
           lineNumbers: true,
           theme: 'solarized light',
-          gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter']
-        }
+          gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+        },
       };
-    }
+    },
   },
 
-  render: function() {
-    var isFixtureSelected = this._isFixtureSelected();
+  render() {
+    const isFixtureSelected = this.isFixtureSelected();
 
-    var classes = {};
-    classes[style['component-playground']] = true;
-    classes[style['full-screen']] = this.props.fullScreen;
-    classes = classNames(classes);
+    const classes = classNames({
+      [style['component-playground']]: true,
+      [style['full-screen']]: this.props.fullScreen,
+    });
 
     return (
       <div className={classes}>
         <div className={style['left-nav']}>
           <div className={style.header}>
-            {this._renderHomeButton()}
-            {isFixtureSelected ? this._renderMenu() : null}
+            {this.renderHomeButton()}
+            {isFixtureSelected ? this.renderMenu() : null}
           </div>
-          <div className={style['fixtures']}>
+          <div className={style.fixtures}>
             <div className={style['filter-input-container']}>
               <input
                 ref="filterInput"
@@ -191,149 +196,180 @@ module.exports = React.createClass({
                 placeholder="Search it"
                 onChange={this.onSearchChange}
               />
-              <i className={style['filter-input-icon']}/>
+              <i className={style['filter-input-icon']} />
             </div>
-            {this._renderFixtures()}
+            {this.renderFixtures()}
           </div>
         </div>
-        {isFixtureSelected ? this._renderContentFrame() : null}
+        {isFixtureSelected ? this.renderContentFrame() : null}
       </div>
     );
   },
 
-  _renderPreview: function() {
-    return <div ref="previewContainer"
-                key="previewContainer"
-                className={this._getPreviewClasses()}>
-      {this.loadChild('preview')}
-    </div>
+  renderPreview() {
+    return (
+      <div
+        ref="previewContainer"
+        key="previewContainer"
+        className={this.getPreviewClasses()}
+      >
+        {this.loadChild('preview')}
+      </div>
+    );
   },
 
-  _renderFixtures: function() {
-    return <ul className={style.components}>
-      {_.map(this._getFilteredFixtures(), function(component, componentName) {
-        return <li className={style.component} key={componentName}>
-          <p ref={'componentName-' + componentName}
-             className={style['component-name']}>{componentName}</p>
-          {this._renderComponentFixtures(componentName, component.fixtures)}
-        </li>;
-
-      }.bind(this))}
-    </ul>
+  renderFixtures() {
+    return (
+      <ul className={style.components}>
+        {_.map(this.getFilteredFixtures(), (component, componentName) => (
+          <li className={style.component} key={componentName}>
+            <p
+              ref={`componentName-${componentName}`}
+              className={style['component-name']}
+            >
+              {componentName}
+            </p>
+            {this.renderComponentFixtures(componentName, component.fixtures)}
+          </li>
+        ))}
+      </ul>
+    );
   },
 
-  _renderComponentFixtures: function(componentName, fixtures) {
-    return <ul className={style['component-fixtures']}>
-      {_.map(fixtures, function(props, fixtureName) {
-        var fixtureProps = this._extendFixtureRoute({
-          component: componentName,
-          fixture: fixtureName
-        });
+  renderComponentFixtures(componentName, fixtures) {
+    return (
+      <ul className={style['component-fixtures']}>
+        {_.map(fixtures, (props, fixtureName) => {
+          const fixtureProps = this.extendFixtureRoute({
+            component: componentName,
+            fixture: fixtureName,
+          });
 
-        return <li className={this._getFixtureClasses(componentName,
-                                                      fixtureName)}
-                   key={fixtureName}>
-          <a ref={'fixtureButton-' + componentName + '-' + fixtureName}
-             href={stringifyParams(fixtureProps)}
-             title={fixtureName}
-             onClick={this.onFixtureClick}>
-            {fixtureName}
-          </a>
-        </li>;
-
-      }.bind(this))}
-    </ul>;
+          return (
+            <li
+              className={this.getFixtureClasses(componentName, fixtureName)}
+              key={fixtureName}
+            >
+              <a
+                ref={`fixtureButton-${componentName}-${fixtureName}`}
+                href={stringifyParams(fixtureProps)}
+                title={fixtureName}
+                onClick={this.onFixtureClick}
+              >
+                {fixtureName}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    );
   },
 
-  _renderContentFrame: function() {
-    return <div ref="contentFrame" className={this._getContentFrameClasses()}>
-      {this.props.editor ? this.loadChild('splitPane') : this._renderPreview()}
-    </div>
+  renderContentFrame() {
+    return (
+      <div ref="contentFrame" className={this.getContentFrameClasses()}>
+        {this.props.editor ? this.loadChild('splitPane') : this.renderPreview()}
+      </div>
+    );
   },
 
-  _renderFixtureEditor: function() {
-    return <div key="fixture-editor-outer"
-                className={style['fixture-editor-outer']}>
-      {this.loadChild('editor')}
-    </div>;
+  renderFixtureEditor() {
+    return (
+      <div key="fixture-editor-outer" className={style['fixture-editor-outer']}>
+        {this.loadChild('editor')}
+      </div>
+    );
   },
 
-  _renderHomeButton: function() {
-    var classes = {};
-    classes[style.button] = true;
-    classes[style['play-button']] = true;
-    classes[style['selected-button']] = !this._isFixtureSelected();
-
-    classes = classNames(classes);
-
-    return <a ref="homeButton"
-              className={classes}
-              href={stringifyParams({})}
-              onClick={this.props.router.routeLink}>
-      <span className={style.electron}></span>
-    </a>;
-  },
-
-  _renderMenu: function() {
-    return <p className={style.menu}>
-      {this._renderFixtureEditorButton()}
-      {this._renderFullScreenButton()}
-    </p>;
-  },
-
-  _renderFixtureEditorButton: function() {
-    var classes = {};
-    classes[style.button] = true;
-    classes[style['fixture-editor-button']] = true;
-    classes[style['selected-button']] = this.props.editor;
-    classes = classNames(classes);
-
-    var editorUrlProps = this._extendFixtureRoute({
-      editor: !this.props.editor
+  renderHomeButton() {
+    const classes = classNames({
+      [style.button]: true,
+      [style['play-button']]: true,
+      [style['selected-button']]: !this.isFixtureSelected(),
     });
 
-    return <a className={classes}
-              href={stringifyParams(editorUrlProps)}
-              ref="editorButton"
-              onClick={this.props.router.routeLink}></a>;
+    return (
+      <a
+        ref="homeButton"
+        className={classes}
+        href={stringifyParams({})}
+        onClick={this.props.router.routeLink}
+      >
+        <span className={style.electron} />
+      </a>
+    );
   },
 
-  _renderFullScreenButton: function() {
-    var fullScreenProps = this._extendFixtureRoute({
+  renderMenu() {
+    return (
+      <p className={style.menu}>
+        {this.renderFixtureEditorButton()}
+        {this.renderFullScreenButton()}
+      </p>
+    );
+  },
+
+  renderFixtureEditorButton() {
+    const classes = classNames({
+      [style.button]: true,
+      [style['fixture-editor-button']]: true,
+      [style['selected-button']]: this.props.editor,
+    });
+
+    const editorUrlProps = this.extendFixtureRoute({
+      editor: !this.props.editor,
+    });
+
+    return (
+      <a
+        className={classes}
+        href={stringifyParams(editorUrlProps)}
+        ref="editorButton"
+        onClick={this.props.router.routeLink}
+      />
+    );
+  },
+
+  renderFullScreenButton() {
+    const fullScreenProps = this.extendFixtureRoute({
       fullScreen: true,
-      editor: false
+      editor: false,
     });
 
-    return <a className={style.button + ' ' + style['full-screen-button']}
-              href={stringifyParams(fullScreenProps)}
-              ref="fullScreenButton"
-              onClick={this.props.router.routeLink}></a>;
+    return (
+      <a
+        className={`${style.button} ${style['full-screen-button']}`}
+        href={stringifyParams(fullScreenProps)}
+        ref="fullScreenButton"
+        onClick={this.props.router.routeLink}
+      />
+    );
   },
 
-  componentDidMount: function() {
-    this._fixtureUpdateInterval = setInterval(this.onFixtureUpdate, 100);
+  componentDidMount() {
+    this.fixtureUpdateInterval = setInterval(this.onFixtureUpdate, 100);
 
     if (this.refs.preview) {
-      this._injectPreviewChildState();
+      this.injectPreviewChildState();
     }
 
     window.addEventListener('resize', this.onWindowResize);
 
-    this._updateContentFrameOrientation();
+    this.updateContentFrameOrientation();
 
     if (this.props.component) {
-      findDOMNode(this.refs['componentName-' + this.props.component])
-                 .scrollIntoView({behavior:'smooth'});
+      findDOMNode(this.refs[`componentName-${this.props.component}`])
+          .scrollIntoView({ behavior: 'smooth' });
     }
   },
 
-  componentWillReceiveProps: function(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (this.constructor.didFixtureChange(this.props, nextProps)) {
       this.setState(this.constructor.getFixtureState(nextProps));
     }
   },
 
-  shouldComponentUpdate: function(nextProps, nextState) {
+  shouldComponentUpdate(nextProps, nextState) {
     // This is pretty wasteful, but it's more important to make sure the loaded
     // component doesn't render on every onFixtureUpdate loop, unless its state
     // changed
@@ -342,117 +378,118 @@ module.exports = React.createClass({
                       _.omit(nextState, 'isEditorFocused'));
   },
 
-  componentDidUpdate: function(prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if (this.refs.preview && (
         this.constructor.didFixtureChange(prevProps, this.props) ||
         prevState.fixtureChange !== this.state.fixtureChange)) {
-      this._injectPreviewChildState();
+      this.injectPreviewChildState();
     }
   },
 
-  componentWillUnmount: function() {
-    clearInterval(this._fixtureUpdateInterval);
+  componentWillUnmount() {
+    clearInterval(this.fixtureUpdateInterval);
 
     window.removeEventListener('resize', this.onWindowResize);
   },
 
-  onFixtureClick: function(event) {
+  onFixtureClick(event) {
     event.preventDefault();
 
-    var location = event.currentTarget.href,
-        params = parseLocation(location);
+    const location = event.currentTarget.href;
+    const params = parseLocation(location);
 
     if (this.constructor.didFixtureChange(this.props, params)) {
       this.props.router.goTo(location);
     } else {
       // This happens when we want to reset a fixture to its original state by
       // clicking on the fixture button while already selected
-      var originalState = this.constructor.getFixtureState(this.props);
+      const originalState = this.constructor.getFixtureState(this.props);
 
       // We also need to bump fixtureChange to trigger a key change for the
       // preview child, because the component and fixture names didn't change
       this.setState(_.assign(originalState, {
-        fixtureChange: this.state.fixtureChange + 1
+        fixtureChange: this.state.fixtureChange + 1,
       }));
     }
   },
 
-  onEditorFocusChange: function(isFocused) {
-    this.setState({isEditorFocused: isFocused});
+  onEditorFocusChange(isFocused) {
+    this.setState({ isEditorFocused: isFocused });
   },
 
-  onFixtureUpdate: function() {
+  onFixtureUpdate() {
     if (!this.refs.preview ||
         // Don't update fixture contents while the user is editing the fixture
         this.state.isEditorFocused) {
       return;
     }
 
-    var snapshot = ComponentTree.serialize(this.refs.preview);
+    const snapshot = ComponentTree.serialize(this.refs.preview);
 
     // Continue to ignore unserializable props
-    var serializableSnapshot =
+    const serializableSnapshot =
         _.omit(snapshot, _.keys(this.state.fixtureUnserializableProps));
 
     this.setState({
       fixtureContents: serializableSnapshot,
       fixtureUserInput:
           this.constructor.getStringifiedFixtureContents(serializableSnapshot),
-      isFixtureUserInputValid: true
+      isFixtureUserInputValid: true,
     });
   },
 
-  onFixtureChange: function(editorValue) {
-    var newState = {fixtureUserInput: editorValue};
+  onFixtureChange(editorValue) {
+    const newState = { fixtureUserInput: editorValue };
+
     try {
-      var fixtureContents = {};
+      const fixtureContents = {};
 
       if (editorValue) {
         _.merge(fixtureContents, JSON.parse(editorValue));
       }
 
       _.assign(newState, {
-        fixtureContents: fixtureContents,
+        fixtureContents,
         fixtureChange: this.state.fixtureChange + 1,
-        isFixtureUserInputValid: true
+        isFixtureUserInputValid: true,
       });
     } catch (e) {
       newState.isFixtureUserInputValid = false;
+      // eslint-disable-next-line no-console
       console.error(e);
     }
 
     this.setState(newState);
   },
 
-  onWindowResize: function(e) {
-    this._updateContentFrameOrientation();
+  onWindowResize() {
+    this.updateContentFrameOrientation();
   },
 
-  onSearchChange: function(e) {
+  onSearchChange(e) {
     this.setState({
-      searchText: e.target.value
+      searchText: e.target.value,
     });
   },
 
-  _isFixtureSelected: function() {
+  isFixtureSelected() {
     return this.constructor.isFixtureSelected(this.props);
   },
 
-  _getPreviewComponentKey: function() {
-    return this.props.component + '-' +
-           this.props.fixture + '-' +
-           this.state.fixtureChange;
+  getPreviewComponentKey() {
+    return `${this.props.component}-${this.props.fixture}-${this.state.fixtureChange}`;
   },
 
-  _getContentFrameClasses: function() {
-    var classes = {};
-    classes[style['content-frame']] = true;
-    return classNames(classes);
+  getContentFrameClasses() {
+    return classNames({
+      [style['content-frame']]: true,
+    });
   },
 
-  _getPreviewClasses: function() {
-    var classes = {};
-    classes[style.preview] = true;
+  getPreviewClasses() {
+    const classes = {
+      [style.preview]: true,
+    };
 
     if (this.props.containerClassName) {
       classes[this.props.containerClassName] = true;
@@ -461,84 +498,80 @@ module.exports = React.createClass({
     return classNames(classes);
   },
 
-  _getFixtureClasses: function(componentName, fixtureName) {
-    var classes = {};
-    classes[style['component-fixture']] = true;
-    classes[style.selected] = this._isCurrentFixtureSelected(componentName,
-                                                             fixtureName);
-
-    return classNames(classes);
+  getFixtureClasses(componentName, fixtureName) {
+    return classNames({
+      [style['component-fixture']]: true,
+      [style.selected]: this.isCurrentFixtureSelected(componentName, fixtureName),
+    });
   },
 
-  _isCurrentFixtureSelected(componentName, fixtureName) {
+  isCurrentFixtureSelected(componentName, fixtureName) {
     return componentName === this.props.component &&
            fixtureName === this.props.fixture;
   },
 
-  _extendFixtureRoute: function(newProps) {
-    var currentProps = {
+  extendFixtureRoute(newProps) {
+    const currentProps = {
       component: this.props.component,
       fixture: this.props.fixture,
       editor: this.props.editor,
-      fullScreen: this.props.fullScreen
+      fullScreen: this.props.fullScreen,
     };
 
-    var defaultProps = this.constructor.getDefaultProps(),
-        props = _.assign(_.omit(currentProps, _.keys(newProps)), newProps);
+    const defaultProps = this.constructor.getDefaultProps();
+    const props = _.assign(_.omit(currentProps, _.keys(newProps)), newProps);
 
     // No need to include props with default values
-    return _.omit(props, function(value, key) {
-      return value === defaultProps[key];
-    });
+    return _.omit(props, (value, key) => value === defaultProps[key]);
   },
 
-  _injectPreviewChildState: function() {
-    var state = this.state.fixtureContents.state;
+  injectPreviewChildState() {
+    const { state } = this.state.fixtureContents;
 
     if (!_.isEmpty(state)) {
       ComponentTree.injectState(this.refs.preview, _.cloneDeep(state));
     }
   },
 
-  _updateContentFrameOrientation: function() {
-    if (!this._isFixtureSelected()) {
+  updateContentFrameOrientation() {
+    if (!this.isFixtureSelected()) {
       return;
     }
 
-    var contentNode = this._getContentNode();
+    const contentNode = this.getContentNode();
 
     this.setState({
       orientation: contentNode.offsetHeight > contentNode.offsetWidth ?
-                   'portrait' : 'landscape'
+                   'portrait' : 'landscape',
     });
   },
 
-  _getOrientationDirection: function() {
-    return this.state.orientation == 'landscape' ? 'vertical' : 'horizontal';
+  getOrientationDirection() {
+    return this.state.orientation === 'landscape' ? 'vertical' : 'horizontal';
   },
 
-  _getSplitPaneClasses: function(type) {
-    return classNames(style[this._getOrientationDirection()], style[type]);
+  getSplitPaneClasses(type) {
+    return classNames(style[this.getOrientationDirection()], style[type]);
   },
 
-  _getContentNode: function() {
+  getContentNode() {
     return findDOMNode(this.refs.contentFrame);
   },
 
-  _getFilteredFixtures() {
-    var components = this.props.components;
+  getFilteredFixtures() {
+    const components = this.props.components;
 
     if (this.state.searchText.length < 2) {
       return components;
     }
 
-    return _.reduce(components, function(acc, component, componentName) {
-      var fixtureNames = Object.keys(component.fixtures);
-      var search = this.state.searchText;
+    return _.reduce(components, (acc, component, componentName) => {
+      const fixtureNames = Object.keys(component.fixtures);
+      const search = this.state.searchText;
 
-      var filteredFixtureNames = _.filter(fixtureNames, function(fixtureName) {
-        var componentAndFixture = componentName + fixtureName,
-            fixtureAndComponent = fixtureName + componentName;
+      const filteredFixtureNames = _.filter(fixtureNames, (fixtureName) => {
+        const componentAndFixture = componentName + fixtureName;
+        const fixtureAndComponent = fixtureName + componentName;
 
         // Ensure that the fuzzy search is working in both direction.
         // component + fixture and fixture + component. That's because the user
@@ -546,8 +579,8 @@ module.exports = React.createClass({
         // we want to show the correct result.
         return !_.isEmpty(fuzzaldrinPlus.match(componentAndFixture, search)) ||
                !_.isEmpty(fuzzaldrinPlus.match(fixtureAndComponent, search)) ||
-               this._isCurrentFixtureSelected(componentName, fixtureName);
-      }.bind(this));
+               this.isCurrentFixtureSelected(componentName, fixtureName);
+      });
 
       // Do not render the component if there are no fixtures
       if (filteredFixtureNames.length === 0) {
@@ -555,17 +588,19 @@ module.exports = React.createClass({
       }
 
       // Show only the fixtures that matched the search query
-      var fixtures = _.reduce(filteredFixtureNames, function(acc, fixture) {
-        acc[fixture] = component.fixtures[fixture];
+      const fixtures = _.reduce(filteredFixtureNames, (acc2, fixture) => {
+        // eslint-disable-next-line no-param-reassign
+        acc2[fixture] = component.fixtures[fixture];
 
-        return acc;
+        return acc2;
       }, {});
 
+      // eslint-disable-next-line no-param-reassign
       acc[componentName] = _.assign({}, component, {
-        fixtures: fixtures
+        fixtures,
       });
 
       return acc;
-    }.bind(this), {});
-  }
+    }, {});
+  },
 });

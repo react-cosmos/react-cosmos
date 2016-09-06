@@ -21,7 +21,7 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, function() {
   });
 
   it('should filter the components', function() {
-    expect(component._getFilteredFixtures()).to.have.all.keys(
+    expect(component.getFilteredFixtures()).to.have.all.keys(
         'FirstComponent', 'SecondComponent')
   });
 });

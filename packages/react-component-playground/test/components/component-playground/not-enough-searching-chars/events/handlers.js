@@ -21,6 +21,6 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, function() {
   });
 
   it('should not filter the components', function() {
-    expect(component._getFilteredFixtures()).to.deep.equal(fixture.components)
+    expect(component.getFilteredFixtures()).to.deep.equal(fixture.components)
   });
 });

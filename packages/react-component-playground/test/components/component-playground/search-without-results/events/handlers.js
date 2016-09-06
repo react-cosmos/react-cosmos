@@ -15,6 +15,6 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, function() {
   });
 
   it('should not render any components based on search value', function() {
-    expect(component._getFilteredFixtures()).to.be.empty;
+    expect(component.getFilteredFixtures()).to.be.empty;
   });
 });

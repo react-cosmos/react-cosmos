@@ -22,7 +22,7 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, function() {
 
   describe('orientation', function() {
     function simulateWindowResize(width, height) {
-      sinon.stub(component, '_getContentNode').returns({
+      sinon.stub(component, 'getContentNode').returns({
         offsetWidth: width,
         offsetHeight: height
       });
