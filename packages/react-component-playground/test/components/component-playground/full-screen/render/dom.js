@@ -1,20 +1,20 @@
-var FIXTURE = 'full-screen';
-var style = require('component-playground/components/component-playground.less');
+const FIXTURE = 'full-screen';
+const style = require('component-playground/components/component-playground.less');
 
-describe(`ComponentPlayground (${FIXTURE}) Render DOM`, function() {
+describe(`ComponentPlayground (${FIXTURE}) Render DOM`, function () {
   var render = require('helpers/render-component.js'),
-      fixture = require(`fixtures/component-playground/${FIXTURE}.js`);
+    fixture = require(`fixtures/component-playground/${FIXTURE}.js`);
 
   var component,
-      $component,
-      container,
-      fixture;
+    $component,
+    container,
+    fixture;
 
-  beforeEach(function() {
-    ({container, component, $component} = render(fixture));
+  beforeEach(function () {
+    ({ container, component, $component } = render(fixture));
   });
 
-  it('should add full-screen class', function() {
+  it('should add full-screen class', function () {
     expect($component.hasClass(style['full-screen'])).to.equal(true);
   });
 });

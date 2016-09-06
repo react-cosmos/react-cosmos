@@ -1,19 +1,19 @@
-var React = require('react');
+const React = require('react');
 
 require('./SimpleButton.css');
 
 module.exports = React.createClass({
-  getInitialState: function() {
+  getInitialState() {
     return {
-      clicks: 0
+      clicks: 0,
     };
   },
 
-  onClick: function() {
-    this.setState({clicks: ++this.state.clicks});
+  onClick() {
+    this.setState({ clicks: ++this.state.clicks });
   },
 
-  render: function() {
+  render() {
     return (
       <button
         type="button"
@@ -26,5 +26,5 @@ module.exports = React.createClass({
                  'Clicked ' + this.state.clicks + ' times'}
       </button>
     );
-  }
+  },
 });

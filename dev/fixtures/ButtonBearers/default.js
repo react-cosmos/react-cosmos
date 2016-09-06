@@ -1,3 +1,3 @@
 module.exports = {
-  count: 5
+  count: 5,
 };

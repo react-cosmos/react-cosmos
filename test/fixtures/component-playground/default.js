@@ -1,4 +1,4 @@
-var React = require('react');
+const React = require('react');
 
 class FirstComponent extends React.Component {
   render() {
@@ -21,21 +21,21 @@ module.exports = {
           myProp: false,
           nested: {
             foo: 'bar',
-            shouldBeCloned: {}
+            shouldBeCloned: {},
           },
           children: [
             React.createElement('span', {
               key: '1',
               children: 'test child',
-              customProp: function() {}
-            })
+              customProp() {},
+            }),
           ],
           state: {
-            somethingHappened: false
-          }
+            somethingHappened: false,
+          },
         },
-        'error': {}
-      }
+        'error': {},
+      },
     },
     SecondComponent: {
       class: SecondComponent,
@@ -43,14 +43,14 @@ module.exports = {
         'index': {
           myProp: true,
           state: {
-            somethingHappened: true
-          }
-        }
-      }
-    }
+            somethingHappened: true,
+          },
+        },
+      },
+    },
   },
   router: {
-    routeLink: function() {},
-    goTo: function() {}
-  }
+    routeLink() {},
+    goTo() {},
+  },
 };

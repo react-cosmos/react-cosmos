@@ -1,10 +1,10 @@
 // Replace with 'react-cosmos' in real life
-var startReactCosmos = require('../../packages/react-cosmos');
+const startReactCosmos = require('../../packages/react-cosmos');
 
-var requireComponent = require.context('COSMOS_COMPONENTS_PATH', true);
-var requireFixture = require.context('COSMOS_FIXTURES_PATH', true);
+const requireComponent = require.context('COSMOS_COMPONENTS_PATH', true);
+const requireFixture = require.context('COSMOS_FIXTURES_PATH', true);
 
-var mapContext = (requireContext) =>
+const mapContext = (requireContext) =>
   requireContext.keys().reduce((prev, nextPath) => {
     // Sometimes files crash. E.g. Class components crash when loaded
     // with React <=0.12
@@ -17,7 +17,7 @@ var mapContext = (requireContext) =>
     return prev;
   }, {});
 
-var components = mapContext(requireComponent);
-var fixtures = mapContext(requireFixture);
+const components = mapContext(requireComponent);
+const fixtures = mapContext(requireFixture);
 
 module.exports = startReactCosmos(components, fixtures);

@@ -1,9 +1,9 @@
-var path = require('path'),
-    webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
 
-var src = path.join(__dirname, 'src');
-var lib = path.join(__dirname, 'lib');
-var nodeModules = path.join(__dirname, 'node_modules');
+const src = path.join(__dirname, 'src');
+const lib = path.join(__dirname, 'lib');
+const nodeModules = path.join(__dirname, 'node_modules');
 
 module.exports = {
   entry: src,
@@ -11,7 +11,7 @@ module.exports = {
     libraryTarget: 'umd',
     library: 'ReactComponentPlayground',
     path: lib,
-    filename: 'index.js'
+    filename: 'index.js',
   },
   externals: {
     // No need to bundle JS deps in the lib. They'll be downloaded & bundled
@@ -31,10 +31,10 @@ module.exports = {
     'react-querystring-router': 'react-querystring-router',
     'ubervu-react-split-pane': 'ubervu-react-split-pane',
     'react': 'react',
-    'react-dom': 'react-dom'
+    'react-dom': 'react-dom',
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx'],
   },
   module: {
     loaders: [{
@@ -45,11 +45,11 @@ module.exports = {
       test: /\.(css|less)$/,
       include: src,
       loader: 'style!css?modules&importLoaders=1' +
-              '&localIdentName=[name]__[local]___[hash:base64:5]!less'
+              '&localIdentName=[name]__[local]___[hash:base64:5]!less',
     }, {
       test: /\.css$/,
       include: nodeModules,
-      loader: 'style!css'
-    }]
-  }
+      loader: 'style!css',
+    }],
+  },
 };

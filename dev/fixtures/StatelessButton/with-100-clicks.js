@@ -1,4 +1,4 @@
 module.exports = {
   disabled: false,
-  clicks: 100
+  clicks: 100,
 };

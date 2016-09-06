@@ -1,6 +1,6 @@
 module.exports = {
   disabled: false,
   state: {
-    clicks: 100
-  }
+    clicks: 100,
+  },
 };

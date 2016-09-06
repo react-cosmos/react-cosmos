@@ -1,6 +1,6 @@
 module.exports = {
-  get: function(option) {
-    var stringifiedValue;
+  get(option) {
+    let stringifiedValue;
 
     try {
       stringifiedValue = localStorage.getItem(option);
@@ -15,11 +15,11 @@ module.exports = {
     }
   },
 
-  set: function(option, value) {
+  set(option, value) {
     try {
       return localStorage.setItem(option, JSON.stringify(value));
     } catch (e) {
-      return null
+      return null;
     }
-  }
+  },
 };
