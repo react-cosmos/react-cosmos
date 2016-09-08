@@ -46,7 +46,6 @@ module.exports = React.createClass({
     proxies: React.PropTypes.arrayOf(React.PropTypes.shape({
       component: React.PropTypes.func.isRequired,
       ref: React.PropTypes.string,
-      name: React.PropTypes.name,
     })),
     router: React.PropTypes.object,
   },
