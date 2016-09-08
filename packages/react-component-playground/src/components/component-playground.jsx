@@ -43,6 +43,11 @@ module.exports = React.createClass({
     editor: React.PropTypes.bool,
     fixture: React.PropTypes.string,
     fullScreen: React.PropTypes.bool,
+    proxies: React.PropTypes.arrayOf(React.PropTypes.shape({
+      component: React.PropTypes.func.isRequired,
+      ref: React.PropTypes.string,
+      name: React.PropTypes.name,
+    })),
     router: React.PropTypes.object,
   },
 
@@ -111,6 +116,7 @@ module.exports = React.createClass({
     return {
       editor: false,
       fullScreen: false,
+      proxies: [],
     };
   },
 
@@ -213,9 +219,17 @@ module.exports = React.createClass({
         key="previewContainer"
         className={this.getPreviewClasses()}
       >
-        {this.loadChild('preview')}
+        {this.renderComponent()}
       </div>
     );
+  },
+
+  renderComponent() {
+    return _.reduce(this.props.proxies, (accumulator, proxy) =>
+      React.createElement(proxy.component, _.assign({}, this.props, {
+        children: React.Children.only(accumulator),
+        ref: proxy.ref,
+      })), this.loadChild('preview'));
   },
 
   renderFixtures() {
