@@ -1,28 +1,31 @@
-var React = require('react'),
-    ReactDOM = require('react-dom-polyfill')(React),
-    _ = require('lodash'),
-    uri = require('./uri.js');
+/* eslint-env browser */
 
-var Router = function(options) {
-  this._options = _.extend({
-    defaultProps: {}
-  }, options);
+import React from 'react';
+import _ from 'lodash';
+import uri from './uri.js';
 
-  this.routeLink = this.routeLink.bind(this);
-  this.onPopState = this.onPopState.bind(this);
+const ReactDOM = require('react-dom-polyfill')(React);
 
-  this._bindPopStateEvent();
+class Router {
+  constructor(options) {
+    this.options = _.extend({
+      defaultProps: {},
+    }, options);
 
-  // The initial render is done instantly when the Router instance is created
-  this._loadParams(uri.parseLocation(this._getCurrentLocation()));
-};
+    this.routeLink = this.routeLink.bind(this);
+    this.onPopState = this.onPopState.bind(this);
 
-Router.prototype = {
-  stop: function() {
-    this._unbindPopStateEvent();
-  },
+    this.bindPopStateEvent();
 
-  routeLink: function(event) {
+    // The initial render is done instantly when the Router instance is created
+    this.loadParams(uri.parseLocation(this.getCurrentLocation()));
+  }
+
+  stop() {
+    this.unbindPopStateEvent();
+  }
+
+  routeLink(event) {
     /**
      * Any <a> tag can have this method bound to its onClick event to have
      * their corresponding href location picked up by the built-in Router
@@ -31,72 +34,72 @@ Router.prototype = {
      */
     event.preventDefault();
 
-    this._pushLocation(event.currentTarget.href);
-  },
+    this.pushLocation(event.currentTarget.href);
+  }
 
-  goTo: function(location) {
-    this._pushLocation(location);
-  },
+  goTo(location) {
+    this.pushLocation(location);
+  }
 
-  onPopState: function(e) {
-    var location = this._getCurrentLocation(),
-        params = uri.parseLocation(location);
+  onPopState() {
+    const location = this.getCurrentLocation();
+    const params = uri.parseLocation(location);
 
-    this._loadParams(params);
-  },
+    this.loadParams(params);
+  }
 
-  _pushLocation: function(location) {
+  pushLocation(location) {
     // Old-school refreshes are made when pushState isn't supported
-    if (!this._isPushStateSupported()) {
+    if (!this.isPushStateSupported()) {
       window.location = location;
       return;
     }
 
     // Create a history entry for the new component
-    this._pushHistoryState({}, location);
+    this.pushHistoryState({}, location);
 
-    this._loadParams(uri.parseLocation(location));
-  },
+    this.loadParams(uri.parseLocation(location));
+  }
 
-  _loadParams: function(params) {
-    var props = _.extend({
+  loadParams(params) {
+    const props = _.extend({
       // Always send the components a reference to the router. This makes it
       // possible for a component to change the page through the router and
       // not have to rely on any sort of globals
-      router: this
-    }, this._options.defaultProps, params);
+      router: this,
+    }, this.options.defaultProps, params);
 
-    var ComponentClass = this._options.getComponentClass(props),
-        componentElement = React.createElement(ComponentClass, props);
+    const ComponentClass = this.options.getComponentClass(props);
+    const componentElement = React.createElement(ComponentClass, props);
 
     // The router exposes the instance of the currently rendered component
     this.rootComponent = ReactDOM.render(componentElement,
-                                         this._options.container);
+                                         this.options.container);
 
-    if (_.isFunction(this._options.onChange)) {
-      this._options.onChange.call(this, props);
+    if (_.isFunction(this.options.onChange)) {
+      this.options.onChange.call(this, props);
     }
-  },
+  }
 
-  _getCurrentLocation: function() {
+  getCurrentLocation() {
     return window.location.href;
-  },
+  }
 
-  _bindPopStateEvent: function() {
+  bindPopStateEvent() {
     window.addEventListener('popstate', this.onPopState);
-  },
+  }
 
-  _unbindPopStateEvent: function() {
+  unbindPopStateEvent() {
     window.removeEventListener('popstate', this.onPopState);
-  },
+  }
 
-  _pushHistoryState: function(state, url) {
+  pushHistoryState(state, url) {
     window.history.pushState(state, '', url);
-  },
+  }
 
-  _isPushStateSupported: function() {
+  isPushStateSupported() {
     return !!window.history.pushState;
   }
-};
+}
 
 module.exports = Router;

@@ -5,73 +5,73 @@ module.exports = {
       bearer0: {
         children: {
           button: {
-            clicks: 0
-          }
-        }
+            clicks: 0,
+          },
+        },
       },
       bearer1: {
         children: {
           button: {
-            clicks: 1
-          }
-        }
+            clicks: 1,
+          },
+        },
       },
       bearer2: {
         children: {
           button: {
-            clicks: 1
-          }
-        }
+            clicks: 1,
+          },
+        },
       },
       bearer3: {
         children: {
           button: {
-            clicks: 2
-          }
-        }
+            clicks: 2,
+          },
+        },
       },
       bearer4: {
         children: {
           button: {
-            clicks: 3
-          }
-        }
+            clicks: 3,
+          },
+        },
       },
       bearer5: {
         children: {
           button: {
-            clicks: 5
-          }
-        }
+            clicks: 5,
+          },
+        },
       },
       bearer6: {
         children: {
           button: {
-            clicks: 8
-          }
-        }
+            clicks: 8,
+          },
+        },
       },
       bearer7: {
         children: {
           button: {
-            clicks: 13
-          }
-        }
+            clicks: 13,
+          },
+        },
       },
       bearer8: {
         children: {
           button: {
-            clicks: 21
-          }
-        }
+            clicks: 21,
+          },
+        },
       },
       bearer9: {
         children: {
           button: {
-            clicks: 34
-          }
-        }
-      }
-    }
-  }
+            clicks: 34,
+          },
+        },
+      },
+    },
+  },
 };

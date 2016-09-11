@@ -1,23 +1,23 @@
-var FIXTURE = 'default';
+const FIXTURE = 'default';
 
-describe(`ComponentPlayground (${FIXTURE}) Render Children`, function() {
-  var loadChild = require('react-component-tree').loadChild,
-      render = require('helpers/render-component.js'),
-      spyLoadChild = require('helpers/spy-load-child.js'),
-      fixture = require(`fixtures/component-playground/${FIXTURE}.js`);
+describe(`ComponentPlayground (${FIXTURE}) Render Children`, () => {
+  const loadChild = require('react-component-tree').loadChild;
+  const render = require('helpers/render-component');
+  const spyLoadChild = require('helpers/spy-load-child');
 
-  var component,
-      $component,
-      container,
-      fixture;
+  const fixture = require(`fixtures/component-playground/${FIXTURE}`);
+
+  let component;
+  let $component;
+  let container;
 
   spyLoadChild();
 
-  beforeEach(function() {
-    ({container, component, $component} = render(fixture));
+  beforeEach(() => {
+    ({ container, component, $component } = render(fixture));
   });
 
-  it('should not load preview component', function() {
+  it('should not load preview component', () => {
     expect(loadChild.loadChild).to.not.have.been.called;
   });
 });

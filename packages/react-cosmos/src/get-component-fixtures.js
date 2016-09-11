@@ -39,18 +39,37 @@
   *   }
   * }
   */
-module.exports = function(components, fixtures) {
-  var componentFixtures = {};
+
+const isReactClass = (component) =>
+  typeof component === 'string' || typeof component === 'function';
+
+const getFixturesForComponent = (allFixtures, componentName) => {
+  const isFixtureOfComponent = new RegExp(`${componentName}/([^/]+)$`);
+  const fixtures = {};
+
+  Object.keys(allFixtures).forEach((fixturePath) => {
+    const match = fixturePath.match(isFixtureOfComponent);
+    if (match) {
+      fixtures[match[1]] = allFixtures[fixturePath];
+    }
+  });
+
+  return fixtures;
+};
+
+module.exports = (components, fixtures) => {
+  const componentFixtures = {};
 
   Object.keys(components).forEach((componentPath) => {
-    var component = components[componentPath];
+    let component = components[componentPath];
 
     // This is an implementation detail of Babel:
     // https://medium.com/@kentcdodds/misunderstanding-es6-modules-upgrading-babel-tears-and-a-solution-ad2d5ab93ce0#.skvldbg39
     // It looks like to be a "standard": https://github.com/esnext/es6-module-transpiler/issues/86 **for now**.
+    // eslint-disable-next-line no-underscore-dangle
     if (component.__esModule) {
-      var parts = componentPath.split('/');
-      var componentName = parts[parts.length - 1];
+      const parts = componentPath.split('/');
+      const componentName = parts[parts.length - 1];
       component = component[componentName] || component.default;
     }
 
@@ -61,7 +80,7 @@ module.exports = function(components, fixtures) {
 
     componentFixtures[componentPath] = {
       class: component,
-      fixtures: getFixturesForComponent(fixtures, componentPath)
+      fixtures: getFixturesForComponent(fixtures, componentPath),
     };
 
     // Allow users to browse components before creating fixtures
@@ -71,22 +90,4 @@ module.exports = function(components, fixtures) {
   });
 
   return componentFixtures;
-};
-
-var isReactClass = function(component) {
-  return typeof component === 'string' || typeof component === 'function';
-}
-
-var getFixturesForComponent = function(allFixtures, componentName) {
-  var isFixtureOfComponent = new RegExp(componentName + '/([^/]+)$'),
-      fixtures = {};
-
-  Object.keys(allFixtures).forEach(function(fixturePath) {
-    var match = fixturePath.match(isFixtureOfComponent);
-    if (match) {
-      fixtures[match[1]] = allFixtures[fixturePath];
-    }
-  });
-
-  return fixtures;
 };

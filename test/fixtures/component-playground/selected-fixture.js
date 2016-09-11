@@ -1,6 +1,6 @@
-var React = require('react'),
-    _ = require('lodash'),
-    defaultFixture = require('./default.js');
+import React from 'react';
+import _ from 'lodash';
+import defaultFixture from './default.js';
 
 module.exports = _.merge({}, defaultFixture, {
   component: 'FirstComponent',
@@ -12,21 +12,21 @@ module.exports = _.merge({}, defaultFixture, {
       myProp: false,
       nested: {
         foo: 'bar',
-        shouldBeCloned: {}
+        shouldBeCloned: {},
       },
       state: {
-        somethingHappened: false
-      }
+        somethingHappened: false,
+      },
     },
     fixtureUnserializableProps: {
       children: [
         React.createElement('span', {
           key: '1',
           children: 'test child',
-          customProp: function() {}
-        })
-      ]
+          customProp() {},
+        }),
+      ],
     },
-    fixtureChange: 10
-  }
+    fixtureChange: 10,
+  },
 });

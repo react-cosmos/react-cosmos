@@ -1,33 +1,33 @@
-var FIXTURE = 'default';
+const FIXTURE = 'default';
 
-describe(`ComponentPlayground (${FIXTURE}) Render URLs`, function() {
-  var render = require('helpers/render-component.js'),
-      getUrlProps = require('helpers/get-url-props.js'),
-      fixture = require(`fixtures/component-playground/${FIXTURE}.js`);
+describe(`ComponentPlayground (${FIXTURE}) Render URLs`, () => {
+  const render = require('helpers/render-component');
+  const getUrlProps = require('helpers/get-url-props');
 
-  var component,
-      $component,
-      container,
-      fixture;
+  const fixture = require(`fixtures/component-playground/${FIXTURE}`);
 
-  beforeEach(function() {
-    ({container, component, $component} = render(fixture));
+  let component;
+  let $component;
+  let container;
+
+  beforeEach(() => {
+    ({ container, component, $component } = render(fixture));
   });
 
-  it('should generate urls with component and fixture names', function() {
-    for (var componentName in fixture.components) {
-      var fixtures = fixture.components[componentName].fixtures;
+  it('should generate urls with component and fixture names', () => {
+    Object.keys(fixture.components).forEach((componentName) => {
+      const fixtures = fixture.components[componentName].fixtures;
 
-      for (var fixtureName in fixtures) {
-        var fixtureButton = component.refs[
-            'fixtureButton-' + componentName + '-' + fixtureName];
-        var urlProps = getUrlProps(fixtureButton);
+      Object.keys(fixtures).forEach((fixtureName) => {
+        const fixtureButton = component.refs[
+            `fixtureButton-${componentName}-${fixtureName}`];
+        const urlProps = getUrlProps(fixtureButton);
 
         expect(urlProps).to.deep.equal({
           component: componentName,
-          fixture: fixtureName
+          fixture: fixtureName,
         });
-      }
-    }
+      });
+    });
   });
 });

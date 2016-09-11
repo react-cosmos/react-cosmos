@@ -1,8 +1,9 @@
-var _ = require('lodash'),
-    React = require('react'),
-    ReactDOM = require('react-dom-polyfill')(React);
+import _ from 'lodash';
+import React from 'react';
 
-exports.render = function(options) {
+const ReactDOM = require('react-dom-polyfill')(React);
+
+exports.render = (options) => {
   /**
    * Render a component and reproduce a state snapshot by recursively injecting
    * the nested state into the component tree it generates.
@@ -14,12 +15,14 @@ exports.render = function(options) {
    *
    * @returns {ReactComponent} Reference to the rendered component
    */
-  var props = _.omit(options.snapshot, 'state', 'children'),
-      state = options.snapshot.state,
-      children = options.snapshot.children;
+  const props = _.omit(options.snapshot, 'state', 'children');
+  const state = options.snapshot.state;
+  const children = options.snapshot.children;
 
-  var element = React.createElement(options.component, props, children),
-      component = ReactDOM.render(element, options.container);
+  const element = React.createElement(options.component, props, children);
+  // TODO: Use callback ref: https://facebook.github.io/react/docs/top-level-api.html#reactdom.render
+  // eslint-disable-next-line react/no-render-return-value
+  const component = ReactDOM.render(element, options.container);
 
   if (!_.isEmpty(state)) {
     exports.injectState(component, state);
@@ -28,16 +31,16 @@ exports.render = function(options) {
   return component;
 };
 
-exports.injectState = function(component, state) {
-  var rootState = _.omit(state, 'children'),
-      childrenStates = state.children;
+exports.injectState = (component, state) => {
+  const rootState = _.omit(state, 'children');
+  const childrenStates = state.children;
 
-  component.setState(rootState, function() {
+  component.setState(rootState, () => {
     if (_.isEmpty(childrenStates)) {
       return;
     }
 
-    _.each(component.refs, function(child, ref) {
+    _.each(component.refs, (child, ref) => {
       if (!_.isEmpty(childrenStates[ref])) {
         exports.injectState(child, childrenStates[ref]);
       }

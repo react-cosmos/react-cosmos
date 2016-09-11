@@ -1,13 +1,15 @@
-var React = require('react'),
-    ReactDOM = require('react-dom-polyfill')(React),
-    render = require('../../src/render.js').render;
+import React from 'react';
+import { render } from '../../src/render.js';
 
-describe('UNIT Render', function() {
-  var domContainer,
-      children = [React.createElement('span', {
-        key: '1',
-        children: 'test child'
-      })];
+const ReactDOM = require('react-dom-polyfill')(React);
+
+describe('UNIT Render', () => {
+  const children = [React.createElement('span', {
+    key: '1',
+    children: 'test child',
+  })];
+
+  let domContainer;
 
   class Component extends React.Component {
     render() {
@@ -15,7 +17,7 @@ describe('UNIT Render', function() {
     }
   }
 
-  beforeEach(function() {
+  beforeEach(() => {
     sinon.spy(React, 'createElement');
     sinon.stub(ReactDOM, 'render');
 
@@ -25,44 +27,44 @@ describe('UNIT Render', function() {
       component: Component,
       snapshot: {
         foo: 'bar',
-        children: children
+        children,
       },
-      container: domContainer
+      container: domContainer,
     });
   });
 
-  afterEach(function() {
+  afterEach(() => {
     React.createElement.restore();
     ReactDOM.render.restore();
   });
 
-  it('should create element for component', function() {
-    var args = React.createElement.lastCall.args;
+  it('should create element for component', () => {
+    const args = React.createElement.lastCall.args;
     expect(args[0]).to.equal(Component);
   });
 
-  it('should create element with props', function() {
-    var args = React.createElement.lastCall.args;
+  it('should create element with props', () => {
+    const args = React.createElement.lastCall.args;
     expect(args[1].foo).to.equal('bar');
   });
 
-  it('should omit children from props', function() {
-    var args = React.createElement.lastCall.args;
+  it('should omit children from props', () => {
+    const args = React.createElement.lastCall.args;
     expect(args[1].children).to.be.undefined;
   });
 
-  it('should create element with children', function() {
-    var args = React.createElement.lastCall.args;
+  it('should create element with children', () => {
+    const args = React.createElement.lastCall.args;
     expect(args[2]).to.be.equal(children);
   });
 
-  it('should render created element', function() {
-    var args = ReactDOM.render.lastCall.args;
+  it('should render created element', () => {
+    const args = ReactDOM.render.lastCall.args;
     expect(args[0]).to.equal(React.createElement.returnValues[0]);
   });
 
-  it('should render in given container', function() {
-    var args = ReactDOM.render.lastCall.args;
+  it('should render in given container', () => {
+    const args = ReactDOM.render.lastCall.args;
     expect(args[1]).to.equal(domContainer);
   });
 });

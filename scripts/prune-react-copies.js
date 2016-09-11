@@ -1,9 +1,10 @@
-var path = require('path');
-var rimraf = require('rimraf');
+const path = require('path');
+const rimraf = require('rimraf');
 
-rimraf(path.join(__dirname, '../packages/*/node_modules/react{,-dom}'), function(error) {
+rimraf(path.join(__dirname, '../packages/*/node_modules/react{,-dom}'), (error) => {
   if (error) {
     throw error;
   }
-  console.log('React copies from packages removed successfully.')
+  /* eslint-disable no-console */
+  console.log('React copies from packages removed successfully.');
 });

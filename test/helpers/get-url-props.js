@@ -1,8 +1,10 @@
-var $ = require('jquery'),
-    parseLocation = require('../../packages/react-querystring-router').uri.parseLocation;
+import $ from 'jquery';
+import { uri } from '../../packages/react-querystring-router';
 
-module.exports = function(element) {
-  var href = $(element).attr('href');
+const { parseLocation } = uri;
+
+module.exports = (element) => {
+  const href = $(element).attr('href');
 
   return parseLocation(href);
 };

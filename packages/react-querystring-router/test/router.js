@@ -1,146 +1,140 @@
-var React = require('react'),
-    ReactDOM = require('react-dom-polyfill')(React),
-    _ = require('lodash'),
-    uri = require('../src/uri.js'),
-    Router = require('../src/router.js');
+import React from 'react';
+import uri from '../src/uri.js';
+import Router from '../src/router.js';
 
-describe('Router class', function() {
-  var ComponentClass = {},
-      componentInstance = {},
-      routerOptions,
-      routerInstance,
-      uriLocation,
-      uriParams;
+const ReactDOM = require('react-dom-polyfill')(React);
 
-  var stubWindowApi = function() {
-    sinon.stub(Router.prototype, '_getCurrentLocation', function() {
-      return uriLocation;
-    });
-    sinon.stub(Router.prototype, '_isPushStateSupported').returns(true);
-    sinon.stub(Router.prototype, '_bindPopStateEvent');
-    sinon.stub(Router.prototype, '_unbindPopStateEvent');
-    sinon.stub(Router.prototype, '_pushHistoryState');
+describe('Router class', () => {
+  const ComponentClass = {};
+  const componentInstance = {};
+  let routerOptions;
+  let routerInstance;
+  let uriLocation;
+  let uriParams;
+
+  const stubWindowApi = () => {
+    sinon.stub(Router.prototype, 'getCurrentLocation', () => uriLocation);
+    sinon.stub(Router.prototype, 'isPushStateSupported').returns(true);
+    sinon.stub(Router.prototype, 'bindPopStateEvent');
+    sinon.stub(Router.prototype, 'unbindPopStateEvent');
+    sinon.stub(Router.prototype, 'pushHistoryState');
   };
 
-  var restoreWindowApi = function() {
-    Router.prototype._getCurrentLocation.restore();
-    Router.prototype._isPushStateSupported.restore();
-    Router.prototype._bindPopStateEvent.restore();
-    Router.prototype._unbindPopStateEvent.restore();
-    Router.prototype._pushHistoryState.restore();
+  const restoreWindowApi = () => {
+    Router.prototype.getCurrentLocation.restore();
+    Router.prototype.isPushStateSupported.restore();
+    Router.prototype.bindPopStateEvent.restore();
+    Router.prototype.unbindPopStateEvent.restore();
+    Router.prototype.pushHistoryState.restore();
   };
 
-  var genericTests = function() {
-    it('should unserialize location', function() {
+  const genericTests = () => {
+    it('should unserialize location', () => {
       expect(uri.parseLocation.lastCall.args[0]).to.equal(uriLocation);
     });
 
-    it('should call getComponentClass with params', function() {
-      var propsSent = routerOptions.getComponentClass.lastCall.args[0];
+    it('should call getComponentClass with params', () => {
+      const propsSent = routerOptions.getComponentClass.lastCall.args[0];
       expect(propsSent.component).to.equal(uriParams.component);
       expect(propsSent.dataUrl).to.equal(uriParams.dataUrl);
     });
 
-    it('should call getComponentClass with default props', function() {
-      var propsSent = routerOptions.getComponentClass.lastCall.args[0];
+    it('should call getComponentClass with default props', () => {
+      const propsSent = routerOptions.getComponentClass.lastCall.args[0];
       expect(propsSent.defaultProp)
             .to.equal(routerOptions.defaultProps.defaultProp);
     });
 
-    it('should call createElement with returned class', function() {
+    it('should call createElement with returned class', () => {
       expect(React.createElement.lastCall.args[0]).to.equal(ComponentClass);
     });
 
-    it('should render using URL params as props', function() {
-      var propsSent = React.createElement.lastCall.args[1];
+    it('should render using URL params as props', () => {
+      const propsSent = React.createElement.lastCall.args[1];
       expect(propsSent.dataUrl).to.equal(uriParams.dataUrl);
     });
 
-    it('should attach router reference to props', function() {
+    it('should attach router reference to props', () => {
       expect(React.createElement.lastCall.args[1].router)
             .to.equal(routerInstance);
     });
 
-    it('should extend default props', function() {
-      var props = React.createElement.lastCall.args[1];
+    it('should extend default props', () => {
+      const props = React.createElement.lastCall.args[1];
       expect(props.dataUrl).to.equal(uriParams.dataUrl);
       expect(props.defaultProp).to.equal(true);
     });
 
-    it('should use container node received in options', function() {
+    it('should use container node received in options', () => {
       expect(ReactDOM.render.lastCall.args[1]).to.equal('<fake DOM element>');
     });
 
-    it('should expose reference to root component', function() {
+    it('should expose reference to root component', () => {
       expect(routerInstance.rootComponent).to.equal(componentInstance);
     });
 
-    it('should call onChange callback with params', function() {
-      var params = routerOptions.onChange.lastCall.args[0];
+    it('should call onChange callback with params', () => {
+      const params = routerOptions.onChange.lastCall.args[0];
       expect(params.component).to.equal(uriParams.component);
       expect(params.dataUrl).to.equal(uriParams.dataUrl);
     });
 
-    it('should call onChange callback with default props', function() {
-      var params = routerOptions.onChange.lastCall.args[0];
+    it('should call onChange callback with default props', () => {
+      const params = routerOptions.onChange.lastCall.args[0];
       expect(params.defaultProp)
             .to.equal(routerOptions.defaultProps.defaultProp);
     });
   };
 
-  var currentLocationTests = function() {
-    it('should get current location', function() {
-      expect(routerInstance._getCurrentLocation).to.have.been.called;
+  const currentLocationTests = () => {
+    it('should get current location', () => {
+      expect(routerInstance.getCurrentLocation).to.have.been.called;
     });
   };
 
-  var pushLocationTests = function() {
-    it('should check if pushState is supported', function() {
-      expect(routerInstance._isPushStateSupported).to.have.been.called;
+  const pushLocationTests = () => {
+    it('should check if pushState is supported', () => {
+      expect(routerInstance.isPushStateSupported).to.have.been.called;
     });
 
-    it('should push new entry to browser history', function() {
+    it('should push new entry to browser history', () => {
       // It's a bit difficult to mock the native functions so we mocked the
       // private methods that wrap those calls
-      //expect(routerInstance._pushHistoryState).to.have.been.called;
-      expect(routerInstance._pushHistoryState.lastCall.args[1])
+      // expect(routerInstance.pushHistoryState).to.have.been.called;
+      expect(routerInstance.pushHistoryState.lastCall.args[1])
           .to.equal(uriLocation);
     });
   };
 
-  beforeEach(function() {
+  beforeEach(() => {
     stubWindowApi();
 
-    sinon.stub(uri, 'parseLocation', function() {
-      return uriParams;
-    });
+    sinon.stub(uri, 'parseLocation', () => uriParams);
 
     sinon.stub(React, 'createElement');
-    sinon.stub(ReactDOM, 'render', function() {
-      return componentInstance;
-    });
+    sinon.stub(ReactDOM, 'render', () => componentInstance);
 
     // Fake browser location and mock (already tested) uri.js lib
     uriLocation = 'mypage.com?component=List&dataUrl=users.json';
 
     uriParams = {
       component: 'List',
-      dataUrl: 'users.json'
+      dataUrl: 'users.json',
     };
 
     routerOptions = {
       defaultProps: {
-        defaultProp: true
+        defaultProp: true,
       },
       container: '<fake DOM element>',
       getComponentClass: sinon.stub().returns(ComponentClass),
-      onChange: sinon.spy()
+      onChange: sinon.spy(),
     };
 
     routerInstance = new Router(routerOptions);
   });
 
-  afterEach(function() {
+  afterEach(() => {
     restoreWindowApi();
 
     uri.parseLocation.restore();
@@ -149,23 +143,23 @@ describe('Router class', function() {
     ReactDOM.render.restore();
   });
 
-  describe('initial location', function() {
+  describe('initial location', () => {
     currentLocationTests();
     genericTests();
   });
 
-  describe('changing location', function() {
-    beforeEach(function() {
+  describe('changing location', () => {
+    beforeEach(() => {
       uriLocation = 'mypage.com?component=User&dataUrl=user.json';
 
       uriParams = {
         component: 'User',
-        dataUrl: 'user.json'
+        dataUrl: 'user.json',
       };
     });
 
-    describe('.goTo method', function() {
-      beforeEach(function() {
+    describe('.goTo method', () => {
+      beforeEach(() => {
         routerInstance.goTo(uriLocation);
       });
 
@@ -173,13 +167,13 @@ describe('Router class', function() {
       genericTests();
     });
 
-    describe('.routeLink method', function() {
-      beforeEach(function() {
+    describe('.routeLink method', () => {
+      beforeEach(() => {
         routerInstance.routeLink({
-          preventDefault: function() {},
+          preventDefault: () => {},
           currentTarget: {
-            href: uriLocation
-          }
+            href: uriLocation,
+          },
         });
       });
 
@@ -187,10 +181,10 @@ describe('Router class', function() {
       genericTests();
     });
 
-    describe('PopState event', function() {
-      beforeEach(function() {
+    describe('PopState event', () => {
+      beforeEach(() => {
         routerInstance.onPopState({
-          state: {}
+          state: {},
         });
       });
 
@@ -198,10 +192,10 @@ describe('Router class', function() {
       genericTests();
     });
 
-    describe('Empty PopState event', function() {
-      beforeEach(function() {
+    describe('Empty PopState event', () => {
+      beforeEach(() => {
         routerInstance.onPopState({
-          state: null
+          state: null,
         });
       });
 

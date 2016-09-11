@@ -1,13 +1,13 @@
-var React = require('react'),
-    ButtonBearer = require('./ButtonBearer.jsx').default;
+const React = require('react');
+const ButtonBearer = require('./ButtonBearer.jsx').default;
 
 class ButtonBearers extends React.Component {
   render() {
-    var bearers = [];
-    for (var i = 0; i < this.props.count; i++) {
+    const bearers = [];
+    for (let i = 0; i < this.props.count; i++) {
       bearers.push(React.createElement(ButtonBearer, {
         key: i,
-        ref: 'bearer' + i
+        ref: 'bearer' + i,
       }));
     }
     return React.DOM.div({}, bearers);
@@ -15,7 +15,7 @@ class ButtonBearers extends React.Component {
 }
 
 ButtonBearers.propTypes = {
-  count: React.PropTypes.number.isRequired
+  count: React.PropTypes.number.isRequired,
 };
 
 module.exports = ButtonBearers;

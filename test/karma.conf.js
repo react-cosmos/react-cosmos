@@ -1,13 +1,13 @@
-var path = require('path');
+const path = require('path');
 
-module.exports = function(config) {
+module.exports = function setKarmaConfig(config) {
   config.set({
     basePath: '../',
     browsers: ['PhantomJS'],
     browserNoActivityTimeout: 30000,
     coverageReporter: {
       type: 'lcov',
-      dir: 'test/coverage/'
+      dir: 'test/coverage/',
     },
     files: [
       'test/bind-polyfill.js',
@@ -16,7 +16,7 @@ module.exports = function(config) {
     frameworks: ['mocha', 'chai', 'sinon-chai'],
     reporters: ['mocha', 'coverage'],
     preprocessors: {
-      'packages/**/*.js': ['webpack']
+      'packages/**/*.js': ['webpack'],
     },
     webpack: {
       resolve: {
@@ -24,8 +24,9 @@ module.exports = function(config) {
         alias: {
           helpers: path.join(__dirname, 'helpers'),
           fixtures: path.join(__dirname, 'fixtures'),
-          'component-playground': path.join(__dirname, '../packages/react-component-playground/src')
-        }
+          'component-playground':
+              path.join(__dirname, '../packages/react-component-playground/src'),
+        },
       },
       module: {
         loaders: [{
@@ -34,21 +35,21 @@ module.exports = function(config) {
           loader: 'babel',
           query: {
             plugins: [
-              ['istanbul', { include: ['packages/*/src/**/*.js{,x}'] }]
-            ]
-          }
+              ['istanbul', { include: ['packages/*/src/**/*.js{,x}'] }],
+            ],
+          },
         }, {
           test: /\.less$/,
           loader: 'style!css?modules&importLoaders=1' +
-              '&localIdentName=[name]__[local]___[hash:base64:5]!less'
+              '&localIdentName=[name]__[local]___[hash:base64:5]!less',
         }, {
           test: /\.css$/,
-          loader: 'style!css'
-        }]
-      }
+          loader: 'style!css',
+        }],
+      },
     },
     webpackMiddleware: {
-      noInfo: true
-    }
+      noInfo: true,
+    },
   });
 };

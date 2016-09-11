@@ -1,6 +1,6 @@
-var _ = require('lodash');
+const _ = require('lodash');
 
-exports.isSerializable = function(obj) {
+exports.isSerializable = (obj) => {
   if (_.isUndefined(obj) ||
       _.isNull(obj) ||
       _.isBoolean(obj) ||
@@ -14,12 +14,13 @@ exports.isSerializable = function(obj) {
     return false;
   }
 
-  for (var key in obj) {
+  let isSerializable = true;
+
+  Object.keys(obj).forEach((key) => {
     if (!exports.isSerializable(obj[key])) {
-      return false;
+      isSerializable = false;
     }
-  }
+  });
 
-  return true;
+  return isSerializable;
 };
-

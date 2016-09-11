@@ -1,48 +1,48 @@
-var FIXTURE = 'selected-fixture';
+const FIXTURE = 'selected-fixture';
 
-describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, function() {
-  var ComponentTree = require('react-component-tree'),
-      render = require('helpers/render-component.js'),
-      fixture = require(`fixtures/component-playground/${FIXTURE}.js`);
+describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, () => {
+  const ComponentTree = require('react-component-tree');
+  const render = require('helpers/render-component');
 
-  var component,
-      $component,
-      container,
-      fixture;
+  const fixture = require(`fixtures/component-playground/${FIXTURE}`);
 
-  beforeEach(function() {
-    ({container, component, $component} = render(fixture));
+  let component;
+  let $component;
+  let container;
+
+  beforeEach(() => {
+    ({ container, component, $component } = render(fixture));
 
     sinon.spy(component, 'setState');
   });
 
-  afterEach(function() {
+  afterEach(() => {
     component.setState.restore();
   });
 
-  describe('orientation', function() {
+  describe('orientation', () => {
     function simulateWindowResize(width, height) {
-      sinon.stub(component, '_getContentNode').returns({
+      sinon.stub(component, 'getContentNode').returns({
         offsetWidth: width,
-        offsetHeight: height
+        offsetHeight: height,
       });
 
       component.onWindowResize();
     }
 
-    it('should be set to landscape on width > height', function() {
+    it('should be set to landscape on width > height', () => {
       simulateWindowResize(300, 200);
 
       expect(component.setState.lastCall.args[0].orientation).to.equal('landscape');
     });
 
-    it('should be set to landscape on width == height', function() {
+    it('should be set to landscape on width == height', () => {
       simulateWindowResize(300, 300);
 
       expect(component.setState.lastCall.args[0].orientation).to.equal('landscape');
     });
 
-    it('should be set to portrait on width < height', function() {
+    it('should be set to portrait on width < height', () => {
       simulateWindowResize(200, 300);
 
       expect(component.setState.lastCall.args[0].orientation).to.equal('portrait');

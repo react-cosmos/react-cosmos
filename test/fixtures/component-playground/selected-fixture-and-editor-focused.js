@@ -1,9 +1,9 @@
-var _ = require('lodash'),
-    defaultFixture = require('./selected-fixture.js');
+import _ from 'lodash';
+import selectedFixture from './selected-fixture.js';
 
-module.exports = _.merge({}, defaultFixture, {
+module.exports = _.merge({}, selectedFixture, {
   editor: true,
   state: {
-    isEditorFocused: true
-  }
+    isEditorFocused: true,
+  },
 });

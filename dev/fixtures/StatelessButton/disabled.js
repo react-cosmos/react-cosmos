@@ -1,3 +1,3 @@
 module.exports = {
-  disabled: true
+  disabled: true,
 };

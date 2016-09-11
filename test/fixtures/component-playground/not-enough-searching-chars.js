@@ -1,8 +1,8 @@
-var _ = require('lodash'),
-    fixture = require('./search-without-results.js');
+import _ from 'lodash';
+import fixture from './search-without-results.js';
 
 module.exports = _.merge({}, fixture, {
   state: {
-    searchText: 'i'
-  }
+    searchText: 'i',
+  },
 });

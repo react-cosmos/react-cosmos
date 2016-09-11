@@ -1,4 +1,6 @@
-var React = require('react');
+/* eslint-disable react/no-multi-comp */
+
+const React = require('react');
 
 class FirstComponent extends React.Component {
   render() {
@@ -17,40 +19,40 @@ module.exports = {
     FirstComponent: {
       class: FirstComponent,
       fixtures: {
-        'default': {
+        default: {
           myProp: false,
           nested: {
             foo: 'bar',
-            shouldBeCloned: {}
+            shouldBeCloned: {},
           },
           children: [
             React.createElement('span', {
               key: '1',
               children: 'test child',
-              customProp: function() {}
-            })
+              customProp() {},
+            }),
           ],
           state: {
-            somethingHappened: false
-          }
+            somethingHappened: false,
+          },
         },
-        'error': {}
-      }
+        error: {},
+      },
     },
     SecondComponent: {
       class: SecondComponent,
       fixtures: {
-        'index': {
+        index: {
           myProp: true,
           state: {
-            somethingHappened: true
-          }
-        }
-      }
-    }
+            somethingHappened: true,
+          },
+        },
+      },
+    },
   },
   router: {
-    routeLink: function() {},
-    goTo: function() {}
-  }
+    routeLink() {},
+    goTo() {},
+  },
 };

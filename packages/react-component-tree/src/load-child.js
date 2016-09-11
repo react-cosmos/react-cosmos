@@ -1,7 +1,26 @@
-var _ = require('lodash'),
-    React = require('react');
+import _ from 'lodash';
+import React from 'react';
 
-exports.loadChild = function(component, childName, a, b, c, d, e, f) {
+const isClassComponent = (Component) =>
+  Component &&
+  Component.prototype &&
+  (typeof Component.prototype.render === 'function' ||
+          'displayName' in Component.prototype.constructor);
+
+
+const getChildParams = (component, childName, a, b, c, d, e, f) => {
+  const params = component.children[childName].call(component, a, b, c, d, e, f);
+
+  // Default the child ref to its key name if the child template doesn't return
+  // a value
+  if (!params.ref && isClassComponent(params.component)) {
+    params.ref = childName;
+  }
+
+  return params;
+};
+
+exports.loadChild = (component, childName, a, b, c, d, e, f) => {
   /**
    * Create a React element for a specific child type.
    *
@@ -39,7 +58,7 @@ exports.loadChild = function(component, childName, a, b, c, d, e, f) {
    *   showAvatar: true
    * });
    */
-  var params = getChildParams.call(
+  const params = getChildParams.call(
       this, component, childName, a, b, c, d, e, f);
 
   // One child with bad params shouldn't block the entire app
@@ -47,26 +66,9 @@ exports.loadChild = function(component, childName, a, b, c, d, e, f) {
     return React.createElement(params.component,
                                _.omit(params, 'component', 'children'),
                                params.children);
-  } catch (e) {
-    console.error(e);
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(err);
+    return null;
   }
-};
-
-var getChildParams = function(component, childName, a, b, c, d, e, f) {
-  var params = component.children[childName].call(component, a, b, c, d, e, f);
-
-  // Default the child ref to its key name if the child template doesn't return
-  // a value
-  if (!params.ref && isClassComponent(params.component)) {
-    params.ref = childName;
-  }
-
-  return params;
-};
-
-var isClassComponent = function(Component) {
-  return Component &&
-         Component.prototype &&
-         (typeof(Component.prototype.render) === 'function' ||
-          'displayName' in Component.prototype.constructor);
 };

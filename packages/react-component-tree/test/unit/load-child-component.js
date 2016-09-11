@@ -1,15 +1,11 @@
-var path = require('path');
+import React from 'react';
+import { renderIntoDocument } from 'react-addons-test-utils';
+import loadChild from '../../src/load-child.js';
+import LoadChildComponent from '../../src/load-child-component.js';
 
-var _ = require('lodash'),
-    React = require('react'),
-    TestUtils = require('react-addons-test-utils'),
-    renderIntoDocument = TestUtils.renderIntoDocument,
-    loadChild = require('../../src/load-child.js'),
-    LoadChildComponent = require('../../src/load-child-component.js');
-
-describe('UNIT Load child component', function() {
-  var fakeReactElement = {},
-      myComponent;
+describe('UNIT Load child component', () => {
+  const fakeReactElement = {};
+  let myComponent;
 
   class MyComponent extends LoadChildComponent {
     constructor(props) {
@@ -21,20 +17,20 @@ describe('UNIT Load child component', function() {
     }
   }
 
-  beforeEach(function() {
+  beforeEach(() => {
     sinon.stub(loadChild, 'loadChild').returns(fakeReactElement);
 
     myComponent = renderIntoDocument(React.createElement(MyComponent, {}));
   });
 
-  afterEach(function() {
+  afterEach(() => {
     loadChild.loadChild.restore();
   });
 
-  it('should call loadChild lib with same args', function() {
+  it('should call loadChild lib with same args', () => {
     myComponent.loadChild('myChild', 5, 10, true);
 
-    var args = loadChild.loadChild.lastCall.args;
+    const args = loadChild.loadChild.lastCall.args;
     expect(args[0]).to.equal(myComponent);
     expect(args[1]).to.equal('myChild');
     expect(args[2]).to.equal(5);
@@ -42,7 +38,7 @@ describe('UNIT Load child component', function() {
     expect(args[4]).to.equal(true);
   });
 
-  it('should return what loadChild lib returned', function() {
+  it('should return what loadChild lib returned', () => {
     expect(myComponent.loadChild()).to.equal(fakeReactElement);
   });
 });

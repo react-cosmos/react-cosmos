@@ -1,65 +1,63 @@
-var FIXTURE = 'selected-fixture';
+const FIXTURE = 'selected-fixture';
 
-describe(`ComponentPlayground (${FIXTURE}) Render Children`, function() {
-  var loadChild = require('react-component-tree').loadChild,
-      render = require('helpers/render-component.js'),
-      spyLoadChild = require('helpers/spy-load-child.js'),
-      fixture = require(`fixtures/component-playground/${FIXTURE}.js`);
+describe(`ComponentPlayground (${FIXTURE}) Render Children`, () => {
+  const loadChild = require('react-component-tree').loadChild;
+  const render = require('helpers/render-component');
+  const spyLoadChild = require('helpers/spy-load-child');
 
-  var component,
-      $component,
-      container,
-      fixture,
-      childParams;
+  const fixture = require(`fixtures/component-playground/${FIXTURE}`);
+
+  let component;
+  let $component;
+  let container;
+  let childParams;
 
   spyLoadChild();
 
-  beforeEach(function() {
-    ({container, component, $component} = render(fixture));
+  beforeEach(() => {
+    ({ container, component, $component } = render(fixture));
 
     childParams = component.children.preview.call(component);
   });
 
-  it('should load preview component', function() {
+  it('should load preview component', () => {
     expect(loadChild.loadChild).to.have.been.called;
   });
 
-  it('should send component class to preview child', function() {
+  it('should send component class to preview child', () => {
     expect(childParams.component)
           .to.equal(fixture.components[fixture.component].class);
   });
 
-  it('should send fixture contents to preview child', function() {
-    var fixtureContents = fixture.state.fixtureContents;
+  it('should send fixture contents to preview child', () => {
+    const fixtureContents = fixture.state.fixtureContents;
 
-    for (var key in fixtureContents) {
+    Object.keys(fixtureContents).forEach((key) => {
       if (key !== 'state') {
         expect(childParams[key]).to.deep.equal(fixtureContents[key]);
       }
-    }
+    });
   });
 
-  it('should send unserializable props to preview child', function() {
-    var fixtureUnserializableContents =
-        fixture.state.fixtureUnserializableContents;
+  it('should send unserializable props to preview child', () => {
+    const fixtureUnserializableProps =
+        fixture.state.fixtureUnserializableProps;
 
-    for (var key in fixtureUnserializableContents) {
-      expect(childParams[key]).to.equal(fixtureUnserializableContents[key]);
-    }
+    Object.keys(fixtureUnserializableProps).forEach((key) => {
+      expect(childParams[key]).to.equal(fixtureUnserializableProps[key]);
+    });
   });
 
-  it('should not send state as prop to preview child', function() {
+  it('should not send state as prop to preview child', () => {
     expect(childParams.state).to.be.undefined;
   });
 
-  it('should generate unique key for preview child', function() {
+  it('should generate unique key for preview child', () => {
     expect(childParams.key).to.equal(
-        fixture.component + '-' +
-        fixture.fixture + '-' +
-        component.state.fixtureChange);
+        `${fixture.component}-${fixture.fixture}-${component.state.fixtureChange}`);
   });
 
-  it('should clone fixture contents sent to child', function() {
+  it('should clone fixture contents sent to child', () => {
     expect(childParams.nested.shouldBeCloned).to.deep.equal(
         fixture.state.fixtureContents.nested.shouldBeCloned);
     expect(childParams.nested.shouldBeCloned).to.not.equal(

@@ -1,30 +1,11 @@
-var _ = require('lodash');
+import _ from 'lodash';
 
-exports.serialize = function(component) {
-  /**
-   * Generate a snapshot with the props and state of a component combined,
-   * including the state of all nested child components.
-   *
-   * @param {ReactComponent} component Rendered React component instance
-   *
-   * @returns {Object} Snapshot with component props and nested state
-   */
-  var snapshot = _.clone(component.props),
-      state = getComponentTreeState(component);
+const getComponentTreeState = (component) => {
+  const state = component.state ? _.clone(component.state) : {};
+  const childrenStates = {};
+  let childState;
 
-  if (!_.isEmpty(state)) {
-    snapshot.state = state;
-  }
-
-  return snapshot;
-};
-
-var getComponentTreeState = function(component) {
-  var state = component.state ? _.clone(component.state) : {},
-      childrenStates = {},
-      childState;
-
-  _.each(component.refs, function(child, ref) {
+  _.each(component.refs, (child, ref) => {
     childState = getComponentTreeState(child);
 
     if (!_.isEmpty(childState)) {
@@ -37,4 +18,23 @@ var getComponentTreeState = function(component) {
   }
 
   return state;
+};
+
+exports.serialize = (component) => {
+  /**
+   * Generate a snapshot with the props and state of a component combined,
+   * including the state of all nested child components.
+   *
+   * @param {ReactComponent} component Rendered React component instance
+   *
+   * @returns {Object} Snapshot with component props and nested state
+   */
+  const snapshot = _.clone(component.props);
+  const state = getComponentTreeState(component);
+
+  if (!_.isEmpty(state)) {
+    snapshot.state = state;
+  }
+
+  return snapshot;
 };
