@@ -1,6 +1,3 @@
-/* eslint-env node, mocha */
-/* global expect, sinon */
-
 import React from 'react';
 import { loadChild } from '../../src/load-child.js';
 

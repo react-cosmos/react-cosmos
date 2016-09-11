@@ -1,8 +1,3 @@
-/* eslint-env node, mocha */
-/* eslint-disable react/no-find-dom-node */
-/* global expect, sinon */
-
-// eslint-disable-next-line import/no-unresolved, import/no-extraneous-dependencies
 const reactDOMPolyfillInjector = require('inject?react-dom!../src');
 
 describe('DOMPolyfill Post React DOM (>=0.14)', () => {

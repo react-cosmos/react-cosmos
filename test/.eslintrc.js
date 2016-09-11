@@ -16,6 +16,8 @@ module.exports = {
     //   require('helpers/render-component')
     "import/no-unresolved": "off",
     "import/no-extraneous-dependencies": "off",
+    // For the moment Cosmos is using findDOMNode()
+    "react/no-find-dom-node": "off",
   },
   globals: {
     expect: true,

@@ -1,6 +1,3 @@
-/* eslint-env browser */
-/* eslint-disable react/no-find-dom-node */
-
 import React from 'react';
 import $ from 'jquery';
 import ComponentTree from '../../packages/react-component-tree';

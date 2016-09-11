@@ -1,6 +1,3 @@
-/* eslint-env mocha */
-/* global sinon */
-
 const ComponentTree = require('../../packages/react-component-tree');
 
 module.exports = () => {

@@ -1,9 +1,4 @@
-/* eslint-env node, mocha, browser */
-/* eslint-disable no-unused-expressions */
-/* global expect, sinon */
-
 import React from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { renderIntoDocument } from 'react-addons-test-utils';
 import { serialize } from '../../src/serialize.js';
 

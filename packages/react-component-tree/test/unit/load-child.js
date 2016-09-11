@@ -1,7 +1,3 @@
-/* eslint-env node, mocha */
-/* eslint-disable no-unused-expressions */
-/* global expect, sinon */
-
 import React from 'react';
 import _ from 'lodash';
 import { loadChild } from '../../src/load-child.js';
