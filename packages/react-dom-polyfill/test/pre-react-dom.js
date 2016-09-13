@@ -1,7 +1,3 @@
-/* eslint-env node, mocha */
-/* eslint-disable react/no-find-dom-node */
-/* global expect, sinon */
-
 const reactDOMPolyfill = require('../src');
 
 describe('DOMPolyfill Pre React DOM (<0.14)', () => {

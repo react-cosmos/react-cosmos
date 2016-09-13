@@ -19,6 +19,7 @@ const PropMutatorProxy = React.createClass({
 const MarkupProxy = React.createClass({
   render() {
     return React.createElement('div', {
+      className: 'markupProxy',
       children: [React.createElement('span',
         { ref: 'textSpan', children: 'Add some text near component' }),
         this.props.children,
@@ -28,12 +29,6 @@ const MarkupProxy = React.createClass({
 });
 
 module.exports = _.merge({}, selectedFixture, {
-  proxies: [{
-    component: PropMutatorProxy,
-    ref: 'PropMutatorProxy',
-  }, {
-    component: MarkupProxy,
-    ref: 'MarkupProxy',
-  }],
+  proxies: [PropMutatorProxy, MarkupProxy],
 });
 

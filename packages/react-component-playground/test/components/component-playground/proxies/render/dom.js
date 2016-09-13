@@ -1,5 +1,7 @@
 const FIXTURE = 'proxies';
 const style = require('component-playground/components/component-playground.less');
+const React = require('react');
+const { findDOMNode } = require('react-dom-polyfill')(React);
 
 describe(`ComponentPlayground (${FIXTURE}) Render DOM`, () => {
   const $ = require('jquery');
@@ -16,11 +18,8 @@ describe(`ComponentPlayground (${FIXTURE}) Render DOM`, () => {
   });
 
   it('should render markup proxy', () => {
-    expect(component.refs.MarkupProxy).to.exist;
-  });
-
-  it('should render prop mutator proxy', () => {
-    expect(component.refs.PropMutatorProxy).to.exist;
+    expect(findDOMNode(component.previewComponent).parentNode.className)
+      .to.equal('markupProxy');
   });
 
   it('should render the selected component', () => {
@@ -32,7 +31,7 @@ describe(`ComponentPlayground (${FIXTURE}) Render DOM`, () => {
   });
 
   it('should add text span next to component', () => {
-    expect(component.refs.MarkupProxy.refs.textSpan.innerHTML)
+    expect(findDOMNode(component.previewComponent).previousSibling.innerHTML)
       .to.equal('Add some text near component');
   });
 });
