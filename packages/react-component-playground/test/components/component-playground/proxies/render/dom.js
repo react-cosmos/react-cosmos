@@ -24,11 +24,11 @@ describe(`ComponentPlayground (${FIXTURE}) Render DOM`, () => {
   });
 
   it('should render the selected component', () => {
-    expect(component.refs.preview).to.exist;
+    expect(component.previewComponent).to.exist;
   });
 
   it('should mutate component prop', () => {
-    expect(component.refs.preview.props.myProp).to.be.true;
+    expect(component.previewComponent.props.myProp).to.be.true;
   });
 
   it('should add text span next to component', () => {

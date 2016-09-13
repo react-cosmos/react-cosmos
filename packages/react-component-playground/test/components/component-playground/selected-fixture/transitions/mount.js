@@ -52,7 +52,7 @@ describe(`ComponentPlayground (${FIXTURE}) Transitions Mount`, () => {
 
   it('should inject state to preview child', () => {
     const args = ComponentTree.injectState.lastCall.args;
-    expect(args[0]).to.equal(component.refs.preview);
+    expect(args[0]).to.equal(component.previewComponent);
     expect(args[1].somethingHappened).to.equal(false);
   });
 });
