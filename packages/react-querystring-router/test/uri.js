@@ -1,6 +1,3 @@
-/* eslint-env node, mocha */
-/* global expect, sinon */
-
 import _ from 'lodash';
 import uri from '../src/uri.js';
 

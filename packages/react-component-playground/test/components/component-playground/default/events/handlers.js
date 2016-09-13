@@ -1,13 +1,3 @@
-/* eslint-env browser, mocha */
-/* eslint-disable
-  global-require,
-  no-unused-vars,
-  no-unused-expressions,
-  import/no-unresolved,
-  import/no-extraneous-dependencies
-*/
-/* global expect, sinon */
-
 const FIXTURE = 'default';
 
 describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, () => {

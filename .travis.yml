@@ -2,6 +2,6 @@ language: node_js
 node_js:
   - "5"
 before_install:
-  - npm install -g lerna@^2.0.0-beta
+  - npm install -g lerna@2.0.0-beta.26
 after_success:
   - npm run coveralls

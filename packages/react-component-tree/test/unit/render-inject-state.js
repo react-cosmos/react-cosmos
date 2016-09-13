@@ -1,8 +1,4 @@
-/* eslint-env node, mocha */
-/* global expect, sinon */
-
 import React from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { renderIntoDocument } from 'react-addons-test-utils';
 import { render } from '../../src/render.js';
 

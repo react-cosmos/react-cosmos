@@ -1,6 +1,3 @@
-/* eslint-env node, mocha, browser */
-/* global expect, sinon */
-
 import React from 'react';
 import { render } from '../../src/render.js';
 

@@ -1,7 +1,3 @@
-/* eslint-env node, mocha */
-/* eslint-disable no-unused-expressions */
-/* global expect, sinon */
-
 import React from 'react';
 import uri from '../src/uri.js';
 import Router from '../src/router.js';

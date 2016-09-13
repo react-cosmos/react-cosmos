@@ -1,12 +1,3 @@
-/* eslint-env browser, mocha */
-/* eslint-disable
-  global-require,
-  no-unused-expressions,
-  import/no-unresolved,
-  import/no-extraneous-dependencies
-*/
-/* global expect, sinon */
-
 const localStorageLib = require('component-playground/lib/local-storage');
 
 describe('Local storage lib', () => {
