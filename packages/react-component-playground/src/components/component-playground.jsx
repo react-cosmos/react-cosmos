@@ -188,16 +188,16 @@ module.exports = React.createClass({
             {this.renderHomeButton()}
             {isFixtureSelected ? this.renderMenu() : null}
           </div>
+          <div className={style['filter-input-container']}>
+            <input
+              ref="filterInput"
+              className={style['filter-input']}
+              placeholder="Search..."
+              onChange={this.onSearchChange}
+            />
+            <i className={style['filter-input-icon']} />
+          </div>
           <div className={style.fixtures}>
-            <div className={style['filter-input-container']}>
-              <input
-                ref="filterInput"
-                className={style['filter-input']}
-                placeholder="Search it"
-                onChange={this.onSearchChange}
-              />
-              <i className={style['filter-input-icon']} />
-            </div>
             {this.renderFixtures()}
           </div>
         </div>
