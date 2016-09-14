@@ -54,7 +54,7 @@ describe(`ComponentPlayground (${FIXTURE}) Transitions Props`, () => {
   });
 
   it('should inject new state to preview child', () => {
-    expect(stateInjected[0]).to.equal(component.refs.preview);
+    expect(stateInjected[0]).to.equal(component.previewComponent);
     expect(stateInjected[1].somethingHappened).to.equal(true);
   });
 });

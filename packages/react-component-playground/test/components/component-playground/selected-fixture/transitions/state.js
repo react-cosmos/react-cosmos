@@ -25,7 +25,7 @@ describe(`ComponentPlayground (${FIXTURE}) Transitions State`, () => {
     });
 
     stateInjected = ComponentTree.injectState.lastCall.args;
-    expect(stateInjected[0]).to.equal(component.refs.preview);
+    expect(stateInjected[0]).to.equal(component.previewComponent);
     expect(stateInjected[1].somethingHappened).to.equal(false);
 
     ComponentTree.injectState.restore();

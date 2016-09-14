@@ -43,6 +43,7 @@ module.exports = React.createClass({
     editor: React.PropTypes.bool,
     fixture: React.PropTypes.string,
     fullScreen: React.PropTypes.bool,
+    proxies: React.PropTypes.arrayOf(React.PropTypes.func),
     router: React.PropTypes.object,
   },
 
@@ -111,6 +112,7 @@ module.exports = React.createClass({
     return {
       editor: false,
       fullScreen: false,
+      proxies: [],
     };
   },
 
@@ -131,6 +133,9 @@ module.exports = React.createClass({
         component: this.constructor.getSelectedComponentClass(this.props),
         // Child should re-render whenever fixture changes
         key: this.getPreviewComponentKey(),
+        ref: (previewComponent) => {
+          this.previewComponent = previewComponent;
+        },
       };
 
       // Shallow apply unserializable props
@@ -213,9 +218,16 @@ module.exports = React.createClass({
         key="previewContainer"
         className={this.getPreviewClasses()}
       >
-        {this.loadChild('preview')}
+        {this.renderComponent()}
       </div>
     );
+  },
+
+  renderComponent() {
+    return _.reduce(this.props.proxies, (accumulator, proxy) =>
+      React.createElement(proxy, _.assign({}, this.props, {
+        children: React.Children.only(accumulator),
+      })), this.loadChild('preview'));
   },
 
   renderFixtures() {
@@ -349,7 +361,7 @@ module.exports = React.createClass({
   componentDidMount() {
     this.fixtureUpdateInterval = setInterval(this.onFixtureUpdate, 100);
 
-    if (this.refs.preview) {
+    if (this.previewComponent) {
       this.injectPreviewChildState();
     }
 
@@ -379,7 +391,7 @@ module.exports = React.createClass({
   },
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.refs.preview && (
+    if (this.previewComponent && (
         this.constructor.didFixtureChange(prevProps, this.props) ||
         prevState.fixtureChange !== this.state.fixtureChange)) {
       this.injectPreviewChildState();
@@ -418,13 +430,13 @@ module.exports = React.createClass({
   },
 
   onFixtureUpdate() {
-    if (!this.refs.preview ||
+    if (!this.previewComponent ||
         // Don't update fixture contents while the user is editing the fixture
         this.state.isEditorFocused) {
       return;
     }
 
-    const snapshot = ComponentTree.serialize(this.refs.preview);
+    const snapshot = ComponentTree.serialize(this.previewComponent);
 
     // Continue to ignore unserializable props
     const serializableSnapshot =
@@ -529,7 +541,7 @@ module.exports = React.createClass({
     const { state } = this.state.fixtureContents;
 
     if (!_.isEmpty(state)) {
-      ComponentTree.injectState(this.refs.preview, _.cloneDeep(state));
+      ComponentTree.injectState(this.previewComponent, _.cloneDeep(state));
     }
   },
 

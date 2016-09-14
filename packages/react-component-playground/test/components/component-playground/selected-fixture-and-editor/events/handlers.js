@@ -41,7 +41,7 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, () => {
 
     it('should serialize preview child', () => {
       expect(ComponentTree.serialize)
-            .to.have.been.calledWith(component.refs.preview);
+            .to.have.been.calledWith(component.previewComponent);
     });
 
     it('should put serializable child state in fixture contents', () => {
