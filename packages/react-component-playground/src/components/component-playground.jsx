@@ -43,7 +43,10 @@ module.exports = React.createClass({
     editor: React.PropTypes.bool,
     fixture: React.PropTypes.string,
     fullScreen: React.PropTypes.bool,
-    proxies: React.PropTypes.arrayOf(React.PropTypes.func),
+    proxies: React.PropTypes.arrayOf(React.PropTypes.shape({
+      component: React.PropTypes.func,
+      props: React.PropTypes.object,
+    })),
     router: React.PropTypes.object,
   },
 
@@ -225,7 +228,7 @@ module.exports = React.createClass({
 
   renderComponent() {
     return _.reduce(this.props.proxies, (accumulator, proxy) =>
-      React.createElement(proxy, _.assign({}, this.props, {
+      React.createElement(proxy.component, _.assign({}, proxy.props, {
         children: React.Children.only(accumulator),
       })), this.loadChild('preview'));
   },

@@ -17,6 +17,7 @@
     "build:cosmos": "PACKAGE=react-cosmos npm run build-babel",
     "build:dom-polyfill": "PACKAGE=react-dom-polyfill npm run build-babel",
     "build:querystring-router": "PACKAGE=react-querystring-router npm run build-babel",
+    "build:redux-proxy": "PACKAGE=react-cosmos-redux-proxy npm run build-babel",
     "build": "rm -rf ./packages/*/lib && npm run build:component-playground && npm run build:component-tree && npm run build:cosmos && npm run build:dom-polyfill && npm run build:querystring-router",
     "prepublish": "npm run bootstrap && npm run build",
     "test": "npm run lint && karma start test/karma.conf.js --single-run",
