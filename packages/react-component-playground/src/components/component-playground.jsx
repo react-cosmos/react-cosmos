@@ -225,6 +225,11 @@ module.exports = React.createClass({
 
   renderComponent() {
     return _.reduce(this.props.proxies, (accumulator, proxy) =>
+      React.createElement(proxy, _.assign({},
+        this.constructor.getSelectedFixtureContents(this.props), {
+          children: React.Children.only(accumulator),
+        }
+      )), this.loadChild('preview'));
   },
 
   renderFixtures() {
