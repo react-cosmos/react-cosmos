@@ -1,4 +1,6 @@
 const path = require('path');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const webpack = require('webpack');
 
 const src = path.join(__dirname, 'src');
 const lib = path.join(__dirname, 'lib');
@@ -51,4 +53,11 @@ module.exports = {
       loader: 'style!css',
     }],
   },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: true,
+      mangle: false,
+      beautify: true,
+    }),
+  ],
 };
