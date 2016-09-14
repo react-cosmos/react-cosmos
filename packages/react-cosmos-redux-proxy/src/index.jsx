@@ -30,7 +30,7 @@ class ReduxProxy extends React.Component {
 
 ReduxProxy.propTypes = {
   children: React.PropTypes.element.isRequired,
-  store: React.PropTypes.object,
+  store: React.PropTypes.object.isRequired,
 };
 
 ReduxProxy.childContextTypes = {
