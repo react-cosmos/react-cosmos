@@ -18,14 +18,11 @@ const ReactDOM = reactDOMPolyfill(React);
 ```
 
 Notes:
-- Also update your React/ReactDOM peer dependencies to make your published lib compatible with all React versions. The latter should be optional. This is a rough example:
+- Also update your React/ReactDOM peer dependencies to make your published lib compatible with all React versions. The latter should be removed (and thus optional). This is a rough example:
 
   ```json
   "peerDependencies": {
     "react": ">=0.12 <16"
-  },
-  "optionalDependencies": {
-    "react-dom": "<16"
   }
   ```
 - Even though calling `findDOMNode` on DOM element refs is not required in newer versions of React, you must always do it to account for older Reacts. This makes this polyfill somewhat *special*. E.g.
