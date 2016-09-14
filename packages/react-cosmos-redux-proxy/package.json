@@ -10,5 +10,8 @@
   },
   "peerDependencies": {
     "react": ">=0.12 <16"
+  },
+  "devDependencies": {
+    "lodash": "^4.15.0"
   }
 }

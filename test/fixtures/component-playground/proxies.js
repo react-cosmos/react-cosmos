@@ -29,12 +29,6 @@ const MarkupProxy = React.createClass({
 });
 
 module.exports = _.merge({}, selectedFixture, {
-  proxies: [{
-    component: PropMutatorProxy,
-    props: {},
-  }, {
-    component: MarkupProxy,
-    props: {},
-  }],
+  proxies: [PropMutatorProxy, MarkupProxy],
 });
 
