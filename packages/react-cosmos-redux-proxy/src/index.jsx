@@ -14,6 +14,10 @@ class ReduxProxy extends React.Component {
   }
 
   render() {
+    // This creates a new element identical to this.props.children.
+    // It is needed because in older versions of React context is owner-based
+    // https://gist.github.com/jimfb/0eb6e61f300a8c1b2ce7
+    // React.cloneElement is not enough either, as it doesn't reset owner in older React versions.
     const { type, props, ref } = this.props.children;
 
     return (
