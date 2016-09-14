@@ -24,8 +24,7 @@ export default ({ storeKey } = { storeKey: 'reduxStore' }) => {
 
       return (
         <div>
-          {React.createElement(type, Object.assign({}, _.omit(props,
-            storeKey), { ref }))}
+          {React.createElement(type, Object.assign({}, _.omit(props, storeKey), { ref }))}
         </div>
       );
     }
