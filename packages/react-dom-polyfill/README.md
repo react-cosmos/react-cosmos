@@ -18,7 +18,7 @@ const ReactDOM = reactDOMPolyfill(React);
 ```
 
 Notes:
-- Also update your React/ReactDOM peer dependencies to make your published lib compatible with all React versions. The latter should be removed (and thus optional). This is a rough example:
+- Also update your React/ReactDOM peer dependencies to make your published lib compatible with all React versions. The latter should be missing (and thus optional). This is a rough example:
 
   ```json
   "peerDependencies": {
