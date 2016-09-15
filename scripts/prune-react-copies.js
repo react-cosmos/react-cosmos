@@ -1,4 +1,5 @@
 const path = require('path');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const rimraf = require('rimraf');
 
 rimraf(path.join(__dirname, '../packages/*/node_modules/react{,-dom}'), (error) => {
