@@ -6,12 +6,10 @@
   "license": "MIT",
   "main": "lib/index.js",
   "dependencies": {
+    "lodash": "^4.15.0",
     "redux": "^3.6.0"
   },
   "peerDependencies": {
     "react": ">=0.12 <16"
-  },
-  "devDependencies": {
-    "lodash": "^4.15.0"
   }
 }

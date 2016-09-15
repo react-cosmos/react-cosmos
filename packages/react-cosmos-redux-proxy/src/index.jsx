@@ -30,8 +30,13 @@ export default ({ storeKey } = { storeKey: 'reduxStore' }) => {
     }
   }
 
+  ReduxProxy.defaultProps = {
+    [storeKey]: {},
+  };
+
   ReduxProxy.propTypes = {
     children: React.PropTypes.element.isRequired,
+    [storeKey]: React.PropTypes.object,
   };
 
   ReduxProxy.childContextTypes = {

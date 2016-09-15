@@ -44,7 +44,7 @@ describe(`ComponentPlayground (${FIXTURE}) Render Children`, () => {
         fixture.state.fixtureUnserializableProps;
 
     Object.keys(fixtureUnserializableProps).forEach((key) => {
-      expect(childParams[key]).to.equal(fixtureUnserializableProps[key]);
+      expect(childParams[key]).to.deep.equal(fixtureUnserializableProps[key]);
     });
   });
 
