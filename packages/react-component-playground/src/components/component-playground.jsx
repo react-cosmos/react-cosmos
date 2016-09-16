@@ -64,6 +64,7 @@ module.exports = React.createClass({
     },
 
     getSelectedFixtureContents(props) {
+      // This returns the fixture contents as it is initially defined, excluding any modifications.
       return props.components[props.component]
                   .fixtures[props.fixture];
     },
@@ -130,7 +131,6 @@ module.exports = React.createClass({
   children: {
     preview() {
       const params = {
-        component: this.constructor.getSelectedComponentClass(this.props),
         // Child should re-render whenever fixture changes
         key: this.getPreviewComponentKey(),
         ref: (previewComponent) => {
@@ -138,10 +138,7 @@ module.exports = React.createClass({
         },
       };
 
-      // Shallow apply unserializable props
-      _.assign(params, this.state.fixtureUnserializableProps);
-
-      return _.merge(params, _.omit(this.state.fixtureContents, 'state'));
+      return _.merge(params, _.omit(this.getCurrentFixtureContents(), 'state'));
     },
 
     splitPane() {
@@ -225,7 +222,7 @@ module.exports = React.createClass({
 
   renderComponent() {
     return _.reduce(this.props.proxies, (accumulator, proxy) =>
-      React.createElement(proxy, _.assign({}, this.props, {
+      React.createElement(proxy, _.assign({}, this.getCurrentFixtureContents(), {
         children: React.Children.only(accumulator),
       })), this.loadChild('preview'));
   },
@@ -559,6 +556,13 @@ module.exports = React.createClass({
       orientation: contentNode.offsetHeight > contentNode.offsetWidth ?
                    'portrait' : 'landscape',
     });
+  },
+
+  getCurrentFixtureContents() {
+    // This returns the fixture contents as it currently is, including user modifications.
+    return _.assign({
+      component: this.constructor.getSelectedComponentClass(this.props),
+    }, this.state.fixtureUnserializableProps, this.state.fixtureContents);
   },
 
   getOrientationDirection() {
