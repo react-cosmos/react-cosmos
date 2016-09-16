@@ -390,10 +390,7 @@ module.exports = React.createClass({
   componentDidUpdate(prevProps, prevState) {
     if (this.previewComponent && (
         this.constructor.didFixtureChange(prevProps, this.props) ||
-        prevState.fixtureChange !== this.state.fixtureChange ||
-        // Toggling the editor re-creates the preview component from scratch,
-        // because SplitPane is added or removed from part of the dom tree
-        prevProps.editor !== this.props.editor)) {
+        prevState.fixtureChange !== this.state.fixtureChange)) {
       this.injectPreviewChildState();
     }
   },
