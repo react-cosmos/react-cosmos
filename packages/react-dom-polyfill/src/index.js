@@ -4,7 +4,7 @@ module.exports = (React) => {
   if (version >= 0.14) {
     // Let bundlers (e.g. webpack) know react-dom won't always be there
     try {
-      // eslint-disable-next-line global-require
+      // eslint-disable-next-line global-require, import/no-extraneous-dependencies
       return require('react-dom');
     } catch (e) {
       return null;

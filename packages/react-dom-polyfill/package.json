@@ -8,9 +8,6 @@
   "peerDependencies": {
     "react": ">=0.12 <16"
   },
-  "optionalDependencies": {
-    "react-dom": "<16"
-  },
   "browserify": {
     "transform": "browserify-optional"
   }
