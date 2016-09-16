@@ -1,8 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
-const postCssNested = require('postcss-nested');
 
-const rootDir = path.join(__dirname, '..');
+const examplePath = path.join(__dirname, '../../example');
 
 module.exports = {
   devtool: 'eval',
@@ -17,15 +16,15 @@ module.exports = {
   },
   resolve: {
     alias: {
-      COSMOS_COMPONENTS_PATH: path.join(rootDir, 'components'),
-      COSMOS_FIXTURES_PATH: path.join(rootDir, 'fixtures'),
+      COSMOS_COMPONENTS_PATH: path.join(examplePath, 'src/components'),
+      COSMOS_FIXTURES_PATH: path.join(examplePath, 'fixtures'),
     },
   },
   module: {
     loaders: [{
       test: /\.jsx?$/,
       loader: 'babel',
-      include: rootDir,
+      exclude: /node_modules/,
       query: {
         presets: ['es2015', 'react'],
         env: {
@@ -35,16 +34,13 @@ module.exports = {
         },
       },
     }, {
-      test: /\.css$/,
-      loader: 'style-loader!css-loader!postcss-loader',
-      include: rootDir,
+      test: /\.(css|less)$/,
+      loader: 'style!css!less',
+      exclude: /node_modules/,
     }],
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
   ],
-  postcss() {
-    return [postCssNested];
-  },
 };
