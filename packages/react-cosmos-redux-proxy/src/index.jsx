@@ -2,11 +2,17 @@ import React from 'react';
 import { createStore } from 'redux';
 import _ from 'lodash';
 
-export default ({ storeKey } = { storeKey: 'reduxStore' }) => {
+const ReduxProxyFactory = ({
+  reducer,
+  storeKey,
+} = {
+  reducer: (state, { payload }) => Object.assign({}, state, payload),
+  storeKey: 'reduxState',
+}) => {
   class ReduxProxy extends React.Component {
     constructor(fixture) {
       super();
-      this.store = createStore((state) => state, fixture[storeKey]);
+      this.store = createStore(reducer, fixture[storeKey]);
     }
 
     getChildContext() {
@@ -46,3 +52,4 @@ export default ({ storeKey } = { storeKey: 'reduxStore' }) => {
   return ReduxProxy;
 };
 
+module.exports = ReduxProxyFactory;
