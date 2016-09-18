@@ -1,11 +1,13 @@
-var React = require('react'),
-    _ = require('lodash'),
-    $ = require('jquery'),
-    constants = require('../constants.js'),
-    events = require('../lib/events.js'),
-    Well = require('./Well.jsx'),
-    GamePanel = require('./GamePanel.jsx'),
-    InfoPanel = require('./InfoPanel.jsx');
+/* global window */
+
+const React = require('react');
+const _ = require('lodash');
+const $ = require('jquery');
+const constants = require('../constants');
+const events = require('../lib/events');
+const Well = require('./Well');
+const GamePanel = require('./GamePanel');
+const InfoPanel = require('./InfoPanel');
 
 require('./FlatrisGame.less');
 
@@ -31,57 +33,11 @@ class FlatrisGame extends React.Component {
     this.pause = this.pause.bind(this);
     this.resume = this.resume.bind(this);
 
-    this.state = _.assign(this._getNewGameDefaults(), {
+    this.state = _.assign(this.getNewGameDefaults(), {
       // Game is stopped by default and there's no Tetrimino to follow
       playing: false,
-      nextTetrimino: null
+      nextTetrimino: null,
     });
-  }
-
-  render() {
-    return <div className="flatris-game">
-      <Well
-        ref="well"
-        rows={constants.WELL_ROWS}
-        cols={constants.WELL_COLS}
-        onTetriminoLanding={this.onTetriminoLanding}
-        onFullWell={this.onFullWell}
-      />
-      {this._renderInfoPanel()}
-      <GamePanel
-        ref="gamePanel"
-        playing={this.state.playing}
-        paused={this.state.paused}
-        score={this.state.score}
-        lines={this.state.lines}
-        nextTetrimino={this.state.nextTetrimino}
-        onPressStart={this.start}
-        onPressPause={this.pause}
-        onPressResume={this.resume}
-      />
-      {this._renderControls()}
-    </div>;
-  }
-
-  _renderInfoPanel() {
-    if (!this.state.playing || this.state.paused) {
-      return <InfoPanel ref="infoPanel" />;
-    }
-  }
-
-  _renderControls() {
-    return <div className="controls">
-      {React.DOM.button(
-        events.attachPointerDownEvent(this.onRotatePress), '↻')}
-      {React.DOM.button(
-        events.attachPointerDownEvent(this.onLeftPress), '←')}
-      {React.DOM.button(
-        events.attachPointerDownEvent(this.onRightPress), '→')}
-      {React.DOM.button(
-        _.assign(
-          events.attachPointerDownEvent(this.onPullPress),
-          events.attachPointerUpEvent(this.onPullRelease)), '↓')}
-    </div>;
   }
 
   componentDidMount() {
@@ -94,38 +50,9 @@ class FlatrisGame extends React.Component {
     $(window).off('keyup', this.onKeyUp);
   }
 
-  start() {
-    /**
-    * Start or restart a Flatris session from scratch.
-    */
-    var newGameDefaults = this._getNewGameDefaults();
-    this.setState(newGameDefaults);
-    this.refs.well.reset();
-
-    // setState is always synchronous so we can't read the next Tetrimino from
-    // .state.nextTetrimino at this point
-    this._insertNextTetriminoInWell(newGameDefaults.nextTetrimino);
-
-    this.resume();
-  }
-
-  pause() {
-    this.setState({paused: true});
-    // Stop any on-going acceleration inside the Well
-    this.refs.well.setState({
-      animationLoopRunning: false,
-      dropAcceleration: false
-    });
-  }
-
-  resume() {
-    this.setState({paused: false});
-    this.refs.well.setState({animationLoopRunning: true});
-  }
-
   onKeyDown(e) {
     // Prevent page from scrolling when pressing arrow keys
-    if (_.values(constants.KEYS).indexOf(e.keyCode) != -1) {
+    if (_.values(constants.KEYS).indexOf(e.keyCode) !== -1) {
       e.preventDefault();
     }
     // Ignore user events when game is stopped or paused
@@ -135,16 +62,18 @@ class FlatrisGame extends React.Component {
 
     switch (e.keyCode) {
       case constants.KEYS.DOWN:
-        this.refs.well.setState({dropAcceleration: true});
+        this.well.setState({ dropAcceleration: true });
         break;
       case constants.KEYS.UP:
-        this.refs.well.rotateTetrimino();
+        this.well.rotateTetrimino();
         break;
       case constants.KEYS.LEFT:
-        this.refs.well.moveTetriminoToLeft();
+        this.well.moveTetriminoToLeft();
         break;
       case constants.KEYS.RIGHT:
-        this.refs.well.moveTetriminoToRight();
+        this.well.moveTetriminoToRight();
+        break;
+      default:
     }
   }
 
@@ -154,8 +83,8 @@ class FlatrisGame extends React.Component {
       return;
     }
 
-    if (e.keyCode == constants.KEYS.DOWN) {
-      this.refs.well.setState({dropAcceleration: false});
+    if (e.keyCode === constants.KEYS.DOWN) {
+      this.well.setState({ dropAcceleration: false });
     }
   }
 
@@ -166,7 +95,7 @@ class FlatrisGame extends React.Component {
     }
 
     e.preventDefault();
-    this.refs.well.rotateTetrimino();
+    this.well.rotateTetrimino();
   }
 
   onLeftPress(e) {
@@ -176,7 +105,7 @@ class FlatrisGame extends React.Component {
     }
 
     e.preventDefault();
-    this.refs.well.moveTetriminoToLeft();
+    this.well.moveTetriminoToLeft();
   }
 
   onRightPress(e) {
@@ -186,7 +115,7 @@ class FlatrisGame extends React.Component {
     }
 
     e.preventDefault();
-    this.refs.well.moveTetriminoToRight();
+    this.well.moveTetriminoToRight();
   }
 
   onPullPress(e) {
@@ -196,7 +125,7 @@ class FlatrisGame extends React.Component {
     }
 
     e.preventDefault();
-    this.refs.well.setState({dropAcceleration: true});
+    this.well.setState({ dropAcceleration: true });
   }
 
   onPullRelease(e) {
@@ -206,7 +135,7 @@ class FlatrisGame extends React.Component {
     }
 
     e.preventDefault();
-    this.refs.well.setState({dropAcceleration: false});
+    this.well.setState({ dropAcceleration: false });
   }
 
   onTetriminoLanding(drop) {
@@ -215,9 +144,9 @@ class FlatrisGame extends React.Component {
       return;
     }
 
-    var score = this.state.score,
-        lines = this.state.lines,
-        level = lines + 1;
+    let score = this.state.score;
+    let lines = this.state.lines;
+    const level = lines + 1;
 
     // Rudimentary scoring logic, no T-Spin and combo bonuses. Read more at
     // http://tetris.wikia.com/wiki/Scoring
@@ -227,14 +156,14 @@ class FlatrisGame extends React.Component {
       lines += drop.lines;
 
       // Increase speed whenever a line is cleared (fast game)
-      this.refs.well.increaseSpeed();
+      this.well.increaseSpeed();
     }
 
     this.setState({
-      score: score,
-      lines: lines
+      score,
+      lines,
     });
-    this._insertNextTetriminoInWell(this.state.nextTetrimino);
+    this.insertNextTetriminoInWell(this.state.nextTetrimino);
   }
 
   onFullWell() {
@@ -242,27 +171,99 @@ class FlatrisGame extends React.Component {
     this.setState({
       playing: false,
       // There won't be any next Tetrimino when the game is over
-      nextTetrimino: null
+      nextTetrimino: null,
     });
   }
 
-  _getNewGameDefaults() {
+  getNewGameDefaults() {
     return {
       playing: true,
       paused: true,
       score: 0,
       lines: 0,
-      nextTetrimino: this._getRandomTetriminoType()
+      nextTetrimino: this.getRandomTetriminoType(),
     };
   }
 
-  _getRandomTetriminoType() {
+  getRandomTetriminoType() {
     return _.sample(_.keys(constants.SHAPES));
   }
 
-  _insertNextTetriminoInWell(nextTetrimino) {
-    this.refs.well.loadTetrimino(nextTetrimino);
-    this.setState({nextTetrimino: this._getRandomTetriminoType()});
+  insertNextTetriminoInWell(nextTetrimino) {
+    this.well.loadTetrimino(nextTetrimino);
+    this.setState({ nextTetrimino: this.getRandomTetriminoType() });
+  }
+
+  start() {
+    /**
+    * Start or restart a Flatris session from scratch.
+    */
+    const newGameDefaults = this.getNewGameDefaults();
+    this.setState(newGameDefaults);
+    this.well.reset();
+
+    // setState is always synchronous so we can't read the next Tetrimino from
+    // .state.nextTetrimino at this point
+    this.insertNextTetriminoInWell(newGameDefaults.nextTetrimino);
+
+    this.resume();
+  }
+
+  pause() {
+    this.setState({ paused: true });
+    // Stop any on-going acceleration inside the Well
+    this.well.setState({
+      animationLoopRunning: false,
+      dropAcceleration: false,
+    });
+  }
+
+  resume() {
+    this.setState({ paused: false });
+    this.well.setState({ animationLoopRunning: true });
+  }
+
+  renderInfoPanel() {
+    return !this.state.playing || this.state.paused ? <InfoPanel /> : null;
+  }
+
+  renderControls() {
+    return (<div className="controls">
+      {React.DOM.button(
+        events.attachPointerDownEvent(this.onRotatePress), '↻')}
+      {React.DOM.button(
+        events.attachPointerDownEvent(this.onLeftPress), '←')}
+      {React.DOM.button(
+        events.attachPointerDownEvent(this.onRightPress), '→')}
+      {React.DOM.button(
+        _.assign(
+          events.attachPointerDownEvent(this.onPullPress),
+          events.attachPointerUpEvent(this.onPullRelease)), '↓')}
+    </div>);
+  }
+
+  render() {
+    return (<div className="flatris-game">
+      <Well
+        ref={(instance) => { this.well = instance; }}
+        rows={constants.WELL_ROWS}
+        cols={constants.WELL_COLS}
+        onTetriminoLanding={this.onTetriminoLanding}
+        onFullWell={this.onFullWell}
+      />
+      {this.renderInfoPanel()}
+      <GamePanel
+        playing={this.state.playing}
+        paused={this.state.paused}
+        score={this.state.score}
+        lines={this.state.lines}
+        nextTetrimino={this.state.nextTetrimino}
+        onPressStart={this.start}
+        onPressPause={this.pause}
+        onPressResume={this.resume}
+      />
+      {this.renderControls()}
+    </div>);
   }
 }
 

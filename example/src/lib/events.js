@@ -1,21 +1,23 @@
+/* global window */
+
 module.exports = {
-  attachPointerDownEvent: function(eventHandler) {
-    if (this._isMobileDevice()) {
-      return {onTouchStart: eventHandler};
-    } else {
-      return {onMouseDown: eventHandler};
+  attachPointerDownEvent(eventHandler) {
+    if (this.isMobileDevice()) {
+      return { onTouchStart: eventHandler };
     }
+
+    return { onMouseDown: eventHandler };
   },
 
-  attachPointerUpEvent: function(eventHandler) {
-    if (this._isMobileDevice()) {
-      return {onTouchEnd: eventHandler};
-    } else {
-      return {onMouseUp: eventHandler};
+  attachPointerUpEvent(eventHandler) {
+    if (this.isMobileDevice()) {
+      return { onTouchEnd: eventHandler };
     }
+
+    return { onMouseUp: eventHandler };
   },
 
-  _isMobileDevice: function() {
+  isMobileDevice() {
     return 'ontouchstart' in window;
-  }
+  },
 };

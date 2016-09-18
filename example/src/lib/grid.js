@@ -1,11 +1,9 @@
-exports.generateEmptyMatrix = function(rows, cols) {
-  var matrix = [],
-      row,
-      col;
+exports.generateEmptyMatrix = (rows, cols) => {
+  const matrix = [];
 
-  for (row = 0; row < rows; row++) {
+  for (let row = 0; row < rows; row++) {
     matrix[row] = [];
-    for (col = 0; col < cols; col++) {
+    for (let col = 0; col < cols; col++) {
       matrix[row][col] = null;
     }
   }
@@ -13,16 +11,14 @@ exports.generateEmptyMatrix = function(rows, cols) {
   return matrix;
 };
 
-exports.rotate = function(grid) {
-  var matrix = [],
-      rows = grid.length,
-      cols = grid[0].length,
-      row,
-      col;
+exports.rotate = (grid) => {
+  const matrix = [];
+  const rows = grid.length;
+  const cols = grid[0].length;
 
-  for (row = 0; row < rows; row++) {
+  for (let row = 0; row < rows; row++) {
     matrix[row] = [];
-    for (col = 0; col < cols; col++) {
+    for (let col = 0; col < cols; col++) {
       matrix[row][col] = grid[cols - 1 - col][row];
     }
   }

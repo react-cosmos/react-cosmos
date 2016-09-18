@@ -6,7 +6,7 @@ module.exports = {
     J: '#3993d0',
     L: '#ed652f',
     S: '#95c43d',
-    Z: '#e84138'
+    Z: '#e84138',
   },
   // The Shapes and their rotation was inspired from
   // http://tetris.wikia.com/wiki/SRS
@@ -15,7 +15,7 @@ module.exports = {
       [0, 0, 0, 0],
       [1, 1, 1, 1],
       [0, 0, 0, 0],
-      [0, 0, 0, 0]
+      [0, 0, 0, 0],
     ],
     O: [
       [1, 1],
@@ -24,7 +24,7 @@ module.exports = {
     T: [
       [0, 1, 0],
       [1, 1, 1],
-      [0, 0, 0]
+      [0, 0, 0],
     ],
     J: [
       [1, 0, 0],
@@ -39,13 +39,13 @@ module.exports = {
     S: [
       [0, 1, 1],
       [1, 1, 0],
-      [0, 0, 0]
+      [0, 0, 0],
     ],
     Z: [
       [1, 1, 0],
       [0, 1, 1],
       [0, 0, 0],
-    ]
+    ],
   },
   WELL_ROWS: 20,
   WELL_COLS: 10,
@@ -57,6 +57,6 @@ module.exports = {
     UP: 38,
     DOWN: 40,
     LEFT: 37,
-    RIGHT: 39
-  }
+    RIGHT: 39,
+  },
 };

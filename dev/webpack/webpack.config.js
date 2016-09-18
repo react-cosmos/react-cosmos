@@ -15,6 +15,7 @@ module.exports = {
     publicPath: '/',
   },
   resolve: {
+    extensions: ['', '.js', '.jsx'],
     alias: {
       COSMOS_COMPONENTS_PATH: path.join(examplePath, 'src/components'),
       COSMOS_FIXTURES_PATH: path.join(examplePath, 'fixtures'),
