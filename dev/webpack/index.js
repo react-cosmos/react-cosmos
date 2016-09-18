@@ -20,4 +20,8 @@ const mapContext = (requireContext) =>
 const components = mapContext(requireComponent);
 const fixtures = mapContext(requireFixture);
 
-module.exports = startReactCosmos(components, fixtures);
+module.exports = startReactCosmos({
+  proxies: [require('../../packages/react-cosmos-redux-proxy')()],
+  components,
+  fixtures,
+});
