@@ -20,8 +20,29 @@ module.exports = React.createClass({
    * afterwards.
    */
   propTypes: {
-    rows: React.PropTypes.number,
-    cols: React.PropTypes.number,
+    cols: React.PropTypes.number.isRequired,
+    rows: React.PropTypes.number.isRequired,
+    grid: React.PropTypes.arrayOf(
+      React.PropTypes.arrayOf(React.PropTypes.string)
+    ).isRequired,
+    gridBlockCount: React.PropTypes.number.isRequired,
+    playing: React.PropTypes.bool.isRequired,
+    paused: React.PropTypes.bool.isRequired,
+    score: React.PropTypes.number.isRequired,
+    lines: React.PropTypes.number.isRequired,
+    activeTetrimino: React.PropTypes.string,
+    activeTetriminoGrid: React.PropTypes.arrayOf(
+      React.PropTypes.arrayOf(React.PropTypes.number)
+    ),
+    activeTetriminoPosition: React.PropTypes.shape({
+      x: React.PropTypes.number,
+      y: React.PropTypes.number,
+    }),
+    dropFrames: React.PropTypes.number.isRequired,
+    dropAcceleration: React.PropTypes.bool.isRequired,
+    updateActiveTetriminoGrid: React.PropTypes.func.isRequired,
+    updateActiveTetriminoPosition: React.PropTypes.func.isRequired,
+    updateGrid: React.PropTypes.func.isRequired,
     onFullWell: React.PropTypes.func,
     onTetriminoLanding: React.PropTypes.func,
   },
@@ -30,35 +51,30 @@ module.exports = React.createClass({
 
   getInitialState() {
     return {
-      grid: grid.generateEmptyMatrix(this.props.rows, this.props.cols),
-      // Grid blocks need unique IDs to be used as React keys in order to tie
-      // them to DOM nodes and prevent reusing them between rows when clearing
-      // lines. DOM nodes need to stay the same to animate them when "falling"
-      gridBlockCount: 0,
-      activeTetrimino: null,
-      activeTetriminoGrid: null,
-      // The active Tetrimino position will be reset whenever a new Tetrimino
-      // is inserted in the Well, using the getInitialPositionForTetriminoType
-      // method
-      activeTetriminoPosition: { x: 0, y: 0 },
-      dropFrames: constants.DROP_FRAMES_DEFAULT,
-      dropAcceleration: false,
-      animationLoopRunning: true,
+      animationLoopRunning: this.isGameRunning(this.props),
     };
   },
 
+  componentWillReceiveProps(nextProps) {
+    if (this.isGameRunning(nextProps) !== this.isGameRunning(this.props)) {
+      this.setState({
+        animationLoopRunning: this.isGameRunning(nextProps),
+      });
+    }
+  },
+
   onFrame(frames) {
-    if (!this.state.activeTetrimino) {
+    if (!this.props.activeTetrimino) {
       return;
     }
 
-    const tetriminoGrid = this.state.activeTetriminoGrid;
+    const tetriminoGrid = this.props.activeTetriminoGrid;
     const drop = {
       cells: this.activeTetrimino.getNumberOfCells(),
-      hardDrop: this.state.dropAcceleration,
+      hardDrop: this.props.dropAcceleration,
     };
 
-    let tetriminoPosition = _.clone(this.state.activeTetriminoPosition);
+    let tetriminoPosition = _.clone(this.props.activeTetriminoPosition);
 
     tetriminoPosition.y += this.getDropStepForFrames(frames);
 
@@ -66,7 +82,7 @@ module.exports = React.createClass({
     if (this.isPositionAvailableForTetriminoGrid(
       tetriminoGrid, tetriminoPosition
     )) {
-      this.setState({ activeTetriminoPosition: tetriminoPosition });
+      this.props.updateActiveTetriminoPosition(tetriminoPosition);
     } else {
       // A big frame skip could cause the Tetrimino to jump more than one row.
       // We need to ensure it ends up in the bottom-most one in case the jump
@@ -75,15 +91,12 @@ module.exports = React.createClass({
         this.getBottomMostPositionForTetriminoGrid(tetriminoGrid,
                                                     tetriminoPosition);
 
-      this.setState({ activeTetriminoPosition: tetriminoPosition });
+      this.props.updateActiveTetriminoPosition(tetriminoPosition);
 
       // This is when the active Tetrimino hits the bottom of the Well and can
       // no longer be controlled
       drop.lines = this.transferActiveTetriminoBlocksToGrid(
-          this.getGridPosition(this.state.activeTetriminoPosition));
-
-      // Unload Tetrimino after landing it
-      this.loadTetrimino(null);
+          this.getGridPosition(this.props.activeTetriminoPosition));
 
       // Notify any listening parent when Well is full, it should stop
       // inserting any new Tetriminos from this point on (until the Well is
@@ -110,7 +123,7 @@ module.exports = React.createClass({
 
   getActiveTetriminoCSSPosition() {
     const position =
-      this.getGridPosition(this.state.activeTetriminoPosition);
+      this.getGridPosition(this.props.activeTetriminoPosition);
 
     return {
       top: `${(100 / this.props.rows) * position.y}%`,
@@ -127,27 +140,9 @@ module.exports = React.createClass({
     };
   },
 
-  getInitialPositionForTetriminoType(type) {
-    /**
-     * Generates positions a Tetrimino entering the Well. The I Tetrimino
-     * occupies columns 4, 5, 6 and 7, the O Tetrimino occupies columns 5 and
-     * 6, and the remaining 5 Tetriminos occupy columns 4, 5 and 6. Pieces
-     * spawn above the visible playfield (that's why y is -2)
-     */
-    if (!type) {
-      return { x: 0, y: 0 };
-    }
-
-    const tetriminoGrid = constants.SHAPES[type];
-    return {
-      x: Math.round(this.props.cols / 2) - Math.round(tetriminoGrid[0].length / 2),
-      y: -2,
-    };
-  },
-
   getDropStepForFrames(frames) {
-    const dropFrames = this.state.dropAcceleration ?
-        constants.DROP_FRAMES_ACCELERATED : this.state.dropFrames;
+    const dropFrames = this.props.dropAcceleration ?
+        constants.DROP_FRAMES_ACCELERATED : this.props.dropFrames;
     return frames / dropFrames;
   },
 
@@ -165,32 +160,17 @@ module.exports = React.createClass({
     return newPosition;
   },
 
-  reset() {
-    this.setState({
-      grid: grid.generateEmptyMatrix(this.props.rows, this.props.cols),
-      gridBlockCount: 0,
-      dropFrames: constants.DROP_FRAMES_DEFAULT,
-    });
-
-    this.loadTetrimino(null);
-  },
-
-  loadTetrimino(type) {
-    this.setState({
-      activeTetrimino: type,
-      activeTetriminoGrid: constants.SHAPES[type],
-      // Reset position to place new Tetrimino at the top entrance point
-      activeTetriminoPosition: this.getInitialPositionForTetriminoType(type),
-    });
+  isGameRunning(props) {
+    return props.playing && !props.paused;
   },
 
   rotateTetrimino() {
-    if (this.state.activeTetrimino) {
-      const tetriminoGrid = grid.rotate(this.state.activeTetriminoGrid);
+    if (this.props.activeTetrimino) {
+      const tetriminoGrid = grid.rotate(this.props.activeTetriminoGrid);
       // If the rotation causes the active Tetrimino to go outside of the
       // Well bounds, its position will be adjusted to fit inside
       const tetriminoPosition = this.fitTetriminoGridPositionInWellBounds(
-        tetriminoGrid, this.state.activeTetriminoPosition
+        tetriminoGrid, this.props.activeTetriminoPosition
       );
 
       // If the rotation causes a collision with landed Tetriminos than it won't
@@ -198,7 +178,7 @@ module.exports = React.createClass({
       if (this.isPositionAvailableForTetriminoGrid(
         tetriminoGrid, tetriminoPosition
       )) {
-        this.setState({ activeTetriminoGrid: tetriminoGrid });
+        this.props.updateActiveTetriminoGrid(tetriminoGrid);
       }
     }
   },
@@ -212,12 +192,12 @@ module.exports = React.createClass({
   },
 
   moveTetrimino(offset) {
-    if (!this.state.activeTetrimino) {
+    if (!this.props.activeTetrimino) {
       return;
     }
 
-    const tetriminoGrid = this.state.activeTetriminoGrid;
-    const tetriminoPosition = _.clone(this.state.activeTetriminoPosition);
+    const tetriminoGrid = this.props.activeTetriminoGrid;
+    const tetriminoPosition = _.clone(this.props.activeTetriminoPosition);
     tetriminoPosition.x += offset;
 
     // Attempting to move the Tetrimino outside the Well bounds or over landed
@@ -225,54 +205,52 @@ module.exports = React.createClass({
     if (this.isPositionAvailableForTetriminoGrid(
       tetriminoGrid, tetriminoPosition
     )) {
-      this.setState({ activeTetriminoPosition: tetriminoPosition });
+      this.props.updateActiveTetriminoPosition(tetriminoPosition);
     }
   },
 
   increaseSpeed() {
-    this.setState({ dropFrames: this.state.dropFrames -
+    this.setState({ dropFrames: this.props.dropFrames -
                                constants.DROP_FRAMES_DECREMENT });
   },
 
   transferActiveTetriminoBlocksToGrid(tetriminoPositionInGrid) {
-    const rows = this.state.activeTetriminoGrid.length;
-    const cols = this.state.activeTetriminoGrid[0].length;
-    let blockCount = this.state.gridBlockCount;
+    const rows = this.props.activeTetriminoGrid.length;
+    const cols = this.props.activeTetriminoGrid[0].length;
+    let blockCount = this.props.gridBlockCount;
+    let newGrid = _.cloneDeep(this.props.grid);
     let relativeRow;
     let relativeCol;
 
     for (let row = 0; row < rows; row++) {
       for (let col = 0; col < cols; col++) {
         // Ignore blank squares from the Tetrimino grid
-        if (this.state.activeTetriminoGrid[row][col]) {
+        if (this.props.activeTetriminoGrid[row][col]) {
           relativeRow = tetriminoPositionInGrid.y + row;
           relativeCol = tetriminoPositionInGrid.x + col;
 
           // When the Well is full the Tetrimino will land before it enters the
           // top of the Well
-          if (this.state.grid[relativeRow]) {
-            this.state.grid[relativeRow][relativeCol] =
-              ++blockCount + constants.COLORS[this.state.activeTetrimino];
+          if (newGrid[relativeRow]) {
+            newGrid[relativeRow][relativeCol] =
+              ++blockCount + constants.COLORS[this.props.activeTetrimino];
           }
         }
       }
     }
 
     // Clear lines created after landing and transfering a Tetrimino
-    const lines = this.clearLinesFromGrid();
+    const r = this.clearLinesFromGrid(newGrid);
+    newGrid = r[0];
+    const lines = r[1];
 
-    // Push grid updates reactively and update DOM since we know for sure the
-    // grid changed here
-    this.setState({
-      grid: this.state.grid,
-      gridBlockCount: blockCount,
-    });
+    this.props.updateGrid(newGrid, blockCount);
 
     // Return lines cleared to measure success of Tetrimino landing :)
     return lines;
   },
 
-  clearLinesFromGrid() {
+  clearLinesFromGrid(prevGrid) {
     /**
      * Clear all rows that form a complete line, from one left to right, inside
      * the Well grid. Gravity is applied to fill in the cleared lines with the
@@ -280,18 +258,19 @@ module.exports = React.createClass({
      */
     let linesCleared = 0;
     let isLine;
+    let newGrid = _.cloneDeep(prevGrid);
 
     for (let row = this.props.rows - 1; row >= 0; row--) {
       isLine = true;
 
       for (let col = this.props.cols - 1; col >= 0; col--) {
-        if (!this.state.grid[row][col]) {
+        if (!newGrid[row][col]) {
           isLine = false;
         }
       }
 
       if (isLine) {
-        this.removeGridRow(row);
+        newGrid = this.removeGridRow(newGrid, row);
         linesCleared++;
 
         // Go once more through the same row
@@ -299,19 +278,23 @@ module.exports = React.createClass({
       }
     }
 
-    return linesCleared;
+    return [newGrid, linesCleared];
   },
 
-  removeGridRow(rowToRemove) {
+  removeGridRow(prevGrid, rowToRemove) {
     /**
      * Remove a row from the Well grid by descending all rows above, thus
      * overriding it with the previous row.
      */
+    const newGrid = _.cloneDeep(prevGrid);
+
     for (let row = rowToRemove; row >= 0; row--) {
       for (let col = this.props.cols - 1; col >= 0; col--) {
-        this.state.grid[row][col] = row ? this.state.grid[row - 1][col] : null;
+        newGrid[row][col] = row ? newGrid[row - 1][col] : null;
       }
     }
+
+    return newGrid;
   },
 
   isPositionAvailableForTetriminoGrid(tetriminoGrid, position) {
@@ -341,7 +324,7 @@ module.exports = React.createClass({
             }
 
             // Then if the position is not already taken inside the grid
-            if (this.state.grid[relativeRow][relativeCol]) {
+            if (this.props.grid[relativeRow][relativeCol]) {
               return false;
             }
           }
@@ -385,17 +368,17 @@ module.exports = React.createClass({
           style={_.assign(this.getTetriminoCSSSize(),
                     this.getActiveTetriminoCSSPosition())}
         >
-          {this.state.activeTetrimino ? (
+          {this.props.activeTetrimino ? (
             <Tetrimino
               ref={(instance) => { this.activeTetrimino = instance; }}
-              color={constants.COLORS[this.state.activeTetrimino]}
-              grid={this.state.activeTetriminoGrid}
+              color={constants.COLORS[this.props.activeTetrimino]}
+              grid={this.props.activeTetriminoGrid}
             />
           ) : null}
         </div>
         <WellGrid
-          grid={this.state.grid}
-          gridBlockCount={this.state.gridBlockCount}
+          grid={this.props.grid}
+          gridBlockCount={this.props.gridBlockCount}
         />
       </div>
     );

@@ -1,15 +1,19 @@
 /* global window */
 
 const React = require('react');
+const connect = require('react-redux').connect;
 const _ = require('lodash');
 const $ = require('jquery');
 const constants = require('../constants');
 const events = require('../lib/events');
+const gridLib = require('../lib/grid');
 const Well = require('./Well');
 const GamePanel = require('./GamePanel');
 const InfoPanel = require('./InfoPanel');
 
 require('./FlatrisGame.less');
+
+const getRandomTetriminoType = () => _.sample(_.keys(constants.SHAPES));
 
 class FlatrisGame extends React.Component {
   /**
@@ -28,16 +32,6 @@ class FlatrisGame extends React.Component {
     this.onPullPress = this.onPullPress.bind(this);
     this.onPullRelease = this.onPullRelease.bind(this);
     this.onTetriminoLanding = this.onTetriminoLanding.bind(this);
-    this.onFullWell = this.onFullWell.bind(this);
-    this.start = this.start.bind(this);
-    this.pause = this.pause.bind(this);
-    this.resume = this.resume.bind(this);
-
-    this.state = _.assign(this.getNewGameDefaults(), {
-      // Game is stopped by default and there's no Tetrimino to follow
-      playing: false,
-      nextTetrimino: null,
-    });
   }
 
   componentDidMount() {
@@ -55,14 +49,14 @@ class FlatrisGame extends React.Component {
     if (_.values(constants.KEYS).indexOf(e.keyCode) !== -1) {
       e.preventDefault();
     }
-    // Ignore user events when game is stopped or paused
-    if (!this.state.playing || this.state.paused) {
+
+    if (!this.isGameRunning()) {
       return;
     }
 
     switch (e.keyCode) {
       case constants.KEYS.DOWN:
-        this.well.setState({ dropAcceleration: true });
+        this.props.enableDropAcceleration();
         break;
       case constants.KEYS.UP:
         this.well.rotateTetrimino();
@@ -78,19 +72,17 @@ class FlatrisGame extends React.Component {
   }
 
   onKeyUp(e) {
-    // Ignore user events when game is stopped or paused
-    if (!this.state.playing || this.state.paused) {
+    if (!this.isGameRunning()) {
       return;
     }
 
     if (e.keyCode === constants.KEYS.DOWN) {
-      this.well.setState({ dropAcceleration: false });
+      this.props.disableDropAcceleration();
     }
   }
 
   onRotatePress(e) {
-    // Ignore user events when game is stopped or paused
-    if (!this.state.playing || this.state.paused) {
+    if (!this.isGameRunning()) {
       return;
     }
 
@@ -99,8 +91,7 @@ class FlatrisGame extends React.Component {
   }
 
   onLeftPress(e) {
-    // Ignore user events when game is stopped or paused
-    if (!this.state.playing || this.state.paused) {
+    if (!this.isGameRunning()) {
       return;
     }
 
@@ -109,8 +100,7 @@ class FlatrisGame extends React.Component {
   }
 
   onRightPress(e) {
-    // Ignore user events when game is stopped or paused
-    if (!this.state.playing || this.state.paused) {
+    if (!this.isGameRunning()) {
       return;
     }
 
@@ -119,112 +109,95 @@ class FlatrisGame extends React.Component {
   }
 
   onPullPress(e) {
-    // Ignore user events when game is stopped or paused
-    if (!this.state.playing || this.state.paused) {
+    if (!this.isGameRunning()) {
       return;
     }
 
     e.preventDefault();
-    this.well.setState({ dropAcceleration: true });
+    this.props.enableDropAcceleration();
   }
 
   onPullRelease(e) {
-    // Ignore user events when game is stopped or paused
-    if (!this.state.playing || this.state.paused) {
+    if (!this.isGameRunning()) {
       return;
     }
 
     e.preventDefault();
-    this.well.setState({ dropAcceleration: false });
+    this.props.disableDropAcceleration();
   }
 
   onTetriminoLanding(drop) {
+    const {
+      playing,
+      score,
+      lines,
+      nextTetrimino,
+    } = this.props;
+
     // Stop inserting Tetriminos and awarding bonuses after game is over
-    if (!this.state.playing) {
+    if (!playing) {
       return;
     }
 
-    let score = this.state.score;
-    let lines = this.state.lines;
-    const level = lines + 1;
+    let nextScore = score;
+    let nextLines = lines;
+    const level = nextLines + 1;
 
     // Rudimentary scoring logic, no T-Spin and combo bonuses. Read more at
     // http://tetris.wikia.com/wiki/Scoring
-    score += drop.hardDrop ? drop.cells * 2 : drop.cells;
+    nextScore += drop.hardDrop ? drop.cells * 2 : drop.cells;
     if (drop.lines) {
-      score += constants.LINE_CLEAR_BONUSES[drop.lines - 1] * level;
-      lines += drop.lines;
+      nextScore += constants.LINE_CLEAR_BONUSES[drop.lines - 1] * level;
+      nextLines += drop.lines;
 
       // Increase speed whenever a line is cleared (fast game)
       this.well.increaseSpeed();
     }
 
-    this.setState({
-      score,
-      lines,
-    });
-    this.insertNextTetriminoInWell(this.state.nextTetrimino);
+    this.props.updateScore(nextScore, nextLines);
+
+    this.insertNextTetriminoInWell(nextTetrimino);
   }
 
-  onFullWell() {
-    this.pause();
-    this.setState({
-      playing: false,
-      // There won't be any next Tetrimino when the game is over
-      nextTetrimino: null,
-    });
-  }
+  getInitialPositionForTetriminoType(type) {
+    /**
+     * Generates positions a Tetrimino entering the Well. The I Tetrimino
+     * occupies columns 4, 5, 6 and 7, the O Tetrimino occupies columns 5 and
+     * 6, and the remaining 5 Tetriminos occupy columns 4, 5 and 6. Pieces
+     * spawn above the visible playfield (that's why y is -2)
+     */
+    if (!type) {
+      return { x: 0, y: 0 };
+    }
 
-  getNewGameDefaults() {
+    const tetriminoGrid = constants.SHAPES[type];
     return {
-      playing: true,
-      paused: true,
-      score: 0,
-      lines: 0,
-      nextTetrimino: this.getRandomTetriminoType(),
+      x: Math.round(this.props.cols / 2) - Math.round(tetriminoGrid[0].length / 2),
+      y: -2,
     };
   }
 
-  getRandomTetriminoType() {
-    return _.sample(_.keys(constants.SHAPES));
+  isGameRunning() {
+    return this.props.playing && !this.props.paused;
   }
 
   insertNextTetriminoInWell(nextTetrimino) {
-    this.well.loadTetrimino(nextTetrimino);
-    this.setState({ nextTetrimino: this.getRandomTetriminoType() });
-  }
-
-  start() {
-    /**
-    * Start or restart a Flatris session from scratch.
-    */
-    const newGameDefaults = this.getNewGameDefaults();
-    this.setState(newGameDefaults);
-    this.well.reset();
-
-    // setState is always synchronous so we can't read the next Tetrimino from
-    // .state.nextTetrimino at this point
-    this.insertNextTetriminoInWell(newGameDefaults.nextTetrimino);
-
-    this.resume();
-  }
-
-  pause() {
-    this.setState({ paused: true });
-    // Stop any on-going acceleration inside the Well
-    this.well.setState({
-      animationLoopRunning: false,
-      dropAcceleration: false,
-    });
-  }
-
-  resume() {
-    this.setState({ paused: false });
-    this.well.setState({ animationLoopRunning: true });
+    this.props.loadTetrimino(
+      nextTetrimino,
+      constants.SHAPES[nextTetrimino],
+      // Reset position to place new Tetrimino at the top entrance point
+      this.getInitialPositionForTetriminoType(nextTetrimino)
+    );
+    this.props.setNextTetrimino(getRandomTetriminoType());
   }
 
   renderInfoPanel() {
-    return !this.state.playing || this.state.paused ? <InfoPanel /> : null;
+    const {
+      playing,
+      paused,
+    } = this.props;
+
+    return !playing || paused ? <InfoPanel /> : null;
   }
 
   renderControls() {
@@ -243,28 +216,171 @@ class FlatrisGame extends React.Component {
   }
 
   render() {
+    const {
+      cols,
+      rows,
+      grid,
+      gridBlockCount,
+      playing,
+      paused,
+      score,
+      lines,
+      nextTetrimino,
+      activeTetrimino,
+      activeTetriminoGrid,
+      activeTetriminoPosition,
+      dropFrames,
+      dropAcceleration,
+    } = this.props;
+
     return (<div className="flatris-game">
       <Well
         ref={(instance) => { this.well = instance; }}
-        rows={constants.WELL_ROWS}
-        cols={constants.WELL_COLS}
+        cols={cols}
+        rows={rows}
+        grid={grid}
+        gridBlockCount={gridBlockCount}
+        playing={playing}
+        paused={paused}
+        activeTetrimino={activeTetrimino}
+        activeTetriminoGrid={activeTetriminoGrid}
+        activeTetriminoPosition={activeTetriminoPosition}
+        dropFrames={dropFrames}
+        dropAcceleration={dropAcceleration}
         onTetriminoLanding={this.onTetriminoLanding}
-        onFullWell={this.onFullWell}
+        onFullWell={this.props.endGame}
+        updateGrid={this.props.updateGrid}
+        updateActiveTetriminoGrid={this.props.updateActiveTetriminoGrid}
+        updateActiveTetriminoPosition={this.props.updateActiveTetriminoPosition}
       />
       {this.renderInfoPanel()}
       <GamePanel
-        playing={this.state.playing}
-        paused={this.state.paused}
-        score={this.state.score}
-        lines={this.state.lines}
-        nextTetrimino={this.state.nextTetrimino}
-        onPressStart={this.start}
-        onPressPause={this.pause}
-        onPressResume={this.resume}
+        playing={playing}
+        paused={paused}
+        score={score}
+        lines={lines}
+        nextTetrimino={nextTetrimino}
+        onPressStart={() => {
+          this.props.start();
+          this.insertNextTetriminoInWell(getRandomTetriminoType());
+        }}
+        onPressPause={this.props.pause}
+        onPressResume={this.props.resume}
       />
       {this.renderControls()}
     </div>);
   }
 }
 
-module.exports = FlatrisGame;
+FlatrisGame.propTypes = {
+  cols: React.PropTypes.number.isRequired,
+  rows: React.PropTypes.number.isRequired,
+  grid: React.PropTypes.arrayOf(
+    React.PropTypes.arrayOf(React.PropTypes.string)
+  ).isRequired,
+  gridBlockCount: React.PropTypes.number.isRequired,
+  playing: React.PropTypes.bool.isRequired,
+  paused: React.PropTypes.bool.isRequired,
+  score: React.PropTypes.number.isRequired,
+  lines: React.PropTypes.number.isRequired,
+  nextTetrimino: React.PropTypes.string,
+  activeTetrimino: React.PropTypes.string,
+  activeTetriminoGrid: React.PropTypes.arrayOf(
+    React.PropTypes.arrayOf(React.PropTypes.number)
+  ),
+  activeTetriminoPosition: React.PropTypes.shape({
+    x: React.PropTypes.number,
+    y: React.PropTypes.number,
+  }),
+  dropFrames: React.PropTypes.number.isRequired,
+  dropAcceleration: React.PropTypes.bool.isRequired,
+  start: React.PropTypes.func.isRequired,
+  endGame: React.PropTypes.func.isRequired,
+  pause: React.PropTypes.func.isRequired,
+  resume: React.PropTypes.func.isRequired,
+  loadTetrimino: React.PropTypes.func.isRequired,
+  setNextTetrimino: React.PropTypes.func.isRequired,
+  updateActiveTetriminoGrid: React.PropTypes.func.isRequired,
+  updateActiveTetriminoPosition: React.PropTypes.func.isRequired,
+  updateGrid: React.PropTypes.func.isRequired,
+  updateScore: React.PropTypes.func.isRequired,
+  enableDropAcceleration: React.PropTypes.func.isRequired,
+  disableDropAcceleration: React.PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => state;
+const mapDispatchToProps = (dispatch) => ({
+  start: () => dispatch({
+    type: 'START',
+    payload: Object.assign({}, {
+      grid: gridLib.generateEmptyMatrix(constants.WELL_ROWS, constants.WELL_COLS),
+      gridBlockCount: 0,
+      playing: true,
+      paused: false,
+      score: 0,
+      lines: 0,
+      nextTetrimino: getRandomTetriminoType(),
+      activeTetrimino: null,
+      activeTetriminoGrid: [],
+      activeTetriminoPosition: { x: 0 },
+      dropFrames: constants.DROP_FRAMES_DEFAULT,
+      dropAcceleration: false,
+    }),
+  }),
+  endGame: () => dispatch({
+    type: 'END_GAME',
+    payload: {
+      playing: false,
+      // There won't be any next Tetrimino when the game is over
+      nextTetrimino: null,
+    },
+  }),
+  pause: () => dispatch({
+    type: 'PAUSE',
+    payload: {
+      paused: true,
+      dropAcceleration: false,
+    },
+  }),
+  resume: () => dispatch({
+    type: 'RESUME',
+    payload: { paused: false },
+  }),
+  loadTetrimino: (activeTetrimino, activeTetriminoGrid, activeTetriminoPosition) => dispatch({
+    type: 'LOAD_TETRIMINO',
+    payload: { activeTetrimino, activeTetriminoGrid, activeTetriminoPosition },
+  }),
+  setNextTetrimino: (nextTetrimino) => dispatch({
+    type: 'SET_NEXT_TETRIMINO',
+    payload: { nextTetrimino },
+  }),
+  updateActiveTetriminoGrid: (activeTetriminoGrid) => dispatch({
+    type: 'UPDATE_ACTIVE_TETRIMINO_GRID',
+    payload: { activeTetriminoGrid },
+  }),
+  updateActiveTetriminoPosition: (activeTetriminoPosition) => dispatch({
+    type: 'UPDATE_ACTIVE_TETRIMINO_POSITION',
+    payload: { activeTetriminoPosition },
+  }),
+  updateGrid: (grid, gridBlockCount) => dispatch({
+    type: 'UPDATE_GRID',
+    payload: { grid, gridBlockCount },
+  }),
+  updateScore: (score, lines) => dispatch({
+    type: 'UPDATE_SCORE',
+    payload: { score, lines },
+  }),
+  enableDropAcceleration: () => dispatch({
+    type: 'ENABLE_DROP_ACCELARATION',
+    payload: { dropAcceleration: true },
+  }),
+  disableDropAcceleration: () => dispatch({
+    type: 'DISABLE_DROP_ACCELARATION',
+    payload: { dropAcceleration: false },
+  }),
+});
+
+module.exports = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FlatrisGame);
