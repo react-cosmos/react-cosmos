@@ -52,11 +52,6 @@ describe(`ComponentPlayground (${FIXTURE}) Render Children`, () => {
     expect(childParams.state).to.be.undefined;
   });
 
-  it('should generate unique key for preview child', () => {
-    expect(childParams.key).to.equal(
-        `${fixture.component}-${fixture.fixture}-${component.state.fixtureChange}`);
-  });
-
   it('should clone fixture contents sent to child', () => {
     expect(childParams.nested.shouldBeCloned).to.deep.equal(
         fixture.state.fixtureContents.nested.shouldBeCloned);

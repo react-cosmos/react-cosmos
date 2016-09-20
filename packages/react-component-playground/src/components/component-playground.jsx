@@ -131,8 +131,6 @@ module.exports = React.createClass({
   children: {
     preview() {
       const params = {
-        // Child should re-render whenever fixture changes
-        key: this.getPreviewComponentKey(),
         ref: (previewComponent) => {
           this.previewComponent = previewComponent;
         },
@@ -224,6 +222,8 @@ module.exports = React.createClass({
     return _.reduce(this.props.proxies, (accumulator, proxy) =>
       React.createElement(proxy, _.assign({}, this.getCurrentFixtureContents(), {
         children: React.Children.only(accumulator),
+        // Re-render whenever fixture changes
+        key: this.getComponentKey(),
       })), this.loadChild('preview'));
   },
 
@@ -491,7 +491,7 @@ module.exports = React.createClass({
     return this.constructor.isFixtureSelected(this.props);
   },
 
-  getPreviewComponentKey() {
+  getComponentKey() {
     return `${this.props.component}-${this.props.fixture}-${this.state.fixtureChange}`;
   },
 
