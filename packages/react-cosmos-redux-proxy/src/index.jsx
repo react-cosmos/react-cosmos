@@ -1,18 +1,16 @@
 import React from 'react';
-import { createStore } from 'redux';
 import _ from 'lodash';
 
 const ReduxProxyFactory = ({
-  reducer,
+  createStore,
   storeKey,
-} = {
-  reducer: (state, { payload }) => Object.assign({}, state, payload),
-  storeKey: 'reduxState',
 }) => {
+  const fixtureStoreKey = storeKey || 'reduxState';
+
   class ReduxProxy extends React.Component {
     constructor(fixture) {
       super();
-      this.store = createStore(reducer, fixture[storeKey]);
+      this.store = createStore(fixture[fixtureStoreKey]);
     }
 
     getChildContext() {
@@ -29,15 +27,15 @@ const ReduxProxyFactory = ({
       const { type, props, ref } = this.props.children;
 
       return (
-        <div>
-          {React.createElement(type, _.assign({}, _.omit(props, storeKey), { ref }))}
-        </div>
+        React.createElement(type, _.assign(
+          {}, _.omit(props, fixtureStoreKey), { ref }
+        ))
       );
     }
   }
 
   ReduxProxy.defaultProps = {
-    [storeKey]: {},
+    [fixtureStoreKey]: {},
   };
 
   ReduxProxy.propTypes = {
