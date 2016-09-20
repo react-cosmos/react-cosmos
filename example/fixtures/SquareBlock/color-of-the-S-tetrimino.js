@@ -1,5 +1,5 @@
-var constants = require('../../src/constants.js');
+import { COLORS } from '../../src/constants/tetrimino';
 
-module.exports = {
-  color: constants.COLORS.S
+export default {
+  color: COLORS.S,
 };

@@ -1,5 +1,4 @@
-const React = require('react');
-const constants = require('../constants');
+import React from 'react';
 
 require('./SquareBlock.less');
 
@@ -16,11 +15,7 @@ const SquareBlock = ({ color }) => (
 );
 
 SquareBlock.propTypes = {
-  color: React.PropTypes.string,
-};
-
-SquareBlock.defaultProp = {
-  color: constants.COLORS.L,
+  color: React.PropTypes.string.isRequired,
 };
 
 module.exports = SquareBlock;

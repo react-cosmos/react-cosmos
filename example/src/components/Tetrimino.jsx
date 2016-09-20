@@ -1,6 +1,5 @@
-const React = require('react');
-const constants = require('../constants');
-const SquareBlock = require('./SquareBlock');
+import React from 'react';
+import SquareBlock from './SquareBlock';
 
 require('./Tetrimino.less');
 
@@ -9,11 +8,6 @@ class Tetrimino extends React.Component {
    * A Tetromino is a geometric shape composed of four squares, connected
    * orthogonally. Read more at http://en.wikipedia.org/wiki/Tetromino
    */
-  getNumberOfCells() {
-    // TODO: Count actual cells (so far all Tetriminos have 4 cells)
-    return 4;
-  }
-
   renderGridBlocks() {
     const blocks = [];
     const rows = this.props.grid.length;
@@ -44,22 +38,19 @@ class Tetrimino extends React.Component {
   }
 
   render() {
-    return (<ul className="tetrimino">
-      {this.renderGridBlocks()}
-    </ul>);
+    return (
+      <ul className="tetrimino">
+        {this.renderGridBlocks()}
+      </ul>
+    );
   }
 }
 
 Tetrimino.propTypes = {
-  color: React.PropTypes.string,
+  color: React.PropTypes.string.isRequired,
   grid: React.PropTypes.arrayOf(
-    React.PropTypes.array
-  ),
-};
-
-Tetrimino.defaultProps = {
-  color: constants.COLORS.T,
-  grid: constants.SHAPES.T,
+    React.PropTypes.arrayOf(React.PropTypes.number)
+  ).isRequired,
 };
 
 module.exports = Tetrimino;

@@ -1,6 +1,6 @@
-var constants = require('../../src/constants.js');
+import { SHAPES, COLORS } from '../../src/constants/tetrimino';
 
-module.exports = {
-  color: constants.COLORS.Z,
-  grid: constants.SHAPES.Z
+export default {
+  color: COLORS.Z,
+  grid: SHAPES.Z,
 };

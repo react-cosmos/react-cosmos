@@ -1,22 +1,14 @@
-const React = require('react');
-const SquareBlock = require('./SquareBlock');
+import React from 'react';
+import SquareBlock from './SquareBlock';
 
 require('./WellGrid.less');
 
 class WellGrid extends React.Component {
   /**
-   * Isolated matrix for the Tetriminos that landed inside the Well.
+   * Grid rendering for the Tetriminos that landed inside the Well.
    */
   shouldComponentUpdate(nextProps) {
-    return nextProps.gridBlockCount !== this.props.gridBlockCount;
-  }
-
-  getIdFromBlockValue(blockValue) {
-    return blockValue.split('#')[0];
-  }
-
-  getColorFromBlockValue(blockValue) {
-    return `#${blockValue.split('#')[1]}`;
+    return nextProps.grid !== this.props.grid;
   }
 
   renderGridBlocks() {
@@ -34,7 +26,7 @@ class WellGrid extends React.Component {
           blocks.push(
             <li
               className="grid-square-block"
-              key={this.getIdFromBlockValue(blockValue)}
+              key={blockValue[0]}
               style={{
                 width: `${widthPercent}%`,
                 height: `${heightPercent}%`,
@@ -43,9 +35,10 @@ class WellGrid extends React.Component {
               }}
             >
               <SquareBlock
-                color={this.getColorFromBlockValue(blockValue)}
+                color={blockValue[1]}
               />
-            </li>);
+            </li>
+          );
         }
       }
     }
@@ -54,17 +47,18 @@ class WellGrid extends React.Component {
   }
 
   render() {
-    return (<ul className="well-grid">
-      {this.renderGridBlocks()}
-    </ul>);
+    return (
+      <ul className="well-grid">
+        {this.renderGridBlocks()}
+      </ul>
+    );
   }
 }
 
 WellGrid.propTypes = {
   grid: React.PropTypes.arrayOf(
-    React.PropTypes.array
-  ),
-  gridBlockCount: React.PropTypes.number,
+    React.PropTypes.arrayOf(React.PropTypes.array)
+  ).isRequired,
 };
 
 module.exports = WellGrid;
