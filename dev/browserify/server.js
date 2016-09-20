@@ -7,6 +7,7 @@ budo(path.join(__dirname, 'index'), {
   port: 8990,
   browserify: {
     transform: ['babelify', 'require-globify', 'node-lessify'],
+    extensions: ['.js', '.json', '.jsx'],
   },
 }).on('connect', function (ev) {
   console.log('Server running on %s', ev.uri);

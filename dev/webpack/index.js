@@ -1,5 +1,10 @@
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import flatrisReducer from '../../example/src/reducer';
+
 // Replace with 'react-cosmos' in real life
-const startReactCosmos = require('../../packages/react-cosmos');
+import startReactCosmos from '../../packages/react-cosmos';
+import reactCosmosReduxProxy from '../../packages/react-cosmos-redux-proxy';
 
 const requireComponent = require.context('COSMOS_COMPONENTS_PATH', true);
 const requireFixture = require.context('COSMOS_FIXTURES_PATH', true);
@@ -21,7 +26,10 @@ const components = mapContext(requireComponent);
 const fixtures = mapContext(requireFixture);
 
 module.exports = startReactCosmos({
-  proxies: [require('../../packages/react-cosmos-redux-proxy')()],
+  proxies: [reactCosmosReduxProxy({
+    createStore: (initialState) =>
+      createStore(flatrisReducer, initialState, applyMiddleware(thunk)),
+  })],
   components,
   fixtures,
 });
