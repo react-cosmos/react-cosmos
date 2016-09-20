@@ -356,7 +356,7 @@ module.exports = React.createClass({
   },
 
   componentDidMount() {
-    this.fixtureUpdateInterval = setInterval(this.onFixtureUpdate, 100);
+    this.fixtureUpdateInterval = setInterval(this.onFixtureUpdate, 1000);
 
     if (this.previewComponent) {
       this.injectPreviewChildState();
