@@ -50,7 +50,9 @@ const getFixturesForComponent = (allFixtures, componentName) => {
   Object.keys(allFixtures).forEach((fixturePath) => {
     const match = fixturePath.match(isFixtureOfComponent);
     if (match) {
-      fixtures[match[1]] = allFixtures[fixturePath];
+      const fixture = allFixtures[fixturePath];
+      // eslint-disable-next-line no-underscore-dangle
+      fixtures[match[1]] = fixture.__esModule ? fixture.default : fixture;
     }
   });
 
