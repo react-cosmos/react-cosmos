@@ -430,22 +430,25 @@ module.exports = React.createClass({
   },
 
   onFixtureUpdate() {
-    if (!this.previewComponent ||
-        // Don't update fixture contents while the user is editing the fixture
-        this.state.isEditorFocused) {
+    if (
+      !this.previewComponent ||
+      // Don't update fixture contents while the user is editing the fixture
+      this.state.isEditorFocused ||
+      // Don't do anything if component is stateless
+      !this.previewComponent.state
+    ) {
       return;
     }
 
-    const snapshot = ComponentTree.serialize(this.previewComponent);
-
-    // Continue to ignore unserializable props
-    const serializableSnapshot =
-        _.omit(snapshot, _.keys(this.state.fixtureUnserializableProps));
+    const liveState = ComponentTree.serialize(this.previewComponent).state;
+    const fixtureContents = _.assign({}, this.state.fixtureContents, {
+      state: liveState,
+    });
 
     this.setState({
-      fixtureContents: serializableSnapshot,
+      fixtureContents,
       fixtureUserInput:
-          this.constructor.getStringifiedFixtureContents(serializableSnapshot),
+          this.constructor.getStringifiedFixtureContents(fixtureContents),
       isFixtureUserInputValid: true,
     });
   },
