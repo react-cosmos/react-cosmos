@@ -15,10 +15,15 @@ const getTitleForFixture = (params) => {
   return title;
 };
 
-module.exports = (components, fixtures) =>
+module.exports = ({
+  proxies,
+  components,
+  fixtures,
+}) =>
   new ReactQuerystringRouter.Router({
     container: document.body.appendChild(document.createElement('div')),
     defaultProps: {
+      proxies,
       components: getComponentFixtures(components, fixtures),
     },
     getComponentClass: () => ComponentPlayground,

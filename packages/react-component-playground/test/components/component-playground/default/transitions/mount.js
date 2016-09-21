@@ -32,7 +32,7 @@ describe(`ComponentPlayground (${FIXTURE}) Transitions Mount`, () => {
   it('should register fixture update interval on mount', () => {
     const setIntervalArgs = window.setInterval.lastCall.args;
     expect(setIntervalArgs[0]).to.equal(component.onFixtureUpdate);
-    expect(setIntervalArgs[1]).to.equal(100);
+    expect(setIntervalArgs[1]).to.equal(1000);
   });
 
   it('should clear fixture update interval on unmount', () => {
