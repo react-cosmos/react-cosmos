@@ -59,6 +59,7 @@
     "karma-sinon": "^1.0.5",
     "karma-sinon-chai": "^1.2.3",
     "karma-webpack": "^1.8.0",
+    "lerna": "^2.0.0-beta.28",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
     "lodash": "^4.15.0",

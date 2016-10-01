@@ -34,7 +34,6 @@ See [Flatris](https://github.com/skidding/flatris) for a complete example. In th
 
 Prerequisites:
 ```bash
-npm install -g lerna@^2.0.0beta
 npm install
 ```
 
