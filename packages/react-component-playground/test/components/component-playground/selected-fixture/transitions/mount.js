@@ -31,8 +31,7 @@ describe(`ComponentPlayground (${FIXTURE}) Transitions Mount`, () => {
 
   it('should populate state with unserializable fixture props', () => {
     expect(component.state.fixtureUnserializableProps.children).to.equal(
-        fixture.components[fixture.component]
-               .fixtures[fixture.fixture].children);
+        fixture.fixtures[fixture.component][fixture.fixture].children);
   });
 
   it('should populate stringified fixture contents as user input', () => {

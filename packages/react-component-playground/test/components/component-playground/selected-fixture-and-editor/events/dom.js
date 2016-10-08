@@ -64,8 +64,7 @@ describe(`ComponentPlayground (${FIXTURE}) Events DOM`, () => {
     it('should not alter the original fixture contents', () => {
       triggerEditorEvent('change', '{"nested": {"foo": "foo"}}');
 
-      expect(fixture.components.FirstComponent
-             .fixtures.default.nested.foo).to.equal('bar');
+      expect(fixture.fixtures.FirstComponent.default.nested.foo).to.equal('bar');
     });
 
     describe('Valid editor input', () => {

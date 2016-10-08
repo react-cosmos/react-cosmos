@@ -25,8 +25,7 @@ describe(`ComponentPlayground (${FIXTURE}) Render Children`, () => {
   });
 
   it('should send component class to preview child', () => {
-    expect(childParams.component)
-          .to.equal(fixture.components[fixture.component].class);
+    expect(childParams.component).to.equal(fixture.components[fixture.component]);
   });
 
   it('should send fixture contents to preview child', () => {

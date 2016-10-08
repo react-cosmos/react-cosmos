@@ -16,37 +16,35 @@ class SecondComponent extends React.Component {
 
 module.exports = {
   components: {
+    FirstComponent,
+    SecondComponent,
+  },
+  fixtures: {
     FirstComponent: {
-      class: FirstComponent,
-      fixtures: {
-        default: {
-          myProp: false,
-          nested: {
-            foo: 'bar',
-            shouldBeCloned: {},
-          },
-          children: [
-            React.createElement('span', {
-              key: '1',
-              children: 'test child',
-              customProp() {},
-            }),
-          ],
-          state: {
-            somethingHappened: false,
-          },
+      default: {
+        myProp: false,
+        nested: {
+          foo: 'bar',
+          shouldBeCloned: {},
         },
-        error: {},
+        children: [
+          React.createElement('span', {
+            key: '1',
+            children: 'test child',
+            customProp() {},
+          }),
+        ],
+        state: {
+          somethingHappened: false,
+        },
       },
+      error: {},
     },
     SecondComponent: {
-      class: SecondComponent,
-      fixtures: {
-        index: {
-          myProp: true,
-          state: {
-            somethingHappened: true,
-          },
+      index: {
+        myProp: true,
+        state: {
+          somethingHappened: true,
         },
       },
     },
