@@ -1,8 +1,6 @@
-/* eslint-env browser */
-
 import ReactQuerystringRouter from 'react-querystring-router';
 import ComponentPlayground from 'react-component-playground';
-import getComponentFixtures from './get-component-fixtures';
+import { loadComponents, loadFixtures } from './load-modules';
 
 const getTitleForFixture = (params) => {
   let title = 'React Cosmos';
@@ -24,7 +22,8 @@ module.exports = ({
     container: document.body.appendChild(document.createElement('div')),
     defaultProps: {
       proxies,
-      components: getComponentFixtures(components, fixtures),
+      components: loadComponents(components),
+      fixtures: loadFixtures(fixtures),
     },
     getComponentClass: () => ComponentPlayground,
     onChange: (params) => {

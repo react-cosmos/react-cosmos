@@ -1,0 +1,4 @@
+{
+  "rootDir": "src",
+  "testEnvironment": "jsdom"
+}
