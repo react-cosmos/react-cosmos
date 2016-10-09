@@ -1,4 +1,4 @@
-# React DOM Polyfill
+# react-dom-polyfill
 
 Publish React libs that work with *almost* all React versions.
 
