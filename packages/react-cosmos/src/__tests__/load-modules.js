@@ -1,4 +1,17 @@
+/* eslint-disable no-console */
+
 import { loadComponents, loadFixtures } from '../load-modules';
+
+let consoleWarn;
+
+beforeEach(() => {
+  consoleWarn = console.warn;
+  console.warn = jest.fn();
+});
+
+afterEach(() => {
+  console.warn = consoleWarn;
+});
 
 describe('loading components', () => {
   test('returns empty object when none', () => {
@@ -34,6 +47,7 @@ describe('loading components', () => {
         },
       });
     }).not.toThrow();
+    expect(console.warn).toHaveBeenCalled();
   });
 });
 
@@ -70,6 +84,7 @@ describe('loading fixtures', () => {
         },
       });
     }).not.toThrow();
+    expect(console.warn).toHaveBeenCalled();
   });
 
   test('returns default fixture when component has none', () => {
