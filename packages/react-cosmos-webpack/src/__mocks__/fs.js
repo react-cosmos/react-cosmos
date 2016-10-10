@@ -1,3 +1,8 @@
+let mockRootPath;
+
 module.exports = {
-  realpathSync: jest.fn((path) => `/path/to/project/${path}`),
+  realpathSync: jest.fn((path) => `${mockRootPath}${path}`),
+  __setMockRootPath: (rootPath) => {
+    mockRootPath = rootPath;
+  },
 };

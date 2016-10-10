@@ -14,6 +14,8 @@ beforeEach(() => {
   fs = require('fs');
   glob = require('glob');
   buildModulePaths = require('../build-module-paths').default;
+
+  fs.__setMockRootPath('/path/to/project/');
 });
 
 describe('single path', () => {
