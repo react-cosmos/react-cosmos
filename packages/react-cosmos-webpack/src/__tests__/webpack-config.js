@@ -51,7 +51,7 @@ test('adds global imports to entries', () => {
 });
 
 test('adds hot middleware client to entries', () => {
-  expect(webpackConfig.entry).toContain('webpack-hot-middleware/client');
+  expect(webpackConfig.entry).toContain(require.resolve('webpack-hot-middleware/client'));
 });
 
 test('adds cosmos entry with cosmos loader and module paths in loader query', () => {

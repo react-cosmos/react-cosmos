@@ -21,7 +21,9 @@ export default function getWebpackConfig(
   } = buildModulePaths(componentPaths, ignore);
 
   const entry = globalImports.concat([
-    'webpack-hot-middleware/client',
+    // It's crucial for Cosmos to not depend on any user loader. This way the
+    // webpack configs can point solely to the user deps for loaders.
+    require.resolve('webpack-hot-middleware/client'),
     `${require.resolve('./entry-loader')}?${JSON.stringify({
       components,
       fixtures,
