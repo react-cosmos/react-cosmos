@@ -6,7 +6,7 @@ let DefinePlugin;
 let mockBuildPaths;
 let getWebpackConfig;
 
-const cosmosConfigPath = require.resolve('./dummy.config');
+const cosmosConfigPath = require.resolve('./dummy-config/cosmos.config');
 
 // So far we use the same user webpack mock between all tests
 const userWebpackConfig = {
@@ -27,7 +27,7 @@ beforeEach(() => {
   jest.resetModules();
 
   // Mock user config
-  jest.mock('./dummy.config', () => cosmosConfig);
+  jest.mock('./dummy-config/cosmos.config', () => cosmosConfig);
 
   // Mock already tested lib
   mockBuildPaths = jest.fn(() => ({

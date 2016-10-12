@@ -1,5 +1,5 @@
 {
   "rootDir": "src",
   "testEnvironment": "node",
-  "testPathIgnorePatterns": ["dummy.config.js"]
+  "testPathIgnorePatterns": ["dummy-config"]
 }

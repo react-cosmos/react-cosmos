@@ -32,7 +32,7 @@
     "start": "npm run start:webpack"
   },
   "dependencies": {
-    "babel-cli": "^6.11.4",
+    "babel-cli": "^6.16.0",
     "babel-core": "^6.13.2",
     "babel-loader": "^6.2.5",
     "babel-plugin-istanbul": "^2.0.0",
@@ -51,8 +51,6 @@
     "eslint-plugin-import": "^1.16.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.4.0",
-    "express": "^4.14.0",
-    "glob": "^7.0.6",
     "inject-loader": "^2.0.1",
     "jest": "^16.0.1",
     "jquery": "^3.1.0",
@@ -84,8 +82,6 @@
     "sinon": "^1.17.5",
     "sinon-chai": "^2.8.0",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.2",
-    "webpack-dev-middleware": "^1.6.1",
-    "webpack-hot-middleware": "^2.12.2"
+    "webpack": "^1.13.2"
   }
 }

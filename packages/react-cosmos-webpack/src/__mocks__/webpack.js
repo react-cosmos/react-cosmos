@@ -1,7 +1,12 @@
-const webpack = {
-  __setPluginMock: (pluginName, plugin) => {
-    webpack[pluginName] = plugin;
-  },
+let compilerMock;
+
+const Webpack = jest.fn(() => compilerMock);
+
+Webpack.__setCompilerMock = (compiler) => {
+  compilerMock = compiler;
+};
+Webpack.__setPluginMock = (pluginName, plugin) => {
+  Webpack[pluginName] = plugin;
 };
 
-module.exports = webpack;
+module.exports = Webpack;

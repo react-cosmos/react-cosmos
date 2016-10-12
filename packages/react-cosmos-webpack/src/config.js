@@ -11,6 +11,7 @@ export default function getConfig(userConfig) {
     ignore: [],
     port: 8989,
     proxies: [],
+    webpackConfigPath: 'webpack.config',
     ...userConfig,
   };
 }
