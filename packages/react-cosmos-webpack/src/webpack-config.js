@@ -11,8 +11,9 @@ export default function getWebpackConfig(
 
   const {
     componentPaths,
-    ignore,
     globalImports,
+    hot,
+    ignore,
   } = cosmosConfig;
 
   const {
@@ -20,15 +21,18 @@ export default function getWebpackConfig(
     fixtures,
   } = buildModulePaths(componentPaths, ignore);
 
-  const entry = globalImports.concat([
+  const entry = [...globalImports];
+
+  if (hot) {
     // It's crucial for Cosmos to not depend on any user loader. This way the
     // webpack configs can point solely to the user deps for loaders.
-    require.resolve('webpack-hot-middleware/client'),
-    `${require.resolve('./entry-loader')}?${JSON.stringify({
-      components,
-      fixtures,
-    })}!${require.resolve('./entry')}`,
-  ]);
+    entry.push(require.resolve('webpack-hot-middleware/client'));
+  }
+
+  entry.push(`${require.resolve('./entry-loader')}?${JSON.stringify({
+    components,
+    fixtures,
+  })}!${require.resolve('./entry')}`);
 
   const output = {
     // Webpack doesn't write to this path when saving build in memory (as

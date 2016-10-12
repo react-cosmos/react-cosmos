@@ -7,6 +7,7 @@ export default function getConfig(userConfig) {
   return {
     globalImports: [],
     hostname: 'localhost',
+    hot: false,
     ignore: [],
     port: 8989,
     proxies: [],
