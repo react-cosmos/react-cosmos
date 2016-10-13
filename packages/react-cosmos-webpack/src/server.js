@@ -1,37 +1,17 @@
 /* eslint-disable global-require */
 
-import path from 'path';
 import express from 'express';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { argv } from 'yargs';
 import getConfig from './config';
+import resolveUserPath from './resolve-user-path';
 import getWebpackConfig from './webpack-config';
 
-/**
- * Resolve path from user config if it isn't already absolute.
- * This allows users to use any of the following forms to express their paths:
- * - componentsPaths: ['src/components']
- * - componentsPaths: [path.join(__dirname, 'src/components')]
- */
-const resolveUserPath = (userPath, root) => {
-  if (path.isAbsolute(userPath)) {
-    return userPath;
-  }
-
-  return path.join(root, userPath);
-};
-
 module.exports = function startServer() {
-  const cosmosConfigPath =
-    resolveUserPath(argv.config || 'cosmos.config', process.cwd());
+  const cosmosConfigPath = resolveUserPath(argv.config || 'cosmos.config');
   const cosmosConfig = getConfig(require(cosmosConfigPath));
-
-  // Our best bet is to resolve relative user paths to the parent dir of their
-  // cosmos config, *assuming* that's their root path. Users also have the
-  // option to use absolute config paths if this doesn't work well in some cases.
-  const projectRootPath = path.dirname(cosmosConfigPath);
 
   const {
     hostname,
@@ -41,7 +21,7 @@ module.exports = function startServer() {
     webpackConfigPath,
   } = cosmosConfig;
 
-  const userWebpackConfig = require(resolveUserPath(webpackConfigPath, projectRootPath));
+  const userWebpackConfig = require(resolveUserPath(webpackConfigPath, cosmosConfigPath));
   const cosmosWebpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
   const compiler = webpack(cosmosWebpackConfig);
   const app = express();
@@ -55,7 +35,7 @@ module.exports = function startServer() {
   }
 
   if (publicPath) {
-    app.use('/', express.static(publicPath));
+    app.use('/', express.static(resolveUserPath(publicPath, cosmosConfigPath)));
   }
 
   app.listen(port, hostname, (err) => {

@@ -1,9 +1,11 @@
+import path from 'path';
+
 jest.mock('webpack');
 
 let DefinePluginMock;
 let DefinePlugin;
 
-let mockBuildPaths;
+let buildModulePathsMock;
 let getWebpackConfig;
 
 const cosmosConfigPath = require.resolve('./dummy-config/cosmos.config');
@@ -22,6 +24,8 @@ let cosmosConfig;
 // This is the output that we test
 let webpackConfig;
 
+const resolveUserPath = (relPath) => path.join(path.dirname(cosmosConfigPath), relPath);
+
 beforeEach(() => {
   // We want to change configs between test cases
   jest.resetModules();
@@ -30,11 +34,11 @@ beforeEach(() => {
   jest.mock('./dummy-config/cosmos.config', () => cosmosConfig);
 
   // Mock already tested lib
-  mockBuildPaths = jest.fn(() => ({
+  buildModulePathsMock = jest.fn(() => ({
     components: '__MOCK_COMPONENTS__',
     fixtures: '__MOCK_FIXTURES__',
   }));
-  jest.mock('../build-module-paths', () => mockBuildPaths);
+  jest.mock('../build-module-paths', () => buildModulePathsMock);
 
   // Mock webpack plugin
   DefinePluginMock = {};
@@ -58,15 +62,18 @@ describe('without hmr', () => {
     expect(webpackConfig.loaders).toBe(userWebpackConfig.loaders);
   });
 
-  test('builds module paths using user config', () => {
-    const { calls } = mockBuildPaths.mock;
-    expect(calls[0][0]).toBe(cosmosConfig.componentPaths);
-    expect(calls[0][1]).toBe(cosmosConfig.ignore);
+  test('builds module paths with user component paths', () => {
+    expect(buildModulePathsMock.mock.calls[0][0]).toEqual(
+      cosmosConfig.componentPaths.map(resolveUserPath));
+  });
+
+  test('builds module paths using ignore paths', () => {
+    expect(buildModulePathsMock.mock.calls[0][1]).toBe(cosmosConfig.ignore);
   });
 
   test('adds global imports to entries', () => {
     cosmosConfig.globalImports.forEach((globalImport) => {
-      expect(webpackConfig.entry).toContain(globalImport);
+      expect(webpackConfig.entry).toContain(resolveUserPath(globalImport));
     });
   });
 
@@ -123,7 +130,7 @@ describe('with hmr', () => {
 
   test('adds global imports to entries', () => {
     cosmosConfig.globalImports.forEach((globalImport) => {
-      expect(webpackConfig.entry).toContain(globalImport);
+      expect(webpackConfig.entry).toContain(resolveUserPath(globalImport));
     });
   });
 
@@ -139,5 +146,27 @@ describe('with hmr', () => {
 
   test('adds hot middleware client to entries', () => {
     expect(webpackConfig.entry).toContain(require.resolve('webpack-hot-middleware/client'));
+  });
+});
+
+describe('with absolute paths', () => {
+  beforeEach(() => {
+    cosmosConfig = {
+      componentPaths: [resolveUserPath('src/components')],
+      globalImports: [resolveUserPath('./global.css')],
+    };
+    webpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
+  });
+
+  test('builds module paths with user component paths', () => {
+    const { calls } = buildModulePathsMock.mock;
+
+    expect(calls[0][0]).toEqual(cosmosConfig.componentPaths);
+  });
+
+  test('adds global imports to entries', () => {
+    cosmosConfig.globalImports.forEach((globalImport) => {
+      expect(webpackConfig.entry).toContain(globalImport);
+    });
   });
 });

@@ -147,9 +147,7 @@ describe('with custom cosmos config path', () => {
       },
     }));
 
-    jest.mock('./dummy-config/custom-path/cosmos.config', () => ({
-      // webpackConfig: module.resolve('./')
-    }));
+    jest.mock('./dummy-config/custom-path/cosmos.config', () => ({}));
     jest.mock('./dummy-config/custom-path/webpack.config', () => userWebpackConfigMock);
 
     startServer();
@@ -190,7 +188,7 @@ describe('with custom webpack config path', () => {
   });
 });
 
-describe('with public path', () => {
+describe('with relative public path', () => {
   beforeEach(() => {
     jest.mock('yargs', () => ({ argv: {} }));
 
@@ -205,8 +203,50 @@ describe('with public path', () => {
   commonTests();
 
   test('creates static server', () => {
-    expect(express.static.mock.calls[0][0]).toBe('server/public'); // What about real path?
+    expect(express.static.mock.calls[0][0]).toBe(path.join(processCwdMock, 'server/public'));
   });
 });
 
-// with custom hostname and port
+describe('with absolute public path', () => {
+  let publicPath;
+
+  beforeEach(() => {
+    jest.mock('yargs', () => ({ argv: {} }));
+
+    publicPath = path.join(processCwdMock, 'server/public');
+    jest.mock('./dummy-config/cosmos.config', () => ({
+      publicPath,
+    }));
+    jest.mock('./dummy-config/webpack.config', () => userWebpackConfigMock);
+
+    startServer();
+  });
+
+  commonTests();
+
+  test('creates static server', () => {
+    expect(express.static.mock.calls[0][0]).toBe(publicPath);
+  });
+});
+
+describe('with custom hostname and port', () => {
+  beforeEach(() => {
+    jest.mock('yargs', () => ({ argv: {} }));
+
+    jest.mock('./dummy-config/cosmos.config', () => ({
+      hostname: '192.168.1.2',
+      port: 9999,
+    }));
+    jest.mock('./dummy-config/webpack.config', () => userWebpackConfigMock);
+
+    startServer();
+  });
+
+  commonTests();
+
+  test('starts express server with default hostname & port', () => {
+    const [port, hostname] = expressInstanceMock.listen.mock.calls[0];
+    expect(port).toBe(9999);
+    expect(hostname).toBe('192.168.1.2');
+  });
+});

@@ -1,6 +1,7 @@
 import webpack from 'webpack';
 import buildModulePaths from './build-module-paths';
 import getConfig from './config';
+import resolveUserPath from './resolve-user-path';
 
 export default function getWebpackConfig(
   userWebpackConfig,
@@ -16,12 +17,17 @@ export default function getWebpackConfig(
     ignore,
   } = cosmosConfig;
 
+  const resolvedComponentPaths = componentPaths.map(
+    path => resolveUserPath(path, cosmosConfigPath));
+  const resolvedGlobalImports = globalImports.map(
+    path => resolveUserPath(path, cosmosConfigPath));
+
   const {
     components,
     fixtures,
-  } = buildModulePaths(componentPaths, ignore);
+  } = buildModulePaths(resolvedComponentPaths, ignore);
 
-  const entry = [...globalImports];
+  const entry = [...resolvedGlobalImports];
 
   if (hot) {
     // It's crucial for Cosmos to not depend on any user loader. This way the
