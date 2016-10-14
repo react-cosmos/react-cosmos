@@ -5,14 +5,13 @@
   react/prop-types
 */
 
-import _ from 'lodash';
 import React from 'react';
 import selectedFixture from './selected-fixture.js';
 
 const PropMutatorProxy = React.createClass({
   render() {
     return React.cloneElement(this.props.children,
-      _.assign({}, this.props.children.props, { myProp: true }));
+      { ...this.props.children.props, myProp: true });
   },
 });
 
@@ -28,7 +27,6 @@ const MarkupProxy = React.createClass({
   },
 });
 
-module.exports = _.merge({}, selectedFixture, {
+module.exports = { ...selectedFixture,
   proxies: [PropMutatorProxy, MarkupProxy],
-});
-
+};

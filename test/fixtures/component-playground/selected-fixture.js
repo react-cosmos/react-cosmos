@@ -1,8 +1,7 @@
 import React from 'react';
-import _ from 'lodash';
 import defaultFixture from './default.js';
 
-module.exports = _.merge({}, defaultFixture, {
+module.exports = { ...defaultFixture,
   component: 'FirstComponent',
   fixture: 'default',
   containerClassName: 'my-app-namespace',
@@ -29,4 +28,4 @@ module.exports = _.merge({}, defaultFixture, {
     },
     fixtureChange: 10,
   },
-});
+};

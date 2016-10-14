@@ -18,5 +18,8 @@
   },
   "peerDependencies": {
     "react": ">=0.12 <16"
+  },
+  "devDependencies": {
+    "babelify": "^7.3.0"
   }
 }

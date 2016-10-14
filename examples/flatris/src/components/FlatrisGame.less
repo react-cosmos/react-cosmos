@@ -1,0 +1,55 @@
+@import '../lib/clear-spacing.less';
+@import '../lib/button.less';
+
+/* Flatris expects a 480 width viewport */
+.flatris-game {
+  position: relative;
+  width: 480px;
+  height: 680px;
+  margin: 30px auto 30px auto;
+
+  .well {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 600px;
+    background: #ecf0f1;
+  }
+
+  .info-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 270px;
+    height: 600px;
+    background: rgba(236, 240, 241, 0.85);
+  }
+
+  .game-panel {
+    position: absolute;
+    top: 0;
+    bottom: 80px;
+    left: 300px;
+    right: 0;
+  }
+
+  .controls {
+    position: absolute;
+    top: 600px;
+    left: 0;
+    height: 80px;
+
+    button {
+      .clear-spacing();
+      .button();
+
+      float: left;
+      width: 60px;
+      margin: 20px 20px 0 0;
+      background: #ecf0f1;
+      color: #34495f;
+      font-size: 24px;
+    }
+  }
+}
