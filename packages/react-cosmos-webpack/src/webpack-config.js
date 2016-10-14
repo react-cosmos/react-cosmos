@@ -36,8 +36,11 @@ export default function getWebpackConfig(
   }
 
   entry.push(`${require.resolve('./entry-loader')}?${JSON.stringify({
-    components,
-    fixtures,
+    // We escape the contents because component or fixture paths might contain
+    // an ! (exclamation point), which throws webpack off thinking everything
+    // after is the entry file path.
+    components: escape(components),
+    fixtures: escape(fixtures),
   })}!${require.resolve('./entry')}`);
 
   const output = {

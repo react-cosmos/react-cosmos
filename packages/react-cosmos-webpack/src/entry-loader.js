@@ -4,6 +4,6 @@ module.exports = function embedModules(source) {
   const { components, fixtures } = loaderUtils.parseQuery(this.query);
 
   return source
-    .replace(/COMPONENTS/g, components)
-    .replace(/FIXTURES/g, fixtures);
+    .replace(/COMPONENTS/g, unescape(components))
+    .replace(/FIXTURES/g, unescape(fixtures));
 };
