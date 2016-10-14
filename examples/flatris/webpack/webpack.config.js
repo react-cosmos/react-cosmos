@@ -23,13 +23,7 @@ module.exports = {
       loader: 'babel',
       exclude: /node_modules/,
       query: {
-        // We don't need to resolve paths in real life. Read comment from
-        // resolveLoader.root for more info.
-        presets: [
-          require.resolve('babel-preset-es2015'),
-          require.resolve('babel-preset-react'),
-          require.resolve('babel-preset-react-hmre'),
-        ],
+        presets: ['es2015', 'react', 'react-hmre'],
       },
     }, {
       test: /\.(css|less)$/,

@@ -36,6 +36,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-preset-es2015": "^6.13.2",
     "babel-preset-react": "^6.11.1",
+    "babel-preset-react-hmre": "^1.1.1",
     "browserify-optional": "^1.0.0",
     "chai": "^3.5.0",
     "coveralls": "^2.11.12",
