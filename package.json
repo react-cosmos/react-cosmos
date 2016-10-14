@@ -46,6 +46,7 @@
     "eslint-plugin-import": "^1.16.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.4.0",
+    "glob": "^7.1.1",
     "inject-loader": "^2.0.1",
     "jest": "^16.0.1",
     "jquery": "^3.1.0",
