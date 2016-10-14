@@ -50,11 +50,8 @@ Follow these steps to get started:
 npm i -D react-cosmos-webpack
 ```
 
-While is it possible to install `react-cosmos-webpack` globally, local installs are preferred. After all, *encapsulation* is the word.
-
 **Step 2: Add `cosmos.config.js` to your project root**
 
-You can get going with as little as this:
 ```js
 // cosmos.config.js
 module.exports = {
@@ -140,8 +137,6 @@ module.exports = {
 #### Using Babel
 
 Unless you pass it the `--plain` param, the webpack CLI runs with `babel-node` by default. This is nice because it allows you to write your fixtures and the webpack & Cosmos configs using the same syntax as your source code.
-
-Warning: If you choose to stick with Babel, know that `react-cosmos-webpack` relies on the `.babelrc` config and Babel plugins and presets from your codebase.
 
 ## Development
 
