@@ -24,6 +24,9 @@
     "style-loader": "^0.13.1",
     "webpack": "^1.13.2"
   },
+  "peerDependencies": {
+    "react": ">=0.12 <16"
+  },
   "scripts": {
     "start:webpack": "../../packages/react-cosmos-webpack/bin/cosmos.js --config webpack/cosmos.config.js",
     "start:browserify": "node ./browserify/server.js",
