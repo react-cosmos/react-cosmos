@@ -2,7 +2,7 @@
   "name": "react-cosmos-flatris-webpack-example",
   "version": "1.0.0-beta.4",
   "description": "webpack integration featuring Flatris",
-  "repository": "https://github.com/skidding/react-cosmos/tree/master/examples/flatris-webpack",
+  "repository": "https://github.com/skidding/react-cosmos/tree/master/examples/flatris",
   "license": "MIT",
   "dependencies": {
     "babel-core": "^6.17.0",
@@ -10,6 +10,7 @@
     "babelify": "^7.3.0",
     "budo": "^9.2.1",
     "css-loader": "^0.25.0",
+    "eslint": "^3.7.1",
     "html-webpack-plugin": "^2.22.0",
     "jquery": "^3.1.1",
     "less": "^2.7.1",
@@ -28,6 +29,7 @@
     "react": ">=0.12 <16"
   },
   "scripts": {
+    "lint": "eslint --ext '.jsx,.js' ./",
     "start:webpack": "../../packages/react-cosmos-webpack/bin/cosmos.js --config webpack/cosmos.config.js",
     "start:browserify": "node ./browserify/server.js",
     "start": "npm run start:webpack"
