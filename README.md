@@ -50,7 +50,7 @@ Follow these steps to get started:
 npm i -D react-cosmos-webpack
 ```
 
-*While is it possible to install `react-cosmos-webpack` globally, local installs are preferred. After all, *encapsulation* is the word.*
+While is it possible to install `react-cosmos-webpack` globally, local installs are preferred. After all, *encapsulation* is the word.
 
 **Step 2: Add `cosmos.config.js` to your project root**
 
