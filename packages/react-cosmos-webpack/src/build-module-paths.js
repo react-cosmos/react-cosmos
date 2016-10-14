@@ -35,7 +35,7 @@ export default function buildModulePaths(componentPaths, ignorePatterns = []) {
   componentPaths.forEach((componentsRootPath) => {
     glob.sync(`${componentsRootPath}/**/*{.js,.jsx}`).forEach((componentPath) => {
       // Remove root path (including trailing slash) and extension
-      const pathMatcher = new RegExp(`^${componentsRootPath}/(.+)\.jsx?$`);
+      const pathMatcher = new RegExp(`^${componentsRootPath}/(.+).jsx?$`);
       const cleanPath = componentPath.match(pathMatcher)[1];
 
       if (

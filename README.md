@@ -29,7 +29,7 @@ _\*DX stands for Developer Experience, the counterpart of UX in building a produ
 
 ## Usage
 
-The easiest way to use React Cosmos is [alongside webpack](examples/flatris/webpack), but if you use Browserify that's aight too. Dedication is required, but a [Browserify example](examples/flatris/browserify) is available.
+The easiest way to use React Cosmos is [alongside webpack](examples/flatris/webpack). Making it work with Browserify takes extra work, but a [complete example](examples/flatris/browserify) is available.
 
 ### webpack CLI
 
@@ -37,14 +37,14 @@ It extends your existing webpack config (*please tell me you have one*) and star
 
 Similar to the *\__tests__* convention in Jest, `react-cosmos-webpack` looks for a `__fixtures__` directory next to your components. E.g.
 ```bash
- src/components/Button.jsx
+src/components/Button.jsx
 src/components/__fixtures__/Button/default.js
 src/components/__fixtures__/Button/disabled.js
 ```
 
 Follow these steps to get started:
 
-**Step 1:** Install package
+**Step 1: Install package**
 
 ```bash
 npm i -D react-cosmos-webpack
@@ -52,7 +52,7 @@ npm i -D react-cosmos-webpack
 
 *While is it possible to install `react-cosmos-webpack` globally, local installs are preferred. After all, *encapsulation* is the word.*
 
-**Step 2:** Add `cosmos.config.js` to your project root
+**Step 2: Add `cosmos.config.js` to your project root**
 
 You can get going with as little as this:
 ```js
@@ -62,7 +62,7 @@ module.exports = {
 };
 ```
 
-**Step 3:** Start and [load playground](http://localhost:8989) 🎉
+**Step 3: Start and [load playground](http://localhost:8989)** 🎉
 
 ```bash
 node_modules/.bin/cosmos
@@ -70,7 +70,7 @@ node_modules/.bin/cosmos
 node_modules/.bin/cosmos --config path/to/cosmos.config.js
 ```
 
-**Bonus:** Create `npm run cosmos` script for extra sugar
+**Bonus: Create `npm run cosmos` script for extra sugar**
 
 ```js
 // package.json
@@ -102,7 +102,7 @@ module.exports = {
   ],
 
   // Components will not be loaded in the playground if their names match these.
-  // There's no excuse for components which can't be loaded independently, but
+  // There's no excuse for components that can't be loaded independently, but
   // if you store HoCs (which export functions) next to regular components, well,
   // what are you gonna do, not use this wonderful tool?
   ignore: [
@@ -163,7 +163,7 @@ npm start
 # live reload on changes
 npm run build:component-playground -- -- --watch
 
-# Test single package as you code
+# Unit test single package as you code
 npm run build:cosmos-webpack -- -- --watch
 ```
 
