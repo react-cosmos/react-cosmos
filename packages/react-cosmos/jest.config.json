@@ -1,4 +1,6 @@
 {
   "rootDir": "src",
-  "testEnvironment": "jsdom"
+  "testEnvironment": "jsdom",
+  "coverageDirectory": "__coverage__",
+  "coverageReporters": ["lcov", "text"]
 }
