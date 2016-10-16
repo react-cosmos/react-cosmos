@@ -35,7 +35,7 @@ The easiest way to use React Cosmos is [alongside webpack](examples/flatris/webp
 
 It extends your existing webpack config (*please tell me you have one*) and starts a dev server for Component Playground tuned to your codebase.
 
-Similar to the *\__tests__* convention in Jest, `react-cosmos-webpack` looks for a `__fixtures__` directory next to your components. E.g.
+`react-cosmos-webpack` looks for a `__fixtures__` directory next to your components. E.g.
 ```bash
 src/components/Button.jsx
 src/components/__fixtures__/Button/default.js
