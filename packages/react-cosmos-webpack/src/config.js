@@ -3,7 +3,7 @@ export default function getConfig(userConfig) {
   // the server and client side and reading it is different per case.
   // On the server side we read the path from the webpack CLI params while on
   // the client receives the embedded path through webpack.DefinePlugin.
-  // These function just applies the defaults, which are "universal".
+  // This function just applies the defaults, which are "universal".
   return {
     globalImports: [],
     hostname: 'localhost',
