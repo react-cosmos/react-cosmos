@@ -11,6 +11,7 @@
     "deep-equal": "^1.0.1",
     "fuzzaldrin-plus": "^0.3.1",
     "lodash": "^3.6.0",
+    "object.omit": "^2.0.0",
     "react-codemirror": "git://github.com/skidding/react-codemirror.git",
     "react-component-tree": "^1.0.0-beta.4",
     "react-dom-polyfill": "^1.0.0-beta.4",
