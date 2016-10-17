@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import createReactCosmosStateProxy from '../index';
+import createReactCosmosStateProxy from '../ReactCosmosStateProxy';
 
 jest.mock('react-component-tree');
 
@@ -18,6 +18,7 @@ let fixture;
 let previewComponent;
 let stateMock;
 let onFixtureUpdate;
+let updatedFixture;
 let ReactCosmosStateProxy;
 let wrapper;
 let childWrapper;
@@ -27,10 +28,10 @@ jest.useFakeTimers();
 
 const renderProxy = (f) => {
   fixture = f;
-  previewComponent = {
-    state: f.state ? { ...f.state } : undefined,
-  };
-  onFixtureUpdate = jest.fn(() => {});
+  previewComponent = f.state ? { state: f.state } : {};
+  onFixtureUpdate = jest.fn(({ state }) => {
+    updatedFixture = { ...fixture, state };
+  });
 
   jest.clearAllMocks();
 
@@ -62,6 +63,10 @@ const commonTests = () => {
 
   test('sends fixture to next proxy', () => {
     expect(childProps.fixture).toEqual(fixture);
+  });
+
+  test('serializes preview component', () => {
+    expect(ReactComponentTree.serialize.mock.calls[0][0]).toBe(previewComponent);
   });
 
   test('bubbles up preview ref', () => {
@@ -121,12 +126,43 @@ describe('fixture with state', () => {
     expect(onFixtureUpdate.mock.calls[0][0].state).toBe(stateMock);
   });
 
-  test('starts update interval with options.interval', () => {
+  test('schedules timeout', () => {
+    expect(setTimeout.mock.calls.length).toBe(1);
+  });
+
+  test('schedules timeout with options.interval', () => {
     expect(setTimeout.mock.calls[0][1]).toBe(1337);
   });
 
-  describe('after interval passes', () => {
+  describe('after interval without state change passes', () => {
     beforeAll(() => {
+      // Simulate one way data flow communication between proxies, fixtureUpdates
+      // are returned as props
+      wrapper.setProps({ fixture: updatedFixture });
+
+      jest.runOnlyPendingTimers();
+    });
+
+    test('serializes preview component again', () => {
+      expect(ReactComponentTree.serialize.mock.calls[1][0]).toBe(previewComponent);
+    });
+
+    test('does not onFixtureUpdate once again', () => {
+      expect(onFixtureUpdate.mock.calls.length).toBe(1);
+    });
+
+    test('schedules another timeout', () => {
+      expect(setTimeout.mock.calls.length).toBe(2);
+    });
+  });
+
+  describe('after interval with state change passes', () => {
+    beforeAll(() => {
+      // Simulate one way data flow communication between proxies, fixtureUpdates
+      // are returned as props
+      wrapper.setProps({ fixture: updatedFixture });
+
+      // Simulate state change inside preview component
       stateMock = { counter: 7 };
       ReactComponentTree.__setStateMock(stateMock);
 
@@ -137,12 +173,25 @@ describe('fixture with state', () => {
       expect(onFixtureUpdate.mock.calls.length).toBe(2);
     });
 
+    test('serializes preview component again', () => {
+      expect(ReactComponentTree.serialize.mock.calls[2][0]).toBe(previewComponent);
+    });
+
     test('calls onFixtureUpdate with updated state', () => {
       expect(onFixtureUpdate.mock.calls[1][0].state.counter).toBe(7);
     });
 
-    test('clears timeout on unmount', () => {
+    test('schedules another timeout', () => {
+      expect(setTimeout.mock.calls.length).toBe(3);
+    });
+  });
+
+  describe('on unmount', () => {
+    beforeAll(() => {
       wrapper.unmount();
+    });
+
+    test('clears timeout', () => {
       expect(clearTimeout.mock.calls.length).toBe(1);
     });
   });

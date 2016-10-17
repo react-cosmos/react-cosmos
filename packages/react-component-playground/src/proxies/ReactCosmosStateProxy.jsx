@@ -1,4 +1,5 @@
 import React from 'react';
+import deepEqual from 'deep-equal';
 import ReactComponentTree from 'react-component-tree';
 
 const defaults = {
@@ -18,7 +19,7 @@ export default function createReactCosmosStateProxy(options) {
     constructor(props) {
       super(props);
       this.onPreviewRender = this.onPreviewRender.bind(this);
-      this.onStateUpdate = this.onStateUpdate.bind(this);
+      this.onStateRefresh = this.onStateRefresh.bind(this);
     }
 
     componentWillUnmount() {
@@ -31,36 +32,49 @@ export default function createReactCosmosStateProxy(options) {
         previewRef,
       } = this.props;
 
-      // Load initial state right after component renders
-      const fixtureState = fixture[fixtureKey];
-      if (fixtureState) {
-        ReactComponentTree.injectState(previewComponent, fixtureState);
-      }
+      // Ref callbacks are also called on unmount with null value. We just need
+      // to make sure to bubble up the unmount call in that case.
+      if (previewComponent) {
+        // Load initial state right after component renders
+        const fixtureState = fixture[fixtureKey];
+        if (fixtureState) {
+          ReactComponentTree.injectState(previewComponent, fixtureState);
+        }
 
-      // No need to poll for state changes if component is stateless
-      if (previewComponent.state) {
-        this.previewComponent = previewComponent;
-        this.onStateUpdate();
+        const initialState = this.getStateTree(previewComponent);
+        // No need to poll for state changes if entire component tree is stateless
+        if (initialState) {
+          this.updateState(initialState);
+        }
       }
 
       // Bubble up preview component ref callback
-      previewRef(previewComponent);
+      previewRef(this.previewComponent = previewComponent);
     }
 
-    onStateUpdate() {
+    onStateRefresh() {
+      this.updateState(this.getStateTree(this.previewComponent));
+    }
+
+    getStateTree(previewComponent) {
+      return ReactComponentTree.serialize(previewComponent).state;
+    }
+
+    updateState(updatedState) {
       const {
         fixture,
         onFixtureUpdate,
       } = this.props;
-      const currentState = ReactComponentTree.serialize(this.previewComponent);
 
-      onFixtureUpdate({
-        ...fixture,
-        state: currentState,
-      });
+      if (!deepEqual(updatedState, fixture.state)) {
+        onFixtureUpdate({
+          ...fixture,
+          state: updatedState,
+        });
+      }
 
       // TODO: Find a better way than polling to hook into state changes
-      this.timeoutId = setTimeout(this.onStateUpdate, updateInterval);
+      this.timeoutId = setTimeout(this.onStateRefresh, updateInterval);
     }
 
     render() {
