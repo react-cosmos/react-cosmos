@@ -1,0 +1,14 @@
+{
+  "name": "react-cosmos-state-proxy",
+  "version": "1.0.0-beta.4",
+  "description": "A React Cosmos proxy to mock and serialize local state",
+  "repository": "https://github.com/skidding/react-cosmos/tree/master/packages/react-cosmos-state-proxy",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "dependencies": {
+    "react-component-tree": "^1.0.0-beta.4"
+  },
+  "peerDependencies": {
+    "react": ">=0.12 <16"
+  }
+}
