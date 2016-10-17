@@ -9,13 +9,13 @@ const defaults = {
   updateInterval: 500,
 };
 
-export default function createReactCosmosStateProxy(options) {
+export default function createStateProxy(options) {
   const {
     fixtureKey,
     updateInterval,
   } = { ...defaults, ...options };
 
-  class ReactCosmosStateProxy extends React.Component {
+  class StateProxy extends React.Component {
     constructor(props) {
       super(props);
       this.onPreviewRender = this.onPreviewRender.bind(this);
@@ -90,7 +90,7 @@ export default function createReactCosmosStateProxy(options) {
     }
   }
 
-  ReactCosmosStateProxy.propTypes = {
+  StateProxy.propTypes = {
     nextProxy: React.PropTypes.shape({
       value: React.PropTypes.func,
       next: React.PropTypes.func,
@@ -100,5 +100,5 @@ export default function createReactCosmosStateProxy(options) {
     onFixtureUpdate: React.PropTypes.func.isRequired,
   };
 
-  return ReactCosmosStateProxy;
+  return StateProxy;
 }

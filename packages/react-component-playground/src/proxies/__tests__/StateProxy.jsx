@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import createReactCosmosStateProxy from '../ReactCosmosStateProxy';
+import createStateProxy from '../StateProxy';
 
 jest.mock('react-component-tree');
 
@@ -19,7 +19,7 @@ let previewComponent;
 let stateMock;
 let onFixtureUpdate;
 let updatedFixture;
-let ReactCosmosStateProxy;
+let StateProxy;
 let wrapper;
 let childWrapper;
 let childProps;
@@ -35,11 +35,11 @@ const renderProxy = (f) => {
 
   jest.clearAllMocks();
 
-  ReactCosmosStateProxy = createReactCosmosStateProxy({
+  StateProxy = createStateProxy({
     updateInterval: 1337,
   });
   wrapper = shallow(
-    <ReactCosmosStateProxy
+    <StateProxy
       nextProxy={nextProxy}
       fixture={fixture}
       previewRef={previewRef}
