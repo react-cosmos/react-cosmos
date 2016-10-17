@@ -29,7 +29,7 @@ export default function createStateProxy(options) {
     onPreviewRender(previewComponent) {
       const {
         fixture,
-        previewRef,
+        onPreviewRef,
       } = this.props;
 
       // Ref callbacks are also called on unmount with null value. We just need
@@ -49,7 +49,7 @@ export default function createStateProxy(options) {
       }
 
       // Bubble up preview component ref callback
-      previewRef(this.previewComponent = previewComponent);
+      onPreviewRef(this.previewComponent = previewComponent);
     }
 
     onStateRefresh() {
@@ -78,14 +78,12 @@ export default function createStateProxy(options) {
     }
 
     render() {
-      const { props } = this;
-      const {
-        nextProxy,
-      } = this.props;
+      const { props, onPreviewRender } = this;
+      const { nextProxy } = this.props;
 
       return React.createElement(nextProxy.value, { ...props,
         nextProxy: nextProxy.next(),
-        previewRef: this.onPreviewRender,
+        onPreviewRef: onPreviewRender,
       });
     }
   }
@@ -96,7 +94,7 @@ export default function createStateProxy(options) {
       next: React.PropTypes.func,
     }).isRequired,
     fixture: React.PropTypes.object.isRequired,
-    previewRef: React.PropTypes.func.isRequired,
+    onPreviewRef: React.PropTypes.func.isRequired,
     onFixtureUpdate: React.PropTypes.func.isRequired,
   };
 

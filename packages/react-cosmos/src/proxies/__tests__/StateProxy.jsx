@@ -12,7 +12,7 @@ const nextProxy = {
   value: NextProxy,
   next: () => nextProxyNext,
 };
-const previewRef = jest.fn();
+const onPreviewRef = jest.fn();
 
 let fixture;
 let previewComponent;
@@ -42,14 +42,14 @@ const renderProxy = (f) => {
     <StateProxy
       nextProxy={nextProxy}
       fixture={fixture}
-      previewRef={previewRef}
+      onPreviewRef={onPreviewRef}
       onFixtureUpdate={onFixtureUpdate}
     />
   );
   childWrapper = wrapper.at(0);
   childProps = childWrapper.props();
   // Simulate renedering of preview component
-  childProps.previewRef(previewComponent);
+  childProps.onPreviewRef(previewComponent);
 };
 
 const commonTests = () => {
@@ -70,7 +70,7 @@ const commonTests = () => {
   });
 
   test('bubbles up preview ref', () => {
-    expect(previewRef.mock.calls[0][0]).toBe(previewComponent);
+    expect(onPreviewRef.mock.calls[0][0]).toBe(previewComponent);
   });
 };
 

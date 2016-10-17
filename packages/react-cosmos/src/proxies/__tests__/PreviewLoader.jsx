@@ -10,7 +10,7 @@ const fixture = {
     counter: 5,
   },
 };
-const previewRef = jest.fn();
+const onPreviewRef = jest.fn();
 
 let wrapper;
 let childWrapper;
@@ -20,7 +20,7 @@ beforeAll(() => {
   wrapper = shallow(
     <PreviewLoader
       fixture={fixture}
-      previewRef={previewRef}
+      onPreviewRef={onPreviewRef}
     />
   );
   childWrapper = wrapper.at(0);
@@ -43,6 +43,6 @@ test('omits fixture.state from props', () => {
   expect(childProps.state).toBe(undefined);
 });
 
-test('sends previewRef as preview component ref callback', () => {
-  expect(childWrapper.get(0).ref).toBe(previewRef);
+test('sets onPreviewRef as preview component ref callback', () => {
+  expect(childWrapper.get(0).ref).toBe(onPreviewRef);
 });
