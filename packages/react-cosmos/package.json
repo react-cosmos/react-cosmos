@@ -6,7 +6,13 @@
   "license": "MIT",
   "main": "lib/index.js",
   "dependencies": {
+    "deep-equal": "^1.0.1",
+    "object.omit": "^2.0.0",
     "react-component-playground": "^1.0.0-beta.4",
+    "react-component-tree": "^1.0.0-beta.4",
     "react-querystring-router": "^1.0.0-beta.4"
+  },
+  "peerDependencies": {
+    "react": ">=0.12 <16"
   }
 }

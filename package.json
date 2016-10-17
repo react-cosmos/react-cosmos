@@ -25,8 +25,7 @@
     "test-jest": "jest --coverage --config packages/$PACKAGE/jest.config.json",
     "test:cosmos": "PACKAGE=react-cosmos npm run test-jest",
     "test:cosmos-webpack": "PACKAGE=react-cosmos-webpack npm run test-jest",
-    "test:component-playground": "PACKAGE=react-component-playground npm run test-jest",
-    "test": "npm run lint && npm run test-karma && npm run test:cosmos && npm run test:cosmos-webpack && npm run test:component-playground",
+    "test": "npm run lint && npm run test-karma && npm run test:cosmos && npm run test:cosmos-webpack",
     "coveralls": "lcov-result-merger '{packages/*/src/__coverage__,test/coverage/*}/lcov.info' | node_modules/coveralls/bin/coveralls.js"
   },
   "dependencies": {
