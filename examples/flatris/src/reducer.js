@@ -3,7 +3,6 @@ import {
   WELL_ROWS,
   WELL_COLS,
   DROP_FRAMES_DEFAULT,
-  DROP_FRAMES_ACCELERATED,
   DROP_FRAMES_DECREMENT,
   LINE_CLEAR_BONUSES,
 } from './constants/grid';
@@ -35,13 +34,10 @@ const reducers = {
       dropAcceleration,
       dropFrames,
     } = state;
-    const { frames } = action.payload;
-
-    const positionChange =
-      frames / (dropAcceleration ? DROP_FRAMES_ACCELERATED : dropFrames);
+    const { rows } = action.payload;
 
     let newPosition = Object.assign({}, activeTetriminoPosition, {
-      y: activeTetriminoPosition.y + positionChange,
+      y: activeTetriminoPosition.y + rows,
     });
 
     // The active Tetrimino keeps falling down until it hits something
