@@ -1,16 +1,25 @@
 import React from 'react';
-import _ from 'lodash';
+import omit from 'object.omit';
 
-const ReduxProxyFactory = ({
-  createStore,
-  storeKey,
-}) => {
-  const fixtureStoreKey = storeKey || 'reduxState';
+const defaults = {
+  fixtureKey: 'reduxState',
+};
+
+export default function createReduxProxy(options) {
+  const {
+    fixtureKey,
+    createStore,
+  } = { ...defaults, ...options };
 
   class ReduxProxy extends React.Component {
-    constructor(fixture) {
-      super();
-      this.store = createStore(fixture[fixtureStoreKey]);
+    constructor(props) {
+      super(props);
+      this.onStoreChange = this.onStoreChange.bind(this);
+
+      const fixtureReduxState = props.fixture[fixtureKey];
+      if (fixtureReduxState) {
+        this.store = createStore(fixtureReduxState);
+      }
     }
 
     getChildContext() {
@@ -19,28 +28,59 @@ const ReduxProxyFactory = ({
       };
     }
 
-    render() {
-      // This creates a new element identical to this.props.children.
-      // It is needed because in older versions of React context is owner-based
-      // https://gist.github.com/jimfb/0eb6e61f300a8c1b2ce7
-      // React.cloneElement is not enough either, as it doesn't reset owner in older React versions.
-      const { type, props, ref } = this.props.children;
+    componentWillMount() {
+      const {
+        store,
+        onStoreChange,
+      } = this;
+      if (store) {
+        this.storeUnsubscribe = store.subscribe(onStoreChange);
+      }
+    }
 
-      return (
-        React.createElement(type, _.assign(
-          {}, _.omit(props, fixtureStoreKey), { ref }
-        ))
-      );
+    componentWillUnmount() {
+      this.storeUnsubscribe();
+    }
+
+    onStoreChange() {
+      const {
+        fixture,
+        onFixtureUpdate,
+      } = this.props;
+      const updatedState = this.store.getState();
+
+      onFixtureUpdate({
+        ...fixture,
+        [fixtureKey]: updatedState,
+      });
+    }
+
+    render() {
+      const {
+        props,
+      } = this;
+      const {
+        nextProxy,
+        fixture,
+        onPreviewRef,
+      } = this.props;
+
+      return React.createElement(nextProxy.value, { ...props,
+        nextProxy: nextProxy.next(),
+        fixture: omit(fixture, fixtureKey),
+        onPreviewRef,
+      });
     }
   }
 
-  ReduxProxy.defaultProps = {
-    [fixtureStoreKey]: {},
-  };
-
   ReduxProxy.propTypes = {
-    children: React.PropTypes.element.isRequired,
-    [storeKey]: React.PropTypes.object,
+    nextProxy: React.PropTypes.shape({
+      value: React.PropTypes.func,
+      next: React.PropTypes.func,
+    }).isRequired,
+    fixture: React.PropTypes.object.isRequired,
+    onPreviewRef: React.PropTypes.func.isRequired,
+    onFixtureUpdate: React.PropTypes.func.isRequired,
   };
 
   ReduxProxy.childContextTypes = {
@@ -48,6 +88,4 @@ const ReduxProxyFactory = ({
   };
 
   return ReduxProxy;
-};
-
-module.exports = ReduxProxyFactory;
+}
