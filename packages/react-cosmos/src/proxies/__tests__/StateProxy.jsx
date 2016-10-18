@@ -25,7 +25,7 @@ let childProps;
 
 jest.useFakeTimers();
 
-const renderProxy = (f) => {
+const renderProxy = (f, disabled = false) => {
   fixture = f;
   previewComponent = f.state ? { state: f.state } : {};
   onFixtureUpdate = jest.fn();
@@ -41,6 +41,7 @@ const renderProxy = (f) => {
       fixture={fixture}
       onPreviewRef={onPreviewRef}
       onFixtureUpdate={onFixtureUpdate}
+      disableLocalState={disabled}
     />
   );
   childWrapper = wrapper.at(0);
@@ -58,12 +59,8 @@ const commonTests = () => {
     expect(childProps.nextProxy).toBe(nextProxyNext);
   });
 
-  test('sends fixture props to next proxy without state', () => {
-    expect(childProps.fixture).toEqual({ foo: 'bar' });
-  });
-
-  test('serializes preview component', () => {
-    expect(ReactComponentTree.serialize.mock.calls[0][0]).toBe(previewComponent);
+  test('sends fixture props to next proxy', () => {
+    expect(childProps.fixture.foo).toBe('bar');
   });
 
   test('bubbles up preview ref', () => {
@@ -71,9 +68,7 @@ const commonTests = () => {
   });
 
   test('bubbles up fixture updates', () => {
-    childProps.onFixtureUpdate({});
-    expect(onFixtureUpdate.mock.calls.length).toBe(1);
-    onFixtureUpdate.mockClear();
+    expect(childProps.onFixtureUpdate).toBe(onFixtureUpdate);
   });
 };
 
@@ -85,6 +80,14 @@ describe('fixture without state', () => {
   });
 
   commonTests();
+
+  test('omits state from fixture sent to next proxy', () => {
+    expect(childProps.fixture.state).toBe(undefined);
+  });
+
+  test('serializes preview component', () => {
+    expect(ReactComponentTree.serialize.mock.calls[0][0]).toBe(previewComponent);
+  });
 
   test('does not inject state', () => {
     expect(ReactComponentTree.injectState).not.toHaveBeenCalled();
@@ -113,6 +116,14 @@ describe('fixture with state', () => {
   });
 
   commonTests();
+
+  test('omits state from fixture sent to next proxy', () => {
+    expect(childProps.fixture.state).toBe(undefined);
+  });
+
+  test('serializes preview component', () => {
+    expect(ReactComponentTree.serialize.mock.calls[0][0]).toBe(previewComponent);
+  });
 
   test('injects state', () => {
     const [component, state] = ReactComponentTree.injectState.mock.calls[0];
@@ -191,5 +202,38 @@ describe('fixture with state', () => {
     test('clears timeout', () => {
       expect(clearTimeout.mock.calls.length).toBe(1);
     });
+  });
+});
+
+describe('disabled by parent proxy', () => {
+  beforeAll(() => {
+    renderProxy({
+      foo: 'bar',
+      state: {
+        counter: 6,
+      },
+    }, true);
+  });
+
+  commonTests();
+
+  test('does not omit state from fixture sent to next proxy', () => {
+    expect(childProps.fixture.state).toEqual({ counter: 6 });
+  });
+
+  test('does not serialize preview component', () => {
+    expect(ReactComponentTree.serialize).not.toHaveBeenCalled();
+  });
+
+  test('does not inject state', () => {
+    expect(ReactComponentTree.injectState).not.toHaveBeenCalled();
+  });
+
+  test('does not call onFixtureUpdate', () => {
+    expect(onFixtureUpdate).not.toHaveBeenCalled();
+  });
+
+  test('does not start update interval', () => {
+    expect(setTimeout.mock.calls.length).toBe(0);
   });
 });

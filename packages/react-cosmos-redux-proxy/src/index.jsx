@@ -68,6 +68,9 @@ export default function createReduxProxy(options) {
         // https://github.com/skidding/react-cosmos/issues/217
         fixture: omit(fixture, fixtureKey),
         onPreviewRef,
+        // Disable StateProxt when Redux state is available, otherwise the entire
+        // Redux store would be duplicated from the connect() component's state
+        disableLocalState: !!this.store,
       });
     }
   }

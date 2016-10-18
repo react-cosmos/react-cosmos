@@ -31,11 +31,12 @@ export default function createStateProxy(options) {
       const {
         fixture,
         onPreviewRef,
+        disableLocalState,
       } = this.props;
 
       // Ref callbacks are also called on unmount with null value. We just need
       // to make sure to bubble up the unmount call in that case.
-      if (previewComponent) {
+      if (previewComponent && !disableLocalState) {
         // Load initial state right after component renders
         const fixtureState = fixture[fixtureKey];
         if (fixtureState) {
@@ -86,17 +87,25 @@ export default function createStateProxy(options) {
       const {
         nextProxy,
         fixture,
+        disableLocalState,
       } = this.props;
+
+      // TODO: No longer omit when props will be read from fixture.props
+      // https://github.com/skidding/react-cosmos/issues/217
+      const childFixture = disableLocalState ? fixture : omit(fixture, 'state');
 
       return React.createElement(nextProxy.value, { ...props,
         nextProxy: nextProxy.next(),
-        // TODO: No longer omit when props will be read from fixture.props
-        // https://github.com/skidding/react-cosmos/issues/217
-        fixture: omit(fixture, 'state'),
+        fixture: childFixture,
         onPreviewRef: onPreviewRender,
       });
     }
   }
+
+  StateProxy.defaultProps = {
+    // Parent proxies can enable this flag to disable this proxy
+    disableLocalState: false,
+  };
 
   StateProxy.propTypes = {
     nextProxy: React.PropTypes.shape({
@@ -106,6 +115,7 @@ export default function createStateProxy(options) {
     fixture: React.PropTypes.object.isRequired,
     onPreviewRef: React.PropTypes.func.isRequired,
     onFixtureUpdate: React.PropTypes.func.isRequired,
+    disableLocalState: React.PropTypes.bool,
   };
 
   return StateProxy;

@@ -90,6 +90,10 @@ describe('fixture without Redux state', () => {
   test('does not create Redux store', () => {
     expect(createStore).not.toHaveBeenCalled();
   });
+
+  test('does not disable local state', () => {
+    expect(childProps.disableLocalState).toBe(false);
+  });
 });
 
 describe('fixture with Redux state', () => {
@@ -131,6 +135,10 @@ describe('fixture with Redux state', () => {
         counter: 10,
       },
     });
+  });
+
+  test('disables local state', () => {
+    expect(childProps.disableLocalState).toBe(true);
   });
 
   describe('on unmount', () => {
