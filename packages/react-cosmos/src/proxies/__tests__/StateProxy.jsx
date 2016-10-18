@@ -51,15 +51,15 @@ const renderProxy = (f) => {
 
 const commonTests = () => {
   test('renders next proxy in line', () => {
-    expect(childWrapper.type()).toEqual(NextProxy);
+    expect(childWrapper.type()).toBe(NextProxy);
   });
 
   test('sends nextProxy.next() to next proxy', () => {
-    expect(childProps.nextProxy).toEqual(nextProxyNext);
+    expect(childProps.nextProxy).toBe(nextProxyNext);
   });
 
-  test('sends fixture to next proxy', () => {
-    expect(childProps.fixture).toEqual(fixture);
+  test('sends fixture props to next proxy without state', () => {
+    expect(childProps.fixture).toEqual({ foo: 'bar' });
   });
 
   test('serializes preview component', () => {
@@ -69,11 +69,19 @@ const commonTests = () => {
   test('bubbles up preview ref', () => {
     expect(onPreviewRef.mock.calls[0][0]).toBe(previewComponent);
   });
+
+  test('bubbles up fixture updates', () => {
+    childProps.onFixtureUpdate({});
+    expect(onFixtureUpdate.mock.calls.length).toBe(1);
+    onFixtureUpdate.mockClear();
+  });
 };
 
 describe('fixture without state', () => {
   beforeAll(() => {
-    renderProxy({});
+    renderProxy({
+      foo: 'bar',
+    });
   });
 
   commonTests();
@@ -83,7 +91,7 @@ describe('fixture without state', () => {
   });
 
   test('does not call onFixtureUpdate', () => {
-    expect(onFixtureUpdate.mock.calls.length).toBe(0);
+    expect(onFixtureUpdate).not.toHaveBeenCalled();
   });
 
   test('does not start update interval', () => {
@@ -97,6 +105,7 @@ describe('fixture with state', () => {
     ReactComponentTree.__setStateMock(stateMock);
 
     renderProxy({
+      foo: 'bar',
       state: {
         counter: 6,
       },

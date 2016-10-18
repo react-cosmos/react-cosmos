@@ -5,8 +5,9 @@ const PreviewLoader = ({
   fixture,
   onPreviewRef,
 }) => React.createElement(fixture.component, {
-  // TODO: Redesign fixture to keep props separately from root keys
-  ...omit(fixture, ['component', 'state']),
+  // TODO: Redesign fixture to read props from fixture.props (vs from root)
+  // https://github.com/skidding/react-cosmos/issues/217
+  ...omit(fixture, ['component']),
   ref: onPreviewRef,
 });
 

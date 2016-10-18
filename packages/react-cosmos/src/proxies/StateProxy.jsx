@@ -1,4 +1,5 @@
 import React from 'react';
+import omit from 'object.omit';
 import deepEqual from 'deep-equal';
 import ReactComponentTree from 'react-component-tree';
 
@@ -78,11 +79,20 @@ export default function createStateProxy(options) {
     }
 
     render() {
-      const { props, onPreviewRender } = this;
-      const { nextProxy } = this.props;
+      const {
+        props,
+        onPreviewRender,
+      } = this;
+      const {
+        nextProxy,
+        fixture,
+      } = this.props;
 
       return React.createElement(nextProxy.value, { ...props,
         nextProxy: nextProxy.next(),
+        // TODO: No longer omit when props will be read from fixture.props
+        // https://github.com/skidding/react-cosmos/issues/217
+        fixture: omit(fixture, 'state'),
         onPreviewRef: onPreviewRender,
       });
     }

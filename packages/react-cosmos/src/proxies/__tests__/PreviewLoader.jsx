@@ -6,9 +6,6 @@ const PreviewComponent = () => {};
 const fixture = {
   component: PreviewComponent,
   foo: 'bar',
-  state: {
-    counter: 5,
-  },
 };
 const onPreviewRef = jest.fn();
 
@@ -37,10 +34,6 @@ test('sends fixture props to preview component', () => {
 
 test('omits fixture.component from props', () => {
   expect(childProps.component).toBe(undefined);
-});
-
-test('omits fixture.state from props', () => {
-  expect(childProps.state).toBe(undefined);
 });
 
 test('sets onPreviewRef as preview component ref callback', () => {

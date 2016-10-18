@@ -57,16 +57,15 @@ export default function createReduxProxy(options) {
 
     render() {
       const {
-        props,
-      } = this;
-      const {
         nextProxy,
         fixture,
         onPreviewRef,
       } = this.props;
 
-      return React.createElement(nextProxy.value, { ...props,
+      return React.createElement(nextProxy.value, { ...this.props,
         nextProxy: nextProxy.next(),
+        // TODO: No longer omit when props will be read from fixture.props
+        // https://github.com/skidding/react-cosmos/issues/217
         fixture: omit(fixture, fixtureKey),
         onPreviewRef,
       });
