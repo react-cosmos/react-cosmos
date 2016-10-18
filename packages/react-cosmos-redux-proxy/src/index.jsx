@@ -39,7 +39,9 @@ export default function createReduxProxy(options) {
     }
 
     componentWillUnmount() {
-      this.storeUnsubscribe();
+      if (this.storeUnsubscribe) {
+        this.storeUnsubscribe();
+      }
     }
 
     onStoreChange() {
