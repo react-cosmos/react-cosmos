@@ -18,7 +18,6 @@ let fixture;
 let previewComponent;
 let stateMock;
 let onFixtureUpdate;
-let updatedFixture;
 let StateProxy;
 let wrapper;
 let childWrapper;
@@ -29,9 +28,7 @@ jest.useFakeTimers();
 const renderProxy = (f) => {
   fixture = f;
   previewComponent = f.state ? { state: f.state } : {};
-  onFixtureUpdate = jest.fn(({ state }) => {
-    updatedFixture = { ...fixture, state };
-  });
+  onFixtureUpdate = jest.fn();
 
   jest.clearAllMocks();
 
@@ -101,7 +98,7 @@ describe('fixture with state', () => {
 
     renderProxy({
       state: {
-        counter: 5,
+        counter: 6,
       },
     });
   });
@@ -118,12 +115,9 @@ describe('fixture with state', () => {
     expect(setTimeout.mock.calls.length).toBe(1);
   });
 
-  test('calls onFixtureUpdate once', () => {
-    expect(onFixtureUpdate.mock.calls.length).toBe(1);
-  });
-
-  test('calls onFixtureUpdate with new state', () => {
-    expect(onFixtureUpdate.mock.calls[0][0].state).toBe(stateMock);
+  test('does not call onFixtureUpdate', () => {
+    // because component state is equal to serialized state in fixture
+    expect(onFixtureUpdate).not.toHaveBeenCalled();
   });
 
   test('schedules timeout', () => {
@@ -136,10 +130,6 @@ describe('fixture with state', () => {
 
   describe('after interval without state change passes', () => {
     beforeAll(() => {
-      // Simulate one way data flow communication between proxies, fixtureUpdates
-      // are returned as props
-      wrapper.setProps({ fixture: updatedFixture });
-
       jest.runOnlyPendingTimers();
     });
 
@@ -147,8 +137,8 @@ describe('fixture with state', () => {
       expect(ReactComponentTree.serialize.mock.calls[1][0]).toBe(previewComponent);
     });
 
-    test('does not onFixtureUpdate once again', () => {
-      expect(onFixtureUpdate.mock.calls.length).toBe(1);
+    test('still does not onFixtureUpdate', () => {
+      expect(onFixtureUpdate).not.toHaveBeenCalled();
     });
 
     test('schedules another timeout', () => {
@@ -158,10 +148,6 @@ describe('fixture with state', () => {
 
   describe('after interval with state change passes', () => {
     beforeAll(() => {
-      // Simulate one way data flow communication between proxies, fixtureUpdates
-      // are returned as props
-      wrapper.setProps({ fixture: updatedFixture });
-
       // Simulate state change inside preview component
       stateMock = { counter: 7 };
       ReactComponentTree.__setStateMock(stateMock);
@@ -170,7 +156,7 @@ describe('fixture with state', () => {
     });
 
     test('calls onFixtureUpdate once again', () => {
-      expect(onFixtureUpdate.mock.calls.length).toBe(2);
+      expect(onFixtureUpdate.mock.calls.length).toBe(1);
     });
 
     test('serializes preview component again', () => {
@@ -178,7 +164,9 @@ describe('fixture with state', () => {
     });
 
     test('calls onFixtureUpdate with updated state', () => {
-      expect(onFixtureUpdate.mock.calls[1][0].state.counter).toBe(7);
+      // Double check paranoia
+      expect(onFixtureUpdate.mock.calls[0][0].state).toBe(stateMock);
+      expect(onFixtureUpdate.mock.calls[0][0].state.counter).toBe(7);
     });
 
     test('schedules another timeout', () => {
