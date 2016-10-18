@@ -17,10 +17,6 @@ describe(`ComponentPlayground (${FIXTURE}) Render Children`, () => {
     ({ container, component, $component } = render(fixture));
   });
 
-  it('should load preview child', () => {
-    expect(loadChild.loadChild).to.have.been.calledWith(component, 'preview');
-  });
-
   it('should load split-pane child', () => {
     expect(loadChild.loadChild).to.have.been.calledWith(component, 'splitPane');
   });

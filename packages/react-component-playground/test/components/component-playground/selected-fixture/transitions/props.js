@@ -11,7 +11,6 @@ describe(`ComponentPlayground (${FIXTURE}) Transitions Props`, () => {
   let $component;
   let container;
   let stateSet;
-  let stateInjected;
 
   beforeEach(() => {
     ({ container, component, $component } = render(fixture));
@@ -29,7 +28,6 @@ describe(`ComponentPlayground (${FIXTURE}) Transitions Props`, () => {
     render(updatedFixture, container);
 
     stateSet = component.setState.lastCall.args[0];
-    stateInjected = ComponentTree.injectState.lastCall.args;
   });
 
   afterEach(() => {
@@ -51,10 +49,5 @@ describe(`ComponentPlayground (${FIXTURE}) Transitions Props`, () => {
 
   it('should reset valid user input flag', () => {
     expect(stateSet.isFixtureUserInputValid).to.be.true;
-  });
-
-  it('should inject new state to preview child', () => {
-    expect(stateInjected[0]).to.equal(component.previewComponent);
-    expect(stateInjected[1].somethingHappened).to.equal(true);
   });
 });

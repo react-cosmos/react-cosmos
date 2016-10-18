@@ -2,7 +2,6 @@ const FIXTURE = 'selected-fixture-and-editor';
 
 describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, () => {
   const _ = require('lodash');
-  const ComponentTree = require('react-component-tree');
   const render = require('helpers/render-component');
   const localStorageLib = require('component-playground/lib/local-storage');
 
@@ -20,9 +19,6 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, () => {
     let stateSet;
 
     beforeEach(() => {
-      sinon.stub(ComponentTree, 'serialize').returns(_.merge({},
-        fixture.state.fixtureContents,
-        fixture.state.fixtureUnserializableProps));
       sinon.spy(component, 'setState');
 
       component.onFixtureUpdate();
@@ -31,17 +27,11 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, () => {
     });
 
     afterEach(() => {
-      ComponentTree.serialize.restore();
       component.setState.restore();
     });
 
     it('should mark user input state as valid', () => {
       expect(stateSet.isFixtureUserInputValid).to.equal(true);
-    });
-
-    it('should serialize preview child', () => {
-      expect(ComponentTree.serialize)
-            .to.have.been.calledWith(component.previewComponent);
     });
 
     it('should put serializable child state in fixture contents', () => {

@@ -2,7 +2,6 @@ const FIXTURE = 'selected-fixture';
 
 describe(`ComponentPlayground (${FIXTURE}) Transitions Mount`, () => {
   const _ = require('lodash');
-  const ComponentTree = require('react-component-tree');
   const render = require('helpers/render-component');
 
   const fixture = require(`fixtures/component-playground/${FIXTURE}`);
@@ -16,13 +15,7 @@ describe(`ComponentPlayground (${FIXTURE}) Transitions Mount`, () => {
   const statelessFixture = _.omit(fixture, 'state');
 
   beforeEach(() => {
-    sinon.stub(ComponentTree, 'injectState');
-
     ({ container, component, $component } = render(statelessFixture));
-  });
-
-  afterEach(() => {
-    ComponentTree.injectState.restore();
   });
 
   it('should populate state with serializable fixture contents', () => {
@@ -37,11 +30,5 @@ describe(`ComponentPlayground (${FIXTURE}) Transitions Mount`, () => {
   it('should populate stringified fixture contents as user input', () => {
     expect(component.state.fixtureUserInput).to.equal(
         JSON.stringify(component.state.fixtureContents, null, 2));
-  });
-
-  it('should inject state to preview child', () => {
-    const args = ComponentTree.injectState.lastCall.args;
-    expect(args[0]).to.equal(component.previewComponent);
-    expect(args[1].somethingHappened).to.equal(false);
   });
 });
