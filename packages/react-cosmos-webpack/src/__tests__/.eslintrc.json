@@ -1,0 +1,9 @@
+{
+  "env": {
+    "jest": true
+  },
+  "rules": {
+    "no-underscore-dangle": 0,
+    "global-require": 0
+  }
+}

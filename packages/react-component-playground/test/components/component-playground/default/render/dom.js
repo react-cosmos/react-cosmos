@@ -25,7 +25,7 @@ describe(`ComponentPlayground (${FIXTURE}) Render DOM`, () => {
 
   it('should render fixture buttons', () => {
     Object.keys(fixture.components).forEach((componentName) => {
-      const fixtures = fixture.components[componentName].fixtures;
+      const fixtures = fixture.fixtures[componentName];
 
       Object.keys(fixtures).forEach((fixtureName) => {
         expect(component.refs[
@@ -36,7 +36,7 @@ describe(`ComponentPlayground (${FIXTURE}) Render DOM`, () => {
 
   it('should render fixture names', () => {
     Object.keys(fixture.components).forEach((componentName) => {
-      const fixtures = fixture.components[componentName].fixtures;
+      const fixtures = fixture.fixtures[componentName];
 
       Object.keys(fixtures).forEach((fixtureName) => {
         const fixtureButton = component.refs[

@@ -20,7 +20,7 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, () => {
     expect(component.state.searchText).to.equal('second');
   });
 
-  it('should not filter the components', () => {
-    expect(component.getFilteredFixtures()).to.deep.equal(fixture.components);
+  it('should not filter the fixtures', () => {
+    expect(component.getFilteredFixtures()).to.deep.equal(fixture.fixtures);
   });
 });

@@ -1,4 +1,6 @@
-The Component Playground provides the UI for interacting with your components and their respective fixtures.
+# react-component-playground
+
+UI for interacting with your components and their respective fixtures.
 
 *Full disclosure: CP is a large component that could be split into more modular pieces.*
 
@@ -15,7 +17,7 @@ Right now it embodies the following parts:
   - The editor ignores fixture updates when focused, giving priority to user input over component state changes.
   - **TODO:** Move into separate `Editor` component.
 
-1. A draggable split pane between the editor and the component preview. 
+1. A draggable split pane between the editor and the component preview.
   - The desired split position is persisted using localStorage.
   - It automatically chooses a portrait/landscape orientation to best serve the width/height ratio of the window.
 

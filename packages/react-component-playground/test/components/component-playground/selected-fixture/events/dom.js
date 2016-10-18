@@ -74,7 +74,7 @@ describe(`ComponentPlayground (${FIXTURE}) Events DOM`, () => {
 
     it('should reset state', () => {
       const fixtureContents = _.omit(
-          fixture.components.FirstComponent.fixtures.default,
+          fixture.fixtures.FirstComponent.default,
           _.keys(component.state.fixtureUnserializableProps));
 
       expect(stateSet.fixtureContents).to.deep.equal(fixtureContents);

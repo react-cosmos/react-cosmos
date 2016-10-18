@@ -1,0 +1,7 @@
+{
+  "rootDir": "src",
+  "testEnvironment": "node",
+  "testPathIgnorePatterns": ["dummy-config"],
+  "coverageDirectory": "__coverage__",
+  "coverageReporters": ["lcov", "text"]
+}

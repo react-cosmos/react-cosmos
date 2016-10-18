@@ -38,6 +38,7 @@ module.exports = React.createClass({
 
   propTypes: {
     components: React.PropTypes.object.isRequired,
+    fixtures: React.PropTypes.object.isRequired,
     component: React.PropTypes.string,
     containerClassName: React.PropTypes.string,
     editor: React.PropTypes.bool,
@@ -60,13 +61,12 @@ module.exports = React.createClass({
     },
 
     getSelectedComponentClass(props) {
-      return props.components[props.component].class;
+      return props.components[props.component];
     },
 
     getSelectedFixtureContents(props) {
       // This returns the fixture contents as it is initially defined, excluding any modifications.
-      return props.components[props.component]
-                  .fixtures[props.fixture];
+      return props.fixtures[props.component][props.fixture];
     },
 
     getStringifiedFixtureContents(fixtureContents) {
@@ -230,7 +230,7 @@ module.exports = React.createClass({
   renderFixtures() {
     return (
       <ul className={style.components}>
-        {_.map(this.getFilteredFixtures(), (component, componentName) => (
+        {_.map(this.getFilteredFixtures(), (componentFixtures, componentName) => (
           <li className={style.component} key={componentName}>
             <p
               ref={`componentName-${componentName}`}
@@ -238,7 +238,7 @@ module.exports = React.createClass({
             >
               {componentName}
             </p>
-            {this.renderComponentFixtures(componentName, component.fixtures)}
+            {this.renderComponentFixtures(componentName, componentFixtures)}
           </li>
         ))}
       </ul>
@@ -581,14 +581,14 @@ module.exports = React.createClass({
   },
 
   getFilteredFixtures() {
-    const components = this.props.components;
+    const fixtures = this.props.fixtures;
 
     if (this.state.searchText.length < 2) {
-      return components;
+      return fixtures;
     }
 
-    return _.reduce(components, (acc, component, componentName) => {
-      const fixtureNames = Object.keys(component.fixtures);
+    return _.reduce(fixtures, (acc, componentFixtures, componentName) => {
+      const fixtureNames = Object.keys(componentFixtures);
       const search = this.state.searchText;
 
       const filteredFixtureNames = _.filter(fixtureNames, (fixtureName) => {
@@ -610,17 +610,15 @@ module.exports = React.createClass({
       }
 
       // Show only the fixtures that matched the search query
-      const fixtures = _.reduce(filteredFixtureNames, (acc2, fixture) => {
+      const filteredFixtures = _.reduce(filteredFixtureNames, (acc2, fixture) => {
         // eslint-disable-next-line no-param-reassign
-        acc2[fixture] = component.fixtures[fixture];
+        acc2[fixture] = componentFixtures[fixture];
 
         return acc2;
       }, {});
 
       // eslint-disable-next-line no-param-reassign
-      acc[componentName] = _.assign({}, component, {
-        fixtures,
-      });
+      acc[componentName] = filteredFixtures;
 
       return acc;
     }, {});
