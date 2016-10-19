@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "lib/index.js",
   "dependencies": {
-    "object.omit": "^2.0.0",
+    "lodash.omit": "^4.5.0",
     "redux": "^3.6.0"
   },
   "peerDependencies": {

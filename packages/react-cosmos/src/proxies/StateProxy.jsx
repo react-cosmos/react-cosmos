@@ -1,6 +1,6 @@
 import React from 'react';
-import omit from 'object.omit';
-import deepEqual from 'deep-equal';
+import omit from 'lodash.omit';
+import isEqual from 'lodash.isequal';
 import ReactComponentTree from 'react-component-tree';
 
 const defaults = {
@@ -68,7 +68,7 @@ export default function createStateProxy(options) {
         onFixtureUpdate,
       } = this.props;
 
-      if (!deepEqual(updatedState, fixture.state)) {
+      if (!isEqual(updatedState, fixture.state)) {
         onFixtureUpdate({
           ...fixture,
           state: updatedState,
@@ -88,7 +88,7 @@ export default function createStateProxy(options) {
         nextProxy,
         fixture,
         disableLocalState,
-      } = this.props;
+      } = props;
 
       // TODO: No longer omit when props will be read from fixture.props
       // https://github.com/skidding/react-cosmos/issues/217

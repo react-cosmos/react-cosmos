@@ -1,5 +1,5 @@
 import React from 'react';
-import omit from 'object.omit';
+import omit from 'lodash.omit';
 
 export default class PreviewLoader extends React.Component {
   render() {

@@ -6,8 +6,8 @@
   "license": "MIT",
   "main": "lib/index.js",
   "dependencies": {
-    "deep-equal": "^1.0.1",
-    "object.omit": "^2.0.0",
+    "lodash.isequal": "^4.4.0",
+    "lodash.omit": "^4.5.0",
     "react-component-playground": "^1.0.0-beta.4",
     "react-component-tree": "^1.0.0-beta.4",
     "react-querystring-router": "^1.0.0-beta.4"
