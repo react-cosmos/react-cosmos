@@ -11,3 +11,5 @@ npm install
 npm run start:webpack
 npm run start:browserify
 ```
+
+*Note: While React Cosmos works with React versions as old as 0.13, this example uses functional components so it only works with React >=0.14.*

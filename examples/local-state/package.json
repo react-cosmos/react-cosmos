@@ -9,7 +9,7 @@
     "webpack": "^1.13.2"
   },
   "peerDependencies": {
-    "react": ">=0.12 <16"
+    "react": ">=0.13 <16"
   },
   "scripts": {
     "start": "../../packages/react-cosmos-webpack/bin/cosmos.js"

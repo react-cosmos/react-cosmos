@@ -1,6 +1,5 @@
 /* eslint-disable
   react/prefer-es6-class,
-  react/prefer-stateless-function,
   react/no-multi-comp,
   react/prop-types,
   react/jsx-filename-extension,

@@ -13,6 +13,6 @@
     "react-querystring-router": "^1.0.0-beta.4"
   },
   "peerDependencies": {
-    "react": ">=0.12 <16"
+    "react": ">=0.13 <16"
   }
 }
