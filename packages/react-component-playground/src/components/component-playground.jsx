@@ -9,8 +9,8 @@ import ReactQuerystringRouter from 'react-querystring-router';
 import CodeMirror from 'react-codemirror';
 import fuzzaldrinPlus from 'fuzzaldrin-plus';
 import SplitPane from 'ubervu-react-split-pane';
-import localStorageLib from '../lib/local-storage.js';
-import { isSerializable } from '../lib/is-serializable.js';
+import localStorageLib from '../lib/local-storage';
+import { isSerializable } from '../lib/is-serializable';
 
 const { findDOMNode } = require('react-dom-polyfill')(React);
 const style = require('./component-playground.less');
@@ -44,7 +44,10 @@ module.exports = React.createClass({
     editor: React.PropTypes.bool,
     fixture: React.PropTypes.string,
     fullScreen: React.PropTypes.bool,
-    proxies: React.PropTypes.arrayOf(React.PropTypes.func),
+    firstProxy: React.PropTypes.shape({
+      value: React.PropTypes.func,
+      next: React.PropTypes.func,
+    }).isRequired,
     router: React.PropTypes.object,
   },
 
@@ -129,16 +132,6 @@ module.exports = React.createClass({
   },
 
   children: {
-    preview() {
-      const params = {
-        ref: (previewComponent) => {
-          this.previewComponent = previewComponent;
-        },
-      };
-
-      return _.merge(params, _.omit(this.getCurrentFixtureContents(), 'state'));
-    },
-
     splitPane() {
       return {
         component: SplitPane,
@@ -219,12 +212,18 @@ module.exports = React.createClass({
   },
 
   renderComponent() {
-    return _.reduce(this.props.proxies, (accumulator, proxy) =>
-      React.createElement(proxy, _.assign({}, this.getCurrentFixtureContents(), {
-        children: React.Children.only(accumulator),
-        // Re-render whenever fixture changes
-        key: this.getComponentKey(),
-      })), this.loadChild('preview'));
+    const { firstProxy } = this.props;
+
+    return React.createElement(firstProxy.value, {
+      // Re-render whenever fixture changes
+      key: this.getComponentKey(),
+      nextProxy: firstProxy.next(),
+      fixture: this.getCurrentFixtureContents(),
+      onPreviewRef: (previewComponent) => {
+        this.previewComponent = previewComponent;
+      },
+      onFixtureUpdate: this.onFixtureUpdate,
+    });
   },
 
   renderFixtures() {
@@ -356,12 +355,6 @@ module.exports = React.createClass({
   },
 
   componentDidMount() {
-    this.fixtureUpdateInterval = setInterval(this.onFixtureUpdate, 1000);
-
-    if (this.previewComponent) {
-      this.injectPreviewChildState();
-    }
-
     window.addEventListener('resize', this.onWindowResize);
 
     this.updateContentFrameOrientation();
@@ -378,29 +371,7 @@ module.exports = React.createClass({
     }
   },
 
-  shouldComponentUpdate(nextProps, nextState) {
-    // This is pretty wasteful, but it's more important to make sure the loaded
-    // component doesn't render on every onFixtureUpdate loop, unless its state
-    // changed
-    return !_.isEqual(this.props, nextProps) ||
-           !_.isEqual(_.omit(this.state, 'isEditorFocused'),
-                      _.omit(nextState, 'isEditorFocused'));
-  },
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.previewComponent && (
-        this.constructor.didFixtureChange(prevProps, this.props) ||
-        prevState.fixtureChange !== this.state.fixtureChange ||
-        // Toggling the editor re-creates the preview component from scratch,
-        // because SplitPane is added or removed from part of the dom tree
-        prevProps.editor !== this.props.editor)) {
-      this.injectPreviewChildState();
-    }
-  },
-
   componentWillUnmount() {
-    clearInterval(this.fixtureUpdateInterval);
-
     window.removeEventListener('resize', this.onWindowResize);
   },
 
@@ -429,21 +400,18 @@ module.exports = React.createClass({
     this.setState({ isEditorFocused: isFocused });
   },
 
-  onFixtureUpdate() {
-    if (
-      !this.previewComponent ||
-      // Don't update fixture contents while the user is editing the fixture
-      this.state.isEditorFocused ||
-      // Don't do anything if component is stateless
-      !this.previewComponent.state
-    ) {
+  onFixtureUpdate(fixturePatch) {
+    // Don't update fixture contents while the user is editing the fixture
+    if (this.state.isEditorFocused) {
       return;
     }
 
-    const liveState = ComponentTree.serialize(this.previewComponent).state;
-    const fixtureContents = _.assign({}, this.state.fixtureContents, {
-      state: liveState,
-    });
+    // XXX: We assume data received in this handler is serializable (& thus
+    // part of state.fixtureContents)
+    const fixtureContents = {
+      ...this.state.fixtureContents,
+      ...fixturePatch,
+    };
 
     this.setState({
       fixtureContents,
@@ -540,14 +508,6 @@ module.exports = React.createClass({
     return _.omit(props, (value, key) => value === defaultProps[key]);
   },
 
-  injectPreviewChildState() {
-    const { state } = this.state.fixtureContents;
-
-    if (!_.isEmpty(state)) {
-      ComponentTree.injectState(this.previewComponent, _.cloneDeep(state));
-    }
-  },
-
   updateContentFrameOrientation() {
     if (!this.isFixtureSelected()) {
       return;
@@ -563,9 +523,16 @@ module.exports = React.createClass({
 
   getCurrentFixtureContents() {
     // This returns the fixture contents as it currently is, including user modifications.
-    return _.assign({
+    const {
+      fixtureUnserializableProps,
+      fixtureContents,
+    } = this.state;
+
+    return {
       component: this.constructor.getSelectedComponentClass(this.props),
-    }, this.state.fixtureUnserializableProps, this.state.fixtureContents);
+      ...fixtureUnserializableProps,
+      ...fixtureContents,
+    };
   },
 
   getOrientationDirection() {

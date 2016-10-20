@@ -1,4 +1,4 @@
-/* eslint-disable react/no-multi-comp */
+/* eslint-disable react/no-multi-comp, react/prop-types */
 
 const React = require('react');
 
@@ -14,7 +14,19 @@ class SecondComponent extends React.Component {
   }
 }
 
+const PreviewLoader = ({
+  fixture,
+  onPreviewRef,
+}) => React.createElement(fixture.component, {
+  fixture,
+  ref: onPreviewRef,
+});
+
 module.exports = {
+  firstProxy: {
+    value: PreviewLoader,
+    next: () => {},
+  },
   components: {
     FirstComponent,
     SecondComponent,

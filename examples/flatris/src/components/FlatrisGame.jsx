@@ -187,27 +187,29 @@ class FlatrisGame extends React.Component {
       onResume,
     } = this.props;
 
-    return (<div className="flatris-game">
-      {grid ? (
-        <Well
-          grid={grid}
-          activeTetrimino={activeTetrimino}
-          activeTetriminoGrid={activeTetriminoGrid}
-          activeTetriminoPosition={activeTetriminoPosition}
+    return (
+      <div className="flatris-game">
+        {grid ? (
+          <Well
+            grid={grid}
+            activeTetrimino={activeTetrimino}
+            activeTetriminoGrid={activeTetriminoGrid}
+            activeTetriminoPosition={activeTetriminoPosition}
+          />
+        ) : null}
+        {this.renderInfoPanel()}
+        <GamePanel
+          gameState={gameState}
+          score={score}
+          lines={lines}
+          nextTetrimino={nextTetrimino}
+          onStart={onStart}
+          onPause={onPause}
+          onResume={onResume}
         />
-      ) : null}
-      {this.renderInfoPanel()}
-      <GamePanel
-        gameState={gameState}
-        score={score}
-        lines={lines}
-        nextTetrimino={nextTetrimino}
-        onStart={onStart}
-        onPause={onPause}
-        onResume={onResume}
-      />
-      {this.renderControls()}
-    </div>);
+        {this.renderControls()}
+      </div>
+    );
   }
 }
 

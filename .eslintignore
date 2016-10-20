@@ -1,4 +1,3 @@
-examples
 packages/*/lib
 packages/*/src/__coverage__
 node_modules

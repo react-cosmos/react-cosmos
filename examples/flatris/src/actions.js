@@ -1,6 +1,9 @@
 import raf from 'raf';
 
 import { STOPPED, PLAYING } from './constants/states';
+import {
+  DROP_FRAMES_ACCELERATED,
+} from './constants/grid';
 
 const FPS = 60;
 const frameDuration = 1000 / FPS;
@@ -20,18 +23,33 @@ const scheduleFrame = (cb) => {
   });
 };
 
+// This changes too fast (60fps) to keep it in the store's state
+let yProgress = 0;
 export const advance = () => (dispatch, getState) => {
   cancelFrame();
   scheduleFrame((frames) => {
+    const {
+      gameState,
+      dropAcceleration,
+      dropFrames,
+    } = getState();
+
     // Stop animation when game ended
-    if (getState().gameState === STOPPED) {
+    if (gameState === STOPPED) {
       return;
     }
 
-    dispatch({
-      type: 'ADVANCE',
-      payload: { frames },
-    });
+    const framesPerDrop = (dropAcceleration ? DROP_FRAMES_ACCELERATED : dropFrames);
+
+    yProgress += frames / framesPerDrop;
+    if (yProgress > 1) {
+      dispatch({
+        type: 'ADVANCE',
+        payload: { rows: Math.floor(yProgress) },
+      });
+      yProgress %= 1;
+    }
+
     dispatch(advance());
   });
 };

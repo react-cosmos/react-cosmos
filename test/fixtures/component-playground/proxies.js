@@ -1,32 +1,66 @@
 /* eslint-disable
   react/prefer-es6-class,
-  react/prefer-stateless-function,
   react/no-multi-comp,
-  react/prop-types
+  react/prop-types,
+  react/jsx-filename-extension,
+  react/no-string-refs
 */
 
 import React from 'react';
 import selectedFixture from './selected-fixture.js';
 
-const PropMutatorProxy = React.createClass({
-  render() {
-    return React.cloneElement(this.props.children,
-      { ...this.props.children.props, myProp: true });
-  },
-});
+const PropMutatorProxy = (props) => {
+  const {
+    nextProxy,
+    fixture,
+  } = props;
 
-const MarkupProxy = React.createClass({
+  return React.createElement(nextProxy.value, {
+    ...props,
+    nextProxy: nextProxy.next(),
+    fixture: {
+      ...fixture,
+      myProp: true,
+    },
+  });
+};
+
+class MarkupProxy extends React.Component {
   render() {
-    return React.createElement('div', {
-      className: 'markupProxy',
-      children: [React.createElement('span',
-        { ref: 'textSpan', children: 'Add some text near component' }),
-        this.props.children,
-      ],
-    });
-  },
+    const {
+      nextProxy,
+      fixture,
+    } = this.props;
+
+    return (
+      <div className="markupProxy">
+        <span ref="textSpan">Add some text near component</span>
+        {React.createElement(nextProxy.value, {
+          ...this.props,
+          nextProxy: nextProxy.next(),
+        })}
+      </div>
+    );
+  }
+}
+
+const PreviewLoader = ({
+  fixture,
+  onPreviewRef,
+}) => React.createElement(fixture.component, {
+  ...fixture,
+  ref: onPreviewRef,
 });
 
 module.exports = { ...selectedFixture,
-  proxies: [PropMutatorProxy, MarkupProxy],
+  firstProxy: {
+    value: PropMutatorProxy,
+    next: () => ({
+      value: MarkupProxy,
+      next: () => ({
+        value: PreviewLoader,
+        next: () => {},
+      }),
+    }),
+  },
 };

@@ -17,14 +17,15 @@ surfaces any implicit dependencies. It also forces you to define sane inputs
 for every component, making them more predictable and easier to debug down the
 road.
 
-![Component Playground](https://cloud.githubusercontent.com/assets/250750/8532005/e6d3b3bc-2433-11e5-9fc3-39a9288198e9.gif)
+![Component Playground](intro.gif)
 
 _\*DX stands for Developer Experience, the counterpart of UX in building a product, system or service._
 
 ## Requirements
 
-- [x] Node 5+ and npm 3+. Older versions might work but aren't guaranteed.
+- [x] Node >=5 and npm >=3. Older versions might work but aren't guaranteed.
 - [x] You should already be using CommonJS modules to structure your code and [webpack](http://webpack.github.io/) or [Browserify](http://browserify.org/) to bundle your modules for the browser.
+- [x] React >=0.13.
 - [ ] You need to create [fixtures](examples/flatris/src/components/__fixtures__) for each set of props and states you want to load your components with. You can do this after you get started.
 
 ## Usage

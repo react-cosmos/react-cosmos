@@ -9,14 +9,14 @@ describe('UNIT Serialize', () => {
     }
   }
 
-  // eslint-disable-next-line react/prefer-stateless-function, react/no-multi-comp
+  // eslint-disable-next-line react/no-multi-comp
   class ParentComponent extends React.Component {
     render() {
       return React.createElement(ChildComponent, { ref: 'child' });
     }
   }
 
-  // eslint-disable-next-line react/prefer-stateless-function, react/no-multi-comp
+  // eslint-disable-next-line react/no-multi-comp
   class GrandparentComponent extends React.Component {
     render() {
       return React.createElement(ParentComponent, { ref: 'child' });

@@ -11,11 +11,7 @@ describe(`ComponentPlayground (${FIXTURE}) Transitions Mount`, () => {
   let $component;
   let container;
 
-  const timeoutId = 555;
-
   beforeEach(() => {
-    sinon.stub(window, 'setInterval').returns(timeoutId);
-    sinon.stub(window, 'clearInterval');
     sinon.stub(window, 'addEventListener');
     sinon.stub(window, 'removeEventListener');
 
@@ -23,22 +19,8 @@ describe(`ComponentPlayground (${FIXTURE}) Transitions Mount`, () => {
   });
 
   afterEach(() => {
-    window.setInterval.restore();
-    window.clearInterval.restore();
     window.addEventListener.restore();
     window.removeEventListener.restore();
-  });
-
-  it('should register fixture update interval on mount', () => {
-    const setIntervalArgs = window.setInterval.lastCall.args;
-    expect(setIntervalArgs[0]).to.equal(component.onFixtureUpdate);
-    expect(setIntervalArgs[1]).to.equal(1000);
-  });
-
-  it('should clear fixture update interval on unmount', () => {
-    ReactDOM.unmountComponentAtNode(container);
-
-    expect(window.clearInterval).to.have.been.calledWith(timeoutId);
   });
 
   it('should add window resize listener on mount', () => {

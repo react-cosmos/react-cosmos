@@ -17,7 +17,7 @@
     "ubervu-react-split-pane": "^0.1.14"
   },
   "peerDependencies": {
-    "react": ">=0.12 <16"
+    "react": ">=0.13 <16"
   },
   "devDependencies": {
     "babelify": "^7.3.0"

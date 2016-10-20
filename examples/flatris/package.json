@@ -10,7 +10,6 @@
     "babelify": "^7.3.0",
     "budo": "^9.2.1",
     "css-loader": "^0.25.0",
-    "eslint": "^3.7.1",
     "html-webpack-plugin": "^2.22.0",
     "jquery": "^3.1.1",
     "less": "^2.7.1",
@@ -26,10 +25,9 @@
     "webpack": "^1.13.2"
   },
   "peerDependencies": {
-    "react": ">=0.12 <16"
+    "react": ">=0.14 <16"
   },
   "scripts": {
-    "lint": "eslint --ext '.jsx,.js' ./",
     "start:webpack": "../../packages/react-cosmos-webpack/bin/cosmos.js --config webpack/cosmos.config.js",
     "start:browserify": "node ./browserify/server.js",
     "start": "npm run start:webpack"
