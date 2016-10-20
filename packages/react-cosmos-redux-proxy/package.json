@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-redux-proxy",
-  "version": "1.0.0-beta.5",
+  "version": "1.0.0-beta.6",
   "description": "A proxy to provide redux-related context to react-cosmos",
   "repository": "https://github.com/skidding/react-cosmos/tree/master/packages/react-cosmos-redux-proxy",
   "license": "MIT",
