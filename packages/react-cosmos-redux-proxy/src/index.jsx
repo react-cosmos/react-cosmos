@@ -46,13 +46,11 @@ export default function createReduxProxy(options) {
 
     onStoreChange() {
       const {
-        fixture,
         onFixtureUpdate,
       } = this.props;
       const updatedState = this.store.getState();
 
       onFixtureUpdate({
-        ...fixture,
         [fixtureKey]: updatedState,
       });
     }

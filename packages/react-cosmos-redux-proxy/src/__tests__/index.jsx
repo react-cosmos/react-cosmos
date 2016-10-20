@@ -130,7 +130,6 @@ describe('fixture with Redux state', () => {
     };
     storeHandler();
     expect(onFixtureUpdate.mock.calls[1][0]).toEqual({
-      foo: 'bar',
       reduxState: {
         counter: 10,
       },

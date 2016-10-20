@@ -400,7 +400,7 @@ module.exports = React.createClass({
     this.setState({ isEditorFocused: isFocused });
   },
 
-  onFixtureUpdate(updatedFixture) {
+  onFixtureUpdate(fixturePatch) {
     // Don't update fixture contents while the user is editing the fixture
     if (this.state.isEditorFocused) {
       return;
@@ -410,7 +410,7 @@ module.exports = React.createClass({
     // part of state.fixtureContents)
     const fixtureContents = {
       ...this.state.fixtureContents,
-      ...updatedFixture,
+      ...fixturePatch,
     };
 
     this.setState({

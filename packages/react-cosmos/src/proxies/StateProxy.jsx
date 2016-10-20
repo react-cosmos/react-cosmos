@@ -70,7 +70,6 @@ export default function createStateProxy(options) {
 
       if (!isEqual(updatedState, fixture.state)) {
         onFixtureUpdate({
-          ...fixture,
           state: updatedState,
         });
       }
