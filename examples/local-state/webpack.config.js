@@ -1,6 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import postCssNested from 'postcss-nested';
 
 // This config doesn't have entry and output set up because it's not meant to
 // work standalone. Cosmos adds an entry & output when extending this.
@@ -26,6 +27,10 @@ module.exports = {
         // 'react-hmre' only works with React >=0.14
         presets: ['es2015', 'react'],
       },
+    }, {
+      test: /\.css$/,
+      loader: 'style-loader!css-loader!postcss-loader',
+      include: __dirname,
     }],
   },
   plugins: [
@@ -35,4 +40,5 @@ module.exports = {
       title: 'React Cosmos',
     }),
   ],
+  postcss: () => [postCssNested],
 };

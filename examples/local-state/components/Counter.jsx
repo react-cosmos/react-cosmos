@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './Counter.css';
+
 export default class Counter extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +19,12 @@ export default class Counter extends React.Component {
 
   render() {
     return (
-      <button onClick={this.onButtonClick}>{this.state.value} times</button>
+      <button
+        className="CounterButton"
+        onClick={this.onButtonClick}
+      >
+        {this.state.value} times
+      </button>
     );
   }
 }
