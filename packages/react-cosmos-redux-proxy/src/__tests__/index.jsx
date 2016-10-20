@@ -76,6 +76,14 @@ const commonTests = () => {
     childProps.onFixtureUpdate({});
     expect(onFixtureUpdate.mock.calls.length).toBe(1);
   });
+
+  test('creates Redux store', () => {
+    expect(createStore).toHaveBeenCalled();
+  });
+
+  test('disables local state', () => {
+    expect(childProps.disableLocalState).toBe(true);
+  });
 };
 
 describe('fixture without Redux state', () => {
@@ -86,14 +94,6 @@ describe('fixture without Redux state', () => {
   });
 
   commonTests();
-
-  test('does not create Redux store', () => {
-    expect(createStore).not.toHaveBeenCalled();
-  });
-
-  test('does not disable local state', () => {
-    expect(childProps.disableLocalState).toBe(false);
-  });
 });
 
 describe('fixture with Redux state', () => {
@@ -110,10 +110,6 @@ describe('fixture with Redux state', () => {
 
   test('omits reduxState from fixture props sent to next proxy', () => {
     expect(childProps.reduxState).toBe(undefined);
-  });
-
-  test('creates Redux store', () => {
-    expect(createStore).toHaveBeenCalled();
   });
 
   test('puts Redux store instance in context', () => {
@@ -134,10 +130,6 @@ describe('fixture with Redux state', () => {
         counter: 10,
       },
     });
-  });
-
-  test('disables local state', () => {
-    expect(childProps.disableLocalState).toBe(true);
   });
 
   describe('on unmount', () => {

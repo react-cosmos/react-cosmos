@@ -16,10 +16,7 @@ export default function createReduxProxy(options) {
       super(props);
       this.onStoreChange = this.onStoreChange.bind(this);
 
-      const fixtureReduxState = props.fixture[fixtureKey];
-      if (fixtureReduxState) {
-        this.store = createStore(fixtureReduxState);
-      }
+      this.store = createStore(props.fixture[fixtureKey]);
     }
 
     getChildContext() {
