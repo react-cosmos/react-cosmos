@@ -20,7 +20,7 @@ export default function createStateProxy(options) {
     constructor(props) {
       super(props);
       this.onPreviewRender = this.onPreviewRender.bind(this);
-      this.onStateRefresh = this.onStateRefresh.bind(this);
+      this.onStateUpdate = this.onStateUpdate.bind(this);
     }
 
     componentWillUnmount() {
@@ -41,12 +41,13 @@ export default function createStateProxy(options) {
         const fixtureState = fixture[fixtureKey];
         if (fixtureState) {
           ReactComponentTree.injectState(previewComponent, fixtureState);
-        }
-
-        const initialState = this.getStateTree(previewComponent);
-        // No need to poll for state changes if entire component tree is stateless
-        if (initialState) {
-          this.updateState(initialState);
+          this.scheduleStateUpdate();
+        } else {
+          const initialState = this.getStateTree(previewComponent);
+          // No need to poll for state changes if entire component tree is stateless
+          if (initialState) {
+            this.updateState(initialState);
+          }
         }
       }
 
@@ -54,7 +55,7 @@ export default function createStateProxy(options) {
       onPreviewRef(this.previewComponent = previewComponent);
     }
 
-    onStateRefresh() {
+    onStateUpdate() {
       this.updateState(this.getStateTree(this.previewComponent));
     }
 
@@ -74,8 +75,12 @@ export default function createStateProxy(options) {
         });
       }
 
+      this.scheduleStateUpdate();
+    }
+
+    scheduleStateUpdate() {
       // TODO: Find a better way than polling to hook into state changes
-      this.timeoutId = setTimeout(this.onStateRefresh, updateInterval);
+      this.timeoutId = setTimeout(this.onStateUpdate, updateInterval);
     }
 
     render() {
