@@ -1,0 +1,7 @@
+{
+  "rootDir": "../packages",
+  "testEnvironment": "jsdom",
+  "testPathIgnorePatterns": ["react-cosmos-webpack/src/__tests__/dummy-config"],
+  "coverageDirectory": "../test/coverage/jest",
+  "coverageReporters": ["lcov", "text"]
+}

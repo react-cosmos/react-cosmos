@@ -65,7 +65,7 @@ export default function createReduxProxy(options) {
       return React.createElement(nextProxy.value, { ...this.props,
         nextProxy: nextProxy.next(),
         // TODO: No longer omit when props will be read from fixture.props
-        // https://github.com/skidding/react-cosmos/issues/217
+        // https://github.com/react-cosmos/react-cosmos/issues/217
         fixture: omit(fixture, fixtureKey),
         onPreviewRef,
         // Disable StateProxy when Redux state is available, otherwise the entire

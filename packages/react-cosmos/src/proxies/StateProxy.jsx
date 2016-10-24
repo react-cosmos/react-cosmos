@@ -95,7 +95,7 @@ export default function createStateProxy(options) {
       } = props;
 
       // TODO: No longer omit when props will be read from fixture.props
-      // https://github.com/skidding/react-cosmos/issues/217
+      // https://github.com/react-cosmos/react-cosmos/issues/217
       const childFixture = disableLocalState ? fixture : omit(fixture, 'state');
 
       return React.createElement(nextProxy.value, { ...props,

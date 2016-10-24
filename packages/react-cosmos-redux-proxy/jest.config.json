@@ -1,6 +1,0 @@
-{
-  "rootDir": "src",
-  "testEnvironment": "node",
-  "coverageDirectory": "__coverage__",
-  "coverageReporters": ["lcov", "text"]
-}
