@@ -2,7 +2,7 @@
   "name": "react-cosmos-webpack",
   "version": "1.0.0-beta.5",
   "description": "CLI for running React Cosmos inside webpack-powered apps",
-  "repository": "https://github.com/skidding/react-cosmos/tree/master/packages/react-cosmos-webpack",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-webpack",
   "license": "MIT",
   "dependencies": {
     "babel-register": "^6.16.3",

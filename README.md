@@ -1,4 +1,4 @@
-# React Cosmos [![Build Status](https://travis-ci.org/skidding/react-cosmos.svg?branch=master)](https://travis-ci.org/skidding/react-cosmos) [![Coverage Status](https://coveralls.io/repos/skidding/react-cosmos/badge.svg?branch=master)](https://coveralls.io/r/skidding/react-cosmos?branch=master) [![Join the chat at https://gitter.im/skidding/cosmos](https://img.shields.io/gitter/room/gitterHQ/gitter.svg)](https://gitter.im/skidding/cosmos?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# React Cosmos [![Build Status](https://travis-ci.org/react-cosmos/react-cosmos.svg?branch=master)](https://travis-ci.org/react-cosmos/react-cosmos) [![Coverage Status](https://coveralls.io/repos/react-cosmos/react-cosmos/badge.svg?branch=master)](https://coveralls.io/r/react-cosmos/react-cosmos?branch=master) [![Join the chat at https://gitter.im/skidding/cosmos](https://img.shields.io/gitter/room/gitterHQ/gitter.svg)](https://gitter.im/skidding/cosmos?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 DX* tool for designing truly encapsulated
 [React](http://facebook.github.io/react/) components.
@@ -77,7 +77,7 @@ node_modules/.bin/cosmos --config path/to/cosmos.config.js
 }
 ```
 
-Voilà! Now you can [extend your config](#configuration), start [creating fixtures](docs/fixtures.md) or be kind and [report what went wrong.](https://github.com/skidding/react-cosmos/issues)
+Voilà! Now you can [extend your config](#configuration), start [creating fixtures](docs/fixtures.md) or be kind and [report what went wrong.](https://github.com/react-cosmos/react-cosmos/issues)
 
 #### Configuration
 

@@ -10,7 +10,7 @@ export default class PreviewLoader extends React.Component {
 
     return React.createElement(fixture.component, {
       // TODO: Redesign fixture to read props from fixture.props (vs from root)
-      // https://github.com/skidding/react-cosmos/issues/217
+      // https://github.com/react-cosmos/react-cosmos/issues/217
       ...omit(fixture, ['component']),
       ref: onPreviewRef,
     });
