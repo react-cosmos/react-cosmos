@@ -24,37 +24,32 @@ Right now it embodies the following parts:
 1. Component loader. Render selected component with selected fixture contents.
   - Fixture is extended by user input from the editor and updates from state listeners.
 
-1. Local state injection and listener. `fixture.state` is injected into component, while preview component is also polled for state changes that merge into the active fixture contents (and therefore into the editor).
-  - **TODO:** Move into built-in proxy.
-
 1. Proxies. Composable middleware between CP and preview component.
   - They can add extra markup around the preview component.
   - They can alter fixture contents before reaching the preview component.
   - They can hook into the preview component's callback ref to obtain its instance.
-  - **TODO:** Send proxies an `onFixtureUpdate` handler and enable them to update current fixture contents from various state sources (e.g. Redux store). This is required in order to isolate local state handling (6) into a proxy.
+  - They receive an `onFixtureUpdate` handler that enables them to update current fixture contents from alternative sources (e.g. Redux store)
 
-Finally, here is an example of the `components` prop, used to pass the components and fixtures from above:
+Finally, here is an example of the `components` and `fixtures` props, used to pass the user components and fixtures:
 ```js
-{
+components: {
+  ComponentOne: require('./components/ComponentOne'),
+  ComponentTwo: require('./components/ComponentTwo'),
+},
+fixtures: {
   ComponentOne: {
-    class: require('./components/ComponentOne'),
-    fixtures: {
-      normal: {
-        fooProp: 'bar'
-      },
-      paused: {
-        fooProp: 'bar',
-        state: {
-          paused: true
-        }
+    normal: {
+      fooProp: 'bar'
+    },
+    paused: {
+      fooProp: 'bar',
+      state: {
+        paused: true
       }
     }
   },
   ComponentTwo: {
-    class: require('./components/ComponentTwo'),
-    fixtures: {
-      //...
-    }
-  },
+    //...
+  }
 };
 ```
