@@ -66,7 +66,7 @@ npm run build:component-playground -- -- --watch
 npm run test-jest -- --watch
 ```
 
-#### Write tests, preferably before implementing
+#### Write tests, preferably before implementation
 
 Use [Jest](https://facebook.github.io/jest/) for unit testing. Here are some examples:
 - [Tests for react-cosmos-redux-proxy](packages/react-cosmos-redux-proxy/src/__tests__/index.jsx)
