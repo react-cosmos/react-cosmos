@@ -1,4 +1,4 @@
-# React Cosmos [![Build Status](https://travis-ci.org/react-cosmos/react-cosmos.svg?branch=master)](https://travis-ci.org/react-cosmos/react-cosmos) [![Coverage Status](https://coveralls.io/repos/react-cosmos/react-cosmos/badge.svg?branch=master)](https://coveralls.io/r/react-cosmos/react-cosmos?branch=master) [![Join the chat at https://gitter.im/skidding/cosmos](https://img.shields.io/gitter/room/gitterHQ/gitter.svg)](https://gitter.im/skidding/cosmos?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# React Cosmos [![Build Status](https://travis-ci.org/react-cosmos/react-cosmos.svg?branch=master)](https://travis-ci.org/react-cosmos/react-cosmos) [![Coverage Status](https://coveralls.io/repos/react-cosmos/react-cosmos/badge.svg?branch=master)](https://coveralls.io/r/react-cosmos/react-cosmos?branch=master) [![Join the chat at https://gitter.im/skidding/cosmos](https://img.shields.io/gitter/room/gitterHQ/gitter.svg)](https://gitter.im/skidding/cosmos?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md#how-to-contribute)
 
 DX* tool for designing truly encapsulated
 [React](http://facebook.github.io/react/) components.
@@ -139,31 +139,7 @@ module.exports = {
 
 Unless you pass it the `--plain` param, the webpack CLI runs with `babel-node` by default. This is nice because it allows you to write your fixtures and the webpack & Cosmos configs using the same syntax as your source code.
 
-## Development
-
-Here is a summary of the ideal workflow:
-
-```bash
-# Install deps and link child packages from monorepo
-npm install
-
-# You can choose to build everything with older React versions 👌
-npm run install-react:0.13
-
-# Build example from source and test React Cosmos holistically
-cd examples/flatris
-npm install
-npm start
-
-# Build single package with watch command and running example will
-# live reload on changes
-npm run build:component-playground -- -- --watch
-
-# Unit test single package as you code
-npm run build:cosmos-webpack -- -- --watch
-```
-
-### Thank you for your interest!
+## Thanks!
 
 Explore the [Contributing Guide](CONTRIBUTING.md) for more information.
 
