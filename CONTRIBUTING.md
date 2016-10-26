@@ -81,9 +81,3 @@ Make sure your code editor has ESLint installed.
 #### Use Git conscientiously
 
 Nothing fancy, just the usual the [GitHub flow.](https://guides.github.com/introduction/flow/)
-
-#### Write meaningful commits
-
-Use the imperative mood to express verbs and add a hashtag with the corresponding issue number at the end of each commit message. The GitHub UI will generate links to the referenced issues.
-
-> Adapt fixture mapping to new Component Playground format [#115](https://github.com/react-cosmos/react-cosmos/issues/115)
