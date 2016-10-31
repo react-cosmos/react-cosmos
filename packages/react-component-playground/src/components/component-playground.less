@@ -55,7 +55,8 @@
 @editor-border-color: rgba(16, 16, 16, 0.1);
 
 @checkerboard-square-size: 25px;
-@checkerboard-color: #f1f1f1;
+// This should look good on both black & white backgrounds
+@checkerboard-color: rgba(160, 160, 160, 0.15);
 
 :global {
   body {
@@ -169,13 +170,13 @@
         list-style-type: none;
 
         .component {
-          padding: 0.5 * @default-spacing 0;
+          padding: 0;
 
           .component-name {
             display: block;
-            height: @fixture-line-height;
+            height: @fixture-line-height + 0.5 * @default-spacing;
             margin: 0;
-            padding: 0 @default-spacing;
+            padding: 0.5 * @default-spacing @default-spacing 0 @default-spacing;
             color: @left-nav-color-selected;
             font-size: @fixture-component-font-size;
             line-height: @fixture-line-height;
