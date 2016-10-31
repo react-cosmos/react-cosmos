@@ -20,6 +20,7 @@ module.exports = ({
   proxies,
   components,
   fixtures,
+  containerQuerySelector,
 }) => {
   const firstProxy = createLinkedList([
     ...proxies,
@@ -29,8 +30,12 @@ module.exports = ({
     PreviewLoader,
   ]);
 
+  const container = containerQuerySelector ?
+    document.querySelector(containerQuerySelector) :
+    document.body.appendChild(document.createElement('div'));
+
   return new ReactQuerystringRouter.Router({
-    container: document.body.appendChild(document.createElement('div')),
+    container,
     defaultProps: {
       firstProxy,
       components: loadComponents(components),

@@ -5,7 +5,7 @@ DX* tool for designing truly encapsulated
 
 ![Cosmos](cosmos-150.png)
 
-Cosmos scans your project for React components and loads them inside the [Component Playground](packages/react-component-playground),
+Cosmos scans your project for React components and loads them inside the [Component Playground](http://react-cosmos.github.io/react-cosmos/),
 enabling you to:
 
 1. Render your components under any combination of props and state
@@ -123,6 +123,10 @@ module.exports = {
       },
     }),
   ],
+
+  // Render inside custom root element. Useful if that root element already
+  // has styles attached, but bad for encapsulation.
+  containerQuerySelector: '#app',
 
   // WARNING: Make sure to add webpack.HotModuleReplacementPlugin to your
   // webpack config plugins section if you enable this. (and magic will ignite)

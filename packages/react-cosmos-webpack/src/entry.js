@@ -3,10 +3,11 @@ import getConfig from './config';
 
 // eslint-disable-next-line no-undef
 const userConfig = require(COSMOS_CONFIG_PATH);
-const { proxies } = getConfig(userConfig);
+const { proxies, containerQuerySelector } = getConfig(userConfig);
 
 module.exports = startReactCosmos({
   proxies,
+  containerQuerySelector,
   // The following constants are replaced at compile-time (through entry-loader)
   // with a map of all components and fixtures read from the disk, matching user
   // conf. Each component or fixture module will have a fn assigned, containing
