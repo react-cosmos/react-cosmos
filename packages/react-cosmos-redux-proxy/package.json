@@ -4,6 +4,10 @@
   "description": "A proxy to provide redux-related context to react-cosmos",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-redux-proxy",
   "license": "MIT",
+  "files": [
+    "lib",
+    "index.js"
+  ],
   "main": "lib/index.js",
   "dependencies": {
     "lodash.omit": "^4.5.0",

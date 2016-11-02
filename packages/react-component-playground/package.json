@@ -4,6 +4,10 @@
   "description": "Isolated loader for React components",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-component-playground",
   "license": "MIT",
+  "files": [
+    "lib",
+    "index.js"
+  ],
   "main": "lib/index.js",
   "dependencies": {
     "classnames": "^2.2.5",

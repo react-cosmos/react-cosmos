@@ -4,6 +4,10 @@
   "description": "The glue between the React Cosmos modules",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos",
   "license": "MIT",
+  "files": [
+    "lib",
+    "index.js"
+  ],
   "main": "lib/index.js",
   "dependencies": {
     "lodash.isequal": "^4.4.0",

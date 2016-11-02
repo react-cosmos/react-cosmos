@@ -4,6 +4,10 @@
   "description": "Serialize and reproduce the state of an entire tree of React components",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-component-tree",
   "license": "MIT",
+  "files": [
+    "lib",
+    "index.js"
+  ],
   "main": "lib/index.js",
   "dependencies": {
     "lodash": "^3.6.0",
