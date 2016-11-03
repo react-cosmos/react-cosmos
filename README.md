@@ -130,7 +130,7 @@ module.exports = {
 
   // WARNING: Make sure to add webpack.HotModuleReplacementPlugin to your
   // webpack config plugins section if you enable this. (and magic will ignite)
-  hot: false,
+  hot: true,
 
   // These ones are self explanatory
   hostname: 'localhost',
