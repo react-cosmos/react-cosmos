@@ -21,6 +21,7 @@ module.exports = ({
   components,
   fixtures,
   containerQuerySelector,
+  containerClassName,
 }) => {
   const firstProxy = createLinkedList([
     ...proxies,
@@ -40,6 +41,7 @@ module.exports = ({
       firstProxy,
       components: loadComponents(components),
       fixtures: loadFixtures(fixtures),
+      containerClassName,
     },
     getComponentClass: () => ComponentPlayground,
     onChange: (params) => {

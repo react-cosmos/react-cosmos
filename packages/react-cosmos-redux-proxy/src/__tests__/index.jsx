@@ -23,7 +23,7 @@ let wrapper;
 let childWrapper;
 let childProps;
 
-const renderProxy = (f) => {
+const renderProxy = (f, options) => {
   fixture = f;
   previewComponent = {};
 
@@ -39,6 +39,7 @@ const renderProxy = (f) => {
   };
   createStore = jest.fn(() => storeMock);
   ReduxProxy = createReduxProxy({
+    ...options,
     createStore,
   });
   wrapper = shallow(
@@ -96,6 +97,22 @@ describe('fixture without Redux state', () => {
   });
 });
 
+describe('fixture without Redux state with alwaysCreateStore', () => {
+  beforeAll(() => {
+    renderProxy({
+      foo: 'bar',
+    }, {
+      alwaysCreateStore: true,
+    });
+  });
+
+  commonTests();
+
+  test('creates Redux store', () => {
+    expect(createStore).toHaveBeenCalled();
+  });
+});
+
 describe('fixture with Redux state', () => {
   beforeAll(() => {
     renderProxy({
@@ -148,5 +165,24 @@ describe('fixture with Redux state', () => {
     test('unsubscribes from store changes', () => {
       expect(storeUnsubscribeMock).toHaveBeenCalled();
     });
+  });
+});
+
+describe('fixture with Redux state and enabled local state', () => {
+  beforeAll(() => {
+    renderProxy({
+      foo: 'bar',
+      reduxState: {
+        counter: 6,
+      },
+    }, {
+      disableLocalState: false,
+    });
+  });
+
+  commonTests();
+
+  test('does not disable local state', () => {
+    expect(childProps.disableLocalState).toBe(false);
   });
 });
