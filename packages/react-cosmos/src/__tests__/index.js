@@ -88,7 +88,7 @@ describe('without container query selector', () => {
   });
 });
 
-describe('with container query selector', () => {
+describe('with container query selector and class name', () => {
   let rootEl;
 
   beforeAll(() => {
@@ -101,6 +101,7 @@ describe('with container query selector', () => {
       components: fakeComponentsInput,
       fixtures: fakeFixturesInput,
       containerQuerySelector: '#app',
+      containerClassName: 'foobar',
     });
   });
 
@@ -116,5 +117,10 @@ describe('with container query selector', () => {
     // it reaches a V8 limit and crashes due to allocation fail. Probably when
     // pretty-format is used to display the pretty diff
     expect(container === rootEl).toBe(true);
+  });
+
+  it('sends containerClassName to Component Playground props', () => {
+    const { containerClassName } = FakeRouter.mock.calls[0][0].defaultProps;
+    expect(containerClassName).toBe('foobar');
   });
 });

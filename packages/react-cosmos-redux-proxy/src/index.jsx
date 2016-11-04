@@ -3,12 +3,16 @@ import omit from 'lodash.omit';
 
 const defaults = {
   fixtureKey: 'reduxState',
+  alwaysCreateStore: false,
+  disableLocalState: true,
 };
 
-export default function createReduxProxy(options) {
+module.exports = function createReduxProxy(options) {
   const {
     fixtureKey,
     createStore,
+    alwaysCreateStore,
+    disableLocalState,
   } = { ...defaults, ...options };
 
   class ReduxProxy extends React.Component {
@@ -17,7 +21,7 @@ export default function createReduxProxy(options) {
       this.onStoreChange = this.onStoreChange.bind(this);
 
       const fixtureReduxState = props.fixture[fixtureKey];
-      if (fixtureReduxState) {
+      if (alwaysCreateStore || fixtureReduxState) {
         this.store = createStore(fixtureReduxState);
       }
     }
@@ -70,7 +74,7 @@ export default function createReduxProxy(options) {
         onPreviewRef,
         // Disable StateProxy when Redux state is available, otherwise the entire
         // Redux store would be duplicated from the connect() component's state
-        disableLocalState: !!this.store,
+        disableLocalState: disableLocalState && !!this.store,
       });
     }
   }
@@ -90,4 +94,4 @@ export default function createReduxProxy(options) {
   };
 
   return ReduxProxy;
-}
+};
