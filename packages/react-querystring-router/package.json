@@ -1,6 +1,6 @@
 {
   "name": "react-querystring-router",
-  "version": "1.0.0-beta.9",
+  "version": "1.0.0",
   "description": "Bare router for React components, using props as query string",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-querystring-router",
   "license": "MIT",
@@ -11,7 +11,7 @@
   "main": "lib/index.js",
   "dependencies": {
     "lodash": "^3.10.1",
-    "react-dom-polyfill": "^1.0.0-beta.9"
+    "react-dom-polyfill": "^1.0.0"
   },
   "peerDependencies": {
     "react": ">=0.13 <16"
