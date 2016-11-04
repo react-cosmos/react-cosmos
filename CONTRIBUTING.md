@@ -12,7 +12,7 @@ Moreover, React Cosmos tries to answer the question: **How to design components 
 
 [The Best Code is No Code At All.](http://blog.codinghorror.com/the-best-code-is-no-code-at-all/) Start with this in mind before writing code.
 
-React Cosmos is [monorepo](packages) with many small packages. This makes it possible to design isolated units, but also to build and test all packages together (inside one of the [examples](examples)).
+React Cosmos is a [monorepo](packages) with many small packages. This makes it possible to design isolated units, but also to build and test all packages together (inside one of the [examples](examples)).
 
 ## Progress
 
