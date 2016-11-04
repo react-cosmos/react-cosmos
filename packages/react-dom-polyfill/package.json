@@ -1,6 +1,6 @@
 {
   "name": "react-dom-polyfill",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Publish React libs that work with all React versions (0.12+)",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-dom-polyfill",
   "license": "MIT",
