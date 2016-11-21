@@ -1,4 +1,4 @@
-/* eslint-disable global-require */
+/* eslint-disable global-require, no-console */
 
 import express from 'express';
 import webpack from 'webpack';
@@ -34,15 +34,22 @@ module.exports = function startServer() {
     app.use(webpackHotMiddleware(compiler));
   }
 
-  if (publicPath) {
-    app.use('/', express.static(resolveUserPath(publicPath, cosmosConfigPath)));
+  let inferredPublicPath = publicPath;
+  if (!inferredPublicPath &&
+      userWebpackConfig.devServer && userWebpackConfig.devServer.contentBase) {
+    inferredPublicPath = userWebpackConfig.devServer.contentBase;
+  }
+
+  if (inferredPublicPath) {
+    const resolvedPublicPath = resolveUserPath(inferredPublicPath, cosmosConfigPath);
+    console.log(`Serving static files from ${resolvedPublicPath}`);
+    app.use('/', express.static(resolvedPublicPath));
   }
 
   app.listen(port, hostname, (err) => {
     if (err) {
       throw err;
     }
-    // eslint-disable-next-line no-console
     console.log(`Listening at http://${hostname}:${port}/`);
   });
 };

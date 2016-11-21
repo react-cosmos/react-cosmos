@@ -202,7 +202,7 @@ describe('with relative public path', () => {
 
   commonTests();
 
-  test('creates static server', () => {
+  test('creates static server with resolved public path', () => {
     expect(express.static.mock.calls[0][0]).toBe(path.join(processCwdMock, 'server/public'));
   });
 });
@@ -224,7 +224,83 @@ describe('with absolute public path', () => {
 
   commonTests();
 
-  test('creates static server', () => {
+  test('creates static server with raw public path', () => {
+    expect(express.static.mock.calls[0][0]).toBe(publicPath);
+  });
+});
+
+describe('with relative devServer.contentBase in webpack config', () => {
+  let contentBase;
+
+  beforeEach(() => {
+    jest.mock('yargs', () => ({ argv: {} }));
+
+    contentBase = 'server/public';
+    jest.mock('./dummy-config/cosmos.config', () => ({}));
+    jest.mock('./dummy-config/webpack.config', () => ({
+      devServer: {
+        contentBase,
+      },
+    }));
+
+    startServer();
+  });
+
+  commonTests();
+
+  test('creates static server using content base', () => {
+    expect(express.static.mock.calls[0][0]).toBe(path.join(processCwdMock, contentBase));
+  });
+});
+
+describe('with absolute devServer.contentBase in webpack config', () => {
+  let contentBase;
+
+  beforeEach(() => {
+    jest.mock('yargs', () => ({ argv: {} }));
+
+    contentBase = path.join(processCwdMock, 'server/public');
+    jest.mock('./dummy-config/cosmos.config', () => ({}));
+    jest.mock('./dummy-config/webpack.config', () => ({
+      devServer: {
+        contentBase,
+      },
+    }));
+
+    startServer();
+  });
+
+  commonTests();
+
+  test('creates static server using content base', () => {
+    expect(express.static.mock.calls[0][0]).toBe(contentBase);
+  });
+});
+
+describe('with devServer.contentBase in webpack config and publicPath', () => {
+  let publicPath;
+  let contentBase;
+
+  beforeEach(() => {
+    jest.mock('yargs', () => ({ argv: {} }));
+
+    publicPath = path.join(processCwdMock, 'server/public1');
+    contentBase = path.join(processCwdMock, 'server/public2');
+    jest.mock('./dummy-config/cosmos.config', () => ({
+      publicPath,
+    }));
+    jest.mock('./dummy-config/webpack.config', () => ({
+      devServer: {
+        contentBase,
+      },
+    }));
+
+    startServer();
+  });
+
+  commonTests();
+
+  test('creates static server using public path', () => {
     expect(express.static.mock.calls[0][0]).toBe(publicPath);
   });
 });
