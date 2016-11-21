@@ -83,7 +83,7 @@ Voilà! Now you can [extend your config](#configuration), start [creating fixtur
 
 #### *"Cannot GET /"*
 
-Chances are you'll be faced with a blank page when opening *localhost:8080*. There
+Chances are you'll be faced with a blank page when opening *localhost:8989*. There
 are two methods for configuring `index.html`:
 - Use [HTML Webpack Plugin.](https://github.com/ampedandwired/html-webpack-plugin) See [Flatris example.](https://github.com/react-cosmos/react-cosmos/blob/a33b53ad533ad340fd81335e9d047f90e63c1ff6/examples/flatris/webpack/webpack.config.js#L37-L39)
 - Use the `publicPath` option to target the parent folder of your index.html. Details below.
