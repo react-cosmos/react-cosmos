@@ -12,5 +12,6 @@ module.exports = {
     createStore: (initialState) =>
       createStore(flatrisReducer, initialState, applyMiddleware(thunk)),
   })],
+  publicPath: '../public',
   hot: true,
 };
