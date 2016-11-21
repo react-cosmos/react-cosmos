@@ -21,6 +21,8 @@ road.
 
 _\*DX stands for Developer Experience, the counterpart of UX in building a product, system or service._
 
+Read the story of React Cosmos: [Fighting for Component Independence.](https://medium.com/@skidding/fighting-for-component-independence-2a762ee53272)
+
 ## Requirements
 
 - [x] Node >=5 and npm >=3. Older versions might work but aren't guaranteed.
