@@ -26,7 +26,7 @@ module.exports = {
     'codemirror/addon/fold/brace-fold': 'codemirror/addon/fold/brace-fold',
     'fuzzaldrin-plus': 'fuzzaldrin-plus',
     lodash: 'lodash',
-    'react-codemirror': 'react-codemirror',
+    '@skidding/react-codemirror': '@skidding/react-codemirror',
     'react-component-tree': 'react-component-tree',
     'react-dom-polyfill': 'react-dom-polyfill',
     'react-querystring-router': 'react-querystring-router',
