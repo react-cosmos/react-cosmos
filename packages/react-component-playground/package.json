@@ -1,6 +1,6 @@
 {
   "name": "react-component-playground",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Isolated loader for React components",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-component-playground",
   "license": "MIT",
@@ -17,7 +17,7 @@
     "@skidding/react-codemirror": "^0.3.0",
     "react-component-tree": "^1.0.1",
     "react-dom-polyfill": "^1.0.1",
-    "react-querystring-router": "^1.0.1",
+    "react-querystring-router": "^1.1.0",
     "ubervu-react-split-pane": "^0.1.14"
   },
   "peerDependencies": {
