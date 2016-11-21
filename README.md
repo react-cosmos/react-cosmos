@@ -3,7 +3,7 @@
 DX* tool for designing truly encapsulated
 [React](http://facebook.github.io/react/) components.
 
-
+![Cosmos](cosmos-150.png)
 
 Cosmos scans your project for React components and loads them inside the [Component Playground](http://react-cosmos.github.io/react-cosmos/),
 enabling you to:
@@ -17,6 +17,7 @@ surfaces any implicit dependencies. It also forces you to define sane inputs
 for every component, making them more predictable and easier to debug down the
 road.
 
+![Component Playground](intro.gif)
 
 _\*DX stands for Developer Experience, the counterpart of UX in building a product, system or service._
 
