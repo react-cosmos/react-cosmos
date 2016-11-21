@@ -20,6 +20,7 @@
     "build:redux-proxy": "PACKAGE=react-cosmos-redux-proxy npm run build-babel",
     "build": "rm -rf ./packages/*/lib && npm run build:component-playground && npm run build:component-tree && npm run build:cosmos && npm run build:cosmos-webpack && npm run build:dom-polyfill && npm run build:querystring-router && npm run build:redux-proxy",
     "prepublish": "npm run bootstrap && npm run build",
+    "publish-lerna": "npm run test && npm run build && lerna publish",
     "test-karma": "karma start test/karma.conf.js --single-run",
     "test-jest": "jest --coverage --config test/jest.config.json",
     "test": "npm run lint && npm run test-karma && npm run test-jest",
