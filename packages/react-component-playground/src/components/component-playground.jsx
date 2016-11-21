@@ -6,7 +6,7 @@ import React from 'react';
 import classNames from 'classnames';
 import ComponentTree from 'react-component-tree';
 import ReactQuerystringRouter from 'react-querystring-router';
-import CodeMirror from 'react-codemirror';
+import CodeMirror from '@skidding/react-codemirror';
 import fuzzaldrinPlus from 'fuzzaldrin-plus';
 import SplitPane from 'ubervu-react-split-pane';
 import localStorageLib from '../lib/local-storage';
@@ -153,6 +153,7 @@ module.exports = React.createClass({
         component: CodeMirror,
         key: 'editor',
         value: this.state.fixtureUserInput,
+        preserveScrollPosition: true,
         onChange: this.onFixtureChange,
         onFocusChange: this.onEditorFocusChange,
         options: {
