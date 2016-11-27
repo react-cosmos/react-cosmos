@@ -2,27 +2,27 @@
 
 import React from 'react';
 import _ from 'lodash';
-import uri from './uri.js';
+import { parseLocation } from './uri';
 
 const ReactDOM = require('react-dom-polyfill')(React);
 
+const getCurrentLocation = () => window.location.href;
+
 class Router {
   constructor(options) {
-    this.options = _.extend({
-      defaultProps: {},
-    }, options);
+    this.options = options;
 
     this.routeLink = this.routeLink.bind(this);
     this.onPopState = this.onPopState.bind(this);
 
-    this.bindPopStateEvent();
+    window.addEventListener('popstate', this.onPopState);
 
     // The initial render is done instantly when the Router instance is created
-    this.loadParams(uri.parseLocation(this.getCurrentLocation()));
+    this.loadParams(parseLocation(getCurrentLocation()));
   }
 
   stop() {
-    this.unbindPopStateEvent();
+    window.removeEventListener('popstate', this.onPopState);
   }
 
   routeLink(event) {
@@ -42,64 +42,43 @@ class Router {
   }
 
   onPopState() {
-    const location = this.getCurrentLocation();
-    const params = uri.parseLocation(location);
+    const location = getCurrentLocation();
+    const params = parseLocation(location);
 
     this.loadParams(params);
   }
 
   pushLocation(location) {
     // Old-school refreshes are made when pushState isn't supported
-    if (!this.isPushStateSupported()) {
+    if (!window.history.pushState) {
       window.location = location;
       return;
     }
 
     // Create a history entry for the new component
-    this.pushHistoryState({}, location);
+    window.history.pushState({}, '', location);
 
-    this.loadParams(uri.parseLocation(location));
+    this.loadParams(parseLocation(location));
   }
 
   loadParams(params) {
-    const props = _.extend({
+    const ComponentClass = this.options.getComponentClass(params);
+    const props = {
+      ...this.options.getComponentProps(params),
       // Always send the components a reference to the router. This makes it
       // possible for a component to change the page through the router and
       // not have to rely on any sort of globals
+      // TODO: Send only methods instead
       router: this,
-    }, this.options.defaultProps, params);
-
-    const ComponentClass = this.options.getComponentClass(props);
+    };
     const componentElement = React.createElement(ComponentClass, props);
 
-    // The router exposes the instance of the currently rendered component
-    this.rootComponent = ReactDOM.render(componentElement,
-                                         this.options.container);
+    ReactDOM.render(componentElement, this.options.container);
 
     if (_.isFunction(this.options.onChange)) {
-      this.options.onChange.call(this, props);
+      this.options.onChange.call(this, params);
     }
-  }
-
-  getCurrentLocation() {
-    return window.location.href;
-  }
-
-  bindPopStateEvent() {
-    window.addEventListener('popstate', this.onPopState);
-  }
-
-  unbindPopStateEvent() {
-    window.removeEventListener('popstate', this.onPopState);
-  }
-
-  pushHistoryState(state, url) {
-    window.history.pushState(state, '', url);
-  }
-
-  isPushStateSupported() {
-    return !!window.history.pushState;
   }
 }
 
-module.exports = Router;
+export default Router;

@@ -1,6 +1,7 @@
-/* eslint-disable global-require */
+import uri from './uri';
+import Router from './router';
 
 module.exports = {
-  uri: require('./uri'),
-  Router: require('./router'),
+  uri,
+  Router,
 };

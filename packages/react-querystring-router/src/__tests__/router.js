@@ -4,6 +4,10 @@ const ReactDOMMock = {
   render: jest.fn(() => componentInstance),
 };
 const getComponentClass = jest.fn(() => ComponentClass);
+const getComponentProps = jest.fn(() => ({
+  foo: 'bar',
+  lorem: 'ipsum',
+}));
 const onChange = jest.fn();
 const uriLocation = 'mypage.com?component=List&dataUrl=users.json';
 const uriParams = {
@@ -25,7 +29,7 @@ jest.mock('react-dom-polyfill', () => jest.fn(() => ReactDOMMock));
 
 const React = require('react');
 const uri = require('../uri');
-const Router = require('../router');
+const Router = require('../router').default;
 const ReactDOM = require('react-dom-polyfill')(React);
 
 const nativeRefs = {};
@@ -51,6 +55,7 @@ const initRouter = () => {
     },
     container: '<fake DOM element>',
     getComponentClass,
+    getComponentProps,
     onChange,
   });
 };
@@ -62,47 +67,34 @@ const commonTests = () => {
     expect(propsSent.dataUrl).toBe(uriParams.dataUrl);
   });
 
-  it('should call getComponentClass with default props', () => {
-    const propsSent = getComponentClass.mock.calls[0][0];
-    expect(propsSent.defaultProp).toBe(true);
+  it('should call getComponentProps with route params', () => {
+    const propsSent = getComponentProps.mock.calls[0][0];
+    expect(propsSent.component).toBe(uriParams.component);
+    expect(propsSent.dataUrl).toBe(uriParams.dataUrl);
   });
 
   it('should call createElement with returned class', () => {
     expect(React.createElement.mock.calls[0][0]).toBe(ComponentClass);
   });
 
-  it('should render using URL params as props', () => {
+  it('should call createElement with returned props', () => {
     const propsSent = React.createElement.mock.calls[0][1];
-    expect(propsSent.dataUrl).toBe(uriParams.dataUrl);
+    expect(propsSent.foo).toBe('bar');
+    expect(propsSent.lorem).toBe('ipsum');
   });
 
   it('should attach router reference to props', () => {
     expect(React.createElement.mock.calls[0][1].router).toBe(routerInstance);
   });
 
-  it('should extend default props', () => {
-    const props = React.createElement.mock.calls[0][1];
-    expect(props.dataUrl).toBe(uriParams.dataUrl);
-    expect(props.defaultProp).toBe(true);
-  });
-
   it('should use container node received in options', () => {
     expect(ReactDOM.render.mock.calls[0][1]).toBe('<fake DOM element>');
-  });
-
-  it('should expose reference to root component', () => {
-    expect(routerInstance.rootComponent).toBe(componentInstance);
   });
 
   it('should call onChange callback with params', () => {
     const params = onChange.mock.calls[0][0];
     expect(params.component).toBe(uriParams.component);
     expect(params.dataUrl).toBe(uriParams.dataUrl);
-  });
-
-  it('should call onChange callback with default props', () => {
-    const params = onChange.mock.calls[0][0];
-    expect(params.defaultProp).toBe(true);
   });
 };
 
