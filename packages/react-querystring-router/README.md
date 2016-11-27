@@ -36,7 +36,7 @@ var myRouter = new Router({
   // Called whenever the route changes (also initially), receiving the parsed
   // props as the first argument
   onChange: (params) => {
-    // E.g. Use the props to set a custom document.title
+    // E.g. Use the params to set a custom document.title
   }
 });
 ```
@@ -55,7 +55,7 @@ const { stringifyParams } = uri;
 render() {
   return (
     <div className="serious-component">
-      <a href={stringifyParams({lifeChangingProp: 1})}
+      <a href={stringifyParams({ lifeChangingProp: 1 })}
          onClick={this.props.router.routeLink}>
          Click me por favor
       </a>
