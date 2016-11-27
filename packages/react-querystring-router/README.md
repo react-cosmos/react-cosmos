@@ -20,7 +20,7 @@ By making use of the `getComponentClass` and `getComponentProps` callbacks, this
 ```js
 import { Router } from 'react-querystring-router';
 
-var myRouter = new Router({
+const myRouter = new Router({
   // This is how the router maps component names to corresponding classes
   getComponentClass: ({ component }) => require(`components/${component}.jsx`),
   // This is to combine url params with default and additional props
