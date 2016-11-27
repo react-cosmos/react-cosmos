@@ -1,7 +1,6 @@
 /* eslint-env browser */
 
 import React from 'react';
-import _ from 'lodash';
 import { parseLocation } from './uri';
 
 const ReactDOM = require('react-dom-polyfill')(React);
@@ -62,9 +61,15 @@ class Router {
   }
 
   loadParams(params) {
-    const ComponentClass = this.options.getComponentClass(params);
+    const {
+      getComponentClass,
+      getComponentProps,
+      container,
+      onChange,
+    } = this.options;
+    const ComponentClass = getComponentClass(params);
     const props = {
-      ...this.options.getComponentProps(params),
+      ...getComponentProps(params),
       // Always send the components a reference to the router. This makes it
       // possible for a component to change the page through the router and
       // not have to rely on any sort of globals
@@ -73,10 +78,10 @@ class Router {
     };
     const componentElement = React.createElement(ComponentClass, props);
 
-    ReactDOM.render(componentElement, this.options.container);
+    ReactDOM.render(componentElement, container);
 
-    if (_.isFunction(this.options.onChange)) {
-      this.options.onChange.call(this, params);
+    if (typeof onChange === 'function') {
+      onChange.call(this, params);
     }
   }
 }
