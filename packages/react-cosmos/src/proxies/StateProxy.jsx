@@ -116,6 +116,7 @@ export default function createStateProxy(options) {
       value: React.PropTypes.func,
       next: React.PropTypes.func,
     }).isRequired,
+    component: React.PropTypes.func.isRequired,
     fixture: React.PropTypes.object.isRequired,
     onPreviewRef: React.PropTypes.func.isRequired,
     onFixtureUpdate: React.PropTypes.func.isRequired,

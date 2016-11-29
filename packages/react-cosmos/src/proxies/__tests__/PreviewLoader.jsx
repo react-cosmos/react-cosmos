@@ -4,7 +4,6 @@ import PreviewLoader from '../PreviewLoader';
 
 const PreviewComponent = () => {};
 const fixture = {
-  component: PreviewComponent,
   foo: 'bar',
 };
 const onPreviewRef = jest.fn();
@@ -16,6 +15,7 @@ let childProps;
 beforeAll(() => {
   wrapper = shallow(
     <PreviewLoader
+      component={PreviewComponent}
       fixture={fixture}
       onPreviewRef={onPreviewRef}
     />
@@ -30,10 +30,6 @@ test('renders preview component', () => {
 
 test('sends fixture props to preview component', () => {
   expect(childProps.foo).toBe('bar');
-});
-
-test('omits fixture.component from props', () => {
-  expect(childProps.component).toBe(undefined);
 });
 
 test('sets onPreviewRef as preview component ref callback', () => {
