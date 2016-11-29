@@ -45,6 +45,7 @@ const renderProxy = (f, options) => {
   wrapper = shallow(
     <ReduxProxy
       nextProxy={nextProxy}
+      component={() => {}}
       fixture={fixture}
       onPreviewRef={onPreviewRef}
       onFixtureUpdate={onFixtureUpdate}
