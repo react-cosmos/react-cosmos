@@ -17,7 +17,7 @@ jest.mock('../load-modules', () => ({
 }));
 jest.mock('react-cosmos-utils/lib/linked-list', () => jest.fn(() => fakeLinkedList));
 
-const PropsProxy = require('../proxies/PropsProxy').default;
+const PropsProxy = require('../components/proxies/PropsProxy').default;
 const createLinkedList = require('react-cosmos-utils/lib/linked-list');
 const startReactCosmos = require('../index');
 

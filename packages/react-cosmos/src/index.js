@@ -2,8 +2,8 @@ import ReactQuerystringRouter from 'react-querystring-router';
 import ComponentPlayground from 'react-component-playground';
 import createLinkedList from 'react-cosmos-utils/lib/linked-list';
 import { loadComponents, loadFixtures } from './load-modules';
-import PropsProxy from './proxies/PropsProxy';
-import createStateProxy from './proxies/StateProxy';
+import PropsProxy from './components/proxies/PropsProxy';
+import createStateProxy from './components/proxies/StateProxy';
 
 const getTitleForFixture = (params) => {
   let title = 'React Cosmos';
