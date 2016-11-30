@@ -58,25 +58,16 @@ class Loader extends React.Component {
         serializable,
       } = splitUnserializableParts(this.props.fixtures[component][fixture]);
 
-      this.updateFixtureState({
+      this.setState({
         component,
         fixture: {
           unserializable,
           serializable: fixtureBody || serializable,
         },
-      });
-    }
-
-    if (data.type === 'fixtureChange') {
-      const {
-        unserializable,
-      } = this.state.fixture;
-
-      this.updateFixtureState({
-        fixture: {
-          unserializable,
-          serializable: data.fixtureBody,
-        },
+        // Used as React Element key to ensure loaded components are rebuilt on
+        // every fixture change (instead of reusing instance and going down the
+        // componentWillReceiveProps route)
+        fixtureUpdateId: getUpdateId(),
       });
     }
   }
@@ -86,16 +77,6 @@ class Loader extends React.Component {
       type: 'fixtureUpdate',
       fixtureBody,
     }, '*');
-  }
-
-  updateFixtureState(state) {
-    this.setState({
-      ...state,
-      // Used as React Element key to ensure loaded components are rebuilt on
-      // every fixture change (instead of reusing instance and going down the
-      // componentWillReceiveProps route)
-      fixtureUpdateId: getUpdateId(),
-    });
   }
 
   render() {

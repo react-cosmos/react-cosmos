@@ -142,60 +142,34 @@ describe('on `fixtureLoad` event', () => {
     expect(firstProxyProps.onFixtureUpdate).toBe(instance.onFixtureUpdate);
   });
 
-  describe('on `fixtureChange` event', () => {
+  describe('on `fixtureLoad` event with fixture body', () => {
+    const fixtureBody = {
+      title: 'We are the robots',
+    };
+
     beforeAll(() => {
       const { onMessage } = instance;
       onMessage({
         data: {
-          type: 'fixtureChange',
-          fixtureBody: {
-            title: 'Dolor sit',
-          },
+          type: 'fixtureLoad',
+          component: 'FooBar',
+          fixture: 'base',
+          fixtureBody,
         },
       });
       firstProxyWrapper = wrapper.find(fakeFirstProxy.value);
       firstProxyProps = firstProxyWrapper.props();
     });
 
-    test('keeps unserializable fixture part', () => {
-      expect(firstProxyProps.fixture.onClick).toBe(fakeFixtureParts.unserializable.onClick);
-    });
-
-    test('replaces serializable fixture part', () => {
-      expect(firstProxyProps.fixture.title).toBe('Dolor sit');
+    test('includes body received in fixture sent to first proxy', () => {
+      expect(firstProxyProps.fixture).toEqual({
+        ...fakeFixtureParts.unserializable,
+        ...fixtureBody,
+      });
     });
 
     test('changes element key', () => {
       expect(firstProxyWrapper.key()).not.toEqual(firstProxyKey);
-    });
-  });
-});
-
-describe('on `fixtureLoad` event with fixture body', () => {
-  const fixtureBody = {
-    title: 'We are the robots',
-  };
-  let firstProxyWrapper;
-  let firstProxyProps;
-
-  beforeAll(() => {
-    const { onMessage } = instance;
-    onMessage({
-      data: {
-        type: 'fixtureLoad',
-        component: 'FooBar',
-        fixture: 'base',
-        fixtureBody,
-      },
-    });
-    firstProxyWrapper = wrapper.find(fakeFirstProxy.value);
-    firstProxyProps = firstProxyWrapper.props();
-  });
-
-  test('includes body received in fixture sent to first proxy', () => {
-    expect(firstProxyProps.fixture).toEqual({
-      ...fakeFixtureParts.unserializable,
-      ...fixtureBody,
     });
   });
 });
