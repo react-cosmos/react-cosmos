@@ -44,7 +44,7 @@ class MarkupProxy extends React.Component {
   }
 }
 
-const PreviewLoader = ({
+const PropsProxy = ({
   fixture,
   onPreviewRef,
 }) => React.createElement(fixture.component, {
@@ -58,7 +58,7 @@ module.exports = { ...selectedFixture,
     next: () => ({
       value: MarkupProxy,
       next: () => ({
-        value: PreviewLoader,
+        value: PropsProxy,
         next: () => {},
       }),
     }),

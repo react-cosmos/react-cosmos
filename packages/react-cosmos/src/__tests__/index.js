@@ -17,7 +17,7 @@ jest.mock('../load-modules', () => ({
 }));
 jest.mock('react-cosmos-utils/lib/linked-list', () => jest.fn(() => fakeLinkedList));
 
-const PreviewLoader = require('../proxies/PreviewLoader').default;
+const PropsProxy = require('../proxies/PropsProxy').default;
 const createLinkedList = require('react-cosmos-utils/lib/linked-list');
 const startReactCosmos = require('../index');
 
@@ -40,7 +40,7 @@ const commonTests = () => {
   });
 
   it('end proxy list with internal proxies', () => {
-    expect(createLinkedList.mock.calls[0][0][3]).toBe(PreviewLoader);
+    expect(createLinkedList.mock.calls[0][0][3]).toBe(PropsProxy);
   });
 
   it('sends proxy list to Component Playground props', () => {

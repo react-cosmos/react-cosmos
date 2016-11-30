@@ -14,7 +14,7 @@ class SecondComponent extends React.Component {
   }
 }
 
-const PreviewLoader = ({
+const PropsProxy = ({
   fixture,
   onPreviewRef,
 }) => React.createElement(fixture.component, {
@@ -24,7 +24,7 @@ const PreviewLoader = ({
 
 module.exports = {
   firstProxy: {
-    value: PreviewLoader,
+    value: PropsProxy,
     next: () => {},
   },
   components: {

@@ -1,6 +1,9 @@
 import React from 'react';
 
-export default class PreviewLoader extends React.Component {
+export default class PropsProxy extends React.Component {
+  /**
+   * The final proxy in the chain that renders the featured component.
+   */
   render() {
     const {
       component,
@@ -15,7 +18,7 @@ export default class PreviewLoader extends React.Component {
   }
 }
 
-PreviewLoader.propTypes = {
+PropsProxy.propTypes = {
   component: React.PropTypes.func.isRequired,
   fixture: React.PropTypes.object.isRequired,
   onPreviewRef: React.PropTypes.func.isRequired,

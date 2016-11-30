@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import PreviewLoader from '../PreviewLoader';
+import PropsProxy from '../PropsProxy';
 
 const PreviewComponent = () => {};
 const fixture = {
@@ -14,7 +14,7 @@ let childProps;
 
 beforeAll(() => {
   wrapper = shallow(
-    <PreviewLoader
+    <PropsProxy
       component={PreviewComponent}
       fixture={fixture}
       onPreviewRef={onPreviewRef}

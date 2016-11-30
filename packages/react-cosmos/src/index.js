@@ -2,7 +2,7 @@ import ReactQuerystringRouter from 'react-querystring-router';
 import ComponentPlayground from 'react-component-playground';
 import createLinkedList from 'react-cosmos-utils/lib/linked-list';
 import { loadComponents, loadFixtures } from './load-modules';
-import PreviewLoader from './proxies/PreviewLoader';
+import PropsProxy from './proxies/PropsProxy';
 import createStateProxy from './proxies/StateProxy';
 
 const getTitleForFixture = (params) => {
@@ -28,7 +28,7 @@ module.exports = ({
     // Loaded by default in all configs
     createStateProxy(),
     // The final proxy in the chain simply renders the preview component
-    PreviewLoader,
+    PropsProxy,
   ]);
 
   const container = containerQuerySelector ?
