@@ -26,7 +26,7 @@ const fakeFirstProxy = {
   next: () => fakeProxyNext,
 };
 const getLinkedList = jest.fn(() => fakeFirstProxy);
-jest.mock('../linked-list', () => getLinkedList);
+jest.mock('react-cosmos-utils/lib/linked-list', () => getLinkedList);
 
 
 const fakeFixtureParts = {
@@ -38,7 +38,7 @@ const fakeFixtureParts = {
   },
 };
 const splitUnserializableParts = jest.fn(() => fakeFixtureParts);
-jest.mock('../unserializable-parts', () => splitUnserializableParts);
+jest.mock('react-cosmos-utils/lib/unserializable-parts', () => splitUnserializableParts);
 
 const Loader = require('../Loader').default;
 

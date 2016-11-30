@@ -15,10 +15,10 @@ jest.mock('../load-modules', () => ({
   loadComponents: fakeLoadComponents,
   loadFixtures: fakeLoadFixtures,
 }));
-jest.mock('../linked-list', () => jest.fn(() => fakeLinkedList));
+jest.mock('react-cosmos-utils/lib/linked-list', () => jest.fn(() => fakeLinkedList));
 
 const PreviewLoader = require('../proxies/PreviewLoader').default;
-const createLinkedList = require('../linked-list');
+const createLinkedList = require('react-cosmos-utils/lib/linked-list');
 const startReactCosmos = require('../index');
 
 let routerInstance;

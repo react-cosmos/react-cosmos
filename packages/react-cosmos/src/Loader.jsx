@@ -1,6 +1,6 @@
 import React from 'react';
-import splitUnserializableParts from './unserializable-parts';
-import createLinkedList from './linked-list';
+import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
+import createLinkedList from 'react-cosmos-utils/lib/linked-list';
 
 const getUpdateId = () => Date.now();
 
