@@ -5,10 +5,10 @@ const React = require('react');
 const PropsProxy = ({
   component,
   fixture,
-  onPreviewRef,
+  onComponentRef,
 }) => React.createElement(component, {
   fixture,
-  ref: onPreviewRef,
+  ref: onComponentRef,
 });
 
 module.exports = {

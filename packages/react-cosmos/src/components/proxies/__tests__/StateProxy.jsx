@@ -12,7 +12,7 @@ const nextProxy = {
   value: NextProxy,
   next: () => nextProxyNext,
 };
-const onPreviewRef = jest.fn();
+const onComponentRef = jest.fn();
 const componentRef = {};
 
 let fixture;
@@ -40,7 +40,7 @@ const renderProxy = (options) => {
       nextProxy={nextProxy}
       component={() => {}}
       fixture={fixture}
-      onPreviewRef={onPreviewRef}
+      onComponentRef={onComponentRef}
       onFixtureUpdate={onFixtureUpdate}
       disableLocalState={options.disabled}
     />
@@ -48,7 +48,7 @@ const renderProxy = (options) => {
   childWrapper = wrapper.at(0);
   childProps = childWrapper.props();
   // Simulate rendering
-  childProps.onPreviewRef(componentRef);
+  childProps.onComponentRef(componentRef);
 };
 
 const commonTests = () => {
@@ -65,7 +65,7 @@ const commonTests = () => {
   });
 
   test('bubbles up component ref', () => {
-    expect(onPreviewRef.mock.calls[0][0]).toBe(componentRef);
+    expect(onComponentRef.mock.calls[0][0]).toBe(componentRef);
   });
 
   test('bubbles up fixture updates', () => {

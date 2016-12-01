@@ -19,7 +19,7 @@ export default function createStateProxy(options) {
   class StateProxy extends React.Component {
     constructor(props) {
       super(props);
-      this.onPreviewRender = this.onPreviewRender.bind(this);
+      this.onComponentRef = this.onComponentRef.bind(this);
       this.onStateUpdate = this.onStateUpdate.bind(this);
     }
 
@@ -27,10 +27,10 @@ export default function createStateProxy(options) {
       clearTimeout(this.timeoutId);
     }
 
-    onPreviewRender(componentRef) {
+    onComponentRef(componentRef) {
       const {
         fixture,
-        onPreviewRef,
+        onComponentRef,
         disableLocalState,
       } = this.props;
 
@@ -52,7 +52,7 @@ export default function createStateProxy(options) {
       }
 
       // Bubble up component ref
-      onPreviewRef(this.componentRef = componentRef);
+      onComponentRef(this.componentRef = componentRef);
     }
 
     onStateUpdate() {
@@ -86,7 +86,7 @@ export default function createStateProxy(options) {
     render() {
       const {
         props,
-        onPreviewRender,
+        onComponentRef,
       } = this;
       const {
         nextProxy,
@@ -101,7 +101,7 @@ export default function createStateProxy(options) {
       return React.createElement(nextProxy.value, { ...props,
         nextProxy: nextProxy.next(),
         fixture: childFixture,
-        onPreviewRef: onPreviewRender,
+        onComponentRef,
       });
     }
   }
@@ -118,7 +118,7 @@ export default function createStateProxy(options) {
     }).isRequired,
     component: React.PropTypes.func.isRequired,
     fixture: React.PropTypes.object.isRequired,
-    onPreviewRef: React.PropTypes.func.isRequired,
+    onComponentRef: React.PropTypes.func.isRequired,
     onFixtureUpdate: React.PropTypes.func.isRequired,
     disableLocalState: React.PropTypes.bool,
   };

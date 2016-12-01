@@ -6,7 +6,7 @@ const Component = () => {};
 const fixture = {
   foo: 'bar',
 };
-const onPreviewRef = jest.fn();
+const onComponentRef = jest.fn();
 
 let wrapper;
 let childWrapper;
@@ -17,7 +17,7 @@ beforeAll(() => {
     <PropsProxy
       component={Component}
       fixture={fixture}
-      onPreviewRef={onPreviewRef}
+      onComponentRef={onComponentRef}
     />
   );
   childWrapper = wrapper.at(0);
@@ -32,6 +32,6 @@ test('sends fixture props to component', () => {
   expect(childProps.foo).toBe('bar');
 });
 
-test('sets onPreviewRef as component ref callback', () => {
-  expect(childWrapper.get(0).ref).toBe(onPreviewRef);
+test('sets onComponentRef as component ref callback', () => {
+  expect(childWrapper.get(0).ref).toBe(onComponentRef);
 });

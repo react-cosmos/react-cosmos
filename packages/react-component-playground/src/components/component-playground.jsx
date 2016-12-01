@@ -119,7 +119,7 @@ module.exports = React.createClass({
     splitPane() {
       return {
         component: SplitPane,
-        key: 'editorPreviewSplitPane',
+        key: 'editorLoaderSplitPane',
         split: this.getOrientationDirection(),
         defaultSize: localStorageLib.get('splitPos'),
         onChange: (size => localStorageLib.set('splitPos', size)),
@@ -127,7 +127,7 @@ module.exports = React.createClass({
         resizerClassName: this.getSplitPaneClasses('resizer'),
         children: [
           this.renderFixtureEditor(),
-          this.renderPreview(),
+          this.renderLoader(),
         ],
       };
     },
@@ -184,7 +184,7 @@ module.exports = React.createClass({
     );
   },
 
-  renderPreview() {
+  renderLoader() {
     return (
       <div
         key="loaderContainer"
@@ -194,7 +194,7 @@ module.exports = React.createClass({
           key="loaderFrame"
           className={style.frame}
           src="/loader/"
-          ref={this.onPreviewFrameRef}
+          ref={this.onLoaderFrameRef}
         />
       </div>
     );
@@ -250,7 +250,7 @@ module.exports = React.createClass({
   renderContentFrame() {
     return (
       <div ref="contentFrame" className={style['content-frame']}>
-        {this.props.editor ? this.loadChild('splitPane') : this.renderPreview()}
+        {this.props.editor ? this.loadChild('splitPane') : this.renderLoader()}
       </div>
     );
   },
@@ -348,7 +348,7 @@ module.exports = React.createClass({
     if (this.constructor.didFixtureChange(this.props, nextProps)) {
       this.setState(
         this.constructor.getFixtureState(nextProps),
-        this.sendFixtureToPreview
+        this.sendFixtureToLoader
       );
     }
   },
@@ -362,7 +362,7 @@ module.exports = React.createClass({
     const { type, fixtureBody } = data;
 
     if (type === 'frameReady') {
-      this.sendFixtureToPreview();
+      this.sendFixtureToLoader();
     }
 
     if (type === 'fixtureUpdate') {
@@ -370,7 +370,7 @@ module.exports = React.createClass({
     }
   },
 
-  onPreviewFrameRef(domNode) {
+  onLoaderFrameRef(domNode) {
     this.loaderFrame = domNode;
   },
 
@@ -387,7 +387,7 @@ module.exports = React.createClass({
       // clicking on the fixture button while already selected
       this.setState(
         this.constructor.getFixtureState(this.props),
-        this.sendFixtureToPreview
+        this.sendFixtureToLoader
       );
     }
   },
@@ -434,7 +434,7 @@ module.exports = React.createClass({
 
     this.setState(newState, () => {
       if (this.state.isFixtureUserInputValid) {
-        this.sendFixtureToPreview();
+        this.sendFixtureToLoader();
       }
     });
   },
@@ -480,7 +480,7 @@ module.exports = React.createClass({
     return _.omit(props, (value, key) => value === defaultProps[key]);
   },
 
-  sendFixtureToPreview() {
+  sendFixtureToLoader() {
     // Maybe iframe has not been loaded yet, in which case it'll receive
     // the fixture to load when it triggers the `frameReady` event
     if (!this.loaderFrame) {
