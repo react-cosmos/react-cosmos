@@ -21,7 +21,14 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, () => {
     beforeEach(() => {
       sinon.spy(component, 'setState');
 
-      component.onFixtureUpdate();
+      component.onMessage({
+        data: {
+          type: 'fixtureUpdate',
+          fixtureBody: {
+            foo: 'bar',
+          },
+        },
+      });
 
       stateSet = component.setState.lastCall.args[0];
     });
@@ -34,14 +41,11 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, () => {
       expect(stateSet.isFixtureUserInputValid).to.equal(true);
     });
 
-    it('should put serializable child state in fixture contents', () => {
-      Object.keys(fixture.state.fixtureContents).forEach((key) => {
-        expect(stateSet.fixtureContents[key])
-        .to.deep.equal(fixture.state.fixtureContents[key]);
-      });
+    it('should override serializable fixture part', () => {
+      expect(stateSet.fixtureContents).to.deep.equal({ foo: 'bar' });
     });
 
-    it('should ignore unserializable child state', () => {
+    it('should keep unserializable fixture part', () => {
       Object.keys(fixture.state.fixtureUnserializableProps).forEach((key) => {
         expect(stateSet.fixtureContents[key]).to.be.undefined;
       });
@@ -49,7 +53,7 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, () => {
 
     it('should update stringified child snapshot state', () => {
       expect(stateSet.fixtureUserInput)
-            .to.equal(JSON.stringify(fixture.state.fixtureContents, null, 2));
+            .to.equal(JSON.stringify({ foo: 'bar' }, null, 2));
     });
   });
 

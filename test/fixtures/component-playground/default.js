@@ -2,22 +2,11 @@
 
 const React = require('react');
 
-class FirstComponent extends React.Component {
-  render() {
-    return React.DOM.div();
-  }
-}
-
-class SecondComponent extends React.Component {
-  render() {
-    return React.DOM.div();
-  }
-}
-
 const PropsProxy = ({
+  component,
   fixture,
   onPreviewRef,
-}) => React.createElement(fixture.component, {
+}) => React.createElement(component, {
   fixture,
   ref: onPreviewRef,
 });
@@ -26,10 +15,6 @@ module.exports = {
   firstProxy: {
     value: PropsProxy,
     next: () => {},
-  },
-  components: {
-    FirstComponent,
-    SecondComponent,
   },
   fixtures: {
     FirstComponent: {

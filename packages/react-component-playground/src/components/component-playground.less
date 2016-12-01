@@ -239,7 +239,7 @@
     .preview {
       .stretch();
 
-      overflow: auto;
+      overflow: hidden;
       // Checkerboard effect on background
       background-image:
         linear-gradient(45deg,
@@ -258,6 +258,12 @@
                        2 * @checkerboard-square-size;
       background-position: 0 0,
                            @checkerboard-square-size @checkerboard-square-size;
+
+      .frame {
+        border: 0;
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 

@@ -5,10 +5,9 @@ import ComponentPlayground from '../../packages/react-component-playground/src';
 
 const ReactDOM = require('../../packages/react-dom-polyfill')(React);
 
-module.exports = (fixture, container = document.createElement('div'),
-  componentType = ComponentPlayground) => {
+module.exports = (fixture, container = document.createElement('div')) => {
   const component = ComponentTree.render({
-    component: componentType,
+    component: ComponentPlayground,
     snapshot: fixture,
     container,
   });

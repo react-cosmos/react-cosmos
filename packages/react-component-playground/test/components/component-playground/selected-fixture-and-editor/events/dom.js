@@ -10,9 +10,17 @@ describe(`ComponentPlayground (${FIXTURE}) Events DOM`, () => {
   let component;
   let $component;
   let container;
+  let postMessage;
 
   beforeEach(() => {
     ({ container, component, $component } = render(fixture));
+
+    postMessage = sinon.spy();
+    component.previewFrame = {
+      contentWindow: {
+        postMessage,
+      },
+    };
   });
 
   describe('Editor events', () => {
@@ -80,9 +88,13 @@ describe(`ComponentPlayground (${FIXTURE}) Events DOM`, () => {
         expect(stateSet.isFixtureUserInputValid).to.equal(true);
       });
 
-      it('should bump fixture change counter', () => {
-        expect(stateSet.fixtureChange)
-              .to.equal(fixture.state.fixtureChange + 1);
+      it('should send `loadFixture` event', () => {
+        expect(postMessage).to.have.been.calledWith({
+          type: 'fixtureLoad',
+          component: fixture.component,
+          fixture: fixture.fixture,
+          fixtureBody: { lorem: 'ipsum' },
+        }, '*');
       });
     });
 
@@ -109,10 +121,6 @@ describe(`ComponentPlayground (${FIXTURE}) Events DOM`, () => {
 
       it('should mark invalid change in state', () => {
         expect(stateSet.isFixtureUserInputValid).to.equal(false);
-      });
-
-      it('should not bump fixture change counter', () => {
-        expect(stateSet.fixtureChange).to.be.undefined;
       });
     });
   });
