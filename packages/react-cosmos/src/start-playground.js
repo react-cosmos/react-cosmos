@@ -16,6 +16,7 @@ const getTitleForFixture = (params) => {
 
 module.exports = ({
   fixtures,
+  loaderUri,
 }) =>
   new Router({
     container: document.body.appendChild(document.createElement('div')),
@@ -23,6 +24,7 @@ module.exports = ({
     getComponentProps: (params) => ({
       ...params,
       fixtures: loadFixtures(fixtures),
+      loaderUri,
     }),
     onChange: (params) => {
       document.title = getTitleForFixture(params);

@@ -38,6 +38,7 @@ module.exports = React.createClass({
 
   propTypes: {
     fixtures: React.PropTypes.object.isRequired,
+    loaderUri: React.PropTypes.string.isRequired,
     component: React.PropTypes.string,
     editor: React.PropTypes.bool,
     fixture: React.PropTypes.string,
@@ -193,7 +194,7 @@ module.exports = React.createClass({
         <iframe
           key="loaderFrame"
           className={style.frame}
-          src="/loader/"
+          src={this.props.loaderUri}
           ref={this.onLoaderFrameRef}
         />
       </div>

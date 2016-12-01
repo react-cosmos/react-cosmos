@@ -31,7 +31,7 @@ const startLoader = require('../start-loader');
 
 let props;
 
-const initRouter = (options) => {
+const init = (options) => {
   jest.clearAllMocks();
   startLoader(options);
   props = FakeReact.createElement.mock.calls[0][1];
@@ -83,7 +83,7 @@ const commonTests = () => {
 
 describe('without container query selector', () => {
   beforeAll(() => {
-    initRouter({
+    init({
       proxies: fakeProxies,
       components: fakeComponentsInput,
       fixtures: fakeFixturesInput,
@@ -92,7 +92,7 @@ describe('without container query selector', () => {
 
   commonTests();
 
-  it('uses element inside document body for router container', () => {
+  it('uses element inside document body for render container', () => {
     const container = FakeReactDOM.render.mock.calls[0][1];
     expect(container.parentNode).toBe(document.body);
   });
@@ -106,7 +106,7 @@ describe('with container query selector and class name', () => {
     rootEl.id = 'app';
     document.body.appendChild(rootEl);
 
-    initRouter({
+    init({
       proxies: fakeProxies,
       components: fakeComponentsInput,
       fixtures: fakeFixturesInput,
@@ -120,7 +120,7 @@ describe('with container query selector and class name', () => {
 
   commonTests();
 
-  it('uses queried element for router container', () => {
+  it('uses queried element for render container', () => {
     const container = FakeReactDOM.render.mock.calls[0][1];
     // For some reason expect(container).toBe(rootEl) fills up the memory until
     // it reaches a V8 limit and crashes due to allocation fail. Probably when

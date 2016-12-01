@@ -12,10 +12,6 @@ const PropsProxy = ({
 });
 
 module.exports = {
-  firstProxy: {
-    value: PropsProxy,
-    next: () => {},
-  },
   fixtures: {
     FirstComponent: {
       default: {
@@ -46,6 +42,7 @@ module.exports = {
       },
     },
   },
+  loaderUri: '/loader/',
   router: {
     routeLink() {},
     goTo() {},

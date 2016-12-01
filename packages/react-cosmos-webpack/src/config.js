@@ -9,6 +9,7 @@ export default function getConfig(userConfig) {
     hostname: 'localhost',
     hot: false,
     ignore: [],
+    loaderUri: '/loader/',
     port: 8989,
     proxies: [],
     webpackConfigPath: 'webpack.config',

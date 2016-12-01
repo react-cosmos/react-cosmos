@@ -40,7 +40,7 @@ describe(`ComponentPlayground (${FIXTURE}) Render DOM`, () => {
     expect(component.loaderFrame).to.exist;
   });
 
-  it('should render fixture loader frame with `/loader/ src`', () => {
-    expect(component.loaderFrame.src).to.match(/\/loader\/$/);
+  it('should render fixture loader frame with loaderUri prop', () => {
+    expect(component.loaderFrame.getAttribute('src')).to.equal(fixture.loaderUri);
   });
 });

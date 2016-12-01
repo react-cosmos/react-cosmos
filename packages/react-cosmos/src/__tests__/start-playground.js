@@ -30,6 +30,7 @@ const initRouter = (options) => {
 beforeAll(() => {
   initRouter({
     fixtures: fakeFixturesInput,
+    loaderUri: '/fake-loader-uri/',
   });
 });
 
@@ -42,9 +43,14 @@ it('sends fixtures input to loadFixtures lib', () => {
   expect(fakeLoadFixtures.mock.calls[0][0]).toBe(fakeFixturesInput);
 });
 
-it('sends components output to Component Playground props', () => {
+it('puts fixtures in Playground props', () => {
   const { fixtures } = getComponentProps();
   expect(fixtures).toBe(fakeFixturesOutput);
+});
+
+it('puts loaderUri option in Playground props', () => {
+  const { loaderUri } = getComponentProps();
+  expect(loaderUri).toBe('/fake-loader-uri/');
 });
 
 it('returns router instance', () => {
