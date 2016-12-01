@@ -36,11 +36,11 @@ describe(`ComponentPlayground (${FIXTURE}) Render DOM`, () => {
     expect(component.refs.editorButton).to.exist;
   });
 
-  it('should render fixture preview frame', () => {
-    expect(component.previewFrame).to.exist;
+  it('should render fixture loader frame', () => {
+    expect(component.loaderFrame).to.exist;
   });
 
-  it('should render fixture preview frame with `/preview/ src`', () => {
-    expect(component.previewFrame.src).to.match(/\/preview\/$/);
+  it('should render fixture loader frame with `/loader/ src`', () => {
+    expect(component.loaderFrame.src).to.match(/\/loader\/$/);
   });
 });

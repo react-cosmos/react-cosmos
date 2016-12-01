@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import PropsProxy from '../PropsProxy';
 
-const PreviewComponent = () => {};
+const Component = () => {};
 const fixture = {
   foo: 'bar',
 };
@@ -15,7 +15,7 @@ let childProps;
 beforeAll(() => {
   wrapper = shallow(
     <PropsProxy
-      component={PreviewComponent}
+      component={Component}
       fixture={fixture}
       onPreviewRef={onPreviewRef}
     />
@@ -24,14 +24,14 @@ beforeAll(() => {
   childProps = childWrapper.props();
 });
 
-test('renders preview component', () => {
-  expect(childWrapper.type()).toEqual(PreviewComponent);
+test('renders component', () => {
+  expect(childWrapper.type()).toEqual(Component);
 });
 
-test('sends fixture props to preview component', () => {
+test('sends fixture props to component', () => {
   expect(childProps.foo).toBe('bar');
 });
 
-test('sets onPreviewRef as preview component ref callback', () => {
+test('sets onPreviewRef as component ref callback', () => {
   expect(childWrapper.get(0).ref).toBe(onPreviewRef);
 });

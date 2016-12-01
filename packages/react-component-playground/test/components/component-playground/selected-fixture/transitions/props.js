@@ -20,7 +20,7 @@ describe(`ComponentPlayground (${FIXTURE}) Transitions Props`, () => {
     sinon.spy(component, 'setState');
 
     postMessage = sinon.spy();
-    component.previewFrame = {
+    component.loaderFrame = {
       contentWindow: {
         postMessage,
       },

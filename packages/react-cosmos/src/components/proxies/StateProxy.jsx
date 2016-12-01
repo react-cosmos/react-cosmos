@@ -5,7 +5,7 @@ import ReactComponentTree from 'react-component-tree';
 
 const defaults = {
   fixtureKey: 'state',
-  // How often to read current state of preview component and report it up the
+  // How often to read current state of loaded component and report it up the
   // chain of proxies
   updateInterval: 500,
 };
@@ -27,7 +27,7 @@ export default function createStateProxy(options) {
       clearTimeout(this.timeoutId);
     }
 
-    onPreviewRender(previewComponent) {
+    onPreviewRender(componentRef) {
       const {
         fixture,
         onPreviewRef,
@@ -36,14 +36,14 @@ export default function createStateProxy(options) {
 
       // Ref callbacks are also called on unmount with null value. We just need
       // to make sure to bubble up the unmount call in that case.
-      if (previewComponent && !disableLocalState) {
+      if (componentRef && !disableLocalState) {
         // Load initial state right after component renders
         const fixtureState = fixture[fixtureKey];
         if (fixtureState) {
-          ReactComponentTree.injectState(previewComponent, fixtureState);
+          ReactComponentTree.injectState(componentRef, fixtureState);
           this.scheduleStateUpdate();
         } else {
-          const initialState = this.getStateTree(previewComponent);
+          const initialState = this.getStateTree(componentRef);
           // No need to poll for state changes if entire component tree is stateless
           if (initialState) {
             this.updateState(initialState);
@@ -51,16 +51,16 @@ export default function createStateProxy(options) {
         }
       }
 
-      // Bubble up preview component ref callback
-      onPreviewRef(this.previewComponent = previewComponent);
+      // Bubble up component ref
+      onPreviewRef(this.componentRef = componentRef);
     }
 
     onStateUpdate() {
-      this.updateState(this.getStateTree(this.previewComponent));
+      this.updateState(this.getStateTree(this.componentRef));
     }
 
-    getStateTree(previewComponent) {
-      return ReactComponentTree.serialize(previewComponent).state;
+    getStateTree(componentRef) {
+      return ReactComponentTree.serialize(componentRef).state;
     }
 
     updateState(updatedState) {

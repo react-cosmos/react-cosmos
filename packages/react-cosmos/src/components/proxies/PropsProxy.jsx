@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class PropsProxy extends React.Component {
   /**
-   * The final proxy in the chain that renders the featured component.
+   * The final proxy in the chain that renders the selected component.
    */
   render() {
     const {

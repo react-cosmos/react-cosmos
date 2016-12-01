@@ -187,13 +187,13 @@ module.exports = React.createClass({
   renderPreview() {
     return (
       <div
-        ref="previewContainer"
-        key="previewContainer"
-        className={style.preview}
+        key="loaderContainer"
+        className={style.loader}
       >
         <iframe
+          key="loaderFrame"
           className={style.frame}
-          src="/preview/"
+          src="/loader/"
           ref={this.onPreviewFrameRef}
         />
       </div>
@@ -371,7 +371,7 @@ module.exports = React.createClass({
   },
 
   onPreviewFrameRef(domNode) {
-    this.previewFrame = domNode;
+    this.loaderFrame = domNode;
   },
 
   onFixtureClick(event) {
@@ -483,7 +483,7 @@ module.exports = React.createClass({
   sendFixtureToPreview() {
     // Maybe iframe has not been loaded yet, in which case it'll receive
     // the fixture to load when it triggers the `frameReady` event
-    if (!this.previewFrame) {
+    if (!this.loaderFrame) {
       return;
     }
 
@@ -493,7 +493,7 @@ module.exports = React.createClass({
     } = this.props;
     const { fixtureContents } = this.state;
 
-    this.previewFrame.contentWindow.postMessage({
+    this.loaderFrame.contentWindow.postMessage({
       type: 'fixtureLoad',
       component,
       fixture,

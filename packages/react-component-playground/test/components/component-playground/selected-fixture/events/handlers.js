@@ -15,7 +15,7 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, () => {
     ({ container, component, $component } = render(fixture));
 
     postMessage = sinon.spy();
-    component.previewFrame = {
+    component.loaderFrame = {
       contentWindow: {
         postMessage,
       },

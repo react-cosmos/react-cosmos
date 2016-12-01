@@ -23,7 +23,7 @@ describe(`ComponentPlayground (${FIXTURE}) Events DOM`, () => {
     ({ container, component, $component } = render(stubbedFixture));
 
     postMessage = sinon.spy();
-    component.previewFrame = {
+    component.loaderFrame = {
       contentWindow: {
         postMessage,
       },
