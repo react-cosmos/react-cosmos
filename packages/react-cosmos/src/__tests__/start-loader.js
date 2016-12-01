@@ -1,5 +1,14 @@
-const FakeRouter = jest.fn();
-const FakeComponentPlayground = () => {};
+const fakeComponentElement = {};
+const fakeComponentInstance = {};
+const FakeReact = {
+  createElement: jest.fn(() => fakeComponentElement),
+};
+const FakeReactDOM = {
+  render: jest.fn(() => fakeComponentInstance),
+};
+const FakeLoader = () => {};
+const FakePropsProxy = () => {};
+const FakeStateProxy = () => {};
 const fakeProxies = [{}, {}];
 const fakeComponentsInput = {};
 const fakeFixturesInput = {};
@@ -7,45 +16,46 @@ const fakeComponentsOutput = {};
 const fakeFixturesOutput = {};
 const fakeLoadComponents = jest.fn(() => fakeComponentsOutput);
 const fakeLoadFixtures = jest.fn(() => fakeFixturesOutput);
-const fakeLinkedList = {};
 
-jest.mock('react-querystring-router', () => ({ Router: FakeRouter }));
-jest.mock('react-component-playground', () => FakeComponentPlayground);
+jest.mock('react', () => FakeReact);
+jest.mock('react-dom-polyfill', () => jest.fn(() => FakeReactDOM));
+jest.mock('../components/Loader', () => FakeLoader);
+jest.mock('../components/proxies/StateProxy', () => () => FakeStateProxy);
+jest.mock('../components/proxies/PropsProxy', () => FakePropsProxy);
 jest.mock('../load-modules', () => ({
   loadComponents: fakeLoadComponents,
   loadFixtures: fakeLoadFixtures,
 }));
-jest.mock('react-cosmos-utils/lib/linked-list', () => jest.fn(() => fakeLinkedList));
 
-const PropsProxy = require('../components/proxies/PropsProxy').default;
-const createLinkedList = require('react-cosmos-utils/lib/linked-list');
-const startReactCosmos = require('../index');
+const startLoader = require('../start-loader');
 
-let routerInstance;
+let props;
 
 const initRouter = (options) => {
   jest.clearAllMocks();
-  routerInstance = startReactCosmos(options);
+  startLoader(options);
+  props = FakeReact.createElement.mock.calls[0][1];
 };
 
 const commonTests = () => {
-  it('uses Componet Playground as router component class', () => {
-    const { getComponentClass } = FakeRouter.mock.calls[0][0];
-    expect(getComponentClass()).toBe(FakeComponentPlayground);
+  it('creates Loader element', () => {
+    expect(FakeReact.createElement.mock.calls[0][0]).toBe(FakeLoader);
   });
 
-  it('create proxy list with user proxies', () => {
-    expect(createLinkedList.mock.calls[0][0][0]).toBe(fakeProxies[0]);
-    expect(createLinkedList.mock.calls[0][0][1]).toBe(fakeProxies[1]);
+  it('sends user proxies to Loader', () => {
+    const { proxies } = props;
+    expect(proxies[0]).toBe(fakeProxies[0]);
+    expect(proxies[1]).toBe(fakeProxies[1]);
   });
 
-  it('end proxy list with internal proxies', () => {
-    expect(createLinkedList.mock.calls[0][0][3]).toBe(PropsProxy);
+  it('includes StateProxy', () => {
+    const { proxies } = props;
+    expect(proxies[2]).toBe(FakeStateProxy);
   });
 
-  it('sends proxy list to Component Playground props', () => {
-    const { firstProxy } = FakeRouter.mock.calls[0][0].defaultProps;
-    expect(firstProxy).toBe(fakeLinkedList);
+  it('includes PropsProxy', () => {
+    const { proxies } = props;
+    expect(proxies[3]).toBe(FakePropsProxy);
   });
 
   it('sends components input to loadComponents lib', () => {
@@ -57,17 +67,17 @@ const commonTests = () => {
   });
 
   it('sends components output to Component Playground props', () => {
-    const { components } = FakeRouter.mock.calls[0][0].defaultProps;
+    const { components } = props;
     expect(components).toBe(fakeComponentsOutput);
   });
 
   it('sends fixtures output to Component Playground props', () => {
-    const { fixtures } = FakeRouter.mock.calls[0][0].defaultProps;
+    const { fixtures } = props;
     expect(fixtures).toBe(fakeFixturesOutput);
   });
 
-  it('returns router instance', () => {
-    expect(routerInstance).toBeInstanceOf(FakeRouter);
+  it('renders React element', () => {
+    expect(FakeReactDOM.render.mock.calls[0][0]).toBe(fakeComponentElement);
   });
 };
 
@@ -83,7 +93,7 @@ describe('without container query selector', () => {
   commonTests();
 
   it('uses element inside document body for router container', () => {
-    const { container } = FakeRouter.mock.calls[0][0];
+    const container = FakeReactDOM.render.mock.calls[0][1];
     expect(container.parentNode).toBe(document.body);
   });
 });
@@ -101,7 +111,6 @@ describe('with container query selector and class name', () => {
       components: fakeComponentsInput,
       fixtures: fakeFixturesInput,
       containerQuerySelector: '#app',
-      containerClassName: 'foobar',
     });
   });
 
@@ -112,15 +121,10 @@ describe('with container query selector and class name', () => {
   commonTests();
 
   it('uses queried element for router container', () => {
-    const { container } = FakeRouter.mock.calls[0][0];
+    const container = FakeReactDOM.render.mock.calls[0][1];
     // For some reason expect(container).toBe(rootEl) fills up the memory until
     // it reaches a V8 limit and crashes due to allocation fail. Probably when
     // pretty-format is used to display the pretty diff
     expect(container === rootEl).toBe(true);
-  });
-
-  it('sends containerClassName to Component Playground props', () => {
-    const { containerClassName } = FakeRouter.mock.calls[0][0].defaultProps;
-    expect(containerClassName).toBe('foobar');
   });
 });
