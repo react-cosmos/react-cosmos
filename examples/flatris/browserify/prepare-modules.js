@@ -1,4 +1,6 @@
-export function prepareComponents(modules) {
+/* eslint-disable react/require-extension */
+
+const prepareComponents = (modules) => {
   const components = {};
   Object.keys(modules).forEach(componentName => {
     if (componentName.indexOf('_') !== 0) {
@@ -6,9 +8,9 @@ export function prepareComponents(modules) {
     }
   });
   return components;
-}
+};
 
-export function prepareFixtures(modules, components) {
+const prepareFixtures = (modules, components) => {
   const fixtures = {};
   Object.keys(components).forEach(componentName => {
     fixtures[componentName] = {};
@@ -21,4 +23,10 @@ export function prepareFixtures(modules, components) {
     });
   });
   return fixtures;
-}
+};
+
+const componentModules = require('../src/components/**/*{.js,.jsx}', { mode: 'hash' });
+const fixtureModules = require('../src/components/__fixtures__/**/*.js', { mode: 'hash' });
+
+export const components = prepareComponents(componentModules);
+export const fixtures = prepareFixtures(fixtureModules, components);
