@@ -1,9 +1,9 @@
-let returnMock;
+let returnMocks;
 
-const middleware = jest.fn(() => returnMock);
+const middleware = jest.fn(() => returnMocks.shift());
 
-middleware.__setMock = (mock => {
-  returnMock = mock;
+middleware.__setMocks = (mocks => {
+  returnMocks = mocks;
 });
 
 module.exports = middleware;

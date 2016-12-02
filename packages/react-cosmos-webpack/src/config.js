@@ -5,11 +5,11 @@ export default function getConfig(userConfig) {
   // the client receives the embedded path through webpack.DefinePlugin.
   // This function just applies the defaults, which are "universal".
   return {
+    componentPaths: [],
     globalImports: [],
     hostname: 'localhost',
     hot: false,
     ignore: [],
-    loaderUri: '/loader/',
     port: 8989,
     proxies: [],
     webpackConfigPath: 'webpack.config',

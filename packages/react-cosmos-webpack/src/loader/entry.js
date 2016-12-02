@@ -1,11 +1,11 @@
-import startReactCosmos from 'react-cosmos';
-import getConfig from './config';
+import { startLoader } from 'react-cosmos';
+import getConfig from '../config';
 
 // eslint-disable-next-line no-undef
 const userConfig = require(COSMOS_CONFIG_PATH);
 const { proxies, containerQuerySelector } = getConfig(userConfig);
 
-module.exports = startReactCosmos({
+module.exports = startLoader({
   proxies,
   containerQuerySelector,
   // The following constants are replaced at compile-time (through entry-loader)

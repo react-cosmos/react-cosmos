@@ -1,31 +1,27 @@
 import webpack from 'webpack';
-import buildModulePaths from './build-module-paths';
-import getConfig from './config';
-import resolveUserPath from './resolve-user-path';
+import getConfig from '../config';
+import resolveUserPath from '../resolve-user-path';
 
 export default function getWebpackConfig(
+  modulePaths,
   userWebpackConfig,
   cosmosConfigPath
 ) {
+  const {
+    components,
+    fixtures,
+  } = modulePaths;
+
   // eslint-disable-next-line global-require
   const cosmosConfig = getConfig(require(cosmosConfigPath));
 
   const {
-    componentPaths,
     globalImports,
     hot,
-    ignore,
   } = cosmosConfig;
 
-  const resolvedComponentPaths = componentPaths.map(
-    path => resolveUserPath(path, cosmosConfigPath));
   const resolvedGlobalImports = globalImports.map(
     path => resolveUserPath(path, cosmosConfigPath));
-
-  const {
-    components,
-    fixtures,
-  } = buildModulePaths(resolvedComponentPaths, ignore);
 
   const entry = [...resolvedGlobalImports];
 
@@ -35,7 +31,7 @@ export default function getWebpackConfig(
     entry.push(require.resolve('webpack-hot-middleware/client'));
   }
 
-  entry.push(`${require.resolve('./entry-loader')}?${JSON.stringify({
+  entry.push(`${require.resolve('../entry-loader')}?${JSON.stringify({
     // We escape the contents because component or fixture paths might contain
     // an ! (exclamation point), which throws webpack off thinking everything
     // after is the entry file path.
@@ -44,14 +40,14 @@ export default function getWebpackConfig(
   })}!${require.resolve('./entry')}`);
 
   const output = {
-    // Webpack doesn't write to this path when saving build in memory (as
-    // react-cosmos-webpack does), but webpack-dev-middleware seems to crash
+    // Webpack doesn't write to this path when saving build in memory, but
+    // webpack-dev-middleware seems to crash
     // without it
     path: '/',
     // Also not a real file. HtmlWebpackPlugin uses this path for the script
     // tag it injects.
     filename: 'bundle.js',
-    publicPath: '/',
+    publicPath: '/loader/',
   };
 
   const plugins = userWebpackConfig.plugins ? [...userWebpackConfig.plugins] : [];

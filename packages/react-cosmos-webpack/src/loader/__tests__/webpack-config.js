@@ -5,10 +5,14 @@ jest.mock('webpack');
 let DefinePluginMock;
 let DefinePlugin;
 
-let buildModulePathsMock;
 let getWebpackConfig;
 
-const cosmosConfigPath = require.resolve('./dummy-config/cosmos.config');
+const componentPathsMock = {
+  components: '__MOCK_COMPONENTS__',
+  fixtures: '__MOCK_FIXTURES__',
+};
+const cosmosConfigRelPath = '../../__tests__/dummy-config/cosmos.config';
+const cosmosConfigPath = require.resolve(cosmosConfigRelPath);
 
 // So far we use the same user webpack mock between all tests
 const userWebpackConfig = {
@@ -31,14 +35,7 @@ beforeEach(() => {
   jest.resetModules();
 
   // Mock user config
-  jest.mock('./dummy-config/cosmos.config', () => cosmosConfig);
-
-  // Mock already tested lib
-  buildModulePathsMock = jest.fn(() => ({
-    components: '__MOCK_COMPONENTS__',
-    fixtures: '__MOCK_FIXTURES__',
-  }));
-  jest.mock('../build-module-paths', () => buildModulePathsMock);
+  jest.mock(cosmosConfigRelPath, () => cosmosConfig);
 
   // Mock webpack plugin
   DefinePluginMock = {};
@@ -55,23 +52,14 @@ describe('without hmr', () => {
       ignore: [],
       globalImports: ['./global.css'],
     };
-    webpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
+    webpackConfig = getWebpackConfig(componentPathsMock, userWebpackConfig, cosmosConfigPath);
   });
 
   test('keeps user loaders', () => {
     expect(webpackConfig.loaders).toBe(userWebpackConfig.loaders);
   });
 
-  test('builds module paths with user component paths', () => {
-    expect(buildModulePathsMock.mock.calls[0][0]).toEqual(
-      cosmosConfig.componentPaths.map(resolveUserPath));
-  });
-
-  test('builds module paths using ignore paths', () => {
-    expect(buildModulePathsMock.mock.calls[0][1]).toBe(cosmosConfig.ignore);
-  });
-
-  test('adds global imports to entries', () => {
+  test('adds resolved global imports to entries', () => {
     cosmosConfig.globalImports.forEach((globalImport) => {
       expect(webpackConfig.entry).toContain(resolveUserPath(globalImport));
     });
@@ -79,7 +67,7 @@ describe('without hmr', () => {
 
   test('adds cosmos entry with cosmos loader and module paths in loader query', () => {
     const cosmosEntry = webpackConfig.entry[webpackConfig.entry.length - 1];
-    const loaderPath = require.resolve('../entry-loader');
+    const loaderPath = require.resolve('../../entry-loader');
     const entryPath = require.resolve('../entry');
     const stringifiedModules =
       '{"components":"__MOCK_COMPONENTS__","fixtures":"__MOCK_FIXTURES__"}';
@@ -95,7 +83,7 @@ describe('without hmr', () => {
     expect(webpackConfig.output).toEqual({
       path: '/',
       filename: 'bundle.js',
-      publicPath: '/',
+      publicPath: '/loader/',
     });
   });
 
@@ -125,10 +113,10 @@ describe('with hmr', () => {
       globalImports: ['./global.css'],
       hot: true,
     };
-    webpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
+    webpackConfig = getWebpackConfig(componentPathsMock, userWebpackConfig, cosmosConfigPath);
   });
 
-  test('adds global imports to entries', () => {
+  test('adds resolved global imports to entries', () => {
     cosmosConfig.globalImports.forEach((globalImport) => {
       expect(webpackConfig.entry).toContain(resolveUserPath(globalImport));
     });
@@ -136,7 +124,7 @@ describe('with hmr', () => {
 
   test('adds cosmos entry with cosmos loader and module paths in loader query', () => {
     const cosmosEntry = webpackConfig.entry[webpackConfig.entry.length - 1];
-    const loaderPath = require.resolve('../entry-loader');
+    const loaderPath = require.resolve('../../entry-loader');
     const entryPath = require.resolve('../entry');
     const stringifiedModules =
       '{"components":"__MOCK_COMPONENTS__","fixtures":"__MOCK_FIXTURES__"}';
@@ -155,16 +143,10 @@ describe('with absolute paths', () => {
       componentPaths: [resolveUserPath('src/components')],
       globalImports: [resolveUserPath('./global.css')],
     };
-    webpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
+    webpackConfig = getWebpackConfig(componentPathsMock, userWebpackConfig, cosmosConfigPath);
   });
 
-  test('builds module paths with user component paths', () => {
-    const { calls } = buildModulePathsMock.mock;
-
-    expect(calls[0][0]).toEqual(cosmosConfig.componentPaths);
-  });
-
-  test('adds global imports to entries', () => {
+  test('adds user global imports to entries', () => {
     cosmosConfig.globalImports.forEach((globalImport) => {
       expect(webpackConfig.entry).toContain(globalImport);
     });

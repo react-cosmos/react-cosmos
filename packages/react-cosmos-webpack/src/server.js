@@ -7,31 +7,49 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import { argv } from 'yargs';
 import getConfig from './config';
 import resolveUserPath from './resolve-user-path';
-import getWebpackConfig from './webpack-config';
+import buildModulePaths from './build-module-paths';
+import getLoaderWebpackConfig from './loader/webpack-config';
+import getPlaygroundWebpackConfig from './playground/webpack-config';
 
 module.exports = function startServer() {
   const cosmosConfigPath = resolveUserPath(argv.config || 'cosmos.config');
   const cosmosConfig = getConfig(require(cosmosConfigPath));
 
   const {
+    componentPaths,
     hostname,
     hot,
+    ignore,
     port,
     publicPath,
     webpackConfigPath,
   } = cosmosConfig;
 
-  const userWebpackConfig = require(resolveUserPath(webpackConfigPath, cosmosConfigPath));
-  const cosmosWebpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
-  const compiler = webpack(cosmosWebpackConfig);
-  const app = express();
+  const resolvedComponentPaths = componentPaths.map(
+    path => resolveUserPath(path, cosmosConfigPath));
+  const modulePaths = buildModulePaths(resolvedComponentPaths, ignore);
 
-  app.use(webpackDevMiddleware(compiler, {
+  const userWebpackConfig = require(resolveUserPath(webpackConfigPath, cosmosConfigPath));
+  const cosmosLoaderWebpackConfig = getLoaderWebpackConfig(
+    modulePaths,
+    userWebpackConfig,
+    cosmosConfigPath
+  );
+  const loaderCompiler = webpack(cosmosLoaderWebpackConfig);
+  const playgroundCompiler = webpack(getPlaygroundWebpackConfig(modulePaths));
+
+  const app = express();
+  app.use(webpackDevMiddleware(loaderCompiler, {
+    publicPath: '/loader/',
+    noInfo: true,
+  }));
+  app.use(webpackDevMiddleware(playgroundCompiler, {
+    publicPath: '/',
     noInfo: true,
   }));
 
   if (hot) {
-    app.use(webpackHotMiddleware(compiler));
+    app.use(webpackHotMiddleware(loaderCompiler));
   }
 
   let inferredPublicPath = publicPath;
@@ -43,7 +61,7 @@ module.exports = function startServer() {
   if (inferredPublicPath) {
     const resolvedPublicPath = resolveUserPath(inferredPublicPath, cosmosConfigPath);
     console.log(`Serving static files from ${resolvedPublicPath}`);
-    app.use('/', express.static(resolvedPublicPath));
+    app.use('/loader/', express.static(resolvedPublicPath));
   }
 
   app.listen(port, hostname, (err) => {
