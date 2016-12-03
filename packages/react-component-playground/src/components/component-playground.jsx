@@ -111,6 +111,7 @@ module.exports = React.createClass({
       isEditorFocused: false,
       orientation: 'landscape',
       searchText: '',
+      isDraggingPane: false,
     };
 
     return _.assign(defaultState, this.constructor.getFixtureState(this.props));
@@ -123,6 +124,8 @@ module.exports = React.createClass({
         key: 'editorLoaderSplitPane',
         split: this.getOrientationDirection(),
         defaultSize: localStorageLib.get('splitPos'),
+        onDragStarted: this.onPaneDragStart,
+        onDragFinished: this.onPaneDragStop,
         onChange: (size => localStorageLib.set('splitPos', size)),
         minSize: 20,
         resizerClassName: this.getSplitPaneClasses('resizer'),
@@ -197,6 +200,7 @@ module.exports = React.createClass({
           src={this.props.loaderUri}
           ref={this.onLoaderFrameRef}
         />
+        {this.state.isDraggingPane ? <div className={style.frameOverlay} /> : null}
       </div>
     );
   },
@@ -447,6 +451,18 @@ module.exports = React.createClass({
   onSearchChange(e) {
     this.setState({
       searchText: e.target.value,
+    });
+  },
+
+  onPaneDragStart() {
+    this.setState({
+      isDraggingPane: true,
+    });
+  },
+
+  onPaneDragStop() {
+    this.setState({
+      isDraggingPane: false,
     });
   },
 
