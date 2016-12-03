@@ -104,11 +104,11 @@ afterEach(() => {
 });
 
 const commonTests = () => {
-  test('compiles loader webpack using combined config', () => {
+  test('compiles loader webpack using extended config', () => {
     expect(webpack.mock.calls[0][0]).toBe(loaderWebpackConfigMock);
   });
 
-  test('compiles playground webpack using combined config', () => {
+  test('compiles playground webpack', () => {
     expect(webpack.mock.calls[1][0]).toBe(playgroundWebpackConfigMock);
   });
 
@@ -163,15 +163,15 @@ describe('default config', () => {
     );
   });
 
-  test('send module paths to loader webpack config', () => {
+  test('sends module paths to loader webpack config', () => {
     expect(getLoaderWebpackConfigMock.mock.calls[0][0]).toBe(modulePathsMock);
   });
 
-  test('send user webpack config to loader webpack config', () => {
+  test('uses user webpack config from cwd', () => {
     expect(getLoaderWebpackConfigMock.mock.calls[0][1]).toBe(userWebpackConfigMock);
   });
 
-  test('reads cosmos config from cwd', () => {
+  test('users cosmos config from cwd', () => {
     expect(getLoaderWebpackConfigMock.mock.calls[0][2]).toBe(
       path.join(processCwdMock, 'cosmos.config'));
   });
@@ -240,11 +240,11 @@ describe('with custom cosmos config path', () => {
     );
   });
 
-  test('reads webpack config from cwd', () => {
+  test('uses user webpack config from cwd', () => {
     expect(getLoaderWebpackConfigMock.mock.calls[0][1]).toBe(userWebpackConfigMock);
   });
 
-  test('reads cosmos config from cwd', () => {
+  test('uses cosmos config from custom path', () => {
     expect(getLoaderWebpackConfigMock.mock.calls[0][2]).toBe(
       path.join(processCwdMock, 'custom-path/cosmos.config'));
   });
@@ -264,11 +264,11 @@ describe('with custom webpack config path', () => {
 
   commonTests();
 
-  test('reads webpack config from cwd', () => {
+  test('uses user webpack config from custom path', () => {
     expect(getLoaderWebpackConfigMock.mock.calls[0][1]).toBe(userWebpackConfigMock);
   });
 
-  test('reads cosmos config from cwd', () => {
+  test('uses cosmos config from custom path', () => {
     expect(getLoaderWebpackConfigMock.mock.calls[0][2]).toBe(
       path.join(processCwdMock, 'cosmos.config'));
   });
