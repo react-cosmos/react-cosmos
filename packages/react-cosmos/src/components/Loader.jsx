@@ -80,13 +80,18 @@ class Loader extends React.Component {
   }
 
   render() {
-    const { props, firstProxy } = this;
+    const {
+      props,
+      state,
+      firstProxy,
+      onFixtureUpdate,
+    } = this;
     const { components } = props;
     const {
       component,
       fixture,
       fixtureUpdateId,
-    } = this.state;
+    } = state;
 
     if (!component) {
       return null;
@@ -102,7 +107,7 @@ class Loader extends React.Component {
           ...fixture.serializable,
         }}
         onComponentRef={() => { /* noope */ }}
-        onFixtureUpdate={this.onFixtureUpdate}
+        onFixtureUpdate={onFixtureUpdate}
       />
     );
   }
