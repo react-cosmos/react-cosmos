@@ -67,7 +67,7 @@ it('sets document title to "React Cosmos" on home route', () => {
   expect(document.title).toBe('React Cosmos');
 });
 
-it('sets componet and fixture in documet title', () => {
+it('sets component and fixture in documet title', () => {
   onChange({
     component: 'Foo',
     fixture: 'bar',
