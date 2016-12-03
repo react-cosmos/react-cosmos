@@ -41,8 +41,7 @@ export default function getWebpackConfig(
 
   const output = {
     // Webpack doesn't write to this path when saving build in memory, but
-    // webpack-dev-middleware seems to crash
-    // without it
+    // webpack-dev-middleware seems to crash without it
     path: '/',
     // Also not a real file. HtmlWebpackPlugin uses this path for the script
     // tag it injects.
