@@ -6,38 +6,37 @@ Bare router for React components, using query string as props.
 http://mysite.com/?component=Father&eyes=blue&mood=happy
 ```
 
-This route will render the component class returned by `getComponentClass`
-using the following props:
+By making use of the `getComponentClass` and `getComponentProps` callbacks, this route will render the following element:
 
-```js
-{
-  component: 'Father',
-  eyes: 'blue',
-  mood: 'happy'
-}
+```jsx
+<Father
+  eyes="blue"
+  mood="happy"
+/>
 ```
 
 #### Options
 
 ```js
-var Router = require('react-querystring-router').Router;
+import { Router } from 'react-querystring-router';
 
-var myRouter = new Router({
-  // These props will be sent to all components loaded, and will be overridden
-  // by the ones in the URL query string
-  defaultProps: {
-    fries: true
-  },
+const myRouter = new Router({
   // This is how the router maps component names to corresponding classes
-  getComponentClass: function(props) {
-    return require('components/' + props.component + '.jsx');
+  getComponentClass: ({ component }) => require(`components/${component}.jsx`),
+  // This is to combine url params with default and additional props
+  getComponentProps: (params) => {
+    return {
+      unlessOverridden: true,
+      ...params,
+      alwaysHere: true,
+    };
   },
   // Tell React where to render in the DOM
   container: document.getElementById('content'),
   // Called whenever the route changes (also initially), receiving the parsed
   // props as the first argument
-  onChange: function(props) {
-    // E.g. Use the props to set a custom document.title
+  onChange: (params) => {
+    // E.g. Use the params to set a custom document.title
   }
 });
 ```
@@ -48,16 +47,19 @@ the `router` prop.
 #### Changing the route
 
 ```jsx
-var stringifyParams = require('react-querystring-router').uri.stringifyParams;
+import { uri } from 'react-querystring-router';
+const { stringifyParams } = uri;
 
 //...
 
-render: function() {
-  return <div className="serious-component">
-    <a href={stringifyParams({lifeChangingProp: 1})}
-       onClick={this.props.router.routeLink}>
-       Click me por favor
-    </a>
-  </div>;
+render() {
+  return (
+    <div className="serious-component">
+      <a href={stringifyParams({ lifeChangingProp: 1 })}
+         onClick={this.props.router.routeLink}>
+         Click me por favor
+      </a>
+    </div>
+  );
 };
 ```

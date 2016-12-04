@@ -9,15 +9,34 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, () => {
   let component;
   let $component;
   let container;
+  let postMessage;
 
   beforeEach(() => {
     ({ container, component, $component } = render(fixture));
+
+    postMessage = sinon.spy();
+    component.loaderFrame = {
+      contentWindow: {
+        postMessage,
+      },
+    };
 
     sinon.spy(component, 'setState');
   });
 
   afterEach(() => {
     component.setState.restore();
+  });
+
+  it('should send `loadFixture` event when frame is ready', () => {
+    component.onMessage({ data: { type: 'frameReady' } });
+
+    expect(postMessage).to.have.been.calledWith({
+      type: 'fixtureLoad',
+      component: fixture.component,
+      fixture: fixture.fixture,
+      fixtureBody: fixture.state.fixtureContents,
+    }, '*');
   });
 
   describe('orientation', () => {

@@ -10,6 +10,7 @@ describe(`ComponentPlayground (${FIXTURE}) Events DOM`, () => {
   let component;
   let $component;
   let container;
+  let postMessage;
 
   const stubbedFixture = _.assign({}, fixture, {
     router: {
@@ -20,6 +21,13 @@ describe(`ComponentPlayground (${FIXTURE}) Events DOM`, () => {
 
   beforeEach(() => {
     ({ container, component, $component } = render(stubbedFixture));
+
+    postMessage = sinon.spy();
+    component.loaderFrame = {
+      contentWindow: {
+        postMessage,
+      },
+    };
   });
 
   afterEach(() => {
@@ -83,8 +91,13 @@ describe(`ComponentPlayground (${FIXTURE}) Events DOM`, () => {
       expect(stateSet.isFixtureUserInputValid).to.equal(true);
     });
 
-    it('should bump fixture change', () => {
-      expect(stateSet.fixtureChange).to.equal(fixture.state.fixtureChange + 1);
+    it('should send `loadFixture` event', () => {
+      expect(postMessage).to.have.been.calledWith({
+        type: 'fixtureLoad',
+        component: fixture.component,
+        fixture: fixture.fixture,
+        fixtureBody: fixture.state.fixtureContents,
+      }, '*');
     });
   });
 });

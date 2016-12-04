@@ -5,6 +5,7 @@ export default function getConfig(userConfig) {
   // the client receives the embedded path through webpack.DefinePlugin.
   // This function just applies the defaults, which are "universal".
   return {
+    componentPaths: [],
     globalImports: [],
     hostname: 'localhost',
     hot: false,

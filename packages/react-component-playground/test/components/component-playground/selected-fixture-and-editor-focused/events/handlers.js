@@ -21,7 +21,14 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, () => {
   });
 
   it('should ignore fixture update', () => {
-    component.onFixtureUpdate();
+    component.onMessage({
+      data: {
+        type: 'fixtureUpdate',
+        fixtureBody: {
+          foo: 'bar',
+        },
+      },
+    });
 
     expect(component.setState).to.not.have.been.called;
   });

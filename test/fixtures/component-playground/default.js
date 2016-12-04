@@ -2,35 +2,16 @@
 
 const React = require('react');
 
-class FirstComponent extends React.Component {
-  render() {
-    return React.DOM.div();
-  }
-}
-
-class SecondComponent extends React.Component {
-  render() {
-    return React.DOM.div();
-  }
-}
-
-const PreviewLoader = ({
+const PropsProxy = ({
+  component,
   fixture,
-  onPreviewRef,
-}) => React.createElement(fixture.component, {
+  onComponentRef,
+}) => React.createElement(component, {
   fixture,
-  ref: onPreviewRef,
+  ref: onComponentRef,
 });
 
 module.exports = {
-  firstProxy: {
-    value: PreviewLoader,
-    next: () => {},
-  },
-  components: {
-    FirstComponent,
-    SecondComponent,
-  },
   fixtures: {
     FirstComponent: {
       default: {
@@ -61,6 +42,7 @@ module.exports = {
       },
     },
   },
+  loaderUri: '/loader/',
   router: {
     routeLink() {},
     goTo() {},

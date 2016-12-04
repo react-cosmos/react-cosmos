@@ -28,11 +28,23 @@ describe(`ComponentPlayground (${FIXTURE}) Transitions Mount`, () => {
         'resize', component.onWindowResize);
   });
 
+  it('should add window message listener on mount', () => {
+    expect(window.addEventListener).to.have.been.calledWith(
+        'message', component.onMessage);
+  });
+
   it('should remove window resize listener on unmount', () => {
     ReactDOM.unmountComponentAtNode(container);
 
     expect(window.removeEventListener).to.have.been.calledWith(
         'resize', component.onWindowResize);
+  });
+
+  it('should remove window message listener on unmount', () => {
+    ReactDOM.unmountComponentAtNode(container);
+
+    expect(window.removeEventListener).to.have.been.calledWith(
+        'message', component.onMessage);
   });
 
   describe('default state', () => {
@@ -46,10 +58,6 @@ describe(`ComponentPlayground (${FIXTURE}) Transitions Mount`, () => {
 
     it('should have fixture user input marked as valid', () => {
       expect(component.state.isFixtureUserInputValid).to.equal(true);
-    });
-
-    it('should have fixture change counter set to 0', () => {
-      expect(component.state.fixtureChange).to.equal(0);
     });
 
     it('should have fixture editor marked as not focused', () => {

@@ -44,4 +44,19 @@ describe(`ComponentPlayground (${FIXTURE}) Render DOM`, () => {
     expect(component.refs.splitPane.props.split)
       .to.equal(splitByOrientation[component.state.orientation]);
   });
+
+  it('should not render the frame overlay', () => {
+    expect($component.find(`.${style.frameOverlay}`).length).to.equal(0);
+  });
+
+  it('should render the frame overlay after pane drag started', () => {
+    component.onPaneDragStart();
+    expect($component.find(`.${style.frameOverlay}`).length).to.equal(1);
+  });
+
+  it('should not render the frame overlay after pane drag stopped', () => {
+    component.onPaneDragStart();
+    component.onPaneDragStop();
+    expect($component.find(`.${style.frameOverlay}`).length).to.equal(0);
+  });
 });

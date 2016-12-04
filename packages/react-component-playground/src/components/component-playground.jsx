@@ -5,12 +5,12 @@ import _ from 'lodash';
 import React from 'react';
 import classNames from 'classnames';
 import ComponentTree from 'react-component-tree';
-import ReactQuerystringRouter from 'react-querystring-router';
+import { uri } from 'react-querystring-router';
+import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
 import CodeMirror from '@skidding/react-codemirror';
 import fuzzaldrinPlus from 'fuzzaldrin-plus';
 import SplitPane from 'ubervu-react-split-pane';
 import localStorageLib from '../lib/local-storage';
-import { isSerializable } from '../lib/is-serializable';
 
 const { findDOMNode } = require('react-dom-polyfill')(React);
 const style = require('./component-playground.less');
@@ -25,7 +25,7 @@ require('codemirror/addon/fold/foldcode');
 require('codemirror/addon/fold/foldgutter');
 require('codemirror/addon/fold/brace-fold');
 
-const { stringifyParams, parseLocation } = ReactQuerystringRouter.uri;
+const { stringifyParams, parseLocation } = uri;
 
 // eslint-disable-next-line react/prefer-es6-class
 module.exports = React.createClass({
@@ -37,17 +37,12 @@ module.exports = React.createClass({
   displayName: 'ComponentPlayground',
 
   propTypes: {
-    components: React.PropTypes.object.isRequired,
     fixtures: React.PropTypes.object.isRequired,
+    loaderUri: React.PropTypes.string.isRequired,
     component: React.PropTypes.string,
-    containerClassName: React.PropTypes.string,
     editor: React.PropTypes.bool,
     fixture: React.PropTypes.string,
     fullScreen: React.PropTypes.bool,
-    firstProxy: React.PropTypes.shape({
-      value: React.PropTypes.func,
-      next: React.PropTypes.func,
-    }).isRequired,
     router: React.PropTypes.object,
   },
 
@@ -61,10 +56,6 @@ module.exports = React.createClass({
     didFixtureChange(prevProps, nextProps) {
       return prevProps.component !== nextProps.component ||
              prevProps.fixture !== nextProps.fixture;
-    },
-
-    getSelectedComponentClass(props) {
-      return props.components[props.component];
     },
 
     getSelectedFixtureContents(props) {
@@ -86,25 +77,20 @@ module.exports = React.createClass({
 
       if (this.isFixtureSelected(props)) {
         const originalFixtureContents = this.getSelectedFixtureContents(props);
-        const fixtureContents = {};
-        const fixtureUnserializableProps = {};
 
         // Unserializable props are stored separately from serializable ones
         // because the serializable props can be overriden by the user using
         // the editor, while the unserializable props are always attached
         // behind the scenes
-        _.forEach(originalFixtureContents, (value, key) => {
-          if (isSerializable(value)) {
-            fixtureContents[key] = value;
-          } else {
-            fixtureUnserializableProps[key] = value;
-          }
-        });
+        const {
+          unserializable,
+          serializable,
+        } = splitUnserializableParts(originalFixtureContents);
 
         _.assign(state, {
-          fixtureContents,
-          fixtureUnserializableProps,
-          fixtureUserInput: this.getStringifiedFixtureContents(fixtureContents),
+          fixtureContents: serializable,
+          fixtureUnserializableProps: unserializable,
+          fixtureUserInput: this.getStringifiedFixtureContents(serializable),
         });
       }
 
@@ -122,10 +108,10 @@ module.exports = React.createClass({
 
   getInitialState() {
     const defaultState = {
-      fixtureChange: 0,
       isEditorFocused: false,
       orientation: 'landscape',
       searchText: '',
+      isDraggingPane: false,
     };
 
     return _.assign(defaultState, this.constructor.getFixtureState(this.props));
@@ -135,15 +121,17 @@ module.exports = React.createClass({
     splitPane() {
       return {
         component: SplitPane,
-        key: 'editorPreviewSplitPane',
+        key: 'editorLoaderSplitPane',
         split: this.getOrientationDirection(),
         defaultSize: localStorageLib.get('splitPos'),
+        onDragStarted: this.onPaneDragStart,
+        onDragFinished: this.onPaneDragStop,
         onChange: (size => localStorageLib.set('splitPos', size)),
         minSize: 20,
         resizerClassName: this.getSplitPaneClasses('resizer'),
         children: [
           this.renderFixtureEditor(),
-          this.renderPreview(),
+          this.renderLoader(),
         ],
       };
     },
@@ -200,31 +188,21 @@ module.exports = React.createClass({
     );
   },
 
-  renderPreview() {
+  renderLoader() {
     return (
       <div
-        ref="previewContainer"
-        key="previewContainer"
-        className={this.getPreviewClasses()}
+        key="loaderContainer"
+        className={style.loader}
       >
-        {this.renderComponent()}
+        <iframe
+          key="loaderFrame"
+          className={style.frame}
+          src={this.props.loaderUri}
+          ref={this.onLoaderFrameRef}
+        />
+        {this.state.isDraggingPane ? <div className={style.frameOverlay} /> : null}
       </div>
     );
-  },
-
-  renderComponent() {
-    const { firstProxy } = this.props;
-
-    return React.createElement(firstProxy.value, {
-      // Re-render whenever fixture changes
-      key: this.getComponentKey(),
-      nextProxy: firstProxy.next(),
-      fixture: this.getCurrentFixtureContents(),
-      onPreviewRef: (previewComponent) => {
-        this.previewComponent = previewComponent;
-      },
-      onFixtureUpdate: this.onFixtureUpdate,
-    });
   },
 
   renderFixtures() {
@@ -276,8 +254,8 @@ module.exports = React.createClass({
 
   renderContentFrame() {
     return (
-      <div ref="contentFrame" className={this.getContentFrameClasses()}>
-        {this.props.editor ? this.loadChild('splitPane') : this.renderPreview()}
+      <div ref="contentFrame" className={style['content-frame']}>
+        {this.props.editor ? this.loadChild('splitPane') : this.renderLoader()}
       </div>
     );
   },
@@ -355,8 +333,13 @@ module.exports = React.createClass({
     );
   },
 
+  componentWillMount() {
+    this.onFixtureUpdate = _.throttle(this.onFixtureUpdate, 500);
+  },
+
   componentDidMount() {
     window.addEventListener('resize', this.onWindowResize);
+    window.addEventListener('message', this.onMessage, false);
 
     this.updateContentFrameOrientation();
 
@@ -368,12 +351,32 @@ module.exports = React.createClass({
 
   componentWillReceiveProps(nextProps) {
     if (this.constructor.didFixtureChange(this.props, nextProps)) {
-      this.setState(this.constructor.getFixtureState(nextProps));
+      this.setState(
+        this.constructor.getFixtureState(nextProps),
+        this.sendFixtureToLoader
+      );
     }
   },
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.onWindowResize);
+    window.removeEventListener('message', this.onMessage);
+  },
+
+  onMessage({ data }) {
+    const { type, fixtureBody } = data;
+
+    if (type === 'frameReady') {
+      this.sendFixtureToLoader();
+    }
+
+    if (type === 'fixtureUpdate') {
+      this.onFixtureUpdate(fixtureBody);
+    }
+  },
+
+  onLoaderFrameRef(domNode) {
+    this.loaderFrame = domNode;
   },
 
   onFixtureClick(event) {
@@ -387,13 +390,10 @@ module.exports = React.createClass({
     } else {
       // This happens when we want to reset a fixture to its original state by
       // clicking on the fixture button while already selected
-      const originalState = this.constructor.getFixtureState(this.props);
-
-      // We also need to bump fixtureChange to trigger a key change for the
-      // preview child, because the component and fixture names didn't change
-      this.setState(_.assign(originalState, {
-        fixtureChange: this.state.fixtureChange + 1,
-      }));
+      this.setState(
+        this.constructor.getFixtureState(this.props),
+        this.sendFixtureToLoader
+      );
     }
   },
 
@@ -401,23 +401,28 @@ module.exports = React.createClass({
     this.setState({ isEditorFocused: isFocused });
   },
 
-  onFixtureUpdate(fixturePatch) {
+  onFixtureUpdate(fixtureBody) {
+    const {
+      isEditorFocused,
+      fixtureContents,
+    } = this.state;
+
     // Don't update fixture contents while the user is editing the fixture
-    if (this.state.isEditorFocused) {
+    if (isEditorFocused) {
       return;
     }
 
-    // XXX: We assume data received in this handler is serializable (& thus
+    // We assume data received in this handler is serializable (& thus
     // part of state.fixtureContents)
-    const fixtureContents = {
-      ...this.state.fixtureContents,
-      ...fixturePatch,
+    const newFixtureContents = {
+      ...fixtureContents,
+      ...fixtureBody,
     };
 
     this.setState({
-      fixtureContents,
+      fixtureContents: newFixtureContents,
       fixtureUserInput:
-          this.constructor.getStringifiedFixtureContents(fixtureContents),
+          this.constructor.getStringifiedFixtureContents(newFixtureContents),
       isFixtureUserInputValid: true,
     });
   },
@@ -434,7 +439,6 @@ module.exports = React.createClass({
 
       _.assign(newState, {
         fixtureContents,
-        fixtureChange: this.state.fixtureChange + 1,
         isFixtureUserInputValid: true,
       });
     } catch (e) {
@@ -443,7 +447,11 @@ module.exports = React.createClass({
       console.error(e);
     }
 
-    this.setState(newState);
+    this.setState(newState, () => {
+      if (this.state.isFixtureUserInputValid) {
+        this.sendFixtureToLoader();
+      }
+    });
   },
 
   onWindowResize() {
@@ -456,30 +464,20 @@ module.exports = React.createClass({
     });
   },
 
-  isFixtureSelected() {
-    return this.constructor.isFixtureSelected(this.props);
-  },
-
-  getComponentKey() {
-    return `${this.props.component}-${this.props.fixture}-${this.state.fixtureChange}`;
-  },
-
-  getContentFrameClasses() {
-    return classNames({
-      [style['content-frame']]: true,
+  onPaneDragStart() {
+    this.setState({
+      isDraggingPane: true,
     });
   },
 
-  getPreviewClasses() {
-    const classes = {
-      [style.preview]: true,
-    };
+  onPaneDragStop() {
+    this.setState({
+      isDraggingPane: false,
+    });
+  },
 
-    if (this.props.containerClassName) {
-      classes[this.props.containerClassName] = true;
-    }
-
-    return classNames(classes);
+  isFixtureSelected() {
+    return this.constructor.isFixtureSelected(this.props);
   },
 
   getFixtureClasses(componentName, fixtureName) {
@@ -509,6 +507,27 @@ module.exports = React.createClass({
     return _.omit(props, (value, key) => value === defaultProps[key]);
   },
 
+  sendFixtureToLoader() {
+    // Maybe iframe has not been loaded yet, in which case it'll receive
+    // the fixture to load when it triggers the `frameReady` event
+    if (!this.loaderFrame) {
+      return;
+    }
+
+    const {
+      component,
+      fixture,
+    } = this.props;
+    const { fixtureContents } = this.state;
+
+    this.loaderFrame.contentWindow.postMessage({
+      type: 'fixtureLoad',
+      component,
+      fixture,
+      fixtureBody: fixtureContents,
+    }, '*');
+  },
+
   updateContentFrameOrientation() {
     if (!this.isFixtureSelected()) {
       return;
@@ -520,20 +539,6 @@ module.exports = React.createClass({
       orientation: contentNode.offsetHeight > contentNode.offsetWidth ?
                    'portrait' : 'landscape',
     });
-  },
-
-  getCurrentFixtureContents() {
-    // This returns the fixture contents as it currently is, including user modifications.
-    const {
-      fixtureUnserializableProps,
-      fixtureContents,
-    } = this.state;
-
-    return {
-      component: this.constructor.getSelectedComponentClass(this.props),
-      ...fixtureUnserializableProps,
-      ...fixtureContents,
-    };
   },
 
   getOrientationDirection() {

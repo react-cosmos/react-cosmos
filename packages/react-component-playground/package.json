@@ -16,9 +16,10 @@
     "lodash": "^3.6.0",
     "@skidding/react-codemirror": "^0.3.0",
     "react-component-tree": "^1.0.1",
+    "react-cosmos-utils": "^1.1.0",
     "react-dom-polyfill": "^1.0.1",
     "react-querystring-router": "^1.1.0",
-    "ubervu-react-split-pane": "^0.1.14"
+    "ubervu-react-split-pane": "^0.1.57"
   },
   "peerDependencies": {
     "react": ">=0.13 <16"

@@ -12,8 +12,8 @@ const nextProxy = {
   value: NextProxy,
   next: () => nextProxyNext,
 };
-const onPreviewRef = jest.fn();
-const previewComponent = {};
+const onComponentRef = jest.fn();
+const componentRef = {};
 
 let fixture;
 let onFixtureUpdate;
@@ -38,16 +38,17 @@ const renderProxy = (options) => {
   wrapper = shallow(
     <StateProxy
       nextProxy={nextProxy}
+      component={() => {}}
       fixture={fixture}
-      onPreviewRef={onPreviewRef}
+      onComponentRef={onComponentRef}
       onFixtureUpdate={onFixtureUpdate}
       disableLocalState={options.disabled}
     />
   );
   childWrapper = wrapper.at(0);
   childProps = childWrapper.props();
-  // Simulate renedering of preview component
-  childProps.onPreviewRef(previewComponent);
+  // Simulate rendering
+  childProps.onComponentRef(componentRef);
 };
 
 const commonTests = () => {
@@ -63,8 +64,8 @@ const commonTests = () => {
     expect(childProps.fixture.foo).toBe('bar');
   });
 
-  test('bubbles up preview ref', () => {
-    expect(onPreviewRef.mock.calls[0][0]).toBe(previewComponent);
+  test('bubbles up component ref', () => {
+    expect(onComponentRef.mock.calls[0][0]).toBe(componentRef);
   });
 
   test('bubbles up fixture updates', () => {
@@ -87,8 +88,8 @@ describe('fixture without state and component without initial state', () => {
     expect(childProps.fixture.state).toBe(undefined);
   });
 
-  test('serializes preview component', () => {
-    expect(ReactComponentTree.serialize.mock.calls[0][0]).toBe(previewComponent);
+  test('serializes component state', () => {
+    expect(ReactComponentTree.serialize.mock.calls[0][0]).toBe(componentRef);
   });
 
   test('does not inject state', () => {
@@ -122,8 +123,8 @@ describe('fixture without state and component with initial state', () => {
     expect(childProps.fixture.state).toBe(undefined);
   });
 
-  test('serializes preview component', () => {
-    expect(ReactComponentTree.serialize.mock.calls[0][0]).toBe(previewComponent);
+  test('serializes component state', () => {
+    expect(ReactComponentTree.serialize.mock.calls[0][0]).toBe(componentRef);
   });
 
   test('does not inject state', () => {
@@ -176,13 +177,13 @@ describe('fixture with state', () => {
     expect(childProps.fixture.state).toBe(undefined);
   });
 
-  test('does not serialize preview component', () => {
+  test('does not serialize component state', () => {
     expect(ReactComponentTree.serialize).not.toHaveBeenCalled();
   });
 
   test('injects state', () => {
     const [component, state] = ReactComponentTree.injectState.mock.calls[0];
-    expect(component).toBe(previewComponent);
+    expect(component).toBe(componentRef);
     expect(state).toEqual({
       counter: 6,
     });
@@ -207,9 +208,9 @@ describe('fixture with state', () => {
       jest.runOnlyPendingTimers();
     });
 
-    test('serializes preview component', () => {
+    test('serializes component state', () => {
       expect(ReactComponentTree.serialize).toHaveBeenCalledTimes(1);
-      expect(ReactComponentTree.serialize.mock.calls[0][0]).toBe(previewComponent);
+      expect(ReactComponentTree.serialize.mock.calls[0][0]).toBe(componentRef);
     });
 
     test('still does not onFixtureUpdate', () => {
@@ -232,8 +233,8 @@ describe('fixture with state', () => {
       expect(onFixtureUpdate).toHaveBeenCalled();
     });
 
-    test('serializes preview component again', () => {
-      expect(ReactComponentTree.serialize.mock.calls[1][0]).toBe(previewComponent);
+    test('serializes component state again', () => {
+      expect(ReactComponentTree.serialize.mock.calls[1][0]).toBe(componentRef);
     });
 
     test('calls onFixtureUpdate with updated state', () => {
@@ -277,7 +278,7 @@ describe('disabled by parent proxy', () => {
     expect(childProps.fixture.state).toEqual({ counter: 6 });
   });
 
-  test('does not serialize preview component', () => {
+  test('does not serialize component state', () => {
     expect(ReactComponentTree.serialize).not.toHaveBeenCalled();
   });
 

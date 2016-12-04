@@ -8,11 +8,11 @@ const nextProxy = {
   value: NextProxy,
   next: () => nextProxyNext,
 };
-const onPreviewRef = jest.fn();
+const onComponentRef = jest.fn();
 const onFixtureUpdate = jest.fn();
 
 let fixture;
-let previewComponent;
+let componentRef;
 let storeUnsubscribeMock;
 let storeMock;
 let storeHandler;
@@ -25,7 +25,7 @@ let childProps;
 
 const renderProxy = (f, options) => {
   fixture = f;
-  previewComponent = {};
+  componentRef = {};
 
   jest.clearAllMocks();
 
@@ -45,15 +45,16 @@ const renderProxy = (f, options) => {
   wrapper = shallow(
     <ReduxProxy
       nextProxy={nextProxy}
+      component={() => {}}
       fixture={fixture}
-      onPreviewRef={onPreviewRef}
+      onComponentRef={onComponentRef}
       onFixtureUpdate={onFixtureUpdate}
     />
   );
   childWrapper = wrapper.at(0);
   childProps = childWrapper.props();
-  // Simulate renedering of preview component
-  childProps.onPreviewRef(previewComponent);
+  // Simulate rendering
+  childProps.onComponentRef(componentRef);
 };
 
 const commonTests = () => {
@@ -69,8 +70,8 @@ const commonTests = () => {
     expect(childProps.fixture.foo).toEqual('bar');
   });
 
-  test('bubbles up preview ref', () => {
-    expect(onPreviewRef.mock.calls[0][0]).toBe(previewComponent);
+  test('bubbles up component ref', () => {
+    expect(onComponentRef.mock.calls[0][0]).toBe(componentRef);
   });
 
   test('bubbles up fixture updates', () => {

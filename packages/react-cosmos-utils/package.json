@@ -1,0 +1,15 @@
+{
+  "name": "react-cosmos-utils",
+  "version": "1.1.0",
+  "description": "Libs shared between React Cosmos modules",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-utils",
+  "license": "MIT",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "dependencies": {
+    "lodash.isarray": "^4.0.0",
+    "lodash.isplainobject": "^4.0.6"
+  }
+}

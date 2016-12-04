@@ -21,14 +21,7 @@ Right now it embodies the following parts:
   - The desired split position is persisted using localStorage.
   - It automatically chooses a portrait/landscape orientation to best serve the width/height ratio of the window.
 
-1. Component loader. Render selected component with selected fixture contents.
-  - Fixture is extended by user input from the editor and updates from state listeners.
-
-1. Proxies. Composable middleware between CP and preview component.
-  - They can add extra markup around the preview component.
-  - They can alter fixture contents before reaching the preview component.
-  - They can hook into the preview component's callback ref to obtain its instance.
-  - They receive an `onFixtureUpdate` handler that enables them to update current fixture contents from alternative sources (e.g. Redux store)
+1. Communication with Component loader, which renders selected component with selected fixture contents.
 
 Finally, here is an example of the `components` and `fixtures` props, used to pass the user components and fixtures:
 ```js

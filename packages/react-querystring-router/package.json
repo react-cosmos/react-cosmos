@@ -10,7 +10,6 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
-    "lodash": "^3.10.1",
     "react-dom-polyfill": "^1.0.1"
   },
   "peerDependencies": {

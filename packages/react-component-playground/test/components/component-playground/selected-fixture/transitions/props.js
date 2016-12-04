@@ -11,12 +11,20 @@ describe(`ComponentPlayground (${FIXTURE}) Transitions Props`, () => {
   let $component;
   let container;
   let stateSet;
+  let postMessage;
 
   beforeEach(() => {
     ({ container, component, $component } = render(fixture));
 
     sinon.stub(ComponentTree, 'injectState');
     sinon.spy(component, 'setState');
+
+    postMessage = sinon.spy();
+    component.loaderFrame = {
+      contentWindow: {
+        postMessage,
+      },
+    };
 
     const updatedFixture = _.clone(fixture);
     _.assign(updatedFixture, {
@@ -49,5 +57,14 @@ describe(`ComponentPlayground (${FIXTURE}) Transitions Props`, () => {
 
   it('should reset valid user input flag', () => {
     expect(stateSet.isFixtureUserInputValid).to.be.true;
+  });
+
+  it('should send `loadFixture` event', () => {
+    expect(postMessage).to.have.been.calledWith({
+      type: 'fixtureLoad',
+      component: 'SecondComponent',
+      fixture: 'index',
+      fixtureBody: fixture.fixtures.SecondComponent.index,
+    }, '*');
   });
 });

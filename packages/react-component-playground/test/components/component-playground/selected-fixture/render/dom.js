@@ -15,12 +15,6 @@ describe(`ComponentPlayground (${FIXTURE}) Render DOM`, () => {
     ({ container, component, $component } = render(fixture));
   });
 
-  it('should add container class on preview element', () => {
-    const $previewContainer = $(component.refs.previewContainer);
-
-    expect($previewContainer.hasClass(fixture.containerClassName)).to.be.true;
-  });
-
   it('should remove selected class on home button', () => {
     expect($(component.refs.homeButton)
            .hasClass(style['selected-button'])).to.be.false;
@@ -40,5 +34,13 @@ describe(`ComponentPlayground (${FIXTURE}) Render DOM`, () => {
 
   it('should render fixture editor button', () => {
     expect(component.refs.editorButton).to.exist;
+  });
+
+  it('should render fixture loader frame', () => {
+    expect(component.loaderFrame).to.exist;
+  });
+
+  it('should render fixture loader frame with loaderUri prop', () => {
+    expect(component.loaderFrame.getAttribute('src')).to.equal(fixture.loaderUri);
   });
 });

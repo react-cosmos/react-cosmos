@@ -60,7 +60,7 @@ npm install
 npm start
 
 # Watch & build single package (running example will live reload)
-npm run build:component-playground -- -- --watch
+npm run build:playground -- -- --watch
 
 # Watch & run unit tests as you code
 npm run test-jest -- --watch
