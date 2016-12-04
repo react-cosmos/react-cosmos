@@ -1,7 +1,7 @@
 // import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-export default function getWebpackConfig({ fixtures }) {
+export default function getWebpackConfig({ fixtures }, { module }) {
   return {
     entry: `${require.resolve('../entry-loader')}?${JSON.stringify({
       // We escape the contents because component or fixture paths might contain
@@ -19,16 +19,9 @@ export default function getWebpackConfig({ fixtures }) {
       filename: 'bundle.js',
       publicPath: '/',
     },
-    module: {
-      loaders: [{
-        test: /\.jsx?$/,
-        loader: 'babel',
-        exclude: /node_modules/,
-        query: {
-          presets: ['es2015', 'react'],
-        },
-      }],
-    },
+    // Use user loaders because fixtures probably use same syntax as source code.
+    // React Cosmos doesn't depend on any loaders anyway.
+    module,
     plugins: [
       new HtmlWebpackPlugin({
         title: 'React Cosmos',

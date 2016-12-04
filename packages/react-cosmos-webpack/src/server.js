@@ -31,12 +31,11 @@ module.exports = function startServer() {
 
   const userWebpackConfig = require(resolveUserPath(webpackConfigPath, cosmosConfigPath));
   const cosmosLoaderWebpackConfig = getLoaderWebpackConfig(
-    modulePaths,
-    userWebpackConfig,
-    cosmosConfigPath
+    modulePaths, userWebpackConfig, cosmosConfigPath
   );
+  const playgroundWebpackConfig = getPlaygroundWebpackConfig(modulePaths, userWebpackConfig);
   const loaderCompiler = webpack(cosmosLoaderWebpackConfig);
-  const playgroundCompiler = webpack(getPlaygroundWebpackConfig(modulePaths));
+  const playgroundCompiler = webpack(playgroundWebpackConfig);
 
   const app = express();
   app.use(webpackDevMiddleware(loaderCompiler, {

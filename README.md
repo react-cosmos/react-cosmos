@@ -152,7 +152,7 @@ module.exports = {
 
 #### Using Babel
 
-Unless you pass it the `--plain` param, the webpack CLI runs with `babel-node` by default. This is nice because it allows you to write your fixtures and the webpack & Cosmos configs using the same syntax as your source code.
+Unless you pass it the `--plain` param, the webpack CLI runs with `babel-node` by default. This is nice because it allows you to write your configs using the same syntax as your source code.
 
 ## Thanks!
 
