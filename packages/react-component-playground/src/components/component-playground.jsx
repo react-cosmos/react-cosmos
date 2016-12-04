@@ -401,18 +401,28 @@ module.exports = React.createClass({
     this.setState({ isEditorFocused: isFocused });
   },
 
-  onFixtureUpdate(fixtureContents) {
+  onFixtureUpdate(fixtureBody) {
+    const {
+      isEditorFocused,
+      fixtureContents,
+    } = this.state;
+
     // Don't update fixture contents while the user is editing the fixture
-    if (this.state.isEditorFocused) {
+    if (isEditorFocused) {
       return;
     }
 
     // We assume data received in this handler is serializable (& thus
     // part of state.fixtureContents)
+    const newFixtureContents = {
+      ...fixtureContents,
+      ...fixtureBody,
+    };
+
     this.setState({
-      fixtureContents,
+      fixtureContents: newFixtureContents,
       fixtureUserInput:
-          this.constructor.getStringifiedFixtureContents(fixtureContents),
+          this.constructor.getStringifiedFixtureContents(newFixtureContents),
       isFixtureUserInputValid: true,
     });
   },

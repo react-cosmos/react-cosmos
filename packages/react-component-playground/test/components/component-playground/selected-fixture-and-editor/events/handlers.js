@@ -25,7 +25,9 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, () => {
         data: {
           type: 'fixtureUpdate',
           fixtureBody: {
-            foo: 'bar',
+            state: {
+              somethingHappened: true,
+            },
           },
         },
       });
@@ -42,7 +44,12 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, () => {
     });
 
     it('should override serializable fixture part', () => {
-      expect(stateSet.fixtureContents).to.deep.equal({ foo: 'bar' });
+      expect(stateSet.fixtureContents).to.deep.equal({
+        ...fixture.state.fixtureContents,
+        state: {
+          somethingHappened: true,
+        },
+      });
     });
 
     it('should keep unserializable fixture part', () => {
@@ -52,8 +59,12 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, () => {
     });
 
     it('should update stringified child snapshot state', () => {
-      expect(stateSet.fixtureUserInput)
-            .to.equal(JSON.stringify({ foo: 'bar' }, null, 2));
+      expect(stateSet.fixtureUserInput).to.equal(JSON.stringify({
+        ...fixture.state.fixtureContents,
+        state: {
+          somethingHappened: true,
+        },
+      }, null, 2));
     });
   });
 
