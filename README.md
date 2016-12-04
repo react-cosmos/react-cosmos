@@ -81,7 +81,7 @@ node_modules/.bin/cosmos --config path/to/cosmos.config.js
 
 Voilà! Now you can [extend your config](#configuration), start [creating fixtures](docs/fixtures.md) or be kind and [report what went wrong.](https://github.com/react-cosmos/react-cosmos/issues)
 
-#### *"Cannot GET /"*
+#### *"Cannot GET /loader/"*
 
 Chances are you'll be faced with a blank page when opening *localhost:8989*. There
 are two methods for configuring `index.html`:
