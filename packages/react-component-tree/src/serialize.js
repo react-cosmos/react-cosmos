@@ -1,19 +1,21 @@
-import _ from 'lodash';
+import isEmpty from 'lodash.isempty';
+import clone from 'lodash.clone';
+import forEach from 'lodash.foreach';
 
 const getComponentTreeState = (component) => {
-  const state = component.state ? _.clone(component.state) : {};
+  const state = component.state ? clone(component.state) : {};
   const childrenStates = {};
   let childState;
 
-  _.each(component.refs, (child, ref) => {
+  forEach(component.refs, (child, ref) => {
     childState = getComponentTreeState(child);
 
-    if (!_.isEmpty(childState)) {
+    if (!isEmpty(childState)) {
       childrenStates[ref] = childState;
     }
   });
 
-  if (!_.isEmpty(childrenStates)) {
+  if (!isEmpty(childrenStates)) {
     state.children = childrenStates;
   }
 
@@ -29,10 +31,10 @@ exports.serialize = (component) => {
    *
    * @returns {Object} Snapshot with component props and nested state
    */
-  const snapshot = _.clone(component.props);
+  const snapshot = clone(component.props);
   const state = getComponentTreeState(component);
 
-  if (!_.isEmpty(state)) {
+  if (!isEmpty(state)) {
     snapshot.state = state;
   }
 

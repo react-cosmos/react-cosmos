@@ -106,7 +106,9 @@ class Loader extends React.Component {
           ...fixture.unserializable,
           ...fixture.serializable,
         }}
-        onComponentRef={() => { /* noope */ }}
+        onComponentRef={
+          () => { /* noope */ }
+        }
         onFixtureUpdate={onFixtureUpdate}
       />
     );

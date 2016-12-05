@@ -1,5 +1,7 @@
-import _ from 'lodash';
 import React from 'react';
+import omit from 'lodash.omit';
+import isEmpty from 'lodash.isempty';
+import forEach from 'lodash.foreach';
 
 const ReactDOM = require('react-dom-polyfill')(React);
 
@@ -15,7 +17,7 @@ exports.render = (options) => {
    *
    * @returns {ReactComponent} Reference to the rendered component
    */
-  const props = _.omit(options.snapshot, 'state', 'children');
+  const props = omit(options.snapshot, 'state', 'children');
   const state = options.snapshot.state;
   const children = options.snapshot.children;
 
@@ -24,7 +26,7 @@ exports.render = (options) => {
   // eslint-disable-next-line react/no-render-return-value
   const component = ReactDOM.render(element, options.container);
 
-  if (!_.isEmpty(state)) {
+  if (!isEmpty(state)) {
     exports.injectState(component, state);
   }
 
@@ -32,16 +34,16 @@ exports.render = (options) => {
 };
 
 exports.injectState = (component, state) => {
-  const rootState = _.omit(state, 'children');
+  const rootState = omit(state, 'children');
   const childrenStates = state.children;
 
   component.setState(rootState, () => {
-    if (_.isEmpty(childrenStates)) {
+    if (isEmpty(childrenStates)) {
       return;
     }
 
-    _.each(component.refs, (child, ref) => {
-      if (!_.isEmpty(childrenStates[ref])) {
+    forEach(component.refs, (child, ref) => {
+      if (!isEmpty(childrenStates[ref])) {
         exports.injectState(child, childrenStates[ref]);
       }
     });
