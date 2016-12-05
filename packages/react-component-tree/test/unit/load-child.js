@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'lodash';
+import cloneDeep from 'lodash.clonedeep';
 import { loadChild } from '../../src/load-child.js';
 
 const ReactComponent = {
@@ -12,9 +12,9 @@ const StatelessComponent = {
 };
 
 describe('UNIT Load child', () => {
-  const FirstComponent = _.cloneDeep(ReactComponent);
-  const SecondComponent = _.cloneDeep(ReactComponent);
-  const ThirdComponent = _.cloneDeep(StatelessComponent);
+  const FirstComponent = cloneDeep(ReactComponent);
+  const SecondComponent = cloneDeep(ReactComponent);
+  const ThirdComponent = cloneDeep(StatelessComponent);
   const children = [React.createElement('span', {
     key: '1',
     children: 'test child',

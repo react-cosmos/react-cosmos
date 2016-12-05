@@ -10,10 +10,16 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
-    "lodash": "^3.6.0",
+    "lodash.clone": "^4.5.0",
+    "lodash.foreach": "^4.5.0",
+    "lodash.isempty": "^4.4.0",
+    "lodash.omit": "^4.5.0",
     "react-dom-polyfill": "^1.0.1"
   },
   "peerDependencies": {
     "react": ">=0.13 <16"
+  },
+  "devDependencies": {
+    "lodash.clonedeep": "^4.5.0"
   }
 }

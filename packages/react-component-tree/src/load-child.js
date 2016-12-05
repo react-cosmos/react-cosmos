@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import omit from 'lodash.omit';
 import React from 'react';
 
 const isClassComponent = (Component) =>
@@ -64,7 +64,7 @@ exports.loadChild = (component, childName, a, b, c, d, e, f) => {
   // One child with bad params shouldn't block the entire app
   try {
     return React.createElement(params.component,
-                               _.omit(params, 'component', 'children'),
+                               omit(params, 'component', 'children'),
                                params.children);
   } catch (err) {
     // eslint-disable-next-line no-console
