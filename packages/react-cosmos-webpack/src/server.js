@@ -6,7 +6,7 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { argv } from 'yargs';
 import getConfig from './config';
-import resolveUserPath from './resolve-user-path';
+import resolveUserPath from './utils/resolve-user-path';
 import buildModulePaths from './build-module-paths';
 import getLoaderWebpackConfig from './loader/webpack-config';
 import getPlaygroundWebpackConfig from './playground/webpack-config';

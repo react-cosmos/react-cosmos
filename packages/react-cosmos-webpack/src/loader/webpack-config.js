@@ -1,6 +1,6 @@
 import webpack from 'webpack';
 import getConfig from '../config';
-import resolveUserPath from '../resolve-user-path';
+import resolveUserPath from '../utils/resolve-user-path';
 
 export default function getWebpackConfig(
   modulePaths,
