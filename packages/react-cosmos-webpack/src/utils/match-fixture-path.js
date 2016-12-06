@@ -8,7 +8,7 @@ const buildPathMatchers = (componentCleanPath) => [
  * Determine whether fixture belongs to component and return the fixture's
  * clean path when true.
  */
-const matchComponentFixture = (fixturePath, componentCleanPath) => {
+const matchFixturePath = (fixturePath, componentCleanPath) => {
   const matchers = buildPathMatchers(componentCleanPath);
 
   for (let i = 0; i < matchers.length; i++) {
@@ -21,4 +21,4 @@ const matchComponentFixture = (fixturePath, componentCleanPath) => {
   return false;
 };
 
-export default matchComponentFixture;
+export default matchFixturePath;

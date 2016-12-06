@@ -1,7 +1,7 @@
-import matchComponentFixture from '../match-component-fixture';
+import matchFixturePath from '../match-fixture-path';
 
 const m = (fixturePath, componentCleanPath, expectedFixtureCleanPath) => {
-  expect(matchComponentFixture(fixturePath, componentCleanPath)).toBe(expectedFixtureCleanPath);
+  expect(matchFixturePath(fixturePath, componentCleanPath)).toBe(expectedFixtureCleanPath);
 };
 
 const testExtension = (ext) => {
