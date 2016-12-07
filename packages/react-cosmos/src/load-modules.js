@@ -1,40 +1,30 @@
 /**
  * Normalize exported value of ES6/CommonJS modules
  */
-const importModule = (fn, moduleName) => {
-  // Make sure imported modules that crash on load are omitted and not spoil the
-  // rest of the build.
-  try {
-    // Modules are require calls wrapped in functions instead of plain paths
-    // in order to help bundlers like Webpack know which files to bundle.
-    let module = fn();
-
-    // This is an implementation detail of Babel:
-    // https://medium.com/@kentcdodds/misunderstanding-es6-modules-upgrading-babel-tears-and-a-solution-ad2d5ab93ce0#.skvldbg39
-    // It looks like to be a "standard": https://github.com/esnext/es6-module-transpiler/issues/86 **for now**.
-    // eslint-disable-next-line no-underscore-dangle
-    if (module.__esModule) {
-      module = module[moduleName] || module.default;
-    }
-
-    return module;
-  } catch (e) {
-    return null;
+const importModule = (module, moduleName) => {
+  // This is an implementation detail of Babel:
+  // https://medium.com/@kentcdodds/misunderstanding-es6-modules-upgrading-babel-tears-and-a-solution-ad2d5ab93ce0#.skvldbg39
+  // https://github.com/esnext/es6-module-transpiler/issues/86
+  // eslint-disable-next-line no-underscore-dangle
+  if (module.__esModule) {
+    return module[moduleName] || module.default;
   }
+
+  return module;
 };
 
-// TODO: Improve ReactClass check!
-const isReactClass = component =>
+// TODO: Improve ReactComponent check!
+const isReactComponent = component =>
   typeof component === 'string' || typeof component === 'function';
 
 /**
  * Input example:
  * {
- *   'Comment': () => require('/path/to/project/src/components/Comment.js'),
+ *   'Comment': { __esModule: true, default: [ReactComponent] },
  * }
  * Output example:
  * {
- *   'Comment': [ReactClass],
+ *   'Comment': [ReactComponent],
  * }
  */
 export function loadComponents(components) {
@@ -43,9 +33,9 @@ export function loadComponents(components) {
   Object.keys(components).forEach(name => {
     const component = importModule(components[name], name);
 
-    if (!component || !isReactClass(component)) {
+    if (!component || !isReactComponent(component)) {
       // eslint-disable-next-line no-console
-      console.warn(`Could not load component '${name}'`);
+      console.warn(`'${name}' is not a valid React component`);
     } else {
       result[name] = component;
     }
@@ -58,9 +48,9 @@ export function loadComponents(components) {
  * Input example:
  * {
  *   'Comment': {
- *     'short': () => require('/path/to/project/src/components/__fixtures__/Comment/short.js'),
- *     'long': () => require('/path/to/project/src/components/__fixtures__/Comment/long.js'),
+ *     'short': { __esModule: true, default: { ... } },
  *   },
+ *   'Post': {}
  * }
  * Output example:
  * {
@@ -69,11 +59,10 @@ export function loadComponents(components) {
  *       'author': 'Sarcastic Sue'
  *       'body': ':)'
  *     },
- *     'long': {
- *       'author': 'Loud Larry'
- *       'body': 'Don't get me started on JavaScript...'
- *     },
  *   },
+ *   'Post': {
+ *     'no props (auto)': {}
+ *   }
  * }
  */
 export function loadFixtures(fixtures) {
@@ -84,14 +73,7 @@ export function loadFixtures(fixtures) {
     const componentResult = {};
 
     Object.keys(componentFixtures).forEach(name => {
-      const fixture = importModule(componentFixtures[name], name);
-
-      if (!fixture) {
-        // eslint-disable-next-line no-console
-        console.warn(`Could not load fixture '${name}' of '${componentName}'`);
-      } else {
-        componentResult[name] = fixture;
-      }
+      componentResult[name] = importModule(componentFixtures[name], name);
     });
 
     // Allow users to browse components before creating fixtures
