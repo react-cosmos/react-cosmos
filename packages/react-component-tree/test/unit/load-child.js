@@ -1,8 +1,12 @@
 import React from 'react';
-import _ from 'lodash';
 import { loadChild } from '../../src/load-child.js';
 
-const ReactComponent = {
+const FirstComponent = {
+  prototype: {
+    render: () => ({}),
+  },
+};
+const SecondComponent = {
   prototype: {
     render: () => ({}),
   },
@@ -12,9 +16,6 @@ const StatelessComponent = {
 };
 
 describe('UNIT Load child', () => {
-  const FirstComponent = _.cloneDeep(ReactComponent);
-  const SecondComponent = _.cloneDeep(ReactComponent);
-  const ThirdComponent = _.cloneDeep(StatelessComponent);
   const children = [React.createElement('span', {
     key: '1',
     children: 'test child',
@@ -35,7 +36,7 @@ describe('UNIT Load child', () => {
           ref: 'fooChild',
         })),
         omittedRef: () => ({
-          component: ThirdComponent,
+          component: StatelessComponent,
         }),
       },
     };
