@@ -1,13 +1,8 @@
-let mockComponents;
-let mockFixtures;
+let parseQueryMock;
 
 module.exports = {
-  parseQuery: jest.fn(() => ({
-    components: mockComponents,
-    fixtures: mockFixtures,
-  })),
-  __setMocks: ({ components, fixtures }) => {
-    mockComponents = components;
-    mockFixtures = fixtures;
+  parseQuery: jest.fn(() => parseQueryMock),
+  __setParseQueryMocks: (mock) => {
+    parseQueryMock = mock;
   },
 };
