@@ -43,6 +43,10 @@ It extends your existing webpack config (*please tell me you have one*) and star
 src/components/Button.jsx
 src/components/__fixtures__/Button/default.js
 src/components/__fixtures__/Button/disabled.js
+# also works if you have one folder per component
+src/components/Button/Button.jsx
+src/components/Button/__fixtures__/default.js
+src/components/Button/__fixtures__/disabled.js
 ```
 
 Follow these steps to get started:
@@ -101,6 +105,13 @@ module.exports = {
   componentPaths: [
     'src/components',
     'src/containers'
+  ],
+
+  // Additional paths to search for fixtures, besides the __fixtures__ folder
+  // nested inside component paths. Useful if you keep fixture files separated
+  // from components files.
+  fixturePaths: [
+    'test/fixtures'
   ],
 
   // Additional entry points that should be present along with any component.
