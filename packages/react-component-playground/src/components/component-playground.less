@@ -78,6 +78,7 @@
     background: @left-nav-bgcolor;
     font-family: @default-font-family;
     font-size: @default-font-size;
+    -webkit-font-smoothing: antialiased;
 
     .header {
       position: relative;
@@ -166,7 +167,7 @@
 
       .components {
         margin: 0;
-        padding: 0;
+        padding: 0 0 @default-spacing 0;
         list-style-type: none;
 
         .component {
@@ -174,7 +175,8 @@
 
           .component-name {
             display: block;
-            height: @fixture-line-height + 0.5 * @default-spacing;
+            box-sizing: content-box;
+            height: @fixture-line-height;
             margin: 0;
             padding: 0.5 * @default-spacing @default-spacing 0 @default-spacing;
             color: @left-nav-color-selected;
@@ -234,12 +236,12 @@
 
       border: 1px solid @editor-border-color;
       background: #f8f5ec;
+      -webkit-font-smoothing: antialiased;
     }
 
     .loader {
       .stretch();
 
-      overflow: hidden;
       // Checkerboard effect on background
       background-image:
         linear-gradient(45deg,
@@ -260,9 +262,10 @@
                            @checkerboard-square-size @checkerboard-square-size;
 
       .frame {
-        border: 0;
+        position: absolute;
         width: 100%;
         height: 100%;
+        border: 0;
       }
 
       // The purpose of the frame overlay is to cover the iframe while user is
