@@ -8,7 +8,7 @@ if (window.parent !== window) {
   window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;
 }
 
-const startCosmos = require('react-cosmos');
+const { startLoader, startPlayground } = require('react-cosmos');
 const getConfig = require('./config').default;
 const expandModulePaths = require('./utils/expand-module-paths').default;
 
@@ -25,9 +25,19 @@ const { proxies, containerQuerySelector, ignore } = getConfig(userConfig);
 // eslint-disable-next-line no-undef
 const { components, fixtures } = expandModulePaths(COMPONENT_CONTEXTS, FIXTURE_CONTEXTS, ignore);
 
-startCosmos({
-  proxies,
-  containerQuerySelector,
-  components,
-  fixtures,
-});
+const loaderUri = '/loader/';
+const { pathname } = window.location;
+
+if (pathname === loaderUri) {
+  startLoader({
+    proxies,
+    components,
+    fixtures,
+    containerQuerySelector,
+  });
+} else {
+  startPlayground({
+    fixtures,
+    loaderUri,
+  });
+}

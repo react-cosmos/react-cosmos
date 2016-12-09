@@ -1,16 +1,32 @@
-const fakeStartLoader = jest.fn();
-const fakeStartPlayground = jest.fn();
-const fakeProxies = {};
+/* global window */
+
 const fakeComponents = {};
 const fakeFixtures = {};
+const fakeExpandModulePaths = jest.fn(() => ({
+  components: fakeComponents,
+  fixtures: fakeFixtures,
+}));
+const fakeStartLoader = jest.fn();
+const fakeStartPlayground = jest.fn();
+const fakeProxies = [];
+const fakeIgnore = [];
 const fakeContainerQuerySelector = '#root';
 
-jest.mock('../start-loader', () => fakeStartLoader);
-jest.mock('../start-playground', () => fakeStartPlayground);
+jest.mock('./dummy-config/cosmos.config.js', () => ({
+  proxies: fakeProxies,
+  ignore: fakeIgnore,
+  containerQuerySelector: fakeContainerQuerySelector,
+}));
 
-const startCosmos = require('../index');
+jest.mock('react-cosmos', () => ({
+  startLoader: fakeStartLoader,
+  startPlayground: fakeStartPlayground,
+}));
+
+jest.mock('../utils/expand-module-paths', () => ({ default: fakeExpandModulePaths }));
 
 const init = (pathname) => {
+  jest.resetModules();
   jest.clearAllMocks();
 
   Object.defineProperty(window.location, 'pathname', {
@@ -18,11 +34,23 @@ const init = (pathname) => {
     value: pathname,
   });
 
-  startCosmos({
-    proxies: fakeProxies,
-    components: fakeComponents,
-    fixtures: fakeFixtures,
-    containerQuerySelector: fakeContainerQuerySelector,
+  require('../entry');
+};
+
+const commonTests = () => {
+  test('calls expandModulePaths with component contexts', () => {
+    // Component contexts are mocked inside jest.config.json
+    expect(fakeExpandModulePaths.mock.calls[0][0]).toBe('__COMPONENT_CONTEXTS__');
+  });
+
+  test('calls expandModulePaths with fixture contexts', () => {
+    // Fixture contexts are mocked inside jest.config.json
+    expect(fakeExpandModulePaths.mock.calls[0][1]).toBe('__FIXTURE_CONTEXTS__');
+  });
+
+  test('calls expandModulePaths with ignore paths', () => {
+    // Fixture contexts are mocked inside jest.config.json
+    expect(fakeExpandModulePaths.mock.calls[0][2]).toBe(fakeIgnore);
   });
 };
 
@@ -62,6 +90,8 @@ describe('playground path', () => {
     init('/');
     options = fakeStartPlayground.mock.calls[0][0];
   });
+
+  commonTests();
 
   test('starts playground', () => {
     expect(fakeStartPlayground).toHaveBeenCalled();
