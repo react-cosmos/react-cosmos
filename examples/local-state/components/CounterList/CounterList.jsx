@@ -1,7 +1,7 @@
 /* eslint-disable react/no-string-refs */
 
 import React from 'react';
-import Counter from './Counter';
+import Counter from '../Counter/Counter';
 
 export default class CounterList extends React.Component {
   render() {
