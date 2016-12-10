@@ -1,6 +1,5 @@
 {
   "name": "react-cosmos-flatris-webpack-example",
-  "version": "1.0.0-beta.4",
   "description": "webpack integration featuring Flatris",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/flatris",
   "license": "MIT",

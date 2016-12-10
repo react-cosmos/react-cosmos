@@ -1,0 +1,16 @@
+{
+  "name": "react-cosmos-context-example",
+  "description": "Example of mocking component context",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/context",
+  "license": "MIT",
+  "dependencies": {
+    "html-webpack-plugin": "^2.22.0",
+    "webpack": "^1.13.2"
+  },
+  "peerDependencies": {
+    "react": ">=0.13 <16"
+  },
+  "scripts": {
+    "start": "../../packages/react-cosmos-webpack/bin/cosmos.js"
+  }
+}

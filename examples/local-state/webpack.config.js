@@ -25,7 +25,7 @@ module.exports = {
       exclude: /node_modules/,
       query: {
         // 'react-hmre' only works with React >=0.14
-        presets: ['es2015', 'react'],
+        presets: ['es2015', 'react', 'react-hmre'],
       },
     }, {
       test: /\.css$/,
@@ -35,7 +35,6 @@ module.exports = {
   },
   plugins: [
     new webpack.NoErrorsPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       title: 'React Cosmos',
     }),
