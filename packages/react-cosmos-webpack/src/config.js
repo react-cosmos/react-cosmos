@@ -8,6 +8,7 @@ export default function getConfig(userConfig) {
     componentPaths: [],
     fixturePaths: [],
     globalImports: [],
+    hmrPlugin: false,
     hostname: 'localhost',
     hot: false,
     ignore: [],

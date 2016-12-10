@@ -19,6 +19,7 @@ export default function getWebpackConfig(
     componentPaths,
     fixturePaths,
     globalImports,
+    hmrPlugin,
     hot,
   } = cosmosConfig;
 
@@ -57,6 +58,10 @@ export default function getWebpackConfig(
   plugins.push(new webpack.DefinePlugin({
     COSMOS_CONFIG_PATH: JSON.stringify(cosmosConfigPath),
   }));
+
+  if (hmrPlugin) {
+    plugins.push(new webpack.HotModuleReplacementPlugin());
+  }
 
   return {
     ...userWebpackConfig,
