@@ -2,10 +2,10 @@ import path from 'path';
 
 jest.mock('webpack');
 
-let DefinePluginMock;
-let DefinePlugin;
-let HotModuleReplacementPluginMock;
-let HotModuleReplacementPlugin;
+const DefinePluginMock = {};
+const DefinePlugin = jest.fn(() => DefinePluginMock);
+const HotModuleReplacementPluginMock = {};
+const HotModuleReplacementPlugin = jest.fn(() => HotModuleReplacementPluginMock);
 
 let getWebpackConfig;
 
@@ -31,16 +31,12 @@ const resolveUserPath = (relPath) => path.join(path.dirname(cosmosConfigPath), r
 beforeEach(() => {
   // We want to change configs between test cases
   jest.resetModules();
+  jest.clearAllMocks();
 
   // Mock user config
   jest.mock(cosmosConfigRelPath, () => cosmosConfig);
 
-  DefinePluginMock = {};
-  DefinePlugin = jest.fn(() => DefinePluginMock);
   require('webpack').__setPluginMock('DefinePlugin', DefinePlugin);
-
-  HotModuleReplacementPluginMock = {};
-  HotModuleReplacementPlugin = jest.fn(() => HotModuleReplacementPluginMock);
   require('webpack').__setPluginMock('HotModuleReplacementPlugin', HotModuleReplacementPlugin);
 
   getWebpackConfig = require('../webpack-config').default;
