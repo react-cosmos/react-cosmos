@@ -1,9 +1,13 @@
 /* global window */
 
+const loaderUri = '/loader/';
+const { pathname } = window.location;
+const isLoader = pathname === loaderUri;
+
 // This has to be done before React is imported. We do it before importing
 // anything which might import React
 // https://github.com/facebook/react-devtools/issues/76#issuecomment-128091900
-if (window.parent !== window) {
+if (isLoader) {
   // eslint-disable-next-line no-underscore-dangle
   window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;
 }
@@ -25,10 +29,7 @@ const { proxies, containerQuerySelector, ignore } = getConfig(userConfig);
 // eslint-disable-next-line no-undef
 const { components, fixtures } = expandModulePaths(COMPONENT_CONTEXTS, FIXTURE_CONTEXTS, ignore);
 
-const loaderUri = '/loader/';
-const { pathname } = window.location;
-
-if (pathname === loaderUri) {
+if (isLoader) {
   startLoader({
     proxies,
     components,
