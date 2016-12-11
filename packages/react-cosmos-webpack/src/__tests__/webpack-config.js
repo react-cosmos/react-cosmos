@@ -2,8 +2,10 @@ import path from 'path';
 
 jest.mock('webpack');
 
-let DefinePluginMock;
-let DefinePlugin;
+const DefinePluginMock = {};
+const DefinePlugin = jest.fn(() => DefinePluginMock);
+const HotModuleReplacementPluginMock = {};
+const HotModuleReplacementPlugin = jest.fn(() => HotModuleReplacementPluginMock);
 
 let getWebpackConfig;
 
@@ -29,14 +31,13 @@ const resolveUserPath = (relPath) => path.join(path.dirname(cosmosConfigPath), r
 beforeEach(() => {
   // We want to change configs between test cases
   jest.resetModules();
+  jest.clearAllMocks();
 
   // Mock user config
   jest.mock(cosmosConfigRelPath, () => cosmosConfig);
 
-  // Mock webpack plugin
-  DefinePluginMock = {};
-  DefinePlugin = jest.fn(() => DefinePluginMock);
   require('webpack').__setPluginMock('DefinePlugin', DefinePlugin);
+  require('webpack').__setPluginMock('HotModuleReplacementPlugin', HotModuleReplacementPlugin);
 
   getWebpackConfig = require('../webpack-config').default;
 });
@@ -134,6 +135,19 @@ describe('with hmr', () => {
 
   test('adds hot middleware client to entries', () => {
     expect(webpackConfig.entry).toContain(require.resolve('webpack-hot-middleware/client'));
+  });
+});
+
+describe('with hmr plugin', () => {
+  beforeEach(() => {
+    cosmosConfig = {
+      hmrPlugin: true,
+    };
+    webpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
+  });
+
+  test('adds HotModuleReplacementPlugin', () => {
+    expect(webpackConfig.plugins).toContain(HotModuleReplacementPluginMock);
   });
 });
 

@@ -150,9 +150,13 @@ module.exports = {
   // has styles attached, but bad for encapsulation.
   containerQuerySelector: '#app',
 
-  // WARNING: Make sure to add webpack.HotModuleReplacementPlugin to your
-  // webpack config plugins section if you enable this. (and magic will ignite)
+  // Enable hot module replacement. Use together with `hmrPlugin` option
+  // depending on your webpack configuration.
   hot: true,
+
+  // Add webpack.HotModuleReplacementPlugin. Don't enable this if your webpack
+  // config already adds it.
+  hmrPlugin: true,
 
   // These ones are self explanatory
   hostname: 'localhost',
