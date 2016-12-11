@@ -15,7 +15,7 @@ module.exports = {
     // within the app. In the latter case, node modules installed in the host
     // app are found by react-cosmos-webpack due to Node's bubble up require
     // strategy.
-    root: path.join(__dirname, '../node_modules'),
+    root: path.join(__dirname, 'node_modules'),
   },
   module: {
     loaders: [{
@@ -26,10 +26,6 @@ module.exports = {
         // 'react-hmre' only works with React >=0.14
         presets: ['es2015', 'react', 'react-hmre'],
       },
-    }, {
-      test: /\.(css|less)$/,
-      loader: 'style!css!less',
-      exclude: /node_modules/,
     }],
   },
   plugins: [
