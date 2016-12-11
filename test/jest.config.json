@@ -4,5 +4,10 @@
   "testURL": "http://foo.bar/",
   "testPathIgnorePatterns": ["react-cosmos-webpack/src/__tests__/dummy-config"],
   "coverageDirectory": "../test/coverage/jest",
-  "coverageReporters": ["lcov", "text"]
+  "coverageReporters": ["lcov", "text"],
+  "globals": {
+    "COSMOS_CONFIG_PATH": "./__tests__/dummy-config/cosmos.config.js",
+    "COMPONENT_CONTEXTS": "__COMPONENT_CONTEXTS__",
+    "FIXTURE_CONTEXTS": "__FIXTURE_CONTEXTS__"
+  }
 }

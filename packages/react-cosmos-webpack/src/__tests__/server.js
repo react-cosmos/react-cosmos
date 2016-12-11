@@ -10,12 +10,6 @@ jest.mock('webpack-hot-middleware');
 const processCwdMock = path.join(__dirname, 'dummy-config');
 let realProcessCwd;
 
-const modulePathsMock = {
-  components: '__MOCK_COMPONENTS__',
-  fixtures: '__MOCK_FIXTURES__',
-};
-const buildModulePathsMock = jest.fn(() => modulePathsMock);
-
 const componentPaths = ['src/components', 'src/containers'];
 
 let express;
@@ -23,18 +17,15 @@ let webpack;
 let webpackDevMiddleware;
 let webpackHotMiddleware;
 
+const expressInstanceCbMocks = {};
 let expressInstanceMock;
-let loaderWebpackCompilerMock;
-let playgroundWebpackCompilerMock;
-let loaderWebpackDevMiddlewareMock;
-let playgroundWebpackDevMiddlewareMock;
+let webpackCompilerMock;
+let webpackDevMiddlewareMock;
 let webpackHotMiddlewareMock;
 
 const userWebpackConfigMock = {};
-let getLoaderWebpackConfigMock;
-let getPlaygroundWebpackConfigMock;
-let loaderWebpackConfigMock;
-let playgroundWebpackConfigMock;
+let getWebpackConfigMock;
+let webpackConfigMock;
 
 const startServer = () => {
   // yargs.argv gets destructured as soon as the ./server module is required,
@@ -67,36 +58,27 @@ beforeEach(() => {
 
   expressInstanceMock = {
     use: jest.fn(),
+    get: (route, cb) => { expressInstanceCbMocks[route] = cb; },
     listen: jest.fn(),
   };
   express.__setInstanceMock(expressInstanceMock);
 
-  loaderWebpackCompilerMock = {};
-  playgroundWebpackCompilerMock = {};
+  webpackCompilerMock = {};
   webpack.__setCompilerMocks([
-    loaderWebpackCompilerMock,
-    playgroundWebpackCompilerMock,
+    webpackCompilerMock,
   ]);
 
-  loaderWebpackDevMiddlewareMock = {};
-  playgroundWebpackDevMiddlewareMock = {};
+  webpackDevMiddlewareMock = {};
   webpackDevMiddleware.__setMocks([
-    loaderWebpackDevMiddlewareMock,
-    playgroundWebpackDevMiddlewareMock,
+    webpackDevMiddlewareMock,
   ]);
 
   webpackHotMiddlewareMock = {};
   webpackHotMiddleware.__setMock(webpackHotMiddlewareMock);
 
-  loaderWebpackConfigMock = {};
-  getLoaderWebpackConfigMock = jest.fn(() => loaderWebpackConfigMock);
-  jest.mock('../loader/webpack-config', () => getLoaderWebpackConfigMock);
-
-  playgroundWebpackConfigMock = {};
-  getPlaygroundWebpackConfigMock = jest.fn(() => playgroundWebpackConfigMock);
-  jest.mock('../playground/webpack-config', () => getPlaygroundWebpackConfigMock);
-
-  jest.mock('../build-module-paths', () => buildModulePathsMock);
+  webpackConfigMock = {};
+  getWebpackConfigMock = jest.fn(() => webpackConfigMock);
+  jest.mock('../webpack-config', () => getWebpackConfigMock);
 });
 
 afterEach(() => {
@@ -104,40 +86,36 @@ afterEach(() => {
 });
 
 const commonTests = () => {
-  test('compiles loader webpack using extended config', () => {
-    expect(webpack.mock.calls[0][0]).toBe(loaderWebpackConfigMock);
-  });
-
-  test('compiles playground webpack', () => {
-    expect(webpack.mock.calls[1][0]).toBe(playgroundWebpackConfigMock);
+  test('compiles webpack using extended config', () => {
+    expect(webpack.mock.calls[0][0]).toBe(webpackConfigMock);
   });
 
   test('creates express server', () => {
     expect(express).toHaveBeenCalled();
   });
 
-  test('sends loader webpack compiler to dev middleware', () => {
-    expect(webpackDevMiddleware.mock.calls[0][0]).toBe(loaderWebpackCompilerMock);
+  test('sends webpack compiler to dev middleware', () => {
+    expect(webpackDevMiddleware.mock.calls[0][0]).toBe(webpackCompilerMock);
   });
 
-  test('sends loader publicPath to dev middleware', () => {
+  test('sends publicPath to dev middleware', () => {
     expect(webpackDevMiddleware.mock.calls[0][1].publicPath).toBe('/loader/');
   });
 
-  test('adds loader dev middleware to express server', () => {
-    expect(expressInstanceMock.use.mock.calls[0][0]).toBe(loaderWebpackDevMiddlewareMock);
+  test('adds dev middleware to express server', () => {
+    expect(expressInstanceMock.use.mock.calls[0][0]).toBe(webpackDevMiddlewareMock);
   });
 
-  test('sends playground webpack compiler to dev middleware', () => {
-    expect(webpackDevMiddleware.mock.calls[1][0]).toBe(playgroundWebpackCompilerMock);
+  test('serve index.html on / route', () => {
+    const sendFile = jest.fn();
+    expressInstanceCbMocks['/']({}, { sendFile });
+    expect(sendFile.mock.calls[0][0]).toBe(require.resolve('../static/index.html'));
   });
 
-  test('sends playground publicPath to dev middleware', () => {
-    expect(webpackDevMiddleware.mock.calls[1][1].publicPath).toBe('/');
-  });
-
-  test('adds playground dev middleware to express server', () => {
-    expect(expressInstanceMock.use.mock.calls[1][0]).toBe(playgroundWebpackDevMiddlewareMock);
+  test('serve favicon.ico on /favicon.ico route', () => {
+    const sendFile = jest.fn();
+    expressInstanceCbMocks['/favicon.ico']({}, { sendFile });
+    expect(sendFile.mock.calls[0][0]).toBe(require.resolve('../static/favicon.ico'));
   });
 };
 
@@ -155,24 +133,12 @@ describe('default config', () => {
 
   commonTests();
 
-  test('builds module paths with resolved user component paths', () => {
-    expect(buildModulePathsMock.mock.calls[0][0]).toEqual(
-      componentPaths.map((relPath) =>
-        path.join(path.dirname(require.resolve('./dummy-config/cosmos.config')), relPath)
-      )
-    );
-  });
-
-  test('sends module paths to loader webpack config', () => {
-    expect(getLoaderWebpackConfigMock.mock.calls[0][0]).toBe(modulePathsMock);
-  });
-
   test('uses user webpack config from cwd', () => {
-    expect(getLoaderWebpackConfigMock.mock.calls[0][1]).toBe(userWebpackConfigMock);
+    expect(getWebpackConfigMock.mock.calls[0][0]).toBe(userWebpackConfigMock);
   });
 
   test('users cosmos config from cwd', () => {
-    expect(getLoaderWebpackConfigMock.mock.calls[0][2]).toBe(
+    expect(getWebpackConfigMock.mock.calls[0][1]).toBe(
       path.join(processCwdMock, 'cosmos.config'));
   });
 
@@ -205,12 +171,12 @@ describe('with hot module replacement', () => {
 
   commonTests();
 
-  test('sends loader webpack compiler to hot middleware', () => {
-    expect(webpackHotMiddleware.mock.calls[0][0]).toBe(loaderWebpackCompilerMock);
+  test('sends webpack compiler to hot middleware', () => {
+    expect(webpackHotMiddleware.mock.calls[0][0]).toBe(webpackCompilerMock);
   });
 
   test('adds hot middleware to express server', () => {
-    expect(expressInstanceMock.use.mock.calls[2][0]).toBe(webpackHotMiddlewareMock);
+    expect(expressInstanceMock.use.mock.calls[1][0]).toBe(webpackHotMiddlewareMock);
   });
 });
 
@@ -232,20 +198,12 @@ describe('with custom cosmos config path', () => {
 
   commonTests();
 
-  test('builds module paths with resolved user component paths', () => {
-    expect(buildModulePathsMock.mock.calls[0][0]).toEqual(
-      componentPaths.map((relPath) => path.join(
-        path.dirname(require.resolve('./dummy-config/custom-path/cosmos.config')), relPath)
-      )
-    );
-  });
-
   test('uses user webpack config from cwd', () => {
-    expect(getLoaderWebpackConfigMock.mock.calls[0][1]).toBe(userWebpackConfigMock);
+    expect(getWebpackConfigMock.mock.calls[0][0]).toBe(userWebpackConfigMock);
   });
 
   test('uses cosmos config from custom path', () => {
-    expect(getLoaderWebpackConfigMock.mock.calls[0][2]).toBe(
+    expect(getWebpackConfigMock.mock.calls[0][1]).toBe(
       path.join(processCwdMock, 'custom-path/cosmos.config'));
   });
 });
@@ -265,11 +223,11 @@ describe('with custom webpack config path', () => {
   commonTests();
 
   test('uses user webpack config from custom path', () => {
-    expect(getLoaderWebpackConfigMock.mock.calls[0][1]).toBe(userWebpackConfigMock);
+    expect(getWebpackConfigMock.mock.calls[0][0]).toBe(userWebpackConfigMock);
   });
 
   test('uses cosmos config from custom path', () => {
-    expect(getLoaderWebpackConfigMock.mock.calls[0][2]).toBe(
+    expect(getWebpackConfigMock.mock.calls[0][1]).toBe(
       path.join(processCwdMock, 'cosmos.config'));
   });
 });

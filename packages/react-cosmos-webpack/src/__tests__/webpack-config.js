@@ -7,11 +7,7 @@ let DefinePlugin;
 
 let getWebpackConfig;
 
-const componentPathsMock = {
-  components: '__MOCK_COMPONENTS__',
-  fixtures: '__MOCK_FIXTURES__',
-};
-const cosmosConfigRelPath = '../../__tests__/dummy-config/cosmos.config';
+const cosmosConfigRelPath = './dummy-config/cosmos.config';
 const cosmosConfigPath = require.resolve(cosmosConfigRelPath);
 
 // So far we use the same user webpack mock between all tests
@@ -49,10 +45,11 @@ describe('without hmr', () => {
   beforeEach(() => {
     cosmosConfig = {
       componentPaths: ['src/components'],
+      fixturePaths: ['test/fixtures'],
       ignore: [],
       globalImports: ['./global.css'],
     };
-    webpackConfig = getWebpackConfig(componentPathsMock, userWebpackConfig, cosmosConfigPath);
+    webpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
   });
 
   test('keeps user loaders', () => {
@@ -65,14 +62,15 @@ describe('without hmr', () => {
     });
   });
 
-  test('adds cosmos entry with cosmos loader and module paths in loader query', () => {
+  test('adds resolved module paths in loader query', () => {
     const cosmosEntry = webpackConfig.entry[webpackConfig.entry.length - 1];
-    const loaderPath = require.resolve('../../entry-loader');
+    const loaderPath = require.resolve('../entry-loader');
     const entryPath = require.resolve('../entry');
-    const stringifiedModules =
-      '{"components":"__MOCK_COMPONENTS__","fixtures":"__MOCK_FIXTURES__"}';
-    const entryMatcher = new RegExp(`^${loaderPath}\\?${stringifiedModules}!${entryPath}$`);
-    expect(cosmosEntry).toMatch(entryMatcher);
+    const stringifiedPaths = JSON.stringify({
+      componentPaths: cosmosConfig.componentPaths.map(resolveUserPath),
+      fixturePaths: cosmosConfig.fixturePaths.map(resolveUserPath),
+    });
+    expect(cosmosEntry).toBe(`${loaderPath}?${stringifiedPaths}!${entryPath}`);
   });
 
   test('does not add hot middleware client to entries', () => {
@@ -109,11 +107,12 @@ describe('with hmr', () => {
   beforeEach(() => {
     cosmosConfig = {
       componentPaths: ['src/components'],
+      fixturePaths: ['test/fixtures'],
       ignore: [],
       globalImports: ['./global.css'],
       hot: true,
     };
-    webpackConfig = getWebpackConfig(componentPathsMock, userWebpackConfig, cosmosConfigPath);
+    webpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
   });
 
   test('adds resolved global imports to entries', () => {
@@ -124,12 +123,13 @@ describe('with hmr', () => {
 
   test('adds cosmos entry with cosmos loader and module paths in loader query', () => {
     const cosmosEntry = webpackConfig.entry[webpackConfig.entry.length - 1];
-    const loaderPath = require.resolve('../../entry-loader');
+    const loaderPath = require.resolve('../entry-loader');
     const entryPath = require.resolve('../entry');
-    const stringifiedModules =
-      '{"components":"__MOCK_COMPONENTS__","fixtures":"__MOCK_FIXTURES__"}';
-    const entryMatcher = new RegExp(`^${loaderPath}\\?${stringifiedModules}!${entryPath}$`);
-    expect(cosmosEntry).toMatch(entryMatcher);
+    const stringifiedPaths = JSON.stringify({
+      componentPaths: cosmosConfig.componentPaths.map(resolveUserPath),
+      fixturePaths: cosmosConfig.fixturePaths.map(resolveUserPath),
+    });
+    expect(cosmosEntry).toBe(`${loaderPath}?${stringifiedPaths}!${entryPath}`);
   });
 
   test('adds hot middleware client to entries', () => {
@@ -143,7 +143,7 @@ describe('with absolute paths', () => {
       componentPaths: [resolveUserPath('src/components')],
       globalImports: [resolveUserPath('./global.css')],
     };
-    webpackConfig = getWebpackConfig(componentPathsMock, userWebpackConfig, cosmosConfigPath);
+    webpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
   });
 
   test('adds user global imports to entries', () => {

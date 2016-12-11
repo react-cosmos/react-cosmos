@@ -21,33 +21,22 @@ describe('loading components', () => {
   test('returns CommonJS export', () => {
     const MyComponent = () => {};
     expect(loadComponents({
-      MyComponent: () => MyComponent,
+      MyComponent,
     }).MyComponent).toBe(MyComponent);
   });
 
   test('returns ES6 default export', () => {
     const MyComponent = () => {};
     expect(loadComponents({
-      MyComponent: () => ({ __esModule: true, default: MyComponent }),
+      MyComponent: { __esModule: true, default: MyComponent },
     }).MyComponent).toBe(MyComponent);
   });
 
   test('returns ES6 named export', () => {
     const MyComponent = () => {};
     expect(loadComponents({
-      MyComponent: () => ({ __esModule: true, MyComponent }),
+      MyComponent: { __esModule: true, MyComponent },
     }).MyComponent).toBe(MyComponent);
-  });
-
-  test('does not crash on exploding module', () => {
-    expect(() => {
-      loadComponents({
-        MyComponent: () => {
-          throw new Error('BOOM!');
-        },
-      });
-    }).not.toThrow();
-    expect(console.warn).toHaveBeenCalled();
   });
 });
 
@@ -60,7 +49,7 @@ describe('loading fixtures', () => {
     const fixture = { foo: 'bar' };
     expect(loadFixtures({
       MyComponent: {
-        blank: () => fixture,
+        blank: fixture,
       },
     }).MyComponent.blank).toBe(fixture);
   });
@@ -69,22 +58,9 @@ describe('loading fixtures', () => {
     const fixture = { foo: 'bar' };
     expect(loadFixtures({
       MyComponent: {
-        blank: () => ({ __esModule: true, default: fixture }),
+        blank: { __esModule: true, default: fixture },
       },
     }).MyComponent.blank).toBe(fixture);
-  });
-
-  test('does not crash on exploding module', () => {
-    expect(() => {
-      loadFixtures({
-        MyComponent: {
-          blank: () => {
-            throw new Error('BOOM!');
-          },
-        },
-      });
-    }).not.toThrow();
-    expect(console.warn).toHaveBeenCalled();
   });
 
   test('returns default fixture when component has none', () => {

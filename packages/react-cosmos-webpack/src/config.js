@@ -6,6 +6,7 @@ export default function getConfig(userConfig) {
   // This function just applies the defaults, which are "universal".
   return {
     componentPaths: [],
+    fixturePaths: [],
     globalImports: [],
     hostname: 'localhost',
     hot: false,

@@ -1,27 +1,33 @@
 import webpack from 'webpack';
-import getConfig from '../config';
-import resolveUserPath from '../resolve-user-path';
+import getConfig from './config';
+import resolveUserPath from './utils/resolve-user-path';
 
+/**
+ * Extend the user config to create the Loader config. Namely,
+ * - Replace the entry and output
+ * - Enable hot reloading
+ * - Embed the config path to make user configs available on the client-side
+ */
 export default function getWebpackConfig(
-  modulePaths,
   userWebpackConfig,
   cosmosConfigPath
 ) {
-  const {
-    components,
-    fixtures,
-  } = modulePaths;
-
   // eslint-disable-next-line global-require
   const cosmosConfig = getConfig(require(cosmosConfigPath));
 
   const {
+    componentPaths,
+    fixturePaths,
     globalImports,
     hot,
   } = cosmosConfig;
 
-  const resolvedGlobalImports = globalImports.map(
-    path => resolveUserPath(path, cosmosConfigPath));
+  const resolvedComponentPaths = componentPaths.map(path =>
+    resolveUserPath(path, cosmosConfigPath));
+  const resolvedFixturePaths = fixturePaths.map(path =>
+    resolveUserPath(path, cosmosConfigPath));
+  const resolvedGlobalImports = globalImports.map(path =>
+    resolveUserPath(path, cosmosConfigPath));
 
   const entry = [...resolvedGlobalImports];
 
@@ -31,12 +37,9 @@ export default function getWebpackConfig(
     entry.push(require.resolve('webpack-hot-middleware/client'));
   }
 
-  entry.push(`${require.resolve('../entry-loader')}?${JSON.stringify({
-    // We escape the contents because component or fixture paths might contain
-    // an ! (exclamation point), which throws webpack off thinking everything
-    // after is the entry file path.
-    components: escape(components),
-    fixtures: escape(fixtures),
+  entry.push(`${require.resolve('./entry-loader')}?${JSON.stringify({
+    componentPaths: resolvedComponentPaths,
+    fixturePaths: resolvedFixturePaths,
   })}!${require.resolve('./entry')}`);
 
   const output = {
