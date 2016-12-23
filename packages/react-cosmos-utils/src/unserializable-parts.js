@@ -1,5 +1,4 @@
 import isPlainObject from 'lodash.isplainobject';
-import isArray from 'lodash.isarray';
 
 const isSerializable = (obj) => {
   if (
@@ -13,7 +12,7 @@ const isSerializable = (obj) => {
   }
 
   if (!isPlainObject(obj) &&
-      !isArray(obj)) {
+      !Array.isArray(obj)) {
     return false;
   }
 
