@@ -1,5 +1,4 @@
 packages/*/lib
 node_modules
 test/coverage
-.idea/
 npm-debug.log
