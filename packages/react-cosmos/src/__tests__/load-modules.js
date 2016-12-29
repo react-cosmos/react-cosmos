@@ -18,6 +18,13 @@ describe('loading components', () => {
     expect(loadComponents({})).toEqual({});
   });
 
+  test('returns empty object when no React components found', () => {
+    const fakeComponent = 42;
+    expect(loadComponents({
+      MyComponent: { __esModule: true, default: fakeComponent },
+    })).toEqual({});
+  });
+
   test('returns CommonJS export', () => {
     const MyComponent = () => {};
     expect(loadComponents({

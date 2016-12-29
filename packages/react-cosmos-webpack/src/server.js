@@ -6,13 +6,14 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { argv } from 'yargs';
+import importModule from 'react-cosmos-utils/lib/import-module';
 import getConfig from './config';
 import resolveUserPath from './utils/resolve-user-path';
 import getWebpackConfig from './webpack-config';
 
 module.exports = function startServer() {
   const cosmosConfigPath = resolveUserPath(argv.config || 'cosmos.config');
-  const cosmosConfig = getConfig(require(cosmosConfigPath));
+  const cosmosConfig = getConfig(importModule(require(cosmosConfigPath)));
 
   const {
     hostname,
@@ -22,7 +23,9 @@ module.exports = function startServer() {
     webpackConfigPath,
   } = cosmosConfig;
 
-  const userWebpackConfig = require(resolveUserPath(webpackConfigPath, cosmosConfigPath));
+  const userWebpackConfig = importModule(
+      require(resolveUserPath(webpackConfigPath, cosmosConfigPath))
+  );
   const cosmosWebpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
   const compiler = webpack(cosmosWebpackConfig);
   const app = express();
