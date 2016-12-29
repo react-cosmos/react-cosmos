@@ -134,7 +134,7 @@ describe('with hmr', () => {
   });
 
   test('adds hot middleware client to entries', () => {
-    expect(webpackConfig.entry).toContain(require.resolve('webpack-hot-middleware/client'));
+    expect(webpackConfig.entry).toContain(require.resolve('webpack-hot-middleware/client?reload=true'));
   });
 });
 
