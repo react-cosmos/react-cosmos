@@ -1,3 +1,6 @@
+/* eslint-disable global-require */
+
+import importModule from 'react-cosmos-utils/lib/import-module';
 import webpack from 'webpack';
 import getConfig from './config';
 import resolveUserPath from './utils/resolve-user-path';
@@ -12,8 +15,7 @@ export default function getWebpackConfig(
   userWebpackConfig,
   cosmosConfigPath
 ) {
-  // eslint-disable-next-line global-require
-  const cosmosConfig = getConfig(require(cosmosConfigPath));
+  const cosmosConfig = getConfig(importModule(require(cosmosConfigPath)));
 
   const {
     componentPaths,
