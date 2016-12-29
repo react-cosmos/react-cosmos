@@ -75,7 +75,9 @@ describe('without hmr', () => {
   });
 
   test('does not add hot middleware client to entries', () => {
-    expect(webpackConfig.entry).not.toContain(require.resolve('webpack-hot-middleware/client'));
+    expect(webpackConfig.entry).not.toContain(
+      `${require.resolve('webpack-hot-middleware/client')}?reload=true`
+    );
   });
 
   test('creates proper output', () => {
@@ -134,7 +136,9 @@ describe('with hmr', () => {
   });
 
   test('adds hot middleware client to entries', () => {
-    expect(webpackConfig.entry).toContain(require.resolve('webpack-hot-middleware/client'));
+    expect(webpackConfig.entry).toContain(
+      `${require.resolve('webpack-hot-middleware/client')}?reload=true`
+    );
   });
 });
 

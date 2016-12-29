@@ -37,7 +37,7 @@ export default function getWebpackConfig(
   if (hot) {
     // It's crucial for Cosmos to not depend on any user loader. This way the
     // webpack configs can point solely to the user deps for loaders.
-    entry.push(require.resolve('webpack-hot-middleware/client'));
+    entry.push(`${require.resolve('webpack-hot-middleware/client')}?reload=true`);
   }
 
   entry.push(`${require.resolve('./entry-loader')}?${JSON.stringify({
