@@ -11,7 +11,9 @@ module.exports = {
     // Object and Array are forbidden by default too
     "react/forbid-prop-types": [2, { "forbid": [ "any" ] }],
     // Passing children as prop is needed in React Cosmos
-    "react/no-children-prop": 0
+    "react/no-children-prop": 0,
+    // Defining unused props is required in Proxies
+    "react/no-unused-prop-types": 0
   },
   parserOptions: {
     ecmaFeatures: {
