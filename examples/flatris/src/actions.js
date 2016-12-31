@@ -61,17 +61,17 @@ export const load = () => (dispatch, getState) => {
   }
 };
 
-export const start = () => dispatch => {
+export const start = () => (dispatch) => {
   dispatch({ type: 'START' });
   dispatch(advance());
 };
 
-export const pause = () => dispatch => {
+export const pause = () => (dispatch) => {
   dispatch({ type: 'PAUSE' });
   cancelFrame();
 };
 
-export const resume = () => dispatch => {
+export const resume = () => (dispatch) => {
   dispatch({ type: 'RESUME' });
   dispatch(advance());
 };

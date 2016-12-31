@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '../../src/render.js';
+import { render } from '../../src/render';
 
 const ReactDOM = require('react-dom-polyfill')(React);
 

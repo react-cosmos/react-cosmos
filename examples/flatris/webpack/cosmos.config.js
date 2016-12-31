@@ -9,7 +9,7 @@ module.exports = {
     '../src/components',
   ],
   proxies: [createReduxProxy({
-    createStore: (initialState) =>
+    createStore: initialState =>
       createStore(flatrisReducer, initialState, applyMiddleware(thunk)),
   })],
   hot: true,

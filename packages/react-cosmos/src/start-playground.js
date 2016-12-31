@@ -21,7 +21,7 @@ module.exports = ({
   new Router({
     container: document.body.appendChild(document.createElement('div')),
     getComponentClass: () => ReactComponentPlayground,
-    getComponentProps: (params) => ({
+    getComponentProps: params => ({
       ...params,
       fixtures: loadFixtures(fixtures),
       loaderUri,

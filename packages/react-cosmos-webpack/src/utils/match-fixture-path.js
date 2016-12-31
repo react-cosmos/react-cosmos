@@ -1,4 +1,4 @@
-const buildPathMatchers = (componentCleanPath) => [
+const buildPathMatchers = componentCleanPath => [
   `\\./__fixtures__/${componentCleanPath}/(.*)\\.(js|json)$`,
   `\\./${componentCleanPath}/__fixtures__/(.*)\\.(js|json)$`,
   `\\./${componentCleanPath}/(.*)\\.(js|json)$`,

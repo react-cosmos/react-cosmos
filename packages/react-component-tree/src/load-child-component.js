@@ -1,5 +1,5 @@
 import React from 'react';
-import loadChild from './load-child.js';
+import loadChild from './load-child';
 
 class LoadChildComponent extends React.Component {
   loadChild(childName, a, b, c, d, e, f) {

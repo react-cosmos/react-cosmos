@@ -26,7 +26,7 @@ let cosmosConfig;
 // This is the output that we test
 let webpackConfig;
 
-const resolveUserPath = (relPath) => path.join(path.dirname(cosmosConfigPath), relPath);
+const resolveUserPath = relPath => path.join(path.dirname(cosmosConfigPath), relPath);
 
 beforeEach(() => {
   // We want to change configs between test cases

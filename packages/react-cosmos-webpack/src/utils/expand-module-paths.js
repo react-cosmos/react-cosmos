@@ -2,8 +2,8 @@ import matchFixturePath from './match-fixture-path';
 
 const SPECIAL_DIRS = ['__tests__', '__fixtures__'];
 
-const isUnderSpecialDir = (path) =>
-  SPECIAL_DIRS.some((dir) => path.indexOf(`/${dir}/`) !== -1);
+const isUnderSpecialDir = path =>
+  SPECIAL_DIRS.some(dir => path.indexOf(`/${dir}/`) !== -1);
 
 /**
  * Traverse through a list of webpack contexts (via require.context) and map
@@ -17,7 +17,7 @@ const expandModulePaths = (componentContexts, fixtureContexts, ignorePatterns = 
     componentContext.keys().forEach((componentPath) => {
       if (
         isUnderSpecialDir(componentPath) ||
-        ignorePatterns.some((ignorePattern) => componentPath.match(ignorePattern))
+        ignorePatterns.some(ignorePattern => componentPath.match(ignorePattern))
       ) {
         return;
       }

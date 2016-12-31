@@ -2,7 +2,7 @@ import loaderUtils from 'loader-utils';
 
 const jsonLoader = require.resolve('json-loader');
 
-const createComponentContext = (path) =>
+const createComponentContext = path =>
   `require.context('${path}', true, /\\.jsx?$/)`;
 
 const getFixturePathForExt = (path, ext) => (
@@ -25,13 +25,13 @@ module.exports = function embedModules(source) {
   const { componentPaths, fixturePaths } = loaderUtils.parseQuery(this.query);
 
   const componentContexts = `[${componentPaths.map(createComponentContext).join(',')}]`;
-  const fixtureContexts = `[${componentPaths.map((path) =>
+  const fixtureContexts = `[${componentPaths.map(path =>
     createRelativeFixtureContext(path, 'js')
-  ).concat(componentPaths.map((path) =>
+  ).concat(componentPaths.map(path =>
     createRelativeFixtureContext(path, 'json')
-  )).concat(fixturePaths.map((path) =>
+  )).concat(fixturePaths.map(path =>
     createExternalFixtureContext(path, 'js')
-  )).concat(fixturePaths.map((path) =>
+  )).concat(fixturePaths.map(path =>
     createExternalFixtureContext(path, 'json')
   ))
   .join(',')}]`;

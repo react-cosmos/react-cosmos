@@ -17,7 +17,7 @@ const isReactComponent = component =>
 export function loadComponents(components) {
   const result = {};
 
-  Object.keys(components).forEach(name => {
+  Object.keys(components).forEach((name) => {
     const component = importModule(components[name], name);
 
     if (!component || !isReactComponent(component)) {
@@ -55,11 +55,11 @@ export function loadComponents(components) {
 export function loadFixtures(fixtures) {
   const result = {};
 
-  Object.keys(fixtures).forEach(componentName => {
+  Object.keys(fixtures).forEach((componentName) => {
     const componentFixtures = fixtures[componentName];
     const componentResult = {};
 
-    Object.keys(componentFixtures).forEach(name => {
+    Object.keys(componentFixtures).forEach((name) => {
       componentResult[name] = importModule(componentFixtures[name], name);
     });
 

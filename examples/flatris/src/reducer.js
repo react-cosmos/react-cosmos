@@ -110,11 +110,11 @@ const reducers = {
     });
   },
 
-  PAUSE: (state) => Object.assign({}, state, {
+  PAUSE: state => Object.assign({}, state, {
     gameState: PAUSED,
   }),
 
-  RESUME: (state) => Object.assign({}, state, {
+  RESUME: state => Object.assign({}, state, {
     gameState: PLAYING,
   }),
 
@@ -141,7 +141,7 @@ const reducers = {
     });
   },
 
-  ROTATE: (state) => {
+  ROTATE: state => {
     const {
       grid,
       activeTetriminoGrid,
@@ -167,11 +167,11 @@ const reducers = {
     });
   },
 
-  ENABLE_ACCELERATION: (state) => Object.assign({}, state, {
+  ENABLE_ACCELERATION: state => Object.assign({}, state, {
     dropAcceleration: true,
   }),
 
-  DISABLE_ACCELERATION: (state) => Object.assign({}, state, {
+  DISABLE_ACCELERATION: state => Object.assign({}, state, {
     dropAcceleration: false,
   }),
 };

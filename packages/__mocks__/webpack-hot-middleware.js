@@ -2,7 +2,7 @@ let returnMock;
 
 const middleware = jest.fn(() => returnMock);
 
-middleware.__setMock = (mock => {
+middleware.__setMock = ((mock) => {
   returnMock = mock;
 });
 
