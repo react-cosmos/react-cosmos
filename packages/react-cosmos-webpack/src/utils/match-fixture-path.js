@@ -11,7 +11,7 @@ const buildPathMatchers = componentCleanPath => [
 const matchFixturePath = (fixturePath, componentCleanPath) => {
   const matchers = buildPathMatchers(componentCleanPath);
 
-  for (let i = 0; i < matchers.length; i++) {
+  for (let i = 0; i < matchers.length; i += 1) {
     const matchResult = fixturePath.match(new RegExp(matchers[i]));
     if (matchResult) {
       return matchResult[1];
