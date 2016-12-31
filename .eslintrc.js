@@ -9,7 +9,9 @@ module.exports = {
     // Dynamic require is needed in Playground
     "import/no-dynamic-require": 0,
     // Object and Array are forbidden by default too
-    "react/forbid-prop-types": [2, { "forbid": [ "any" ] }]
+    "react/forbid-prop-types": [2, { "forbid": [ "any" ] }],
+    // Passing children as prop is needed in React Cosmos
+    "react/no-children-prop": 0
   },
   parserOptions: {
     ecmaFeatures: {
