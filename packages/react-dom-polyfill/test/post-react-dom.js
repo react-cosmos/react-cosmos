@@ -1,3 +1,4 @@
+/* eslint-disable import/no-webpack-loader-syntax */
 const reactDOMPolyfillInjector = require('inject?react-dom!../src');
 
 describe('DOMPolyfill Post React DOM (>=0.14)', () => {
