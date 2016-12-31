@@ -69,11 +69,11 @@ class Well extends React.Component {
 
 Well.propTypes = {
   grid: React.PropTypes.arrayOf(
-    React.PropTypes.arrayOf(React.PropTypes.array)
+    React.PropTypes.arrayOf(React.PropTypes.array),
   ).isRequired,
   activeTetrimino: React.PropTypes.string,
   activeTetriminoGrid: React.PropTypes.arrayOf(
-    React.PropTypes.arrayOf(React.PropTypes.number)
+    React.PropTypes.arrayOf(React.PropTypes.number),
   ),
   activeTetriminoPosition: React.PropTypes.shape({
     x: React.PropTypes.number,

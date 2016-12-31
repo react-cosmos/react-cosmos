@@ -49,7 +49,7 @@ const renderProxy = (f, options) => {
       fixture={fixture}
       onComponentRef={onComponentRef}
       onFixtureUpdate={onFixtureUpdate}
-    />
+    />,
   );
   childWrapper = wrapper.at(0);
   childProps = childWrapper.props();

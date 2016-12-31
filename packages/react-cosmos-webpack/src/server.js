@@ -24,7 +24,7 @@ module.exports = function startServer() {
   } = cosmosConfig;
 
   const userWebpackConfig = importModule(
-      require(resolveUserPath(webpackConfigPath, cosmosConfigPath))
+      require(resolveUserPath(webpackConfigPath, cosmosConfigPath)),
   );
   const cosmosWebpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
   const compiler = webpack(cosmosWebpackConfig);

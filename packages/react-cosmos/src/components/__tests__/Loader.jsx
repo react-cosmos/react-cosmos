@@ -61,7 +61,7 @@ const init = () => {
           base: baseFixture,
         },
       }}
-    />
+    />,
   );
   instance = wrapper.instance();
 };

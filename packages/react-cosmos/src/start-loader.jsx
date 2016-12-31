@@ -39,6 +39,6 @@ module.exports = ({
         PropsProxy,
       ]}
     />,
-    container
+    container,
   );
 };

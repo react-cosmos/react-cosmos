@@ -219,11 +219,11 @@ FlatrisGame.propTypes = {
   lines: React.PropTypes.number.isRequired,
   nextTetrimino: React.PropTypes.string,
   grid: React.PropTypes.arrayOf(
-    React.PropTypes.arrayOf(React.PropTypes.array)
+    React.PropTypes.arrayOf(React.PropTypes.array),
   ),
   activeTetrimino: React.PropTypes.string,
   activeTetriminoGrid: React.PropTypes.arrayOf(
-    React.PropTypes.arrayOf(React.PropTypes.number)
+    React.PropTypes.arrayOf(React.PropTypes.number),
   ),
   activeTetriminoPosition: React.PropTypes.shape({
     x: React.PropTypes.number,
@@ -255,5 +255,5 @@ const mapDispatchToProps = (dispatch) => ({
 
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(FlatrisGame);

@@ -353,7 +353,7 @@ module.exports = React.createClass({
     if (this.constructor.didFixtureChange(this.props, nextProps)) {
       this.setState(
         this.constructor.getFixtureState(nextProps),
-        this.sendFixtureToLoader
+        this.sendFixtureToLoader,
       );
     }
   },
@@ -392,7 +392,7 @@ module.exports = React.createClass({
       // clicking on the fixture button while already selected
       this.setState(
         this.constructor.getFixtureState(this.props),
-        this.sendFixtureToLoader
+        this.sendFixtureToLoader,
       );
     }
   },

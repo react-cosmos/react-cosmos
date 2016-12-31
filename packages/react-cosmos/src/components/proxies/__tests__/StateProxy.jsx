@@ -43,7 +43,7 @@ const renderProxy = (options) => {
       onComponentRef={onComponentRef}
       onFixtureUpdate={onFixtureUpdate}
       disableLocalState={options.disabled}
-    />
+    />,
   );
   childWrapper = wrapper.at(0);
   childProps = childWrapper.props();

@@ -26,13 +26,13 @@ module.exports = function embedModules(source) {
 
   const componentContexts = `[${componentPaths.map(createComponentContext).join(',')}]`;
   const fixtureContexts = `[${componentPaths.map(path =>
-    createRelativeFixtureContext(path, 'js')
+    createRelativeFixtureContext(path, 'js'),
   ).concat(componentPaths.map(path =>
-    createRelativeFixtureContext(path, 'json')
+    createRelativeFixtureContext(path, 'json'),
   )).concat(fixturePaths.map(path =>
-    createExternalFixtureContext(path, 'js')
+    createExternalFixtureContext(path, 'js'),
   )).concat(fixturePaths.map(path =>
-    createExternalFixtureContext(path, 'json')
+    createExternalFixtureContext(path, 'json'),
   ))
   .join(',')}]`;
 

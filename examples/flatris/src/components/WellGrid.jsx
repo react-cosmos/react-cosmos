@@ -37,7 +37,7 @@ class WellGrid extends React.Component {
               <SquareBlock
                 color={blockValue[1]}
               />
-            </li>
+            </li>,
           );
         }
       }
@@ -57,7 +57,7 @@ class WellGrid extends React.Component {
 
 WellGrid.propTypes = {
   grid: React.PropTypes.arrayOf(
-    React.PropTypes.arrayOf(React.PropTypes.array)
+    React.PropTypes.arrayOf(React.PropTypes.array),
   ).isRequired,
 };
 
