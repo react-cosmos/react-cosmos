@@ -1,7 +1,7 @@
 import React from 'react';
-import defaultFixture from './default.js';
+import defaultFixture from './default';
 
-module.exports = { ...defaultFixture,
+export default { ...defaultFixture,
   component: 'FirstComponent',
   fixture: 'default',
   state: {

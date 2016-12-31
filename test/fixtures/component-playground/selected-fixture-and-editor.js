@@ -1,5 +1,5 @@
-import selectedFixture from './selected-fixture.js';
+import selectedFixture from './selected-fixture';
 
-module.exports = { ...selectedFixture,
+export default { ...selectedFixture,
   editor: true,
 };

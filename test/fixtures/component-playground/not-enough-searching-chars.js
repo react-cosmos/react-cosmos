@@ -1,6 +1,6 @@
-import fixture from './search-without-results.js';
+import fixture from './search-without-results';
 
-module.exports = { ...fixture,
+export default { ...fixture,
   state: {
     searchText: 'i',
   },

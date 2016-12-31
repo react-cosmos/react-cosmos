@@ -11,7 +11,7 @@ const PropsProxy = ({
   ref: onComponentRef,
 });
 
-module.exports = {
+export default {
   fixtures: {
     FirstComponent: {
       default: {
