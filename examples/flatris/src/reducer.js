@@ -141,7 +141,7 @@ const reducers = {
     });
   },
 
-  ROTATE: state => {
+  ROTATE: (state) => {
     const {
       grid,
       activeTetriminoGrid,

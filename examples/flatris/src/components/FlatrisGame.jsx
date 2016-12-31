@@ -241,8 +241,8 @@ FlatrisGame.propTypes = {
   onDisableAcceleration: React.PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => state;
-const mapDispatchToProps = (dispatch) => ({
+const mapStateToProps = state => state;
+const mapDispatchToProps = dispatch => ({
   onLoad: () => dispatch(load()),
   onStart: () => dispatch(start()),
   onPause: () => dispatch(pause()),
