@@ -1,5 +1,5 @@
-import fixture from './selected-fixture';
+const fixture = require('./selected-fixture');
 
-export default { ...fixture,
+module.exports = { ...fixture,
   fullScreen: true,
 };

@@ -1,5 +1,5 @@
-import selectedFixture from './selected-fixture';
+const selectedFixture = require('./selected-fixture');
 
-export default { ...selectedFixture,
+module.exports = { ...selectedFixture,
   editor: true,
 };

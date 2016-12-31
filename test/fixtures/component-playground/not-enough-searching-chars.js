@@ -1,6 +1,6 @@
-import fixture from './search-without-results';
+const fixture = require('./search-without-results');
 
-export default { ...fixture,
+module.exports = { ...fixture,
   state: {
     searchText: 'i',
   },
