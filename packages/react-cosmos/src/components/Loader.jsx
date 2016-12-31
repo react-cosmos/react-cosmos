@@ -1,4 +1,5 @@
 /* global parent */
+/* eslint-disable class-methods-use-this */
 import React from 'react';
 import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
 import createLinkedList from 'react-cosmos-utils/lib/linked-list';
