@@ -1,3 +1,4 @@
+/* eslint-disable no-bitwise */
 import isPlainObject from 'lodash.isplainobject';
 
 const isSerializable = (obj) => {
