@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 export function generateEmptyGrid(rows, cols) {
   const matrix = [];
 
