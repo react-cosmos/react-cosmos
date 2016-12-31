@@ -1,6 +1,6 @@
 import React from 'react';
 import { renderIntoDocument } from 'react-addons-test-utils';
-import { serialize } from '../../src/serialize.js';
+import { serialize } from '../../src/serialize';
 
 describe('UNIT Serialize', () => {
   class ChildComponent extends React.Component {

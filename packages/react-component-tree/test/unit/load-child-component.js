@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderIntoDocument } from 'react-addons-test-utils';
-import loadChild from '../../src/load-child.js';
-import LoadChildComponent from '../../src/load-child-component.js';
+import loadChild from '../../src/load-child';
+import LoadChildComponent from '../../src/load-child-component';
 
 describe('UNIT Load child component', () => {
   const fakeReactElement = {};

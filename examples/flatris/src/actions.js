@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import raf from 'raf';
 
 import { STOPPED, PLAYING } from './constants/states';

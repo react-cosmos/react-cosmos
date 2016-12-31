@@ -1,4 +1,4 @@
-import uri from '../uri.js';
+import uri from '../uri';
 
 test('returns empty object when querystring is missing', () => {
   const uriLocation = 'mypage.com';

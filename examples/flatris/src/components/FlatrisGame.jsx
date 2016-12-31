@@ -1,4 +1,5 @@
 /* global window */
+/* eslint-disable import/extensions */
 
 import React from 'react';
 import { connect } from 'react-redux';

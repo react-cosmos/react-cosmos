@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderIntoDocument } from 'react-addons-test-utils';
-import loadChild from '../../src/load-child.js';
-import LoadChildMixin from '../../src/load-child-mixin.js';
+import loadChild from '../../src/load-child';
+import LoadChildMixin from '../../src/load-child-mixin';
 
 describe('UNIT Load child mixin', () => {
   const fakeReactElement = {};

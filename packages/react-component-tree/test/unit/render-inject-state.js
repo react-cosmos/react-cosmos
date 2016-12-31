@@ -1,6 +1,6 @@
 import React from 'react';
 import { renderIntoDocument } from 'react-addons-test-utils';
-import { render } from '../../src/render.js';
+import { render } from '../../src/render';
 
 const ReactDOM = require('react-dom-polyfill')(React);
 
