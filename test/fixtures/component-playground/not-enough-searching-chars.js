@@ -1,4 +1,4 @@
-const fixture = require('./search-without-results');
+import fixture from './search-without-results';
 
 module.exports = { ...fixture,
   state: {

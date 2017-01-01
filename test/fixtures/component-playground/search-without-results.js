@@ -1,4 +1,4 @@
-const fixture = require('./selected-fixture-with-search');
+import fixture from './selected-fixture-with-search';
 
 module.exports = { ...fixture,
   component: '',

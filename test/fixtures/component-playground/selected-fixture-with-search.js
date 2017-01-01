@@ -1,4 +1,4 @@
-const selectedFixture = require('./selected-fixture');
+import selectedFixture from './selected-fixture';
 
 module.exports = { ...selectedFixture,
   state: {
