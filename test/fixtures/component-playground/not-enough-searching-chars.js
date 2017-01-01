@@ -1,4 +1,4 @@
-import fixture from './search-without-results.js';
+import fixture from './search-without-results';
 
 module.exports = { ...fixture,
   state: {

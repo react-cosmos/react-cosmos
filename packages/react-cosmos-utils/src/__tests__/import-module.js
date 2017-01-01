@@ -26,7 +26,7 @@ const es6ModuleWithMultiExports = Object.assign({}, es6Module, {
 
 test('returns es6 module containing default export', () => {
   expect(importModule(es6ModuleWithDefaultExport, 'foo')).toBe(
-      es6ModuleWithDefaultExport.default
+      es6ModuleWithDefaultExport.default,
   );
 });
 
@@ -36,7 +36,7 @@ test('returns es6 module containing named export', () => {
 
 test('returns es6 module containing default and named exports', () => {
   expect(importModule(es6ModuleWithMultiExports, 'foo')).toBe(
-      es6ModuleWithMultiExports.foo
+      es6ModuleWithMultiExports.foo,
   );
 });
 

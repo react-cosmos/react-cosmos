@@ -1,5 +1,7 @@
 /* eslint-env browser */
-/* eslint-disable react/no-string-refs, react/no-find-dom-node, react/sort-comp */
+/* eslint-disable react/no-string-refs, react/no-find-dom-node,
+    react/sort-comp, jsx-a11y/anchor-has-content
+*/
 
 import _ from 'lodash';
 import React from 'react';
@@ -353,7 +355,7 @@ module.exports = React.createClass({
     if (this.constructor.didFixtureChange(this.props, nextProps)) {
       this.setState(
         this.constructor.getFixtureState(nextProps),
-        this.sendFixtureToLoader
+        this.sendFixtureToLoader,
       );
     }
   },
@@ -392,7 +394,7 @@ module.exports = React.createClass({
       // clicking on the fixture button while already selected
       this.setState(
         this.constructor.getFixtureState(this.props),
-        this.sendFixtureToLoader
+        this.sendFixtureToLoader,
       );
     }
   },

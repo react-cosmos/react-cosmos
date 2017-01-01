@@ -1,5 +1,5 @@
 import React from 'react';
-import { loadChild } from '../../src/load-child.js';
+import { loadChild } from '../../src/load-child';
 
 const FirstComponent = {
   prototype: {

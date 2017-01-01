@@ -13,7 +13,7 @@ module.exports = (React) => {
   } else {
     const { render, unmountComponentAtNode } = React;
     return {
-      findDOMNode: (reactElement) => (
+      findDOMNode: reactElement => (
         typeof reactElement.getDOMNode === 'function' ?
           reactElement.getDOMNode() : reactElement
       ),

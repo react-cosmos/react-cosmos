@@ -1,7 +1,7 @@
 import omit from 'lodash.omit';
 import React from 'react';
 
-const isClassComponent = (Component) =>
+const isClassComponent = Component =>
   Component &&
   Component.prototype &&
   (typeof Component.prototype.render === 'function' ||

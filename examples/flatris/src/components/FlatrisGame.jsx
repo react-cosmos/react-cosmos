@@ -1,4 +1,5 @@
 /* global window */
+/* eslint-disable import/extensions */
 
 import React from 'react';
 import { connect } from 'react-redux';
@@ -219,11 +220,11 @@ FlatrisGame.propTypes = {
   lines: React.PropTypes.number.isRequired,
   nextTetrimino: React.PropTypes.string,
   grid: React.PropTypes.arrayOf(
-    React.PropTypes.arrayOf(React.PropTypes.array)
+    React.PropTypes.arrayOf(React.PropTypes.array),
   ),
   activeTetrimino: React.PropTypes.string,
   activeTetriminoGrid: React.PropTypes.arrayOf(
-    React.PropTypes.arrayOf(React.PropTypes.number)
+    React.PropTypes.arrayOf(React.PropTypes.number),
   ),
   activeTetriminoPosition: React.PropTypes.shape({
     x: React.PropTypes.number,
@@ -240,8 +241,8 @@ FlatrisGame.propTypes = {
   onDisableAcceleration: React.PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => state;
-const mapDispatchToProps = (dispatch) => ({
+const mapStateToProps = state => state;
+const mapDispatchToProps = dispatch => ({
   onLoad: () => dispatch(load()),
   onStart: () => dispatch(start()),
   onPause: () => dispatch(pause()),
@@ -255,5 +256,5 @@ const mapDispatchToProps = (dispatch) => ({
 
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(FlatrisGame);

@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 export function generateEmptyGrid(rows, cols) {
   const matrix = [];
 
@@ -86,10 +87,10 @@ export function getBottomMostPosition(grid, tetriminoGrid, position) {
   return Object.assign({}, position, { y });
 }
 
-const getMaxIdFromLine = (line) =>
+const getMaxIdFromLine = line =>
   Math.max(...line.map(cell => (cell ? cell[0] : 0)));
 
-const getMaxIdFromGrid = (grid) =>
+const getMaxIdFromGrid = grid =>
   Math.max(...grid.map(line => getMaxIdFromLine(line)));
 
 export function transferTetriminoToGrid(grid, tetriminoGrid, position, color) {
@@ -120,9 +121,9 @@ export function transferTetriminoToGrid(grid, tetriminoGrid, position, color) {
   return newGrid;
 }
 
-const createEmptyLine = (cols) => [...Array(cols)].map(() => null);
+const createEmptyLine = cols => [...Array(cols)].map(() => null);
 
-const isLine = (row) => !row.some((cell) => cell === null);
+const isLine = row => !row.some(cell => cell === null);
 
 export function clearLines(grid) {
   /**

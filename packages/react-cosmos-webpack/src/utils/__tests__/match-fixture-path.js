@@ -29,7 +29,7 @@ const testExtension = (ext) => {
       });
     });
 
-    describe('Nested inside ${COMPONENT_PATH}/__fixtures__', () => {
+    describe('Nested inside COMPONENT_PATH/__fixtures__', () => {
       test('matches root component with root fixture', () => {
         m(`./Menu/__fixtures__/base.${ext}`, 'Menu', 'base');
       });

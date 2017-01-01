@@ -3,7 +3,7 @@ import isPlainObject from 'lodash.isplainobject';
 const isSerializable = (obj) => {
   if (
     obj === undefined ||
-    obj === null |
+    obj === null ||
     typeof obj === 'boolean' ||
     typeof obj === 'number' ||
     typeof obj === 'string'

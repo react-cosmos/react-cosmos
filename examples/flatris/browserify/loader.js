@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
@@ -10,7 +11,7 @@ import flatrisReducer from '../src/reducer';
 
 module.exports = startLoader({
   proxies: [createReduxProxy({
-    createStore: (initialState) =>
+    createStore: initialState =>
       createStore(flatrisReducer, initialState, applyMiddleware(thunk)),
   })],
   components,

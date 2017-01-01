@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import React from 'react';
 import omit from 'lodash.omit';
 import isEqual from 'lodash.isequal';

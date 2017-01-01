@@ -1,4 +1,4 @@
-import fixture from './selected-fixture-with-search.js';
+import fixture from './selected-fixture-with-search';
 
 module.exports = { ...fixture,
   component: '',

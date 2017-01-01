@@ -1,5 +1,5 @@
 import React from 'react';
-import defaultFixture from './default.js';
+import defaultFixture from './default';
 
 module.exports = { ...defaultFixture,
   component: 'FirstComponent',

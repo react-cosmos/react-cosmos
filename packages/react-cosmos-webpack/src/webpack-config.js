@@ -13,7 +13,7 @@ import resolveUserPath from './utils/resolve-user-path';
  */
 export default function getWebpackConfig(
   userWebpackConfig,
-  cosmosConfigPath
+  cosmosConfigPath,
 ) {
   const cosmosConfig = getConfig(importModule(require(cosmosConfigPath)));
 

@@ -18,7 +18,7 @@ beforeAll(() => {
       component={Component}
       fixture={fixture}
       onComponentRef={onComponentRef}
-    />
+    />,
   );
   childWrapper = wrapper.at(0);
   childProps = childWrapper.props();

@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 import React from 'react';
 import SquareBlock from './SquareBlock';
 
@@ -28,7 +29,7 @@ class Tetrimino extends React.Component {
               <SquareBlock
                 color={this.props.color}
               />
-            </li>
+            </li>,
           );
         }
       }
@@ -49,7 +50,7 @@ class Tetrimino extends React.Component {
 Tetrimino.propTypes = {
   color: React.PropTypes.string.isRequired,
   grid: React.PropTypes.arrayOf(
-    React.PropTypes.arrayOf(React.PropTypes.number)
+    React.PropTypes.arrayOf(React.PropTypes.number),
   ).isRequired,
 };
 

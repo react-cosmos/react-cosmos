@@ -3,7 +3,7 @@ const createContext = (fileMap) => {
   // Useful for matchFixturePath mock
   Object.assign(allModules, fileMap);
 
-  const fn = (path) => fileMap[path];
+  const fn = path => fileMap[path];
   fn.keys = () => Object.keys(fileMap);
   return fn;
 };

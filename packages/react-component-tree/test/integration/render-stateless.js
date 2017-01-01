@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '../../src/render.js';
+import { render } from '../../src/render';
 
 const ReactDOM = require('react-dom-polyfill')(React);
 
@@ -11,7 +11,7 @@ describe('INTEGRATION Render stateless component', () => {
 
   let domContainer;
 
-  const StatelessComponent = (props) =>
+  const StatelessComponent = props =>
     // eslint-disable-next-line react/jsx-filename-extension, react/prop-types
     <div>{props.children ? props.children : props.foo}</div>;
 
