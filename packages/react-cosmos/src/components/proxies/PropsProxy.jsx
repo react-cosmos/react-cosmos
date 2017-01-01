@@ -10,11 +10,15 @@ export default class PropsProxy extends React.Component {
       fixture,
       onComponentRef,
     } = this.props;
+    let children;
+    if (Array.isArray(fixture.children)) {
+      children = [].slice.call(fixture.children);
+    }
 
     return React.createElement(component, {
       ...fixture,
       ref: onComponentRef,
-    });
+    }, children);
   }
 }
 
