@@ -1,5 +1,7 @@
 /* eslint-env browser */
-/* eslint-disable react/no-string-refs, react/no-find-dom-node, react/sort-comp */
+/* eslint-disable react/no-string-refs, react/no-find-dom-node,
+    react/sort-comp, jsx-a11y/anchor-has-content
+*/
 
 import _ from 'lodash';
 import React from 'react';
