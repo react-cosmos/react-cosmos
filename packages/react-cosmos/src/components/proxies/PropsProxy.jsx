@@ -1,4 +1,5 @@
 import React from 'react';
+import omit from 'lodash.omit';
 
 export default class PropsProxy extends React.Component {
   /**
@@ -10,15 +11,11 @@ export default class PropsProxy extends React.Component {
       fixture,
       onComponentRef,
     } = this.props;
-    let children;
-    if (Array.isArray(fixture.children)) {
-      children = [].slice.call(fixture.children);
-    }
 
     return React.createElement(component, {
-      ...fixture,
+      ...omit(fixture, 'children'),
       ref: onComponentRef,
-    }, children);
+    }, fixture.children);
   }
 }
 
