@@ -14,7 +14,6 @@ module.exports = {
     "react/no-children-prop": 0,
     // Defining unused props is required in Proxies
     "react/no-unused-prop-types": 0,
-    "jsx-a11y/anchor-has-content": 0
   },
   parserOptions: {
     ecmaFeatures: {
