@@ -1,33 +1,15 @@
 const glob = require('glob');
 const path = require('path');
-const { spawn } = require('child_process');
+const npmRun = require('npm-run');
 
 function _runBuild(packageName) {
   const npmTask = packageName !== 'react-component-playground' ? 'build-babel' :
       'build-webpack';
-  const child = spawn(/^win/.test(process.platform) ? 'npm.cmd' : 'npm',
-      ['run', npmTask], {
-        env: {
-          $PACKAGE: packageName,
-        },
-      }
-  );
-
-  child.stdout.on('data', (data) => {
-    console.log(data);
+  const stdout = npmRun.execSync(`PACKAGE=${packageName} npm run ${npmTask}`, {
+    cwd: __dirname,
   });
 
-  child.stderr.on('data', (data) => {
-    console.error(data);
-  });
-
-  child.on('close', (code) => {
-    console.log(`child process exited with code ${code}`);
-  });
-
-  child.on('error', (err) => {
-    console.error(`Failed to start child process ${err}`);
-  });
+  console.log(stdout.toString('utf-8'));
 }
 
 glob('./packages/*react-*', null, (err, files) => {
