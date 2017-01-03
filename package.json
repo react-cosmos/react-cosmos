@@ -11,7 +11,7 @@
     "lint": "eslint --ext '.jsx,.js' ./",
     "build-babel": "babel -D --ignore '__tests__,__mocks__' packages/$PACKAGE/src -d packages/$PACKAGE/lib",
     "build-webpack": "webpack --config packages/$PACKAGE/webpack.config.js",
-    "build:package": "node ./scripts/build-webpack-package.js",
+    "build:package": "node ./scripts/build-package.js",
     "build": "rm -rf ./packages/*/lib && npm run build:package",
     "prepublish": "npm run bootstrap && npm run build",
     "publish-lerna": "npm run test && npm run build && lerna publish",
