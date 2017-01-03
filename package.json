@@ -11,6 +11,7 @@
     "lint": "eslint --ext '.jsx,.js' ./",
     "build-babel": "babel -D --ignore '__tests__,__mocks__' packages/$PACKAGE/src -d packages/$PACKAGE/lib",
     "build-webpack": "webpack --config packages/$PACKAGE/webpack.config.js",
+    "build:package": "node ./scripts/build-webpack-package.js",
     "build:playground": "PACKAGE=react-component-playground npm run build-webpack",
     "build:component-tree": "PACKAGE=react-component-tree npm run build-babel",
     "build:cosmos": "PACKAGE=react-cosmos npm run build-babel",
