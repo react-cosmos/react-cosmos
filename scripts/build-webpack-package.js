@@ -5,11 +5,13 @@ const { spawn } = require('child_process');
 function _runBuild(packageName) {
   const npmTask = packageName !== 'react-component-playground' ? 'build-babel' :
       'build-webpack';
-  const child = spawn('npm', ['run', npmTask], {
-    env: {
-      $PACKAGE: packageName,
-    },
-  });
+  const child = spawn(/^win/.test(process.platform) ? 'npm.cmd' : 'npm',
+      ['run', npmTask], {
+        env: {
+          $PACKAGE: packageName,
+        },
+      }
+  );
 
   child.stdout.on('data', (data) => {
     console.log(data);
