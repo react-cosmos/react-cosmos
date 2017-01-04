@@ -6,16 +6,27 @@ const yargs = require('yargs');
 /**
  * Runs the build-babel or build-webpack npm target for the specified package.
  * @param packageName Name of the package as listed in ./packages/
+ * @param npmTask Name of the npm task, defaults to build-babel
  */
-function runBuildTask(packageName) {
-  const npmTask = packageName !== 'react-component-playground' ? 'build-babel' :
-      'build-webpack';
+function runBuildTask(packageName, npmTask = 'build-babel') {
   const stdout = npmRun.execSync(`PACKAGE=${packageName} npm run ${npmTask}`, {
     cwd: __dirname,
   });
 
   /* eslint-disable no-console */
   console.log(stdout.toString('utf-8'));
+}
+
+/**
+ * Run the build for Component Playground, since it's a webpack build it
+ * requires all other components to be built first.
+ * @param packageNames List of package names
+ */
+function runBuildPlayground(packageNames) {
+  packageNames
+      .filter(pkg => pkg !== 'react-component-playground')
+      .forEach(pkg => (runBuildTask(pkg)));
+  runBuildTask('react-component-playground', 'build-webpack');
 }
 
 glob('./packages/react-*', null, (err, files) => {
@@ -27,9 +38,15 @@ glob('./packages/react-*', null, (err, files) => {
   const targetPackage = argv._[0];
 
   if (!targetPackage) {
-    allPackages.forEach(pkg => (runBuildTask(pkg)));
+    // NOTE: The Playground needs to be built after everything else
+
   } else if (allPackages.includes(targetPackage)) {
-    runBuildTask(targetPackage);
+    // NOTE: The Playground needs to be built after everything else
+    if (targetPackage === 'react-component-playground') {
+
+    } else {
+      runBuildTask(targetPackage);
+    }
   } else {
     throw new Error(`Invalid package! Can only build the following packages: ${allPackages}`);
   }
