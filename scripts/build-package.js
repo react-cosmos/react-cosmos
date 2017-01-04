@@ -8,8 +8,9 @@ const yargs = require('yargs');
  * @param packageName Name of the package as listed in ./packages/
  * @param npmTask Name of the npm task, defaults to build-babel
  */
-function runBuildTask(packageName, npmTask = 'build-babel') {
-  const stdout = npmRun.execSync(`PACKAGE=${packageName} npm run ${npmTask}`, {
+function runBuildTask(packageName, npmTask) {
+  const task = npmTask || 'build-babel';
+  const stdout = npmRun.execSync(`PACKAGE=${packageName} npm run ${task}`, {
     cwd: __dirname,
   });
 
