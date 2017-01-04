@@ -56,7 +56,7 @@ function runBuildPlayground(packageNames, watch) {
   });
 }
 
-const [targetPackage] = argv._;
+const targetPackage = argv._[0];
 const applyWatch = Boolean(argv.watch);
 
 glob('./packages/react-*', null, (err, files) => {
