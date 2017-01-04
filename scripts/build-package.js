@@ -30,24 +30,19 @@ function runBuildPlayground(packageNames) {
 }
 
 glob('./packages/react-*', null, (err, files) => {
-  const allPackages = files.map(f => path.basename(f));
+  const allPackagesNames = files.map(f => path.basename(f));
   const argv = yargs
       .usage('Usage: $0 <package>')
       .help()
       .argv;
   const targetPackage = argv._[0];
 
-  if (!targetPackage) {
+  if (!targetPackage || targetPackage === 'react-component-playground') {
     // NOTE: The Playground needs to be built after everything else
-
-  } else if (allPackages.includes(targetPackage)) {
-    // NOTE: The Playground needs to be built after everything else
-    if (targetPackage === 'react-component-playground') {
-
-    } else {
-      runBuildTask(targetPackage);
-    }
+    runBuildPlayground(allPackagesNames);
+  } else if (allPackagesNames.includes(targetPackage)) {
+    runBuildTask(targetPackage);
   } else {
-    throw new Error(`Invalid package! Can only build the following packages: ${allPackages}`);
+    throw new Error(`Invalid package! Can only build the following packages: ${allPackagesNames}`);
   }
 });
