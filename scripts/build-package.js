@@ -18,7 +18,7 @@ function runBuildTask(packageName) {
   console.log(stdout.toString('utf-8'));
 }
 
-glob('./packages/*react-*', null, (err, files) => {
+glob('./packages/react-*', null, (err, files) => {
   const allPackages = files.map(f => path.basename(f));
   const argv = yargs
       .usage('Usage: $0 <package>')
