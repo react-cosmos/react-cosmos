@@ -45,7 +45,7 @@
     "eslint": "^3.7.1",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^3.0.2",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.4.0",
     "glob": "^7.1.1",
     "inject-loader": "^2.0.1",
