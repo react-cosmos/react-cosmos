@@ -1,38 +1,42 @@
 /* global window */
 
-const fakeComponents = {};
-const fakeFixtures = {};
-const fakeExpandModulePaths = jest.fn(() => ({
-  components: fakeComponents,
-  fixtures: fakeFixtures,
-}));
-const fakeStartLoader = jest.fn();
-const fakeStartPlayground = jest.fn();
-const fakeProxies = [];
-const fakeIgnore = [];
-const fakeContainerQuerySelector = '#root';
+const mockComponents = {};
+const mockFixtures = {};
+const mockStartLoader = jest.fn();
+const mockStartPlayground = jest.fn();
+const mockProxies = [];
+const mockIgnore = [];
+const mockContainerQuerySelector = '#root';
+
+let mockExpandModulePaths;
 
 jest.mock('./dummy-config/cosmos.config.js', () => ({
-  proxies: fakeProxies,
-  ignore: fakeIgnore,
-  containerQuerySelector: fakeContainerQuerySelector,
+  proxies: mockProxies,
+  ignore: mockIgnore,
+  containerQuerySelector: mockContainerQuerySelector,
 }));
 
 jest.mock('react-cosmos', () => ({
-  startLoader: fakeStartLoader,
-  startPlayground: fakeStartPlayground,
+  startLoader: mockStartLoader,
+  startPlayground: mockStartPlayground,
 }));
 
-jest.mock('../utils/expand-module-paths', () => ({ default: fakeExpandModulePaths }));
+
+jest.mock('../utils/expand-module-paths', () => ({ default: mockExpandModulePaths }));
 
 const init = (pathname) => {
   jest.resetModules();
-  jest.clearAllMocks();
+  jest.resetAllMocks();
 
   Object.defineProperty(window.location, 'pathname', {
     writable: true,
     value: pathname,
   });
+
+  mockExpandModulePaths = jest.fn(() => ({
+    components: mockComponents,
+    fixtures: mockFixtures,
+  }));
 
   require('../entry');
 };
@@ -40,17 +44,17 @@ const init = (pathname) => {
 const commonTests = () => {
   test('calls expandModulePaths with component contexts', () => {
     // Component contexts are mocked inside jest.config.json
-    expect(fakeExpandModulePaths.mock.calls[0][0]).toBe('__COMPONENT_CONTEXTS__');
+    expect(mockExpandModulePaths.mock.calls[0][0]).toBe('__COMPONENT_CONTEXTS__');
   });
 
   test('calls expandModulePaths with fixture contexts', () => {
     // Fixture contexts are mocked inside jest.config.json
-    expect(fakeExpandModulePaths.mock.calls[0][1]).toBe('__FIXTURE_CONTEXTS__');
+    expect(mockExpandModulePaths.mock.calls[0][1]).toBe('__FIXTURE_CONTEXTS__');
   });
 
   test('calls expandModulePaths with ignore paths', () => {
     // Fixture contexts are mocked inside jest.config.json
-    expect(fakeExpandModulePaths.mock.calls[0][2]).toBe(fakeIgnore);
+    expect(mockExpandModulePaths.mock.calls[0][2]).toBe(mockIgnore);
   });
 };
 
@@ -59,27 +63,27 @@ describe('loader path', () => {
 
   beforeAll(() => {
     init('/loader/');
-    options = fakeStartLoader.mock.calls[0][0];
+    options = mockStartLoader.mock.calls[0][0];
   });
 
   test('starts loader', () => {
-    expect(fakeStartLoader).toHaveBeenCalled();
+    expect(mockStartLoader).toHaveBeenCalled();
   });
 
   test('sends proxies to loader', () => {
-    expect(options.proxies).toBe(fakeProxies);
+    expect(options.proxies).toBe(mockProxies);
   });
 
   test('sends components to loader', () => {
-    expect(options.components).toBe(fakeComponents);
+    expect(options.components).toBe(mockComponents);
   });
 
   test('sends fixtures to loader', () => {
-    expect(options.fixtures).toBe(fakeFixtures);
+    expect(options.fixtures).toBe(mockFixtures);
   });
 
   test('sends containerQuerySelector to loader', () => {
-    expect(options.containerQuerySelector).toBe(fakeContainerQuerySelector);
+    expect(options.containerQuerySelector).toBe(mockContainerQuerySelector);
   });
 });
 
@@ -88,17 +92,17 @@ describe('playground path', () => {
 
   beforeAll(() => {
     init('/');
-    options = fakeStartPlayground.mock.calls[0][0];
+    options = mockStartPlayground.mock.calls[0][0];
   });
 
   commonTests();
 
   test('starts playground', () => {
-    expect(fakeStartPlayground).toHaveBeenCalled();
+    expect(mockStartPlayground).toHaveBeenCalled();
   });
 
   test('sends fixtures to playground', () => {
-    expect(options.fixtures).toBe(fakeFixtures);
+    expect(options.fixtures).toBe(mockFixtures);
   });
 
   test('sends loaderUri to playground', () => {

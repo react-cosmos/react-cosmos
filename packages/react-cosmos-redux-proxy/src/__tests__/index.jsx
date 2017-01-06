@@ -27,7 +27,7 @@ const renderProxy = (f, options) => {
   fixture = f;
   componentRef = {};
 
-  jest.clearAllMocks();
+  jest.resetAllMocks();
 
   storeUnsubscribeMock = jest.fn();
   storeMock = {

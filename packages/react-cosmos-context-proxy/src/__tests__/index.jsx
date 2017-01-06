@@ -19,7 +19,7 @@ let getChildContext;
 const renderProxy = (fixture, options) => {
   componentRef = {};
 
-  jest.clearAllMocks();
+  jest.resetAllMocks();
 
   const ContextProxy = createContextProxy({
     ...options,

@@ -20,16 +20,16 @@ const revertWindowApi = () => {
   window.removeEventListener = origRemoveEventListener;
 };
 
-const fakeProxyNext = {};
-const fakeFirstProxy = {
+const mockProxyNext = {};
+const mockFirstProxy = {
   value: () => <span />,
-  next: () => fakeProxyNext,
+  next: () => mockProxyNext,
 };
-const getLinkedList = jest.fn(() => fakeFirstProxy);
-jest.mock('react-cosmos-utils/lib/linked-list', () => getLinkedList);
+const mockGetLinkedList = jest.fn(() => mockFirstProxy);
+jest.mock('react-cosmos-utils/lib/linked-list', () => mockGetLinkedList);
 
 
-const fakeFixtureParts = {
+const mockFixtureParts = {
   unserializable: {
     onClick: jest.fn(),
   },
@@ -37,8 +37,8 @@ const fakeFixtureParts = {
     title: 'Lorem ipsum',
   },
 };
-const splitUnserializableParts = jest.fn(() => fakeFixtureParts);
-jest.mock('react-cosmos-utils/lib/unserializable-parts', () => splitUnserializableParts);
+const mockSplitUnserializableParts = jest.fn(() => mockFixtureParts);
+jest.mock('react-cosmos-utils/lib/unserializable-parts', () => mockSplitUnserializableParts);
 
 const Loader = require('../Loader').default;
 
@@ -89,7 +89,7 @@ test('notifies parent frames on load', () => {
 });
 
 test('creates linked list from proxy list', () => {
-  expect(getLinkedList).toHaveBeenLastCalledWith([Proxy]);
+  expect(mockGetLinkedList).toHaveBeenLastCalledWith([Proxy]);
 });
 
 describe('on `fixtureLoad` event', () => {
@@ -106,7 +106,7 @@ describe('on `fixtureLoad` event', () => {
         fixture: 'base',
       },
     });
-    firstProxyWrapper = wrapper.find(fakeFirstProxy.value);
+    firstProxyWrapper = wrapper.find(mockFirstProxy.value);
     firstProxyProps = firstProxyWrapper.props();
     firstProxyKey = firstProxyWrapper.key();
   });
@@ -120,7 +120,7 @@ describe('on `fixtureLoad` event', () => {
   });
 
   test('sends next proxy to first proxy ', () => {
-    expect(firstProxyProps.nextProxy).toBe(fakeProxyNext);
+    expect(firstProxyProps.nextProxy).toBe(mockProxyNext);
   });
 
   test('sends component to first proxy ', () => {
@@ -128,13 +128,13 @@ describe('on `fixtureLoad` event', () => {
   });
 
   test('splits unserializable parts from fixture', () => {
-    expect(splitUnserializableParts).toHaveBeenLastCalledWith(baseFixture);
+    expect(mockSplitUnserializableParts).toHaveBeenLastCalledWith(baseFixture);
   });
 
   test('sends merged fixture parts to first proxy', () => {
     expect(firstProxyProps.fixture).toEqual({
-      ...fakeFixtureParts.unserializable,
-      ...fakeFixtureParts.serializable,
+      ...mockFixtureParts.unserializable,
+      ...mockFixtureParts.serializable,
     });
   });
 
@@ -157,13 +157,13 @@ describe('on `fixtureLoad` event', () => {
           fixtureBody,
         },
       });
-      firstProxyWrapper = wrapper.find(fakeFirstProxy.value);
+      firstProxyWrapper = wrapper.find(mockFirstProxy.value);
       firstProxyProps = firstProxyWrapper.props();
     });
 
     test('includes body received in fixture sent to first proxy', () => {
       expect(firstProxyProps.fixture).toEqual({
-        ...fakeFixtureParts.unserializable,
+        ...mockFixtureParts.unserializable,
         ...fixtureBody,
       });
     });
