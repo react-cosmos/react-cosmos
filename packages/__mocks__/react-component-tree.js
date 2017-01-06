@@ -1,9 +1,8 @@
-let stateMock;
-
-module.exports = {
+const mock = {
   injectState: jest.fn(),
-  serialize: jest.fn(() => (stateMock ? { state: stateMock } : {})),
   __setStateMock: (state) => {
-    stateMock = state;
+    mock.serialize = jest.fn(() => (state ? { state } : {}));
   },
 };
+
+module.exports = mock;

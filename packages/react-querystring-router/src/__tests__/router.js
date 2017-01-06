@@ -1,36 +1,23 @@
-const ComponentClass = {};
-const componentInstance = {};
-const ReactDOMMock = {
-  render: jest.fn(() => componentInstance),
+const mockComponentClass = {};
+const mockReactDOM = {
+  render: jest.fn(() => {}),
 };
-const getComponentClass = jest.fn(() => ComponentClass);
-const getComponentProps = jest.fn(() => ({
-  foo: 'bar',
-  lorem: 'ipsum',
-}));
+
+let getComponentClass;
+let getComponentProps;
+
 const onChange = jest.fn();
-const uriLocation = 'mypage.com?component=List&dataUrl=users.json';
-const uriParams = {
+const mockUriLocation = 'mypage.com?component=List&dataUrl=users.json';
+const mockUriParams = {
   component: 'List',
   dataUrl: 'users.json',
 };
 
+let React;
+let uri;
+let Router;
+let ReactDOM;
 let routerInstance;
-
-jest.mock('../uri', () => ({
-  parseLocation: jest.fn(() => uriParams),
-}));
-
-jest.mock('react', () => ({
-  createElement: jest.fn(),
-}));
-
-jest.mock('react-dom-polyfill', () => jest.fn(() => ReactDOMMock));
-
-const React = require('react');
-const uri = require('../uri');
-const Router = require('../router').default;
-const ReactDOM = require('react-dom-polyfill')(React);
 
 const nativeRefs = {};
 const stubWindowApi = () => {
@@ -49,6 +36,30 @@ const restoreWindowApi = () => {
 };
 
 const initRouter = () => {
+  jest.resetModules();
+  jest.resetAllMocks();
+
+  getComponentClass = jest.fn(() => mockComponentClass);
+  getComponentProps = jest.fn(() => ({
+    foo: 'bar',
+    lorem: 'ipsum',
+  }));
+
+  jest.mock('../uri', () => ({
+    parseLocation: jest.fn(() => mockUriParams),
+  }));
+
+  jest.mock('react', () => ({
+    createElement: jest.fn(),
+  }));
+
+  jest.mock('react-dom-polyfill', () => jest.fn(() => mockReactDOM));
+
+  React = require('react');
+  uri = require('../uri');
+  Router = require('../router').default;
+  ReactDOM = require('react-dom-polyfill')(React);
+
   routerInstance = new Router({
     defaultProps: {
       defaultProp: true,
@@ -63,18 +74,18 @@ const initRouter = () => {
 const commonTests = () => {
   it('should call getComponentClass with route params', () => {
     const propsSent = getComponentClass.mock.calls[0][0];
-    expect(propsSent.component).toBe(uriParams.component);
-    expect(propsSent.dataUrl).toBe(uriParams.dataUrl);
+    expect(propsSent.component).toBe(mockUriParams.component);
+    expect(propsSent.dataUrl).toBe(mockUriParams.dataUrl);
   });
 
   it('should call getComponentProps with route params', () => {
     const propsSent = getComponentProps.mock.calls[0][0];
-    expect(propsSent.component).toBe(uriParams.component);
-    expect(propsSent.dataUrl).toBe(uriParams.dataUrl);
+    expect(propsSent.component).toBe(mockUriParams.component);
+    expect(propsSent.dataUrl).toBe(mockUriParams.dataUrl);
   });
 
   it('should call createElement with returned class', () => {
-    expect(React.createElement.mock.calls[0][0]).toBe(ComponentClass);
+    expect(React.createElement.mock.calls[0][0]).toBe(mockComponentClass);
   });
 
   it('should call createElement with returned props', () => {
@@ -93,8 +104,8 @@ const commonTests = () => {
 
   it('should call onChange callback with params', () => {
     const params = onChange.mock.calls[0][0];
-    expect(params.component).toBe(uriParams.component);
-    expect(params.dataUrl).toBe(uriParams.dataUrl);
+    expect(params.component).toBe(mockUriParams.component);
+    expect(params.dataUrl).toBe(mockUriParams.dataUrl);
   });
 };
 
@@ -107,7 +118,7 @@ const currentLocationTests = () => {
 
 const pushLocationTests = () => {
   it('should push new entry to browser history', () => {
-    expect(window.history.pushState.mock.calls[0][2]).toBe(uriLocation);
+    expect(window.history.pushState.mock.calls[0][2]).toBe(mockUriLocation);
   });
 };
 
@@ -141,9 +152,8 @@ describe('initial location', () => {
 describe('.goTo method', () => {
   beforeAll(() => {
     initRouter();
-    jest.clearAllMocks();
 
-    routerInstance.goTo(uriLocation);
+    routerInstance.goTo(mockUriLocation);
   });
 
   commonTests();
@@ -153,12 +163,11 @@ describe('.goTo method', () => {
 describe('.routeLink method', () => {
   beforeAll(() => {
     initRouter();
-    jest.clearAllMocks();
 
     routerInstance.routeLink({
       preventDefault: () => {},
       currentTarget: {
-        href: uriLocation,
+        href: mockUriLocation,
       },
     });
   });
@@ -170,7 +179,6 @@ describe('.routeLink method', () => {
 describe('PopState event', () => {
   beforeAll(() => {
     initRouter();
-    jest.clearAllMocks();
 
     routerInstance.onPopState({
       state: {},
@@ -184,7 +192,6 @@ describe('PopState event', () => {
 describe('Empty PopState event', () => {
   beforeEach(() => {
     initRouter();
-    jest.clearAllMocks();
 
     routerInstance.onPopState({
       state: null,

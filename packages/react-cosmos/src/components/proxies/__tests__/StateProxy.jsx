@@ -22,13 +22,12 @@ let wrapper;
 let childWrapper;
 let childProps;
 
-jest.useFakeTimers();
-
 const renderProxy = (options) => {
   fixture = options.fixture;
   onFixtureUpdate = jest.fn();
 
-  jest.clearAllMocks();
+  jest.resetAllMocks();
+  jest.useFakeTimers();
 
   ReactComponentTree.__setStateMock(options.initialState);
 
@@ -234,7 +233,7 @@ describe('fixture with state', () => {
     });
 
     test('serializes component state again', () => {
-      expect(ReactComponentTree.serialize.mock.calls[1][0]).toBe(componentRef);
+      expect(ReactComponentTree.serialize.mock.calls[0][0]).toBe(componentRef);
     });
 
     test('calls onFixtureUpdate with updated state', () => {

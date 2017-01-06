@@ -1,7 +1,7 @@
-const allModules = {};
+const mockModules = {};
 const createContext = (fileMap) => {
   // Useful for matchFixturePath mock
-  Object.assign(allModules, fileMap);
+  Object.assign(mockModules, fileMap);
 
   const fn = path => fileMap[path];
   fn.keys = () => Object.keys(fileMap);
@@ -32,7 +32,7 @@ const Onboarding_base = {
 /* eslint-enable camelcase */
 
 jest.mock('../match-fixture-path', () => (fixturePath, componentCleanPath) => {
-  const fixture = allModules[fixturePath];
+  const fixture = mockModules[fixturePath];
   return fixture.componentCleanPath !== componentCleanPath ? false : fixture.name;
 });
 

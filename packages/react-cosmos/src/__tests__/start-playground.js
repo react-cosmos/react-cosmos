@@ -1,51 +1,55 @@
-const FakeRouter = jest.fn();
-const FakeComponentPlayground = () => {};
-const fakeFixturesInput = {};
-const fakeFixturesOutput = {};
-const fakeLoadFixtures = jest.fn(() => fakeFixturesOutput);
-
-jest.mock('react-querystring-router', () => ({ Router: FakeRouter }));
-jest.mock('react-component-playground', () => FakeComponentPlayground);
-jest.mock('../load-modules', () => ({
-  loadFixtures: fakeLoadFixtures,
-}));
-
-const startPlayground = require('../start-playground');
-
+const mockRouter = jest.fn();
+const mockComponentPlayground = () => {};
+const mockFixturesInput = {};
+const mockFixturesOutput = {};
+let mockLoadFixtures;
+let startPlayground;
 let routerInstance;
 let getComponentClass;
 let getComponentProps;
 let onChange;
 
 const initRouter = (options) => {
-  jest.clearAllMocks();
+  jest.resetModules();
+  jest.resetAllMocks();
+
+  mockLoadFixtures = jest.fn(() => mockFixturesOutput);
+
+  jest.mock('react-querystring-router', () => ({ Router: mockRouter }));
+  jest.mock('react-component-playground', () => mockComponentPlayground);
+  jest.mock('../load-modules', () => ({
+    loadFixtures: mockLoadFixtures,
+  }));
+
+  startPlayground = require('../start-playground');
+
   routerInstance = startPlayground(options);
   ({
     getComponentClass,
     getComponentProps,
     onChange,
-  } = FakeRouter.mock.calls[0][0]);
+  } = mockRouter.mock.calls[0][0]);
 };
 
 beforeAll(() => {
   initRouter({
-    fixtures: fakeFixturesInput,
+    fixtures: mockFixturesInput,
     loaderUri: '/fake-loader-uri/',
   });
 });
 
 it('uses Playground as router component class', () => {
-  expect(getComponentClass()).toBe(FakeComponentPlayground);
+  expect(getComponentClass()).toBe(mockComponentPlayground);
 });
 
 it('sends fixtures input to loadFixtures lib', () => {
   getComponentProps();
-  expect(fakeLoadFixtures.mock.calls[0][0]).toBe(fakeFixturesInput);
+  expect(mockLoadFixtures.mock.calls[0][0]).toBe(mockFixturesInput);
 });
 
 it('puts fixtures in Playground props', () => {
   const { fixtures } = getComponentProps();
-  expect(fixtures).toBe(fakeFixturesOutput);
+  expect(fixtures).toBe(mockFixturesOutput);
 });
 
 it('puts loaderUri option in Playground props', () => {
@@ -54,11 +58,11 @@ it('puts loaderUri option in Playground props', () => {
 });
 
 it('returns router instance', () => {
-  expect(routerInstance).toBeInstanceOf(FakeRouter);
+  expect(routerInstance).toBeInstanceOf(mockRouter);
 });
 
 it('uses element inside document body for router container', () => {
-  const { container } = FakeRouter.mock.calls[0][0];
+  const { container } = mockRouter.mock.calls[0][0];
   expect(container.parentNode).toBe(document.body);
 });
 
