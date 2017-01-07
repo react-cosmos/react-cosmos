@@ -2,7 +2,7 @@
 const glob = require('glob');
 const rimraf = require('rimraf');
 const path = require('path');
-const { spawn } = require('child_process');
+const spawn = require('child_process').spawn;
 const argv = require('yargs').argv;
 
 /**
