@@ -94,6 +94,8 @@ glob('./packages/react-*', null, (err, files) => {
       watch: applyWatch,
     });
   } else {
-    throw new Error(`Invalid package! Can only build the following packages: ${allPackagesNames}`);
+    const formattedPackages = `${[''].concat(allPackagesNames).join('\n -')}`;
+    console.error(`Invalid package! Can only build the following packages: 
+        ${formattedPackages}`);
   }
 });
