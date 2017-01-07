@@ -69,7 +69,7 @@ function runBuildAllTask(packageNames) {
   // Cleanup
   glob.sync('./packages/*/lib').forEach((packageLibPath) => {
     rimraf.sync(packageLibPath);
-    console.log('WARNING: Removed lib directory for', packageLibPath);
+    console.log('INFO: Removed lib directory for', packageLibPath);
   });
 
   // Build all packages and after finishing, build CP
