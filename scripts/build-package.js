@@ -2,8 +2,10 @@
 const glob = require('glob');
 const rimraf = require('rimraf');
 const path = require('path');
-const spawn = require('child_process').spawn;
+const spawn = require('child-process-promise').spawn;
 const argv = require('yargs').argv;
+
+const COMPONENT_PLAYGROUND = 'react-component-playground';
 
 /**
  * Runs the build-babel or build-webpack npm target for the specified package.
@@ -11,6 +13,7 @@ const argv = require('yargs').argv;
  * @param options.npmTask Name of the npm task to run
  * @param options.watch Whether to apply watch argument
  * @param options.packageName Name of the React package to build
+ * @returns promise Child process wrapped in a Promise
  */
 function runBuildTask(options) {
   const task = options.npmTask || 'build-babel';
@@ -19,12 +22,14 @@ function runBuildTask(options) {
     args.push('--', '--watch');
   }
 
-  const child = spawn('npm', args, {
+  const promise = spawn('npm', args, {
     cwd: __dirname,
     env: Object.assign({}, process.env, {
       PACKAGE: options.packageName,
     }),
   });
+
+  const child = promise.childProcess;
 
   child.stdout.on('data', (data) => {
     process.stdout.write(data);
@@ -39,6 +44,8 @@ function runBuildTask(options) {
       process.stderr.write(`${options.packageName} exited with code ${code}`);
     }
   });
+
+  return promise;
 }
 
 /**
@@ -46,9 +53,8 @@ function runBuildTask(options) {
  * @param watch Apply watch argument
  */
 function runBuildPlaygroundTask(watch) {
-  // Build CP
-  runBuildTask({
-    packageName: 'react-component-playground',
+  return runBuildTask({
+    packageName: COMPONENT_PLAYGROUND,
     npmTask: 'build-webpack',
     watch,
   });
@@ -66,35 +72,44 @@ function runBuildAllTask(packageNames) {
     console.log('WARNING: Removed lib directory for', packageLibPath);
   });
 
-  // Build all packages except CP
-  packageNames
-      .filter(pkg => pkg !== 'react-component-playground')
-      .forEach(packageName => (
-          runBuildTask({
-            packageName,
-          })
-        ));
-
-  runBuildPlaygroundTask();
+  // Build all packages and after finishing, build CP
+  Promise.all(
+      packageNames
+          .filter(pkg => pkg !== COMPONENT_PLAYGROUND)
+          .map(packageName => runBuildTask({packageName}))
+  ).then(() => runBuildPlaygroundTask());
 }
 
+// Read CLI arguments
 const targetPackage = argv._[0];
 const applyWatch = Boolean(argv.watch);
 
+/**
+ * Read all the react-* packages, and decide what to build based
+ * on command line arguments.
+ */
 glob('./packages/react-*', null, (err, files) => {
-  const allPackagesNames = files.map(f => path.basename(f));
+  const allPackageNames = files.map(f => path.basename(f));
+  const formattedPackages = `${[''].concat(allPackageNames).join('\n - ')}`;
 
   if (!targetPackage) {
-    runBuildAllTask(allPackagesNames, applyWatch);
-  } else if (targetPackage === 'react-component-playground') {
+    // Build all packages
+    if (applyWatch) {
+      console.error(`Cannot build all packages with the --watch argument. ` +
+          `If you'd like to --watch, please choose one of the existing packages:
+          ${formattedPackages}`);
+    } else {
+      runBuildAllTask(allPackageNames, applyWatch);
+    }
+  } else if (targetPackage === COMPONENT_PLAYGROUND) {
     runBuildPlaygroundTask(applyWatch);
-  } else if (allPackagesNames.includes(targetPackage)) {
+  } else if (allPackageNames.indexOf(targetPackage) !== -1) {
+    // Build a single package
     runBuildTask({
       packageName: targetPackage,
       watch: applyWatch,
     });
   } else {
-    const formattedPackages = `${[''].concat(allPackagesNames).join('\n -')}`;
     console.error(`Invalid package! These are the existing packages: 
         ${formattedPackages}`);
   }
