@@ -95,7 +95,7 @@ glob('./packages/react-*', null, (err, files) => {
     });
   } else {
     const formattedPackages = `${[''].concat(allPackagesNames).join('\n -')}`;
-    console.error(`Invalid package! Can only build the following packages: 
+    console.error(`Invalid package! These are the existing packages: 
         ${formattedPackages}`);
   }
 });
