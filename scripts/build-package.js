@@ -1,10 +1,15 @@
 const glob = require('glob');
+const rimraf = require('rimraf');
 const path = require('path');
 const { spawn } = require('child_process');
 const argv = require('yargs').argv;
 
 /**
  * Runs the build-babel or build-webpack npm target for the specified package.
+ * @param options
+ * @param options.npmTask Name of the npm task to run
+ * @param options.watch Whether to apply watch argument
+ * @param options.packageName Name of the React package to build
  */
 function runBuildTask(options) {
   const task = options.npmTask || 'build-babel';
@@ -36,12 +41,19 @@ function runBuildTask(options) {
 }
 
 /**
- * Run the build for Component Playground, since it's a webpack build it
- * requires all other components to be built first.
+ * Run the build for all packages, the CP requires all other components
+ * to be built first.
  * @param packageNames List of package names
- * @param watch Whether to apply watch argument to the running task
  */
-function runBuildPlayground(packageNames, watch) {
+function runBuildAllTask(packageNames) {
+  // Cleanup
+  glob.sync('./packages/*/lib').forEach(
+      function removePackageLib(packageLibPath) {
+        rimraf.sync(packageLibPath);
+        console.log('WARNING: Removed lib', packageLibPath);
+      });
+
+  // Build all packages except CP
   packageNames
       .filter(pkg => pkg !== 'react-component-playground')
       .forEach(packageName => (
@@ -49,6 +61,16 @@ function runBuildPlayground(packageNames, watch) {
             packageName,
           })
         ));
+
+  runBuildPlaygroundTask();
+}
+
+/**
+ * Build CP only
+ * @param watch Apply watch argument
+ */
+function runBuildPlaygroundTask(watch) {
+  // Build CP
   runBuildTask({
     packageName: 'react-component-playground',
     npmTask: 'build-webpack',
@@ -62,9 +84,10 @@ const applyWatch = Boolean(argv.watch);
 glob('./packages/react-*', null, (err, files) => {
   const allPackagesNames = files.map(f => path.basename(f));
 
-  if (!targetPackage || targetPackage === 'react-component-playground') {
-    // NOTE: The Playground needs to be built after everything else
-    runBuildPlayground(allPackagesNames, applyWatch);
+  if (!targetPackage) {
+    runBuildAllTask(allPackagesNames, applyWatch);
+  } else if (targetPackage === 'react-component-playground') {
+    runBuildPlaygroundTask(applyWatch);
   } else if (allPackagesNames.includes(targetPackage)) {
     runBuildTask({
       packageName: targetPackage,
