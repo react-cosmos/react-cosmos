@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const glob = require('glob');
 const rimraf = require('rimraf');
 const path = require('path');
@@ -41,17 +42,29 @@ function runBuildTask(options) {
 }
 
 /**
+ * Build CP only
+ * @param watch Apply watch argument
+ */
+function runBuildPlaygroundTask(watch) {
+  // Build CP
+  runBuildTask({
+    packageName: 'react-component-playground',
+    npmTask: 'build-webpack',
+    watch,
+  });
+}
+
+/**
  * Run the build for all packages, the CP requires all other components
  * to be built first.
  * @param packageNames List of package names
  */
 function runBuildAllTask(packageNames) {
   // Cleanup
-  glob.sync('./packages/*/lib').forEach(
-      function removePackageLib(packageLibPath) {
-        rimraf.sync(packageLibPath);
-        console.log('WARNING: Removed lib', packageLibPath);
-      });
+  glob.sync('./packages/*/lib').forEach((packageLibPath) => {
+    rimraf.sync(packageLibPath);
+    console.log('WARNING: Removed lib directory for', packageLibPath);
+  });
 
   // Build all packages except CP
   packageNames
@@ -63,19 +76,6 @@ function runBuildAllTask(packageNames) {
         ));
 
   runBuildPlaygroundTask();
-}
-
-/**
- * Build CP only
- * @param watch Apply watch argument
- */
-function runBuildPlaygroundTask(watch) {
-  // Build CP
-  runBuildTask({
-    packageName: 'react-component-playground',
-    npmTask: 'build-webpack',
-    watch,
-  });
 }
 
 const targetPackage = argv._[0];
