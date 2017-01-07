@@ -1,6 +1,6 @@
 const glob = require('glob');
 const path = require('path');
-const npmRun = require('npm-run');
+const { spawn } = require('child_process');
 const argv = require('yargs').argv;
 
 /**
@@ -13,7 +13,7 @@ function runBuildTask(options) {
     args.push('--', '--watch');
   }
 
-  const child = npmRun.spawn('npm', args, {
+  const child = spawn('npm', args, {
     cwd: __dirname,
     env: Object.assign({}, process.env, {
       PACKAGE: options.packageName,
