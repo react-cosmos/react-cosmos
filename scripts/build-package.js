@@ -73,11 +73,13 @@ function runBuildAllTask(packageNames) {
   });
 
   // Build all packages and after finishing, build CP
-  Promise.all(
-      packageNames
-          .filter(pkg => pkg !== COMPONENT_PLAYGROUND)
-          .map(packageName => runBuildTask({packageName}))
-  ).then(() => runBuildPlaygroundTask());
+  const promises = packageNames
+      .filter(pkg => pkg !== COMPONENT_PLAYGROUND)
+      .map(packageName => runBuildTask({ packageName }));
+
+  Promise.all(promises).then(() => {
+    runBuildPlaygroundTask();
+  });
 }
 
 // Read CLI arguments
@@ -95,8 +97,7 @@ glob('./packages/react-*', null, (err, files) => {
   if (!targetPackage) {
     // Build all packages
     if (applyWatch) {
-      console.error(`Cannot build all packages with the --watch argument. ` +
-          `If you'd like to --watch, please choose one of the existing packages:
+      console.error(`Cannot build all packages with the --watch argument. If you'd like to --watch, please choose one of the existing packages: 
           ${formattedPackages}`);
     } else {
       runBuildAllTask(allPackageNames, applyWatch);
