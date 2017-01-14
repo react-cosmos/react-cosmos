@@ -52,7 +52,7 @@
     "karma-phantomjs-launcher": "^1.0.1",
     "karma-sinon": "^1.0.5",
     "karma-sinon-chai": "^1.2.3",
-    "karma-webpack": "^1.8.0",
+    "karma-webpack": "^2.0.1",
     "lcov-result-merger": "^1.2.0",
     "lerna": "2.0.0-beta.32",
     "less": "^2.7.1",
