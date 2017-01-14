@@ -81,4 +81,10 @@ Well.propTypes = {
   }),
 };
 
+Well.defaultProps = {
+  activeTetrimino: null,
+  activeTetriminoGrid: null,
+  activeTetriminoPosition: null,
+};
+
 export default Well;

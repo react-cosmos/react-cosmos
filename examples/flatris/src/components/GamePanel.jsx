@@ -93,4 +93,8 @@ GamePanel.propTypes = {
   onResume: React.PropTypes.func.isRequired,
 };
 
+GamePanel.defaultProps = {
+  nextTetrimino: null,
+};
+
 module.exports = GamePanel;

@@ -241,6 +241,14 @@ FlatrisGame.propTypes = {
   onDisableAcceleration: React.PropTypes.func.isRequired,
 };
 
+FlatrisGame.defaultProps = {
+  nextTetrimino: null,
+  grid: null,
+  activeTetrimino: null,
+  activeTetriminoGrid: null,
+  activeTetriminoPosition: null,
+};
+
 const mapStateToProps = state => state;
 const mapDispatchToProps = dispatch => ({
   onLoad: () => dispatch(load()),

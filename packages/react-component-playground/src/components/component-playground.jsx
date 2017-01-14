@@ -39,13 +39,13 @@ module.exports = React.createClass({
   displayName: 'ComponentPlayground',
 
   propTypes: {
-    fixtures: React.PropTypes.object.isRequired,
-    loaderUri: React.PropTypes.string.isRequired,
     component: React.PropTypes.string,
     editor: React.PropTypes.bool,
     fixture: React.PropTypes.string,
+    fixtures: React.PropTypes.object.isRequired,
     fullScreen: React.PropTypes.bool,
-    router: React.PropTypes.object,
+    loaderUri: React.PropTypes.string.isRequired,
+    router: React.PropTypes.object.isRequired,
   },
 
   mixins: [ComponentTree.Mixin],
@@ -102,7 +102,9 @@ module.exports = React.createClass({
 
   getDefaultProps() {
     return {
+      component: null,
       editor: false,
+      fixture: null,
       fullScreen: false,
       proxies: [],
     };
