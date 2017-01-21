@@ -1,4 +1,5 @@
 import matchFixturePath from './match-fixture-path';
+import { getComponentContexts, getFixtureContexts } from './get-contexts';
 
 const SPECIAL_DIRS = ['__tests__', '__fixtures__'];
 
@@ -9,7 +10,9 @@ const isUnderSpecialDir = path =>
  * Traverse through a list of webpack contexts (via require.context) and map
  * components found along with their corresponding fixtures.
  */
-const expandModulePaths = (componentContexts, fixtureContexts, ignorePatterns = []) => {
+const expandModulePaths = (ignorePatterns = []) => {
+  const componentContexts = getComponentContexts();
+  const fixtureContexts = getFixtureContexts();
   const components = {};
   const fixtures = {};
 
