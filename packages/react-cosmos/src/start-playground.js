@@ -14,12 +14,22 @@ const getTitleForFixture = (params) => {
   return title;
 };
 
+let domContainer;
+
+const createDomContainer = () => {
+  if (!domContainer) {
+    domContainer = document.createElement('div');
+    document.body.appendChild(domContainer);
+  }
+  return domContainer;
+};
+
 module.exports = ({
   fixtures,
   loaderUri,
 }) =>
   new Router({
-    container: document.body.appendChild(document.createElement('div')),
+    container: createDomContainer(),
     getComponentClass: () => ReactComponentPlayground,
     getComponentProps: params => ({
       ...params,
