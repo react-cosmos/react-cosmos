@@ -35,8 +35,7 @@ export default function createStateProxy(options) {
         disableLocalState,
       } = this.props;
 
-      // Ref callbacks are also called on unmount with null value. We just need
-      // to make sure to bubble up the unmount call in that case.
+      // Ref callbacks are also called on unmount with null value
       if (componentRef && !disableLocalState) {
         // Load initial state right after component renders
         const fixtureState = fixture[fixtureKey];
@@ -50,6 +49,10 @@ export default function createStateProxy(options) {
             this.updateState(initialState);
           }
         }
+      }
+
+      if (!componentRef) {
+        clearTimeout(this.timeoutId);
       }
 
       // Bubble up component ref
