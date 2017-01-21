@@ -10,11 +10,12 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
+    "@skidding/react-codemirror": "^0.3.0",
     "classnames": "^2.2.5",
     "codemirror": "^5.18.2",
     "fuzzaldrin-plus": "^0.3.1",
     "lodash": "^3.6.0",
-    "@skidding/react-codemirror": "^0.3.0",
+    "lodash.isequal": "^4.5.0",
     "react-component-tree": "^2.0.0-beta.2",
     "react-cosmos-utils": "^2.0.0-beta.3",
     "react-dom-polyfill": "^1.0.1",

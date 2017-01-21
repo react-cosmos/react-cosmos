@@ -6,6 +6,7 @@
 import _ from 'lodash';
 import React from 'react';
 import classNames from 'classnames';
+import isEqual from 'lodash.isequal';
 import ComponentTree from 'react-component-tree';
 import { uri } from 'react-querystring-router';
 import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
@@ -55,14 +56,16 @@ module.exports = React.createClass({
       return !!(props.component && props.fixture);
     },
 
-    didFixtureChange(prevProps, nextProps) {
+    didFixtureNavChange(prevProps, nextProps) {
       return prevProps.component !== nextProps.component ||
              prevProps.fixture !== nextProps.fixture;
     },
 
     getSelectedFixtureContents(props) {
+      const { fixtures, component, fixture } = props;
+
       // This returns the fixture contents as it is initially defined, excluding any modifications.
-      return props.fixtures[props.component][props.fixture];
+      return component && fixture && fixtures[component][fixture];
     },
 
     getStringifiedFixtureContents(fixtureContents) {
@@ -354,11 +357,22 @@ module.exports = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if (this.constructor.didFixtureChange(this.props, nextProps)) {
+    const didFixtureNavChange = this.constructor.didFixtureNavChange(this.props, nextProps);
+    // HMR might've rebuilt all fixtures
+    const didSourcesChange = nextProps.fixtures !== this.props.fixtures;
+    const didFixtureContentsChanged = didSourcesChange && !isEqual(
+      this.constructor.getSelectedFixtureContents(this.props),
+      this.constructor.getSelectedFixtureContents(nextProps),
+    );
+
+    if (didFixtureNavChange || didFixtureContentsChanged) {
       this.setState(
         this.constructor.getFixtureState(nextProps),
         this.sendFixtureToLoader,
       );
+    } else if (didSourcesChange) {
+      // Inject current fixture contents in newly loaded component
+      this.sendFixtureToLoader();
     }
   },
 
@@ -389,7 +403,7 @@ module.exports = React.createClass({
     const location = event.currentTarget.href;
     const params = parseLocation(location);
 
-    if (this.constructor.didFixtureChange(this.props, params)) {
+    if (this.constructor.didFixtureNavChange(this.props, params)) {
       this.props.router.goTo(location);
     } else {
       // This happens when we want to reset a fixture to its original state by
