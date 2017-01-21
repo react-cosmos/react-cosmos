@@ -24,10 +24,6 @@ module.exports = {
       test: /\.jsx?$/,
       loader: 'babel',
       exclude: /node_modules/,
-      query: {
-        // 'react-hmre' only works with React >=0.14
-        presets: ['es2015', 'react', 'react-hmre'],
-      },
     }, {
       test: /\.css$/,
       loader: 'style-loader!css-loader!postcss-loader',
