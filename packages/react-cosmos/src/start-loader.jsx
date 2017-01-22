@@ -7,13 +7,18 @@ import createStateProxy from './components/proxies/StateProxy';
 
 const ReactDOM = reactDomPolyfill(React);
 
-const createDomContainer = () => {
-  const node = document.createElement('div');
-  node.style.position = 'absolute';
-  node.style.width = '100%';
-  node.style.height = '100%';
+let domContainer;
 
-  return node;
+const createDomContainer = () => {
+  if (!domContainer) {
+    domContainer = document.createElement('div');
+    domContainer.style.position = 'absolute';
+    domContainer.style.width = '100%';
+    domContainer.style.height = '100%';
+    document.body.appendChild(domContainer);
+  }
+
+  return domContainer;
 };
 
 module.exports = ({
@@ -25,7 +30,7 @@ module.exports = ({
   const container =
     containerQuerySelector ?
     document.querySelector(containerQuerySelector) :
-    document.body.appendChild(createDomContainer());
+    createDomContainer();
 
   ReactDOM.render(
     <Loader

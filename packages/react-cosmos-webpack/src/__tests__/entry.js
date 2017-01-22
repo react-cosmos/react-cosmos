@@ -42,19 +42,9 @@ const init = (pathname) => {
 };
 
 const commonTests = () => {
-  test('calls expandModulePaths with component contexts', () => {
-    // Component contexts are mocked inside jest.config.json
-    expect(mockExpandModulePaths.mock.calls[0][0]).toBe('__COMPONENT_CONTEXTS__');
-  });
-
-  test('calls expandModulePaths with fixture contexts', () => {
-    // Fixture contexts are mocked inside jest.config.json
-    expect(mockExpandModulePaths.mock.calls[0][1]).toBe('__FIXTURE_CONTEXTS__');
-  });
-
   test('calls expandModulePaths with ignore paths', () => {
     // Fixture contexts are mocked inside jest.config.json
-    expect(mockExpandModulePaths.mock.calls[0][2]).toBe(mockIgnore);
+    expect(mockExpandModulePaths.mock.calls[0][0]).toBe(mockIgnore);
   });
 };
 

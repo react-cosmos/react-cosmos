@@ -67,15 +67,9 @@ describe('without hmr', () => {
     });
   });
 
-  test('adds resolved module paths in loader query', () => {
+  test('adds cosmos entry', () => {
     const cosmosEntry = webpackConfig.entry[webpackConfig.entry.length - 1];
-    const loaderPath = require.resolve('../entry-loader');
-    const entryPath = require.resolve('../entry');
-    const stringifiedPaths = JSON.stringify({
-      componentPaths: mockCosmosConfig.componentPaths.map(resolveUserPath),
-      fixturePaths: mockCosmosConfig.fixturePaths.map(resolveUserPath),
-    });
-    expect(cosmosEntry).toBe(`${loaderPath}?${stringifiedPaths}!${entryPath}`);
+    expect(cosmosEntry).toBe(require.resolve('../entry'));
   });
 
   test('does not add hot middleware client to entries', () => {
@@ -107,6 +101,20 @@ describe('without hmr', () => {
   test('adds DefinePlugin', () => {
     expect(webpackConfig.plugins).toContain(mockDefinePlugin);
   });
+
+  test('adds cosmos paths', () => {
+    expect(webpackConfig.cosmos).toEqual({
+      componentPaths: mockCosmosConfig.componentPaths.map(resolveUserPath),
+      fixturePaths: mockCosmosConfig.fixturePaths.map(resolveUserPath),
+    });
+  });
+
+  test('adds module loader', () => {
+    expect(webpackConfig.module.loaders[webpackConfig.module.loaders.length - 1]).toEqual({
+      loader: require.resolve('../module-loader'),
+      include: require.resolve('../utils/get-contexts'),
+    });
+  });
 });
 
 // Hmr setting affects entries, so only entry-related are duplicated here
@@ -128,15 +136,11 @@ describe('with hmr', () => {
     });
   });
 
-  test('adds cosmos entry with cosmos loader and module paths in loader query', () => {
-    const cosmosEntry = webpackConfig.entry[webpackConfig.entry.length - 1];
-    const loaderPath = require.resolve('../entry-loader');
-    const entryPath = require.resolve('../entry');
-    const stringifiedPaths = JSON.stringify({
-      componentPaths: mockCosmosConfig.componentPaths.map(resolveUserPath),
-      fixturePaths: mockCosmosConfig.fixturePaths.map(resolveUserPath),
+  test('adds cosmos entry', () => {
+    test('adds cosmos entry', () => {
+      const cosmosEntry = webpackConfig.entry[webpackConfig.entry.length - 1];
+      expect(cosmosEntry).toBe(require.resolve('../entry'));
     });
-    expect(cosmosEntry).toBe(`${loaderPath}?${stringifiedPaths}!${entryPath}`);
   });
 
   test('adds hot middleware client to entries', () => {

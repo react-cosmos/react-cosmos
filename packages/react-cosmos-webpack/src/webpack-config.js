@@ -40,10 +40,7 @@ export default function getWebpackConfig(
     entry.push(`${require.resolve('webpack-hot-middleware/client')}?reload=true`);
   }
 
-  entry.push(`${require.resolve('./entry-loader')}?${JSON.stringify({
-    componentPaths: resolvedComponentPaths,
-    fixturePaths: resolvedFixturePaths,
-  })}!${require.resolve('./entry')}`);
+  entry.push(require.resolve('./entry'));
 
   const output = {
     // Webpack doesn't write to this path when saving build in memory, but
@@ -55,7 +52,14 @@ export default function getWebpackConfig(
     publicPath: '/loader/',
   };
 
+  const loaders = userWebpackConfig.module && userWebpackConfig.module.loaders ?
+    [...userWebpackConfig.module.loaders] : [];
   const plugins = userWebpackConfig.plugins ? [...userWebpackConfig.plugins] : [];
+
+  loaders.push({
+    loader: require.resolve('./module-loader'),
+    include: require.resolve('./utils/get-contexts'),
+  });
 
   plugins.push(new webpack.DefinePlugin({
     COSMOS_CONFIG_PATH: JSON.stringify(cosmosConfigPath),
@@ -69,6 +73,14 @@ export default function getWebpackConfig(
     ...userWebpackConfig,
     entry,
     output,
+    module: {
+      ...userWebpackConfig.module,
+      loaders,
+    },
     plugins,
+    cosmos: {
+      componentPaths: resolvedComponentPaths,
+      fixturePaths: resolvedFixturePaths,
+    },
   };
 }

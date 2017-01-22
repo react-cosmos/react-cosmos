@@ -38,7 +38,7 @@ jest.mock('../match-fixture-path', () => (fixturePath, componentCleanPath) => {
 
 const expandModulePaths = require('../expand-module-paths').default;
 
-const componentContext1 = createContext({
+const mockComponentContext1 = createContext({
   './Welcome.jsx': Welcome,
   './Dashboard/Header.js': DashboardHeader,
   './Banned.js': {},
@@ -48,31 +48,36 @@ const componentContext1 = createContext({
   './__fixtures__/Dashboard/Header/loggedIn.js': DashboardHeader_loggedIn,
 });
 
-const componentContext2 = createContext({
+const mockComponentContext2 = createContext({
   './Onboarding/Onboarding.jsx': Onboarding,
 });
 
-const fixtureContext1 = createContext({
+const mockFixtureContext1 = createContext({
   './__fixtures__/Welcome/base.js': Welcome_base,
   './__fixtures__/Dashboard/Header/base.js': DashboardHeader_base,
   './__fixtures__/Dashboard/Header/loggedIn.js': DashboardHeader_loggedIn,
 });
 
-const fixtureContext2 = createContext({
+const mockFixtureContext2 = createContext({
   './Onboarding/base.js': Onboarding_base,
 });
+
+jest.mock('../get-contexts', () => ({
+  getComponentContexts: () => [
+    mockComponentContext1,
+    mockComponentContext2,
+  ],
+  getFixtureContexts: () => [
+    mockFixtureContext1,
+    mockFixtureContext2,
+  ],
+}));
 
 let components;
 let fixtures;
 
 beforeAll(() => {
   ({ components, fixtures } = expandModulePaths([
-    componentContext1,
-    componentContext2,
-  ], [
-    fixtureContext1,
-    fixtureContext2,
-  ], [
     /Ban/,
   ]));
 });

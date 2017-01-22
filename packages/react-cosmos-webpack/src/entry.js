@@ -1,5 +1,7 @@
 /* global window */
 
+import importModule from 'react-cosmos-utils/lib/import-module';
+
 const loaderUri = '/loader/';
 const { pathname } = window.location;
 const isLoader = pathname === loaderUri;
@@ -14,31 +16,37 @@ if (isLoader) {
 
 const { startLoader, startPlayground } = require('react-cosmos');
 const getConfig = require('./config').default;
-const expandModulePaths = require('./utils/expand-module-paths').default;
 
 // eslint-disable-next-line no-undef
 const userConfig = require(COSMOS_CONFIG_PATH);
-const { proxies, containerQuerySelector, ignore } = getConfig(userConfig);
+const { proxies, containerQuerySelector, ignore } = getConfig(importModule(userConfig));
 
-// The following constants are replaced at compile-time (through entry-loader)
-// with a map of require.context calls with absolute paths, derived from user
-// conf. By the time webpack analyzes this file to build the dependency tree
-// all paths will be embedded and webpack will register watchers for each
-// context (which will update the bundle automatically when files are added or
-// changed).
-// eslint-disable-next-line no-undef
-const { components, fixtures } = expandModulePaths(COMPONENT_CONTEXTS, FIXTURE_CONTEXTS, ignore);
+const start = () => {
+  // Module is imported whenever this function is called, making sure the
+  // lastest module version is used after a HMR update
+  // eslint-disable-next-line global-require
+  const expandModulePaths = require('./utils/expand-module-paths').default;
+  const { components, fixtures } = expandModulePaths(ignore);
 
-if (isLoader) {
-  startLoader({
-    proxies,
-    components,
-    fixtures,
-    containerQuerySelector,
-  });
-} else {
-  startPlayground({
-    fixtures,
-    loaderUri,
+  if (isLoader) {
+    startLoader({
+      proxies,
+      components,
+      fixtures,
+      containerQuerySelector,
+    });
+  } else {
+    startPlayground({
+      fixtures,
+      loaderUri,
+    });
+  }
+};
+
+start();
+
+if (module.hot) {
+  module.hot.accept('./utils/expand-module-paths', () => {
+    start();
   });
 }
