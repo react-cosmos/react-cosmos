@@ -1,48 +1,48 @@
 # React Cosmos [![Build Status](https://travis-ci.org/react-cosmos/react-cosmos.svg?branch=master)](https://travis-ci.org/react-cosmos/react-cosmos) [![Coverage Status](https://coveralls.io/repos/react-cosmos/react-cosmos/badge.svg?branch=master)](https://coveralls.io/r/react-cosmos/react-cosmos?branch=master) [![Join the chat at https://gitter.im/skidding/cosmos](https://img.shields.io/gitter/room/gitterHQ/gitter.svg)](https://gitter.im/skidding/cosmos?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md#how-to-contribute)
 
-DX* tool for designing truly encapsulated
-[React](http://facebook.github.io/react/) components.
+DX tool for designing truly encapsulated
+[React](http://facebook.github.io/react/) components
 
 ![Cosmos](cosmos-150.png)
 
 Cosmos scans your project for React components and loads them inside the [Component Playground](http://react-cosmos.github.io/react-cosmos/),
 enabling you to:
 
-1. Render your components under any combination of props and state
+1. Render your components under any combination of props, context and state
 2. See component states evolve in real-time as you interact with running
 instances
 
-> Working with Cosmos improves the component design because it
-surfaces any implicit dependencies. It also forces you to define sane inputs
-for every component, making them more predictable and easier to debug down the
+> Working with Cosmos improves component design because it
+surfaces implicit dependencies. It also forces you to define sane inputs
+for your components, making them predictable and easier to debug down the
 road.
 
 ![Component Playground](intro.gif)
-
-_\*DX stands for Developer Experience, the counterpart of UX in building a product, system or service._
 
 Read the story of React Cosmos: [Fighting for Component Independence.](https://medium.com/@skidding/fighting-for-component-independence-2a762ee53272)
 
 ## Requirements
 
-- [x] Node >=5 and npm >=3. Older versions might work but aren't guaranteed.
-- [x] You should already be using CommonJS modules to structure your code and [webpack](http://webpack.github.io/) or [Browserify](http://browserify.org/) to bundle your modules for the browser.
-- [x] React >=0.13.
-- [ ] You need to create [fixtures](examples/flatris/src/components/__fixtures__) for each set of props and states you want to load your components with. You can do this after you get started.
+- [x] Node >=5 and npm >=3 (older versions might work but aren't guaranteed)
+- [x] React >=0.13
+- [x] webpack or Browserify (or go rogue and roll your own)
+- [ ] [Fixtures](examples/flatris/src/components/__fixtures__) to define states for your components (you'll do this after you get started)
 
 ## Usage
 
 The easiest way to use React Cosmos is [alongside webpack](examples/flatris/webpack). Making it work with Browserify takes extra work, but a [complete example](examples/flatris/browserify) is available.
 
-### webpack CLI
+### react-cosmos-webpack
 
-It extends your existing webpack config (*please tell me you have one*) and starts a dev server for Component Playground tuned to your codebase.
+Extends your existing webpack config (*please tell me you have one*) and starts a dev server for Component Playground tuned to your codebase.
 
-`react-cosmos-webpack` looks for a `__fixtures__` directory next to your components. E.g.
+By default, it looks for a `__fixtures__` dir next to your components.
+
 ```bash
 src/components/Button.jsx
 src/components/__fixtures__/Button/default.js
 src/components/__fixtures__/Button/disabled.js
+
 # also works if you have one folder per component
 src/components/Button/Button.jsx
 src/components/Button/__fixtures__/default.js
@@ -89,6 +89,7 @@ Voilà! Now you can [extend your config](#configuration), start [creating fixtur
 
 Chances are you'll be faced with a blank page when opening *localhost:8989*. There
 are two methods for configuring `index.html`:
+
 - Use [HTML Webpack Plugin.](https://github.com/ampedandwired/html-webpack-plugin) See [Flatris example.](https://github.com/react-cosmos/react-cosmos/blob/a33b53ad533ad340fd81335e9d047f90e63c1ff6/examples/flatris/webpack/webpack.config.js#L37-L39)
 - Use the `publicPath` option to target the parent folder of your index.html. Details below.
 
@@ -97,6 +98,7 @@ The former is recommended, otherwise **the script tag from your index.html needs
 #### Configuration
 
 All the options supported by `cosmos.config.js`.
+
 ```js
 // cosmos.config.js
 module.exports = {
@@ -173,11 +175,26 @@ module.exports = {
 };
 ```
 
-#### Using Babel
+#### Using webpack 2
 
-Unless you pass it the `--plain` param, the webpack CLI runs with `babel-node` by default. This is nice because it allows you to write your configs using the same syntax as your source code.
+From [the new webpack docs](https://webpack.js.org/guides/migrating/#mixing-es2015-with-amd-and-commonjs):
 
-## Thanks!
+
+> It is important to note that you will want to tell Babel to not parse these module symbols so webpack can use them. You can do this by setting the following in your `.babelrc` or babel-loader options.
+>
+> ```json
+> {
+>  "presets": [
+>    ["es2015", { "modules": false }]
+>  ]
+> }
+> ```
+
+#### Using babel-node
+
+Unless you pass it the `--plain` param, react-cosmos-webpack runs with `babel-node` by default. This is nice because it allows you to write your configs using the same syntax as your source code.
+
+## Thank you!
 
 Explore the [Contributing Guide](CONTRIBUTING.md) for more information.
 

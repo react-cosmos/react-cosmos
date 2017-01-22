@@ -4,8 +4,7 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/context",
   "license": "MIT",
   "dependencies": {
-    "html-webpack-plugin": "^2.22.0",
-    "webpack": "^1.13.2"
+    "html-webpack-plugin": "^2.22.0"
   },
   "peerDependencies": {
     "react": ">=0.13 <16"

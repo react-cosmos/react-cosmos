@@ -4,12 +4,7 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/local-state",
   "license": "MIT",
   "dependencies": {
-    "css-loader": "^0.25.0",
-    "html-webpack-plugin": "^2.22.0",
-    "postcss-loader": "^1.0.0",
-    "postcss-nested": "^1.0.0",
-    "style-loader": "^0.13.1",
-    "webpack": "^1.13.2"
+    "html-webpack-plugin": "^2.22.0"
   },
   "peerDependencies": {
     "react": ">=0.13 <16"

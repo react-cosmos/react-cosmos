@@ -15,12 +15,15 @@
     "glob": "^7.1.1",
     "html-webpack-plugin": "^2.24.1",
     "json-loader": "^0.5.4",
+    "loader-utils": "^0.2.16",
     "react-cosmos": "^2.0.0-beta.4",
     "react-cosmos-utils": "^2.0.0-beta.4",
-    "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.8.4",
     "webpack-hot-middleware": "^2.13.0",
     "yargs": "^6.0.0"
+  },
+  "peerDependencies": {
+    "webpack": ">=1.13 <3"
   },
   "bin": {
     "cosmos": "./bin/cosmos.js"

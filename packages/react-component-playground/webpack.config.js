@@ -35,22 +35,28 @@ module.exports = {
     'react-dom': 'react-dom',
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
   },
   module: {
-    loaders: [{
+    rules: [{
       test: /\.jsx?$/,
-      loader: 'babel',
       include: src,
+      use: 'babel-loader',
     }, {
       test: /\.(css|less)$/,
       include: src,
-      loader: 'style!css?modules&importLoaders=1' +
-              '&localIdentName=[name]__[local]___[hash:base64:5]!less',
+      use: [
+        'style-loader',
+        'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+        'less-loader',
+      ],
     }, {
       test: /\.css$/,
       include: nodeModules,
-      loader: 'style!css',
+      use: [
+        'style-loader',
+        'css-loader',
+      ],
     }],
   },
   plugins: [
