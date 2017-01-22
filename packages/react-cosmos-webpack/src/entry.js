@@ -1,5 +1,7 @@
 /* global window */
 
+import importModule from 'react-cosmos-utils/lib/import-module';
+
 const loaderUri = '/loader/';
 const { pathname } = window.location;
 const isLoader = pathname === loaderUri;
@@ -17,7 +19,7 @@ const getConfig = require('./config').default;
 
 // eslint-disable-next-line no-undef
 const userConfig = require(COSMOS_CONFIG_PATH);
-const { proxies, containerQuerySelector, ignore } = getConfig(userConfig);
+const { proxies, containerQuerySelector, ignore } = getConfig(importModule(userConfig));
 
 const start = () => {
   // Module is imported whenever this function is called, making sure the
