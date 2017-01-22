@@ -1,7 +1,7 @@
 # React Cosmos [![Build Status](https://travis-ci.org/react-cosmos/react-cosmos.svg?branch=master)](https://travis-ci.org/react-cosmos/react-cosmos) [![Coverage Status](https://coveralls.io/repos/react-cosmos/react-cosmos/badge.svg?branch=master)](https://coveralls.io/r/react-cosmos/react-cosmos?branch=master) [![Join the chat at https://gitter.im/skidding/cosmos](https://img.shields.io/gitter/room/gitterHQ/gitter.svg)](https://gitter.im/skidding/cosmos?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md#how-to-contribute)
 
 DX tool for designing truly encapsulated
-[React](http://facebook.github.io/react/) components.
+[React](http://facebook.github.io/react/) components
 
 ![Cosmos](cosmos-150.png)
 
@@ -192,7 +192,7 @@ From [the new webpack docs](https://webpack.js.org/guides/migrating/#mixing-es20
 
 #### Using babel-node
 
-Unless you pass it the `--plain` param, the react-cosmos-webpack runs with `babel-node` by default. This is nice because it allows you to write your configs using the same syntax as your source code.
+Unless you pass it the `--plain` param, react-cosmos-webpack runs with `babel-node` by default. This is nice because it allows you to write your configs using the same syntax as your source code.
 
 ## Thank you!
 
