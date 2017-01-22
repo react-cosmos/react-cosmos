@@ -9,7 +9,7 @@ export default function getDefaultWebpackConfig() {
       extensions: ['.js', '.jsx'],
     },
     module: {
-      // Using loaders instead of rules to preserve weback 1.x compatibiltiy
+      // Using loaders instead of rules to preserve webpack 1.x compatibility
       loaders: [{
         test: /\.jsx?$/,
         loader: require.resolve('babel-loader'),
