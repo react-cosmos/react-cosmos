@@ -59,6 +59,10 @@ export default function getWebpackConfig(
   loaders.push({
     loader: require.resolve('./module-loader'),
     include: require.resolve('./utils/get-contexts'),
+    query: {
+      componentPaths: resolvedComponentPaths,
+      fixturePaths: resolvedFixturePaths,
+    },
   });
 
   plugins.push(new webpack.DefinePlugin({
@@ -78,9 +82,5 @@ export default function getWebpackConfig(
       loaders,
     },
     plugins,
-    cosmos: {
-      componentPaths: resolvedComponentPaths,
-      fixturePaths: resolvedFixturePaths,
-    },
   };
 }

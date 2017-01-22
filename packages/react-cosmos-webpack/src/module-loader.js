@@ -1,3 +1,5 @@
+import loaderUtils from 'loader-utils';
+
 const jsonLoader = require.resolve('json-loader');
 
 const createComponentContext = path =>
@@ -20,7 +22,7 @@ const createExternalFixtureContext = (path, ext) =>
  * - To watch for (and react to) added and changed component/fixture files
  */
 module.exports = function embedModules(source) {
-  const { componentPaths, fixturePaths } = this.options.cosmos;
+  const { componentPaths, fixturePaths } = loaderUtils.parseQuery(this.query);
 
   const componentContexts = `[${componentPaths.map(createComponentContext).join(',')}]`;
   const fixtureContexts = `[${componentPaths.map(path =>

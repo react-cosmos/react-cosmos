@@ -1,20 +1,21 @@
 jest.mock('loader-utils');
 
+const loaderUtils = require('loader-utils');
 const moduleLoader = require('../module-loader');
+
+loaderUtils.__setParseQueryMocks({
+  componentPaths: [
+    '/somewhere/over/the/rainbow/components',
+    '/somewhere/over/the/rainbow/containers',
+  ],
+  fixturePaths: [
+    '/somewhere/over/the/rainbow/test/fixtures',
+  ],
+});
 
 const jsonLoader = require.resolve('json-loader');
 const loaderContext = {
-  options: {
-    cosmos: {
-      componentPaths: [
-        '/somewhere/over/the/rainbow/components',
-        '/somewhere/over/the/rainbow/containers',
-      ],
-      fixturePaths: [
-        '/somewhere/over/the/rainbow/test/fixtures',
-      ],
-    },
-  },
+  query: 'all component and fixture paths are crammed in here',
 };
 const loaderInput = 'components = COMPONENT_CONTEXTS; fixtures = FIXTURE_CONTEXTS;';
 const loaderOutput = moduleLoader.call(loaderContext, loaderInput);
@@ -37,6 +38,10 @@ const customFixtureContext =
 const customFixtureJsonContext =
   `require.context('${jsonLoader}!/somewhere/over/the/rainbow/test/fixtures', true, /\\.json$/)`;
 /* eslint-enable max-len */
+
+test('calls loaderUtils.parseQuery with context query', () => {
+  expect(loaderUtils.parseQuery.mock.calls[0][0]).toBe(loaderContext.query);
+});
 
 test('creates context for 1st component path', () => {
   expect(loaderOutput).toContain(component1Context);

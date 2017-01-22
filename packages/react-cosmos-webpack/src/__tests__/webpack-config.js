@@ -102,17 +102,14 @@ describe('without hmr', () => {
     expect(webpackConfig.plugins).toContain(mockDefinePlugin);
   });
 
-  test('adds cosmos paths', () => {
-    expect(webpackConfig.cosmos).toEqual({
-      componentPaths: mockCosmosConfig.componentPaths.map(resolveUserPath),
-      fixturePaths: mockCosmosConfig.fixturePaths.map(resolveUserPath),
-    });
-  });
-
   test('adds module loader', () => {
     expect(webpackConfig.module.loaders[webpackConfig.module.loaders.length - 1]).toEqual({
       loader: require.resolve('../module-loader'),
       include: require.resolve('../utils/get-contexts'),
+      query: {
+        componentPaths: mockCosmosConfig.componentPaths.map(resolveUserPath),
+        fixturePaths: mockCosmosConfig.fixturePaths.map(resolveUserPath),
+      },
     });
   });
 });
