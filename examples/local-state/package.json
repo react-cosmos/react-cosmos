@@ -3,9 +3,6 @@
   "description": "Example of injecting and serializing component local state",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/local-state",
   "license": "MIT",
-  "dependencies": {
-    "html-webpack-plugin": "^2.22.0"
-  },
   "peerDependencies": {
     "react": ">=0.13 <16"
   },
