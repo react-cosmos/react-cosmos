@@ -157,6 +157,28 @@ describe('default config', () => {
   });
 });
 
+describe('missing webpack config', () => {
+  const mockDefaultWebpackConfig = {};
+
+  beforeEach(() => {
+    jest.mock('yargs', () => ({ argv: {} }));
+
+    jest.mock('./dummy-config/cosmos.config', () => ({
+      webpackConfigPath: 'missing-path/webpack.config',
+    }));
+
+    jest.mock('../default-webpack-config', () => () => mockDefaultWebpackConfig);
+
+    startServer();
+  });
+
+  commonTests();
+
+  test('uses default user webpack config', () => {
+    expect(mockGetWebpackConfig.mock.calls[0][0]).toBe(mockDefaultWebpackConfig);
+  });
+});
+
 describe('with hot module replacement', () => {
   beforeEach(() => {
     jest.mock('yargs', () => ({ argv: {} }));
