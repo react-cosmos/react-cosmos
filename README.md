@@ -1,6 +1,6 @@
 # React Cosmos [![Build Status](https://travis-ci.org/react-cosmos/react-cosmos.svg?branch=master)](https://travis-ci.org/react-cosmos/react-cosmos) [![Coverage Status](https://coveralls.io/repos/react-cosmos/react-cosmos/badge.svg?branch=master)](https://coveralls.io/r/react-cosmos/react-cosmos?branch=master) [![Join the chat at https://gitter.im/skidding/cosmos](https://img.shields.io/gitter/room/gitterHQ/gitter.svg)](https://gitter.im/skidding/cosmos?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md#how-to-contribute)
 
-DX* tool for designing truly encapsulated
+DX tool for designing truly encapsulated
 [React](http://facebook.github.io/react/) components.
 
 ![Cosmos](cosmos-150.png)
@@ -18,8 +18,6 @@ for your components, making them predictable and easier to debug down the
 road.
 
 ![Component Playground](intro.gif)
-
-_\*DX stands for Developer Experience, the counterpart of UX in building a product, system or service._
 
 Read the story of React Cosmos: [Fighting for Component Independence.](https://medium.com/@skidding/fighting-for-component-independence-2a762ee53272)
 
