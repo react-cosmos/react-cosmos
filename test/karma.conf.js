@@ -29,22 +29,30 @@ module.exports = function setKarmaConfig(config) {
         },
       },
       module: {
-        loaders: [{
+        rules: [{
           test: /\.jsx?$/,
           exclude: /node_modules/,
-          loader: 'babel-loader',
-          query: {
-            plugins: [
-              ['istanbul', { include: ['packages/*/src/**/*.js{,x}'] }],
-            ],
+          use: {
+            loader: 'babel-loader',
+            options: {
+              plugins: [
+                ['istanbul', { include: ['packages/*/src/**/*.js{,x}'] }],
+              ],
+            },
           },
         }, {
           test: /\.less$/,
-          loader: 'style-loader!css-loader?modules&importLoaders=1' +
-              '&localIdentName=[name]__[local]___[hash:base64:5]!less-loader',
+          use: [
+            'style-loader',
+            'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+            'less-loader',
+          ],
         }, {
           test: /\.css$/,
-          loader: 'style-loader!css-loader',
+          use: [
+            'style-loader',
+            'css-loader',
+          ],
         }],
       },
     },

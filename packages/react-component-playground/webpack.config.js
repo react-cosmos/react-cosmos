@@ -38,19 +38,25 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   module: {
-    loaders: [{
+    rules: [{
       test: /\.jsx?$/,
-      loader: 'babel-loader',
       include: src,
+      use: 'babel-loader',
     }, {
       test: /\.(css|less)$/,
       include: src,
-      loader: 'style-loader!css-loader?modules&importLoaders=1' +
-              '&localIdentName=[name]__[local]___[hash:base64:5]!less-loader',
+      use: [
+        'style-loader',
+        'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+        'less-loader',
+      ],
     }, {
       test: /\.css$/,
       include: nodeModules,
-      loader: 'style-loader!css-loader',
+      use: [
+        'style-loader',
+        'css-loader',
+      ],
     }],
   },
   plugins: [
