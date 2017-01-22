@@ -1,5 +1,5 @@
 /* eslint-disable import/no-webpack-loader-syntax */
-const reactDOMPolyfillInjector = require('inject?react-dom!../src');
+const reactDOMPolyfillInjector = require('inject-loader?react-dom!../src');
 
 describe('DOMPolyfill Post React DOM (>=0.14)', () => {
   // Make sure version is parsed correctly

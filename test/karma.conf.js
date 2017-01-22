@@ -20,7 +20,7 @@ module.exports = function setKarmaConfig(config) {
     },
     webpack: {
       resolve: {
-        extensions: ['', '.js', '.jsx'],
+        extensions: ['.js', '.jsx'],
         alias: {
           helpers: path.join(__dirname, 'helpers'),
           fixtures: path.join(__dirname, 'fixtures'),
@@ -32,7 +32,7 @@ module.exports = function setKarmaConfig(config) {
         loaders: [{
           test: /\.jsx?$/,
           exclude: /node_modules/,
-          loader: 'babel',
+          loader: 'babel-loader',
           query: {
             plugins: [
               ['istanbul', { include: ['packages/*/src/**/*.js{,x}'] }],
@@ -40,11 +40,11 @@ module.exports = function setKarmaConfig(config) {
           },
         }, {
           test: /\.less$/,
-          loader: 'style!css?modules&importLoaders=1' +
-              '&localIdentName=[name]__[local]___[hash:base64:5]!less',
+          loader: 'style-loader!css-loader?modules&importLoaders=1' +
+              '&localIdentName=[name]__[local]___[hash:base64:5]!less-loader',
         }, {
           test: /\.css$/,
-          loader: 'style!css',
+          loader: 'style-loader!css-loader',
         }],
       },
     },
