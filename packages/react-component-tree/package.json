@@ -1,6 +1,6 @@
 {
   "name": "react-component-tree",
-  "version": "2.0.0-beta.4",
+  "version": "2.0.0-beta.5",
   "description": "Serialize and reproduce the state of an entire tree of React components",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-component-tree",
   "license": "MIT",
@@ -14,7 +14,7 @@
     "lodash.foreach": "^4.5.0",
     "lodash.isempty": "^4.4.0",
     "lodash.omit": "^4.5.0",
-    "react-dom-polyfill": "^2.0.0-beta.4"
+    "react-dom-polyfill": "^2.0.0-beta.5"
   },
   "peerDependencies": {
     "react": ">=0.13 <16"

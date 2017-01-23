@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-webpack",
-  "version": "2.0.0-beta.4",
+  "version": "2.0.0-beta.5",
   "description": "CLI for running React Cosmos inside webpack-powered apps",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-webpack",
   "license": "MIT",
@@ -18,7 +18,7 @@
     "@skidding/html-webpack-plugin": "^2.26.0",
     "json-loader": "^0.5.4",
     "loader-utils": "^0.2.16",
-    "react-cosmos": "^2.0.0-beta.4",
+    "react-cosmos": "^2.0.0-beta.5",
     "react-cosmos-utils": "^2.0.0-beta.4",
     "style-loader": "^0.13.1",
     "webpack-dev-middleware": "^1.8.4",
