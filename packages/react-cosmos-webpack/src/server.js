@@ -10,6 +10,15 @@ import importModule from 'react-cosmos-utils/lib/import-module';
 import getConfig from './config';
 import resolveUserPath from './utils/resolve-user-path';
 import getWebpackConfig from './webpack-config';
+import getDefaultWebpackConfig from './default-webpack-config';
+
+const moduleExists = (modulePath) => {
+  try {
+    return require.resolve(modulePath) && true;
+  } catch (e) {
+    return false;
+  }
+};
 
 module.exports = function startServer() {
   const cosmosConfigPath = resolveUserPath(argv.config || 'cosmos.config');
@@ -23,9 +32,17 @@ module.exports = function startServer() {
     webpackConfigPath,
   } = cosmosConfig;
 
-  const userWebpackConfig = importModule(
-      require(resolveUserPath(webpackConfigPath, cosmosConfigPath)),
-  );
+  const userWebpackConfigPath = resolveUserPath(webpackConfigPath, cosmosConfigPath);
+  let userWebpackConfig;
+
+  if (moduleExists(userWebpackConfigPath)) {
+    console.log(`[Cosmos] Using webpack config found at ${userWebpackConfigPath}`);
+    userWebpackConfig = importModule(require(userWebpackConfigPath));
+  } else {
+    console.log('[Cosmos] No webpack config found, using default configuration');
+    userWebpackConfig = getDefaultWebpackConfig();
+  }
+
   const cosmosWebpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
   const compiler = webpack(cosmosWebpackConfig);
   const app = express();
@@ -47,7 +64,7 @@ module.exports = function startServer() {
 
   if (inferredPublicPath) {
     const resolvedPublicPath = resolveUserPath(inferredPublicPath, cosmosConfigPath);
-    console.log(`Serving static files from ${resolvedPublicPath}`);
+    console.log(`[Cosmos] Serving static files from ${resolvedPublicPath}`);
     app.use('/loader/', express.static(resolvedPublicPath));
   }
 
@@ -63,6 +80,6 @@ module.exports = function startServer() {
     if (err) {
       throw err;
     }
-    console.log(`Listening at http://${hostname}:${port}/`);
+    console.log(`[Cosmos] See you at http://${hostname}:${port}/`);
   });
 };

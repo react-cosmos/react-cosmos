@@ -11,13 +11,13 @@
   text-shadow: 0px 1px 0px #b23e35;
   cursor: pointer;
   outline: none;
+}
 
-  &:active {
-    background: linear-gradient(to bottom, #e4685d 5%, #fc8d83 100%);
-    background-color: #e4685d;
-  }
+.CounterButton:active {
+  background: linear-gradient(to bottom, #e4685d 5%, #fc8d83 100%);
+  background-color: #e4685d;
+}
 
-  &:disabled {
-    opacity: 0.5;
-  }
+.CounterButton:disabled {
+  opacity: 0.5;
 }

@@ -157,6 +157,28 @@ describe('default config', () => {
   });
 });
 
+describe('missing webpack config', () => {
+  const mockDefaultWebpackConfig = {};
+
+  beforeEach(() => {
+    jest.mock('yargs', () => ({ argv: {} }));
+
+    jest.mock('./dummy-config/cosmos.config', () => ({
+      webpackConfigPath: 'missing-path/webpack.config',
+    }));
+
+    jest.mock('../default-webpack-config', () => () => mockDefaultWebpackConfig);
+
+    startServer();
+  });
+
+  commonTests();
+
+  test('uses default user webpack config', () => {
+    expect(mockGetWebpackConfig.mock.calls[0][0]).toBe(mockDefaultWebpackConfig);
+  });
+});
+
 describe('with hot module replacement', () => {
   beforeEach(() => {
     jest.mock('yargs', () => ({ argv: {} }));
@@ -209,13 +231,15 @@ describe('with custom cosmos config path', () => {
 });
 
 describe('with custom webpack config path', () => {
+  const mockCustomWebpackConfig = {};
+
   beforeEach(() => {
     jest.mock('yargs', () => ({ argv: {} }));
 
     jest.mock('./dummy-config/cosmos.config', () => ({
-      webpackConfig: 'custom-path/webpack.config',
+      webpackConfigPath: 'custom-path/webpack.config',
     }));
-    jest.mock('./dummy-config/custom-path/webpack.config', () => mockUserWebpackConfig);
+    jest.mock('./dummy-config/custom-path/webpack.config', () => mockCustomWebpackConfig);
 
     startServer();
   });
@@ -223,7 +247,7 @@ describe('with custom webpack config path', () => {
   commonTests();
 
   test('uses user webpack config from custom path', () => {
-    expect(mockGetWebpackConfig.mock.calls[0][0]).toBe(mockUserWebpackConfig);
+    expect(mockGetWebpackConfig.mock.calls[0][0]).toBe(mockCustomWebpackConfig);
   });
 
   test('uses cosmos config from custom path', () => {
