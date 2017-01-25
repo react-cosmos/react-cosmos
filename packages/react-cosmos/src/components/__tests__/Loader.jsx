@@ -1,25 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-let origAddEventListener;
-let origRemoveEventListener;
-let origParentPostMessage;
-
-const stubWindowApi = () => {
-  origParentPostMessage = parent.postMessage;
-  parent.postMessage = jest.fn();
-  origAddEventListener = window.addEventListener;
-  window.addEventListener = jest.fn();
-  origRemoveEventListener = window.removeEventListener;
-  window.removeEventListener = jest.fn();
-};
-
-const revertWindowApi = () => {
-  parent.postMessage = origParentPostMessage;
-  window.addEventListener = origAddEventListener;
-  window.removeEventListener = origRemoveEventListener;
-};
-
 const mockProxyNext = {};
 const mockFirstProxy = {
   value: () => <span />,
@@ -44,6 +25,7 @@ const Loader = require('../Loader').default;
 
 const Proxy = jest.fn();
 const FooBarComponent = () => {};
+const FooBarBarComponent = () => {};
 const baseFixture = {};
 
 let wrapper;
@@ -55,9 +37,13 @@ const init = () => {
       proxies={[Proxy]}
       components={{
         FooBar: FooBarComponent,
+        FooBarBar: FooBarBarComponent,
       }}
       fixtures={{
         FooBar: {
+          base: baseFixture,
+        },
+        FooBarBar: {
           base: baseFixture,
         },
       }}
@@ -66,30 +52,49 @@ const init = () => {
   instance = wrapper.instance();
 };
 
+let pendingPromiseResolve;
+const waitForPostMessage = () => new Promise((resolve) => {
+  pendingPromiseResolve = resolve;
+});
+
+const parentMessageListener = (e) => {
+  pendingPromiseResolve(e.data);
+};
+
 beforeAll(() => {
-  stubWindowApi();
+  parent.addEventListener('message', parentMessageListener, false);
   init();
 });
 
 afterAll(() => {
-  revertWindowApi();
+  parent.removeEventListener('message', parentMessageListener);
 });
 
 test('renders nothing at first', () => {
   expect(wrapper.html()).toBe(null);
 });
 
-test('subscribes to message events', () => {
-  const { onMessage } = instance;
-  expect(window.addEventListener).toHaveBeenLastCalledWith('message', onMessage, false);
-});
-
-test('notifies parent frames on load', () => {
-  expect(parent.postMessage).toHaveBeenLastCalledWith({ type: 'frameReady' }, '*');
-});
+test('notifies parent frames on load', () =>
+  waitForPostMessage().then((data) => {
+    expect(data).toEqual({ type: 'frameReady' });
+  }),
+);
 
 test('creates linked list from proxy list', () => {
   expect(mockGetLinkedList).toHaveBeenLastCalledWith([Proxy]);
+});
+
+test('publishes message to parent on fixture update', () => {
+  const { onFixtureUpdate } = instance;
+  const updatedFixture = {};
+  onFixtureUpdate(updatedFixture);
+
+  return waitForPostMessage().then((data) => {
+    expect(data).toEqual({
+      type: 'fixtureUpdate',
+      fixtureBody: updatedFixture,
+    });
+  });
 });
 
 describe('on `fixtureLoad` event', () => {
@@ -98,17 +103,17 @@ describe('on `fixtureLoad` event', () => {
   let firstProxyKey;
 
   beforeAll(() => {
-    const { onMessage } = instance;
-    onMessage({
-      data: {
-        type: 'fixtureLoad',
-        component: 'FooBar',
-        fixture: 'base',
-      },
+    window.postMessage({
+      type: 'fixtureLoad',
+      component: 'FooBar',
+      fixture: 'base',
+    }, '*');
+
+    return waitForPostMessage().then(() => {
+      firstProxyWrapper = wrapper.find(mockFirstProxy.value);
+      firstProxyProps = firstProxyWrapper.props();
+      firstProxyKey = firstProxyWrapper.key();
     });
-    firstProxyWrapper = wrapper.find(mockFirstProxy.value);
-    firstProxyProps = firstProxyWrapper.props();
-    firstProxyKey = firstProxyWrapper.key();
   });
 
   test('renders first proxy ', () => {
@@ -148,17 +153,17 @@ describe('on `fixtureLoad` event', () => {
     };
 
     beforeAll(() => {
-      const { onMessage } = instance;
-      onMessage({
-        data: {
-          type: 'fixtureLoad',
-          component: 'FooBar',
-          fixture: 'base',
-          fixtureBody,
-        },
+      window.postMessage({
+        type: 'fixtureLoad',
+        component: 'FooBar',
+        fixture: 'base',
+        fixtureBody,
+      }, '*');
+
+      return waitForPostMessage().then(() => {
+        firstProxyWrapper = wrapper.find(mockFirstProxy.value);
+        firstProxyProps = firstProxyWrapper.props();
       });
-      firstProxyWrapper = wrapper.find(mockFirstProxy.value);
-      firstProxyProps = firstProxyWrapper.props();
     });
 
     test('includes body received in fixture sent to first proxy', () => {
@@ -172,20 +177,24 @@ describe('on `fixtureLoad` event', () => {
       expect(firstProxyWrapper.key()).not.toEqual(firstProxyKey);
     });
   });
-});
 
-test('publishes message to parent on fixture update', () => {
-  const { onFixtureUpdate } = instance;
-  const updatedFixture = {};
-  onFixtureUpdate(updatedFixture);
-  expect(parent.postMessage).toHaveBeenLastCalledWith({
-    type: 'fixtureUpdate',
-    fixtureBody: updatedFixture,
-  }, '*');
-});
+  describe('on unmount', () => {
+    beforeAll(() => {
+      wrapper.unmount();
+    });
 
-test('unsubscribes from message events on unmount', () => {
-  const { onMessage } = instance;
-  wrapper.unmount();
-  expect(window.removeEventListener).toHaveBeenLastCalledWith('message', onMessage);
+    test('unsubscribes from message events', () => {
+      instance.setState = jest.fn();
+
+      window.postMessage({
+        type: 'fixtureLoad',
+        component: 'FooBarBar',
+        fixture: 'base',
+      }, '*');
+
+      return waitForPostMessage().then(() => {
+        expect(instance.setState).not.toHaveBeenCalled();
+      });
+    });
+  });
 });
