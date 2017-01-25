@@ -7,7 +7,9 @@ let getComponentClass;
 let getComponentProps;
 
 const onChange = jest.fn();
-const mockUriLocation = 'mypage.com?component=List&dataUrl=users.json';
+// window.location is mocked inside jest.config.json
+const mockUriLocationInitial = 'http://foo.bar/';
+const mockUriLocation = `${mockUriLocationInitial}?component=List&dataUrl=users.json`;
 const mockUriParams = {
   component: 'List',
   dataUrl: 'users.json',
@@ -18,22 +20,6 @@ let uri;
 let Router;
 let ReactDOM;
 let routerInstance;
-
-const nativeRefs = {};
-const stubWindowApi = () => {
-  nativeRefs.addEventListener = window.addEventListener;
-  nativeRefs.removeEventListener = window.removeEventListener;
-  nativeRefs.historyPushState = window.history.pushState;
-
-  window.addEventListener = jest.fn();
-  window.removeEventListener = jest.fn();
-  window.history.pushState = jest.fn();
-};
-const restoreWindowApi = () => {
-  window.addEventListener = nativeRefs.addEventListener;
-  window.removeEventListener = nativeRefs.removeEventListener;
-  window.history.pushState = nativeRefs.historyPushState;
-};
 
 const initRouter = () => {
   jest.resetModules();
@@ -109,43 +95,15 @@ const commonTests = () => {
   });
 };
 
-const currentLocationTests = () => {
-  it('should unserialize current location', () => {
-    // window.location is mocked inside jest.config.json
-    expect(uri.parseLocation.mock.calls[0][0]).toBe('http://foo.bar/');
-  });
-};
-
-const pushLocationTests = () => {
-  it('should push new entry to browser history', () => {
-    expect(window.history.pushState.mock.calls[0][2]).toBe(mockUriLocation);
-  });
-};
-
-beforeAll(() => {
-  stubWindowApi();
-});
-
-afterAll(() => {
-  restoreWindowApi();
-});
-
 describe('initial location', () => {
   beforeAll(() => {
     initRouter();
   });
 
   commonTests();
-  currentLocationTests();
 
-  it('should add popstate event listener', () => {
-    expect(window.addEventListener.mock.calls[0]).toEqual(['popstate', routerInstance.onPopState]);
-  });
-
-  it('should remove popstate event listener on destroy', () => {
-    routerInstance.stop();
-    expect(window.removeEventListener.mock.calls[0]).toEqual(
-      ['popstate', routerInstance.onPopState]);
+  it('should unserialize current location', () => {
+    expect(uri.parseLocation.mock.calls[0][0]).toBe(mockUriLocationInitial);
   });
 });
 
@@ -156,8 +114,15 @@ describe('.goTo method', () => {
     routerInstance.goTo(mockUriLocation);
   });
 
+  afterAll(() => {
+    window.history.pushState({}, '', mockUriLocationInitial);
+  });
+
   commonTests();
-  pushLocationTests();
+
+  it('should push new entry to browser history', () => {
+    expect(window.location.href).toBe(mockUriLocation);
+  });
 });
 
 describe('.routeLink method', () => {
@@ -172,32 +137,35 @@ describe('.routeLink method', () => {
     });
   });
 
+  afterAll(() => {
+    window.history.pushState({}, '', mockUriLocationInitial);
+  });
+
   commonTests();
-  pushLocationTests();
+
+  it('should push new entry to browser history', () => {
+    expect(window.location.href).toBe(mockUriLocation);
+  });
 });
 
 describe('PopState event', () => {
   beforeAll(() => {
     initRouter();
 
-    routerInstance.onPopState({
-      state: {},
-    });
+    window.history.pushState({}, '', mockUriLocation);
+    window.dispatchEvent(new Event('popstate'));
   });
 
   commonTests();
-  currentLocationTests();
-});
 
-describe('Empty PopState event', () => {
-  beforeEach(() => {
-    initRouter();
-
-    routerInstance.onPopState({
-      state: null,
-    });
+  it('should unserialize current location', () => {
+    expect(uri.parseLocation.mock.calls[1][0]).toBe(mockUriLocation);
   });
 
-  commonTests();
-  currentLocationTests();
+  it('should remove popstate event listener on destroy', () => {
+    routerInstance.stop();
+    window.dispatchEvent(new Event('popstate'));
+
+    expect(uri.parseLocation.mock.calls.length).toEqual(2);
+  });
 });
