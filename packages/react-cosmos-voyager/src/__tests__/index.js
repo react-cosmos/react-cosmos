@@ -7,8 +7,9 @@ const resolvePath = relPath => path.join(__dirname, '../use-cases', relPath);
 const testUseCase = (useCase, {
   componentPaths = [],
   fixturePaths = [],
-  getComponentName,
   ignore,
+  getComponentName,
+  getFixturePathsForComponent,
 }, output) => {
   describe(useCase, () => {
     const expectation = traverse(output).map(val => (
@@ -20,8 +21,9 @@ const testUseCase = (useCase, {
       result = getFilePaths({
         componentPaths: componentPaths.map(p => resolvePath(`${useCase}/${p}`)),
         fixturePaths: fixturePaths.map(p => resolvePath(`${useCase}/${p}`)),
-        getComponentName,
         ignore,
+        getComponentName,
+        getFixturePathsForComponent,
       });
     });
 
@@ -127,6 +129,15 @@ testUseCase('separate-packages-external-fixtures', {
   getComponentName: componentPath => (
     componentPath.match(/pkgs\/(.+)\/src\/index/)[1]
   ),
+  getFixturePathsForComponent: componentName => ({
+    Foo: {
+      blank: resolvePath('separate-packages-external-fixtures/fixtures/Foo/blank.js'),
+    },
+    'nested/Bar': {
+      one: resolvePath('separate-packages-external-fixtures/fixtures/nested/Bar/one.js'),
+      two: resolvePath('separate-packages-external-fixtures/fixtures/nested/Bar/two.json'),
+    },
+  }[componentName]),
   ignore: [/Baz/],
 }, {
   components: {

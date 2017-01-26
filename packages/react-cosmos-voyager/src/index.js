@@ -44,6 +44,7 @@ const getFilePaths = ({
   fixturePaths = [],
   ignore = [],
   getComponentName,
+  getFixturePathsForComponent,
 }) => {
   const extFixtures = getExternalFixtures(fixturePaths);
   const components = {};
@@ -56,13 +57,15 @@ const getFilePaths = ({
       }
 
       const componentDir = path.dirname(componentPath);
-      const relFixtures = glob.sync(`${componentDir}/**/__fixtures__/**/*.{js,json}`);
       const componentName = getComponentName(componentPath);
 
       components[componentName] = componentPath;
-      fixtures[componentName] = getMatchingFixtures(
-        [...relFixtures, ...extFixtures], componentName,
-      );
+      fixtures[componentName] = typeof getFixturePathsForComponent === 'function' ?
+        getFixturePathsForComponent(componentName) :
+        getMatchingFixtures([
+          ...glob.sync(`${componentDir}/**/__fixtures__/**/*.{js,json}`),
+          ...extFixtures,
+        ], componentName);
     } else {
       const relFixtures = glob.sync(`${componentPath}/**/__fixtures__/**/*.{js,json}`);
       glob.sync(`${componentPath}/**/*.{js,jsx}`).forEach((filePath) => {

@@ -1,6 +1,7 @@
 const path = require('path');
 const mkdirp = require('mkdirp');
 const touch = require('touch');
+const rimraf = require('rimraf');
 
 const useCases = {
   'relative-fixtures': (`
@@ -41,21 +42,25 @@ const useCases = {
   `),
   'separate-packages-external-fixtures': (`
     pkgs/Foo/src/index.js
+    pkgs/Foo/fixtures/blank.js
     pkgs/nested/Bar/src/index.jsx
+    pkgs/nested/Bar/fixtures/one.js
+    pkgs/nested/Bar/fixtures/two.json
     pkgs/nested/Baz/src/index.jsx
-    fixtures/Foo/blank.js
-    fixtures/nested/Bar/one.js
-    fixtures/nested/Bar/two.json
-    fixtures/nested/Baz/blank.js
+    pkgs/nested/Baz/fixtures/blank.js
   `),
 };
+
+const useCasePath = path.join(__dirname, '../src/use-cases');
+
+rimraf.sync(useCasePath);
 
 Object.keys(useCases).forEach((useCase) => {
   useCases[useCase].split('\n')
     .map(p => p.trim())
     .filter(p => !!p.length)
     .forEach((p) => {
-      const filePath = path.join(__dirname, '../src/use-cases/', useCase, p);
+      const filePath = path.join(useCasePath, useCase, p);
       const dir = path.dirname(filePath);
       mkdirp(dir, (err) => {
         if (err) {
