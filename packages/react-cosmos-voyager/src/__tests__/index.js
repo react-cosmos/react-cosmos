@@ -126,7 +126,6 @@ testUseCase('separate-packages-external-fixtures', {
     'pkgs/Foo/src/index.js',
     'pkgs/nested/Bar/src/index.jsx',
   ],
-  fixturePaths: ['fixtures'],
   getComponentName: componentPath => (
     componentPath.match(/pkgs\/(.+)\/src\/index/)[1]
   ),
