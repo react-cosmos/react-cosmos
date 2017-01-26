@@ -15,5 +15,8 @@
   "devDependencies": {
     "mkdirp": "^0.5.1",
     "touch": "^1.0.0"
+  },
+  "dependencies": {
+    "glob": "^7.1.1"
   }
 }
