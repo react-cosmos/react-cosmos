@@ -1,0 +1,19 @@
+{
+  "name": "react-cosmos-voyager",
+  "version": "2.0.0-beta.5",
+  "description": "Explores your codebase to find component and fixture files",
+  "repository": "https://github.com/react-cosmos/react-cosmos-voyager/tree/master/packages/react-cosmos",
+  "license": "MIT",
+  "files": [
+    "lib",
+    "index.js"
+  ],
+  "main": "lib/index.js",
+  "scripts": {
+    "generate-use-cases": "node scripts/generate-use-cases.js"
+  },
+  "devDependencies": {
+    "mkdirp": "^0.5.1",
+    "touch": "^1.0.0"
+  }
+}

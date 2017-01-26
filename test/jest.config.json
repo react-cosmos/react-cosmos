@@ -2,7 +2,10 @@
   "rootDir": "../packages",
   "testEnvironment": "jsdom",
   "testURL": "http://foo.bar/",
-  "testPathIgnorePatterns": ["react-cosmos-webpack/src/__tests__/dummy-config"],
+  "testPathIgnorePatterns": [
+    "react-cosmos-voyager/src/__tests__/use-cases",
+    "react-cosmos-webpack/src/__tests__/dummy-config"
+  ],
   "coverageDirectory": "../test/coverage/jest",
   "coverageReporters": ["lcov", "text"],
   "globals": {
