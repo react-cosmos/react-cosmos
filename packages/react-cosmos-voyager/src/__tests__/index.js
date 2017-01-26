@@ -2,7 +2,7 @@ import path from 'path';
 import traverse from 'traverse';
 import getFilePaths from '../index';
 
-const resolvePath = relPath => path.join(__dirname, 'use-cases', relPath);
+const resolvePath = relPath => path.join(__dirname, '../use-cases', relPath);
 
 const testUseCase = (useCase, {
   componentPaths = [],
@@ -10,23 +10,34 @@ const testUseCase = (useCase, {
   getComponentName,
   ignore,
 }, output) => {
-  test(useCase, () => {
-    expect(getFilePaths({
-      componentPaths: componentPaths.map(p => resolvePath(p)),
-      fixturePaths: fixturePaths.map(p => resolvePath(p)),
-      getComponentName,
-      ignore,
-    })).toEqual(
-      traverse(output).map(val => (
-        typeof val === 'string' ? resolvePath(val) : val
-      )),
-    );
+  describe(useCase, () => {
+    const expectation = traverse(output).map(val => (
+      typeof val === 'string' ? resolvePath(`${useCase}/${val}`) : val
+    ));
+    let result;
+
+    beforeAll(() => {
+      result = getFilePaths({
+        componentPaths: componentPaths.map(p => resolvePath(`${useCase}/${p}`)),
+        fixturePaths: fixturePaths.map(p => resolvePath(`${useCase}/${p}`)),
+        getComponentName,
+        ignore,
+      });
+    });
+
+    test('components', () => {
+      expect(result.components).toEqual(expectation.components);
+    });
+
+    test('fixtures', () => {
+      expect(result.fixtures).toEqual(expectation.fixtures);
+    });
   });
 };
 
 testUseCase('relative-fixtures', {
   componentPaths: ['components'],
-  ignore: [/Baz/, /three/],
+  ignore: [/Baz/],
 }, {
   components: {
     Foo: 'components/Foo.js',
@@ -38,13 +49,14 @@ testUseCase('relative-fixtures', {
     },
     'nested/Bar': {
       one: 'components/__fixtures__/nested/Bar/one.js',
-      two: 'components/__fixtures__/nested/Bar/two.js',
+      two: 'components/__fixtures__/nested/Bar/two.json',
     },
   },
 });
 
 testUseCase('relative-fixtures-component-dir', {
   componentPaths: ['components'],
+  ignore: [/Baz/],
 }, {
   components: {
     Foo: 'components/Foo/Foo.js',
@@ -56,7 +68,7 @@ testUseCase('relative-fixtures-component-dir', {
     },
     'nested/Bar': {
       one: 'components/nested/Bar/__fixtures__/one.js',
-      two: 'components/nested/Bar/__fixtures__/two.js',
+      two: 'components/nested/Bar/__fixtures__/two.json',
     },
   },
 });
@@ -64,6 +76,7 @@ testUseCase('relative-fixtures-component-dir', {
 testUseCase('external-fixtures', {
   componentPaths: ['components'],
   fixturePaths: ['fixtures'],
+  ignore: [/Baz/],
 }, {
   components: {
     Foo: 'components/Foo.js',
@@ -74,49 +87,51 @@ testUseCase('external-fixtures', {
       blank: 'fixtures/Foo/blank.js',
     },
     'nested/Bar': {
-      one: 'fixtures/Bar/one.js',
-      two: 'fixtures/Bar/two.js',
+      one: 'fixtures/nested/Bar/one.js',
+      two: 'fixtures/nested/Bar/two.json',
     },
   },
 });
 
 testUseCase('separate-packages', {
   componentPaths: [
-    'packages/Foo/src/index.js',
-    'packages/nested/Bar/src/index.jsx',
+    'pkgs/Foo/src/index.js',
+    'pkgs/nested/Bar/src/index.jsx',
   ],
   getComponentName: componentPath => (
-    componentPath.match(/packages\/(.+)\/src\/index/)[1]
+    componentPath.match(/pkgs\/(.+)\/src\/index/)[1]
   ),
+  ignore: [/Baz/],
 }, {
   components: {
-    Foo: 'packages/Foo/src/index.js',
-    'nested/Bar': 'packages/nested/Bar/src/index.jsx',
+    Foo: 'pkgs/Foo/src/index.js',
+    'nested/Bar': 'pkgs/nested/Bar/src/index.jsx',
   },
   fixtures: {
     Foo: {
-      blank: 'packages/Foo/src/__fixtures__/blank.js',
+      blank: 'pkgs/Foo/src/__fixtures__/blank.js',
     },
     'nested/Bar': {
-      one: 'packages/nested/Bar/src/__fixtures__/one.js',
-      two: 'packages/nested/Bar/src/__fixtures__/two.js',
+      one: 'pkgs/nested/Bar/src/__fixtures__/one.js',
+      two: 'pkgs/nested/Bar/src/__fixtures__/two.json',
     },
   },
 });
 
 testUseCase('separate-packages-external-fixtures', {
   componentPaths: [
-    'packages/Foo/src/index.js',
-    'packages/nested/Bar/src/index.jsx',
+    'pkgs/Foo/src/index.js',
+    'pkgs/nested/Bar/src/index.jsx',
   ],
   fixturePaths: ['fixtures'],
   getComponentName: componentPath => (
-    componentPath.match(/packages\/(.+)\/src\/index/)[1]
+    componentPath.match(/pkgs\/(.+)\/src\/index/)[1]
   ),
+  ignore: [/Baz/],
 }, {
   components: {
-    Foo: 'packages/Foo/src/index.js',
-    'nested/Bar': 'packages/nested/Bar/src/index.jsx',
+    Foo: 'pkgs/Foo/src/index.js',
+    'nested/Bar': 'pkgs/nested/Bar/src/index.jsx',
   },
   fixtures: {
     Foo: {
@@ -124,7 +139,7 @@ testUseCase('separate-packages-external-fixtures', {
     },
     'nested/Bar': {
       one: 'fixtures/nested/Bar/one.js',
-      two: 'fixtures/nested/Bar/two.js',
+      two: 'fixtures/nested/Bar/two.json',
     },
   },
 });
