@@ -1,4 +1,5 @@
 import path from 'path';
+import glob from 'glob';
 import traverse from 'traverse';
 import getFilePaths from '../index';
 
@@ -131,11 +132,11 @@ testUseCase('separate-packages-external-fixtures', {
   ),
   getFixturePathsForComponent: componentName => ({
     Foo: {
-      blank: resolvePath('separate-packages-external-fixtures/fixtures/Foo/blank.js'),
+      blank: resolvePath('separate-packages-external-fixtures/pkgs/Foo/fixtures/blank.js'),
     },
     'nested/Bar': {
-      one: resolvePath('separate-packages-external-fixtures/fixtures/nested/Bar/one.js'),
-      two: resolvePath('separate-packages-external-fixtures/fixtures/nested/Bar/two.json'),
+      one: resolvePath('separate-packages-external-fixtures/pkgs/nested/Bar/fixtures/one.js'),
+      two: resolvePath('separate-packages-external-fixtures/pkgs/nested/Bar/fixtures/two.json'),
     },
   }[componentName]),
   ignore: [/Baz/],
@@ -146,11 +147,11 @@ testUseCase('separate-packages-external-fixtures', {
   },
   fixtures: {
     Foo: {
-      blank: 'fixtures/Foo/blank.js',
+      blank: 'pkgs/Foo/fixtures/blank.js',
     },
     'nested/Bar': {
-      one: 'fixtures/nested/Bar/one.js',
-      two: 'fixtures/nested/Bar/two.json',
+      one: 'pkgs/nested/Bar/fixtures/one.js',
+      two: 'pkgs/nested/Bar/fixtures/two.json',
     },
   },
 });
