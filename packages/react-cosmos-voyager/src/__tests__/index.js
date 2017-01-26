@@ -1,5 +1,4 @@
 import path from 'path';
-import glob from 'glob';
 import traverse from 'traverse';
 import getFilePaths from '../index';
 
