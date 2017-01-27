@@ -19,14 +19,14 @@ const getConfig = require('./config').default;
 
 // eslint-disable-next-line no-undef
 const userConfig = require(COSMOS_CONFIG_PATH);
-const { proxies, containerQuerySelector, ignore } = getConfig(importModule(userConfig));
+const { proxies, containerQuerySelector } = getConfig(importModule(userConfig));
 
 const start = () => {
   // Module is imported whenever this function is called, making sure the
   // lastest module version is used after a HMR update
   // eslint-disable-next-line global-require
-  const expandModulePaths = require('./utils/expand-module-paths').default;
-  const { components, fixtures } = expandModulePaths(ignore);
+  const getUserModules = require('./user-modules').default;
+  const { components, fixtures } = getUserModules();
 
   if (isLoader) {
     startLoader({
@@ -46,7 +46,7 @@ const start = () => {
 start();
 
 if (module.hot) {
-  module.hot.accept('./utils/expand-module-paths', () => {
+  module.hot.accept('./user-modules', () => {
     start();
   });
 }

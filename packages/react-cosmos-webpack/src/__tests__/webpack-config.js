@@ -105,10 +105,9 @@ describe('without hmr', () => {
   test('adds module loader', () => {
     expect(webpackConfig.module.loaders[webpackConfig.module.loaders.length - 1]).toEqual({
       loader: require.resolve('../module-loader'),
-      include: require.resolve('../utils/get-contexts'),
+      include: require.resolve('../user-modules'),
       query: {
-        componentPaths: mockCosmosConfig.componentPaths.map(resolveUserPath),
-        fixturePaths: mockCosmosConfig.fixturePaths.map(resolveUserPath),
+        cosmosConfigPath,
       },
     });
   });
