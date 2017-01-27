@@ -18,17 +18,11 @@ export default function getWebpackConfig(
   const cosmosConfig = getConfig(importModule(require(cosmosConfigPath)));
 
   const {
-    componentPaths,
-    fixturePaths,
     globalImports,
     hmrPlugin,
     hot,
   } = cosmosConfig;
 
-  const resolvedComponentPaths = componentPaths.map(path =>
-    resolveUserPath(path, cosmosConfigPath));
-  const resolvedFixturePaths = fixturePaths.map(path =>
-    resolveUserPath(path, cosmosConfigPath));
   const resolvedGlobalImports = globalImports.map(path =>
     resolveUserPath(path, cosmosConfigPath));
 
@@ -58,10 +52,9 @@ export default function getWebpackConfig(
 
   loaders.push({
     loader: require.resolve('./module-loader'),
-    include: require.resolve('./utils/get-contexts'),
+    include: require.resolve('./user-modules'),
     query: {
-      componentPaths: resolvedComponentPaths,
-      fixturePaths: resolvedFixturePaths,
+      cosmosConfigPath,
     },
   });
 
