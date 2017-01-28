@@ -139,7 +139,7 @@ module.exports = {
   // NEW: Plugin system for React Cosmos!
   proxies: [
     // Here is how to activate Redux:
-    require('react-cosmos-redux-proxy')({
+    require('react-cosmos-redux-proxy').default({
       // Called when fixture loads with `fixture.reduxState` as initial state.
       // See Flatris example for a complete Redux integration.
       createStore: (initialState) => {
@@ -149,7 +149,7 @@ module.exports = {
 
     // This is how to mock regular context:
     // Expects fixture.context to contain `theme` object
-    require('react-cosmos-context-proxy')({
+    require('react-cosmos-context-proxy').default({
       childContextTypes: {
         theme: React.PropTypes.object.isRequired,
       },

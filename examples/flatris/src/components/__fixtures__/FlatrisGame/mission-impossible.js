@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-
 import { PAUSED } from '../../../constants/states';
 import { SHAPES } from '../../../constants/tetrimino';
 

@@ -31,7 +31,7 @@ const renderProxy = (f, options) => {
 
   storeUnsubscribeMock = jest.fn();
   storeMock = {
-    subscribe: jest.fn((handler) => {
+    subscribe: jest.fn(handler => {
       storeHandler = handler;
       return storeUnsubscribeMock;
     }),

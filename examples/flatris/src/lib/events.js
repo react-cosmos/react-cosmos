@@ -4,7 +4,6 @@ export function isMobileDevice() {
   return 'ontouchstart' in window;
 }
 
-
 export function attachPointerDownEvent(eventHandler) {
   if (isMobileDevice()) {
     return { onTouchStart: eventHandler };

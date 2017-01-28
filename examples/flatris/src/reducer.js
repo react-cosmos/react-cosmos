@@ -89,7 +89,7 @@ const reducers = {
     });
   },
 
-  START: (state) => {
+  START: state => {
     const nextTetrimino = getRandomTetrimino();
     const activeTetrimino = getRandomTetrimino();
     const activeTetriminoGrid = SHAPES[activeTetrimino];
@@ -141,7 +141,7 @@ const reducers = {
     });
   },
 
-  ROTATE: (state) => {
+  ROTATE: state => {
     const {
       grid,
       activeTetriminoGrid,

@@ -1,18 +1,16 @@
-/* eslint-env browser */
-
 module.exports = {
   get(option) {
     let stringifiedValue;
 
     try {
       stringifiedValue = localStorage.getItem(option);
-    } catch (e) {
+    } catch (err) {
       stringifiedValue = null;
     }
 
     try {
       return JSON.parse(stringifiedValue);
-    } catch (e) {
+    } catch (err) {
       return null;
     }
   },
@@ -20,7 +18,7 @@ module.exports = {
   set(option, value) {
     try {
       return localStorage.setItem(option, JSON.stringify(value));
-    } catch (e) {
+    } catch (err) {
       return null;
     }
   },

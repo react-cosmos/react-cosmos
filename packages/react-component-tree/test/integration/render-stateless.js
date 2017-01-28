@@ -12,7 +12,7 @@ describe('INTEGRATION Render stateless component', () => {
   let domContainer;
 
   const StatelessComponent = props =>
-    // eslint-disable-next-line react/jsx-filename-extension, react/prop-types
+
     <div>{props.children ? props.children : props.foo}</div>;
 
   beforeEach(() => {

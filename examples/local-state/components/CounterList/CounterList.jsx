@@ -1,5 +1,3 @@
-/* eslint-disable react/no-string-refs */
-
 import React from 'react';
 import Counter from '../Counter/Counter';
 

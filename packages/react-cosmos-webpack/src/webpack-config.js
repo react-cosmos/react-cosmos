@@ -1,9 +1,7 @@
-/* eslint-disable global-require */
-
-import importModule from 'react-cosmos-utils/lib/import-module';
 import webpack from 'webpack';
 import getConfig from './config';
 import resolveUserPath from './utils/resolve-user-path';
+import importModule from 'react-cosmos-utils/lib/import-module';
 
 /**
  * Extend the user config to create the Loader config. Namely,

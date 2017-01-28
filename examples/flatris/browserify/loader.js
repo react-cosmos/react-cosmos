@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
@@ -6,8 +5,8 @@ import thunk from 'redux-thunk';
 import { startLoader } from '../../../packages/react-cosmos';
 import createReduxProxy from '../../../packages/react-cosmos-redux-proxy';
 
-import { components, fixtures } from './prepare-modules';
 import flatrisReducer from '../src/reducer';
+import { components, fixtures } from './prepare-modules';
 
 module.exports = startLoader({
   proxies: [createReduxProxy({

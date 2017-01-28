@@ -1,6 +1,6 @@
 const mock = {
   injectState: jest.fn(),
-  __setStateMock: (state) => {
+  __setStateMock: state => {
     mock.serialize = jest.fn(() => (state ? { state } : {}));
   },
 };

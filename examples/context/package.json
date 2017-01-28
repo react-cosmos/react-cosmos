@@ -8,5 +8,6 @@
   },
   "scripts": {
     "start": "../../packages/react-cosmos-webpack/bin/cosmos.js"
-  }
+  },
+  "xo": false
 }

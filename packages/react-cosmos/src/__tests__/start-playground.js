@@ -9,7 +9,7 @@ let getComponentClass;
 let getComponentProps;
 let onChange;
 
-const initRouter = (options) => {
+const initRouter = options => {
   jest.resetModules();
   jest.resetAllMocks();
 
@@ -21,7 +21,7 @@ const initRouter = (options) => {
     loadFixtures: mockLoadFixtures,
   }));
 
-  startPlayground = require('../start-playground');
+  startPlayground = require('../start-playground').default;
 
   routerInstance = startPlayground(options);
   ({

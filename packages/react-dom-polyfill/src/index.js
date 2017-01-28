@@ -1,13 +1,12 @@
-module.exports = (React) => {
+module.exports = React => {
   const version = parseFloat(React.version);
 
   if (version >= 0.14) {
     // Let bundlers (e.g. webpack) know react-dom won't always be there
     try {
-      /* eslint-disable global-require, import/no-extraneous-dependencies, import/no-unresolved */
+      // eslint-disable-next-line import/no-extraneous-dependencies
       return require('react-dom');
-      /* eslint-enable global-require, import/no-extraneous-dependencies, import/no-unresolved */
-    } catch (e) {
+    } catch (err) {
       return null;
     }
   } else {

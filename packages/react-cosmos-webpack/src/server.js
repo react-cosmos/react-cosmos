@@ -1,21 +1,19 @@
-/* eslint-disable global-require, no-console */
-
 import path from 'path';
 import express from 'express';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { argv } from 'yargs';
-import importModule from 'react-cosmos-utils/lib/import-module';
 import getConfig from './config';
 import resolveUserPath from './utils/resolve-user-path';
 import getWebpackConfig from './webpack-config';
 import getDefaultWebpackConfig from './default-webpack-config';
+import importModule from 'react-cosmos-utils/lib/import-module';
 
-const moduleExists = (modulePath) => {
+const moduleExists = modulePath => {
   try {
     return require.resolve(modulePath) && true;
-  } catch (e) {
+  } catch (err) {
     return false;
   }
 };
@@ -76,7 +74,7 @@ module.exports = function startServer() {
     res.sendFile(path.join(__dirname, 'static/favicon.ico'));
   });
 
-  app.listen(port, hostname, (err) => {
+  app.listen(port, hostname, err => {
     if (err) {
       throw err;
     }

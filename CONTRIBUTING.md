@@ -69,14 +69,14 @@ npm run test-jest -- --watch
 #### Write tests, preferably before implementation
 
 Use [Jest](https://facebook.github.io/jest/) for unit testing. Here are some examples:
-- [Tests for react-cosmos-redux-proxy](packages/react-cosmos-redux-proxy/src/__tests__/index.jsx)
+- [Tests for react-cosmos-redux-proxy](packages/react-cosmos-redux-proxy/src/__tests__/index.js)
 - [Tests for react-cosmos-webpack](packages/react-cosmos-webpack/src/__tests__)
 
 Older packages are tested with Mocha and Karma, but those tests are considered legacy.
 
-#### Respect the [Airbnb Style Guide](https://github.com/airbnb/javascript)
+#### Keep coding style consistent
 
-Make sure your code editor has ESLint installed.
+Make sure `npm run lint` passes and add [xo](https://github.com/sindresorhus/xo) to your editor if possible.
 
 #### Use Git conscientiously
 

@@ -1,4 +1,3 @@
-/* eslint-disable no-plusplus */
 import React from 'react';
 import SquareBlock from './SquareBlock';
 
@@ -62,4 +61,4 @@ WellGrid.propTypes = {
   ).isRequired,
 };
 
-module.exports = WellGrid;
+export default WellGrid;

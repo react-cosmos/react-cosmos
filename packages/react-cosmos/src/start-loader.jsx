@@ -1,9 +1,9 @@
 import React from 'react';
-import reactDomPolyfill from 'react-dom-polyfill';
 import { loadComponents, loadFixtures } from './load-modules';
 import Loader from './components/Loader';
 import PropsProxy from './components/proxies/PropsProxy';
 import createStateProxy from './components/proxies/StateProxy';
+import reactDomPolyfill from 'react-dom-polyfill';
 
 const ReactDOM = reactDomPolyfill(React);
 
@@ -21,12 +21,12 @@ const createDomContainer = () => {
   return domContainer;
 };
 
-module.exports = ({
+export default function startLoader({
   proxies,
   components,
   fixtures,
   containerQuerySelector,
-}) => {
+}) {
   const container =
     containerQuerySelector ?
     document.querySelector(containerQuerySelector) :
@@ -46,4 +46,4 @@ module.exports = ({
     />,
     container,
   );
-};
+}

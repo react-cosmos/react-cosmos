@@ -2,7 +2,7 @@ let compilerMocks;
 
 const Webpack = jest.fn(() => compilerMocks.shift());
 
-Webpack.__setCompilerMocks = (compilers) => {
+Webpack.__setCompilerMocks = compilers => {
   compilerMocks = compilers;
 };
 Webpack.__setPluginMock = (pluginName, plugin) => {

@@ -2,7 +2,7 @@ import isEmpty from 'lodash.isempty';
 import clone from 'lodash.clone';
 import forEach from 'lodash.foreach';
 
-const getComponentTreeState = (component) => {
+const getComponentTreeState = component => {
   const state = component.state ? clone(component.state) : {};
   const childrenStates = {};
   let childState;
@@ -22,7 +22,7 @@ const getComponentTreeState = (component) => {
   return state;
 };
 
-exports.serialize = (component) => {
+exports.serialize = component => {
   /**
    * Generate a snapshot with the props and state of a component combined,
    * including the state of all nested child components.

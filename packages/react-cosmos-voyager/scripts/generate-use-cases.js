@@ -55,14 +55,14 @@ const useCasePath = path.join(__dirname, '../src/use-cases');
 
 rimraf.sync(useCasePath);
 
-Object.keys(useCases).forEach((useCase) => {
+Object.keys(useCases).forEach(useCase => {
   useCases[useCase].split('\n')
     .map(p => p.trim())
-    .filter(p => !!p.length)
-    .forEach((p) => {
+    .filter(p => Boolean(p.length))
+    .forEach(p => {
       const filePath = path.join(useCasePath, useCase, p);
       const dir = path.dirname(filePath);
-      mkdirp(dir, (err) => {
+      mkdirp(dir, err => {
         if (err) {
           console.error(err);
         } else {

@@ -13,14 +13,12 @@ describe('INTEGRATION Render and inject state', () => {
     }
   }
 
-  // eslint-disable-next-line react/no-multi-comp
   class ParentComponent extends React.Component {
     render() {
       return React.createElement(ChildComponent, { ref: 'child' });
     }
   }
 
-  // eslint-disable-next-line react/no-multi-comp
   class GrandparentComponent extends React.Component {
     render() {
       return React.createElement(ParentComponent, { ref: 'child' });

@@ -53,7 +53,7 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, () => {
     });
 
     it('should keep unserializable fixture part', () => {
-      Object.keys(fixture.state.fixtureUnserializableProps).forEach((key) => {
+      Object.keys(fixture.state.fixtureUnserializableProps).forEach(key => {
         expect(stateSet.fixtureContents[key]).to.be.undefined;
       });
     });

@@ -10,12 +10,11 @@ const isLoader = pathname === loaderUri;
 // anything which might import React
 // https://github.com/facebook/react-devtools/issues/76#issuecomment-128091900
 if (isLoader) {
-  // eslint-disable-next-line no-underscore-dangle
   window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;
 }
 
-const { startLoader, startPlayground } = require('react-cosmos');
 const getConfig = require('./config').default;
+const { startLoader, startPlayground } = require('react-cosmos');
 
 // eslint-disable-next-line no-undef
 const userConfig = require(COSMOS_CONFIG_PATH);
@@ -24,7 +23,7 @@ const { proxies, containerQuerySelector } = getConfig(importModule(userConfig));
 const start = () => {
   // Module is imported whenever this function is called, making sure the
   // lastest module version is used after a HMR update
-  // eslint-disable-next-line global-require
+
   const getUserModules = require('./user-modules').default;
   const { components, fixtures } = getUserModules();
 

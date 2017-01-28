@@ -8,7 +8,7 @@
     "install-react:0.13": "npm run install-react -- react@0.13",
     "install-react:0.14": "npm run install-react -- react@0.14 react-dom@0.14 react-addons-test-utils@0.14",
     "install-react:15": "npm run install-react -- react@15 react-dom@15 react-addons-test-utils@15",
-    "lint": "eslint --ext '.jsx,.js' ./",
+    "lint": "xo --quiet",
     "build-babel": "babel -D --ignore '__tests__,__mocks__' packages/$PACKAGE/src -d packages/$PACKAGE/lib",
     "build-webpack": "webpack --config packages/$PACKAGE/webpack.config.js",
     "build": "node ./scripts/build.js",
@@ -33,10 +33,8 @@
     "coveralls": "^2.11.12",
     "css-loader": "^0.26.1",
     "enzyme": "^2.4.1",
-    "eslint": "^3.13.1",
-    "eslint-config-airbnb": "^14.0.0",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^3.0.2",
+    "eslint-config-xo-react": "^0.10.0",
+    "eslint-import-resolver-webpack": "^0.8.1",
     "eslint-plugin-react": "^6.9.0",
     "glob": "^7.1.1",
     "inject-loader": "^2.0.1",
@@ -66,6 +64,117 @@
     "style-loader": "^0.13.1",
     "traverse": "^0.6.6",
     "webpack": "^2.2.0",
+    "xo": "^0.17.1",
     "yargs": "^6.6.0"
+  },
+  "xo": {
+    "space": true,
+    "plugins": [
+      "react"
+    ],
+    "settings": {
+      "import/resolver": {
+        "webpack": {
+          "config": {
+            "resolve": {
+              "extensions": [
+                ".js",
+                ".jsx"
+              ]
+            }
+          }
+        }
+      },
+      "import/extensions": [
+        ".js",
+        ".jsx"
+      ]
+    },
+    "rules": {
+      "comma-dangle": 0,
+      "object-curly-spacing": 0,
+      "func-names": [
+        "error",
+        "as-needed"
+      ],
+      "no-multiple-empty-lines": ["error", {
+          "max": 1,
+          "maxBOF": 0,
+          "maxEOF": 0
+        }],
+      "unicorn/filename-case": 0,
+      "import/no-unassigned-import": 0,
+      "react/jsx-uses-vars": 1,
+      "react/jsx-uses-react": 1
+    },
+    "overrides": [
+      {
+        "files": [
+          "packages/*/src/**/*.{js,jsx}",
+          "!**/__tests__/**/*.*"
+        ],
+        "env": [
+          "browser"
+        ]
+      },
+      {
+        "files": [
+          "packages/react-component-tree/**/*.js"
+        ],
+        "rules": {
+          "import/default": 0,
+          "import/named": 0
+        }
+      },
+      {
+        "files": [
+          "packages/react-cosmos-webpack/src/**/*.js"
+        ],
+        "rules": {
+          "import/no-dynamic-require": 0
+        }
+      },
+      {
+        "files": [
+          "**/__tests__/**/*.{js,jsx}",
+          "packages/__mocks__/**/*.js"
+        ],
+        "env": [
+          "jest",
+          "browser"
+        ],
+        "rules": {
+          "import/no-extraneous-dependencies": 0
+        }
+      },
+      {
+        "files": [
+          "packages/react-{dom-polyfill,component-tree,component-playground}/test/**/*.js",
+          "test/helpers/**/*.js"
+        ],
+        "env": [
+          "browser",
+          "mocha"
+        ],
+        "globals": [
+          "expect",
+          "sinon"
+        ],
+        "rules": {
+          "no-unused-vars": 0,
+          "no-unused-expressions": 0,
+          "import/no-unresolved": 0,
+          "import/no-extraneous-dependencies": 0,
+          "import/no-dynamic-require": 0,
+          "import/named": 0
+        }
+      },
+      {
+        "files": "examples/**/*.{js,jsx}",
+        "rules": {
+          "import/no-unresolved": 0
+        }
+      }
+    ]
   }
 }

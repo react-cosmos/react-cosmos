@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { loadComponents, loadFixtures } from '../load-modules';
 
 let consoleWarn;

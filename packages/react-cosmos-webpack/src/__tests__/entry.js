@@ -21,10 +21,9 @@ jest.mock('react-cosmos', () => ({
   startPlayground: mockStartPlayground,
 }));
 
-
 jest.mock('../user-modules', () => ({ default: mockGetUserModules }));
 
-const init = (pathname) => {
+const init = pathname => {
   jest.resetModules();
   jest.resetAllMocks();
 

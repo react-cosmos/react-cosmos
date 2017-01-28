@@ -62,7 +62,7 @@ describe('without hmr', () => {
   });
 
   test('adds resolved global imports to entries', () => {
-    mockCosmosConfig.globalImports.forEach((globalImport) => {
+    mockCosmosConfig.globalImports.forEach(globalImport => {
       expect(webpackConfig.entry).toContain(resolveUserPath(globalImport));
     });
   });
@@ -87,7 +87,7 @@ describe('without hmr', () => {
   });
 
   test('keeps user plugins', () => {
-    userWebpackConfig.plugins.forEach((plugin) => {
+    userWebpackConfig.plugins.forEach(plugin => {
       expect(webpackConfig.plugins).toContain(plugin);
     });
   });
@@ -127,7 +127,7 @@ describe('with hmr', () => {
   });
 
   test('adds resolved global imports to entries', () => {
-    mockCosmosConfig.globalImports.forEach((globalImport) => {
+    mockCosmosConfig.globalImports.forEach(globalImport => {
       expect(webpackConfig.entry).toContain(resolveUserPath(globalImport));
     });
   });
@@ -169,7 +169,7 @@ describe('with absolute paths', () => {
   });
 
   test('adds user global imports to entries', () => {
-    mockCosmosConfig.globalImports.forEach((globalImport) => {
+    mockCosmosConfig.globalImports.forEach(globalImport => {
       expect(webpackConfig.entry).toContain(globalImport);
     });
   });
