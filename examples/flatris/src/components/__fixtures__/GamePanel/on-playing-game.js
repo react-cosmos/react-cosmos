@@ -1,4 +1,3 @@
-
 import { PLAYING } from '../../../constants/states';
 
 export default {

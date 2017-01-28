@@ -1,4 +1,3 @@
-
 export function generateEmptyGrid(rows, cols) {
   const matrix = [];
 

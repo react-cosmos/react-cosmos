@@ -1,4 +1,3 @@
-
 import { SHAPES } from '../../../constants/tetrimino';
 
 export default {

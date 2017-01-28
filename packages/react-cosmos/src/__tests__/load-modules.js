@@ -1,4 +1,3 @@
-
 import { loadComponents, loadFixtures } from '../load-modules';
 
 let consoleWarn;

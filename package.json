@@ -97,6 +97,11 @@
         "error",
         "as-needed"
       ],
+      "no-multiple-empty-lines": ["error", {
+          "max": 1,
+          "maxBOF": 0,
+          "maxEOF": 0
+        }],
       "unicorn/filename-case": 0,
       "import/no-unassigned-import": 0,
       "react/jsx-uses-vars": 1,

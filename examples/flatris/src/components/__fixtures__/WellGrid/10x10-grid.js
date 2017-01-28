@@ -1,4 +1,3 @@
-
 export default {
   grid: [
     [null, null, null, null, null, null, null, null, null, null],

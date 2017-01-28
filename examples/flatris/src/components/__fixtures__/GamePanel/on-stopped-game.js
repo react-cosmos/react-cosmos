@@ -1,4 +1,3 @@
-
 import { STOPPED } from '../../../constants/states';
 
 export default {

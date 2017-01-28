@@ -1,4 +1,3 @@
-
 import { PAUSED } from '../../../constants/states';
 import { SHAPES } from '../../../constants/tetrimino';
 

@@ -1,4 +1,3 @@
-
 import webpack from 'webpack';
 import getConfig from './config';
 import resolveUserPath from './utils/resolve-user-path';

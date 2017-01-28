@@ -1,4 +1,3 @@
-
 // Child packages should keep React in peerDeps instead of deps. Sometimes
 // deps of child packages mess this up so we must make sure to keep a single
 // React (and affiliated modules) copy for the entire repo.

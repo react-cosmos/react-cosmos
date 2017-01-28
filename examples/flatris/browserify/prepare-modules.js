@@ -1,4 +1,3 @@
-
 const prepareComponents = modules => {
   const components = {};
   Object.keys(modules).forEach(componentName => {
