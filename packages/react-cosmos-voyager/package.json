@@ -19,5 +19,6 @@
   },
   "dependencies": {
     "glob": "^7.1.1"
-  }
+  },
+  "xo": false
 }

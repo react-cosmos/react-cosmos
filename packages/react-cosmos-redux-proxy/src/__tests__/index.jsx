@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import createReduxProxy from '../index';
+import createReduxProxy from '../index.jsx';
 
 const NextProxy = () => {};
 const nextProxyNext = {};
@@ -31,7 +31,7 @@ const renderProxy = (f, options) => {
 
   storeUnsubscribeMock = jest.fn();
   storeMock = {
-    subscribe: jest.fn((handler) => {
+    subscribe: jest.fn(handler => {
       storeHandler = handler;
       return storeUnsubscribeMock;
     }),

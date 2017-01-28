@@ -1,6 +1,6 @@
-/* eslint-disable no-plusplus */
+
 import React from 'react';
-import SquareBlock from './SquareBlock';
+import SquareBlock from './SquareBlock.jsx';
 
 require('./WellGrid.less');
 

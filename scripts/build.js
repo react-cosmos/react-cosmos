@@ -1,7 +1,7 @@
-/* eslint-disable no-console */
+
+const path = require('path');
 const glob = require('glob');
 const rimraf = require('rimraf');
-const path = require('path');
 const spawn = require('child-process-promise').spawn;
 const argv = require('yargs').argv;
 
@@ -31,15 +31,15 @@ function runBuildTask(options) {
 
   const child = promise.childProcess;
 
-  child.stdout.on('data', (data) => {
+  child.stdout.on('data', data => {
     process.stdout.write(data);
   });
 
-  child.stderr.on('data', (data) => {
+  child.stderr.on('data', data => {
     process.stderr.write(data);
   });
 
-  child.on('close', (code) => {
+  child.on('close', code => {
     if (code) {
       process.stderr.write(`${options.packageName} exited with code ${code}`);
     }
@@ -67,7 +67,7 @@ function runBuildPlaygroundTask(watch) {
  */
 function runBuildAllTask(packageNames) {
   // Cleanup
-  glob.sync('./packages/*/lib').forEach((packageLibPath) => {
+  glob.sync('./packages/*/lib').forEach(packageLibPath => {
     rimraf.sync(packageLibPath);
     console.log('INFO: Removed lib directory for', packageLibPath);
   });
@@ -97,21 +97,21 @@ glob('./packages/react-*', null, (err, files) => {
   if (!targetPackage) {
     // Build all packages
     if (applyWatch) {
-      console.error(`Cannot build all packages with the --watch argument. If you'd like to --watch, please choose one of the existing packages: 
+      console.error(`Cannot build all packages with the --watch argument. If you'd like to --watch, please choose one of the existing packages:
           ${formattedPackages}`);
     } else {
       runBuildAllTask(allPackageNames, applyWatch);
     }
   } else if (targetPackage === COMPONENT_PLAYGROUND) {
     runBuildPlaygroundTask(applyWatch);
-  } else if (allPackageNames.indexOf(targetPackage) !== -1) {
+  } else if (allPackageNames.indexOf(targetPackage) === -1) {
+    console.error(`Invalid package! These are the existing packages:
+        ${formattedPackages}`);
+  } else {
     // Build a single package
     runBuildTask({
       packageName: targetPackage,
       watch: applyWatch,
     });
-  } else {
-    console.error(`Invalid package! These are the existing packages: 
-        ${formattedPackages}`);
   }
 });

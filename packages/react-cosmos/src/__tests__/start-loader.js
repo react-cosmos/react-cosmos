@@ -15,7 +15,7 @@ let mockLoadFixtures;
 let startLoader;
 let props;
 
-const init = (options) => {
+const init = options => {
   jest.resetModules();
   jest.resetAllMocks();
 
@@ -38,7 +38,7 @@ const init = (options) => {
     loadFixtures: mockLoadFixtures,
   }));
 
-  startLoader = require('../start-loader');
+  startLoader = require('../start-loader.jsx').default;
 
   startLoader(options);
 

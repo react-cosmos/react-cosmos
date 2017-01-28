@@ -9,7 +9,6 @@ const mockFirstProxy = {
 const mockGetLinkedList = jest.fn(() => mockFirstProxy);
 jest.mock('react-cosmos-utils/lib/linked-list', () => mockGetLinkedList);
 
-
 const mockFixtureParts = {
   unserializable: {
     onClick: jest.fn(),
@@ -21,7 +20,7 @@ const mockFixtureParts = {
 const mockSplitUnserializableParts = jest.fn(() => mockFixtureParts);
 jest.mock('react-cosmos-utils/lib/unserializable-parts', () => mockSplitUnserializableParts);
 
-const Loader = require('../Loader').default;
+const Loader = require('../Loader.jsx').default;
 
 const Proxy = jest.fn();
 const FooBarComponent = () => {};
@@ -53,11 +52,11 @@ const init = () => {
 };
 
 let pendingPromiseResolve;
-const waitForPostMessage = () => new Promise((resolve) => {
+const waitForPostMessage = () => new Promise(resolve => {
   pendingPromiseResolve = resolve;
 });
 
-const parentMessageListener = (e) => {
+const parentMessageListener = e => {
   pendingPromiseResolve(e.data);
 };
 
@@ -75,7 +74,7 @@ test('renders nothing at first', () => {
 });
 
 test('notifies parent frames on load', () =>
-  waitForPostMessage().then((data) => {
+  waitForPostMessage().then(data => {
     expect(data).toEqual({ type: 'frameReady' });
   }),
 );
@@ -89,7 +88,7 @@ test('publishes message to parent on fixture update', () => {
   const updatedFixture = {};
   onFixtureUpdate(updatedFixture);
 
-  return waitForPostMessage().then((data) => {
+  return waitForPostMessage().then(data => {
     expect(data).toEqual({
       type: 'fixtureUpdate',
       fixtureBody: updatedFixture,

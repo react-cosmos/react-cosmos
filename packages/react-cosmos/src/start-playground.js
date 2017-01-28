@@ -2,7 +2,7 @@ import { Router } from 'react-querystring-router';
 import ReactComponentPlayground from 'react-component-playground';
 import { loadFixtures } from './load-modules';
 
-const getTitleForFixture = (params) => {
+const getTitleForFixture = params => {
   const { component, fixture } = params;
   const title = 'React Cosmos';
 
@@ -24,11 +24,11 @@ const createDomContainer = () => {
   return domContainer;
 };
 
-module.exports = ({
+export default function startPlayground({
   fixtures,
   loaderUri,
-}) =>
-  new Router({
+}) {
+  return new Router({
     container: createDomContainer(),
     getComponentClass: () => ReactComponentPlayground,
     getComponentProps: params => ({
@@ -36,7 +36,8 @@ module.exports = ({
       fixtures: loadFixtures(fixtures),
       loaderUri,
     }),
-    onChange: (params) => {
+    onChange: params => {
       document.title = getTitleForFixture(params);
     },
   });
+}

@@ -5,7 +5,7 @@ import forEach from 'lodash.foreach';
 
 const ReactDOM = require('react-dom-polyfill')(React);
 
-exports.render = (options) => {
+exports.render = options => {
   /**
    * Render a component and reproduce a state snapshot by recursively injecting
    * the nested state into the component tree it generates.
@@ -23,7 +23,7 @@ exports.render = (options) => {
 
   const element = React.createElement(options.component, props, children);
   // TODO: Use callback ref: https://facebook.github.io/react/docs/top-level-api.html#reactdom.render
-  // eslint-disable-next-line react/no-render-return-value
+
   const component = ReactDOM.render(element, options.container);
 
   if (!isEmpty(state)) {

@@ -1,4 +1,3 @@
-/* eslint-disable global-require */
 
 import path from 'path';
 import loaderUtils from 'loader-utils';
@@ -14,10 +13,10 @@ const getRequirePath = filePath => (
   path.extname(filePath) === '.json' ? `${jsonLoader}!${filePath}` : filePath
 );
 
-const convertFilePathsToRequireCalls = (filePaths) => {
+const convertFilePathsToRequireCalls = filePaths => {
   const props = [];
 
-  Object.keys(filePaths).forEach((key) => {
+  Object.keys(filePaths).forEach(key => {
     const val = filePaths[key];
     const newVal = typeof val === 'string' ?
       `require('${getRequirePath(val)}')` :
@@ -32,12 +31,12 @@ const convertFilePathsToRequireCalls = (filePaths) => {
 const getUniqueDirsOfUserModules = (components, fixtures) => {
   const dirs = new Set();
 
-  traverse(components).forEach((val) => {
+  traverse(components).forEach(val => {
     if (typeof val === 'string') {
       dirs.add(path.dirname(val));
     }
   });
-  traverse(fixtures).forEach((val) => {
+  traverse(fixtures).forEach(val => {
     if (typeof val === 'string') {
       dirs.add(path.dirname(val));
     }
@@ -81,7 +80,7 @@ module.exports = function embedModules(source) {
   });
   const contexts = getUniqueDirsOfUserModules(components, fixtures);
 
-  contexts.forEach((dirPath) => {
+  contexts.forEach(dirPath => {
     // This ensures this loader is invalidated whenever a new component/fixture
     // file is created or renamed, which leads succesfully uda ...
     this.addDependency(dirPath);

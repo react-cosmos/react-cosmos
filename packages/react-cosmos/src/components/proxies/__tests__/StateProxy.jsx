@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import createStateProxy from '../StateProxy';
+import createStateProxy from '../StateProxy.jsx';
 
 jest.mock('react-component-tree');
 
@@ -22,7 +22,7 @@ let wrapper;
 let childWrapper;
 let childProps;
 
-const renderProxy = (options) => {
+const renderProxy = options => {
   fixture = options.fixture;
   onFixtureUpdate = jest.fn();
 

@@ -1,4 +1,3 @@
-/* eslint-disable */
 /**
  * PhantomJS doesn't support Function.prototype.bind natively, so
  * polyfill it whenever this module is required.

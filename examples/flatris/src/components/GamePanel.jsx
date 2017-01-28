@@ -2,7 +2,7 @@ import React from 'react';
 import { STOPPED, PLAYING, PAUSED } from '../constants/states';
 import { SHAPES, COLORS } from '../constants/tetrimino';
 import { attachPointerDownEvent } from '../lib/events';
-import Tetrimino from './Tetrimino';
+import Tetrimino from './Tetrimino.jsx';
 
 require('./GamePanel.less');
 

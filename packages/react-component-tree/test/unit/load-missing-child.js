@@ -21,7 +21,6 @@ describe('UNIT Load missing child', () => {
   afterEach(() => {
     React.createElement.restore();
 
-    // eslint-disable-next-line no-console
     console.error.restore();
   });
 
@@ -34,7 +33,6 @@ describe('UNIT Load missing child', () => {
   it('should log error', () => {
     loadChild(component, 'missingChild');
 
-    // eslint-disable-next-line no-console
     expect(console.error.lastCall.args[0]).to.be.an.instanceof(Error);
   });
 });

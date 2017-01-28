@@ -1,6 +1,6 @@
 import fs from 'fs';
-import glob from 'glob';
 import path from 'path';
+import glob from 'glob';
 import matchFixturePath from './match-fixture-path';
 
 const SPECIAL_DIRS = ['__tests__', '__fixtures__'];
@@ -50,7 +50,7 @@ const getFilePaths = ({
   const components = {};
   const fixtures = {};
 
-  componentPaths.forEach((componentPath) => {
+  componentPaths.forEach(componentPath => {
     if (fs.lstatSync(componentPath).isFile()) {
       if (typeof getComponentName !== 'function') {
         throw new Error('Must implement getComponentName when using exact file paths in componentPaths');
@@ -68,7 +68,7 @@ const getFilePaths = ({
         ], componentName);
     } else {
       const relFixtures = glob.sync(`${componentPath}/**/__fixtures__/**/*.{js,json}`);
-      glob.sync(`${componentPath}/**/*.{js,jsx}`).forEach((filePath) => {
+      glob.sync(`${componentPath}/**/*.{js,jsx}`).forEach(filePath => {
         if (
           isUnderSpecialDir(filePath) ||
           ignore.some(ignorePattern => filePath.match(ignorePattern))
@@ -92,4 +92,4 @@ const getFilePaths = ({
   };
 };
 
-module.exports = getFilePaths;
+export default getFilePaths;

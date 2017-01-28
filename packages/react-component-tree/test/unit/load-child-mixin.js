@@ -7,7 +7,6 @@ describe('UNIT Load child mixin', () => {
   const fakeReactElement = {};
   let myComponent;
 
-  // eslint-disable-next-line react/prefer-es6-class
   const MyComponent = React.createClass({
     mixins: [LoadChildMixin],
     children: {},

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 
 import { STOPPED } from '../../../constants/states';
 

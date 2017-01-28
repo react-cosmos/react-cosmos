@@ -14,5 +14,6 @@
   },
   "browserify": {
     "transform": "browserify-optional"
-  }
+  },
+  "xo": false
 }

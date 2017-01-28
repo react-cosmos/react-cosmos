@@ -1,9 +1,9 @@
-/* eslint-disable import/no-webpack-loader-syntax */
+// eslint-disable-next-line import/no-webpack-loader-syntax
 const reactDOMPolyfillInjector = require('inject-loader?react-dom!../src');
 
 describe('DOMPolyfill Post React DOM (>=0.14)', () => {
   // Make sure version is parsed correctly
-  ['0.14', '0.14.8', '15', '15.3.1'].forEach((version) => {
+  ['0.14', '0.14.8', '15', '15.3.1'].forEach(version => {
     const ReactMock = {
       version,
     };

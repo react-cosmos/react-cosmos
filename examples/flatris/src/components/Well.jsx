@@ -1,8 +1,8 @@
 import React from 'react';
 import { COLORS } from '../constants/tetrimino';
 import { getExactPosition } from '../lib/grid';
-import WellGrid from './WellGrid';
-import Tetrimino from './Tetrimino';
+import WellGrid from './WellGrid.jsx';
+import Tetrimino from './Tetrimino.jsx';
 
 require('./Well.less');
 

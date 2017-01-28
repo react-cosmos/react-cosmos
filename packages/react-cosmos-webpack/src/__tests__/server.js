@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 
 import path from 'path';
 
@@ -58,7 +57,9 @@ beforeEach(() => {
 
   mockExpressInstance = {
     use: jest.fn(),
-    get: (route, cb) => { expressInstanceCbMocks[route] = cb; },
+    get: (route, cb) => {
+      expressInstanceCbMocks[route] = cb;
+    },
     listen: jest.fn(),
   };
   express.__setInstanceMock(mockExpressInstance);

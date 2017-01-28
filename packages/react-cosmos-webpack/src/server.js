@@ -1,4 +1,3 @@
-/* eslint-disable global-require, no-console */
 
 import path from 'path';
 import express from 'express';
@@ -12,10 +11,10 @@ import resolveUserPath from './utils/resolve-user-path';
 import getWebpackConfig from './webpack-config';
 import getDefaultWebpackConfig from './default-webpack-config';
 
-const moduleExists = (modulePath) => {
+const moduleExists = modulePath => {
   try {
     return require.resolve(modulePath) && true;
-  } catch (e) {
+  } catch (err) {
     return false;
   }
 };
@@ -76,7 +75,7 @@ module.exports = function startServer() {
     res.sendFile(path.join(__dirname, 'static/favicon.ico'));
   });
 
-  app.listen(port, hostname, (err) => {
+  app.listen(port, hostname, err => {
     if (err) {
       throw err;
     }

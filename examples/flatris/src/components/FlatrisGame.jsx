@@ -1,5 +1,4 @@
 /* global window */
-/* eslint-disable import/extensions */
 
 import React from 'react';
 import { connect } from 'react-redux';
@@ -19,9 +18,9 @@ import {
   enableAcceleration,
   disableAcceleration,
 } from '../actions';
-import Well from './Well';
-import GamePanel from './GamePanel';
-import InfoPanel from './InfoPanel';
+import Well from './Well.jsx';
+import GamePanel from './GamePanel.jsx';
+import InfoPanel from './InfoPanel.jsx';
 
 require('./FlatrisGame.less');
 
@@ -153,7 +152,7 @@ class FlatrisGame extends React.Component {
       gameState,
     } = this.props;
 
-    return gameState !== PLAYING ? <InfoPanel /> : null;
+    return gameState === PLAYING ? null : <InfoPanel />;
   }
 
   renderControls() {

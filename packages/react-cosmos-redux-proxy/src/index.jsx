@@ -74,7 +74,7 @@ module.exports = function createReduxProxy(options) {
         onComponentRef,
         // Disable StateProxy when Redux state is available, otherwise the entire
         // Redux store would be duplicated from the connect() component's state
-        disableLocalState: disableLocalState && !!this.store,
+        disableLocalState: disableLocalState && Boolean(this.store),
       });
     }
   }

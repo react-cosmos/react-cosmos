@@ -54,9 +54,8 @@ test('calls react-cosmos-voyager with fixture paths', () => {
 });
 
 test('injects components', () => {
-  /* eslint-disable no-eval */
+  // eslint-disable-next-line no-eval
   const components = eval(`(${componentsOutput.replace(/require/g, '__req')})`);
-  /* eslint-enable no-eval */
 
   expect(components).toEqual({
     Foo: '__req(components/Foo.js)',
@@ -65,9 +64,8 @@ test('injects components', () => {
 });
 
 test('injects fixtures', () => {
-  /* eslint-disable no-eval */
+  // eslint-disable-next-line no-eval
   const components = eval(`(${fixturesOutput.replace(/require/g, '__req')})`);
-  /* eslint-enable no-eval */
 
   expect(components).toEqual({
     Foo: {
@@ -81,9 +79,8 @@ test('injects fixtures', () => {
 });
 
 test('injects contexts', () => {
-  /* eslint-disable no-eval */
+  // eslint-disable-next-line no-eval
   const contexts = eval(`(${contextsOutput.replace(/require.context/g, '__req')})`);
-  /* eslint-enable no-eval */
 
   expect(contexts).toEqual([
     '__req(components)',

@@ -1,4 +1,3 @@
-/* eslint-disable global-require */
 
 import importModule from 'react-cosmos-utils/lib/import-module';
 import webpack from 'webpack';

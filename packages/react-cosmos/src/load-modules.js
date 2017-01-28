@@ -17,11 +17,10 @@ const isReactComponent = component =>
 export function loadComponents(components) {
   const result = {};
 
-  Object.keys(components).forEach((name) => {
+  Object.keys(components).forEach(name => {
     const component = importModule(components[name], name);
 
     if (!component || !isReactComponent(component)) {
-      // eslint-disable-next-line no-console
       console.warn(`'${name}' is not a valid React component`);
     } else {
       result[name] = component;
@@ -55,18 +54,18 @@ export function loadComponents(components) {
 export function loadFixtures(fixtures) {
   const result = {};
 
-  Object.keys(fixtures).forEach((componentName) => {
+  Object.keys(fixtures).forEach(componentName => {
     const componentFixtures = fixtures[componentName];
     const componentResult = {};
 
-    Object.keys(componentFixtures).forEach((name) => {
+    Object.keys(componentFixtures).forEach(name => {
       componentResult[name] = importModule(componentFixtures[name], name);
     });
 
     // Allow users to browse components before creating fixtures
     // TODO: Create more than empty defaults. Alongside a more metadata-rich
     // input, we could generate default fixtures to match PropTypes.
-    if (!Object.keys(componentResult).length) {
+    if (Object.keys(componentResult).length === 0) {
       componentResult['no props (auto)'] = {};
     }
 

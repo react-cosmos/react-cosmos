@@ -1,12 +1,11 @@
-/* eslint-disable no-console, prefer-arrow-callback */
 
 const path = require('path');
 const budo = require('budo');
 
-const onConnect = (ev) => {
+const onConnect = ev => {
   console.log('Server running on %s', ev.uri);
 };
-const onUpdate = (buffer) => {
+const onUpdate = buffer => {
   console.log('bundle - %d bytes', buffer.length);
 };
 const browserify = {

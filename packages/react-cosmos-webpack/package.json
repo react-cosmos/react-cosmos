@@ -32,5 +32,6 @@
   },
   "bin": {
     "cosmos": "./bin/cosmos.js"
-  }
+  },
+  "xo": false
 }

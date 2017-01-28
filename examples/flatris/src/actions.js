@@ -1,4 +1,4 @@
-/* eslint-disable import/extensions */
+
 import raf from 'raf';
 
 import { STOPPED, PLAYING } from './constants/states';
@@ -16,7 +16,7 @@ const cancelFrame = () => {
   raf.cancel(animationHandle);
 };
 
-const scheduleFrame = (cb) => {
+const scheduleFrame = cb => {
   timeBegin = Date.now();
   animationHandle = raf(() => {
     const timeEnd = Date.now();
@@ -28,7 +28,7 @@ const scheduleFrame = (cb) => {
 let yProgress = 0;
 export const advance = () => (dispatch, getState) => {
   cancelFrame();
-  scheduleFrame((frames) => {
+  scheduleFrame(frames => {
     const {
       gameState,
       dropAcceleration,
@@ -62,17 +62,17 @@ export const load = () => (dispatch, getState) => {
   }
 };
 
-export const start = () => (dispatch) => {
+export const start = () => dispatch => {
   dispatch({ type: 'START' });
   dispatch(advance());
 };
 
-export const pause = () => (dispatch) => {
+export const pause = () => dispatch => {
   dispatch({ type: 'PAUSE' });
   cancelFrame();
 };
 
-export const resume = () => (dispatch) => {
+export const resume = () => dispatch => {
   dispatch({ type: 'RESUME' });
   dispatch(advance());
 };

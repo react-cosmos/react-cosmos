@@ -27,5 +27,6 @@
   },
   "devDependencies": {
     "babelify": "^7.3.0"
-  }
+  },
+  "xo": false
 }
