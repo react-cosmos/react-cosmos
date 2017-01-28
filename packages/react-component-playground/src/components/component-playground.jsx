@@ -104,6 +104,7 @@ module.exports = React.createClass({
       editor: false,
       fixture: null,
       fullScreen: false,
+      viewSource: false,
       proxies: [],
     };
   },
@@ -142,7 +143,8 @@ module.exports = React.createClass({
       return {
         component: CodeMirror,
         key: 'editor',
-        value: this.state.fixtureUserInput,
+        //value: this.state.fixtureUserInput,
+        value: this.props.userSource[this.props.component],
         preserveScrollPosition: true,
         onChange: this.onFixtureChange,
         onFocusChange: this.onEditorFocusChange,
@@ -292,12 +294,33 @@ module.exports = React.createClass({
   renderMenu() {
     return (
       <p className={style.menu}>
+        {this.renderViewSourceButton()}
         {this.renderFixtureEditorButton()}
         {this.renderFullScreenButton()}
       </p>
     );
   },
 
+  renderViewSourceButton() {
+    const classes = classNames({
+      [style.button]: true,
+      [style['view-source-button']]: true,
+      [style['selected-button']]: this.props.viewSource,
+    });
+
+    const viewSourceUrlProps = this.extendFixtureRoute({
+      viewSource: !this.props.viewSource,
+    });
+
+    return (
+      <a
+        className={classes}
+        href={stringifyParams(viewSourceUrlProps)}
+        ref="viewSourceButton"
+        onClick={this.props.router.routeLink}
+      />
+    );
+  },
   renderFixtureEditorButton() {
     const classes = classNames({
       [style.button]: true,
@@ -511,6 +534,7 @@ module.exports = React.createClass({
       fixture: this.props.fixture,
       editor: this.props.editor,
       fullScreen: this.props.fullScreen,
+      viewSource: this.props.viewSource,
     };
 
     const defaultProps = this.constructor.getDefaultProps();
