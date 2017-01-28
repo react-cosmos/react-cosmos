@@ -27,17 +27,17 @@ class WelcomeScreen extends Component {
           <span>A fixture is a JSON-like object, except it contains functions and any other types components receive via props.</span>
         </div>
       );
-    } else {
-      return (
-        <div className={className}>
-          <span>Congratulations! You're on your way to designing beautiful components. It looks like you have no components. If you're just starting a new project, this is fine and I envy you. If this isn't a new project and your components aren't showing up, then your setup needs some tweaking. Try the following:</span>
-          <ul>
-            <li>Adjust <code>componentPaths</code> in cosmos.config.js to match your file structure</li>
-            <li>Open up a GitHub issue and ask for help by sharing your config and file structure</li>
-          </ul>
-        </div>
-      );
     }
+
+    return (
+      <div className={className}>
+        <span>Congratulations! You're on your way to designing beautiful components. It looks like you have no components. If you're just starting a new project, this is fine and I envy you. If this isn't a new project and your components aren't showing up, then your setup needs some tweaking. Try the following:</span>
+        <ul>
+          <li>Adjust <code>componentPaths</code> in cosmos.config.js to match your file structure</li>
+          <li>Open up a GitHub issue and ask for help by sharing your config and file structure</li>
+        </ul>
+      </div>
+    );
   }
 }
 
