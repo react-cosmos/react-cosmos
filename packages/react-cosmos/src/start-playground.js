@@ -1,6 +1,6 @@
+import { loadFixtures } from './load-modules';
 import { Router } from 'react-querystring-router';
 import ReactComponentPlayground from 'react-component-playground';
-import { loadFixtures } from './load-modules';
 
 const getTitleForFixture = params => {
   const { component, fixture } = params;

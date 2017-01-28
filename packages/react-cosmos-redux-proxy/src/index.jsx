@@ -7,7 +7,7 @@ const defaults = {
   disableLocalState: true,
 };
 
-module.exports = function createReduxProxy(options) {
+export default function createReduxProxy(options) {
   const {
     fixtureKey,
     createStore,
@@ -95,4 +95,4 @@ module.exports = function createReduxProxy(options) {
   };
 
   return ReduxProxy;
-};
+}

@@ -1,4 +1,4 @@
-import startLoader from './start-loader.jsx';
+import startLoader from './start-loader';
 import startPlayground from './start-playground';
 
 module.exports = {

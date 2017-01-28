@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import PropsProxy from '../PropsProxy.jsx';
+import PropsProxy from '../PropsProxy';
 
 const Component = () => {};
 const fixture = {

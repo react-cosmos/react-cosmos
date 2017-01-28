@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import createContextProxy from '../index.jsx';
+import createContextProxy from '../index';
 
 const NextProxy = () => {};
 const nextProxyNext = {};

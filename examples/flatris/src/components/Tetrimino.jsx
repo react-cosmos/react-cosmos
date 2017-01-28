@@ -1,6 +1,6 @@
 
 import React from 'react';
-import SquareBlock from './SquareBlock.jsx';
+import SquareBlock from './SquareBlock';
 
 require('./Tetrimino.less');
 
@@ -54,4 +54,4 @@ Tetrimino.propTypes = {
   ).isRequired,
 };
 
-module.exports = Tetrimino;
+export default Tetrimino;

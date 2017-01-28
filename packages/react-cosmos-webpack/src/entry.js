@@ -13,8 +13,8 @@ if (isLoader) {
   window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;
 }
 
-const { startLoader, startPlayground } = require('react-cosmos');
 const getConfig = require('./config').default;
+const { startLoader, startPlayground } = require('react-cosmos');
 
 // eslint-disable-next-line no-undef
 const userConfig = require(COSMOS_CONFIG_PATH);

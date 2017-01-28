@@ -2,10 +2,10 @@
 import path from 'path';
 import loaderUtils from 'loader-utils';
 import traverse from 'traverse';
-import importModule from 'react-cosmos-utils/lib/import-module';
-import getFilePaths from 'react-cosmos-voyager';
 import getConfig from './config';
 import resolveUserPath from './utils/resolve-user-path';
+import importModule from 'react-cosmos-utils/lib/import-module';
+import getFilePaths from 'react-cosmos-voyager';
 
 const jsonLoader = require.resolve('json-loader');
 

@@ -18,9 +18,9 @@ import {
   enableAcceleration,
   disableAcceleration,
 } from '../actions';
-import Well from './Well.jsx';
-import GamePanel from './GamePanel.jsx';
-import InfoPanel from './InfoPanel.jsx';
+import Well from './Well';
+import GamePanel from './GamePanel';
+import InfoPanel from './InfoPanel';
 
 require('./FlatrisGame.less');
 
@@ -261,7 +261,7 @@ const mapDispatchToProps = dispatch => ({
   onDisableAcceleration: () => dispatch(disableAcceleration()),
 });
 
-module.exports = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(FlatrisGame);

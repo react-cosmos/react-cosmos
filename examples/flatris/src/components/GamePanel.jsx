@@ -2,7 +2,7 @@ import React from 'react';
 import { STOPPED, PLAYING, PAUSED } from '../constants/states';
 import { SHAPES, COLORS } from '../constants/tetrimino';
 import { attachPointerDownEvent } from '../lib/events';
-import Tetrimino from './Tetrimino.jsx';
+import Tetrimino from './Tetrimino';
 
 require('./GamePanel.less');
 
@@ -97,4 +97,4 @@ GamePanel.defaultProps = {
   nextTetrimino: null,
 };
 
-module.exports = GamePanel;
+export default GamePanel;

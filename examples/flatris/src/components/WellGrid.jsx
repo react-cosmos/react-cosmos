@@ -1,6 +1,6 @@
 
 import React from 'react';
-import SquareBlock from './SquareBlock.jsx';
+import SquareBlock from './SquareBlock';
 
 require('./WellGrid.less');
 
@@ -62,4 +62,4 @@ WellGrid.propTypes = {
   ).isRequired,
 };
 
-module.exports = WellGrid;
+export default WellGrid;

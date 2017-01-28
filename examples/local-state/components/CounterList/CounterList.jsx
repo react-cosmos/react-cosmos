@@ -1,6 +1,6 @@
 
 import React from 'react';
-import Counter from '../Counter/Counter.jsx';
+import Counter from '../Counter/Counter';
 
 export default class CounterList extends React.Component {
   render() {

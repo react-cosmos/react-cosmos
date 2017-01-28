@@ -1,9 +1,9 @@
 import React from 'react';
-import reactDomPolyfill from 'react-dom-polyfill';
 import { loadComponents, loadFixtures } from './load-modules';
-import Loader from './components/Loader.jsx';
-import PropsProxy from './components/proxies/PropsProxy.jsx';
-import createStateProxy from './components/proxies/StateProxy.jsx';
+import Loader from './components/Loader';
+import PropsProxy from './components/proxies/PropsProxy';
+import createStateProxy from './components/proxies/StateProxy';
+import reactDomPolyfill from 'react-dom-polyfill';
 
 const ReactDOM = reactDomPolyfill(React);
 

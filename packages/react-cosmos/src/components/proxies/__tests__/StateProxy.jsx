@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import createStateProxy from '../StateProxy.jsx';
+import createStateProxy from '../StateProxy';
 
 jest.mock('react-component-tree');
 

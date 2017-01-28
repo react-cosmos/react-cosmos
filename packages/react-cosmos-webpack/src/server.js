@@ -5,11 +5,11 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { argv } from 'yargs';
-import importModule from 'react-cosmos-utils/lib/import-module';
 import getConfig from './config';
 import resolveUserPath from './utils/resolve-user-path';
 import getWebpackConfig from './webpack-config';
 import getDefaultWebpackConfig from './default-webpack-config';
+import importModule from 'react-cosmos-utils/lib/import-module';
 
 const moduleExists = modulePath => {
   try {

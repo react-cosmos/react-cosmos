@@ -13,4 +13,4 @@ const InfoPanel = () => (
   </div>
 );
 
-module.exports = InfoPanel;
+export default InfoPanel;

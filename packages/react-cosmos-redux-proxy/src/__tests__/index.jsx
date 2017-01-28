@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import createReduxProxy from '../index.jsx';
+import createReduxProxy from '../index';
 
 const NextProxy = () => {};
 const nextProxyNext = {};

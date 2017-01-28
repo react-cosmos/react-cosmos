@@ -18,4 +18,4 @@ SquareBlock.propTypes = {
   color: React.PropTypes.string.isRequired,
 };
 
-module.exports = SquareBlock;
+export default SquareBlock;
