@@ -25,8 +25,7 @@ const start = () => {
   // lastest module version is used after a HMR update
 
   const getUserModules = require('./user-modules').default;
-  const { components, fixtures } = getUserModules();
-
+  const { components, fixtures, userSource } = getUserModules();
   if (isLoader) {
     startLoader({
       proxies,
@@ -38,6 +37,7 @@ const start = () => {
     startPlayground({
       fixtures,
       loaderUri,
+      userSource
     });
   }
 };

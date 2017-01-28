@@ -70,7 +70,7 @@ module.exports = function embedModules(source) {
   const resolvedFixturePaths = fixturePaths.map(p =>
     resolveUserPath(p, cosmosConfigPath));
 
-  const { components, fixtures } = getFilePaths({
+  const { components, fixtures, userSource } = getFilePaths({
     componentPaths: resolvedComponentPaths,
     fixturePaths: resolvedFixturePaths,
     ignore,
@@ -88,5 +88,6 @@ module.exports = function embedModules(source) {
   return source
     .replace(/COMPONENTS/g, convertFilePathsToRequireCalls(components))
     .replace(/FIXTURES/g, convertFilePathsToRequireCalls(fixtures))
-    .replace(/CONTEXTS/g, convertDirPathsToContextCalls(contexts));
+    .replace(/CONTEXTS/g, convertDirPathsToContextCalls(contexts))
+    .replace(/USER_SOURCE/g, JSON.stringify(userSource));
 };

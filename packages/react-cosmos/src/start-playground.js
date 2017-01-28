@@ -27,6 +27,7 @@ const createDomContainer = () => {
 export default function startPlayground({
   fixtures,
   loaderUri,
+  userSource
 }) {
   return new Router({
     container: createDomContainer(),
@@ -35,6 +36,7 @@ export default function startPlayground({
       ...params,
       fixtures: loadFixtures(fixtures),
       loaderUri,
+      userSource
     }),
     onChange: params => {
       document.title = getTitleForFixture(params);

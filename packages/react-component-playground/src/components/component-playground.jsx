@@ -41,6 +41,7 @@ module.exports = React.createClass({
     fullScreen: React.PropTypes.bool,
     loaderUri: React.PropTypes.string.isRequired,
     router: React.PropTypes.object.isRequired,
+    userSource: React.PropTypes.object
   },
 
   mixins: [ComponentTree.Mixin],
