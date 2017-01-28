@@ -9,6 +9,7 @@ import localStorageLib from '../lib/local-storage';
 import ComponentTree from 'react-component-tree';
 import { uri } from 'react-querystring-router';
 import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
+import WelcomeComponent from './welcome';
 
 const style = require('./component-playground.less');
 const { findDOMNode } = require('react-dom-polyfill')(React);
@@ -164,6 +165,11 @@ module.exports = React.createClass({
       [style['full-screen']]: this.props.fullScreen,
     });
 
+    const hasComponents = Object.keys(this.props.fixtures).length > 0;
+    const hasFixtures = _.reduce(this.props.fixtures, (acc, compFixtures) => {
+      return acc || (Object.keys(compFixtures).length > 0);
+    }, false);
+
     return (
       <div className={classes}>
         <div className={style['left-nav']}>
@@ -184,7 +190,12 @@ module.exports = React.createClass({
             {this.renderFixtures()}
           </div>
         </div>
-        {isFixtureSelected ? this.renderContentFrame() : null}
+        {isFixtureSelected ? this.renderContentFrame() : (
+          <WelcomeComponent
+              hasComponents={hasComponents}
+              hasFixtures={hasFixtures}
+          />
+        )}
       </div>
     );
   },
