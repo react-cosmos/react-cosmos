@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-const style = require('./welcome.less');
+const style = require('./welcome-screen.less');
 
 class WelcomeScreen extends Component {
   render() {
