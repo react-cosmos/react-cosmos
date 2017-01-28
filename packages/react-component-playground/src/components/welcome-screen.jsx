@@ -50,4 +50,4 @@ WelcomeScreen.defaultProps = {
   hasFixtures: false,
 };
 
-module.exports = WelcomeScreen;
+export default WelcomeScreen;

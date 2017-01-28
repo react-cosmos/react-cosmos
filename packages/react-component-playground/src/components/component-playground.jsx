@@ -9,7 +9,7 @@ import localStorageLib from '../lib/local-storage';
 import ComponentTree from 'react-component-tree';
 import { uri } from 'react-querystring-router';
 import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
-import WelcomeComponent from './welcome';
+import WelcomeComponent from './welcome-screen';
 
 const style = require('./component-playground.less');
 const { findDOMNode } = require('react-dom-polyfill')(React);
