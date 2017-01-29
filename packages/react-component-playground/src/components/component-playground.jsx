@@ -168,7 +168,7 @@ module.exports = React.createClass({
     const hasComponents = Object.keys(this.props.fixtures).length > 0;
     const hasFixtures = _.reduce(this.props.fixtures, (acc, compFixtures) => {
       const fixtureNames = Object.keys(compFixtures);
-      const noAutoFixture = !fixtureNames[0].indexOf('(auto)');
+      const noAutoFixture = fixtureNames[0].indexOf('(auto)') === -1;
 
       return acc || (fixtureNames.length > 1 && noAutoFixture);
     }, false);
