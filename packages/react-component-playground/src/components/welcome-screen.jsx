@@ -17,7 +17,11 @@ class WelcomeScreen extends Component {
     if (this.props.hasComponents && this.props.hasFixtures) {
       return (
         <div className={className}>
-          <span>You're the best.</span>
+          <p>You're the best. You should contribute.</p>
+          <ul>
+            <li>Reason #1</li>
+            <li>Reason #2</li>
+          </ul>
         </div>
       );
     } else if (this.props.hasComponents && !this.props.hasFixtures) {
