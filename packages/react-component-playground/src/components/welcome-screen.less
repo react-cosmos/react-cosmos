@@ -8,17 +8,17 @@
 .welcome-screen {
   position: absolute;
   left: @left-nav-width;
-  min-height: 100vh;
-  width: ~"calc(100% - @{left-nav-width})";
+  top: 0;
+  bottom: 0;
+  right: 0;
   display: flex;
   justify-content: center;
-  flex-direction: column;
+  align-items: center;
   background: @background;
 
   &-inner {
+    flex: .5;
     font-family: @default-font-family;
-    width: 50%;
-    margin: auto;
     padding: 16px;
     color: @text-color;
     background-color: rgba(255, 255, 255, 0.9);
