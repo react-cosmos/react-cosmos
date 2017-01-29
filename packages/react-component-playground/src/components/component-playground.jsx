@@ -157,11 +157,18 @@ module.exports = React.createClass({
           value: this.state.fixtureUserInput,
           onChange: this.onFixtureChange,
           onFocusChange: this.onEditorFocusChange,
+          options: _.assign(baseEditor.options, {
+            readOnly: false
+          })
         })
       } else {
         return _.assign(baseEditor, {
           value: this.props.userSource[this.props.component],
-          readOnly: true
+          onChange: null,
+          onFocusChange: null,
+          options: _.assign(baseEditor.options, {
+            readOnly: true
+          })
         })
       }
     },
