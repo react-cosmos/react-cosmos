@@ -57,6 +57,10 @@ module.exports = {
         'style-loader',
         'css-loader',
       ],
+    }, {
+      test: /\.png$/,
+      include: src,
+      use: 'url-loader'
     }],
   },
   plugins: [

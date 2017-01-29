@@ -36,6 +36,7 @@
     "eslint-config-xo-react": "^0.10.0",
     "eslint-import-resolver-webpack": "^0.8.1",
     "eslint-plugin-react": "^6.9.0",
+    "file-loader": "^0.10.0",
     "glob": "^7.1.1",
     "inject-loader": "^2.0.1",
     "jest": "^18.1.0",
@@ -63,6 +64,7 @@
     "sinon-chai": "^2.8.0",
     "style-loader": "^0.13.1",
     "traverse": "^0.6.6",
+    "url-loader": "^0.5.7",
     "webpack": "^2.2.0",
     "xo": "^0.17.1",
     "yargs": "^6.6.0"
@@ -97,11 +99,14 @@
         "error",
         "as-needed"
       ],
-      "no-multiple-empty-lines": ["error", {
+      "no-multiple-empty-lines": [
+        "error",
+        {
           "max": 1,
           "maxBOF": 0,
           "maxEOF": 0
-        }],
+        }
+      ],
       "unicorn/filename-case": 0,
       "import/no-unassigned-import": 0,
       "react/jsx-uses-vars": 1,
