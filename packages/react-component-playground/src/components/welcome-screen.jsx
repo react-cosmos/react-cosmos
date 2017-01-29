@@ -23,8 +23,9 @@ class WelcomeScreen extends Component {
     } else if (this.props.hasComponents && !this.props.hasFixtures) {
       return (
         <div className={className}>
-          <span>Your components are listed the left side. It looks like you haven't created fixtures for them yet. An empty fixture is available for each component, but chances are your components depend on one or more props to function. </span>
-          <span>A fixture is a JSON-like object, except it contains functions and any other types components receive via props.</span>
+          <p>Your components are listed the left side. It looks like you haven't created fixtures for them yet. An empty fixture is available for each component, but chances are your components depend on one or more props to function. </p>
+          <p>A fixture is a JSON-like object, except it contains functions and any other types components receive via props.</p>
+          <p>Here's a guide on creating fixtures to help you get started: <a target="_blank" href="https://github.com/react-cosmos/react-cosmos/blob/master/docs/fixtures.md">Creating Fixtures</a></p>
         </div>
       );
     }
