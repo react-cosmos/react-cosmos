@@ -6,7 +6,7 @@ import CodeMirror from '@skidding/react-codemirror';
 import fuzzaldrinPlus from 'fuzzaldrin-plus';
 import SplitPane from 'ubervu-react-split-pane';
 import localStorageLib from '../lib/local-storage';
-import WelcomeComponent from './welcome-screen';
+import WelcomeScreen from './welcome-screen';
 import ComponentTree from 'react-component-tree';
 import { uri } from 'react-querystring-router';
 import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
@@ -155,6 +155,15 @@ module.exports = React.createClass({
         },
       };
     },
+
+    welcome() {
+      return {
+        component: WelcomeScreen,
+        key: 'welcome',
+        hasComponents: this.userHasComponents(),
+        hasFixtures: this.userHasFixtures(),
+      };
+    }
   },
 
   render() {
@@ -164,14 +173,6 @@ module.exports = React.createClass({
       [style['component-playground']]: true,
       [style['full-screen']]: this.props.fullScreen,
     });
-
-    const hasComponents = Object.keys(this.props.fixtures).length > 0;
-    const hasFixtures = _.reduce(this.props.fixtures, (acc, compFixtures) => {
-      const fixtureNames = Object.keys(compFixtures);
-      const noAutoFixture = fixtureNames[0].indexOf('(auto)') === -1;
-
-      return acc || (fixtureNames.length > 1 && noAutoFixture);
-    }, false);
 
     return (
       <div className={classes}>
@@ -193,12 +194,7 @@ module.exports = React.createClass({
             {this.renderFixtures()}
           </div>
         </div>
-        {isFixtureSelected ? this.renderContentFrame() : (
-          <WelcomeComponent
-            hasComponents={hasComponents}
-            hasFixtures={hasFixtures}
-          />
-        )}
+        {isFixtureSelected ? this.renderContentFrame() : this.renderWelcomeScreen()}
       </div>
     );
   },
@@ -346,6 +342,10 @@ module.exports = React.createClass({
         onClick={this.props.router.routeLink}
       />
     );
+  },
+
+  renderWelcomeScreen() {
+    return this.loadChild('welcome');
   },
 
   componentWillMount() {
@@ -516,6 +516,19 @@ module.exports = React.createClass({
   isCurrentFixtureSelected(componentName, fixtureName) {
     return componentName === this.props.component &&
            fixtureName === this.props.fixture;
+  },
+
+  userHasComponents() {
+    return Object.keys(this.props.fixtures).length > 0;
+  },
+
+  userHasFixtures() {
+    return _.reduce(this.props.fixtures, (acc, compFixtures) => {
+      const fixtureNames = Object.keys(compFixtures);
+      const noAutoFixture = fixtureNames[0].indexOf('(auto)') === -1;
+
+      return acc || (fixtureNames.length > 1 && noAutoFixture);
+    }, false);
   },
 
   extendFixtureRoute(newProps) {
