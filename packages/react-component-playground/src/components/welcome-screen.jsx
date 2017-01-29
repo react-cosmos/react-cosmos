@@ -6,6 +6,7 @@ class WelcomeScreen extends Component {
   render() {
     return (
       <div className={style['welcome-screen']}>
+        {this._renderStarryBackground()}
         {this._renderContent()}
       </div>
     );
@@ -44,6 +45,14 @@ class WelcomeScreen extends Component {
         </ul>
       </div>
     );
+  }
+
+  _renderStarryBackground() {
+    return <div className={style['starry-background']}>
+        <div className={style['stars']}></div>
+        <div className={style['twinkling']}></div>
+        <div className={style['clouds']}></div>
+    </div>;
   }
 }
 
