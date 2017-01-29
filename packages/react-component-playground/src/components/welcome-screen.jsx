@@ -32,10 +32,11 @@ class WelcomeScreen extends Component {
 
     return (
       <div className={className}>
-        <span>Congratulations! You're on your way to designing beautiful components. It looks like you have no components. If you're just starting a new project, this is fine and I envy you. If this isn't a new project and your components aren't showing up, then your setup needs some tweaking. Try the following:</span>
+        <p>Congratulations! You're on your way to designing beautiful components.</p>
+        <p>No components found. If you're just starting a new project, this is fine and I envy you, otherwise your setup needs tweaking. Try the following:</p>
         <ul>
           <li>Adjust <code>componentPaths</code> in cosmos.config.js to match your file structure</li>
-          <li>Open up a GitHub issue and ask for help by sharing your config and file structure</li>
+          <li>Open up a <a target="_blank" href="https://github.com/react-cosmos/react-cosmos/issues">GitHub issue</a> and ask for help by sharing your config and file structure</li>
         </ul>
       </div>
     );
