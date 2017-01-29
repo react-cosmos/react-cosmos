@@ -15,7 +15,7 @@ const { findDOMNode } = require('react-dom-polyfill')(React);
 
 require('codemirror/lib/codemirror.css');
 require('codemirror/addon/fold/foldgutter.css');
-require('codemirror/theme/solarized.css');
+require('codemirror/theme/eclipse.css');
 require('./codemirror.css');
 
 require('codemirror/mode/jsx/jsx');
@@ -148,7 +148,7 @@ module.exports = React.createClass({
           mode: 'jsx',
           foldGutter: true,
           lineNumbers: true,
-          theme: 'solarized light',
+          theme: 'eclipse',
           gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
         },
       };
