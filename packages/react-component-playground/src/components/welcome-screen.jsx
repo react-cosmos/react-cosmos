@@ -18,11 +18,13 @@ class WelcomeScreen extends Component {
     if (this.props.hasComponents && this.props.hasFixtures) {
       return (
         <div className={className}>
-          <p>You're the best. You should contribute.</p>
+          <p>You're all set! But did you know...</p>
           <ul>
-            <li>Reason #1</li>
-            <li>Reason #2</li>
+            <li>You can mock Redux state and build custom middleware using <a target="_blank" href="https://github.com/react-cosmos/react-cosmos#configuration">proxies</a></li>
+            <li>You can search for components and fixtures? Try it, it's all warm and <a target="_blank" href="https://github.com/jeancroy/fuzz-aldrin-plus">fuzzy</a>.</li>
+            <li>You can load CSS, polyfills, and any other files <a target="_blank" href="https://github.com/react-cosmos/react-cosmos#configuration">globally</a>?</li>
           </ul>
+          <p>Be part of React Cosmos by becoming a <a target="_blank" href="https://github.com/react-cosmos/react-cosmos/blob/master/CONTRIBUTING.md">contributor</a>.</p>
         </div>
       );
     } else if (this.props.hasComponents && !this.props.hasFixtures) {

@@ -34,15 +34,15 @@ describe('WelcomeScreen', () => {
     });
 
     it('should render paragraphs', () => {
-      expect(wrapper.find('p').length).toBe(1);
+      expect(wrapper.find('p').length).toBe(2);
     });
 
     it('should render list items', () => {
-      expect(wrapper.find('li').length).toBe(2);
+      expect(wrapper.find('li').length).toBe(3);
     });
 
     it('should render correct text', () => {
-      expect(wrapper.text()).toMatch(/contribute/);
+      expect(wrapper.text()).toMatch(/contributor/);
     });
   });
 
