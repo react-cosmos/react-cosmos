@@ -1,4 +1,4 @@
-import HtmlWebpackPlugin from '@skidding/html-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 // This config doesn't have entry and output set up because it's not meant to
 // work standalone. react-cosmos-webpack adds an entry & output when extending this.
