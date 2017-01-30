@@ -50,7 +50,7 @@
     right: 0;
     bottom: 0;
     overflow: hidden;
-    background-color: #000;
+    background-color: #1c1b1d;
     z-index: -1;
 
     .stars, .clouds, .twinkling {
@@ -62,24 +62,24 @@
     }
 
     .clouds {
-        min-width: 3970px; 
+        min-width: 3970px;
         min-height: 2676px;
         background-image: @clouds-texture;
-        animation: clouds-ani 5s linear infinite;
+        animation: clouds-ani 100s linear infinite;
     }
 
     .twinkling {
-        min-width: 1000px; 
+        min-width: 1000px;
         min-height: 1000px;
-        background-image: @twinkling-texture;
-        animation: twinkling-ani 10s linear infinite;
+        // background-image: @twinkling-texture;
+        animation: twinkling-ani 100s linear infinite;
     }
 
     .stars {
-        min-width: 4000px; 
+        min-width: 4000px;
         min-height: 2750px;
         background-image: @stars-texture;
-        animation: stars-ani 10s linear infinite;
+        animation: stars-ani 200s linear infinite;
     }
   }
 }
