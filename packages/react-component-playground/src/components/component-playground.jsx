@@ -525,9 +525,8 @@ module.exports = React.createClass({
   userHasFixtures() {
     return _.reduce(this.props.fixtures, (acc, compFixtures) => {
       const fixtureNames = Object.keys(compFixtures);
-      const noAutoFixture = fixtureNames[0].indexOf('(auto)') === -1;
 
-      return acc || (fixtureNames.length > 1 && noAutoFixture);
+      return acc || fixtureNames[0].indexOf('(auto)') === -1;
     }, false);
   },
 
