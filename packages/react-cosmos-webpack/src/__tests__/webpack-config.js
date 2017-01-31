@@ -15,7 +15,9 @@ const cosmosConfigPath = require.resolve(cosmosConfigRelPath);
 
 // So far we use the same user webpack mock between all tests
 const userWebpackConfig = {
-  loaders: [],
+  module: {
+    rules: [],
+  },
   plugins: [
     // fake plugins, something to compare identity with
     {}, {},
@@ -46,23 +48,6 @@ beforeEach(() => {
   getWebpackConfig = require('../webpack-config').default;
 });
 
-describe('user config validation', () => {
-  beforeEach(() => {
-    mockCosmosConfig = {
-      componentPaths: ['src/components'],
-      fixturePaths: ['test/fixtures'],
-      ignore: [],
-      globalImports: ['./global.css'],
-    };
-  });
-
-  test('should throw an exception if `rules` passed', () => {
-    expect(() => {
-      getWebpackConfig({ module: { rules: {} } }, cosmosConfigPath);
-    }).toThrow();
-  });
-});
-
 describe('without hmr', () => {
   beforeEach(() => {
     mockCosmosConfig = {
@@ -74,8 +59,32 @@ describe('without hmr', () => {
     webpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
   });
 
-  test('keeps user loaders', () => {
-    expect(webpackConfig.loaders).toBe(userWebpackConfig.loaders);
+  test('choose `loaders` or `rules` from user config', () => {
+    const userRule = { foo: 'bar' };
+
+    webpackConfig = getWebpackConfig(
+      {
+        module: {
+          rules: [userRule]
+        }
+      },
+      cosmosConfigPath
+    );
+    expect(webpackConfig.module.rules[0]).toEqual(userRule);
+
+    webpackConfig = getWebpackConfig(
+      {
+        module: {
+          loaders: [userRule]
+        }
+      },
+      cosmosConfigPath
+    );
+    expect(webpackConfig.module.loaders[0]).toEqual(userRule);
+  });
+
+  test('keeps user rules', () => {
+    expect(webpackConfig.rules).toBe(userWebpackConfig.rules);
   });
 
   test('adds resolved global imports to entries', () => {
@@ -120,7 +129,7 @@ describe('without hmr', () => {
   });
 
   test('adds module loader', () => {
-    expect(webpackConfig.module.loaders[webpackConfig.module.loaders.length - 1]).toEqual({
+    expect(webpackConfig.module.rules[webpackConfig.module.rules.length - 1]).toEqual({
       loader: require.resolve('../module-loader'),
       include: require.resolve('../user-modules'),
       query: {

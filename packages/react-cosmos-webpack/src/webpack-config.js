@@ -44,15 +44,13 @@ export default function getWebpackConfig(
     publicPath: '/loader/',
   };
 
-  if (userWebpackConfig.module && userWebpackConfig.module.rules) {
-    throw new Error('Please use `loaders` instead of `rules` in your webpack config');
-  }
-
-  const loaders = userWebpackConfig.module && userWebpackConfig.module.loaders ?
-    [...userWebpackConfig.module.loaders] : [];
+  // use what user wants
+  const webpackRulesOptionName = userWebpackConfig.module && userWebpackConfig.module.rules ? 'rules' : 'loaders';
+  const rules = userWebpackConfig.module && userWebpackConfig.module[webpackRulesOptionName] ?
+    [...userWebpackConfig.module[webpackRulesOptionName]] : [];
   const plugins = userWebpackConfig.plugins ? [...userWebpackConfig.plugins] : [];
 
-  loaders.push({
+  rules.push({
     loader: require.resolve('./module-loader'),
     include: require.resolve('./user-modules'),
     query: {
@@ -73,8 +71,7 @@ export default function getWebpackConfig(
     entry,
     output,
     module: {
-      ...userWebpackConfig.module,
-      loaders,
+      [webpackRulesOptionName]: rules,
     },
     plugins,
   };
