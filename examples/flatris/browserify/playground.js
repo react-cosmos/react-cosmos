@@ -1,4 +1,4 @@
-// Replace with 'react-cosmos' & 'react-cosmos-redux-proxy' in real life
+// Replace with 'react-cosmos' in real life
 import { startPlayground } from '../../../packages/react-cosmos';
 import { fixtures } from './prepare-modules';
 
