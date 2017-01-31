@@ -19,6 +19,7 @@
     "json-loader": "^0.5.4",
     "loader-utils": "^0.2.16",
     "react-cosmos": "^2.0.0-beta.5",
+    "react-cosmos-config": "^2.0.0-beta.5",
     "react-cosmos-utils": "^2.0.0-beta.4",
     "react-cosmos-voyager": "^2.0.0-beta.5",
     "style-loader": "^0.13.1",
