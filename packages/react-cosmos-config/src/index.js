@@ -30,7 +30,7 @@ export default function getCosmosConfig(configPath = 'cosmos.config') {
     ...userConfig,
   };
   const resolvedConfig = Object.keys(config).reduce((result, key) => {
-    if (['componentPaths', 'fixturePaths', 'globalImports'].includes(key)) {
+    if (['componentPaths', 'fixturePaths', 'globalImports', 'proxies'].includes(key)) {
       result[key] = config[key].map(path => resolveUserPath(path, rootPath));
     } else if (['publicPath', 'webpackConfigPath'].includes(key)) {
       result[key] = resolveUserPath(config[key], rootPath);

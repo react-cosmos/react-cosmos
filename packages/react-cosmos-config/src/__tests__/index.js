@@ -34,19 +34,35 @@ test('loads custom config path', () => {
   expect(getCosmosConfig('./custom-path/cosmos.config').opt).toBe(opt);
 });
 
-test('resolves module global imports', () => {
-  mockUserConfig('./mock-cwd/cosmos.config', {
-    // react-cosmos-utils/src/import-module chosen arbitrarily from project's deps
-    globalImports: ['react-cosmos-utils/src/import-module']
+describe('resolves module paths', () => {
+  let globalImports;
+  let proxies;
+
+  beforeEach(() => {
+    mockUserConfig('./mock-cwd/cosmos.config', {
+      // react-cosmos-utils chosen arbitrarily from project's deps
+      globalImports: ['react-cosmos-utils/src/import-module'],
+      proxies: ['react-cosmos-utils/src/linked-list']
+    });
+
+    ({ globalImports, proxies } =
+      getCosmosConfig());
   });
 
-  expect(getCosmosConfig().globalImports).toEqual([path.join(__dirname, '../../../react-cosmos-utils/src/import-module.js')]);
+  test('global imports', () => {
+    expect(globalImports).toEqual([path.join(__dirname, '../../../react-cosmos-utils/src/import-module.js')]);
+  });
+
+  test('proxies', () => {
+    expect(proxies).toEqual([path.join(__dirname, '../../../react-cosmos-utils/src/linked-list.js')]);
+  });
 });
 
 describe('keeps absolute paths', () => {
   let componentPaths;
   let fixturePaths;
   let globalImports;
+  let proxies;
   let publicPath;
   let webpackConfigPath;
 
@@ -55,11 +71,12 @@ describe('keeps absolute paths', () => {
       componentPaths: ['/path/to/components'],
       fixturePaths: ['/path/to/fixtures'],
       globalImports: ['/path/to/import'],
+      proxies: ['/path/to/proxy'],
       publicPath: '/path/to/static',
       webpackConfigPath: '/path/to/webpack',
     });
 
-    ({ componentPaths, fixturePaths, globalImports, publicPath, webpackConfigPath } =
+    ({ componentPaths, fixturePaths, globalImports, proxies, publicPath, webpackConfigPath } =
       getCosmosConfig());
   });
 
@@ -75,6 +92,10 @@ describe('keeps absolute paths', () => {
     expect(globalImports).toEqual(['/path/to/import']);
   });
 
+  test('proxies', () => {
+    expect(proxies).toEqual(['/path/to/proxy']);
+  });
+
   test('public', () => {
     expect(publicPath).toEqual('/path/to/static');
   });
@@ -88,6 +109,7 @@ describe('resolves relative paths', () => {
   let componentPaths;
   let fixturePaths;
   let globalImports;
+  let proxies;
   let publicPath;
   let webpackConfigPath;
 
@@ -96,11 +118,12 @@ describe('resolves relative paths', () => {
       componentPaths: ['./path/to/components'],
       fixturePaths: ['./path/to/fixtures'],
       globalImports: ['./path/to/import'],
+      proxies: ['./path/to/proxy'],
       publicPath: './path/to/static',
       webpackConfigPath: './path/to/webpack',
     });
 
-    ({ componentPaths, fixturePaths, globalImports, publicPath, webpackConfigPath } =
+    ({ componentPaths, fixturePaths, globalImports, proxies, publicPath, webpackConfigPath } =
       getCosmosConfig('./custom-path/cosmos.config'));
   });
 
@@ -114,6 +137,10 @@ describe('resolves relative paths', () => {
 
   test('global imports', () => {
     expect(globalImports).toEqual([path.join(__dirname, 'mock-cwd/custom-path/path/to/import')]);
+  });
+
+  test('proxies', () => {
+    expect(proxies).toEqual([path.join(__dirname, 'mock-cwd/custom-path/path/to/proxy')]);
   });
 
   test('public', () => {
