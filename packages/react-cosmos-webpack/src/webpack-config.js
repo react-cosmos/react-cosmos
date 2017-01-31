@@ -1,4 +1,5 @@
 import webpack from 'webpack';
+import omit from 'lodash.omit';
 import getConfig from './config';
 import resolveUserPath from './utils/resolve-user-path';
 import importModule from 'react-cosmos-utils/lib/import-module';
@@ -44,7 +45,7 @@ export default function getWebpackConfig(
     publicPath: '/loader/',
   };
 
-  // use what user wants
+  // To support webpack 1 and 2 configuration formats. So we use the one that user passes
   const webpackRulesOptionName = userWebpackConfig.module && userWebpackConfig.module.rules ? 'rules' : 'loaders';
   const rules = userWebpackConfig.module && userWebpackConfig.module[webpackRulesOptionName] ?
     [...userWebpackConfig.module[webpackRulesOptionName]] : [];
@@ -71,6 +72,7 @@ export default function getWebpackConfig(
     entry,
     output,
     module: {
+      ...omit(userWebpackConfig.module, 'rules', 'loaders'),
       [webpackRulesOptionName]: rules,
     },
     plugins,

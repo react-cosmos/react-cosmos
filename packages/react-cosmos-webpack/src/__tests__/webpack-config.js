@@ -59,30 +59,6 @@ describe('without hmr', () => {
     webpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
   });
 
-  test('choose `loaders` or `rules` from user config', () => {
-    const userRule = { foo: 'bar' };
-
-    webpackConfig = getWebpackConfig(
-      {
-        module: {
-          rules: [userRule]
-        }
-      },
-      cosmosConfigPath
-    );
-    expect(webpackConfig.module.rules[0]).toEqual(userRule);
-
-    webpackConfig = getWebpackConfig(
-      {
-        module: {
-          loaders: [userRule]
-        }
-      },
-      cosmosConfigPath
-    );
-    expect(webpackConfig.module.loaders[0]).toEqual(userRule);
-  });
-
   test('keeps user rules', () => {
     expect(webpackConfig.rules).toBe(userWebpackConfig.rules);
   });
@@ -198,5 +174,50 @@ describe('with absolute paths', () => {
     mockCosmosConfig.globalImports.forEach(globalImport => {
       expect(webpackConfig.entry).toContain(globalImport);
     });
+  });
+});
+
+describe('webpack config basic', () => {
+  test('choose `loaders` or `rules` from user config', () => {
+    const userRule = { foo: 'bar' };
+
+    webpackConfig = getWebpackConfig(
+      {
+        module: {
+          rules: [userRule]
+        }
+      },
+      cosmosConfigPath
+    );
+    expect(webpackConfig.module.rules[0]).toEqual(userRule);
+
+    webpackConfig = getWebpackConfig(
+      {
+        module: {
+          loaders: [userRule]
+        }
+      },
+      cosmosConfigPath
+    );
+    expect(webpackConfig.module.loaders[0]).toEqual(userRule);
+  });
+
+  test('passing user data to module config', () => {
+    const additionalOption = {
+      something: 'foo',
+    };
+    const userRule = { foo: 'bar' };
+    webpackConfig = getWebpackConfig(
+      {
+        module: {
+          additionalOption,
+          rules: [userRule],
+        }
+      },
+      cosmosConfigPath
+    );
+
+    expect(webpackConfig.module.additionalOption).toEqual(additionalOption);
+    expect(webpackConfig.module.rules[0]).toEqual(userRule);
   });
 });
