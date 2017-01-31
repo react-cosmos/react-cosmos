@@ -20,7 +20,7 @@ class WelcomeScreen extends Component {
         <div className={className}>
           <p>You're all set! But did you know...</p>
           <ul>
-            <li>You can mock Redux state and build custom middleware using <a target="_blank" href="https://github.com/react-cosmos/react-cosmos#configuration">proxies</a>?</li>
+            <li>You can mock Redux state and build custom middleware using <a target="_blank" href="https://github.com/react-cosmos/react-cosmos#proxies">proxies</a>?</li>
             <li>You can search for components and fixtures? Try it, it's all warm and <a target="_blank" href="https://github.com/jeancroy/fuzz-aldrin-plus">fuzzy</a>.</li>
             <li>You can load CSS, polyfills, and any other files <a target="_blank" href="https://github.com/react-cosmos/react-cosmos#configuration">globally</a>?</li>
           </ul>

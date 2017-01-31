@@ -2,19 +2,11 @@
 
 const mockComponents = {};
 const mockFixtures = {};
+const mockProxies = [];
 const mockStartLoader = jest.fn();
 const mockStartPlayground = jest.fn();
-const mockProxies = [];
-const mockIgnore = [];
-const mockContainerQuerySelector = '#root';
 
 let mockGetUserModules;
-
-jest.mock('./dummy-config/cosmos.config.js', () => ({
-  proxies: mockProxies,
-  ignore: mockIgnore,
-  containerQuerySelector: mockContainerQuerySelector,
-}));
 
 jest.mock('react-cosmos', () => ({
   startLoader: mockStartLoader,
@@ -35,6 +27,7 @@ const init = pathname => {
   mockGetUserModules = jest.fn(() => ({
     components: mockComponents,
     fixtures: mockFixtures,
+    proxies: mockProxies,
   }));
 
   require('../entry');
@@ -71,7 +64,8 @@ describe('loader path', () => {
   });
 
   test('sends containerQuerySelector to loader', () => {
-    expect(options.containerQuerySelector).toBe(mockContainerQuerySelector);
+    // Mocked in jest.config.js
+    expect(options.containerQuerySelector).toBe('__mock__containerQuerySelector');
   });
 });
 

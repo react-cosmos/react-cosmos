@@ -1,5 +1,3 @@
-import path from 'path';
-
 jest.mock('webpack');
 
 const mockDefinePlugin = {};
@@ -10,13 +8,24 @@ let HotModuleReplacementPlugin;
 
 let getWebpackConfig;
 
-const cosmosConfigRelPath = './dummy-config/cosmos.config';
-const cosmosConfigPath = require.resolve(cosmosConfigRelPath);
+const cosmosConfigPath = '/mock/config/path';
 
-// So far we use the same user webpack mock between all tests
-const userWebpackConfig = {
+const userLoader = {};
+const userRule = {};
+const userWebpack1Config = {
   module: {
-    rules: [],
+    additionalOption: {
+      something: 'foo',
+    },
+    loaders: [userLoader],
+  },
+};
+const userWebpack2Config = {
+  module: {
+    additionalOption: {
+      something: 'bar',
+    },
+    rules: [userRule],
   },
   plugins: [
     // fake plugins, something to compare identity with
@@ -25,11 +34,10 @@ const userWebpackConfig = {
 };
 
 // This changes between test cases
+let mockGetCosmosConfig;
 let mockCosmosConfig;
 // This is the output that we test
 let webpackConfig;
-
-const resolveUserPath = relPath => path.join(path.dirname(cosmosConfigPath), relPath);
 
 beforeEach(() => {
   // We want to change configs between test cases
@@ -37,7 +45,8 @@ beforeEach(() => {
   jest.resetAllMocks();
 
   // Mock user config
-  jest.mock(cosmosConfigRelPath, () => mockCosmosConfig);
+  mockGetCosmosConfig = jest.fn(() => mockCosmosConfig);
+  jest.mock('react-cosmos-config', () => mockGetCosmosConfig);
 
   DefinePlugin = jest.fn(() => mockDefinePlugin);
   HotModuleReplacementPlugin = jest.fn(() => mockHotModuleReplacementPlugin);
@@ -55,17 +64,18 @@ describe('without hmr', () => {
       fixturePaths: ['test/fixtures'],
       ignore: [],
       globalImports: ['./global.css'],
+      containerQuerySelector: '__mock__containerQuerySelector',
     };
-    webpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
+    webpackConfig = getWebpackConfig(userWebpack2Config, cosmosConfigPath);
   });
 
-  test('keeps user rules', () => {
-    expect(webpackConfig.rules).toBe(userWebpackConfig.rules);
+  test('calls react-cosmos-config with config path', () => {
+    expect(mockGetCosmosConfig.mock.calls[0][0]).toBe(cosmosConfigPath);
   });
 
   test('adds resolved global imports to entries', () => {
     mockCosmosConfig.globalImports.forEach(globalImport => {
-      expect(webpackConfig.entry).toContain(resolveUserPath(globalImport));
+      expect(webpackConfig.entry).toContain(globalImport);
     });
   });
 
@@ -89,29 +99,21 @@ describe('without hmr', () => {
   });
 
   test('keeps user plugins', () => {
-    userWebpackConfig.plugins.forEach(plugin => {
+    userWebpack2Config.plugins.forEach(plugin => {
       expect(webpackConfig.plugins).toContain(plugin);
     });
   });
 
   test('calls define plugin with user config path', () => {
     expect(DefinePlugin.mock.calls[0][0]).toEqual({
-      COSMOS_CONFIG_PATH: JSON.stringify(cosmosConfigPath),
+      COSMOS_CONFIG: JSON.stringify({
+        containerQuerySelector: '__mock__containerQuerySelector',
+      }),
     });
   });
 
   test('adds DefinePlugin', () => {
     expect(webpackConfig.plugins).toContain(mockDefinePlugin);
-  });
-
-  test('adds module loader', () => {
-    expect(webpackConfig.module.rules[webpackConfig.module.rules.length - 1]).toEqual({
-      loader: require.resolve('../module-loader'),
-      include: require.resolve('../user-modules'),
-      query: {
-        cosmosConfigPath,
-      },
-    });
   });
 });
 
@@ -125,12 +127,12 @@ describe('with hmr', () => {
       globalImports: ['./global.css'],
       hot: true,
     };
-    webpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
+    webpackConfig = getWebpackConfig(userWebpack2Config, cosmosConfigPath);
   });
 
   test('adds resolved global imports to entries', () => {
     mockCosmosConfig.globalImports.forEach(globalImport => {
-      expect(webpackConfig.entry).toContain(resolveUserPath(globalImport));
+      expect(webpackConfig.entry).toContain(globalImport);
     });
   });
 
@@ -151,9 +153,10 @@ describe('with hmr', () => {
 describe('with hmr plugin', () => {
   beforeEach(() => {
     mockCosmosConfig = {
+      globalImports: [],
       hmrPlugin: true,
     };
-    webpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
+    webpackConfig = getWebpackConfig(userWebpack2Config, cosmosConfigPath);
   });
 
   test('adds HotModuleReplacementPlugin', () => {
@@ -161,63 +164,64 @@ describe('with hmr plugin', () => {
   });
 });
 
-describe('with absolute paths', () => {
-  beforeEach(() => {
-    mockCosmosConfig = {
-      componentPaths: [resolveUserPath('src/components')],
-      globalImports: [resolveUserPath('./global.css')],
-    };
-    webpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
-  });
+describe('loaders', () => {
+  describe('webpack1', () => {
+    beforeAll(() => {
+      webpackConfig = getWebpackConfig(userWebpack1Config, cosmosConfigPath);
+    });
 
-  test('adds user global imports to entries', () => {
-    mockCosmosConfig.globalImports.forEach(globalImport => {
-      expect(webpackConfig.entry).toContain(globalImport);
+    test('keeps user loaders', () => {
+      expect(webpackConfig.module.loaders[0]).toBe(userLoader);
+    });
+
+    test('adds module loader to module.loaders', () => {
+      expect(webpackConfig.module.loaders[webpackConfig.module.loaders.length - 1]).toEqual({
+        loader: require.resolve('../module-loader'),
+        include: require.resolve('../user-modules'),
+        query: {
+          cosmosConfigPath,
+        },
+      });
+    });
+
+    test('does not create module.rules', () => {
+      expect(webpackConfig.module.rules).toBe(undefined);
+    });
+
+    test('preserves additional module options', () => {
+      expect(webpackConfig.module.additionalOption).toEqual({
+        something: 'foo',
+      });
     });
   });
-});
 
-describe('webpack config basic', () => {
-  test('choose `loaders` or `rules` from user config', () => {
-    const userRule = { foo: 'bar' };
+  describe('webpack2', () => {
+    beforeAll(() => {
+      webpackConfig = getWebpackConfig(userWebpack2Config, cosmosConfigPath);
+    });
 
-    webpackConfig = getWebpackConfig(
-      {
-        module: {
-          rules: [userRule]
-        }
-      },
-      cosmosConfigPath
-    );
-    expect(webpackConfig.module.rules[0]).toEqual(userRule);
+    test('keeps user rules', () => {
+      expect(webpackConfig.module.rules[0]).toBe(userRule);
+    });
 
-    webpackConfig = getWebpackConfig(
-      {
-        module: {
-          loaders: [userRule]
-        }
-      },
-      cosmosConfigPath
-    );
-    expect(webpackConfig.module.loaders[0]).toEqual(userRule);
-  });
+    test('adds module loader to module.rules', () => {
+      expect(webpackConfig.module.rules[webpackConfig.module.rules.length - 1]).toEqual({
+        loader: require.resolve('../module-loader'),
+        include: require.resolve('../user-modules'),
+        query: {
+          cosmosConfigPath,
+        },
+      });
+    });
 
-  test('passing user data to module config', () => {
-    const additionalOption = {
-      something: 'foo',
-    };
-    const userRule = { foo: 'bar' };
-    webpackConfig = getWebpackConfig(
-      {
-        module: {
-          additionalOption,
-          rules: [userRule],
-        }
-      },
-      cosmosConfigPath
-    );
+    test('does not create module.loaders', () => {
+      expect(webpackConfig.module.loaders).toBe(undefined);
+    });
 
-    expect(webpackConfig.module.additionalOption).toEqual(additionalOption);
-    expect(webpackConfig.module.rules[0]).toEqual(userRule);
+    test('preserves additional module options', () => {
+      expect(webpackConfig.module.additionalOption).toEqual({
+        something: 'bar',
+      });
+    });
   });
 });

@@ -133,7 +133,7 @@
       },
       {
         "files": [
-          "packages/react-cosmos-webpack/src/**/*.js"
+          "packages/react-cosmos-{config,webpack}/src/**/*.js"
         ],
         "rules": {
           "import/no-dynamic-require": 0
