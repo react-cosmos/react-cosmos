@@ -161,13 +161,31 @@ module.exports = {
 };
 ```
 
-#### Proxies
+#### Using webpack 2
+
+From [the new webpack docs](https://webpack.js.org/guides/migrating/#mixing-es2015-with-amd-and-commonjs):
+
+> It is important to note that you will want to tell Babel to not parse these module symbols so webpack can use them. You can do this by setting the following in your `.babelrc` or babel-loader options.
+>
+> ```json
+> {
+>  "presets": [
+>    ["es2015", { "modules": false }]
+>  ]
+> }
+> ```
+
+#### Using babel-node
+
+Unless you pass it the `--plain` param, react-cosmos-webpack runs with `babel-node` by default. This is nice because it allows you to write your configs using the same syntax as your source code.
+
+### Proxies
 
 Proxies are a plugin system for React Cosmos, allowing fixtures to go beyond mocking *props* and *state*. As regular React components, they compose in the order they are listed in your config and decorate the functionality of the loaded component, while respecting the contract to render the next proxy in the chain.
 
 The added functionality can range from mocking Redux state (or server requests made from your components) to creating a resizable viewport for seeing how components behave at different scales.
 
-##### react-cosmos-redux-proxy
+#### react-cosmos-redux-proxy
 
 Most components in a Redux app depend on Redux state–either they're a *container* or one of their descendants is. This proxy creates the store context required for any component you load, just like [Provider](http://redux.js.org/docs/basics/UsageWithReact.html#passing-the-store) does for your root component. Writing Redux fixtures almost feels too easy. Because Redux state is global, once you have one state mock you can render any component you want!
 
@@ -186,7 +204,7 @@ export function () {
 }
 ```
 
-##### react-cosmos-context-proxy
+#### react-cosmos-context-proxy
 
 Very convenient if your app uses component context. You can provide generic context using a base fixture that all other fixtures extend.
 
@@ -206,24 +224,6 @@ export function () {
 ```
 
 *What proxy would you create to improve DX?*
-
-#### Using webpack 2
-
-From [the new webpack docs](https://webpack.js.org/guides/migrating/#mixing-es2015-with-amd-and-commonjs):
-
-> It is important to note that you will want to tell Babel to not parse these module symbols so webpack can use them. You can do this by setting the following in your `.babelrc` or babel-loader options.
->
-> ```json
-> {
->  "presets": [
->    ["es2015", { "modules": false }]
->  ]
-> }
-> ```
-
-#### Using babel-node
-
-Unless you pass it the `--plain` param, react-cosmos-webpack runs with `babel-node` by default. This is nice because it allows you to write your configs using the same syntax as your source code.
 
 ## Thank you!
 
