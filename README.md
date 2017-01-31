@@ -193,7 +193,7 @@ Most components in a Redux app depend on Redux state–either they're a *contain
 // redux-proxy.js
 import createReduxProxy from 'react-cosmos-redux-proxy';
 
-export default function () {
+export default () => {
   return createReduxProxy({
     // Called when fixture loads with fixture.reduxState as initial state.
     // See examples/flatris
@@ -201,7 +201,7 @@ export default function () {
       return Redux.createStore(yourReducer, initialState, yourMiddleware);
     },
   })
-}
+};
 ```
 
 #### react-cosmos-context-proxy
@@ -212,7 +212,7 @@ Very convenient if your app uses component context. You can provide generic cont
 // context-proxy.js
 import createContextProxy from 'react-cosmos-context-proxy';
 
-export default function () {
+export default () => {
   return createContextProxy({
     // Expects fixture.context to contain `theme` object
     // See examples/context
@@ -220,7 +220,7 @@ export default function () {
       theme: React.PropTypes.object.isRequired,
     },
   });
-}
+};
 ```
 
 *What proxy would you create to improve DX?*
