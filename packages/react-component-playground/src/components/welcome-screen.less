@@ -63,51 +63,51 @@
     }
 
     .clouds {
-        min-width: 3970px;
-        min-height: 2676px;
-        background-image: @clouds-texture;
-        animation: clouds-ani 100s linear infinite;
+      min-width: 3970px;
+      min-height: 2676px;
+      background-image: @clouds-texture;
+      animation: clouds-ani 100s linear infinite;
     }
 
     .twinkling {
-        min-width: 1000px;
-        min-height: 1000px;
-        // background-image: @twinkling-texture;
-        animation: twinkling-ani 100s linear infinite;
+      min-width: 1000px;
+      min-height: 1000px;
+      background-image: @twinkling-texture;
+      animation: twinkling-ani 100s linear infinite;
     }
 
     .stars {
-        min-width: 4000px;
-        min-height: 2750px;
-        background-image: @stars-texture;
-        animation: stars-ani 200s linear infinite;
+      min-width: 4000px;
+      min-height: 2750px;
+      background-image: @stars-texture;
+      animation: stars-ani 200s linear infinite;
     }
   }
 }
 
 @keyframes clouds-ani {
-    0% {
-      transform: translateY(0) translateX(0);
-    }
-    100% {
-      transform: translateY(1320px) translateX(1958px);
-    }
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  100% {
+    transform: translateY(1320px) translateX(1958px);
+  }
 }
 
 @keyframes twinkling-ani {
-    0% {
-      transform: translateY(0) translateX(0);
-    }
-    100% {
-      transform: translateY(1000px) translateX(1000px);
-    }
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  100% {
+    transform: translateY(1000px) translateX(1000px);
+  }
 }
 
 @keyframes stars-ani {
-    0% {
-      transform: translateY(0) translateX(0);
-    }
-    100% {
-      transform: translateY(1372px) translateX(2000px);
-    }
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  100% {
+    transform: translateY(1372px) translateX(2000px);
+  }
 }
