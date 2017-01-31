@@ -4,38 +4,40 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { argv } from 'yargs';
-import getConfig from './config';
-import resolveUserPath from './utils/resolve-user-path';
 import getWebpackConfig from './webpack-config';
 import getDefaultWebpackConfig from './default-webpack-config';
 import importModule from 'react-cosmos-utils/lib/import-module';
+import getCosmosConfig from 'react-cosmos-config';
 
 const moduleExists = modulePath => {
   try {
-    return require.resolve(modulePath) && true;
+    return modulePath && require.resolve(modulePath) && true;
   } catch (err) {
     return false;
   }
 };
 
+const getPublicPath = (cosmosConfig, userWebpackConfig) => {
+  return cosmosConfig.publicPath || (
+    userWebpackConfig.devServer && userWebpackConfig.devServer.contentBase
+  );
+};
+
 module.exports = function startServer() {
-  const cosmosConfigPath = resolveUserPath(argv.config || 'cosmos.config');
-  const cosmosConfig = getConfig(importModule(require(cosmosConfigPath)));
+  const cosmosConfigPath = argv.config;
+  const cosmosConfig = getCosmosConfig(cosmosConfigPath);
 
   const {
     hostname,
     hot,
     port,
-    publicPath,
     webpackConfigPath,
   } = cosmosConfig;
 
-  const userWebpackConfigPath = resolveUserPath(webpackConfigPath, cosmosConfigPath);
   let userWebpackConfig;
-
-  if (moduleExists(userWebpackConfigPath)) {
-    console.log(`[Cosmos] Using webpack config found at ${userWebpackConfigPath}`);
-    userWebpackConfig = importModule(require(userWebpackConfigPath));
+  if (moduleExists(webpackConfigPath)) {
+    console.log(`[Cosmos] Using webpack config found at ${webpackConfigPath}`);
+    userWebpackConfig = importModule(require(webpackConfigPath));
   } else {
     console.log('[Cosmos] No webpack config found, using default configuration');
     userWebpackConfig = getDefaultWebpackConfig();
@@ -54,16 +56,10 @@ module.exports = function startServer() {
     app.use(webpackHotMiddleware(compiler));
   }
 
-  let inferredPublicPath = publicPath;
-  if (!inferredPublicPath &&
-      userWebpackConfig.devServer && userWebpackConfig.devServer.contentBase) {
-    inferredPublicPath = userWebpackConfig.devServer.contentBase;
-  }
-
-  if (inferredPublicPath) {
-    const resolvedPublicPath = resolveUserPath(inferredPublicPath, cosmosConfigPath);
-    console.log(`[Cosmos] Serving static files from ${resolvedPublicPath}`);
-    app.use('/loader/', express.static(resolvedPublicPath));
+  const publicPath = getPublicPath(cosmosConfig, userWebpackConfig);
+  if (publicPath) {
+    console.log(`[Cosmos] Serving static files from ${publicPath}`);
+    app.use('/loader/', express.static(publicPath));
   }
 
   app.get('/', (req, res) => {

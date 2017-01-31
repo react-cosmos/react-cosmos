@@ -4,7 +4,8 @@
   "testURL": "http://foo.bar/",
   "testPathIgnorePatterns": [
     "react-cosmos-voyager/src/__tests__/use-cases",
-    "react-cosmos-config/src/__tests__/mock-cwd"
+    "react-cosmos-config/src/__tests__/mock-cwd",
+    "react-cosmos-webpack/src/__tests__/mocks"
   ],
   "coverageDirectory": "../test/coverage/jest",
   "coverageReporters": ["lcov", "text"],
