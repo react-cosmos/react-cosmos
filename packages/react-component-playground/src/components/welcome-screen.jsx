@@ -20,7 +20,7 @@ class WelcomeScreen extends Component {
         <div className={className}>
           <p>You're all set! But did you know...</p>
           <ul>
-            <li>You can mock Redux state and build custom middleware using <a target="_blank" href="https://github.com/react-cosmos/react-cosmos#configuration">proxies</a></li>
+            <li>You can mock Redux state and build custom middleware using <a target="_blank" href="https://github.com/react-cosmos/react-cosmos#configuration">proxies</a>?</li>
             <li>You can search for components and fixtures? Try it, it's all warm and <a target="_blank" href="https://github.com/jeancroy/fuzz-aldrin-plus">fuzzy</a>.</li>
             <li>You can load CSS, polyfills, and any other files <a target="_blank" href="https://github.com/react-cosmos/react-cosmos#configuration">globally</a>?</li>
           </ul>
@@ -32,7 +32,7 @@ class WelcomeScreen extends Component {
         <div className={className}>
           <p>Your components are listed the left side. It looks like you haven't created fixtures for them yet. An empty fixture is available for each component, but chances are your components depend on one or more props to function. </p>
           <p>A fixture is a JSON-like object, except it contains functions and any other types components receive via props.</p>
-          <p>Here's a guide on creating fixtures to help you get started: <a target="_blank" href="https://github.com/react-cosmos/react-cosmos/blob/master/docs/fixtures.md">Creating Fixtures</a></p>
+          <p>Read the <a target="_blank" href="https://github.com/react-cosmos/react-cosmos/blob/master/docs/fixtures.md">creating fixtures</a> guide to help you get started.</p>
         </div>
       );
     }
