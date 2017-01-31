@@ -19,7 +19,6 @@ const { containerQuerySelector } = COSMOS_CONFIG;
 const start = () => {
   // Module is imported whenever this function is called, making sure the
   // lastest module version is used after a HMR update
-
   const getUserModules = require('./user-modules').default;
   const { components, fixtures, proxies } = getUserModules();
 

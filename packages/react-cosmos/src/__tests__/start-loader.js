@@ -3,7 +3,9 @@ const mockComponentInstance = {};
 const mockLoader = () => {};
 const mockPropsProxy = () => {};
 const mockStateProxy = () => {};
-const mockProxies = [{}, {}];
+const mockProxy1 = {};
+const mockProxy2 = {};
+const mockProxies = [() => mockProxy1, () => mockProxy2];
 const mockComponentsInput = {};
 const mockFixturesInput = {};
 const mockComponentsOutput = {};
@@ -50,10 +52,10 @@ const commonTests = () => {
     expect(mockReact.createElement.mock.calls[0][0]).toBe(mockLoader);
   });
 
-  it('sends user proxies to Loader', () => {
+  it('sends initialized user proxies to Loader', () => {
     const { proxies } = props;
-    expect(proxies[0]).toBe(mockProxies[0]);
-    expect(proxies[1]).toBe(mockProxies[1]);
+    expect(proxies[0]).toBe(mockProxy1);
+    expect(proxies[1]).toBe(mockProxy2);
   });
 
   it('includes StateProxy', () => {
