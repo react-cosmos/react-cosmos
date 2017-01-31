@@ -1,4 +1,5 @@
 import webpack from 'webpack';
+import omit from 'lodash.omit';
 import getCosmosConfig from 'react-cosmos-config';
 
 /**
@@ -40,11 +41,13 @@ export default function getWebpackConfig(
     publicPath: '/loader/',
   };
 
-  const loaders = userWebpackConfig.module && userWebpackConfig.module.loaders ?
-    [...userWebpackConfig.module.loaders] : [];
+  // To support webpack 1 and 2 configuration formats. So we use the one that user passes
+  const webpackRulesOptionName = userWebpackConfig.module && userWebpackConfig.module.rules ? 'rules' : 'loaders';
+  const rules = userWebpackConfig.module && userWebpackConfig.module[webpackRulesOptionName] ?
+    [...userWebpackConfig.module[webpackRulesOptionName]] : [];
   const plugins = userWebpackConfig.plugins ? [...userWebpackConfig.plugins] : [];
 
-  loaders.push({
+  rules.push({
     loader: require.resolve('./module-loader'),
     include: require.resolve('./user-modules'),
     query: {
@@ -69,8 +72,8 @@ export default function getWebpackConfig(
     entry,
     output,
     module: {
-      ...userWebpackConfig.module,
-      loaders,
+      ...omit(userWebpackConfig.module, 'rules', 'loaders'),
+      [webpackRulesOptionName]: rules,
     },
     plugins,
   };

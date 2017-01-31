@@ -13,5 +13,8 @@
     "COSMOS_CONFIG": {
       "containerQuerySelector": "__mock__containerQuerySelector"
     }
+  },
+  "moduleNameMapper": {
+    "\\.(css|less)$": "<rootDir>/__mocks__/style-mock.js"
   }
 }

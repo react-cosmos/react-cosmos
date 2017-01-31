@@ -12,7 +12,9 @@ const cosmosConfigPath = '/mock/config/path';
 
 // So far we use the same user webpack mock between all tests
 const userWebpackConfig = {
-  loaders: [],
+  module: {
+    rules: [],
+  },
   plugins: [
     // fake plugins, something to compare identity with
     {}, {},
@@ -60,7 +62,7 @@ describe('without hmr', () => {
   });
 
   test('keeps user loaders', () => {
-    expect(webpackConfig.loaders).toBe(userWebpackConfig.loaders);
+    expect(webpackConfig.rules).toBe(userWebpackConfig.rules);
   });
 
   test('adds resolved global imports to entries', () => {
@@ -107,7 +109,7 @@ describe('without hmr', () => {
   });
 
   test('adds module loader', () => {
-    expect(webpackConfig.module.loaders[webpackConfig.module.loaders.length - 1]).toEqual({
+    expect(webpackConfig.module.rules[webpackConfig.module.rules.length - 1]).toEqual({
       loader: require.resolve('../module-loader'),
       include: require.resolve('../user-modules'),
       query: {
@@ -161,5 +163,50 @@ describe('with hmr plugin', () => {
 
   test('adds HotModuleReplacementPlugin', () => {
     expect(webpackConfig.plugins).toContain(mockHotModuleReplacementPlugin);
+  });
+});
+
+describe('webpack config basic', () => {
+  test('choose `loaders` or `rules` from user config', () => {
+    const userRule = { foo: 'bar' };
+
+    webpackConfig = getWebpackConfig(
+      {
+        module: {
+          rules: [userRule]
+        }
+      },
+      cosmosConfigPath
+    );
+    expect(webpackConfig.module.rules[0]).toEqual(userRule);
+
+    webpackConfig = getWebpackConfig(
+      {
+        module: {
+          loaders: [userRule]
+        }
+      },
+      cosmosConfigPath
+    );
+    expect(webpackConfig.module.loaders[0]).toEqual(userRule);
+  });
+
+  test('passing user data to module config', () => {
+    const additionalOption = {
+      something: 'foo',
+    };
+    const userRule = { foo: 'bar' };
+    webpackConfig = getWebpackConfig(
+      {
+        module: {
+          additionalOption,
+          rules: [userRule],
+        }
+      },
+      cosmosConfigPath
+    );
+
+    expect(webpackConfig.module.additionalOption).toEqual(additionalOption);
+    expect(webpackConfig.module.rules[0]).toEqual(userRule);
   });
 });
