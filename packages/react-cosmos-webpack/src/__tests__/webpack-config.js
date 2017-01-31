@@ -46,6 +46,23 @@ beforeEach(() => {
   getWebpackConfig = require('../webpack-config').default;
 });
 
+describe('user config validation', () => {
+  beforeEach(() => {
+    mockCosmosConfig = {
+      componentPaths: ['src/components'],
+      fixturePaths: ['test/fixtures'],
+      ignore: [],
+      globalImports: ['./global.css'],
+    };
+  });
+
+  test('should throw an exception if `rules` passed', () => {
+    expect(() => {
+      getWebpackConfig({ module: { rules: {} } }, cosmosConfigPath);
+    }).toThrow();
+  });
+});
+
 describe('without hmr', () => {
   beforeEach(() => {
     mockCosmosConfig = {

@@ -44,6 +44,10 @@ export default function getWebpackConfig(
     publicPath: '/loader/',
   };
 
+  if (userWebpackConfig.module && userWebpackConfig.module.rules) {
+    throw new Error('Please use `loaders` instead of `rules` in your webpack config');
+  }
+
   const loaders = userWebpackConfig.module && userWebpackConfig.module.loaders ?
     [...userWebpackConfig.module.loaders] : [];
   const plugins = userWebpackConfig.plugins ? [...userWebpackConfig.plugins] : [];
