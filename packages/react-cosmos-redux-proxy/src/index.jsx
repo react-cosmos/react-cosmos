@@ -7,7 +7,7 @@ const defaults = {
   disableLocalState: true,
 };
 
-module.exports = function createReduxProxy(options) {
+export default function createReduxProxy(options) {
   const {
     fixtureKey,
     createStore,
@@ -74,7 +74,7 @@ module.exports = function createReduxProxy(options) {
         onComponentRef,
         // Disable StateProxy when Redux state is available, otherwise the entire
         // Redux store would be duplicated from the connect() component's state
-        disableLocalState: disableLocalState && !!this.store,
+        disableLocalState: disableLocalState && Boolean(this.store),
       });
     }
   }
@@ -95,4 +95,4 @@ module.exports = function createReduxProxy(options) {
   };
 
   return ReduxProxy;
-};
+}

@@ -1,22 +1,22 @@
 import splitUnserializableParts from '../unserializable-parts';
 
-const fn = () => {};
+const Fn = () => {};
 const fixture = {
   nada: null,
   numero: 5,
   texto: 'Hola bombon',
   listaSimple: [1, 2, 3],
-  listaComplejo: [1, 2, fn],
+  listaComplejo: [1, 2, Fn],
   objetoSimple: {
     bueno: true,
   },
   objetoComplejo: {
-    funcion: fn,
+    funcion: Fn,
   },
   expresionRegular: /buscar/,
-  funcion: fn,
-  // eslint-disable-next-line new-cap
-  instancia: new fn(),
+  funcion: Fn,
+
+  instancia: new Fn(),
 };
 const { serializable, unserializable } = splitUnserializableParts(fixture);
 

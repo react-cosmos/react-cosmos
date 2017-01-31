@@ -16,7 +16,7 @@ describe(`ComponentPlayground (${FIXTURE}) Render DOM`, () => {
   });
 
   it('should render component names', () => {
-    Object.keys(fixture.fixtures).forEach((componentName) => {
+    Object.keys(fixture.fixtures).forEach(componentName => {
       const nameElement = component.refs[`componentName-${componentName}`];
 
       expect($(nameElement).text()).to.equal(componentName);
@@ -24,10 +24,10 @@ describe(`ComponentPlayground (${FIXTURE}) Render DOM`, () => {
   });
 
   it('should render fixture buttons', () => {
-    Object.keys(fixture.fixtures).forEach((componentName) => {
+    Object.keys(fixture.fixtures).forEach(componentName => {
       const fixtures = fixture.fixtures[componentName];
 
-      Object.keys(fixtures).forEach((fixtureName) => {
+      Object.keys(fixtures).forEach(fixtureName => {
         expect(component.refs[
             `fixtureButton-${componentName}-${fixtureName}`]).to.exist;
       });
@@ -35,10 +35,10 @@ describe(`ComponentPlayground (${FIXTURE}) Render DOM`, () => {
   });
 
   it('should render fixture names', () => {
-    Object.keys(fixture.fixtures).forEach((componentName) => {
+    Object.keys(fixture.fixtures).forEach(componentName => {
       const fixtures = fixture.fixtures[componentName];
 
-      Object.keys(fixtures).forEach((fixtureName) => {
+      Object.keys(fixtures).forEach(fixtureName => {
         const fixtureButton = component.refs[
             `fixtureButton-${componentName}-${fixtureName}`];
 

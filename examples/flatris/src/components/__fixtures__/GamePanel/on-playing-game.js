@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { PLAYING } from '../../../constants/states';
 
 export default {

@@ -2,29 +2,20 @@
 
 const mockComponents = {};
 const mockFixtures = {};
+const mockProxies = [];
 const mockStartLoader = jest.fn();
 const mockStartPlayground = jest.fn();
-const mockProxies = [];
-const mockIgnore = [];
-const mockContainerQuerySelector = '#root';
 
-let mockExpandModulePaths;
-
-jest.mock('./dummy-config/cosmos.config.js', () => ({
-  proxies: mockProxies,
-  ignore: mockIgnore,
-  containerQuerySelector: mockContainerQuerySelector,
-}));
+let mockGetUserModules;
 
 jest.mock('react-cosmos', () => ({
   startLoader: mockStartLoader,
   startPlayground: mockStartPlayground,
 }));
 
+jest.mock('../user-modules', () => ({ default: mockGetUserModules }));
 
-jest.mock('../utils/expand-module-paths', () => ({ default: mockExpandModulePaths }));
-
-const init = (pathname) => {
+const init = pathname => {
   jest.resetModules();
   jest.resetAllMocks();
 
@@ -33,9 +24,10 @@ const init = (pathname) => {
     value: pathname,
   });
 
-  mockExpandModulePaths = jest.fn(() => ({
+  mockGetUserModules = jest.fn(() => ({
     components: mockComponents,
     fixtures: mockFixtures,
+    proxies: mockProxies,
   }));
 
   require('../entry');
@@ -43,8 +35,7 @@ const init = (pathname) => {
 
 const commonTests = () => {
   test('calls expandModulePaths with ignore paths', () => {
-    // Fixture contexts are mocked inside jest.config.json
-    expect(mockExpandModulePaths.mock.calls[0][0]).toBe(mockIgnore);
+    expect(mockGetUserModules).toHaveBeenCalled();
   });
 };
 
@@ -73,7 +64,8 @@ describe('loader path', () => {
   });
 
   test('sends containerQuerySelector to loader', () => {
-    expect(options.containerQuerySelector).toBe(mockContainerQuerySelector);
+    // Mocked in jest.config.js
+    expect(options.containerQuerySelector).toBe('__mock__containerQuerySelector');
   });
 });
 

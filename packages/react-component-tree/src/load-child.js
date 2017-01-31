@@ -7,7 +7,6 @@ const isClassComponent = Component =>
   (typeof Component.prototype.render === 'function' ||
           'displayName' in Component.prototype.constructor);
 
-
 const getChildParams = (component, childName, a, b, c, d, e, f) => {
   const params = component.children[childName].call(component, a, b, c, d, e, f);
 
@@ -67,7 +66,6 @@ exports.loadChild = (component, childName, a, b, c, d, e, f) => {
                                omit(params, 'component', 'children'),
                                params.children);
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.error(err);
     return null;
   }

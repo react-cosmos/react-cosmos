@@ -1,5 +1,3 @@
-/* eslint-env browser */
-
 import React from 'react';
 import { parseLocation } from './uri';
 

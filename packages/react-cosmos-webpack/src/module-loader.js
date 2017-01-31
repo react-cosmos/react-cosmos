@@ -1,42 +1,76 @@
+import path from 'path';
 import loaderUtils from 'loader-utils';
+import traverse from 'traverse';
+import getCosmosConfig from 'react-cosmos-config';
+import getFilePaths from 'react-cosmos-voyager';
 
 const jsonLoader = require.resolve('json-loader');
 
-const createComponentContext = path =>
-  `require.context('${path}', true, /\\.jsx?$/)`;
-
-const getFixturePathForExt = (path, ext) => (
-  ext === 'json' ? `${jsonLoader}!${path}` : path
+const getRequirePath = filePath => (
+  path.extname(filePath) === '.json' ? `${jsonLoader}!${filePath}` : filePath
 );
 
-const createRelativeFixtureContext = (path, ext) =>
-  `require.context('${getFixturePathForExt(path, ext)}', true, /\\/__fixtures__\\/.+\\.${ext}$/)`;
+const convertPathToRequireCall = p => `require('${getRequirePath(p)}')`;
 
-const createExternalFixtureContext = (path, ext) =>
-  `require.context('${getFixturePathForExt(path, ext)}', true, /\\.${ext}$/)`;
+const convertPathMapToRequireCalls = paths => {
+  const props = [];
+
+  Object.keys(paths).forEach(key => {
+    const val = paths[key];
+    const newVal = typeof val === 'string' ?
+      convertPathToRequireCall(val) :
+      convertPathMapToRequireCalls(val);
+
+    props.push(`'${key}':${newVal}`);
+  });
+
+  return `{${props.join(',')}}`;
+};
+
+const convertPathListToRequireCalls = paths => `[${paths.map(convertPathToRequireCall).join(',')}]`;
+
+const getUniqueDirsOfUserModules = (components, fixtures) => {
+  const dirs = new Set();
+
+  traverse(components).forEach(val => {
+    if (typeof val === 'string') {
+      dirs.add(path.dirname(val));
+    }
+  });
+  traverse(fixtures).forEach(val => {
+    if (typeof val === 'string') {
+      dirs.add(path.dirname(val));
+    }
+  });
+
+  return [...dirs];
+};
+
+const convertDirPathsToContextCalls = dirPaths =>
+  `[${dirPaths.map(dirPath => `require.context('${dirPath}', false)`)}]`;
 
 /**
- * Inject require.context calls in bundle for each component/fixture path.
- * This tell webpack two things:
- * - To bundle all necessary component/fixture modules
- * - To watch for (and react to) added and changed component/fixture files
+ * Inject require calls in bundle for each component/fixture path and
+ * require.context calls for each dir with user modules. Tells webpack to
+ * - Bundle all necessary component/fixture modules
+ * - Watch for (and react to) added and changed component/fixture files
  */
 module.exports = function embedModules(source) {
-  const { componentPaths, fixturePaths } = loaderUtils.parseQuery(this.query);
+  const { cosmosConfigPath } = loaderUtils.parseQuery(this.query);
+  const cosmosConfig = getCosmosConfig(cosmosConfigPath);
+  const { components, fixtures } = getFilePaths(cosmosConfig);
+  const { proxies } = cosmosConfig;
+  const contexts = getUniqueDirsOfUserModules(components, fixtures);
 
-  const componentContexts = `[${componentPaths.map(createComponentContext).join(',')}]`;
-  const fixtureContexts = `[${componentPaths.map(path =>
-    createRelativeFixtureContext(path, 'js'),
-  ).concat(componentPaths.map(path =>
-    createRelativeFixtureContext(path, 'json'),
-  )).concat(fixturePaths.map(path =>
-    createExternalFixtureContext(path, 'js'),
-  )).concat(fixturePaths.map(path =>
-    createExternalFixtureContext(path, 'json'),
-  ))
-  .join(',')}]`;
+  contexts.forEach(dirPath => {
+    // This ensures this loader is invalidated whenever a new component/fixture
+    // file is created or renamed, which leads succesfully uda ...
+    this.addDependency(dirPath);
+  });
 
   return source
-    .replace(/COMPONENT_CONTEXTS/g, componentContexts)
-    .replace(/FIXTURE_CONTEXTS/g, fixtureContexts);
+    .replace(/COMPONENTS/g, convertPathMapToRequireCalls(components))
+    .replace(/FIXTURES/g, convertPathMapToRequireCalls(fixtures))
+    .replace(/PROXIES/g, convertPathListToRequireCalls(proxies))
+    .replace(/CONTEXTS/g, convertDirPathsToContextCalls(contexts));
 };

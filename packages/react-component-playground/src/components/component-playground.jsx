@@ -1,22 +1,18 @@
-/* eslint-env browser */
-/* eslint-disable react/no-string-refs, react/no-find-dom-node,
-    react/sort-comp, jsx-a11y/anchor-has-content
-*/
-
 import _ from 'lodash';
 import React from 'react';
 import classNames from 'classnames';
 import isEqual from 'lodash.isequal';
-import ComponentTree from 'react-component-tree';
-import { uri } from 'react-querystring-router';
-import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
 import CodeMirror from '@skidding/react-codemirror';
 import fuzzaldrinPlus from 'fuzzaldrin-plus';
 import SplitPane from 'ubervu-react-split-pane';
 import localStorageLib from '../lib/local-storage';
+import WelcomeScreen from './welcome-screen';
+import ComponentTree from 'react-component-tree';
+import { uri } from 'react-querystring-router';
+import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
 
-const { findDOMNode } = require('react-dom-polyfill')(React);
 const style = require('./component-playground.less');
+const { findDOMNode } = require('react-dom-polyfill')(React);
 
 require('codemirror/lib/codemirror.css');
 require('codemirror/addon/fold/foldgutter.css');
@@ -30,7 +26,6 @@ require('codemirror/addon/fold/brace-fold');
 
 const { stringifyParams, parseLocation } = uri;
 
-// eslint-disable-next-line react/prefer-es6-class
 module.exports = React.createClass({
   /**
    * ComponentPlayground provides a minimal frame for loading React components
@@ -53,7 +48,7 @@ module.exports = React.createClass({
 
   statics: {
     isFixtureSelected(props) {
-      return !!(props.component && props.fixture);
+      return Boolean(props.component && props.fixture);
     },
 
     didFixtureNavChange(prevProps, nextProps) {
@@ -160,6 +155,15 @@ module.exports = React.createClass({
         },
       };
     },
+
+    welcome() {
+      return {
+        component: WelcomeScreen,
+        key: 'welcome',
+        hasComponents: this.userHasComponents(),
+        hasFixtures: this.userHasFixtures(),
+      };
+    }
   },
 
   render() {
@@ -190,7 +194,7 @@ module.exports = React.createClass({
             {this.renderFixtures()}
           </div>
         </div>
-        {isFixtureSelected ? this.renderContentFrame() : null}
+        {isFixtureSelected ? this.renderContentFrame() : this.renderWelcomeScreen()}
       </div>
     );
   },
@@ -340,6 +344,10 @@ module.exports = React.createClass({
     );
   },
 
+  renderWelcomeScreen() {
+    return this.loadChild('welcome');
+  },
+
   componentWillMount() {
     this.onFixtureUpdate = _.throttle(this.onFixtureUpdate, 500);
   },
@@ -459,10 +467,10 @@ module.exports = React.createClass({
         fixtureContents,
         isFixtureUserInputValid: true,
       });
-    } catch (e) {
+    } catch (err) {
       newState.isFixtureUserInputValid = false;
-      // eslint-disable-next-line no-console
-      console.error(e);
+
+      console.error(err);
     }
 
     this.setState(newState, () => {
@@ -508,6 +516,18 @@ module.exports = React.createClass({
   isCurrentFixtureSelected(componentName, fixtureName) {
     return componentName === this.props.component &&
            fixtureName === this.props.fixture;
+  },
+
+  userHasComponents() {
+    return Object.keys(this.props.fixtures).length > 0;
+  },
+
+  userHasFixtures() {
+    return _.reduce(this.props.fixtures, (acc, compFixtures) => {
+      const fixtureNames = Object.keys(compFixtures);
+
+      return acc || fixtureNames[0].indexOf('(auto)') === -1;
+    }, false);
   },
 
   extendFixtureRoute(newProps) {
@@ -582,7 +602,7 @@ module.exports = React.createClass({
       const fixtureNames = Object.keys(componentFixtures);
       const search = this.state.searchText;
 
-      const filteredFixtureNames = _.filter(fixtureNames, (fixtureName) => {
+      const filteredFixtureNames = _.filter(fixtureNames, fixtureName => {
         const componentAndFixture = componentName + fixtureName;
         const fixtureAndComponent = fixtureName + componentName;
 
@@ -602,13 +622,11 @@ module.exports = React.createClass({
 
       // Show only the fixtures that matched the search query
       const filteredFixtures = _.reduce(filteredFixtureNames, (acc2, fixture) => {
-        // eslint-disable-next-line no-param-reassign
         acc2[fixture] = componentFixtures[fixture];
 
         return acc2;
       }, {});
 
-      // eslint-disable-next-line no-param-reassign
       acc[componentName] = filteredFixtures;
 
       return acc;

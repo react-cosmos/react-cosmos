@@ -23,5 +23,6 @@
     "start:webpack": "../../packages/react-cosmos-webpack/bin/cosmos.js --config webpack/cosmos.config.js",
     "start:browserify": "node ./browserify/server.js",
     "start": "npm run start:webpack"
-  }
+  },
+  "xo": false
 }

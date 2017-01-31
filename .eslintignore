@@ -1,4 +1,5 @@
 docs
 packages/*/lib
 node_modules
+test/bind-polyfill.js
 test/coverage

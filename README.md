@@ -136,24 +136,10 @@ module.exports = {
   // Where to serve static files from. Like --content-base in webpack-dev-server.
   publicPath: 'src/public',
 
-  // NEW: Plugin system for React Cosmos!
+  // Read more about proxies below
   proxies: [
-    // Here is how to activate Redux:
-    require('react-cosmos-redux-proxy')({
-      // Called when fixture loads with `fixture.reduxState` as initial state.
-      // See Flatris example for a complete Redux integration.
-      createStore: (initialState) => {
-        return Redux.createStore(yourReducer, initialState, yourMiddleware);
-      },
-    }),
-
-    // This is how to mock regular context:
-    // Expects fixture.context to contain `theme` object
-    require('react-cosmos-context-proxy')({
-      childContextTypes: {
-        theme: React.PropTypes.object.isRequired,
-      },
-    }),
+    './redux-proxy.js',
+    './context-proxy.js',
   ],
 
   // Render inside custom root element. Useful if that root element already
@@ -179,7 +165,6 @@ module.exports = {
 
 From [the new webpack docs](https://webpack.js.org/guides/migrating/#mixing-es2015-with-amd-and-commonjs):
 
-
 > It is important to note that you will want to tell Babel to not parse these module symbols so webpack can use them. You can do this by setting the following in your `.babelrc` or babel-loader options.
 >
 > ```json
@@ -193,6 +178,52 @@ From [the new webpack docs](https://webpack.js.org/guides/migrating/#mixing-es20
 #### Using babel-node
 
 Unless you pass it the `--plain` param, react-cosmos-webpack runs with `babel-node` by default. This is nice because it allows you to write your configs using the same syntax as your source code.
+
+### Proxies
+
+Proxies are a plugin system for React Cosmos, allowing fixtures to go beyond mocking *props* and *state*. As regular React components, they compose in the order they are listed in your config and decorate the functionality of the loaded component, while respecting the contract to render the next proxy in the chain.
+
+The added functionality can range from mocking Redux state (or server requests made from your components) to creating a resizable viewport for seeing how components behave at different scales.
+
+#### react-cosmos-redux-proxy
+
+Most components in a Redux app depend on Redux state–either they're a *container* or one of their descendants is. This proxy creates the store context required for any component you load, just like [Provider](http://redux.js.org/docs/basics/UsageWithReact.html#passing-the-store) does for your root component. Writing Redux fixtures almost feels too easy. Because Redux state is global, once you have one state mock you can render any component you want!
+
+```js
+// redux-proxy.js
+import createReduxProxy from 'react-cosmos-redux-proxy';
+
+export default () => {
+  return createReduxProxy({
+    // Called when fixture loads with fixture.reduxState as initial state.
+    // See examples/flatris
+    createStore: (initialState) => {
+      return Redux.createStore(yourReducer, initialState, yourMiddleware);
+    },
+  })
+};
+```
+
+#### react-cosmos-context-proxy
+
+Very convenient if your app uses component context. You can provide generic context using a base fixture that all other fixtures extend.
+
+```js
+// context-proxy.js
+import createContextProxy from 'react-cosmos-context-proxy';
+
+export default () => {
+  return createContextProxy({
+    // Expects fixture.context to contain `theme` object
+    // See examples/context
+    childContextTypes: {
+      theme: React.PropTypes.object.isRequired,
+    },
+  });
+};
+```
+
+*What proxy would you create to improve DX?*
 
 ## Thank you!
 

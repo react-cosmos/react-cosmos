@@ -2,7 +2,7 @@ const reactDOMPolyfill = require('../src');
 
 describe('DOMPolyfill Pre React DOM (<0.14)', () => {
   // Make sure version is parsed correctly
-  ['0.12', '0.12.2', '0.13', '0.13.3'].forEach((version) => {
+  ['0.12', '0.12.2', '0.13', '0.13.3'].forEach(version => {
     const ReactMock = {
       version,
       render: sinon.spy(),

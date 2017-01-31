@@ -97,4 +97,4 @@ GamePanel.defaultProps = {
   nextTetrimino: null,
 };
 
-module.exports = GamePanel;
+export default GamePanel;

@@ -15,10 +15,10 @@ describe(`ComponentPlayground (${FIXTURE}) Render URLs`, () => {
   });
 
   it('should generate urls with component and fixture names', () => {
-    Object.keys(fixture.fixtures).forEach((componentName) => {
+    Object.keys(fixture.fixtures).forEach(componentName => {
       const fixtures = fixture.fixtures[componentName];
 
-      Object.keys(fixtures).forEach((fixtureName) => {
+      Object.keys(fixtures).forEach(fixtureName => {
         const fixtureButton = component.refs[
             `fixtureButton-${componentName}-${fixtureName}`];
         const urlProps = getUrlProps(fixtureButton);

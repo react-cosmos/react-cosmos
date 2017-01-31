@@ -1,5 +1,5 @@
 module.exports = {
-  parseLocation: (location) => {
+  parseLocation: location => {
     const params = {};
 
     if (location.indexOf('?') === -1) {
@@ -7,7 +7,7 @@ module.exports = {
     }
 
     const queryString = location.split('?').pop();
-    if (!queryString.length) {
+    if (queryString.length === 0) {
       return params;
     }
 
@@ -16,14 +16,14 @@ module.exports = {
     let key;
     let value;
 
-    pairs.forEach((pair) => {
+    pairs.forEach(pair => {
       parts = pair.split('=');
       key = parts[0];
       value = decodeURIComponent(parts[1]);
 
       try {
         value = JSON.parse(value);
-      } catch (e) {
+      } catch (err) {
         // If the prop was a simple type and not a stringified JSON it will
         // keep its original value
       }
@@ -34,7 +34,7 @@ module.exports = {
     return params;
   },
 
-  stringifyParams: (params) => {
+  stringifyParams: params => {
     /**
      * Serializes JSON params into a browser-complient URL. The URL
      * generated can be simply put inside the href attribute of an <a> tag
@@ -42,14 +42,14 @@ module.exports = {
     const parts = [];
     let value;
 
-    Object.keys(params).forEach((key) => {
+    Object.keys(params).forEach(key => {
       value = params[key];
 
       // Objects can be embedded in a query string as well
       if (typeof value === 'object') {
         try {
           value = JSON.stringify(value);
-        } catch (e) {
+        } catch (err) {
           // Params that can't be stringified should be ignored
           return;
         }

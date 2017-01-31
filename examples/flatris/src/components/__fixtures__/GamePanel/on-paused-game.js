@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { PAUSED } from '../../../constants/states';
 
 export default {

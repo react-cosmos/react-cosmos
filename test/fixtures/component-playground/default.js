@@ -1,15 +1,4 @@
-/* eslint-disable react/no-multi-comp, react/prop-types */
-
 const React = require('react');
-
-const PropsProxy = ({
-  component,
-  fixture,
-  onComponentRef,
-}) => React.createElement(component, {
-  fixture,
-  ref: onComponentRef,
-});
 
 module.exports = {
   fixtures: {

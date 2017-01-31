@@ -22,7 +22,7 @@ let wrapper;
 let childWrapper;
 let childProps;
 
-const renderProxy = (options) => {
+const renderProxy = options => {
   fixture = options.fixture;
   onFixtureUpdate = jest.fn();
 

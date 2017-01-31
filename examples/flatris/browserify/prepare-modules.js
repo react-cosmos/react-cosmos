@@ -1,8 +1,6 @@
-/* eslint-disable react/require-extension */
-
-const prepareComponents = (modules) => {
+const prepareComponents = modules => {
   const components = {};
-  Object.keys(modules).forEach((componentName) => {
+  Object.keys(modules).forEach(componentName => {
     if (componentName.indexOf('_') !== 0) {
       components[componentName] = modules[componentName];
     }
@@ -12,9 +10,9 @@ const prepareComponents = (modules) => {
 
 const prepareFixtures = (modules, components) => {
   const fixtures = {};
-  Object.keys(components).forEach((componentName) => {
+  Object.keys(components).forEach(componentName => {
     fixtures[componentName] = {};
-    Object.keys(modules).forEach((fixtureName) => {
+    Object.keys(modules).forEach(fixtureName => {
       const componentPrefix = `${componentName}/`;
       if (fixtureName.indexOf(componentPrefix) === 0) {
         fixtures[componentName][fixtureName.slice(componentPrefix.length)] =

@@ -20,5 +20,6 @@
   },
   "peerDependencies": {
     "react": ">=0.13 <16"
-  }
+  },
+  "xo": false
 }

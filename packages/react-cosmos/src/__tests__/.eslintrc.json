@@ -1,8 +1,0 @@
-{
-  "env": {
-    "jest": true
-  },
-  "rules": {
-    "global-require": 0
-  }
-}

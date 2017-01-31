@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import path from 'path';
 
 jest.mock('express');
@@ -9,8 +7,6 @@ jest.mock('webpack-hot-middleware');
 
 const mockProcessCwd = path.join(__dirname, 'dummy-config');
 let realProcessCwd;
-
-const mockComponentPaths = ['src/components', 'src/containers'];
 
 let express;
 let webpack;
@@ -23,11 +19,24 @@ let mockWebpackCompiler;
 let mockWebpackDevMiddleware;
 let mockWebpackHotMiddleware;
 
-const mockUserWebpackConfig = {};
+let mockGetCosmosConfig;
+
 let mockGetWebpackConfig;
 let mockWebpackConfig;
 
-const startServer = () => {
+const startServer = (argv, config) => {
+  const mockYargs = { argv };
+  jest.mock('yargs', () => mockYargs);
+
+  const mockConfig = {
+    port: 8989,
+    hostname: 'localhost',
+    webpackConfigPath: require.resolve('./mocks/webpack.config.js'),
+    ...config,
+  };
+  mockGetCosmosConfig = jest.fn(() => mockConfig);
+  jest.mock('react-cosmos-config', () => mockGetCosmosConfig);
+
   // yargs.argv gets destructured as soon as the ./server module is required,
   // so we need to mock yargs first
   require('../server')();
@@ -58,7 +67,9 @@ beforeEach(() => {
 
   mockExpressInstance = {
     use: jest.fn(),
-    get: (route, cb) => { expressInstanceCbMocks[route] = cb; },
+    get: (route, cb) => {
+      expressInstanceCbMocks[route] = cb;
+    },
     listen: jest.fn(),
   };
   express.__setInstanceMock(mockExpressInstance);
@@ -121,25 +132,21 @@ const commonTests = () => {
 
 describe('default config', () => {
   beforeEach(() => {
-    jest.mock('yargs', () => ({ argv: {} }));
-
-    jest.mock('./dummy-config/cosmos.config', () => ({
-      mockComponentPaths,
-    }));
-    jest.mock('./dummy-config/webpack.config', () => mockUserWebpackConfig);
-
-    startServer();
+    startServer({}, {});
   });
 
   commonTests();
 
-  test('uses user webpack config from cwd', () => {
-    expect(mockGetWebpackConfig.mock.calls[0][0]).toBe(mockUserWebpackConfig);
+  test('sends undefined config path to react-cosmos-config', () => {
+    expect(mockGetCosmosConfig.mock.calls[0][0]).toBe(undefined);
   });
 
-  test('users cosmos config from cwd', () => {
-    expect(mockGetWebpackConfig.mock.calls[0][1]).toBe(
-      path.join(mockProcessCwd, 'cosmos.config'));
+  test('sends user webpack config to getWebpackConfig', () => {
+    expect(mockGetWebpackConfig.mock.calls[0][0]).toBe(require('./mocks/webpack.config').default);
+  });
+
+  test('sends undefined path to getWebpackConfig', () => {
+    expect(mockGetWebpackConfig.mock.calls[0][1]).toBe(undefined);
   });
 
   test('does not use hot middleware', () => {
@@ -161,15 +168,11 @@ describe('missing webpack config', () => {
   const mockDefaultWebpackConfig = {};
 
   beforeEach(() => {
-    jest.mock('yargs', () => ({ argv: {} }));
-
-    jest.mock('./dummy-config/cosmos.config', () => ({
-      webpackConfigPath: 'missing-path/webpack.config',
-    }));
-
     jest.mock('../default-webpack-config', () => () => mockDefaultWebpackConfig);
 
-    startServer();
+    startServer({}, {
+      webpackConfigPath: path.join(__dirname, 'webpack.config-missing.js'),
+    });
   });
 
   commonTests();
@@ -181,14 +184,9 @@ describe('missing webpack config', () => {
 
 describe('with hot module replacement', () => {
   beforeEach(() => {
-    jest.mock('yargs', () => ({ argv: {} }));
-
-    jest.mock('./dummy-config/cosmos.config', () => ({
+    startServer({}, {
       hot: true,
-    }));
-    jest.mock('./dummy-config/webpack.config', () => mockUserWebpackConfig);
-
-    startServer();
+    });
   });
 
   commonTests();
@@ -204,193 +202,61 @@ describe('with hot module replacement', () => {
 
 describe('with custom cosmos config path', () => {
   beforeEach(() => {
-    jest.mock('yargs', () => ({
-      argv: {
-        config: 'custom-path/cosmos.config',
-      },
-    }));
-
-    jest.mock('./dummy-config/custom-path/cosmos.config', () => ({
-      mockComponentPaths,
-    }));
-    jest.mock('./dummy-config/custom-path/webpack.config', () => mockUserWebpackConfig);
-
-    startServer();
+    startServer({
+      config: 'custom-path/cosmos.config',
+    }, {});
   });
 
   commonTests();
 
-  test('uses user webpack config from cwd', () => {
-    expect(mockGetWebpackConfig.mock.calls[0][0]).toBe(mockUserWebpackConfig);
+  test('sends custom config path to react-cosmos-config', () => {
+    expect(mockGetCosmosConfig.mock.calls[0][0]).toBe('custom-path/cosmos.config');
   });
 
-  test('uses cosmos config from custom path', () => {
-    expect(mockGetWebpackConfig.mock.calls[0][1]).toBe(
-      path.join(mockProcessCwd, 'custom-path/cosmos.config'));
-  });
-});
-
-describe('with custom webpack config path', () => {
-  const mockCustomWebpackConfig = {};
-
-  beforeEach(() => {
-    jest.mock('yargs', () => ({ argv: {} }));
-
-    jest.mock('./dummy-config/cosmos.config', () => ({
-      webpackConfigPath: 'custom-path/webpack.config',
-    }));
-    jest.mock('./dummy-config/custom-path/webpack.config', () => mockCustomWebpackConfig);
-
-    startServer();
-  });
-
-  commonTests();
-
-  test('uses user webpack config from custom path', () => {
-    expect(mockGetWebpackConfig.mock.calls[0][0]).toBe(mockCustomWebpackConfig);
-  });
-
-  test('uses cosmos config from custom path', () => {
-    expect(mockGetWebpackConfig.mock.calls[0][1]).toBe(
-      path.join(mockProcessCwd, 'cosmos.config'));
+  test('sends custom config path to getWebpackConfig', () => {
+    expect(mockGetWebpackConfig.mock.calls[0][1]).toBe('custom-path/cosmos.config');
   });
 });
 
-describe('with relative public path', () => {
+describe('with public path', () => {
   beforeEach(() => {
-    jest.mock('yargs', () => ({ argv: {} }));
-
-    jest.mock('./dummy-config/cosmos.config', () => ({
+    startServer({}, {
       publicPath: 'server/public',
-    }));
-    jest.mock('./dummy-config/webpack.config', () => mockUserWebpackConfig);
-
-    startServer();
+    });
   });
 
   commonTests();
 
-  test('creates static server with resolved public path', () => {
-    expect(express.static.mock.calls[0][0]).toBe(path.join(mockProcessCwd, 'server/public'));
+  test('creates static server with public path', () => {
+    expect(express.static.mock.calls[0][0]).toBe('server/public');
   });
 });
 
-describe('with absolute public path', () => {
-  let mockPublicPath;
-
+describe('with devServer.contentBase in webpack config', () => {
   beforeEach(() => {
-    jest.mock('yargs', () => ({ argv: {} }));
-
-    mockPublicPath = path.join(mockProcessCwd, 'server/public');
-    jest.mock('./dummy-config/cosmos.config', () => ({
-      publicPath: mockPublicPath,
-    }));
-    jest.mock('./dummy-config/webpack.config', () => mockUserWebpackConfig);
-
-    startServer();
-  });
-
-  commonTests();
-
-  test('creates static server with raw public path', () => {
-    expect(express.static.mock.calls[0][0]).toBe(mockPublicPath);
-  });
-});
-
-describe('with relative devServer.contentBase in webpack config', () => {
-  let mockContentBase;
-
-  beforeEach(() => {
-    jest.mock('yargs', () => ({ argv: {} }));
-
-    mockContentBase = 'server/public';
-    jest.mock('./dummy-config/cosmos.config', () => ({}));
-    jest.mock('./dummy-config/webpack.config', () => ({
-      devServer: {
-        contentBase: mockContentBase,
-      },
-    }));
-
-    startServer();
+    startServer({}, {
+      webpackConfigPath: require.resolve('./mocks/webpack.config-content-base.js'),
+    });
   });
 
   commonTests();
 
   test('creates static server using content base', () => {
-    expect(express.static.mock.calls[0][0]).toBe(path.join(mockProcessCwd, mockContentBase));
-  });
-});
-
-describe('with absolute devServer.contentBase in webpack config', () => {
-  let mockContentBase;
-
-  beforeEach(() => {
-    jest.mock('yargs', () => ({ argv: {} }));
-
-    mockContentBase = path.join(mockProcessCwd, 'server/public');
-    jest.mock('./dummy-config/cosmos.config', () => ({}));
-    jest.mock('./dummy-config/webpack.config', () => ({
-      devServer: {
-        contentBase: mockContentBase,
-      },
-    }));
-
-    startServer();
-  });
-
-  commonTests();
-
-  test('creates static server using content base', () => {
-    expect(express.static.mock.calls[0][0]).toBe(mockContentBase);
+    expect(express.static.mock.calls[0][0]).toBe('user/server/public');
   });
 });
 
 describe('with devServer.contentBase in webpack config and publicPath', () => {
-  let mockPublicPath;
-  let mockContentBase;
-
   beforeEach(() => {
-    jest.mock('yargs', () => ({ argv: {} }));
-
-    mockPublicPath = path.join(mockProcessCwd, 'server/public1');
-    mockContentBase = path.join(mockProcessCwd, 'server/public2');
-    jest.mock('./dummy-config/cosmos.config', () => ({
-      publicPath: mockPublicPath,
-    }));
-    jest.mock('./dummy-config/webpack.config', () => ({
-      devServer: {
-        contentBase: mockContentBase,
-      },
-    }));
-
-    startServer();
+    startServer({}, {
+      publicPath: 'server/public',
+      webpackConfigPath: require.resolve('./mocks/webpack.config-content-base.js'),
+    });
   });
 
   commonTests();
 
   test('creates static server using public path', () => {
-    expect(express.static.mock.calls[0][0]).toBe(mockPublicPath);
-  });
-});
-
-describe('with custom hostname and port', () => {
-  beforeEach(() => {
-    jest.mock('yargs', () => ({ argv: {} }));
-
-    jest.mock('./dummy-config/cosmos.config', () => ({
-      hostname: '192.168.1.2',
-      port: 9999,
-    }));
-    jest.mock('./dummy-config/webpack.config', () => mockUserWebpackConfig);
-
-    startServer();
-  });
-
-  commonTests();
-
-  test('starts express server with default hostname & port', () => {
-    const [port, hostname] = mockExpressInstance.listen.mock.calls[0];
-    expect(port).toBe(9999);
-    expect(hostname).toBe('192.168.1.2');
+    expect(express.static.mock.calls[0][0]).toBe('server/public');
   });
 });

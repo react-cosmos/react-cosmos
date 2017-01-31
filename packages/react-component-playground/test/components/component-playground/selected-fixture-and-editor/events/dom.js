@@ -106,7 +106,6 @@ describe(`ComponentPlayground (${FIXTURE}) Events DOM`, () => {
       });
 
       afterEach(() => {
-        // eslint-disable-next-line no-console
         console.error.restore();
       });
 
@@ -115,7 +114,6 @@ describe(`ComponentPlayground (${FIXTURE}) Events DOM`, () => {
       });
 
       it('should call console.error', () => {
-        // eslint-disable-next-line no-console
         expect(console.error.lastCall.args[0]).to.be.an.instanceof(Error);
       });
 

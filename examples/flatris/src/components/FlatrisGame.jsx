@@ -1,5 +1,4 @@
 /* global window */
-/* eslint-disable import/extensions */
 
 import React from 'react';
 import { connect } from 'react-redux';
@@ -153,7 +152,7 @@ class FlatrisGame extends React.Component {
       gameState,
     } = this.props;
 
-    return gameState !== PLAYING ? <InfoPanel /> : null;
+    return gameState === PLAYING ? null : <InfoPanel />;
   }
 
   renderControls() {
@@ -262,7 +261,7 @@ const mapDispatchToProps = dispatch => ({
   onDisableAcceleration: () => dispatch(disableAcceleration()),
 });
 
-module.exports = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(FlatrisGame);
