@@ -1,0 +1,113 @@
+@import 'common.less';
+
+
+@clouds-texture: url('../static/clouds.png');
+@twinkling-texture: url('../static/twinkling.png');
+@stars-texture: url('../static/stars.png');
+
+@anchor-color: #08c;
+@anchor-color-focus: #005580;
+@text-color: #545454;
+
+.welcome-screen {
+  position: absolute;
+  left: @left-nav-width;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &-inner {
+    width: 50%;
+    max-width: 500px;
+    font-family: @default-font-family;
+    padding: 0 16px;
+    color: @text-color;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+
+    a {
+      color: @anchor-color;
+      text-decoration: none;
+
+      &:focus, &:hover {
+        color: @anchor-color-focus;
+        text-decoration: underline;
+      }
+
+      &:active, &:hover {
+        outline: 0;
+      }
+    }
+  }
+
+  .starry-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    background-color: #1c1b1d;
+    z-index: -1;
+
+    .stars, .clouds, .twinkling {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 300%;
+      height: 300%;
+    }
+
+    .clouds {
+      min-width: 3970px;
+      min-height: 2676px;
+      background-image: @clouds-texture;
+      animation: clouds-ani 100s linear infinite;
+    }
+
+    .twinkling {
+      min-width: 1000px;
+      min-height: 1000px;
+      background-image: @twinkling-texture;
+      animation: twinkling-ani 100s linear infinite;
+    }
+
+    .stars {
+      min-width: 4000px;
+      min-height: 2750px;
+      background-image: @stars-texture;
+      animation: stars-ani 200s linear infinite;
+    }
+  }
+}
+
+@keyframes clouds-ani {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  100% {
+    transform: translateY(1320px) translateX(1958px);
+  }
+}
+
+@keyframes twinkling-ani {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  100% {
+    transform: translateY(1000px) translateX(1000px);
+  }
+}
+
+@keyframes stars-ani {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  100% {
+    transform: translateY(1372px) translateX(2000px);
+  }
+}

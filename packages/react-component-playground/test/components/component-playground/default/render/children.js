@@ -17,7 +17,7 @@ describe(`ComponentPlayground (${FIXTURE}) Render Children`, () => {
     ({ container, component, $component } = render(fixture));
   });
 
-  it('should not load component', () => {
-    expect(loadChild.loadChild).to.not.have.been.called;
+  it('should load welcome screen', () => {
+    expect(loadChild.loadChild).to.have.been.called.once;
   });
 });

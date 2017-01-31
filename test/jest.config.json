@@ -10,5 +10,8 @@
   "coverageReporters": ["lcov", "text"],
   "globals": {
     "COSMOS_CONFIG_PATH": "./__tests__/dummy-config/cosmos.config.js"
+  },
+  "moduleNameMapper": {
+    "\\.(css|less)$": "<rootDir>/__mocks__/style-mock.js"
   }
 }
