@@ -1,7 +1,5 @@
 import webpack from 'webpack';
-import getConfig from './config';
-import resolveUserPath from './utils/resolve-user-path';
-import importModule from 'react-cosmos-utils/lib/import-module';
+import getCosmosConfig from 'react-cosmos-config';
 
 /**
  * Extend the user config to create the Loader config. Namely,
@@ -13,18 +11,16 @@ export default function getWebpackConfig(
   userWebpackConfig,
   cosmosConfigPath,
 ) {
-  const cosmosConfig = getConfig(importModule(require(cosmosConfigPath)));
+  const cosmosConfig = getCosmosConfig(cosmosConfigPath);
 
   const {
+    containerQuerySelector,
     globalImports,
     hmrPlugin,
     hot,
   } = cosmosConfig;
 
-  const resolvedGlobalImports = globalImports.map(path =>
-    resolveUserPath(path, cosmosConfigPath));
-
-  const entry = [...resolvedGlobalImports];
+  const entry = [...globalImports];
 
   if (hot) {
     // It's crucial for Cosmos to not depend on any user loader. This way the
@@ -57,7 +53,11 @@ export default function getWebpackConfig(
   });
 
   plugins.push(new webpack.DefinePlugin({
-    COSMOS_CONFIG_PATH: JSON.stringify(cosmosConfigPath),
+    COSMOS_CONFIG: JSON.stringify({
+      // Config options that are available inside the client bundle. Warning:
+      // Must be serializable!
+      containerQuerySelector,
+    }),
   }));
 
   if (hmrPlugin) {

@@ -1,5 +1,3 @@
-import path from 'path';
-
 jest.mock('webpack');
 
 const mockDefinePlugin = {};
@@ -10,8 +8,7 @@ let HotModuleReplacementPlugin;
 
 let getWebpackConfig;
 
-const cosmosConfigRelPath = './dummy-config/cosmos.config';
-const cosmosConfigPath = require.resolve(cosmosConfigRelPath);
+const cosmosConfigPath = '/mock/config/path';
 
 // So far we use the same user webpack mock between all tests
 const userWebpackConfig = {
@@ -23,11 +20,10 @@ const userWebpackConfig = {
 };
 
 // This changes between test cases
+let mockGetCosmosConfig;
 let mockCosmosConfig;
 // This is the output that we test
 let webpackConfig;
-
-const resolveUserPath = relPath => path.join(path.dirname(cosmosConfigPath), relPath);
 
 beforeEach(() => {
   // We want to change configs between test cases
@@ -35,7 +31,8 @@ beforeEach(() => {
   jest.resetAllMocks();
 
   // Mock user config
-  jest.mock(cosmosConfigRelPath, () => mockCosmosConfig);
+  mockGetCosmosConfig = jest.fn(() => mockCosmosConfig);
+  jest.mock('react-cosmos-config', () => mockGetCosmosConfig);
 
   DefinePlugin = jest.fn(() => mockDefinePlugin);
   HotModuleReplacementPlugin = jest.fn(() => mockHotModuleReplacementPlugin);
@@ -53,8 +50,13 @@ describe('without hmr', () => {
       fixturePaths: ['test/fixtures'],
       ignore: [],
       globalImports: ['./global.css'],
+      containerQuerySelector: '__mock__containerQuerySelector',
     };
     webpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
+  });
+
+  test('calls react-cosmos-config with config path', () => {
+    expect(mockGetCosmosConfig.mock.calls[0][0]).toBe(cosmosConfigPath);
   });
 
   test('keeps user loaders', () => {
@@ -63,7 +65,7 @@ describe('without hmr', () => {
 
   test('adds resolved global imports to entries', () => {
     mockCosmosConfig.globalImports.forEach(globalImport => {
-      expect(webpackConfig.entry).toContain(resolveUserPath(globalImport));
+      expect(webpackConfig.entry).toContain(globalImport);
     });
   });
 
@@ -94,7 +96,9 @@ describe('without hmr', () => {
 
   test('calls define plugin with user config path', () => {
     expect(DefinePlugin.mock.calls[0][0]).toEqual({
-      COSMOS_CONFIG_PATH: JSON.stringify(cosmosConfigPath),
+      COSMOS_CONFIG: JSON.stringify({
+        containerQuerySelector: '__mock__containerQuerySelector',
+      }),
     });
   });
 
@@ -128,7 +132,7 @@ describe('with hmr', () => {
 
   test('adds resolved global imports to entries', () => {
     mockCosmosConfig.globalImports.forEach(globalImport => {
-      expect(webpackConfig.entry).toContain(resolveUserPath(globalImport));
+      expect(webpackConfig.entry).toContain(globalImport);
     });
   });
 
@@ -149,6 +153,7 @@ describe('with hmr', () => {
 describe('with hmr plugin', () => {
   beforeEach(() => {
     mockCosmosConfig = {
+      globalImports: [],
       hmrPlugin: true,
     };
     webpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
@@ -156,21 +161,5 @@ describe('with hmr plugin', () => {
 
   test('adds HotModuleReplacementPlugin', () => {
     expect(webpackConfig.plugins).toContain(mockHotModuleReplacementPlugin);
-  });
-});
-
-describe('with absolute paths', () => {
-  beforeEach(() => {
-    mockCosmosConfig = {
-      componentPaths: [resolveUserPath('src/components')],
-      globalImports: [resolveUserPath('./global.css')],
-    };
-    webpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
-  });
-
-  test('adds user global imports to entries', () => {
-    mockCosmosConfig.globalImports.forEach(globalImport => {
-      expect(webpackConfig.entry).toContain(globalImport);
-    });
   });
 });
