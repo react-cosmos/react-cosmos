@@ -34,7 +34,7 @@ const init = options => {
     loadFixtures: mockLoadFixtures,
   }));
 
-  createLoaderElement = require('../create-loader-element.jsx').default;
+  createLoaderElement = require('../create-loader-element').default;
 
   createLoaderElement(options);
 
