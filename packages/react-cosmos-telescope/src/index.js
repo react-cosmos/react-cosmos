@@ -27,9 +27,9 @@ export default ({ cosmosConfigPath }) => {
     };
   }, {});
 
-  Object.keys(fixtures).forEach(component => {
+  keys(fixtures).forEach(component => {
     const componentFixtures = fixtures[component];
-    Object.keys(componentFixtures).forEach(fixture => {
+    keys(componentFixtures).forEach(fixture => {
       test(`${component}:${fixture}`, () => {
         const tree = renderer.create(
           createLoaderElement({
