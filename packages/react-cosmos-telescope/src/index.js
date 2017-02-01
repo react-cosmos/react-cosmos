@@ -1,5 +1,3 @@
-/* eslint-disable import/no-dynamic-require */
-
 import renderer from 'react-test-renderer';
 import getCosmosConfig from 'react-cosmos-config';
 import getFilePaths from 'react-cosmos-voyager';
