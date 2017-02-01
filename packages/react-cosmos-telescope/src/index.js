@@ -14,7 +14,7 @@ const importFileTree = filePaths => (
   }, {})
 );
 
-export default ({ cosmosConfigPath }) => {
+export default ({ cosmosConfigPath } = {}) => {
   const cosmosConfig = getCosmosConfig(cosmosConfigPath);
   const filePaths = getFilePaths(cosmosConfig);
 
