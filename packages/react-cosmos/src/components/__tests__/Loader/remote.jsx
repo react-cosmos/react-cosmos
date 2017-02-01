@@ -20,7 +20,7 @@ const mockFixtureParts = {
 const mockSplitUnserializableParts = jest.fn(() => mockFixtureParts);
 jest.mock('react-cosmos-utils/lib/unserializable-parts', () => mockSplitUnserializableParts);
 
-const Loader = require('../Loader.jsx').default;
+const Loader = require('../../Loader.jsx').default;
 
 const Proxy = jest.fn();
 const FooBarComponent = () => {};

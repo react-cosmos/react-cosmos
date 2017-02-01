@@ -4,12 +4,46 @@ import createLinkedList from 'react-cosmos-utils/lib/linked-list';
 
 const getUpdateId = () => Date.now();
 
+const hasInitialFixture = ({ component, fixture }) => Boolean(component && fixture);
+
+const getFixtureState = ({ fixtures, component, fixture, fixtureBody }) => {
+  if (!hasInitialFixture({ component, fixture })) {
+    // Nothing is rendered until parent frame says so
+    return {
+      component: null,
+      fixture: {
+        unserializable: {},
+        serializable: {},
+      },
+      fixtureUpdateId: 0,
+    };
+  }
+
+  const {
+    unserializable,
+    serializable,
+  } = splitUnserializableParts(fixtures[component][fixture]);
+
+  return {
+    component,
+    fixture: {
+      unserializable,
+      serializable: fixtureBody || serializable,
+    },
+    // Used as React Element key to ensure loaded components are rebuilt on
+    // every fixture change (instead of reusing instance and going down the
+    // componentWillReceiveProps route)
+    fixtureUpdateId: getUpdateId(),
+  };
+};
+
 class Loader extends React.Component {
   /**
    * Isolated loader for React components.
    *
-   * Renders components using fixtures and Proxy middleware, controlled
-   * programatically by a parent frame (via postMessage protocol).
+   * Renders components using fixtures and Proxy middleware. Supports two modes:
+   * 1. Controlled programatically by a parent frame (via postMessage protocol).
+   * 2. Initialized via props (component & fixture)
    *
    * It both receives fixture changes from parent frame and sends fixture
    * updates bubbled up from proxy chain (due to state changes) to parent frame.
@@ -22,26 +56,22 @@ class Loader extends React.Component {
     // Cache linked list to reuse between lifecycles (proxy list never changes)
     this.firstProxy = createLinkedList(props.proxies);
 
-    this.state = {
-      // Nothing is rendered until parent frame says so
-      component: null,
-      fixture: {
-        unserializable: {},
-        serializable: {},
-      },
-      fixtureUpdateId: 0,
-    };
+    this.state = getFixtureState(props);
   }
 
   componentDidMount() {
-    window.addEventListener('message', this.onMessage, false);
+    if (!hasInitialFixture(this.props)) {
+      window.addEventListener('message', this.onMessage, false);
 
-    // Let parent know loader is ready to render
-    parent.postMessage({ type: 'frameReady' }, '*');
+      // Let parent know loader is ready to render
+      parent.postMessage({ type: 'frameReady' }, '*');
+    }
   }
 
   componentWillUnmount() {
-    window.removeEventListener('message', this.onMessage);
+    if (!hasInitialFixture(this.props)) {
+      window.removeEventListener('message', this.onMessage);
+    }
   }
 
   onMessage({ data }) {
@@ -53,22 +83,12 @@ class Loader extends React.Component {
         fixtureBody,
       } = data;
 
-      const {
-        unserializable,
-        serializable,
-      } = splitUnserializableParts(this.props.fixtures[component][fixture]);
-
-      this.setState({
+      this.setState(getFixtureState({
+        fixtures: this.props.fixtures,
         component,
-        fixture: {
-          unserializable,
-          serializable: fixtureBody || serializable,
-        },
-        // Used as React Element key to ensure loaded components are rebuilt on
-        // every fixture change (instead of reusing instance and going down the
-        // componentWillReceiveProps route)
-        fixtureUpdateId: getUpdateId(),
-      });
+        fixture,
+        fixtureBody
+      }));
     }
   }
 
@@ -119,6 +139,8 @@ Loader.propTypes = {
   components: React.PropTypes.object.isRequired,
   fixtures: React.PropTypes.object.isRequired,
   proxies: React.PropTypes.array.isRequired,
+  component: React.PropTypes.string,
+  fixture: React.PropTypes.string,
 };
 
 export default Loader;
