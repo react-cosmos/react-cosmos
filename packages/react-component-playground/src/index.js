@@ -1,1 +1,1 @@
-module.exports = require('./components/component-playground.jsx');
+module.exports = require('./components/component-playground');

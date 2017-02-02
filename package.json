@@ -142,14 +142,16 @@
       {
         "files": [
           "**/__tests__/**/*.{js,jsx}",
-          "packages/__mocks__/**/*.js"
+          "packages/__mocks__/**/*.js",
+          "packages/react-cosmos-telescope/**/*.js"
         ],
         "env": [
           "jest",
           "browser"
         ],
         "rules": {
-          "import/no-extraneous-dependencies": 0
+          "import/no-extraneous-dependencies": 0,
+          "import/no-dynamic-require": 0
         }
       },
       {
