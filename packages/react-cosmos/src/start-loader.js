@@ -9,9 +9,11 @@ let domContainer;
 const createDomContainer = () => {
   if (!domContainer) {
     domContainer = document.createElement('div');
-    domContainer.style.position = 'absolute';
-    domContainer.style.width = '100%';
-    domContainer.style.height = '100%';
+    Object.assign(domContainer.style, {
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+    });
     document.body.appendChild(domContainer);
   }
 
