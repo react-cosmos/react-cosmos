@@ -5,7 +5,7 @@ DX tool for designing truly encapsulated
 
 ![Cosmos](cosmos-150.png)
 
-Cosmos scans your project for React components and loads them inside the [Component Playground](http://react-cosmos.github.io/react-cosmos/),
+Cosmos scans your project for React components and loads them inside [Component Playground](https://react-cosmos.github.io/),
 enabling you to:
 
 1. Render your components under any combination of props, context and state
