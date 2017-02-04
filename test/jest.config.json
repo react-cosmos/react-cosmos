@@ -4,11 +4,17 @@
   "testURL": "http://foo.bar/",
   "testPathIgnorePatterns": [
     "react-cosmos-voyager/src/__tests__/use-cases",
-    "react-cosmos-webpack/src/__tests__/dummy-config"
+    "react-cosmos-config/src/__tests__/mock-cwd",
+    "react-cosmos-webpack/src/__tests__/mocks"
   ],
   "coverageDirectory": "../test/coverage/jest",
   "coverageReporters": ["lcov", "text"],
   "globals": {
-    "COSMOS_CONFIG_PATH": "./__tests__/dummy-config/cosmos.config.js"
+    "COSMOS_CONFIG": {
+      "containerQuerySelector": "__mock__containerQuerySelector"
+    }
+  },
+  "moduleNameMapper": {
+    "\\.(css|less)$": "<rootDir>/__mocks__/style-mock.js"
   }
 }

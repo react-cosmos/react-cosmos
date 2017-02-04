@@ -1,87 +1,41 @@
 const mockComponentElement = {};
 const mockComponentInstance = {};
-const mockLoader = () => {};
-const mockPropsProxy = () => {};
-const mockStateProxy = () => {};
-const mockProxies = [{}, {}];
+const mockProxy1 = {};
+const mockProxy2 = {};
+const mockProxies = [() => mockProxy1, () => mockProxy2];
 const mockComponentsInput = {};
 const mockFixturesInput = {};
-const mockComponentsOutput = {};
-const mockFixturesOutput = {};
-let mockReact;
+let mockCreateLoaderElement;
 let mockReactDOM;
-let mockLoadComponents;
-let mockLoadFixtures;
 let startLoader;
-let props;
 
 const init = options => {
   jest.resetModules();
   jest.resetAllMocks();
 
-  mockReact = {
-    createElement: jest.fn(() => mockComponentElement),
-  };
+  mockCreateLoaderElement = jest.fn(() => mockComponentElement);
   mockReactDOM = {
     render: jest.fn(() => mockComponentInstance),
   };
-  mockLoadComponents = jest.fn(() => mockComponentsOutput);
-  mockLoadFixtures = jest.fn(() => mockFixturesOutput);
-
-  jest.mock('react', () => mockReact);
+  jest.mock('../create-loader-element', () => mockCreateLoaderElement);
   jest.mock('react-dom-polyfill', () => jest.fn(() => mockReactDOM));
-  jest.mock('../components/Loader', () => mockLoader);
-  jest.mock('../components/proxies/StateProxy', () => () => mockStateProxy);
-  jest.mock('../components/proxies/PropsProxy', () => mockPropsProxy);
-  jest.mock('../load-modules', () => ({
-    loadComponents: mockLoadComponents,
-    loadFixtures: mockLoadFixtures,
-  }));
 
-  startLoader = require('../start-loader.jsx').default;
+  startLoader = require('../start-loader.js').default;
 
   startLoader(options);
-
-  props = mockReact.createElement.mock.calls[0][1];
 };
 
 const commonTests = () => {
-  it('creates Loader element', () => {
-    expect(mockReact.createElement.mock.calls[0][0]).toBe(mockLoader);
+  it('passes proxies to loader element', () => {
+    expect(mockCreateLoaderElement.mock.calls[0][0].proxies).toBe(mockProxies);
   });
 
-  it('sends user proxies to Loader', () => {
-    const { proxies } = props;
-    expect(proxies[0]).toBe(mockProxies[0]);
-    expect(proxies[1]).toBe(mockProxies[1]);
+  it('passes components to loader element', () => {
+    expect(mockCreateLoaderElement.mock.calls[0][0].components).toBe(mockComponentsInput);
   });
 
-  it('includes StateProxy', () => {
-    const { proxies } = props;
-    expect(proxies[2]).toBe(mockStateProxy);
-  });
-
-  it('includes PropsProxy', () => {
-    const { proxies } = props;
-    expect(proxies[3]).toBe(mockPropsProxy);
-  });
-
-  it('sends components input to loadComponents lib', () => {
-    expect(mockLoadComponents.mock.calls[0][0]).toBe(mockComponentsInput);
-  });
-
-  it('sends fixtures input to loadFixtures lib', () => {
-    expect(mockLoadFixtures.mock.calls[0][0]).toBe(mockFixturesInput);
-  });
-
-  it('sends components output to Component Playground props', () => {
-    const { components } = props;
-    expect(components).toBe(mockComponentsOutput);
-  });
-
-  it('sends fixtures output to Component Playground props', () => {
-    const { fixtures } = props;
-    expect(fixtures).toBe(mockFixturesOutput);
+  it('passes fixtures to loader element', () => {
+    expect(mockCreateLoaderElement.mock.calls[0][0].fixtures).toBe(mockFixturesInput);
   });
 
   it('renders React element', () => {

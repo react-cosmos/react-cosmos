@@ -1,12 +1,15 @@
-const cosmosConfigRelPath = './dummy-config/cosmos.config';
-const cosmosConfigPath = require.resolve(cosmosConfigRelPath);
+const cosmosConfigPath = '/mock/config/path';
 
 const mockComponentPaths = [];
 const mockFixturePaths = [];
-jest.mock(cosmosConfigRelPath, () => ({
+
+const mockGetCosmosConfig = jest.fn(() => ({
   componentPaths: mockComponentPaths,
   fixturePaths: mockFixturePaths,
+  proxies: ['proxy-module', './proxy-file'],
 }));
+
+jest.mock('react-cosmos-config', () => mockGetCosmosConfig);
 
 const mockGetFilePaths = jest.fn(() => ({
   components: {
@@ -35,22 +38,26 @@ const loaderContext = {
   },
   addDependency: mockAddDependency,
 };
-const loaderInput = 'components = COMPONENTS; fixtures = FIXTURES; contexts = CONTEXTS;';
+const loaderInput = 'components = COMPONENTS; fixtures = FIXTURES; proxies = PROXIES; contexts = CONTEXTS;';
 const loaderOutput = moduleLoader.call(loaderContext, loaderInput);
 
 // Replace actual request calls with a mock of their signature
 // eslint-disable-next-line no-unused-vars
 const __req = path => `__req(${path})`;
 
-const [, componentsOutput, fixturesOutput, contextsOutput] =
-  loaderOutput.match(/^components = (.+); fixtures = (.+); contexts = (.+);$/);
+const [, componentsOutput, fixturesOutput, proxiesOutput, contextsOutput] =
+  loaderOutput.match(/^components = (.+); fixtures = (.+); proxies = (.+); contexts = (.+);$/);
+
+test('calls react-cosmos-config with cosmos config path', () => {
+  expect(mockGetCosmosConfig.mock.calls[0][0]).toBe(cosmosConfigPath);
+});
 
 test('calls react-cosmos-voyager with component paths', () => {
-  expect(mockGetFilePaths.mock.calls[0][0].componentPaths).toEqual(mockComponentPaths);
+  expect(mockGetFilePaths.mock.calls[0][0].componentPaths).toBe(mockComponentPaths);
 });
 
 test('calls react-cosmos-voyager with fixture paths', () => {
-  expect(mockGetFilePaths.mock.calls[0][0].fixturePaths).toEqual(mockFixturePaths);
+  expect(mockGetFilePaths.mock.calls[0][0].fixturePaths).toBe(mockFixturePaths);
 });
 
 test('injects components', () => {
@@ -76,6 +83,16 @@ test('injects fixtures', () => {
       two: `__req(${jsonLoader}!components/__fixtures__/Bar/two.json)`,
     },
   });
+});
+
+test('injects proxies', () => {
+  // eslint-disable-next-line no-eval
+  const proxies = eval(`(${proxiesOutput.replace(/require/g, '__req')})`);
+
+  expect(proxies).toEqual([
+    '__req(proxy-module)',
+    '__req(./proxy-file)'
+  ]);
 });
 
 test('injects contexts', () => {

@@ -1,16 +1,4 @@
-import React from 'react';
-import createContextProxy from '../../packages/react-cosmos-context-proxy';
-
-module.exports = {
+export default {
   componentPaths: ['components'],
-  proxies: [
-    createContextProxy({
-      childContextTypes: {
-        backgroundColor: React.PropTypes.string.isRequired,
-        textColor: React.PropTypes.string.isRequired,
-      },
-    }),
-  ],
-  hot: true,
-  hmrPlugin: true,
+  proxies: ['./context-proxy'],
 };

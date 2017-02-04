@@ -1,7 +1,7 @@
 const buildPathMatchers = componentName => [
-  `/__fixtures__/${componentName}/(.*)\\.(js|json)$`,
-  `/${componentName}/(?:.+/)?__fixtures__/(.*)\\.(js|json)$`,
-  `/${componentName}/(.*)\\.(js|json)$`,
+  `/__fixtures__/${componentName}/([^/]+)\\.(js|json)$`,
+  `/${componentName}/(?:.+/)?__fixtures__/([^/]+)\\.(js|json)$`,
+  `/${componentName}/([^/]+)\\.(js|json)$`,
 ];
 
 /**

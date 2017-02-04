@@ -1,9 +1,7 @@
 import path from 'path';
 import loaderUtils from 'loader-utils';
 import traverse from 'traverse';
-import getConfig from './config';
-import resolveUserPath from './utils/resolve-user-path';
-import importModule from 'react-cosmos-utils/lib/import-module';
+import getCosmosConfig from 'react-cosmos-config';
 import getFilePaths from 'react-cosmos-voyager';
 
 const jsonLoader = require.resolve('json-loader');
@@ -12,20 +10,24 @@ const getRequirePath = filePath => (
   path.extname(filePath) === '.json' ? `${jsonLoader}!${filePath}` : filePath
 );
 
-const convertFilePathsToRequireCalls = filePaths => {
+const convertPathToRequireCall = p => `require('${getRequirePath(p)}')`;
+
+const convertPathMapToRequireCalls = paths => {
   const props = [];
 
-  Object.keys(filePaths).forEach(key => {
-    const val = filePaths[key];
+  Object.keys(paths).forEach(key => {
+    const val = paths[key];
     const newVal = typeof val === 'string' ?
-      `require('${getRequirePath(val)}')` :
-      convertFilePathsToRequireCalls(val);
+      convertPathToRequireCall(val) :
+      convertPathMapToRequireCalls(val);
 
     props.push(`'${key}':${newVal}`);
   });
 
   return `{${props.join(',')}}`;
 };
+
+const convertPathListToRequireCalls = paths => `[${paths.map(convertPathToRequireCall).join(',')}]`;
 
 const getUniqueDirsOfUserModules = (components, fixtures) => {
   const dirs = new Set();
@@ -55,28 +57,10 @@ const convertDirPathsToContextCalls = dirPaths =>
  */
 module.exports = function embedModules(source) {
   const { cosmosConfigPath } = loaderUtils.parseQuery(this.query);
-  const cosmosConfig = getConfig(importModule(require(cosmosConfigPath)));
 
-  const {
-    componentPaths,
-    fixturePaths,
-    ignore,
-    getComponentName,
-    getFixturePathsForComponent,
-  } = cosmosConfig;
-
-  const resolvedComponentPaths = componentPaths.map(p =>
-    resolveUserPath(p, cosmosConfigPath));
-  const resolvedFixturePaths = fixturePaths.map(p =>
-    resolveUserPath(p, cosmosConfigPath));
-
-  const { components, fixtures, userSource } = getFilePaths({
-    componentPaths: resolvedComponentPaths,
-    fixturePaths: resolvedFixturePaths,
-    ignore,
-    getComponentName,
-    getFixturePathsForComponent,
-  });
+  const cosmosConfig = getCosmosConfig(cosmosConfigPath);
+  const { components, fixtures, userSource } = getFilePaths(cosmosConfig);
+  const { proxies } = cosmosConfig;
   const contexts = getUniqueDirsOfUserModules(components, fixtures);
 
   contexts.forEach(dirPath => {
@@ -86,8 +70,9 @@ module.exports = function embedModules(source) {
   });
 
   return source
-    .replace(/COMPONENTS/g, convertFilePathsToRequireCalls(components))
-    .replace(/FIXTURES/g, convertFilePathsToRequireCalls(fixtures))
+    .replace(/COMPONENTS/g, convertPathMapToRequireCalls(components))
+    .replace(/FIXTURES/g, convertPathMapToRequireCalls(fixtures))
+    .replace(/PROXIES/g, convertPathListToRequireCalls(proxies))
     .replace(/CONTEXTS/g, convertDirPathsToContextCalls(contexts))
     .replace(/USER_SOURCE/g, JSON.stringify(userSource));
 };

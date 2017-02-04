@@ -6,6 +6,7 @@ import CodeMirror from '@skidding/react-codemirror';
 import fuzzaldrinPlus from 'fuzzaldrin-plus';
 import SplitPane from 'ubervu-react-split-pane';
 import localStorageLib from '../lib/local-storage';
+import WelcomeScreen from './welcome-screen';
 import ComponentTree from 'react-component-tree';
 import { uri } from 'react-querystring-router';
 import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
@@ -172,6 +173,15 @@ module.exports = React.createClass({
         })
       }
     },
+
+    welcome() {
+      return {
+        component: WelcomeScreen,
+        key: 'welcome',
+        hasComponents: this.userHasComponents(),
+        hasFixtures: this.userHasFixtures(),
+      };
+    }
   },
 
   render() {
@@ -202,7 +212,7 @@ module.exports = React.createClass({
             {this.renderFixtures()}
           </div>
         </div>
-        {isFixtureSelected ? this.renderContentFrame() : null}
+        {isFixtureSelected ? this.renderContentFrame() : this.renderWelcomeScreen()}
       </div>
     );
   },
@@ -381,6 +391,10 @@ module.exports = React.createClass({
     );
   },
 
+  renderWelcomeScreen() {
+    return this.loadChild('welcome');
+  },
+
   componentWillMount() {
     this.onFixtureUpdate = _.throttle(this.onFixtureUpdate, 500);
   },
@@ -549,6 +563,18 @@ module.exports = React.createClass({
   isCurrentFixtureSelected(componentName, fixtureName) {
     return componentName === this.props.component &&
            fixtureName === this.props.fixture;
+  },
+
+  userHasComponents() {
+    return Object.keys(this.props.fixtures).length > 0;
+  },
+
+  userHasFixtures() {
+    return _.reduce(this.props.fixtures, (acc, compFixtures) => {
+      const fixtureNames = Object.keys(compFixtures);
+
+      return acc || fixtureNames[0].indexOf('(auto)') === -1;
+    }, false);
   },
 
   extendFixtureRoute(newProps) {
