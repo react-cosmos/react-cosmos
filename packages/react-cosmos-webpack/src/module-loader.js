@@ -57,8 +57,9 @@ const convertDirPathsToContextCalls = dirPaths =>
  */
 module.exports = function embedModules(source) {
   const { cosmosConfigPath } = loaderUtils.parseQuery(this.query);
+
   const cosmosConfig = getCosmosConfig(cosmosConfigPath);
-  const { components, fixtures } = getFilePaths(cosmosConfig);
+  const { components, fixtures, userSource } = getFilePaths(cosmosConfig);
   const { proxies } = cosmosConfig;
   const contexts = getUniqueDirsOfUserModules(components, fixtures);
 
@@ -72,5 +73,6 @@ module.exports = function embedModules(source) {
     .replace(/COMPONENTS/g, convertPathMapToRequireCalls(components))
     .replace(/FIXTURES/g, convertPathMapToRequireCalls(fixtures))
     .replace(/PROXIES/g, convertPathListToRequireCalls(proxies))
-    .replace(/CONTEXTS/g, convertDirPathsToContextCalls(contexts));
+    .replace(/CONTEXTS/g, convertDirPathsToContextCalls(contexts))
+    .replace(/USER_SOURCE/g, JSON.stringify(userSource));
 };

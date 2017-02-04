@@ -49,6 +49,7 @@ const getFilePaths = ({
   const extFixtures = getExternalFixtures(fixturePaths);
   const components = {};
   const fixtures = {};
+  const userSource = {};
 
   componentPaths.forEach(componentPath => {
     if (fs.lstatSync(componentPath).isFile()) {
@@ -82,6 +83,7 @@ const getFilePaths = ({
         fixtures[componentName] = getMatchingFixtures(
           [...relFixtures, ...extFixtures], componentName,
         );
+        userSource[componentName] = fs.readFileSync(filePath, 'utf8')
       });
     }
   });
@@ -89,6 +91,7 @@ const getFilePaths = ({
   return {
     components,
     fixtures,
+    userSource
   };
 };
 

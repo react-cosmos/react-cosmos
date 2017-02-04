@@ -20,7 +20,8 @@ module.exports = {
     // not require users to add CSS & LESS webpack loaders to their build.
     classnames: 'classnames',
     codemirror: 'codemirror',
-    'codemirror/mode/javascript/javascript': 'codemirror/mode/javascript/javascript',
+    //'codemirror/mode/javascript/javascript': 'codemirror/mode/javascript/javascript',
+    'codemirror/mode/jsx/jsx': 'codemirror/mode/jsx/jsx',
     'codemirror/addon/fold/foldcode': 'codemirror/addon/fold/foldcode',
     'codemirror/addon/fold/foldgutter': 'codemirror/addon/fold/foldgutter',
     'codemirror/addon/fold/brace-fold': 'codemirror/addon/fold/brace-fold',

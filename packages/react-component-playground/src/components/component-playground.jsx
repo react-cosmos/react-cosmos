@@ -16,10 +16,10 @@ const { findDOMNode } = require('react-dom-polyfill')(React);
 
 require('codemirror/lib/codemirror.css');
 require('codemirror/addon/fold/foldgutter.css');
-require('codemirror/theme/solarized.css');
+require('codemirror/theme/eclipse.css');
 require('./codemirror.css');
 
-require('codemirror/mode/javascript/javascript');
+require('codemirror/mode/jsx/jsx');
 require('codemirror/addon/fold/foldcode');
 require('codemirror/addon/fold/foldgutter');
 require('codemirror/addon/fold/brace-fold');
@@ -42,6 +42,7 @@ module.exports = React.createClass({
     fullScreen: React.PropTypes.bool,
     loaderUri: React.PropTypes.string.isRequired,
     router: React.PropTypes.object.isRequired,
+    userSource: React.PropTypes.object
   },
 
   mixins: [ComponentTree.Mixin],
@@ -104,6 +105,7 @@ module.exports = React.createClass({
       editor: false,
       fixture: null,
       fullScreen: false,
+      viewSource: false,
       proxies: [],
     };
   },
@@ -139,21 +141,37 @@ module.exports = React.createClass({
     },
 
     editor() {
-      return {
+      const baseEditor = {
         component: CodeMirror,
         key: 'editor',
-        value: this.state.fixtureUserInput,
         preserveScrollPosition: true,
-        onChange: this.onFixtureChange,
-        onFocusChange: this.onEditorFocusChange,
         options: {
-          mode: 'javascript',
+          mode: 'jsx',
           foldGutter: true,
           lineNumbers: true,
-          theme: 'solarized light',
+          theme: 'eclipse',
           gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
         },
       };
+      if (this.props.editor) {
+        return _.assign(baseEditor, {
+          value: this.state.fixtureUserInput,
+          onChange: this.onFixtureChange,
+          onFocusChange: this.onEditorFocusChange,
+          options: _.assign(baseEditor.options, {
+            readOnly: false
+          })
+        })
+      } else {
+        return _.assign(baseEditor, {
+          value: this.props.userSource[this.props.component],
+          onChange: null,
+          onFocusChange: null,
+          options: _.assign(baseEditor.options, {
+            readOnly: true
+          })
+        })
+      }
     },
 
     welcome() {
@@ -266,7 +284,7 @@ module.exports = React.createClass({
   renderContentFrame() {
     return (
       <div ref="contentFrame" className={style['content-frame']}>
-        {this.props.editor ? this.loadChild('splitPane') : this.renderLoader()}
+        {this.props.editor || this.props.viewSource ? this.loadChild('splitPane') : this.renderLoader()}
       </div>
     );
   },
@@ -301,12 +319,37 @@ module.exports = React.createClass({
   renderMenu() {
     return (
       <p className={style.menu}>
+        {this.renderViewSourceButton()}
         {this.renderFixtureEditorButton()}
         {this.renderFullScreenButton()}
       </p>
     );
   },
 
+  renderViewSourceButton() {
+    const classes = classNames({
+      [style.button]: true,
+      [style['view-source-button']]: true,
+      [style['selected-button']]: this.props.viewSource,
+    });
+
+    const viewSource = !this.props.viewSource;
+    const editor = viewSource === true ? false : this.props.editor
+
+    const viewSourceUrlProps = this.extendFixtureRoute({
+      viewSource,
+      editor
+    });
+
+    return (
+      <a
+        className={classes}
+        href={stringifyParams(viewSourceUrlProps)}
+        ref="viewSourceButton"
+        onClick={this.props.router.routeLink}
+      />
+    );
+  },
   renderFixtureEditorButton() {
     const classes = classNames({
       [style.button]: true,
@@ -314,8 +357,12 @@ module.exports = React.createClass({
       [style['selected-button']]: this.props.editor,
     });
 
+    const editor = !this.props.editor;
+    const viewSource = editor === true ? false : this.props.viewSource
+
     const editorUrlProps = this.extendFixtureRoute({
-      editor: !this.props.editor,
+      editor,
+      viewSource
     });
 
     return (
@@ -536,6 +583,7 @@ module.exports = React.createClass({
       fixture: this.props.fixture,
       editor: this.props.editor,
       fullScreen: this.props.fullScreen,
+      viewSource: this.props.viewSource,
     };
 
     const defaultProps = this.constructor.getDefaultProps();
