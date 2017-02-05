@@ -83,7 +83,7 @@ const getFilePaths = ({
         fixtures[componentName] = getMatchingFixtures(
           [...relFixtures, ...extFixtures], componentName,
         );
-        userSource[componentName] = fs.readFileSync(filePath, 'utf8')
+        userSource[componentName] = fs.readFileSync(filePath, 'utf8');
       });
     }
   });

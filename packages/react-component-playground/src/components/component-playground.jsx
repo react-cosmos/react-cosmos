@@ -161,17 +161,16 @@ module.exports = React.createClass({
           options: _.assign(baseEditor.options, {
             readOnly: false
           })
-        })
-      } else {
-        return _.assign(baseEditor, {
-          value: this.props.userSource[this.props.component],
-          onChange: null,
-          onFocusChange: null,
-          options: _.assign(baseEditor.options, {
-            readOnly: true
-          })
-        })
+        });
       }
+      return _.assign(baseEditor, {
+        value: this.props.userSource[this.props.component],
+        onChange: null,
+        onFocusChange: null,
+        options: _.assign(baseEditor.options, {
+          readOnly: true
+        })
+      });
     },
 
     welcome() {
@@ -334,7 +333,7 @@ module.exports = React.createClass({
     });
 
     const viewSource = !this.props.viewSource;
-    const editor = viewSource === true ? false : this.props.editor
+    const editor = viewSource === true ? false : this.props.editor;
 
     const viewSourceUrlProps = this.extendFixtureRoute({
       viewSource,
@@ -358,7 +357,7 @@ module.exports = React.createClass({
     });
 
     const editor = !this.props.editor;
-    const viewSource = editor === true ? false : this.props.viewSource
+    const viewSource = editor === true ? false : this.props.viewSource;
 
     const editorUrlProps = this.extendFixtureRoute({
       editor,
