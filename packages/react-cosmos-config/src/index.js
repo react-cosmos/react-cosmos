@@ -18,11 +18,11 @@ const defaults = {
   port: 8989,
   proxies: [],
   webpackConfigPath: 'webpack.config',
+  outputPath: 'dist'
 };
 
 export default function getCosmosConfig(configPath = 'cosmos.config') {
   const normalizedConfigPath = resolveUserPath(configPath, process.cwd());
-  defaults.outputPath = path.join(path.dirname(normalizedConfigPath), 'dist');
   const userConfig = importModule(require(normalizedConfigPath));
   const rootPath = path.dirname(normalizedConfigPath);
 
