@@ -35,5 +35,8 @@
   "bin": {
     "cosmos": "./bin/cosmos.js"
   },
-  "xo": false
+  "xo": false,
+  "devDependencies": {
+    "fs-extra": "^2.0.0"
+  }
 }
