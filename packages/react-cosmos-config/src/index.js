@@ -22,6 +22,7 @@ const defaults = {
 
 export default function getCosmosConfig(configPath = 'cosmos.config') {
   const normalizedConfigPath = resolveUserPath(configPath, process.cwd());
+  defaults.outputPath = path.join(path.dirname(normalizedConfigPath), 'dist');
   const userConfig = importModule(require(normalizedConfigPath));
   const rootPath = path.dirname(normalizedConfigPath);
 
@@ -32,7 +33,7 @@ export default function getCosmosConfig(configPath = 'cosmos.config') {
   const resolvedConfig = Object.keys(config).reduce((result, key) => {
     if (['componentPaths', 'fixturePaths', 'globalImports', 'proxies'].includes(key)) {
       result[key] = config[key].map(path => resolveUserPath(path, rootPath));
-    } else if (['publicPath', 'webpackConfigPath'].includes(key)) {
+    } else if (['publicPath', 'webpackConfigPath', 'outputPath'].includes(key)) {
       result[key] = resolveUserPath(config[key], rootPath);
     } else {
       result[key] = config[key];
