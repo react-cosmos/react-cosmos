@@ -4,7 +4,7 @@ To scale UI development linearly by prioritising on component design in isolatio
 
 At the core is the assumption that complexity in large apps stems from hidden links between parts. Tedious as it can be to uncover each and every component dependency, committing to it promises predictability and long term sanity.
 
-Moreover, React Cosmos tries to answer the question: **How to design components that are truly encapsulated?**
+Moreover, React Cosmos tries to answer the question: **How to design components that are truly reusable?**
 
 *For more context see [manifesto](https://github.com/react-cosmos/react-cosmos/wiki/Manifesto) and [problem analysis](https://github.com/react-cosmos/react-cosmos/wiki/Problem) written back in 2014, before code was written.*
 
