@@ -7,7 +7,7 @@ import importModule from 'react-cosmos-utils/lib/import-module';
 import getCosmosConfig from 'react-cosmos-config';
 import fs from 'fs-extra';
 
-process.env['NODE_ENV'] = 'production'; // disables hmr and hot reloading
+process.env['NODE_ENV'] = 'production';
 
 const moduleExists = modulePath => {
   try {
@@ -17,7 +17,7 @@ const moduleExists = modulePath => {
   }
 };
 
-module.exports = function exportBundle() {
+module.exports = function startExport() {
   const cosmosConfigPath = argv.config;
   const cosmosConfig = getCosmosConfig(cosmosConfigPath);
 
@@ -28,23 +28,14 @@ module.exports = function exportBundle() {
 
   let userWebpackConfig;
   if (moduleExists(webpackConfigPath)) {
-    console.log(`[Cosmos Export Bundle] Using webpack config found at ${webpackConfigPath}`);
+    console.log(`[Cosmos Export] Using webpack config found at ${webpackConfigPath}`);
     userWebpackConfig = importModule(require(webpackConfigPath));
   } else {
-    console.log('[Cosmos Export Bundle] No webpack config found, using default configuration');
+    console.log('[Cosmos Export] No webpack config found, using default configuration');
     userWebpackConfig = getDefaultWebpackConfig();
   }
 
-  const cosmosWebpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
-  cosmosWebpackConfig.output.path = outputPath;
-  cosmosWebpackConfig.output.filename = 'loader/bundle.js';
-  cosmosWebpackConfig.output.publicPath = '/';
-
-  console.log(`---------------------------
-Webpack output has been set to:
-${JSON.stringify(cosmosWebpackConfig.output, null, 2)}
-`);
-
+  const cosmosWebpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath, true);
   const compiler = webpack(cosmosWebpackConfig);
 
   compiler.run((err, stats) => {
@@ -54,6 +45,7 @@ ${JSON.stringify(cosmosWebpackConfig.output, null, 2)}
     } else {
       try {
         fs.copySync(path.join(__dirname, 'static/favicon.ico'), `${cosmosWebpackConfig.output.path}/favicon.ico`);
+        fs.copySync(`${cosmosWebpackConfig.output.path}/bundle.js`, `${cosmosWebpackConfig.output.path}/loader/bundle.js`);
         console.log(`Export Complete! Find the exported files here:
 ${cosmosWebpackConfig.output.path}`);
       } catch (err) {
