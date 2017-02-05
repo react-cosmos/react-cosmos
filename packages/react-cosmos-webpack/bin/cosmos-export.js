@@ -7,6 +7,6 @@ if (!argv.plain) {
   require('babel-register');
 }
 
-const exportBundle = require('../lib/export-bundle');
+const startExport = require('../lib/export');
 
-exportBundle();
+startExport();
