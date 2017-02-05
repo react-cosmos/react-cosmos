@@ -23,7 +23,7 @@ export default function getWebpackConfig(
 
   const entry = [...globalImports];
 
-  if (hot) {
+  if (hot && process.env.NODE_ENV !== 'production' ) {
     // It's crucial for Cosmos to not depend on any user loader. This way the
     // webpack configs can point solely to the user deps for loaders.
     entry.push(`${require.resolve('webpack-hot-middleware/client')}?reload=true`);
@@ -63,7 +63,7 @@ export default function getWebpackConfig(
     }),
   }));
 
-  if (hmrPlugin) {
+  if (hmrPlugin && process.env.NODE_ENV !== 'production') {
     plugins.push(new webpack.HotModuleReplacementPlugin());
   }
 
