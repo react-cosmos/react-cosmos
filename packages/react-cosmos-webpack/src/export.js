@@ -1,13 +1,13 @@
 import path from 'path';
 import webpack from 'webpack';
 import { argv } from 'yargs';
+import fs from 'fs-extra';
 import getWebpackConfig from './webpack-config';
 import getDefaultWebpackConfig from './default-webpack-config';
 import importModule from 'react-cosmos-utils/lib/import-module';
 import getCosmosConfig from 'react-cosmos-config';
-import fs from 'fs-extra';
 
-process.env['NODE_ENV'] = 'production';
+process.env.NODE_ENV = 'production';
 
 const moduleExists = modulePath => {
   try {
@@ -22,8 +22,7 @@ module.exports = function startExport() {
   const cosmosConfig = getCosmosConfig(cosmosConfigPath);
 
   const {
-    webpackConfigPath,
-    outputPath
+    webpackConfigPath
   } = cosmosConfig;
 
   let userWebpackConfig;
@@ -43,6 +42,7 @@ module.exports = function startExport() {
       console.error('Export Failed! See error below:');
       console.error(err);
     } else {
+      console.log(stats);
       try {
         fs.copySync(path.join(__dirname, 'static/favicon.ico'), `${cosmosWebpackConfig.output.path}/favicon.ico`);
         fs.copySync(`${cosmosWebpackConfig.output.path}/bundle.js`, `${cosmosWebpackConfig.output.path}/loader/bundle.js`);
@@ -55,5 +55,4 @@ module.exports = function startExport() {
 ${cosmosWebpackConfig.output.path}`);
     }
   });
-
 };
