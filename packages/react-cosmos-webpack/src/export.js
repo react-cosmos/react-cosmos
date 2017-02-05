@@ -46,12 +46,13 @@ module.exports = function startExport() {
       try {
         fs.copySync(path.join(__dirname, 'static/favicon.ico'), `${cosmosWebpackConfig.output.path}/favicon.ico`);
         fs.copySync(`${cosmosWebpackConfig.output.path}/bundle.js`, `${cosmosWebpackConfig.output.path}/loader/bundle.js`);
-        console.log(`Export Complete! Find the exported files here:
-${cosmosWebpackConfig.output.path}`);
+        fs.removeSync(`${cosmosWebpackConfig.output.path}/bundle.js`);
       } catch (err) {
         console.error('Export Failed! See error below:');
         console.error(err);
       }
+      console.log(`Export Complete! Find the exported files here:
+${cosmosWebpackConfig.output.path}`);
     }
   });
 
