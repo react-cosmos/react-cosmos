@@ -22,15 +22,16 @@ module.exports = function startExport() {
   const cosmosConfig = getCosmosConfig(cosmosConfigPath);
 
   const {
-    webpackConfigPath
+    webpackConfigPath,
+    outputPath
   } = cosmosConfig;
 
   let userWebpackConfig;
   if (moduleExists(webpackConfigPath)) {
-    console.log(`[Cosmos Export] Using webpack config found at ${webpackConfigPath}`);
+    console.log(`[Cosmos] Using webpack config found at ${webpackConfigPath}`);
     userWebpackConfig = importModule(require(webpackConfigPath));
   } else {
-    console.log('[Cosmos Export] No webpack config found, using default configuration');
+    console.log('[Cosmos] No webpack config found, using default configuration');
     userWebpackConfig = getDefaultWebpackConfig();
   }
 
@@ -39,20 +40,23 @@ module.exports = function startExport() {
 
   compiler.run((err, stats) => {
     if (err) {
-      console.error('Export Failed! See error below:');
+      console.error('[Cosmos] Export Failed! See error below:');
       console.error(err);
     } else {
       console.log(stats);
       try {
-        fs.copySync(path.join(__dirname, 'static/favicon.ico'), `${cosmosWebpackConfig.output.path}/favicon.ico`);
-        fs.copySync(`${cosmosWebpackConfig.output.path}/bundle.js`, `${cosmosWebpackConfig.output.path}/loader/bundle.js`);
-        fs.removeSync(`${cosmosWebpackConfig.output.path}/bundle.js`);
+        fs.copySync(`${outputPath}/bundle.js`, `${outputPath}/loader/bundle.js`);
+        fs.copySync(`${outputPath}/index.html`, `${outputPath}/loader/index.html`);
+        fs.removeSync(`${outputPath}/bundle.js`);
+        fs.removeSync(`${outputPath}/index.html`);
+        fs.copySync(path.join(__dirname, 'static/favicon.ico'), `${outputPath}/favicon.ico`);
+        fs.copySync(path.join(__dirname, 'static/index.html'), `${outputPath}/index.html`);
       } catch (err) {
-        console.error('Export Failed! See error below:');
+        console.error('[Cosmos] Export Failed! See error below:');
         console.error(err);
       }
-      console.log(`Export Complete! Find the exported files here:
-${cosmosWebpackConfig.output.path}`);
+      console.log(`[Cosmos] Export Complete! Find the exported files here:
+${outputPath}`);
     }
   });
 };
