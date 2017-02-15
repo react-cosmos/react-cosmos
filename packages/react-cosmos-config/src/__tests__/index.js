@@ -65,7 +65,8 @@ describe('keeps absolute paths', () => {
   let proxies;
   let publicPath;
   let webpackConfigPath;
-
+  let outputPath;
+  
   beforeEach(() => {
     mockUserConfig('./mock-cwd/cosmos.config', {
       componentPaths: ['/path/to/components'],
@@ -74,9 +75,10 @@ describe('keeps absolute paths', () => {
       proxies: ['/path/to/proxy'],
       publicPath: '/path/to/static',
       webpackConfigPath: '/path/to/webpack',
+      outputPath: '/path/to/output',
     });
 
-    ({ componentPaths, fixturePaths, globalImports, proxies, publicPath, webpackConfigPath } =
+    ({ componentPaths, fixturePaths, globalImports, proxies, publicPath, webpackConfigPath, outputPath } =
       getCosmosConfig());
   });
 
@@ -103,6 +105,10 @@ describe('keeps absolute paths', () => {
   test('webpack config', () => {
     expect(webpackConfigPath).toEqual('/path/to/webpack');
   });
+
+  test('output path', () => {
+    expect(outputPath).toEqual('/path/to/output');
+  });
 });
 
 describe('resolves relative paths', () => {
@@ -112,6 +118,7 @@ describe('resolves relative paths', () => {
   let proxies;
   let publicPath;
   let webpackConfigPath;
+  let outputPath;
 
   beforeEach(() => {
     mockUserConfig('./mock-cwd/custom-path/cosmos.config', {
@@ -121,9 +128,10 @@ describe('resolves relative paths', () => {
       proxies: ['./path/to/proxy'],
       publicPath: './path/to/static',
       webpackConfigPath: './path/to/webpack',
+      outputPath: './path/to/output',
     });
 
-    ({ componentPaths, fixturePaths, globalImports, proxies, publicPath, webpackConfigPath } =
+    ({ componentPaths, fixturePaths, globalImports, proxies, publicPath, webpackConfigPath, outputPath } =
       getCosmosConfig('./custom-path/cosmos.config'));
   });
 
@@ -149,6 +157,10 @@ describe('resolves relative paths', () => {
 
   test('webpack config', () => {
     expect(webpackConfigPath).toEqual(path.join(__dirname, 'mock-cwd/custom-path/path/to/webpack'));
+  });
+
+  test('output path', () => {
+    expect(outputPath).toEqual(path.join(__dirname, 'mock-cwd/custom-path/path/to/output'));
   });
 });
 
