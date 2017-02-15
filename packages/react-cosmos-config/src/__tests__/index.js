@@ -66,7 +66,7 @@ describe('keeps absolute paths', () => {
   let publicPath;
   let webpackConfigPath;
   let outputPath;
-  
+
   beforeEach(() => {
     mockUserConfig('./mock-cwd/cosmos.config', {
       componentPaths: ['/path/to/components'],
