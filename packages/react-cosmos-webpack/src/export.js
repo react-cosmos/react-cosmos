@@ -17,6 +17,15 @@ const moduleExists = modulePath => {
   }
 };
 
+const arrangeExportInOutputPath = outputPath => {
+  fs.copySync(`${outputPath}/bundle.js`, `${outputPath}/loader/bundle.js`);
+  fs.copySync(`${outputPath}/index.html`, `${outputPath}/loader/index.html`);
+  fs.removeSync(`${outputPath}/bundle.js`);
+  fs.removeSync(`${outputPath}/index.html`);
+  fs.copySync(path.join(__dirname, 'static/favicon.ico'), `${outputPath}/favicon.ico`);
+  fs.copySync(path.join(__dirname, 'static/index.html'), `${outputPath}/index.html`);
+};
+
 module.exports = function startExport() {
   const cosmosConfigPath = argv.config;
   const cosmosConfig = getCosmosConfig(cosmosConfigPath);
@@ -45,12 +54,7 @@ module.exports = function startExport() {
     } else {
       console.log(stats);
       try {
-        fs.copySync(`${outputPath}/bundle.js`, `${outputPath}/loader/bundle.js`);
-        fs.copySync(`${outputPath}/index.html`, `${outputPath}/loader/index.html`);
-        fs.removeSync(`${outputPath}/bundle.js`);
-        fs.removeSync(`${outputPath}/index.html`);
-        fs.copySync(path.join(__dirname, 'static/favicon.ico'), `${outputPath}/favicon.ico`);
-        fs.copySync(path.join(__dirname, 'static/index.html'), `${outputPath}/index.html`);
+        arrangeExportInOutputPath(outputPath);
       } catch (err) {
         console.error('[Cosmos] Export Failed! See error below:');
         console.error(err);
