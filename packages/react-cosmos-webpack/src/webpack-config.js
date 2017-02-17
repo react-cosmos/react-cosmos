@@ -11,6 +11,7 @@ import getCosmosConfig from 'react-cosmos-config';
 export default function getWebpackConfig(
   userWebpackConfig,
   cosmosConfigPath,
+  shouldExport = false
 ) {
   const cosmosConfig = getCosmosConfig(cosmosConfigPath);
 
@@ -19,11 +20,13 @@ export default function getWebpackConfig(
     globalImports,
     hmrPlugin,
     hot,
+    outputPath
   } = cosmosConfig;
 
   const entry = [...globalImports];
 
-  if (hot) {
+
+  if (hot && !shouldExport) {
     // It's crucial for Cosmos to not depend on any user loader. This way the
     // webpack configs can point solely to the user deps for loaders.
     entry.push(`${require.resolve('webpack-hot-middleware/client')}?reload=true`);
@@ -34,7 +37,7 @@ export default function getWebpackConfig(
   const output = {
     // Webpack doesn't write to this path when saving build in memory, but
     // webpack-dev-middleware seems to crash without it
-    path: '/',
+    path: shouldExport ? outputPath : '/',
     // Also not a real file. HtmlWebpackPlugin uses this path for the script
     // tag it injects.
     filename: 'bundle.js',
@@ -63,7 +66,7 @@ export default function getWebpackConfig(
     }),
   }));
 
-  if (hmrPlugin) {
+  if (hmrPlugin && !shouldExport) {
     plugins.push(new webpack.HotModuleReplacementPlugin());
   }
 
