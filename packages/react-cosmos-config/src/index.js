@@ -18,6 +18,7 @@ const defaults = {
   port: 8989,
   proxies: [],
   webpackConfigPath: 'webpack.config',
+  outputPath: 'cosmos-export'
 };
 
 export default function getCosmosConfig(configPath = 'cosmos.config') {
