@@ -225,3 +225,55 @@ describe('loaders', () => {
     });
   });
 });
+
+describe('output', () => {
+  beforeAll(() => {
+    mockCosmosConfig = {
+      componentPaths: ['src/components'],
+      fixturePaths: ['test/fixtures'],
+      ignore: [],
+      globalImports: ['./global.css'],
+      hot: true,
+      outputPath: '__mock__outputPath'
+    };
+  });
+  describe('with shouldExport false', () => {
+    beforeAll(() => {
+      webpackConfig = getWebpackConfig(userWebpack1Config, cosmosConfigPath);
+    });
+    test('path is \'/\'', () => {
+      expect(webpackConfig.output.path).toEqual('/');
+    });
+  });
+  describe('with shouldExport true', () => {
+    beforeAll(() => {
+      webpackConfig = getWebpackConfig(userWebpack1Config, cosmosConfigPath, true);
+    });
+    test('path matches cosmos config outputPath', () => {
+      expect(webpackConfig.output.path).toEqual('__mock__outputPath');
+    });
+  });
+});
+
+describe('with shouldExport true', () => {
+  beforeAll(() => {
+    mockCosmosConfig = {
+      componentPaths: ['src/components'],
+      fixturePaths: ['test/fixtures'],
+      ignore: [],
+      globalImports: ['./global.css'],
+      hot: true,
+      hmrPlugin: true,
+      outputPath: '__mock__outputPath'
+    };
+    webpackConfig = getWebpackConfig(userWebpack2Config, cosmosConfigPath, true);
+  });
+  test('does not add hot middleware client to entries', () => {
+    expect(webpackConfig.entry).not.toContain(
+      `${require.resolve('webpack-hot-middleware/client')}?reload=true`,
+    );
+  });
+  test('does not add HotModuleReplacementPlugin to plugins', () => {
+    expect(webpackConfig.plugins).not.toContain(mockHotModuleReplacementPlugin);
+  });
+});
