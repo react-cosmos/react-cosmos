@@ -34,13 +34,9 @@ export default function getWebpackConfig(
   entry.push(require.resolve('./entry'));
 
   const output = {
-    // Webpack doesn't write to this path when saving build in memory, but
-    // webpack-dev-middleware seems to crash without it
     path: shouldExport ? outputPath : '/',
-    // Also not a real file. HtmlWebpackPlugin uses this path for the script
-    // tag it injects.
     filename: 'bundle.js',
-    publicPath: '/loader/',
+    publicPath: './',
   };
 
   // To support webpack 1 and 2 configuration formats. So we use the one that user passes
@@ -56,6 +52,12 @@ export default function getWebpackConfig(
       cosmosConfigPath,
     },
   });
+
+  plugins.push(new webpack.DefinePlugin({
+    'process.env': {
+      NODE_ENV: JSON.stringify(shouldExport ? 'production' : 'development')
+    }
+  }));
 
   plugins.push(new webpack.DefinePlugin({
     COSMOS_CONFIG: JSON.stringify({

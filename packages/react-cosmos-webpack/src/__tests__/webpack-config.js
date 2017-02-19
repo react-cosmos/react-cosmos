@@ -94,7 +94,7 @@ describe('without hmr', () => {
     expect(webpackConfig.output).toEqual({
       path: '/',
       filename: 'bundle.js',
-      publicPath: '/loader/',
+      publicPath: './',
     });
   });
 
@@ -104,8 +104,16 @@ describe('without hmr', () => {
     });
   });
 
-  test('calls define plugin with user config path', () => {
+  test('calls define plugin with NODE_ENV set to development', () => {
     expect(DefinePlugin.mock.calls[0][0]).toEqual({
+      'process.env': {
+        NODE_ENV: JSON.stringify('development')
+      },
+    });
+  });
+
+  test('calls define plugin with user config path', () => {
+    expect(DefinePlugin.mock.calls[1][0]).toEqual({
       COSMOS_CONFIG: JSON.stringify({
         containerQuerySelector: '__mock__containerQuerySelector',
       }),
@@ -256,7 +264,7 @@ describe('output', () => {
 });
 
 describe('with shouldExport true', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     mockCosmosConfig = {
       componentPaths: ['src/components'],
       fixturePaths: ['test/fixtures'],
@@ -264,7 +272,8 @@ describe('with shouldExport true', () => {
       globalImports: ['./global.css'],
       hot: true,
       hmrPlugin: true,
-      outputPath: '__mock__outputPath'
+      outputPath: '__mock__outputPath',
+      containerQuerySelector: '__mock__containerQuerySelector'
     };
     webpackConfig = getWebpackConfig(userWebpack2Config, cosmosConfigPath, true);
   });
@@ -273,7 +282,24 @@ describe('with shouldExport true', () => {
       `${require.resolve('webpack-hot-middleware/client')}?reload=true`,
     );
   });
-  test('does not add HotModuleReplacementPlugin to plugins', () => {
-    expect(webpackConfig.plugins).not.toContain(mockHotModuleReplacementPlugin);
+  test('does add NODE_ENV plugin as production ', () => {
+    expect(DefinePlugin.mock.calls[0][0]).toEqual({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      },
+    });
+  });
+  test('calls define plugin with user config path', () => {
+    expect(DefinePlugin.mock.calls[1][0]).toEqual({
+      COSMOS_CONFIG: JSON.stringify({
+        containerQuerySelector: '__mock__containerQuerySelector',
+      }),
+    });
+  });
+  test('DefinePlugin should be called exactly twice total', () => {
+    expect(DefinePlugin.mock.calls.length).toEqual(2);
+  });
+  test('adds DefinePlugin', () => {
+    expect(webpackConfig.plugins).toContain(mockDefinePlugin);
   });
 });

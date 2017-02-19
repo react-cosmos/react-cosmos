@@ -1,13 +1,13 @@
 /* global window */
 
-const loaderUri = '/loader/';
+const loaderUri = './loader/index.html';
 const { pathname } = window.location;
-const isLoader = pathname === loaderUri;
+const isLoader = pathname.match(/loader\/index\.html$/);
 
 // This has to be done before React is imported. We do it before importing
 // anything which might import React
 // https://github.com/facebook/react-devtools/issues/76#issuecomment-128091900
-if (isLoader) {
+if (isLoader && process.env.NODE_ENV === 'development') {
   window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;
 }
 

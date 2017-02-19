@@ -7,8 +7,6 @@ import getDefaultWebpackConfig from './default-webpack-config';
 import importModule from 'react-cosmos-utils/lib/import-module';
 import getCosmosConfig from 'react-cosmos-config';
 
-process.env.NODE_ENV = 'production';
-
 const moduleExists = modulePath => {
   try {
     return modulePath && require.resolve(modulePath) && true;
