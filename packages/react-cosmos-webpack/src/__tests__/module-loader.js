@@ -43,7 +43,7 @@ const loaderOutput = moduleLoader.call(loaderContext, loaderInput);
 
 // Replace actual request calls with a mock of their signature
 // eslint-disable-next-line no-unused-vars
-const __req = path => `__req(${path})`;
+const __req = (...args) => `__req(${[...args]})`;
 
 const [, componentsOutput, fixturesOutput, proxiesOutput, contextsOutput] =
   loaderOutput.match(/^components = (.+); fixtures = (.+); proxies = (.+); contexts = (.+);$/);
@@ -100,9 +100,9 @@ test('injects contexts', () => {
   const contexts = eval(`(${contextsOutput.replace(/require.context/g, '__req')})`);
 
   expect(contexts).toEqual([
-    '__req(components)',
-    '__req(components/__fixtures__/Foo)',
-    '__req(components/__fixtures__/Bar)',
+    '__req(components,false,/\\.jsx?$/)',
+    '__req(components/__fixtures__/Foo,false,/\\.jsx?$/)',
+    '__req(components/__fixtures__/Bar,false,/\\.jsx?$/)',
   ]);
 });
 
