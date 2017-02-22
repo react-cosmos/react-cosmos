@@ -81,3 +81,7 @@ Make sure `npm run lint` passes and add [xo](https://github.com/sindresorhus/xo)
 #### Use Git conscientiously
 
 Nothing fancy, just the usual the [GitHub flow.](https://guides.github.com/introduction/flow/)
+
+---
+
+Please note that this project is released with a [Contributor Code of Conduct.](CODE_OF_CONDUCT.md) By participating in this project you agree to abide by its terms.
