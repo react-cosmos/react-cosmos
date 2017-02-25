@@ -47,7 +47,7 @@ const getUniqueDirsOfUserModules = (components, fixtures) => {
 };
 
 const convertDirPathsToContextCalls = dirPaths =>
-  `[${dirPaths.map(dirPath => `require.context('${dirPath}', false)`)}]`;
+  `[${dirPaths.map(dirPath => `require.context('${dirPath}', false, /\\.jsx?$/)`)}]`;
 
 /**
  * Inject require calls in bundle for each component/fixture path and
