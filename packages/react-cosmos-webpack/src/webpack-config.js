@@ -36,7 +36,7 @@ export default function getWebpackConfig(
   const output = {
     path: shouldExport ? outputPath : '/',
     filename: 'bundle.js',
-    publicPath: './',
+    publicPath: shouldExport ? './' : '/loader/',
   };
 
   // To support webpack 1 and 2 configuration formats. So we use the one that user passes

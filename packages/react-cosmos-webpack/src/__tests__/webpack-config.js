@@ -90,14 +90,6 @@ describe('without hmr', () => {
     );
   });
 
-  test('creates proper output', () => {
-    expect(webpackConfig.output).toEqual({
-      path: '/',
-      filename: 'bundle.js',
-      publicPath: './',
-    });
-  });
-
   test('keeps user plugins', () => {
     userWebpack2Config.plugins.forEach(plugin => {
       expect(webpackConfig.plugins).toContain(plugin);
@@ -249,16 +241,24 @@ describe('output', () => {
     beforeAll(() => {
       webpackConfig = getWebpackConfig(userWebpack1Config, cosmosConfigPath);
     });
-    test('path is \'/\'', () => {
-      expect(webpackConfig.output.path).toEqual('/');
+    test('creates proper output', () => {
+      expect(webpackConfig.output).toEqual({
+        path: '/',
+        filename: 'bundle.js',
+        publicPath: '/loader/',
+      });
     });
   });
   describe('with shouldExport true', () => {
     beforeAll(() => {
       webpackConfig = getWebpackConfig(userWebpack1Config, cosmosConfigPath, true);
     });
-    test('path matches cosmos config outputPath', () => {
-      expect(webpackConfig.output.path).toEqual('__mock__outputPath');
+    test('creates proper output', () => {
+      expect(webpackConfig.output).toEqual({
+        path: '__mock__outputPath',
+        filename: 'bundle.js',
+        publicPath: './',
+      });
     });
   });
 });
