@@ -160,6 +160,29 @@ module.exports = {
 };
 ```
 
+#### Custom component paths
+
+The `componentPaths` option supports both dir and file paths. Most of the times using a dir path is enough (e.g. "src/components"), but we might need to target the exact file paths when component files sit next non-component files. Here's an example for this type of setup:
+
+```js
+// cosmos.config.js
+componentPaths: [
+  'src/components/A.jsx',
+  'src/components/B.jsx'
+],
+getComponentName: componentPath =>
+  componentPath.match(/src\/components\/(.+)\.jsx$/)[1]
+```
+
+> **Note: The `getComponentName` option needs to be added when using file paths.**
+
+We can also use [glob](https://github.com/isaacs/node-glob) instead of adding each component by hand:
+
+```js
+// cosmos.config.js
+componentPaths: glob.sync('src/components/*.jsx')
+```
+
 #### Using webpack 2
 
 From [the new webpack docs](https://webpack.js.org/guides/migrating/#mixing-es2015-with-amd-and-commonjs):
