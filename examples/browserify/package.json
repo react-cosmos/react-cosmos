@@ -1,0 +1,18 @@
+{
+  "name": "react-cosmos-browserify-example",
+  "description": "Example of using Cosmos with Browserify",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/browserify",
+  "license": "MIT",
+  "dependencies": {
+    "babelify": "^7.3.0",
+    "budo": "^9.2.1",
+    "require-globify": "^1.4.1"
+  },
+  "peerDependencies": {
+    "react": ">=0.13 <16"
+  },
+  "scripts": {
+    "start": "node ./server.js"
+  },
+  "xo": false
+}
