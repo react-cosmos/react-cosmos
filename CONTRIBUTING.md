@@ -55,7 +55,7 @@ npm install
 npm run install-react:0.13
 
 # Build example from source and test React Cosmos holistically
-cd examples/flatris
+cd examples/context
 npm install
 npm start
 

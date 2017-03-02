@@ -1,7 +1,0 @@
-{
-  "rootDir": "./",
-  "testEnvironment": "jsdom",
-  "moduleNameMapper": {
-    "\\.(css|less)$": "<rootDir>/../../packages/__mocks__/style-mock.js"
-  }
-}
