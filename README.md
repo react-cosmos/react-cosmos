@@ -162,7 +162,7 @@ module.exports = {
 
 #### Custom component paths
 
-The `componentPaths` option supports both dir and file paths. Most of the times using a dir path is enough (e.g. "src/components"), but we might need to target the exact file paths when component files sit next non-component files. Here's an example for this type of setup:
+The `componentPaths` option supports both dir and file paths. Most of the times using a dir path is enough (e.g. "src/components"), but we might need to target the exact file paths when component files sit next to non-component files. Here's an example for this type of setup:
 
 ```js
 // cosmos.config.js
