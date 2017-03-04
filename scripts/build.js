@@ -25,12 +25,12 @@ function runBuildTask(options) {
       `packages/${packageName}/src`,
       '--out-dir', `packages/${packageName}/lib`,
       '--copy-files',
-      '--ignore', '\'__tests__,__mocks_\''
+      '--ignore', '\'__tests__,__mocks__\''
     ]
   };
 
   const {name, args = []} = options.task || babelTask;
- 
+
   if (options.watch) {
     args.push('--watch');
   }
