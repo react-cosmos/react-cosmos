@@ -237,10 +237,12 @@ describe('output', () => {
       outputPath: '__mock__outputPath'
     };
   });
+
   describe('with shouldExport false', () => {
     beforeAll(() => {
       webpackConfig = getWebpackConfig(userWebpack1Config, cosmosConfigPath);
     });
+
     test('creates proper output', () => {
       expect(webpackConfig.output).toEqual({
         path: '/',
@@ -249,10 +251,12 @@ describe('output', () => {
       });
     });
   });
+
   describe('with shouldExport true', () => {
     beforeAll(() => {
       webpackConfig = getWebpackConfig(userWebpack1Config, cosmosConfigPath, true);
     });
+
     test('creates proper output', () => {
       expect(webpackConfig.output).toEqual({
         path: '__mock__outputPath',
@@ -277,11 +281,13 @@ describe('with shouldExport true', () => {
     };
     webpackConfig = getWebpackConfig(userWebpack2Config, cosmosConfigPath, true);
   });
+
   test('does not add hot middleware client to entries', () => {
     expect(webpackConfig.entry).not.toContain(
       `${require.resolve('webpack-hot-middleware/client')}?reload=true`,
     );
   });
+
   test('does add NODE_ENV plugin as production ', () => {
     expect(DefinePlugin.mock.calls[0][0]).toEqual({
       'process.env': {
@@ -289,6 +295,7 @@ describe('with shouldExport true', () => {
       },
     });
   });
+
   test('calls define plugin with user config path', () => {
     expect(DefinePlugin.mock.calls[1][0]).toEqual({
       COSMOS_CONFIG: JSON.stringify({
@@ -296,9 +303,11 @@ describe('with shouldExport true', () => {
       }),
     });
   });
+
   test('DefinePlugin should be called exactly twice total', () => {
     expect(DefinePlugin.mock.calls.length).toEqual(2);
   });
+
   test('adds DefinePlugin', () => {
     expect(webpackConfig.plugins).toContain(mockDefinePlugin);
   });

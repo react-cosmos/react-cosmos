@@ -43,7 +43,7 @@ describe('loader path', () => {
   let options;
 
   beforeAll(() => {
-    init('./loader/index.html');
+    init('/loader/index.html');
     options = mockStartLoader.mock.calls[0][0];
   });
 
