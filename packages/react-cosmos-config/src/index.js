@@ -1,11 +1,12 @@
 import path from 'path';
+import slash from 'slash';
 import resolveFrom from 'resolve-from';
 import importModule from 'react-cosmos-utils/lib/import-module';
 
 const resolveUserPath = (userPath, rootPath) =>
-  path.isAbsolute(userPath) ? userPath : (
+  slash(path.isAbsolute(userPath) ? userPath : (
     resolveFrom(rootPath, userPath) || path.join(rootPath, userPath)
-  );
+  ));
 
 const defaults = {
   componentPaths: [],
