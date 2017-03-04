@@ -17,25 +17,24 @@ const COMPONENT_PLAYGROUND = 'react-component-playground';
  * @returns promise Child process wrapped in a Promise.
  */
 function runBuildTask(options) {
-  const {packageName} = options;
-
   const babelTask = {
     name: 'babel',
     args: [
-      `packages/${packageName}/src`,
-      '--out-dir', `packages/${packageName}/lib`,
+      `packages/${options.packageName}/src`,
+      '--out-dir', `packages/${options.packageName}/lib`,
       '--copy-files',
-      '--ignore', '\'__tests__,__mocks__\''
+      '--ignore', '__tests__,__mocks__'
     ]
   };
 
-  const {name, args = []} = options.task || babelTask;
+  const task = options.task || babelTask;
+  const taskArgs = task.args || [];
 
   if (options.watch) {
-    args.push('--watch');
+    taskArgs.push('--watch');
   }
 
-  const promise = spawn(name, args, {
+  const promise = spawn(task.name, taskArgs, {
     cwd: path.join(__dirname, '..')
   });
 
