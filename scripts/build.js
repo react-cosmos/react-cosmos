@@ -7,25 +7,36 @@ const argv = require('yargs').argv;
 const COMPONENT_PLAYGROUND = 'react-component-playground';
 
 /**
- * Runs the build-babel or build-webpack npm target for the specified package.
- * @param options
- * @param options.npmTask Name of the npm task to run
- * @param options.watch Whether to apply watch argument
- * @param options.packageName Name of the React package to build
- * @returns promise Child process wrapped in a Promise
+ * Builds a package by running it through Babel or Webpack.
+ * @param {Object} options
+ * @param {Object} options.task
+ * @param {String} options.task.name Name of the task to run.
+ * @param {String} options.task.args Arguments that will be passed to the task.
+ * @param {Boolean} options.watch Whether to apply watch argument.
+ * @param {String} options.packageName Name of the React package to build.
+ * @returns promise Child process wrapped in a Promise.
  */
 function runBuildTask(options) {
-  const task = options.npmTask || 'build-babel';
-  const args = ['run', task];
+  const {packageName} = options;
+
+  const babelTask = {
+    name: 'babel',
+    args: [
+      `packages/${packageName}/src`,
+      '--out-dir', `packages/${packageName}/lib`,
+      '--copy-files',
+      '--ignore', '\'__tests__,__mocks_\''
+    ]
+  };
+
+  const {name, args = []} = options.task || babelTask;
+ 
   if (options.watch) {
-    args.push('--', '--watch');
+    args.push('--watch');
   }
 
-  const promise = spawn('npm', args, {
-    cwd: __dirname,
-    env: Object.assign({}, process.env, {
-      PACKAGE: options.packageName,
-    }),
+  const promise = spawn(name, args, {
+    cwd: path.join(__dirname, '..')
   });
 
   const child = promise.childProcess;
@@ -54,8 +65,11 @@ function runBuildTask(options) {
 function runBuildPlaygroundTask(watch) {
   return runBuildTask({
     packageName: COMPONENT_PLAYGROUND,
-    npmTask: 'build-webpack',
-    watch,
+    task: {
+      name: 'webpack',
+      args: ['--config', `packages/${COMPONENT_PLAYGROUND}/webpack.config.js`]
+    },
+    watch
   });
 }
 
@@ -73,8 +87,8 @@ function runBuildAllTask(packageNames) {
 
   // Build all packages and after finishing, build CP
   const promises = packageNames
-      .filter(pkg => pkg !== COMPONENT_PLAYGROUND)
-      .map(packageName => runBuildTask({ packageName }));
+    .filter(pkg => pkg !== COMPONENT_PLAYGROUND)
+    .map(packageName => runBuildTask({ packageName }));
 
   Promise.all(promises).then(() => {
     runBuildPlaygroundTask();
@@ -96,21 +110,25 @@ glob('./packages/react-*', null, (err, files) => {
   if (!targetPackage) {
     // Build all packages
     if (applyWatch) {
-      console.error(`Cannot build all packages with the --watch argument. If you'd like to --watch, please choose one of the existing packages:
-          ${formattedPackages}`);
+      console.error(
+        `Cannot build all packages with the --watch argument. If you'd like to --watch, please choose one of the existing packages:
+          ${formattedPackages}`
+      );
     } else {
       runBuildAllTask(allPackageNames, applyWatch);
     }
   } else if (targetPackage === COMPONENT_PLAYGROUND) {
     runBuildPlaygroundTask(applyWatch);
   } else if (allPackageNames.indexOf(targetPackage) === -1) {
-    console.error(`Invalid package! These are the existing packages:
-        ${formattedPackages}`);
+    console.error(
+      `Invalid package! These are the existing packages:
+        ${formattedPackages}`
+    );
   } else {
     // Build a single package
     runBuildTask({
       packageName: targetPackage,
-      watch: applyWatch,
+      watch: applyWatch
     });
   }
 });
