@@ -7,7 +7,7 @@
     "react": ">=0.13 <16"
   },
   "scripts": {
-    "start": "../../packages/react-cosmos-webpack/bin/cosmos.js"
+    "start": "node ../../packages/react-cosmos-webpack/bin/cosmos.js"
   },
   "xo": false
 }

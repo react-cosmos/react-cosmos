@@ -20,10 +20,10 @@
     "react": ">=0.14 <16"
   },
   "scripts": {
-    "start:webpack": "../../packages/react-cosmos-webpack/bin/cosmos.js --config webpack/cosmos.config.js",
+    "start:webpack": "node ../../packages/react-cosmos-webpack/bin/cosmos.js --config webpack/cosmos.config.js",
     "start:browserify": "node ./browserify/server.js",
     "start": "npm run start:webpack",
-    "test": "../../node_modules/.bin/jest --config ./jest.config.json cosmos.test.js"
+    "test": "node ../../node_modules/.bin/jest --config ./jest.config.json cosmos.test.js"
   },
   "xo": false
 }
