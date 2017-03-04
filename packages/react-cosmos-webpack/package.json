@@ -34,7 +34,8 @@
     "webpack": ">=1.13 <3"
   },
   "bin": {
-    "cosmos": "./bin/cosmos.js"
+    "cosmos": "./bin/cosmos.js",
+    "cosmos-export": "NODE_ENV=production ./bin/cosmos.js"
   },
   "xo": false
 }
