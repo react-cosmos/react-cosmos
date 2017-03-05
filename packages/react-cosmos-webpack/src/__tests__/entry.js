@@ -43,7 +43,7 @@ describe('loader path', () => {
   let options;
 
   beforeAll(() => {
-    init('/loader/');
+    init('/loader/index.html');
     options = mockStartLoader.mock.calls[0][0];
   });
 
@@ -88,6 +88,6 @@ describe('playground path', () => {
   });
 
   test('sends loaderUri to playground', () => {
-    expect(options.loaderUri).toBe('/loader/');
+    expect(options.loaderUri).toBe('./loader/index.html');
   });
 });

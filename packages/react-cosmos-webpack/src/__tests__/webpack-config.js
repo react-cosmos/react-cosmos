@@ -90,22 +90,22 @@ describe('without hmr', () => {
     );
   });
 
-  test('creates proper output', () => {
-    expect(webpackConfig.output).toEqual({
-      path: '/',
-      filename: 'bundle.js',
-      publicPath: '/loader/',
-    });
-  });
-
   test('keeps user plugins', () => {
     userWebpack2Config.plugins.forEach(plugin => {
       expect(webpackConfig.plugins).toContain(plugin);
     });
   });
 
-  test('calls define plugin with user config path', () => {
+  test('calls define plugin with NODE_ENV set to development', () => {
     expect(DefinePlugin.mock.calls[0][0]).toEqual({
+      'process.env': {
+        NODE_ENV: JSON.stringify('development')
+      },
+    });
+  });
+
+  test('calls define plugin with user config path', () => {
+    expect(DefinePlugin.mock.calls[1][0]).toEqual({
       COSMOS_CONFIG: JSON.stringify({
         containerQuerySelector: '__mock__containerQuerySelector',
       }),
@@ -223,5 +223,92 @@ describe('loaders', () => {
         something: 'bar',
       });
     });
+  });
+});
+
+describe('output', () => {
+  beforeAll(() => {
+    mockCosmosConfig = {
+      componentPaths: ['src/components'],
+      fixturePaths: ['test/fixtures'],
+      ignore: [],
+      globalImports: ['./global.css'],
+      hot: true,
+      outputPath: '__mock__outputPath'
+    };
+  });
+
+  describe('with shouldExport false', () => {
+    beforeAll(() => {
+      webpackConfig = getWebpackConfig(userWebpack1Config, cosmosConfigPath);
+    });
+
+    test('creates proper output', () => {
+      expect(webpackConfig.output).toEqual({
+        path: '/',
+        filename: 'bundle.js',
+        publicPath: '/loader/',
+      });
+    });
+  });
+
+  describe('with shouldExport true', () => {
+    beforeAll(() => {
+      webpackConfig = getWebpackConfig(userWebpack1Config, cosmosConfigPath, true);
+    });
+
+    test('creates proper output', () => {
+      expect(webpackConfig.output).toEqual({
+        path: '__mock__outputPath',
+        filename: 'bundle.js',
+        publicPath: './',
+      });
+    });
+  });
+});
+
+describe('with shouldExport true', () => {
+  beforeEach(() => {
+    mockCosmosConfig = {
+      componentPaths: ['src/components'],
+      fixturePaths: ['test/fixtures'],
+      ignore: [],
+      globalImports: ['./global.css'],
+      hot: true,
+      hmrPlugin: true,
+      outputPath: '__mock__outputPath',
+      containerQuerySelector: '__mock__containerQuerySelector'
+    };
+    webpackConfig = getWebpackConfig(userWebpack2Config, cosmosConfigPath, true);
+  });
+
+  test('does not add hot middleware client to entries', () => {
+    expect(webpackConfig.entry).not.toContain(
+      `${require.resolve('webpack-hot-middleware/client')}?reload=true`,
+    );
+  });
+
+  test('does add NODE_ENV plugin as production ', () => {
+    expect(DefinePlugin.mock.calls[0][0]).toEqual({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      },
+    });
+  });
+
+  test('calls define plugin with user config path', () => {
+    expect(DefinePlugin.mock.calls[1][0]).toEqual({
+      COSMOS_CONFIG: JSON.stringify({
+        containerQuerySelector: '__mock__containerQuerySelector',
+      }),
+    });
+  });
+
+  test('DefinePlugin should be called exactly twice total', () => {
+    expect(DefinePlugin.mock.calls.length).toEqual(2);
+  });
+
+  test('adds DefinePlugin', () => {
+    expect(webpackConfig.plugins).toContain(mockDefinePlugin);
   });
 });

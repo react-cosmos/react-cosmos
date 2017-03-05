@@ -18,6 +18,7 @@ const defaults = {
   port: 8989,
   proxies: [],
   webpackConfigPath: 'webpack.config',
+  outputPath: 'cosmos-export'
 };
 
 export default function getCosmosConfig(configPath = 'cosmos.config') {
@@ -32,7 +33,7 @@ export default function getCosmosConfig(configPath = 'cosmos.config') {
   const resolvedConfig = Object.keys(config).reduce((result, key) => {
     if (['componentPaths', 'fixturePaths', 'globalImports', 'proxies'].includes(key)) {
       result[key] = config[key].map(path => resolveUserPath(path, rootPath));
-    } else if (['publicPath', 'webpackConfigPath'].includes(key)) {
+    } else if (['publicPath', 'webpackConfigPath', 'outputPath'].includes(key)) {
       result[key] = resolveUserPath(config[key], rootPath);
     } else {
       result[key] = config[key];
