@@ -161,7 +161,7 @@ describe('resolves relative paths', () => {
   });
 
   test('output path', () => {
-    expect(outputPath).toEqual(path.join(__dirname, 'mock-cwd/custom-path/path/to/output'));
+    expect(outputPath).toEqual(slash(path.join(__dirname, 'mock-cwd/custom-path/path/to/output')));
   });
 });
 
