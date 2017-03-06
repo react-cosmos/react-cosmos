@@ -9,8 +9,6 @@
     "install-react:0.14": "npm run install-react -- react@0.14 react-dom@0.14 react-addons-test-utils@0.14",
     "install-react:15": "npm run install-react -- react@15 react-dom@15 react-addons-test-utils@15",
     "lint": "xo --quiet",
-    "build-babel": "babel -D --ignore '__tests__,__mocks__' packages/$PACKAGE/src -d packages/$PACKAGE/lib",
-    "build-webpack": "webpack --config packages/$PACKAGE/webpack.config.js",
     "build": "node ./scripts/build.js",
     "prepublish": "npm run bootstrap && npm run build",
     "publish-lerna": "npm run test && npm run build && lerna publish",

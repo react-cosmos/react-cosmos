@@ -28,7 +28,9 @@ const mockGetFilePaths = jest.fn(() => ({
 }));
 jest.mock('react-cosmos-voyager', () => mockGetFilePaths);
 
-const jsonLoader = require.resolve('json-loader');
+const slash = require('slash');
+
+const jsonLoader = slash(require.resolve('json-loader'));
 const moduleLoader = require('../module-loader');
 
 const mockAddDependency = jest.fn();
