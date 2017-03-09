@@ -1,8 +1,25 @@
-# React Cosmos [![Build Status](https://travis-ci.org/react-cosmos/react-cosmos.svg?branch=master)](https://travis-ci.org/react-cosmos/react-cosmos) [![Coverage Status](https://coveralls.io/repos/react-cosmos/react-cosmos/badge.svg?branch=master)](https://coveralls.io/r/react-cosmos/react-cosmos?branch=master) [![Join the chat at https://gitter.im/skidding/cosmos](https://img.shields.io/gitter/room/gitterHQ/gitter.svg)](https://gitter.im/skidding/cosmos?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md#how-to-contribute)
+<p align="center">
+  <img alt="Cosmos" src="cosmos-150.png">
+</p>
 
-DX tool for designing reusable [React](http://facebook.github.io/react/) components
+<p align="center">
+  <strong>React Cosmos</strong> ✭ DX tool for designing reusable <a href="http://facebook.github.io/react/">React</a> components
+</p>
 
-![Cosmos](cosmos-150.png)
+<p align="center">
+  <a href="https://travis-ci.org/react-cosmos/react-cosmos">
+    <img alt="Build status" src="https://travis-ci.org/react-cosmos/react-cosmos.svg?branch=master">
+  </a>
+  <a href="https://coveralls.io/r/react-cosmos/react-cosmos?branch=master">
+    <img alt="Coverage status" src="https://coveralls.io/repos/react-cosmos/react-cosmos/badge.svg?branch=master">
+  </a>
+  <a href="https://join-react-cosmos.now.sh/">
+    <img alt="Slack" src="https://join-react-cosmos.now.sh/badge.svg">
+  </a>
+  <a href="CONTRIBUTING.md#how-to-contribute">
+    <img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg">
+  </a>
+</p>
 
 Cosmos scans your project for React components and loads them inside [Component Playground](https://react-cosmos.github.io/),
 enabling you to:
@@ -30,6 +47,8 @@ Read the story of React Cosmos: [Fighting for Component Independence.](https://m
 ## Usage
 
 The easiest way to use React Cosmos is alongside webpack. Making it work with Browserify takes extra work, but a [complete example](examples/browserify) is available.
+
+*Have a question or idea to share? See you on [Slack](https://join-react-cosmos.now.sh/).*
 
 ### react-cosmos-webpack
 
