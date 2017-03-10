@@ -28,12 +28,12 @@ enabling you to:
 2. See state evolve in real-time while interacting with running
 instances
 
+![Component Playground](intro.gif)
+
 > Working with Cosmos improves component design because it
 surfaces implicit dependencies. It also forces you to define sane inputs
 for your components, making them predictable and easier to debug down the
 road.
-
-![Component Playground](intro.gif)
 
 Read the story of React Cosmos: [Fighting for Component Independence.](https://medium.com/@skidding/fighting-for-component-independence-2a762ee53272)
 
@@ -281,8 +281,8 @@ export default () => {
 
 *What proxy would you create to improve DX?*
 
-## Thank you!
+## Join the component revolution!
 
-Explore the [Contributing Guide](CONTRIBUTING.md) for more information.
+This project welcomes all. Check out the [Contributing Guide](CONTRIBUTING.md) to read about the project's mission and how to get involved. Ask anything on [Slack](https://join-react-cosmos.now.sh/). Let's make UI development fun!
 
 *Thanks to [Kreativa Studio](http://www.kreativa-studio.com/) for the Cosmos logo.*
