@@ -21,11 +21,11 @@
   </a>
 </p>
 
-Cosmos scans your project for React components and loads them inside [Component Playground](https://react-cosmos.github.io/),
+Cosmos scans your project for components and loads them inside [Component Playground](https://react-cosmos.github.io/),
 enabling you to:
 
-1. Render your components under any combination of props, context and state
-2. See component states evolve in real-time as you interact with running
+1. Render components under any combination of props, context and state
+2. See state evolve in real-time while interacting with running
 instances
 
 > Working with Cosmos improves component design because it
