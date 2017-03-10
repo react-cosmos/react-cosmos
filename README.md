@@ -104,11 +104,12 @@ Bonus: Create `npm run cosmos` script for extra sugar
 **Voilà!** Now you can [extend your config](#configuration), start [creating fixtures](docs/fixtures.md) or be kind and [report what went wrong.](https://github.com/react-cosmos/react-cosmos/issues)
 
 Also see:
+
 - [Configuring index.html](#configuring-indexhtml)
 - [Option dump](#option-dump)
 - [Custom component paths](#custom-component-paths)
-- [Using webpack 2](using-webpack-2)
-- [Using babel-node](using-babel-node)
+- [Using webpack 2](#using-webpack-2)
+- [Using babel-node](#using-babel-node)
 
 #### Configuring index.html
 
