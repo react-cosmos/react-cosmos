@@ -242,7 +242,7 @@ Define `.babelrc` to enable ES6 in config & fixtures, using the CRA preset.
 
 Finally, make sure to put [proxies](#proxies) in the `src` dir, the only place included by the CRA Babel loader.
 
-CRA + Cosmos example: [Flatris](https://github.com/skidding/flatris)
+*CRA + Cosmos example: [Flatris](https://github.com/skidding/flatris)*
 
 #### Using Next.js
 
@@ -263,7 +263,7 @@ Define `.babelrc` to enable ES6 in config & fixtures, using the Next.js preset.
 }
 ```
 
-Next.js + Cosmos example: [Illustrated Algorithms](https://github.com/skidding/illustrated-algorithms)
+*Next.js + Cosmos example: [Illustrated Algorithms](https://github.com/skidding/illustrated-algorithms)*
 
 #### Using webpack 2
 
