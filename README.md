@@ -240,7 +240,7 @@ Define `.babelrc` to enable ES6 in config & fixtures, using the CRA preset.
 }
 ```
 
-Finally, make sure to put [proxies](#Proxies) in the `src` dir, the only place included by the CRA Babel loader.
+Finally, make sure to put [proxies](#proxies) in the `src` dir, the only place included by the CRA Babel loader.
 
 #### Using Next.js
 
