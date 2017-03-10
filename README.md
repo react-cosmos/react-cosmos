@@ -285,4 +285,4 @@ export default () => {
 
 This project welcomes all. Check out the [Contributing Guide](CONTRIBUTING.md) to read about the project's mission and how to get involved. Ask anything on [Slack](https://join-react-cosmos.now.sh/). Let's make UI development fun!
 
-*Thanks to [Kreativa Studio](http://www.kreativa-studio.com/) for the Cosmos logo.*
+Thanks to [Kreativa Studio](http://www.kreativa-studio.com/) for the Cosmos logo.
