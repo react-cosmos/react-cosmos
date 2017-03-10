@@ -48,6 +48,11 @@ Read the story of React Cosmos: [Fighting for Component Independence.](https://m
 
 The easiest way to use React Cosmos is alongside webpack. Making it work with Browserify takes extra work, but a [complete example](examples/browserify) is available.
 
+Jump to:
+
+- [react-cosmos-webpack](#react-cosmos-webpack)
+- [Proxies](#proxies)
+
 *Have a question or idea to share? See you on [Slack](https://join-react-cosmos.now.sh/).*
 
 ### react-cosmos-webpack
