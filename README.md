@@ -113,6 +113,8 @@ Also see:
 - [Configuring index.html](#configuring-indexhtml)
 - [Option dump](#option-dump)
 - [Custom component paths](#custom-component-paths)
+- [Using Create React App](#using-create-react-app)
+- [Using Next.js](#using-nextjs)
 - [Using webpack 2](#using-webpack-2)
 - [Using babel-node](#using-babel-node)
 
@@ -215,6 +217,48 @@ We can also use [glob](https://github.com/isaacs/node-glob) instead of adding ea
 ```js
 // cosmos.config.js
 componentPaths: glob.sync('src/components/*.jsx')
+```
+
+#### Using Create React App
+
+It's preferred to use CRA's own webpack config (instead of duplicating it).
+
+```js
+// cosmos.config.js
+export default {
+  componentPaths: ['src/components'],
+  containerQuerySelector: '#root',
+  webpackConfigPath: 'react-scripts/config/webpack.config.dev'
+};
+```
+
+Define `.babelrc` to enable ES6 in config & fixtures, using the CRA preset.
+
+```json
+{
+  "presets": ["react-app"]
+}
+```
+
+Finally, make sure to put [proxies](#Proxies) in the `src` dir, the only place included by the CRA Babel loader.
+
+#### Using Next.js
+
+Next.js apps run on both client & server, so compilation is done via Babel plugins instead of webpack loaders. This means we can rely on Cosmos' default webpack config.
+
+```js
+// cosmos.config.js
+export default {
+  componentPaths: ['components'],
+};
+```
+
+Define `.babelrc` to enable ES6 in config & fixtures, using the Next.js preset.
+
+```json
+{
+  "presets": ["next/babel"],
+}
 ```
 
 #### Using webpack 2
