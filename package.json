@@ -52,7 +52,7 @@
     "lcov-result-merger": "^1.2.0",
     "lerna": "2.0.0-beta.37",
     "less": "^2.7.1",
-    "less-loader": "^2.2.3",
+    "less-loader": "^3.0.0",
     "mocha": "^3.0.2",
     "react": ">=0.13 <16",
     "react-addons-test-utils": "<16",
