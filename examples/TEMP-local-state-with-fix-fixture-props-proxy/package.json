@@ -1,0 +1,16 @@
+{
+  "name": "react-cosmos-local-state-example",
+  "description": "Example of injecting and serializing component local state",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/local-state",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=0.13 <16"
+  },
+  "scripts": {
+    "start": "node ../../packages/react-cosmos-webpack/bin/cosmos.js"
+  },
+  "xo": false,
+  "dependencies": {
+    "lodash.reduce": "^4.5.0"
+  }
+}
