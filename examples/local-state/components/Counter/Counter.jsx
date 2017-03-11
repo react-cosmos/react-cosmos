@@ -23,8 +23,12 @@ export default class Counter extends React.Component {
         className="CounterButton"
         onClick={this.onButtonClick}
       >
-        {this.state.value} times
+        {`${this.props.name} clicked ${this.state.value} times`}
       </button>
     );
   }
 }
+
+Counter.defaultProps = {
+  name: 'Unnamed Counter'
+};

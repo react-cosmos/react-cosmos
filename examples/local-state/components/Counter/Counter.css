@@ -1,5 +1,5 @@
 .CounterButton {
-  display: inline-block;
+  display: block;
   padding: 6px 12px;
   box-shadow: inset 0px 1px 0px 0px #f7c5c0;
   border: 1px solid #d83526;
@@ -11,6 +11,7 @@
   text-shadow: 0px 1px 0px #b23e35;
   cursor: pointer;
   outline: none;
+  margin-bottom: 10px;
 }
 
 .CounterButton:active {
