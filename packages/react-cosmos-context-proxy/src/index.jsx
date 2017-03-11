@@ -1,5 +1,4 @@
 import React from 'react';
-import omit from 'lodash.omit';
 
 const defaults = {
   fixtureKey: 'context',
@@ -25,9 +24,7 @@ export default function createContextProxy(options) {
 
       return React.createElement(nextProxy.value, { ...this.props,
         nextProxy: nextProxy.next(),
-        // TODO: No longer omit when props will be read from fixture.props
-        // https://github.com/react-cosmos/react-cosmos/issues/217
-        fixture: omit(fixture, fixtureKey),
+        fixture,
         onComponentRef,
       });
     }

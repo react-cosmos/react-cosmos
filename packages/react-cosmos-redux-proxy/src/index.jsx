@@ -1,5 +1,4 @@
 import React from 'react';
-import omit from 'lodash.omit';
 
 const defaults = {
   fixtureKey: 'reduxState',
@@ -68,9 +67,7 @@ export default function createReduxProxy(options) {
 
       return React.createElement(nextProxy.value, { ...this.props,
         nextProxy: nextProxy.next(),
-        // TODO: No longer omit when props will be read from fixture.props
-        // https://github.com/react-cosmos/react-cosmos/issues/217
-        fixture: omit(fixture, fixtureKey),
+        fixture,
         onComponentRef,
         // Disable StateProxy when Redux state is available, otherwise the entire
         // Redux store would be duplicated from the connect() component's state
