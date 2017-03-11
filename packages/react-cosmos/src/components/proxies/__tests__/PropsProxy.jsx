@@ -4,7 +4,9 @@ import PropsProxy from '../PropsProxy';
 
 const Component = () => {};
 const fixture = {
-  foo: 'bar',
+  props: {
+    foo: 'bar'
+  },
   children: [
     <p key="1">Child 1</p>,
   ],
