@@ -98,8 +98,4 @@ describe('fixture context', () => {
       color: 'red',
     });
   });
-
-  test('omits fixture.context in child fixture', () => {
-    expect(childProps.fixture.context).toBeUndefined();
-  });
 });
