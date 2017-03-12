@@ -1,0 +1,20 @@
+{
+  "name": "react-cosmos-normalize-props-proxy",
+  "version": "2.0.0-beta.6",
+  "description": "Seperate props in fixtures",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-normalize-props-proxy",
+  "license": "MIT",
+  "files": [
+    "lib",
+    "index.js"
+  ],
+  "main": "lib/index.js",
+  "dependencies": {
+    "lodash.omit": "^4.5.0",
+    "lodash.pick": "^4.5.0"
+  },
+  "peerDependencies": {
+    "react": ">=0.13 <16"
+  },
+  "xo": false
+}
