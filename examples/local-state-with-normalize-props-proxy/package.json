@@ -9,8 +9,5 @@
   "scripts": {
     "start": "node ../../packages/react-cosmos-webpack/bin/cosmos.js"
   },
-  "xo": false,
-  "dependencies": {
-    "lodash.reduce": "^4.5.0"
-  }
+  "xo": false
 }
