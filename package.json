@@ -58,7 +58,7 @@
     "react-addons-test-utils": "<16",
     "react-dom": "<16",
     "rimraf": "^2.5.4",
-    "sinon": "^1.17.5",
+    "sinon": "^2.0.0",
     "sinon-chai": "^2.8.0",
     "style-loader": "^0.13.1",
     "traverse": "^0.6.6",
