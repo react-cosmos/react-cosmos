@@ -83,10 +83,6 @@ describe('fixture without state and component without initial state', () => {
 
   commonTests();
 
-  test('does not omit state from fixture sent to next proxy', () => {
-    expect(childProps.fixture.state).toBe(undefined);
-  });
-
   test('serializes component state', () => {
     expect(ReactComponentTree.serialize.mock.calls[0][0]).toBe(componentRef);
   });
