@@ -28,36 +28,28 @@ const isSerializable = obj => {
 };
 
 const splitUnserializableParts = obj => {
-  const splitResult = {
-    serializable: { },
-    unserializable: { }
-  };
-
-  const { serializable, unserializable } = splitResult;
+  const serializable = {};
+  const unserializable = {};
 
   Object.keys(obj).forEach(key => {
     if (isSerializable(obj[key])) {
       serializable[key] = obj[key];
     } else if (key === 'props' && isPlainObject(obj[key])) {
       Object.keys(obj.props).forEach(propKey => {
-        let propHome = 'serializable';
-        if (!isSerializable(obj.props[propKey])) {
-          propHome = 'unserializable';
+        const propVal = obj.props[propKey];
+        const propHome = isSerializable(propVal) ? serializable : unserializable;
+
+        if (!propHome.props) {
+          propHome.props = {};
         }
-        if (splitResult[propHome].props) {
-          splitResult[propHome].props[propKey] = obj.props[propKey];
-        } else {
-          splitResult[propHome].props = {
-            [propKey]: obj.props[propKey]
-          };
-        }
+        propHome.props[propKey] = propVal;
       });
     } else {
       unserializable[key] = obj[key];
     }
   });
 
-  return splitResult;
+  return { serializable, unserializable };
 };
 
 export default splitUnserializableParts;
