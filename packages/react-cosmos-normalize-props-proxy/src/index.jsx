@@ -2,30 +2,28 @@ import React from 'react';
 import omit from 'lodash.omit';
 import pick from 'lodash.pick';
 
+const notProps = ['children', 'state', 'context', 'reduxState'];
+
 const getFixedFixture = fixture => {
   if (fixture.props) {
-    // the fixture doesn't need fixing if it has props
+    // proxy does not support partially upgraded fixture
     return fixture;
   }
 
-  const notProps = ['children', 'state', 'context', 'reduxState'];
-
-  const fixedFixture = Object.assign(pick(fixture, notProps), {
+  return {
+    ...pick(fixture, notProps),
     props: omit(fixture, notProps)
-  });
-  return fixedFixture;
+  };
 };
 
 class NormalizePropsProxy extends React.Component {
   render() {
     const { nextProxy, fixture } = this.props;
 
-    const fixedFixture = getFixedFixture(fixture);
-
     return React.createElement(nextProxy.value, {
       ...this.props,
       nextProxy: nextProxy.next(),
-      fixture: fixedFixture
+      fixture: getFixedFixture(fixture)
     });
   }
 }
