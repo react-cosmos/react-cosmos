@@ -37,7 +37,7 @@ const startServer = (argv, config) => {
   mockGetCosmosConfig = jest.fn(() => mockConfig);
   jest.mock('react-cosmos-config', () => mockGetCosmosConfig);
 
-  // yargs.argv gets destructured as soon as the ./server module is required,
+  // \yargs.argv gets destructured as soon as the ./server module is required,
   // so we need to mock yargs first
   require('../server')();
 };
