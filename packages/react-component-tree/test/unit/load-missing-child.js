@@ -11,7 +11,7 @@ describe('UNIT Load missing child', () => {
       },
     };
 
-    sinon.stub(React, 'createElement', () => {
+    sinon.stub(React, 'createElement').callsFake(() => {
       throw new Error('Invalid component');
     });
 

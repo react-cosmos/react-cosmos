@@ -53,7 +53,7 @@ const getFilePaths = ({
   componentPaths.forEach(componentPath => {
     if (fs.lstatSync(componentPath).isFile()) {
       if (typeof getComponentName !== 'function') {
-        throw new Error('Must implement getComponentName when using exact file paths in componentPaths');
+        throw new TypeError('Must implement getComponentName when using exact file paths in componentPaths');
       }
 
       const componentDir = path.dirname(componentPath);

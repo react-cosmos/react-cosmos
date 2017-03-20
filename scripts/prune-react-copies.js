@@ -7,7 +7,7 @@ const glob = require('glob');
 const rimraf = require('rimraf');
 
 glob.sync('./packages/*/node_modules/react{,-dom}').forEach(
-  function removeUnwantedReactCopies(reactCopyPath) {
+  reactCopyPath => {
     rimraf.sync(reactCopyPath);
     console.log('WARNING: Removed unwanted React copy', reactCopyPath);
   });
