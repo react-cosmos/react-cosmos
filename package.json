@@ -60,7 +60,7 @@
     "rimraf": "^2.5.4",
     "sinon": "^2.0.0",
     "sinon-chai": "^2.8.0",
-    "style-loader": "^0.14.0",
+    "style-loader": "^0.15.0",
     "traverse": "^0.6.6",
     "url-loader": "^0.5.7",
     "webpack": "^2.2.0",
