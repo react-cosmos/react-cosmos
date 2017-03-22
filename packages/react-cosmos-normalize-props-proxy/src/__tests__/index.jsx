@@ -16,6 +16,11 @@ let componentRef;
 let childWrapper;
 let childProps;
 
+const mockContext = {};
+const mockChildren = [];
+const mockState = {};
+const mockReduxState = {};
+
 const renderProxy = fixture => {
   componentRef = {};
 
@@ -47,10 +52,10 @@ const commonTests = () => {
   });
 
   test('sends designated root level fixture fields to next proxy unmodified', () => {
-    expect(childProps.fixture.context).toEqual({});
-    expect(childProps.fixture.children).toEqual([]);
-    expect(childProps.fixture.state).toEqual({});
-    expect(childProps.fixture.reduxState).toEqual({});
+    expect(childProps.fixture.context).toEqual(mockContext);
+    expect(childProps.fixture.children).toEqual(mockChildren);
+    expect(childProps.fixture.state).toEqual(mockState);
+    expect(childProps.fixture.reduxState).toEqual(mockReduxState);
   });
 
   test('bubbles up component ref', () => {
@@ -66,10 +71,10 @@ const commonTests = () => {
 describe('fixture without fixture.props', () => {
   beforeAll(() => {
     renderProxy({
-      context: {},
-      children: [],
-      state: {},
-      reduxState: {},
+      context: mockContext,
+      children: mockChildren,
+      state: mockState,
+      reduxState: mockReduxState,
       foo: 'bar',
     });
   });
@@ -84,10 +89,10 @@ describe('fixture without fixture.props', () => {
 describe('fixture with fixture.props', () => {
   beforeAll(() => {
     renderProxy({
-      context: {},
-      children: [],
-      state: {},
-      reduxState: {},
+      context: mockContext,
+      children: mockChildren,
+      state: mockState,
+      reduxState: mockReduxState,
       foo: 'bar',
       props: {
         car: 'honda',
