@@ -2,9 +2,11 @@ import React from 'react';
 import omit from 'lodash.omit';
 import pick from 'lodash.pick';
 
-const notProps = ['children', 'state', 'context', 'reduxState'];
+const defaults = {
+  notProps: ['children', 'state', 'context', 'reduxState'],
+};
 
-const getFixedFixture = fixture => {
+const getFixedFixture = (fixture, notProps) => {
   if (fixture.props) {
     // proxy does not support partially upgraded fixture
     return fixture;
@@ -16,24 +18,30 @@ const getFixedFixture = fixture => {
   };
 };
 
-class NormalizePropsProxy extends React.Component {
-  render() {
-    const { nextProxy, fixture } = this.props;
+export default function createNormalizePropsProxy(options) {
+  const {
+    notProps
+  } = { ...defaults, ...options };
 
-    return React.createElement(nextProxy.value, {
-      ...this.props,
-      nextProxy: nextProxy.next(),
-      fixture: getFixedFixture(fixture)
-    });
+  class NormalizePropsProxy extends React.Component {
+    render() {
+      const { nextProxy, fixture } = this.props;
+
+      return React.createElement(nextProxy.value, {
+        ...this.props,
+        nextProxy: nextProxy.next(),
+        fixture: getFixedFixture(fixture, notProps)
+      });
+    }
   }
+
+  NormalizePropsProxy.propTypes = {
+    nextProxy: React.PropTypes.shape({
+      value: React.PropTypes.func,
+      next: React.PropTypes.func
+    }).isRequired,
+    fixture: React.PropTypes.object.isRequired
+  };
+
+  return NormalizePropsProxy;
 }
-
-NormalizePropsProxy.propTypes = {
-  nextProxy: React.PropTypes.shape({
-    value: React.PropTypes.func,
-    next: React.PropTypes.func
-  }).isRequired,
-  fixture: React.PropTypes.object.isRequired
-};
-
-export default () => NormalizePropsProxy;
