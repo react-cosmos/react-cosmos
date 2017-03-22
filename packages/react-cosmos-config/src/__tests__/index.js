@@ -41,7 +41,7 @@ describe('resolves module paths', () => {
 
   beforeEach(() => {
     mockUserConfig('./mock-cwd/cosmos.config', {
-      // react-cosmos-utils chosen arbitrarily from project's deps
+      // \react-cosmos-utils chosen arbitrarily from project's deps
       globalImports: ['react-cosmos-utils/src/import-module'],
       proxies: ['react-cosmos-utils/src/linked-list']
     });

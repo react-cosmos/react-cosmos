@@ -28,7 +28,7 @@ const userWebpack2Config = {
     rules: [userRule],
   },
   plugins: [
-    // fake plugins, something to compare identity with
+    // Fake plugins, something to compare identity with
     {}, {},
   ],
 };
