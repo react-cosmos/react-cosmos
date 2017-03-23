@@ -8,7 +8,7 @@ const defaults = {
 
 const getFixedFixture = (fixture, notProps) => {
   if (fixture.props) {
-    // proxy does not support partially upgraded fixture
+    // Proxy does not support partially upgraded fixture
     return fixture;
   }
 
