@@ -52,10 +52,10 @@ const commonTests = () => {
   });
 
   test('sends designated root level fixture fields to next proxy unmodified', () => {
-    expect(childProps.fixture.context).toEqual(mockContext);
-    expect(childProps.fixture.children).toEqual(mockChildren);
-    expect(childProps.fixture.state).toEqual(mockState);
-    expect(childProps.fixture.reduxState).toEqual(mockReduxState);
+    expect(childProps.fixture.context).toBe(mockContext);
+    expect(childProps.fixture.children).toBe(mockChildren);
+    expect(childProps.fixture.state).toBe(mockState);
+    expect(childProps.fixture.reduxState).toBe(mockReduxState);
   });
 
   test('bubbles up component ref', () => {
