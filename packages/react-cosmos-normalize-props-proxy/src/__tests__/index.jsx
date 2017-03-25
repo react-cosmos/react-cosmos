@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import createContextProxy from '../index';
+import createNormalizePropsProxy from '../index';
 
 const NextProxy = () => {};
 const nextProxyNext = {};
@@ -11,24 +11,23 @@ const nextProxy = {
 const onComponentRef = jest.fn();
 const onFixtureUpdate = jest.fn();
 
+let NormalizePropsProxy;
 let componentRef;
 let childWrapper;
 let childProps;
-let getChildContext;
 
-const renderProxy = (fixture, options) => {
+const mockContext = {};
+const mockChildren = [];
+const mockState = {};
+const mockReduxState = {};
+
+const renderProxy = fixture => {
   componentRef = {};
 
   jest.resetAllMocks();
-
-  const ContextProxy = createContextProxy({
-    ...options,
-    childContextTypes: {
-      color: React.PropTypes.string,
-    },
-  });
+  NormalizePropsProxy = createNormalizePropsProxy();
   const wrapper = shallow(
-    <ContextProxy
+    <NormalizePropsProxy
       nextProxy={nextProxy}
       component={() => {}}
       fixture={fixture}
@@ -38,7 +37,6 @@ const renderProxy = (fixture, options) => {
   );
   childWrapper = wrapper.at(0);
   childProps = childWrapper.props();
-  getChildContext = wrapper.instance().getChildContext();
 
   // Simulate rendering
   childProps.onComponentRef(componentRef);
@@ -53,8 +51,11 @@ const commonTests = () => {
     expect(childProps.nextProxy).toBe(nextProxyNext);
   });
 
-  test('sends fixture props to next proxy', () => {
-    expect(childProps.fixture.foo).toEqual('bar');
+  test('sends designated root level fixture fields to next proxy unmodified', () => {
+    expect(childProps.fixture.context).toBe(mockContext);
+    expect(childProps.fixture.children).toBe(mockChildren);
+    expect(childProps.fixture.state).toBe(mockState);
+    expect(childProps.fixture.reduxState).toBe(mockReduxState);
   });
 
   test('bubbles up component ref', () => {
@@ -67,35 +68,44 @@ const commonTests = () => {
   });
 };
 
-describe('fixture without context', () => {
+describe('fixture without fixture.props', () => {
   beforeAll(() => {
     renderProxy({
+      context: mockContext,
+      children: mockChildren,
+      state: mockState,
+      reduxState: mockReduxState,
       foo: 'bar',
     });
   });
 
   commonTests();
 
-  test('child context is empty', () => {
-    expect(getChildContext).toBeUndefined();
+  test('sends root level fixture props to next proxy on fixture.props', () => {
+    expect(childProps.fixture.props.foo).toEqual('bar');
   });
 });
 
-describe('fixture context', () => {
+describe('fixture with fixture.props', () => {
   beforeAll(() => {
     renderProxy({
+      context: mockContext,
+      children: mockChildren,
+      state: mockState,
+      reduxState: mockReduxState,
       foo: 'bar',
-      context: {
-        color: 'red',
+      props: {
+        car: 'honda',
       },
     });
   });
 
   commonTests();
 
-  test('child context is populated', () => {
-    expect(getChildContext).toEqual({
-      color: 'red',
-    });
+  test('does not send root level fixture props to next proxy on fixture.props', () => {
+    expect(childProps.fixture.props.foo).toBeUndefined();
+  });
+  test('sends existings fixture.props to next proxy unmodified', () => {
+    expect(childProps.fixture.props.car).toEqual('honda');
   });
 });

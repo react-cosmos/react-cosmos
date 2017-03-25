@@ -1,4 +1,5 @@
 import React from 'react';
+import merge from 'lodash.merge';
 import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
 import createLinkedList from 'react-cosmos-utils/lib/linked-list';
 
@@ -122,10 +123,7 @@ class Loader extends React.Component {
         key={fixtureUpdateId}
         nextProxy={firstProxy.next()}
         component={components[component]}
-        fixture={{
-          ...fixture.unserializable,
-          ...fixture.serializable,
-        }}
+        fixture={merge(fixture.unserializable, fixture.serializable)}
         onComponentRef={
           () => { /* noope */ }
         }

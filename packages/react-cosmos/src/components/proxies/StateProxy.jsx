@@ -1,5 +1,4 @@
 import React from 'react';
-import omit from 'lodash.omit';
 import isEqual from 'lodash.isequal';
 import ReactComponentTree from 'react-component-tree';
 
@@ -92,19 +91,12 @@ export default function createStateProxy(options) {
         onComponentRef,
       } = this;
       const {
-        nextProxy,
-        fixture,
-        disableLocalState,
+        nextProxy
       } = props;
-
-      // TODO: No longer omit when props will be read from fixture.props
-      // https://github.com/react-cosmos/react-cosmos/issues/217
-      const childFixture = disableLocalState ? fixture : omit(fixture, 'state');
 
       return React.createElement(nextProxy.value, { ...props,
         nextProxy: nextProxy.next(),
-        fixture: childFixture,
-        onComponentRef,
+        onComponentRef
       });
     }
   }

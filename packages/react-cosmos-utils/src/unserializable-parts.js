@@ -28,14 +28,22 @@ const isSerializable = obj => {
 };
 
 const splitUnserializableParts = obj => {
-  // TODO: Perform nested separation of unserializable parts. Required if props
-  // will move to fixture.props https://github.com/react-cosmos/react-cosmos/issues/217
   const serializable = {};
   const unserializable = {};
 
   Object.keys(obj).forEach(key => {
     if (isSerializable(obj[key])) {
       serializable[key] = obj[key];
+    } else if (key === 'props' && isPlainObject(obj[key])) {
+      Object.keys(obj.props).forEach(propKey => {
+        const propVal = obj.props[propKey];
+        const propHome = isSerializable(propVal) ? serializable : unserializable;
+
+        if (!propHome.props) {
+          propHome.props = {};
+        }
+        propHome.props[propKey] = propVal;
+      });
     } else {
       unserializable[key] = obj[key];
     }
