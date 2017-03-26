@@ -36,7 +36,7 @@
     "eslint-plugin-react": "^6.10.2",
     "file-loader": "^0.10.0",
     "glob": "^7.1.1",
-    "inject-loader": "^2.0.1",
+    "inject-loader": "^3.0.0",
     "jest": "^19.0.0",
     "jquery": "^3.1.0",
     "karma": "^1.2.0",
