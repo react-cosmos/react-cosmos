@@ -34,7 +34,7 @@
     "eslint-config-xo-react": "^0.11.0",
     "eslint-import-resolver-webpack": "^0.8.1",
     "eslint-plugin-react": "^6.10.2",
-    "file-loader": "^0.10.0",
+    "file-loader": "^0.11.0",
     "glob": "^7.1.1",
     "inject-loader": "^2.0.1",
     "jest": "^19.0.0",
