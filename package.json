@@ -50,7 +50,7 @@
     "karma-sinon-chai": "^1.2.3",
     "karma-webpack": "^2.0.1",
     "lcov-result-merger": "^1.2.0",
-    "lerna": "2.0.0-beta.37",
+    "lerna": "2.0.0-rc.1",
     "less": "^2.7.1",
     "less-loader": "^3.0.0",
     "mocha": "^3.0.2",
