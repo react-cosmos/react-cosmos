@@ -11,6 +11,7 @@ const useCases = {
     components/__fixtures__/Foo/blank.js
     components/__fixtures__/nested/Bar/one.js
     components/__fixtures__/nested/Bar/two.json
+    components/__fixtures__/nested/Bar/three.jsx
     components/__fixtures__/nested/Baz/blank.js
   `),
   'relative-fixtures-component-dir': (`
@@ -19,6 +20,7 @@ const useCases = {
     components/nested/Bar/Bar.jsx
     components/nested/Bar/__fixtures__/one.js
     components/nested/Bar/__fixtures__/two.json
+    components/nested/Bar/__fixtures__/three.jsx
     components/nested/Baz/Baz.jsx
     components/nested/Baz/__fixtures__/blank.js
   `),
@@ -29,6 +31,7 @@ const useCases = {
     fixtures/Foo/blank.js
     fixtures/nested/Bar/one.js
     fixtures/nested/Bar/two.json
+    fixtures/nested/Bar/three.jsx
     fixtures/nested/Baz/blank.js
   `),
   'separate-packages': (`
@@ -37,6 +40,7 @@ const useCases = {
     pkgs/nested/Bar/src/index.jsx
     pkgs/nested/Bar/src/__fixtures__/one.js
     pkgs/nested/Bar/src/__fixtures__/two.json
+    pkgs/nested/Bar/src/__fixtures__/three.jsx
     pkgs/nested/Baz/src/index.js
     pkgs/nested/Baz/src/__fixtures__/blank.js
   `),
@@ -46,6 +50,7 @@ const useCases = {
     pkgs/nested/Bar/src/index.jsx
     pkgs/nested/Bar/fixtures/one.js
     pkgs/nested/Bar/fixtures/two.json
+    pkgs/nested/Bar/fixtures/three.jsx
     pkgs/nested/Baz/src/index.jsx
     pkgs/nested/Baz/fixtures/blank.js
   `),

@@ -1,7 +1,9 @@
+import { FIXTURE_EXTENSIONS_REGEX } from './fixture_extensions';
+
 const buildPathMatchers = componentName => [
-  `/__fixtures__/${componentName}/([^/]+)\\.(js|json)$`,
-  `/${componentName}/(?:.+/)?__fixtures__/([^/]+)\\.(js|json)$`,
-  `/${componentName}/([^/]+)\\.(js|json)$`,
+  `/__fixtures__/${componentName}/([^/]+)\\.(${FIXTURE_EXTENSIONS_REGEX})$`,
+  `/${componentName}/(?:.+/)?__fixtures__/([^/]+)\\.(${FIXTURE_EXTENSIONS_REGEX})$`,
+  `/${componentName}/([^/]+)\\.(${FIXTURE_EXTENSIONS_REGEX})$`,
 ];
 
 /**
