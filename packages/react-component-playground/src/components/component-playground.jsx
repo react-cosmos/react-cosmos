@@ -64,16 +64,10 @@ module.exports = React.createClass({
       return component && fixture && fixtures[component] && fixtures[component][fixture];
     },
 
-    isValidComponent(props) {
-      const { fixtures, component } = props;
-
-      return fixtures && fixtures.hasOwnProperty(component);
-    },
-
-    isValidFixture(props) {
+    isValidComponentAndFixture(props) {
       const { fixtures, component, fixture } = props;
 
-      return fixtures && fixtures[component] && fixtures[component].hasOwnProperty(fixture);
+      return Boolean(fixtures && fixtures[component] && fixtures[component][fixture]);
     },
 
     getStringifiedFixtureContents(fixtureContents) {
@@ -88,7 +82,7 @@ module.exports = React.createClass({
         isFixtureUserInputValid: true,
       };
       
-      if (this.isFixtureSelected(props) && this.isValidComponent(props) && this.isValidFixture(props)) {
+      if (this.isFixtureSelected(props) && this.isValidComponentAndFixture(props)) {
         const originalFixtureContents = this.getSelectedFixtureContents(props);
 
         // Unserializable props are stored separately from serializable ones
@@ -190,8 +184,7 @@ module.exports = React.createClass({
 
   render() {
     const isFixtureSelected = this.isFixtureSelected();
-    const isValidComponent = this.isValidComponent();
-    const isValidFixture = this.isValidFixture();
+    const isValidComponentAndFixture = this.isValidComponentAndFixture();
 
     const classes = classNames({
       [style['component-playground']]: true,
@@ -220,7 +213,7 @@ module.exports = React.createClass({
         </div>
         {
             isFixtureSelected ? 
-              (!isValidComponent || !isValidFixture) ? this.renderError() : this.renderContentFrame() 
+              !isValidComponentAndFixture ? this.renderError() : this.renderContentFrame() 
               : this.renderWelcomeScreen()
         }
       </div>
@@ -390,7 +383,7 @@ module.exports = React.createClass({
 
     this.updateContentFrameOrientation();
 
-    if (this.props.component && this.isValidComponent(this.props)) {
+    if (this.props.component && this.isValidComponentAndFixture()) {
       findDOMNode(this.refs[`componentName-${this.props.component}`])
           .scrollIntoView({ behavior: 'smooth' });
     }
@@ -539,12 +532,8 @@ module.exports = React.createClass({
     return this.constructor.isFixtureSelected(this.props);
   },
 
-  isValidComponent() {
-    return this.constructor.isValidComponent(this.props);
-  },
-
-  isValidFixture() {
-    return this.constructor.isValidFixture(this.props);
+  isValidComponentAndFixture() {
+    return this.constructor.isValidComponentAndFixture(this.props);
   },
 
   getFixtureClasses(componentName, fixtureName) {
@@ -608,12 +597,11 @@ module.exports = React.createClass({
   },
 
   updateContentFrameOrientation() {
-    if (!this.isFixtureSelected()) {
+    if (!this.isFixtureSelected() || !this.isValidComponentAndFixture()) {
       return;
     }
 
     const contentNode = this.getContentNode();
-
     this.setState({
       orientation: contentNode.offsetHeight > contentNode.offsetWidth ?
                    'portrait' : 'landscape',
