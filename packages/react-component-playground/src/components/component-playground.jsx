@@ -7,6 +7,7 @@ import fuzzaldrinPlus from 'fuzzaldrin-plus';
 import SplitPane from 'ubervu-react-split-pane';
 import localStorageLib from '../lib/local-storage';
 import WelcomeScreen from './welcome-screen';
+import ErrorScreen from './error-screen';
 import ComponentTree from 'react-component-tree';
 import { uri } from 'react-querystring-router';
 import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
@@ -60,7 +61,19 @@ module.exports = React.createClass({
       const { fixtures, component, fixture } = props;
 
       // This returns the fixture contents as it is initially defined, excluding any modifications.
-      return component && fixture && fixtures[component][fixture];
+      return component && fixture && fixtures[component] && fixtures[component][fixture];
+    },
+
+    isValidComponent(props) {
+      const { fixtures, component } = props;
+
+      return fixtures && fixtures.hasOwnProperty(component);
+    },
+
+    isValidFixture(props) {
+      const { fixtures, component, fixture } = props;
+
+      return fixtures && fixtures[component] && fixtures[component].hasOwnProperty(fixture);
     },
 
     getStringifiedFixtureContents(fixtureContents) {
@@ -74,8 +87,8 @@ module.exports = React.createClass({
         fixtureUserInput: '{}',
         isFixtureUserInputValid: true,
       };
-
-      if (this.isFixtureSelected(props)) {
+      
+      if (this.isFixtureSelected(props) && this.isValidComponent(props) && this.isValidFixture(props)) {
         const originalFixtureContents = this.getSelectedFixtureContents(props);
 
         // Unserializable props are stored separately from serializable ones
@@ -163,11 +176,22 @@ module.exports = React.createClass({
         hasComponents: this.userHasComponents(),
         hasFixtures: this.userHasFixtures(),
       };
-    }
+    },
+
+    error() {
+      return {
+        component: ErrorScreen,
+        key: 'error',
+        componentName: this.props.component,
+        fixtureName: this.props.fixture
+      }
+    },
   },
 
   render() {
     const isFixtureSelected = this.isFixtureSelected();
+    const isValidComponent = this.isValidComponent();
+    const isValidFixture = this.isValidFixture();
 
     const classes = classNames({
       [style['component-playground']]: true,
@@ -194,7 +218,11 @@ module.exports = React.createClass({
             {this.renderFixtures()}
           </div>
         </div>
-        {isFixtureSelected ? this.renderContentFrame() : this.renderWelcomeScreen()}
+        {
+            isFixtureSelected ? 
+              (!isValidComponent || !isValidFixture) ? this.renderError() : this.renderContentFrame() 
+              : this.renderWelcomeScreen()
+        }
       </div>
     );
   },
@@ -348,6 +376,10 @@ module.exports = React.createClass({
     return this.loadChild('welcome');
   },
 
+  renderError() {
+    return this.loadChild('error');
+  },
+
   componentWillMount() {
     this.onFixtureUpdate = _.throttle(this.onFixtureUpdate, 500);
   },
@@ -358,7 +390,7 @@ module.exports = React.createClass({
 
     this.updateContentFrameOrientation();
 
-    if (this.props.component) {
+    if (this.props.component && this.isValidComponent(this.props)) {
       findDOMNode(this.refs[`componentName-${this.props.component}`])
           .scrollIntoView({ behavior: 'smooth' });
     }
@@ -366,6 +398,7 @@ module.exports = React.createClass({
 
   componentWillReceiveProps(nextProps) {
     const didFixtureNavChange = this.constructor.didFixtureNavChange(this.props, nextProps);
+
     // HMR might've rebuilt all fixtures
     const didSourcesChange = nextProps.fixtures !== this.props.fixtures;
     const didFixtureContentsChanged = didSourcesChange && !isEqual(
@@ -504,6 +537,14 @@ module.exports = React.createClass({
 
   isFixtureSelected() {
     return this.constructor.isFixtureSelected(this.props);
+  },
+
+  isValidComponent() {
+    return this.constructor.isValidComponent(this.props);
+  },
+
+  isValidFixture() {
+    return this.constructor.isValidFixture(this.props);
   },
 
   getFixtureClasses(componentName, fixtureName) {
