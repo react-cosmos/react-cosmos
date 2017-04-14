@@ -30,7 +30,7 @@
     "child-process-promise": "^2.2.0",
     "coveralls": "^2.11.12",
     "css-loader": "^0.27.1",
-    "enzyme": "^2.4.1",
+    "enzyme": "^2.8.2",
     "eslint-config-xo-react": "^0.11.0",
     "eslint-import-resolver-webpack": "^0.8.1",
     "eslint-plugin-react": "^6.10.2",
