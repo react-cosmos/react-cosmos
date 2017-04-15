@@ -13,7 +13,7 @@
     "lodash.omit": "^4.5.0"
   },
   "peerDependencies": {
-    "react": ">=0.13 <16"
+    "react": ">=0.14 <16"
   },
   "xo": false
 }

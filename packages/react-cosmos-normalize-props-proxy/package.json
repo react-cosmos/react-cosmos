@@ -14,7 +14,7 @@
     "lodash.pick": "^4.4.0"
   },
   "peerDependencies": {
-    "react": ">=0.13 <16"
+    "react": ">=0.14 <16"
   },
   "xo": false
 }

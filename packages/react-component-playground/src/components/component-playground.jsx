@@ -1,10 +1,11 @@
 import _ from 'lodash';
 import React from 'react';
+import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import isEqual from 'lodash.isequal';
-import CodeMirror from '@skidding/react-codemirror';
+import CodeMirror from 'react-codemirror';
 import fuzzaldrinPlus from 'fuzzaldrin-plus';
-import SplitPane from 'ubervu-react-split-pane';
+import SplitPane from 'react-split-pane';
 import localStorageLib from '../lib/local-storage';
 import WelcomeScreen from './welcome-screen';
 import ErrorScreen from './error-screen';
@@ -13,7 +14,6 @@ import { uri } from 'react-querystring-router';
 import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
 
 const style = require('./component-playground.less');
-const { findDOMNode } = require('react-dom-polyfill')(React);
 
 require('codemirror/lib/codemirror.css');
 require('codemirror/addon/fold/foldgutter.css');

@@ -16,11 +16,11 @@
     "react-component-playground": "^2.0.0-beta.9",
     "react-component-tree": "^2.0.0-beta.9",
     "react-cosmos-utils": "^2.0.0-beta.9",
-    "react-dom-polyfill": "^2.0.0-beta.6",
     "react-querystring-router": "^2.0.0-beta.9"
   },
   "peerDependencies": {
-    "react": ">=0.13 <16"
+    "react": ">=0.14 <16",
+    "react-dom": ">=0.14 <16"
   },
   "xo": false
 }

@@ -2,7 +2,7 @@ const FIXTURE = 'default';
 
 describe(`ComponentPlayground (${FIXTURE}) Transitions Mount`, () => {
   const React = require('react');
-  const ReactDOM = require('react-dom-polyfill')(React);
+  const ReactDOM = require('react-dom');
   const render = require('helpers/render-component');
 
   const fixture = require(`fixtures/component-playground/${FIXTURE}`);

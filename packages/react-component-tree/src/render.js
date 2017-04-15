@@ -1,9 +1,8 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import omit from 'lodash.omit';
 import isEmpty from 'lodash.isempty';
 import forEach from 'lodash.foreach';
-
-const ReactDOM = require('react-dom-polyfill')(React);
 
 exports.render = options => {
   /**

@@ -1,8 +1,5 @@
-import React from 'react';
+import ReactDOM from 'react-dom';
 import createLoaderElement from './create-loader-element';
-import reactDomPolyfill from 'react-dom-polyfill';
-
-const ReactDOM = reactDomPolyfill(React);
 
 let domContainer;
 

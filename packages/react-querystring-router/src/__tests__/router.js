@@ -39,12 +39,12 @@ const initRouter = () => {
     createElement: jest.fn(),
   }));
 
-  jest.mock('react-dom-polyfill', () => jest.fn(() => mockReactDOM));
+  jest.mock('react-dom', () => mockReactDOM);
 
   React = require('react');
+  ReactDOM = require('react-dom');
   uri = require('../uri');
   Router = require('../router').default;
-  ReactDOM = require('react-dom-polyfill')(React);
 
   routerInstance = new Router({
     defaultProps: {
