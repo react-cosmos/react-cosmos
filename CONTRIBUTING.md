@@ -44,6 +44,8 @@ Code review aside, also ask for review *before* implementing solution. Saves eve
 
 #### Get familiar with codebase
 
+Make sure you have [Yarn](https://yarnpkg.com/) installed. We use it to install dependencies faster and more reliably.
+
 ```bash
 git clone git@github.com:react-cosmos/react-cosmos.git
 cd react-cosmos
