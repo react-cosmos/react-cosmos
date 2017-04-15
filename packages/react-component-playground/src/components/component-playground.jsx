@@ -388,7 +388,7 @@ module.exports = React.createClass({
 
     this.updateContentFrameOrientation();
 
-    if (this.isFixtureSelected && this.doesSelectedFixtureExist()) {
+    if (this.isFixtureSelected() && this.doesSelectedFixtureExist()) {
       findDOMNode(this.refs[`componentName-${this.props.component}`])
           .scrollIntoView({ behavior: 'smooth' });
     }
