@@ -64,10 +64,10 @@ module.exports = React.createClass({
       return component && fixture && fixtures[component] && fixtures[component][fixture];
     },
 
-    isValidComponentAndFixture(props) {
+    doesSelectedFixtureExist(props) {
       const { fixtures, component, fixture } = props;
 
-      return Boolean(fixtures && fixtures[component] && fixtures[component][fixture]);
+      return Boolean(fixtures[component] && fixtures[component][fixture]);
     },
 
     getStringifiedFixtureContents(fixtureContents) {
@@ -82,7 +82,7 @@ module.exports = React.createClass({
         isFixtureUserInputValid: true,
       };
 
-      if (this.isFixtureSelected(props) && this.isValidComponentAndFixture(props)) {
+      if (this.isFixtureSelected(props) && this.doesSelectedFixtureExist(props)) {
         const originalFixtureContents = this.getSelectedFixtureContents(props);
 
         // Unserializable props are stored separately from serializable ones
@@ -217,7 +217,7 @@ module.exports = React.createClass({
 
   renderContent() {
     if (this.isFixtureSelected()) {
-      return this.isValidComponentAndFixture() ?
+      return this.doesSelectedFixtureExist() ?
           this.renderContentFrame() :
           this.renderError();
     }
@@ -388,7 +388,7 @@ module.exports = React.createClass({
 
     this.updateContentFrameOrientation();
 
-    if (this.isValidComponentAndFixture()) {
+    if (this.isFixtureSelected && this.doesSelectedFixtureExist()) {
       findDOMNode(this.refs[`componentName-${this.props.component}`])
           .scrollIntoView({ behavior: 'smooth' });
     }
@@ -537,8 +537,8 @@ module.exports = React.createClass({
     return this.constructor.isFixtureSelected(this.props);
   },
 
-  isValidComponentAndFixture() {
-    return this.constructor.isValidComponentAndFixture(this.props);
+  doesSelectedFixtureExist() {
+    return this.constructor.doesSelectedFixtureExist(this.props);
   },
 
   getFixtureClasses(componentName, fixtureName) {
@@ -602,7 +602,7 @@ module.exports = React.createClass({
   },
 
   updateContentFrameOrientation() {
-    if (!this.isFixtureSelected() || !this.isValidComponentAndFixture()) {
+    if (!this.isFixtureSelected() || !this.doesSelectedFixtureExist()) {
       return;
     }
 
