@@ -1,3 +1,5 @@
 export default {
-  food: 'pizza'
+  props: {
+    food: 'pizza'
+  }
 };
