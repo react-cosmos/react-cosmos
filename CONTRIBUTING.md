@@ -51,14 +51,14 @@ git clone git@github.com:react-cosmos/react-cosmos.git
 cd react-cosmos
 
 # Install deps and link child packages (using Lerna)
-yarn install
+yarn
 
 # Optional: build everything using older React versions
 yarn run install-react:0.14
 
 # Build example from source and test React Cosmos holistically
 cd examples/context
-yarn install
+yarn
 yarn start
 
 # Watch & build single package (running example will live reload)
