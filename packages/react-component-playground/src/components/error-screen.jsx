@@ -1,19 +1,20 @@
 import React, { Component, PropTypes } from 'react';
+import StarryBackground from './starry-background';
 
-const style = require('./welcome-screen.less');
+const style = require('./display-screen.less');
 
 class ErrorScreen extends Component {
   render() {
     return (
-      <div className={style['welcome-screen']}>
-        {this._renderStarryBackground()}
+      <div className={style['display-screen']}>
+        <StarryBackground />
         {this._renderContent()}
       </div>
     );
   }
 
   _renderContent() {
-    const className = style['welcome-screen-inner'];
+    const className = style['display-screen-inner'];
     const { componentName, fixtureName } = this.props;
 
     return (
@@ -23,14 +24,6 @@ class ErrorScreen extends Component {
       </div>
     );
   }
-
-  _renderStarryBackground() {
-    return <div className={style['starry-background']}>
-      <div className={style.stars}></div>
-      <div className={style.twinkling}></div>
-      <div className={style.clouds}></div>
-    </div>;
-  }
 }
 
 ErrorScreen.propTypes = {
@@ -39,8 +32,8 @@ ErrorScreen.propTypes = {
 };
 
 ErrorScreen.defaultProps = {
-  componentName: "",
-  fixtureName: "",
+  componentName: '',
+  fixtureName: '',
 };
 
 export default ErrorScreen;

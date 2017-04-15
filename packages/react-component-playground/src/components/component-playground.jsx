@@ -81,7 +81,7 @@ module.exports = React.createClass({
         fixtureUserInput: '{}',
         isFixtureUserInputValid: true,
       };
-      
+
       if (this.isFixtureSelected(props) && this.isValidComponentAndFixture(props)) {
         const originalFixtureContents = this.getSelectedFixtureContents(props);
 
@@ -178,13 +178,12 @@ module.exports = React.createClass({
         key: 'error',
         componentName: this.props.component,
         fixtureName: this.props.fixture
-      }
+      };
     },
   },
 
   render() {
     const isFixtureSelected = this.isFixtureSelected();
-    const isValidComponentAndFixture = this.isValidComponentAndFixture();
 
     const classes = classNames({
       [style['component-playground']]: true,
@@ -211,13 +210,19 @@ module.exports = React.createClass({
             {this.renderFixtures()}
           </div>
         </div>
-        {
-            isFixtureSelected ? 
-              !isValidComponentAndFixture ? this.renderError() : this.renderContentFrame() 
-              : this.renderWelcomeScreen()
-        }
+        {this.renderContent()}
       </div>
     );
+  },
+
+  renderContent() {
+    if (this.isFixtureSelected()) {
+      return this.isValidComponentAndFixture() ?
+          this.renderContentFrame() :
+          this.renderError();
+    }
+
+    return this.renderWelcomeScreen();
   },
 
   renderLoader() {
@@ -383,7 +388,7 @@ module.exports = React.createClass({
 
     this.updateContentFrameOrientation();
 
-    if (this.props.component && this.isValidComponentAndFixture()) {
+    if (this.isValidComponentAndFixture()) {
       findDOMNode(this.refs[`componentName-${this.props.component}`])
           .scrollIntoView({ behavior: 'smooth' });
     }

@@ -1,19 +1,20 @@
 import React, { Component, PropTypes } from 'react';
+import StarryBackground from './starry-background';
 
-const style = require('./welcome-screen.less');
+const style = require('./display-screen.less');
 
 class WelcomeScreen extends Component {
   render() {
     return (
-      <div className={style['welcome-screen']}>
-        {this._renderStarryBackground()}
+      <div className={style['display-screen']}>
+        <StarryBackground />
         {this._renderContent()}
       </div>
     );
   }
 
   _renderContent() {
-    const className = style['welcome-screen-inner'];
+    const className = style['display-screen-inner'];
 
     if (this.props.hasComponents && this.props.hasFixtures) {
       return (
@@ -47,14 +48,6 @@ class WelcomeScreen extends Component {
         </ul>
       </div>
     );
-  }
-
-  _renderStarryBackground() {
-    return <div className={style['starry-background']}>
-      <div className={style.stars}></div>
-      <div className={style.twinkling}></div>
-      <div className={style.clouds}></div>
-    </div>;
   }
 }
 
