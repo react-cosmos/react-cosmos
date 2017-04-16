@@ -9,7 +9,7 @@
     "require-globify": "^1.4.1"
   },
   "peerDependencies": {
-    "react": ">=0.13 <16"
+    "react": ">=0.14 <16"
   },
   "scripts": {
     "start": "node ./server.js"

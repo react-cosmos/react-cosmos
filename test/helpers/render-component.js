@@ -1,9 +1,8 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import ComponentTree from '../../packages/react-component-tree';
 import ComponentPlayground from '../../packages/react-component-playground/src';
-
-const ReactDOM = require('../../packages/react-dom-polyfill')(React);
 
 module.exports = (fixture, container = document.createElement('div')) => {
   const component = ComponentTree.render({

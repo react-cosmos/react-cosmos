@@ -18,7 +18,7 @@ const init = options => {
     render: jest.fn(() => mockComponentInstance),
   };
   jest.mock('../create-loader-element', () => mockCreateLoaderElement);
-  jest.mock('react-dom-polyfill', () => jest.fn(() => mockReactDOM));
+  jest.mock('react-dom', () => mockReactDOM);
 
   startLoader = require('../start-loader.js').default;
 

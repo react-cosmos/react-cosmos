@@ -1,7 +1,6 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { parseLocation } from './uri';
-
-const ReactDOM = require('react-dom-polyfill')(React);
 
 const getCurrentLocation = () => window.location.href;
 

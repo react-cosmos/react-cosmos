@@ -1,8 +1,7 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { renderIntoDocument } from 'react-addons-test-utils';
 import { render } from '../../src/render';
-
-const ReactDOM = require('react-dom-polyfill')(React);
 
 describe('UNIT Render and inject state', () => {
   let component;

@@ -10,20 +10,20 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
-    "@skidding/react-codemirror": "^0.3.0",
     "classnames": "^2.2.5",
     "codemirror": "^5.18.2",
     "fuzzaldrin-plus": "^0.3.1",
     "lodash": "^3.6.0",
     "lodash.isequal": "^4.5.0",
+    "react-codemirror": "^0.3.0",
     "react-component-tree": "^2.0.0-beta.9",
     "react-cosmos-utils": "^2.0.0-beta.9",
-    "react-dom-polyfill": "^2.0.0-beta.6",
     "react-querystring-router": "^2.0.0-beta.9",
-    "ubervu-react-split-pane": "^0.1.57"
+    "react-split-pane": "^0.1.61"
   },
   "peerDependencies": {
-    "react": ">=0.13 <16"
+    "react": ">=0.14 <16",
+    "react-dom": ">=0.14 <16"
   },
   "devDependencies": {
     "babelify": "^7.3.0"
