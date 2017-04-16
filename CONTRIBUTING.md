@@ -44,26 +44,28 @@ Code review aside, also ask for review *before* implementing solution. Saves eve
 
 #### Get familiar with codebase
 
+Make sure you have [Yarn](https://yarnpkg.com/) installed. We use it to install dependencies faster and more reliably.
+
 ```bash
 git clone git@github.com:react-cosmos/react-cosmos.git
 cd react-cosmos
 
 # Install deps and link child packages (using Lerna)
-npm install
+yarn
 
 # Optional: build everything using older React versions
-npm run install-react:0.13
+yarn run install-react:0.14
 
 # Build example from source and test React Cosmos holistically
 cd examples/context
-npm install
-npm start
+yarn
+yarn start
 
 # Watch & build single package (running example will live reload)
-npm run build react-component-playground -- --watch
+yarn run build react-component-playground -- --watch
 
 # Watch & run unit tests as you code
-npm run test-jest -- --watch
+yarn run test-jest -- --watch
 ```
 
 #### Write tests, preferably before implementation
@@ -76,7 +78,7 @@ Older packages are tested with Mocha and Karma, but those tests are considered l
 
 #### Keep coding style consistent
 
-Make sure `npm run lint` passes and add [xo](https://github.com/sindresorhus/xo) to your editor if possible.
+Make sure `yarn run lint` passes and add [xo](https://github.com/sindresorhus/xo) to your editor if possible.
 
 #### Use Git conscientiously
 
