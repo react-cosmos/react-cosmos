@@ -7,6 +7,7 @@ import fuzzaldrinPlus from 'fuzzaldrin-plus';
 import SplitPane from 'ubervu-react-split-pane';
 import localStorageLib from '../lib/local-storage';
 import WelcomeScreen from './welcome-screen';
+import ErrorScreen from './error-screen';
 import ComponentTree from 'react-component-tree';
 import { uri } from 'react-querystring-router';
 import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
@@ -60,7 +61,13 @@ module.exports = React.createClass({
       const { fixtures, component, fixture } = props;
 
       // This returns the fixture contents as it is initially defined, excluding any modifications.
-      return component && fixture && fixtures[component][fixture];
+      return component && fixture && fixtures[component] && fixtures[component][fixture];
+    },
+
+    doesSelectedFixtureExist(props) {
+      const { fixtures, component, fixture } = props;
+
+      return Boolean(fixtures[component] && fixtures[component][fixture]);
     },
 
     getStringifiedFixtureContents(fixtureContents) {
@@ -75,7 +82,7 @@ module.exports = React.createClass({
         isFixtureUserInputValid: true,
       };
 
-      if (this.isFixtureSelected(props)) {
+      if (this.isFixtureSelected(props) && this.doesSelectedFixtureExist(props)) {
         const originalFixtureContents = this.getSelectedFixtureContents(props);
 
         // Unserializable props are stored separately from serializable ones
@@ -163,7 +170,16 @@ module.exports = React.createClass({
         hasComponents: this.userHasComponents(),
         hasFixtures: this.userHasFixtures(),
       };
-    }
+    },
+
+    error() {
+      return {
+        component: ErrorScreen,
+        key: 'error',
+        componentName: this.props.component,
+        fixtureName: this.props.fixture
+      };
+    },
   },
 
   render() {
@@ -194,9 +210,19 @@ module.exports = React.createClass({
             {this.renderFixtures()}
           </div>
         </div>
-        {isFixtureSelected ? this.renderContentFrame() : this.renderWelcomeScreen()}
+        {this.renderContent()}
       </div>
     );
+  },
+
+  renderContent() {
+    if (this.isFixtureSelected()) {
+      return this.doesSelectedFixtureExist() ?
+          this.renderContentFrame() :
+          this.renderError();
+    }
+
+    return this.renderWelcomeScreen();
   },
 
   renderLoader() {
@@ -348,6 +374,10 @@ module.exports = React.createClass({
     return this.loadChild('welcome');
   },
 
+  renderError() {
+    return this.loadChild('error');
+  },
+
   componentWillMount() {
     this.onFixtureUpdate = _.throttle(this.onFixtureUpdate, 500);
   },
@@ -358,7 +388,7 @@ module.exports = React.createClass({
 
     this.updateContentFrameOrientation();
 
-    if (this.props.component) {
+    if (this.isFixtureSelected() && this.doesSelectedFixtureExist()) {
       findDOMNode(this.refs[`componentName-${this.props.component}`])
           .scrollIntoView({ behavior: 'smooth' });
     }
@@ -366,6 +396,7 @@ module.exports = React.createClass({
 
   componentWillReceiveProps(nextProps) {
     const didFixtureNavChange = this.constructor.didFixtureNavChange(this.props, nextProps);
+
     // HMR might've rebuilt all fixtures
     const didSourcesChange = nextProps.fixtures !== this.props.fixtures;
     const didFixtureContentsChanged = didSourcesChange && !isEqual(
@@ -506,6 +537,10 @@ module.exports = React.createClass({
     return this.constructor.isFixtureSelected(this.props);
   },
 
+  doesSelectedFixtureExist() {
+    return this.constructor.doesSelectedFixtureExist(this.props);
+  },
+
   getFixtureClasses(componentName, fixtureName) {
     return classNames({
       [style['component-fixture']]: true,
@@ -567,12 +602,11 @@ module.exports = React.createClass({
   },
 
   updateContentFrameOrientation() {
-    if (!this.isFixtureSelected()) {
+    if (!this.isFixtureSelected() || !this.doesSelectedFixtureExist()) {
       return;
     }
 
     const contentNode = this.getContentNode();
-
     this.setState({
       orientation: contentNode.offsetHeight > contentNode.offsetWidth ?
                    'portrait' : 'landscape',
