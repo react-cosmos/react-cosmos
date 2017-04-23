@@ -27,6 +27,42 @@ require('codemirror/addon/fold/brace-fold');
 
 const { stringifyParams, parseLocation } = uri;
 
+const SvgIcon = ({ children }) => (
+  <svg viewBox="0 0 24 24">
+    {children}
+  </svg>
+);
+
+const FolderIcon = () => (
+  <SvgIcon>
+    <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
+  </SvgIcon>
+);
+
+const SearchIcon = () => (
+  <SvgIcon>
+    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+  </SvgIcon>
+);
+
+const HomeIcon = () => (
+  <SvgIcon>
+    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+  </SvgIcon>
+);
+
+const CodeIcon = () => (
+  <SvgIcon>
+    <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+  </SvgIcon>
+);
+
+const FullScreenIcon = () => (
+  <SvgIcon>
+    <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+  </SvgIcon>
+);
+
 module.exports = React.createClass({
   /**
    * ComponentPlayground provides a minimal frame for loading React components
@@ -204,7 +240,7 @@ module.exports = React.createClass({
               placeholder="Search..."
               onChange={this.onSearchChange}
             />
-            <i className={style['filter-input-icon']} />
+            <SearchIcon />
           </div>
           <div className={style.fixtures}>
             {this.renderFixtures()}
@@ -251,7 +287,7 @@ module.exports = React.createClass({
               ref={`componentName-${componentName}`}
               className={style['component-name']}
             >
-              {componentName}
+              <FolderIcon /><span>{componentName}</span>
             </p>
             {this.renderComponentFixtures(componentName, componentFixtures)}
           </li>
@@ -308,7 +344,7 @@ module.exports = React.createClass({
   renderHomeButton() {
     const classes = classNames({
       [style.button]: true,
-      [style['play-button']]: true,
+      [style['home-button']]: true,
       [style['selected-button']]: !this.isFixtureSelected(),
     });
 
@@ -319,7 +355,7 @@ module.exports = React.createClass({
         href={stringifyParams({})}
         onClick={this.props.router.routeLink}
       >
-        <span className={style.electron} />
+        <HomeIcon />
       </a>
     );
   },
@@ -336,7 +372,6 @@ module.exports = React.createClass({
   renderFixtureEditorButton() {
     const classes = classNames({
       [style.button]: true,
-      [style['fixture-editor-button']]: true,
       [style['selected-button']]: this.props.editor,
     });
 
@@ -350,7 +385,9 @@ module.exports = React.createClass({
         href={stringifyParams(editorUrlProps)}
         ref="editorButton"
         onClick={this.props.router.routeLink}
-      />
+        >
+        <CodeIcon />
+      </a>
     );
   },
 
@@ -362,11 +399,13 @@ module.exports = React.createClass({
 
     return (
       <a
-        className={`${style.button} ${style['full-screen-button']}`}
+        className={style.button}
         href={stringifyParams(fullScreenProps)}
         ref="fullScreenButton"
         onClick={this.props.router.routeLink}
-      />
+        >
+        <FullScreenIcon />
+      </a>
     );
   },
 
