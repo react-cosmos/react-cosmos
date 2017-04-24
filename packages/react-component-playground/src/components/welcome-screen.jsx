@@ -38,7 +38,7 @@ class WelcomeScreen extends Component {
       return (
         <Template>
           <p className={style.header}>Almost there...</p>
-          <p>Your components are listed the left side, but it looks like you haven't created fixtures for them yet.</p>
+          <p>Your components are listed the left side. It looks like you haven't created fixtures for them yet.</p>
           <p>An empty fixture is available for each component, but chances are your components depend on one or more props to function. </p>
           <p>A fixture is a JSON-like object, except it contains functions and any other types components receive via props.</p>
           <p>Read the <a target="_blank" href="https://github.com/react-cosmos/react-cosmos/blob/master/docs/fixtures.md">creating fixtures</a> guide to help you get started.</p>
