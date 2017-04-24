@@ -57,7 +57,7 @@ module.exports = {
         'css-loader',
       ],
     }, {
-      test: /\.png$/,
+      test: /\.(png|woff)$/,
       include: src,
       use: 'url-loader'
     }],

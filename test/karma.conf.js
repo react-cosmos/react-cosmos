@@ -54,7 +54,7 @@ module.exports = function setKarmaConfig(config) {
             'css-loader',
           ],
         }, {
-          test: /\.png$/,
+          test: /\.(png|woff)$/,
           use: 'url-loader'
         }],
       },

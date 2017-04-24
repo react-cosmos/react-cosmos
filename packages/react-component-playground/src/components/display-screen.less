@@ -1,13 +1,10 @@
 @import 'common.less';
 
-
-@clouds-texture: url('../static/clouds.png');
-@twinkling-texture: url('../static/twinkling.png');
 @stars-texture: url('../static/stars.png');
 
-@anchor-color: #08c;
-@anchor-color-focus: #005580;
-@text-color: #545454;
+@anchor-color: #358682;
+@anchor-color-focus: #358682;
+@text-color: @left-nav-bgcolor;
 
 .display-screen {
   position: absolute;
@@ -18,16 +15,38 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  perspective: 1000px;
 
   &-inner {
-    width: 50%;
-    max-width: 500px;
+    display: flex;
+    align-items: center;
+    width: 540px;
     font-family: @default-font-family;
+    font-size: 16px;
     padding: 0 16px;
     color: @text-color;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.85);
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
     border-radius: 4px;
+    opacity: 0;
+    transform: rotateX(15deg) translateY(32px) scale(0.9);
+    animation: fade-in-box 0.4s linear 0.5s forwards;
+    will-change: transform, opacity;
+
+    img {
+      flex-shrink: 0;
+      width: 100px;
+      height: 100px;
+      margin-right: 16px;
+    }
+
+    ul {
+      padding: 0 0 0 32px;
+    }
+
+    li {
+      margin-bottom: 12px;
+    }
 
     a {
       color: @anchor-color;
@@ -42,6 +61,25 @@
         outline: 0;
       }
     }
+
+    p {
+      margin: 16px 0;
+    }
+
+    p, li {
+      line-height: 20px;
+    }
+
+    .header {
+      margin-top: 24px;
+      font-size: 22px;
+      font-weight: 300;
+      opacity: 0.6;
+    }
+
+    code {
+      font-family: 'FiraCode-Light';
+    }
   }
 
   .starry-background {
@@ -51,55 +89,21 @@
     right: 0;
     bottom: 0;
     overflow: hidden;
-    background-color: #1c1b1d;
+    background-color: darken(@left-nav-bgcolor, 5%);
     z-index: -1;
 
-    .stars, .clouds, .twinkling {
+    .stars {
       position: absolute;
       bottom: 0;
       right: 0;
       width: 300%;
       height: 300%;
-    }
-
-    .clouds {
-      min-width: 3970px;
-      min-height: 2676px;
-      background-image: @clouds-texture;
-      animation: clouds-ani 100s linear infinite;
-    }
-
-    .twinkling {
-      min-width: 1000px;
-      min-height: 1000px;
-      background-image: @twinkling-texture;
-      animation: twinkling-ani 100s linear infinite;
-    }
-
-    .stars {
       min-width: 4000px;
       min-height: 2750px;
       background-image: @stars-texture;
+      background-position: center center;
       animation: stars-ani 200s linear infinite;
     }
-  }
-}
-
-@keyframes clouds-ani {
-  0% {
-    transform: translateY(0) translateX(0);
-  }
-  100% {
-    transform: translateY(1320px) translateX(1958px);
-  }
-}
-
-@keyframes twinkling-ani {
-  0% {
-    transform: translateY(0) translateX(0);
-  }
-  100% {
-    transform: translateY(1000px) translateX(1000px);
   }
 }
 
@@ -109,5 +113,16 @@
   }
   100% {
     transform: translateY(1372px) translateX(2000px);
+  }
+}
+
+@keyframes fade-in-box {
+  0% {
+    opacity: 0;
+    transform: rotateX(15deg) translateY(16px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateX(0deg) translateY(0) scale(1);
   }
 }
