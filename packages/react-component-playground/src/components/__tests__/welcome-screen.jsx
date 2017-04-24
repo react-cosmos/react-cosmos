@@ -1,12 +1,12 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import WelcomeScreen from '../welcome-screen';
 
 describe('WelcomeScreen', () => {
   let wrapper;
 
   beforeAll(() => {
-    wrapper = shallow(
+    wrapper = mount(
       <WelcomeScreen hasFixtures={false} hasComponents={false} />
     );
   });
@@ -55,7 +55,7 @@ describe('WelcomeScreen', () => {
     });
 
     it('should render paragraphs', () => {
-      expect(wrapper.find('p').length).toBe(3);
+      expect(wrapper.find('p').length).toBe(5);
     });
 
     it('should render correct text', () => {
