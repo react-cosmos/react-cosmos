@@ -15,6 +15,7 @@
     }
   },
   "moduleNameMapper": {
-    "\\.(css|less)$": "<rootDir>/__mocks__/style-mock.js"
+    "\\.(css|less)$": "<rootDir>/__mocks__/style-mock.js",
+    "\\.(jpg|png)$": "<rootDir>/__mocks__/img-mock.js"
   }
 }
