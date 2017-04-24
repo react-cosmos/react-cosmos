@@ -7,8 +7,6 @@ class StarryBackground extends Component {
     return (
       <div className={style['starry-background']}>
         <div className={style.stars}></div>
-        <div className={style.twinkling}></div>
-        <div className={style.clouds}></div>
       </div>
     );
   }

@@ -1,10 +1,5 @@
 @import 'common.less';
 
-@left-nav-bgcolor: #0C293E;
-@left-nav-bgcolor-selected: rgba(255, 255, 255, 0.1);
-@left-nav-color: #A5BED2;
-@left-nav-color-selected: #F8FAFC;
-
 @header-height: 70px; // 50 + 2 * 10 margins
 @header-button-size: @header-height - 2 * @default-spacing;
 
@@ -47,7 +42,7 @@
 
 @checkerboard-square-size: 25px;
 // This should look good on both black & white backgrounds
-@checkerboard-color: rgba(160, 160, 160, 0.15);
+@checkerboard-color: fade(@left-nav-color, 15%);
 
 :global {
   body {
