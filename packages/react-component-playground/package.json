@@ -1,6 +1,6 @@
 {
   "name": "react-component-playground",
-  "version": "2.0.0-beta.9",
+  "version": "2.0.0-beta.11",
   "description": "Isolated loader for React components",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-component-playground",
   "license": "MIT",
@@ -16,9 +16,9 @@
     "lodash": "^3.6.0",
     "lodash.isequal": "^4.5.0",
     "react-codemirror": "^0.3.0",
-    "react-component-tree": "^2.0.0-beta.9",
-    "react-cosmos-utils": "^2.0.0-beta.9",
-    "react-querystring-router": "^2.0.0-beta.9",
+    "react-component-tree": "^2.0.0-beta.11",
+    "react-cosmos-utils": "^2.0.0-beta.11",
+    "react-querystring-router": "^2.0.0-beta.11",
     "react-split-pane": "^0.1.61"
   },
   "peerDependencies": {

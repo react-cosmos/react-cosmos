@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-context-proxy",
-  "version": "2.0.0-beta.9",
+  "version": "2.0.0-beta.11",
   "description": "Mock component context via fixtures in react-cosmos",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-context-proxy",
   "license": "MIT",
