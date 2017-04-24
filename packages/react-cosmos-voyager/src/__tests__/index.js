@@ -53,6 +53,7 @@ testUseCase('relative-fixtures', {
     'nested/Bar': {
       one: 'components/__fixtures__/nested/Bar/one.js',
       two: 'components/__fixtures__/nested/Bar/two.json',
+      three: 'components/__fixtures__/nested/Bar/three.jsx',
     },
   },
 });
@@ -72,6 +73,7 @@ testUseCase('relative-fixtures-component-dir', {
     'nested/Bar': {
       one: 'components/nested/Bar/__fixtures__/one.js',
       two: 'components/nested/Bar/__fixtures__/two.json',
+      three: 'components/nested/Bar/__fixtures__/three.jsx',
     },
   },
 });
@@ -92,6 +94,7 @@ testUseCase('external-fixtures', {
     'nested/Bar': {
       one: 'fixtures/nested/Bar/one.js',
       two: 'fixtures/nested/Bar/two.json',
+      three: 'fixtures/nested/Bar/three.jsx',
     },
   },
 });
@@ -117,6 +120,7 @@ testUseCase('separate-packages', {
     'nested/Bar': {
       one: 'pkgs/nested/Bar/src/__fixtures__/one.js',
       two: 'pkgs/nested/Bar/src/__fixtures__/two.json',
+      three: 'pkgs/nested/Bar/src/__fixtures__/three.jsx',
     },
   },
 });
@@ -136,6 +140,7 @@ testUseCase('separate-packages-external-fixtures', {
     'nested/Bar': {
       one: resolvePath('separate-packages-external-fixtures/pkgs/nested/Bar/fixtures/one.js'),
       two: resolvePath('separate-packages-external-fixtures/pkgs/nested/Bar/fixtures/two.json'),
+      three: resolvePath('separate-packages-external-fixtures/pkgs/nested/Bar/fixtures/three.jsx'),
     },
   }[componentName]),
   ignore: [/Baz/],
@@ -151,6 +156,7 @@ testUseCase('separate-packages-external-fixtures', {
     'nested/Bar': {
       one: 'pkgs/nested/Bar/fixtures/one.js',
       two: 'pkgs/nested/Bar/fixtures/two.json',
+      three: 'pkgs/nested/Bar/fixtures/three.jsx',
     },
   },
 });
