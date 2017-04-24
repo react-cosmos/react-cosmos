@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import glob from 'glob';
 import matchFixturePath from './match-fixture-path';
-import { FIXTURE_EXTENSIONS_GLOB } from './fixture_extensions';
+import { FIXTURE_EXTENSIONS_GLOB } from './fixture-extensions';
 
 const SPECIAL_DIRS = ['__tests__', '__fixtures__'];
 
