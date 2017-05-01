@@ -28,7 +28,7 @@ enabling you to:
 2. See state evolve in real-time while interacting with running
 instances
 
-[https://react-cosmos.github.io/?component=FlatrisGame&fixture=new-game-running](![Component Playground](intro.gif))
+![Component Playground](intro.gif)
 
 > Working with Cosmos improves component design because it
 surfaces implicit dependencies. It also forces you to define sane inputs
