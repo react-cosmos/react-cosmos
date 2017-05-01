@@ -1,12 +1,12 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import ErrorScreen from '../error-screen';
 
 describe('ErrorScreen', () => {
   let wrapper;
 
   beforeAll(() => {
-    wrapper = shallow(
+    wrapper = mount(
       <ErrorScreen componentName="Flatris" fixtureName="WithState" />
     );
   });

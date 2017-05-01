@@ -1,27 +1,17 @@
 import React, { Component, PropTypes } from 'react';
-import StarryBackground from './starry-background';
+import ScreenTemplate from './screen-template';
 
 const style = require('./display-screen.less');
 
 class ErrorScreen extends Component {
   render() {
-    return (
-      <div className={style['display-screen']}>
-        <StarryBackground />
-        {this._renderContent()}
-      </div>
-    );
-  }
-
-  _renderContent() {
-    const className = style['display-screen-inner'];
     const { componentName, fixtureName } = this.props;
 
     return (
-      <div className={className}>
-        <p>Invalid coordinates.</p>
-        <p>No astronomical object found at {componentName}:{fixtureName}.</p>
-      </div>
+      <ScreenTemplate>
+        <p className={style.header}>Invalid coordinates.</p>
+        <p>No astronomical object found at <strong>{componentName}:{fixtureName}</strong>.</p>
+      </ScreenTemplate>
     );
   }
 }
