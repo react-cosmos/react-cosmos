@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="Cosmos" src="cosmos-150.png">
+  <img alt="Cosmos" src="cosmos.png">
 </p>
 
 <p align="center">
