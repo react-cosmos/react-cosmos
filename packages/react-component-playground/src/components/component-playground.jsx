@@ -223,7 +223,7 @@ module.exports = React.createClass({
 
     const classes = classNames({
       [style['component-playground']]: true,
-      'full-screen': this.props.fullScreen,
+      [style['full-screen']]: this.props.fullScreen,
     });
 
     return (
@@ -411,11 +411,19 @@ module.exports = React.createClass({
   },
 
   renderWelcomeScreen() {
-    return this.loadChild('welcome');
+    return (
+      <div ref="contentFrame" className={style['content-frame']}>
+        {this.loadChild('welcome')}
+      </div>
+    );
   },
 
   renderError() {
-    return this.loadChild('error');
+    return (
+      <div ref="contentFrame" className={style['content-frame']}>
+        {this.loadChild('error')}
+      </div>
+    );
   },
 
   componentWillMount() {
