@@ -213,7 +213,7 @@ module.exports = React.createClass({
         component: ErrorScreen,
         key: 'error',
         componentName: this.props.component,
-        fixtureName: this.props.fixture
+        fixtureName: this.props.fixture,
       };
     },
   },
@@ -223,7 +223,7 @@ module.exports = React.createClass({
 
     const classes = classNames({
       [style['component-playground']]: true,
-      [style['full-screen']]: this.props.fullScreen,
+      'full-screen': this.props.fullScreen,
     });
 
     return (
@@ -231,7 +231,8 @@ module.exports = React.createClass({
         <div className={style['left-nav']}>
           <div className={style.header}>
             {this.renderHomeButton()}
-            {isFixtureSelected ? this.renderMenu() : null}
+            {isFixtureSelected &&
+            this.doesSelectedFixtureExist() ? this.renderMenu() : null}
           </div>
           <div className={style['filter-input-container']}>
             <input

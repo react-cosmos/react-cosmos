@@ -15,6 +15,6 @@ describe(`ComponentPlayground (${FIXTURE}) Render DOM`, () => {
   });
 
   it('should add full-screen class', () => {
-    expect($component.hasClass(style['full-screen'])).to.equal(true);
+    expect($component.hasClass('full-screen')).to.equal(true);
   });
 });
