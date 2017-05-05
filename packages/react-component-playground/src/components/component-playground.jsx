@@ -213,7 +213,7 @@ module.exports = React.createClass({
         component: ErrorScreen,
         key: 'error',
         componentName: this.props.component,
-        fixtureName: this.props.fixture
+        fixtureName: this.props.fixture,
       };
     },
   },
@@ -231,7 +231,8 @@ module.exports = React.createClass({
         <div className={style['left-nav']}>
           <div className={style.header}>
             {this.renderHomeButton()}
-            {isFixtureSelected ? this.renderMenu() : null}
+            {isFixtureSelected &&
+            this.doesSelectedFixtureExist() ? this.renderMenu() : null}
           </div>
           <div className={style['filter-input-container']}>
             <input
@@ -410,11 +411,19 @@ module.exports = React.createClass({
   },
 
   renderWelcomeScreen() {
-    return this.loadChild('welcome');
+    return (
+      <div ref="contentFrame" className={style['content-frame']}>
+        {this.loadChild('welcome')}
+      </div>
+    );
   },
 
   renderError() {
-    return this.loadChild('error');
+    return (
+      <div ref="contentFrame" className={style['content-frame']}>
+        {this.loadChild('error')}
+      </div>
+    );
   },
 
   componentWillMount() {
