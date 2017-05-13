@@ -57,7 +57,7 @@ const convertDirPathsToContextCalls = dirPaths =>
  * - Watch for (and react to) added and changed component/fixture files
  */
 module.exports = function embedModules(source) {
-  const { cosmosConfigPath } = loaderUtils.parseQuery(this.query);
+  const { cosmosConfigPath } = loaderUtils.getOptions(this);
   const cosmosConfig = getCosmosConfig(cosmosConfigPath);
   const { components, fixtures } = getFilePaths(cosmosConfig);
   const { proxies } = cosmosConfig;
