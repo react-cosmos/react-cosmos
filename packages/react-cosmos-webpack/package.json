@@ -12,7 +12,7 @@
   "dependencies": {
     "babel-loader": "^6.2.10",
     "babel-register": "^6.16.3",
-    "css-loader": "^0.26.1",
+    "css-loader": "^0.28.1",
     "express": "^4.14.0",
     "fs-extra": "^2.0.0",
     "glob": "^7.1.1",
@@ -25,11 +25,11 @@
     "react-cosmos-utils": "^2.0.0-beta.11",
     "react-cosmos-voyager": "^2.0.0-beta.11",
     "slash": "^1.0.0",
-    "style-loader": "^0.13.1",
+    "style-loader": "^0.17.0",
     "traverse": "^0.6.6",
     "webpack-dev-middleware": "^1.8.4",
     "webpack-hot-middleware": "^2.13.0",
-    "yargs": "^6.0.0"
+    "yargs": "^8.0.1"
   },
   "peerDependencies": {
     "webpack": ">=1.13 <3"
