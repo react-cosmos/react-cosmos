@@ -57,6 +57,7 @@
     "react": "^15.5.4",
     "react-addons-test-utils": "^15.5.1",
     "react-dom": "^15.5.4",
+    "react-test-renderer": "^15.5.4",
     "rimraf": "^2.5.4",
     "sinon": "^2.2.0",
     "sinon-chai": "^2.10.0",
