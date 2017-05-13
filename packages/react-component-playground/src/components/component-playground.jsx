@@ -625,7 +625,7 @@ module.exports = React.createClass({
     const props = _.assign(_.omit(currentProps, _.keys(newProps)), newProps);
 
     // No need to include props with default values
-    return _.omit(props, (value, key) => value === defaultProps[key]);
+    return _.omitBy(props, (value, key) => value === defaultProps[key]);
   },
 
   sendFixtureToLoader() {
