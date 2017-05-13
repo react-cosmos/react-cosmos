@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import ScreenTemplate from './screen-template';
 
 const style = require('./display-screen.less');

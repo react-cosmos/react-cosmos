@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import merge from 'lodash.merge';
 import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
@@ -134,11 +135,11 @@ class Loader extends React.Component {
 }
 
 Loader.propTypes = {
-  components: React.PropTypes.object.isRequired,
-  fixtures: React.PropTypes.object.isRequired,
-  proxies: React.PropTypes.array.isRequired,
-  component: React.PropTypes.string,
-  fixture: React.PropTypes.string,
+  components: PropTypes.object.isRequired,
+  fixtures: PropTypes.object.isRequired,
+  proxies: PropTypes.array.isRequired,
+  component: PropTypes.string,
+  fixture: PropTypes.string,
 };
 
 export default Loader;

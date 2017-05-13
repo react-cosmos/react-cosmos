@@ -10,9 +10,5 @@
   ],
   "main": "lib/index.js",
   "dependencies": {},
-  "peerDependencies": {
-    "react": ">=0.14 <16",
-    "react-dom": ">=0.14 <16"
-  },
   "xo": false
 }

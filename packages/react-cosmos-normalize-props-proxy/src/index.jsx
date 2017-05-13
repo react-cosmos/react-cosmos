@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import omit from 'lodash.omit';
 import pick from 'lodash.pick';
@@ -36,11 +37,11 @@ export default function createNormalizePropsProxy(options) {
   }
 
   NormalizePropsProxy.propTypes = {
-    nextProxy: React.PropTypes.shape({
-      value: React.PropTypes.func,
-      next: React.PropTypes.func
+    nextProxy: PropTypes.shape({
+      value: PropTypes.func,
+      next: PropTypes.func
     }).isRequired,
-    fixture: React.PropTypes.object.isRequired
+    fixture: PropTypes.object.isRequired
   };
 
   return NormalizePropsProxy;

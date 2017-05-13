@@ -20,25 +20,25 @@
     "babel-cli": "^6.16.0",
     "babel-core": "^6.13.2",
     "babel-loader": "^6.2.5",
-    "babel-plugin-istanbul": "^4.0.0",
+    "babel-plugin-istanbul": "^4.1.3",
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-preset-es2015": "^6.13.2",
     "babel-preset-react": "^6.11.1",
     "browserify-optional": "^1.0.0",
     "chai": "^3.5.0",
     "child-process-promise": "^2.2.0",
-    "coveralls": "^2.11.12",
-    "css-loader": "^0.28.0",
+    "coveralls": "^2.13.1",
+    "css-loader": "^0.28.1",
     "enzyme": "^2.8.2",
-    "eslint-config-xo-react": "^0.11.0",
+    "eslint-config-xo-react": "^0.12.0",
     "eslint-import-resolver-webpack": "^0.8.1",
-    "eslint-plugin-react": "^6.10.2",
+    "eslint-plugin-react": "^7.0.0",
     "file-loader": "^0.11.1",
     "glob": "^7.1.1",
     "inject-loader": "^3.0.0",
-    "jest": "^19.0.0",
+    "jest": "^20.0.1",
     "jquery": "^3.1.0",
-    "karma": "^1.2.0",
+    "karma": "^1.7.0",
     "karma-chai": "^0.1.0",
     "karma-cli": "^1.0.1",
     "karma-coverage": "^1.1.1",
@@ -49,22 +49,24 @@
     "karma-sinon-chai": "^1.3.1",
     "karma-webpack": "^2.0.1",
     "lcov-result-merger": "^1.2.0",
-    "lerna": "2.0.0-rc.3",
+    "lerna": "^2.0.0-rc.4",
     "less": "^2.7.1",
     "less-loader": "^4.0.3",
-    "mocha": "^3.0.2",
-    "react": "15.4",
-    "react-addons-test-utils": "15.4",
-    "react-dom": "15.4",
+    "mocha": "^3.3.0",
+    "prop-types": "^15.5.10",
+    "react": "^15.5.4",
+    "react-addons-test-utils": "^15.5.1",
+    "react-dom": "^15.5.4",
+    "react-test-renderer": "^15.5.4",
     "rimraf": "^2.5.4",
-    "sinon": "^2.1.0",
-    "sinon-chai": "^2.9.0",
-    "style-loader": "^0.16.1",
+    "sinon": "^2.2.0",
+    "sinon-chai": "^2.10.0",
+    "style-loader": "^0.17.0",
     "traverse": "^0.6.6",
     "url-loader": "^0.5.7",
-    "webpack": "^2.2.0",
-    "xo": "^0.18.1",
-    "yargs": "^7.0.1"
+    "webpack": "^2.5.1",
+    "xo": "^0.18.2",
+    "yargs": "^8.0.1"
   },
   "xo": {
     "space": true,
@@ -106,6 +108,7 @@
       ],
       "unicorn/filename-case": 0,
       "import/no-unassigned-import": 0,
+      "import/no-extraneous-dependencies": 0,
       "react/jsx-uses-vars": 1,
       "react/jsx-uses-react": 1
     },
@@ -131,10 +134,7 @@
       {
         "files": [
           "packages/react-cosmos-{config,webpack}/src/**/*.js"
-        ],
-        "rules": {
-          "import/no-dynamic-require": 0
-        }
+        ]
       },
       {
         "files": [
@@ -145,11 +145,7 @@
         "env": [
           "jest",
           "browser"
-        ],
-        "rules": {
-          "import/no-extraneous-dependencies": 0,
-          "import/no-dynamic-require": 0
-        }
+        ]
       },
       {
         "files": [
@@ -168,8 +164,6 @@
           "no-unused-vars": 0,
           "no-unused-expressions": 0,
           "import/no-unresolved": 0,
-          "import/no-extraneous-dependencies": 0,
-          "import/no-dynamic-require": 0,
           "import/named": 0
         }
       },

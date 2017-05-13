@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 export default class PropsProxy extends React.Component {
@@ -19,7 +20,7 @@ export default class PropsProxy extends React.Component {
 }
 
 PropsProxy.propTypes = {
-  component: React.PropTypes.func.isRequired,
-  fixture: React.PropTypes.object.isRequired,
-  onComponentRef: React.PropTypes.func.isRequired,
+  component: PropTypes.func.isRequired,
+  fixture: PropTypes.object.isRequired,
+  onComponentRef: PropTypes.func.isRequired,
 };

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import isEqual from 'lodash.isequal';
 import ReactComponentTree from 'react-component-tree';
@@ -107,15 +108,15 @@ export default function createStateProxy(options) {
   };
 
   StateProxy.propTypes = {
-    nextProxy: React.PropTypes.shape({
-      value: React.PropTypes.func,
-      next: React.PropTypes.func,
+    nextProxy: PropTypes.shape({
+      value: PropTypes.func,
+      next: PropTypes.func,
     }).isRequired,
-    component: React.PropTypes.func.isRequired,
-    fixture: React.PropTypes.object.isRequired,
-    onComponentRef: React.PropTypes.func.isRequired,
-    onFixtureUpdate: React.PropTypes.func.isRequired,
-    disableLocalState: React.PropTypes.bool,
+    component: PropTypes.func.isRequired,
+    fixture: PropTypes.object.isRequired,
+    onComponentRef: PropTypes.func.isRequired,
+    onFixtureUpdate: PropTypes.func.isRequired,
+    disableLocalState: PropTypes.bool,
   };
 
   return StateProxy;

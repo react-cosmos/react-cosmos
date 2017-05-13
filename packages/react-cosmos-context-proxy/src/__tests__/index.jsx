@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { shallow } from 'enzyme';
 import createContextProxy from '../index';
@@ -24,7 +25,7 @@ const renderProxy = (fixture, options) => {
   const ContextProxy = createContextProxy({
     ...options,
     childContextTypes: {
-      color: React.PropTypes.string,
+      color: PropTypes.string,
     },
   });
   const wrapper = shallow(

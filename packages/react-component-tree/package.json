@@ -10,13 +10,10 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
+    "create-react-class": "^15.5.3",
     "lodash.clone": "^4.5.0",
     "lodash.foreach": "^4.5.0",
     "lodash.isempty": "^4.4.0",
     "lodash.omit": "^4.5.0"
-  },
-  "peerDependencies": {
-    "react": ">=0.14 <16",
-    "react-dom": ">=0.14 <16"
   }
 }

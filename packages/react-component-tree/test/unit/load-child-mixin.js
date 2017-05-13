@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { renderIntoDocument } from 'react-addons-test-utils';
 import loadChild from '../../src/load-child';
 import LoadChildMixin from '../../src/load-child-mixin';
@@ -7,7 +8,7 @@ describe('UNIT Load child mixin', () => {
   const fakeReactElement = {};
   let myComponent;
 
-  const MyComponent = React.createClass({
+  const MyComponent = createReactClass({
     mixins: [LoadChildMixin],
     children: {},
 

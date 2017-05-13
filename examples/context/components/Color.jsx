@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 export default class Color extends React.Component {
@@ -13,6 +14,6 @@ export default class Color extends React.Component {
 }
 
 Color.contextTypes = {
-  backgroundColor: React.PropTypes.string.isRequired,
-  textColor: React.PropTypes.string.isRequired,
+  backgroundColor: PropTypes.string.isRequired,
+  textColor: PropTypes.string.isRequired,
 };

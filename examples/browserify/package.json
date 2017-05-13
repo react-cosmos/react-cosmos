@@ -6,10 +6,8 @@
   "dependencies": {
     "babelify": "^7.3.0",
     "budo": "^9.2.1",
+    "prop-types": "^15.5.10",
     "require-globify": "^1.4.1"
-  },
-  "peerDependencies": {
-    "react": ">=0.14 <16"
   },
   "scripts": {
     "start": "node ./server.js"

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 const defaults = {
@@ -77,18 +78,18 @@ export default function createReduxProxy(options) {
   }
 
   ReduxProxy.propTypes = {
-    nextProxy: React.PropTypes.shape({
-      value: React.PropTypes.func,
-      next: React.PropTypes.func,
+    nextProxy: PropTypes.shape({
+      value: PropTypes.func,
+      next: PropTypes.func,
     }).isRequired,
-    component: React.PropTypes.func.isRequired,
-    fixture: React.PropTypes.object.isRequired,
-    onComponentRef: React.PropTypes.func.isRequired,
-    onFixtureUpdate: React.PropTypes.func.isRequired,
+    component: PropTypes.func.isRequired,
+    fixture: PropTypes.object.isRequired,
+    onComponentRef: PropTypes.func.isRequired,
+    onFixtureUpdate: PropTypes.func.isRequired,
   };
 
   ReduxProxy.childContextTypes = {
-    store: React.PropTypes.object,
+    store: PropTypes.object,
   };
 
   return ReduxProxy;

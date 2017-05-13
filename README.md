@@ -40,7 +40,7 @@ Read the story of React Cosmos: [Fighting for Component Independence.](https://m
 ## Requirements
 
 - [x] Node >=5 (older versions might work but aren't guaranteed)
-- [x] React >=0.14
+- [x] React >=0.14.9
 - [x] webpack or Browserify (or go rogue and roll your own)
 - [ ] [Fixtures](https://github.com/skidding/flatris/tree/master/src/components/__fixtures__) to define states for your components (you'll do this after you get started)
 
@@ -321,7 +321,7 @@ export default () => {
     // Expects fixture.context to contain `theme` object
     // See examples/context
     childContextTypes: {
-      theme: React.PropTypes.object.isRequired,
+      theme: PropTypes.object.isRequired,
     },
   });
 };
