@@ -108,6 +108,7 @@
       ],
       "unicorn/filename-case": 0,
       "import/no-unassigned-import": 0,
+      "import/no-extraneous-dependencies": 0,
       "react/jsx-uses-vars": 1,
       "react/jsx-uses-react": 1
     },
@@ -144,10 +145,7 @@
         "env": [
           "jest",
           "browser"
-        ],
-        "rules": {
-          "import/no-extraneous-dependencies": 0
-        }
+        ]
       },
       {
         "files": [
@@ -166,7 +164,6 @@
           "no-unused-vars": 0,
           "no-unused-expressions": 0,
           "import/no-unresolved": 0,
-          "import/no-extraneous-dependencies": 0,
           "import/named": 0
         }
       },

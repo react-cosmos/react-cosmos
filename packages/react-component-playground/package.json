@@ -23,10 +23,6 @@
     "react-querystring-router": "^2.0.0-beta.11",
     "react-split-pane": "^0.1.63"
   },
-  "peerDependencies": {
-    "react": ">=0.14 <16",
-    "react-dom": ">=0.14 <16"
-  },
   "devDependencies": {
     "babelify": "^7.3.0"
   },

@@ -19,9 +19,5 @@
     "react-cosmos-utils": "^2.0.0-beta.11",
     "react-querystring-router": "^2.0.0-beta.11"
   },
-  "peerDependencies": {
-    "react": ">=0.14 <16",
-    "react-dom": ">=0.14 <16"
-  },
   "xo": false
 }

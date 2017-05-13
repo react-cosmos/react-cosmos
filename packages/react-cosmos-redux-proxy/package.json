@@ -14,8 +14,5 @@
     "prop-types": "^15.5.10",
     "redux": "^3.6.0"
   },
-  "peerDependencies": {
-    "react": ">=0.14 <16"
-  },
   "xo": false
 }
