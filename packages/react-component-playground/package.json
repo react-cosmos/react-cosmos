@@ -11,15 +11,15 @@
   "main": "lib/index.js",
   "dependencies": {
     "classnames": "^2.2.5",
-    "codemirror": "^5.18.2",
-    "fuzzaldrin-plus": "^0.3.1",
-    "lodash": "^3.6.0",
+    "codemirror": "^5.25.2",
+    "fuzzaldrin-plus": "^0.4.1",
+    "lodash": "^4.17.4",
     "lodash.isequal": "^4.5.0",
     "react-codemirror": "^0.3.0",
     "react-component-tree": "^2.0.0-beta.11",
     "react-cosmos-utils": "^2.0.0-beta.11",
     "react-querystring-router": "^2.0.0-beta.11",
-    "react-split-pane": "^0.1.61"
+    "react-split-pane": "^0.1.63"
   },
   "peerDependencies": {
     "react": ">=0.14 <16",
