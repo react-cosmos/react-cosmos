@@ -5,7 +5,7 @@ import importModule from 'react-cosmos-utils/lib/import-module';
 
 const resolveUserPath = (userPath, rootPath) =>
   slash(path.isAbsolute(userPath) ? userPath : (
-    resolveFrom(rootPath, userPath) || path.join(rootPath, userPath)
+    resolveFrom.silent(rootPath, userPath) || path.join(rootPath, userPath)
   ));
 
 const defaults = {
