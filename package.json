@@ -30,7 +30,7 @@
     "coveralls": "^2.11.12",
     "css-loader": "^0.28.1",
     "enzyme": "^2.8.2",
-    "eslint-config-xo-react": "^0.11.0",
+    "eslint-config-xo-react": "^0.12.0",
     "eslint-import-resolver-webpack": "^0.8.1",
     "eslint-plugin-react": "^6.10.2",
     "file-loader": "^0.11.1",
