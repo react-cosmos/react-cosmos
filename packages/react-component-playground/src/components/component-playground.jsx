@@ -1,4 +1,6 @@
 import _ from 'lodash';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
@@ -63,7 +65,7 @@ const FullScreenIcon = () => (
   </SvgIcon>
 );
 
-module.exports = React.createClass({
+module.exports = createReactClass({
   /**
    * ComponentPlayground provides a minimal frame for loading React components
    * in isolation. It can either render the component full-screen or with the
@@ -72,13 +74,13 @@ module.exports = React.createClass({
   displayName: 'ComponentPlayground',
 
   propTypes: {
-    component: React.PropTypes.string,
-    editor: React.PropTypes.bool,
-    fixture: React.PropTypes.string,
-    fixtures: React.PropTypes.object.isRequired,
-    fullScreen: React.PropTypes.bool,
-    loaderUri: React.PropTypes.string.isRequired,
-    router: React.PropTypes.object.isRequired,
+    component: PropTypes.string,
+    editor: PropTypes.bool,
+    fixture: PropTypes.string,
+    fixtures: PropTypes.object.isRequired,
+    fullScreen: PropTypes.bool,
+    loaderUri: PropTypes.string.isRequired,
+    router: PropTypes.object.isRequired,
   },
 
   mixins: [ComponentTree.Mixin],

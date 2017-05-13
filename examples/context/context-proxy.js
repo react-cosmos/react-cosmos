@@ -1,11 +1,11 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import createContextProxy from '../../packages/react-cosmos-context-proxy';
 
 export default () => {
   return createContextProxy({
     childContextTypes: {
-      backgroundColor: React.PropTypes.string.isRequired,
-      textColor: React.PropTypes.string.isRequired,
+      backgroundColor: PropTypes.string.isRequired,
+      textColor: PropTypes.string.isRequired,
     },
   });
 };

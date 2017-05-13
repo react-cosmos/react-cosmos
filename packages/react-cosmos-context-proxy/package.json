@@ -10,7 +10,8 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
-    "lodash.omit": "^4.5.0"
+    "lodash.omit": "^4.5.0",
+    "prop-types": "^15.5.10"
   },
   "peerDependencies": {
     "react": ">=0.14 <16"

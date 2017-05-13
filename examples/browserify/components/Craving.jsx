@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 const Craving = ({ food }) => (
@@ -5,7 +6,7 @@ const Craving = ({ food }) => (
 );
 
 Craving.propTypes = {
-  food: React.PropTypes.string.isRequired,
+  food: PropTypes.string.isRequired,
 };
 
 export default Craving;

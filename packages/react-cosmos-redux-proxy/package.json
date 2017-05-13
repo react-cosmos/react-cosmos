@@ -11,6 +11,7 @@
   "main": "lib/index.js",
   "dependencies": {
     "lodash.omit": "^4.5.0",
+    "prop-types": "^15.5.10",
     "redux": "^3.6.0"
   },
   "peerDependencies": {

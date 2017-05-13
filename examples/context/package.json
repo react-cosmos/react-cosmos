@@ -9,5 +9,8 @@
   "scripts": {
     "start": "node ../../packages/react-cosmos-webpack/bin/cosmos.js"
   },
-  "xo": false
+  "xo": false,
+  "dependencies": {
+    "prop-types": "^15.5.10"
+  }
 }

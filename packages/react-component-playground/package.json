@@ -12,9 +12,11 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "codemirror": "^5.25.2",
+    "create-react-class": "^15.5.3",
     "fuzzaldrin-plus": "^0.4.1",
     "lodash": "^4.17.4",
     "lodash.isequal": "^4.5.0",
+    "prop-types": "^15.5.10",
     "react-codemirror": "^0.3.0",
     "react-component-tree": "^2.0.0-beta.11",
     "react-cosmos-utils": "^2.0.0-beta.11",

@@ -10,6 +10,7 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
+    "create-react-class": "^15.5.3",
     "lodash.clone": "^4.5.0",
     "lodash.foreach": "^4.5.0",
     "lodash.isempty": "^4.4.0",

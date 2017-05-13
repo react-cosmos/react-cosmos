@@ -53,6 +53,7 @@
     "less": "^2.7.1",
     "less-loader": "^4.0.3",
     "mocha": "^3.3.0",
+    "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-addons-test-utils": "^15.5.1",
     "react-dom": "^15.5.4",
