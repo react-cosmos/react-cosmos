@@ -63,7 +63,7 @@
     "traverse": "^0.6.6",
     "url-loader": "^0.5.7",
     "webpack": "^2.2.0",
-    "xo": "^0.18.1",
+    "xo": "^0.18.2",
     "yargs": "^7.0.1"
   },
   "xo": {
@@ -131,10 +131,7 @@
       {
         "files": [
           "packages/react-cosmos-{config,webpack}/src/**/*.js"
-        ],
-        "rules": {
-          "import/no-dynamic-require": 0
-        }
+        ]
       },
       {
         "files": [
@@ -147,8 +144,7 @@
           "browser"
         ],
         "rules": {
-          "import/no-extraneous-dependencies": 0,
-          "import/no-dynamic-require": 0
+          "import/no-extraneous-dependencies": 0
         }
       },
       {
@@ -169,7 +165,6 @@
           "no-unused-expressions": 0,
           "import/no-unresolved": 0,
           "import/no-extraneous-dependencies": 0,
-          "import/no-dynamic-require": 0,
           "import/named": 0
         }
       },
