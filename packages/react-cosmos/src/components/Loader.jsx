@@ -54,6 +54,7 @@ class Loader extends React.Component {
     super(props);
 
     this.onMessage = this.onMessage.bind(this);
+    this.onFixtureUpdate = this.onFixtureUpdate.bind(this);
 
     // Cache linked list to reuse between lifecycles (proxy list never changes)
     this.firstProxy = createLinkedList(props.proxies);
@@ -95,6 +96,21 @@ class Loader extends React.Component {
   }
 
   onFixtureUpdate(fixtureBody) {
+    const {
+      unserializable,
+      serializable
+    } = this.state.fixture;
+
+    this.setState({
+      fixture: {
+        unserializable,
+        serializable: {
+          ...serializable,
+          ...fixtureBody
+        }
+      }
+    });
+
     parent.postMessage({
       type: 'fixtureUpdate',
       fixtureBody,

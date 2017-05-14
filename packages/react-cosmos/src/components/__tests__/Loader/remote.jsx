@@ -83,19 +83,6 @@ test('creates linked list from proxy list', () => {
   expect(mockGetLinkedList).toHaveBeenLastCalledWith([Proxy]);
 });
 
-test('publishes message to parent on fixture update', () => {
-  const { onFixtureUpdate } = instance;
-  const updatedFixture = {};
-  onFixtureUpdate(updatedFixture);
-
-  return waitForPostMessage().then(data => {
-    expect(data).toEqual({
-      type: 'fixtureUpdate',
-      fixtureBody: updatedFixture,
-    });
-  });
-});
-
 describe('on `fixtureLoad` event', () => {
   let firstProxyWrapper;
   let firstProxyProps;
@@ -174,6 +161,30 @@ describe('on `fixtureLoad` event', () => {
 
     test('changes element key', () => {
       expect(firstProxyWrapper.key()).not.toEqual(firstProxyKey);
+    });
+  });
+
+  describe('on fixture update', () => {
+    const updatedFixture = {
+      title: 'We are the robots PART 2'
+    };
+
+    beforeAll(() => {
+      const { onFixtureUpdate } = instance;
+      onFixtureUpdate(updatedFixture);
+    });
+
+    test('updates local state', () => {
+      expect(wrapper.state('fixture').serializable).toEqual(updatedFixture);
+    });
+
+    test('publishes message to parent', () => {
+      return waitForPostMessage().then(data => {
+        expect(data).toEqual({
+          type: 'fixtureUpdate',
+          fixtureBody: updatedFixture,
+        });
+      });
     });
   });
 
