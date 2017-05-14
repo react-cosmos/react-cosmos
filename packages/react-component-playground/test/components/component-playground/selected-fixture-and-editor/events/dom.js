@@ -1,7 +1,7 @@
 const FIXTURE = 'selected-fixture-and-editor';
 
 describe(`ComponentPlayground (${FIXTURE}) Events DOM`, () => {
-  const utils = require('react-addons-test-utils');
+  const utils = require('react-dom/test-utils');
   const CodeMirror = require('codemirror');
   const render = require('helpers/render-component');
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
-import { renderIntoDocument } from 'react-addons-test-utils';
+import { renderIntoDocument } from 'react-dom/test-utils';
 import loadChild from '../../src/load-child';
 import LoadChildMixin from '../../src/load-child-mixin';
 
