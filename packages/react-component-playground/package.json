@@ -17,7 +17,7 @@
     "lodash": "^4.17.4",
     "lodash.isequal": "^4.5.0",
     "prop-types": "^15.5.10",
-    "react-codemirror": "^0.3.0",
+    "react-codemirror": "^1.0.0",
     "react-component-tree": "^2.0.0-beta.11",
     "react-cosmos-utils": "^2.0.0-beta.11",
     "react-querystring-router": "^2.0.0-beta.11",
