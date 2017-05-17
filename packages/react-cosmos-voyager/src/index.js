@@ -2,7 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import glob from 'glob';
 import matchFixturePath from './match-fixture-path';
-import { FIXTURE_EXTENSIONS_GLOB } from './fixture-extensions';
+import {
+  COMPONENT_EXTENSIONS_GLOB,
+  FIXTURE_EXTENSIONS_GLOB
+} from './fixture-extensions';
 
 const SPECIAL_DIRS = ['__tests__', '__fixtures__'];
 
@@ -21,9 +24,13 @@ const extractComponentName = (filePath, rootPath) => {
   // Nested components are normalized. E.g. Header/Header.jsx will only
   // show up as "Header" in the UI and will read fixtures from
   // Header/__fixtures__ or from a custom fixture path.
+  // The same goes for Header/index.js
   const parts = componentName.split('/');
   if (parts.length > 1) {
-    if (parts[parts.length - 1] === parts[parts.length - 2]) {
+    if (
+      parts[parts.length - 1] === parts[parts.length - 2] ||
+      parts[parts.length - 1] === 'index'
+    ) {
       componentName = parts.slice(0, -1).join('/');
     }
   }
@@ -69,7 +76,7 @@ const getFilePaths = ({
         ], componentName);
     } else {
       const relFixtures = glob.sync(`${componentPath}/**/__fixtures__/**/*.{${FIXTURE_EXTENSIONS_GLOB}}`);
-      glob.sync(`${componentPath}/**/*.{${FIXTURE_EXTENSIONS_GLOB}}`).forEach(filePath => {
+      glob.sync(`${componentPath}/**/*.{${COMPONENT_EXTENSIONS_GLOB}}`).forEach(filePath => {
         if (
           isUnderSpecialDir(filePath) ||
           ignore.some(ignorePattern => filePath.match(ignorePattern))
