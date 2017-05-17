@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos",
-  "version": "2.0.0-beta.12",
+  "version": "2.0.0-beta.13",
   "description": "The glue between the React Cosmos modules",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos",
   "license": "MIT",
@@ -14,10 +14,10 @@
     "lodash.merge": "^4.6.0",
     "lodash.omit": "^4.5.0",
     "prop-types": "^15.5.10",
-    "react-component-playground": "^2.0.0-beta.12",
-    "react-component-tree": "^2.0.0-beta.11",
+    "react-component-playground": "^2.0.0-beta.13",
+    "react-component-tree": "^2.0.0-beta.13",
     "react-cosmos-utils": "^2.0.0-beta.11",
-    "react-querystring-router": "^2.0.0-beta.11"
+    "react-querystring-router": "^2.0.0-beta.13"
   },
   "xo": false
 }
