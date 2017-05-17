@@ -21,9 +21,13 @@ const extractComponentName = (filePath, rootPath) => {
   // Nested components are normalized. E.g. Header/Header.jsx will only
   // show up as "Header" in the UI and will read fixtures from
   // Header/__fixtures__ or from a custom fixture path.
+  // The same goes for Header/index.js
   const parts = componentName.split('/');
   if (parts.length > 1) {
-    if (parts[parts.length - 1] === parts[parts.length - 2]) {
+    if (
+      parts[parts.length - 1] === parts[parts.length - 2] ||
+      parts[parts.length - 1] === 'index'
+    ) {
       componentName = parts.slice(0, -1).join('/');
     }
   }
