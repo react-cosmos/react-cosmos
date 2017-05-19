@@ -65,6 +65,7 @@ testUseCase('relative-fixtures-component-dir', {
   components: {
     Foo: 'components/Foo/Foo.js',
     'nested/Bar': 'components/nested/Bar/Bar.jsx',
+    Qux: 'components/Qux/index.js',
   },
   fixtures: {
     Foo: {
@@ -74,6 +75,9 @@ testUseCase('relative-fixtures-component-dir', {
       one: 'components/nested/Bar/__fixtures__/one.js',
       two: 'components/nested/Bar/__fixtures__/two.json',
       three: 'components/nested/Bar/__fixtures__/three.jsx',
+    },
+    Qux: {
+      blank: 'components/Qux/__fixtures__/blank.js',
     },
   },
 });
