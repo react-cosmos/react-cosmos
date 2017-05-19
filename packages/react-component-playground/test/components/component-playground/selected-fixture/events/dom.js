@@ -1,7 +1,7 @@
 const FIXTURE = 'selected-fixture';
 
 describe(`ComponentPlayground (${FIXTURE}) Events DOM`, () => {
-  const utils = require('react-addons-test-utils');
+  const utils = require('react-dom/test-utils');
   const _ = require('lodash');
   const render = require('helpers/render-component');
 
