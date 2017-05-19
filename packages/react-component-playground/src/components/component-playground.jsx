@@ -5,7 +5,7 @@ import React from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import isEqual from 'lodash.isequal';
-import CodeMirror from 'react-codemirror';
+import CodeMirror from '@skidding/react-codemirror';
 import fuzzaldrinPlus from 'fuzzaldrin-plus';
 import SplitPane from 'react-split-pane';
 import localStorageLib from '../lib/local-storage';
