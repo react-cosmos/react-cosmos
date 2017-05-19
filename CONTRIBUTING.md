@@ -70,8 +70,8 @@ Order of events at init:
 1. Playground renders and Loader `<iframe>` is added to DOM
 1. Loader renders inside iframe and sends `loaderReady` event to *window.parent*
 1. Playground receives `loaderReady` event and immediately sends `fixtureSelect` event to the loader frame, if any of two cases are met:
-  - User quickly selects fixture before Loader is ready (edge-case)
-  - The Cosmos URL already contains a selected fixture
+    - User quickly selects fixture before Loader is ready (edge-case)
+    - The Cosmos URL already contains a selected fixture
 1. *If fixture is selected...*
 1. Loader immediately sends `fixtureLoad` event to playground with the serializable part of the selected fixture
 1. Playground receives fixture contents via `fixtureLoad` and puts it inside local state
