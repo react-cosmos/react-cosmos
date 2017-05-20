@@ -16,15 +16,6 @@ module.exports = { ...defaultFixture,
         somethingHappened: false,
       },
     },
-    fixtureUnserializableProps: {
-      children: [
-        React.createElement('span', {
-          key: '1',
-          children: 'test child',
-          customProp() {},
-        }),
-      ],
-    },
     fixtureChange: 10,
   },
 };

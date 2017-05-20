@@ -18,13 +18,8 @@ describe(`ComponentPlayground (${FIXTURE}) Transitions Mount`, () => {
     ({ container, component, $component } = render(statelessFixture));
   });
 
-  it('should populate state with serializable fixture contents', () => {
+  it('should populate state with fixture contents', () => {
     expect(component.state.fixtureContents.myProp).to.equal(false);
-  });
-
-  it('should populate state with unserializable fixture props', () => {
-    expect(component.state.fixtureUnserializableProps.children).to.equal(
-        fixture.fixtures[fixture.component][fixture.fixture].children);
   });
 
   it('should populate stringified fixture contents as user input', () => {

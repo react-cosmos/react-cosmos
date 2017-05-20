@@ -43,18 +43,12 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, () => {
       expect(stateSet.isFixtureUserInputValid).to.equal(true);
     });
 
-    it('should override serializable fixture part', () => {
+    it('should override fixture part', () => {
       expect(stateSet.fixtureContents).to.deep.equal({
         ...fixture.state.fixtureContents,
         state: {
           somethingHappened: true,
         },
-      });
-    });
-
-    it('should keep unserializable fixture part', () => {
-      Object.keys(fixture.state.fixtureUnserializableProps).forEach(key => {
-        expect(stateSet.fixtureContents[key]).to.be.undefined;
       });
     });
 

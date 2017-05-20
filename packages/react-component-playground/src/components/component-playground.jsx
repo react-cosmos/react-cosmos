@@ -13,7 +13,6 @@ import WelcomeScreen from './welcome-screen';
 import ErrorScreen from './error-screen';
 import ComponentTree from 'react-component-tree';
 import { uri } from 'react-querystring-router';
-import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
 
 const style = require('./component-playground.less');
 
@@ -115,27 +114,16 @@ module.exports = createReactClass({
     getFixtureState(props) {
       const state = {
         fixtureContents: {},
-        fixtureUnserializableProps: {},
         fixtureUserInput: '{}',
         isFixtureUserInputValid: true,
       };
 
       if (this.isFixtureSelected(props) && this.doesSelectedFixtureExist(props)) {
-        const originalFixtureContents = this.getSelectedFixtureContents(props);
-
-        // Unserializable props are stored separately from serializable ones
-        // because the serializable props can be overriden by the user using
-        // the editor, while the unserializable props are always attached
-        // behind the scenes
-        const {
-          unserializable,
-          serializable,
-        } = splitUnserializableParts(originalFixtureContents);
+        const fixtureContents = this.getSelectedFixtureContents(props);
 
         _.assign(state, {
-          fixtureContents: serializable,
-          fixtureUnserializableProps: unserializable,
-          fixtureUserInput: this.getStringifiedFixtureContents(serializable),
+          fixtureContents,
+          fixtureUserInput: this.getStringifiedFixtureContents(fixtureContents),
         });
       }
 
@@ -519,8 +507,6 @@ module.exports = createReactClass({
       return;
     }
 
-    // We assume data received in this handler is serializable (& thus
-    // part of state.fixtureContents)
     const newFixtureContents = {
       ...fixtureContents,
       ...fixtureBody,
