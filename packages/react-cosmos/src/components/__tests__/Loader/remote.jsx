@@ -174,6 +174,7 @@ describe('on `fixtureLoad` event', () => {
       onFixtureUpdate(updatedFixture);
 
       firstProxyWrapper = wrapper.find(mockFirstProxy.value);
+      firstProxyProps = firstProxyWrapper.props();
     });
 
     test('includes body received in fixture sent to first proxy', () => {
