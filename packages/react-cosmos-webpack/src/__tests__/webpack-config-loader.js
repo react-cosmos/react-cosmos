@@ -54,7 +54,7 @@ beforeEach(() => {
   require('webpack').__setPluginMock('DefinePlugin', DefinePlugin);
   require('webpack').__setPluginMock('HotModuleReplacementPlugin', HotModuleReplacementPlugin);
 
-  getWebpackConfig = require('../webpack-config').default;
+  getWebpackConfig = require('../webpack-config-loader').default;
 });
 
 describe('without hmr', () => {
@@ -79,9 +79,9 @@ describe('without hmr', () => {
     });
   });
 
-  test('adds cosmos entry', () => {
+  test('adds loader entry', () => {
     const cosmosEntry = webpackConfig.entry[webpackConfig.entry.length - 1];
-    expect(cosmosEntry).toBe(require.resolve('../entry'));
+    expect(cosmosEntry).toBe(require.resolve('../entry-loader'));
   });
 
   test('does not add hot middleware client to entries', () => {
@@ -136,11 +136,9 @@ describe('with hmr', () => {
     });
   });
 
-  test('adds cosmos entry', () => {
-    test('adds cosmos entry', () => {
-      const cosmosEntry = webpackConfig.entry[webpackConfig.entry.length - 1];
-      expect(cosmosEntry).toBe(require.resolve('../entry'));
-    });
+  test('adds loader entry', () => {
+    const cosmosEntry = webpackConfig.entry[webpackConfig.entry.length - 1];
+    expect(cosmosEntry).toBe(require.resolve('../entry-loader'));
   });
 
   test('adds hot middleware client to entries', () => {
@@ -245,7 +243,7 @@ describe('output', () => {
 
     test('creates proper output', () => {
       expect(webpackConfig.output).toEqual({
-        path: '/',
+        path: '/loader/',
         filename: 'bundle.js',
         publicPath: '/loader/',
       });
@@ -259,7 +257,7 @@ describe('output', () => {
 
     test('creates proper output', () => {
       expect(webpackConfig.output).toEqual({
-        path: '__mock__outputPath',
+        path: '__mock__outputPath/loader/',
         filename: 'bundle.js',
         publicPath: './',
       });

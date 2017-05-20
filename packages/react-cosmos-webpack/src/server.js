@@ -4,7 +4,8 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { argv } from 'yargs';
-import getWebpackConfig from './webpack-config';
+import getLoaderWebpackConfig from './webpack-config-loader';
+import getPlaygroundWebpackConfig from './webpack-config-playground';
 import getDefaultWebpackConfig from './default-webpack-config';
 import importModule from 'react-cosmos-utils/lib/import-module';
 import getCosmosConfig from 'react-cosmos-config';
@@ -43,17 +44,24 @@ module.exports = function startServer() {
     userWebpackConfig = getDefaultWebpackConfig();
   }
 
-  const cosmosWebpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath);
-  const compiler = webpack(cosmosWebpackConfig);
+  const loaderWebpackConfig = getLoaderWebpackConfig(userWebpackConfig, cosmosConfigPath);
+  const loaderCompiler = webpack(loaderWebpackConfig);
+  const playgroundWebpackConfig = getPlaygroundWebpackConfig(cosmosConfigPath);
+  const playgroundCompiler = webpack(playgroundWebpackConfig);
   const app = express();
 
-  app.use(webpackDevMiddleware(compiler, {
+  app.use(webpackDevMiddleware(loaderCompiler, {
     publicPath: '/loader/',
     noInfo: true,
   }));
 
+  app.use(webpackDevMiddleware(playgroundCompiler, {
+    publicPath: '/',
+    noInfo: true,
+  }));
+
   if (hot) {
-    app.use(webpackHotMiddleware(compiler));
+    app.use(webpackHotMiddleware(loaderCompiler));
   }
 
   const publicPath = getPublicPath(cosmosConfig, userWebpackConfig);

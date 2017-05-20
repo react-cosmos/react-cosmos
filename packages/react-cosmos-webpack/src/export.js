@@ -2,7 +2,8 @@ import path from 'path';
 import webpack from 'webpack';
 import { argv } from 'yargs';
 import fs from 'fs-extra';
-import getWebpackConfig from './webpack-config';
+import getLoaderWebpackConfig from './webpack-config-loader';
+import getPlaygroundWebpackConfig from './webpack-config-playground';
 import getDefaultWebpackConfig from './default-webpack-config';
 import importModule from 'react-cosmos-utils/lib/import-module';
 import getCosmosConfig from 'react-cosmos-config';
@@ -15,14 +16,22 @@ const moduleExists = modulePath => {
   }
 };
 
-const arrangeExportInOutputPath = outputPath => {
-  fs.copySync(`${outputPath}/bundle.js`, `${outputPath}/loader/bundle.js`);
-  fs.copySync(`${outputPath}/index.html`, `${outputPath}/loader/index.html`);
-  fs.removeSync(`${outputPath}/bundle.js`);
-  fs.removeSync(`${outputPath}/index.html`);
+const copyStaticFiles = outputPath => {
   fs.copySync(path.join(__dirname, 'static/favicon.ico'), `${outputPath}/favicon.ico`);
   fs.copySync(path.join(__dirname, 'static/index.html'), `${outputPath}/index.html`);
 };
+
+const runWebpackCompiler = config =>
+  new Promise((resolve, reject) => {
+    const compiler = webpack(config);
+    compiler.run((err, stats) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(stats);
+      }
+    });
+  });
 
 module.exports = function startExport() {
   const cosmosConfigPath = argv.config;
@@ -42,23 +51,19 @@ module.exports = function startExport() {
     userWebpackConfig = getDefaultWebpackConfig();
   }
 
-  const cosmosWebpackConfig = getWebpackConfig(userWebpackConfig, cosmosConfigPath, true);
-  const compiler = webpack(cosmosWebpackConfig);
+  const loaderWebpackConfig = getLoaderWebpackConfig(userWebpackConfig, cosmosConfigPath, true);
+  const playgroundWebpackConfig = getPlaygroundWebpackConfig(cosmosConfigPath, true);
 
-  compiler.run((err, stats) => {
-    if (err) {
-      console.error('[Cosmos] Export Failed! See error below:');
-      console.error(err);
-    } else {
-      console.log(stats);
-      try {
-        arrangeExportInOutputPath(outputPath);
-      } catch (err) {
-        console.error('[Cosmos] Export Failed! See error below:');
-        console.error(err);
-      }
-      console.log(`[Cosmos] Export Complete! Find the exported files here:
-${outputPath}`);
-    }
+  Promise.all([
+    runWebpackCompiler(loaderWebpackConfig),
+    runWebpackCompiler(playgroundWebpackConfig),
+  ]).then(() => {
+    copyStaticFiles(outputPath);
+  }).then(() => {
+    console.log('[Cosmos] Export Complete! Find the exported files here:');
+    console.log(outputPath);
+  }, err => {
+    console.error('[Cosmos] Export Failed! See error below:');
+    console.error(err);
   });
 };

@@ -12,6 +12,9 @@
   "globals": {
     "COSMOS_CONFIG": {
       "containerQuerySelector": "__mock__containerQuerySelector"
+    },
+    "COSMOS_FIXTURES": {
+      "foo": "bar"
     }
   },
   "moduleNameMapper": {

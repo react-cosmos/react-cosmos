@@ -8,7 +8,7 @@ import getCosmosConfig from 'react-cosmos-config';
  * - Enable hot reloading
  * - Embed the config path to make user configs available on the client-side
  */
-export default function getWebpackConfig(
+export default function getLoaderWebpackConfig(
   userWebpackConfig,
   cosmosConfigPath,
   shouldExport = false
@@ -31,10 +31,10 @@ export default function getWebpackConfig(
     entry.push(`${require.resolve('webpack-hot-middleware/client')}?reload=true`);
   }
 
-  entry.push(require.resolve('./entry'));
+  entry.push(require.resolve('./entry-loader'));
 
   const output = {
-    path: shouldExport ? outputPath : '/',
+    path: shouldExport ? `${outputPath}/loader/` : '/loader/',
     filename: 'bundle.js',
     publicPath: shouldExport ? './' : '/loader/',
   };
