@@ -29,7 +29,7 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, () => {
   });
 
   it('should send `loadFixture` event when frame is ready', () => {
-    component.onMessage({ data: { type: 'frameReady' } });
+    component.onMessage({ data: { type: 'loaderReady' } });
 
     expect(postMessage).to.have.been.calledWith({
       type: 'fixtureLoad',

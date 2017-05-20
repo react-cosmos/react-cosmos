@@ -473,7 +473,7 @@ module.exports = createReactClass({
   onMessage({ data }) {
     const { type, fixtureBody } = data;
 
-    if (type === 'frameReady') {
+    if (type === 'loaderReady') {
       this.sendFixtureToLoader();
     }
 
@@ -632,7 +632,7 @@ module.exports = createReactClass({
 
   sendFixtureToLoader() {
     // Maybe iframe has not been loaded yet, in which case it'll receive
-    // the fixture to load when it triggers the `frameReady` event
+    // the fixture to load when it triggers the `loaderReady` event
     if (!this.loaderFrame) {
       return;
     }

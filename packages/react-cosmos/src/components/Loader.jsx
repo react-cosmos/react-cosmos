@@ -67,7 +67,7 @@ class Loader extends React.Component {
       window.addEventListener('message', this.onMessage, false);
 
       // Let parent know loader is ready to render
-      parent.postMessage({ type: 'frameReady' }, '*');
+      parent.postMessage({ type: 'loaderReady' }, '*');
     }
   }
 

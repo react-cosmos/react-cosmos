@@ -75,7 +75,7 @@ test('renders nothing at first', () => {
 
 test('notifies parent frames on load', () =>
   waitForPostMessage().then(data => {
-    expect(data).toEqual({ type: 'frameReady' });
+    expect(data).toEqual({ type: 'loaderReady' });
   }),
 );
 
