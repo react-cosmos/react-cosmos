@@ -178,7 +178,7 @@ class Loader extends React.Component {
         key={fixtureId}
         nextProxy={firstProxy.next()}
         component={components[component]}
-        fixture={merge(unserializable, serializable)}
+        fixture={merge({}, unserializable, serializable)}
         onComponentRef={
           () => { /* noope */ }
         }
