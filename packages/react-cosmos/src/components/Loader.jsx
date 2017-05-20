@@ -8,7 +8,13 @@ const getUpdateId = () => Date.now();
 
 const hasInitialFixture = ({ component, fixture }) => Boolean(component && fixture);
 
-const getFixtureState = ({ fixtures, component, fixture, fixtureBody }) => {
+const getFixtureState = ({
+  fixtures,
+  component,
+  fixture,
+  fixtureBody,
+  fixtureId,
+}) => {
   if (!hasInitialFixture({ component, fixture })) {
     // Nothing is rendered until parent frame says so
     return {
@@ -18,7 +24,7 @@ const getFixtureState = ({ fixtures, component, fixture, fixtureBody }) => {
         unserializable: {},
         serializable: {},
       },
-      fixtureUpdateId: 0,
+      fixtureId: 0,
     };
   }
 
@@ -37,7 +43,7 @@ const getFixtureState = ({ fixtures, component, fixture, fixtureBody }) => {
     // Used as React Element key to ensure loaded components are rebuilt on
     // every fixture change (instead of reusing instance and going down the
     // componentWillReceiveProps route)
-    fixtureUpdateId: getUpdateId(),
+    fixtureId,
   };
 };
 
@@ -63,7 +69,12 @@ class Loader extends React.Component {
     // Cache linked list to reuse between lifecycles (proxy list never changes)
     this.firstProxy = createLinkedList(proxies);
 
-    this.state = getFixtureState({ fixtures, component, fixture });
+    this.state = getFixtureState({
+      fixtures,
+      component,
+      fixture,
+      fixtureId: getUpdateId()
+    });
   }
 
   componentDidMount() {
@@ -96,6 +107,7 @@ class Loader extends React.Component {
       fixtures,
       component,
       fixture,
+      fixtureId: getUpdateId()
     }));
   }
 
@@ -107,19 +119,22 @@ class Loader extends React.Component {
       fixtures,
       component,
       fixture,
-      fixtureBody
+      fixtureBody,
+      fixtureId: getUpdateId()
     }));
   }
 
   onFixtureUpdate(fixtureBody) {
     const { fixtures } = this.props;
-    const { component, fixture } = this.state;
+    const { component, fixture, fixtureId } = this.state;
 
     this.setState(getFixtureState({
       fixtures,
       component,
       fixture,
-      fixtureBody
+      fixtureBody,
+      // Preserve React instances when fixture change comes from state changes
+      fixtureId
     }));
 
     parent.postMessage({
@@ -139,7 +154,7 @@ class Loader extends React.Component {
     const {
       component,
       fixtureBody,
-      fixtureUpdateId,
+      fixtureId,
     } = state;
     const {
       unserializable,
@@ -152,7 +167,7 @@ class Loader extends React.Component {
 
     return (
       <firstProxy.value
-        key={fixtureUpdateId}
+        key={fixtureId}
         nextProxy={firstProxy.next()}
         component={components[component]}
         fixture={merge(unserializable, serializable)}

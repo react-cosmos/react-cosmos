@@ -168,8 +168,12 @@ describe('on `fixtureLoad` event', () => {
     };
 
     beforeAll(() => {
+      firstProxyKey = firstProxyWrapper.key();
+
       const { onFixtureUpdate } = instance;
       onFixtureUpdate(updatedFixture);
+
+      firstProxyWrapper = wrapper.find(mockFirstProxy.value);
     });
 
     test('includes body received in fixture sent to first proxy', () => {
@@ -177,6 +181,10 @@ describe('on `fixtureLoad` event', () => {
         ...mockFixtureParts.unserializable,
         ...updatedFixture,
       });
+    });
+
+    test('does not change element key', () => {
+      expect(firstProxyWrapper.key()).toEqual(firstProxyKey);
     });
 
     test('publishes message to parent', () => {
