@@ -133,16 +133,14 @@ describe('on `fixtureLoad` event', () => {
     expect(firstProxyProps.onFixtureUpdate).toBe(instance.onFixtureUpdate);
   });
 
-  describe('on `fixtureLoad` event with fixture body', () => {
+  describe('on `fixtureChange` event', () => {
     const fixtureBody = {
       title: 'We are the robots',
     };
 
     beforeAll(() => {
       window.postMessage({
-        type: 'fixtureLoad',
-        component: 'FooBar',
-        fixture: 'base',
+        type: 'fixtureChange',
         fixtureBody,
       }, '*');
 
@@ -174,8 +172,11 @@ describe('on `fixtureLoad` event', () => {
       onFixtureUpdate(updatedFixture);
     });
 
-    test('updates local state', () => {
-      expect(wrapper.state('fixture').serializable).toEqual(updatedFixture);
+    test('includes body received in fixture sent to first proxy', () => {
+      expect(firstProxyProps.fixture).toEqual({
+        ...mockFixtureParts.unserializable,
+        ...updatedFixture,
+      });
     });
 
     test('publishes message to parent', () => {

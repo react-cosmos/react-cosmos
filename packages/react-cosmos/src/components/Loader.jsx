@@ -13,7 +13,8 @@ const getFixtureState = ({ fixtures, component, fixture, fixtureBody }) => {
     // Nothing is rendered until parent frame says so
     return {
       component: null,
-      fixture: {
+      fixture: null,
+      fixtureBody: {
         unserializable: {},
         serializable: {},
       },
@@ -28,7 +29,8 @@ const getFixtureState = ({ fixtures, component, fixture, fixtureBody }) => {
 
   return {
     component,
-    fixture: {
+    fixture,
+    fixtureBody: {
       unserializable,
       serializable: fixtureBody || serializable,
     },
@@ -56,10 +58,12 @@ class Loader extends React.Component {
     this.onMessage = this.onMessage.bind(this);
     this.onFixtureUpdate = this.onFixtureUpdate.bind(this);
 
-    // Cache linked list to reuse between lifecycles (proxy list never changes)
-    this.firstProxy = createLinkedList(props.proxies);
+    const { proxies, fixtures, component, fixture } = props;
 
-    this.state = getFixtureState(props);
+    // Cache linked list to reuse between lifecycles (proxy list never changes)
+    this.firstProxy = createLinkedList(proxies);
+
+    this.state = getFixtureState({ fixtures, component, fixture });
   }
 
   componentDidMount() {
@@ -79,37 +83,44 @@ class Loader extends React.Component {
 
   onMessage({ data }) {
     if (data.type === 'fixtureLoad') {
-      const {
-        component,
-        fixture,
-        // Optional patch to apply on top of initial fixture
-        fixtureBody,
-      } = data;
-
-      this.setState(getFixtureState({
-        fixtures: this.props.fixtures,
-        component,
-        fixture,
-        fixtureBody
-      }));
+      this.onFixtureLoad(data);
+    } else if (data.type === 'fixtureChange') {
+      this.onFixtureChange(data);
     }
   }
 
-  onFixtureUpdate(fixtureBody) {
-    const {
-      unserializable,
-      serializable
-    } = this.state.fixture;
+  onFixtureLoad({ component, fixture }) {
+    const { fixtures } = this.props;
 
-    this.setState({
-      fixture: {
-        unserializable,
-        serializable: {
-          ...serializable,
-          ...fixtureBody
-        }
-      }
-    });
+    this.setState(getFixtureState({
+      fixtures,
+      component,
+      fixture,
+    }));
+  }
+
+  onFixtureChange({ fixtureBody }) {
+    const { fixtures } = this.props;
+    const { component, fixture } = this.state;
+
+    this.setState(getFixtureState({
+      fixtures,
+      component,
+      fixture,
+      fixtureBody
+    }));
+  }
+
+  onFixtureUpdate(fixtureBody) {
+    const { fixtures } = this.props;
+    const { component, fixture } = this.state;
+
+    this.setState(getFixtureState({
+      fixtures,
+      component,
+      fixture,
+      fixtureBody
+    }));
 
     parent.postMessage({
       type: 'fixtureUpdate',
@@ -127,9 +138,13 @@ class Loader extends React.Component {
     const { components } = props;
     const {
       component,
-      fixture,
+      fixtureBody,
       fixtureUpdateId,
     } = state;
+    const {
+      unserializable,
+      serializable
+    } = fixtureBody;
 
     if (!component) {
       return null;
@@ -140,7 +155,7 @@ class Loader extends React.Component {
         key={fixtureUpdateId}
         nextProxy={firstProxy.next()}
         component={components[component]}
-        fixture={merge(fixture.unserializable, fixture.serializable)}
+        fixture={merge(unserializable, serializable)}
         onComponentRef={
           () => { /* noope */ }
         }
