@@ -59,12 +59,11 @@ describe(`ComponentPlayground (${FIXTURE}) Transitions Props`, () => {
     expect(stateSet.isFixtureUserInputValid).to.be.true;
   });
 
-  it('should send `loadFixture` event', () => {
+  it('should send `fixtureLoad` event', () => {
     expect(postMessage).to.have.been.calledWith({
       type: 'fixtureLoad',
       component: 'SecondComponent',
-      fixture: 'index',
-      fixtureBody: fixture.fixtures.SecondComponent.index,
+      fixture: 'index'
     }, '*');
   });
 });

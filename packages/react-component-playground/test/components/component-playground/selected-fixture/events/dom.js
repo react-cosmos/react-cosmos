@@ -91,12 +91,11 @@ describe(`ComponentPlayground (${FIXTURE}) Events DOM`, () => {
       expect(stateSet.isFixtureUserInputValid).to.equal(true);
     });
 
-    it('should send `loadFixture` event', () => {
+    it('should send `fixtureLoad` event', () => {
       expect(postMessage).to.have.been.calledWith({
         type: 'fixtureLoad',
         component: fixture.component,
         fixture: fixture.fixture,
-        fixtureBody: fixture.state.fixtureContents,
       }, '*');
     });
   });

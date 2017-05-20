@@ -23,16 +23,16 @@ From Playground to Loader:
 - User selects fixture
   ```js
   {
-    type: 'fixtureSelect',
+    type: 'fixtureLoad',
     component: 'Message',
     fixture: 'multiline'
   }
   ```
-- User edits fixture contents inside editor
+- User edits fixture body inside editor
   ```js
   {
-    type: 'fixtureEdit',
-    fixtureContents: {
+    type: 'fixtureChange',
+    fixtureBody: {
       // serializable stuff
     }
   }
@@ -46,20 +46,11 @@ From Loader to Playground:
     type: `loaderReady`
   }
   ```
-- Serializable part of fixture contents is sent to Playground (to use in fixture editor), sent right after an incoming `fixtureSelect` event
+- Fixture updates due to state changes (local state, Redux or custom)
   ```js
   {
-    type: `fixtureLoad`,
-    fixtureContents: {
-      // serializable stuff
-    }
-  }
-  ```
-- Component state changes (local state, Redux or custom)
-  ```js
-  {
-    type: `stateChange`,
-    fixtureContents: {
+    type: `fixtureUpdate`,
+    fixtureBody: {
       // serializable stuff
     }
   }
@@ -69,14 +60,9 @@ Order of events at init:
 
 1. Playground renders and Loader `<iframe>` is added to DOM
 1. Loader renders inside iframe and sends `loaderReady` event to *window.parent*
-1. Playground receives `loaderReady` event and immediately sends `fixtureSelect` event to the loader frame, if any of two cases are met:
+1. Playground receives `loaderReady` event and immediately sends `fixtureLoad` event to the loader frame, if any of two cases are met:
     - User quickly selects fixture before Loader is ready (edge-case)
     - The Cosmos URL already contains a selected fixture
-1. *If fixture is selected...*
-1. Loader immediately sends `fixtureLoad` event to playground with the serializable part of the selected fixture
-1. Playground receives fixture contents via `fixtureLoad` and puts it inside local state
-1. Serializable fixture contents show up in fixture editor
-
 
 ## Progress
 

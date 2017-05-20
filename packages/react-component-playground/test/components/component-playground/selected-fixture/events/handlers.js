@@ -28,14 +28,13 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, () => {
     component.setState.restore();
   });
 
-  it('should send `loadFixture` event when frame is ready', () => {
+  it('should send `fixtureLoad` event when frame is ready', () => {
     component.onMessage({ data: { type: 'loaderReady' } });
 
     expect(postMessage).to.have.been.calledWith({
       type: 'fixtureLoad',
       component: fixture.component,
-      fixture: fixture.fixture,
-      fixtureBody: fixture.state.fixtureContents,
+      fixture: fixture.fixture
     }, '*');
   });
 

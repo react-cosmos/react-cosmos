@@ -556,7 +556,7 @@ module.exports = createReactClass({
 
     this.setState(newState, () => {
       if (this.state.isFixtureUserInputValid) {
-        this.sendFixtureToLoader();
+        this.sendFixtureContentsToLoader();
       }
     });
   },
@@ -641,12 +641,25 @@ module.exports = createReactClass({
       component,
       fixture,
     } = this.props;
-    const { fixtureContents } = this.state;
 
     this.loaderFrame.contentWindow.postMessage({
       type: 'fixtureLoad',
       component,
       fixture,
+    }, '*');
+  },
+
+  sendFixtureContentsToLoader() {
+    // Edge-case: User makes edit inside fixture editor and Loader frame isn't
+    // ready yet. Edit will be lost unless repeated after Loader boots.
+    if (!this.loaderFrame) {
+      return;
+    }
+
+    const { fixtureContents } = this.state;
+
+    this.loaderFrame.contentWindow.postMessage({
+      type: 'fixtureChange',
       fixtureBody: fixtureContents,
     }, '*');
   },
