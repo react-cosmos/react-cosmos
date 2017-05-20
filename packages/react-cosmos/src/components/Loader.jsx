@@ -126,21 +126,29 @@ class Loader extends React.Component {
 
   onFixtureUpdate(fixtureBody) {
     const { fixtures } = this.props;
-    const { component, fixture, fixtureId } = this.state;
+    const { component, fixture, fixtureBody: { serializable }, fixtureId } = this.state;
 
     this.setState(getFixtureState({
       fixtures,
       component,
       fixture,
-      fixtureBody,
+      // Fixture updates are partial
+      fixtureBody: {
+        ...serializable,
+        ...fixtureBody
+      },
       // Preserve React instances when fixture change comes from state changes
       fixtureId
     }));
 
-    parent.postMessage({
-      type: 'fixtureUpdate',
-      fixtureBody,
-    }, '*');
+    try {
+      parent.postMessage({
+        type: 'fixtureUpdate',
+        fixtureBody
+      }, '*');
+    } catch (err) {
+      console.warn('[Cosmos] Failed to send fixture update to parent', err);
+    }
   }
 
   render() {
