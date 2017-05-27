@@ -1,6 +1,6 @@
 import { getSelector } from '../support/utils/css-modules';
 
-describe('Local state example', function() {
+describe('Local state example', () => {
   context('homepage', () => {
     before(() => {
       cy.visit('/');
@@ -27,7 +27,7 @@ describe('Local state example', function() {
     it('should show welcome message', () => {
       cy
         .get(getSelector('display-screen__header'))
-        .should('contain', "You're all set");
+        .should('contain', 'You\'re all set');
     });
   });
 

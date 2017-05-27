@@ -32,6 +32,7 @@
     "child-process-promise": "^2.2.0",
     "coveralls": "^2.13.1",
     "css-loader": "^0.28.1",
+    "cypress-cli": "^0.13.1",
     "enzyme": "^2.8.2",
     "eslint-config-xo-react": "^0.12.0",
     "eslint-import-resolver-webpack": "^0.8.1",
@@ -111,6 +112,7 @@
       "unicorn/filename-case": 0,
       "import/no-unassigned-import": 0,
       "import/no-extraneous-dependencies": 0,
+      "import/prefer-default-export": 0,
       "react/jsx-uses-vars": 1,
       "react/jsx-uses-react": 1
     },
@@ -174,6 +176,17 @@
         "rules": {
           "import/no-unresolved": 0
         }
+      },
+      {
+        "files": [
+          "cypress/**/*.{js,jsx}"
+        ],
+        "env": [
+          "mocha"
+        ],
+        "globals": [
+          "cy"
+        ]
       }
     ]
   }
