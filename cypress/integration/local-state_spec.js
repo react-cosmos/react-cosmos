@@ -45,32 +45,58 @@ describe('Local state example', () => {
         .eq(0)
         .should('contain', 'oneTwoThree');
     });
+  });
 
-    context('select fixture', () => {
-      // There's only one fixture at this point
-      const fixtureButtonSel = `${getSelector('component-playground__component-fixture')}:eq(0)`;
+  context('select fixture', () => {
+    // There's only one fixture at this point
+    const fixtureButtonSel = `${getSelector('component-playground__component-fixture')}:eq(0)`;
 
-      before(() => {
-        cy.get(fixtureButtonSel).click();
-      });
+    before(() => {
+      cy.get(fixtureButtonSel).click();
+    });
 
-      it('should add active class to button', () => {
-        cy
-          .get(fixtureButtonSel)
-          .then($fixtureButton => {
-            return $fixtureButton.attr('class');
-          })
-          .should('contain', 'component-playground__selected__');
-      });
+    it('should add active class to fixture button', () => {
+      cy
+        .get(fixtureButtonSel)
+        .then($fixtureButton => {
+          return $fixtureButton.attr('class');
+        })
+        .should('contain', 'component-playground__selected__');
+    });
 
-      it('should render Loader iframe', () => {
-        cy
-          .get('iframe')
-          .should('have.exist')
-          .should('have.attr', 'src', './loader/index.html');
-      });
+    it('should render Loader iframe', () => {
+      cy
+        .get('iframe')
+        .should('have.exist')
+        .should('have.attr', 'src', './loader/index.html');
+    });
+  });
 
-      context('fixture editor', () => {});
+  context('fixture editor', () => {
+    // The first menu button is the fixture editor toggle
+    const editorButtonSel = `${getSelector('component-playground__button')}:eq(1)`;
+
+    before(() => {
+      cy.get(editorButtonSel).click();
+    });
+
+    it('should add active class to editor button', () => {
+      cy
+        .get(editorButtonSel)
+        .then($fixtureButton => {
+          return $fixtureButton.attr('class');
+        })
+        .should('contain', 'component-playground__selected-button__');
+    });
+
+    it('should display fixture inside editor', () => {
+      cy.get('.CodeMirror-line:eq(0)').should('have.text', '{');
+      cy.get('.CodeMirror-line:eq(1)').should('have.text', '  "state": {');
+      cy.get('.CodeMirror-line:eq(2)').should('have.text', '    "children": {');
+      cy.get('.CodeMirror-line:eq(3)').should('have.text', '      "c1": {');
+      cy.get('.CodeMirror-line:eq(4)').should('have.text', '        "value": 1');
+      cy.get('.CodeMirror-line:eq(7)').should('have.text', '        "value": 2');
+      cy.get('.CodeMirror-line:eq(10)').should('have.text', '        "value": 3');
     });
   });
 });
