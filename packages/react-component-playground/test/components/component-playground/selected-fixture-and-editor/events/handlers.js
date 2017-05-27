@@ -6,12 +6,15 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, () => {
   const localStorageLib = require('component-playground/lib/local-storage');
 
   const fixture = require(`fixtures/component-playground/${FIXTURE}`);
+  const initialSplitPos = 207;
 
   let component;
   let $component;
   let container;
 
   beforeEach(() => {
+    localStorageLib.set('splitPos', initialSplitPos);
+
     ({ container, component, $component } = render(fixture));
   });
 
@@ -68,13 +71,12 @@ describe(`ComponentPlayground (${FIXTURE}) Events Handlers`, () => {
     });
   });
 
-  it('should save split-pane position in local storage on change', () => {
-    expect(component.refs.splitPane.props.onChange())
-      .to.equal(localStorageLib.set('splitPos'));
+  it('should get split-pane default size from local storage', () => {
+    expect(component.refs.splitPane.props.defaultSize).to.equal(initialSplitPos);
   });
 
-  it('should get split-pane default size from local storage', () => {
-    expect(component.refs.splitPane.props.defaultSize)
-      .to.equal(localStorageLib.get('splitPos'));
+  it('should save split-pane position in local storage on change', () => {
+    component.refs.splitPane.props.onChange(102);
+    expect(localStorageLib.get('splitPos')).to.equal(102);
   });
 });
