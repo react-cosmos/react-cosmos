@@ -158,7 +158,7 @@ module.exports = createReactClass({
         component: SplitPane,
         key: 'editorLoaderSplitPane',
         split: this.getOrientationDirection(),
-        defaultSize: localStorageLib.get('splitPos'),
+        defaultSize: localStorageLib.get('splitPos') || 250,
         onDragStarted: this.onPaneDragStart,
         onDragFinished: this.onPaneDragStop,
         onChange: (size => localStorageLib.set('splitPos', size)),
