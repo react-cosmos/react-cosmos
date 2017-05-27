@@ -31,9 +31,6 @@
     "webpack-hot-middleware": "^2.13.0",
     "yargs": "^8.0.1"
   },
-  "peerDependencies": {
-    "webpack": ">=1.13 <3"
-  },
   "bin": {
     "cosmos": "./bin/cosmos.js",
     "cosmos-export": "./bin/cosmos-export.js"
