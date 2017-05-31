@@ -90,13 +90,13 @@ describe('Local state example', () => {
     });
 
     it('should display fixture inside editor', () => {
-      cy.get('.CodeMirror-line:eq(0)').should('have.text', '{');
-      cy.get('.CodeMirror-line:eq(1)').should('have.text', '  "state": {');
-      cy.get('.CodeMirror-line:eq(2)').should('have.text', '    "children": {');
-      cy.get('.CodeMirror-line:eq(3)').should('have.text', '      "c1": {');
-      cy.get('.CodeMirror-line:eq(4)').should('have.text', '        "value": 1');
-      cy.get('.CodeMirror-line:eq(7)').should('have.text', '        "value": 2');
-      cy.get('.CodeMirror-line:eq(10)').should('have.text', '        "value": 3');
+      cy.get('.CodeMirror-line:eq(0)').should('contain', '{');
+      cy.get('.CodeMirror-line:eq(1)').should('contain', '"state": {');
+      cy.get('.CodeMirror-line:eq(2)').should('contain', '"children": {');
+      cy.get('.CodeMirror-line:eq(3)').should('contain', '"c1": {');
+      cy.get('.CodeMirror-line:eq(4)').should('contain', '"value": 1');
+      cy.get('.CodeMirror-line:eq(7)').should('contain', '"value": 2');
+      cy.get('.CodeMirror-line:eq(10)').should('contain', '"value": 3');
     });
   });
 });
