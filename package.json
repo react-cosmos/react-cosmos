@@ -28,7 +28,7 @@
     "babel-preset-es2015": "^6.13.2",
     "babel-preset-react": "^6.11.1",
     "browserify-optional": "^1.0.0",
-    "chai": "^3.5.0",
+    "chai": "^4.0.1",
     "child-process-promise": "^2.2.0",
     "coveralls": "^2.13.1",
     "css-loader": "^0.28.1",
