@@ -18,7 +18,7 @@ const getExternalFixtures = fixturePaths => fixturePaths.reduce((prev, next) => 
 
 const extractComponentName = (filePath, rootPath) => {
   let componentName = filePath
-    .slice(rootPath.length + 1)
+    .replace(new RegExp(`^${rootPath}/?(.+)$`), '$1')
     .replace(/\.jsx?$/, '');
 
   // Nested components are normalized. E.g. Header/Header.jsx will only
