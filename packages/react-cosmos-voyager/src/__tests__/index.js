@@ -64,8 +64,7 @@ testUseCase('relative-fixtures-component-dir', {
 }, {
   components: {
     Foo: 'components/Foo/Foo.js',
-    'nested/Bar': 'components/nested/Bar/Bar.jsx',
-    Qux: 'components/Qux/index.js',
+    'nested/Bar': 'components/nested/Bar/Bar.jsx'
   },
   fixtures: {
     Foo: {
@@ -75,9 +74,25 @@ testUseCase('relative-fixtures-component-dir', {
       one: 'components/nested/Bar/__fixtures__/one.js',
       two: 'components/nested/Bar/__fixtures__/two.json',
       three: 'components/nested/Bar/__fixtures__/three.jsx',
+    }
+  },
+});
+
+testUseCase('relative-fixtures-component-dir-index', {
+  componentPaths: ['components'],
+}, {
+  components: {
+    Foo: 'components/Foo/index.js',
+    'nested/Bar': 'components/nested/Bar/index.jsx',
+  },
+  fixtures: {
+    Foo: {
+      blank: 'components/Foo/__fixtures__/blank.js',
     },
-    Qux: {
-      blank: 'components/Qux/__fixtures__/blank.js',
+    'nested/Bar': {
+      one: 'components/nested/Bar/__fixtures__/one.js',
+      two: 'components/nested/Bar/__fixtures__/two.json',
+      three: 'components/nested/Bar/__fixtures__/three.jsx',
     },
   },
 });
