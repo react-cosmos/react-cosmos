@@ -8,13 +8,16 @@
     "install-react:0.14": "yarn run install-react -- react@^0.14.9 react-dom@^0.14.9",
     "install-react:15": "yarn run install-react -- react@^15.5.4 react-dom@^15.5.4",
     "lint": "xo --quiet",
+    "start": "./packages/react-cosmos-webpack/bin/cosmos.js --config examples/local-state/cosmos.config.js",
     "build": "node ./scripts/build.js",
     "postinstall": "yarn run bootstrap && yarn run build",
     "publish-lerna": "yarn run test && yarn run build && lerna publish",
     "test-karma": "karma start test/karma.conf.js --single-run",
     "test-jest": "jest --coverage --config test/jest.config.json",
     "test": "yarn run lint && yarn run test-karma && yarn run test-jest",
-    "coveralls": "lcov-result-merger 'test/coverage/*/lcov.info' | node_modules/coveralls/bin/coveralls.js"
+    "coveralls": "lcov-result-merger 'test/coverage/*/lcov.info' | node_modules/coveralls/bin/coveralls.js",
+    "test-smoke": "cypress run",
+    "test-smoke-ci": "yarn start & cypress run --record"
   },
   "dependencies": {
     "babel-cli": "^6.16.0",
@@ -29,6 +32,7 @@
     "child-process-promise": "^2.2.0",
     "coveralls": "^2.13.1",
     "css-loader": "^0.28.1",
+    "cypress-cli": "^0.13.1",
     "enzyme": "^2.8.2",
     "eslint-config-xo-react": "^0.12.0",
     "eslint-import-resolver-webpack": "^0.8.1",
@@ -108,6 +112,7 @@
       "unicorn/filename-case": 0,
       "import/no-unassigned-import": 0,
       "import/no-extraneous-dependencies": 0,
+      "import/prefer-default-export": 0,
       "react/jsx-uses-vars": 1,
       "react/jsx-uses-react": 1
     },
@@ -171,6 +176,17 @@
         "rules": {
           "import/no-unresolved": 0
         }
+      },
+      {
+        "files": [
+          "cypress/**/*.{js,jsx}"
+        ],
+        "env": [
+          "mocha"
+        ],
+        "globals": [
+          "cy"
+        ]
       }
     ]
   }
