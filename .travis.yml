@@ -3,7 +3,7 @@ node_js:
   - "5"
 script:
   - npm run test
-  - npm run test-cypress-ci
+  - npm run test-smoke-ci
 after_success:
   - npm run coveralls
 cache:

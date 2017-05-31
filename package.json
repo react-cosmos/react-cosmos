@@ -16,8 +16,8 @@
     "test-jest": "jest --coverage --config test/jest.config.json",
     "test": "yarn run lint && yarn run test-karma && yarn run test-jest",
     "coveralls": "lcov-result-merger 'test/coverage/*/lcov.info' | node_modules/coveralls/bin/coveralls.js",
-    "test-cypress": "cypress run",
-    "test-cypress-ci": "yarn start & cypress run --record"
+    "test-smoke": "cypress run",
+    "test-smoke-ci": "yarn start & cypress run --record"
   },
   "dependencies": {
     "babel-cli": "^6.16.0",
