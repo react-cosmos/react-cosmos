@@ -7,7 +7,7 @@ const resolvePath = relPath => slash(path.join(__dirname, '../use-cases', relPat
 
 const testUseCase = ({
   useCase,
-  variantion,
+  variation,
   input: {
     componentPaths = [],
     fixturePaths = [],
@@ -17,7 +17,7 @@ const testUseCase = ({
   },
   output
 }) => {
-  const testName = variantion ? `${useCase} (${variantion})` : useCase;
+  const testName = variation ? `${useCase} (${variation})` : useCase;
   describe(testName, () => {
     const expectation = traverse(output).map(val => (
       typeof val === 'string' ? resolvePath(`${useCase}/${val}`) : val
@@ -142,7 +142,7 @@ testUseCase({
 
 testUseCase({
   useCase: 'external-fixtures',
-  variantion: 'trailing comma',
+  variation: 'trailing comma',
   input: {
     componentPaths: ['components/'],
     fixturePaths: ['fixtures/'],
