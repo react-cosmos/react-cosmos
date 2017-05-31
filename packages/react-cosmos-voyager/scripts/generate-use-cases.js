@@ -23,7 +23,6 @@ const useCases = {
     components/nested/Bar/__fixtures__/three.jsx
     components/nested/Baz/Baz.jsx
     components/nested/Baz/__fixtures__/blank.js
-
   `),
   'relative-fixtures-component-dir-index': (`
     components/Foo/index.js

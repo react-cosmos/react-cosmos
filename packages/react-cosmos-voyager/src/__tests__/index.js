@@ -11,8 +11,9 @@ const testUseCase = (useCase, {
   ignore,
   getComponentName,
   getFixturePathsForComponent,
-}, output) => {
-  describe(useCase, () => {
+}, output, inputVariation) => {
+  const testName = inputVariation ? `${useCase} (${inputVariation})` : useCase;
+  describe(testName, () => {
     const expectation = traverse(output).map(val => (
       typeof val === 'string' ? resolvePath(`${useCase}/${val}`) : val
     ));
@@ -117,6 +118,27 @@ testUseCase('external-fixtures', {
     },
   },
 });
+
+testUseCase('external-fixtures', {
+  componentPaths: ['components/'],
+  fixturePaths: ['fixtures/'],
+  ignore: [/Baz/],
+}, {
+  components: {
+    Foo: 'components/Foo.js',
+    'nested/Bar': 'components/nested/Bar.jsx',
+  },
+  fixtures: {
+    Foo: {
+      blank: 'fixtures/Foo/blank.js',
+    },
+    'nested/Bar': {
+      one: 'fixtures/nested/Bar/one.js',
+      two: 'fixtures/nested/Bar/two.json',
+      three: 'fixtures/nested/Bar/three.jsx',
+    },
+  },
+}, 'trailing commas');
 
 testUseCase('separate-packages', {
   componentPaths: [
