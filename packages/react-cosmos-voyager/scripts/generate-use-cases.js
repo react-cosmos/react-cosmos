@@ -62,6 +62,16 @@ const useCases = {
     pkgs/nested/Baz/src/index.jsx
     pkgs/nested/Baz/fixtures/blank.js
   `),
+  'fixtures-dir-setting': (`
+    components/Foo.js
+    components/nested/Bar.jsx
+    components/nested/Baz.jsx
+    components/__fixtures__/Foo/blank.js
+    components/__fixtures__/nested/Bar/one.js
+    components/__fixtures__/nested/Bar/two.json
+    components/__fixtures__/nested/Bar/three.jsx
+    components/__fixtures__/nested/Baz/blank.js
+  `),
 };
 
 const useCasePath = path.join(__dirname, '../src/use-cases');

@@ -235,3 +235,27 @@ testUseCase({
     }
   }
 });
+
+testUseCase({
+  useCase: 'fixtures-dir-setting',
+  input: {
+    componentPaths: ['components'],
+    ignore: [/Baz/],
+  },
+  output: {
+    components: {
+      Foo: 'components/Foo.js',
+      'nested/Bar': 'components/nested/Bar.jsx',
+    },
+    fixtures: {
+      Foo: {
+        blank: 'components/__fixtures__/Foo/blank.js',
+      },
+      'nested/Bar': {
+        one: 'components/__fixtures__/nested/Bar/one.js',
+        two: 'components/__fixtures__/nested/Bar/two.json',
+        three: 'components/__fixtures__/nested/Bar/three.jsx',
+      },
+    },
+  }
+});
