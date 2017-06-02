@@ -7,10 +7,10 @@ import {
   FIXTURE_EXTENSIONS_GLOB
 } from './fixture-extensions';
 
-const SPECIAL_DIRS = ['__tests__', '__fixtures__'];
+const SPECIAL_DIRS = ['__tests__'];
 
-const isUnderSpecialDir = filePath =>
-  SPECIAL_DIRS.some(dir => filePath.indexOf(`/${dir}/`) !== -1);
+const isUnderSpecialDir = (filePath, fixturesDir) =>
+  SPECIAL_DIRS.concat(fixturesDir).some(dir => filePath.indexOf(`/${dir}/`) !== -1);
 
 const getExternalFixtures = fixturePaths => fixturePaths.reduce((prev, next) => (
   [...prev, ...glob.sync(`${next}/**/*.{${FIXTURE_EXTENSIONS_GLOB}}`)]
@@ -38,9 +38,9 @@ const extractComponentName = (filePath, rootPath) => {
   return componentName;
 };
 
-const getMatchingFixtures = (fixtures, componentName) =>
+const getMatchingFixtures = (fixtures, componentName, fixturesDir) =>
   fixtures.reduce((matchingFixtures, fixturePath) => {
-    const fixtureName = matchFixturePath(fixturePath, componentName);
+    const fixtureName = matchFixturePath(fixturePath, componentName, fixturesDir);
     return fixtureName ? {
       ...matchingFixtures,
       [fixtureName]: fixturePath,
@@ -50,6 +50,7 @@ const getMatchingFixtures = (fixtures, componentName) =>
 const getFilePaths = ({
   componentPaths = [],
   fixturePaths = [],
+  fixturesDir = '__fixtures__',
   ignore = [],
   getComponentName,
   getFixturePathsForComponent,
@@ -71,14 +72,14 @@ const getFilePaths = ({
       fixtures[componentName] = typeof getFixturePathsForComponent === 'function' ?
         getFixturePathsForComponent(componentName) :
         getMatchingFixtures([
-          ...glob.sync(`${componentDir}/**/__fixtures__/**/*.{${FIXTURE_EXTENSIONS_GLOB}}`),
+          ...glob.sync(`${componentDir}/**/${fixturesDir}/**/*.{${FIXTURE_EXTENSIONS_GLOB}}`),
           ...extFixtures,
-        ], componentName);
+        ], componentName, fixturesDir);
     } else {
-      const relFixtures = glob.sync(`${componentPath}/**/__fixtures__/**/*.{${FIXTURE_EXTENSIONS_GLOB}}`);
+      const relFixtures = glob.sync(`${componentPath}/**/${fixturesDir}/**/*.{${FIXTURE_EXTENSIONS_GLOB}}`);
       glob.sync(`${componentPath}/**/*.{${COMPONENT_EXTENSIONS_GLOB}}`).forEach(filePath => {
         if (
-          isUnderSpecialDir(filePath) ||
+          isUnderSpecialDir(filePath, fixturesDir) ||
           ignore.some(ignorePattern => filePath.match(ignorePattern))
         ) {
           return;
@@ -88,7 +89,7 @@ const getFilePaths = ({
 
         components[componentName] = filePath;
         fixtures[componentName] = getMatchingFixtures(
-          [...relFixtures, ...extFixtures], componentName,
+          [...relFixtures, ...extFixtures], componentName, fixturesDir
         );
       });
     }
