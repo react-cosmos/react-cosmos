@@ -6,13 +6,17 @@ import Loader from '../../Loader';
 const ProxyFoo = () => <span />;
 const ProxyBar = () => <span />;
 const ComponentFoo = () => {};
-const fixtureFoo = {};
+const fixtureFoo = {
+  onFoo: () => {},
+  foo: 'bar'
+};
 
 // Vars populated in beforeEach blocks
 let messageHandlers;
 let wrapper;
 let firstProxyWrapper;
 let firstProxyProps;
+let fixtureLoadMessage;
 
 const handleMessage = e => {
   const { type } = e.data;
@@ -35,6 +39,7 @@ describe('Fixture is selected remotely', () => {
 
     const onFrameReady = waitForPostMessage('loaderReady');
     const onFixtureSelect = waitForPostMessage('fixtureSelect');
+    const onFixtureLoad = waitForPostMessage('fixtureLoad');
     wrapper = mount(
       <Loader
         proxies={[ProxyFoo, ProxyBar]}
@@ -60,6 +65,10 @@ describe('Fixture is selected remotely', () => {
     }).then(() => {
       firstProxyWrapper = wrapper.find(ProxyFoo);
       firstProxyProps = firstProxyWrapper.props();
+
+      return onFixtureLoad;
+    }).then(message => {
+      fixtureLoadMessage = message;
     });
   });
 
@@ -89,5 +98,14 @@ describe('Fixture is selected remotely', () => {
 
   test('sends onFixtureUpdate cb to first proxy ', () => {
     expect(firstProxyProps.onFixtureUpdate).toBe(wrapper.instance().onFixtureUpdate);
+  });
+
+  test('sends fixtureLoad event to parent with fixture body', () => {
+    expect(fixtureLoadMessage).toEqual({
+      type: 'fixtureLoad',
+      fixtureBody: {
+        foo: 'bar'
+      }
+    });
   });
 });

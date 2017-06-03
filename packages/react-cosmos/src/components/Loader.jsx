@@ -133,7 +133,17 @@ class Loader extends React.Component {
       fixtures,
       component,
       fixture
-    }));
+    }), () => {
+      if (fixture) {
+        const { serializable: fixtureBody } = this.state.fixtureBody;
+
+        // Notify back parent with the serializble contents of the loaded fixture
+        parent.postMessage({
+          type: 'fixtureLoad',
+          fixtureBody
+        }, '*');
+      }
+    });
   }
 
   onFixtureEdit({ fixtureBody }) {
