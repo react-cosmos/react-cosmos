@@ -66,11 +66,11 @@ const useCases = {
     components/Foo.js
     components/nested/Bar.jsx
     components/nested/Baz.jsx
-    components/__fixtures__/Foo/blank.js
-    components/__fixtures__/nested/Bar/one.js
-    components/__fixtures__/nested/Bar/two.json
-    components/__fixtures__/nested/Bar/three.jsx
-    components/__fixtures__/nested/Baz/blank.js
+    components/non-default-fixtures-dir/Foo/blank.js
+    components/non-default-fixtures-dir/nested/Bar/one.js
+    components/non-default-fixtures-dir/nested/Bar/two.json
+    components/non-default-fixtures-dir/nested/Bar/three.jsx
+    components/non-default-fixtures-dir/nested/Baz/blank.js
   `),
 };
 
