@@ -4,9 +4,20 @@ import merge from 'lodash.merge';
 import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
 import createLinkedList from 'react-cosmos-utils/lib/linked-list';
 
+const noFixtureState = {
+  component: null,
+  fixture: null,
+  fixtureBody: null,
+  fixtureId: 0,
+};
+
 const getUpdateId = () => Date.now();
 
-const hasInitialFixture = ({ component, fixture }) => Boolean(component && fixture);
+const extractFixtureNames = fixtures =>
+  Object.keys(fixtures).reduce((acc, next) => {
+    acc[next] = Object.keys(fixtures[next]);
+    return acc;
+  }, {});
 
 const getFixtureState = ({
   fixtures,
@@ -15,17 +26,8 @@ const getFixtureState = ({
   fixtureBody,
   fixtureId,
 }) => {
-  if (!hasInitialFixture({ component, fixture })) {
-    // Nothing is rendered until parent frame says so
-    return {
-      component: null,
-      fixture: null,
-      fixtureBody: {
-        unserializable: {},
-        serializable: {},
-      },
-      fixtureId: 0,
-    };
+  if (!fixture) {
+    return noFixtureState;
   }
 
   const {
@@ -38,12 +40,12 @@ const getFixtureState = ({
     fixture,
     fixtureBody: {
       unserializable,
-      serializable: fixtureBody || serializable,
+      serializable: fixtureBody === undefined ? serializable : fixtureBody,
     },
     // Used as React Element key to ensure loaded components are rebuilt on
     // every fixture change (instead of reusing instance and going down the
     // componentWillReceiveProps route)
-    fixtureId,
+    fixtureId: fixtureId === undefined ? getUpdateId() : fixtureId,
   };
 };
 
@@ -64,54 +66,77 @@ class Loader extends React.Component {
     this.onMessage = this.onMessage.bind(this);
     this.onFixtureUpdate = this.onFixtureUpdate.bind(this);
 
-    const { proxies, fixtures, component, fixture } = props;
-
-    // Cache linked list to reuse between lifecycles (proxy list never changes)
-    this.firstProxy = createLinkedList(proxies);
+    const { fixtures, component, fixture } = props;
 
     this.state = getFixtureState({
       fixtures,
       component,
-      fixture,
-      fixtureId: getUpdateId()
+      fixture
     });
   }
 
   componentDidMount() {
-    if (!hasInitialFixture(this.props)) {
-      window.addEventListener('message', this.onMessage, false);
+    window.addEventListener('message', this.onMessage, false);
 
-      // Let parent know loader is ready to render
-      parent.postMessage({ type: 'loaderReady' }, '*');
+    // Let parent know loader is ready to render, along with the initial
+    // fixture list (which might update later due to HMR)
+    const { fixtures } = this.props;
+    parent.postMessage({
+      type: 'loaderReady',
+      fixtures: extractFixtureNames(fixtures)
+    }, '*');
+  }
+
+  componentWillReceiveProps({ fixtures }) {
+    if (fixtures === this.props.fixtures) {
+      return;
     }
+
+    // Keep parent frame in sync when fixture files change (udpated via
+    // webpack HMR)
+    parent.postMessage({
+      type: 'fixtureListUpdate',
+      fixtures: extractFixtureNames(fixtures)
+    }, '*');
+
+    const { component, fixture } = this.state;
+
+    // Reset fixture state to reflect fixture file changes
+    this.setState(getFixtureState({
+      fixtures,
+      component,
+      fixture
+    }), () => {
+      // Keep parent frame in sync with latest fixture body
+      this.onFixtureUpdate(this.state.fixtureBody.serializable);
+    });
   }
 
   componentWillUnmount() {
-    if (!hasInitialFixture(this.props)) {
-      window.removeEventListener('message', this.onMessage);
-    }
+    window.removeEventListener('message', this.onMessage);
   }
 
   onMessage({ data }) {
-    if (data.type === 'fixtureLoad') {
-      this.onFixtureLoad(data);
-    } else if (data.type === 'fixtureChange') {
-      this.onFixtureChange(data);
+    const { type } = data;
+
+    if (type === 'fixtureSelect') {
+      this.onFixtureSelect(data);
+    } else if (type === 'fixtureEdit') {
+      this.onFixtureEdit(data);
     }
   }
 
-  onFixtureLoad({ component, fixture }) {
+  onFixtureSelect({ component, fixture }) {
     const { fixtures } = this.props;
 
     this.setState(getFixtureState({
       fixtures,
       component,
-      fixture,
-      fixtureId: getUpdateId()
+      fixture
     }));
   }
 
-  onFixtureChange({ fixtureBody }) {
+  onFixtureEdit({ fixtureBody }) {
     const { fixtures } = this.props;
     const { component, fixture } = this.state;
 
@@ -119,8 +144,7 @@ class Loader extends React.Component {
       fixtures,
       component,
       fixture,
-      fixtureBody,
-      fixtureId: getUpdateId()
+      fixtureBody
     }));
   }
 
@@ -152,26 +176,18 @@ class Loader extends React.Component {
   }
 
   render() {
-    const {
-      props,
-      state,
-      firstProxy,
-      onFixtureUpdate,
-    } = this;
-    const { components } = props;
-    const {
-      component,
-      fixtureBody,
-      fixtureId,
-    } = state;
-    const {
-      unserializable,
-      serializable
-    } = fixtureBody;
+    const { proxies, components } = this.props;
+    const { component, fixtureBody, fixtureId } = this.state;
 
     if (!component) {
       return null;
     }
+
+    const firstProxy = createLinkedList(proxies);
+    const {
+      unserializable,
+      serializable
+    } = fixtureBody;
 
     return (
       <firstProxy.value
@@ -182,7 +198,7 @@ class Loader extends React.Component {
         onComponentRef={
           () => { /* noope */ }
         }
-        onFixtureUpdate={onFixtureUpdate}
+        onFixtureUpdate={this.onFixtureUpdate}
       />
     );
   }

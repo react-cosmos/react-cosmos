@@ -16,14 +16,14 @@ React Cosmos is a [monorepo](packages) with many small packages. This makes it p
 
 ### Playground ⇆ Loader communication
 
-The Cosmos UI is built out of two frames (both conceptually but also literally–components are loaded inside an `iframe` for maximum encapsulation). Because the Playground and the Loader aren't part of the same frame, we use `postMessage` to communicate back and forth.
+The Cosmos UI is built out of two frames (both conceptually but also literally–components are loaded inside an `iframe` for full encapsulation). Because the Playground and the Loader aren't part of the same frame, we use `postMessage` to communicate back and forth.
 
 From Playground to Loader:
 
 - User selects fixture
   ```js
   {
-    type: 'fixtureLoad',
+    type: 'fixtureSelect',
     component: 'Message',
     fixture: 'multiline'
   }
@@ -31,7 +31,7 @@ From Playground to Loader:
 - User edits fixture body inside editor
   ```js
   {
-    type: 'fixtureChange',
+    type: 'fixtureEdit',
     fixtureBody: {
       // serializable stuff
     }
@@ -40,13 +40,35 @@ From Playground to Loader:
 
 From Loader to Playground:
 
-- Loader frame loads and is ready to receive messages (happens once per full browser refresh)
+- Loader frame loads, sends user fixture list and is ready to receive messages (happens once per full browser refresh)
   ```js
   {
-    type: `loaderReady`
+    type: `loaderReady`,
+    fixtures: {
+      ComponentA: ['fixture1', 'fixture2'],
+    }
   }
   ```
-- Fixture updates due to state changes (local state, Redux or custom)
+- Fixture list updates due to changes on disk (received by Loader via webpack HMR)
+  ```js
+  {
+    type: `fixtureListUpdate`,
+    fixtures: {
+      ComponentA: ['fixture1', 'fixture2', 'fixture3']
+    }
+  }
+  ```
+- Fixture is loaded and serializable fixture body is sent
+  ```js
+  {
+    type: `fixtureLoad`,
+    fixtureBody: {
+      // serializable stuff
+    }
+  }
+  ```
+- Fixture updates due to state changes (local state, Redux or custom) or due
+to changes on disk (received by Loader via webpack HMR)
   ```js
   {
     type: `fixtureUpdate`,
@@ -58,11 +80,16 @@ From Loader to Playground:
 
 Order of events at init:
 
-1. Playground renders and Loader `<iframe>` is added to DOM
-1. Loader renders inside iframe and sends `loaderReady` event to *window.parent*
-1. Playground receives `loaderReady` event and immediately sends `fixtureLoad` event to the loader frame, if any of two cases are met:
-    - User quickly selects fixture before Loader is ready (edge-case)
-    - The Cosmos URL already contains a selected fixture
+1. Playground renders in loading state and Loader `<iframe>` is added to DOM
+1. Loader renders inside iframe and sends `loaderReady` event to *window.parent*, along with user fixture list
+1. Playground receives `loaderReady` event, puts fixture list in state and exists the loading state
+
+Order of events on selecting fixture:
+
+1. Playground sends `fixtureSelect` event to Loader with the selected component + fixture pair
+1. Loader receives `fixtureSelect` and renders corresponding component fixture (wrapped in user configured Proxy chain)
+1. User component renders, callback `ref` is bubbled up to Loader and `fixtureLoad` event is sent to Playground together with the serializable body of the selected fixture
+1. Playground receives serializable fixture body, puts it in state and uses it as the JSON contents of the fixture editor
 
 ## Progress
 
