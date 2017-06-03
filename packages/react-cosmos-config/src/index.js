@@ -11,6 +11,7 @@ const resolveUserPath = (userPath, rootPath) =>
 const defaults = {
   componentPaths: [],
   fixturePaths: [],
+  fixturesDir: '__fixtures__',
   globalImports: [],
   hmrPlugin: true,
   hostname: 'localhost',
