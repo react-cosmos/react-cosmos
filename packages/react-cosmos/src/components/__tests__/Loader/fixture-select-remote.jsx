@@ -14,7 +14,7 @@ let wrapper;
 let firstProxyWrapper;
 let firstProxyProps;
 
-const handleParentMessage = e => {
+const handleMessage = e => {
   const { type } = e.data;
   if (!messageHandlers[type]) {
     throw new Error('Unexpected message event');
@@ -29,7 +29,9 @@ const waitForPostMessage = type => new Promise(resolve => {
 describe('Fixture is selected remotely', () => {
   beforeEach(() => {
     messageHandlers = {};
-    parent.addEventListener('message', handleParentMessage, false);
+    // window recieves both incoming and outgoing messages from/to parent because
+    // window.parent === window in the Jest environment
+    window.addEventListener('message', handleMessage, false);
 
     const onFrameReady = waitForPostMessage('loaderReady');
     const onFixtureSelect = waitForPostMessage('fixtureSelect');
@@ -62,8 +64,7 @@ describe('Fixture is selected remotely', () => {
   });
 
   afterEach(() => {
-    messageHandlers = {};
-    parent.removeEventListener('message', handleParentMessage);
+    window.removeEventListener('message', handleMessage);
   });
 
   test('renders first proxy ', () => {
