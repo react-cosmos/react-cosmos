@@ -20,7 +20,7 @@ export default class Counter extends React.Component {
   render() {
     return (
       <button
-        className="CounterButton"
+        className={`CounterButton ${this.props.color}`}
         onClick={this.onButtonClick}
       >
         {`${this.props.name} clicked ${this.state.value} times`}
@@ -30,5 +30,6 @@ export default class Counter extends React.Component {
 }
 
 Counter.defaultProps = {
-  name: 'Unnamed Counter'
+  name: 'Unnamed Counter',
+  color: 'red'
 };

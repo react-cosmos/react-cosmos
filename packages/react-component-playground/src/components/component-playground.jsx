@@ -90,6 +90,10 @@ module.exports = createReactClass({
       return Boolean(props.component && props.fixture);
     },
 
+    isComponentSelected(props) {
+      return Boolean(props.component);
+    },
+
     didFixtureNavChange(prevProps, nextProps) {
       return prevProps.component !== nextProps.component ||
              prevProps.fixture !== nextProps.fixture;
@@ -222,6 +226,7 @@ module.exports = createReactClass({
 
   render() {
     const isFixtureSelected = this.isFixtureSelected();
+    const isComponentSelected = this.isComponentSelected();
 
     const classes = classNames({
       [style['component-playground']]: true,
@@ -261,6 +266,10 @@ module.exports = createReactClass({
           this.renderError();
     }
 
+    if (this.isComponentSelected()) {
+      return this.renderComponent();
+    }
+
     return this.renderWelcomeScreen();
   },
 
@@ -286,12 +295,14 @@ module.exports = createReactClass({
       <ul className={style.components}>
         {_.map(this.getFilteredFixtures(), (componentFixtures, componentName) => (
           <li className={style.component} key={componentName}>
-            <p
+            <a
               ref={`componentName-${componentName}`}
               className={style['component-name']}
+              onClick={this.props.router.routeLink}
+              href={`?component=${componentName}`}
             >
               <FolderIcon /><span>{componentName}</span>
-            </p>
+            </a>
             {this.renderComponentFixtures(componentName, componentFixtures)}
           </li>
         ))}
@@ -416,6 +427,14 @@ module.exports = createReactClass({
     return (
       <div ref="contentFrame" className={style['content-frame']}>
         {this.loadChild('welcome')}
+      </div>
+    );
+  },
+
+  renderComponent() {
+    return (
+      <div ref="contentFrame" className={style['content-frame']}>
+        <h1>hello in renderComponent</h1>
       </div>
     );
   },
@@ -585,6 +604,10 @@ module.exports = createReactClass({
 
   isFixtureSelected() {
     return this.constructor.isFixtureSelected(this.props);
+  },
+
+  isComponentSelected() {
+    return this.constructor.isComponentSelected(this.props);
   },
 
   doesSelectedFixtureExist() {
