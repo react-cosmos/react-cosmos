@@ -83,7 +83,7 @@ export default class FixtureList extends Component {
   }
 
   render() {
-    const { fixtures, selectedComponent, selectedFixture, urlParams } = this.props;
+    const { fixtures, urlParams } = this.props;
     const { searchText } = this.state;
     const filteredFixtures = getFilteredFixtures(fixtures, searchText);
     const components = Object.keys(filteredFixtures);
@@ -114,8 +114,8 @@ export default class FixtureList extends Component {
                   {filteredFixtures[component].map((fixture, j) => {
                     const fixtureClassNames = classNames(styles.fixture, {
                       [styles.fixtureSelected]:
-                        component === selectedComponent &&
-                        fixture === selectedFixture
+                        component === urlParams.component &&
+                        fixture === urlParams.fixture
                     });
                     const nextUrlParams = {
                       ...urlParams,
@@ -146,8 +146,6 @@ export default class FixtureList extends Component {
 
 FixtureList.propTypes = {
   fixtures: objectOf(arrayOf(string)).isRequired,
-  selectedComponent: string,
-  selectedFixture: string,
   urlParams: shape({
     component: string,
     fixture: string,

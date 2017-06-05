@@ -173,6 +173,7 @@ describe('Search input keyboard shortcut', () => {
   };
 
   beforeEach(() => {
+    // Mount component in order to be able to access DOM nodes
     wrapper = mount(
       <FixtureList fixtures={fixtures} urlParams={{}} onUrlChange={() => {}}/>
     );
@@ -218,9 +219,10 @@ describe('Selected fixture', () => {
     wrapper = shallow(
       <FixtureList
         fixtures={fixtures}
-        selectedComponent="ComponentA"
-        selectedFixture="bar"
-        urlParams={{}}
+        urlParams={{
+          component: "ComponentA",
+          fixture: "bar"
+        }}
         onUrlChange={() => {}}
         />
     );
