@@ -63,9 +63,6 @@ class Loader extends React.Component {
   constructor(props) {
     super(props);
 
-    this.onMessage = this.onMessage.bind(this);
-    this.onFixtureUpdate = this.onFixtureUpdate.bind(this);
-
     const { fixtures, component, fixture } = props;
 
     this.state = getFixtureState({
@@ -116,7 +113,7 @@ class Loader extends React.Component {
     window.removeEventListener('message', this.onMessage);
   }
 
-  onMessage({ data }) {
+  onMessage = ({ data }) => {
     const { type } = data;
 
     if (type === 'fixtureSelect') {
@@ -158,7 +155,7 @@ class Loader extends React.Component {
     }));
   }
 
-  onFixtureUpdate(fixtureBody) {
+  onFixtureUpdate = fixtureBody => {
     const { fixtures } = this.props;
     const { component, fixture, fixtureBody: { serializable }, fixtureId } = this.state;
 
