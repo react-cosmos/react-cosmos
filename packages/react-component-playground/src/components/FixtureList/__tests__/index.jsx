@@ -56,22 +56,22 @@ describe('Links', () => {
 
     test('link 1', () => {
       expect(componentA.find('.fixture').at(0).prop('href'))
-        .toEqual('?component=ComponentA&fixture=foo');
+        .toEqual('/?component=ComponentA&fixture=foo');
     });
 
     test('link 2', () => {
       expect(componentA.find('.fixture').at(1).prop('href'))
-        .toEqual('?component=ComponentA&fixture=bar');
+        .toEqual('/?component=ComponentA&fixture=bar');
     });
 
     test('link 3', () => {
       expect(componentB.find('.fixture').at(0).prop('href'))
-        .toEqual('?component=ComponentB&fixture=baz');
+        .toEqual('/?component=ComponentB&fixture=baz');
     });
 
     test('link 4', () => {
       expect(componentB.find('.fixture').at(1).prop('href'))
-        .toEqual('?component=ComponentB&fixture=qux');
+        .toEqual('/?component=ComponentB&fixture=qux');
     });
   });
 
@@ -82,22 +82,22 @@ describe('Links', () => {
 
     test('link 1', () => {
       expect(componentA.find('.fixture').at(0).prop('href'))
-        .toEqual('?editor=true&component=ComponentA&fixture=foo');
+        .toEqual('/?editor=true&component=ComponentA&fixture=foo');
     });
 
     test('link 2', () => {
       expect(componentA.find('.fixture').at(1).prop('href'))
-        .toEqual('?editor=true&component=ComponentA&fixture=bar');
+        .toEqual('/?editor=true&component=ComponentA&fixture=bar');
     });
 
     test('link 3', () => {
       expect(componentB.find('.fixture').at(0).prop('href'))
-        .toEqual('?editor=true&component=ComponentB&fixture=baz');
+        .toEqual('/?editor=true&component=ComponentB&fixture=baz');
     });
 
     test('link 4', () => {
       expect(componentB.find('.fixture').at(1).prop('href'))
-        .toEqual('?editor=true&component=ComponentB&fixture=qux');
+        .toEqual('/?editor=true&component=ComponentB&fixture=qux');
     });
   });
 });
@@ -220,8 +220,8 @@ describe('Selected fixture', () => {
       <FixtureList
         fixtures={fixtures}
         urlParams={{
-          component: "ComponentA",
-          fixture: "bar"
+          component: 'ComponentA',
+          fixture: 'bar'
         }}
         onUrlChange={() => {}}
         />
