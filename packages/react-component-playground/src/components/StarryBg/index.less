@@ -4,6 +4,7 @@
 
 .root {
   .stretch();
+
   overflow: hidden;
   background-color: darken(@left-nav-bgcolor, 5%);
 }
@@ -19,6 +20,14 @@
   background-image: @stars-texture;
   background-position: center center;
   animation: stars-ani 200s linear infinite;
+}
+
+.content {
+  .stretch();
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @keyframes stars-ani {
