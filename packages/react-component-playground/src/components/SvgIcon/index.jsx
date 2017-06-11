@@ -31,3 +31,9 @@ export const FullScreenIcon = () => (
     <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
   </SvgIcon>
 );
+
+export const CodeIcon = () => (
+  <SvgIcon>
+    <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+  </SvgIcon>
+);

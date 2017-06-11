@@ -3,7 +3,7 @@ import { string, bool, object } from 'prop-types';
 import classNames from 'classnames';
 import { omitBy } from 'lodash';
 import { uri } from 'react-querystring-router';
-import { HomeIcon, FullScreenIcon } from '../SvgIcon';
+import { HomeIcon, FullScreenIcon, CodeIcon } from '../SvgIcon';
 import StarryBg from '../StarryBg';
 import FixtureList from '../FixtureList';
 import styles from './index.less';
@@ -152,6 +152,11 @@ export default class ComponentPlayground extends Component {
     const homeClassNames = classNames(styles.button, {
       [styles.selectedButton]: !isFixtureSelected,
     });
+    const fixtureEditorUrl = uri.stringifyParams({
+      component,
+      fixture,
+      editor: true
+    });
     const fullScreenUrl = uri.stringifyParams({
       component,
       fixture,
@@ -172,6 +177,15 @@ export default class ComponentPlayground extends Component {
             </a>
           </div>
           <div className={styles.buttons}>
+            {isFixtureSelected &&
+              <a
+                ref="fixtureEditorButton"
+                className={styles.button}
+                href={`/${fixtureEditorUrl}`}
+                onClick={router.routeLink}
+              >
+                <CodeIcon />
+              </a>}
             {isFixtureSelected &&
               <a
                 ref="fullScreenButton"
