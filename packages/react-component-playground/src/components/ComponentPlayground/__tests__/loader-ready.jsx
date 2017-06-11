@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import FixtureList from '../../FixtureList';
+import WelcomeScreen from '../../WelcomeScreen';
 import ComponentPlayground from '../';
 
 // Vars populated in beforeEach blocks
@@ -16,9 +17,10 @@ const handleMessage = e => {
   messageHandlers[type](e.data);
 };
 
-const waitForPostMessage = type => new Promise(resolve => {
-  messageHandlers[type] = resolve;
-});
+const waitForPostMessage = type =>
+  new Promise(resolve => {
+    messageHandlers[type] = resolve;
+  });
 
 describe('CP loader ready', () => {
   beforeEach(() => {
@@ -26,26 +28,26 @@ describe('CP loader ready', () => {
     window.addEventListener('message', handleMessage, false);
 
     router = {
-      goTo: jest.fn()
+      goTo: jest.fn(),
     };
 
     const onFrameReady = waitForPostMessage('loaderReady');
 
     // Mounting component in order for lifecycle methods to be called
     wrapper = mount(
-      <ComponentPlayground
-        loaderUri="/loader/index.html"
-        router={router}
-      />
+      <ComponentPlayground loaderUri="/loader/index.html" router={router} />
     );
 
-    window.postMessage({
-      type: 'loaderReady',
-      fixtures: {
-        ComponentA: ['foo', 'bar'],
-        ComponentB: ['baz', 'qux'],
-      }
-    }, '*');
+    window.postMessage(
+      {
+        type: 'loaderReady',
+        fixtures: {
+          ComponentA: ['foo', 'bar'],
+          ComponentB: ['baz', 'qux'],
+        },
+      },
+      '*'
+    );
 
     return onFrameReady;
   });
@@ -89,6 +91,19 @@ describe('CP loader ready', () => {
 
     test('should render selected home button', () => {
       expect(wrapper.find('a[href="/"].selectedButton').length).toBe(1);
+    });
+  });
+
+  describe('welcome screen', () => {
+    test('should render welcome screen', () => {
+      expect(wrapper.find(WelcomeScreen).length).toEqual(1);
+    });
+
+    test('should send fixtures to welcome screen', () => {
+      expect(wrapper.find(WelcomeScreen).prop('fixtures')).toEqual({
+        ComponentA: ['foo', 'bar'],
+        ComponentB: ['baz', 'qux'],
+      });
     });
   });
 });

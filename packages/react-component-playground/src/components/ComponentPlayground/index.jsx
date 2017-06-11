@@ -6,6 +6,7 @@ import { uri } from 'react-querystring-router';
 import { HomeIcon, FullScreenIcon, CodeIcon } from '../SvgIcon';
 import StarryBg from '../StarryBg';
 import FixtureList from '../FixtureList';
+import WelcomeScreen from '../WelcomeScreen';
 import styles from './index.less';
 
 export default class ComponentPlayground extends Component {
@@ -76,60 +77,35 @@ export default class ComponentPlayground extends Component {
   render() {
     return (
       <div className={styles.root}>
-        {this.renderContent()}
+        {this.renderInner()}
       </div>
     );
   }
 
-  renderContent() {
-    const { fixture } = this.props;
+  renderInner() {
+    const { fullScreen } = this.props;
     const { waitingForLoader } = this.state;
 
-    if (waitingForLoader) {
-      return this.renderLoadingState();
+    if (waitingForLoader || fullScreen) {
+      return this.renderContent();
     }
 
-    if (fixture) {
-      return this.renderSelectedFixture();
-    }
-
-    return this.renderHomepage();
+    return [this.renderLeftNav(), this.renderContent()];
   }
 
-  renderLoadingState() {
-    return this.renderLoader(false);
-  }
-
-  renderHomepage() {
-    return [
-      this.renderLeftNav(),
-      this.renderLoader(false)
-    ];
-  }
-
-  renderSelectedFixture() {
-    if (this.props.fullScreen) {
-      return this.renderLoader(true);
-    }
-
-    return [
-      this.renderLeftNav(),
-      this.renderLoader(true)
-    ];
-  }
-
-  renderLoader(displayLoader) {
-    const { loaderUri } = this.props;
+  renderContent() {
+    const { loaderUri, fixture } = this.props;
+    const { waitingForLoader, fixtures } = this.state;
+    const showLoader = !waitingForLoader && Boolean(fixture);
 
     return (
-      <div
-        key="loader"
-        className={styles.loader}
-        >
-        <StarryBg />
+      <div key="loader" className={styles.loader}>
+        <StarryBg>
+          {!waitingForLoader && <WelcomeScreen fixtures={fixtures} />}
+        </StarryBg>
         <iframe
           className={styles.loaderFrame}
-          style={{ display: displayLoader ? 'block' : 'none' }}
+          style={{ display: showLoader ? 'block' : 'none' }}
           ref={node => {
             this.loaderFrame = node;
           }}
@@ -155,12 +131,12 @@ export default class ComponentPlayground extends Component {
     const fixtureEditorUrl = uri.stringifyParams({
       component,
       fixture,
-      editor: true
+      editor: true,
     });
     const fullScreenUrl = uri.stringifyParams({
       component,
       fixture,
-      fullScreen: true
+      fullScreen: true,
     });
 
     return (
