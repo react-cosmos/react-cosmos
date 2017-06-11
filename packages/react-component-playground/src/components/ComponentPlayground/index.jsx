@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import { string, bool, object } from 'prop-types';
+import classNames from 'classnames';
 import { omitBy } from 'lodash';
-import { } from '../SvgIcon';
+import { uri } from 'react-querystring-router';
+import { HomeIcon, FullScreenIcon } from '../SvgIcon';
 import StarryBg from '../StarryBg';
 import FixtureList from '../FixtureList';
 import styles from './index.less';
 
 export default class ComponentPlayground extends Component {
-  static defaultProps = {}
+  static defaultProps = {};
 
   // Exclude params with default values
   static getCleanUrlParams = params =>
-    omitBy(params, (val, key) => ComponentPlayground.defaultProps[key] === val)
+    omitBy(params, (val, key) => ComponentPlayground.defaultProps[key] === val);
 
   state = {
-    waitingForLoader: true
+    waitingForLoader: true,
   };
 
   componentDidMount() {
@@ -26,15 +28,15 @@ export default class ComponentPlayground extends Component {
   }
 
   componentWillReceiveProps({ component, fixture }) {
-    if (
-      component !== this.props.component ||
-      fixture !== this.props.fixture
-    ) {
-      this.loaderFrame.contentWindow.postMessage({
-        type: 'fixtureSelect',
-        component,
-        fixture,
-      }, '*');
+    if (component !== this.props.component || fixture !== this.props.fixture) {
+      this.loaderFrame.contentWindow.postMessage(
+        {
+          type: 'fixtureSelect',
+          component,
+          fixture,
+        },
+        '*'
+      );
     }
   }
 
@@ -44,29 +46,32 @@ export default class ComponentPlayground extends Component {
     if (type === 'loaderReady') {
       this.onLoaderReady(data);
     }
-  }
+  };
 
   onLoaderReady({ fixtures }) {
     const { loaderFrame } = this;
 
     this.setState({
       waitingForLoader: false,
-      fixtures
+      fixtures,
     });
 
     const { component, fixture } = this.props;
     if (component && fixture) {
-      loaderFrame.contentWindow.postMessage({
-        type: 'fixtureSelect',
-        component,
-        fixture,
-      }, '*');
+      loaderFrame.contentWindow.postMessage(
+        {
+          type: 'fixtureSelect',
+          component,
+          fixture,
+        },
+        '*'
+      );
     }
   }
 
   onUrlChange = location => {
     this.props.router.goTo(location);
-  }
+  };
 
   render() {
     return (
@@ -77,48 +82,113 @@ export default class ComponentPlayground extends Component {
   }
 
   renderContent() {
-    const { component, fixture, editor, fullScreen } = this.props;
+    const { fixture } = this.props;
     const { waitingForLoader } = this.state;
 
     if (waitingForLoader) {
-      return <div>
-        {this.renderLoaderFrame()}
-        <StarryBg />
-      </div>;
+      return this.renderLoadingState();
     }
 
+    if (fixture) {
+      return this.renderSelectedFixture();
+    }
+
+    return this.renderHomepage();
+  }
+
+  renderLoadingState() {
+    return this.renderLoader(false);
+  }
+
+  renderHomepage() {
+    return [
+      this.renderLeftNav(),
+      this.renderLoader(false)
+    ];
+  }
+
+  renderSelectedFixture() {
+    if (this.props.fullScreen) {
+      return this.renderLoader(true);
+    }
+
+    return [
+      this.renderLeftNav(),
+      this.renderLoader(true)
+    ];
+  }
+
+  renderLoader(displayLoader) {
+    const { loaderUri } = this.props;
+
+    return (
+      <div
+        key="loader"
+        className={styles.loader}
+        >
+        <StarryBg />
+        <iframe
+          className={styles.loaderFrame}
+          style={{ display: displayLoader ? 'block' : 'none' }}
+          ref={node => {
+            this.loaderFrame = node;
+          }}
+          src={loaderUri}
+        />
+      </div>
+    );
+  }
+
+  renderLeftNav() {
+    const { router, component, fixture, editor, fullScreen } = this.props;
     const { fixtures } = this.state;
     const urlParams = ComponentPlayground.getCleanUrlParams({
       component,
       fixture,
       editor,
-      fullScreen
+      fullScreen,
+    });
+    const isFixtureSelected = Boolean(fixture);
+    const homeClassNames = classNames(styles.button, {
+      [styles.selectedButton]: !isFixtureSelected,
+    });
+    const fullScreenUrl = uri.stringifyParams({
+      component,
+      fixture,
+      fullScreen: true
     });
 
     return (
-      <div>
+      <div key="leftNav" className={styles.leftNav}>
+        <div className={styles.header}>
+          <div className={styles.buttons}>
+            <a
+              ref="homeButton"
+              className={homeClassNames}
+              href="/"
+              onClick={router.routeLink}
+            >
+              <HomeIcon />
+            </a>
+          </div>
+          <div className={styles.buttons}>
+            {isFixtureSelected &&
+              <a
+                ref="fullScreenButton"
+                className={styles.button}
+                href={`/${fullScreenUrl}`}
+                onClick={router.routeLink}
+              >
+                <FullScreenIcon />
+              </a>}
+          </div>
+        </div>
         <FixtureList
           fixtures={fixtures}
           urlParams={urlParams}
           onUrlChange={this.onUrlChange}
         />
-        {this.renderLoaderFrame()}
-        <StarryBg />
       </div>
-    );
-  }
-
-  renderLoaderFrame() {
-    const { loaderUri } = this.props;
-
-    return (
-      <iframe
-        key="loaderFrame"
-        ref={node => {
-          this.loaderFrame = node;
-        }}
-        src={loaderUri}
-        />
     );
   }
 }

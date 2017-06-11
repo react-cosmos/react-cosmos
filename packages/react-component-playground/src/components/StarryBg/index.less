@@ -3,14 +3,9 @@
 @stars-texture: url('../../static/stars.png');
 
 .root {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  .stretch();
   overflow: hidden;
   background-color: darken(@left-nav-bgcolor, 5%);
-  z-index: -1;
 }
 
 .stars {

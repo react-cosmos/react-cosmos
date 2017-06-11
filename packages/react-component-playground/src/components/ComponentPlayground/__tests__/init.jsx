@@ -19,11 +19,11 @@ describe('CP init', () => {
     expect(wrapper.find(StarryBg).length).toBe(1);
   });
 
-  test('should inject loader iframe', () => {
+  test('should render loader iframe', () => {
     expect(wrapper.find('iframe').length).toBe(1);
   });
 
-  test('should inject loader iframe with props.loaderUri', () => {
+  test('should render loader iframe with props.loaderUri', () => {
     expect(wrapper.find('iframe').prop('src')).toBe('/loader/index.html');
   });
 });

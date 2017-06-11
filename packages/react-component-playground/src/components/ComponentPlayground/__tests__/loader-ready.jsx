@@ -54,25 +54,41 @@ describe('CP loader ready', () => {
     window.removeEventListener('message', handleMessage);
   });
 
-  test('should render fixture list', () => {
-    expect(wrapper.find(FixtureList).length).toEqual(1);
-  });
+  describe('fixture list', () => {
+    let props;
 
-  test('should send fixtures to fixture list', () => {
-    expect(wrapper.find(FixtureList).prop('fixtures')).toEqual({
-      ComponentA: ['foo', 'bar'],
-      ComponentB: ['baz', 'qux'],
+    beforeEach(() => {
+      props = wrapper.find(FixtureList).props();
+    });
+
+    test('should render fixture list', () => {
+      expect(wrapper.find(FixtureList).length).toEqual(1);
+    });
+
+    test('should send fixtures to fixture list', () => {
+      expect(props.fixtures).toEqual({
+        ComponentA: ['foo', 'bar'],
+        ComponentB: ['baz', 'qux'],
+      });
+    });
+
+    test('should send empty url params to fixture list', () => {
+      expect(Object.keys(props.urlParams)).toEqual([]);
+    });
+
+    test('should go to URL from fixture list handler', () => {
+      props.onUrlChange('/path/to/location');
+      expect(router.goTo).toHaveBeenCalledWith('/path/to/location');
     });
   });
 
-  test('should send empty url params to fixture list', () => {
-    const urlParams = wrapper.find(FixtureList).prop('urlParams');
-    expect(Object.keys(urlParams)).toEqual([]);
-  });
+  describe('main menu', () => {
+    test('should render home button', () => {
+      expect(wrapper.find('a[href="/"].button').length).toBe(1);
+    });
 
-  test('should go to URL from fixture list handler', () => {
-    const onUrlChange = wrapper.find(FixtureList).prop('onUrlChange');
-    onUrlChange('/path/to/location');
-    expect(router.goTo).toHaveBeenCalledWith('/path/to/location');
+    test('should render selected home button', () => {
+      expect(wrapper.find('a[href="/"].selectedButton').length).toBe(1);
+    });
   });
 });

@@ -21,7 +21,7 @@ const waitForPostMessage = type => new Promise(resolve => {
   messageHandlers[type] = resolve;
 });
 
-describe('CP with fixture already selected', () => {
+describe('CP with fixture already selected in full screen', () => {
   beforeEach(() => {
     messageHandlers = {};
     window.addEventListener('message', handleMessage, false);
@@ -35,10 +35,11 @@ describe('CP with fixture already selected', () => {
     // Mounting component in order for lifecycle methods to be called
     wrapper = mount(
       <ComponentPlayground
-        component="ComponentA"
-        fixture="foo"
         loaderUri="/loader/index.html"
         router={router}
+        component="ComponentA"
+        fixture="foo"
+        fullScreen
       />
     );
 
@@ -65,42 +66,11 @@ describe('CP with fixture already selected', () => {
     window.removeEventListener('message', handleMessage);
   });
 
-  describe('fixture list', () => {
-    let props;
-
-    beforeEach(() => {
-      props = wrapper.find(FixtureList).props();
-    });
-
-    test('should send url params (component, fixture) to fixture list', () => {
-      expect(props.urlParams).toEqual({
-        component: 'ComponentA',
-        fixture: 'foo',
-      });
-    });
-
-    test('sends fixture select message to loader', () => {
-      expect(loaderContentWindow.postMessage).toHaveBeenCalledWith({
-        type: 'fixtureSelect',
-        component: 'ComponentA',
-        fixture: 'foo',
-      }, '*');
-    });
+  test('should not render fixture list', () => {
+    expect(wrapper.find(FixtureList).length).toEqual(0);
   });
 
-  describe('main menu', () => {
-    const fullScreenUrl = '/?component=ComponentA&fixture=foo&fullScreen=true';
-
-    test('should render home button', () => {
-      expect(wrapper.find('a[href="/"].button').length).toBe(1);
-    });
-
-    test('should render unselected home button', () => {
-      expect(wrapper.find('a[href="/"].selectedButton').length).toBe(0);
-    });
-
-    test('should render full screen button with correct url', () => {
-      expect(wrapper.find(`a[href="${fullScreenUrl}"].button`).length).toBe(1);
-    });
+  test('should render loader iframe', () => {
+    expect(wrapper.find('iframe').length).toBe(1);
   });
 });
