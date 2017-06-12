@@ -25,8 +25,10 @@ const getFilteredFixtures = (fixtures, searchText) => {
       // component + fixture and fixture + component. That's because the user
       // can search for fixture name and afterwards for component name and
       // we want to show the correct result.
-      return match(componentAndFixture, searchText).length !== 0 ||
-             match(fixtureAndComponent, searchText).length !== 0;
+      return (
+        match(componentAndFixture, searchText).length !== 0 ||
+        match(fixtureAndComponent, searchText).length !== 0
+      );
     });
 
     // Do not render the component if it has no matching fixtures
@@ -42,7 +44,7 @@ const getFilteredFixtures = (fixtures, searchText) => {
 
 export default class FixtureList extends Component {
   state = {
-    searchText: ''
+    searchText: '',
   };
 
   componentDidMount() {
@@ -63,16 +65,16 @@ export default class FixtureList extends Component {
       this.searchInput.focus();
     } else if (e.keyCode === KEY_ESC && isFocused) {
       this.setState({
-        searchText: ''
+        searchText: '',
       });
 
       this.searchInput.blur();
     }
-  }
+  };
 
   onChange = e => {
     this.setState({
-      searchText: e.target.value
+      searchText: e.target.value,
     });
   };
 
@@ -80,7 +82,7 @@ export default class FixtureList extends Component {
     e.preventDefault();
 
     this.props.onUrlChange(e.currentTarget.href);
-  }
+  };
 
   render() {
     const { fixtures, urlParams } = this.props;
@@ -99,7 +101,7 @@ export default class FixtureList extends Component {
             ref={node => {
               this.searchInput = node;
             }}
-            />
+          />
           <SearchIcon />
         </div>
         <div className={styles.list}>
@@ -113,14 +115,13 @@ export default class FixtureList extends Component {
                 <div>
                   {filteredFixtures[component].map((fixture, j) => {
                     const fixtureClassNames = classNames(styles.fixture, {
-                      [styles.fixtureSelected]:
-                        component === urlParams.component &&
-                        fixture === urlParams.fixture
+                      [styles.fixtureSelected]: component ===
+                        urlParams.component && fixture === urlParams.fixture,
                     });
                     const nextUrlParams = {
                       ...urlParams,
                       component,
-                      fixture
+                      fixture,
                     };
 
                     return (
@@ -129,7 +130,7 @@ export default class FixtureList extends Component {
                         className={fixtureClassNames}
                         href={`/${uri.stringifyParams(nextUrlParams)}`}
                         onClick={this.onFixtureClick}
-                        >
+                      >
                         {fixture}
                       </a>
                     );
@@ -152,5 +153,5 @@ FixtureList.propTypes = {
     editor: bool,
     fullScreen: bool,
   }).isRequired,
-  onUrlChange: func.isRequired
+  onUrlChange: func.isRequired,
 };

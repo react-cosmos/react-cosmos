@@ -1,18 +1,23 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
+import { Loader } from 'react-cosmos-loader';
 import FixtureList from '../';
+import populatedFixture from '../__fixtures__/populated';
+import populatedWithEditorFixture from '../__fixtures__/populated-with-editor';
+import populatedAndSelectedFixture
+  from '../__fixtures__/populated-and-selected';
 
-const fixtures = {
-  ComponentA: ['foo', 'bar'],
-  ComponentB: ['baz', 'qux'],
-};
+const shallowLoader = element =>
+  shallow(element)
+    .dive() // Loader
+    .dive(); // PropsProxy
 
 describe('List', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(
-      <FixtureList fixtures={fixtures} urlParams={{}} onUrlChange={() => {}}/>
+    wrapper = shallowLoader(
+      <Loader component={FixtureList} fixture={populatedFixture} />
     );
   });
 
@@ -36,68 +41,75 @@ describe('List', () => {
 });
 
 describe('Links', () => {
-  let urlParams;
   let wrapper;
   let componentA;
   let componentB;
 
-  beforeEach(() => {
-    wrapper = shallow(
-      <FixtureList fixtures={fixtures} urlParams={urlParams} onUrlChange={() => {}}/>
-    );
-    componentA = wrapper.find('.component').at(0);
-    componentB = wrapper.find('.component').at(1);
-  });
-
   describe('editor closed', () => {
-    beforeAll(() => {
-      urlParams = {};
+    beforeEach(() => {
+      wrapper = shallowLoader(
+        <Loader component={FixtureList} fixture={populatedFixture} />
+      );
+      componentA = wrapper.find('.component').at(0);
+      componentB = wrapper.find('.component').at(1);
     });
 
     test('link 1', () => {
-      expect(componentA.find('.fixture').at(0).prop('href'))
-        .toEqual('/?component=ComponentA&fixture=foo');
+      expect(componentA.find('.fixture').at(0).prop('href')).toEqual(
+        '/?component=ComponentA&fixture=foo'
+      );
     });
 
     test('link 2', () => {
-      expect(componentA.find('.fixture').at(1).prop('href'))
-        .toEqual('/?component=ComponentA&fixture=bar');
+      expect(componentA.find('.fixture').at(1).prop('href')).toEqual(
+        '/?component=ComponentA&fixture=bar'
+      );
     });
 
     test('link 3', () => {
-      expect(componentB.find('.fixture').at(0).prop('href'))
-        .toEqual('/?component=ComponentB&fixture=baz');
+      expect(componentB.find('.fixture').at(0).prop('href')).toEqual(
+        '/?component=ComponentB&fixture=baz'
+      );
     });
 
     test('link 4', () => {
-      expect(componentB.find('.fixture').at(1).prop('href'))
-        .toEqual('/?component=ComponentB&fixture=qux');
+      expect(componentB.find('.fixture').at(1).prop('href')).toEqual(
+        '/?component=ComponentB&fixture=qux'
+      );
     });
   });
 
   describe('editor open', () => {
-    beforeAll(() => {
-      urlParams = { editor: true };
+    beforeEach(() => {
+      wrapper = shallowLoader(
+        <Loader component={FixtureList} fixture={populatedWithEditorFixture} />
+      );
+      componentA = wrapper.find('.component').at(0);
+      componentB = wrapper.find('.component').at(1);
     });
 
     test('link 1', () => {
-      expect(componentA.find('.fixture').at(0).prop('href'))
-        .toEqual('/?editor=true&component=ComponentA&fixture=foo');
+      expect(componentA.find('.fixture').at(0).prop('href')).toEqual(
+        '/?editor=true&component=ComponentA&fixture=foo'
+      );
     });
 
     test('link 2', () => {
-      expect(componentA.find('.fixture').at(1).prop('href'))
-        .toEqual('/?editor=true&component=ComponentA&fixture=bar');
+      expect(componentA.find('.fixture').at(1).prop('href')).toEqual(
+        '/?editor=true&component=ComponentA&fixture=bar'
+      );
     });
 
     test('link 3', () => {
-      expect(componentB.find('.fixture').at(0).prop('href'))
-        .toEqual('/?editor=true&component=ComponentB&fixture=baz');
+      expect(componentB.find('.fixture').at(0).prop('href')).toEqual(
+        '/?editor=true&component=ComponentB&fixture=baz'
+      );
     });
 
     test('link 4', () => {
-      expect(componentB.find('.fixture').at(1).prop('href'))
-        .toEqual('/?editor=true&component=ComponentB&fixture=qux');
+      expect(componentB.find('.fixture').at(1).prop('href')).toEqual(
+        '/?editor=true&component=ComponentB&fixture=qux'
+      );
     });
   });
 });
@@ -108,8 +120,14 @@ describe('Select', () => {
 
   beforeEach(() => {
     onUrlChange = jest.fn();
-    wrapper = shallow(
-      <FixtureList fixtures={fixtures} urlParams={{}} onUrlChange={onUrlChange}/>
+    const fixture = {
+      props: {
+        ...populatedFixture.props,
+        onUrlChange,
+      },
+    };
+    wrapper = shallowLoader(
+      <Loader component={FixtureList} fixture={fixture} />
     );
   });
 
@@ -119,8 +137,8 @@ describe('Select', () => {
     fixtureFoo.simulate('click', {
       preventDefault: jest.fn(),
       currentTarget: {
-        href: fixtureFoo.prop('href')
-      }
+        href: fixtureFoo.prop('href'),
+      },
     });
 
     expect(onUrlChange).toHaveBeenCalledWith(fixtureFoo.prop('href'));
@@ -132,8 +150,8 @@ describe('Select', () => {
     fixtureQux.simulate('click', {
       preventDefault: jest.fn(),
       currentTarget: {
-        href: fixtureQux.prop('href')
-      }
+        href: fixtureQux.prop('href'),
+      },
     });
 
     expect(onUrlChange).toHaveBeenCalledWith(fixtureQux.prop('href'));
@@ -144,14 +162,14 @@ describe('Search', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(
-      <FixtureList fixtures={fixtures} urlParams={{}} onUrlChange={() => {}}/>
+    wrapper = shallowLoader(
+      <Loader component={FixtureList} fixture={populatedFixture} />
     );
   });
 
   test('should only show matched component', () => {
     const searchInput = wrapper.find('.searchInput');
-    searchInput.simulate('change', { target: { value: 'ux' }});
+    searchInput.simulate('change', { target: { value: 'ux' } });
 
     // This is a mouthful, but we want to ensure that only ComponentB/qux
     // is visible
@@ -166,6 +184,7 @@ describe('Search', () => {
 
 describe('Search input keyboard shortcut', () => {
   let wrapper;
+  let instance;
 
   // Triggering a window event is cumbersome...
   const triggerKeyEvent = (handler, keyCode) => {
@@ -173,10 +192,21 @@ describe('Search input keyboard shortcut', () => {
   };
 
   beforeEach(() => {
-    // Mount component in order to be able to access DOM nodes
-    wrapper = mount(
-      <FixtureList fixtures={fixtures} urlParams={{}} onUrlChange={() => {}}/>
-    );
+    const waitToRender = new Promise(resolve => {
+      // Mount component in order to be able to access DOM nodes
+      wrapper = mount(
+        // <FixtureList fixtures={fixtures} urlParams={{}} onUrlChange={() => {}} />
+        <Loader
+          component={FixtureList}
+          fixture={populatedFixture}
+          onComponentRef={i => {
+            instance = i;
+            resolve();
+          }}
+        />
+      );
+    });
+    return waitToRender;
   });
 
   describe('on `s` key', () => {
@@ -184,7 +214,7 @@ describe('Search input keyboard shortcut', () => {
 
     beforeEach(() => {
       searchInput = wrapper.find('.searchInput');
-      triggerKeyEvent(wrapper.instance().onWindowKey, 83);
+      triggerKeyEvent(instance.onWindowKey, 83);
     });
 
     test('should focus input', () => {
@@ -197,9 +227,9 @@ describe('Search input keyboard shortcut', () => {
 
     beforeEach(() => {
       searchInput = wrapper.find('.searchInput');
-      triggerKeyEvent(wrapper.instance().onWindowKey, 83);
-      searchInput.simulate('change', { target: { value: 'foo' }});
-      triggerKeyEvent(wrapper.instance().onWindowKey, 27);
+      triggerKeyEvent(instance.onWindowKey, 83);
+      searchInput.simulate('change', { target: { value: 'foo' } });
+      triggerKeyEvent(instance.onWindowKey, 27);
     });
 
     test('should blur input', () => {
@@ -216,15 +246,8 @@ describe('Selected fixture', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(
-      <FixtureList
-        fixtures={fixtures}
-        urlParams={{
-          component: 'ComponentA',
-          fixture: 'bar'
-        }}
-        onUrlChange={() => {}}
-        />
+    wrapper = shallowLoader(
+      <Loader component={FixtureList} fixture={populatedAndSelectedFixture} />
     );
   });
 
