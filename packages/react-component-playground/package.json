@@ -24,7 +24,8 @@
     "react-split-pane": "^0.1.63"
   },
   "devDependencies": {
-    "babelify": "^7.3.0"
+    "babelify": "^7.3.0",
+    "react-cosmos-loader": "^2.0.0-beta.14"
   },
   "xo": false
 }

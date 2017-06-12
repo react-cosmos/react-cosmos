@@ -1,13 +1,25 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { Loader } from 'react-cosmos-loader';
 import WelcomeScreen from '../';
+import noComponents from '../__fixtures__/no-components';
+import componentsWithoutFixtures
+  from '../__fixtures__/components-without-fixtures';
+import componentsWithFixtures from '../__fixtures__/components-with-fixtures';
+
+const shallowLoader = element =>
+  shallow(element)
+    .dive() // Loader
+    .dive(); // PropsProxy
 
 describe('WelcomeScreen', () => {
   let wrapper;
 
   describe('for users without fixtures and components', () => {
     beforeEach(() => {
-      wrapper = shallow(<WelcomeScreen fixtures={{}} />).dive();
+      wrapper = shallowLoader(
+        <Loader component={WelcomeScreen} fixture={noComponents} />
+      ).dive();
     });
 
     it('should render title', () => {
@@ -21,13 +33,8 @@ describe('WelcomeScreen', () => {
 
   describe('for users with components without fixtures', () => {
     beforeEach(() => {
-      wrapper = shallow(
-        <WelcomeScreen
-          fixtures={{
-            ComponentA: [],
-            ComponentB: [],
-          }}
-        />
+      wrapper = shallowLoader(
+        <Loader component={WelcomeScreen} fixture={componentsWithoutFixtures} />
       ).dive();
     });
 
@@ -42,13 +49,8 @@ describe('WelcomeScreen', () => {
 
   describe('for users with components and fixtures', () => {
     beforeEach(() => {
-      wrapper = shallow(
-        <WelcomeScreen
-          fixtures={{
-            ComponentA: ['foo'],
-            ComponentB: ['bar'],
-          }}
-        />
+      wrapper = shallowLoader(
+        <Loader component={WelcomeScreen} fixture={componentsWithFixtures} />
       ).dive();
     });
 
