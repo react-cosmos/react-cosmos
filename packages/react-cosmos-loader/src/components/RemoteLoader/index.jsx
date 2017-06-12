@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { object, array } from 'prop-types';
+import { object, objectOf, func, array } from 'prop-types';
 import merge from 'lodash.merge';
 import splitUnserializableParts
   from 'react-cosmos-utils/lib/unserializable-parts';
@@ -226,8 +226,8 @@ class RemoteLoader extends Component {
 }
 
 RemoteLoader.propTypes = {
-  components: object.isRequired,
-  fixtures: object.isRequired,
+  components: objectOf(func).isRequired,
+  fixtures: objectOf(objectOf(object)).isRequired,
   proxies: array,
 };
 
