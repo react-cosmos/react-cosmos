@@ -7,6 +7,7 @@ import Loader from '../';
 const ProxyFoo = () => <span />;
 const ComponentFoo = () => <span />;
 const fixtureFoo = { foo: 'bar' };
+const onComponentRef = () => {};
 
 // Vars populated in beforeEach blocks
 let wrapper;
@@ -20,6 +21,7 @@ describe('Fixture is selected via props', () => {
         proxies={[ProxyFoo]}
         component={ComponentFoo}
         fixture={fixtureFoo}
+        onComponentRef={onComponentRef}
       />
     );
 
@@ -41,5 +43,9 @@ describe('Fixture is selected via props', () => {
 
   test('sends fixture to first proxy', () => {
     expect(firstProxyProps.fixture).toEqual(fixtureFoo);
+  });
+
+  test('sends onComponentRef to first proxy', () => {
+    expect(firstProxyProps.onComponentRef).toEqual(onComponentRef);
   });
 });

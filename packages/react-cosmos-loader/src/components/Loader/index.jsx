@@ -13,7 +13,7 @@ class Loader extends Component {
    * props.
    */
   render() {
-    const { proxies, component, fixture } = this.props;
+    const { proxies, component, fixture, onComponentRef } = this.props;
 
     const firstProxy = createLinkedList([...proxies, PropsProxy]);
 
@@ -22,7 +22,7 @@ class Loader extends Component {
         nextProxy={firstProxy.next()}
         component={component}
         fixture={fixture}
-        onComponentRef={noope}
+        onComponentRef={onComponentRef || noope}
         onFixtureUpdate={noope}
       />
     );
@@ -33,6 +33,7 @@ Loader.propTypes = {
   component: func.isRequired,
   fixture: object.isRequired,
   proxies: array,
+  onComponentRef: func,
 };
 
 Loader.defaultProps = {
