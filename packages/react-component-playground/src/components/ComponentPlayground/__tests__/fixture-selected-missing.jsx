@@ -15,6 +15,5 @@ test('CP with missing fixture selected', () => {
       />
     )
     .toJSON();
-  console.log(tree);
   expect(tree).toMatchSnapshot();
 });
