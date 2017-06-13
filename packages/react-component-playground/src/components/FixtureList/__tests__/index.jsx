@@ -195,7 +195,6 @@ describe('Search input keyboard shortcut', () => {
     const waitToRender = new Promise(resolve => {
       // Mount component in order to be able to access DOM nodes
       wrapper = mount(
-        // <FixtureList fixtures={fixtures} urlParams={{}} onUrlChange={() => {}} />
         <Loader
           component={FixtureList}
           fixture={populatedFixture}
