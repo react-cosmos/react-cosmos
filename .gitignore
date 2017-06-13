@@ -1,4 +1,5 @@
 packages/*/lib
+packages/*/yarn.lock
 node_modules
 test/coverage
 npm-debug.log
