@@ -1,69 +1,29 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { Loader } from 'react-cosmos-loader';
+import createStateProxy from 'react-cosmos-state-proxy';
+import selectedFullScreenFixture from '../__fixtures__/selected-fullscreen';
 import FixtureList from '../../FixtureList';
 import ComponentPlayground from '../';
 
 // Vars populated in beforeEach blocks
-let messageHandlers;
-let router;
 let wrapper;
-let loaderContentWindow;
-
-const handleMessage = e => {
-  const { type } = e.data;
-  if (!messageHandlers[type]) {
-    throw new Error('Unexpected message event');
-  }
-  messageHandlers[type](e.data);
-};
-
-const waitForPostMessage = type => new Promise(resolve => {
-  messageHandlers[type] = resolve;
-});
 
 describe('CP with fixture already selected in full screen', () => {
   beforeEach(() => {
-    messageHandlers = {};
-    window.addEventListener('message', handleMessage, false);
-
-    router = {
-      goTo: jest.fn()
-    };
-
-    const onFrameReady = waitForPostMessage('loaderReady');
-
-    // Mounting component in order for lifecycle methods to be called
-    wrapper = mount(
-      <ComponentPlayground
-        loaderUri="/loader/index.html"
-        router={router}
-        component="ComponentA"
-        fixture="foo"
-        fullScreen
-      />
-    );
-
-    loaderContentWindow = {
-      postMessage: jest.fn()
-    };
-    // iframe.contentWindow isn't available in jsdom
-    wrapper.instance().loaderFrame = {
-      contentWindow: loaderContentWindow
-    };
-
-    window.postMessage({
-      type: 'loaderReady',
-      fixtures: {
-        ComponentA: ['foo', 'bar'],
-        ComponentB: ['baz', 'qux'],
-      }
-    }, '*');
-
-    return onFrameReady;
-  });
-
-  afterEach(() => {
-    window.removeEventListener('message', handleMessage);
+    return new Promise(resolve => {
+      // Mount component in order for ref and lifecycle methods to be called
+      wrapper = mount(
+        <Loader
+          proxies={[createStateProxy()]}
+          component={ComponentPlayground}
+          fixture={selectedFullScreenFixture}
+          onComponentRef={() => {
+            resolve();
+          }}
+        />
+      );
+    });
   });
 
   test('should not render fixture list', () => {

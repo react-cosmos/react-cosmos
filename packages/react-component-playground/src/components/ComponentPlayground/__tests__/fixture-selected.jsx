@@ -1,12 +1,15 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { Loader } from 'react-cosmos-loader';
+import createStateProxy from 'react-cosmos-state-proxy';
+import selectedFixture from '../__fixtures__/selected';
 import FixtureList from '../../FixtureList';
 import ComponentPlayground from '../';
 
 // Vars populated in beforeEach blocks
 let messageHandlers;
-let router;
 let wrapper;
+let instance;
 let loaderContentWindow;
 
 const handleMessage = e => {
@@ -17,48 +20,53 @@ const handleMessage = e => {
   messageHandlers[type](e.data);
 };
 
-const waitForPostMessage = type => new Promise(resolve => {
-  messageHandlers[type] = resolve;
-});
+const waitForPostMessage = type =>
+  new Promise(resolve => {
+    messageHandlers[type] = resolve;
+  });
 
 describe('CP with fixture already selected', () => {
   beforeEach(() => {
     messageHandlers = {};
     window.addEventListener('message', handleMessage, false);
 
-    router = {
-      goTo: jest.fn()
-    };
-
     const onFrameReady = waitForPostMessage('loaderReady');
+    const waitToRender = new Promise(resolve => {
+      // Mount component in order for ref and lifecycle methods to be called
+      wrapper = mount(
+        <Loader
+          proxies={[createStateProxy()]}
+          component={ComponentPlayground}
+          fixture={selectedFixture}
+          onComponentRef={i => {
+            instance = i;
+            resolve();
+          }}
+        />
+      );
+    });
 
-    // Mounting component in order for lifecycle methods to be called
-    wrapper = mount(
-      <ComponentPlayground
-        component="ComponentA"
-        fixture="foo"
-        loaderUri="/loader/index.html"
-        router={router}
-      />
-    );
+    return waitToRender.then(() => {
+      loaderContentWindow = {
+        postMessage: jest.fn(),
+      };
+      // iframe.contentWindow isn't available in jsdom
+      instance.loaderFrame = {
+        contentWindow: loaderContentWindow,
+      };
 
-    loaderContentWindow = {
-      postMessage: jest.fn()
-    };
-    // iframe.contentWindow isn't available in jsdom
-    wrapper.instance().loaderFrame = {
-      contentWindow: loaderContentWindow
-    };
+      // State is already injected, but we need to trigger this event for the
+      // `fixtureSelect` message event to be triggered
+      window.postMessage(
+        {
+          type: 'loaderReady',
+          fixtures: selectedFixture.state.fixtures,
+        },
+        '*'
+      );
 
-    window.postMessage({
-      type: 'loaderReady',
-      fixtures: {
-        ComponentA: ['foo', 'bar'],
-        ComponentB: ['baz', 'qux'],
-      }
-    }, '*');
-
-    return onFrameReady;
+      return onFrameReady;
+    });
   });
 
   afterEach(() => {
@@ -80,11 +88,14 @@ describe('CP with fixture already selected', () => {
     });
 
     test('sends fixture select message to loader', () => {
-      expect(loaderContentWindow.postMessage).toHaveBeenCalledWith({
-        type: 'fixtureSelect',
-        component: 'ComponentA',
-        fixture: 'foo',
-      }, '*');
+      expect(loaderContentWindow.postMessage).toHaveBeenCalledWith(
+        {
+          type: 'fixtureSelect',
+          component: 'ComponentA',
+          fixture: 'foo',
+        },
+        '*'
+      );
     });
   });
 
@@ -101,11 +112,15 @@ describe('CP with fixture already selected', () => {
     });
 
     test('should render fixture editor button', () => {
-      expect(wrapper.find(`a[href="${fixtureEditorUrl}"].button`).length).toBe(1);
+      expect(wrapper.find(`a[href="${fixtureEditorUrl}"].button`).length).toBe(
+        1
+      );
     });
 
     test('should not render selected fixture editor button', () => {
-      expect(wrapper.find(`a[href="${fixtureEditorUrl}"].selectedButton`).length).toBe(0);
+      expect(
+        wrapper.find(`a[href="${fixtureEditorUrl}"].selectedButton`).length
+      ).toBe(0);
     });
 
     test('should render full screen button', () => {

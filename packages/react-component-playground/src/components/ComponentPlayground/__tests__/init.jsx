@@ -1,17 +1,21 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { Loader } from 'react-cosmos-loader';
+import initFixture from '../__fixtures__/init';
 import StarryBg from '../../StarryBg';
 import ComponentPlayground from '../';
+
+const shallowLoader = element =>
+  shallow(element)
+    .dive() // Loader
+    .dive(); // PropsProxy
 
 describe('CP init', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(
-      <ComponentPlayground
-        loaderUri="/loader/index.html"
-        router={{}}
-      />
+    wrapper = shallowLoader(
+      <Loader component={ComponentPlayground} fixture={initFixture} />
     );
   });
 
@@ -24,6 +28,6 @@ describe('CP init', () => {
   });
 
   test('should render loader iframe with props.loaderUri', () => {
-    expect(wrapper.find('iframe').prop('src')).toBe('/loader/index.html');
+    expect(wrapper.find('iframe').prop('src')).toBe('/mock/loader/index.html');
   });
 });
