@@ -7,6 +7,7 @@ import { HomeIcon, FullScreenIcon, CodeIcon } from '../SvgIcon';
 import StarryBg from '../StarryBg';
 import FixtureList from '../FixtureList';
 import WelcomeScreen from '../WelcomeScreen';
+import MissingScreen from '../MissingScreen';
 import styles from './index.less';
 
 export default class ComponentPlayground extends Component {
@@ -94,18 +95,29 @@ export default class ComponentPlayground extends Component {
   }
 
   renderContent() {
-    const { loaderUri, fixture } = this.props;
+    const { loaderUri, component, fixture } = this.props;
     const { waitingForLoader, fixtures } = this.state;
-    const showLoader = !waitingForLoader && Boolean(fixture);
+    const isFixtureSelected = !waitingForLoader && Boolean(fixture);
+    const isMissingFixtureSelected =
+      isFixtureSelected &&
+      (!fixtures[component] || fixtures[component].indexOf(fixture) === -1);
 
     return (
       <div key="loader" className={styles.loader}>
         <StarryBg>
-          {!waitingForLoader && <WelcomeScreen fixtures={fixtures} />}
+          {!waitingForLoader &&
+            !isFixtureSelected &&
+            <WelcomeScreen fixtures={fixtures} />}
+          {isMissingFixtureSelected &&
+            <MissingScreen componentName={component} fixtureName={fixture} />}
         </StarryBg>
         <iframe
           className={styles.loaderFrame}
-          style={{ display: showLoader ? 'block' : 'none' }}
+          style={{
+            display: isFixtureSelected && !isMissingFixtureSelected
+              ? 'block'
+              : 'none',
+          }}
           ref={node => {
             this.loaderFrame = node;
           }}
