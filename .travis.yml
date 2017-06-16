@@ -1,11 +1,18 @@
 language: node_js
 node_js:
   - "5"
+before_install:
+  - yarn global add greenkeeper-lockfile@1
+before_script:
+  - greenkeeper-lockfile-update
 script:
-  - npm run test
-  - npm run test-smoke-ci
+  - yarn run test
+  - yarn run test-smoke-ci
+after_script:
+  - greenkeeper-lockfile-upload
 after_success:
-  - npm run coveralls
+  - yarn run coveralls
 cache:
+  yarn: true
   directories:
     - /home/travis/.cypress/Cypress
