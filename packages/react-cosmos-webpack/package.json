@@ -1,0 +1,42 @@
+{
+  "name": "react-cosmos-webpack",
+  "version": "2.0.0-beta.14",
+  "description": "CLI for running React Cosmos inside webpack-powered apps",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-webpack",
+  "license": "MIT",
+  "files": [
+    "bin",
+    "lib",
+    "index.js"
+  ],
+  "dependencies": {
+    "babel-loader": "^6.2.10",
+    "babel-register": "^6.16.3",
+    "css-loader": "^0.28.1",
+    "express": "^4.14.0",
+    "fs-extra": "^3.0.1",
+    "glob": "^7.1.1",
+    "html-webpack-plugin": "^2.28.0",
+    "json-loader": "^0.5.4",
+    "loader-utils": "^1.1.0",
+    "lodash.omit": "^4.5.0",
+    "react-cosmos": "^2.0.0-beta.14",
+    "react-cosmos-config": "^2.0.0-beta.13",
+    "react-cosmos-utils": "^2.0.0-beta.11",
+    "react-cosmos-voyager": "^2.0.0-beta.13",
+    "slash": "^1.0.0",
+    "style-loader": "^0.17.0",
+    "traverse": "^0.6.6",
+    "webpack-dev-middleware": "^1.10.2",
+    "webpack-hot-middleware": "^2.13.0",
+    "yargs": "^8.0.1"
+  },
+  "peerDependencies": {
+    "webpack": ">=1.13 <3"
+  },
+  "bin": {
+    "cosmos": "./bin/cosmos.js",
+    "cosmos-export": "./bin/cosmos-export.js"
+  },
+  "xo": false
+}

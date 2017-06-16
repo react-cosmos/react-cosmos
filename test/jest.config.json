@@ -1,0 +1,21 @@
+{
+  "rootDir": "../packages",
+  "testEnvironment": "jsdom",
+  "testURL": "http://foo.bar/",
+  "testPathIgnorePatterns": [
+    "react-cosmos-voyager/src/__tests__/use-cases",
+    "react-cosmos-config/src/__tests__/mock-cwd",
+    "react-cosmos-webpack/src/__tests__/mocks"
+  ],
+  "coverageDirectory": "../test/coverage/jest",
+  "coverageReporters": ["lcov", "text"],
+  "globals": {
+    "COSMOS_CONFIG": {
+      "containerQuerySelector": "__mock__containerQuerySelector"
+    }
+  },
+  "moduleNameMapper": {
+    "\\.(css|less)$": "<rootDir>/__mocks__/style-mock.js",
+    "\\.(jpg|png)$": "<rootDir>/__mocks__/img-mock.js"
+  }
+}

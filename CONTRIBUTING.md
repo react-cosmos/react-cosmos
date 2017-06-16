@@ -1,72 +1,89 @@
 ## Mission
 
-**How to design components that are truly encapsulated?**
+To scale UI development linearly by prioritising on component design in isolation.
 
-[Read more.](https://github.com/skidding/cosmos/wiki/Problem)
+At the core is the assumption that complexity in large apps stems from hidden links between parts. Tedious as it can be to uncover each and every component dependency, committing to it promises predictability and long term sanity.
 
-## Manifesto
+Moreover, React Cosmos tries to answer the question: **How to design components that are truly reusable?**
 
-_cos·mos<sup>1</sup> `/ˈkäzməs,-ˌmōs,-ˌmäs/` noun — 1. The universe seen as
-a well-ordered whole._
-
-- Zero bootstrap
-- Can be plugged into any other framework
-- Everything is a Component
-- Components are oblivious of ancestors
-- Any component can be represented by a URI
-- The state of the entire UI can be serialized at any given point in time
-- Components can implement any data sync mechanism
-
-These set of principles were defined before any code was written and have guided the evolution of Cosmos to present.
-
-## Packaging
-
-Cosmos is split into smaller repositories for modularity and ease of development. This contributing guide applies to all included packages.
-
-- [ReactComponentTree](https://github.com/skidding/react-component-tree) – Serialize and reproduce the state of an entire tree of React components
-- [ReactComponentPlayground](https://github.com/skidding/react-component-playground) – Minimal frame for loading and testing React components in isolation
-- [ReactQuerystringRouter](https://github.com/skidding/react-querystring-router) – Bare router for React components, using query string as props
-
-The `cosmos-js` package is the top layer, responsible for offering a minimum configuration ComponentPlayground setup for projects powered by React components.
+*For more context see [manifesto](https://github.com/react-cosmos/react-cosmos/wiki/Manifesto) and [problem analysis](https://github.com/react-cosmos/react-cosmos/wiki/Problem) written back in 2014, before code was written.*
 
 ## Design
 
-[The Best Code is No Code At All.](http://blog.codinghorror.com/the-best-code-is-no-code-at-all/) Start with this in mind before adding any new line of code.
+[The Best Code is No Code At All.](http://blog.codinghorror.com/the-best-code-is-no-code-at-all/) Start with this in mind before writing code.
 
-1. When thinking of adding or changing something, make sure it is in line with the project [mission.](#mission)
-2. Once the value added is clear, strive for the simplest, most obvious solution.
+React Cosmos is a [monorepo](packages) with many small packages. This makes it possible to design isolated units, but also to build and test all packages together (inside one of the [examples](examples)).
 
-## Style
+## Progress
 
-Unless explicitly overridden, all rules from the [Google JavaScript Style Guide](https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml) apply. The [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript) is also a good reference.
+[Projects](https://github.com/react-cosmos/react-cosmos/projects) are used to track large releases. [Issues](https://github.com/react-cosmos/react-cosmos/issues) are used for everything else.
 
-## Tests
+#### Issue labels
 
-Unit tests both keep the project sane and define its specs. Providing test coverage for every contribution is mandatory.
+Issues are first categorised as one of the following:
+- `hmm` Questions and support
+- `oops` Bugs
+- `i have a dream` Ideas and feature proposals
 
-Repo | Build | Status
---- | --- | ---
-[Cosmos](https://github.com/skidding/cosmos/tree/master/tests) | [![Build Status](https://travis-ci.org/skidding/cosmos.svg?branch=master)](https://travis-ci.org/skidding/cosmos) | [![Coverage Status](https://coveralls.io/repos/skidding/cosmos/badge.svg?branch=master)](https://coveralls.io/r/skidding/cosmos?branch=master)
-[ReactComponentTree](https://github.com/skidding/react-component-tree/tree/master/tests) | [![Build Status](https://travis-ci.org/skidding/react-component-tree.svg?branch=master)](https://travis-ci.org/skidding/react-component-tree) | [![Coverage Status](https://coveralls.io/repos/skidding/react-component-tree/badge.svg?branch=master)](https://coveralls.io/r/skidding/react-component-tree?branch=master)
-[ReactComponentPlayground](https://github.com/skidding/react-component-playground/tree/master/tests) | [![Build Status](https://travis-ci.org/skidding/react-component-playground.svg?branch=master)](https://travis-ci.org/skidding/react-component-playground) | [![Coverage Status](https://coveralls.io/repos/skidding/react-component-playground/badge.svg?branch=master)](https://coveralls.io/r/skidding/react-component-playground?branch=master)
-[ReactQuerystringRouter](https://github.com/skidding/react-querystring-router/tree/master/tests) | [![Build Status](https://travis-ci.org/skidding/react-querystring-router.svg?branch=master)](https://travis-ci.org/skidding/react-querystring-router) | [![Coverage Status](https://coveralls.io/repos/skidding/react-querystring-router/badge.svg?branch=master)](https://coveralls.io/r/skidding/react-querystring-router?branch=master)
+Once a draft progresses, it will go through the following phases:
+- `needs love` Accepted ideas without a clear implementation plan
+- `free for all` Detailed issues that can be picked up by anyone
+- `on it` Work in progress
 
-The only untested sections are the [webpack config](component-playground/config.js) and the [dev runner](bin/component-playground.js), which are also the parts most likely to change in the future.
+## How to contribute
 
-## Git flow
+A great way to start is by picking up a [`free for all`](https://github.com/react-cosmos/react-cosmos/issues?q=is%3Aopen+is%3Aissue+label%3A%22free+for+all%22) issue.
 
-Make sure you're familiar with the [Github flow.](https://guides.github.com/introduction/flow/)
+#### Be kind and thoughtful
 
-### Branches
+Most of us are doing this for free, so be realistic and don't expect special treatment. The better we communicate the more likely we'll end up collaborating.
 
-Prefix branch names with the corresponding issue number. E.g. `137-contributing-guide`
+#### Ask for review
 
-### Commits
+Code review aside, also ask for review *before* implementing solution. Saves everybody time and effort.
 
-Use the imperative mood to express verbs and add a hashtag with the corresponding issue number at the end of each commit message. The Github UI will generate links to the referenced issues.
+#### Get familiar with codebase
 
-> Adapt fixture mapping to new ComponentPlayground format [#115](https://github.com/skidding/cosmos/issues/115)
+Make sure you have [Yarn](https://yarnpkg.com/) installed. We use it to install dependencies faster and more reliably.
 
-### Review
+```bash
+git clone git@github.com:react-cosmos/react-cosmos.git
+cd react-cosmos
 
-Ask for review *before* writing the code. Saves everybody time and effort.
+# Install deps and link child packages (using Lerna)
+yarn
+
+# Optional: build everything using older React versions
+yarn run install-react:0.14
+
+# Build example from source and test React Cosmos holistically
+cd examples/context
+yarn
+yarn start
+
+# Watch & build single package (running example will live reload)
+yarn run build react-component-playground -- --watch
+
+# Watch & run unit tests as you code
+yarn run test-jest -- --watch
+```
+
+#### Write tests, preferably before implementation
+
+Use [Jest](https://facebook.github.io/jest/) for unit testing. Here are some examples:
+- [Tests for react-cosmos-redux-proxy](packages/react-cosmos-redux-proxy/src/__tests__/index.js)
+- [Tests for react-cosmos-webpack](packages/react-cosmos-webpack/src/__tests__)
+
+Older packages are tested with Mocha and Karma, but those tests are considered legacy.
+
+#### Keep coding style consistent
+
+Make sure `yarn run lint` passes and add [xo](https://github.com/sindresorhus/xo) to your editor if possible.
+
+#### Use Git conscientiously
+
+Nothing fancy, just the usual the [GitHub flow.](https://guides.github.com/introduction/flow/)
+
+---
+
+Please note that this project is released with a [Contributor Code of Conduct.](CODE_OF_CONDUCT.md) By participating in this project you agree to abide by its terms.

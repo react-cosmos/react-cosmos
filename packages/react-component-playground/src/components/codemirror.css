@@ -1,0 +1,12 @@
+:global {
+  .CodeMirror, .ReactCodeMirror {
+    width: 100%;
+    height: 100%;
+    font-family: 'FiraCode-Light';
+    font-size: 14px;
+  }
+
+  .cm-s-solarized.cm-s-light, .CodeMirror-foldmarker {
+    text-shadow: none;
+  }
+}

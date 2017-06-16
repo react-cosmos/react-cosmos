@@ -1,0 +1,30 @@
+{
+  "name": "react-component-playground",
+  "version": "2.0.0-beta.14",
+  "description": "Isolated loader for React components",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-component-playground",
+  "license": "MIT",
+  "files": [
+    "lib",
+    "index.js"
+  ],
+  "main": "lib/index.js",
+  "dependencies": {
+    "@skidding/react-codemirror": "^1.0.1",
+    "classnames": "^2.2.5",
+    "codemirror": "^5.25.2",
+    "create-react-class": "^15.5.3",
+    "fuzzaldrin-plus": "^0.4.1",
+    "lodash": "^4.17.4",
+    "lodash.isequal": "^4.5.0",
+    "prop-types": "^15.5.10",
+    "react-component-tree": "^2.0.0-beta.14",
+    "react-cosmos-utils": "^2.0.0-beta.11",
+    "react-querystring-router": "^2.0.0-beta.13",
+    "react-split-pane": "^0.1.63"
+  },
+  "devDependencies": {
+    "babelify": "^7.3.0"
+  },
+  "xo": false
+}
