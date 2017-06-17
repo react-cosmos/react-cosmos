@@ -47,6 +47,8 @@ export default class ComponentPlayground extends Component {
 
     if (type === 'loaderReady') {
       this.onLoaderReady(data);
+    } else if (type === 'fixtureListUpdate') {
+      this.onFixtureListUpdate(data);
     }
   };
 
@@ -69,6 +71,12 @@ export default class ComponentPlayground extends Component {
         '*'
       );
     }
+  }
+
+  onFixtureListUpdate({ fixtures }) {
+    this.setState({
+      fixtures,
+    });
   }
 
   onUrlChange = location => {
