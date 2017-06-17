@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { string, bool, object } from 'prop-types';
 import classNames from 'classnames';
-import { omitBy } from 'lodash';
+import omitBy from 'lodash.omitby';
 import { uri } from 'react-querystring-router';
 import { HomeIcon, FullScreenIcon, CodeIcon } from '../SvgIcon';
 import StarryBg from '../StarryBg';

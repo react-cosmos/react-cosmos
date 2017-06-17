@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { objectOf, arrayOf, string } from 'prop-types';
-import { reduce } from 'lodash';
+import reduce from 'lodash.reduce';
 import DisplayScreen from '../DisplayScreen';
 import styles from '../DisplayScreen/index.less';
 
@@ -82,14 +82,17 @@ class WelcomeScreen extends Component {
         <DisplayScreen>
           <p className={styles.header}>Almost there...</p>
           <p>
-            Your components are listed the left side. It looks like you haven't created fixtures for them yet.
+            Your components are listed the left side. It looks like you haven't
+            created fixtures for them yet.
           </p>
           <p>
-            An empty fixture is available for each component, but chances are your components depend on one or more props to function.
+            An empty fixture is available for each component, but chances are
+            your components depend on one or more props to function.
             {' '}
           </p>
           <p>
-            A fixture is a JSON-like object, except it contains functions and any other types components receive via props.
+            A fixture is a JSON-like object, except it contains functions and
+            any other types components receive via props.
           </p>
           <p>
             Read the
@@ -113,7 +116,9 @@ class WelcomeScreen extends Component {
           Congratulations! You're on your way to designing beautiful components
         </p>
         <p>
-          No components detected. If you're just starting a new project, this is fine and I envy you, otherwise your setup needs tweaking. Try the following:
+          No components detected. If you're just starting a new project, this is
+          fine and I envy you, otherwise your setup needs tweaking. Try the
+          following:
         </p>
         <ul>
           <li>

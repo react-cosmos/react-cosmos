@@ -1,6 +1,6 @@
 packages/*/lib
 packages/*/yarn.lock
 node_modules
-test/coverage
+coverage
 npm-debug.log
 cypress/videos

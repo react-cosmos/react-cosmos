@@ -1,5 +1,5 @@
 {
-  "rootDir": "../packages",
+  "rootDir": "./packages",
   "testEnvironment": "jsdom",
   "testURL": "http://foo.bar/",
   "testPathIgnorePatterns": [
@@ -7,14 +7,11 @@
     "react-cosmos-config/src/__tests__/mock-cwd",
     "react-cosmos-webpack/src/__tests__/mocks"
   ],
-  "coverageDirectory": "../test/coverage/jest",
+  "coverageDirectory": "./coverage",
   "coverageReporters": ["lcov", "text"],
   "globals": {
     "COSMOS_CONFIG": {
       "containerQuerySelector": "__mock__containerQuerySelector"
-    },
-    "COSMOS_FIXTURES": {
-      "foo": "bar"
     }
   },
   "moduleNameMapper": {

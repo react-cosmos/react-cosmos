@@ -14,8 +14,9 @@
     "lodash.merge": "^4.6.0",
     "lodash.omit": "^4.5.0",
     "prop-types": "^15.5.10",
+    "react-cosmos-loader": "^2.0.0-beta.14",
     "react-component-playground": "^2.0.0-beta.14",
-    "react-component-tree": "^2.0.0-beta.14",
+    "react-cosmos-state-proxy": "^2.0.0-beta.14",
     "react-cosmos-utils": "^2.0.0-beta.11",
     "react-querystring-router": "^2.0.0-beta.13"
   },

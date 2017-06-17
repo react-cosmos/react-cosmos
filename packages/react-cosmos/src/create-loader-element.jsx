@@ -1,20 +1,13 @@
 import React from 'react';
 import { loadComponents, loadFixtures } from './load-modules';
-import Loader from './components/Loader';
-import PropsProxy from './components/proxies/PropsProxy';
-import createStateProxy from './components/proxies/StateProxy';
 import importModule from 'react-cosmos-utils/lib/import-module';
+import { RemoteLoader } from 'react-cosmos-loader';
+import createStateProxy from 'react-cosmos-state-proxy';
 
 const initProxy = proxy => importModule(proxy)();
 
-export default ({
-  proxies,
-  components,
-  fixtures,
-  component,
-  fixture,
-}) => (
-  <Loader
+export default ({ proxies, components, fixtures, component, fixture }) =>
+  <RemoteLoader
     components={loadComponents(components)}
     fixtures={loadFixtures(fixtures)}
     component={component}
@@ -23,8 +16,5 @@ export default ({
       ...proxies.map(initProxy),
       // Loaded by default in all configs
       createStateProxy(),
-      // The final proxy in the chain simply renders the selected component
-      PropsProxy,
     ]}
-  />
-);
+  />;
