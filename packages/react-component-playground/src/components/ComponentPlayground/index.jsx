@@ -61,7 +61,13 @@ export default class ComponentPlayground extends Component {
     });
 
     const { component, fixture } = this.props;
-    if (component && fixture) {
+    if (
+      component &&
+      fixture &&
+      // Don't send select event to the Loader in case of 404
+      fixtures[component] &&
+      fixtures[component].indexOf(fixture) !== -1
+    ) {
       loaderFrame.contentWindow.postMessage(
         {
           type: 'fixtureSelect',

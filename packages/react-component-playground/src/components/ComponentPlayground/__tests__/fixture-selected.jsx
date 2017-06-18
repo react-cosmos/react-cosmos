@@ -73,6 +73,17 @@ describe('CP with fixture already selected', () => {
     window.removeEventListener('message', handleMessage);
   });
 
+  test('sends fixture select message to loader', () => {
+    expect(loaderContentWindow.postMessage).toHaveBeenCalledWith(
+      {
+        type: 'fixtureSelect',
+        component: 'ComponentA',
+        fixture: 'foo',
+      },
+      '*'
+    );
+  });
+
   describe('fixture list', () => {
     let props;
 
@@ -85,17 +96,6 @@ describe('CP with fixture already selected', () => {
         component: 'ComponentA',
         fixture: 'foo',
       });
-    });
-
-    test('sends fixture select message to loader', () => {
-      expect(loaderContentWindow.postMessage).toHaveBeenCalledWith(
-        {
-          type: 'fixtureSelect',
-          component: 'ComponentA',
-          fixture: 'foo',
-        },
-        '*'
-      );
     });
   });
 
