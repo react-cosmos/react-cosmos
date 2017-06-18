@@ -10,6 +10,9 @@ import WelcomeScreen from '../WelcomeScreen';
 import MissingScreen from '../MissingScreen';
 import styles from './index.less';
 
+const fixtureExists = (fixtures, component, fixture) =>
+  fixtures[component] && fixtures[component].indexOf(fixture) !== -1;
+
 export default class ComponentPlayground extends Component {
   static defaultProps = {};
 
@@ -30,15 +33,22 @@ export default class ComponentPlayground extends Component {
   }
 
   componentWillReceiveProps({ component, fixture }) {
-    if (component !== this.props.component || fixture !== this.props.fixture) {
-      this.loaderFrame.contentWindow.postMessage(
-        {
-          type: 'fixtureSelect',
-          component,
-          fixture,
-        },
-        '*'
-      );
+    const { waitingForLoader, fixtures } = this.state;
+
+    if (!waitingForLoader) {
+      const fixtureChanged =
+        component !== this.props.component || fixture !== this.props.fixture;
+
+      if (fixtureChanged && fixtureExists(fixtures, component, fixture)) {
+        this.loaderFrame.contentWindow.postMessage(
+          {
+            type: 'fixtureSelect',
+            component,
+            fixture,
+          },
+          '*'
+        );
+      }
     }
   }
 
@@ -61,13 +71,7 @@ export default class ComponentPlayground extends Component {
     });
 
     const { component, fixture } = this.props;
-    if (
-      component &&
-      fixture &&
-      // Don't send select event to the Loader in case of 404
-      fixtures[component] &&
-      fixtures[component].indexOf(fixture) !== -1
-    ) {
+    if (component && fixture && fixtureExists(fixtures, component, fixture)) {
       loaderFrame.contentWindow.postMessage(
         {
           type: 'fixtureSelect',
@@ -113,8 +117,7 @@ export default class ComponentPlayground extends Component {
     const { waitingForLoader, fixtures } = this.state;
     const isFixtureSelected = !waitingForLoader && Boolean(fixture);
     const isMissingFixtureSelected =
-      isFixtureSelected &&
-      (!fixtures[component] || fixtures[component].indexOf(fixture) === -1);
+      isFixtureSelected && !fixtureExists(fixtures, component, fixture);
 
     return (
       <div key="loader" className={styles.loader}>
