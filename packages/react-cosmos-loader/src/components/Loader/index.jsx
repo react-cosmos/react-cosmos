@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import { func, object, array } from 'prop-types';
 import createLinkedList from 'react-cosmos-utils/lib/linked-list';
+import importModule from 'react-cosmos-utils/lib/import-module';
 import PropsProxy from '../PropsProxy';
 
 const noope = () => {};
+
+const initProxy = proxy => importModule(proxy)();
+
+const createProxyLinkedList = userProxies =>
+  createLinkedList([...userProxies.map(initProxy), PropsProxy]);
 
 class Loader extends Component {
   /**
@@ -12,10 +18,21 @@ class Loader extends Component {
    * Renders components using fixtures and Proxy middleware. Initialized via
    * props.
    */
-  render() {
-    const { proxies, component, fixture, onComponentRef } = this.props;
+  constructor(props) {
+    super(props);
 
-    const firstProxy = createLinkedList([...proxies, PropsProxy]);
+    this.firstProxy = createProxyLinkedList(props.proxies);
+  }
+
+  componentWillReceiveProps({ proxies }) {
+    if (proxies !== this.props.proxies) {
+      this.firstProxy = createProxyLinkedList(proxies);
+    }
+  }
+
+  render() {
+    const { firstProxy } = this;
+    const { component, fixture, onComponentRef } = this.props;
 
     return (
       <firstProxy.value

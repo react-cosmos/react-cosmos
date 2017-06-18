@@ -4,6 +4,7 @@ import RemoteLoader from '../';
 
 // Objects to check identity against
 const ProxyFoo = () => <span />;
+const createProxyFoo = () => ProxyFoo;
 const ComponentFoo = () => {};
 const fixtureFoo = { foo: 'bar', onClick: () => {} };
 
@@ -39,7 +40,7 @@ describe('Fixture is edited by parent frame', () => {
     const onFixtureEdit = waitForPostMessage('fixtureEdit');
     wrapper = mount(
       <RemoteLoader
-        proxies={[ProxyFoo]}
+        proxies={[createProxyFoo]}
         components={{
           Foo: ComponentFoo,
         }}

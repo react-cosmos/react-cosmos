@@ -5,6 +5,8 @@ import RemoteLoader from '../';
 // Objects to check identity against
 const ProxyFoo = () => <span />;
 const ProxyBar = () => <span />;
+const createProxyFoo = () => ProxyFoo;
+const createProxyBar = () => ProxyBar;
 const ComponentFoo = () => {};
 const fixtureFoo = {};
 
@@ -37,7 +39,7 @@ describe('Proxy is changed', () => {
     const onFixtureLoad = waitForPostMessage('fixtureLoad');
     wrapper = mount(
       <RemoteLoader
-        proxies={[ProxyFoo]}
+        proxies={[createProxyFoo]}
         components={{
           Foo: ComponentFoo,
         }}
@@ -67,7 +69,7 @@ describe('Proxy is changed', () => {
       .then(() => onFixtureLoad)
       .then(() => {
         wrapper.setProps({
-          proxies: [ProxyBar],
+          proxies: [createProxyBar],
         });
       });
   });

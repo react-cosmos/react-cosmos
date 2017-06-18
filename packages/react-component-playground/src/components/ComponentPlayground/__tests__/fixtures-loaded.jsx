@@ -29,7 +29,7 @@ describe('CP fixtures loaded', () => {
       // Mount component in order for ref and lifecycle methods to be called
       wrapper = mount(
         <Loader
-          proxies={[createStateProxy()]}
+          proxies={[createStateProxy]}
           component={ComponentPlayground}
           fixture={fixture}
           onComponentRef={() => {

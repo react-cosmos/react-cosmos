@@ -3,9 +3,15 @@ import { object, objectOf, func, array } from 'prop-types';
 import merge from 'lodash.merge';
 import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
 import createLinkedList from 'react-cosmos-utils/lib/linked-list';
+import importModule from 'react-cosmos-utils/lib/import-module';
 import PropsProxy from '../PropsProxy';
 
 const noope = () => {};
+
+const initProxy = proxy => importModule(proxy)();
+
+const createProxyLinkedList = userProxies =>
+  createLinkedList([...userProxies.map(initProxy), PropsProxy]);
 
 const noFixtureState = {
   component: null,
@@ -63,6 +69,12 @@ class RemoteLoader extends Component {
    */
   state = noFixtureState;
 
+  constructor(props) {
+    super(props);
+
+    this.firstProxy = createProxyLinkedList(props.proxies);
+  }
+
   componentDidMount() {
     window.addEventListener('message', this.onMessage, false);
 
@@ -78,7 +90,11 @@ class RemoteLoader extends Component {
     );
   }
 
-  componentWillReceiveProps({ fixtures }) {
+  componentWillReceiveProps({ proxies, fixtures }) {
+    if (proxies !== this.props.proxies) {
+      this.firstProxy = createProxyLinkedList(proxies);
+    }
+
     if (fixtures === this.props.fixtures) {
       return;
     }
@@ -203,14 +219,14 @@ class RemoteLoader extends Component {
   };
 
   render() {
-    const { proxies, components } = this.props;
+    const { components } = this.props;
     const { component, fixtureBody, fixtureId } = this.state;
 
     if (!component) {
       return null;
     }
 
-    const firstProxy = createLinkedList([...proxies, PropsProxy]);
+    const { firstProxy } = this;
     const { unserializable, serializable } = fixtureBody;
 
     return (

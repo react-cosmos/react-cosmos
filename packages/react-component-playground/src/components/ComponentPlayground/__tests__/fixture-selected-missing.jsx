@@ -9,7 +9,7 @@ test('CP with missing fixture selected', () => {
   const tree = renderer
     .create(
       <Loader
-        proxies={[createStateProxy()]}
+        proxies={[createStateProxy]}
         component={ComponentPlayground}
         fixture={selectedMissing}
       />
