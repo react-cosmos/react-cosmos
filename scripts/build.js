@@ -95,7 +95,7 @@ function runBuildAllTask(packageNames) {
     .filter(pkg => pkg !== COMPONENT_PLAYGROUND)
     .map(packageName => runBuildTask({ packageName }));
 
-  return Promise.all(promises).then(runBuildPlaygroundTask);
+  return Promise.all(promises).then(() => runBuildPlaygroundTask());
 }
 
 // Read CLI arguments
