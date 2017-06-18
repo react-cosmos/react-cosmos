@@ -1,4 +1,4 @@
-# react-component-playground
+# react-cosmos-component-playground
 
 UI for interacting with your components and their respective fixtures.
 

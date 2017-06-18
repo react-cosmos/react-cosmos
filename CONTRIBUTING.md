@@ -139,7 +139,7 @@ yarn
 yarn start
 
 # Watch & build single package (running example will live reload)
-yarn run build react-component-playground -- --watch
+yarn run build react-cosmos-component-playground -- --watch
 
 # Watch & run unit tests as you code
 yarn run test-jest -- --watch
