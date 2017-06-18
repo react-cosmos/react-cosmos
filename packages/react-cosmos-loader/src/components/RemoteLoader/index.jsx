@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { object, objectOf, func, array } from 'prop-types';
 import merge from 'lodash.merge';
-import splitUnserializableParts
-  from 'react-cosmos-utils/lib/unserializable-parts';
+import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
 import createLinkedList from 'react-cosmos-utils/lib/linked-list';
 import PropsProxy from '../PropsProxy';
 
@@ -104,8 +103,10 @@ class RemoteLoader extends Component {
         fixture,
       }),
       () => {
-        // Keep parent frame in sync with latest fixture body
-        this.onFixtureUpdate(this.state.fixtureBody.serializable);
+        if (component && fixture) {
+          // Keep parent frame in sync with latest fixture body
+          this.onFixtureUpdate(this.state.fixtureBody.serializable);
+        }
       }
     );
   }
