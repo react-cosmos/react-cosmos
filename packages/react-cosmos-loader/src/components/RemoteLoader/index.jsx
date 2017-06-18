@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { object, objectOf, func, array } from 'prop-types';
+import { object, objectOf, func, arrayOf } from 'prop-types';
 import merge from 'lodash.merge';
 import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
 import createLinkedList from 'react-cosmos-utils/lib/linked-list';
 import importModule from 'react-cosmos-utils/lib/import-module';
+import importComponent from 'react-cosmos-utils/lib/import-component';
+import createModuleType from '../../utils/module-type';
 import PropsProxy from '../PropsProxy';
 
 const noope = () => {};
@@ -40,7 +42,7 @@ const getFixtureState = ({
   }
 
   const { unserializable, serializable } = splitUnserializableParts(
-    fixtures[component][fixture]
+    importModule(fixtures[component][fixture])
   );
 
   return {
@@ -233,7 +235,7 @@ class RemoteLoader extends Component {
       <firstProxy.value
         key={fixtureId}
         nextProxy={firstProxy.next()}
-        component={components[component]}
+        component={importComponent(components[component], component)}
         fixture={merge({}, unserializable, serializable)}
         onComponentRef={noope}
         onFixtureUpdate={this.onFixtureUpdate}
@@ -243,9 +245,9 @@ class RemoteLoader extends Component {
 }
 
 RemoteLoader.propTypes = {
-  components: objectOf(func).isRequired,
-  fixtures: objectOf(objectOf(object)).isRequired,
-  proxies: array,
+  components: objectOf(createModuleType(func)).isRequired,
+  fixtures: objectOf(objectOf(createModuleType(object))).isRequired,
+  proxies: arrayOf(createModuleType(func)),
 };
 
 RemoteLoader.defaultProps = {

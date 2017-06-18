@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { func, object, array } from 'prop-types';
 import createLinkedList from 'react-cosmos-utils/lib/linked-list';
 import importModule from 'react-cosmos-utils/lib/import-module';
+import importComponent from 'react-cosmos-utils/lib/import-component';
+import createModuleType from '../../utils/module-type';
 import PropsProxy from '../PropsProxy';
 
 const noope = () => {};
@@ -37,8 +39,8 @@ class Loader extends Component {
     return (
       <firstProxy.value
         nextProxy={firstProxy.next()}
-        component={component}
-        fixture={fixture}
+        component={importComponent(component)}
+        fixture={importModule(fixture)}
         onComponentRef={onComponentRef || noope}
         onFixtureUpdate={noope}
       />
@@ -47,8 +49,8 @@ class Loader extends Component {
 }
 
 Loader.propTypes = {
-  component: func.isRequired,
-  fixture: object.isRequired,
+  component: createModuleType(func).isRequired,
+  fixture: createModuleType(object).isRequired,
   proxies: array,
   onComponentRef: func,
 };

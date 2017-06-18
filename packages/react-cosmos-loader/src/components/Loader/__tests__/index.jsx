@@ -7,7 +7,15 @@ import Loader from '../';
 const ProxyFoo = () => <span />;
 const createProxyFoo = () => ProxyFoo;
 const ComponentFoo = () => <span />;
+const ComponentFooModule = {
+  __esModule: true,
+  default: ComponentFoo,
+};
 const fixtureFoo = { foo: 'bar' };
+const fixtureFooModule = {
+  __esModule: true,
+  default: fixtureFoo,
+};
 const onComponentRef = () => {};
 
 // Vars populated in beforeEach blocks
@@ -20,8 +28,8 @@ describe('Fixture is selected via props', () => {
     wrapper = mount(
       <Loader
         proxies={[createProxyFoo]}
-        component={ComponentFoo}
-        fixture={fixtureFoo}
+        component={ComponentFooModule}
+        fixture={fixtureFooModule}
         onComponentRef={onComponentRef}
       />
     );
