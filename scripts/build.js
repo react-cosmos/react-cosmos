@@ -21,10 +21,12 @@ function runBuildTask(options) {
     name: 'babel',
     args: [
       `packages/${options.packageName}/src`,
-      '--out-dir', `packages/${options.packageName}/lib`,
+      '--out-dir',
+      `packages/${options.packageName}/lib`,
       '--copy-files',
-      '--ignore', '__tests__,__mocks__'
-    ]
+      '--ignore',
+      '__tests__,__mocks__',
+    ],
   };
 
   const task = options.task || babelTask;
@@ -35,7 +37,8 @@ function runBuildTask(options) {
   }
 
   const promise = spawn(task.name, taskArgs, {
-    cwd: path.join(__dirname, '..')
+    cwd: path.join(__dirname, '..'),
+    env: Object.assign({}, process.env, options.env),
   });
 
   const child = promise.childProcess;
@@ -66,9 +69,12 @@ function runBuildPlaygroundTask(watch) {
     packageName: COMPONENT_PLAYGROUND,
     task: {
       name: 'webpack',
-      args: ['--config', `packages/${COMPONENT_PLAYGROUND}/webpack.config.js`]
+      args: ['--config', `packages/${COMPONENT_PLAYGROUND}/webpack.config.js`],
     },
-    watch
+    watch,
+    env: {
+      NODE_ENV: 'production',
+    },
   });
 }
 
@@ -89,9 +95,7 @@ function runBuildAllTask(packageNames) {
     .filter(pkg => pkg !== COMPONENT_PLAYGROUND)
     .map(packageName => runBuildTask({ packageName }));
 
-  Promise.all(promises).then(() => {
-    runBuildPlaygroundTask();
-  });
+  return Promise.all(promises).then(runBuildPlaygroundTask);
 }
 
 // Read CLI arguments
@@ -114,10 +118,14 @@ glob('./packages/react-*', null, (err, files) => {
           ${formattedPackages}`
       );
     } else {
-      runBuildAllTask(allPackageNames, applyWatch);
+      runBuildAllTask(allPackageNames, applyWatch).catch(err => {
+        console.error(`Build failed`, err);
+      });
     }
   } else if (targetPackage === COMPONENT_PLAYGROUND) {
-    runBuildPlaygroundTask(applyWatch);
+    runBuildPlaygroundTask(applyWatch).catch(err => {
+      console.error('Playground build failed', err);
+    });
   } else if (allPackageNames.indexOf(targetPackage) === -1) {
     console.error(
       `Invalid package! These are the existing packages:
@@ -127,7 +135,9 @@ glob('./packages/react-*', null, (err, files) => {
     // Build a single package
     runBuildTask({
       packageName: targetPackage,
-      watch: applyWatch
+      watch: applyWatch,
+    }).catch(err => {
+      console.error(`${targetPackage} build failed`, err);
     });
   }
 });
