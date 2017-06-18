@@ -4,11 +4,11 @@
 // anything which might import React
 // https://github.com/facebook/react-devtools/issues/76#issuecomment-128091900
 if (process.env.NODE_ENV === 'development') {
-  window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+  window.__REACT_DEVTOOLS_GLOBAL_HOOK__ =
+    window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;
 }
 
-// TODO: Move loader entry to react-cosmos-loader
-const { startLoader } = require('react-cosmos');
+const mountLoader = require('react-cosmos-loader');
 
 // eslint-disable-next-line no-undef
 const { containerQuerySelector } = COSMOS_CONFIG;
@@ -19,7 +19,7 @@ const start = () => {
   const getUserModules = require('./user-modules').default;
   const { components, fixtures, proxies } = getUserModules();
 
-  startLoader({
+  mountLoader.default({
     proxies,
     components,
     fixtures,

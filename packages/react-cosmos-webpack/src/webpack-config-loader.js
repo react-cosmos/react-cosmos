@@ -31,7 +31,7 @@ export default function getLoaderWebpackConfig(
     entry.push(`${require.resolve('webpack-hot-middleware/client')}?reload=true`);
   }
 
-  entry.push(require.resolve('./entry-loader'));
+  entry.push(require.resolve('./loader-entry'));
 
   const output = {
     path: shouldExport ? `${outputPath}/loader/` : '/loader/',
