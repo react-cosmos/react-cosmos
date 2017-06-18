@@ -12,6 +12,7 @@
   "dependencies": {
     "lodash.merge": "^4.6.0",
     "prop-types": "^15.5.10",
+    "react-cosmos-state-proxy": "^2.0.0-beta.14",
     "react-cosmos-utils": "^2.0.0-beta.11"
   },
   "xo": false
