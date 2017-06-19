@@ -7,6 +7,12 @@
     "react-cosmos-config/src/__tests__/mock-cwd",
     "react-cosmos-webpack/src/__tests__/mocks"
   ],
+  "collectCoverageFrom": [
+    "**/src/**/*.{js,jsx}",
+    "!**/__fixtures__/**",
+    "!**/lib/**",
+    "!**/node_modules/**"
+  ],
   "coverageDirectory": "../coverage",
   "coverageReporters": ["lcov", "text"],
   "globals": {
