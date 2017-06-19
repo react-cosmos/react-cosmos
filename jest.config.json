@@ -7,7 +7,7 @@
     "react-cosmos-config/src/__tests__/mock-cwd",
     "react-cosmos-webpack/src/__tests__/mocks"
   ],
-  "coverageDirectory": "./coverage",
+  "coverageDirectory": "../coverage",
   "coverageReporters": ["lcov", "text"],
   "globals": {
     "COSMOS_CONFIG": {
