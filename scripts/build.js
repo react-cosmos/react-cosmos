@@ -119,7 +119,7 @@ glob('./packages/react-*', null, (err, files) => {
       );
     } else {
       runBuildAllTask(allPackageNames, applyWatch).catch(err => {
-        console.error(`Build failed`, err);
+        console.error('Build failed', err);
       });
     }
   } else if (targetPackage === COMPONENT_PLAYGROUND) {

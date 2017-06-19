@@ -82,6 +82,13 @@
       ]
     },
     "rules": {
+      "quotes": [
+        "error",
+        "single",
+        {
+          "avoidEscape": true
+        }
+      ],
       "comma-dangle": 0,
       "object-curly-spacing": 0,
       "func-names": [
