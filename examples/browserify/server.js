@@ -16,8 +16,9 @@ budo(path.join(__dirname, 'playground'), {
   live: false,
   host: 'localhost',
   port: 8989,
-  browserify,
-}).on('connect', onConnect).on('update', onUpdate);
+})
+  .on('connect', onConnect)
+  .on('update', onUpdate);
 
 budo(path.join(__dirname, 'loader'), {
   live: true,
