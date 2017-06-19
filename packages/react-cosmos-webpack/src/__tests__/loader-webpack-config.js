@@ -29,7 +29,8 @@ const userWebpack2Config = {
   },
   plugins: [
     // Fake plugins, something to compare identity with
-    {}, {},
+    {},
+    {},
   ],
 };
 
@@ -52,9 +53,12 @@ beforeEach(() => {
   HotModuleReplacementPlugin = jest.fn(() => mockHotModuleReplacementPlugin);
 
   require('webpack').__setPluginMock('DefinePlugin', DefinePlugin);
-  require('webpack').__setPluginMock('HotModuleReplacementPlugin', HotModuleReplacementPlugin);
+  require('webpack').__setPluginMock(
+    'HotModuleReplacementPlugin',
+    HotModuleReplacementPlugin
+  );
 
-  getWebpackConfig = require('../webpack-config-loader').default;
+  getWebpackConfig = require('../loader-webpack-config').default;
 });
 
 describe('without hmr', () => {
@@ -81,12 +85,12 @@ describe('without hmr', () => {
 
   test('adds loader entry', () => {
     const cosmosEntry = webpackConfig.entry[webpackConfig.entry.length - 1];
-    expect(cosmosEntry).toBe(require.resolve('../entry-loader'));
+    expect(cosmosEntry).toBe(require.resolve('../loader-entry'));
   });
 
   test('does not add hot middleware client to entries', () => {
     expect(webpackConfig.entry).not.toContain(
-      `${require.resolve('webpack-hot-middleware/client')}?reload=true`,
+      `${require.resolve('webpack-hot-middleware/client')}?reload=true`
     );
   });
 
@@ -99,7 +103,7 @@ describe('without hmr', () => {
   test('calls define plugin with NODE_ENV set to development', () => {
     expect(DefinePlugin.mock.calls[0][0]).toEqual({
       'process.env': {
-        NODE_ENV: JSON.stringify('development')
+        NODE_ENV: JSON.stringify('development'),
       },
     });
   });
@@ -138,12 +142,12 @@ describe('with hmr', () => {
 
   test('adds loader entry', () => {
     const cosmosEntry = webpackConfig.entry[webpackConfig.entry.length - 1];
-    expect(cosmosEntry).toBe(require.resolve('../entry-loader'));
+    expect(cosmosEntry).toBe(require.resolve('../loader-entry'));
   });
 
   test('adds hot middleware client to entries', () => {
     expect(webpackConfig.entry).toContain(
-      `${require.resolve('webpack-hot-middleware/client')}?reload=true`,
+      `${require.resolve('webpack-hot-middleware/client')}?reload=true`
     );
   });
 });
@@ -173,7 +177,9 @@ describe('loaders', () => {
     });
 
     test('adds module loader to module.loaders', () => {
-      expect(webpackConfig.module.loaders[webpackConfig.module.loaders.length - 1]).toEqual({
+      expect(
+        webpackConfig.module.loaders[webpackConfig.module.loaders.length - 1]
+      ).toEqual({
         loader: require.resolve('../module-loader'),
         include: require.resolve('../user-modules'),
         query: {
@@ -203,7 +209,9 @@ describe('loaders', () => {
     });
 
     test('adds module loader to module.rules', () => {
-      expect(webpackConfig.module.rules[webpackConfig.module.rules.length - 1]).toEqual({
+      expect(
+        webpackConfig.module.rules[webpackConfig.module.rules.length - 1]
+      ).toEqual({
         loader: require.resolve('../module-loader'),
         include: require.resolve('../user-modules'),
         query: {
@@ -232,7 +240,7 @@ describe('output', () => {
       ignore: [],
       globalImports: ['./global.css'],
       hot: true,
-      outputPath: '__mock__outputPath'
+      outputPath: '__mock__outputPath',
     };
   });
 
@@ -252,7 +260,11 @@ describe('output', () => {
 
   describe('with shouldExport true', () => {
     beforeAll(() => {
-      webpackConfig = getWebpackConfig(userWebpack1Config, cosmosConfigPath, true);
+      webpackConfig = getWebpackConfig(
+        userWebpack1Config,
+        cosmosConfigPath,
+        true
+      );
     });
 
     test('creates proper output', () => {
@@ -275,21 +287,25 @@ describe('with shouldExport true', () => {
       hot: true,
       hmrPlugin: true,
       outputPath: '__mock__outputPath',
-      containerQuerySelector: '__mock__containerQuerySelector'
+      containerQuerySelector: '__mock__containerQuerySelector',
     };
-    webpackConfig = getWebpackConfig(userWebpack2Config, cosmosConfigPath, true);
+    webpackConfig = getWebpackConfig(
+      userWebpack2Config,
+      cosmosConfigPath,
+      true
+    );
   });
 
   test('does not add hot middleware client to entries', () => {
     expect(webpackConfig.entry).not.toContain(
-      `${require.resolve('webpack-hot-middleware/client')}?reload=true`,
+      `${require.resolve('webpack-hot-middleware/client')}?reload=true`
     );
   });
 
   test('does add NODE_ENV plugin as production ', () => {
     expect(DefinePlugin.mock.calls[0][0]).toEqual({
       'process.env': {
-        NODE_ENV: JSON.stringify('production')
+        NODE_ENV: JSON.stringify('production'),
       },
     });
   });

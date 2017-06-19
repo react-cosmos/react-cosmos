@@ -99,7 +99,7 @@ beforeEach(() => {
   mockPlaygroundWebpackConfig = {};
   mockGetLoaderWebpackConfig = jest.fn(() => mockLoaderWebpackConfig);
   mockGetPlaygroundWebpackConfig = jest.fn(() => mockPlaygroundWebpackConfig);
-  jest.mock('../webpack-config-loader', () => mockGetLoaderWebpackConfig);
+  jest.mock('../loader-webpack-config', () => mockGetLoaderWebpackConfig);
   jest.mock('../webpack-config-playground', () => mockGetPlaygroundWebpackConfig);
 });
 

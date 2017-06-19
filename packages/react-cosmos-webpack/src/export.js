@@ -2,7 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import { argv } from 'yargs';
 import fs from 'fs-extra';
-import getLoaderWebpackConfig from './webpack-config-loader';
+import getLoaderWebpackConfig from './loader-webpack-config';
 import getPlaygroundWebpackConfig from './webpack-config-playground';
 import getDefaultWebpackConfig from './default-webpack-config';
 import importModule from 'react-cosmos-utils/lib/import-module';
