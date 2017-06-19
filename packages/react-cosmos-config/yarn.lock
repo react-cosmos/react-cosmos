@@ -2,16 +2,6 @@
 # yarn lockfile v1
 
 
-lodash.isplainobject@^4.0.6:
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
-
-react-cosmos-utils@^2.0.0-beta.11:
-  version "2.0.0-beta.11"
-  resolved "https://registry.yarnpkg.com/react-cosmos-utils/-/react-cosmos-utils-2.0.0-beta.11.tgz#587b3bc76a67c0035a4c772119cd580b5609c884"
-  dependencies:
-    lodash.isplainobject "^4.0.6"
-
 resolve-from@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/resolve-from/-/resolve-from-3.0.0.tgz#b22c7af7d9d6881bc8b6e653335eebcb0a188748"
