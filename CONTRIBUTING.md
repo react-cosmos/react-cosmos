@@ -43,7 +43,7 @@ From Loader to Playground:
 - Loader frame loads, sends user fixture list and is ready to receive messages (happens once per full browser refresh)
   ```js
   {
-    type: `loaderReady`,
+    type: 'loaderReady',
     fixtures: {
       ComponentA: ['fixture1', 'fixture2'],
     }
@@ -52,7 +52,7 @@ From Loader to Playground:
 - Fixture list updates due to changes on disk (received by Loader via webpack HMR)
   ```js
   {
-    type: `fixtureListUpdate`,
+    type: 'fixtureListUpdate',
     fixtures: {
       ComponentA: ['fixture1', 'fixture2', 'fixture3']
     }
@@ -61,7 +61,7 @@ From Loader to Playground:
 - Fixture is loaded and serializable fixture body is sent
   ```js
   {
-    type: `fixtureLoad`,
+    type: 'fixtureLoad',
     fixtureBody: {
       // serializable stuff
     }
@@ -71,7 +71,7 @@ From Loader to Playground:
 to changes on disk (received by Loader via webpack HMR)
   ```js
   {
-    type: `fixtureUpdate`,
+    type: 'fixtureUpdate',
     fixtureBody: {
       // serializable stuff
     }
