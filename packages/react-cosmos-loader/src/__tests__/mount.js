@@ -2,7 +2,7 @@ import { createElement } from 'react';
 import { render } from 'react-dom';
 import createStateProxy from 'react-cosmos-state-proxy';
 import RemoteLoader from '../components/RemoteLoader';
-import mountLoader from '../mount';
+import mountLoader from '../';
 
 jest.mock('react', () => ({
   Component: jest.fn(),
