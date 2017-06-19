@@ -128,8 +128,7 @@ glob('./packages/react-*', null, (err, files) => {
     });
   } else if (allPackageNames.indexOf(targetPackage) === -1) {
     console.error(
-      `Invalid package! These are the existing packages:
-        ${formattedPackages}`
+      `Invalid package! These are the existing packages:${formattedPackages}`
     );
   } else {
     // Build a single package
