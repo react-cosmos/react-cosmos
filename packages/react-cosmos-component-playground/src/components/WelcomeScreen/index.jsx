@@ -6,12 +6,10 @@ import styles from '../DisplayScreen/index.less';
 
 const { keys } = Object;
 
-const hasNonEmptyFixtures = fixtures =>
+const hasComponentFixtures = fixtures =>
   reduce(
     fixtures,
-    (acc, compFixtures) =>
-      acc ||
-      (compFixtures.length > 0 && compFixtures[0].indexOf('(auto)') === -1),
+    (acc, compFixtures) => acc || compFixtures.length > 0,
     false
   );
 
@@ -19,7 +17,7 @@ class WelcomeScreen extends Component {
   render() {
     const { fixtures } = this.props;
     const hasComponents = keys(fixtures).length;
-    const hasFixtures = hasNonEmptyFixtures(fixtures);
+    const hasFixtures = hasComponentFixtures(fixtures);
 
     if (hasComponents && hasFixtures) {
       return (
@@ -82,13 +80,9 @@ class WelcomeScreen extends Component {
         <DisplayScreen>
           <p className={styles.header}>Almost there...</p>
           <p>
-            Your components are listed the left side. It looks like you haven't
+            Your components are listed the left side, but it looks like you
+            haven't
             created fixtures for them yet.
-          </p>
-          <p>
-            An empty fixture is available for each component, but chances are
-            your components depend on one or more props to function.
-            {' '}
           </p>
           <p>
             A fixture is a JSON-like object, except it contains functions and
