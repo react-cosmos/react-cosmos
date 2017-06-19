@@ -3,7 +3,6 @@
   "testEnvironment": "jsdom",
   "testURL": "http://foo.bar/",
   "testPathIgnorePatterns": [
-    "react-cosmos-voyager/src/__tests__/use-cases",
     "react-cosmos-config/src/__tests__/mock-cwd",
     "react-cosmos-webpack/src/__tests__/mocks"
   ],
@@ -11,7 +10,8 @@
     "**/src/**/*.{js,jsx}",
     "!**/__fixtures__/**",
     "!**/lib/**",
-    "!**/node_modules/**"
+    "!**/node_modules/**",
+    "!**/react-cosmos-voyager/src/use-cases/**"
   ],
   "coverageDirectory": "../coverage",
   "coverageReporters": ["lcov", "text"],
