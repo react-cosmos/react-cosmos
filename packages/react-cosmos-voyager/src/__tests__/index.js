@@ -11,6 +11,7 @@ const testUseCase = ({
   input: {
     componentPaths = [],
     fixturePaths = [],
+    fixturesDir,
     ignore,
     getComponentName,
     getFixturePathsForComponent,
@@ -28,6 +29,7 @@ const testUseCase = ({
       result = getFilePaths({
         componentPaths: componentPaths.map(p => resolvePath(`${useCase}/${p}`)),
         fixturePaths: fixturePaths.map(p => resolvePath(`${useCase}/${p}`)),
+        fixturesDir,
         ignore,
         getComponentName,
         getFixturePathsForComponent,
@@ -233,5 +235,30 @@ testUseCase({
         three: 'pkgs/nested/Bar/fixtures/three.jsx',
       },
     }
+  }
+});
+
+testUseCase({
+  useCase: 'fixtures-dir-setting',
+  input: {
+    componentPaths: ['components'],
+    ignore: [/Baz/],
+    fixturesDir: 'non-default-fixtures-dir',
+  },
+  output: {
+    components: {
+      Foo: 'components/Foo.js',
+      'nested/Bar': 'components/nested/Bar.jsx',
+    },
+    fixtures: {
+      Foo: {
+        blank: 'components/non-default-fixtures-dir/Foo/blank.js',
+      },
+      'nested/Bar': {
+        one: 'components/non-default-fixtures-dir/nested/Bar/one.js',
+        two: 'components/non-default-fixtures-dir/nested/Bar/two.json',
+        three: 'components/non-default-fixtures-dir/nested/Bar/three.jsx',
+      },
+    },
   }
 });

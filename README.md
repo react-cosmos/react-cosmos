@@ -114,6 +114,7 @@ Also see:
 - [Option dump](#option-dump)
 - [Custom component paths](#custom-component-paths)
 - [Using Create React App](#using-create-react-app)
+- [Using React Redux Starter Kit](#using-react-redux-starter-kit)
 - [Using Next.js](#using-nextjs)
 - [Using webpack 2](#using-webpack-2)
 - [Using babel-node](#using-babel-node)
@@ -243,6 +244,38 @@ Define `.babelrc` to enable ES6 in config & fixtures, using the CRA preset.
 Finally, make sure to put [proxies](#proxies) in the `src` dir, the only place included by the CRA Babel loader.
 
 *CRA + Cosmos example: [Flatris](https://github.com/skidding/flatris)*
+
+#### Using React Redux Starter Kit
+
+It's preferred to use the starter kit's own webpack config `build/webpack.config.js` (instead of duplicating it), but modifications are needed.
+
+Add a `__PLAYGROUND__` environment (~line 10)
+
+```js
+const __PLAYGROUND__ = project.env === 'playground'
+```
+
+Disable extractStyles when running in playground (~line 97)
+
+```js
+// old
+  disable: __DEV__, 
+
+// new
+  disable: __DEV__ || __PLAYGROUND__,
+```
+
+Ensure bundle splitting doesn't happen when running in playground (~line 198)
+
+```js
+// old
+if (!__TEST__) { 
+
+// new
+if (!__TEST__ && !__PLAYGROUND__) { 
+```
+
+Just run it with your `NODE_ENV` set to `playground` and all should be good! Don't forget to set up the redux proxy :)
 
 #### Using Next.js
 
