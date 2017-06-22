@@ -1,20 +1,20 @@
 @import '../../utils/common.less';
 
 .root {
-  position: absolute;
+  flex-shrink: 0;
   background: darken(@left-nav-bgcolor, 5%);
   width: 50px;
   height: 50px;
 }
 
 .horizontal {
-  width: 5px;
+  width: @drag-handle-size;
   height: 100%;
   cursor: ew-resize;
 }
 
 .vertical {
   width: 100%;
-  height: 5px;
+  height: @drag-handle-size;
   cursor: ns-resize;
 }

@@ -23,10 +23,13 @@ class DragHandle extends Component {
   }
 
   onMouseDown = e => {
+    e.preventDefault();
+
+    const { rootNode } = this;
     const { clientX, clientY } = e;
     const offset = this.props.vertical
-      ? clientY - this.rootNode.offsetTop
-      : clientX - this.rootNode.offsetLeft;
+      ? rootNode.offsetTop + rootNode.offsetHeight - clientY
+      : rootNode.offsetLeft + rootNode.offsetWidth - clientX;
 
     this.setState({
       isDragging: true,
@@ -41,7 +44,7 @@ class DragHandle extends Component {
 
     if (isDragging) {
       const val = vertical ? clientY : clientX;
-      onChange(val - offset);
+      onChange(val + offset);
     }
   };
 

@@ -20,12 +20,22 @@
   }
 }
 
+@left-nav-min-width: @header-button-size * 3 + @default-spacing * 4;
+
 .leftNav {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-shrink: 0;
-  width: @left-nav-width;
+  /* Width is set from JS */
+  min-width: @left-nav-min-width + @drag-handle-size;
+  max-width: @left-nav-min-width * 2 + @drag-handle-size;
   background: @left-nav-bgcolor;
+}
+
+.leftNavInner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .header {

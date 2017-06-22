@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import { string, bool, object } from 'prop-types';
 import classNames from 'classnames';
 import omitBy from 'lodash.omitby';
+import localForage from 'localforage';
 import { uri } from 'react-querystring-router';
 import { HomeIcon, FullScreenIcon, CodeIcon } from '../SvgIcon';
 import StarryBg from '../StarryBg';
 import FixtureList from '../FixtureList';
 import WelcomeScreen from '../WelcomeScreen';
 import MissingScreen from '../MissingScreen';
+import DragHandle from '../DragHandle';
 import styles from './index.less';
+
+export const LEFT_NAV_SIZE = '__cosmos__left-nav-size';
 
 const fixtureExists = (fixtures, component, fixture) =>
   fixtures[component] && fixtures[component].indexOf(fixture) !== -1;
@@ -22,10 +26,19 @@ export default class ComponentPlayground extends Component {
 
   state = {
     waitingForLoader: true,
+    leftNavSize: 250,
   };
 
   componentDidMount() {
     window.addEventListener('message', this.onMessage, false);
+
+    localForage.getItem(LEFT_NAV_SIZE).then(leftNavSize => {
+      if (leftNavSize) {
+        this.setState({
+          leftNavSize,
+        });
+      }
+    });
   }
 
   componentWillUnmount() {
@@ -93,6 +106,14 @@ export default class ComponentPlayground extends Component {
     this.props.router.goTo(location);
   };
 
+  onLeftNavDrag = leftNavSize => {
+    this.setState({
+      leftNavSize,
+    });
+
+    localForage.setItem(LEFT_NAV_SIZE, leftNavSize);
+  };
+
   render() {
     return (
       <div className={styles.root}>
@@ -146,7 +167,7 @@ export default class ComponentPlayground extends Component {
 
   renderLeftNav() {
     const { router, component, fixture, editor, fullScreen } = this.props;
-    const { fixtures } = this.state;
+    const { fixtures, leftNavSize } = this.state;
     const urlParams = ComponentPlayground.getCleanUrlParams({
       component,
       fixture,
@@ -169,44 +190,53 @@ export default class ComponentPlayground extends Component {
     });
 
     return (
-      <div key="leftNav" className={styles.leftNav}>
-        <div className={styles.header}>
-          <div className={styles.buttons}>
-            <a
-              ref="homeButton"
-              className={homeClassNames}
-              href="/"
-              onClick={router.routeLink}
-            >
-              <HomeIcon />
-            </a>
-          </div>
-          <div className={styles.buttons}>
-            {isFixtureSelected &&
+      <div
+        key="leftNav"
+        className={styles.leftNav}
+        style={{
+          width: leftNavSize,
+        }}
+      >
+        <div className={styles.leftNavInner}>
+          <div className={styles.header}>
+            <div className={styles.buttons}>
               <a
-                ref="fixtureEditorButton"
-                className={styles.button}
-                href={`/${fixtureEditorUrl}`}
+                ref="homeButton"
+                className={homeClassNames}
+                href="/"
                 onClick={router.routeLink}
               >
-                <CodeIcon />
-              </a>}
-            {isFixtureSelected &&
-              <a
-                ref="fullScreenButton"
-                className={styles.button}
-                href={`/${fullScreenUrl}`}
-                onClick={router.routeLink}
-              >
-                <FullScreenIcon />
-              </a>}
+                <HomeIcon />
+              </a>
+            </div>
+            <div className={styles.buttons}>
+              {isFixtureSelected &&
+                <a
+                  ref="fixtureEditorButton"
+                  className={styles.button}
+                  href={`/${fixtureEditorUrl}`}
+                  onClick={router.routeLink}
+                >
+                  <CodeIcon />
+                </a>}
+              {isFixtureSelected &&
+                <a
+                  ref="fullScreenButton"
+                  className={styles.button}
+                  href={`/${fullScreenUrl}`}
+                  onClick={router.routeLink}
+                >
+                  <FullScreenIcon />
+                </a>}
+            </div>
           </div>
+          <FixtureList
+            fixtures={fixtures}
+            urlParams={urlParams}
+            onUrlChange={this.onUrlChange}
+          />
         </div>
-        <FixtureList
-          fixtures={fixtures}
-          urlParams={urlParams}
-          onUrlChange={this.onUrlChange}
-        />
+        <DragHandle onChange={this.onLeftNavDrag} />
       </div>
     );
   }
