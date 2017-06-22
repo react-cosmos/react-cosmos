@@ -27,6 +27,7 @@ export default class ComponentPlayground extends Component {
   state = {
     waitingForLoader: true,
     leftNavSize: 250,
+    leftNavIsDragging: false,
   };
 
   componentDidMount() {
@@ -114,6 +115,14 @@ export default class ComponentPlayground extends Component {
     localForage.setItem(LEFT_NAV_SIZE, leftNavSize);
   };
 
+  onLeftNavDragStart = () => {
+    this.setState({ leftNavIsDragging: true });
+  };
+
+  onLeftNavDragEnd = () => {
+    this.setState({ leftNavIsDragging: false });
+  };
+
   render() {
     return (
       <div className={styles.root}>
@@ -135,7 +144,7 @@ export default class ComponentPlayground extends Component {
 
   renderContent() {
     const { loaderUri, component, fixture } = this.props;
-    const { waitingForLoader, fixtures } = this.state;
+    const { waitingForLoader, fixtures, leftNavIsDragging } = this.state;
     const isFixtureSelected = !waitingForLoader && Boolean(fixture);
     const isMissingFixtureSelected =
       isFixtureSelected && !fixtureExists(fixtures, component, fixture);
@@ -160,6 +169,12 @@ export default class ComponentPlayground extends Component {
             this.loaderFrame = node;
           }}
           src={loaderUri}
+        />
+        <div
+          className={styles.loaderFrameOverlay}
+          style={{
+            display: leftNavIsDragging ? 'block' : 'none',
+          }}
         />
       </div>
     );
@@ -236,7 +251,11 @@ export default class ComponentPlayground extends Component {
             onUrlChange={this.onUrlChange}
           />
         </div>
-        <DragHandle onChange={this.onLeftNavDrag} />
+        <DragHandle
+          onDrag={this.onLeftNavDrag}
+          onDragStart={this.onLeftNavDragStart}
+          onDragEnd={this.onLeftNavDragEnd}
+        />
       </div>
     );
   }

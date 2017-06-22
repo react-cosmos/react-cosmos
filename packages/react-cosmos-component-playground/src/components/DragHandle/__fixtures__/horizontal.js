@@ -1,5 +1,5 @@
 export default {
   props: {
-    onChange: value => console.log(value),
+    onDrag: value => console.log(value),
   },
 };

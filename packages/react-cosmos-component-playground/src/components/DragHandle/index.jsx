@@ -3,7 +3,6 @@ import { bool, func } from 'prop-types';
 import classNames from 'classnames';
 import styles from './index.less';
 
-// TODO: Add tests for onChange callback
 class DragHandle extends Component {
   state = {
     isDragging: false,
@@ -31,27 +30,33 @@ class DragHandle extends Component {
       ? rootNode.offsetTop + rootNode.offsetHeight - clientY
       : rootNode.offsetLeft + rootNode.offsetWidth - clientX;
 
-    this.setState({
-      isDragging: true,
-      offset,
-    });
+    this.setState(
+      {
+        isDragging: true,
+        offset,
+      },
+      this.props.onDragStart
+    );
   };
 
   onMouseMove = e => {
-    const { vertical, onChange } = this.props;
+    const { vertical, onDrag } = this.props;
     const { isDragging, offset } = this.state;
     const { clientX, clientY } = e;
 
     if (isDragging) {
       const val = vertical ? clientY : clientX;
-      onChange(val + offset);
+      onDrag(val + offset);
     }
   };
 
   onMouseUp = () => {
-    this.setState({
-      isDragging: false,
-    });
+    this.setState(
+      {
+        isDragging: false,
+      },
+      this.props.onDragEnd
+    );
   };
 
   render() {
@@ -74,7 +79,15 @@ class DragHandle extends Component {
 
 DragHandle.propTypes = {
   vertical: bool,
-  onChange: func,
+  onDrag: func.isRequired,
+  onDragStart: func,
+  onDragEnd: func,
+};
+
+DragHandle.defaultProps = {
+  vertical: false,
+  onDragStart: () => {},
+  onDragEnd: () => {},
 };
 
 export default DragHandle;

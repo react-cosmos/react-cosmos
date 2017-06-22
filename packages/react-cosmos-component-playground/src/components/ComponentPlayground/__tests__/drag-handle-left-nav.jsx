@@ -80,13 +80,14 @@ describe('CP left nav DragHandle', () => {
       const downEvent = new MouseEvent('mousedown', {
         clientX: 2,
       });
+      dragHandleElement.dispatchEvent(downEvent);
+
       const moveEvent = new MouseEvent('mousemove', {
         clientX: 202,
       });
-      const upEvent = new MouseEvent('mouseup');
-
-      dragHandleElement.dispatchEvent(downEvent);
       document.dispatchEvent(moveEvent);
+
+      const upEvent = new MouseEvent('mouseup');
       document.dispatchEvent(upEvent);
     });
 
@@ -96,6 +97,45 @@ describe('CP left nav DragHandle', () => {
 
     it('should update cache', () => {
       expect(localForage.setItem).toHaveBeenCalledWith(LEFT_NAV_SIZE, 200);
+    });
+  });
+
+  describe('loader frame overlay', () => {
+    it('is visible while dragging', () => {
+      const dragHandleElement = wrapper
+        .find('.leftNav')
+        .find(DragHandle)
+        .getDOMNode();
+
+      // We can't use Enzyme's simulate to trigger native events
+      const downEvent = new MouseEvent('mousedown', {
+        clientX: 0,
+      });
+      dragHandleElement.dispatchEvent(downEvent);
+
+      expect(wrapper.find('.loaderFrameOverlay').prop('style').display).toBe(
+        'block'
+      );
+    });
+
+    it('is not visible after dragging', () => {
+      const dragHandleElement = wrapper
+        .find('.leftNav')
+        .find(DragHandle)
+        .getDOMNode();
+
+      // We can't use Enzyme's simulate to trigger native events
+      const downEvent = new MouseEvent('mousedown', {
+        clientX: 0,
+      });
+      dragHandleElement.dispatchEvent(downEvent);
+
+      const upEvent = new MouseEvent('mouseup');
+      document.dispatchEvent(upEvent);
+
+      expect(wrapper.find('.loaderFrameOverlay').prop('style').display).toBe(
+        'none'
+      );
     });
   });
 });
