@@ -12,7 +12,7 @@ jest.mock('localforage');
 // Vars populated in beforeEach blocks
 let wrapper;
 
-describe('CP left nav DragHandle', () => {
+describe('CP left nav drag', () => {
   describe('default size', () => {
     beforeEach(() => {
       return new Promise(resolve => {
