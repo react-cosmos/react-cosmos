@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
 import selectedFixture from '../__fixtures__/selected';
+import StarryBg from '../../StarryBg';
 import FixtureList from '../../FixtureList';
 import ComponentPlayground from '../';
 
@@ -125,6 +126,12 @@ describe('CP with fixture already selected', () => {
 
     test('should render full screen button', () => {
       expect(wrapper.find(`a[href="${fullScreenUrl}"].button`).length).toBe(1);
+    });
+  });
+
+  describe('content', () => {
+    test('should not render StarryBg', () => {
+      expect(wrapper.find(StarryBg).length).toBe(0);
     });
   });
 });

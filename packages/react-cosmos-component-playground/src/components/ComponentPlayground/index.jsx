@@ -148,28 +148,31 @@ export default class ComponentPlayground extends Component {
     const isFixtureSelected = !waitingForLoader && Boolean(fixture);
     const isMissingFixtureSelected =
       isFixtureSelected && !fixtureExists(fixtures, component, fixture);
+    const isLoaderVisible = isFixtureSelected && !isMissingFixtureSelected;
 
     return (
       <div key="loader" className={styles.loader}>
-        <StarryBg>
-          {!waitingForLoader &&
-            !isFixtureSelected &&
-            <WelcomeScreen fixtures={fixtures} />}
-          {isMissingFixtureSelected &&
-            <MissingScreen componentName={component} fixtureName={fixture} />}
-        </StarryBg>
-        <iframe
+        {!isLoaderVisible &&
+          <StarryBg>
+            {!waitingForLoader &&
+              !isFixtureSelected &&
+              <WelcomeScreen fixtures={fixtures} />}
+            {isMissingFixtureSelected &&
+              <MissingScreen componentName={component} fixtureName={fixture} />}
+          </StarryBg>}
+        <div
           className={styles.loaderFrame}
           style={{
-            display: isFixtureSelected && !isMissingFixtureSelected
-              ? 'block'
-              : 'none',
+            display: isLoaderVisible ? 'block' : 'none',
           }}
-          ref={node => {
-            this.loaderFrame = node;
-          }}
-          src={loaderUri}
-        />
+        >
+          <iframe
+            ref={node => {
+              this.loaderFrame = node;
+            }}
+            src={loaderUri}
+          />
+        </div>
         <div
           className={styles.loaderFrameOverlay}
           style={{
