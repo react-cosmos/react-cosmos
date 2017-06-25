@@ -226,7 +226,7 @@ It's preferred to use CRA's own webpack config (instead of duplicating it).
 
 ```js
 // cosmos.config.js
-export default {
+module.exports = {
   componentPaths: ['src/components'],
   containerQuerySelector: '#root',
   webpackConfigPath: 'react-scripts/config/webpack.config.dev'
@@ -283,7 +283,7 @@ Next.js apps run on both client & server, so compilation is done via Babel plugi
 
 ```js
 // cosmos.config.js
-export default {
+module.exports = {
   componentPaths: ['components'],
 };
 ```
