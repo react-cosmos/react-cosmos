@@ -45,14 +45,16 @@ export default class ComponentPlayground extends Component {
       localForage.getItem(LEFT_NAV_SIZE),
       localForage.getItem(FIXTURE_EDITOR_PANE_SIZE),
     ]).then(([leftNavSize, fixtureEditorPaneSize]) => {
-      const state = {
-        leftNavSize,
-        fixtureEditorPaneSize,
-      };
       this.setState(
         // Only override default values when cache values are present
-        omitBy(state, val => typeof val !== 'number'),
-        this.updateOrientation
+        omitBy(
+          {
+            leftNavSize,
+            fixtureEditorPaneSize,
+          },
+          val => typeof val !== 'number'
+        ),
+        this.updateContentOrientation
       );
     });
   }
@@ -94,16 +96,21 @@ export default class ComponentPlayground extends Component {
 
   // TODO: Debounce resize handler for better perf
   onResize = () => {
-    this.updateOrientation();
+    this.updateContentOrientation();
   };
 
   onLoaderReady({ fixtures }) {
     const { loaderFrame } = this;
 
-    this.setState({
-      waitingForLoader: false,
-      fixtures,
-    });
+    this.setState(
+      {
+        waitingForLoader: false,
+        fixtures,
+      },
+      // We update the content orientation because the content width decreases
+      // when the left nav becomes visible
+      this.updateContentOrientation
+    );
 
     const { component, fixture } = this.props;
     if (component && fixture && fixtureExists(fixtures, component, fixture)) {
@@ -129,9 +136,14 @@ export default class ComponentPlayground extends Component {
   };
 
   onLeftNavDrag = leftNavSize => {
-    this.setState({
-      leftNavSize,
-    });
+    this.setState(
+      {
+        leftNavSize,
+      },
+      // We update the content orientation because the content width changes
+      // when the width of left nav changes
+      this.updateContentOrientation
+    );
 
     localForage.setItem(LEFT_NAV_SIZE, leftNavSize);
   };
@@ -160,7 +172,7 @@ export default class ComponentPlayground extends Component {
     this.loaderFrame = node;
   };
 
-  updateOrientation() {
+  updateContentOrientation() {
     const { offsetHeight, offsetWidth } = this.contentNode;
     this.setState({
       orientation: offsetHeight > offsetWidth ? 'portrait' : 'landscape',
