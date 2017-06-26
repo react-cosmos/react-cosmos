@@ -13,6 +13,7 @@ import DragHandle from '../DragHandle';
 import styles from './index.less';
 
 export const LEFT_NAV_SIZE = '__cosmos__left-nav-size';
+export const FIXTURE_EDITOR_PANE_SIZE = '__cosmos__fixture-editor-pane-size';
 
 const fixtureExists = (fixtures, component, fixture) =>
   fixtures[component] && fixtures[component].indexOf(fixture) !== -1;
@@ -29,19 +30,25 @@ export default class ComponentPlayground extends Component {
 
   state = {
     waitingForLoader: true,
+    isDragging: false,
     leftNavSize: 250,
-    leftNavIsDragging: false,
+    fixtureEditorPaneSize: 250,
+    orientation: 'landscape',
   };
 
   componentDidMount() {
     window.addEventListener('message', this.onMessage, false);
 
-    localForage.getItem(LEFT_NAV_SIZE).then(leftNavSize => {
-      if (leftNavSize) {
-        this.setState({
-          leftNavSize,
-        });
-      }
+    // Remember the resizable pane offsets between sessions
+    Promise.all([
+      localForage.getItem(LEFT_NAV_SIZE),
+      localForage.getItem(FIXTURE_EDITOR_PANE_SIZE),
+    ]).then(([leftNavSize, fixtureEditorPaneSize]) => {
+      const state = {
+        leftNavSize,
+        fixtureEditorPaneSize,
+      };
+      this.setState(omitBy(state, val => typeof val !== 'number'));
     });
   }
 
@@ -118,12 +125,24 @@ export default class ComponentPlayground extends Component {
     localForage.setItem(LEFT_NAV_SIZE, leftNavSize);
   };
 
-  onLeftNavDragStart = () => {
-    this.setState({ leftNavIsDragging: true });
+  onFixtureEditorPaneDrag = fixtureEditorPaneSize => {
+    this.setState({
+      fixtureEditorPaneSize,
+    });
+
+    localForage.setItem(FIXTURE_EDITOR_PANE_SIZE, fixtureEditorPaneSize);
   };
 
-  onLeftNavDragEnd = () => {
-    this.setState({ leftNavIsDragging: false });
+  onDragStart = () => {
+    this.setState({ isDragging: true });
+  };
+
+  onDragEnd = () => {
+    this.setState({ isDragging: false });
+  };
+
+  handleIframeRef = node => {
+    this.loaderFrame = node;
   };
 
   render() {
@@ -146,15 +165,15 @@ export default class ComponentPlayground extends Component {
   }
 
   renderContent() {
-    const { loaderUri, component, fixture } = this.props;
-    const { waitingForLoader, fixtures, leftNavIsDragging } = this.state;
+    const { component, fixture, editor } = this.props;
+    const { waitingForLoader, fixtures } = this.state;
     const isFixtureSelected = !waitingForLoader && Boolean(fixture);
     const isMissingFixtureSelected =
       isFixtureSelected && !fixtureExists(fixtures, component, fixture);
     const isLoaderVisible = isFixtureSelected && !isMissingFixtureSelected;
 
     return (
-      <div key="loader" className={styles.loader}>
+      <div key="content" className={styles.content}>
         {!isLoaderVisible &&
           <StarryBg>
             {!waitingForLoader &&
@@ -163,25 +182,8 @@ export default class ComponentPlayground extends Component {
             {isMissingFixtureSelected &&
               <MissingScreen componentName={component} fixtureName={fixture} />}
           </StarryBg>}
-        <div
-          className={styles.loaderFrame}
-          style={{
-            display: isLoaderVisible ? 'block' : 'none',
-          }}
-        >
-          <iframe
-            ref={node => {
-              this.loaderFrame = node;
-            }}
-            src={loaderUri}
-          />
-        </div>
-        <div
-          className={styles.loaderFrameOverlay}
-          style={{
-            display: leftNavIsDragging ? 'block' : 'none',
-          }}
-        />
+        {editor && this.renderFixtureEditor()}
+        {this.renderLoader(isLoaderVisible)}
       </div>
     );
   }
@@ -265,8 +267,48 @@ export default class ComponentPlayground extends Component {
         </div>
         <DragHandle
           onDrag={this.onLeftNavDrag}
-          onDragStart={this.onLeftNavDragStart}
-          onDragEnd={this.onLeftNavDragEnd}
+          onDragStart={this.onDragStart}
+          onDragEnd={this.onDragEnd}
+        />
+      </div>
+    );
+  }
+
+  renderFixtureEditor() {
+    const { fixtureEditorPaneSize } = this.state;
+    const style = {
+      width: fixtureEditorPaneSize,
+    };
+
+    return (
+      <div className={styles.fixtureEditorPane} style={style}>
+        <div className={styles.fixtureEditor} />
+        <DragHandle
+          vertical={false /* orientation */}
+          onDrag={this.onFixtureEditorPaneDrag}
+          onDragStart={this.onDragStart}
+          onDragEnd={this.onDragEnd}
+        />
+      </div>
+    );
+  }
+
+  renderLoader(isLoaderVisible) {
+    const { loaderUri } = this.props;
+    const { isDragging } = this.state;
+    const loaderStyle = {
+      display: isLoaderVisible ? 'block' : 'none',
+    };
+    const loaderFrameOverlayStyle = {
+      display: isDragging ? 'block' : 'none',
+    };
+
+    return (
+      <div className={styles.loaderFrame} style={loaderStyle}>
+        <iframe ref={this.handleIframeRef} src={loaderUri} />
+        <div
+          className={styles.loaderFrameOverlay}
+          style={loaderFrameOverlayStyle}
         />
       </div>
     );

@@ -71,6 +71,8 @@ describe('CP left nav drag', () => {
     let dragHandleElement;
 
     beforeEach(() => {
+      localForage.setItem.mockClear();
+
       dragHandleElement = wrapper
         .find('.leftNav')
         .find(DragHandle)

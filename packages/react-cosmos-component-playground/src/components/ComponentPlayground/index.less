@@ -74,24 +74,35 @@
 
 .selectedButton {
   background-color: @left-nav-bgcolor-selected;
-  cursor: default;
 
   svg {
     fill: @left-nav-color-selected;
   }
 }
 
-.loader {
-  flex: 1;
+.content {
   position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+.fixtureEditorPane {
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  min-width: 25%;
+  max-width: 75%;
+}
+
+.fixtureEditor {
+  flex: 1;
 }
 
 .loaderFrame {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  position: relative;
+  flex: 1;
+  overflow: hidden;
   // Checkerboard effect on background
   background-color: #fff;
   background-image: linear-gradient(
@@ -125,6 +136,8 @@
 // when the mouse went over the iframe
 .loaderFrameOverlay {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
