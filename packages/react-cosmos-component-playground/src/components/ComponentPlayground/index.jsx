@@ -18,7 +18,10 @@ const fixtureExists = (fixtures, component, fixture) =>
   fixtures[component] && fixtures[component].indexOf(fixture) !== -1;
 
 export default class ComponentPlayground extends Component {
-  static defaultProps = {};
+  static defaultProps = {
+    editor: false,
+    fullScreen: false,
+  };
 
   // Exclude params with default values
   static getCleanUrlParams = params =>
@@ -184,9 +187,10 @@ export default class ComponentPlayground extends Component {
   }
 
   renderLeftNav() {
+    const { getCleanUrlParams } = ComponentPlayground;
     const { router, component, fixture, editor, fullScreen } = this.props;
     const { fixtures, leftNavSize } = this.state;
-    const urlParams = ComponentPlayground.getCleanUrlParams({
+    const urlParams = getCleanUrlParams({
       component,
       fixture,
       editor,
@@ -196,11 +200,16 @@ export default class ComponentPlayground extends Component {
     const homeClassNames = classNames(styles.button, {
       [styles.selectedButton]: !isFixtureSelected,
     });
-    const fixtureEditorUrl = uri.stringifyParams({
-      component,
-      fixture,
-      editor: true,
+    const fixtureEditorClassNames = classNames(styles.button, {
+      [styles.selectedButton]: editor,
     });
+    const fixtureEditorUrl = uri.stringifyParams(
+      getCleanUrlParams({
+        component,
+        fixture,
+        editor: !editor,
+      })
+    );
     const fullScreenUrl = uri.stringifyParams({
       component,
       fixture,
@@ -231,7 +240,7 @@ export default class ComponentPlayground extends Component {
               {isFixtureSelected &&
                 <a
                   ref="fixtureEditorButton"
-                  className={styles.button}
+                  className={fixtureEditorClassNames}
                   href={`/${fixtureEditorUrl}`}
                   onClick={router.routeLink}
                 >
