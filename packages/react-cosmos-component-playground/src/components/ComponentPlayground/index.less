@@ -84,15 +84,31 @@
   position: relative;
   flex: 1;
   display: flex;
+}
+
+.contentLandscape {
   flex-direction: row;
+}
+
+.contentPortrait {
+  flex-direction: column;
 }
 
 .fixtureEditorPane {
   display: flex;
-  flex-direction: row;
   flex-shrink: 0;
+}
+
+.contentLandscape .fixtureEditorPane {
+  flex-direction: row;
   min-width: 25%;
   max-width: 75%;
+}
+
+.contentPortrait .fixtureEditorPane {
+  flex-direction: column;
+  min-height: 25%;
+  max-height: 75%;
 }
 
 .fixtureEditor {

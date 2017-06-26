@@ -38,6 +38,7 @@ export default class ComponentPlayground extends Component {
 
   componentDidMount() {
     window.addEventListener('message', this.onMessage, false);
+    window.addEventListener('resize', this.onResize, false);
 
     // Remember the resizable pane offsets between sessions
     Promise.all([
@@ -48,12 +49,17 @@ export default class ComponentPlayground extends Component {
         leftNavSize,
         fixtureEditorPaneSize,
       };
-      this.setState(omitBy(state, val => typeof val !== 'number'));
+      this.setState(
+        // Only override default values when cache values are present
+        omitBy(state, val => typeof val !== 'number'),
+        this.updateOrientation
+      );
     });
   }
 
   componentWillUnmount() {
     window.removeEventListener('message', this.onMessage);
+    window.removeEventListener('resize', this.onResize);
   }
 
   componentWillReceiveProps({ component, fixture }) {
@@ -84,6 +90,11 @@ export default class ComponentPlayground extends Component {
     } else if (type === 'fixtureListUpdate') {
       this.onFixtureListUpdate(data);
     }
+  };
+
+  // TODO: Debounce resize handler for better perf
+  onResize = () => {
+    this.updateOrientation();
   };
 
   onLoaderReady({ fixtures }) {
@@ -141,9 +152,20 @@ export default class ComponentPlayground extends Component {
     this.setState({ isDragging: false });
   };
 
+  handleContentRef = node => {
+    this.contentNode = node;
+  };
+
   handleIframeRef = node => {
     this.loaderFrame = node;
   };
+
+  updateOrientation() {
+    const { offsetHeight, offsetWidth } = this.contentNode;
+    this.setState({
+      orientation: offsetHeight > offsetWidth ? 'portrait' : 'landscape',
+    });
+  }
 
   render() {
     return (
@@ -166,14 +188,18 @@ export default class ComponentPlayground extends Component {
 
   renderContent() {
     const { component, fixture, editor } = this.props;
-    const { waitingForLoader, fixtures } = this.state;
+    const { waitingForLoader, fixtures, orientation } = this.state;
     const isFixtureSelected = !waitingForLoader && Boolean(fixture);
     const isMissingFixtureSelected =
       isFixtureSelected && !fixtureExists(fixtures, component, fixture);
     const isLoaderVisible = isFixtureSelected && !isMissingFixtureSelected;
+    const classes = classNames(styles.content, {
+      [styles.contentPortrait]: orientation === 'portrait',
+      [styles.contentLandscape]: orientation === 'landscape',
+    });
 
     return (
-      <div key="content" className={styles.content}>
+      <div key="content" ref={this.handleContentRef} className={classes}>
         {!isLoaderVisible &&
           <StarryBg>
             {!waitingForLoader &&
@@ -275,16 +301,16 @@ export default class ComponentPlayground extends Component {
   }
 
   renderFixtureEditor() {
-    const { fixtureEditorPaneSize } = this.state;
+    const { orientation, fixtureEditorPaneSize } = this.state;
     const style = {
-      width: fixtureEditorPaneSize,
+      [orientation === 'landscape' ? 'width' : 'height']: fixtureEditorPaneSize,
     };
 
     return (
       <div className={styles.fixtureEditorPane} style={style}>
         <div className={styles.fixtureEditor} />
         <DragHandle
-          vertical={false /* orientation */}
+          vertical={orientation === 'portrait'}
           onDrag={this.onFixtureEditorPaneDrag}
           onDragStart={this.onDragStart}
           onDragEnd={this.onDragEnd}
