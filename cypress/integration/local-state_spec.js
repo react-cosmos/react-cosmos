@@ -30,7 +30,7 @@ describe('Local state example', () => {
     });
 
     it('should show welcome message', () => {
-      cy.get(getSelector('index__loader')).should('contain', "You're all set");
+      cy.get(getSelector('index__content')).should('contain', "You're all set");
     });
   });
 
