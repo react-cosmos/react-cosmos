@@ -49,11 +49,17 @@ class FixtureEditor extends Component {
     this.props.onFocusChange(isFocused);
   };
 
+  handleKeyDown = e => {
+    // Prevent editor key events from reaching other components (E.g. Fixture
+    // list search mustn't be triggered when typing "s" inside the editor)
+    e.stopPropagation();
+  };
+
   render() {
     const { userInput, error } = this.state;
 
     return (
-      <div className={styles.root}>
+      <div className={styles.root} onKeyDown={this.handleKeyDown}>
         <CodeMirror
           value={userInput}
           preserveScrollPosition
