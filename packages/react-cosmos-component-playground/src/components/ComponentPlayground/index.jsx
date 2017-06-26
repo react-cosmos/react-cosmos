@@ -94,7 +94,6 @@ export default class ComponentPlayground extends Component {
     }
   };
 
-  // TODO: Debounce resize handler for better perf
   onResize = () => {
     this.updateContentOrientation();
   };
