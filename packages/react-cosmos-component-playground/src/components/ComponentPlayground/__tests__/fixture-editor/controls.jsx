@@ -6,11 +6,8 @@ import selectedEditorFixture from '../../__fixtures__/selected-editor';
 import DragHandle from '../../../DragHandle';
 import ComponentPlayground from '../../';
 
-jest.mock('localforage');
-
 // Vars populated in beforeEach blocks
 let wrapper;
-let instance;
 
 describe('Fixture editor controls', () => {
   // Fixture editor is already on so the button will untoggle it
@@ -24,19 +21,9 @@ describe('Fixture editor controls', () => {
           proxies={[createStateProxy]}
           component={ComponentPlayground}
           fixture={selectedEditorFixture}
-          onComponentRef={i => {
-            instance = i;
-            resolve();
-          }}
+          onComponentRef={resolve}
         />
       );
-    }).then(() => {
-      // Fake node width/height
-      instance.contentNode = {
-        // Landscape
-        offsetWidth: 300,
-        offsetHeight: 200,
-      };
     });
   });
 

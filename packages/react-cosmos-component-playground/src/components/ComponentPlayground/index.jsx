@@ -10,6 +10,7 @@ import FixtureList from '../FixtureList';
 import WelcomeScreen from '../WelcomeScreen';
 import MissingScreen from '../MissingScreen';
 import DragHandle from '../DragHandle';
+import FixtureEditor from '../FixtureEditor';
 import styles from './index.less';
 
 export const LEFT_NAV_SIZE = '__cosmos__left-nav-size';
@@ -17,6 +18,9 @@ export const FIXTURE_EDITOR_PANE_SIZE = '__cosmos__fixture-editor-pane-size';
 
 const fixtureExists = (fixtures, component, fixture) =>
   fixtures[component] && fixtures[component].indexOf(fixture) !== -1;
+
+const postMessageToFrame = (frame, data) =>
+  frame.contentWindow.postMessage(data, '*');
 
 export default class ComponentPlayground extends Component {
   static defaultProps = {
@@ -34,6 +38,7 @@ export default class ComponentPlayground extends Component {
     leftNavSize: 250,
     fixtureEditorPaneSize: 250,
     orientation: 'landscape',
+    fixtureBody: {},
   };
 
   componentDidMount() {
@@ -72,14 +77,11 @@ export default class ComponentPlayground extends Component {
         component !== this.props.component || fixture !== this.props.fixture;
 
       if (fixtureChanged && fixtureExists(fixtures, component, fixture)) {
-        this.loaderFrame.contentWindow.postMessage(
-          {
-            type: 'fixtureSelect',
-            component,
-            fixture,
-          },
-          '*'
-        );
+        postMessageToFrame(this.loaderFrame, {
+          type: 'fixtureSelect',
+          component,
+          fixture,
+        });
       }
     }
   }
@@ -91,6 +93,10 @@ export default class ComponentPlayground extends Component {
       this.onLoaderReady(data);
     } else if (type === 'fixtureListUpdate') {
       this.onFixtureListUpdate(data);
+    } else if (type === 'fixtureLoad') {
+      this.onFixtureLoad(data);
+    } else if (type === 'fixtureUpdate') {
+      this.onFixtureUpdate(data);
     }
   };
 
@@ -113,20 +119,33 @@ export default class ComponentPlayground extends Component {
 
     const { component, fixture } = this.props;
     if (component && fixture && fixtureExists(fixtures, component, fixture)) {
-      loaderFrame.contentWindow.postMessage(
-        {
-          type: 'fixtureSelect',
-          component,
-          fixture,
-        },
-        '*'
-      );
+      postMessageToFrame(loaderFrame, {
+        type: 'fixtureSelect',
+        component,
+        fixture,
+      });
     }
   }
 
   onFixtureListUpdate({ fixtures }) {
     this.setState({
       fixtures,
+    });
+  }
+
+  onFixtureLoad({ fixtureBody }) {
+    this.setState({
+      fixtureBody,
+    });
+  }
+
+  onFixtureUpdate({ fixtureBody }) {
+    this.setState({
+      // Fixture updates are partial
+      fixtureBody: {
+        ...this.state.fixtureBody,
+        ...fixtureBody,
+      },
     });
   }
 
@@ -161,6 +180,17 @@ export default class ComponentPlayground extends Component {
 
   onDragEnd = () => {
     this.setState({ isDragging: false });
+  };
+
+  onFixtureEditorChange = fixtureBody => {
+    this.setState({
+      fixtureBody,
+    });
+
+    postMessageToFrame(this.loaderFrame, {
+      type: 'fixtureEdit',
+      fixtureBody,
+    });
   };
 
   handleContentRef = node => {
@@ -312,14 +342,19 @@ export default class ComponentPlayground extends Component {
   }
 
   renderFixtureEditor() {
-    const { orientation, fixtureEditorPaneSize } = this.state;
+    const { orientation, fixtureEditorPaneSize, fixtureBody } = this.state;
     const style = {
       [orientation === 'landscape' ? 'width' : 'height']: fixtureEditorPaneSize,
     };
 
     return (
       <div className={styles.fixtureEditorPane} style={style}>
-        <div className={styles.fixtureEditor} />
+        <div className={styles.fixtureEditor}>
+          <FixtureEditor
+            value={fixtureBody}
+            onChange={this.onFixtureEditorChange}
+          />
+        </div>
         <DragHandle
           vertical={orientation === 'portrait'}
           onDrag={this.onFixtureEditorPaneDrag}

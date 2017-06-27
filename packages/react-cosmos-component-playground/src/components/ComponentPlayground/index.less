@@ -113,6 +113,7 @@
 
 .fixtureEditor {
   flex: 1;
+  position: relative;
 }
 
 .loaderFrame {
@@ -147,9 +148,9 @@
   }
 }
 
-// This overlay is meant to sit on top of the loader iframe while the user is
-// dragging the panes, because otherwise the drag events would be discontinued
-// when the mouse went over the iframe
+// The overlay sits on top of the loader iframe while the user is dragging the
+// panes, because otherwise the drag events would be discontinued when the
+// mouse cursor goes over the iframe
 .loaderFrameOverlay {
   position: absolute;
   top: 0;
