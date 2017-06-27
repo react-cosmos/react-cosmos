@@ -219,7 +219,7 @@ export default class ComponentPlayground extends Component {
             {isMissingFixtureSelected &&
               <MissingScreen componentName={component} fixtureName={fixture} />}
           </StarryBg>}
-        {editor && this.renderFixtureEditor()}
+        {editor && !waitingForLoader && this.renderFixtureEditor()}
         {this.renderLoader(isLoaderVisible)}
       </div>
     );
