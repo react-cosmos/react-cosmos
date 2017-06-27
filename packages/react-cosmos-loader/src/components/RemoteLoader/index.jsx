@@ -59,6 +59,8 @@ const getFixtureState = ({
   };
 };
 
+const postMessageToParent = data => parent.postMessage(data, '*');
+
 class RemoteLoader extends Component {
   /**
    * Remote loader for rendering React components in isolation.
@@ -83,13 +85,10 @@ class RemoteLoader extends Component {
     // Let parent know loader is ready to render, along with the initial
     // fixture list (which might update later due to HMR)
     const { fixtures } = this.props;
-    parent.postMessage(
-      {
-        type: 'loaderReady',
-        fixtures: extractFixtureNames(fixtures),
-      },
-      '*'
-    );
+    postMessageToParent({
+      type: 'loaderReady',
+      fixtures: extractFixtureNames(fixtures),
+    });
   }
 
   componentWillReceiveProps({ proxies, fixtures }) {
@@ -103,13 +102,10 @@ class RemoteLoader extends Component {
 
     // Keep parent frame in sync when fixture files change (udpated via
     // webpack HMR)
-    parent.postMessage(
-      {
-        type: 'fixtureListUpdate',
-        fixtures: extractFixtureNames(fixtures),
-      },
-      '*'
-    );
+    postMessageToParent({
+      type: 'fixtureListUpdate',
+      fixtures: extractFixtureNames(fixtures),
+    });
 
     const { component, fixture } = this.state;
 
@@ -145,28 +141,23 @@ class RemoteLoader extends Component {
 
   onFixtureSelect({ component, fixture }) {
     const { fixtures } = this.props;
+    const state = getFixtureState({
+      fixtures,
+      component,
+      fixture,
+    });
 
-    this.setState(
-      getFixtureState({
-        fixtures,
-        component,
-        fixture,
-      }),
-      () => {
-        if (fixture) {
-          const { serializable: fixtureBody } = this.state.fixtureBody;
+    if (fixture) {
+      const { serializable: fixtureBody } = state.fixtureBody;
 
-          // Notify back parent with the serializble contents of the loaded fixture
-          parent.postMessage(
-            {
-              type: 'fixtureLoad',
-              fixtureBody,
-            },
-            '*'
-          );
-        }
-      }
-    );
+      // Notify back parent with the serializable contents of the loaded fixture
+      postMessageToParent({
+        type: 'fixtureLoad',
+        fixtureBody,
+      });
+    }
+
+    this.setState(state);
   }
 
   onFixtureEdit({ fixtureBody }) {
@@ -208,13 +199,10 @@ class RemoteLoader extends Component {
     );
 
     try {
-      parent.postMessage(
-        {
-          type: 'fixtureUpdate',
-          fixtureBody,
-        },
-        '*'
-      );
+      postMessageToParent({
+        type: 'fixtureUpdate',
+        fixtureBody,
+      });
     } catch (err) {
       console.warn('[Cosmos] Failed to send fixture update to parent', err);
     }
