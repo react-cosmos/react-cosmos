@@ -1,4 +1,5 @@
 import React from 'react';
+import merge from 'lodash.merge';
 import { mount } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
@@ -16,14 +17,11 @@ describe('CP fixtures loaded', () => {
     router = {
       goTo: jest.fn(),
     };
-    const { props, state } = readyFixture;
-    const fixture = {
+    const fixture = merge({}, readyFixture, {
       props: {
-        ...props,
         router,
       },
-      state,
-    };
+    });
 
     return new Promise(resolve => {
       // Mount component in order for ref and lifecycle methods to be called

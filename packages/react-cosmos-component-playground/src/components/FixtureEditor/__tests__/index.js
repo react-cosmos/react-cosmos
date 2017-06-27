@@ -1,4 +1,5 @@
 import React from 'react';
+import merge from 'lodash.merge';
 import { shallow } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
 import CodeMirror from '@skidding/react-codemirror';
@@ -17,13 +18,13 @@ describe('FixtureEditor', () => {
   let wrapper;
 
   beforeEach(() => {
-    fixture = {
+    fixture = merge({}, propsFixture, {
       props: {
         ...propsFixture.props,
         onChange: jest.fn(),
         onFocusChange: jest.fn(),
       },
-    };
+    });
     wrapper = shallowLoader(
       <Loader component={FixtureEditor} fixture={fixture} />
     );
