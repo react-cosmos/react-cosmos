@@ -19,12 +19,16 @@ class FixtureEditor extends Component {
 
     this.state = {
       userInput: stringify(props.value),
+      isFocused: false,
       error: null,
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    if (stringify(nextProps.value) !== stringify(this.props.value)) {
+    if (
+      !this.state.isFocused &&
+      stringify(nextProps.value) !== stringify(this.props.value)
+    ) {
       this.setState({
         userInput: stringify(nextProps.value),
         error: null,
@@ -38,6 +42,10 @@ class FixtureEditor extends Component {
     try {
       // Treat the empty editor as '{}'
       onChange(userInput ? JSON.parse(userInput) : {});
+
+      this.setState({
+        error: null,
+      });
     } catch (err) {
       this.setState({
         error: err.message,
@@ -46,7 +54,7 @@ class FixtureEditor extends Component {
   };
 
   handleFocusChange = isFocused => {
-    this.props.onFocusChange(isFocused);
+    this.setState({ isFocused });
   };
 
   handleKeyDown = e => {
@@ -82,7 +90,6 @@ class FixtureEditor extends Component {
 FixtureEditor.propTypes = {
   value: object,
   onChange: func,
-  onFocusChange: func,
 };
 
 export default FixtureEditor;

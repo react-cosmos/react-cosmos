@@ -6,6 +6,5 @@ export default {
       },
     },
     onChange: value => console.log('change', value),
-    onFocusChange: isFocused => console.log('focus', isFocused),
   },
 };

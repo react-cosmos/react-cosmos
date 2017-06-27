@@ -20,7 +20,6 @@ describe('FixtureEditor', () => {
   beforeEach(() => {
     fixture = merge({}, propsFixture, {
       props: {
-        ...propsFixture.props,
         onChange: jest.fn(),
         onFocusChange: jest.fn(),
       },
@@ -64,11 +63,6 @@ describe('FixtureEditor', () => {
           baz: 'qux',
         },
       });
-    });
-
-    it('bubble up onFocusChange event', () => {
-      props.onFocusChange(true);
-      expect(fixture.props.onFocusChange).toHaveBeenCalledWith(true);
     });
 
     describe('invalid change', () => {

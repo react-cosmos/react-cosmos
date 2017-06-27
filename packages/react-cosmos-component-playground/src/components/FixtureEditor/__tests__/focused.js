@@ -5,17 +5,17 @@ import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
 import CodeMirror from '@skidding/react-codemirror';
 import FixtureEditor from '../';
-import erredFixture from '../__fixtures__/erred';
+import focusedFixture from '../__fixtures__/focused';
 
 const stringify = value => JSON.stringify(value, null, 2);
 
-describe('FixtureEditor error', () => {
+describe('FixtureEditor focused', () => {
   let wrapper;
   let fixture;
 
   beforeEach(() => {
     return new Promise(resolve => {
-      fixture = merge({}, erredFixture, {
+      const fixture = merge({}, focusedFixture, {
         props: {
           onChange: jest.fn(),
         },
@@ -32,31 +32,7 @@ describe('FixtureEditor error', () => {
           }}
         />
       );
-    });
-  });
-
-  it('displays error', () => {
-    expect(wrapper.find('.error').text()).toBe(
-      'Unexpected token x in JSON at position 36'
-    );
-  });
-
-  describe('on editor onChange', () => {
-    beforeEach(() => {
-      wrapper.find(CodeMirror).prop('onChange')(
-        stringify({
-          props: { baz: 'qux' },
-        })
-      );
-    });
-
-    it('clears error state', () => {
-      expect(wrapper.find('.error').length).toBe(0);
-    });
-  });
-
-  describe('on value prop change', () => {
-    beforeEach(() => {
+    }).then(() => {
       wrapper.setProps({
         fixture: merge({}, fixture, {
           props: {
@@ -69,19 +45,15 @@ describe('FixtureEditor error', () => {
         }),
       });
     });
+  });
 
-    it('sends new value to editor', () => {
-      expect(wrapper.find(CodeMirror).prop('value')).toBe(
-        stringify({
-          props: {
-            foo: 'baz',
-          },
-        })
-      );
-    });
-
-    it('clears error state', () => {
-      expect(wrapper.find('.error').length).toBe(0);
-    });
+  it('does not send new value to editor', () => {
+    expect(wrapper.find(CodeMirror).prop('value')).toBe(
+      stringify({
+        props: {
+          foo: 'bar',
+        },
+      })
+    );
   });
 });
