@@ -75,8 +75,7 @@ describe('Local state example', () => {
     });
   });
 
-  // TODO: Enable back once FixtureEditor is put into new ComponentPlayground
-  context.skip('fixture editor', () => {
+  context('fixture editor', () => {
     // The first menu button is the fixture editor toggle
     const editorButtonSel = `${getSelector('index__button')}:eq(1)`;
 
