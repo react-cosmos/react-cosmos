@@ -8,6 +8,8 @@ export default {
     onChange: value => console.log('change', value),
   },
   state: {
-    error: 'Unexpected token x in JSON at position 36',
+    value: '{\n  "props": {\n    "foo": "bar"\n  }\n}z',
+    isFocused: false,
+    error: 'Unexpected token x in JSON at position 37',
   },
 };

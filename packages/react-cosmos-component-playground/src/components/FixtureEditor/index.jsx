@@ -18,7 +18,11 @@ class FixtureEditor extends Component {
     super(props);
 
     this.state = {
-      userInput: stringify(props.value),
+      // state.value works as a stringified cache of the props.value, but most
+      // importantly, it allows ignoring a newer props.value when the editor
+      // is focused (i.e. don't allow the editor to be updated while the user
+      // is typing).
+      value: stringify(props.value),
       isFocused: false,
       error: null,
     };
@@ -30,18 +34,18 @@ class FixtureEditor extends Component {
       stringify(nextProps.value) !== stringify(this.props.value)
     ) {
       this.setState({
-        userInput: stringify(nextProps.value),
+        value: stringify(nextProps.value),
         error: null,
       });
     }
   }
 
-  handleChange = userInput => {
+  handleChange = value => {
     const { onChange } = this.props;
 
     try {
       // Treat the empty editor as '{}'
-      onChange(userInput ? JSON.parse(userInput) : {});
+      onChange(value ? JSON.parse(value) : {});
 
       this.setState({
         error: null,
@@ -64,12 +68,12 @@ class FixtureEditor extends Component {
   };
 
   render() {
-    const { userInput, error } = this.state;
+    const { value, error } = this.state;
 
     return (
       <div className={styles.root} onKeyDown={this.handleKeyDown}>
         <CodeMirror
-          value={userInput}
+          value={value}
           preserveScrollPosition
           onChange={this.handleChange}
           onFocusChange={this.handleFocusChange}

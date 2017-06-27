@@ -37,7 +37,7 @@ describe('FixtureEditor error', () => {
 
   it('displays error', () => {
     expect(wrapper.find('.error').text()).toBe(
-      'Unexpected token x in JSON at position 36'
+      'Unexpected token x in JSON at position 37'
     );
   });
 
