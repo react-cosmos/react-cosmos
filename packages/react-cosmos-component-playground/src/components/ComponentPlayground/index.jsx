@@ -150,7 +150,16 @@ export default class ComponentPlayground extends Component {
   }
 
   onUrlChange = location => {
-    this.props.router.goTo(location);
+    if (location === window.location.href) {
+      const { component, fixture } = this.props;
+      postMessageToFrame(this.loaderFrame, {
+        type: 'fixtureSelect',
+        component,
+        fixture,
+      });
+    } else {
+      this.props.router.goTo(location);
+    }
   };
 
   onLeftNavDrag = leftNavSize => {

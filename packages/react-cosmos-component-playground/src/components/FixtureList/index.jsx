@@ -106,8 +106,9 @@ export default class FixtureList extends Component {
                 <div>
                   {filteredFixtures[component].map((fixture, j) => {
                     const fixtureClassNames = classNames(styles.fixture, {
-                      [styles.fixtureSelected]: component ===
-                        urlParams.component && fixture === urlParams.fixture,
+                      [styles.fixtureSelected]:
+                        component === urlParams.component &&
+                          fixture === urlParams.fixture,
                     });
                     const nextUrlParams = {
                       ...urlParams,

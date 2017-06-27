@@ -74,7 +74,7 @@ describe('CP with fixture already selected', () => {
     window.removeEventListener('message', handleMessage);
   });
 
-  test('sends fixture select message to loader', () => {
+  it('sends fixture select message to loader', () => {
     expect(loaderContentWindow.postMessage).toHaveBeenCalledWith(
       {
         type: 'fixtureSelect',
@@ -92,11 +92,24 @@ describe('CP with fixture already selected', () => {
       props = wrapper.find(FixtureList).props();
     });
 
-    test('should send url params (component, fixture) to fixture list', () => {
+    it('should send url params (component, fixture) to fixture list', () => {
       expect(props.urlParams).toEqual({
         component: 'ComponentA',
         fixture: 'foo',
       });
+    });
+
+    it('clicking on selected fixture sends new message to loader', () => {
+      props.onUrlChange(window.location.href);
+      expect(loaderContentWindow.postMessage).toHaveBeenCalledTimes(2);
+      expect(loaderContentWindow.postMessage).toHaveBeenLastCalledWith(
+        {
+          type: 'fixtureSelect',
+          component: 'ComponentA',
+          fixture: 'foo',
+        },
+        '*'
+      );
     });
   });
 
@@ -104,33 +117,33 @@ describe('CP with fixture already selected', () => {
     const fixtureEditorUrl = '/?component=ComponentA&fixture=foo&editor=true';
     const fullScreenUrl = '/?component=ComponentA&fixture=foo&fullScreen=true';
 
-    test('should render home button', () => {
+    it('should render home button', () => {
       expect(wrapper.find('a[href="/"].button').length).toBe(1);
     });
 
-    test('should not render selected home button', () => {
+    it('should not render selected home button', () => {
       expect(wrapper.find('a[href="/"].selectedButton').length).toBe(0);
     });
 
-    test('should render fixture editor button', () => {
+    it('should render fixture editor button', () => {
       expect(wrapper.find(`a[href="${fixtureEditorUrl}"].button`).length).toBe(
         1
       );
     });
 
-    test('should not render selected fixture editor button', () => {
+    it('should not render selected fixture editor button', () => {
       expect(
         wrapper.find(`a[href="${fixtureEditorUrl}"].selectedButton`).length
       ).toBe(0);
     });
 
-    test('should render full screen button', () => {
+    it('should render full screen button', () => {
       expect(wrapper.find(`a[href="${fullScreenUrl}"].button`).length).toBe(1);
     });
   });
 
   describe('content', () => {
-    test('should not render StarryBg', () => {
+    it('should not render StarryBg', () => {
       expect(wrapper.find(StarryBg).length).toBe(0);
     });
   });
