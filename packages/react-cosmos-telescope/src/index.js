@@ -1,5 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import createStateProxy from 'react-cosmos-state-proxy';
 import getCosmosConfig from 'react-cosmos-config';
 import getFilePaths from 'react-cosmos-voyager';
 import { Loader } from 'react-cosmos-loader';
@@ -34,7 +35,11 @@ export default ({ cosmosConfigPath } = {}) => {
         const tree = renderer
           .create(
             <Loader
-              proxies={proxies}
+              proxies={[
+                ...proxies,
+                // Loaded by default in all configs
+                createStateProxy,
+              ]}
               component={components[component]}
               fixture={componentFixtures[fixture]}
             />
