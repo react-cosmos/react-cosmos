@@ -48,7 +48,7 @@
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "react-test-renderer": "^15.6.1",
+    "react-test-renderer": "^15.5.4",
     "rimraf": "^2.5.4",
     "style-loader": "^0.18.2",
     "traverse": "^0.6.6",
