@@ -28,7 +28,7 @@ describe('Fixture editor controls', () => {
   });
 
   it('should set untoggle URL to fixture editor button', () => {
-    expect(wrapper.find(`.header a[href="${fixtureEditorUrl}"]`).length).toBe(
+    expect(wrapper.find(`.header a[href="${fixtureEditorUrl}"]`)).toHaveLength(
       1
     );
   });
@@ -36,11 +36,10 @@ describe('Fixture editor controls', () => {
   it('should render selected fixture editor button', () => {
     expect(
       wrapper.find(`.header a[href="${fixtureEditorUrl}"].selectedButton`)
-        .length
-    ).toBe(1);
+    ).toHaveLength(1);
   });
 
   it('should render DragHandle in fixture editor pane', () => {
-    expect(wrapper.find('.fixtureEditorPane').find(DragHandle).length).toBe(1);
+    expect(wrapper.find('.fixtureEditorPane').find(DragHandle)).toHaveLength(1);
   });
 });

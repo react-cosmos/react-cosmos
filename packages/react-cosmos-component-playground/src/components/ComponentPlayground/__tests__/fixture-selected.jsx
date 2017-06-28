@@ -118,15 +118,15 @@ describe('CP with fixture already selected', () => {
     const fullScreenUrl = '/?component=ComponentA&fixture=foo&fullScreen=true';
 
     it('should render home button', () => {
-      expect(wrapper.find('a[href="/"].button').length).toBe(1);
+      expect(wrapper.find('a[href="/"].button')).toHaveLength(1);
     });
 
     it('should not render selected home button', () => {
-      expect(wrapper.find('a[href="/"].selectedButton').length).toBe(0);
+      expect(wrapper.find('a[href="/"].selectedButton')).toHaveLength(0);
     });
 
     it('should render fixture editor button', () => {
-      expect(wrapper.find(`a[href="${fixtureEditorUrl}"].button`).length).toBe(
+      expect(wrapper.find(`a[href="${fixtureEditorUrl}"].button`)).toHaveLength(
         1
       );
     });
@@ -138,13 +138,13 @@ describe('CP with fixture already selected', () => {
     });
 
     it('should render full screen button', () => {
-      expect(wrapper.find(`a[href="${fullScreenUrl}"].button`).length).toBe(1);
+      expect(wrapper.find(`a[href="${fullScreenUrl}"].button`)).toHaveLength(1);
     });
   });
 
   describe('content', () => {
     it('should not render StarryBg', () => {
-      expect(wrapper.find(StarryBg).length).toBe(0);
+      expect(wrapper.find(StarryBg)).toHaveLength(0);
     });
   });
 });

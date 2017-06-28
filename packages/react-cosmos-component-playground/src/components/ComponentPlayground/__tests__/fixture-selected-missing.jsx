@@ -78,7 +78,7 @@ describe('CP with missing fixture already selected', () => {
   });
 
   test('renders MissingScreen', () => {
-    expect(wrapper.find(MissingScreen).length).toBe(1);
+    expect(wrapper.find(MissingScreen)).toHaveLength(1);
   });
 
   test('sends component name to MissingScreen', () => {

@@ -42,11 +42,11 @@ describe('Portrait fixture editor pane', () => {
     });
 
     it('should set landscape class to content', () => {
-      expect(wrapper.find('.content.contentPortrait').length).toBe(1);
+      expect(wrapper.find('.content.contentPortrait')).toHaveLength(1);
     });
 
     it('should render fixture editor pane', () => {
-      expect(wrapper.find('.fixtureEditorPane').length).toBe(1);
+      expect(wrapper.find('.fixtureEditorPane')).toHaveLength(1);
     });
 
     it('should set default fixture editor pane height', () => {

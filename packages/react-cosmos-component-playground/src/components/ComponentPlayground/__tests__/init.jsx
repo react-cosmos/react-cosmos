@@ -20,11 +20,11 @@ describe('CP init', () => {
   });
 
   test('should starry background', () => {
-    expect(wrapper.find(StarryBg).length).toBe(1);
+    expect(wrapper.find(StarryBg)).toHaveLength(1);
   });
 
   test('should render loader iframe', () => {
-    expect(wrapper.find('iframe').length).toBe(1);
+    expect(wrapper.find('iframe')).toHaveLength(1);
   });
 
   test('should render loader iframe with props.loaderUri', () => {

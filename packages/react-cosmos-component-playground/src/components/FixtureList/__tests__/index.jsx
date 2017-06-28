@@ -174,8 +174,8 @@ describe('Search', () => {
     // is visible
     const components = wrapper.find('.component');
     const fixtures = wrapper.find('.fixture');
-    expect(components.length).toBe(1);
-    expect(fixtures.length).toBe(1);
+    expect(components).toHaveLength(1);
+    expect(fixtures).toHaveLength(1);
     expect(components.at(0).text()).toContain('ComponentB');
     expect(fixtures.at(0).text()).toContain('qux');
   });

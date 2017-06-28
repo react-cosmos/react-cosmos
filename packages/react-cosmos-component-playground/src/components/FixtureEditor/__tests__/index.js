@@ -30,7 +30,7 @@ describe('FixtureEditor', () => {
   });
 
   it('renders CodeMirror', () => {
-    expect(wrapper.find(CodeMirror).length).toBe(1);
+    expect(wrapper.find(CodeMirror)).toHaveLength(1);
   });
 
   describe('CodeMirror props', () => {

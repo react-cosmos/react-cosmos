@@ -63,7 +63,7 @@ describe('CP left nav drag', () => {
     });
 
     it('should render DragHandle in left nav', () => {
-      expect(wrapper.find('.leftNav').find(DragHandle).length).toBe(1);
+      expect(wrapper.find('.leftNav').find(DragHandle)).toHaveLength(1);
     });
   });
 

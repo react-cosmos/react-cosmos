@@ -42,11 +42,11 @@ describe('Landscape fixture editor pane', () => {
     });
 
     it('should set landscape class to content', () => {
-      expect(wrapper.find('.content.contentLandscape').length).toBe(1);
+      expect(wrapper.find('.content.contentLandscape')).toHaveLength(1);
     });
 
     it('should render fixture editor pane', () => {
-      expect(wrapper.find('.fixtureEditorPane').length).toBe(1);
+      expect(wrapper.find('.fixtureEditorPane')).toHaveLength(1);
     });
 
     it('should set default fixture editor pane width', () => {

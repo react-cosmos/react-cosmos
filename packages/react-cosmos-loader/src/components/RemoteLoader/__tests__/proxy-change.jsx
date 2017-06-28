@@ -79,6 +79,6 @@ describe('Proxy is changed', () => {
   });
 
   test('renders new proxy', () => {
-    expect(wrapper.find(ProxyBar).length).toBe(1);
+    expect(wrapper.find(ProxyBar)).toHaveLength(1);
   });
 });

@@ -39,7 +39,7 @@ describe('Fixture is selected via props', () => {
   });
 
   test('renders first proxy ', () => {
-    expect(firstProxyWrapper.length).toBe(1);
+    expect(firstProxyWrapper).toHaveLength(1);
   });
 
   test('sends PropsProxy to first proxy ', () => {

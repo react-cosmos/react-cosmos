@@ -46,7 +46,7 @@ describe('Resize fixture editor pane', () => {
   });
 
   it('should set landscape class to content', () => {
-    expect(wrapper.find('.content.contentLandscape').length).toBe(1);
+    expect(wrapper.find('.content.contentLandscape')).toHaveLength(1);
   });
 
   it('should set cached fixture editor pane width', () => {
@@ -66,7 +66,7 @@ describe('Resize fixture editor pane', () => {
     });
 
     it('should set portrait class to content', () => {
-      expect(wrapper.find('.content.contentPortrait').length).toBe(1);
+      expect(wrapper.find('.content.contentPortrait')).toHaveLength(1);
     });
 
     it('should set cached fixture editor pane height', () => {

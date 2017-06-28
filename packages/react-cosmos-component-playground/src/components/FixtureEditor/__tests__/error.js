@@ -51,7 +51,7 @@ describe('FixtureEditor error', () => {
     });
 
     it('clears error state', () => {
-      expect(wrapper.find('.error').length).toBe(0);
+      expect(wrapper.find('.error')).toHaveLength(0);
     });
   });
 
@@ -81,7 +81,7 @@ describe('FixtureEditor error', () => {
     });
 
     it('clears error state', () => {
-      expect(wrapper.find('.error').length).toBe(0);
+      expect(wrapper.find('.error')).toHaveLength(0);
     });
   });
 });

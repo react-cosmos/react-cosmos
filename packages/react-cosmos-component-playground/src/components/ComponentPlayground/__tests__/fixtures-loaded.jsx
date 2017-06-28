@@ -68,11 +68,11 @@ describe('CP fixtures loaded', () => {
 
   describe('main menu', () => {
     test('should render home button', () => {
-      expect(wrapper.find('a[href="/"].button').length).toBe(1);
+      expect(wrapper.find('a[href="/"].button')).toHaveLength(1);
     });
 
     test('should render selected home button', () => {
-      expect(wrapper.find('a[href="/"].selectedButton').length).toBe(1);
+      expect(wrapper.find('a[href="/"].selectedButton')).toHaveLength(1);
     });
   });
 

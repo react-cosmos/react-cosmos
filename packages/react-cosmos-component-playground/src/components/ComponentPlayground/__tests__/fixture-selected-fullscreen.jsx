@@ -31,6 +31,6 @@ describe('CP with fixture already selected in full screen', () => {
   });
 
   test('should render loader iframe', () => {
-    expect(wrapper.find('iframe').length).toBe(1);
+    expect(wrapper.find('iframe')).toHaveLength(1);
   });
 });
