@@ -22,7 +22,7 @@ const exportPlaygroundFiles = outputPath => {
   );
 
   fs.copySync(
-    require.resolve('react-component-playground'),
+    require.resolve('react-cosmos-component-playground'),
     `${outputPath}/bundle.js`
   );
 
