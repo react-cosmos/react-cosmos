@@ -1,5 +1,6 @@
 packages/*/lib
 node_modules
-test/coverage
+coverage
 npm-debug.log
+cypress/screenshots
 cypress/videos

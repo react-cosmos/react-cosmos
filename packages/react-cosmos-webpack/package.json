@@ -20,8 +20,9 @@
     "json-loader": "^0.5.4",
     "loader-utils": "^1.1.0",
     "lodash.omit": "^4.5.0",
-    "react-cosmos": "^2.0.0-beta.14",
+    "react-cosmos-component-playground": "^2.0.0-beta.14",
     "react-cosmos-config": "^2.0.0-beta.13",
+    "react-cosmos-loader": "^2.0.0-beta.14",
     "react-cosmos-utils": "^2.0.0-beta.11",
     "react-cosmos-voyager": "^2.0.0-beta.13",
     "slash": "^1.0.0",
@@ -30,9 +31,6 @@
     "webpack-dev-middleware": "^1.10.2",
     "webpack-hot-middleware": "^2.13.0",
     "yargs": "^8.0.1"
-  },
-  "peerDependencies": {
-    "webpack": ">=1.13 <3"
   },
   "bin": {
     "cosmos": "./bin/cosmos.js",

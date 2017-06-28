@@ -1,18 +1,18 @@
+import React from 'react';
 import renderer from 'react-test-renderer';
 import getCosmosConfig from 'react-cosmos-config';
 import getFilePaths from 'react-cosmos-voyager';
-import { createLoaderElement } from 'react-cosmos';
+import { Loader } from 'react-cosmos-loader';
 
 const { keys } = Object;
 
-const importFileTree = filePaths => (
+const importFileTree = filePaths =>
   keys(filePaths).reduce((acc, name) => {
     return {
       ...acc,
       [name]: require(filePaths[name]),
     };
-  }, {})
-);
+  }, {});
 
 export default ({ cosmosConfigPath } = {}) => {
   const cosmosConfig = getCosmosConfig(cosmosConfigPath);
@@ -31,15 +31,15 @@ export default ({ cosmosConfigPath } = {}) => {
     const componentFixtures = fixtures[component];
     keys(componentFixtures).forEach(fixture => {
       test(`${component}:${fixture}`, () => {
-        const tree = renderer.create(
-          createLoaderElement({
-            components,
-            fixtures,
-            proxies,
-            component,
-            fixture,
-          })
-        ).toJSON();
+        const tree = renderer
+          .create(
+            <Loader
+              proxies={proxies}
+              component={components[component]}
+              fixture={componentFixtures[fixture]}
+            />
+          )
+          .toJSON();
         expect(tree).toMatchSnapshot();
       });
     });

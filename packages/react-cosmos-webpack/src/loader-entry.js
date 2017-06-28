@@ -1,0 +1,39 @@
+/* global window */
+
+// This has to be done before React is imported. We do it before importing
+// anything which might import React
+// https://github.com/facebook/react-devtools/issues/76#issuecomment-128091900
+if (process.env.NODE_ENV === 'development') {
+  window.__REACT_DEVTOOLS_GLOBAL_HOOK__ =
+    window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+}
+
+const { mount, unmount } = require('react-cosmos-loader');
+
+// eslint-disable-next-line no-undef
+const { containerQuerySelector } = COSMOS_CONFIG;
+
+const start = () => {
+  // Unmounting needs to be done before importing new modules after HMR
+  unmount();
+
+  // Module is imported whenever this function is called, making sure the
+  // lastest module version is used after a HMR update
+  const getUserModules = require('./user-modules').default;
+  const { components, fixtures, proxies } = getUserModules();
+
+  mount({
+    proxies,
+    components,
+    fixtures,
+    containerQuerySelector,
+  });
+};
+
+start();
+
+if (module.hot) {
+  module.hot.accept('./user-modules', () => {
+    start();
+  });
+}

@@ -10,8 +10,8 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
-    "react-cosmos": "^2.0.0-beta.14",
     "react-cosmos-config": "^2.0.0-beta.13",
+    "react-cosmos-loader": "^2.0.0-beta.14",
     "react-cosmos-voyager": "^2.0.0-beta.13",
     "react-test-renderer": "^15.4.2"
   },

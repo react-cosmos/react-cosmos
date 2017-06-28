@@ -1,0 +1,160 @@
+@import '../../utils/common.less';
+
+@header-height: 70px; // 50 + 2 * 10 margins
+@header-button-size: @header-height - 2 * @default-spacing;
+
+@checkerboard-square-size: 25px;
+// This should look good on both black & white backgrounds
+@checkerboard-color: fade(@left-nav-color, 15%);
+
+.root {
+  .stretch();
+
+  display: flex;
+  flex-direction: row;
+  font-family: @default-font-family;
+  font-size: @default-font-size;
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+@left-nav-min-width: @header-button-size * 3 + @default-spacing * 4;
+
+.leftNav {
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  /* Width is set from JS */
+  min-width: @left-nav-min-width + @drag-handle-size;
+  max-width: @left-nav-min-width * 2 + @drag-handle-size;
+  background: @left-nav-bgcolor;
+}
+
+.leftNavInner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: @default-spacing;
+}
+
+.buttons {
+  display: flex;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: @header-button-size;
+  height: @header-button-size;
+  border-radius: 100%;
+
+  &:hover {
+    background-color: @left-nav-bgcolor-selected;
+  }
+
+  &:not(:last-child) {
+    margin-right: @default-spacing;
+  }
+
+  svg {
+    width: 35px;
+    height: 35px;
+    fill: @left-nav-color;
+  }
+}
+
+.selectedButton {
+  background-color: @left-nav-bgcolor-selected;
+
+  svg {
+    fill: @left-nav-color-selected;
+  }
+}
+
+.content {
+  position: relative;
+  flex: 1;
+  display: flex;
+}
+
+.contentLandscape {
+  flex-direction: row;
+}
+
+.contentPortrait {
+  flex-direction: column;
+}
+
+.fixtureEditorPane {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.contentLandscape .fixtureEditorPane {
+  flex-direction: row;
+  min-width: 25%;
+  max-width: 75%;
+}
+
+.contentPortrait .fixtureEditorPane {
+  flex-direction: column;
+  min-height: 25%;
+  max-height: 75%;
+}
+
+.fixtureEditor {
+  flex: 1;
+  position: relative;
+}
+
+.loaderFrame {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  // Checkerboard effect on background
+  background-color: #fff;
+  background-image: linear-gradient(
+      45deg,
+      @checkerboard-color 25%,
+      transparent 25%,
+      transparent 75%,
+      @checkerboard-color 75%,
+      @checkerboard-color 100%
+    ),
+    linear-gradient(
+      45deg,
+      @checkerboard-color 25%,
+      transparent 25%,
+      transparent 75%,
+      @checkerboard-color 75%,
+      @checkerboard-color 100%
+    );
+  background-size: 2 * @checkerboard-square-size 2 * @checkerboard-square-size;
+  background-position: 0 0, @checkerboard-square-size @checkerboard-square-size;
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+}
+
+// The overlay sits on top of the loader iframe while the user is dragging the
+// panes, because otherwise the drag events would be discontinued when the
+// mouse cursor goes over the iframe
+.loaderFrameOverlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

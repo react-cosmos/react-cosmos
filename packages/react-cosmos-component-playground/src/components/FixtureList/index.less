@@ -1,0 +1,109 @@
+@import '../../utils/common.less';
+
+@fixture-line-height: 30px;
+@fixture-component-font-size: 16px;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  font-family: @default-font-family;
+  -webkit-font-smoothing: antialiased;
+}
+
+.searchInputContainer {
+  flex-shrink: 0;
+  position: relative;
+  border-bottom: 1px solid @left-nav-bgcolor-selected;
+
+  svg {
+    .vertical-center();
+
+    left: @default-spacing;
+    width: 22px;
+    height: 22px;
+    fill: @left-nav-color;
+  }
+}
+
+.searchInput {
+  display: block;
+  height: @fixture-line-height;
+  width: 100%;
+  padding: 0 @default-spacing;
+  padding-left: @fixture-line-height + @default-spacing;
+  background-color: @left-nav-bgcolor;
+  color: @left-nav-color;
+  border: 0;
+  box-shadow: none;
+  font-size: @editor-font-size;
+  transition: background-color .3s ease;
+
+  &:focus, &:active {
+    outline: none;
+    background-color: @left-nav-bgcolor-selected;
+  }
+
+  &::placeholder {
+    color: fade(@left-nav-color-selected, 30%);
+  }
+}
+
+.list {
+  background: @default-darken-color;
+  overflow-x: hidden;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.component {
+}
+
+.componentName {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  height: @fixture-line-height + @default-spacing;
+  margin: 0;
+  padding: @default-spacing @default-spacing 0 @default-spacing;
+  color: @left-nav-color-selected;
+  font-size: @fixture-component-font-size;
+  line-height: @fixture-line-height;
+  cursor: default;
+
+  svg {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    fill: @left-nav-color-selected;
+    margin-right: 0.5 * @default-spacing;
+  }
+
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.fixture {
+  display: block;
+  height: @fixture-line-height;
+  padding: 0 @default-spacing;
+  color: @left-nav-color;
+  line-height: @fixture-line-height;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover {
+    background: @left-nav-bgcolor-selected;
+  }
+}
+
+.fixtureSelected {
+  background: @left-nav-bgcolor-selected;
+  color: @left-nav-color-selected;
+}

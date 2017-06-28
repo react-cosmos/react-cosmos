@@ -7,7 +7,7 @@ export default (module, moduleName) => {
   // https://github.com/esnext/es6-module-transpiler/issues/86
 
   if (module.__esModule) {
-    return module[moduleName] || module.default;
+    return (moduleName && module[moduleName]) || module.default;
   }
 
   return module;

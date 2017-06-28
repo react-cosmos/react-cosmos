@@ -1,8 +1,8 @@
-// Replace with 'react-cosmos' in real life
-import { startLoader } from '../../packages/react-cosmos';
+// Replace with 'react-cosmos-loader' in real life
+import mountLoader from '../../packages/react-cosmos-loader';
 import { components, fixtures } from './prepare-modules';
 
-module.exports = startLoader({
+module.exports = mountLoader({
   proxies: [],
   components,
   fixtures,
