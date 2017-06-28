@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render, unmountComponentAtNode } from 'react-dom';
 import RemoteLoader from './components/RemoteLoader';
 import createStateProxy from 'react-cosmos-state-proxy';
 
@@ -14,12 +14,17 @@ const createDomContainer = () => {
   return domContainer;
 };
 
-export default ({ proxies, components, fixtures, containerQuerySelector }) => {
+export function mount({
+  proxies,
+  components,
+  fixtures,
+  containerQuerySelector,
+}) {
   const container = containerQuerySelector
     ? document.querySelector(containerQuerySelector)
     : createDomContainer();
 
-  ReactDOM.render(
+  render(
     <RemoteLoader
       components={components}
       fixtures={fixtures}
@@ -31,4 +36,10 @@ export default ({ proxies, components, fixtures, containerQuerySelector }) => {
     />,
     container
   );
-};
+}
+
+export function unmount() {
+  if (domContainer) {
+    unmountComponentAtNode(domContainer);
+  }
+}

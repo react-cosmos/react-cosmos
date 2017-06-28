@@ -8,18 +8,21 @@ if (process.env.NODE_ENV === 'development') {
     window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;
 }
 
-const mountLoader = require('react-cosmos-loader');
+const { mount, unmount } = require('react-cosmos-loader');
 
 // eslint-disable-next-line no-undef
 const { containerQuerySelector } = COSMOS_CONFIG;
 
 const start = () => {
+  // Unmounting needs to be done before importing new modules after HMR
+  unmount();
+
   // Module is imported whenever this function is called, making sure the
   // lastest module version is used after a HMR update
   const getUserModules = require('./user-modules').default;
   const { components, fixtures, proxies } = getUserModules();
 
-  mountLoader.default({
+  mount({
     proxies,
     components,
     fixtures,

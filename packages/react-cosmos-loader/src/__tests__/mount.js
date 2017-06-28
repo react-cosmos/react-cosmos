@@ -2,7 +2,7 @@ import { createElement } from 'react';
 import { render } from 'react-dom';
 import createStateProxy from 'react-cosmos-state-proxy';
 import RemoteLoader from '../components/RemoteLoader';
-import mountLoader from '../';
+import { mount } from '../';
 
 jest.mock('react', () => ({
   Component: jest.fn(),
@@ -23,7 +23,7 @@ beforeEach(() => {
 
 describe('without container query selector', () => {
   beforeEach(() => {
-    mountLoader({
+    mount({
       proxies: [mockProxy],
       components: {
         foo: mockComponent,
@@ -80,7 +80,7 @@ describe('with container query selector and class name', () => {
     rootEl.id = 'app123';
     document.body.appendChild(rootEl);
 
-    mountLoader({
+    mount({
       proxies: [mockProxy],
       components: {
         foo: mockComponent,
