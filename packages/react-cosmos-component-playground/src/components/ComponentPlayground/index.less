@@ -20,12 +20,23 @@
   }
 }
 
+@left-nav-min-width: @header-button-size * 3 + @default-spacing * 4;
+
 .leftNav {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-shrink: 0;
-  width: @left-nav-width;
+  /* Width is set from JS */
+  min-width: @left-nav-min-width + @drag-handle-size;
+  max-width: @left-nav-min-width * 2 + @drag-handle-size;
   background: @left-nav-bgcolor;
+}
+
+.leftNavInner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .header {
@@ -63,27 +74,55 @@
 
 .selectedButton {
   background-color: @left-nav-bgcolor-selected;
-  cursor: default;
 
   svg {
     fill: @left-nav-color-selected;
   }
 }
 
-.loader {
+.content {
+  position: relative;
+  flex: 1;
+  display: flex;
+}
+
+.contentLandscape {
+  flex-direction: row;
+}
+
+.contentPortrait {
+  flex-direction: column;
+}
+
+.fixtureEditorPane {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.contentLandscape .fixtureEditorPane {
+  flex-direction: row;
+  min-width: 25%;
+  max-width: 75%;
+}
+
+.contentPortrait .fixtureEditorPane {
+  flex-direction: column;
+  min-height: 25%;
+  max-height: 75%;
+}
+
+.fixtureEditor {
   flex: 1;
   position: relative;
 }
 
 .loaderFrame {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border: 0;
+  position: relative;
+  flex: 1;
+  overflow: hidden;
   // Checkerboard effect on background
   background-color: #fff;
-  background-image:
-    linear-gradient(
+  background-image: linear-gradient(
       45deg,
       @checkerboard-color 25%,
       transparent 25%,
@@ -99,8 +138,23 @@
       @checkerboard-color 75%,
       @checkerboard-color 100%
     );
-  background-size:
-      2 * @checkerboard-square-size 2 * @checkerboard-square-size;
-  background-position:
-      0 0, @checkerboard-square-size @checkerboard-square-size;
+  background-size: 2 * @checkerboard-square-size 2 * @checkerboard-square-size;
+  background-position: 0 0, @checkerboard-square-size @checkerboard-square-size;
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+}
+
+// The overlay sits on top of the loader iframe while the user is dragging the
+// panes, because otherwise the drag events would be discontinued when the
+// mouse cursor goes over the iframe
+.loaderFrameOverlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }

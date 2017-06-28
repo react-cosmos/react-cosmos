@@ -17,19 +17,10 @@ const getFilteredFixtures = (fixtures, searchText) => {
   const components = Object.keys(fixtures);
 
   return components.reduce((acc, componentName) => {
-    const matchingFixtures = fixtures[componentName].filter(fixtureName => {
-      const componentAndFixture = componentName + fixtureName;
-      const fixtureAndComponent = fixtureName + componentName;
-
-      // Ensure that the fuzzy search is working in both direction.
-      // component + fixture and fixture + component. That's because the user
-      // can search for fixture name and afterwards for component name and
-      // we want to show the correct result.
-      return (
-        match(componentAndFixture, searchText).length !== 0 ||
-        match(fixtureAndComponent, searchText).length !== 0
-      );
-    });
+    const matchingFixtures = fixtures[componentName].filter(
+      fixtureName =>
+        match(`${componentName}${fixtureName}`, searchText).length !== 0
+    );
 
     // Do not render the component if it has no matching fixtures
     if (matchingFixtures.length === 0) {
@@ -115,8 +106,9 @@ export default class FixtureList extends Component {
                 <div>
                   {filteredFixtures[component].map((fixture, j) => {
                     const fixtureClassNames = classNames(styles.fixture, {
-                      [styles.fixtureSelected]: component ===
-                        urlParams.component && fixture === urlParams.fixture,
+                      [styles.fixtureSelected]:
+                        component === urlParams.component &&
+                          fixture === urlParams.fixture,
                     });
                     const nextUrlParams = {
                       ...urlParams,

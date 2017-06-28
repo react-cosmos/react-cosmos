@@ -6,7 +6,7 @@ const src = path.join(__dirname, 'src');
 const lib = path.join(__dirname, 'lib');
 const nodeModules = path.join(__dirname, 'node_modules');
 
-const env = process.env.NODE_ENV;
+const env = process.env.NODE_ENV || 'development';
 const plugins = [
   new webpack.DefinePlugin({
     'process.env': {

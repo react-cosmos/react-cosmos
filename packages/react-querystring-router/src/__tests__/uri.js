@@ -4,14 +4,14 @@ test('returns empty object when querystring is missing', () => {
   const uriLocation = 'mypage.com';
   const params = uri.parseLocation(uriLocation);
 
-  expect(Object.keys(params).length).toBe(0);
+  expect(Object.keys(params)).toHaveLength(0);
 });
 
 test('returns empty object when querystring is empty', () => {
   const uriLocation = 'mypage.com?';
   const params = uri.parseLocation(uriLocation);
 
-  expect(Object.keys(params).length).toBe(0);
+  expect(Object.keys(params)).toHaveLength(0);
 });
 
 test('parses stringified and encoded params from location', () => {

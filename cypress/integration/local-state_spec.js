@@ -30,7 +30,7 @@ describe('Local state example', () => {
     });
 
     it('should show welcome message', () => {
-      cy.get(getSelector('index__loader')).should('contain', "You're all set");
+      cy.get(getSelector('index__content')).should('contain', "You're all set");
     });
   });
 
@@ -75,8 +75,7 @@ describe('Local state example', () => {
     });
   });
 
-  // TODO: Enable back once FixtureEditor is put into new ComponentPlayground
-  context.skip('fixture editor', () => {
+  context('fixture editor', () => {
     // The first menu button is the fixture editor toggle
     const editorButtonSel = `${getSelector('index__button')}:eq(1)`;
 

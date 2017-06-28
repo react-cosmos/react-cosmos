@@ -1,4 +1,5 @@
 import React from 'react';
+import merge from 'lodash.merge';
 import { mount } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
@@ -16,14 +17,11 @@ describe('CP fixtures loaded', () => {
     router = {
       goTo: jest.fn(),
     };
-    const { props, state } = readyFixture;
-    const fixture = {
+    const fixture = merge({}, readyFixture, {
       props: {
-        ...props,
         router,
       },
-      state,
-    };
+    });
 
     return new Promise(resolve => {
       // Mount component in order for ref and lifecycle methods to be called
@@ -70,11 +68,11 @@ describe('CP fixtures loaded', () => {
 
   describe('main menu', () => {
     test('should render home button', () => {
-      expect(wrapper.find('a[href="/"].button').length).toBe(1);
+      expect(wrapper.find('a[href="/"].button')).toHaveLength(1);
     });
 
     test('should render selected home button', () => {
-      expect(wrapper.find('a[href="/"].selectedButton').length).toBe(1);
+      expect(wrapper.find('a[href="/"].selectedButton')).toHaveLength(1);
     });
   });
 

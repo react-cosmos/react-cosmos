@@ -76,7 +76,7 @@ const commonTests = () => {
 
   test('bubbles up fixture updates', () => {
     childProps.onFixtureUpdate({});
-    expect(onFixtureUpdate.mock.calls.length).toBe(1);
+    expect(onFixtureUpdate.mock.calls).toHaveLength(1);
   });
 };
 

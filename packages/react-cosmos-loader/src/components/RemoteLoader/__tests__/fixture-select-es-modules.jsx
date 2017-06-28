@@ -97,7 +97,7 @@ describe('Fixture is selected remotely', () => {
   });
 
   test('renders first proxy ', () => {
-    expect(firstProxyWrapper.length).toBe(1);
+    expect(firstProxyWrapper).toHaveLength(1);
   });
 
   test('sets first proxy element key ', () => {

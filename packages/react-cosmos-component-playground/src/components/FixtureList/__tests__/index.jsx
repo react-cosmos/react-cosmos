@@ -1,11 +1,11 @@
 import React from 'react';
+import merge from 'lodash.merge';
 import { shallow, mount } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
 import FixtureList from '../';
 import populatedFixture from '../__fixtures__/populated';
 import populatedWithEditorFixture from '../__fixtures__/populated-with-editor';
-import populatedAndSelectedFixture
-  from '../__fixtures__/populated-and-selected';
+import populatedAndSelectedFixture from '../__fixtures__/populated-and-selected';
 
 const shallowLoader = element =>
   shallow(element)
@@ -120,12 +120,11 @@ describe('Select', () => {
 
   beforeEach(() => {
     onUrlChange = jest.fn();
-    const fixture = {
+    const fixture = merge({}, populatedFixture, {
       props: {
-        ...populatedFixture.props,
         onUrlChange,
       },
-    };
+    });
     wrapper = shallowLoader(
       <Loader component={FixtureList} fixture={fixture} />
     );
@@ -175,8 +174,8 @@ describe('Search', () => {
     // is visible
     const components = wrapper.find('.component');
     const fixtures = wrapper.find('.fixture');
-    expect(components.length).toBe(1);
-    expect(fixtures.length).toBe(1);
+    expect(components).toHaveLength(1);
+    expect(fixtures).toHaveLength(1);
     expect(components.at(0).text()).toContain('ComponentB');
     expect(fixtures.at(0).text()).toContain('qux');
   });

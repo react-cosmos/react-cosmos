@@ -42,7 +42,7 @@ const injectState = (component, state, cb) => {
 const getState = component => {
   const { state, refs } = component;
 
-  if (!state || !refs) {
+  if (!refs) {
     return state;
   }
 

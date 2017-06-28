@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
 import selectedFixture from '../__fixtures__/selected';
+import StarryBg from '../../StarryBg';
 import FixtureList from '../../FixtureList';
 import ComponentPlayground from '../';
 
@@ -73,7 +74,7 @@ describe('CP with fixture already selected', () => {
     window.removeEventListener('message', handleMessage);
   });
 
-  test('sends fixture select message to loader', () => {
+  it('sends fixture select message to loader', () => {
     expect(loaderContentWindow.postMessage).toHaveBeenCalledWith(
       {
         type: 'fixtureSelect',
@@ -91,11 +92,24 @@ describe('CP with fixture already selected', () => {
       props = wrapper.find(FixtureList).props();
     });
 
-    test('should send url params (component, fixture) to fixture list', () => {
+    it('should send url params (component, fixture) to fixture list', () => {
       expect(props.urlParams).toEqual({
         component: 'ComponentA',
         fixture: 'foo',
       });
+    });
+
+    it('clicking on selected fixture sends new message to loader', () => {
+      props.onUrlChange(window.location.href);
+      expect(loaderContentWindow.postMessage).toHaveBeenCalledTimes(2);
+      expect(loaderContentWindow.postMessage).toHaveBeenLastCalledWith(
+        {
+          type: 'fixtureSelect',
+          component: 'ComponentA',
+          fixture: 'foo',
+        },
+        '*'
+      );
     });
   });
 
@@ -103,28 +117,34 @@ describe('CP with fixture already selected', () => {
     const fixtureEditorUrl = '/?component=ComponentA&fixture=foo&editor=true';
     const fullScreenUrl = '/?component=ComponentA&fixture=foo&fullScreen=true';
 
-    test('should render home button', () => {
-      expect(wrapper.find('a[href="/"].button').length).toBe(1);
+    it('should render home button', () => {
+      expect(wrapper.find('a[href="/"].button')).toHaveLength(1);
     });
 
-    test('should not render selected home button', () => {
-      expect(wrapper.find('a[href="/"].selectedButton').length).toBe(0);
+    it('should not render selected home button', () => {
+      expect(wrapper.find('a[href="/"].selectedButton')).toHaveLength(0);
     });
 
-    test('should render fixture editor button', () => {
-      expect(wrapper.find(`a[href="${fixtureEditorUrl}"].button`).length).toBe(
+    it('should render fixture editor button', () => {
+      expect(wrapper.find(`a[href="${fixtureEditorUrl}"].button`)).toHaveLength(
         1
       );
     });
 
-    test('should not render selected fixture editor button', () => {
+    it('should not render selected fixture editor button', () => {
       expect(
         wrapper.find(`a[href="${fixtureEditorUrl}"].selectedButton`).length
       ).toBe(0);
     });
 
-    test('should render full screen button', () => {
-      expect(wrapper.find(`a[href="${fullScreenUrl}"].button`).length).toBe(1);
+    it('should render full screen button', () => {
+      expect(wrapper.find(`a[href="${fullScreenUrl}"].button`)).toHaveLength(1);
+    });
+  });
+
+  describe('content', () => {
+    it('should not render StarryBg', () => {
+      expect(wrapper.find(StarryBg)).toHaveLength(0);
     });
   });
 });
