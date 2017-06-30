@@ -164,12 +164,10 @@ describe('Select', () => {
     expect(onUrlChange).toHaveBeenCalledWith(fixtureQux.prop('href'));
   });
 
-
   test('should call select callback on component click', () => {
     wrapper.find('.component').at(1).simulate('click');
     expect(onUrlChange).toHaveBeenCalledWith('?component=ComponentB');
   });
-
 });
 
 describe('Search', () => {

@@ -110,7 +110,7 @@ export default class FixtureList extends Component {
               <div
                 key={i}
                 className={componentClassNames}
-                onClick={e => this.onComponentClick(component)}
+                onClick={() => this.onComponentClick(component)}
               >
                 <div className={styles.componentName}>
                   <FolderIcon />
