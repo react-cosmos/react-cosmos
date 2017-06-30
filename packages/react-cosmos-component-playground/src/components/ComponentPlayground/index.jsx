@@ -275,8 +275,9 @@ export default class ComponentPlayground extends Component {
       fullScreen,
     });
     const isFixtureSelected = Boolean(fixture);
+    const isComponentSelected = Boolean(component);
     const homeClassNames = classNames(styles.button, {
-      [styles.selectedButton]: !isFixtureSelected,
+      [styles.selectedButton]: !isFixtureSelected && !isComponentSelected,
     });
     const fixtureEditorClassNames = classNames(styles.button, {
       [styles.selectedButton]: editor,

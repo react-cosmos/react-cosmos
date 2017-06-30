@@ -71,9 +71,13 @@ export default class FixtureList extends Component {
 
   onFixtureClick = e => {
     e.preventDefault();
-
+    e.stopPropagation();
     this.props.onUrlChange(e.currentTarget.href);
   };
+
+  onComponentClick = component => {
+    this.props.onUrlChange(uri.stringifyParams({component}));
+  }
 
   render() {
     const { fixtures, urlParams } = this.props;
@@ -97,8 +101,17 @@ export default class FixtureList extends Component {
         </div>
         <div className={styles.list}>
           {components.map((component, i) => {
+            const componentClassNames = classNames(styles.component, {
+              [styles.componentSelected]:
+                component === urlParams.component &&
+                !urlParams.fixture,
+            });
             return (
-              <div key={i} className={styles.component}>
+              <div
+                key={i}
+                className={componentClassNames}
+                onClick={e => this.onComponentClick(component)}
+              >
                 <div className={styles.componentName}>
                   <FolderIcon />
                   <span>{component}</span>

@@ -6,6 +6,7 @@ import FixtureList from '../';
 import populatedFixture from '../__fixtures__/populated';
 import populatedWithEditorFixture from '../__fixtures__/populated-with-editor';
 import populatedAndSelectedFixture from '../__fixtures__/populated-and-selected';
+import populatedAndSelectedComponentFixture from '../__fixtures__/populated-and-selected-component';
 
 const shallowLoader = element =>
   shallow(element)
@@ -130,11 +131,12 @@ describe('Select', () => {
     );
   });
 
-  test('should call select callback on click', () => {
+  test('should call select callback on fixture click', () => {
     const componentA = wrapper.find('.component').at(0);
     const fixtureFoo = componentA.find('.fixture').at(0);
     fixtureFoo.simulate('click', {
       preventDefault: jest.fn(),
+      stopPropagation: jest.fn(),
       currentTarget: {
         href: fixtureFoo.prop('href'),
       },
@@ -143,11 +145,17 @@ describe('Select', () => {
     expect(onUrlChange).toHaveBeenCalledWith(fixtureFoo.prop('href'));
   });
 
-  test('should call select callback on click', () => {
+  test('should call select callback on component click', () => {
+    wrapper.find('.component').at(0).simulate('click');
+    expect(onUrlChange).toHaveBeenCalledWith('?component=ComponentA');
+  });
+
+  test('should call select callback on fixture click', () => {
     const componentB = wrapper.find('.component').at(1);
     const fixtureQux = componentB.find('.fixture').at(1);
     fixtureQux.simulate('click', {
       preventDefault: jest.fn(),
+      stopPropagation: jest.fn(),
       currentTarget: {
         href: fixtureQux.prop('href'),
       },
@@ -155,6 +163,13 @@ describe('Select', () => {
 
     expect(onUrlChange).toHaveBeenCalledWith(fixtureQux.prop('href'));
   });
+
+
+  test('should call select callback on component click', () => {
+    wrapper.find('.component').at(1).simulate('click');
+    expect(onUrlChange).toHaveBeenCalledWith('?component=ComponentB');
+  });
+
 });
 
 describe('Search', () => {
@@ -251,6 +266,22 @@ describe('Selected fixture', () => {
 
   test('should add extra class to selected fixture', () => {
     expect(wrapper.find('.fixtureSelected').length).toEqual(1);
+    expect(wrapper.find('.componentSelected').length).toEqual(0);
     expect(wrapper.find('.fixtureSelected').text()).toContain('bar');
+  });
+});
+
+describe('Selected component', () => {
+  let wrapper;
+
+  beforeEach(() => {
+    wrapper = shallowLoader(
+      <Loader component={FixtureList} fixture={populatedAndSelectedComponentFixture} />
+    );
+  });
+
+  test('should add extra class to selected component', () => {
+    expect(wrapper.find('.componentSelected').length).toEqual(1);
+    expect(wrapper.find('.componentSelected').text()).toContain('ComponentA');
   });
 });

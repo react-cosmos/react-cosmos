@@ -67,16 +67,16 @@
   height: @fixture-line-height + @default-spacing;
   margin: 0;
   padding: @default-spacing @default-spacing 0 @default-spacing;
-  color: @left-nav-color-selected;
+  color: @left-nav-color;
   font-size: @fixture-component-font-size;
   line-height: @fixture-line-height;
-  cursor: default;
+  cursor: pointer;
 
   svg {
     flex-shrink: 0;
     width: 20px;
     height: 20px;
-    fill: @left-nav-color-selected;
+    fill: @left-nav-color;
     margin-right: 0.5 * @default-spacing;
   }
 
@@ -84,6 +84,15 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+}
+
+.componentSelected .componentName {
+  background: @left-nav-bgcolor-selected;
+  color: @left-nav-color-selected;
+
+  svg {
+    fill: @left-nav-color-selected;
   }
 }
 
