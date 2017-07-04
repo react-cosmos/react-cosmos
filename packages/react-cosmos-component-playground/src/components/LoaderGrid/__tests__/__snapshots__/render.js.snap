@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoaderGrid blank renders correctly 1`] = `
+<div>
+  Grid of loaders
+</div>
+`;

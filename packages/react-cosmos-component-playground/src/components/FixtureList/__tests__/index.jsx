@@ -136,7 +136,6 @@ describe('Select', () => {
     const fixtureFoo = componentA.find('.fixture').at(0);
     fixtureFoo.simulate('click', {
       preventDefault: jest.fn(),
-      stopPropagation: jest.fn(),
       currentTarget: {
         href: fixtureFoo.prop('href'),
       },
@@ -146,7 +145,7 @@ describe('Select', () => {
   });
 
   test('should call select callback on component click', () => {
-    wrapper.find('.component').at(0).simulate('click');
+    wrapper.find('.componentName').at(0).simulate('click');
     expect(onUrlChange).toHaveBeenCalledWith('?component=ComponentA');
   });
 
@@ -155,7 +154,6 @@ describe('Select', () => {
     const fixtureQux = componentB.find('.fixture').at(1);
     fixtureQux.simulate('click', {
       preventDefault: jest.fn(),
-      stopPropagation: jest.fn(),
       currentTarget: {
         href: fixtureQux.prop('href'),
       },
@@ -165,7 +163,7 @@ describe('Select', () => {
   });
 
   test('should call select callback on component click', () => {
-    wrapper.find('.component').at(1).simulate('click');
+    wrapper.find('.componentName').at(1).simulate('click');
     expect(onUrlChange).toHaveBeenCalledWith('?component=ComponentB');
   });
 });

@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`StarryBg blank renders correctly 1`] = `
-<div>
-  Grid of loaders with one for each fixture
-</div>
-`;

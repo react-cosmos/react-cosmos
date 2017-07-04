@@ -71,7 +71,6 @@ export default class FixtureList extends Component {
 
   onFixtureClick = e => {
     e.preventDefault();
-    e.stopPropagation();
     this.props.onUrlChange(e.currentTarget.href);
   };
 
@@ -110,9 +109,10 @@ export default class FixtureList extends Component {
               <div
                 key={i}
                 className={componentClassNames}
-                onClick={() => this.onComponentClick(component)}
               >
-                <div className={styles.componentName}>
+                <div className={styles.componentName}
+                  onClick={() => this.onComponentClick(component)}
+                >
                   <FolderIcon />
                   <span>{component}</span>
                 </div>

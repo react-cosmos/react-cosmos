@@ -6,7 +6,7 @@ import localForage from 'localforage';
 import { uri } from 'react-querystring-router';
 import { HomeIcon, FullScreenIcon, CodeIcon } from '../SvgIcon';
 import StarryBg from '../StarryBg';
-import LoadersGrid from '../LoadersGrid';
+import ComponentPage from '../ComponentPage';
 import FixtureList from '../FixtureList';
 import WelcomeScreen from '../WelcomeScreen';
 import MissingScreen from '../MissingScreen';
@@ -245,8 +245,8 @@ export default class ComponentPlayground extends Component {
     const isMissingFixtureSelected =
       isFixtureSelected && !fixtureExists(fixtures, component, fixture);
     const isLoaderVisible = isFixtureSelected && !isMissingFixtureSelected;
-    const isGridVisible = isComponentSelected && !isFixtureSelected;
-    const isStarryVisible = !isLoaderVisible && !isGridVisible;
+    const isComponentPageVisible = isComponentSelected && !isFixtureSelected;
+    const isStarryVisible = !isLoaderVisible && !isComponentPageVisible;
     const classes = classNames(styles.content, {
       [styles.contentPortrait]: orientation === 'portrait',
       [styles.contentLandscape]: orientation === 'landscape',
@@ -264,8 +264,8 @@ export default class ComponentPlayground extends Component {
           </StarryBg>}
         {editor && !waitingForLoader && this.renderFixtureEditor()}
         {this.renderLoader(isLoaderVisible)}
-        {isGridVisible &&
-          <LoadersGrid />}
+        {isComponentPageVisible &&
+          <ComponentPage />}
       </div>
     );
   }

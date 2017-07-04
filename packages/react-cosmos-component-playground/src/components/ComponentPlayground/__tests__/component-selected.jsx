@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
 import selectedComponentFixture from '../__fixtures__/selected-component';
-import LoadersGrid from '../../LoadersGrid';
+import ComponentPage from '../../ComponentPage';
 import ComponentPlayground from '../';
 
 // Vars populated in beforeEach blocks
@@ -32,7 +32,7 @@ describe('CP with component already selected', () => {
 
   describe('component page init', () => {
     test('should render grid', () => {
-      expect(wrapper.find(LoadersGrid)).toHaveLength(1);
+      expect(wrapper.find(ComponentPage)).toHaveLength(1);
     });
   });
 });
