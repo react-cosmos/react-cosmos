@@ -19,7 +19,9 @@
     "touch": "^1.0.0"
   },
   "dependencies": {
+    "fs-extra": "^3.0.1",
     "glob": "^7.1.1",
+    "lodash.find": "^4.6.0",
     "react-cosmos-config": "^2.0.0-beta.15"
   },
   "xo": false

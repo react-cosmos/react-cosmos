@@ -1,16 +1,17 @@
 import { argv } from 'yargs';
-import { dirname } from 'path';
-import { existsSync, mkdirSync, writeFileSync } from 'fs';
+import { dirname, basename } from 'path';
 import getCosmosConfig from 'react-cosmos-config';
 import getFilePaths from './index';
 import reduce from 'lodash.reduce';
+import find from 'lodash.find';
+import fs from 'fs-extra';
 
 module.exports = function startCreateFixtures() {
-  createBlankFixturesForComponents(getComponentsWithoutFixtures());
+  const cosmosConfig = getCosmosConfig(argv.config);
+  createBlankFixturesForComponents(getComponentsWithoutFixtures(cosmosConfig), cosmosConfig);
 };
 
-function getComponentsWithoutFixtures() {
-  const cosmosConfig = getCosmosConfig(argv.config);
+function getComponentsWithoutFixtures(cosmosConfig) {
   const { components, fixtures } = getFilePaths(cosmosConfig);
   return reduce(
     components,
@@ -24,20 +25,19 @@ function getComponentsWithoutFixtures() {
   );
 }
 
-function createBlankFixturesForComponents(componentPaths) {
+function createBlankFixturesForComponents(componentPaths, cosmosConfig) {
   const result = reduce(
     componentPaths,
     (final, path, componentName) => {
-      const fixturesFolder = `${dirname(path)}/__fixtures__`;
-      const fixture = `${fixturesFolder}/default.js`;
+      const fixturesFolder = getFixturesFolder(path, cosmosConfig.componentPaths);
+      const fixture = `${fixturesFolder}/empty.js`;
       try {
-        ensureFixturesFolderExists(fixturesFolder);
-        writeFileSync(
+        fs.ensureDirSync(fixturesFolder);
+        fs.outputFileSync(
           fixture,
           `// Blank fixture created by cosmos-create-fixtures
     export default {};
-    `,
-          'utf8'
+    `
         );
         final.success.push({ componentName, fixture });
       } catch (err) {
@@ -56,9 +56,17 @@ function createBlankFixturesForComponents(componentPaths) {
   );
 }
 
-function ensureFixturesFolderExists(dirname) {
-  if (existsSync(dirname)) {
-    return;
+function getFixturesFolder(path, componentPaths) {
+  if (basename(path).match(new RegExp(`${basename(basename(dirname(path)))}.(js|jsx)$`))) {
+    //also works if you have one folder per component
+    return `${dirname(path)}/__fixtures__`;
   }
-  mkdirSync(dirname);
+  //By default, it looks for a __fixtures__ dir next to your components.
+  //TODO: improve this approach to finding root of components folder
+  const componentsFolder = find(componentPaths, p => path.indexOf(p) > -1);
+  const relativeComponentFolder = path.replace(componentsFolder, '');
+  return `${componentsFolder}/__fixtures__${relativeComponentFolder.substr(
+    0,
+    relativeComponentFolder.lastIndexOf('.')
+  ) || relativeComponentFolder}`;
 }
