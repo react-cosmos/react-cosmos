@@ -241,7 +241,7 @@ export default class ComponentPlayground extends Component {
     const { component, fixture, editor } = this.props;
     const { waitingForLoader, fixtures, orientation } = this.state;
     const isFixtureSelected = !waitingForLoader && Boolean(fixture);
-    const isComponentSelected = Boolean(component);
+    const isComponentSelected = !waitingForLoader && Boolean(component);
     const isMissingFixtureSelected =
       isFixtureSelected && !fixtureExists(fixtures, component, fixture);
     const isLoaderVisible = isFixtureSelected && !isMissingFixtureSelected;
@@ -265,7 +265,9 @@ export default class ComponentPlayground extends Component {
         {editor && !waitingForLoader && this.renderFixtureEditor()}
         {this.renderLoader(isLoaderVisible)}
         {isComponentPageVisible &&
-          <ComponentPage />}
+          <ComponentPage
+            fixtures={fixtures}
+            component={component} />}
       </div>
     );
   }

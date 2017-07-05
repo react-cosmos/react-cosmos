@@ -3,5 +3,9 @@
 exports[`ComponentPage blank renders correctly 1`] = `
 <div>
   ComponentPage
+  []
+  <div>
+    Grid of loaders
+  </div>
 </div>
 `;
