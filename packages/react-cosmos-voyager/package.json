@@ -19,7 +19,8 @@
     "touch": "^1.0.0"
   },
   "dependencies": {
-    "glob": "^7.1.1"
+    "glob": "^7.1.1",
+    "react-cosmos-config": "^2.0.0-beta.15"
   },
   "xo": false
 }

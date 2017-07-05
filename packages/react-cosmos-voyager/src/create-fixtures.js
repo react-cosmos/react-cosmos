@@ -2,13 +2,17 @@ import { argv } from 'yargs';
 import { dirname } from 'path';
 import { existsSync, mkdirSync, writeFileSync } from 'fs';
 import getCosmosConfig from 'react-cosmos-config';
-import getFilePaths from 'react-cosmos-voyager';
+import getFilePaths from './index';
 import reduce from 'lodash.reduce';
 
 module.exports = function startCreateFixtures() {
+  createBlankFixturesForComponents(getComponentsWithoutFixtures());
+};
+
+function getComponentsWithoutFixtures() {
   const cosmosConfig = getCosmosConfig(argv.config);
   const { components, fixtures } = getFilePaths(cosmosConfig);
-  const noFixtures = reduce(
+  return reduce(
     components,
     (final, componentPath, componentName) => {
       if (!fixtures[componentName] || Object.keys(fixtures[componentName]).length === 0) {
@@ -18,16 +22,11 @@ module.exports = function startCreateFixtures() {
     },
     {}
   );
-  if (Object.keys(noFixtures).length === 0) {
-    console.log('[Cosmos] No fixtures created. Every component has at least one fixture.');
-  } else {
-    createMissingFixtures(noFixtures);
-  }
-};
+}
 
-function createMissingFixtures(noFixtures) {
+function createBlankFixturesForComponents(componentPaths) {
   const result = reduce(
-    noFixtures,
+    componentPaths,
     (final, path, componentName) => {
       const fixturesFolder = `${dirname(path)}/__fixtures__`;
       const fixture = `${fixturesFolder}/default.js`;
@@ -35,9 +34,9 @@ function createMissingFixtures(noFixtures) {
         ensureFixturesFolderExists(fixturesFolder);
         writeFileSync(
           fixture,
-          `// Empty fixture created by cosmos-create-fixtures
-export default {};
-`,
+          `// Blank fixture created by cosmos-create-fixtures
+    export default {};
+    `,
           'utf8'
         );
         final.success.push({ componentName, fixture });
@@ -52,8 +51,8 @@ export default {};
     }
   );
   console.log(
-    `[Cosmos] Create Fixtures Result: ${result.success.length}/${Object.keys(noFixtures)
-      .length} Created`
+    `[Cosmos] Create Fixtures Result: ${result.success.length}/${Object.keys(componentPaths)
+      .length} Blank Fixtures Created`
   );
 }
 

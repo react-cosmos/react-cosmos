@@ -7,6 +7,6 @@ if (!argv.plain) {
   require('babel-register');
 }
 
-const startCreateFixtures = require('../lib/create-fixtures');
+const startCreateFixtures = require('react-cosmos-voyager/lib/create-fixtures');
 
 startCreateFixtures();
