@@ -57,12 +57,13 @@ function createBlankFixturesForComponents(componentPaths, cosmosConfig) {
 }
 
 function getFixturesFolder(path, componentPaths) {
-  if (basename(path).match(new RegExp(`${basename(basename(dirname(path)))}.(js|jsx)$`))) {
+  if (basename(path).match(new RegExp(`${basename(dirname(path))}.(js|jsx)$`))) {
     //also works if you have one folder per component
     return `${dirname(path)}/__fixtures__`;
   }
-  //By default, it looks for a __fixtures__ dir next to your components.
-  //TODO: improve this approach to finding root of components folder
+  // By default, it looks for a __fixtures__ dir next to your components.
+  // TODO: Improve this approach to finding root of components folder
+  // TODO: Handle cosmos config componentPaths as globs and file paths
   const componentsFolder = find(componentPaths, p => path.indexOf(p) > -1);
   const relativeComponentFolder = path.replace(componentsFolder, '');
   return `${componentsFolder}/__fixtures__${relativeComponentFolder.substr(
