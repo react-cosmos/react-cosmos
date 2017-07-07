@@ -8,7 +8,7 @@
     "install-react:0.14": "yarn run install-react -- react@^0.14.9 react-dom@^0.14.9",
     "install-react:15": "yarn run install-react -- react@^15.5.4 react-dom@^15.5.4",
     "lint": "xo --quiet",
-    "start": "./packages/react-cosmos-webpack/bin/cosmos.js --config examples/local-state/cosmos.config.js",
+    "start": "./examples/local-state/node_modules/.bin/cosmos --config examples/local-state/cosmos.config.js",
     "start:playground": "./packages/react-cosmos-webpack/bin/cosmos.js --config packages/react-cosmos-component-playground/cosmos.config.js",
     "build": "node ./scripts/build.js",
     "postinstall": "yarn run bootstrap && yarn run build",
