@@ -7,29 +7,17 @@ import find from 'lodash.find';
 import fs from 'fs-extra';
 
 module.exports = function startCreateFixtures() {
-  const cosmosConfig = getCosmosConfig(argv.config);
-  createBlankFixturesForComponents(getComponentsWithoutFixtures(cosmosConfig), cosmosConfig);
+  createBlankFixturesForComponents(getComponentsWithoutFixtures());
 };
 
-function getComponentsWithoutFixtures(cosmosConfig) {
-  const { components, fixtures } = getFilePaths(cosmosConfig);
-  return reduce(
-    components,
-    (final, componentPath, componentName) => {
-      if (!fixtures[componentName] || Object.keys(fixtures[componentName]).length === 0) {
-        final[componentName] = componentPath;
-      }
-      return final;
-    },
-    {}
-  );
+function getComponentsWithoutFixtures() {
+  return getFilePaths(getCosmosConfig(argv.config)).missingFixtures
 }
 
-function createBlankFixturesForComponents(componentPaths, cosmosConfig) {
+function createBlankFixturesForComponents(missingFixtures) {
   const result = reduce(
-    componentPaths,
-    (final, path, componentName) => {
-      const fixturesFolder = getFixturesFolder(path, cosmosConfig.componentPaths);
+    missingFixtures,
+    (final, fixturesFolder, componentName) => {
       const fixture = `${fixturesFolder}/empty.js`;
       try {
         fs.ensureDirSync(fixturesFolder);
@@ -51,23 +39,35 @@ function createBlankFixturesForComponents(componentPaths, cosmosConfig) {
     }
   );
   console.log(
-    `[Cosmos] Create Fixtures Result: ${result.success.length}/${Object.keys(componentPaths)
+    `[Cosmos] Create Fixtures Result: ${result.success.length}/${Object.keys(missingFixtures)
       .length} Blank Fixtures Created`
   );
 }
 
-function getFixturesFolder(path, componentPaths) {
-  if (basename(path).match(new RegExp(`${basename(dirname(path))}.(js|jsx)$`))) {
-    //also works if you have one folder per component
-    return `${dirname(path)}/__fixtures__`;
+/**
+ * returns folder to create fixtures in
+ * @param  {string} componentPath Directory from cosmos.config componentPaths that the component
+ *                                was found in. If using file paths, it the dir the file is in.
+ * @param  {string} filePath      component file path
+ * @param  {string} fixturesDir   __fixtures__ alternative from cosmos.config
+ * @return {string}               folder to create fixture in
+ */
+export function getFixturesFolderForComponent(componentPath, filePath, fixturesDir) {
+  if (basename(filePath).match(new RegExp(`${basename(dirname(filePath))}.(js|jsx)$`))) {
+    // Component's parent folder name matches component name
+    // This means the component is stored in its own folder
+    // Fixture should be created in fixture folder next to component
+    return `${dirname(filePath)}/${fixturesDir}`;
   }
-  // By default, it looks for a __fixtures__ dir next to your components.
-  // TODO: Improve this approach to finding root of components folder
-  // TODO: Handle cosmos config componentPaths as globs and file paths
-  const componentsFolder = find(componentPaths, p => path.indexOf(p) > -1);
-  const relativeComponentFolder = path.replace(componentsFolder, '');
-  return `${componentsFolder}/__fixtures__${relativeComponentFolder.substr(
+  // create fixture in root level fixturesDir with matching dir structure as component's filePath
+  return `${componentPath}/${fixturesDir}${getComponentFolderRelativeToComponentPath(filePath, componentPath)}`
+}
+
+function getComponentFolderRelativeToComponentPath(filePath, componentPath) {
+  const relativeToComponentPath = filePath.replace(componentPath, '')
+  // remove file extension
+  return relativeToComponentPath.substr(
     0,
-    relativeComponentFolder.lastIndexOf('.')
-  ) || relativeComponentFolder}`;
+    relativeToComponentPath.lastIndexOf('.')
+  ) || relativeToComponentPath;
 }

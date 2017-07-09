@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import glob from 'glob';
 import matchFixturePath from './match-fixture-path';
+import { getFixturesFolderForComponent } from './create-fixtures';
 import {
   COMPONENT_EXTENSIONS_GLOB,
   FIXTURE_EXTENSIONS_GLOB
@@ -58,7 +59,9 @@ const getFilePaths = ({
   const extFixtures = getExternalFixtures(fixturePaths);
   const components = {};
   const fixtures = {};
+  const missingFixtures = {};
 
+  // If componentPaths was a glob it would already be resolved as an array of paths
   componentPaths.forEach(componentPath => {
     if (fs.lstatSync(componentPath).isFile()) {
       if (typeof getComponentName !== 'function') {
@@ -75,6 +78,9 @@ const getFilePaths = ({
           ...glob.sync(`${componentDir}/**/${fixturesDir}/**/*.{${FIXTURE_EXTENSIONS_GLOB}}`),
           ...extFixtures,
         ], componentName, fixturesDir);
+      if (Object.keys(fixtures[componentName]).length === 0) {
+        missingFixtures[componentName] = getFixturesFolderForComponent(componentDir, componentPath, fixturesDir);
+      }
     } else {
       const relFixtures = glob.sync(`${componentPath}/**/${fixturesDir}/**/*.{${FIXTURE_EXTENSIONS_GLOB}}`);
       glob.sync(`${componentPath}/**/*.{${COMPONENT_EXTENSIONS_GLOB}}`).forEach(filePath => {
@@ -91,6 +97,9 @@ const getFilePaths = ({
         fixtures[componentName] = getMatchingFixtures(
           [...relFixtures, ...extFixtures], componentName, fixturesDir
         );
+        if (Object.keys(fixtures[componentName]).length === 0) {
+          missingFixtures[componentName] = getFixturesFolderForComponent(componentPath, filePath, fixturesDir);®
+        }
       });
     }
   });
@@ -98,6 +107,7 @@ const getFilePaths = ({
   return {
     components,
     fixtures,
+    missingFixtures
   };
 };
 
