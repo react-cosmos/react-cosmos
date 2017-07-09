@@ -16,11 +16,11 @@ Moreover, React Cosmos tries to answer the question: **How to design components 
 
 React Cosmos is a [monorepo](packages) powered by [Lerna](https://github.com/lerna/lerna). The monorepo structure makes it possible to publish independent packages while being able to have end-to-end tests for the whole project, and to easily link examples to unpublished packages.
 
-While the monorepo structure is powerful, it also creates limitations. Important to note:
+Important to note:
 
-- **Test and build tools are installed globally in the root node_modules.** This includes Jest, Babel, webpack, and their corresponding plugins and loaders. ESLint is also applied globally.
+- **Test and build tools are installed globally in the root node_modules.** This includes Jest, Babel, webpack, and their corresponding plugins and loaders. ESLint is also applied globally. Creating a new package has less overhead because of this.
 
-- **React and webpack deps are *hoisted* in the root node_modules.** The linked packages and examples are sibling directories, so they each have a separate node_modules dir. In real life, however, when Cosmos packages are installed in a user codebase, they all share a common node_modules. We simulate the real life scenario by deduplicate these dependencies.
+- **React and webpack deps are installed globally in the root node_modules.** The linked packages and examples are sibling directories, so they each have a separate node_modules dir. But, when Cosmos packages are installed in a user codebase, they all share a common node_modules. We simulate the real life scenario by deduplicate these dependencies.
 
 Because of the latter, integration tests or examples for older React or webpack version are not possible inside the monorepo. We should create external repos for testing React 0.14.x or webpack 1.x.
 
