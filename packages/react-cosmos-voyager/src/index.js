@@ -98,7 +98,7 @@ const getFilePaths = ({
           [...relFixtures, ...extFixtures], componentName, fixturesDir
         );
         if (Object.keys(fixtures[componentName]).length === 0) {
-          missingFixtures[componentName] = getFixturesFolderForComponent(componentPath, filePath, fixturesDir);®
+          missingFixtures[componentName] = getFixturesFolderForComponent(componentPath, filePath, fixturesDir);
         }
       });
     }
