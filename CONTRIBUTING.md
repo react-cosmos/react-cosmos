@@ -12,79 +12,107 @@ Moreover, React Cosmos tries to answer the question: **How to design components 
 
 [The Best Code is No Code At All.](http://blog.codinghorror.com/the-best-code-is-no-code-at-all/) Start with this in mind before writing code.
 
-React Cosmos is a [monorepo](packages) with many small packages. This makes it possible to design isolated units, but also to build and test all packages together (inside one of the [examples](examples)).
+### Monorepo
+
+React Cosmos is a [monorepo](packages) powered by [Lerna](https://github.com/lerna/lerna). The monorepo structure makes it possible to publish independent packages while being able to have end-to-end tests for the whole project, and to easily link examples to unpublished packages.
+
+Important to note:
+
+- **Test and build tools are installed globally in the root node_modules.** This includes Jest, Babel, webpack, and their corresponding plugins and loaders. ESLint is also applied globally. Creating a new package has less overhead because of this.
+
+- **React and webpack deps are installed globally in the root node_modules.** The linked packages and examples are sibling directories, so they each have a separate node_modules dir. But, when Cosmos packages are installed in a user codebase, they all share a common node_modules. We simulate the real life scenario by deduplicate these dependencies.
+
+Because of the latter, integration tests or examples for older React or webpack version are not possible inside the monorepo. We should create external repos for testing React 0.14.x or webpack 1.x.
 
 ### Playground ⇆ Loader communication
 
-The Cosmos UI is built out of two frames (both conceptually but also literally–components are loaded inside an `iframe` for full encapsulation). Because the Playground and the Loader aren't part of the same frame, we use `postMessage` to communicate back and forth.
+The Cosmos UI is made out of two frames. Components are loaded inside an `iframe` for full encapsulation. Because the Playground and the Loader aren't part of the same frame, we use `postMessage` to communicate back and forth.
 
-From Playground to Loader:
+#### Playground to Loader
 
-- User selects fixture
-  ```js
-  {
-    type: 'fixtureSelect',
-    component: 'Message',
-    fixture: 'multiline'
-  }
-  ```
-- User edits fixture body inside editor
-  ```js
-  {
-    type: 'fixtureEdit',
-    fixtureBody: {
-      // serializable stuff
-    }
-  }
-  ```
+##### User selects fixture
 
-From Loader to Playground:
+```js
+{
+  type: 'fixtureSelect',
+  component: 'Message',
+  fixture: 'multiline'
+}
+```
+##### User edits fixture body inside editor
 
-- Loader frame loads, sends user fixture list and is ready to receive messages (happens once per full browser refresh)
-  ```js
-  {
-    type: 'loaderReady',
-    fixtures: {
-      ComponentA: ['fixture1', 'fixture2'],
-    }
+```js
+{
+  type: 'fixtureEdit',
+  fixtureBody: {
+    // serializable stuff
   }
-  ```
-- Fixture list updates due to changes on disk (received by Loader via webpack HMR)
-  ```js
-  {
-    type: 'fixtureListUpdate',
-    fixtures: {
-      ComponentA: ['fixture1', 'fixture2', 'fixture3']
-    }
-  }
-  ```
-- Fixture is loaded and serializable fixture body is sent
-  ```js
-  {
-    type: 'fixtureLoad',
-    fixtureBody: {
-      // serializable stuff
-    }
-  }
-  ```
-- Fixture updates due to state changes (local state, Redux or custom) or due
-to changes on disk (received by Loader via webpack HMR)
-  ```js
-  {
-    type: 'fixtureUpdate',
-    fixtureBody: {
-      // serializable stuff
-    }
-  }
-  ```
+}
+```
 
-Order of events at init:
+#### Loader to Playground
+
+##### Loader frame loads and is ready to receive messages
+
+Includes user fixture list. Happens once per full browser refresh.
+
+```js
+{
+  type: 'loaderReady',
+  fixtures: {
+    ComponentA: ['fixture1', 'fixture2'],
+  }
+}
+```
+
+##### Fixture list updats due to changes on disk
+
+webpack HMR updates Loader with the latest fixture list.
+
+```js
+{
+  type: 'fixtureListUpdate',
+  fixtures: {
+    ComponentA: ['fixture1', 'fixture2', 'fixture3']
+  }
+}
+```
+
+##### Fixture loads
+
+Serializable fixture body is attached, which the Playground uses for the fixture editor.
+
+```js
+{
+  type: 'fixtureLoad',
+  fixtureBody: {
+    // serializable stuff
+  }
+}
+```
+
+##### Fixture updates
+
+Due to state changes (local state, Redux or custom) or due to changes on disk (received by Loader via webpack HMR).
+
+```js
+{
+  type: 'fixtureUpdate',
+  fixtureBody: {
+    // serializable stuff
+  }
+}
+```
+
+#### Order of events
+
+Init:
 
 1. Playground renders in loading state and Loader `<iframe>` is added to DOM
 1. Loader renders inside iframe and sends `loaderReady` event to *window.parent*, along with user fixture list
 1. Playground receives `loaderReady` event, puts fixture list in state and exists the loading state
 
-Order of events on selecting fixture:
+Selecting fixture:
 
 1. Playground sends `fixtureSelect` event to Loader with the selected component + fixture pair
 1. Loader receives `fixtureSelect` and renders corresponding component fixture (wrapped in user configured Proxy chain)
