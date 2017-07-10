@@ -60,7 +60,7 @@ export function getFixturesFolderForComponent(componentPath, filePath, fixturesD
     return `${dirname(filePath)}/${fixturesDir}`;
   }
   // Create fixture in root level fixturesDir with matching dir structure as component's filePath
-  return `${componentPath}/${fixturesDir}${getComponentFolderRelativeToComponentPath(componentPath, filePath)}`
+  return `${componentPath}/${fixturesDir}${getDirStructureforComponent(componentPath, filePath)}`
 }
 
 /**
@@ -72,7 +72,7 @@ export function getFixturesFolderForComponent(componentPath, filePath, fixturesD
  * @param  {string} filePath      component file path
  * @return {string}               Dir path of component relative to componentPath
  */
-function getComponentFolderRelativeToComponentPath(componentPath, filePath) {
+function getDirStructureforComponent(componentPath, filePath) {
   return removeFileExtension(filePath.replace(componentPath, ''))
 }
 
