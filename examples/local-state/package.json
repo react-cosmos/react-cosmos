@@ -4,7 +4,8 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/local-state",
   "license": "MIT",
   "scripts": {
-    "start": "node ../../packages/react-cosmos-webpack/bin/cosmos.js"
+    "start": "node ../../packages/react-cosmos-webpack/bin/cosmos.js",
+    "create-fixtures": "node ../../packages/react-cosmos-webpack/bin/cosmos-create-fixtures.js"
   },
   "xo": false
 }
