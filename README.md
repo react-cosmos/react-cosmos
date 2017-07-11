@@ -102,7 +102,7 @@ Bonus: Create `npm run cosmos` script for extra sugar
 ```js
 // package.json
 "scripts": {
-  "cosmos": "cosmos"
+  "cosmos": "NODE_ENV=development cosmos"
 }
 ```
 
@@ -241,7 +241,9 @@ Define `.babelrc` to enable ES6 in config & fixtures, using the CRA preset.
 }
 ```
 
-Finally, make sure to put [proxies](#proxies) in the `src` dir, the only place included by the CRA Babel loader.
+Finally, make sure to:
+- Set `NODE_ENV=development` when running `cosmos`
+- Put [proxies](#proxies) in the `src` dir, the only place included by the CRA Babel loader.
 
 *CRA + Cosmos example: [Flatris](https://github.com/skidding/flatris)*
 
