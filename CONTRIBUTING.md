@@ -175,11 +175,7 @@ yarn run test-jest -- --watch
 
 #### Write tests, preferably before implementation
 
-Use [Jest](https://facebook.github.io/jest/) for unit testing. Here are some examples:
-- [Tests for react-cosmos-redux-proxy](packages/react-cosmos-redux-proxy/src/__tests__/index.js)
-- [Tests for react-cosmos-webpack](packages/react-cosmos-webpack/src/__tests__)
-
-Older packages are tested with Mocha and Karma, but those tests are considered legacy.
+Use [Jest](https://facebook.github.io/jest/) for unit testing. Look inside `__tests__` folders for examples.
 
 #### Keep coding style consistent
 
