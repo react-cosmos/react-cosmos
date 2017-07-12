@@ -37,19 +37,19 @@ export default function getLoaderWebpackConfig(
 
   const output = {
     path: shouldExport ? `${outputPath}/loader/` : '/loader/',
-    filename: 'bundle.js',
+    filename: '[name].js',
     publicPath: shouldExport ? './' : '/loader/',
   };
 
   // To support webpack 1 and 2 configuration formats. So we use the one that user passes
-  const webpackRulesOptionName = userWebpackConfig.module &&
-    userWebpackConfig.module.rules
-    ? 'rules'
-    : 'loaders';
-  const rules = userWebpackConfig.module &&
-    userWebpackConfig.module[webpackRulesOptionName]
-    ? [...userWebpackConfig.module[webpackRulesOptionName]]
-    : [];
+  const webpackRulesOptionName =
+    userWebpackConfig.module && userWebpackConfig.module.rules
+      ? 'rules'
+      : 'loaders';
+  const rules =
+    userWebpackConfig.module && userWebpackConfig.module[webpackRulesOptionName]
+      ? [...userWebpackConfig.module[webpackRulesOptionName]]
+      : [];
   const plugins = userWebpackConfig.plugins
     ? [...userWebpackConfig.plugins]
     : [];

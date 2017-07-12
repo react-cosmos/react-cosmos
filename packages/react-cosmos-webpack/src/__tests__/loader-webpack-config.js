@@ -252,7 +252,7 @@ describe('output', () => {
     test('creates proper output', () => {
       expect(webpackConfig.output).toEqual({
         path: '/loader/',
-        filename: 'bundle.js',
+        filename: '[name].js',
         publicPath: '/loader/',
       });
     });
@@ -270,7 +270,7 @@ describe('output', () => {
     test('creates proper output', () => {
       expect(webpackConfig.output).toEqual({
         path: '__mock__outputPath/loader/',
-        filename: 'bundle.js',
+        filename: '[name].js',
         publicPath: './',
       });
     });
