@@ -233,15 +233,7 @@ module.exports = {
 };
 ```
 
-Define `.babelrc` to enable ES6 in config & fixtures, using the CRA preset.
-
-```json
-{
-  "presets": ["react-app"]
-}
-```
-
-Finally, make sure to:
+Also make sure to:
 - Set `NODE_ENV=development` when running `cosmos`
 - Put [proxies](#proxies) in the `src` dir, the only place included by the CRA Babel loader.
 
@@ -290,7 +282,7 @@ module.exports = {
 };
 ```
 
-Define `.babelrc` to enable ES6 in config & fixtures, using the Next.js preset.
+Define `.babelrc` for the Cosmos webpack config to rely on the Next.js preset.
 
 ```json
 {
@@ -299,20 +291,6 @@ Define `.babelrc` to enable ES6 in config & fixtures, using the Next.js preset.
 ```
 
 *Next.js + Cosmos example: [Illustrated Algorithms](https://github.com/skidding/illustrated-algorithms)*
-
-#### Using webpack 2
-
-From [the new webpack docs](https://webpack.js.org/guides/migrating/#mixing-es2015-with-amd-and-commonjs):
-
-> It is important to note that you will want to tell Babel to not parse these module symbols so webpack can use them. You can do this by setting the following in your `.babelrc` or babel-loader options.
->
-> ```json
-> {
->  "presets": [
->    ["es2015", { "modules": false }]
->  ]
-> }
-> ```
 
 #### Using babel-node
 
