@@ -121,10 +121,9 @@ Also see:
 
 #### Configuring index.html
 
-> *"Cannot GET /loader/"*
+> *GET http://localhost:8989/loader/index.html 404 (Not Found)*
 
-You might be greeted by this error when using a custom webpack config. There
-are two methods for configuring the index.html page:
+The browser console might greet you with this error when using a custom webpack config. There are two methods for configuring the Loader index.html page:
 
 1. Use [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin)
 2. Put a static index.html file in your public path (see `publicPath` option below)
