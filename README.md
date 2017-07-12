@@ -128,7 +128,7 @@ The browser console might greet you with this error when using a custom webpack 
 1. Use [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin)
 2. Put a static index.html file in your public path (see `publicPath` option below)
 
-**Using `html-webpack-plugin` is recommended** because it automatically injects the `<script>` tag in the index.html file. If you create your own index.html then make sure the script tag points to "main.js".
+**Using `html-webpack-plugin` is recommended** because it automatically injects the `<script>` tag in index.html. If you create your own index.html then make sure the script tag points to "main.js".
 
 ```html
 <script src="./main.js"></script>
