@@ -18,7 +18,6 @@ export default function getLoaderWebpackConfig(
   const {
     containerQuerySelector,
     globalImports,
-    hmrPlugin,
     hot,
     outputPath,
   } = cosmosConfig;
@@ -80,7 +79,7 @@ export default function getLoaderWebpackConfig(
     })
   );
 
-  if (hmrPlugin && !shouldExport) {
+  if (hot && !shouldExport) {
     plugins.push(new webpack.HotModuleReplacementPlugin());
   }
 

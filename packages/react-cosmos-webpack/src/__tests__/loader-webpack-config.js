@@ -150,16 +150,6 @@ describe('with hmr', () => {
       `${require.resolve('webpack-hot-middleware/client')}?reload=true`
     );
   });
-});
-
-describe('with hmr plugin', () => {
-  beforeEach(() => {
-    mockCosmosConfig = {
-      globalImports: [],
-      hmrPlugin: true,
-    };
-    webpackConfig = getWebpackConfig(userWebpack2Config, cosmosConfigPath);
-  });
 
   test('adds HotModuleReplacementPlugin', () => {
     expect(webpackConfig.plugins).toContain(mockHotModuleReplacementPlugin);
@@ -285,7 +275,6 @@ describe('with shouldExport true', () => {
       ignore: [],
       globalImports: ['./global.css'],
       hot: true,
-      hmrPlugin: true,
       outputPath: '__mock__outputPath',
       containerQuerySelector: '__mock__containerQuerySelector',
     };
