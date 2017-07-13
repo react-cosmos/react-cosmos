@@ -232,42 +232,29 @@ module.exports = {
 ```
 
 Also make sure to:
-- Set `NODE_ENV=development` when running `cosmos`
-- Put [proxies](#proxies) in the `src` dir, the only place included by the CRA Babel loader.
+- Run `cosmos` with `NODE_ENV=development`
+- Put [proxies](#proxies) in the `src` dir–the only place included by the CRA Babel loader
 
 *CRA + Cosmos example: [Flatris](https://github.com/skidding/flatris)*
 
 #### Using React Redux Starter Kit
 
-It's preferred to use the starter kit's own webpack config `build/webpack.config.js` (instead of duplicating it), but modifications are needed.
-
-Add a `__PLAYGROUND__` environment (~line 10)
+It's preferred to use the starter kit's own webpack config (instead of duplicating it).
 
 ```js
-const __PLAYGROUND__ = project.env === 'playground'
+// cosmos.config.js
+module.exports = {
+  componentPaths: [
+    'src/routes/Counter/components',
+    'src/routes/Home/components'
+  ],
+  webpackConfigPath: 'build/webpack.config.js'
+}
 ```
 
-Disable extractStyles when running in playground (~line 97)
-
-```js
-// old
-  disable: __DEV__, 
-
-// new
-  disable: __DEV__ || __PLAYGROUND__,
-```
-
-Ensure bundle splitting doesn't happen when running in playground (~line 198)
-
-```js
-// old
-if (!__TEST__) { 
-
-// new
-if (!__TEST__ && !__PLAYGROUND__) { 
-```
-
-Just run it with your `NODE_ENV` set to `playground` and all should be good! Don't forget to set up the redux proxy :)
+Also make sure to:
+- Run `cosmos` with `NODE_ENV=development`
+- Set up the [Redux proxy](#react-cosmos-context-proxy) :)
 
 #### Using Next.js
 
