@@ -2,12 +2,25 @@ import React, { Component } from 'react';
 import { objectOf, arrayOf, string } from 'prop-types';
 import LoaderGrid from '../LoaderGrid';
 
+const stringify = value => JSON.stringify(value, null, 2);
+
 export default class ComponentPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       gridData: this.getGridData(props)
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (
+      stringify(nextProps.fixtures) !== stringify(this.props.fixtures) ||
+      stringify(nextProps.component) !== stringify(this.props.component)
+    ) {
+      this.setState({
+        gridData: this.getGridData(nextProps)
+      });
+    }
   }
 
   getGridData(props) {
@@ -35,5 +48,6 @@ export default class ComponentPage extends Component {
 }
 
 ComponentPage.propTypes = {
-  fixtures: objectOf(arrayOf(string))
+  fixtures: objectOf(arrayOf(string)),
+  component: string
 };
