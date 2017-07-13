@@ -110,7 +110,7 @@ Init:
 
 1. Playground renders in loading state and Loader `<iframe>` is added to DOM
 1. Loader renders inside iframe and sends `loaderReady` event to *window.parent*, along with user fixture list
-1. Playground receives `loaderReady` event, puts fixture list in state and exists the loading state
+1. Playground receives `loaderReady` event, puts fixture list in state and exits the loading state
 
 Selecting fixture:
 
