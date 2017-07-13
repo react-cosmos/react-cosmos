@@ -2,6 +2,12 @@ import webpack from 'webpack';
 import omit from 'lodash.omit';
 import getCosmosConfig from 'react-cosmos-config';
 
+const alreadyHasHmrPlugin = ({ plugins }) =>
+  plugins &&
+  plugins.filter(
+    p => p.constructor && p.constructor.name === 'HotModuleReplacementPlugin'
+  ).length > 0;
+
 /**
  * Extend the user config to create the Loader config. Namely,
  * - Replace the entry and output
@@ -80,7 +86,9 @@ export default function getLoaderWebpackConfig(
   );
 
   if (hot && !shouldExport) {
-    plugins.push(new webpack.HotModuleReplacementPlugin());
+    if (!alreadyHasHmrPlugin(userWebpackConfig)) {
+      plugins.push(new webpack.HotModuleReplacementPlugin());
+    }
   }
 
   return {
