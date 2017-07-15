@@ -102,4 +102,20 @@ describe('Local state example', () => {
       cy.get('.CodeMirror-line:eq(10)').should('contain', '"value": 3');
     });
   });
+
+  context('fixture update', () => {
+    before(() => {
+      // Click three times on the first button
+      cy.get('iframe').then($iframe => {
+        const $firstButton = $iframe.contents().find('button:first');
+        $firstButton.trigger('click');
+        $firstButton.trigger('click');
+        $firstButton.trigger('click');
+      });
+    });
+
+    it('should update fixture contents inside editor', () => {
+      cy.get('.CodeMirror-line:eq(4)').should('contain', '"value": 4');
+    });
+  });
 });
