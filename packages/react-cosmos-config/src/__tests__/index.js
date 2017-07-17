@@ -175,16 +175,14 @@ describe('defaults', () => {
   test('provide hot reloading', () => {
     mockUserConfig('./mock-cwd/cosmos.config', {});
 
-    const { hot, hmrPlugin } = getCosmosConfig();
+    const { hot } = getCosmosConfig();
     expect(hot).toBe(true);
-    expect(hmrPlugin).toBe(true);
   });
 
   test('are extended', () => {
-    mockUserConfig('./mock-cwd/cosmos.config', { hmrPlugin: false });
+    mockUserConfig('./mock-cwd/cosmos.config', { hot: false });
 
-    const { hot, hmrPlugin } = getCosmosConfig();
-    expect(hot).toBe(true);
-    expect(hmrPlugin).toBe(false);
+    const { hot } = getCosmosConfig();
+    expect(hot).toBe(false);
   });
 });

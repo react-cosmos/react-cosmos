@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   componentPaths: ['components'],
   proxies: ['./context-proxy'],
 };
