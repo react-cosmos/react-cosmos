@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import createContextProxy from '../../packages/react-cosmos-context-proxy';
+import createContextProxy from 'react-cosmos-context-proxy';
 
 export default () => {
   return createContextProxy({

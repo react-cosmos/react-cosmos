@@ -1,0 +1,20 @@
+{
+  "name": "react-cosmos-webpack-dll-example",
+  "version": "2.0.0-beta.17",
+  "description": "Example of webpack & DllPlugin",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/webpack-dll",
+  "license": "MIT",
+  "scripts": {
+    "build-dll": "../../node_modules/.bin/webpack --config webpack.vendor.config.js",
+    "start": "yarn run build-dll && cosmos"
+  },
+  "dependencies": {
+    "moment": "^2.18.1",
+    "react-cosmos-webpack": "^2.0.0-beta.16"
+  },
+  "xo": false,
+  "devDependencies": {
+    "add-asset-html-webpack-plugin": "^2.0.1",
+    "html-webpack-plugin": "^2.29.0"
+  }
+}

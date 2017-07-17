@@ -4,3 +4,4 @@ coverage
 npm-debug.log
 cypress/screenshots
 cypress/videos
+examples/webpack-dll/build
