@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
 // This config doesn't have entry and output set up because it's not meant to
 // work standalone. react-cosmos-webpack adds an entry & output when extending this.
@@ -21,14 +20,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'React Cosmos',
     }),
-    new AddAssetHtmlPlugin({
-      filepath: require.resolve('./build/dll.vendor'),
-      includeSourcemap: false,
-    }),
-    new webpack.DllReferencePlugin({
-      context: __dirname,
-      manifest: require('./build/vendor-manifest.json'),
-      extensions: ['.js'],
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['manifest'],
     }),
   ],
 };
