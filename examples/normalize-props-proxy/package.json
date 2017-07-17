@@ -1,8 +1,8 @@
 {
-  "name": "react-cosmos-local-state-example",
+  "name": "react-cosmos-normalize-props-proxy-example",
   "version": "2.0.0-beta.17",
-  "description": "Example of injecting and serializing component local state",
-  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/local-state",
+  "description": "Example of using normalize-props-proxy",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/normalize-props-proxy",
   "license": "MIT",
   "scripts": {
     "start": "cosmos"
