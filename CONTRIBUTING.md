@@ -1,14 +1,53 @@
+Hello, fellow human!
+
+You seem to be interested in the inner workings of Cosmos. Good news, we've been expecting you. Before continuing, we kindly ask you to respect the terms of the [Contributor Code of Conduct](CODE_OF_CONDUCT.md). Thanks!
+
+Jump to:
+
+- [Mission](#mission)
+- [Goals](#goals)
+- [Tracking](#tracking)
+- [Architecture](#architecture)
+  - [Monorepo](#monorepo)
+  - [Playground & Loader](#playground--loader-communication)
+  - [webpack](#webpack)
+- [How to contribute](#how-to-contribute)
+
 ## Mission
 
-To scale UI development linearly by prioritising on component design in isolation.
+**To preserve harmony in UI projects by making component reusability simple & fun.**
 
-At the core is the assumption that complexity in large apps stems from hidden links between parts. Tedious as it can be to uncover each and every component dependency, committing to it promises predictability and long term sanity.
+Cosmos is built on the assumption that complexity in large apps stems from hidden links between parts. Tedious as it can be to uncover each and every component dependency, committing to it promises predictability and long term sanity.
 
-Moreover, React Cosmos tries to answer the question: **How to design components that are truly reusable?**
+## Goals
 
-*For more context see [manifesto](https://github.com/react-cosmos/react-cosmos/wiki/Manifesto) and [problem analysis](https://github.com/react-cosmos/react-cosmos/wiki/Problem) written back in 2014, before code was written.*
+All contributions should be in line with these long term goals. Contributions that advance these goals have higher priority.
 
-## Design
+- [#PainlessOnboarding](https://github.com/react-cosmos/react-cosmos/labels/%PainlessOnboarding) DX is king. Minimize initial config and integrate easily with popular tools and starter kits.
+
+- [#MockEverything](https://github.com/react-cosmos/react-cosmos/labels/%23MockEverything) Every component input can and should be mocked. Redux state, Router context, API responses. No input left unmocked.
+
+- [#UniversalComponentPlayground](https://github.com/react-cosmos/react-cosmos/labels/%23UniversalComponentPlayground) Abstract the core from the React loader and allow other rendering engines to plug into Cosmos.
+
+## Tracking
+
+[Projects](https://github.com/react-cosmos/react-cosmos/projects) are used to track large releases. [Issues](https://github.com/react-cosmos/react-cosmos/issues) are used for everything else.
+
+#### Issue labels
+
+Issues are first categorised as one of the following:
+- `hmm` Questions and support
+- `oops` Bugs
+- `i have a dream` Feature proposals
+
+Once a draft progresses, it will go through the following phases:
+- `needs love` Good ideas without a plan
+- `free for all` Can be picked up by anyone
+- `on it` Work in progress
+
+There's also a label for each long term goal.
+
+## Architecture
 
 [The Best Code is No Code At All.](http://blog.codinghorror.com/the-best-code-is-no-code-at-all/) Start with this in mind before writing code.
 
@@ -28,120 +67,25 @@ Because of the latter, integration tests or examples for older React or webpack 
 
 The Cosmos UI is made out of two frames. Components are loaded inside an `iframe` for full encapsulation. Because the Playground and the Loader aren't part of the same frame, we use `postMessage` to communicate back and forth.
 
-#### Playground to Loader
+Read about all event payloads and their order [here](docs/playground-loader.md).
 
-##### User selects fixture
+### webpack
 
-```js
-{
-  type: 'fixtureSelect',
-  component: 'Message',
-  fixture: 'multiline'
-}
-```
-##### User edits fixture body inside editor
+`react-cosmos-webpack` extends the user's webpack config or fallbacks to a default config with Babel and CSS loaders.
 
-```js
-{
-  type: 'fixtureEdit',
-  fixtureBody: {
-    // serializable stuff
-  }
-}
-```
+The entry file of the resulting webpack config mounts `RemoteLoader`, together with all the user components, fixtures and proxies. **The component and fixture paths are injected statically in the Loader bundle** via [module-loader.js](../packages/react-cosmos-webpack/src/module-loader.js)—a custom webpack loader.
 
-#### Loader to Playground
+Using webpack-dev-middleware, the webpack config is attached to an Express server, which serves the Playground bundle at `/` and the Loader bundle at `/loader/`. The server will also serve a static directory when the `publicPath` option is used.
 
-##### Loader frame loads and is ready to receive messages
-
-Includes user fixture list. Happens once per full browser refresh.
-
-```js
-{
-  type: 'loaderReady',
-  fixtures: {
-    ComponentA: ['fixture1', 'fixture2'],
-  }
-}
-```
-
-##### Fixture list updats due to changes on disk
-
-webpack HMR updates Loader with the latest fixture list.
-
-```js
-{
-  type: 'fixtureListUpdate',
-  fixtures: {
-    ComponentA: ['fixture1', 'fixture2', 'fixture3']
-  }
-}
-```
-
-##### Fixture loads
-
-Serializable fixture body is attached, which the Playground uses for the fixture editor.
-
-```js
-{
-  type: 'fixtureLoad',
-  fixtureBody: {
-    // serializable stuff
-  }
-}
-```
-
-##### Fixture updates
-
-Due to state changes (local state, Redux or custom) or due to changes on disk (received by Loader via webpack HMR).
-
-```js
-{
-  type: 'fixtureUpdate',
-  fixtureBody: {
-    // serializable stuff
-  }
-}
-```
-
-#### Order of events
-
-Init:
-
-1. Playground renders in loading state and Loader `<iframe>` is added to DOM
-1. Loader renders inside iframe and sends `loaderReady` event to *window.parent*, along with user fixture list
-1. Playground receives `loaderReady` event, puts fixture list in state and exits the loading state
-
-Selecting fixture:
-
-1. Playground sends `fixtureSelect` event to Loader with the selected component + fixture pair
-1. Loader receives `fixtureSelect` and renders corresponding component fixture (wrapped in user configured Proxy chain)
-1. User component renders, callback `ref` is bubbled up to Loader and `fixtureLoad` event is sent to Playground together with the serializable body of the selected fixture
-1. Playground receives serializable fixture body, puts it in state and uses it as the JSON contents of the fixture editor
-
-## Progress
-
-[Projects](https://github.com/react-cosmos/react-cosmos/projects) are used to track large releases. [Issues](https://github.com/react-cosmos/react-cosmos/issues) are used for everything else.
-
-#### Issue labels
-
-Issues are first categorised as one of the following:
-- `hmm` Questions and support
-- `oops` Bugs
-- `i have a dream` Ideas and feature proposals
-
-Once a draft progresses, it will go through the following phases:
-- `needs love` Accepted ideas without a clear implementation plan
-- `free for all` Detailed issues that can be picked up by anyone
-- `on it` Work in progress
+Static exporting is almost identical to development mode, except that it saves the webpack build to disk instead of attaching it to a running Express server.
 
 ## How to contribute
 
-A great way to start is by picking up a [`free for all`](https://github.com/react-cosmos/react-cosmos/issues?q=is%3Aopen+is%3Aissue+label%3A%22free+for+all%22) issue.
+A great way to start is by picking up a [`free for all`](https://github.com/react-cosmos/react-cosmos/issues?q=is%3Aopen+is%3Aissue+label%3A%22free+for+all%22) issue. Keep the project [goals](#goals) in mind.
 
 #### Be kind and thoughtful
 
-Most of us are doing this for free, so be realistic and don't expect special treatment. The better we communicate the more likely we'll end up collaborating.
+We are doing this for free, so be realistic and don't expect special treatment. The better we communicate the more likely we'll end up collaborating.
 
 #### Ask for review
 
@@ -158,12 +102,8 @@ cd react-cosmos
 # Install deps and link child packages (using Lerna)
 yarn
 
-# Optional: build everything using older React versions
-yarn run install-react:0.14
-
-# Build example from source and test React Cosmos holistically
+# Build example from source and test React Cosmos end to end
 cd examples/context
-yarn
 yarn start
 
 # Watch & build single package (running example will live reload)
@@ -187,4 +127,4 @@ Nothing fancy, just the usual the [GitHub flow.](https://guides.github.com/intro
 
 ---
 
-Please note that this project is released with a [Contributor Code of Conduct.](CODE_OF_CONDUCT.md) By participating in this project you agree to abide by its terms.
+*Have a question or idea to share? See you on [Slack](https://join-react-cosmos.now.sh/).*
