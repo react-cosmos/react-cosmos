@@ -40,7 +40,7 @@
     "glob": "^7.1.2",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^20.0.4",
-    "lerna": "^2.0.0-rc.4",
+    "lerna": "^2.0.0",
     "less": "^2.7.1",
     "less-loader": "^4.0.4",
     "prop-types": "^15.5.10",
