@@ -33,7 +33,7 @@
     "css-loader": "^0.28.4",
     "cypress-cli": "^0.13.1",
     "enzyme": "^2.9.1",
-    "eslint-config-xo-react": "^0.12.0",
+    "eslint-config-xo-react": "^0.13.0",
     "eslint-import-resolver-webpack": "^0.8.3",
     "eslint-plugin-react": "^7.1.0",
     "file-loader": "^0.11.2",
