@@ -2,6 +2,8 @@ Hello, fellow human!
 
 You seem to be interested in the inner workings of Cosmos. Good news, we've been expecting you. Before continuing, we kindly ask you to respect the terms of the [Contributor Code of Conduct](CODE_OF_CONDUCT.md). Thanks!
 
+Jump to:
+
 - [Mission](#mission)
 - [Goals](#goals)
 - [Tracking](#tracking)
