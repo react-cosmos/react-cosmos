@@ -50,7 +50,7 @@ React Cosmos works best with webpack. Making it work with other bundlers takes e
 
 Jump to:
 
-- [Getting started](#getting-started)
+- **[Getting started](#getting-started)**
 - [Fixtures](#fixtures)
   - [What's a fixture?](#whats-a-fixture)
   - [Where to put fixtures?](#where-to-put-fixtures)
