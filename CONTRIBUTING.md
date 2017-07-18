@@ -23,7 +23,7 @@ Cosmos is built on the assumption that complexity in large apps stems from hidde
 
 All contributions should be in line with these long term goals. Contributions that advance these goals have higher priority.
 
-- [#PainlessOnboarding](https://github.com/react-cosmos/react-cosmos/labels/%PainlessOnboarding) DX is king. Minimize initial config and integrate easily with popular tools and starter kits.
+- [#PainlessOnboarding](https://github.com/react-cosmos/react-cosmos/labels/%23PainlessOnboarding) DX is king. Minimize initial config and integrate easily with popular tools and starter kits.
 
 - [#MockEverything](https://github.com/react-cosmos/react-cosmos/labels/%23MockEverything) Every component input can and should be mocked. Redux state, Router context, API responses. No input left unmocked.
 
