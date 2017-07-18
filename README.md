@@ -48,8 +48,6 @@ Read the story of React Cosmos: [Fighting for Component Independence](https://me
 
 React Cosmos works best with webpack. Making it work with other bundlers takes extra work, but a complete [Browserify example](examples/browserify) is available.
 
-Jump to:
-
 - [Getting started](#getting-started)
 - [Fixtures](#fixtures)
   - [What's a fixture?](#whats-a-fixture)
