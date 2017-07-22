@@ -176,20 +176,20 @@ testUseCase({
       'pkgs/nested/Bar/src/index.jsx',
     ],
     getComponentName: componentPath => (
-      componentPath.match(/pkgs\/(.+)\/src\/index/)[1]
+      componentPath.match(/pkgs\/(.+\/src)\/index/)[1]
     ),
     ignore: [/Baz/],
   },
   output: {
     components: {
-      Foo: 'pkgs/Foo/src/index.js',
-      'nested/Bar': 'pkgs/nested/Bar/src/index.jsx',
+      'Foo/src': 'pkgs/Foo/src/index.js',
+      'nested/Bar/src': 'pkgs/nested/Bar/src/index.jsx',
     },
     fixtures: {
-      Foo: {
+      'Foo/src': {
         blank: 'pkgs/Foo/src/__fixtures__/blank.js',
       },
-      'nested/Bar': {
+      'nested/Bar/src': {
         one: 'pkgs/nested/Bar/src/__fixtures__/one.js',
         two: 'pkgs/nested/Bar/src/__fixtures__/two.json',
         three: 'pkgs/nested/Bar/src/__fixtures__/three.jsx',

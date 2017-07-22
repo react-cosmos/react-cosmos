@@ -67,6 +67,7 @@ const getFilePaths = ({
 
       const componentDir = path.dirname(componentPath);
       const componentName = getComponentName(componentPath);
+      console.log(componentName);
 
       components[componentName] = componentPath;
       fixtures[componentName] = typeof getFixturePathsForComponent === 'function' ?
