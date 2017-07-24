@@ -195,7 +195,7 @@ testUseCase({
   }
 });
 
-// should throw depreication warning
+// should throw deprecation warning
 testUseCase({
   useCase: 'separate-packages',
   input: {
