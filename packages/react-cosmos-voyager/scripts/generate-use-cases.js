@@ -32,6 +32,16 @@ const useCases = {
     components/nested/Bar/__fixtures__/two.json
     components/nested/Bar/__fixtures__/three.jsx
   `),
+  'nested-fixtures': (`
+    components/Foo.js
+    components/__fixtures__/Foo/blank.js
+    components/nested/Bar/index.jsx
+    components/nested/Bar/__fixtures__/one.js
+    components/nested/Bar/__fixtures__/two.json
+    components/nested/Bar/__fixtures__/three.jsx
+    components/nested/Bar/components/Baz/index.jsx
+    components/nested/Bar/components/Baz/__fixtures__/baz.js
+  `),
   'external-fixtures': (`
     components/Foo.js
     components/nested/Bar.jsx
