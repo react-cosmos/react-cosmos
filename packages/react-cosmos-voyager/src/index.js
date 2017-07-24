@@ -88,9 +88,11 @@ const getFilePaths = ({
         const componentName = extractComponentName(filePath, componentPath);
 
         components[componentName] = filePath;
-        fixtures[componentName] = getMatchingFixtures(
-          [...relFixtures, ...extFixtures], componentName, fixturesDir
-        );
+        fixtures[componentName] = typeof getFixturePathsForComponent === 'function' ?
+          getFixturePathsForComponent(componentName) :
+          getMatchingFixtures(
+            [...relFixtures, ...extFixtures], componentName, fixturesDir
+          );
       });
     }
   });

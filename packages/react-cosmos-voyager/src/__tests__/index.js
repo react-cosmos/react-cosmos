@@ -195,6 +195,7 @@ testUseCase({
   }
 });
 
+// should throw depreication warning
 testUseCase({
   useCase: 'separate-packages',
   input: {
@@ -203,20 +204,20 @@ testUseCase({
       'pkgs/nested/Bar/src/index.jsx',
     ],
     getComponentName: componentPath => (
-      componentPath.match(/pkgs\/(.+\/src)\/index/)[1]
+      componentPath.match(/pkgs\/(.+)\/src\/index/)[1]
     ),
     ignore: [/Baz/],
   },
   output: {
     components: {
-      'Foo/src': 'pkgs/Foo/src/index.js',
-      'nested/Bar/src': 'pkgs/nested/Bar/src/index.jsx',
+      Foo: 'pkgs/Foo/src/index.js',
+      'nested/Bar': 'pkgs/nested/Bar/src/index.jsx',
     },
     fixtures: {
-      'Foo/src': {
+      Foo: {
         blank: 'pkgs/Foo/src/__fixtures__/blank.js',
       },
-      'nested/Bar/src': {
+      'nested/Bar': {
         one: 'pkgs/nested/Bar/src/__fixtures__/one.js',
         two: 'pkgs/nested/Bar/src/__fixtures__/two.json',
         three: 'pkgs/nested/Bar/src/__fixtures__/three.jsx',
