@@ -68,6 +68,9 @@ Jump to:
   - [Custom component paths](#custom-component-paths)
   - [Option dump](#option-dump)
 - [Exporting](#exporting)
+- [Experimental: Test helpers](#experimental-test-helpers)
+  - [Global Jest snapshot](#global-jest-snapshot)
+- [Why Cosmos and not X?](#why-cosmos-and-not-x)
 
 *Have a question or idea to share? See you on [Slack](https://join-react-cosmos.now.sh/).*
 
@@ -382,6 +385,42 @@ Static Component Playground? Piece of 🍰! Add this script and run `npm run cos
   "cosmos-export": "NODE_ENV=production cosmos-export"
 }
 ```
+
+### Experimental: Test helpers
+
+Fixtures can be reused inside automated tests. Along with proxies, they replace elaborate test preparation and render a component with a single JSX tag.
+
+```js
+import { mount } from 'enzyme';
+import { Loader } from 'react-cosmos-loader';
+import DisplayScreen from '../';
+import fixture from '../__fixtures__/hi-there';
+
+it('should render hello message', () => {
+  const wrapper = mount(
+    <Loader component={DisplayScreen} fixture={fixture} />
+  );
+  expect(wrapper.text()).toMatch(/Hi there/);
+});
+```
+
+#### Global Jest snapshot
+
+You can create a snapshot of all your components with `react-cosmos-telescope`. A single snapshot file for all components isn't ideal, but it makes a difference until you have time to create granular tests.
+
+```js
+import runTests from 'react-cosmos-telescope';
+
+runTests({
+  cosmosConfigPath: require.resolve('./cosmos.config.js'),
+});
+```
+
+### Why Cosmos and not X?
+
+Many other component explorers emerged in the last few years. [React Storybook](https://github.com/storybooks/storybook) and [React Styleguidist](https://github.com/styleguidist/react-styleguidist) are good examples, but you can find a more extensive list of options [here](https://react-styleguidist.js.org/docs/cookbook.html#are-there-any-other-projects-like-this). To decide which tool is best for you, check for each project's [goals](CONTRIBUTING.md#goals), how much they match your needs and how well the project is maintained.
+
+**Cosmos is dev tool first, made to improve the design of *all* components, big and small, not just the stateless UI bits.** The fixture and proxy architecture doubles as a automated testing utility and further aids the process of developing robust and reusable components. Cosmos also makes it easy to create a living style guide, but it's a secondary goal and you might get more value from alternatives if this is your chief concern.
 
 ## Join the component revolution!
 
