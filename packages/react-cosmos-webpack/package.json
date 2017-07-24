@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-webpack",
-  "version": "2.0.0-beta.18",
+  "version": "2.0.0-beta.19",
   "description": "CLI for running React Cosmos inside webpack-powered apps",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-webpack",
   "license": "MIT",
@@ -24,7 +24,7 @@
     "react-cosmos-config": "^2.0.0-beta.18",
     "react-cosmos-loader": "^2.0.0-beta.15",
     "react-cosmos-utils": "^2.0.0-beta.15",
-    "react-cosmos-voyager": "^2.0.0-beta.15",
+    "react-cosmos-voyager": "^2.0.0-beta.19",
     "slash": "^1.0.0",
     "style-loader": "^0.17.0",
     "traverse": "^0.6.6",
