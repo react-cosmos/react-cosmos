@@ -422,7 +422,7 @@ runTests({
 
 Many other component explorers emerged in the last few years. [React Storybook](https://github.com/storybooks/storybook) and [React Styleguidist](https://github.com/styleguidist/react-styleguidist) are good examples, but you can find a more extensive list of options [here](https://react-styleguidist.js.org/docs/cookbook.html#are-there-any-other-projects-like-this). To decide which tool is best for you, check for each project's [goals](CONTRIBUTING.md#goals), how much they match your needs and how well the project is maintained.
 
-**Cosmos is dev tool first, made to improve the design of *all* components, big and small, not just the stateless UI bits.** The fixture and proxy architecture doubles as a automated testing utility and further aids the process of developing robust and reusable components. Cosmos also makes it easy to create a living style guide, but it's a secondary goal and you might get more value from alternatives if this is your chief concern.
+**Cosmos is a dev tool first, made to improve the design of *all* components, big and small, not just the stateless UI bits.** The fixture and proxy architecture doubles as an automated testing utility and further aids the process of developing robust and reusable components. Cosmos also makes it easy to create a living style guide, but it's a secondary goal and you might get more value from alternatives if this is your chief concern.
 
 ## Join the component revolution!
 
