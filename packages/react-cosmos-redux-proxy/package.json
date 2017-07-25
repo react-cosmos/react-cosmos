@@ -5,8 +5,7 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-redux-proxy",
   "license": "MIT",
   "files": [
-    "lib",
-    "index.js"
+    "lib"
   ],
   "main": "lib/index.js",
   "dependencies": {
