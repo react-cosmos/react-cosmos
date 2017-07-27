@@ -10,35 +10,34 @@ let nextProxy;
 let Component;
 let wrapper;
 
-describe('React fetch proxy unmount', () => {
-  beforeEach(() => {
-    FetchProxy = createFetchProxy();
+beforeEach(() => {
+  FetchProxy = createFetchProxy();
 
-    // Objects to check identity against
-    NextProxy = () => {};
-    nextProxyNext = {};
-    nextProxy = {
-      value: NextProxy,
-      next: () => nextProxyNext,
-    };
-    Component = () => {};
+  // Objects to check identity against
+  NextProxy = () => {};
+  nextProxyNext = {};
+  nextProxy = {
+    value: NextProxy,
+    next: () => nextProxyNext,
+  };
+  Component = () => {};
 
-    wrapper = shallow(
-      <FetchProxy
-        nextProxy={nextProxy}
-        component={Component}
-        fixture={{
-          fetch: {},
-        }}
-        onComponentRef={() => {}}
-        onFixtureUpdate={() => {}}
-      />
-    );
+  wrapper = shallow(
+    <FetchProxy
+      nextProxy={nextProxy}
+      component={Component}
+      fixture={{
+        fetch: {},
+      }}
+      onComponentRef={() => {}}
+      onFixtureUpdate={() => {}}
+    />
+  );
 
-    wrapper.unmount();
-  });
+  wrapper.unmount();
+});
 
-  afterEach(() => {});
-
-  test('TODO', () => {});
+test('unmounting reverts to original fetch', () => {
+  // The original window.fetch is also a mock from jest.config.js #inceptionmock
+  expect(window.fetch).toBe('__GLOBAL_FETCH_MOCK__');
 });

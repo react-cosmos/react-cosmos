@@ -1,6 +1,16 @@
 import React, { Component } from 'react';
 import proxyPropTypes from 'react-cosmos-utils/lib/proxy-prop-types';
 
+const createFetchMock = response => () =>
+  new Promise(resolve => {
+    resolve({
+      json: () =>
+        new Promise(resolve => {
+          resolve(response);
+        }),
+    });
+  });
+
 const defaults = {
   fixtureKey: 'fetch',
 };
@@ -12,12 +22,18 @@ export default function createFetchProxy(options) {
     constructor(props) {
       super(props);
 
-      // TODO Mock window.fetch
-      console.log(props.fixture[fixtureKey]);
+      const response = props.fixture[fixtureKey];
+      if (response) {
+        this.realFetch = window.fetch;
+        window.fetch = createFetchMock(response);
+      }
     }
 
     componentWillUnmount() {
-      // TODO Unmock window.fetch
+      // Unmock fetch
+      if (this.realFetch) {
+        window.fetch = this.realFetch;
+      }
     }
 
     render() {
