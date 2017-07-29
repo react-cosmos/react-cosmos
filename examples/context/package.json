@@ -5,7 +5,7 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/context",
   "license": "MIT",
   "scripts": {
-    "start": "cosmos"
+    "start": "NODE_ENV=development cosmos"
   },
   "dependencies": {
     "prop-types": "^15.5.10",
