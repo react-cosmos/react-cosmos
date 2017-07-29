@@ -40,27 +40,17 @@ beforeEach(() => {
             {
               url: '/users',
               response: (req, res) =>
-                res
-                  .status(200)
-                  .header('Content-Type', 'application/json')
-                  .body(
-                    JSON.stringify([{ name: 'John' }, { name: 'Jessica' }])
-                  ),
+                res.status(200).body([{ name: 'John' }, { name: 'Jessica' }]),
             },
             {
               url: '/user',
               method: 'POST',
               response: (req, res) => {
-                const { id } = JSON.parse(req.body());
-                return res
-                  .status(200)
-                  .header('Content-Type', 'application/json')
-                  .body(
-                    JSON.stringify({
-                      id,
-                      name: 'John Doe',
-                    })
-                  );
+                const { id } = req.body();
+                return res.status(200).body({
+                  id,
+                  name: 'John Doe',
+                });
               },
             },
             {
@@ -125,9 +115,10 @@ describe('xhr mocking', () => {
     xhr.open('GET', '/users');
     xhr.onload = () => {
       try {
-        expect(xhr.responseText).toEqual(
-          JSON.stringify([{ name: 'John' }, { name: 'Jessica' }])
-        );
+        expect(xhr.responseText).toEqual([
+          { name: 'John' },
+          { name: 'Jessica' },
+        ]);
         done();
       } catch (err) {
         done.fail(err);
@@ -146,9 +137,7 @@ describe('xhr mocking', () => {
     xhr.open('POST', '/user');
     xhr.onload = () => {
       try {
-        expect(xhr.responseText).toEqual(
-          JSON.stringify({ id: 5, name: 'John Doe' })
-        );
+        expect(xhr.responseText).toEqual({ id: 5, name: 'John Doe' });
         done();
       } catch (err) {
         done.fail(err);
@@ -157,11 +146,9 @@ describe('xhr mocking', () => {
     xhr.onerror = err => {
       done.fail(err);
     };
-    xhr.send(
-      JSON.stringify({
-        id: 5,
-      })
-    );
+    xhr.send({
+      id: 5,
+    });
   });
 
   test('returns error from DELETE request', done => {
