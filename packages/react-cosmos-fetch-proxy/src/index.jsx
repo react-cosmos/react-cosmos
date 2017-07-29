@@ -15,8 +15,8 @@ export default function createFetchProxy(options) {
 
       const mocks = props.fixture[fixtureKey];
       if (mocks) {
-        mocks.forEach(({ matcher, response, options }) => {
-          fetchMock.get(matcher, response, options);
+        mocks.forEach(options => {
+          fetchMock.get(options);
         });
       }
     }
@@ -40,9 +40,7 @@ export default function createFetchProxy(options) {
     }
   }
 
-  FetchProxy.propTypes = {
-    ...proxyPropTypes,
-  };
+  FetchProxy.propTypes = proxyPropTypes;
 
   return FetchProxy;
 }

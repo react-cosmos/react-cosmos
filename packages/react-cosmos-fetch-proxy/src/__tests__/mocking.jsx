@@ -41,6 +41,23 @@ beforeEach(() => {
               matcher: '/users',
               response: [{ name: 'John' }, { name: 'Jerry' }],
             },
+            {
+              matcher: '/user',
+              method: 'POST',
+              response: (url, { body }) => {
+                return {
+                  id: body.id,
+                  name: 'John Doe',
+                };
+              },
+            },
+            {
+              matcher: '/user',
+              method: 'DELETE',
+              response: {
+                throws: 'Not allowed',
+              },
+            },
           ],
         }}
         onComponentRef={ref => {
@@ -91,7 +108,7 @@ describe('next proxy', () => {
 });
 
 describe('fetch mocking', () => {
-  test('returns mocked data', () => {
+  test('returns mocked object from GET request', () => {
     expect.assertions(1);
 
     return fetch('/users').then(response =>
@@ -101,5 +118,31 @@ describe('fetch mocking', () => {
           expect(response).toEqual([{ name: 'John' }, { name: 'Jerry' }])
         )
     );
+  });
+
+  test('returns function mock from POST request', () => {
+    expect.assertions(1);
+
+    return fetch('/user', {
+      method: 'POST',
+      body: {
+        id: 5,
+      },
+    }).then(response =>
+      response
+        .json()
+        .then(response => expect(response).toEqual({ id: 5, name: 'John Doe' }))
+    );
+  });
+
+  test('returns error from DELETE request', () => {
+    expect.assertions(1);
+
+    return fetch('/user', {
+      method: 'DELETE',
+      body: {
+        id: 5,
+      },
+    }).catch(err => expect(err).toEqual('Not allowed'));
   });
 });
