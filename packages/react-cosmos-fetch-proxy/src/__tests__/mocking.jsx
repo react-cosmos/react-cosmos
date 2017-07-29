@@ -39,7 +39,7 @@ beforeEach(() => {
           fetch: [
             {
               matcher: '/users',
-              response: [{ name: 'John' }, { name: 'Jerry' }],
+              response: [{ name: 'John' }, { name: 'Jessica' }],
             },
             {
               matcher: '/user',
@@ -115,7 +115,7 @@ describe('fetch mocking', () => {
       response
         .json()
         .then(response =>
-          expect(response).toEqual([{ name: 'John' }, { name: 'Jerry' }])
+          expect(response).toEqual([{ name: 'John' }, { name: 'Jessica' }])
         )
     );
   });

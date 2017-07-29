@@ -30,7 +30,7 @@ beforeEach(() => {
         fetch: [
           {
             matcher: '/users',
-            response: [{ name: 'John' }, { name: 'Jerry' }],
+            response: [{ name: 'John' }, { name: 'Jessica' }],
           },
         ],
       }}
