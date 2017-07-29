@@ -27,7 +27,12 @@ beforeEach(() => {
       nextProxy={nextProxy}
       component={Component}
       fixture={{
-        fetch: {},
+        fetch: [
+          {
+            matcher: '/users',
+            response: [{ name: 'John' }, { name: 'Jerry' }],
+          },
+        ],
       }}
       onComponentRef={() => {}}
       onFixtureUpdate={() => {}}
@@ -39,5 +44,5 @@ beforeEach(() => {
 
 test('unmounting reverts to original fetch', () => {
   // The original window.fetch is also a mock from jest.config.js #inceptionmock
-  expect(window.fetch).toBe('__GLOBAL_FETCH_MOCK__');
+  expect(fetch).toBe('__GLOBAL_FETCH_MOCK__');
 });

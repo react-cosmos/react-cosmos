@@ -13,11 +13,6 @@ let onComponentRef;
 let onFixtureUpdate;
 let wrapper;
 let props;
-let fetchMock;
-
-// TODO:
-// - fn mock
-// - object mock, custom fixture key
 
 beforeEach(() => {
   FetchProxy = createFetchProxy();
@@ -33,9 +28,6 @@ beforeEach(() => {
   componentRef = {};
   onComponentRef = jest.fn();
   onFixtureUpdate = jest.fn();
-  fetchMock = {
-    '/users': [{ name: 'John' }, { name: 'Jerry' }],
-  };
 
   return new Promise(resolve => {
     wrapper = shallow(
@@ -44,7 +36,12 @@ beforeEach(() => {
         component={Component}
         fixture={{
           foo: 'bar',
-          fetch: fetchMock,
+          fetch: [
+            {
+              matcher: '/users',
+              response: [{ name: 'John' }, { name: 'Jerry' }],
+            },
+          ],
         }}
         onComponentRef={ref => {
           onComponentRef(ref);
@@ -94,10 +91,15 @@ describe('next proxy', () => {
 });
 
 describe('fetch mocking', () => {
-  test('returns mocked data', () =>
-    window.fetch('/foo/bar').then(response =>
-      response.json(response => {
-        expect(response).toBe(fetchMock);
-      })
-    ));
+  test('returns mocked data', () => {
+    expect.assertions(1);
+
+    return fetch('/users').then(response =>
+      response
+        .json()
+        .then(response =>
+          expect(response).toEqual([{ name: 'John' }, { name: 'Jerry' }])
+        )
+    );
+  });
 });

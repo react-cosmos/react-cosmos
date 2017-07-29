@@ -9,6 +9,7 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
+    "fetch-mock": "^5.12.1",
     "react-cosmos-utils": "^2.0.0-beta.15"
   },
   "xo": false
