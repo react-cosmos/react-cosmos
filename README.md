@@ -59,7 +59,7 @@ Jump to:
   - [Redux](#redux)
   - [Context](#context)
   - [XHR](#xhr)
-  - [fetch](#fetch)
+  - [Fetch](#fetch)
 - [Integration with popular tools](#integration-with-popular-tools)
   - [Create React App](#create-react-app)
   - [Next.js](#nextjs)
@@ -236,7 +236,7 @@ export default {
 
 The response API is documented [here](https://github.com/jameslnewell/xhr-mock#mockresponse). Check out the [Axios example](examples/axios) to see `react-cosmos-xhr-proxy` in action.
 
-#### fetch
+#### Fetch
 
 Mock *fetch* responses, using the [fetch-proxy](https://github.com/wheresrhys/fetch-mock) utility.
 
@@ -265,7 +265,7 @@ export default {
 };
 ```
 
-The API is documented [here](http://www.wheresrhys.co.uk/fetch-mock/api). Check out the [fetch example](examples/fetch) to see `react-cosmos-fetch-proxy` in action.
+The API is documented [here](http://www.wheresrhys.co.uk/fetch-mock/api). Check out the [Fetch example](examples/fetch) to see `react-cosmos-fetch-proxy` in action.
 
 *What proxy would you create to improve DX?*
 
