@@ -58,6 +58,8 @@ Jump to:
   - [What's a proxy?](#whats-a-proxy)
   - [Redux](#redux)
   - [Context](#context)
+  - [XHR](#xhr)
+  - [fetch](#fetch)
 - [Integration with popular tools](#integration-with-popular-tools)
   - [Create React App](#create-react-app)
   - [Next.js](#nextjs)
@@ -201,6 +203,69 @@ export default () => {
   });
 };
 ```
+
+#### XHR
+
+Mock *XMLHttpRequest* responses, using the [xhr-proxy](https://github.com/jameslnewell/xhr-mock) utility.
+
+```js
+// __fixtures__/example.js
+export default {
+  xhr: [
+    {
+      url: '/users',
+      response: (req, res) =>
+        res.status(200).body([
+          {
+            id: 1,
+            name: 'Blossom',
+          },
+          {
+            id: 2,
+            name: 'Bubbles',
+          },
+          {
+            id: 3,
+            name: 'Buttercup'
+          }
+        ]),
+    },
+  ],
+};
+```
+
+The response API is documented [here](https://github.com/jameslnewell/xhr-mock#mockresponse). Check out the [Axios example](examples/axios) to see `react-cosmos-xhr-proxy` in action.
+
+#### fetch
+
+Mock *fetch* responses, using the [fetch-proxy](https://github.com/wheresrhys/fetch-mock) utility.
+
+```js
+// __fixtures__/example.js
+export default {
+  fetch: [
+    {
+      matcher: '/users',
+      response: [
+        {
+          id: 1,
+          name: 'Prabu',
+        },
+        {
+          id: 2,
+          name: 'Karla',
+        },
+        {
+          id: 3,
+          name: 'Linbaba'
+        }
+      ],
+    },
+  ]
+};
+```
+
+The API is documented [here](http://www.wheresrhys.co.uk/fetch-mock/api). Check out the [fetch example](examples/fetch) to see `react-cosmos-fetch-proxy` in action.
 
 *What proxy would you create to improve DX?*
 
