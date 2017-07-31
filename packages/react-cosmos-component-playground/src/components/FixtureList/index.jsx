@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { uri } from 'react-querystring-router';
 import { FolderIcon, SearchIcon } from '../SvgIcon';
 import styles from './index.less';
+import { findDOMNode } from 'react-dom';
 
 const KEY_S = 83;
 const KEY_ESC = 27;
@@ -33,6 +34,14 @@ const getFilteredFixtures = (fixtures, searchText) => {
   }, {});
 };
 
+const isFixtureSelected = (fixtures, component, fixture) => {
+  return (
+    component && fixture &&
+    fixtures[component] &&
+    fixtures[component].indexOf(fixture) !== -1
+  );  
+}
+
 export default class FixtureList extends Component {
   state = {
     searchText: '',
@@ -40,21 +49,27 @@ export default class FixtureList extends Component {
 
   componentDidMount() {
     window.addEventListener('keydown', this.onWindowKey);
+    const {fixtures, urlParams, router} = this.props;
+
+    if (isFixtureSelected(fixtures, urlParams.component, urlParams.fixture)) {
+      findDOMNode(this.refs[`componentName-${urlParams.component}`])
+        .scrollIntoView({ behavior: 'smooth' });
+    } 
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.onWindowKey);
-  }
+    componentWillUnmount() {
+      window.removeEventListener('keydown', this.onWindowKey);
+    }
 
-  onWindowKey = e => {
-    const isFocused = this.searchInput === document.activeElement;
+    onWindowKey = e => {
+      const isFocused = this.searchInput === document.activeElement;
 
-    if (e.keyCode === KEY_S && !isFocused) {
-      // Prevent entering `s` in the search field along with focusing
-      e.preventDefault();
+      if (e.keyCode === KEY_S && !isFocused) {
+        // Prevent entering `s` in the search field along with focusing
+        e.preventDefault();
 
-      this.searchInput.focus();
-    } else if (e.keyCode === KEY_ESC && isFocused) {
+        this.searchInput.focus();
+      } else if (e.keyCode === KEY_ESC && isFocused) {
       this.setState({
         searchText: '',
       });
@@ -73,6 +88,7 @@ export default class FixtureList extends Component {
     e.preventDefault();
 
     this.props.onUrlChange(e.currentTarget.href);
+    
   };
 
   render() {
@@ -101,7 +117,7 @@ export default class FixtureList extends Component {
               <div key={i} className={styles.component}>
                 <div className={styles.componentName}>
                   <FolderIcon />
-                  <span>{component}</span>
+                  <span ref={`componentName-${component}`}>{component}</span>
                 </div>
                 <div>
                   {filteredFixtures[component].map((fixture, j) => {
