@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-fetch-example",
-  "version": "2.0.0-beta.19",
+  "version": "2.0.0-beta.20",
   "description": "Example of mocking the fetch API",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/fetch",
   "license": "MIT",
@@ -8,8 +8,8 @@
     "start": "NODE_ENV=development cosmos"
   },
   "dependencies": {
-    "react-cosmos-fetch-proxy": "^2.0.0-beta.19",
-    "react-cosmos-webpack": "^2.0.0-beta.19"
+    "react-cosmos-fetch-proxy": "^2.0.0-beta.20",
+    "react-cosmos-webpack": "^2.0.0-beta.20"
   },
   "xo": false
 }

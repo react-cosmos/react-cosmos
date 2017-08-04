@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-normalize-props-proxy-example",
-  "version": "2.0.0-beta.19",
+  "version": "2.0.0-beta.20",
   "description": "Example of using normalize-props-proxy",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/normalize-props-proxy",
   "license": "MIT",
@@ -8,8 +8,8 @@
     "start": "NODE_ENV=development cosmos"
   },
   "dependencies": {
-    "react-cosmos-normalize-props-proxy": "^2.0.0-beta.15",
-    "react-cosmos-webpack": "^2.0.0-beta.19"
+    "react-cosmos-normalize-props-proxy": "^2.0.0-beta.20",
+    "react-cosmos-webpack": "^2.0.0-beta.20"
   },
   "xo": false
 }
