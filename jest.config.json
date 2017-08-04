@@ -16,6 +16,7 @@
   "coverageDirectory": "../coverage",
   "coverageReporters": ["lcov", "text"],
   "globals": {
+    "fetch": "__GLOBAL_FETCH_MOCK__",
     "COSMOS_CONFIG": {
       "containerQuerySelector": "__mock__containerQuerySelector"
     }

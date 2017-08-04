@@ -58,6 +58,8 @@ Jump to:
   - [What's a proxy?](#whats-a-proxy)
   - [Redux](#redux)
   - [Context](#context)
+  - [XHR](#xhr)
+  - [Fetch](#fetch)
 - [Integration with popular tools](#integration-with-popular-tools)
   - [Create React App](#create-react-app)
   - [Next.js](#nextjs)
@@ -201,6 +203,69 @@ export default () => {
   });
 };
 ```
+
+#### XHR
+
+Besides client-side state, components also depend on external data. Mocking server responses allows us to completely isolate our components. By adding the `react-cosmos-xhr-proxy` to our config, we can put *XMLHttpRequest* mocks in fixtures.
+
+```js
+// __fixtures__/example.js
+export default {
+  xhr: [
+    {
+      url: '/users',
+      response: (req, res) =>
+        res.status(200).body([
+          {
+            id: 1,
+            name: 'Blossom',
+          },
+          {
+            id: 2,
+            name: 'Bubbles',
+          },
+          {
+            id: 3,
+            name: 'Buttercup'
+          }
+        ]),
+    },
+  ],
+};
+```
+
+The proxy is a thin layer on top of the [xhr-proxy](https://github.com/jameslnewell/xhr-mock) utility. Check out the [Axios example](examples/axios) to see it in action.
+
+#### Fetch
+
+Like the [XHR](#xhr) proxy, but for the *Fetch API*.
+
+```js
+// __fixtures__/example.js
+export default {
+  fetch: [
+    {
+      matcher: '/users',
+      response: [
+        {
+          id: 1,
+          name: 'Prabu',
+        },
+        {
+          id: 2,
+          name: 'Karla',
+        },
+        {
+          id: 3,
+          name: 'Linbaba'
+        }
+      ],
+    },
+  ]
+};
+```
+
+Built on top of [fetch-mock](http://www.wheresrhys.co.uk/fetch-mock/api). Check out the [Fetch example](examples/fetch) to see `react-cosmos-fetch-proxy` in action.
 
 *What proxy would you create to improve DX?*
 

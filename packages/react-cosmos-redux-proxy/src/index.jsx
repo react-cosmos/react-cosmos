@@ -1,5 +1,6 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import { object } from 'prop-types';
+import proxyPropTypes from 'react-cosmos-utils/lib/proxy-prop-types';
 
 const defaults = {
   fixtureKey: 'reduxState',
@@ -8,12 +9,10 @@ const defaults = {
 };
 
 export default function createReduxProxy(options) {
-  const {
-    fixtureKey,
-    createStore,
-    alwaysCreateStore,
-    disableLocalState,
-  } = { ...defaults, ...options };
+  const { fixtureKey, createStore, alwaysCreateStore, disableLocalState } = {
+    ...defaults,
+    ...options,
+  };
 
   class ReduxProxy extends React.Component {
     constructor(props) {
@@ -33,10 +32,7 @@ export default function createReduxProxy(options) {
     }
 
     componentWillMount() {
-      const {
-        store,
-        onStoreChange,
-      } = this;
+      const { store, onStoreChange } = this;
       if (store) {
         this.storeUnsubscribe = store.subscribe(onStoreChange);
       }
@@ -49,9 +45,7 @@ export default function createReduxProxy(options) {
     }
 
     onStoreChange() {
-      const {
-        onFixtureUpdate,
-      } = this.props;
+      const { onFixtureUpdate } = this.props;
       const updatedState = this.store.getState();
 
       onFixtureUpdate({
@@ -60,13 +54,10 @@ export default function createReduxProxy(options) {
     }
 
     render() {
-      const {
-        nextProxy,
-        fixture,
-        onComponentRef,
-      } = this.props;
+      const { nextProxy, fixture, onComponentRef } = this.props;
 
-      return React.createElement(nextProxy.value, { ...this.props,
+      return React.createElement(nextProxy.value, {
+        ...this.props,
         nextProxy: nextProxy.next(),
         fixture,
         onComponentRef,
@@ -77,19 +68,10 @@ export default function createReduxProxy(options) {
     }
   }
 
-  ReduxProxy.propTypes = {
-    nextProxy: PropTypes.shape({
-      value: PropTypes.func,
-      next: PropTypes.func,
-    }).isRequired,
-    component: PropTypes.func.isRequired,
-    fixture: PropTypes.object.isRequired,
-    onComponentRef: PropTypes.func.isRequired,
-    onFixtureUpdate: PropTypes.func.isRequired,
-  };
+  ReduxProxy.propTypes = proxyPropTypes;
 
   ReduxProxy.childContextTypes = {
-    store: PropTypes.object,
+    store: object,
   };
 
   return ReduxProxy;

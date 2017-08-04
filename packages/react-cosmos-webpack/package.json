@@ -6,8 +6,7 @@
   "license": "MIT",
   "files": [
     "bin",
-    "lib",
-    "index.js"
+    "lib"
   ],
   "dependencies": {
     "babel-loader": "^6.2.10",
