@@ -55,7 +55,7 @@ module.exports = function startExport() {
   const cosmosConfigPath = argv.config;
   const cosmosConfig = getCosmosConfig(cosmosConfigPath);
 
-  const { webpackConfigPath, outputPath } = cosmosConfig;
+  const { webpackConfigPath, outputPath, publicPath, publicUrl } = cosmosConfig;
 
   let userWebpackConfig;
   if (moduleExists(webpackConfigPath)) {
@@ -73,6 +73,13 @@ module.exports = function startExport() {
     cosmosConfigPath,
     true
   );
+
+  // Copy static files first, so that the built index.html overrides the its
+  // template file (in case the static asserts are served from the root path)
+  if (publicPath) {
+    const exportPublicPath = path.join(outputPath, publicUrl);
+    fs.copySync(publicPath, exportPublicPath);
+  }
 
   runWebpackCompiler(loaderWebpackConfig)
     .then(() => {
