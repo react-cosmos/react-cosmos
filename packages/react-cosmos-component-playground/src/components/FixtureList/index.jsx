@@ -122,7 +122,7 @@ export default class FixtureList extends Component {
                       <a
                         key={j}
                         className={fixtureClassNames}
-                        href={`${uri.stringifyParams(nextUrlParams)}`}
+                        href={uri.stringifyParams(nextUrlParams)}
                         onClick={this.onFixtureClick}
                       >
                         {fixture}
