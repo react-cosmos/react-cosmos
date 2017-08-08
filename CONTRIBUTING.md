@@ -11,6 +11,7 @@ Jump to:
   - [Monorepo](#monorepo)
   - [Playground & Loader](#playground--loader-communication)
   - [webpack](#webpack)
+- [Proxy boilerplate](#proxy-boilerplate)
 - [How to contribute](#how-to-contribute)
 
 ## Mission
@@ -78,6 +79,43 @@ The entry file of the resulting webpack config mounts `RemoteLoader`, together w
 Using webpack-dev-middleware, the webpack config is attached to an Express server, which serves the Playground bundle at `/` and the Loader bundle at `/loader/`. The server will also serve a static directory when the `publicPath` option is used.
 
 Static exporting is almost identical to development mode, except that it saves the webpack build to disk instead of attaching it to a running Express server.
+
+## Proxy boilerplate
+
+Start from this when creating a new proxy.
+
+```js
+import React from 'react';
+import proxyPropTypes from 'react-cosmos-utils/lib/proxy-prop-types';
+
+const defaults = {
+  // add option defaults here
+};
+
+export default options => {
+  const { /* expand options here */ } = { ...defaults, ...options };
+
+  const NoopProxy = props => {
+    const { value: NextProxy } = props.nextProxy;
+
+    return <NextProxy {...props} nextProxy={props.nextProxy.next()} />;
+  };
+
+  NoopProxy.propTypes = proxyPropTypes;
+
+  return NoopProxy;
+};
+```
+
+Notice the core requirements of a proxy:
+- Renders next proxy with same props
+- Advances the proxy chain – sends `props.nextProxy.next()` to next proxy
+- Implements or extends default proxy PropTypes
+
+This is a very basic example. Here's what proxies might also do:
+- Implement lifecycle methods (mock stuff in constructor, revert it in componentWillUnmount)
+- Add extra DOM markup around NextProxy
+- Transform props of props.fixture (careful, tho.)
 
 ## How to contribute
 
