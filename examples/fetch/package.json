@@ -11,5 +11,6 @@
     "react-cosmos-fetch-proxy": "^2.0.0-beta.20",
     "react-cosmos-webpack": "^2.0.0-beta.20"
   },
-  "xo": false
+  "xo": false,
+  "private": true
 }
