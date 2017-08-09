@@ -1,5 +1,4 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router';
 import { shallow } from 'enzyme';
 import createRouterProxy from '../';
 
@@ -12,10 +11,8 @@ let Component;
 let componentRef;
 let onComponentRef;
 let onFixtureUpdate;
-let routerWrapper;
-let nextProxyWrapper;
-let routerProps;
-let nextProxyProps;
+let wrapper;
+let props;
 
 beforeEach(() => {
   RouterProxy = createRouterProxy();
@@ -33,13 +30,12 @@ beforeEach(() => {
   onFixtureUpdate = jest.fn();
 
   return new Promise(resolve => {
-    routerWrapper = shallow(
+    wrapper = shallow(
       <RouterProxy
         nextProxy={nextProxy}
         component={Component}
         fixture={{
           foo: 'bar',
-          route: '/foo-route',
         }}
         onComponentRef={ref => {
           onComponentRef(ref);
@@ -50,32 +46,28 @@ beforeEach(() => {
     );
 
     // These are the props of the next proxy
-    routerProps = routerWrapper.props();
-
-    // Reach the inner element of the next proxy through the Router elements
-    nextProxyWrapper = routerWrapper.dive().dive();
-    nextProxyProps = nextProxyWrapper.props();
+    props = wrapper.props();
 
     // Simulate rendering
-    nextProxyProps.onComponentRef(componentRef);
+    props.onComponentRef(componentRef);
   });
 });
 
 describe('next proxy', () => {
   test('renders next proxy in line', () => {
-    expect(nextProxyWrapper.type()).toBe(NextProxy);
+    expect(wrapper.type()).toBe(NextProxy);
   });
 
   test('sends nextProxy.next() to next proxy', () => {
-    expect(nextProxyProps.nextProxy).toBe(nextProxyNext);
+    expect(props.nextProxy).toBe(nextProxyNext);
   });
 
   test('sends component to next proxy', () => {
-    expect(nextProxyProps.component).toBe(Component);
+    expect(props.component).toBe(Component);
   });
 
   test('sends fixture to next proxy', () => {
-    expect(nextProxyProps.fixture.foo).toEqual('bar');
+    expect(props.fixture.foo).toEqual('bar');
   });
 
   test('bubbles up component ref', () => {
@@ -83,17 +75,7 @@ describe('next proxy', () => {
   });
 
   test('bubbles up fixture updates', () => {
-    nextProxyProps.onFixtureUpdate({});
+    props.onFixtureUpdate({});
     expect(onFixtureUpdate.mock.calls).toHaveLength(1);
-  });
-});
-
-describe('router provider', () => {
-  test('renders MemoryRouter', () => {
-    expect(routerWrapper.type()).toBe(MemoryRouter);
-  });
-
-  test('sets initialEntries based on current route', () => {
-    expect(routerProps.initialEntries).toEqual(['/foo-route']);
   });
 });
