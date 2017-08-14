@@ -4,9 +4,11 @@ import resolveFrom from 'resolve-from';
 import importModule from 'react-cosmos-utils/lib/import-module';
 
 const resolveUserPath = (userPath, rootPath) =>
-  slash(path.isAbsolute(userPath) ? userPath : (
-    resolveFrom.silent(rootPath, userPath) || path.join(rootPath, userPath)
-  ));
+  slash(
+    path.isAbsolute(userPath)
+      ? userPath
+      : resolveFrom.silent(rootPath, userPath) || path.join(rootPath, userPath)
+  );
 
 const defaults = {
   componentPaths: [],
@@ -20,6 +22,7 @@ const defaults = {
   proxies: [],
   webpackConfigPath: 'webpack.config',
   outputPath: 'cosmos-export',
+  publicUrl: '/loader/',
 };
 
 const PATHS = ['componentPaths', 'fixturePaths', 'globalImports', 'proxies'];

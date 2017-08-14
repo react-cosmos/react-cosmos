@@ -308,7 +308,7 @@ export default class ComponentPlayground extends Component {
               <a
                 ref="homeButton"
                 className={homeClassNames}
-                href="/"
+                href="?"
                 onClick={router.routeLink}
               >
                 <HomeIcon />
@@ -319,7 +319,7 @@ export default class ComponentPlayground extends Component {
                 <a
                   ref="fixtureEditorButton"
                   className={fixtureEditorClassNames}
-                  href={`/${fixtureEditorUrl}`}
+                  href={fixtureEditorUrl}
                   onClick={router.routeLink}
                 >
                   <CodeIcon />
@@ -328,7 +328,7 @@ export default class ComponentPlayground extends Component {
                 <a
                   ref="fullScreenButton"
                   className={styles.button}
-                  href={`/${fullScreenUrl}`}
+                  href={fullScreenUrl}
                   onClick={router.routeLink}
                 >
                   <FullScreenIcon />

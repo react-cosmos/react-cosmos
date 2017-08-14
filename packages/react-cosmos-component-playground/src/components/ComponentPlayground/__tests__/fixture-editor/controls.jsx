@@ -11,7 +11,7 @@ let wrapper;
 
 describe('Fixture editor controls', () => {
   // Fixture editor is already on so the button will untoggle it
-  const fixtureEditorUrl = '/?component=ComponentA&fixture=foo';
+  const fixtureEditorUrl = '?component=ComponentA&fixture=foo';
 
   beforeEach(() => {
     return new Promise(resolve => {
