@@ -1,3 +1,3 @@
 export default {
-  route: '/b',
+  url: '/a',
 };

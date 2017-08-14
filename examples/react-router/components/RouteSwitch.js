@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Switch, Route } from 'react-router';
 import { Link } from 'react-router-dom';
 
 const NoRoute = () =>
   <div>
-    <p>No route selected. </p>
+    <p>No route selected.</p>
     <p>
       <Link to="/a">
         Go to <strong>A</strong>
@@ -37,16 +37,11 @@ const RouteB = () =>
     </p>
   </div>;
 
-export default class RouteSwitch extends Component {
-  render() {
-    return (
-      <div>
-        <Switch>
-          <Route exact path="/a" component={RouteA} />
-          <Route exact path="/b" component={RouteB} />
-          <Route component={NoRoute} />
-        </Switch>
-      </div>
-    );
-  }
-}
+export default () =>
+  <div>
+    <Switch>
+      <Route exact path="/a" component={RouteA} />
+      <Route exact path="/b" component={RouteB} />
+      <Route component={NoRoute} />
+    </Switch>
+  </div>;
