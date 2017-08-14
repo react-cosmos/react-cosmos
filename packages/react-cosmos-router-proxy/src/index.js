@@ -6,16 +6,16 @@ import proxyPropTypes from 'react-cosmos-utils/lib/proxy-prop-types';
 export default () => {
   const RouterProxy = props => {
     const { value: NextProxy, next } = props.nextProxy;
-    const { route } = props.fixture;
+    const { route, url } = props.fixture;
     const nextProxy = <NextProxy {...props} nextProxy={next()} />;
 
-    if (!route) {
+    if (!url) {
       return nextProxy;
     }
 
     return (
-      <MemoryRouter initialEntries={[route]}>
-        <Route path={route} render={() => nextProxy} />
+      <MemoryRouter initialEntries={[url]}>
+        {route ? <Route path={route} render={() => nextProxy} /> : nextProxy}
       </MemoryRouter>
     );
   };
@@ -23,6 +23,7 @@ export default () => {
   RouterProxy.propTypes = {
     ...proxyPropTypes,
     route: string,
+    url: string,
   };
 
   return RouterProxy;
