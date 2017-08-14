@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <strong>React Cosmos</strong> ✭ DX tool for designing reusable <a href="http://facebook.github.io/react/">React</a> components
+  <strong>React Cosmos</strong> ✭ Dev tool for creating reusable <a href="http://facebook.github.io/react/">React</a> components
 </p>
 
 <p align="center">
