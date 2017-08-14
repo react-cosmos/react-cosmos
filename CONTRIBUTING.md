@@ -12,6 +12,7 @@ Jump to:
   - [Playground & Loader](#playground--loader-communication)
   - [webpack](#webpack)
 - [Proxy boilerplate](#proxy-boilerplate)
+  - [Testing proxies](#testing-proxies)
 - [How to contribute](#how-to-contribute)
 
 ## Mission
@@ -96,9 +97,9 @@ export default options => {
   const { /* expand options here */ } = { ...defaults, ...options };
 
   const NoopProxy = props => {
-    const { value: NextProxy } = props.nextProxy;
+    const { value: NextProxy, next } = props.nextProxy;
 
-    return <NextProxy {...props} nextProxy={props.nextProxy.next()} />;
+    return <NextProxy {...props} nextProxy={next()} />;
   };
 
   NoopProxy.propTypes = proxyPropTypes;
@@ -116,6 +117,10 @@ This is a very basic example. Here's what proxies might also do:
 - Implement lifecycle methods (mock stuff in constructor, revert it in componentWillUnmount)
 - Add extra DOM markup around NextProxy
 - Transform props of props.fixture (careful, tho.)
+
+### Testing proxies
+
+Writing tests for a new proxy often takes more than its implementation. Extend this [proxy test boilerplate](docs/proxy-test-boilerplate.md) and most of the pain will go away.
 
 ## How to contribute
 

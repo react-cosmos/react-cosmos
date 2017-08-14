@@ -1,7 +1,9 @@
+### Proxy test boilerplate
+
+```js
 import React from 'react';
 import { mount } from 'enzyme';
-import { MemoryRouter } from 'react-router';
-import createRouterProxy from '../';
+import createFooProxy from '../';
 
 // The final responsibility of proxies is to render the user's component at
 // the end of the proxy chain. While it goes beyond unit testing, testing a
@@ -24,7 +26,7 @@ let wrapper;
 
 beforeEach(() => {
   // Create Proxy with default options
-  const RouterProxy = createRouterProxy();
+  const FooProxy = createFooProxy();
 
   // Fixture updates from inner proxies need to bubble up to the root proxy
   onFixtureUpdate = jest.fn();
@@ -36,7 +38,7 @@ beforeEach(() => {
     // Mouting is more useful because it calls lifecycle methods and enables
     // DOM interaction
     wrapper = mount(
-      <RouterProxy
+      <FooProxy
         nextProxy={{
           // Besides rendering the next proxy, we also need to ensure the 2nd
           // next proxy is passed to the next proxy for further chaining. It
@@ -92,7 +94,4 @@ describe('next proxy props', () => {
     expect(onFixtureUpdate.mock.calls).toHaveLength(1);
   });
 });
-
-test('does not render MemoryRouter', () => {
-  expect(wrapper.find(MemoryRouter)).toHaveLength(0);
-});
+```

@@ -5,11 +5,9 @@ import proxyPropTypes from 'react-cosmos-utils/lib/proxy-prop-types';
 
 export default () => {
   const RouterProxy = props => {
-    const { value: NextProxy } = props.nextProxy;
+    const { value: NextProxy, next } = props.nextProxy;
     const { route } = props.fixture;
-    const nextProxy = (
-      <NextProxy {...props} nextProxy={props.nextProxy.next()} />
-    );
+    const nextProxy = <NextProxy {...props} nextProxy={next()} />;
 
     if (!route) {
       return nextProxy;
