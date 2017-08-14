@@ -1,6 +1,9 @@
 language: node_js
 node_js:
-  - "6"
+  - 8
+  - 7
+  - 6
+  - 5
 script:
   - yarn run test
   - yarn run test-smoke-ci
