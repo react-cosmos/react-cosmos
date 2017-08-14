@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-component-playground",
-  "version": "2.0.0-beta.20",
+  "version": "2.0.0-beta.21",
   "description": "Dev tool for creating reusable React components",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-component-playground",
   "license": "MIT",
