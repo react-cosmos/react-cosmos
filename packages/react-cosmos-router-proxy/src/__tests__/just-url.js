@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { MemoryRouter, Route } from 'react-router';
+import { MemoryRouter, Router, Route } from 'react-router';
 import createRouterProxy from '../';
 
 // The final responsibility of proxies is to render the user's component at
@@ -109,6 +109,12 @@ describe('MemoryRouter', () => {
 
     test('sets initialEntries based on current route', () => {
       expect(routerProps.initialEntries).toEqual(['/foo-route']);
+    });
+
+    test('sends fixture updates when location changes', () => {
+      const history = wrapper.find(Router).prop('history');
+      history.push('/bar-route');
+      expect(onFixtureUpdate).toHaveBeenCalledWith({ url: '/bar-route' });
     });
   });
 });
