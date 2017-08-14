@@ -75,7 +75,7 @@ module.exports = function startExport() {
   );
 
   // Copy static files first, so that the built index.html overrides the its
-  // template file (in case the static asserts are served from the root path)
+  // template file (in case the static assets are served from the root path)
   if (publicPath) {
     const exportPublicPath = path.join(outputPath, publicUrl);
     fs.copySync(publicPath, exportPublicPath);
