@@ -267,15 +267,19 @@ describe('with custom cosmos config path', () => {
 
 describe('with public path', () => {
   beforeEach(() => {
-    startServer(
-      {},
-      {
-        publicPath: 'server/public',
-      }
-    );
+    const argv = {};
+    const config = {
+      publicPath: 'server/public',
+      publicUrl: '/static/',
+    };
+    startServer(argv, config);
   });
 
   commonTests();
+
+  test('adds public url to express server', () => {
+    expect(mockExpressInstance.use.mock.calls[1][0]).toBe('/static/');
+  });
 
   test('creates static server with public path', () => {
     expect(express.static.mock.calls[0][0]).toBe('server/public');

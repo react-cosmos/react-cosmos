@@ -12,7 +12,7 @@
     "start:playground": "NODE_ENV=development ./packages/react-cosmos-webpack/bin/cosmos.js --config packages/react-cosmos-component-playground/cosmos.config.js",
     "build": "node ./scripts/build.js",
     "postinstall": "yarn run bootstrap && yarn run build",
-    "publish-lerna": "yarn run test && yarn run build && lerna publish",
+    "publish-lerna": "yarn run test && yarn run build && lerna publish --registry=https://registry.npmjs.org/",
     "test-jest": "jest --coverage --config jest.config.json",
     "test": "yarn run lint && yarn run test-jest",
     "coveralls": "cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",

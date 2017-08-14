@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <strong>React Cosmos</strong> ✭ DX tool for designing reusable <a href="http://facebook.github.io/react/">React</a> components
+  <strong>React Cosmos</strong> ✭ Dev tool for creating reusable <a href="http://facebook.github.io/react/">React</a> components
 </p>
 
 <p align="center">
@@ -308,7 +308,8 @@ It's preferred to use CRA's own webpack config (instead of duplicating it).
 module.exports = {
   componentPaths: ['src/components'],
   containerQuerySelector: '#root',
-  webpackConfigPath: 'react-scripts/config/webpack.config.dev'
+  webpackConfigPath: 'react-scripts/config/webpack.config.dev',
+  publicPath: 'public'
 };
 ```
 
@@ -326,6 +327,8 @@ Next.js apps run on both client & server, so compilation is done via Babel plugi
 // cosmos.config.js
 module.exports = {
   componentPaths: ['components'],
+  publicPath: 'static',
+  publicUrl: '/static/',
 };
 ```
 
@@ -450,6 +453,9 @@ module.exports = {
   // Where to serve static files from. Like --content-base in webpack-dev-server.
   publicPath: 'src/public',
 
+  // Set base URL for static assets from public folder
+  publicUrl: '/static/',
+
   // Read more about proxies below
   proxies: [
     './redux-proxy.js',
@@ -460,8 +466,8 @@ module.exports = {
   // has styles attached, but bad for encapsulation.
   containerQuerySelector: '#app',
 
-  // Enable hot module replacement.
-  hot: true,
+  // Disable hot module replacement
+  hot: false,
 
   // These ones are self explanatory
   hostname: 'localhost',
