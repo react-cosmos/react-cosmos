@@ -13,7 +13,7 @@
     "build": "node ./scripts/build.js",
     "postinstall": "yarn run bootstrap && yarn run build",
     "publish-lerna": "yarn run test && yarn run build && lerna publish --registry=https://registry.npmjs.org/",
-    "test-jest": "node --harmony node_modules/.bin/jest --coverage --config jest.config.json",
+    "test-jest": "jest --coverage --config jest.config.json",
     "test": "yarn run lint && yarn run test-jest",
     "coveralls": "cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
     "test-smoke": "cypress run",

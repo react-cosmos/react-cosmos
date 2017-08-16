@@ -3,7 +3,6 @@ node_js:
   - 8
   - 7
   - 6
-  - 5
 script:
   - yarn run test
   - yarn run test-smoke-ci
