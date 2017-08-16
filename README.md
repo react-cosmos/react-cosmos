@@ -39,7 +39,6 @@ Read the story of React Cosmos: [Fighting for Component Independence](https://me
 
 ## Requirements
 
-- [x] Node >=5 (older versions might work but aren't guaranteed)
 - [x] React >=0.14.9
 - [x] webpack or Browserify (or go rogue and roll your own integration)
 - [ ] [Fixtures](#fixtures) to define states for your components (you'll do this after you get started)
