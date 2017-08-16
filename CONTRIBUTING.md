@@ -93,6 +93,8 @@ Code review aside, also ask for review *before* implementing solution. Saves eve
 
 #### Get familiar with codebase
 
+> Developing on Cosmos requires [Node](https://nodejs.org/en/download/) v6 or newer
+
 Make sure you have [Yarn](https://yarnpkg.com/) installed. We use it to install dependencies faster and more reliably.
 
 ```bash
