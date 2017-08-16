@@ -1,17 +1,17 @@
 import { Component } from 'react';
+import { withRouter } from 'react-router';
 import { object } from 'prop-types';
 
-// Heads up: This is tied to React Router internals and is subject to change
-const getPathFromContext = context => context.router.route.location.pathname;
+const getPathFromProps = props => props.location.pathname;
 
-export default class LocationInterceptor extends Component {
+class LocationInterceptor extends Component {
   static contextTypes = {
     router: object,
   };
 
-  componentDidUpdate(prevProps, prevState, prevContext) {
-    const newPath = getPathFromContext(this.context);
-    if (newPath !== getPathFromContext(prevContext)) {
+  componentDidUpdate(prevProps) {
+    const newPath = getPathFromProps(this.props);
+    if (newPath !== getPathFromProps(prevProps)) {
       this.props.onLocation(newPath);
     }
   }
@@ -20,3 +20,5 @@ export default class LocationInterceptor extends Component {
     return this.props.children;
   }
 }
+
+export default withRouter(LocationInterceptor);

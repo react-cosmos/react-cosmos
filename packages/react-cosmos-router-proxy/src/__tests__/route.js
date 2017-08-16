@@ -115,20 +115,8 @@ describe('MemoryRouter', () => {
   });
 });
 
-describe('Route', () => {
-  test('renders Route', () => {
-    expect(wrapper.find(Route)).toHaveLength(1);
-  });
-
-  describe('props', () => {
-    let routeProps;
-
-    beforeEach(() => {
-      routeProps = wrapper.find(Route).props();
-    });
-
-    test('sets path based on current route', () => {
-      expect(routeProps.path).toEqual('/route/:param');
-    });
-  });
+test('renders Route', () => {
+  expect(
+    wrapper.find(Route).filterWhere(w => w.prop('path') === '/route/:param')
+  ).toHaveLength(1);
 });

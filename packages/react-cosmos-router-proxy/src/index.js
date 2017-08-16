@@ -9,20 +9,19 @@ export default () => {
     const { nextProxy, fixture, onFixtureUpdate } = props;
     const { value: NextProxy, next } = nextProxy;
     const { route, url } = fixture;
-
-    const children = (
-      <LocationInterceptor onLocation={url => onFixtureUpdate({ url })}>
-        <NextProxy {...props} nextProxy={next()} />
-      </LocationInterceptor>
-    );
+    const nextProxyEl = <NextProxy {...props} nextProxy={next()} />;
 
     if (!url) {
-      return children;
+      return nextProxyEl;
     }
 
     return (
       <MemoryRouter initialEntries={[url]}>
-        {route ? <Route path={route} render={() => children} /> : children}
+        <LocationInterceptor onLocation={url => onFixtureUpdate({ url })}>
+          {route
+            ? <Route path={route} render={() => nextProxyEl} />
+            : nextProxyEl}
+        </LocationInterceptor>
       </MemoryRouter>
     );
   };
