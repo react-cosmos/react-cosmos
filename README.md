@@ -59,6 +59,7 @@ Jump to:
   - [Context](#context)
   - [XHR](#xhr)
   - [Fetch](#fetch)
+  - [React Router](#react-router)
 - [Integration with popular tools](#integration-with-popular-tools)
   - [Create React App](#create-react-app)
   - [Next.js](#nextjs)
@@ -167,7 +168,7 @@ The added functionality can range from mocking Redux state to creating a resizab
 
 #### Redux
 
-Most components in a Redux app depend on Redux state–either they're a *container* or one of their descendants is. This proxy creates the store context required for any component you load, just like [Provider](http://redux.js.org/docs/basics/UsageWithReact.html#passing-the-store) does for your root component. Writing Redux fixtures almost feels too easy. Because Redux state is global, once you have one state mock you can render any component you want!
+Most components in a [Redux](http://redux.js.org/) app depend on Redux state–either they're a *container* or one of their descendants is. This proxy creates the store context required for any component you load, just like [Provider](http://redux.js.org/docs/basics/UsageWithReact.html#passing-the-store) does for your root component. Writing Redux fixtures almost feels too easy. Because Redux state is global, once you have one state mock you can render any component you want!
 
 ```js
 // redux-proxy.js
@@ -265,6 +266,33 @@ export default {
 ```
 
 Built on top of [fetch-mock](http://www.wheresrhys.co.uk/fetch-mock/api). Check out the [Fetch example](examples/fetch) to see `react-cosmos-fetch-proxy` in action.
+
+#### React Router
+
+> react-cosmos-router-proxy is designed for React Router **v4** and above
+
+[React Router](https://reacttraining.com/react-router/) is used in most React projects. Wrapping components with `withRouter` makes the Router context an implicit dependency–one we need to mock. But mocking RR internals and putting them into the React context is nasty business. No worries, `react-cosmos-redux-proxy` does it for you.
+
+Simply adding a `url` to your fixture will wrap the loaded component inside a [Router](https://reacttraining.com/react-router/core/api/Router).
+
+```js
+// __fixtures__/example.js
+export default {
+  url: '/about'
+}
+```
+
+Optionally, `route` can be added to also wrap the loaded component inside a [Route](https://reacttraining.com/react-router/core/api/Route).
+
+```js
+// __fixtures__/example.js
+export default {
+  url: '/users/5',
+  route: '/users/:userId'
+}
+```
+
+Check out the [React Router example](examples/react-router) to see `react-cosmos-redux-proxy` in action.
 
 *What proxy would you create to improve DX?*
 

@@ -11,5 +11,6 @@
     "react-cosmos-normalize-props-proxy": "^2.0.0-beta.20",
     "react-cosmos-webpack": "^2.0.0-beta.21"
   },
-  "xo": false
+  "xo": false,
+  "private": true
 }

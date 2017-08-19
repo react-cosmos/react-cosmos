@@ -12,6 +12,7 @@
     "react-cosmos-webpack": "^2.0.0-beta.21"
   },
   "xo": false,
+  "private": true,
   "devDependencies": {
     "html-webpack-plugin": "^2.29.0"
   }
