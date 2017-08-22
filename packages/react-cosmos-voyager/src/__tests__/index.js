@@ -71,6 +71,33 @@ testUseCase({
 });
 
 testUseCase({
+  useCase: 'nested-fixtures',
+  input: {
+    componentPaths: ['components'],
+  },
+  output: {
+    components: {
+      Foo: 'components/Foo.js',
+      'nested/Bar': 'components/nested/Bar/index.jsx',
+      'nested/Bar/components/Baz': 'components/nested/Bar/components/Baz/index.jsx',
+    },
+    fixtures: {
+      Foo: {
+        blank: 'components/__fixtures__/Foo/blank.js',
+      },
+      'nested/Bar': {
+        one: 'components/nested/Bar/__fixtures__/one.js',
+        two: 'components/nested/Bar/__fixtures__/two.json',
+        three: 'components/nested/Bar/__fixtures__/three.jsx',
+      },
+      'nested/Bar/components/Baz': {
+        baz: 'components/nested/Bar/components/Baz/__fixtures__/baz.js',
+      },
+    },
+  }
+});
+
+testUseCase({
   useCase: 'relative-fixtures-component-dir',
   input: {
     componentPaths: ['components'],
@@ -168,6 +195,7 @@ testUseCase({
   }
 });
 
+// should throw deprecation warning
 testUseCase({
   useCase: 'separate-packages',
   input: {

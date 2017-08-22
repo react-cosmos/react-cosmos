@@ -1,16 +1,15 @@
 {
   "name": "react-cosmos-config",
-  "version": "2.0.0-beta.15",
+  "version": "2.0.0-beta.21",
   "description": "Reads user cosmos config and extends defaults",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-config",
   "license": "MIT",
   "files": [
-    "lib",
-    "index.js"
+    "lib"
   ],
   "main": "lib/index.js",
   "dependencies": {
-    "react-cosmos-utils": "^2.0.0-beta.15",
+    "react-cosmos-utils": "^2.0.0-beta.20",
     "resolve-from": "^3.0.0",
     "slash": "^1.0.0"
   },

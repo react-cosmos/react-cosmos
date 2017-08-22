@@ -57,25 +57,25 @@ describe('Links', () => {
 
     test('link 1', () => {
       expect(componentA.find('.fixture').at(0).prop('href')).toEqual(
-        '/?component=ComponentA&fixture=foo'
+        '?component=ComponentA&fixture=foo'
       );
     });
 
     test('link 2', () => {
       expect(componentA.find('.fixture').at(1).prop('href')).toEqual(
-        '/?component=ComponentA&fixture=bar'
+        '?component=ComponentA&fixture=bar'
       );
     });
 
     test('link 3', () => {
       expect(componentB.find('.fixture').at(0).prop('href')).toEqual(
-        '/?component=ComponentB&fixture=baz'
+        '?component=ComponentB&fixture=baz'
       );
     });
 
     test('link 4', () => {
       expect(componentB.find('.fixture').at(1).prop('href')).toEqual(
-        '/?component=ComponentB&fixture=qux'
+        '?component=ComponentB&fixture=qux'
       );
     });
   });
@@ -91,25 +91,25 @@ describe('Links', () => {
 
     test('link 1', () => {
       expect(componentA.find('.fixture').at(0).prop('href')).toEqual(
-        '/?editor=true&component=ComponentA&fixture=foo'
+        '?editor=true&component=ComponentA&fixture=foo'
       );
     });
 
     test('link 2', () => {
       expect(componentA.find('.fixture').at(1).prop('href')).toEqual(
-        '/?editor=true&component=ComponentA&fixture=bar'
+        '?editor=true&component=ComponentA&fixture=bar'
       );
     });
 
     test('link 3', () => {
       expect(componentB.find('.fixture').at(0).prop('href')).toEqual(
-        '/?editor=true&component=ComponentB&fixture=baz'
+        '?editor=true&component=ComponentB&fixture=baz'
       );
     });
 
     test('link 4', () => {
       expect(componentB.find('.fixture').at(1).prop('href')).toEqual(
-        '/?editor=true&component=ComponentB&fixture=qux'
+        '?editor=true&component=ComponentB&fixture=qux'
       );
     });
   });

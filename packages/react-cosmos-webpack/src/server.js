@@ -29,7 +29,7 @@ module.exports = function startServer() {
   const cosmosConfigPath = argv.config;
   const cosmosConfig = getCosmosConfig(cosmosConfigPath);
 
-  const { hostname, hot, port, webpackConfigPath } = cosmosConfig;
+  const { hostname, hot, port, webpackConfigPath, publicUrl } = cosmosConfig;
 
   let userWebpackConfig;
   if (moduleExists(webpackConfigPath)) {
@@ -63,7 +63,7 @@ module.exports = function startServer() {
   const publicPath = getPublicPath(cosmosConfig, userWebpackConfig);
   if (publicPath) {
     console.log(`[Cosmos] Serving static files from ${publicPath}`);
-    app.use('/loader/', express.static(publicPath));
+    app.use(publicUrl, express.static(publicPath));
   }
 
   const playgroundHtml = fs.readFileSync(

@@ -114,15 +114,15 @@ describe('CP with fixture already selected', () => {
   });
 
   describe('main menu', () => {
-    const fixtureEditorUrl = '/?component=ComponentA&fixture=foo&editor=true';
-    const fullScreenUrl = '/?component=ComponentA&fixture=foo&fullScreen=true';
+    const fixtureEditorUrl = '?component=ComponentA&fixture=foo&editor=true';
+    const fullScreenUrl = '?component=ComponentA&fixture=foo&fullScreen=true';
 
     it('should render home button', () => {
-      expect(wrapper.find('a[href="/"].button')).toHaveLength(1);
+      expect(wrapper.find('a[href="?"].button')).toHaveLength(1);
     });
 
     it('should not render selected home button', () => {
-      expect(wrapper.find('a[href="/"].selectedButton')).toHaveLength(0);
+      expect(wrapper.find('a[href="?"].selectedButton')).toHaveLength(0);
     });
 
     it('should render fixture editor button', () => {

@@ -114,14 +114,16 @@ export default class FixtureList extends Component {
                   onClick={() => this.onComponentClick(component)}
                 >
                   <FolderIcon />
-                  <span>{component}</span>
+                  <span>
+                    {component}
+                  </span>
                 </div>
                 <div>
                   {filteredFixtures[component].map((fixture, j) => {
                     const fixtureClassNames = classNames(styles.fixture, {
                       [styles.fixtureSelected]:
                         component === urlParams.component &&
-                          fixture === urlParams.fixture,
+                        fixture === urlParams.fixture,
                     });
                     const nextUrlParams = {
                       ...urlParams,
@@ -133,7 +135,7 @@ export default class FixtureList extends Component {
                       <a
                         key={j}
                         className={fixtureClassNames}
-                        href={`/${uri.stringifyParams(nextUrlParams)}`}
+                        href={uri.stringifyParams(nextUrlParams)}
                         onClick={this.onFixtureClick}
                       >
                         {fixture}

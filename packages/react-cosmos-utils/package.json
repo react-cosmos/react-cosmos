@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-utils",
-  "version": "2.0.0-beta.15",
+  "version": "2.0.0-beta.20",
   "description": "Libs shared between React Cosmos modules",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-utils",
   "license": "MIT",
@@ -9,7 +9,8 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
-    "lodash.isplainobject": "^4.0.6"
+    "lodash.isplainobject": "^4.0.6",
+    "prop-types": "^15.5.10"
   },
   "xo": false
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { shape, func, object, bool } from 'prop-types';
+import { bool } from 'prop-types';
+import proxyPropTypes from 'react-cosmos-utils/lib/proxy-prop-types';
 import isEqual from 'lodash.isequal';
 import isEmpty from 'lodash.isempty';
 import omit from 'lodash.omit';
@@ -165,14 +166,7 @@ export default function createStateProxy(options) {
   };
 
   StateProxy.propTypes = {
-    nextProxy: shape({
-      value: func,
-      next: func,
-    }).isRequired,
-    component: func.isRequired,
-    fixture: object.isRequired,
-    onComponentRef: func.isRequired,
-    onFixtureUpdate: func.isRequired,
+    ...proxyPropTypes,
     disableLocalState: bool,
   };
 

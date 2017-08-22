@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import proxyPropTypes from 'react-cosmos-utils/lib/proxy-prop-types';
 import omit from 'lodash.omit';
 import pick from 'lodash.pick';
 
@@ -15,14 +15,12 @@ const getFixedFixture = (fixture, notProps) => {
 
   return {
     ...pick(fixture, notProps),
-    props: omit(fixture, notProps)
+    props: omit(fixture, notProps),
   };
 };
 
 export default function createNormalizePropsProxy(options) {
-  const {
-    notProps
-  } = { ...defaults, ...options };
+  const { notProps } = { ...defaults, ...options };
 
   class NormalizePropsProxy extends React.Component {
     render() {
@@ -31,18 +29,12 @@ export default function createNormalizePropsProxy(options) {
       return React.createElement(nextProxy.value, {
         ...this.props,
         nextProxy: nextProxy.next(),
-        fixture: getFixedFixture(fixture, notProps)
+        fixture: getFixedFixture(fixture, notProps),
       });
     }
   }
 
-  NormalizePropsProxy.propTypes = {
-    nextProxy: PropTypes.shape({
-      value: PropTypes.func,
-      next: PropTypes.func
-    }).isRequired,
-    fixture: PropTypes.object.isRequired
-  };
+  NormalizePropsProxy.propTypes = proxyPropTypes;
 
   return NormalizePropsProxy;
 }

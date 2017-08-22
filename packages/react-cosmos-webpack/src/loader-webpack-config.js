@@ -2,6 +2,12 @@ import webpack from 'webpack';
 import omit from 'lodash.omit';
 import getCosmosConfig from 'react-cosmos-config';
 
+const alreadyHasHmrPlugin = ({ plugins }) =>
+  plugins &&
+  plugins.filter(
+    p => p.constructor && p.constructor.name === 'HotModuleReplacementPlugin'
+  ).length > 0;
+
 /**
  * Extend the user config to create the Loader config. Namely,
  * - Replace the entry and output
@@ -18,7 +24,6 @@ export default function getLoaderWebpackConfig(
   const {
     containerQuerySelector,
     globalImports,
-    hmrPlugin,
     hot,
     outputPath,
   } = cosmosConfig;
@@ -37,19 +42,19 @@ export default function getLoaderWebpackConfig(
 
   const output = {
     path: shouldExport ? `${outputPath}/loader/` : '/loader/',
-    filename: 'bundle.js',
+    filename: '[name].js',
     publicPath: shouldExport ? './' : '/loader/',
   };
 
   // To support webpack 1 and 2 configuration formats. So we use the one that user passes
-  const webpackRulesOptionName = userWebpackConfig.module &&
-    userWebpackConfig.module.rules
-    ? 'rules'
-    : 'loaders';
-  const rules = userWebpackConfig.module &&
-    userWebpackConfig.module[webpackRulesOptionName]
-    ? [...userWebpackConfig.module[webpackRulesOptionName]]
-    : [];
+  const webpackRulesOptionName =
+    userWebpackConfig.module && userWebpackConfig.module.rules
+      ? 'rules'
+      : 'loaders';
+  const rules =
+    userWebpackConfig.module && userWebpackConfig.module[webpackRulesOptionName]
+      ? [...userWebpackConfig.module[webpackRulesOptionName]]
+      : [];
   const plugins = userWebpackConfig.plugins
     ? [...userWebpackConfig.plugins]
     : [];
@@ -80,8 +85,10 @@ export default function getLoaderWebpackConfig(
     })
   );
 
-  if (hmrPlugin && !shouldExport) {
-    plugins.push(new webpack.HotModuleReplacementPlugin());
+  if (hot && !shouldExport) {
+    if (!alreadyHasHmrPlugin(userWebpackConfig)) {
+      plugins.push(new webpack.HotModuleReplacementPlugin());
+    }
   }
 
   return {
