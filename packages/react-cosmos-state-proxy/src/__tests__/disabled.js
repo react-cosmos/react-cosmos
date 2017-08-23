@@ -25,20 +25,20 @@ describe('React state proxy – disabled', () => {
     nextProxyNext = {};
     nextProxy = {
       value: NextProxy,
-      next: () => nextProxyNext,
+      next: () => nextProxyNext
     };
     Component = () => {};
     setState = jest.fn((state, cb) => {
       cb();
     });
     componentRef = {
-      setState,
+      setState
     };
     onComponentRef = jest.fn();
     onFixtureUpdate = jest.fn();
 
     StateProxy = createStateProxy({
-      updateInterval: 1337,
+      updateInterval: 1337
     });
 
     return new Promise(resolve => {
@@ -49,8 +49,8 @@ describe('React state proxy – disabled', () => {
           fixture={{
             foo: 'bar',
             state: {
-              baz: 'qux',
-            },
+              baz: 'qux'
+            }
           }}
           onComponentRef={ref => {
             onComponentRef(ref);
@@ -89,8 +89,8 @@ describe('React state proxy – disabled', () => {
     expect(props.fixture).toEqual({
       foo: 'bar',
       state: {
-        baz: 'qux',
-      },
+        baz: 'qux'
+      }
     });
   });
 

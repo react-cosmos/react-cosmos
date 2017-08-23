@@ -27,11 +27,11 @@ describe('CP fixture select via router', () => {
       );
     }).then(() => {
       loaderContentWindow = {
-        postMessage: jest.fn(),
+        postMessage: jest.fn()
       };
       // iframe.contentWindow isn't available in jsdom
       instance.loaderFrame = {
-        contentWindow: loaderContentWindow,
+        contentWindow: loaderContentWindow
       };
 
       const { props, state } = readyFixture;
@@ -40,10 +40,10 @@ describe('CP fixture select via router', () => {
           props: {
             ...props,
             component: 'ComponentB',
-            fixture: 'qux',
+            fixture: 'qux'
           },
-          state,
-        },
+          state
+        }
       });
     });
   });
@@ -53,7 +53,7 @@ describe('CP fixture select via router', () => {
       {
         type: 'fixtureSelect',
         component: 'ComponentB',
-        fixture: 'qux',
+        fixture: 'qux'
       },
       '*'
     );

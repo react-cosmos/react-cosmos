@@ -1,4 +1,4 @@
 module.exports = {
   componentPaths: ['components'],
-  proxies: ['react-cosmos-router-proxy'],
+  proxies: ['react-cosmos-router-proxy']
 };

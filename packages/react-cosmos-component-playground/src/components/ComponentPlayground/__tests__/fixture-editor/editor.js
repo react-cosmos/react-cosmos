@@ -43,19 +43,19 @@ describe('Fixture editor', () => {
       );
     }).then(instance => {
       loaderContentWindow = {
-        postMessage: jest.fn(),
+        postMessage: jest.fn()
       };
       // iframe.contentWindow isn't available in jsdom
       instance.loaderFrame = {
-        contentWindow: loaderContentWindow,
+        contentWindow: loaderContentWindow
       };
 
       window.postMessage(
         {
           type: 'fixtureLoad',
           fixtureBody: {
-            foo: 'bar',
-          },
+            foo: 'bar'
+          }
         },
         '*'
       );
@@ -70,7 +70,7 @@ describe('Fixture editor', () => {
 
   it('sends initial fixture body as value to FixtureEditor', () => {
     expect(wrapper.find(FixtureEditor).prop('value')).toEqual({
-      foo: 'bar',
+      foo: 'bar'
     });
   });
 
@@ -82,8 +82,8 @@ describe('Fixture editor', () => {
         {
           type: 'fixtureUpdate',
           fixtureBody: {
-            baz: 'qux',
-          },
+            baz: 'qux'
+          }
         },
         '*'
       );
@@ -94,7 +94,7 @@ describe('Fixture editor', () => {
     it('sends updated fixture body as value to FixtureEditor', () => {
       expect(wrapper.find(FixtureEditor).prop('value')).toEqual({
         foo: 'bar',
-        baz: 'qux',
+        baz: 'qux'
       });
     });
   });
@@ -102,7 +102,7 @@ describe('Fixture editor', () => {
   describe('on fixture edit from editor', () => {
     beforeEach(() => {
       wrapper.find(FixtureEditor).prop('onChange')({
-        foo: 'baz',
+        foo: 'baz'
       });
     });
 
@@ -111,8 +111,8 @@ describe('Fixture editor', () => {
         {
           type: 'fixtureEdit',
           fixtureBody: {
-            foo: 'baz',
-          },
+            foo: 'baz'
+          }
         },
         '*'
       );

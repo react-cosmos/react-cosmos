@@ -64,7 +64,7 @@ const getState = component => {
 
   return {
     ...state,
-    children,
+    children
   };
 };
 
@@ -72,7 +72,7 @@ const defaults = {
   fixtureKey: 'state',
   // How often to read current state of loaded component and report it up the
   // chain of proxies
-  updateInterval: 500,
+  updateInterval: 500
 };
 
 export default function createStateProxy(options) {
@@ -132,7 +132,7 @@ export default function createStateProxy(options) {
 
       if (!isEqual(updatedState, fixture.state)) {
         onFixtureUpdate({
-          state: updatedState,
+          state: updatedState
         });
       }
 
@@ -155,19 +155,19 @@ export default function createStateProxy(options) {
       return React.createElement(nextProxy.value, {
         ...props,
         nextProxy: nextProxy.next(),
-        onComponentRef,
+        onComponentRef
       });
     }
   }
 
   StateProxy.defaultProps = {
     // Parent proxies can enable this flag to disable this proxy
-    disableLocalState: false,
+    disableLocalState: false
   };
 
   StateProxy.propTypes = {
     ...proxyPropTypes,
-    disableLocalState: bool,
+    disableLocalState: bool
   };
 
   return StateProxy;

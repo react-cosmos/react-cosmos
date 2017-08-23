@@ -18,7 +18,7 @@ beforeEach(() => {
   nextProxyNext = {};
   nextProxy = {
     value: NextProxy,
-    next: () => nextProxyNext,
+    next: () => nextProxyNext
   };
   Component = () => {};
 
@@ -30,9 +30,9 @@ beforeEach(() => {
         fetch: [
           {
             matcher: '/users',
-            response: [{ name: 'John' }, { name: 'Jessica' }],
-          },
-        ],
+            response: [{ name: 'John' }, { name: 'Jessica' }]
+          }
+        ]
       }}
       onComponentRef={() => {}}
       onFixtureUpdate={() => {}}

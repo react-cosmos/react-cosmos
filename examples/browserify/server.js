@@ -9,13 +9,13 @@ const onUpdate = buffer => {
 };
 const browserify = {
   transform: ['babelify', 'require-globify'],
-  extensions: ['.js', '.json', '.jsx'],
+  extensions: ['.js', '.json', '.jsx']
 };
 
 budo(path.join(__dirname, 'playground'), {
   live: false,
   host: 'localhost',
-  port: 8989,
+  port: 8989
 })
   .on('connect', onConnect)
   .on('update', onUpdate);
@@ -24,5 +24,5 @@ budo(path.join(__dirname, 'loader'), {
   live: true,
   host: 'localhost',
   port: 8990,
-  browserify,
+  browserify
 }).on('update', onUpdate);

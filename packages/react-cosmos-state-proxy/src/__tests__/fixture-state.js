@@ -25,20 +25,20 @@ describe('React state proxy – fixture state', () => {
     nextProxyNext = {};
     nextProxy = {
       value: NextProxy,
-      next: () => nextProxyNext,
+      next: () => nextProxyNext
     };
     Component = () => {};
     setState = jest.fn((state, cb) => {
       cb();
     });
     componentRef = {
-      setState,
+      setState
     };
     onComponentRef = jest.fn();
     onFixtureUpdate = jest.fn();
 
     StateProxy = createStateProxy({
-      updateInterval: 1337,
+      updateInterval: 1337
     });
 
     return new Promise(resolve => {
@@ -49,8 +49,8 @@ describe('React state proxy – fixture state', () => {
           fixture={{
             foo: 'bar',
             state: {
-              baz: 'qux',
-            },
+              baz: 'qux'
+            }
           }}
           onComponentRef={ref => {
             onComponentRef(ref);
@@ -88,8 +88,8 @@ describe('React state proxy – fixture state', () => {
     expect(props.fixture).toEqual({
       foo: 'bar',
       state: {
-        baz: 'qux',
-      },
+        baz: 'qux'
+      }
     });
   });
 
@@ -104,7 +104,7 @@ describe('React state proxy – fixture state', () => {
   test('injects state', () => {
     expect(setState).toHaveBeenLastCalledWith(
       {
-        baz: 'qux',
+        baz: 'qux'
       },
       expect.any(Function)
     );
@@ -129,7 +129,7 @@ describe('React state proxy – fixture state', () => {
     beforeEach(() => {
       // Match initial change
       componentRef.state = {
-        baz: 'qux',
+        baz: 'qux'
       };
       jest.runOnlyPendingTimers();
     });
@@ -148,7 +148,7 @@ describe('React state proxy – fixture state', () => {
     beforeEach(() => {
       // Fake state change
       componentRef.state = {
-        baz: 'quux',
+        baz: 'quux'
       };
       jest.runOnlyPendingTimers();
     });
@@ -160,8 +160,8 @@ describe('React state proxy – fixture state', () => {
     test('calls onFixtureUpdate with updated state', () => {
       expect(onFixtureUpdate).toHaveBeenLastCalledWith({
         state: {
-          baz: 'quux',
-        },
+          baz: 'quux'
+        }
       });
     });
 

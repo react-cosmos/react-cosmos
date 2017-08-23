@@ -4,7 +4,7 @@ import omit from 'lodash.omit';
 import pick from 'lodash.pick';
 
 const defaults = {
-  notProps: ['children', 'state', 'context', 'reduxState'],
+  notProps: ['children', 'state', 'context', 'reduxState']
 };
 
 const getFixedFixture = (fixture, notProps) => {
@@ -15,7 +15,7 @@ const getFixedFixture = (fixture, notProps) => {
 
   return {
     ...pick(fixture, notProps),
-    props: omit(fixture, notProps),
+    props: omit(fixture, notProps)
   };
 };
 
@@ -29,7 +29,7 @@ export default function createNormalizePropsProxy(options) {
       return React.createElement(nextProxy.value, {
         ...this.props,
         nextProxy: nextProxy.next(),
-        fixture: getFixedFixture(fixture, notProps),
+        fixture: getFixedFixture(fixture, notProps)
       });
     }
   }

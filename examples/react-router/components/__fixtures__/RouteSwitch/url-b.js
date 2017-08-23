@@ -1,3 +1,3 @@
 export default {
-  url: '/b',
+  url: '/b'
 };

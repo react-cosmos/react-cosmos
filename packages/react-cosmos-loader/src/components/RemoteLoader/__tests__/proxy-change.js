@@ -41,12 +41,12 @@ describe('Proxy is changed', () => {
       <RemoteLoader
         proxies={[createProxyFoo]}
         components={{
-          Foo: ComponentFoo,
+          Foo: ComponentFoo
         }}
         fixtures={{
           Foo: {
-            foo: fixtureFoo,
-          },
+            foo: fixtureFoo
+          }
         }}
         component="Foo"
         fixture="foo"
@@ -59,7 +59,7 @@ describe('Proxy is changed', () => {
           {
             type: 'fixtureSelect',
             component: 'Foo',
-            fixture: 'foo',
+            fixture: 'foo'
           },
           '*'
         );
@@ -69,7 +69,7 @@ describe('Proxy is changed', () => {
       .then(() => onFixtureLoad)
       .then(() => {
         wrapper.setProps({
-          proxies: [createProxyBar],
+          proxies: [createProxyBar]
         });
       });
   });

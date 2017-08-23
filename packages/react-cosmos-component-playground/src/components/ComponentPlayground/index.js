@@ -25,7 +25,7 @@ const postMessageToFrame = (frame, data) =>
 export default class ComponentPlayground extends Component {
   static defaultProps = {
     editor: false,
-    fullScreen: false,
+    fullScreen: false
   };
 
   // Exclude params with default values
@@ -38,7 +38,7 @@ export default class ComponentPlayground extends Component {
     leftNavSize: 250,
     fixtureEditorPaneSize: 250,
     orientation: 'landscape',
-    fixtureBody: {},
+    fixtureBody: {}
   };
 
   componentDidMount() {
@@ -48,14 +48,14 @@ export default class ComponentPlayground extends Component {
     // Remember the resizable pane offsets between sessions
     Promise.all([
       localForage.getItem(LEFT_NAV_SIZE),
-      localForage.getItem(FIXTURE_EDITOR_PANE_SIZE),
+      localForage.getItem(FIXTURE_EDITOR_PANE_SIZE)
     ]).then(([leftNavSize, fixtureEditorPaneSize]) => {
       this.setState(
         // Only override default values when cache values are present
         omitBy(
           {
             leftNavSize,
-            fixtureEditorPaneSize,
+            fixtureEditorPaneSize
           },
           val => typeof val !== 'number'
         ),
@@ -80,7 +80,7 @@ export default class ComponentPlayground extends Component {
         postMessageToFrame(this.loaderFrame, {
           type: 'fixtureSelect',
           component,
-          fixture,
+          fixture
         });
       }
     }
@@ -110,7 +110,7 @@ export default class ComponentPlayground extends Component {
     this.setState(
       {
         waitingForLoader: false,
-        fixtures,
+        fixtures
       },
       // We update the content orientation because the content width decreases
       // when the left nav becomes visible
@@ -122,20 +122,20 @@ export default class ComponentPlayground extends Component {
       postMessageToFrame(loaderFrame, {
         type: 'fixtureSelect',
         component,
-        fixture,
+        fixture
       });
     }
   }
 
   onFixtureListUpdate({ fixtures }) {
     this.setState({
-      fixtures,
+      fixtures
     });
   }
 
   onFixtureLoad({ fixtureBody }) {
     this.setState({
-      fixtureBody,
+      fixtureBody
     });
   }
 
@@ -144,8 +144,8 @@ export default class ComponentPlayground extends Component {
       // Fixture updates are partial
       fixtureBody: {
         ...this.state.fixtureBody,
-        ...fixtureBody,
-      },
+        ...fixtureBody
+      }
     });
   }
 
@@ -155,7 +155,7 @@ export default class ComponentPlayground extends Component {
       postMessageToFrame(this.loaderFrame, {
         type: 'fixtureSelect',
         component,
-        fixture,
+        fixture
       });
     } else {
       this.props.router.goTo(location);
@@ -165,7 +165,7 @@ export default class ComponentPlayground extends Component {
   onLeftNavDrag = leftNavSize => {
     this.setState(
       {
-        leftNavSize,
+        leftNavSize
       },
       // We update the content orientation because the content width changes
       // when the width of left nav changes
@@ -177,7 +177,7 @@ export default class ComponentPlayground extends Component {
 
   onFixtureEditorPaneDrag = fixtureEditorPaneSize => {
     this.setState({
-      fixtureEditorPaneSize,
+      fixtureEditorPaneSize
     });
 
     localForage.setItem(FIXTURE_EDITOR_PANE_SIZE, fixtureEditorPaneSize);
@@ -193,12 +193,12 @@ export default class ComponentPlayground extends Component {
 
   onFixtureEditorChange = fixtureBody => {
     this.setState({
-      fixtureBody,
+      fixtureBody
     });
 
     postMessageToFrame(this.loaderFrame, {
       type: 'fixtureEdit',
-      fixtureBody,
+      fixtureBody
     });
   };
 
@@ -213,7 +213,7 @@ export default class ComponentPlayground extends Component {
   updateContentOrientation() {
     const { offsetHeight, offsetWidth } = this.contentNode;
     this.setState({
-      orientation: offsetHeight > offsetWidth ? 'portrait' : 'landscape',
+      orientation: offsetHeight > offsetWidth ? 'portrait' : 'landscape'
     });
   }
 
@@ -245,7 +245,7 @@ export default class ComponentPlayground extends Component {
     const isLoaderVisible = isFixtureSelected && !isMissingFixtureSelected;
     const classes = classNames(styles.content, {
       [styles.contentPortrait]: orientation === 'portrait',
-      [styles.contentLandscape]: orientation === 'landscape',
+      [styles.contentLandscape]: orientation === 'landscape'
     });
 
     return (
@@ -272,26 +272,26 @@ export default class ComponentPlayground extends Component {
       component,
       fixture,
       editor,
-      fullScreen,
+      fullScreen
     });
     const isFixtureSelected = Boolean(fixture);
     const homeClassNames = classNames(styles.button, {
-      [styles.selectedButton]: !isFixtureSelected,
+      [styles.selectedButton]: !isFixtureSelected
     });
     const fixtureEditorClassNames = classNames(styles.button, {
-      [styles.selectedButton]: editor,
+      [styles.selectedButton]: editor
     });
     const fixtureEditorUrl = uri.stringifyParams(
       getCleanUrlParams({
         component,
         fixture,
-        editor: !editor,
+        editor: !editor
       })
     );
     const fullScreenUrl = uri.stringifyParams({
       component,
       fixture,
-      fullScreen: true,
+      fullScreen: true
     });
 
     return (
@@ -299,7 +299,7 @@ export default class ComponentPlayground extends Component {
         key="leftNav"
         className={styles.leftNav}
         style={{
-          width: leftNavSize,
+          width: leftNavSize
         }}
       >
         <div className={styles.leftNavInner}>
@@ -353,7 +353,7 @@ export default class ComponentPlayground extends Component {
   renderFixtureEditor() {
     const { orientation, fixtureEditorPaneSize, fixtureBody } = this.state;
     const style = {
-      [orientation === 'landscape' ? 'width' : 'height']: fixtureEditorPaneSize,
+      [orientation === 'landscape' ? 'width' : 'height']: fixtureEditorPaneSize
     };
 
     return (
@@ -378,10 +378,10 @@ export default class ComponentPlayground extends Component {
     const { loaderUri } = this.props;
     const { isDragging } = this.state;
     const loaderStyle = {
-      display: isLoaderVisible ? 'block' : 'none',
+      display: isLoaderVisible ? 'block' : 'none'
     };
     const loaderFrameOverlayStyle = {
-      display: isDragging ? 'block' : 'none',
+      display: isDragging ? 'block' : 'none'
     };
 
     return (
@@ -402,5 +402,5 @@ ComponentPlayground.propTypes = {
   component: string,
   fixture: string,
   editor: bool,
-  fullScreen: bool,
+  fullScreen: bool
 };

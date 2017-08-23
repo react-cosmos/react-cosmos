@@ -1,4 +1,4 @@
 export default {
   props: {},
-  children: 'floating over the starry sky...',
+  children: 'floating over the starry sky...'
 };

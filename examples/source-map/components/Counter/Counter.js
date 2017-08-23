@@ -4,7 +4,7 @@ import './Counter.css';
 
 export default class Counter extends Component {
   state = {
-    value: 0,
+    value: 0
   };
 
   onButtonClick = () => {
@@ -13,7 +13,7 @@ export default class Counter extends Component {
     // eslint-disable-next-line no-debugger
     debugger;
     this.setState({
-      value: this.state.value + 1,
+      value: this.state.value + 1
     });
   };
 

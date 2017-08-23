@@ -6,17 +6,17 @@ export default {
       routeLink: e => {
         e.preventDefault();
         console.log('link to', e.currentTarget.href);
-      },
+      }
     },
     component: 'ComponentA',
     fixture: 'foo',
-    editor: true,
+    editor: true
   },
   state: {
     waitingForLoader: false,
     fixtures: {
       ComponentA: ['foo', 'bar'],
-      ComponentB: ['baz', 'qux'],
-    },
-  },
+      ComponentB: ['baz', 'qux']
+    }
+  }
 };

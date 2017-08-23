@@ -18,7 +18,7 @@ export function mount({
   proxies,
   components,
   fixtures,
-  containerQuerySelector,
+  containerQuerySelector
 }) {
   const container = containerQuerySelector
     ? document.querySelector(containerQuerySelector)
@@ -31,7 +31,7 @@ export function mount({
       proxies={[
         ...proxies,
         // Loaded by default in all configs
-        createStateProxy,
+        createStateProxy
       ]}
     />,
     container

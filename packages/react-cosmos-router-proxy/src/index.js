@@ -29,7 +29,7 @@ export default () => {
   RouterProxy.propTypes = {
     ...proxyPropTypes,
     route: string,
-    url: string,
+    url: string
   };
 
   return RouterProxy;

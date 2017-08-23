@@ -33,7 +33,7 @@ const startServer = (argv, config) => {
     port: 8989,
     hostname: 'localhost',
     webpackConfigPath: require.resolve('./mocks/webpack.config.js'),
-    ...config,
+    ...config
   };
   mockGetCosmosConfig = jest.fn(() => mockConfig);
   jest.mock('react-cosmos-config', () => mockGetCosmosConfig);
@@ -71,7 +71,7 @@ beforeEach(() => {
     get: (route, cb) => {
       expressInstanceCbMocks[route] = cb;
     },
-    listen: jest.fn(),
+    listen: jest.fn()
   };
   express.__setInstanceMock(mockExpressInstance);
 
@@ -138,7 +138,7 @@ const commonTests = () => {
         htmlContents.replace(
           '__PLAYGROUND_OPTS__',
           JSON.stringify({
-            loaderUri: './loader/index.html',
+            loaderUri: './loader/index.html'
           })
         )
       );
@@ -201,7 +201,7 @@ describe('missing webpack config', () => {
     startServer(
       {},
       {
-        webpackConfigPath: path.join(__dirname, 'webpack.config-missing.js'),
+        webpackConfigPath: path.join(__dirname, 'webpack.config-missing.js')
       }
     );
   });
@@ -220,7 +220,7 @@ describe('with hot module replacement', () => {
     startServer(
       {},
       {
-        hot: true,
+        hot: true
       }
     );
   });
@@ -244,7 +244,7 @@ describe('with custom cosmos config path', () => {
   beforeEach(() => {
     startServer(
       {
-        config: 'custom-path/cosmos.config',
+        config: 'custom-path/cosmos.config'
       },
       {}
     );
@@ -270,7 +270,7 @@ describe('with public path', () => {
     const argv = {};
     const config = {
       publicPath: 'server/public',
-      publicUrl: '/static/',
+      publicUrl: '/static/'
     };
     startServer(argv, config);
   });
@@ -293,7 +293,7 @@ describe('with devServer.contentBase in webpack config', () => {
       {
         webpackConfigPath: require.resolve(
           './mocks/webpack.config-content-base.js'
-        ),
+        )
       }
     );
   });
@@ -313,7 +313,7 @@ describe('with devServer.contentBase in webpack config and publicPath', () => {
         publicPath: 'server/public',
         webpackConfigPath: require.resolve(
           './mocks/webpack.config-content-base.js'
-        ),
+        )
       }
     );
   });

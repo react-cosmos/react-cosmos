@@ -5,13 +5,13 @@ import proxyPropTypes from 'react-cosmos-utils/lib/proxy-prop-types';
 const defaults = {
   fixtureKey: 'reduxState',
   alwaysCreateStore: false,
-  disableLocalState: true,
+  disableLocalState: true
 };
 
 export default function createReduxProxy(options) {
   const { fixtureKey, createStore, alwaysCreateStore, disableLocalState } = {
     ...defaults,
-    ...options,
+    ...options
   };
 
   class ReduxProxy extends React.Component {
@@ -27,7 +27,7 @@ export default function createReduxProxy(options) {
 
     getChildContext() {
       return {
-        store: this.store,
+        store: this.store
       };
     }
 
@@ -49,7 +49,7 @@ export default function createReduxProxy(options) {
       const updatedState = this.store.getState();
 
       onFixtureUpdate({
-        [fixtureKey]: updatedState,
+        [fixtureKey]: updatedState
       });
     }
 
@@ -63,7 +63,7 @@ export default function createReduxProxy(options) {
         onComponentRef,
         // Disable StateProxy when Redux state is available, otherwise the entire
         // Redux store would be duplicated from the connect() component's state
-        disableLocalState: disableLocalState && Boolean(this.store),
+        disableLocalState: disableLocalState && Boolean(this.store)
       });
     }
   }
@@ -71,7 +71,7 @@ export default function createReduxProxy(options) {
   ReduxProxy.propTypes = proxyPropTypes;
 
   ReduxProxy.childContextTypes = {
-    store: object,
+    store: object
   };
 
   return ReduxProxy;

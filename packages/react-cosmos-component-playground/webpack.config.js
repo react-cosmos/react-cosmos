@@ -10,9 +10,9 @@ const env = process.env.NODE_ENV || 'development';
 const plugins = [
   new webpack.DefinePlugin({
     'process.env': {
-      NODE_ENV: JSON.stringify(env),
-    },
-  }),
+      NODE_ENV: JSON.stringify(env)
+    }
+  })
 ];
 
 if (env === 'production') {
@@ -21,14 +21,14 @@ if (env === 'production') {
     new webpack.optimize.UglifyJsPlugin({
       compress: true,
       mangle: false,
-      beautify: true,
+      beautify: true
     })
   );
 } else {
   // Used by Cosmos config (when loading Playground inside Playground)
   plugins.push(
     new HtmlWebpackPlugin({
-      title: 'React Cosmos',
+      title: 'React Cosmos'
     })
   );
 }
@@ -39,17 +39,17 @@ module.exports = {
     libraryTarget: 'umd',
     library: 'mountPlayground',
     path: lib,
-    filename: 'index.js',
+    filename: 'index.js'
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx']
   },
   module: {
     rules: [
       {
         test: /\.jsx?$/,
         include: src,
-        use: 'babel-loader',
+        use: 'babel-loader'
       },
       {
         test: /\.(css|less)$/,
@@ -57,20 +57,20 @@ module.exports = {
         use: [
           'style-loader',
           'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
-          'less-loader',
-        ],
+          'less-loader'
+        ]
       },
       {
         test: /\.css$/,
         include: nodeModules,
-        use: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.(png|woff)$/,
         include: src,
-        use: 'url-loader',
-      },
-    ],
+        use: 'url-loader'
+      }
+    ]
   },
-  plugins,
+  plugins
 };

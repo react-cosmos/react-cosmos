@@ -37,12 +37,12 @@ describe('Loader unmounts', () => {
       <Remote
         proxies={[]}
         components={{
-          Foo: ComponentFoo,
+          Foo: ComponentFoo
         }}
         fixtures={{
           Foo: {
-            foo: fixtureFoo,
-          },
+            foo: fixtureFoo
+          }
         }}
       />
     );
@@ -57,7 +57,7 @@ describe('Loader unmounts', () => {
         {
           type: 'fixtureSelect',
           component: 'Foo',
-          fixture: 'foo',
+          fixture: 'foo'
         },
         '*'
       );

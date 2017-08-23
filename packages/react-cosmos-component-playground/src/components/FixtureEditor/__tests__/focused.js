@@ -17,8 +17,8 @@ describe('FixtureEditor focused', () => {
     return new Promise(resolve => {
       const fixture = merge({}, focusedFixture, {
         props: {
-          onChange: jest.fn(),
-        },
+          onChange: jest.fn()
+        }
       });
 
       // Mount component in order for ref and lifecycle methods to be called
@@ -38,11 +38,11 @@ describe('FixtureEditor focused', () => {
           props: {
             value: {
               props: {
-                foo: 'baz',
-              },
-            },
-          },
-        }),
+                foo: 'baz'
+              }
+            }
+          }
+        })
       });
     });
   });
@@ -51,8 +51,8 @@ describe('FixtureEditor focused', () => {
     expect(wrapper.find(CodeMirror).prop('value')).toBe(
       stringify({
         props: {
-          foo: 'bar',
-        },
+          foo: 'bar'
+        }
       })
     );
   });

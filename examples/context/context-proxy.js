@@ -5,7 +5,7 @@ export default () => {
   return createContextProxy({
     childContextTypes: {
       backgroundColor: PropTypes.string.isRequired,
-      textColor: PropTypes.string.isRequired,
-    },
+      textColor: PropTypes.string.isRequired
+    }
   });
 };

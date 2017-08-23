@@ -9,7 +9,7 @@ const createProxyFoo = () => ProxyFoo;
 const ComponentFoo = () => {};
 const fixtureFoo = {
   onFoo: () => {},
-  foo: 'bar',
+  foo: 'bar'
 };
 
 // Vars populated in beforeEach blocks
@@ -46,12 +46,12 @@ describe('Fixture is selected remotely', () => {
       <RemoteLoader
         proxies={[createProxyFoo]}
         components={{
-          Foo: ComponentFoo,
+          Foo: ComponentFoo
         }}
         fixtures={{
           Foo: {
-            foo: fixtureFoo,
-          },
+            foo: fixtureFoo
+          }
         }}
       />
     );
@@ -62,7 +62,7 @@ describe('Fixture is selected remotely', () => {
           {
             type: 'fixtureSelect',
             component: 'Foo',
-            fixture: 'foo',
+            fixture: 'foo'
           },
           '*'
         );
@@ -114,8 +114,8 @@ describe('Fixture is selected remotely', () => {
     expect(fixtureLoadMessage).toEqual({
       type: 'fixtureLoad',
       fixtureBody: {
-        foo: 'bar',
-      },
+        foo: 'bar'
+      }
     });
   });
 });

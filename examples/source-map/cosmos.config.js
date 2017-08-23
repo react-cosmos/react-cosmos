@@ -1,3 +1,3 @@
 export default {
-  componentPaths: ['components'],
+  componentPaths: ['components']
 };

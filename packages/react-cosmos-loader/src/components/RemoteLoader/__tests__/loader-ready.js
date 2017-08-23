@@ -39,15 +39,15 @@ describe('Loader is ready', () => {
         proxies={[]}
         components={{
           Foo: ComponentFoo,
-          Bar: ComponentBar,
+          Bar: ComponentBar
         }}
         fixtures={{
           Foo: {
-            foo: fixtureFoo,
+            foo: fixtureFoo
           },
           Bar: {
-            bar: fixtureBar,
-          },
+            bar: fixtureBar
+          }
         }}
       />
     );
@@ -70,8 +70,8 @@ describe('Loader is ready', () => {
       type: 'loaderReady',
       fixtures: {
         Foo: ['foo'],
-        Bar: ['bar'],
-      },
+        Bar: ['bar']
+      }
     });
   });
 });

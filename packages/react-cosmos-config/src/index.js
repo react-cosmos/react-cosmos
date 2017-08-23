@@ -22,7 +22,7 @@ const defaults = {
   proxies: [],
   webpackConfigPath: 'webpack.config',
   outputPath: 'cosmos-export',
-  publicUrl: '/loader/',
+  publicUrl: '/loader/'
 };
 
 const PATHS = ['componentPaths', 'fixturePaths', 'globalImports', 'proxies'];
@@ -35,7 +35,7 @@ export default function getCosmosConfig(configPath = 'cosmos.config') {
 
   const config = {
     ...defaults,
-    ...userConfig,
+    ...userConfig
   };
   const resolvedConfig = Object.keys(config).reduce((result, key) => {
     if (PATHS.indexOf(key) > -1) {

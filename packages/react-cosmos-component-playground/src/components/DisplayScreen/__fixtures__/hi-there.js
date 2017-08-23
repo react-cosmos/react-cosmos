@@ -1,3 +1,3 @@
 export default {
-  children: 'Hi there!',
+  children: 'Hi there!'
 };

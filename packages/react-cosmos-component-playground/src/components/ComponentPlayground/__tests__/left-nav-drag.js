@@ -40,7 +40,7 @@ describe('CP left nav drag', () => {
 
     beforeEach(() => {
       localForage.__setItemMocks({
-        [LEFT_NAV_SIZE]: cachedSize,
+        [LEFT_NAV_SIZE]: cachedSize
       });
 
       return new Promise(resolve => {
@@ -80,12 +80,12 @@ describe('CP left nav drag', () => {
 
       // We can't use Enzyme's simulate to trigger native events
       const downEvent = new MouseEvent('mousedown', {
-        clientX: 2,
+        clientX: 2
       });
       dragHandleElement.dispatchEvent(downEvent);
 
       const moveEvent = new MouseEvent('mousemove', {
-        clientX: 202,
+        clientX: 202
       });
       document.dispatchEvent(moveEvent);
 
@@ -111,7 +111,7 @@ describe('CP left nav drag', () => {
 
       // We can't use Enzyme's simulate to trigger native events
       const downEvent = new MouseEvent('mousedown', {
-        clientX: 0,
+        clientX: 0
       });
       dragHandleElement.dispatchEvent(downEvent);
 
@@ -128,7 +128,7 @@ describe('CP left nav drag', () => {
 
       // We can't use Enzyme's simulate to trigger native events
       const downEvent = new MouseEvent('mousedown', {
-        clientX: 0,
+        clientX: 0
       });
       dragHandleElement.dispatchEvent(downEvent);
 

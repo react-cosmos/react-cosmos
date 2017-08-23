@@ -18,7 +18,7 @@ const mockContentNodeSize = () => {
   instance.contentNode = {
     // Landscape
     offsetWidth: 300,
-    offsetHeight: 200,
+    offsetHeight: 200
   };
 };
 
@@ -66,12 +66,12 @@ describe('Landscape fixture editor pane', () => {
 
         // We can't use Enzyme's simulate to trigger native events
         const downEvent = new MouseEvent('mousedown', {
-          clientX: 3,
+          clientX: 3
         });
         dragHandleElement.dispatchEvent(downEvent);
 
         const moveEvent = new MouseEvent('mousemove', {
-          clientX: 204,
+          clientX: 204
         });
         document.dispatchEvent(moveEvent);
 
@@ -102,7 +102,7 @@ describe('Landscape fixture editor pane', () => {
 
         // We can't use Enzyme's simulate to trigger native events
         const downEvent = new MouseEvent('mousedown', {
-          clientX: 0,
+          clientX: 0
         });
         dragHandleElement.dispatchEvent(downEvent);
 
@@ -119,7 +119,7 @@ describe('Landscape fixture editor pane', () => {
 
         // We can't use Enzyme's simulate to trigger native events
         const downEvent = new MouseEvent('mousedown', {
-          clientX: 0,
+          clientX: 0
         });
         dragHandleElement.dispatchEvent(downEvent);
 
@@ -138,7 +138,7 @@ describe('Landscape fixture editor pane', () => {
 
     beforeEach(() => {
       localForage.__setItemMocks({
-        [FIXTURE_EDITOR_PANE_SIZE]: cachedSize,
+        [FIXTURE_EDITOR_PANE_SIZE]: cachedSize
       });
 
       return new Promise(resolve => {

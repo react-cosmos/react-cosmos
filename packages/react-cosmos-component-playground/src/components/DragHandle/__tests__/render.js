@@ -13,7 +13,7 @@ const createNodeMock = () => nodeMock;
 beforeEach(() => {
   nodeMock = {
     addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
+    removeEventListener: jest.fn()
   };
 });
 

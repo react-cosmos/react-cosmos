@@ -25,7 +25,7 @@ export default function getLoaderWebpackConfig(
     containerQuerySelector,
     globalImports,
     hot,
-    outputPath,
+    outputPath
   } = cosmosConfig;
 
   const entry = [...globalImports];
@@ -43,7 +43,7 @@ export default function getLoaderWebpackConfig(
   const output = {
     path: shouldExport ? `${outputPath}/loader/` : '/loader/',
     filename: '[name].js',
-    publicPath: shouldExport ? './' : '/loader/',
+    publicPath: shouldExport ? './' : '/loader/'
   };
 
   // To support webpack 1 and 2 configuration formats. So we use the one that user passes
@@ -63,15 +63,15 @@ export default function getLoaderWebpackConfig(
     loader: require.resolve('./module-loader'),
     include: require.resolve('./user-modules'),
     query: {
-      cosmosConfigPath,
-    },
+      cosmosConfigPath
+    }
   });
 
   plugins.push(
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(shouldExport ? 'production' : 'development'),
-      },
+        NODE_ENV: JSON.stringify(shouldExport ? 'production' : 'development')
+      }
     })
   );
 
@@ -80,8 +80,8 @@ export default function getLoaderWebpackConfig(
       COSMOS_CONFIG: JSON.stringify({
         // Config options that are available inside the client bundle. Warning:
         // Must be serializable!
-        containerQuerySelector,
-      }),
+        containerQuerySelector
+      })
     })
   );
 
@@ -97,8 +97,8 @@ export default function getLoaderWebpackConfig(
     output,
     module: {
       ...omit(userWebpackConfig.module, 'rules', 'loaders'),
-      [webpackRulesOptionName]: rules,
+      [webpackRulesOptionName]: rules
     },
-    plugins,
+    plugins
   };
 }

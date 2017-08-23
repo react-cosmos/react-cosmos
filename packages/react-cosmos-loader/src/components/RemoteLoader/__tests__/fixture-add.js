@@ -41,12 +41,12 @@ describe('Fixture is added', () => {
       <RemoteLoader
         proxies={[createProxyFoo]}
         components={{
-          Foo: ComponentFoo,
+          Foo: ComponentFoo
         }}
         fixtures={{
           Foo: {
-            foo: fixtureFoo,
-          },
+            foo: fixtureFoo
+          }
         }}
       />
     );
@@ -57,7 +57,7 @@ describe('Fixture is added', () => {
           {
             type: 'fixtureSelect',
             component: 'Foo',
-            fixture: 'foo',
+            fixture: 'foo'
           },
           '*'
         );
@@ -69,9 +69,9 @@ describe('Fixture is added', () => {
           fixtures: {
             Foo: {
               foo: fixtureFoo,
-              bar: fixtureBar,
-            },
-          },
+              bar: fixtureBar
+            }
+          }
         });
 
         return onFixtureListUpdate;
@@ -89,8 +89,8 @@ describe('Fixture is added', () => {
     expect(fixtureListUpdateMessage).toEqual({
       type: 'fixtureListUpdate',
       fixtures: {
-        Foo: ['foo', 'bar'],
-      },
+        Foo: ['foo', 'bar']
+      }
     });
   });
 });

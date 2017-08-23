@@ -4,15 +4,15 @@ import '../loader-entry';
 jest.mock('react-cosmos-loader', () => ({
   __esModule: true,
   mount: jest.fn(),
-  unmount: jest.fn(),
+  unmount: jest.fn()
 }));
 
 jest.mock('../user-modules', () => ({
   default: jest.fn(() => ({
     proxies: '__mock_proxies__',
     components: '__mock_components__',
-    fixtures: '__mock_fixtures__',
-  })),
+    fixtures: '__mock_fixtures__'
+  }))
 }));
 
 const options = mount.mock.calls[0][0];

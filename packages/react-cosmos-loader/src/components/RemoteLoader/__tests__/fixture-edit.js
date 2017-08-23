@@ -42,12 +42,12 @@ describe('Fixture is edited by parent frame', () => {
       <RemoteLoader
         proxies={[createProxyFoo]}
         components={{
-          Foo: ComponentFoo,
+          Foo: ComponentFoo
         }}
         fixtures={{
           Foo: {
-            foo: fixtureFoo,
-          },
+            foo: fixtureFoo
+          }
         }}
       />
     );
@@ -58,7 +58,7 @@ describe('Fixture is edited by parent frame', () => {
           {
             type: 'fixtureSelect',
             component: 'Foo',
-            fixture: 'foo',
+            fixture: 'foo'
           },
           '*'
         );
@@ -72,8 +72,8 @@ describe('Fixture is edited by parent frame', () => {
           {
             type: 'fixtureEdit',
             fixtureBody: {
-              foo: 'baz',
-            },
+              foo: 'baz'
+            }
           },
           '*'
         );
@@ -93,7 +93,7 @@ describe('Fixture is edited by parent frame', () => {
   test('sends updated (merged) fixture to first proxy', () => {
     expect(firstProxyProps.fixture).toEqual({
       ...fixtureFoo,
-      foo: 'baz',
+      foo: 'baz'
     });
   });
 

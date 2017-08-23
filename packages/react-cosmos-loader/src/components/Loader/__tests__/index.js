@@ -9,12 +9,12 @@ const createProxyFoo = () => ProxyFoo;
 const ComponentFoo = () => <span />;
 const ComponentFooModule = {
   __esModule: true,
-  default: ComponentFoo,
+  default: ComponentFoo
 };
 const fixtureFoo = { foo: 'bar' };
 const fixtureFooModule = {
   __esModule: true,
-  default: fixtureFoo,
+  default: fixtureFoo
 };
 const onComponentRef = () => {};
 

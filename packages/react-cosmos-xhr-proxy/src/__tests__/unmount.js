@@ -18,7 +18,7 @@ beforeEach(() => {
   nextProxyNext = {};
   nextProxy = {
     value: NextProxy,
-    next: () => nextProxyNext,
+    next: () => nextProxyNext
   };
   Component = () => {};
 
@@ -30,9 +30,9 @@ beforeEach(() => {
         xhr: [
           {
             url: '/users',
-            response: () => {}, // Never reached in this test
-          },
-        ],
+            response: () => {} // Never reached in this test
+          }
+        ]
       }}
       onComponentRef={() => {}}
       onFixtureUpdate={() => {}}

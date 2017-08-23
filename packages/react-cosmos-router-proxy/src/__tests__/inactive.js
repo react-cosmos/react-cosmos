@@ -44,14 +44,14 @@ beforeEach(() => {
           value: NextProxy,
           next: () => ({
             value: LastProxy,
-            next: () => {},
-          }),
+            next: () => {}
+          })
         }}
         component={Component}
         fixture={{
           // Except for some rare cases, the proxy needs to pass along the
           // fixture without changing it
-          foo: 'bar',
+          foo: 'bar'
         }}
         onComponentRef={resolve}
         onFixtureUpdate={onFixtureUpdate}

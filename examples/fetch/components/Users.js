@@ -6,7 +6,7 @@ export default class Users extends Component {
   state = {
     isLoading: true,
     error: null,
-    users: null,
+    users: null
   };
 
   componentDidMount() {
@@ -18,7 +18,7 @@ export default class Users extends Component {
       } else {
         this.setState({
           isLoading: false,
-          error: `Error ${response.status}`,
+          error: `Error ${response.status}`
         });
       }
     });

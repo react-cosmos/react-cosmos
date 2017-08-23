@@ -1,4 +1,4 @@
 export default {
   route: '/user/:userId',
-  url: '/user/5',
+  url: '/user/5'
 };

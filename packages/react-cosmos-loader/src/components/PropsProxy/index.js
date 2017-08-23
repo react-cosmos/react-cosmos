@@ -12,7 +12,7 @@ export default class PropsProxy extends Component {
       component,
       {
         ...fixture.props,
-        ref: onComponentRef,
+        ref: onComponentRef
       },
       fixture.children
     );
@@ -22,5 +22,5 @@ export default class PropsProxy extends Component {
 PropsProxy.propTypes = {
   component: func.isRequired,
   fixture: object.isRequired,
-  onComponentRef: func.isRequired,
+  onComponentRef: func.isRequired
 };

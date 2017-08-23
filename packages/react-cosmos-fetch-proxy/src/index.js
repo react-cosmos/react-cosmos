@@ -3,7 +3,7 @@ import fetchMock from 'fetch-mock';
 import proxyPropTypes from 'react-cosmos-utils/lib/proxy-prop-types';
 
 const defaults = {
-  fixtureKey: 'fetch',
+  fixtureKey: 'fetch'
 };
 
 export default function createFetchProxy(options) {
@@ -35,7 +35,7 @@ export default function createFetchProxy(options) {
       return React.createElement(nextProxy.value, {
         ...props,
         nextProxy: nextProxy.next(),
-        onComponentRef,
+        onComponentRef
       });
     }
   }

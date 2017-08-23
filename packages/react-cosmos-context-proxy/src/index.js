@@ -2,7 +2,7 @@ import proxyPropTypes from 'react-cosmos-utils/lib/proxy-prop-types';
 import React from 'react';
 
 const defaults = {
-  fixtureKey: 'context',
+  fixtureKey: 'context'
 };
 
 export default function createContextProxy(options) {
@@ -20,7 +20,7 @@ export default function createContextProxy(options) {
         ...this.props,
         nextProxy: nextProxy.next(),
         fixture,
-        onComponentRef,
+        onComponentRef
       });
     }
   }
