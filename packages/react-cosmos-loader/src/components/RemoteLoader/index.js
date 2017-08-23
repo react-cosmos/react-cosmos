@@ -22,7 +22,9 @@ const noFixtureState = {
   fixtureId: 0
 };
 
-const getUpdateId = () => Date.now();
+let updateId = 0;
+
+const getUpdateId = () => ++updateId;
 
 const extractFixtureNames = fixtures =>
   Object.keys(fixtures).reduce((acc, next) => {
