@@ -6,7 +6,9 @@ const DisplayScreen = ({ children }) =>
   <div className={styles.root}>
     <div className={styles.inner}>
       <img src={CosmosImg} />
-      <div>{children}</div>
+      <div>
+        {children}
+      </div>
     </div>
   </div>;
 

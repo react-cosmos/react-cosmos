@@ -11,9 +11,10 @@ class MissingScreen extends Component {
       <DisplayScreen>
         <p className={style.header}>Invalid coordinates.</p>
         <p>
-          No astronomical object found at
-          {' '}
-          <strong>{componentName}:{fixtureName}</strong>
+          No astronomical object found at{' '}
+          <strong>
+            {componentName}:{fixtureName}
+          </strong>
           .
         </p>
       </DisplayScreen>
@@ -23,12 +24,12 @@ class MissingScreen extends Component {
 
 MissingScreen.propTypes = {
   componentName: string,
-  fixtureName: string,
+  fixtureName: string
 };
 
 MissingScreen.defaultProps = {
   componentName: '',
-  fixtureName: '',
+  fixtureName: ''
 };
 
 export default MissingScreen;

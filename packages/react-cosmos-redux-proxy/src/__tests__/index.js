@@ -6,7 +6,7 @@ const NextProxy = () => {};
 const nextProxyNext = {};
 const nextProxy = {
   value: NextProxy,
-  next: () => nextProxyNext,
+  next: () => nextProxyNext
 };
 const onComponentRef = jest.fn();
 const onFixtureUpdate = jest.fn();
@@ -35,12 +35,12 @@ const renderProxy = (f, options) => {
       storeHandler = handler;
       return storeUnsubscribeMock;
     }),
-    getState: () => storeState,
+    getState: () => storeState
   };
   createStore = jest.fn(() => storeMock);
   ReduxProxy = createReduxProxy({
     ...options,
-    createStore,
+    createStore
   });
   wrapper = shallow(
     <ReduxProxy
@@ -49,7 +49,7 @@ const renderProxy = (f, options) => {
       fixture={fixture}
       onComponentRef={onComponentRef}
       onFixtureUpdate={onFixtureUpdate}
-    />,
+    />
   );
   childWrapper = wrapper.at(0);
   childProps = childWrapper.props();
@@ -83,7 +83,7 @@ const commonTests = () => {
 describe('fixture without Redux state', () => {
   beforeAll(() => {
     renderProxy({
-      foo: 'bar',
+      foo: 'bar'
     });
   });
 
@@ -100,11 +100,14 @@ describe('fixture without Redux state', () => {
 
 describe('fixture without Redux state with alwaysCreateStore', () => {
   beforeAll(() => {
-    renderProxy({
-      foo: 'bar',
-    }, {
-      alwaysCreateStore: true,
-    });
+    renderProxy(
+      {
+        foo: 'bar'
+      },
+      {
+        alwaysCreateStore: true
+      }
+    );
   });
 
   commonTests();
@@ -119,8 +122,8 @@ describe('fixture with Redux state', () => {
     renderProxy({
       foo: 'bar',
       reduxState: {
-        counter: 6,
-      },
+        counter: 6
+      }
     });
   });
 
@@ -144,13 +147,13 @@ describe('fixture with Redux state', () => {
 
   test('sends fixture update on Redux store change', () => {
     storeState = {
-      counter: 10,
+      counter: 10
     };
     storeHandler();
     expect(onFixtureUpdate.mock.calls[1][0]).toEqual({
       reduxState: {
-        counter: 10,
-      },
+        counter: 10
+      }
     });
   });
 
@@ -171,14 +174,17 @@ describe('fixture with Redux state', () => {
 
 describe('fixture with Redux state and enabled local state', () => {
   beforeAll(() => {
-    renderProxy({
-      foo: 'bar',
-      reduxState: {
-        counter: 6,
+    renderProxy(
+      {
+        foo: 'bar',
+        reduxState: {
+          counter: 6
+        }
       },
-    }, {
-      disableLocalState: false,
-    });
+      {
+        disableLocalState: false
+      }
+    );
   });
 
   commonTests();

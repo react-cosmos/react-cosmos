@@ -6,24 +6,29 @@ export default function getDefaultWebpackConfig() {
   return {
     devtool: 'eval',
     resolve: {
-      extensions: ['.js', '.jsx'],
+      extensions: ['.js', '.jsx']
     },
     module: {
       // Using loaders instead of rules to preserve webpack 1.x compatibility
-      loaders: [{
-        test: /\.jsx?$/,
-        loader: require.resolve('babel-loader'),
-        exclude: /node_modules/,
-      }, {
-        test: /\.css$/,
-        loader: `${require.resolve('style-loader')}!${require.resolve('css-loader')}`,
-        exclude: /node_modules/,
-      }],
+      loaders: [
+        {
+          test: /\.jsx?$/,
+          loader: require.resolve('babel-loader'),
+          exclude: /node_modules/
+        },
+        {
+          test: /\.css$/,
+          loader: `${require.resolve('style-loader')}!${require.resolve(
+            'css-loader'
+          )}`,
+          exclude: /node_modules/
+        }
+      ]
     },
     plugins: [
       new HtmlWebpackPlugin({
-        title: 'React Cosmos',
-      }),
-    ],
+        title: 'React Cosmos'
+      })
+    ]
   };
 }

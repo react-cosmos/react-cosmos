@@ -24,7 +24,7 @@ class FixtureEditor extends Component {
       // is typing).
       value: stringify(props.value),
       isFocused: false,
-      error: null,
+      error: null
     };
   }
 
@@ -35,7 +35,7 @@ class FixtureEditor extends Component {
     ) {
       this.setState({
         value: stringify(nextProps.value),
-        error: null,
+        error: null
       });
     }
   }
@@ -48,11 +48,11 @@ class FixtureEditor extends Component {
       onChange(value ? JSON.parse(value) : {});
 
       this.setState({
-        error: null,
+        error: null
       });
     } catch (err) {
       this.setState({
-        error: err.message,
+        error: err.message
       });
     }
   };
@@ -82,10 +82,13 @@ class FixtureEditor extends Component {
             foldGutter: true,
             lineNumbers: true,
             theme: 'solarized light',
-            gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+            gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter']
           }}
         />
-        {error && <div className={styles.error}>{error}</div>}
+        {error &&
+          <div className={styles.error}>
+            {error}
+          </div>}
       </div>
     );
   }
@@ -93,7 +96,7 @@ class FixtureEditor extends Component {
 
 FixtureEditor.propTypes = {
   value: object,
-  onChange: func,
+  onChange: func
 };
 
 export default FixtureEditor;

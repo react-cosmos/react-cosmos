@@ -11,8 +11,7 @@ const isSerializable = obj => {
     return true;
   }
 
-  if (!isPlainObject(obj) &&
-      !Array.isArray(obj)) {
+  if (!isPlainObject(obj) && !Array.isArray(obj)) {
     return false;
   }
 
@@ -37,7 +36,9 @@ const splitUnserializableParts = obj => {
     } else if (key === 'props' && isPlainObject(obj[key])) {
       Object.keys(obj.props).forEach(propKey => {
         const propVal = obj.props[propKey];
-        const propHome = isSerializable(propVal) ? serializable : unserializable;
+        const propHome = isSerializable(propVal)
+          ? serializable
+          : unserializable;
 
         if (!propHome.props) {
           propHome.props = {};

@@ -21,8 +21,8 @@ test('parses stringified and encoded params from location', () => {
   expect(params).toEqual({
     name: 'Jack',
     info: {
-      age: 25,
-    },
+      age: 25
+    }
   });
 });
 
@@ -30,10 +30,11 @@ test('generates location with query string from params', () => {
   const params = {
     name: 'Jack',
     info: {
-      age: 25,
-    },
+      age: 25
+    }
   };
 
-  expect(uri.stringifyParams(params))
-      .toBe('?name=Jack&info=%7B%22age%22%3A25%7D');
+  expect(uri.stringifyParams(params)).toBe(
+    '?name=Jack&info=%7B%22age%22%3A25%7D'
+  );
 });

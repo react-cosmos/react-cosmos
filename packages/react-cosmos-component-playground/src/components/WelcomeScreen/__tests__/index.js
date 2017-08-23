@@ -3,8 +3,7 @@ import { shallow } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
 import WelcomeScreen from '../';
 import noComponents from '../__fixtures__/no-components';
-import componentsWithoutFixtures
-  from '../__fixtures__/components-without-fixtures';
+import componentsWithoutFixtures from '../__fixtures__/components-without-fixtures';
 import componentsWithFixtures from '../__fixtures__/components-with-fixtures';
 
 const shallowLoader = element =>

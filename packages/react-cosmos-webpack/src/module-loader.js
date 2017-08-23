@@ -7,9 +7,8 @@ import getFilePaths from 'react-cosmos-voyager';
 
 const jsonLoader = slash(require.resolve('json-loader'));
 
-const getRequirePath = filePath => (
-  path.extname(filePath) === '.json' ? `${jsonLoader}!${filePath}` : filePath
-);
+const getRequirePath = filePath =>
+  path.extname(filePath) === '.json' ? `${jsonLoader}!${filePath}` : filePath;
 
 const convertPathToRequireCall = p => `require('${getRequirePath(p)}')`;
 
@@ -18,9 +17,10 @@ const convertPathMapToRequireCalls = paths => {
 
   Object.keys(paths).forEach(key => {
     const val = paths[key];
-    const newVal = typeof val === 'string' ?
-      convertPathToRequireCall(val) :
-      convertPathMapToRequireCalls(val);
+    const newVal =
+      typeof val === 'string'
+        ? convertPathToRequireCall(val)
+        : convertPathMapToRequireCalls(val);
 
     props.push(`'${key}':${newVal}`);
   });
@@ -28,7 +28,8 @@ const convertPathMapToRequireCalls = paths => {
   return `{${props.join(',')}}`;
 };
 
-const convertPathListToRequireCalls = paths => `[${paths.map(convertPathToRequireCall).join(',')}]`;
+const convertPathListToRequireCalls = paths =>
+  `[${paths.map(convertPathToRequireCall).join(',')}]`;
 
 const getUniqueDirsOfUserModules = (components, fixtures) => {
   const dirs = new Set();
@@ -48,7 +49,9 @@ const getUniqueDirsOfUserModules = (components, fixtures) => {
 };
 
 const convertDirPathsToContextCalls = dirPaths =>
-  `[${dirPaths.map(dirPath => `require.context('${dirPath}', false, /\\.jsx?$/)`)}]`;
+  `[${dirPaths.map(
+    dirPath => `require.context('${dirPath}', false, /\\.jsx?$/)`
+  )}]`;
 
 /**
  * Inject require calls in bundle for each component/fixture path and

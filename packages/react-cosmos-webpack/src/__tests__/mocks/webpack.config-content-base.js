@@ -1,5 +1,5 @@
 export default {
   devServer: {
-    contentBase: 'user/server/public',
+    contentBase: 'user/server/public'
   }
 };
