@@ -12,7 +12,7 @@ const getUserModules = () => ({
   /* eslint-disable no-undef */
   components: COMPONENTS,
   fixtures: FIXTURES,
-  proxies: PROXIES,
+  proxies: PROXIES
   /* eslint-enable no-undef */
 });
 

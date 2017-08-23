@@ -44,12 +44,12 @@ describe('Fixture source changes', () => {
       <RemoteLoader
         proxies={[createProxyFoo]}
         components={{
-          Foo: ComponentFoo,
+          Foo: ComponentFoo
         }}
         fixtures={{
           Foo: {
-            foo: fixtureFoo,
-          },
+            foo: fixtureFoo
+          }
         }}
       />
     );
@@ -60,7 +60,7 @@ describe('Fixture source changes', () => {
           {
             type: 'fixtureSelect',
             component: 'Foo',
-            fixture: 'foo',
+            fixture: 'foo'
           },
           '*'
         );
@@ -73,9 +73,9 @@ describe('Fixture source changes', () => {
         wrapper.setProps({
           fixtures: {
             Foo: {
-              foo: fixtureFoo2,
-            },
-          },
+              foo: fixtureFoo2
+            }
+          }
         });
 
         firstProxyWrapper = wrapper.find(ProxyFoo);
@@ -95,7 +95,7 @@ describe('Fixture source changes', () => {
   test('sends updated fixture body to parent', () => {
     expect(fixtureUpdateMessage).toEqual({
       type: 'fixtureUpdate',
-      fixtureBody: fixtureFoo2,
+      fixtureBody: fixtureFoo2
     });
   });
 

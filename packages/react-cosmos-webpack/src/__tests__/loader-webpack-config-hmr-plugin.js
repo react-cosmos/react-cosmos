@@ -24,7 +24,7 @@ describe('Loader webpack hmr', () => {
 
   test('does not duplicate HotModuleReplacementPlugin', () => {
     const userWebpackConfig = {
-      plugins: [new webpack.HotModuleReplacementPlugin()],
+      plugins: [new webpack.HotModuleReplacementPlugin()]
     };
     const webpackConfig = getWebpackConfig(
       userWebpackConfig,

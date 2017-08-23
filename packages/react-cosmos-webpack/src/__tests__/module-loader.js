@@ -6,7 +6,7 @@ const mockFixturePaths = [];
 const mockGetCosmosConfig = jest.fn(() => ({
   componentPaths: mockComponentPaths,
   fixturePaths: mockFixturePaths,
-  proxies: ['proxy-module', './proxy-file'],
+  proxies: ['proxy-module', './proxy-file']
 }));
 
 jest.mock('react-cosmos-config', () => mockGetCosmosConfig);
@@ -14,17 +14,17 @@ jest.mock('react-cosmos-config', () => mockGetCosmosConfig);
 const mockGetFilePaths = jest.fn(() => ({
   components: {
     Foo: 'components/Foo.js',
-    Bar: 'components/Bar.js',
+    Bar: 'components/Bar.js'
   },
   fixtures: {
     Foo: {
-      blank: 'components/__fixtures__/Foo/blank.js',
+      blank: 'components/__fixtures__/Foo/blank.js'
     },
     Bar: {
       one: 'components/__fixtures__/Bar/one.js',
-      two: 'components/__fixtures__/Bar/two.json',
-    },
-  },
+      two: 'components/__fixtures__/Bar/two.json'
+    }
+  }
 }));
 jest.mock('react-cosmos-voyager', () => mockGetFilePaths);
 
@@ -36,26 +36,36 @@ const moduleLoader = require('../module-loader');
 const mockAddDependency = jest.fn();
 const loaderContext = {
   query: {
-    cosmosConfigPath,
+    cosmosConfigPath
   },
-  addDependency: mockAddDependency,
+  addDependency: mockAddDependency
 };
-const loaderInput = 'components = COMPONENTS; fixtures = FIXTURES; proxies = PROXIES; contexts = CONTEXTS;';
+const loaderInput =
+  'components = COMPONENTS; fixtures = FIXTURES; proxies = PROXIES; contexts = CONTEXTS;';
 const loaderOutput = moduleLoader.call(loaderContext, loaderInput);
 
 // Replace actual request calls with a mock of their signature
 // eslint-disable-next-line no-unused-vars
 const __req = (...args) => `__req(${[...args]})`;
 
-const [, componentsOutput, fixturesOutput, proxiesOutput, contextsOutput] =
-  loaderOutput.match(/^components = (.+); fixtures = (.+); proxies = (.+); contexts = (.+);$/);
+const [
+  ,
+  componentsOutput,
+  fixturesOutput,
+  proxiesOutput,
+  contextsOutput
+] = loaderOutput.match(
+  /^components = (.+); fixtures = (.+); proxies = (.+); contexts = (.+);$/
+);
 
 test('calls react-cosmos-config with cosmos config path', () => {
   expect(mockGetCosmosConfig.mock.calls[0][0]).toBe(cosmosConfigPath);
 });
 
 test('calls react-cosmos-voyager with component paths', () => {
-  expect(mockGetFilePaths.mock.calls[0][0].componentPaths).toBe(mockComponentPaths);
+  expect(mockGetFilePaths.mock.calls[0][0].componentPaths).toBe(
+    mockComponentPaths
+  );
 });
 
 test('calls react-cosmos-voyager with fixture paths', () => {
@@ -68,7 +78,7 @@ test('injects components', () => {
 
   expect(components).toEqual({
     Foo: '__req(components/Foo.js)',
-    Bar: '__req(components/Bar.js)',
+    Bar: '__req(components/Bar.js)'
   });
 });
 
@@ -78,12 +88,12 @@ test('injects fixtures', () => {
 
   expect(components).toEqual({
     Foo: {
-      blank: '__req(components/__fixtures__/Foo/blank.js)',
+      blank: '__req(components/__fixtures__/Foo/blank.js)'
     },
     Bar: {
       one: '__req(components/__fixtures__/Bar/one.js)',
-      two: `__req(${jsonLoader}!components/__fixtures__/Bar/two.json)`,
-    },
+      two: `__req(${jsonLoader}!components/__fixtures__/Bar/two.json)`
+    }
   });
 });
 
@@ -91,25 +101,28 @@ test('injects proxies', () => {
   // eslint-disable-next-line no-eval
   const proxies = eval(`(${proxiesOutput.replace(/require/g, '__req')})`);
 
-  expect(proxies).toEqual([
-    '__req(proxy-module)',
-    '__req(./proxy-file)'
-  ]);
+  expect(proxies).toEqual(['__req(proxy-module)', '__req(./proxy-file)']);
 });
 
 test('injects contexts', () => {
   // eslint-disable-next-line no-eval
-  const contexts = eval(`(${contextsOutput.replace(/require.context/g, '__req')})`);
+  const contexts = eval(
+    `(${contextsOutput.replace(/require.context/g, '__req')})`
+  );
 
   expect(contexts).toEqual([
     '__req(components,false,/\\.jsx?$/)',
     '__req(components/__fixtures__/Foo,false,/\\.jsx?$/)',
-    '__req(components/__fixtures__/Bar,false,/\\.jsx?$/)',
+    '__req(components/__fixtures__/Bar,false,/\\.jsx?$/)'
   ]);
 });
 
 test('registers user dirs as loader deps', () => {
   expect(mockAddDependency.mock.calls[0][0]).toEqual('components');
-  expect(mockAddDependency.mock.calls[1][0]).toEqual('components/__fixtures__/Foo');
-  expect(mockAddDependency.mock.calls[2][0]).toEqual('components/__fixtures__/Bar');
+  expect(mockAddDependency.mock.calls[1][0]).toEqual(
+    'components/__fixtures__/Foo'
+  );
+  expect(mockAddDependency.mock.calls[2][0]).toEqual(
+    'components/__fixtures__/Bar'
+  );
 });

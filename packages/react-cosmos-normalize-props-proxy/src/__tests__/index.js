@@ -6,7 +6,7 @@ const NextProxy = () => {};
 const nextProxyNext = {};
 const nextProxy = {
   value: NextProxy,
-  next: () => nextProxyNext,
+  next: () => nextProxyNext
 };
 const onComponentRef = jest.fn();
 const onFixtureUpdate = jest.fn();
@@ -33,7 +33,7 @@ const renderProxy = fixture => {
       fixture={fixture}
       onComponentRef={onComponentRef}
       onFixtureUpdate={onFixtureUpdate}
-    />,
+    />
   );
   childWrapper = wrapper.at(0);
   childProps = childWrapper.props();
@@ -75,7 +75,7 @@ describe('fixture without fixture.props', () => {
       children: mockChildren,
       state: mockState,
       reduxState: mockReduxState,
-      foo: 'bar',
+      foo: 'bar'
     });
   });
 
@@ -95,8 +95,8 @@ describe('fixture with fixture.props', () => {
       reduxState: mockReduxState,
       foo: 'bar',
       props: {
-        car: 'honda',
-      },
+        car: 'honda'
+      }
     });
   });
 

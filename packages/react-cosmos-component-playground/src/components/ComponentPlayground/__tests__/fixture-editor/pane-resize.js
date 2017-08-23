@@ -17,7 +17,7 @@ const mockContentNodeSize = () => {
   instance.contentNode = {
     // Landscape
     offsetWidth: 300,
-    offsetHeight: 200,
+    offsetHeight: 200
   };
 };
 
@@ -26,7 +26,7 @@ describe('Resize fixture editor pane', () => {
 
   beforeEach(() => {
     localForage.__setItemMocks({
-      [FIXTURE_EDITOR_PANE_SIZE]: cachedSize,
+      [FIXTURE_EDITOR_PANE_SIZE]: cachedSize
     });
 
     return new Promise(resolve => {
@@ -60,7 +60,7 @@ describe('Resize fixture editor pane', () => {
       instance.contentNode = {
         // Portrait
         offsetWidth: 200,
-        offsetHeight: 300,
+        offsetHeight: 300
       };
       instance.onResize();
     });

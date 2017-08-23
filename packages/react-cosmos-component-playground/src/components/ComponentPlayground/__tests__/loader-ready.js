@@ -47,8 +47,8 @@ describe('CP loader ready', () => {
           type: 'loaderReady',
           fixtures: {
             ComponentA: ['foo', 'bar'],
-            ComponentB: ['baz', 'qux'],
-          },
+            ComponentB: ['baz', 'qux']
+          }
         },
         '*'
       );
@@ -68,7 +68,7 @@ describe('CP loader ready', () => {
   test('should add fixtures to state', () => {
     expect(instance.state.fixtures).toEqual({
       ComponentA: ['foo', 'bar'],
-      ComponentB: ['baz', 'qux'],
+      ComponentB: ['baz', 'qux']
     });
   });
 });

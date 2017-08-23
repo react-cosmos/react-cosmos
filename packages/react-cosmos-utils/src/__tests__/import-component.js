@@ -13,7 +13,7 @@ class classComponent extends Component {
 test('returns stateless component from es module', () => {
   const module = {
     __esModule: true,
-    default: statelessComponent,
+    default: statelessComponent
   };
   expect(importComponent(module)).toBe(statelessComponent);
 });
@@ -21,7 +21,7 @@ test('returns stateless component from es module', () => {
 test('returns class component from es module', () => {
   const module = {
     __esModule: true,
-    default: classComponent,
+    default: classComponent
   };
   expect(importComponent(module)).toBe(classComponent);
 });
@@ -29,7 +29,7 @@ test('returns class component from es module', () => {
 test('returns invalid component from es module', () => {
   const module = {
     __esModule: true,
-    default: {},
+    default: {}
   };
   const MissingComponent = importComponent(module);
   expect(shallow(<MissingComponent />).text()).toEqual(
@@ -40,7 +40,7 @@ test('returns invalid component from es module', () => {
 test('returns invalid named component from es module', () => {
   const module = {
     __esModule: true,
-    default: {},
+    default: {}
   };
   const MissingComponent = importComponent(module, 'Foo');
   expect(shallow(<MissingComponent />).text()).toEqual(

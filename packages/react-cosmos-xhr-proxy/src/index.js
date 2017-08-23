@@ -3,11 +3,11 @@ import xhrMock from 'xhr-mock';
 import proxyPropTypes from 'react-cosmos-utils/lib/proxy-prop-types';
 
 const defaults = {
-  fixtureKey: 'xhr',
+  fixtureKey: 'xhr'
 };
 
 const mockDefaults = {
-  method: 'get',
+  method: 'get'
 };
 
 export default function createXhrProxy(options) {
@@ -40,7 +40,7 @@ export default function createXhrProxy(options) {
       return React.createElement(nextProxy.value, {
         ...props,
         nextProxy: nextProxy.next(),
-        onComponentRef,
+        onComponentRef
       });
     }
   }

@@ -35,7 +35,7 @@ const getFilteredFixtures = (fixtures, searchText) => {
 
 export default class FixtureList extends Component {
   state = {
-    searchText: '',
+    searchText: ''
   };
 
   componentDidMount() {
@@ -56,7 +56,7 @@ export default class FixtureList extends Component {
       this.searchInput.focus();
     } else if (e.keyCode === KEY_ESC && isFocused) {
       this.setState({
-        searchText: '',
+        searchText: ''
       });
 
       this.searchInput.blur();
@@ -65,7 +65,7 @@ export default class FixtureList extends Component {
 
   onChange = e => {
     this.setState({
-      searchText: e.target.value,
+      searchText: e.target.value
     });
   };
 
@@ -110,12 +110,12 @@ export default class FixtureList extends Component {
                     const fixtureClassNames = classNames(styles.fixture, {
                       [styles.fixtureSelected]:
                         component === urlParams.component &&
-                        fixture === urlParams.fixture,
+                        fixture === urlParams.fixture
                     });
                     const nextUrlParams = {
                       ...urlParams,
                       component,
-                      fixture,
+                      fixture
                     };
 
                     return (
@@ -145,7 +145,7 @@ FixtureList.propTypes = {
     component: string,
     fixture: string,
     editor: bool,
-    fullScreen: bool,
+    fullScreen: bool
   }).isRequired,
-  onUrlChange: func.isRequired,
+  onUrlChange: func.isRequired
 };

@@ -10,11 +10,18 @@ import {
 const SPECIAL_DIRS = ['__tests__'];
 
 const isUnderSpecialDir = (filePath, fixturesDir) =>
-  SPECIAL_DIRS.concat(fixturesDir).some(dir => filePath.indexOf(`/${dir}/`) !== -1);
+  SPECIAL_DIRS.concat(fixturesDir).some(
+    dir => filePath.indexOf(`/${dir}/`) !== -1
+  );
 
-const getExternalFixtures = fixturePaths => fixturePaths.reduce((prev, next) => (
-  [...prev, ...glob.sync(`${next}/**/*.{${FIXTURE_EXTENSIONS_GLOB}}`)]
-), []);
+const getExternalFixtures = fixturePaths =>
+  fixturePaths.reduce(
+    (prev, next) => [
+      ...prev,
+      ...glob.sync(`${next}/**/*.{${FIXTURE_EXTENSIONS_GLOB}}`)
+    ],
+    []
+  );
 
 const extractComponentName = (filePath, rootPath) => {
   let componentName = filePath
@@ -40,11 +47,17 @@ const extractComponentName = (filePath, rootPath) => {
 
 const getMatchingFixtures = (fixtures, componentName, fixturesDir) =>
   fixtures.reduce((matchingFixtures, fixturePath) => {
-    const fixtureName = matchFixturePath(fixturePath, componentName, fixturesDir);
-    return fixtureName ? {
-      ...matchingFixtures,
-      [fixtureName]: fixturePath,
-    } : matchingFixtures;
+    const fixtureName = matchFixturePath(
+      fixturePath,
+      componentName,
+      fixturesDir
+    );
+    return fixtureName
+      ? {
+          ...matchingFixtures,
+          [fixtureName]: fixturePath
+        }
+      : matchingFixtures;
   }, {});
 
 const getFilePaths = ({
@@ -53,7 +66,7 @@ const getFilePaths = ({
   fixturesDir = '__fixtures__',
   ignore = [],
   getComponentName,
-  getFixturePathsForComponent,
+  getFixturePathsForComponent
 }) => {
   const extFixtures = getExternalFixtures(fixturePaths);
   const components = {};
@@ -62,44 +75,60 @@ const getFilePaths = ({
   componentPaths.forEach(componentPath => {
     if (fs.lstatSync(componentPath).isFile()) {
       if (typeof getComponentName !== 'function') {
-        throw new TypeError('Must implement getComponentName when using exact file paths in componentPaths');
+        throw new TypeError(
+          'Must implement getComponentName when using exact file paths in componentPaths'
+        );
       }
 
       const componentDir = path.dirname(componentPath);
       const componentName = getComponentName(componentPath);
 
       components[componentName] = componentPath;
-      fixtures[componentName] = typeof getFixturePathsForComponent === 'function' ?
-        getFixturePathsForComponent(componentName) :
-        getMatchingFixtures([
-          ...glob.sync(`${componentDir}/**/${fixturesDir}/**/*.{${FIXTURE_EXTENSIONS_GLOB}}`),
-          ...extFixtures,
-        ], componentName, fixturesDir);
+      fixtures[componentName] =
+        typeof getFixturePathsForComponent === 'function'
+          ? getFixturePathsForComponent(componentName)
+          : getMatchingFixtures(
+              [
+                ...glob.sync(
+                  `${componentDir}/**/${fixturesDir}/**/*.{${FIXTURE_EXTENSIONS_GLOB}}`
+                ),
+                ...extFixtures
+              ],
+              componentName,
+              fixturesDir
+            );
     } else {
-      const relFixtures = glob.sync(`${componentPath}/**/${fixturesDir}/**/*.{${FIXTURE_EXTENSIONS_GLOB}}`);
-      glob.sync(`${componentPath}/**/*.{${COMPONENT_EXTENSIONS_GLOB}}`).forEach(filePath => {
-        if (
-          isUnderSpecialDir(filePath, fixturesDir) ||
-          ignore.some(ignorePattern => filePath.match(ignorePattern))
-        ) {
-          return;
-        }
+      const relFixtures = glob.sync(
+        `${componentPath}/**/${fixturesDir}/**/*.{${FIXTURE_EXTENSIONS_GLOB}}`
+      );
+      glob
+        .sync(`${componentPath}/**/*.{${COMPONENT_EXTENSIONS_GLOB}}`)
+        .forEach(filePath => {
+          if (
+            isUnderSpecialDir(filePath, fixturesDir) ||
+            ignore.some(ignorePattern => filePath.match(ignorePattern))
+          ) {
+            return;
+          }
 
-        const componentName = extractComponentName(filePath, componentPath);
+          const componentName = extractComponentName(filePath, componentPath);
 
-        components[componentName] = filePath;
-        fixtures[componentName] = typeof getFixturePathsForComponent === 'function' ?
-          getFixturePathsForComponent(componentName) :
-          getMatchingFixtures(
-            [...relFixtures, ...extFixtures], componentName, fixturesDir
-          );
-      });
+          components[componentName] = filePath;
+          fixtures[componentName] =
+            typeof getFixturePathsForComponent === 'function'
+              ? getFixturePathsForComponent(componentName)
+              : getMatchingFixtures(
+                  [...relFixtures, ...extFixtures],
+                  componentName,
+                  fixturesDir
+                );
+        });
     }
   });
 
   return {
     components,
-    fixtures,
+    fixtures
   };
 };
 

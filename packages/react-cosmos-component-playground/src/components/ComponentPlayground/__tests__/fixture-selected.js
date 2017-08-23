@@ -49,11 +49,11 @@ describe('CP with fixture already selected', () => {
 
     return waitToRender.then(() => {
       loaderContentWindow = {
-        postMessage: jest.fn(),
+        postMessage: jest.fn()
       };
       // iframe.contentWindow isn't available in jsdom
       instance.loaderFrame = {
-        contentWindow: loaderContentWindow,
+        contentWindow: loaderContentWindow
       };
 
       // State is already injected, but we need to trigger this event for the
@@ -61,7 +61,7 @@ describe('CP with fixture already selected', () => {
       window.postMessage(
         {
           type: 'loaderReady',
-          fixtures: selectedFixture.state.fixtures,
+          fixtures: selectedFixture.state.fixtures
         },
         '*'
       );
@@ -79,7 +79,7 @@ describe('CP with fixture already selected', () => {
       {
         type: 'fixtureSelect',
         component: 'ComponentA',
-        fixture: 'foo',
+        fixture: 'foo'
       },
       '*'
     );
@@ -95,7 +95,7 @@ describe('CP with fixture already selected', () => {
     it('should send url params (component, fixture) to fixture list', () => {
       expect(props.urlParams).toEqual({
         component: 'ComponentA',
-        fixture: 'foo',
+        fixture: 'foo'
       });
     });
 
@@ -106,7 +106,7 @@ describe('CP with fixture already selected', () => {
         {
           type: 'fixtureSelect',
           component: 'ComponentA',
-          fixture: 'foo',
+          fixture: 'foo'
         },
         '*'
       );

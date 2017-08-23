@@ -25,8 +25,8 @@ function runBuildTask(options) {
       `packages/${options.packageName}/lib`,
       '--copy-files',
       '--ignore',
-      '__tests__,__mocks__',
-    ],
+      '__tests__,__mocks__'
+    ]
   };
 
   const task = options.task || babelTask;
@@ -38,7 +38,7 @@ function runBuildTask(options) {
 
   const promise = spawn(task.name, taskArgs, {
     cwd: path.join(__dirname, '..'),
-    env: Object.assign({}, process.env, options.env),
+    env: Object.assign({}, process.env, options.env)
   });
 
   const child = promise.childProcess;
@@ -69,12 +69,12 @@ function runBuildPlaygroundTask(watch) {
     packageName: COMPONENT_PLAYGROUND,
     task: {
       name: 'webpack',
-      args: ['--config', `packages/${COMPONENT_PLAYGROUND}/webpack.config.js`],
+      args: ['--config', `packages/${COMPONENT_PLAYGROUND}/webpack.config.js`]
     },
     watch,
     env: {
-      NODE_ENV: 'production',
-    },
+      NODE_ENV: 'production'
+    }
   });
 }
 
@@ -134,7 +134,7 @@ glob('./packages/react-*', null, (err, files) => {
     // Build a single package
     runBuildTask({
       packageName: targetPackage,
-      watch: applyWatch,
+      watch: applyWatch
     }).catch(err => {
       console.error(`${targetPackage} build failed`, err);
     });

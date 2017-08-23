@@ -7,7 +7,7 @@ const NextProxy = () => {};
 const nextProxyNext = {};
 const nextProxy = {
   value: NextProxy,
-  next: () => nextProxyNext,
+  next: () => nextProxyNext
 };
 const onComponentRef = jest.fn();
 const onFixtureUpdate = jest.fn();
@@ -25,8 +25,8 @@ const renderProxy = (fixture, options) => {
   const ContextProxy = createContextProxy({
     ...options,
     childContextTypes: {
-      color: PropTypes.string,
-    },
+      color: PropTypes.string
+    }
   });
   const wrapper = shallow(
     <ContextProxy
@@ -35,7 +35,7 @@ const renderProxy = (fixture, options) => {
       fixture={fixture}
       onComponentRef={onComponentRef}
       onFixtureUpdate={onFixtureUpdate}
-    />,
+    />
   );
   childWrapper = wrapper.at(0);
   childProps = childWrapper.props();
@@ -71,7 +71,7 @@ const commonTests = () => {
 describe('fixture without context', () => {
   beforeAll(() => {
     renderProxy({
-      foo: 'bar',
+      foo: 'bar'
     });
   });
 
@@ -87,8 +87,8 @@ describe('fixture context', () => {
     renderProxy({
       foo: 'bar',
       context: {
-        color: 'red',
-      },
+        color: 'red'
+      }
     });
   });
 
@@ -96,7 +96,7 @@ describe('fixture context', () => {
 
   test('child context is populated', () => {
     expect(getChildContext).toEqual({
-      color: 'red',
+      color: 'red'
     });
   });
 });

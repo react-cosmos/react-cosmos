@@ -22,7 +22,7 @@ beforeEach(() => {
   nextProxyNext = {};
   nextProxy = {
     value: NextProxy,
-    next: () => nextProxyNext,
+    next: () => nextProxyNext
   };
   Component = () => {};
   componentRef = {};
@@ -40,7 +40,7 @@ beforeEach(() => {
             {
               url: '/users',
               response: (req, res) =>
-                res.status(200).body([{ name: 'John' }, { name: 'Jessica' }]),
+                res.status(200).body([{ name: 'John' }, { name: 'Jessica' }])
             },
             {
               url: '/user',
@@ -49,16 +49,16 @@ beforeEach(() => {
                 const { id } = req.body();
                 return res.status(200).body({
                   id,
-                  name: 'John Doe',
+                  name: 'John Doe'
                 });
-              },
+              }
             },
             {
               url: '/user',
               method: 'DELETE',
-              response: () => null,
-            },
-          ],
+              response: () => null
+            }
+          ]
         }}
         onComponentRef={ref => {
           onComponentRef(ref);
@@ -117,7 +117,7 @@ describe('xhr mocking', () => {
       try {
         expect(xhr.responseText).toEqual([
           { name: 'John' },
-          { name: 'Jessica' },
+          { name: 'Jessica' }
         ]);
         done();
       } catch (err) {
@@ -147,7 +147,7 @@ describe('xhr mocking', () => {
       done.fail(err);
     };
     xhr.send({
-      id: 5,
+      id: 5
     });
   });
 

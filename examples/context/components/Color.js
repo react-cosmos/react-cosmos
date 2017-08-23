@@ -15,5 +15,5 @@ export default class Color extends React.Component {
 
 Color.contextTypes = {
   backgroundColor: PropTypes.string.isRequired,
-  textColor: PropTypes.string.isRequired,
+  textColor: PropTypes.string.isRequired
 };

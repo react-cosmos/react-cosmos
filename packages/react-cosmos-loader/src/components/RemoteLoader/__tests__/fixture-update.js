@@ -44,12 +44,12 @@ describe('Fixture content updated by proxies', () => {
       <RemoteLoader
         proxies={[createProxyFoo]}
         components={{
-          Foo: ComponentFoo,
+          Foo: ComponentFoo
         }}
         fixtures={{
           Foo: {
-            foo: fixtureFoo,
-          },
+            foo: fixtureFoo
+          }
         }}
       />
     );
@@ -60,7 +60,7 @@ describe('Fixture content updated by proxies', () => {
           {
             type: 'fixtureSelect',
             component: 'Foo',
-            fixture: 'foo',
+            fixture: 'foo'
           },
           '*'
         );
@@ -90,14 +90,14 @@ describe('Fixture content updated by proxies', () => {
   test('sends updated fixture body to parent', () => {
     expect(fixtureUpdateMessage).toEqual({
       type: 'fixtureUpdate',
-      fixtureBody: fixtureFoo2,
+      fixtureBody: fixtureFoo2
     });
   });
 
   test('sends updated (merged) fixture to first proxy', () => {
     expect(firstProxyProps.fixture).toEqual({
       ...fixtureFoo,
-      ...fixtureFoo2,
+      ...fixtureFoo2
     });
   });
 

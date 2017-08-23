@@ -24,31 +24,31 @@ describe('React state proxy – component state nested', () => {
     nextProxyNext = {};
     nextProxy = {
       value: NextProxy,
-      next: () => nextProxyNext,
+      next: () => nextProxyNext
     };
     Component = () => {};
     componentRef = {
       state: {
-        baz: 'qux',
+        baz: 'qux'
       },
       refs: {
         child1: {
           state: {
-            qux: 'quuz',
-          },
+            qux: 'quuz'
+          }
         },
         child2: {
           state: {
-            corge: 'grault',
-          },
-        },
-      },
+            corge: 'grault'
+          }
+        }
+      }
     };
     onComponentRef = jest.fn();
     onFixtureUpdate = jest.fn();
 
     StateProxy = createStateProxy({
-      updateInterval: 1337,
+      updateInterval: 1337
     });
 
     return new Promise(resolve => {
@@ -57,7 +57,7 @@ describe('React state proxy – component state nested', () => {
           nextProxy={nextProxy}
           component={Component}
           fixture={{
-            foo: 'bar',
+            foo: 'bar'
           }}
           onComponentRef={ref => {
             onComponentRef(ref);
@@ -93,7 +93,7 @@ describe('React state proxy – component state nested', () => {
 
   test('sends fixture to next proxy', () => {
     expect(props.fixture).toEqual({
-      foo: 'bar',
+      foo: 'bar'
     });
   });
 
@@ -111,13 +111,13 @@ describe('React state proxy – component state nested', () => {
         baz: 'qux',
         children: {
           child1: {
-            qux: 'quuz',
+            qux: 'quuz'
           },
           child2: {
-            corge: 'grault',
-          },
-        },
-      },
+            corge: 'grault'
+          }
+        }
+      }
     });
   });
 

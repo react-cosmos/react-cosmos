@@ -5,9 +5,9 @@ import PropsProxy from '../';
 const Component = () => {};
 const fixture = {
   props: {
-    foo: 'bar',
+    foo: 'bar'
   },
-  children: [<p key="1">Child 1</p>],
+  children: [<p key="1">Child 1</p>]
 };
 const onComponentRef = jest.fn();
 

@@ -3,18 +3,18 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    vendor: ['moment'],
+    vendor: ['moment']
   },
   output: {
     path: path.join(__dirname, 'build'),
     filename: 'dll.[name].js',
-    library: '[name]',
+    library: '[name]'
   },
   plugins: [
     new webpack.DllPlugin({
       context: __dirname,
       path: path.join(__dirname, 'build', '[name]-manifest.json'),
-      name: '[name]',
-    }),
-  ],
+      name: '[name]'
+    })
+  ]
 };

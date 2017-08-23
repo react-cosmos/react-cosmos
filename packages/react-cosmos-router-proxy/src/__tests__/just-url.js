@@ -44,8 +44,8 @@ beforeEach(() => {
           value: NextProxy,
           next: () => ({
             value: LastProxy,
-            next: () => {},
-          }),
+            next: () => {}
+          })
         }}
         component={Component}
         fixture={{
@@ -53,7 +53,7 @@ beforeEach(() => {
           // fixture without changing it
           foo: 'bar',
           // This tells RouterProxy to add MemoryRouter wrapper
-          url: '/foo-route',
+          url: '/foo-route'
         }}
         onComponentRef={resolve}
         onFixtureUpdate={onFixtureUpdate}

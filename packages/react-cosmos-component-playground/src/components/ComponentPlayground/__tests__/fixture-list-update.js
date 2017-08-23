@@ -49,8 +49,8 @@ describe('CP fixture list update', () => {
           type: 'fixtureListUpdate',
           fixtures: {
             ComponentA: ['foo', 'bar'],
-            ComponentB: ['baz', 'qux', 'quux'],
-          },
+            ComponentB: ['baz', 'qux', 'quux']
+          }
         },
         '*'
       );
@@ -66,14 +66,14 @@ describe('CP fixture list update', () => {
   test('should send fixtures to fixture list', () => {
     expect(wrapper.find(FixtureList).prop('fixtures')).toEqual({
       ComponentA: ['foo', 'bar'],
-      ComponentB: ['baz', 'qux', 'quux'],
+      ComponentB: ['baz', 'qux', 'quux']
     });
   });
 
   test('should send fixtures to welcome screen', () => {
     expect(wrapper.find(WelcomeScreen).prop('fixtures')).toEqual({
       ComponentA: ['foo', 'bar'],
-      ComponentB: ['baz', 'qux', 'quux'],
+      ComponentB: ['baz', 'qux', 'quux']
     });
   });
 });

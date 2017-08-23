@@ -24,7 +24,7 @@ describe('React state proxy – stateless', () => {
     nextProxyNext = {};
     nextProxy = {
       value: NextProxy,
-      next: () => nextProxyNext,
+      next: () => nextProxyNext
     };
     Component = () => {};
     componentRef = {};
@@ -32,7 +32,7 @@ describe('React state proxy – stateless', () => {
     onFixtureUpdate = jest.fn();
 
     StateProxy = createStateProxy({
-      updateInterval: 1337,
+      updateInterval: 1337
     });
 
     return new Promise(resolve => {
@@ -41,7 +41,7 @@ describe('React state proxy – stateless', () => {
           nextProxy={nextProxy}
           component={Component}
           fixture={{
-            foo: 'bar',
+            foo: 'bar'
           }}
           onComponentRef={ref => {
             onComponentRef(ref);
@@ -77,7 +77,7 @@ describe('React state proxy – stateless', () => {
 
   test('sends fixture to next proxy', () => {
     expect(props.fixture).toEqual({
-      foo: 'bar',
+      foo: 'bar'
     });
   });
 

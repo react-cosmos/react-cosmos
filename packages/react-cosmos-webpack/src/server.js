@@ -52,7 +52,7 @@ module.exports = function startServer() {
   app.use(
     webpackDevMiddleware(loaderCompiler, {
       publicPath: '/loader/',
-      noInfo: true,
+      noInfo: true
     })
   );
 
@@ -71,7 +71,7 @@ module.exports = function startServer() {
     'utf8'
   );
   const playgroundOpts = JSON.stringify({
-    loaderUri: './loader/index.html',
+    loaderUri: './loader/index.html'
   });
 
   app.get('/', (req, res) => {

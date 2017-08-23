@@ -21,8 +21,8 @@ describe('FixtureEditor', () => {
     fixture = merge({}, propsFixture, {
       props: {
         onChange: jest.fn(),
-        onFocusChange: jest.fn(),
-      },
+        onFocusChange: jest.fn()
+      }
     });
     wrapper = shallowLoader(
       <Loader component={FixtureEditor} fixture={fixture} />
@@ -43,7 +43,7 @@ describe('FixtureEditor', () => {
     it('have stringified value', () => {
       expect(props.value).toBe(
         stringify({
-          props: { foo: 'bar' },
+          props: { foo: 'bar' }
         })
       );
     });
@@ -55,13 +55,13 @@ describe('FixtureEditor', () => {
     it('trigger onChange prop on valid input', () => {
       props.onChange(
         stringify({
-          props: { baz: 'qux' },
+          props: { baz: 'qux' }
         })
       );
       expect(fixture.props.onChange).toHaveBeenCalledWith({
         props: {
-          baz: 'qux',
-        },
+          baz: 'qux'
+        }
       });
     });
 

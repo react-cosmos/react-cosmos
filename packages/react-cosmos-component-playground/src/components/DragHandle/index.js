@@ -6,7 +6,7 @@ import styles from './index.less';
 class DragHandle extends Component {
   state = {
     isDragging: false,
-    offset: 0,
+    offset: 0
   };
 
   componentDidMount() {
@@ -33,7 +33,7 @@ class DragHandle extends Component {
     this.setState(
       {
         isDragging: true,
-        offset,
+        offset
       },
       this.props.onDragStart
     );
@@ -53,7 +53,7 @@ class DragHandle extends Component {
   onMouseUp = () => {
     this.setState(
       {
-        isDragging: false,
+        isDragging: false
       },
       this.props.onDragEnd
     );
@@ -64,7 +64,7 @@ class DragHandle extends Component {
 
     const className = classNames(styles.root, {
       [styles.vertical]: vertical,
-      [styles.horizontal]: !vertical,
+      [styles.horizontal]: !vertical
     });
     return (
       <div
@@ -81,13 +81,13 @@ DragHandle.propTypes = {
   vertical: bool,
   onDrag: func.isRequired,
   onDragStart: func,
-  onDragEnd: func,
+  onDragEnd: func
 };
 
 DragHandle.defaultProps = {
   vertical: false,
   onDragStart: () => {},
-  onDragEnd: () => {},
+  onDragEnd: () => {}
 };
 
 export default DragHandle;

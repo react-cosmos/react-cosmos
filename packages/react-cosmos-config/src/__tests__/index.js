@@ -46,16 +46,23 @@ describe('resolves module paths', () => {
       proxies: ['react-cosmos-utils/src/linked-list']
     });
 
-    ({ globalImports, proxies } =
-      getCosmosConfig());
+    ({ globalImports, proxies } = getCosmosConfig());
   });
 
   test('global imports', () => {
-    expect(globalImports).toEqual([slash(path.join(__dirname, '../../../react-cosmos-utils/src/import-module.js'))]);
+    expect(globalImports).toEqual([
+      slash(
+        path.join(__dirname, '../../../react-cosmos-utils/src/import-module.js')
+      )
+    ]);
   });
 
   test('proxies', () => {
-    expect(proxies).toEqual([slash(path.join(__dirname, '../../../react-cosmos-utils/src/linked-list.js'))]);
+    expect(proxies).toEqual([
+      slash(
+        path.join(__dirname, '../../../react-cosmos-utils/src/linked-list.js')
+      )
+    ]);
   });
 });
 
@@ -76,11 +83,18 @@ describe('keeps absolute paths', () => {
       proxies: ['/path/to/proxy'],
       publicPath: '/path/to/static',
       webpackConfigPath: '/path/to/webpack',
-      outputPath: '/path/to/output',
+      outputPath: '/path/to/output'
     });
 
-    ({ componentPaths, fixturePaths, globalImports, proxies, publicPath, webpackConfigPath, outputPath } =
-      getCosmosConfig());
+    ({
+      componentPaths,
+      fixturePaths,
+      globalImports,
+      proxies,
+      publicPath,
+      webpackConfigPath,
+      outputPath
+    } = getCosmosConfig());
   });
 
   test('components', () => {
@@ -129,39 +143,60 @@ describe('resolves relative paths', () => {
       proxies: ['./path/to/proxy'],
       publicPath: './path/to/static',
       webpackConfigPath: './path/to/webpack',
-      outputPath: './path/to/output',
+      outputPath: './path/to/output'
     });
 
-    ({ componentPaths, fixturePaths, globalImports, proxies, publicPath, webpackConfigPath, outputPath } =
-      getCosmosConfig('./custom-path/cosmos.config'));
+    ({
+      componentPaths,
+      fixturePaths,
+      globalImports,
+      proxies,
+      publicPath,
+      webpackConfigPath,
+      outputPath
+    } = getCosmosConfig('./custom-path/cosmos.config'));
   });
 
   test('components', () => {
-    expect(componentPaths).toEqual([slash(path.join(__dirname, 'mock-cwd/custom-path/path/to/components'))]);
+    expect(componentPaths).toEqual([
+      slash(path.join(__dirname, 'mock-cwd/custom-path/path/to/components'))
+    ]);
   });
 
   test('fixtures', () => {
-    expect(fixturePaths).toEqual([slash(path.join(__dirname, 'mock-cwd/custom-path/path/to/fixtures'))]);
+    expect(fixturePaths).toEqual([
+      slash(path.join(__dirname, 'mock-cwd/custom-path/path/to/fixtures'))
+    ]);
   });
 
   test('global imports', () => {
-    expect(globalImports).toEqual([slash(path.join(__dirname, 'mock-cwd/custom-path/path/to/import'))]);
+    expect(globalImports).toEqual([
+      slash(path.join(__dirname, 'mock-cwd/custom-path/path/to/import'))
+    ]);
   });
 
   test('proxies', () => {
-    expect(proxies).toEqual([slash(path.join(__dirname, 'mock-cwd/custom-path/path/to/proxy'))]);
+    expect(proxies).toEqual([
+      slash(path.join(__dirname, 'mock-cwd/custom-path/path/to/proxy'))
+    ]);
   });
 
   test('public', () => {
-    expect(publicPath).toEqual(slash(path.join(__dirname, 'mock-cwd/custom-path/path/to/static')));
+    expect(publicPath).toEqual(
+      slash(path.join(__dirname, 'mock-cwd/custom-path/path/to/static'))
+    );
   });
 
   test('webpack config', () => {
-    expect(webpackConfigPath).toEqual(slash(path.join(__dirname, 'mock-cwd/custom-path/path/to/webpack')));
+    expect(webpackConfigPath).toEqual(
+      slash(path.join(__dirname, 'mock-cwd/custom-path/path/to/webpack'))
+    );
   });
 
   test('output path', () => {
-    expect(outputPath).toEqual(slash(path.join(__dirname, 'mock-cwd/custom-path/path/to/output')));
+    expect(outputPath).toEqual(
+      slash(path.join(__dirname, 'mock-cwd/custom-path/path/to/output'))
+    );
   });
 });
 
@@ -169,7 +204,9 @@ describe('defaults', () => {
   test('provide relative webpack path', () => {
     mockUserConfig('./mock-cwd/cosmos.config', {});
 
-    expect(getCosmosConfig().webpackConfigPath).toBe(slash(path.join(__dirname, 'mock-cwd/webpack.config')));
+    expect(getCosmosConfig().webpackConfigPath).toBe(
+      slash(path.join(__dirname, 'mock-cwd/webpack.config'))
+    );
   });
 
   test('provide hot reloading', () => {

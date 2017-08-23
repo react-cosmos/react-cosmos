@@ -18,7 +18,7 @@ const mockContentNodeSize = () => {
   instance.contentNode = {
     // Portrait
     offsetWidth: 200,
-    offsetHeight: 300,
+    offsetHeight: 300
   };
 };
 
@@ -66,12 +66,12 @@ describe('Portrait fixture editor pane', () => {
 
         // We can't use Enzyme's simulate to trigger native events
         const downEvent = new MouseEvent('mousedown', {
-          clientY: 3,
+          clientY: 3
         });
         dragHandleElement.dispatchEvent(downEvent);
 
         const moveEvent = new MouseEvent('mousemove', {
-          clientY: 204,
+          clientY: 204
         });
         document.dispatchEvent(moveEvent);
 
@@ -99,7 +99,7 @@ describe('Portrait fixture editor pane', () => {
 
     beforeEach(() => {
       localForage.__setItemMocks({
-        [FIXTURE_EDITOR_PANE_SIZE]: cachedSize,
+        [FIXTURE_EDITOR_PANE_SIZE]: cachedSize
       });
 
       return new Promise(resolve => {

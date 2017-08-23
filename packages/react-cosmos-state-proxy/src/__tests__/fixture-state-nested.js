@@ -27,7 +27,7 @@ describe('React state proxy – fixture state nested', () => {
     nextProxyNext = {};
     nextProxy = {
       value: NextProxy,
-      next: () => nextProxyNext,
+      next: () => nextProxyNext
     };
     Component = () => {};
     setState = jest.fn((state, cb) => cb());
@@ -37,18 +37,18 @@ describe('React state proxy – fixture state nested', () => {
       setState,
       refs: {
         child1: {
-          setState: setStateChild1,
+          setState: setStateChild1
         },
         child2: {
-          setState: setStateChild2,
-        },
-      },
+          setState: setStateChild2
+        }
+      }
     };
     onComponentRef = jest.fn();
     onFixtureUpdate = jest.fn();
 
     StateProxy = createStateProxy({
-      updateInterval: 1337,
+      updateInterval: 1337
     });
 
     return new Promise(resolve => {
@@ -62,13 +62,13 @@ describe('React state proxy – fixture state nested', () => {
               baz: 'qux',
               children: {
                 child1: {
-                  qux: 'quuz',
+                  qux: 'quuz'
                 },
                 child2: {
-                  corge: 'grault',
-                },
-              },
-            },
+                  corge: 'grault'
+                }
+              }
+            }
           }}
           onComponentRef={ref => {
             onComponentRef(ref);
@@ -109,13 +109,13 @@ describe('React state proxy – fixture state nested', () => {
         baz: 'qux',
         children: {
           child1: {
-            qux: 'quuz',
+            qux: 'quuz'
           },
           child2: {
-            corge: 'grault',
-          },
-        },
-      },
+            corge: 'grault'
+          }
+        }
+      }
     });
   });
 
@@ -130,7 +130,7 @@ describe('React state proxy – fixture state nested', () => {
   test('injects state', () => {
     expect(setState).toHaveBeenLastCalledWith(
       {
-        baz: 'qux',
+        baz: 'qux'
       },
       expect.any(Function)
     );
@@ -139,7 +139,7 @@ describe('React state proxy – fixture state nested', () => {
   test('injects state in first child', () => {
     expect(setStateChild1).toHaveBeenLastCalledWith(
       {
-        qux: 'quuz',
+        qux: 'quuz'
       },
       expect.any(Function)
     );
@@ -148,7 +148,7 @@ describe('React state proxy – fixture state nested', () => {
   test('injects state in second child', () => {
     expect(setStateChild2).toHaveBeenLastCalledWith(
       {
-        corge: 'grault',
+        corge: 'grault'
       },
       expect.any(Function)
     );

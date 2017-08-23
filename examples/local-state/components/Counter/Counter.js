@@ -7,22 +7,19 @@ export default class Counter extends React.Component {
     super(props);
     this.onButtonClick = this.onButtonClick.bind(this);
     this.state = {
-      value: 0,
+      value: 0
     };
   }
 
   onButtonClick() {
     this.setState({
-      value: this.state.value + 1,
+      value: this.state.value + 1
     });
   }
 
   render() {
     return (
-      <button
-        className="CounterButton"
-        onClick={this.onButtonClick}
-      >
+      <button className="CounterButton" onClick={this.onButtonClick}>
         {`${this.props.name} clicked ${this.state.value} times`}
       </button>
     );

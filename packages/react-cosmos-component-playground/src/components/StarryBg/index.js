@@ -6,7 +6,7 @@ class StarryBg extends Component {
     const { children } = this.props;
     return (
       <div className={styles.root}>
-        <div className={styles.stars}></div>
+        <div className={styles.stars} />
         {children &&
           <div className={styles.content}>
             {children}

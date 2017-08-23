@@ -2,12 +2,12 @@ export default {
   props: {
     value: {
       props: {
-        foo: 'bar',
-      },
+        foo: 'bar'
+      }
     },
-    onChange: value => console.log('change', value),
+    onChange: value => console.log('change', value)
   },
   state: {
-    isFocused: true,
-  },
+    isFocused: true
+  }
 };

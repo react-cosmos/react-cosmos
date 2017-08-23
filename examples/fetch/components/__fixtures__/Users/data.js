@@ -5,13 +5,13 @@ export default {
       response: [
         {
           id: 1,
-          name: 'John',
+          name: 'John'
         },
         {
           id: 2,
-          name: 'Jessica',
-        },
-      ],
-    },
-  ],
+          name: 'Jessica'
+        }
+      ]
+    }
+  ]
 };

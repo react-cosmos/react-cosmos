@@ -15,12 +15,12 @@ let wrapper;
 describe('CP fixtures loaded', () => {
   beforeEach(() => {
     router = {
-      goTo: jest.fn(),
+      goTo: jest.fn()
     };
     const fixture = merge({}, readyFixture, {
       props: {
-        router,
-      },
+        router
+      }
     });
 
     return new Promise(resolve => {
@@ -52,7 +52,7 @@ describe('CP fixtures loaded', () => {
     test('should send fixtures to fixture list', () => {
       expect(props.fixtures).toEqual({
         ComponentA: ['foo', 'bar'],
-        ComponentB: ['baz', 'qux'],
+        ComponentB: ['baz', 'qux']
       });
     });
 
@@ -84,7 +84,7 @@ describe('CP fixtures loaded', () => {
     test('should send fixtures to welcome screen', () => {
       expect(wrapper.find(WelcomeScreen).prop('fixtures')).toEqual({
         ComponentA: ['foo', 'bar'],
-        ComponentB: ['baz', 'qux'],
+        ComponentB: ['baz', 'qux']
       });
     });
   });

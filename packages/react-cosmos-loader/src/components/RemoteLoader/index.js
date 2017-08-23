@@ -19,7 +19,7 @@ const noFixtureState = {
   component: null,
   fixture: null,
   fixtureBody: null,
-  fixtureId: 0,
+  fixtureId: 0
 };
 
 const getUpdateId = () => Date.now();
@@ -35,7 +35,7 @@ const getFixtureState = ({
   component,
   fixture,
   fixtureBody,
-  fixtureId,
+  fixtureId
 }) => {
   if (!fixture) {
     return noFixtureState;
@@ -50,12 +50,12 @@ const getFixtureState = ({
     fixture,
     fixtureBody: {
       unserializable,
-      serializable: fixtureBody === undefined ? serializable : fixtureBody,
+      serializable: fixtureBody === undefined ? serializable : fixtureBody
     },
     // Used as React Element key to ensure loaded components are rebuilt on
     // every fixture change (instead of reusing instance and going down the
     // componentWillReceiveProps route)
-    fixtureId: fixtureId === undefined ? getUpdateId() : fixtureId,
+    fixtureId: fixtureId === undefined ? getUpdateId() : fixtureId
   };
 };
 
@@ -87,7 +87,7 @@ class RemoteLoader extends Component {
     const { fixtures } = this.props;
     postMessageToParent({
       type: 'loaderReady',
-      fixtures: extractFixtureNames(fixtures),
+      fixtures: extractFixtureNames(fixtures)
     });
   }
 
@@ -104,7 +104,7 @@ class RemoteLoader extends Component {
     // webpack HMR)
     postMessageToParent({
       type: 'fixtureListUpdate',
-      fixtures: extractFixtureNames(fixtures),
+      fixtures: extractFixtureNames(fixtures)
     });
 
     const { component, fixture } = this.state;
@@ -114,7 +114,7 @@ class RemoteLoader extends Component {
       getFixtureState({
         fixtures,
         component,
-        fixture,
+        fixture
       }),
       () => {
         if (component && fixture) {
@@ -144,7 +144,7 @@ class RemoteLoader extends Component {
     const state = getFixtureState({
       fixtures,
       component,
-      fixture,
+      fixture
     });
 
     if (fixture) {
@@ -153,7 +153,7 @@ class RemoteLoader extends Component {
       // Notify back parent with the serializable contents of the loaded fixture
       postMessageToParent({
         type: 'fixtureLoad',
-        fixtureBody,
+        fixtureBody
       });
     }
 
@@ -169,7 +169,7 @@ class RemoteLoader extends Component {
         fixtures,
         component,
         fixture,
-        fixtureBody,
+        fixtureBody
       })
     );
   }
@@ -180,7 +180,7 @@ class RemoteLoader extends Component {
       component,
       fixture,
       fixtureBody: { serializable },
-      fixtureId,
+      fixtureId
     } = this.state;
 
     this.setState(
@@ -191,17 +191,17 @@ class RemoteLoader extends Component {
         // Fixture updates are partial
         fixtureBody: {
           ...serializable,
-          ...fixtureBody,
+          ...fixtureBody
         },
         // Preserve React instances when fixture change comes from state changes
-        fixtureId,
+        fixtureId
       })
     );
 
     try {
       postMessageToParent({
         type: 'fixtureUpdate',
-        fixtureBody,
+        fixtureBody
       });
     } catch (err) {
       console.warn('[Cosmos] Failed to send fixture update to parent', err);
@@ -235,11 +235,11 @@ class RemoteLoader extends Component {
 RemoteLoader.propTypes = {
   components: objectOf(createModuleType(func)).isRequired,
   fixtures: objectOf(objectOf(createModuleType(object))).isRequired,
-  proxies: arrayOf(createModuleType(func)),
+  proxies: arrayOf(createModuleType(func))
 };
 
 RemoteLoader.defaultProps = {
-  proxies: [],
+  proxies: []
 };
 
 export default RemoteLoader;

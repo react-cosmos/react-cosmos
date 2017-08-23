@@ -23,8 +23,13 @@ const prepareFixtures = (modules, components) => {
   return fixtures;
 };
 
-const componentModules = require('./components/**/*{.js,.jsx}', { mode: 'hash' });
-const fixtureModules = require('./components/__fixtures__/**/*.js', { mode: 'hash', resolve: ['path', 'strip-ext'] });
+const componentModules = require('./components/**/*{.js,.jsx}', {
+  mode: 'hash'
+});
+const fixtureModules = require('./components/__fixtures__/**/*.js', {
+  mode: 'hash',
+  resolve: ['path', 'strip-ext']
+});
 
 export const components = prepareComponents(componentModules);
 export const fixtures = prepareFixtures(fixtureModules, components);

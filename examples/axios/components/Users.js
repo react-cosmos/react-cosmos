@@ -5,7 +5,7 @@ export default class Users extends Component {
   state = {
     isLoading: true,
     error: null,
-    users: null,
+    users: null
   };
 
   componentDidMount() {
@@ -16,7 +16,7 @@ export default class Users extends Component {
       .catch(err => {
         this.setState({
           isLoading: false,
-          error: err.message,
+          error: err.message
         });
       });
   }

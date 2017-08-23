@@ -52,11 +52,11 @@ Loader.propTypes = {
   component: createModuleType(func).isRequired,
   fixture: createModuleType(object).isRequired,
   proxies: array,
-  onComponentRef: func,
+  onComponentRef: func
 };
 
 Loader.defaultProps = {
-  proxies: [],
+  proxies: []
 };
 
 export default Loader;

@@ -122,8 +122,8 @@ describe('Select', () => {
     onUrlChange = jest.fn();
     const fixture = merge({}, populatedFixture, {
       props: {
-        onUrlChange,
-      },
+        onUrlChange
+      }
     });
     wrapper = shallowLoader(
       <Loader component={FixtureList} fixture={fixture} />
@@ -136,8 +136,8 @@ describe('Select', () => {
     fixtureFoo.simulate('click', {
       preventDefault: jest.fn(),
       currentTarget: {
-        href: fixtureFoo.prop('href'),
-      },
+        href: fixtureFoo.prop('href')
+      }
     });
 
     expect(onUrlChange).toHaveBeenCalledWith(fixtureFoo.prop('href'));
@@ -149,8 +149,8 @@ describe('Select', () => {
     fixtureQux.simulate('click', {
       preventDefault: jest.fn(),
       currentTarget: {
-        href: fixtureQux.prop('href'),
-      },
+        href: fixtureQux.prop('href')
+      }
     });
 
     expect(onUrlChange).toHaveBeenCalledWith(fixtureQux.prop('href'));

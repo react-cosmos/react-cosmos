@@ -1,4 +1,4 @@
 export default {
   componentPaths: ['src/components'],
-  globalImports: ['src/utils/global.less'],
+  globalImports: ['src/utils/global.less']
 };

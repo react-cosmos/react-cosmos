@@ -11,7 +11,7 @@ const importFileTree = filePaths =>
   keys(filePaths).reduce((acc, name) => {
     return {
       ...acc,
-      [name]: require(filePaths[name]),
+      [name]: require(filePaths[name])
     };
   }, {});
 
@@ -24,7 +24,7 @@ export default ({ cosmosConfigPath } = {}) => {
   const fixtures = keys(filePaths.fixtures).reduce((acc, component) => {
     return {
       ...acc,
-      [component]: importFileTree(filePaths.fixtures[component]),
+      [component]: importFileTree(filePaths.fixtures[component])
     };
   }, {});
 
@@ -38,7 +38,7 @@ export default ({ cosmosConfigPath } = {}) => {
               proxies={[
                 ...proxies,
                 // Loaded by default in all configs
-                createStateProxy,
+                createStateProxy
               ]}
               component={components[component]}
               fixture={componentFixtures[fixture]}

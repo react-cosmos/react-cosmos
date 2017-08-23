@@ -22,7 +22,7 @@ beforeEach(() => {
   nextProxyNext = {};
   nextProxy = {
     value: NextProxy,
-    next: () => nextProxyNext,
+    next: () => nextProxyNext
   };
   Component = () => {};
   componentRef = {};
@@ -39,7 +39,7 @@ beforeEach(() => {
           fetch: [
             {
               matcher: '/users',
-              response: [{ name: 'John' }, { name: 'Jessica' }],
+              response: [{ name: 'John' }, { name: 'Jessica' }]
             },
             {
               matcher: '/user',
@@ -47,18 +47,18 @@ beforeEach(() => {
               response: (url, { body }) => {
                 return {
                   id: body.id,
-                  name: 'John Doe',
+                  name: 'John Doe'
                 };
-              },
+              }
             },
             {
               matcher: '/user',
               method: 'DELETE',
               response: {
-                throws: 'Not allowed',
-              },
-            },
-          ],
+                throws: 'Not allowed'
+              }
+            }
+          ]
         }}
         onComponentRef={ref => {
           onComponentRef(ref);
@@ -126,8 +126,8 @@ describe('fetch mocking', () => {
     return fetch('/user', {
       method: 'POST',
       body: {
-        id: 5,
-      },
+        id: 5
+      }
     }).then(response =>
       response
         .json()
@@ -141,8 +141,8 @@ describe('fetch mocking', () => {
     return fetch('/user', {
       method: 'DELETE',
       body: {
-        id: 5,
-      },
+        id: 5
+      }
     }).catch(err => expect(err).toEqual('Not allowed'));
   });
 });

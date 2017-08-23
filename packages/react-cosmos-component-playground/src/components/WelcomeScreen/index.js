@@ -25,8 +25,7 @@ class WelcomeScreen extends Component {
           <p className={styles.header}>You're all set! But did you know...</p>
           <ul>
             <li>
-              You can mock Redux state and build custom middleware using
-              {' '}
+              You can mock Redux state and build custom middleware using{' '}
               <a
                 target="_blank"
                 href="https://github.com/react-cosmos/react-cosmos#proxies"
@@ -38,8 +37,7 @@ class WelcomeScreen extends Component {
             <li>
               You can search for components and fixtures?
               <br />
-              Try it, it's all warm and
-              {' '}
+              Try it, it's all warm and{' '}
               <a
                 target="_blank"
                 href="https://github.com/jeancroy/fuzz-aldrin-plus"
@@ -49,8 +47,7 @@ class WelcomeScreen extends Component {
               .
             </li>
             <li>
-              You can load CSS, polyfills and other files
-              {' '}
+              You can load CSS, polyfills and other files{' '}
               <a
                 target="_blank"
                 href="https://github.com/react-cosmos/react-cosmos#configuration"
@@ -61,8 +58,7 @@ class WelcomeScreen extends Component {
             </li>
           </ul>
           <p>
-            Be a part of React Cosmos by becoming a
-            {' '}
+            Be a part of React Cosmos by becoming a{' '}
             <a
               target="_blank"
               href="https://github.com/react-cosmos/react-cosmos/blob/master/CONTRIBUTING.md"
@@ -81,23 +77,20 @@ class WelcomeScreen extends Component {
           <p className={styles.header}>Almost there...</p>
           <p>
             Your components are listed the left side, but it looks like you
-            haven't
-            created fixtures for them yet.
+            haven't created fixtures for them yet.
           </p>
           <p>
             A fixture is a JSON-like object, except it contains functions and
             any other types components receive via props.
           </p>
           <p>
-            Read the
-            {' '}
+            Read the{' '}
             <a
               target="_blank"
               href="https://github.com/react-cosmos/react-cosmos/blob/master/docs/fixtures.md"
             >
               creating fixtures
-            </a>
-            {' '}
+            </a>{' '}
             guide to help you get started.
           </p>
         </DisplayScreen>
@@ -116,22 +109,17 @@ class WelcomeScreen extends Component {
         </p>
         <ul>
           <li>
-            Adjust
-            {' '}
-            <strong>componentPaths</strong>
-            {' '}
-            in cosmos.config.js to match your file structure
+            Adjust <strong>componentPaths</strong> in cosmos.config.js to match
+            your file structure
           </li>
           <li>
-            Open up a
-            {' '}
+            Open up a{' '}
             <a
               target="_blank"
               href="https://github.com/react-cosmos/react-cosmos/issues"
             >
               GitHub issue
-            </a>
-            {' '}
+            </a>{' '}
             and ask for help by sharing your config and file structure
           </li>
         </ul>
@@ -141,7 +129,7 @@ class WelcomeScreen extends Component {
 }
 
 WelcomeScreen.propTypes = {
-  fixtures: objectOf(arrayOf(string)).isRequired,
+  fixtures: objectOf(arrayOf(string)).isRequired
 };
 
 export default WelcomeScreen;

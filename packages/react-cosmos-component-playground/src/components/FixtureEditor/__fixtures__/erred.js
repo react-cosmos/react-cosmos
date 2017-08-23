@@ -2,14 +2,14 @@ export default {
   props: {
     value: {
       props: {
-        foo: 'bar',
-      },
+        foo: 'bar'
+      }
     },
-    onChange: value => console.log('change', value),
+    onChange: value => console.log('change', value)
   },
   state: {
     value: '{\n  "props": {\n    "foo": "bar"\n  }\n}z',
     isFocused: false,
-    error: 'Unexpected token x in JSON at position 37',
-  },
+    error: 'Unexpected token x in JSON at position 37'
+  }
 };

@@ -24,19 +24,19 @@ describe('React state proxy – component state', () => {
     nextProxyNext = {};
     nextProxy = {
       value: NextProxy,
-      next: () => nextProxyNext,
+      next: () => nextProxyNext
     };
     Component = () => {};
     componentRef = {
       state: {
-        baz: 'qux',
-      },
+        baz: 'qux'
+      }
     };
     onComponentRef = jest.fn();
     onFixtureUpdate = jest.fn();
 
     StateProxy = createStateProxy({
-      updateInterval: 1337,
+      updateInterval: 1337
     });
 
     return new Promise(resolve => {
@@ -45,7 +45,7 @@ describe('React state proxy – component state', () => {
           nextProxy={nextProxy}
           component={Component}
           fixture={{
-            foo: 'bar',
+            foo: 'bar'
           }}
           onComponentRef={ref => {
             onComponentRef(ref);
@@ -81,7 +81,7 @@ describe('React state proxy – component state', () => {
 
   test('sends fixture to next proxy', () => {
     expect(props.fixture).toEqual({
-      foo: 'bar',
+      foo: 'bar'
     });
   });
 
@@ -96,8 +96,8 @@ describe('React state proxy – component state', () => {
   test('calls onFixtureUpdate with initial state', () => {
     expect(onFixtureUpdate).toHaveBeenLastCalledWith({
       state: {
-        baz: 'qux',
-      },
+        baz: 'qux'
+      }
     });
   });
 
