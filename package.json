@@ -91,26 +91,12 @@
     },
     "rules": {
       "indent": 0,
-      "quotes": [
-        "error",
-        "single",
-        {
-          "avoidEscape": true
-        }
-      ],
-      "comma-dangle": 0,
       "object-curly-spacing": 0,
+      "operator-linebreak": 0,
+      "capitalized-comments": 0,
       "func-names": [
         "error",
         "as-needed"
-      ],
-      "no-multiple-empty-lines": [
-        "error",
-        {
-          "max": 1,
-          "maxBOF": 0,
-          "maxEOF": 0
-        }
       ],
       "unicorn/filename-case": 0,
       "import/no-unassigned-import": 0,
@@ -118,9 +104,7 @@
       "import/prefer-default-export": 0,
       "import/order": 0,
       "react/jsx-uses-vars": 1,
-      "react/jsx-uses-react": 1,
-      "operator-linebreak": 0,
-      "capitalized-comments": 0
+      "react/jsx-uses-react": 1
     },
     "overrides": [
       {
