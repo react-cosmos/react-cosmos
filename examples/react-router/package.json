@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-react-router-example",
-  "version": "2.0.0-beta.20",
+  "version": "2.0.0-beta.22",
   "description": "Example of React Router proxy integration",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/react-router",
   "license": "MIT",
@@ -8,10 +8,10 @@
     "start": "NODE_ENV=development cosmos"
   },
   "dependencies": {
+    "react-cosmos-router-proxy": "^2.0.0-beta.22",
+    "react-cosmos-webpack": "^2.0.0-beta.22",
     "react-router": "^4.1.2",
-    "react-router-dom": "^4.1.2",
-    "react-cosmos-router-proxy": "^2.0.0-beta.20",
-    "react-cosmos-webpack": "^2.0.0-beta.20"
+    "react-router-dom": "^4.1.2"
   },
   "xo": false,
   "private": true,
