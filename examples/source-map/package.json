@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-source-map-example",
-  "version": "2.0.0-beta.22",
+  "version": "2.0.0-beta.23",
   "description": "Example of configuring source maps in the Cosmos build",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/source-map",
   "license": "MIT",
@@ -8,7 +8,7 @@
     "start": "NODE_ENV=development cosmos"
   },
   "dependencies": {
-    "react-cosmos-webpack": "^2.0.0-beta.22"
+    "react-cosmos-webpack": "^2.0.0-beta.23"
   },
   "xo": false,
   "private": true
