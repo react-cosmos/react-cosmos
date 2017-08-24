@@ -22,15 +22,19 @@ const onComponentRef = () => {};
 let wrapper;
 let firstProxyWrapper;
 let firstProxyProps;
+let onFixtureUpdate;
 
 describe('Fixture is selected via props', () => {
   beforeEach(() => {
+    onFixtureUpdate = jest.fn();
+
     wrapper = mount(
       <Loader
         proxies={[createProxyFoo]}
         component={ComponentFooModule}
         fixture={fixtureFooModule}
         onComponentRef={onComponentRef}
+        onFixtureUpdate={onFixtureUpdate}
       />
     );
 
@@ -56,5 +60,10 @@ describe('Fixture is selected via props', () => {
 
   test('sends onComponentRef to first proxy', () => {
     expect(firstProxyProps.onComponentRef).toEqual(onComponentRef);
+  });
+
+  test('bubbles up fixture updates', () => {
+    firstProxyProps.onFixtureUpdate({});
+    expect(onFixtureUpdate.mock.calls).toHaveLength(1);
   });
 });

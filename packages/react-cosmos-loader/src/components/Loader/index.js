@@ -34,7 +34,7 @@ class Loader extends Component {
 
   render() {
     const { firstProxy } = this;
-    const { component, fixture, onComponentRef } = this.props;
+    const { component, fixture, onComponentRef, onFixtureUpdate } = this.props;
 
     return (
       <firstProxy.value
@@ -42,7 +42,7 @@ class Loader extends Component {
         component={importComponent(component)}
         fixture={importModule(fixture)}
         onComponentRef={onComponentRef || noope}
-        onFixtureUpdate={noope}
+        onFixtureUpdate={onFixtureUpdate}
       />
     );
   }
