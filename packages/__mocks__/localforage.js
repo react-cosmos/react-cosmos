@@ -5,5 +5,5 @@ module.exports = {
     itemMocks = mocks;
   },
   getItem: jest.fn(itemKey => Promise.resolve(itemMocks[itemKey])),
-  setItem: jest.fn(() => Promise.resolve()),
+  setItem: jest.fn(() => Promise.resolve())
 };

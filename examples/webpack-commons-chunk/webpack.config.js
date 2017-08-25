@@ -5,23 +5,23 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 // work standalone. react-cosmos-webpack adds an entry & output when extending this.
 module.exports = {
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx']
   },
   module: {
     loaders: [
       {
         test: /\.jsx?$/,
         loader: 'babel-loader',
-        exclude: /node_modules/,
-      },
-    ],
+        exclude: /node_modules/
+      }
+    ]
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'React Cosmos',
+      title: 'React Cosmos'
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['manifest'],
-    }),
-  ],
+      names: ['manifest']
+    })
+  ]
 };

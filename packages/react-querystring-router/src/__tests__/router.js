@@ -1,6 +1,6 @@
 const mockComponentClass = {};
 const mockReactDOM = {
-  render: jest.fn(() => {}),
+  render: jest.fn(() => {})
 };
 
 let getComponentClass;
@@ -12,7 +12,7 @@ const mockUriLocationInitial = 'http://foo.bar/';
 const mockUriLocation = `${mockUriLocationInitial}?component=List&dataUrl=users.json`;
 const mockUriParams = {
   component: 'List',
-  dataUrl: 'users.json',
+  dataUrl: 'users.json'
 };
 
 let React;
@@ -28,15 +28,15 @@ const initRouter = () => {
   getComponentClass = jest.fn(() => mockComponentClass);
   getComponentProps = jest.fn(() => ({
     foo: 'bar',
-    lorem: 'ipsum',
+    lorem: 'ipsum'
   }));
 
   jest.mock('../uri', () => ({
-    parseLocation: jest.fn(() => mockUriParams),
+    parseLocation: jest.fn(() => mockUriParams)
   }));
 
   jest.mock('react', () => ({
-    createElement: jest.fn(),
+    createElement: jest.fn()
   }));
 
   jest.mock('react-dom', () => mockReactDOM);
@@ -48,12 +48,12 @@ const initRouter = () => {
 
   routerInstance = new Router({
     defaultProps: {
-      defaultProp: true,
+      defaultProp: true
     },
     container: '<fake DOM element>',
     getComponentClass,
     getComponentProps,
-    onChange,
+    onChange
   });
 };
 
@@ -132,8 +132,8 @@ describe('.routeLink method', () => {
     routerInstance.routeLink({
       preventDefault: () => {},
       currentTarget: {
-        href: mockUriLocation,
-      },
+        href: mockUriLocation
+      }
     });
   });
 

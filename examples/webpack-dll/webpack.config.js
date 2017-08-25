@@ -6,29 +6,29 @@ const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 // work standalone. react-cosmos-webpack adds an entry & output when extending this.
 module.exports = {
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx']
   },
   module: {
     loaders: [
       {
         test: /\.jsx?$/,
         loader: 'babel-loader',
-        exclude: /node_modules/,
-      },
-    ],
+        exclude: /node_modules/
+      }
+    ]
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'React Cosmos',
+      title: 'React Cosmos'
     }),
     new AddAssetHtmlPlugin({
       filepath: require.resolve('./build/dll.vendor'),
-      includeSourcemap: false,
+      includeSourcemap: false
     }),
     new webpack.DllReferencePlugin({
       context: __dirname,
       manifest: require('./build/vendor-manifest.json'),
-      extensions: ['.js'],
-    }),
-  ],
+      extensions: ['.js']
+    })
+  ]
 };

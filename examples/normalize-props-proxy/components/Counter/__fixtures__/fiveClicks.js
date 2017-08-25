@@ -4,7 +4,7 @@
 // See /proxies/normalize-props-proxy-with-options.js for the `notProps` option used in this example
 export default {
   state: {
-    value: 5,
+    value: 5
   },
   // `name` will get passed as a component prop by NormalizePropsProxy
   name: 'Awesome Counter',

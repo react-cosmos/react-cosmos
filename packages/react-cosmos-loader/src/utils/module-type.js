@@ -5,6 +5,6 @@ export default innerType =>
     innerType,
     shape({
       __esModule: oneOf([true]),
-      default: innerType,
-    }),
+      default: innerType
+    })
   ]);

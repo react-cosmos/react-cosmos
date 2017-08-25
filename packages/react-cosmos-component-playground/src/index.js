@@ -25,10 +25,10 @@ module.exports = opts => {
     getComponentClass: () => ReactComponentPlayground,
     getComponentProps: params => ({
       ...params,
-      loaderUri,
+      loaderUri
     }),
     onChange: params => {
       document.title = getPageTitle(params);
-    },
+    }
   });
 };

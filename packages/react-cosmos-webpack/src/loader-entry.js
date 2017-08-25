@@ -32,7 +32,7 @@ const start = () => {
     proxies,
     components,
     fixtures,
-    containerQuerySelector,
+    containerQuerySelector
   });
 };
 

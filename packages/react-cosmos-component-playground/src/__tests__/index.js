@@ -8,7 +8,7 @@ const mountPlayground = require('../');
 let routerInstance;
 
 jest.mock('react-querystring-router', () => ({
-  Router: jest.fn(),
+  Router: jest.fn()
 }));
 
 describe('Playground mount', () => {
@@ -16,7 +16,7 @@ describe('Playground mount', () => {
     jest.resetAllMocks();
 
     routerInstance = mountPlayground({
-      loaderUri: '/fake-loader-uri/',
+      loaderUri: '/fake-loader-uri/'
     });
   });
 
@@ -61,7 +61,7 @@ describe('Playground mount', () => {
       const { onChange } = routerArgs[0];
       onChange({
         component: 'Foo',
-        fixture: 'bar',
+        fixture: 'bar'
       });
       expect(document.title).toBe('Foo:bar – React Cosmos');
     });

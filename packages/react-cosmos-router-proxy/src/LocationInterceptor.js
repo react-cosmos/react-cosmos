@@ -6,7 +6,7 @@ const getPathFromProps = props => props.location.pathname;
 
 class LocationInterceptor extends Component {
   static contextTypes = {
-    router: object,
+    router: object
   };
 
   componentDidUpdate(prevProps) {

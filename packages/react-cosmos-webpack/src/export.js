@@ -31,7 +31,7 @@ const exportPlaygroundFiles = outputPath => {
     'utf8'
   );
   const playgroundOpts = JSON.stringify({
-    loaderUri: './loader/index.html',
+    loaderUri: './loader/index.html'
   });
   fs.writeFileSync(
     `${outputPath}/index.html`,

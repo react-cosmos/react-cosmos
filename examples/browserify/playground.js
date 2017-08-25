@@ -3,5 +3,5 @@
 const mountPlayground = require('react-cosmos-component-playground');
 
 module.exports = mountPlayground({
-  loaderUri: 'http://localhost:8990/',
+  loaderUri: 'http://localhost:8990/'
 });

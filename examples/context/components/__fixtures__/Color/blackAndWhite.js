@@ -1,6 +1,6 @@
 export default {
   context: {
     backgroundColor: 'black',
-    textColor: 'white',
-  },
+    textColor: 'white'
+  }
 };

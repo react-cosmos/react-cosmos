@@ -62,7 +62,7 @@ class Router {
       getComponentClass,
       getComponentProps,
       container,
-      onChange,
+      onChange
     } = this.options;
     const ComponentClass = getComponentClass(params);
     const props = {
@@ -71,7 +71,7 @@ class Router {
       // possible for a component to change the page through the router and
       // not have to rely on any sort of globals
       // TODO: Send only methods instead
-      router: this,
+      router: this
     };
     const componentElement = React.createElement(ComponentClass, props);
 

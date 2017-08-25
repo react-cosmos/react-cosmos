@@ -1,4 +1,4 @@
 module.exports = {
   componentPaths: ['components'],
-  proxies: ['react-cosmos-fetch-proxy'],
+  proxies: ['react-cosmos-fetch-proxy']
 };

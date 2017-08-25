@@ -4,7 +4,7 @@ export default function createLinkedList(items) {
       value: items[toIndex],
       next: function getNextItem(nextIndex) {
         return advanceList(nextIndex);
-      }.bind(null, toIndex + 1),
+      }.bind(null, toIndex + 1)
     };
   }
 

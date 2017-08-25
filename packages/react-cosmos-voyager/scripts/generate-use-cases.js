@@ -4,7 +4,7 @@ const touch = require('touch');
 const rimraf = require('rimraf');
 
 const useCases = {
-  'relative-fixtures': (`
+  'relative-fixtures': `
     components/Foo.js
     components/nested/Bar.jsx
     components/nested/Baz.jsx
@@ -13,8 +13,8 @@ const useCases = {
     components/__fixtures__/nested/Bar/two.json
     components/__fixtures__/nested/Bar/three.jsx
     components/__fixtures__/nested/Baz/blank.js
-  `),
-  'relative-fixtures-component-dir': (`
+  `,
+  'relative-fixtures-component-dir': `
     components/Foo/Foo.js
     components/Foo/__fixtures__/blank.js
     components/nested/Bar/Bar.jsx
@@ -23,16 +23,16 @@ const useCases = {
     components/nested/Bar/__fixtures__/three.jsx
     components/nested/Baz/Baz.jsx
     components/nested/Baz/__fixtures__/blank.js
-  `),
-  'relative-fixtures-component-dir-index': (`
+  `,
+  'relative-fixtures-component-dir-index': `
     components/Foo/index.js
     components/Foo/__fixtures__/blank.js
     components/nested/Bar/index.jsx
     components/nested/Bar/__fixtures__/one.js
     components/nested/Bar/__fixtures__/two.json
     components/nested/Bar/__fixtures__/three.jsx
-  `),
-  'nested-fixtures': (`
+  `,
+  'nested-fixtures': `
     components/Foo.js
     components/__fixtures__/Foo/blank.js
     components/nested/Bar/index.jsx
@@ -41,8 +41,8 @@ const useCases = {
     components/nested/Bar/__fixtures__/three.jsx
     components/nested/Bar/components/Baz/index.jsx
     components/nested/Bar/components/Baz/__fixtures__/baz.js
-  `),
-  'external-fixtures': (`
+  `,
+  'external-fixtures': `
     components/Foo.js
     components/nested/Bar.jsx
     components/nested/Baz.jsx
@@ -51,8 +51,8 @@ const useCases = {
     fixtures/nested/Bar/two.json
     fixtures/nested/Bar/three.jsx
     fixtures/nested/Baz/blank.js
-  `),
-  'separate-packages': (`
+  `,
+  'separate-packages': `
     pkgs/Foo/src/index.js
     pkgs/Foo/src/__fixtures__/blank.js
     pkgs/nested/Bar/src/index.jsx
@@ -61,8 +61,8 @@ const useCases = {
     pkgs/nested/Bar/src/__fixtures__/three.jsx
     pkgs/nested/Baz/src/index.js
     pkgs/nested/Baz/src/__fixtures__/blank.js
-  `),
-  'separate-packages-external-fixtures': (`
+  `,
+  'separate-packages-external-fixtures': `
     pkgs/Foo/src/index.js
     pkgs/Foo/fixtures/blank.js
     pkgs/nested/Bar/src/index.jsx
@@ -71,8 +71,8 @@ const useCases = {
     pkgs/nested/Bar/fixtures/three.jsx
     pkgs/nested/Baz/src/index.jsx
     pkgs/nested/Baz/fixtures/blank.js
-  `),
-  'fixtures-dir-setting': (`
+  `,
+  'fixtures-dir-setting': `
     components/Foo.js
     components/nested/Bar.jsx
     components/nested/Baz.jsx
@@ -81,7 +81,7 @@ const useCases = {
     components/non-default-fixtures-dir/nested/Bar/two.json
     components/non-default-fixtures-dir/nested/Bar/three.jsx
     components/non-default-fixtures-dir/nested/Baz/blank.js
-  `),
+  `
 };
 
 const useCasePath = path.join(__dirname, '../src/use-cases');
@@ -89,7 +89,8 @@ const useCasePath = path.join(__dirname, '../src/use-cases');
 rimraf.sync(useCasePath);
 
 Object.keys(useCases).forEach(useCase => {
-  useCases[useCase].split('\n')
+  useCases[useCase]
+    .split('\n')
     .map(p => p.trim())
     .filter(p => Boolean(p.length))
     .forEach(p => {

@@ -15,23 +15,23 @@ const userRule = {};
 const userWebpack1Config = {
   module: {
     additionalOption: {
-      something: 'foo',
+      something: 'foo'
     },
-    loaders: [userLoader],
-  },
+    loaders: [userLoader]
+  }
 };
 const userWebpack2Config = {
   module: {
     additionalOption: {
-      something: 'bar',
+      something: 'bar'
     },
-    rules: [userRule],
+    rules: [userRule]
   },
   plugins: [
     // Fake plugins, something to compare identity with
     {},
-    {},
-  ],
+    {}
+  ]
 };
 
 // This changes between test cases
@@ -68,7 +68,7 @@ describe('without hmr', () => {
       fixturePaths: ['test/fixtures'],
       ignore: [],
       globalImports: ['./global.css'],
-      containerQuerySelector: '__mock__containerQuerySelector',
+      containerQuerySelector: '__mock__containerQuerySelector'
     };
     webpackConfig = getWebpackConfig(userWebpack2Config, cosmosConfigPath);
   });
@@ -103,16 +103,16 @@ describe('without hmr', () => {
   test('calls define plugin with NODE_ENV set to development', () => {
     expect(DefinePlugin.mock.calls[0][0]).toEqual({
       'process.env': {
-        NODE_ENV: JSON.stringify('development'),
-      },
+        NODE_ENV: JSON.stringify('development')
+      }
     });
   });
 
   test('calls define plugin with user config path', () => {
     expect(DefinePlugin.mock.calls[1][0]).toEqual({
       COSMOS_CONFIG: JSON.stringify({
-        containerQuerySelector: '__mock__containerQuerySelector',
-      }),
+        containerQuerySelector: '__mock__containerQuerySelector'
+      })
     });
   });
 
@@ -129,7 +129,7 @@ describe('with hmr', () => {
       fixturePaths: ['test/fixtures'],
       ignore: [],
       globalImports: ['./global.css'],
-      hot: true,
+      hot: true
     };
     webpackConfig = getWebpackConfig(userWebpack2Config, cosmosConfigPath);
   });
@@ -173,8 +173,8 @@ describe('loaders', () => {
         loader: require.resolve('../module-loader'),
         include: require.resolve('../user-modules'),
         query: {
-          cosmosConfigPath,
-        },
+          cosmosConfigPath
+        }
       });
     });
 
@@ -184,7 +184,7 @@ describe('loaders', () => {
 
     test('preserves additional module options', () => {
       expect(webpackConfig.module.additionalOption).toEqual({
-        something: 'foo',
+        something: 'foo'
       });
     });
   });
@@ -205,8 +205,8 @@ describe('loaders', () => {
         loader: require.resolve('../module-loader'),
         include: require.resolve('../user-modules'),
         query: {
-          cosmosConfigPath,
-        },
+          cosmosConfigPath
+        }
       });
     });
 
@@ -216,7 +216,7 @@ describe('loaders', () => {
 
     test('preserves additional module options', () => {
       expect(webpackConfig.module.additionalOption).toEqual({
-        something: 'bar',
+        something: 'bar'
       });
     });
   });
@@ -230,7 +230,7 @@ describe('output', () => {
       ignore: [],
       globalImports: ['./global.css'],
       hot: true,
-      outputPath: '__mock__outputPath',
+      outputPath: '__mock__outputPath'
     };
   });
 
@@ -243,7 +243,7 @@ describe('output', () => {
       expect(webpackConfig.output).toEqual({
         path: '/loader/',
         filename: '[name].js',
-        publicPath: '/loader/',
+        publicPath: '/loader/'
       });
     });
   });
@@ -261,7 +261,7 @@ describe('output', () => {
       expect(webpackConfig.output).toEqual({
         path: '__mock__outputPath/loader/',
         filename: '[name].js',
-        publicPath: './',
+        publicPath: './'
       });
     });
   });
@@ -276,7 +276,7 @@ describe('with shouldExport true', () => {
       globalImports: ['./global.css'],
       hot: true,
       outputPath: '__mock__outputPath',
-      containerQuerySelector: '__mock__containerQuerySelector',
+      containerQuerySelector: '__mock__containerQuerySelector'
     };
     webpackConfig = getWebpackConfig(
       userWebpack2Config,
@@ -294,16 +294,16 @@ describe('with shouldExport true', () => {
   test('does add NODE_ENV plugin as production ', () => {
     expect(DefinePlugin.mock.calls[0][0]).toEqual({
       'process.env': {
-        NODE_ENV: JSON.stringify('production'),
-      },
+        NODE_ENV: JSON.stringify('production')
+      }
     });
   });
 
   test('calls define plugin with user config path', () => {
     expect(DefinePlugin.mock.calls[1][0]).toEqual({
       COSMOS_CONFIG: JSON.stringify({
-        containerQuerySelector: '__mock__containerQuerySelector',
-      }),
+        containerQuerySelector: '__mock__containerQuerySelector'
+      })
     });
   });
 

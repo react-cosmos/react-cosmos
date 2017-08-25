@@ -3,5 +3,5 @@ import Router from './router';
 
 module.exports = {
   uri,
-  Router,
+  Router
 };

@@ -8,10 +8,10 @@ const fixture = {
   listaSimple: [1, 2, 3],
   listaComplejo: [1, 2, Fn],
   objetoSimple: {
-    bueno: true,
+    bueno: true
   },
   objetoComplejo: {
-    funcion: Fn,
+    funcion: Fn
   },
   expresionRegular: /buscar/,
   funcion: Fn,
@@ -23,14 +23,14 @@ const fixture = {
     listaSimpleProp: [1, 2, 3],
     listaComplejoProp: [1, 2, Fn],
     objetoSimpleProp: {
-      buenoProp: true,
+      buenoProp: true
     },
     objetoComplejoProp: {
-      funcionProp: Fn,
+      funcionProp: Fn
     },
     expresionRegularProp: /buscar/,
     funcionProp: Fn,
-    instanciaProp: new Fn(),
+    instanciaProp: new Fn()
   }
 };
 const { serializable, unserializable } = splitUnserializableParts(fixture);
@@ -105,27 +105,39 @@ describe('for fields on fixture.props', () => {
 
   test('finds simple list serializable', () => {
     expect(Object.keys(unserializable.props)).not.toContain('listaSimpleProp');
-    expect(serializable.props.listaSimpleProp).toBe(fixture.props.listaSimpleProp);
+    expect(serializable.props.listaSimpleProp).toBe(
+      fixture.props.listaSimpleProp
+    );
   });
 
   test('finds complex list unserializable', () => {
     expect(Object.keys(serializable.props)).not.toContain('listaComplejoProp');
-    expect(unserializable.props.listaComplejoProp).toBe(fixture.props.listaComplejoProp);
+    expect(unserializable.props.listaComplejoProp).toBe(
+      fixture.props.listaComplejoProp
+    );
   });
 
   test('finds simple object serializable', () => {
     expect(Object.keys(unserializable.props)).not.toContain('objetoSimpleProp');
-    expect(serializable.props.objetoSimpleProp).toBe(fixture.props.objetoSimpleProp);
+    expect(serializable.props.objetoSimpleProp).toBe(
+      fixture.props.objetoSimpleProp
+    );
   });
 
   test('finds complex object unserializable', () => {
     expect(Object.keys(serializable.props)).not.toContain('objetoComplejoProp');
-    expect(unserializable.props.objetoComplejoProp).toBe(fixture.props.objetoComplejoProp);
+    expect(unserializable.props.objetoComplejoProp).toBe(
+      fixture.props.objetoComplejoProp
+    );
   });
 
   test('finds regular expression unserializable', () => {
-    expect(Object.keys(serializable.props)).not.toContain('expresionRegularProp');
-    expect(unserializable.props.expresionRegularProp).toBe(fixture.props.expresionRegularProp);
+    expect(Object.keys(serializable.props)).not.toContain(
+      'expresionRegularProp'
+    );
+    expect(unserializable.props.expresionRegularProp).toBe(
+      fixture.props.expresionRegularProp
+    );
   });
 
   test('finds function unserializable', () => {
@@ -135,6 +147,8 @@ describe('for fields on fixture.props', () => {
 
   test('finds instance unserializable', () => {
     expect(Object.keys(serializable.props)).not.toContain('instanciaProp');
-    expect(unserializable.props.instanciaProp).toBe(fixture.props.instanciaProp);
+    expect(unserializable.props.instanciaProp).toBe(
+      fixture.props.instanciaProp
+    );
   });
 });

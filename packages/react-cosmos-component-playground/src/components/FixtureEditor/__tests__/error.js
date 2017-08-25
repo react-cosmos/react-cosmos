@@ -17,8 +17,8 @@ describe('FixtureEditor error', () => {
     return new Promise(resolve => {
       fixture = merge({}, erredFixture, {
         props: {
-          onChange: jest.fn(),
-        },
+          onChange: jest.fn()
+        }
       });
 
       // Mount component in order for ref and lifecycle methods to be called
@@ -45,7 +45,7 @@ describe('FixtureEditor error', () => {
     beforeEach(() => {
       wrapper.find(CodeMirror).prop('onChange')(
         stringify({
-          props: { baz: 'qux' },
+          props: { baz: 'qux' }
         })
       );
     });
@@ -62,11 +62,11 @@ describe('FixtureEditor error', () => {
           props: {
             value: {
               props: {
-                foo: 'baz',
-              },
-            },
-          },
-        }),
+                foo: 'baz'
+              }
+            }
+          }
+        })
       });
     });
 
@@ -74,8 +74,8 @@ describe('FixtureEditor error', () => {
       expect(wrapper.find(CodeMirror).prop('value')).toBe(
         stringify({
           props: {
-            foo: 'baz',
-          },
+            foo: 'baz'
+          }
         })
       );
     });

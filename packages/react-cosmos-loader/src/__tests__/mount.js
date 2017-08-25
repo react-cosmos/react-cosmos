@@ -6,10 +6,10 @@ import { mount } from '../';
 
 jest.mock('react', () => ({
   Component: jest.fn(),
-  createElement: jest.fn(() => '__mock_element__'),
+  createElement: jest.fn(() => '__mock_element__')
 }));
 jest.mock('react-dom', () => ({
-  render: jest.fn(),
+  render: jest.fn()
 }));
 jest.mock('react-cosmos-state-proxy', () => jest.fn());
 
@@ -26,13 +26,13 @@ describe('without container query selector', () => {
     mount({
       proxies: [mockProxy],
       components: {
-        foo: mockComponent,
+        foo: mockComponent
       },
       fixtures: {
         foo: {
-          bar: mockFixture,
-        },
-      },
+          bar: mockFixture
+        }
+      }
     });
   });
 
@@ -83,14 +83,14 @@ describe('with container query selector and class name', () => {
     mount({
       proxies: [mockProxy],
       components: {
-        foo: mockComponent,
+        foo: mockComponent
       },
       fixtures: {
         foo: {
-          bar: mockFixture,
-        },
+          bar: mockFixture
+        }
       },
-      containerQuerySelector: '#app123',
+      containerQuerySelector: '#app123'
     });
   });
 
