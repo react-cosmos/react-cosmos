@@ -103,7 +103,7 @@ export default class FixtureList extends Component {
             const componentClassNames = classNames(styles.component, {
               [styles.componentSelected]:
                 component === urlParams.component &&
-                !urlParams.fixture,
+                !urlParams.fixture
             });
             return (
               <div

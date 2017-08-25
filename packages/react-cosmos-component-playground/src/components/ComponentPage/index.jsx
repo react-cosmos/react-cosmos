@@ -31,7 +31,7 @@ export default class ComponentPage extends Component {
 
     return fixtures[component].map(fixture => {
       return {
-        fixture,
+        fixture
       };
     });
   }
