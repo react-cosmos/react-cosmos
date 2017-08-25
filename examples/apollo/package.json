@@ -1,0 +1,18 @@
+{
+  "name": "react-cosmos-apollo-example",
+  "version": "2.0.0-beta.23",
+  "description": "Example of mocking the Apollo Client",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/apollo",
+  "license": "MIT",
+  "scripts": {
+    "start": "NODE_ENV=development cosmos"
+  },
+  "dependencies": {
+    "react-apollo": "^1.4.15",
+    "react-cosmos-utils": "^2.0.0-beta.23",
+    "react-cosmos-apollo-proxy": "^2.0.0-beta.23",
+    "react-cosmos-webpack": "^2.0.0-beta.23"
+  },
+  "xo": false,
+  "private": true
+}
