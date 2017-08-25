@@ -77,8 +77,16 @@ module.exports = function startExport() {
   // Copy static files first, so that the built index.html overrides the its
   // template file (in case the static assets are served from the root path)
   if (publicPath) {
-    const exportPublicPath = path.join(outputPath, publicUrl);
-    fs.copySync(publicPath, exportPublicPath);
+    if (outputPath.indexOf(publicPath) === -1) {
+      const exportPublicPath = path.join(outputPath, publicUrl);
+      fs.copySync(publicPath, exportPublicPath);
+    } else {
+      console.warn(
+        `[Cosmos] Warning: Can't export public path because contains export path–avoiding infinite loop!`
+      );
+      console.warn('Public path:', publicPath);
+      console.warn('Export path:', outputPath);
+    }
   }
 
   runWebpackCompiler(loaderWebpackConfig)
