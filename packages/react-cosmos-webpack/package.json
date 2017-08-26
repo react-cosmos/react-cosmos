@@ -13,7 +13,7 @@
     "express": "^4.14.0",
     "fs-extra": "^3.0.1",
     "glob": "^7.1.1",
-    "html-webpack-plugin": "^2.28.0",
+    "import-from": "^2.1.0",
     "loader-utils": "^1.1.0",
     "lodash.omit": "^4.5.0",
     "react-cosmos-component-playground": "^2.0.0-beta.23",

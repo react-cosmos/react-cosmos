@@ -1,41 +1,52 @@
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import { silent } from 'resolve-from';
+import { silent as silentResolve } from 'resolve-from';
+import { silent as silentImport } from 'import-from';
 
 // This config doesn't have entry and output set up because it's not meant to
 // work standalone. react-cosmos-webpack adds an entry & output when extending this.
 export default function getDefaultWebpackConfig(cosmosConfigPath) {
   // react-cosmos-webpack doesn't directly depend on any webpack loader.
   // Instead, it leverages the ones already installed by the user.
-  const babelLoader = silent(cosmosConfigPath, 'babel-loader');
-  const styleLoader = silent(cosmosConfigPath, 'style-loader');
-  const cssLoader = silent(cosmosConfigPath, 'css-loader');
+  const babelLoaderPath = silentResolve(cosmosConfigPath, 'babel-loader');
+  const styleLoaderPath = silentResolve(cosmosConfigPath, 'style-loader');
+  const cssLoaderPath = silentResolve(cosmosConfigPath, 'css-loader');
   // Note: Since webpack >= v2.0.0, importing of JSON files will work by default
-  const jsonLoader = silent(cosmosConfigPath, 'json-loader');
-
+  const jsonLoaderPath = silentResolve(cosmosConfigPath, 'json-loader');
   const loaders = [];
 
-  if (babelLoader) {
+  if (babelLoaderPath) {
     loaders.push({
       test: /\.jsx?$/,
-      loader: babelLoader,
+      loader: babelLoaderPath,
       exclude: /node_modules/
     });
   }
 
-  if (styleLoader) {
+  if (styleLoaderPath) {
     loaders.push({
       test: /\.css$/,
-      loader: cssLoader ? `${styleLoader}!${cssLoader}` : styleLoader,
+      loader: cssLoaderPath
+        ? `${styleLoaderPath}!${cssLoaderPath}`
+        : styleLoaderPath,
       exclude: /node_modules/
     });
   }
 
-  if (jsonLoader) {
+  if (jsonLoaderPath) {
     loaders.push({
       test: /\.json$/,
-      loader: jsonLoader,
+      loader: jsonLoaderPath,
       exclude: /node_modules/
     });
+  }
+
+  const HtmlWebpackPlugin = silentImport(
+    cosmosConfigPath,
+    'html-webpack-plugin'
+  );
+  const plugins = [];
+
+  if (HtmlWebpackPlugin) {
+    plugins.push(new HtmlWebpackPlugin({ title: 'React Cosmos' }));
   }
 
   return {
@@ -47,11 +58,6 @@ export default function getDefaultWebpackConfig(cosmosConfigPath) {
       // Using loaders instead of rules to preserve webpack 1.x compatibility
       loaders
     },
-    plugins: [
-      // TODO: Use user's copy of HtmlWebpackPlugin
-      new HtmlWebpackPlugin({
-        title: 'React Cosmos'
-      })
-    ]
+    plugins
   };
 }
