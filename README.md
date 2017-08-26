@@ -305,11 +305,10 @@ It's preferred to use CRA's own webpack config (instead of duplicating it).
 ```js
 // cosmos.config.js
 module.exports = {
-  componentPaths: ['src'],
+  componentPaths: ['src/components'],
   containerQuerySelector: '#root',
   webpackConfigPath: 'react-scripts/config/webpack.config.dev',
-  publicPath: 'public',
-  ignore: [/App.test.js/]
+  publicPath: 'public'
 };
 ```
 
