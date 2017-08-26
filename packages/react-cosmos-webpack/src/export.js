@@ -82,7 +82,7 @@ module.exports = function startExport() {
       fs.copySync(publicPath, exportPublicPath);
     } else {
       console.warn(
-        `[Cosmos] Warning: Can't export public path because contains export path–avoiding infinite loop!`
+        `[Cosmos] Warning: Can't export publicPath because it contains the export path! (avoiding infinite loop)`
       );
       console.warn('Public path:', publicPath);
       console.warn('Export path:', outputPath);
