@@ -39,7 +39,7 @@ export default class ComponentPlayground extends Component {
     leftNavSize: 250,
     fixtureEditorPaneSize: 250,
     orientation: 'landscape',
-    fixtureBody: {}
+    fixtureBodies: {}
   };
 
   componentDidMount() {
@@ -134,19 +134,24 @@ export default class ComponentPlayground extends Component {
     });
   }
 
-  onFixtureLoad({ fixtureBody }) {
+  onFixtureLoad({ component, fixture, fixtureBody }) {
+    const { fixtureBodies } = this.state;
+    fixtureBodies[component] = fixtureBodies[component] || {};
+    fixtureBodies[component][fixture] = fixtureBody;
     this.setState({
-      fixtureBody
+      fixtureBodies
     });
   }
 
-  onFixtureUpdate({ fixtureBody }) {
+  onFixtureUpdate({ component, fixture, fixtureBody }) {
+    const { fixtureBodies } = this.state;
+    // Fixture updates are partial
+    fixtureBodies[component][fixture] = {
+      ...fixtureBodies[component][fixture],
+      ...fixtureBody
+    };
     this.setState({
-      // Fixture updates are partial
-      fixtureBody: {
-        ...this.state.fixtureBody,
-        ...fixtureBody
-      }
+      fixtureBodies
     });
   }
 
@@ -193,8 +198,12 @@ export default class ComponentPlayground extends Component {
   };
 
   onFixtureEditorChange = fixtureBody => {
+    const { component, fixture } = this.props;
+    const { fixtureBodies } = this.state;
+    fixtureBodies[component] = fixtureBodies[component] || {};
+    fixtureBodies[component][fixture] = fixtureBody;
     this.setState({
-      fixtureBody
+      fixtureBodies
     });
 
     postMessageToFrame(this.loaderFrame, {
@@ -265,9 +274,7 @@ export default class ComponentPlayground extends Component {
         {editor && !waitingForLoader && this.renderFixtureEditor()}
         {this.renderLoader(isLoaderVisible)}
         {isComponentPageVisible &&
-          <ComponentPage
-            fixtures={fixtures}
-            component={component} />}
+          <ComponentPage fixtures={fixtures} component={component} />}
       </div>
     );
   }
@@ -360,7 +367,10 @@ export default class ComponentPlayground extends Component {
   }
 
   renderFixtureEditor() {
-    const { orientation, fixtureEditorPaneSize, fixtureBody } = this.state;
+    const { component, fixture } = this.props;
+    const { orientation, fixtureEditorPaneSize, fixtureBodies } = this.state;
+    const fixtureBody =
+      (fixtureBodies[component] && fixtureBodies[component][fixture]) || {};
     const style = {
       [orientation === 'landscape' ? 'width' : 'height']: fixtureEditorPaneSize
     };

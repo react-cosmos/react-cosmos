@@ -53,6 +53,8 @@ describe('Fixture editor', () => {
       window.postMessage(
         {
           type: 'fixtureLoad',
+          component: 'ComponentA',
+          fixture: 'foo',
           fixtureBody: {
             foo: 'bar'
           }
@@ -81,6 +83,8 @@ describe('Fixture editor', () => {
       window.postMessage(
         {
           type: 'fixtureUpdate',
+          component: 'ComponentA',
+          fixture: 'foo',
           fixtureBody: {
             baz: 'qux'
           }

@@ -95,6 +95,8 @@ describe('Fixture source changes', () => {
   test('sends updated fixture body to parent', () => {
     expect(fixtureUpdateMessage).toEqual({
       type: 'fixtureUpdate',
+      component: 'Foo',
+      fixture: 'foo',
       fixtureBody: fixtureFoo2
     });
   });
