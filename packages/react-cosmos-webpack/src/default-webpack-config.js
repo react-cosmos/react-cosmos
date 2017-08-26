@@ -9,6 +9,8 @@ export default function getDefaultWebpackConfig(cosmosConfigPath) {
   const babelLoader = silent(cosmosConfigPath, 'babel-loader');
   const styleLoader = silent(cosmosConfigPath, 'style-loader');
   const cssLoader = silent(cosmosConfigPath, 'css-loader');
+  // Note: Since webpack >= v2.0.0, importing of JSON files will work by default
+  const jsonLoader = silent(cosmosConfigPath, 'json-loader');
 
   const loaders = [];
 
@@ -24,6 +26,14 @@ export default function getDefaultWebpackConfig(cosmosConfigPath) {
     loaders.push({
       test: /\.css$/,
       loader: cssLoader ? `${styleLoader}!${cssLoader}` : styleLoader,
+      exclude: /node_modules/
+    });
+  }
+
+  if (jsonLoader) {
+    loaders.push({
+      test: /\.json$/,
+      loader: jsonLoader,
       exclude: /node_modules/
     });
   }

@@ -46,3 +46,15 @@ describe('includes style-loader + css-loader', () => {
     exclude: /node_modules/
   });
 });
+
+describe('includes json-loader', () => {
+  __setMocks({
+    'json-loader': '/foo/json/path'
+  });
+  const config = getDefaultWebpackConfig('/foo/path');
+  expect(config.module.loaders).toContainEqual({
+    test: /\.json$/,
+    loader: '/foo/json/path',
+    exclude: /node_modules/
+  });
+});

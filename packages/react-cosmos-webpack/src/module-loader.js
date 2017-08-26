@@ -1,16 +1,10 @@
 import path from 'path';
-import slash from 'slash';
 import loaderUtils from 'loader-utils';
 import traverse from 'traverse';
 import getCosmosConfig from 'react-cosmos-config';
 import getFilePaths from 'react-cosmos-voyager';
 
-const jsonLoader = slash(require.resolve('json-loader'));
-
-const getRequirePath = filePath =>
-  path.extname(filePath) === '.json' ? `${jsonLoader}!${filePath}` : filePath;
-
-const convertPathToRequireCall = p => `require('${getRequirePath(p)}')`;
+const convertPathToRequireCall = p => `require('${p}')`;
 
 const convertPathMapToRequireCalls = paths => {
   const props = [];
