@@ -12,7 +12,7 @@
     "lodash.omit": "^4.5.0",
     "prop-types": "^15.5.10",
     "react-cosmos-utils": "^2.0.0-beta.23",
-    "redux": "^3.6.0"
+    "redux": "^3.7.2"
   },
   "xo": false
 }

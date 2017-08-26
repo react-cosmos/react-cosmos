@@ -11,9 +11,8 @@
   "devDependencies": {
     "@skidding/react-codemirror": "^1.0.1",
     "classnames": "^2.2.5",
-    "codemirror": "^5.25.2",
+    "codemirror": "^5.29.0",
     "fuzzaldrin-plus": "^0.4.1",
-    "html-webpack-plugin": "^2.28.0",
     "localforage": "^1.5.0",
     "lodash.merge": "^4.6.0",
     "lodash.omitby": "^4.6.0",
