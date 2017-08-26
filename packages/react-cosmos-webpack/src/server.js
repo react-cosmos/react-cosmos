@@ -39,7 +39,7 @@ module.exports = function startServer() {
     console.log(
       '[Cosmos] No webpack config found, using default configuration'
     );
-    userWebpackConfig = getDefaultWebpackConfig(webpackConfigPath);
+    userWebpackConfig = getDefaultWebpackConfig(cosmosConfigPath);
   }
 
   const loaderWebpackConfig = getLoaderWebpackConfig(
