@@ -2,6 +2,8 @@ import path from 'path';
 import slash from 'slash';
 import getCosmosConfig from '../index';
 
+jest.unmock('resolve-from');
+
 const mockUserConfig = (path, mockConfig) => {
   jest.mock(path, () => mockConfig);
 };
