@@ -4,5 +4,5 @@ module.exports = {
   __setMocks: mocks => {
     moduleMocks = mocks;
   },
-  silent: (fromDir, moduleId) => moduleMocks[moduleId]
+  silent: jest.fn((fromDir, moduleId) => moduleMocks[moduleId])
 };
