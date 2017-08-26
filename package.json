@@ -3,7 +3,7 @@
   "license": "MIT",
   "scripts": {
     "prune-react-copies": "node ./scripts/prune-react-copies.js",
-    "bootstrap": "lerna bootstrap --npm-client=yarn && yarn run prune-react-copies",
+    "bootstrap": "lerna bootstrap --npm-client=yarn --concurrency=1 && yarn run prune-react-copies",
     "install-react": "yarn remove react react-dom && yarn add",
     "install-react:0.14": "yarn run install-react -- react@^0.14.9 react-dom@^0.14.9",
     "install-react:15": "yarn run install-react -- react@^15.5.4 react-dom@^15.5.4",
