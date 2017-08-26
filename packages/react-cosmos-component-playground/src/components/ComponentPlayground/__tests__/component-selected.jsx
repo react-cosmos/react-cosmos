@@ -22,11 +22,11 @@ describe('CP with component already selected', () => {
 
   describe('main menu', () => {
     it('should render home button', () => {
-      expect(wrapper.find('a[href="/"].button')).toHaveLength(1);
+      expect(wrapper.find('a[href="?"].button')).toHaveLength(1);
     });
 
     it('should not render selected home button', () => {
-      expect(wrapper.find('a[href="/"].selectedButton')).toHaveLength(0);
+      expect(wrapper.find('a[href="?"].selectedButton')).toHaveLength(0);
     });
   });
 
