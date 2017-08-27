@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+const fs = require('fs');
 const {
   default: resolveUserPath
 } = require('react-cosmos-utils/lib/resolve-user-path');
@@ -17,8 +18,11 @@ const cosmosConfigPath = resolveUserPath(
   argv.config || 'cosmos.config'
 );
 
-if (cosmosConfigPath) {
+if (cosmosConfigPath && fs.existsSync(cosmosConfigPath)) {
   startServer(cosmosConfigPath);
 } else {
   console.warn(`[Cosmos] No config file found at ${cosmosConfigPath}!`);
+  console.log(
+    'Please check docs: https://github.com/react-cosmos/react-cosmos#getting-started'
+  );
 }
