@@ -52,6 +52,7 @@ export default function getDefaultWebpackConfig(cosmosConfigPath) {
   return {
     devtool: 'eval',
     resolve: {
+      // Warning: webpack 1.x expects ['', '.js', '.jsx']
       extensions: ['.js', '.jsx']
     },
     module: {
