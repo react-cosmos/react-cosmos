@@ -52,7 +52,7 @@ export default function getDefaultWebpackConfig(cosmosConfigPath) {
   return {
     devtool: 'eval',
     resolve: {
-      extensions: ['.js', '.jsx']
+      extensions: ['', '.js', '.jsx']
     },
     module: {
       // Using loaders instead of rules to preserve webpack 1.x compatibility
