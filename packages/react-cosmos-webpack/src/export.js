@@ -1,7 +1,6 @@
 import path from 'path';
-import webpack from 'webpack';
-import { argv } from 'yargs';
 import fs from 'fs-extra';
+import { silent as silentImport } from 'import-from';
 import getLoaderWebpackConfig from './loader-webpack-config';
 import getDefaultWebpackConfig from './default-webpack-config';
 import importModule from 'react-cosmos-utils/lib/import-module';
@@ -39,7 +38,7 @@ const exportPlaygroundFiles = outputPath => {
   );
 };
 
-const runWebpackCompiler = config =>
+const runWebpackCompiler = (webpack, config) =>
   new Promise((resolve, reject) => {
     const compiler = webpack(config);
     compiler.run((err, stats) => {
@@ -51,28 +50,32 @@ const runWebpackCompiler = config =>
     });
   });
 
-module.exports = function startExport() {
-  const cosmosConfigPath = argv.config;
+module.exports = function startExport(cosmosConfigPath) {
   const cosmosConfig = getCosmosConfig(cosmosConfigPath);
-
   const { webpackConfigPath, outputPath, publicPath, publicUrl } = cosmosConfig;
+
+  const webpack = silentImport(cosmosConfigPath, 'webpack');
+  if (!webpack) {
+    console.warn('[Cosmos] webpack dependency missing!');
+    console.log('Install using "yarn add webpack" or "npm install webpack"');
+    return;
+  }
 
   let userWebpackConfig;
   if (moduleExists(webpackConfigPath)) {
     console.log(`[Cosmos] Using webpack config found at ${webpackConfigPath}`);
     userWebpackConfig = importModule(require(webpackConfigPath));
   } else {
-    console.log(
-      '[Cosmos] No webpack config found, using default configuration'
-    );
+    console.log('[Cosmos] No webpack config found, using default config');
     userWebpackConfig = getDefaultWebpackConfig(cosmosConfigPath);
   }
 
-  const loaderWebpackConfig = getLoaderWebpackConfig(
+  const loaderWebpackConfig = getLoaderWebpackConfig({
+    webpack,
     userWebpackConfig,
     cosmosConfigPath,
-    true
-  );
+    shouldExport: true
+  });
 
   // Copy static files first, so that the built index.html overrides the its
   // template file (in case the static assets are served from the root path)
@@ -89,7 +92,7 @@ module.exports = function startExport() {
     }
   }
 
-  runWebpackCompiler(loaderWebpackConfig)
+  runWebpackCompiler(webpack, loaderWebpackConfig)
     .then(() => {
       exportPlaygroundFiles(outputPath);
     })

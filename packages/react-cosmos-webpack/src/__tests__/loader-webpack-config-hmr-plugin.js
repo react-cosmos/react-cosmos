@@ -4,6 +4,8 @@ import getWebpackConfig from '../loader-webpack-config';
 // Mocking 3rd part deps is too much work. Let's only do it when it's necessary
 // from now on
 jest.unmock('webpack');
+jest.unmock('resolve-from');
+jest.unmock('import-from');
 
 const getHmrPlugins = plugins =>
   plugins.filter(
@@ -15,10 +17,11 @@ describe('Loader webpack hmr', () => {
 
   test('adds HotModuleReplacementPlugin', () => {
     const userWebpackConfig = {};
-    const webpackConfig = getWebpackConfig(
+    const webpackConfig = getWebpackConfig({
+      webpack,
       userWebpackConfig,
-      require.resolve('./mocks/cosmos.config')
-    );
+      cosmosConfigPath: require.resolve('./mocks/cosmos.config')
+    });
     expect(getHmrPlugins(webpackConfig.plugins)).toHaveLength(1);
   });
 
@@ -26,10 +29,11 @@ describe('Loader webpack hmr', () => {
     const userWebpackConfig = {
       plugins: [new webpack.HotModuleReplacementPlugin()]
     };
-    const webpackConfig = getWebpackConfig(
+    const webpackConfig = getWebpackConfig({
+      webpack,
       userWebpackConfig,
-      require.resolve('./mocks/cosmos.config')
-    );
+      cosmosConfigPath: require.resolve('./mocks/cosmos.config')
+    });
     expect(getHmrPlugins(webpackConfig.plugins)).toHaveLength(1);
   });
 });

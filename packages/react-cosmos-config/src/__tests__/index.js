@@ -1,40 +1,20 @@
 import path from 'path';
-import slash from 'slash';
 import getCosmosConfig from '../index';
 
 jest.unmock('resolve-from');
 
-const mockUserConfig = (path, mockConfig) => {
-  jest.mock(path, () => mockConfig);
-};
-
-const mockProcessCwd = path.join(__dirname, 'mock-cwd');
-let origProcessCwd;
+const cosmosConfigPath = require.resolve('./mocks/cosmos.config');
 
 beforeEach(() => {
   jest.resetModules();
-  jest.resetAllMocks();
-
-  origProcessCwd = process.cwd;
-  process.cwd = jest.fn(() => mockProcessCwd);
 });
 
-afterEach(() => {
-  process.cwd = origProcessCwd;
-});
+test('loads config options', () => {
+  jest.mock('./mocks/cosmos.config', () => ({
+    foo: 'bar'
+  }));
 
-test('loads cosmos.config.js from cwd', () => {
-  const opt = {};
-  mockUserConfig('./mock-cwd/cosmos.config', { opt });
-
-  expect(getCosmosConfig().opt).toBe(opt);
-});
-
-test('loads custom config path', () => {
-  const opt = {};
-  mockUserConfig('./mock-cwd/custom-path/cosmos.config', { opt });
-
-  expect(getCosmosConfig('./custom-path/cosmos.config').opt).toBe(opt);
+  expect(getCosmosConfig(cosmosConfigPath).foo).toBe('bar');
 });
 
 describe('resolves module paths', () => {
@@ -42,28 +22,24 @@ describe('resolves module paths', () => {
   let proxies;
 
   beforeEach(() => {
-    mockUserConfig('./mock-cwd/cosmos.config', {
-      // \react-cosmos-utils chosen arbitrarily from project's deps
+    jest.mock('./mocks/cosmos.config', () => ({
+      // Existing modules chosen arbitrarily
       globalImports: ['react-cosmos-utils/src/import-module'],
       proxies: ['react-cosmos-utils/src/linked-list']
-    });
+    }));
 
-    ({ globalImports, proxies } = getCosmosConfig());
+    ({ globalImports, proxies } = getCosmosConfig(cosmosConfigPath));
   });
 
   test('global imports', () => {
     expect(globalImports).toEqual([
-      slash(
-        path.join(__dirname, '../../../react-cosmos-utils/src/import-module.js')
-      )
+      path.join(__dirname, '../../../react-cosmos-utils/src/import-module.js')
     ]);
   });
 
   test('proxies', () => {
     expect(proxies).toEqual([
-      slash(
-        path.join(__dirname, '../../../react-cosmos-utils/src/linked-list.js')
-      )
+      path.join(__dirname, '../../../react-cosmos-utils/src/linked-list.js')
     ]);
   });
 });
@@ -78,7 +54,7 @@ describe('keeps absolute paths', () => {
   let outputPath;
 
   beforeEach(() => {
-    mockUserConfig('./mock-cwd/cosmos.config', {
+    jest.mock('./mocks/cosmos.config', () => ({
       componentPaths: ['/path/to/components'],
       fixturePaths: ['/path/to/fixtures'],
       globalImports: ['/path/to/import'],
@@ -86,7 +62,7 @@ describe('keeps absolute paths', () => {
       publicPath: '/path/to/static',
       webpackConfigPath: '/path/to/webpack',
       outputPath: '/path/to/output'
-    });
+    }));
 
     ({
       componentPaths,
@@ -96,7 +72,7 @@ describe('keeps absolute paths', () => {
       publicPath,
       webpackConfigPath,
       outputPath
-    } = getCosmosConfig());
+    } = getCosmosConfig(cosmosConfigPath));
   });
 
   test('components', () => {
@@ -138,7 +114,7 @@ describe('resolves relative paths', () => {
   let outputPath;
 
   beforeEach(() => {
-    mockUserConfig('./mock-cwd/custom-path/cosmos.config', {
+    jest.mock('./mocks/cosmos.config', () => ({
       componentPaths: ['./path/to/components'],
       fixturePaths: ['./path/to/fixtures'],
       globalImports: ['./path/to/import'],
@@ -146,7 +122,7 @@ describe('resolves relative paths', () => {
       publicPath: './path/to/static',
       webpackConfigPath: './path/to/webpack',
       outputPath: './path/to/output'
-    });
+    }));
 
     ({
       componentPaths,
@@ -156,72 +132,66 @@ describe('resolves relative paths', () => {
       publicPath,
       webpackConfigPath,
       outputPath
-    } = getCosmosConfig('./custom-path/cosmos.config'));
+    } = getCosmosConfig(cosmosConfigPath));
   });
 
   test('components', () => {
     expect(componentPaths).toEqual([
-      slash(path.join(__dirname, 'mock-cwd/custom-path/path/to/components'))
+      path.join(__dirname, 'mocks/path/to/components')
     ]);
   });
 
   test('fixtures', () => {
     expect(fixturePaths).toEqual([
-      slash(path.join(__dirname, 'mock-cwd/custom-path/path/to/fixtures'))
+      path.join(__dirname, 'mocks/path/to/fixtures')
     ]);
   });
 
   test('global imports', () => {
     expect(globalImports).toEqual([
-      slash(path.join(__dirname, 'mock-cwd/custom-path/path/to/import'))
+      path.join(__dirname, 'mocks/path/to/import')
     ]);
   });
 
   test('proxies', () => {
-    expect(proxies).toEqual([
-      slash(path.join(__dirname, 'mock-cwd/custom-path/path/to/proxy'))
-    ]);
+    expect(proxies).toEqual([path.join(__dirname, 'mocks/path/to/proxy')]);
   });
 
   test('public', () => {
-    expect(publicPath).toEqual(
-      slash(path.join(__dirname, 'mock-cwd/custom-path/path/to/static'))
-    );
+    expect(publicPath).toEqual(path.join(__dirname, 'mocks/path/to/static'));
   });
 
   test('webpack config', () => {
     expect(webpackConfigPath).toEqual(
-      slash(path.join(__dirname, 'mock-cwd/custom-path/path/to/webpack'))
+      path.join(__dirname, 'mocks/path/to/webpack')
     );
   });
 
   test('output path', () => {
-    expect(outputPath).toEqual(
-      slash(path.join(__dirname, 'mock-cwd/custom-path/path/to/output'))
-    );
+    expect(outputPath).toEqual(path.join(__dirname, 'mocks/path/to/output'));
   });
 });
 
 describe('defaults', () => {
   test('provide relative webpack path', () => {
-    mockUserConfig('./mock-cwd/cosmos.config', {});
+    jest.mock('./mocks/cosmos.config', () => ({}));
 
-    expect(getCosmosConfig().webpackConfigPath).toBe(
-      slash(path.join(__dirname, 'mock-cwd/webpack.config'))
+    expect(getCosmosConfig(cosmosConfigPath).webpackConfigPath).toBe(
+      path.join(__dirname, 'mocks/webpack.config')
     );
   });
 
   test('provide hot reloading', () => {
-    mockUserConfig('./mock-cwd/cosmos.config', {});
+    jest.mock('./mocks/cosmos.config', () => ({}));
 
-    const { hot } = getCosmosConfig();
+    const { hot } = getCosmosConfig(cosmosConfigPath);
     expect(hot).toBe(true);
   });
 
   test('are extended', () => {
-    mockUserConfig('./mock-cwd/cosmos.config', { hot: false });
+    jest.mock('./mocks/cosmos.config', () => ({ hot: false }));
 
-    const { hot } = getCosmosConfig();
+    const { hot } = getCosmosConfig(cosmosConfigPath);
     expect(hot).toBe(false);
   });
 });
