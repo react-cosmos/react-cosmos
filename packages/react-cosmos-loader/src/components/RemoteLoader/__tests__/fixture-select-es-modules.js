@@ -125,8 +125,6 @@ describe('Fixture is selected remotely', () => {
   test('sends fixtureLoad event to parent with fixture body', () => {
     expect(fixtureLoadMessage).toEqual({
       type: 'fixtureLoad',
-      component: 'Foo',
-      fixture: 'foo',
       fixtureBody: {
         foo: 'bar'
       }

@@ -155,8 +155,6 @@ class RemoteLoader extends Component {
       // Notify back parent with the serializable contents of the loaded fixture
       postMessageToParent({
         type: 'fixtureLoad',
-        component,
-        fixture,
         fixtureBody
       });
     }
@@ -205,8 +203,6 @@ class RemoteLoader extends Component {
     try {
       postMessageToParent({
         type: 'fixtureUpdate',
-        component,
-        fixture,
         fixtureBody
       });
     } catch (err) {
