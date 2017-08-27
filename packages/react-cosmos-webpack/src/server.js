@@ -7,15 +7,8 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import getLoaderWebpackConfig from './loader-webpack-config';
 import getDefaultWebpackConfig from './default-webpack-config';
 import importModule from 'react-cosmos-utils/lib/import-module';
+import moduleExists from 'react-cosmos-utils/lib/module-exists';
 import getCosmosConfig from 'react-cosmos-config';
-
-const moduleExists = modulePath => {
-  try {
-    return modulePath && require.resolve(modulePath) && true;
-  } catch (err) {
-    return false;
-  }
-};
 
 const getPublicPath = (cosmosConfig, userWebpackConfig) => {
   return (
