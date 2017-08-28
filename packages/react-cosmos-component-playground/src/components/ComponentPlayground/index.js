@@ -6,7 +6,6 @@ import localForage from 'localforage';
 import { uri } from 'react-querystring-router';
 import { HomeIcon, FullScreenIcon, CodeIcon } from '../SvgIcon';
 import StarryBg from '../StarryBg';
-import ComponentPage from '../ComponentPage';
 import FixtureList from '../FixtureList';
 import WelcomeScreen from '../WelcomeScreen';
 import MissingScreen from '../MissingScreen';
@@ -35,6 +34,9 @@ export default class ComponentPlayground extends Component {
 
   state = {
     waitingForLoader: true,
+    loadersRequired: 0,
+    loadersCount: 0,
+    loadersReady: 0,
     isDragging: false,
     leftNavSize: 250,
     fixtureEditorPaneSize: 250,
@@ -60,7 +62,10 @@ export default class ComponentPlayground extends Component {
           },
           val => typeof val !== 'number'
         ),
-        this.updateContentOrientation
+        () => {
+          this.updateContentOrientation();
+          this.updateLoaders();
+        }
       );
     });
   }
@@ -72,11 +77,14 @@ export default class ComponentPlayground extends Component {
 
   componentWillReceiveProps({ component, fixture }) {
     const { waitingForLoader, fixtures } = this.state;
+    const fixtureChanged =
+      component !== this.props.component || fixture !== this.props.fixture;
+
+    if (fixtureChanged) {
+      this.updateLoaders({component, fixture});
+    }
 
     if (!waitingForLoader) {
-      const fixtureChanged =
-        component !== this.props.component || fixture !== this.props.fixture;
-
       if (fixtureChanged && fixtureExists(fixtures, component, fixture)) {
         postMessageToFrame(this.loaderFrame, {
           type: 'fixtureSelect',
@@ -115,7 +123,10 @@ export default class ComponentPlayground extends Component {
       },
       // We update the content orientation because the content width decreases
       // when the left nav becomes visible
-      this.updateContentOrientation
+      () => {
+        this.updateContentOrientation();
+        this.updateLoaders();
+      }
     );
 
     const { component, fixture } = this.props;
@@ -218,6 +229,26 @@ export default class ComponentPlayground extends Component {
     });
   }
 
+  updateLoaders(props = this.props) {
+    const { loadersCount } = this.state;
+    const loadersRequired = this.getLoadersRequired(props);
+    this.setState({
+      loadersRequired,
+      loadersCount: Math.max(loadersCount, loadersRequired)
+    });
+  }
+
+  getLoadersRequired({ component, fixture }) {
+    const { fixtures } = this.state;
+    if (fixture) {
+      return 1;
+    }
+    if (component && fixtures) {
+      return fixtures[component].length;
+    }
+    return 0;
+  }
+
   render() {
     return (
       <div className={styles.root}>
@@ -264,10 +295,6 @@ export default class ComponentPlayground extends Component {
           </StarryBg>}
         {editor && !waitingForLoader && this.renderFixtureEditor()}
         {this.renderLoader(isLoaderVisible)}
-        {isComponentPageVisible &&
-          <ComponentPage
-            fixtures={fixtures}
-            component={component} />}
       </div>
     );
   }
