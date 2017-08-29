@@ -314,7 +314,7 @@ module.exports = {
 
 Also make sure to:
 - Run `cosmos` with `NODE_ENV=development`
-- Create the `src/components` directory and place your components there, or change componentPaths option to match your existing structure.
+- Create the `src/components` directory and place your components there, or change componentPaths option to match your existing structure
 - Put [proxies](#proxies) in the `src` dir–the only place included by the CRA Babel loader
 
 *CRA + Cosmos example: [Flatris](https://github.com/skidding/flatris)*
@@ -332,7 +332,9 @@ module.exports = {
 };
 ```
 
-Define `.babelrc` for the Cosmos webpack config to rely on the Next.js preset.
+Also make sure to:
+- Add `html-webpack-plugin` to your dev dependencies
+- Define `.babelrc` for the Cosmos webpack config to rely on the Next.js preset:
 
 ```json
 {
