@@ -3,6 +3,9 @@ node_js:
   - 8
   - 7
   - 6
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH=$HOME/.yarn/bin:$PATH
 script:
   - yarn run test
   - yarn run test-smoke-ci

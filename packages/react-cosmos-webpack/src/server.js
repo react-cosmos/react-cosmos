@@ -1,22 +1,14 @@
 import path from 'path';
 import fs from 'fs';
+import { silent as silentImport } from 'import-from';
 import express from 'express';
-import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import { argv } from 'yargs';
 import getLoaderWebpackConfig from './loader-webpack-config';
 import getDefaultWebpackConfig from './default-webpack-config';
 import importModule from 'react-cosmos-utils/lib/import-module';
+import moduleExists from 'react-cosmos-utils/lib/module-exists';
 import getCosmosConfig from 'react-cosmos-config';
-
-const moduleExists = modulePath => {
-  try {
-    return modulePath && require.resolve(modulePath) && true;
-  } catch (err) {
-    return false;
-  }
-};
 
 const getPublicPath = (cosmosConfig, userWebpackConfig) => {
   return (
@@ -25,27 +17,31 @@ const getPublicPath = (cosmosConfig, userWebpackConfig) => {
   );
 };
 
-module.exports = function startServer() {
-  const cosmosConfigPath = argv.config;
+module.exports = function startServer(cosmosConfigPath) {
   const cosmosConfig = getCosmosConfig(cosmosConfigPath);
-
   const { hostname, hot, port, webpackConfigPath, publicUrl } = cosmosConfig;
+
+  const webpack = silentImport(cosmosConfigPath, 'webpack');
+  if (!webpack) {
+    console.warn('[Cosmos] webpack dependency missing!');
+    console.log('Install using "yarn add webpack" or "npm install webpack"');
+    return;
+  }
 
   let userWebpackConfig;
   if (moduleExists(webpackConfigPath)) {
     console.log(`[Cosmos] Using webpack config found at ${webpackConfigPath}`);
     userWebpackConfig = importModule(require(webpackConfigPath));
   } else {
-    console.log(
-      '[Cosmos] No webpack config found, using default configuration'
-    );
-    userWebpackConfig = getDefaultWebpackConfig();
+    console.log('[Cosmos] No webpack config found, using default config');
+    userWebpackConfig = getDefaultWebpackConfig(cosmosConfigPath);
   }
 
-  const loaderWebpackConfig = getLoaderWebpackConfig(
+  const loaderWebpackConfig = getLoaderWebpackConfig({
+    webpack,
     userWebpackConfig,
     cosmosConfigPath
-  );
+  });
   const loaderCompiler = webpack(loaderWebpackConfig);
   const app = express();
 

@@ -1,14 +1,6 @@
 import path from 'path';
-import slash from 'slash';
-import resolveFrom from 'resolve-from';
 import importModule from 'react-cosmos-utils/lib/import-module';
-
-const resolveUserPath = (userPath, rootPath) =>
-  slash(
-    path.isAbsolute(userPath)
-      ? userPath
-      : resolveFrom.silent(rootPath, userPath) || path.join(rootPath, userPath)
-  );
+import resolveUserPath from 'react-cosmos-utils/lib/resolve-user-path';
 
 const defaults = {
   componentPaths: [],
@@ -28,10 +20,9 @@ const defaults = {
 const PATHS = ['componentPaths', 'fixturePaths', 'globalImports', 'proxies'];
 const PATH = ['publicPath', 'webpackConfigPath', 'outputPath'];
 
-export default function getCosmosConfig(configPath = 'cosmos.config') {
-  const normalizedConfigPath = resolveUserPath(configPath, process.cwd());
-  const userConfig = importModule(require(normalizedConfigPath));
-  const rootPath = path.dirname(normalizedConfigPath);
+export default function getCosmosConfig(cosmosConfigPath) {
+  const userConfig = importModule(require(cosmosConfigPath));
+  const rootPath = path.dirname(cosmosConfigPath);
 
   const config = {
     ...defaults,
@@ -39,9 +30,9 @@ export default function getCosmosConfig(configPath = 'cosmos.config') {
   };
   const resolvedConfig = Object.keys(config).reduce((result, key) => {
     if (PATHS.indexOf(key) > -1) {
-      result[key] = config[key].map(path => resolveUserPath(path, rootPath));
+      result[key] = config[key].map(path => resolveUserPath(rootPath, path));
     } else if (PATH.indexOf(key) > -1) {
-      result[key] = resolveUserPath(config[key], rootPath);
+      result[key] = resolveUserPath(rootPath, config[key]);
     } else {
       result[key] = config[key];
     }

@@ -28,9 +28,6 @@ const mockGetFilePaths = jest.fn(() => ({
 }));
 jest.mock('react-cosmos-voyager', () => mockGetFilePaths);
 
-const slash = require('slash');
-
-const jsonLoader = slash(require.resolve('json-loader'));
 const moduleLoader = require('../module-loader');
 
 const mockAddDependency = jest.fn();
@@ -92,7 +89,7 @@ test('injects fixtures', () => {
     },
     Bar: {
       one: '__req(components/__fixtures__/Bar/one.js)',
-      two: `__req(${jsonLoader}!components/__fixtures__/Bar/two.json)`
+      two: `__req(components/__fixtures__/Bar/two.json)`
     }
   });
 });

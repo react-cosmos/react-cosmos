@@ -42,7 +42,7 @@ class Loader extends Component {
         component={importComponent(component)}
         fixture={importModule(fixture)}
         onComponentRef={onComponentRef || noope}
-        onFixtureUpdate={onFixtureUpdate}
+        onFixtureUpdate={onFixtureUpdate || noope}
       />
     );
   }

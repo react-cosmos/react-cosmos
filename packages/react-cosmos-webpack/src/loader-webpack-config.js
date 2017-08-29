@@ -1,4 +1,3 @@
-import webpack from 'webpack';
 import omit from 'lodash.omit';
 import getCosmosConfig from 'react-cosmos-config';
 
@@ -14,11 +13,12 @@ const alreadyHasHmrPlugin = ({ plugins }) =>
  * - Enable hot reloading
  * - Embed the config path to make user configs available on the client-side
  */
-export default function getLoaderWebpackConfig(
+export default function getLoaderWebpackConfig({
+  webpack,
   userWebpackConfig,
   cosmosConfigPath,
   shouldExport = false
-) {
+}) {
   const cosmosConfig = getCosmosConfig(cosmosConfigPath);
 
   const {

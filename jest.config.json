@@ -3,7 +3,7 @@
   "testEnvironment": "jsdom",
   "testURL": "http://foo.bar/",
   "testPathIgnorePatterns": [
-    "react-cosmos-config/src/__tests__/mock-cwd",
+    "react-cosmos-config/src/__tests__/mocks",
     "react-cosmos-webpack/src/__tests__/mocks"
   ],
   "collectCoverageFrom": [

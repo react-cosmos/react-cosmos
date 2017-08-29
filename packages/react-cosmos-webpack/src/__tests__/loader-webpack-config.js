@@ -35,6 +35,7 @@ const userWebpack2Config = {
 };
 
 // This changes between test cases
+let webpack;
 let mockGetCosmosConfig;
 let mockCosmosConfig;
 // This is the output that we test
@@ -43,7 +44,6 @@ let webpackConfig;
 beforeEach(() => {
   // We want to change configs between test cases
   jest.resetModules();
-  jest.resetAllMocks();
 
   // Mock user config
   mockGetCosmosConfig = jest.fn(() => mockCosmosConfig);
@@ -52,8 +52,9 @@ beforeEach(() => {
   DefinePlugin = jest.fn(() => mockDefinePlugin);
   HotModuleReplacementPlugin = jest.fn(() => mockHotModuleReplacementPlugin);
 
-  require('webpack').__setPluginMock('DefinePlugin', DefinePlugin);
-  require('webpack').__setPluginMock(
+  webpack = require('webpack');
+  webpack.__setPluginMock('DefinePlugin', DefinePlugin);
+  webpack.__setPluginMock(
     'HotModuleReplacementPlugin',
     HotModuleReplacementPlugin
   );
@@ -70,7 +71,11 @@ describe('without hmr', () => {
       globalImports: ['./global.css'],
       containerQuerySelector: '__mock__containerQuerySelector'
     };
-    webpackConfig = getWebpackConfig(userWebpack2Config, cosmosConfigPath);
+    webpackConfig = getWebpackConfig({
+      webpack,
+      userWebpackConfig: userWebpack2Config,
+      cosmosConfigPath
+    });
   });
 
   test('calls react-cosmos-config with config path', () => {
@@ -131,7 +136,11 @@ describe('with hmr', () => {
       globalImports: ['./global.css'],
       hot: true
     };
-    webpackConfig = getWebpackConfig(userWebpack2Config, cosmosConfigPath);
+    webpackConfig = getWebpackConfig({
+      webpack,
+      userWebpackConfig: userWebpack2Config,
+      cosmosConfigPath
+    });
   });
 
   test('adds resolved global imports to entries', () => {
@@ -159,7 +168,11 @@ describe('with hmr', () => {
 describe('loaders', () => {
   describe('webpack1', () => {
     beforeAll(() => {
-      webpackConfig = getWebpackConfig(userWebpack1Config, cosmosConfigPath);
+      webpackConfig = getWebpackConfig({
+        webpack,
+        userWebpackConfig: userWebpack1Config,
+        cosmosConfigPath
+      });
     });
 
     test('keeps user loaders', () => {
@@ -191,7 +204,11 @@ describe('loaders', () => {
 
   describe('webpack2', () => {
     beforeAll(() => {
-      webpackConfig = getWebpackConfig(userWebpack2Config, cosmosConfigPath);
+      webpackConfig = getWebpackConfig({
+        webpack,
+        userWebpackConfig: userWebpack2Config,
+        cosmosConfigPath
+      });
     });
 
     test('keeps user rules', () => {
@@ -236,7 +253,11 @@ describe('output', () => {
 
   describe('with shouldExport false', () => {
     beforeAll(() => {
-      webpackConfig = getWebpackConfig(userWebpack1Config, cosmosConfigPath);
+      webpackConfig = getWebpackConfig({
+        webpack,
+        userWebpackConfig: userWebpack1Config,
+        cosmosConfigPath
+      });
     });
 
     test('creates proper output', () => {
@@ -250,11 +271,12 @@ describe('output', () => {
 
   describe('with shouldExport true', () => {
     beforeAll(() => {
-      webpackConfig = getWebpackConfig(
-        userWebpack1Config,
+      webpackConfig = getWebpackConfig({
+        webpack,
+        userWebpackConfig: userWebpack1Config,
         cosmosConfigPath,
-        true
-      );
+        shouldExport: true
+      });
     });
 
     test('creates proper output', () => {
@@ -278,11 +300,12 @@ describe('with shouldExport true', () => {
       outputPath: '__mock__outputPath',
       containerQuerySelector: '__mock__containerQuerySelector'
     };
-    webpackConfig = getWebpackConfig(
-      userWebpack2Config,
+    webpackConfig = getWebpackConfig({
+      webpack,
+      userWebpackConfig: userWebpack2Config,
       cosmosConfigPath,
-      true
-    );
+      shouldExport: true
+    });
   });
 
   test('does not add hot middleware client to entries', () => {
