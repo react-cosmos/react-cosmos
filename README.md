@@ -58,6 +58,9 @@ Jump to:
 - [Fixtures](#fixtures)
   - [What's a fixture?](#whats-a-fixture)
   - [Where to put fixtures?](#where-to-put-fixtures)
+  - [Props](#props)
+  - [Children](#Children)
+  - [State](#state)
 - [Proxies](#proxies)
   - [What's a proxy?](#whats-a-proxy)
   - [Redux](#redux)
@@ -120,7 +123,7 @@ Run `npm run cosmos` or `yarn cosmos` and go to [localhost:8989](http://localhos
 
 #### What's a fixture?
 
-A fixture is a component mock. An example of component input. The input can be props, state, or–with the help of [proxies](#proxies)–anything a component depends upon (e.g. API responses).
+A fixture a JS object used to mock component input and external dependencies. The input can be [props](#props), [children](#children), [state](#state) and [context](#context). With the help of [proxies](#proxies), fixtures can mock anything else a component depends on, from API responses to localStorage to screen size.
 
 ```js
 export default {
@@ -161,6 +164,48 @@ components/nested/Dropdown/__fixtures__/open.js
 ```
 
 Named component files also work in the nested hierarchy (i.e. `Button/Button.jsx` and `nested/Dropdown/Dropdown.jsx`).
+
+#### Props
+
+Mocking props is the most basic thing a fixture can do.
+
+```js
+export default {
+  props: {
+    loggedIn: true,
+    user: {
+      name: 'Dan the Man'
+    }
+  }
+}
+```
+
+#### Children
+
+Composition is the name of the game and many React components expect [children](https://facebook.github.io/react/docs/jsx-in-depth.html#children-in-jsx). Components access them via `props.children`, but children are not quite *props* so we put them under `fixture.children`.
+
+```jsx
+export default {
+  children: (
+    <div>
+      <p>Fixture ain't afraid of JSX</p>
+      <p>Fixture ain't afraid of nothin!</p>
+    </div>
+  )
+}
+```
+
+#### State
+
+Mocking state is where things get interesting. [Component state](https://facebook.github.io/react/docs/react-component.html#state) is private IRL, but Cosmos allows us to inject it and simulate all the various states a component can find itself in.
+
+```js
+export default {
+  state: {
+    searchQuery: 'Who let the dogs out?'
+  }
+}
+```
 
 ### Proxies
 
