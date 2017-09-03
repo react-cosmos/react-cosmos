@@ -64,11 +64,11 @@ Jump to:
 - [Proxies](#proxies)
   - [What's a proxy?](#whats-a-proxy)
   - [Where to put proxies?](#where-to-put-proxies)
-  - [Redux](#redux)
   - [Context](#context)
-  - [XHR](#xhr)
-  - [Fetch](#fetch)
+  - [Redux](#redux)
   - [React Router](#react-router)
+  - [Fetch](#fetch)
+  - [XHR](#xhr)
 - [Integration with popular tools](#integration-with-popular-tools)
   - [Create React App](#create-react-app)
   - [Next.js](#nextjs)
@@ -81,6 +81,7 @@ Jump to:
 - [Exporting](#exporting)
 - [Experimental: Test helpers](#experimental-test-helpers)
   - [Global Jest snapshot](#global-jest-snapshot)
+- [Join the component revolution!](#join-the-component-revolution)
 
 *Have a question or idea to share? See you on [Slack](https://join-react-cosmos.now.sh/).*
 
@@ -256,6 +257,43 @@ Jump to:
 - [Fetch](#fetch)
 - [XHR](#xhr)
 
+#### Context
+
+[React Context](https://facebook.github.io/react/docs/context.html): *With great power comes great responsibility.*
+
+> Note: React doesn't recommend using *context* unless you're a lib, so most of us don't need this proxy either.
+
+##### Configuration
+
+```js
+// cosmos.proxies.js
+import createContextProxy from 'react-cosmos-context-proxy';
+
+const ContextProxy = createContextProxy({
+  // Expects fixture.context to contain `theme` object (see examples/context)
+  childContextTypes: {
+    theme: PropTypes.object.isRequired,
+  },
+});
+
+export default [
+  ContextProxy,
+  // ...other proxies
+];
+```
+
+##### Activation
+
+```js
+// __fixtures__/example.js
+export default {
+  theme: {
+    backgroundColor: '#f1f1f1',
+    color: '#222'
+  }
+}
+```
+
 #### Redux
 
 Most components in a [Redux](http://redux.js.org/) app depend on Redux state–either they're a *container* or one of their descendants is. This proxy creates the store context required for any component you load, just like a [Provider](http://redux.js.org/docs/basics/UsageWithReact.html#passing-the-store).
@@ -292,90 +330,48 @@ export default {
 }
 ```
 
-#### Context
+#### React Router
 
-[React Context](https://facebook.github.io/react/docs/context.html): *With great power comes great responsibility.*
+> Warning: react-cosmos-router-proxy is designed for React Router **v4** and above
 
-> Note: React doesn't recommend using *context* unless you're a lib, so most of us don't need this proxy either.
-
-##### Configuration
-
-```js
-// context-proxy.js
-import createContextProxy from 'react-cosmos-context-proxy';
-
-const ContextProxy = createContextProxy({
-  // Expects fixture.context to contain `theme` object (see examples/context)
-  childContextTypes: {
-    theme: PropTypes.object.isRequired,
-  },
-});
-
-export default [
-  ContextProxy,
-  // ...other proxies
-];
-```
-
-##### Activation
-
-```js
-// __fixtures__/example.js
-export default {
-  theme: {
-    backgroundColor: '#f1f1f1',
-    color: '#222'
-  }
-}
-```
-
-#### XHR
-
-Besides client-side state, components also depend on external data. Mocking server responses allows us to completely isolate our components.
+[React Router](https://reacttraining.com/react-router/) is used in most React projects. Wrapping components with `withRouter` makes the Router context an implicit dependency–one we need to mock.
 
 ##### Configuration
 
 ```js
 // cosmos.proxies.js
 export default [
-  'react-cosmos-xhr-proxy',
+  'react-cosmos-router-proxy',
   // ...other proxies
 ]
 ```
 
 ##### Activation
 
+Simply adding a `url` to your fixture will wrap the loaded component inside a [Router](https://reacttraining.com/react-router/core/api/Router).
+
 ```js
 // __fixtures__/example.js
 export default {
-  xhr: [
-    {
-      url: '/users',
-      response: (req, res) =>
-        res.status(200).body([
-          {
-            id: 1,
-            name: 'Blossom',
-          },
-          {
-            id: 2,
-            name: 'Bubbles',
-          },
-          {
-            id: 3,
-            name: 'Buttercup'
-          }
-        ]),
-    },
-  ],
-};
+  url: '/about'
+}
 ```
 
-The proxy is a thin layer on top of the [xhr-proxy](https://github.com/jameslnewell/xhr-mock) utility. Check out the [Axios example](examples/axios) to see it in action.
+Optionally, `route` can be added to also wrap the loaded component inside a [Route](https://reacttraining.com/react-router/core/api/Route).
+
+```js
+// __fixtures__/example.js
+export default {
+  url: '/users/5',
+  route: '/users/:userId'
+}
+```
+
+Check out the [React Router example](examples/react-router) to see proxy in action.
 
 #### Fetch
 
-Like the [XHR](#xhr) proxy, but for the *Fetch API*.
+Besides client-side state, components also depend on external data. Mocking server responses allows us to completely isolate our components. This proxy makes mocking [Fetch](https://developer.mozilla.org/en/docs/Web/API/Fetch_API) responses a breeze.
 
 ##### Configuration
 
@@ -416,44 +412,49 @@ export default {
 
 Built on top of [fetch-mock](http://www.wheresrhys.co.uk/fetch-mock/api). Check out the [Fetch example](examples/fetch) to see `react-cosmos-fetch-proxy` in action.
 
-#### React Router
+#### XHR
 
-> Warning: react-cosmos-router-proxy is designed for React Router **v4** and above
-
-[React Router](https://reacttraining.com/react-router/) is used in most React projects. Wrapping components with `withRouter` makes the Router context an implicit dependency–one we need to mock.
+Like the [Fetch](#fetch) proxy, but for *XMLHttpRequest*.
 
 ##### Configuration
 
 ```js
 // cosmos.proxies.js
 export default [
-  'react-cosmos-router-proxy',
+  'react-cosmos-xhr-proxy',
   // ...other proxies
 ]
 ```
 
 ##### Activation
 
-Simply adding a `url` to your fixture will wrap the loaded component inside a [Router](https://reacttraining.com/react-router/core/api/Router).
-
 ```js
 // __fixtures__/example.js
 export default {
-  url: '/about'
-}
+  xhr: [
+    {
+      url: '/users',
+      response: (req, res) =>
+        res.status(200).body([
+          {
+            id: 1,
+            name: 'Blossom',
+          },
+          {
+            id: 2,
+            name: 'Bubbles',
+          },
+          {
+            id: 3,
+            name: 'Buttercup'
+          }
+        ]),
+    },
+  ],
+};
 ```
 
-Optionally, `route` can be added to also wrap the loaded component inside a [Route](https://reacttraining.com/react-router/core/api/Route).
-
-```js
-// __fixtures__/example.js
-export default {
-  url: '/users/5',
-  route: '/users/:userId'
-}
-```
-
-Check out the [React Router example](examples/react-router) to see proxy in action.
+Built on top of [xhr-proxy](https://github.com/jameslnewell/xhr-mock). Check out the [Axios example](examples/axios) to see it in action.
 
 *What proxy would you create to improve DX?*
 
