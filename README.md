@@ -63,6 +63,7 @@ Jump to:
   - [State](#state)
 - [Proxies](#proxies)
   - [What's a proxy?](#whats-a-proxy)
+  - [Where to put proxies?](#where-to-put-proxies)
   - [Redux](#redux)
   - [Context](#context)
   - [XHR](#xhr)
@@ -91,7 +92,7 @@ npm install --dev react-cosmos-webpack
 yarn add --dev react-cosmos-webpack
 ```
 
-Add `cosmos.config.js` to your project root
+Create `cosmos.config.js` in your project root
 
 ```js
 module.exports = {
@@ -123,7 +124,7 @@ Run `npm run cosmos` or `yarn cosmos` and go to [localhost:8989](http://localhos
 
 #### What's a fixture?
 
-A fixture a JS object used to mock component input and external dependencies. The input can be [props](#props), [children](#children), [state](#state) and [context](#context). With the help of [proxies](#proxies), fixtures can mock anything else a component depends on, from API responses to localStorage to screen size.
+A fixture a JS object used to mock component input and external dependencies. The input can be [props](#props), [children](#children), [state](#state) and [context](#context). With the help of [proxies](#proxies), fixtures can mock anything else a component depends on, from API responses to localStorage to window size.
 
 ```js
 export default {
@@ -211,9 +212,51 @@ export default {
 
 #### What's a proxy?
 
-Proxies are Cosmos plugins, allowing fixtures to go beyond mocking *props* and *state*. As regular React components, proxies compose in the order they are listed in your config and decorate the loaded component, respecting the contract to render the next proxy in the chain.
+Proxies are Cosmos plugins, allowing fixtures to go beyond mocking *props* and *state*.
 
-The added functionality can range from mocking Redux state to creating a resizable viewport for seeing how components behave at different scales.
+We've seen `component = f(props, state)` a hundred times–the seductive promise of React and libs alike. In reality, however, it's more like `component = f(props, state, context)` and most components are *nothing* without the context part. This is still an oversimplification. The ugly truth is components take input from many other places: API responses, localStorage and window size to name a few.
+
+But we know developing components in isolation is *The Way*, so intricate inputs won't stop us! With proxies, we look the devil in the eye and mock anything components depend on. Hell, we might even simplify our components once we're aware of all the crazy things they need to work.
+
+How do proxies work? Well duh, they're *Just Components*. As regular React components, proxies compose in the order they are listed in your config and decorate the loaded component, respecting the contract to render the next proxy in the chain. They can be stateless or have lifecycle, mocking before mounting and unmocking before unmounting.
+
+Proxies have two parts:
+
+1. **Configuration.** Done once per project, inside [cosmos.proxies.js](#where-to-put-proxies). Some proxies might not require any options so it's just a matter of adding a package name to a list (similar to Babel plugins).
+2. **Activation**. Triggered by a special fixture attribute. Eg. The React Router proxy activates when `fixture.url` is defined, otherwise it's a noop. Proxies can also be always-active, but it's a best practice to make proxies opt-in to avoid useless overhead.
+
+#### Where to put proxies?
+
+As soon as you're ready to add proxies to your Cosmos setup, create `cosmos.proxies.js` (next to cosmos.config.js) and export a list of proxies in the order they should load–from outermost to innermost. Here's an elaborate example:
+
+```js
+// cosmos.proxies.js
+import createReduxProxy from 'react-cosmos-redux-proxy';
+// We can import anything from our codebase in this file
+import configureStore from '../configureStore';
+
+const ReduxProxy = createReduxProxy({
+  createStore: state => configureStore(state)
+});
+
+const ComponentHugger = props => {
+  const { value: NextProxy, next } = props.nextProxy;
+  return (
+    <🐻🤗>
+      <NextProxy {...props} nextProxy={next()} />
+    </🐻🤗>
+  );
+};
+
+// We can ensure a specific proxy order
+export default [
+  ReduxProxy,
+  // No need to import proxies if we rely on defaults
+  'react-cosmos-router-proxy',
+  'react-cosmos-fetch-proxy',
+  ComponentHugger
+];
+```
 
 #### Redux
 
