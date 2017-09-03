@@ -214,7 +214,7 @@ export default {
 
 Proxies are Cosmos plugins, allowing fixtures to go beyond mocking *props* and *state*.
 
-Jump to proxy: [Context](#context), [Redux](#redux), [React Router](#react-router), [fetch](#fetch), [XHR](#xhr)
+Jump to proxy: [Context](#context) • [Redux](#redux) • [React Router](#react-router) • [Fetch](#fetch) • [XHR](#xhr)
 
 We've seen `component = f(props, state)` a hundred times–the seductive promise of React and libs alike. **In reality, however, it's more like `component = f(props, state, context)` and most components are *nothing* without the context part.** This is still an oversimplification. The ugly truth is components take input from many other places: API responses, localStorage and window size to name a few.
 
