@@ -227,18 +227,10 @@ Proxies have two parts:
 
 #### Where to put proxies?
 
-As soon as you're ready to add proxies to your Cosmos setup, create `cosmos.proxies.js` (next to cosmos.config.js) and export a list of proxies in the order they should load–from outermost to innermost. Here's an elaborate example:
+As soon as you're ready to add proxies to your Cosmos setup, create `cosmos.proxies.js` (next to cosmos.config.js) and export a list of proxies in the order they should load–from outermost to innermost. Here's an example with two standard proxies and a custom one:
 
 ```js
 // cosmos.proxies.js
-import createReduxProxy from 'react-cosmos-redux-proxy';
-// We can import anything from our codebase in this file
-import configureStore from '../configureStore';
-
-const ReduxProxy = createReduxProxy({
-  createStore: state => configureStore(state)
-});
-
 const ComponentHugger = props => {
   const { value: NextProxy, next } = props.nextProxy;
   return (
@@ -250,7 +242,6 @@ const ComponentHugger = props => {
 
 // We can ensure a specific proxy order
 export default [
-  ReduxProxy,
   // No need to import proxies if we rely on defaults
   'react-cosmos-router-proxy',
   'react-cosmos-fetch-proxy',
