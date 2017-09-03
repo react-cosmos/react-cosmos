@@ -270,7 +270,6 @@ Jump to:
 import createContextProxy from 'react-cosmos-context-proxy';
 
 const ContextProxy = createContextProxy({
-  // Expects fixture.context to contain `theme` object (see examples/context)
   childContextTypes: {
     theme: PropTypes.object.isRequired,
   },
@@ -294,6 +293,8 @@ export default {
 }
 ```
 
+Check out the [context example](examples/context) to see the proxy in action.
+
 #### Redux
 
 Most components in a [Redux](http://redux.js.org/) app depend on Redux state–either they're a *container* or one of their descendants is. This proxy creates the store context required for any component you load, just like a [Provider](http://redux.js.org/docs/basics/UsageWithReact.html#passing-the-store).
@@ -305,12 +306,10 @@ Writing Redux fixtures almost feels too easy. Because Redux state is global, onc
 ```js
 // cosmos.proxies.js
 import createReduxProxy from 'react-cosmos-redux-proxy';
+import configureStore from './configureStore';
 
 const ReduxProxy = createReduxProxy({
-  // Called when fixture loads with fixture.reduxState as initial state
-  createStore: (initialState) => {
-    return Redux.createStore(yourReducer, initialState, yourMiddleware);
-  },
+  createStore: state => configureStore(state)
 });
 
 export default [
@@ -367,7 +366,7 @@ export default {
 }
 ```
 
-Check out the [React Router example](examples/react-router) to see proxy in action.
+Check out the [React Router example](examples/react-router) to see the proxy in action.
 
 #### Fetch
 
@@ -410,7 +409,7 @@ export default {
 };
 ```
 
-Built on top of [fetch-mock](http://www.wheresrhys.co.uk/fetch-mock/api). Check out the [Fetch example](examples/fetch) to see `react-cosmos-fetch-proxy` in action.
+Built on top of [fetch-mock](http://www.wheresrhys.co.uk/fetch-mock/api). Check out the [Fetch example](examples/fetch) to see the proxy in action.
 
 #### XHR
 
@@ -454,7 +453,7 @@ export default {
 };
 ```
 
-Built on top of [xhr-proxy](https://github.com/jameslnewell/xhr-mock). Check out the [Axios example](examples/axios) to see it in action.
+Built on top of [xhr-proxy](https://github.com/jameslnewell/xhr-mock). Check out the [Axios example](examples/axios) to see the proxy in action.
 
 *What proxy would you create to improve DX?*
 
