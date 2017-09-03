@@ -81,7 +81,6 @@ Jump to:
 - [Exporting](#exporting)
 - [Experimental: Test helpers](#experimental-test-helpers)
   - [Global Jest snapshot](#global-jest-snapshot)
-- [Join the component revolution!](#join-the-component-revolution)
 
 *Have a question or idea to share? See you on [Slack](https://join-react-cosmos.now.sh/).*
 
