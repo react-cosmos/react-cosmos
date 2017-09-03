@@ -210,13 +210,6 @@ export default {
 
 ### Proxies
 
-Jump to:
-- [Context](#context)
-- [Redux](#redux)
-- [React Router](#react-router)
-- [Fetch](#fetch)
-- [XHR](#xhr)
-
 #### What's a proxy?
 
 Proxies are Cosmos plugins, allowing fixtures to go beyond mocking *props* and *state*.
@@ -256,47 +249,101 @@ export default [
 ];
 ```
 
+Jump to:
+- [Context](#context)
+- [Redux](#redux)
+- [React Router](#react-router)
+- [Fetch](#fetch)
+- [XHR](#xhr)
+
 #### Redux
 
-Most components in a [Redux](http://redux.js.org/) app depend on Redux state–either they're a *container* or one of their descendants is. This proxy creates the store context required for any component you load, just like [Provider](http://redux.js.org/docs/basics/UsageWithReact.html#passing-the-store) does for your root component. Writing Redux fixtures almost feels too easy. Because Redux state is global, once you have one state mock you can render any component you want!
+Most components in a [Redux](http://redux.js.org/) app depend on Redux state–either they're a *container* or one of their descendants is. This proxy creates the store context required for any component you load, just like a [Provider](http://redux.js.org/docs/basics/UsageWithReact.html#passing-the-store).
+
+Writing Redux fixtures almost feels too easy. Because Redux state is global, once you have one state mock you can render any component you want!
+
+##### Configuration
 
 ```js
-// redux-proxy.js
+// cosmos.proxies.js
 import createReduxProxy from 'react-cosmos-redux-proxy';
 
-export default () => {
-  return createReduxProxy({
-    // Called when fixture loads with fixture.reduxState as initial state.
-    // See https://github.com/skidding/flatris/blob/master/cosmos/redux-proxy.js
-    createStore: (initialState) => {
-      return Redux.createStore(yourReducer, initialState, yourMiddleware);
-    },
-  })
-};
+const ReduxProxy = createReduxProxy({
+  // Called when fixture loads with fixture.reduxState as initial state
+  createStore: (initialState) => {
+    return Redux.createStore(yourReducer, initialState, yourMiddleware);
+  },
+});
+
+export default [
+  ReduxProxy,
+  // ...other proxies
+];
+```
+
+##### Activation
+
+```js
+// __fixtures__/example.js
+export default {
+  // An empty object will populate the store with the initial state
+  // returned by reducers. But we can also put any state we want here.
+  reduxState: {}
+}
 ```
 
 #### Context
 
-Very convenient if your app uses [React context](https://facebook.github.io/react/docs/context.html). You can provide generic context using a base fixture that all other fixtures extend.
+[React Context](https://facebook.github.io/react/docs/context.html): *With great power comes great responsibility.*
+
+> Note: React doesn't recommend using *context* unless you're a lib, so most of us don't need this proxy either.
+
+##### Configuration
 
 ```js
 // context-proxy.js
 import createContextProxy from 'react-cosmos-context-proxy';
 
-export default () => {
-  return createContextProxy({
-    // Expects fixture.context to contain `theme` object
-    // See examples/context
-    childContextTypes: {
-      theme: PropTypes.object.isRequired,
-    },
-  });
-};
+const ContextProxy = createContextProxy({
+  // Expects fixture.context to contain `theme` object (see examples/context)
+  childContextTypes: {
+    theme: PropTypes.object.isRequired,
+  },
+});
+
+export default [
+  ContextProxy,
+  // ...other proxies
+];
+```
+
+##### Activation
+
+```js
+// __fixtures__/example.js
+export default {
+  theme: {
+    backgroundColor: '#f1f1f1',
+    color: '#222'
+  }
+}
 ```
 
 #### XHR
 
-Besides client-side state, components also depend on external data. Mocking server responses allows us to completely isolate our components. By adding the `react-cosmos-xhr-proxy` to our config, we can put *XMLHttpRequest* mocks in fixtures.
+Besides client-side state, components also depend on external data. Mocking server responses allows us to completely isolate our components.
+
+##### Configuration
+
+```js
+// cosmos.proxies.js
+export default [
+  'react-cosmos-xhr-proxy',
+  // ...other proxies
+]
+```
+
+##### Activation
 
 ```js
 // __fixtures__/example.js
@@ -330,6 +377,18 @@ The proxy is a thin layer on top of the [xhr-proxy](https://github.com/jameslnew
 
 Like the [XHR](#xhr) proxy, but for the *Fetch API*.
 
+##### Configuration
+
+```js
+// cosmos.proxies.js
+export default [
+  'react-cosmos-fetch-proxy',
+  // ...other proxies
+]
+```
+
+##### Activation
+
 ```js
 // __fixtures__/example.js
 export default {
@@ -359,9 +418,21 @@ Built on top of [fetch-mock](http://www.wheresrhys.co.uk/fetch-mock/api). Check 
 
 #### React Router
 
-> react-cosmos-router-proxy is designed for React Router **v4** and above
+> Warning: react-cosmos-router-proxy is designed for React Router **v4** and above
 
-[React Router](https://reacttraining.com/react-router/) is used in most React projects. Wrapping components with `withRouter` makes the Router context an implicit dependency–one we need to mock. But mocking RR internals and putting them into the React context is nasty business. No worries, `react-cosmos-redux-proxy` does it for you.
+[React Router](https://reacttraining.com/react-router/) is used in most React projects. Wrapping components with `withRouter` makes the Router context an implicit dependency–one we need to mock.
+
+##### Configuration
+
+```js
+// cosmos.proxies.js
+export default [
+  'react-cosmos-router-proxy',
+  // ...other proxies
+]
+```
+
+##### Activation
 
 Simply adding a `url` to your fixture will wrap the loaded component inside a [Router](https://reacttraining.com/react-router/core/api/Router).
 
@@ -382,7 +453,7 @@ export default {
 }
 ```
 
-Check out the [React Router example](examples/react-router) to see `react-cosmos-redux-proxy` in action.
+Check out the [React Router example](examples/react-router) to see proxy in action.
 
 *What proxy would you create to improve DX?*
 
