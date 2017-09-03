@@ -296,9 +296,7 @@ Check out the [context example](examples/context) to see the proxy in action.
 
 #### Redux
 
-Most components in a [Redux](http://redux.js.org/) app depend on Redux state–either they're a *container* or one of their descendants is. This proxy creates the store context required for any component you load, just like a [Provider](http://redux.js.org/docs/basics/UsageWithReact.html#passing-the-store).
-
-Writing Redux fixtures almost feels too easy. Because Redux state is global, once you have one state mock you can render any component you want!
+Most components in a [Redux](http://redux.js.org/) app depend on Redux state, either they're a *container* or one of their descendants is. This proxy creates a store using initial data from fixtures and puts it in the context, just like the [Provider](http://redux.js.org/docs/basics/UsageWithReact.html#passing-the-store) does.
 
 ##### Configuration
 
@@ -327,6 +325,8 @@ export default {
   reduxState: {}
 }
 ```
+
+Writing Redux fixtures almost feels too easy. Because Redux state is global, once we have one state mock we can render any component we want!
 
 #### React Router
 
