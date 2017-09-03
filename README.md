@@ -214,11 +214,13 @@ export default {
 
 Proxies are Cosmos plugins, allowing fixtures to go beyond mocking *props* and *state*.
 
-We've seen `component = f(props, state)` a hundred times–the seductive promise of React and libs alike. In reality, however, it's more like `component = f(props, state, context)` and most components are *nothing* without the context part. This is still an oversimplification. The ugly truth is components take input from many other places: API responses, localStorage and window size to name a few.
+Jump to proxy: [Context](#context), [Redux](#redux), [React Router](#react-router), [fetch](#fetch), [XHR](#xhr)
+
+We've seen `component = f(props, state)` a hundred times–the seductive promise of React and libs alike. **In reality, however, it's more like `component = f(props, state, context)` and most components are *nothing* without the context part.** This is still an oversimplification. The ugly truth is components take input from many other places: API responses, localStorage and window size to name a few.
 
 But we know developing components in isolation is *The Way*, so intricate inputs won't stop us! With proxies, we look the devil in the eye and mock anything components depend on. Hell, we might even simplify our components once we're aware of all the crazy things they need to work.
 
-How do proxies work? Well duh, they're *Just Components*. As regular React components, proxies compose in the order they are listed in your config and decorate the loaded component, respecting the contract to render the next proxy in the chain. They can be stateless or have lifecycle, mocking before mounting and unmocking before unmounting.
+How do proxies work? Well duh, they're *Just Components*. As regular React components, proxies compose in the order they are listed in your config and decorate the loaded component, respecting the contract to render the next proxy in the chain. They can be stateless or have a life cycle, mocking before mounting and unmocking before unmounting.
 
 Proxies have two parts:
 
@@ -240,9 +242,9 @@ const ComponentHugger = props => {
   );
 };
 
-// We can ensure a specific proxy order
+// We ensure a specific proxy order
 export default [
-  // No need to import proxies if we rely on defaults
+  // We can reference proxy packages when relying on defaults
   'react-cosmos-router-proxy',
   'react-cosmos-fetch-proxy',
   ComponentHugger
