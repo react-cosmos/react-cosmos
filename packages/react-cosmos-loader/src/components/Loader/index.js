@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import { func, object, array } from 'prop-types';
 import createLinkedList from 'react-cosmos-utils/lib/linked-list';
-import importModule from 'react-cosmos-utils/lib/import-module';
-import importComponent from 'react-cosmos-utils/lib/import-component';
 import createModuleType from '../../utils/module-type';
 import PropsProxy from '../PropsProxy';
 
 const noope = () => {};
 
 const createProxyLinkedList = userProxies =>
-  createLinkedList([...userProxies.map(importModule), PropsProxy]);
+  createLinkedList([...userProxies, PropsProxy]);
 
 class Loader extends Component {
   /**
@@ -37,8 +35,8 @@ class Loader extends Component {
     return (
       <firstProxy.value
         nextProxy={firstProxy.next()}
-        component={importComponent(component)}
-        fixture={importModule(fixture)}
+        component={component}
+        fixture={fixture}
         onComponentRef={onComponentRef || noope}
         onFixtureUpdate={onFixtureUpdate || noope}
       />

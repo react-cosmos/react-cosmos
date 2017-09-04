@@ -6,15 +6,7 @@ import Loader from '../';
 // Objects to check identity against
 const ProxyFoo = () => <span />;
 const ComponentFoo = () => <span />;
-const ComponentFooModule = {
-  __esModule: true,
-  default: ComponentFoo
-};
 const fixtureFoo = { foo: 'bar' };
-const fixtureFooModule = {
-  __esModule: true,
-  default: fixtureFoo
-};
 const onComponentRef = () => {};
 
 // Vars populated in beforeEach blocks
@@ -30,8 +22,8 @@ describe('Fixture is selected via props', () => {
     wrapper = mount(
       <Loader
         proxies={[ProxyFoo]}
-        component={ComponentFooModule}
-        fixture={fixtureFooModule}
+        component={ComponentFoo}
+        fixture={fixtureFoo}
         onComponentRef={onComponentRef}
         onFixtureUpdate={onFixtureUpdate}
       />

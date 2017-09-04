@@ -31,7 +31,7 @@ export function mount({
       proxies={[
         ...proxies,
         // Loaded by default in all configs
-        createStateProxy
+        createStateProxy()
       ]}
     />,
     container
