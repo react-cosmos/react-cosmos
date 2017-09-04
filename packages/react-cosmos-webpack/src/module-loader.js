@@ -3,6 +3,7 @@ import loaderUtils from 'loader-utils';
 import traverse from 'traverse';
 import getCosmosConfig from 'react-cosmos-config';
 import getFilePaths from 'react-cosmos-voyager';
+import moduleExists from 'react-cosmos-utils/lib/module-exists';
 
 const convertPathToRequireCall = p => `require('${p}')`;
 
@@ -21,9 +22,6 @@ const convertPathMapToRequireCalls = paths => {
 
   return `{${props.join(',')}}`;
 };
-
-const convertPathListToRequireCalls = paths =>
-  `[${paths.map(convertPathToRequireCall).join(',')}]`;
 
 const getUniqueDirsOfUserModules = (components, fixtures) => {
   const dirs = new Set();
@@ -57,7 +55,7 @@ module.exports = function embedModules(source) {
   const { cosmosConfigPath } = loaderUtils.getOptions(this);
   const cosmosConfig = getCosmosConfig(cosmosConfigPath);
   const { components, fixtures } = getFilePaths(cosmosConfig);
-  const { proxies } = cosmosConfig;
+  const { proxiesPath } = cosmosConfig;
   const contexts = getUniqueDirsOfUserModules(components, fixtures);
 
   contexts.forEach(dirPath => {
@@ -69,6 +67,9 @@ module.exports = function embedModules(source) {
   return source
     .replace(/COMPONENTS/g, convertPathMapToRequireCalls(components))
     .replace(/FIXTURES/g, convertPathMapToRequireCalls(fixtures))
-    .replace(/PROXIES/g, convertPathListToRequireCalls(proxies))
+    .replace(
+      /PROXIES/g,
+      moduleExists(proxiesPath) ? convertPathToRequireCall(proxiesPath) : '[]'
+    )
     .replace(/CONTEXTS/g, convertDirPathsToContextCalls(contexts));
 };
