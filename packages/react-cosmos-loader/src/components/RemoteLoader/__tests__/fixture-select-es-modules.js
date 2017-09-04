@@ -5,10 +5,9 @@ import RemoteLoader from '../';
 
 // Objects to check identity against
 const ProxyFoo = () => <span />;
-const createProxyFoo = () => ProxyFoo;
-const createProxyFooModule = {
+const ProxyFooModule = {
   __esModule: true,
-  default: createProxyFoo
+  default: ProxyFoo
 };
 const ComponentFoo = () => {};
 const ComponentFooModule = {
@@ -56,7 +55,7 @@ describe('Fixture is selected remotely', () => {
     const onFixtureLoad = waitForPostMessage('fixtureLoad');
     wrapper = mount(
       <RemoteLoader
-        proxies={[createProxyFooModule]}
+        proxies={[ProxyFooModule]}
         components={{
           Foo: ComponentFooModule
         }}

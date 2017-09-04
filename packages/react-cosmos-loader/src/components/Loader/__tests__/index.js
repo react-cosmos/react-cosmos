@@ -5,7 +5,6 @@ import Loader from '../';
 
 // Objects to check identity against
 const ProxyFoo = () => <span />;
-const createProxyFoo = () => ProxyFoo;
 const ComponentFoo = () => <span />;
 const ComponentFooModule = {
   __esModule: true,
@@ -30,7 +29,7 @@ describe('Fixture is selected via props', () => {
 
     wrapper = mount(
       <Loader
-        proxies={[createProxyFoo]}
+        proxies={[ProxyFoo]}
         component={ComponentFooModule}
         fixture={fixtureFooModule}
         onComponentRef={onComponentRef}
