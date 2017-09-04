@@ -222,7 +222,7 @@ How do proxies work? Well duh, they're *Just Components*. As regular React compo
 
 Proxies have two parts:
 
-1. **Configuration.** Done once per project, inside [cosmos.proxies.js](#where-to-put-proxies). Some proxies might not require any options so it's just a matter of adding a package name to a list (similar to Babel plugins).
+1. **Configuration.** Done once per project, inside [cosmos.proxies.js](#where-to-put-proxies). Import proxy packages, call their default export (always a *create* function) and add the result to the list of exported proxies. Some proxies require options, others work out of the box.
 2. **Activation**. Triggered by a special fixture attribute. Eg. The React Router proxy activates when `fixture.url` is defined, otherwise it's a noop. Proxies can also be always-active, but it's a best practice to make proxies opt-in to avoid useless overhead.
 
 #### Where to put proxies?
@@ -231,6 +231,9 @@ As soon as you're ready to add proxies to your Cosmos setup, create `cosmos.prox
 
 ```js
 // cosmos.proxies.js
+import createRouterProxy from 'react-cosmos-router-proxy';
+import createFetchProxy from 'react-cosmos-fetch-proxy';
+
 const ComponentHugger = props => {
   const { value: NextProxy, next } = props.nextProxy;
   return (
@@ -242,9 +245,8 @@ const ComponentHugger = props => {
 
 // We ensure a specific proxy order
 export default [
-  // We can reference proxy packages when relying on defaults
-  'react-cosmos-router-proxy',
-  'react-cosmos-fetch-proxy',
+  createRouterProxy(),
+  createFetchProxy(),
   ComponentHugger
 ];
 ```
@@ -338,8 +340,10 @@ Writing Redux fixtures almost feels too easy. Because Redux state is global, onc
 
 ```js
 // cosmos.proxies.js
+import createRouterProxy from 'react-cosmos-router-proxy';
+
 export default [
-  'react-cosmos-router-proxy',
+  createRouterProxy(),
   // ...other proxies
 ]
 ```
@@ -375,8 +379,10 @@ Besides client-side state, components also depend on external data. Mocking serv
 
 ```js
 // cosmos.proxies.js
+import createFetchProxy from 'react-cosmos-fetch-proxy';
+
 export default [
-  'react-cosmos-fetch-proxy',
+  createFetchProxy(),
   // ...other proxies
 ]
 ```
@@ -418,8 +424,10 @@ Like the [Fetch](#fetch) proxy, but for *XMLHttpRequest*.
 
 ```js
 // cosmos.proxies.js
+import createXhrProxy from 'react-cosmos-xhr-proxy';
+
 export default [
-  'react-cosmos-xhr-proxy',
+  createXhrProxy(),
   // ...other proxies
 ]
 ```
