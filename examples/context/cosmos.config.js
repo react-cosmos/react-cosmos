@@ -1,4 +1,3 @@
 module.exports = {
-  componentPaths: ['components'],
-  proxies: ['./context-proxy']
+  componentPaths: ['components']
 };
