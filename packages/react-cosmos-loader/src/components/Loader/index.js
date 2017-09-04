@@ -9,10 +9,7 @@ import PropsProxy from '../PropsProxy';
 const noope = () => {};
 
 const createProxyLinkedList = userProxies =>
-  createLinkedList([
-    ...userProxies.map(proxy => importModule(proxy)),
-    PropsProxy
-  ]);
+  createLinkedList([...userProxies.map(importModule), PropsProxy]);
 
 class Loader extends Component {
   /**
