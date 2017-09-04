@@ -19,16 +19,16 @@ test('loads config options', () => {
 
 describe('resolves module paths', () => {
   let globalImports;
-  let proxies;
+  let proxiesPath;
 
   beforeEach(() => {
     jest.mock('./mocks/cosmos.config', () => ({
       // Existing modules chosen arbitrarily
       globalImports: ['react-cosmos-utils/src/import-module'],
-      proxies: ['react-cosmos-utils/src/linked-list']
+      proxiesPath: 'react-cosmos-utils/src/linked-list'
     }));
 
-    ({ globalImports, proxies } = getCosmosConfig(cosmosConfigPath));
+    ({ globalImports, proxiesPath } = getCosmosConfig(cosmosConfigPath));
   });
 
   test('global imports', () => {
@@ -38,9 +38,9 @@ describe('resolves module paths', () => {
   });
 
   test('proxies', () => {
-    expect(proxies).toEqual([
+    expect(proxiesPath).toEqual(
       path.join(__dirname, '../../../react-cosmos-utils/src/linked-list.js')
-    ]);
+    );
   });
 });
 
@@ -48,7 +48,7 @@ describe('keeps absolute paths', () => {
   let componentPaths;
   let fixturePaths;
   let globalImports;
-  let proxies;
+  let proxiesPath;
   let publicPath;
   let webpackConfigPath;
   let outputPath;
@@ -58,7 +58,7 @@ describe('keeps absolute paths', () => {
       componentPaths: ['/path/to/components'],
       fixturePaths: ['/path/to/fixtures'],
       globalImports: ['/path/to/import'],
-      proxies: ['/path/to/proxy'],
+      proxiesPath: '/path/to/proxy',
       publicPath: '/path/to/static',
       webpackConfigPath: '/path/to/webpack',
       outputPath: '/path/to/output'
@@ -68,7 +68,7 @@ describe('keeps absolute paths', () => {
       componentPaths,
       fixturePaths,
       globalImports,
-      proxies,
+      proxiesPath,
       publicPath,
       webpackConfigPath,
       outputPath
@@ -88,7 +88,7 @@ describe('keeps absolute paths', () => {
   });
 
   test('proxies', () => {
-    expect(proxies).toEqual(['/path/to/proxy']);
+    expect(proxiesPath).toEqual('/path/to/proxy');
   });
 
   test('public', () => {
@@ -108,7 +108,7 @@ describe('resolves relative paths', () => {
   let componentPaths;
   let fixturePaths;
   let globalImports;
-  let proxies;
+  let proxiesPath;
   let publicPath;
   let webpackConfigPath;
   let outputPath;
@@ -118,7 +118,7 @@ describe('resolves relative paths', () => {
       componentPaths: ['./path/to/components'],
       fixturePaths: ['./path/to/fixtures'],
       globalImports: ['./path/to/import'],
-      proxies: ['./path/to/proxy'],
+      proxiesPath: './path/to/proxy',
       publicPath: './path/to/static',
       webpackConfigPath: './path/to/webpack',
       outputPath: './path/to/output'
@@ -128,7 +128,7 @@ describe('resolves relative paths', () => {
       componentPaths,
       fixturePaths,
       globalImports,
-      proxies,
+      proxiesPath,
       publicPath,
       webpackConfigPath,
       outputPath
@@ -154,7 +154,7 @@ describe('resolves relative paths', () => {
   });
 
   test('proxies', () => {
-    expect(proxies).toEqual([path.join(__dirname, 'mocks/path/to/proxy')]);
+    expect(proxiesPath).toEqual(path.join(__dirname, 'mocks/path/to/proxy'));
   });
 
   test('public', () => {
@@ -173,6 +173,14 @@ describe('resolves relative paths', () => {
 });
 
 describe('defaults', () => {
+  test('provide relative proxies path', () => {
+    jest.mock('./mocks/cosmos.config', () => ({}));
+
+    expect(getCosmosConfig(cosmosConfigPath).proxiesPath).toBe(
+      path.join(__dirname, 'mocks/cosmos.proxies')
+    );
+  });
+
   test('provide relative webpack path', () => {
     jest.mock('./mocks/cosmos.config', () => ({}));
 

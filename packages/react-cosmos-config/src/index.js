@@ -11,14 +11,14 @@ const defaults = {
   hot: true,
   ignore: [],
   port: 8989,
-  proxies: [],
+  proxiesPath: 'cosmos.proxies',
   webpackConfigPath: 'webpack.config',
   outputPath: 'cosmos-export',
   publicUrl: '/loader/'
 };
 
-const PATHS = ['componentPaths', 'fixturePaths', 'globalImports', 'proxies'];
-const PATH = ['publicPath', 'webpackConfigPath', 'outputPath'];
+const PATHS = ['componentPaths', 'fixturePaths', 'globalImports'];
+const PATH = ['proxiesPath', 'publicPath', 'webpackConfigPath', 'outputPath'];
 
 export default function getCosmosConfig(cosmosConfigPath) {
   const userConfig = importModule(require(cosmosConfigPath));
