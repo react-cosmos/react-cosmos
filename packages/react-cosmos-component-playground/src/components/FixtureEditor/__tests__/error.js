@@ -24,7 +24,7 @@ describe('FixtureEditor error', () => {
       // Mount component in order for ref and lifecycle methods to be called
       wrapper = mount(
         <Loader
-          proxies={[createStateProxy]}
+          proxies={[createStateProxy()]}
           component={FixtureEditor}
           fixture={fixture}
           onComponentRef={() => {

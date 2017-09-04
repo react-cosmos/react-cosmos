@@ -29,7 +29,7 @@ describe('Portrait fixture editor pane', () => {
         // Mount component in order for ref and lifecycle methods to be called
         wrapper = mount(
           <Loader
-            proxies={[createStateProxy]}
+            proxies={[createStateProxy()]}
             component={ComponentPlayground}
             fixture={selectedEditorFixture}
             onComponentRef={i => {
@@ -106,7 +106,7 @@ describe('Portrait fixture editor pane', () => {
         // Mount component in order for ref and lifecycle methods to be called
         wrapper = mount(
           <Loader
-            proxies={[createStateProxy]}
+            proxies={[createStateProxy()]}
             component={ComponentPlayground}
             fixture={selectedEditorFixture}
             onComponentRef={i => {
