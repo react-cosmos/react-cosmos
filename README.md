@@ -25,8 +25,7 @@ Cosmos scans your project for components and enables you to:
 
 1. Render components under any combination of props, context and state
 2. Mock *every* external dependency (eg. API responses, localStorage, etc)
-3. See app state evolve in real-time while interacting with running
-instances
+3. See app state evolve in real-time while interacting with running instances
 
 ![Component Playground](intro.gif)
 
