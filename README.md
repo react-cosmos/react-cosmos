@@ -230,25 +230,26 @@ As soon as you're ready to add proxies to your Cosmos setup, create `cosmos.prox
 
 ```js
 // cosmos.proxies.js
-import createRouterProxy from 'react-cosmos-router-proxy';
 import createFetchProxy from 'react-cosmos-fetch-proxy';
+import createReduxProxy from 'react-cosmos-redux-proxy';
+import createRouterProxy from 'react-cosmos-router-proxy';
+// We can import app file here
+import configureStore from './configureStore';
 
-const ComponentHugger = props => {
-  const { value: NextProxy, next } = props.nextProxy;
-  return (
-    <🐻🤗>
-      <NextProxy {...props} nextProxy={next()} />
-    </🐻🤗>
-  );
-};
+// Read more about configuring Redux in the Redux proxy section below
+const ReduxProxy = createReduxProxy({
+  createStore: state => configureStore(state)
+});
 
 // We ensure a specific proxy order
 export default [
-  createRouterProxy(),
   createFetchProxy(),
-  ComponentHugger
+  ReduxProxy,
+  createRouterProxy()
 ];
 ```
+
+> For details on *creating* proxies, see the [Proxy boilerplate](CONTRIBUTING.md#proxy-boilerplate)
 
 Jump to:
 - [Context](#context)
