@@ -14,6 +14,13 @@ if (process.env.NODE_ENV === 'development') {
   }
 }
 
+const {
+  default: importModule
+} = require('react-cosmos-utils/lib/import-module');
+const {
+  normalizeComponents,
+  normalizeFixtures
+} = require('./normalize-modules');
 const { mount, unmount } = require('react-cosmos-loader');
 
 // eslint-disable-next-line no-undef
@@ -29,9 +36,9 @@ const start = () => {
   const { components, fixtures, proxies } = getUserModules();
 
   mount({
-    proxies,
-    components,
-    fixtures,
+    proxies: importModule(proxies),
+    components: normalizeComponents(components),
+    fixtures: normalizeFixtures(fixtures),
     containerQuerySelector
   });
 };

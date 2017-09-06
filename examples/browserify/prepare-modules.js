@@ -2,7 +2,7 @@ const prepareComponents = modules => {
   const components = {};
   Object.keys(modules).forEach(componentName => {
     if (componentName.indexOf('_') !== 0) {
-      components[componentName] = modules[componentName];
+      components[componentName] = modules[componentName].default;
     }
   });
   return components;
@@ -16,7 +16,7 @@ const prepareFixtures = (modules, components) => {
       const componentPrefix = `./components/__fixtures__/${componentName}/`;
       if (fixtureName.indexOf(componentPrefix) === 0) {
         fixtures[componentName][fixtureName.slice(componentPrefix.length)] =
-          modules[fixtureName];
+          modules[fixtureName].default;
       }
     });
   });

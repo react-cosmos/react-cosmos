@@ -37,6 +37,13 @@ module.exports = function startServer(cosmosConfigPath) {
     userWebpackConfig = getDefaultWebpackConfig(cosmosConfigPath);
   }
 
+  if (cosmosConfig.proxies) {
+    console.warn('[Cosmos] Warning: config.proxies is deprecated!');
+    console.warn(
+      'Please check latest proxy docs: https://github.com/react-cosmos/react-cosmos#proxies'
+    );
+  }
+
   const loaderWebpackConfig = getLoaderWebpackConfig({
     webpack,
     userWebpackConfig,

@@ -19,7 +19,7 @@ describe('CP left nav drag', () => {
         // Mount component in order for ref and lifecycle methods to be called
         wrapper = mount(
           <Loader
-            proxies={[createStateProxy]}
+            proxies={[createStateProxy()]}
             component={ComponentPlayground}
             fixture={readyFixture}
             onComponentRef={() => {
@@ -47,7 +47,7 @@ describe('CP left nav drag', () => {
         // Mount component in order for ref and lifecycle methods to be called
         wrapper = mount(
           <Loader
-            proxies={[createStateProxy]}
+            proxies={[createStateProxy()]}
             component={ComponentPlayground}
             fixture={readyFixture}
             onComponentRef={() => {

@@ -9,9 +9,15 @@ jest.mock('react-cosmos-loader', () => ({
 
 jest.mock('../user-modules', () => ({
   default: jest.fn(() => ({
-    proxies: '__mock_proxies__',
-    components: '__mock_components__',
-    fixtures: '__mock_fixtures__'
+    proxies: { __esModule: true, default: '__PROXIES__' },
+    components: {
+      Foo: '__FOO_COMPONENT__',
+      Bar: { __esModule: true, default: '__BAR_COMPONENT__' }
+    },
+    fixtures: {
+      Foo: { foo: '__FOO_FIXTURE__' },
+      Bar: { bar: { __esModule: true, default: '__BAR_FIXTURE__' } }
+    }
   }))
 }));
 
@@ -26,15 +32,23 @@ test('starts loader', () => {
 });
 
 test('sends proxies to loader', () => {
-  expect(options.proxies).toBe('__mock_proxies__');
+  expect(options.proxies).toBe('__PROXIES__');
 });
 
-test('sends components to loader', () => {
-  expect(options.components).toBe('__mock_components__');
+test('sends CJS component to loader', () => {
+  expect(options.components.Foo).toBe('__FOO_COMPONENT__');
 });
 
-test('sends fixtures to loader', () => {
-  expect(options.fixtures).toBe('__mock_fixtures__');
+test('sends ES component to loader', () => {
+  expect(options.components.Bar).toBe('__BAR_COMPONENT__');
+});
+
+test('sends CJS fixture to loader', () => {
+  expect(options.fixtures.Foo.foo).toBe('__FOO_FIXTURE__');
+});
+
+test('sends ES fixture to loader', () => {
+  expect(options.fixtures.Bar.bar).toBe('__BAR_FIXTURE__');
 });
 
 test('sends containerQuerySelector to loader', () => {

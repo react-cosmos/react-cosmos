@@ -1,8 +1,12 @@
 import { createElement } from 'react';
 import { render } from 'react-dom';
-import createStateProxy from 'react-cosmos-state-proxy';
 import RemoteLoader from '../components/RemoteLoader';
 import { mount } from '../';
+
+const mockComponent = () => {};
+const mockFixture = {};
+const mockProxy = () => {};
+const mockStateProxy = () => {};
 
 jest.mock('react', () => ({
   Component: jest.fn(),
@@ -11,11 +15,7 @@ jest.mock('react', () => ({
 jest.mock('react-dom', () => ({
   render: jest.fn()
 }));
-jest.mock('react-cosmos-state-proxy', () => jest.fn());
-
-const mockComponent = () => {};
-const mockFixture = {};
-const mockProxy = () => {};
+jest.mock('react-cosmos-state-proxy', () => jest.fn(() => mockStateProxy));
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -48,7 +48,7 @@ describe('without container query selector', () => {
 
   it('appends state proxy', () => {
     const { proxies } = createElement.mock.calls[0][1];
-    expect(proxies).toContain(createStateProxy);
+    expect(proxies).toContain(mockStateProxy);
   });
 
   it('passes components to loader element', () => {
@@ -110,7 +110,7 @@ describe('with container query selector and class name', () => {
 
   it('appends state proxy', () => {
     const { proxies } = createElement.mock.calls[0][1];
-    expect(proxies).toContain(createStateProxy);
+    expect(proxies).toContain(mockStateProxy);
   });
 
   it('passes components to loader element', () => {

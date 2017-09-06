@@ -2,11 +2,12 @@ const cosmosConfigPath = '/mock/config/path';
 
 const mockComponentPaths = [];
 const mockFixturePaths = [];
+const proxiesPath = require.resolve('./mocks/cosmos.proxies');
 
 const mockGetCosmosConfig = jest.fn(() => ({
   componentPaths: mockComponentPaths,
   fixturePaths: mockFixturePaths,
-  proxies: ['proxy-module', './proxy-file']
+  proxiesPath
 }));
 
 jest.mock('react-cosmos-config', () => mockGetCosmosConfig);
@@ -98,7 +99,7 @@ test('injects proxies', () => {
   // eslint-disable-next-line no-eval
   const proxies = eval(`(${proxiesOutput.replace(/require/g, '__req')})`);
 
-  expect(proxies).toEqual(['__req(proxy-module)', '__req(./proxy-file)']);
+  expect(proxies).toEqual(`__req(${proxiesPath})`);
 });
 
 test('injects contexts', () => {

@@ -3,17 +3,13 @@ import { object, objectOf, func, arrayOf } from 'prop-types';
 import merge from 'lodash.merge';
 import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
 import createLinkedList from 'react-cosmos-utils/lib/linked-list';
-import importModule from 'react-cosmos-utils/lib/import-module';
-import importComponent from 'react-cosmos-utils/lib/import-component';
 import createModuleType from '../../utils/module-type';
 import PropsProxy from '../PropsProxy';
 
 const noope = () => {};
 
-const initProxy = proxy => importModule(proxy)();
-
 const createProxyLinkedList = userProxies =>
-  createLinkedList([...userProxies.map(initProxy), PropsProxy]);
+  createLinkedList([...userProxies, PropsProxy]);
 
 const noFixtureState = {
   component: null,
@@ -44,7 +40,7 @@ const getFixtureState = ({
   }
 
   const { unserializable, serializable } = splitUnserializableParts(
-    importModule(fixtures[component][fixture])
+    fixtures[component][fixture]
   );
 
   return {
@@ -225,7 +221,7 @@ class RemoteLoader extends Component {
       <firstProxy.value
         key={fixtureId}
         nextProxy={firstProxy.next()}
-        component={importComponent(components[component], component)}
+        component={components[component]}
         fixture={merge({}, unserializable, serializable)}
         onComponentRef={noope}
         onFixtureUpdate={this.onFixtureUpdate}
