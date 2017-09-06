@@ -226,7 +226,7 @@ Proxies have two parts:
 
 #### Where to put proxies?
 
-As soon as you're ready to add proxies to your Cosmos setup, create `cosmos.proxies.js` (next to cosmos.config.js) and export a list of proxies in the order they should load–from outermost to innermost. Here's an example with two standard proxies and a custom one:
+As soon as you're ready to add proxies to your Cosmos setup, create `cosmos.proxies.js` (next to cosmos.config.js) and export a list of proxies in the order they should load–from outermost to innermost. Here's an example where we mock the Fetch API and add Redux and React Router providers:
 
 ```js
 // cosmos.proxies.js
@@ -243,6 +243,7 @@ const ReduxProxy = createReduxProxy({
 
 // We ensure a specific proxy order
 export default [
+  // Not all proxies have options, and often relying on defaults is good enough
   createFetchProxy(),
   ReduxProxy,
   createRouterProxy()
