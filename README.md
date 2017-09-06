@@ -233,7 +233,7 @@ As soon as you're ready to add proxies to your Cosmos setup, create `cosmos.prox
 import createFetchProxy from 'react-cosmos-fetch-proxy';
 import createReduxProxy from 'react-cosmos-redux-proxy';
 import createRouterProxy from 'react-cosmos-router-proxy';
-// We can import app file here
+// We can import app files here
 import configureStore from './configureStore';
 
 // Read more about configuring Redux in the Redux proxy section below
