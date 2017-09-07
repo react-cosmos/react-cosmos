@@ -1,185 +1,72 @@
 import React from 'react';
-import merge from 'lodash.merge';
 import { shallow, mount } from 'enzyme';
-import { Loader } from 'react-cosmos-loader';
-import FixtureList from '../';
+import renderer from 'react-test-renderer';
+import FixtureList from '../index';
 import populatedFixture from '../__fixtures__/populated';
-import populatedWithEditorFixture from '../__fixtures__/populated-with-editor';
 import populatedAndSelectedFixture from '../__fixtures__/populated-and-selected';
 
-const shallowLoader = element =>
-  shallow(element)
-    .dive() // Loader
-    .dive(); // PropsProxy
+describe('Tree Fixtrue View', () => {
+  test('should load Tree with propulated items ', () => {
+    const list = renderer
+      .create(<FixtureList {...populatedFixture.props} />)
+      .toJSON();
+    expect(list).toMatchSnapshot();
+  });
 
-describe('List', () => {
-  let wrapper;
+  test('should load Tree with propulated items and selected path', () => {
+    const list = renderer
+      .create(<FixtureList {...populatedAndSelectedFixture.props} />)
+      .toJSON();
+    expect(list).toMatchSnapshot();
+  });
 
-  beforeEach(() => {
-    wrapper = shallowLoader(
-      <Loader component={FixtureList} fixture={populatedFixture} />
+  test.only('should have state set correctly', () => {
+    const wrapper = shallow(
+      <FixtureList {...populatedAndSelectedFixture.props} />
+    );
+    const instance = wrapper.instance();
+    expect(instance.state.selectedPath).toEqual('ComponentA/bar');
+    expect(instance.state.filteredFixtures).toEqual(
+      populatedAndSelectedFixture.fixtures
     );
   });
-
-  test('should render component names', () => {
-    const componentA = wrapper.find('.component').at(0);
-    expect(componentA.text()).toContain('ComponentA');
-
-    const componentB = wrapper.find('.component').at(1);
-    expect(componentB.text()).toContain('ComponentB');
-  });
-
-  test('should render fixture names', () => {
-    const componentA = wrapper.find('.component').at(0);
-    expect(componentA.find('.fixture').at(0).text()).toContain('foo');
-    expect(componentA.find('.fixture').at(1).text()).toContain('bar');
-
-    const componentB = wrapper.find('.component').at(1);
-    expect(componentB.find('.fixture').at(0).text()).toContain('baz');
-    expect(componentB.find('.fixture').at(1).text()).toContain('qux');
-  });
 });
 
-describe('Links', () => {
-  let wrapper;
-  let componentA;
-  let componentB;
+// describe('Select', () => {
+//   let wrapper;
+//   let onUrlChange;
 
-  describe('editor closed', () => {
-    beforeEach(() => {
-      wrapper = shallowLoader(
-        <Loader component={FixtureList} fixture={populatedFixture} />
-      );
-      componentA = wrapper.find('.component').at(0);
-      componentB = wrapper.find('.component').at(1);
-    });
+//   beforeEach(() => {
+//     onUrlChange = jest.fn();
+//     wrapper = shallow(<FixtureList {...populatedFixture.props} onUrlChange={onUrlChange} />);
+//   });
 
-    test('link 1', () => {
-      expect(componentA.find('.fixture').at(0).prop('href')).toEqual(
-        '?component=ComponentA&fixture=foo'
-      );
-    });
+//   test.only('should call select callback on click', () => {
+//     const leaf = wrapper.find('.isLeaf');
+//     leaf.simulate('click');
+//     expect(onUrlChange.mock.calls.length).toEqual(1);
+//     console.log(onUrlChange.mock.calls[0]);
+//   });
+// });
 
-    test('link 2', () => {
-      expect(componentA.find('.fixture').at(1).prop('href')).toEqual(
-        '?component=ComponentA&fixture=bar'
-      );
-    });
+// describe('Search', () => {
+//   let wrapper;
+//   let searchInput;
 
-    test('link 3', () => {
-      expect(componentB.find('.fixture').at(0).prop('href')).toEqual(
-        '?component=ComponentB&fixture=baz'
-      );
-    });
+//   beforeEach(() => {
+//     wrapper = mount(<FixtureList {...populatedFixture.props} />);
+//     searchInput = wrapper.find('.searchInput');
+//   });
 
-    test('link 4', () => {
-      expect(componentB.find('.fixture').at(1).prop('href')).toEqual(
-        '?component=ComponentB&fixture=qux'
-      );
-    });
-  });
-
-  describe('editor open', () => {
-    beforeEach(() => {
-      wrapper = shallowLoader(
-        <Loader component={FixtureList} fixture={populatedWithEditorFixture} />
-      );
-      componentA = wrapper.find('.component').at(0);
-      componentB = wrapper.find('.component').at(1);
-    });
-
-    test('link 1', () => {
-      expect(componentA.find('.fixture').at(0).prop('href')).toEqual(
-        '?editor=true&component=ComponentA&fixture=foo'
-      );
-    });
-
-    test('link 2', () => {
-      expect(componentA.find('.fixture').at(1).prop('href')).toEqual(
-        '?editor=true&component=ComponentA&fixture=bar'
-      );
-    });
-
-    test('link 3', () => {
-      expect(componentB.find('.fixture').at(0).prop('href')).toEqual(
-        '?editor=true&component=ComponentB&fixture=baz'
-      );
-    });
-
-    test('link 4', () => {
-      expect(componentB.find('.fixture').at(1).prop('href')).toEqual(
-        '?editor=true&component=ComponentB&fixture=qux'
-      );
-    });
-  });
-});
-
-describe('Select', () => {
-  let wrapper;
-  let onUrlChange;
-
-  beforeEach(() => {
-    onUrlChange = jest.fn();
-    const fixture = merge({}, populatedFixture, {
-      props: {
-        onUrlChange
-      }
-    });
-    wrapper = shallowLoader(
-      <Loader component={FixtureList} fixture={fixture} />
-    );
-  });
-
-  test('should call select callback on click', () => {
-    const componentA = wrapper.find('.component').at(0);
-    const fixtureFoo = componentA.find('.fixture').at(0);
-    fixtureFoo.simulate('click', {
-      preventDefault: jest.fn(),
-      currentTarget: {
-        href: fixtureFoo.prop('href')
-      }
-    });
-
-    expect(onUrlChange).toHaveBeenCalledWith(fixtureFoo.prop('href'));
-  });
-
-  test('should call select callback on click', () => {
-    const componentB = wrapper.find('.component').at(1);
-    const fixtureQux = componentB.find('.fixture').at(1);
-    fixtureQux.simulate('click', {
-      preventDefault: jest.fn(),
-      currentTarget: {
-        href: fixtureQux.prop('href')
-      }
-    });
-
-    expect(onUrlChange).toHaveBeenCalledWith(fixtureQux.prop('href'));
-  });
-});
-
-describe('Search', () => {
-  let wrapper;
-
-  beforeEach(() => {
-    wrapper = shallowLoader(
-      <Loader component={FixtureList} fixture={populatedFixture} />
-    );
-  });
-
-  test('should only show matched component', () => {
-    const searchInput = wrapper.find('.searchInput');
-    searchInput.simulate('change', { target: { value: 'ux' } });
-
-    // This is a mouthful, but we want to ensure that only ComponentB/qux
-    // is visible
-    const components = wrapper.find('.component');
-    const fixtures = wrapper.find('.fixture');
-    expect(components).toHaveLength(1);
-    expect(fixtures).toHaveLength(1);
-    expect(components.at(0).text()).toContain('ComponentB');
-    expect(fixtures.at(0).text()).toContain('qux');
-  });
-});
+//   test('should only show matched component', () => {
+//     searchInput.simulate('change', { target: { value: 'ux' } });
+//     const instance = wrapper.instance();
+//     expect(instance.state.searchText).toEqal('ux');
+//     expect(instance.state.filteredFixtures).toEqal({
+//       ComponentB: ['qux']
+//     });
+//   });
+// });
 
 describe('Search input keyboard shortcut', () => {
   let wrapper;
@@ -191,20 +78,8 @@ describe('Search input keyboard shortcut', () => {
   };
 
   beforeEach(() => {
-    const waitToRender = new Promise(resolve => {
-      // Mount component in order to be able to access DOM nodes
-      wrapper = mount(
-        <Loader
-          component={FixtureList}
-          fixture={populatedFixture}
-          onComponentRef={i => {
-            instance = i;
-            resolve();
-          }}
-        />
-      );
-    });
-    return waitToRender;
+    wrapper = mount(<FixtureList {...populatedFixture.props} />);
+    instance = wrapper.instance();
   });
 
   describe('on `s` key', () => {
@@ -237,20 +112,5 @@ describe('Search input keyboard shortcut', () => {
     test('should clear input', () => {
       expect(searchInput.prop('value')).toBe('');
     });
-  });
-});
-
-describe('Selected fixture', () => {
-  let wrapper;
-
-  beforeEach(() => {
-    wrapper = shallowLoader(
-      <Loader component={FixtureList} fixture={populatedAndSelectedFixture} />
-    );
-  });
-
-  test('should add extra class to selected fixture', () => {
-    expect(wrapper.find('.fixtureSelected').length).toEqual(1);
-    expect(wrapper.find('.fixtureSelected').text()).toContain('bar');
   });
 });
