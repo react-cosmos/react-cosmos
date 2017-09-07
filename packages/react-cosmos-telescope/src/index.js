@@ -1,6 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import createStateProxy from 'react-cosmos-state-proxy';
+import moduleExists from 'react-cosmos-utils/lib/module-exists';
 import importModule from 'react-cosmos-utils/lib/import-module';
 import getCosmosConfig from 'react-cosmos-config';
 import getFilePaths from 'react-cosmos-voyager';
@@ -12,15 +13,18 @@ const importFileTree = filePaths =>
   keys(filePaths).reduce((acc, name) => {
     return {
       ...acc,
-      [name]: require(filePaths[name])
+      [name]: importModule(require(filePaths[name]))
     };
   }, {});
 
 export default ({ cosmosConfigPath } = {}) => {
   const cosmosConfig = getCosmosConfig(cosmosConfigPath);
   const filePaths = getFilePaths(cosmosConfig);
+  const { proxiesPath } = cosmosConfig;
 
-  const proxies = cosmosConfig.proxies.map(require).map(importModule);
+  const proxies = moduleExists(proxiesPath)
+    ? importModule(require(proxiesPath))
+    : [];
   const components = importFileTree(filePaths.components);
   const fixtures = keys(filePaths.fixtures).reduce((acc, component) => {
     return {
