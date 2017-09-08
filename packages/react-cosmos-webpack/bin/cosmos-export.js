@@ -1,11 +1,8 @@
 #!/usr/bin/env node
 
-const {
-  default: moduleExists
-} = require('react-cosmos-utils/lib/module-exists');
-const {
-  default: resolveUserPath
-} = require('react-cosmos-utils/lib/resolve-user-path');
+const moduleExists = require('react-cosmos-utils/lib/module-exists').default;
+const resolveUserPath = require('react-cosmos-utils/lib/resolve-user-path')
+  .default;
 const argv = require('yargs').argv;
 
 // Babel is included by default, but --plain will run only on Node features
