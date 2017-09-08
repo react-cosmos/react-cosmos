@@ -1,0 +1,16 @@
+{
+  "name": "react-cosmos-localstorage-example",
+  "version": "2.0.0-beta.27",
+  "description": "Example of mocking the localstorage API",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/localstorage",
+  "license": "MIT",
+  "scripts": {
+    "start": "NODE_ENV=development cosmos"
+  },
+  "dependencies": {
+    "react-cosmos-localstorage-proxy": "^2.0.0-beta.25",
+    "react-cosmos-webpack": "^2.0.0-beta.27"
+  },
+  "xo": false,
+  "private": true
+}
