@@ -33,6 +33,15 @@ const getFilteredFixtures = (fixtures, searchText) => {
   }, {});
 };
 
+const isExistingFixtureSelected = (fixtures, component, fixture) => {
+  return (
+    component &&
+    fixture &&
+    fixtures[component] &&
+    fixtures[component].indexOf(fixture) !== -1
+  );
+};
+
 export default class FixtureList extends Component {
   state = {
     searchText: ''
@@ -40,6 +49,17 @@ export default class FixtureList extends Component {
 
   componentDidMount() {
     window.addEventListener('keydown', this.onWindowKey);
+    const { fixtures, urlParams: { component, fixture } } = this.props;
+
+    if (isExistingFixtureSelected(fixtures, component, fixture)) {
+      const node = this.refs[`componentName-${component}`];
+      // scrollIntoView doesn't seem to exist in Jest/jsdom
+      if (node.scrollIntoView) {
+        node.scrollIntoView({
+          behavior: 'smooth'
+        });
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -99,7 +119,10 @@ export default class FixtureList extends Component {
           {components.map((component, i) => {
             return (
               <div key={i} className={styles.component}>
-                <div className={styles.componentName}>
+                <div
+                  ref={`componentName-${component}`}
+                  className={styles.componentName}
+                >
                   <FolderIcon />
                   <span>
                     {component}
