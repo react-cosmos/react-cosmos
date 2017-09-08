@@ -90,3 +90,19 @@ describe('next proxy', () => {
 test('injects fixture data into global localStorage', () => {
   expect(localStorage.getItem('userToken')).toBe('foo-token');
 });
+
+test('updates fixture state on local storage setItem', () => {
+  localStorage.setItem('userToken', 'bar-token');
+  expect(onFixtureUpdate).toHaveBeenCalledWith({
+    localStorage: {
+      userToken: 'bar-token'
+    }
+  });
+});
+
+test('updates fixture state on local storage removeItem', () => {
+  localStorage.removeItem('userToken');
+  expect(onFixtureUpdate).toHaveBeenCalledWith({
+    localStorage: {}
+  });
+});

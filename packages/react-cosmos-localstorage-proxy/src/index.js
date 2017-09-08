@@ -11,8 +11,9 @@ export default function createLocalStorageProxy(options) {
   // Mocking localStorage completely ensures no conflict with existing browser
   // data and works in test environments like Jest
   class LocalStorageMock {
-    constructor(store) {
+    constructor(store, onUpdate) {
       this.store = store;
+      this.onUpdate = onUpdate;
     }
     clear() {
       this.store = {};
@@ -22,9 +23,11 @@ export default function createLocalStorageProxy(options) {
     }
     setItem(key, value) {
       this.store[key] = value.toString();
+      this.onUpdate(this.store);
     }
     removeItem(key) {
       delete this.store[key];
+      this.onUpdate(this.store);
     }
   }
 
@@ -37,7 +40,9 @@ export default function createLocalStorageProxy(options) {
         this._localStorage = global.localStorage;
         Object.defineProperty(global, 'localStorage', {
           writable: true,
-          value: new LocalStorageMock(mock)
+          value: new LocalStorageMock(mock, updatedStore => {
+            this.props.onFixtureUpdate({ localStorage: updatedStore });
+          })
         });
       }
     }
