@@ -68,6 +68,7 @@ Jump to:
   - [React Router](#react-router)
   - [Fetch](#fetch)
   - [XHR](#xhr)
+  - [LocalStorage](#localstorage)
 - [Integration with popular tools](#integration-with-popular-tools)
   - [Create React App](#create-react-app)
   - [Next.js](#nextjs)
@@ -258,6 +259,7 @@ Jump to:
 - [React Router](#react-router)
 - [Fetch](#fetch)
 - [XHR](#xhr)
+- [LocalStorage](#localstorage)
 
 #### Context
 
@@ -462,6 +464,36 @@ export default {
 ```
 
 Built on top of [xhr-proxy](https://github.com/jameslnewell/xhr-mock). Check out the [Axios example](examples/axios) to see the proxy in action.
+
+#### LocalStorage
+
+Overrides the global localStorage API with a replica mock.
+
+Mocking localStorage completely ensures no conflict with existing browser data
+and works in test environments like Jest.
+
+##### Configuration
+
+```js
+// cosmos.proxies.js
+import createLocalStorageProxy from 'react-cosmos-localstorage-proxy';
+
+export default [
+  createLocalStorageProxy(),
+  // ...other proxies
+]
+```
+
+##### Activation
+
+```js
+// __fixtures__/example.js
+export default {
+  localStorage: {
+    userToken: 'foobar-token'
+  }
+};
+```
 
 *What proxy would you create to improve DX?*
 
