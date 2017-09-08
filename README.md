@@ -124,7 +124,7 @@ Run `npm run cosmos` or `yarn cosmos` and go to [localhost:8989](http://localhos
 
 #### What's a fixture?
 
-A fixture a JS object used to mock component input and external dependencies. The input can be [props](#props), [children](#children), [state](#state) and [context](#context). With the help of [proxies](#proxies), fixtures can mock anything else a component depends on, from API responses to localStorage to window size.
+A fixture a JS object used to mock component input and external dependencies. The input can be [props](#props), [children](#children), [state](#state) and [context](#context). With the help of [proxies](#proxies), fixtures can mock anything else a component depends on, from API responses to localStorage.
 
 ```js
 export default {
@@ -469,8 +469,7 @@ Built on top of [xhr-proxy](https://github.com/jameslnewell/xhr-mock). Check out
 
 Overrides the global localStorage API with a replica mock.
 
-Mocking localStorage completely ensures no conflict with existing browser data
-and works in test environments like Jest.
+Mocking localStorage prevents conflicts with existing browser data and enables the localStorage API in test environments like Jest.
 
 ##### Configuration
 
