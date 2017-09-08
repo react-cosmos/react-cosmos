@@ -1,35 +1,44 @@
 import React, { Component } from 'react';
 import proxyPropTypes from 'react-cosmos-utils/lib/proxy-prop-types';
 
+// Mocking localStorage completely ensures no conflict with existing browser
+// data and works in test environments like Jest
+class LocalStorageMock {
+  constructor(store, onUpdate) {
+    this.store = store;
+    this.onUpdate = onUpdate;
+  }
+
+  clear() {
+    this.store = {};
+    this.update();
+  }
+
+  getItem(key) {
+    return this.store[key] || null;
+  }
+
+  setItem(key, value) {
+    this.store[key] = value.toString();
+    this.update();
+  }
+
+  removeItem(key) {
+    delete this.store[key];
+    this.update();
+  }
+
+  update() {
+    this.onUpdate(this.store);
+  }
+}
+
 const defaults = {
   fixtureKey: 'localStorage'
 };
 
 export default function createLocalStorageProxy(options) {
   const { fixtureKey } = { ...defaults, ...options };
-
-  // Mocking localStorage completely ensures no conflict with existing browser
-  // data and works in test environments like Jest
-  class LocalStorageMock {
-    constructor(store, onUpdate) {
-      this.store = store;
-      this.onUpdate = onUpdate;
-    }
-    clear() {
-      this.store = {};
-    }
-    getItem(key) {
-      return this.store[key] || null;
-    }
-    setItem(key, value) {
-      this.store[key] = value.toString();
-      this.onUpdate(this.store);
-    }
-    removeItem(key) {
-      delete this.store[key];
-      this.onUpdate(this.store);
-    }
-  }
 
   class LocalStorageProxy extends Component {
     constructor(props) {

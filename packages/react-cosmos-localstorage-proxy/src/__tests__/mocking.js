@@ -106,3 +106,10 @@ test('updates fixture state on local storage removeItem', () => {
     localStorage: {}
   });
 });
+
+test('updates fixture state on local storage clear', () => {
+  localStorage.clear();
+  expect(onFixtureUpdate).toHaveBeenCalledWith({
+    localStorage: {}
+  });
+});
