@@ -8,6 +8,9 @@
     "lib"
   ],
   "main": "lib/index.js",
+  "scripts": {
+    "cosmos": "NODE_ENV=development cosmos"
+  },
   "devDependencies": {
     "@skidding/react-codemirror": "^1.0.1",
     "classnames": "^2.2.5",
@@ -21,8 +24,10 @@
     "react": "^15.5.4",
     "react-cosmos-loader": "^2.0.0-beta.25",
     "react-cosmos-state-proxy": "^2.0.0-beta.24",
+    "react-cosmos-webpack": "^2.0.0-beta.25",
     "react-dom": "^15.5.4",
-    "react-querystring-router": "^2.0.0-beta.23"
+    "react-querystring-router": "^2.0.0-beta.23",
+    "react-test-renderer": "^15.6.1"
   },
   "xo": false
 }

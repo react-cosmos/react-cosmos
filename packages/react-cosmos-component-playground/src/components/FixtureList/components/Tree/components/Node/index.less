@@ -1,0 +1,65 @@
+@import '../../../../../../utils/common.less';
+
+@fixture-line-height: 1.5;
+@left-nav-leaf-color: #c1c1c1;
+@fixture-component-font-size: 14px;
+
+.node {
+  margin-left: -10px;
+}
+
+.node button {
+  border: none;
+  background: transparent;
+  outline: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.nodeNameContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  height: 25px;
+  width: 100%;
+
+  &.active {
+    background: @left-nav-bgcolor-selected;
+  }
+
+  &.isLeaf .nodeName {
+    color: @left-nav-leaf-color;
+  }
+  &.isNode .nodeName {
+    color: @left-nav-color;
+  }
+  &:hover .nodeName {
+    color: @left-nav-color-selected;
+  }
+  &.active .nodeName  {
+    color: @left-nav-color-selected;
+  }
+ 
+}
+.nodeArrow {
+  width: 10px;
+  padding-bottom: 5px;
+}
+.nodeIcon {
+  width: 30px;
+  padding: 0 5px;
+}
+.nodeName {
+  flex: 1;
+  font-size: @fixture-component-font-size;
+  line-height: @fixture-line-height;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 10em;
+}
+
+.nodeChildren {
+  padding-left: 20px;
+}
