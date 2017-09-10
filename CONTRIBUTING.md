@@ -6,6 +6,7 @@ Jump to:
 
 - [Mission](#mission)
 - [Goals](#goals)
+- [Roadmap](#roadmap)
 - [Tracking](#tracking)
 - [Architecture](#architecture)
   - [Monorepo](#monorepo)
@@ -31,13 +32,22 @@ All contributions should be in line with these long term goals. Contributions th
 
 - [#UniversalComponentPlayground](https://github.com/react-cosmos/react-cosmos/labels/%23UniversalComponentPlayground) Abstract the core from the React loader and allow other rendering engines to plug into Cosmos.
 
+## Roadmap
+
+High impact initiatives. By working on these exciting topics, you have the opportunity to make a significant project contribution and radically advance the Cosmos mission.
+
+> Warning: These are high-level tasks and they require further analysis and collaboration before they can be turned into concrete tasks
+
+- [Redesign filesystem API](https://github.com/react-cosmos/react-cosmos/issues/440)
+- [Create Cosmos server](https://github.com/react-cosmos/react-cosmos/pull/383#issuecomment-328297128)
+
 ## Tracking
 
 [Projects](https://github.com/react-cosmos/react-cosmos/projects) are used to track large releases. [Issues](https://github.com/react-cosmos/react-cosmos/issues) are used for everything else.
 
 #### Issue labels
 
-Issues are first categorised as one of the following:
+Issues are first categorized as one of the following:
 - `hmm` Questions and support
 - `oops` Bugs
 - `i have a dream` Feature proposals
@@ -47,7 +57,7 @@ Once a draft progresses, it will go through the following phases:
 - `free for all` Can be picked up by anyone
 - `on it` Work in progress
 
-There's also a label for each long term goal.
+There's also a label for each [long term goal](#goals).
 
 ## Architecture
 
