@@ -71,6 +71,7 @@ Jump to:
 - [Integration with popular tools](#integration-with-popular-tools)
   - [Create React App](#create-react-app)
   - [Next.js](#nextjs)
+  - [React Boilerplate](#react-boilerplate)
   - [React Redux Starter Kit](#react-redux-starter-kit)
 - [Configuration](#configuration)
   - [Loader index.html](#loader-indexhtml)
@@ -521,6 +522,19 @@ Also make sure to:
 ```
 
 *Next.js + Cosmos example: [Illustrated Algorithms](https://github.com/skidding/illustrated-algorithms)*
+
+#### React Boilerplate
+
+The current version of React Boilerplate (v3.4) requires [some tweaking](https://github.com/react-cosmos/react-cosmos/issues/296) to work with Cosmos. A PR has [landed](https://github.com/react-boilerplate/react-boilerplate/pull/1849), however, which makes the integration with [upcoming](https://github.com/react-boilerplate/react-boilerplate/tree/dev) v3.5 as simple as this:
+
+```js
+// cosmos.config.js
+module.exports = {
+  componentPaths: ['app/components'],
+  ignore: ['tests', 'messages', /.+Styles/],
+  webpackConfigPath: './internals/webpack/webpack.dev.babel',
+};
+```
 
 #### React Redux Starter Kit
 
