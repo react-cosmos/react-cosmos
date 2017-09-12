@@ -71,6 +71,7 @@ Jump to:
 - [Integration with popular tools](#integration-with-popular-tools)
   - [Create React App](#create-react-app)
   - [Next.js](#nextjs)
+  - [React Boilerplate](#react-boilerplate)
   - [React Redux Starter Kit](#react-redux-starter-kit)
 - [Configuration](#configuration)
   - [Loader index.html](#loader-indexhtml)
@@ -110,6 +111,13 @@ Add script to package.json
 ```
 
 Run `npm run cosmos` or `yarn cosmos` and go to [localhost:8989](http://localhost:8989) 🎉
+
+> If you rely on the default webpack config, make sure to install the Babel and webpack plugins yourself. Depending on your needs, you'll probably want `babel-preset-env babel-preset-react babel-loader style-loader css-loader html-webpack-plugin`. Finally, add `.babelrc` to your project root.
+> ```
+> {
+>   "presets": ["env", "react"]
+> }
+> ```
 
 #### Next steps
 
@@ -514,6 +522,19 @@ Also make sure to:
 ```
 
 *Next.js + Cosmos example: [Illustrated Algorithms](https://github.com/skidding/illustrated-algorithms)*
+
+#### React Boilerplate
+
+The current version of React Boilerplate (v3.4) requires [some tweaking](https://github.com/react-cosmos/react-cosmos/issues/296) to work with Cosmos. A PR has [landed](https://github.com/react-boilerplate/react-boilerplate/pull/1849), however, which makes the integration with [upcoming](https://github.com/react-boilerplate/react-boilerplate/tree/dev) v3.5 as simple as this:
+
+```js
+// cosmos.config.js
+module.exports = {
+  componentPaths: ['app/components'],
+  ignore: ['tests', 'messages', /.+Styles/],
+  webpackConfigPath: './internals/webpack/webpack.dev.babel',
+};
+```
 
 #### React Redux Starter Kit
 
