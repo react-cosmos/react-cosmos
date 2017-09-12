@@ -68,6 +68,7 @@ Jump to:
   - [React Router](#react-router)
   - [Fetch](#fetch)
   - [XHR](#xhr)
+  - [LocalStorage](#localstorage)
 - [Integration with popular tools](#integration-with-popular-tools)
   - [Create React App](#create-react-app)
   - [Next.js](#nextjs)
@@ -131,7 +132,7 @@ Run `npm run cosmos` or `yarn cosmos` and go to [localhost:8989](http://localhos
 
 #### What's a fixture?
 
-A fixture a JS object used to mock component input and external dependencies. The input can be [props](#props), [children](#children), [state](#state) and [context](#context). With the help of [proxies](#proxies), fixtures can mock anything else a component depends on, from API responses to localStorage to window size.
+A fixture is a JS object used to mock component input and external dependencies. The input can be [props](#props), [children](#children), [state](#state) and [context](#context). With the help of [proxies](#proxies), fixtures can mock anything else a component depends on, from API responses to localStorage.
 
 ```js
 export default {
@@ -266,6 +267,7 @@ Jump to:
 - [React Router](#react-router)
 - [Fetch](#fetch)
 - [XHR](#xhr)
+- [LocalStorage](#localstorage)
 
 #### Context
 
@@ -470,6 +472,35 @@ export default {
 ```
 
 Built on top of [xhr-proxy](https://github.com/jameslnewell/xhr-mock). Check out the [Axios example](examples/axios) to see the proxy in action.
+
+#### LocalStorage
+
+Overrides the global localStorage API with a replica mock.
+
+Mocking localStorage prevents conflicts with existing browser data and enables the localStorage API in test environments like Jest.
+
+##### Configuration
+
+```js
+// cosmos.proxies.js
+import createLocalStorageProxy from 'react-cosmos-localstorage-proxy';
+
+export default [
+  createLocalStorageProxy(),
+  // ...other proxies
+]
+```
+
+##### Activation
+
+```js
+// __fixtures__/example.js
+export default {
+  localStorage: {
+    userToken: 'foobar-token'
+  }
+};
+```
 
 *What proxy would you create to improve DX?*
 
