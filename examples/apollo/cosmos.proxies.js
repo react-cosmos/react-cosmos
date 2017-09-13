@@ -12,8 +12,9 @@ const mocks = {
   })
 };
 
-export default () =>
+export default [
   createApolloProxy({
     typeDefs,
     mocks
-  });
+  })
+];
