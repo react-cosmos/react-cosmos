@@ -66,7 +66,7 @@ Jump to:
   - [Context](#context)
   - [Redux](#redux)
   - [React Router](#react-router)
-  - [Apollo](#apollo)
+  - [React Apollo (GraphQL)](#react-apollo-graphql)
   - [Fetch](#fetch)
   - [XHR](#xhr)
   - [LocalStorage](#localstorage)
@@ -266,6 +266,7 @@ Jump to:
 - [Context](#context)
 - [Redux](#redux)
 - [React Router](#react-router)
+- [React Apollo (GraphQL)](#react-apollo-graphql)
 - [Fetch](#fetch)
 - [XHR](#xhr)
 - [LocalStorage](#localstorage)
@@ -382,6 +383,48 @@ export default {
 ```
 
 Check out the [React Router example](examples/react-router) to see the proxy in action.
+
+#### React Apollo (GraphQL)
+
+If you use the [React integration](http://dev.apollodata.com/react/) of [Apollo Client](http://dev.apollodata.com/) to provide data in your app, you may want to provide mocks for isolated UI testing with GraphQL.
+Your components wrapped with the `graphql` higher-order component provided by `react-apollo` depends on the `ApolloProvider` defined at the top-level of your app. This proxy does that for you!
+
+##### Configuration
+
+Provide:
+- GraphQL type definitions
+- A [Mock object like you would with `graphql-tools`](http://dev.apollodata.com/tools/graphql-tools/mocking.html)
+
+```js
+// cosmos.proxies.js
+import createApolloProxy from 'react-cosmos-apollo-proxy';
+
+const typeDefs = `
+  type Query {
+    hello(who: String): String
+  }
+`;
+
+const mocks = {
+  Query: () => ({
+    hello: (root, { who }) => `Hello ${who ? who : 'C O S M O S'}`,
+  }),
+};
+
+export default [
+  createApolloProxy({
+    typeDefs,
+    mocks,
+  }),
+  // ...other proxies
+];
+```
+
+##### Activation
+
+It's activated out of the box!
+
+Check out the [Apollo example](examples/apollo) to see `react-cosmos-apollo-proxy` in action.
 
 #### Fetch
 
