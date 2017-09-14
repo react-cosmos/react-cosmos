@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "react-apollo": "^1.4.15",
-    "react-cosmos-utils": "^2.0.0-beta.28",
+    "react-cosmos-utils": "^2.0.0-beta.24",
     "react-cosmos-apollo-proxy": "^2.0.0-beta.28",
     "react-cosmos-webpack": "^2.0.0-beta.28"
   },
