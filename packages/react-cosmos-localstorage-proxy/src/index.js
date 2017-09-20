@@ -4,8 +4,8 @@ import proxyPropTypes from 'react-cosmos-utils/lib/proxy-prop-types';
 // Mocking localStorage completely ensures no conflict with existing browser
 // data and works in test environments like Jest
 class LocalStorageMock {
-  constructor(store, onUpdate) {
-    this.store = store;
+  constructor(store = {}, onUpdate) {
+    this.store = { ...store };
     this.onUpdate = onUpdate;
   }
 
