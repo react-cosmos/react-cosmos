@@ -1,0 +1,82 @@
+@import '../../utils/common.less';
+
+@fixture-line-height: 30px;
+@fixture-component-font-size: 16px;
+
+.component {
+}
+
+.componentName {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  height: @fixture-line-height + @default-spacing;
+  margin: 0;
+  padding: 0;
+  color: @left-nav-color-selected;
+  font-size: @fixture-component-font-size;
+  line-height: @fixture-line-height;
+  cursor: default;
+
+  svg {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    fill: @left-nav-color-selected;
+    margin-right: 0.5 * @default-spacing;
+  }
+
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &:hover {
+    background: @left-nav-bgcolor-selected;
+  }
+}
+
+.fixture {
+  display: block;
+  height: @fixture-line-height;
+  padding: 0 @default-spacing;
+  color: @left-nav-color;
+  line-height: @fixture-line-height;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover {
+    background: @left-nav-bgcolor-selected;
+  }
+}
+
+.fixtureSelected {
+  background: @left-nav-bgcolor-selected;
+  color: @left-nav-color-selected;
+}
+
+.arrowRight {
+  width: 12px;
+  height: 0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 6px solid white;
+  margin-right: 0.5 * @default-spacing;
+}
+
+.arrowDown {
+  width: 12px;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid white;
+  margin-right: 0.5 * @default-spacing;
+}
+
+.searchHighlight {
+  background-color: #fdfd96;
+}

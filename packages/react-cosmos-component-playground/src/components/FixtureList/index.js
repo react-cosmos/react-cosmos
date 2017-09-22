@@ -5,33 +5,12 @@ import classNames from 'classnames';
 import { uri } from 'react-querystring-router';
 import { FolderIcon, SearchIcon } from '../SvgIcon';
 import styles from './index.less';
+import fixturesToTreeData from './dataMapper';
+import * as filters from './filter';
+import TreeRenderer from '../TreeRenderer';
 
 const KEY_S = 83;
 const KEY_ESC = 27;
-
-const getFilteredFixtures = (fixtures, searchText) => {
-  if (searchText.length < 2) {
-    return fixtures;
-  }
-
-  const components = Object.keys(fixtures);
-
-  return components.reduce((acc, componentName) => {
-    const matchingFixtures = fixtures[componentName].filter(
-      fixtureName =>
-        match(`${componentName}${fixtureName}`, searchText).length !== 0
-    );
-
-    // Do not render the component if it has no matching fixtures
-    if (matchingFixtures.length === 0) {
-      return acc;
-    }
-
-    acc[componentName] = matchingFixtures;
-
-    return acc;
-  }, {});
-};
 
 const isExistingFixtureSelected = (fixtures, component, fixture) => {
   return (
@@ -42,10 +21,16 @@ const isExistingFixtureSelected = (fixtures, component, fixture) => {
   );
 };
 
-export default class FixtureList extends Component {
-  state = {
-    searchText: ''
-  };
+export default class FixtureList extends React.Component {
+  constructor(props) {
+    super(props);
+    const treeViewData = fixturesToTreeData(props.fixtures);
+    this.state = {
+      searchText: '',
+      originalData: treeViewData,
+      filteredData: treeViewData
+    };
+  }
 
   componentDidMount() {
     window.addEventListener('keydown', this.onWindowKey);
@@ -84,23 +69,35 @@ export default class FixtureList extends Component {
   };
 
   onChange = e => {
-    this.setState({
-      searchText: e.target.value
-    });
+    const { originalData } = this.state;
+    const searchText = e.target.value.trim();
+    if (!searchText) this.setState({ filteredData: originalData });
+    const filteredData = filters.filterTree(originalData, searchText);
+    this.setState({ filteredData, searchText });
   };
 
-  onFixtureClick = e => {
-    e.preventDefault();
-
-    this.props.onUrlChange(e.currentTarget.href);
+  onSelect = (node, expanded) => {
+    const { urlParams } = this.props;
+    let nextUrlParams = {
+      ...urlParams,
+      component: node.component
+    };
+    if (node.children) {
+      // Mutates state. The world won't explode, just be aware. Hugely simplifies things.
+      node.expanded = expanded;
+      // In case you want to select a folder, I think that feature is coming?
+      delete nextUrlParams['fixture'];
+    } else {
+      nextUrlParams.fixture = node.name;
+    }
+    const href = uri.stringifyParams(nextUrlParams);
+    this.props.onUrlChange(href);
+    this.forceUpdate();
   };
 
   render() {
-    const { fixtures, urlParams } = this.props;
-    const { searchText } = this.state;
-    const filteredFixtures = getFilteredFixtures(fixtures, searchText);
-    const components = Object.keys(filteredFixtures);
-
+    const { urlParams } = this.props;
+    const { filteredData, searchText } = this.state;
     return (
       <div className={styles.root}>
         <div className={styles.searchInputContainer}>
@@ -116,46 +113,15 @@ export default class FixtureList extends Component {
           <SearchIcon />
         </div>
         <div className={styles.list}>
-          {components.map((component, i) => {
-            return (
-              <div key={i} className={styles.component}>
-                <div
-                  ref={`componentName-${component}`}
-                  className={styles.componentName}
-                >
-                  <FolderIcon />
-                  <span>
-                    {component}
-                  </span>
-                </div>
-                <div>
-                  {filteredFixtures[component].map((fixture, j) => {
-                    const fixtureClassNames = classNames(styles.fixture, {
-                      [styles.fixtureSelected]:
-                        component === urlParams.component &&
-                        fixture === urlParams.fixture
-                    });
-                    const nextUrlParams = {
-                      ...urlParams,
-                      component,
-                      fixture
-                    };
-
-                    return (
-                      <a
-                        key={j}
-                        className={fixtureClassNames}
-                        href={uri.stringifyParams(nextUrlParams)}
-                        onClick={this.onFixtureClick}
-                      >
-                        {fixture}
-                      </a>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
+          <TreeRenderer
+            nodeArray={filteredData}
+            onSelect={this.onSelect}
+            searchText={searchText}
+            selected={{
+              component: urlParams.component,
+              fixture: urlParams.fixture
+            }}
+          />
         </div>
       </div>
     );
