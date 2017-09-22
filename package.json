@@ -38,7 +38,7 @@
     "child-process-promise": "^2.2.0",
     "coveralls": "^2.13.1",
     "css-loader": "^0.28.5",
-    "cypress-cli": "^0.13.1",
+    "cypress-cli": "^0.14.0",
     "enzyme": "^2.9.1",
     "eslint-config-xo-react": "^0.13.0",
     "eslint-import-resolver-webpack": "^0.8.3",
@@ -49,10 +49,10 @@
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^21.1.0",
-    "lerna": "^2.1.0",
+    "lerna": "^2.2.0",
     "less": "^2.7.1",
     "less-loader": "^4.0.5",
-    "lint-staged": "^4.0.4",
+    "lint-staged": "^4.2.1",
     "prettier": "^1.5.3",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
@@ -62,9 +62,9 @@
     "style-loader": "^0.18.2",
     "traverse": "^0.6.6",
     "url-loader": "^0.5.9",
-    "webpack": "^3.5.5",
+    "webpack": "^3.6.0",
     "xo": "^0.18.2",
-    "yargs": "^8.0.2"
+    "yargs": "^9.0.1"
   },
   "xo": {
     "space": true,
