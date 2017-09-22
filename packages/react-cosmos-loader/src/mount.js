@@ -4,6 +4,8 @@ import RemoteLoader from './components/RemoteLoader';
 import createStateProxy from 'react-cosmos-state-proxy';
 
 let domContainer;
+let loaderRef;
+let prevState;
 
 const createDomContainer = () => {
   if (!domContainer) {
@@ -26,6 +28,10 @@ export function mount({
 
   render(
     <RemoteLoader
+      ref={ref => {
+        loaderRef = ref;
+      }}
+      initialState={prevState}
       components={components}
       fixtures={fixtures}
       proxies={[
@@ -40,6 +46,10 @@ export function mount({
 
 export function unmount() {
   if (domContainer) {
+    if (loaderRef) {
+      prevState = loaderRef.state;
+    }
+
     unmountComponentAtNode(domContainer);
   }
 }

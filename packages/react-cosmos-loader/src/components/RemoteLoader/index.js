@@ -69,24 +69,24 @@ class RemoteLoader extends Component {
    * It both receives fixture changes from parent frame and sends fixture
    * updates bubbled up from proxy chain (due to state changes) to parent frame.
    */
-  state = noFixtureState;
-
   constructor(props) {
     super(props);
 
+    this.state = props.initialState || noFixtureState;
     this.firstProxy = createProxyLinkedList(props.proxies);
   }
 
   componentDidMount() {
     window.addEventListener('message', this.onMessage, false);
 
-    // Let parent know loader is ready to render, along with the initial
-    // fixture list (which might update later due to HMR)
-    const { fixtures } = this.props;
-    postMessageToParent({
-      type: 'loaderReady',
-      fixtures: extractFixtureNames(fixtures)
-    });
+    if (!this.props.initialState) {
+      // Let parent know loader is ready to render, along with the initial
+      // fixture list (which might update later due to HMR)
+      postMessageToParent({
+        type: 'loaderReady',
+        fixtures: extractFixtureNames(this.props.fixtures)
+      });
+    }
   }
 
   componentWillReceiveProps({ proxies, fixtures }) {
@@ -231,6 +231,7 @@ class RemoteLoader extends Component {
 }
 
 RemoteLoader.propTypes = {
+  initialState: object,
   components: objectOf(createModuleType(func)).isRequired,
   fixtures: objectOf(objectOf(createModuleType(object))).isRequired,
   proxies: arrayOf(createModuleType(func))
