@@ -1,13 +1,5 @@
-import React, { Component } from 'react';
-import {
-  objectOf,
-  arrayOf,
-  shape,
-  number,
-  string,
-  func,
-  bool
-} from 'prop-types';
+import React from 'react';
+import { arrayOf, shape, number, string, func, bool } from 'prop-types';
 import { FolderIcon } from '../SvgIcon';
 import Highlighter from 'react-highlight-words';
 import styles from './index.less';
@@ -91,7 +83,7 @@ const TreeRenderer = ({
   return (
     <div>
       {nodeArray.map(node => {
-        if (node.children)
+        if (node.children) {
           return (
             <TreeFolder
               node={node}
@@ -101,16 +93,16 @@ const TreeRenderer = ({
               searchText={searchText}
             />
           );
-        else
-          return (
-            <TreeItem
-              node={node}
-              onSelect={onSelect}
-              selected={selected}
-              nestingLevel={nestingLevel}
-              searchText={searchText}
-            />
-          );
+        }
+        return (
+          <TreeItem
+            node={node}
+            onSelect={onSelect}
+            selected={selected}
+            nestingLevel={nestingLevel}
+            searchText={searchText}
+          />
+        );
       })}
     </div>
   );

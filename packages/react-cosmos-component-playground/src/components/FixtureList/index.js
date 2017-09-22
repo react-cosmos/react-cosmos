@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { objectOf, arrayOf, shape, string, func, bool } from 'prop-types';
-import { match } from 'fuzzaldrin-plus';
-import classNames from 'classnames';
 import { uri } from 'react-querystring-router';
-import { FolderIcon, SearchIcon } from '../SvgIcon';
+import { SearchIcon } from '../SvgIcon';
 import styles from './index.less';
 import fixturesToTreeData from './dataMapper';
 import * as filters from './filter';
@@ -21,7 +19,7 @@ const isExistingFixtureSelected = (fixtures, component, fixture) => {
   );
 };
 
-export default class FixtureList extends React.Component {
+export default class FixtureList extends Component {
   constructor(props) {
     super(props);
     const treeViewData = fixturesToTreeData(props.fixtures);
@@ -71,14 +69,16 @@ export default class FixtureList extends React.Component {
   onChange = e => {
     const { originalData } = this.state;
     const searchText = e.target.value.trim();
-    if (!searchText) this.setState({ filteredData: originalData });
+    if (!searchText) {
+      this.setState({ filteredData: originalData });
+    }
     const filteredData = filters.filterTree(originalData, searchText);
     this.setState({ filteredData, searchText });
   };
 
   onSelect = (node, expanded) => {
     const { urlParams } = this.props;
-    let nextUrlParams = {
+    const nextUrlParams = {
       ...urlParams,
       component: node.component
     };
@@ -86,7 +86,7 @@ export default class FixtureList extends React.Component {
       // Mutates state. The world won't explode, just be aware. Hugely simplifies things.
       node.expanded = expanded;
       // In case you want to select a folder, I think that feature is coming?
-      delete nextUrlParams['fixture'];
+      delete nextUrlParams.fixture;
     } else {
       nextUrlParams.fixture = node.name;
     }

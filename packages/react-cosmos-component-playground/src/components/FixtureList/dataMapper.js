@@ -3,14 +3,14 @@ import set from 'lodash.set';
 const dataObjectToNestedArray = (base, path = '') => {
   const returnChildren = [];
   for (const key in base) {
-    if (typeof base[key] == 'object') {
+    if (typeof base[key] === 'object') {
       const newPath = path ? `${path}/${key}` : key;
       const children = dataObjectToNestedArray(base[key], newPath);
       returnChildren.push({
         name: key,
         expanded: true,
         component: newPath,
-        children: children
+        children
       });
     } else {
       const fixtures = base.map(fixture => ({
