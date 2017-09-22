@@ -50,3 +50,6 @@ if (module.hot) {
     start();
   });
 }
+
+// Hook for Cypress to simulate a HMR update
+window.__startCosmosLoader = start;
