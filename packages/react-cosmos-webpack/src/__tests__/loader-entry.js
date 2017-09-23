@@ -1,4 +1,4 @@
-import { mount, unmount } from 'react-cosmos-loader';
+import { mount } from 'react-cosmos-loader';
 import '../loader-entry';
 
 jest.mock('react-cosmos-loader', () => ({
