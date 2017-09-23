@@ -21,15 +21,12 @@ const {
   normalizeComponents,
   normalizeFixtures
 } = require('./normalize-modules');
-const { mount, unmount } = require('react-cosmos-loader');
+const { mount } = require('react-cosmos-loader');
 
 // eslint-disable-next-line no-undef
 const { containerQuerySelector } = COSMOS_CONFIG;
 
 const start = () => {
-  // Unmounting needs to be done before importing new modules after HMR
-  unmount();
-
   // Module is imported whenever this function is called, making sure the
   // lastest module version is used after a HMR update
   const getUserModules = require('./user-modules').default;

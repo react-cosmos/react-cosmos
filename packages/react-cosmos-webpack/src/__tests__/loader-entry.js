@@ -23,10 +23,6 @@ jest.mock('../user-modules', () => ({
 
 const options = mount.mock.calls[0][0];
 
-test('unmount prev loader', () => {
-  expect(unmount).toHaveBeenCalled();
-});
-
 test('starts loader', () => {
   expect(mount).toHaveBeenCalled();
 });

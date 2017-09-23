@@ -73,21 +73,19 @@ class RemoteLoader extends Component {
   constructor(props) {
     super(props);
 
-    this.state = props.initialState || noFixtureState;
+    this.state = noFixtureState;
     this.firstProxy = createProxyLinkedList(props.proxies);
   }
 
   componentDidMount() {
     window.addEventListener('message', this.onMessage, false);
 
-    if (!this.props.initialState) {
-      // Let parent know loader is ready to render, along with the initial
-      // fixture list (which might update later due to HMR)
-      postMessageToParent({
-        type: 'loaderReady',
-        fixtures: extractFixtureNames(this.props.fixtures)
-      });
-    }
+    // Let parent know loader is ready to render, along with the initial
+    // fixture list (which might update later due to HMR)
+    postMessageToParent({
+      type: 'loaderReady',
+      fixtures: extractFixtureNames(this.props.fixtures)
+    });
   }
 
   componentWillReceiveProps({ proxies, fixtures }) {
@@ -235,7 +233,6 @@ class RemoteLoader extends Component {
 }
 
 RemoteLoader.propTypes = {
-  initialState: object,
   components: objectOf(createModuleType(func)).isRequired,
   fixtures: objectOf(objectOf(createModuleType(object))).isRequired,
   proxies: arrayOf(createModuleType(func))

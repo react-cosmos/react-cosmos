@@ -1,15 +1,10 @@
 import React from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
+import { render } from 'react-dom';
 import RemoteLoader from './components/RemoteLoader';
 import createStateProxy from 'react-cosmos-state-proxy';
 
-// Reuse proxy instance between renders to be able to do deep equals between
-// RemoteLoader prop transitions and know whether the user proxies changed.
-const StateProxy = createStateProxy();
-
 let domContainer;
-let loaderRef;
-let prevState;
+let StateProxy;
 
 const createDomContainer = () => {
   if (!domContainer) {
@@ -30,12 +25,14 @@ export function mount({
     ? document.querySelector(containerQuerySelector)
     : createDomContainer();
 
+  // Reuse proxy instance between renders to be able to do deep equals between
+  // RemoteLoader prop transitions and know whether the user proxies changed.
+  if (!StateProxy) {
+    StateProxy = createStateProxy();
+  }
+
   render(
     <RemoteLoader
-      ref={ref => {
-        loaderRef = ref;
-      }}
-      initialState={prevState}
       components={components}
       fixtures={fixtures}
       proxies={[
@@ -46,14 +43,4 @@ export function mount({
     />,
     container
   );
-}
-
-export function unmount() {
-  if (domContainer) {
-    if (loaderRef) {
-      prevState = loaderRef.state;
-    }
-
-    unmountComponentAtNode(domContainer);
-  }
 }
