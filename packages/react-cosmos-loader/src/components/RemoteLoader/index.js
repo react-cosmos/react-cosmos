@@ -70,10 +70,11 @@ class RemoteLoader extends Component {
    * It both receives fixture changes from parent frame and sends fixture
    * updates bubbled up from proxy chain (due to state changes) to parent frame.
    */
+  state = noFixtureState;
+
   constructor(props) {
     super(props);
 
-    this.state = noFixtureState;
     this.firstProxy = createProxyLinkedList(props.proxies);
   }
 
