@@ -3,6 +3,10 @@ import { render, unmountComponentAtNode } from 'react-dom';
 import RemoteLoader from './components/RemoteLoader';
 import createStateProxy from 'react-cosmos-state-proxy';
 
+// Reuse proxy instance between renders to be able to do deep equals between
+// RemoteLoader prop transitions and know whether the user proxies changed.
+const StateProxy = createStateProxy();
+
 let domContainer;
 let loaderRef;
 let prevState;
@@ -37,7 +41,7 @@ export function mount({
       proxies={[
         ...proxies,
         // Loaded by default in all configs
-        createStateProxy()
+        StateProxy
       ]}
     />,
     container
