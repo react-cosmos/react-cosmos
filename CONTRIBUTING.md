@@ -178,7 +178,10 @@ Make sure `yarn run lint` passes and add [xo](https://github.com/sindresorhus/xo
 
 #### Use Git conscientiously
 
-Nothing fancy, just the usual the [GitHub flow.](https://guides.github.com/introduction/flow/)
+- [GitHub Flow](https://guides.github.com/introduction/flow/)
+- [Conventional Commits](https://conventionalcommits.org/) (important for generating release notes)
+
+
 
 ---
 
