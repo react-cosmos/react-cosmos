@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-loader",
-  "version": "2.0.0-rc.1",
+  "version": "2.0.0-rc.3",
   "description": "Loader for rendering React components in isolation",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-loader",
   "license": "MIT",
