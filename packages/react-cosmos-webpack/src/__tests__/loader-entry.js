@@ -1,4 +1,4 @@
-import { mount, unmount } from 'react-cosmos-loader';
+import { mount } from 'react-cosmos-loader';
 import '../loader-entry';
 
 jest.mock('react-cosmos-loader', () => ({
@@ -22,10 +22,6 @@ jest.mock('../user-modules', () => ({
 }));
 
 const options = mount.mock.calls[0][0];
-
-test('unmount prev loader', () => {
-  expect(unmount).toHaveBeenCalled();
-});
 
 test('starts loader', () => {
   expect(mount).toHaveBeenCalled();

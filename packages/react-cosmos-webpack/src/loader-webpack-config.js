@@ -72,17 +72,18 @@ export default function getLoaderWebpackConfig({
       'process.env': {
         NODE_ENV: JSON.stringify(shouldExport ? 'production' : 'development')
       }
-    })
-  );
-
-  plugins.push(
+    }),
     new webpack.DefinePlugin({
       COSMOS_CONFIG: JSON.stringify({
         // Config options that are available inside the client bundle. Warning:
         // Must be serializable!
         containerQuerySelector
       })
-    })
+    }),
+    // Important: Without this webpack tries to apply hot updates for broken
+    // builds and results in duplicate React nodes attached
+    // See https://github.com/webpack/webpack/issues/2117
+    new webpack.NoEmitOnErrorsPlugin()
   );
 
   if (hot && !shouldExport) {

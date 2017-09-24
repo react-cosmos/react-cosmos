@@ -67,9 +67,23 @@ describe('Component source changes', () => {
       })
       .then(() => onFixtureLoad)
       .then(() => {
+        const { onFixtureUpdate } = wrapper.find(ProxyFoo).props();
+
+        // Simulate a state change to see if the HMR doesn't invalidate it
+        onFixtureUpdate({
+          foo: true
+        });
+
+        // Simulate a HMR update
         wrapper.setProps({
           components: {
             Foo: ComponentFoo2
+          },
+          // Re-create fixture structure with same references
+          fixtures: {
+            Foo: {
+              foo: fixtureFoo
+            }
           }
         });
 
@@ -79,5 +93,9 @@ describe('Component source changes', () => {
 
   test('sends new component to proxies', () => {
     expect(firstProxyWrapper.props().component).toBe(ComponentFoo2);
+  });
+
+  test('preserves previous fixture state', () => {
+    expect(firstProxyWrapper.props().fixture).toEqual({ foo: true });
   });
 });

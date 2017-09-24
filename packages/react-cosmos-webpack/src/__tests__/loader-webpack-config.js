@@ -54,6 +54,7 @@ beforeEach(() => {
 
   webpack = require('webpack');
   webpack.__setPluginMock('DefinePlugin', DefinePlugin);
+  webpack.__setPluginMock('NoEmitOnErrorsPlugin', () => {});
   webpack.__setPluginMock(
     'HotModuleReplacementPlugin',
     HotModuleReplacementPlugin

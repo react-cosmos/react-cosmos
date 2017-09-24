@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { object, objectOf, func, arrayOf } from 'prop-types';
 import merge from 'lodash.merge';
+import deepEqual from 'deep-equal';
 import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
 import createLinkedList from 'react-cosmos-utils/lib/linked-list';
 import createModuleType from '../../utils/module-type';
@@ -82,45 +83,47 @@ class RemoteLoader extends Component {
 
     // Let parent know loader is ready to render, along with the initial
     // fixture list (which might update later due to HMR)
-    const { fixtures } = this.props;
     postMessageToParent({
       type: 'loaderReady',
-      fixtures: extractFixtureNames(fixtures)
+      fixtures: extractFixtureNames(this.props.fixtures)
     });
   }
 
   componentWillReceiveProps({ proxies, fixtures }) {
-    if (proxies !== this.props.proxies) {
+    if (!deepEqual(proxies, this.props.proxies)) {
       this.firstProxy = createProxyLinkedList(proxies);
     }
 
-    if (fixtures === this.props.fixtures) {
-      return;
+    // Keep parent frame in sync when fixture files are added to fs
+    const fixtureNames = extractFixtureNames(fixtures);
+    if (!deepEqual(fixtureNames, extractFixtureNames(this.props.fixtures))) {
+      postMessageToParent({
+        type: 'fixtureListUpdate',
+        fixtures: fixtureNames
+      });
     }
 
-    // Keep parent frame in sync when fixture files change (udpated via
-    // webpack HMR)
-    postMessageToParent({
-      type: 'fixtureListUpdate',
-      fixtures: extractFixtureNames(fixtures)
-    });
-
+    // Fixture file changes override updated fixture state
     const { component, fixture } = this.state;
-
-    // Reset fixture state to reflect fixture file changes
-    this.setState(
-      getFixtureState({
-        fixtures,
-        component,
-        fixture
-      }),
-      () => {
-        if (component && fixture) {
-          // Keep parent frame in sync with latest fixture body
-          this.onFixtureUpdate(this.state.fixtureBody.serializable);
+    const isFixtureSelected = component && fixture;
+    if (
+      isFixtureSelected &&
+      fixtures[component][fixture] !== this.props.fixtures[component][fixture]
+    ) {
+      this.setState(
+        getFixtureState({
+          fixtures,
+          component,
+          fixture
+        }),
+        () => {
+          if (isFixtureSelected) {
+            // Keep parent frame in sync with latest fixture body
+            this.onFixtureUpdate(this.state.fixtureBody.serializable);
+          }
         }
-      }
-    );
+      );
+    }
   }
 
   componentWillUnmount() {
