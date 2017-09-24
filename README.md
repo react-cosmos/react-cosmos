@@ -554,7 +554,7 @@ export default {
 
 #### Create React App
 
-It's preferred to use CRA's own webpack config (instead of duplicating it).
+Add `react-cosmos-webpack` to dev dependencies and create `cosmos.config.js`.
 
 ```js
 // cosmos.config.js
@@ -577,7 +577,9 @@ Also make sure to:
 
 #### Next.js
 
-Next.js apps run on both client & server, so compilation is done via Babel plugins instead of webpack loaders. This means we can rely on Cosmos' default webpack config.
+Add `react-cosmos-webpack` to dev dependencies and create `cosmos.config.js`.
+
+> Next.js apps run on both client & server, so compilation is done via Babel plugins instead of webpack loaders. This means we can rely on Cosmos' default webpack config.
 
 ```js
 // cosmos.config.js
@@ -602,7 +604,7 @@ Also make sure to:
 
 #### React Boilerplate
 
-The current version of React Boilerplate (v3.4) requires [some tweaking](https://github.com/react-cosmos/react-cosmos/issues/296) to work with Cosmos. A PR has [landed](https://github.com/react-boilerplate/react-boilerplate/pull/1849), however, which makes the integration with [upcoming](https://github.com/react-boilerplate/react-boilerplate/tree/dev) v3.5 as simple as this:
+Add `react-cosmos-webpack` to dev dependencies and create `cosmos.config.js`.
 
 ```js
 // cosmos.config.js
@@ -615,7 +617,7 @@ module.exports = {
 
 #### React Redux Starter Kit
 
-It's preferred to use the starter kit's own webpack config (instead of duplicating it).
+Add `react-cosmos-webpack` to dev dependencies and create `cosmos.config.js`.
 
 ```js
 // cosmos.config.js
