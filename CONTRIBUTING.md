@@ -39,6 +39,7 @@ High impact initiatives. By working on these exciting topics, you have the oppor
 > Warning: These are high-level tasks and they require further analysis and collaboration before they can be turned into concrete tasks
 
 - [Redesign filesystem API](https://github.com/react-cosmos/react-cosmos/issues/440)
+- [Config generation](https://github.com/react-cosmos/react-cosmos/issues/452)
 - [Create Cosmos server](https://github.com/react-cosmos/react-cosmos/pull/383#issuecomment-328297128)
 
 ## Tracking
