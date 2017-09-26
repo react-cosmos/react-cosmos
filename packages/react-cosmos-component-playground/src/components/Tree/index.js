@@ -94,7 +94,6 @@ const nodeIsSelected = (node, selected) => {
   );
 };
 
-// Needs to be a component so that we can put a ref on it.
 const TreeItem = ({ node, onSelect, isSelected, nestingLevel, searchText }) => {
   const fixtureClassNames = classNames(styles.fixture, {
     [styles.fixtureSelected]: isSelected
