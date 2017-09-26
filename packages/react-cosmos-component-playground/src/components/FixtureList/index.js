@@ -25,7 +25,7 @@ export default class FixtureList extends Component {
     const treeViewData = fixturesToTreeData(props.fixtures);
     this.state = {
       searchText: '',
-      originalData: treeViewData,
+      fixtureTree: treeViewData,
       filteredData: treeViewData
     };
   }
@@ -37,11 +37,11 @@ export default class FixtureList extends Component {
     if (isExistingFixtureSelected(fixtures, component, fixture)) {
       const node = this.refs[`componentName-${component}`];
       // scrollIntoView doesn't seem to exist in Jest/jsdom
-      if (node.scrollIntoView) {
-        node.scrollIntoView({
-          behavior: 'smooth'
-        });
-      }
+      // if (node.scrollIntoView) {
+      //   node.scrollIntoView({
+      //     behavior: 'smooth'
+      //   });
+      // }
     }
   }
 
@@ -67,12 +67,12 @@ export default class FixtureList extends Component {
   };
 
   onChange = e => {
-    const { originalData } = this.state;
+    const { fixtureTree } = this.state;
     const searchText = e.target.value.trim();
     if (!searchText) {
-      this.setState({ filteredData: originalData });
+      this.setState({ filteredData: fixtureTree });
     }
-    const filteredData = filters.filterTree(originalData, searchText);
+    const filteredData = filters.filterTree(fixtureTree, searchText);
     this.setState({ filteredData, searchText });
   };
 
