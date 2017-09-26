@@ -3,7 +3,10 @@ import { match } from 'fuzzaldrin-plus';
 
 // Helper functions for search filtering
 export const defaultMatcher = (filterText, node) => {
-  return match(node.name, filterText).length > 0;
+  const matchText = node.urlParams
+    ? `${node.urlParams.component}${node.urlParams.fixture}`
+    : node.name;
+  return match(matchText, filterText).length > 0;
 };
 
 export const findNode = (node, filter, matcher) => {

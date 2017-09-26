@@ -104,7 +104,7 @@ export default {
       component: 'dirB/subdirA/Component4',
       fixture: 'fixtureA'
     },
-    searchText: '',
+    searchText: 'sub a',
     onSelect: node => console.log('Selected node: ', node),
     onToggle: (node, expanded) => console.log('Toggled node: ', node, expanded)
   }
