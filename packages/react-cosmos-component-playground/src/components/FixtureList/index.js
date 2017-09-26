@@ -22,11 +22,9 @@ const isExistingFixtureSelected = (fixtures, component, fixture) => {
 export default class FixtureList extends Component {
   constructor(props) {
     super(props);
-    const treeViewData = fixturesToTreeData(props.fixtures);
     this.state = {
       searchText: '',
-      fixtureTree: treeViewData,
-      filteredData: treeViewData
+      fixtureTree: fixturesToTreeData(props.fixtures)
     };
   }
 
@@ -67,13 +65,7 @@ export default class FixtureList extends Component {
   };
 
   onChange = e => {
-    const { fixtureTree } = this.state;
-    const searchText = e.target.value.trim();
-    if (!searchText) {
-      this.setState({ filteredData: fixtureTree });
-    }
-    const filteredData = filters.filterTree(fixtureTree, searchText);
-    this.setState({ filteredData, searchText });
+    this.setState({ searchText: e.target.value });
   };
 
   onSelect = (node, expanded) => {
@@ -97,7 +89,14 @@ export default class FixtureList extends Component {
 
   render() {
     const { urlParams } = this.props;
-    const { filteredData, searchText } = this.state;
+    const { fixtureTree, searchText } = this.state;
+
+    const trimmedSearchText = searchText.trim();
+    let filteredFixtureTree = fixtureTree;
+    if (trimmedSearchText !== '') {
+      filteredFixtureTree = filters.filterTree(fixtureTree, trimmedSearchText);
+    }
+
     return (
       <div className={styles.root}>
         <div className={styles.searchInputContainer}>
@@ -114,7 +113,7 @@ export default class FixtureList extends Component {
         </div>
         <div className={styles.list}>
           <Tree
-            nodeArray={filteredData}
+            nodeArray={filteredFixtureTree}
             onSelect={this.onSelect}
             searchText={searchText}
             selected={{
