@@ -80,8 +80,12 @@ const Tree = ({
   searchText,
   nestingLevel = 0
 }) => {
+  const treeStyle = {};
+  if (process.env.NODE_ENV === 'development') {
+    treeStyle.backgroundColor = 'black';
+  }
   return (
-    <div>
+    <div style={treeStyle}>
       {nodeArray.map(node => {
         if (node.children) {
           return (
