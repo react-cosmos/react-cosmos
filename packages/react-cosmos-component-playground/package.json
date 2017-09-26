@@ -22,7 +22,6 @@
     "react-cosmos-loader": "^2.0.0-rc.1",
     "react-cosmos-state-proxy": "^2.0.0-rc.1",
     "react-dom": "^15.5.4",
-    "react-highlight-words": "^0.8.1",
     "react-querystring-router": "^2.0.0-rc.1"
   },
   "xo": false

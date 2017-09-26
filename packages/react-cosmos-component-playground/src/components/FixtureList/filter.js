@@ -1,8 +1,9 @@
 // Adapted from https://github.com/alexcurtis/react-treebeard
+import { match } from 'fuzzaldrin-plus';
 
 // Helper functions for search filtering
 export const defaultMatcher = (filterText, node) => {
-  return node.name.toLowerCase().indexOf(filterText.toLowerCase()) !== -1;
+  return match(node.name, filterText).length > 0;
 };
 
 export const findNode = (node, filter, matcher) => {

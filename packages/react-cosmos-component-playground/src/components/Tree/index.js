@@ -1,12 +1,44 @@
 import React from 'react';
 import { arrayOf, shape, number, string, func, bool } from 'prop-types';
 import { FolderIcon, RightArrowIcon, DownArrowIcon } from '../SvgIcon';
-import Highlighter from 'react-highlight-words';
 import styles from './index.less';
 import classNames from 'classnames';
+import { match } from 'fuzzaldrin-plus';
 
 const CONTAINER_LEFT_PADDING = 10;
 const INDENT_PADDING = 20;
+
+const FuzzyHighligher = ({ searchText, textToHighlight }) => {
+  if (!searchText) {
+    return <span>{textToHighlight}</span>;
+  }
+
+  const fuzzyMatch = match(textToHighlight, searchText);
+  if (fuzzyMatch.length === 0) {
+    return <span>{textToHighlight}</span>;
+  }
+
+  const highlighted = [];
+  fuzzyMatch.forEach((highlightIndex, index) => {
+    const highlightChar = textToHighlight.slice(
+      highlightIndex,
+      highlightIndex + 1
+    );
+    highlighted.push(
+      <mark className={styles.searchHighlight}>{highlightChar}</mark>
+    );
+    const nextHighlightIndex = fuzzyMatch[index + 1];
+    if (nextHighlightIndex !== highlightIndex + 1) {
+      const unhighlightedChars = textToHighlight.slice(
+        highlightIndex + 1,
+        nextHighlightIndex
+      );
+      highlighted.push(<span>{unhighlightedChars}</span>);
+    }
+  });
+
+  return <span>{highlighted}</span>;
+};
 
 const TreeFolder = ({
   node,
@@ -34,11 +66,7 @@ const TreeFolder = ({
       >
         {node.expanded ? <DownArrowIcon /> : <RightArrowIcon />}
         <FolderIcon />
-        <Highlighter
-          searchWords={[searchText]}
-          textToHighlight={node.name}
-          highlightClassName={styles.searchHighlight}
-        />
+        <FuzzyHighligher searchText={searchText} textToHighlight={node.name} />
       </div>
       {node.expanded && (
         <Tree
@@ -81,11 +109,7 @@ const TreeItem = ({ node, onSelect, selected, nestingLevel, searchText }) => {
         onSelect(node);
       }}
     >
-      <Highlighter
-        searchWords={[searchText]}
-        textToHighlight={node.name}
-        highlightClassName={styles.searchHighlight}
-      />
+      <FuzzyHighligher searchText={searchText} textToHighlight={node.name} />
     </a>
   );
 };
