@@ -1,6 +1,6 @@
 import React from 'react';
 import { arrayOf, shape, number, string, func, bool } from 'prop-types';
-import { FolderIcon } from '../SvgIcon';
+import { FolderIcon, RightArrowIcon, DownArrowIcon } from '../SvgIcon';
 import Highlighter from 'react-highlight-words';
 import styles from './index.less';
 import classNames from 'classnames';
@@ -25,7 +25,7 @@ const TreeFolder = ({ node, onSelect, selected, nestingLevel, searchText }) => {
         }}
         // ref={`componentName-${node.component}`}
       >
-        <div className={node.expanded ? styles.arrowDown : styles.arrowRight} />
+        {node.expanded ? <DownArrowIcon /> : <RightArrowIcon />}
         <FolderIcon />
         <Highlighter
           searchWords={[searchText]}
