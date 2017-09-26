@@ -94,70 +94,94 @@ const nodeIsSelected = (node, selected) => {
   );
 };
 
-const TreeItem = ({ node, onSelect, selected, nestingLevel, searchText }) => {
-  const fixtureClassNames = classNames(styles.fixture, {
-    [styles.fixtureSelected]: nodeIsSelected(node, selected)
-  });
-  return (
-    <a
-      className={fixtureClassNames}
-      style={{
-        paddingLeft:
-          CONTAINER_LEFT_PADDING + (1 + nestingLevel) * INDENT_PADDING
-      }}
-      onClick={e => {
-        e.preventDefault();
-        e.stopPropagation();
-        onSelect(node);
-      }}
-    >
-      <FuzzyHighligher searchText={searchText} textToHighlight={node.name} />
-    </a>
-  );
-};
+// Needs to be a component so that we can put a ref on it.
+class TreeItem extends React.Component {
+  render() {
+    const { node, onSelect, isSelected, nestingLevel, searchText } = this.props;
+    const fixtureClassNames = classNames(styles.fixture, {
+      [styles.fixtureSelected]: isSelected
+    });
 
-const Tree = ({
-  nodeArray,
-  onSelect,
-  onToggle,
-  selected,
-  searchText,
-  nestingLevel = 0
-}) => {
-  const treeStyle = {};
-  if (process.env.NODE_ENV === 'development') {
-    treeStyle.backgroundColor = 'black';
+    return (
+      <a
+        className={fixtureClassNames}
+        style={{
+          paddingLeft:
+            CONTAINER_LEFT_PADDING + (1 + nestingLevel) * INDENT_PADDING
+        }}
+        onClick={e => {
+          e.preventDefault();
+          e.stopPropagation();
+          onSelect(node);
+        }}
+      >
+        <FuzzyHighligher searchText={searchText} textToHighlight={node.name} />
+      </a>
+    );
   }
-  return (
-    <div style={treeStyle}>
-      {nodeArray.map((node, index) => {
-        if (node.children) {
+}
+
+class Tree extends React.Component {
+  componentDidMount() {
+    const el = this.selectedItem;
+    // scrollIntoView doesn't seem to exist in Jest/jsdom
+    if (el && el.scrollIntoView) {
+      el.scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+  }
+
+  render() {
+    const {
+      nodeArray,
+      onSelect,
+      onToggle,
+      selected,
+      searchText,
+      nestingLevel = 0
+    } = this.props;
+    const treeStyle = {};
+    if (process.env.NODE_ENV === 'development') {
+      treeStyle.backgroundColor = 'black';
+    }
+    return (
+      <div style={treeStyle}>
+        {nodeArray.map((node, index) => {
+          if (node.children) {
+            return (
+              <TreeFolder
+                key={index}
+                node={node}
+                onToggle={onToggle}
+                onSelect={onSelect}
+                selected={selected}
+                nestingLevel={nestingLevel}
+                searchText={searchText}
+              />
+            );
+          }
+          const isSelected = nodeIsSelected(node, selected);
           return (
-            <TreeFolder
+            <TreeItem
+              ref={el => {
+                if (isSelected) {
+                  this.selectedItem = el;
+                }
+              }}
               key={index}
               node={node}
-              onToggle={onToggle}
               onSelect={onSelect}
-              selected={selected}
+              isSelected={isSelected}
               nestingLevel={nestingLevel}
               searchText={searchText}
             />
           );
-        }
-        return (
-          <TreeItem
-            key={index}
-            node={node}
-            onSelect={onSelect}
-            selected={selected}
-            nestingLevel={nestingLevel}
-            searchText={searchText}
-          />
-        );
-      })}
-    </div>
-  );
-};
+        })}
+      </div>
+    );
+  }
+}
 
 const nodeShape = shape({
   name: string.isRequired,
