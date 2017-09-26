@@ -95,31 +95,28 @@ const nodeIsSelected = (node, selected) => {
 };
 
 // Needs to be a component so that we can put a ref on it.
-class TreeItem extends React.Component {
-  render() {
-    const { node, onSelect, isSelected, nestingLevel, searchText } = this.props;
-    const fixtureClassNames = classNames(styles.fixture, {
-      [styles.fixtureSelected]: isSelected
-    });
+const TreeItem = ({ node, onSelect, isSelected, nestingLevel, searchText }) => {
+  const fixtureClassNames = classNames(styles.fixture, {
+    [styles.fixtureSelected]: isSelected
+  });
 
-    return (
-      <a
-        className={fixtureClassNames}
-        style={{
-          paddingLeft:
-            CONTAINER_LEFT_PADDING + (1 + nestingLevel) * INDENT_PADDING
-        }}
-        onClick={e => {
-          e.preventDefault();
-          e.stopPropagation();
-          onSelect(node);
-        }}
-      >
-        <FuzzyHighligher searchText={searchText} textToHighlight={node.name} />
-      </a>
-    );
-  }
-}
+  return (
+    <a
+      className={fixtureClassNames}
+      style={{
+        paddingLeft:
+          CONTAINER_LEFT_PADDING + (1 + nestingLevel) * INDENT_PADDING
+      }}
+      onClick={e => {
+        e.preventDefault();
+        e.stopPropagation();
+        onSelect(node);
+      }}
+    >
+      <FuzzyHighligher searchText={searchText} textToHighlight={node.name} />
+    </a>
+  );
+};
 
 class Tree extends React.Component {
   componentDidMount() {
@@ -163,19 +160,22 @@ class Tree extends React.Component {
           }
           const isSelected = nodeIsSelected(node, selected);
           return (
-            <TreeItem
+            <div
               ref={el => {
                 if (isSelected) {
                   this.selectedItem = el;
                 }
               }}
               key={index}
-              node={node}
-              onSelect={onSelect}
-              isSelected={isSelected}
-              nestingLevel={nestingLevel}
-              searchText={searchText}
-            />
+            >
+              <TreeItem
+                node={node}
+                onSelect={onSelect}
+                isSelected={isSelected}
+                nestingLevel={nestingLevel}
+                searchText={searchText}
+              />
+            </div>
           );
         })}
       </div>
