@@ -25,7 +25,9 @@ const FuzzyHighligher = ({ searchText, textToHighlight }) => {
       highlightIndex + 1
     );
     highlighted.push(
-      <mark className={styles.searchHighlight}>{highlightChar}</mark>
+      <mark key={`highlight-${index}`} className={styles.searchHighlight}>
+        {highlightChar}
+      </mark>
     );
     const nextHighlightIndex = fuzzyMatch[index + 1];
     if (nextHighlightIndex !== highlightIndex + 1) {
@@ -33,7 +35,7 @@ const FuzzyHighligher = ({ searchText, textToHighlight }) => {
         highlightIndex + 1,
         nextHighlightIndex
       );
-      highlighted.push(<span>{unhighlightedChars}</span>);
+      highlighted.push(<span key={index}>{unhighlightedChars}</span>);
     }
   });
 
