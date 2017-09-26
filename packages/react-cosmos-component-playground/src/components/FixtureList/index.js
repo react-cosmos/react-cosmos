@@ -47,6 +47,14 @@ export default class FixtureList extends Component {
     window.removeEventListener('keydown', this.onWindowKey);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (
+      JSON.stringify(nextProps.fixtures) !== JSON.stringify(this.props.fixtures)
+    ) {
+      this.setState({ fixtureTree: fixturesToTreeData(nextProps.fixtures) });
+    }
+  }
+
   onWindowKey = e => {
     const isFocused = this.searchInput === document.activeElement;
 
