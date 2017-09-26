@@ -33,7 +33,7 @@ export default {
           },
           {
             name: 'Component3',
-            expanded: true,
+            expanded: false,
             component: 'dirB/Component3',
             children: [
               { name: 'fixtureA', component: 'dirB/Component3' },
