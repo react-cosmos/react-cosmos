@@ -69,22 +69,15 @@ export default class FixtureList extends Component {
   };
 
   onSelect = (node, expanded) => {
-    const { urlParams } = this.props;
-    const nextUrlParams = {
-      ...urlParams,
-      component: node.component
-    };
     if (node.children) {
       // Mutates state. The world won't explode, just be aware. Hugely simplifies things.
       node.expanded = expanded;
-      // In case you want to select a folder, I think that feature is coming?
-      delete nextUrlParams.fixture;
-    } else {
-      nextUrlParams.fixture = node.name;
+      this.forceUpdate();
     }
-    const href = uri.stringifyParams(nextUrlParams);
-    this.props.onUrlChange(href);
-    this.forceUpdate();
+    if (node.urlParams) {
+      const href = uri.stringifyParams(node.urlParams);
+      this.props.onUrlChange(href);
+    }
   };
 
   render() {

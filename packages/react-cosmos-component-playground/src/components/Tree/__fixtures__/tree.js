@@ -4,15 +4,25 @@ export default {
       {
         name: 'dirA',
         expanded: true,
-        component: 'dirA',
         children: [
           {
             name: 'Component1',
             expanded: true,
-            component: 'dirA/Component1',
             children: [
-              { name: 'fixtureA', component: 'dirA/Component1' },
-              { name: 'fixtureB', component: 'dirA/Component1' }
+              {
+                name: 'fixtureA',
+                urlParams: {
+                  component: 'dirA/Component1',
+                  fixture: 'fixtureA'
+                }
+              },
+              {
+                name: 'fixtureB',
+                urlParams: {
+                  component: 'dirA/Component1',
+                  fixture: 'fixtureB'
+                }
+              }
             ]
           }
         ]
@@ -20,38 +30,69 @@ export default {
       {
         name: 'dirB',
         expanded: true,
-        component: 'dirB',
         children: [
           {
             name: 'Component2',
             expanded: true,
-            component: 'dirB/Component2',
             children: [
-              { name: 'fixtureA', component: 'dirB/Component2' },
-              { name: 'fixtureB', component: 'dirB/Component2' }
+              {
+                name: 'fixtureA',
+                urlParams: {
+                  component: 'dirB/Component2',
+                  fixture: 'fixtureA'
+                }
+              },
+              {
+                name: 'fixtureB',
+                urlParams: {
+                  component: 'dirB/Component2',
+                  fixture: 'fixtureB'
+                }
+              }
             ]
           },
           {
             name: 'Component3',
             expanded: false,
-            component: 'dirB/Component3',
             children: [
-              { name: 'fixtureA', component: 'dirB/Component3' },
-              { name: 'fixtureB', component: 'dirB/Component3' }
+              {
+                name: 'fixtureA',
+                urlParams: {
+                  component: 'dirB/Component3',
+                  fixture: 'fixtureA'
+                }
+              },
+              {
+                name: 'fixtureB',
+                urlParams: {
+                  component: 'dirB/Component3',
+                  fixture: 'fixtureB'
+                }
+              }
             ]
           },
           {
             name: 'subdirA',
             expanded: true,
-            component: 'dirB/subdirA',
             children: [
               {
                 name: 'Component4',
                 expanded: true,
-                component: 'dirB/subdirA/Component4',
                 children: [
-                  { name: 'fixtureA', component: 'dirB/subdirA/Component4' },
-                  { name: 'fixtureB', component: 'dirB/subdirA/Component4' }
+                  {
+                    name: 'fixtureA',
+                    urlParams: {
+                      component: 'dirB/subdirA/Component4',
+                      fixture: 'fixtureA'
+                    }
+                  },
+                  {
+                    name: 'fixtureB',
+                    urlParams: {
+                      component: 'dirB/subdirA/Component4',
+                      fixture: 'fixtureB'
+                    }
+                  }
                 ]
               }
             ]

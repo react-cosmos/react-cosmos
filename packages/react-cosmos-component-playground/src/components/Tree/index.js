@@ -116,8 +116,11 @@ const Tree = ({
 
 const nodeShape = shape({
   name: string.isRequired,
-  component: string.isRequired,
-  expanded: bool
+  expanded: bool,
+  urlParams: shape({
+    component: string.isRequired,
+    fixture: string.isRequired
+  })
 });
 nodeShape.children = arrayOf(nodeShape);
 
