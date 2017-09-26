@@ -10,15 +10,6 @@ import Tree from '../Tree';
 const KEY_S = 83;
 const KEY_ESC = 27;
 
-const isExistingFixtureSelected = (fixtures, component, fixture) => {
-  return (
-    component &&
-    fixture &&
-    fixtures[component] &&
-    fixtures[component].indexOf(fixture) !== -1
-  );
-};
-
 export default class FixtureList extends Component {
   constructor(props) {
     super(props);
@@ -30,17 +21,6 @@ export default class FixtureList extends Component {
 
   componentDidMount() {
     window.addEventListener('keydown', this.onWindowKey);
-    const { fixtures, urlParams: { component, fixture } } = this.props;
-
-    if (isExistingFixtureSelected(fixtures, component, fixture)) {
-      const node = this.refs[`componentName-${component}`];
-      // scrollIntoView doesn't seem to exist in Jest/jsdom
-      // if (node.scrollIntoView) {
-      //   node.scrollIntoView({
-      //     behavior: 'smooth'
-      //   });
-      // }
-    }
   }
 
   componentWillUnmount() {
