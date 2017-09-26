@@ -34,7 +34,7 @@ const TreeFolder = ({ node, onSelect, selected, nestingLevel, searchText }) => {
         />
       </div>
       {node.expanded && (
-        <TreeRenderer
+        <Tree
           nodeArray={node.children}
           onSelect={onSelect}
           selected={selected}
@@ -73,7 +73,7 @@ const TreeItem = ({ node, onSelect, selected, nestingLevel, searchText }) => {
   );
 };
 
-const TreeRenderer = ({
+const Tree = ({
   nodeArray,
   onSelect,
   selected,
@@ -115,7 +115,7 @@ const nodeShape = shape({
 });
 nodeShape.children = arrayOf(nodeShape);
 
-TreeRenderer.propTypes = {
+Tree.propTypes = {
   nodeArray: arrayOf(nodeShape).isRequired,
   onSelect: func.isRequired,
   selected: shape({
@@ -126,4 +126,4 @@ TreeRenderer.propTypes = {
   nestingLevel: number
 };
 
-export default TreeRenderer;
+export default Tree;

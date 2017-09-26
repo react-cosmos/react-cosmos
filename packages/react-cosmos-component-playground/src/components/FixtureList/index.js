@@ -5,7 +5,7 @@ import { SearchIcon } from '../SvgIcon';
 import styles from './index.less';
 import fixturesToTreeData from './dataMapper';
 import * as filters from './filter';
-import TreeRenderer from '../TreeRenderer';
+import Tree from '../Tree';
 
 const KEY_S = 83;
 const KEY_ESC = 27;
@@ -113,7 +113,7 @@ export default class FixtureList extends Component {
           <SearchIcon />
         </div>
         <div className={styles.list}>
-          <TreeRenderer
+          <Tree
             nodeArray={filteredData}
             onSelect={this.onSelect}
             searchText={searchText}
