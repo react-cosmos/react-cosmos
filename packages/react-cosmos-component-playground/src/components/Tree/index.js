@@ -86,10 +86,11 @@ const Tree = ({
   }
   return (
     <div style={treeStyle}>
-      {nodeArray.map(node => {
+      {nodeArray.map((node, index) => {
         if (node.children) {
           return (
             <TreeFolder
+              key={index}
               node={node}
               onSelect={onSelect}
               selected={selected}
@@ -100,6 +101,7 @@ const Tree = ({
         }
         return (
           <TreeItem
+            key={index}
             node={node}
             onSelect={onSelect}
             selected={selected}
