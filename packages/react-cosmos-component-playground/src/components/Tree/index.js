@@ -8,14 +8,21 @@ import classNames from 'classnames';
 const CONTAINER_LEFT_PADDING = 10;
 const INDENT_PADDING = 20;
 
-const TreeFolder = ({ node, onSelect, selected, nestingLevel, searchText }) => {
+const TreeFolder = ({
+  node,
+  onSelect,
+  onToggle,
+  selected,
+  nestingLevel,
+  searchText
+}) => {
   return (
     <div
       className={styles.component}
       onClick={e => {
         e.preventDefault();
         e.stopPropagation();
-        onSelect(node, !node.expanded);
+        onToggle(node, !node.expanded);
       }}
     >
       <div
@@ -36,6 +43,7 @@ const TreeFolder = ({ node, onSelect, selected, nestingLevel, searchText }) => {
       {node.expanded && (
         <Tree
           nodeArray={node.children}
+          onToggle={onToggle}
           onSelect={onSelect}
           selected={selected}
           nestingLevel={nestingLevel + 1}
@@ -46,10 +54,19 @@ const TreeFolder = ({ node, onSelect, selected, nestingLevel, searchText }) => {
   );
 };
 
+const nodeIsSelected = (node, selected) => {
+  if (!node.urlParams) {
+    return false;
+  }
+  return (
+    node.urlParams.component === selected.component &&
+    node.urlParams.fixture === selected.fixture
+  );
+};
+
 const TreeItem = ({ node, onSelect, selected, nestingLevel, searchText }) => {
   const fixtureClassNames = classNames(styles.fixture, {
-    [styles.fixtureSelected]:
-      node.component === selected.component && node.name === selected.fixture
+    [styles.fixtureSelected]: nodeIsSelected(node, selected)
   });
   return (
     <a
@@ -61,7 +78,7 @@ const TreeItem = ({ node, onSelect, selected, nestingLevel, searchText }) => {
       onClick={e => {
         e.preventDefault();
         e.stopPropagation();
-        onSelect(node, true);
+        onSelect(node);
       }}
     >
       <Highlighter
@@ -76,6 +93,7 @@ const TreeItem = ({ node, onSelect, selected, nestingLevel, searchText }) => {
 const Tree = ({
   nodeArray,
   onSelect,
+  onToggle,
   selected,
   searchText,
   nestingLevel = 0
@@ -92,6 +110,7 @@ const Tree = ({
             <TreeFolder
               key={index}
               node={node}
+              onToggle={onToggle}
               onSelect={onSelect}
               selected={selected}
               nestingLevel={nestingLevel}
@@ -127,6 +146,7 @@ nodeShape.children = arrayOf(nodeShape);
 Tree.propTypes = {
   nodeArray: arrayOf(nodeShape).isRequired,
   onSelect: func.isRequired,
+  onToggle: func.isRequired,
   selected: shape({
     component: string,
     fixture: string

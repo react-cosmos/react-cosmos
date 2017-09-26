@@ -64,20 +64,19 @@ export default class FixtureList extends Component {
     }
   };
 
-  onChange = e => {
+  onSearchChange = e => {
     this.setState({ searchText: e.target.value });
   };
 
-  onSelect = (node, expanded) => {
-    if (node.children) {
-      // Mutates state. The world won't explode, just be aware. Hugely simplifies things.
-      node.expanded = expanded;
-      this.forceUpdate();
-    }
-    if (node.urlParams) {
-      const href = uri.stringifyParams(node.urlParams);
-      this.props.onUrlChange(href);
-    }
+  onToggle = (node, expanded) => {
+    // Mutates state. The world won't explode, just be aware. Hugely simplifies things.
+    node.expanded = expanded;
+    this.forceUpdate();
+  };
+
+  onSelect = node => {
+    const href = uri.stringifyParams(node.urlParams);
+    this.props.onUrlChange(href);
   };
 
   render() {
@@ -97,7 +96,7 @@ export default class FixtureList extends Component {
             className={styles.searchInput}
             placeholder="Search..."
             value={searchText}
-            onChange={this.onChange}
+            onChange={this.onSearchChange}
             ref={node => {
               this.searchInput = node;
             }}
@@ -108,6 +107,7 @@ export default class FixtureList extends Component {
           <Tree
             nodeArray={filteredFixtureTree}
             onSelect={this.onSelect}
+            onToggle={this.onToggle}
             searchText={searchText}
             selected={{
               component: urlParams.component,

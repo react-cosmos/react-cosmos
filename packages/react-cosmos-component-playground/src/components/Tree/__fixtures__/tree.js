@@ -105,7 +105,7 @@ export default {
       fixture: 'fixtureA'
     },
     searchText: '',
-    onSelect: (node, expanded) =>
-      console.log('Clicked on something: ', node, expanded)
+    onSelect: node => console.log('Selected node: ', node),
+    onToggle: (node, expanded) => console.log('Toggled node: ', node, expanded)
   }
 };
