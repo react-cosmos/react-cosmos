@@ -236,7 +236,11 @@ Proxies have two parts:
 
 #### Where to put proxies?
 
-As soon as you're ready to add proxies to your Cosmos setup, create `cosmos.proxies.js` (next to cosmos.config.js) and export a list of proxies in the order they should load–from outermost to innermost. Here's an example where we mock the Fetch API and add Redux and React Router providers:
+As soon as you're ready to add proxies to your Cosmos setup, create `cosmos.proxies.js` (next to cosmos.config.js) and export a list of proxies in the order they should load–from outermost to innermost.
+
+> `proxies.cosmos.js` requires compilation so you may need to place it next to your source files (eg. if the `src` dir is whitelisted in babel-loader). Use `proxiesPath` option to customize its location.
+
+Here's an example where we mock the Fetch API and add Redux and React Router providers:
 
 ```js
 // cosmos.proxies.js
@@ -563,7 +567,7 @@ module.exports = {
   containerQuerySelector: '#root',
   webpackConfigPath: 'react-scripts/config/webpack.config.dev',
   publicPath: 'public',
-  // Optional. Add this when you start using proxies
+  // Optional: Add this when you start using proxies
   proxiesPath: 'src/cosmos.proxies'
 };
 ```
@@ -729,11 +733,8 @@ module.exports = {
   // Set base URL for static assets from public folder
   publicUrl: '/static/',
 
-  // Read more about proxies below
-  proxies: [
-    './redux-proxy.js',
-    './context-proxy.js',
-  ],
+  // Customize proxies file path. Useful if Babel doesn't compile the root dir.
+  proxiesPath: 'src/proxies.cosmos',
 
   // Render inside custom root element. Useful if that root element already
   // has styles attached, but bad for encapsulation.
