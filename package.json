@@ -36,7 +36,7 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.11.1",
     "child-process-promise": "^2.2.0",
-    "coveralls": "^2.13.1",
+    "coveralls": "^3.0.0",
     "css-loader": "^0.28.5",
     "cypress-cli": "^0.14.0",
     "enzyme": "^2.9.1",
