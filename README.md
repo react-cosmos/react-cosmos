@@ -89,7 +89,7 @@ Jump to:
 ### Getting started
 
 ```bash
-npm install --dev react-cosmos-webpack
+npm install --save-dev react-cosmos-webpack
 # or
 yarn add --dev react-cosmos-webpack
 ```
