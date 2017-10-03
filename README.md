@@ -58,7 +58,7 @@ Jump to:
   - [What's a fixture?](#whats-a-fixture)
   - [Where to put fixtures?](#where-to-put-fixtures)
   - [Props](#props)
-  - [Children](#Children)
+  - [Children](#children)
   - [State](#state)
 - [Proxies](#proxies)
   - [What's a proxy?](#whats-a-proxy)
