@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { shallow } from 'enzyme';
 import PropsProxy from '../';
 
-const Component = () => {};
+const StatelessComponent = () => {};
+// class ClassComponent extends Component {
+//   render() {}
+// }
+// createClass;
+
 const fixture = {
   props: {
     foo: 'bar'
@@ -19,7 +24,7 @@ let childChildren;
 beforeAll(() => {
   wrapper = shallow(
     <PropsProxy
-      component={Component}
+      component={StatelessComponent}
       fixture={fixture}
       onComponentRef={onComponentRef}
     />
@@ -30,7 +35,7 @@ beforeAll(() => {
 });
 
 test('renders component', () => {
-  expect(childWrapper.type()).toEqual(Component);
+  expect(childWrapper.type()).toEqual(StatelessComponent);
 });
 
 test('sends fixture props to component', () => {
