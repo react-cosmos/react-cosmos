@@ -15,19 +15,14 @@ let wrapper;
 describe('CP left nav drag', () => {
   describe('default size', () => {
     beforeEach(() => {
-      return new Promise(resolve => {
-        // Mount component in order for ref and lifecycle methods to be called
-        wrapper = mount(
-          <Loader
-            proxies={[createStateProxy()]}
-            component={ComponentPlayground}
-            fixture={readyFixture}
-            onComponentRef={() => {
-              resolve();
-            }}
-          />
-        );
-      });
+      // Mount component in order for ref and lifecycle methods to be called
+      wrapper = mount(
+        <Loader
+          proxies={[createStateProxy()]}
+          component={ComponentPlayground}
+          fixture={readyFixture}
+        />
+      );
     });
 
     it('should set default left nav width', () => {
@@ -43,18 +38,21 @@ describe('CP left nav drag', () => {
         [LEFT_NAV_SIZE]: cachedSize
       });
 
+      // Mount component in order for ref and lifecycle methods to be called
+      wrapper = mount(
+        <Loader
+          proxies={[createStateProxy()]}
+          component={ComponentPlayground}
+          fixture={readyFixture}
+        />
+      );
+
+      // Wait for async actions in componentDidMount to complete
       return new Promise(resolve => {
-        // Mount component in order for ref and lifecycle methods to be called
-        wrapper = mount(
-          <Loader
-            proxies={[createStateProxy()]}
-            component={ComponentPlayground}
-            fixture={readyFixture}
-            onComponentRef={() => {
-              resolve();
-            }}
-          />
-        );
+        setImmediate(() => {
+          wrapper.update();
+          resolve();
+        });
       });
     });
 
@@ -91,6 +89,8 @@ describe('CP left nav drag', () => {
 
       const upEvent = new MouseEvent('mouseup');
       document.dispatchEvent(upEvent);
+
+      wrapper.update();
     });
 
     it('should resize left nav', () => {
@@ -115,6 +115,8 @@ describe('CP left nav drag', () => {
       });
       dragHandleElement.dispatchEvent(downEvent);
 
+      wrapper.update();
+
       expect(wrapper.find('.loaderFrameOverlay').prop('style').display).toBe(
         'block'
       );
@@ -134,6 +136,8 @@ describe('CP left nav drag', () => {
 
       const upEvent = new MouseEvent('mouseup');
       document.dispatchEvent(upEvent);
+
+      wrapper.update();
 
       expect(wrapper.find('.loaderFrameOverlay').prop('style').display).toBe(
         'none'

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, object, array } from 'prop-types';
+import { func, object, arrayOf } from 'prop-types';
 import createLinkedList from 'react-cosmos-utils/lib/linked-list';
 import createModuleType from '../../utils/module-type';
 import PropsProxy from '../PropsProxy';
@@ -47,7 +47,7 @@ class Loader extends Component {
 Loader.propTypes = {
   component: createModuleType(func).isRequired,
   fixture: createModuleType(object).isRequired,
-  proxies: array,
+  proxies: arrayOf(createModuleType(func)),
   onComponentRef: func
 };
 

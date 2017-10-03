@@ -1,20 +1,15 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
 import initFixture from '../__fixtures__/init';
 import StarryBg from '../../StarryBg';
 import ComponentPlayground from '../';
 
-const shallowLoader = element =>
-  shallow(element)
-    .dive() // Loader
-    .dive(); // PropsProxy
-
 describe('CP init', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallowLoader(
+    wrapper = mount(
       <Loader component={ComponentPlayground} fixture={initFixture} />
     );
   });

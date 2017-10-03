@@ -65,6 +65,7 @@ describe('Fixture is edited by parent frame', () => {
         return onFixtureSelect;
       })
       .then(() => {
+        wrapper.update();
         firstProxyKey = wrapper.find(ProxyFoo).key();
 
         window.postMessage(
@@ -80,6 +81,7 @@ describe('Fixture is edited by parent frame', () => {
         return onFixtureEdit;
       })
       .then(() => {
+        wrapper.update();
         firstProxyWrapper = wrapper.find(ProxyFoo);
         firstProxyProps = firstProxyWrapper.props();
       });

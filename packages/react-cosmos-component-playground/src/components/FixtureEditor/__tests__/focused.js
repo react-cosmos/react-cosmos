@@ -11,28 +11,24 @@ const stringify = value => JSON.stringify(value, null, 2);
 
 describe('FixtureEditor focused', () => {
   let wrapper;
-  let fixture;
 
   beforeEach(() => {
-    return new Promise(resolve => {
-      const fixture = merge({}, focusedFixture, {
-        props: {
-          onChange: jest.fn()
-        }
-      });
+    const fixture = merge({}, focusedFixture, {
+      props: {
+        onChange: jest.fn()
+      }
+    });
 
-      // Mount component in order for ref and lifecycle methods to be called
-      wrapper = mount(
-        <Loader
-          proxies={[createStateProxy()]}
-          component={FixtureEditor}
-          fixture={fixture}
-          onComponentRef={() => {
-            resolve();
-          }}
-        />
-      );
-    }).then(() => {
+    // Mount component in order for ref and lifecycle methods to be called
+    wrapper = mount(
+      <Loader
+        proxies={[createStateProxy()]}
+        component={FixtureEditor}
+        fixture={fixture}
+      />
+    );
+
+    Promise.resolve().then(() => {
       wrapper.setProps({
         fixture: merge({}, fixture, {
           props: {

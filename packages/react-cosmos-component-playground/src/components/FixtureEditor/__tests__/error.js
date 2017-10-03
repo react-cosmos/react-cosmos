@@ -14,25 +14,20 @@ describe('FixtureEditor error', () => {
   let fixture;
 
   beforeEach(() => {
-    return new Promise(resolve => {
-      fixture = merge({}, erredFixture, {
-        props: {
-          onChange: jest.fn()
-        }
-      });
-
-      // Mount component in order for ref and lifecycle methods to be called
-      wrapper = mount(
-        <Loader
-          proxies={[createStateProxy()]}
-          component={FixtureEditor}
-          fixture={fixture}
-          onComponentRef={() => {
-            resolve();
-          }}
-        />
-      );
+    fixture = merge({}, erredFixture, {
+      props: {
+        onChange: jest.fn()
+      }
     });
+
+    // Mount component in order for ref and lifecycle methods to be called
+    wrapper = mount(
+      <Loader
+        proxies={[createStateProxy()]}
+        component={FixtureEditor}
+        fixture={fixture}
+      />
+    );
   });
 
   it('displays error', () => {
@@ -48,6 +43,7 @@ describe('FixtureEditor error', () => {
           props: { baz: 'qux' }
         })
       );
+      wrapper.update();
     });
 
     it('clears error state', () => {

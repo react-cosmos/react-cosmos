@@ -124,9 +124,7 @@ export default class FixtureList extends Component {
                   className={styles.componentName}
                 >
                   <FolderIcon />
-                  <span>
-                    {component}
-                  </span>
+                  <span>{component}</span>
                 </div>
                 <div>
                   {filteredFixtures[component].map((fixture, j) => {

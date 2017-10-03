@@ -69,6 +69,7 @@ describe('Fixture is selected remotely', () => {
         return onFixtureSelect;
       })
       .then(() => {
+        wrapper.update();
         firstProxyWrapper = wrapper.find(ProxyFoo);
         firstProxyProps = firstProxyWrapper.props();
 

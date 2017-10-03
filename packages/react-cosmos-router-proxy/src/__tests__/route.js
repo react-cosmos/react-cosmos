@@ -15,8 +15,7 @@ const NextProxy = props => {
   return <P {...props} nextProxy={next()} />;
 };
 
-const LastProxy = ({ component: C, onComponentRef }) =>
-  <C ref={onComponentRef} />;
+const LastProxy = ({ component: C }) => <C />;
 
 // Vars populated from scratch before each test
 let onFixtureUpdate;
@@ -29,39 +28,34 @@ beforeEach(() => {
   // Fixture updates from inner proxies need to bubble up to the root proxy
   onFixtureUpdate = jest.fn();
 
-  // Rendering can be asynchronous, so our safest strategy is to wait until the
-  // Component `ref` is called. If the entire test suite times out, it's
-  // probably because onComponentRef isn't properly propagated.
-  return new Promise(resolve => {
-    // Mouting is more useful because it calls lifecycle methods and enables
-    // DOM interaction
-    wrapper = mount(
-      <RouterProxy
-        nextProxy={{
-          // Besides rendering the next proxy, we also need to ensure the 2nd
-          // next proxy is passed to the next proxy for further chaining. It
-          // might take a few reads to grasp this...
-          value: NextProxy,
-          next: () => ({
-            value: LastProxy,
-            next: () => {}
-          })
-        }}
-        component={Component}
-        fixture={{
-          // Except for some rare cases, the proxy needs to pass along the
-          // fixture without changing it
-          foo: 'bar',
-          // This tells RouterProxy to add MemoryRouter wrapper
-          url: '/route/foo',
-          // This tells RouterProxy to add Route wrapper
-          route: '/route/:param'
-        }}
-        onComponentRef={resolve}
-        onFixtureUpdate={onFixtureUpdate}
-      />
-    );
-  });
+  // Mouting is more useful because it calls lifecycle methods and enables
+  // DOM interaction
+  wrapper = mount(
+    <RouterProxy
+      nextProxy={{
+        // Besides rendering the next proxy, we also need to ensure the 2nd
+        // next proxy is passed to the next proxy for further chaining. It
+        // might take a few reads to grasp this...
+        value: NextProxy,
+        next: () => ({
+          value: LastProxy,
+          next: () => {}
+        })
+      }}
+      component={Component}
+      fixture={{
+        // Except for some rare cases, the proxy needs to pass along the
+        // fixture without changing it
+        foo: 'bar',
+        // This tells RouterProxy to add MemoryRouter wrapper
+        url: '/route/foo',
+        // This tells RouterProxy to add Route wrapper
+        route: '/route/:param'
+      }}
+      onComponentRef={() => {}}
+      onFixtureUpdate={onFixtureUpdate}
+    />
+  );
 });
 
 test('renders next proxy', () => {
