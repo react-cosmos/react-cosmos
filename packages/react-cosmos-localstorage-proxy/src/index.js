@@ -46,20 +46,23 @@ export default function createLocalStorageProxy(options) {
 
       const mock = this.props.fixture[fixtureKey];
       if (mock) {
-        this._localStorage = global.localStorage;
+        this._localStorageOrig = global.localStorage;
+        this._localStorageMock = new LocalStorageMock(mock, updatedStore => {
+          this.props.onFixtureUpdate({ localStorage: updatedStore });
+        });
+
         Object.defineProperty(global, 'localStorage', {
           writable: true,
-          value: new LocalStorageMock(mock, updatedStore => {
-            this.props.onFixtureUpdate({ localStorage: updatedStore });
-          })
+          value: this._localStorageMock
         });
       }
     }
 
     componentWillUnmount() {
-      // Only clear localStorage if proxy was activated in the first place
-      if (this._localStorage) {
-        global.localStorage = this._localStorage;
+      // Make sure we don't clear a mock from a newer instance (in React 16
+      //  B.constructor is called before A.componentWillUnmount)
+      if (global.localStorage === this._localStorageMock) {
+        global.localStorage = this._localStorageOrig;
       }
     }
 
