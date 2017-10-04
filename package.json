@@ -61,7 +61,7 @@
     "rimraf": "^2.5.4",
     "style-loader": "^0.18.2",
     "traverse": "^0.6.6",
-    "url-loader": "^0.5.9",
+    "url-loader": "^0.6.1",
     "webpack": "^3.6.0",
     "xo": "^0.18.2",
     "yargs": "^9.0.1"
