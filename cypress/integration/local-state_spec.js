@@ -36,8 +36,12 @@ describe('Local state example', () => {
 
   context('filter', () => {
     before(() => {
-      const inputSel = getSelector('index__searchInput');
-      cy.get(inputSel).type('oneThree');
+      // https://github.com/cypress-io/cypress/issues/647
+      cy.window().then(window => {
+        window.__changePlaygroundSearch({
+          target: { value: 'oneTwoThree' }
+        });
+      });
     });
 
     it('should match only one fixture', () => {
