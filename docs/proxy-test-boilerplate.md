@@ -48,7 +48,7 @@ beforeEach(() => {
       fixture={{
         // Except for some rare cases, the proxy needs to pass along the
         // fixture without changing it
-        foo: 'bar',
+        foo: 'bar'
       }}
       onComponentRef={() => {}}
       onFixtureUpdate={onFixtureUpdate}
