@@ -14,7 +14,7 @@
     "react-cosmos-state-proxy": "^2.0.0",
     "react-cosmos-utils": "^2.0.0",
     "react-cosmos-voyager": "^2.0.0",
-    "react-test-renderer": "^15.4.2"
+    "react-test-renderer": "^16.0.0"
   },
   "xo": false
 }

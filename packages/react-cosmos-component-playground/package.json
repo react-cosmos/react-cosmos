@@ -18,10 +18,8 @@
     "lodash.omitby": "^4.6.0",
     "lodash.reduce": "^4.6.0",
     "prop-types": "^15.5.10",
-    "react": "^15.5.4",
     "react-cosmos-loader": "^2.0.0",
     "react-cosmos-state-proxy": "^2.0.0",
-    "react-dom": "^15.5.4",
     "react-querystring-router": "^2.0.0"
   },
   "xo": false
