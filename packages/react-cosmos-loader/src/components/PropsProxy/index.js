@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { func, object } from 'prop-types';
 
 const isComponentClass = componentType =>
+  // Warning: Some functions don't have the .prototype property
+  componentType.prototype &&
   // ES6 Class
-  componentType.prototype instanceof Component ||
-  // React.createClass
-  componentType.prototype.constructor.displayName;
+  (componentType.prototype instanceof Component ||
+    // React.createClass
+    componentType.prototype.constructor.displayName);
 
 export default class PropsProxy extends Component {
   /**
