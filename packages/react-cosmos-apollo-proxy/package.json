@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-apollo-proxy",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Mock Apollo Client requests via fixtures",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-apollo-proxy",
   "license": "MIT",

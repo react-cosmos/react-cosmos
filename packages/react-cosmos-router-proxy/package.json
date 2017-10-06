@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-router-proxy",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Mock React Router context via fixtures",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-router-proxy",
   "license": "MIT",
