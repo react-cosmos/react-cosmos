@@ -10,7 +10,7 @@ export default function createContextProxy(options) {
 
   class ContextProxy extends React.Component {
     getChildContext() {
-      return this.props.fixture[fixtureKey];
+      return this.props.fixture[fixtureKey] || {};
     }
 
     render() {
