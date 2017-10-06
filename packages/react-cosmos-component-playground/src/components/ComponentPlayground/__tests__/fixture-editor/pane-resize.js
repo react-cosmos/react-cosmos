@@ -29,20 +29,26 @@ describe('Resize fixture editor pane', () => {
       [FIXTURE_EDITOR_PANE_SIZE]: cachedSize
     });
 
+    // Mount component in order for ref and lifecycle methods to be called
+    wrapper = mount(
+      <Loader
+        proxies={[createStateProxy()]}
+        component={ComponentPlayground}
+        fixture={selectedEditorFixture}
+        onComponentRef={i => {
+          instance = i;
+          mockContentNodeSize();
+        }}
+      />
+    );
+
+    // Wait for async actions in componentDidMount to complete
     return new Promise(resolve => {
-      // Mount component in order for ref and lifecycle methods to be called
-      wrapper = mount(
-        <Loader
-          proxies={[createStateProxy()]}
-          component={ComponentPlayground}
-          fixture={selectedEditorFixture}
-          onComponentRef={i => {
-            instance = i;
-            resolve();
-          }}
-        />
-      );
-    }).then(mockContentNodeSize);
+      setImmediate(() => {
+        wrapper.update();
+        resolve();
+      });
+    });
   });
 
   it('should set landscape class to content', () => {
@@ -63,6 +69,7 @@ describe('Resize fixture editor pane', () => {
         offsetHeight: 300
       };
       instance.onResize();
+      wrapper.update();
     });
 
     it('should set portrait class to content', () => {

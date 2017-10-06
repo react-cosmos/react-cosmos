@@ -25,20 +25,26 @@ const mockContentNodeSize = () => {
 describe('Portrait fixture editor pane', () => {
   describe('default size', () => {
     beforeEach(() => {
+      // Mount component in order for ref and lifecycle methods to be called
+      wrapper = mount(
+        <Loader
+          proxies={[createStateProxy()]}
+          component={ComponentPlayground}
+          fixture={selectedEditorFixture}
+          onComponentRef={i => {
+            instance = i;
+            mockContentNodeSize();
+          }}
+        />
+      );
+
+      // Wait for async actions in componentDidMount to complete
       return new Promise(resolve => {
-        // Mount component in order for ref and lifecycle methods to be called
-        wrapper = mount(
-          <Loader
-            proxies={[createStateProxy()]}
-            component={ComponentPlayground}
-            fixture={selectedEditorFixture}
-            onComponentRef={i => {
-              instance = i;
-              resolve();
-            }}
-          />
-        );
-      }).then(mockContentNodeSize);
+        setTimeout(() => {
+          wrapper.update();
+          resolve();
+        });
+      });
     });
 
     it('should set landscape class to content', () => {
@@ -77,6 +83,8 @@ describe('Portrait fixture editor pane', () => {
 
         const upEvent = new MouseEvent('mouseup');
         document.dispatchEvent(upEvent);
+
+        wrapper.update();
       });
 
       it('should resize fixture editor pane', () => {
@@ -102,20 +110,26 @@ describe('Portrait fixture editor pane', () => {
         [FIXTURE_EDITOR_PANE_SIZE]: cachedSize
       });
 
+      // Mount component in order for ref and lifecycle methods to be called
+      wrapper = mount(
+        <Loader
+          proxies={[createStateProxy()]}
+          component={ComponentPlayground}
+          fixture={selectedEditorFixture}
+          onComponentRef={i => {
+            instance = i;
+            mockContentNodeSize();
+          }}
+        />
+      );
+
+      // Wait for async actions in componentDidMount to complete
       return new Promise(resolve => {
-        // Mount component in order for ref and lifecycle methods to be called
-        wrapper = mount(
-          <Loader
-            proxies={[createStateProxy()]}
-            component={ComponentPlayground}
-            fixture={selectedEditorFixture}
-            onComponentRef={i => {
-              instance = i;
-              resolve();
-            }}
-          />
-        );
-      }).then(mockContentNodeSize);
+        setTimeout(() => {
+          wrapper.update();
+          resolve();
+        });
+      });
     });
 
     it('should set cached fixture editor pane height', () => {

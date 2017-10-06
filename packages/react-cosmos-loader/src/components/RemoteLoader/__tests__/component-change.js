@@ -67,6 +67,7 @@ describe('Component source changes', () => {
       })
       .then(() => onFixtureLoad)
       .then(() => {
+        wrapper.update();
         const { onFixtureUpdate } = wrapper.find(ProxyFoo).props();
 
         // Simulate a state change to see if the HMR doesn't invalidate it

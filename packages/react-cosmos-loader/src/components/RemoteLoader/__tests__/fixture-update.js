@@ -67,11 +67,13 @@ describe('Fixture content updated by proxies', () => {
         return onFixtureSelect;
       })
       .then(() => {
+        wrapper.update();
         firstProxyKey = wrapper.find(ProxyFoo).key();
 
         const instance = wrapper.instance();
         instance.onFixtureUpdate(fixtureFoo2);
 
+        wrapper.update();
         firstProxyWrapper = wrapper.find(ProxyFoo);
         firstProxyProps = firstProxyWrapper.props();
 

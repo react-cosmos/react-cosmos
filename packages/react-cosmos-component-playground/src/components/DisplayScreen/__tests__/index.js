@@ -1,19 +1,14 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
 import DisplayScreen from '../';
 import hiThereFixture from '../__fixtures__/hi-there';
 
-const shallowLoader = element =>
-  shallow(element)
-    .dive() // Loader
-    .dive(); // PropsProxy
-
 describe('DisplayScreen', () => {
   let wrapper;
 
-  beforeAll(() => {
-    wrapper = shallowLoader(
+  beforeEach(() => {
+    wrapper = mount(
       <Loader component={DisplayScreen} fixture={hiThereFixture} />
     );
   });

@@ -27,21 +27,19 @@ describe('CP loader ready', () => {
     window.addEventListener('message', handleMessage, false);
 
     const onFrameReady = waitForPostMessage('loaderReady');
-    const waitToRender = new Promise(resolve => {
-      // Mount component in order for ref and lifecycle methods to be called
-      mount(
-        <Loader
-          component={ComponentPlayground}
-          fixture={initFixture}
-          onComponentRef={i => {
-            instance = i;
-            resolve();
-          }}
-        />
-      );
-    });
 
-    return waitToRender.then(() => {
+    // Mount component in order for ref and lifecycle methods to be called
+    mount(
+      <Loader
+        component={ComponentPlayground}
+        fixture={initFixture}
+        onComponentRef={i => {
+          instance = i;
+        }}
+      />
+    );
+
+    return Promise.resolve().then(() => {
       window.postMessage(
         {
           type: 'loaderReady',

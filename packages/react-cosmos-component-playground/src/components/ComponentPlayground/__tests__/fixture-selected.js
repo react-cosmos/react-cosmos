@@ -32,22 +32,20 @@ describe('CP with fixture already selected', () => {
     window.addEventListener('message', handleMessage, false);
 
     const onFrameReady = waitForPostMessage('loaderReady');
-    const waitToRender = new Promise(resolve => {
-      // Mount component in order for ref and lifecycle methods to be called
-      wrapper = mount(
-        <Loader
-          proxies={[createStateProxy()]}
-          component={ComponentPlayground}
-          fixture={selectedFixture}
-          onComponentRef={i => {
-            instance = i;
-            resolve();
-          }}
-        />
-      );
-    });
 
-    return waitToRender.then(() => {
+    // Mount component in order for ref and lifecycle methods to be called
+    wrapper = mount(
+      <Loader
+        proxies={[createStateProxy()]}
+        component={ComponentPlayground}
+        fixture={selectedFixture}
+        onComponentRef={i => {
+          instance = i;
+        }}
+      />
+    );
+
+    return Promise.resolve().then(() => {
       loaderContentWindow = {
         postMessage: jest.fn()
       };

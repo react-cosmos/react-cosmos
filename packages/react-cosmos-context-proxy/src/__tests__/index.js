@@ -78,7 +78,7 @@ describe('fixture without context', () => {
   commonTests();
 
   test('child context is empty', () => {
-    expect(getChildContext).toBeUndefined();
+    expect(getChildContext).toEqual({});
   });
 });
 

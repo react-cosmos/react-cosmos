@@ -12,20 +12,19 @@ let loaderContentWindow;
 
 describe('CP wrong fixture select via router', () => {
   beforeEach(() => {
-    return new Promise(resolve => {
-      // Mount component in order for ref and lifecycle methods to be called
-      wrapper = mount(
-        <Loader
-          proxies={[createStateProxy()]}
-          component={ComponentPlayground}
-          fixture={readyFixture}
-          onComponentRef={i => {
-            instance = i;
-            resolve();
-          }}
-        />
-      );
-    }).then(() => {
+    // Mount component in order for ref and lifecycle methods to be called
+    wrapper = mount(
+      <Loader
+        proxies={[createStateProxy()]}
+        component={ComponentPlayground}
+        fixture={readyFixture}
+        onComponentRef={i => {
+          instance = i;
+        }}
+      />
+    );
+
+    return Promise.resolve().then(() => {
       loaderContentWindow = {
         postMessage: jest.fn()
       };

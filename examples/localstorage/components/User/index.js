@@ -8,7 +8,12 @@ export default () => {
 
   if (!name) {
     return (
-      <form onSubmit={() => localStorage.setItem('name', inputNode.value)}>
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          localStorage.setItem('name', inputNode.value);
+        }}
+      >
         Who are you?{' '}
         <input
           ref={node => {

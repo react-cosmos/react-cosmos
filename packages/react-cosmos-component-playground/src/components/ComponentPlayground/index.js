@@ -218,11 +218,7 @@ export default class ComponentPlayground extends Component {
   }
 
   render() {
-    return (
-      <div className={styles.root}>
-        {this.renderInner()}
-      </div>
-    );
+    return <div className={styles.root}>{this.renderInner()}</div>;
   }
 
   renderInner() {
@@ -250,14 +246,15 @@ export default class ComponentPlayground extends Component {
 
     return (
       <div key="content" ref={this.handleContentRef} className={classes}>
-        {!isLoaderVisible &&
+        {!isLoaderVisible && (
           <StarryBg>
             {!waitingForLoader &&
-              !isFixtureSelected &&
-              <WelcomeScreen fixtures={fixtures} />}
-            {isMissingFixtureSelected &&
-              <MissingScreen componentName={component} fixtureName={fixture} />}
-          </StarryBg>}
+            !isFixtureSelected && <WelcomeScreen fixtures={fixtures} />}
+            {isMissingFixtureSelected && (
+              <MissingScreen componentName={component} fixtureName={fixture} />
+            )}
+          </StarryBg>
+        )}
         {editor && !waitingForLoader && this.renderFixtureEditor()}
         {this.renderLoader(isLoaderVisible)}
       </div>
@@ -315,7 +312,7 @@ export default class ComponentPlayground extends Component {
               </a>
             </div>
             <div className={styles.buttons}>
-              {isFixtureSelected &&
+              {isFixtureSelected && (
                 <a
                   ref="fixtureEditorButton"
                   className={fixtureEditorClassNames}
@@ -323,8 +320,9 @@ export default class ComponentPlayground extends Component {
                   onClick={router.routeLink}
                 >
                   <CodeIcon />
-                </a>}
-              {isFixtureSelected &&
+                </a>
+              )}
+              {isFixtureSelected && (
                 <a
                   ref="fullScreenButton"
                   className={styles.button}
@@ -332,7 +330,8 @@ export default class ComponentPlayground extends Component {
                   onClick={router.routeLink}
                 >
                   <FullScreenIcon />
-                </a>}
+                </a>
+              )}
             </div>
           </div>
           <FixtureList
