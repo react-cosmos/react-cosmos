@@ -57,7 +57,7 @@ export default class FixtureList extends Component {
   };
 
   onToggle = (node, expanded) => {
-    // Mutates state. The world won't explode, just be aware. Hugely simplifies things.
+    // Mutates state, specifically a node from state.fixtureTree
     node.expanded = expanded;
     this.forceUpdate();
   };
