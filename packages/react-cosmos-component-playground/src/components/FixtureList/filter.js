@@ -13,7 +13,7 @@ const findNode = (node, filter) =>
   matcher(filter, node) || // i match
   (node.children && // or i have decendents and one of them match
     node.children.length &&
-    Boolean(node.children.find(child => findNode(child, filter, matcher))));
+    Boolean(node.children.find(childNode => findNode(childNode, filter))));
 
 const filterNode = (node, filter) => {
   // If im an exact match then all my children get to stay
@@ -22,13 +22,13 @@ const filterNode = (node, filter) => {
   }
   // If not then only keep the ones that match or have matching descendants
   // eslint-disable-next-line no-use-before-define
-  const filtered = filterNodeArray(node.children, filter);
-  return { ...node, expanded: true, children: filtered };
+  const filteredChildren = filterNodeArray(node.children, filter);
+  return { ...node, expanded: true, children: filteredChildren };
 };
 
 const filterNodeArray = (nodeArray, filter) =>
   nodeArray
-    .filter(child => findNode(child, filter))
-    .map(child => filterNode(child, filter));
+    .filter(node => findNode(node, filter))
+    .map(node => filterNode(node, filter));
 
 export default filterNodeArray;
