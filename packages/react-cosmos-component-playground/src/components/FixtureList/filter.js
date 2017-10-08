@@ -21,6 +21,7 @@ const filterNode = (node, filter) => {
     return { ...node, expanded: true };
   }
   // If not then only keep the ones that match or have matching descendants
+  // eslint-disable-next-line no-use-before-define
   const filtered = filterNodeArray(node.children, filter);
   return { ...node, expanded: true, children: filtered };
 };
