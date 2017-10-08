@@ -38,6 +38,21 @@
   }
 }
 
+.arrowIcon {
+  display: flex;
+}
+
+.treeSearchActive {
+  .arrowIcon {
+    path {
+      fill: @left-nav-color-search;
+    }
+  }
+  .componentName:hover {
+    background: inherit;
+  }
+}
+
 .fixture {
   display: block;
   height: @fixture-line-height;

@@ -66,7 +66,9 @@ const TreeFolder = ({
         }}
         // ref={`componentName-${node.component}`}
       >
-        {node.expanded ? <DownArrowIcon /> : <RightArrowIcon />}
+        <span className={styles.arrowIcon}>
+          {node.expanded ? <DownArrowIcon /> : <RightArrowIcon />}
+        </span>
         <FolderIcon />
         <FuzzyHighligher searchText={searchText} textToHighlight={node.name} />
       </div>
@@ -182,6 +184,14 @@ class Tree extends React.Component {
   }
 }
 
+const TreeWrapper = props => {
+  return (
+    <div className={props.searchText === '' ? '' : styles.treeSearchActive}>
+      <Tree {...props} />
+    </div>
+  );
+};
+
 const nodeShape = shape({
   name: string.isRequired,
   expanded: bool,
@@ -192,7 +202,7 @@ const nodeShape = shape({
 });
 nodeShape.children = arrayOf(nodeShape);
 
-Tree.propTypes = {
+TreeWrapper.propTypes = {
   nodeArray: arrayOf(nodeShape).isRequired,
   onSelect: func.isRequired,
   onToggle: func.isRequired,
@@ -204,4 +214,4 @@ Tree.propTypes = {
   nestingLevel: number
 };
 
-export default Tree;
+export default TreeWrapper;
