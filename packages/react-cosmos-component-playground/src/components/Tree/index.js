@@ -24,7 +24,9 @@ const FuzzyHighligher = ({ searchText, textToHighlight }) => {
     // unhighlighted characters
     if (index === 0 && highlightIndex !== 0) {
       highlighted.push(
-        <span key={index}>{textToHighlight.slice(0, highlightIndex)}</span>
+        <span key={'initial-unhighlighted'}>
+          {textToHighlight.slice(0, highlightIndex)}
+        </span>
       );
     }
 
@@ -83,16 +85,15 @@ const TreeFolder = ({
         <FolderIcon />
         <FuzzyHighligher searchText={searchText} textToHighlight={node.name} />
       </div>
-      {node.expanded && (
-        <Tree
-          nodeArray={node.children}
-          onToggle={onToggle}
-          onSelect={onSelect}
-          selected={selected}
-          nestingLevel={nestingLevel + 1}
-          searchText={searchText}
-        />
-      )}
+      <Tree
+        nodeArray={node.children}
+        onToggle={onToggle}
+        onSelect={onSelect}
+        selected={selected}
+        nestingLevel={nestingLevel + 1}
+        searchText={searchText}
+        isHidden={!node.expanded}
+      />
     </div>
   );
 };
@@ -148,14 +149,19 @@ class Tree extends React.Component {
       onToggle,
       selected,
       searchText,
-      nestingLevel = 0
+      nestingLevel = 0,
+      isHidden = false
     } = this.props;
     const treeStyle = {};
     if (process.env.NODE_ENV === 'development') {
       treeStyle.backgroundColor = 'black';
     }
+    const classes = classNames(styles.componentChildren, {
+      [styles.componentChildrenCollapsed]: isHidden
+    });
+
     return (
-      <div style={treeStyle}>
+      <div className={classes} style={treeStyle}>
         {nodeArray.map((node, index) => {
           if (node.children) {
             return (
@@ -206,6 +212,7 @@ const TreeWrapper = props => {
 const nodeShape = shape({
   name: string.isRequired,
   expanded: bool,
+  isHidden: bool,
   urlParams: shape({
     component: string.isRequired,
     fixture: string.isRequired
