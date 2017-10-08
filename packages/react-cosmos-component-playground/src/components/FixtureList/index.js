@@ -4,7 +4,7 @@ import { uri } from 'react-querystring-router';
 import { SearchIcon } from '../SvgIcon';
 import styles from './index.less';
 import fixturesToTreeData from './dataMapper';
-import * as filters from './filter';
+import filterNodeArray from './filter';
 import Tree from '../Tree';
 
 const KEY_S = 83;
@@ -74,7 +74,7 @@ export default class FixtureList extends Component {
     const trimmedSearchText = searchText.trim();
     let filteredFixtureTree = fixtureTree;
     if (trimmedSearchText !== '') {
-      filteredFixtureTree = filters.filterTree(fixtureTree, trimmedSearchText);
+      filteredFixtureTree = filterNodeArray(fixtureTree, trimmedSearchText);
     }
 
     return (

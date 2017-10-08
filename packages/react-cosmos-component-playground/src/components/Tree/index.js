@@ -20,6 +20,15 @@ const FuzzyHighligher = ({ searchText, textToHighlight }) => {
 
   const highlighted = [];
   fuzzyMatch.forEach((highlightIndex, index) => {
+    // If the first character isn't highlighted, push the initial
+    // unhighlighted characters
+    if (index === 0 && highlightIndex !== 0) {
+      highlighted.push(
+        <span key={index}>{textToHighlight.slice(0, highlightIndex)}</span>
+      );
+    }
+
+    // Push the highlighted character
     const highlightChar = textToHighlight.slice(
       highlightIndex,
       highlightIndex + 1
@@ -29,6 +38,9 @@ const FuzzyHighligher = ({ searchText, textToHighlight }) => {
         {highlightChar}
       </mark>
     );
+
+    // If the next character isn't highlighted,
+    // push the subsequent unhighlighted characters
     const nextHighlightIndex = fuzzyMatch[index + 1];
     if (nextHighlightIndex !== highlightIndex + 1) {
       const unhighlightedChars = textToHighlight.slice(
