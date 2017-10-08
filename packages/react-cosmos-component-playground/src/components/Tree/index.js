@@ -64,7 +64,6 @@ const TreeFolder = ({
         style={{
           paddingLeft: CONTAINER_LEFT_PADDING + nestingLevel * INDENT_PADDING
         }}
-        // ref={`componentName-${node.component}`}
       >
         <span className={styles.arrowIcon}>
           {node.expanded ? <DownArrowIcon /> : <RightArrowIcon />}
