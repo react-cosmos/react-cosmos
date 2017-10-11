@@ -6,6 +6,3 @@ global.requestAnimationFrame = cb => setTimeout(cb, 0);
 const Adapter = require('enzyme-adapter-react-16');
 
 configure({ adapter: new Adapter() });
-
-// Sometimes Travis is very slow...
-jest.setTimeout(30000);

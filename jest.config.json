@@ -1,12 +1,14 @@
 {
-  "rootDir": "./packages",
+  "rootDir": "./",
   "testEnvironment": "jsdom",
-  "setupFiles": ["../jest.setup.js"],
+  "setupFiles": ["./jest.setup.js"],
+  "setupTestFrameworkScriptFile": "./jest.frameworkSetup.js",
   "testURL": "http://foo.bar/",
   "testPathIgnorePatterns": [
-    "/fileMocks/",
-    "react-cosmos-config/src/__tests__/mocks",
-    "react-cosmos-webpack/src/__tests__/mocks"
+    "<rootDir>/node_modules/",
+    "<rootDir>/packages/react-cosmos-config/src/__tests__/mocks",
+    "<rootDir>/packages/react-cosmos-voyager2/src/__tests__/fileMocks/",
+    "<rootDir>/packages/react-cosmos-webpack/src/__tests__/mocks"
   ],
   "collectCoverageFrom": [
     "**/src/**/*.{js,jsx}",
@@ -25,6 +27,6 @@
   },
   "moduleNameMapper": {
     "\\.(css|less)$": "identity-obj-proxy",
-    "\\.(jpg|png)$": "<rootDir>/__mocks__/img-mock.js"
+    "\\.(jpg|png)$": "<rootDir>/packages/__mocks__/img-mock.js"
   }
 }
