@@ -1,0 +1,3 @@
+package.json
+examples/*/package.json
+packages/*/package.json
