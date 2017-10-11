@@ -4,9 +4,9 @@
   "setupFiles": ["../jest.setup.js"],
   "testURL": "http://foo.bar/",
   "testPathIgnorePatterns": [
+    "/fileMocks/",
     "react-cosmos-config/src/__tests__/mocks",
-    "react-cosmos-webpack/src/__tests__/mocks",
-    "/fileMocks/"
+    "react-cosmos-webpack/src/__tests__/mocks"
   ],
   "collectCoverageFrom": [
     "**/src/**/*.{js,jsx}",
