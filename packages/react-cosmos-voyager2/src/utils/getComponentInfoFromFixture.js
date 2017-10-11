@@ -51,7 +51,7 @@ export async function getComponentInfoFromFixture(args: Args): Promise<Output> {
     const defaultExportNode = body.find(isTyper('ExportDefaultDeclaration'));
 
     if (!defaultExportNode) {
-      throw Error('Could not find default export in fixture file');
+      throw new Error('Could not find default export in fixture file');
     }
 
     const exportBody = defaultExportNode.declaration;
@@ -67,7 +67,7 @@ export async function getComponentInfoFromFixture(args: Args): Promise<Output> {
     if (!fixtureNode) {
       // Could not understand fixture contents so we report that we were
       // unsuccessful in detecting the component path
-      throw Error('Could not parse fixture export');
+      throw new Error('Could not parse fixture export');
     } else {
       const componentProperty = fixtureNode.properties.find(
         prop => prop.key.name === 'component'
@@ -79,7 +79,7 @@ export async function getComponentInfoFromFixture(args: Args): Promise<Output> {
       try {
         const componentPath = getImportPathByName(imports, componentName);
         if (!componentPath) {
-          throw Error(
+          throw new Error(
             'Could not find corresponding component import. ' +
               'Maybe the component is declared inside the fixture?'
           );
@@ -96,7 +96,7 @@ export async function getComponentInfoFromFixture(args: Args): Promise<Output> {
           componentName,
           componentPath: componentResolvedPath
         };
-      } catch (e) {
+      } catch (err) {
         // TODO: Allow user to see these errors when debugging
         // console.log(e.message);
         return {
@@ -105,7 +105,7 @@ export async function getComponentInfoFromFixture(args: Args): Promise<Output> {
         };
       }
     }
-  } catch (e) {
+  } catch (err) {
     // TODO: Allow user to see these errors when debugging
     // console.log(e.message);
     return {

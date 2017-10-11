@@ -2,7 +2,6 @@
 
 import path from 'path';
 import { getComponents } from '../getComponents';
-import Italics from './fileMocks/singlesUnnamed/Italics';
 
 describe('More unnamed single fixture files', () => {
   let components;

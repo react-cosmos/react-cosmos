@@ -2,8 +2,6 @@
 
 import path from 'path';
 import { getComponents } from '../getComponents';
-import Italics from './fileMocks/multiNamed/Italics';
-import Bold from './fileMocks/multiNamed/Bold';
 
 describe('Named multi fixture file', () => {
   let components;

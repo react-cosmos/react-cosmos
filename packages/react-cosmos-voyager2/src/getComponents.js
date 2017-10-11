@@ -112,7 +112,7 @@ export async function getComponents(args: Args): Promise<Components> {
   );
   const defaultComponentNamer = createDefaultNamer('Component');
 
-  for (let componentType of fixturesByComponent.keys()) {
+  for (const componentType of fixturesByComponent.keys()) {
     const compFixtures = fixturesByComponent.get(componentType);
     const filePath = componentPaths.get(componentType) || null;
     const name =

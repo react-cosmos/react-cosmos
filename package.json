@@ -98,6 +98,9 @@
       "object-curly-spacing": 0,
       "operator-linebreak": 0,
       "capitalized-comments": 0,
+      "space-before-function-paren": 0,
+      "no-await-in-loop": 0,
+      "no-negated-condition": 0,
       "func-names": [
         "error",
         "as-needed"
