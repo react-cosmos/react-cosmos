@@ -2,6 +2,18 @@
 
 import type { ComponentType } from 'react';
 
+// Component info is gathered via static analysis (AST) and can fail. Real
+// time meta data is used to cover up for these hopes on the client side
+export type ComponentInfo = {
+  name: string | null,
+  filePath: string | null
+};
+
+export type FixtureFile = {
+  filePath: string,
+  components: Array<ComponentInfo>
+};
+
 export type Fixture = {
   filePath: string,
   fixtureIndex: number | null,
