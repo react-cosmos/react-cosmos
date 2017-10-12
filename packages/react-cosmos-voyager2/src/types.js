@@ -2,6 +2,10 @@
 
 import type { ComponentType } from 'react';
 
+export type Modules = {
+  [string]: Object
+};
+
 // Component info is gathered via static analysis (AST) and can fail. Real
 // time meta data is used to cover up for these hopes on the client side
 export type ComponentInfo = {
@@ -16,33 +20,29 @@ export type FixtureFile = {
 
 export type Fixture = {
   filePath: string,
-  fixtureIndex: number | null,
   name: string,
-  namespace: string
+  namespace: string,
+  source: Object
 };
-
-export type Fixtures = Array<Fixture>;
-
-export type FixturesByComponent = Map<ComponentType<*>, Fixtures>;
 
 export type Component = {
   filePath: string | null,
   name: string,
   namespace: string,
   type: ComponentType<*>,
-  fixtures: Fixtures
+  fixtures: Array<Fixture>
 };
 
-export type Components = Array<Component>;
-
-type ComponentNode = {
-  component: Component
-};
-
-type FixtureNode = {
-  fixture: Fixture
-};
-
-export type TreeNode = (ComponentNode | FixtureNode) & {
-  children: Array<TreeNode>
-};
+// TODO: Future UI types
+//
+// type ComponentNode = {
+//   component: Component
+// };
+//
+// type FixtureNode = {
+//   fixture: Fixture
+// };
+//
+// export type TreeNode = (ComponentNode | FixtureNode) & {
+//   children: Array<TreeNode>
+// };

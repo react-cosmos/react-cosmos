@@ -1,75 +1,75 @@
 import path from 'path';
 import loaderUtils from 'loader-utils';
-import traverse from 'traverse';
 import getCosmosConfig from 'react-cosmos-config';
-import getFilePaths from 'react-cosmos-voyager';
 import moduleExists from 'react-cosmos-utils/lib/module-exists';
+import { findFixtureFiles } from '@skidding/react-cosmos-voyager2/lib/server/findFixtureFiles';
 
-const convertPathToRequireCall = p => `require('${p}')`;
-
-const convertPathMapToRequireCalls = paths => {
-  const props = [];
-
-  Object.keys(paths).forEach(key => {
-    const val = paths[key];
-    const newVal =
-      typeof val === 'string'
-        ? convertPathToRequireCall(val)
-        : convertPathMapToRequireCalls(val);
-
-    props.push(`'${key}':${newVal}`);
-  });
-
-  return `{${props.join(',')}}`;
-};
-
-const getUniqueDirsOfUserModules = (components, fixtures) => {
-  const dirs = new Set();
-
-  traverse(components).forEach(val => {
-    if (typeof val === 'string') {
-      dirs.add(path.dirname(val));
-    }
-  });
-  traverse(fixtures).forEach(val => {
-    if (typeof val === 'string') {
-      dirs.add(path.dirname(val));
-    }
-  });
-
-  return [...dirs];
-};
-
-const convertDirPathsToContextCalls = dirPaths =>
-  `[${dirPaths.map(
-    dirPath => `require.context('${dirPath}', false, /\\.jsx?$/)`
-  )}]`;
+import type { FixtureFile } from '@skidding/react-cosmos-voyager2/lib/types';
 
 /**
+ * TODO: Update docs
  * Inject require calls in bundle for each component/fixture path and
  * require.context calls for each dir with user modules. Tells webpack to
  * - Bundle all necessary component/fixture modules
  * - Watch for (and react to) added and changed component/fixture files
  */
-module.exports = function embedModules(source) {
+module.exports = async function embedModules(source) {
+  const callback = this.async();
+
   const { cosmosConfigPath } = loaderUtils.getOptions(this);
   const cosmosConfig = getCosmosConfig(cosmosConfigPath);
-  const { components, fixtures } = getFilePaths(cosmosConfig);
   const { proxiesPath } = cosmosConfig;
-  const contexts = getUniqueDirsOfUserModules(components, fixtures);
 
+  // TODO: New fs API coming fru
+  const fixtureFiles = await findFixtureFiles({
+    cwd: path.dirname(cosmosConfigPath)
+  });
+  const fixturePaths = getFixtureModules(fixtureFiles);
+  const fixtureModuleCalls = convertPathsToRequireCalls(fixturePaths);
+
+  const contexts = getUniqueDirsOfPaths(fixturePaths);
   contexts.forEach(dirPath => {
     // This ensures this loader is invalidated whenever a new component/fixture
     // file is created or renamed, which leads succesfully uda ...
     this.addDependency(dirPath);
   });
+  const contextCalls = convertDirPathsToContextCalls(contexts);
 
-  return source
-    .replace(/COMPONENTS/g, convertPathMapToRequireCalls(components))
-    .replace(/FIXTURES/g, convertPathMapToRequireCalls(fixtures))
+  const result = source
+    .replace(/FIXTURE_MODULES/g, fixtureModuleCalls)
+    .replace(/FIXTURE_FILES/g, JSON.stringify(fixtureFiles))
     .replace(
       /PROXIES/g,
       moduleExists(proxiesPath) ? convertPathToRequireCall(proxiesPath) : '[]'
     )
-    .replace(/CONTEXTS/g, convertDirPathsToContextCalls(contexts));
+    .replace(/CONTEXTS/g, contextCalls);
+
+  callback(null, result);
 };
+
+function getFixtureModules(files: Array<FixtureFile>): Array<string> {
+  return files.map(file => file.filePath);
+}
+
+function convertPathsToRequireCalls(paths: Array<string>): string {
+  const entries = paths.map(p => `'${p}':${convertPathToRequireCall(p)}`);
+
+  return `{${entries.join(',')}}`;
+}
+
+function convertPathToRequireCall(p) {
+  return `require('${p}')`;
+}
+
+function getUniqueDirsOfPaths(paths) {
+  const dirs = new Set();
+  paths.forEach(p => dirs.add(path.dirname(p)));
+
+  return [...dirs];
+}
+
+function convertDirPathsToContextCalls(dirPaths) {
+  return `[${dirPaths.map(
+    dirPath => `require.context('${dirPath}', false, /\\.jsx?$/)`
+  )}]`;
+}

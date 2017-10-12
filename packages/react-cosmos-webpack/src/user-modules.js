@@ -10,8 +10,8 @@ CONTEXTS;
 
 const getUserModules = () => ({
   /* eslint-disable no-undef */
-  components: COMPONENTS,
-  fixtures: FIXTURES,
+  fixtureModules: FIXTURE_MODULES,
+  fixtureFiles: FIXTURE_FILES,
   proxies: PROXIES
   /* eslint-enable no-undef */
 });

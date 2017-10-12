@@ -1,30 +1,15 @@
+import type { Modules } from '@skidding/react-cosmos-voyager2/lib/types';
+
 const {
   default: importModule
 } = require('react-cosmos-utils/lib/import-module');
-const {
-  default: importComponent
-} = require('react-cosmos-utils/lib/import-component');
 
-export const normalizeComponents = components =>
-  Object.keys(components).reduce(
+// TODO: New fs API coming fru
+export const normalizeModules = (modules: Modules) =>
+  Object.keys(modules).reduce(
     (acc, next) => ({
       ...acc,
-      [next]: importComponent(components[next], next)
+      [next]: importModule(modules[next])
     }),
     {}
   );
-
-export const normalizeFixtures = fixtures =>
-  Object.keys(fixtures).reduce((acc, next) => {
-    const componentFixtures = fixtures[next];
-    return {
-      ...acc,
-      [next]: Object.keys(componentFixtures).reduce(
-        (acc2, next2) => ({
-          ...acc2,
-          [next2]: importModule(componentFixtures[next2])
-        }),
-        {}
-      )
-    };
-  }, {});
