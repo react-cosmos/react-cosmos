@@ -1,0 +1,13 @@
+[ignore]
+.*/packages/react-cosmos-voyager/src/use-cases/.*
+.*/packages/react-cosmos-voyager/lib/use-cases/.*
+
+[include]
+
+[libs]
+flow-typed
+
+[lints]
+
+[options]
+module.ignore_non_literal_requires=true

@@ -43,13 +43,15 @@
     "coveralls": "^3.0.0",
     "create-react-class": "^15.6.2",
     "css-loader": "^0.28.5",
-    "cypress": "^0.20.1",
+    "cypress": "^1.0.1",
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-16": "^1.0.1",
     "eslint-config-xo-react": "^0.13.0",
     "eslint-import-resolver-webpack": "^0.8.3",
     "eslint-plugin-react": "^7.4.0",
     "file-loader": "^1.1.5",
+    "flow-bin": "^0.56.0",
+    "flow-typed": "^2.2.0",
     "glob": "^7.1.2",
     "html-webpack-plugin": "^2.30.1",
     "husky": "^0.14.3",
@@ -116,6 +118,9 @@
       "react/jsx-uses-vars": 1,
       "react/jsx-uses-react": 1
     },
+    "ignores": [
+      "flow-typed/**"
+    ],
     "overrides": [
       {
         "files": [
