@@ -1,6 +1,6 @@
 {
   "name": "@skidding/react-cosmos-webpack",
-  "version": "2.2.0-0",
+  "version": "2.2.0-1",
   "publishConfig": {
     "access": "public"
   },
@@ -12,6 +12,7 @@
     "lib"
   ],
   "dependencies": {
+    "@skidding/react-cosmos-voyager2": "^2.2.0-1",
     "babel-register": "^6.26.0",
     "express": "^4.15.4",
     "fs-extra": "^4.0.1",
@@ -24,7 +25,6 @@
     "react-cosmos-loader": "^2.1.0",
     "react-cosmos-utils": "^2.0.0",
     "react-cosmos-voyager": "^2.0.0",
-    "@skidding/react-cosmos-voyager2": "^2.2.0-0",
     "resolve-from": "^3.0.0",
     "traverse": "^0.6.6",
     "webpack-dev-middleware": "^1.12.0",

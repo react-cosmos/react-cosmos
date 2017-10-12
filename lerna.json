@@ -1,6 +1,16 @@
 {
   "lerna": "2.1.0",
-  "version": "2.2.0-0",
+  "version": "2.2.0-1",
   "npmClient": "yarn",
-  "useWorkspaces": true
+  "useWorkspaces": true,
+  "commands": {
+    "publish": {
+      "ignore": [
+        "yarn.lock",
+        "package.json",
+        "webpack.config.js",
+        "README.md"
+      ]
+    }
+  }
 }
