@@ -17,7 +17,7 @@
     "!**/node_modules/**",
     "!**/react-cosmos-voyager/src/use-cases/**"
   ],
-  "coverageDirectory": "../coverage",
+  "coverageDirectory": "./coverage",
   "coverageReporters": ["lcov", "text"],
   "globals": {
     "fetch": "__GLOBAL_FETCH_MOCK__",
