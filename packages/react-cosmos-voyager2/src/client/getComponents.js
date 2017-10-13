@@ -41,8 +41,7 @@ export function getComponents({
     const fileFixtureNamer = createDefaultNamer(fileName);
 
     // Fixture files can export one fixture object or a list of fixture object
-    const isMultiFixture = Array.isArray(module);
-    const fixturesInFile = isMultiFixture ? module : [module];
+    const fixturesInFile = Array.isArray(module) ? module : [module];
 
     fixturesInFile.forEach((fixture, fixtureIndex) => {
       const { component, name } = fixture;

@@ -7,7 +7,6 @@
   "testPathIgnorePatterns": [
     "<rootDir>/node_modules/",
     "<rootDir>/packages/react-cosmos-config/src/__tests__/mocks",
-    "<rootDir>/packages/react-cosmos-voyager2/src/__tests__/fileMocks/",
     "<rootDir>/packages/react-cosmos-webpack/src/__tests__/mocks",
     "/__fsMocks__/"
   ],

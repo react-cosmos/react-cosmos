@@ -3,7 +3,7 @@
 import type { ComponentType } from 'react';
 
 export type Modules = {
-  [string]: Object
+  [string]: Object | Array<Object>
 };
 
 // Component info is gathered via static analysis (AST) and can fail. Real
