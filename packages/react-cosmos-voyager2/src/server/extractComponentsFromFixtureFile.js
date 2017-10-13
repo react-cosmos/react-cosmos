@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import promisify from 'util.promisify';
 import * as babylon from 'babylon';
+import * as t from 'babel-types';
 
 import type { ComponentInfo } from '../types';
 
@@ -35,8 +36,8 @@ export async function extractComponentsFromFixtureFile(
     const { body } = ast.program;
 
     // Get a list of all imports to query them later
-    const imports = body.filter(isTyper('ImportDeclaration'));
-    const defaultExportNode = body.find(isTyper('ExportDefaultDeclaration'));
+    const imports = body.filter(t.isImportDeclaration);
+    const defaultExportNode = body.find(t.isExportDefaultDeclaration);
 
     if (!defaultExportNode) {
       throw new Error('Could not find default export in fixture file');
@@ -46,9 +47,9 @@ export async function extractComponentsFromFixtureFile(
     let fixtureNodes;
 
     // Support for single and multi fixture files
-    if (isType(exportBody, 'ArrayExpression')) {
+    if (t.isArrayExpression(exportBody)) {
       fixtureNodes = exportBody.elements;
-    } else if (isType(exportBody, 'ObjectExpression')) {
+    } else if (t.isObjectExpression(exportBody)) {
       fixtureNodes = [exportBody];
     }
 
@@ -111,12 +112,4 @@ function getImportPathByName(imports, importName: string): string | null {
   );
 
   return relevantImport ? relevantImport.source.value : null;
-}
-
-function isTyper(nodeType) {
-  return node => isType(node, nodeType);
-}
-
-function isType(node, nodeType) {
-  return node.type === nodeType;
 }
