@@ -1,0 +1,22 @@
+{
+  "name": "@skidding/react-cosmos-transforms",
+  "version": "2.2.0-1",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Static transforms for Cosmos-related bidniss",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-transforms",
+  "license": "MIT",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "scripts": {},
+  "dependencies": {
+    "babel-generator": "^6.26.0",
+    "babel-traverse": "^6.26.0",
+    "babel-types": "^6.26.0",
+    "babylon": "^6.18.0"
+  },
+  "xo": false
+}
