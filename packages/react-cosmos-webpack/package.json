@@ -12,6 +12,7 @@
     "lib"
   ],
   "dependencies": {
+    "@skidding/react-cosmos-transforms": "^2.2.0-1",
     "@skidding/react-cosmos-voyager2": "^2.2.0-1",
     "babel-register": "^6.26.0",
     "express": "^4.15.4",
@@ -33,7 +34,8 @@
   },
   "bin": {
     "cosmos": "./bin/cosmos.js",
-    "cosmos-export": "./bin/cosmos-export.js"
+    "cosmos-export": "./bin/cosmos-export.js",
+    "upgrade-fixtures": "./bin/upgradeFixtures.js"
   },
   "xo": false
 }

@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+// TODO: Put this in one place and reuse in all binaries
 const moduleExists = require('react-cosmos-utils/lib/module-exists').default;
 const resolveUserPath = require('react-cosmos-utils/lib/resolve-user-path')
   .default;
@@ -7,11 +8,14 @@ const argv = require('yargs').argv;
 
 // Babel is included by default, but --plain will run only on Node features
 if (!argv.plain) {
+  // TODO: Remove. Server is already compiled and the babel-register dependency
+  // only complicates things
   require('babel-register');
 }
 
 const startServer = require('../lib/server');
 
+// TODO: Put this in one place and reuse in all binaries
 const cosmosConfigPath = resolveUserPath(
   process.cwd(),
   argv.config || 'cosmos.config'
