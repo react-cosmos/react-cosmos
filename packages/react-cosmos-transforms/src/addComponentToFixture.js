@@ -17,7 +17,7 @@ type Args = {
  * TODO: Move to new module react-cosmos-transform, together with a transform
  * to remove `componentPaths` and friends from cosmos.config
  */
-export async function addComponentToFixture({
+export function addComponentToFixture({
   fixtureCode,
   componentPath,
   componentName
@@ -99,5 +99,6 @@ export async function addComponentToFixture({
   // Ensure there are no empty lines between imports
   newCode = newCode.replace(/;\n\nimport/g, `;\nimport`);
 
-  return newCode;
+  // All files must end with a newline!
+  return `${newCode}\n`;
 }
