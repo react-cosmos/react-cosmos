@@ -5,12 +5,7 @@
   "useWorkspaces": true,
   "commands": {
     "publish": {
-      "ignore": [
-        "yarn.lock",
-        "package.json",
-        "webpack.config.js",
-        "README.md"
-      ]
+      "ignore": ["README.md"]
     }
   }
 }
