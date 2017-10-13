@@ -91,7 +91,12 @@ export function addComponentToFixture({
     }
   });
 
-  let { code: newCode } = generate(ast, { quotes: 'single' }, fixtureCode);
+  const opts = {
+    quotes: 'single',
+    compact: false,
+    comments: true
+  };
+  let { code: newCode } = generate(ast, opts, fixtureCode);
 
   // Ensure there is an empty line between last import and export
   newCode = newCode.replace(/;\nexport default/g, `;\n\nexport default`);
