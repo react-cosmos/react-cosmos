@@ -75,15 +75,19 @@ export async function addComponentToFixture({
         t.identifier(componentName)
       );
       const existingProps = path.get('declaration').get('properties');
-      path.get('declaration').replaceWith(
-        t.objectExpression([
-          componentProp,
-          // Recreate existing props to have consistent whitespace
-          ...existingProps
-            .map(p => p.node)
-            .map(n => t.objectProperty(n.key, n.value))
-        ])
-      );
+
+      // Don't add component prop twice
+      if (!existingProps.find(p => p.node.key.name === 'component')) {
+        path.get('declaration').replaceWith(
+          t.objectExpression([
+            componentProp,
+            // Recreate existing props to have consistent whitespace
+            ...existingProps
+              .map(p => p.node)
+              .map(n => t.objectProperty(n.key, n.value))
+          ])
+        );
+      }
     }
   });
 
