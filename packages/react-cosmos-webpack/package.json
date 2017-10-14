@@ -1,6 +1,6 @@
 {
   "name": "@skidding/react-cosmos-webpack",
-  "version": "2.2.0-2",
+  "version": "2.2.0-3",
   "publishConfig": {
     "access": "public"
   },
@@ -12,7 +12,7 @@
     "lib"
   ],
   "dependencies": {
-    "@skidding/react-cosmos-transforms": "^2.2.0-2",
+    "@skidding/react-cosmos-transforms": "^2.2.0-3",
     "@skidding/react-cosmos-voyager2": "^2.2.0-2",
     "babel-register": "^6.26.0",
     "express": "^4.15.4",

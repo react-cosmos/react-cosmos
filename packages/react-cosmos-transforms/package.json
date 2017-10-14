@@ -1,6 +1,6 @@
 {
   "name": "@skidding/react-cosmos-transforms",
-  "version": "2.2.0-2",
+  "version": "2.2.0-3",
   "publishConfig": {
     "access": "public"
   },
