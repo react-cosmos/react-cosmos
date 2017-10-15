@@ -10,11 +10,11 @@ describe('ES module / Single fixture with anonymous component', () => {
   let files;
 
   beforeEach(async () => {
-    files = await findFixtureFiles({ cwd: join(__dirname, '__fsMocks__') });
+    files = await findFixtureFiles({ cwd: join(__dirname, '__fsmocks__') });
   });
 
   it('has fixture path', () => {
-    expect(files[0].filePath).toBe(resolve('./__fsMocks__/fixture'));
+    expect(files[0].filePath).toBe(resolve('./__fsmocks__/fixture'));
   });
 
   it('has component name', () => {

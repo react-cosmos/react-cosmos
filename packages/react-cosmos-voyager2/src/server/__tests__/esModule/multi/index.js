@@ -9,11 +9,11 @@ describe('ES module / Multi fixture', () => {
   let files;
 
   beforeEach(async () => {
-    files = await findFixtureFiles({ cwd: join(__dirname, '__fsMocks__') });
+    files = await findFixtureFiles({ cwd: join(__dirname, '__fsmocks__') });
   });
 
   it('has fixture path', () => {
-    expect(files[0].filePath).toBe(resolve('./__fsMocks__/fixtures'));
+    expect(files[0].filePath).toBe(resolve('./__fsmocks__/fixtures'));
   });
 
   it('has component names', () => {
@@ -23,10 +23,10 @@ describe('ES module / Multi fixture', () => {
   });
 
   it('has component paths', () => {
-    expect(files[0].components[0].filePath).toBe(resolve('./__fsMocks__/Bold'));
-    expect(files[0].components[1].filePath).toBe(resolve('./__fsMocks__/Bold'));
+    expect(files[0].components[0].filePath).toBe(resolve('./__fsmocks__/Bold'));
+    expect(files[0].components[1].filePath).toBe(resolve('./__fsmocks__/Bold'));
     expect(files[0].components[2].filePath).toBe(
-      resolve('./__fsMocks__/Italic')
+      resolve('./__fsmocks__/Italic')
     );
   });
 });

@@ -119,7 +119,7 @@
       "react/jsx-uses-react": 1
     },
     "ignores": [
-      "**/__fsMocks__/**",
+      "**/__fsmocks__/**",
       "flow-typed/**"
     ],
     "overrides": [

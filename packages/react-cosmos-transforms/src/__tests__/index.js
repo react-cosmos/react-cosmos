@@ -6,7 +6,7 @@ import { addComponentToFixture } from '../addComponentToFixture';
 
 function readMockFile(fileName) {
   return fs.readFileSync(
-    path.join(__dirname, '__fsMocks__', `${fileName}.js`),
+    path.join(__dirname, '__fsmocks__', `${fileName}.js`),
     'utf8'
   );
 }

@@ -7,8 +7,7 @@
   "testPathIgnorePatterns": [
     "<rootDir>/node_modules/",
     "<rootDir>/packages/react-cosmos-webpack/src/__tests__/mocks",
-    "/__fsmocks__/",
-    "/__fsMocks__/"
+    "/__fsmocks__/"
   ],
   "transformIgnorePatterns": ["/node_modules/(?!react-cosmos.+)"],
   "collectCoverageFrom": [

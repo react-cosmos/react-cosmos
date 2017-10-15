@@ -12,12 +12,12 @@ describe('ES module / Single + multi fixture', () => {
   let files;
 
   beforeEach(async () => {
-    files = await findFixtureFiles({ cwd: join(__dirname, '__fsMocks__') });
+    files = await findFixtureFiles({ cwd: join(__dirname, '__fsmocks__') });
   });
 
   describe('file 1', () => {
     it('has fixture path', () => {
-      expect(files[0].filePath).toBe(resolve('./__fsMocks__/fixture'));
+      expect(files[0].filePath).toBe(resolve('./__fsmocks__/fixture'));
     });
 
     it('has component name', () => {
@@ -26,14 +26,14 @@ describe('ES module / Single + multi fixture', () => {
 
     it('has component path', () => {
       expect(files[0].components[0].filePath).toBe(
-        resolve('./__fsMocks__/Italic')
+        resolve('./__fsmocks__/Italic')
       );
     });
   });
 
   describe('file 2', () => {
     it('has fixture path', () => {
-      expect(files[1].filePath).toBe(resolve('./__fsMocks__/fixtures'));
+      expect(files[1].filePath).toBe(resolve('./__fsmocks__/fixtures'));
     });
 
     it('has component names', () => {
@@ -44,13 +44,13 @@ describe('ES module / Single + multi fixture', () => {
 
     it('has component paths', () => {
       expect(files[1].components[0].filePath).toBe(
-        resolve('./__fsMocks__/Bold')
+        resolve('./__fsmocks__/Bold')
       );
       expect(files[1].components[1].filePath).toBe(
-        resolve('./__fsMocks__/Bold')
+        resolve('./__fsmocks__/Bold')
       );
       expect(files[1].components[2].filePath).toBe(
-        resolve('./__fsMocks__/Italic')
+        resolve('./__fsmocks__/Italic')
       );
     });
   });
