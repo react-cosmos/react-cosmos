@@ -63,7 +63,8 @@ const TreeFolder = ({
   onToggle,
   selected,
   nestingLevel,
-  searchText
+  searchText,
+  baseUrlParams
 }) => {
   return (
     <div
@@ -94,6 +95,7 @@ const TreeFolder = ({
         nestingLevel={nestingLevel + 1}
         searchText={searchText}
         isHidden={!node.expanded}
+        baseUrlParams={baseUrlParams}
       />
     </div>
   );
@@ -109,10 +111,22 @@ const nodeIsSelected = (node, selected) => {
   );
 };
 
-const TreeItem = ({ node, onSelect, isSelected, nestingLevel, searchText }) => {
+const TreeItem = ({
+  node,
+  onSelect,
+  isSelected,
+  nestingLevel,
+  searchText,
+  baseUrlParams
+}) => {
   const fixtureClassNames = classNames(styles.fixture, {
     [styles.fixtureSelected]: isSelected
   });
+
+  const mergedUrlParams = {
+    ...baseUrlParams,
+    ...node.urlParams
+  };
 
   return (
     <a
@@ -121,11 +135,11 @@ const TreeItem = ({ node, onSelect, isSelected, nestingLevel, searchText }) => {
         paddingLeft:
           CONTAINER_LEFT_PADDING + (1 + nestingLevel) * INDENT_PADDING
       }}
-      href={uri.stringifyParams(node.urlParams)}
+      href={uri.stringifyParams(mergedUrlParams)}
       onClick={e => {
         e.preventDefault();
         e.stopPropagation();
-        onSelect(node);
+        onSelect(mergedUrlParams);
       }}
     >
       <FuzzyHighligher searchText={searchText} textToHighlight={node.name} />
@@ -151,6 +165,7 @@ class Tree extends React.Component {
       onToggle,
       selected,
       searchText,
+      baseUrlParams,
       nestingLevel = 0,
       isHidden = false
     } = this.props;
@@ -175,6 +190,7 @@ class Tree extends React.Component {
                 selected={selected}
                 nestingLevel={nestingLevel}
                 searchText={searchText}
+                baseUrlParams={baseUrlParams}
               />
             );
           }
@@ -194,6 +210,7 @@ class Tree extends React.Component {
                 isSelected={isSelected}
                 nestingLevel={nestingLevel}
                 searchText={searchText}
+                baseUrlParams={baseUrlParams}
               />
             </div>
           );
@@ -229,6 +246,10 @@ TreeWrapper.propTypes = {
   selected: shape({
     component: string,
     fixture: string
+  }).isRequired,
+  baseUrlParams: shape({
+    editor: bool,
+    fullScreen: bool
   }).isRequired,
   searchText: string,
   nestingLevel: number

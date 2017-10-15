@@ -43,7 +43,8 @@ export default {
       component: 'ComponentB',
       fixture: 'baz'
     },
-    onSelect: node => console.log('Selected node: ', node),
+    baseUrlParams: {},
+    onSelect: urlParams => console.log('Selected urlParams: ', urlParams),
     onToggle: (node, expanded) => console.log('Toggled node: ', node, expanded)
   }
 };

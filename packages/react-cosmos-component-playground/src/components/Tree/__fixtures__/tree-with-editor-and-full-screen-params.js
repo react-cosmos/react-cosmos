@@ -104,8 +104,11 @@ export default {
       component: 'dirB/subdirA/Component4',
       fixture: 'fixtureA'
     },
-    searchText: 'sub a',
-    baseUrlParams: {},
+    searchText: '',
+    baseUrlParams: {
+      editor: true,
+      fullScreen: true
+    },
     onSelect: urlParams => console.log('Selected urlParams: ', urlParams),
     onToggle: (node, expanded) => console.log('Toggled node: ', node, expanded)
   }
