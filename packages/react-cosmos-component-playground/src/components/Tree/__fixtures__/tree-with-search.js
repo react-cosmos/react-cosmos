@@ -106,7 +106,7 @@ export default {
     },
     searchText: 'sub a',
     baseUrlParams: {},
-    onSelect: urlParams => console.log('Selected urlParams: ', urlParams),
+    onSelect: href => console.log('Selected href: ', href),
     onToggle: (node, expanded) => console.log('Toggled node: ', node, expanded)
   }
 };

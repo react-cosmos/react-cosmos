@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { objectOf, arrayOf, shape, string, func, bool } from 'prop-types';
-import { uri } from 'react-querystring-router';
 import { SearchIcon } from '../SvgIcon';
 import styles from './index.less';
 import fixturesToTreeData from './dataMapper';
@@ -69,8 +68,7 @@ export default class FixtureList extends Component {
     this.forceUpdate();
   };
 
-  onSelect = urlParams => {
-    const href = uri.stringifyParams(urlParams);
+  onSelect = href => {
     this.props.onUrlChange(href);
   };
 

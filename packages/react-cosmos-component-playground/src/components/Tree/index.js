@@ -128,6 +128,8 @@ const TreeItem = ({
     ...node.urlParams
   };
 
+  const href = uri.stringifyParams(mergedUrlParams);
+
   return (
     <a
       className={fixtureClassNames}
@@ -135,11 +137,11 @@ const TreeItem = ({
         paddingLeft:
           CONTAINER_LEFT_PADDING + (1 + nestingLevel) * INDENT_PADDING
       }}
-      href={uri.stringifyParams(mergedUrlParams)}
+      href={href}
       onClick={e => {
         e.preventDefault();
         e.stopPropagation();
-        onSelect(mergedUrlParams);
+        onSelect(e.currentTarget.href);
       }}
     >
       <FuzzyHighligher searchText={searchText} textToHighlight={node.name} />
