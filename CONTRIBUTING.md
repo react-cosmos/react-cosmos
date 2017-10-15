@@ -75,6 +75,24 @@ Important to note:
 
 Because of the latter, integration tests or examples for older React or webpack version are not possible inside the monorepo. We should create external repos for testing React 0.14.x or webpack 1.x.
 
+#### Compiled vs source code
+
+Monorepo packages have source code under `packages/PKG_NAME/src` and compiled code under `packages/PKG_NAME/lib`. Package entries point to the compiled code (ie. `lib/index.js`), so whenever we reference a specific file from another package we must also point to the lib path:
+
+```js
+import moduleExists from 'react-cosmos-utils/lib/module-exists';
+```
+
+But, if we want to import a Flow type we'll only find it using the src path:
+
+```js
+import type { FixtureFile } from 'react-cosmos-voyager2/src/types';
+```
+
+Ideally we would always import the source of other packages for Flow to validate types across packages, but we can only do this in client side code which gets compiled again by webpack. Importing a source file from another package in a server side package would result in uncompiled code running in Node, which is not cool. Even when Node will support ES modules without a feature flag, we'll still want to compile stuff like JSX.
+
+Please reach out of you have a better idea for handling this!
+
 ### Playground ⇆ Loader communication
 
 The Cosmos UI is made out of two frames. Components are loaded inside an `iframe` for full encapsulation. Because the Playground and the Loader aren't part of the same frame, we use `postMessage` to communicate back and forth.

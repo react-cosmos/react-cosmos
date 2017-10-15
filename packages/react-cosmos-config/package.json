@@ -9,7 +9,8 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
-    "react-cosmos-utils": "^2.0.0"
+    "react-cosmos-utils": "^2.0.0",
+    "yargs": "^9.0.1"
   },
   "xo": false
 }
