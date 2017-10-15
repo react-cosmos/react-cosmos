@@ -1,6 +1,6 @@
 // @flow
 
-import { getComponents } from '../getComponents';
+import { getComponents } from '../get-components';
 
 describe('Single component defaults', () => {
   let components;

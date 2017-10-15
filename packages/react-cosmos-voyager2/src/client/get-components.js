@@ -3,8 +3,8 @@
 import path from 'path';
 import commondir from 'commondir';
 import { sortBy } from 'lodash';
-import { inferComponentName } from './utils/inferComponentName';
-import { createDefaultNamer } from './utils/defaultNamer';
+import { inferComponentName } from './utils/infer-component-name';
+import { createDefaultNamer } from './utils/default-namer';
 
 import type { ComponentType } from 'react';
 import type { Modules, FixtureFile, Fixture, Component } from '../types';

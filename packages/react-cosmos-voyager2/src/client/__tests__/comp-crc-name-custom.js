@@ -2,7 +2,7 @@
 
 import React from 'react';
 import createReactClass from 'create-react-class';
-import { getComponents } from '../getComponents';
+import { getComponents } from '../get-components';
 
 const Strike = createReactClass({
   // Jest seems to automatically add a displayName equal to the filename, so a

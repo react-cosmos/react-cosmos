@@ -1,10 +1,12 @@
 // @flow
 
-import { getComponents } from '../getComponents';
+import { getComponents } from '../get-components';
 
 const FooComp = () => {};
 
-describe('Default namespace for one component', () => {
+FooComp.namespace = 'fooNs';
+
+describe('Custom namespace for one component', () => {
   let components;
 
   beforeEach(async () => {
@@ -27,8 +29,8 @@ describe('Default namespace for one component', () => {
     components = await getComponents({ fixtureFiles, fixtureModules });
   });
 
-  it('has empty namespace', () => {
-    expect(components[0].namespace).toBe('');
+  it('has custom namespace', () => {
+    expect(components[0].namespace).toBe('fooNs');
   });
 });
 
@@ -36,7 +38,11 @@ const FooComp1 = () => {};
 const FooComp2 = () => {};
 const FooComp3 = () => {};
 
-describe('Default namespace for more components', () => {
+FooComp1.namespace = 'fooNs1';
+FooComp2.namespace = 'fooNs2';
+FooComp3.namespace = 'fooNs3';
+
+describe('Custom namespace for more components', () => {
   let components;
 
   beforeEach(async () => {
@@ -46,15 +52,15 @@ describe('Default namespace for more components', () => {
         components: [
           {
             name: 'FooComp1',
-            filePath: '/path/to1/fooComp1.js'
+            filePath: '/path/to/fooComp1.js'
           },
           {
             name: 'FooComp2',
-            filePath: '/path/to2/fooComp2.js'
+            filePath: '/path/to/fooComp2.js'
           },
           {
             name: 'FooComp3',
-            filePath: '/path/to3/fooComp3.js'
+            filePath: '/path/to/fooComp3.js'
           }
         ]
       }
@@ -75,15 +81,15 @@ describe('Default namespace for more components', () => {
     components = await getComponents({ fixtureFiles, fixtureModules });
   });
 
-  it('has namespace from file path', () => {
-    expect(components[0].namespace).toBe('to1');
+  it('has custom namespace', () => {
+    expect(components[0].namespace).toBe('fooNs1');
   });
 
-  it('has namespace from file path', () => {
-    expect(components[1].namespace).toBe('to2');
+  it('has custom namespace', () => {
+    expect(components[1].namespace).toBe('fooNs2');
   });
 
-  it('has namespace from file path', () => {
-    expect(components[2].namespace).toBe('to3');
+  it('has custom namespace', () => {
+    expect(components[2].namespace).toBe('fooNs3');
   });
 });

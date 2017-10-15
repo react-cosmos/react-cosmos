@@ -1,10 +1,10 @@
 // @flow
 
-import { getComponents } from '../getComponents';
+import { getComponents } from '../get-components';
 
 const Comp = () => {};
 
-describe('Default name for single fixture', () => {
+describe('Custom name for single fixture', () => {
   let components;
 
   beforeEach(async () => {
@@ -16,18 +16,19 @@ describe('Default name for single fixture', () => {
     ];
     const fixtureModules = {
       '/path/to/foo.js': {
+        name: 'fu fu',
         component: Comp
       }
     };
     components = await getComponents({ fixtureFiles, fixtureModules });
   });
 
-  it('has name of file', () => {
-    expect(components[0].fixtures[0].name).toBe('foo');
+  it('has name', () => {
+    expect(components[0].fixtures[0].name).toBe('fu fu');
   });
 });
 
-describe('Default names for multi fixture', () => {
+describe('Custom names for multi fixture', () => {
   let components;
 
   beforeEach(async () => {
@@ -40,12 +41,15 @@ describe('Default names for multi fixture', () => {
     const fixtureModules = {
       '/path/to/foo.js': [
         {
+          name: 'fu fu 1',
           component: Comp
         },
         {
+          name: 'fu fu 2',
           component: Comp
         },
         {
+          name: 'fu fu 3',
           component: Comp
         }
       ]
@@ -53,15 +57,15 @@ describe('Default names for multi fixture', () => {
     components = await getComponents({ fixtureFiles, fixtureModules });
   });
 
-  it('has name of file', () => {
-    expect(components[0].fixtures[0].name).toBe('foo');
+  it('has name', () => {
+    expect(components[0].fixtures[0].name).toBe('fu fu 1');
   });
 
-  it('has name of file', () => {
-    expect(components[0].fixtures[1].name).toBe('foo (1)');
+  it('has name', () => {
+    expect(components[0].fixtures[1].name).toBe('fu fu 2');
   });
 
-  it('has name of file', () => {
-    expect(components[0].fixtures[2].name).toBe('foo (2)');
+  it('has name', () => {
+    expect(components[0].fixtures[2].name).toBe('fu fu 3');
   });
 });

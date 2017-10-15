@@ -1,7 +1,7 @@
 // @flow
 
 import { join } from 'path';
-import { findFixtureFiles } from '../../../findFixtureFiles';
+import { findFixtureFiles } from '../../../find-fixture-files';
 
 const { resolve } = require;
 

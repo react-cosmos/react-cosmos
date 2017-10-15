@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { getComponents } from '../getComponents';
+import { getComponents } from '../get-components';
 
 class Bold extends Component<{ name: string }> {
   render() {

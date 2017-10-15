@@ -1,12 +1,11 @@
 // @flow
 
 import { join } from 'path';
-import { findFixtureFiles } from '../../../findFixtureFiles';
+import { findFixtureFiles } from '../../../find-fixture-files';
 
 const { resolve } = require;
 
-// We test for edge cases to make sure we degrade gracefully
-describe('ES module / Single fixture with inline component', () => {
+describe('ES module / Single fixture', () => {
   let files;
 
   beforeEach(async () => {
@@ -18,10 +17,12 @@ describe('ES module / Single fixture with inline component', () => {
   });
 
   it('has component name', () => {
-    expect(files[0].components[0].name).toBe('InlineComponent');
+    expect(files[0].components[0].name).toBe('Italic');
   });
 
   it('has component path', () => {
-    expect(files[0].components[0].filePath).toBe(null);
+    expect(files[0].components[0].filePath).toBe(
+      resolve('./__fsmocks__/Italic')
+    );
   });
 });

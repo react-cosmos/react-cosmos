@@ -2,7 +2,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import { addComponentToFixture } from '../addComponentToFixture';
+import { addComponentToFixture } from '../add-component-to-fixture';
 
 function readMockFile(fileName) {
   return fs.readFileSync(
@@ -12,11 +12,11 @@ function readMockFile(fileName) {
 }
 
 [
-  'esModuleExist',
-  'esModuleExistName',
-  'esModuleExistPath',
-  'esModuleFirst',
-  'esModuleLast'
+  'es-module-exist',
+  'es-module-exist-name',
+  'es-module-exist-path',
+  'es-module-first',
+  'es-module-last'
 ].forEach(testName => {
   test(testName, () => {
     const input = readMockFile(`${testName}.input`);
@@ -32,9 +32,9 @@ function readMockFile(fileName) {
   });
 });
 
-test('esModuleFirstJsx', () => {
-  const input = readMockFile(`esModuleFirstJsx.input`);
-  const output = readMockFile(`esModuleFirstJsx.output`);
+test('es-module-first-jsx', () => {
+  const input = readMockFile(`es-module-first-jsx.input`);
+  const output = readMockFile(`es-module-first-jsx.output`);
 
   const newCode = addComponentToFixture({
     fixtureCode: input,

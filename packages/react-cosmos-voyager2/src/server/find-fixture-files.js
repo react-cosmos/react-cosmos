@@ -3,7 +3,7 @@
 import glob from 'glob';
 import micromatch from 'micromatch';
 import promisify from 'util.promisify';
-import { extractComponentsFromFixtureFile } from './extractComponentsFromFixtureFile';
+import { extractComponentsFromFixtureFile } from './extract-components-from-fixture-file';
 
 import type { FixtureFile } from '../types';
 
@@ -32,7 +32,6 @@ export async function findFixtureFiles(
 ): Promise<Array<FixtureFile>> {
   const { fileMatch, cwd } = { ...defaults, ...args };
 
-  // TODO: How do we watch for file changes?
   const allPaths = await globAsync('**/*', {
     cwd,
     absolute: true,

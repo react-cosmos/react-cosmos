@@ -194,12 +194,16 @@ Use [Jest](https://facebook.github.io/jest/) for unit testing. Look inside `__te
 
 Make sure `yarn run lint` passes and add [xo](https://github.com/sindresorhus/xo) to your editor if possible.
 
+When naming a file:
+- Use *CamelCase* for components: `DragHandle.js` or `DragHandle/index.js`
+- Use *kebab-case* for any other path: `packages/react-cosmos-utils/src/resolve-user-path.js`
+
+Please follow these rules or challenge them if you think it's worth it.
+
 #### Use Git conscientiously
 
 - [GitHub Flow](https://guides.github.com/introduction/flow/)
 - [Conventional Commits](https://conventionalcommits.org/) (important for generating release notes)
-
-
 
 ---
 
