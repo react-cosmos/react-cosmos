@@ -4,6 +4,7 @@ import { FolderIcon, RightArrowIcon, DownArrowIcon } from '../SvgIcon';
 import styles from './index.less';
 import classNames from 'classnames';
 import { match } from 'fuzzaldrin-plus';
+import { uri } from 'react-querystring-router';
 
 const CONTAINER_LEFT_PADDING = 10;
 const INDENT_PADDING = 20;
@@ -120,6 +121,7 @@ const TreeItem = ({ node, onSelect, isSelected, nestingLevel, searchText }) => {
         paddingLeft:
           CONTAINER_LEFT_PADDING + (1 + nestingLevel) * INDENT_PADDING
       }}
+      href={uri.stringifyParams(node.urlParams)}
       onClick={e => {
         e.preventDefault();
         e.stopPropagation();
