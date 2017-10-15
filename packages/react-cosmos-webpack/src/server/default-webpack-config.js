@@ -3,14 +3,14 @@ import { silent as silentImport } from 'import-from';
 
 // This config doesn't have entry and output set up because it's not meant to
 // work standalone. react-cosmos-webpack adds an entry & output when extending this.
-export default function getDefaultWebpackConfig(cosmosConfigPath) {
+export default function getDefaultWebpackConfig(rootPath) {
   // react-cosmos-webpack doesn't directly depend on any webpack loader.
   // Instead, it leverages the ones already installed by the user.
-  const babelLoaderPath = silentResolve(cosmosConfigPath, 'babel-loader');
-  const styleLoaderPath = silentResolve(cosmosConfigPath, 'style-loader');
-  const cssLoaderPath = silentResolve(cosmosConfigPath, 'css-loader');
+  const babelLoaderPath = silentResolve(rootPath, 'babel-loader');
+  const styleLoaderPath = silentResolve(rootPath, 'style-loader');
+  const cssLoaderPath = silentResolve(rootPath, 'css-loader');
   // Note: Since webpack >= v2.0.0, importing of JSON files will work by default
-  const jsonLoaderPath = silentResolve(cosmosConfigPath, 'json-loader');
+  const jsonLoaderPath = silentResolve(rootPath, 'json-loader');
   const loaders = [];
 
   if (babelLoaderPath) {
@@ -39,10 +39,7 @@ export default function getDefaultWebpackConfig(cosmosConfigPath) {
     });
   }
 
-  const HtmlWebpackPlugin = silentImport(
-    cosmosConfigPath,
-    'html-webpack-plugin'
-  );
+  const HtmlWebpackPlugin = silentImport(rootPath, 'html-webpack-plugin');
   const plugins = [];
 
   if (HtmlWebpackPlugin) {
