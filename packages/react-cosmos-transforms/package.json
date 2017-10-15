@@ -1,5 +1,5 @@
 {
-  "name": "@skidding/react-cosmos-transforms",
+  "name": "react-cosmos-transforms",
   "version": "2.2.0-3",
   "publishConfig": {
     "access": "public"
@@ -13,7 +13,9 @@
   "main": "lib/index.js",
   "scripts": {},
   "dependencies": {
-    "jscodeshift": "^0.3.32"
+    "jscodeshift": "^0.3.32",
+    "react-cosmos-config": "^2.0.0",
+    "react-cosmos-voyager": "^2.0.0"
   },
   "xo": false
 }

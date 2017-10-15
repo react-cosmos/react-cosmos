@@ -1,18 +1,26 @@
+// @flow
+
 import fs from 'fs';
 import path from 'path';
 import getCosmosConfig from 'react-cosmos-config';
 import getFilePaths from 'react-cosmos-voyager';
-import { addComponentToFixture } from '@skidding/react-cosmos-transforms/lib/addComponentToFixture';
+import { addComponentToFixture } from './add-component-to-fixture';
 
-export default function upgradeFixtures(cosmosConfigPath) {
-  const cosmosConfig = getCosmosConfig(cosmosConfigPath);
+import type { Config } from 'react-cosmos-config/src';
 
-  // TODO: Abort if cosmosConfig.componentPaths is empty
+const { keys } = Object;
 
-  const { components, fixtures } = getFilePaths(cosmosConfig);
+export default function upgradeFixtures() {
+  const config: Config = getCosmosConfig();
 
-  Object.keys(fixtures).forEach(componentName => {
-    Object.keys(fixtures[componentName]).forEach(fixtureName => {
+  if (config.componentPaths.length === 0) {
+    console.warn('[Cosmos] Could not find `componentPaths` in config. Abort.');
+  }
+
+  const { components, fixtures } = getFilePaths(config);
+
+  keys(fixtures).forEach(componentName => {
+    keys(fixtures[componentName]).forEach(fixtureName => {
       const fixturePath = fixtures[componentName][fixtureName];
       const componentPathAbs = components[componentName];
       const componentPath = path.relative(

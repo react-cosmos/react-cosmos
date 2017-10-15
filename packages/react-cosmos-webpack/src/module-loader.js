@@ -1,10 +1,11 @@
+// @flow
+
 import path from 'path';
-import loaderUtils from 'loader-utils';
 import getCosmosConfig from 'react-cosmos-config';
 import moduleExists from 'react-cosmos-utils/lib/module-exists';
-import { findFixtureFiles } from '@skidding/react-cosmos-voyager2/lib/server/findFixtureFiles';
+import { findFixtureFiles } from 'react-cosmos-voyager2/lib/server/find-fixture-files';
 
-import type { FixtureFile } from '@skidding/react-cosmos-voyager2/lib/types';
+import type { FixtureFile } from 'react-cosmos-voyager2/src/types';
 
 /**
  * TODO: Update docs
@@ -16,13 +17,12 @@ import type { FixtureFile } from '@skidding/react-cosmos-voyager2/lib/types';
 module.exports = async function embedModules(source) {
   const callback = this.async();
 
-  const { cosmosConfigPath } = loaderUtils.getOptions(this);
-  const cosmosConfig = getCosmosConfig(cosmosConfigPath);
+  const cosmosConfig = getCosmosConfig();
   const { proxiesPath } = cosmosConfig;
 
   // TODO: New fs API coming fru
   const fixtureFiles = await findFixtureFiles({
-    cwd: path.dirname(cosmosConfigPath)
+    cwd: cosmosConfig.rootPath
   });
   const fixturePaths = getFixtureModules(fixtureFiles);
   const fixtureModuleCalls = convertPathsToRequireCalls(fixturePaths);
@@ -69,7 +69,7 @@ function getUniqueDirsOfPaths(paths) {
 }
 
 function convertDirPathsToContextCalls(dirPaths) {
-  return `[${dirPaths.map(
-    dirPath => `require.context('${dirPath}', false, /\\.jsx?$/)`
-  )}]`;
+  return `[${dirPaths
+    .map(dirPath => `require.context('${dirPath}', false, /\\.jsx?$/)`)
+    .join(',')}]`;
 }

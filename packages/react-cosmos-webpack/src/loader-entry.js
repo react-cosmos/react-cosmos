@@ -1,6 +1,6 @@
 /* global window */
 
-import { getComponents } from '@skidding/react-cosmos-voyager2/lib/client/getComponents';
+import { getComponents } from 'react-cosmos-voyager2/src/client/get-components';
 
 // TODO: Put in a separate file and use regular imports
 // This has to be done before React is imported. We do it before importing

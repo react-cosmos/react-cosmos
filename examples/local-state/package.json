@@ -8,7 +8,7 @@
     "start": "NODE_ENV=development cosmos"
   },
   "dependencies": {
-    "@skidding/react-cosmos-webpack": "^2.2.0-3"
+    "react-cosmos-webpack": "^2.2.0-3"
   },
   "xo": false,
   "private": true

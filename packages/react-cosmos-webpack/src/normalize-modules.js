@@ -1,4 +1,6 @@
-import type { Modules } from '@skidding/react-cosmos-voyager2/lib/types';
+// @flow
+
+import type { Modules } from 'react-cosmos-voyager2/src/types';
 
 const {
   default: importModule
