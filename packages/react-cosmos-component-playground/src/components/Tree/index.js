@@ -156,12 +156,12 @@ class Tree extends React.Component {
     if (process.env.NODE_ENV === 'development') {
       treeStyle.backgroundColor = 'black';
     }
-    const classes = classNames(styles.componentChildren, {
-      [styles.componentChildrenCollapsed]: isHidden
-    });
 
     return (
-      <div className={classes} style={treeStyle}>
+      <div
+        className={isHidden ? styles.componentCollapsed : ''}
+        style={treeStyle}
+      >
         {nodeArray.map((node, index) => {
           if (node.children) {
             return (
