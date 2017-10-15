@@ -1,6 +1,7 @@
 {
   "rootDir": "./packages",
   "testEnvironment": "jsdom",
+  "setupFiles": ["../jest.setup.js"],
   "testURL": "http://foo.bar/",
   "testPathIgnorePatterns": [
     "react-cosmos-config/src/__tests__/mocks",

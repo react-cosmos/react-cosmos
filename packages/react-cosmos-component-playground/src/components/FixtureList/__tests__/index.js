@@ -1,22 +1,17 @@
 import React from 'react';
 import merge from 'lodash.merge';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
 import FixtureList from '../';
 import populatedFixture from '../__fixtures__/populated';
 import populatedWithEditorFixture from '../__fixtures__/populated-with-editor';
 import populatedAndSelectedFixture from '../__fixtures__/populated-and-selected';
 
-const shallowLoader = element =>
-  shallow(element)
-    .dive() // Loader
-    .dive(); // PropsProxy
-
 describe('List', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallowLoader(
+    wrapper = mount(
       <Loader component={FixtureList} fixture={populatedFixture} />
     );
   });
@@ -31,12 +26,32 @@ describe('List', () => {
 
   test('should render fixture names', () => {
     const componentA = wrapper.find('.component').at(0);
-    expect(componentA.find('.fixture').at(0).text()).toContain('foo');
-    expect(componentA.find('.fixture').at(1).text()).toContain('bar');
+    expect(
+      componentA
+        .find('.fixture')
+        .at(0)
+        .text()
+    ).toContain('foo');
+    expect(
+      componentA
+        .find('.fixture')
+        .at(1)
+        .text()
+    ).toContain('bar');
 
     const componentB = wrapper.find('.component').at(1);
-    expect(componentB.find('.fixture').at(0).text()).toContain('baz');
-    expect(componentB.find('.fixture').at(1).text()).toContain('qux');
+    expect(
+      componentB
+        .find('.fixture')
+        .at(0)
+        .text()
+    ).toContain('baz');
+    expect(
+      componentB
+        .find('.fixture')
+        .at(1)
+        .text()
+    ).toContain('qux');
   });
 });
 
@@ -47,7 +62,7 @@ describe('Links', () => {
 
   describe('editor closed', () => {
     beforeEach(() => {
-      wrapper = shallowLoader(
+      wrapper = mount(
         <Loader component={FixtureList} fixture={populatedFixture} />
       );
       componentA = wrapper.find('.component').at(0);
@@ -55,33 +70,45 @@ describe('Links', () => {
     });
 
     test('link 1', () => {
-      expect(componentA.find('.fixture').at(0).prop('href')).toEqual(
-        '?component=ComponentA&fixture=foo'
-      );
+      expect(
+        componentA
+          .find('.fixture')
+          .at(0)
+          .prop('href')
+      ).toEqual('?component=ComponentA&fixture=foo');
     });
 
     test('link 2', () => {
-      expect(componentA.find('.fixture').at(1).prop('href')).toEqual(
-        '?component=ComponentA&fixture=bar'
-      );
+      expect(
+        componentA
+          .find('.fixture')
+          .at(1)
+          .prop('href')
+      ).toEqual('?component=ComponentA&fixture=bar');
     });
 
     test('link 3', () => {
-      expect(componentB.find('.fixture').at(0).prop('href')).toEqual(
-        '?component=ComponentB&fixture=baz'
-      );
+      expect(
+        componentB
+          .find('.fixture')
+          .at(0)
+          .prop('href')
+      ).toEqual('?component=ComponentB&fixture=baz');
     });
 
     test('link 4', () => {
-      expect(componentB.find('.fixture').at(1).prop('href')).toEqual(
-        '?component=ComponentB&fixture=qux'
-      );
+      expect(
+        componentB
+          .find('.fixture')
+          .at(1)
+          .prop('href')
+      ).toEqual('?component=ComponentB&fixture=qux');
     });
   });
 
   describe('editor open', () => {
     beforeEach(() => {
-      wrapper = shallowLoader(
+      wrapper = mount(
         <Loader component={FixtureList} fixture={populatedWithEditorFixture} />
       );
       componentA = wrapper.find('.component').at(0);
@@ -89,27 +116,39 @@ describe('Links', () => {
     });
 
     test('link 1', () => {
-      expect(componentA.find('.fixture').at(0).prop('href')).toEqual(
-        '?editor=true&component=ComponentA&fixture=foo'
-      );
+      expect(
+        componentA
+          .find('.fixture')
+          .at(0)
+          .prop('href')
+      ).toEqual('?editor=true&component=ComponentA&fixture=foo');
     });
 
     test('link 2', () => {
-      expect(componentA.find('.fixture').at(1).prop('href')).toEqual(
-        '?editor=true&component=ComponentA&fixture=bar'
-      );
+      expect(
+        componentA
+          .find('.fixture')
+          .at(1)
+          .prop('href')
+      ).toEqual('?editor=true&component=ComponentA&fixture=bar');
     });
 
     test('link 3', () => {
-      expect(componentB.find('.fixture').at(0).prop('href')).toEqual(
-        '?editor=true&component=ComponentB&fixture=baz'
-      );
+      expect(
+        componentB
+          .find('.fixture')
+          .at(0)
+          .prop('href')
+      ).toEqual('?editor=true&component=ComponentB&fixture=baz');
     });
 
     test('link 4', () => {
-      expect(componentB.find('.fixture').at(1).prop('href')).toEqual(
-        '?editor=true&component=ComponentB&fixture=qux'
-      );
+      expect(
+        componentB
+          .find('.fixture')
+          .at(1)
+          .prop('href')
+      ).toEqual('?editor=true&component=ComponentB&fixture=qux');
     });
   });
 });
@@ -125,35 +164,31 @@ describe('Select', () => {
         onUrlChange
       }
     });
-    wrapper = shallowLoader(
-      <Loader component={FixtureList} fixture={fixture} />
-    );
+    wrapper = mount(<Loader component={FixtureList} fixture={fixture} />);
   });
 
   test('should call select callback on click', () => {
     const componentA = wrapper.find('.component').at(0);
     const fixtureFoo = componentA.find('.fixture').at(0);
     fixtureFoo.simulate('click', {
-      preventDefault: jest.fn(),
-      currentTarget: {
-        href: fixtureFoo.prop('href')
-      }
+      preventDefault: jest.fn()
     });
 
-    expect(onUrlChange).toHaveBeenCalledWith(fixtureFoo.prop('href'));
+    expect(onUrlChange).toHaveBeenCalledWith(
+      `http://foo.bar/${fixtureFoo.prop('href')}`
+    );
   });
 
   test('should call select callback on click', () => {
     const componentB = wrapper.find('.component').at(1);
     const fixtureQux = componentB.find('.fixture').at(1);
     fixtureQux.simulate('click', {
-      preventDefault: jest.fn(),
-      currentTarget: {
-        href: fixtureQux.prop('href')
-      }
+      preventDefault: jest.fn()
     });
 
-    expect(onUrlChange).toHaveBeenCalledWith(fixtureQux.prop('href'));
+    expect(onUrlChange).toHaveBeenCalledWith(
+      `http://foo.bar/${fixtureQux.prop('href')}`
+    );
   });
 });
 
@@ -161,7 +196,7 @@ describe('Search', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallowLoader(
+    wrapper = mount(
       <Loader component={FixtureList} fixture={populatedFixture} />
     );
   });
@@ -208,15 +243,13 @@ describe('Search input keyboard shortcut', () => {
   });
 
   describe('on `s` key', () => {
-    let searchInput;
-
     beforeEach(() => {
-      searchInput = wrapper.find('.searchInput');
       triggerKeyEvent(instance.onWindowKey, 83);
+      wrapper.update();
     });
 
     test('should focus input', () => {
-      expect(searchInput.node).toBe(document.activeElement);
+      expect(document.activeElement.className).toBe('searchInput');
     });
   });
 
@@ -231,7 +264,7 @@ describe('Search input keyboard shortcut', () => {
     });
 
     test('should blur input', () => {
-      expect(searchInput.node).not.toBe(document.activeElement);
+      expect(document.activeElement.className).not.toBe('searchInput');
     });
 
     test('should clear input', () => {
@@ -244,7 +277,7 @@ describe('Selected fixture', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallowLoader(
+    wrapper = mount(
       <Loader component={FixtureList} fixture={populatedAndSelectedFixture} />
     );
   });

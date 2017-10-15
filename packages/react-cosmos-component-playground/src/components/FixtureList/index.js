@@ -21,6 +21,13 @@ export default class FixtureList extends Component {
 
   componentDidMount() {
     window.addEventListener('keydown', this.onWindowKey);
+
+    // Expose change handler for Cypress to call during tests. The problem is
+    // Cypress can't trigger React events at the moment
+    // https://github.com/cypress-io/cypress/issues/647
+    if (window.Cypress) {
+      window.__changePlaygroundSearch = this.onChange;
+    }
   }
 
   componentWillUnmount() {

@@ -13,18 +13,35 @@ export default function createFetchProxy(options) {
     constructor(props) {
       super(props);
 
-      const mocks = props.fixture[fixtureKey];
+      this.mock();
+    }
+
+    componentWillUnmount() {
+      // Make sure we don't clear a mock from a newer instance (in React 16
+      // B.constructor is called before A.componentWillUnmount)
+      if (fetchMock.__prevProxy === this) {
+        this.unmock();
+      }
+    }
+
+    mock() {
+      // Clear mocks from a previous FetchProxy instance
+      // Warning: A page can only have one FetchProxy instance at the same time
+      this.unmock();
+
+      const mocks = this.props.fixture[fixtureKey];
       if (mocks) {
         mocks.forEach(options => {
           fetchMock.mock(options);
         });
+        fetchMock.__prevProxy = this;
       }
     }
 
-    componentWillUnmount() {
-      // Unmock fetch
+    unmock() {
       if (typeof fetchMock.restore === 'function') {
         fetchMock.restore();
+        delete fetchMock.__prevProxy;
       }
     }
 

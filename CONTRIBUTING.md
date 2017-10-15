@@ -39,6 +39,7 @@ High impact initiatives. By working on these exciting topics, you have the oppor
 > Warning: These are high-level tasks and they require further analysis and collaboration before they can be turned into concrete tasks
 
 - [Redesign filesystem API](https://github.com/react-cosmos/react-cosmos/issues/440)
+- [Config generation](https://github.com/react-cosmos/react-cosmos/issues/452)
 - [Create Cosmos server](https://github.com/react-cosmos/react-cosmos/pull/383#issuecomment-328297128)
 
 ## Tracking
@@ -47,15 +48,14 @@ High impact initiatives. By working on these exciting topics, you have the oppor
 
 #### Issue labels
 
-Issues are first categorized as one of the following:
 - `hmm` Questions and support
 - `oops` Bugs
 - `i have a dream` Feature proposals
 
-Once a draft progresses, it will go through the following phases:
-- `needs love` Good ideas without a plan
-- `free for all` Can be picked up by anyone
-- `on it` Work in progress
+Drafts progress through the following phases:
+- `needs love` Require feedback and a sound plan
+- `free for all` Ready to be picked up by anyone
+- *Assigned*
 
 There's also a label for each [long term goal](#goals).
 
@@ -178,7 +178,10 @@ Make sure `yarn run lint` passes and add [xo](https://github.com/sindresorhus/xo
 
 #### Use Git conscientiously
 
-Nothing fancy, just the usual the [GitHub flow.](https://guides.github.com/introduction/flow/)
+- [GitHub Flow](https://guides.github.com/introduction/flow/)
+- [Conventional Commits](https://conventionalcommits.org/) (important for generating release notes)
+
+
 
 ---
 

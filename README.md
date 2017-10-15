@@ -58,7 +58,7 @@ Jump to:
   - [What's a fixture?](#whats-a-fixture)
   - [Where to put fixtures?](#where-to-put-fixtures)
   - [Props](#props)
-  - [Children](#Children)
+  - [Children](#children)
   - [State](#state)
 - [Proxies](#proxies)
   - [What's a proxy?](#whats-a-proxy)
@@ -89,7 +89,7 @@ Jump to:
 ### Getting started
 
 ```bash
-npm install --dev react-cosmos-webpack
+npm install --save-dev react-cosmos-webpack
 # or
 yarn add --dev react-cosmos-webpack
 ```
@@ -236,7 +236,11 @@ Proxies have two parts:
 
 #### Where to put proxies?
 
-As soon as you're ready to add proxies to your Cosmos setup, create `cosmos.proxies.js` (next to cosmos.config.js) and export a list of proxies in the order they should load–from outermost to innermost. Here's an example where we mock the Fetch API and add Redux and React Router providers:
+As soon as you're ready to add proxies to your Cosmos setup, create `cosmos.proxies.js` (next to cosmos.config.js) and export a list of proxies in the order they should load–from outermost to innermost.
+
+> `proxies.cosmos.js` requires compilation so you may need to place it next to your source files (eg. if the `src` dir is whitelisted in babel-loader). Use `proxiesPath` option to customize its location.
+
+Here's an example where we mock the Fetch API and add Redux and React Router providers:
 
 ```js
 // cosmos.proxies.js
@@ -473,6 +477,8 @@ Built on top of [fetch-mock](http://www.wheresrhys.co.uk/fetch-mock/api). Check 
 
 #### XHR
 
+> **Warning: Currently the XHR proxy breaks hot reloading.** Subscribe to [#430](https://github.com/react-cosmos/react-cosmos/issues/430) for updates.
+
 Like the [Fetch](#fetch) proxy, but for *XMLHttpRequest*.
 
 ##### Configuration
@@ -552,7 +558,7 @@ export default {
 
 #### Create React App
 
-It's preferred to use CRA's own webpack config (instead of duplicating it).
+Add `react-cosmos-webpack` to dev dependencies and create `cosmos.config.js`.
 
 ```js
 // cosmos.config.js
@@ -561,7 +567,7 @@ module.exports = {
   containerQuerySelector: '#root',
   webpackConfigPath: 'react-scripts/config/webpack.config.dev',
   publicPath: 'public',
-  // Optional. Add this when you start using proxies
+  // Optional: Add this when you start using proxies
   proxiesPath: 'src/cosmos.proxies'
 };
 ```
@@ -575,7 +581,9 @@ Also make sure to:
 
 #### Next.js
 
-Next.js apps run on both client & server, so compilation is done via Babel plugins instead of webpack loaders. This means we can rely on Cosmos' default webpack config.
+Add `react-cosmos-webpack` to dev dependencies and create `cosmos.config.js`.
+
+> Next.js apps run on both client & server, so compilation is done via Babel plugins instead of webpack loaders. This means we can rely on Cosmos' default webpack config.
 
 ```js
 // cosmos.config.js
@@ -600,7 +608,7 @@ Also make sure to:
 
 #### React Boilerplate
 
-The current version of React Boilerplate (v3.4) requires [some tweaking](https://github.com/react-cosmos/react-cosmos/issues/296) to work with Cosmos. A PR has [landed](https://github.com/react-boilerplate/react-boilerplate/pull/1849), however, which makes the integration with [upcoming](https://github.com/react-boilerplate/react-boilerplate/tree/dev) v3.5 as simple as this:
+Add `react-cosmos-webpack` to dev dependencies and create `cosmos.config.js`.
 
 ```js
 // cosmos.config.js
@@ -613,7 +621,7 @@ module.exports = {
 
 #### React Redux Starter Kit
 
-It's preferred to use the starter kit's own webpack config (instead of duplicating it).
+Add `react-cosmos-webpack` to dev dependencies and create `cosmos.config.js`.
 
 ```js
 // cosmos.config.js
@@ -725,11 +733,8 @@ module.exports = {
   // Set base URL for static assets from public folder
   publicUrl: '/static/',
 
-  // Read more about proxies below
-  proxies: [
-    './redux-proxy.js',
-    './context-proxy.js',
-  ],
+  // Customize proxies file path. Useful if Babel doesn't compile the root dir.
+  proxiesPath: 'src/proxies.cosmos',
 
   // Render inside custom root element. Useful if that root element already
   // has styles attached, but bad for encapsulation.

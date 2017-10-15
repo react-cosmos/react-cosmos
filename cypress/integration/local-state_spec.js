@@ -36,8 +36,12 @@ describe('Local state example', () => {
 
   context('filter', () => {
     before(() => {
-      const inputSel = getSelector('index__searchInput');
-      cy.get(inputSel).type('oneThree');
+      // https://github.com/cypress-io/cypress/issues/647
+      cy.window().then(window => {
+        window.__changePlaygroundSearch({
+          target: { value: 'oneTwoThree' }
+        });
+      });
     });
 
     it('should match only one fixture', () => {
@@ -116,6 +120,16 @@ describe('Local state example', () => {
 
     it('should update fixture contents inside editor', () => {
       cy.get('.CodeMirror-line:eq(4)').should('contain', '"value": 4');
+    });
+
+    it('should preseve state after HMR update', () => {
+      cy.get('iframe').then($iframe => {
+        $iframe[0].contentWindow.__startCosmosLoader();
+        cy
+          .wait(100) // Wait for postMessage communication to occur
+          .get('.CodeMirror-line:eq(4)')
+          .should('have.text', '        "value": 4');
+      });
     });
   });
 });

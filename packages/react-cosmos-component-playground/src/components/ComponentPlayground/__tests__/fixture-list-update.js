@@ -31,32 +31,33 @@ describe('CP fixture list update', () => {
 
     const onFixtureListUpdate = waitForPostMessage('fixtureListUpdate');
 
-    return new Promise(resolve => {
-      // Mount component in order for ref and lifecycle methods to be called
-      wrapper = mount(
-        <Loader
-          proxies={[createStateProxy()]}
-          component={ComponentPlayground}
-          fixture={readyFixture}
-          onComponentRef={() => {
-            resolve();
-          }}
-        />
-      );
-    }).then(() => {
-      window.postMessage(
-        {
-          type: 'fixtureListUpdate',
-          fixtures: {
-            ComponentA: ['foo', 'bar'],
-            ComponentB: ['baz', 'qux', 'quux']
-          }
-        },
-        '*'
-      );
+    // Mount component in order for ref and lifecycle methods to be called
+    wrapper = mount(
+      <Loader
+        proxies={[createStateProxy()]}
+        component={ComponentPlayground}
+        fixture={readyFixture}
+      />
+    );
 
-      return onFixtureListUpdate;
-    });
+    return Promise.resolve()
+      .then(() => {
+        window.postMessage(
+          {
+            type: 'fixtureListUpdate',
+            fixtures: {
+              ComponentA: ['foo', 'bar'],
+              ComponentB: ['baz', 'qux', 'quux']
+            }
+          },
+          '*'
+        );
+
+        return onFixtureListUpdate;
+      })
+      .then(() => {
+        wrapper.update();
+      });
   });
 
   afterEach(() => {

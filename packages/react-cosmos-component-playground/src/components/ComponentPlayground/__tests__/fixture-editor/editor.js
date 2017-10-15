@@ -41,27 +41,31 @@ describe('Fixture editor', () => {
           onComponentRef={resolve}
         />
       );
-    }).then(instance => {
-      loaderContentWindow = {
-        postMessage: jest.fn()
-      };
-      // iframe.contentWindow isn't available in jsdom
-      instance.loaderFrame = {
-        contentWindow: loaderContentWindow
-      };
+    })
+      .then(instance => {
+        loaderContentWindow = {
+          postMessage: jest.fn()
+        };
+        // iframe.contentWindow isn't available in jsdom
+        instance.loaderFrame = {
+          contentWindow: loaderContentWindow
+        };
 
-      window.postMessage(
-        {
-          type: 'fixtureLoad',
-          fixtureBody: {
-            foo: 'bar'
-          }
-        },
-        '*'
-      );
+        window.postMessage(
+          {
+            type: 'fixtureLoad',
+            fixtureBody: {
+              foo: 'bar'
+            }
+          },
+          '*'
+        );
 
-      return onFixtureLoad;
-    });
+        return onFixtureLoad;
+      })
+      .then(() => {
+        wrapper.update();
+      });
   });
 
   afterEach(() => {
@@ -88,7 +92,9 @@ describe('Fixture editor', () => {
         '*'
       );
 
-      return onFixtureUpdate;
+      return onFixtureUpdate.then(() => {
+        wrapper.update();
+      });
     });
 
     it('sends updated fixture body as value to FixtureEditor', () => {

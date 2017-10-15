@@ -67,6 +67,7 @@ describe('Fixture source changes', () => {
         return onFixtureSelect;
       })
       .then(() => {
+        wrapper.update();
         firstProxyKey = wrapper.find(ProxyFoo).key();
 
         wrapper.setProps({
