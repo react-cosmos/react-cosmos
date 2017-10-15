@@ -70,7 +70,14 @@ export default class FixtureList extends Component {
   };
 
   onSelect = node => {
-    const href = uri.stringifyParams(node.urlParams);
+    const { urlParams } = this.props;
+    // urlParams can have 'global' attributes like editor or fullScreen
+    // node.urlParams will have 'local' attributes like component and fixture.
+    const mergedParams = {
+      ...urlParams,
+      ...node.urlParams
+    };
+    const href = uri.stringifyParams(mergedParams);
     this.props.onUrlChange(href);
   };
 
