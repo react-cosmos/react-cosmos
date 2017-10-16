@@ -1,5 +1,6 @@
 import importModule from 'react-cosmos-utils/lib/import-module';
 import { getComponents } from 'react-cosmos-voyager2/src/client/get-components';
+import getUserModules from './user-modules';
 import { mount } from 'react-cosmos-loader';
 
 import type {
@@ -12,9 +13,6 @@ import type {
 const { containerQuerySelector } = COSMOS_CONFIG;
 
 export default function() {
-  // Module is imported whenever this function is called, making sure the
-  // lastest module version is used after a HMR update
-  const getUserModules = require('./user-modules').default;
   const {
     fixtureModules,
     fixtureFiles,

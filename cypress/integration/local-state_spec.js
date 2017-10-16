@@ -124,7 +124,7 @@ describe('Local state example', () => {
 
     it('should preseve state after HMR update', () => {
       cy.get('iframe').then($iframe => {
-        $iframe[0].contentWindow.__startCosmosLoader();
+        $iframe[0].contentWindow.__runCosmosLoader();
         cy
           .wait(100) // Wait for postMessage communication to occur
           .get('.CodeMirror-line:eq(4)')

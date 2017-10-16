@@ -1,5 +1,4 @@
 import { mount as mountLoader } from 'react-cosmos-loader';
-import mount from '../../mount';
 
 jest.mock('react-cosmos-loader', () => ({
   __esModule: true,
@@ -60,7 +59,8 @@ beforeEach(() => {
     '/components/Foo.js': Foo
   };
 
-  mount();
+  // Require module after globals have been mocked
+  require('../../mount').default();
 });
 
 it('sends proxies to loader', () => {
