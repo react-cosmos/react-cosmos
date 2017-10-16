@@ -12,6 +12,7 @@ const getUserModules = () => ({
   /* eslint-disable no-undef */
   fixtureModules: FIXTURE_MODULES,
   fixtureFiles: FIXTURE_FILES,
+  deprecatedComponentModules: DEPRECATED_COMPONENT_MODULES,
   proxies: PROXIES
   /* eslint-enable no-undef */
 });

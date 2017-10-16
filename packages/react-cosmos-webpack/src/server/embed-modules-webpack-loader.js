@@ -3,27 +3,27 @@
 import path from 'path';
 import getCosmosConfig from 'react-cosmos-config';
 import moduleExists from 'react-cosmos-utils/lib/module-exists';
+import getFilePaths from 'react-cosmos-voyager';
 import { findFixtureFiles } from 'react-cosmos-voyager2/lib/server/find-fixture-files';
 
+import type { Config } from 'react-cosmos-config/src';
 import type { FixtureFile } from 'react-cosmos-voyager2/src/types';
 
+const { keys } = Object;
+
 /**
- * TODO: Update docs
  * Inject require calls in bundle for each component/fixture path and
  * require.context calls for each dir with user modules. Tells webpack to
  * - Bundle all necessary component/fixture modules
  * - Watch for (and react to) added and changed component/fixture files
  */
-module.exports = async function embedModules(source) {
+module.exports = async function embedModules(source: string) {
   const callback = this.async();
 
-  const cosmosConfig = getCosmosConfig();
-  const { proxiesPath } = cosmosConfig;
+  const cosmosConfig: Config = getCosmosConfig();
+  const { proxiesPath, componentPaths } = cosmosConfig;
 
-  // TODO: New fs API coming fru
-  const fixtureFiles = await findFixtureFiles({
-    cwd: cosmosConfig.rootPath
-  });
+  const fixtureFiles = await getNormalizedFixturePaths(cosmosConfig);
   const fixturePaths = getFixtureModules(fixtureFiles);
   const fixtureModuleCalls = convertPathsToRequireCalls(fixturePaths);
 
@@ -35,7 +35,7 @@ module.exports = async function embedModules(source) {
   });
   const contextCalls = convertDirPathsToContextCalls(contexts);
 
-  const result = source
+  let result = source
     .replace(/FIXTURE_MODULES/g, fixtureModuleCalls)
     .replace(/FIXTURE_FILES/g, JSON.stringify(fixtureFiles))
     .replace(
@@ -44,8 +44,52 @@ module.exports = async function embedModules(source) {
     )
     .replace(/CONTEXTS/g, contextCalls);
 
+  if (componentPaths.length > 0) {
+    console.warn(
+      '[Cosmos] Using `componentPaths` config is deprecated. ' +
+        'Please consider upgrading your fixtures.'
+    );
+
+    const { components } = getFilePaths(cosmosConfig);
+
+    result = result.replace(
+      /DEPRECATED_COMPONENT_MODULES/g,
+      convertPathsToRequireCalls(keys(components).map(c => components[c]))
+    );
+  } else {
+    result = result.replace(/DEPRECATED_COMPONENT_MODULES/g, '{}');
+  }
+
   callback(null, result);
 };
+
+async function getNormalizedFixturePaths(cosmosConfig) {
+  const { rootPath, componentPaths } = cosmosConfig;
+
+  if (componentPaths.length > 0) {
+    const { components, fixtures } = getFilePaths(cosmosConfig);
+    const fixtureFiles = [];
+
+    // Convert old format to new format
+    keys(fixtures).forEach(componentName => {
+      keys(fixtures[componentName]).forEach(fixtureName => {
+        fixtureFiles.push({
+          filePath: fixtures[componentName][fixtureName],
+          components: [
+            {
+              name: componentName,
+              filePath: components[componentName]
+            }
+          ]
+        });
+      });
+    });
+
+    return fixtureFiles;
+  }
+
+  return findFixtureFiles({ cwd: rootPath });
+}
 
 function getFixtureModules(files: Array<FixtureFile>): Array<string> {
   return files.map(file => file.filePath);
@@ -70,6 +114,6 @@ function getUniqueDirsOfPaths(paths) {
 
 function convertDirPathsToContextCalls(dirPaths) {
   return `[${dirPaths
-    .map(dirPath => `require.context('${dirPath}', false, /\\.jsx?$/)`)
+    .map(dirPath => `require.context('${dirPath}',false,/\\.jsx?$/)`)
     .join(',')}]`;
 }
