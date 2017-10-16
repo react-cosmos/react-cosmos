@@ -102,7 +102,7 @@ export default class FixtureList extends Component {
             onSelect={this.onSelect}
             onToggle={this.onToggle}
             searchText={searchText}
-            baseUrlParams={urlParams}
+            currentUrlParams={urlParams}
             selected={{
               component: urlParams.component,
               fixture: urlParams.fixture

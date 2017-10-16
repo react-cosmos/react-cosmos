@@ -105,7 +105,7 @@ export default {
       fixture: 'fixtureA'
     },
     searchText: 'sub a',
-    baseUrlParams: {},
+    currentUrlParams: {},
     onSelect: href => console.log('Selected href: ', href),
     onToggle: (node, expanded) => console.log('Toggled node: ', node, expanded)
   }

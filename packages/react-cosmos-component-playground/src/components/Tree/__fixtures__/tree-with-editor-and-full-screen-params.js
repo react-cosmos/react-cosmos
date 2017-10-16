@@ -105,7 +105,7 @@ export default {
       fixture: 'fixtureA'
     },
     searchText: '',
-    baseUrlParams: {
+    currentUrlParams: {
       editor: true,
       fullScreen: true
     },

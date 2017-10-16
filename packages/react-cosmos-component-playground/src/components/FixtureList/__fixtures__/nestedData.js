@@ -7,8 +7,8 @@ export default {
       'dirB/subdirA/Component4': ['fixtureA', 'fixtureB']
     },
     urlParams: {},
-    onUrlChange: newParams => {
-      console.log('New URL Params:', newParams);
+    onUrlChange: url => {
+      console.log('New url:', url);
     }
   }
 };

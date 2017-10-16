@@ -64,7 +64,7 @@ const TreeFolder = ({
   selected,
   nestingLevel,
   searchText,
-  baseUrlParams
+  currentUrlParams
 }) => {
   return (
     <div
@@ -95,7 +95,7 @@ const TreeFolder = ({
         nestingLevel={nestingLevel + 1}
         searchText={searchText}
         isHidden={!node.expanded}
-        baseUrlParams={baseUrlParams}
+        currentUrlParams={currentUrlParams}
       />
     </div>
   );
@@ -117,14 +117,14 @@ const TreeItem = ({
   isSelected,
   nestingLevel,
   searchText,
-  baseUrlParams
+  currentUrlParams
 }) => {
   const fixtureClassNames = classNames(styles.fixture, {
     [styles.fixtureSelected]: isSelected
   });
 
   const mergedUrlParams = {
-    ...baseUrlParams,
+    ...currentUrlParams,
     ...node.urlParams
   };
 
@@ -167,7 +167,7 @@ class Tree extends React.Component {
       onToggle,
       selected,
       searchText,
-      baseUrlParams,
+      currentUrlParams,
       nestingLevel = 0,
       isHidden = false
     } = this.props;
@@ -192,7 +192,7 @@ class Tree extends React.Component {
                 selected={selected}
                 nestingLevel={nestingLevel}
                 searchText={searchText}
-                baseUrlParams={baseUrlParams}
+                currentUrlParams={currentUrlParams}
               />
             );
           }
@@ -212,7 +212,7 @@ class Tree extends React.Component {
                 isSelected={isSelected}
                 nestingLevel={nestingLevel}
                 searchText={searchText}
-                baseUrlParams={baseUrlParams}
+                currentUrlParams={currentUrlParams}
               />
             </div>
           );
@@ -249,7 +249,7 @@ TreeWrapper.propTypes = {
     component: string,
     fixture: string
   }).isRequired,
-  baseUrlParams: shape({
+  currentUrlParams: shape({
     editor: bool,
     fullScreen: bool
   }).isRequired,
