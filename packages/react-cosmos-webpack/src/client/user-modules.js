@@ -1,4 +1,4 @@
-// The following constants are replaced at compile-time (through module-loader)
+// The constants are replaced at compile-time (via embed-modules-webpack-loader)
 // with a map of require calls with absolute paths, derived from user conf.
 // By the time webpack analyzes this file to build the dependency tree
 // all paths will be embedded and webpack will register watchers for each

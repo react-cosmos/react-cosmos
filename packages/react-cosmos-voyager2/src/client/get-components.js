@@ -16,7 +16,6 @@ type Args = {
   fixtureModules: Modules
 };
 
-// TODO: Adapt tests from ../getComponents
 export function getComponents({
   fixtureFiles,
   fixtureModules
@@ -150,8 +149,10 @@ function warnAboutIncompatFixtures(
       .map(f => `- ${f.slice(fixtureCommonDir.length + 1)}`)
       .join('\n')
   );
-  console.log('Enable these fixtures by adding the new `component` property.');
   console.log(
-    'More details at https://github.com/react-cosmos/react-cosmos/issues/440'
+    '[Cosmos] Enable these fixtures by adding the `component` property.'
+  );
+  console.log(
+    '[Cosmos] More details at https://github.com/react-cosmos/react-cosmos/issues/440'
   );
 }
