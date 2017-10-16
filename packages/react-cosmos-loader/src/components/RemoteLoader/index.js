@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { object, objectOf, func, arrayOf } from 'prop-types';
 import merge from 'lodash.merge';
 import deepEqual from 'deep-equal';
+import omit from 'lodash.omit';
 import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
 import createLinkedList from 'react-cosmos-utils/lib/linked-list';
 import createModuleType from '../../utils/module-type';
@@ -104,11 +105,19 @@ class RemoteLoader extends Component {
     }
 
     // Fixture file changes override updated fixture state
+    // XXX: This has degraded since we put the component in the fixture. Any
+    // component change will invalidate the fixture file as well, which means
+    // that the fixture will lose its state on component HMR if it contains any
+    // non complex properties (eg. functions) that will fail the deepEqual
+    // comparison when the new fixture module is received
     const { component, fixture } = this.state;
     const isFixtureSelected = component && fixture;
     if (
       isFixtureSelected &&
-      fixtures[component][fixture] !== this.props.fixtures[component][fixture]
+      !deepEqual(
+        omit(fixtures[component][fixture], 'component'),
+        omit(this.props.fixtures[component][fixture], 'component')
+      )
     ) {
       this.setState(
         getFixtureState({
