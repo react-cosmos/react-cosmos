@@ -4,11 +4,7 @@
   "setupFiles": ["./jest.setup.js"],
   "setupTestFrameworkScriptFile": "./jest.frameworkSetup.js",
   "testURL": "http://foo.bar/",
-  "testPathIgnorePatterns": [
-    "<rootDir>/node_modules/",
-    "<rootDir>/packages/react-cosmos-webpack/src/__tests__/mocks",
-    "/__fsmocks__/"
-  ],
+  "testPathIgnorePatterns": ["<rootDir>/node_modules/", "/__fsmocks__/"],
   "transformIgnorePatterns": ["/node_modules/(?!react-cosmos.+)"],
   "collectCoverageFrom": [
     "**/src/**/*.{js,jsx}",

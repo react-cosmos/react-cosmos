@@ -15,6 +15,7 @@ type UserConfig = {
   webpackConfigPath: string,
   outputPath: string,
   publicUrl: string,
+  containerQuerySelector?: string,
   // Deprecated
   componentPaths: Array<string>,
   fixturePaths: Array<string>

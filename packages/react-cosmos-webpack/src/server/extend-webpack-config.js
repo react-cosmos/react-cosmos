@@ -1,11 +1,9 @@
+// @flow
+
 import omit from 'lodash.omit';
 import getCosmosConfig from 'react-cosmos-config';
 
-const alreadyHasHmrPlugin = ({ plugins }) =>
-  plugins &&
-  plugins.filter(
-    p => p.constructor && p.constructor.name === 'HotModuleReplacementPlugin'
-  ).length > 0;
+import type { Config } from 'react-cosmos-config/src';
 
 /**
  * Extend the user config to create the Loader config. Namely,
@@ -13,13 +11,18 @@ const alreadyHasHmrPlugin = ({ plugins }) =>
  * - Enable hot reloading
  * - Embed the config path to make user configs available on the client-side
  */
-export default function getLoaderWebpackConfig({
+type Args = {
+  webpack: Object,
+  userWebpackConfig: Object,
+  shouldExport: boolean
+};
+
+export default function extendWebpackConfig({
   webpack,
   userWebpackConfig,
-  cosmosConfigPath,
   shouldExport = false
-}) {
-  const cosmosConfig = getCosmosConfig(cosmosConfigPath);
+}: Args) {
+  const cosmosConfig: Config = getCosmosConfig();
 
   const {
     containerQuerySelector,
@@ -38,7 +41,7 @@ export default function getLoaderWebpackConfig({
     );
   }
 
-  entry.push(require.resolve('./loader-entry'));
+  entry.push(require.resolve('../client/loader-entry'));
 
   const output = {
     path: shouldExport ? `${outputPath}/loader/` : '/loader/',
@@ -60,11 +63,8 @@ export default function getLoaderWebpackConfig({
     : [];
 
   rules.push({
-    loader: require.resolve('./module-loader'),
-    include: require.resolve('./user-modules'),
-    query: {
-      cosmosConfigPath
-    }
+    loader: require.resolve('./embed-modules-webpack-loader'),
+    include: require.resolve('../client/user-modules')
   });
 
   plugins.push(
@@ -102,4 +102,13 @@ export default function getLoaderWebpackConfig({
     },
     plugins
   };
+}
+
+function alreadyHasHmrPlugin({ plugins }) {
+  return (
+    plugins &&
+    plugins.filter(
+      p => p.constructor && p.constructor.name === 'HotModuleReplacementPlugin'
+    ).length > 0
+  );
 }
