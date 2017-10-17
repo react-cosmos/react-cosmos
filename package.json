@@ -115,6 +115,7 @@
       "import/no-extraneous-dependencies": 0,
       "import/prefer-default-export": 0,
       "import/order": 0,
+      "no-mixed-operators": 0,
       "react/jsx-uses-vars": 1,
       "react/jsx-uses-react": 1
     },

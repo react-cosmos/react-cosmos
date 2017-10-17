@@ -1,76 +1,44 @@
 import React, { Component } from 'react';
 import { objectOf, arrayOf, shape, string, func, bool } from 'prop-types';
-import { match } from 'fuzzaldrin-plus';
-import classNames from 'classnames';
-import { uri } from 'react-querystring-router';
-import { FolderIcon, SearchIcon } from '../SvgIcon';
+import { SearchIcon } from '../SvgIcon';
 import styles from './index.less';
+import fixturesToTreeData from './dataMapper';
+import filterNodeArray from './filter';
+import Tree from '../Tree';
 
 const KEY_S = 83;
 const KEY_ESC = 27;
 
-const getFilteredFixtures = (fixtures, searchText) => {
-  if (searchText.length < 2) {
-    return fixtures;
-  }
-
-  const components = Object.keys(fixtures);
-
-  return components.reduce((acc, componentName) => {
-    const matchingFixtures = fixtures[componentName].filter(
-      fixtureName =>
-        match(`${componentName}${fixtureName}`, searchText).length !== 0
-    );
-
-    // Do not render the component if it has no matching fixtures
-    if (matchingFixtures.length === 0) {
-      return acc;
-    }
-
-    acc[componentName] = matchingFixtures;
-
-    return acc;
-  }, {});
-};
-
-const isExistingFixtureSelected = (fixtures, component, fixture) => {
-  return (
-    component &&
-    fixture &&
-    fixtures[component] &&
-    fixtures[component].indexOf(fixture) !== -1
-  );
-};
-
 export default class FixtureList extends Component {
-  state = {
-    searchText: ''
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchText: '',
+      fixtureTree: fixturesToTreeData(props.fixtures)
+    };
+  }
 
   componentDidMount() {
     window.addEventListener('keydown', this.onWindowKey);
-    const { fixtures, urlParams: { component, fixture } } = this.props;
-
-    if (isExistingFixtureSelected(fixtures, component, fixture)) {
-      const node = this.refs[`componentName-${component}`];
-      // scrollIntoView doesn't seem to exist in Jest/jsdom
-      if (node.scrollIntoView) {
-        node.scrollIntoView({
-          behavior: 'smooth'
-        });
-      }
-    }
 
     // Expose change handler for Cypress to call during tests. The problem is
     // Cypress can't trigger React events at the moment
     // https://github.com/cypress-io/cypress/issues/647
     if (window.Cypress) {
-      window.__changePlaygroundSearch = this.onChange;
+      window.__changePlaygroundSearch = this.onSearchChange;
     }
   }
 
   componentWillUnmount() {
     window.removeEventListener('keydown', this.onWindowKey);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (
+      JSON.stringify(nextProps.fixtures) !== JSON.stringify(this.props.fixtures)
+    ) {
+      this.setState({ fixtureTree: fixturesToTreeData(nextProps.fixtures) });
+    }
   }
 
   onWindowKey = e => {
@@ -90,23 +58,29 @@ export default class FixtureList extends Component {
     }
   };
 
-  onChange = e => {
-    this.setState({
-      searchText: e.target.value
-    });
+  onSearchChange = e => {
+    this.setState({ searchText: e.target.value });
   };
 
-  onFixtureClick = e => {
-    e.preventDefault();
+  onToggle = (node, expanded) => {
+    // Mutates state, specifically a node from state.fixtureTree
+    node.expanded = expanded;
+    this.forceUpdate();
+  };
 
-    this.props.onUrlChange(e.currentTarget.href);
+  onSelect = href => {
+    this.props.onUrlChange(href);
   };
 
   render() {
-    const { fixtures, urlParams } = this.props;
-    const { searchText } = this.state;
-    const filteredFixtures = getFilteredFixtures(fixtures, searchText);
-    const components = Object.keys(filteredFixtures);
+    const { urlParams } = this.props;
+    const { fixtureTree, searchText } = this.state;
+
+    const trimmedSearchText = searchText.trim();
+    let filteredFixtureTree = fixtureTree;
+    if (trimmedSearchText !== '') {
+      filteredFixtureTree = filterNodeArray(fixtureTree, trimmedSearchText);
+    }
 
     return (
       <div className={styles.root}>
@@ -115,7 +89,7 @@ export default class FixtureList extends Component {
             className={styles.searchInput}
             placeholder="Search..."
             value={searchText}
-            onChange={this.onChange}
+            onChange={this.onSearchChange}
             ref={node => {
               this.searchInput = node;
             }}
@@ -123,44 +97,17 @@ export default class FixtureList extends Component {
           <SearchIcon />
         </div>
         <div className={styles.list}>
-          {components.map((component, i) => {
-            return (
-              <div key={i} className={styles.component}>
-                <div
-                  ref={`componentName-${component}`}
-                  className={styles.componentName}
-                >
-                  <FolderIcon />
-                  <span>{component}</span>
-                </div>
-                <div>
-                  {filteredFixtures[component].map((fixture, j) => {
-                    const fixtureClassNames = classNames(styles.fixture, {
-                      [styles.fixtureSelected]:
-                        component === urlParams.component &&
-                        fixture === urlParams.fixture
-                    });
-                    const nextUrlParams = {
-                      ...urlParams,
-                      component,
-                      fixture
-                    };
-
-                    return (
-                      <a
-                        key={j}
-                        className={fixtureClassNames}
-                        href={uri.stringifyParams(nextUrlParams)}
-                        onClick={this.onFixtureClick}
-                      >
-                        {fixture}
-                      </a>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
+          <Tree
+            nodeArray={filteredFixtureTree}
+            onSelect={this.onSelect}
+            onToggle={this.onToggle}
+            searchText={searchText}
+            currentUrlParams={urlParams}
+            selected={{
+              component: urlParams.component,
+              fixture: urlParams.fixture
+            }}
+          />
         </div>
       </div>
     );

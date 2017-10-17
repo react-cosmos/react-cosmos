@@ -17,6 +17,7 @@
     "lodash.merge": "^4.6.0",
     "lodash.omitby": "^4.6.0",
     "lodash.reduce": "^4.6.0",
+    "lodash.set": "^4.3.2",
     "prop-types": "^15.5.10",
     "react-cosmos-loader": "^2.1.0",
     "react-cosmos-state-proxy": "^2.0.0",

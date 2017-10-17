@@ -1,0 +1,93 @@
+@import '../../utils/common.less';
+
+@fixture-line-height: 30px;
+@fixture-component-font-size: 14px;
+
+.root {
+  background: @left-nav-bgcolor-darker;
+  font-family: @default-font-family;
+  font-size: @default-font-size;
+  -webkit-font-smoothing: antialiased;
+}
+
+.component {
+}
+
+.componentName {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  height: @fixture-line-height;
+  margin: 0;
+  padding: 0;
+  color: @left-nav-color-selected;
+  font-size: @fixture-component-font-size;
+  line-height: @fixture-line-height;
+  user-select: none;
+  cursor: default;
+
+  svg {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    fill: @left-nav-color-selected;
+    margin-right: 0.5 * @default-spacing;
+  }
+
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &:hover {
+    background: @left-nav-bgcolor-selected;
+  }
+}
+
+.componentCollapsed {
+  display: none;
+}
+
+.arrowIcon {
+  display: flex;
+}
+
+.treeSearchActive {
+  .arrowIcon {
+    path {
+      opacity: 0.5;
+    }
+  }
+  .componentName:hover {
+    background: inherit;
+  }
+}
+
+.fixture {
+  display: block;
+  height: @fixture-line-height;
+  padding: 0 @default-spacing;
+  color: @left-nav-color;
+  line-height: @fixture-line-height;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: none;
+  cursor: default;
+
+  &:hover {
+    background: @left-nav-bgcolor-selected;
+  }
+}
+
+.fixtureSelected {
+  background: @left-nav-bgcolor-selected;
+  color: @left-nav-color-selected;
+}
+
+.searchHighlight {
+  background-color: #fdfd96;
+}
