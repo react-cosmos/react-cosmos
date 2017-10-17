@@ -7,8 +7,8 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import importModule from 'react-cosmos-utils/lib/import-module';
 import moduleExists from 'react-cosmos-utils/lib/module-exists';
 import getCosmosConfig from 'react-cosmos-config';
-import extendWebpackConfig from '../server/extend-webpack-config';
-import getDefaultWebpackConfig from '../server/default-webpack-config';
+import extendWebpackConfig from './extend-webpack-config';
+import getDefaultWebpackConfig from './default-webpack-config';
 
 const getPublicPath = (cosmosConfig, userWebpackConfig) => {
   return (
