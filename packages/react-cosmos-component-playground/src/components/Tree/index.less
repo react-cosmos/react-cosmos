@@ -3,6 +3,13 @@
 @fixture-line-height: 30px;
 @fixture-component-font-size: 14px;
 
+.root {
+  background: @left-nav-bgcolor-darker;
+  font-family: @default-font-family;
+  font-size: @default-font-size;
+  -webkit-font-smoothing: antialiased;
+}
+
 .component {
 }
 
@@ -17,6 +24,7 @@
   color: @left-nav-color-selected;
   font-size: @fixture-component-font-size;
   line-height: @fixture-line-height;
+  user-select: none;
   cursor: default;
 
   svg {
@@ -49,7 +57,7 @@
 .treeSearchActive {
   .arrowIcon {
     path {
-      fill: @left-nav-color-search;
+      opacity: 0.5;
     }
   }
   .componentName:hover {
@@ -67,6 +75,8 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  user-select: none;
+  cursor: default;
 
   &:hover {
     background: @left-nav-bgcolor-selected;

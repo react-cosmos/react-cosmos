@@ -2,10 +2,11 @@
   "name": "react-cosmos-component-playground",
   "version": "2.1.0",
   "description": "Dev tool for creating reusable React components",
-  "repository":
-    "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-component-playground",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-component-playground",
   "license": "MIT",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "main": "lib/index.js",
   "devDependencies": {
     "@skidding/react-codemirror": "^1.0.1",

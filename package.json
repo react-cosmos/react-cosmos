@@ -5,29 +5,26 @@
     "prune-react-copies": "node ./scripts/prune-react-copies.js",
     "bootstrap": "lerna bootstrap && yarn run prune-react-copies",
     "install-react": "yarn remove react react-dom && yarn add",
-    "install-react:0.14":
-      "yarn run install-react -- react@^0.14.9 react-dom@^0.14.9",
-    "install-react:15":
-      "yarn run install-react -- react@^15.5.4 react-dom@^15.5.4",
+    "install-react:0.14": "yarn run install-react -- react@^0.14.9 react-dom@^0.14.9",
+    "install-react:15": "yarn run install-react -- react@^15.5.4 react-dom@^15.5.4",
     "lint": "xo --quiet",
-    "start":
-      "NODE_ENV=development ./examples/local-state/node_modules/.bin/cosmos --config examples/local-state/cosmos.config.js",
-    "start:playground":
-      "NODE_ENV=development ./packages/react-cosmos-webpack/bin/cosmos.js --config packages/react-cosmos-component-playground/cosmos.config.js",
+    "start": "NODE_ENV=development ./examples/local-state/node_modules/.bin/cosmos --config examples/local-state/cosmos.config.js",
+    "start:playground": "NODE_ENV=development ./packages/react-cosmos-webpack/bin/cosmos.js --config packages/react-cosmos-component-playground/cosmos.config.js",
     "build": "node ./scripts/build.js",
     "postinstall": "yarn run bootstrap && yarn run build",
-    "publish-lerna":
-      "yarn run test && yarn run build && lerna publish --registry=https://registry.npmjs.org/",
+    "publish-lerna": "yarn run test && yarn run build && lerna publish --registry=https://registry.npmjs.org/",
     "test-jest": "jest --coverage --config jest.config.json",
     "test": "yarn run lint && yarn run test-jest",
-    "coveralls":
-      "cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
+    "coveralls": "cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
     "test-smoke": "cypress run",
     "test-smoke-ci": "yarn start & cypress run",
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": ["prettier --single-quote --write", "git add"]
+    "*.js": [
+      "prettier --single-quote --write",
+      "git add"
+    ]
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
@@ -74,25 +71,36 @@
   "xo": {
     "space": true,
     "parser": "babel-eslint",
-    "plugins": ["react"],
+    "plugins": [
+      "react"
+    ],
     "settings": {
       "import/resolver": {
         "webpack": {
           "config": {
             "resolve": {
-              "extensions": [".js", ".jsx"]
+              "extensions": [
+                ".js",
+                ".jsx"
+              ]
             }
           }
         }
       },
-      "import/extensions": [".js", ".jsx"]
+      "import/extensions": [
+        ".js",
+        ".jsx"
+      ]
     },
     "rules": {
       "indent": 0,
       "object-curly-spacing": 0,
       "operator-linebreak": 0,
       "capitalized-comments": 0,
-      "func-names": ["error", "as-needed"],
+      "func-names": [
+        "error",
+        "as-needed"
+      ],
       "unicorn/filename-case": 0,
       "import/no-unassigned-import": 0,
       "import/no-extraneous-dependencies": 0,
@@ -104,8 +112,13 @@
     },
     "overrides": [
       {
-        "files": ["packages/*/src/**/*.{js,jsx}", "!**/__tests__/**/*.*"],
-        "env": ["browser"]
+        "files": [
+          "packages/*/src/**/*.{js,jsx}",
+          "!**/__tests__/**/*.*"
+        ],
+        "env": [
+          "browser"
+        ]
       },
       {
         "files": [
@@ -113,7 +126,10 @@
           "packages/__mocks__/**/*.js",
           "packages/react-cosmos-telescope/**/*.js"
         ],
-        "env": ["jest", "browser"]
+        "env": [
+          "jest",
+          "browser"
+        ]
       },
       {
         "files": "examples/**/*.{js,jsx}",
@@ -122,9 +138,15 @@
         }
       },
       {
-        "files": ["cypress/**/*.{js,jsx}"],
-        "env": ["mocha"],
-        "globals": ["cy"]
+        "files": [
+          "cypress/**/*.{js,jsx}"
+        ],
+        "env": [
+          "mocha"
+        ],
+        "globals": [
+          "cy"
+        ]
       }
     ]
   }

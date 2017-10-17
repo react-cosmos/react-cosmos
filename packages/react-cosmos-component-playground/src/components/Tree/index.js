@@ -172,9 +172,6 @@ class Tree extends React.Component {
       isHidden = false
     } = this.props;
     const treeStyle = {};
-    if (process.env.NODE_ENV === 'development') {
-      treeStyle.backgroundColor = 'black';
-    }
 
     return (
       <div
@@ -223,8 +220,13 @@ class Tree extends React.Component {
 }
 
 const TreeWrapper = props => {
+  const classes = classNames({
+    [styles.root]: true,
+    [styles.treeSearchActive]: props.searchText !== ''
+  });
+
   return (
-    <div className={props.searchText === '' ? '' : styles.treeSearchActive}>
+    <div className={classes}>
       <Tree {...props} />
     </div>
   );
