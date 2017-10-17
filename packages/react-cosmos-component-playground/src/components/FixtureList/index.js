@@ -25,7 +25,7 @@ export default class FixtureList extends Component {
     // Cypress can't trigger React events at the moment
     // https://github.com/cypress-io/cypress/issues/647
     if (window.Cypress) {
-      window.__changePlaygroundSearch = this.onChange;
+      window.__changePlaygroundSearch = this.onSearchChange;
     }
   }
 
