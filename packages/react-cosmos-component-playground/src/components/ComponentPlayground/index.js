@@ -249,7 +249,7 @@ export default class ComponentPlayground extends Component {
         {!isLoaderVisible && (
           <StarryBg>
             {!waitingForLoader &&
-            !isFixtureSelected && <WelcomeScreen fixtures={fixtures} />}
+              !isFixtureSelected && <WelcomeScreen fixtures={fixtures} />}
             {isMissingFixtureSelected && (
               <MissingScreen componentName={component} fixtureName={fixture} />
             )}
