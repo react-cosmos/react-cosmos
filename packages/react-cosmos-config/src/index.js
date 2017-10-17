@@ -14,6 +14,7 @@ type UserConfig = {
   proxiesPath: string,
   webpackConfigPath: string,
   outputPath: string,
+  publicPath?: string,
   publicUrl: string,
   containerQuerySelector?: string,
   // Deprecated
