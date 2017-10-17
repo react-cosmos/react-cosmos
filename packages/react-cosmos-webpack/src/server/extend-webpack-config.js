@@ -14,7 +14,7 @@ import type { Config } from 'react-cosmos-config/src';
 type Args = {
   webpack: Object,
   userWebpackConfig: Object,
-  shouldExport: boolean
+  shouldExport?: boolean
 };
 
 export default function extendWebpackConfig({

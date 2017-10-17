@@ -4,11 +4,9 @@ import { silent as silentImport } from 'import-from';
 import express from 'express';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import importModule from 'react-cosmos-utils/lib/import-module';
-import moduleExists from 'react-cosmos-utils/lib/module-exists';
 import getCosmosConfig from 'react-cosmos-config';
 import extendWebpackConfig from './extend-webpack-config';
-import getDefaultWebpackConfig from './default-webpack-config';
+import getUserWebpackConfig from './user-webpack-config';
 
 const getPublicPath = (cosmosConfig, userWebpackConfig) => {
   return (
@@ -19,29 +17,13 @@ const getPublicPath = (cosmosConfig, userWebpackConfig) => {
 
 export default function startServer() {
   const cosmosConfig = getCosmosConfig();
-  const {
-    rootPath,
-    hostname,
-    hot,
-    port,
-    webpackConfigPath,
-    publicUrl
-  } = cosmosConfig;
+  const { rootPath, hostname, hot, port, publicUrl } = cosmosConfig;
 
   const webpack = silentImport(rootPath, 'webpack');
   if (!webpack) {
     console.warn('[Cosmos] webpack dependency missing!');
     console.log('Install using "yarn add webpack" or "npm install webpack"');
     return;
-  }
-
-  let userWebpackConfig;
-  if (moduleExists(webpackConfigPath)) {
-    console.log(`[Cosmos] Using webpack config found at ${webpackConfigPath}`);
-    userWebpackConfig = importModule(require(webpackConfigPath));
-  } else {
-    console.log('[Cosmos] No webpack config found, using default config');
-    userWebpackConfig = getDefaultWebpackConfig(rootPath);
   }
 
   if (cosmosConfig.proxies) {
@@ -51,6 +33,7 @@ export default function startServer() {
     );
   }
 
+  const userWebpackConfig = getUserWebpackConfig(cosmosConfig);
   const loaderWebpackConfig = extendWebpackConfig({
     webpack,
     userWebpackConfig
