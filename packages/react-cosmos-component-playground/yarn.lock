@@ -204,15 +204,11 @@ lodash.reduce@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.reduce/-/lodash.reduce-4.6.0.tgz#f1ab6b839299ad48f784abbf476596f03b914d3b"
 
-<<<<<<< HEAD
 lodash.set@^4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/lodash.set/-/lodash.set-4.3.2.tgz#d8757b1da807dde24816b0d6a84bea1a76230b23"
 
-loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.3.1:
-=======
 loose-envify@^1.0.0, loose-envify@^1.3.1:
->>>>>>> master
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.3.1.tgz#d1a8ad33fa9ce0e713d65fdd0ac8b748d478c848"
   dependencies:
@@ -250,9 +246,9 @@ prop-types@^15.5.10, prop-types@^15.5.4:
     fbjs "^0.8.9"
     loose-envify "^1.3.1"
 
-react-cosmos-loader@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-cosmos-loader/-/react-cosmos-loader-2.0.0.tgz#cb7c94a67ec6f33845a7a652f36c83e6e7c0eca4"
+react-cosmos-loader@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-cosmos-loader/-/react-cosmos-loader-2.1.0.tgz#d928cd1277e03679d2cf131538fb746bc5a1d82c"
   dependencies:
     deep-equal "^1.0.1"
     lodash.merge "^4.6.0"
