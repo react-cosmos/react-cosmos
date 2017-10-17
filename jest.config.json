@@ -5,6 +5,7 @@
   "setupTestFrameworkScriptFile": "./jest.frameworkSetup.js",
   "testURL": "http://foo.bar/",
   "testPathIgnorePatterns": ["<rootDir>/node_modules/", "/__fsmocks__/"],
+  "watchPathIgnorePatterns": ["/__fsoutput__/"],
   "transformIgnorePatterns": ["/node_modules/(?!react-cosmos.+)"],
   "collectCoverageFrom": [
     "**/src/**/*.{js,jsx}",

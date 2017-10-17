@@ -1,18 +1,9 @@
 import path from 'path';
 import fs from 'fs-extra';
 import { silent as silentImport } from 'import-from';
-import getLoaderWebpackConfig from './loader-webpack-config';
-import getDefaultWebpackConfig from './default-webpack-config';
-import importModule from 'react-cosmos-utils/lib/import-module';
+import extendWebpackConfig from './extend-webpack-config';
 import getCosmosConfig from 'react-cosmos-config';
-
-const moduleExists = modulePath => {
-  try {
-    return modulePath && require.resolve(modulePath) && true;
-  } catch (err) {
-    return false;
-  }
-};
+import getUserWebpackConfig from './user-webpack-config';
 
 const exportPlaygroundFiles = outputPath => {
   fs.copySync(
@@ -50,30 +41,21 @@ const runWebpackCompiler = (webpack, config) =>
     });
   });
 
-module.exports = function startExport(cosmosConfigPath) {
-  const cosmosConfig = getCosmosConfig(cosmosConfigPath);
-  const { webpackConfigPath, outputPath, publicPath, publicUrl } = cosmosConfig;
+export default function startExport() {
+  const cosmosConfig = getCosmosConfig();
+  const { rootPath, outputPath, publicPath, publicUrl } = cosmosConfig;
 
-  const webpack = silentImport(cosmosConfigPath, 'webpack');
+  const webpack = silentImport(rootPath, 'webpack');
   if (!webpack) {
     console.warn('[Cosmos] webpack dependency missing!');
     console.log('Install using "yarn add webpack" or "npm install webpack"');
     return;
   }
 
-  let userWebpackConfig;
-  if (moduleExists(webpackConfigPath)) {
-    console.log(`[Cosmos] Using webpack config found at ${webpackConfigPath}`);
-    userWebpackConfig = importModule(require(webpackConfigPath));
-  } else {
-    console.log('[Cosmos] No webpack config found, using default config');
-    userWebpackConfig = getDefaultWebpackConfig(cosmosConfigPath);
-  }
-
-  const loaderWebpackConfig = getLoaderWebpackConfig({
+  const userWebpackConfig = getUserWebpackConfig(cosmosConfig);
+  const loaderWebpackConfig = extendWebpackConfig({
     webpack,
     userWebpackConfig,
-    cosmosConfigPath,
     shouldExport: true
   });
 
@@ -106,4 +88,4 @@ module.exports = function startExport(cosmosConfigPath) {
         console.error(err);
       }
     );
-};
+}
