@@ -4,11 +4,11 @@ import { silent as silentImport } from 'import-from';
 import express from 'express';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import getLoaderWebpackConfig from './loader-webpack-config';
-import getDefaultWebpackConfig from './default-webpack-config';
 import importModule from 'react-cosmos-utils/lib/import-module';
 import moduleExists from 'react-cosmos-utils/lib/module-exists';
 import getCosmosConfig from 'react-cosmos-config';
+import extendWebpackConfig from '../server/extend-webpack-config';
+import getDefaultWebpackConfig from '../server/default-webpack-config';
 
 const getPublicPath = (cosmosConfig, userWebpackConfig) => {
   return (
@@ -17,11 +17,18 @@ const getPublicPath = (cosmosConfig, userWebpackConfig) => {
   );
 };
 
-module.exports = function startServer(cosmosConfigPath) {
-  const cosmosConfig = getCosmosConfig(cosmosConfigPath);
-  const { hostname, hot, port, webpackConfigPath, publicUrl } = cosmosConfig;
+export default function startServer() {
+  const cosmosConfig = getCosmosConfig();
+  const {
+    rootPath,
+    hostname,
+    hot,
+    port,
+    webpackConfigPath,
+    publicUrl
+  } = cosmosConfig;
 
-  const webpack = silentImport(cosmosConfigPath, 'webpack');
+  const webpack = silentImport(rootPath, 'webpack');
   if (!webpack) {
     console.warn('[Cosmos] webpack dependency missing!');
     console.log('Install using "yarn add webpack" or "npm install webpack"');
@@ -34,7 +41,7 @@ module.exports = function startServer(cosmosConfigPath) {
     userWebpackConfig = importModule(require(webpackConfigPath));
   } else {
     console.log('[Cosmos] No webpack config found, using default config');
-    userWebpackConfig = getDefaultWebpackConfig(cosmosConfigPath);
+    userWebpackConfig = getDefaultWebpackConfig(rootPath);
   }
 
   if (cosmosConfig.proxies) {
@@ -44,10 +51,9 @@ module.exports = function startServer(cosmosConfigPath) {
     );
   }
 
-  const loaderWebpackConfig = getLoaderWebpackConfig({
+  const loaderWebpackConfig = extendWebpackConfig({
     webpack,
-    userWebpackConfig,
-    cosmosConfigPath
+    userWebpackConfig
   });
   const loaderCompiler = webpack(loaderWebpackConfig);
   const app = express();
@@ -95,4 +101,4 @@ module.exports = function startServer(cosmosConfigPath) {
     }
     console.log(`[Cosmos] See you at http://${hostname}:${port}/`);
   });
-};
+}

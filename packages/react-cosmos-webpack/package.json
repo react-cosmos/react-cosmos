@@ -12,7 +12,6 @@
     "lib"
   ],
   "dependencies": {
-    "babel-register": "^6.26.0",
     "express": "^4.15.4",
     "fs-extra": "^4.0.1",
     "glob": "^7.1.1",
