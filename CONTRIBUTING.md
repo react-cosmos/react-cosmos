@@ -89,7 +89,7 @@ But, if we want to import a Flow type we'll only find it using the src path:
 import type { FixtureFile } from 'react-cosmos-voyager2/src/types';
 ```
 
-Ideally we would always import the source of other packages for Flow to validate types across packages, but we can only do this in client side code which gets compiled again by webpack. Importing a source file from another package in a server side package would result in uncompiled code running in Node, which is not cool. Even when Node will support ES modules without a feature flag, we'll still want to compile stuff like JSX.
+Ideally we would always import the source of other packages for Flow to validate types across packages, but if we do this we end up running uncompiled code on the user's machine, which is not cool. Even when Node will support ES modules without a feature flag, we'll still want to compile stuff like Flow or JSX.
 
 Please reach out of you have a better idea for handling this!
 
