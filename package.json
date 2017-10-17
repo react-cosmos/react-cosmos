@@ -43,7 +43,7 @@
     "coveralls": "^3.0.0",
     "create-react-class": "^15.6.2",
     "css-loader": "^0.28.5",
-    "cypress": "^1.0.1",
+    "cypress": "^1.0.2",
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-16": "^1.0.1",
     "eslint-config-xo-react": "^0.13.0",
