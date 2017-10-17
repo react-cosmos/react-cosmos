@@ -24,6 +24,7 @@
   },
   "moduleNameMapper": {
     "\\.(css|less)$": "identity-obj-proxy",
-    "\\.(jpg|png)$": "<rootDir>/packages/__mocks__/img-mock.js"
+    "\\.(jpg|png)$":
+      "<rootDir>/packages/react-cosmos-component-playground/img-stub.js"
   }
 }
