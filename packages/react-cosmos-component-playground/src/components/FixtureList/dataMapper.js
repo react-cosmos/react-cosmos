@@ -10,6 +10,8 @@ const dataObjectToNestedArray = (base, path = '') => {
         name: key,
         expanded: true,
         children
+        // TODO: Enable this when we'll have component pages
+        // https://github.com/react-cosmos/react-cosmos/issues/314
         // urlParams: { component: newPath }
       });
     } else {
