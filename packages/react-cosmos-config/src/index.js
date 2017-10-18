@@ -19,6 +19,8 @@ type UserConfig = {
   containerQuerySelector?: string,
   // Deprecated
   componentPaths: Array<string>,
+  ignore: Array<RegExp>,
+  fixturesDir: string,
   fixturePaths: Array<string>
 };
 
@@ -37,6 +39,8 @@ const defaults = {
   publicUrl: '/loader/',
   // Deprecated
   componentPaths: [],
+  ignore: [],
+  fixturesDir: '__fixtures__',
   fixturePaths: []
 };
 
