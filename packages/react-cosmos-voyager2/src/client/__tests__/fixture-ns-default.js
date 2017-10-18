@@ -2,7 +2,8 @@
 
 import { getComponents } from '../get-components';
 
-const Comp = () => {};
+const Comp1 = () => {};
+const Comp2 = () => {};
 
 describe('Default namespace for one fixture', () => {
   let components;
@@ -10,13 +11,13 @@ describe('Default namespace for one fixture', () => {
   beforeEach(async () => {
     const fixtureFiles = [
       {
-        filePath: '/path/to/foo.js',
+        filePath: '/fixtures/comp1/ns1/foo.js',
         components: []
       }
     ];
     const fixtureModules = {
-      '/path/to/foo.js': {
-        component: Comp
+      '/fixtures/comp1/ns1/foo.js': {
+        component: Comp1
       }
     };
     components = await getComponents({ fixtureFiles, fixtureModules });
@@ -33,47 +34,52 @@ describe('Default namespace for more fixtures', () => {
   beforeEach(async () => {
     const fixtureFiles = [
       {
-        filePath: '/path/to1/foo.js',
+        filePath: '/fixtures/comp1/ns1/foo.js',
         components: []
       },
       {
-        filePath: '/path/to2/foo.js',
+        filePath: '/fixtures/comp1/ns2/foo.js',
         components: []
       },
       {
-        filePath: '/path/to3/foo.js',
+        filePath: '/fixtures/comp1/ns2/bar.js',
+        components: []
+      },
+      {
+        filePath: '/fixtures/comp2/foo.js',
         components: []
       }
     ];
     const fixtureModules = {
-      '/path/to1/foo.js': [
-        {
-          component: Comp
-        }
-      ],
-      '/path/to2/foo.js': [
-        {
-          component: Comp
-        }
-      ],
-      '/path/to3/foo.js': [
-        {
-          component: Comp
-        }
-      ]
+      '/fixtures/comp1/ns1/foo.js': {
+        component: Comp1
+      },
+      '/fixtures/comp1/ns2/foo.js': {
+        component: Comp1
+      },
+      '/fixtures/comp1/ns2/bar.js': {
+        component: Comp1
+      },
+      '/fixtures/comp2/foo.js': {
+        component: Comp2
+      }
     };
     components = await getComponents({ fixtureFiles, fixtureModules });
   });
 
-  it('has namespace from file path', () => {
-    expect(components[0].fixtures[0].namespace).toBe('to1');
+  it('[0][0] has namespace from file path', () => {
+    expect(components[0].fixtures[0].namespace).toBe('ns1');
   });
 
-  it('has namespace from file path', () => {
-    expect(components[0].fixtures[1].namespace).toBe('to2');
+  it('[0][1] has namespace from file path', () => {
+    expect(components[0].fixtures[1].namespace).toBe('ns2');
   });
 
-  it('has namespace from file path', () => {
-    expect(components[0].fixtures[2].namespace).toBe('to3');
+  it('[0][2] has namespace from file path', () => {
+    expect(components[0].fixtures[2].namespace).toBe('ns2');
+  });
+
+  it('[1][0] has namespace from file path', () => {
+    expect(components[1].fixtures[0].namespace).toBe('');
   });
 });

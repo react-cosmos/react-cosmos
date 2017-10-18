@@ -24,7 +24,6 @@ export function getComponents({
   const fixturesByComponent: FixturesByComponent = new Map();
   const componentNames: Map<ComponentType<*>, string> = new Map();
   const componentPaths: Map<ComponentType<*>, string> = new Map();
-  const fixtureCommonDir = getCommonDirFromPaths(Object.keys(fixtureModules));
 
   fixtureFiles.forEach(fixtureFile => {
     const { filePath } = fixtureFile;
@@ -35,7 +34,6 @@ export function getComponents({
       return;
     }
 
-    const fileNamespace = getFileNamespace(fixtureCommonDir, filePath);
     const fileName = getFileNameFromPath(filePath);
     const fileFixtureNamer = createDefaultNamer(fileName);
 
@@ -50,10 +48,6 @@ export function getComponents({
         return;
       }
 
-      // Check user specified namespace first, fallback to namespacing based
-      // on file path
-      const namespace = fixture.namespace || fileNamespace;
-
       // Is this the first fixture for this component?
       let compFixtures = fixturesByComponent.get(component);
       if (!compFixtures) {
@@ -64,7 +58,10 @@ export function getComponents({
       compFixtures.push({
         filePath,
         name: name || fileFixtureNamer(),
-        namespace,
+        // Note: namespace is updated later, after gathering all fixtures per
+        // component
+        namespace: '',
+        // namespace,
         source: fixture
       });
 
@@ -85,6 +82,7 @@ export function getComponents({
   });
 
   if (incompatFixtures.size > 0) {
+    const fixtureCommonDir = getCommonDirFromPaths(Object.keys(fixtureModules));
     warnAboutIncompatFixtures(incompatFixtures, fixtureCommonDir);
   }
 
@@ -97,6 +95,10 @@ export function getComponents({
 
   for (const componentType of fixturesByComponent.keys()) {
     const compFixtures = fixturesByComponent.get(componentType);
+    if (!compFixtures) {
+      continue;
+    }
+
     const filePath = componentPaths.get(componentType) || null;
     const name =
       // Try to read the Class/function name at run-time. User can override
@@ -112,16 +114,29 @@ export function getComponents({
         ? componentType.namespace
         : getFileNamespace(componentCommonDir, filePath);
 
+    // We had to wait until now to be able to determine the common dir between
+    // all fixtures belonging to the same component
+    const compFixtureCommonDir = getCommonDirFromPaths(
+      compFixtures.map(f => f.filePath)
+    );
+    const fixturesWithNamespace = compFixtures.map(f => ({
+      ...f,
+      // Check user specified namespace first, fallback to namespacing based
+      // on file path
+      namespace:
+        f.source.namespace || getFileNamespace(compFixtureCommonDir, f.filePath)
+    }));
+
     components.push({
       filePath,
       name,
       namespace,
       type: componentType,
-      fixtures: compFixtures ? sortBy(compFixtures, f => f.name) : []
+      fixtures: compFixtures ? sortBy(fixturesWithNamespace, getObjectPath) : []
     });
   }
 
-  return sortBy(components, c => c.name);
+  return sortBy(components, getObjectPath);
 }
 
 function getFileNameFromPath(filePath: string) {
@@ -155,4 +170,8 @@ function warnAboutIncompatFixtures(
   console.log(
     '[Cosmos] More details at https://github.com/react-cosmos/react-cosmos/issues/440'
   );
+}
+
+function getObjectPath(obj: { name: string, namespace: string }): string {
+  return obj.namespace ? `${obj.namespace}/${obj.name}` : obj.name;
 }
