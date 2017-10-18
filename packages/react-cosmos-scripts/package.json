@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-scripts",
-  "version": "2.2.0-3",
+  "version": "2.2.0-3.0.0-alpha.1.0",
   "publishConfig": {
     "access": "public"
   },
@@ -16,7 +16,7 @@
     "jscodeshift": "^0.3.32",
     "lodash.camelcase": "^4.3.0",
     "lodash.upperfirst": "^4.3.1",
-    "react-cosmos-config": "^2.0.0",
+    "react-cosmos-config": "^2.2.0-3.0.0-alpha.1.0",
     "react-cosmos-voyager": "^2.0.0"
   },
   "xo": false

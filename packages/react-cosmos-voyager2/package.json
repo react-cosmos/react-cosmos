@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-voyager2",
-  "version": "2.2.0-2",
+  "version": "2.2.0-3.0.0-alpha.1.0",
   "publishConfig": {
     "access": "public"
   },
