@@ -2,7 +2,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import { addComponentToFixture } from '../add-component-to-fixture';
+import { addComponentToFixture } from '../../add-component-to-fixture';
 
 function readMockFile(fileName) {
   return fs.readFileSync(

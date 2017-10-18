@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import getCosmosConfig from 'react-cosmos-config';
 import getFilePaths from 'react-cosmos-voyager';
-import { addComponentToFixture } from './add-component-to-fixture';
+import { addComponentToFixture } from './transforms/add-component-to-fixture';
 
 import type { Config } from 'react-cosmos-config/src';
 
