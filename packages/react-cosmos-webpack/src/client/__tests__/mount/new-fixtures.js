@@ -28,16 +28,16 @@ const fixtureFiles = [
     filePath: '/components/__fixtures__/Bar/one.js',
     components: [
       {
-        filePath: '/components/Bar.js',
+        filePath: '/components/nested/Bar.js',
         name: 'Bar'
       }
     ]
   },
   {
-    filePath: '/components/__fixtures__/Bar/two.json',
+    filePath: '/components/__fixtures__/Bar/nested/two.json',
     components: [
       {
-        filePath: '/components/Bar.js',
+        filePath: '/components/nested/Bar.js',
         name: 'Bar'
       }
     ]
@@ -46,7 +46,7 @@ const fixtureFiles = [
 const fixtureModules = {
   '/components/__fixtures__/Foo/blank.js': blank,
   '/components/__fixtures__/Bar/one.js': one,
-  '/components/__fixtures__/Bar/two.json': two
+  '/components/__fixtures__/Bar/nested/two.json': two
 };
 
 beforeEach(() => {
@@ -66,16 +66,16 @@ it('sends proxies to loader', () => {
 
 test('sends components to loader', () => {
   expect(mountLoader.mock.calls[0][0].components).toEqual({
-    Bar,
+    'nested/Bar': Bar,
     Foo
   });
 });
 
 test('sends fixtures to loader', () => {
   expect(mountLoader.mock.calls[0][0].fixtures).toEqual({
-    Bar: {
+    'nested/Bar': {
       one,
-      two
+      'nested/two': two
     },
     Foo: {
       blank

@@ -120,11 +120,13 @@ function getOldSchoolModulesFromNewStyleComponents(newStyleComponents) {
   const fixtures = {};
 
   newStyleComponents.forEach(c => {
-    components[c.name] = c.type;
-    fixtures[c.name] = {};
+    const componentName = getObjectPath(c);
+    components[componentName] = c.type;
+    fixtures[componentName] = {};
 
     c.fixtures.forEach(f => {
-      fixtures[c.name][f.name] = f.source;
+      const fixtureName = getObjectPath(f);
+      fixtures[componentName][fixtureName] = f.source;
     });
   });
 
@@ -133,4 +135,8 @@ function getOldSchoolModulesFromNewStyleComponents(newStyleComponents) {
 
 function getPrintableListFromPaths(set: Set<string>): string {
   return [...set.values()].map(f => `- ${f}`).join('\n');
+}
+
+function getObjectPath(obj: { name: string, namespace: string }): string {
+  return obj.namespace ? `${obj.namespace}/${obj.name}` : obj.name;
 }
