@@ -18,7 +18,8 @@ describe('Local state example', () => {
     it('should list components', () => {
       const componentSel = getSelector('index__componentName');
       cy.get(`${componentSel}:eq(0)`).should('contain', 'Counter');
-      cy.get(`${componentSel}:eq(1)`).should('contain', 'CounterList');
+      // TEMP: Find a more reliable way to target this
+      cy.get(`${componentSel}:eq(2)`).should('contain', 'CounterList');
     });
 
     it('should list fixtures', () => {
