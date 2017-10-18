@@ -4,7 +4,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "Static transforms for Cosmos-related bidniss",
+  "description": "Scripts for Cosmos-related bidniss",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-scripts",
   "license": "MIT",
   "files": [
