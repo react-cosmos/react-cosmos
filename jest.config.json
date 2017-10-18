@@ -10,8 +10,6 @@
   "collectCoverageFrom": [
     "**/src/**/*.{js,jsx}",
     "!**/__fixtures__/**",
-    "!**/lib/**",
-    "!**/node_modules/**",
     "!**/react-cosmos-voyager/src/use-cases/**"
   ],
   "coverageDirectory": "./coverage",
