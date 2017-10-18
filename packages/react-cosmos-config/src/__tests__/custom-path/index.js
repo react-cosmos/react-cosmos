@@ -12,7 +12,7 @@ beforeEach(() => {
 });
 
 describe('when no config exists', () => {
-  it('gets extended server defaults', () => {
+  it('returns extended server defaults', () => {
     const config = getCosmosConfig();
     expect(config).toMatchObject({
       globalImports: [path.join(mocksPath, 'nested/some-polyfill')],
@@ -23,26 +23,26 @@ describe('when no config exists', () => {
     });
   });
 
-  it('gets root path', () => {
+  it('returns absolute root path', () => {
     const config = getCosmosConfig();
     expect(config.rootPath).toBe(path.join(mocksPath, 'nested'));
   });
 
-  it('gets default proxies path', () => {
+  it('returns absolute default proxies path', () => {
     const config = getCosmosConfig();
     expect(config.proxiesPath).toBe(
       path.join(mocksPath, 'nested/cosmos.proxies')
     );
   });
 
-  it('gets default webpack config path', () => {
+  it('returns absolute default webpack config path', () => {
     const config = getCosmosConfig();
     expect(config.webpackConfigPath).toBe(
       path.join(mocksPath, 'nested/webpack.config')
     );
   });
 
-  it('gets default output path', () => {
+  it('returns absolute default output path', () => {
     const config = getCosmosConfig();
     expect(config.outputPath).toBe(
       path.join(mocksPath, 'nested/cosmos-export')

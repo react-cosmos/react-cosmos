@@ -11,8 +11,8 @@ beforeEach(() => {
   global.process.cwd = () => mocksPath;
 });
 
-describe('when no config exists', () => {
-  it('gets server defaults', () => {
+describe('when no config exists at explicit path', () => {
+  it('returns server defaults', () => {
     const config = getCosmosConfig();
     expect(config).toMatchObject({
       globalImports: [],
@@ -23,24 +23,24 @@ describe('when no config exists', () => {
     });
   });
 
-  it('gets root path', () => {
+  it('returns absolute root path', () => {
     const config = getCosmosConfig();
     expect(config.rootPath).toBe(mocksPath);
   });
 
-  it('gets default proxies path', () => {
+  it('returns absolute default proxies path', () => {
     const config = getCosmosConfig();
     expect(config.proxiesPath).toBe(path.join(mocksPath, 'cosmos.proxies'));
   });
 
-  it('gets default webpack config path', () => {
+  it('returns absolute default webpack config path', () => {
     const config = getCosmosConfig();
     expect(config.webpackConfigPath).toBe(
       path.join(mocksPath, 'webpack.config')
     );
   });
 
-  it('gets default output path', () => {
+  it('returns absolute default output path', () => {
     const config = getCosmosConfig();
     expect(config.outputPath).toBe(path.join(mocksPath, 'cosmos-export'));
   });
