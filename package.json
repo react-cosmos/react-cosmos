@@ -16,7 +16,7 @@
     "build": "node ./scripts/build.js",
     "postinstall": "yarn build",
     "publish-lerna": "yarn test && yarn build && lerna publish --registry=https://registry.npmjs.org/",
-    "test-jest": "jest --coverage --config jest.config.json",
+    "test-jest": "jest --coverage --maxWorkers=4 --config jest.config.json",
     "test": "yarn lint && yarn test-jest",
     "coveralls": "cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
     "test-smoke": "cypress run",
