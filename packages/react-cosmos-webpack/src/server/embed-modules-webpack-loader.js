@@ -47,7 +47,7 @@ module.exports = async function embedModules(source: string) {
   if (componentPaths.length > 0) {
     console.warn(
       '[Cosmos] Using `componentPaths` config is deprecated. ' +
-        'Please consider upgrading your fixtures.'
+        'Please consider upgrading.'
     );
 
     const { components } = getFilePaths(cosmosConfig);
