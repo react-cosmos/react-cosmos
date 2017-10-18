@@ -6,7 +6,8 @@ import importModule from 'react-cosmos-utils/lib/import-module';
 import moduleExists from 'react-cosmos-utils/lib/module-exists';
 import resolveUserPath from 'react-cosmos-utils/lib/resolve-user-path';
 
-type UserConfig = {
+export type Config = {
+  rootPath: string,
   globalImports: Array<string>,
   hostname: string,
   hot: boolean,
@@ -24,11 +25,8 @@ type UserConfig = {
   fixturePaths: Array<string>
 };
 
-export type Config = {
-  rootPath: string
-} & UserConfig;
-
 const defaults = {
+  rootPath: '.',
   globalImports: [],
   hostname: 'localhost',
   hot: true,
@@ -44,66 +42,62 @@ const defaults = {
   fixturePaths: []
 };
 
-export default function getCosmosConfig(): Config {
-  const cosmosConfigPath = resolveUserPath(
-    process.cwd(),
-    argv.config || 'cosmos.config'
-  );
+export default function getCosmosConfig(cosmosConfigPath?: string): Config {
+  const configPath =
+    cosmosConfigPath ||
+    resolveUserPath(process.cwd(), argv.config || 'cosmos.config');
+  const relPath = path.dirname(configPath);
 
-  if (!moduleExists(cosmosConfigPath)) {
+  if (!moduleExists(configPath)) {
     if (argv.config) {
-      const cosmosConfigPathRel = path.relative(
-        process.cwd(),
-        cosmosConfigPath
-      );
+      const configPathRel = path.relative(process.cwd(), configPath);
       console.warn(
-        `[Cosmos] Using defaults, no config file found at ${cosmosConfigPathRel}!`
+        `[Cosmos] Using defaults, no config file found at ${configPathRel}!`
       );
     } else {
       console.log(`[Cosmos] Using defaults, no config file found`);
     }
 
-    return {
-      rootPath: process.cwd(),
-      ...getNormalizedConfig(defaults, process.cwd())
-    };
+    return getNormalizedConfig(defaults, relPath);
   }
 
-  const userConfig = importModule(require(cosmosConfigPath));
-  const rootPath = path.dirname(cosmosConfigPath);
+  const userConfig = importModule(require(configPath));
   const config = {
     ...defaults,
     ...userConfig
   };
 
-  return {
-    rootPath,
-    ...getNormalizedConfig(config, rootPath)
-  };
+  return getNormalizedConfig(config, relPath);
 }
 
-function getNormalizedConfig(
-  rawConfig: UserConfig,
-  rootPath: string
-): UserConfig {
+function getNormalizedConfig(relativeConfig: Config, relPath: string): Config {
   const {
     globalImports,
     outputPath,
     proxiesPath,
+    publicPath,
     webpackConfigPath,
     // Deprecated
     componentPaths,
     fixturePaths
-  } = rawConfig;
+  } = relativeConfig;
 
-  return {
-    ...rawConfig,
+  const rootPath = path.resolve(relPath, relativeConfig.rootPath);
+  const config = {
+    ...relativeConfig,
+    rootPath,
     globalImports: globalImports.map(p => resolveUserPath(rootPath, p)),
-    outputPath: resolveUserPath(rootPath, outputPath),
+    outputPath: path.resolve(rootPath, outputPath),
     proxiesPath: resolveUserPath(rootPath, proxiesPath),
     webpackConfigPath: resolveUserPath(rootPath, webpackConfigPath),
     // Deprecated
-    componentPaths: componentPaths.map(p => resolveUserPath(rootPath, p)),
-    fixturePaths: fixturePaths.map(p => resolveUserPath(rootPath, p))
+    componentPaths: componentPaths.map(p => path.resolve(rootPath, p)),
+    fixturePaths: fixturePaths.map(p => path.resolve(rootPath, p))
   };
+
+  if (publicPath) {
+    config.publicPath = path.resolve(rootPath, publicPath);
+  }
+
+  return config;
 }
