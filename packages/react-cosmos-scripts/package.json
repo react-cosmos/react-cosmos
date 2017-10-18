@@ -1,11 +1,11 @@
 {
-  "name": "react-cosmos-transforms",
+  "name": "react-cosmos-scripts",
   "version": "2.2.0-3",
   "publishConfig": {
     "access": "public"
   },
   "description": "Static transforms for Cosmos-related bidniss",
-  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-transforms",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-scripts",
   "license": "MIT",
   "files": [
     "lib"

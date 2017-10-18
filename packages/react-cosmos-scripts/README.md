@@ -1,3 +1,3 @@
-# react-cosmos-transforms
+# react-cosmos-scripts
 
 Static transforms for Cosmos-related bidniss.
