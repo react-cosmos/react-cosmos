@@ -2,6 +2,8 @@
 
 import fs from 'fs';
 import path from 'path';
+import camelCase from 'lodash.camelcase';
+import upperFirst from 'lodash.upperfirst';
 import getCosmosConfig from 'react-cosmos-config';
 import getFilePaths from 'react-cosmos-voyager';
 import { addComponentToFixture } from './transforms/add-component-to-fixture';
@@ -32,9 +34,13 @@ export default function upgradeFixtures() {
       const newFixtureCode = addComponentToFixture({
         fixtureCode,
         componentPath,
-        componentName
+        componentName: getIdentifiableComponentName(componentName)
       });
       fs.writeFileSync(fixturePath, newFixtureCode, 'utf8');
     });
   });
+}
+
+function getIdentifiableComponentName(name) {
+  return upperFirst(camelCase(name.split('/').pop()));
 }

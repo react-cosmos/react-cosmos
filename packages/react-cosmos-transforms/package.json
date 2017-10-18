@@ -14,6 +14,8 @@
   "scripts": {},
   "dependencies": {
     "jscodeshift": "^0.3.32",
+    "lodash.camelcase": "^4.3.0",
+    "lodash.upperfirst": "^4.3.1",
     "react-cosmos-config": "^2.0.0",
     "react-cosmos-voyager": "^2.0.0"
   },

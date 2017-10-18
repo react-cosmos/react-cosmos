@@ -65,7 +65,7 @@ describe('first file', () => {
     expect(addComponentToFixture).toHaveBeenCalledWith({
       fixtureCode: 'MOCK_I1',
       componentPath: '../../../../ill/shared/emoji-block.js',
-      componentName: 'ill/shared/emoji-block'
+      componentName: 'EmojiBlock'
     });
   });
 
@@ -90,7 +90,7 @@ describe('second file', () => {
     expect(addComponentToFixture).toHaveBeenCalledWith({
       fixtureCode: 'MOCK_I2',
       componentPath: '../../../../ill/shared/emoji-icon.js',
-      componentName: 'ill/shared/emoji-icon'
+      componentName: 'EmojiIcon'
     });
   });
 
@@ -115,7 +115,7 @@ describe('third file', () => {
     expect(addComponentToFixture).toHaveBeenCalledWith({
       fixtureCode: 'MOCK_I3',
       componentPath: '../../../../ill/shared/emoji-icon.js',
-      componentName: 'ill/shared/emoji-icon'
+      componentName: 'EmojiIcon'
     });
   });
 
