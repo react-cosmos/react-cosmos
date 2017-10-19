@@ -5,17 +5,34 @@ import styles from './index.less';
 import fixturesToTreeData from './dataMapper';
 import filterNodeArray from './filter';
 import Tree from '../Tree';
+import localForage from 'localforage';
 
 const KEY_S = 83;
 const KEY_ESC = 27;
+export const TREE_EXPANSION_STATE = '__cosmos__tree-expansion-state';
+
+const updateLocalToggleState = (key, expanded) => {
+  localForage.getItem(TREE_EXPANSION_STATE).then(value => {
+    let output = value;
+    if (!output) {
+      output = {};
+    }
+    output[key] = expanded;
+    localForage.setItem(TREE_EXPANSION_STATE, output);
+  });
+};
 
 export default class FixtureList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchText: '',
-      fixtureTree: fixturesToTreeData(props.fixtures)
+      searchText: ''
     };
+    localForage.getItem(TREE_EXPANSION_STATE).then(savedExpansionState => {
+      this.setState({
+        fixtureTree: fixturesToTreeData(props.fixtures, savedExpansionState)
+      });
+    });
   }
 
   componentDidMount() {
@@ -37,7 +54,14 @@ export default class FixtureList extends Component {
     if (
       JSON.stringify(nextProps.fixtures) !== JSON.stringify(this.props.fixtures)
     ) {
-      this.setState({ fixtureTree: fixturesToTreeData(nextProps.fixtures) });
+      localForage.getItem(TREE_EXPANSION_STATE).then(savedExpansionState => {
+        this.setState({
+          fixtureTree: fixturesToTreeData(
+            nextProps.fixtures,
+            savedExpansionState
+          )
+        });
+      });
     }
   }
 
@@ -63,6 +87,7 @@ export default class FixtureList extends Component {
   };
 
   onToggle = (node, expanded) => {
+    updateLocalToggleState(node.localStorageKey, expanded);
     // Mutates state, specifically a node from state.fixtureTree
     node.expanded = expanded;
     this.forceUpdate();
@@ -75,6 +100,11 @@ export default class FixtureList extends Component {
   render() {
     const { urlParams } = this.props;
     const { fixtureTree, searchText } = this.state;
+
+    // We might be waiting on localForage to return
+    if (!fixtureTree) {
+      return null;
+    }
 
     const trimmedSearchText = searchText.trim();
     let filteredFixtureTree = fixtureTree;
