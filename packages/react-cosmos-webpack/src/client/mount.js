@@ -62,7 +62,9 @@ function getNormalizedFixtureModules(
     const fixtureModule = importModule(fixtureModules[next]);
 
     // Component seems to be up to date, no alteration needed
-    if (fixtureModule.component) {
+    // Warn: Since multi fixtures weren't supported before v3, we assume multi
+    // fixtures (Array default export) to be legit new style fixtures
+    if (Array.isArray(fixtureModule) || fixtureModule.component) {
       return {
         ...acc,
         [next]: fixtureModule
@@ -74,6 +76,7 @@ function getNormalizedFixtureModules(
       const { components } = fixtureFile;
       const componentModule =
         deprecatedComponentModules[components[0].filePath];
+      const component = importModule(componentModule);
 
       alteredFixtures.add(next);
 
@@ -81,7 +84,7 @@ function getNormalizedFixtureModules(
         ...acc,
         [next]: {
           ...fixtureModule,
-          component: importModule(componentModule)
+          component
         }
       };
     } catch (err) {

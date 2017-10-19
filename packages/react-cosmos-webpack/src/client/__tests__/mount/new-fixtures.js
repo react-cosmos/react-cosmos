@@ -11,7 +11,7 @@ const Foo = () => {};
 const Bar = () => {};
 const blank = { component: Foo };
 const one = { component: Bar };
-const two = { component: Bar };
+const two = [{ component: Bar }, { component: Bar }];
 
 const proxies = [ProxyA];
 const fixtureFiles = [
@@ -75,7 +75,8 @@ test('sends fixtures to loader', () => {
   expect(mountLoader.mock.calls[0][0].fixtures).toEqual({
     'nested/Bar': {
       one,
-      'nested/two': two
+      'nested/two': two[0],
+      'nested/two (1)': two[1]
     },
     Foo: {
       blank
