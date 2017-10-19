@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-webpack",
-  "version": "3.0.0-alpha.2",
+  "version": "3.0.0-alpha.5",
   "publishConfig": {
     "access": "public"
   },
