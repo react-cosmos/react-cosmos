@@ -6,14 +6,11 @@ import RemoteLoader from '../';
 const ProxyFoo = () => <span />;
 const ComponentFoo = () => {};
 const fixtureFoo = { foo: 'bar', onClick: () => {} };
-const fixtureFoo2 = { foo: 'baz' };
 
 // Vars populated in beforeEach blocks
 let messageHandlers;
 let wrapper;
 let firstProxyWrapper;
-let firstProxyProps;
-let firstProxyKey;
 
 const handleMessage = e => {
   const { type } = e.data;
@@ -28,7 +25,7 @@ const waitForPostMessage = type =>
     messageHandlers[type] = resolve;
   });
 
-describe('Fixture source changes', () => {
+describe('Fixture source removal', () => {
   beforeEach(() => {
     messageHandlers = {};
     // window recieves both incoming and outgoing messages from/to parent because
@@ -65,19 +62,13 @@ describe('Fixture source changes', () => {
         return onFixtureSelect;
       })
       .then(() => {
-        wrapper.update();
-        firstProxyKey = wrapper.find(ProxyFoo).key();
-
         wrapper.setProps({
           fixtures: {
-            Foo: {
-              foo: fixtureFoo2
-            }
+            Foo: {}
           }
         });
 
         firstProxyWrapper = wrapper.find(ProxyFoo);
-        firstProxyProps = firstProxyWrapper.props();
       });
   });
 
@@ -85,11 +76,7 @@ describe('Fixture source changes', () => {
     window.removeEventListener('message', handleMessage);
   });
 
-  test('keeps sending previous fixture body to first proxy', () => {
-    expect(firstProxyProps.fixture).toEqual(fixtureFoo);
-  });
-
-  test('does not change element key', () => {
-    expect(firstProxyWrapper.key()).toEqual(firstProxyKey);
+  test('stops rendering proxies', () => {
+    expect(firstProxyWrapper).toHaveLength(0);
   });
 });

@@ -11,7 +11,6 @@
   "dependencies": {
     "deep-equal": "^1.0.1",
     "lodash.merge": "^4.6.0",
-    "lodash.omit": "^4.5.0",
     "prop-types": "^15.5.10",
     "react-cosmos-state-proxy": "^3.0.0-alpha.2",
     "react-cosmos-utils": "^3.0.0-alpha.2"
