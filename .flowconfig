@@ -1,6 +1,11 @@
 [ignore]
-.*/packages/react-cosmos-voyager/src/use-cases/.*
-.*/packages/react-cosmos-voyager/lib/use-cases/.*
+.*/react-cosmos-voyager/src/use-cases/.*
+.*/react-cosmos-voyager/lib/use-cases/.*
+💩 Ignore packages with type issues
+.*/node_modules/apollo-client/.*
+.*/node_modules/apollo-link-core/.*
+.*/node_modules/react-apollo/.*
+.*/node_modules/cypress/.*
 
 [include]
 
