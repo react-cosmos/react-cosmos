@@ -17,7 +17,7 @@
     "glob": "^7.1.1",
     "import-from": "^2.1.0",
     "lodash.omit": "^4.5.0",
-    "react-cosmos-component-playground": "^3.0.0-alpha.2",
+    "react-cosmos-playground": "^3.0.0-alpha.2",
     "react-cosmos-config": "^3.0.0-alpha.2",
     "react-cosmos-loader": "^3.0.0-alpha.2",
     "react-cosmos-utils": "^3.0.0-alpha.2",

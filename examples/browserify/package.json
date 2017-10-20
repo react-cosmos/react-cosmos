@@ -11,7 +11,7 @@
     "babelify": "^7.3.0",
     "budo": "^9.2.1",
     "prop-types": "^15.5.10",
-    "react-cosmos-component-playground": "^3.0.0-alpha.2",
+    "react-cosmos-playground": "^3.0.0-alpha.2",
     "react-cosmos-loader": "^3.0.0-alpha.2",
     "require-globify": "^1.4.1"
   },

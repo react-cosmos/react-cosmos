@@ -71,7 +71,7 @@ export default function startServer() {
   });
 
   app.get('/bundle.js', (req, res) => {
-    res.sendFile(require.resolve('react-cosmos-component-playground'));
+    res.sendFile(require.resolve('react-cosmos-playground'));
   });
 
   app.get('/favicon.ico', (req, res) => {

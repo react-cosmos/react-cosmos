@@ -7,10 +7,7 @@ class StarryBg extends Component {
     return (
       <div className={styles.root}>
         <div className={styles.stars} />
-        {children &&
-          <div className={styles.content}>
-            {children}
-          </div>}
+        {children && <div className={styles.content}>{children}</div>}
       </div>
     );
   }

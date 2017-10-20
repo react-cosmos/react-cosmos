@@ -85,10 +85,7 @@ class FixtureEditor extends Component {
             gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter']
           }}
         />
-        {error &&
-          <div className={styles.error}>
-            {error}
-          </div>}
+        {error && <div className={styles.error}>{error}</div>}
       </div>
     );
   }
