@@ -2,7 +2,7 @@
   "rootDir": "./",
   "testEnvironment": "jsdom",
   "setupFiles": ["./jest.setup.js"],
-  "setupTestFrameworkScriptFile": "./jest.frameworkSetup.js",
+  "setupTestFrameworkScriptFile": "./jest.framework-setup.js",
   "testURL": "http://foo.bar/",
   "testPathIgnorePatterns": ["<rootDir>/node_modules/", "/__fsmocks__/"],
   "watchPathIgnorePatterns": ["/__fsoutput__/"],

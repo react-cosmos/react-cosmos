@@ -40,9 +40,9 @@ describe('Local state example', () => {
     it('should list fixtures', () => {
       const fixtureSel = getSelector('index__fixture');
       cy.get(`${fixtureSel}:eq(0)`).should('contain', 'default');
-      cy.get(`${fixtureSel}:eq(1)`).should('contain', 'fiveClicks');
+      cy.get(`${fixtureSel}:eq(1)`).should('contain', 'five-clicks');
       cy.get(`${fixtureSel}:eq(2)`).should('contain', 'default');
-      cy.get(`${fixtureSel}:eq(3)`).should('contain', 'oneTwoThree');
+      cy.get(`${fixtureSel}:eq(3)`).should('contain', 'one-two-three');
     });
 
     it('should show welcome message', () => {
@@ -53,7 +53,7 @@ describe('Local state example', () => {
   context('filter', () => {
     beforeEach(() => {
       const inputSel = getSelector('index__searchInput');
-      cy.get(inputSel).type('oneThree');
+      cy.get(inputSel).type('one three');
     });
 
     it('should match only one fixture', () => {
@@ -62,19 +62,19 @@ describe('Local state example', () => {
         .get(fixtureSel)
         .should('have.length', 1)
         .eq(0)
-        .should('contain', 'oneTwoThree');
+        .should('contain', 'one-two-three');
     });
   });
 
   context('select fixture', () => {
     beforeEach(() => {
-      selectFixture('oneTwoThree');
+      selectFixture('one-two-three');
     });
 
     it('should add active class to fixture button', () => {
       cy
         .get(fixtureButtonSel)
-        .contains('oneTwoThree')
+        .contains('one-two-three')
         .parent(fixtureButtonSel)
         .then($fixtureButton => {
           return $fixtureButton.attr('class');
@@ -92,7 +92,7 @@ describe('Local state example', () => {
 
   context('fixture editor', () => {
     beforeEach(() => {
-      selectFixture('oneTwoThree');
+      selectFixture('one-two-three');
       toggleFixtureEditor();
     });
 
@@ -118,7 +118,7 @@ describe('Local state example', () => {
 
   context('fixture update', () => {
     beforeEach(() => {
-      selectFixture('oneTwoThree');
+      selectFixture('one-two-three');
       toggleFixtureEditor();
 
       // Click three times on the first button

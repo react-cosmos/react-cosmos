@@ -1,4 +1,4 @@
-import fixturesToTreeData from '../dataMapper';
+import fixturesToTreeData from '../data-mapper';
 
 const input = {
   'dirA/Component1': ['fixtureA', 'fixtureB'],

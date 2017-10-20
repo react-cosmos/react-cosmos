@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { objectOf, arrayOf, shape, string, func, bool } from 'prop-types';
 import { SearchIcon } from '../SvgIcon';
 import styles from './index.less';
-import fixturesToTreeData from './dataMapper';
+import fixturesToTreeData from './data-mapper';
 import filterNodeArray from './filter';
 import Tree from '../Tree';
 

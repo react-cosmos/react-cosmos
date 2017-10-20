@@ -135,7 +135,7 @@
       },
       {
         "files": [
-          "jest.frameworkSetup.js",
+          "jest.framework-setup.js",
           "**/__tests__/**/*.{js,jsx}",
           "**/__mocks__/**/*.js",
           "packages/react-cosmos-telescope/**/*.js"
