@@ -64,7 +64,7 @@ module.exports = async function embedModules(source: string) {
 };
 
 async function getNormalizedFixturePaths(cosmosConfig) {
-  const { rootPath, componentPaths } = cosmosConfig;
+  const { rootPath, fileMatch, componentPaths } = cosmosConfig;
 
   if (componentPaths.length > 0) {
     const { components, fixtures } = getFilePaths(cosmosConfig);
@@ -88,7 +88,7 @@ async function getNormalizedFixturePaths(cosmosConfig) {
     return fixtureFiles;
   }
 
-  return findFixtureFiles({ cwd: rootPath });
+  return findFixtureFiles({ cwd: rootPath, fileMatch });
 }
 
 function getFixtureModules(files: Array<FixtureFile>): Array<string> {

@@ -1,3 +1,4 @@
+// Requiring because embed-modules-webpack-loader is a CJS module
 const embedModules = require('../../embed-modules-webpack-loader');
 
 jest.mock('react-cosmos-config', () => () => ({

@@ -1,6 +1,13 @@
+import { findFixtureFiles } from 'react-cosmos-voyager2/lib/server/find-fixture-files';
+
+// Requiring because embed-modules-webpack-loader is a CJS module
 const embedModules = require('../../embed-modules-webpack-loader');
 
+const mockFileMatch = [];
+
 jest.mock('react-cosmos-config', () => () => ({
+  rootPath: 'MOCK_ROOT_PATH',
+  fileMatch: mockFileMatch,
   componentPaths: [],
   proxiesPath: require.resolve('../__fsmocks__/cosmos.proxies')
 }));
@@ -62,6 +69,14 @@ beforeEach(() => {
     };
     embedModules.call(loaderContext, loaderInput);
   });
+});
+
+it('calls findFixtureFiles with fileMatch with rootPath as cwd', () => {
+  expect(findFixtureFiles.mock.calls[0][0].cwd).toBe('MOCK_ROOT_PATH');
+});
+
+it('calls findFixtureFiles with fileMatch config', () => {
+  expect(findFixtureFiles.mock.calls[0][0].fileMatch).toBe(mockFileMatch);
 });
 
 it('injects fixture modules', () => {

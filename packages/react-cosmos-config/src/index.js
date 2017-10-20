@@ -8,6 +8,7 @@ import resolveUserPath from 'react-cosmos-utils/lib/resolve-user-path';
 
 export type Config = {
   rootPath: string,
+  fileMatch?: Array<string>,
   globalImports: Array<string>,
   hostname: string,
   hot: boolean,
