@@ -15,9 +15,9 @@
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@cypress/xvfb/-/xvfb-1.0.4.tgz#e7391d534baef2b180bd84fdc2ffea1020f7d6a5"
 
-"@skidding/react-codemirror@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@skidding/react-codemirror/-/react-codemirror-1.0.1.tgz#ce7927a10248e2369f8bce03669b92d88fead797"
+"@skidding/react-codemirror@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@skidding/react-codemirror/-/react-codemirror-1.0.2.tgz#819ac6b4e043824ae3a71144e1541295fcfaa269"
   dependencies:
     classnames "^2.2.5"
     codemirror "^5.18.2"

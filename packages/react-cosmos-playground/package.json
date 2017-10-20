@@ -9,7 +9,7 @@
   ],
   "main": "lib/index.js",
   "devDependencies": {
-    "@skidding/react-codemirror": "^1.0.1",
+    "@skidding/react-codemirror": "^1.0.2",
     "classnames": "^2.2.5",
     "codemirror": "^5.29.0",
     "fuzzaldrin-plus": "^0.4.1",
