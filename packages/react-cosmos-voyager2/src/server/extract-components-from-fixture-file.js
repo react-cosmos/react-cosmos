@@ -22,15 +22,29 @@ export async function extractComponentsFromFixtureFile(
   fixturePath: string
 ): Promise<Array<ComponentInfo>> {
   const components = [];
+  let ast;
 
-  // TODO: Memoize
-  const code = await readFileAsync(fixturePath, 'utf8');
+  try {
+    // TODO: Memoize
+    const code = await readFileAsync(fixturePath, 'utf8');
 
-  // TODO: How do we support everything user is using? (eg. Flow, TS, etc)
-  const ast = babylon.parse(code, {
-    sourceType: 'module',
-    plugins: ['jsx']
-  });
+    ast = babylon.parse(code, {
+      sourceType: 'module',
+      // XXX: Does using all plugins have any disadvantage?
+      plugins: [
+        'jsx',
+        'flow',
+        'typescript',
+        'objectRestSpread',
+        'classProperties',
+        'asyncGenerators',
+        'dynamicImport'
+      ]
+    });
+  } catch (err) {
+    console.log(`[Cosmos] Failed to parse ${fixturePath}`);
+    return components;
+  }
 
   try {
     const { body } = ast.program;
