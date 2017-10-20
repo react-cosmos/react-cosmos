@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-webpack",
-  "version": "3.0.0-alpha.5",
+  "version": "3.0.0-alpha.6",
   "publishConfig": {
     "access": "public"
   },
@@ -22,7 +22,7 @@
     "react-cosmos-loader": "^3.0.0-alpha.2",
     "react-cosmos-utils": "^3.0.0-alpha.2",
     "react-cosmos-voyager": "^3.0.0-alpha.2",
-    "react-cosmos-voyager2": "^3.0.0-alpha.2",
+    "react-cosmos-voyager2": "^3.0.0-alpha.6",
     "resolve-from": "^3.0.0",
     "traverse": "^0.6.6",
     "webpack-dev-middleware": "^1.12.0",
