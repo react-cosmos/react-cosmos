@@ -19,18 +19,13 @@ const defaultFileMatch = [
   '**/?(*.)fixture?(s).{js,jsx}'
 ];
 
-const defaults = {
-  fileMatch: defaultFileMatch,
-  cwd: process.cwd()
-};
-
 /**
  * Search the user code for fixture files.
  */
 export async function findFixtureFiles(
   args: Args
 ): Promise<Array<FixtureFile>> {
-  const { fileMatch, cwd } = { ...defaults, ...args };
+  const { fileMatch = defaultFileMatch, cwd = process.cwd() } = args || {};
 
   const allPaths = await globAsync('**/*', {
     cwd,
