@@ -5,7 +5,6 @@ import Loader from '../';
 
 // Objects to check identity against
 const ProxyFoo = () => <span />;
-const ComponentFoo = () => <span />;
 const fixtureFoo = { foo: 'bar' };
 const onComponentRef = () => {};
 
@@ -22,7 +21,6 @@ describe('Fixture is selected via props', () => {
     wrapper = mount(
       <Loader
         proxies={[ProxyFoo]}
-        component={ComponentFoo}
         fixture={fixtureFoo}
         onComponentRef={onComponentRef}
         onFixtureUpdate={onFixtureUpdate}
@@ -39,10 +37,6 @@ describe('Fixture is selected via props', () => {
 
   test('sends PropsProxy to first proxy ', () => {
     expect(firstProxyProps.nextProxy.value).toBe(PropsProxy);
-  });
-
-  test('sends component to first proxy ', () => {
-    expect(firstProxyProps.component).toBe(ComponentFoo);
   });
 
   test('sends fixture to first proxy', () => {

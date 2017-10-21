@@ -5,7 +5,6 @@ import RemoteLoader from '../';
 // Objects to check identity against
 const ProxyFoo = () => <span />;
 const ProxyBar = () => <span />;
-const ComponentFoo = () => {};
 const fixtureFoo = {};
 
 // Vars populated in beforeEach blocks
@@ -38,9 +37,6 @@ describe('Proxy is changed', () => {
     wrapper = mount(
       <RemoteLoader
         proxies={[ProxyFoo]}
-        components={{
-          Foo: ComponentFoo
-        }}
         fixtures={{
           Foo: {
             foo: fixtureFoo

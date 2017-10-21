@@ -18,12 +18,7 @@ const createDomContainer = () => {
   return newNode;
 };
 
-export function mount({
-  proxies,
-  components,
-  fixtures,
-  containerQuerySelector
-}) {
+export function mount({ proxies, fixtures, containerQuerySelector }) {
   const container = containerQuerySelector
     ? document.querySelector(containerQuerySelector)
     : createDomContainer();
@@ -36,7 +31,6 @@ export function mount({
 
   render(
     <RemoteLoader
-      components={components}
       fixtures={fixtures}
       proxies={[
         ...proxies,

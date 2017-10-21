@@ -15,8 +15,7 @@ export default class PropsProxy extends Component {
    */
   render() {
     const {
-      component: C,
-      fixture: { props, children },
+      fixture: { component: C, props, children },
       onComponentRef
     } = this.props;
 
@@ -32,7 +31,6 @@ export default class PropsProxy extends Component {
 }
 
 PropsProxy.propTypes = {
-  component: func.isRequired,
   fixture: object.isRequired,
   onComponentRef: func.isRequired
 };

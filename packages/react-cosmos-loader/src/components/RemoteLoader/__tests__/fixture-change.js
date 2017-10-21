@@ -4,7 +4,6 @@ import RemoteLoader from '../';
 
 // Objects to check identity against
 const ProxyFoo = () => <span />;
-const ComponentFoo = () => {};
 const fixtureFoo = { foo: 'bar', onClick: () => {} };
 const fixtureFoo2 = { foo: 'baz' };
 
@@ -40,9 +39,6 @@ describe('Fixture source changes', () => {
     wrapper = mount(
       <RemoteLoader
         proxies={[ProxyFoo]}
-        components={{
-          Foo: ComponentFoo
-        }}
         fixtures={{
           Foo: {
             foo: fixtureFoo

@@ -4,7 +4,6 @@ import RemoteLoader from '../';
 
 // Objects to check identity against
 const ProxyFoo = () => <span />;
-const ComponentFoo = () => {};
 const fixtureFoo = { foo: 'bar', onClick: () => {} };
 
 // Vars populated in beforeEach blocks
@@ -37,9 +36,6 @@ describe('Fixture source removal', () => {
     wrapper = mount(
       <RemoteLoader
         proxies={[ProxyFoo]}
-        components={{
-          Foo: ComponentFoo
-        }}
         fixtures={{
           Foo: {
             foo: fixtureFoo

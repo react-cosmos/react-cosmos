@@ -30,12 +30,11 @@ class Loader extends Component {
 
   render() {
     const { firstProxy } = this;
-    const { component, fixture, onComponentRef, onFixtureUpdate } = this.props;
+    const { fixture, onComponentRef, onFixtureUpdate } = this.props;
 
     return (
       <firstProxy.value
         nextProxy={firstProxy.next()}
-        component={component}
         fixture={fixture}
         onComponentRef={onComponentRef || noope}
         onFixtureUpdate={onFixtureUpdate || noope}
@@ -45,7 +44,6 @@ class Loader extends Component {
 }
 
 Loader.propTypes = {
-  component: createModuleType(func).isRequired,
   fixture: createModuleType(object).isRequired,
   proxies: arrayOf(createModuleType(func)),
   onComponentRef: func
