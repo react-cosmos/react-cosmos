@@ -1,4 +1,8 @@
+import ComponentPlayground from '../index';
+
 export default {
+  component: ComponentPlayground,
+
   props: {
     loaderUri: '/mock/loader/index.html',
     router: {
@@ -12,6 +16,7 @@ export default {
     fixture: 'foo',
     editor: true
   },
+
   state: {
     waitingForLoader: false,
     fixtures: {

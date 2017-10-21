@@ -1,4 +1,8 @@
+import FixtureEditor from '../index';
+
 export default {
+  component: FixtureEditor,
+
   props: {
     value: {
       props: {

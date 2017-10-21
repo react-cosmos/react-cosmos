@@ -1,4 +1,8 @@
+import FixtureEditor from '../index';
+
 export default {
+  component: FixtureEditor,
+
   props: {
     value: {
       props: {
@@ -7,6 +11,7 @@ export default {
     },
     onChange: value => console.log('change', value)
   },
+
   state: {
     value: '{\n  "props": {\n    "foo": "bar"\n  }\n}z',
     isFocused: false,

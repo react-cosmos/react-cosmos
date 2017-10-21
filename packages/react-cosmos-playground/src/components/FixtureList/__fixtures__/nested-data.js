@@ -1,4 +1,8 @@
+import FixtureList from '../index';
+
 export default {
+  component: FixtureList,
+
   props: {
     fixtures: {
       'dirA/Component1': ['fixtureA', 'fixtureB'],

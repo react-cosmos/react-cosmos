@@ -1,4 +1,8 @@
+import Tree from '../index';
+
 export default {
+  component: Tree,
+
   props: {
     nodeArray: [
       {
