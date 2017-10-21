@@ -4,7 +4,7 @@ import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
 import readyFixture from '../__fixtures__/ready';
 import DragHandle from '../../DragHandle';
-import ComponentPlayground, { LEFT_NAV_SIZE } from '../';
+import { LEFT_NAV_SIZE } from '../';
 import localForage from 'localforage';
 
 jest.mock('localforage');
@@ -17,11 +17,7 @@ describe('CP left nav drag', () => {
     beforeEach(() => {
       // Mount component in order for ref and lifecycle methods to be called
       wrapper = mount(
-        <Loader
-          proxies={[createStateProxy()]}
-          component={ComponentPlayground}
-          fixture={readyFixture}
-        />
+        <Loader proxies={[createStateProxy()]} fixture={readyFixture} />
       );
     });
 
@@ -40,11 +36,7 @@ describe('CP left nav drag', () => {
 
       // Mount component in order for ref and lifecycle methods to be called
       wrapper = mount(
-        <Loader
-          proxies={[createStateProxy()]}
-          component={ComponentPlayground}
-          fixture={readyFixture}
-        />
+        <Loader proxies={[createStateProxy()]} fixture={readyFixture} />
       );
 
       // Wait for async actions in componentDidMount to complete

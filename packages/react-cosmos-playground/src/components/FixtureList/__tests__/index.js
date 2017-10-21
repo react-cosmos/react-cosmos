@@ -2,7 +2,6 @@ import React from 'react';
 import merge from 'lodash.merge';
 import { mount } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
-import FixtureList from '../';
 import populatedFixture from '../__fixtures__/populated';
 import populatedWithEditorFixture from '../__fixtures__/populated-with-editor';
 import populatedAndSelectedFixture from '../__fixtures__/populated-and-selected';
@@ -11,9 +10,7 @@ describe('List', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(
-      <Loader component={FixtureList} fixture={populatedFixture} />
-    );
+    wrapper = mount(<Loader fixture={populatedFixture} />);
   });
 
   test('should render component names', () => {
@@ -62,9 +59,7 @@ describe('Links', () => {
 
   describe('editor closed', () => {
     beforeEach(() => {
-      wrapper = mount(
-        <Loader component={FixtureList} fixture={populatedFixture} />
-      );
+      wrapper = mount(<Loader fixture={populatedFixture} />);
       componentA = wrapper.find('.component').at(0);
       componentB = wrapper.find('.component').at(1);
     });
@@ -108,9 +103,7 @@ describe('Links', () => {
 
   describe('editor open', () => {
     beforeEach(() => {
-      wrapper = mount(
-        <Loader component={FixtureList} fixture={populatedWithEditorFixture} />
-      );
+      wrapper = mount(<Loader fixture={populatedWithEditorFixture} />);
       componentA = wrapper.find('.component').at(0);
       componentB = wrapper.find('.component').at(1);
     });
@@ -164,7 +157,7 @@ describe('Select', () => {
         onUrlChange
       }
     });
-    wrapper = mount(<Loader component={FixtureList} fixture={fixture} />);
+    wrapper = mount(<Loader fixture={fixture} />);
   });
 
   test('should call select callback on click', () => {
@@ -196,9 +189,7 @@ describe('Search', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(
-      <Loader component={FixtureList} fixture={populatedFixture} />
-    );
+    wrapper = mount(<Loader fixture={populatedFixture} />);
   });
 
   test('should only show matched component', () => {
@@ -230,7 +221,6 @@ describe('Search input keyboard shortcut', () => {
       // Mount component in order to be able to access DOM nodes
       wrapper = mount(
         <Loader
-          component={FixtureList}
           fixture={populatedFixture}
           onComponentRef={i => {
             instance = i;
@@ -277,9 +267,7 @@ describe('Selected fixture', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(
-      <Loader component={FixtureList} fixture={populatedAndSelectedFixture} />
-    );
+    wrapper = mount(<Loader fixture={populatedAndSelectedFixture} />);
   });
 
   test('should add extra class to selected fixture', () => {

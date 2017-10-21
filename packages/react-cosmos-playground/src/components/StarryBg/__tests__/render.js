@@ -1,7 +1,6 @@
 import React from 'react';
 import { Loader } from 'react-cosmos-loader';
 import renderer from 'react-test-renderer';
-import StarryBg from '../';
 import blankFixture from '../__fixtures__/blank';
 import contentFixture from '../__fixtures__/content';
 
@@ -9,9 +8,7 @@ describe('StarryBg blank', () => {
   let component;
 
   beforeEach(() => {
-    component = renderer.create(
-      <Loader component={StarryBg} fixture={blankFixture} />
-    );
+    component = renderer.create(<Loader fixture={blankFixture} />);
   });
 
   it('renders correctly', () => {
@@ -23,9 +20,7 @@ describe('StarryBg content', () => {
   let component;
 
   beforeEach(() => {
-    component = renderer.create(
-      <Loader component={StarryBg} fixture={contentFixture} />
-    );
+    component = renderer.create(<Loader fixture={contentFixture} />);
   });
 
   it('renders correctly', () => {

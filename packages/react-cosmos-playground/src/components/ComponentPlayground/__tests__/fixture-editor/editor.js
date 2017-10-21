@@ -4,7 +4,6 @@ import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
 import selectedEditorFixture from '../../__fixtures__/selected-editor';
 import FixtureEditor from '../../../FixtureEditor';
-import ComponentPlayground from '../../';
 
 // Vars populated in beforeEach blocks
 let messageHandlers;
@@ -36,7 +35,6 @@ describe('Fixture editor', () => {
       wrapper = mount(
         <Loader
           proxies={[createStateProxy()]}
-          component={ComponentPlayground}
           fixture={selectedEditorFixture}
           onComponentRef={resolve}
         />

@@ -1,4 +1,5 @@
 import Tree from '../index';
+
 const children = [];
 for (let i = 0; i < 100; i++) {
   children.push({

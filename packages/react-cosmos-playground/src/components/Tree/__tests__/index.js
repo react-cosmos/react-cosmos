@@ -2,7 +2,6 @@ import React from 'react';
 import merge from 'lodash.merge';
 import { mount } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
-import Tree from '../';
 import treeFixture from '../__fixtures__/tree';
 import treeWithEditorAndFullScreenParams from '../__fixtures__/tree-with-editor-and-full-screen-params';
 import treeWithSearchFixture from '../__fixtures__/tree-with-search';
@@ -11,7 +10,7 @@ describe('Tree', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Loader component={Tree} fixture={treeFixture} />);
+    wrapper = mount(<Loader fixture={treeFixture} />);
   });
 
   test('should render component names', () => {
@@ -41,7 +40,7 @@ describe('Basic Links', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Loader component={Tree} fixture={treeFixture} />);
+    wrapper = mount(<Loader fixture={treeFixture} />);
   });
 
   test('should render fixture links', () => {
@@ -56,9 +55,7 @@ describe('Links with URL Params', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(
-      <Loader component={Tree} fixture={treeWithEditorAndFullScreenParams} />
-    );
+    wrapper = mount(<Loader fixture={treeWithEditorAndFullScreenParams} />);
   });
 
   test('should render fixture links', () => {
@@ -80,7 +77,7 @@ describe('Fixture Select', () => {
         onSelect
       }
     });
-    wrapper = mount(<Loader component={Tree} fixture={fixture} />);
+    wrapper = mount(<Loader fixture={fixture} />);
   });
 
   test('should call onSelect callback on fixture click', () => {
@@ -106,7 +103,7 @@ describe('Node Select', () => {
         onToggle
       }
     });
-    wrapper = mount(<Loader component={Tree} fixture={fixture} />);
+    wrapper = mount(<Loader fixture={fixture} />);
   });
 
   test('should call onToggle callback on click', () => {
@@ -123,9 +120,7 @@ describe('Search Highlight', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(
-      <Loader component={Tree} fixture={treeWithSearchFixture} />
-    );
+    wrapper = mount(<Loader fixture={treeWithSearchFixture} />);
   });
 
   test('should highlight letters "sub A"', () => {

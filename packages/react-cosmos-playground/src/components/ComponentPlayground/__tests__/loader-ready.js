@@ -2,7 +2,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
 import initFixture from '../__fixtures__/init';
-import ComponentPlayground from '../';
 
 // Vars populated in beforeEach blocks
 let messageHandlers;
@@ -31,7 +30,6 @@ describe('CP loader ready', () => {
     // Mount component in order for ref and lifecycle methods to be called
     mount(
       <Loader
-        component={ComponentPlayground}
         fixture={initFixture}
         onComponentRef={i => {
           instance = i;

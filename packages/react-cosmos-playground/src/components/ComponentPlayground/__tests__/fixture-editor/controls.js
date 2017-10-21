@@ -4,7 +4,6 @@ import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
 import selectedEditorFixture from '../../__fixtures__/selected-editor';
 import DragHandle from '../../../DragHandle';
-import ComponentPlayground from '../../';
 
 // Vars populated in beforeEach blocks
 let wrapper;
@@ -16,11 +15,7 @@ describe('Fixture editor controls', () => {
   beforeEach(() => {
     // Mount component in order for ref and lifecycle methods to be called
     wrapper = mount(
-      <Loader
-        proxies={[createStateProxy()]}
-        component={ComponentPlayground}
-        fixture={selectedEditorFixture}
-      />
+      <Loader proxies={[createStateProxy()]} fixture={selectedEditorFixture} />
     );
   });
 

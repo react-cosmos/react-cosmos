@@ -1,7 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
-import WelcomeScreen from '../';
 import noComponents from '../__fixtures__/no-components';
 import componentsWithoutFixtures from '../__fixtures__/components-without-fixtures';
 import componentsWithFixtures from '../__fixtures__/components-with-fixtures';
@@ -11,9 +10,7 @@ describe('WelcomeScreen', () => {
 
   describe('for users without fixtures and components', () => {
     beforeEach(() => {
-      wrapper = mount(
-        <Loader component={WelcomeScreen} fixture={noComponents} />
-      );
+      wrapper = mount(<Loader fixture={noComponents} />);
     });
 
     it('should render title', () => {
@@ -27,9 +24,7 @@ describe('WelcomeScreen', () => {
 
   describe('for users with components without fixtures', () => {
     beforeEach(() => {
-      wrapper = mount(
-        <Loader component={WelcomeScreen} fixture={componentsWithoutFixtures} />
-      );
+      wrapper = mount(<Loader fixture={componentsWithoutFixtures} />);
     });
 
     it('should render title', () => {
@@ -43,9 +38,7 @@ describe('WelcomeScreen', () => {
 
   describe('for users with components and fixtures', () => {
     beforeEach(() => {
-      wrapper = mount(
-        <Loader component={WelcomeScreen} fixture={componentsWithFixtures} />
-      );
+      wrapper = mount(<Loader fixture={componentsWithFixtures} />);
     });
 
     it('should render title', () => {

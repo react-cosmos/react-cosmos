@@ -5,7 +5,6 @@ import createStateProxy from 'react-cosmos-state-proxy';
 import selectedFixture from '../__fixtures__/selected';
 import StarryBg from '../../StarryBg';
 import FixtureList from '../../FixtureList';
-import ComponentPlayground from '../';
 
 // Vars populated in beforeEach blocks
 let messageHandlers;
@@ -37,7 +36,6 @@ describe('CP with fixture already selected', () => {
     wrapper = mount(
       <Loader
         proxies={[createStateProxy()]}
-        component={ComponentPlayground}
         fixture={selectedFixture}
         onComponentRef={i => {
           instance = i;

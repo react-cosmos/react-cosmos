@@ -4,7 +4,6 @@ import { mount } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
 import CodeMirror from '@skidding/react-codemirror';
-import FixtureEditor from '../';
 import focusedFixture from '../__fixtures__/focused';
 
 const stringify = value => JSON.stringify(value, null, 2);
@@ -21,11 +20,7 @@ describe('FixtureEditor focused', () => {
 
     // Mount component in order for ref and lifecycle methods to be called
     wrapper = mount(
-      <Loader
-        proxies={[createStateProxy()]}
-        component={FixtureEditor}
-        fixture={fixture}
-      />
+      <Loader proxies={[createStateProxy()]} fixture={fixture} />
     );
 
     Promise.resolve().then(() => {

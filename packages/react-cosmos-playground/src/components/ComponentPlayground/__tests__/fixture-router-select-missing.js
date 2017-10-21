@@ -3,7 +3,6 @@ import { mount } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
 import readyFixture from '../__fixtures__/ready';
-import ComponentPlayground from '../';
 
 // Vars populated in beforeEach blocks
 let wrapper;
@@ -16,7 +15,6 @@ describe('CP wrong fixture select via router', () => {
     wrapper = mount(
       <Loader
         proxies={[createStateProxy()]}
-        component={ComponentPlayground}
         fixture={readyFixture}
         onComponentRef={i => {
           instance = i;
@@ -33,15 +31,15 @@ describe('CP wrong fixture select via router', () => {
         contentWindow: loaderContentWindow
       };
 
-      const { props, state } = readyFixture;
+      const { props } = readyFixture;
       wrapper.setProps({
         fixture: {
+          ...readyFixture,
           props: {
             ...props,
             component: 'ComponentB',
             fixture: 'quxx'
-          },
-          state
+          }
         }
       });
     });

@@ -4,7 +4,6 @@ import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
 import MissingScreen from '../../MissingScreen';
 import selectedFixture from '../__fixtures__/selected-missing';
-import ComponentPlayground from '../';
 
 // Vars populated in beforeEach blocks
 let messageHandlers;
@@ -36,7 +35,6 @@ describe('CP with missing fixture already selected', () => {
     wrapper = mount(
       <Loader
         proxies={[createStateProxy()]}
-        component={ComponentPlayground}
         fixture={selectedFixture}
         onComponentRef={i => {
           instance = i;

@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
 import selectedEditorFixture from '../../__fixtures__/selected-editor';
-import ComponentPlayground, { FIXTURE_EDITOR_PANE_SIZE } from '../../';
+import { FIXTURE_EDITOR_PANE_SIZE } from '../../';
 import localForage from 'localforage';
 
 jest.mock('localforage');
@@ -33,7 +33,6 @@ describe('Resize fixture editor pane', () => {
     wrapper = mount(
       <Loader
         proxies={[createStateProxy()]}
-        component={ComponentPlayground}
         fixture={selectedEditorFixture}
         onComponentRef={i => {
           instance = i;

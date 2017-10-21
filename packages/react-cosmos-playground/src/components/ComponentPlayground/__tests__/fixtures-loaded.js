@@ -6,7 +6,6 @@ import createStateProxy from 'react-cosmos-state-proxy';
 import readyFixture from '../__fixtures__/ready';
 import FixtureList from '../../FixtureList';
 import WelcomeScreen from '../../WelcomeScreen';
-import ComponentPlayground from '../';
 
 // Vars populated in beforeEach blocks
 let router;
@@ -25,11 +24,7 @@ describe('CP fixtures loaded', () => {
 
     // Mount component in order for ref and lifecycle methods to be called
     wrapper = mount(
-      <Loader
-        proxies={[createStateProxy()]}
-        component={ComponentPlayground}
-        fixture={fixture}
-      />
+      <Loader proxies={[createStateProxy()]} fixture={fixture} />
     );
   });
 

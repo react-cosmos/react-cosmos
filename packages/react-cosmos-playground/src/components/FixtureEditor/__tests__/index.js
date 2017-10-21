@@ -3,7 +3,6 @@ import merge from 'lodash.merge';
 import { mount } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
 import CodeMirror from '@skidding/react-codemirror';
-import FixtureEditor from '../';
 import propsFixture from '../__fixtures__/props';
 
 const stringify = value => JSON.stringify(value, null, 2);
@@ -19,7 +18,7 @@ describe('FixtureEditor', () => {
         onFocusChange: jest.fn()
       }
     });
-    wrapper = mount(<Loader component={FixtureEditor} fixture={fixture} />);
+    wrapper = mount(<Loader fixture={fixture} />);
   });
 
   it('renders CodeMirror', () => {

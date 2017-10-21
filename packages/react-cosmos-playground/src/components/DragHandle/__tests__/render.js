@@ -1,7 +1,6 @@
 import React from 'react';
 import { Loader } from 'react-cosmos-loader';
 import renderer from 'react-test-renderer';
-import DragHandle from '../';
 import horizontalFixture from '../__fixtures__/horizontal';
 import verticalFixture from '../__fixtures__/vertical';
 
@@ -21,7 +20,7 @@ describe('Horizontal DragHandle', () => {
   beforeEach(() => {
     const options = { createNodeMock };
     component = renderer.create(
-      <Loader component={DragHandle} fixture={horizontalFixture} />,
+      <Loader fixture={horizontalFixture} />,
       options
     );
   });
@@ -43,10 +42,7 @@ describe('Horizontal DragHandle', () => {
 describe('Vertical DragHandle', () => {
   beforeEach(() => {
     const options = { createNodeMock };
-    component = renderer.create(
-      <Loader component={DragHandle} fixture={verticalFixture} />,
-      options
-    );
+    component = renderer.create(<Loader fixture={verticalFixture} />, options);
   });
 
   it('renders correctly', () => {

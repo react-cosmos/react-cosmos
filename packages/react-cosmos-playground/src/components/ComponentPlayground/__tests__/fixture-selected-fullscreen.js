@@ -4,7 +4,6 @@ import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
 import selectedFullScreenFixture from '../__fixtures__/selected-fullscreen';
 import FixtureList from '../../FixtureList';
-import ComponentPlayground from '../';
 
 // Vars populated in beforeEach blocks
 let wrapper;
@@ -15,7 +14,6 @@ describe('CP with fixture already selected in full screen', () => {
     wrapper = mount(
       <Loader
         proxies={[createStateProxy()]}
-        component={ComponentPlayground}
         fixture={selectedFullScreenFixture}
       />
     );
