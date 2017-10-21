@@ -67,13 +67,6 @@ it('sends proxies to loader', () => {
   expect(mountLoader.mock.calls[0][0].proxies).toEqual(proxies);
 });
 
-test('sends components to loader', () => {
-  expect(mountLoader.mock.calls[0][0].components).toEqual({
-    Bar,
-    Foo
-  });
-});
-
 test('sends adapted fixtures to loader', () => {
   expect(mountLoader.mock.calls[0][0].fixtures).toEqual({
     Bar: {

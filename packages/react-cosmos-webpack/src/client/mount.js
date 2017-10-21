@@ -38,13 +38,12 @@ export default function() {
     fixtureModules: normalizedFixtureModules,
     fixtureFiles
   });
-  const { components, fixtures } = getOldSchoolModulesFromNewStyleComponents(
+  const fixtures = getOldSchoolFixturesFromNewStyleComponents(
     newStyleComponents
   );
 
   mount({
     proxies: importModule(proxies),
-    components,
     fixtures,
     containerQuerySelector
   });
@@ -118,13 +117,11 @@ function getNormalizedFixtureModules(
   return modules;
 }
 
-function getOldSchoolModulesFromNewStyleComponents(newStyleComponents) {
-  const components = {};
+function getOldSchoolFixturesFromNewStyleComponents(newStyleComponents) {
   const fixtures = {};
 
   newStyleComponents.forEach(c => {
     const componentName = getObjectPath(c);
-    components[componentName] = c.type;
     fixtures[componentName] = {};
 
     c.fixtures.forEach(f => {
@@ -133,7 +130,7 @@ function getOldSchoolModulesFromNewStyleComponents(newStyleComponents) {
     });
   });
 
-  return { components, fixtures };
+  return fixtures;
 }
 
 function getPrintableListFromPaths(set: Set<string>): string {

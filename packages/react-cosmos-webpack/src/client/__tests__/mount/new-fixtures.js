@@ -64,14 +64,6 @@ it('sends proxies to loader', () => {
   expect(mountLoader.mock.calls[0][0].proxies).toEqual(proxies);
 });
 
-test('sends components to loader', () => {
-  expect(mountLoader.mock.calls[0][0].components).toEqual({
-    // "nested/Bar" is collapsed to "Bar"
-    Bar,
-    Foo
-  });
-});
-
 test('sends fixtures to loader', () => {
   expect(mountLoader.mock.calls[0][0].fixtures).toEqual({
     // "nested/Bar" is collapsed to "Bar"
