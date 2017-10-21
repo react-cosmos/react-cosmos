@@ -88,9 +88,7 @@ export function getComponents({
 
   // Add component meta data around fixtures
   const components = [];
-  const componentCommonDir = getCommonDirFromPaths(
-    Array.from(componentPaths.values())
-  );
+  const componentPathValues = Array.from(componentPaths.values());
   const defaultComponentNamer = createDefaultNamer('Component');
 
   for (const componentType of fixturesByComponent.keys()) {
@@ -112,7 +110,7 @@ export function getComponents({
     const namespace =
       typeof componentType.namespace === 'string'
         ? componentType.namespace
-        : getFileNamespace(componentCommonDir, filePath);
+        : getCollapsedComponentNamespace(componentPathValues, filePath);
 
     // We had to wait until now to be able to determine the common dir between
     // all fixtures belonging to the same component
@@ -150,8 +148,39 @@ function getCommonDirFromPaths(paths: Array<string>) {
   return paths.length > 0 ? commondir(paths) : '';
 }
 
-function getFileNamespace(commonDir, filePath) {
+function getFileNamespace(commonDir: string, filePath: ?string) {
   return filePath ? path.dirname(filePath).slice(commonDir.length + 1) : '';
+}
+
+function getCollapsedComponentNamespace(
+  componentPaths: Array<string>,
+  filePath: ?string
+) {
+  const componentCommonDir = getCommonDirFromPaths(componentPaths);
+  const namespace = getFileNamespace(componentCommonDir, filePath);
+
+  // Nothing to collapse
+  if (!namespace) {
+    return namespace;
+  }
+
+  const relPath = componentCommonDir
+    ? `${componentCommonDir}/${namespace}`
+    : namespace;
+  const componentsAtPath = componentPaths.filter(
+    p => p.indexOf(`${relPath}/`) === 0
+  );
+
+  if (componentsAtPath.length > 1) {
+    return namespace;
+  }
+
+  // Collapse path by one level to prevent an extra nesting (eg "Button/Button")
+  // when there is only one component in a directory
+  return namespace
+    .split('/')
+    .slice(0, -1)
+    .join('/');
 }
 
 function warnAboutIncompatFixtures(

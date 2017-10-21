@@ -54,7 +54,7 @@ describe('Default namespace for more components', () => {
           },
           {
             name: 'FooComp3',
-            filePath: '/path/to3/fooComp3.js'
+            filePath: '/path/to2/fooComp3.js'
           }
         ]
       }
@@ -75,8 +75,8 @@ describe('Default namespace for more components', () => {
     components = await getComponents({ fixtureFiles, fixtureModules });
   });
 
-  it('has namespace from file path', () => {
-    expect(components[0].namespace).toBe('to1');
+  it('has collapsed namespace from file path', () => {
+    expect(components[0].namespace).toBe('');
   });
 
   it('has namespace from file path', () => {
@@ -84,6 +84,6 @@ describe('Default namespace for more components', () => {
   });
 
   it('has namespace from file path', () => {
-    expect(components[2].namespace).toBe('to3');
+    expect(components[2].namespace).toBe('to2');
   });
 });

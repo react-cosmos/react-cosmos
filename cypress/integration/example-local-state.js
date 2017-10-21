@@ -28,13 +28,7 @@ describe('Local state example', () => {
     it('should list components', () => {
       const componentSel = getSelector('index__componentName');
       cy.get(`${componentSel}:eq(0)`).should('contain', 'Counter');
-      // TEMP: We're targeting the 3rd element because at the moment the tree
-      // view looks like this:
-      // - Counter
-      //   - Counter
-      // - CounterList
-      //   - CounterList
-      cy.get(`${componentSel}:eq(2)`).should('contain', 'CounterList');
+      cy.get(`${componentSel}:eq(1)`).should('contain', 'CounterList');
     });
 
     it('should list fixtures', () => {
