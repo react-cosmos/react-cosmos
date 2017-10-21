@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-config",
-  "version": "3.0.0-alpha.2",
+  "version": "3.0.0-alpha.7",
   "description": "Reads user cosmos config and extends defaults",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-config",
   "license": "MIT",

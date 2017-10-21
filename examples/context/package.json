@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-context-example",
-  "version": "3.0.0-alpha.2",
+  "version": "3.0.0-alpha.7",
   "description": "Example of mocking component context",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/context",
   "license": "MIT",
