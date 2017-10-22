@@ -176,6 +176,10 @@ localforage@^1.5.0:
   dependencies:
     lie "3.0.2"
 
+lodash.flatmapdeep@^4.10.0:
+  version "4.10.0"
+  resolved "https://registry.yarnpkg.com/lodash.flatmapdeep/-/lodash.flatmapdeep-4.10.0.tgz#aecefefc0346ffda519fec2f4092fa04ff58fcbd"
+
 lodash.isempty@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/lodash.isempty/-/lodash.isempty-4.4.0.tgz#6f86cbedd8be4ec987be9aaf33c9684db1b31e7e"

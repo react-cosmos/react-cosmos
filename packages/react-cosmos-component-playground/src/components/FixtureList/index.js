@@ -5,21 +5,14 @@ import styles from './index.less';
 import fixturesToTreeData from './dataMapper';
 import filterNodeArray from './filter';
 import Tree from '../Tree';
-import localForage from 'localforage';
+import {
+  updateLocalToggleState,
+  pruneUnusedExpansionState,
+  getSavedExpansionState
+} from './persistence';
 
 const KEY_S = 83;
 const KEY_ESC = 27;
-export const TREE_EXPANSION_STATE = '__cosmos__tree-expansion-state';
-
-function updateLocalToggleState(key, expanded) {
-  localForage.getItem(TREE_EXPANSION_STATE).then(state => {
-    const currentState = state || {};
-    localForage.setItem(TREE_EXPANSION_STATE, {
-      ...currentState,
-      [key]: expanded
-    });
-  });
-}
 
 export default class FixtureList extends Component {
   constructor(props) {
@@ -31,15 +24,16 @@ export default class FixtureList extends Component {
   }
 
   componentDidMount() {
+    const { fixtures, projectKey } = this.props;
     window.addEventListener('keydown', this.onWindowKey);
 
-    localForage.getItem(TREE_EXPANSION_STATE).then(savedExpansionState => {
-      this.setState({
-        fixtureTree: fixturesToTreeData(
-          this.props.fixtures,
-          savedExpansionState || {}
-        )
-      });
+    getSavedExpansionState(projectKey).then(savedExpansionState => {
+      const fixtureTree = fixturesToTreeData(
+        fixtures,
+        savedExpansionState || {}
+      );
+      pruneUnusedExpansionState(projectKey, savedExpansionState, fixtureTree);
+      this.setState({ fixtureTree });
     });
 
     // Expose change handler for Cypress to call during tests. The problem is
@@ -56,9 +50,11 @@ export default class FixtureList extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (
-      JSON.stringify(nextProps.fixtures) !== JSON.stringify(this.props.fixtures)
+      JSON.stringify(nextProps.fixtures) !==
+        JSON.stringify(this.props.fixtures) ||
+      nextProps.projectKey !== this.props.projectKey
     ) {
-      localForage.getItem(TREE_EXPANSION_STATE).then(savedExpansionState => {
+      getSavedExpansionState(nextProps.projectKey).then(savedExpansionState => {
         this.setState({
           fixtureTree: fixturesToTreeData(
             nextProps.fixtures,
@@ -91,7 +87,7 @@ export default class FixtureList extends Component {
   };
 
   onToggle = (node, expanded) => {
-    updateLocalToggleState(node.path, expanded);
+    updateLocalToggleState(this.props.projectKey, node.path, expanded);
     // Mutates state, specifically a node from state.fixtureTree
     node.expanded = expanded;
     this.forceUpdate();
@@ -148,8 +144,13 @@ export default class FixtureList extends Component {
   }
 }
 
+FixtureList.defaultProps = {
+  projectKey: 'global'
+};
+
 FixtureList.propTypes = {
   fixtures: objectOf(arrayOf(string)).isRequired,
+  projectKey: string,
   urlParams: shape({
     component: string,
     fixture: string,
