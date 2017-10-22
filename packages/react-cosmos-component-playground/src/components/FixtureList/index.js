@@ -91,7 +91,7 @@ export default class FixtureList extends Component {
   };
 
   onToggle = (node, expanded) => {
-    updateLocalToggleState(node.localStorageKey, expanded);
+    updateLocalToggleState(node.path, expanded);
     // Mutates state, specifically a node from state.fixtureTree
     node.expanded = expanded;
     this.forceUpdate();

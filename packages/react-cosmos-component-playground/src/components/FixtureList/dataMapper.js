@@ -18,7 +18,7 @@ const dataObjectToNestedArray = (base, savedExpansionState, path = '') => {
         )
           ? savedExpansionState[newPath]
           : true,
-        localStorageKey: newPath,
+        path: newPath,
         children
         // TODO: Enable this when we'll have component pages
         // https://github.com/react-cosmos/react-cosmos/issues/314

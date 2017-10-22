@@ -12,12 +12,12 @@ test('transforms fixture data structure to tree data structure', () => {
     {
       name: 'dirA',
       expanded: true,
-      localStorageKey: 'dirA',
+      path: 'dirA',
       children: [
         {
           name: 'Component1',
           expanded: true,
-          localStorageKey: 'dirA/Component1',
+          path: 'dirA/Component1',
           children: [
             {
               name: 'fixtureA',
@@ -40,12 +40,12 @@ test('transforms fixture data structure to tree data structure', () => {
     {
       name: 'dirB',
       expanded: true,
-      localStorageKey: 'dirB',
+      path: 'dirB',
       children: [
         {
           name: 'Component2',
           expanded: true,
-          localStorageKey: 'dirB/Component2',
+          path: 'dirB/Component2',
           children: [
             {
               name: 'fixtureA',
@@ -66,7 +66,7 @@ test('transforms fixture data structure to tree data structure', () => {
         {
           name: 'Component3',
           expanded: true,
-          localStorageKey: 'dirB/Component3',
+          path: 'dirB/Component3',
           children: [
             {
               name: 'fixtureA',
@@ -87,11 +87,11 @@ test('transforms fixture data structure to tree data structure', () => {
         {
           name: 'subdirA',
           expanded: true,
-          localStorageKey: 'dirB/subdirA',
+          path: 'dirB/subdirA',
           children: [
             {
               name: 'Component4',
-              localStorageKey: 'dirB/subdirA/Component4',
+              path: 'dirB/subdirA/Component4',
               expanded: true,
               children: [
                 {
