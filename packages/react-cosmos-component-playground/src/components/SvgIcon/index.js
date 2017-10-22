@@ -17,6 +17,7 @@ export const FolderIcon = () => (
   <SvgIcon d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z" />
 );
 
+// https://www.shareicon.net/react-logo-react-js-js-640324
 export const ComponentIcon = () => (
   <svg viewBox="0 0 426 426">
     <circle style={{ fill: '#3765AF' }} cx="211.8" cy="214" r="214" />
