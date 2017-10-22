@@ -11,7 +11,7 @@ const KEY_S = 83;
 const KEY_ESC = 27;
 export const TREE_EXPANSION_STATE = '__cosmos__tree-expansion-state';
 
-const updateLocalToggleState = (key, expanded) => {
+function updateLocalToggleState(key, expanded) {
   localForage.getItem(TREE_EXPANSION_STATE).then(value => {
     let output = value;
     if (!output) {
@@ -20,7 +20,7 @@ const updateLocalToggleState = (key, expanded) => {
     output[key] = expanded;
     localForage.setItem(TREE_EXPANSION_STATE, output);
   });
-};
+}
 
 export default class FixtureList extends Component {
   constructor(props) {
