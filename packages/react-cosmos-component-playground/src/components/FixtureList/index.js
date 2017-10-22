@@ -32,7 +32,11 @@ export default class FixtureList extends Component {
         fixtures,
         savedExpansionState || {}
       );
-      pruneUnusedExpansionState(projectKey, savedExpansionState, fixtureTree);
+      pruneUnusedExpansionState(
+        projectKey,
+        savedExpansionState || {},
+        fixtureTree
+      );
       this.setState({ fixtureTree });
     });
 

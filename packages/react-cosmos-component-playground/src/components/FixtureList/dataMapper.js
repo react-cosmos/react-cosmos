@@ -35,7 +35,7 @@ const dataObjectToNestedArray = (base, savedExpansionState, path = '') => {
   return returnChildren;
 };
 
-const fixturesToTreeData = (fixtures, savedExpansionState = {}) => {
+const fixturesToTreeData = (fixtures, savedExpansionState) => {
   const components = Object.keys(fixtures);
   const data = {};
 

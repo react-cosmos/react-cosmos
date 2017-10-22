@@ -12,8 +12,7 @@ function setSavedExpansionState(projectKey, value) {
 }
 
 export function updateLocalToggleState(projectKey, path, expanded) {
-  getSavedExpansionState(projectKey).then(state => {
-    const currentState = state || {};
+  getSavedExpansionState(projectKey).then(currentState => {
     setSavedExpansionState(projectKey, {
       ...currentState,
       [path]: expanded
