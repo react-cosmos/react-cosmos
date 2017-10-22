@@ -3,14 +3,17 @@ export default {
     nodeArray: [
       {
         name: 'dirA',
+        type: 'directory',
         expanded: true,
         children: [
           {
             name: 'Component1',
+            type: 'component',
             expanded: true,
             children: [
               {
                 name: 'fixtureA',
+                type: 'fixture',
                 urlParams: {
                   component: 'dirA/Component1',
                   fixture: 'fixtureA'
@@ -18,6 +21,7 @@ export default {
               },
               {
                 name: 'fixtureB',
+                type: 'fixture',
                 urlParams: {
                   component: 'dirA/Component1',
                   fixture: 'fixtureB'
@@ -29,14 +33,17 @@ export default {
       },
       {
         name: 'dirB',
+        type: 'directory',
         expanded: true,
         children: [
           {
             name: 'Component2',
+            type: 'component',
             expanded: true,
             children: [
               {
                 name: 'fixtureA',
+                type: 'fixture',
                 urlParams: {
                   component: 'dirB/Component2',
                   fixture: 'fixtureA'
@@ -44,6 +51,7 @@ export default {
               },
               {
                 name: 'fixtureB',
+                type: 'fixture',
                 urlParams: {
                   component: 'dirB/Component2',
                   fixture: 'fixtureB'
@@ -53,10 +61,12 @@ export default {
           },
           {
             name: 'Component3',
+            type: 'component',
             expanded: false,
             children: [
               {
                 name: 'fixtureA',
+                type: 'fixture',
                 urlParams: {
                   component: 'dirB/Component3',
                   fixture: 'fixtureA'
@@ -64,6 +74,7 @@ export default {
               },
               {
                 name: 'fixtureB',
+                type: 'fixture',
                 urlParams: {
                   component: 'dirB/Component3',
                   fixture: 'fixtureB'
@@ -73,14 +84,17 @@ export default {
           },
           {
             name: 'subdirA',
+            type: 'directory',
             expanded: true,
             children: [
               {
                 name: 'Component4',
+                type: 'component',
                 expanded: true,
                 children: [
                   {
                     name: 'fixtureA',
+                    type: 'fixture',
                     urlParams: {
                       component: 'dirB/subdirA/Component4',
                       fixture: 'fixtureA'
@@ -88,6 +102,7 @@ export default {
                   },
                   {
                     name: 'fixtureB',
+                    type: 'fixture',
                     urlParams: {
                       component: 'dirB/subdirA/Component4',
                       fixture: 'fixtureB'
