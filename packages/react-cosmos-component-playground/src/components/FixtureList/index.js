@@ -26,17 +26,22 @@ export default class FixtureList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchText: ''
+      searchText: '',
+      fixtureTree: null
     };
-    localForage.getItem(TREE_EXPANSION_STATE).then(savedExpansionState => {
-      this.setState({
-        fixtureTree: fixturesToTreeData(props.fixtures, savedExpansionState)
-      });
-    });
   }
 
   componentDidMount() {
     window.addEventListener('keydown', this.onWindowKey);
+
+    localForage.getItem(TREE_EXPANSION_STATE).then(savedExpansionState => {
+      this.setState({
+        fixtureTree: fixturesToTreeData(
+          this.props.fixtures,
+          savedExpansionState
+        )
+      });
+    });
 
     // Expose change handler for Cypress to call during tests. The problem is
     // Cypress can't trigger React events at the moment
