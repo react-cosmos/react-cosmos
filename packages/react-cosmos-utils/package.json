@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-utils",
-  "version": "3.0.0-alpha.2",
+  "version": "3.0.0-alpha.8",
   "description": "Libs shared between React Cosmos modules",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-utils",
   "license": "MIT",
