@@ -150,7 +150,7 @@ FixtureList.defaultProps = {
 
 FixtureList.propTypes = {
   fixtures: objectOf(arrayOf(string)).isRequired,
-  projectKey: string,
+  projectKey: string.isRequired,
   urlParams: shape({
     component: string,
     fixture: string,
