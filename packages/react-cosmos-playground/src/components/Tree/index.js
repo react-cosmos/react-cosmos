@@ -1,6 +1,11 @@
 import React from 'react';
-import { arrayOf, shape, number, string, func, bool } from 'prop-types';
-import { FolderIcon, RightArrowIcon, DownArrowIcon } from '../SvgIcon';
+import { arrayOf, oneOf, shape, number, string, func, bool } from 'prop-types';
+import {
+  FolderIcon,
+  ComponentIcon,
+  RightArrowIcon,
+  DownArrowIcon
+} from '../SvgIcon';
 import styles from './index.less';
 import classNames from 'classnames';
 import { match } from 'fuzzaldrin-plus';
@@ -84,7 +89,7 @@ const TreeFolder = ({
         <span className={styles.arrowIcon}>
           {node.expanded ? <DownArrowIcon /> : <RightArrowIcon />}
         </span>
-        <FolderIcon />
+        {node.type === 'component' ? <ComponentIcon /> : <FolderIcon />}
         <FuzzyHighligher searchText={searchText} textToHighlight={node.name} />
       </div>
       <Tree
@@ -234,6 +239,7 @@ const TreeWrapper = props => {
 
 const nodeShape = shape({
   name: string.isRequired,
+  type: oneOf(['directory', 'component', 'fixture']).isRequired,
   expanded: bool,
   isHidden: bool,
   urlParams: shape({

@@ -5,6 +5,7 @@ import { Loader } from 'react-cosmos-loader';
 import treeFixture from '../__fixtures__/tree';
 import treeWithEditorAndFullScreenParams from '../__fixtures__/tree-with-editor-and-full-screen-params';
 import treeWithSearchFixture from '../__fixtures__/tree-with-search';
+import { FolderIcon, ComponentIcon } from '../../SvgIcon';
 
 describe('Tree', () => {
   let wrapper;
@@ -22,6 +23,18 @@ describe('Tree', () => {
 
     const fixtureA = wrapper.find('.fixture').at(0);
     expect(fixtureA.text()).toContain('fixtureA');
+  });
+
+  test('should render appropriate icon', () => {
+    const dirA = wrapper.find('.componentName').at(0);
+    expect(dirA.find(FolderIcon).length).toEqual(1);
+
+    const component1 = wrapper.find('.componentName').at(1);
+    expect(component1.find(ComponentIcon).length).toEqual(1);
+
+    const fixtureA = wrapper.find('.fixture').at(0);
+    expect(fixtureA.find(FolderIcon).length).toEqual(0);
+    expect(fixtureA.find(ComponentIcon).length).toEqual(0);
   });
 
   test('should indent child nodes', () => {
