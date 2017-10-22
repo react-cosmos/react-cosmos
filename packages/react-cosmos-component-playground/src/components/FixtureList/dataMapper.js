@@ -1,4 +1,5 @@
 import set from 'lodash.set';
+import some from 'lodash.some';
 
 const dataObjectToNestedArray = (base, path = '') => {
   const returnChildren = [];
@@ -6,9 +7,11 @@ const dataObjectToNestedArray = (base, path = '') => {
     if (typeof base[key] === 'object') {
       const newPath = path ? `${path}/${key}` : key;
       const children = dataObjectToNestedArray(base[key], newPath);
+      const isDirectory = some(children, child => child.children);
       returnChildren.push({
         name: key,
         expanded: true,
+        type: isDirectory ? 'directory' : 'component',
         children
         // TODO: Enable this when we'll have component pages
         // https://github.com/react-cosmos/react-cosmos/issues/314
@@ -17,6 +20,7 @@ const dataObjectToNestedArray = (base, path = '') => {
     } else {
       const fixtures = base.map(fixture => ({
         name: fixture,
+        type: 'fixture',
         urlParams: { component: path, fixture }
       }));
       return fixtures;

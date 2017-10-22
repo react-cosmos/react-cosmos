@@ -11,14 +11,17 @@ test('transforms fixture data structure to tree data structure', () => {
   const expected = [
     {
       name: 'dirA',
+      type: 'directory',
       expanded: true,
       children: [
         {
           name: 'Component1',
+          type: 'component',
           expanded: true,
           children: [
             {
               name: 'fixtureA',
+              type: 'fixture',
               urlParams: {
                 component: 'dirA/Component1',
                 fixture: 'fixtureA'
@@ -26,6 +29,7 @@ test('transforms fixture data structure to tree data structure', () => {
             },
             {
               name: 'fixtureB',
+              type: 'fixture',
               urlParams: {
                 component: 'dirA/Component1',
                 fixture: 'fixtureB'
@@ -37,14 +41,17 @@ test('transforms fixture data structure to tree data structure', () => {
     },
     {
       name: 'dirB',
+      type: 'directory',
       expanded: true,
       children: [
         {
           name: 'Component2',
+          type: 'component',
           expanded: true,
           children: [
             {
               name: 'fixtureA',
+              type: 'fixture',
               urlParams: {
                 component: 'dirB/Component2',
                 fixture: 'fixtureA'
@@ -52,6 +59,7 @@ test('transforms fixture data structure to tree data structure', () => {
             },
             {
               name: 'fixtureB',
+              type: 'fixture',
               urlParams: {
                 component: 'dirB/Component2',
                 fixture: 'fixtureB'
@@ -61,10 +69,12 @@ test('transforms fixture data structure to tree data structure', () => {
         },
         {
           name: 'Component3',
+          type: 'component',
           expanded: true,
           children: [
             {
               name: 'fixtureA',
+              type: 'fixture',
               urlParams: {
                 component: 'dirB/Component3',
                 fixture: 'fixtureA'
@@ -72,6 +82,7 @@ test('transforms fixture data structure to tree data structure', () => {
             },
             {
               name: 'fixtureB',
+              type: 'fixture',
               urlParams: {
                 component: 'dirB/Component3',
                 fixture: 'fixtureB'
@@ -81,14 +92,17 @@ test('transforms fixture data structure to tree data structure', () => {
         },
         {
           name: 'subdirA',
+          type: 'directory',
           expanded: true,
           children: [
             {
               name: 'Component4',
+              type: 'component',
               expanded: true,
               children: [
                 {
                   name: 'fixtureA',
+                  type: 'fixture',
                   urlParams: {
                     component: 'dirB/subdirA/Component4',
                     fixture: 'fixtureA'
@@ -96,6 +110,7 @@ test('transforms fixture data structure to tree data structure', () => {
                 },
                 {
                   name: 'fixtureB',
+                  type: 'fixture',
                   urlParams: {
                     component: 'dirB/subdirA/Component4',
                     fixture: 'fixtureB'
