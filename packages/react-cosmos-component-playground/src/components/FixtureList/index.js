@@ -12,13 +12,12 @@ const KEY_ESC = 27;
 export const TREE_EXPANSION_STATE = '__cosmos__tree-expansion-state';
 
 function updateLocalToggleState(key, expanded) {
-  localForage.getItem(TREE_EXPANSION_STATE).then(value => {
-    let output = value;
-    if (!output) {
-      output = {};
-    }
-    output[key] = expanded;
-    localForage.setItem(TREE_EXPANSION_STATE, output);
+  localForage.getItem(TREE_EXPANSION_STATE).then(state => {
+    const currentState = state || {};
+    localForage.setItem(TREE_EXPANSION_STATE, {
+      ...currentState,
+      [key]: expanded
+    });
   });
 }
 
@@ -38,7 +37,7 @@ export default class FixtureList extends Component {
       this.setState({
         fixtureTree: fixturesToTreeData(
           this.props.fixtures,
-          savedExpansionState
+          savedExpansionState || {}
         )
       });
     });
@@ -63,7 +62,7 @@ export default class FixtureList extends Component {
         this.setState({
           fixtureTree: fixturesToTreeData(
             nextProps.fixtures,
-            savedExpansionState
+            savedExpansionState || {}
           )
         });
       });
