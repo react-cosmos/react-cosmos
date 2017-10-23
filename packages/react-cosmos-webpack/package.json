@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-webpack",
-  "version": "3.0.0-alpha.9",
+  "version": "3.0.0-alpha.10",
   "publishConfig": {
     "access": "public"
   },
@@ -17,7 +17,7 @@
     "glob": "^7.1.1",
     "import-from": "^2.1.0",
     "lodash.omit": "^4.5.0",
-    "react-cosmos-config": "^3.0.0-alpha.8",
+    "react-cosmos-config": "^3.0.0-alpha.10",
     "react-cosmos-loader": "^3.0.0-alpha.8",
     "react-cosmos-playground": "^3.0.0-alpha.8",
     "react-cosmos-utils": "^3.0.0-alpha.8",
