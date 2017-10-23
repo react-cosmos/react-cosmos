@@ -5,6 +5,7 @@ import { argv } from 'yargs';
 import importModule from 'react-cosmos-utils/lib/import-module';
 import moduleExists from 'react-cosmos-utils/lib/module-exists';
 import resolveUserPath from 'react-cosmos-utils/lib/resolve-user-path';
+import { log, warn } from './log';
 
 export type Config = {
   rootPath: string,
@@ -51,12 +52,10 @@ export default function getCosmosConfig(cosmosConfigPath?: string): Config {
 
   if (!moduleExists(configPath)) {
     if (argv.config) {
-      const configPathRel = path.relative(process.cwd(), configPath);
-      console.warn(
-        `[Cosmos] Using defaults, no config file found at ${configPathRel}!`
-      );
+      const relPath = path.relative(process.cwd(), configPath);
+      warn(`[Cosmos] Using defaults, no config file found at ${relPath}!`);
     } else {
-      console.log(`[Cosmos] Using defaults, no config file found`);
+      log(`[Cosmos] Using defaults, no config file found`);
     }
 
     return getNormalizedConfig(defaults, relPath);
