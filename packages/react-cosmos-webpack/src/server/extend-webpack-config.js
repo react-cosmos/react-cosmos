@@ -83,7 +83,10 @@ export default function extendWebpackConfig({
     // Important: Without this webpack tries to apply hot updates for broken
     // builds and results in duplicate React nodes attached
     // See https://github.com/webpack/webpack/issues/2117
-    new webpack.NoEmitOnErrorsPlugin()
+    // Note: NoEmitOnErrorsPlugin replaced NoErrorsPlugin since webpack 2.x
+    webpack.NoEmitOnErrorsPlugin
+      ? new webpack.NoEmitOnErrorsPlugin()
+      : new webpack.NoErrorsPlugin()
   );
 
   if (hot && !shouldExport) {
