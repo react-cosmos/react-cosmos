@@ -21,11 +21,17 @@ module.exports = async function embedModules(source: string) {
   const callback = this.async();
 
   const cosmosConfig: Config = getCosmosConfig();
-  const { proxiesPath, componentPaths } = cosmosConfig;
+  const { proxiesPath } = cosmosConfig;
 
-  const fixtureFiles = await getNormalizedFixturePaths(cosmosConfig);
-  const fixturePaths = getFixtureModules(fixtureFiles);
+  const {
+    fixtureFiles,
+    deprecatedComponentModules
+  } = await getNormalizedModules(cosmosConfig);
+  const fixturePaths = getFixturePaths(fixtureFiles);
   const fixtureModuleCalls = convertPathsToRequireCalls(fixturePaths);
+  const componentModuleCallls = convertPathsToRequireCalls(
+    keys(deprecatedComponentModules).map(c => deprecatedComponentModules[c])
+  );
 
   const contexts = getUniqueDirsOfPaths(fixturePaths);
   contexts.forEach(dirPath => {
@@ -35,14 +41,21 @@ module.exports = async function embedModules(source: string) {
   });
   const contextCalls = convertDirPathsToContextCalls(contexts);
 
-  let result = source
+  const result = source
     .replace(/FIXTURE_MODULES/g, fixtureModuleCalls)
     .replace(/FIXTURE_FILES/g, JSON.stringify(fixtureFiles))
+    .replace(/DEPRECATED_COMPONENT_MODULES/g, componentModuleCallls)
     .replace(
       /PROXIES/g,
       moduleExists(proxiesPath) ? convertPathToRequireCall(proxiesPath) : '[]'
     )
     .replace(/CONTEXTS/g, contextCalls);
+
+  callback(null, result);
+};
+
+async function getNormalizedModules(cosmosConfig) {
+  const { rootPath, fileMatch, componentPaths } = cosmosConfig;
 
   if (componentPaths.length > 0) {
     console.warn(
@@ -50,23 +63,6 @@ module.exports = async function embedModules(source: string) {
         'Please consider upgrading.'
     );
 
-    const { components } = getFilePaths(cosmosConfig);
-
-    result = result.replace(
-      /DEPRECATED_COMPONENT_MODULES/g,
-      convertPathsToRequireCalls(keys(components).map(c => components[c]))
-    );
-  } else {
-    result = result.replace(/DEPRECATED_COMPONENT_MODULES/g, '{}');
-  }
-
-  callback(null, result);
-};
-
-async function getNormalizedFixturePaths(cosmosConfig) {
-  const { rootPath, fileMatch, componentPaths } = cosmosConfig;
-
-  if (componentPaths.length > 0) {
     const { components, fixtures } = getFilePaths(cosmosConfig);
     const fixtureFiles = [];
 
@@ -85,13 +81,18 @@ async function getNormalizedFixturePaths(cosmosConfig) {
       });
     });
 
-    return fixtureFiles;
+    return { fixtureFiles, deprecatedComponentModules: components };
   }
 
-  return findFixtureFiles({ cwd: rootPath, fileMatch });
+  const fixtureFiles = await findFixtureFiles({ cwd: rootPath, fileMatch });
+
+  return {
+    fixtureFiles,
+    deprecatedComponentModules: {}
+  };
 }
 
-function getFixtureModules(files: Array<FixtureFile>): Array<string> {
+function getFixturePaths(files: Array<FixtureFile>): Array<string> {
   return files.map(file => file.filePath);
 }
 
