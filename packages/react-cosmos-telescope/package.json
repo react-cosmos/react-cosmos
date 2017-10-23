@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-telescope",
-  "version": "3.0.0-alpha.8",
+  "version": "3.0.0-alpha.9",
   "description": "Uses Jest snapshots to test your code for changes",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-telescope",
   "license": "MIT",
