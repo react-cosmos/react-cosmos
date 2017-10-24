@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "moment": "^2.18.1",
-    "react-cosmos-webpack": "^2.1.0"
+    "react-cosmos-webpack": "^3.0.0-alpha.10"
   },
   "xo": false,
   "private": true,
