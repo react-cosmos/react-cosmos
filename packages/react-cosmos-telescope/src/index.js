@@ -3,8 +3,8 @@ import renderer from 'react-test-renderer';
 import createStateProxy from 'react-cosmos-state-proxy';
 import { moduleExists, importModule } from 'react-cosmos-shared';
 import getCosmosConfig from 'react-cosmos-config';
-import { findFixtureFiles } from 'react-cosmos-voyager2/lib/server/find-fixture-files';
-import { getComponents } from 'react-cosmos-voyager2/lib/client/get-components';
+import { findFixtureFiles } from 'react-cosmos-voyager2/lib/server';
+import { getComponents } from 'react-cosmos-voyager2/lib/client';
 import { Loader } from 'react-cosmos-loader';
 
 export default async ({ cosmosConfigPath } = {}) => {
