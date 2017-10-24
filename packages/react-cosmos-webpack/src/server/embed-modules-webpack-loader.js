@@ -2,7 +2,7 @@
 
 import path from 'path';
 import getCosmosConfig from 'react-cosmos-config';
-import moduleExists from 'react-cosmos-utils/lib/module-exists';
+import moduleExists from 'react-cosmos-shared/lib/module-exists';
 import getFilePaths from 'react-cosmos-voyager';
 import { findFixtureFiles } from 'react-cosmos-voyager2/lib/server/find-fixture-files';
 

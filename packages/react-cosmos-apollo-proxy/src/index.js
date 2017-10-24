@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import proxyPropTypes from 'react-cosmos-utils/lib/proxy-prop-types';
+import proxyPropTypes from 'react-cosmos-shared/lib/proxy-prop-types';
 import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
 import { graphql, print } from 'graphql';
 import { ApolloProvider, ApolloClient } from 'react-apollo';

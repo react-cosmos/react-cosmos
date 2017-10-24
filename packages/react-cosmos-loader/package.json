@@ -13,7 +13,7 @@
     "lodash.merge": "^4.6.0",
     "prop-types": "^15.5.10",
     "react-cosmos-state-proxy": "^3.0.0-alpha.8",
-    "react-cosmos-utils": "^3.0.0-alpha.8"
+    "react-cosmos-shared": "^3.0.0-alpha.8"
   },
   "xo": false
 }

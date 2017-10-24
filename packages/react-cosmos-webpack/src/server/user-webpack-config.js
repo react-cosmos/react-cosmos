@@ -1,7 +1,7 @@
 // @flow
 
-import importModule from 'react-cosmos-utils/lib/import-module';
-import moduleExists from 'react-cosmos-utils/lib/module-exists';
+import importModule from 'react-cosmos-shared/lib/import-module';
+import moduleExists from 'react-cosmos-shared/lib/module-exists';
 import getDefaultWebpackConfig from './default-webpack-config';
 
 import type { Config } from 'react-cosmos-config/src';

@@ -16,10 +16,11 @@ export default (module, name) => {
 
   if (!component || !isReactComponent(component)) {
     if (name) {
-      return () =>
+      return () => (
         <div>
           <strong>{name}</strong> is not a valid React component
-        </div>;
+        </div>
+      );
     }
 
     return () => <div>Not a valid React component</div>;

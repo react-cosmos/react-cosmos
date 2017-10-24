@@ -10,7 +10,7 @@
   "main": "lib/index.js",
   "dependencies": {
     "prop-types": "^15.5.10",
-    "react-cosmos-utils": "^3.0.0-alpha.8"
+    "react-cosmos-shared": "^3.0.0-alpha.8"
   },
   "devDependencies": {
     "react-router": "^4.1.2"

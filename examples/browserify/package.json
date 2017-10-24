@@ -14,7 +14,7 @@
     "react-cosmos-loader": "^3.0.0-alpha.8",
     "react-cosmos-playground": "^3.0.0-alpha.8",
     "react-cosmos-voyager2": "^3.0.0-alpha.7",
-    "react-cosmos-utils": "^3.0.0-alpha.8",
+    "react-cosmos-shared": "^3.0.0-alpha.8",
     "require-globify": "^1.4.1"
   },
   "xo": false,

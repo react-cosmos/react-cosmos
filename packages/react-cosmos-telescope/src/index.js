@@ -1,8 +1,8 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import createStateProxy from 'react-cosmos-state-proxy';
-import moduleExists from 'react-cosmos-utils/lib/module-exists';
-import importModule from 'react-cosmos-utils/lib/import-module';
+import moduleExists from 'react-cosmos-shared/lib/module-exists';
+import importModule from 'react-cosmos-shared/lib/import-module';
 import getCosmosConfig from 'react-cosmos-config';
 import { findFixtureFiles } from 'react-cosmos-voyager2/lib/server/find-fixture-files';
 import { getComponents } from 'react-cosmos-voyager2/lib/client/get-components';

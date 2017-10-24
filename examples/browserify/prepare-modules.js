@@ -1,4 +1,4 @@
-import importModule from 'react-cosmos-utils/lib/import-module';
+import importModule from 'react-cosmos-shared/lib/import-module';
 import { getComponents } from 'react-cosmos-voyager2/lib/client/get-components';
 
 const { keys } = Object;

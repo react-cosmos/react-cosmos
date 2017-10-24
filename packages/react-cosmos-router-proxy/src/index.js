@@ -1,7 +1,7 @@
 import React from 'react';
 import { string } from 'prop-types';
 import { MemoryRouter, Route } from 'react-router';
-import proxyPropTypes from 'react-cosmos-utils/lib/proxy-prop-types';
+import proxyPropTypes from 'react-cosmos-shared/lib/proxy-prop-types';
 import LocationInterceptor from './LocationInterceptor';
 
 export default () => {
@@ -18,9 +18,11 @@ export default () => {
     return (
       <MemoryRouter initialEntries={[url]}>
         <LocationInterceptor onLocation={url => onFixtureUpdate({ url })}>
-          {route
-            ? <Route path={route} render={() => nextProxyEl} />
-            : nextProxyEl}
+          {route ? (
+            <Route path={route} render={() => nextProxyEl} />
+          ) : (
+            nextProxyEl
+          )}
         </LocationInterceptor>
       </MemoryRouter>
     );

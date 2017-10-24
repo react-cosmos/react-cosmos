@@ -1,4 +1,4 @@
-import proxyPropTypes from 'react-cosmos-utils/lib/proxy-prop-types';
+import proxyPropTypes from 'react-cosmos-shared/lib/proxy-prop-types';
 import React from 'react';
 
 const defaults = {
