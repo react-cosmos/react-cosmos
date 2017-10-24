@@ -2,11 +2,8 @@
 
 import path from 'path';
 import { argv } from 'yargs';
-import {
-  importModule,
-  moduleExists,
-  resolveUserPath
-} from 'react-cosmos-shared';
+import { importModule } from 'react-cosmos-shared';
+import { moduleExists, resolveUserPath } from 'react-cosmos-shared/lib/server';
 import { log, warn } from './log';
 
 export type Config = {
