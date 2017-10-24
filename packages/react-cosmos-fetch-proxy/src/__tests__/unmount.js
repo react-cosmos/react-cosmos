@@ -26,8 +26,8 @@ beforeEach(() => {
   wrapper = shallow(
     <FetchProxy
       nextProxy={nextProxy}
-      component={Component}
       fixture={{
+        component: Component,
         fetch: [
           {
             matcher: '/users',

@@ -17,7 +17,7 @@ const NextProxy = props => {
   return <P {...props} nextProxy={next()} />;
 };
 
-const LastProxy = ({ component: C }) => <C />;
+const LastProxy = ({ fixture }) => <fixture.component />;
 
 // Vars populated from scratch before each test
 let onFixtureUpdate;
@@ -44,8 +44,8 @@ beforeEach(() => {
           next: () => {},
         }),
       }}
-      component={Component}
       fixture={{
+        component: Component,
         // Except for some rare cases, the proxy needs to pass along the
         // fixture without changing it
         foo: 'bar'
@@ -71,12 +71,11 @@ describe('next proxy props', () => {
     nextProxyProps = wrapper.find(NextProxy).props();
   });
 
-  test('sends component to next proxy', () => {
-    expect(nextProxyProps.component).toBe(Component);
-  });
-
   test('sends fixture to next proxy', () => {
-    expect(nextProxyProps.fixture.foo).toEqual('bar');
+    expect(nextProxyProps.fixture).toEqual({
+      component: Component,
+      foo: 'bar'
+    });
   });
 
   test('passes 2nd next proxy to next proxy', () => {

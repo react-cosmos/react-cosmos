@@ -33,8 +33,8 @@ beforeEach(() => {
     wrapper = shallow(
       <LocalStorageProxy
         nextProxy={nextProxy}
-        component={Component}
         fixture={{
+          component: Component,
           foo: 'bar',
           localStorage: {
             userToken: 'foo-token'
@@ -70,7 +70,7 @@ describe('next proxy', () => {
   });
 
   test('sends component to next proxy', () => {
-    expect(props.component).toBe(Component);
+    expect(props.fixture.component).toBe(Component);
   });
 
   test('sends fixture to next proxy', () => {
