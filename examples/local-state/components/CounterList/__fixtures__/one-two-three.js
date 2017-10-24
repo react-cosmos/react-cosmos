@@ -1,4 +1,8 @@
+import CounterList from '../CounterList';
+
 export default {
+  component: CounterList,
+
   state: {
     children: {
       c1: {
