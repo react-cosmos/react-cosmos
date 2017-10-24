@@ -80,7 +80,7 @@ Because of the latter, integration tests or examples for older React or webpack 
 Monorepo packages have source code under `packages/PKG_NAME/src` and compiled code under `packages/PKG_NAME/lib`. Package entries point to the compiled code (ie. `lib/index.js`), so whenever we reference a specific file from another package we must also point to the lib path:
 
 ```js
-import moduleExists from 'react-cosmos-shared/lib/module-exists';
+import { moduleExists } from 'react-cosmos-shared';
 ```
 
 But, if we want to import a Flow type we'll only find it using the src path:
@@ -115,7 +115,7 @@ Start from this when creating a new proxy.
 
 ```js
 import React from 'react';
-import proxyPropTypes from 'react-cosmos-shared/lib/proxy-prop-types';
+import { proxyPropTypes } from 'react-cosmos-shared';
 
 const defaults = {
   // add option defaults here

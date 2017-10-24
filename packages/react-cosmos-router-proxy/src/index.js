@@ -1,7 +1,7 @@
 import React from 'react';
 import { string } from 'prop-types';
 import { MemoryRouter, Route } from 'react-router';
-import proxyPropTypes from 'react-cosmos-shared/lib/proxy-prop-types';
+import { proxyPropTypes } from 'react-cosmos-shared';
 import LocationInterceptor from './LocationInterceptor';
 
 export default () => {
