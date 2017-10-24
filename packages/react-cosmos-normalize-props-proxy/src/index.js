@@ -4,7 +4,7 @@ import omit from 'lodash.omit';
 import pick from 'lodash.pick';
 
 const defaults = {
-  notProps: ['children', 'state', 'context', 'reduxState']
+  notProps: ['component', 'children', 'state', 'context', 'reduxState']
 };
 
 const getFixedFixture = (fixture, notProps) => {
