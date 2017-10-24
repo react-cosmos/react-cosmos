@@ -53,9 +53,9 @@ export default function getCosmosConfig(cosmosConfigPath?: string): Config {
   if (!moduleExists(configPath)) {
     if (argv.config) {
       const relPath = path.relative(process.cwd(), configPath);
-      warn(`[Cosmos] Using defaults, no config file found at ${relPath}!`);
+      warn(`[Cosmos] No config file found at ${relPath}, using defaults`);
     } else {
-      log(`[Cosmos] Using defaults, no config file found`);
+      log(`[Cosmos] No config file found, using defaults`);
     }
 
     return getNormalizedConfig(defaults, relPath);
