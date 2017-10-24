@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "react-cosmos-normalize-props-proxy": "^3.0.0-alpha.8",
-    "react-cosmos-webpack": "^2.1.0"
+    "react-cosmos-webpack": "^3.0.0-alpha.10"
   },
   "xo": false,
   "private": true
