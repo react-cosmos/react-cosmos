@@ -5,7 +5,6 @@ export default {
     value: func,
     next: func
   }).isRequired,
-  component: func.isRequired,
   fixture: object.isRequired,
   onComponentRef: func.isRequired,
   onFixtureUpdate: func.isRequired

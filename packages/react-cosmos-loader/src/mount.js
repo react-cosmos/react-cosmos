@@ -3,24 +3,22 @@ import { render } from 'react-dom';
 import RemoteLoader from './components/RemoteLoader';
 import createStateProxy from 'react-cosmos-state-proxy';
 
-let domContainer;
 let StateProxy;
 
 const createDomContainer = () => {
-  if (!domContainer) {
-    domContainer = document.createElement('div');
-    document.body.appendChild(domContainer);
+  const existingNode = document.getElementById('root');
+  if (existingNode) {
+    return existingNode;
   }
 
-  return domContainer;
+  const newNode = document.createElement('div');
+  newNode.setAttribute('id', 'root');
+  document.body.appendChild(newNode);
+
+  return newNode;
 };
 
-export function mount({
-  proxies,
-  components,
-  fixtures,
-  containerQuerySelector
-}) {
+export function mount({ proxies, fixtures, containerQuerySelector }) {
   const container = containerQuerySelector
     ? document.querySelector(containerQuerySelector)
     : createDomContainer();
@@ -33,7 +31,6 @@ export function mount({
 
   render(
     <RemoteLoader
-      components={components}
       fixtures={fixtures}
       proxies={[
         ...proxies,

@@ -30,8 +30,10 @@ describe('Functional Component', () => {
   beforeEach(() => {
     wrapper = shallow(
       <PropsProxy
-        component={FunctionalComponent}
-        fixture={fixture}
+        fixture={{
+          component: FunctionalComponent,
+          ...fixture
+        }}
         onComponentRef={onComponentRef}
       />
     );
@@ -62,8 +64,10 @@ describe('ES6 Class Component', () => {
   beforeEach(() => {
     wrapper = shallow(
       <PropsProxy
-        component={ClassComponent}
-        fixture={fixture}
+        fixture={{
+          component: ClassComponent,
+          ...fixture
+        }}
         onComponentRef={onComponentRef}
       />
     );
@@ -80,7 +84,7 @@ describe('ES6 Class Component', () => {
     expect(childProps.foo).toBe('bar');
   });
 
-  test('does not sets onComponentRef as component ref callback', () => {
+  test('sets onComponentRef as component ref callback', () => {
     expect(childWrapper.get(0).ref).toBe(onComponentRef);
   });
 
@@ -94,8 +98,10 @@ describe('React.createClass', () => {
   beforeEach(() => {
     wrapper = shallow(
       <PropsProxy
-        component={ClassicComponent}
-        fixture={fixture}
+        fixture={{
+          component: ClassicComponent,
+          ...fixture
+        }}
         onComponentRef={onComponentRef}
       />
     );
@@ -112,7 +118,7 @@ describe('React.createClass', () => {
     expect(childProps.foo).toBe('bar');
   });
 
-  test('does not sets onComponentRef as component ref callback', () => {
+  test('sets onComponentRef as component ref callback', () => {
     expect(childWrapper.get(0).ref).toBe(onComponentRef);
   });
 

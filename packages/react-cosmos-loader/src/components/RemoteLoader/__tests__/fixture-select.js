@@ -5,7 +5,6 @@ import RemoteLoader from '../';
 
 // Objects to check identity against
 const ProxyFoo = () => <span />;
-const ComponentFoo = () => {};
 const fixtureFoo = {
   onFoo: () => {},
   foo: 'bar'
@@ -44,9 +43,6 @@ describe('Fixture is selected remotely', () => {
     wrapper = mount(
       <RemoteLoader
         proxies={[ProxyFoo]}
-        components={{
-          Foo: ComponentFoo
-        }}
         fixtures={{
           Foo: {
             foo: fixtureFoo
@@ -94,10 +90,6 @@ describe('Fixture is selected remotely', () => {
 
   test('sends PropsProxy to first proxy ', () => {
     expect(firstProxyProps.nextProxy.value).toBe(PropsProxy);
-  });
-
-  test('sends component to first proxy ', () => {
-    expect(firstProxyProps.component).toBe(ComponentFoo);
   });
 
   test('sends fixture to first proxy', () => {

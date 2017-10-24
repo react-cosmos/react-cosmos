@@ -75,6 +75,24 @@ Important to note:
 
 Because of the latter, integration tests or examples for older React or webpack version are not possible inside the monorepo. We should create external repos for testing React 0.14.x or webpack 1.x.
 
+#### Compiled vs source code
+
+Monorepo packages have source code under `packages/PKG_NAME/src` and compiled code under `packages/PKG_NAME/lib`. Package entries point to the compiled code (ie. `lib/index.js`), so whenever we reference a specific file from another package we must also point to the lib path:
+
+```js
+import moduleExists from 'react-cosmos-utils/lib/module-exists';
+```
+
+But, if we want to import a Flow type we'll only find it using the src path:
+
+```js
+import type { FixtureFile } from 'react-cosmos-voyager2/src/types';
+```
+
+Ideally we would always import the source of other packages for Flow to validate types across packages, but if we do this we end up running uncompiled code on the user's machine, which is not cool. Even when Node will support ES modules without a feature flag, we'll still want to compile stuff like Flow or JSX.
+
+Please reach out of you have a better idea for handling this!
+
 ### Playground ⇆ Loader communication
 
 The Cosmos UI is made out of two frames. Components are loaded inside an `iframe` for full encapsulation. Because the Playground and the Loader aren't part of the same frame, we use `postMessage` to communicate back and forth.
@@ -162,7 +180,7 @@ cd examples/context
 yarn start
 
 # Watch & build single package (running example will live reload)
-yarn run build react-cosmos-component-playground -- --watch
+yarn run build react-cosmos-playground -- --watch
 
 # Watch & run unit tests as you code
 yarn run test-jest -- --watch
@@ -176,12 +194,16 @@ Use [Jest](https://facebook.github.io/jest/) for unit testing. Look inside `__te
 
 Make sure `yarn run lint` passes and add [xo](https://github.com/sindresorhus/xo) to your editor if possible.
 
+When naming a file:
+- Use *CamelCase* for components: `DragHandle.js` or `DragHandle/index.js`
+- Use *kebab-case* for any other path: `packages/react-cosmos-utils/src/resolve-user-path.js`
+
+Please follow these rules or challenge them if you think it's worth it.
+
 #### Use Git conscientiously
 
 - [GitHub Flow](https://guides.github.com/introduction/flow/)
 - [Conventional Commits](https://conventionalcommits.org/) (important for generating release notes)
-
-
 
 ---
 

@@ -55,8 +55,8 @@ describe('React state proxy – component state nested', () => {
       wrapper = shallow(
         <StateProxy
           nextProxy={nextProxy}
-          component={Component}
           fixture={{
+            component: Component,
             foo: 'bar'
           }}
           onComponentRef={ref => {
@@ -87,12 +87,9 @@ describe('React state proxy – component state nested', () => {
     expect(props.nextProxy).toBe(nextProxyNext);
   });
 
-  test('sends component to next proxy', () => {
-    expect(props.component).toBe(Component);
-  });
-
   test('sends fixture to next proxy', () => {
     expect(props.fixture).toEqual({
+      component: Component,
       foo: 'bar'
     });
   });

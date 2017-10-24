@@ -1,20 +1,23 @@
 {
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
   "repository": "https://github.com/react-cosmos/react-cosmos",
   "license": "MIT",
   "scripts": {
-    "prune-react-copies": "node ./scripts/prune-react-copies.js",
-    "bootstrap": "lerna bootstrap && yarn run prune-react-copies",
     "install-react": "yarn remove react react-dom && yarn add",
-    "install-react:0.14": "yarn run install-react -- react@^0.14.9 react-dom@^0.14.9",
-    "install-react:15": "yarn run install-react -- react@^15.5.4 react-dom@^15.5.4",
+    "install-react:0.14": "yarn install-react -- react@^0.14.9 react-dom@^0.14.9",
+    "install-react:15": "yarn install-react -- react@^15.5.4 react-dom@^15.5.4",
     "lint": "xo --quiet",
     "start": "NODE_ENV=development ./examples/local-state/node_modules/.bin/cosmos --config examples/local-state/cosmos.config.js",
-    "start:playground": "NODE_ENV=development ./packages/react-cosmos-webpack/bin/cosmos.js --config packages/react-cosmos-component-playground/cosmos.config.js",
+    "start:playground": "NODE_ENV=development ./packages/react-cosmos-webpack/bin/cosmos.js --config packages/react-cosmos-playground/cosmos.config.js",
     "build": "node ./scripts/build.js",
-    "postinstall": "yarn run bootstrap && yarn run build",
-    "publish-lerna": "yarn run test && yarn run build && lerna publish --registry=https://registry.npmjs.org/",
-    "test-jest": "jest --coverage --config jest.config.json",
-    "test": "yarn run lint && yarn run test-jest",
+    "postinstall": "yarn build",
+    "publish-lerna": "yarn test && yarn build && lerna publish --registry=https://registry.npmjs.org/",
+    "test-jest": "jest --coverage --maxWorkers=4 --config jest.config.json",
+    "test": "yarn lint && yarn test-jest",
     "coveralls": "cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
     "test-smoke": "cypress run",
     "test-smoke-ci": "yarn start & cypress run",
@@ -26,26 +29,29 @@
       "git add"
     ]
   },
-  "dependencies": {
+  "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.11.1",
     "child-process-promise": "^2.2.0",
     "coveralls": "^3.0.0",
     "create-react-class": "^15.6.2",
     "css-loader": "^0.28.5",
-    "cypress": "^0.20.1",
+    "cypress": "^1.0.2",
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-16": "^1.0.1",
     "eslint-config-xo-react": "^0.13.0",
     "eslint-import-resolver-webpack": "^0.8.3",
     "eslint-plugin-react": "^7.4.0",
     "file-loader": "^1.1.5",
+    "flow-bin": "^0.56.0",
+    "flow-typed": "^2.2.0",
     "glob": "^7.1.2",
     "html-webpack-plugin": "^2.30.1",
     "husky": "^0.14.3",
@@ -97,6 +103,9 @@
       "object-curly-spacing": 0,
       "operator-linebreak": 0,
       "capitalized-comments": 0,
+      "space-before-function-paren": 0,
+      "no-await-in-loop": 0,
+      "no-negated-condition": 0,
       "func-names": [
         "error",
         "as-needed"
@@ -110,6 +119,10 @@
       "react/jsx-uses-vars": 1,
       "react/jsx-uses-react": 1
     },
+    "ignores": [
+      "**/__fsmocks__/**",
+      "flow-typed/**"
+    ],
     "overrides": [
       {
         "files": [
@@ -122,8 +135,9 @@
       },
       {
         "files": [
+          "jest.framework-setup.js",
           "**/__tests__/**/*.{js,jsx}",
-          "packages/__mocks__/**/*.js",
+          "**/__mocks__/**/*.js",
           "packages/react-cosmos-telescope/**/*.js"
         ],
         "env": [

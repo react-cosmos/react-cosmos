@@ -45,8 +45,8 @@ describe('React state proxy – disabled', () => {
       wrapper = shallow(
         <StateProxy
           nextProxy={nextProxy}
-          component={Component}
           fixture={{
+            component: Component,
             foo: 'bar',
             state: {
               baz: 'qux'
@@ -81,12 +81,9 @@ describe('React state proxy – disabled', () => {
     expect(props.nextProxy).toBe(nextProxyNext);
   });
 
-  test('sends component to next proxy', () => {
-    expect(props.component).toBe(Component);
-  });
-
   test('sends fixture to next proxy', () => {
     expect(props.fixture).toEqual({
+      component: Component,
       foo: 'bar',
       state: {
         baz: 'qux'

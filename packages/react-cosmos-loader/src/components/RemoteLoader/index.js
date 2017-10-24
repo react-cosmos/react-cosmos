@@ -103,26 +103,30 @@ class RemoteLoader extends Component {
       });
     }
 
-    // Fixture file changes override updated fixture state
     const { component, fixture } = this.state;
     const isFixtureSelected = component && fixture;
-    if (
-      isFixtureSelected &&
-      fixtures[component][fixture] !== this.props.fixtures[component][fixture]
-    ) {
-      this.setState(
-        getFixtureState({
-          fixtures,
-          component,
-          fixture
-        }),
-        () => {
-          if (isFixtureSelected) {
-            // Keep parent frame in sync with latest fixture body
-            this.onFixtureUpdate(this.state.fixtureBody.serializable);
-          }
+    if (isFixtureSelected) {
+      if (!fixtures[component][fixture]) {
+        // Clear selected fixture if its corresponding file has been removed
+        this.setState(noFixtureState);
+      } else {
+        const componentSourceChanged =
+          fixtures[component][fixture].component !==
+          this.props.fixtures[component][fixture].component;
+
+        if (componentSourceChanged) {
+          // Reset fixture state to point to new component
+          this.setState(
+            getFixtureState({
+              fixtures,
+              component,
+              fixture,
+              // Important: Cosmos HMR is useless unless prev state is preserved
+              fixtureBody: this.state.fixtureBody.serializable
+            })
+          );
         }
-      );
+      }
     }
   }
 
@@ -210,22 +214,20 @@ class RemoteLoader extends Component {
   };
 
   render() {
-    const { components } = this.props;
     const { component, fixtureBody, fixtureId } = this.state;
 
     if (!component) {
       return null;
     }
-
     const { firstProxy } = this;
     const { unserializable, serializable } = fixtureBody;
+    const fixture = merge({}, unserializable, serializable);
 
     return (
       <firstProxy.value
         key={fixtureId}
         nextProxy={firstProxy.next()}
-        component={components[component]}
-        fixture={merge({}, unserializable, serializable)}
+        fixture={fixture}
         onComponentRef={noope}
         onFixtureUpdate={this.onFixtureUpdate}
       />
@@ -234,7 +236,6 @@ class RemoteLoader extends Component {
 }
 
 RemoteLoader.propTypes = {
-  components: objectOf(createModuleType(func)).isRequired,
   fixtures: objectOf(objectOf(createModuleType(object))).isRequired,
   proxies: arrayOf(createModuleType(func)),
   onComponentRef: func

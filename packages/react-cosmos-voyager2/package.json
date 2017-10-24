@@ -1,0 +1,26 @@
+{
+  "name": "react-cosmos-voyager2",
+  "version": "3.0.0-alpha.7",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Explores your codebase to find component and fixture files",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-voyager2",
+  "license": "MIT",
+  "files": [
+    "src",
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "scripts": {},
+  "dependencies": {
+    "babel-types": "^6.26.0",
+    "babylon": "^6.18.0",
+    "commondir": "^1.0.1",
+    "glob": "^7.1.2",
+    "lodash.sortby": "^4.7.0",
+    "micromatch": "^3.1.0",
+    "util.promisify": "^1.0.0"
+  },
+  "xo": false
+}

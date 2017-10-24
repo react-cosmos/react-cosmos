@@ -31,7 +31,6 @@ const renderProxy = (fixture, options) => {
   const wrapper = shallow(
     <ContextProxy
       nextProxy={nextProxy}
-      component={() => {}}
       fixture={fixture}
       onComponentRef={onComponentRef}
       onFixtureUpdate={onFixtureUpdate}

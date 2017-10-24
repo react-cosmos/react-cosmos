@@ -4,7 +4,7 @@ const rimraf = require('rimraf');
 const spawn = require('child-process-promise').spawn;
 const argv = require('yargs').argv;
 
-const COMPONENT_PLAYGROUND = 'react-cosmos-component-playground';
+const COMPONENT_PLAYGROUND = 'react-cosmos-playground';
 
 /**
  * Builds a package by running it through Babel or Webpack.
