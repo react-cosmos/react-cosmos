@@ -14,6 +14,6 @@ export default function getUserWebpackConfig(cosmosConfig: Config) {
     return importModule(require(webpackConfigPath));
   }
 
-  console.log('[Cosmos] No webpack config found, using default config');
+  console.log('[Cosmos] No webpack config found, using defaults');
   return getDefaultWebpackConfig(rootPath);
 }
