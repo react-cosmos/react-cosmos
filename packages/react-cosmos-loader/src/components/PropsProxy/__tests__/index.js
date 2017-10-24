@@ -84,7 +84,7 @@ describe('ES6 Class Component', () => {
     expect(childProps.foo).toBe('bar');
   });
 
-  test('does not sets onComponentRef as component ref callback', () => {
+  test('sets onComponentRef as component ref callback', () => {
     expect(childWrapper.get(0).ref).toBe(onComponentRef);
   });
 
@@ -118,7 +118,7 @@ describe('React.createClass', () => {
     expect(childProps.foo).toBe('bar');
   });
 
-  test('does not sets onComponentRef as component ref callback', () => {
+  test('sets onComponentRef as component ref callback', () => {
     expect(childWrapper.get(0).ref).toBe(onComponentRef);
   });
 

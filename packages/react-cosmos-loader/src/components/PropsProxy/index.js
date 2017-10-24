@@ -7,7 +7,8 @@ const isComponentClass = componentType =>
   // ES6 Class
   (componentType.prototype instanceof Component ||
     // React.createClass
-    componentType.prototype.constructor.displayName);
+    componentType.prototype.getInitialState !== undefined) &&
+  true;
 
 export default class PropsProxy extends Component {
   /**
