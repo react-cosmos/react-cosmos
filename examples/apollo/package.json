@@ -11,7 +11,7 @@
     "react-apollo": "^1.4.15",
     "react-cosmos-apollo-proxy": "^3.0.0-alpha.8",
     "react-cosmos-utils": "^3.0.0-alpha.8",
-    "react-cosmos-webpack": "^2.1.0"
+    "react-cosmos-webpack": "^3.0.0-alpha.10"
   },
   "xo": false,
   "private": true
