@@ -9,7 +9,7 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
-    "react-cosmos-utils": "^3.0.0-alpha.8",
+    "react-cosmos-shared": "^3.0.0-alpha.8",
     "yargs": "^9.0.1"
   },
   "xo": false

@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { object, objectOf, func, arrayOf } from 'prop-types';
 import merge from 'lodash.merge';
 import deepEqual from 'deep-equal';
-import splitUnserializableParts from 'react-cosmos-utils/lib/unserializable-parts';
-import createLinkedList from 'react-cosmos-utils/lib/linked-list';
+import {
+  splitUnserializableParts,
+  createLinkedList
+} from 'react-cosmos-shared';
 import createModuleType from '../../utils/module-type';
 import PropsProxy from '../PropsProxy';
 

@@ -1,3 +1,3 @@
-# react-cosmos-utils
+# react-cosmos-shared
 
 Libs shared between React Cosmos modules.

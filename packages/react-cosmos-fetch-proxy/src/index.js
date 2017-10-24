@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import fetchMock from 'fetch-mock';
-import proxyPropTypes from 'react-cosmos-utils/lib/proxy-prop-types';
+import { proxyPropTypes } from 'react-cosmos-shared';
 
 const defaults = {
   fixtureKey: 'fetch'

@@ -1,5 +1,5 @@
-import importModule from 'react-cosmos-utils/lib/import-module';
-import { getComponents } from 'react-cosmos-voyager2/lib/client/get-components';
+import { importModule } from 'react-cosmos-shared';
+import { getComponents } from 'react-cosmos-voyager2/lib/client';
 import getUserModules from './user-modules';
 import { mount } from 'react-cosmos-loader';
 

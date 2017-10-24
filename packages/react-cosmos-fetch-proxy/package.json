@@ -10,7 +10,7 @@
   "main": "lib/index.js",
   "dependencies": {
     "fetch-mock": "^5.12.2",
-    "react-cosmos-utils": "^3.0.0-alpha.8"
+    "react-cosmos-shared": "^3.0.0-alpha.8"
   },
   "xo": false
 }
