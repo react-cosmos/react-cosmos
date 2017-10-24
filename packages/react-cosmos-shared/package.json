@@ -1,7 +1,7 @@
 {
   "name": "react-cosmos-shared",
   "version": "3.0.0-alpha.8",
-  "description": "Libs shared between React Cosmos modules",
+  "description": "Libs shared between React Cosmos packages",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-shared",
   "license": "MIT",
   "files": [
