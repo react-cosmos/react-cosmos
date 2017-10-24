@@ -1,35 +1,54 @@
-const prepareComponents = modules => {
-  const components = {};
-  Object.keys(modules).forEach(componentName => {
-    if (componentName.indexOf('_') !== 0) {
-      components[componentName] = modules[componentName].default;
-    }
-  });
-  return components;
-};
+import importModule from 'react-cosmos-utils/lib/import-module';
+import { getComponents } from 'react-cosmos-voyager2/lib/client/get-components';
 
-const prepareFixtures = (modules, components) => {
-  const fixtures = {};
-  Object.keys(components).forEach(componentName => {
-    fixtures[componentName] = {};
-    Object.keys(modules).forEach(fixtureName => {
-      const componentPrefix = `./components/__fixtures__/${componentName}/`;
-      if (fixtureName.indexOf(componentPrefix) === 0) {
-        fixtures[componentName][fixtureName.slice(componentPrefix.length)] =
-          modules[fixtureName].default;
-      }
-    });
-  });
-  return fixtures;
-};
-
-const componentModules = require('./components/**/*{.js,.jsx}', {
-  mode: 'hash'
-});
 const fixtureModules = require('./components/__fixtures__/**/*.js', {
   mode: 'hash',
-  resolve: ['path', 'strip-ext']
+  resolve: ['path']
 });
 
-export const components = prepareComponents(componentModules);
-export const fixtures = prepareFixtures(fixtureModules, components);
+const normalizedFixtureModules = Object.keys(fixtureModules).reduce(
+  (acc, relPath) => ({
+    ...acc,
+    [relToAbsPath(relPath)]: importModule(fixtureModules[relPath])
+  }),
+  {}
+);
+
+export const fixtures = prepareOldSchoolFixtures(normalizedFixtureModules);
+
+function prepareOldSchoolFixtures(fixtureModules) {
+  const fixtureFiles = Object.keys(fixtureModules).map(filePath => {
+    return {
+      filePath,
+      components: []
+    };
+  });
+
+  const components = getComponents({ fixtureFiles, fixtureModules });
+
+  return getOldSchoolFixturesFromNewStyleComponents(components);
+}
+
+function relToAbsPath(relPath) {
+  return relPath.slice(1);
+}
+
+function getOldSchoolFixturesFromNewStyleComponents(newStyleComponents) {
+  const fixtures = {};
+
+  newStyleComponents.forEach(c => {
+    const componentName = getObjectPath(c);
+    fixtures[componentName] = {};
+
+    c.fixtures.forEach(f => {
+      const fixtureName = getObjectPath(f);
+      fixtures[componentName][fixtureName] = f.source;
+    });
+  });
+
+  return fixtures;
+}
+
+function getObjectPath(obj) {
+  return obj.namespace ? `${obj.namespace}/${obj.name}` : obj.name;
+}
