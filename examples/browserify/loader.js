@@ -1,7 +1,9 @@
 import { mount } from 'react-cosmos-loader';
-import { fixtures } from './prepare-modules';
+import { prepareOldSchoolFixtures } from './prepare-modules';
 
 module.exports = mount({
   proxies: [],
-  fixtures
+  // FYI: The loader mount() API currently works with simple data types that
+  // will be updated to match the newer data types from react-cosmos-voyager2
+  fixtures: prepareOldSchoolFixtures()
 });

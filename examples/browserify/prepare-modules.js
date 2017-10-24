@@ -1,36 +1,38 @@
 import importModule from 'react-cosmos-utils/lib/import-module';
 import { getComponents } from 'react-cosmos-voyager2/lib/client/get-components';
 
-const fixtureModules = require('./components/__fixtures__/**/*.js', {
+const { keys } = Object;
+
+const rawFixtureModules = require('./components/__fixtures__/**/*.js', {
   mode: 'hash',
   resolve: ['path']
 });
 
-const normalizedFixtureModules = Object.keys(fixtureModules).reduce(
-  (acc, relPath) => ({
-    ...acc,
-    [relToAbsPath(relPath)]: importModule(fixtureModules[relPath])
-  }),
-  {}
-);
-
-export const fixtures = prepareOldSchoolFixtures(normalizedFixtureModules);
-
-function prepareOldSchoolFixtures(fixtureModules) {
-  const fixtureFiles = Object.keys(fixtureModules).map(filePath => {
-    return {
-      filePath,
-      components: []
-    };
-  });
-
+export function prepareOldSchoolFixtures() {
+  const fixtureModules = getNormalizedModules(rawFixtureModules);
+  const fixtureFiles = getFixtureFilesFromModules(fixtureModules);
   const components = getComponents({ fixtureFiles, fixtureModules });
 
   return getOldSchoolFixturesFromNewStyleComponents(components);
 }
 
-function relToAbsPath(relPath) {
-  return relPath.slice(1);
+function getNormalizedModules(modules) {
+  return keys(modules).reduce(
+    (acc, relPath) => ({
+      ...acc,
+      [relToAbsPath(relPath)]: importModule(modules[relPath])
+    }),
+    {}
+  );
+}
+
+function getFixtureFilesFromModules(modules) {
+  return keys(modules).map(filePath => {
+    return {
+      filePath,
+      components: []
+    };
+  });
 }
 
 function getOldSchoolFixturesFromNewStyleComponents(newStyleComponents) {
@@ -47,6 +49,10 @@ function getOldSchoolFixturesFromNewStyleComponents(newStyleComponents) {
   });
 
   return fixtures;
+}
+
+function relToAbsPath(relPath) {
+  return relPath.slice(1);
 }
 
 function getObjectPath(obj) {
