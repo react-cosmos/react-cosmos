@@ -2,18 +2,20 @@ import { Component } from 'react';
 import { withRouter } from 'react-router';
 import { object } from 'prop-types';
 
-const getPathFromProps = ({ location: { pathname, search, hash } }) =>
-  `${pathname}${search}${hash}`;
-
 class LocationInterceptor extends Component {
   static contextTypes = {
     router: object
   };
 
+  componentDidMount() {
+    const { location, onLocationChange } = this.props;
+    onLocationChange(location);
+  }
+
   componentDidUpdate(prevProps) {
-    const newPath = getPathFromProps(this.props);
-    if (newPath !== getPathFromProps(prevProps)) {
-      this.props.onLocation(newPath);
+    const { location, onLocationChange } = this.props;
+    if (JSON.stringify(location) !== JSON.stringify(prevProps.location)) {
+      onLocationChange(location);
     }
   }
 
