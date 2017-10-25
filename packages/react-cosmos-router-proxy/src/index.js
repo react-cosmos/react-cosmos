@@ -5,7 +5,7 @@ import { proxyPropTypes } from 'react-cosmos-shared';
 import LocationInterceptor from './LocationInterceptor';
 
 function locationToUrl({ pathname, search, hash }) {
-  return `${pathname}${search}${hash}`;
+  return `${pathname}${search ? search : ''}${hash ? hash : ''}`;
 }
 
 export default () => {
