@@ -2,7 +2,8 @@ import { Component } from 'react';
 import { withRouter } from 'react-router';
 import { object } from 'prop-types';
 
-const getPathFromProps = props => props.location.pathname;
+const getPathFromProps = ({ location: { pathname, search, hash } }) =>
+  `${pathname}${search}${hash}`;
 
 class LocationInterceptor extends Component {
   static contextTypes = {
