@@ -5,15 +5,14 @@ import micromatch from 'micromatch';
 import promisify from 'util.promisify';
 import { extractComponentsFromFixtureFile } from './extract-components-from-fixture-file';
 
+import type { ExcludePatterns } from 'react-cosmos-shared/src/types';
 import type { FixtureFile } from '../types';
 
 const globAsync = promisify(glob);
 
-type ExcludePattern = string | RegExp;
-
 type Args = ?{
   fileMatch?: Array<string>,
-  exclude?: ExcludePattern | Array<ExcludePattern>,
+  exclude?: ExcludePatterns,
   cwd?: string
 };
 

@@ -3,11 +3,14 @@ import { findFixtureFiles } from 'react-cosmos-voyager2/lib/server';
 // Requiring because embed-modules-webpack-loader is a CJS module
 const embedModules = require('../../embed-modules-webpack-loader');
 
+// The values of these mocks doesn't matter, we check for identity
 const mockFileMatch = [];
+const mockExclude = [];
 
 jest.mock('react-cosmos-config', () => () => ({
   rootPath: 'MOCK_ROOT_PATH',
   fileMatch: mockFileMatch,
+  exclude: mockExclude,
   componentPaths: [],
   proxiesPath: require.resolve('../__fsmocks__/cosmos.proxies')
 }));
@@ -77,6 +80,10 @@ it('calls findFixtureFiles with fileMatch with rootPath as cwd', () => {
 
 it('calls findFixtureFiles with fileMatch config', () => {
   expect(findFixtureFiles.mock.calls[0][0].fileMatch).toBe(mockFileMatch);
+});
+
+it('calls findFixtureFiles with exclude config', () => {
+  expect(findFixtureFiles.mock.calls[0][0].exclude).toBe(mockExclude);
 });
 
 it('injects fixture modules', () => {
