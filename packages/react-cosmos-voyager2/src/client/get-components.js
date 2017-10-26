@@ -68,8 +68,8 @@ export function getComponents({
       // Prepare for component info to be an empty list
       const componentInfo = fixtureFile.components[fixtureIndex];
       if (componentInfo) {
-        // Stop at the first name found. Different component names for the same
-        // component can be found in the future components but will be ignored.
+        // Stop at the first name found. Different names for the same component
+        // can be found in future fixtures but will be ignored.
         if (!componentNames.get(component) && componentInfo.name) {
           componentNames.set(component, componentInfo.name);
         }
