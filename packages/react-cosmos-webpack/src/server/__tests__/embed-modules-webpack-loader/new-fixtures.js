@@ -3,7 +3,7 @@ import { findFixtureFiles } from 'react-cosmos-voyager2/lib/server';
 // Requiring because embed-modules-webpack-loader is a CJS module
 const embedModules = require('../../embed-modules-webpack-loader');
 
-// The values of these mocks doesn't matter, we check for identity
+// The values of these mocks don't matter, we check for identity
 const mockFileMatch = [];
 const mockExclude = [];
 
