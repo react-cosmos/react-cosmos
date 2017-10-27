@@ -54,7 +54,8 @@ export default function startServer() {
 
   const publicPath = getPublicPath(cosmosConfig, userWebpackConfig);
   if (publicPath) {
-    console.log(`[Cosmos] Serving static files from ${publicPath}`);
+    const relPublicPath = path.relative(rootPath, publicPath);
+    console.log(`[Cosmos] Serving static files from ${relPublicPath}`);
     app.use(publicUrl, express.static(publicPath));
   }
 
