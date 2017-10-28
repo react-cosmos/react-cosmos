@@ -1,9 +1,11 @@
 import React from 'react';
 import { render } from 'react-dom';
-import RemoteLoader from './components/RemoteLoader';
 import createStateProxy from 'react-cosmos-state-proxy';
+import RemoteLoader from './components/RemoteLoader';
+import createErrorCatchProxy from './components/ErrorCatchProxy';
 
 let StateProxy;
+let ErrorCatchProxy;
 
 const createDomContainer = () => {
   const existingNode = document.getElementById('root');
@@ -23,18 +25,20 @@ export function mount({ proxies, fixtures, containerQuerySelector }) {
     ? document.querySelector(containerQuerySelector)
     : createDomContainer();
 
-  // Reuse proxy instance between renders to be able to do deep equals between
+  // Reuse proxy instances between renders to be able to do deep equals between
   // RemoteLoader prop transitions and know whether the user proxies changed.
   if (!StateProxy) {
     StateProxy = createStateProxy();
+    ErrorCatchProxy = createErrorCatchProxy();
   }
 
   render(
     <RemoteLoader
       fixtures={fixtures}
       proxies={[
+        // Some proxies are loaded by default in all configs
+        ErrorCatchProxy,
         ...proxies,
-        // Loaded by default in all configs
         StateProxy
       ]}
     />,
