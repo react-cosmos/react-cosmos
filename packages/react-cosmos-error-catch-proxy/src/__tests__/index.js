@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { createLinkedList } from 'react-cosmos-shared';
 import createErrorCatchProxy from '../';
 
 // The final responsibility of proxies is to render the user's component at
@@ -15,30 +16,21 @@ const NextProxy = props => {
 
 const LastProxy = ({ fixture }) => <fixture.component {...fixture.props} />;
 
+// Fixture updates from inner proxies need to bubble up to the root proxy
 const onFixtureUpdate = jest.fn();
 
 // Vars populated from scratch before each test
 let wrapper;
 
 const mountProxy = props => {
-  onFixtureUpdate.mockClear();
-
   const ErrorCatchProxy = createErrorCatchProxy();
 
   // Mouting is more useful because it calls lifecycle methods and enables
   // DOM interaction
   wrapper = mount(
     <ErrorCatchProxy
-      nextProxy={{
-        // Besides rendering the next proxy, we also need to ensure the 2nd
-        // next proxy is passed to the next proxy for further chaining. It
-        // might take a few reads to grasp this...
-        value: NextProxy,
-        next: () => ({
-          value: LastProxy,
-          next: () => {}
-        })
-      }}
+      // Ensure the chain of proxies is properly propagated
+      nextProxy={createLinkedList([NextProxy, LastProxy])}
       fixture={{
         component: Component,
         props
@@ -49,41 +41,37 @@ const mountProxy = props => {
   );
 };
 
+const getNextProxy = () => wrapper.find(NextProxy);
+const getNextProxyProps = () => wrapper.find(NextProxy).props();
+
 describe('Sane component', () => {
   beforeEach(() => {
+    onFixtureUpdate.mockClear();
     mountProxy({ user: { name: 'Arthur' } });
   });
 
   it('renders next proxy', () => {
-    expect(wrapper.find(NextProxy)).toHaveLength(1);
+    expect(getNextProxy()).toHaveLength(1);
+  });
+
+  it('sends fixture to next proxy', () => {
+    expect(getNextProxyProps().fixture).toEqual({
+      component: Component,
+      props: { user: { name: 'Arthur' } }
+    });
+  });
+
+  it('passes 2nd next proxy to next proxy', () => {
+    expect(getNextProxyProps().nextProxy.value).toBe(LastProxy);
+  });
+
+  it('bubbles up fixture updates', () => {
+    getNextProxyProps().onFixtureUpdate({});
+    expect(onFixtureUpdate.mock.calls).toHaveLength(1);
   });
 
   it('renders component', () => {
     expect(wrapper.text()).toEqual('Arthur');
-  });
-
-  describe('next proxy props', () => {
-    let nextProxyProps;
-
-    beforeEach(() => {
-      nextProxyProps = wrapper.find(NextProxy).props();
-    });
-
-    it('sends fixture to next proxy', () => {
-      expect(nextProxyProps.fixture).toEqual({
-        component: Component,
-        props: { user: { name: 'Arthur' } }
-      });
-    });
-
-    it('passes 2nd next proxy to next proxy', () => {
-      expect(nextProxyProps.nextProxy.value).toBe(LastProxy);
-    });
-
-    it('bubbles up fixture updates', () => {
-      nextProxyProps.onFixtureUpdate({});
-      expect(onFixtureUpdate.mock.calls).toHaveLength(1);
-    });
   });
 });
 

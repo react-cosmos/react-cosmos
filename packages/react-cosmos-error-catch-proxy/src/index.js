@@ -1,35 +1,39 @@
+// @flow
+
 import React, { Component } from 'react';
-import { proxyPropTypes } from 'react-cosmos-shared';
+
+import type { ProxyProps } from 'react-cosmos-shared/src/react/types';
+
+type State = {
+  hasError: boolean
+};
 
 // Returning a class creator to be consistent with the other proxies and to be
 // able to add options in the future without breaking API
 export default function createErrorCatchProxy() {
-  class ErrorCatchProxy extends Component {
+  class ErrorCatchProxy extends Component<ProxyProps, State> {
     state = {
       hasError: false
     };
 
-    componentDidCatch(error, info) {
+    componentDidCatch(error: Error, info: any) {
       console.log(error, info);
       this.setState({ hasError: true });
     }
 
     render() {
-      const { nextProxy } = this.props;
-
-      return this.state.hasError ? (
-        this.renderError()
-      ) : (
-        <nextProxy.value {...this.props} nextProxy={nextProxy.next()} />
-      );
+      return this.state.hasError ? this.renderError() : this.renderNextProxy();
     }
 
     renderError() {
       return <div>Something went wrong. Check console for errors.</div>;
     }
-  }
 
-  ErrorCatchProxy.propTypes = proxyPropTypes;
+    renderNextProxy() {
+      const { nextProxy } = this.props;
+      return <nextProxy.value {...this.props} nextProxy={nextProxy.next()} />;
+    }
+  }
 
   return ErrorCatchProxy;
 }
