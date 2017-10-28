@@ -93,9 +93,17 @@ describe('Broken component', () => {
     console.error = origConsoleError;
   });
 
-  it('renders error', () => {
-    expect(wrapper.text()).toEqual(
-      'Something went wrong. Check console for errors.'
+  it('renders error header', () => {
+    expect(wrapper.text()).toContain('Ouch, something wrong');
+  });
+
+  it('renders error footer', () => {
+    expect(wrapper.text()).toContain('Check console for more info.');
+  });
+
+  it('renders error message', () => {
+    expect(wrapper.text()).toContain(
+      `Cannot read property 'name' of undefined`
     );
   });
 
