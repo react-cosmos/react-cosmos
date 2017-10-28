@@ -12,12 +12,11 @@ import createFooProxy from '../';
 const Component = () => <span>__COMPONENT_MOCK__</span>;
 
 const NextProxy = props => {
-  const { value: P, next } = props.nextProxy;
-
-  return <P {...props} nextProxy={next()} />;
+  const { nextProxy } = props;
+  return <nextProxy.value {...props} nextProxy={nextProxy.next()} />;
 };
 
-const LastProxy = ({ fixture }) => <fixture.component />;
+const LastProxy = ({ fixture }) => <fixture.component {...fixture.props} />;
 
 // Vars populated from scratch before each test
 let onFixtureUpdate;
@@ -56,11 +55,11 @@ beforeEach(() => {
   );
 });
 
-test('renders next proxy', () => {
+it('renders next proxy', () => {
   expect(wrapper.find(NextProxy)).toHaveLength(1);
 });
 
-test('renders component', () => {
+it('renders component', () => {
   expect(wrapper.text()).toEqual('__COMPONENT_MOCK__');
 });
 
@@ -71,18 +70,18 @@ describe('next proxy props', () => {
     nextProxyProps = wrapper.find(NextProxy).props();
   });
 
-  test('sends fixture to next proxy', () => {
+  it('sends fixture to next proxy', () => {
     expect(nextProxyProps.fixture).toEqual({
       component: Component,
       foo: 'bar'
     });
   });
 
-  test('passes 2nd next proxy to next proxy', () => {
+  it('passes 2nd next proxy to next proxy', () => {
     expect(nextProxyProps.nextProxy.value).toBe(LastProxy);
   });
 
-  test('bubbles up fixture updates', () => {
+  it('bubbles up fixture updates', () => {
     nextProxyProps.onFixtureUpdate({});
     expect(onFixtureUpdate.mock.calls).toHaveLength(1);
   });
