@@ -6088,6 +6088,10 @@ lodash.cond@^4.3.0:
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/lodash.cond/-/lodash.cond-4.5.2.tgz#f471a1da486be60f6ab955d17115523dd1d255d5"
 
+lodash.flatmapdeep@^4.10.0:
+  version "4.10.0"
+  resolved "https://registry.yarnpkg.com/lodash.flatmapdeep/-/lodash.flatmapdeep-4.10.0.tgz#aecefefc0346ffda519fec2f4092fa04ff58fcbd"
+
 lodash.flattendeep@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/lodash.flattendeep/-/lodash.flattendeep-4.4.0.tgz#fb030917f86a3134e5bc9bec0d69e0013ddfedb2"

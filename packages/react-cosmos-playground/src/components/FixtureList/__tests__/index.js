@@ -6,11 +6,18 @@ import populatedFixture from '../__fixtures__/populated';
 import populatedWithEditorFixture from '../__fixtures__/populated-with-editor';
 import populatedAndSelectedFixture from '../__fixtures__/populated-and-selected';
 
+function afterOngoingPromises() {
+  return new Promise(resolve => {
+    setImmediate(resolve);
+  });
+}
+
 describe('List', () => {
   let wrapper;
 
   beforeEach(() => {
     wrapper = mount(<Loader fixture={populatedFixture} />);
+    return afterOngoingPromises();
   });
 
   test('should render component names', () => {

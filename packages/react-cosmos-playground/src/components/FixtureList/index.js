@@ -5,6 +5,11 @@ import styles from './index.less';
 import fixturesToTreeData from './data-mapper';
 import filterNodeArray from './filter';
 import Tree from '../Tree';
+import {
+  updateLocalToggleState,
+  pruneUnusedExpansionState,
+  getSavedExpansionState
+} from './persistence';
 
 const KEY_S = 83;
 const KEY_ESC = 27;
@@ -14,12 +19,26 @@ export default class FixtureList extends Component {
     super(props);
     this.state = {
       searchText: '',
-      fixtureTree: fixturesToTreeData(props.fixtures)
+      fixtureTree: null
     };
   }
 
   componentDidMount() {
+    const { fixtures, projectKey } = this.props;
     window.addEventListener('keydown', this.onWindowKey);
+
+    getSavedExpansionState(projectKey).then(savedExpansionState => {
+      const fixtureTree = fixturesToTreeData(
+        fixtures,
+        savedExpansionState || {}
+      );
+      pruneUnusedExpansionState(
+        projectKey,
+        savedExpansionState || {},
+        fixtureTree
+      );
+      this.setState({ fixtureTree });
+    });
   }
 
   componentWillUnmount() {
@@ -28,9 +47,18 @@ export default class FixtureList extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (
-      JSON.stringify(nextProps.fixtures) !== JSON.stringify(this.props.fixtures)
+      JSON.stringify(nextProps.fixtures) !==
+        JSON.stringify(this.props.fixtures) ||
+      nextProps.projectKey !== this.props.projectKey
     ) {
-      this.setState({ fixtureTree: fixturesToTreeData(nextProps.fixtures) });
+      getSavedExpansionState(nextProps.projectKey).then(savedExpansionState => {
+        this.setState({
+          fixtureTree: fixturesToTreeData(
+            nextProps.fixtures,
+            savedExpansionState || {}
+          )
+        });
+      });
     }
   }
 
@@ -56,6 +84,7 @@ export default class FixtureList extends Component {
   };
 
   onToggle = (node, expanded) => {
+    updateLocalToggleState(this.props.projectKey, node.path, expanded);
     // Mutates state, specifically a node from state.fixtureTree
     node.expanded = expanded;
     this.forceUpdate();
@@ -68,6 +97,11 @@ export default class FixtureList extends Component {
   render() {
     const { urlParams } = this.props;
     const { fixtureTree, searchText } = this.state;
+
+    // We might be waiting on localForage to return
+    if (!fixtureTree) {
+      return null;
+    }
 
     const trimmedSearchText = searchText.trim();
     let filteredFixtureTree = fixtureTree;
@@ -107,8 +141,13 @@ export default class FixtureList extends Component {
   }
 }
 
+FixtureList.defaultProps = {
+  projectKey: 'global'
+};
+
 FixtureList.propTypes = {
   fixtures: objectOf(arrayOf(string)).isRequired,
+  projectKey: string.isRequired,
   urlParams: shape({
     component: string,
     fixture: string,
