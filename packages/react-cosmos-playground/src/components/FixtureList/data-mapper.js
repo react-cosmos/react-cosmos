@@ -1,12 +1,16 @@
 import set from 'lodash.set';
 import some from 'lodash.some';
 
-const dataObjectToNestedArray = (base, path = '') => {
+const dataObjectToNestedArray = (base, savedExpansionState, path = '') => {
   const returnChildren = [];
   for (const key in base) {
     if (typeof base[key] === 'object') {
       const newPath = path ? `${path}/${key}` : key;
-      const children = dataObjectToNestedArray(base[key], newPath);
+      const children = dataObjectToNestedArray(
+        base[key],
+        savedExpansionState,
+        newPath
+      );
       const isDirectory = some(children, child => child.children);
       returnChildren.push({
         name: key,
@@ -29,7 +33,7 @@ const dataObjectToNestedArray = (base, path = '') => {
   return returnChildren;
 };
 
-const fixturesToTreeData = fixtures => {
+const fixturesToTreeData = (fixtures, savedExpansionState) => {
   const components = Object.keys(fixtures);
   const data = {};
 
@@ -39,7 +43,7 @@ const fixturesToTreeData = fixtures => {
     set(data, pathArray, fixturesAtPath);
   });
 
-  return dataObjectToNestedArray(data);
+  return dataObjectToNestedArray(data, savedExpansionState);
 };
 
 export default fixturesToTreeData;
