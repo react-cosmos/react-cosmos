@@ -115,7 +115,7 @@ Start from this when creating a new proxy.
 
 ```js
 import React from 'react';
-import { proxyPropTypes } from 'react-cosmos-shared';
+import { proxyPropTypes } from 'react-cosmos-shared/lib/react';
 
 const defaults = {
   // add option defaults here

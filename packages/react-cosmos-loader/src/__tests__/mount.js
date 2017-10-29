@@ -6,6 +6,7 @@ import { mount } from '../';
 const mockFixture = {};
 const mockProxy = () => {};
 const mockStateProxy = () => {};
+const mockErrorCatchProxy = () => {};
 
 jest.mock('react', () => ({
   Component: jest.fn(),
@@ -15,6 +16,9 @@ jest.mock('react-dom', () => ({
   render: jest.fn()
 }));
 jest.mock('react-cosmos-state-proxy', () => jest.fn(() => mockStateProxy));
+jest.mock('../components/ErrorCatchProxy', () =>
+  jest.fn(() => mockErrorCatchProxy)
+);
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -42,7 +46,12 @@ describe('without container query selector', () => {
     expect(proxies).toContain(mockProxy);
   });
 
-  it('appends state proxy', () => {
+  it('includes ErrorCatchProxy', () => {
+    const { proxies } = createElement.mock.calls[0][1];
+    expect(proxies).toContain(mockErrorCatchProxy);
+  });
+
+  it('includes StateProxy', () => {
     const { proxies } = createElement.mock.calls[0][1];
     expect(proxies).toContain(mockStateProxy);
   });

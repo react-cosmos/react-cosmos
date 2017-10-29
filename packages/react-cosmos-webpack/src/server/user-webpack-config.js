@@ -11,7 +11,7 @@ export default function getUserWebpackConfig(cosmosConfig: Config) {
   const { rootPath, webpackConfigPath } = cosmosConfig;
 
   if (moduleExists(webpackConfigPath)) {
-    const relPath = path.relative(rootPath, webpackConfigPath);
+    const relPath = path.relative(process.cwd(), webpackConfigPath);
     console.log(`[Cosmos] Using webpack config found at ${relPath}`);
     return importModule(require(webpackConfigPath));
   }
