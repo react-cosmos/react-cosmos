@@ -4,7 +4,6 @@ import RemoteLoader from '../';
 
 // Objects to check identity against
 const ProxyFoo = () => <span />;
-const ComponentFoo = () => {};
 const fixtureFoo = { foo: 'bar', onClick: () => {} };
 const fixtureFoo2 = { foo: 'baz' };
 
@@ -14,7 +13,6 @@ let wrapper;
 let firstProxyWrapper;
 let firstProxyProps;
 let firstProxyKey;
-let fixtureUpdateMessage;
 
 const handleMessage = e => {
   const { type } = e.data;
@@ -38,13 +36,9 @@ describe('Fixture source changes', () => {
 
     const onFrameReady = waitForPostMessage('loaderReady');
     const onFixtureSelect = waitForPostMessage('fixtureSelect');
-    const onFixtureUpdate = waitForPostMessage('fixtureUpdate');
     wrapper = mount(
       <RemoteLoader
         proxies={[ProxyFoo]}
-        components={{
-          Foo: ComponentFoo
-        }}
         fixtures={{
           Foo: {
             foo: fixtureFoo
@@ -80,11 +74,6 @@ describe('Fixture source changes', () => {
 
         firstProxyWrapper = wrapper.find(ProxyFoo);
         firstProxyProps = firstProxyWrapper.props();
-
-        return onFixtureUpdate;
-      })
-      .then(data => {
-        fixtureUpdateMessage = data;
       });
   });
 
@@ -92,18 +81,11 @@ describe('Fixture source changes', () => {
     window.removeEventListener('message', handleMessage);
   });
 
-  test('sends updated fixture body to parent', () => {
-    expect(fixtureUpdateMessage).toEqual({
-      type: 'fixtureUpdate',
-      fixtureBody: fixtureFoo2
-    });
+  test('keeps sending previous fixture body to first proxy', () => {
+    expect(firstProxyProps.fixture).toEqual(fixtureFoo);
   });
 
-  test('sends updated fixture to first proxy', () => {
-    expect(firstProxyProps.fixture).toEqual(fixtureFoo2);
-  });
-
-  test('changes element key', () => {
-    expect(firstProxyWrapper.key()).not.toEqual(firstProxyKey);
+  test('does not change element key', () => {
+    expect(firstProxyWrapper.key()).toEqual(firstProxyKey);
   });
 });

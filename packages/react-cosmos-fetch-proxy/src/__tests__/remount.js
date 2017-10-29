@@ -14,7 +14,7 @@ const NextProxy = props => {
   return <P {...props} nextProxy={next()} />;
 };
 
-const LastProxy = ({ component: C }) => <C />;
+const LastProxy = ({ fixture }) => <fixture.component />;
 
 // Vars populated from scratch before each test
 let wrapper;
@@ -36,8 +36,8 @@ const mountProxy = () => {
           next: () => {}
         })
       }}
-      component={Component}
       fixture={{
+        component: Component,
         fetch: [
           {
             matcher: '/users',

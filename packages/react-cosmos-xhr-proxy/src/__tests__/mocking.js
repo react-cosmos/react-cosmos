@@ -33,8 +33,8 @@ beforeEach(() => {
     wrapper = shallow(
       <XhrProxy
         nextProxy={nextProxy}
-        component={Component}
         fixture={{
+          component: Component,
           foo: 'bar',
           xhr: [
             {
@@ -90,7 +90,7 @@ describe('next proxy', () => {
   });
 
   test('sends component to next proxy', () => {
-    expect(props.component).toBe(Component);
+    expect(props.fixture.component).toBe(Component);
   });
 
   test('sends fixture to next proxy', () => {

@@ -1,57 +1,73 @@
+// @flow
+
 import React from 'react';
 import renderer from 'react-test-renderer';
 import createStateProxy from 'react-cosmos-state-proxy';
-import moduleExists from 'react-cosmos-utils/lib/module-exists';
-import importModule from 'react-cosmos-utils/lib/import-module';
+import { importModule } from 'react-cosmos-shared';
+import { moduleExists } from 'react-cosmos-shared/lib/server';
 import getCosmosConfig from 'react-cosmos-config';
-import getFilePaths from 'react-cosmos-voyager';
+import { findFixtureFiles } from 'react-cosmos-voyager2/lib/server';
+import { getComponents } from 'react-cosmos-voyager2/lib/client';
 import { Loader } from 'react-cosmos-loader';
 
-const { keys } = Object;
+type Args = {
+  cosmosConfigPath: Array<string>
+};
 
-const importFileTree = filePaths =>
-  keys(filePaths).reduce((acc, name) => {
-    return {
-      ...acc,
-      [name]: importModule(require(filePaths[name]))
-    };
-  }, {});
-
-export default ({ cosmosConfigPath } = {}) => {
+export default async ({ cosmosConfigPath }: Args) => {
   const cosmosConfig = getCosmosConfig(cosmosConfigPath);
-  const filePaths = getFilePaths(cosmosConfig);
-  const { proxiesPath } = cosmosConfig;
+  const {
+    rootPath,
+    proxiesPath,
+    fileMatch,
+    exclude,
+    componentPaths
+  } = cosmosConfig;
 
-  const proxies = moduleExists(proxiesPath)
+  if (componentPaths.length > 0) {
+    console.warn(
+      '[Cosmos] Using `componentPaths` config is deprecated.' +
+        'Upgrading is required for snapshot testing.'
+    );
+    return;
+  }
+
+  const userProxies = moduleExists(proxiesPath)
     ? importModule(require(proxiesPath))
     : [];
-  const components = importFileTree(filePaths.components);
-  const fixtures = keys(filePaths.fixtures).reduce((acc, component) => {
-    return {
-      ...acc,
-      [component]: importFileTree(filePaths.fixtures[component])
-    };
-  }, {});
+  const proxies = [
+    ...userProxies,
+    // Loaded by default in all configs
+    createStateProxy()
+  ];
 
-  keys(fixtures).forEach(component => {
-    const componentFixtures = fixtures[component];
-    keys(componentFixtures).forEach(fixture => {
-      test(`${component}:${fixture}`, () => {
+  test('Cosmos fixtures', async () => {
+    const fixtureFiles = await findFixtureFiles({
+      cwd: rootPath,
+      fileMatch,
+      exclude
+    });
+    const fixtureModules = getFixtureModules(fixtureFiles);
+    const components = getComponents({ fixtureModules, fixtureFiles });
+
+    components.forEach(component => {
+      const { fixtures } = component;
+      fixtures.forEach(fixture => {
         const tree = renderer
-          .create(
-            <Loader
-              proxies={[
-                ...proxies,
-                // Loaded by default in all configs
-                createStateProxy()
-              ]}
-              component={components[component]}
-              fixture={componentFixtures[fixture]}
-            />
-          )
+          .create(<Loader proxies={proxies} fixture={fixture.source} />)
           .toJSON();
-        expect(tree).toMatchSnapshot();
+        expect(tree).toMatchSnapshot(`${component.name}:${fixture.name}`);
       });
     });
   });
 };
+
+function getFixtureModules(fixtureFiles) {
+  return fixtureFiles.reduce(
+    (acc, f) => ({
+      ...acc,
+      [f.filePath]: importModule(require(f.filePath))
+    }),
+    {}
+  );
+}

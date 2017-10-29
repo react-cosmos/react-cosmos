@@ -6,7 +6,9 @@ import RemoteLoader from '../';
 const ProxyFoo = () => <span />;
 const ComponentFoo = () => <span />;
 const ComponentFoo2 = () => <span />;
-const fixtureFoo = {};
+const fixtureFoo = {
+  component: ComponentFoo
+};
 
 // Vars populated in beforeEach blocks
 let messageHandlers;
@@ -39,9 +41,6 @@ describe('Component source changes', () => {
     wrapper = mount(
       <RemoteLoader
         proxies={[ProxyFoo]}
-        components={{
-          Foo: ComponentFoo
-        }}
         fixtures={{
           Foo: {
             foo: fixtureFoo
@@ -77,13 +76,12 @@ describe('Component source changes', () => {
 
         // Simulate a HMR update
         wrapper.setProps({
-          components: {
-            Foo: ComponentFoo2
-          },
-          // Re-create fixture structure with same references
           fixtures: {
             Foo: {
-              foo: fixtureFoo
+              foo: {
+                ...fixtureFoo,
+                component: ComponentFoo2
+              }
             }
           }
         });
@@ -93,10 +91,10 @@ describe('Component source changes', () => {
   });
 
   test('sends new component to proxies', () => {
-    expect(firstProxyWrapper.props().component).toBe(ComponentFoo2);
+    expect(firstProxyWrapper.props().fixture.component).toBe(ComponentFoo2);
   });
 
   test('preserves previous fixture state', () => {
-    expect(firstProxyWrapper.props().fixture).toEqual({ foo: true });
+    expect(firstProxyWrapper.props().fixture.foo).toBe(true);
   });
 });

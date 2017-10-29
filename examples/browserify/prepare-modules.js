@@ -1,35 +1,60 @@
-const prepareComponents = modules => {
-  const components = {};
-  Object.keys(modules).forEach(componentName => {
-    if (componentName.indexOf('_') !== 0) {
-      components[componentName] = modules[componentName].default;
-    }
-  });
-  return components;
-};
+import { importModule } from 'react-cosmos-shared';
+import { getComponents } from 'react-cosmos-voyager2/lib/client';
 
-const prepareFixtures = (modules, components) => {
+const { keys } = Object;
+
+const rawFixtureModules = require('./components/__fixtures__/**/*.js', {
+  mode: 'hash',
+  resolve: ['path']
+});
+
+export function prepareOldSchoolFixtures() {
+  const fixtureModules = getNormalizedModules(rawFixtureModules);
+  const fixtureFiles = getFixtureFilesFromModules(fixtureModules);
+  const components = getComponents({ fixtureFiles, fixtureModules });
+
+  return getOldSchoolFixturesFromNewStyleComponents(components);
+}
+
+function getNormalizedModules(modules) {
+  return keys(modules).reduce(
+    (acc, relPath) => ({
+      ...acc,
+      [relToAbsPath(relPath)]: importModule(modules[relPath])
+    }),
+    {}
+  );
+}
+
+function getFixtureFilesFromModules(modules) {
+  return keys(modules).map(filePath => {
+    return {
+      filePath,
+      components: []
+    };
+  });
+}
+
+function getOldSchoolFixturesFromNewStyleComponents(newStyleComponents) {
   const fixtures = {};
-  Object.keys(components).forEach(componentName => {
+
+  newStyleComponents.forEach(c => {
+    const componentName = getObjectPath(c);
     fixtures[componentName] = {};
-    Object.keys(modules).forEach(fixtureName => {
-      const componentPrefix = `./components/__fixtures__/${componentName}/`;
-      if (fixtureName.indexOf(componentPrefix) === 0) {
-        fixtures[componentName][fixtureName.slice(componentPrefix.length)] =
-          modules[fixtureName].default;
-      }
+
+    c.fixtures.forEach(f => {
+      const fixtureName = getObjectPath(f);
+      fixtures[componentName][fixtureName] = f.source;
     });
   });
+
   return fixtures;
-};
+}
 
-const componentModules = require('./components/**/*{.js,.jsx}', {
-  mode: 'hash'
-});
-const fixtureModules = require('./components/__fixtures__/**/*.js', {
-  mode: 'hash',
-  resolve: ['path', 'strip-ext']
-});
+function relToAbsPath(relPath) {
+  return relPath.slice(1);
+}
 
-export const components = prepareComponents(componentModules);
-export const fixtures = prepareFixtures(fixtureModules, components);
+function getObjectPath(obj) {
+  return obj.namespace ? `${obj.namespace}/${obj.name}` : obj.name;
+}

@@ -1,5 +1,5 @@
-import proxyPropTypes from 'react-cosmos-utils/lib/proxy-prop-types';
 import React from 'react';
+import { proxyPropTypes } from 'react-cosmos-shared';
 
 const defaults = {
   fixtureKey: 'context'

@@ -3,7 +3,6 @@ import { render } from 'react-dom';
 import RemoteLoader from '../components/RemoteLoader';
 import { mount } from '../';
 
-const mockComponent = () => {};
 const mockFixture = {};
 const mockProxy = () => {};
 const mockStateProxy = () => {};
@@ -25,9 +24,6 @@ describe('without container query selector', () => {
   beforeEach(() => {
     mount({
       proxies: [mockProxy],
-      components: {
-        foo: mockComponent
-      },
       fixtures: {
         foo: {
           bar: mockFixture
@@ -49,11 +45,6 @@ describe('without container query selector', () => {
   it('appends state proxy', () => {
     const { proxies } = createElement.mock.calls[0][1];
     expect(proxies).toContain(mockStateProxy);
-  });
-
-  it('passes components to loader element', () => {
-    const { components } = createElement.mock.calls[0][1];
-    expect(components.foo).toBe(mockComponent);
   });
 
   it('passes fixtures to loader element', () => {
@@ -82,9 +73,6 @@ describe('with container query selector and class name', () => {
 
     mount({
       proxies: [mockProxy],
-      components: {
-        foo: mockComponent
-      },
       fixtures: {
         foo: {
           bar: mockFixture
@@ -111,11 +99,6 @@ describe('with container query selector and class name', () => {
   it('appends state proxy', () => {
     const { proxies } = createElement.mock.calls[0][1];
     expect(proxies).toContain(mockStateProxy);
-  });
-
-  it('passes components to loader element', () => {
-    const { components } = createElement.mock.calls[0][1];
-    expect(components.foo).toBe(mockComponent);
   });
 
   it('passes fixtures to loader element', () => {

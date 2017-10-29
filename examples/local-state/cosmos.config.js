@@ -1,3 +1,1 @@
-module.exports = {
-  componentPaths: ['components']
-};
+module.exports = {};

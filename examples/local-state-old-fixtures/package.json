@@ -1,0 +1,15 @@
+{
+  "name": "react-cosmos-local-state-old-fixtures-example",
+  "version": "3.0.0-beta.2",
+  "description": "Example of injecting and serializing component local state",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/local-state",
+  "license": "MIT",
+  "scripts": {
+    "start": "NODE_ENV=development cosmos"
+  },
+  "dependencies": {
+    "react-cosmos-webpack": "^3.0.0-beta.2"
+  },
+  "xo": false,
+  "private": true
+}

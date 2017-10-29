@@ -2,6 +2,13 @@ import createNormalizePropsProxy from 'react-cosmos-normalize-props-proxy';
 
 export default [
   createNormalizePropsProxy({
-    notProps: ['children', 'state', 'context', 'reduxState', 'myMagicField']
+    notProps: [
+      'component',
+      'children',
+      'state',
+      'context',
+      'reduxState',
+      'myMagicField'
+    ]
   })
 ];

@@ -25,8 +25,8 @@ beforeEach(() => {
   wrapper = shallow(
     <XhrProxy
       nextProxy={nextProxy}
-      component={Component}
       fixture={{
+        component: Component,
         xhr: [
           {
             url: '/users',

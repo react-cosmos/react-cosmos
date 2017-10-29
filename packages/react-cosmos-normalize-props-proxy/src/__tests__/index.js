@@ -16,6 +16,7 @@ let componentRef;
 let childWrapper;
 let childProps;
 
+const mockComponent = {};
 const mockContext = {};
 const mockChildren = [];
 const mockState = {};
@@ -29,7 +30,6 @@ const renderProxy = fixture => {
   const wrapper = shallow(
     <NormalizePropsProxy
       nextProxy={nextProxy}
-      component={() => {}}
       fixture={fixture}
       onComponentRef={onComponentRef}
       onFixtureUpdate={onFixtureUpdate}
@@ -52,6 +52,7 @@ const commonTests = () => {
   });
 
   test('sends designated root level fixture fields to next proxy unmodified', () => {
+    expect(childProps.fixture.component).toBe(mockComponent);
     expect(childProps.fixture.context).toBe(mockContext);
     expect(childProps.fixture.children).toBe(mockChildren);
     expect(childProps.fixture.state).toBe(mockState);
@@ -71,6 +72,7 @@ const commonTests = () => {
 describe('fixture without fixture.props', () => {
   beforeAll(() => {
     renderProxy({
+      component: mockComponent,
       context: mockContext,
       children: mockChildren,
       state: mockState,
@@ -89,6 +91,7 @@ describe('fixture without fixture.props', () => {
 describe('fixture with fixture.props', () => {
   beforeAll(() => {
     renderProxy({
+      component: mockComponent,
       context: mockContext,
       children: mockChildren,
       state: mockState,

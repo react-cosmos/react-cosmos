@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { bool } from 'prop-types';
-import proxyPropTypes from 'react-cosmos-utils/lib/proxy-prop-types';
+import { proxyPropTypes } from 'react-cosmos-shared';
 import isEqual from 'lodash.isequal';
 import isEmpty from 'lodash.isempty';
 import omit from 'lodash.omit';

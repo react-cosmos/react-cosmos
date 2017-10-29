@@ -768,13 +768,10 @@ Fixtures can be reused inside automated tests. Along with proxies, they replace 
 ```js
 import { mount } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
-import DisplayScreen from '../';
-import fixture from '../__fixtures__/hi-there';
+import fixture from './hello.fixture';
 
 it('should render hello message', () => {
-  const wrapper = mount(
-    <Loader component={DisplayScreen} fixture={fixture} />
-  );
+  const wrapper = mount(<Loader fixture={fixture} />);
   expect(wrapper.text()).toMatch(/Hi there/);
 });
 ```

@@ -3,7 +3,6 @@ import { mount } from 'enzyme';
 import Remote from '../';
 
 // Objects to check identity against
-const ComponentFoo = () => {};
 const fixtureFoo = {};
 
 // Vars populated in beforeEach blocks
@@ -36,9 +35,6 @@ describe('Loader unmounts', () => {
     wrapper = mount(
       <Remote
         proxies={[]}
-        components={{
-          Foo: ComponentFoo
-        }}
         fixtures={{
           Foo: {
             foo: fixtureFoo
