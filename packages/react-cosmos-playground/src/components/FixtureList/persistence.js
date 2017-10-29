@@ -22,14 +22,20 @@ export function updateLocalToggleState(projectKey, path, expanded) {
 
 function fixtureTreeToPathArray(fixtureTree) {
   return flatMapDeep(fixtureTree, node => {
-    const result = [];
-    if (node.path) {
-      result.push(node.path);
+    // Leaf nodes (fixtures) don't have a path because they don't have an
+    // expanded state
+    if (!node.path) {
+      return [];
     }
+
+    const paths = [node.path];
+
     if (node.children) {
-      result.push(fixtureTreeToPathArray(node.children));
+      // Get all paths from current node's subtree
+      paths.push(fixtureTreeToPathArray(node.children));
     }
-    return result;
+
+    return paths;
   });
 }
 
