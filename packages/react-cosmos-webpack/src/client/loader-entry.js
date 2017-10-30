@@ -29,9 +29,12 @@ startReportingRuntimeErrors({
 });
 
 if (window['__webpack_hot_middleware_reporter__'] != null) {
+  // Report build errors
   window['__webpack_hot_middleware_reporter__'].useCustomOverlay({
     showProblems(type, obj) {
       if (type !== 'errors') {
+        // We might've went from errors -> warnings
+        dismissBuildError();
         return;
       }
       reportBuildError(obj[0]);
