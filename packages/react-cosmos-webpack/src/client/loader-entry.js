@@ -19,7 +19,7 @@ window.__runCosmosLoader = run;
 
 // Report runtime errors
 startReportingRuntimeErrors({
-  launchEditorEndpoint: '', // TODO: disabled for now
+  launchEditorEndpoint: '/__open-stack-frame-in-editor',
   onError: () => {}, // TODO: consider forcing a full reload after an error and stopping HMR
   filename: '/loader/main.js'
 });

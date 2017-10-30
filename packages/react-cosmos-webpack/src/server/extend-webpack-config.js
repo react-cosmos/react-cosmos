@@ -2,6 +2,7 @@
 
 import omit from 'lodash.omit';
 import getCosmosConfig from 'react-cosmos-config';
+import * as path from 'path';
 
 import type { Config } from 'react-cosmos-config/src';
 
@@ -46,7 +47,10 @@ export default function extendWebpackConfig({
   const output = {
     path: shouldExport ? `${outputPath}/loader/` : '/loader/',
     filename: '[name].js',
-    publicPath: shouldExport ? './' : '/loader/'
+    publicPath: shouldExport ? './' : '/loader/',
+    // Enable click-to-open source
+    devtoolModuleFilenameTemplate: info =>
+      path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
   };
 
   // To support webpack 1 and 2 configuration formats. So we use the one that user passes
