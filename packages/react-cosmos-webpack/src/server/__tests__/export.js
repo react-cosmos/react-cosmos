@@ -71,7 +71,7 @@ describe('playground files', () => {
     const outputPath = path.join(mockOutputPath, 'index.html');
     const optsStr = JSON.stringify({
       loaderUri: './loader/index.html',
-      projectKey: btoa(mockRootPath)
+      projectKey: mockRootPath
     });
 
     expect(fs.readFileSync(outputPath, 'utf8')).toBe(

@@ -14,7 +14,7 @@ export default function getPlaygroundHtml(cosmosConfig: Config) {
   );
   const opts = JSON.stringify({
     loaderUri: './loader/index.html',
-    projectKey: btoa(rootPath)
+    projectKey: rootPath
   });
 
   return html.replace('__PLAYGROUND_OPTS__', opts);

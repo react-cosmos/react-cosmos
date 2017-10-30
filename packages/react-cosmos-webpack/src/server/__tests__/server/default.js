@@ -102,7 +102,7 @@ it('serves index.html on / route with playgrounds opts included', () => {
         '__PLAYGROUND_OPTS__',
         JSON.stringify({
           loaderUri: './loader/index.html',
-          projectKey: btoa(mockRootPath)
+          projectKey: mockRootPath
         })
       )
     );
