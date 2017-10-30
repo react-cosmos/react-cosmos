@@ -101,7 +101,8 @@ it('serves index.html on / route with playgrounds opts included', () => {
       htmlContents.replace(
         '__PLAYGROUND_OPTS__',
         JSON.stringify({
-          loaderUri: './loader/index.html'
+          loaderUri: './loader/index.html',
+          projectKey: btoa(mockRootPath)
         })
       )
     );
