@@ -1,5 +1,9 @@
 import './react-devtools-hook';
-import { startReportingRuntimeErrors } from 'react-error-overlay';
+import {
+  startReportingRuntimeErrors,
+  reportBuildError,
+  dismissBuildError
+} from 'react-error-overlay';
 
 function run() {
   // Module is imported whenever this function is called, making sure the
@@ -23,3 +27,17 @@ startReportingRuntimeErrors({
   onError: () => {}, // TODO: consider forcing a full reload after an error and stopping HMR
   filename: '/loader/main.js'
 });
+
+if (window['__webpack_hot_middleware_reporter__'] != null) {
+  window['__webpack_hot_middleware_reporter__'].useCustomOverlay({
+    showProblems(type, obj) {
+      if (type !== 'errors') {
+        return;
+      }
+      reportBuildError(obj[0]);
+    },
+    clear() {
+      dismissBuildError();
+    }
+  });
+}
