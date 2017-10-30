@@ -2,6 +2,7 @@ import React from 'react';
 import { arrayOf, oneOf, shape, number, string, func, bool } from 'prop-types';
 import {
   FolderIcon,
+  FixtureFolderIcon,
   ComponentIcon,
   RightArrowIcon,
   DownArrowIcon
@@ -62,6 +63,19 @@ const FuzzyHighligher = ({ searchText, textToHighlight }) => {
   return <span>{highlighted}</span>;
 };
 
+const Icon = ({ type }) => {
+  switch (type) {
+    case 'component':
+      return <ComponentIcon />;
+    case 'directory':
+      return <FolderIcon />;
+    case 'fixtureDirectory':
+      return <FixtureFolderIcon />;
+    default:
+      throw new Error(`Unexpected icon type ${type}`);
+  }
+};
+
 const TreeFolder = ({
   node,
   onSelect,
@@ -89,7 +103,7 @@ const TreeFolder = ({
         <span className={styles.arrowIcon}>
           {node.expanded ? <DownArrowIcon /> : <RightArrowIcon />}
         </span>
-        {node.type === 'component' ? <ComponentIcon /> : <FolderIcon />}
+        <Icon type={node.type} />
         <FuzzyHighligher searchText={searchText} textToHighlight={node.name} />
       </div>
       <Tree
