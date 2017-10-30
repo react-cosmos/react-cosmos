@@ -1,5 +1,5 @@
 import { Router } from 'react-querystring-router';
-import ReactComponentPlayground from './components/ComponentPlayground';
+import ComponentPlayground from './components/ComponentPlayground';
 import getPageTitle from './utils/page-title';
 
 import './utils/global.less';
@@ -18,14 +18,15 @@ const createDomContainer = () => {
 // Use module.exports to avoid having to call .default() when attached to
 // the global window namespace
 module.exports = opts => {
-  const { loaderUri } = opts;
+  const { loaderUri, projectKey } = opts;
 
   return new Router({
     container: createDomContainer(),
-    getComponentClass: () => ReactComponentPlayground,
+    getComponentClass: () => ComponentPlayground,
     getComponentProps: params => ({
       ...params,
-      loaderUri
+      loaderUri,
+      projectKey
     }),
     onChange: params => {
       document.title = getPageTitle(params);
