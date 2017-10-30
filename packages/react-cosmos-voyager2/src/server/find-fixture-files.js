@@ -17,8 +17,8 @@ type Args = ?{
 };
 
 const defaultFileMatch = [
-  '**/__fixture?(s)__/**/*.{js,jsx}',
-  '**/?(*.)fixture?(s).{js,jsx}'
+  '**/__fixture?(s)__/**/*.{js,jsx,ts,tsx}',
+  '**/?(*.)fixture?(s).{js,jsx,ts,tsx}'
 ];
 
 const defaultExclude = [];
