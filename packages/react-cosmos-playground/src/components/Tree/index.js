@@ -2,7 +2,6 @@ import React from 'react';
 import { arrayOf, oneOf, shape, number, string, func, bool } from 'prop-types';
 import {
   FolderIcon,
-  FixtureFolderIcon,
   ComponentIcon,
   RightArrowIcon,
   DownArrowIcon
@@ -70,7 +69,7 @@ const Icon = ({ type }) => {
     case 'directory':
       return <FolderIcon />;
     case 'fixtureDirectory':
-      return <FixtureFolderIcon />;
+      return <FolderIcon />;
     default:
       throw new Error(`Unexpected icon type ${type}`);
   }
@@ -85,6 +84,10 @@ const TreeFolder = ({
   searchText,
   currentUrlParams
 }) => {
+  const componentClasses = classNames({
+    [styles.componentName]: true,
+    [styles.fixtureDirectory]: node.type === 'fixtureDirectory'
+  });
   return (
     <div
       className={styles.component}
@@ -95,7 +98,7 @@ const TreeFolder = ({
       }}
     >
       <div
-        className={styles.componentName}
+        className={componentClasses}
         style={{
           paddingLeft: CONTAINER_LEFT_PADDING + nestingLevel * INDENT_PADDING
         }}
@@ -190,13 +193,9 @@ class Tree extends React.Component {
       nestingLevel = 0,
       isHidden = false
     } = this.props;
-    const treeStyle = {};
 
     return (
-      <div
-        className={isHidden ? styles.componentCollapsed : ''}
-        style={treeStyle}
-      >
+      <div className={isHidden ? styles.componentCollapsed : ''}>
         {nodeArray.map((node, index) => {
           if (node.children) {
             return (
