@@ -28,9 +28,9 @@ startReportingRuntimeErrors({
   filename: '/loader/main.js'
 });
 
-if (window['__webpack_hot_middleware_reporter__'] != null) {
+if (window.__webpack_hot_middleware_reporter__ !== undefined) {
   // Report build errors
-  window['__webpack_hot_middleware_reporter__'].useCustomOverlay({
+  window.__webpack_hot_middleware_reporter__.useCustomOverlay({
     showProblems(type, obj) {
       if (type !== 'errors') {
         // We might've went from errors -> warnings
