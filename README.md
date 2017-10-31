@@ -125,7 +125,7 @@ Run `npm run cosmos` or `yarn cosmos` and go to [localhost:8989](http://localhos
 
 - Extend existing [webpack config](#custom-webpack-config)
 - See [popular integrations](#integration-with-popular-tools) (e.g. CRA or Next.js)
-- Extend your [config](#configuration)
+- Extend your [config](#config)
 - Create [fixtures](#fixtures)
 - Configure or create [proxies](#proxies) (e.g. Redux)
 - Be kind and [report what went wrong](https://github.com/react-cosmos/react-cosmos/issues)
