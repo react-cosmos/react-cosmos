@@ -23,41 +23,29 @@ export default class FixtureList extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const { fixtures, projectKey } = this.props;
     window.addEventListener('keydown', this.onWindowKey);
 
-    getSavedExpansionState(projectKey).then(savedExpansionState => {
-      const fixtureTree = fixturesToTreeData(
-        fixtures,
-        savedExpansionState || {}
-      );
-      pruneUnusedExpansionState(
-        projectKey,
-        savedExpansionState || {},
-        fixtureTree
-      );
-      this.setState({ fixtureTree });
-    });
+    const savedExpansionState = await getSavedExpansionState(projectKey);
+    const fixtureTree = fixturesToTreeData(fixtures, savedExpansionState);
+    pruneUnusedExpansionState(projectKey, savedExpansionState, fixtureTree);
+    this.setState({ fixtureTree });
   }
 
   componentWillUnmount() {
     window.removeEventListener('keydown', this.onWindowKey);
   }
 
-  componentWillReceiveProps(nextProps) {
+  async componentWillReceiveProps(nextProps) {
+    const { fixtures, projectKey } = nextProps;
     if (
-      JSON.stringify(nextProps.fixtures) !==
-        JSON.stringify(this.props.fixtures) ||
-      nextProps.projectKey !== this.props.projectKey
+      JSON.stringify(fixtures) !== JSON.stringify(this.props.fixtures) ||
+      projectKey !== this.props.projectKey
     ) {
-      getSavedExpansionState(nextProps.projectKey).then(savedExpansionState => {
-        this.setState({
-          fixtureTree: fixturesToTreeData(
-            nextProps.fixtures,
-            savedExpansionState || {}
-          )
-        });
+      const savedExpansionState = await getSavedExpansionState(projectKey);
+      this.setState({
+        fixtureTree: fixturesToTreeData(fixtures, savedExpansionState)
       });
     }
   }
