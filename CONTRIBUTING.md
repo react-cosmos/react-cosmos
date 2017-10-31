@@ -38,7 +38,7 @@ High impact initiatives. By working on these exciting topics, you have the oppor
 
 > Warning: These are high-level tasks and they require further analysis and collaboration before they can be turned into concrete tasks
 
-- [Redesign filesystem API](https://github.com/react-cosmos/react-cosmos/issues/440)
+- ~~[Redesign filesystem API](https://github.com/react-cosmos/react-cosmos/issues/440)~~
 - [Config generation](https://github.com/react-cosmos/react-cosmos/issues/452)
 - [Create Cosmos server](https://github.com/react-cosmos/react-cosmos/pull/383#issuecomment-328297128)
 
@@ -64,6 +64,8 @@ There's also a label for each [long term goal](#goals).
 [The Best Code is No Code At All.](http://blog.codinghorror.com/the-best-code-is-no-code-at-all/) Start with this in mind before writing code.
 
 ### Monorepo
+
+TODO: Mention Yarn Workspaces
 
 React Cosmos is a [monorepo](packages) powered by [Lerna](https://github.com/lerna/lerna). The monorepo structure makes it possible to publish independent packages while being able to have end-to-end tests for the whole project, and to easily link examples to unpublished packages.
 
@@ -101,7 +103,7 @@ Read about all event payloads and their order [here](docs/playground-loader.md).
 
 ### webpack
 
-`react-cosmos-webpack` extends the user's webpack config or fallbacks to a default config with Babel and CSS loaders.
+The `react-cosmos` CLI extends the user's webpack config or fallbacks to a default config, which automatically detects and includes the user's Babel and CSS loaders.
 
 The entry file of the resulting webpack config mounts `RemoteLoader`, together with all the user components, fixtures and proxies. **The component and fixture paths are injected statically in the Loader bundle** via [module-loader.js](packages/react-cosmos-webpack/src/module-loader.js)—a custom webpack loader.
 
@@ -110,6 +112,8 @@ Using webpack-dev-middleware, the webpack config is attached to an Express serve
 Static exporting is almost identical to development mode, except that it saves the webpack build to disk instead of attaching it to a running Express server.
 
 ## Proxy boilerplate
+
+TODO: Add Flow to boilerplate
 
 Start from this when creating a new proxy.
 
@@ -180,10 +184,10 @@ cd examples/context
 yarn start
 
 # Watch & build single package (running example will live reload)
-yarn run build react-cosmos-playground -- --watch
+yarn run build react-cosmos-playground --watch
 
 # Watch & run unit tests as you code
-yarn run test-jest -- --watch
+yarn run test-jest --watch
 ```
 
 #### Write tests, preferably before implementation
