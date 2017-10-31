@@ -1,6 +1,10 @@
-import { getSavedExpansionState, updateLocalToggleState } from '../persistence';
+import {
+  TREE_EXPANSION_STATE,
+  getSavedExpansionState,
+  updateLocalToggleState
+} from '../persistence';
 import localForage from 'localforage';
-import { TREE_EXPANSION_STATE } from '../persistence';
+
 jest.mock('localforage');
 
 test('getSavedExpansionState', async () => {

@@ -7,9 +7,7 @@ export async function getSavedExpansionState(projectKey) {
   const value = await localForage.getItem(
     `${TREE_EXPANSION_STATE}-${projectKey}`
   );
-  // Whilst localForage should only ever return null,
-  // Jest tests can return undefined.
-  return value || {};
+  return value !== null ? value : {};
 }
 
 function setSavedExpansionState(projectKey, value) {
