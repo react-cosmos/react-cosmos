@@ -1,7 +1,7 @@
 import localForage from 'localforage';
 import flatMapDeep from 'lodash.flatmapdeep';
 
-const TREE_EXPANSION_STATE = '__cosmos__tree-expansion-state';
+export const TREE_EXPANSION_STATE = '__cosmos__tree-expansion-state';
 
 export async function getSavedExpansionState(projectKey) {
   const value = await localForage.getItem(
@@ -16,12 +16,11 @@ function setSavedExpansionState(projectKey, value) {
   return localForage.setItem(`${TREE_EXPANSION_STATE}-${projectKey}`, value);
 }
 
-export function updateLocalToggleState(projectKey, path, expanded) {
-  getSavedExpansionState(projectKey).then(currentState => {
-    setSavedExpansionState(projectKey, {
-      ...currentState,
-      [path]: expanded
-    });
+export async function updateLocalToggleState(projectKey, path, expanded) {
+  const currentState = await getSavedExpansionState(projectKey);
+  setSavedExpansionState(projectKey, {
+    ...currentState,
+    [path]: expanded
   });
 }
 
