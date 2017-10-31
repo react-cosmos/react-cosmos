@@ -16,7 +16,8 @@ describe('Playground mount', () => {
     jest.resetAllMocks();
 
     routerInstance = mountPlayground({
-      loaderUri: '/fake-loader-uri/'
+      loaderUri: '/fake-loader-uri/',
+      projectKey: '/fake-project-key/'
     });
   });
 
@@ -40,6 +41,12 @@ describe('Playground mount', () => {
       const { getComponentProps } = routerArgs[0];
       const { loaderUri } = getComponentProps();
       expect(loaderUri).toBe('/fake-loader-uri/');
+    });
+
+    it('puts projectKey option in Playground props', () => {
+      const { getComponentProps } = routerArgs[0];
+      const { projectKey } = getComponentProps();
+      expect(projectKey).toBe('/fake-project-key/');
     });
 
     it('returns router instance', () => {

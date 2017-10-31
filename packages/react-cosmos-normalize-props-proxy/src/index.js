@@ -1,5 +1,5 @@
 import React from 'react';
-import { proxyPropTypes } from 'react-cosmos-shared';
+import { proxyPropTypes } from 'react-cosmos-shared/lib/react';
 import omit from 'lodash.omit';
 import pick from 'lodash.pick';
 

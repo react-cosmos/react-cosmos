@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
 import { graphql, print } from 'graphql';
 import { ApolloProvider, ApolloClient } from 'react-apollo';
-import { proxyPropTypes } from 'react-cosmos-shared';
+import { proxyPropTypes } from 'react-cosmos-shared/lib/react';
 
 const defaults = {
   // Must provide schema definition with query type or a type named Query.

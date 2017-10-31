@@ -24,6 +24,7 @@ const postMessageToFrame = (frame, data) =>
 
 export default class ComponentPlayground extends Component {
   static defaultProps = {
+    projectKey: 'default',
     editor: false,
     fullScreen: false
   };
@@ -398,6 +399,7 @@ export default class ComponentPlayground extends Component {
 ComponentPlayground.propTypes = {
   router: object.isRequired,
   loaderUri: string.isRequired,
+  projectKey: string.isRequired,
   component: string,
   fixture: string,
   editor: bool,

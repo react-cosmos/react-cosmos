@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { proxyPropTypes } from 'react-cosmos-shared';
+import { proxyPropTypes } from 'react-cosmos-shared/lib/react';
 
 // Mocking localStorage completely ensures no conflict with existing browser
 // data and works in test environments like Jest

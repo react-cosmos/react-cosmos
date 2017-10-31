@@ -3,6 +3,7 @@
 ```js
 import React from 'react';
 import { mount } from 'enzyme';
+import { createLinkedList } from 'react-cosmos-shared';
 import createFooProxy from '../';
 
 // The final responsibility of proxies is to render the user's component at
@@ -12,38 +13,28 @@ import createFooProxy from '../';
 const Component = () => <span>__COMPONENT_MOCK__</span>;
 
 const NextProxy = props => {
-  const { value: P, next } = props.nextProxy;
-
-  return <P {...props} nextProxy={next()} />;
+  const { nextProxy } = props;
+  return <nextProxy.value {...props} nextProxy={nextProxy.next()} />;
 };
 
-const LastProxy = ({ fixture }) => <fixture.component />;
+const LastProxy = ({ fixture }) => <fixture.component {...fixture.props} />;
+
+// Fixture updates from inner proxies need to bubble up to the root proxy
+const onFixtureUpdate = jest.fn();
 
 // Vars populated from scratch before each test
-let onFixtureUpdate;
 let wrapper;
 
-beforeEach(() => {
+const mountProxy = () => {
   // Create Proxy with default options
   const FooProxy = createFooProxy();
-
-  // Fixture updates from inner proxies need to bubble up to the root proxy
-  onFixtureUpdate = jest.fn();
 
   // Mouting is more useful because it calls lifecycle methods and enables
   // DOM interaction
   wrapper = mount(
     <FooProxy
-      nextProxy={{
-        // Besides rendering the next proxy, we also need to ensure the 2nd
-        // next proxy is passed to the next proxy for further chaining. It
-        // might take a few reads to grasp this...
-        value: NextProxy,
-        next: () => ({
-          value: LastProxy,
-          next: () => {},
-        }),
-      }}
+      // Ensure the chain of proxies is properly propagated
+      nextProxy={createLinkedList([NextProxy, LastProxy])}
       fixture={{
         component: Component,
         // Except for some rare cases, the proxy needs to pass along the
@@ -54,37 +45,33 @@ beforeEach(() => {
       onFixtureUpdate={onFixtureUpdate}
     />
   );
+};
+
+const getNextProxy = () => wrapper.find(NextProxy);
+const getNextProxyProps = () => wrapper.find(NextProxy).props();
+
+beforeEach(() => {
+  onFixtureUpdate.mockClear();
+  mountProxy();
 });
 
-test('renders next proxy', () => {
-  expect(wrapper.find(NextProxy)).toHaveLength(1);
+it('renders next proxy', () => {
+  expect(getNextProxy()).toHaveLength(1);
 });
 
-test('renders component', () => {
-  expect(wrapper.text()).toEqual('__COMPONENT_MOCK__');
+it('sends fixture to next proxy', () => {
+  expect(getNextProxyProps().fixture).toEqual({
+    component: Component,
+    foo: 'bar'
+  });
 });
 
-describe('next proxy props', () => {
-  let nextProxyProps;
+it('passes 2nd next proxy to next proxy', () => {
+  expect(getNextProxyProps().nextProxy.value).toBe(LastProxy);
+});
 
-  beforeEach(() => {
-    nextProxyProps = wrapper.find(NextProxy).props();
-  });
-
-  test('sends fixture to next proxy', () => {
-    expect(nextProxyProps.fixture).toEqual({
-      component: Component,
-      foo: 'bar'
-    });
-  });
-
-  test('passes 2nd next proxy to next proxy', () => {
-    expect(nextProxyProps.nextProxy.value).toBe(LastProxy);
-  });
-
-  test('bubbles up fixture updates', () => {
-    nextProxyProps.onFixtureUpdate({});
-    expect(onFixtureUpdate.mock.calls).toHaveLength(1);
-  });
+it('bubbles up fixture updates', () => {
+  getNextProxyProps().onFixtureUpdate({});
+  expect(onFixtureUpdate.mock.calls).toHaveLength(1);
 });
 ```

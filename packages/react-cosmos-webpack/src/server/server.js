@@ -1,5 +1,4 @@
 import path from 'path';
-import fs from 'fs';
 import { silent as silentImport } from 'import-from';
 import express from 'express';
 import webpackDevMiddleware from 'webpack-dev-middleware';
@@ -7,6 +6,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import getCosmosConfig from 'react-cosmos-config';
 import extendWebpackConfig from './extend-webpack-config';
 import getUserWebpackConfig from './user-webpack-config';
+import getPlaygroundHtml from './playground-html';
 
 const getPublicPath = (cosmosConfig, userWebpackConfig) => {
   return (
@@ -54,21 +54,14 @@ export default function startServer() {
 
   const publicPath = getPublicPath(cosmosConfig, userWebpackConfig);
   if (publicPath) {
-    const relPublicPath = path.relative(rootPath, publicPath);
+    const relPublicPath = path.relative(process.cwd(), publicPath);
     console.log(`[Cosmos] Serving static files from ${relPublicPath}`);
     app.use(publicUrl, express.static(publicPath));
   }
 
-  const playgroundHtml = fs.readFileSync(
-    path.join(__dirname, 'static/index.html'),
-    'utf8'
-  );
-  const playgroundOpts = JSON.stringify({
-    loaderUri: './loader/index.html'
-  });
-
+  const playgroundHtml = getPlaygroundHtml(cosmosConfig);
   app.get('/', (req, res) => {
-    res.send(playgroundHtml.replace('__PLAYGROUND_OPTS__', playgroundOpts));
+    res.send(playgroundHtml);
   });
 
   app.get('/bundle.js', (req, res) => {
