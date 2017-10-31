@@ -4,8 +4,9 @@ import { silent as silentImport } from 'import-from';
 import extendWebpackConfig from './extend-webpack-config';
 import getCosmosConfig from 'react-cosmos-config';
 import getUserWebpackConfig from './user-webpack-config';
+import getPlaygroundHtml from './playground-html';
 
-const exportPlaygroundFiles = outputPath => {
+const exportPlaygroundFiles = (cosmosConfig, outputPath) => {
   fs.copySync(
     path.join(__dirname, 'static/favicon.ico'),
     `${outputPath}/favicon.ico`
@@ -16,17 +17,8 @@ const exportPlaygroundFiles = outputPath => {
     `${outputPath}/bundle.js`
   );
 
-  const playgroundHtml = fs.readFileSync(
-    path.join(__dirname, 'static/index.html'),
-    'utf8'
-  );
-  const playgroundOpts = JSON.stringify({
-    loaderUri: './loader/index.html'
-  });
-  fs.writeFileSync(
-    `${outputPath}/index.html`,
-    playgroundHtml.replace('__PLAYGROUND_OPTS__', playgroundOpts)
-  );
+  const playgroundHtml = getPlaygroundHtml(cosmosConfig);
+  fs.writeFileSync(`${outputPath}/index.html`, playgroundHtml);
 };
 
 const runWebpackCompiler = (webpack, config) =>
@@ -76,7 +68,7 @@ export default function startExport() {
 
   runWebpackCompiler(webpack, loaderWebpackConfig)
     .then(() => {
-      exportPlaygroundFiles(outputPath);
+      exportPlaygroundFiles(cosmosConfig, outputPath);
     })
     .then(
       () => {

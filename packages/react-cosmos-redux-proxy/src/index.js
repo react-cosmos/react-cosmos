@@ -1,6 +1,6 @@
 import React from 'react';
 import { object } from 'prop-types';
-import { proxyPropTypes } from 'react-cosmos-shared';
+import { proxyPropTypes } from 'react-cosmos-shared/lib/react';
 
 const defaults = {
   fixtureKey: 'reduxState',
