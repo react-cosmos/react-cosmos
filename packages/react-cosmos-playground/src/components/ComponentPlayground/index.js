@@ -264,7 +264,14 @@ export default class ComponentPlayground extends Component {
 
   renderLeftNav() {
     const { getCleanUrlParams } = ComponentPlayground;
-    const { router, component, fixture, editor, fullScreen } = this.props;
+    const {
+      router,
+      component,
+      fixture,
+      editor,
+      fullScreen,
+      projectKey
+    } = this.props;
     const { fixtures, leftNavSize } = this.state;
     const urlParams = getCleanUrlParams({
       component,
@@ -336,6 +343,7 @@ export default class ComponentPlayground extends Component {
             </div>
           </div>
           <FixtureList
+            projectKey={projectKey}
             fixtures={fixtures}
             urlParams={urlParams}
             onUrlChange={this.onUrlChange}

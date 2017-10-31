@@ -129,10 +129,6 @@ export default class FixtureList extends Component {
   }
 }
 
-FixtureList.defaultProps = {
-  projectKey: 'global'
-};
-
 FixtureList.propTypes = {
   fixtures: objectOf(arrayOf(string)).isRequired,
   projectKey: string.isRequired,
