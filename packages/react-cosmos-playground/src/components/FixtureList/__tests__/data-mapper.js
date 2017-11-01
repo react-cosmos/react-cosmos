@@ -1,13 +1,13 @@
 import fixturesToTreeData from '../data-mapper';
 
-const input = {
-  'dirA/Component1': ['fixtureA', 'fixtureB'],
-  'dirB/Component2': ['fixtureA', 'fixtureB'],
-  'dirB/Component3': ['fixtureA', 'fixtureB'],
-  'dirB/subdirA/Component4': ['fixtureA', 'fixtureB']
-};
-
 test('transforms fixture data structure to tree data structure', () => {
+  const input = {
+    'dirA/Component1': ['fixtureA', 'fixtureB'],
+    'dirB/Component2': ['fixtureA', 'fixtureB'],
+    'dirB/Component3': ['fixtureA', 'fixtureB'],
+    'dirB/subdirA/Component4': ['fixtureA', 'fixtureB']
+  };
+
   const expected = [
     {
       name: 'dirA',
@@ -135,6 +135,13 @@ test('transforms fixture data structure to tree data structure', () => {
 });
 
 test('allows specifying a savedExpansionState object', () => {
+  const input = {
+    'dirA/Component1': ['fixtureA', 'fixtureB'],
+    'dirB/Component2': ['fixtureA', 'fixtureB'],
+    'dirB/Component3': ['fixtureA', 'fixtureB'],
+    'dirB/subdirA/Component4': ['fixtureA', 'fixtureB']
+  };
+
   const savedExpansionState = {
     'dirB/subdirA/Component4': false
   };
@@ -263,4 +270,115 @@ test('allows specifying a savedExpansionState object', () => {
   ];
 
   expect(fixturesToTreeData(input, savedExpansionState)).toEqual(expected);
+});
+
+test('deals with components with namespaced fixtures', () => {
+  const input = {
+    'dirA/Component1': ['fixtureA', 'fixtureB'],
+    'dirB/Component2': [
+      'Some folder/fixtureA',
+      'Some folder/fixtureB',
+      'Another folder/fixtureC',
+      'fixtureD'
+    ]
+  };
+
+  const expected = [
+    {
+      name: 'dirA',
+      type: 'directory',
+      expanded: true,
+      path: 'dirA',
+      children: [
+        {
+          name: 'Component1',
+          type: 'component',
+          expanded: true,
+          path: 'dirA/Component1',
+          children: [
+            {
+              name: 'fixtureA',
+              type: 'fixture',
+              urlParams: {
+                component: 'dirA/Component1',
+                fixture: 'fixtureA'
+              }
+            },
+            {
+              name: 'fixtureB',
+              type: 'fixture',
+              urlParams: {
+                component: 'dirA/Component1',
+                fixture: 'fixtureB'
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      name: 'dirB',
+      type: 'directory',
+      expanded: true,
+      path: 'dirB',
+      children: [
+        {
+          name: 'Component2',
+          type: 'component',
+          expanded: true,
+          path: 'dirB/Component2',
+          children: [
+            {
+              name: 'Some folder',
+              type: 'fixtureDirectory',
+              expanded: true,
+              children: [
+                {
+                  name: 'fixtureA',
+                  type: 'fixture',
+                  urlParams: {
+                    component: 'dirB/Component2',
+                    fixture: 'Some folder/fixtureA'
+                  }
+                },
+                {
+                  name: 'fixtureB',
+                  type: 'fixture',
+                  urlParams: {
+                    component: 'dirB/Component2',
+                    fixture: 'Some folder/fixtureB'
+                  }
+                }
+              ]
+            },
+            {
+              name: 'Another folder',
+              type: 'fixtureDirectory',
+              expanded: true,
+              children: [
+                {
+                  name: 'fixtureC',
+                  type: 'fixture',
+                  urlParams: {
+                    component: 'dirB/Component2',
+                    fixture: 'Another folder/fixtureC'
+                  }
+                }
+              ]
+            },
+            {
+              name: 'fixtureD',
+              type: 'fixture',
+              urlParams: {
+                component: 'dirB/Component2',
+                fixture: 'fixtureD'
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ];
+
+  expect(fixturesToTreeData(input, {})).toEqual(expected);
 });

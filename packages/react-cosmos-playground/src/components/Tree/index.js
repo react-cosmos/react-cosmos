@@ -62,6 +62,19 @@ const FuzzyHighligher = ({ searchText, textToHighlight }) => {
   return <span>{highlighted}</span>;
 };
 
+const Icon = ({ type }) => {
+  switch (type) {
+    case 'component':
+      return <ComponentIcon />;
+    case 'directory':
+      return <FolderIcon />;
+    case 'fixtureDirectory':
+      return <FolderIcon />;
+    default:
+      throw new Error(`Unexpected icon type ${type}`);
+  }
+};
+
 const TreeFolder = ({
   node,
   onSelect,
@@ -71,6 +84,10 @@ const TreeFolder = ({
   searchText,
   currentUrlParams
 }) => {
+  const componentClasses = classNames({
+    [styles.componentName]: true,
+    [styles.fixtureDirectory]: node.type === 'fixtureDirectory'
+  });
   return (
     <div
       className={styles.component}
@@ -81,7 +98,7 @@ const TreeFolder = ({
       }}
     >
       <div
-        className={styles.componentName}
+        className={componentClasses}
         style={{
           paddingLeft: CONTAINER_LEFT_PADDING + nestingLevel * INDENT_PADDING
         }}
@@ -89,7 +106,7 @@ const TreeFolder = ({
         <span className={styles.arrowIcon}>
           {node.expanded ? <DownArrowIcon /> : <RightArrowIcon />}
         </span>
-        {node.type === 'component' ? <ComponentIcon /> : <FolderIcon />}
+        <Icon type={node.type} />
         <FuzzyHighligher searchText={searchText} textToHighlight={node.name} />
       </div>
       <Tree
@@ -176,13 +193,9 @@ class Tree extends React.Component {
       nestingLevel = 0,
       isHidden = false
     } = this.props;
-    const treeStyle = {};
 
     return (
-      <div
-        className={isHidden ? styles.componentCollapsed : ''}
-        style={treeStyle}
-      >
+      <div className={isHidden ? styles.componentCollapsed : ''}>
         {nodeArray.map((node, index) => {
           if (node.children) {
             return (
