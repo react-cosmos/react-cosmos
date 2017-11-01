@@ -3,9 +3,11 @@ import { silent as silentImport } from 'import-from';
 import express from 'express';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
+import launchEditor from 'react-dev-utils/launchEditor';
 import getCosmosConfig from 'react-cosmos-config';
 import extendWebpackConfig from './extend-webpack-config';
 import getUserWebpackConfig from './user-webpack-config';
+
 import getPlaygroundHtml from './playground-html';
 
 const getPublicPath = (cosmosConfig, userWebpackConfig) => {
@@ -70,6 +72,11 @@ export default function startServer() {
 
   app.get('/favicon.ico', (req, res) => {
     res.sendFile(path.join(__dirname, 'static/favicon.ico'));
+  });
+
+  app.get('/__open-stack-frame-in-editor', (req, res) => {
+    launchEditor(req.query.fileName, req.query.lineNumber);
+    res.end();
   });
 
   app.listen(port, hostname, err => {
