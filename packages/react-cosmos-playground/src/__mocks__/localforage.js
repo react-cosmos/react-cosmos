@@ -13,5 +13,8 @@ module.exports = {
         : null
     )
   ),
-  setItem: jest.fn(() => Promise.resolve())
+  setItem: jest.fn((itemKey, newValue) => {
+    itemMocks[itemKey] = newValue;
+    return Promise.resolve(newValue);
+  })
 };
