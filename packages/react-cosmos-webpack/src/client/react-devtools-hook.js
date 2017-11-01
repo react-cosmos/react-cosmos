@@ -19,14 +19,14 @@ if (process.env.NODE_ENV === 'development') {
     onError: () => {},
     filename: '/loader/main.js'
   });
-  ErrorOverlay.setEditorHandler(function editorHandler(errorLocation) {
+  ErrorOverlay.setEditorHandler(errorLocation =>
     window.fetch(
       '/__open-stack-frame-in-editor?fileName=' +
         window.encodeURIComponent(errorLocation.fileName) +
         '&lineNumber=' +
         window.encodeURIComponent(errorLocation.lineNumber || 1)
-    );
-  });
+    )
+  );
 
   if (window.__webpack_hot_middleware_reporter__ !== undefined) {
     // Report build errors
