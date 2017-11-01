@@ -1,6 +1,5 @@
 import { silent as silentResolve } from 'resolve-from';
 import { silent as silentImport } from 'import-from';
-import * as path from 'path';
 
 // This config doesn't have entry and output set up because it's not meant to
 // work standalone. react-cosmos-webpack adds an entry & output when extending this.
@@ -51,11 +50,6 @@ export default function getDefaultWebpackConfig(rootPath) {
     // Besides other advantages, cheap-module-source-map is compatible with
     // React.componentDidCatch https://github.com/facebook/react/issues/10441
     devtool: 'cheap-module-source-map',
-    output: {
-      // Enable click-to-open source
-      devtoolModuleFilenameTemplate: info =>
-        path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
-    },
     resolve: {
       // Warning: webpack 1.x expects ['', '.js', '.jsx']
       extensions: ['.js', '.jsx']

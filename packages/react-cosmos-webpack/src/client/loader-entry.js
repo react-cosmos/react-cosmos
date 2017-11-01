@@ -1,4 +1,5 @@
 import './react-devtools-hook';
+import './react-error-overlay';
 
 function run() {
   // Module is imported whenever this function is called, making sure the

@@ -86,8 +86,7 @@ it('creates proper output', () => {
   expect(typeof webpackConfig.output.devtoolModuleFilenameTemplate).toBe(
     'function'
   );
-  delete webpackConfig.output.devtoolModuleFilenameTemplate;
-  expect(webpackConfig.output).toEqual({
+  expect(webpackConfig.output).toMatchObject({
     path: '/loader/',
     filename: '[name].js',
     publicPath: '/loader/'
