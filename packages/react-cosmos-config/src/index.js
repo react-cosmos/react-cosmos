@@ -6,9 +6,12 @@ import { importModule } from 'react-cosmos-shared';
 import { moduleExists, resolveUserPath } from 'react-cosmos-shared/lib/server';
 import { log, warn } from './log';
 
+import type { ExcludePatterns } from 'react-cosmos-shared/src/types';
+
 export type Config = {
   rootPath: string,
   fileMatch?: Array<string>,
+  exclude?: ExcludePatterns,
   globalImports: Array<string>,
   hostname: string,
   hot: boolean,

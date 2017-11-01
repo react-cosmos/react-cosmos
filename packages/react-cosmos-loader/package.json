@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-loader",
-  "version": "3.0.0-beta.1",
+  "version": "3.0.0-beta.3",
   "description": "Loader for rendering React components in isolation",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-loader",
   "license": "MIT",
@@ -12,8 +12,8 @@
     "deep-equal": "^1.0.1",
     "lodash.merge": "^4.6.0",
     "prop-types": "^15.5.10",
-    "react-cosmos-shared": "^3.0.0-beta.1",
-    "react-cosmos-state-proxy": "^3.0.0-beta.1"
+    "react-cosmos-shared": "^3.0.0-beta.3",
+    "react-cosmos-state-proxy": "^3.0.0-beta.3"
   },
   "xo": false
 }

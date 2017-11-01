@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import renderer from 'react-test-renderer';
 import createStateProxy from 'react-cosmos-state-proxy';
@@ -8,9 +10,19 @@ import { findFixtureFiles } from 'react-cosmos-voyager2/lib/server';
 import { getComponents } from 'react-cosmos-voyager2/lib/client';
 import { Loader } from 'react-cosmos-loader';
 
-export default async ({ cosmosConfigPath } = {}) => {
+type Args = {
+  cosmosConfigPath: Array<string>
+};
+
+export default async ({ cosmosConfigPath }: Args) => {
   const cosmosConfig = getCosmosConfig(cosmosConfigPath);
-  const { componentPaths, proxiesPath } = cosmosConfig;
+  const {
+    rootPath,
+    proxiesPath,
+    fileMatch,
+    exclude,
+    componentPaths
+  } = cosmosConfig;
 
   if (componentPaths.length > 0) {
     console.warn(
@@ -30,7 +42,11 @@ export default async ({ cosmosConfigPath } = {}) => {
   ];
 
   test('Cosmos fixtures', async () => {
-    const fixtureFiles = await findFixtureFiles(cosmosConfig);
+    const fixtureFiles = await findFixtureFiles({
+      cwd: rootPath,
+      fileMatch,
+      exclude
+    });
     const fixtureModules = getFixtureModules(fixtureFiles);
     const components = getComponents({ fixtureModules, fixtureFiles });
 
