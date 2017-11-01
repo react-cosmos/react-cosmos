@@ -28,7 +28,7 @@ const NoRoute = () => (
   </div>
 );
 
-const RouteItem = ({ name, location: { search, hash, state } }) => (
+const RouteItem = ({ name, location, location: { search, hash, state } }) => (
   <div>
     <p>
       Route <strong>{name}</strong> selected.
@@ -53,6 +53,11 @@ const RouteItem = ({ name, location: { search, hash, state } }) => (
     )}
     <p>
       <Link to="/">Go to index</Link>
+    </p>
+    <p>
+      <Link to={{ ...location, state: { newstate: true } }}>
+        Go to this url with newstate: true
+      </Link>
     </p>
   </div>
 );

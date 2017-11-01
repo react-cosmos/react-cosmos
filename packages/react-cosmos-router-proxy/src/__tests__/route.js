@@ -104,7 +104,14 @@ describe('MemoryRouter', () => {
     });
 
     test('sets initialEntries based on current route', () => {
-      expect(routerProps.initialEntries).toEqual(['/route/foo']);
+      expect(routerProps.initialEntries).toEqual([
+        {
+          hash: null,
+          pathname: '/route/foo',
+          search: null,
+          state: undefined
+        }
+      ]);
     });
   });
 });

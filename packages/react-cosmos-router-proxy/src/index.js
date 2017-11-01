@@ -1,36 +1,51 @@
 import React from 'react';
-import { string } from 'prop-types';
+import { string, any } from 'prop-types';
 import { MemoryRouter, Route } from 'react-router';
 import { proxyPropTypes } from 'react-cosmos-shared/lib/react';
 import LocationInterceptor from './LocationInterceptor';
+import urlParser from 'url';
 
-function locationToUrl({ pathname, search, hash }) {
-  return `${pathname}${search ? search : ''}${hash ? hash : ''}`;
+function buildLocation(url, locationState) {
+  const parsedUrl = urlParser.parse(url);
+  return {
+    pathname: parsedUrl.pathname,
+    search: parsedUrl.search,
+    hash: parsedUrl.hash,
+    state: locationState
+  };
 }
 
 export default () => {
   const RouterProxy = props => {
     const { nextProxy, fixture, onFixtureUpdate } = props;
     const { value: NextProxy, next } = nextProxy;
-    const { route, url, location } = fixture;
+    const { route, url, locationState } = fixture;
     const nextProxyEl = <NextProxy {...props} nextProxy={next()} />;
 
-    if (!url && !location) {
+    if (locationState && !url) {
+      throw new Error('Must provide a url in fixture to use locationState');
+    }
+
+    if (!url) {
       return nextProxyEl;
     }
 
-    const handleLocationChange = location => {
-      const url = locationToUrl(location);
-      onFixtureUpdate({ location, url });
+    const handleUrlChange = url => {
+      onFixtureUpdate({ url });
     };
 
-    if (location && url !== locationToUrl(location)) {
-      console.log('URL and LOCATION mismatch', url, locationToUrl(location));
-    }
+    const handleLocationStateChange = locationState => {
+      onFixtureUpdate({ locationState });
+    };
+
+    const location = buildLocation(url, locationState);
 
     return (
-      <MemoryRouter initialEntries={[location || url]}>
-        <LocationInterceptor onLocationChange={handleLocationChange}>
+      <MemoryRouter initialEntries={[location]}>
+        <LocationInterceptor
+          onUrlChange={handleUrlChange}
+          onLocationStateChange={handleLocationStateChange}
+        >
           {route ? (
             <Route path={route} render={() => nextProxyEl} />
           ) : (
@@ -44,7 +59,8 @@ export default () => {
   RouterProxy.propTypes = {
     ...proxyPropTypes,
     route: string,
-    url: string
+    url: string,
+    locationState: any
   };
 
   return RouterProxy;

@@ -48,7 +48,9 @@ beforeEach(() => {
         // fixture without changing it
         foo: 'bar',
         // This tells RouterProxy to add MemoryRouter wrapper
-        url: '/foo-route'
+        url: '/foo-route?bar=true#hash',
+        // This tells RouterProxy to set location.state
+        locationState: { someState: true }
       }}
       onComponentRef={() => {}}
       onFixtureUpdate={onFixtureUpdate}
@@ -102,13 +104,30 @@ describe('MemoryRouter', () => {
     });
 
     test('sets initialEntries based on current route', () => {
-      expect(routerProps.initialEntries).toEqual(['/foo-route']);
+      expect(routerProps.initialEntries).toEqual([
+        {
+          hash: '#hash',
+          pathname: '/foo-route',
+          search: '?bar=true',
+          state: { someState: true }
+        }
+      ]);
     });
 
-    test('sends fixture updates when location changes', () => {
+    test('sends fixture updates when url changes', () => {
       const history = wrapper.find(Router).prop('history');
-      history.push('/bar-route');
-      expect(onFixtureUpdate).toHaveBeenCalledWith({ url: '/bar-route' });
+      history.push('/bar-route?foo=true#hash');
+      expect(onFixtureUpdate).toHaveBeenCalledWith({
+        url: '/bar-route?foo=true#hash'
+      });
+    });
+
+    test('sends fixture updates when location.state changes', () => {
+      const history = wrapper.find(Router).prop('history');
+      history.push({ state: { somestate: true } });
+      expect(onFixtureUpdate).toHaveBeenCalledWith({
+        locationState: { somestate: true }
+      });
     });
   });
 });
