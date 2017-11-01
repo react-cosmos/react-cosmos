@@ -32,6 +32,10 @@ beforeEach(() => {
 
 it('creates proper output', () => {
   const webpackConfig = getConfig();
+  expect(typeof webpackConfig.output.devtoolModuleFilenameTemplate).toBe(
+    'function'
+  );
+  delete webpackConfig.output.devtoolModuleFilenameTemplate;
   expect(webpackConfig.output).toEqual({
     path: '__mock__outputPath/loader/',
     filename: '[name].js',

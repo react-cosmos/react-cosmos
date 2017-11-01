@@ -83,6 +83,10 @@ it('adds DefinePlugin plugin with user config path', () => {
 
 it('creates proper output', () => {
   const webpackConfig = getConfig();
+  expect(typeof webpackConfig.output.devtoolModuleFilenameTemplate).toBe(
+    'function'
+  );
+  delete webpackConfig.output.devtoolModuleFilenameTemplate;
   expect(webpackConfig.output).toEqual({
     path: '/loader/',
     filename: '[name].js',
