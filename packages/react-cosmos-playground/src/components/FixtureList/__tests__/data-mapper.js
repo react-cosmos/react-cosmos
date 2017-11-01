@@ -283,6 +283,10 @@ test('deals with components with namespaced fixtures', () => {
     ]
   };
 
+  const savedExpansionState = {
+    'dirB/Component2/Another folder': false
+  };
+
   const expected = [
     {
       name: 'dirA',
@@ -332,6 +336,7 @@ test('deals with components with namespaced fixtures', () => {
               name: 'Some folder',
               type: 'fixtureDirectory',
               expanded: true,
+              path: 'dirB/Component2/Some folder',
               children: [
                 {
                   name: 'fixtureA',
@@ -354,7 +359,8 @@ test('deals with components with namespaced fixtures', () => {
             {
               name: 'Another folder',
               type: 'fixtureDirectory',
-              expanded: true,
+              expanded: false,
+              path: 'dirB/Component2/Another folder',
               children: [
                 {
                   name: 'fixtureC',
@@ -380,5 +386,5 @@ test('deals with components with namespaced fixtures', () => {
     }
   ];
 
-  expect(fixturesToTreeData(input, {})).toEqual(expected);
+  expect(fixturesToTreeData(input, savedExpansionState)).toEqual(expected);
 });

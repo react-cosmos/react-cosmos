@@ -1,7 +1,13 @@
 import set from 'lodash.set';
 import some from 'lodash.some';
 
-function parseFixtureArray(componentName, fixtureArray) {
+function getExandedValue(savedExpansionState, path) {
+  return Object.prototype.hasOwnProperty.call(savedExpansionState, path)
+    ? savedExpansionState[path]
+    : true;
+}
+
+function parseFixtureArray(componentName, fixtureArray, savedExpansionState) {
   const nestedData = {};
   const unnestedData = [];
 
@@ -19,16 +25,23 @@ function parseFixtureArray(componentName, fixtureArray) {
   });
 
   // Nested folders go first
-  const result = Object.keys(nestedData).map(key => ({
-    name: key,
-    expanded: true,
-    type: 'fixtureDirectory',
-    children: nestedData[key].map(fixture => ({
-      type: 'fixture',
-      name: fixture,
-      urlParams: { component: componentName, fixture: `${key}/${fixture}` }
-    }))
-  }));
+  const result = Object.keys(nestedData).map(folderName => {
+    const newPath = `${componentName}/${folderName}`;
+    return {
+      name: folderName,
+      expanded: getExandedValue(savedExpansionState, newPath),
+      type: 'fixtureDirectory',
+      path: newPath,
+      children: nestedData[folderName].map(fixture => ({
+        type: 'fixture',
+        name: fixture,
+        urlParams: {
+          component: componentName,
+          fixture: `${folderName}/${fixture}`
+        }
+      }))
+    };
+  });
 
   // Unnested fixtures go last
   unnestedData.forEach(fixture => {
@@ -64,12 +77,7 @@ const dataObjectToNestedArray = (base, savedExpansionState, path = '') => {
       returnChildren.push({
         name: key,
         path: newPath,
-        expanded: Object.prototype.hasOwnProperty.call(
-          savedExpansionState,
-          newPath
-        )
-          ? savedExpansionState[newPath]
-          : true,
+        expanded: getExandedValue(savedExpansionState, newPath),
         type: isDirectory ? 'directory' : 'component',
         children
         // TODO: Enable this when we'll have component pages
@@ -77,7 +85,7 @@ const dataObjectToNestedArray = (base, savedExpansionState, path = '') => {
         // urlParams: { component: newPath }
       });
     } else {
-      return parseFixtureArray(path, base);
+      return parseFixtureArray(path, base, savedExpansionState);
     }
   }
   return returnChildren;
