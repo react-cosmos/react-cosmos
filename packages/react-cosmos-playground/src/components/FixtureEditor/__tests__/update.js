@@ -14,6 +14,8 @@ describe('FixtureEditor update', () => {
 
   const getProps = () => wrapper.find(CodeMirror).props();
 
+  const onChange = value => getProps().onChange(stringify(value));
+
   beforeEach(() => {
     fixture = merge({}, propsFixture, {
       props: {
@@ -30,25 +32,21 @@ describe('FixtureEditor update', () => {
   });
 
   test('updates value on change', () => {
-    getProps().onChange(
-      stringify({
-        props: {
-          foo: 'barbar'
-        }
-      })
-    );
+    onChange({
+      props: {
+        foo: 'barbar'
+      }
+    });
     wrapper.update();
 
     expect(getProps().value).toBe(stringify({ props: { foo: 'barbar' } }));
 
     // Edge case: Going back to original value
-    getProps().onChange(
-      stringify({
-        props: {
-          foo: 'bar'
-        }
-      })
-    );
+    onChange({
+      props: {
+        foo: 'bar'
+      }
+    });
     wrapper.update();
 
     expect(getProps().value).toBe(stringify({ props: { foo: 'bar' } }));
