@@ -13,8 +13,11 @@ describe('FixtureEditor update', () => {
   let wrapper;
 
   const getProps = () => wrapper.find(CodeMirror).props();
-
-  const onChange = value => getProps().onChange(stringify(value));
+  const getValue = () => JSON.parse(getProps().value);
+  const onChange = value => {
+    getProps().onChange(stringify(value));
+    wrapper.update();
+  };
 
   beforeEach(() => {
     fixture = merge({}, propsFixture, {
@@ -37,9 +40,7 @@ describe('FixtureEditor update', () => {
         foo: 'barbar'
       }
     });
-    wrapper.update();
-
-    expect(getProps().value).toBe(stringify({ props: { foo: 'barbar' } }));
+    expect(getValue()).toEqual({ props: { foo: 'barbar' } });
 
     // Edge case: Going back to original value
     onChange({
@@ -47,8 +48,6 @@ describe('FixtureEditor update', () => {
         foo: 'bar'
       }
     });
-    wrapper.update();
-
-    expect(getProps().value).toBe(stringify({ props: { foo: 'bar' } }));
+    expect(getValue()).toEqual({ props: { foo: 'bar' } });
   });
 });
