@@ -6,11 +6,11 @@ import LocationInterceptor from './LocationInterceptor';
 import urlParser from 'url';
 
 function buildLocation(url, locationState) {
-  const parsedUrl = urlParser.parse(url);
+  const { pathnamee, search, hash } = urlParser.parse(url);
   return {
-    pathname: parsedUrl.pathname,
-    search: parsedUrl.search,
-    hash: parsedUrl.hash,
+    pathname,
+    search,
+    hash,
     state: locationState
   };
 }
