@@ -48,6 +48,11 @@ class FixtureEditor extends Component {
       onChange(value ? JSON.parse(value) : {});
 
       this.setState({
+        // Update own state when change happens from within. Otherwise
+        // FixtureEditor state falls out of sync with CodeMirror & Playground
+        // state, causing equality checks on outdated values inside
+        // componentWillReceiveProps
+        value,
         error: null
       });
     } catch (err) {
