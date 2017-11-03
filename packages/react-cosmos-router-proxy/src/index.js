@@ -1,23 +1,51 @@
 import React from 'react';
-import { string } from 'prop-types';
+import { string, any } from 'prop-types';
 import { MemoryRouter, Route } from 'react-router';
 import { proxyPropTypes } from 'react-cosmos-shared/lib/react';
 import LocationInterceptor from './LocationInterceptor';
+import urlParser from 'url';
+
+function buildLocation(url, locationState) {
+  const { pathname, search, hash } = urlParser.parse(url);
+  return {
+    pathname,
+    search,
+    hash,
+    state: locationState
+  };
+}
 
 export default () => {
   const RouterProxy = props => {
     const { nextProxy, fixture, onFixtureUpdate } = props;
     const { value: NextProxy, next } = nextProxy;
-    const { route, url } = fixture;
+    const { route, url, locationState } = fixture;
     const nextProxyEl = <NextProxy {...props} nextProxy={next()} />;
+
+    if (locationState && !url) {
+      throw new Error('Must provide a url in fixture to use locationState');
+    }
 
     if (!url) {
       return nextProxyEl;
     }
 
+    const handleUrlChange = url => {
+      onFixtureUpdate({ url });
+    };
+
+    const handleLocationStateChange = locationState => {
+      onFixtureUpdate({ locationState });
+    };
+
+    const location = buildLocation(url, locationState);
+
     return (
-      <MemoryRouter initialEntries={[url]}>
-        <LocationInterceptor onLocation={url => onFixtureUpdate({ url })}>
+      <MemoryRouter initialEntries={[location]}>
+        <LocationInterceptor
+          onUrlChange={handleUrlChange}
+          onLocationStateChange={handleLocationStateChange}
+        >
           {route ? (
             <Route path={route} render={() => nextProxyEl} />
           ) : (
@@ -31,7 +59,8 @@ export default () => {
   RouterProxy.propTypes = {
     ...proxyPropTypes,
     route: string,
-    url: string
+    url: string,
+    locationState: any
   };
 
   return RouterProxy;
