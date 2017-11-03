@@ -180,10 +180,10 @@ cd examples/context
 yarn start
 
 # Watch & build single package (running example will live reload)
-yarn run build react-cosmos-playground -- --watch
+yarn build react-cosmos-playground --watch
 
 # Watch & run unit tests as you code
-yarn run test-jest -- --watch
+yarn test:watch
 ```
 
 #### Write tests, preferably before implementation

@@ -34,6 +34,11 @@ export default function createFetchProxy(options) {
         mocks.forEach(options => {
           fetchMock.mock(options);
         });
+
+        // Allow unmocked requests to fall through
+        // eslint-disable-next-line unicorn/catch-error-name
+        fetchMock.catch((...args) => fetchMock.realFetch.apply(window, args));
+
         fetchMock.__prevProxy = this;
       }
     }

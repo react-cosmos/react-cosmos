@@ -41,7 +41,9 @@ it('adds loader entry last', () => {
 it('adds hot middleware client to entries', () => {
   const webpackConfig = getConfig();
   expect(webpackConfig.entry).toContain(
-    `${require.resolve('webpack-hot-middleware/client')}?reload=true`
+    `${require.resolve(
+      'webpack-hot-middleware/client'
+    )}?reload=true&overlay=false`
   );
 });
 

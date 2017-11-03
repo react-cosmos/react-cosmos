@@ -21,6 +21,10 @@
   </a>
 </p>
 
+> **Install `react-cosmos-webpack@next` to try out Cosmos 3.0 BETA! 👌**
+>
+> Updated docs coming soon. Please go on Slack or create an issue if you have any questions in the meantime.
+
 Cosmos scans your project for components and enables you to:
 
 1. Render components under any combination of props, context and state

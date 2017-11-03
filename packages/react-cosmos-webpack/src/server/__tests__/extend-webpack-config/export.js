@@ -32,7 +32,7 @@ beforeEach(() => {
 
 it('creates proper output', () => {
   const webpackConfig = getConfig();
-  expect(webpackConfig.output).toEqual({
+  expect(webpackConfig.output).toMatchObject({
     path: '__mock__outputPath/loader/',
     filename: '[name].js',
     publicPath: './'
