@@ -5,7 +5,7 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/webpack-commons-chunk",
   "license": "MIT",
   "scripts": {
-    "start": "NODE_ENV=development cosmos"
+    "start": "cosmos"
   },
   "dependencies": {
     "moment": "^2.18.1",

@@ -5,7 +5,7 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/fetch",
   "license": "MIT",
   "scripts": {
-    "start": "NODE_ENV=development cosmos"
+    "start": "cosmos"
   },
   "dependencies": {
     "react-cosmos-fetch-proxy": "^3.0.0-beta.5",
