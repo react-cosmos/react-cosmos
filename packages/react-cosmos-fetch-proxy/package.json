@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-fetch-proxy",
-  "version": "3.0.0-beta.5",
+  "version": "3.0.0-beta.6",
   "description": "Mock fetch responses via fixtures",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-fetch-proxy",
   "license": "MIT",
