@@ -112,7 +112,7 @@ Add script to package.json
 
 ```js
 "scripts": {
-  "cosmos": "NODE_ENV=development cosmos"
+  "cosmos": "cosmos"
 }
 ```
 
@@ -577,7 +577,6 @@ module.exports = {
 ```
 
 Also make sure to:
-- Run `cosmos` with `NODE_ENV=development`
 - Create the `src/components` directory and place your components there, or change componentPaths option to match your existing structure
 - Put [proxies](#proxies) in the `src` dir–the only place included by the CRA Babel loader
 
@@ -639,7 +638,6 @@ module.exports = {
 ```
 
 Also make sure to:
-- Run `cosmos` with `NODE_ENV=development`
 - Set up the [Redux proxy](#react-cosmos-context-proxy) :)
 
 ### Configuration
@@ -666,7 +664,7 @@ Use the `--config` CLI arg if you prefer not placing the config in the project r
 ```js
 // package.json
 "scripts": {
-  "cosmos": "NODE_ENV=development cosmos --config path/to/cosmos.config.js"
+  "cosmos": "cosmos --config path/to/cosmos.config.js"
 }
 ```
 
@@ -761,7 +759,7 @@ Static Component Playground? Piece of 🍰! Add this script and run `npm run cos
 ```js
 // package.json
 "scripts": {
-  "cosmos-export": "NODE_ENV=production cosmos-export"
+  "cosmos-export": "cosmos-export"
 }
 ```
 

@@ -4,6 +4,6 @@
 process.env.BABEL_ENV = 'development';
 process.env.NODE_ENV = 'development';
 
-const startServer = require('../lib/server/server').default;
+const printFixtureFiles = require('../lib/server/print-fixture-files').default;
 
-startServer();
+printFixtureFiles();

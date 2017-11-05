@@ -10,7 +10,9 @@ describe('ES module / Single fixture with inline component', () => {
   let files;
 
   beforeEach(async () => {
-    files = await findFixtureFiles({ cwd: join(__dirname, '__fsmocks__') });
+    files = await findFixtureFiles({
+      rootPath: join(__dirname, '__fsmocks__')
+    });
   });
 
   it('has fixture path', () => {

@@ -11,9 +11,9 @@ import type { FixtureFile } from '../types';
 const globAsync = promisify(glob);
 
 type Args = ?{
+  rootPath?: string,
   fileMatch?: Array<string>,
-  exclude?: ExcludePatterns,
-  cwd?: string
+  exclude?: ExcludePatterns
 };
 
 const defaultFileMatch = [
@@ -30,15 +30,15 @@ export async function findFixtureFiles(
   args: Args
 ): Promise<Array<FixtureFile>> {
   const {
+    rootPath = process.cwd(),
     fileMatch = defaultFileMatch,
-    exclude = defaultExclude,
-    cwd = process.cwd()
+    exclude = defaultExclude
   } =
     args || {};
 
   const excludeList = Array.isArray(exclude) ? exclude : [exclude];
   const allPaths = await globAsync('**/*', {
-    cwd,
+    cwd: rootPath,
     absolute: true,
     ignore: '**/node_modules/**'
   });

@@ -43,7 +43,7 @@ export default async ({ cosmosConfigPath }: Args) => {
 
   test('Cosmos fixtures', async () => {
     const fixtureFiles = await findFixtureFiles({
-      cwd: rootPath,
+      rootPath,
       fileMatch,
       exclude
     });

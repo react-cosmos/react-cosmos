@@ -55,7 +55,7 @@ module.exports = async function embedModules(source: string) {
 };
 
 async function getNormalizedModules(cosmosConfig) {
-  const { rootPath, fileMatch, exclude, componentPaths } = cosmosConfig;
+  const { componentPaths } = cosmosConfig;
 
   if (componentPaths.length > 0) {
     console.warn(
@@ -84,11 +84,7 @@ async function getNormalizedModules(cosmosConfig) {
     return { fixtureFiles, deprecatedComponentModules: components };
   }
 
-  const fixtureFiles = await findFixtureFiles({
-    cwd: rootPath,
-    fileMatch,
-    exclude
-  });
+  const fixtureFiles = await findFixtureFiles(cosmosConfig);
 
   return {
     fixtureFiles,

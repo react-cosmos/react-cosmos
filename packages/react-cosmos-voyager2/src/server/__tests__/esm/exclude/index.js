@@ -10,7 +10,7 @@ describe('ES module / Exclude option (list)', () => {
 
   beforeEach(async () => {
     files = await findFixtureFiles({
-      cwd: join(__dirname, '__fsmocks__'),
+      rootPath: join(__dirname, '__fsmocks__'),
       exclude: [/ignored-dir/, /ignored-file/]
     });
   });
@@ -26,7 +26,7 @@ describe('ES module / Exclude option (single)', () => {
 
   beforeEach(async () => {
     files = await findFixtureFiles({
-      cwd: join(__dirname, '__fsmocks__'),
+      rootPath: join(__dirname, '__fsmocks__'),
       exclude: /(ignored-dir|ignored-file)/
     });
   });
