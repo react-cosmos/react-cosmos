@@ -90,6 +90,7 @@ export function getComponents({
   const components = [];
   const componentPathValues = Array.from(componentPaths.values());
   const defaultComponentNamer = createDefaultNamer('Component');
+  const componentNamers: Map<string, () => string> = new Map();
 
   for (const componentType of fixturesByComponent.keys()) {
     const compFixtures = fixturesByComponent.get(componentType);
@@ -107,6 +108,16 @@ export function getComponents({
       componentNames.get(componentType) ||
       // Fallback to "Component", "Component (1)", "Component (2)", etc.
       defaultComponentNamer();
+
+    // Components with duplicate names can end up being squashed (#494), so
+    // it's best to keep component names unique
+    let namer = componentNamers.get(name);
+    if (!namer) {
+      namer = createDefaultNamer(name);
+      componentNamers.set(name, namer);
+    }
+
+    const uniqueName = namer();
     const namespace =
       typeof componentType.namespace === 'string'
         ? componentType.namespace
@@ -127,7 +138,7 @@ export function getComponents({
 
     components.push({
       filePath,
-      name,
+      name: uniqueName,
       namespace,
       type: componentType,
       fixtures: compFixtures ? sortBy(fixturesWithNamespace, getObjectPath) : []
