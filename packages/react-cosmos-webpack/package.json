@@ -33,7 +33,8 @@
   },
   "bin": {
     "cosmos": "./bin/cosmos.js",
-    "cosmos-export": "./bin/cosmos-export.js"
+    "cosmos-export": "./bin/cosmos-export.js",
+    "print-fixture-files": "./bin/print-fixture-files.js"
   },
   "xo": false
 }
