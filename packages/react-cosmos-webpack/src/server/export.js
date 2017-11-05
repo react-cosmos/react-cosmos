@@ -3,7 +3,7 @@ import fs from 'fs-extra';
 import { silent as silentImport } from 'import-from';
 import extendWebpackConfig from './extend-webpack-config';
 import getCosmosConfig from 'react-cosmos-config';
-import getUserWebpackConfig from './user-webpack-config';
+import { getUserWebpackConfig } from './user-webpack-config';
 import getPlaygroundHtml from './playground-html';
 
 const exportPlaygroundFiles = (cosmosConfig, outputPath) => {
