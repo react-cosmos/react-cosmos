@@ -9,7 +9,9 @@ describe('ES module / Multi fixture', () => {
   let files;
 
   beforeEach(async () => {
-    files = await findFixtureFiles({ cwd: join(__dirname, '__fsmocks__') });
+    files = await findFixtureFiles({
+      rootPath: join(__dirname, '__fsmocks__')
+    });
   });
 
   it('has fixture path', () => {
