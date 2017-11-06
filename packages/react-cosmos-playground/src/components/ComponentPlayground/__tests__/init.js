@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import afterOngoingPromises from 'after-ongoing-promises';
 import { Loader } from 'react-cosmos-loader';
 import initFixture from '../__fixtures__/init';
 import createFetchProxy from 'react-cosmos-fetch-proxy';
@@ -10,8 +11,11 @@ const FetchProxy = createFetchProxy();
 describe('CP init', () => {
   let wrapper;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     wrapper = mount(<Loader proxies={[FetchProxy]} fixture={initFixture} />);
+    // Wait for Loader status to be confirmed
+    await afterOngoingPromises();
+    wrapper.update();
   });
 
   test('should starry background', () => {

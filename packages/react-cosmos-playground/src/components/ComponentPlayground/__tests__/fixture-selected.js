@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import afterOngoingPromises from 'after-ongoing-promises';
 import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
 import createFetchProxy from 'react-cosmos-fetch-proxy';
@@ -46,6 +47,9 @@ describe('CP with fixture already selected', () => {
         }}
       />
     );
+
+    // Wait for Loader status to be confirmed
+    await afterOngoingPromises();
 
     loaderContentWindow = {
       postMessage: jest.fn()

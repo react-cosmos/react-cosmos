@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import afterOngoingPromises from 'after-ongoing-promises';
 import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
 import createFetchProxy from 'react-cosmos-fetch-proxy';
@@ -13,7 +14,7 @@ const FetchProxy = createFetchProxy();
 let wrapper;
 
 describe('CP with fixture already selected in full screen', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     // Mount component in order for ref and lifecycle methods to be called
     wrapper = mount(
       <Loader
@@ -21,6 +22,9 @@ describe('CP with fixture already selected in full screen', () => {
         fixture={selectedFullScreenFixture}
       />
     );
+    // Wait for Loader status to be confirmed
+    await afterOngoingPromises();
+    wrapper.update();
   });
 
   test('should not render fixture list', () => {

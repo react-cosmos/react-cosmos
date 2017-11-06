@@ -284,7 +284,7 @@ export default class ComponentPlayground extends Component {
           </StarryBg>
         )}
         {editor && isLoaderReady && this.renderFixtureEditor()}
-        {this.renderLoader(isLoaderVisible)}
+        {isLoaderResponding && this.renderLoader(isLoaderVisible)}
       </div>
     );
   }
