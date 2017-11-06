@@ -78,7 +78,7 @@ class WelcomeScreen extends Component {
         </p>
         <p>
           <strong>No fixtures detected.</strong> If you're just starting a new
-          project, this is fine and I envy you, otherwise your setup needs
+          project this is fine and I envy you, otherwise your setup needs
           tweaking. Try the following:
         </p>
         <ul>
@@ -96,7 +96,7 @@ class WelcomeScreen extends Component {
             Open up a{' '}
             <a
               target="_blank"
-              href="https://github.com/react-cosmos/react-cosmos/issues"
+              href="https://github.com/react-cosmos/react-cosmos/issues/new"
             >
               GitHub issue
             </a>{' '}
