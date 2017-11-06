@@ -29,9 +29,11 @@ module.exports = (opts: PlaygroundOpts) => {
     getComponentClass: () => ComponentPlayground,
     getComponentProps: params => ({
       ...params,
-      loaderUri,
-      projectKey,
-      webpackConfigType
+      options: {
+        loaderUri,
+        projectKey,
+        webpackConfigType
+      }
     }),
     onChange: params => {
       document.title = getPageTitle(params);

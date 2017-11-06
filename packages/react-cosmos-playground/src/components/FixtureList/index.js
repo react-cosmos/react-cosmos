@@ -24,7 +24,7 @@ export default class FixtureList extends Component {
   }
 
   async componentDidMount() {
-    const { fixtures, projectKey } = this.props;
+    const { fixtures, options: { projectKey } } = this.props;
     window.addEventListener('keydown', this.onWindowKey);
 
     const savedExpansionState = await getSavedExpansionState(projectKey);
@@ -38,10 +38,10 @@ export default class FixtureList extends Component {
   }
 
   async componentWillReceiveProps(nextProps) {
-    const { fixtures, projectKey } = nextProps;
+    const { fixtures, options: { projectKey } } = nextProps;
     if (
       JSON.stringify(fixtures) !== JSON.stringify(this.props.fixtures) ||
-      projectKey !== this.props.projectKey
+      projectKey !== this.props.options.projectKey
     ) {
       const savedExpansionState = await getSavedExpansionState(projectKey);
       this.setState({
@@ -72,7 +72,7 @@ export default class FixtureList extends Component {
   };
 
   onToggle = (node, expanded) => {
-    updateLocalToggleState(this.props.projectKey, node.path, expanded);
+    updateLocalToggleState(this.props.options.projectKey, node.path, expanded);
     // Mutates state, specifically a node from state.fixtureTree
     node.expanded = expanded;
     this.forceUpdate();
@@ -131,7 +131,9 @@ export default class FixtureList extends Component {
 
 FixtureList.propTypes = {
   fixtures: objectOf(arrayOf(string)).isRequired,
-  projectKey: string.isRequired,
+  options: shape({
+    projectKey: string.isRequired
+  }).isRequired,
   urlParams: shape({
     component: string,
     fixture: string,

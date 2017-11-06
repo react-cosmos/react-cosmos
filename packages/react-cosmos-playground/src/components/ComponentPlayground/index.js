@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, bool, object } from 'prop-types';
+import { string, bool, object, shape, oneOf } from 'prop-types';
 import classNames from 'classnames';
 import omitBy from 'lodash.omitby';
 import localForage from 'localforage';
@@ -24,7 +24,6 @@ const postMessageToFrame = (frame, data) =>
 
 export default class ComponentPlayground extends Component {
   static defaultProps = {
-    projectKey: 'default',
     editor: false,
     fullScreen: false
   };
@@ -270,7 +269,7 @@ export default class ComponentPlayground extends Component {
       fixture,
       editor,
       fullScreen,
-      projectKey
+      options
     } = this.props;
     const { fixtures, leftNavSize } = this.state;
     const urlParams = getCleanUrlParams({
@@ -343,7 +342,7 @@ export default class ComponentPlayground extends Component {
             </div>
           </div>
           <FixtureList
-            projectKey={projectKey}
+            options={options}
             fixtures={fixtures}
             urlParams={urlParams}
             onUrlChange={this.onUrlChange}
@@ -383,7 +382,7 @@ export default class ComponentPlayground extends Component {
   }
 
   renderLoader(isLoaderVisible) {
-    const { loaderUri } = this.props;
+    const { options: { loaderUri } } = this.props;
     const { isDragging } = this.state;
     const loaderStyle = {
       display: isLoaderVisible ? 'block' : 'none'
@@ -406,8 +405,11 @@ export default class ComponentPlayground extends Component {
 
 ComponentPlayground.propTypes = {
   router: object.isRequired,
-  loaderUri: string.isRequired,
-  projectKey: string.isRequired,
+  options: shape({
+    loaderUri: string.isRequired,
+    projectKey: string.isRequired,
+    webpackConfigType: oneOf(['default', 'custom'])
+  }).isRequired,
   component: string,
   fixture: string,
   editor: bool,

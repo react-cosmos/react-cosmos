@@ -40,22 +40,14 @@ describe('Playground mount', () => {
       expect(getComponentClass()).toBe(ReactComponentPlayground);
     });
 
-    it('puts loaderUri option in Playground props', () => {
+    it('sends options to Playground', () => {
       const { getComponentProps } = routerArgs[0];
-      const { loaderUri } = getComponentProps();
-      expect(loaderUri).toBe('/fake-loader-uri/');
-    });
-
-    it('puts projectKey option in Playground props', () => {
-      const { getComponentProps } = routerArgs[0];
-      const { projectKey } = getComponentProps();
-      expect(projectKey).toBe('/fake-project-key/');
-    });
-
-    it('puts webpackConfigType option in Playground props', () => {
-      const { getComponentProps } = routerArgs[0];
-      const { webpackConfigType } = getComponentProps();
-      expect(webpackConfigType).toBe('custom');
+      const { options } = getComponentProps();
+      expect(options).toEqual({
+        loaderUri: '/fake-loader-uri/',
+        projectKey: '/fake-project-key/',
+        webpackConfigType: 'custom'
+      });
     });
 
     it('returns router instance', () => {

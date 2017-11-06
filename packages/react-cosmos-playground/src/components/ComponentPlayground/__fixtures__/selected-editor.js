@@ -4,7 +4,10 @@ export default {
   component: ComponentPlayground,
 
   props: {
-    loaderUri: '/mock/loader/index.html',
+    options: {
+      loaderUri: '/mock/loader/index.html',
+      projectKey: 'test'
+    },
     router: {
       goTo: url => console.log('go to', url),
       routeLink: e => {
