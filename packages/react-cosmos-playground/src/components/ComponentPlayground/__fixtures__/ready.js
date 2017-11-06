@@ -23,5 +23,12 @@ export default {
       ComponentA: ['foo', 'bar'],
       ComponentB: ['baz', 'qux']
     }
-  }
+  },
+
+  fetch: [
+    {
+      matcher: 'end:/mock/loader/index.html',
+      response: 200
+    }
+  ]
 };

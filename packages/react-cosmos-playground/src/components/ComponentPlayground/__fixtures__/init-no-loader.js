@@ -14,7 +14,7 @@ export default {
   fetch: [
     {
       matcher: 'end:/mock/loader/index.html',
-      response: 200
+      response: 404
     }
   ]
 };

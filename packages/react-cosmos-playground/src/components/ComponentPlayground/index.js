@@ -9,6 +9,7 @@ import StarryBg from '../StarryBg';
 import FixtureList from '../FixtureList';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import MissingScreen from '../screens/MissingScreen';
+import NoLoaderScreen from '../screens/NoLoaderScreen';
 import DragHandle from '../DragHandle';
 import FixtureEditor from '../FixtureEditor';
 import styles from './index.less';
@@ -34,6 +35,7 @@ export default class ComponentPlayground extends Component {
 
   state = {
     waitingForLoader: true,
+    isLoaderResponding: false,
     isDragging: false,
     leftNavSize: 250,
     fixtureEditorPaneSize: 250,
@@ -41,27 +43,25 @@ export default class ComponentPlayground extends Component {
     fixtureBody: {}
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     window.addEventListener('message', this.onMessage, false);
     window.addEventListener('resize', this.onResize, false);
 
-    // Remember the resizable pane offsets between sessions
-    Promise.all([
-      localForage.getItem(LEFT_NAV_SIZE),
-      localForage.getItem(FIXTURE_EDITOR_PANE_SIZE)
-    ]).then(([leftNavSize, fixtureEditorPaneSize]) => {
+    // Check if Loader is working
+    const { status } = await fetch(this.props.options.loaderUri);
+    if (status === 200) {
       this.setState(
-        // Only override default values when cache values are present
-        omitBy(
-          {
-            leftNavSize,
-            fixtureEditorPaneSize
-          },
-          val => typeof val !== 'number'
-        ),
-        this.updateContentOrientation
+        {
+          isLoaderResponding: true
+        },
+        this.restoreUserSettings
       );
-    });
+    } else {
+      this.setState({
+        waitingForLoader: false,
+        isLoaderResponding: false
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -70,9 +70,9 @@ export default class ComponentPlayground extends Component {
   }
 
   componentWillReceiveProps({ component, fixture }) {
-    const { waitingForLoader, fixtures } = this.state;
+    const { waitingForLoader, isLoaderResponding, fixtures } = this.state;
 
-    if (!waitingForLoader) {
+    if (!waitingForLoader && isLoaderResponding) {
       const fixtureChanged =
         component !== this.props.component || fixture !== this.props.fixture;
 
@@ -210,6 +210,26 @@ export default class ComponentPlayground extends Component {
     this.loaderFrame = node;
   };
 
+  restoreUserSettings = async () => {
+    // Remember the resizable pane offsets between sessions
+    const [leftNavSize, fixtureEditorPaneSize] = await Promise.all([
+      localForage.getItem(LEFT_NAV_SIZE),
+      localForage.getItem(FIXTURE_EDITOR_PANE_SIZE)
+    ]);
+
+    this.setState(
+      // Only override default values when cache values are present
+      omitBy(
+        {
+          leftNavSize,
+          fixtureEditorPaneSize
+        },
+        val => typeof val !== 'number'
+      ),
+      this.updateContentOrientation
+    );
+  };
+
   updateContentOrientation() {
     const { offsetHeight, offsetWidth } = this.contentNode;
     this.setState({
@@ -223,9 +243,9 @@ export default class ComponentPlayground extends Component {
 
   renderInner() {
     const { fullScreen } = this.props;
-    const { waitingForLoader } = this.state;
+    const { waitingForLoader, isLoaderResponding } = this.state;
 
-    if (waitingForLoader || fullScreen) {
+    if (waitingForLoader || !isLoaderResponding || fullScreen) {
       return this.renderContent();
     }
 
@@ -233,9 +253,15 @@ export default class ComponentPlayground extends Component {
   }
 
   renderContent() {
-    const { component, fixture, editor } = this.props;
-    const { waitingForLoader, fixtures, orientation } = this.state;
-    const isFixtureSelected = !waitingForLoader && Boolean(fixture);
+    const { component, fixture, editor, options } = this.props;
+    const {
+      waitingForLoader,
+      isLoaderResponding,
+      fixtures,
+      orientation
+    } = this.state;
+    const isLoaderReady = !waitingForLoader && isLoaderResponding;
+    const isFixtureSelected = isLoaderReady && Boolean(fixture);
     const isMissingFixtureSelected =
       isFixtureSelected && !fixtureExists(fixtures, component, fixture);
     const isLoaderVisible = isFixtureSelected && !isMissingFixtureSelected;
@@ -248,14 +274,16 @@ export default class ComponentPlayground extends Component {
       <div key="content" ref={this.handleContentRef} className={classes}>
         {!isLoaderVisible && (
           <StarryBg>
-            {!waitingForLoader &&
+            {!isLoaderResponding &&
+              !waitingForLoader && <NoLoaderScreen options={options} />}
+            {isLoaderReady &&
               !isFixtureSelected && <WelcomeScreen fixtures={fixtures} />}
             {isMissingFixtureSelected && (
               <MissingScreen componentName={component} fixtureName={fixture} />
             )}
           </StarryBg>
         )}
-        {editor && !waitingForLoader && this.renderFixtureEditor()}
+        {editor && isLoaderReady && this.renderFixtureEditor()}
         {this.renderLoader(isLoaderVisible)}
       </div>
     );
