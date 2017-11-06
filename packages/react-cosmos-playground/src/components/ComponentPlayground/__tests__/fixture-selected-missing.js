@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
-import MissingScreen from '../../MissingScreen';
+import MissingScreen from '../../screens/MissingScreen';
 import selectedFixture from '../__fixtures__/selected-missing';
 
 // Vars populated in beforeEach blocks

@@ -1,5 +1,5 @@
 import React from 'react';
-import CosmosImg from '../../static/cosmos.png';
+import CosmosImg from '../../../static/cosmos.png';
 import styles from './index.less';
 
 const DisplayScreen = ({ children }) => (

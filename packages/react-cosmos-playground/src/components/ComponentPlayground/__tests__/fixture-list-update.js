@@ -4,7 +4,7 @@ import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
 import readyFixture from '../__fixtures__/ready';
 import FixtureList from '../../FixtureList';
-import WelcomeScreen from '../../WelcomeScreen';
+import WelcomeScreen from '../../screens/WelcomeScreen';
 
 // Vars populated in beforeEach blocks
 let messageHandlers;
