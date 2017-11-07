@@ -79,7 +79,6 @@ Jump to:
   - [React Redux Starter Kit](#react-redux-starter-kit)
 - [Config](#config)
   - [Custom webpack config](#custom-webpack-config)
-  - [Loader index.html](#loader-indexhtml)
   - [Custom config path](#custom-config-path)
   - [Custom fixture paths](#custom-fixture-paths)
   - [Option dump](#option-dump)
@@ -643,21 +642,6 @@ TODO:
 TODO:
 - Explain that Cosmos relies on default webpack config using your own loaders
 - Example of customizing cosmos config
-
-#### Loader index.html
-
-> *GET http://localhost:8989/loader/index.html 404 (Not Found)*
-
-The browser console might greet you with this error when using a custom webpack config. There are two methods for configuring the Loader index.html page:
-
-1. Use [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin)
-2. Put a static index.html file in your public path (see `publicPath` option below)
-
-**Using `html-webpack-plugin` is recommended** because it automatically injects the `<script>` tag in index.html. If you create your own index.html then make sure the script tag points to "main.js".
-
-```html
-<script src="./main.js"></script>
-```
 
 #### Custom config path
 
