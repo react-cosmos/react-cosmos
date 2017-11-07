@@ -75,7 +75,7 @@ beforeEach(() => {
 });
 
 it('calls findFixtureFiles with fileMatch with rootPath as cwd', () => {
-  expect(findFixtureFiles.mock.calls[0][0].cwd).toBe('MOCK_ROOT_PATH');
+  expect(findFixtureFiles.mock.calls[0][0].rootPath).toBe('MOCK_ROOT_PATH');
 });
 
 it('calls findFixtureFiles with fileMatch config', () => {

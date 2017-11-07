@@ -71,52 +71,32 @@ class WelcomeScreen extends Component {
       );
     }
 
-    if (hasComponents && !hasFixtures) {
-      return (
-        <DisplayScreen>
-          <p className={styles.header}>Almost there...</p>
-          <p>
-            Your components are listed the left side, but it looks like you
-            haven't created fixtures for them yet.
-          </p>
-          <p>
-            A fixture is a JSON-like object, except it contains functions and
-            any other types components receive via props.
-          </p>
-          <p>
-            Read the{' '}
-            <a
-              target="_blank"
-              href="https://github.com/react-cosmos/react-cosmos/blob/master/docs/fixtures.md"
-            >
-              creating fixtures
-            </a>{' '}
-            guide to help you get started.
-          </p>
-        </DisplayScreen>
-      );
-    }
-
     return (
       <DisplayScreen>
         <p className={styles.header}>
           Congratulations! You're on your way to designing beautiful components
         </p>
         <p>
-          No components detected. If you're just starting a new project, this is
-          fine and I envy you, otherwise your setup needs tweaking. Try the
-          following:
+          <strong>No fixtures detected.</strong> If you're just starting a new
+          project this is fine and I envy you, otherwise your setup needs
+          tweaking. Try the following:
         </p>
         <ul>
           <li>
-            Adjust <strong>componentPaths</strong> in cosmos.config.js to match
-            your file structure
+            Create your first{' '}
+            <a
+              target="_blank"
+              href="https://github.com/react-cosmos/react-cosmos#fixtures"
+            >
+              fixture
+            </a>{' '}
+            🐣
           </li>
           <li>
             Open up a{' '}
             <a
               target="_blank"
-              href="https://github.com/react-cosmos/react-cosmos/issues"
+              href="https://github.com/react-cosmos/react-cosmos/issues/new"
             >
               GitHub issue
             </a>{' '}

@@ -23,6 +23,9 @@ describe('Tree', () => {
 
     const fixtureA = wrapper.find('.fixture').at(0);
     expect(fixtureA.text()).toContain('fixtureA');
+
+    const fixtureDirectory = wrapper.find('.fixtureDirectory').at(0);
+    expect(fixtureDirectory.text()).toContain('Some folder');
   });
 
   test('should render appropriate icon', () => {
@@ -35,6 +38,9 @@ describe('Tree', () => {
     const fixtureA = wrapper.find('.fixture').at(0);
     expect(fixtureA.find(FolderIcon).length).toEqual(0);
     expect(fixtureA.find(ComponentIcon).length).toEqual(0);
+
+    const fixtureDirectory = wrapper.find('.fixtureDirectory').at(0);
+    expect(fixtureDirectory.find(FolderIcon).length).toEqual(1);
   });
 
   test('should indent child nodes', () => {
@@ -46,6 +52,9 @@ describe('Tree', () => {
 
     const fixtureA = wrapper.find('.fixture').get(0);
     expect(fixtureA.props.style.paddingLeft).toEqual(70);
+
+    const fixtureDirectory = wrapper.find('.fixtureDirectory').get(0);
+    expect(fixtureDirectory.props.style.paddingLeft).toEqual(70);
   });
 });
 

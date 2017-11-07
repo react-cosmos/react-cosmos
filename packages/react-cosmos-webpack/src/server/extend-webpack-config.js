@@ -1,5 +1,6 @@
 // @flow
 
+import path from 'path';
 import omit from 'lodash.omit';
 import getCosmosConfig from 'react-cosmos-config';
 
@@ -37,17 +38,29 @@ export default function extendWebpackConfig({
     // It's crucial for Cosmos to not depend on any user loader. This way the
     // webpack configs can point solely to the user deps for loaders.
     entry.push(
-      `${require.resolve('webpack-hot-middleware/client')}?reload=true`
+      `${require.resolve(
+        'webpack-hot-middleware/client'
+      )}?reload=true&overlay=false`
     );
   }
 
   entry.push(require.resolve('../client/loader-entry'));
 
-  const output = {
+  let output = {
     path: shouldExport ? `${outputPath}/loader/` : '/loader/',
     filename: '[name].js',
     publicPath: shouldExport ? './' : '/loader/'
   };
+
+  // Exports are generally meant to run outside of the developer's machine
+  if (!shouldExport) {
+    // Enable click-to-open source
+    output = {
+      ...output,
+      devtoolModuleFilenameTemplate: info =>
+        path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
+    };
+  }
 
   // To support webpack 1 and 2 configuration formats. So we use the one that user passes
   const webpackRulesOptionName =

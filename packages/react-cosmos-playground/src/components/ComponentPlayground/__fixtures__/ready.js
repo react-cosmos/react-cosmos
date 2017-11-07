@@ -4,7 +4,10 @@ export default {
   component: ComponentPlayground,
 
   props: {
-    loaderUri: '/mock/loader/index.html',
+    options: {
+      loaderUri: '/mock/loader/index.html',
+      projectKey: 'test'
+    },
     router: {
       goTo: url => console.log('go to', url),
       routeLink: e => {
@@ -20,5 +23,12 @@ export default {
       ComponentA: ['foo', 'bar'],
       ComponentB: ['baz', 'qux']
     }
-  }
+  },
+
+  fetch: [
+    {
+      matcher: 'end:/mock/loader/index.html',
+      response: 200
+    }
+  ]
 };

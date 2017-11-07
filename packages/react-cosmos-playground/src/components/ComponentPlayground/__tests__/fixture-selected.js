@@ -1,10 +1,15 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import afterOngoingPromises from 'after-ongoing-promises';
 import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
+import createFetchProxy from 'react-cosmos-fetch-proxy';
 import selectedFixture from '../__fixtures__/selected';
 import StarryBg from '../../StarryBg';
 import FixtureList from '../../FixtureList';
+
+const StateProxy = createStateProxy();
+const FetchProxy = createFetchProxy();
 
 // Vars populated in beforeEach blocks
 let messageHandlers;
@@ -26,7 +31,7 @@ const waitForPostMessage = type =>
   });
 
 describe('CP with fixture already selected', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     messageHandlers = {};
     window.addEventListener('message', handleMessage, false);
 
@@ -35,7 +40,7 @@ describe('CP with fixture already selected', () => {
     // Mount component in order for ref and lifecycle methods to be called
     wrapper = mount(
       <Loader
-        proxies={[createStateProxy()]}
+        proxies={[StateProxy, FetchProxy]}
         fixture={selectedFixture}
         onComponentRef={i => {
           instance = i;
@@ -43,27 +48,30 @@ describe('CP with fixture already selected', () => {
       />
     );
 
-    return Promise.resolve().then(() => {
-      loaderContentWindow = {
-        postMessage: jest.fn()
-      };
-      // iframe.contentWindow isn't available in jsdom
-      instance.loaderFrame = {
-        contentWindow: loaderContentWindow
-      };
+    // Wait for Loader status to be confirmed
+    await afterOngoingPromises();
 
-      // State is already injected, but we need to trigger this event for the
-      // `fixtureSelect` message event to be triggered
-      window.postMessage(
-        {
-          type: 'loaderReady',
-          fixtures: selectedFixture.state.fixtures
-        },
-        '*'
-      );
+    loaderContentWindow = {
+      postMessage: jest.fn()
+    };
+    // iframe.contentWindow isn't available in jsdom
+    instance.loaderFrame = {
+      contentWindow: loaderContentWindow
+    };
 
-      return onFrameReady;
-    });
+    // State is already injected, but we need to trigger this event for the
+    // `fixtureSelect` message event to be triggered
+    window.postMessage(
+      {
+        type: 'loaderReady',
+        fixtures: selectedFixture.state.fixtures
+      },
+      '*'
+    );
+
+    await onFrameReady;
+
+    wrapper.update();
   });
 
   afterEach(() => {

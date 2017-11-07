@@ -1,7 +1,10 @@
+import fs from 'fs';
 import webpack from 'webpack';
+import promisify from 'util.promisify';
 import startServer from '../../server';
 import extendWebpackConfig from '../../extend-webpack-config';
 
+const readFileAsync = promisify(fs.readFile);
 const mockRootPath = __dirname;
 
 jest.mock('react-cosmos-config', () => () => ({
@@ -58,4 +61,25 @@ it('extends webpack config from user config', () => {
 
 it('compiles webpack using extended config', () => {
   expect(webpack).toHaveBeenCalledWith('MOCK_WEBPACK_CONFIG');
+});
+
+it('serves index.html on / route with playgrounds opts included', async () => {
+  const send = jest.fn();
+  getCbs['/']({}, { send });
+
+  const htmlContents = await readFileAsync(
+    require.resolve('../../static/index.html'),
+    'utf8'
+  );
+
+  expect(send).toHaveBeenCalledWith(
+    htmlContents.replace(
+      '__PLAYGROUND_OPTS__',
+      JSON.stringify({
+        loaderUri: './loader/index.html',
+        projectKey: mockRootPath,
+        webpackConfigType: 'custom'
+      })
+    )
+  );
 });

@@ -1,6 +1,7 @@
 import React from 'react';
 import merge from 'lodash.merge';
 import { mount } from 'enzyme';
+import afterOngoingPromises from 'after-ongoing-promises';
 import { Loader } from 'react-cosmos-loader';
 import populatedFixture from '../__fixtures__/populated';
 import populatedWithEditorFixture from '../__fixtures__/populated-with-editor';
@@ -9,8 +10,10 @@ import populatedAndSelectedFixture from '../__fixtures__/populated-and-selected'
 describe('List', () => {
   let wrapper;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     wrapper = mount(<Loader fixture={populatedFixture} />);
+    await afterOngoingPromises();
+    wrapper.update();
   });
 
   test('should render component names', () => {
@@ -58,8 +61,10 @@ describe('Links', () => {
   let componentB;
 
   describe('editor closed', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       wrapper = mount(<Loader fixture={populatedFixture} />);
+      await afterOngoingPromises();
+      wrapper.update();
       componentA = wrapper.find('.component').at(0);
       componentB = wrapper.find('.component').at(1);
     });
@@ -102,8 +107,10 @@ describe('Links', () => {
   });
 
   describe('editor open', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       wrapper = mount(<Loader fixture={populatedWithEditorFixture} />);
+      await afterOngoingPromises();
+      wrapper.update();
       componentA = wrapper.find('.component').at(0);
       componentB = wrapper.find('.component').at(1);
     });
@@ -150,7 +157,7 @@ describe('Select', () => {
   let wrapper;
   let onUrlChange;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     onUrlChange = jest.fn();
     const fixture = merge({}, populatedFixture, {
       props: {
@@ -158,6 +165,8 @@ describe('Select', () => {
       }
     });
     wrapper = mount(<Loader fixture={fixture} />);
+    await afterOngoingPromises();
+    wrapper.update();
   });
 
   test('should call select callback on click', () => {
@@ -188,8 +197,10 @@ describe('Select', () => {
 describe('Search', () => {
   let wrapper;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     wrapper = mount(<Loader fixture={populatedFixture} />);
+    await afterOngoingPromises();
+    wrapper.update();
   });
 
   test('should only show matched component', () => {
@@ -216,7 +227,7 @@ describe('Search input keyboard shortcut', () => {
     handler({ keyCode, preventDefault: jest.fn() });
   };
 
-  beforeEach(() => {
+  beforeEach(async () => {
     const waitToRender = new Promise(resolve => {
       // Mount component in order to be able to access DOM nodes
       wrapper = mount(
@@ -229,6 +240,9 @@ describe('Search input keyboard shortcut', () => {
         />
       );
     });
+
+    await afterOngoingPromises();
+    wrapper.update();
     return waitToRender;
   });
 
@@ -266,8 +280,10 @@ describe('Search input keyboard shortcut', () => {
 describe('Selected fixture', () => {
   let wrapper;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     wrapper = mount(<Loader fixture={populatedAndSelectedFixture} />);
+    await afterOngoingPromises();
+    wrapper.update();
   });
 
   test('should add extra class to selected fixture', () => {

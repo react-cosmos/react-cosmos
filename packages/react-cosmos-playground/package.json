@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-playground",
-  "version": "3.0.0-beta.4",
+  "version": "3.0.0-beta.6",
   "description": "Dev tool for creating reusable React components",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-playground",
   "license": "MIT",
@@ -13,16 +13,18 @@
     "classnames": "^2.2.5",
     "codemirror": "^5.29.0",
     "fuzzaldrin-plus": "^0.4.1",
-    "localforage": "^1.5.0",
+    "localforage": "^1.5.3",
+    "lodash.flatmapdeep": "^4.10.0",
     "lodash.merge": "^4.6.0",
     "lodash.omitby": "^4.6.0",
     "lodash.reduce": "^4.6.0",
     "lodash.set": "^4.3.2",
     "lodash.some": "^4.6.0",
     "prop-types": "^15.5.10",
-    "react-cosmos-loader": "^3.0.0-beta.3",
-    "react-cosmos-state-proxy": "^3.0.0-beta.3",
-    "react-querystring-router": "^3.0.0-beta.1"
+    "react-cosmos-loader": "^3.0.0-beta.5",
+    "react-cosmos-fetch-proxy": "^3.0.0-beta.6",
+    "react-cosmos-state-proxy": "^3.0.0-beta.5",
+    "react-querystring-router": "^3.0.0-beta.5"
   },
   "xo": false
 }

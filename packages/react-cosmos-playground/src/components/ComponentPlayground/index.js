@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, bool, object } from 'prop-types';
+import { string, bool, object, shape, oneOf } from 'prop-types';
 import classNames from 'classnames';
 import omitBy from 'lodash.omitby';
 import localForage from 'localforage';
@@ -7,14 +7,18 @@ import { uri } from 'react-querystring-router';
 import { HomeIcon, FullScreenIcon, CodeIcon } from '../SvgIcon';
 import StarryBg from '../StarryBg';
 import FixtureList from '../FixtureList';
-import WelcomeScreen from '../WelcomeScreen';
-import MissingScreen from '../MissingScreen';
+import WelcomeScreen from '../screens/WelcomeScreen';
+import MissingScreen from '../screens/MissingScreen';
+import NoLoaderScreen from '../screens/NoLoaderScreen';
+import LoadingScreen from '../screens/LoadingScreen';
 import DragHandle from '../DragHandle';
 import FixtureEditor from '../FixtureEditor';
 import styles from './index.less';
 
 export const LEFT_NAV_SIZE = '__cosmos__left-nav-size';
 export const FIXTURE_EDITOR_PANE_SIZE = '__cosmos__fixture-editor-pane-size';
+
+const isNumber = val => typeof val !== 'number';
 
 const fixtureExists = (fixtures, component, fixture) =>
   fixtures[component] && fixtures[component].indexOf(fixture) !== -1;
@@ -24,7 +28,6 @@ const postMessageToFrame = (frame, data) =>
 
 export default class ComponentPlayground extends Component {
   static defaultProps = {
-    projectKey: 'default',
     editor: false,
     fullScreen: false
   };
@@ -35,6 +38,7 @@ export default class ComponentPlayground extends Component {
 
   state = {
     waitingForLoader: true,
+    isLoaderResponding: false,
     isDragging: false,
     leftNavSize: 250,
     fixtureEditorPaneSize: 250,
@@ -42,27 +46,25 @@ export default class ComponentPlayground extends Component {
     fixtureBody: {}
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     window.addEventListener('message', this.onMessage, false);
     window.addEventListener('resize', this.onResize, false);
 
-    // Remember the resizable pane offsets between sessions
-    Promise.all([
-      localForage.getItem(LEFT_NAV_SIZE),
-      localForage.getItem(FIXTURE_EDITOR_PANE_SIZE)
-    ]).then(([leftNavSize, fixtureEditorPaneSize]) => {
-      this.setState(
-        // Only override default values when cache values are present
-        omitBy(
-          {
-            leftNavSize,
-            fixtureEditorPaneSize
-          },
-          val => typeof val !== 'number'
-        ),
-        this.updateContentOrientation
-      );
-    });
+    // Check if Loader is working
+    const { status } = await fetch(this.props.options.loaderUri);
+    if (status === 200) {
+      // Wait until all session settings are read before rendering
+      this.restoreUserSettings(() => {
+        this.setState({
+          isLoaderResponding: true
+        });
+      });
+    } else {
+      this.setState({
+        waitingForLoader: false,
+        isLoaderResponding: false
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -71,9 +73,9 @@ export default class ComponentPlayground extends Component {
   }
 
   componentWillReceiveProps({ component, fixture }) {
-    const { waitingForLoader, fixtures } = this.state;
+    const { waitingForLoader, isLoaderResponding, fixtures } = this.state;
 
-    if (!waitingForLoader) {
+    if (!waitingForLoader && isLoaderResponding) {
       const fixtureChanged =
         component !== this.props.component || fixture !== this.props.fixture;
 
@@ -211,11 +213,34 @@ export default class ComponentPlayground extends Component {
     this.loaderFrame = node;
   };
 
-  updateContentOrientation() {
-    const { offsetHeight, offsetWidth } = this.contentNode;
-    this.setState({
-      orientation: offsetHeight > offsetWidth ? 'portrait' : 'landscape'
+  restoreUserSettings = async cb => {
+    // Remember the resizable pane offsets between sessions
+    const [leftNavSize, fixtureEditorPaneSize] = await Promise.all([
+      localForage.getItem(LEFT_NAV_SIZE),
+      localForage.getItem(FIXTURE_EDITOR_PANE_SIZE)
+    ]);
+
+    // Only override default values when cache values are present
+    const state = omitBy(
+      {
+        leftNavSize,
+        fixtureEditorPaneSize
+      },
+      isNumber
+    );
+
+    this.setState(state, () => {
+      this.updateContentOrientation(cb);
     });
+  };
+
+  updateContentOrientation(cb) {
+    const { offsetHeight, offsetWidth } = this.contentNode;
+    const state = {
+      orientation: offsetHeight > offsetWidth ? 'portrait' : 'landscape'
+    };
+
+    this.setState(state, cb);
   }
 
   render() {
@@ -224,9 +249,9 @@ export default class ComponentPlayground extends Component {
 
   renderInner() {
     const { fullScreen } = this.props;
-    const { waitingForLoader } = this.state;
+    const { waitingForLoader, isLoaderResponding } = this.state;
 
-    if (waitingForLoader || fullScreen) {
+    if (waitingForLoader || !isLoaderResponding || fullScreen) {
       return this.renderContent();
     }
 
@@ -234,9 +259,15 @@ export default class ComponentPlayground extends Component {
   }
 
   renderContent() {
-    const { component, fixture, editor } = this.props;
-    const { waitingForLoader, fixtures, orientation } = this.state;
-    const isFixtureSelected = !waitingForLoader && Boolean(fixture);
+    const { component, fixture, editor, options } = this.props;
+    const {
+      waitingForLoader,
+      isLoaderResponding,
+      fixtures,
+      orientation
+    } = this.state;
+    const isLoaderReady = !waitingForLoader && isLoaderResponding;
+    const isFixtureSelected = isLoaderReady && Boolean(fixture);
     const isMissingFixtureSelected =
       isFixtureSelected && !fixtureExists(fixtures, component, fixture);
     const isLoaderVisible = isFixtureSelected && !isMissingFixtureSelected;
@@ -249,22 +280,32 @@ export default class ComponentPlayground extends Component {
       <div key="content" ref={this.handleContentRef} className={classes}>
         {!isLoaderVisible && (
           <StarryBg>
-            {!waitingForLoader &&
+            {waitingForLoader && <LoadingScreen />}
+            {!isLoaderResponding &&
+              !waitingForLoader && <NoLoaderScreen options={options} />}
+            {isLoaderReady &&
               !isFixtureSelected && <WelcomeScreen fixtures={fixtures} />}
             {isMissingFixtureSelected && (
               <MissingScreen componentName={component} fixtureName={fixture} />
             )}
           </StarryBg>
         )}
-        {editor && !waitingForLoader && this.renderFixtureEditor()}
-        {this.renderLoader(isLoaderVisible)}
+        {editor && isLoaderReady && this.renderFixtureEditor()}
+        {isLoaderResponding && this.renderLoader(isLoaderVisible)}
       </div>
     );
   }
 
   renderLeftNav() {
     const { getCleanUrlParams } = ComponentPlayground;
-    const { router, component, fixture, editor, fullScreen } = this.props;
+    const {
+      router,
+      component,
+      fixture,
+      editor,
+      fullScreen,
+      options
+    } = this.props;
     const { fixtures, leftNavSize } = this.state;
     const urlParams = getCleanUrlParams({
       component,
@@ -336,6 +377,7 @@ export default class ComponentPlayground extends Component {
             </div>
           </div>
           <FixtureList
+            options={options}
             fixtures={fixtures}
             urlParams={urlParams}
             onUrlChange={this.onUrlChange}
@@ -375,7 +417,7 @@ export default class ComponentPlayground extends Component {
   }
 
   renderLoader(isLoaderVisible) {
-    const { loaderUri } = this.props;
+    const { options: { loaderUri } } = this.props;
     const { isDragging } = this.state;
     const loaderStyle = {
       display: isLoaderVisible ? 'block' : 'none'
@@ -398,8 +440,11 @@ export default class ComponentPlayground extends Component {
 
 ComponentPlayground.propTypes = {
   router: object.isRequired,
-  loaderUri: string.isRequired,
-  projectKey: string.isRequired,
+  options: shape({
+    loaderUri: string.isRequired,
+    projectKey: string.isRequired,
+    webpackConfigType: oneOf(['default', 'custom'])
+  }).isRequired,
   component: string,
   fixture: string,
   editor: bool,

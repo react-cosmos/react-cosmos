@@ -1,4 +1,4 @@
-@import '../../utils/common.less';
+@import '../../../utils/common.less';
 
 @anchor-color: #358682;
 @anchor-color-focus: #358682;
@@ -76,8 +76,13 @@
   }
 
   code {
-    font-family: 'FiraCode-Light';
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 2px 6px;
   }
+}
+
+.innerDelayed {
+  animation-delay: 2s;
 }
 
 @keyframes fade-in-box {

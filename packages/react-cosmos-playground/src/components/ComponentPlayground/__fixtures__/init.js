@@ -4,7 +4,17 @@ export default {
   component: ComponentPlayground,
 
   props: {
-    loaderUri: '/mock/loader/index.html',
+    options: {
+      loaderUri: '/mock/loader/index.html',
+      projectKey: 'test'
+    },
     router: {}
-  }
+  },
+
+  fetch: [
+    {
+      matcher: 'end:/mock/loader/index.html',
+      response: 200
+    }
+  ]
 };

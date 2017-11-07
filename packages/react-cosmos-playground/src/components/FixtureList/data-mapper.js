@@ -1,16 +1,83 @@
 import set from 'lodash.set';
 import some from 'lodash.some';
 
-const dataObjectToNestedArray = (base, path = '') => {
+function getExandedValue(savedExpansionState, path) {
+  return Object.prototype.hasOwnProperty.call(savedExpansionState, path)
+    ? savedExpansionState[path]
+    : true;
+}
+
+function parseFixtureArray(componentName, fixtureArray, savedExpansionState) {
+  const nestedData = {};
+  const unnestedData = [];
+
+  fixtureArray.forEach(fixturePath => {
+    const [pre, post] = fixturePath.split('/');
+    if (post) {
+      const [folderName, fixtureName] = [pre, post];
+      // fixturePath contains a folder
+      nestedData[folderName] = nestedData[folderName] || [];
+      nestedData[folderName].push(fixtureName);
+    } else {
+      const fixtureName = pre;
+      unnestedData.push(fixtureName);
+    }
+  });
+
+  // Nested folders go first
+  const result = Object.keys(nestedData).map(folderName => {
+    const newPath = `${componentName}/${folderName}`;
+    return {
+      name: folderName,
+      expanded: getExandedValue(savedExpansionState, newPath),
+      type: 'fixtureDirectory',
+      path: newPath,
+      children: nestedData[folderName].map(fixture => ({
+        type: 'fixture',
+        name: fixture,
+        urlParams: {
+          component: componentName,
+          fixture: `${folderName}/${fixture}`
+        }
+      }))
+    };
+  });
+
+  // Unnested fixtures go last
+  unnestedData.forEach(fixture => {
+    result.push({
+      type: 'fixture',
+      name: fixture,
+      urlParams: {
+        component: componentName,
+        fixture
+      }
+    });
+  });
+
+  return result;
+}
+
+const dataObjectToNestedArray = (base, savedExpansionState, path = '') => {
   const returnChildren = [];
   for (const key in base) {
     if (typeof base[key] === 'object') {
       const newPath = path ? `${path}/${key}` : key;
-      const children = dataObjectToNestedArray(base[key], newPath);
-      const isDirectory = some(children, child => child.children);
+      const children = dataObjectToNestedArray(
+        base[key],
+        savedExpansionState,
+        newPath
+      );
+      const isDirectory = some(
+        children,
+        child =>
+          child.children &&
+          (child.type === 'directory' || child.type === 'component')
+      );
       returnChildren.push({
         name: key,
-        expanded: true,
+        path: newPath,
+        expanded: getExandedValue(savedExpansionState, newPath),
         type: isDirectory ? 'directory' : 'component',
         children
         // TODO: Enable this when we'll have component pages
@@ -18,18 +85,13 @@ const dataObjectToNestedArray = (base, path = '') => {
         // urlParams: { component: newPath }
       });
     } else {
-      const fixtures = base.map(fixture => ({
-        name: fixture,
-        type: 'fixture',
-        urlParams: { component: path, fixture }
-      }));
-      return fixtures;
+      return parseFixtureArray(path, base, savedExpansionState);
     }
   }
   return returnChildren;
 };
 
-const fixturesToTreeData = fixtures => {
+const fixturesToTreeData = (fixtures, savedExpansionState) => {
   const components = Object.keys(fixtures);
   const data = {};
 
@@ -39,115 +101,7 @@ const fixturesToTreeData = fixtures => {
     set(data, pathArray, fixturesAtPath);
   });
 
-  return dataObjectToNestedArray(data);
+  return dataObjectToNestedArray(data, savedExpansionState);
 };
 
 export default fixturesToTreeData;
-
-// const input = {
-//   "dirA/Component1": ["fixtureA", "fixtureB"],
-//   "dirB/Component2": ["fixtureA", "fixtureB"],
-//   "dirB/Component3": ["fixtureA", "fixtureB"],
-//   "dirB/subdirA/Component4": ["fixtureA", "fixtureB"],
-// };
-
-// const output = [
-//   {
-//     name: 'dirA',
-//     expanded: true,
-//     children: [
-//       {
-//         name: 'Component1',
-//         expanded: true,
-//         children: [
-//           {
-//             name: 'fixtureA',
-//             urlParams: {
-//               component: 'dirA/Component1',
-//               fixture: 'fixtureA'
-//             }
-//           },
-//           {
-//             name: 'fixtureB',
-//             urlParams: {
-//               component: 'dirA/Component1',
-//               fixture: 'fixtureB'
-//             }
-//           }
-//         ]
-//       }
-//     ]
-//   },
-//   {
-//     name: 'dirB',
-//     expanded: true,
-//     children: [
-//       {
-//         name: 'Component2',
-//         expanded: true,
-//         children: [
-//           {
-//             name: 'fixtureA',
-//             urlParams: {
-//               component: 'dirB/Component2',
-//               fixture: 'fixtureA'
-//             }
-//           },
-//           {
-//             name: 'fixtureB',
-//             urlParams: {
-//               component: 'dirB/Component2',
-//               fixture: 'fixtureB'
-//             }
-//           }
-//         ]
-//       },
-//       {
-//         name: 'Component3',
-//         expanded: true,
-//         children: [
-//           {
-//             name: 'fixtureA',
-//             urlParams: {
-//               component: 'dirB/Component3',
-//               fixture: 'fixtureA'
-//             }
-//           },
-//           {
-//             name: 'fixtureB',
-//             urlParams: {
-//               component: 'dirB/Component3',
-//               fixture: 'fixtureB'
-//             }
-//           }
-//         ]
-//       },
-//       {
-//         name: 'subdirA',
-//         expanded: true,
-//         children: [
-//           {
-//             name: 'Component4',
-//             expanded: true,
-//             children: [
-//               {
-//                 name: 'fixtureA',
-//                 urlParams: {
-//                   component: 'dirB/subdirA/Component4',
-//                   fixture: 'fixtureA'
-//                 }
-//               },
-//               {
-//                 name: 'fixtureB',
-//                 urlParams: {
-//                   component: 'dirB/subdirA/Component4',
-//                   fixture: 'fixtureB'
-//                 }
-//               }
-//             ]
-//           }
-//         ]
-//       }
-//     ]
-//   }
-// ];

@@ -1,11 +1,13 @@
 import fs from 'fs';
 import express from 'express';
 import webpack from 'webpack';
+import promisify from 'util.promisify';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import startServer from '../../server';
 import extendWebpackConfig from '../../extend-webpack-config';
 
+const readFileAsync = promisify(fs.readFile);
 const mockRootPath = __dirname;
 
 jest.mock('react-cosmos-config', () => () => ({
@@ -81,32 +83,25 @@ it('adds loader dev middleware to express server', () => {
   expect(mockUse).toHaveBeenCalledWith('MOCK_DEV_MIDDLEWARE');
 });
 
-it('serves index.html on / route with playgrounds opts included', () => {
+it('serves index.html on / route with playgrounds opts included', async () => {
   const send = jest.fn();
   getCbs['/']({}, { send });
 
-  return new Promise((resolve, reject) => {
-    fs.readFile(
-      require.resolve('../../static/index.html'),
-      'utf8',
-      (err, data) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(data);
-      }
-    );
-  }).then(htmlContents => {
-    expect(send).toHaveBeenCalledWith(
-      htmlContents.replace(
-        '__PLAYGROUND_OPTS__',
-        JSON.stringify({
-          loaderUri: './loader/index.html',
-          projectKey: mockRootPath
-        })
-      )
-    );
-  });
+  const htmlContents = await readFileAsync(
+    require.resolve('../../static/index.html'),
+    'utf8'
+  );
+
+  expect(send).toHaveBeenCalledWith(
+    htmlContents.replace(
+      '__PLAYGROUND_OPTS__',
+      JSON.stringify({
+        loaderUri: './loader/index.html',
+        projectKey: mockRootPath,
+        webpackConfigType: 'default'
+      })
+    )
+  );
 });
 
 it('serve favicon.ico on /favicon.ico route', () => {

@@ -1,16 +1,16 @@
 {
   "name": "react-cosmos-axios-example",
-  "version": "3.0.0-beta.4",
+  "version": "3.0.0-beta.7",
   "description": "Example of mocking Axios (XMLHttpRequest)",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/axios",
   "license": "MIT",
   "scripts": {
-    "start": "NODE_ENV=development cosmos"
+    "start": "cosmos"
   },
   "dependencies": {
     "axios": "^0.16.2",
-    "react-cosmos-webpack": "^3.0.0-beta.4",
-    "react-cosmos-xhr-proxy": "^3.0.0-beta.3"
+    "react-cosmos-webpack": "^3.0.0-beta.7",
+    "react-cosmos-xhr-proxy": "^3.0.0-beta.5"
   },
   "xo": false,
   "private": true

@@ -97,19 +97,49 @@ export default {
                 expanded: true,
                 children: [
                   {
-                    name: 'fixtureA',
-                    type: 'fixture',
-                    urlParams: {
-                      component: 'dirB/subdirA/Component4',
-                      fixture: 'fixtureA'
-                    }
+                    name: 'Some folder',
+                    type: 'fixtureDirectory',
+                    expanded: true,
+                    children: [
+                      {
+                        name: 'fixtureA',
+                        type: 'fixture',
+                        urlParams: {
+                          component: 'dirB/subdirA/Component4',
+                          fixture: 'Some folder/fixtureA'
+                        }
+                      },
+                      {
+                        name: 'fixtureB',
+                        type: 'fixture',
+                        urlParams: {
+                          component: 'dirB/subdirA/Component4',
+                          fixture: 'Some folder/fixtureB'
+                        }
+                      }
+                    ]
                   },
                   {
-                    name: 'fixtureB',
+                    name: 'Another folder',
+                    type: 'fixtureDirectory',
+                    expanded: true,
+                    children: [
+                      {
+                        name: 'fixtureC',
+                        type: 'fixture',
+                        urlParams: {
+                          component: 'dirB/subdirA/Component4',
+                          fixture: 'Another folder/fixtureC'
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    name: 'fixtureD',
                     type: 'fixture',
                     urlParams: {
                       component: 'dirB/subdirA/Component4',
-                      fixture: 'fixtureB'
+                      fixture: 'fixtureD'
                     }
                   }
                 ]
