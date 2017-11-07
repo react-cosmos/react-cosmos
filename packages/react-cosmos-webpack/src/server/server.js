@@ -1,6 +1,7 @@
 import path from 'path';
 import { silent as silentImport } from 'import-from';
 import express from 'express';
+import httpProxyMiddleware from 'express-http-proxy';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import launchEditor from 'react-dev-utils/launchEditor';
@@ -41,6 +42,16 @@ export default function startServer() {
   });
   const loaderCompiler = webpack(loaderWebpackConfig);
   const app = express();
+
+  if (cosmosConfig.httpProxy) {
+    const apiProxy = httpProxyMiddleware('localhost:4001', {
+      proxyReqPathResolver: function(req, res) {
+        return require('url').parse(req.originalUrl).path;
+      }
+    });
+
+    app.use('/api/*', apiProxy);
+  }
 
   app.use(
     webpackDevMiddleware(loaderCompiler, {
