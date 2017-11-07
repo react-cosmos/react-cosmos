@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-webpack-commons-chunk-example",
-  "version": "3.0.0-beta.7",
+  "version": "3.0.0-beta.8",
   "description": "Example of webpack & CommonsChunkPlugin",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/webpack-commons-chunk",
   "license": "MIT",
@@ -9,9 +9,8 @@
   },
   "dependencies": {
     "moment": "^2.18.1",
-    "react-cosmos-webpack": "^3.0.0-beta.7"
+    "react-cosmos-webpack": "^3.0.0-beta.8"
   },
-  "devDependencies": {},
   "xo": false,
   "private": true
 }
