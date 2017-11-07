@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import afterOngoingPromises from 'after-ongoing-promises';
 import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
 import createFetchProxy from 'react-cosmos-fetch-proxy';
@@ -28,13 +29,13 @@ const waitForPostMessage = type =>
   });
 
 describe('Fixture editor', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     messageHandlers = {};
     window.addEventListener('message', handleMessage, false);
 
     const onFixtureLoad = waitForPostMessage('fixtureLoad');
 
-    return new Promise(resolve => {
+    const instance = await new Promise(resolve => {
       // Mount component in order for ref and lifecycle methods to be called
       wrapper = mount(
         <Loader
@@ -43,31 +44,32 @@ describe('Fixture editor', () => {
           onComponentRef={resolve}
         />
       );
-    })
-      .then(instance => {
-        loaderContentWindow = {
-          postMessage: jest.fn()
-        };
-        // iframe.contentWindow isn't available in jsdom
-        instance.loaderFrame = {
-          contentWindow: loaderContentWindow
-        };
+    });
 
-        window.postMessage(
-          {
-            type: 'fixtureLoad',
-            fixtureBody: {
-              foo: 'bar'
-            }
-          },
-          '*'
-        );
+    // Wait for Loader status to be confirmed
+    await afterOngoingPromises();
 
-        return onFixtureLoad;
-      })
-      .then(() => {
-        wrapper.update();
-      });
+    loaderContentWindow = {
+      postMessage: jest.fn()
+    };
+    // iframe.contentWindow isn't available in jsdom
+    instance.loaderFrame = {
+      contentWindow: loaderContentWindow
+    };
+
+    window.postMessage(
+      {
+        type: 'fixtureLoad',
+        fixtureBody: {
+          foo: 'bar'
+        }
+      },
+      '*'
+    );
+
+    await onFixtureLoad;
+
+    wrapper.update();
   });
 
   afterEach(() => {

@@ -18,6 +18,8 @@ import styles from './index.less';
 export const LEFT_NAV_SIZE = '__cosmos__left-nav-size';
 export const FIXTURE_EDITOR_PANE_SIZE = '__cosmos__fixture-editor-pane-size';
 
+const isNumber = val => typeof val !== 'number';
+
 const fixtureExists = (fixtures, component, fixture) =>
   fixtures[component] && fixtures[component].indexOf(fixture) !== -1;
 
@@ -51,12 +53,12 @@ export default class ComponentPlayground extends Component {
     // Check if Loader is working
     const { status } = await fetch(this.props.options.loaderUri);
     if (status === 200) {
-      this.setState(
-        {
+      // Wait until all session settings are read before rendering
+      this.restoreUserSettings(() => {
+        this.setState({
           isLoaderResponding: true
-        },
-        this.restoreUserSettings
-      );
+        });
+      });
     } else {
       this.setState({
         waitingForLoader: false,
@@ -211,31 +213,34 @@ export default class ComponentPlayground extends Component {
     this.loaderFrame = node;
   };
 
-  restoreUserSettings = async () => {
+  restoreUserSettings = async cb => {
     // Remember the resizable pane offsets between sessions
     const [leftNavSize, fixtureEditorPaneSize] = await Promise.all([
       localForage.getItem(LEFT_NAV_SIZE),
       localForage.getItem(FIXTURE_EDITOR_PANE_SIZE)
     ]);
 
-    this.setState(
-      // Only override default values when cache values are present
-      omitBy(
-        {
-          leftNavSize,
-          fixtureEditorPaneSize
-        },
-        val => typeof val !== 'number'
-      ),
-      this.updateContentOrientation
+    // Only override default values when cache values are present
+    const state = omitBy(
+      {
+        leftNavSize,
+        fixtureEditorPaneSize
+      },
+      isNumber
     );
+
+    this.setState(state, () => {
+      this.updateContentOrientation(cb);
+    });
   };
 
-  updateContentOrientation() {
+  updateContentOrientation(cb) {
     const { offsetHeight, offsetWidth } = this.contentNode;
-    this.setState({
+    const state = {
       orientation: offsetHeight > offsetWidth ? 'portrait' : 'landscape'
-    });
+    };
+
+    this.setState(state, cb);
   }
 
   render() {
