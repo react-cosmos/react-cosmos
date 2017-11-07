@@ -44,13 +44,7 @@ export default function startServer() {
   const app = express();
 
   if (cosmosConfig.httpProxy) {
-    app.use(
-      '/api',
-      httpProxyMiddleware({
-        target: 'http://localhost:4001',
-        changeOrigin: true
-      })
-    );
+    app.use('/api', httpProxyMiddleware('http://localhost:4000/api'));
   }
 
   app.use(
