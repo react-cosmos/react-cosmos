@@ -1,7 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import afterOngoingPromises from 'after-ongoing-promises';
 import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
+import createFetchProxy from 'react-cosmos-fetch-proxy';
 import readyFixture from '../__fixtures__/ready';
 import DragHandle from '../../DragHandle';
 import { LEFT_NAV_SIZE } from '../';
@@ -9,16 +11,23 @@ import localForage from 'localforage';
 
 jest.mock('localforage');
 
+const StateProxy = createStateProxy();
+const FetchProxy = createFetchProxy();
+
 // Vars populated in beforeEach blocks
 let wrapper;
 
 describe('CP left nav drag', () => {
   describe('default size', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       // Mount component in order for ref and lifecycle methods to be called
       wrapper = mount(
-        <Loader proxies={[createStateProxy()]} fixture={readyFixture} />
+        <Loader proxies={[StateProxy, FetchProxy]} fixture={readyFixture} />
       );
+
+      await afterOngoingPromises();
+
+      wrapper.update();
     });
 
     it('should set default left nav width', () => {
@@ -36,7 +45,7 @@ describe('CP left nav drag', () => {
 
       // Mount component in order for ref and lifecycle methods to be called
       wrapper = mount(
-        <Loader proxies={[createStateProxy()]} fixture={readyFixture} />
+        <Loader proxies={[StateProxy, FetchProxy]} fixture={readyFixture} />
       );
 
       // Wait for async actions in componentDidMount to complete

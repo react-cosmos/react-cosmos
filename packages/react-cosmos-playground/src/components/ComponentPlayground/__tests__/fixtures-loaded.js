@@ -1,18 +1,23 @@
 import React from 'react';
 import merge from 'lodash.merge';
 import { mount } from 'enzyme';
+import afterOngoingPromises from 'after-ongoing-promises';
 import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
+import createFetchProxy from 'react-cosmos-fetch-proxy';
 import readyFixture from '../__fixtures__/ready';
 import FixtureList from '../../FixtureList';
-import WelcomeScreen from '../../WelcomeScreen';
+import WelcomeScreen from '../../screens/WelcomeScreen';
+
+const StateProxy = createStateProxy();
+const FetchProxy = createFetchProxy();
 
 // Vars populated in beforeEach blocks
 let router;
 let wrapper;
 
 describe('CP fixtures loaded', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     router = {
       goTo: jest.fn()
     };
@@ -24,8 +29,12 @@ describe('CP fixtures loaded', () => {
 
     // Mount component in order for ref and lifecycle methods to be called
     wrapper = mount(
-      <Loader proxies={[createStateProxy()]} fixture={fixture} />
+      <Loader proxies={[StateProxy, FetchProxy]} fixture={fixture} />
     );
+
+    await afterOngoingPromises();
+
+    wrapper.update();
   });
 
   describe('fixture list', () => {

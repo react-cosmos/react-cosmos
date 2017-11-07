@@ -2,8 +2,12 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
-import MissingScreen from '../../MissingScreen';
+import createFetchProxy from 'react-cosmos-fetch-proxy';
+import MissingScreen from '../../screens/MissingScreen';
 import selectedFixture from '../__fixtures__/selected-missing';
+
+const StateProxy = createStateProxy();
+const FetchProxy = createFetchProxy();
 
 // Vars populated in beforeEach blocks
 let messageHandlers;
@@ -25,7 +29,7 @@ const waitForPostMessage = type =>
   });
 
 describe('CP with missing fixture already selected', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     messageHandlers = {};
     window.addEventListener('message', handleMessage, false);
 
@@ -34,7 +38,7 @@ describe('CP with missing fixture already selected', () => {
     // Mount component in order for ref and lifecycle methods to be called
     wrapper = mount(
       <Loader
-        proxies={[createStateProxy()]}
+        proxies={[StateProxy, FetchProxy]}
         fixture={selectedFixture}
         onComponentRef={i => {
           instance = i;
@@ -42,27 +46,27 @@ describe('CP with missing fixture already selected', () => {
       />
     );
 
-    return Promise.resolve().then(() => {
-      loaderContentWindow = {
-        postMessage: jest.fn()
-      };
-      // iframe.contentWindow isn't available in jsdom
-      instance.loaderFrame = {
-        contentWindow: loaderContentWindow
-      };
+    loaderContentWindow = {
+      postMessage: jest.fn()
+    };
+    // iframe.contentWindow isn't available in jsdom
+    instance.loaderFrame = {
+      contentWindow: loaderContentWindow
+    };
 
-      // State is already injected, but we need to trigger this event for the
-      // `fixtureSelect` message event to be triggered
-      window.postMessage(
-        {
-          type: 'loaderReady',
-          fixtures: selectedFixture.state.fixtures
-        },
-        '*'
-      );
+    // State is already injected, but we need to trigger this event for the
+    // `fixtureSelect` message event to be triggered
+    window.postMessage(
+      {
+        type: 'loaderReady',
+        fixtures: selectedFixture.state.fixtures
+      },
+      '*'
+    );
 
-      return onFrameReady;
-    });
+    await onFrameReady;
+
+    wrapper.update();
   });
 
   afterEach(() => {

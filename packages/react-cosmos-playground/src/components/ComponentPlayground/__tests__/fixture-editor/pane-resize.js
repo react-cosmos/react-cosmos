@@ -2,11 +2,15 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
 import createStateProxy from 'react-cosmos-state-proxy';
+import createFetchProxy from 'react-cosmos-fetch-proxy';
 import selectedEditorFixture from '../../__fixtures__/selected-editor';
 import { FIXTURE_EDITOR_PANE_SIZE } from '../../';
 import localForage from 'localforage';
 
 jest.mock('localforage');
+
+const StateProxy = createStateProxy();
+const FetchProxy = createFetchProxy();
 
 // Vars populated in beforeEach blocks
 let wrapper;
@@ -32,7 +36,7 @@ describe('Resize fixture editor pane', () => {
     // Mount component in order for ref and lifecycle methods to be called
     wrapper = mount(
       <Loader
-        proxies={[createStateProxy()]}
+        proxies={[StateProxy, FetchProxy]}
         fixture={selectedEditorFixture}
         onComponentRef={i => {
           instance = i;
