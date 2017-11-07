@@ -10,6 +10,7 @@ import FixtureList from '../FixtureList';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import MissingScreen from '../screens/MissingScreen';
 import NoLoaderScreen from '../screens/NoLoaderScreen';
+import LoadingScreen from '../screens/LoadingScreen';
 import DragHandle from '../DragHandle';
 import FixtureEditor from '../FixtureEditor';
 import styles from './index.less';
@@ -274,6 +275,7 @@ export default class ComponentPlayground extends Component {
       <div key="content" ref={this.handleContentRef} className={classes}>
         {!isLoaderVisible && (
           <StarryBg>
+            {waitingForLoader && <LoadingScreen />}
             {!isLoaderResponding &&
               !waitingForLoader && <NoLoaderScreen options={options} />}
             {isLoaderReady &&
