@@ -88,7 +88,23 @@ export default class FixtureList extends Component {
 
     // We might be waiting on localForage to return
     if (!fixtureTree) {
-      return null;
+      // Loading shell. This is actually visible for 1 split second and avoids
+      // complete flash of no layout
+      return (
+        <div className={styles.root}>
+          <div className={styles.searchInputContainer}>
+            <input
+              className={styles.searchInput}
+              placeholder="Search..."
+              value={searchText}
+              disabled
+              onChange={this.onSearchChange}
+            />
+            <SearchIcon />
+          </div>
+          <div className={styles.list} />
+        </div>
+      );
     }
 
     const trimmedSearchText = searchText.trim();
