@@ -65,9 +65,7 @@ There's also a label for each [long term goal](#goals).
 
 ### Monorepo
 
-TODO: Mention Yarn Workspaces
-
-React Cosmos is a [monorepo](packages) powered by [Lerna](https://github.com/lerna/lerna). The monorepo structure makes it possible to publish independent packages while being able to have end-to-end tests for the whole project, and to easily link examples to unpublished packages.
+React Cosmos is a [monorepo](packages) powered by [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) and  [Lerna](https://github.com/lerna/lerna). The monorepo structure makes it possible to publish independent packages while being able to have end-to-end tests for the whole project, and to easily link examples to unpublished packages.
 
 Important to note:
 
@@ -113,28 +111,26 @@ Static exporting is almost identical to development mode, except that it saves t
 
 ## Proxy boilerplate
 
-TODO: Add Flow to boilerplate
-
 Start from this when creating a new proxy.
 
 ```js
 import React from 'react';
-import { proxyPropTypes } from 'react-cosmos-shared/lib/react';
+
+import type { ProxyProps } from 'react-cosmos-shared/src/react/types';
 
 const defaults = {
-  // add option defaults here
+  // Add option defaults here...
 };
 
-export default options => {
-  const { /* expand options here */ } = { ...defaults, ...options };
+export default () => {
+  const { /* Expand options here... */ } = { ...defaults, ...options };
 
-  const NoopProxy = props => {
-    const { value: NextProxy, next } = props.nextProxy;
+  const NoopProxy = (props: ProxyProps) => {
+    const { nextProxy, ...rest } = props;
+    const { value: NextProxy, next } = nextProxy;
 
-    return <NextProxy {...props} nextProxy={next()} />;
+    return <NextProxy {...rest} nextProxy={next()} />;
   };
-
-  NoopProxy.propTypes = proxyPropTypes;
 
   return NoopProxy;
 };
@@ -182,6 +178,9 @@ yarn
 # Build example from source and test React Cosmos end to end
 cd examples/context
 yarn start
+
+# Load Playground source inside compiled Playground #inception
+yarn start:playground
 
 # Watch & build single package (running example will live reload)
 yarn build react-cosmos-playground --watch
