@@ -660,6 +660,8 @@ The `fileMatch` and `exclude` options are used to detect fixture files. The defa
 
 > Note: Set the `rootPath` to a dir parent to all fixture files when using a [custom config path](#custom-config-path)
 
+TODO: Add `fixtureDir` and `fixtureSuffix` options for easier file match customization [#488](https://github.com/react-cosmos/react-cosmos/issues/488)
+
 #### Option dump
 
 Options supported by `cosmos.config.js`.
