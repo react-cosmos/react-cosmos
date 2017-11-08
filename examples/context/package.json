@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-context-example",
-  "version": "3.0.0-beta.8",
+  "version": "3.0.0-beta.9",
   "description": "Example of mocking component context",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/context",
   "license": "MIT",
@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "prop-types": "^15.5.10",
-    "react-cosmos-context-proxy": "^3.0.0-beta.8",
-    "react-cosmos": "^3.0.0-beta.8"
+    "react-cosmos": "^3.0.0-beta.9",
+    "react-cosmos-context-proxy": "^3.0.0-beta.8"
   },
   "xo": false,
   "private": true
