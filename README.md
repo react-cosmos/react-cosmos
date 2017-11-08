@@ -651,14 +651,14 @@ If you already have a hairy webpack config that you'd like to reuse, set the `we
 
 #### Custom fixture paths
 
-The `fileMatch` and `exclude` options are used to detect fixture files. The default *fileMatch* value is meant to accommodate most needs out of the box:
+The `fileMatch` and `exclude` options are used to detect fixture files. The default fileMatch value is meant to accommodate most needs out of the box:
 
 ```
 '**/__fixture?(s)__/**/*.{js,jsx,ts,tsx}',
 '**/?(*.)fixture?(s).{js,jsx,ts,tsx}'
 ```
 
-> Note: Set the `rootPath` accordingly when using a [Custom config path](#custom-config-path)
+> Note: Set the `rootPath` to a dir parent to all fixture files when using a [custom config path](#custom-config-path)
 
 #### Option dump
 
