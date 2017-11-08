@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "react-cosmos-localstorage-proxy": "^3.0.0-beta.8",
-    "react-cosmos-webpack": "^3.0.0-beta.8"
+    "react-cosmos": "^3.0.0-beta.8"
   },
   "xo": false,
   "private": true
