@@ -21,7 +21,7 @@
   </a>
 </p>
 
-> **Install `react-cosmos@next` and try out Cosmos 3.0 RC! 👌**
+> **Install `react-cosmos@next` and try out Cosmos 3.0 BETA! 👌**
 
 Cosmos scans your project for components and enables you to:
 
@@ -78,8 +78,8 @@ Jump to:
   - [React Boilerplate](#react-boilerplate)
   - [React Redux Starter Kit](#react-redux-starter-kit)
 - [Config](#config)
-  - [Custom webpack config](#custom-webpack-config)
   - [Custom config path](#custom-config-path)
+  - [Custom webpack config](#custom-webpack-config)
   - [Custom fixture paths](#custom-fixture-paths)
   - [Option dump](#option-dump)
 - [Exporting](#exporting)
@@ -139,7 +139,10 @@ If something's wrong
 A fixture is a JS object used to mock component input and external dependencies. The input can be [props](#props), [children](#children), [state](#state) and [context](#context). With the help of [proxies](#proxies), fixtures can mock anything else a component depends on, from API responses to localStorage.
 
 ```js
+import Input from './Input';
+
 export default {
+  component: Input,
   props: {
     value: 'Lorem ipsum',
     disabled: true,
@@ -632,16 +635,7 @@ Also make sure to:
 
 ### Config
 
-TODO:
-- Config is optional
-- Here is example of config
-- Link to custom config path
-
-#### Custom webpack config
-
-TODO:
-- Explain that Cosmos relies on default webpack config using your own loaders
-- Example of customizing cosmos config
+The Cosmos config is optional, but it's very likely you'll want to create one at some point to set some custom options. The standard approach is to put a `cosmos.config.js` file in your project root.
 
 #### Custom config path
 
@@ -654,6 +648,21 @@ Use the `--config` CLI arg if you prefer not placing the config in the project r
 }
 ```
 
+Set the `rootPath` option to match the project root when using a custom config path. All other paths defined in the config are relative to rootPath.
+
+```js
+// cosmos.config.js
+module.exports = {
+  rootPath: '../../'
+};
+```
+
+#### Custom webpack config
+
+The default webpack config included in Cosmos checks to see which packages you have installed and, if found, automatically includes the Babel, CSS and JSON loaders, as well as the HtmlWebpackPlugin.
+
+If you already have a hairy webpack config that you'd like to reuse, set the `webpackConfigPath` option to your webpack config's file path and Cosmos will do its best to extend it.
+
 #### Custom fixture paths
 
 The `fileMatch` and `exclude` options are used to detect fixture files. The default *fileMatch* value is meant to accommodate most needs out of the box:
@@ -662,6 +671,8 @@ The `fileMatch` and `exclude` options are used to detect fixture files. The defa
 '**/__fixture?(s)__/**/*.{js,jsx,ts,tsx}',
 '**/?(*.)fixture?(s).{js,jsx,ts,tsx}'
 ```
+
+> Note: Set the `rootPath` accordingly when using a [Custom config path](#custom-config-path)
 
 #### Option dump
 
