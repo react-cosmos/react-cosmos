@@ -54,7 +54,7 @@ export default class NoLoaderScreen extends Component<Props> {
         <p className={style.header}>Almost there...</p>
         <p>
           <strong>
-            Install <code>html-webpack-config</code> in your dev dependencies
+            Install <code>html-webpack-plugin</code> in your dev dependencies
           </strong>{' '}
           and restart Cosmos.
         </p>
