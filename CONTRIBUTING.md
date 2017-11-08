@@ -103,7 +103,7 @@ Read about all event payloads and their order [here](docs/playground-loader.md).
 
 The `react-cosmos` CLI extends the user's webpack config or fallbacks to a default config, which automatically detects and includes the user's Babel and CSS loaders.
 
-The entry file of the resulting webpack config mounts `RemoteLoader`, together with all the user components, fixtures and proxies. **The component and fixture paths are injected statically in the Loader bundle** via [module-loader.js](packages/react-cosmos-webpack/src/module-loader.js)—a custom webpack loader.
+The entry file of the resulting webpack config mounts `RemoteLoader`, together with all the user components, fixtures and proxies. **The component and fixture paths are injected statically in the Loader bundle** via [module-loader.js](packages/react-cosmos/src/module-loader.js)—a custom webpack loader.
 
 Using webpack-dev-middleware, the webpack config is attached to an Express server, which serves the Playground bundle at `/` and the Loader bundle at `/loader/`. The server will also serve a static directory when the `publicPath` option is used.
 

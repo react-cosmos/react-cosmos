@@ -2,9 +2,9 @@ import { silent as silentResolve } from 'resolve-from';
 import { silent as silentImport } from 'import-from';
 
 // This config doesn't have entry and output set up because it's not meant to
-// work standalone. react-cosmos-webpack adds an entry & output when extending this.
+// work standalone. react-cosmos adds an entry & output when extending this.
 export default function getDefaultWebpackConfig(rootPath) {
-  // react-cosmos-webpack doesn't directly depend on any webpack loader.
+  // react-cosmos doesn't directly depend on any webpack loader.
   // Instead, it leverages the ones already installed by the user.
   const babelLoaderPath = silentResolve(rootPath, 'babel-loader');
   const styleLoaderPath = silentResolve(rootPath, 'style-loader');

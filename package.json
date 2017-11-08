@@ -13,7 +13,7 @@
     "prettify": "prettier --write '{{{packages,examples}/*/src,cypress,scripts}/**/,}*.{js,jsx,css,less}'",
     "lint": "xo --quiet",
     "start": "./examples/local-state/node_modules/.bin/cosmos --config examples/local-state/cosmos.config.js",
-    "start:playground": "./packages/react-cosmos-webpack/bin/cosmos.js --config packages/react-cosmos-playground/cosmos.config.js",
+    "start:playground": "./packages/react-cosmos/bin/cosmos.js --config packages/react-cosmos-playground/cosmos.config.js",
     "build": "node ./scripts/build.js",
     "postinstall": "yarn build",
     "publish-lerna": "yarn test && yarn build && lerna publish --registry=https://registry.npmjs.org/",
