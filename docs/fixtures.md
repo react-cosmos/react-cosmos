@@ -9,4 +9,4 @@ Creating fixtures is fun if you do it from the beginning, but it can be a drag i
 
 ![Recording fixture](recording-fixture.gif)
 
-*Disclaimer: This is just a quick way to start experimenting with React Cosmos. Most components expect one or more unserializable props (e.g. callbacks or children) which can't be copied as JSON.*
+*Disclaimer: This is just a quick way to start experimenting with React Cosmos. Most components expect one or more unserializable props (e.g. callbacks or children) which can't be copied as JSON and **the `component` field has to be added by hand.***

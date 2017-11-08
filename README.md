@@ -155,31 +155,7 @@ export default {
 
 #### Where to put fixtures?
 
-Cosmos looks for `__fixtures__` dirs next to your components. Here are a few of the supported patterns.
-
-##### Flat hierarchy
-
-```bash
-components/Button.jsx
-components/nested/Dropdown.jsx
-components/__fixtures__/Button/default.js
-components/__fixtures__/Button/disabled.js
-components/__fixtures__/nested/Dropdown/default.js
-components/__fixtures__/nested/Dropdown/open.js
-```
-
-##### Nested hierarchy
-
-```bash
-components/Button/index.jsx
-components/Button/__fixtures__/default.js
-components/Button/__fixtures__/disabled.js
-components/nested/Dropdown/index.jsx
-components/nested/Dropdown/__fixtures__/default.js
-components/nested/Dropdown/__fixtures__/open.js
-```
-
-Named component files also work in the nested hierarchy (i.e. `Button/Button.jsx` and `nested/Dropdown/Dropdown.jsx`).
+Cosmos looks for `*.fixture` named files and files inside `__fixtures__` dirs by default. See [custom fixture paths](#custom-fixture-paths) for further customization.
 
 #### Props
 
@@ -187,6 +163,7 @@ Mocking props is the most basic thing a fixture can do.
 
 ```js
 export default {
+  component: Auth,
   props: {
     loggedIn: true,
     user: {
@@ -202,6 +179,7 @@ Composition is the name of the game and many React components expect [children](
 
 ```jsx
 export default {
+  component: Text,
   children: (
     <div>
       <p>Fixture ain't afraid of JSX</p>
@@ -217,6 +195,7 @@ Mocking state is where things get interesting. [Component state](https://faceboo
 
 ```js
 export default {
+  component: SearchBox,
   state: {
     searchQuery: 'Who let the dogs out?'
   }
@@ -310,6 +289,7 @@ export default [
 ```js
 // __fixtures__/example.js
 export default {
+  component: MyComponent,
   theme: {
     backgroundColor: '#f1f1f1',
     color: '#222'
@@ -345,6 +325,7 @@ export default [
 ```js
 // __fixtures__/example.js
 export default {
+  component: MyComponent,
   // An empty object will populate the store with the initial state
   // returned by reducers. But we can also put any state we want here.
   reduxState: {}
@@ -378,6 +359,7 @@ Simply adding a `url` to your fixture will wrap the loaded component inside a [R
 ```js
 // __fixtures__/example.js
 export default {
+  component: MyComponent,
   url: '/about'
 }
 ```
@@ -387,6 +369,7 @@ Optionally, `route` can be added to also wrap the loaded component inside a [Rou
 ```js
 // __fixtures__/example.js
 export default {
+  component: MyComponent,
   url: '/users/5',
   route: '/users/:userId'
 }
@@ -457,6 +440,7 @@ export default [
 ```js
 // __fixtures__/example.js
 export default {
+  component: MyComponent,
   fetch: [
     {
       matcher: '/users',
@@ -504,6 +488,7 @@ export default [
 ```js
 // __fixtures__/example.js
 export default {
+  component: MyComponent,
   xhr: [
     {
       url: '/users',
@@ -552,6 +537,7 @@ export default [
 ```js
 // __fixtures__/example.js
 export default {
+  component: MyComponent,
   localStorage: {
     userToken: 'foobar-token'
   }
