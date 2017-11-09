@@ -90,7 +90,9 @@ const getFilePaths = ({
           : getMatchingFixtures(
               [
                 ...glob.sync(
-                  `${componentDir}/**/${fixturesDir}/**/*.{${FIXTURE_EXTENSIONS_GLOB}}`
+                  `${componentDir}/**/${fixturesDir}/**/*.{${
+                    FIXTURE_EXTENSIONS_GLOB
+                  }}`
                 ),
                 ...extFixtures
               ],
