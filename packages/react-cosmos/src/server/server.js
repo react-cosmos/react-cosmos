@@ -19,7 +19,7 @@ const getPublicPath = (cosmosConfig, userWebpackConfig) => {
 
 export default function startServer() {
   const cosmosConfig = getCosmosConfig();
-  const { rootPath, hostname, hot, port, publicUrl } = cosmosConfig;
+  const { rootPath, hostname, hot, port, publicUrl, httpProxy } = cosmosConfig;
 
   const webpack = silentImport(rootPath, 'webpack');
   if (!webpack) {
@@ -43,8 +43,9 @@ export default function startServer() {
   const loaderCompiler = webpack(loaderWebpackConfig);
   const app = express();
 
-  if (cosmosConfig.httpProxy) {
-    app.use('/api', httpProxyMiddleware('http://localhost:4000/api'));
+  if (httpProxy) {
+    const { context, target } = httpProxy;
+    app.use(context, httpProxyMiddleware(target));
   }
 
   app.use(
