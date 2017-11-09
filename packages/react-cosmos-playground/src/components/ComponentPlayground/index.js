@@ -1,5 +1,6 @@
+// @flow
+
 import React, { Component } from 'react';
-import { string, bool, object, shape, oneOf } from 'prop-types';
 import classNames from 'classnames';
 import omitBy from 'lodash.omitby';
 import localForage from 'localforage';
@@ -15,18 +16,49 @@ import DragHandle from '../DragHandle';
 import FixtureEditor from '../FixtureEditor';
 import styles from './index.less';
 
+import type {
+  PlaygroundOpts,
+  LoaderReadyMessageData,
+  FixtureListUpdateMessageData,
+  FixtureLoadMessageData,
+  FixtureUpdateData,
+  LoaderMessage
+} from 'react-cosmos-shared/src/types';
+
 export const LEFT_NAV_SIZE = '__cosmos__left-nav-size';
 export const FIXTURE_EDITOR_PANE_SIZE = '__cosmos__fixture-editor-pane-size';
 
-const isNumber = val => typeof val !== 'number';
+export const PENDING = 0;
+export const MISSING = 1;
+export const OK = 2;
+export const ERROR = 3;
+export const READY = 4;
 
-const fixtureExists = (fixtures, component, fixture) =>
-  fixtures[component] && fixtures[component].indexOf(fixture) !== -1;
+type Props = {
+  router: Object,
+  options: PlaygroundOpts,
+  component?: string,
+  fixture?: string,
+  editor?: boolean,
+  fullScreen?: boolean
+};
 
-const postMessageToFrame = (frame, data) =>
-  frame.contentWindow.postMessage(data, '*');
+type State = {
+  // There doesn't seem to be a way to use const values as types. Let me know
+  // if you can think of a better way to express this!
+  loaderStatus: 0 | 1 | 2 | 3 | 4,
+  isDragging: boolean,
+  leftNavSize: number,
+  fixtureEditorPaneSize: number,
+  orientation: 'landscape' | 'portrait',
+  fixtureBody: Object,
+  fixtures: Object
+};
 
-export default class ComponentPlayground extends Component {
+export default class ComponentPlayground extends Component<Props, State> {
+  contentNode: ?HTMLElement;
+  loaderFrame: ?HTMLElement;
+
   static defaultProps = {
     editor: false,
     fullScreen: false
@@ -37,16 +69,16 @@ export default class ComponentPlayground extends Component {
     omitBy(params, (val, key) => ComponentPlayground.defaultProps[key] === val);
 
   state = {
-    waitingForLoader: true,
-    isLoaderResponding: false,
+    loaderStatus: PENDING,
     isDragging: false,
     leftNavSize: 250,
     fixtureEditorPaneSize: 250,
     orientation: 'landscape',
-    fixtureBody: {}
+    fixtureBody: {},
+    fixtures: {}
   };
 
-  async componentDidMount() {
+  async componentDidMount(): any {
     window.addEventListener('message', this.onMessage, false);
     window.addEventListener('resize', this.onResize, false);
 
@@ -55,14 +87,24 @@ export default class ComponentPlayground extends Component {
     if (status === 200) {
       // Wait until all session settings are read before rendering
       this.restoreUserSettings(() => {
-        this.setState({
-          isLoaderResponding: true
-        });
+        // XXX: Because we can't mock the iframe contents we sometimes inject
+        // loaderStatus via fixture.state. Don't override it in those cases.
+        // TODO: The bigger issue here is that Playground fixtures mock state
+        // which in real life is the result of several state transitions. In
+        // the long term we should not mock the final state but a natural state
+        // progression. In this case we should mock
+        // 1. Loader check response (fetch)
+        // 2. Loader ready event (window.postMessage) – At the moment we can't
+        // mock this via fixtures.
+        if (this.state.loaderStatus === PENDING) {
+          this.setState({
+            loaderStatus: OK
+          });
+        }
       });
     } else {
       this.setState({
-        waitingForLoader: false,
-        isLoaderResponding: false
+        loaderStatus: MISSING
       });
     }
   }
@@ -72,10 +114,10 @@ export default class ComponentPlayground extends Component {
     window.removeEventListener('resize', this.onResize);
   }
 
-  componentWillReceiveProps({ component, fixture }) {
-    const { waitingForLoader, isLoaderResponding, fixtures } = this.state;
+  componentWillReceiveProps({ component, fixture }: Props) {
+    const { loaderStatus, fixtures } = this.state;
 
-    if (!waitingForLoader && isLoaderResponding) {
+    if (loaderStatus === READY) {
       const fixtureChanged =
         component !== this.props.component || fixture !== this.props.fixture;
 
@@ -89,16 +131,16 @@ export default class ComponentPlayground extends Component {
     }
   }
 
-  onMessage = ({ data }) => {
-    const { type } = data;
-
-    if (type === 'loaderReady') {
+  onMessage = ({ data }: LoaderMessage) => {
+    if (data.type === 'runtimeError') {
+      this.onRuntimeError();
+    } else if (data.type === 'loaderReady') {
       this.onLoaderReady(data);
-    } else if (type === 'fixtureListUpdate') {
+    } else if (data.type === 'fixtureListUpdate') {
       this.onFixtureListUpdate(data);
-    } else if (type === 'fixtureLoad') {
+    } else if (data.type === 'fixtureLoad') {
       this.onFixtureLoad(data);
-    } else if (type === 'fixtureUpdate') {
+    } else if (data.type === 'fixtureUpdate') {
       this.onFixtureUpdate(data);
     }
   };
@@ -107,12 +149,20 @@ export default class ComponentPlayground extends Component {
     this.updateContentOrientation();
   };
 
-  onLoaderReady({ fixtures }) {
+  onRuntimeError() {
+    // We only care about runtime errors before Loader is ready. Once
+    // initialized, the Loader will safely guard against runtime errors.
+    if (!this.state.isLoaderReady) {
+      this.setState({ loaderStatus: ERROR });
+    }
+  }
+
+  onLoaderReady({ fixtures }: LoaderReadyMessageData) {
     const { loaderFrame } = this;
 
     this.setState(
       {
-        waitingForLoader: false,
+        loaderStatus: READY,
         fixtures
       },
       // We update the content orientation because the content width decreases
@@ -130,19 +180,19 @@ export default class ComponentPlayground extends Component {
     }
   }
 
-  onFixtureListUpdate({ fixtures }) {
+  onFixtureListUpdate({ fixtures }: FixtureListUpdateMessageData) {
     this.setState({
       fixtures
     });
   }
 
-  onFixtureLoad({ fixtureBody }) {
+  onFixtureLoad({ fixtureBody }: FixtureLoadMessageData) {
     this.setState({
       fixtureBody
     });
   }
 
-  onFixtureUpdate({ fixtureBody }) {
+  onFixtureUpdate({ fixtureBody }: FixtureUpdateData) {
     this.setState({
       // Fixture updates are partial
       fixtureBody: {
@@ -152,7 +202,7 @@ export default class ComponentPlayground extends Component {
     });
   }
 
-  onUrlChange = location => {
+  onUrlChange = (location: string) => {
     if (location === window.location.href) {
       const { component, fixture } = this.props;
       postMessageToFrame(this.loaderFrame, {
@@ -165,7 +215,7 @@ export default class ComponentPlayground extends Component {
     }
   };
 
-  onLeftNavDrag = leftNavSize => {
+  onLeftNavDrag = (leftNavSize: number) => {
     this.setState(
       {
         leftNavSize
@@ -178,7 +228,7 @@ export default class ComponentPlayground extends Component {
     localForage.setItem(LEFT_NAV_SIZE, leftNavSize);
   };
 
-  onFixtureEditorPaneDrag = fixtureEditorPaneSize => {
+  onFixtureEditorPaneDrag = (fixtureEditorPaneSize: number) => {
     this.setState({
       fixtureEditorPaneSize
     });
@@ -194,7 +244,7 @@ export default class ComponentPlayground extends Component {
     this.setState({ isDragging: false });
   };
 
-  onFixtureEditorChange = fixtureBody => {
+  onFixtureEditorChange = (fixtureBody: Object) => {
     this.setState({
       fixtureBody
     });
@@ -205,15 +255,15 @@ export default class ComponentPlayground extends Component {
     });
   };
 
-  handleContentRef = node => {
+  handleContentRef = (node: ?HTMLElement) => {
     this.contentNode = node;
   };
 
-  handleIframeRef = node => {
+  handleIframeRef = (node: ?HTMLElement) => {
     this.loaderFrame = node;
   };
 
-  restoreUserSettings = async cb => {
+  restoreUserSettings = async (cb?: Function) => {
     // Remember the resizable pane offsets between sessions
     const [leftNavSize, fixtureEditorPaneSize] = await Promise.all([
       localForage.getItem(LEFT_NAV_SIZE),
@@ -234,7 +284,11 @@ export default class ComponentPlayground extends Component {
     });
   };
 
-  updateContentOrientation(cb) {
+  updateContentOrientation(cb?: Function) {
+    if (!this.contentNode) {
+      return;
+    }
+
     const { offsetHeight, offsetWidth } = this.contentNode;
     const state = {
       orientation: offsetHeight > offsetWidth ? 'portrait' : 'landscape'
@@ -249,9 +303,10 @@ export default class ComponentPlayground extends Component {
 
   renderInner() {
     const { fullScreen } = this.props;
-    const { waitingForLoader, isLoaderResponding } = this.state;
+    const { loaderStatus } = this.state;
 
-    if (waitingForLoader || !isLoaderResponding || fullScreen) {
+    // Can't show left nav until we receive fixture list with READY event
+    if (loaderStatus < READY || fullScreen) {
       return this.renderContent();
     }
 
@@ -260,17 +315,16 @@ export default class ComponentPlayground extends Component {
 
   renderContent() {
     const { component, fixture, editor, options } = this.props;
-    const {
-      waitingForLoader,
-      isLoaderResponding,
-      fixtures,
-      orientation
-    } = this.state;
-    const isLoaderReady = !waitingForLoader && isLoaderResponding;
-    const isFixtureSelected = isLoaderReady && Boolean(fixture);
+    const { loaderStatus, fixtures, orientation } = this.state;
+    // We can only check if a fixture exists once loader is READY and fixture
+    // list has been received
+    const isFixtureSelected = loaderStatus === READY && Boolean(fixture);
     const isMissingFixtureSelected =
       isFixtureSelected && !fixtureExists(fixtures, component, fixture);
-    const isLoaderVisible = isFixtureSelected && !isMissingFixtureSelected;
+    const isLoaderVisible =
+      (isFixtureSelected && !isMissingFixtureSelected) ||
+      // Show loader when it crashes during initializing
+      loaderStatus === ERROR;
     const classes = classNames(styles.content, {
       [styles.contentPortrait]: orientation === 'portrait',
       [styles.contentLandscape]: orientation === 'landscape'
@@ -280,18 +334,17 @@ export default class ComponentPlayground extends Component {
       <div key="content" ref={this.handleContentRef} className={classes}>
         {!isLoaderVisible && (
           <StarryBg>
-            {waitingForLoader && <LoadingScreen />}
-            {!isLoaderResponding &&
-              !waitingForLoader && <NoLoaderScreen options={options} />}
-            {isLoaderReady &&
+            {loaderStatus === PENDING && <LoadingScreen />}
+            {loaderStatus === MISSING && <NoLoaderScreen options={options} />}
+            {loaderStatus === READY &&
               !isFixtureSelected && <WelcomeScreen fixtures={fixtures} />}
             {isMissingFixtureSelected && (
               <MissingScreen componentName={component} fixtureName={fixture} />
             )}
           </StarryBg>
         )}
-        {editor && isLoaderReady && this.renderFixtureEditor()}
-        {isLoaderResponding && this.renderLoader(isLoaderVisible)}
+        {editor && isLoaderVisible && this.renderFixtureEditor()}
+        {loaderStatus >= OK && this.renderLoader(isLoaderVisible)}
       </div>
     );
   }
@@ -416,7 +469,7 @@ export default class ComponentPlayground extends Component {
     );
   }
 
-  renderLoader(isLoaderVisible) {
+  renderLoader(isLoaderVisible: boolean) {
     const { options: { loaderUri } } = this.props;
     const { isDragging } = this.state;
     const loaderStyle = {
@@ -438,15 +491,14 @@ export default class ComponentPlayground extends Component {
   }
 }
 
-ComponentPlayground.propTypes = {
-  router: object.isRequired,
-  options: shape({
-    loaderUri: string.isRequired,
-    projectKey: string.isRequired,
-    webpackConfigType: oneOf(['default', 'custom'])
-  }).isRequired,
-  component: string,
-  fixture: string,
-  editor: bool,
-  fullScreen: bool
-};
+function isNumber(val) {
+  return typeof val !== 'number';
+}
+
+function fixtureExists(fixtures, component, fixture) {
+  return fixtures[component] && fixtures[component].indexOf(fixture) !== -1;
+}
+
+function postMessageToFrame(frame, data) {
+  return frame.contentWindow.postMessage(data, '*');
+}

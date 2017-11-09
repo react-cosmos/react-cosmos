@@ -5,7 +5,10 @@ import * as ErrorOverlay from 'react-error-overlay';
 if (process.env.NODE_ENV === 'development') {
   // Report runtime errors
   ErrorOverlay.startReportingRuntimeErrors({
-    onError: () => {},
+    onError: () => {
+      // Let the Playground know when the Loader crashes
+      parent.postMessage({ type: 'runtimeError' }, '*');
+    },
     filename: '/loader/main.js'
   });
   ErrorOverlay.setEditorHandler(errorLocation =>

@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
 import createFetchProxy from 'react-cosmos-fetch-proxy';
 import initFixture from '../__fixtures__/init';
+import { READY } from '../';
 
 const FetchProxy = createFetchProxy();
 
@@ -61,8 +62,8 @@ describe('CP loader ready', () => {
     window.removeEventListener('message', handleMessage);
   });
 
-  test('should set waitingForLoader to false', () => {
-    expect(instance.state.waitingForLoader).toBe(false);
+  test('should set loaderStatus to READY', () => {
+    expect(instance.state.loaderStatus).toBe(READY);
   });
 
   test('should add fixtures to state', () => {
