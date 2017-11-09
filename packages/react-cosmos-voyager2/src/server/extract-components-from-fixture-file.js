@@ -99,7 +99,18 @@ export async function extractComponentsFromFixtureFile(
           );
         }
 
-        filePath = resolveUserPath(path.dirname(fixturePath), importPath);
+        // There are 3 use cases we support here:
+        // 1. Relative paths to js files that can be resolved via Node. We
+        // resolve path to actual file. Eg: ./Button => /path/to/Button.js
+        // 2. Relative paths to non-js files. We resolve this path relative to
+        // the fixture dir even if we can't check if file exists.
+        // Eg: ./Button => /path/to/Button)
+        // 3. Custom resolved absolute paths. We use as is.
+        // Eg: components/Button
+        const isCustomPath = importPath.match(/^[^./]/);
+        filePath = isCustomPath
+          ? importPath
+          : resolveUserPath(path.dirname(fixturePath), importPath);
       } catch (err) {
         // TODO: Allow user to see these errors when debugging
         // console.log(err.message);
