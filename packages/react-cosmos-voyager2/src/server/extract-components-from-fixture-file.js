@@ -5,8 +5,8 @@ import path from 'path';
 import promisify from 'util.promisify';
 import * as babylon from 'babylon';
 import * as t from 'babel-types';
-
 import { resolveUserPath } from 'react-cosmos-shared/lib/server';
+
 import type { ComponentInfo } from '../types';
 
 const readFileAsync = promisify(fs.readFile);
@@ -99,7 +99,6 @@ export async function extractComponentsFromFixtureFile(
           );
         }
 
-        // TODO: What if path isn't relative?
         filePath = resolveUserPath(path.dirname(fixturePath), importPath);
       } catch (err) {
         // TODO: Allow user to see these errors when debugging
