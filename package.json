@@ -52,7 +52,7 @@
     "eslint-import-resolver-webpack": "^0.8.3",
     "eslint-plugin-react": "^7.4.0",
     "file-loader": "^1.1.5",
-    "flow-bin": "^0.58.0",
+    "flow-bin": "^0.59.0",
     "flow-typed": "^2.2.3",
     "glob": "^7.1.2",
     "html-webpack-plugin": "^2.30.1",

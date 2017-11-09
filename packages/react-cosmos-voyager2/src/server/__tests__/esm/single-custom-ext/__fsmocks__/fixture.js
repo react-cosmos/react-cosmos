@@ -1,5 +1,3 @@
-// @flow
-
 import Italic from './Italic';
 
 export default {

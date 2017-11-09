@@ -65,7 +65,7 @@ export default class ComponentPlayground extends Component<Props, State> {
   };
 
   // Exclude params with default values
-  static getCleanUrlParams = params =>
+  static getCleanUrlParams = (params: {}) =>
     omitBy(params, (val, key) => ComponentPlayground.defaultProps[key] === val);
 
   state = {
