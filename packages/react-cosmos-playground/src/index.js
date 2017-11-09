@@ -13,7 +13,9 @@ let container;
 const createDomContainer = () => {
   if (!container) {
     container = document.createElement('div');
-    document.body.appendChild(container);
+    if (document.body) {
+      document.body.appendChild(container);
+    }
   }
 
   return container;

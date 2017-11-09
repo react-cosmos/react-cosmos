@@ -264,7 +264,7 @@ Jump to:
 
 [React Context](https://facebook.github.io/react/docs/context.html): *With great power comes great responsibility.*
 
-> Note: React doesn't recommend using *context* unless you're a lib, so most of us don't need this proxy either.
+> Note: React doesn't recommend using *context* unless you're a lib, so in most cases we're better of using a higher level proxy like the [Redux](#redux) or [React Router](#react-router) one.
 
 ##### Configuration
 
@@ -680,10 +680,7 @@ module.exports = {
     './global.css',
   ],
 
-  // Components will not be loaded in the playground if their names match these.
-  // There's no excuse for components that can't be loaded independently, but
-  // if you store HoCs (which export functions) next to regular components, well,
-  // what are you gonna do, not use this wonderful tool?
+  // Fixtures will not be loaded in the playground if their names match these
   exclude: [
     /notAFixture/,
     /itsComplicated/,
