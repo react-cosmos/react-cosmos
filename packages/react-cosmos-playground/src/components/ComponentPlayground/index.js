@@ -151,7 +151,8 @@ export default class ComponentPlayground extends Component<Props, State> {
 
   onRuntimeError() {
     // We only care about runtime errors before Loader is ready. Once
-    // initialized, the Loader will safely guard against runtime errors.
+    // initialized, the Loader will safely capture and display runtime errors
+    // when they occur
     if (!this.state.isLoaderReady) {
       this.setState({ loaderStatus: ERROR });
     }
