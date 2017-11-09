@@ -496,9 +496,14 @@ function isNumber(val) {
 }
 
 function fixtureExists(fixtures, component, fixture) {
-  return fixtures[component] && fixtures[component].indexOf(fixture) !== -1;
+  return (
+    component &&
+    fixture &&
+    fixtures[component] &&
+    fixtures[component].indexOf(fixture) !== -1
+  );
 }
 
-function postMessageToFrame(frame, data) {
+function postMessageToFrame(frame: window, data) {
   return frame.contentWindow.postMessage(data, '*');
 }
