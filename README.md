@@ -21,9 +21,7 @@
   </a>
 </p>
 
-> **Install `react-cosmos-webpack@next` to try out Cosmos 3.0 BETA! 👌**
->
-> Updated docs coming soon. Please go on Slack or create an issue if you have any questions in the meantime.
+> **Install `react-cosmos@next` and try out Cosmos 3.0 BETA! 👌**
 
 Cosmos scans your project for components and enables you to:
 
@@ -79,10 +77,10 @@ Jump to:
   - [Next.js](#nextjs)
   - [React Boilerplate](#react-boilerplate)
   - [React Redux Starter Kit](#react-redux-starter-kit)
-- [Configuration](#configuration)
-  - [Loader index.html](#loader-indexhtml)
+- [Config](#config)
   - [Custom config path](#custom-config-path)
-  - [Custom component paths](#custom-component-paths)
+  - [Custom webpack config](#custom-webpack-config)
+  - [Custom fixture paths](#custom-fixture-paths)
   - [Option dump](#option-dump)
 - [Exporting](#exporting)
 - [Experimental: Test helpers](#experimental-test-helpers)
@@ -92,27 +90,24 @@ Jump to:
 
 ### Getting started
 
+Install via npm
+
 ```bash
-npm install --save-dev react-cosmos-webpack
-# or
-yarn add --dev react-cosmos-webpack
+npm install --save-dev react-cosmos
 ```
 
-Create `cosmos.config.js` in your project root
+or Yarn
 
-```js
-module.exports = {
-  componentPaths: ['src/components'],
-  // Optionally, reuse loaders and plugins from your existing webpack config
-  webpackConfigPath: './config/webpack.config.dev'
-};
+```bash
+yarn add --dev react-cosmos
 ```
 
-Add script to package.json
+Add package.json scripts
 
-```js
+```diff
 "scripts": {
-  "cosmos": "cosmos"
++  "cosmos": "cosmos"
++  "cosmos:export": "cosmos-export"
 }
 ```
 
@@ -127,10 +122,14 @@ Run `npm run cosmos` or `yarn cosmos` and go to [localhost:8989](http://localhos
 
 #### Next steps
 
+If everything's working
+- **Create your first [fixture](#fixtures)**
+- Configure or create [proxies](#proxies) (e.g. Redux integration)
+
+If something's wrong
+- Extend existing [webpack config](#custom-webpack-config)
 - See [popular integrations](#integration-with-popular-tools) (e.g. CRA or Next.js)
-- Extend your [config](#configuration)
-- Create [fixtures](#fixtures)
-- Configure or create [proxies](#proxies) (e.g. Redux)
+- Extend your [config](#config)
 - Be kind and [report what went wrong](https://github.com/react-cosmos/react-cosmos/issues)
 
 ### Fixtures
@@ -140,7 +139,10 @@ Run `npm run cosmos` or `yarn cosmos` and go to [localhost:8989](http://localhos
 A fixture is a JS object used to mock component input and external dependencies. The input can be [props](#props), [children](#children), [state](#state) and [context](#context). With the help of [proxies](#proxies), fixtures can mock anything else a component depends on, from API responses to localStorage.
 
 ```js
+import Input from './Input';
+
 export default {
+  component: Input,
   props: {
     value: 'Lorem ipsum',
     disabled: true,
@@ -153,31 +155,7 @@ export default {
 
 #### Where to put fixtures?
 
-Cosmos looks for `__fixtures__` dirs next to your components. Here are a few of the supported patterns.
-
-##### Flat hierarchy
-
-```bash
-components/Button.jsx
-components/nested/Dropdown.jsx
-components/__fixtures__/Button/default.js
-components/__fixtures__/Button/disabled.js
-components/__fixtures__/nested/Dropdown/default.js
-components/__fixtures__/nested/Dropdown/open.js
-```
-
-##### Nested hierarchy
-
-```bash
-components/Button/index.jsx
-components/Button/__fixtures__/default.js
-components/Button/__fixtures__/disabled.js
-components/nested/Dropdown/index.jsx
-components/nested/Dropdown/__fixtures__/default.js
-components/nested/Dropdown/__fixtures__/open.js
-```
-
-Named component files also work in the nested hierarchy (i.e. `Button/Button.jsx` and `nested/Dropdown/Dropdown.jsx`).
+Cosmos looks for `*.fixture` named files and files inside `__fixtures__` dirs by default. See [custom fixture paths](#custom-fixture-paths) for further customization.
 
 #### Props
 
@@ -185,6 +163,7 @@ Mocking props is the most basic thing a fixture can do.
 
 ```js
 export default {
+  component: Auth,
   props: {
     loggedIn: true,
     user: {
@@ -200,6 +179,7 @@ Composition is the name of the game and many React components expect [children](
 
 ```jsx
 export default {
+  component: Text,
   children: (
     <div>
       <p>Fixture ain't afraid of JSX</p>
@@ -215,6 +195,7 @@ Mocking state is where things get interesting. [Component state](https://faceboo
 
 ```js
 export default {
+  component: SearchBox,
   state: {
     searchQuery: 'Who let the dogs out?'
   }
@@ -240,7 +221,7 @@ Proxies have two parts:
 
 #### Where to put proxies?
 
-As soon as you're ready to add proxies to your Cosmos setup, create `cosmos.proxies.js` (next to cosmos.config.js) and export a list of proxies in the order they should load–from outermost to innermost.
+As soon as you're ready to add proxies to your Cosmos setup, create `cosmos.proxies.js` (in your project's root directory or next to cosmos.config.js) and export a list of proxies in the order they should load–from outermost to innermost.
 
 > `proxies.cosmos.js` requires compilation so you may need to place it next to your source files (eg. if the `src` dir is whitelisted in babel-loader). Use `proxiesPath` option to customize its location.
 
@@ -308,6 +289,7 @@ export default [
 ```js
 // __fixtures__/example.js
 export default {
+  component: MyComponent,
   theme: {
     backgroundColor: '#f1f1f1',
     color: '#222'
@@ -343,6 +325,7 @@ export default [
 ```js
 // __fixtures__/example.js
 export default {
+  component: MyComponent,
   // An empty object will populate the store with the initial state
   // returned by reducers. But we can also put any state we want here.
   reduxState: {}
@@ -376,6 +359,7 @@ Simply adding a `url` to your fixture will wrap the loaded component inside a [R
 ```js
 // __fixtures__/example.js
 export default {
+  component: MyComponent,
   url: '/about'
 }
 ```
@@ -385,6 +369,7 @@ Optionally, `route` can be added to also wrap the loaded component inside a [Rou
 ```js
 // __fixtures__/example.js
 export default {
+  component: MyComponent,
   url: '/users/5',
   route: '/users/:userId'
 }
@@ -455,6 +440,7 @@ export default [
 ```js
 // __fixtures__/example.js
 export default {
+  component: MyComponent,
   fetch: [
     {
       matcher: '/users',
@@ -502,6 +488,7 @@ export default [
 ```js
 // __fixtures__/example.js
 export default {
+  component: MyComponent,
   xhr: [
     {
       url: '/users',
@@ -550,6 +537,7 @@ export default [
 ```js
 // __fixtures__/example.js
 export default {
+  component: MyComponent,
   localStorage: {
     userToken: 'foobar-token'
   }
@@ -562,12 +550,11 @@ export default {
 
 #### Create React App
 
-Add `react-cosmos-webpack` to dev dependencies and create `cosmos.config.js`.
+Add `react-cosmos` to dev dependencies and create `cosmos.config.js`.
 
 ```js
 // cosmos.config.js
 module.exports = {
-  componentPaths: ['src/components'],
   containerQuerySelector: '#root',
   webpackConfigPath: 'react-scripts/config/webpack.config.dev',
   publicPath: 'public',
@@ -577,21 +564,19 @@ module.exports = {
 ```
 
 Also make sure to:
-- Create the `src/components` directory and place your components there, or change componentPaths option to match your existing structure
 - Put [proxies](#proxies) in the `src` dir–the only place included by the CRA Babel loader
 
 *CRA + Cosmos example: [Flatris](https://github.com/skidding/flatris)*
 
 #### Next.js
 
-Add `react-cosmos-webpack` to dev dependencies and create `cosmos.config.js`.
+Add `react-cosmos` to dev dependencies and create `cosmos.config.js`.
 
 > Next.js apps run on both client & server, so compilation is done via Babel plugins instead of webpack loaders. This means we can rely on Cosmos' default webpack config.
 
 ```js
 // cosmos.config.js
 module.exports = {
-  componentPaths: ['components'],
   publicPath: 'static',
   publicUrl: '/static/',
 };
@@ -611,28 +596,22 @@ Also make sure to:
 
 #### React Boilerplate
 
-Add `react-cosmos-webpack` to dev dependencies and create `cosmos.config.js`.
+Add `react-cosmos` to dev dependencies and create `cosmos.config.js`.
 
 ```js
 // cosmos.config.js
 module.exports = {
-  componentPaths: ['app/components'],
-  ignore: ['tests', 'messages', /.+Styles/],
   webpackConfigPath: './internals/webpack/webpack.dev.babel',
 };
 ```
 
 #### React Redux Starter Kit
 
-Add `react-cosmos-webpack` to dev dependencies and create `cosmos.config.js`.
+Add `react-cosmos` to dev dependencies and create `cosmos.config.js`.
 
 ```js
 // cosmos.config.js
 module.exports = {
-  componentPaths: [
-    'src/routes/Counter/components',
-    'src/routes/Home/components'
-  ],
   webpackConfigPath: 'build/webpack.config.js'
 }
 ```
@@ -640,22 +619,9 @@ module.exports = {
 Also make sure to:
 - Set up the [Redux proxy](#react-cosmos-context-proxy) :)
 
-### Configuration
+### Config
 
-#### Loader index.html
-
-> *GET http://localhost:8989/loader/index.html 404 (Not Found)*
-
-The browser console might greet you with this error when using a custom webpack config. There are two methods for configuring the Loader index.html page:
-
-1. Use [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin)
-2. Put a static index.html file in your public path (see `publicPath` option below)
-
-**Using `html-webpack-plugin` is recommended** because it automatically injects the `<script>` tag in index.html. If you create your own index.html then make sure the script tag points to "main.js".
-
-```html
-<script src="./main.js"></script>
-```
+The Cosmos config is optional, but it's very likely you'll want to create one at some point to set some custom options. The standard approach is to put a `cosmos.config.js` file in your project root.
 
 #### Custom config path
 
@@ -668,28 +634,33 @@ Use the `--config` CLI arg if you prefer not placing the config in the project r
 }
 ```
 
-#### Custom component paths
-
-The `componentPaths` option supports both dir and file paths. Most of the times using a dir path is enough (e.g. "src/components"), but we might need to target the exact file paths when component files sit next to non-component files. Here's an example for this type of setup:
+Set the `rootPath` option to match the project root when using a custom config path. All other paths defined in the config are relative to rootPath.
 
 ```js
 // cosmos.config.js
-componentPaths: [
-  'src/components/A.jsx',
-  'src/components/B.jsx'
-],
-getComponentName: componentPath =>
-  componentPath.match(/src\/components\/(.+)\.jsx$/)[1]
+module.exports = {
+  rootPath: '../../'
+};
 ```
 
-> The `getComponentName` option needs to be added when using file paths.
+#### Custom webpack config
 
-We can also use [glob](https://github.com/isaacs/node-glob) instead of adding each component by hand:
+The default webpack config included in Cosmos checks to see which packages you have installed and, if found, automatically includes the Babel, CSS and JSON loaders, as well as the HtmlWebpackPlugin.
 
-```js
-// cosmos.config.js
-componentPaths: glob.sync('src/components/*.jsx')
+If you already have a hairy webpack config that you'd like to reuse, set the `webpackConfigPath` option to your webpack config's file path and Cosmos will do its best to extend it.
+
+#### Custom fixture paths
+
+The `fileMatch` and `exclude` options are used to detect fixture files. The default fileMatch value is meant to accommodate most needs out of the box:
+
 ```
+'**/__fixture?(s)__/**/*.{js,jsx,ts,tsx}',
+'**/?(*.)fixture?(s).{js,jsx,ts,tsx}'
+```
+
+> Note: Set the `rootPath` to a dir parent to all fixture files when using a [custom config path](#custom-config-path)
+
+TODO: Add `fixtureDir` and `fixtureSuffix` options for easier file match customization [#488](https://github.com/react-cosmos/react-cosmos/issues/488)
 
 #### Option dump
 
@@ -698,19 +669,9 @@ Options supported by `cosmos.config.js`.
 ```js
 // cosmos.config.js
 module.exports = {
-  // Read components from multiple locations. Useful for including Redux
-  // containers or if you split your UI per sections.
-  componentPaths: [
-    'src/components',
-    'src/containers'
-  ],
-
-  // Additional paths to search for fixtures, besides the __fixtures__ folder
-  // nested inside component paths. Useful if you keep fixture files separated
-  // from components files.
-  fixturePaths: [
-    'test/fixtures'
-  ],
+  // Set all other paths relative this this one. Important when cosmos.config
+  // isn't placed in the project root
+  rootPath: '../',
 
   // Additional entry points that should be present along with any component.
   // Sad, but inevitable.
@@ -723,8 +684,8 @@ module.exports = {
   // There's no excuse for components that can't be loaded independently, but
   // if you store HoCs (which export functions) next to regular components, well,
   // what are you gonna do, not use this wonderful tool?
-  ignore: [
-    /notATrueComponent/,
+  exclude: [
+    /notAFixture/,
     /itsComplicated/,
     /itsNotMeItsYou/,
   ],
@@ -754,16 +715,17 @@ module.exports = {
 
 ### Exporting
 
-Static Component Playground? Piece of 🍰! Add this script and run `npm run cosmos-export` or `yarn cosmos-export`.
+Static Component Playground? Piece of 🍰! Add this script and run `npm run cosmos:export` or `yarn cosmos:export`.
 
-```js
-// package.json
+```diff
 "scripts": {
-  "cosmos-export": "cosmos-export"
++  "cosmos:export": "cosmos-export"
 }
 ```
 
 ### Experimental: Test helpers
+
+> **Stay tuned:** New API for testing fixtures with Enzyme coming soon!
 
 Fixtures can be reused inside automated tests. Along with proxies, they replace elaborate test preparation and render a component with a single JSX tag.
 

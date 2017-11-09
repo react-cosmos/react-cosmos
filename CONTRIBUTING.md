@@ -38,7 +38,7 @@ High impact initiatives. By working on these exciting topics, you have the oppor
 
 > Warning: These are high-level tasks and they require further analysis and collaboration before they can be turned into concrete tasks
 
-- [Redesign filesystem API](https://github.com/react-cosmos/react-cosmos/issues/440)
+- ~~[Redesign filesystem API](https://github.com/react-cosmos/react-cosmos/issues/440)~~
 - [Config generation](https://github.com/react-cosmos/react-cosmos/issues/452)
 - [Create Cosmos server](https://github.com/react-cosmos/react-cosmos/pull/383#issuecomment-328297128)
 
@@ -65,7 +65,7 @@ There's also a label for each [long term goal](#goals).
 
 ### Monorepo
 
-React Cosmos is a [monorepo](packages) powered by [Lerna](https://github.com/lerna/lerna). The monorepo structure makes it possible to publish independent packages while being able to have end-to-end tests for the whole project, and to easily link examples to unpublished packages.
+React Cosmos is a [monorepo](packages) powered by [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) and  [Lerna](https://github.com/lerna/lerna). The monorepo structure makes it possible to publish independent packages while being able to have end-to-end tests for the whole project, and to easily link examples to unpublished packages.
 
 Important to note:
 
@@ -101,9 +101,9 @@ Read about all event payloads and their order [here](docs/playground-loader.md).
 
 ### webpack
 
-`react-cosmos-webpack` extends the user's webpack config or fallbacks to a default config with Babel and CSS loaders.
+The `react-cosmos` CLI extends the user's webpack config or fallbacks to a default config, which automatically detects and includes the user's Babel and CSS loaders.
 
-The entry file of the resulting webpack config mounts `RemoteLoader`, together with all the user components, fixtures and proxies. **The component and fixture paths are injected statically in the Loader bundle** via [module-loader.js](packages/react-cosmos-webpack/src/module-loader.js)—a custom webpack loader.
+The entry file of the resulting webpack config mounts `RemoteLoader`, together with all the user components, fixtures and proxies. **The component and fixture paths are injected statically in the Loader bundle** via [module-loader.js](packages/react-cosmos/src/module-loader.js)—a custom webpack loader.
 
 Using webpack-dev-middleware, the webpack config is attached to an Express server, which serves the Playground bundle at `/` and the Loader bundle at `/loader/`. The server will also serve a static directory when the `publicPath` option is used.
 
@@ -115,22 +115,22 @@ Start from this when creating a new proxy.
 
 ```js
 import React from 'react';
-import { proxyPropTypes } from 'react-cosmos-shared/lib/react';
+
+import type { ProxyProps } from 'react-cosmos-shared/src/react/types';
 
 const defaults = {
-  // add option defaults here
+  // Add option defaults here...
 };
 
-export default options => {
-  const { /* expand options here */ } = { ...defaults, ...options };
+export default () => {
+  const { /* Expand options here... */ } = { ...defaults, ...options };
 
-  const NoopProxy = props => {
-    const { value: NextProxy, next } = props.nextProxy;
+  const NoopProxy = (props: ProxyProps) => {
+    const { nextProxy, ...rest } = props;
+    const { value: NextProxy, next } = nextProxy;
 
-    return <NextProxy {...props} nextProxy={next()} />;
+    return <NextProxy {...rest} nextProxy={next()} />;
   };
-
-  NoopProxy.propTypes = proxyPropTypes;
 
   return NoopProxy;
 };
@@ -178,6 +178,9 @@ yarn
 # Build example from source and test React Cosmos end to end
 cd examples/context
 yarn start
+
+# Load Playground source inside compiled Playground #inception
+yarn start:playground
 
 # Watch & build single package (running example will live reload)
 yarn build react-cosmos-playground --watch

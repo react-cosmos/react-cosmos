@@ -4,7 +4,9 @@ export default {
   component: FixtureList,
 
   props: {
-    projectKey: 'test',
+    options: {
+      projectKey: 'test'
+    },
     fixtures: {
       ComponentA: ['foo', 'bar'],
       ComponentB: ['baz', 'qux']

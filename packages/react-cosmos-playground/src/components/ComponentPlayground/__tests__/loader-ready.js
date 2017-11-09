@@ -1,7 +1,10 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
+import createFetchProxy from 'react-cosmos-fetch-proxy';
 import initFixture from '../__fixtures__/init';
+
+const FetchProxy = createFetchProxy();
 
 // Vars populated in beforeEach blocks
 let messageHandlers;
@@ -30,6 +33,7 @@ describe('CP loader ready', () => {
     // Mount component in order for ref and lifecycle methods to be called
     mount(
       <Loader
+        proxies={[FetchProxy]}
         fixture={initFixture}
         onComponentRef={i => {
           instance = i;

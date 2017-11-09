@@ -1,3 +1,5 @@
+// @flow
+
 import ReactComponentPlayground from '../components/ComponentPlayground';
 import { Router } from 'react-querystring-router';
 
@@ -17,7 +19,8 @@ describe('Playground mount', () => {
 
     routerInstance = mountPlayground({
       loaderUri: '/fake-loader-uri/',
-      projectKey: '/fake-project-key/'
+      projectKey: '/fake-project-key/',
+      webpackConfigType: 'custom'
     });
   });
 
@@ -37,16 +40,14 @@ describe('Playground mount', () => {
       expect(getComponentClass()).toBe(ReactComponentPlayground);
     });
 
-    it('puts loaderUri option in Playground props', () => {
+    it('sends options to Playground', () => {
       const { getComponentProps } = routerArgs[0];
-      const { loaderUri } = getComponentProps();
-      expect(loaderUri).toBe('/fake-loader-uri/');
-    });
-
-    it('puts projectKey option in Playground props', () => {
-      const { getComponentProps } = routerArgs[0];
-      const { projectKey } = getComponentProps();
-      expect(projectKey).toBe('/fake-project-key/');
+      const { options } = getComponentProps();
+      expect(options).toEqual({
+        loaderUri: '/fake-loader-uri/',
+        projectKey: '/fake-project-key/',
+        webpackConfigType: 'custom'
+      });
     });
 
     it('returns router instance', () => {
