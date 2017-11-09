@@ -10,7 +10,7 @@
   "main": "lib/index.js",
   "dependencies": {
     "graphql": "^0.11.7",
-    "graphql-tools": "^2.4.0",
+    "graphql-tools": "^2.7.2",
     "react-apollo": "^1.4.15",
     "react-cosmos-shared": "^3.0.0-beta.8"
   },
