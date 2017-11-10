@@ -1,4 +1,4 @@
-import ComponentPlayground from '../index';
+import ComponentPlayground, { READY } from '../index';
 
 export default {
   component: ComponentPlayground,
@@ -18,7 +18,7 @@ export default {
   },
 
   state: {
-    waitingForLoader: false,
+    loaderStatus: READY,
     fixtures: {
       ComponentA: ['foo', 'bar'],
       ComponentB: ['baz', 'qux']

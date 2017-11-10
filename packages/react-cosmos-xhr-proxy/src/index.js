@@ -17,6 +17,14 @@ export default function createXhrProxy(options) {
     constructor(props) {
       super(props);
 
+      if (module.hot) {
+        module.hot.status(status => {
+          if (status === 'check') {
+            xhrMock.teardown();
+          }
+        });
+      }
+
       this.mock();
     }
 

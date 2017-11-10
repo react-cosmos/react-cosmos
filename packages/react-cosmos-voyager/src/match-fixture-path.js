@@ -7,7 +7,9 @@ const buildPathMatchers = (componentName, fixturesDir) => [
 ];
 
 const buildDeprecatedPathMatchers = (componentName, fixturesDir) => [
-  `/${componentName}/src/${fixturesDir}/([^/]+)\\.(${FIXTURE_EXTENSIONS_REGEX})$`
+  `/${componentName}/src/${fixturesDir}/([^/]+)\\.(${
+    FIXTURE_EXTENSIONS_REGEX
+  })$`
 ];
 
 /**
@@ -33,9 +35,11 @@ const matchFixturePath = (fixturePath, componentName, fixturesDir) => {
     const matchResult = fixturePath.match(new RegExp(deprecatedMatchers[i]));
     if (matchResult) {
       console.warn(
-        `The fixture path "${fixturePath}" for component name "${componentName}" has matched a deprecated pattern ${deprecatedMatchers[
-          i
-        ]}, use getFixturePathsForComponent in your cosmos.config.js to handle special cases instead`
+        `The fixture path "${fixturePath}" for component name "${
+          componentName
+        }" has matched a deprecated pattern ${
+          deprecatedMatchers[i]
+        }, use getFixturePathsForComponent in your cosmos.config.js to handle special cases instead`
       );
       return matchResult[1];
     }

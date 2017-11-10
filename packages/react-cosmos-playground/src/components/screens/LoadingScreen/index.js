@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import DisplayScreen from '../DisplayScreen';
 import style from '../DisplayScreen/index.less';
 
-export default class LoadingScreen extends Component {
+export default class LoadingScreen extends Component<{}> {
   render() {
     return (
       <DisplayScreen delayed>
