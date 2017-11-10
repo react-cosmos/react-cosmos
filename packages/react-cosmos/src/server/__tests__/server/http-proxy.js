@@ -1,6 +1,6 @@
-import express from 'express';
 import startServer from '../../server';
 import httpProxyMiddleware from 'http-proxy-middleware';
+
 const mockRootPath = __dirname;
 
 jest.mock('react-cosmos-config', () => () => ({
