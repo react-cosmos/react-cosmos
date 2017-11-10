@@ -20,7 +20,8 @@ const readFileAsync = promisify(fs.readFile);
  * TODO: Support CJS
  */
 export async function extractComponentsFromFixtureFile(
-  fixturePath: string
+  fixturePath: string,
+  rootPath: string
 ): Promise<Array<ComponentInfo>> {
   const components = [];
   let ast;
@@ -109,7 +110,7 @@ export async function extractComponentsFromFixtureFile(
         // Eg: components/Button
         const isModulePath = importPath.match(/^[^./]/);
         filePath = isModulePath
-          ? `/${importPath}`
+          ? path.join(rootPath, importPath)
           : resolveUserPath(path.dirname(fixturePath), importPath);
       } catch (err) {
         // TODO: Allow user to see these errors when debugging

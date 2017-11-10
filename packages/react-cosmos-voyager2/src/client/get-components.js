@@ -160,6 +160,7 @@ function getCommonDirFromPaths(paths: Array<string>) {
 }
 
 function getFileNamespace(commonDir: string, filePath: ?string) {
+  // Warning: This function works well only when the filePath starts with /
   return filePath ? path.dirname(filePath).slice(commonDir.length + 1) : '';
 }
 

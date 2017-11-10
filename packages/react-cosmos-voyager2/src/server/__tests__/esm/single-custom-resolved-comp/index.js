@@ -23,6 +23,8 @@ describe('ES module / Single fixture with module component path', () => {
   });
 
   it('has component path', () => {
-    expect(files[0].components[0].filePath).toBe('/components/Italic');
+    expect(files[0].components[0].filePath).toBe(
+      join(__dirname, '__fsmocks__/components/Italic')
+    );
   });
 });
