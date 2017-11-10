@@ -706,7 +706,7 @@ module.exports = {
   // HTTP proxy specific requests to a different target
   httpProxy:  {
     context: '/api',
-    target: 'http://127.0.0.1:4000/api',
+    target: 'http://localhost:4000/api',
   },
 
   // These ones are self explanatory
