@@ -5,7 +5,7 @@ import { findFixtureFiles } from '../../../find-fixture-files';
 
 const { resolve } = require;
 
-describe('ES module / Single fixture with custom resolved component path', () => {
+describe('ES module / Single fixture with module component path', () => {
   let files;
 
   beforeEach(async () => {
@@ -23,6 +23,6 @@ describe('ES module / Single fixture with custom resolved component path', () =>
   });
 
   it('has component path', () => {
-    expect(files[0].components[0].filePath).toBe('components/Italic');
+    expect(files[0].components[0].filePath).toBe('/components/Italic');
   });
 });
