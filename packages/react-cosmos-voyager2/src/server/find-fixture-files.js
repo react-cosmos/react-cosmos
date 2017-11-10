@@ -53,7 +53,10 @@ export async function findFixtureFiles(
       continue;
     }
 
-    const components = await extractComponentsFromFixtureFile(filePath);
+    const components = await extractComponentsFromFixtureFile(
+      filePath,
+      rootPath
+    );
 
     fixtureFiles.push({
       filePath,
