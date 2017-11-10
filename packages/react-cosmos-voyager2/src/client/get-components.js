@@ -99,6 +99,10 @@ export function getComponents({
     }
 
     const filePath = componentPaths.get(componentType) || null;
+    const namespace =
+      typeof componentType.namespace === 'string'
+        ? componentType.namespace
+        : getCollapsedComponentNamespace(componentPathValues, filePath);
     const name =
       // Try to read the Class/function name at run-time. User can override
       // this for custom naming
@@ -110,18 +114,15 @@ export function getComponents({
       defaultComponentNamer();
 
     // Components with duplicate names can end up being squashed (#494), so
-    // it's best to keep component names unique
-    let namer = componentNamers.get(name);
+    // it's best to keep component names unique.
+    // That said, component names only have to be unique under the same namespace
+    const nsName = getObjectPath({ name, namespace });
+    let namer = componentNamers.get(nsName);
     if (!namer) {
       namer = createDefaultNamer(name);
-      componentNamers.set(name, namer);
+      componentNamers.set(nsName, namer);
     }
-
     const uniqueName = namer();
-    const namespace =
-      typeof componentType.namespace === 'string'
-        ? componentType.namespace
-        : getCollapsedComponentNamespace(componentPathValues, filePath);
 
     // We had to wait until now to be able to determine the common dir between
     // all fixtures belonging to the same component
