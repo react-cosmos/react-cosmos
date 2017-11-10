@@ -1,6 +1,7 @@
 import path from 'path';
 import { silent as silentImport } from 'import-from';
 import express from 'express';
+import httpProxyMiddleware from 'http-proxy-middleware';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import launchEditor from 'react-dev-utils/launchEditor';
@@ -18,7 +19,7 @@ const getPublicPath = (cosmosConfig, userWebpackConfig) => {
 
 export default function startServer() {
   const cosmosConfig = getCosmosConfig();
-  const { rootPath, hostname, hot, port, publicUrl } = cosmosConfig;
+  const { rootPath, hostname, hot, port, publicUrl, httpProxy } = cosmosConfig;
 
   const webpack = silentImport(rootPath, 'webpack');
   if (!webpack) {
@@ -41,6 +42,11 @@ export default function startServer() {
   });
   const loaderCompiler = webpack(loaderWebpackConfig);
   const app = express();
+
+  if (httpProxy) {
+    const { context, target } = httpProxy;
+    app.use(context, httpProxyMiddleware(target));
+  }
 
   app.use(
     webpackDevMiddleware(loaderCompiler, {

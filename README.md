@@ -703,6 +703,12 @@ module.exports = {
   // Disable hot module replacement
   hot: false,
 
+  // HTTP proxy specific requests to a different target
+  httpProxy:  {
+    context: '/api',
+    target: 'http://localhost:4000/api',
+  },
+
   // These ones are self explanatory
   hostname: 'localhost',
   port: 8989,
