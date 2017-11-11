@@ -62,7 +62,7 @@
     "lerna": "^2.5.1",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
-    "lint-staged": "^4.2.3",
+    "lint-staged": "^5.0.0",
     "prettier": "1.8.2",
     "prop-types": "^15.6.0",
     "react": "^16.1.0",
