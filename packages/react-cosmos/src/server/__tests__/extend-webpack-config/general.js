@@ -1,11 +1,14 @@
 import extendWebpackConfig from '../../extend-webpack-config';
 
-jest.mock('react-cosmos-config', () => () => ({
-  componentPaths: ['src/components'],
-  fixturePaths: ['test/fixtures'],
-  ignore: [],
-  globalImports: ['./global.css'],
-  containerQuerySelector: '__mock__containerQuerySelector'
+jest.mock('react-cosmos-config', () => ({
+  hasCosmosConfig: () => true,
+  getCosmosConfig: () => ({
+    componentPaths: ['src/components'],
+    fixturePaths: ['test/fixtures'],
+    ignore: [],
+    globalImports: ['./global.css'],
+    containerQuerySelector: '__mock__containerQuerySelector'
+  })
 }));
 
 const DefinePlugin = jest.fn();

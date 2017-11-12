@@ -47,7 +47,7 @@ const defaults = {
   fixturePaths: []
 };
 
-export default function getCosmosConfig(cosmosConfigPath?: string): Config {
+export function getCosmosConfig(cosmosConfigPath?: string): Config {
   const configPath =
     cosmosConfigPath ||
     resolveUserPath(process.cwd(), argv.config || 'cosmos.config');

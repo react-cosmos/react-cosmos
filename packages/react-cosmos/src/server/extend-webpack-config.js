@@ -2,7 +2,7 @@
 
 import path from 'path';
 import omit from 'lodash.omit';
-import getCosmosConfig from 'react-cosmos-config';
+import { getCosmosConfig } from 'react-cosmos-config';
 
 import type { Config } from 'react-cosmos-config/src';
 

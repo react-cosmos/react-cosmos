@@ -8,11 +8,14 @@ import startExport from '../export';
 const mockRootPath = __dirname;
 const mockOutputPath = path.join(__dirname, './__fsoutput__/export');
 
-jest.mock('react-cosmos-config', () => () => ({
-  rootPath: mockRootPath,
-  outputPath: mockOutputPath,
-  globalImports: [],
-  componentPaths: []
+jest.mock('react-cosmos-config', () => ({
+  hasCosmosConfig: () => true,
+  getCosmosConfig: () => ({
+    rootPath: mockRootPath,
+    outputPath: mockOutputPath,
+    globalImports: [],
+    componentPaths: []
+  })
 }));
 
 jest.mock('webpack', () =>

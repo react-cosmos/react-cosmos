@@ -10,12 +10,15 @@ import extendWebpackConfig from '../../extend-webpack-config';
 const readFileAsync = promisify(fs.readFile);
 const mockRootPath = __dirname;
 
-jest.mock('react-cosmos-config', () => () => ({
-  rootPath: mockRootPath,
-  port: 9999,
-  hostname: '127.0.0.1',
-  globalImports: [],
-  componentPaths: []
+jest.mock('react-cosmos-config', () => ({
+  hasCosmosConfig: () => true,
+  getCosmosConfig: () => ({
+    rootPath: mockRootPath,
+    port: 9999,
+    hostname: '127.0.0.1',
+    globalImports: [],
+    componentPaths: []
+  })
 }));
 
 const getCbs = {};

@@ -5,7 +5,7 @@ import httpProxyMiddleware from 'http-proxy-middleware';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import launchEditor from 'react-dev-utils/launchEditor';
-import getCosmosConfig from 'react-cosmos-config';
+import { getCosmosConfig } from 'react-cosmos-config';
 import extendWebpackConfig from './extend-webpack-config';
 import { getUserWebpackConfig } from './user-webpack-config';
 import getPlaygroundHtml from './playground-html';

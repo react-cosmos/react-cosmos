@@ -1,7 +1,7 @@
 // @flow
 
 import path from 'path';
-import getCosmosConfig from 'react-cosmos-config';
+import { getCosmosConfig } from 'react-cosmos-config';
 import { moduleExists } from 'react-cosmos-shared/lib/server';
 import getFilePaths from 'react-cosmos-voyager';
 import { findFixtureFiles } from 'react-cosmos-voyager2/lib/server';

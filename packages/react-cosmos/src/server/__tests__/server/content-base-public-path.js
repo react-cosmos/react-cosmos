@@ -3,15 +3,18 @@ import startServer from '../../server';
 
 const mockRootPath = __dirname;
 
-jest.mock('react-cosmos-config', () => () => ({
-  rootPath: mockRootPath,
-  port: 9999,
-  hostname: '127.0.0.1',
-  publicPath: 'server/public',
-  publicUrl: '/static/',
-  webpackConfigPath: require.resolve('./__fsmocks__/webpack.config'),
-  globalImports: [],
-  componentPaths: []
+jest.mock('react-cosmos-config', () => ({
+  hasCosmosConfig: () => true,
+  getCosmosConfig: () => ({
+    rootPath: mockRootPath,
+    port: 9999,
+    hostname: '127.0.0.1',
+    publicPath: 'server/public',
+    publicUrl: '/static/',
+    webpackConfigPath: require.resolve('./__fsmocks__/webpack.config'),
+    globalImports: [],
+    componentPaths: []
+  })
 }));
 
 const getCbs = {};

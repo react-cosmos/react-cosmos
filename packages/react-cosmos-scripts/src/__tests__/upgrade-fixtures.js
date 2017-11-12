@@ -4,11 +4,12 @@ import { readFileSync, writeFileSync } from 'fs';
 import upgradeFixtures from '../upgrade-fixtures';
 import { addComponentToFixture } from '../transforms/add-component-to-fixture';
 
-jest.mock('react-cosmos-config', () =>
-  jest.fn(() => ({
+jest.mock('react-cosmos-config', () => ({
+  hasCosmosConfig: () => true,
+  getCosmosConfig: jest.fn(() => ({
     componentPaths: ['foo']
   }))
-);
+}));
 
 const mockComponents = {
   'ill/shared/emoji-block': '/path/to/components/ill/shared/emoji-block.js',

@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import camelCase from 'lodash.camelcase';
 import upperFirst from 'lodash.upperfirst';
-import getCosmosConfig from 'react-cosmos-config';
+import { getCosmosConfig } from 'react-cosmos-config';
 import getFilePaths from 'react-cosmos-voyager';
 import { addComponentToFixture } from './transforms/add-component-to-fixture';
 
