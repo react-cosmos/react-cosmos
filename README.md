@@ -21,7 +21,7 @@
   </a>
 </p>
 
-> **Install `react-cosmos@next` and try out Cosmos 3.0 BETA! 👌**
+> **Install `react-cosmos@next` and try out Cosmos 3.0 RC! 👌**
 
 Cosmos scans your project for components and enables you to:
 
