@@ -134,6 +134,8 @@ If something's wrong
 
 ### Fixtures
 
+> **Old fixtures need to be adjusted to work with Cosmos v3**. Check out this [guide for upgrading](docs/fixture-upgrade.md).
+
 #### What's a fixture?
 
 A fixture is a JS object used to mock component input and external dependencies. The input can be [props](#props), [children](#children), [state](#state) and [context](#context). With the help of [proxies](#proxies), fixtures can mock anything else a component depends on, from API responses to localStorage.
