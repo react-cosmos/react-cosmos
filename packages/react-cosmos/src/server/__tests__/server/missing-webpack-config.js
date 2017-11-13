@@ -10,7 +10,7 @@ const mockWebpackConfigPath = path.join(
 );
 
 jest.mock('react-cosmos-config', () => ({
-  hasCosmosConfig: () => true,
+  hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
     port: 9999,

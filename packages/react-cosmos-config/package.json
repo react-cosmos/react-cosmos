@@ -12,5 +12,10 @@
     "react-cosmos-shared": "^3.0.0-beta.13",
     "yargs": "^9.0.1"
   },
+  "devDependencies": {
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2.6.2",
+    "touch": "^3.1.0"
+  },
   "xo": false
 }

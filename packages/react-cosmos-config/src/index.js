@@ -1,10 +1,12 @@
 // @flow
 
+import fs from 'fs';
 import path from 'path';
 import { argv } from 'yargs';
 import { importModule } from 'react-cosmos-shared';
 import { moduleExists, resolveUserPath } from 'react-cosmos-shared/lib/server';
 import { log, warn } from './log';
+import { CRA_COSMOS_CONFIG } from './config-templates';
 
 import type { ExcludePatterns } from 'react-cosmos-shared/src/types';
 
@@ -48,12 +50,10 @@ const defaults = {
 };
 
 export function getCosmosConfig(cosmosConfigPath?: string): Config {
-  const configPath =
-    cosmosConfigPath ||
-    resolveUserPath(process.cwd(), argv.config || 'cosmos.config');
+  const configPath = getUserConfigPath(cosmosConfigPath);
   const relPath = path.dirname(configPath);
 
-  if (!moduleExists(configPath)) {
+  if (!configExist(configPath)) {
     if (argv.config) {
       const relPath = path.relative(process.cwd(), configPath);
       warn(`[Cosmos] No config file found at ${relPath}, using defaults`);
@@ -71,6 +71,40 @@ export function getCosmosConfig(cosmosConfigPath?: string): Config {
   };
 
   return getNormalizedConfig(config, relPath);
+}
+
+export function hasUserCosmosConfig(): boolean {
+  return configExist(getUserConfigPath());
+}
+
+export function generateCosmosConfig(): ?string {
+  // Warning: This code assumes the user hasn't created cosmos.config by now
+  const configPath = getUserConfigPath();
+  const rootPath = path.dirname(configPath);
+  const craWebpackConfigPath = 'react-scripts/config/webpack.config.dev';
+
+  if (moduleExists(resolveUserPath(rootPath, craWebpackConfigPath))) {
+    fs.writeFileSync(configPath, CRA_COSMOS_CONFIG, 'utf8');
+
+    return 'Create React App';
+  }
+}
+
+function getUserConfigPath(customConfigPath?: string) {
+  const loosePath = path.resolve(
+    process.cwd(),
+    customConfigPath || argv.config || 'cosmos.config.js'
+  );
+
+  // Ensure path has file extension
+  return loosePath.match(/\.js$/) ? loosePath : `${loosePath}.js`;
+}
+
+function configExist(path: string): boolean {
+  // Only resolve config path once we know it exists, otherwise the path will
+  // be cached to a missing module for the rest of the process execution.
+  // This allows us to generate the config at run time and import it later.
+  return fs.existsSync(path);
 }
 
 function getNormalizedConfig(relativeConfig: Config, relPath: string): Config {

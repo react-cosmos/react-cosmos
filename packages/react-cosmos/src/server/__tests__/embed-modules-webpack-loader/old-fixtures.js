@@ -2,7 +2,7 @@
 const embedModules = require('../../embed-modules-webpack-loader');
 
 jest.mock('react-cosmos-config', () => ({
-  hasCosmosConfig: () => true,
+  hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
     componentPaths: ['/path/to/components'],
     proxiesPath: require.resolve('../__fsmocks__/cosmos.proxies')

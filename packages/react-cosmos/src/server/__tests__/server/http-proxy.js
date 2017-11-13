@@ -4,7 +4,7 @@ import httpProxyMiddleware from 'http-proxy-middleware';
 const mockRootPath = __dirname;
 
 jest.mock('react-cosmos-config', () => ({
-  hasCosmosConfig: () => true,
+  hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
     port: 9999,

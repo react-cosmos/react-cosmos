@@ -5,7 +5,7 @@ import upgradeFixtures from '../upgrade-fixtures';
 import { addComponentToFixture } from '../transforms/add-component-to-fixture';
 
 jest.mock('react-cosmos-config', () => ({
-  hasCosmosConfig: () => true,
+  hasUserCosmosConfig: () => true,
   getCosmosConfig: jest.fn(() => ({
     componentPaths: ['foo']
   }))

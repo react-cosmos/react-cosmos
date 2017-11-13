@@ -9,7 +9,7 @@ const mockRootPath = __dirname;
 const mockOutputPath = path.join(__dirname, './__fsoutput__/export');
 
 jest.mock('react-cosmos-config', () => ({
-  hasCosmosConfig: () => true,
+  hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
     outputPath: mockOutputPath,

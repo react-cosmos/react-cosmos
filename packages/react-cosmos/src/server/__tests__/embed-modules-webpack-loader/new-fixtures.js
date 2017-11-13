@@ -8,7 +8,7 @@ const mockFileMatch = [];
 const mockExclude = [];
 
 jest.mock('react-cosmos-config', () => ({
-  hasCosmosConfig: () => true,
+  hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
     rootPath: 'MOCK_ROOT_PATH',
     fileMatch: mockFileMatch,
