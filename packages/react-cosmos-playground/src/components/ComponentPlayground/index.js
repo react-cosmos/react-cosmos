@@ -78,35 +78,11 @@ export default class ComponentPlayground extends Component<Props, State> {
     fixtures: {}
   };
 
-  async componentDidMount(): any {
+  componentDidMount() {
     window.addEventListener('message', this.onMessage, false);
     window.addEventListener('resize', this.onResize, false);
 
-    // Check if Loader is working
-    const { status } = await fetch(this.props.options.loaderUri);
-    if (status === 200) {
-      // Wait until all session settings are read before rendering
-      this.restoreUserSettings(() => {
-        // XXX: Because we can't mock the iframe contents we sometimes inject
-        // loaderStatus via fixture.state. Don't override it in those cases.
-        // TODO: The bigger issue here is that Playground fixtures mock state
-        // which in real life is the result of several state transitions. In
-        // the long term we should not mock the final state but a natural state
-        // progression. In this case we should mock
-        // 1. Loader check response (fetch)
-        // 2. Loader ready event (window.postMessage) – At the moment we can't
-        // mock this via fixtures.
-        if (this.state.loaderStatus === PENDING) {
-          this.setState({
-            loaderStatus: OK
-          });
-        }
-      });
-    } else {
-      this.setState({
-        loaderStatus: MISSING
-      });
-    }
+    this.checkLoaderStatus();
   }
 
   componentWillUnmount() {
@@ -263,6 +239,45 @@ export default class ComponentPlayground extends Component<Props, State> {
   handleIframeRef = (node: ?HTMLElement) => {
     this.loaderFrame = node;
   };
+
+  async checkLoaderStatus() {
+    // We can't do fetch requests when Cosmos exports are opened without a
+    // web server (ie. via file:/// protocol), so we might as well be optimistic
+    // and assume the Loader iframe responds 200
+    if (location.protocol === 'file:') {
+      this.restoreUserSettings(() => {
+        this.setState({
+          loaderStatus: OK
+        });
+      });
+    } else {
+      // Check if Loader is working
+      const { status } = await fetch(this.props.options.loaderUri);
+      if (status === 200) {
+        // Wait until all session settings are read before rendering
+        this.restoreUserSettings(() => {
+          // XXX: Because we can't mock the iframe contents we sometimes inject
+          // loaderStatus via fixture.state. Don't override it in those cases.
+          // TODO: The bigger issue here is that Playground fixtures mock state
+          // which in real life is the result of several state transitions. In
+          // the long term we should not mock the final state but a natural state
+          // progression. In this case we should mock
+          // 1. Loader check response (fetch)
+          // 2. Loader ready event (window.postMessage) – At the moment we can't
+          // mock this via fixtures.
+          if (this.state.loaderStatus === PENDING) {
+            this.setState({
+              loaderStatus: OK
+            });
+          }
+        });
+      } else {
+        this.setState({
+          loaderStatus: MISSING
+        });
+      }
+    }
+  }
 
   restoreUserSettings = async (cb?: Function) => {
     // Remember the resizable pane offsets between sessions
