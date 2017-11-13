@@ -1,7 +1,7 @@
 // @flow
 
 import path from 'path';
-import getCosmosConfig from '../../../';
+import { getCosmosConfig, hasUserCosmosConfig } from '../../../';
 
 jest.mock('yargs', () => ({ argv: {} }));
 
@@ -25,5 +25,9 @@ describe('[CLI path] when no config exists', () => {
       rootPath: mocksPath,
       webpackConfigPath: path.join(mocksPath, 'webpack.config')
     });
+  });
+
+  it('reports users has no config', () => {
+    expect(hasUserCosmosConfig()).toBe(false);
   });
 });

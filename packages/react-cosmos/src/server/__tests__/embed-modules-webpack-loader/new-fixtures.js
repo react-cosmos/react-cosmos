@@ -7,12 +7,15 @@ const embedModules = require('../../embed-modules-webpack-loader');
 const mockFileMatch = [];
 const mockExclude = [];
 
-jest.mock('react-cosmos-config', () => () => ({
-  rootPath: 'MOCK_ROOT_PATH',
-  fileMatch: mockFileMatch,
-  exclude: mockExclude,
-  componentPaths: [],
-  proxiesPath: require.resolve('../__fsmocks__/cosmos.proxies')
+jest.mock('react-cosmos-config', () => ({
+  hasUserCosmosConfig: () => true,
+  getCosmosConfig: () => ({
+    rootPath: 'MOCK_ROOT_PATH',
+    fileMatch: mockFileMatch,
+    exclude: mockExclude,
+    componentPaths: [],
+    proxiesPath: require.resolve('../__fsmocks__/cosmos.proxies')
+  })
 }));
 
 const mockFixtureFiles = [

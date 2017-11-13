@@ -6,16 +6,21 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import startServer from '../../server';
 import extendWebpackConfig from '../../extend-webpack-config';
+import { generateCosmosConfig } from 'react-cosmos-config';
 
 const readFileAsync = promisify(fs.readFile);
 const mockRootPath = __dirname;
 
-jest.mock('react-cosmos-config', () => () => ({
-  rootPath: mockRootPath,
-  port: 9999,
-  hostname: '127.0.0.1',
-  globalImports: [],
-  componentPaths: []
+jest.mock('react-cosmos-config', () => ({
+  hasUserCosmosConfig: () => true,
+  generateCosmosConfig: jest.fn(),
+  getCosmosConfig: () => ({
+    rootPath: mockRootPath,
+    port: 9999,
+    hostname: '127.0.0.1',
+    globalImports: [],
+    componentPaths: []
+  })
 }));
 
 const getCbs = {};
@@ -125,4 +130,8 @@ it('starts express server with hostname & port', () => {
   const [port, hostname] = mockListen.mock.calls[0];
   expect(port).toBe(9999);
   expect(hostname).toBe('127.0.0.1');
+});
+
+it('does not call config generation function', () => {
+  expect(generateCosmosConfig).not.toHaveBeenCalled();
 });

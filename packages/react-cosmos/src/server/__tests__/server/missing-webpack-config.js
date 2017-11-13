@@ -9,13 +9,16 @@ const mockWebpackConfigPath = path.join(
   './__fsmocks__/missing.webpack.config'
 );
 
-jest.mock('react-cosmos-config', () => () => ({
-  rootPath: mockRootPath,
-  port: 9999,
-  hostname: '127.0.0.1',
-  webpackConfigPath: mockWebpackConfigPath,
-  globalImports: [],
-  componentPaths: []
+jest.mock('react-cosmos-config', () => ({
+  hasUserCosmosConfig: () => true,
+  getCosmosConfig: () => ({
+    rootPath: mockRootPath,
+    port: 9999,
+    hostname: '127.0.0.1',
+    webpackConfigPath: mockWebpackConfigPath,
+    globalImports: [],
+    componentPaths: []
+  })
 }));
 
 const getCbs = {};

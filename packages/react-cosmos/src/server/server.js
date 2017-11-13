@@ -5,7 +5,11 @@ import httpProxyMiddleware from 'http-proxy-middleware';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import launchEditor from 'react-dev-utils/launchEditor';
-import getCosmosConfig from 'react-cosmos-config';
+import {
+  getCosmosConfig,
+  hasUserCosmosConfig,
+  generateCosmosConfig
+} from 'react-cosmos-config';
 import extendWebpackConfig from './extend-webpack-config';
 import { getUserWebpackConfig } from './user-webpack-config';
 import getPlaygroundHtml from './playground-html';
@@ -18,6 +22,14 @@ const getPublicPath = (cosmosConfig, userWebpackConfig) => {
 };
 
 export default function startServer() {
+  if (!hasUserCosmosConfig()) {
+    const generatedConfigFor = generateCosmosConfig();
+    if (generatedConfigFor) {
+      console.log(`[Cosmos] Nice! You're using ${generatedConfigFor}`);
+      console.log('[Cosmos] Generated a tailored config file for your setup');
+    }
+  }
+
   const cosmosConfig = getCosmosConfig();
   const { rootPath, hostname, hot, port, publicUrl, httpProxy } = cosmosConfig;
 

@@ -1,10 +1,11 @@
-import webpackHotMiddleware from 'webpack-hot-middleware';
+import { hasUserCosmosConfig, generateCosmosConfig } from 'react-cosmos-config';
 import startServer from '../../server';
 
 const mockRootPath = __dirname;
 
 jest.mock('react-cosmos-config', () => ({
-  hasUserCosmosConfig: () => true,
+  hasUserCosmosConfig: jest.fn(() => false),
+  generateCosmosConfig: jest.fn(),
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
     port: 9999,
@@ -46,10 +47,10 @@ beforeEach(() => {
   startServer();
 });
 
-it('sends webpack compiler to hot middleware', () => {
-  expect(webpackHotMiddleware.mock.calls[0][0]).toBe('MOCK_WEBPACK_COMPILER');
+it('checks if user has cosmos config', () => {
+  expect(hasUserCosmosConfig).toHaveBeenCalled();
 });
 
-it('does not use hot middleware', () => {
-  expect(mockUse).toHaveBeenCalledWith('MOCK_HOT_MIDDLEWARE');
+it('calls config generation function', () => {
+  expect(generateCosmosConfig).toHaveBeenCalled();
 });

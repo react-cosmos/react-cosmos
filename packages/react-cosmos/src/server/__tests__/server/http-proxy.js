@@ -3,13 +3,16 @@ import httpProxyMiddleware from 'http-proxy-middleware';
 
 const mockRootPath = __dirname;
 
-jest.mock('react-cosmos-config', () => () => ({
-  rootPath: mockRootPath,
-  port: 9999,
-  hostname: '127.0.0.1',
-  httpProxy: { context: '/api', target: 'http://127.0.0.1:4000/api' },
-  globalImports: [],
-  componentPaths: []
+jest.mock('react-cosmos-config', () => ({
+  hasUserCosmosConfig: () => true,
+  getCosmosConfig: () => ({
+    rootPath: mockRootPath,
+    port: 9999,
+    hostname: '127.0.0.1',
+    httpProxy: { context: '/api', target: 'http://127.0.0.1:4000/api' },
+    globalImports: [],
+    componentPaths: []
+  })
 }));
 
 const getCbs = {};

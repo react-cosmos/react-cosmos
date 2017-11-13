@@ -1,9 +1,12 @@
 // Requiring because embed-modules-webpack-loader is a CJS module
 const embedModules = require('../../embed-modules-webpack-loader');
 
-jest.mock('react-cosmos-config', () => () => ({
-  componentPaths: ['/path/to/components'],
-  proxiesPath: require.resolve('../__fsmocks__/cosmos.proxies')
+jest.mock('react-cosmos-config', () => ({
+  hasUserCosmosConfig: () => true,
+  getCosmosConfig: () => ({
+    componentPaths: ['/path/to/components'],
+    proxiesPath: require.resolve('../__fsmocks__/cosmos.proxies')
+  })
 }));
 
 jest.mock('react-cosmos-voyager', () => () => ({
