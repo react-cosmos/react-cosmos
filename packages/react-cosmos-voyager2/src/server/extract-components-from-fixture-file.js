@@ -131,9 +131,8 @@ export async function extractComponentsFromFixtureFile(
 }
 
 function getImportPathByName(imports, importName: string): string | null {
-  // TODO: Support `import { component }` or `import { component as component }`
-  const relevantImport = imports.find(
-    i => i.specifiers[0].local.name === importName
+  const relevantImport = imports.find(i =>
+    i.specifiers.some(s => s.local.name === importName)
   );
 
   return relevantImport ? relevantImport.source.value : null;
