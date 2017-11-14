@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-webpack-dll-example",
-  "version": "3.0.0-rc.4",
+  "version": "3.0.0-rc.5",
   "description": "Example of webpack & DllPlugin",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/webpack-dll",
   "license": "MIT",
@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "moment": "^2.18.1",
-    "react-cosmos": "^3.0.0-rc.4"
+    "react-cosmos": "^3.0.0-rc.5"
   },
   "devDependencies": {
     "add-asset-html-webpack-plugin": "^2.0.1"
