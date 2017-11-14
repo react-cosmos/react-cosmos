@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos",
-  "version": "3.0.0-rc.2",
+  "version": "3.0.0-rc.3",
   "publishConfig": {
     "access": "public"
   },
@@ -18,12 +18,12 @@
     "http-proxy-middleware": "^0.17.4",
     "import-from": "^2.1.0",
     "lodash.omit": "^4.5.0",
-    "react-cosmos-config": "^3.0.0-rc.2",
-    "react-cosmos-loader": "^3.0.0-rc.2",
-    "react-cosmos-playground": "^3.0.0-rc.2",
-    "react-cosmos-shared": "^3.0.0-rc.2",
-    "react-cosmos-voyager": "^3.0.0-rc.2",
-    "react-cosmos-voyager2": "^3.0.0-rc.2",
+    "react-cosmos-config": "^3.0.0-rc.3",
+    "react-cosmos-loader": "^3.0.0-rc.3",
+    "react-cosmos-playground": "^3.0.0-rc.3",
+    "react-cosmos-shared": "^3.0.0-rc.3",
+    "react-cosmos-voyager": "^3.0.0-rc.3",
+    "react-cosmos-voyager2": "^3.0.0-rc.3",
     "react-dev-utils": "^4.2.1",
     "react-error-overlay": "^3.0.0",
     "resolve-from": "^3.0.0",
