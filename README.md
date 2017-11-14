@@ -72,6 +72,7 @@ Jump to:
   - [Fetch](#fetch)
   - [XHR](#xhr)
   - [LocalStorage](#localstorage)
+  - [More proxies...](#more-proxies)
 - [Integration with popular tools](#integration-with-popular-tools)
   - [Create React App](#create-react-app)
   - [Next.js](#nextjs)
@@ -261,6 +262,7 @@ Jump to:
 - [Fetch](#fetch)
 - [XHR](#xhr)
 - [LocalStorage](#localstorage)
+- [More proxies...](#more-proxies)
 
 #### Context
 
@@ -546,6 +548,11 @@ export default {
 };
 ```
 
+#### More proxies
+
+Other proxies created by the Cosmos community:
+- [alp82/react-cosmos-glamorous-proxy](https://github.com/alp82/react-cosmos-glamorous-proxy) A simple proxy for react-cosmos to load glamorous themes
+
 *What proxy would you create to improve DX?*
 
 ### Integration with popular tools
@@ -682,11 +689,16 @@ module.exports = {
     './global.css',
   ],
 
+  // Customize pattern(s) for matching fixture files
+  fileMatch: [
+    '**/fixtures-in-here/**/*.js'
+  ],
+
   // Fixtures will not be loaded in the playground if their names match these
   exclude: [
-    /notAFixture/,
-    /itsComplicated/,
-    /itsNotMeItsYou/,
+    /not-a-fixture/,
+    /its-complicated/,
+    /its-not-me-its-you/,
   ],
 
   // Where to serve static files from. Like --content-base in webpack-dev-server.
