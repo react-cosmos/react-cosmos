@@ -21,7 +21,7 @@
     "react-cosmos-voyager": "^3.0.0-rc.2"
   },
   "bin": {
-    "upgrade-fixtures": "./bin/upgrade-fixtures.js"
+    "cosmos-upgrade-fixtures": "./bin/upgrade-fixtures.js"
   },
   "xo": false
 }
