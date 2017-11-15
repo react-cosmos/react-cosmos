@@ -1,6 +1,5 @@
 [ignore]
 .*/react-cosmos-voyager/src/use-cases/.*
-.*/react-cosmos-voyager/lib/use-cases/.*
 💩 Ignore packages with type issues
 .*/node_modules/apollo-client/.*
 .*/node_modules/apollo-link-core/.*
