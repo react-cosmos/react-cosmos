@@ -610,7 +610,9 @@ Add `react-cosmos` to dev dependencies and create `cosmos.config.js`.
 ```js
 // cosmos.config.js
 module.exports = {
+  containerQuerySelector: '#app',
   webpackConfigPath: './internals/webpack/webpack.dev.babel',
+  globalImports: ['./app/global-styles.js'],
 };
 ```
 
