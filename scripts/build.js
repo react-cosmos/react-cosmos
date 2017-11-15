@@ -17,15 +17,22 @@ const COMPONENT_PLAYGROUND = 'react-cosmos-playground';
  * @returns promise Child process wrapped in a Promise.
  */
 function runBuildTask(options) {
+  const packageName = options.packageName;
+
+  const ignore = ['__tests__', '__mocks__'];
+  if (packageName === 'react-cosmos-voyager') {
+    ignore.push('use-cases');
+  }
+
   const babelTask = {
     name: 'babel',
     args: [
-      `packages/${options.packageName}/src`,
+      `packages/${packageName}/src`,
       '--out-dir',
-      `packages/${options.packageName}/lib`,
+      `packages/${packageName}/lib`,
       '--copy-files',
       '--ignore',
-      '__tests__,__mocks__'
+      ignore.join(',')
     ]
   };
 
