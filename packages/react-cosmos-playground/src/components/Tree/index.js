@@ -88,7 +88,12 @@ const extractHocNames = string => {
   return { componentName, hocs };
 };
 
-const ComponentName = ({ name, searchText }) => {
+const ComponentName = ({ node: { name, type }, searchText }) => {
+  if (type !== 'component') {
+    // Don't parse e.g. directory names for parentheses
+    return <FuzzyHighligher searchText={searchText} textToHighlight={name} />;
+  }
+
   const { componentName, hocs } = extractHocNames(name);
   return (
     <span>
@@ -141,7 +146,7 @@ const TreeFolder = ({
           {node.expanded ? <DownArrowIcon /> : <RightArrowIcon />}
         </span>
         <Icon type={node.type} />
-        <ComponentName searchText={searchText} name={node.name} />
+        <ComponentName searchText={searchText} node={node} />
       </div>
       <Tree
         nodeArray={node.children}
