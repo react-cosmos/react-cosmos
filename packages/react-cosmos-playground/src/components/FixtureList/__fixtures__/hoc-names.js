@@ -10,7 +10,7 @@ export default {
     fixtures: {
       ComponentA: ['fixtureA'],
       'withRouter(ComponentA)': ['fixtureA'],
-      'withRouter(Connect(ComponentA))': ['fixtureA']
+      'withRouter(connect(ComponentA))': ['fixtureA']
     },
     urlParams: {},
     onUrlChange: () => {}
