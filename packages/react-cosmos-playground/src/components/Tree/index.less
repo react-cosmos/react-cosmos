@@ -35,19 +35,31 @@
     margin-right: 0.5 * @default-spacing;
   }
 
-  span {
+  .truncate {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-
-  &:hover {
-    background: @left-nav-bgcolor-selected;
+  // Needed to make sure styling of the ellipsis is the right color
+  // depending on whether or not we are showing HOC names.
+  .truncateHoc {
+    color: @left-nav-color-selected-lighter;
+  }
+  .truncateComponent {
+    color: @left-nav-color-selected;
   }
 
   .hocs {
     color: @left-nav-color-selected-lighter;
     font-size: 80%;
+  }
+
+  .name {
+    color: @left-nav-color-selected;
+  }
+
+  &:hover {
+    background: @left-nav-bgcolor-selected;
   }
 }
 

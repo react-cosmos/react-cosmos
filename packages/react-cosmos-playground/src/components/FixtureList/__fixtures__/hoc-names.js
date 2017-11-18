@@ -8,8 +8,8 @@ export default {
       projectKey: 'test'
     },
     fixtures: {
-      ComponentA: ['fixtureA'],
-      'withRouter(ComponentA)': ['fixtureA'],
+      ThisIsAVeryLongComponentName: ['fixtureA'],
+      'withRouter(ThisIsAVeryLongComponentName)': ['fixtureA'],
       'withRouter(connect(ComponentA))': ['fixtureA']
     },
     urlParams: {},

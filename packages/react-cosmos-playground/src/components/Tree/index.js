@@ -95,12 +95,21 @@ const ComponentName = ({ node: { name, type }, searchText }) => {
   }
 
   const { componentName, hocs } = extractHocNames(name);
+
+  const componentClasses = classNames({
+    [styles.truncate]: true,
+    [styles.truncateHoc]: hocs.length > 0,
+    [styles.truncateComponent]: hocs.length === 0
+  });
+
   return (
-    <span>
-      <FuzzyHighligher
-        searchText={searchText}
-        textToHighlight={componentName}
-      />
+    <span className={componentClasses}>
+      <span className={styles.name}>
+        <FuzzyHighligher
+          searchText={searchText}
+          textToHighlight={componentName}
+        />
+      </span>
       {hocs.length > 0 && (
         <span className={styles.hocs}>
           {' '}
