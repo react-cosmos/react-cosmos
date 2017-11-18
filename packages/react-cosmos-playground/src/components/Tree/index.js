@@ -77,18 +77,15 @@ const Icon = ({ type }) => {
 
 const extractHocNames = string => {
   const splitString = string.split('(');
-  const innerString = splitString[splitString.length - 1];
+  let componentName = splitString.pop();
+  const hocs = splitString;
 
-  if (splitString.length > 1) {
-    // Remove trailing )) from innerString
-    const slicedString = innerString.slice(0, -splitString.length + 1);
-    splitString[splitString.length - 1] = slicedString;
+  if (hocs.length > 0) {
+    // Remove trailing )s from componentName
+    componentName = componentName.slice(0, -hocs.length);
   }
 
-  return {
-    componentName: splitString.pop(),
-    hocs: splitString
-  };
+  return { componentName, hocs };
 };
 
 const ComponentName = ({ name, searchText }) => {
