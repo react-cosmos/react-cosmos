@@ -75,6 +75,43 @@ const Icon = ({ type }) => {
   }
 };
 
+const extractHocNames = string => {
+  const splitString = string.split('(');
+  const innerString = splitString[splitString.length - 1];
+
+  if (splitString.length > 1) {
+    // Remove trailing )) from innerString
+    const slicedString = innerString.slice(0, -splitString.length + 1);
+    splitString[splitString.length - 1] = slicedString;
+  }
+
+  return {
+    componentName: splitString.pop(),
+    hocs: splitString
+  };
+};
+
+const ComponentName = ({ name, searchText }) => {
+  const { componentName, hocs } = extractHocNames(name);
+  return (
+    <span>
+      <FuzzyHighligher
+        searchText={searchText}
+        textToHighlight={componentName}
+      />
+      {hocs.length > 0 && (
+        <span className={styles.hocs}>
+          {' '}
+          <FuzzyHighligher
+            searchText={searchText}
+            textToHighlight={hocs.join(', ')}
+          />
+        </span>
+      )}
+    </span>
+  );
+};
+
 const TreeFolder = ({
   node,
   onSelect,
@@ -107,7 +144,7 @@ const TreeFolder = ({
           {node.expanded ? <DownArrowIcon /> : <RightArrowIcon />}
         </span>
         <Icon type={node.type} />
-        <FuzzyHighligher searchText={searchText} textToHighlight={node.name} />
+        <ComponentName searchText={searchText} name={node.name} />
       </div>
       <Tree
         nodeArray={node.children}
