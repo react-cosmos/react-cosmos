@@ -1,6 +1,6 @@
 import set from 'lodash.set';
 import some from 'lodash.some';
-import sortBy from 'lodash.sortBy';
+import sortBy from 'lodash.sortby';
 
 const NODE_ORDER_BY_TYPE = ['directory', 'component'];
 
