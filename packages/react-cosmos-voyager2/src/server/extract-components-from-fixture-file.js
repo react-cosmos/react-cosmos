@@ -51,8 +51,10 @@ export async function extractComponentsFromFixtureFile(
   try {
     const { body } = ast.program;
 
-    // Get a list of all imports to query them later
+    // Get a list of all imports and vars to query them later
     const imports = body.filter(t.isImportDeclaration);
+    const vars = body.filter(t.isVariableDeclaration);
+
     const defaultExportNode = body.find(t.isExportDefaultDeclaration);
 
     if (!defaultExportNode) {
@@ -60,17 +62,27 @@ export async function extractComponentsFromFixtureFile(
     }
 
     const exportBody = defaultExportNode.declaration;
-    let fixtureNodes;
+
+    // Sometimes the export is referencing a previously declared var,
+    // other times it is declared inline
+    const fixtureBody = t.isIdentifier(exportBody)
+      ? getVarBodyByName(vars, exportBody.name)
+      : exportBody;
+
+    if (!fixtureBody) {
+      throw new Error('Could not parse fixture export');
+    }
 
     // Support for single and multi fixture files
-    if (t.isArrayExpression(exportBody)) {
-      fixtureNodes = exportBody.elements;
-    } else if (t.isObjectExpression(exportBody)) {
-      fixtureNodes = [exportBody];
+    let fixtureNodes;
+    if (t.isArrayExpression(fixtureBody)) {
+      fixtureNodes = fixtureBody.elements;
+    } else if (t.isObjectExpression(fixtureBody)) {
+      fixtureNodes = [fixtureBody];
     }
 
     if (!fixtureNodes) {
-      throw new Error('Could not parse fixture export');
+      throw new Error('Could not parse fixture contents');
     }
 
     fixtureNodes.forEach(fixtureNode => {
@@ -78,7 +90,18 @@ export async function extractComponentsFromFixtureFile(
       let filePath = null;
 
       try {
-        const compProp = fixtureNode.properties.find(
+        // Sometimes the fixture is referencing a previously declared var,
+        // other times it is declared inline
+        const fixtureBody = t.isIdentifier(fixtureNode)
+          ? getVarBodyByName(vars, fixtureNode.name)
+          : fixtureNode;
+
+        if (!t.isObjectExpression(fixtureBody)) {
+          throw new Error('Could not read fixture body');
+        }
+
+        // $FlowFixMe
+        const compProp = fixtureBody.properties.find(
           prop => prop.key.name === 'component'
         );
         if (!compProp) {
@@ -136,4 +159,19 @@ function getImportPathByName(imports, importName: string): string | null {
   );
 
   return relevantImport ? relevantImport.source.value : null;
+}
+
+// TODO: Find out how to use Flow types with Babel types
+function getVarBodyByName(vars, varName: string): any | null {
+  let varBody = null;
+
+  vars.forEach(declaration =>
+    declaration.declarations.forEach(declarator => {
+      if (declarator.id.name === varName) {
+        varBody = declarator.init;
+      }
+    })
+  );
+
+  return varBody;
 }
