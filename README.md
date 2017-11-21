@@ -16,12 +16,15 @@
   <a href="https://join-react-cosmos.now.sh/">
     <img alt="Slack" src="https://join-react-cosmos.now.sh/badge.svg">
   </a>
+  <a href="https://spectrum.chat/cosmos">
+    <img alt="Join the community on Spectrum" src="https://withspectrum.github.io/badge/badge.svg" />
+  </a>
   <a href="CONTRIBUTING.md#how-to-contribute">
     <img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg">
   </a>
 </p>
 
-> **Install `react-cosmos@next` and try out Cosmos 3.0 RC! 👌**
+> **New: [Cosmos 3.0, the version you’ll fall in love with](https://medium.com/@skidding/cosmos-3-0-the-version-youll-fall-in-love-with-28a862ecf72e)**
 
 Cosmos scans your project for components and enables you to:
 
