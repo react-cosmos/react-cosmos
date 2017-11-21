@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-scripts",
-  "version": "3.0.0-rc.7",
+  "version": "3.0.0",
   "publishConfig": {
     "access": "public"
   },
@@ -17,8 +17,8 @@
     "jscodeshift": "^0.3.32",
     "lodash.camelcase": "^4.3.0",
     "lodash.upperfirst": "^4.3.1",
-    "react-cosmos-config": "^3.0.0-rc.7",
-    "react-cosmos-voyager": "^3.0.0-rc.7"
+    "react-cosmos-config": "^3.0.0",
+    "react-cosmos-voyager": "^3.0.0"
   },
   "bin": {
     "cosmos-upgrade-fixtures": "./bin/upgrade-fixtures.js"
