@@ -1,77 +1,54 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import { Loader } from 'react-cosmos-loader';
-import createStateProxy from 'react-cosmos-state-proxy';
+import createInitCallbackProxy from 'react-cosmos-loader/lib/components/InitCallbackProxy';
 import createFetchProxy from 'react-cosmos-fetch-proxy';
-import readyFixture from '../__fixtures__/ready';
+import { createContext, afterPendingTimers } from '../../../utils/enzyme';
 import FixtureList from '../../FixtureList';
 import WelcomeScreen from '../../screens/WelcomeScreen';
+import fixture from '../__fixtures__/ready';
 
-const StateProxy = createStateProxy();
+const InitCallbackProxy = createInitCallbackProxy();
 const FetchProxy = createFetchProxy();
 
-// Vars populated in beforeEach blocks
-let messageHandlers;
-let wrapper;
-
-const handleMessage = e => {
-  const { type } = e.data;
-  if (!messageHandlers[type]) {
-    throw new Error('Unexpected message event');
-  }
-  messageHandlers[type](e.data);
-};
-
-const waitForPostMessage = type =>
-  new Promise(resolve => {
-    messageHandlers[type] = resolve;
-  });
+const { mount, getWrapper } = createContext({
+  proxies: [InitCallbackProxy, FetchProxy],
+  fixture
+});
 
 describe('CP fixture list update', () => {
-  beforeEach(() => {
-    messageHandlers = {};
-    window.addEventListener('message', handleMessage, false);
+  beforeEach(async () => {
+    await mount();
 
-    const onFixtureListUpdate = waitForPostMessage('fixtureListUpdate');
-
-    // Mount component in order for ref and lifecycle methods to be called
-    wrapper = mount(
-      <Loader proxies={[StateProxy, FetchProxy]} fixture={readyFixture} />
+    window.postMessage(
+      {
+        type: 'fixtureListUpdate',
+        fixtures: {
+          ComponentA: ['foo', 'bar'],
+          ComponentB: ['baz', 'qux', 'quux']
+        }
+      },
+      '*'
     );
 
-    return Promise.resolve()
-      .then(() => {
-        window.postMessage(
-          {
-            type: 'fixtureListUpdate',
-            fixtures: {
-              ComponentA: ['foo', 'bar'],
-              ComponentB: ['baz', 'qux', 'quux']
-            }
-          },
-          '*'
-        );
-
-        return onFixtureListUpdate;
-      })
-      .then(() => {
-        wrapper.update();
-      });
-  });
-
-  afterEach(() => {
-    window.removeEventListener('message', handleMessage);
+    // postMessage is async, but should be received by next loop
+    await afterPendingTimers();
   });
 
   test('should send fixtures to fixture list', () => {
-    expect(wrapper.find(FixtureList).prop('fixtures')).toEqual({
+    expect(
+      getWrapper()
+        .find(FixtureList)
+        .prop('fixtures')
+    ).toEqual({
       ComponentA: ['foo', 'bar'],
       ComponentB: ['baz', 'qux', 'quux']
     });
   });
 
   test('should send fixtures to welcome screen', () => {
-    expect(wrapper.find(WelcomeScreen).prop('fixtures')).toEqual({
+    expect(
+      getWrapper()
+        .find(WelcomeScreen)
+        .prop('fixtures')
+    ).toEqual({
       ComponentA: ['foo', 'bar'],
       ComponentB: ['baz', 'qux', 'quux']
     });

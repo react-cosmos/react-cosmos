@@ -3,9 +3,11 @@ import { render } from 'react-dom';
 import createStateProxy from 'react-cosmos-state-proxy';
 import RemoteLoader from './components/RemoteLoader';
 import createErrorCatchProxy from './components/ErrorCatchProxy';
+import createInitCallbackProxy from './components/InitCallbackProxy';
 
 let StateProxy;
 let ErrorCatchProxy;
+let InitCallbackProxy;
 
 const createDomContainer = () => {
   const existingNode = document.getElementById('root');
@@ -30,6 +32,7 @@ export function mount({ proxies, fixtures, containerQuerySelector }) {
   if (!StateProxy) {
     StateProxy = createStateProxy();
     ErrorCatchProxy = createErrorCatchProxy();
+    InitCallbackProxy = createInitCallbackProxy();
   }
 
   render(
@@ -38,6 +41,7 @@ export function mount({ proxies, fixtures, containerQuerySelector }) {
       proxies={[
         // Some proxies are loaded by default in all configs
         ErrorCatchProxy,
+        InitCallbackProxy,
         ...proxies,
         StateProxy
       ]}

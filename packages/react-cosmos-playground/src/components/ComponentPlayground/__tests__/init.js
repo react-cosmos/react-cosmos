@@ -1,32 +1,31 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import afterOngoingPromises from 'after-ongoing-promises';
-import { Loader } from 'react-cosmos-loader';
-import initFixture from '../__fixtures__/init';
 import createFetchProxy from 'react-cosmos-fetch-proxy';
+import { createContext } from '../../../utils/enzyme';
 import StarryBg from '../../StarryBg';
+import fixture from '../__fixtures__/init';
 
 const FetchProxy = createFetchProxy();
 
-describe('CP init', () => {
-  let wrapper;
+const { mount, getWrapper } = createContext({
+  proxies: [FetchProxy],
+  fixture
+});
 
-  beforeEach(async () => {
-    wrapper = mount(<Loader proxies={[FetchProxy]} fixture={initFixture} />);
-    // Wait for Loader status to be confirmed
-    await afterOngoingPromises();
-    wrapper.update();
-  });
+describe('CP init', () => {
+  beforeEach(mount);
 
   test('should starry background', () => {
-    expect(wrapper.find(StarryBg)).toHaveLength(1);
+    expect(getWrapper().find(StarryBg)).toHaveLength(1);
   });
 
   test('should render loader iframe', () => {
-    expect(wrapper.find('iframe')).toHaveLength(1);
+    expect(getWrapper().find('iframe')).toHaveLength(1);
   });
 
   test('should render loader iframe with props.loaderUri', () => {
-    expect(wrapper.find('iframe').prop('src')).toBe('/mock/loader/index.html');
+    expect(
+      getWrapper()
+        .find('iframe')
+        .prop('src')
+    ).toBe('/mock/loader/index.html');
   });
 });

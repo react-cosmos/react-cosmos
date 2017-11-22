@@ -1,4 +1,5 @@
-import ComponentPlayground, { READY } from '../index';
+import ComponentPlayground from '../index';
+import { routerProps, init } from './_shared';
 
 export default {
   component: ComponentPlayground,
@@ -8,23 +9,9 @@ export default {
       loaderUri: '/mock/loader/index.html',
       projectKey: 'test'
     },
-    router: {
-      goTo: url => console.log('go to', url),
-      routeLink: e => {
-        e.preventDefault();
-        console.log('link to', e.currentTarget.href);
-      }
-    },
+    router: routerProps,
     component: 'ComponentA',
     fixture: 'foot'
-  },
-
-  state: {
-    loaderStatus: READY,
-    fixtures: {
-      ComponentA: ['foo', 'bar'],
-      ComponentB: ['baz', 'qux']
-    }
   },
 
   fetch: [
@@ -32,5 +19,7 @@ export default {
       matcher: 'end:/mock/loader/index.html',
       response: 200
     }
-  ]
+  ],
+
+  init
 };

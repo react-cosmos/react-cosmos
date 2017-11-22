@@ -1,85 +1,41 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import afterOngoingPromises from 'after-ongoing-promises';
-import { Loader } from 'react-cosmos-loader';
-import createStateProxy from 'react-cosmos-state-proxy';
+import until from 'async-until';
+import createInitCallbackProxy from 'react-cosmos-loader/lib/components/InitCallbackProxy';
 import createFetchProxy from 'react-cosmos-fetch-proxy';
-import selectedFixture from '../__fixtures__/selected';
+import { createContext } from '../../../utils/enzyme';
 import StarryBg from '../../StarryBg';
 import FixtureList from '../../FixtureList';
+import fixture from '../__fixtures__/selected';
 
-const StateProxy = createStateProxy();
+const InitCallbackProxy = createInitCallbackProxy();
 const FetchProxy = createFetchProxy();
 
-// Vars populated in beforeEach blocks
-let messageHandlers;
-let wrapper;
-let instance;
-let loaderContentWindow;
+const postMessage = jest.fn();
 
-const handleMessage = e => {
-  const { type } = e.data;
-  if (!messageHandlers[type]) {
-    throw new Error('Unexpected message event');
+const { mount, unmount, getWrapper } = createContext({
+  proxies: [InitCallbackProxy, FetchProxy],
+  fixture,
+  async mockRefs(compInstance) {
+    await until(() => compInstance.loaderFrame);
+    compInstance.loaderFrame = {
+      contentWindow: {
+        postMessage
+      }
+    };
   }
-  messageHandlers[type](e.data);
-};
-
-const waitForPostMessage = type =>
-  new Promise(resolve => {
-    messageHandlers[type] = resolve;
-  });
+});
 
 describe('CP with fixture already selected', () => {
   beforeEach(async () => {
-    messageHandlers = {};
-    window.addEventListener('message', handleMessage, false);
-
-    const onFrameReady = waitForPostMessage('loaderReady');
-
-    // Mount component in order for ref and lifecycle methods to be called
-    wrapper = mount(
-      <Loader
-        proxies={[StateProxy, FetchProxy]}
-        fixture={selectedFixture}
-        onComponentRef={i => {
-          instance = i;
-        }}
-      />
-    );
-
-    // Wait for Loader status to be confirmed
-    await afterOngoingPromises();
-
-    loaderContentWindow = {
-      postMessage: jest.fn()
-    };
-    // iframe.contentWindow isn't available in jsdom
-    instance.loaderFrame = {
-      contentWindow: loaderContentWindow
-    };
-
-    // State is already injected, but we need to trigger this event for the
-    // `fixtureSelect` message event to be triggered
-    window.postMessage(
-      {
-        type: 'loaderReady',
-        fixtures: selectedFixture.state.fixtures
-      },
-      '*'
-    );
-
-    await onFrameReady;
-
-    wrapper.update();
+    postMessage.mockClear();
+    await mount();
   });
 
   afterEach(() => {
-    window.removeEventListener('message', handleMessage);
+    unmount();
   });
 
   it('sends fixture select message to loader', () => {
-    expect(loaderContentWindow.postMessage).toHaveBeenCalledWith(
+    expect(postMessage).toHaveBeenCalledWith(
       {
         type: 'fixtureSelect',
         component: 'ComponentA',
@@ -93,7 +49,9 @@ describe('CP with fixture already selected', () => {
     let props;
 
     beforeEach(() => {
-      props = wrapper.find(FixtureList).props();
+      props = getWrapper()
+        .find(FixtureList)
+        .props();
     });
 
     it('should send url params (component, fixture) to fixture list', () => {
@@ -105,8 +63,8 @@ describe('CP with fixture already selected', () => {
 
     it('clicking on selected fixture sends new message to loader', () => {
       props.onUrlChange(window.location.href);
-      expect(loaderContentWindow.postMessage).toHaveBeenCalledTimes(2);
-      expect(loaderContentWindow.postMessage).toHaveBeenLastCalledWith(
+      expect(postMessage).toHaveBeenCalledTimes(2);
+      expect(postMessage).toHaveBeenLastCalledWith(
         {
           type: 'fixtureSelect',
           component: 'ComponentA',
@@ -122,33 +80,35 @@ describe('CP with fixture already selected', () => {
     const fullScreenUrl = '?component=ComponentA&fixture=foo&fullScreen=true';
 
     it('should render home button', () => {
-      expect(wrapper.find('a[href="?"].button')).toHaveLength(1);
+      expect(getWrapper().find('a[href="?"].button')).toHaveLength(1);
     });
 
     it('should not render selected home button', () => {
-      expect(wrapper.find('a[href="?"].selectedButton')).toHaveLength(0);
+      expect(getWrapper().find('a[href="?"].selectedButton')).toHaveLength(0);
     });
 
     it('should render fixture editor button', () => {
-      expect(wrapper.find(`a[href="${fixtureEditorUrl}"].button`)).toHaveLength(
-        1
-      );
+      expect(
+        getWrapper().find(`a[href="${fixtureEditorUrl}"].button`)
+      ).toHaveLength(1);
     });
 
     it('should not render selected fixture editor button', () => {
       expect(
-        wrapper.find(`a[href="${fixtureEditorUrl}"].selectedButton`).length
+        getWrapper().find(`a[href="${fixtureEditorUrl}"].selectedButton`).length
       ).toBe(0);
     });
 
     it('should render full screen button', () => {
-      expect(wrapper.find(`a[href="${fullScreenUrl}"].button`)).toHaveLength(1);
+      expect(
+        getWrapper().find(`a[href="${fullScreenUrl}"].button`)
+      ).toHaveLength(1);
     });
   });
 
   describe('content', () => {
     it('should not render StarryBg', () => {
-      expect(wrapper.find(StarryBg)).toHaveLength(0);
+      expect(getWrapper().find(StarryBg)).toHaveLength(0);
     });
   });
 });

@@ -256,20 +256,9 @@ export default class ComponentPlayground extends Component<Props, State> {
       if (status === 200) {
         // Wait until all session settings are read before rendering
         this.restoreUserSettings(() => {
-          // XXX: Because we can't mock the iframe contents we sometimes inject
-          // loaderStatus via fixture.state. Don't override it in those cases.
-          // TODO: The bigger issue here is that Playground fixtures mock state
-          // which in real life is the result of several state transitions. In
-          // the long term we should not mock the final state but a natural state
-          // progression. In this case we should mock
-          // 1. Loader check response (fetch)
-          // 2. Loader ready event (window.postMessage) – At the moment we can't
-          // mock this via fixtures.
-          if (this.state.loaderStatus === PENDING) {
-            this.setState({
-              loaderStatus: OK
-            });
-          }
+          this.setState({
+            loaderStatus: OK
+          });
         });
       } else {
         this.setState({

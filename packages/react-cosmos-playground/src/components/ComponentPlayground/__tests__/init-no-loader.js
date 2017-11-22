@@ -1,38 +1,32 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import afterOngoingPromises from 'after-ongoing-promises';
-import { Loader } from 'react-cosmos-loader';
 import createFetchProxy from 'react-cosmos-fetch-proxy';
-import initNoLoaderFixture from '../__fixtures__/init-no-loader';
+import { createContext } from '../../../utils/enzyme';
 import StarryBg from '../../StarryBg';
 import NoLoaderScreen from '../../screens/NoLoaderScreen';
 import LoadingScreen from '../../screens/LoadingScreen';
+import fixture from '../__fixtures__/init-no-loader';
 
 const FetchProxy = createFetchProxy();
 
+const { mount, getWrapper } = createContext({
+  proxies: [FetchProxy],
+  fixture
+});
+
+const getNoLoaderScreen = () => getWrapper().find(NoLoaderScreen);
+
 describe('CP init', () => {
-  let wrapper;
-
-  const getNoLoaderScreen = () => wrapper.find(NoLoaderScreen);
-
-  beforeEach(() => {
-    wrapper = mount(
-      <Loader proxies={[FetchProxy]} fixture={initNoLoaderFixture} />
-    );
-  });
-
   test('renders loading screen', () => {
-    expect(wrapper.find(LoadingScreen)).toHaveLength(1);
+    // Purposely don't "await" on mount because by the time it finishes the
+    // loading screen would have been removed
+    mount();
+    expect(getWrapper().find(LoadingScreen)).toHaveLength(1);
   });
 
   describe('after loader status is confirmed', () => {
-    beforeEach(async () => {
-      await afterOngoingPromises();
-      wrapper.update();
-    });
+    beforeEach(mount);
 
     test('should render starry background', () => {
-      expect(wrapper.find(StarryBg)).toHaveLength(1);
+      expect(getWrapper().find(StarryBg)).toHaveLength(1);
     });
 
     test('should render NoLoaderScreen', () => {
@@ -41,7 +35,7 @@ describe('CP init', () => {
 
     test('should render NoLoaderScreen with options', () => {
       expect(getNoLoaderScreen().prop('options')).toEqual(
-        initNoLoaderFixture.props.options
+        fixture.props.options
       );
     });
   });
