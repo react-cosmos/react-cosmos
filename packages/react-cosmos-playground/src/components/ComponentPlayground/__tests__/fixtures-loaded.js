@@ -29,13 +29,11 @@ describe('CP fixtures loaded', () => {
     let props;
 
     beforeEach(() => {
-      props = getWrapper()
-        .find(FixtureList)
-        .props();
+      props = getWrapper(FixtureList).props();
     });
 
     test('should render fixture list', () => {
-      expect(getWrapper().find(FixtureList).length).toEqual(1);
+      expect(getWrapper(FixtureList).length).toEqual(1);
     });
 
     test('should send fixtures to fixture list', () => {
@@ -57,25 +55,21 @@ describe('CP fixtures loaded', () => {
 
   describe('main menu', () => {
     test('should render home button', () => {
-      expect(getWrapper().find('a[href="?"].button')).toHaveLength(1);
+      expect(getWrapper('a[href="?"].button')).toHaveLength(1);
     });
 
     test('should render selected home button', () => {
-      expect(getWrapper().find('a[href="?"].selectedButton')).toHaveLength(1);
+      expect(getWrapper('a[href="?"].selectedButton')).toHaveLength(1);
     });
   });
 
   describe('welcome screen', () => {
     test('should render welcome screen', () => {
-      expect(getWrapper().find(WelcomeScreen).length).toEqual(1);
+      expect(getWrapper(WelcomeScreen).length).toEqual(1);
     });
 
     test('should send fixtures to welcome screen', () => {
-      expect(
-        getWrapper()
-          .find(WelcomeScreen)
-          .prop('fixtures')
-      ).toEqual({
+      expect(getWrapper(WelcomeScreen).prop('fixtures')).toEqual({
         ComponentA: ['foo', 'bar'],
         ComponentB: ['baz', 'qux']
       });

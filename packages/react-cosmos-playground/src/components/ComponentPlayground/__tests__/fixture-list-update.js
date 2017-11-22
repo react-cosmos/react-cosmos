@@ -33,22 +33,14 @@ describe('CP fixture list update', () => {
   });
 
   test('should send fixtures to fixture list', () => {
-    expect(
-      getWrapper()
-        .find(FixtureList)
-        .prop('fixtures')
-    ).toEqual({
+    expect(getWrapper(FixtureList).prop('fixtures')).toEqual({
       ComponentA: ['foo', 'bar'],
       ComponentB: ['baz', 'qux', 'quux']
     });
   });
 
   test('should send fixtures to welcome screen', () => {
-    expect(
-      getWrapper()
-        .find(WelcomeScreen)
-        .prop('fixtures')
-    ).toEqual({
+    expect(getWrapper(WelcomeScreen).prop('fixtures')).toEqual({
       ComponentA: ['foo', 'bar'],
       ComponentB: ['baz', 'qux', 'quux']
     });

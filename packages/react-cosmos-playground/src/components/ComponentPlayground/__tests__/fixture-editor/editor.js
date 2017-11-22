@@ -42,11 +42,7 @@ describe('Fixture editor', () => {
   });
 
   it('sends initial fixture body as value to FixtureEditor', () => {
-    expect(
-      getWrapper()
-        .find(FixtureEditor)
-        .prop('value')
-    ).toEqual({
+    expect(getWrapper(FixtureEditor).prop('value')).toEqual({
       foo: 'bar'
     });
   });
@@ -68,11 +64,7 @@ describe('Fixture editor', () => {
     });
 
     it('sends updated fixture body as value to FixtureEditor', () => {
-      expect(
-        getWrapper()
-          .find(FixtureEditor)
-          .prop('value')
-      ).toEqual({
+      expect(getWrapper(FixtureEditor).prop('value')).toEqual({
         foo: 'bar',
         baz: 'qux'
       });
@@ -81,8 +73,7 @@ describe('Fixture editor', () => {
 
   describe('on fixture edit from editor', () => {
     beforeEach(() => {
-      getWrapper()
-        .find(FixtureEditor)
+      getWrapper(FixtureEditor)
         .props()
         .onChange({
           foo: 'baz'

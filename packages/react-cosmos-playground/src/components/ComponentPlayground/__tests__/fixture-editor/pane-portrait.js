@@ -29,19 +29,15 @@ describe('Portrait fixture editor pane', () => {
     beforeEach(mount);
 
     it('should set landscape class to content', () => {
-      expect(getWrapper().find('.content.contentPortrait')).toHaveLength(1);
+      expect(getWrapper('.content.contentPortrait')).toHaveLength(1);
     });
 
     it('should render fixture editor pane', () => {
-      expect(getWrapper().find('.fixtureEditorPane')).toHaveLength(1);
+      expect(getWrapper('.fixtureEditorPane')).toHaveLength(1);
     });
 
     it('should set default fixture editor pane height', () => {
-      expect(
-        getWrapper()
-          .find('.fixtureEditorPane')
-          .prop('style').height
-      ).toBe(250);
+      expect(getWrapper('.fixtureEditorPane').prop('style').height).toBe(250);
     });
 
     describe('on drag', () => {
@@ -50,8 +46,7 @@ describe('Portrait fixture editor pane', () => {
       beforeEach(() => {
         localForage.setItem.mockClear();
 
-        dragHandleElement = getWrapper()
-          .find('.fixtureEditorPane')
+        dragHandleElement = getWrapper('.fixtureEditorPane')
           .find(DragHandle)
           .getDOMNode();
 
@@ -71,11 +66,7 @@ describe('Portrait fixture editor pane', () => {
       });
 
       it('should resize fixture editor pane', () => {
-        expect(
-          getWrapper()
-            .find('.fixtureEditorPane')
-            .prop('style').height
-        ).toBe(201);
+        expect(getWrapper('.fixtureEditorPane').prop('style').height).toBe(201);
       });
 
       it('should update cache', () => {
@@ -99,11 +90,9 @@ describe('Portrait fixture editor pane', () => {
     });
 
     it('should set cached fixture editor pane height', () => {
-      expect(
-        getWrapper()
-          .find('.fixtureEditorPane')
-          .prop('style').height
-      ).toBe(cachedSize);
+      expect(getWrapper('.fixtureEditorPane').prop('style').height).toBe(
+        cachedSize
+      );
     });
   });
 });

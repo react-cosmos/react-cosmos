@@ -19,22 +19,16 @@ describe('Fixture editor controls', () => {
   beforeEach(mount);
 
   it('should set untoggle URL to fixture editor button', () => {
-    expect(
-      getWrapper().find(`.header a[href="${fixtureEditorUrl}"]`)
-    ).toHaveLength(1);
+    expect(getWrapper(`.header a[href="${fixtureEditorUrl}"]`)).toHaveLength(1);
   });
 
   it('should render selected fixture editor button', () => {
     expect(
-      getWrapper().find(`.header a[href="${fixtureEditorUrl}"].selectedButton`)
+      getWrapper(`.header a[href="${fixtureEditorUrl}"].selectedButton`)
     ).toHaveLength(1);
   });
 
   it('should render DragHandle in fixture editor pane', () => {
-    expect(
-      getWrapper()
-        .find('.fixtureEditorPane')
-        .find(DragHandle)
-    ).toHaveLength(1);
+    expect(getWrapper('.fixtureEditorPane').find(DragHandle)).toHaveLength(1);
   });
 });

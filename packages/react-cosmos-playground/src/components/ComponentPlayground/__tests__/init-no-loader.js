@@ -12,29 +12,27 @@ const { mount, getWrapper } = createContext({
   fixture
 });
 
-const getNoLoaderScreen = () => getWrapper().find(NoLoaderScreen);
-
 describe('CP init', () => {
   test('renders loading screen', () => {
     // Purposely don't "await" on mount because by the time it finishes the
     // loading screen would have been removed
     mount();
-    expect(getWrapper().find(LoadingScreen)).toHaveLength(1);
+    expect(getWrapper(LoadingScreen)).toHaveLength(1);
   });
 
   describe('after loader status is confirmed', () => {
     beforeEach(mount);
 
     test('should render starry background', () => {
-      expect(getWrapper().find(StarryBg)).toHaveLength(1);
+      expect(getWrapper(StarryBg)).toHaveLength(1);
     });
 
     test('should render NoLoaderScreen', () => {
-      expect(getNoLoaderScreen()).toHaveLength(1);
+      expect(getWrapper(NoLoaderScreen)).toHaveLength(1);
     });
 
     test('should render NoLoaderScreen with options', () => {
-      expect(getNoLoaderScreen().prop('options')).toEqual(
+      expect(getWrapper(NoLoaderScreen).prop('options')).toEqual(
         fixture.props.options
       );
     });

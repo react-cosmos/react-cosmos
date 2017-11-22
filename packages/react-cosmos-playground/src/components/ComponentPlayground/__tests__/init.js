@@ -14,18 +14,14 @@ describe('CP init', () => {
   beforeEach(mount);
 
   test('should starry background', () => {
-    expect(getWrapper().find(StarryBg)).toHaveLength(1);
+    expect(getWrapper(StarryBg)).toHaveLength(1);
   });
 
   test('should render loader iframe', () => {
-    expect(getWrapper().find('iframe')).toHaveLength(1);
+    expect(getWrapper('iframe')).toHaveLength(1);
   });
 
   test('should render loader iframe with props.loaderUri', () => {
-    expect(
-      getWrapper()
-        .find('iframe')
-        .prop('src')
-    ).toBe('/mock/loader/index.html');
+    expect(getWrapper('iframe').prop('src')).toBe('/mock/loader/index.html');
   });
 });

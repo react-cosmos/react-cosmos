@@ -49,9 +49,7 @@ describe('CP with fixture already selected', () => {
     let props;
 
     beforeEach(() => {
-      props = getWrapper()
-        .find(FixtureList)
-        .props();
+      props = getWrapper(FixtureList).props();
     });
 
     it('should send url params (component, fixture) to fixture list', () => {
@@ -80,35 +78,33 @@ describe('CP with fixture already selected', () => {
     const fullScreenUrl = '?component=ComponentA&fixture=foo&fullScreen=true';
 
     it('should render home button', () => {
-      expect(getWrapper().find('a[href="?"].button')).toHaveLength(1);
+      expect(getWrapper('a[href="?"].button')).toHaveLength(1);
     });
 
     it('should not render selected home button', () => {
-      expect(getWrapper().find('a[href="?"].selectedButton')).toHaveLength(0);
+      expect(getWrapper('a[href="?"].selectedButton')).toHaveLength(0);
     });
 
     it('should render fixture editor button', () => {
-      expect(
-        getWrapper().find(`a[href="${fixtureEditorUrl}"].button`)
-      ).toHaveLength(1);
+      expect(getWrapper(`a[href="${fixtureEditorUrl}"].button`)).toHaveLength(
+        1
+      );
     });
 
     it('should not render selected fixture editor button', () => {
       expect(
-        getWrapper().find(`a[href="${fixtureEditorUrl}"].selectedButton`).length
+        getWrapper(`a[href="${fixtureEditorUrl}"].selectedButton`).length
       ).toBe(0);
     });
 
     it('should render full screen button', () => {
-      expect(
-        getWrapper().find(`a[href="${fullScreenUrl}"].button`)
-      ).toHaveLength(1);
+      expect(getWrapper(`a[href="${fullScreenUrl}"].button`)).toHaveLength(1);
     });
   });
 
   describe('content', () => {
     it('should not render StarryBg', () => {
-      expect(getWrapper().find(StarryBg)).toHaveLength(0);
+      expect(getWrapper(StarryBg)).toHaveLength(0);
     });
   });
 });

@@ -16,10 +16,10 @@ describe('CP with fixture already selected in full screen', () => {
   beforeEach(mount);
 
   test('should not render fixture list', () => {
-    expect(getWrapper().find(FixtureList).length).toEqual(0);
+    expect(getWrapper(FixtureList).length).toEqual(0);
   });
 
   test('should render loader iframe', () => {
-    expect(getWrapper().find('iframe')).toHaveLength(1);
+    expect(getWrapper('iframe')).toHaveLength(1);
   });
 });

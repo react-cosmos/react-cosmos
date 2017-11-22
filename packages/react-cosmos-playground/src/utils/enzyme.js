@@ -12,6 +12,8 @@ type Args = {
   mockRefs?: Function
 };
 
+type Selector = string | ComponentType<*>;
+
 export function createContext({ proxies, fixture, mockRefs }: Args) {
   let wrapper;
   let compInstance;
@@ -51,7 +53,10 @@ export function createContext({ proxies, fixture, mockRefs }: Args) {
     mount,
     unmount: () => wrapper.unmount(),
     getRootWrapper,
-    getWrapper: () => getRootWrapper().find(fixture.component),
+    getWrapper: (selector: ?Selector) => {
+      const innerWrapper = getRootWrapper().find(fixture.component);
+      return selector ? innerWrapper.find(selector) : innerWrapper;
+    },
     getCompInstance: () => compInstance
   };
 }

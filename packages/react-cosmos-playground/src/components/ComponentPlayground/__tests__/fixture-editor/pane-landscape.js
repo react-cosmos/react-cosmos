@@ -29,19 +29,15 @@ describe('Landscape fixture editor pane', () => {
     beforeEach(mount);
 
     it('should set landscape class to content', () => {
-      expect(getWrapper().find('.content.contentLandscape')).toHaveLength(1);
+      expect(getWrapper('.content.contentLandscape')).toHaveLength(1);
     });
 
     it('should render fixture editor pane', () => {
-      expect(getWrapper().find('.fixtureEditorPane')).toHaveLength(1);
+      expect(getWrapper('.fixtureEditorPane')).toHaveLength(1);
     });
 
     it('should set default fixture editor pane width', () => {
-      expect(
-        getWrapper()
-          .find('.fixtureEditorPane')
-          .prop('style').width
-      ).toBe(250);
+      expect(getWrapper('.fixtureEditorPane').prop('style').width).toBe(250);
     });
 
     describe('on drag', () => {
@@ -50,8 +46,7 @@ describe('Landscape fixture editor pane', () => {
       beforeEach(() => {
         localForage.setItem.mockClear();
 
-        dragHandleElement = getWrapper()
-          .find('.fixtureEditorPane')
+        dragHandleElement = getWrapper('.fixtureEditorPane')
           .find(DragHandle)
           .getDOMNode();
 
@@ -71,11 +66,7 @@ describe('Landscape fixture editor pane', () => {
       });
 
       it('should resize fixture editor pane', () => {
-        expect(
-          getWrapper()
-            .find('.fixtureEditorPane')
-            .prop('style').width
-        ).toBe(201);
+        expect(getWrapper('.fixtureEditorPane').prop('style').width).toBe(201);
       });
 
       it('should update cache', () => {
@@ -88,8 +79,7 @@ describe('Landscape fixture editor pane', () => {
 
     describe('loader frame overlay', () => {
       it('is visible while dragging', () => {
-        const dragHandleElement = getWrapper()
-          .find('.fixtureEditorPane')
+        const dragHandleElement = getWrapper('.fixtureEditorPane')
           .find(DragHandle)
           .getDOMNode();
 
@@ -99,16 +89,13 @@ describe('Landscape fixture editor pane', () => {
         });
         dragHandleElement.dispatchEvent(downEvent);
 
-        expect(
-          getWrapper()
-            .find('.loaderFrameOverlay')
-            .prop('style').display
-        ).toBe('block');
+        expect(getWrapper('.loaderFrameOverlay').prop('style').display).toBe(
+          'block'
+        );
       });
 
       it('is not visible after dragging', () => {
-        const dragHandleElement = getWrapper()
-          .find('.fixtureEditorPane')
+        const dragHandleElement = getWrapper('.fixtureEditorPane')
           .find(DragHandle)
           .getDOMNode();
 
@@ -121,11 +108,9 @@ describe('Landscape fixture editor pane', () => {
         const upEvent = new MouseEvent('mouseup');
         document.dispatchEvent(upEvent);
 
-        expect(
-          getWrapper()
-            .find('.loaderFrameOverlay')
-            .prop('style').display
-        ).toBe('none');
+        expect(getWrapper('.loaderFrameOverlay').prop('style').display).toBe(
+          'none'
+        );
       });
     });
   });
@@ -142,11 +127,9 @@ describe('Landscape fixture editor pane', () => {
     });
 
     it('should set cached fixture editor pane width', () => {
-      expect(
-        getWrapper()
-          .find('.fixtureEditorPane')
-          .prop('style').width
-      ).toBe(cachedSize);
+      expect(getWrapper('.fixtureEditorPane').prop('style').width).toBe(
+        cachedSize
+      );
     });
   });
 });

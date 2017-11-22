@@ -35,15 +35,13 @@ describe('Resize fixture editor pane', () => {
   });
 
   it('should set landscape class to content', () => {
-    expect(getWrapper().find('.content.contentLandscape')).toHaveLength(1);
+    expect(getWrapper('.content.contentLandscape')).toHaveLength(1);
   });
 
   it('should set cached fixture editor pane width', () => {
-    expect(
-      getWrapper()
-        .find('.fixtureEditorPane')
-        .prop('style').width
-    ).toBe(cachedSize);
+    expect(getWrapper('.fixtureEditorPane').prop('style').width).toBe(
+      cachedSize
+    );
   });
 
   describe('from landscape to portrait', () => {
@@ -57,15 +55,13 @@ describe('Resize fixture editor pane', () => {
     });
 
     it('should set portrait class to content', () => {
-      expect(getWrapper().find('.content.contentPortrait')).toHaveLength(1);
+      expect(getWrapper('.content.contentPortrait')).toHaveLength(1);
     });
 
     it('should set cached fixture editor pane height', () => {
-      expect(
-        getWrapper()
-          .find('.fixtureEditorPane')
-          .prop('style').height
-      ).toBe(cachedSize);
+      expect(getWrapper('.fixtureEditorPane').prop('style').height).toBe(
+        cachedSize
+      );
     });
   });
 });

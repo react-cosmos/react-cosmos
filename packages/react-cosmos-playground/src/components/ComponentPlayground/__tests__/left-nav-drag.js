@@ -21,11 +21,7 @@ describe('CP left nav drag', () => {
     beforeEach(mount);
 
     it('should set default left nav width', () => {
-      expect(
-        getWrapper()
-          .find('.leftNav')
-          .prop('style').width
-      ).toBe(250);
+      expect(getWrapper('.leftNav').prop('style').width).toBe(250);
     });
   });
 
@@ -41,19 +37,11 @@ describe('CP left nav drag', () => {
     });
 
     it('should set cached left nav width', () => {
-      expect(
-        getWrapper()
-          .find('.leftNav')
-          .prop('style').width
-      ).toBe(cachedSize);
+      expect(getWrapper('.leftNav').prop('style').width).toBe(cachedSize);
     });
 
     it('should render DragHandle in left nav', () => {
-      expect(
-        getWrapper()
-          .find('.leftNav')
-          .find(DragHandle)
-      ).toHaveLength(1);
+      expect(getWrapper('.leftNav').find(DragHandle)).toHaveLength(1);
     });
   });
 
@@ -63,8 +51,7 @@ describe('CP left nav drag', () => {
     beforeEach(() => {
       localForage.setItem.mockClear();
 
-      dragHandleElement = getWrapper()
-        .find('.leftNav')
+      dragHandleElement = getWrapper('.leftNav')
         .find(DragHandle)
         .getDOMNode();
 
@@ -84,11 +71,7 @@ describe('CP left nav drag', () => {
     });
 
     it('should resize left nav', () => {
-      expect(
-        getWrapper()
-          .find('.leftNav')
-          .prop('style').width
-      ).toBe(200);
+      expect(getWrapper('.leftNav').prop('style').width).toBe(200);
     });
 
     it('should update cache', () => {
@@ -98,8 +81,7 @@ describe('CP left nav drag', () => {
 
   describe('loader frame overlay', () => {
     it('is visible while dragging', () => {
-      const dragHandleElement = getWrapper()
-        .find('.leftNav')
+      const dragHandleElement = getWrapper('.leftNav')
         .find(DragHandle)
         .getDOMNode();
 
@@ -109,16 +91,13 @@ describe('CP left nav drag', () => {
       });
       dragHandleElement.dispatchEvent(downEvent);
 
-      expect(
-        getWrapper()
-          .find('.loaderFrameOverlay')
-          .prop('style').display
-      ).toBe('block');
+      expect(getWrapper('.loaderFrameOverlay').prop('style').display).toBe(
+        'block'
+      );
     });
 
     it('is not visible after dragging', () => {
-      const dragHandleElement = getWrapper()
-        .find('.leftNav')
+      const dragHandleElement = getWrapper('.leftNav')
         .find(DragHandle)
         .getDOMNode();
 
@@ -131,11 +110,9 @@ describe('CP left nav drag', () => {
       const upEvent = new MouseEvent('mouseup');
       document.dispatchEvent(upEvent);
 
-      expect(
-        getWrapper()
-          .find('.loaderFrameOverlay')
-          .prop('style').display
-      ).toBe('none');
+      expect(getWrapper('.loaderFrameOverlay').prop('style').display).toBe(
+        'none'
+      );
     });
   });
 });

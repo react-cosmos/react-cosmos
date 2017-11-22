@@ -31,20 +31,16 @@ describe('CP with missing fixture already selected', () => {
   });
 
   test('renders MissingScreen', () => {
-    expect(getWrapper().find(MissingScreen)).toHaveLength(1);
+    expect(getWrapper(MissingScreen)).toHaveLength(1);
   });
 
   test('sends component name to MissingScreen', () => {
-    const { componentName } = getWrapper()
-      .find(MissingScreen)
-      .props();
+    const { componentName } = getWrapper(MissingScreen).props();
     expect(componentName).toBe('ComponentA');
   });
 
   test('sends fixture name to MissingScreen', () => {
-    const { fixtureName } = getWrapper()
-      .find(MissingScreen)
-      .props();
+    const { fixtureName } = getWrapper(MissingScreen).props();
     expect(fixtureName).toBe('foot');
   });
 });
