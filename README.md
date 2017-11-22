@@ -297,9 +297,11 @@ export default [
 // __fixtures__/example.js
 export default {
   component: MyComponent,
-  theme: {
-    backgroundColor: '#f1f1f1',
-    color: '#222'
+  context: {
+    theme: {
+      backgroundColor: '#f1f1f1',
+      color: '#222'
+    }
   }
 }
 ```
