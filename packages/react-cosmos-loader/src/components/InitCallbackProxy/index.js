@@ -9,16 +9,14 @@ import type { ProxyProps } from 'react-cosmos-shared/src/react/types';
 // able to add options in the future without breaking API
 export default function createInitCallbackProxy() {
   class InitCallbackProxy extends Component<ProxyProps> {
-    onComponentRef = async (
-      componentInstance: ?ElementRef<typeof Component>
-    ) => {
+    onComponentRef = async (compInstance: ?ElementRef<typeof Component>) => {
       const { fixture, onComponentRef } = this.props;
 
-      if (componentInstance && fixture.init) {
-        await fixture.init(componentInstance);
+      if (compInstance && fixture.init) {
+        await fixture.init(compInstance);
       }
 
-      onComponentRef(componentInstance);
+      onComponentRef(compInstance);
     };
 
     render() {
