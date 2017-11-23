@@ -32,7 +32,7 @@ module.exports = async function embedModules(source: string) {
   const componentModuleCallls = convertPathsToRequireCalls(
     keys(deprecatedComponentModules).map(c => deprecatedComponentModules[c])
   );
-  const componentsCommonDir = getCommonComponentsPath(fixtureFiles);
+  const componentsCommonDir = getCommonComponentsDir(fixtureFiles);
 
   // This ensures this loader is invalidated whenever a new component/fixture
   // file is created or renamed, which leads succesfully uda ...
@@ -95,7 +95,7 @@ function getFixturePaths(files: Array<FixtureFile>): Array<string> {
   return files.map(file => file.filePath);
 }
 
-function getCommonComponentsPath(fixtureFiles: Array<FixtureFile>): string {
+function getCommonComponentsDir(fixtureFiles: Array<FixtureFile>): string {
   // Get a flat list of all components paths
   const componentPaths: Array<string> = fixtureFiles
     .map(file =>
