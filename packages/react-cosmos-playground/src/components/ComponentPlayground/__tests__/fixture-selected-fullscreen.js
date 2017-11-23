@@ -1,16 +1,8 @@
-import createInitCallbackProxy from 'react-cosmos-loader/lib/components/InitCallbackProxy';
-import createFetchProxy from 'react-cosmos-fetch-proxy';
 import { createContext } from '../../../utils/enzyme';
 import FixtureList from '../../FixtureList';
 import fixture from '../__fixtures__/selected-fullscreen';
 
-const InitCallbackProxy = createInitCallbackProxy();
-const FetchProxy = createFetchProxy();
-
-const { mount, getWrapper } = createContext({
-  proxies: [InitCallbackProxy, FetchProxy],
-  fixture
-});
+const { mount, getWrapper } = createContext({ fixture });
 
 describe('CP with fixture already selected in full screen', () => {
   beforeEach(mount);

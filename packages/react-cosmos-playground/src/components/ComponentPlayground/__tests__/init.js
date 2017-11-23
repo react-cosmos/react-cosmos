@@ -1,14 +1,8 @@
-import createFetchProxy from 'react-cosmos-fetch-proxy';
 import { createContext } from '../../../utils/enzyme';
 import StarryBg from '../../StarryBg';
 import fixture from '../__fixtures__/init';
 
-const FetchProxy = createFetchProxy();
-
-const { mount, getWrapper } = createContext({
-  proxies: [FetchProxy],
-  fixture
-});
+const { mount, getWrapper } = createContext({ fixture });
 
 describe('CP init', () => {
   beforeEach(mount);

@@ -1,16 +1,8 @@
-import createInitCallbackProxy from 'react-cosmos-loader/lib/components/InitCallbackProxy';
-import createFetchProxy from 'react-cosmos-fetch-proxy';
 import { createContext } from '../../../utils/enzyme';
 import { READY } from '../';
 import fixture from '../__fixtures__/ready';
 
-const InitCallbackProxy = createInitCallbackProxy();
-const FetchProxy = createFetchProxy();
-
-const { mount, getCompInstance } = createContext({
-  proxies: [InitCallbackProxy, FetchProxy],
-  fixture
-});
+const { mount, getCompInstance } = createContext({ fixture });
 
 describe('CP loader ready', () => {
   beforeEach(mount);

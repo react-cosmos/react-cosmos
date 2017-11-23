@@ -1,17 +1,11 @@
 import localForage from 'localforage';
-import createInitCallbackProxy from 'react-cosmos-loader/lib/components/InitCallbackProxy';
-import createFetchProxy from 'react-cosmos-fetch-proxy';
 import { createContext } from '../../../../utils/enzyme';
 import { FIXTURE_EDITOR_PANE_SIZE } from '../../';
 import fixture from '../../__fixtures__/selected-editor';
 
 jest.mock('localforage');
 
-const InitCallbackProxy = createInitCallbackProxy();
-const FetchProxy = createFetchProxy();
-
 const { mount, getWrapper, getCompInstance } = createContext({
-  proxies: [InitCallbackProxy, FetchProxy],
   fixture,
   async mockRefs(compInstance) {
     // Fake node width/height

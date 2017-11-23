@@ -3,6 +3,8 @@
 import React from 'react';
 import { mount as mountEnzyme } from 'enzyme';
 import { Loader } from 'react-cosmos-loader';
+import createInitCallbackProxy from 'react-cosmos-loader/lib/components/InitCallbackProxy';
+import createFetchProxy from 'react-cosmos-fetch-proxy';
 
 import type { ComponentType } from 'react';
 
@@ -14,7 +16,10 @@ type Args = {
 
 type Selector = string | ComponentType<*>;
 
-export function createContext({ proxies, fixture, mockRefs }: Args) {
+export function createContext({ fixture, mockRefs }: Args) {
+  const InitCallbackProxy = createInitCallbackProxy();
+  const FetchProxy = createFetchProxy();
+
   let wrapper;
   let compInstance;
 
@@ -23,7 +28,7 @@ export function createContext({ proxies, fixture, mockRefs }: Args) {
       // Mount component in order for ref and lifecycle methods to be called
       wrapper = mountEnzyme(
         <Loader
-          proxies={proxies}
+          proxies={[InitCallbackProxy, FetchProxy]}
           fixture={{
             ...fixture,
             init: async (...args) => {

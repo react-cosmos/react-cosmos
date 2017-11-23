@@ -1,18 +1,12 @@
 import merge from 'lodash.merge';
-import createInitCallbackProxy from 'react-cosmos-loader/lib/components/InitCallbackProxy';
-import createFetchProxy from 'react-cosmos-fetch-proxy';
 import { createContext } from '../../../utils/enzyme';
 import FixtureList from '../../FixtureList';
 import WelcomeScreen from '../../screens/WelcomeScreen';
 import fixture from '../__fixtures__/ready';
 
-const InitCallbackProxy = createInitCallbackProxy();
-const FetchProxy = createFetchProxy();
-
 const goTo = jest.fn();
 
 const { mount, getWrapper } = createContext({
-  proxies: [InitCallbackProxy, FetchProxy],
   fixture: merge({}, fixture, {
     props: {
       router: {

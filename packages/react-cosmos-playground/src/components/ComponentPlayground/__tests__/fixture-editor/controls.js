@@ -1,16 +1,8 @@
-import createInitCallbackProxy from 'react-cosmos-loader/lib/components/InitCallbackProxy';
-import createFetchProxy from 'react-cosmos-fetch-proxy';
 import { createContext } from '../../../../utils/enzyme';
 import DragHandle from '../../../DragHandle';
 import fixture from '../../__fixtures__/selected-editor';
 
-const InitCallbackProxy = createInitCallbackProxy();
-const FetchProxy = createFetchProxy();
-
-const { mount, getWrapper } = createContext({
-  proxies: [InitCallbackProxy, FetchProxy],
-  fixture
-});
+const { mount, getWrapper } = createContext({ fixture });
 
 // Fixture editor is already on so the button will untoggle it
 const fixtureEditorUrl = '?component=ComponentA&fixture=foo';

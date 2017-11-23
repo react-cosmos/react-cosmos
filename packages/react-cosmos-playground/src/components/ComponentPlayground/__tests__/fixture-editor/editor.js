@@ -1,17 +1,11 @@
 import until from 'async-until';
-import createInitCallbackProxy from 'react-cosmos-loader/lib/components/InitCallbackProxy';
-import createFetchProxy from 'react-cosmos-fetch-proxy';
 import { createContext, afterPendingTimers } from '../../../../utils/enzyme';
 import FixtureEditor from '../../../FixtureEditor';
 import fixture from '../../__fixtures__/selected-editor';
 
-const InitCallbackProxy = createInitCallbackProxy();
-const FetchProxy = createFetchProxy();
-
 const postMessage = jest.fn();
 
 const { mount, getWrapper } = createContext({
-  proxies: [InitCallbackProxy, FetchProxy],
   fixture,
   async mockRefs(compInstance) {
     await until(() => compInstance.loaderFrame);

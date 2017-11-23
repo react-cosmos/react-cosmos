@@ -1,6 +1,4 @@
 import localForage from 'localforage';
-import createInitCallbackProxy from 'react-cosmos-loader/lib/components/InitCallbackProxy';
-import createFetchProxy from 'react-cosmos-fetch-proxy';
 import { createContext } from '../../../utils/enzyme';
 import DragHandle from '../../DragHandle';
 import { LEFT_NAV_SIZE } from '../';
@@ -8,13 +6,7 @@ import fixture from '../__fixtures__/ready';
 
 jest.mock('localforage');
 
-const RefCallbackProxy = createInitCallbackProxy();
-const FetchProxy = createFetchProxy();
-
-const { mount, getWrapper } = createContext({
-  proxies: [RefCallbackProxy, FetchProxy],
-  fixture
-});
+const { mount, getWrapper } = createContext({ fixture });
 
 describe('CP left nav drag', () => {
   describe('default size', () => {
