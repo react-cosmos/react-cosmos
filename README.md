@@ -62,6 +62,7 @@ Jump to:
   - [Props](#props)
   - [Children](#children)
   - [State](#state)
+  - [Init hook](#init-hook)
 - [Proxies](#proxies)
   - [What's a proxy?](#whats-a-proxy)
   - [Where to put proxies?](#where-to-put-proxies)
@@ -204,6 +205,24 @@ export default {
   }
 }
 ```
+
+#### Init hook
+
+Hook for custom component setup. This is an advanced feature and should only be used when a desired state can't be reproduced via [proxies](#proxies). Eg. Faking a `postMessage` event from an iframe after component mounted.
+
+```js
+export default {
+  component: Dashboard,
+  init(compInstance) {
+    window.postMessage({
+      type: 'loaderReady',
+      // ...
+    });
+  }
+}
+```
+
+> The `init` hook is useful when writing headless tests. Having a reference to the component instance we can mock *refs*. We can also stall test execution by making fixture.init *async* and *awaiting* until we're confident that our component is ready for assertions.
 
 ### Proxies
 
