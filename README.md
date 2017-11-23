@@ -62,7 +62,7 @@ Jump to:
   - [Props](#props)
   - [Children](#children)
   - [State](#state)
-  - [Init hook](#init-hook)
+  - [Ref callback](#ref-callback)
 - [Proxies](#proxies)
   - [What's a proxy?](#whats-a-proxy)
   - [Where to put proxies?](#where-to-put-proxies)
@@ -206,23 +206,20 @@ export default {
 }
 ```
 
-#### Init hook
+#### Ref callback
 
-Hook for custom component setup. This is an advanced feature and should only be used when a desired state can't be reproduced via [proxies](#proxies). Eg. Faking a `postMessage` event from an iframe after component mounted.
+**Exclusively for Class components.** This is an advanced feature and should only be used when a desired state can't be reproduced via [proxies](#proxies).
 
 ```js
 export default {
   component: Dashboard,
-  init(compInstance) {
-    window.postMessage({
-      type: 'loaderReady',
-      // ...
-    });
+  async ref(compInstance) {
+    // With great power comes great ref-sponsibility...
   }
 }
 ```
 
-> The `init` hook is useful when writing headless tests. Having a reference to the component instance we can mock *refs*. We can also stall test execution by making fixture.init *async* and *awaiting* until we're confident that our component is ready for assertions.
+> The `ref` callback is useful when writing headless tests. Having a reference to the component instance enables us to mock child *refs*. We can also stall test execution by making fixture.ref *async* and *awaiting* until we're confident that our component is ready for assertions.
 
 ### Proxies
 

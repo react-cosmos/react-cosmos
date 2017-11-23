@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import afterOngoingPromises from 'after-ongoing-promises';
 import { createLinkedList } from 'react-cosmos-shared';
-import createInitCallbackProxy from '../';
+import createRefCallbackProxy from '../';
 
 jest.useFakeTimers();
 
@@ -33,7 +33,7 @@ const LastProxy = ({ onComponentRef, fixture }) => (
 const onFixtureUpdate = jest.fn();
 const onComponentRef = jest.fn();
 
-const init = jest.fn(async () => {
+const ref = jest.fn(async () => {
   await new Promise(resolve => setTimeout(resolve, 5000));
 });
 
@@ -42,12 +42,12 @@ let wrapper;
 
 const mountProxy = () => {
   // Create Proxy with default options
-  const InitCallbackProxy = createInitCallbackProxy();
+  const RefCallbackProxy = createRefCallbackProxy();
 
   // Mouting is more useful because it calls lifecycle methods and enables
   // DOM interaction
   wrapper = mount(
-    <InitCallbackProxy
+    <RefCallbackProxy
       // Ensure the chain of proxies is properly propagated
       nextProxy={createLinkedList([NextProxy, LastProxy])}
       fixture={{
@@ -55,7 +55,7 @@ const mountProxy = () => {
         // Except for some rare cases, the proxy needs to pass along the
         // fixture without changing it
         foo: 'bar',
-        init
+        ref
       }}
       onComponentRef={onComponentRef}
       onFixtureUpdate={onFixtureUpdate}
@@ -67,7 +67,7 @@ const getNextProxy = () => wrapper.find(NextProxy);
 const getNextProxyProps = () => wrapper.find(NextProxy).props();
 
 beforeEach(() => {
-  onFixtureUpdate.mockClear();
+  jest.clearAllMocks();
   mountProxy();
 });
 
@@ -79,7 +79,7 @@ it('sends fixture to next proxy', () => {
   expect(getNextProxyProps().fixture).toEqual({
     component: Component,
     foo: 'bar',
-    init
+    ref
   });
 });
 

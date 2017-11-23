@@ -7,13 +7,13 @@ import type { ProxyProps } from 'react-cosmos-shared/src/react/types';
 
 // Returning a class creator to be consistent with the other proxies and to be
 // able to add options in the future without breaking API
-export default function createInitCallbackProxy() {
-  class InitCallbackProxy extends Component<ProxyProps> {
+export default function createRefCallbackProxy() {
+  class RefCallbackProxy extends Component<ProxyProps> {
     onComponentRef = async (compInstance: ?ElementRef<typeof Component>) => {
       const { fixture, onComponentRef } = this.props;
 
-      if (compInstance && fixture.init) {
-        await fixture.init(compInstance);
+      if (compInstance && fixture.ref) {
+        await fixture.ref(compInstance);
       }
 
       onComponentRef(compInstance);
@@ -31,5 +31,5 @@ export default function createInitCallbackProxy() {
     }
   }
 
-  return InitCallbackProxy;
+  return RefCallbackProxy;
 }

@@ -17,7 +17,7 @@ export const readyMessage = {
   }
 };
 
-export async function init(compInstance) {
+export async function ref(compInstance) {
   // Wait until fetch mock has responded and component state is ready to receive
   // messages from inside the Loader frame
   await until(hasLoaderStatus(compInstance, OK));

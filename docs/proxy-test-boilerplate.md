@@ -51,7 +51,7 @@ const getNextProxy = () => wrapper.find(NextProxy);
 const getNextProxyProps = () => wrapper.find(NextProxy).props();
 
 beforeEach(() => {
-  onFixtureUpdate.mockClear();
+  jest.clearAllMocks();
   mountProxy();
 });
 
