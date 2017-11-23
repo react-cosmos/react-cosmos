@@ -32,13 +32,7 @@ module.exports = async function embedModules(source: string) {
   const componentModuleCallls = convertPathsToRequireCalls(
     keys(deprecatedComponentModules).map(c => deprecatedComponentModules[c])
   );
-
-  // get a flat list of all components paths
-  const paths = fixtureFiles
-    .map(file => file.components.map(component => component.filePath))
-    .reduce((list, current) => [...list, ...current]);
-
-  const componentsCommonDir = commondir(paths);
+  const componentsCommonDir = getCommonComponentsPath(fixtureFiles);
 
   // This ensures this loader is invalidated whenever a new component/fixture
   // file is created or renamed, which leads succesfully uda ...
@@ -99,6 +93,18 @@ async function getNormalizedModules(cosmosConfig) {
 
 function getFixturePaths(files: Array<FixtureFile>): Array<string> {
   return files.map(file => file.filePath);
+}
+
+function getCommonComponentsPath(fixtureFiles: Array<FixtureFile>): string {
+  // Get a flat list of all components paths
+  const componentPaths: Array<string> = fixtureFiles
+    .map(file =>
+      // https://github.com/facebook/flow/issues/1026#issuecomment-298801746
+      file.components.map(component => component.filePath).filter(Boolean)
+    )
+    .reduce((list, current) => [...list, ...current]);
+
+  return commondir(componentPaths);
 }
 
 function convertPathsToRequireCalls(paths: Array<string>): string {
