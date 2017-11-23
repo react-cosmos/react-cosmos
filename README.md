@@ -476,8 +476,6 @@ Built on top of [fetch-mock](http://www.wheresrhys.co.uk/fetch-mock/api). Check 
 
 #### XHR
 
-> **Warning: Currently the XHR proxy breaks hot reloading.** Subscribe to [#430](https://github.com/react-cosmos/react-cosmos/issues/430) for updates.
-
 Like the [Fetch](#fetch) proxy, but for *XMLHttpRequest*.
 
 ##### Configuration
