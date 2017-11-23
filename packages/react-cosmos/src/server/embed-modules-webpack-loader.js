@@ -32,11 +32,19 @@ module.exports = async function embedModules(source: string) {
   const componentModuleCallls = convertPathsToRequireCalls(
     keys(deprecatedComponentModules).map(c => deprecatedComponentModules[c])
   );
-  const { componentsCommonDir, contextCall } = getContextCall(fixtureFiles);
+
+  // get a flat list of all components paths
+  const paths = fixtureFiles
+    .map(file => file.components.map(component => component.filePath))
+    .reduce((list, current) => [...list, ...current]);
+
+  const componentsCommonDir = commondir(paths);
 
   // This ensures this loader is invalidated whenever a new component/fixture
   // file is created or renamed, which leads succesfully uda ...
   this.addDependency(componentsCommonDir);
+
+  const contextCall = getContextCall(componentsCommonDir);
 
   const result = source
     .replace(/FIXTURE_MODULES/g, fixtureModuleCalls)
@@ -103,17 +111,6 @@ function convertPathToRequireCall(p) {
   return `require('${p}')`;
 }
 
-function getContextCall(fixtureFiles) {
-  const paths = fixtureFiles
-    .map(file => file.components.map(component => component.filePath))
-    .reduce((list, current) => [...list, ...current]);
-
-  const componentsCommonDir = commondir(paths);
-
-  return {
-    contextCall: `require.context('${
-      componentsCommonDir
-    }',true,/\\.(j|t)sx?$/)`,
-    componentsCommonDir
-  };
+function getContextCall(componentsCommonDir) {
+  return `require.context('${componentsCommonDir}',true,/\\.(j|t)sx?$/)`;
 }
