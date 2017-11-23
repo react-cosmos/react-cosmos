@@ -11,16 +11,16 @@ jest.mock('react-cosmos-config', () => ({
 
 jest.mock('react-cosmos-voyager', () => () => ({
   components: {
-    Foo: 'components/Foo.js',
-    Bar: 'components/Bar.js'
+    Foo: '/components/Foo.js',
+    Bar: '/components/Bar.js'
   },
   fixtures: {
     Foo: {
-      blank: 'components/__fixtures__/Foo/blank.js'
+      blank: '/components/__fixtures__/Foo/blank.js'
     },
     Bar: {
-      one: 'components/__fixtures__/Bar/one.js',
-      two: 'components/__fixtures__/Bar/two.json'
+      one: '/components/__fixtures__/Bar/one.js',
+      two: '/components/__fixtures__/Bar/two.json'
     }
   }
 }));
@@ -55,9 +55,9 @@ it('injects fixture modules', () => {
   const [, fixtureModules] = output.match(/fixtureModules: (.+)(,|$)/);
 
   const expected = `{
-    'components/__fixtures__/Foo/blank.js':require('components/__fixtures__/Foo/blank.js'),
-    'components/__fixtures__/Bar/one.js':require('components/__fixtures__/Bar/one.js'),
-    'components/__fixtures__/Bar/two.json':require('components/__fixtures__/Bar/two.json')
+    '/components/__fixtures__/Foo/blank.js':require('/components/__fixtures__/Foo/blank.js'),
+    '/components/__fixtures__/Bar/one.js':require('/components/__fixtures__/Bar/one.js'),
+    '/components/__fixtures__/Bar/two.json':require('/components/__fixtures__/Bar/two.json')
   }`;
   expect(fixtureModules).toEqual(expected.replace(/\s/g, ''));
 });
@@ -68,28 +68,28 @@ it('injects fixture files', () => {
 
   expect(JSON.parse(fixtureFiles)).toEqual([
     {
-      filePath: 'components/__fixtures__/Foo/blank.js',
+      filePath: '/components/__fixtures__/Foo/blank.js',
       components: [
         {
-          filePath: 'components/Foo.js',
+          filePath: '/components/Foo.js',
           name: 'Foo'
         }
       ]
     },
     {
-      filePath: 'components/__fixtures__/Bar/one.js',
+      filePath: '/components/__fixtures__/Bar/one.js',
       components: [
         {
-          filePath: 'components/Bar.js',
+          filePath: '/components/Bar.js',
           name: 'Bar'
         }
       ]
     },
     {
-      filePath: 'components/__fixtures__/Bar/two.json',
+      filePath: '/components/__fixtures__/Bar/two.json',
       components: [
         {
-          filePath: 'components/Bar.js',
+          filePath: '/components/Bar.js',
           name: 'Bar'
         }
       ]
@@ -110,16 +110,12 @@ it('injects contexts', () => {
   const output = loaderCallback.mock.calls[0][1];
   const [, contexts] = output.match(/contexts: (.+)(,|$)/);
 
-  const expected = `[
-    require.context('components/__fixtures__/Foo',false,/\\.jsx?$/),
-    require.context('components/__fixtures__/Bar',false,/\\.jsx?$/)
-  ]`;
+  const expected = `require.context('/components',true,/\\.(j|t)sx?$/)`;
   expect(contexts).toEqual(expected.replace(/\s/g, ''));
 });
 
 it('registers user dirs as loader deps', () => {
-  expect(mockAddDependency).toHaveBeenCalledWith('components/__fixtures__/Foo');
-  expect(mockAddDependency).toHaveBeenCalledWith('components/__fixtures__/Bar');
+  expect(mockAddDependency).toHaveBeenCalledWith('/components');
 });
 
 it('injects deprecated components', () => {
@@ -129,8 +125,8 @@ it('injects deprecated components', () => {
   );
 
   const expected = `{
-    'components/Foo.js':require('components/Foo.js'),
-    'components/Bar.js':require('components/Bar.js')
+    '/components/Foo.js':require('/components/Foo.js'),
+    '/components/Bar.js':require('/components/Bar.js')
   }`;
   expect(deprecatedComponentModules).toEqual(expected.replace(/\s/g, ''));
 });

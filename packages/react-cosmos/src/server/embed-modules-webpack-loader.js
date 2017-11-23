@@ -1,6 +1,6 @@
 // @flow
 
-import path from 'path';
+import commondir from 'commondir';
 import { getCosmosConfig } from 'react-cosmos-config';
 import { moduleExists } from 'react-cosmos-shared/lib/server';
 import getFilePaths from 'react-cosmos-voyager';
@@ -32,14 +32,11 @@ module.exports = async function embedModules(source: string) {
   const componentModuleCallls = convertPathsToRequireCalls(
     keys(deprecatedComponentModules).map(c => deprecatedComponentModules[c])
   );
+  const { componentsCommonDir, contextCall } = getContextCall(fixtureFiles);
 
-  const contexts = getUniqueDirsOfPaths(fixturePaths);
-  contexts.forEach(dirPath => {
-    // This ensures this loader is invalidated whenever a new component/fixture
-    // file is created or renamed, which leads succesfully uda ...
-    this.addDependency(dirPath);
-  });
-  const contextCalls = convertDirPathsToContextCalls(contexts);
+  // This ensures this loader is invalidated whenever a new component/fixture
+  // file is created or renamed, which leads succesfully uda ...
+  this.addDependency(componentsCommonDir);
 
   const result = source
     .replace(/FIXTURE_MODULES/g, fixtureModuleCalls)
@@ -49,7 +46,7 @@ module.exports = async function embedModules(source: string) {
       /PROXIES/g,
       moduleExists(proxiesPath) ? convertPathToRequireCall(proxiesPath) : '[]'
     )
-    .replace(/CONTEXTS/g, contextCalls);
+    .replace(/CONTEXTS/g, contextCall);
 
   callback(null, result);
 };
@@ -106,15 +103,17 @@ function convertPathToRequireCall(p) {
   return `require('${p}')`;
 }
 
-function getUniqueDirsOfPaths(paths) {
-  const dirs = new Set();
-  paths.forEach(p => dirs.add(path.dirname(p)));
+function getContextCall(fixtureFiles) {
+  const paths = fixtureFiles
+    .map(file => file.components.map(component => component.filePath))
+    .reduce((list, current) => [...list, ...current]);
 
-  return [...dirs];
-}
+  const componentsCommonDir = commondir(paths);
 
-function convertDirPathsToContextCalls(dirPaths) {
-  return `[${dirPaths
-    .map(dirPath => `require.context('${dirPath}',false,/\\.jsx?$/)`)
-    .join(',')}]`;
+  return {
+    contextCall: `require.context('${
+      componentsCommonDir
+    }',true,/\\.(j|t)sx?$/)`,
+    componentsCommonDir
+  };
 }
