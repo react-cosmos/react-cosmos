@@ -1,65 +1,37 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import { Loader } from 'react-cosmos-loader';
-import createStateProxy from 'react-cosmos-state-proxy';
-import createFetchProxy from 'react-cosmos-fetch-proxy';
-import selectedEditorFixture from '../../__fixtures__/selected-editor';
+import localForage from 'localforage';
+import { createContext } from '../../../../utils/enzyme';
 import DragHandle from '../../../DragHandle';
 import { FIXTURE_EDITOR_PANE_SIZE } from '../../';
-import localForage from 'localforage';
+import fixture from '../../__fixtures__/selected-editor';
 
 jest.mock('localforage');
 
-const StateProxy = createStateProxy();
-const FetchProxy = createFetchProxy();
-
-// Vars populated in beforeEach blocks
-let wrapper;
-let instance;
-
-const mockContentNodeSize = () => {
-  // Fake node width/height
-  instance.contentNode = {
-    // Landscape
-    offsetWidth: 300,
-    offsetHeight: 200
-  };
-};
+const { mount, getWrapper } = createContext({
+  fixture,
+  async mockRefs(compInstance) {
+    // Fake node width/height
+    compInstance.contentNode = {
+      // Landscape
+      offsetWidth: 300,
+      offsetHeight: 200
+    };
+  }
+});
 
 describe('Landscape fixture editor pane', () => {
   describe('default size', () => {
-    beforeEach(() => {
-      // Mount component in order for ref and lifecycle methods to be called
-      wrapper = mount(
-        <Loader
-          proxies={[StateProxy, FetchProxy]}
-          fixture={selectedEditorFixture}
-          onComponentRef={i => {
-            instance = i;
-            mockContentNodeSize();
-          }}
-        />
-      );
-
-      // Wait for async actions in componentDidMount to complete
-      return new Promise(resolve => {
-        setImmediate(() => {
-          wrapper.update();
-          resolve();
-        });
-      });
-    });
+    beforeEach(mount);
 
     it('should set landscape class to content', () => {
-      expect(wrapper.find('.content.contentLandscape')).toHaveLength(1);
+      expect(getWrapper('.content.contentLandscape')).toHaveLength(1);
     });
 
     it('should render fixture editor pane', () => {
-      expect(wrapper.find('.fixtureEditorPane')).toHaveLength(1);
+      expect(getWrapper('.fixtureEditorPane')).toHaveLength(1);
     });
 
     it('should set default fixture editor pane width', () => {
-      expect(wrapper.find('.fixtureEditorPane').prop('style').width).toBe(250);
+      expect(getWrapper('.fixtureEditorPane').prop('style').width).toBe(250);
     });
 
     describe('on drag', () => {
@@ -68,8 +40,7 @@ describe('Landscape fixture editor pane', () => {
       beforeEach(() => {
         localForage.setItem.mockClear();
 
-        dragHandleElement = wrapper
-          .find('.fixtureEditorPane')
+        dragHandleElement = getWrapper('.fixtureEditorPane')
           .find(DragHandle)
           .getDOMNode();
 
@@ -86,14 +57,10 @@ describe('Landscape fixture editor pane', () => {
 
         const upEvent = new MouseEvent('mouseup');
         document.dispatchEvent(upEvent);
-
-        wrapper.update();
       });
 
       it('should resize fixture editor pane', () => {
-        expect(wrapper.find('.fixtureEditorPane').prop('style').width).toBe(
-          201
-        );
+        expect(getWrapper('.fixtureEditorPane').prop('style').width).toBe(201);
       });
 
       it('should update cache', () => {
@@ -106,8 +73,7 @@ describe('Landscape fixture editor pane', () => {
 
     describe('loader frame overlay', () => {
       it('is visible while dragging', () => {
-        const dragHandleElement = wrapper
-          .find('.fixtureEditorPane')
+        const dragHandleElement = getWrapper('.fixtureEditorPane')
           .find(DragHandle)
           .getDOMNode();
 
@@ -117,16 +83,13 @@ describe('Landscape fixture editor pane', () => {
         });
         dragHandleElement.dispatchEvent(downEvent);
 
-        wrapper.update();
-
-        expect(wrapper.find('.loaderFrameOverlay').prop('style').display).toBe(
+        expect(getWrapper('.loaderFrameOverlay').prop('style').display).toBe(
           'block'
         );
       });
 
       it('is not visible after dragging', () => {
-        const dragHandleElement = wrapper
-          .find('.fixtureEditorPane')
+        const dragHandleElement = getWrapper('.fixtureEditorPane')
           .find(DragHandle)
           .getDOMNode();
 
@@ -139,7 +102,7 @@ describe('Landscape fixture editor pane', () => {
         const upEvent = new MouseEvent('mouseup');
         document.dispatchEvent(upEvent);
 
-        expect(wrapper.find('.loaderFrameOverlay').prop('style').display).toBe(
+        expect(getWrapper('.loaderFrameOverlay').prop('style').display).toBe(
           'none'
         );
       });
@@ -149,34 +112,16 @@ describe('Landscape fixture editor pane', () => {
   describe('cached size', () => {
     const cachedSize = 270;
 
-    beforeEach(() => {
+    beforeEach(async () => {
       localForage.__setItemMocks({
         [FIXTURE_EDITOR_PANE_SIZE]: cachedSize
       });
 
-      // Mount component in order for ref and lifecycle methods to be called
-      wrapper = mount(
-        <Loader
-          proxies={[StateProxy, FetchProxy]}
-          fixture={selectedEditorFixture}
-          onComponentRef={i => {
-            instance = i;
-            mockContentNodeSize();
-          }}
-        />
-      );
-
-      // Wait for async actions in componentDidMount to complete
-      return new Promise(resolve => {
-        setImmediate(() => {
-          wrapper.update();
-          resolve();
-        });
-      });
+      await mount();
     });
 
     it('should set cached fixture editor pane width', () => {
-      expect(wrapper.find('.fixtureEditorPane').prop('style').width).toBe(
+      expect(getWrapper('.fixtureEditorPane').prop('style').width).toBe(
         cachedSize
       );
     });

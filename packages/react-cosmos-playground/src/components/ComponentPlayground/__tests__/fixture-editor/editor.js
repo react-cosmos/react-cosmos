@@ -1,61 +1,25 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import afterOngoingPromises from 'after-ongoing-promises';
-import { Loader } from 'react-cosmos-loader';
-import createStateProxy from 'react-cosmos-state-proxy';
-import createFetchProxy from 'react-cosmos-fetch-proxy';
-import selectedEditorFixture from '../../__fixtures__/selected-editor';
+import until from 'async-until';
+import { createContext, afterPendingTimers } from '../../../../utils/enzyme';
 import FixtureEditor from '../../../FixtureEditor';
+import fixture from '../../__fixtures__/selected-editor';
 
-const StateProxy = createStateProxy();
-const FetchProxy = createFetchProxy();
+const postMessage = jest.fn();
 
-// Vars populated in beforeEach blocks
-let messageHandlers;
-let wrapper;
-let loaderContentWindow;
-
-const handleMessage = e => {
-  const { type } = e.data;
-  if (!messageHandlers[type]) {
-    throw new Error('Unexpected message event');
+const { mount, getWrapper } = createContext({
+  fixture,
+  async mockRefs(compInstance) {
+    await until(() => compInstance.loaderFrame);
+    compInstance.loaderFrame = {
+      contentWindow: {
+        postMessage
+      }
+    };
   }
-  messageHandlers[type](e.data);
-};
-
-const waitForPostMessage = type =>
-  new Promise(resolve => {
-    messageHandlers[type] = resolve;
-  });
+});
 
 describe('Fixture editor', () => {
   beforeEach(async () => {
-    messageHandlers = {};
-    window.addEventListener('message', handleMessage, false);
-
-    const onFixtureLoad = waitForPostMessage('fixtureLoad');
-
-    const instance = await new Promise(resolve => {
-      // Mount component in order for ref and lifecycle methods to be called
-      wrapper = mount(
-        <Loader
-          proxies={[StateProxy, FetchProxy]}
-          fixture={selectedEditorFixture}
-          onComponentRef={resolve}
-        />
-      );
-    });
-
-    // Wait for Loader status to be confirmed
-    await afterOngoingPromises();
-
-    loaderContentWindow = {
-      postMessage: jest.fn()
-    };
-    // iframe.contentWindow isn't available in jsdom
-    instance.loaderFrame = {
-      contentWindow: loaderContentWindow
-    };
+    await mount();
 
     window.postMessage(
       {
@@ -67,25 +31,18 @@ describe('Fixture editor', () => {
       '*'
     );
 
-    await onFixtureLoad;
-
-    wrapper.update();
-  });
-
-  afterEach(() => {
-    window.removeEventListener('message', handleMessage);
+    // postMessage is async, but should be received by next loop
+    await afterPendingTimers();
   });
 
   it('sends initial fixture body as value to FixtureEditor', () => {
-    expect(wrapper.find(FixtureEditor).prop('value')).toEqual({
+    expect(getWrapper(FixtureEditor).prop('value')).toEqual({
       foo: 'bar'
     });
   });
 
   describe('on fixture update from Loader', () => {
-    beforeEach(() => {
-      const onFixtureUpdate = waitForPostMessage('fixtureUpdate');
-
+    beforeEach(async () => {
       window.postMessage(
         {
           type: 'fixtureUpdate',
@@ -96,13 +53,12 @@ describe('Fixture editor', () => {
         '*'
       );
 
-      return onFixtureUpdate.then(() => {
-        wrapper.update();
-      });
+      // postMessage is async, but should be received by next loop
+      await afterPendingTimers();
     });
 
     it('sends updated fixture body as value to FixtureEditor', () => {
-      expect(wrapper.find(FixtureEditor).prop('value')).toEqual({
+      expect(getWrapper(FixtureEditor).prop('value')).toEqual({
         foo: 'bar',
         baz: 'qux'
       });
@@ -111,13 +67,15 @@ describe('Fixture editor', () => {
 
   describe('on fixture edit from editor', () => {
     beforeEach(() => {
-      wrapper.find(FixtureEditor).prop('onChange')({
-        foo: 'baz'
-      });
+      getWrapper(FixtureEditor)
+        .props()
+        .onChange({
+          foo: 'baz'
+        });
     });
 
     it('sends edited fixture body to Loader', () => {
-      expect(loaderContentWindow.postMessage).toHaveBeenCalledWith(
+      expect(postMessage).toHaveBeenCalledWith(
         {
           type: 'fixtureEdit',
           fixtureBody: {

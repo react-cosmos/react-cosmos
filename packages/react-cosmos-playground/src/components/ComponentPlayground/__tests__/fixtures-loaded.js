@@ -1,51 +1,33 @@
-import React from 'react';
 import merge from 'lodash.merge';
-import { mount } from 'enzyme';
-import afterOngoingPromises from 'after-ongoing-promises';
-import { Loader } from 'react-cosmos-loader';
-import createStateProxy from 'react-cosmos-state-proxy';
-import createFetchProxy from 'react-cosmos-fetch-proxy';
-import readyFixture from '../__fixtures__/ready';
+import { createContext } from '../../../utils/enzyme';
 import FixtureList from '../../FixtureList';
 import WelcomeScreen from '../../screens/WelcomeScreen';
+import fixture from '../__fixtures__/ready';
 
-const StateProxy = createStateProxy();
-const FetchProxy = createFetchProxy();
+const goTo = jest.fn();
 
-// Vars populated in beforeEach blocks
-let router;
-let wrapper;
+const { mount, getWrapper } = createContext({
+  fixture: merge({}, fixture, {
+    props: {
+      router: {
+        goTo
+      }
+    }
+  })
+});
 
 describe('CP fixtures loaded', () => {
-  beforeEach(async () => {
-    router = {
-      goTo: jest.fn()
-    };
-    const fixture = merge({}, readyFixture, {
-      props: {
-        router
-      }
-    });
-
-    // Mount component in order for ref and lifecycle methods to be called
-    wrapper = mount(
-      <Loader proxies={[StateProxy, FetchProxy]} fixture={fixture} />
-    );
-
-    await afterOngoingPromises();
-
-    wrapper.update();
-  });
+  beforeEach(mount);
 
   describe('fixture list', () => {
     let props;
 
     beforeEach(() => {
-      props = wrapper.find(FixtureList).props();
+      props = getWrapper(FixtureList).props();
     });
 
     test('should render fixture list', () => {
-      expect(wrapper.find(FixtureList).length).toEqual(1);
+      expect(getWrapper(FixtureList).length).toEqual(1);
     });
 
     test('should send fixtures to fixture list', () => {
@@ -61,27 +43,27 @@ describe('CP fixtures loaded', () => {
 
     test('should go to URL from fixture list handler', () => {
       props.onUrlChange('/path/to/location');
-      expect(router.goTo).toHaveBeenCalledWith('/path/to/location');
+      expect(goTo).toHaveBeenCalledWith('/path/to/location');
     });
   });
 
   describe('main menu', () => {
     test('should render home button', () => {
-      expect(wrapper.find('a[href="?"].button')).toHaveLength(1);
+      expect(getWrapper('a[href="?"].button')).toHaveLength(1);
     });
 
     test('should render selected home button', () => {
-      expect(wrapper.find('a[href="?"].selectedButton')).toHaveLength(1);
+      expect(getWrapper('a[href="?"].selectedButton')).toHaveLength(1);
     });
   });
 
   describe('welcome screen', () => {
     test('should render welcome screen', () => {
-      expect(wrapper.find(WelcomeScreen).length).toEqual(1);
+      expect(getWrapper(WelcomeScreen).length).toEqual(1);
     });
 
     test('should send fixtures to welcome screen', () => {
-      expect(wrapper.find(WelcomeScreen).prop('fixtures')).toEqual({
+      expect(getWrapper(WelcomeScreen).prop('fixtures')).toEqual({
         ComponentA: ['foo', 'bar'],
         ComponentB: ['baz', 'qux']
       });

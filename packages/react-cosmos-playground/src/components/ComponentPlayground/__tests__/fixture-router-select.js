@@ -1,47 +1,29 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import afterOngoingPromises from 'after-ongoing-promises';
-import { Loader } from 'react-cosmos-loader';
-import createStateProxy from 'react-cosmos-state-proxy';
-import createFetchProxy from 'react-cosmos-fetch-proxy';
-import readyFixture from '../__fixtures__/ready';
+import until from 'async-until';
+import { createContext } from '../../../utils/enzyme';
+import fixture from '../__fixtures__/ready';
 
-const StateProxy = createStateProxy();
-const FetchProxy = createFetchProxy();
+const postMessage = jest.fn();
 
-// Vars populated in beforeEach blocks
-let wrapper;
-let instance;
-let loaderContentWindow;
+const { mount, getRootWrapper } = createContext({
+  fixture,
+  async mockRefs(compInstance) {
+    await until(() => compInstance.loaderFrame);
+    compInstance.loaderFrame = {
+      contentWindow: {
+        postMessage
+      }
+    };
+  }
+});
 
 describe('CP fixture select via router', () => {
   beforeEach(async () => {
-    // Mount component in order for ref and lifecycle methods to be called
-    wrapper = mount(
-      <Loader
-        proxies={[StateProxy, FetchProxy]}
-        fixture={readyFixture}
-        onComponentRef={i => {
-          instance = i;
-        }}
-      />
-    );
+    await mount();
 
-    // Wait for Loader status to be confirmed
-    await afterOngoingPromises();
-
-    loaderContentWindow = {
-      postMessage: jest.fn()
-    };
-    // iframe.contentWindow isn't available in jsdom
-    instance.loaderFrame = {
-      contentWindow: loaderContentWindow
-    };
-
-    const { props } = readyFixture;
-    wrapper.setProps({
+    const { props } = fixture;
+    getRootWrapper().setProps({
       fixture: {
-        ...readyFixture,
+        ...fixture,
         props: {
           ...props,
           component: 'ComponentB',
@@ -52,7 +34,7 @@ describe('CP fixture select via router', () => {
   });
 
   test('sends fixture select message to loader', () => {
-    expect(loaderContentWindow.postMessage).toHaveBeenCalledWith(
+    expect(postMessage).toHaveBeenCalledWith(
       {
         type: 'fixtureSelect',
         component: 'ComponentB',

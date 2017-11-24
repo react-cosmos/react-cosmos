@@ -25,13 +25,14 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": [
+    "*.{js,jsx,css,less}": [
       "prettier --single-quote --write",
       "git add"
     ]
   },
   "devDependencies": {
     "after-ongoing-promises": "^0.0.1",
+    "async-until": "^0.0.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.2",
