@@ -7,7 +7,7 @@ const postMessage = jest.fn();
 
 const { mount, getWrapper } = createContext({
   fixture,
-  async mockRefs(compInstance) {
+  async ref(compInstance) {
     await until(() => compInstance.loaderFrame);
     compInstance.loaderFrame = {
       contentWindow: {

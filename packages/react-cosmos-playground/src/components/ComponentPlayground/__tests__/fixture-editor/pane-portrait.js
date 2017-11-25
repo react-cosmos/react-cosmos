@@ -8,7 +8,7 @@ jest.mock('localforage');
 
 const { mount, getWrapper } = createContext({
   fixture,
-  async mockRefs(compInstance) {
+  async ref(compInstance) {
     // Fake node width/height
     compInstance.contentNode = {
       // Landscape

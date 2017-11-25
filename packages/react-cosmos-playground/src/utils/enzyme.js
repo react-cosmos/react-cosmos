@@ -1,9 +1,7 @@
 // @flow
 
-import React from 'react';
 import { mount as mountEnzyme } from 'enzyme';
-import { Loader } from 'react-cosmos-loader';
-import createRefCallbackProxy from 'react-cosmos-loader/lib/components/RefCallbackProxy';
+import { createContext as _createContext } from 'react-cosmos-loader';
 import createFetchProxy from 'react-cosmos-fetch-proxy';
 
 import type { ComponentType } from 'react';
@@ -11,58 +9,36 @@ import type { ComponentType } from 'react';
 type Args = {
   proxies: Array<ComponentType<*>>,
   fixture: Object,
-  mockRefs?: Function
+  ref?: Function
 };
 
 type Selector = string | ComponentType<*>;
 
-export function createContext({ fixture, mockRefs }: Args) {
-  const RefCallbackProxy = createRefCallbackProxy();
+export function createContext(args: Args) {
+  const { fixture } = args;
   const FetchProxy = createFetchProxy();
 
-  let wrapper;
-  let compInstance;
-
-  const mount = async () =>
-    new Promise(resolve => {
-      // Mount component in order for ref and lifecycle methods to be called
-      wrapper = mountEnzyme(
-        <Loader
-          proxies={[RefCallbackProxy, FetchProxy]}
-          fixture={{
-            ...fixture,
-            ref: async (...args) => {
-              if (mockRefs) {
-                await mockRefs(...args);
-              }
-              if (fixture.ref) {
-                await fixture.ref(...args);
-              }
-            }
-          }}
-          onComponentRef={ref => {
-            compInstance = ref;
-            resolve();
-          }}
-        />
-      );
-    });
+  const context = _createContext({
+    ...args,
+    renderer: mountEnzyme,
+    proxies: [FetchProxy]
+  });
+  const { getWrapper } = context;
 
   const getRootWrapper = () => {
+    const wrapper = getWrapper();
     // Always keep wrapper up to date
     wrapper.update();
     return wrapper;
   };
 
   return {
-    mount,
-    unmount: () => wrapper.unmount(),
+    ...context,
     getRootWrapper,
     getWrapper: (selector: ?Selector) => {
       const innerWrapper = getRootWrapper().find(fixture.component);
       return selector ? innerWrapper.find(selector) : innerWrapper;
-    },
-    getCompInstance: () => compInstance
+    }
   };
 }
 
