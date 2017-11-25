@@ -26,13 +26,15 @@ type Return = {
   mount: () => Promise<any>,
   unmount: () => any,
   getRef: () => ?ElementRef<typeof Component>,
-  getWrapper: () => ?Wrapper
-  // get: (fixtureKey: string) => any
+  getWrapper: () => ?Wrapper,
+  get: (fixtureKey?: string) => any,
+  set: (fixtureParts: {}) => any
 };
 
 export function createContext(args: Args): Return {
   const { renderer, proxies = [], fixture, ref } = args;
 
+  let updatedFixture = { ...fixture };
   let wrapper: ?Wrapper;
   let compRef: ?ElementRef<typeof Component>;
 
@@ -43,7 +45,9 @@ export function createContext(args: Args): Return {
           wrapper = renderer(
             <Loader
               proxies={[RefCallbackProxy, ...proxies]}
-              fixture={ref ? decorateFixtureRef(fixture, ref) : fixture}
+              fixture={
+                ref ? decorateFixtureRef(updatedFixture, ref) : updatedFixture
+              }
               onComponentRef={ref => {
                 compRef = ref;
                 resolve();
@@ -61,7 +65,11 @@ export function createContext(args: Args): Return {
       }
     },
     getRef: () => compRef,
-    getWrapper: () => wrapper
+    getWrapper: () => wrapper,
+    get: fixtureKey => (fixtureKey ? updatedFixture[fixtureKey] : fixture),
+    set: fixtureParts => {
+      updatedFixture = { ...updatedFixture, ...fixtureParts };
+    }
   };
 }
 

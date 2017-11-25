@@ -30,7 +30,7 @@ const renderer = jest.fn(element => {
   return wrapper;
 });
 const proxies = [ProxyA, ProxyB];
-const fixture = { component: FooComp };
+const fixture = { component: FooComp, state: { count: 5 } };
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -54,7 +54,7 @@ describe('mounting', () => {
   describe('Loader props', () => {
     it('has fixture', () => {
       const element = renderer.mock.calls[0][0];
-      expect(element.props.fixture).toBe(fixture);
+      expect(element.props.fixture).toEqual(fixture);
     });
 
     it('includes user proxies', () => {
@@ -115,4 +115,23 @@ it('stalls mounting until ref cb resolves', async () => {
 
   afterPendingPromises();
   expect(hasMounted).toBe(true);
+});
+
+it('gets fixture', async () => {
+  const { get } = createContext({ renderer, fixture });
+
+  expect(get()).toEqual(fixture);
+});
+
+it('gets fixture part', async () => {
+  const { get } = createContext({ renderer, fixture });
+
+  expect(get('state')).toEqual({ count: 5 });
+});
+
+it('set fixture part', async () => {
+  const { get, set } = createContext({ renderer, fixture });
+
+  set({ state: { count: 6 } });
+  expect(get('state')).toEqual({ count: 6 });
 });
