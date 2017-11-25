@@ -1,0 +1,17 @@
+{
+  "name": "react-cosmos-mount",
+  "version": "3.0.0",
+  "description": "API for mounting Cosmos fixtures",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-mount",
+  "license": "MIT",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "dependencies": {
+    "react-cosmos-config": "^3.0.0",
+    "react-cosmos-loader": "^3.0.0"
+  },
+  "devDependencies": {},
+  "xo": false
+}
