@@ -1,5 +1,6 @@
 import until from 'async-until';
-import { createContext, afterPendingTimers } from '../../../../utils/enzyme';
+import afterPendingTimers from 'after-pending-timers';
+import { createContext } from '../../../../utils/enzyme';
 import FixtureEditor from '../../../FixtureEditor';
 import fixture from '../../__fixtures__/selected-editor';
 

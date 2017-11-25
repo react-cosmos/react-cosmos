@@ -31,7 +31,8 @@
     ]
   },
   "devDependencies": {
-    "after-ongoing-promises": "^0.0.1",
+    "after-pending-promises": "^0.0.1",
+    "after-pending-timers": "^0.0.1",
     "async-until": "^0.0.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",

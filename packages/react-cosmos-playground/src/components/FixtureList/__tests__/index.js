@@ -1,7 +1,7 @@
 import React from 'react';
 import merge from 'lodash.merge';
 import { mount } from 'enzyme';
-import afterOngoingPromises from 'after-ongoing-promises';
+import afterPendingPromises from 'after-pending-promises';
 import { Loader } from 'react-cosmos-loader';
 import populatedFixture from '../__fixtures__/populated';
 import populatedWithEditorFixture from '../__fixtures__/populated-with-editor';
@@ -12,7 +12,7 @@ describe('List', () => {
 
   beforeEach(async () => {
     wrapper = mount(<Loader fixture={populatedFixture} />);
-    await afterOngoingPromises();
+    await afterPendingPromises();
     wrapper.update();
   });
 
@@ -63,7 +63,7 @@ describe('Links', () => {
   describe('editor closed', () => {
     beforeEach(async () => {
       wrapper = mount(<Loader fixture={populatedFixture} />);
-      await afterOngoingPromises();
+      await afterPendingPromises();
       wrapper.update();
       componentA = wrapper.find('.component').at(0);
       componentB = wrapper.find('.component').at(1);
@@ -109,7 +109,7 @@ describe('Links', () => {
   describe('editor open', () => {
     beforeEach(async () => {
       wrapper = mount(<Loader fixture={populatedWithEditorFixture} />);
-      await afterOngoingPromises();
+      await afterPendingPromises();
       wrapper.update();
       componentA = wrapper.find('.component').at(0);
       componentB = wrapper.find('.component').at(1);
@@ -165,7 +165,7 @@ describe('Select', () => {
       }
     });
     wrapper = mount(<Loader fixture={fixture} />);
-    await afterOngoingPromises();
+    await afterPendingPromises();
     wrapper.update();
   });
 
@@ -199,7 +199,7 @@ describe('Search', () => {
 
   beforeEach(async () => {
     wrapper = mount(<Loader fixture={populatedFixture} />);
-    await afterOngoingPromises();
+    await afterPendingPromises();
     wrapper.update();
   });
 
@@ -241,7 +241,7 @@ describe('Search input keyboard shortcut', () => {
       );
     });
 
-    await afterOngoingPromises();
+    await afterPendingPromises();
     wrapper.update();
     return waitToRender;
   });
@@ -282,7 +282,7 @@ describe('Selected fixture', () => {
 
   beforeEach(async () => {
     wrapper = mount(<Loader fixture={populatedAndSelectedFixture} />);
-    await afterOngoingPromises();
+    await afterPendingPromises();
     wrapper.update();
   });
 

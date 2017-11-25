@@ -41,7 +41,3 @@ export function createContext(args: Args) {
     }
   };
 }
-
-export function afterPendingTimers(): Promise<any> {
-  return new Promise(resolve => setTimeout(resolve, 0));
-}

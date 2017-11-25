@@ -158,9 +158,13 @@ address@1.0.3, address@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/address/-/address-1.0.3.tgz#b5f50631f8d6cec8bd20c963963afb55e06cbce9"
 
-after-ongoing-promises@^0.0.1:
+after-pending-promises@^0.0.1:
   version "0.0.1"
-  resolved "https://registry.yarnpkg.com/after-ongoing-promises/-/after-ongoing-promises-0.0.1.tgz#ce5e4bc1088a42c8e165ed47707ea3a20593a1f6"
+  resolved "https://registry.yarnpkg.com/after-pending-promises/-/after-pending-promises-0.0.1.tgz#d1c75f4ab541b5c50c029fefeb70c35570a7567f"
+
+after-pending-timers@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/after-pending-timers/-/after-pending-timers-0.0.1.tgz#a944fe27c86c2d38e734d66e5a279314639b0ce2"
 
 ajv-keywords@^1.0.0:
   version "1.5.1"

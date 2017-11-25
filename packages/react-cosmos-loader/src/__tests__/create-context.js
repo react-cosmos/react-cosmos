@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import TestRenderer from 'react-test-renderer';
-import afterOngoingPromises from 'after-ongoing-promises';
+import afterPendingPromises from 'after-pending-promises';
 import Loader from '../components/Loader';
 import { createContext } from '../';
 
@@ -108,11 +108,11 @@ it('stalls mounting until ref cb resolves', async () => {
 
   if (refResolve) {
     refResolve();
-    await afterOngoingPromises();
+    await afterPendingPromises();
   } else {
     throw new Error('Ref has not been called');
   }
 
-  afterOngoingPromises();
+  afterPendingPromises();
   expect(hasMounted).toBe(true);
 });

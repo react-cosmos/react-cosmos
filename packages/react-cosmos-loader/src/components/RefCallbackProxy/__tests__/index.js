@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import afterOngoingPromises from 'after-ongoing-promises';
+import afterPendingPromises from 'after-pending-promises';
 import { createLinkedList } from 'react-cosmos-shared';
 import createRefCallbackProxy from '../';
 
@@ -95,6 +95,6 @@ it('bubbles up fixture updates', () => {
 it('it calls onComponentRef after 5 seconds', async () => {
   expect(onComponentRef).not.toHaveBeenCalled();
   jest.runTimersToTime(5000);
-  await afterOngoingPromises();
+  await afterPendingPromises();
   expect(onComponentRef).toHaveBeenCalledWith('MOCK_REF');
 });
