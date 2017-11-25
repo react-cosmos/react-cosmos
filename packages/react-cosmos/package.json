@@ -1,9 +1,6 @@
 {
   "name": "react-cosmos",
   "version": "3.0.0",
-  "publishConfig": {
-    "access": "public"
-  },
   "description": "CLI for running React Cosmos inside webpack-powered apps",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos",
   "license": "MIT",

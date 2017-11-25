@@ -1,9 +1,6 @@
 {
   "name": "react-cosmos-scripts",
   "version": "3.0.0",
-  "publishConfig": {
-    "access": "public"
-  },
   "description": "Scripts for Cosmos-related bidniss",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-scripts",
   "license": "MIT",
