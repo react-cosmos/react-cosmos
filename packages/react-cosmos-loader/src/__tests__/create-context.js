@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import TestRenderer from 'react-test-renderer';
 import afterOngoingPromises from 'after-ongoing-promises';
-import { Loader } from 'react-cosmos-loader';
+import Loader from '../components/Loader';
 import { createContext } from '../';
 
 function ProxyA(props) {

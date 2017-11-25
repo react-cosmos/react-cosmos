@@ -1,8 +1,8 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Loader } from 'react-cosmos-loader';
-import createRefCallbackProxy from 'react-cosmos-loader/lib/components/RefCallbackProxy';
+import Loader from './components/Loader';
+import createRefCallbackProxy from './components/RefCallbackProxy';
 import type { ComponentType, Element, ElementRef } from 'react';
 
 const RefCallbackProxy = createRefCallbackProxy();
