@@ -1,28 +1,36 @@
 // @flow
 
-import { createContext } from '../';
+import React, { Component } from 'react';
+import TestRenderer from 'react-test-renderer';
+import afterOngoingPromises from 'after-ongoing-promises';
 import { Loader } from 'react-cosmos-loader';
+import { createContext } from '../';
 
-jest.mock('react-cosmos-loader/lib/components/RefCallbackProxy', () =>
-  jest.fn(() => ({ MOCK_REFCB_PROXY: true }))
-);
+function ProxyA(props) {
+  const { nextProxy } = props;
+  return <nextProxy.value {...props} nextProxy={nextProxy.next()} />;
+}
 
-const compRef = {};
+function ProxyB(props) {
+  const { nextProxy } = props;
+  return <nextProxy.value {...props} nextProxy={nextProxy.next()} />;
+}
+
+class FooComp extends Component<{}> {
+  render() {
+    return 'YO';
+  }
+}
+
 const wrapper = {
   unmount: jest.fn()
 };
-const renderer = jest.fn(() => {
-  try {
-    const element = renderer.mock.calls[0][0];
-    element.props.onComponentRef(compRef);
-  } catch (err) {
-    throw new Error('Loader could not call onComponentRef prop');
-  }
-
+const renderer = jest.fn(element => {
+  TestRenderer.create(element);
   return wrapper;
 });
-const proxies = [() => {}, () => {}];
-const fixture = {};
+const proxies = [ProxyA, ProxyB];
+const fixture = { component: FooComp };
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -51,13 +59,8 @@ describe('mounting', () => {
 
     it('includes user proxies', () => {
       const element = renderer.mock.calls[0][0];
-      expect(element.props.proxies).toContain(proxies[0]);
-      expect(element.props.proxies).toContain(proxies[1]);
-    });
-
-    it('prepends RefCallbackProxy', () => {
-      const element = renderer.mock.calls[0][0];
-      expect(element.props.proxies[0].MOCK_REFCB_PROXY).toBe(true);
+      expect(element.props.proxies).toContain(ProxyA);
+      expect(element.props.proxies).toContain(ProxyB);
     });
   });
 });
@@ -78,7 +81,7 @@ it('returns component ref', async () => {
   const { mount, getRef } = createContext({ renderer, fixture });
   await mount();
 
-  expect(getRef()).toBe(compRef);
+  expect(getRef()).toBeInstanceOf(FooComp);
 });
 
 it('returns wrapper', async () => {
@@ -86,4 +89,30 @@ it('returns wrapper', async () => {
   await mount();
 
   expect(getWrapper()).toBe(wrapper);
+});
+
+it('stalls mounting until ref cb resolves', async () => {
+  let refResolve;
+  const ref = () =>
+    new Promise(resolve => {
+      refResolve = resolve;
+    });
+  const { mount } = createContext({ renderer, fixture, ref });
+
+  let hasMounted = false;
+  mount().then(() => {
+    hasMounted = true;
+  });
+
+  expect(hasMounted).toBe(false);
+
+  if (refResolve) {
+    refResolve();
+    await afterOngoingPromises();
+  } else {
+    throw new Error('Ref has not been called');
+  }
+
+  afterOngoingPromises();
+  expect(hasMounted).toBe(true);
 });

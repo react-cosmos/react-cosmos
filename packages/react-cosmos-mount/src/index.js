@@ -11,10 +11,15 @@ type Wrapper = {
   unmount: () => any
 };
 
+type Fixture = {
+  ref?: () => Promise<any>
+};
+
 type Args = {
   renderer: (element: Element<any>) => Wrapper,
   proxies?: Array<ComponentType<any>>,
-  fixture: Object
+  fixture: Fixture,
+  ref?: () => Promise<any>
 };
 
 type Return = {
@@ -22,13 +27,14 @@ type Return = {
   unmount: () => any,
   getRef: () => ?ElementRef<typeof Component>,
   getWrapper: () => ?Wrapper
+  // get: (fixtureKey: string) => any
 };
 
 export function createContext(args: Args): Return {
-  const { renderer, proxies = [], fixture } = args;
+  const { renderer, proxies = [], fixture, ref } = args;
 
   let wrapper: ?Wrapper;
-  let compRef;
+  let compRef: ?ElementRef<typeof Component>;
 
   return {
     mount: () => {
@@ -37,7 +43,7 @@ export function createContext(args: Args): Return {
           wrapper = renderer(
             <Loader
               proxies={[RefCallbackProxy, ...proxies]}
-              fixture={fixture}
+              fixture={ref ? decorateFixtureRef(fixture, ref) : fixture}
               onComponentRef={ref => {
                 compRef = ref;
                 resolve();
@@ -56,5 +62,22 @@ export function createContext(args: Args): Return {
     },
     getRef: () => compRef,
     getWrapper: () => wrapper
+  };
+}
+
+function decorateFixtureRef(
+  fixture: Fixture,
+  ref: () => Promise<any>
+): Fixture {
+  return {
+    ...fixture,
+    async ref(...args) {
+      if (ref) {
+        await ref(...args);
+      }
+      if (fixture.ref) {
+        await fixture.ref(...args);
+      }
+    }
   };
 }
