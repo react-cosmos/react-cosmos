@@ -1,31 +1,31 @@
 // @flow
 
+import until from 'async-until';
 import React, { Component } from 'react';
 import Loader from './components/Loader';
-import createRefCallbackProxy from './components/RefCallbackProxy';
 import type { ComponentType, Element, ElementRef } from 'react';
 
-const RefCallbackProxy = createRefCallbackProxy();
+type ComponentInstance = ElementRef<typeof Component>;
 
 type Wrapper = {
   unmount: () => any
 };
 
 type Fixture = {
-  ref?: () => Promise<any>
+  ref?: (ref: ComponentInstance) => Promise<any>
 };
 
 type Args = {
   renderer: (element: Element<any>) => Wrapper,
   proxies?: Array<ComponentType<any>>,
   fixture: Fixture,
-  ref?: () => Promise<any>
+  ref?: (ref: ComponentInstance) => Promise<any>
 };
 
 type Return = {
   mount: () => Promise<any>,
   unmount: () => any,
-  getRef: () => ?ElementRef<typeof Component>,
+  getRef: () => ?ComponentInstance,
   getWrapper: () => ?Wrapper,
   get: (fixtureKey?: string) => any,
   set: (fixtureParts: {}) => any
@@ -36,24 +36,40 @@ export function createContext(args: Args): Return {
 
   let updatedFixture = { ...fixture };
   let wrapper: ?Wrapper;
-  let compRef: ?ElementRef<typeof Component>;
+  let compRef: ?ComponentInstance;
 
   return {
     mount: () => {
-      return new Promise((resolve, reject) => {
+      return new Promise(async (resolve, reject) => {
         try {
           wrapper = renderer(
             <Loader
-              proxies={[RefCallbackProxy, ...proxies]}
-              fixture={
-                ref ? decorateFixtureRef(updatedFixture, ref) : updatedFixture
-              }
+              proxies={proxies}
+              fixture={updatedFixture}
               onComponentRef={ref => {
                 compRef = ref;
-                resolve();
               }}
             />
           );
+
+          // Only Class components have refs, so for stateless components mount
+          // will be synchronous. If fixture.ref or args.ref exists for a
+          // stateless component mount will hang forever
+          if (ref || fixture.ref) {
+            await until(() => compRef);
+          }
+
+          // At this point we're sure compRef exists, but Flow doesn't
+          // understand what until() does...
+          if (ref && compRef) {
+            await ref(compRef);
+          }
+
+          if (fixture.ref && compRef) {
+            await fixture.ref(compRef);
+          }
+
+          resolve();
         } catch (err) {
           reject(err);
         }
@@ -69,23 +85,6 @@ export function createContext(args: Args): Return {
     get: fixtureKey => (fixtureKey ? updatedFixture[fixtureKey] : fixture),
     set: fixtureParts => {
       updatedFixture = { ...updatedFixture, ...fixtureParts };
-    }
-  };
-}
-
-function decorateFixtureRef(
-  fixture: Fixture,
-  ref: () => Promise<any>
-): Fixture {
-  return {
-    ...fixture,
-    async ref(...args) {
-      if (ref) {
-        await ref(...args);
-      }
-      if (fixture.ref) {
-        await fixture.ref(...args);
-      }
     }
   };
 }

@@ -104,16 +104,16 @@ it('stalls mounting until ref cb resolves', async () => {
     hasMounted = true;
   });
 
+  await afterPendingPromises();
   expect(hasMounted).toBe(false);
 
   if (refResolve) {
     refResolve();
-    await afterPendingPromises();
   } else {
     throw new Error('Ref has not been called');
   }
 
-  afterPendingPromises();
+  await afterPendingPromises();
   expect(hasMounted).toBe(true);
 });
 
