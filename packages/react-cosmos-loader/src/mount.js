@@ -6,7 +6,6 @@ import createErrorCatchProxy from './components/ErrorCatchProxy';
 
 let StateProxy;
 let ErrorCatchProxy;
-let RefCallbackProxy;
 
 const createDomContainer = () => {
   const existingNode = document.getElementById('root');
@@ -39,7 +38,6 @@ export function mount({ proxies, fixtures, containerQuerySelector }) {
       proxies={[
         // Some proxies are loaded by default in all configs
         ErrorCatchProxy,
-        RefCallbackProxy,
         ...proxies,
         StateProxy
       ]}
