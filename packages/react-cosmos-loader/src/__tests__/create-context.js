@@ -91,13 +91,13 @@ it('returns wrapper', async () => {
   expect(getWrapper()).toBe(wrapper);
 });
 
-it('stalls mounting until ref cb resolves', async () => {
-  let refResolve;
-  const ref = () =>
+it('stalls mounting until beforeInit resolves', async () => {
+  let resolveHook;
+  const beforeInit = () =>
     new Promise(resolve => {
-      refResolve = resolve;
+      resolveHook = resolve;
     });
-  const { mount } = createContext({ renderer, fixture, ref });
+  const { mount } = createContext({ renderer, fixture, beforeInit });
 
   let hasMounted = false;
   mount().then(() => {
@@ -107,8 +107,34 @@ it('stalls mounting until ref cb resolves', async () => {
   await afterPendingPromises();
   expect(hasMounted).toBe(false);
 
-  if (refResolve) {
-    refResolve();
+  if (resolveHook) {
+    resolveHook();
+  } else {
+    throw new Error('Ref has not been called');
+  }
+
+  await afterPendingPromises();
+  expect(hasMounted).toBe(true);
+});
+
+it('stalls mounting until fixture.init resolves', async () => {
+  let resolveHook;
+  const init = () =>
+    new Promise(resolve => {
+      resolveHook = resolve;
+    });
+  const { mount } = createContext({ renderer, fixture: { ...fixture, init } });
+
+  let hasMounted = false;
+  mount().then(() => {
+    hasMounted = true;
+  });
+
+  await afterPendingPromises();
+  expect(hasMounted).toBe(false);
+
+  if (resolveHook) {
+    resolveHook();
   } else {
     throw new Error('Ref has not been called');
   }

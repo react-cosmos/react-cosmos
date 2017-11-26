@@ -3,6 +3,8 @@
 import until from 'async-until';
 import React, { Component } from 'react';
 import Loader from './components/Loader';
+import { isComponentClass } from './utils/is-component-class';
+
 import type { ComponentType, Element, ElementRef } from 'react';
 
 type ComponentInstance = ElementRef<typeof Component>;
@@ -11,80 +13,92 @@ type Wrapper = {
   unmount: () => any
 };
 
-type Fixture = {
-  ref?: (ref: ComponentInstance) => Promise<any>
-};
-
-type Args = {
-  renderer: (element: Element<any>) => Wrapper,
-  proxies?: Array<ComponentType<any>>,
-  fixture: Fixture,
-  ref?: (ref: ComponentInstance) => Promise<any>
-};
-
-type Return = {
-  mount: () => Promise<any>,
-  unmount: () => any,
+type GettersSetters = {
   getRef: () => ?ComponentInstance,
   getWrapper: () => ?Wrapper,
   get: (fixtureKey?: string) => any,
   set: (fixtureParts: {}) => any
 };
 
+type Fixture = {
+  component: ComponentType<any>,
+  init?: (args: GettersSetters) => Promise<any>
+};
+
+type Args = {
+  renderer: (element: Element<any>) => Wrapper,
+  proxies?: Array<ComponentType<any>>,
+  fixture: Fixture,
+  beforeInit?: () => Promise<any>
+};
+
+type Return = {
+  mount: () => Promise<any>,
+  unmount: () => any
+} & GettersSetters;
+
 export function createContext(args: Args): Return {
-  const { renderer, proxies = [], fixture, ref } = args;
+  const { renderer, proxies = [], fixture, beforeInit } = args;
 
   let updatedFixture = { ...fixture };
   let wrapper: ?Wrapper;
   let compRef: ?ComponentInstance;
 
-  return {
-    mount: () => {
-      return new Promise(async (resolve, reject) => {
-        try {
-          wrapper = renderer(
-            <Loader
-              proxies={proxies}
-              fixture={updatedFixture}
-              onComponentRef={ref => {
-                compRef = ref;
-              }}
-            />
-          );
+  const getRef = () => compRef;
+  const getWrapper = () => wrapper;
+  const get = fixtureKey => (fixtureKey ? updatedFixture[fixtureKey] : fixture);
+  const set = fixtureParts => {
+    updatedFixture = { ...updatedFixture, ...fixtureParts };
+  };
 
-          // Only Class components have refs, so for stateless components mount
-          // will be synchronous. If fixture.ref or args.ref exists for a
-          // stateless component mount will hang forever
-          if (ref || fixture.ref) {
-            await until(() => compRef);
-          }
+  const mount = () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        wrapper = renderer(
+          <Loader
+            proxies={proxies}
+            fixture={updatedFixture}
+            onComponentRef={ref => {
+              compRef = ref;
+            }}
+          />
+        );
 
-          // At this point we're sure compRef exists, but Flow doesn't
-          // understand what until() does...
-          if (ref && compRef) {
-            await ref(compRef);
-          }
-
-          if (fixture.ref && compRef) {
-            await fixture.ref(compRef);
-          }
-
-          resolve();
-        } catch (err) {
-          reject(err);
+        // Ensure component ref is available when mounting is resolved (esp.
+        // convenient in headless tests)
+        if (isComponentClass(fixture.component)) {
+          await until(() => compRef);
         }
-      });
-    },
-    unmount: () => {
-      if (wrapper) {
-        wrapper.unmount();
+
+        // Useful for **mocking refs** before fixture.init is called
+        if (beforeInit) {
+          await beforeInit();
+        }
+
+        // Allow fixture to do run setup steps after component mounts
+        if (fixture.init) {
+          await fixture.init({ getWrapper, getRef, get, set });
+        }
+
+        resolve();
+      } catch (err) {
+        reject(err);
       }
-    },
-    getRef: () => compRef,
-    getWrapper: () => wrapper,
-    get: fixtureKey => (fixtureKey ? updatedFixture[fixtureKey] : fixture),
-    set: fixtureParts => {
-      updatedFixture = { ...updatedFixture, ...fixtureParts };
+    });
+  };
+
+  const unmount = () => {
+    if (wrapper) {
+      wrapper.unmount();
     }
+  };
+
+  return {
+    mount,
+    unmount,
+    getRef,
+    getWrapper,
+    get,
+    set
   };
 }

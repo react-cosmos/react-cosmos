@@ -6,11 +6,11 @@ import fixture from '../../__fixtures__/selected-editor';
 
 jest.mock('localforage');
 
-const { mount, getWrapper } = createContext({
+const { mount, getWrapper, getRef } = createContext({
   fixture,
-  async ref(compInstance) {
+  beforeInit: () => {
     // Fake node width/height
-    compInstance.contentNode = {
+    getRef().contentNode = {
       // Landscape
       offsetWidth: 200,
       offsetHeight: 300
@@ -20,7 +20,9 @@ const { mount, getWrapper } = createContext({
 
 describe('Portrait fixture editor pane', () => {
   describe('default size', () => {
-    beforeEach(mount);
+    beforeEach(async () => {
+      await mount();
+    });
 
     it('should set landscape class to content', () => {
       expect(getWrapper('.content.contentPortrait')).toHaveLength(1);

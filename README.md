@@ -65,7 +65,7 @@ Jump to:
   - [Props](#props)
   - [Children](#children)
   - [State](#state)
-  - [Ref callback](#ref-callback)
+  - [Init hook](#init-hook)
 - [Proxies](#proxies)
   - [What's a proxy?](#whats-a-proxy)
   - [Where to put proxies?](#where-to-put-proxies)
@@ -209,20 +209,18 @@ export default {
 }
 ```
 
-#### Ref callback
+#### Init hook
 
-**Exclusively for Class components.** This is an advanced feature and should only be used when a desired state can't be reproduced via [proxies](#proxies).
+This is an advanced feature and should only be used when a desired state can't be reproduced via [proxies](#proxies).
 
 ```js
 export default {
   component: Dashboard,
-  async ref(compInstance) {
+  async init({ getRef }) {
     // With great power comes great ref-sponsibility...
   }
 }
 ```
-
-> The `ref` callback is useful when writing headless tests. Having a reference to the component instance enables us to mock child *refs*. We can also stall test execution by making fixture.ref *async* and *awaiting* until we're confident that our component is ready for assertions.
 
 ### Proxies
 

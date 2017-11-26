@@ -6,11 +6,11 @@ import fixture from '../../__fixtures__/selected-editor';
 
 jest.mock('localforage');
 
-const { mount, getWrapper } = createContext({
+const { mount, getWrapper, getRef } = createContext({
   fixture,
-  async ref(compInstance) {
+  async beforeInit() {
     // Fake node width/height
-    compInstance.contentNode = {
+    getRef().contentNode = {
       // Landscape
       offsetWidth: 300,
       offsetHeight: 200
