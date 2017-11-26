@@ -3,7 +3,6 @@ import { render } from 'react-dom';
 import createStateProxy from 'react-cosmos-state-proxy';
 import RemoteLoader from './components/RemoteLoader';
 import createErrorCatchProxy from './components/ErrorCatchProxy';
-import createRefCallbackProxy from './components/RefCallbackProxy';
 
 let StateProxy;
 let ErrorCatchProxy;
@@ -32,7 +31,6 @@ export function mount({ proxies, fixtures, containerQuerySelector }) {
   if (!StateProxy) {
     StateProxy = createStateProxy();
     ErrorCatchProxy = createErrorCatchProxy();
-    RefCallbackProxy = createRefCallbackProxy();
   }
 
   render(

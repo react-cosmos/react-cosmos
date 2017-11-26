@@ -4,7 +4,11 @@
   "setupFiles": ["./jest.setup.js"],
   "setupTestFrameworkScriptFile": "./jest.framework-setup.js",
   "testURL": "http://foo.bar/",
-  "testPathIgnorePatterns": ["<rootDir>/node_modules/", "/__fsmocks__/"],
+  "testPathIgnorePatterns": [
+    "<rootDir>/node_modules/",
+    "/__fsmocks__/",
+    "/_shared"
+  ],
   "watchPathIgnorePatterns": ["/__fsoutput__/"],
   "transformIgnorePatterns": ["/node_modules/(?!react-cosmos.+)"],
   "collectCoverageFrom": [
@@ -22,7 +26,6 @@
   },
   "moduleNameMapper": {
     "\\.(css|less)$": "identity-obj-proxy",
-    "\\.(jpg|png)$":
-      "<rootDir>/packages/react-cosmos-playground/img-stub.js"
+    "\\.(jpg|png)$": "<rootDir>/packages/react-cosmos-playground/img-stub.js"
   }
 }

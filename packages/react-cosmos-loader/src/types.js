@@ -2,13 +2,15 @@
 
 import { Component } from 'react';
 
-import type { ComponentType, ElementRef } from 'react';
+import type { Element, ComponentType, ElementRef } from 'react';
 
 export type ComponentRef = ElementRef<typeof Component>;
 
 export type Wrapper = {
   unmount: () => any
 };
+
+export type Renderer = (element: Element<any>) => Wrapper;
 
 type GetRef = () => ?ComponentRef;
 

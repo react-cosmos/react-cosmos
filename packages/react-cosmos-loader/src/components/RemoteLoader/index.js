@@ -62,6 +62,7 @@ const getFixtureState = ({
 
 const postMessageToParent = data => parent.postMessage(data, '*');
 
+// TODO: Deprecate in favor of connectLoader
 class RemoteLoader extends Component {
   /**
    * Remote loader for rendering React components in isolation.
