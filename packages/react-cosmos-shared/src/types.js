@@ -24,6 +24,12 @@ export type FixtureListUpdateMessageData = {
   fixtures: Object
 };
 
+export type FixtureSelectMessageData = {
+  type: 'fixtureSelect',
+  component: string,
+  fixture: string
+};
+
 export type FixtureLoadMessageData = {
   type: 'fixtureLoad',
   fixtureBody: Object
@@ -34,11 +40,14 @@ export type FixtureUpdateData = {
   fixtureBody: Object
 };
 
+export type LoaderMessageData =
+  | RuntimeErrorMessageData
+  | LoaderReadyMessageData
+  | FixtureListUpdateMessageData
+  | FixtureSelectMessageData
+  | FixtureLoadMessageData
+  | FixtureUpdateData;
+
 export type LoaderMessage = {
-  data:
-    | RuntimeErrorMessageData
-    | LoaderReadyMessageData
-    | FixtureListUpdateMessageData
-    | FixtureLoadMessageData
-    | FixtureUpdateData
+  data: LoaderMessageData
 };
