@@ -6,6 +6,7 @@ import {
   splitUnserializableParts,
   createLinkedList
 } from 'react-cosmos-shared';
+import { dismissRuntimeErrors } from 'react-error-overlay';
 import createModuleType from '../../utils/module-type';
 import PropsProxy from '../PropsProxy';
 
@@ -156,6 +157,8 @@ class RemoteLoader extends Component {
 
     if (fixture) {
       const { serializable: fixtureBody } = state.fixtureBody;
+
+      dismissRuntimeErrors();
 
       // Notify back parent with the serializable contents of the loaded fixture
       postMessageToParent({
