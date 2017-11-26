@@ -1,48 +1,32 @@
 // @flow
 
 import until from 'async-until';
-import React, { Component } from 'react';
+import React from 'react';
 import Loader from './components/Loader';
 import { isComponentClass } from './utils/is-component-class';
 
-import type { ComponentType, Element, ElementRef } from 'react';
-
-type ComponentInstance = ElementRef<typeof Component>;
-
-type Wrapper = {
-  unmount: () => any
-};
-
-type GettersSetters = {
-  getRef: () => ?ComponentInstance,
-  getWrapper: () => ?Wrapper,
-  get: (fixtureKey?: string) => any,
-  set: (fixtureParts: {}) => any
-};
-
-type Fixture = {
-  component: ComponentType<any>,
-  init?: (args: GettersSetters) => Promise<any>
-};
+import type { Element } from 'react';
+import type {
+  ComponentRef,
+  Wrapper,
+  Fixture,
+  Proxy,
+  ContextFunctions
+} from './types';
 
 type Args = {
   renderer: (element: Element<any>) => Wrapper,
-  proxies?: Array<ComponentType<any>>,
+  proxies?: Array<Proxy>,
   fixture: Fixture,
   beforeInit?: () => Promise<any>
 };
 
-type Return = {
-  mount: () => Promise<any>,
-  unmount: () => any
-} & GettersSetters;
-
-export function createContext(args: Args): Return {
+export function createContext(args: Args): ContextFunctions {
   const { renderer, proxies = [], fixture, beforeInit } = args;
 
   let updatedFixture = { ...fixture };
   let wrapper: ?Wrapper;
-  let compRef: ?ComponentInstance;
+  let compRef: ?ComponentRef;
 
   const getRef = () => compRef;
   const getWrapper = () => wrapper;
@@ -77,7 +61,7 @@ export function createContext(args: Args): Return {
 
         // Allow fixture to do run setup steps after component mounts
         if (fixture.init) {
-          await fixture.init({ getWrapper, getRef, get, set });
+          await fixture.init({ getRef });
         }
 
         resolve();
