@@ -21,7 +21,7 @@ export function connectLoader(args: Args) {
   // This will be populated on fixtureSelect events
   let currentFixture: ?Fixture;
 
-  async function loadFixture(fixture) {
+  async function loadFixture(fixture, clearPrevInstance = true) {
     currentFixture = fixture;
     const { mount } = createContext({
       renderer,
@@ -29,7 +29,7 @@ export function connectLoader(args: Args) {
       fixture,
       onUpdate: onContextUpdate
     });
-    await mount();
+    await mount(clearPrevInstance);
   }
 
   function onContextUpdate(fixturePart) {
@@ -59,11 +59,11 @@ export function connectLoader(args: Args) {
       if (!currentFixture) {
         console.error('[Cosmos] No selected fixture to edit');
       } else {
-        // Note: We recreate the fixture context on every fixture edit. This
-        // means that the component will always go down the componentDidMount
-        // path (instead of componentWillReceiveProps) when user edit fixture
-        // via fixture editor. In the future we might want to sometimes reuse
-        // the fixture context and update its state instead of overriding it.
+        // Note: Creating fixture context from scratch on every fixture edit.
+        // This means that the component will always go down the
+        // componentDidMount path (instead of componentWillReceiveProps) when
+        // user edits fixture via fixture editor. In the future we might want to
+        // sometimes update the fixture context instead of resetting it.
         await loadFixture(applyFixturePart(currentFixture, data.fixtureBody));
       }
     }
