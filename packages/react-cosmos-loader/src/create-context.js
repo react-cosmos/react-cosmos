@@ -97,7 +97,6 @@ export function createContext(args: Args): ContextFunctions {
     unmount,
     getRef,
     getWrapper,
-    get,
-    update
+    get
   };
 }

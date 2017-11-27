@@ -55,11 +55,11 @@ export function connectLoader(args: Args) {
       if (!currentFixture) {
         console.error('[Cosmos] No selected fixture to edit');
       } else {
-        // Note: We recreate the fixture context on every fixture edit. This means
-        // component will always go down the componentDidMount path and never on
-        // componentWillReceiveProps when user edit fixture via fixture editor.
-        // In the future we might want to reuse the fixture context and update its
-        // state instead of recreating it on every edit.
+        // Note: We recreate the fixture context on every fixture edit. This
+        // means that the component will always go down the componentDidMount
+        // path (instead of componentWillReceiveProps) when user edit fixture
+        // via fixture editor. In the future we might want to sometimes reuse
+        // the fixture context and update its state instead of overriding it.
         await loadFixture(applyFixturePart(currentFixture, data.fixtureBody));
       }
     }

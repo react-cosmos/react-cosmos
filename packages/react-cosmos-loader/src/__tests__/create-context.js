@@ -151,20 +151,6 @@ it('gets fixture part', async () => {
   expect(get('state')).toEqual({ count: 5 });
 });
 
-it('updates fixture part', async () => {
-  const { get, update } = createContext({ renderer, fixture });
-
-  update({ state: { count: 6 } });
-  expect(get('state')).toEqual({ count: 6 });
-});
-
-it('forwards update calls', async () => {
-  const { update } = createContext({ renderer, fixture, onUpdate });
-
-  update({ state: { count: 6 } });
-  expect(onUpdate).toHaveBeenCalledWith({ state: { count: 6 } });
-});
-
 it('calls wrapper.unmount on unmount', async () => {
   const { mount, unmount } = createContext({ renderer, fixture });
   await mount();
