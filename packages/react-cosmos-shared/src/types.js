@@ -35,8 +35,13 @@ export type FixtureLoadMessageData = {
   fixtureBody: Object
 };
 
-export type FixtureUpdateData = {
+export type FixtureUpdateMessageData = {
   type: 'fixtureUpdate',
+  fixtureBody: Object
+};
+
+export type FixtureEditMessageData = {
+  type: 'fixtureEdit',
   fixtureBody: Object
 };
 
@@ -46,7 +51,8 @@ export type LoaderMessageData =
   | FixtureListUpdateMessageData
   | FixtureSelectMessageData
   | FixtureLoadMessageData
-  | FixtureUpdateData;
+  | FixtureUpdateMessageData
+  | FixtureEditMessageData;
 
 export type LoaderMessage = {
   data: LoaderMessageData
