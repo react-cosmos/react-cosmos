@@ -18,24 +18,38 @@ type Args = {
   renderer: (element: Element<any>) => Wrapper,
   proxies?: Array<Proxy>,
   fixture: Fixture,
+  onUpdate?: (fixturePart: {}) => any,
   beforeInit?: () => Promise<any>
 };
 
 export function createContext(args: Args): ContextFunctions {
-  const { renderer, proxies = [], fixture, beforeInit } = args;
+  const { renderer, proxies = [], fixture, onUpdate, beforeInit } = args;
 
   let updatedFixture = { ...fixture };
   let wrapper: ?Wrapper;
   let compRef: ?ComponentRef;
 
-  const getRef = () => compRef;
-  const getWrapper = () => wrapper;
-  const get = fixtureKey => (fixtureKey ? updatedFixture[fixtureKey] : fixture);
-  const set = fixtureParts => {
-    updatedFixture = { ...updatedFixture, ...fixtureParts };
-  };
+  function getRef() {
+    return compRef;
+  }
 
-  const mount = () => {
+  function getWrapper() {
+    return wrapper;
+  }
+
+  function get(fixtureKey) {
+    return fixtureKey ? updatedFixture[fixtureKey] : updatedFixture;
+  }
+
+  function update(fixturePart) {
+    updatedFixture = { ...updatedFixture, ...fixturePart };
+
+    if (onUpdate) {
+      onUpdate(fixturePart);
+    }
+  }
+
+  function mount() {
     return new Promise(async (resolve, reject) => {
       try {
         wrapper = renderer(
@@ -45,6 +59,7 @@ export function createContext(args: Args): ContextFunctions {
             onComponentRef={ref => {
               compRef = ref;
             }}
+            onFixtureUpdate={update}
           />
         );
 
@@ -69,13 +84,13 @@ export function createContext(args: Args): ContextFunctions {
         reject(err);
       }
     });
-  };
+  }
 
-  const unmount = () => {
+  function unmount() {
     if (wrapper) {
       wrapper.unmount();
     }
-  };
+  }
 
   return {
     mount,
@@ -83,6 +98,6 @@ export function createContext(args: Args): ContextFunctions {
     getRef,
     getWrapper,
     get,
-    set
+    update
   };
 }

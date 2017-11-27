@@ -29,6 +29,7 @@ const renderer = jest.fn(element => {
   TestRenderer.create(element);
   return wrapper;
 });
+const onUpdate = jest.fn();
 const proxies = [ProxyA, ProxyB];
 const fixture = { component: FooComp, state: { count: 5 } };
 
@@ -36,45 +37,40 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
-describe('mounting', () => {
-  beforeEach(async () => {
-    const { mount } = createContext({ renderer, proxies, fixture });
-    await mount();
-  });
+it('calls renderer with Loader element', async () => {
+  const { mount } = createContext({ renderer, proxies, fixture });
+  await mount();
 
-  it('calls renderer on mount', () => {
-    expect(renderer).toHaveBeenCalled();
-  });
-
-  it('calls renderer with Loader element', () => {
-    const element = renderer.mock.calls[0][0];
-    expect(element.type).toBe(Loader);
-  });
-
-  describe('Loader props', () => {
-    it('has fixture', () => {
-      const element = renderer.mock.calls[0][0];
-      expect(element.props.fixture).toEqual(fixture);
-    });
-
-    it('includes user proxies', () => {
-      const element = renderer.mock.calls[0][0];
-      expect(element.props.proxies).toContain(ProxyA);
-      expect(element.props.proxies).toContain(ProxyB);
-    });
-  });
+  const element = renderer.mock.calls[0][0];
+  expect(element.type).toBe(Loader);
 });
 
-describe('unmounting', () => {
-  beforeEach(async () => {
-    const { mount, unmount } = createContext({ renderer, fixture });
-    await mount();
-    await unmount();
-  });
+it('includes fixture in Loader props', async () => {
+  const { mount } = createContext({ renderer, proxies, fixture });
+  await mount();
 
-  it('calls wrapper.unmount', () => {
-    expect(wrapper.unmount).toHaveBeenCalled();
-  });
+  const element = renderer.mock.calls[0][0];
+  expect(element.props.fixture).toEqual(fixture);
+});
+
+it('includes user proxies in Loader props', async () => {
+  const { mount } = createContext({ renderer, proxies, fixture });
+  await mount();
+
+  const element = renderer.mock.calls[0][0];
+  expect(element.props.proxies).toContain(ProxyA);
+  expect(element.props.proxies).toContain(ProxyB);
+});
+
+it('includes update callback in Loader props', async () => {
+  const { mount } = createContext({ renderer, proxies, fixture, onUpdate });
+  await mount();
+
+  const element = renderer.mock.calls[0][0];
+  const { onFixtureUpdate } = element.props;
+
+  onFixtureUpdate({ state: { count: 6 } });
+  expect(onUpdate).toHaveBeenCalledWith({ state: { count: 6 } });
 });
 
 it('returns component ref', async () => {
@@ -155,9 +151,24 @@ it('gets fixture part', async () => {
   expect(get('state')).toEqual({ count: 5 });
 });
 
-it('set fixture part', async () => {
-  const { get, set } = createContext({ renderer, fixture });
+it('updates fixture part', async () => {
+  const { get, update } = createContext({ renderer, fixture });
 
-  set({ state: { count: 6 } });
+  update({ state: { count: 6 } });
   expect(get('state')).toEqual({ count: 6 });
+});
+
+it('forwards update calls', async () => {
+  const { update } = createContext({ renderer, fixture, onUpdate });
+
+  update({ state: { count: 6 } });
+  expect(onUpdate).toHaveBeenCalledWith({ state: { count: 6 } });
+});
+
+it('calls wrapper.unmount on unmount', async () => {
+  const { mount, unmount } = createContext({ renderer, fixture });
+  await mount();
+  await unmount();
+
+  expect(wrapper.unmount).toHaveBeenCalled();
 });
