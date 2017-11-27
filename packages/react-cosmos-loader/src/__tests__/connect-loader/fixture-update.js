@@ -45,15 +45,16 @@ beforeEach(async () => {
 
   await until(hasSentFixtureLoadMessage);
 
-  onContextUpdate({ foo: false });
+  onContextUpdate({ foo: false, fooFn: () => {} });
 });
 
-it('sends updated fixture body to parent', async () => {
+it('sends serializable part of updated fixture body to parent', async () => {
   // postMessage events are only received in the next loop
   await afterPendingTimers();
 
   expect(getLastWindowMessage()).toEqual({
     type: 'fixtureUpdate',
+    // Note: fixture.fooFn is unserializable so it's omitted
     fixtureBody: {
       foo: false
     }

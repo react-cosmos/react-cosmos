@@ -57,12 +57,13 @@ it('mounts context', () => {
   expect(mockMount).toHaveBeenCalled();
 });
 
-it('sends fixtureLoad event to parent with fixture body', async () => {
+it('sends fixtureLoad event to parent with serializable fixture body', async () => {
   // postMessage events are only received in the next loop
   await afterPendingTimers();
 
   expect(getLastWindowMessage()).toEqual({
     type: 'fixtureLoad',
+    // Note: fixture.fooFn is unserializable so it's omitted
     fixtureBody: {
       foo: true
     }
