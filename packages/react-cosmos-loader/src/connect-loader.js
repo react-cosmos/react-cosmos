@@ -42,15 +42,19 @@ export function connectLoader(args: Args) {
 
   async function onMessage({ data }: LoaderMessage) {
     if (data.type === 'fixtureSelect') {
-      // TODO: Handle selecting null component/fixture
-      await loadFixture(fixtures[data.component][data.fixture]);
+      const { component, fixture } = data;
+      if (fixtures[component] && fixtures[component][fixture]) {
+        await loadFixture(fixtures[component][fixture]);
 
-      // Notify back parent with the serializable contents of the loaded fixture
-      const { serializable } = splitUnserializableParts(currentFixture);
-      postMessageToParent({
-        type: 'fixtureLoad',
-        fixtureBody: serializable
-      });
+        // Notify back parent with the serializable contents of the loaded fixture
+        const { serializable } = splitUnserializableParts(currentFixture);
+        postMessageToParent({
+          type: 'fixtureLoad',
+          fixtureBody: serializable
+        });
+      } else {
+        console.error(`[Cosmos] Missing fixture for ${component}:${fixture}`);
+      }
     } else if (data.type === 'fixtureEdit') {
       if (!currentFixture) {
         console.error('[Cosmos] No selected fixture to edit');
