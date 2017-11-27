@@ -1,7 +1,6 @@
 // @flow
 
 import afterPendingTimers from 'after-pending-timers';
-import until from 'async-until';
 import { connectLoader } from '../../connect-loader';
 import {
   renderer,
@@ -9,9 +8,9 @@ import {
   fixtures,
   subscribeToWindowMessages,
   getLastWindowMessage,
-  hasReceivedReadyMessage,
-  hasSentFixtureLoadMessage,
-  postWindowMessage
+  receivedEvent,
+  postWindowMessage,
+  until
 } from './_shared';
 
 const mockMount = jest.fn();
@@ -26,16 +25,18 @@ jest.mock('../../create-context', () => ({
 
 subscribeToWindowMessages();
 
+let destroy;
+
 beforeEach(async () => {
   jest.clearAllMocks();
 
-  connectLoader({
+  destroy = connectLoader({
     renderer,
     proxies,
     fixtures
   });
 
-  await until(hasReceivedReadyMessage);
+  await until(receivedEvent('loaderReady'), 'Loader has not sent ready event');
 
   postWindowMessage({
     type: 'fixtureSelect',
@@ -43,10 +44,16 @@ beforeEach(async () => {
     fixture: 'foo'
   });
 
-  await until(hasSentFixtureLoadMessage);
+  await until(
+    receivedEvent('fixtureLoad'),
+    'Loader has not sent fixture load event'
+  );
 
   onContextUpdate({ foo: false, fooFn: () => {} });
 });
+
+// Ensure state doesn't leak between tests
+afterEach(() => destroy());
 
 it('sends serializable part of updated fixture body to parent', async () => {
   // postMessage events are only received in the next loop

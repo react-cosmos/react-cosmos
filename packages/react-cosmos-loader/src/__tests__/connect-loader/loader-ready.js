@@ -6,19 +6,18 @@ import {
   renderer,
   proxies,
   fixtures,
-  handleMessage,
   subscribeToWindowMessages,
   getLastWindowMessage
 } from './_shared';
 
 subscribeToWindowMessages();
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
+let destroy;
 
-it('notifies tells parent frame with fixture names', async () => {
-  connectLoader({
+beforeEach(async () => {
+  jest.clearAllMocks();
+
+  destroy = connectLoader({
     renderer,
     proxies,
     fixtures
@@ -26,8 +25,11 @@ it('notifies tells parent frame with fixture names', async () => {
 
   // postMessage events are only received in the next loop
   await afterPendingTimers();
+});
 
-  expect(handleMessage).toHaveBeenCalled();
+afterEach(() => destroy());
+
+it('notifies parent frame with updated fixture names', () => {
   expect(getLastWindowMessage()).toEqual({
     type: 'loaderReady',
     fixtures: {

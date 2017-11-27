@@ -1,7 +1,6 @@
 // @flow
 
 import afterPendingTimers from 'after-pending-timers';
-import until from 'async-until';
 import { createContext } from '../../create-context';
 import { connectLoader } from '../../connect-loader';
 import {
@@ -12,8 +11,9 @@ import {
   fixtureFoo,
   subscribeToWindowMessages,
   getLastWindowMessage,
-  hasReceivedReadyMessage,
-  postWindowMessage
+  receivedEvent,
+  postWindowMessage,
+  until
 } from './_shared';
 
 const mockMount = jest.fn();
@@ -24,16 +24,18 @@ jest.mock('../../create-context', () => ({
 
 subscribeToWindowMessages();
 
+let destroy;
+
 beforeEach(async () => {
   jest.clearAllMocks();
 
-  connectLoader({
+  destroy = connectLoader({
     renderer,
     proxies,
     fixtures
   });
 
-  await until(hasReceivedReadyMessage);
+  await until(receivedEvent('loaderReady'), 'Loader has not sent ready event');
 
   postWindowMessage({
     type: 'fixtureSelect',
@@ -44,6 +46,9 @@ beforeEach(async () => {
   // postMessage events are only received in the next loop
   await afterPendingTimers();
 });
+
+// Ensure state doesn't leak between tests
+afterEach(() => destroy());
 
 it('creates context with fixture "Foo/foo"', () => {
   expect(getMock(createContext).calls[0][0]).toMatchObject({

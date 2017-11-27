@@ -43,22 +43,35 @@ export function getLastWindowMessage() {
   return calls[calls.length - 1][0].data;
 }
 
-export function hasReceivedReadyMessage() {
-  return (
+export function receivedEvent(eventType: string) {
+  return () =>
     handleMessage.mock.calls.length > 0 &&
-    getLastWindowMessage().type === 'loaderReady'
-  );
-}
-
-export function hasSentFixtureLoadMessage() {
-  return (
-    handleMessage.mock.calls.length > 0 &&
-    getLastWindowMessage().type === 'fixtureLoad'
-  );
+    getLastWindowMessage().type === eventType;
 }
 
 export function postWindowMessage(msg: LoaderMessageData) {
   window.postMessage(msg, '*');
+}
+
+export function until(
+  cb: () => boolean,
+  failMsg: string,
+  timeout: number = 100
+): Promise<any> {
+  const t1 = Date.now();
+
+  return new Promise((resolve, reject) => {
+    function loop() {
+      if (cb()) {
+        resolve();
+      } else if (Date.now() - t1 < timeout) {
+        setTimeout(loop);
+      } else {
+        reject(failMsg);
+      }
+    }
+    loop();
+  });
 }
 
 type JestMock = {

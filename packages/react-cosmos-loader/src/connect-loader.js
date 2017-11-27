@@ -68,20 +68,26 @@ export function connectLoader(args: Args) {
   if (!isListening) {
     window.addEventListener('message', onMessage, false);
     isListening = true;
+
+    // Let parent know loader is ready to render, along with the initial
+    // fixture list (which might update later due to HMR)
+    postMessageToParent({
+      type: 'loaderReady',
+      fixtures: extractFixtureNames(fixtures)
+    });
+  } else {
+    // Let parent know loader is ready to render, along with the initial
+    // fixture list (which might update later due to HMR)
+    postMessageToParent({
+      type: 'fixtureListUpdate',
+      fixtures: extractFixtureNames(fixtures)
+    });
   }
 
-  // Let parent know loader is ready to render, along with the initial
-  // fixture list (which might update later due to HMR)
-  postMessageToParent({
-    type: 'loaderReady',
-    fixtures: extractFixtureNames(fixtures)
-  });
-
-  // TODO: Return destroy method
-  // return function destroy() {
-  //   window.removeEventListener('message', onMessage);
-  //   isListening = false;
-  // };
+  return function destroy() {
+    window.removeEventListener('message', onMessage);
+    isListening = false;
+  };
 }
 
 function postMessageToParent(data) {
