@@ -18,7 +18,7 @@ export type ContextFunctions = {
   getRef: GetRef,
   getWrapper: () => ?Wrapper,
   get: (fixtureKey?: string) => any,
-  mount: () => Promise<any>,
+  mount: (clearPrevInstance?: boolean) => Promise<any>,
   unmount: () => any
 };
 

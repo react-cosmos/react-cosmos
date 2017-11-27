@@ -156,5 +156,21 @@ it('calls wrapper.unmount on unmount', async () => {
   await mount();
   await unmount();
 
-  expect(wrapper.unmount).toHaveBeenCalled();
+  expect(wrapper.unmount).toHaveBeenCalledTimes(1);
+});
+
+it('unmounts before 2nd mount by default', async () => {
+  const { mount } = createContext({ renderer, fixture });
+  await mount();
+  await mount();
+
+  expect(wrapper.unmount).toHaveBeenCalledTimes(1);
+});
+
+it('unmounts before 2nd mount if clearPrevInstance is false', async () => {
+  const { mount } = createContext({ renderer, fixture });
+  await mount();
+  await mount(false);
+
+  expect(wrapper.unmount).not.toHaveBeenCalled();
 });

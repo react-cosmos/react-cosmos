@@ -49,9 +49,13 @@ export function createContext(args: Args): ContextFunctions {
     }
   }
 
-  function mount() {
+  function mount(clearPrevInstance = true) {
     return new Promise(async (resolve, reject) => {
       try {
+        if (clearPrevInstance) {
+          unmount();
+        }
+
         wrapper = renderer(
           <Loader
             proxies={proxies}
