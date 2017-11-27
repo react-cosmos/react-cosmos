@@ -50,6 +50,21 @@ export function hasReceivedReadyMessage() {
   );
 }
 
+export function hasSentFixtureLoadMessage() {
+  return (
+    handleMessage.mock.calls.length > 0 &&
+    getLastWindowMessage().type === 'fixtureLoad'
+  );
+}
+
 export function postWindowMessage(msg: LoaderMessageData) {
   window.postMessage(msg, '*');
+}
+
+type JestMock = {
+  calls: Array<Array<any>>
+};
+
+export function getMock(fn: any): JestMock {
+  return fn.mock;
 }

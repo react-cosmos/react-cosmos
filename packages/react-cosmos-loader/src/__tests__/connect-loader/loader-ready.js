@@ -23,6 +23,8 @@ it('notifies tells parent frame with fixture names', async () => {
     proxies,
     fixtures
   });
+
+  // postMessage events are only received in the next loop
   await afterPendingTimers();
 
   expect(handleMessage).toHaveBeenCalled();

@@ -1,5 +1,6 @@
 // @flow
 
+// import merge from 'lodash.merge';
 import { splitUnserializableParts } from 'react-cosmos-shared';
 import { createContext } from './create-context';
 
@@ -12,6 +13,8 @@ type Args = {
   fixtures: Fixtures
 };
 
+let isListening = false;
+
 export function connectLoader(args: Args) {
   const { proxies, fixtures, renderer } = args;
 
@@ -22,11 +25,24 @@ export function connectLoader(args: Args) {
     fixtures: extractFixtureNames(fixtures)
   });
 
+  function onContextUpdate(fixturePart) {
+    const { serializable } = splitUnserializableParts(fixturePart);
+    postMessageToParent({
+      type: 'fixtureUpdate',
+      fixtureBody: serializable
+    });
+  }
+
   async function onMessage({ data }: LoaderMessage) {
     if (data.type === 'fixtureSelect') {
       // TODO: Handle selecting null component/fixture
       const fixture = fixtures[data.component][data.fixture];
-      const { mount } = createContext({ renderer, proxies, fixture });
+      const { mount } = createContext({
+        renderer,
+        proxies,
+        fixture,
+        onUpdate: onContextUpdate
+      });
       await mount();
 
       // Notify back parent with the serializable contents of the loaded fixture
@@ -38,11 +54,15 @@ export function connectLoader(args: Args) {
     }
   }
 
-  window.addEventListener('message', onMessage, false);
+  if (!isListening) {
+    window.addEventListener('message', onMessage, false);
+    isListening = true;
+  }
 
   // TODO: Return destroy method
   // return function destroy() {
   //   window.removeEventListener('message', onMessage);
+  //   isListening = false;
   // };
 }
 

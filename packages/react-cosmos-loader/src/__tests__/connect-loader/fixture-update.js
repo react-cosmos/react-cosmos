@@ -2,24 +2,26 @@
 
 import afterPendingTimers from 'after-pending-timers';
 import until from 'async-until';
-import { createContext } from '../../create-context';
 import { connectLoader } from '../../connect-loader';
 import {
-  getMock,
   renderer,
   proxies,
   fixtures,
-  fixtureFoo,
   subscribeToWindowMessages,
   getLastWindowMessage,
   hasReceivedReadyMessage,
+  hasSentFixtureLoadMessage,
   postWindowMessage
 } from './_shared';
 
 const mockMount = jest.fn();
+let onContextUpdate;
 
 jest.mock('../../create-context', () => ({
-  createContext: jest.fn(() => ({ mount: mockMount }))
+  createContext: jest.fn(({ onUpdate }) => {
+    onContextUpdate = onUpdate;
+    return { mount: mockMount };
+  })
 }));
 
 subscribeToWindowMessages();
@@ -41,30 +43,23 @@ beforeEach(async () => {
     fixture: 'foo'
   });
 
-  // postMessage events are only received in the next loop
-  await afterPendingTimers();
+  await until(hasSentFixtureLoadMessage);
+
+  onContextUpdate({ foo: false });
 });
 
-it('creates context with fixture "Foo/foo"', () => {
-  expect(getMock(createContext).calls[0][0]).toMatchObject({
-    renderer,
-    proxies,
-    fixture: fixtureFoo
-  });
-});
-
-it('mounts context', () => {
-  expect(mockMount).toHaveBeenCalled();
-});
-
-it('sends fixtureLoad event to parent with fixture body', async () => {
+it('sends updated fixture body to parent', async () => {
   // postMessage events are only received in the next loop
   await afterPendingTimers();
 
   expect(getLastWindowMessage()).toEqual({
-    type: 'fixtureLoad',
+    type: 'fixtureUpdate',
     fixtureBody: {
-      foo: true
+      foo: false
     }
   });
+});
+
+it('does not mount context again', () => {
+  expect(mockMount).toHaveBeenCalledTimes(1);
 });
