@@ -1,18 +1,17 @@
 // @flow
 
 import afterPendingTimers from 'after-pending-timers';
+import { until, getMock } from 'react-cosmos-shared/src/jest';
 import { createContext } from '../../create-context';
 import { connectLoader } from '../../connect-loader';
 import {
-  getMock,
   renderer,
   proxies,
   fixtures,
   fixtureFoo,
   subscribeToWindowMessages,
   receivedEvent,
-  postWindowMessage,
-  until
+  postWindowMessage
 } from './_shared';
 
 const mockMount = jest.fn();

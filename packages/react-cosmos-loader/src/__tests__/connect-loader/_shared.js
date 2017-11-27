@@ -52,32 +52,3 @@ export function receivedEvent(eventType: string) {
 export function postWindowMessage(msg: LoaderMessageData) {
   window.postMessage(msg, '*');
 }
-
-export function until(
-  cb: () => boolean,
-  failMsg: string,
-  timeout: number = 100
-): Promise<any> {
-  const t1 = Date.now();
-
-  return new Promise((resolve, reject) => {
-    function loop() {
-      if (cb()) {
-        resolve();
-      } else if (Date.now() - t1 < timeout) {
-        setTimeout(loop);
-      } else {
-        reject(failMsg);
-      }
-    }
-    loop();
-  });
-}
-
-type JestMock = {
-  calls: Array<Array<any>>
-};
-
-export function getMock(fn: any): JestMock {
-  return fn.mock;
-}

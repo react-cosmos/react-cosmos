@@ -1,6 +1,7 @@
 // @flow
 
 import afterPendingTimers from 'after-pending-timers';
+import { until } from 'react-cosmos-shared/src/jest';
 import { connectLoader } from '../../connect-loader';
 import {
   renderer,
@@ -8,8 +9,7 @@ import {
   fixtures,
   subscribeToWindowMessages,
   receivedEvent,
-  getLastWindowMessage,
-  until
+  getLastWindowMessage
 } from './_shared';
 
 subscribeToWindowMessages();

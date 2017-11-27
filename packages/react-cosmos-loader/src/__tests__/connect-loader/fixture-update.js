@@ -1,6 +1,7 @@
 // @flow
 
 import afterPendingTimers from 'after-pending-timers';
+import { until } from 'react-cosmos-shared/src/jest';
 import { connectLoader } from '../../connect-loader';
 import {
   renderer,
@@ -9,8 +10,7 @@ import {
   subscribeToWindowMessages,
   getLastWindowMessage,
   receivedEvent,
-  postWindowMessage,
-  until
+  postWindowMessage
 } from './_shared';
 
 const mockMount = jest.fn();
