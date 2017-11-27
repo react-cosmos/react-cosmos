@@ -21,7 +21,7 @@ import type {
   LoaderReadyMessageData,
   FixtureListUpdateMessageData,
   FixtureLoadMessageData,
-  FixtureUpdateData,
+  FixtureUpdateMessageData,
   LoaderMessage
 } from 'react-cosmos-shared/src/types';
 
@@ -169,7 +169,7 @@ export default class ComponentPlayground extends Component<Props, State> {
     });
   }
 
-  onFixtureUpdate({ fixtureBody }: FixtureUpdateData) {
+  onFixtureUpdate({ fixtureBody }: FixtureUpdateMessageData) {
     this.setState({
       // Fixture updates are partial
       fixtureBody: {
