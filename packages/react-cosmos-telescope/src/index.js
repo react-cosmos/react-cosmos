@@ -10,7 +10,7 @@ import { getComponents } from 'react-cosmos-voyager2/lib/client';
 import { createContext } from 'react-cosmos-loader';
 
 type Args = {
-  cosmosConfigPath: Array<string>
+  cosmosConfigPath?: string
 };
 
 export default async ({ cosmosConfigPath }: Args) => {
