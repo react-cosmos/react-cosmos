@@ -242,7 +242,8 @@ class RemoteLoader extends Component {
 RemoteLoader.propTypes = {
   fixtures: objectOf(objectOf(createModuleType(object))).isRequired,
   proxies: arrayOf(createModuleType(func)),
-  onComponentRef: func
+  onComponentRef: func,
+  dismissRuntimeErrors: func
 };
 
 RemoteLoader.defaultProps = {
