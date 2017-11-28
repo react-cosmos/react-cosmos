@@ -5,22 +5,12 @@ import React from 'react';
 import Loader from './components/Loader';
 import { isComponentClass } from './utils/is-component-class';
 
-import type { Element } from 'react';
 import type {
   ComponentRef,
   Wrapper,
-  Fixture,
-  Proxy,
+  ContextArgs,
   ContextFunctions
 } from './types';
-
-type Args = {
-  renderer: (element: Element<any>) => Wrapper,
-  proxies?: Array<Proxy>,
-  fixture: Fixture,
-  onUpdate?: (fixturePart: {}) => any,
-  beforeInit?: () => Promise<any>
-};
 
 let wrapper: ?Wrapper;
 
@@ -36,7 +26,7 @@ let wrapper: ?Wrapper;
  * window.fetch) there can only be one active context per page. This means that
  * mounting a new context will unmount the previous automatically.
  */
-export function createContext(args: Args): ContextFunctions {
+export function createContext(args: ContextArgs): ContextFunctions {
   const { renderer, proxies = [], fixture, onUpdate, beforeInit } = args;
 
   let updatedFixture = { ...fixture };

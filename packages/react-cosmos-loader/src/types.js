@@ -6,11 +6,26 @@ import type { Element, ComponentType, ElementRef } from 'react';
 
 export type ComponentRef = ElementRef<typeof Component>;
 
+export type Fixture = {
+  component: ComponentType<any>,
+  init?: ({ compRef: ?ComponentRef }) => Promise<any>
+};
+
+export type Proxy = ComponentType<any>;
+
 export type Wrapper = {
   unmount: () => any
 };
 
 export type Renderer = (element: Element<any>) => Wrapper;
+
+export type ContextArgs = {
+  renderer: (element: Element<any>) => Wrapper,
+  proxies?: Array<Proxy>,
+  fixture: Fixture,
+  onUpdate?: (fixturePart: {}) => any,
+  beforeInit?: () => Promise<any>
+};
 
 export type ContextFunctions = {
   getRef: () => ?ComponentRef,
@@ -19,13 +34,6 @@ export type ContextFunctions = {
   mount: (clearPrevInstance?: boolean) => Promise<any>,
   unmount: () => any
 };
-
-export type Fixture = {
-  component: ComponentType<any>,
-  init?: ({ compRef: ?ComponentRef }) => Promise<any>
-};
-
-export type Proxy = ComponentType<any>;
 
 export type Fixtures = {
   [componentName: string]: {
