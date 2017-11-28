@@ -17,15 +17,15 @@ export const readyMessage = {
   }
 };
 
-export async function init({ getRef }) {
+export async function init({ compRef }) {
   // Wait until fetch mock has responded and component state is ready to receive
   // messages from inside the Loader frame
-  await until(hasLoaderStatus(getRef(), OK));
+  await until(hasLoaderStatus(compRef, OK));
 
   window.postMessage(readyMessage, '*');
 
   // Wait until Playground state has been updated before running any assertions
-  await until(hasLoaderStatus(getRef(), READY));
+  await until(hasLoaderStatus(compRef, READY));
 }
 
 function hasLoaderStatus(compInstance, status) {

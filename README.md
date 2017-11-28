@@ -216,7 +216,7 @@ This is an advanced feature and should only be used when a desired state can't b
 ```js
 export default {
   component: Dashboard,
-  async init({ getRef }) {
+  async init({ compRef }) {
     // With great power comes great ref-sponsibility...
   }
 }

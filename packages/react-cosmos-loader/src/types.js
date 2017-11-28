@@ -12,10 +12,8 @@ export type Wrapper = {
 
 export type Renderer = (element: Element<any>) => Wrapper;
 
-type GetRef = () => ?ComponentRef;
-
 export type ContextFunctions = {
-  getRef: GetRef,
+  getRef: () => ?ComponentRef,
   getWrapper: () => ?Wrapper,
   get: (fixtureKey?: string) => any,
   mount: (clearPrevInstance?: boolean) => Promise<any>,
@@ -24,7 +22,7 @@ export type ContextFunctions = {
 
 export type Fixture = {
   component: ComponentType<any>,
-  init?: ({ getRef: GetRef }) => Promise<any>
+  init?: ({ compRef: ?ComponentRef }) => Promise<any>
 };
 
 export type Proxy = ComponentType<any>;

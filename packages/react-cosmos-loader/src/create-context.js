@@ -93,7 +93,7 @@ export function createContext(args: Args): ContextFunctions {
 
         // Allow fixture to do run setup steps after component mounts
         if (fixture.init) {
-          await fixture.init({ getRef });
+          await fixture.init({ compRef });
         }
 
         resolve();
