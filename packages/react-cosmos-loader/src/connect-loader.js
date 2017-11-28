@@ -15,13 +15,23 @@ type Args = {
 
 let isListening = false;
 
+/**
+ * Connect fixture context to remote Playground UI via window.postMessage.
+ * In the future we'll replace window.postMessage with a fully remote (likely
+ * websockets) communication channel, which will allow the Playground and the
+ * Loader to live in completely different environments (eg. Control a Native
+ * component instance from a web Playground UI).
+ *
+ * It both receives fixture changes from parent frame and sends fixture
+ * updates bubbled up from proxy chain (due to state changes) to parent frame.
+ */
 export function connectLoader(args: Args) {
   const { proxies, fixtures, renderer } = args;
 
   // This will be populated on fixtureSelect events
   let currentFixture: ?Fixture;
 
-  async function loadFixture(fixture, clearPrevInstance = true) {
+  async function loadFixture(fixture) {
     currentFixture = fixture;
     const { mount } = createContext({
       renderer,
@@ -29,7 +39,7 @@ export function connectLoader(args: Args) {
       fixture,
       onUpdate: onContextUpdate
     });
-    await mount(clearPrevInstance);
+    await mount();
   }
 
   function onContextUpdate(fixturePart) {
