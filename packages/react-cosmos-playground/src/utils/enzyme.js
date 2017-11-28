@@ -1,43 +1,12 @@
 // @flow
 
-import { mount as mountEnzyme } from 'enzyme';
-import { createContext as _createContext } from 'react-cosmos-loader';
-import createFetchProxy from 'react-cosmos-fetch-proxy';
+import { createContext as _createContext } from 'react-cosmos-enzyme';
 
-import type { ComponentType } from 'react';
+import type { EnzymeContextArgs } from 'react-cosmos-enzyme/src';
 
-type Args = {
-  proxies: Array<ComponentType<*>>,
-  fixture: Object,
-  ref?: Function
-};
-
-type Selector = string | ComponentType<*>;
-
-export function createContext(args: Args) {
-  const { fixture } = args;
-  const FetchProxy = createFetchProxy();
-
-  const context = _createContext({
+export function createContext(args: EnzymeContextArgs) {
+  return _createContext({
     ...args,
-    renderer: mountEnzyme,
-    proxies: [FetchProxy]
+    cosmosConfigPath: require.resolve('../../cosmos.config')
   });
-  const { getWrapper } = context;
-
-  const getRootWrapper = () => {
-    const wrapper = getWrapper();
-    // Always keep wrapper up to date
-    wrapper.update();
-    return wrapper;
-  };
-
-  return {
-    ...context,
-    getRootWrapper,
-    getWrapper: (selector: ?Selector) => {
-      const innerWrapper = getRootWrapper().find(fixture.component);
-      return selector ? innerWrapper.find(selector) : innerWrapper;
-    }
-  };
 }

@@ -1,0 +1,17 @@
+{
+  "name": "react-cosmos-enzyme",
+  "version": "3.0.0",
+  "description": "Wrapper for testing Cosmos fixtures with Enzyme",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-enzyme",
+  "license": "MIT",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "dependencies": {
+    "react-cosmos-config": "^3.0.0",
+    "react-cosmos-loader": "^3.0.0",
+    "react-cosmos-shared": "^3.0.0"
+  },
+  "xo": false
+}
