@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import TestRenderer from 'react-test-renderer';
 import afterPendingPromises from 'after-pending-promises';
 import Loader from '../components/Loader';
-import { createContext } from '../create-context';
+import { createContext as _createContext } from '../create-context';
 
 function ProxyA(props) {
   const { nextProxy } = props;
@@ -33,9 +33,19 @@ const onUpdate = jest.fn();
 const proxies = [ProxyA, ProxyB];
 const fixture = { component: FooComp, state: { count: 5 } };
 
+// Unmount between tests to prevent leaking module state
+let _unmount;
+const createContext = args => {
+  const context = _createContext(args);
+  _unmount = context.unmount;
+  return context;
+};
+
 beforeEach(() => {
   jest.clearAllMocks();
 });
+
+afterEach(() => _unmount());
 
 it('calls renderer with Loader element', async () => {
   const { mount } = createContext({ renderer, proxies, fixture });
@@ -167,10 +177,17 @@ it('unmounts before 2nd mount by default', async () => {
   expect(wrapper.unmount).toHaveBeenCalledTimes(1);
 });
 
-it('unmounts before 2nd mount if clearPrevInstance is false', async () => {
+it('does not unmount before 2nd mount if clearPrevInstance is false', async () => {
   const { mount } = createContext({ renderer, fixture });
   await mount();
   await mount(false);
 
   expect(wrapper.unmount).not.toHaveBeenCalled();
+});
+
+it('unmounts before 2nd createContext', async () => {
+  await createContext({ renderer, fixture }).mount();
+  await createContext({ renderer, fixture }).mount();
+
+  expect(wrapper.unmount).toHaveBeenCalledTimes(1);
 });
