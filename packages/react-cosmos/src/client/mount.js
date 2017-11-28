@@ -2,6 +2,7 @@ import { importModule } from 'react-cosmos-shared';
 import { getComponents } from 'react-cosmos-voyager2/lib/client';
 import getUserModules from './user-modules';
 import { mount } from 'react-cosmos-loader';
+import { dismissRuntimeErrors } from 'react-error-overlay';
 
 import type {
   Modules,
@@ -45,7 +46,8 @@ export default function() {
   mount({
     proxies: importModule(proxies),
     fixtures,
-    containerQuerySelector
+    containerQuerySelector,
+    dismissRuntimeErrors
   });
 }
 

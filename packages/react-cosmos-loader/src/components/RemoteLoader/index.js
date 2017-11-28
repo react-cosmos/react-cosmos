@@ -6,7 +6,6 @@ import {
   splitUnserializableParts,
   createLinkedList
 } from 'react-cosmos-shared';
-import { dismissRuntimeErrors } from 'react-error-overlay';
 import createModuleType from '../../utils/module-type';
 import PropsProxy from '../PropsProxy';
 
@@ -148,7 +147,7 @@ class RemoteLoader extends Component {
   };
 
   onFixtureSelect({ component, fixture }) {
-    const { fixtures } = this.props;
+    const { fixtures, dismissRuntimeErrors } = this.props;
     const state = getFixtureState({
       fixtures,
       component,
