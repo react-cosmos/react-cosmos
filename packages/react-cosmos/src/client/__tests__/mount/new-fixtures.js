@@ -80,7 +80,7 @@ test('sends fixtures to loader', () => {
 
 test('sends containerQuerySelector to loader', () => {
   // Mocked in jest.config.js
-  expect(mountLoader.mock.calls[0][0].containerQuerySelector).toBe(
-    '__mock__containerQuerySelector'
-  );
+  expect(mountLoader.mock.calls[0][0].loaderOpts).toEqual({
+    containerQuerySelector: '__mock__containerQuerySelector'
+  });
 });

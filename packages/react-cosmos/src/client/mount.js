@@ -3,6 +3,7 @@ import { getComponents } from 'react-cosmos-voyager2/lib/client';
 import getUserModules from './user-modules';
 import { mount } from 'react-cosmos-loader';
 
+import type { LoaderOpts } from 'react-cosmos-shared/src/types';
 import type {
   Modules,
   FixtureFile,
@@ -10,7 +11,7 @@ import type {
 } from 'react-cosmos-voyager2/src/types';
 
 // eslint-disable-next-line no-undef
-const { containerQuerySelector } = COSMOS_CONFIG;
+const loaderOpts: LoaderOpts = COSMOS_CONFIG;
 
 export default function() {
   const {
@@ -45,7 +46,7 @@ export default function() {
   mount({
     proxies: importModule(proxies),
     fixtures,
-    containerQuerySelector
+    loaderOpts
   });
 }
 
