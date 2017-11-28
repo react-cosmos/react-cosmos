@@ -18,7 +18,7 @@ let StateProxy;
 let ErrorCatchProxy;
 
 export function mount(args: Args) {
-  const { proxies, fixtures, loaderOpts = {} } = args;
+  const { proxies, fixtures, loaderOpts } = args;
   const renderer = createDomRenderer(loaderOpts);
 
   // Reuse proxy instances
