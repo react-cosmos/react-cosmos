@@ -10,6 +10,10 @@ export type PlaygroundOpts = {
   webpackConfigType: 'default' | 'custom'
 };
 
+export type LoaderOpts = {
+  containerQuerySelector?: string
+};
+
 export type RuntimeErrorMessageData = {
   type: 'runtimeError'
 };
