@@ -17,10 +17,11 @@ export type Wrapper = {
   unmount: () => any
 };
 
-export type Renderer = (element: Element<any>) => Wrapper;
+export type Renderer = (element: Element<any>, options?: Object) => Wrapper;
 
 export type ContextArgs = {
-  renderer: (element: Element<any>) => Wrapper,
+  renderer: Renderer,
+  rendererOptions?: Object,
   proxies?: Array<Proxy>,
   fixture: Fixture,
   onUpdate?: (fixturePart: {}) => any,

@@ -27,7 +27,14 @@ let wrapper: ?Wrapper;
  * mounting a new context will unmount the previous automatically.
  */
 export function createContext(args: ContextArgs): ContextFunctions {
-  const { renderer, proxies = [], fixture, onUpdate, beforeInit } = args;
+  const {
+    renderer,
+    rendererOptions,
+    proxies = [],
+    fixture,
+    onUpdate,
+    beforeInit
+  } = args;
 
   let updatedFixture = { ...fixture };
   let compRef: ?ComponentRef;
@@ -79,7 +86,8 @@ export function createContext(args: ContextArgs): ContextFunctions {
               compRef = ref;
             }}
             onFixtureUpdate={update}
-          />
+          />,
+          rendererOptions
         );
 
         // Ensure component ref is available when mounting is resolved (esp.

@@ -72,6 +72,19 @@ it('includes user proxies in Loader props', async () => {
   expect(element.props.proxies).toContain(ProxyB);
 });
 
+it('calls renderer with loaderOptions', async () => {
+  const rendererOptions = {};
+  const { mount } = createContext({
+    renderer,
+    rendererOptions,
+    proxies,
+    fixture
+  });
+  await mount();
+
+  expect(renderer.mock.calls[0][1]).toBe(rendererOptions);
+});
+
 it('includes update callback in Loader props', async () => {
   const { mount } = createContext({ renderer, proxies, fixture, onUpdate });
   await mount();
