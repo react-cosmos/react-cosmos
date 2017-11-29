@@ -1,47 +1,26 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import afterOngoingPromises from 'after-ongoing-promises';
-import { Loader } from 'react-cosmos-loader';
-import createStateProxy from 'react-cosmos-state-proxy';
-import createFetchProxy from 'react-cosmos-fetch-proxy';
-import selectedEditorFixture from '../../__fixtures__/selected-editor';
+import { createContext } from '../../../../utils/enzyme';
 import DragHandle from '../../../DragHandle';
+import fixture from '../../__fixtures__/selected-editor';
 
-const StateProxy = createStateProxy();
-const FetchProxy = createFetchProxy();
+const { mount, getWrapper } = createContext({ fixture });
 
-// Vars populated in beforeEach blocks
-let wrapper;
+// Fixture editor is already on so the button will untoggle it
+const fixtureEditorUrl = '?component=ComponentA&fixture=foo';
 
 describe('Fixture editor controls', () => {
-  // Fixture editor is already on so the button will untoggle it
-  const fixtureEditorUrl = '?component=ComponentA&fixture=foo';
-
-  beforeEach(async () => {
-    // Mount component in order for ref and lifecycle methods to be called
-    wrapper = mount(
-      <Loader
-        proxies={[StateProxy, FetchProxy]}
-        fixture={selectedEditorFixture}
-      />
-    );
-    await afterOngoingPromises();
-    wrapper.update();
-  });
+  beforeEach(mount);
 
   it('should set untoggle URL to fixture editor button', () => {
-    expect(wrapper.find(`.header a[href="${fixtureEditorUrl}"]`)).toHaveLength(
-      1
-    );
+    expect(getWrapper(`.header a[href="${fixtureEditorUrl}"]`)).toHaveLength(1);
   });
 
   it('should render selected fixture editor button', () => {
     expect(
-      wrapper.find(`.header a[href="${fixtureEditorUrl}"].selectedButton`)
+      getWrapper(`.header a[href="${fixtureEditorUrl}"].selectedButton`)
     ).toHaveLength(1);
   });
 
   it('should render DragHandle in fixture editor pane', () => {
-    expect(wrapper.find('.fixtureEditorPane').find(DragHandle)).toHaveLength(1);
+    expect(getWrapper('.fixtureEditorPane').find(DragHandle)).toHaveLength(1);
   });
 });

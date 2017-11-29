@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-voyager2",
-  "version": "3.0.0-rc.6",
+  "version": "3.0.0",
   "publishConfig": {
     "access": "public"
   },
@@ -20,7 +20,7 @@
     "glob": "^7.1.2",
     "lodash.sortby": "^4.7.0",
     "micromatch": "^3.1.4",
-    "react-cosmos-shared": "^3.0.0-rc.6",
+    "react-cosmos-shared": "^3.0.0",
     "util.promisify": "^1.0.0"
   },
   "xo": false

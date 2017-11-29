@@ -16,12 +16,15 @@
   <a href="https://join-react-cosmos.now.sh/">
     <img alt="Slack" src="https://join-react-cosmos.now.sh/badge.svg">
   </a>
+  <a href="https://spectrum.chat/cosmos">
+    <img alt="Join the community on Spectrum" src="https://withspectrum.github.io/badge/badge.svg" />
+  </a>
   <a href="CONTRIBUTING.md#how-to-contribute">
     <img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg">
   </a>
 </p>
 
-> **Install `react-cosmos@next` and try out Cosmos 3.0 RC! 👌**
+> **New: [Cosmos 3.0, the version you’ll fall in love with](https://medium.com/@skidding/cosmos-3-0-the-version-youll-fall-in-love-with-28a862ecf72e)**
 
 Cosmos scans your project for components and enables you to:
 
@@ -62,6 +65,7 @@ Jump to:
   - [Props](#props)
   - [Children](#children)
   - [State](#state)
+  - [Ref callback](#ref-callback)
 - [Proxies](#proxies)
   - [What's a proxy?](#whats-a-proxy)
   - [Where to put proxies?](#where-to-put-proxies)
@@ -205,6 +209,21 @@ export default {
 }
 ```
 
+#### Ref callback
+
+**Exclusively for Class components.** This is an advanced feature and should only be used when a desired state can't be reproduced via [proxies](#proxies).
+
+```js
+export default {
+  component: Dashboard,
+  async ref(compInstance) {
+    // With great power comes great ref-sponsibility...
+  }
+}
+```
+
+> The `ref` callback is useful when writing headless tests. Having a reference to the component instance enables us to mock child *refs*. We can also stall test execution by making fixture.ref *async* and *awaiting* until we're confident that our component is ready for assertions.
+
 ### Proxies
 
 #### What's a proxy?
@@ -224,7 +243,21 @@ Proxies have two parts:
 
 #### Where to put proxies?
 
-As soon as you're ready to add proxies to your Cosmos setup, create `cosmos.proxies.js` (in your project's root directory or next to cosmos.config.js) and export a list of proxies in the order they should load–from outermost to innermost.
+As soon as you're ready to add proxies to your Cosmos setup, install them using your package manager.  For example:
+
+via npm
+
+```bash
+npm install --save-dev react-cosmos-fetch-proxy react-cosmos-redux-proxy react-cosmos-router-proxy
+```
+
+or Yarn
+
+```bash
+yarn add --dev react-cosmos-fetch-proxy react-cosmos-redux-proxy react-cosmos-router-proxy
+```
+
+Then create `cosmos.proxies.js` (in your project's root directory or next to cosmos.config.js) and export a list of proxies in the order they should load–from outermost to innermost.
 
 > `proxies.cosmos.js` requires compilation so you may need to place it next to your source files (eg. if the `src` dir is whitelisted in babel-loader). Use `proxiesPath` option to customize its location.
 
@@ -294,9 +327,11 @@ export default [
 // __fixtures__/example.js
 export default {
   component: MyComponent,
-  theme: {
-    backgroundColor: '#f1f1f1',
-    color: '#222'
+  context: {
+    theme: {
+      backgroundColor: '#f1f1f1',
+      color: '#222'
+    }
   }
 }
 ```
@@ -471,8 +506,6 @@ Built on top of [fetch-mock](http://www.wheresrhys.co.uk/fetch-mock/api). Check 
 
 #### XHR
 
-> **Warning: Currently the XHR proxy breaks hot reloading.** Subscribe to [#430](https://github.com/react-cosmos/react-cosmos/issues/430) for updates.
-
 Like the [Fetch](#fetch) proxy, but for *XMLHttpRequest*.
 
 ##### Configuration
@@ -552,6 +585,7 @@ export default {
 
 Other proxies created by the Cosmos community:
 - [alp82/react-cosmos-glamorous-proxy](https://github.com/alp82/react-cosmos-glamorous-proxy) A simple proxy for react-cosmos to load glamorous themes
+- [jozsi/react-cosmos-wrapper-proxy](https://github.com/jozsi/react-cosmos-wrapper-proxy) Easily wrap components using react-cosmos
 
 *What proxy would you create to improve DX?*
 

@@ -1,5 +1,8 @@
 import set from 'lodash.set';
 import some from 'lodash.some';
+import sortBy from 'lodash.sortby';
+
+const NODE_ORDER_BY_TYPE = ['directory', 'component'];
 
 function getExandedValue(savedExpansionState, path) {
   return Object.prototype.hasOwnProperty.call(savedExpansionState, path)
@@ -88,7 +91,8 @@ const dataObjectToNestedArray = (base, savedExpansionState, path = '') => {
       return parseFixtureArray(path, base, savedExpansionState);
     }
   }
-  return returnChildren;
+
+  return sortBy(returnChildren, node => NODE_ORDER_BY_TYPE.indexOf(node.type));
 };
 
 const fixturesToTreeData = (fixtures, savedExpansionState) => {

@@ -1,93 +1,40 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import { Loader } from 'react-cosmos-loader';
-import createStateProxy from 'react-cosmos-state-proxy';
-import createFetchProxy from 'react-cosmos-fetch-proxy';
+import until from 'async-until';
+import { createContext } from '../../../utils/enzyme';
 import MissingScreen from '../../screens/MissingScreen';
-import selectedFixture from '../__fixtures__/selected-missing';
+import fixture from '../__fixtures__/selected-missing';
 
-const StateProxy = createStateProxy();
-const FetchProxy = createFetchProxy();
+const postMessage = jest.fn();
 
-// Vars populated in beforeEach blocks
-let messageHandlers;
-let wrapper;
-let instance;
-let loaderContentWindow;
-
-const handleMessage = e => {
-  const { type } = e.data;
-  if (!messageHandlers[type]) {
-    throw new Error('Unexpected message event');
+const { mount, getWrapper } = createContext({
+  fixture,
+  async mockRefs(compInstance) {
+    await until(() => compInstance.loaderFrame);
+    compInstance.loaderFrame = {
+      contentWindow: {
+        postMessage
+      }
+    };
   }
-  messageHandlers[type](e.data);
-};
-
-const waitForPostMessage = type =>
-  new Promise(resolve => {
-    messageHandlers[type] = resolve;
-  });
+});
 
 describe('CP with missing fixture already selected', () => {
-  beforeEach(async () => {
-    messageHandlers = {};
-    window.addEventListener('message', handleMessage, false);
-
-    const onFrameReady = waitForPostMessage('loaderReady');
-
-    // Mount component in order for ref and lifecycle methods to be called
-    wrapper = mount(
-      <Loader
-        proxies={[StateProxy, FetchProxy]}
-        fixture={selectedFixture}
-        onComponentRef={i => {
-          instance = i;
-        }}
-      />
-    );
-
-    loaderContentWindow = {
-      postMessage: jest.fn()
-    };
-    // iframe.contentWindow isn't available in jsdom
-    instance.loaderFrame = {
-      contentWindow: loaderContentWindow
-    };
-
-    // State is already injected, but we need to trigger this event for the
-    // `fixtureSelect` message event to be triggered
-    window.postMessage(
-      {
-        type: 'loaderReady',
-        fixtures: selectedFixture.state.fixtures
-      },
-      '*'
-    );
-
-    await onFrameReady;
-
-    wrapper.update();
-  });
-
-  afterEach(() => {
-    window.removeEventListener('message', handleMessage);
-  });
+  beforeEach(mount);
 
   test('does not send fixture select message to loader', () => {
-    expect(loaderContentWindow.postMessage).not.toHaveBeenCalled();
+    expect(postMessage).not.toHaveBeenCalled();
   });
 
   test('renders MissingScreen', () => {
-    expect(wrapper.find(MissingScreen)).toHaveLength(1);
+    expect(getWrapper(MissingScreen)).toHaveLength(1);
   });
 
   test('sends component name to MissingScreen', () => {
-    const { componentName } = wrapper.find(MissingScreen).props();
+    const { componentName } = getWrapper(MissingScreen).props();
     expect(componentName).toBe('ComponentA');
   });
 
   test('sends fixture name to MissingScreen', () => {
-    const { fixtureName } = wrapper.find(MissingScreen).props();
+    const { fixtureName } = getWrapper(MissingScreen).props();
     expect(fixtureName).toBe('foot');
   });
 });

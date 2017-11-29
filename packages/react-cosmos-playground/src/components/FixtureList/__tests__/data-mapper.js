@@ -47,6 +47,39 @@ test('transforms fixture data structure to tree data structure', () => {
       expanded: true,
       path: 'dirB',
       children: [
+        // Dirs are placed before components
+        {
+          name: 'subdirA',
+          type: 'directory',
+          expanded: true,
+          path: 'dirB/subdirA',
+          children: [
+            {
+              name: 'Component4',
+              path: 'dirB/subdirA/Component4',
+              type: 'component',
+              expanded: true,
+              children: [
+                {
+                  name: 'fixtureA',
+                  type: 'fixture',
+                  urlParams: {
+                    component: 'dirB/subdirA/Component4',
+                    fixture: 'fixtureA'
+                  }
+                },
+                {
+                  name: 'fixtureB',
+                  type: 'fixture',
+                  urlParams: {
+                    component: 'dirB/subdirA/Component4',
+                    fixture: 'fixtureB'
+                  }
+                }
+              ]
+            }
+          ]
+        },
         {
           name: 'Component2',
           type: 'component',
@@ -92,38 +125,6 @@ test('transforms fixture data structure to tree data structure', () => {
                 component: 'dirB/Component3',
                 fixture: 'fixtureB'
               }
-            }
-          ]
-        },
-        {
-          name: 'subdirA',
-          type: 'directory',
-          expanded: true,
-          path: 'dirB/subdirA',
-          children: [
-            {
-              name: 'Component4',
-              path: 'dirB/subdirA/Component4',
-              type: 'component',
-              expanded: true,
-              children: [
-                {
-                  name: 'fixtureA',
-                  type: 'fixture',
-                  urlParams: {
-                    component: 'dirB/subdirA/Component4',
-                    fixture: 'fixtureA'
-                  }
-                },
-                {
-                  name: 'fixtureB',
-                  type: 'fixture',
-                  urlParams: {
-                    component: 'dirB/subdirA/Component4',
-                    fixture: 'fixtureB'
-                  }
-                }
-              ]
             }
           ]
         }
@@ -185,6 +186,39 @@ test('allows specifying a savedExpansionState object', () => {
       expanded: true,
       path: 'dirB',
       children: [
+        // Dirs are placed before components
+        {
+          name: 'subdirA',
+          type: 'directory',
+          expanded: true,
+          path: 'dirB/subdirA',
+          children: [
+            {
+              name: 'Component4',
+              path: 'dirB/subdirA/Component4',
+              type: 'component',
+              expanded: false,
+              children: [
+                {
+                  name: 'fixtureA',
+                  type: 'fixture',
+                  urlParams: {
+                    component: 'dirB/subdirA/Component4',
+                    fixture: 'fixtureA'
+                  }
+                },
+                {
+                  name: 'fixtureB',
+                  type: 'fixture',
+                  urlParams: {
+                    component: 'dirB/subdirA/Component4',
+                    fixture: 'fixtureB'
+                  }
+                }
+              ]
+            }
+          ]
+        },
         {
           name: 'Component2',
           type: 'component',
@@ -230,38 +264,6 @@ test('allows specifying a savedExpansionState object', () => {
                 component: 'dirB/Component3',
                 fixture: 'fixtureB'
               }
-            }
-          ]
-        },
-        {
-          name: 'subdirA',
-          type: 'directory',
-          expanded: true,
-          path: 'dirB/subdirA',
-          children: [
-            {
-              name: 'Component4',
-              path: 'dirB/subdirA/Component4',
-              type: 'component',
-              expanded: false,
-              children: [
-                {
-                  name: 'fixtureA',
-                  type: 'fixture',
-                  urlParams: {
-                    component: 'dirB/subdirA/Component4',
-                    fixture: 'fixtureA'
-                  }
-                },
-                {
-                  name: 'fixtureB',
-                  type: 'fixture',
-                  urlParams: {
-                    component: 'dirB/subdirA/Component4',
-                    fixture: 'fixtureB'
-                  }
-                }
-              ]
             }
           ]
         }
