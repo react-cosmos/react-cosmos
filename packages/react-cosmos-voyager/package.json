@@ -18,7 +18,8 @@
     "touch": "^3.1.0"
   },
   "dependencies": {
-    "glob": "^7.1.1"
+    "glob": "^7.1.1",
+    "traverse": "^0.6.6"
   },
   "xo": false
 }
