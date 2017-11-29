@@ -33,10 +33,22 @@ export function createContext(args: ContextArgs): ContextFunctions {
   let compRef: ?ComponentRef;
 
   function getRef() {
+    if (!compRef) {
+      throw new Error(
+        `Component ref is not available yet. Did you mount() the context?`
+      );
+    }
+
     return compRef;
   }
 
   function getWrapper() {
+    if (!wrapper) {
+      throw new Error(
+        `Context wrapper hasn't been created yet. Did you mount() the context?`
+      );
+    }
+
     return wrapper;
   }
 

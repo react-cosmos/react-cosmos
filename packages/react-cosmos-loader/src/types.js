@@ -28,8 +28,8 @@ export type ContextArgs = {
 };
 
 export type ContextFunctions = {
-  getRef: () => ?ComponentRef,
-  getWrapper: () => ?Wrapper,
+  getRef: () => ComponentRef,
+  getWrapper: () => Wrapper,
   get: (fixtureKey?: string) => any,
   mount: (clearPrevInstance?: boolean) => Promise<any>,
   unmount: () => any
