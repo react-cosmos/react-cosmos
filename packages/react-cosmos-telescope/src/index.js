@@ -13,7 +13,7 @@ type Args = {
   cosmosConfigPath?: string
 };
 
-export default async ({ cosmosConfigPath }: Args) => {
+export default async ({ cosmosConfigPath }: Args = {}) => {
   const cosmosConfig = getCosmosConfig(cosmosConfigPath);
   const {
     rootPath,
@@ -49,24 +49,21 @@ export default async ({ cosmosConfigPath }: Args) => {
     const fixtureModules = getFixtureModules(fixtureFiles);
     const components = getComponents({ fixtureModules, fixtureFiles });
 
-    const promises = [];
-    components.forEach(component => {
-      const { fixtures } = component;
-      fixtures.forEach(fixture => {
+    for (let i = 0, component; i < components.length; i++) {
+      component = components[i];
+      for (let j = 0, fixture; j < component.fixtures.length; j++) {
+        fixture = component.fixtures[j];
         const { mount, getWrapper } = createContext({
           renderer,
           proxies,
           fixture: fixture.source
         });
-        promises.push(
-          mount().then(() => {
-            const tree = getWrapper().toJSON();
-            expect(tree).toMatchSnapshot(`${component.name}:${fixture.name}`);
-          })
-        );
-      });
-    });
-    await Promise.all(promises);
+        await mount();
+
+        const tree = getWrapper().toJSON();
+        expect(tree).toMatchSnapshot(`${component.name}:${fixture.name}`);
+      }
+    }
   });
 };
 
