@@ -1,14 +1,12 @@
 // @flow
 
-import afterPendingTimers from 'after-pending-timers';
-import { until } from 'react-cosmos-shared/src/jest';
 import { connectLoader } from '../../connect-loader';
 import {
   renderer,
   proxies,
   fixtures,
   subscribeToWindowMessages,
-  receivedEvent,
+  untilEvent,
   getLastWindowMessage
 } from './_shared';
 
@@ -25,7 +23,7 @@ beforeEach(async () => {
     fixtures
   });
 
-  await until(receivedEvent('loaderReady'), 'Loader has not sent ready event');
+  await untilEvent('loaderReady');
 });
 
 // Ensure state doesn't leak between tests
@@ -43,8 +41,7 @@ it('notifies parent frame with latest fixture names', async () => {
     }
   });
 
-  // postMessage events are only received in the next loop
-  await afterPendingTimers();
+  await untilEvent('fixtureListUpdate');
 
   expect(getLastWindowMessage()).toEqual({
     type: 'fixtureListUpdate',

@@ -1,7 +1,5 @@
 // @flow
 
-import afterPendingTimers from 'after-pending-timers';
-import { until } from 'react-cosmos-shared/src/jest';
 import { createContext } from '../../create-context';
 import { connectLoader } from '../../connect-loader';
 import {
@@ -9,7 +7,7 @@ import {
   proxies,
   fixtures,
   subscribeToWindowMessages,
-  receivedEvent,
+  untilEvent,
   postWindowMessage
 } from './_shared';
 
@@ -32,7 +30,7 @@ beforeEach(async () => {
     fixtures
   });
 
-  await until(receivedEvent('loaderReady'), 'Loader has not sent ready event');
+  await untilEvent('loaderReady');
 
   postWindowMessage({
     type: 'fixtureSelect',
@@ -40,8 +38,7 @@ beforeEach(async () => {
     fixture: 'qux'
   });
 
-  // postMessage events are only received in the next loop
-  await afterPendingTimers();
+  await untilEvent('fixtureSelect');
 });
 
 // Ensure state doesn't leak between tests

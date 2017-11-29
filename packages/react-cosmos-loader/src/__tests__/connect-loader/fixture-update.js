@@ -1,7 +1,5 @@
 // @flow
 
-import afterPendingTimers from 'after-pending-timers';
-import { until } from 'react-cosmos-shared/src/jest';
 import { connectLoader } from '../../connect-loader';
 import {
   renderer,
@@ -9,7 +7,7 @@ import {
   fixtures,
   subscribeToWindowMessages,
   getLastWindowMessage,
-  receivedEvent,
+  untilEvent,
   postWindowMessage
 } from './_shared';
 
@@ -36,7 +34,7 @@ beforeEach(async () => {
     fixtures
   });
 
-  await until(receivedEvent('loaderReady'), 'Loader has not sent ready event');
+  await untilEvent('loaderReady');
 
   postWindowMessage({
     type: 'fixtureSelect',
@@ -44,17 +42,11 @@ beforeEach(async () => {
     fixture: 'foo'
   });
 
-  await until(
-    receivedEvent('fixtureLoad'),
-    'Loader has not sent fixture load event'
-  );
+  await untilEvent('fixtureLoad');
 
   onContextUpdate({ foo: false, fooFn: () => {} });
 
-  await until(
-    receivedEvent('fixtureUpdate'),
-    'Loader has not sent fixture update event'
-  );
+  await untilEvent('fixtureUpdate');
 });
 
 // Ensure state doesn't leak between tests

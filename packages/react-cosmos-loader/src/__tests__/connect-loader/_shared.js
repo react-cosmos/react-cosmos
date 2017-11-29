@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import { until } from 'react-cosmos-shared/src/jest';
 
 import type { LoaderMessageData } from 'react-cosmos-shared/src/types';
 import type { Renderer } from '../../types';
@@ -47,6 +48,10 @@ export function receivedEvent(eventType: string) {
   return () =>
     handleMessage.mock.calls.length > 0 &&
     getLastWindowMessage().type === eventType;
+}
+
+export async function untilEvent(eventType: string) {
+  return until(receivedEvent(eventType), `No ${eventType} event detected`);
 }
 
 export function postWindowMessage(msg: LoaderMessageData) {

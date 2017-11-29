@@ -1,12 +1,12 @@
 // @flow
 
-import afterPendingTimers from 'after-pending-timers';
 import { connectLoader } from '../../connect-loader';
 import {
   renderer,
   proxies,
   fixtures,
   subscribeToWindowMessages,
+  untilEvent,
   getLastWindowMessage
 } from './_shared';
 
@@ -23,8 +23,7 @@ beforeEach(async () => {
     fixtures
   });
 
-  // postMessage events are only received in the next loop
-  await afterPendingTimers();
+  await untilEvent('loaderReady');
 });
 
 afterEach(() => destroy());
