@@ -50,15 +50,17 @@ beforeEach(async () => {
   );
 
   onContextUpdate({ foo: false, fooFn: () => {} });
+
+  await until(
+    receivedEvent('fixtureUpdate'),
+    'Loader has not sent fixture update event'
+  );
 });
 
 // Ensure state doesn't leak between tests
 afterEach(() => destroy());
 
 it('sends serializable part of updated fixture body to parent', async () => {
-  // postMessage events are only received in the next loop
-  await afterPendingTimers();
-
   expect(getLastWindowMessage()).toEqual({
     type: 'fixtureUpdate',
     // Note: fixture.fooFn is unserializable so it's omitted
