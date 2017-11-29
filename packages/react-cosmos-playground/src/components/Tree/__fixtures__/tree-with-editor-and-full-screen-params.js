@@ -14,6 +14,11 @@ export default {
             name: 'Component1',
             type: 'component',
             expanded: true,
+            displayData: {
+              componentName: 'Component1',
+              hocs: [],
+              search: 'Component1'
+            },
             children: [
               {
                 name: 'fixtureA',
@@ -44,6 +49,11 @@ export default {
             name: 'Component2',
             type: 'component',
             expanded: true,
+            displayData: {
+              componentName: 'Component2',
+              hocs: [],
+              search: 'Component2'
+            },
             children: [
               {
                 name: 'fixtureA',
@@ -67,6 +77,11 @@ export default {
             name: 'Component3',
             type: 'component',
             expanded: false,
+            displayData: {
+              componentName: 'Component3',
+              hocs: [],
+              search: 'Component3'
+            },
             children: [
               {
                 name: 'fixtureA',
@@ -95,6 +110,11 @@ export default {
                 name: 'Component4',
                 type: 'component',
                 expanded: true,
+                displayData: {
+                  componentName: 'Component4',
+                  hocs: [],
+                  search: 'Component4'
+                },
                 children: [
                   {
                     name: 'fixtureA',

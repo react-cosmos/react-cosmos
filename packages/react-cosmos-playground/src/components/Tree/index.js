@@ -75,26 +75,13 @@ const Icon = ({ type }) => {
   }
 };
 
-const extractHocNames = string => {
-  const splitString = string.split('(');
-  let componentName = splitString.pop();
-  const hocs = splitString;
-
-  if (hocs.length > 0) {
-    // Remove trailing )s from componentName
-    componentName = componentName.slice(0, -hocs.length);
-  }
-
-  return { componentName, hocs };
-};
-
-const ComponentName = ({ node: { name, type }, searchText }) => {
+const ComponentName = ({ node: { name, type, displayData }, searchText }) => {
   if (type !== 'component') {
-    // Don't parse e.g. directory names for parentheses
+    // Don't deal with stuff like hoc names for e.g. directories
     return <FuzzyHighligher searchText={searchText} textToHighlight={name} />;
   }
 
-  const { componentName, hocs } = extractHocNames(name);
+  const { componentName, hocs } = displayData;
 
   const componentClasses = classNames({
     [styles.truncate]: true,
@@ -303,6 +290,12 @@ const nodeShape = shape({
   type: oneOf(['directory', 'component', 'fixture']).isRequired,
   expanded: bool,
   isHidden: bool,
+  path: string,
+  displayData: shape({
+    componentName: string.isRequired,
+    hocs: arrayOf(string).isRequired,
+    search: string.isRequired
+  }),
   urlParams: shape({
     component: string.isRequired,
     fixture: string.isRequired
