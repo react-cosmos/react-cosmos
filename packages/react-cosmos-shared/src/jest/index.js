@@ -5,7 +5,7 @@ import type { JestMock } from './types';
 export function until(
   cb: () => boolean,
   failMsg: string,
-  timeout: number = 100
+  timeout: number = 300
 ): Promise<any> {
   const t1 = Date.now();
 
