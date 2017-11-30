@@ -9,6 +9,7 @@ const fixtureFoo = {
   onFoo: () => {},
   foo: 'bar'
 };
+const mockDismissRuntimeErrors = jest.fn();
 
 // Vars populated in beforeEach blocks
 let messageHandlers;
@@ -48,6 +49,7 @@ describe('Fixture is selected remotely', () => {
             foo: fixtureFoo
           }
         }}
+        dismissRuntimeErrors={mockDismissRuntimeErrors}
       />
     );
 
@@ -109,5 +111,9 @@ describe('Fixture is selected remotely', () => {
         foo: 'bar'
       }
     });
+  });
+
+  test('calls dismissRuntimeErrors', () => {
+    expect(mockDismissRuntimeErrors).toHaveBeenCalled();
   });
 });
