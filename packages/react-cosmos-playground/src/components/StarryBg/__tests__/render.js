@@ -1,29 +1,30 @@
-import React from 'react';
-import { Loader } from 'react-cosmos-loader';
-import renderer from 'react-test-renderer';
+import { create as renderer } from 'react-test-renderer';
+import { createContext } from 'react-cosmos-loader';
 import blankFixture from '../__fixtures__/blank';
 import contentFixture from '../__fixtures__/content';
 
 describe('StarryBg blank', () => {
-  let component;
-
-  beforeEach(() => {
-    component = renderer.create(<Loader fixture={blankFixture} />);
+  const { mount, getWrapper } = createContext({
+    renderer,
+    fixture: blankFixture
   });
 
+  beforeEach(mount);
+
   it('renders correctly', () => {
-    expect(component.toJSON()).toMatchSnapshot();
+    expect(getWrapper().toJSON()).toMatchSnapshot();
   });
 });
 
 describe('StarryBg content', () => {
-  let component;
-
-  beforeEach(() => {
-    component = renderer.create(<Loader fixture={contentFixture} />);
+  const { mount, getWrapper } = createContext({
+    renderer,
+    fixture: contentFixture
   });
 
+  beforeEach(mount);
+
   it('renders correctly', () => {
-    expect(component.toJSON()).toMatchSnapshot();
+    expect(getWrapper().toJSON()).toMatchSnapshot();
   });
 });

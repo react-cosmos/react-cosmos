@@ -1,32 +1,29 @@
-import React from 'react';
-import { Loader } from 'react-cosmos-loader';
-import renderer from 'react-test-renderer';
+import { createContext } from 'react-cosmos-loader';
+import { create as renderer } from 'react-test-renderer';
 import horizontalFixture from '../__fixtures__/horizontal';
 import verticalFixture from '../__fixtures__/vertical';
 
-let nodeMock;
-let component;
-
+const nodeMock = {
+  addEventListener: jest.fn(),
+  removeEventListener: jest.fn()
+};
 const createNodeMock = () => nodeMock;
 
 beforeEach(() => {
-  nodeMock = {
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn()
-  };
+  jest.clearAllMocks();
 });
 
 describe('Horizontal DragHandle', () => {
-  beforeEach(() => {
-    const options = { createNodeMock };
-    component = renderer.create(
-      <Loader fixture={horizontalFixture} />,
-      options
-    );
+  const { getWrapper, mount, unmount } = createContext({
+    renderer,
+    rendererOptions: { createNodeMock },
+    fixture: horizontalFixture
   });
 
+  beforeEach(mount);
+
   it('renders correctly', () => {
-    expect(component.toJSON()).toMatchSnapshot();
+    expect(getWrapper().toJSON()).toMatchSnapshot();
   });
 
   it('calls addEventListener on mount', () => {
@@ -34,19 +31,22 @@ describe('Horizontal DragHandle', () => {
   });
 
   it('calls removeEventListener on unmount', () => {
-    component.unmount();
+    unmount();
     expect(nodeMock.removeEventListener).toHaveBeenCalled();
   });
 });
 
 describe('Vertical DragHandle', () => {
-  beforeEach(() => {
-    const options = { createNodeMock };
-    component = renderer.create(<Loader fixture={verticalFixture} />, options);
+  const { getWrapper, mount, unmount } = createContext({
+    renderer,
+    rendererOptions: { createNodeMock },
+    fixture: verticalFixture
   });
 
+  beforeEach(mount);
+
   it('renders correctly', () => {
-    expect(component.toJSON()).toMatchSnapshot();
+    expect(getWrapper().toJSON()).toMatchSnapshot();
   });
 
   it('calls addEventListener on mount', () => {
@@ -54,7 +54,7 @@ describe('Vertical DragHandle', () => {
   });
 
   it('calls removeEventListener on unmount', () => {
-    component.unmount();
+    unmount();
     expect(nodeMock.removeEventListener).toHaveBeenCalled();
   });
 });

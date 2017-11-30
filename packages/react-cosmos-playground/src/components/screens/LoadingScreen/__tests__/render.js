@@ -1,16 +1,13 @@
-import React from 'react';
-import { Loader } from 'react-cosmos-loader';
-import renderer from 'react-test-renderer';
-import defaultFixture from '../__fixtures__/default';
+import { create as renderer } from 'react-test-renderer';
+import { createContext } from 'react-cosmos-loader';
+import fixture from '../__fixtures__/default';
+
+const { mount, getWrapper } = createContext({ renderer, fixture });
 
 describe('LoadingScreen', () => {
-  let component;
-
-  beforeEach(() => {
-    component = renderer.create(<Loader fixture={defaultFixture} />);
-  });
+  beforeEach(mount);
 
   it('renders correctly', () => {
-    expect(component.toJSON()).toMatchSnapshot();
+    expect(getWrapper().toJSON()).toMatchSnapshot();
   });
 });

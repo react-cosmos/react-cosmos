@@ -1,20 +1,16 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import { Loader } from 'react-cosmos-loader';
-import missingFixture from '../__fixtures__/missing-fixture';
+import { createContext } from '../../../../utils/enzyme';
+import fixture from '../__fixtures__/missing-fixture';
+
+const { mount, getWrapper } = createContext({ fixture });
 
 describe('MissingScreen', () => {
-  let wrapper;
-
-  beforeAll(() => {
-    wrapper = mount(<Loader fixture={missingFixture} />);
-  });
+  beforeEach(mount);
 
   it('should render correct component name', () => {
-    expect(wrapper.text()).toMatch(/Flatris/);
+    expect(getWrapper().text()).toMatch(/Flatris/);
   });
 
   it('should render correct fixture name', () => {
-    expect(wrapper.text()).toMatch(/WithState/);
+    expect(getWrapper().text()).toMatch(/WithState/);
   });
 });

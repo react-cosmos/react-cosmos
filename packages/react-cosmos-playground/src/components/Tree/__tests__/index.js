@@ -1,72 +1,65 @@
-import React from 'react';
-import merge from 'lodash.merge';
-import { mount } from 'enzyme';
-import { Loader } from 'react-cosmos-loader';
+import { createContext } from '../../../utils/enzyme';
 import treeFixture from '../__fixtures__/tree';
 import treeWithEditorAndFullScreenParams from '../__fixtures__/tree-with-editor-and-full-screen-params';
 import treeWithSearchFixture from '../__fixtures__/tree-with-search';
 import { FolderIcon, ComponentIcon } from '../../SvgIcon';
 
 describe('Tree', () => {
-  let wrapper;
+  const { mount, getWrapper } = createContext({ fixture: treeFixture });
 
-  beforeEach(() => {
-    wrapper = mount(<Loader fixture={treeFixture} />);
-  });
+  beforeEach(mount);
 
   test('should render component names', () => {
-    const dirA = wrapper.find('.componentName').at(0);
+    const dirA = getWrapper('.componentName').at(0);
     expect(dirA.text()).toContain('dirA');
 
-    const component1 = wrapper.find('.componentName').at(1);
+    const component1 = getWrapper('.componentName').at(1);
     expect(component1.text()).toContain('Component1');
 
-    const fixtureA = wrapper.find('.fixture').at(0);
+    const fixtureA = getWrapper('.fixture').at(0);
     expect(fixtureA.text()).toContain('fixtureA');
 
-    const fixtureDirectory = wrapper.find('.fixtureDirectory').at(0);
+    const fixtureDirectory = getWrapper('.fixtureDirectory').at(0);
     expect(fixtureDirectory.text()).toContain('Some folder');
   });
 
   test('should render appropriate icon', () => {
-    const dirA = wrapper.find('.componentName').at(0);
+    const dirA = getWrapper('.componentName').at(0);
     expect(dirA.find(FolderIcon).length).toEqual(1);
 
-    const component1 = wrapper.find('.componentName').at(1);
+    const component1 = getWrapper('.componentName').at(1);
     expect(component1.find(ComponentIcon).length).toEqual(1);
 
-    const fixtureA = wrapper.find('.fixture').at(0);
+    const fixtureA = getWrapper('.fixture').at(0);
     expect(fixtureA.find(FolderIcon).length).toEqual(0);
     expect(fixtureA.find(ComponentIcon).length).toEqual(0);
 
-    const fixtureDirectory = wrapper.find('.fixtureDirectory').at(0);
+    const fixtureDirectory = getWrapper('.fixtureDirectory').at(0);
     expect(fixtureDirectory.find(FolderIcon).length).toEqual(1);
   });
 
   test('should indent child nodes', () => {
-    const dirA = wrapper.find('.componentName').get(0);
+    const dirA = getWrapper('.componentName').get(0);
     expect(dirA.props.style.paddingLeft).toEqual(10);
 
-    const component1 = wrapper.find('.componentName').get(1);
+    const component1 = getWrapper('.componentName').get(1);
     expect(component1.props.style.paddingLeft).toEqual(30);
 
-    const fixtureA = wrapper.find('.fixture').get(0);
+    const fixtureA = getWrapper('.fixture').get(0);
     expect(fixtureA.props.style.paddingLeft).toEqual(70);
 
-    const fixtureDirectory = wrapper.find('.fixtureDirectory').get(0);
+    const fixtureDirectory = getWrapper('.fixtureDirectory').get(0);
     expect(fixtureDirectory.props.style.paddingLeft).toEqual(70);
   });
 });
 
 describe('Basic Links', () => {
-  let wrapper;
+  const { mount, getWrapper } = createContext({ fixture: treeFixture });
 
-  beforeEach(() => {
-    wrapper = mount(<Loader fixture={treeFixture} />);
-  });
+  beforeEach(mount);
 
   test('should render fixture links', () => {
-    const fixtureA = wrapper.find('.fixture').at(0);
+    const fixtureA = getWrapper('.fixture').at(0);
     expect(fixtureA.prop('href')).toEqual(
       '?component=dirA%2FComponent1&fixture=fixtureA'
     );
@@ -74,14 +67,14 @@ describe('Basic Links', () => {
 });
 
 describe('Links with URL Params', () => {
-  let wrapper;
-
-  beforeEach(() => {
-    wrapper = mount(<Loader fixture={treeWithEditorAndFullScreenParams} />);
+  const { mount, getWrapper } = createContext({
+    fixture: treeWithEditorAndFullScreenParams
   });
 
+  beforeEach(mount);
+
   test('should render fixture links', () => {
-    const fixtureA = wrapper.find('.fixture').at(0);
+    const fixtureA = getWrapper('.fixture').at(0);
     expect(fixtureA.prop('href')).toEqual(
       '?editor=true&fullScreen=true&component=dirA%2FComponent1&fixture=fixtureA'
     );
@@ -89,70 +82,52 @@ describe('Links with URL Params', () => {
 });
 
 describe('Fixture Select', () => {
-  let wrapper;
-  let onSelect;
+  const { mount, getWrapper } = createContext({ fixture: treeFixture });
 
-  beforeEach(() => {
-    onSelect = jest.fn();
-    const fixture = merge({}, treeFixture, {
-      props: {
-        onSelect
-      }
-    });
-    wrapper = mount(<Loader fixture={fixture} />);
-  });
+  beforeEach(mount);
 
   test('should call onSelect callback on fixture click', () => {
-    const fixtureA = wrapper.find('.fixture').at(0);
+    const fixtureA = getWrapper('.fixture').at(0);
     fixtureA.simulate('click', {
       preventDefault: jest.fn()
     });
 
-    expect(onSelect).toHaveBeenCalledWith(
+    expect(getWrapper().props().onSelect).toHaveBeenCalledWith(
       `http://foo.bar/${fixtureA.prop('href')}`
     );
   });
 });
 
 describe('Node Select', () => {
-  let wrapper;
-  let onToggle;
+  const { mount, getWrapper } = createContext({ fixture: treeFixture });
 
-  beforeEach(() => {
-    onToggle = jest.fn();
-    const fixture = merge({}, treeFixture, {
-      props: {
-        onToggle
-      }
-    });
-    wrapper = mount(<Loader fixture={fixture} />);
-  });
+  beforeEach(mount);
 
   test('should call onToggle callback on click', () => {
-    const component1 = wrapper.find('.componentName').at(1);
+    const component1 = getWrapper('.componentName').at(1);
     component1.simulate('click', {
       preventDefault: jest.fn()
     });
 
-    expect(onToggle).toHaveBeenCalled();
+    expect(getWrapper().props().onToggle).toHaveBeenCalled();
   });
 });
 
 describe('Search Highlight', () => {
-  let wrapper;
-
-  beforeEach(() => {
-    wrapper = mount(<Loader fixture={treeWithSearchFixture} />);
+  const { mount, getWrapper } = createContext({
+    fixture: treeWithSearchFixture
   });
 
+  beforeEach(mount);
+
   test('should highlight letters "sub A"', () => {
-    const highlightS = wrapper.find('mark').at(0);
+    const highlightS = getWrapper('mark').at(0);
     expect(highlightS.text()).toContain('s');
-    const highlightU = wrapper.find('mark').at(1);
+    const highlightU = getWrapper('mark').at(1);
     expect(highlightU.text()).toContain('u');
-    const highlightB = wrapper.find('mark').at(2);
+    const highlightB = getWrapper('mark').at(2);
     expect(highlightB.text()).toContain('b');
-    const highlightA = wrapper.find('mark').at(3);
+    const highlightA = getWrapper('mark').at(3);
     expect(highlightA.text()).toContain('A');
   });
 });
