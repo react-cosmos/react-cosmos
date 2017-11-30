@@ -247,7 +247,8 @@ RemoteLoader.propTypes = {
 };
 
 RemoteLoader.defaultProps = {
-  proxies: []
+  proxies: [],
+  dismissRuntimeErrors: () => {}
 };
 
 export default RemoteLoader;
