@@ -1,5 +1,5 @@
-import { createContext } from 'react-cosmos-loader';
 import { create as renderer } from 'react-test-renderer';
+import createContext from 'react-cosmos-test/generic';
 import horizontalFixture from '../__fixtures__/horizontal';
 import verticalFixture from '../__fixtures__/vertical';
 

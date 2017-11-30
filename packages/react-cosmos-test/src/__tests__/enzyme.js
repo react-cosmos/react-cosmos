@@ -1,10 +1,8 @@
 // @flow
 
 import { mount as mountEnzyme } from 'enzyme';
-import { getCosmosConfig } from 'react-cosmos-config';
-import { createContext as createGenericContext } from 'react-cosmos-loader';
-import { ProxyFoo, ProxyBar } from './__fsmocks__/cosmos.proxies';
-import { createContext } from '../';
+import { createContext as createLoaderContext } from 'react-cosmos-loader';
+import { createContext } from '../enzyme';
 
 jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,
@@ -33,7 +31,7 @@ jest.mock('react-cosmos-loader', () => ({
 const fixture = { component: () => {} };
 
 function getLastContextArgs() {
-  return createGenericContext.mock.calls[0][0];
+  return createLoaderContext.mock.calls[0][0];
 }
 
 beforeEach(() => {
@@ -44,31 +42,6 @@ it('sends Enzyme renderer to generic createContext', () => {
   createContext({ fixture });
 
   expect(getLastContextArgs().renderer).toEqual(mountEnzyme);
-});
-
-it('forwards fixture to generic createContext', () => {
-  createContext({ fixture });
-
-  expect(getLastContextArgs().fixture).toEqual(fixture);
-});
-
-it('detects proxies from user config', () => {
-  createContext({ fixture });
-
-  expect(getLastContextArgs().proxies).toEqual([ProxyFoo, ProxyBar]);
-});
-
-it('prefers specified proxies', () => {
-  const ProxyBaz = () => {};
-  createContext({ fixture, proxies: [ProxyBaz] });
-
-  expect(getLastContextArgs().proxies).toEqual([ProxyBaz]);
-});
-
-it('forwards custom config path', () => {
-  createContext({ fixture, cosmosConfigPath: '/foo/path' });
-
-  expect(getCosmosConfig).toHaveBeenCalledWith('/foo/path');
 });
 
 it('returns original wrapper via getRootWrapper', async () => {

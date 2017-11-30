@@ -1,5 +1,5 @@
 import { create as renderer } from 'react-test-renderer';
-import { createContext } from 'react-cosmos-loader';
+import createContext from 'react-cosmos-test/generic';
 import fixture from '../__fixtures__/default';
 
 const { mount, getWrapper } = createContext({ renderer, fixture });

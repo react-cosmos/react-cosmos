@@ -22,10 +22,10 @@
     "lodash.some": "^4.6.0",
     "lodash.sortby": "^4.7.0",
     "prop-types": "^15.5.10",
-    "react-cosmos-enzyme": "^3.0.0",
     "react-cosmos-fetch-proxy": "^3.0.0",
     "react-cosmos-loader": "^3.0.0",
     "react-cosmos-state-proxy": "^3.0.0",
+    "react-cosmos-test": "^3.0.0",
     "react-querystring-router": "^3.0.0"
   },
   "xo": false
