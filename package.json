@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "after-ongoing-promises": "^0.0.1",
-    "async-until": "^0.0.1",
+    "async-until": "^1.0.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.2",
