@@ -241,7 +241,21 @@ Proxies have two parts:
 
 #### Where to put proxies?
 
-As soon as you're ready to add proxies to your Cosmos setup, create `cosmos.proxies.js` (in your project's root directory or next to cosmos.config.js) and export a list of proxies in the order they should load–from outermost to innermost.
+As soon as you're ready to add proxies to your Cosmos setup, install them using your package manager.  For example:
+
+via npm
+
+```bash
+npm install --save-dev react-cosmos-fetch-proxy react-cosmos-redux-proxy react-cosmos-router-proxy
+```
+
+or Yarn
+
+```bash
+yarn add --dev react-cosmos-fetch-proxy react-cosmos-redux-proxy react-cosmos-router-proxy
+```
+
+Then create `cosmos.proxies.js` (in your project's root directory or next to cosmos.config.js) and export a list of proxies in the order they should load–from outermost to innermost.
 
 > `proxies.cosmos.js` requires compilation so you may need to place it next to your source files (eg. if the `src` dir is whitelisted in babel-loader). Use `proxiesPath` option to customize its location.
 

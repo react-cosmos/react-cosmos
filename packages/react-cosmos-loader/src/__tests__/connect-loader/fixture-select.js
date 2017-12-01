@@ -22,6 +22,8 @@ jest.mock('../../create-context', () => ({
 
 subscribeToWindowMessages();
 
+const mockDismissRuntimeErrors = jest.fn();
+
 let destroy;
 
 beforeEach(async () => {
@@ -30,7 +32,8 @@ beforeEach(async () => {
   destroy = connectLoader({
     renderer,
     proxies,
-    fixtures
+    fixtures,
+    dismissRuntimeErrors: mockDismissRuntimeErrors
   });
 
   await untilEvent('loaderReady');
@@ -69,4 +72,8 @@ it('sends fixtureLoad event to parent with serializable fixture body', async () 
       foo: true
     }
   });
+});
+
+test('calls dismissRuntimeErrors', () => {
+  expect(mockDismissRuntimeErrors).toHaveBeenCalled();
 });

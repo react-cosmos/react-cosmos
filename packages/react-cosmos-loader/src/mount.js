@@ -11,14 +11,15 @@ import type { Proxy, Fixtures } from './types';
 type Args = {
   proxies: Array<Proxy>,
   fixtures: Fixtures,
-  loaderOpts?: LoaderOpts
+  loaderOpts?: LoaderOpts,
+  dismissRuntimeErrors?: Function
 };
 
 let StateProxy;
 let ErrorCatchProxy;
 
 export function mount(args: Args) {
-  const { proxies, fixtures, loaderOpts } = args;
+  const { proxies, fixtures, loaderOpts, dismissRuntimeErrors } = args;
   const renderer = createDomRenderer(loaderOpts);
 
   // Reuse proxy instances
@@ -30,6 +31,7 @@ export function mount(args: Args) {
   connectLoader({
     renderer,
     proxies: [ErrorCatchProxy, ...proxies, StateProxy],
-    fixtures
+    fixtures,
+    dismissRuntimeErrors
   });
 }

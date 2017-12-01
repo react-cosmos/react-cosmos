@@ -12,6 +12,7 @@ const mockLoaderOpts = { containerQuerySelector: '#app123' };
 const mockRenderer = {};
 const mockStateProxy = {};
 const mockErrorCatchProxy = {};
+const mockDismissRuntimeErrors = () => {};
 
 jest.mock('react-cosmos-state-proxy', () => jest.fn(() => mockStateProxy));
 jest.mock('../components/ErrorCatchProxy', () =>
@@ -45,7 +46,8 @@ beforeEach(() => {
         bar: mockFixture
       }
     },
-    loaderOpts: mockLoaderOpts
+    loaderOpts: mockLoaderOpts,
+    dismissRuntimeErrors: mockDismissRuntimeErrors
   });
 });
 
@@ -71,4 +73,10 @@ it('passes renderer to loaderConnect', () => {
 
 it('calls renderer creator with loader options', () => {
   expect(createDomRenderer).toHaveBeenCalledWith(mockLoaderOpts);
+});
+
+it('passes dismissRuntimeErrors to loaderConnect', () => {
+  expect(getArgsFromLastCall().dismissRuntimeErrors).toBe(
+    mockDismissRuntimeErrors
+  );
 });

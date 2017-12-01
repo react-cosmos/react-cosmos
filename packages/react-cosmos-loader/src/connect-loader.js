@@ -10,7 +10,8 @@ import type { Renderer, Proxy, Fixture, Fixtures, FixtureNames } from './types';
 type Args = {
   renderer: Renderer,
   proxies: Array<Proxy>,
-  fixtures: Fixtures
+  fixtures: Fixtures,
+  dismissRuntimeErrors?: Function
 };
 
 let isListening = false;
@@ -26,7 +27,7 @@ let isListening = false;
  * updates bubbled up from proxy chain (due to state changes) to parent frame.
  */
 export function connectLoader(args: Args) {
-  const { proxies, fixtures, renderer } = args;
+  const { proxies, fixtures, renderer, dismissRuntimeErrors } = args;
 
   // This will be populated on fixtureSelect events
   let currentFixture: ?Fixture;
@@ -62,6 +63,10 @@ export function connectLoader(args: Args) {
           type: 'fixtureLoad',
           fixtureBody: serializable
         });
+
+        if (dismissRuntimeErrors) {
+          dismissRuntimeErrors();
+        }
       } else {
         console.error(`[Cosmos] Missing fixture for ${component}:${fixture}`);
       }

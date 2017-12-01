@@ -1,4 +1,7 @@
 import { mount as mountLoader } from 'react-cosmos-loader';
+// import { dismissRuntimeErrors } from 'react-error-overlay';
+
+const dismissRuntimeErrors = () => {};
 
 jest.mock('react-cosmos-loader', () => ({
   __esModule: true,
@@ -83,4 +86,10 @@ test('sends containerQuerySelector to loader', () => {
   expect(mountLoader.mock.calls[0][0].loaderOpts).toEqual({
     containerQuerySelector: '__mock__containerQuerySelector'
   });
+});
+
+test.skip('sends dismissRuntimeErrors to loader', () => {
+  expect(mountLoader.mock.calls[0][0].dismissRuntimeErrors).toBe(
+    dismissRuntimeErrors
+  );
 });
