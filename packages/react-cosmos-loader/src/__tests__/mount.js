@@ -25,7 +25,8 @@ jest.mock('../connect-loader', () => ({
 }));
 
 function getArgsFromLastCall() {
-  return getMock(connectLoader).calls[0][0];
+  const { calls } = getMock(connectLoader);
+  return calls[calls.length - 1][0];
 }
 
 function getProxiesFromLastCall() {

@@ -76,6 +76,9 @@ export function createContext(args: ContextArgs): ContextFunctions {
       try {
         if (clearPrevInstance) {
           unmount();
+
+          // Bring fixture to its initial state
+          updatedFixture = { ...fixture };
         }
 
         wrapper = renderer(

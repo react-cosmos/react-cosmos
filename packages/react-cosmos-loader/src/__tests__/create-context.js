@@ -41,6 +41,11 @@ const createContext = args => {
   return context;
 };
 
+function getElementFromLastRendererCall() {
+  const { calls } = renderer.mock;
+  return calls[calls.length - 1][0];
+}
+
 beforeEach(() => {
   jest.clearAllMocks();
 });
@@ -51,7 +56,7 @@ it('calls renderer with Loader element', async () => {
   const { mount } = createContext({ renderer, proxies, fixture });
   await mount();
 
-  const element = renderer.mock.calls[0][0];
+  const element = getElementFromLastRendererCall();
   expect(element.type).toBe(Loader);
 });
 
@@ -59,7 +64,7 @@ it('includes fixture in Loader props', async () => {
   const { mount } = createContext({ renderer, proxies, fixture });
   await mount();
 
-  const element = renderer.mock.calls[0][0];
+  const element = getElementFromLastRendererCall();
   expect(element.props.fixture).toEqual(fixture);
 });
 
@@ -67,7 +72,7 @@ it('includes user proxies in Loader props', async () => {
   const { mount } = createContext({ renderer, proxies, fixture });
   await mount();
 
-  const element = renderer.mock.calls[0][0];
+  const element = getElementFromLastRendererCall();
   expect(element.props.proxies).toContain(ProxyA);
   expect(element.props.proxies).toContain(ProxyB);
 });
@@ -89,7 +94,7 @@ it('includes update callback in Loader props', async () => {
   const { mount } = createContext({ renderer, proxies, fixture, onUpdate });
   await mount();
 
-  const element = renderer.mock.calls[0][0];
+  const element = getElementFromLastRendererCall();
   const { onFixtureUpdate } = element.props;
 
   onFixtureUpdate({ state: { count: 6 } });
@@ -190,12 +195,40 @@ it('unmounts before 2nd mount by default', async () => {
   expect(wrapper.unmount).toHaveBeenCalledTimes(1);
 });
 
+it('resets fixture state before 2nd mount by default', async () => {
+  const { mount } = createContext({ renderer, fixture });
+  await mount();
+
+  const firstArgs = getElementFromLastRendererCall();
+  const { onFixtureUpdate } = firstArgs.props;
+  onFixtureUpdate({ state: { count: 6 } });
+
+  await mount();
+
+  const secondArgs = getElementFromLastRendererCall();
+  expect(secondArgs.props.fixture.state.count).toBe(5);
+});
+
 it('does not unmount before 2nd mount if clearPrevInstance is false', async () => {
   const { mount } = createContext({ renderer, fixture });
   await mount();
   await mount(false);
 
   expect(wrapper.unmount).not.toHaveBeenCalled();
+});
+
+it('does not reset fixture state before 2nd mount by default', async () => {
+  const { mount } = createContext({ renderer, fixture });
+  await mount();
+
+  const firstArgs = getElementFromLastRendererCall();
+  const { onFixtureUpdate } = firstArgs.props;
+  onFixtureUpdate({ state: { count: 6 } });
+
+  await mount(false);
+
+  const secondArgs = getElementFromLastRendererCall();
+  expect(secondArgs.props.fixture.state.count).toBe(6);
 });
 
 it('unmounts before 2nd createContext', async () => {
