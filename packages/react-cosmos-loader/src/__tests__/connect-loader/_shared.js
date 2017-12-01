@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { until } from 'react-cosmos-shared/src/jest';
+import until from 'async-until';
 
 import type { LoaderMessageData } from 'react-cosmos-shared/src/types';
 import type { Renderer } from '../../types';
@@ -51,7 +51,9 @@ export function receivedEvent(eventType: string) {
 }
 
 export async function untilEvent(eventType: string) {
-  return until(receivedEvent(eventType), `No ${eventType} event detected`);
+  return until(receivedEvent(eventType), {
+    failMsg: `No ${eventType} event detected`
+  });
 }
 
 export function postWindowMessage(msg: LoaderMessageData) {
