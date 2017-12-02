@@ -154,7 +154,8 @@ FixtureList.propTypes = {
     component: string,
     fixture: string,
     editor: bool,
-    fullScreen: bool
+    fullScreen: bool,
+    responsive: bool
   }).isRequired,
   onUrlChange: func.isRequired
 };

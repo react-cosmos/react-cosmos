@@ -1,0 +1,29 @@
+.buttonContainer {
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+}
+
+// <div
+// className="flex justify-around items-center h3"
+// style={{ minHeight: "4rem" }}
+// >
+
+.button {
+  border: none;
+  padding: 0.25rem 0.5rem;
+  height: 4rem;
+  color: white;
+  flex: auto;
+  cursor: pointer;
+  border-radius: 0;
+  background-color: blue;
+  &:hover {
+    background-color: gray;
+  }
+  font-size: 1rem;
+}
+
+.buttonActive {
+  background-color: orange;
+}

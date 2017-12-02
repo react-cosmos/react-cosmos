@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.outerWrapper {
+  flex: 1;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border: none;
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  text-align: center;
+}
+
+.innerWrapper {
+  transform-origin: 0% 0%;
+  overflow: hidden;
+  border-color: black;
+  iframe {
+    width: 100%;
+    height: 100%;
+    line-height: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+}

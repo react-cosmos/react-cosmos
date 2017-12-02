@@ -15,7 +15,7 @@ import LoadingScreen from '../screens/LoadingScreen';
 import DragHandle from '../DragHandle';
 import FixtureEditor from '../FixtureEditor';
 import styles from './index.less';
-import ResponsiveLoader from './ResponsiveLoader';
+import ResponsiveLoader from '../ResponsiveLoader';
 
 import type {
   PlaygroundOpts,
@@ -42,7 +42,7 @@ type Props = {
   fixture?: string,
   editor?: boolean,
   fullScreen?: boolean,
-  responsive?: boolean
+  responsive: boolean
 };
 
 type State = {
@@ -373,7 +373,8 @@ export default class ComponentPlayground extends Component<Props, State> {
       component,
       fixture,
       editor,
-      fullScreen
+      fullScreen,
+      responsive
     });
     const isFixtureSelected = Boolean(fixture);
     const homeClassNames = classNames(styles.button, {
@@ -389,7 +390,8 @@ export default class ComponentPlayground extends Component<Props, State> {
       getCleanUrlParams({
         component,
         fixture,
-        editor: !editor
+        editor: !editor,
+        responsive
       })
     );
     const fullScreenUrl = uri.stringifyParams({
@@ -401,6 +403,7 @@ export default class ComponentPlayground extends Component<Props, State> {
       getCleanUrlParams({
         component,
         fixture,
+        editor,
         responsive: !responsive
       })
     );
@@ -499,7 +502,7 @@ export default class ComponentPlayground extends Component<Props, State> {
 
   renderLoader(isLoaderVisible: boolean) {
     const { options: { loaderUri }, responsive } = this.props;
-    const { isDragging } = this.state;
+    const { isDragging, fixtureBody } = this.state;
     const loaderStyle = {
       display: isLoaderVisible ? 'block' : 'none'
     };
@@ -513,6 +516,8 @@ export default class ComponentPlayground extends Component<Props, State> {
           showResponsiveControls={responsive}
           inputRef={this.handleIframeRef}
           src={loaderUri}
+          onFixtureUpdate={this.onFixtureEditorChange}
+          fixture={fixtureBody}
         />
         <div
           className={styles.loaderFrameOverlay}
