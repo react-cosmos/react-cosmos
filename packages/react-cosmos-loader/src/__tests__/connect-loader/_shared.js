@@ -52,7 +52,8 @@ export function receivedEvent(eventType: string) {
 
 export async function untilEvent(eventType: string) {
   return until(receivedEvent(eventType), {
-    failMsg: `No ${eventType} event detected`
+    failMsg: `No ${eventType} event detected`,
+    timeout: 1000
   });
 }
 
