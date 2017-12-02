@@ -7,6 +7,7 @@ const mockFixture = {};
 const mockProxy = () => {};
 const mockStateProxy = () => {};
 const mockErrorCatchProxy = () => {};
+const mockDismissRuntimeErrors = () => {};
 
 jest.mock('react', () => ({
   Component: jest.fn(),
@@ -32,7 +33,8 @@ describe('without container query selector', () => {
         foo: {
           bar: mockFixture
         }
-      }
+      },
+      dismissRuntimeErrors: mockDismissRuntimeErrors
     });
   });
 
@@ -70,6 +72,11 @@ describe('without container query selector', () => {
     const container = render.mock.calls[0][1];
     expect(container.parentNode).toBe(document.body);
   });
+
+  it('passes dismissRuntimeErrors to loader element', () => {
+    const { dismissRuntimeErrors } = createElement.mock.calls[0][1];
+    expect(dismissRuntimeErrors).toBe(mockDismissRuntimeErrors);
+  });
 });
 
 describe('with container query selector and class name', () => {
@@ -87,7 +94,8 @@ describe('with container query selector and class name', () => {
           bar: mockFixture
         }
       },
-      containerQuerySelector: '#app123'
+      containerQuerySelector: '#app123',
+      dismissRuntimeErrors: mockDismissRuntimeErrors
     });
   });
 
@@ -123,5 +131,10 @@ describe('with container query selector and class name', () => {
   it('uses queried element for render container', () => {
     const container = render.mock.calls[0][1];
     expect(container.id).toBe('app123');
+  });
+
+  it('passes dismissRuntimeErrors to loader element', () => {
+    const { dismissRuntimeErrors } = createElement.mock.calls[0][1];
+    expect(dismissRuntimeErrors).toBe(mockDismissRuntimeErrors);
   });
 });

@@ -22,7 +22,12 @@ const createDomContainer = () => {
   return newNode;
 };
 
-export function mount({ proxies, fixtures, containerQuerySelector }) {
+export function mount({
+  proxies,
+  fixtures,
+  containerQuerySelector,
+  dismissRuntimeErrors
+}) {
   const container = containerQuerySelector
     ? document.querySelector(containerQuerySelector)
     : createDomContainer();
@@ -45,6 +50,7 @@ export function mount({ proxies, fixtures, containerQuerySelector }) {
         ...proxies,
         StateProxy
       ]}
+      dismissRuntimeErrors={dismissRuntimeErrors}
     />,
     container
   );

@@ -147,7 +147,7 @@ class RemoteLoader extends Component {
   };
 
   onFixtureSelect({ component, fixture }) {
-    const { fixtures } = this.props;
+    const { fixtures, dismissRuntimeErrors } = this.props;
     const state = getFixtureState({
       fixtures,
       component,
@@ -156,6 +156,8 @@ class RemoteLoader extends Component {
 
     if (fixture) {
       const { serializable: fixtureBody } = state.fixtureBody;
+
+      dismissRuntimeErrors();
 
       // Notify back parent with the serializable contents of the loaded fixture
       postMessageToParent({
@@ -240,11 +242,13 @@ class RemoteLoader extends Component {
 RemoteLoader.propTypes = {
   fixtures: objectOf(objectOf(createModuleType(object))).isRequired,
   proxies: arrayOf(createModuleType(func)),
-  onComponentRef: func
+  onComponentRef: func,
+  dismissRuntimeErrors: func
 };
 
 RemoteLoader.defaultProps = {
-  proxies: []
+  proxies: [],
+  dismissRuntimeErrors: () => {}
 };
 
 export default RemoteLoader;
