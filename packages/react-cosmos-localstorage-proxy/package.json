@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-localstorage-proxy",
-  "version": "3.0.0",
+  "version": "3.1.0-0",
   "description": "Mock localStorage via fixtures",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-localstorage-proxy",
   "license": "MIT",
@@ -9,7 +9,7 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
-    "react-cosmos-shared": "^3.0.0"
+    "react-cosmos-shared": "^3.1.0-0"
   },
   "xo": false
 }
