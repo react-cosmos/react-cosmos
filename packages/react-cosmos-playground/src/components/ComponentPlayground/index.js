@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import omitBy from 'lodash.omitby';
 import localForage from 'localforage';
 import { uri } from 'react-querystring-router';
-import { HomeIcon, FullScreenIcon, CodeIcon } from '../SvgIcon';
+import { HomeIcon, FullScreenIcon, CodeIcon, ResponsiveIcon } from '../SvgIcon';
 import StarryBg from '../StarryBg';
 import FixtureList from '../FixtureList';
 import WelcomeScreen from '../screens/WelcomeScreen';
@@ -15,6 +15,7 @@ import LoadingScreen from '../screens/LoadingScreen';
 import DragHandle from '../DragHandle';
 import FixtureEditor from '../FixtureEditor';
 import styles from './index.less';
+import ResponsiveLoader from './ResponsiveLoader';
 
 import type {
   PlaygroundOpts,
@@ -40,7 +41,8 @@ type Props = {
   component?: string,
   fixture?: string,
   editor?: boolean,
-  fullScreen?: boolean
+  fullScreen?: boolean,
+  responsive?: boolean
 };
 
 type State = {
@@ -61,7 +63,8 @@ export default class ComponentPlayground extends Component<Props, State> {
 
   static defaultProps = {
     editor: false,
-    fullScreen: false
+    fullScreen: false,
+    responsive: false
   };
 
   // Exclude params with default values
@@ -362,6 +365,7 @@ export default class ComponentPlayground extends Component<Props, State> {
       fixture,
       editor,
       fullScreen,
+      responsive,
       options
     } = this.props;
     const { fixtures, leftNavSize } = this.state;
@@ -378,6 +382,9 @@ export default class ComponentPlayground extends Component<Props, State> {
     const fixtureEditorClassNames = classNames(styles.button, {
       [styles.selectedButton]: editor
     });
+    const responsiveClassNames = classNames(styles.button, {
+      [styles.selectedButton]: responsive
+    });
     const fixtureEditorUrl = uri.stringifyParams(
       getCleanUrlParams({
         component,
@@ -390,7 +397,13 @@ export default class ComponentPlayground extends Component<Props, State> {
       fixture,
       fullScreen: true
     });
-
+    const responsiveUrl = uri.stringifyParams(
+      getCleanUrlParams({
+        component,
+        fixture,
+        responsive: !responsive
+      })
+    );
     return (
       <div
         key="leftNav"
@@ -430,6 +443,16 @@ export default class ComponentPlayground extends Component<Props, State> {
                   onClick={router.routeLink}
                 >
                   <FullScreenIcon />
+                </a>
+              )}
+              {isFixtureSelected && (
+                <a
+                  ref="responsiveButton"
+                  className={responsiveClassNames}
+                  href={responsiveUrl}
+                  onClick={router.routeLink}
+                >
+                  <ResponsiveIcon />
                 </a>
               )}
             </div>
@@ -475,7 +498,7 @@ export default class ComponentPlayground extends Component<Props, State> {
   }
 
   renderLoader(isLoaderVisible: boolean) {
-    const { options: { loaderUri } } = this.props;
+    const { options: { loaderUri }, responsive } = this.props;
     const { isDragging } = this.state;
     const loaderStyle = {
       display: isLoaderVisible ? 'block' : 'none'
@@ -486,7 +509,11 @@ export default class ComponentPlayground extends Component<Props, State> {
 
     return (
       <div className={styles.loaderFrame} style={loaderStyle}>
-        <iframe ref={this.handleIframeRef} src={loaderUri} />
+        <ResponsiveLoader
+          showResponsiveControls={responsive}
+          inputRef={this.handleIframeRef}
+          src={loaderUri}
+        />
         <div
           className={styles.loaderFrameOverlay}
           style={loaderFrameOverlayStyle}
