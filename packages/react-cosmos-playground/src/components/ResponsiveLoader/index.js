@@ -86,14 +86,18 @@ class ResponsiveLoader extends React.Component<Props, State> {
           style={{ padding: PADDING }}
         >
           <div
-            style={{ lineHeight: 0, width: scaledWidth, height: scaledHeight }}
+            style={{
+              lineHeight: 0,
+              width: scaledWidth + 2 * BORDER_WIDTH,
+              height: scaledHeight + 2 * BORDER_WIDTH
+            }}
           >
             <div
               className={styles.innerWrapper}
               style={{
                 borderWidth: BORDER_WIDTH,
-                width: width,
-                height: height,
+                width: width + 2 * BORDER_WIDTH,
+                height: height + 2 * BORDER_WIDTH,
                 alignSelf: scaleHeight === 1 ? 'center' : 'flex-start',
                 justifySelf: scaleWidth === 1 ? 'center' : 'flex-start',
                 transform: `scale( ${scale} )`
