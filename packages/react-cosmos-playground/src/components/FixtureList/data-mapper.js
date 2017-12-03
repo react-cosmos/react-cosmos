@@ -61,6 +61,28 @@ function parseFixtureArray(componentName, fixtureArray, savedExpansionState) {
   return result;
 }
 
+const extractHocNames = string => {
+  const splitString = string.split('(');
+  let componentName = splitString.pop();
+  const hocs = splitString;
+
+  if (hocs.length > 0) {
+    // Remove trailing )s from componentName
+    componentName = componentName.slice(0, -hocs.length);
+  }
+
+  return { componentName, hocs };
+};
+
+const generateDisplayData = name => {
+  const { componentName, hocs } = extractHocNames(name);
+  return {
+    componentName,
+    hocs,
+    search: `${componentName} ${hocs.join(', ')}`.trim()
+  };
+};
+
 const dataObjectToNestedArray = (base, savedExpansionState, path = '') => {
   const returnChildren = [];
   for (const key in base) {
@@ -77,11 +99,16 @@ const dataObjectToNestedArray = (base, savedExpansionState, path = '') => {
           child.children &&
           (child.type === 'directory' || child.type === 'component')
       );
+      let displayData = null;
+      if (!isDirectory) {
+        displayData = generateDisplayData(key);
+      }
       returnChildren.push({
         name: key,
         path: newPath,
         expanded: getExandedValue(savedExpansionState, newPath),
         type: isDirectory ? 'directory' : 'component',
+        displayData,
         children
         // TODO: Enable this when we'll have component pages
         // https://github.com/react-cosmos/react-cosmos/issues/314
