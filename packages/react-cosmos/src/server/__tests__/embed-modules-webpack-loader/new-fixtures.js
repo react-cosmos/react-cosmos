@@ -1,4 +1,5 @@
 import { findFixtureFiles } from 'react-cosmos-voyager2/lib/server';
+import { ALL_BUT_TEST_FILES } from '../../shared/regexp';
 
 // Requiring because embed-modules-webpack-loader is a CJS module
 const embedModules = require('../../embed-modules-webpack-loader');
@@ -121,7 +122,9 @@ it('injects contexts', () => {
   const output = loaderCallback.mock.calls[0][1];
   const [, contexts] = output.match(/contexts: (.+)(,|$)/);
 
-  const expected = `require.context('/components',true,/\\.(j|t)sx?$/)`;
+  const expected = `require.context('/components',true,/${
+    ALL_BUT_TEST_FILES
+  }/)`;
   expect(contexts).toEqual(expected.replace(/\s/g, ''));
 });
 
