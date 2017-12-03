@@ -2,6 +2,7 @@ import { createContext } from '../../../utils/enzyme';
 import treeFixture from '../__fixtures__/tree';
 import treeWithEditorAndFullScreenParams from '../__fixtures__/tree-with-editor-and-full-screen-params';
 import treeWithSearchFixture from '../__fixtures__/tree-with-search';
+import treeWithDisplayData from '../__fixtures__/tree-with-display-data';
 import { FolderIcon, ComponentIcon } from '../../SvgIcon';
 
 describe('Tree', () => {
@@ -129,5 +130,22 @@ describe('Search Highlight', () => {
     expect(highlightB.text()).toContain('b');
     const highlightA = getWrapper('mark').at(3);
     expect(highlightA.text()).toContain('A');
+  });
+});
+
+describe('Tree with displayData', () => {
+  const { mount, getWrapper } = createContext({ fixture: treeWithDisplayData });
+
+  beforeEach(mount);
+
+  test('should display the HOCs after the component name', () => {
+    const componentName = getWrapper('ComponentName').at(0);
+    const name = componentName.find('.name');
+    const hocs = componentName.find('.hocs');
+    expect(name.text()).toContain('ComponentA');
+    expect(name.text()).not.toContain('withRouter');
+    expect(name.text()).not.toContain('connect');
+    expect(hocs.text()).toContain('withRouter, connect');
+    expect(hocs.text()).not.toContain('ComponentA');
   });
 });

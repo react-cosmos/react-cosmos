@@ -14,12 +14,18 @@ test('transforms fixture data structure to tree data structure', () => {
       type: 'directory',
       expanded: true,
       path: 'dirA',
+      displayData: null,
       children: [
         {
           name: 'Component1',
           type: 'component',
           expanded: true,
           path: 'dirA/Component1',
+          displayData: {
+            componentName: 'Component1',
+            hocs: [],
+            search: 'Component1'
+          },
           children: [
             {
               name: 'fixtureA',
@@ -46,6 +52,7 @@ test('transforms fixture data structure to tree data structure', () => {
       type: 'directory',
       expanded: true,
       path: 'dirB',
+      displayData: null,
       children: [
         // Dirs are placed before components
         {
@@ -53,12 +60,18 @@ test('transforms fixture data structure to tree data structure', () => {
           type: 'directory',
           expanded: true,
           path: 'dirB/subdirA',
+          displayData: null,
           children: [
             {
               name: 'Component4',
               path: 'dirB/subdirA/Component4',
               type: 'component',
               expanded: true,
+              displayData: {
+                componentName: 'Component4',
+                hocs: [],
+                search: 'Component4'
+              },
               children: [
                 {
                   name: 'fixtureA',
@@ -85,6 +98,11 @@ test('transforms fixture data structure to tree data structure', () => {
           type: 'component',
           expanded: true,
           path: 'dirB/Component2',
+          displayData: {
+            componentName: 'Component2',
+            hocs: [],
+            search: 'Component2'
+          },
           children: [
             {
               name: 'fixtureA',
@@ -109,6 +127,11 @@ test('transforms fixture data structure to tree data structure', () => {
           type: 'component',
           expanded: true,
           path: 'dirB/Component3',
+          displayData: {
+            componentName: 'Component3',
+            hocs: [],
+            search: 'Component3'
+          },
           children: [
             {
               name: 'fixtureA',
@@ -153,12 +176,18 @@ test('allows specifying a savedExpansionState object', () => {
       type: 'directory',
       expanded: true,
       path: 'dirA',
+      displayData: null,
       children: [
         {
           name: 'Component1',
           type: 'component',
           expanded: true,
           path: 'dirA/Component1',
+          displayData: {
+            componentName: 'Component1',
+            hocs: [],
+            search: 'Component1'
+          },
           children: [
             {
               name: 'fixtureA',
@@ -185,6 +214,7 @@ test('allows specifying a savedExpansionState object', () => {
       type: 'directory',
       expanded: true,
       path: 'dirB',
+      displayData: null,
       children: [
         // Dirs are placed before components
         {
@@ -192,12 +222,18 @@ test('allows specifying a savedExpansionState object', () => {
           type: 'directory',
           expanded: true,
           path: 'dirB/subdirA',
+          displayData: null,
           children: [
             {
               name: 'Component4',
               path: 'dirB/subdirA/Component4',
               type: 'component',
               expanded: false,
+              displayData: {
+                componentName: 'Component4',
+                hocs: [],
+                search: 'Component4'
+              },
               children: [
                 {
                   name: 'fixtureA',
@@ -224,6 +260,11 @@ test('allows specifying a savedExpansionState object', () => {
           type: 'component',
           expanded: true,
           path: 'dirB/Component2',
+          displayData: {
+            componentName: 'Component2',
+            hocs: [],
+            search: 'Component2'
+          },
           children: [
             {
               name: 'fixtureA',
@@ -248,6 +289,11 @@ test('allows specifying a savedExpansionState object', () => {
           type: 'component',
           expanded: true,
           path: 'dirB/Component3',
+          displayData: {
+            componentName: 'Component3',
+            hocs: [],
+            search: 'Component3'
+          },
           children: [
             {
               name: 'fixtureA',
@@ -295,12 +341,18 @@ test('deals with components with namespaced fixtures', () => {
       type: 'directory',
       expanded: true,
       path: 'dirA',
+      displayData: null,
       children: [
         {
           name: 'Component1',
           type: 'component',
           expanded: true,
           path: 'dirA/Component1',
+          displayData: {
+            componentName: 'Component1',
+            hocs: [],
+            search: 'Component1'
+          },
           children: [
             {
               name: 'fixtureA',
@@ -327,12 +379,18 @@ test('deals with components with namespaced fixtures', () => {
       type: 'directory',
       expanded: true,
       path: 'dirB',
+      displayData: null,
       children: [
         {
           name: 'Component2',
           type: 'component',
           expanded: true,
           path: 'dirB/Component2',
+          displayData: {
+            componentName: 'Component2',
+            hocs: [],
+            search: 'Component2'
+          },
           children: [
             {
               name: 'Some folder',
@@ -380,6 +438,49 @@ test('deals with components with namespaced fixtures', () => {
               urlParams: {
                 component: 'dirB/Component2',
                 fixture: 'fixtureD'
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ];
+
+  expect(fixturesToTreeData(input, savedExpansionState)).toEqual(expected);
+});
+
+test('deals with extracting hoc names', () => {
+  const input = {
+    'dirA/withRouter(Connect(Component1))': ['fixtureA']
+  };
+
+  const savedExpansionState = {};
+
+  const expected = [
+    {
+      name: 'dirA',
+      type: 'directory',
+      expanded: true,
+      path: 'dirA',
+      displayData: null,
+      children: [
+        {
+          name: 'withRouter(Connect(Component1))',
+          type: 'component',
+          expanded: true,
+          path: 'dirA/withRouter(Connect(Component1))',
+          displayData: {
+            componentName: 'Component1',
+            hocs: ['withRouter', 'Connect'],
+            search: 'Component1 withRouter, Connect'
+          },
+          children: [
+            {
+              name: 'fixtureA',
+              type: 'fixture',
+              urlParams: {
+                component: 'dirA/withRouter(Connect(Component1))',
+                fixture: 'fixtureA'
               }
             }
           ]

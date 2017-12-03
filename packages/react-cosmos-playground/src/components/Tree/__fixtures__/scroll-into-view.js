@@ -21,12 +21,22 @@ export default {
         name: 'ComponentA',
         type: 'component',
         expanded: true,
+        displayData: {
+          componentName: 'ComponentA',
+          hocs: [],
+          search: 'ComponentA'
+        },
         children
       },
       {
         name: 'ComponentB',
         type: 'component',
         expanded: true,
+        displayData: {
+          componentName: 'ComponentB',
+          hocs: [],
+          search: 'ComponentB'
+        },
         children: [
           {
             name: 'baz',
