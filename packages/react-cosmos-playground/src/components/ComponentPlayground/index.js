@@ -516,7 +516,12 @@ export default class ComponentPlayground extends Component<Props, State> {
           showResponsiveControls={responsive}
           inputRef={this.handleIframeRef}
           src={loaderUri}
-          onFixtureUpdate={this.onFixtureEditorChange}
+          onFixtureUpdate={updatedFields =>
+            this.onFixtureEditorChange({
+              ...fixtureBody,
+              ...updatedFields
+            })
+          }
           fixture={fixtureBody}
         />
         <div
