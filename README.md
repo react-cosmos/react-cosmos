@@ -89,7 +89,7 @@ Jump to:
   - [Option dump](#option-dump)
 - [Exporting](#exporting)
 - [Headless testing](#headless-testing)
-  - [Using Enzyme](#using-Enzyme)
+  - [Using Enzyme](#using-enzyme)
   - [Using a custom renderer](#using-a-custom-renderer)
   - [Capturing state changes](#capturing-state-changes)
   - [createTestContext API](#createtestcontext-api)
@@ -819,7 +819,7 @@ const { mount, getWrapper } = createTestContext({
 
 beforeEach(mount);
 
-test('renders hello', () => {
+test('matches snapshot', () => {
   // Careful, this is no longer an Enzyme wrapper, but a react-test-renderer wrapper!
   expect(getWrapper().toJSON()).toMatchSnapshot();
 });
@@ -856,8 +856,7 @@ test('redirects to home page after signing out', () => {
 The createTestContext API makes use of already configured proxies, which can be included in more ways.
 
 ```js
-// Detect proxies automatically by reading cosmos config from cwd
-// or via --config CLI arg
+// Detect proxies automatically by reading cosmos config from cwd (or via --config CLI arg)
 const { mount } = createTestContext({ fixture });
 
 // Or point to a custom config path
