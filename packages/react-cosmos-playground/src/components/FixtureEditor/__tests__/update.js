@@ -1,39 +1,26 @@
-import React from 'react';
-import merge from 'lodash.merge';
-import { mount } from 'enzyme';
-import { Loader } from 'react-cosmos-loader';
-import createStateProxy from 'react-cosmos-state-proxy';
+import { createContext } from '../../../utils/enzyme';
 import CodeMirror from '@skidding/react-codemirror';
-import propsFixture from '../__fixtures__/props';
+import fixture from '../__fixtures__/props';
 
 const stringify = value => JSON.stringify(value, null, 2);
 
+const { getWrapper, mount } = createContext({ fixture });
+
+const getProps = () =>
+  getWrapper()
+    .find(CodeMirror)
+    .props();
+const getValue = () => JSON.parse(getProps().value);
+const onChange = value => {
+  getProps().onChange(stringify(value));
+};
+
+beforeEach(async () => {
+  jest.clearAllMocks();
+  await mount();
+});
+
 describe('FixtureEditor update', () => {
-  let fixture;
-  let wrapper;
-
-  const getProps = () => wrapper.find(CodeMirror).props();
-  const getValue = () => JSON.parse(getProps().value);
-  const onChange = value => {
-    getProps().onChange(stringify(value));
-    wrapper.update();
-  };
-
-  beforeEach(() => {
-    fixture = merge({}, propsFixture, {
-      props: {
-        onChange: jest.fn(),
-        onFocusChange: jest.fn()
-      },
-      state: {
-        isFocused: true
-      }
-    });
-    wrapper = mount(
-      <Loader proxies={[createStateProxy()]} fixture={fixture} />
-    );
-  });
-
   test('updates value on change', () => {
     onChange({
       props: {

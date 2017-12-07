@@ -6,11 +6,11 @@ import fixture from '../__fixtures__/selected';
 
 const postMessage = jest.fn();
 
-const { mount, unmount, getWrapper } = createContext({
+const { mount, unmount, getWrapper, getRef } = createContext({
   fixture,
-  async mockRefs(compInstance) {
-    await until(() => compInstance.loaderFrame);
-    compInstance.loaderFrame = {
+  async beforeInit() {
+    await until(() => getRef().loaderFrame);
+    getRef().loaderFrame = {
       contentWindow: {
         postMessage
       }

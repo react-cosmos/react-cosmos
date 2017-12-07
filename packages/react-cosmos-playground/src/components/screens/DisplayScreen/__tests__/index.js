@@ -1,16 +1,12 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import { Loader } from 'react-cosmos-loader';
-import hiThereFixture from '../__fixtures__/hi-there';
+import { createContext } from '../../../../utils/enzyme';
+import fixture from '../__fixtures__/hi-there';
+
+const { mount, getWrapper } = createContext({ fixture });
 
 describe('DisplayScreen', () => {
-  let wrapper;
-
-  beforeEach(() => {
-    wrapper = mount(<Loader fixture={hiThereFixture} />);
-  });
+  beforeEach(mount);
 
   it('should render children', () => {
-    expect(wrapper.text()).toMatch(/Hi there/);
+    expect(getWrapper().text()).toMatch(/Hi there/);
   });
 });

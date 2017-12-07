@@ -5,11 +5,11 @@ import fixture from '../../__fixtures__/selected-editor';
 
 jest.mock('localforage');
 
-const { mount, getWrapper, getCompInstance } = createContext({
+const { mount, getWrapper, getRef } = createContext({
   fixture,
-  async mockRefs(compInstance) {
+  beforeInit: () => {
     // Fake node width/height
-    compInstance.contentNode = {
+    getRef().contentNode = {
       // Landscape
       offsetWidth: 300,
       offsetHeight: 200
@@ -40,12 +40,12 @@ describe('Resize fixture editor pane', () => {
 
   describe('from landscape to portrait', () => {
     beforeEach(() => {
-      getCompInstance().contentNode = {
+      getRef().contentNode = {
         // Portrait
         offsetWidth: 200,
         offsetHeight: 300
       };
-      getCompInstance().onResize();
+      getRef().onResize();
     });
 
     it('should set portrait class to content', () => {

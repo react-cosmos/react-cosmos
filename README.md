@@ -65,7 +65,7 @@ Jump to:
   - [Props](#props)
   - [Children](#children)
   - [State](#state)
-  - [Ref callback](#ref-callback)
+  - [Init hook](#init-hook)
 - [Proxies](#proxies)
   - [What's a proxy?](#whats-a-proxy)
   - [Where to put proxies?](#where-to-put-proxies)
@@ -88,7 +88,11 @@ Jump to:
   - [Custom fixture paths](#custom-fixture-paths)
   - [Option dump](#option-dump)
 - [Exporting](#exporting)
-- [Experimental: Test helpers](#experimental-test-helpers)
+- [Headless testing](#headless-testing)
+  - [Using Enzyme](#using-enzyme)
+  - [Using a custom renderer](#using-a-custom-renderer)
+  - [Capturing state changes](#capturing-state-changes)
+  - [createTestContext API](#createtestcontext-api)
   - [Global Jest snapshot](#global-jest-snapshot)
 
 *Have a question or idea to share? See you on [Slack](https://join-react-cosmos.now.sh/).*
@@ -209,20 +213,18 @@ export default {
 }
 ```
 
-#### Ref callback
+#### Init hook
 
-**Exclusively for Class components.** This is an advanced feature and should only be used when a desired state can't be reproduced via [proxies](#proxies).
+This is an advanced feature and should only be used when a desired state can't be reproduced via [proxies](#proxies).
 
 ```js
 export default {
   component: Dashboard,
-  async ref(compInstance) {
+  async init({ compRef }) {
     // With great power comes great ref-sponsibility...
   }
 }
 ```
-
-> The `ref` callback is useful when writing headless tests. Having a reference to the component instance enables us to mock child *refs*. We can also stall test execution by making fixture.ref *async* and *awaiting* until we're confident that our component is ready for assertions.
 
 ### Proxies
 
@@ -776,22 +778,104 @@ Static Component Playground? Piece of 🍰! Add this script and run `npm run cos
 }
 ```
 
-### Experimental: Test helpers
+### Headless testing
 
-> **Stay tuned:** New API for testing fixtures with Enzyme coming soon!
+> Add `react-cosmos-test` to your dev dependencies for this API.
 
-Fixtures can be reused inside automated tests. Along with proxies, they replace elaborate test preparation and render a component with a single JSX tag.
+Besides showing up in the Playground UI, fixtures can also be used independently to render a component in a mocked environment.
+
+#### Using Enzyme
+
+The test API exposes an entry point specifically designed for [Enzyme](http://airbnb.io/enzyme/).
 
 ```js
-import { mount } from 'enzyme';
-import { Loader } from 'react-cosmos-loader';
-import fixture from './hello.fixture';
+import createTestContext from 'react-cosmos-test/enzyme';
+import fixture from './fixture';
 
-it('should render hello message', () => {
-  const wrapper = mount(<Loader fixture={fixture} />);
-  expect(wrapper.text()).toMatch(/Hi there/);
+const { mount, getWrapper } = createTestContext({ fixture });
+
+beforeEach(mount);
+
+test('renders hello', () => {
+  expect(getWrapper().text()).toContain('Hello World');
 });
 ```
+
+But this is not the only way. As we'll see below, we can also mount fixtures using with a custom renderer.
+
+#### Using a custom renderer
+
+Here's how to render a fixture with good ol' [react-test-renderer](https://reactjs.org/docs/test-renderer.html).
+
+```js
+import { create as renderer } from 'react-test-renderer';
+import createTestContext from 'react-cosmos-test/generic';
+import fixture from './fixture';
+
+const { mount, getWrapper } = createTestContext({
+  renderer,
+  fixture
+});
+
+beforeEach(mount);
+
+test('matches snapshot', () => {
+  // Careful, this is no longer an Enzyme wrapper, but a react-test-renderer wrapper!
+  expect(getWrapper().toJSON()).toMatchSnapshot();
+});
+```
+
+#### Capturing state changes
+
+The fixture does more than just defining component input. Like a sticky fly trap, the fixture captures state changes that occur during the component's lifecycle, which we can then inspect. For example:
+
+- If Redux state changes, the latest state can be read via `get('reduxState')`
+- If Router URL changes, the latest URL can be read via `get('url')`
+
+Instead of polluting our tests with various store and provider initialization, we let the [Proxies](#proxies) take care of it and then collect state changes from the updated fixture.
+
+> The following example assumes `react-cosmos-router-proxy` is configured.
+
+```js
+import createTestContext from 'react-cosmos-test/enzyme';
+import fixture from '../__fixtures__/logged-in';
+
+const { mount, getWrapper, get } = createTestContext({ fixture });
+
+beforeEach(mount);
+
+test('redirects to home page after signing out', () => {
+  getWrapper('.logout-btn').simulate('click');
+
+  expect(get('url')).toBe('/');
+});
+```
+
+#### createTestContext API
+
+The createTestContext API makes use of already configured proxies, which can be included in more ways.
+
+```js
+// Detect proxies automatically by reading cosmos config from cwd (or via --config CLI arg)
+const { mount } = createTestContext({ fixture });
+
+// Or point to a custom config path
+const { mount } = createTestContext({
+  fixture,
+  cosmosConfigPath: '/path/to/my/special/config';
+});
+
+// Or pass proxies directly
+const { mount } = createTestContext({ fixture, proxies });
+```
+
+##### Context methods
+
+- *async* `mount` Mounts component via renderer (usually called in `beforeEach`)
+- `unmount` Calls unmount method of wrapper returned by renderer
+- `getWrapper` Returns wrapper returned by renderer
+- `getRef` Get component ref (exclusively for Class components)
+- `getField` (or `get` for brevity) Returns updated fixture field
 
 #### Global Jest snapshot
 

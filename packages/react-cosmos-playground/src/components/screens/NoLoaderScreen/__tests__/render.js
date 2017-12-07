@@ -1,29 +1,30 @@
-import React from 'react';
-import { Loader } from 'react-cosmos-loader';
-import renderer from 'react-test-renderer';
+import { create as renderer } from 'react-test-renderer';
+import createContext from 'react-cosmos-test/generic';
 import customFixture from '../__fixtures__/custom-webpack-config';
 import defaultFixture from '../__fixtures__/default-webpack-config';
 
 describe('NoLoaderScreen custom webpack config', () => {
-  let component;
-
-  beforeEach(() => {
-    component = renderer.create(<Loader fixture={customFixture} />);
+  const { mount, getWrapper } = createContext({
+    renderer,
+    fixture: customFixture
   });
 
+  beforeEach(mount);
+
   it('renders correctly', () => {
-    expect(component.toJSON()).toMatchSnapshot();
+    expect(getWrapper().toJSON()).toMatchSnapshot();
   });
 });
 
 describe('NoLoaderScreen default webpack config', () => {
-  let component;
-
-  beforeEach(() => {
-    component = renderer.create(<Loader fixture={defaultFixture} />);
+  const { mount, getWrapper } = createContext({
+    renderer,
+    fixture: defaultFixture
   });
 
+  beforeEach(mount);
+
   it('renders correctly', () => {
-    expect(component.toJSON()).toMatchSnapshot();
+    expect(getWrapper().toJSON()).toMatchSnapshot();
   });
 });

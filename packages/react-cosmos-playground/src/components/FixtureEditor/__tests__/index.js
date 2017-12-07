@@ -1,39 +1,26 @@
-import React from 'react';
-import merge from 'lodash.merge';
-import { mount } from 'enzyme';
-import { Loader } from 'react-cosmos-loader';
+import { createContext } from '../../../utils/enzyme';
 import CodeMirror from '@skidding/react-codemirror';
-import propsFixture from '../__fixtures__/props';
+import fixture from '../__fixtures__/props';
 
 const stringify = value => JSON.stringify(value, null, 2);
 
-describe('FixtureEditor', () => {
-  let fixture;
-  let wrapper;
+const { getWrapper, mount } = createContext({ fixture });
 
-  beforeEach(() => {
-    fixture = merge({}, propsFixture, {
-      props: {
-        onChange: jest.fn(),
-        onFocusChange: jest.fn()
-      }
-    });
-    wrapper = mount(<Loader fixture={fixture} />);
+const getCodeMirrorProps = () => getWrapper(CodeMirror).props();
+
+describe('FixtureEditor', () => {
+  beforeEach(async () => {
+    jest.clearAllMocks();
+    await mount();
   });
 
   it('renders CodeMirror', () => {
-    expect(wrapper.find(CodeMirror)).toHaveLength(1);
+    expect(getWrapper(CodeMirror)).toHaveLength(1);
   });
 
   describe('CodeMirror props', () => {
-    let props;
-
-    beforeEach(() => {
-      props = wrapper.find(CodeMirror).props();
-    });
-
     it('have stringified value', () => {
-      expect(props.value).toBe(
+      expect(getCodeMirrorProps().value).toBe(
         stringify({
           props: { foo: 'bar' }
         })
@@ -41,16 +28,16 @@ describe('FixtureEditor', () => {
     });
 
     it('have preserveScrollPosition flag', () => {
-      expect(props.preserveScrollPosition).toBe(true);
+      expect(getCodeMirrorProps().preserveScrollPosition).toBe(true);
     });
 
     it('trigger onChange prop on valid input', () => {
-      props.onChange(
+      getCodeMirrorProps().onChange(
         stringify({
           props: { baz: 'qux' }
         })
       );
-      expect(fixture.props.onChange).toHaveBeenCalledWith({
+      expect(getWrapper().props().onChange).toHaveBeenCalledWith({
         props: {
           baz: 'qux'
         }
@@ -59,16 +46,15 @@ describe('FixtureEditor', () => {
 
     describe('invalid change', () => {
       beforeEach(() => {
-        props.onChange('xxxxx');
-        wrapper.update();
+        getCodeMirrorProps().onChange('xxxxx');
       });
 
       it('does not trigger onChange prop on invalid input', () => {
-        expect(fixture.props.onChange).not.toHaveBeenCalled();
+        expect(getWrapper().props().onChange).not.toHaveBeenCalled();
       });
 
       it('displays error on invalid input', () => {
-        expect(wrapper.find('.error').text()).toBe(
+        expect(getWrapper('.error').text()).toBe(
           'Unexpected token x in JSON at position 0'
         );
       });

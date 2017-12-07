@@ -1,53 +1,47 @@
-import React from 'react';
-import merge from 'lodash.merge';
-import { mount } from 'enzyme';
-import afterOngoingPromises from 'after-ongoing-promises';
-import { Loader } from 'react-cosmos-loader';
+import { createContext } from '../../../utils/enzyme';
 import populatedFixture from '../__fixtures__/populated';
 import populatedWithEditorFixture from '../__fixtures__/populated-with-editor';
 import populatedAndSelectedFixture from '../__fixtures__/populated-and-selected';
 
-describe('List', () => {
-  let wrapper;
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
-  beforeEach(async () => {
-    wrapper = mount(<Loader fixture={populatedFixture} />);
-    await afterOngoingPromises();
-    wrapper.update();
-  });
+describe('List', () => {
+  const { getWrapper, mount } = createContext({ fixture: populatedFixture });
+
+  beforeEach(mount);
+
+  const getComponentA = () => getWrapper('.component').at(0);
+  const getComponentB = () => getWrapper('.component').at(1);
 
   test('should render component names', () => {
-    const componentA = wrapper.find('.component').at(0);
-    expect(componentA.text()).toContain('ComponentA');
-
-    const componentB = wrapper.find('.component').at(1);
-    expect(componentB.text()).toContain('ComponentB');
+    expect(getComponentA().text()).toContain('ComponentA');
+    expect(getComponentB().text()).toContain('ComponentB');
   });
 
   test('should render fixture names', () => {
-    const componentA = wrapper.find('.component').at(0);
     expect(
-      componentA
+      getComponentA()
         .find('.fixture')
         .at(0)
         .text()
     ).toContain('foo');
     expect(
-      componentA
+      getComponentA()
         .find('.fixture')
         .at(1)
         .text()
     ).toContain('bar');
 
-    const componentB = wrapper.find('.component').at(1);
     expect(
-      componentB
+      getComponentB()
         .find('.fixture')
         .at(0)
         .text()
     ).toContain('baz');
     expect(
-      componentB
+      getComponentB()
         .find('.fixture')
         .at(1)
         .text()
@@ -56,22 +50,19 @@ describe('List', () => {
 });
 
 describe('Links', () => {
-  let wrapper;
-  let componentA;
-  let componentB;
-
   describe('editor closed', () => {
-    beforeEach(async () => {
-      wrapper = mount(<Loader fixture={populatedFixture} />);
-      await afterOngoingPromises();
-      wrapper.update();
-      componentA = wrapper.find('.component').at(0);
-      componentB = wrapper.find('.component').at(1);
+    const { getWrapper, mount } = createContext({
+      fixture: populatedFixture
     });
+
+    const getComponentA = () => getWrapper('.component').at(0);
+    const getComponentB = () => getWrapper('.component').at(1);
+
+    beforeEach(mount);
 
     test('link 1', () => {
       expect(
-        componentA
+        getComponentA()
           .find('.fixture')
           .at(0)
           .prop('href')
@@ -80,7 +71,7 @@ describe('Links', () => {
 
     test('link 2', () => {
       expect(
-        componentA
+        getComponentA()
           .find('.fixture')
           .at(1)
           .prop('href')
@@ -89,7 +80,7 @@ describe('Links', () => {
 
     test('link 3', () => {
       expect(
-        componentB
+        getComponentB()
           .find('.fixture')
           .at(0)
           .prop('href')
@@ -98,7 +89,7 @@ describe('Links', () => {
 
     test('link 4', () => {
       expect(
-        componentB
+        getComponentB()
           .find('.fixture')
           .at(1)
           .prop('href')
@@ -107,17 +98,18 @@ describe('Links', () => {
   });
 
   describe('editor open', () => {
-    beforeEach(async () => {
-      wrapper = mount(<Loader fixture={populatedWithEditorFixture} />);
-      await afterOngoingPromises();
-      wrapper.update();
-      componentA = wrapper.find('.component').at(0);
-      componentB = wrapper.find('.component').at(1);
+    const { getWrapper, mount } = createContext({
+      fixture: populatedWithEditorFixture
     });
+
+    const getComponentA = () => getWrapper('.component').at(0);
+    const getComponentB = () => getWrapper('.component').at(1);
+
+    beforeEach(mount);
 
     test('link 1', () => {
       expect(
-        componentA
+        getComponentA()
           .find('.fixture')
           .at(0)
           .prop('href')
@@ -126,7 +118,7 @@ describe('Links', () => {
 
     test('link 2', () => {
       expect(
-        componentA
+        getComponentA()
           .find('.fixture')
           .at(1)
           .prop('href')
@@ -135,7 +127,7 @@ describe('Links', () => {
 
     test('link 3', () => {
       expect(
-        componentB
+        getComponentB()
           .find('.fixture')
           .at(0)
           .prop('href')
@@ -144,7 +136,7 @@ describe('Links', () => {
 
     test('link 4', () => {
       expect(
-        componentB
+        getComponentB()
           .find('.fixture')
           .at(1)
           .prop('href')
@@ -154,63 +146,57 @@ describe('Links', () => {
 });
 
 describe('Select', () => {
-  let wrapper;
-  let onUrlChange;
-
-  beforeEach(async () => {
-    onUrlChange = jest.fn();
-    const fixture = merge({}, populatedFixture, {
-      props: {
-        onUrlChange
-      }
-    });
-    wrapper = mount(<Loader fixture={fixture} />);
-    await afterOngoingPromises();
-    wrapper.update();
+  const { getWrapper, mount } = createContext({
+    fixture: populatedFixture
   });
 
+  const getComponentA = () => getWrapper('.component').at(0);
+  const getComponentB = () => getWrapper('.component').at(1);
+
+  beforeEach(mount);
+
   test('should call select callback on click', () => {
-    const componentA = wrapper.find('.component').at(0);
-    const fixtureFoo = componentA.find('.fixture').at(0);
+    const fixtureFoo = getComponentA()
+      .find('.fixture')
+      .at(0);
     fixtureFoo.simulate('click', {
       preventDefault: jest.fn()
     });
 
-    expect(onUrlChange).toHaveBeenCalledWith(
+    expect(getWrapper().props().onUrlChange).toHaveBeenCalledWith(
       `http://foo.bar/${fixtureFoo.prop('href')}`
     );
   });
 
   test('should call select callback on click', () => {
-    const componentB = wrapper.find('.component').at(1);
-    const fixtureQux = componentB.find('.fixture').at(1);
+    const fixtureQux = getComponentB()
+      .find('.fixture')
+      .at(1);
     fixtureQux.simulate('click', {
       preventDefault: jest.fn()
     });
 
-    expect(onUrlChange).toHaveBeenCalledWith(
+    expect(getWrapper().props().onUrlChange).toHaveBeenCalledWith(
       `http://foo.bar/${fixtureQux.prop('href')}`
     );
   });
 });
 
 describe('Search', () => {
-  let wrapper;
-
-  beforeEach(async () => {
-    wrapper = mount(<Loader fixture={populatedFixture} />);
-    await afterOngoingPromises();
-    wrapper.update();
+  const { getWrapper, mount } = createContext({
+    fixture: populatedFixture
   });
 
+  beforeEach(mount);
+
   test('should only show matched component', () => {
-    const searchInput = wrapper.find('.searchInput');
+    const searchInput = getWrapper('.searchInput');
     searchInput.simulate('change', { target: { value: 'ux' } });
 
     // This is a mouthful, but we want to ensure that only ComponentB/qux
     // is visible
-    const components = wrapper.find('.component');
-    const fixtures = wrapper.find('.fixture');
+    const components = getWrapper('.component');
+    const fixtures = getWrapper('.fixture');
     expect(components).toHaveLength(1);
     expect(fixtures).toHaveLength(1);
     expect(components.at(0).text()).toContain('ComponentB');
@@ -219,37 +205,20 @@ describe('Search', () => {
 });
 
 describe('Search input keyboard shortcut', () => {
-  let wrapper;
-  let instance;
+  const { getRef, getWrapper, mount } = createContext({
+    fixture: populatedFixture
+  });
 
   // Triggering a window event is cumbersome...
   const triggerKeyEvent = (handler, keyCode) => {
     handler({ keyCode, preventDefault: jest.fn() });
   };
 
-  beforeEach(async () => {
-    const waitToRender = new Promise(resolve => {
-      // Mount component in order to be able to access DOM nodes
-      wrapper = mount(
-        <Loader
-          fixture={populatedFixture}
-          onComponentRef={i => {
-            instance = i;
-            resolve();
-          }}
-        />
-      );
-    });
-
-    await afterOngoingPromises();
-    wrapper.update();
-    return waitToRender;
-  });
+  beforeEach(mount);
 
   describe('on `s` key', () => {
     beforeEach(() => {
-      triggerKeyEvent(instance.onWindowKey, 83);
-      wrapper.update();
+      triggerKeyEvent(getRef().onWindowKey, 83);
     });
 
     test('should focus input', () => {
@@ -261,10 +230,10 @@ describe('Search input keyboard shortcut', () => {
     let searchInput;
 
     beforeEach(() => {
-      searchInput = wrapper.find('.searchInput');
-      triggerKeyEvent(instance.onWindowKey, 83);
+      searchInput = getWrapper('.searchInput');
+      triggerKeyEvent(getRef().onWindowKey, 83);
       searchInput.simulate('change', { target: { value: 'foo' } });
-      triggerKeyEvent(instance.onWindowKey, 27);
+      triggerKeyEvent(getRef().onWindowKey, 27);
     });
 
     test('should blur input', () => {
@@ -278,16 +247,14 @@ describe('Search input keyboard shortcut', () => {
 });
 
 describe('Selected fixture', () => {
-  let wrapper;
-
-  beforeEach(async () => {
-    wrapper = mount(<Loader fixture={populatedAndSelectedFixture} />);
-    await afterOngoingPromises();
-    wrapper.update();
+  const { getWrapper, mount } = createContext({
+    fixture: populatedAndSelectedFixture
   });
 
+  beforeEach(mount);
+
   test('should add extra class to selected fixture', () => {
-    expect(wrapper.find('.fixtureSelected').length).toEqual(1);
-    expect(wrapper.find('.fixtureSelected').text()).toContain('bar');
+    expect(getWrapper('.fixtureSelected').length).toEqual(1);
+    expect(getWrapper('.fixtureSelected').text()).toContain('bar');
   });
 });

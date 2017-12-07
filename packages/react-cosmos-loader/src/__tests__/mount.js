@@ -1,140 +1,82 @@
-import { createElement } from 'react';
-import { render } from 'react-dom';
-import RemoteLoader from '../components/RemoteLoader';
-import { mount } from '../';
+// @flow
 
-const mockFixture = {};
+import { getMock } from 'react-cosmos-shared/src/jest';
+import { connectLoader } from '../connect-loader';
+import { createDomRenderer } from '../dom-renderer';
+import { mount } from '../mount';
+
+const mockFixture = { component: () => {} };
 const mockProxy = () => {};
-const mockStateProxy = () => {};
-const mockErrorCatchProxy = () => {};
+const mockLoaderOpts = { containerQuerySelector: '#app123' };
+
+const mockRenderer = {};
+const mockStateProxy = {};
+const mockErrorCatchProxy = {};
 const mockDismissRuntimeErrors = () => {};
 
-jest.mock('react', () => ({
-  Component: jest.fn(),
-  createElement: jest.fn(() => '__mock_element__')
-}));
-jest.mock('react-dom', () => ({
-  render: jest.fn()
-}));
 jest.mock('react-cosmos-state-proxy', () => jest.fn(() => mockStateProxy));
 jest.mock('../components/ErrorCatchProxy', () =>
   jest.fn(() => mockErrorCatchProxy)
 );
+jest.mock('../dom-renderer', () => ({
+  createDomRenderer: jest.fn(() => mockRenderer)
+}));
+jest.mock('../connect-loader', () => ({
+  connectLoader: jest.fn()
+}));
+
+function getArgsFromLastCall() {
+  const { calls } = getMock(connectLoader);
+  return calls[calls.length - 1][0];
+}
+
+function getProxiesFromLastCall() {
+  return getArgsFromLastCall().proxies;
+}
 
 beforeEach(() => {
   jest.clearAllMocks();
 });
 
-describe('without container query selector', () => {
-  beforeEach(() => {
-    mount({
-      proxies: [mockProxy],
-      fixtures: {
-        foo: {
-          bar: mockFixture
-        }
-      },
-      dismissRuntimeErrors: mockDismissRuntimeErrors
-    });
-  });
-
-  it('creates RemoteLoader element', () => {
-    const args = createElement.mock.calls[0];
-    expect(args[0]).toBe(RemoteLoader);
-  });
-
-  it('passes proxies to loader element', () => {
-    const { proxies } = createElement.mock.calls[0][1];
-    expect(proxies).toContain(mockProxy);
-  });
-
-  it('includes ErrorCatchProxy', () => {
-    const { proxies } = createElement.mock.calls[0][1];
-    expect(proxies).toContain(mockErrorCatchProxy);
-  });
-
-  it('includes StateProxy', () => {
-    const { proxies } = createElement.mock.calls[0][1];
-    expect(proxies).toContain(mockStateProxy);
-  });
-
-  it('passes fixtures to loader element', () => {
-    const { fixtures } = createElement.mock.calls[0][1];
-    expect(fixtures.foo.bar).toBe(mockFixture);
-  });
-
-  it('renders React element', () => {
-    const renderArgs = render.mock.calls[0];
-    expect(renderArgs[0]).toBe('__mock_element__');
-  });
-
-  it('uses element inside document body for render container', () => {
-    const container = render.mock.calls[0][1];
-    expect(container.parentNode).toBe(document.body);
-  });
-
-  it('passes dismissRuntimeErrors to loader element', () => {
-    const { dismissRuntimeErrors } = createElement.mock.calls[0][1];
-    expect(dismissRuntimeErrors).toBe(mockDismissRuntimeErrors);
+beforeEach(() => {
+  mount({
+    proxies: [mockProxy],
+    fixtures: {
+      Foo: {
+        bar: mockFixture
+      }
+    },
+    loaderOpts: mockLoaderOpts,
+    dismissRuntimeErrors: mockDismissRuntimeErrors
   });
 });
 
-describe('with container query selector and class name', () => {
-  let rootEl;
+it('passes user proxies to loaderConnect', () => {
+  expect(getProxiesFromLastCall()).toContain(mockProxy);
+});
 
-  beforeEach(() => {
-    rootEl = window.document.createElement('div', { id: 'root' });
-    rootEl.id = 'app123';
-    document.body.appendChild(rootEl);
+it('includes ErrorCatchProxy', () => {
+  expect(getProxiesFromLastCall()).toContain(mockErrorCatchProxy);
+});
 
-    mount({
-      proxies: [mockProxy],
-      fixtures: {
-        foo: {
-          bar: mockFixture
-        }
-      },
-      containerQuerySelector: '#app123',
-      dismissRuntimeErrors: mockDismissRuntimeErrors
-    });
-  });
+it('includes StateProxy', () => {
+  expect(getProxiesFromLastCall()).toContain(mockStateProxy);
+});
 
-  afterAll(() => {
-    document.body.removeChild(rootEl);
-  });
+it('passes fixtures to loaderConnect', () => {
+  expect(getArgsFromLastCall().fixtures.Foo.bar).toBe(mockFixture);
+});
 
-  it('creates RemoteLoader element', () => {
-    const args = createElement.mock.calls[0];
-    expect(args[0]).toBe(RemoteLoader);
-  });
+it('passes renderer to loaderConnect', () => {
+  expect(getArgsFromLastCall().renderer).toBe(mockRenderer);
+});
 
-  it('passes proxies to loader element', () => {
-    const { proxies } = createElement.mock.calls[0][1];
-    expect(proxies).toContain(mockProxy);
-  });
+it('calls renderer creator with loader options', () => {
+  expect(createDomRenderer).toHaveBeenCalledWith(mockLoaderOpts);
+});
 
-  it('appends state proxy', () => {
-    const { proxies } = createElement.mock.calls[0][1];
-    expect(proxies).toContain(mockStateProxy);
-  });
-
-  it('passes fixtures to loader element', () => {
-    const { fixtures } = createElement.mock.calls[0][1];
-    expect(fixtures.foo.bar).toBe(mockFixture);
-  });
-
-  it('renders React element', () => {
-    const renderArgs = render.mock.calls[0];
-    expect(renderArgs[0]).toBe('__mock_element__');
-  });
-
-  it('uses queried element for render container', () => {
-    const container = render.mock.calls[0][1];
-    expect(container.id).toBe('app123');
-  });
-
-  it('passes dismissRuntimeErrors to loader element', () => {
-    const { dismissRuntimeErrors } = createElement.mock.calls[0][1];
-    expect(dismissRuntimeErrors).toBe(mockDismissRuntimeErrors);
-  });
+it('passes dismissRuntimeErrors to loaderConnect', () => {
+  expect(getArgsFromLastCall().dismissRuntimeErrors).toBe(
+    mockDismissRuntimeErrors
+  );
 });

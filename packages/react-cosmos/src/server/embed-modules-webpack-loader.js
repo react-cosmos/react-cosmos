@@ -5,6 +5,7 @@ import { getCosmosConfig } from 'react-cosmos-config';
 import { moduleExists } from 'react-cosmos-shared/lib/server';
 import getFilePaths from 'react-cosmos-voyager';
 import { findFixtureFiles } from 'react-cosmos-voyager2/lib/server';
+import { ALL_BUT_TEST_FILES } from './shared/regexp';
 
 import type { Config } from 'react-cosmos-config/src';
 import type { FixtureFile } from 'react-cosmos-voyager2/src/types';
@@ -118,5 +119,7 @@ function convertPathToRequireCall(p) {
 }
 
 function getContextCall(componentsCommonDir) {
-  return `require.context('${componentsCommonDir}',true,/\\.(j|t)sx?$/)`;
+  return `require.context('${componentsCommonDir}',true,/${
+    ALL_BUT_TEST_FILES
+  }/)`;
 }

@@ -1,54 +1,41 @@
-import React from 'react';
 import merge from 'lodash.merge';
-import { mount } from 'enzyme';
-import { Loader } from 'react-cosmos-loader';
-import createStateProxy from 'react-cosmos-state-proxy';
+import { createContext } from '../../../utils/enzyme';
 import CodeMirror from '@skidding/react-codemirror';
-import erredFixture from '../__fixtures__/erred';
+import fixture from '../__fixtures__/erred';
 
 const stringify = value => JSON.stringify(value, null, 2);
 
+const { getWrapper, getRootWrapper, mount } = createContext({ fixture });
+
 describe('FixtureEditor error', () => {
-  let wrapper;
-  let fixture;
-
-  beforeEach(() => {
-    fixture = merge({}, erredFixture, {
-      props: {
-        onChange: jest.fn()
-      }
-    });
-
-    // Mount component in order for ref and lifecycle methods to be called
-    wrapper = mount(
-      <Loader proxies={[createStateProxy()]} fixture={fixture} />
-    );
+  beforeEach(async () => {
+    jest.clearAllMocks();
+    await mount();
   });
 
   it('displays error', () => {
-    expect(wrapper.find('.error').text()).toBe(
+    expect(getWrapper('.error').text()).toBe(
       'Unexpected token x in JSON at position 37'
     );
   });
 
   describe('on editor onChange', () => {
     beforeEach(() => {
-      wrapper.find(CodeMirror).prop('onChange')(
+      getWrapper(CodeMirror).prop('onChange')(
         stringify({
           props: { baz: 'qux' }
         })
       );
-      wrapper.update();
     });
 
     it('clears error state', () => {
-      expect(wrapper.find('.error')).toHaveLength(0);
+      expect(getWrapper('.error')).toHaveLength(0);
     });
   });
 
   describe('on value prop change', () => {
     beforeEach(() => {
-      wrapper.setProps({
+      getRootWrapper().setProps({
         fixture: merge({}, fixture, {
           props: {
             value: {
@@ -62,7 +49,7 @@ describe('FixtureEditor error', () => {
     });
 
     it('sends new value to editor', () => {
-      expect(wrapper.find(CodeMirror).prop('value')).toBe(
+      expect(getWrapper(CodeMirror).prop('value')).toBe(
         stringify({
           props: {
             foo: 'baz'
@@ -72,7 +59,7 @@ describe('FixtureEditor error', () => {
     });
 
     it('clears error state', () => {
-      expect(wrapper.find('.error')).toHaveLength(0);
+      expect(getWrapper('.error')).toHaveLength(0);
     });
   });
 });
