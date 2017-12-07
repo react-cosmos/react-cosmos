@@ -31,6 +31,7 @@ export type ContextArgs = {
 export type ContextFunctions = {
   getRef: () => ComponentRef,
   getWrapper: () => Wrapper,
+  getField: (fixtureKey?: string) => any,
   get: (fixtureKey?: string) => any,
   mount: (clearPrevInstance?: boolean) => Promise<any>,
   unmount: () => any

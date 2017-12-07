@@ -179,6 +179,18 @@ it('gets fixture part', async () => {
   expect(get('state')).toEqual({ count: 5 });
 });
 
+it('gets fixture (alias)', async () => {
+  const { getField } = createContext({ renderer, fixture });
+
+  expect(getField()).toEqual(fixture);
+});
+
+it('gets fixture part (alias)', async () => {
+  const { getField } = createContext({ renderer, fixture });
+
+  expect(getField('state')).toEqual({ count: 5 });
+});
+
 it('calls wrapper.unmount on unmount', async () => {
   const { mount, unmount } = createContext({ renderer, fixture });
   await mount();

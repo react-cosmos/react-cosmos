@@ -128,6 +128,7 @@ export function createContext(args: ContextArgs): ContextFunctions {
     unmount,
     getRef,
     getWrapper,
-    get
+    get,
+    getField: get
   };
 }

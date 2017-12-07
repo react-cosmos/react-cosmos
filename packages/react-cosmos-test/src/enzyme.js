@@ -31,7 +31,7 @@ export function createContext(args: EnzymeContextArgs): EnzymeContextFunctions {
     ...args,
     renderer: mountEnzyme
   });
-  const { mount, unmount, getRef, get } = context;
+  const { mount, unmount, getRef, get, getField } = context;
 
   function getRootWrapper(): EnzymeWrapper {
     const wrapper = wrapWrapper(context.getWrapper());
@@ -54,6 +54,7 @@ export function createContext(args: EnzymeContextArgs): EnzymeContextFunctions {
     unmount,
     getRef,
     get,
+    getField,
     getRootWrapper,
     getWrapper
   };
