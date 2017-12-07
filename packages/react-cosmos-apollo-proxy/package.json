@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-apollo-proxy",
-  "version": "3.1.0-2",
+  "version": "3.1.0-3",
   "description": "Mock Apollo Client requests via fixtures",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-apollo-proxy",
   "license": "MIT",
@@ -12,7 +12,7 @@
     "graphql": "^0.11.7",
     "graphql-tools": "^2.7.2",
     "react-apollo": "^1.4.15",
-    "react-cosmos-shared": "^3.1.0-2"
+    "react-cosmos-shared": "^3.1.0-3"
   },
   "xo": false
 }
