@@ -122,9 +122,7 @@ it('injects contexts', () => {
   const output = loaderCallback.mock.calls[0][1];
   const [, contexts] = output.match(/contexts: (.+)(,|$)/);
 
-  const expected = `require.context('/components',true,/${
-    ALL_BUT_TEST_FILES
-  }/)`;
+  const expected = `require.context('/components',true,/${ALL_BUT_TEST_FILES}/)`;
   expect(contexts).toEqual(expected.replace(/\s/g, ''));
 });
 

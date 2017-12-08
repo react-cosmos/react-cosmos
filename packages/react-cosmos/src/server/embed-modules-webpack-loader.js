@@ -119,7 +119,5 @@ function convertPathToRequireCall(p) {
 }
 
 function getContextCall(componentsCommonDir) {
-  return `require.context('${componentsCommonDir}',true,/${
-    ALL_BUT_TEST_FILES
-  }/)`;
+  return `require.context('${componentsCommonDir}',true,/${ALL_BUT_TEST_FILES}/)`;
 }

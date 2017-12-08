@@ -28,9 +28,7 @@ function getDomContainer(querySelector?: string): HTMLElement {
   const existingContainer = document.querySelector(querySelector);
   if (!existingContainer) {
     console.warn(
-      `[Cosmos] Could not find ${
-        querySelector
-      } element. Created fresh DOM container.`
+      `[Cosmos] Could not find ${querySelector} element. Created fresh DOM container.`
     );
     return createDomContainer();
   }

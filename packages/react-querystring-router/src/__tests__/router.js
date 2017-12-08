@@ -9,9 +9,7 @@ let getComponentProps;
 const onChange = jest.fn();
 // \window.location is mocked inside jest.config.json
 const mockUriLocationInitial = 'http://foo.bar/';
-const mockUriLocation = `${
-  mockUriLocationInitial
-}?component=List&dataUrl=users.json`;
+const mockUriLocation = `${mockUriLocationInitial}?component=List&dataUrl=users.json`;
 const mockUriParams = {
   component: 'List',
   dataUrl: 'users.json'
