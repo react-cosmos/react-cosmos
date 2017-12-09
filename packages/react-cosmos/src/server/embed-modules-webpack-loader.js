@@ -101,7 +101,7 @@ function getFixturePaths(files: Array<FixtureFile>): Array<string> {
   return files.map(file => file.filePath);
 }
 
-function getCommonComponentsDir(fixtureFiles: Array<FixtureFile>): string {
+function getCommonComponentsDir(fixtureFiles: Array<FixtureFile>): ?string {
   // Get a flat list of all components paths
   const componentPaths: Array<string> = fixtureFiles
     .map(file =>
@@ -111,7 +111,7 @@ function getCommonComponentsDir(fixtureFiles: Array<FixtureFile>): string {
     .reduce((list, current) => [...list, ...current], []);
 
   if (getUniqLengthOfArray(componentPaths) === 0) {
-    return '';
+    return null;
   }
 
   if (getUniqLengthOfArray(componentPaths) === 1) {
