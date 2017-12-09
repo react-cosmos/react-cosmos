@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { graphql, gql } from 'react-apollo';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 
 const withData = graphql(
   gql`
@@ -23,18 +24,10 @@ class Hello extends Component {
     }
 
     if (error) {
-      return (
-        <div style={{ color: 'red' }}>
-          {error}
-        </div>
-      );
+      return <div style={{ color: 'red' }}>{error}</div>;
     }
 
-    return (
-      <div>
-        {hello}
-      </div>
-    );
+    return <div>{hello}</div>;
   }
 }
 

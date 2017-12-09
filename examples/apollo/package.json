@@ -8,8 +8,11 @@
     "start": "cosmos"
   },
   "dependencies": {
-    "react-apollo": "^1.4.15",
-    "react-cosmos": "^3.7.1",
+    "apollo-client": "^2.0.4",
+    "graphql": "^0.11.7",
+    "graphql-tag": "^2.6.0",
+    "react-apollo": "^2.0.4",
+    "react-cosmos": "^3.2.0",
     "react-cosmos-apollo-proxy": "^3.6.1",
     "react-cosmos-shared": "^3.6.1"
   },

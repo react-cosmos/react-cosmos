@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
-import { graphql, print } from 'graphql';
-import { ApolloProvider, ApolloClient } from 'react-apollo';
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { SchemaLink } from 'apollo-link-schema';
+import { ApolloProvider } from 'react-apollo';
 import { proxyPropTypes } from 'react-cosmos-shared/lib/react';
 
 const defaults = {
@@ -25,18 +27,12 @@ export default function createApolloProxy(options) {
       super(props);
 
       this.client = new ApolloClient({
-        networkInterface: {
-          query(request) {
-            return graphql(
-              schema,
-              print(request.query),
-              rootValue,
-              context,
-              request.variables,
-              request.operationName
-            );
-          }
-        }
+        cache: new InMemoryCache(),
+        link: new SchemaLink({
+          schema,
+          context,
+          rootValue
+        })
       });
     }
 

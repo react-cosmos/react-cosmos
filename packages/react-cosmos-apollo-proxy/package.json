@@ -9,10 +9,12 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
+    "apollo-cache-inmemory": "^1.1.4",
+    "apollo-client": "^2.0.4",
+    "apollo-link-schema": "^1.0.1",
     "graphql": "^0.11.7",
-    "graphql-tools": "^2.7.2",
-    "react-apollo": "^1.4.15",
-    "react-cosmos-shared": "^3.6.1"
+    "react-apollo": "^2.0.4",
+    "react-cosmos-shared": "^3.161"
   },
   "xo": false
 }
