@@ -1,5 +1,6 @@
 // @flow
 
+import path from 'path';
 import commondir from 'commondir';
 import { getCosmosConfig } from 'react-cosmos-config';
 import { moduleExists } from 'react-cosmos-shared/lib/server';
@@ -35,11 +36,12 @@ module.exports = async function embedModules(source: string) {
   );
   const componentsCommonDir = getCommonComponentsDir(fixtureFiles);
 
-  // This ensures this loader is invalidated whenever a new component/fixture
-  // file is created or renamed, which leads succesfully uda ...
-  this.addDependency(componentsCommonDir);
-
-  const contextCall = getContextCall(componentsCommonDir);
+  if (componentsCommonDir) {
+    // This ensures this loader is invalidated whenever a new component/fixture
+    // file is created or renamed, ensuring new fixtures show up without having
+    // to restart the Cosmos server
+    this.addDependency(componentsCommonDir);
+  }
 
   const result = source
     .replace(/FIXTURE_MODULES/g, fixtureModuleCalls)
@@ -49,7 +51,10 @@ module.exports = async function embedModules(source: string) {
       /PROXIES/g,
       moduleExists(proxiesPath) ? convertPathToRequireCall(proxiesPath) : '[]'
     )
-    .replace(/CONTEXTS/g, contextCall);
+    .replace(
+      /CONTEXTS/g,
+      componentsCommonDir ? getContextCall(componentsCommonDir) : ''
+    );
 
   callback(null, result);
 };
@@ -96,16 +101,28 @@ function getFixturePaths(files: Array<FixtureFile>): Array<string> {
   return files.map(file => file.filePath);
 }
 
-function getCommonComponentsDir(fixtureFiles: Array<FixtureFile>): string {
+function getCommonComponentsDir(fixtureFiles: Array<FixtureFile>): ?string {
   // Get a flat list of all components paths
   const componentPaths: Array<string> = fixtureFiles
     .map(file =>
       // https://github.com/facebook/flow/issues/1026#issuecomment-298801746
       file.components.map(component => component.filePath).filter(Boolean)
     )
-    .reduce((list, current) => [...list, ...current]);
+    .reduce((list, current) => [...list, ...current], []);
+
+  if (getUniqLengthOfArray(componentPaths) === 0) {
+    return null;
+  }
+
+  if (getUniqLengthOfArray(componentPaths) === 1) {
+    return path.dirname(componentPaths[0]);
+  }
 
   return commondir(componentPaths);
+}
+
+function getUniqLengthOfArray(arr: Array<any>): number {
+  return new Set(arr).size;
 }
 
 function convertPathsToRequireCalls(paths: Array<string>): string {
