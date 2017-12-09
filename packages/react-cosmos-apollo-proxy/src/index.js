@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
+
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { SchemaLink } from 'apollo-link-schema';
@@ -7,32 +7,45 @@ import { ApolloProvider } from 'react-apollo';
 import { proxyPropTypes } from 'react-cosmos-shared/lib/react';
 
 const defaults = {
-  // Must provide schema definition with query type or a type named Query.
-  typeDefs: `type Query { hello: String }`,
   context: {},
   rootValue: {}
 };
 
 export default function createApolloProxy(options) {
-  const { typeDefs, mocks, context, rootValue } = { ...defaults, ...options };
-
-  const schema = makeExecutableSchema({ typeDefs });
-
-  if (mocks) {
-    addMockFunctionsToSchema({ schema, mocks });
-  }
+  const { link, schema, context, rootValue } = {
+    ...defaults,
+    ...options
+  };
 
   class ApolloProxy extends Component {
     constructor(props) {
       super(props);
 
+      if (!link && !schema) {
+        throw new Error(
+          `It looks the Apollo Proxy is missing a schema instance! 
+          Pass it a local schema built with graphql-tools or a link pointing to a GraphQL endpoint.
+          Read more at: https://github.com/react-cosmos/react-cosmos#react-apollo-graphql.`
+        );
+      }
+
+      if (schema && link) {
+        throw new Error(
+          `It looks like the Apollo Proxy is configured with both a schema & an Apollo Link!
+          You can  either just pass a local schema instance, or build your own link to connect to the schema you want to use.
+          Read more at: https://github.com/react-cosmos/react-cosmos#react-apollo-graphql.`
+        );
+      }
+
       this.client = new ApolloClient({
         cache: new InMemoryCache(),
-        link: new SchemaLink({
-          schema,
-          context,
-          rootValue
-        })
+        link:
+          link ||
+          new SchemaLink({
+            schema,
+            context,
+            rootValue
+          })
       });
     }
 
