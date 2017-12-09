@@ -47,6 +47,9 @@ export default function createApolloProxy(options) {
             rootValue
           })
       });
+
+      // enable the Apollo Client DevTools to recognize the Apollo Client instance
+      parent.__APOLLO_CLIENT__ = this.client;
     }
 
     render() {
