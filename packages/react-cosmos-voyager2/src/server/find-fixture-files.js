@@ -3,6 +3,10 @@
 import glob from 'glob';
 import micromatch from 'micromatch';
 import promisify from 'util.promisify';
+import {
+  defaultFileMatch,
+  defaultExclude
+} from 'react-cosmos-shared/lib/server';
 import { extractComponentsFromFixtureFile } from './extract-components-from-fixture-file';
 
 import type { ExcludePatterns } from 'react-cosmos-shared/src/types';
@@ -15,13 +19,6 @@ type Args = ?{
   fileMatch?: Array<string>,
   exclude?: ExcludePatterns
 };
-
-const defaultFileMatch = [
-  '**/__fixture?(s)__/**/*.{js,jsx,ts,tsx}',
-  '**/?(*.)fixture?(s).{js,jsx,ts,tsx}'
-];
-
-const defaultExclude = [];
 
 /**
  * Search the user code for fixture files.
