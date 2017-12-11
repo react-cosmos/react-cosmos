@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-state-proxy",
-  "version": "3.1.1",
+  "version": "3.2.0-1",
   "description": "Mock React component state via fixtures",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-state-proxy",
   "license": "MIT",
