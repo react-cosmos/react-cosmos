@@ -79,6 +79,8 @@ export default function createStateProxy(options) {
   const { fixtureKey, updateInterval } = { ...defaults, ...options };
 
   class StateProxy extends Component {
+    prevState = {};
+
     componentWillUnmount() {
       this.clearTimeout();
     }
@@ -102,6 +104,7 @@ export default function createStateProxy(options) {
               // Bubble up component ref after state has been injected
               onComponentRef(componentRef);
 
+              this.prevState = fixtureState;
               this.scheduleStateUpdate();
             });
           } else {
@@ -128,9 +131,11 @@ export default function createStateProxy(options) {
     };
 
     updateState(updatedState) {
-      const { fixture, onFixtureUpdate } = this.props;
+      const { onFixtureUpdate } = this.props;
 
-      if (!isEqual(updatedState, fixture.state)) {
+      if (!isEqual(updatedState, this.prevState)) {
+        this.prevState = updatedState;
+
         onFixtureUpdate({
           state: updatedState
         });
