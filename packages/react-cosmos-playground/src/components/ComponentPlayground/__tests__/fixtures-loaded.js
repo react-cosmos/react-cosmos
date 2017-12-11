@@ -3,8 +3,6 @@ import FixtureList from '../../FixtureList';
 import WelcomeScreen from '../../screens/WelcomeScreen';
 import fixture from '../__fixtures__/ready';
 
-const goTo = jest.fn();
-
 const { mount, getWrapper, get } = createContext({ fixture });
 
 describe('CP fixtures loaded', () => {
