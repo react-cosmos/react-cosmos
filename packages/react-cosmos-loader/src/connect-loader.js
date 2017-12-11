@@ -14,7 +14,7 @@ type Args = {
   dismissRuntimeErrors?: Function
 };
 
-let isListening = false;
+let unbindPrev: ?Function;
 
 // This will be populated on fixtureSelect events
 let selected: ?{
@@ -35,7 +35,7 @@ let selected: ?{
 export async function connectLoader(args: Args) {
   const { proxies, fixtures, renderer, dismissRuntimeErrors } = args;
 
-  async function loadFixture(fixture) {
+  async function loadFixture(fixture, notifyParent = true) {
     const { mount } = createContext({
       renderer,
       proxies,
@@ -44,6 +44,15 @@ export async function connectLoader(args: Args) {
     });
 
     await mount();
+
+    if (notifyParent) {
+      // Notify back parent with the serializable contents of the loaded fixture
+      const { serializable } = splitUnserializableParts(fixture);
+      postMessageToParent({
+        type: 'fixtureLoad',
+        fixtureBody: serializable
+      });
+    }
   }
 
   function onContextUpdate(fixturePart) {
@@ -63,13 +72,6 @@ export async function connectLoader(args: Args) {
         const selectedFixture = fixtures[component][fixture];
         await loadFixture(selectedFixture);
 
-        // Notify back parent with the serializable contents of the loaded fixture
-        const { serializable } = splitUnserializableParts(selectedFixture);
-        postMessageToParent({
-          type: 'fixtureLoad',
-          fixtureBody: serializable
-        });
-
         if (dismissRuntimeErrors) {
           dismissRuntimeErrors();
         }
@@ -88,15 +90,35 @@ export async function connectLoader(args: Args) {
         // componentDidMount path (instead of componentWillReceiveProps) when
         // user edits fixture via fixture editor. In the future we might want to
         // sometimes update the fixture context instead of resetting it.
-        await loadFixture(applyFixturePart(selectedFixture, data.fixtureBody));
+        await loadFixture(
+          applyFixturePart(selectedFixture, data.fixtureBody),
+          false
+        );
       }
     }
   }
 
-  if (!isListening) {
+  function bind() {
     window.addEventListener('message', onMessage, false);
-    isListening = true;
+  }
 
+  function unbind() {
+    window.removeEventListener('message', onMessage);
+    unbindPrev = undefined;
+  }
+
+  const isFirstCall = !unbindPrev;
+
+  // Implicitly unbind prev context when new one is created
+  if (unbindPrev) {
+    unbindPrev();
+  }
+  unbindPrev = unbind;
+
+  // Always bind onMessage handler to latest input
+  bind();
+
+  if (isFirstCall) {
     // Let parent know loader is ready to render, along with the initial
     // fixture list (which might update later due to HMR)
     postMessageToParent({
@@ -104,8 +126,7 @@ export async function connectLoader(args: Args) {
       fixtures: extractFixtureNames(fixtures)
     });
   } else {
-    // Let parent know loader is ready to render, along with the initial
-    // fixture list (which might update later due to HMR)
+    // Keep parent up to date with fixture list
     postMessageToParent({
       type: 'fixtureListUpdate',
       fixtures: extractFixtureNames(fixtures)
@@ -118,9 +139,8 @@ export async function connectLoader(args: Args) {
   }
 
   return function destroy() {
-    if (isListening) {
-      window.removeEventListener('message', onMessage);
-      isListening = false;
+    if (unbindPrev) {
+      unbindPrev();
       selected = undefined;
     }
   };

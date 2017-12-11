@@ -9,7 +9,9 @@ import {
   fixtures,
   fixtureFoo,
   subscribeToWindowMessages,
+  getLastWindowMessage,
   untilEvent,
+  untilEventSeq,
   postWindowMessage
 } from './_shared';
 
@@ -41,8 +43,9 @@ beforeEach(async () => {
   });
 
   await untilEvent('fixtureSelect');
+  await untilEvent('fixtureLoad');
 
-  await connectLoader({
+  destroy = await connectLoader({
     renderer,
     proxies,
     fixtures: {
@@ -55,6 +58,14 @@ beforeEach(async () => {
       }
     }
   });
+
+  await untilEventSeq([
+    'loaderReady',
+    'fixtureSelect',
+    'fixtureLoad',
+    'fixtureListUpdate',
+    'fixtureLoad'
+  ]);
 });
 
 // Ensure state doesn't leak between tests
@@ -73,4 +84,35 @@ it('creates new context with new fixture', () => {
 
 it('mounts context again', () => {
   expect(mockMount).toHaveBeenCalledTimes(2);
+});
+
+it('sends fixtureLoad event to parent with latest serializable fixture body', async () => {
+  expect(getLastWindowMessage()).toEqual({
+    type: 'fixtureLoad',
+    // Note: fixture.fooFn is unserializable so it's omitted
+    fixtureBody: {
+      foo: true,
+      bar: true
+    }
+  });
+});
+
+it('uses latest fixture source on re-select', async () => {
+  postWindowMessage({
+    type: 'fixtureSelect',
+    component: 'Foo',
+    fixture: 'foo'
+  });
+
+  await untilEvent('fixtureSelect');
+
+  expect(getMock(createContext).calls[2][0]).toMatchObject({
+    renderer,
+    proxies,
+    fixture: {
+      ...fixtureFoo,
+      foo: true,
+      bar: true
+    }
+  });
 });

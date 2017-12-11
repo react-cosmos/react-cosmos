@@ -2,6 +2,7 @@
 
 import React from 'react';
 import until from 'async-until';
+import deepEqual from 'deep-equal';
 
 import type { LoaderMessageData } from 'react-cosmos-shared/src/types';
 import type { Renderer } from '../../types';
@@ -57,6 +58,22 @@ export async function untilEvent(eventType: string) {
   });
 }
 
+export async function untilEventSeq(eventTypes: Array<string>) {
+  try {
+    await until(() => deepEqual(getEventSeq(), eventTypes), {
+      timeout: 1000
+    });
+  } catch (err) {
+    // This always fails, but it's nice to see the diff
+    expect(getEventSeq()).toEqual(eventTypes);
+  }
+}
+
 export function postWindowMessage(msg: LoaderMessageData) {
   window.postMessage(msg, '*');
+}
+
+function getEventSeq(): Array<string> {
+  const { calls } = handleMessage.mock;
+  return calls.map(call => call[0].data.type);
 }
