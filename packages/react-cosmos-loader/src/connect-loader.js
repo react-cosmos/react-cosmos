@@ -21,6 +21,7 @@ let selected: ?{
   component: string,
   fixture: string
 };
+let hasReceivedUpdate = false;
 
 /**
  * Connect fixture context to remote Playground UI via window.postMessage.
@@ -61,6 +62,11 @@ export async function connectLoader(args: Args) {
       type: 'fixtureUpdate',
       fixtureBody: serializable
     });
+
+    // Once the fixture has been updated from within the fixture context we
+    // give it priority and ignore fixture source changes (until fixture is
+    // reset via `fixtureSelect` event).
+    hasReceivedUpdate = true;
   }
 
   async function onMessage({ data }: LoaderMessage) {
@@ -71,6 +77,10 @@ export async function connectLoader(args: Args) {
 
         const selectedFixture = fixtures[component][fixture];
         await loadFixture(selectedFixture);
+
+        // Fixture has been reloaded from latest source and any previous update
+        // has been discarded
+        hasReceivedUpdate = false;
 
         if (dismissRuntimeErrors) {
           dismissRuntimeErrors();
@@ -132,7 +142,7 @@ export async function connectLoader(args: Args) {
       fixtures: extractFixtureNames(fixtures)
     });
 
-    if (selected) {
+    if (selected && !hasReceivedUpdate) {
       const { component, fixture } = selected;
       await loadFixture(fixtures[component][fixture]);
     }
@@ -142,6 +152,7 @@ export async function connectLoader(args: Args) {
     if (unbindPrev) {
       unbindPrev();
       selected = undefined;
+      hasReceivedUpdate = false;
     }
   };
 }

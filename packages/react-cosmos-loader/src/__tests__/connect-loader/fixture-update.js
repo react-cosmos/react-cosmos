@@ -1,10 +1,13 @@
 // @flow
 
+import { getMock } from 'react-cosmos-shared/src/jest';
+import { createContext } from '../../create-context';
 import { connectLoader } from '../../connect-loader';
 import {
   renderer,
   proxies,
   fixtures,
+  fixtureFoo,
   subscribeToWindowMessages,
   getLastWindowMessage,
   untilEvent,
@@ -64,4 +67,77 @@ it('sends serializable part of updated fixture body to parent', async () => {
 
 it('does not mount context again', () => {
   expect(mockMount).toHaveBeenCalledTimes(1);
+});
+
+describe('after fixture change', () => {
+  beforeEach(async () => {
+    destroy = await connectLoader({
+      renderer,
+      proxies,
+      fixtures: {
+        ...fixtures,
+        Foo: {
+          foo: {
+            ...fixtureFoo,
+            bar: true
+          }
+        }
+      }
+    });
+  });
+
+  it('should not create a new context', async () => {
+    // The previous context (with the updated fixture) should be preserved
+    expect(createContext).toHaveBeenCalledTimes(1);
+  });
+
+  describe('after fixture select', () => {
+    beforeEach(async () => {
+      postWindowMessage({
+        type: 'fixtureSelect',
+        component: 'Foo',
+        fixture: 'foo'
+      });
+
+      await untilEvent('fixtureSelect');
+    });
+
+    it('should create fresh context with latest fixture source', () => {
+      expect(getMock(createContext).calls[1][0]).toMatchObject({
+        renderer,
+        proxies,
+        fixture: {
+          ...fixtureFoo,
+          foo: true,
+          bar: true
+        }
+      });
+    });
+
+    it('should keep resetting context on fixture change', async () => {
+      destroy = await connectLoader({
+        renderer,
+        proxies,
+        fixtures: {
+          ...fixtures,
+          Foo: {
+            foo: {
+              ...fixtureFoo,
+              bar: false
+            }
+          }
+        }
+      });
+
+      expect(getMock(createContext).calls[2][0]).toMatchObject({
+        renderer,
+        proxies,
+        fixture: {
+          ...fixtureFoo,
+          foo: true,
+          bar: false
+        }
+      });
+    });
+  });
 });
