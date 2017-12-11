@@ -26,7 +26,7 @@ let destroy;
 beforeEach(async () => {
   jest.clearAllMocks();
 
-  destroy = connectLoader({
+  destroy = await connectLoader({
     renderer,
     proxies,
     fixtures
@@ -50,6 +50,9 @@ beforeEach(async () => {
   await untilEvent('fixtureEdit');
 });
 
+// Ensure state doesn't leak between tests
+afterEach(() => destroy());
+
 it('creates new context with merged fixture', () => {
   expect(getMock(createContext).calls[1][0]).toMatchObject({
     renderer,
@@ -62,9 +65,6 @@ it('creates new context with merged fixture', () => {
     }
   });
 });
-
-// Ensure state doesn't leak between tests
-afterEach(() => destroy());
 
 it('mounts context again', () => {
   expect(mockMount).toHaveBeenCalledTimes(2);

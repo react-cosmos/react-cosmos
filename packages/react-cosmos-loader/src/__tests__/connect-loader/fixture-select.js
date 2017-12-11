@@ -29,7 +29,7 @@ let destroy;
 beforeEach(async () => {
   jest.clearAllMocks();
 
-  destroy = connectLoader({
+  destroy = await connectLoader({
     renderer,
     proxies,
     fixtures,

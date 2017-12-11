@@ -1,24 +1,22 @@
 // @flow
 
+import { getMock } from 'react-cosmos-shared/src/jest';
+import { createContext } from '../../create-context';
 import { connectLoader } from '../../connect-loader';
 import {
   renderer,
   proxies,
   fixtures,
+  fixtureFoo,
   subscribeToWindowMessages,
-  getLastWindowMessage,
   untilEvent,
   postWindowMessage
 } from './_shared';
 
 const mockMount = jest.fn();
-let onContextUpdate;
 
 jest.mock('../../create-context', () => ({
-  createContext: jest.fn(({ onUpdate }) => {
-    onContextUpdate = onUpdate;
-    return { mount: mockMount };
-  })
+  createContext: jest.fn(() => ({ mount: mockMount }))
 }));
 
 subscribeToWindowMessages();
@@ -42,26 +40,37 @@ beforeEach(async () => {
     fixture: 'foo'
   });
 
-  await untilEvent('fixtureLoad');
+  await untilEvent('fixtureSelect');
 
-  onContextUpdate({ foo: false, fooFn: () => {} });
-
-  await untilEvent('fixtureUpdate');
+  await connectLoader({
+    renderer,
+    proxies,
+    fixtures: {
+      ...fixtures,
+      Foo: {
+        foo: {
+          ...fixtureFoo,
+          bar: true
+        }
+      }
+    }
+  });
 });
 
 // Ensure state doesn't leak between tests
 afterEach(() => destroy());
 
-it('sends serializable part of updated fixture body to parent', async () => {
-  expect(getLastWindowMessage()).toEqual({
-    type: 'fixtureUpdate',
-    // Note: fixture.fooFn is unserializable so it's omitted
-    fixtureBody: {
-      foo: false
+it('creates new context with new fixture', () => {
+  expect(getMock(createContext).calls[1][0]).toMatchObject({
+    renderer,
+    proxies,
+    fixture: {
+      ...fixtureFoo,
+      bar: true
     }
   });
 });
 
-it('does not mount context again', () => {
-  expect(mockMount).toHaveBeenCalledTimes(1);
+it('mounts context again', () => {
+  expect(mockMount).toHaveBeenCalledTimes(2);
 });
