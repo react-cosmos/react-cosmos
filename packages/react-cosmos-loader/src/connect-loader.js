@@ -21,7 +21,13 @@ let selected: ?{
   component: string,
   fixture: string
 };
-let hasReceivedUpdate = false;
+
+// This flag is set to true in two case:
+// - On fixture updates received from proxy chain via context's onUpdate handler
+// - On `fixtureEdit` events triggered when user edits fixture in Playground UI
+// The flag is reset to false on `fixtureSelect`, when a fixture (including the
+// current one) is selected
+let hasFixtureUpdate = false;
 
 /**
  * Connect fixture context to remote Playground UI via window.postMessage.
@@ -57,16 +63,13 @@ export async function connectLoader(args: Args) {
   }
 
   function onContextUpdate(fixturePart) {
+    hasFixtureUpdate = true;
+
     const { serializable } = splitUnserializableParts(fixturePart);
     postMessageToParent({
       type: 'fixtureUpdate',
       fixtureBody: serializable
     });
-
-    // Once the fixture has been updated from within the fixture context we
-    // give it priority and ignore fixture source changes (until fixture is
-    // reset via `fixtureSelect` event).
-    hasReceivedUpdate = true;
   }
 
   async function onMessage({ data }: LoaderMessage) {
@@ -74,13 +77,10 @@ export async function connectLoader(args: Args) {
       const { component, fixture } = data;
       if (fixtures[component] && fixtures[component][fixture]) {
         selected = { component, fixture };
+        hasFixtureUpdate = false;
 
         const selectedFixture = fixtures[component][fixture];
         await loadFixture(selectedFixture);
-
-        // Fixture has been reloaded from latest source and any previous update
-        // has been discarded
-        hasReceivedUpdate = false;
 
         if (dismissRuntimeErrors) {
           dismissRuntimeErrors();
@@ -92,14 +92,15 @@ export async function connectLoader(args: Args) {
       if (!selected) {
         console.error('[Cosmos] No selected fixture to edit');
       } else {
-        const { component, fixture } = selected;
-        const selectedFixture = fixtures[component][fixture];
+        hasFixtureUpdate = true;
 
         // Note: Creating fixture context from scratch on every fixture edit.
         // This means that the component will always go down the
         // componentDidMount path (instead of componentWillReceiveProps) when
         // user edits fixture via fixture editor. In the future we might want to
         // sometimes update the fixture context instead of resetting it.
+        const { component, fixture } = selected;
+        const selectedFixture = fixtures[component][fixture];
         await loadFixture(
           applyFixturePart(selectedFixture, data.fixtureBody),
           false
@@ -142,7 +143,7 @@ export async function connectLoader(args: Args) {
       fixtures: extractFixtureNames(fixtures)
     });
 
-    if (selected && !hasReceivedUpdate) {
+    if (selected && !hasFixtureUpdate) {
       const { component, fixture } = selected;
       await loadFixture(fixtures[component][fixture]);
     }
@@ -152,7 +153,7 @@ export async function connectLoader(args: Args) {
     if (unbindPrev) {
       unbindPrev();
       selected = undefined;
-      hasReceivedUpdate = false;
+      hasFixtureUpdate = false;
     }
   };
 }

@@ -40,6 +40,8 @@ beforeEach(async () => {
     fixture: 'foo'
   });
 
+  await untilEvent('fixtureLoad');
+
   postWindowMessage({
     type: 'fixtureEdit',
     fixtureBody: {
@@ -68,4 +70,75 @@ it('creates new context with merged fixture', () => {
 
 it('mounts context again', () => {
   expect(mockMount).toHaveBeenCalledTimes(2);
+});
+
+describe('after fixture change', () => {
+  beforeEach(async () => {
+    destroy = await connectLoader({
+      renderer,
+      proxies,
+      fixtures: {
+        ...fixtures,
+        Foo: {
+          foo: {
+            ...fixtureFoo,
+            bar: true
+          }
+        }
+      }
+    });
+  });
+
+  it('should not create a new context', async () => {
+    // The previous context (with the edited fixture) should be preserved
+    expect(createContext).toHaveBeenCalledTimes(2);
+  });
+
+  describe('after fixture select', () => {
+    beforeEach(async () => {
+      postWindowMessage({
+        type: 'fixtureSelect',
+        component: 'Foo',
+        fixture: 'foo'
+      });
+
+      await untilEvent('fixtureSelect');
+    });
+
+    it('should create fresh context with latest fixture source', () => {
+      expect(getMock(createContext).calls[2][0]).toMatchObject({
+        renderer,
+        proxies,
+        fixture: {
+          ...fixtureFoo,
+          bar: true
+        }
+      });
+    });
+
+    it('should keep resetting context on fixture change', async () => {
+      destroy = await connectLoader({
+        renderer,
+        proxies,
+        fixtures: {
+          ...fixtures,
+          Foo: {
+            foo: {
+              ...fixtureFoo,
+              bar: false
+            }
+          }
+        }
+      });
+
+      expect(getMock(createContext).calls[3][0]).toMatchObject({
+        renderer,
+        proxies,
+        fixture: {
+          ...fixtureFoo,
+          bar: false
+        }
+      });
+    });
+  });
 });

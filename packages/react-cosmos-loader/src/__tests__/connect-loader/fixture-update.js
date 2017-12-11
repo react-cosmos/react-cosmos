@@ -108,7 +108,6 @@ describe('after fixture change', () => {
         proxies,
         fixture: {
           ...fixtureFoo,
-          foo: true,
           bar: true
         }
       });
@@ -134,7 +133,6 @@ describe('after fixture change', () => {
         proxies,
         fixture: {
           ...fixtureFoo,
-          foo: true,
           bar: false
         }
       });
