@@ -105,7 +105,7 @@ describe('after fixture source change', () => {
       await untilEvent('fixtureSelect');
     });
 
-    it('should create fresh context with latest fixture source', () => {
+    it('creates new context with latest fixture source', () => {
       expect(getMock(createContext).calls[2][0]).toMatchObject({
         renderer,
         proxies,
@@ -116,28 +116,32 @@ describe('after fixture source change', () => {
       });
     });
 
-    it('should keep resetting context on fixture change', async () => {
-      destroy = await connectLoader({
-        renderer,
-        proxies,
-        fixtures: {
-          ...fixtures,
-          Foo: {
-            foo: {
-              ...fixtureFoo,
-              bar: false
+    describe('after fixture source change', () => {
+      beforeEach(async () => {
+        destroy = await connectLoader({
+          renderer,
+          proxies,
+          fixtures: {
+            ...fixtures,
+            Foo: {
+              foo: {
+                ...fixtureFoo,
+                bar: false
+              }
             }
           }
-        }
+        });
       });
 
-      expect(getMock(createContext).calls[3][0]).toMatchObject({
-        renderer,
-        proxies,
-        fixture: {
-          ...fixtureFoo,
-          bar: false
-        }
+      it('creates a new context', async () => {
+        expect(getMock(createContext).calls[3][0]).toMatchObject({
+          renderer,
+          proxies,
+          fixture: {
+            ...fixtureFoo,
+            bar: false
+          }
+        });
       });
     });
   });
