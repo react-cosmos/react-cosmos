@@ -167,7 +167,11 @@ export async function connectLoader(args: Args) {
       const { component, fixture } = selected;
       const originalFixture = fixtures[component][fixture];
 
-      if (fixtureCache) {
+      if (!originalFixture) {
+        // Maybe fixture was renamed
+        selected = undefined;
+        fixtureCache = undefined;
+      } else if (fixtureCache) {
         await loadFixture({
           ...fixtureCache,
           component: originalFixture.component
