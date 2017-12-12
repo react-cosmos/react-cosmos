@@ -59,26 +59,16 @@ beforeEach(async () => {
     }
   });
 
-  await untilEventSeq([
-    'loaderReady',
-    'fixtureSelect',
-    'fixtureLoad',
-    'fixtureListUpdate',
-    'fixtureLoad'
-  ]);
+  await untilEventSeq(['fixtureListUpdate', 'fixtureLoad']);
 });
 
 // Ensure state doesn't leak between tests
 afterEach(() => destroy());
 
-it('creates new context with new fixture', () => {
-  expect(getMock(createContext).calls[1][0]).toMatchObject({
-    renderer,
-    proxies,
-    fixture: {
-      ...fixtureFoo,
-      bar: true
-    }
+it('creates context with new fixture', () => {
+  expect(getMock(createContext).calls[1][0].fixture).toEqual({
+    ...fixtureFoo,
+    bar: true
   });
 });
 
@@ -105,14 +95,10 @@ it('uses latest fixture source on re-select', async () => {
   });
 
   await untilEvent('fixtureSelect');
+  await untilEvent('fixtureLoad');
 
-  expect(getMock(createContext).calls[2][0]).toMatchObject({
-    renderer,
-    proxies,
-    fixture: {
-      ...fixtureFoo,
-      foo: true,
-      bar: true
-    }
+  expect(getMock(createContext).calls[2][0].fixture).toEqual({
+    ...fixtureFoo,
+    bar: true
   });
 });

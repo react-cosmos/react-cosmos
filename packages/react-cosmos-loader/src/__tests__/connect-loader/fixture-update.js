@@ -26,6 +26,7 @@ jest.mock('../../create-context', () => ({
 
 subscribeToWindowMessages();
 
+const updateFn = () => {};
 let destroy;
 
 beforeEach(async () => {
@@ -47,7 +48,7 @@ beforeEach(async () => {
 
   await untilEvent('fixtureLoad');
 
-  onContextUpdate({ foo: false, fooFn: () => {} });
+  onContextUpdate({ update: true, updateFn });
 
   await untilEvent('fixtureUpdate');
 });
@@ -58,9 +59,9 @@ afterEach(() => destroy());
 it('sends serializable part of updated fixture body to parent', async () => {
   expect(getLastWindowMessage()).toEqual({
     type: 'fixtureUpdate',
-    // Note: fixture.fooFn is unserializable so it's omitted
+    // Note: fixture.updateFn is unserializable so it's omitted
     fixtureBody: {
-      foo: false
+      update: true
     }
   });
 });
@@ -79,16 +80,19 @@ describe('after fixture source change', () => {
         Foo: {
           foo: {
             ...fixtureFoo,
-            bar: true
+            change: true
           }
         }
       }
     });
   });
 
-  it('should not create a new context', async () => {
-    // The previous context (with the updated fixture) should be preserved
-    expect(createContext).toHaveBeenCalledTimes(1);
+  it('ignores change and creates context with cached fixture fields', async () => {
+    expect(getMock(createContext).calls[1][0].fixture).toEqual({
+      ...fixtureFoo,
+      update: true,
+      updateFn
+    });
   });
 
   describe('after fixture select', () => {
@@ -102,14 +106,10 @@ describe('after fixture source change', () => {
       await untilEvent('fixtureSelect');
     });
 
-    it('creates new context with latest fixture source', () => {
-      expect(getMock(createContext).calls[1][0]).toMatchObject({
-        renderer,
-        proxies,
-        fixture: {
-          ...fixtureFoo,
-          bar: true
-        }
+    it('discards update and creates context with latest fixture source', () => {
+      expect(getMock(createContext).calls[2][0].fixture).toEqual({
+        ...fixtureFoo,
+        change: true
       });
     });
 
@@ -123,21 +123,17 @@ describe('after fixture source change', () => {
             Foo: {
               foo: {
                 ...fixtureFoo,
-                bar: false
+                change2: true
               }
             }
           }
         });
       });
 
-      it('creates a new context', async () => {
-        expect(getMock(createContext).calls[2][0]).toMatchObject({
-          renderer,
-          proxies,
-          fixture: {
-            ...fixtureFoo,
-            bar: false
-          }
+      it('creates context with latest fixture source', async () => {
+        expect(getMock(createContext).calls[3][0].fixture).toEqual({
+          ...fixtureFoo,
+          change2: true
         });
       });
     });
