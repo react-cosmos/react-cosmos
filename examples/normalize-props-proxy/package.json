@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-normalize-props-proxy-example",
-  "version": "3.2.0-2",
+  "version": "3.2.0-3",
   "description": "Example of using normalize-props-proxy",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/normalize-props-proxy",
   "license": "MIT",
@@ -8,7 +8,7 @@
     "start": "cosmos"
   },
   "dependencies": {
-    "react-cosmos": "^3.2.0-2",
+    "react-cosmos": "^3.2.0-3",
     "react-cosmos-normalize-props-proxy": "^3.1.1"
   },
   "xo": false,
