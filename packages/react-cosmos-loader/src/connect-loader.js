@@ -36,7 +36,7 @@ let hasFixtureUpdate = false;
  * Loader to live in completely different environments (eg. Control a Native
  * component instance from a web Playground UI).
  *
- * It both receives fixture changes from parent frame and sends fixture
+ * It both receives fixture edits from parent frame and forwards fixture
  * updates bubbled up from proxy chain (due to state changes) to parent frame.
  */
 export async function connectLoader(args: Args) {

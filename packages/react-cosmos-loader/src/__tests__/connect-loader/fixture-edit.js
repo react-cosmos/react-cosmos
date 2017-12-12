@@ -72,7 +72,7 @@ it('mounts context again', () => {
   expect(mockMount).toHaveBeenCalledTimes(2);
 });
 
-describe('after fixture change', () => {
+describe('after fixture source change', () => {
   beforeEach(async () => {
     destroy = await connectLoader({
       renderer,
