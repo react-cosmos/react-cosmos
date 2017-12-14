@@ -1,6 +1,6 @@
 import createApolloProxy from 'react-cosmos-apollo-proxy';
 
-// // remote setup of the proxy
+// remote setup of the proxy
 import { HttpLink } from 'apollo-link-http';
 
 const link = new HttpLink({ uri: 'https://1jzxrj179.lp.gql.zone/graphql' });
@@ -32,6 +32,7 @@ export default [createApolloProxy({ link })];
 // const mocks = {
 //   Query: () => ({
 //     author: (root, { id }) => ({
+//       id,
 //       firstName: id === 1 ? 'Ovidiu' : 'You'
 //     })
 //   }),
@@ -45,4 +46,4 @@ export default [createApolloProxy({ link })];
 
 // addMockFunctionsToSchema({ schema, mocks });
 
-// export default [createApolloProxy({ schema, link })];
+// export default [createApolloProxy({ schema })];
