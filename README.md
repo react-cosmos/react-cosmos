@@ -607,6 +607,14 @@ module.exports = {
   proxiesPath: 'src/cosmos.proxies'
 };
 ```
+If you are using the `NODE_PATH` environment variable for absolute imports, make sure to include that as part of the cosmos script:
+
+```js
+// package.json
+"scripts": {
+  "cosmos": "NODE_PATH=./src cosmos"
+}
+```
 
 Also make sure to:
 - Put [proxies](#proxies) in the `src` dir–the only place included by the CRA Babel loader
