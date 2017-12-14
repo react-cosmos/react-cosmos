@@ -7,12 +7,13 @@ import { ApolloProvider } from 'react-apollo';
 import { proxyPropTypes } from 'react-cosmos-shared/lib/react';
 
 const defaults = {
+  fixtureKey: 'apollo',
   context: {},
   rootValue: {}
 };
 
 export default function createApolloProxy(options) {
-  const { link, schema, context, rootValue } = {
+  const { fixtureKey, link, schema, context, rootValue } = {
     ...defaults,
     ...options
   };
@@ -38,7 +39,9 @@ export default function createApolloProxy(options) {
       }
 
       this.client = new ApolloClient({
-        cache: new InMemoryCache(),
+        cache: new InMemoryCache().restore(
+          this.props.fixture[fixtureKey] || {}
+        ),
         link:
           link ||
           new SchemaLink({
@@ -48,10 +51,21 @@ export default function createApolloProxy(options) {
           })
       });
 
-      // enable the Apollo Client DevTools to recognize the Apollo Client instance
-      parent.__APOLLO_CLIENT__ = this.client;
-    }
+      this.onBroadcast = this.onBroadcast.bind(this);
 
+      // hook Cosmos on the callback designed for the Apollo Client DevTools Chrome Extension 😇
+      this.client.__actionHookForDevTools(this.onBroadcast);
+    }
+    onBroadcast({ state, dataWithOptimisticResults: cache }) {
+      if (isEmptyObject(state.queries) && isEmptyObject(state.mutations)) {
+        console.log('// empty broadcast!');
+        return;
+      }
+      console.log('// updating fixture with new cache', JSON.stringify(cache));
+      this.props.onFixtureUpdate({
+        [fixtureKey]: cache
+      });
+    }
     render() {
       const { value: NextProxy, next } = this.props.nextProxy;
 
@@ -62,8 +76,10 @@ export default function createApolloProxy(options) {
       );
     }
   }
-
   ApolloProxy.propTypes = proxyPropTypes;
 
   return ApolloProxy;
+}
+function isEmptyObject(obj) {
+  return !Object.keys(obj).length;
 }
