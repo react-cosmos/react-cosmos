@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-apollo-example",
-  "version": "3.2.0-4",
+  "version": "3.2.0",
   "description": "Example of mocking the Apollo Client",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/apollo",
   "license": "MIT",
@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "react-apollo": "^1.4.15",
-    "react-cosmos": "^3.2.0-4",
+    "react-cosmos": "^3.2.0",
     "react-cosmos-apollo-proxy": "^3.1.1",
     "react-cosmos-shared": "^3.1.1"
   },
