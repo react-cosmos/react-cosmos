@@ -24,12 +24,12 @@
   </a>
 </p>
 
-> **New: [Cosmos 3.0, the version you’ll fall in love with](https://medium.com/@skidding/cosmos-3-0-the-version-youll-fall-in-love-with-28a862ecf72e)**
+> **New: [Testing React Components](https://medium.com/@skidding/testing-react-components-30516bc6a1b3)** (with Cosmos)
 
 Cosmos scans your project for components and enables you to:
 
 1. Render components under any combination of props, context and state
-2. Mock *every* external dependency (eg. API responses, localStorage, etc)
+2. Mock _every_ external dependency (eg. API responses, localStorage, etc)
 3. See app state evolve in real-time while interacting with running instances
 
 ![Component Playground](intro.gif)
@@ -42,7 +42,7 @@ Read the story of React Cosmos: [Fighting for Component Independence](https://me
 
 Many other component explorers emerged in the past years. [Storybook](https://github.com/storybooks/storybook) and [React Styleguidist](https://github.com/styleguidist/react-styleguidist) are good examples, but you can find an extensive list of options [here](https://react-styleguidist.js.org/docs/cookbook.html#are-there-any-other-projects-like-this). To decide which tool is best for you check for each project's goals, how much they match your needs, and how well the project is maintained.
 
-**Cosmos is a dev tool first, made to improve *all* components, big and small, not just the stateless UI bits.** The [fixture](#fixtures) and [proxy](#proxies) architecture doubles as an [automated testing utility](#experimental-test-helpers), providing a complete solution for developing robust and reusable components. Cosmos also makes it easy to create a living style guide, but it's a secondary goal and you might get more value from alternatives if this is your chief concern.
+**Cosmos is a dev tool first, made to improve _all_ components, big and small, not just the stateless UI bits.** The [fixture](#fixtures) and [proxy](#proxies) architecture doubles as an [automated testing utility](#experimental-test-helpers), providing a complete solution for developing robust and reusable components. Cosmos also makes it easy to create a living style guide, but it's a secondary goal and you might get more value from alternatives if this is your chief concern.
 
 To find out more about the Cosmos project, check out [Mission](CONTRIBUTING.md#mission), [Goals](CONTRIBUTING.md#goals) and [Architecture](CONTRIBUTING.md#architecture).
 
@@ -50,52 +50,52 @@ To find out more about the Cosmos project, check out [Mission](CONTRIBUTING.md#m
 
 Requirements:
 
-- [x] React >=0.14.9
-- [x] webpack or Browserify (or roll your own integration)
-- [ ] [Fixtures](#fixtures) (you'll create them after getting started)
+* [x] React >=0.14.9
+* [x] webpack or Browserify (or roll your own integration)
+* [ ] [Fixtures](#fixtures) (you'll create them after getting started)
 
 React Cosmos works best with webpack. Making it work with other bundlers takes extra work, but a complete [Browserify example](examples/browserify) is available.
 
 Jump to:
 
-- **[Getting started](#getting-started)**
-- [Fixtures](#fixtures)
-  - [What's a fixture?](#whats-a-fixture)
-  - [Where to put fixtures?](#where-to-put-fixtures)
-  - [Props](#props)
-  - [Children](#children)
-  - [State](#state)
-  - [Init hook](#init-hook)
-- [Proxies](#proxies)
-  - [What's a proxy?](#whats-a-proxy)
-  - [Where to put proxies?](#where-to-put-proxies)
-  - [Context](#context)
-  - [Redux](#redux)
-  - [React Router](#react-router)
-  - [React Apollo (GraphQL)](#react-apollo-graphql)
-  - [Fetch](#fetch)
-  - [XHR](#xhr)
-  - [LocalStorage](#localstorage)
-  - [More proxies...](#more-proxies)
-- [Integration with popular tools](#integration-with-popular-tools)
-  - [Create React App](#create-react-app)
-  - [Next.js](#nextjs)
-  - [React Boilerplate](#react-boilerplate)
-  - [React Redux Starter Kit](#react-redux-starter-kit)
-- [Config](#config)
-  - [Custom config path](#custom-config-path)
-  - [Custom webpack config](#custom-webpack-config)
-  - [Custom fixture paths](#custom-fixture-paths)
-  - [Option dump](#option-dump)
-- [Exporting](#exporting)
-- [Headless testing](#headless-testing)
-  - [Using Enzyme](#using-enzyme)
-  - [Using a custom renderer](#using-a-custom-renderer)
-  - [Capturing state changes](#capturing-state-changes)
-  - [createTestContext API](#createtestcontext-api)
-  - [Global Jest snapshot](#global-jest-snapshot)
+* **[Getting started](#getting-started)**
+* [Fixtures](#fixtures)
+  * [What's a fixture?](#whats-a-fixture)
+  * [Where to put fixtures?](#where-to-put-fixtures)
+  * [Props](#props)
+  * [Children](#children)
+  * [State](#state)
+  * [Init hook](#init-hook)
+* [Proxies](#proxies)
+  * [What's a proxy?](#whats-a-proxy)
+  * [Where to put proxies?](#where-to-put-proxies)
+  * [Context](#context)
+  * [Redux](#redux)
+  * [React Router](#react-router)
+  * [React Apollo (GraphQL)](#react-apollo-graphql)
+  * [Fetch](#fetch)
+  * [XHR](#xhr)
+  * [LocalStorage](#localstorage)
+  * [More proxies...](#more-proxies)
+* [Integration with popular tools](#integration-with-popular-tools)
+  * [Create React App](#create-react-app)
+  * [Next.js](#nextjs)
+  * [React Boilerplate](#react-boilerplate)
+  * [React Redux Starter Kit](#react-redux-starter-kit)
+* [Config](#config)
+  * [Custom config path](#custom-config-path)
+  * [Custom webpack config](#custom-webpack-config)
+  * [Custom fixture paths](#custom-fixture-paths)
+  * [Option dump](#option-dump)
+* [Exporting](#exporting)
+* [Headless testing](#headless-testing)
+  * [Using Enzyme](#using-enzyme)
+  * [Using a custom renderer](#using-a-custom-renderer)
+  * [Capturing state changes](#capturing-state-changes)
+  * [createTestContext API](#createtestcontext-api)
+  * [Global Jest snapshot](#global-jest-snapshot)
 
-*Have a question or idea to share? See you on [Slack](https://join-react-cosmos.now.sh/).*
+_Have a question or idea to share? See you on [Slack](https://join-react-cosmos.now.sh/)._
 
 ### Getting started
 
@@ -123,6 +123,7 @@ Add package.json scripts
 Run `npm run cosmos` or `yarn cosmos` and go to [localhost:8989](http://localhost:8989) 🎉
 
 > If you rely on the default webpack config, make sure to install the Babel and webpack plugins yourself. Depending on your needs, you'll probably want `babel-preset-env babel-preset-react babel-loader style-loader css-loader html-webpack-plugin`. Finally, add `.babelrc` to your project root.
+>
 > ```
 > {
 >   "presets": ["env", "react"]
@@ -132,14 +133,16 @@ Run `npm run cosmos` or `yarn cosmos` and go to [localhost:8989](http://localhos
 #### Next steps
 
 If everything's working
-- **Create your first [fixture](#fixtures)**
-- Configure or create [proxies](#proxies) (e.g. Redux integration)
+
+* **Create your first [fixture](#fixtures)**
+* Configure or create [proxies](#proxies) (e.g. Redux integration)
 
 If something's wrong
-- Extend existing [webpack config](#custom-webpack-config)
-- See [popular integrations](#integration-with-popular-tools) (e.g. CRA or Next.js)
-- Extend your [config](#config)
-- Be kind and [report what went wrong](https://github.com/react-cosmos/react-cosmos/issues)
+
+* Extend existing [webpack config](#custom-webpack-config)
+* See [popular integrations](#integration-with-popular-tools) (e.g. CRA or Next.js)
+* Extend your [config](#config)
+* Be kind and [report what went wrong](https://github.com/react-cosmos/react-cosmos/issues)
 
 ### Fixtures
 
@@ -159,7 +162,7 @@ export default {
     disabled: true,
     onChange: value => console.log(`Select: ${value}`)
   }
-}
+};
 ```
 
 > Check out this [quick hack](docs/fixtures.md) for getting started with fixtures.
@@ -181,12 +184,12 @@ export default {
       name: 'Dan the Man'
     }
   }
-}
+};
 ```
 
 #### Children
 
-Composition is the name of the game and many React components expect [children](https://facebook.github.io/react/docs/jsx-in-depth.html#children-in-jsx). Components access them via `props.children`, but children are not quite *props* so we put them under `fixture.children`.
+Composition is the name of the game and many React components expect [children](https://facebook.github.io/react/docs/jsx-in-depth.html#children-in-jsx). Components access them via `props.children`, but children are not quite _props_ so we put them under `fixture.children`.
 
 ```jsx
 export default {
@@ -197,7 +200,7 @@ export default {
       <p>Fixture ain't afraid of nothin!</p>
     </div>
   )
-}
+};
 ```
 
 #### State
@@ -210,7 +213,7 @@ export default {
   state: {
     searchQuery: 'Who let the dogs out?'
   }
-}
+};
 ```
 
 #### Init hook
@@ -223,29 +226,29 @@ export default {
   async init({ compRef }) {
     // With great power comes great ref-sponsibility...
   }
-}
+};
 ```
 
 ### Proxies
 
 #### What's a proxy?
 
-Proxies are Cosmos plugins, allowing fixtures to go beyond mocking *props* and *state*.
+Proxies are Cosmos plugins, allowing fixtures to go beyond mocking _props_ and _state_.
 
-We've seen `component = f(props, state)` a hundred times–the seductive promise of React and libs alike. **In reality, however, it's more like `component = f(props, state, context)` and most components are *nothing* without the context part.** This is still an oversimplification. The ugly truth is components take input from many other places: API responses, localStorage and window size to name a few.
+We've seen `component = f(props, state)` a hundred times–the seductive promise of React and libs alike. **In reality, however, it's more like `component = f(props, state, context)` and most components are _nothing_ without the context part.** This is still an oversimplification. The ugly truth is components take input from many other places: API responses, localStorage and window size to name a few.
 
-But we know developing components in isolation is *The Way*, so intricate inputs won't stop us! With proxies, we look the devil in the eye and mock anything components depend on. Hell, we might even simplify our components once we're aware of all the crazy things they need to work.
+But we know developing components in isolation is _The Way_, so intricate inputs won't stop us! With proxies, we look the devil in the eye and mock anything components depend on. Hell, we might even simplify our components once we're aware of all the crazy things they need to work.
 
-How do proxies work? Well duh, they're *Just Components*. As regular React components, proxies compose in the order they are listed in your config and decorate the loaded component, respecting the contract to render the next proxy in the chain. They can be stateless or have a life cycle, mocking before mounting and unmocking before unmounting.
+How do proxies work? Well duh, they're _Just Components_. As regular React components, proxies compose in the order they are listed in your config and decorate the loaded component, respecting the contract to render the next proxy in the chain. They can be stateless or have a life cycle, mocking before mounting and unmocking before unmounting.
 
 Proxies have two parts:
 
-1. **Configuration.** Done once per project, inside [cosmos.proxies.js](#where-to-put-proxies). Import proxy packages, call their default export (always a *create* function) and add the result to the list of exported proxies. Some proxies require options, others work out of the box.
+1. **Configuration.** Done once per project, inside [cosmos.proxies.js](#where-to-put-proxies). Import proxy packages, call their default export (always a _create_ function) and add the result to the list of exported proxies. Some proxies require options, others work out of the box.
 2. **Activation**. Triggered by a special fixture attribute. Eg. The React Router proxy activates when `fixture.url` is defined, otherwise it's a noop. Proxies can also be always-active, but it's a best practice to make proxies opt-in to avoid useless overhead.
 
 #### Where to put proxies?
 
-As soon as you're ready to add proxies to your Cosmos setup, install them using your package manager.  For example:
+As soon as you're ready to add proxies to your Cosmos setup, install them using your package manager. For example:
 
 via npm
 
@@ -287,23 +290,24 @@ export default [
 ];
 ```
 
-> For details on *creating* proxies, see the [Proxy boilerplate](CONTRIBUTING.md#proxy-boilerplate)
+> For details on _creating_ proxies, see the [Proxy boilerplate](CONTRIBUTING.md#proxy-boilerplate)
 
 Jump to:
-- [Context](#context)
-- [Redux](#redux)
-- [React Router](#react-router)
-- [React Apollo (GraphQL)](#react-apollo-graphql)
-- [Fetch](#fetch)
-- [XHR](#xhr)
-- [LocalStorage](#localstorage)
-- [More proxies...](#more-proxies)
+
+* [Context](#context)
+* [Redux](#redux)
+* [React Router](#react-router)
+* [React Apollo (GraphQL)](#react-apollo-graphql)
+* [Fetch](#fetch)
+* [XHR](#xhr)
+* [LocalStorage](#localstorage)
+* [More proxies...](#more-proxies)
 
 #### Context
 
-[React Context](https://facebook.github.io/react/docs/context.html): *With great power comes great responsibility.*
+[React Context](https://facebook.github.io/react/docs/context.html): _With great power comes great responsibility._
 
-> Note: React doesn't recommend using *context* unless you're a lib, so in most cases we're better of using a higher level proxy like the [Redux](#redux) or [React Router](#react-router) one.
+> Note: React doesn't recommend using _context_ unless you're a lib, so in most cases we're better of using a higher level proxy like the [Redux](#redux) or [React Router](#react-router) one.
 
 ##### Configuration
 
@@ -313,12 +317,12 @@ import createContextProxy from 'react-cosmos-context-proxy';
 
 const ContextProxy = createContextProxy({
   childContextTypes: {
-    theme: PropTypes.object.isRequired,
-  },
+    theme: PropTypes.object.isRequired
+  }
 });
 
 export default [
-  ContextProxy,
+  ContextProxy
   // ...other proxies
 ];
 ```
@@ -335,14 +339,14 @@ export default {
       color: '#222'
     }
   }
-}
+};
 ```
 
 Check out the [context example](examples/context) to see the proxy in action.
 
 #### Redux
 
-Most components in a [Redux](http://redux.js.org/) app depend on Redux state, either they're a *container* or one of their descendants is. This proxy creates a store using initial data from fixtures and puts it in the context, just like the [Provider](http://redux.js.org/docs/basics/UsageWithReact.html#passing-the-store) does.
+Most components in a [Redux](http://redux.js.org/) app depend on Redux state, either they're a _container_ or one of their descendants is. This proxy creates a store using initial data from fixtures and puts it in the context, just like the [Provider](http://redux.js.org/docs/basics/UsageWithReact.html#passing-the-store) does.
 
 ##### Configuration
 
@@ -356,7 +360,7 @@ const ReduxProxy = createReduxProxy({
 });
 
 export default [
-  ReduxProxy,
+  ReduxProxy
   // ...other proxies
 ];
 ```
@@ -370,7 +374,7 @@ export default {
   // An empty object will populate the store with the initial state
   // returned by reducers. But we can also put any state we want here.
   reduxState: {}
-}
+};
 ```
 
 Writing Redux fixtures almost feels too easy. Because Redux state is global, once we have one state mock we can render any component we want!
@@ -388,9 +392,9 @@ Writing Redux fixtures almost feels too easy. Because Redux state is global, onc
 import createRouterProxy from 'react-cosmos-router-proxy';
 
 export default [
-  createRouterProxy(),
+  createRouterProxy()
   // ...other proxies
-]
+];
 ```
 
 ##### Activation
@@ -402,7 +406,7 @@ Simply adding a `url` to your fixture will wrap the loaded component inside a [R
 export default {
   component: MyComponent,
   url: '/about'
-}
+};
 ```
 
 Optionally, `route` can be added to also wrap the loaded component inside a [Route](https://reacttraining.com/react-router/core/api/Route).
@@ -413,7 +417,7 @@ export default {
   component: MyComponent,
   url: '/users/5',
   route: '/users/:userId'
-}
+};
 ```
 
 Check out the [React Router example](examples/react-router) to see the proxy in action.
@@ -426,8 +430,9 @@ Your components wrapped with the `graphql` higher-order component provided by `r
 ##### Configuration
 
 Provide:
-- GraphQL type definitions
-- A [Mock object like you would with `graphql-tools`](http://dev.apollodata.com/tools/graphql-tools/mocking.html)
+
+* GraphQL type definitions
+* A [Mock object like you would with `graphql-tools`](http://dev.apollodata.com/tools/graphql-tools/mocking.html)
 
 ```js
 // cosmos.proxies.js
@@ -441,15 +446,15 @@ const typeDefs = `
 
 const mocks = {
   Query: () => ({
-    hello: (root, { who }) => `Hello ${who ? who : 'C O S M O S'}`,
-  }),
+    hello: (root, { who }) => `Hello ${who ? who : 'C O S M O S'}`
+  })
 };
 
 export default [
   createApolloProxy({
     typeDefs,
-    mocks,
-  }),
+    mocks
+  })
   // ...other proxies
 ];
 ```
@@ -471,9 +476,9 @@ Besides client-side state, components also depend on external data. Mocking serv
 import createFetchProxy from 'react-cosmos-fetch-proxy';
 
 export default [
-  createFetchProxy(),
+  createFetchProxy()
   // ...other proxies
-]
+];
 ```
 
 ##### Activation
@@ -488,18 +493,18 @@ export default {
       response: [
         {
           id: 1,
-          name: 'Prabu',
+          name: 'Prabu'
         },
         {
           id: 2,
-          name: 'Karla',
+          name: 'Karla'
         },
         {
           id: 3,
           name: 'Linbaba'
         }
-      ],
-    },
+      ]
+    }
   ]
 };
 ```
@@ -508,7 +513,7 @@ Built on top of [fetch-mock](http://www.wheresrhys.co.uk/fetch-mock/api). Check 
 
 #### XHR
 
-Like the [Fetch](#fetch) proxy, but for *XMLHttpRequest*.
+Like the [Fetch](#fetch) proxy, but for _XMLHttpRequest_.
 
 ##### Configuration
 
@@ -517,9 +522,9 @@ Like the [Fetch](#fetch) proxy, but for *XMLHttpRequest*.
 import createXhrProxy from 'react-cosmos-xhr-proxy';
 
 export default [
-  createXhrProxy(),
+  createXhrProxy()
   // ...other proxies
-]
+];
 ```
 
 ##### Activation
@@ -535,19 +540,19 @@ export default {
         res.status(200).body([
           {
             id: 1,
-            name: 'Blossom',
+            name: 'Blossom'
           },
           {
             id: 2,
-            name: 'Bubbles',
+            name: 'Bubbles'
           },
           {
             id: 3,
             name: 'Buttercup'
           }
-        ]),
-    },
-  ],
+        ])
+    }
+  ]
 };
 ```
 
@@ -566,9 +571,9 @@ Mocking localStorage prevents conflicts with existing browser data and enables t
 import createLocalStorageProxy from 'react-cosmos-localstorage-proxy';
 
 export default [
-  createLocalStorageProxy(),
+  createLocalStorageProxy()
   // ...other proxies
-]
+];
 ```
 
 ##### Activation
@@ -586,10 +591,11 @@ export default {
 #### More proxies
 
 Other proxies created by the Cosmos community:
-- [alp82/react-cosmos-glamorous-proxy](https://github.com/alp82/react-cosmos-glamorous-proxy) A simple proxy for react-cosmos to load glamorous themes
-- [jozsi/react-cosmos-wrapper-proxy](https://github.com/jozsi/react-cosmos-wrapper-proxy) Easily wrap components using react-cosmos
 
-*What proxy would you create to improve DX?*
+* [alp82/react-cosmos-glamorous-proxy](https://github.com/alp82/react-cosmos-glamorous-proxy) A simple proxy for react-cosmos to load glamorous themes
+* [jozsi/react-cosmos-wrapper-proxy](https://github.com/jozsi/react-cosmos-wrapper-proxy) Easily wrap components using react-cosmos
+
+_What proxy would you create to improve DX?_
 
 ### Integration with popular tools
 
@@ -607,6 +613,7 @@ module.exports = {
   proxiesPath: 'src/cosmos.proxies'
 };
 ```
+
 If you are using the `NODE_PATH` environment variable for absolute imports, make sure to include that as part of the cosmos script:
 
 ```js
@@ -617,9 +624,10 @@ If you are using the `NODE_PATH` environment variable for absolute imports, make
 ```
 
 Also make sure to:
-- Put [proxies](#proxies) in the `src` dir–the only place included by the CRA Babel loader
 
-*CRA + Cosmos example: [Flatris](https://github.com/skidding/flatris)*
+* Put [proxies](#proxies) in the `src` dir–the only place included by the CRA Babel loader
+
+_CRA + Cosmos example: [Flatris](https://github.com/skidding/flatris)_
 
 #### Next.js
 
@@ -631,21 +639,22 @@ Add `react-cosmos` to dev dependencies and create `cosmos.config.js`.
 // cosmos.config.js
 module.exports = {
   publicPath: 'static',
-  publicUrl: '/static/',
+  publicUrl: '/static/'
 };
 ```
 
 Also make sure to:
-- Add `html-webpack-plugin` to your dev dependencies
-- Define `.babelrc` for the Cosmos webpack config to rely on the Next.js preset:
+
+* Add `html-webpack-plugin` to your dev dependencies
+* Define `.babelrc` for the Cosmos webpack config to rely on the Next.js preset:
 
 ```json
 {
-  "presets": ["next/babel"],
+  "presets": ["next/babel"]
 }
 ```
 
-*Next.js + Cosmos example: [Illustrated Algorithms](https://github.com/skidding/illustrated-algorithms)*
+_Next.js + Cosmos example: [Illustrated Algorithms](https://github.com/skidding/illustrated-algorithms)_
 
 #### React Boilerplate
 
@@ -656,7 +665,7 @@ Add `react-cosmos` to dev dependencies and create `cosmos.config.js`.
 module.exports = {
   containerQuerySelector: '#app',
   webpackConfigPath: './internals/webpack/webpack.dev.babel',
-  globalImports: ['./app/global-styles.js'],
+  globalImports: ['./app/global-styles.js']
 };
 ```
 
@@ -668,11 +677,12 @@ Add `react-cosmos` to dev dependencies and create `cosmos.config.js`.
 // cosmos.config.js
 module.exports = {
   webpackConfigPath: 'build/webpack.config.js'
-}
+};
 ```
 
 Also make sure to:
-- Set up the [Redux proxy](#react-cosmos-context-proxy) :)
+
+* Set up the [Redux proxy](#react-cosmos-context-proxy) :)
 
 ### Config
 
@@ -730,22 +740,13 @@ module.exports = {
 
   // Additional entry points that should be present along with any component.
   // Sad, but inevitable.
-  globalImports: [
-    './reset.css',
-    './global.css',
-  ],
+  globalImports: ['./reset.css', './global.css'],
 
   // Customize pattern(s) for matching fixture files
-  fileMatch: [
-    '**/fixtures-in-here/**/*.js'
-  ],
+  fileMatch: ['**/fixtures-in-here/**/*.js'],
 
   // Fixtures will not be loaded in the playground if their names match these
-  exclude: [
-    /not-a-fixture/,
-    /its-complicated/,
-    /its-not-me-its-you/,
-  ],
+  exclude: [/not-a-fixture/, /its-complicated/, /its-not-me-its-you/],
 
   // Where to serve static files from. Like --content-base in webpack-dev-server.
   publicPath: 'src/public',
@@ -764,15 +765,15 @@ module.exports = {
   hot: false,
 
   // HTTP proxy specific requests to a different target
-  httpProxy:  {
+  httpProxy: {
     context: '/api',
-    target: 'http://localhost:4000/api',
+    target: 'http://localhost:4000/api'
   },
 
   // These ones are self explanatory
   hostname: 'localhost',
   port: 8989,
-  webpackConfigPath: './config/webpack.config.dev',
+  webpackConfigPath: './config/webpack.config.dev'
 };
 ```
 
@@ -837,8 +838,8 @@ test('matches snapshot', () => {
 
 The fixture does more than just defining component input. Like a sticky fly trap, the fixture captures state changes that occur during the component's lifecycle, which we can then inspect. For example:
 
-- If Redux state changes, the latest state can be read via `get('reduxState')`
-- If Router URL changes, the latest URL can be read via `get('url')`
+* If Redux state changes, the latest state can be read via `get('reduxState')`
+* If Router URL changes, the latest URL can be read via `get('url')`
 
 Instead of polluting our tests with various store and provider initialization, we let the [Proxies](#proxies) take care of it and then collect state changes from the updated fixture.
 
@@ -879,11 +880,11 @@ const { mount } = createTestContext({ fixture, proxies });
 
 ##### Context methods
 
-- *async* `mount` Mounts component via renderer (usually called in `beforeEach`)
-- `unmount` Calls unmount method of wrapper returned by renderer
-- `getWrapper` Returns wrapper returned by renderer
-- `getRef` Get component ref (exclusively for Class components)
-- `getField` (or `get` for brevity) Returns updated fixture field
+* _async_ `mount` Mounts component via renderer (usually called in `beforeEach`)
+* `unmount` Calls unmount method of wrapper returned by renderer
+* `getWrapper` Returns wrapper returned by renderer
+* `getRef` Get component ref (exclusively for Class components)
+* `getField` (or `get` for brevity) Returns updated fixture field
 
 #### Global Jest snapshot
 
@@ -893,7 +894,7 @@ You can create a snapshot of all your components with `react-cosmos-telescope`. 
 import runTests from 'react-cosmos-telescope';
 
 runTests({
-  cosmosConfigPath: require.resolve('./cosmos.config.js'),
+  cosmosConfigPath: require.resolve('./cosmos.config.js')
 });
 ```
 
