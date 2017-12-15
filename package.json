@@ -50,7 +50,7 @@
     "cypress": "^1.0.3",
     "enzyme": "^3.1.1",
     "enzyme-adapter-react-16": "^1.0.4",
-    "eslint-config-xo-react": "^0.14.0",
+    "eslint-config-xo-react": "^0.15.0",
     "eslint-import-resolver-webpack": "^0.8.3",
     "eslint-plugin-react": "^7.4.0",
     "file-loader": "^1.1.5",
