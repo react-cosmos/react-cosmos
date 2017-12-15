@@ -1,5 +1,4 @@
 import { findFixtureFiles } from 'react-cosmos-voyager2/lib/server';
-import { ALL_BUT_TEST_FILES } from '../../shared/regexp';
 
 // Requiring because embed-modules-webpack-loader is a CJS module
 const embedModules = require('../../embed-modules-webpack-loader');
@@ -122,12 +121,20 @@ it('injects contexts', () => {
   const output = loaderCallback.mock.calls[0][1];
   const [, contexts] = output.match(/contexts: (.+)(,|$)/);
 
-  const expected = `require.context('/components',true,/${ALL_BUT_TEST_FILES}/)`;
+  const expected = `[
+    require.context('/components/__fixtures__/Foo',false,/\\.jsx?$/),
+    require.context('/components/__fixtures__/Bar',false,/\\.jsx?$/)
+  ]`;
   expect(contexts).toEqual(expected.replace(/\s/g, ''));
 });
 
 it('registers user dirs as loader deps', () => {
-  expect(mockAddDependency).toHaveBeenCalledWith('/components');
+  expect(mockAddDependency).toHaveBeenCalledWith(
+    '/components/__fixtures__/Foo'
+  );
+  expect(mockAddDependency).toHaveBeenCalledWith(
+    '/components/__fixtures__/Bar'
+  );
 });
 
 it('injects empty deprecated components', () => {
