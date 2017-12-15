@@ -9,7 +9,6 @@
     "lib"
   ],
   "dependencies": {
-    "commondir": "^1.0.1",
     "express": "^4.15.4",
     "fs-extra": "^4.0.1",
     "glob": "^7.1.1",
