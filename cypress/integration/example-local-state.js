@@ -116,16 +116,16 @@ describe('Local state example', () => {
       toggleFixtureEditor();
 
       // Click three times on the first button
-      cy.get('iframe').then($iframe => {
-        const $firstButton = $iframe.contents().find('button:first');
-        $firstButton.trigger('click');
-        $firstButton.trigger('click');
-        $firstButton.trigger('click');
-      });
-    });
-
-    it('should update fixture contents inside editor', () => {
-      cy.get('.CodeMirror-line:eq(4)').should('contain', '"value": 4');
+      cy
+        .get('iframe')
+        .then($iframe => {
+          const $firstButton = $iframe.contents().find('button:first');
+          $firstButton.trigger('click');
+          $firstButton.trigger('click');
+          $firstButton.trigger('click');
+        })
+        .get('.CodeMirror-line:eq(4)')
+        .should('contain', '"value": 4');
     });
 
     it('should preseve state after HMR update', () => {

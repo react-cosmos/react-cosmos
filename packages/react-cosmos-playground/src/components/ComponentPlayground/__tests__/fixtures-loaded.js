@@ -1,20 +1,9 @@
-import merge from 'lodash.merge';
 import { createContext } from '../../../utils/enzyme';
 import FixtureList from '../../FixtureList';
 import WelcomeScreen from '../../screens/WelcomeScreen';
 import fixture from '../__fixtures__/ready';
 
-const goTo = jest.fn();
-
-const { mount, getWrapper } = createContext({
-  fixture: merge({}, fixture, {
-    props: {
-      router: {
-        goTo
-      }
-    }
-  })
-});
+const { mount, getWrapper, get } = createContext({ fixture });
 
 describe('CP fixtures loaded', () => {
   beforeEach(mount);
@@ -43,7 +32,9 @@ describe('CP fixtures loaded', () => {
 
     test('should go to URL from fixture list handler', () => {
       props.onUrlChange('/path/to/location');
-      expect(goTo).toHaveBeenCalledWith('/path/to/location');
+      expect(get('props').router.goTo).toHaveBeenCalledWith(
+        '/path/to/location'
+      );
     });
   });
 

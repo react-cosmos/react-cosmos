@@ -59,19 +59,19 @@ function inJestEnv() {
   }
 }
 
-function addJestWrapper(fn: Function): Function {
+function addJestWrapper(prop: any): Function {
   // HIGHLY EXPERIMENTAL: This is likely to go away if it causes problems. But,
   // in the meantime, as Louie would say, "Weeeee!". This makes it possible to
   // do expect(fixture.props.*).toHaveBeenCalled in Jest without wrapping any
   // callback with jest.fn() by had.
   // eslint-disable-next-line no-undef
-  return isFunctionButNotClass(fn) ? jest.fn(fn) : fn;
+  return isFunctionButNotClass(prop) ? jest.fn(prop) : prop;
 }
 
-function isFunctionButNotClass(fn: Function): boolean {
+function isFunctionButNotClass(prop: any): boolean {
   // Inspired from https://stackoverflow.com/a/32235930
   return (
-    typeof fn === 'function' &&
-    !/^(?:class\s+|function\s+(?:_class|_default|[A-Z]))/.test(fn.toString())
+    typeof prop === 'function' &&
+    !/^(?:class\s+|function\s+(?:_class|_default|[A-Z]))/.test(prop.toString())
   );
 }

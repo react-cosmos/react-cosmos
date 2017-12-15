@@ -14,7 +14,19 @@ type Args = {
   dismissRuntimeErrors?: Function
 };
 
-let isListening = false;
+let unbindPrev: ?Function;
+
+// This will be populated on fixtureSelect events
+let selected: ?{
+  component: string,
+  fixture: string
+};
+
+// The fixture cache can contain
+// - Fixture updates received from proxy chain via context's onUpdate handler
+// - Fixture edits received from Playground UI
+// The cache is cleared when a fixture (including the current one) is selected
+let fixtureCache: ?Fixture;
 
 /**
  * Connect fixture context to remote Playground UI via window.postMessage.
@@ -23,27 +35,48 @@ let isListening = false;
  * Loader to live in completely different environments (eg. Control a Native
  * component instance from a web Playground UI).
  *
- * It both receives fixture changes from parent frame and sends fixture
+ * It both receives fixture edits from parent frame and forwards fixture
  * updates bubbled up from proxy chain (due to state changes) to parent frame.
  */
-export function connectLoader(args: Args) {
+export async function connectLoader(args: Args) {
   const { proxies, fixtures, renderer, dismissRuntimeErrors } = args;
 
-  // This will be populated on fixtureSelect events
-  let currentFixture: ?Fixture;
-
-  async function loadFixture(fixture) {
-    currentFixture = fixture;
+  async function loadFixture(fixture, notifyParent = true) {
     const { mount } = createContext({
       renderer,
       proxies,
       fixture,
       onUpdate: onContextUpdate
     });
+
     await mount();
+
+    if (notifyParent) {
+      // Notify back parent with the serializable contents of the loaded fixture
+      const { serializable } = splitUnserializableParts(fixture);
+      postMessageToParent({
+        type: 'fixtureLoad',
+        fixtureBody: serializable
+      });
+    }
   }
 
   function onContextUpdate(fixturePart) {
+    if (!selected) {
+      return;
+    }
+
+    // This can be the first update after a fixture was selected
+    if (!fixtureCache) {
+      const { component, fixture } = selected;
+      fixtureCache = fixtures[component][fixture];
+    }
+
+    // NOTE: Updates extend the fixture fields
+    // Apply the entire updated fixture part...
+    fixtureCache = applyFixturePart(fixtureCache, fixturePart);
+
+    // ...but only the serializable part can be sent to parent
     const { serializable } = splitUnserializableParts(fixturePart);
     postMessageToParent({
       type: 'fixtureUpdate',
@@ -55,14 +88,15 @@ export function connectLoader(args: Args) {
     if (data.type === 'fixtureSelect') {
       const { component, fixture } = data;
       if (fixtures[component] && fixtures[component][fixture]) {
-        await loadFixture(fixtures[component][fixture]);
+        selected = { component, fixture };
 
-        // Notify back parent with the serializable contents of the loaded fixture
-        const { serializable } = splitUnserializableParts(currentFixture);
-        postMessageToParent({
-          type: 'fixtureLoad',
-          fixtureBody: serializable
-        });
+        // No need for a cache at this point. Until a fixtureUpdate or
+        // fixtureEdit event is receved, fixture source changes will be
+        // applied immediately.
+        fixtureCache = undefined;
+
+        const selectedFixture = fixtures[component][fixture];
+        await loadFixture(selectedFixture);
 
         if (dismissRuntimeErrors) {
           dismissRuntimeErrors();
@@ -71,23 +105,49 @@ export function connectLoader(args: Args) {
         console.error(`[Cosmos] Missing fixture for ${component}:${fixture}`);
       }
     } else if (data.type === 'fixtureEdit') {
-      if (!currentFixture) {
+      if (!selected) {
         console.error('[Cosmos] No selected fixture to edit');
       } else {
+        // This can be the first edit after a fixture was selected
+        if (!fixtureCache) {
+          const { component, fixture } = selected;
+          fixtureCache = fixtures[component][fixture];
+        }
+
+        // NOTE: Edits override the entire (serializable) fixture body
+        fixtureCache = applyFixtureBody(fixtureCache, data.fixtureBody);
+
         // Note: Creating fixture context from scratch on every fixture edit.
         // This means that the component will always go down the
         // componentDidMount path (instead of componentWillReceiveProps) when
-        // user edits fixture via fixture editor. In the future we might want to
-        // sometimes update the fixture context instead of resetting it.
-        await loadFixture(applyFixturePart(currentFixture, data.fixtureBody));
+        // user edits fixture via fixture editor. In the future we might want
+        // to sometimes update the fixture context instead of resetting it.
+        await loadFixture(fixtureCache, false);
       }
     }
   }
 
-  if (!isListening) {
+  function bind() {
     window.addEventListener('message', onMessage, false);
-    isListening = true;
+  }
 
+  function unbind() {
+    window.removeEventListener('message', onMessage);
+    unbindPrev = undefined;
+  }
+
+  const isFirstCall = !unbindPrev;
+
+  // Implicitly unbind prev context when new one is created
+  if (unbindPrev) {
+    unbindPrev();
+  }
+  unbindPrev = unbind;
+
+  // Always bind onMessage handler to latest input
+  bind();
+
+  if (isFirstCall) {
     // Let parent know loader is ready to render, along with the initial
     // fixture list (which might update later due to HMR)
     postMessageToParent({
@@ -95,17 +155,39 @@ export function connectLoader(args: Args) {
       fixtures: extractFixtureNames(fixtures)
     });
   } else {
-    // Let parent know loader is ready to render, along with the initial
-    // fixture list (which might update later due to HMR)
+    // Keep parent up to date with fixture list
     postMessageToParent({
       type: 'fixtureListUpdate',
       fixtures: extractFixtureNames(fixtures)
     });
+
+    if (selected) {
+      // Use the fixture cache contents if present, but always re-create the
+      // context to ensure latest proxies and components are used.
+      const { component, fixture } = selected;
+      const originalFixture = fixtures[component][fixture];
+
+      if (!originalFixture) {
+        // Maybe fixture was renamed
+        selected = undefined;
+        fixtureCache = undefined;
+      } else if (fixtureCache) {
+        await loadFixture({
+          ...fixtureCache,
+          component: originalFixture.component
+        });
+      } else {
+        await loadFixture(originalFixture);
+      }
+    }
   }
 
   return function destroy() {
-    window.removeEventListener('message', onMessage);
-    isListening = false;
+    if (unbindPrev) {
+      unbindPrev();
+      selected = undefined;
+      fixtureCache = undefined;
+    }
   };
 }
 
@@ -121,11 +203,11 @@ function extractFixtureNames(fixtures: Fixtures): FixtureNames {
 }
 
 function applyFixturePart(currentFixture: Fixture, fixturePart: {}): Fixture {
-  const { unserializable, serializable } = splitUnserializableParts(
-    currentFixture
-  );
-  return merge({}, unserializable, {
-    ...serializable,
-    ...fixturePart
-  });
+  return { ...currentFixture, ...fixturePart };
+}
+
+function applyFixtureBody(currentFixture: Fixture, fixtureBody: {}): Fixture {
+  const { unserializable } = splitUnserializableParts(currentFixture);
+
+  return merge({}, unserializable, fixtureBody);
 }

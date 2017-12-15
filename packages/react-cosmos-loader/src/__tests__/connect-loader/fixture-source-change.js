@@ -11,6 +11,7 @@ import {
   subscribeToWindowMessages,
   getLastWindowMessage,
   untilEvent,
+  untilEventSeq,
   postWindowMessage
 } from './_shared';
 
@@ -22,8 +23,6 @@ jest.mock('../../create-context', () => ({
 
 subscribeToWindowMessages();
 
-const mockDismissRuntimeErrors = jest.fn();
-
 let destroy;
 
 beforeEach(async () => {
@@ -32,8 +31,7 @@ beforeEach(async () => {
   destroy = await connectLoader({
     renderer,
     proxies,
-    fixtures,
-    dismissRuntimeErrors: mockDismissRuntimeErrors
+    fixtures
   });
 
   await untilEvent('loaderReady');
@@ -45,35 +43,62 @@ beforeEach(async () => {
   });
 
   await untilEvent('fixtureSelect');
+  await untilEvent('fixtureLoad');
+
+  destroy = await connectLoader({
+    renderer,
+    proxies,
+    fixtures: {
+      ...fixtures,
+      Foo: {
+        foo: {
+          ...fixtureFoo,
+          bar: true
+        }
+      }
+    }
+  });
+
+  await untilEventSeq(['fixtureListUpdate', 'fixtureLoad']);
 });
 
 // Ensure state doesn't leak between tests
 afterEach(() => destroy());
 
-it('creates context with fixture "Foo/foo"', () => {
-  expect(getMock(createContext).calls[0][0]).toMatchObject({
-    renderer,
-    proxies,
-    fixture: fixtureFoo
+it('creates context with new fixture', () => {
+  expect(getMock(createContext).calls[1][0].fixture).toEqual({
+    ...fixtureFoo,
+    bar: true
   });
 });
 
-it('mounts context', () => {
-  expect(mockMount).toHaveBeenCalled();
+it('mounts context again', () => {
+  expect(mockMount).toHaveBeenCalledTimes(2);
 });
 
-it('sends fixtureLoad event to parent with serializable fixture body', async () => {
-  await untilEvent('fixtureLoad');
-
+it('sends fixtureLoad event to parent with latest serializable fixture body', async () => {
   expect(getLastWindowMessage()).toEqual({
     type: 'fixtureLoad',
     // Note: fixture.fooFn is unserializable so it's omitted
     fixtureBody: {
-      foo: true
+      foo: true,
+      bar: true
     }
   });
 });
 
-test('calls dismissRuntimeErrors', () => {
-  expect(mockDismissRuntimeErrors).toHaveBeenCalled();
+it('uses latest fixture source on re-select', async () => {
+  postWindowMessage({
+    type: 'fixtureSelect',
+    component: 'Foo',
+    fixture: 'foo'
+  });
+
+  await untilEvent('fixtureSelect');
+  await untilEvent('fixtureLoad');
+
+  expect(getMock(createContext).calls[2][0].fixture).toEqual({
+    ...fixtureFoo,
+    bar: true
+  });
 });

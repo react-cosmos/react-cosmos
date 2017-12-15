@@ -1,10 +1,13 @@
 // @flow
 
+import { getMock } from 'react-cosmos-shared/src/jest';
+import { createContext } from '../../create-context';
 import { connectLoader } from '../../connect-loader';
 import {
   renderer,
   proxies,
   fixtures,
+  fixtureFoo,
   subscribeToWindowMessages,
   getLastWindowMessage,
   untilEvent,
@@ -23,12 +26,13 @@ jest.mock('../../create-context', () => ({
 
 subscribeToWindowMessages();
 
+const updateFn = () => {};
 let destroy;
 
 beforeEach(async () => {
   jest.clearAllMocks();
 
-  destroy = connectLoader({
+  destroy = await connectLoader({
     renderer,
     proxies,
     fixtures
@@ -44,7 +48,7 @@ beforeEach(async () => {
 
   await untilEvent('fixtureLoad');
 
-  onContextUpdate({ foo: false, fooFn: () => {} });
+  onContextUpdate({ update: true, updateFn });
 
   await untilEvent('fixtureUpdate');
 });
@@ -55,13 +59,83 @@ afterEach(() => destroy());
 it('sends serializable part of updated fixture body to parent', async () => {
   expect(getLastWindowMessage()).toEqual({
     type: 'fixtureUpdate',
-    // Note: fixture.fooFn is unserializable so it's omitted
+    // Note: fixture.updateFn is unserializable so it's omitted
     fixtureBody: {
-      foo: false
+      update: true
     }
   });
 });
 
 it('does not mount context again', () => {
   expect(mockMount).toHaveBeenCalledTimes(1);
+});
+
+describe('after fixture source change', () => {
+  beforeEach(async () => {
+    destroy = await connectLoader({
+      renderer,
+      proxies,
+      fixtures: {
+        ...fixtures,
+        Foo: {
+          foo: {
+            ...fixtureFoo,
+            change: true
+          }
+        }
+      }
+    });
+  });
+
+  it('ignores change and creates context with cached fixture fields', async () => {
+    expect(getMock(createContext).calls[1][0].fixture).toEqual({
+      ...fixtureFoo,
+      update: true,
+      updateFn
+    });
+  });
+
+  describe('after fixture select', () => {
+    beforeEach(async () => {
+      postWindowMessage({
+        type: 'fixtureSelect',
+        component: 'Foo',
+        fixture: 'foo'
+      });
+
+      await untilEvent('fixtureSelect');
+    });
+
+    it('discards update and creates context with latest fixture source', () => {
+      expect(getMock(createContext).calls[2][0].fixture).toEqual({
+        ...fixtureFoo,
+        change: true
+      });
+    });
+
+    describe('after fixture source change', () => {
+      beforeEach(async () => {
+        destroy = await connectLoader({
+          renderer,
+          proxies,
+          fixtures: {
+            ...fixtures,
+            Foo: {
+              foo: {
+                ...fixtureFoo,
+                change2: true
+              }
+            }
+          }
+        });
+      });
+
+      it('creates context with latest fixture source', async () => {
+        expect(getMock(createContext).calls[3][0].fixture).toEqual({
+          ...fixtureFoo,
+          change2: true
+        });
+      });
+    });
+  });
 });
