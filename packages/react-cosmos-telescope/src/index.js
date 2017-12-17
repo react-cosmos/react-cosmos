@@ -1,20 +1,19 @@
 // @flow
 
-import React from 'react';
-import renderer from 'react-test-renderer';
+import { create as renderer } from 'react-test-renderer';
 import createStateProxy from 'react-cosmos-state-proxy';
 import { importModule } from 'react-cosmos-shared';
 import { moduleExists } from 'react-cosmos-shared/lib/server';
 import { getCosmosConfig } from 'react-cosmos-config';
 import { findFixtureFiles } from 'react-cosmos-voyager2/lib/server';
 import { getComponents } from 'react-cosmos-voyager2/lib/client';
-import { Loader } from 'react-cosmos-loader';
+import { createContext } from 'react-cosmos-loader';
 
 type Args = {
-  cosmosConfigPath: Array<string>
+  cosmosConfigPath?: string
 };
 
-export default async ({ cosmosConfigPath }: Args) => {
+export default async ({ cosmosConfigPath }: Args = {}) => {
   const cosmosConfig = getCosmosConfig(cosmosConfigPath);
   const {
     rootPath,
@@ -50,15 +49,21 @@ export default async ({ cosmosConfigPath }: Args) => {
     const fixtureModules = getFixtureModules(fixtureFiles);
     const components = getComponents({ fixtureModules, fixtureFiles });
 
-    components.forEach(component => {
-      const { fixtures } = component;
-      fixtures.forEach(fixture => {
-        const tree = renderer
-          .create(<Loader proxies={proxies} fixture={fixture.source} />)
-          .toJSON();
+    for (let i = 0, component; i < components.length; i++) {
+      component = components[i];
+      for (let j = 0, fixture; j < component.fixtures.length; j++) {
+        fixture = component.fixtures[j];
+        const { mount, getWrapper } = createContext({
+          renderer,
+          proxies,
+          fixture: fixture.source
+        });
+        await mount();
+
+        const tree = getWrapper().toJSON();
         expect(tree).toMatchSnapshot(`${component.name}:${fixture.name}`);
-      });
-    });
+      }
+    }
   });
 };
 

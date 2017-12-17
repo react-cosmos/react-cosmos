@@ -121,12 +121,20 @@ it('injects contexts', () => {
   const output = loaderCallback.mock.calls[0][1];
   const [, contexts] = output.match(/contexts: (.+)(,|$)/);
 
-  const expected = `require.context('/components',true,/\\.(j|t)sx?$/)`;
+  const expected = `[
+    require.context('/components/__fixtures__/Foo',false,/\\.jsx?$/),
+    require.context('/components/__fixtures__/Bar',false,/\\.jsx?$/)
+  ]`;
   expect(contexts).toEqual(expected.replace(/\s/g, ''));
 });
 
 it('registers user dirs as loader deps', () => {
-  expect(mockAddDependency).toHaveBeenCalledWith('/components');
+  expect(mockAddDependency).toHaveBeenCalledWith(
+    '/components/__fixtures__/Foo'
+  );
+  expect(mockAddDependency).toHaveBeenCalledWith(
+    '/components/__fixtures__/Bar'
+  );
 });
 
 it('injects empty deprecated components', () => {

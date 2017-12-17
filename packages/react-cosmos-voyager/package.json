@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-voyager",
-  "version": "3.0.0",
+  "version": "3.1.1",
   "description": "Explores your codebase to find component and fixture files",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-voyager",
   "license": "MIT",
@@ -18,7 +18,8 @@
     "touch": "^3.1.0"
   },
   "dependencies": {
-    "glob": "^7.1.1"
+    "glob": "^7.1.1",
+    "traverse": "^0.6.6"
   },
   "xo": false
 }

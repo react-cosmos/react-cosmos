@@ -1,0 +1,19 @@
+{
+  "name": "react-cosmos-test",
+  "version": "3.2.0",
+  "description": "APIs for testing Cosmos fixtures in headless environments",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-test",
+  "license": "MIT",
+  "files": [
+    "lib",
+    "enzyme.js",
+    "generic.js"
+  ],
+  "dependencies": {
+    "react-cosmos-config": "^3.1.1",
+    "react-cosmos-loader": "^3.2.0",
+    "react-cosmos-shared": "^3.1.1",
+    "traverse": "^0.6.6"
+  },
+  "xo": false
+}

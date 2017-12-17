@@ -1,57 +1,37 @@
-import React from 'react';
-import { render } from 'react-dom';
+// @flow
+
 import createStateProxy from 'react-cosmos-state-proxy';
-import RemoteLoader from './components/RemoteLoader';
 import createErrorCatchProxy from './components/ErrorCatchProxy';
-import createRefCallbackProxy from './components/RefCallbackProxy';
+import { createDomRenderer } from './dom-renderer';
+import { connectLoader } from './connect-loader';
+
+import type { LoaderOpts } from 'react-cosmos-shared/src/types';
+import type { Proxy, Fixtures } from './types';
+
+type Args = {
+  proxies: Array<Proxy>,
+  fixtures: Fixtures,
+  loaderOpts?: LoaderOpts,
+  dismissRuntimeErrors?: Function
+};
 
 let StateProxy;
 let ErrorCatchProxy;
-let RefCallbackProxy;
 
-const createDomContainer = () => {
-  const existingNode = document.getElementById('root');
-  if (existingNode) {
-    return existingNode;
-  }
+export function mount(args: Args) {
+  const { proxies, fixtures, loaderOpts, dismissRuntimeErrors } = args;
+  const renderer = createDomRenderer(loaderOpts);
 
-  const newNode = document.createElement('div');
-  newNode.setAttribute('id', 'root');
-  document.body.appendChild(newNode);
-
-  return newNode;
-};
-
-export function mount({
-  proxies,
-  fixtures,
-  containerQuerySelector,
-  dismissRuntimeErrors
-}) {
-  const container = containerQuerySelector
-    ? document.querySelector(containerQuerySelector)
-    : createDomContainer();
-
-  // Reuse proxy instances between renders to be able to do deep equals between
-  // RemoteLoader prop transitions and know whether the user proxies changed.
+  // Reuse proxy instances
   if (!StateProxy) {
     StateProxy = createStateProxy();
     ErrorCatchProxy = createErrorCatchProxy();
-    RefCallbackProxy = createRefCallbackProxy();
   }
 
-  render(
-    <RemoteLoader
-      fixtures={fixtures}
-      proxies={[
-        // Some proxies are loaded by default in all configs
-        ErrorCatchProxy,
-        RefCallbackProxy,
-        ...proxies,
-        StateProxy
-      ]}
-      dismissRuntimeErrors={dismissRuntimeErrors}
-    />,
-    container
-  );
+  connectLoader({
+    renderer,
+    proxies: [ErrorCatchProxy, ...proxies, StateProxy],
+    fixtures,
+    dismissRuntimeErrors
+  });
 }

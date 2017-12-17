@@ -1,5 +1,5 @@
 import ComponentPlayground from '../index';
-import { routerProps, ref } from './_shared';
+import { routerProps, init } from './_shared';
 
 export default {
   component: ComponentPlayground,
@@ -21,5 +21,5 @@ export default {
     }
   ],
 
-  ref
+  init
 };

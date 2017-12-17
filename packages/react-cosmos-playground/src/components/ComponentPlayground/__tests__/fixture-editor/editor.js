@@ -1,15 +1,16 @@
 import until from 'async-until';
-import { createContext, afterPendingTimers } from '../../../../utils/enzyme';
+import afterPendingTimers from 'after-pending-timers';
+import { createContext } from '../../../../utils/enzyme';
 import FixtureEditor from '../../../FixtureEditor';
 import fixture from '../../__fixtures__/selected-editor';
 
 const postMessage = jest.fn();
 
-const { mount, getWrapper } = createContext({
+const { mount, getWrapper, getRef } = createContext({
   fixture,
-  async mockRefs(compInstance) {
-    await until(() => compInstance.loaderFrame);
-    compInstance.loaderFrame = {
+  async beforeInit() {
+    await until(() => getRef().loaderFrame);
+    getRef().loaderFrame = {
       contentWindow: {
         postMessage
       }

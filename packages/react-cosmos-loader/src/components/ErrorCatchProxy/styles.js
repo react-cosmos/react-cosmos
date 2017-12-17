@@ -2,7 +2,7 @@
 
 export const rootStyles = {
   margin: 12,
-  fontFamily: `'BlinkMacSystemFont', 'Lucida Grande', 'Segoe UI', Ubuntu, Cantarell, sans-serif`
+  fontFamily: `-apple-system, 'BlinkMacSystemFont', 'Lucida Grande', 'Segoe UI', Ubuntu, Cantarell, sans-serif`
 };
 
 export const codeStyles = {

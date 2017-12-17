@@ -1,6 +1,6 @@
 // @flow
 
-import commondir from 'commondir';
+import path from 'path';
 import { getCosmosConfig } from 'react-cosmos-config';
 import { moduleExists } from 'react-cosmos-shared/lib/server';
 import getFilePaths from 'react-cosmos-voyager';
@@ -32,13 +32,13 @@ module.exports = async function embedModules(source: string) {
   const componentModuleCallls = convertPathsToRequireCalls(
     keys(deprecatedComponentModules).map(c => deprecatedComponentModules[c])
   );
-  const componentsCommonDir = getCommonComponentsDir(fixtureFiles);
 
-  // This ensures this loader is invalidated whenever a new component/fixture
-  // file is created or renamed, which leads succesfully uda ...
-  this.addDependency(componentsCommonDir);
-
-  const contextCall = getContextCall(componentsCommonDir);
+  const contexts = getUniqueDirsOfPaths(fixturePaths);
+  contexts.forEach(dirPath => {
+    // This ensures this loader is invalidated whenever a new component/fixture
+    // file is created or renamed, which leads succesfully uda ...
+    this.addDependency(dirPath);
+  });
 
   const result = source
     .replace(/FIXTURE_MODULES/g, fixtureModuleCalls)
@@ -48,7 +48,7 @@ module.exports = async function embedModules(source: string) {
       /PROXIES/g,
       moduleExists(proxiesPath) ? convertPathToRequireCall(proxiesPath) : '[]'
     )
-    .replace(/CONTEXTS/g, contextCall);
+    .replace(/CONTEXTS/g, convertDirPathsToContextCalls(contexts));
 
   callback(null, result);
 };
@@ -95,18 +95,6 @@ function getFixturePaths(files: Array<FixtureFile>): Array<string> {
   return files.map(file => file.filePath);
 }
 
-function getCommonComponentsDir(fixtureFiles: Array<FixtureFile>): string {
-  // Get a flat list of all components paths
-  const componentPaths: Array<string> = fixtureFiles
-    .map(file =>
-      // https://github.com/facebook/flow/issues/1026#issuecomment-298801746
-      file.components.map(component => component.filePath).filter(Boolean)
-    )
-    .reduce((list, current) => [...list, ...current]);
-
-  return commondir(componentPaths);
-}
-
 function convertPathsToRequireCalls(paths: Array<string>): string {
   const entries = paths.map(p => `'${p}':${convertPathToRequireCall(p)}`);
 
@@ -117,6 +105,15 @@ function convertPathToRequireCall(p) {
   return `require('${p}')`;
 }
 
-function getContextCall(componentsCommonDir) {
-  return `require.context('${componentsCommonDir}',true,/\\.(j|t)sx?$/)`;
+function getUniqueDirsOfPaths(paths) {
+  const dirs = new Set();
+  paths.forEach(p => dirs.add(path.dirname(p)));
+
+  return [...dirs];
+}
+
+function convertDirPathsToContextCalls(dirPaths) {
+  return `[${dirPaths
+    .map(dirPath => `require.context('${dirPath}',false,/\\.jsx?$/)`)
+    .join(',')}]`;
 }

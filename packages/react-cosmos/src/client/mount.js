@@ -4,6 +4,7 @@ import getUserModules from './user-modules';
 import { mount } from 'react-cosmos-loader';
 // import { dismissRuntimeErrors } from 'react-error-overlay';
 
+import type { LoaderOpts } from 'react-cosmos-shared/src/types';
 import type {
   Modules,
   FixtureFile,
@@ -11,7 +12,7 @@ import type {
 } from 'react-cosmos-voyager2/src/types';
 
 // eslint-disable-next-line no-undef
-const { containerQuerySelector } = COSMOS_CONFIG;
+const loaderOpts: LoaderOpts = COSMOS_CONFIG;
 const dismissRuntimeErrors = () => {};
 
 export default function() {
@@ -47,7 +48,7 @@ export default function() {
   mount({
     proxies: importModule(proxies),
     fixtures,
-    containerQuerySelector,
+    loaderOpts,
     dismissRuntimeErrors
   });
 }

@@ -1,4 +1,5 @@
-import { createContext, afterPendingTimers } from '../../../utils/enzyme';
+import afterPendingTimers from 'after-pending-timers';
+import { createContext } from '../../../utils/enzyme';
 import FixtureList from '../../FixtureList';
 import WelcomeScreen from '../../screens/WelcomeScreen';
 import fixture from '../__fixtures__/ready';
