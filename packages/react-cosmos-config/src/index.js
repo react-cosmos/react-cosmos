@@ -29,6 +29,7 @@ export type Config = {
   publicPath?: string,
   publicUrl: string,
   containerQuerySelector?: string,
+  responsiveDevices: Array<{| label: string, width: number, height: number |}>,
   httpProxy?: {| context: string, target: string |},
   // Deprecated
   componentPaths: Array<string>,
@@ -49,6 +50,14 @@ const defaults = {
   webpackConfigPath: 'webpack.config',
   outputPath: 'cosmos-export',
   publicUrl: '/loader/',
+  responsiveDevices: [
+    { label: 'iPhone 5', width: 320, height: 568 },
+    { label: 'iPhone 6', width: 375, height: 667 },
+    { label: 'iPhone 6 Plus', width: 414, height: 736 },
+    { label: 'Medium', width: 1024, height: 768 },
+    { label: 'Large', width: 1440, height: 900 },
+    { label: '1080p', width: 1920, height: 1080 }
+  ],
   // Deprecated
   componentPaths: [],
   ignore: [],
@@ -121,6 +130,7 @@ function getNormalizedConfig(relativeConfig: Config, relPath: string): Config {
     proxiesPath,
     publicPath,
     webpackConfigPath,
+    responsiveDevices,
     // Deprecated
     componentPaths,
     fixturePaths

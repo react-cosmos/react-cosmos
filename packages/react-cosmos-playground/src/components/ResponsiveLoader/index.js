@@ -10,6 +10,7 @@ type Props = {
   src: string,
   showResponsiveControls: boolean,
   onFixtureUpdate: any,
+  devices: Array<{| label: string, width: number, height: number |}>,
   fixture: Object
 };
 
@@ -55,6 +56,7 @@ class ResponsiveLoader extends React.Component<Props, State> {
     const {
       inputRef,
       src,
+      devices,
       showResponsiveControls,
       onFixtureUpdate,
       fixture
@@ -62,19 +64,26 @@ class ResponsiveLoader extends React.Component<Props, State> {
     if (!showResponsiveControls) {
       return <iframe ref={inputRef} src={src} />;
     }
-    const { width = 320, height = 568 } = fixture;
+    const { responsive = {} } = fixture;
+    const width =
+      responsive.width === 0 || responsive.width ? responsive.width : 320;
+    const height =
+      responsive.height === 0 || responsive.height ? responsive.height : 568;
+    const scale = true;
+
     const { containerWidth, containerHeight } = this.state;
     const scaleWidth = Math.min(1, containerWidth / width);
     const scaleHeight = Math.min(1, containerHeight / height);
-    const scale = Math.min(scaleWidth, scaleHeight);
-    const scaledWidth = width * scale;
-    const scaledHeight = height * scale;
+    const scaleFactor = scale ? Math.min(scaleWidth, scaleHeight) : 1;
+    const scaledWidth = width * scaleFactor;
+    const scaledHeight = height * scaleFactor;
 
     return (
       <div className={styles.container}>
         <Header
+          devices={devices}
           onFixtureUpdate={onFixtureUpdate}
-          fixture={fixture}
+          dimensions={{ width, height, scale }}
           containerWidth={containerWidth}
           containerHeight={containerHeight}
         />
@@ -100,7 +109,7 @@ class ResponsiveLoader extends React.Component<Props, State> {
                 height: height + 2 * BORDER_WIDTH,
                 alignSelf: scaleHeight === 1 ? 'center' : 'flex-start',
                 justifySelf: scaleWidth === 1 ? 'center' : 'flex-start',
-                transform: `scale( ${scale} )`
+                transform: `scale( ${scaleFactor} )`
               }}
             >
               <iframe

@@ -8,8 +8,7 @@ import type { PlaygroundOpts } from 'react-cosmos-shared/src/types';
 import type { Config } from 'react-cosmos-config/src';
 
 export default function getPlaygroundHtml(cosmosConfig: Config) {
-  const { rootPath } = cosmosConfig;
-
+  const { rootPath, responsiveDevices } = cosmosConfig;
   const html = fs.readFileSync(
     path.join(__dirname, 'static/index.html'),
     'utf8'
@@ -17,6 +16,7 @@ export default function getPlaygroundHtml(cosmosConfig: Config) {
   const opts: PlaygroundOpts = {
     loaderUri: './loader/index.html',
     projectKey: rootPath,
+    responsiveDevices,
     webpackConfigType: hasUserCustomWebpackConfig(cosmosConfig)
       ? 'custom'
       : 'default'

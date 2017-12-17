@@ -368,7 +368,7 @@ export default class ComponentPlayground extends Component<Props, State> {
       responsive,
       options
     } = this.props;
-    const { fixtures, leftNavSize } = this.state;
+    const { fixtures, fixtureBody, leftNavSize } = this.state;
     const urlParams = getCleanUrlParams({
       component,
       fixture,
@@ -384,7 +384,7 @@ export default class ComponentPlayground extends Component<Props, State> {
       [styles.selectedButton]: editor
     });
     const responsiveClassNames = classNames(styles.button, {
-      [styles.selectedButton]: responsive
+      [styles.selectedButton]: fixtureBody.responsive || responsive
     });
     const fixtureEditorUrl = uri.stringifyParams(
       getCleanUrlParams({
@@ -501,7 +501,10 @@ export default class ComponentPlayground extends Component<Props, State> {
   }
 
   renderLoader(isLoaderVisible: boolean) {
-    const { options: { loaderUri }, responsive } = this.props;
+    const {
+      options: { loaderUri, responsiveDevices },
+      responsive
+    } = this.props;
     const { isDragging, fixtureBody } = this.state;
     const loaderStyle = {
       display: isLoaderVisible ? 'block' : 'none'
@@ -509,13 +512,14 @@ export default class ComponentPlayground extends Component<Props, State> {
     const loaderFrameOverlayStyle = {
       display: isDragging ? 'block' : 'none'
     };
-
+    const showResponsiveControls = fixtureBody.responsive || responsive;
     return (
       <div className={styles.loaderFrame} style={loaderStyle}>
         <ResponsiveLoader
-          showResponsiveControls={responsive}
+          showResponsiveControls={showResponsiveControls}
           inputRef={this.handleIframeRef}
           src={loaderUri}
+          devices={responsiveDevices}
           onFixtureUpdate={updatedFields =>
             this.onFixtureEditorChange({
               ...fixtureBody,

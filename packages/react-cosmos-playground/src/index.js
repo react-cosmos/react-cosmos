@@ -24,7 +24,7 @@ const createDomContainer = () => {
 // Use module.exports to avoid having to call .default() when attached to
 // the global window namespace
 module.exports = (opts: PlaygroundOpts) => {
-  const { loaderUri, projectKey, webpackConfigType } = opts;
+  const { loaderUri, projectKey, responsiveDevices, webpackConfigType } = opts;
 
   return new Router({
     container: createDomContainer(),
@@ -34,6 +34,7 @@ module.exports = (opts: PlaygroundOpts) => {
       options: {
         loaderUri,
         projectKey,
+        responsiveDevices,
         webpackConfigType
       }
     }),

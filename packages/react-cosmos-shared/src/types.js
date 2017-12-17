@@ -7,6 +7,7 @@ export type ExcludePatterns = ExcludePattern | Array<ExcludePattern>;
 export type PlaygroundOpts = {
   loaderUri: string,
   projectKey: string,
+  responsiveDevices: Array<{| label: string, width: number, height: number |}>,
   webpackConfigType: 'default' | 'custom'
 };
 
