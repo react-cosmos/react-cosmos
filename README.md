@@ -307,7 +307,7 @@ Jump to:
 
 [React Context](https://facebook.github.io/react/docs/context.html): _With great power comes great responsibility._
 
-> Note: React doesn't recommend using _context_ unless you're a lib, so in most cases we're better of using a higher level proxy like the [Redux](#redux) or [React Router](#react-router) one.
+> Note: React doesn't recommend using _context_ unless you're a lib, so in most cases we're better off using a higher level proxy like the [Redux](#redux) or [React Router](#react-router) one.
 
 ##### Configuration
 
