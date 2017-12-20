@@ -244,7 +244,7 @@ It is also possible to export an array of fixtures from a single file. The above
 ```js
 export default [{
   component: SearchBox,
-  namespace: 'Searching for pets'
+  namespace: 'Searching for pets',
   name: 'Dog search',
   state: {
     searchQuery: 'Who let the dogs out?'
@@ -252,7 +252,7 @@ export default [{
 },
 {
   component: SearchBox,
-  namespace: 'Searching for pets'
+  namespace: 'Searching for pets',
   name: 'Dog search',
   state: {
     searchQuery: 'où est le chat?'
