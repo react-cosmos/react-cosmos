@@ -229,6 +229,37 @@ export default {
 };
 ```
 
+#### Other fixture Properties
+
+```
+{
+  name: // string - specify a title for the fixture. Otherwise it will default to the relevant component name
+  
+  namespace: // string - allows nesting of fixtures which share the same namespace
+}
+```
+
+It is also possible to export an array of fixtures from a single file. The above properties can be particularly useful in this case. For example
+
+```js
+export default [{
+  component: SearchBox,
+  namespace: 'Searching for pets'
+  name: 'Dog search',
+  state: {
+    searchQuery: 'Who let the dogs out?'
+  }
+},
+{
+  component: SearchBox,
+  namespace: 'Searching for pets'
+  name: 'Dog search',
+  state: {
+    searchQuery: 'où est le chat?'
+  }
+}]
+```
+
 ### Proxies
 
 #### What's a proxy?
