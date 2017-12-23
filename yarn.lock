@@ -405,12 +405,6 @@ apollo-link-dedup@^1.0.0:
   dependencies:
     apollo-link "^1.0.6"
 
-apollo-link-http@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/apollo-link-http/-/apollo-link-http-1.3.1.tgz#c58aee1a27d1bf43dc9e9c634b8a91c68d21a082"
-  dependencies:
-    apollo-link "^1.0.6"
-
 apollo-link-http@^1.3.2:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/apollo-link-http/-/apollo-link-http-1.3.2.tgz#63537ee5ecf9c004efb0317f1222b7dbc6f21559"
@@ -4726,9 +4720,21 @@ graphql-tag@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.6.0.tgz#0fb1b9f6d6651263c47a3420e827910e6fed3952"
 
+graphql-tag@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.6.1.tgz#4788d509f6e29607d947fc47a40c4e18f736d34a"
+
 graphql-tools@^2.12.0:
   version "2.12.0"
   resolved "https://registry.yarnpkg.com/graphql-tools/-/graphql-tools-2.12.0.tgz#6286902650537bf7f20ac87159ab5c8b2e9741f8"
+  dependencies:
+    apollo-utilities "^1.0.1"
+    deprecated-decorator "^0.1.6"
+    uuid "^3.1.0"
+
+graphql-tools@^2.14.1:
+  version "2.14.1"
+  resolved "https://registry.yarnpkg.com/graphql-tools/-/graphql-tools-2.14.1.tgz#15f96683d7f178042baddcfc17d73dcfeee67356"
   dependencies:
     apollo-utilities "^1.0.1"
     deprecated-decorator "^0.1.6"
@@ -8323,17 +8329,6 @@ react-apollo@^2.0.4:
     lodash.flowright "^3.5.0"
     lodash.pick "^4.4.0"
     prop-types "^15.5.8"
-
-react-cosmos-apollo-proxy@^3.2.0:
-  version "3.1.1"
-  dependencies:
-    apollo-cache-inmemory "^1.1.4"
-    apollo-client "^2.0.4"
-    apollo-link-http "^1.3.2"
-    apollo-link-schema "^1.0.1"
-    graphql "^0.11.7"
-    react-apollo "^2.0.4"
-    react-cosmos-shared "^3.1.1"
 
 react-dev-utils@^4.2.1:
   version "4.2.1"

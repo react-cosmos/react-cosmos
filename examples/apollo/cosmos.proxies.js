@@ -1,48 +1,20 @@
 import createApolloProxy from 'react-cosmos-apollo-proxy';
 
+// see more examples at:
+// https://github.com/react-cosmos/react-cosmos#react-apollo-graphql
+
+// most simple config for real data
 export default [
   createApolloProxy({
-    /*endpoint: 'https://1jzxrj179.lp.gql.zone/graphql'*/
+    endpoint: 'https://1jzxrj179.lp.gql.zone/graphql'
   })
 ];
 
-// // local setup of the proxy
-// import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
+// most simple config for mocked data
+// import schema from './local-schema';
 
-// const typeDefs = `
-//   type Query {
-//     author(id: Int!): Author
-//   }
-
-//   type Author {
-//     id: Int!
-//     firstName: String
-//     posts: [Post]
-//   }
-
-//   type Post {
-//     id: Int!
-//     title: String
-//     author: Author
-//     votes: Int
-//   }
-// `;
-
-// const mocks = {
-//   Query: () => ({
-//     author: (root, { id }) => ({
-//       id,
-//       firstName: id === 1 ? 'Ovidiu' : 'You'
-//     })
-//   }),
-//   Post: () => ({
-//     title: Math.random() > 0.5 ? 'About Cosmos' : 'The story of Life',
-//     votes: 42
+// export default [
+//   createApolloProxy({
+//     schema
 //   })
-// };
-
-// const schema = makeExecutableSchema({ typeDefs });
-
-// addMockFunctionsToSchema({ schema, mocks });
-
-// export default [createApolloProxy({ schema })];
+// ];
