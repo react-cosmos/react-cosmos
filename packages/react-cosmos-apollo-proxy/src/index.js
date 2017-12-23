@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { SchemaLink } from 'apollo-link-schema';
 import { ApolloProvider } from 'react-apollo';
 import { proxyPropTypes } from 'react-cosmos-shared/lib/react';
+import { createFixtureLink } from './fixtureLink';
 
 const defaults = {
   fixtureKey: 'apollo',
@@ -14,7 +14,7 @@ const defaults = {
 };
 
 export default function createApolloProxy(options) {
-  const { endpoint, client, schema, context, rootValue } = {
+  const { fixtureKey, endpoint, client, schema, context, rootValue } = {
     ...defaults,
     ...options
   };
@@ -35,17 +35,22 @@ Read more at: https://github.com/react-cosmos/react-cosmos#react-apollo-graphql.
         );
       }
 
+      const { resolveWith, failWith } = this.props.fixture[fixtureKey] || {};
+
       this.client =
         client ||
         new ApolloClient({
           cache: new InMemoryCache(),
-          link: endpoint
-            ? new HttpLink({ uri: endpoint })
-            : new SchemaLink({
-                schema,
-                context,
-                rootValue
-              })
+          link:
+            resolveWith || failWith
+              ? createFixtureLink({ resolveWith, failWith }).request
+              : endpoint
+                ? new HttpLink({ uri: endpoint })
+                : new SchemaLink({
+                    schema,
+                    context,
+                    rootValue
+                  })
         });
     }
 
