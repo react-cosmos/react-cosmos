@@ -41,17 +41,20 @@ Read more at: https://github.com/react-cosmos/react-cosmos#react-apollo-graphql.
         client ||
         new ApolloClient({
           cache: new InMemoryCache(),
-          link:
-            resolveWith || failWith
-              ? createFixtureLink({ resolveWith, failWith }).request
-              : endpoint
-                ? new HttpLink({ uri: endpoint })
-                : new SchemaLink({
-                    schema,
-                    context,
-                    rootValue
-                  })
+          link: endpoint
+            ? new HttpLink({ uri: endpoint })
+            : new SchemaLink({
+                schema,
+                context,
+                rootValue
+              })
         });
+
+      if (resolveWith || failWith) {
+        const link = createFixtureLink({ resolveWith, failWith }).request;
+
+        this.client.link = link;
+      }
     }
 
     render() {
