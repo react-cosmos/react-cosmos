@@ -24,16 +24,15 @@ export default function createApolloProxy(options) {
       super(props);
 
       if (!endpoint && !client && !schema) {
-        console.warn(
-          `It looks the Apollo Proxy is not configured! 
-          Pass it:
-          - a GraphQL endpoint to send GraphQL operations to;
-          - a configured Apollo Client (maybe the one you use in your app?);
-          - a local schema built with graphql-tools or a link pointing to a GraphQL endpoint.
-          Read more at: https://github.com/react-cosmos/react-cosmos#react-apollo-graphql.`
+        throw new Error(
+          `
+It looks the Apollo Proxy is not configured! 
+Give it:
+- a GraphQL endpoint to send GraphQL operations to;
+- a configured Apollo Client (maybe the one you use in your app?);
+- a local schema built with graphql-tools or a link pointing to a GraphQL endpoint.
+Read more at: https://github.com/react-cosmos/react-cosmos#react-apollo-graphql.`
         );
-
-        return;
       }
 
       const { cache } = props.fixture[fixtureKey] || {};
@@ -71,9 +70,6 @@ export default function createApolloProxy(options) {
     render() {
       const { value: NextProxy, next } = this.props.nextProxy;
 
-      if (!this.client) {
-        return <NextProxy {...this.props} nextProxy={next()} />;
-      }
       return (
         <ApolloProvider client={this.client}>
           <NextProxy {...this.props} nextProxy={next()} />

@@ -1,11 +1,10 @@
 import createApolloProxy from 'react-cosmos-apollo-proxy';
 
-// remote setup of the proxy
-import { HttpLink } from 'apollo-link-http';
-
-const link = new HttpLink({ uri: 'https://1jzxrj179.lp.gql.zone/graphql' });
-
-export default [createApolloProxy({ link })];
+export default [
+  createApolloProxy({
+    /*endpoint: 'https://1jzxrj179.lp.gql.zone/graphql'*/
+  })
+];
 
 // // local setup of the proxy
 // import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
