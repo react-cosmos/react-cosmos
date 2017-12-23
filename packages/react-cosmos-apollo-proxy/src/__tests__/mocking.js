@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import createApolloProxy from '../';
-import { ApolloClient, ApolloProvider } from 'react-apollo';
+import { ApolloProvider } from 'react-apollo';
 
 // The final responsibility of proxies is to render the user's component at
 // the end of the proxy chain. While it goes beyond unit testing, testing a
@@ -22,11 +22,8 @@ let onFixtureUpdate;
 let wrapper;
 
 beforeEach(() => {
-  // The Apollo Client is created for each test
-  ApolloClient.mockReset();
-
   // Create Proxy with default options
-  const ApolloProxy = createApolloProxy();
+  const ApolloProxy = createApolloProxy({ endpoint: 'https://pipo' });
 
   // Fixture updates from inner proxies need to bubble up to the root proxy
   onFixtureUpdate = jest.fn();
@@ -87,10 +84,6 @@ describe('next proxy props', () => {
     nextProxyProps.onFixtureUpdate({});
     expect(onFixtureUpdate.mock.calls).toHaveLength(1);
   });
-});
-
-test('creates the Apollo client', () => {
-  expect(ApolloClient).toHaveBeenCalledTimes(1);
 });
 
 test('renders the Apollo provider', () => {
