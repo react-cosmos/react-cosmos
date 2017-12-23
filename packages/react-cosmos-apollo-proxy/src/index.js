@@ -14,7 +14,7 @@ const defaults = {
 };
 
 export default function createApolloProxy(options) {
-  const { fixtureKey, endpoint, client, schema, context, rootValue } = {
+  const { endpoint, client, schema, context, rootValue } = {
     ...defaults,
     ...options
   };
@@ -35,12 +35,10 @@ Read more at: https://github.com/react-cosmos/react-cosmos#react-apollo-graphql.
         );
       }
 
-      const { cache } = props.fixture[fixtureKey] || {};
-
       this.client =
         client ||
         new ApolloClient({
-          cache: new InMemoryCache().restore(cache),
+          cache: new InMemoryCache(),
           link: endpoint
             ? new HttpLink({ uri: endpoint })
             : new SchemaLink({
@@ -49,24 +47,8 @@ Read more at: https://github.com/react-cosmos/react-cosmos#react-apollo-graphql.
                 rootValue
               })
         });
-
-      this.onBroadcast = this.onBroadcast.bind(this);
-
-      // hook Cosmos on the callback designed for the Apollo Client DevTools Chrome Extension 😇
-      this.client.__actionHookForDevTools(this.onBroadcast);
     }
-    onBroadcast({ state, dataWithOptimisticResults: cache }) {
-      if (isEmptyObject(state.queries) && isEmptyObject(state.mutations)) {
-        console.log('// empty broadcast!');
-        return;
-      }
-      console.log('// updating fixture with new cache', JSON.stringify(cache));
-      this.props.onFixtureUpdate({
-        [fixtureKey]: {
-          cache
-        }
-      });
-    }
+
     render() {
       const { value: NextProxy, next } = this.props.nextProxy;
 
@@ -80,7 +62,4 @@ Read more at: https://github.com/react-cosmos/react-cosmos#react-apollo-graphql.
   ApolloProxy.propTypes = proxyPropTypes;
 
   return ApolloProxy;
-}
-function isEmptyObject(obj) {
-  return !Object.keys(obj).length;
 }
