@@ -8,7 +8,7 @@ import find from 'lodash/find';
 type CustomButtonProps = {
   width: number,
   height: number,
-  onChange: ({ responsive: { width: number, height: number } }) => void,
+  onChange: ({ viewport: { width: number, height: number } }) => void,
   isActive: boolean,
   scalable: boolean,
   scale: boolean
@@ -29,7 +29,7 @@ const CustomButton = ({
     <button
       className={className}
       onClick={() =>
-        isActive ? null : onChange({ responsive: { width: 400, height: 400 } })
+        isActive ? null : onChange({ viewport: { width: 400, height: 400 } })
       }
     >
       <div>Custom</div>
@@ -41,7 +41,7 @@ const CustomButton = ({
             style={{ width: 40, height: 20 }}
             onChange={e =>
               onChange({
-                responsive: { width: parseInt(e.target.value, 10) || 0, height }
+                viewport: { width: parseInt(e.target.value, 10) || 0, height }
               })
             }
           />{' '}
@@ -52,7 +52,7 @@ const CustomButton = ({
             style={{ width: 40, height: 20 }}
             onChange={e =>
               onChange({
-                responsive: { height: parseInt(e.target.value, 10) || 0, width }
+                viewport: { height: parseInt(e.target.value, 10) || 0, width }
               })
             }
           />
@@ -67,7 +67,7 @@ type SizeButtonProps = {
   label: string,
   width: number,
   height: number,
-  onChange: ({ responsive: { width: number, height: number } }) => void,
+  onChange: ({ viewport: { width: number, height: number } }) => void,
   isActive: boolean,
   scalable: boolean,
   scale: boolean
@@ -88,7 +88,7 @@ const SizeButton = ({
   return (
     <button
       className={className}
-      onClick={() => onChange({ responsive: { width, height } })}
+      onClick={() => onChange({ viewport: { width, height } })}
     >
       <div>{label}</div>
       {width} x {height}

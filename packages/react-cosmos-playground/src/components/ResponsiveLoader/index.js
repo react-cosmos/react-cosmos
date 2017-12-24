@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Header from './Header';
+import classNames from 'classnames';
 
 import styles from './index.less';
 
@@ -62,7 +63,11 @@ class ResponsiveLoader extends React.Component<Props, State> {
       fixture
     } = this.props;
     if (!showResponsiveControls) {
-      return <iframe ref={inputRef} src={src} />;
+      return (
+        <div className={classNames(styles.checkerboard, styles.nonResponsive)}>
+          <iframe ref={inputRef} src={src} />
+        </div>
+      );
     }
     const { viewport = {} } = fixture;
     const width = viewport.width === 0 || viewport.width ? viewport.width : 320;
@@ -101,7 +106,7 @@ class ResponsiveLoader extends React.Component<Props, State> {
             }}
           >
             <div
-              className={styles.innerWrapper + ' ' + styles.loaderFrame}
+              className={styles.innerWrapper + ' ' + styles.checkerboard}
               style={{
                 borderWidth: BORDER_WIDTH,
                 width: width + 2 * BORDER_WIDTH,

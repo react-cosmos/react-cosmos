@@ -1,8 +1,8 @@
-import Mock from '../Mock';
+import Demo from '../Demo';
 
 export default {
-  component: Mock,
-  name: 'Mock - Custom Viewport',
+  component: Demo,
+  name: 'Demo - Custom Viewport',
   viewport: {
     width: 400,
     height: 600

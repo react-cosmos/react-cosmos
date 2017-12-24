@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './mock.less';
+import styles from './demo.less';
 
-const Mock = () => (
+const Demo = () => (
   <div style={{ fontSize: 50, backgroundColor: 'deepskyblue' }}>
     <div className={styles.showSmall}>I am small</div>
     <div className={styles.showMedium}>I am medium</div>
@@ -9,4 +9,4 @@ const Mock = () => (
   </div>
 );
 
-export default Mock;
+export default Demo;

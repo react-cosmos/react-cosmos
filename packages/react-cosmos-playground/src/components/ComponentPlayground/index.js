@@ -507,7 +507,7 @@ export default class ComponentPlayground extends Component<Props, State> {
     } = this.props;
     const { isDragging, fixtureBody } = this.state;
     const loaderStyle = {
-      display: isLoaderVisible ? 'block' : 'none'
+      display: isLoaderVisible ? 'flex' : 'none'
     };
     const loaderFrameOverlayStyle = {
       display: isDragging ? 'block' : 'none'
