@@ -76,6 +76,11 @@ class ResponsiveLoader extends React.Component<Props, State> {
     const scaledWidth = width * scaleFactor;
     const scaledHeight = height * scaleFactor;
 
+    // We can't simply say
+    // if (!showResponsiveControls) { return <iframe> };
+    // because this causes flicker when switching between responsive and
+    // non responsive mode.
+
     const containerClassName = showResponsiveControls
       ? styles.container
       : styles.nonResponsive;
