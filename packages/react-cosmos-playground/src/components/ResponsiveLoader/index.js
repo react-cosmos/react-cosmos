@@ -62,13 +62,7 @@ class ResponsiveLoader extends React.Component<Props, State> {
       onFixtureUpdate,
       fixture
     } = this.props;
-    if (!showResponsiveControls) {
-      return (
-        <div className={classNames(styles.checkerboard, styles.nonResponsive)}>
-          <iframe ref={inputRef} src={src} />
-        </div>
-      );
-    }
+
     const { viewport = {} } = fixture;
     const width = viewport.width === 0 || viewport.width ? viewport.width : 320;
     const height =
@@ -82,40 +76,62 @@ class ResponsiveLoader extends React.Component<Props, State> {
     const scaledWidth = width * scaleFactor;
     const scaledHeight = height * scaleFactor;
 
+    const containerClassName = showResponsiveControls
+      ? styles.container
+      : styles.nonResponsive;
+
+    const outerWrapperClassName = showResponsiveControls
+      ? styles.outerWrapper
+      : styles.nonResponsive;
+    const outerWrapperStyle = showResponsiveControls
+      ? { padding: PADDING }
+      : {};
+
+    const middleWrapperClassName = showResponsiveControls
+      ? ''
+      : styles.nonResponsive;
+    const middleWrapperStyle = showResponsiveControls
+      ? {
+          lineHeight: 0,
+          width: scaledWidth + 2 * BORDER_WIDTH,
+          height: scaledHeight + 2 * BORDER_WIDTH
+        }
+      : {};
+
+    const innerWrapperClassName = showResponsiveControls
+      ? classNames(styles.innerWrapper, styles.checkerboard)
+      : classNames(styles.nonResponsive, styles.checkerboard);
+    const innerWrapperStyle = showResponsiveControls
+      ? {
+          borderWidth: BORDER_WIDTH,
+          width: width + 2 * BORDER_WIDTH,
+          height: height + 2 * BORDER_WIDTH,
+          alignSelf: scaleHeight === 1 ? 'center' : 'flex-start',
+          justifySelf: scaleWidth === 1 ? 'center' : 'flex-start',
+          transform: `scale( ${scaleFactor} )`
+        }
+      : {};
+
     return (
-      <div className={styles.container}>
-        <Header
-          devices={devices}
-          onFixtureUpdate={onFixtureUpdate}
-          dimensions={{ width, height, scale }}
-          containerWidth={containerWidth}
-          containerHeight={containerHeight}
-        />
+      <div className={containerClassName}>
+        {showResponsiveControls && (
+          <Header
+            devices={devices}
+            onFixtureUpdate={onFixtureUpdate}
+            dimensions={{ width, height, scale }}
+            containerWidth={containerWidth}
+            containerHeight={containerHeight}
+          />
+        )}
         <div
-          className={styles.outerWrapper}
+          className={outerWrapperClassName}
           ref={el => {
             this.scalableDiv = el;
           }}
-          style={{ padding: PADDING }}
+          style={outerWrapperStyle}
         >
-          <div
-            style={{
-              lineHeight: 0,
-              width: scaledWidth + 2 * BORDER_WIDTH,
-              height: scaledHeight + 2 * BORDER_WIDTH
-            }}
-          >
-            <div
-              className={styles.innerWrapper + ' ' + styles.checkerboard}
-              style={{
-                borderWidth: BORDER_WIDTH,
-                width: width + 2 * BORDER_WIDTH,
-                height: height + 2 * BORDER_WIDTH,
-                alignSelf: scaleHeight === 1 ? 'center' : 'flex-start',
-                justifySelf: scaleWidth === 1 ? 'center' : 'flex-start',
-                transform: `scale( ${scaleFactor} )`
-              }}
-            >
+          <div className={middleWrapperClassName} style={middleWrapperStyle}>
+            <div className={innerWrapperClassName} style={innerWrapperStyle}>
               <iframe
                 ref={inputRef}
                 src={src}
