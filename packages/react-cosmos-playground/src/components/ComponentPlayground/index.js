@@ -384,7 +384,7 @@ export default class ComponentPlayground extends Component<Props, State> {
       [styles.selectedButton]: editor
     });
     const responsiveClassNames = classNames(styles.button, {
-      [styles.selectedButton]: fixtureBody.responsive || responsive
+      [styles.selectedButton]: fixtureBody.viewport || responsive
     });
     const fixtureEditorUrl = uri.stringifyParams(
       getCleanUrlParams({
@@ -512,7 +512,7 @@ export default class ComponentPlayground extends Component<Props, State> {
     const loaderFrameOverlayStyle = {
       display: isDragging ? 'block' : 'none'
     };
-    const showResponsiveControls = fixtureBody.responsive || responsive;
+    const showResponsiveControls = fixtureBody.viewport || responsive;
     return (
       <div className={styles.loaderFrame} style={loaderStyle}>
         <ResponsiveLoader

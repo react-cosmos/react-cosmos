@@ -64,11 +64,10 @@ class ResponsiveLoader extends React.Component<Props, State> {
     if (!showResponsiveControls) {
       return <iframe ref={inputRef} src={src} />;
     }
-    const { responsive = {} } = fixture;
-    const width =
-      responsive.width === 0 || responsive.width ? responsive.width : 320;
+    const { viewport = {} } = fixture;
+    const width = viewport.width === 0 || viewport.width ? viewport.width : 320;
     const height =
-      responsive.height === 0 || responsive.height ? responsive.height : 568;
+      viewport.height === 0 || viewport.height ? viewport.height : 568;
     const scale = true;
 
     const { containerWidth, containerHeight } = this.state;
@@ -102,7 +101,7 @@ class ResponsiveLoader extends React.Component<Props, State> {
             }}
           >
             <div
-              className={styles.innerWrapper}
+              className={styles.innerWrapper + ' ' + styles.loaderFrame}
               style={{
                 borderWidth: BORDER_WIDTH,
                 width: width + 2 * BORDER_WIDTH,

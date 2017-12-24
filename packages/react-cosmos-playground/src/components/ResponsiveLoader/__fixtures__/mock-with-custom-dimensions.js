@@ -2,7 +2,8 @@ import Mock from '../Mock';
 
 export default {
   component: Mock,
-  responsive: {
+  name: 'Mock - Custom Viewport',
+  viewport: {
     width: 400,
     height: 600
   },

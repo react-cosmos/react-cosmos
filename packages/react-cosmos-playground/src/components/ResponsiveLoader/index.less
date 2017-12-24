@@ -1,3 +1,9 @@
+@import '../../utils/common.less';
+
+@checkerboard-square-size: 25px;
+// This should look good on both black & white backgrounds
+@checkerboard-color: fade(@left-nav-color, 15%);
+
 .container {
   display: flex;
   flex-direction: column;
@@ -32,4 +38,31 @@
     padding: 0;
     border: none;
   }
+}
+
+.loaderFrame {
+  display: block;
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  // Checkerboard effect on background
+  background-color: #fff;
+  background-image: linear-gradient(
+      45deg,
+      @checkerboard-color 25%,
+      transparent 25%,
+      transparent 75%,
+      @checkerboard-color 75%,
+      @checkerboard-color 100%
+    ),
+    linear-gradient(
+      45deg,
+      @checkerboard-color 25%,
+      transparent 25%,
+      transparent 75%,
+      @checkerboard-color 75%,
+      @checkerboard-color 100%
+    );
+  background-size: 2 * @checkerboard-square-size 2 * @checkerboard-square-size;
+  background-position: 0 0, @checkerboard-square-size @checkerboard-square-size;
 }

@@ -116,6 +116,17 @@
   position: relative;
 }
 
+// The overlay sits on top of the loader iframe while the user is dragging the
+// panes, because otherwise the drag events would be discontinued when the
+// mouse cursor goes over the iframe
+.loaderFrameOverlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
 .loaderFrame {
   position: relative;
   flex: 1;
@@ -140,15 +151,4 @@
     );
   background-size: 2 * @checkerboard-square-size 2 * @checkerboard-square-size;
   background-position: 0 0, @checkerboard-square-size @checkerboard-square-size;
-}
-
-// The overlay sits on top of the loader iframe while the user is dragging the
-// panes, because otherwise the drag events would be discontinued when the
-// mouse cursor goes over the iframe
-.loaderFrameOverlay {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
 }
