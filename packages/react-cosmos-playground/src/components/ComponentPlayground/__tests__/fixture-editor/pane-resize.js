@@ -1,3 +1,4 @@
+import until from 'async-until';
 import localForage from 'localforage';
 import { createContext } from '../../../../utils/enzyme';
 import { FIXTURE_EDITOR_PANE_SIZE } from '../../';
@@ -5,14 +6,22 @@ import fixture from '../../__fixtures__/selected-editor';
 
 jest.mock('localforage');
 
+const postMessage = jest.fn();
 const { mount, getWrapper, getRef } = createContext({
   fixture,
-  beforeInit: () => {
+  async beforeInit() {
     // Fake node width/height
     getRef().contentNode = {
       // Landscape
       offsetWidth: 300,
       offsetHeight: 200
+    };
+
+    await until(() => getRef().loaderFrame);
+    getRef().loaderFrame = {
+      contentWindow: {
+        postMessage
+      }
     };
   }
 });
