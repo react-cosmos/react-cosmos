@@ -1,8 +1,20 @@
+import until from 'async-until';
 import { createContext } from '../../../utils/enzyme';
 import FixtureList from '../../FixtureList';
 import fixture from '../__fixtures__/selected-fullscreen';
 
-const { mount, getWrapper } = createContext({ fixture });
+const postMessage = jest.fn();
+const { mount, getWrapper, getRef } = createContext({
+  fixture,
+  async beforeInit() {
+    await until(() => getRef().loaderFrame);
+    getRef().loaderFrame = {
+      contentWindow: {
+        postMessage
+      }
+    };
+  }
+});
 
 describe('CP with fixture already selected in full screen', () => {
   beforeEach(mount);

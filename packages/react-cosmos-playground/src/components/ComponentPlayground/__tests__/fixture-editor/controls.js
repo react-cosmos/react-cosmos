@@ -1,8 +1,20 @@
+import until from 'async-until';
 import { createContext } from '../../../../utils/enzyme';
 import DragHandle from '../../../DragHandle';
 import fixture from '../../__fixtures__/selected-editor';
 
-const { mount, getWrapper } = createContext({ fixture });
+const postMessage = jest.fn();
+const { mount, getWrapper, getRef } = createContext({
+  fixture,
+  async beforeInit() {
+    await until(() => getRef().loaderFrame);
+    getRef().loaderFrame = {
+      contentWindow: {
+        postMessage
+      }
+    };
+  }
+});
 
 // Fixture editor is already on so the button will untoggle it
 const fixtureEditorUrl = '?component=ComponentA&fixture=foo';

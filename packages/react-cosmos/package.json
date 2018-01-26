@@ -26,7 +26,7 @@
     "resolve-from": "^3.0.0",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-hot-middleware": "^2.18.2",
-    "yargs": "^8.0.1"
+    "yargs": "^11.0.0"
   },
   "bin": {
     "cosmos": "./bin/cosmos.js",
