@@ -189,17 +189,20 @@ export default {
 
 #### Children
 
-Composition is the name of the game and many React components expect [children](https://facebook.github.io/react/docs/jsx-in-depth.html#children-in-jsx). Components access them via `props.children`, but children are not quite _props_ so we put them under `fixture.children`.
+Composition is the name of the game and many React components expect [children](https://facebook.github.io/react/docs/jsx-in-depth.html#children-in-jsx). You can specify your children just like you would any other prop:
 
 ```jsx
 export default {
   component: Text,
-  children: (
-    <div>
-      <p>Fixture ain't afraid of JSX</p>
-      <p>Fixture ain't afraid of nothin!</p>
-    </div>
-  )
+  props: {
+    someProp: true,
+    children: (
+      <div>
+        <p>Fixture ain't afraid of JSX</p>
+        <p>Fixture ain't afraid of nothin!</p>
+      </div>
+    )
+  }
 };
 ```
 
