@@ -107,6 +107,7 @@ describe('MemoryRouter', () => {
       expect(routerProps.initialEntries).toEqual([
         {
           hash: '#hash',
+          key: 'mocked',
           pathname: '/foo-route',
           search: '?bar=true',
           state: { someState: true }
