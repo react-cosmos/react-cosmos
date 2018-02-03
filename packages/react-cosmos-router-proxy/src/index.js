@@ -11,6 +11,7 @@ function buildLocation(url, locationState) {
     pathname,
     search,
     hash,
+    key: 'mocked',
     state: locationState
   };
 }
