@@ -380,8 +380,7 @@ export default class ComponentPlayground extends Component<Props, State> {
     });
 
     const showResponsiveControls =
-      (responsive !== 'forceHide' && fixtureBody.viewport) ||
-      responsive === true;
+      responsive === 'forceHide' ? false : fixtureBody.viewport || responsive;
 
     const nextResponsive =
       responsive === 'forceHide'
@@ -526,9 +525,11 @@ export default class ComponentPlayground extends Component<Props, State> {
       display: isDragging ? 'block' : 'none'
     };
     const showResponsiveControls =
-      (responsive !== 'forceHide' && fixtureBody.viewport) ||
-      responsive === true;
+      responsive === 'forceHide' ? false : fixtureBody.viewport || responsive;
 
+    // console.log('Rendering Playground');
+    // console.log('Fixture name is', this.props.fixture);
+    // console.log('Fixture object is', fixtureBody);
     return (
       <div className={styles.loaderFrame} style={loaderStyle}>
         <ResponsiveLoader
