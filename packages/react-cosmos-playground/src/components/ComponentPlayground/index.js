@@ -369,13 +369,25 @@ export default class ComponentPlayground extends Component<Props, State> {
       options
     } = this.props;
     const { fixtures, fixtureBody, leftNavSize } = this.state;
+
     const urlParams = getCleanUrlParams({
       component,
       fixture,
       editor,
       fullScreen,
-      responsive
+      // We don't persist the `forceHide` value when changing fixturess
+      responsive: responsive === 'forceHide' ? false : responsive
     });
+
+    const showResponsiveControls =
+      (responsive !== 'forceHide' && fixtureBody.viewport) ||
+      responsive === true;
+
+    const nextResponsive =
+      responsive === 'forceHide'
+        ? true
+        : fixtureBody.viewport ? 'forceHide' : !responsive;
+
     const isFixtureSelected = Boolean(fixture);
     const homeClassNames = classNames(styles.button, {
       [styles.selectedButton]: !isFixtureSelected
@@ -384,14 +396,14 @@ export default class ComponentPlayground extends Component<Props, State> {
       [styles.selectedButton]: editor
     });
     const responsiveClassNames = classNames(styles.button, {
-      [styles.selectedButton]: fixtureBody.viewport || responsive
+      [styles.selectedButton]: showResponsiveControls
     });
     const fixtureEditorUrl = uri.stringifyParams(
       getCleanUrlParams({
         component,
         fixture,
         editor: !editor,
-        responsive
+        responsive: nextResponsive
       })
     );
     const fullScreenUrl = uri.stringifyParams({
@@ -399,12 +411,13 @@ export default class ComponentPlayground extends Component<Props, State> {
       fixture,
       fullScreen: true
     });
+
     const responsiveUrl = uri.stringifyParams(
       getCleanUrlParams({
         component,
         fixture,
         editor,
-        responsive: !responsive
+        responsive: nextResponsive
       })
     );
     return (
@@ -512,7 +525,10 @@ export default class ComponentPlayground extends Component<Props, State> {
     const loaderFrameOverlayStyle = {
       display: isDragging ? 'block' : 'none'
     };
-    const showResponsiveControls = fixtureBody.viewport || responsive;
+    const showResponsiveControls =
+      (responsive !== 'forceHide' && fixtureBody.viewport) ||
+      responsive === true;
+
     return (
       <div className={styles.loaderFrame} style={loaderStyle}>
         <ResponsiveLoader

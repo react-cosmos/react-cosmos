@@ -3,7 +3,7 @@
 import React from 'react';
 import Header from './Header';
 import classNames from 'classnames';
-
+import localForage from 'localforage';
 import styles from './index.less';
 
 type Props = {
@@ -17,24 +17,49 @@ type Props = {
 
 type State = {
   containerWidth: number,
-  containerHeight: number
+  containerHeight: number,
+  savedWidth: ?number,
+  savedHeight: ?number
 };
+
+export const RESPONSIVE_FIXTURE_WIDTH = '__cosmos__responsive-fixture-width';
+export const RESPONSIVE_FIXTURE_HEIGHT = '__cosmos__respinsive-fixture-height';
 
 const PADDING = 16;
 const BORDER_WIDTH = 2;
 
 class ResponsiveLoader extends React.Component<Props, State> {
-  state = { containerWidth: 10000, containerHeight: 10000 };
+  state = {
+    containerWidth: 10000,
+    containerHeight: 10000,
+    savedWidth: null,
+    savedHeight: null
+  };
   scalableDiv: ?HTMLElement;
 
-  componentDidMount() {
+  async componentDidMount() {
     window.addEventListener('resize', this.updateContainerWidth);
     setTimeout(this.updateContainerWidth, 1000);
+
+    const [savedWidth, savedHeight] = await Promise.all([
+      localForage.getItem(RESPONSIVE_FIXTURE_WIDTH),
+      localForage.getItem(RESPONSIVE_FIXTURE_HEIGHT)
+    ]);
+
+    this.setState({ savedWidth, savedHeight });
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateContainerWidth);
   }
+
+  updateDimensions = (width: number, height: number) => {
+    const { onFixtureUpdate } = this.props;
+    localForage.setItem(RESPONSIVE_FIXTURE_WIDTH, width);
+    localForage.setItem(RESPONSIVE_FIXTURE_HEIGHT, height);
+    onFixtureUpdate({ viewport: { width, height } });
+    this.setState({ savedWidth: width, savedHeight: height });
+  };
 
   updateContainerWidth = () => {
     if (!this.scalableDiv) {
@@ -59,14 +84,19 @@ class ResponsiveLoader extends React.Component<Props, State> {
       src,
       devices,
       showResponsiveControls,
-      onFixtureUpdate,
       fixture
     } = this.props;
+    const { savedWidth, savedHeight } = this.state;
 
-    const { viewport = {} } = fixture;
-    const width = viewport.width === 0 || viewport.width ? viewport.width : 320;
+    const { viewport = {}, useLocalDimensions } = fixture;
+    const width =
+      viewport.width === 0 || viewport.width
+        ? viewport.width
+        : savedWidth || 320;
     const height =
-      viewport.height === 0 || viewport.height ? viewport.height : 568;
+      viewport.height === 0 || viewport.height
+        ? viewport.height
+        : savedHeight || 568;
     const scale = true;
 
     const { containerWidth, containerHeight } = this.state;
@@ -122,10 +152,10 @@ class ResponsiveLoader extends React.Component<Props, State> {
         {showResponsiveControls && (
           <Header
             devices={devices}
-            onFixtureUpdate={onFixtureUpdate}
             dimensions={{ width, height, scale }}
             containerWidth={containerWidth}
             containerHeight={containerHeight}
+            updateDimensions={this.updateDimensions}
           />
         )}
         <div
