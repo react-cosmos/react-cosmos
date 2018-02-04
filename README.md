@@ -42,7 +42,7 @@ Read the story of React Cosmos: [Fighting for Component Independence](https://me
 
 Many other component explorers emerged in the past years. [Storybook](https://github.com/storybooks/storybook) and [React Styleguidist](https://github.com/styleguidist/react-styleguidist) are good examples, but you can find an extensive list of options [here](https://react-styleguidist.js.org/docs/cookbook.html#are-there-any-other-projects-like-this). To decide which tool is best for you check for each project's goals, how much they match your needs, and how well the project is maintained.
 
-**Cosmos is a dev tool first, made to improve _all_ components, big and small, not just the stateless UI bits.** The [fixture](#fixtures) and [proxy](#proxies) architecture doubles as an [automated testing utility](#experimental-test-helpers), providing a complete solution for developing robust and reusable components. Cosmos also makes it easy to create a living style guide, but it's a secondary goal and you might get more value from alternatives if this is your chief concern.
+**Cosmos is a dev tool first, made to improve _all_ components, big and small, not just the stateless UI bits.** The [fixture](#fixtures) and [proxy](#proxies) architecture doubles as an [automated testing utility](#headless-testing), providing a complete solution for developing robust and reusable components. Cosmos also makes it easy to create a living style guide, but it's a secondary goal and you might get more value from alternatives if this is your chief concern.
 
 To find out more about the Cosmos project, check out [Mission](CONTRIBUTING.md#mission), [Goals](CONTRIBUTING.md#goals) and [Architecture](CONTRIBUTING.md#architecture).
 
@@ -189,17 +189,20 @@ export default {
 
 #### Children
 
-Composition is the name of the game and many React components expect [children](https://facebook.github.io/react/docs/jsx-in-depth.html#children-in-jsx). Components access them via `props.children`, but children are not quite _props_ so we put them under `fixture.children`.
+Composition is the name of the game and many React components expect [children](https://facebook.github.io/react/docs/jsx-in-depth.html#children-in-jsx). You can specify your children just like you would any other prop:
 
 ```jsx
 export default {
   component: Text,
-  children: (
-    <div>
-      <p>Fixture ain't afraid of JSX</p>
-      <p>Fixture ain't afraid of nothin!</p>
-    </div>
-  )
+  props: {
+    someProp: true,
+    children: (
+      <div>
+        <p>Fixture ain't afraid of JSX</p>
+        <p>Fixture ain't afraid of nothin!</p>
+      </div>
+    )
+  }
 };
 ```
 
@@ -307,7 +310,7 @@ Jump to:
 
 [React Context](https://facebook.github.io/react/docs/context.html): _With great power comes great responsibility._
 
-> Note: React doesn't recommend using _context_ unless you're a lib, so in most cases we're better of using a higher level proxy like the [Redux](#redux) or [React Router](#react-router) one.
+> Note: React doesn't recommend using _context_ unless you're a lib, so in most cases we're better off using a higher level proxy like the [Redux](#redux) or [React Router](#react-router) one.
 
 ##### Configuration
 

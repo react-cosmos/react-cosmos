@@ -108,6 +108,7 @@ describe('MemoryRouter', () => {
         {
           hash: null,
           pathname: '/route/foo',
+          key: 'mocked',
           search: null,
           state: undefined
         }

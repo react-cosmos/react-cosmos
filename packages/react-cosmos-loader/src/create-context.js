@@ -37,6 +37,7 @@ export function createContext(args: ContextArgs): ContextFunctions {
   } = args;
 
   let updatedFixture = { ...fixture };
+  let compRefCalled = false;
   let compRef: ?ComponentRef;
 
   function getRef() {
@@ -86,6 +87,11 @@ export function createContext(args: ContextArgs): ContextFunctions {
             proxies={proxies}
             fixture={updatedFixture}
             onComponentRef={ref => {
+              // Sometimes the component unmounts instantly (eg. redirects on
+              // componentWillMount and parent HoC doesn't render it anymore).
+              // In this cases compRef will be null but we'll know that the
+              // component rendered
+              compRefCalled = true;
               compRef = ref;
             }}
             onFixtureUpdate={update}
@@ -96,7 +102,7 @@ export function createContext(args: ContextArgs): ContextFunctions {
         // Ensure component ref is available when mounting is resolved (esp.
         // convenient in headless tests)
         if (isComponentClass(fixture.component)) {
-          await until(() => compRef);
+          await until(() => compRefCalled);
         }
 
         // Useful for **mocking refs** before fixture.init is called

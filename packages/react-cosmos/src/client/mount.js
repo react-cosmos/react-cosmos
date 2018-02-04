@@ -2,7 +2,7 @@ import { importModule } from 'react-cosmos-shared';
 import { getComponents } from 'react-cosmos-voyager2/lib/client';
 import getUserModules from './user-modules';
 import { mount } from 'react-cosmos-loader';
-// import { dismissRuntimeErrors } from 'react-error-overlay';
+import { dismissRuntimeErrors } from 'react-error-overlay';
 
 import type { LoaderOpts } from 'react-cosmos-shared/src/types';
 import type {
@@ -13,7 +13,6 @@ import type {
 
 // eslint-disable-next-line no-undef
 const loaderOpts: LoaderOpts = COSMOS_CONFIG;
-const dismissRuntimeErrors = () => {};
 
 export default function() {
   const {

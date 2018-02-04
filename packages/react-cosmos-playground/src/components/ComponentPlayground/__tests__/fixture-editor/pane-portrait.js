@@ -1,3 +1,4 @@
+import until from 'async-until';
 import localForage from 'localforage';
 import { createContext } from '../../../../utils/enzyme';
 import DragHandle from '../../../DragHandle';
@@ -6,14 +7,22 @@ import fixture from '../../__fixtures__/selected-editor';
 
 jest.mock('localforage');
 
+const postMessage = jest.fn();
 const { mount, getWrapper, getRef } = createContext({
   fixture,
-  beforeInit: () => {
+  async beforeInit() {
     // Fake node width/height
     getRef().contentNode = {
       // Landscape
       offsetWidth: 200,
       offsetHeight: 300
+    };
+
+    await until(() => getRef().loaderFrame);
+    getRef().loaderFrame = {
+      contentWindow: {
+        postMessage
+      }
     };
   }
 });

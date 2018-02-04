@@ -15,10 +15,18 @@ const ClassicComponent = createReactClass({
 
 const fixture = {
   props: {
+    foo: 'bar',
+    children: [<p key="1">Child 1</p>]
+  }
+};
+
+const fixtureWithNonPropChildren = {
+  props: {
     foo: 'bar'
   },
   children: [<p key="1">Child 1</p>]
 };
+
 const onComponentRef = jest.fn();
 
 let wrapper;
@@ -50,13 +58,13 @@ describe('Functional Component', () => {
     expect(childProps.foo).toBe('bar');
   });
 
-  test('does not sets onComponentRef as component ref callback', () => {
+  test('does not set onComponentRef as component ref callback', () => {
     expect(childWrapper.get(0).ref).toBeFalsy();
   });
 
-  test('passes children to component', () => {
+  test('passes prop children to component', () => {
     expect(childChildren.length).toEqual(1);
-    expect(childChildren.at(0).equals(fixture.children[0])).toBe(true);
+    expect(childChildren.at(0).equals(fixture.props.children[0])).toBe(true);
   });
 });
 
@@ -88,9 +96,9 @@ describe('ES6 Class Component', () => {
     expect(childWrapper.get(0).ref).toBe(onComponentRef);
   });
 
-  test('passes children to component', () => {
+  test('passes prop children to component', () => {
     expect(childChildren.length).toEqual(1);
-    expect(childChildren.at(0).equals(fixture.children[0])).toBe(true);
+    expect(childChildren.at(0).equals(fixture.props.children[0])).toBe(true);
   });
 });
 
@@ -122,8 +130,58 @@ describe('React.createClass', () => {
     expect(childWrapper.get(0).ref).toBe(onComponentRef);
   });
 
-  test('passes children to component', () => {
+  test('passes prop children to component', () => {
     expect(childChildren.length).toEqual(1);
-    expect(childChildren.at(0).equals(fixture.children[0])).toBe(true);
+    expect(childChildren.at(0).equals(fixture.props.children[0])).toBe(true);
+  });
+});
+
+describe('Legacy fixture children', () => {
+  test('Functional Component passes fixture children to component', () => {
+    wrapper = shallow(
+      <PropsProxy
+        fixture={{
+          component: FunctionalComponent,
+          ...fixtureWithNonPropChildren
+        }}
+        onComponentRef={onComponentRef}
+      />
+    );
+
+    childChildren = wrapper.at(0).children();
+    expect(childChildren.length).toEqual(1);
+    expect(childChildren.at(0).equals(fixture.props.children[0])).toBe(true);
+  });
+
+  test('ES6 Class Component passes fixture children to component', () => {
+    wrapper = shallow(
+      <PropsProxy
+        fixture={{
+          component: ClassComponent,
+          ...fixtureWithNonPropChildren
+        }}
+        onComponentRef={onComponentRef}
+      />
+    );
+
+    childChildren = wrapper.at(0).children();
+    expect(childChildren.length).toEqual(1);
+    expect(childChildren.at(0).equals(fixture.props.children[0])).toBe(true);
+  });
+
+  test('React.createClass Component passes fixture children to component', () => {
+    wrapper = shallow(
+      <PropsProxy
+        fixture={{
+          component: ClassicComponent,
+          ...fixtureWithNonPropChildren
+        }}
+        onComponentRef={onComponentRef}
+      />
+    );
+
+    childChildren = wrapper.at(0).children();
+    expect(childChildren.length).toEqual(1);
+    expect(childChildren.at(0).equals(fixture.props.children[0])).toBe(true);
   });
 });
