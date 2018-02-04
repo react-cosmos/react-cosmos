@@ -403,7 +403,7 @@ export default class ComponentPlayground extends Component<Props, State> {
         component,
         fixture,
         editor: !editor,
-        responsive: nextResponsive
+        responsive
       })
     );
     const fullScreenUrl = uri.stringifyParams({

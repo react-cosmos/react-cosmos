@@ -130,7 +130,6 @@ function getNormalizedConfig(relativeConfig: Config, relPath: string): Config {
     proxiesPath,
     publicPath,
     webpackConfigPath,
-    responsiveDevices,
     // Deprecated
     componentPaths,
     fixturePaths

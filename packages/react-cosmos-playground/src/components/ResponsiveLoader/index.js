@@ -22,8 +22,8 @@ type State = {
   savedHeight: ?number
 };
 
-export const RESPONSIVE_FIXTURE_WIDTH = '__cosmos__responsive-fixture-width';
-export const RESPONSIVE_FIXTURE_HEIGHT = '__cosmos__respinsive-fixture-height';
+const RESPONSIVE_FIXTURE_WIDTH = '__cosmos__responsive-fixture-width';
+const RESPONSIVE_FIXTURE_HEIGHT = '__cosmos__respinsive-fixture-height';
 
 const PADDING = 16;
 const BORDER_WIDTH = 2;
@@ -88,7 +88,7 @@ class ResponsiveLoader extends React.Component<Props, State> {
     } = this.props;
     const { savedWidth, savedHeight } = this.state;
 
-    const { viewport = {}, useLocalDimensions } = fixture;
+    const { viewport = {} } = fixture;
     const width =
       viewport.width === 0 || viewport.width
         ? viewport.width
