@@ -39,6 +39,7 @@ class ResponsiveLoader extends React.Component<Props, State> {
 
   async componentDidMount() {
     window.addEventListener('resize', this.updateContainerWidth);
+
     setTimeout(this.updateContainerWidth, 1000);
 
     const [savedWidth, savedHeight] = await Promise.all([
@@ -67,6 +68,7 @@ class ResponsiveLoader extends React.Component<Props, State> {
     }
     const nextContainerWidth = this.scalableDiv.getBoundingClientRect().width;
     const nextContainerHeight = this.scalableDiv.getBoundingClientRect().height;
+
     if (
       nextContainerWidth !== this.state.containerWidth ||
       nextContainerHeight !== this.state.containerHeight
@@ -97,6 +99,8 @@ class ResponsiveLoader extends React.Component<Props, State> {
       viewport.height === 0 || viewport.height
         ? viewport.height
         : savedHeight || 568;
+
+    // Eventually allow toggling of scaled vs absolute viewports
     const scale = true;
 
     const { containerWidth, containerHeight } = this.state;
@@ -167,12 +171,7 @@ class ResponsiveLoader extends React.Component<Props, State> {
         >
           <div className={middleWrapperClassName} style={middleWrapperStyle}>
             <div className={innerWrapperClassName} style={innerWrapperStyle}>
-              <iframe
-                ref={inputRef}
-                src={src}
-                frameBorder={0}
-                allowTransparency="true"
-              />
+              <iframe ref={inputRef} src={src} frameBorder={0} />
             </div>
           </div>
         </div>
