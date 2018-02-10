@@ -49,6 +49,27 @@ export function createContext(args: EnzymeContextArgs): EnzymeContextFunctions {
     return selector ? innerWrapper.find(selector) : innerWrapper;
   }
 
+  function setProps(props: any) {
+    const { fixture } = args;
+    const updatedFixture = {
+      ...fixture,
+      props: {
+        ...fixture.props,
+        ...props
+      }
+    };
+    getRootWrapper().setProps({ fixture: updatedFixture });
+  }
+
+  function set(key: string, valueToReplace: any) {
+    const { fixture } = args;
+    const updatedFixture = {
+      ...fixture,
+      [key]: valueToReplace
+    };
+    getRootWrapper().setProps({ fixture: updatedFixture });
+  }
+
   return {
     mount,
     unmount,
@@ -56,7 +77,9 @@ export function createContext(args: EnzymeContextArgs): EnzymeContextFunctions {
     get,
     getField,
     getRootWrapper,
-    getWrapper
+    getWrapper,
+    set,
+    setProps
   };
 }
 
