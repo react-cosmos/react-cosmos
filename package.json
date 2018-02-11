@@ -62,7 +62,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^22.1.4",
     "lerna": "^2.5.1",
-    "less": "^2.7.3",
+    "less": "^3.0.0",
     "less-loader": "^4.0.5",
     "lint-staged": "^6.0.0",
     "prettier": "1.10.2",
