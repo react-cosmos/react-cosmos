@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-router-proxy",
-  "version": "3.5.0",
+  "version": "3.100.0-alpha.1",
   "description": "Mock React Router context via fixtures",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-router-proxy",
   "license": "MIT",
@@ -10,7 +10,7 @@
   "main": "lib/index.js",
   "dependencies": {
     "prop-types": "^15.5.10",
-    "react-cosmos-shared": "^3.1.1",
+    "react-cosmos-shared": "^3.100.0-alpha.1",
     "url": "^0.11.0"
   },
   "devDependencies": {
