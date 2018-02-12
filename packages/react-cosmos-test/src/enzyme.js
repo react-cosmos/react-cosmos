@@ -18,12 +18,24 @@ export type EnzymeContextArgs = $Diff<TestContextArgs, { renderer: Renderer }>;
 
 type EnzymeWrapper = Wrapper & {
   update: () => any,
+  setProps: Object => any,
   find: (selector: ?Selector) => EnzymeWrapper
 };
 
-type EnzymeContextFunctions = ContextFunctions & {
+// From the Flow docs: "But when you have properties that overlap by having the
+// same name, it creates an intersection of the property type as well."
+// Thus we ensure that getWrapper is not an intersection of
+// ContextFunctions.getWrapper & EnzymeContextFunctions.getWrapper
+type BaseContextFunctions = $Diff<
+  ContextFunctions,
+  { getWrapper: () => Wrapper }
+>;
+
+type EnzymeContextFunctions = BaseContextFunctions & {
   getRootWrapper: () => EnzymeWrapper,
-  getWrapper: (selector: ?Selector) => EnzymeWrapper
+  getWrapper: (selector: ?Selector) => EnzymeWrapper,
+  set: (fixtureKey: string, fixtureValue: Object) => any,
+  setProps: Object => any
 };
 
 export function createContext(args: EnzymeContextArgs): EnzymeContextFunctions {
@@ -49,13 +61,14 @@ export function createContext(args: EnzymeContextArgs): EnzymeContextFunctions {
     return selector ? innerWrapper.find(selector) : innerWrapper;
   }
 
-  function setProps(props: any) {
+  function setProps(newProps: Object) {
     const { fixture } = args;
+    const prevProps = fixture.props || {};
     const updatedFixture = {
       ...fixture,
       props: {
-        ...fixture.props,
-        ...props
+        ...prevProps,
+        ...newProps
       }
     };
     getRootWrapper().setProps({ fixture: updatedFixture });

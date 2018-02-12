@@ -52,6 +52,7 @@
     "enzyme-adapter-react-16": "^1.0.4",
     "eslint-config-xo-react": "^0.15.0",
     "eslint-import-resolver-webpack": "^0.8.4",
+    "eslint-plugin-flowtype": "^2.43.0",
     "eslint-plugin-react": "^7.6.0",
     "file-loader": "^1.1.5",
     "flow-bin": "^0.64.0",
@@ -81,7 +82,11 @@
     "space": true,
     "parser": "babel-eslint",
     "plugins": [
-      "react"
+      "react",
+      "flowtype"
+    ],
+    "extends": [
+      "plugin:flowtype/recommended"
     ],
     "settings": {
       "import/resolver": {
@@ -120,7 +125,8 @@
       "import/order": 0,
       "no-mixed-operators": 0,
       "react/jsx-uses-vars": 1,
-      "react/jsx-uses-react": 1
+      "react/jsx-uses-react": 1,
+      "flowtype/generic-spacing": 0
     },
     "ignores": [
       "**/__fsmocks__/**",
