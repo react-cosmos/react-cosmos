@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-test",
-  "version": "3.4.0",
+  "version": "3.6.0",
   "description": "APIs for testing Cosmos fixtures in headless environments",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-test",
   "license": "MIT",

@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos",
-  "version": "3.4.0",
+  "version": "3.6.0",
   "description": "CLI for running React Cosmos inside webpack-powered apps",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos",
   "license": "MIT",
@@ -17,7 +17,7 @@
     "lodash.omit": "^4.5.0",
     "react-cosmos-config": "^3.3.0",
     "react-cosmos-loader": "^3.4.0",
-    "react-cosmos-playground": "^3.4.0",
+    "react-cosmos-playground": "^3.6.0",
     "react-cosmos-shared": "^3.1.1",
     "react-cosmos-voyager": "^3.1.1",
     "react-cosmos-voyager2": "^3.1.1",
