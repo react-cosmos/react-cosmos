@@ -862,6 +862,51 @@ test('redirects to home page after signing out', () => {
   expect(get('url')).toBe('/');
 });
 ```
+#### Updating fixtures in tests
+
+Sometimes you want to test your component updates correctly in response to props updates.  You can use `setProps` to update the props passed to your component.
+`setProps` merges existing props with passed in props.
+
+```js
+import createTestContext from 'react-cosmos-test/enzyme';
+import fixture from '../__fixtures__/button';
+
+const { mount, getWrapper, setProps } = createTestContext({ fixture });
+
+beforeEach(mount);
+
+test('responds to props being updated', () => {
+  expect(getWrapper('.btn').hasClass('warning')).toBeFalsy();
+  setProps({warning: true});
+  expect(getWrapper('.btn').hasClass('warning')).toBeTruthy();
+});
+
+```
+
+You can also completely replace any part of the fixture (including `props`) by using `set`.  To update part of the store, use `get` with `set` (use this with `props` to replace all the props)
+
+```js
+import createTestContext from 'react-cosmos-test/enzyme';
+import fixture from '../__fixtures__/connectedButton';
+
+const { mount, getWrapper, set, get } = createTestContext({ fixture });
+
+beforeEach(mount);
+
+test('responds to store being updated', () => {
+  const newStore = { showWarning : true};
+  set('reduxStore', newStore);
+  expect(getWrapper('.btn').hasClass('warning')).toBeTruthy();
+});
+
+test('updating store works too', () => {
+  const existingSTore = get('reduxStore');
+  const updatedStore = { ...existingStore, warningMessage: 'Uh Oh'};
+  set('reduxStore', newStore);
+  expect(getWrapper('.btn').text()).toBe('Uh Oh');
+});
+
+```
 
 #### createTestContext API
 
@@ -888,6 +933,8 @@ const { mount } = createTestContext({ fixture, proxies });
 * `getWrapper` Returns wrapper returned by renderer
 * `getRef` Get component ref (exclusively for Class components)
 * `getField` (or `get` for brevity) Returns updated fixture field
+* `set(fixtureKey, fixtureValue)`  _replaces_ part of fixture with passed in value.  Ex.  `set('reduxStore', newStoreState)`
+* `setProps(propsToMerge)` merges `propsToMerge` with existing fixture props, triggering re-render of component
 
 #### Global Jest snapshot
 
