@@ -10,7 +10,7 @@
     "install-react": "yarn remove react react-dom && yarn add",
     "install-react:0.14": "yarn install-react -- react@^0.14.9 react-dom@^0.14.9",
     "install-react:15": "yarn install-react -- react@^15.5.4 react-dom@^15.5.4",
-    "prettify": "prettier --write '{{{packages,examples}/*/src,cypress,scripts}/**/,}*.{js,jsx,css,less}'",
+    "prettify": "prettier --write '{{{packages,examples}/*/src,cypress,scripts}/**/,}*.{js,jsx,css,less,md}'",
     "lint": "xo --quiet",
     "start": "./examples/local-state/node_modules/.bin/cosmos --config examples/local-state/cosmos.config.js",
     "start:playground": "./packages/react-cosmos/bin/cosmos.js --config packages/react-cosmos-playground/cosmos.config.js",
