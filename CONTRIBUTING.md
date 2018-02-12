@@ -4,17 +4,17 @@ You seem to be interested in the inner workings of Cosmos. Good news, we've been
 
 Jump to:
 
-- [Mission](#mission)
-- [Goals](#goals)
-- [Roadmap](#roadmap)
-- [Tracking](#tracking)
-- [Architecture](#architecture)
-  - [Monorepo](#monorepo)
-  - [Playground & Loader](#playground--loader-communication)
-  - [webpack](#webpack)
-- [Proxy boilerplate](#proxy-boilerplate)
-  - [Testing proxies](#testing-proxies)
-- [How to contribute](#how-to-contribute)
+* [Mission](#mission)
+* [Goals](#goals)
+* [Roadmap](#roadmap)
+* [Tracking](#tracking)
+* [Architecture](#architecture)
+  * [Monorepo](#monorepo)
+  * [Playground & Loader](#playground--loader-communication)
+  * [webpack](#webpack)
+* [Proxy boilerplate](#proxy-boilerplate)
+  * [Testing proxies](#testing-proxies)
+* [How to contribute](#how-to-contribute)
 
 ## Mission
 
@@ -26,11 +26,11 @@ Cosmos is built on the assumption that complexity in large apps stems from hidde
 
 All contributions should be in line with these long term goals. Contributions that advance these goals have higher priority.
 
-- [#PainlessOnboarding](https://github.com/react-cosmos/react-cosmos/labels/%23PainlessOnboarding) DX is king. Minimize initial config and integrate easily with popular tools and starter kits.
+* [#PainlessOnboarding](https://github.com/react-cosmos/react-cosmos/labels/%23PainlessOnboarding) DX is king. Minimize initial config and integrate easily with popular tools and starter kits.
 
-- [#MockEverything](https://github.com/react-cosmos/react-cosmos/labels/%23MockEverything) Every component input can and should be mocked. Redux state, Router context, API responses. No input left unmocked.
+* [#MockEverything](https://github.com/react-cosmos/react-cosmos/labels/%23MockEverything) Every component input can and should be mocked. Redux state, Router context, API responses. No input left unmocked.
 
-- [#UniversalComponentPlayground](https://github.com/react-cosmos/react-cosmos/labels/%23UniversalComponentPlayground) Abstract the core from the React loader and allow other rendering engines to plug into Cosmos.
+* [#UniversalComponentPlayground](https://github.com/react-cosmos/react-cosmos/labels/%23UniversalComponentPlayground) Abstract the core from the React loader and allow other rendering engines to plug into Cosmos.
 
 ## Roadmap
 
@@ -38,9 +38,9 @@ High impact initiatives. By working on these exciting topics, you have the oppor
 
 > Warning: These are high-level tasks and they require further analysis and collaboration before they can be turned into concrete tasks
 
-- ~~[Redesign filesystem API](https://github.com/react-cosmos/react-cosmos/issues/440)~~
-- [Config generation](https://github.com/react-cosmos/react-cosmos/issues/452)
-- [Create Cosmos server](https://github.com/react-cosmos/react-cosmos/pull/383#issuecomment-328297128)
+* ~~[Redesign filesystem API](https://github.com/react-cosmos/react-cosmos/issues/440)~~
+* [Config generation](https://github.com/react-cosmos/react-cosmos/issues/452)
+* [Create Cosmos server](https://github.com/react-cosmos/react-cosmos/pull/383#issuecomment-328297128)
 
 ## Tracking
 
@@ -48,14 +48,15 @@ High impact initiatives. By working on these exciting topics, you have the oppor
 
 #### Issue labels
 
-- `hmm` Questions and support
-- `oops` Bugs
-- `i have a dream` Feature proposals
+* `hmm` Questions and support
+* `oops` Bugs
+* `i have a dream` Feature proposals
 
 Drafts progress through the following phases:
-- `needs love` Require feedback and a sound plan
-- `free for all` Ready to be picked up by anyone
-- *Assigned*
+
+* `needs love` Require feedback and a sound plan
+* `free for all` Ready to be picked up by anyone
+* _Assigned_
 
 There's also a label for each [long term goal](#goals).
 
@@ -65,13 +66,13 @@ There's also a label for each [long term goal](#goals).
 
 ### Monorepo
 
-React Cosmos is a [monorepo](packages) powered by [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) and  [Lerna](https://github.com/lerna/lerna). The monorepo structure makes it possible to publish independent packages while being able to have end-to-end tests for the whole project, and to easily link examples to unpublished packages.
+React Cosmos is a [monorepo](packages) powered by [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) and [Lerna](https://github.com/lerna/lerna). The monorepo structure makes it possible to publish independent packages while being able to have end-to-end tests for the whole project, and to easily link examples to unpublished packages.
 
 Important to note:
 
-- **Test and build tools are installed globally in the root node_modules.** This includes Jest, Babel, webpack, and their corresponding plugins and loaders. ESLint is also applied globally. Creating a new package has less overhead because of this.
+* **Test and build tools are installed globally in the root node_modules.** This includes Jest, Babel, webpack, and their corresponding plugins and loaders. ESLint is also applied globally. Creating a new package has less overhead because of this.
 
-- **React and webpack deps are installed globally in the root node_modules.** The linked packages and examples are sibling directories, so they each have a separate node_modules dir. But, when Cosmos packages are installed in a user codebase, they all share a common node_modules. We simulate the real life scenario by deduplicate these dependencies.
+* **React and webpack deps are installed globally in the root node_modules.** The linked packages and examples are sibling directories, so they each have a separate node_modules dir. But, when Cosmos packages are installed in a user codebase, they all share a common node_modules. We simulate the real life scenario by deduplicate these dependencies.
 
 Because of the latter, integration tests or examples for older React or webpack version are not possible inside the monorepo. We should create external repos for testing React 0.14.x or webpack 1.x.
 
@@ -123,7 +124,9 @@ const defaults = {
 };
 
 export default () => {
-  const { /* Expand options here... */ } = { ...defaults, ...options };
+  const {
+    /* Expand options here... */
+  } = { ...defaults, ...options };
 
   const NoopProxy = (props: ProxyProps) => {
     const { nextProxy, ...rest } = props;
@@ -137,14 +140,16 @@ export default () => {
 ```
 
 Notice the core requirements of a proxy:
-- Renders next proxy with same props
-- Advances the proxy chain – sends `props.nextProxy.next()` to next proxy
-- Implements or extends default proxy PropTypes
+
+* Renders next proxy with same props
+* Advances the proxy chain – sends `props.nextProxy.next()` to next proxy
+* Implements or extends default proxy PropTypes
 
 This is a very basic example. Here's what proxies might also do:
-- Implement lifecycle methods (mock stuff in constructor, revert it in componentWillUnmount)
-- Add extra DOM markup around NextProxy
-- Transform props of props.fixture (careful, tho.)
+
+* Implement lifecycle methods (mock stuff in constructor, revert it in componentWillUnmount)
+* Add extra DOM markup around NextProxy
+* Transform props of props.fixture (careful, tho.)
 
 ### Testing proxies
 
@@ -160,7 +165,7 @@ We are doing this for free, so be realistic and don't expect special treatment. 
 
 #### Ask for review
 
-Code review aside, also ask for review *before* implementing solution. Saves everybody time and effort.
+Code review aside, also ask for review _before_ implementing solution. Saves everybody time and effort.
 
 #### Get familiar with codebase
 
@@ -198,16 +203,17 @@ Use [Jest](https://facebook.github.io/jest/) for unit testing. Look inside `__te
 Make sure `yarn run lint` passes and add [xo](https://github.com/sindresorhus/xo) to your editor if possible.
 
 When naming a file:
-- Use *CamelCase* for components: `DragHandle.js` or `DragHandle/index.js`
-- Use *kebab-case* for any other path: `packages/react-cosmos-shared/src/resolve-user-path.js`
+
+* Use _CamelCase_ for components: `DragHandle.js` or `DragHandle/index.js`
+* Use _kebab-case_ for any other path: `packages/react-cosmos-shared/src/resolve-user-path.js`
 
 Please follow these rules or challenge them if you think it's worth it.
 
 #### Use Git conscientiously
 
-- [GitHub Flow](https://guides.github.com/introduction/flow/)
-- [Conventional Commits](https://conventionalcommits.org/) (important for generating release notes)
+* [GitHub Flow](https://guides.github.com/introduction/flow/)
+* [Conventional Commits](https://conventionalcommits.org/) (important for generating release notes)
 
 ---
 
-*Have a question or idea to share? See you on [Slack](https://join-react-cosmos.now.sh/).*
+_Have a question or idea to share? See you on [Slack](https://join-react-cosmos.now.sh/)._

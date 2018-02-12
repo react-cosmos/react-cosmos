@@ -10,7 +10,7 @@
     "install-react": "yarn remove react react-dom && yarn add",
     "install-react:0.14": "yarn install-react -- react@^0.14.9 react-dom@^0.14.9",
     "install-react:15": "yarn install-react -- react@^15.5.4 react-dom@^15.5.4",
-    "prettify": "prettier --write '{{{packages,examples}/*/src,cypress,scripts}/**/,}*.{js,jsx,css,less}'",
+    "prettify": "prettier --write '{{{packages,examples}/*/src,cypress,scripts}/**/,}*.{js,jsx,css,less,md}'",
     "lint": "xo --quiet",
     "start": "./examples/local-state/node_modules/.bin/cosmos --config examples/local-state/cosmos.config.js",
     "start:playground": "./packages/react-cosmos/bin/cosmos.js --config packages/react-cosmos-playground/cosmos.config.js",
@@ -52,6 +52,7 @@
     "enzyme-adapter-react-16": "^1.0.4",
     "eslint-config-xo-react": "^0.15.0",
     "eslint-import-resolver-webpack": "^0.8.4",
+    "eslint-plugin-flowtype": "^2.43.0",
     "eslint-plugin-react": "^7.6.0",
     "file-loader": "^1.1.5",
     "flow-bin": "^0.64.0",
@@ -81,7 +82,11 @@
     "space": true,
     "parser": "babel-eslint",
     "plugins": [
-      "react"
+      "react",
+      "flowtype"
+    ],
+    "extends": [
+      "plugin:flowtype/recommended"
     ],
     "settings": {
       "import/resolver": {
@@ -120,7 +125,8 @@
       "import/order": 0,
       "no-mixed-operators": 0,
       "react/jsx-uses-vars": 1,
-      "react/jsx-uses-react": 1
+      "react/jsx-uses-react": 1,
+      "flowtype/generic-spacing": 0
     },
     "ignores": [
       "**/__fsmocks__/**",

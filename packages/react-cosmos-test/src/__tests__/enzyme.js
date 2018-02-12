@@ -82,21 +82,25 @@ it('finds child inner wrapper via getWrapper with selector', async () => {
 it('calls setProps on rootWrapper when setProps is called', async () => {
   const { mount, setProps } = createContext({ fixture });
   await mount();
-  const propsToSet = { propName: 'propValue' };
-  setProps(propsToSet);
+
+  const newProps = { propName: 'propValue' };
+  setProps(newProps);
+
   expect(mockWrapper.setProps).toHaveBeenCalled();
 });
 
-it('calls setProps on rootWrapper with updated fixture that sets props', async () => {
+it('calls setProps on rootWrapper with fixture props', async () => {
   const { mount, setProps } = createContext({ fixture });
   await mount();
-  const propsToSet = { propName: 'propValue' };
-  setProps(propsToSet);
+
+  const props = { propName: 'propValue' };
+  setProps(props);
+
   const mockCall = mockWrapper.setProps.mock.calls[0][0];
-  expect(mockCall.fixture.props).toEqual(propsToSet);
+  expect(mockCall.fixture.props).toEqual(props);
 });
 
-it('calls setProps on rootWrapper with updated fixture that merges props', async () => {
+it('calls setProps on rootWrapper with merged fixture props', async () => {
   const fixtureWithExistingProps = {
     ...fixture,
     props: { existingKey: 'existingProp' }
@@ -105,8 +109,10 @@ it('calls setProps on rootWrapper with updated fixture that merges props', async
     fixture: fixtureWithExistingProps
   });
   await mount();
-  const propsToSet = { propName: 'propValue' };
-  setProps(propsToSet);
+
+  const newProps = { propName: 'propValue' };
+  setProps(newProps);
+
   const mockCall = mockWrapper.setProps.mock.calls[0][0];
   expect(mockCall.fixture.props).toEqual({
     existingKey: 'existingProp',
@@ -114,21 +120,25 @@ it('calls setProps on rootWrapper with updated fixture that merges props', async
   });
 });
 
-it('overwrites part of fixture via set', async () => {
+it('overwrites props via set', async () => {
   const { mount, set } = createContext({ fixture });
   await mount();
-  const propsToSet = { propName: 'propValue' };
-  set('props', propsToSet);
+
+  const newProps = { propName: 'propValue' };
+  set('props', newProps);
+
   const mockCall = mockWrapper.setProps.mock.calls[0][0];
-  expect(mockCall.fixture.props).toEqual(propsToSet);
+  expect(mockCall.fixture.props).toEqual(newProps);
 });
 
-it('can overwrite any part of the fixture via set', async () => {
-  const updatedFixture = { ...fixture, reduxStore: { foo: 'bar' } };
+it('overwrites any fixture part via set', async () => {
+  const updatedFixture = { ...fixture, reduxState: { foo: 'bar' } };
   const { mount, set } = createContext({ fixture: updatedFixture });
   await mount();
-  const newStore = { baz: 'buzz' };
-  set('reduxStore', newStore);
+
+  const newState = { baz: 'buzz' };
+  set('reduxState', newState);
+
   const mockCall = mockWrapper.setProps.mock.calls[0][0];
-  expect(mockCall.fixture.reduxStore).toEqual(newStore);
+  expect(mockCall.fixture.reduxState).toEqual(newState);
 });
