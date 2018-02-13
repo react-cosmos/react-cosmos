@@ -77,7 +77,7 @@ export async function extractComponentsFromFixtureFile(
     let fixtureNodes;
     if (t.isArrayExpression(fixtureBody)) {
       fixtureNodes = fixtureBody.elements;
-    } else if (t.isObjectExpression(fixtureBody)) {
+    } else if (fixtureBody) {
       fixtureNodes = [fixtureBody];
     }
 
@@ -90,11 +90,23 @@ export async function extractComponentsFromFixtureFile(
       let filePath = null;
 
       try {
+        let fixtureBody = fixtureNode;
+
         // Sometimes the fixture is referencing a previously declared var,
         // other times it is declared inline
-        const fixtureBody = t.isIdentifier(fixtureNode)
-          ? getVarBodyByName(vars, fixtureNode.name)
-          : fixtureNode;
+        if (t.isIdentifier(fixtureBody)) {
+          fixtureBody = getVarBodyByName(vars, fixtureNode.name);
+
+          if (!fixtureBody) {
+            throw new Error('Could not read fixture body');
+          }
+        }
+
+        // Sometimes the fixture is returned via a proxy function
+        // Eg. createFixture({ ... })
+        if (t.isCallExpression(fixtureBody)) {
+          fixtureBody = fixtureBody.arguments[0];
+        }
 
         if (!t.isObjectExpression(fixtureBody)) {
           throw new Error('Could not read fixture body');
