@@ -1,20 +1,11 @@
 import createReduxProxy from 'react-cosmos-redux-proxy';
-
-import { createStore, combineReducers } from 'redux';
-import { reducer as reduxFormReducer } from 'redux-form';
-
-import { devToolsEnhancer } from 'redux-devtools-extension';
-
-const formReducer = combineReducers({
-  form: reduxFormReducer // mounted under "form"
-});
+import configureStore from './configureStore';
 
 const ReduxProxy = createReduxProxy({
-  createStore: initialState => {
-    const store = createStore(formReducer, initialState, devToolsEnhancer());
-
-    return store;
-  }
+  createStore: initialState => configureStore(initialState)
 });
 
-export default [ReduxProxy];
+export default [
+  ReduxProxy
+  // ...other proxies
+];
