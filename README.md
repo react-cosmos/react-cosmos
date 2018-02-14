@@ -92,6 +92,7 @@ Jump to:
   * [Using Enzyme](#using-enzyme)
   * [Using a custom renderer](#using-a-custom-renderer)
   * [Capturing state changes](#capturing-state-changes)
+  * [Updating fixtures in tests](#updating-fixtures-in-tests)
   * [createTestContext API](#createtestcontext-api)
   * [Global Jest snapshot](#global-jest-snapshot)
 
@@ -863,6 +864,49 @@ test('redirects to home page after signing out', () => {
 });
 ```
 
+#### Updating fixtures in tests
+
+Sometimes we want to test that a component updates correctly in response to _prop_ changes. We can use `setProps` to pass new props to a component. `setProps` merges passed in props with existing props.
+
+```js
+import createTestContext from 'react-cosmos-test/enzyme';
+import fixture from '../__fixtures__/button';
+
+const { mount, getWrapper, setProps } = createTestContext({ fixture });
+
+beforeEach(mount);
+
+test('responds to props being updated', () => {
+  expect(getWrapper('.btn').hasClass('warning')).toBeFalsy();
+  setProps({ warning: true });
+  expect(getWrapper('.btn').hasClass('warning')).toBeTruthy();
+});
+```
+
+We can also replace a part of the fixture (including `props`) using `set`.
+
+```js
+import createTestContext from 'react-cosmos-test/enzyme';
+import fixture from '../__fixtures__/connectedButton';
+
+const { mount, getWrapper, set, get } = createTestContext({ fixture });
+
+beforeEach(mount);
+
+test('responds to new state', () => {
+  const newState = { showWarning: true };
+  set('reduxState', newState);
+  expect(getWrapper('.btn').hasClass('warning')).toBeTruthy();
+});
+
+test('responds to partially updated state', () => {
+  const existingState = get('reduxStore');
+  const updatedState = { ...existingState, warningMessage: 'Uh Oh' };
+  set('reduxStore', updatedState);
+  expect(getWrapper('.btn').text()).toBe('Uh Oh');
+});
+```
+
 #### createTestContext API
 
 The createTestContext API makes use of already configured proxies, which can be included in more ways.
@@ -887,7 +931,9 @@ const { mount } = createTestContext({ fixture, proxies });
 * `unmount` Calls unmount method of wrapper returned by renderer
 * `getWrapper` Returns wrapper returned by renderer
 * `getRef` Get component ref (exclusively for Class components)
-* `getField` (or `get` for brevity) Returns updated fixture field
+* `getField(fixtureKey)` (or `get` for brevity) Returns updated fixture field
+* `set(fixtureKey, fixtureValue)` _Replaces_ a fixture part with passed in value (triggers re-render)
+* `setProps(newProps)` _Merges_ passed in props with existing fixture props (triggers re-render)
 
 #### Global Jest snapshot
 

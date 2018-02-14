@@ -1,3 +1,5 @@
+// @flow
+
 import { importModule } from 'react-cosmos-shared';
 import { getComponents } from 'react-cosmos-voyager2/lib/client';
 import getUserModules from './user-modules';
@@ -11,7 +13,8 @@ import type {
   Component
 } from 'react-cosmos-voyager2/src/types';
 
-// eslint-disable-next-line no-undef
+declare var COSMOS_CONFIG: LoaderOpts;
+
 const loaderOpts: LoaderOpts = COSMOS_CONFIG;
 
 export default function() {
@@ -75,9 +78,17 @@ function getNormalizedFixtureModules(
 
     try {
       const fixtureFile = fixtureFiles.find(f => f.filePath === next);
+      if (!fixtureFile) {
+        throw new Error(`Missing fixture file for path: ${next}`);
+      }
+
       const { components } = fixtureFile;
-      const componentModule =
-        deprecatedComponentModules[components[0].filePath];
+      const component1 = components[0];
+      if (!component1 || !component1.filePath) {
+        throw new Error(`Missing component data for fixture path: ${next}`);
+      }
+
+      const componentModule = deprecatedComponentModules[component1.filePath];
       const component = importModule(componentModule);
 
       alteredFixtures.add(next);
