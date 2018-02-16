@@ -23,7 +23,7 @@ export default function createApolloProxy(options) {
       if (!endpoint && !client) {
         throw new Error(
           `
-It looks the Apollo Proxy is not configured! 
+It looks the Apollo Proxy is not configured!
 Give it:
 - a GraphQL endpoint to send GraphQL operations to;
 - a configured Apollo Client (maybe the one you use in your app?);
@@ -31,7 +31,15 @@ Read more at: https://github.com/react-cosmos/react-cosmos#react-apollo-graphql.
         );
       }
 
-      const { resolveWith, failWith } = this.props.fixture[fixtureKey] || {};
+      const mockKeys = ['resolveWith', 'failWith'];
+      const fixtureApolloKeys = flatObjectKeys(
+        mockKeys,
+        this.props.fixture[fixtureKey] || {}
+      );
+
+      const isMockedFixture = !!mockKeys.find(key =>
+        fixtureApolloKeys.includes(key)
+      );
 
       this.client =
         client ||
@@ -40,8 +48,8 @@ Read more at: https://github.com/react-cosmos/react-cosmos#react-apollo-graphql.
           link: new HttpLink({ uri: endpoint })
         });
 
-      if (resolveWith || failWith) {
-        const link = createFixtureLink({ resolveWith, failWith }).request;
+      if (isMockedFixture) {
+        const link = createFixtureLink(this.props.fixture[fixtureKey]).request;
 
         this.client.link = link;
       }
@@ -61,3 +69,13 @@ Read more at: https://github.com/react-cosmos/react-cosmos#react-apollo-graphql.
 
   return ApolloProxy;
 }
+
+export const flatObjectKeys = (keys, object, digNestedObjects = true) => {
+  return Object.entries(object).reduce((list, [key, value]) => {
+    if (!keys.includes(key) && typeof value === 'object' && digNestedObjects) {
+      return [...list, ...flatObjectKeys(keys, value, false)];
+    }
+
+    return [...list, key];
+  }, []);
+};
