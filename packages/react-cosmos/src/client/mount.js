@@ -17,7 +17,7 @@ declare var COSMOS_CONFIG: LoaderOpts;
 
 const loaderOpts: LoaderOpts = COSMOS_CONFIG;
 
-export default function() {
+export default function({ isDev }: { isDev: boolean } = {}) {
   const {
     fixtureModules,
     fixtureFiles,
@@ -51,7 +51,9 @@ export default function() {
     proxies: importModule(proxies),
     fixtures,
     loaderOpts,
-    dismissRuntimeErrors
+    // Send a noop callback for `dismissRuntimeErrors` when exporting, because
+    // react-error-overlay is only initialized in `development` env
+    dismissRuntimeErrors: isDev ? dismissRuntimeErrors : () => {}
   });
 }
 
