@@ -66,6 +66,7 @@ Jump to:
   * [Children](#children)
   * [State](#state)
   * [Init hook](#init-hook)
+  * [Fixture name and namespace](#fixture-name-and-namespace)
 * [Proxies](#proxies)
   * [What's a proxy?](#whats-a-proxy)
   * [Where to put proxies?](#where-to-put-proxies)
@@ -172,6 +173,27 @@ export default {
 
 Cosmos looks for `*.fixture` named files and files inside `__fixtures__` dirs by default. See [custom fixture paths](#custom-fixture-paths) for further customization.
 
+It is also possible to export an array of fixtures from a single file. You may want to define the [fixture name and namespace](#fixture-name-and-namespace) in this case.
+
+```js
+export default [
+  {
+    component: Input,
+    name: 'disabled',
+    props: {
+      disabled: true
+    }
+  },
+  {
+    component: Input,
+    name: 'enabled',
+    props: {
+      disabled: false
+    }
+  }
+];
+```
+
 #### Props
 
 Mocking props is the most basic thing a fixture can do.
@@ -233,35 +255,16 @@ export default {
 };
 ```
 
-#### Other fixture Properties
+#### Fixture name and namespace
 
-```
-{
-  name: // string - specify a title for the fixture. Otherwise it will default to the relevant component name
-  
-  namespace: // string - allows nesting of fixtures which share the same namespace
-}
-```
-
-It is also possible to export an array of fixtures from a single file. The above properties can be particularly useful in this case. For example
+The fixture name and namespace are detected automatically from the file name and file path respectively, but they can be overridden with custom values.
 
 ```js
-export default [{
+export default {
   component: SearchBox,
-  namespace: 'Searching for pets',
-  name: 'Dog search',
-  state: {
-    searchQuery: 'Who let the dogs out?'
-  }
-},
-{
-  component: SearchBox,
-  namespace: 'Searching for pets',
-  name: 'Dog search',
-  state: {
-    searchQuery: 'où est le chat?'
-  }
-}]
+  name: 'dog search',
+  namespace: 'dashboard/pets'
+};
 ```
 
 ### Proxies
