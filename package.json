@@ -55,7 +55,7 @@
     "eslint-plugin-flowtype": "^2.43.0",
     "eslint-plugin-react": "^7.6.1",
     "file-loader": "^1.1.6",
-    "flow-bin": "^0.65.0",
+    "flow-bin": "^0.66.0",
     "flow-typed": "^2.3.0",
     "glob": "^7.1.2",
     "html-webpack-plugin": "^2.30.1",
