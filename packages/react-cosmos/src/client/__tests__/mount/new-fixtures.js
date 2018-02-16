@@ -58,7 +58,7 @@ beforeEach(() => {
   global.DEPRECATED_COMPONENT_MODULES = [];
 
   // Require module after globals have been mocked
-  require('../../mount').default();
+  require('../../mount').default({ isDev: true });
 });
 
 it('sends proxies to loader', () => {
