@@ -917,30 +917,6 @@ test('responds to props being updated', () => {
 });
 ```
 
-We can also replace a part of the fixture (including `props`) using `set`.
-
-```js
-import createTestContext from 'react-cosmos-test/enzyme';
-import fixture from '../__fixtures__/connectedButton';
-
-const { mount, getWrapper, set, get } = createTestContext({ fixture });
-
-beforeEach(mount);
-
-test('responds to new state', () => {
-  const newState = { showWarning: true };
-  set('reduxState', newState);
-  expect(getWrapper('.btn').hasClass('warning')).toBeTruthy();
-});
-
-test('responds to partially updated state', () => {
-  const existingState = get('reduxStore');
-  const updatedState = { ...existingState, warningMessage: 'Uh Oh' };
-  set('reduxStore', updatedState);
-  expect(getWrapper('.btn').text()).toBe('Uh Oh');
-});
-```
-
 #### createTestContext API
 
 The createTestContext API makes use of already configured proxies, which can be included in more ways.
@@ -966,7 +942,6 @@ const { mount } = createTestContext({ fixture, proxies });
 * `getWrapper` Returns wrapper returned by renderer
 * `getRef` Get component ref (exclusively for Class components)
 * `getField(fixtureKey)` (or `get` for brevity) Returns updated fixture field
-* `set(fixtureKey, fixtureValue)` _Replaces_ a fixture part with passed in value (triggers re-render)
 * `setProps(newProps)` _Merges_ passed in props with existing fixture props (triggers re-render)
 
 #### Global Jest snapshot
