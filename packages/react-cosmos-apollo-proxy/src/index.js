@@ -62,6 +62,9 @@ Read more at: https://github.com/react-cosmos/react-cosmos#react-apollo-graphql.
             ? createFixtureLink({ apolloFixture, cache })
             : new HttpLink({ uri: endpoint })
         });
+
+      // enable the Apollo Client DevTools to recognize the Apollo Client instance
+      parent.__APOLLO_CLIENT__ = this.client;
     }
 
     render() {
