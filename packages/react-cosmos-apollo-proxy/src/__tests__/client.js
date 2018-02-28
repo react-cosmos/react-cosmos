@@ -1,5 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { HttpLink } from 'apollo-link-http';
 import createApolloProxy from '../index';
 import fixture from '../../../../examples/apollo/components/__fixtures__/Author/mock-with-mutation';
 
@@ -57,4 +60,25 @@ describe('proxy not configured', () => {
   });
 
   afterAll(() => (console.error = originalConsoleError));
+});
+
+describe('proxy configured with a client', () => {
+  let client;
+
+  beforeEach(() => {
+    client = new ApolloClient({
+      cache: new InMemoryCache(),
+      link: new HttpLink({ uri: 'https://xyz' })
+    });
+
+    setupTestWrapper({ client });
+  });
+
+  it('uses the client passed in the config', () => {
+    expect(wrapper.instance().client).toBe(client);
+  });
+
+  it('connects to the Apollo DevTools', () => {
+    expect(parent.__APOLLO_CLIENT__).toBe(client);
+  });
 });
