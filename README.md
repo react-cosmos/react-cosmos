@@ -171,7 +171,7 @@ export default {
 
 #### Where to put fixtures?
 
-Cosmos looks for `*.fixture` named files and files inside `__fixtures__` dirs by default. See [custom fixture paths](#custom-fixture-paths) for further customization.
+Cosmos looks for `*.fixture.js` named files and files inside `__fixtures__` dirs by default. See [custom fixture paths](#custom-fixture-paths) for further customization.
 
 It is also possible to export an array of fixtures from a single file. You may want to define the [fixture name and namespace](#fixture-name-and-namespace) in this case.
 
