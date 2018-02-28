@@ -58,7 +58,7 @@
     "flow-bin": "^0.65.0",
     "flow-typed": "^2.3.0",
     "glob": "^7.1.2",
-    "html-webpack-plugin": "^2.30.1",
+    "html-webpack-plugin": "^3.0.0",
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^22.2.2",
