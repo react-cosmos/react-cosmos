@@ -21,6 +21,7 @@
   "devDependencies": {
     "async-until": "^1.0.0",
     "fetch-mock": "^6.0.1",
+    "graphql-tag": "^2.8.0",
     "node-fetch": "^2.0.0"
   }
 }

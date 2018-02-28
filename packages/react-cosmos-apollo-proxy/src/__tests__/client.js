@@ -3,54 +3,74 @@ import { mount } from 'enzyme';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache, ID_KEY } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 import fetch from 'node-fetch';
 import fetchMock from 'fetch-mock';
 import until from 'async-until';
 import createApolloProxy from '../index';
-import exampleFixture from '../../../../examples/apollo/components/__fixtures__/Author/mock-with-mutation';
 
-global.fetch = fetch;
+const sampleQuery = gql`
+  query SampleQuery($authorId: Int!) {
+    author(authorId: $authorId) {
+      id
+      firstName
+    }
+  }
+`;
 
-// The final responsibility of proxies is to render the user's component at
-// the end of the proxy chain. While it goes beyond unit testing, testing a
-// complete proxy chain provides a clearer picture than solely dissecting the
-// props that the tested proxy passes to the next.
-const NextProxy = props => {
-  const { value: P, next } = props.nextProxy;
+const SampleComponent = ({ data }) => {
+  if (data.loading) {
+    return <span>Loading</span>;
+  }
 
-  return <P {...props} nextProxy={next()} />;
+  if (data.error) {
+    throw new Error(data.error);
+  }
+
+  return <span>{data.author.firstName}</span>;
 };
 
+const withData = graphql(sampleQuery, {
+  options: ({ authorId }) => ({ variables: { authorId } })
+});
+
+const sampleFixture = {
+  component: withData(SampleComponent),
+  props: {
+    authorId: 1
+  }
+};
+
+// used under the hood by HttpLink
+global.fetch = fetch;
+
+// render the component fixture
 const LastProxy = ({ fixture }) => <fixture.component {...fixture.props} />;
 
-// Vars populated from scratch before each test
+// vars populated from scratch before each test
 let onFixtureUpdate;
 let wrapper;
 
+// utility to get the fixture wrapped component
+const getWrappedComponent = () => {
+  return wrapper.find(sampleFixture.component.WrappedComponent);
+};
+
+// utility to instantiate the proxy and the fixture
 const setupTestWrapper = ({ proxyConfig, fixture } = {}) => {
-  // Create Proxy with default options
+  // create Proxy with default options
   const ApolloProxy = createApolloProxy(proxyConfig);
 
-  // Fixture updates from inner proxies need to bubble up to the root proxy
-  onFixtureUpdate = () => {
-    console.log('updating fixture!');
-  };
+  onFixtureUpdate = jest.fn();
 
-  // Mouting is more useful because it calls lifecycle methods and enables
-  // DOM interaction
   wrapper = mount(
     <ApolloProxy
       nextProxy={{
-        // Besides rendering the next proxy, we also need to ensure the 2nd
-        // next proxy is passed to the next proxy for further chaining. It
-        // might take a few reads to grasp this...
-        value: NextProxy,
-        next: () => ({
-          value: LastProxy,
-          next: () => {}
-        })
+        value: LastProxy,
+        next: () => {}
       }}
-      fixture={fixture || exampleFixture}
+      fixture={fixture || sampleFixture}
       onComponentRef={() => {}}
       onFixtureUpdate={onFixtureUpdate}
     />
@@ -60,13 +80,17 @@ const setupTestWrapper = ({ proxyConfig, fixture } = {}) => {
 describe('proxy not configured', () => {
   // don't show the error in the console (cosmetic purpose)
   const originalConsoleError = console.error;
-  beforeAll(() => (console.error = () => {}));
+  beforeAll(() => {
+    console.error = () => {};
+  });
 
   it('throws an error', () => {
     expect(() => setupTestWrapper()).toThrow();
   });
 
-  afterAll(() => (console.error = originalConsoleError));
+  afterAll(() => {
+    console.error = originalConsoleError;
+  });
 });
 
 describe('proxy configured with a client', () => {
@@ -91,54 +115,65 @@ describe('proxy configured with a client', () => {
 });
 
 describe('proxy configured with an endpoint', () => {
-  const mockedResponse = {
-    data: {
-      author: {
-        __typename: 'Author',
-        id: 0,
-        [ID_KEY]: 'Author:0',
-        firstName: 'Jane Dough',
-        posts: [
-          {
-            __typename: 'Post',
-            id: 0,
-            [ID_KEY]: 'Post:0',
-            title: 'Play pipo with class',
-            votes: 42
-          }
-        ]
-      }
+  const resolveWith = {
+    author: {
+      __typename: 'Author',
+      id: 1,
+      firstName: 'Jane Dough',
+      [ID_KEY]: 'Author:1'
     }
   };
 
-  fetchMock.post('https://xyz', mockedResponse);
+  beforeAll(() => {
+    fetchMock.post('https://xyz', { data: resolveWith });
+  });
 
-  const getWrappedComponent = () => {
-    return wrapper.find(exampleFixture.component.WrappedComponent);
-  };
+  afterEach(() => {
+    fetchMock.reset();
+  });
 
-  it('uses a default http link if the fixture is not mocked', async () => {
+  it('uses a default http link if the fixture has not mocked data', async () => {
     setupTestWrapper({
       proxyConfig: {
         endpoint: 'https://xyz'
-      },
-      fixture: {
-        component: exampleFixture.component,
-        props: {
-          authorId: 1
-        }
       }
     });
 
+    expect(fetchMock.called('https://xyz', 'POST')).toBe(true);
+
+    // wait for the fake network request to complete
     await until(() => {
-      // note: why do we need to update manually the wrapper?
       wrapper.update();
 
       return !getWrappedComponent().props().data.loading;
     });
 
     expect(getWrappedComponent().props().data.author).toEqual(
-      mockedResponse.data.author
+      resolveWith.author
+    );
+  });
+
+  it('uses a fixture link if the fixture has mocked data', async () => {
+    setupTestWrapper({
+      proxyConfig: {
+        endpoint: 'https://xyz'
+      },
+      fixture: {
+        ...sampleFixture,
+        apollo: {
+          resolveWith
+        }
+      }
+    });
+
+    // no network requests issued
+    expect(fetchMock.called('https://xyz', 'POST')).toBe(false);
+
+    // no loading because synchronous return of the fixture data
+    expect(getWrappedComponent().props().data.loading).toBe(false);
+
+    expect(getWrappedComponent().props().data.author).toEqual(
+      resolveWith.author
     );
   });
 });
