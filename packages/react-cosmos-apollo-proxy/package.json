@@ -17,5 +17,10 @@
     "react-apollo": "^2.0.4",
     "react-cosmos-shared": "^3.6.1"
   },
-  "xo": false
+  "xo": false,
+  "devDependencies": {
+    "async-until": "^1.0.0",
+    "fetch-mock": "^6.0.1",
+    "node-fetch": "^2.0.0"
+  }
 }
