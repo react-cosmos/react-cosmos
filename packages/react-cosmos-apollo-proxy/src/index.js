@@ -11,7 +11,7 @@ const defaults = {
 };
 
 // utility to find mock keys inside a fixture
-export const flatObjectKeys = (keys, object, digNestedObjects = true) => {
+const flatObjectKeys = (keys, object, digNestedObjects = true) => {
   return Object.entries(object).reduce((list, [key, value]) => {
     if (!keys.includes(key) && typeof value === 'object' && digNestedObjects) {
       // only "dig" one level deep
@@ -35,7 +35,7 @@ export default function createApolloProxy(options) {
       if (!endpoint && !client) {
         throw new Error(
           `
-It looks the Apollo Proxy is not configured!
+It looks like the Apollo Proxy is not configured!
 Give it:
 - a GraphQL endpoint to send GraphQL operations to;
 - a configured Apollo Client (maybe the one you use in your app?);
