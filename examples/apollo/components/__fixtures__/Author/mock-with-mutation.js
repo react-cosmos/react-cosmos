@@ -4,7 +4,8 @@ export default {
   component: Author,
 
   props: {
-    authorId: 1
+    authorId: 1,
+    upvoteEnabled: true
   },
   apollo: {
     PostsForAuthor: {
@@ -25,9 +26,20 @@ export default {
         }
       }
     },
-    SomeOtherQuery: {
-      resolveWith: {
-        xyz: 123
+    UpvotePost: {
+      resolveWith: ({ cache, variables }) => {
+        const typename = 'Post';
+
+        const data = cache.extract();
+
+        const post = data[`${typename}:${variables.postId}`];
+
+        return {
+          upvotePost: {
+            ...post,
+            votes: post.votes + 1
+          }
+        };
       }
     }
   }

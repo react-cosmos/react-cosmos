@@ -31,28 +31,25 @@ Read more at: https://github.com/react-cosmos/react-cosmos#react-apollo-graphql.
         );
       }
 
+      const apolloFixture = this.props.fixture[fixtureKey] || {};
       const mockKeys = ['resolveWith', 'failWith'];
-      const fixtureApolloKeys = flatObjectKeys(
-        mockKeys,
-        this.props.fixture[fixtureKey] || {}
-      );
+
+      const fixtureApolloKeys = flatObjectKeys(mockKeys, apolloFixture);
 
       const isMockedFixture = !!mockKeys.find(key =>
         fixtureApolloKeys.includes(key)
       );
 
+      const cache = new InMemoryCache();
+
       this.client =
         client ||
         new ApolloClient({
-          cache: new InMemoryCache(),
-          link: new HttpLink({ uri: endpoint })
+          cache,
+          link: isMockedFixture
+            ? createFixtureLink({ apolloFixture, cache })
+            : new HttpLink({ uri: endpoint })
         });
-
-      if (isMockedFixture) {
-        const link = createFixtureLink(this.props.fixture[fixtureKey]).request;
-
-        this.client.link = link;
-      }
     }
 
     render() {
@@ -73,6 +70,7 @@ Read more at: https://github.com/react-cosmos/react-cosmos#react-apollo-graphql.
 export const flatObjectKeys = (keys, object, digNestedObjects = true) => {
   return Object.entries(object).reduce((list, [key, value]) => {
     if (!keys.includes(key) && typeof value === 'object' && digNestedObjects) {
+      // only "dig" one level deep
       return [...list, ...flatObjectKeys(keys, value, false)];
     }
 
