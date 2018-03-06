@@ -215,6 +215,9 @@ export default {
 Composition is the name of the game and many React components expect [children](https://facebook.github.io/react/docs/jsx-in-depth.html#children-in-jsx). You can specify your children just like you would any other prop:
 
 ```jsx
+// React needs to be in scope for JSX to work
+import React from 'react';
+
 export default {
   component: Text,
   props: {
