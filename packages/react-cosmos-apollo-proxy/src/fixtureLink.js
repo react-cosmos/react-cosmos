@@ -1,6 +1,6 @@
 import { ApolloLink, Observable } from 'apollo-link';
 
-export function createFixtureLink({ apolloFixture, cache }) {
+export function createFixtureLink({ apolloFixture, cache, fixture }) {
   return new ApolloLink(
     ({ operationName, variables }) =>
       new Observable(observer => {
@@ -14,7 +14,7 @@ export function createFixtureLink({ apolloFixture, cache }) {
         observer.next({
           data:
             typeof resolveWith === 'function'
-              ? resolveWith({ cache, variables })
+              ? resolveWith({ cache, variables, fixture })
               : resolveWith
         });
 

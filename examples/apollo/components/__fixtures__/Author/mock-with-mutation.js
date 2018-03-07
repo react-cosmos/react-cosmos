@@ -1,10 +1,10 @@
-import Author from '../../Author';
+import Author, { QUERY } from '../../Author';
 
 export default {
   component: Author,
 
   props: {
-    authorId: 1,
+    authorId: 123,
     upvoteEnabled: true
   },
   apollo: {
@@ -27,17 +27,20 @@ export default {
       }
     },
     UpvotePost: {
-      resolveWith: ({ cache, variables }) => {
-        const typename = 'Post';
+      resolveWith: ({ cache, variables, fixture }) => {
+        const data = cache.readQuery({
+          query: QUERY,
+          variables: { authorId: fixture.props.authorId }
+        });
 
-        const data = cache.extract();
-
-        const post = data[`${typename}:${variables.postId}`];
+        const post = data.author.posts.find(
+          post => post.id === variables.postId
+        );
 
         return {
           upvotePost: {
             ...post,
-            votes: post.votes + 1
+            votes: post.votes + 10
           }
         };
       }

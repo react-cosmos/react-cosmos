@@ -59,7 +59,11 @@ Read more at: https://github.com/react-cosmos/react-cosmos#react-apollo-graphql.
         new ApolloClient({
           cache,
           link: isMockedFixture
-            ? createFixtureLink({ apolloFixture, cache })
+            ? createFixtureLink({
+                apolloFixture,
+                cache,
+                fixture: this.props.fixture
+              })
             : new HttpLink({ uri: endpoint })
         });
 

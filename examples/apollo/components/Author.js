@@ -2,28 +2,27 @@ import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 
-const withData = graphql(
-  gql`
-    query PostsForAuthor($authorId: Int!) {
-      author(id: $authorId) {
+export const QUERY = gql`
+  query PostsForAuthor($authorId: Int!) {
+    author(id: $authorId) {
+      id
+      firstName
+      posts {
         id
-        firstName
-        posts {
-          id
-          title
-          votes
-        }
+        title
+        votes
       }
     }
-  `,
-  {
-    options: ({ authorId }) => ({
-      variables: { authorId }
-    })
   }
-);
+`;
 
-const withMutation = graphql(gql`
+const withData = graphql(QUERY, {
+  options: ({ authorId }) => ({
+    variables: { authorId }
+  })
+});
+
+export const MUTATION = gql`
   mutation UpvotePost($postId: Int!) {
     upvotePost(postId: $postId) {
       id
@@ -31,7 +30,9 @@ const withMutation = graphql(gql`
       votes
     }
   }
-`);
+`;
+
+const withMutation = graphql(MUTATION);
 
 class Author extends Component {
   handleUpvote = postId => () => {

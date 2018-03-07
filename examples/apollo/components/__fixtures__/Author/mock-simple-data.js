@@ -4,7 +4,7 @@ export default {
   component: Author,
 
   props: {
-    authorId: 1
+    authorId: 123
   },
   apollo: {
     resolveWith: {
