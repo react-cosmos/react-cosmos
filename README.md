@@ -465,46 +465,165 @@ Check out the [React Router example](examples/react-router) to see the proxy in 
 
 #### React Apollo (GraphQL)
 
-If you use the [React integration](http://dev.apollodata.com/react/) of [Apollo Client](http://dev.apollodata.com/) to provide data in your app, you may want to provide mocks for isolated UI testing with GraphQL.
-Your components wrapped with the `graphql` higher-order component provided by `react-apollo` depends on the `ApolloProvider` defined at the top-level of your app. This proxy does that for you!
+If you use the [React integration](http://dev.apollodata.com/react/) of [Apollo Client](http://dev.apollodata.com/) to provide data in your app, you may want to:
+
+* work on your data components in isolation ;
+* provide static or dynamic mocks to prototype your components:
+
+This proxy wraps your components with the `ApolloProvider` so they can render in Cosmos like they would normally in your app, and it .
 
 ##### Configuration
 
 Provide:
 
-* GraphQL type definitions
-* A [Mock object like you would with `graphql-tools`](http://dev.apollodata.com/tools/graphql-tools/mocking.html)
+* The GraphQL `endpoint` you send operations to
+* Or The `client` used in your app
 
 ```js
 // cosmos.proxies.js
 import createApolloProxy from 'react-cosmos-apollo-proxy';
 
-const typeDefs = `
-  type Query {
-    hello(who: String): String
-  }
-`;
-
-const mocks = {
-  Query: () => ({
-    hello: (root, { who }) => `Hello ${who ? who : 'C O S M O S'}`
-  })
-};
+// option 1: specify a graphql endpoint
 
 export default [
   createApolloProxy({
-    typeDefs,
-    mocks
+    endpoint: 'https://my.api.xyz/graphql'
   })
   // ...other proxies
 ];
 ```
 
-##### Activation
+```js
+// cosmos.proxies.js
+import createApolloProxy from 'react-cosmos-apollo-proxy';
 
-It's activated out of the box!
+// option 2: use the client from your app
 
-Check out the [Apollo example](examples/apollo) to see `react-cosmos-apollo-proxy` in action.
+import myConfiguredClient from './src/client.js';
+
+export default [
+  createApolloProxy({
+    client: myConfiguredClient
+  })
+  // ...other proxies
+];
+```
+
+##### "Live" behavior
+
+Once configured, your components enhanced by `react-apollo` will behave as they would normally in your app, sending operation via your own client or to the endpoint passed specified in `cosmos.proxies.js`.
+
+##### Mocking a response.
+
+Mocking at the fixture level is done by specifying an `apollo` key in your fixture.
+
+The proxy will look for a `resolveWith` or a `failWith` key in order to return the appropriate mock value: this can be an object or a function returning an object.
+
+See examples below or check [the fixtures defined in the Apollo example](examples/apollo/components/__fixtures__/Author).
+
+##### Static response
+
+```js
+export default {
+  component: Author,
+  props: {
+    authorId: 123
+  },
+  apollo: {
+    resolveWith: {
+      author: {
+        __typename: 'Author',
+        id: 123,
+        firstName: 'Ovidiu'
+      }
+    }
+  }
+};
+```
+
+##### Dynamic response
+
+```js
+export default {
+  component: Author,
+  props: {
+    authorId: 123
+  },
+  apollo: {
+    resolveWith: ({ cache, variables, fixture }) => ({
+      author: {
+        __typename: 'Author',
+        id: variables.authorId,
+        firstName: variables.authorId === 123 ? 'Ovidiu' : 'Xavier'
+      }
+    })
+  }
+};
+```
+
+##### Named responses
+
+If your fixture's component is enhanced by multiple operations (like a query and a mutation), you can also provide the name of the operation so the proxy knows which response corresponds to which operation.
+
+Below an example with a query & a mutation:
+
+```js
+export default {
+  component: Author,
+
+  props: {
+    authorId: 123
+  },
+  apollo: {
+    // mocked response for the query named PostsForAuthor
+    PostsForAuthor: {
+      resolveWith: {
+        author: {
+          __typename: 'Author',
+          id: 123,
+          firstName: 'Ovidiu',
+          posts: [
+            {
+              __typename: 'Post',
+              id: 456,
+              title: 'Testing React Components',
+              votes: 1234
+            },
+            {
+              __typename: 'Post',
+              id: 789,
+              title: 'When to assert?',
+              votes: 56
+            }
+          ]
+        }
+      }
+    },
+    // mocked response for the mutation named UpvotePost
+    UpvotePost: {
+      resolveWith: ({ cache, variables, fixture }) => {
+        const data = cache.readQuery({
+          query: QUERY,
+          variables: { authorId: fixture.props.authorId }
+        });
+
+        const post = data.author.posts.find(
+          post => post.id === variables.postId
+        );
+
+        return {
+          upvotePost: {
+            ...post,
+            votes: post.votes + 10
+          }
+        };
+      }
+    }
+  }
+};
+```
+
+Check out the [Apollo example](examples/apollo) to see `react-cosmos-apollo-proxy` in action! 🚀
 
 #### Fetch
 
