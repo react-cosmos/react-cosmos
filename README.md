@@ -513,7 +513,7 @@ export default [
 
 Once configured, your components enhanced by `react-apollo` will behave as they would normally in your app, sending operation via your own client or to the endpoint passed specified in `cosmos.proxies.js`.
 
-##### Mocking a response.
+##### Mocking a response with a result or an error
 
 Mocking at the fixture level is done by specifying an `apollo` key in your fixture.
 
@@ -618,6 +618,22 @@ export default {
           }
         };
       }
+    }
+  }
+};
+```
+
+### Failing response
+
+```js
+export default {
+  component: Author,
+  props: {
+    authorId: 123
+  },
+  apollo: {
+    failWith: {
+      message: 'Something went bad, please try again!'
     }
   }
 };
