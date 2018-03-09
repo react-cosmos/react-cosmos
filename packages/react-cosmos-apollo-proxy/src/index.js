@@ -58,14 +58,16 @@ Read more at: https://github.com/react-cosmos/react-cosmos#react-apollo-graphql.
         client ||
         new ApolloClient({
           cache,
-          link: isMockedFixture
-            ? createFixtureLink({
-                apolloFixture,
-                cache,
-                fixture: this.props.fixture
-              })
-            : new HttpLink({ uri: endpoint })
+          link: new HttpLink({ uri: endpoint })
         });
+
+      if (isMockedFixture) {
+        this.client.link = createFixtureLink({
+          apolloFixture,
+          cache,
+          fixture: this.props.fixture
+        });
+      }
 
       // enable the Apollo Client DevTools to recognize the Apollo Client instance
       parent.__APOLLO_CLIENT__ = this.client;
