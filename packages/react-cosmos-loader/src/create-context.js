@@ -2,6 +2,7 @@
 
 import until from 'async-until';
 import React from 'react';
+import createStateProxy from 'react-cosmos-state-proxy';
 import Loader from './components/Loader';
 import { isComponentClass } from './utils/is-component-class';
 
@@ -39,6 +40,7 @@ export function createContext(args: ContextArgs): ContextFunctions {
   let updatedFixture = { ...fixture };
   let compRefCalled = false;
   let compRef: ?ComponentRef;
+  let StateProxy;
 
   function getRef() {
     if (!compRef) {
@@ -82,9 +84,13 @@ export function createContext(args: ContextArgs): ContextFunctions {
           updatedFixture = { ...fixture };
         }
 
+        if (!StateProxy) {
+          StateProxy = createStateProxy();
+        }
+
         wrapper = renderer(
           <Loader
-            proxies={proxies}
+            proxies={[...proxies, StateProxy]}
             fixture={updatedFixture}
             onComponentRef={ref => {
               // Sometimes the component unmounts instantly (eg. redirects on
