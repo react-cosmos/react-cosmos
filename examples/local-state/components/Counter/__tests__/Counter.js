@@ -1,6 +1,6 @@
 import createTestContext from 'react-cosmos-test/enzyme';
 import until from 'async-until';
-import fiveClicksFixture from './__fixtures__/five-clicks';
+import fiveClicksFixture from '../__fixtures__/five-clicks';
 
 const { mount, get, getWrapper } = createTestContext({
   fixture: fiveClicksFixture

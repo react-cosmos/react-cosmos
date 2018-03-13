@@ -10,7 +10,6 @@ const mockProxy = () => {};
 const mockLoaderOpts = { containerQuerySelector: '#app123' };
 
 const mockRenderer = {};
-const mockStateProxy = {};
 const mockErrorCatchProxy = {};
 const mockDismissRuntimeErrors = () => {};
 
