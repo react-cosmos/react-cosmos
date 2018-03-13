@@ -1,6 +1,5 @@
 // @flow
 
-import createStateProxy from 'react-cosmos-state-proxy';
 import createErrorCatchProxy from './components/ErrorCatchProxy';
 import { createDomRenderer } from './dom-renderer';
 import { connectLoader } from './connect-loader';
@@ -15,7 +14,6 @@ type Args = {
   dismissRuntimeErrors?: Function
 };
 
-let StateProxy;
 let ErrorCatchProxy;
 
 export function mount(args: Args) {
@@ -23,14 +21,13 @@ export function mount(args: Args) {
   const renderer = createDomRenderer(loaderOpts);
 
   // Reuse proxy instances
-  if (!StateProxy) {
-    StateProxy = createStateProxy();
+  if (!ErrorCatchProxy) {
     ErrorCatchProxy = createErrorCatchProxy();
   }
 
   connectLoader({
     renderer,
-    proxies: [ErrorCatchProxy, ...proxies, StateProxy],
+    proxies: [ErrorCatchProxy, ...proxies],
     fixtures,
     dismissRuntimeErrors
   });
