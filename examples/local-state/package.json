@@ -5,11 +5,16 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/local-state",
   "license": "MIT",
   "scripts": {
-    "start": "cosmos"
+    "start": "cosmos",
+    "test": "node ../../node_modules/jest-cli/bin/jest.js --watch --config ../../jest.config.json"
   },
   "dependencies": {
     "react-cosmos": "^3.7.1"
   },
   "xo": false,
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "async-until": "^1.0.0",
+    "react-cosmos-test": "^3.6.1"
+  }
 }
