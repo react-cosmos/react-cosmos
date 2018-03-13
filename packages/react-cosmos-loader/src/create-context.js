@@ -85,7 +85,7 @@ export function createContext(args: ContextArgs): ContextFunctions {
         }
 
         if (!StateProxy) {
-          StateProxy = createStateProxy();
+          StateProxy = createStateProxy({ updateInterval: 50 });
         }
 
         wrapper = renderer(
