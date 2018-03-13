@@ -14,7 +14,6 @@ const mockStateProxy = {};
 const mockErrorCatchProxy = {};
 const mockDismissRuntimeErrors = () => {};
 
-jest.mock('react-cosmos-state-proxy', () => jest.fn(() => mockStateProxy));
 jest.mock('../components/ErrorCatchProxy', () =>
   jest.fn(() => mockErrorCatchProxy)
 );
@@ -57,10 +56,6 @@ it('passes user proxies to loaderConnect', () => {
 
 it('includes ErrorCatchProxy', () => {
   expect(getProxiesFromLastCall()).toContain(mockErrorCatchProxy);
-});
-
-it('includes StateProxy', () => {
-  expect(getProxiesFromLastCall()).toContain(mockStateProxy);
 });
 
 it('passes fixtures to loaderConnect', () => {
