@@ -10,12 +10,12 @@ describe('ES module / Current working directory path includes "."', () => {
 
   beforeEach(async () => {
     files = await findFixtureFiles({
-      rootPath: join(__dirname, '.fsmocks')
+      rootPath: join(__dirname, '.dot/__fsmocks__')
     });
   });
 
   it('has fixture path', () => {
-    expect(files[0].filePath).toBe(resolve('./.fsmocks/fixture'));
+    expect(files[0].filePath).toBe(resolve('./.dot/__fsmocks__/fixture'));
   });
 
   it('has component name', () => {
@@ -23,6 +23,8 @@ describe('ES module / Current working directory path includes "."', () => {
   });
 
   it('has component path', () => {
-    expect(files[0].components[0].filePath).toBe(resolve('./.fsmocks/Italic'));
+    expect(files[0].components[0].filePath).toBe(
+      resolve('./.dot/__fsmocks__/Italic')
+    );
   });
 });
