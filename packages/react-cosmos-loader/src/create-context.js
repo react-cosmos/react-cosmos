@@ -14,6 +14,7 @@ import type {
 } from './types';
 
 let wrapper: ?Wrapper;
+const StateProxy = createStateProxy({ updateInterval: 50 });
 
 /**
  * Generalized way to render fixtures, without any assumptions on the renderer.
@@ -40,7 +41,6 @@ export function createContext(args: ContextArgs): ContextFunctions {
   let updatedFixture = { ...fixture };
   let compRefCalled = false;
   let compRef: ?ComponentRef;
-  let StateProxy;
 
   function getRef() {
     if (!compRef) {
@@ -82,10 +82,6 @@ export function createContext(args: ContextArgs): ContextFunctions {
 
           // Bring fixture to its initial state
           updatedFixture = { ...fixture };
-        }
-
-        if (!StateProxy) {
-          StateProxy = createStateProxy({ updateInterval: 50 });
         }
 
         wrapper = renderer(
