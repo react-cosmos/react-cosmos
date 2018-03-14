@@ -39,7 +39,7 @@ export async function findFixtureFiles(
     absolute: true,
     ignore: '**/node_modules/**'
   });
-  const fixturePaths = micromatch(allPaths, fileMatch);
+  const fixturePaths = micromatch(allPaths, fileMatch, { dot: true });
   const fixtureFiles = [];
 
   // Can't use forEach because we want each (async) loop to be serial
