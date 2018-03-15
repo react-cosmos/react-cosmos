@@ -54,6 +54,8 @@ let wrapper;
 
 // utility to get the fixture wrapped component
 const getWrappedComponent = () => {
+  wrapper.update();
+
   return wrapper.find(sampleFixture.component.WrappedComponent);
 };
 
@@ -142,11 +144,7 @@ describe('proxy configured with an endpoint', () => {
     expect(fetchMock.called('https://xyz', 'POST')).toBe(true);
 
     // wait for the fake network request to complete
-    await until(() => {
-      wrapper.update();
-
-      return !getWrappedComponent().props().data.loading;
-    });
+    await until(() => !getWrappedComponent().props().data.loading);
 
     expect(getWrappedComponent().props().data.author).toEqual(
       resolveWith.author

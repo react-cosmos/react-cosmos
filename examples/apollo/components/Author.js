@@ -19,7 +19,8 @@ export const QUERY = gql`
 const withData = graphql(QUERY, {
   options: ({ authorId }) => ({
     variables: { authorId }
-  })
+  }),
+  alias: 'withData'
 });
 
 export const MUTATION = gql`
@@ -32,7 +33,7 @@ export const MUTATION = gql`
   }
 `;
 
-const withMutation = graphql(MUTATION);
+const withMutation = graphql(MUTATION, { alias: 'withMutation' });
 
 class Author extends Component {
   handleUpvote = postId => () => {

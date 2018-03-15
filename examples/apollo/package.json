@@ -12,7 +12,7 @@
     "graphql-tag": "^2.7.3",
     "graphql-tools": "^2.14.1",
     "react-apollo": "^2.0.4",
-    "react-cosmos": "^3.2.0",
+    "react-cosmos": "^3.7.1",
     "react-cosmos-apollo-proxy": "^3.6.1",
     "react-cosmos-shared": "^3.6.1"
   },

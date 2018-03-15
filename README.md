@@ -467,10 +467,10 @@ Check out the [React Router example](examples/react-router) to see the proxy in 
 
 If you use the [React integration](http://dev.apollodata.com/react/) of [Apollo Client](http://dev.apollodata.com/) to provide data in your app, you may want to:
 
-* work on your data components in isolation ;
-* provide static or dynamic mocks to prototype your components:
+* Work on your data components in isolation
+* Provide static or dynamic mocks to prototype your components
 
-This proxy wraps your components with the `ApolloProvider` so they can render in Cosmos like they would normally in your app, and it .
+This proxy wraps your components with the `ApolloProvider` so they can render in Cosmos like they would normally in your app. Then, you'll be able to consume directly your API or mock its response.
 
 ##### Configuration
 
@@ -623,7 +623,7 @@ export default {
 };
 ```
 
-### Failing response
+##### Failing response
 
 ```js
 export default {
