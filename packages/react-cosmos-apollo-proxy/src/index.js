@@ -12,7 +12,8 @@ const defaults = {
 
 // utility to find mock keys inside a fixture
 const flatObjectKeys = (keys, object, digNestedObjects = true) => {
-  return Object.entries(object).reduce((list, [key, value]) => {
+  return Object.keys(object).reduce((list, key) => {
+    const value = object[key];
     if (!keys.includes(key) && typeof value === 'object' && digNestedObjects) {
       // only "dig" one level deep
       return [...list, ...flatObjectKeys(keys, value, false)];
