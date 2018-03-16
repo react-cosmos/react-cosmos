@@ -1,9 +1,26 @@
+// # Posts and Authors example from graphql-tools docs
+// This project was created with [Apollo Launchpad](https://launchpad.graphql.com)
+// You can see the original pad at [https://launchpad.graphql.com/1jzxrj179](https://launchpad.graphql.com/1jzxrj179)
+
 import { find, filter } from 'lodash';
 import { makeExecutableSchema } from 'graphql-tools';
 import express from 'express';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+
+const authors = [
+  { id: 1, firstName: 'Tom', lastName: 'Coleman' },
+  { id: 2, firstName: 'Sashko', lastName: 'Stubailo' },
+  { id: 3, firstName: 'Mikhail', lastName: 'Novikov' }
+];
+
+const posts = [
+  { id: 1, authorId: 1, title: 'Introduction to GraphQL', votes: 2 },
+  { id: 2, authorId: 2, title: 'Welcome to Apollo', votes: 3 },
+  { id: 3, authorId: 2, title: 'Advanced GraphQL', votes: 1 },
+  { id: 4, authorId: 3, title: 'Launchpad is Cool', votes: 7 }
+];
 
 const typeDefs = `
   type Author {
@@ -37,7 +54,7 @@ const typeDefs = `
 const resolvers = {
   Query: {
     posts: () => posts,
-    author: (_, { id }) => find(authors, { id: id })
+    author: (_, { id }) => find(authors, { id })
   },
   Mutation: {
     upvotePost: (_, { postId }) => {
@@ -62,19 +79,6 @@ const schema = makeExecutableSchema({
   resolvers
 });
 
-const authors = [
-  { id: 1, firstName: 'Tom', lastName: 'Coleman' },
-  { id: 2, firstName: 'Sashko', lastName: 'Stubailo' },
-  { id: 3, firstName: 'Mikhail', lastName: 'Novikov' }
-];
-
-const posts = [
-  { id: 1, authorId: 1, title: 'Introduction to GraphQL', votes: 2 },
-  { id: 2, authorId: 2, title: 'Welcome to Apollo', votes: 3 },
-  { id: 3, authorId: 2, title: 'Advanced GraphQL', votes: 1 },
-  { id: 4, authorId: 3, title: 'Launchpad is Cool', votes: 7 }
-];
-
 const PORT = 1337;
 const server = express();
 
@@ -82,7 +86,7 @@ server.use(
   '/graphql',
   cors(),
   bodyParser.json(),
-  graphqlExpress(request => ({
+  graphqlExpress(() => ({
     schema
   }))
 );
