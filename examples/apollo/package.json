@@ -23,5 +23,8 @@
     "react-cosmos-shared": "^3.6.1"
   },
   "xo": false,
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
+  }
 }
