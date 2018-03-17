@@ -5,7 +5,6 @@ import { InMemoryCache, ID_KEY } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import fetch from 'node-fetch';
 import fetchMock from 'fetch-mock';
 import until from 'async-until';
 import createApolloProxy from '../index';
@@ -43,7 +42,7 @@ const sampleFixture = {
 };
 
 // used under the hood by HttpLink
-global.fetch = fetch;
+global.fetch = fetchMock.fetchMock;
 
 // render the component fixture
 const LastProxy = ({ fixture }) => <fixture.component {...fixture.props} />;
@@ -96,7 +95,23 @@ describe('proxy not configured', () => {
 });
 
 describe('proxy configured with a client', () => {
+  const resolveWith = {
+    author: {
+      __typename: 'Author',
+      id: 1,
+      firstName: 'Jane Dough',
+      [ID_KEY]: 'Author:1'
+    }
+  };
   let client;
+
+  beforeAll(() => {
+    fetchMock.post('https://xyz', { data: resolveWith });
+  });
+
+  afterEach(() => {
+    fetchMock.reset();
+  });
 
   beforeEach(() => {
     client = new ApolloClient({
