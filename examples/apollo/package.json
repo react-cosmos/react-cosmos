@@ -5,14 +5,26 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/apollo",
   "license": "MIT",
   "scripts": {
+    "start:server": "babel-node server.js",
     "start": "cosmos"
   },
   "dependencies": {
-    "react-apollo": "^1.4.15",
+    "apollo-server-express": "^1.3.2",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "graphql": "^0.13.1",
+    "graphql-tag": "^2.7.3",
+    "graphql-tools": "^2.23.0",
+    "lodash": "^4.17.5",
+    "react-apollo": "^2.0.4",
     "react-cosmos": "^3.7.1",
     "react-cosmos-apollo-proxy": "^3.6.1",
     "react-cosmos-shared": "^3.6.1"
   },
   "xo": false,
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
+  }
 }

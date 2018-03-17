@@ -1,20 +1,14 @@
 import createApolloProxy from 'react-cosmos-apollo-proxy';
 
-const typeDefs = `
-  type Query {
-    hello(who: String): String
-  }
-`;
-
-const mocks = {
-  Query: () => ({
-    hello: (root, { who }) => `Hello ${who ? who : 'C O S M O S'}`
-  })
-};
+// see more examples at:
+// https://github.com/react-cosmos/react-cosmos#react-apollo-graphql
 
 export default [
   createApolloProxy({
-    typeDefs,
-    mocks
+    // how to run the example with real data:
+    // install dependencies: yarn
+    // use the local graphql api: yarn start:server
+    // [different terminal] run the server: yarn start
+    endpoint: 'http://localhost:1337/graphql'
   })
 ];
