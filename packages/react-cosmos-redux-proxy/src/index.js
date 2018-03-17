@@ -18,11 +18,8 @@ export default function createReduxProxy(options) {
     constructor(props) {
       super(props);
       this.onStoreChange = this.onStoreChange.bind(this);
-
-      const fixtureReduxState = props.fixture[fixtureKey];
-      if (alwaysCreateStore || fixtureReduxState) {
-        this.store = createStore(fixtureReduxState);
-      }
+      this.rebuildStore(props);
+      this.state = { storeId: 0 };
     }
 
     getChildContext() {
@@ -31,14 +28,44 @@ export default function createReduxProxy(options) {
       };
     }
 
-    componentWillMount() {
+    componentWillReceiveProps(nextProps) {
+      const oldReduxState = this.props.fixture[fixtureKey];
+      const newReduxState = nextProps.fixture[fixtureKey];
+      if (oldReduxState !== newReduxState) {
+        this.reloadStore(nextProps);
+      }
+    }
+
+    componentDidMount() {
+      this.subscribeToStore();
+    }
+
+    componentWillUnmount() {
+      this.unsubscribeFromStore();
+    }
+
+    rebuildStore(props) {
+      const fixtureReduxState = props.fixture[fixtureKey];
+      if (alwaysCreateStore || fixtureReduxState) {
+        this.store = createStore(fixtureReduxState);
+      }
+    }
+
+    reloadStore(props) {
+      this.unsubscribeFromStore();
+      this.rebuildStore(props);
+      this.subscribeToStore();
+      this.setState({ storeId: this.state.storeId + 1 });
+    }
+
+    subscribeToStore() {
       const { store, onStoreChange } = this;
       if (store) {
         this.storeUnsubscribe = store.subscribe(onStoreChange);
       }
     }
 
-    componentWillUnmount() {
+    unsubscribeFromStore() {
       if (this.storeUnsubscribe) {
         this.storeUnsubscribe();
       }
@@ -58,6 +85,7 @@ export default function createReduxProxy(options) {
 
       return React.createElement(nextProxy.value, {
         ...this.props,
+        key: this.state.storeId,
         nextProxy: nextProxy.next(),
         fixture,
         onComponentRef,
