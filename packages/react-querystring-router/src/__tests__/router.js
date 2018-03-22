@@ -44,7 +44,7 @@ const initRouter = () => {
   React = require('react');
   ReactDOM = require('react-dom');
   uri = require('../uri');
-  Router = require('../').Router;
+  Router = require('..').Router;
 
   routerInstance = new Router({
     defaultProps: {

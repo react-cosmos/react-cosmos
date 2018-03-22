@@ -1,7 +1,7 @@
 // @flow
 
 import path from 'path';
-import { getCosmosConfig, hasUserCosmosConfig } from '../../../';
+import { getCosmosConfig, hasUserCosmosConfig } from '../../..';
 
 jest.mock('yargs', () => ({ argv: {} }));
 

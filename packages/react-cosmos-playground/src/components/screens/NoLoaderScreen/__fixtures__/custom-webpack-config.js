@@ -1,4 +1,4 @@
-import NoLoaderScreen from '../index';
+import NoLoaderScreen from '..';
 
 export default {
   component: NoLoaderScreen,

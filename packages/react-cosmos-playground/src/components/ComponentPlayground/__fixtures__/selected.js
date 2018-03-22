@@ -1,4 +1,4 @@
-import ComponentPlayground from '../index';
+import ComponentPlayground from '..';
 import { routerProps, init } from './_shared';
 
 export default {

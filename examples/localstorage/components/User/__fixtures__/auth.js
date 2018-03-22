@@ -1,4 +1,4 @@
-import User from '../index';
+import User from '..';
 
 export default {
   component: User,

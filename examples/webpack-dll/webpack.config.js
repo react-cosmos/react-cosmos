@@ -5,11 +5,12 @@ const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 // This config doesn't have entry and output set up because it's not meant to
 // work standalone. react-cosmos adds an entry & output when extending this.
 module.exports = {
+  mode: 'development',
   resolve: {
     extensions: ['.js', '.jsx']
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
         loader: 'babel-loader',

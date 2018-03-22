@@ -1,7 +1,7 @@
 {
   "name": "react-cosmos-webpack-commons-chunk-example",
   "version": "4.0.0-beta.1",
-  "description": "Example of webpack & CommonsChunkPlugin",
+  "description": "Example of webpack & optimization.splitChunks",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/webpack-commons-chunk",
   "license": "MIT",
   "scripts": {

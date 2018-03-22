@@ -1,5 +1,5 @@
 import until from 'async-until';
-import { OK, READY } from '../index';
+import { OK, READY } from '..';
 
 export const routerProps = {
   goTo: url => console.log('go to', url),

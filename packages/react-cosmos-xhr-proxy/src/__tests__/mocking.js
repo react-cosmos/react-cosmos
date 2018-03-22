@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import createXhrProxy from '../';
+import createXhrProxy from '..';
 
 // Vars populated in beforeEach blocks
 let XhrProxy;
@@ -113,7 +113,7 @@ describe('xhr mocking', () => {
 
     const xhr = new XMLHttpRequest();
     xhr.open('GET', '/users');
-    xhr.onload = () => {
+    xhr.addEventListener('load', () => {
       try {
         expect(xhr.responseText).toEqual([
           { name: 'John' },
@@ -123,10 +123,10 @@ describe('xhr mocking', () => {
       } catch (err) {
         done.fail(err);
       }
-    };
-    xhr.onerror = err => {
+    });
+    xhr.addEventListener('error', err => {
       done.fail(err);
-    };
+    });
     xhr.send();
   });
 
@@ -135,17 +135,17 @@ describe('xhr mocking', () => {
 
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/user');
-    xhr.onload = () => {
+    xhr.addEventListener('load', () => {
       try {
         expect(xhr.responseText).toEqual({ id: 5, name: 'John Doe' });
         done();
       } catch (err) {
         done.fail(err);
       }
-    };
-    xhr.onerror = err => {
+    });
+    xhr.addEventListener('error', err => {
       done.fail(err);
-    };
+    });
     xhr.send({
       id: 5
     });
@@ -154,9 +154,9 @@ describe('xhr mocking', () => {
   test('returns error from DELETE request', done => {
     const xhr = new XMLHttpRequest();
     xhr.open('DELETE', '/user');
-    xhr.onerror = () => {
+    xhr.addEventListener('error', () => {
       done();
-    };
+    });
     xhr.send();
   });
 });

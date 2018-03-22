@@ -1,5 +1,5 @@
 import { createContext } from '../../../utils/enzyme';
-import { READY } from '../';
+import { READY } from '..';
 import fixture from '../__fixtures__/ready';
 
 const { mount, getRef } = createContext({ fixture });
