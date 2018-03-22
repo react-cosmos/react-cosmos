@@ -46,10 +46,7 @@ export default function getDefaultWebpackConfig(rootPath) {
     plugins.push(new HtmlWebpackPlugin({ title: 'React Cosmos' }));
   }
 
-  return {
-    // Note: `mode` only works with webpack >=4.x. For older compatibility use
-    // a custom webpack config
-    mode: 'development',
+  let config = {
     // Besides other advantages, cheap-module-source-map is compatible with
     // React.componentDidCatch https://github.com/facebook/react/issues/10441
     devtool: 'cheap-module-source-map',
@@ -64,4 +61,14 @@ export default function getDefaultWebpackConfig(rootPath) {
     },
     plugins
   };
+
+  // Add mode option for webpack 4+
+  const webpack = silentImport(rootPath, 'webpack');
+
+  if (webpack.version && parseInt(webpack.version, 10) >= 4) {
+    const mode = process.env.NODE_ENV || 'development';
+    config = { ...config, mode };
+  }
+
+  return config;
 }

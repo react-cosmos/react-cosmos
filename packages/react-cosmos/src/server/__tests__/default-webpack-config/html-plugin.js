@@ -7,6 +7,7 @@ jest.mock('import-from', () => ({
       id: '__html_plugin_mock__'
     }));
     const mocks = {
+      webpack: {},
       'html-webpack-plugin': HtmlWebpackPluginMock
     };
     return mocks[pluginName];
