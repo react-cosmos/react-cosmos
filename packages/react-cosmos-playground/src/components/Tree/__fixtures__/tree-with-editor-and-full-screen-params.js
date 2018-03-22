@@ -1,4 +1,4 @@
-import Tree from '../index';
+import Tree from '..';
 
 export default {
   component: Tree,

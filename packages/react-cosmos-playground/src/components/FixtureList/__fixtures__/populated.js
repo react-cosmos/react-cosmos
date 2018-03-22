@@ -1,4 +1,4 @@
-import FixtureList from '../index';
+import FixtureList from '..';
 
 export default {
   component: FixtureList,

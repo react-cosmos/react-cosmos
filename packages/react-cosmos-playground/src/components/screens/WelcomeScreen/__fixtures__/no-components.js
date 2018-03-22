@@ -1,4 +1,4 @@
-import WelcomeScreen from '../index';
+import WelcomeScreen from '..';
 
 export default {
   component: WelcomeScreen,

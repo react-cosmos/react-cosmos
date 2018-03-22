@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import createApolloProxy from '../';
+import createApolloProxy from '..';
 import { ApolloProvider } from 'react-apollo';
 
 // The final responsibility of proxies is to render the user's component at

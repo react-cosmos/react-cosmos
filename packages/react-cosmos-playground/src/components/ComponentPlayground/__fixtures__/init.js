@@ -1,4 +1,4 @@
-import ComponentPlayground from '../index';
+import ComponentPlayground from '..';
 
 export default {
   component: ComponentPlayground,

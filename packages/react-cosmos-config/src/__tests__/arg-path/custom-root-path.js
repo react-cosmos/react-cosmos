@@ -1,7 +1,7 @@
 // @flow
 
 import path from 'path';
-import { getCosmosConfig } from '../../';
+import { getCosmosConfig } from '../..';
 
 const configPath = require.resolve(
   './__fsmocks__/cosmos-custom-root.config.js'

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { shallow } from 'enzyme';
-import createContextProxy from '../index';
+import createContextProxy from '..';
 
 const NextProxy = () => {};
 const nextProxyNext = {};

@@ -1,7 +1,7 @@
 import localForage from 'localforage';
 import { createContext } from '../../../utils/enzyme';
 import DragHandle from '../../DragHandle';
-import { LEFT_NAV_SIZE } from '../';
+import { LEFT_NAV_SIZE } from '..';
 import fixture from '../__fixtures__/ready';
 
 jest.mock('localforage');

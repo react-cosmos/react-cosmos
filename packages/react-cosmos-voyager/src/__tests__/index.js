@@ -1,7 +1,7 @@
 import path from 'path';
 import slash from 'slash';
 import traverse from 'traverse';
-import getFilePaths from '../index';
+import getFilePaths from '..';
 
 const resolvePath = relPath =>
   slash(path.join(__dirname, '../use-cases', relPath));

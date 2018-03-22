@@ -36,7 +36,7 @@
     "async-until": "^1.0.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
-    "babel-eslint": "~8.0.3",
+    "babel-eslint": "~8.2.2",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -52,8 +52,8 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint-config-xo-react": "^0.16.0",
     "eslint-import-resolver-webpack": "^0.8.4",
-    "eslint-plugin-flowtype": "^2.43.0",
-    "eslint-plugin-react": "^7.6.1",
+    "eslint-plugin-flowtype": "^2.46.1",
+    "eslint-plugin-react": "^7.7.0",
     "file-loader": "^1.1.6",
     "flow-bin": "^0.68.0",
     "flow-typed": "^2.3.0",
@@ -75,7 +75,7 @@
     "style-loader": "^0.20.1",
     "url-loader": "^1.0.1",
     "webpack": "^3.11.0",
-    "xo": "^0.18.2",
+    "xo": "^0.20.3",
     "yargs": "^11.0.0"
   },
   "xo": {

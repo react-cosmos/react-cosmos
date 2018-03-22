@@ -57,6 +57,7 @@ type State = {
 
 export default class ComponentPlayground extends Component<Props, State> {
   contentNode: ?HTMLElement;
+
   loaderFrame: ?HTMLElement;
 
   static defaultProps = {
