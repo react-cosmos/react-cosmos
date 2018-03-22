@@ -1,14 +1,14 @@
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // This config doesn't have entry and output set up because it's not meant to
 // work standalone. react-cosmos adds an entry & output when extending this.
 module.exports = {
+  mode: 'development',
   resolve: {
     extensions: ['.js', '.jsx']
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
         loader: 'babel-loader',
@@ -19,9 +19,11 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'React Cosmos'
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ['manifest']
     })
-  ]
+  ],
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
+  }
 };

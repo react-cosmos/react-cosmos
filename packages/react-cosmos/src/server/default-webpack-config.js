@@ -11,10 +11,10 @@ export default function getDefaultWebpackConfig(rootPath) {
   const cssLoaderPath = silentResolve(rootPath, 'css-loader');
   // Note: Since webpack >= v2.0.0, importing of JSON files will work by default
   const jsonLoaderPath = silentResolve(rootPath, 'json-loader');
-  const loaders = [];
+  const rules = [];
 
   if (babelLoaderPath) {
-    loaders.push({
+    rules.push({
       test: /\.jsx?$/,
       loader: babelLoaderPath,
       exclude: /node_modules/
@@ -22,7 +22,7 @@ export default function getDefaultWebpackConfig(rootPath) {
   }
 
   if (styleLoaderPath) {
-    loaders.push({
+    rules.push({
       test: /\.css$/,
       loader: cssLoaderPath
         ? `${styleLoaderPath}!${cssLoaderPath}`
@@ -32,7 +32,7 @@ export default function getDefaultWebpackConfig(rootPath) {
   }
 
   if (jsonLoaderPath) {
-    loaders.push({
+    rules.push({
       test: /\.json$/,
       loader: jsonLoaderPath,
       exclude: /node_modules/
@@ -47,6 +47,9 @@ export default function getDefaultWebpackConfig(rootPath) {
   }
 
   return {
+    // Note: `mode` only works with webpack >=4.x. For older compatibility use
+    // a custom webpack config
+    mode: 'development',
     // Besides other advantages, cheap-module-source-map is compatible with
     // React.componentDidCatch https://github.com/facebook/react/issues/10441
     devtool: 'cheap-module-source-map',
@@ -55,8 +58,9 @@ export default function getDefaultWebpackConfig(rootPath) {
       extensions: ['.js', '.jsx']
     },
     module: {
-      // Using loaders instead of rules to preserve webpack 1.x compatibility
-      loaders
+      // Note: `module.rules` only works with webpack >=2.x. For 1.x
+      // compatibility a custom webpack config (with module.loaders) is required
+      rules
     },
     plugins
   };

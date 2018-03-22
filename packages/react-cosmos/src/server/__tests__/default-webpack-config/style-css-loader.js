@@ -13,7 +13,7 @@ jest.mock('import-from', () => ({ silent: () => {} }));
 
 it('includes style-loader + css-loader', () => {
   const config = getDefaultWebpackConfig('/foo/path');
-  expect(config.module.loaders).toContainEqual({
+  expect(config.module.rules).toContainEqual({
     test: /\.css$/,
     loader: '/style/path!/css/path',
     exclude: /node_modules/
