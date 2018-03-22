@@ -4,13 +4,13 @@ jest.mock('resolve-from', () => ({ silent: () => {} }));
 jest.mock('import-from', () => ({
   silent: (rootPath, loaderName) => {
     const mocks = {
-      webpack: {}
+      webpack: { version: '4.2.0' }
     };
     return mocks[loaderName];
   }
 }));
 
-it('has empty module.rules list', () => {
+it('sets config.mode as NODE_ENV', () => {
   const config = getDefaultWebpackConfig('/foo/path');
-  expect(config.module.rules).toEqual([]);
+  expect(config.mode).toEqual('test'); // NOE_ENV is "test" in Jest
 });

@@ -8,7 +8,14 @@ jest.mock('resolve-from', () => ({
     return mocks[loaderName];
   }
 }));
-jest.mock('import-from', () => ({ silent: () => {} }));
+jest.mock('import-from', () => ({
+  silent: (rootPath, loaderName) => {
+    const mocks = {
+      webpack: {}
+    };
+    return mocks[loaderName];
+  }
+}));
 
 it('includes json-loader', () => {
   const config = getDefaultWebpackConfig('/foo/path');

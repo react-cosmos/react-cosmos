@@ -4,13 +4,13 @@ jest.mock('resolve-from', () => ({ silent: () => {} }));
 jest.mock('import-from', () => ({
   silent: (rootPath, loaderName) => {
     const mocks = {
-      webpack: {}
+      webpack: { version: '3.5.0' }
     };
     return mocks[loaderName];
   }
 }));
 
-it('has empty module.rules list', () => {
+it('does not add config.mode', () => {
   const config = getDefaultWebpackConfig('/foo/path');
-  expect(config.module.rules).toEqual([]);
+  expect(config.mode).not.toBeDefined();
 });
