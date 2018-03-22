@@ -47,9 +47,6 @@ export default function getDefaultWebpackConfig(rootPath) {
   }
 
   return {
-    // Note: `mode` only works with webpack >=4.x. For older compatibility use
-    // a custom webpack config
-    mode: 'development',
     // Besides other advantages, cheap-module-source-map is compatible with
     // React.componentDidCatch https://github.com/facebook/react/issues/10441
     devtool: 'cheap-module-source-map',
