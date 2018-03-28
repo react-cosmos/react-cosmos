@@ -18,11 +18,21 @@ jest.mock('import-from', () => ({
   }
 }));
 
-it('includes style-loader + css-loader', () => {
+it('parses personal css with style-loader + css-loader', () => {
   const config = getDefaultWebpackConfig('/foo/path');
   expect(config.module.rules).toContainEqual({
     test: /\.css$/,
     loader: '/style/path!/css/path',
     exclude: /node_modules/
+  });
+});
+
+it('parses 3rd party css with style-loader + css-loader', () => {
+  const config = getDefaultWebpackConfig('/foo/path');
+
+  expect(config.module.rules).toContainEqual({
+    test: /\.css$/,
+    loader: '/style/path!/css/path',
+    include: /node_modules/
   });
 });

@@ -29,6 +29,15 @@ export default function getDefaultWebpackConfig(rootPath) {
         : styleLoaderPath,
       exclude: /node_modules/
     });
+
+    // Preprocess 3rd party .css files located in node_modules
+    rules.push({
+      test: /\.css$/,
+      loader: cssLoaderPath
+        ? `${styleLoaderPath}!${cssLoaderPath}`
+        : styleLoaderPath,
+      include: /node_modules/
+    });
   }
 
   if (jsonLoaderPath) {
