@@ -4,8 +4,12 @@ import merge from 'lodash.merge';
 import { splitUnserializableParts } from 'react-cosmos-shared';
 import { createContext } from './create-context';
 
-import type { LoaderMessage } from 'react-cosmos-shared/src/types';
-import type { Renderer, Proxy, Fixture, Fixtures, FixtureNames } from './types';
+import type { ComponentType } from 'react';
+import type { LoaderMessage } from 'react-cosmos-flow/loader';
+import type { FixtureType } from 'react-cosmos-flow/fixture';
+import type { Proxy } from 'react-cosmos-flow/proxy';
+import type { Renderer } from 'react-cosmos-flow/context';
+import type { Fixtures, FixtureNames } from 'react-cosmos-flow/module';
 
 type Args = {
   renderer: Renderer,
@@ -26,7 +30,7 @@ let selected: ?{
 // - Fixture updates received from proxy chain via context's onUpdate handler
 // - Fixture edits received from Playground UI
 // The cache is cleared when a fixture (including the current one) is selected
-let fixtureCache: ?Fixture;
+let fixtureCache: ?FixtureType<*, *>;
 
 /**
  * Connect fixture context to remote Playground UI via window.postMessage.
@@ -41,7 +45,7 @@ let fixtureCache: ?Fixture;
 export async function connectLoader(args: Args) {
   const { proxies, fixtures, renderer, dismissRuntimeErrors } = args;
 
-  async function loadFixture(fixture, notifyParent = true) {
+  async function loadFixture(fixture: FixtureType<*, *>, notifyParent = true) {
     const { mount } = createContext({
       renderer,
       proxies,
@@ -202,11 +206,17 @@ function extractFixtureNames(fixtures: Fixtures): FixtureNames {
   }, {});
 }
 
-function applyFixturePart(currentFixture: Fixture, fixturePart: {}): Fixture {
+function applyFixturePart<P: {}, C: ComponentType<P>>(
+  currentFixture: FixtureType<P, C>,
+  fixturePart: {}
+): FixtureType<P, C> {
   return { ...currentFixture, ...fixturePart };
 }
 
-function applyFixtureBody(currentFixture: Fixture, fixtureBody: {}): Fixture {
+function applyFixtureBody<P: {}, C: ComponentType<P>>(
+  currentFixture: FixtureType<P, C>,
+  fixtureBody: {}
+): FixtureType<P, C> {
   const { unserializable } = splitUnserializableParts(currentFixture);
 
   return merge({}, unserializable, fixtureBody);

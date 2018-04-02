@@ -2,7 +2,7 @@
 
 import path from 'path';
 import React from 'react';
-import { getMock } from 'react-cosmos-shared/src/jest';
+import { getMock } from 'react-cosmos-flow/jest';
 import runTests from '..';
 
 jest.mock('./__fsmocks__/fixtures', () => {

@@ -4,8 +4,8 @@ import path from 'path';
 import fs from 'fs';
 import { hasUserCustomWebpackConfig } from './user-webpack-config';
 
-import type { PlaygroundOpts } from 'react-cosmos-shared/src/types';
-import type { Config } from 'react-cosmos-config/src';
+import type { Config } from 'react-cosmos-flow/config';
+import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
 
 export default function getPlaygroundHtml(cosmosConfig: Config) {
   const { rootPath } = cosmosConfig;

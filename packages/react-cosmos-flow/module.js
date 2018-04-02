@@ -1,13 +1,14 @@
 // @flow
 
 import type { ComponentType } from 'react';
+import type { FixtureType } from './fixture';
 
 export type Modules = {
   [string]: Object | Array<Object>
 };
 
-// Component info is gathered via static analysis (AST) and can fail. Real
-// time meta data is used to cover up for these hopes on the client side
+// Component info is gathered via static analysis (AST) and can fail. But the
+// name is primarily read at run time, with this as a backup plan.
 export type ComponentInfo = {
   name: string | null,
   filePath: string | null
@@ -22,7 +23,7 @@ export type Fixture = {
   filePath: string,
   name: string,
   namespace: string,
-  source: Object
+  source: FixtureType<*, *>
 };
 
 export type Component = {
@@ -31,6 +32,16 @@ export type Component = {
   namespace: string,
   type: ComponentType<*>,
   fixtures: Array<Fixture>
+};
+
+export type Fixtures = {
+  [componentName: string]: {
+    [fixtureName: string]: FixtureType<*, *>
+  }
+};
+
+export type FixtureNames = {
+  [componentName: string]: Array<string>
 };
 
 // TODO: Future UI types

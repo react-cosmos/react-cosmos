@@ -4,6 +4,7 @@ const rimraf = require('rimraf');
 const spawn = require('child-process-promise').spawn;
 const argv = require('yargs').argv;
 
+const NOT_BUILDABLE = ['react-cosmos-flow'];
 const COMPONENT_PLAYGROUND = 'react-cosmos-playground';
 
 /**
@@ -114,7 +115,9 @@ const applyWatch = Boolean(argv.watch);
  * on command line arguments.
  */
 glob('./packages/react-*', null, (err, files) => {
-  const allPackageNames = files.map(f => path.basename(f));
+  const allPackageNames = files
+    .map(f => path.basename(f))
+    .filter(pkg => NOT_BUILDABLE.indexOf(pkg) === -1);
   const formattedPackages = `${[''].concat(allPackageNames).join('\n - ')}`;
 
   if (!targetPackage) {

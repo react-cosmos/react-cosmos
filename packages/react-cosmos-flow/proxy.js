@@ -1,7 +1,7 @@
 // @flow
 
 import type { ComponentType } from 'react';
-import type { LinkedItem } from '../linked-list';
+import type { LinkedItem } from './linked-list';
 
 export type ProxyProps = {
   nextProxy: LinkedItem<ComponentType<ProxyProps>>,
@@ -9,3 +9,5 @@ export type ProxyProps = {
   onComponentRef: Function,
   onFixtureUpdate: Function
 };
+
+export type Proxy = ComponentType<ProxyProps>;

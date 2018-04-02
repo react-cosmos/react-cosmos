@@ -7,9 +7,14 @@ import { inferComponentName } from './utils/infer-component-name';
 import { createDefaultNamer } from './utils/default-namer';
 
 import type { ComponentType } from 'react';
-import type { Modules, FixtureFile, Fixture, Component } from '../types';
+import type {
+  Modules,
+  FixtureFile,
+  Fixture,
+  Component
+} from 'react-cosmos-flow/module';
 
-export type FixturesByComponent = Map<ComponentType<*>, Array<Fixture>>;
+type FixturesByComponent = Map<ComponentType<*>, Array<Fixture>>;
 
 type Args = {
   fixtureFiles: Array<FixtureFile>,
@@ -100,6 +105,9 @@ export function getComponents({
 
     const filePath = componentPaths.get(componentType) || null;
     const namespace =
+      // Not sure how to tell Flow that components can have extra properties
+      // defined
+      // $FlowFixMe
       typeof componentType.namespace === 'string'
         ? componentType.namespace
         : getCollapsedComponentNamespace(componentPathValues, filePath);

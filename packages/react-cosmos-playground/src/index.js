@@ -6,7 +6,7 @@ import getPageTitle from './utils/page-title';
 
 import './utils/global.less';
 
-import type { PlaygroundOpts } from 'react-cosmos-shared/src/types';
+import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
 
 let container;
 

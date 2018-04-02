@@ -6,17 +6,14 @@ import { moduleExists } from 'react-cosmos-shared/lib/server';
 import { getCosmosConfig } from 'react-cosmos-config';
 import { createContext as createLoaderContext } from 'react-cosmos-loader';
 
-import type { Config } from 'react-cosmos-config/src';
+import type { ComponentType } from 'react';
+import type { Config } from 'react-cosmos-flow/config';
+import type { FixtureType } from 'react-cosmos-flow/fixture';
+import type { Proxy } from 'react-cosmos-flow/proxy';
 import type {
-  Proxy,
-  Fixture,
-  ContextArgs,
-  ContextFunctions
-} from 'react-cosmos-loader/src/types';
-
-export type TestContextArgs = ContextArgs & {
-  cosmosConfigPath?: string
-};
+  ContextFunctions,
+  TestContextArgs
+} from 'react-cosmos-flow/context';
 
 export function createContext(args: TestContextArgs): ContextFunctions {
   const { fixture, proxies = detectUserProxies(args.cosmosConfigPath) } = args;
@@ -39,7 +36,9 @@ function detectUserProxies(cosmosConfigPath): Array<Proxy> {
   return userProxies;
 }
 
-function decorateFixture(fixture: Fixture): Fixture {
+function decorateFixture<P: {}, C: ComponentType<P>>(
+  fixture: FixtureType<P, C>
+): FixtureType<P, C> {
   if (!inJestEnv() || !fixture.props) {
     return fixture;
   }

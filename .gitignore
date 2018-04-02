@@ -1,7 +1,10 @@
-packages/*/lib
 node_modules
-coverage
 npm-debug.log
+yarn-error.log
+
+packages/*/lib
+examples/webpack-dll/build
+
+coverage
 cypress/screenshots
 cypress/videos
-examples/webpack-dll/build

@@ -4,8 +4,8 @@ import React from 'react';
 import until from 'async-until';
 import deepEqual from 'deep-equal';
 
-import type { LoaderMessageData } from 'react-cosmos-shared/src/types';
-import type { Renderer } from '../../types';
+import type { Renderer } from 'react-cosmos-flow/context';
+import type { LoaderMessageData } from 'react-cosmos-flow/loader';
 
 export const ProxyFoo = () => <span />;
 export const proxies = [ProxyFoo];

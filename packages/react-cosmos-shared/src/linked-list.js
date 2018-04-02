@@ -1,9 +1,6 @@
 // @flow
 
-export type LinkedItem<Item> = {
-  value: Item,
-  next: () => LinkedItem<Item>
-};
+import type { LinkedItem } from 'react-cosmos-flow/linked-list';
 
 export default function createLinkedList<Item>(
   items: Array<Item>

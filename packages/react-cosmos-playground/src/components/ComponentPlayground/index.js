@@ -17,13 +17,13 @@ import FixtureEditor from '../FixtureEditor';
 import styles from './index.less';
 
 import type {
-  PlaygroundOpts,
   LoaderReadyMessageData,
   FixtureListUpdateMessageData,
   FixtureLoadMessageData,
   FixtureUpdateMessageData,
   LoaderMessage
-} from 'react-cosmos-shared/src/types';
+} from 'react-cosmos-flow/loader';
+import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
 
 export const LEFT_NAV_SIZE = '__cosmos__left-nav-size';
 export const FIXTURE_EDITOR_PANE_SIZE = '__cosmos__fixture-editor-pane-size';

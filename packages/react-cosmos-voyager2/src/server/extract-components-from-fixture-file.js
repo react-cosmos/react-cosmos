@@ -7,7 +7,7 @@ import * as babylon from 'babylon';
 import * as t from 'babel-types';
 import { resolveUserPath } from 'react-cosmos-shared/lib/server';
 
-import type { ComponentInfo } from '../types';
+import type { ComponentInfo } from 'react-cosmos-flow/module';
 
 const readFileAsync = promisify(fs.readFile);
 

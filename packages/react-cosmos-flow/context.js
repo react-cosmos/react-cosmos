@@ -1,17 +1,9 @@
 // @flow
 
-import { Component } from 'react';
-
-import type { Element, ComponentType, ElementRef } from 'react';
-
-export type ComponentRef = ElementRef<typeof Component>;
-
-export type Fixture = {
-  component: ComponentType<any>,
-  init?: ({ compRef: ?ComponentRef }) => Promise<any>
-};
-
-export type Proxy = ComponentType<any>;
+import type { Element } from 'react';
+import type { FixtureType } from './fixture';
+import type { Proxy } from './proxy';
+import type { ComponentRef } from './react';
 
 export type Wrapper = {
   unmount: () => any
@@ -23,7 +15,7 @@ export type ContextArgs = {
   renderer: Renderer,
   rendererOptions?: Object,
   proxies?: Array<Proxy>,
-  fixture: Fixture,
+  fixture: FixtureType<*, *>,
   onUpdate?: (fixturePart: {}) => any,
   beforeInit?: () => Promise<any>
 };
@@ -37,12 +29,8 @@ export type ContextFunctions = {
   unmount: () => any
 };
 
-export type Fixtures = {
-  [componentName: string]: {
-    [fixtureName: string]: Fixture
-  }
+export type TestContextArgs = ContextArgs & {
+  cosmosConfigPath?: string
 };
 
-export type FixtureNames = {
-  [componentName: string]: Array<string>
-};
+export type EnzymeContextArgs = $Diff<TestContextArgs, { renderer: Renderer }>;

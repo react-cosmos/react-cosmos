@@ -2,8 +2,8 @@
 
 import { render, unmountComponentAtNode } from 'react-dom';
 
-import type { LoaderOpts } from 'react-cosmos-shared/src/types';
-import type { Renderer } from './types';
+import type { LoaderOpts } from 'react-cosmos-flow/loader';
+import type { Renderer } from 'react-cosmos-flow/context';
 
 export function createDomRenderer(opts?: LoaderOpts = {}): Renderer {
   const { containerQuerySelector } = opts;

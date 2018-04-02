@@ -5,7 +5,7 @@ import { importModule } from 'react-cosmos-shared';
 import { moduleExists } from 'react-cosmos-shared/lib/server';
 import getDefaultWebpackConfig from './default-webpack-config';
 
-import type { Config } from 'react-cosmos-config/src';
+import type { Config } from 'react-cosmos-flow/config';
 
 export function getUserWebpackConfig(cosmosConfig: Config) {
   const { rootPath, webpackConfigPath } = cosmosConfig;

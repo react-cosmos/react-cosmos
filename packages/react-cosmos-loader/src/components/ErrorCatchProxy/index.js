@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { rootStyles, codeStyles } from './styles';
 
-import type { ProxyProps } from 'react-cosmos-shared/src/react/types';
+import type { ProxyProps } from 'react-cosmos-flow/proxy';
 
 type State = {
   hasError: boolean,

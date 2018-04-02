@@ -9,8 +9,8 @@ import {
 } from 'react-cosmos-shared/lib/server';
 import { extractComponentsFromFixtureFile } from './extract-components-from-fixture-file';
 
-import type { ExcludePatterns } from 'react-cosmos-shared/src/types';
-import type { FixtureFile } from '../types';
+import type { ExcludePatterns } from 'react-cosmos-flow/config';
+import type { FixtureFile } from 'react-cosmos-flow/module';
 
 const globAsync = promisify(glob);
 
