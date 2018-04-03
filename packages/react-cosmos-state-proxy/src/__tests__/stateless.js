@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import createStateProxy from '..';
+import { createStateProxy } from '..';
 
 // Vars populated in beforeEach blocks
 let NextProxy;

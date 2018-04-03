@@ -5,69 +5,6 @@ import isEqual from 'lodash.isequal';
 import isEmpty from 'lodash.isempty';
 import omit from 'lodash.omit';
 
-const injectState = (component, state, cb) => {
-  const rootState = omit(state, 'children');
-
-  component.setState(rootState, () => {
-    const { children } = state;
-
-    if (isEmpty(children)) {
-      cb();
-      return;
-    }
-
-    const { refs } = component;
-    const promises = [];
-
-    Object.keys(refs).forEach(ref => {
-      const child = refs[ref];
-      const childState = children[ref];
-
-      if (!isEmpty(childState)) {
-        promises.push(
-          new Promise(resolve => {
-            injectState(child, childState, resolve);
-          })
-        );
-      }
-    });
-
-    if (promises.length === 0) {
-      cb();
-    } else {
-      Promise.all(promises).then(cb);
-    }
-  });
-};
-
-const getState = component => {
-  const { state, refs } = component;
-
-  if (!refs) {
-    return state;
-  }
-
-  const children = {};
-
-  Object.keys(refs).forEach(ref => {
-    const child = refs[ref];
-    const childState = getState(child);
-
-    if (!isEmpty(childState)) {
-      children[ref] = childState;
-    }
-  });
-
-  if (isEmpty(children)) {
-    return state;
-  }
-
-  return {
-    ...state,
-    children
-  };
-};
-
 const defaults = {
   fixtureKey: 'state',
   // How often to read current state of loaded component and report it up the
@@ -75,7 +12,7 @@ const defaults = {
   updateInterval: 500
 };
 
-export default function createStateProxy(options) {
+export function createStateProxy(options) {
   const { fixtureKey, updateInterval } = { ...defaults, ...options };
 
   class StateProxy extends Component {
@@ -176,4 +113,67 @@ export default function createStateProxy(options) {
   };
 
   return StateProxy;
+}
+
+function injectState(component, state, cb) {
+  const rootState = omit(state, 'children');
+
+  component.setState(rootState, () => {
+    const { children } = state;
+
+    if (isEmpty(children)) {
+      cb();
+      return;
+    }
+
+    const { refs } = component;
+    const promises = [];
+
+    Object.keys(refs).forEach(ref => {
+      const child = refs[ref];
+      const childState = children[ref];
+
+      if (!isEmpty(childState)) {
+        promises.push(
+          new Promise(resolve => {
+            injectState(child, childState, resolve);
+          })
+        );
+      }
+    });
+
+    if (promises.length === 0) {
+      cb();
+    } else {
+      Promise.all(promises).then(cb);
+    }
+  });
+}
+
+function getState(component) {
+  const { state, refs } = component;
+
+  if (!refs) {
+    return state;
+  }
+
+  const children = {};
+
+  Object.keys(refs).forEach(ref => {
+    const child = refs[ref];
+    const childState = getState(child);
+
+    if (!isEmpty(childState)) {
+      children[ref] = childState;
+    }
+  });
+
+  if (isEmpty(children)) {
+    return state;
+  }
+
+  return {
+    ...state,
+    children
+  };
 }
