@@ -13,7 +13,7 @@ type Args = {
   cosmosConfigPath?: string
 };
 
-export default async ({ cosmosConfigPath }: Args = {}) => {
+export async function runTests({ cosmosConfigPath }: Args = {}) {
   const cosmosConfig = getCosmosConfig(cosmosConfigPath);
   const {
     rootPath,
@@ -65,7 +65,7 @@ export default async ({ cosmosConfigPath }: Args = {}) => {
       }
     }
   });
-};
+}
 
 function getFixtureModules(fixtureFiles) {
   return fixtureFiles.reduce(

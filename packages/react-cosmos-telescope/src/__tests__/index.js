@@ -3,7 +3,7 @@
 import path from 'path';
 import React from 'react';
 import { getMock } from 'react-cosmos-flow/jest';
-import runTests from '..';
+import { runTests } from '../run-tests';
 
 jest.mock('./__fsmocks__/fixtures', () => {
   const Foo = ({ what }: { what: string }) => <span>Foo is {what}</span>;
