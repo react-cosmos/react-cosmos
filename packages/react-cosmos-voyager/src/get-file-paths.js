@@ -60,7 +60,7 @@ const getMatchingFixtures = (fixtures, componentName, fixturesDir) =>
       : matchingFixtures;
   }, {});
 
-const getFilePaths = ({
+export const getFilePaths = ({
   componentPaths = [],
   fixturePaths = [],
   fixturesDir = '__fixtures__',
@@ -131,5 +131,3 @@ const getFilePaths = ({
     fixtures
   };
 };
-
-export default getFilePaths;
