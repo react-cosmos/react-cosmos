@@ -4,7 +4,7 @@ import path from 'path';
 import { getCosmosConfig } from 'react-cosmos-config';
 import { moduleExists } from 'react-cosmos-shared/server';
 import getFilePaths from 'react-cosmos-voyager';
-import { findFixtureFiles } from 'react-cosmos-voyager2/lib/server';
+import { findFixtureFiles } from 'react-cosmos-voyager2/server';
 
 import type { Config } from 'react-cosmos-flow/config';
 import type { FixtureFile } from 'react-cosmos-flow/module';

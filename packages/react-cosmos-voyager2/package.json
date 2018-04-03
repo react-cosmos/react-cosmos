@@ -7,7 +7,6 @@
   "files": [
     "lib"
   ],
-  "main": "lib/index.js",
   "scripts": {},
   "dependencies": {
     "babel-types": "^6.26.0",

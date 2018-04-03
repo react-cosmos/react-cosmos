@@ -1,5 +1,5 @@
 import { importModule } from 'react-cosmos-shared';
-import { getComponents } from 'react-cosmos-voyager2/lib/client';
+import { getComponents } from 'react-cosmos-voyager2/client';
 
 const { keys } = Object;
 

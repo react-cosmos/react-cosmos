@@ -1,5 +1,5 @@
 import { getCosmosConfig } from 'react-cosmos-config';
-import { findFixtureFiles } from 'react-cosmos-voyager2/lib/server';
+import { findFixtureFiles } from 'react-cosmos-voyager2/server';
 
 export default async function printFixtureFiles() {
   const cosmosConfig = getCosmosConfig();
