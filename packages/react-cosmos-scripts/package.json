@@ -8,7 +8,6 @@
     "bin",
     "lib"
   ],
-  "main": "lib/index.js",
   "scripts": {},
   "dependencies": {
     "jscodeshift": "^0.3.32",
