@@ -1,46 +1,17 @@
 import React, { Component } from 'react';
 import { proxyPropTypes } from 'react-cosmos-shared/react';
-
-// Mocking localStorage completely ensures no conflict with existing browser
-// data and works in test environments like Jest
-class LocalStorageMock {
-  constructor(store = {}, onUpdate) {
-    this.store = { ...store };
-    this.onUpdate = onUpdate;
-  }
-
-  clear() {
-    this.store = {};
-    this.update();
-  }
-
-  getItem(key) {
-    return this.store[key] || null;
-  }
-
-  setItem(key, value) {
-    this.store[key] = value.toString();
-    this.update();
-  }
-
-  removeItem(key) {
-    delete this.store[key];
-    this.update();
-  }
-
-  update() {
-    this.onUpdate(this.store);
-  }
-}
+import { LocalStorageMock } from './local-storage-mock';
 
 const defaults = {
   fixtureKey: 'localStorage'
 };
 
-export default function createLocalStorageProxy(options) {
+export function createLocalStorageProxy(options) {
   const { fixtureKey } = { ...defaults, ...options };
 
   class LocalStorageProxy extends Component {
+    static LocalStorageProxy = proxyPropTypes;
+
     constructor(props) {
       super(props);
 
@@ -72,8 +43,6 @@ export default function createLocalStorageProxy(options) {
       return <NextProxy {...this.props} nextProxy={next()} />;
     }
   }
-
-  LocalStorageProxy.propTypes = proxyPropTypes;
 
   return LocalStorageProxy;
 }

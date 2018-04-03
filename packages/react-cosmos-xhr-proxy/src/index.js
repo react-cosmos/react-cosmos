@@ -10,10 +10,12 @@ const mockDefaults = {
   method: 'get'
 };
 
-export default function createXhrProxy(options) {
+export function createXhrProxy(options) {
   const { fixtureKey } = { ...defaults, ...options };
 
   class XhrProxy extends Component {
+    static XhrProxy = proxyPropTypes;
+
     constructor(props) {
       super(props);
 
@@ -68,8 +70,6 @@ export default function createXhrProxy(options) {
       });
     }
   }
-
-  XhrProxy.propTypes = proxyPropTypes;
 
   return XhrProxy;
 }

@@ -6,10 +6,12 @@ const defaults = {
   fixtureKey: 'fetch'
 };
 
-export default function createFetchProxy(options) {
+export function createFetchProxy(options) {
   const { fixtureKey } = { ...defaults, ...options };
 
   class FetchProxy extends Component {
+    static proxyTypes = proxyPropTypes;
+
     constructor(props) {
       super(props);
 
@@ -61,8 +63,6 @@ export default function createFetchProxy(options) {
       });
     }
   }
-
-  FetchProxy.propTypes = proxyPropTypes;
 
   return FetchProxy;
 }

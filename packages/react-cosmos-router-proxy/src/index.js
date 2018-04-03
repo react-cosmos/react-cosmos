@@ -5,18 +5,7 @@ import { proxyPropTypes } from 'react-cosmos-shared/react';
 import LocationInterceptor from './LocationInterceptor';
 import urlParser from 'url';
 
-function buildLocation(url, locationState) {
-  const { pathname, search, hash } = urlParser.parse(url);
-  return {
-    pathname,
-    search,
-    hash,
-    key: 'mocked',
-    state: locationState
-  };
-}
-
-export default () => {
+export function createRouterProxy() {
   const RouterProxy = props => {
     const { nextProxy, fixture, onFixtureUpdate } = props;
     const { value: NextProxy, next } = nextProxy;
@@ -65,4 +54,15 @@ export default () => {
   };
 
   return RouterProxy;
-};
+}
+
+function buildLocation(url, locationState) {
+  const { pathname, search, hash } = urlParser.parse(url);
+  return {
+    pathname,
+    search,
+    hash,
+    key: 'mocked',
+    state: locationState
+  };
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import createNormalizePropsProxy from '..';
+import { createNormalizePropsProxy } from '..';
 
 const NextProxy = () => {};
 const nextProxyNext = {};

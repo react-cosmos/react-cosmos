@@ -10,26 +10,15 @@ const defaults = {
   fixtureKey: 'apollo'
 };
 
-// utility to find mock keys inside a fixture
-const flatObjectKeys = (keys, object, digNestedObjects = true) => {
-  return Object.keys(object).reduce((list, key) => {
-    const value = object[key];
-    if (!keys.includes(key) && typeof value === 'object' && digNestedObjects) {
-      // only "dig" one level deep
-      return [...list, ...flatObjectKeys(keys, value, false)];
-    }
-
-    return [...list, key];
-  }, []);
-};
-
-export default function createApolloProxy(options) {
+export function createApolloProxy(options) {
   const { fixtureKey, endpoint, client } = {
     ...defaults,
     ...options
   };
 
   class ApolloProxy extends Component {
+    static propTypes = proxyPropTypes;
+
     constructor(props) {
       super(props);
 
@@ -85,7 +74,18 @@ Read more at: https://github.com/react-cosmos/react-cosmos#react-apollo-graphql.
     }
   }
 
-  ApolloProxy.propTypes = proxyPropTypes;
-
   return ApolloProxy;
+}
+
+// Utility to find mock keys inside a fixture
+function flatObjectKeys(keys, object, digNestedObjects = true) {
+  return Object.keys(object).reduce((list, key) => {
+    const value = object[key];
+    if (!keys.includes(key) && typeof value === 'object' && digNestedObjects) {
+      // only "dig" one level deep
+      return [...list, ...flatObjectKeys(keys, value, false)];
+    }
+
+    return [...list, key];
+  }, []);
 }

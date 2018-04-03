@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { proxyPropTypes } from 'react-cosmos-shared/react';
 
 const defaults = {
   fixtureKey: 'context'
 };
 
-export default function createContextProxy(options) {
+export function createContextProxy(options) {
   const { fixtureKey, childContextTypes } = { ...defaults, ...options };
 
-  class ContextProxy extends React.Component {
+  class ContextProxy extends Component {
+    static propTypes = proxyPropTypes;
+
+    static childContextTypes = childContextTypes;
+
     getChildContext() {
       return this.props.fixture[fixtureKey] || {};
     }
@@ -24,10 +28,6 @@ export default function createContextProxy(options) {
       });
     }
   }
-
-  ContextProxy.propTypes = proxyPropTypes;
-
-  ContextProxy.childContextTypes = childContextTypes;
 
   return ContextProxy;
 }

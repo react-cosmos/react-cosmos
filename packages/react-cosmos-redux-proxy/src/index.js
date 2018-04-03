@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { object } from 'prop-types';
 import { proxyPropTypes } from 'react-cosmos-shared/react';
 
@@ -8,13 +8,19 @@ const defaults = {
   disableLocalState: true
 };
 
-export default function createReduxProxy(options) {
+export function createReduxProxy(options) {
   const { fixtureKey, createStore, alwaysCreateStore, disableLocalState } = {
     ...defaults,
     ...options
   };
 
-  class ReduxProxy extends React.Component {
+  class ReduxProxy extends Component {
+    static propTypes = proxyPropTypes;
+
+    static childContextTypes = {
+      store: object
+    };
+
     constructor(props) {
       super(props);
       this.onStoreChange = this.onStoreChange.bind(this);
@@ -95,12 +101,6 @@ export default function createReduxProxy(options) {
       });
     }
   }
-
-  ReduxProxy.propTypes = proxyPropTypes;
-
-  ReduxProxy.childContextTypes = {
-    store: object
-  };
 
   return ReduxProxy;
 }

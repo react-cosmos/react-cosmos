@@ -1,6 +1,6 @@
 import createTestContext from 'react-cosmos-test/enzyme';
 import fixture from '../__fixtures__/stableKeys';
-import createRouterProxy from '..';
+import { createRouterProxy } from '..';
 import toJson from 'enzyme-to-json';
 
 const proxies = [createRouterProxy()];
