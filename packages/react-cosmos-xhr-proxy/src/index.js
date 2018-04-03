@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import xhrMock from 'xhr-mock';
-import { proxyPropTypes } from 'react-cosmos-shared/lib/react';
+import { proxyPropTypes } from 'react-cosmos-shared/react';
 
 const defaults = {
   fixtureKey: 'xhr'

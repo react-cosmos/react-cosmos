@@ -1,4 +1,4 @@
-import splitUnserializableParts from '../unserializable-parts';
+import { splitUnserializableParts } from '../unserializable-parts';
 
 const Fn = () => {};
 const fixture = {

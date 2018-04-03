@@ -5,7 +5,7 @@ import path from 'path';
 import promisify from 'util.promisify';
 import * as babylon from 'babylon';
 import * as t from 'babel-types';
-import { resolveUserPath } from 'react-cosmos-shared/lib/server';
+import { resolveUserPath } from 'react-cosmos-shared/server';
 
 import type { ComponentInfo } from 'react-cosmos-flow/module';
 

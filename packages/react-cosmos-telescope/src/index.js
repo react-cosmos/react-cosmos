@@ -3,7 +3,7 @@
 import { create as renderer } from 'react-test-renderer';
 import createStateProxy from 'react-cosmos-state-proxy';
 import { importModule } from 'react-cosmos-shared';
-import { moduleExists } from 'react-cosmos-shared/lib/server';
+import { moduleExists } from 'react-cosmos-shared/server';
 import { getCosmosConfig } from 'react-cosmos-config';
 import { findFixtureFiles } from 'react-cosmos-voyager2/lib/server';
 import { getComponents } from 'react-cosmos-voyager2/lib/client';

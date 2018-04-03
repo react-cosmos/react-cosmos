@@ -2,7 +2,7 @@
 
 import traverse from 'traverse';
 import { importModule } from 'react-cosmos-shared';
-import { moduleExists } from 'react-cosmos-shared/lib/server';
+import { moduleExists } from 'react-cosmos-shared/server';
 import { getCosmosConfig } from 'react-cosmos-config';
 import { createContext as createLoaderContext } from 'react-cosmos-loader';
 

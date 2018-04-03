@@ -1,4 +1,4 @@
-import importModule from '../import-module';
+import { importModule } from '../import-module';
 
 const commonJsModule = {
   foo: {

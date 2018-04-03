@@ -3,7 +3,7 @@ import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { ApolloProvider } from 'react-apollo';
-import { proxyPropTypes } from 'react-cosmos-shared/lib/react';
+import { proxyPropTypes } from 'react-cosmos-shared/react';
 import { createFixtureLink } from './fixtureLink';
 
 const defaults = {

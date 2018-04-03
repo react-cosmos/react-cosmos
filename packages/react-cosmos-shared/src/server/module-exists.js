@@ -1,4 +1,4 @@
-export default modulePath => {
+export function moduleExists(modulePath) {
   // This is better than fs.existsSync because it works for paths without .js
   // extension
   try {
@@ -6,4 +6,4 @@ export default modulePath => {
   } catch (err) {
     return false;
   }
-};
+}

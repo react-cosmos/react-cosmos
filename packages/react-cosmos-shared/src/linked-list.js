@@ -2,9 +2,7 @@
 
 import type { LinkedItem } from 'react-cosmos-flow/linked-list';
 
-export default function createLinkedList<Item>(
-  items: Array<Item>
-): LinkedItem<Item> {
+export function createLinkedList<Item>(items: Array<Item>): LinkedItem<Item> {
   function advanceList(toIndex: number): LinkedItem<Item> {
     return {
       value: items[toIndex],

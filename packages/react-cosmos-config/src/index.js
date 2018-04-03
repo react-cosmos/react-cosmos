@@ -9,7 +9,7 @@ import {
   resolveUserPath,
   defaultFileMatch,
   defaultExclude
-} from 'react-cosmos-shared/lib/server';
+} from 'react-cosmos-shared/server';
 import { log, warn } from './log';
 import { CRA_COSMOS_CONFIG } from './config-templates';
 

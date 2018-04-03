@@ -3,10 +3,7 @@
 import glob from 'glob';
 import micromatch from 'micromatch';
 import promisify from 'util.promisify';
-import {
-  defaultFileMatch,
-  defaultExclude
-} from 'react-cosmos-shared/lib/server';
+import { defaultFileMatch, defaultExclude } from 'react-cosmos-shared/server';
 import { extractComponentsFromFixtureFile } from './extract-components-from-fixture-file';
 
 import type { ExcludePatterns } from 'react-cosmos-flow/config';

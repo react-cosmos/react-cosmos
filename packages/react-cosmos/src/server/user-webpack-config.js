@@ -2,7 +2,7 @@
 
 import path from 'path';
 import { importModule } from 'react-cosmos-shared';
-import { moduleExists } from 'react-cosmos-shared/lib/server';
+import { moduleExists } from 'react-cosmos-shared/server';
 import getDefaultWebpackConfig from './default-webpack-config';
 
 import type { Config } from 'react-cosmos-flow/config';
