@@ -1,6 +1,6 @@
 // @flow
 
-import createErrorCatchProxy from './components/ErrorCatchProxy';
+import { createErrorCatchProxy } from './components/ErrorCatchProxy';
 import { createDomRenderer } from './dom-renderer';
 import { connectLoader } from './connect-loader';
 

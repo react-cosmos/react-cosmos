@@ -3,7 +3,7 @@
 import until from 'async-until';
 import React from 'react';
 import createStateProxy from 'react-cosmos-state-proxy';
-import Loader from './components/Loader';
+import { Loader } from './components/Loader';
 import { isComponentClass } from './utils/is-component-class';
 
 import type { ComponentRef } from 'react-cosmos-flow/react';

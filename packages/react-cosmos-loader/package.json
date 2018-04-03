@@ -7,7 +7,7 @@
   "files": [
     "lib"
   ],
-  "main": "lib/index.js",
+  "main": "index.js",
   "dependencies": {
     "async-until": "^1.0.0",
     "deep-equal": "^1.0.1",

@@ -12,7 +12,7 @@ type State = {
 
 // Returning a class creator to be consistent with the other proxies and to be
 // able to add options in the future without breaking API
-export default function createErrorCatchProxy() {
+export function createErrorCatchProxy() {
   class ErrorCatchProxy extends Component<ProxyProps, State> {
     state = {
       hasError: false,

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { func, object } from 'prop-types';
 import { isComponentClass } from '../../utils/is-component-class';
 
-export default class PropsProxy extends Component {
+export class PropsProxy extends Component {
   /**
    * The final proxy in the chain that renders the selected component.
    */

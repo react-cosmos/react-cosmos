@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import TestRenderer from 'react-test-renderer';
 import afterPendingPromises from 'after-pending-promises';
-import Loader from '../components/Loader';
+import { Loader } from '../components/Loader';
 import { createContext as _createContext } from '../create-context';
 
 function mockStateProxy(props) {

@@ -13,9 +13,9 @@ const mockRenderer = {};
 const mockErrorCatchProxy = {};
 const mockDismissRuntimeErrors = () => {};
 
-jest.mock('../components/ErrorCatchProxy', () =>
-  jest.fn(() => mockErrorCatchProxy)
-);
+jest.mock('../components/ErrorCatchProxy', () => ({
+  createErrorCatchProxy: jest.fn(() => mockErrorCatchProxy)
+}));
 jest.mock('../dom-renderer', () => ({
   createDomRenderer: jest.fn(() => mockRenderer)
 }));
