@@ -15,7 +15,7 @@ export type ContextArgs = {
   renderer: Renderer,
   rendererOptions?: Object,
   proxies?: Array<Proxy>,
-  fixture: FixtureType<*, *>,
+  fixture: FixtureType<*>,
   onUpdate?: (fixturePart: {}) => any,
   beforeInit?: () => Promise<any>
 };

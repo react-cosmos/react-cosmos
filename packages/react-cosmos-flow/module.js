@@ -23,7 +23,7 @@ export type Fixture = {
   filePath: string,
   name: string,
   namespace: string,
-  source: FixtureType<*, *>
+  source: FixtureType<*>
 };
 
 export type Component = {
@@ -36,7 +36,7 @@ export type Component = {
 
 export type Fixtures = {
   [componentName: string]: {
-    [fixtureName: string]: FixtureType<*, *>
+    [fixtureName: string]: FixtureType<*>
   }
 };
 

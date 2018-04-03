@@ -4,7 +4,6 @@ import merge from 'lodash.merge';
 import { splitUnserializableParts } from 'react-cosmos-shared';
 import { createContext } from './create-context';
 
-import type { ComponentType } from 'react';
 import type { LoaderMessage } from 'react-cosmos-flow/loader';
 import type { FixtureType } from 'react-cosmos-flow/fixture';
 import type { Proxy } from 'react-cosmos-flow/proxy';
@@ -30,7 +29,7 @@ let selected: ?{
 // - Fixture updates received from proxy chain via context's onUpdate handler
 // - Fixture edits received from Playground UI
 // The cache is cleared when a fixture (including the current one) is selected
-let fixtureCache: ?FixtureType<*, *>;
+let fixtureCache: ?FixtureType<*>;
 
 /**
  * Connect fixture context to remote Playground UI via window.postMessage.
@@ -45,7 +44,7 @@ let fixtureCache: ?FixtureType<*, *>;
 export async function connectLoader(args: Args) {
   const { proxies, fixtures, renderer, dismissRuntimeErrors } = args;
 
-  async function loadFixture(fixture: FixtureType<*, *>, notifyParent = true) {
+  async function loadFixture(fixture: FixtureType<*>, notifyParent = true) {
     const { mount } = createContext({
       renderer,
       proxies,
@@ -206,17 +205,17 @@ function extractFixtureNames(fixtures: Fixtures): FixtureNames {
   }, {});
 }
 
-function applyFixturePart<P: {}, C: ComponentType<P>>(
-  currentFixture: FixtureType<P, C>,
+function applyFixturePart<P: {}>(
+  currentFixture: FixtureType<P>,
   fixturePart: {}
-): FixtureType<P, C> {
+): FixtureType<P> {
   return { ...currentFixture, ...fixturePart };
 }
 
-function applyFixtureBody<P: {}, C: ComponentType<P>>(
-  currentFixture: FixtureType<P, C>,
+function applyFixtureBody<P: {}>(
+  currentFixture: FixtureType<P>,
   fixtureBody: {}
-): FixtureType<P, C> {
+): FixtureType<P> {
   const { unserializable } = splitUnserializableParts(currentFixture);
 
   return merge({}, unserializable, fixtureBody);
