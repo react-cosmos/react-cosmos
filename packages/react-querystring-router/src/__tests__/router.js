@@ -16,7 +16,7 @@ const mockUriParams = {
 };
 
 let React;
-let uri;
+let parseLocation;
 let Router;
 let ReactDOM;
 let routerInstance;
@@ -43,8 +43,8 @@ const initRouter = () => {
 
   React = require('react');
   ReactDOM = require('react-dom');
-  uri = require('../uri');
-  Router = require('..').Router;
+  parseLocation = require('../uri').parseLocation;
+  Router = require('../router').Router;
 
   routerInstance = new Router({
     defaultProps: {
@@ -103,7 +103,7 @@ describe('initial location', () => {
   commonTests();
 
   it('should unserialize current location', () => {
-    expect(uri.parseLocation.mock.calls[0][0]).toBe(mockUriLocationInitial);
+    expect(parseLocation.mock.calls[0][0]).toBe(mockUriLocationInitial);
   });
 });
 
@@ -159,13 +159,13 @@ describe('PopState event', () => {
   commonTests();
 
   it('should unserialize current location', () => {
-    expect(uri.parseLocation.mock.calls[1][0]).toBe(mockUriLocation);
+    expect(parseLocation.mock.calls[1][0]).toBe(mockUriLocation);
   });
 
   it('should remove popstate event listener on destroy', () => {
     routerInstance.stop();
     window.dispatchEvent(new Event('popstate'));
 
-    expect(uri.parseLocation.mock.calls.length).toEqual(2);
+    expect(parseLocation.mock.calls.length).toEqual(2);
   });
 });

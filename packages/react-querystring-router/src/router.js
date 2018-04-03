@@ -4,7 +4,7 @@ import { parseLocation } from './uri';
 
 const getCurrentLocation = () => window.location.href;
 
-class Router {
+export class Router {
   constructor(options) {
     this.options = options;
 
@@ -82,5 +82,3 @@ class Router {
     }
   }
 }
-
-export default Router;
