@@ -36,7 +36,12 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        include: src,
+        include: [
+          src,
+          // Allow building playground from uncompiled monorepo deps
+          /react-cosmos-.+\/src\//,
+          /react-querystring-router\/src\//
+        ],
         use: 'babel-loader'
       },
       {
