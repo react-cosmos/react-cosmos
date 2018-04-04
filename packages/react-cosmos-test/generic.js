@@ -1,1 +1,3 @@
-module.exports = require('./lib/generic').createContext;
+// @flow
+
+module.exports = require('./src/generic').createContext;

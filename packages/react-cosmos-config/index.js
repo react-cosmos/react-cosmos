@@ -1,3 +1,5 @@
-exports.getCosmosConfig = require('./lib').getCosmosConfig;
-exports.hasUserCosmosConfig = require('./lib').hasUserCosmosConfig;
-exports.generateCosmosConfig = require('./lib').generateCosmosConfig;
+// @flow
+
+exports.getCosmosConfig = require('./src').getCosmosConfig;
+exports.hasUserCosmosConfig = require('./src').hasUserCosmosConfig;
+exports.generateCosmosConfig = require('./src').generateCosmosConfig;

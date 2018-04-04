@@ -1,2 +1,4 @@
+// @flow
+
 // Use default export to maintain backwards compatibility
-module.exports = require('./lib').createReduxProxy;
+module.exports = require('./src').createReduxProxy;

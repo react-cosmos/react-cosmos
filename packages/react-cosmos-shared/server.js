@@ -1,5 +1,7 @@
-exports.moduleExists = require('./lib/server/module-exists').moduleExists;
-exports.resolveUserPath = require('./lib/server/resolve-user-path').resolveUserPath;
+// @flow
+
+exports.moduleExists = require('./src/server/module-exists').moduleExists;
+exports.resolveUserPath = require('./src/server/resolve-user-path').resolveUserPath;
 
 exports.defaultFileMatch = [
   '**/__fixture?(s)__/**/*.{js,jsx,ts,tsx}',

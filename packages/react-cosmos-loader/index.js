@@ -1,3 +1,5 @@
-exports.mount = require('./lib/mount').mount;
-exports.createContext = require('./lib/create-context').createContext;
-exports.Loader = require('./lib/components/Loader').Loader;
+// @flow
+
+exports.mount = require('./src/mount').mount;
+exports.createContext = require('./src/create-context').createContext;
+exports.Loader = require('./src/components/Loader').Loader;

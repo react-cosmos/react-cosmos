@@ -1,6 +1,8 @@
+// @flow
+
 // Keeping nested "uri" export to maintain backwards compatibility
 exports.uri = {
-  parseLocation: require('./lib/uri').parseLocation,
-  stringifyParams: require('./lib/uri').stringifyParams
+  parseLocation: require('./src/uri').parseLocation,
+  stringifyParams: require('./src/uri').stringifyParams
 };
-exports.Router = require('./lib/router').Router;
+exports.Router = require('./src/router').Router;

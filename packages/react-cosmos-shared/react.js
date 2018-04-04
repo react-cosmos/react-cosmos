@@ -1,1 +1,3 @@
-exports.proxyPropTypes = require('./lib/react/proxy-prop-types').proxyPropTypes;
+// @flow
+
+exports.proxyPropTypes = require('./src/react/proxy-prop-types').proxyPropTypes;

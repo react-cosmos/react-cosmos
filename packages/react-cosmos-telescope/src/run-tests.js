@@ -60,7 +60,14 @@ export async function runTests({ cosmosConfigPath }: Args = {}) {
         });
         await mount();
 
-        const tree = getWrapper().toJSON();
+        const wrapper = getWrapper();
+        if (typeof wrapper.toJSON !== 'function') {
+          throw new TypeError(
+            `Snapshots can't be generated because test wrapper doesn't have .toJSON method`
+          );
+        }
+
+        const tree = wrapper.toJSON();
         expect(tree).toMatchSnapshot(`${component.name}:${fixture.name}`);
       }
     }

@@ -1,3 +1,5 @@
-exports.importModule = require('./lib/import-module').importModule;
-exports.createLinkedList = require('./lib/linked-list').createLinkedList;
-exports.splitUnserializableParts = require('./lib/unserializable-parts').splitUnserializableParts;
+// @flow
+
+exports.importModule = require('./src/import-module').importModule;
+exports.createLinkedList = require('./src/linked-list').createLinkedList;
+exports.splitUnserializableParts = require('./src/unserializable-parts').splitUnserializableParts;
