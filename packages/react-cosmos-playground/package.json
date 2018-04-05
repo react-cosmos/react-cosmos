@@ -5,9 +5,9 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-playground",
   "license": "MIT",
   "files": [
-    "lib"
+    "dist"
   ],
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "devDependencies": {
     "@skidding/react-codemirror": "^1.0.2",
     "classnames": "^2.2.5",

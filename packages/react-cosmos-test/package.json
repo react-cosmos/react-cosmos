@@ -5,7 +5,7 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-test",
   "license": "MIT",
   "files": [
-    "lib",
+    "dist",
     "enzyme.js",
     "generic.js"
   ],

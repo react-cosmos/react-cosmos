@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const src = path.join(__dirname, 'src');
-const lib = path.join(__dirname, 'lib');
+const dist = path.join(__dirname, 'dist');
 const nodeModules = path.join(__dirname, '../../node_modules');
 
 const env = process.env.NODE_ENV || 'development';
@@ -26,7 +26,7 @@ module.exports = {
   output: {
     libraryTarget: 'umd',
     library: 'mountPlayground',
-    path: lib,
+    path: dist,
     filename: 'index.js'
   },
   resolve: {

@@ -2,7 +2,7 @@ node_modules
 npm-debug.log
 yarn-error.log
 
-packages/*/lib
+packages/*/dist
 examples/webpack-dll/build
 
 coverage

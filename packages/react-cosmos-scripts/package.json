@@ -6,7 +6,7 @@
   "license": "MIT",
   "files": [
     "bin",
-    "lib"
+    "dist"
   ],
   "scripts": {},
   "dependencies": {

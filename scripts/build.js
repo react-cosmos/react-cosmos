@@ -30,7 +30,7 @@ function runBuildTask(options) {
     args: [
       `packages/${packageName}/src`,
       '--out-dir',
-      `packages/${packageName}/lib`,
+      `packages/${packageName}/dist`,
       '--copy-files',
       '--ignore',
       ignore.join(',')
@@ -93,9 +93,9 @@ function runBuildPlaygroundTask(watch) {
  */
 function runBuildAllTask(packageNames) {
   // Cleanup
-  glob.sync('./packages/*/lib').forEach(packageLibPath => {
-    rimraf.sync(packageLibPath);
-    console.log('INFO: Removed lib directory for', packageLibPath);
+  glob.sync('./packages/*/dist').forEach(packageDistPath => {
+    rimraf.sync(packageDistPath);
+    console.log('INFO: Removed dist directory for', packageDistPath);
   });
 
   // Build all packages and after finishing, build CP

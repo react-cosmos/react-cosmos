@@ -5,7 +5,9 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-voyager2",
   "license": "MIT",
   "files": [
-    "lib"
+    "dist",
+    "client.js",
+    "server.js"
   ],
   "scripts": {},
   "dependencies": {

@@ -9,7 +9,7 @@ import {
 } from './shared';
 
 const SRC_DIR = 'src';
-const DIST_DIR = 'lib';
+const DIST_DIR = 'dist';
 
 type TargetDir = typeof SRC_DIR | typeof DIST_DIR;
 

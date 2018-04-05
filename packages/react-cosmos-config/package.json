@@ -5,7 +5,8 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-config",
   "license": "MIT",
   "files": [
-    "lib"
+    "dist",
+    "index.js"
   ],
   "main": "index.js",
   "dependencies": {

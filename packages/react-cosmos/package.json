@@ -6,7 +6,7 @@
   "license": "MIT",
   "files": [
     "bin",
-    "lib"
+    "dist"
   ],
   "dependencies": {
     "express": "^4.15.4",
