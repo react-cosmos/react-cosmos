@@ -1,11 +1,13 @@
 // @flow
 
 import { argv } from 'yargs';
+import chalk from 'chalk';
 import {
   globAsync,
   readFileAsync,
   writeFileAsync,
-  getNodePackages
+  getNodePackages,
+  successText
 } from './shared';
 
 const SRC_DIR = 'src';
@@ -21,8 +23,9 @@ async function run() {
   const entryPoints = await getPackageEntryPoints(nodePackages);
   await Promise.all(entryPoints.map(f => linkFileRequiresToDir(f, targetDir)));
 
-  // TODO: Prettify console output
-  console.log(`DONE Linked entry points to {${targetDir}}.`);
+  console.log(
+    successText(' DONE ') + ` Linked entry points to ${chalk.bold(targetDir)}.`
+  );
 }
 
 async function linkFileRequiresToDir(filePath, targetDir: TargetDir) {

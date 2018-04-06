@@ -3,6 +3,7 @@
 import { readFile, writeFile } from 'fs';
 import path from 'path';
 import glob from 'glob';
+import chalk from 'chalk';
 
 type PackageNames = Array<string>;
 
@@ -30,6 +31,10 @@ export async function getAllPackages(): Promise<PackageNames> {
   const files = await globAsync('./packages/react-*');
 
   return files.map(f => path.basename(f));
+}
+
+export function successText(text: string) {
+  return chalk.inverse.bold.green.green(text);
 }
 
 function asyncify(fn: Function) {
