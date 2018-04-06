@@ -3,6 +3,7 @@
 import { readFile, writeFile } from 'fs';
 import path from 'path';
 import glob from 'glob';
+import rimraf from 'rimraf';
 import { argv } from 'yargs';
 import chalk from 'chalk';
 
@@ -11,6 +12,7 @@ type PackageNames = Array<string>;
 export const globAsync = asyncify(glob);
 export const readFileAsync = asyncify(readFile);
 export const writeFileAsync = asyncify(writeFile);
+export const rimrafAsync = asyncify(rimraf);
 
 export const AS_IS_PACKAGES = ['react-cosmos-flow'];
 export const BROWSER_PACKAGES = ['react-cosmos-playground'];
