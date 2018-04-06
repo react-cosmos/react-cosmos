@@ -13,7 +13,7 @@
     "precommit": "lint-staged",
     "prettify": "prettier --write '{{{packages,examples}/*/src,cypress,scripts}/**/,}*.{js,jsx,css,less,md}'",
     "lint": "xo --quiet",
-    "test": "yarn lint && jest --coverage --maxWorkers=4 --config jest.config.json",
+    "test": "yarn flow && yarn lint && jest --coverage --maxWorkers=4 --config jest.config.json",
     "test:watch": "jest --watch --config jest.config.json",
     "coveralls": "cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
     "test-smoke": "cypress run",
