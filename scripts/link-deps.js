@@ -7,8 +7,8 @@ import {
   writeFileAsync,
   getNodePackages,
   getUnnamedArg,
-  successText,
-  errorText
+  done,
+  error
 } from './shared';
 
 const SRC_DIR = 'src';
@@ -27,13 +27,11 @@ async function run() {
       entryPoints.map(f => linkFileRequiresToDir(f, targetDir))
     );
 
-    console.log(
-      successText(' DONE ') + ` Linked entry points to ${bold(targetDir)}.`
-    );
+    console.log(done() + ` Linked entry points to ${bold(targetDir)}.`);
   } catch (err) {
     if (err instanceof InvalidTargetDir) {
       console.log(
-        errorText(' ERROR ') +
+        error() +
           ` ${err.message} Available options are ${bold(SRC_DIR)} and ${bold(
             DIST_DIR
           )}`

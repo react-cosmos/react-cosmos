@@ -12,8 +12,8 @@ export const globAsync = asyncify(glob);
 export const readFileAsync = asyncify(readFile);
 export const writeFileAsync = asyncify(writeFile);
 
-const AS_IS_PACKAGES = ['react-cosmos-flow'];
-const BROWSER_PACKAGES = ['react-cosmos-playground'];
+export const AS_IS_PACKAGES = ['react-cosmos-flow'];
+export const BROWSER_PACKAGES = ['react-cosmos-playground'];
 
 export async function getNodePackages(): Promise<PackageNames> {
   const allPackages = await getAllPackages();
@@ -48,12 +48,12 @@ export function getBoolArg(name: string): boolean {
   return getNamedArg(name) === true;
 }
 
-export function successText(text: string) {
-  return chalk.bold.inverse.green(text);
+export function done(text: string = 'DONE') {
+  return chalk.bold.inverse.green(` ${text} `);
 }
 
-export function errorText(text: string) {
-  return chalk.bold.inverse.red(text);
+export function error(text: string = 'ERROR') {
+  return chalk.bold.inverse.red(` ${text} `);
 }
 
 function asyncify(fn: Function) {
