@@ -10,7 +10,6 @@
   ],
   "main": "index.js",
   "dependencies": {
-    "prop-types": "^15.5.10",
     "react-cosmos-shared": "^4.0.0-beta.5",
     "url": "^0.11.0"
   },

@@ -1,18 +1,17 @@
+// @flow
+
 import React, { Component } from 'react';
 import fetchMock from 'fetch-mock';
-import { proxyPropTypes } from 'react-cosmos-shared/react';
 
-const defaults = {
-  fixtureKey: 'fetch'
+import type { ProxyProps } from 'react-cosmos-flow/proxy';
+
+type Options = {
+  fixtureKey?: string
 };
 
-export function createFetchProxy(options) {
-  const { fixtureKey } = { ...defaults, ...options };
-
-  class FetchProxy extends Component {
-    static proxyTypes = proxyPropTypes;
-
-    constructor(props) {
+export function createFetchProxy({ fixtureKey = 'fetch' }: Options = {}) {
+  class FetchProxy extends Component<ProxyProps> {
+    constructor(props: ProxyProps) {
       super(props);
 
       this.mock();

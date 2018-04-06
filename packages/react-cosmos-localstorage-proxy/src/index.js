@@ -1,18 +1,23 @@
+// @flow
+
 import React, { Component } from 'react';
-import { proxyPropTypes } from 'react-cosmos-shared/react';
 import { LocalStorageMock } from './local-storage-mock';
 
-const defaults = {
-  fixtureKey: 'localStorage'
+import type { ProxyProps } from 'react-cosmos-flow/proxy';
+
+type Options = {
+  fixtureKey?: string
 };
 
-export function createLocalStorageProxy(options) {
-  const { fixtureKey } = { ...defaults, ...options };
+export function createLocalStorageProxy({
+  fixtureKey = 'localStorage'
+}: Options = {}) {
+  class LocalStorageProxy extends Component<ProxyProps> {
+    _localStorageOrig: Object;
 
-  class LocalStorageProxy extends Component {
-    static LocalStorageProxy = proxyPropTypes;
+    _localStorageMock: LocalStorageMock;
 
-    constructor(props) {
+    constructor(props: ProxyProps) {
       super(props);
 
       const mock = this.props.fixture[fixtureKey];

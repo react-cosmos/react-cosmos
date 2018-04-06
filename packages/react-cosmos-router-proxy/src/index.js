@@ -1,12 +1,20 @@
+// @flow
+
 import React from 'react';
-import { string, any } from 'prop-types';
 import { MemoryRouter, Route } from 'react-router';
-import { proxyPropTypes } from 'react-cosmos-shared/react';
 import LocationInterceptor from './LocationInterceptor';
 import urlParser from 'url';
 
+import type { ProxyProps } from 'react-cosmos-flow/proxy';
+
+type Props = ProxyProps & {
+  route?: string,
+  url?: string,
+  locationState?: Object
+};
+
 export function createRouterProxy() {
-  const RouterProxy = props => {
+  const RouterProxy = (props: Props) => {
     const { nextProxy, fixture, onFixtureUpdate } = props;
     const { value: NextProxy, next } = nextProxy;
     const { route, url, locationState } = fixture;
@@ -44,13 +52,6 @@ export function createRouterProxy() {
         </LocationInterceptor>
       </MemoryRouter>
     );
-  };
-
-  RouterProxy.propTypes = {
-    ...proxyPropTypes,
-    route: string,
-    url: string,
-    locationState: any
   };
 
   return RouterProxy;

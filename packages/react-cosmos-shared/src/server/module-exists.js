@@ -1,4 +1,6 @@
-export function moduleExists(modulePath) {
+// @flow
+
+export function moduleExists(modulePath: string) {
   // This is better than fs.existsSync because it works for paths without .js
   // extension
   try {

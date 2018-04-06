@@ -1,24 +1,25 @@
+// @flow
+
 import React, { Component } from 'react';
 import xhrMock from 'xhr-mock';
-import { proxyPropTypes } from 'react-cosmos-shared/react';
 
-const defaults = {
-  fixtureKey: 'xhr'
+import type { ProxyProps } from 'react-cosmos-flow/proxy';
+
+type Options = {
+  fixtureKey?: 'string'
 };
 
 const mockDefaults = {
   method: 'get'
 };
 
-export function createXhrProxy(options) {
-  const { fixtureKey } = { ...defaults, ...options };
-
-  class XhrProxy extends Component {
-    static XhrProxy = proxyPropTypes;
-
-    constructor(props) {
+export function createXhrProxy({ fixtureKey = 'xhr' }: Options = {}) {
+  class XhrProxy extends Component<ProxyProps> {
+    constructor(props: ProxyProps) {
       super(props);
 
+      // webpack shiz
+      // $FlowFixMe
       if (module.hot) {
         module.hot.status(status => {
           if (status === 'check') {

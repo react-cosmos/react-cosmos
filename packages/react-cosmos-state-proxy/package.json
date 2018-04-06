@@ -13,7 +13,6 @@
     "lodash.isempty": "^4.4.0",
     "lodash.isequal": "^4.4.0",
     "lodash.omit": "^4.5.0",
-    "prop-types": "^15.5.10",
     "react-cosmos-shared": "^4.0.0-beta.5"
   },
   "xo": false

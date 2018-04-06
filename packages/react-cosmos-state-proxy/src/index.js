@@ -1,28 +1,45 @@
+// @flow
+
 import React, { Component } from 'react';
-import { bool } from 'prop-types';
-import { proxyPropTypes } from 'react-cosmos-shared/react';
 import isEqual from 'lodash.isequal';
 import isEmpty from 'lodash.isempty';
 import omit from 'lodash.omit';
 
-const defaults = {
-  fixtureKey: 'state',
-  // How often to read current state of loaded component and report it up the
-  // chain of proxies
-  updateInterval: 500
+import type { ComponentRef } from 'react-cosmos-flow/react';
+import type { ProxyProps } from 'react-cosmos-flow/proxy';
+
+type Options = {
+  fixtureKey?: string,
+  updateInterval?: number
 };
 
-export function createStateProxy(options) {
-  const { fixtureKey, updateInterval } = { ...defaults, ...options };
+type Props = ProxyProps & {
+  disableLocalState?: boolean
+};
 
-  class StateProxy extends Component {
+export function createStateProxy({
+  fixtureKey = 'state',
+  // How often to read current state of loaded component and report it up the
+  // chain of proxies
+  updateInterval = 500
+}: Options = {}) {
+  class StateProxy extends Component<Props> {
+    static defaultProps = {
+      // Parent proxies can enable this flag to disable this proxy
+      disableLocalState: false
+    };
+
     prevState = {};
+
+    componentRef: ?ComponentRef;
+
+    timeoutId: ?TimeoutID;
 
     componentWillUnmount() {
       this.clearTimeout();
     }
 
-    onComponentRef = componentRef => {
+    onComponentRef = (componentRef: ?ComponentRef) => {
       // Save component ref to be able to read its state later
       this.componentRef = componentRef;
 
@@ -64,10 +81,12 @@ export function createStateProxy(options) {
     };
 
     onStateUpdate = () => {
-      this.updateState(getState(this.componentRef));
+      if (this.componentRef) {
+        this.updateState(getState(this.componentRef));
+      }
     };
 
-    updateState(updatedState) {
+    updateState(updatedState: Object) {
       const { onFixtureUpdate } = this.props;
 
       if (!isEqual(updatedState, this.prevState)) {
@@ -87,7 +106,9 @@ export function createStateProxy(options) {
     }
 
     clearTimeout() {
-      clearTimeout(this.timeoutId);
+      if (this.timeoutId) {
+        clearTimeout(this.timeoutId);
+      }
     }
 
     render() {
@@ -101,16 +122,6 @@ export function createStateProxy(options) {
       });
     }
   }
-
-  StateProxy.defaultProps = {
-    // Parent proxies can enable this flag to disable this proxy
-    disableLocalState: false
-  };
-
-  StateProxy.propTypes = {
-    ...proxyPropTypes,
-    disableLocalState: bool
-  };
 
   return StateProxy;
 }

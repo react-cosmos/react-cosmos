@@ -1,3 +1,5 @@
+// @flow
+
 import createReduxProxy from 'react-cosmos-redux-proxy';
 import configureStore from './configureStore';
 

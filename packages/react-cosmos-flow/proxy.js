@@ -10,4 +10,6 @@ export type ProxyProps = {
   onFixtureUpdate: Function
 };
 
-export type Proxy = ComponentType<ProxyProps>;
+// $Subtype allows us to type proxy components that have additional props with
+// the Proxy type.
+export type Proxy = ComponentType<$Subtype<ProxyProps>>;

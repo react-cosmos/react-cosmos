@@ -1,18 +1,20 @@
+// @flow
+
 import React, { Component } from 'react';
-import { proxyPropTypes } from 'react-cosmos-shared/react';
 import omit from 'lodash.omit';
 import pick from 'lodash.pick';
 
-const defaults = {
-  notProps: ['component', 'children', 'state', 'context', 'reduxState']
+import type { ProxyProps } from 'react-cosmos-flow/proxy';
+
+type Options = {
+  fixtureKey?: string,
+  notProps?: Array<string>
 };
 
-export function createNormalizePropsProxy(options) {
-  const { notProps } = { ...defaults, ...options };
-
-  class NormalizePropsProxy extends Component {
-    static propTypes = proxyPropTypes;
-
+export function createNormalizePropsProxy({
+  notProps = ['component', 'children', 'state', 'context', 'reduxState']
+}: Options = {}) {
+  class NormalizePropsProxy extends Component<ProxyProps> {
     render() {
       const { nextProxy, fixture } = this.props;
 
