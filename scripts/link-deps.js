@@ -1,13 +1,14 @@
 // @flow
 
-import { argv } from 'yargs';
-import chalk from 'chalk';
+import { bold } from 'chalk';
 import {
   globAsync,
   readFileAsync,
   writeFileAsync,
   getNodePackages,
-  successText
+  getUnnamedArg,
+  successText,
+  errorText
 } from './shared';
 
 const SRC_DIR = 'src';
@@ -18,14 +19,29 @@ type TargetDir = typeof SRC_DIR | typeof DIST_DIR;
 run();
 
 async function run() {
-  const targetDir = getTargetDir();
-  const nodePackages = await getNodePackages();
-  const entryPoints = await getPackageEntryPoints(nodePackages);
-  await Promise.all(entryPoints.map(f => linkFileRequiresToDir(f, targetDir)));
+  try {
+    const targetDir = getTargetDir();
+    const nodePackages = await getNodePackages();
+    const entryPoints = await getPackageEntryPoints(nodePackages);
+    await Promise.all(
+      entryPoints.map(f => linkFileRequiresToDir(f, targetDir))
+    );
 
-  console.log(
-    successText(' DONE ') + ` Linked entry points to ${chalk.bold(targetDir)}.`
-  );
+    console.log(
+      successText(' DONE ') + ` Linked entry points to ${bold(targetDir)}.`
+    );
+  } catch (err) {
+    if (err instanceof InvalidTargetDir) {
+      console.log(
+        errorText(' ERROR ') +
+          ` ${err.message} Available options are ${bold(SRC_DIR)} and ${bold(
+            DIST_DIR
+          )}`
+      );
+    } else {
+      throw err;
+    }
+  }
 }
 
 async function linkFileRequiresToDir(filePath, targetDir: TargetDir) {
@@ -43,7 +59,7 @@ async function getPackageEntryPoints(packages) {
 }
 
 function getTargetDir(): TargetDir {
-  const targetDir: void | ?string = argv._[0];
+  const targetDir = getUnnamedArg();
 
   if (
     typeof targetDir === 'string' &&
@@ -52,7 +68,10 @@ function getTargetDir(): TargetDir {
     return targetDir;
   }
 
-  throw new Error(
-    `Invalid target dir! Available options are "${SRC_DIR}" and "${DIST_DIR}"`
-  );
+  throw new InvalidTargetDir();
+}
+
+export function InvalidTargetDir() {
+  this.name = 'InvalidTargetDir';
+  this.message = 'Invalid target dir!';
 }
