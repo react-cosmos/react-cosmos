@@ -14,7 +14,9 @@ import type {
   Component
 } from 'react-cosmos-flow/module';
 
-type FixturesByComponent = Map<ComponentType<*>, Array<Fixture>>;
+// Let Flow know that components can have extra properties defined (eg. name
+// or .namespace)
+type FixturesByComponent = Map<$Subtype<ComponentType<*>>, Array<Fixture>>;
 
 type Args = {
   fixtureFiles: Array<FixtureFile>,
@@ -105,9 +107,6 @@ export function getComponents({
 
     const filePath = componentPaths.get(componentType) || null;
     const namespace =
-      // Not sure how to tell Flow that components can have extra properties
-      // defined
-      // $FlowFixMe
       typeof componentType.namespace === 'string'
         ? componentType.namespace
         : getCollapsedComponentNamespace(componentPathValues, filePath);
