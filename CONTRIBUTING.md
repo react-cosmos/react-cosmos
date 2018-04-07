@@ -204,6 +204,9 @@ cd react-cosmos
 # Install deps and link child packages (using Lerna)
 yarn
 
+# Build monorepo packages
+yarn build
+
 # Build example from source and test React Cosmos end to end
 cd examples/context
 yarn start
