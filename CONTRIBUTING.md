@@ -78,7 +78,7 @@ Because of the latter, integration tests or examples for older React or webpack 
 
 #### Compiled vs source code
 
-Monorepo packages have source code under `packages/PACKAGE/src` and compiled code under `packages/PACKAGE/dist`. Each packages has one or more _entry points_ (or zero in rare cases, like `react-cosmos-scripts` which exposes only binaries).
+Monorepo packages have source code under `packages/PACKAGE/src` and compiled code under `packages/PACKAGE/dist`. Each package has one or more _entry points_ (or zero in rare cases, like `react-cosmos-scripts` which exposes only binaries).
 
 **Entry points** are ES5 modules that are published to npm as-in, and they only forward exports from package modules. `package.json#main` usually points the `index.js` entry point. But some packages have multiple entry points. Because they are placed at the package root level, secondary entry points can be imported like this:
 
