@@ -4,10 +4,6 @@
   "description": "Mock Apollo Client requests via fixtures",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-apollo-proxy",
   "license": "MIT",
-  "files": [
-    "dist",
-    "index.js"
-  ],
   "main": "index.js",
   "dependencies": {
     "apollo-cache-inmemory": "^1.1.9",

@@ -4,11 +4,6 @@
   "description": "APIs for testing Cosmos fixtures in headless environments",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-test",
   "license": "MIT",
-  "files": [
-    "dist",
-    "enzyme.js",
-    "generic.js"
-  ],
   "dependencies": {
     "react-cosmos-config": "^4.0.0-beta.9",
     "react-cosmos-loader": "^4.0.0-beta.9",

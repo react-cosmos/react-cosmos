@@ -4,10 +4,6 @@
   "description": "Mock fetch responses via fixtures",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-fetch-proxy",
   "license": "MIT",
-  "files": [
-    "dist",
-    "index.js"
-  ],
   "main": "index.js",
   "dependencies": {
     "fetch-mock": "^5.12.2",

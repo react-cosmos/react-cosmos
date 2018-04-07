@@ -4,9 +4,6 @@
   "description": "Dev tool for creating reusable React components",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-playground",
   "license": "MIT",
-  "files": [
-    "dist"
-  ],
   "main": "dist/index.js",
   "devDependencies": {
     "@skidding/react-codemirror": "^1.0.2",

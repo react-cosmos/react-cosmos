@@ -4,10 +4,6 @@
   "description": "Uses Jest snapshots to test your code for changes",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-telescope",
   "license": "MIT",
-  "files": [
-    "dist",
-    "index.js"
-  ],
   "main": "index.js",
   "dependencies": {
     "react-cosmos-config": "^4.0.0-beta.9",

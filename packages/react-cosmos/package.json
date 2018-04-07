@@ -4,10 +4,6 @@
   "description": "CLI for running React Cosmos inside webpack-powered apps",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos",
   "license": "MIT",
-  "files": [
-    "bin",
-    "dist"
-  ],
   "dependencies": {
     "express": "^4.15.4",
     "fs-extra": "^4.0.1",

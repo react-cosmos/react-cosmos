@@ -4,11 +4,6 @@
   "description": "Explores your codebase to find component and fixture files",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-voyager2",
   "license": "MIT",
-  "files": [
-    "dist",
-    "client.js",
-    "server.js"
-  ],
   "scripts": {},
   "dependencies": {
     "babel-types": "^6.26.0",

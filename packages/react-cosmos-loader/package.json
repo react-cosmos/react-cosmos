@@ -4,10 +4,6 @@
   "description": "Loader for rendering React components in isolation",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-loader",
   "license": "MIT",
-  "files": [
-    "dist",
-    "index.js"
-  ],
   "main": "index.js",
   "dependencies": {
     "async-until": "^1.0.0",
