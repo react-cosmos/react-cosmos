@@ -114,11 +114,9 @@ The Cosmos monorepo is typed using [Flow](https://github.com/facebook/flow). Mos
   import type { Config } from 'react-cosmos-flow/config';
   ```
 
-* 3rd party projects can also benefit by Cosmos types by adding `react-cosmos-flow` to their dev dependencies. Useful when writing a [custom proxy](#proxy-boilerplate).
+* 3rd party projects can also benefit from Cosmos types by adding `react-cosmos-flow` to their dev dependencies. Useful when writing a [custom proxy](#proxy-boilerplate).
 
-> Cosmos packages mustn't add `react-cosmos-flow` to their `dependencies`, because Flow annotations shouldn't be published along with the compiled output.
-
-> Let us know if you ever find unwanted Flow types in your node_modules because of Cosmos deps!
+> Cosmos packages mustn't add `react-cosmos-flow` to their `dependencies`, because Flow annotations shouldn't be published along with the compiled output. Let us know if you ever find unwanted Flow types in your node_modules because of Cosmos deps!
 
 ### Playground ⇆ Loader communication
 
