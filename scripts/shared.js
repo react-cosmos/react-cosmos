@@ -50,12 +50,12 @@ export function getBoolArg(name: string): boolean {
   return getNamedArg(name) === true;
 }
 
-export function done(text: string = 'DONE') {
-  return chalk.bold.inverse.green(` ${text} `);
+export function done(text: string) {
+  return `${chalk.bold.inverse.green(` DONE `)} ${text}`;
 }
 
-export function error(text: string = 'ERROR') {
-  return chalk.bold.inverse.red(` ${text} `);
+export function error(text: string) {
+  return `${chalk.bold.inverse.red(` ERROR `)} ${text}`;
 }
 
 function asyncify(fn: Function) {

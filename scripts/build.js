@@ -27,22 +27,22 @@ async function run() {
 
   if (pkgName) {
     if (typeof pkgName !== 'string') {
-      stderr.write(`${error()} Invalid package name ${bold(pkgName)}!\n`);
+      stderr.write(error(`Invalid package name ${bold(pkgName)}!\n`));
       return;
     }
 
     if (AS_IS_PACKAGES.indexOf(pkgName) !== -1) {
-      stderr.write(`${error()} ${bold(pkgName)} doesn't require building!\n`);
+      stderr.write(error(`${bold(pkgName)} doesn't require building!\n`));
       return;
     }
 
     if (buildablePackages.indexOf(pkgName) === -1) {
       stderr.write(
-        `${error()} ${bold(
-          pkgName
-        )} doesn't exist!\nPackages: ${getFormattedPackageList(
-          buildablePackages
-        )}`
+        error(
+          `${bold(pkgName)} doesn't exist!\nPackages: ${getFormattedPackageList(
+            buildablePackages
+          )}`
+        )
       );
       return;
     }
@@ -60,11 +60,13 @@ async function run() {
     if (watch) {
       // The limitation here is that we need to build browser packages after
       // packages compiled with Babel. This doesn't work out of the box because
-      // `buildNodePackage` hangs foever in watch mode.
+      // `buildNodePackage` hangs forever in watch mode.
       stderr.write(
-        `${error()} Can't build-watch all packages! Run ${italic(
-          'build PACKAGE --watch'
-        )} for one or more packages (in separate terminals)\n`
+        error(
+          `Can't build-watch all packages! Run ${italic(
+            'build PACKAGE --watch'
+          )} for one or more packages (in separate terminals)\n`
+        )
       );
       return;
     }
@@ -127,9 +129,9 @@ async function runBuildTask({ pkgName, cmd, args, env = {} }: BuildTaskArgs) {
 
   childProcess.on('close', code => {
     if (code) {
-      stderr.write(`${error()} ${bold(pkgName)}\n`);
+      stderr.write(error(`${bold(pkgName)}\n`));
     } else {
-      stdout.write(`${done()} ${bold(pkgName)}\n`);
+      stdout.write(done(`${bold(pkgName)}\n`));
     }
   });
 

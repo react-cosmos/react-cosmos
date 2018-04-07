@@ -27,14 +27,15 @@ async function run() {
       entryPoints.map(f => linkFileRequiresToDir(f, targetDir))
     );
 
-    console.log(done() + ` Linked entry points to ${bold(targetDir)}.`);
+    console.log(done(`Linked entry points to ${bold(targetDir)}.`));
   } catch (err) {
     if (err instanceof InvalidTargetDir) {
       console.log(
-        error() +
-          ` ${err.message} Available options are ${bold(SRC_DIR)} and ${bold(
+        error(
+          `${err.message} Available options are ${bold(SRC_DIR)} and ${bold(
             DIST_DIR
           )}`
+        )
       );
     } else {
       throw err;
