@@ -231,6 +231,11 @@ When naming a file:
 * Use _CamelCase_ for components: `DragHandle.js` or `DragHandle/index.js`
 * Use _kebab-case_ for any other path: `packages/react-cosmos-shared/src/resolve-user-path.js`
 
+When creating a module:
+
+* **Named exports** are preferred over default exports
+* **Function declarations** are preferred over arrow functions at the module level (one reason is that the order doesn't matter when using the former)
+
 Please follow these rules or challenge them if you think it's worth it.
 
 #### Use Git conscientiously
