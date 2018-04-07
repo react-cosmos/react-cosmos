@@ -90,6 +90,7 @@ The main benefit of this structure is that **we can at any time choose to link p
 
 * **Flow types are carried over between packages.** So if package B calls an API from package A with incorrect arguments, Flow lets us know right away.
 * **Tests always run against latest source.** In the past each package pointed to the compiled output of its monorepo dependencies. This made it easy to mistakenly run integration (cross-package) tests on part source code, part outdated compiled output.
+* **In watch-mode, one change triggers tests across multiple packages.** Change something in `react-cosmos-shared` and a dozen packages are influenced. Because monorepo dependencies link to _src_, and because Jest is awesome, tests from all related packages are ran.
 * **Test coverage is calculated correctly.** Cross-package integration tests count coverage in all the packages they touch, not just in the package the tests start from.
 
 ```bash
