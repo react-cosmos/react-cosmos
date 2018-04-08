@@ -1,9 +1,11 @@
+// @flow
+
 import { silent as silentResolve } from 'resolve-from';
 import { silent as silentImport } from 'import-from';
 
 // This config doesn't have entry and output set up because it's not meant to
 // work standalone. react-cosmos adds an entry & output when extending this.
-export default function getDefaultWebpackConfig(rootPath) {
+export default function getDefaultWebpackConfig(rootPath: string) {
   // react-cosmos doesn't directly depend on any webpack loader.
   // Instead, it leverages the ones already installed by the user.
   const babelLoaderPath = silentResolve(rootPath, 'babel-loader');
@@ -18,6 +20,14 @@ export default function getDefaultWebpackConfig(rootPath) {
       test: /\.jsx?$/,
       loader: babelLoaderPath,
       exclude: /node_modules/
+    });
+
+    // This only applies to users who install `react-cosmos-flow`, which
+    // requires them to have Flow compilation included in their Babel config
+    rules.push({
+      test: /\.js$/,
+      loader: babelLoaderPath,
+      include: /react-cosmos-flow/
     });
   }
 
