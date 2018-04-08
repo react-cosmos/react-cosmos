@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-local-state-example",
-  "version": "4.0.0-beta.11",
+  "version": "4.0.0-beta.12",
   "description": "Example of injecting and serializing component local state",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/local-state",
   "license": "MIT",
@@ -9,12 +9,12 @@
     "test": "node ../../node_modules/jest-cli/bin/jest.js --watch --config ../../jest.config.json"
   },
   "dependencies": {
-    "react-cosmos": "^4.0.0-beta.11"
+    "react-cosmos": "^4.0.0-beta.12"
   },
   "xo": false,
   "private": true,
   "devDependencies": {
     "async-until": "^1.0.0",
-    "react-cosmos-test": "^4.0.0-beta.11"
+    "react-cosmos-test": "^4.0.0-beta.12"
   }
 }
