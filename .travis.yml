@@ -6,10 +6,11 @@ before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH=$HOME/.yarn/bin:$PATH
 script:
-  - yarn run test
-  - yarn run test-smoke-ci
+  - yarn build
+  - yarn test
+  - yarn test-smoke-ci
 after_success:
-  - yarn run coveralls
+  - yarn coveralls
 cache:
   yarn: true
   directories:

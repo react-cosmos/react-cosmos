@@ -7,9 +7,16 @@ import { inferComponentName } from './utils/infer-component-name';
 import { createDefaultNamer } from './utils/default-namer';
 
 import type { ComponentType } from 'react';
-import type { Modules, FixtureFile, Fixture, Component } from '../types';
+import type {
+  Modules,
+  FixtureFile,
+  Fixture,
+  Component
+} from 'react-cosmos-flow/module';
 
-export type FixturesByComponent = Map<ComponentType<*>, Array<Fixture>>;
+// Let Flow know that components can have extra properties defined (eg. name
+// or .namespace)
+type FixturesByComponent = Map<$Subtype<ComponentType<*>>, Array<Fixture>>;
 
 type Args = {
   fixtureFiles: Array<FixtureFile>,

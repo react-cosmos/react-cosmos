@@ -1,4 +1,4 @@
-import { findFixtureFiles } from 'react-cosmos-voyager2/lib/server';
+import { findFixtureFiles } from 'react-cosmos-voyager2/server';
 
 // Requiring because embed-modules-webpack-loader is a CJS module
 const embedModules = require('../../embed-modules-webpack-loader');
@@ -48,7 +48,7 @@ const mockFixtureFiles = [
   }
 ];
 
-jest.mock('react-cosmos-voyager2/lib/server/find-fixture-files', () => ({
+jest.mock('react-cosmos-voyager2/server', () => ({
   findFixtureFiles: jest.fn(() => mockFixtureFiles)
 }));
 

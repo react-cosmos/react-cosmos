@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import createXhrProxy from '..';
+import { createXhrProxy } from '..';
 
 // Vars populated in beforeEach blocks
 let XhrProxy;

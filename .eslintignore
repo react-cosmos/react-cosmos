@@ -1,4 +1,4 @@
 docs
-packages/*/lib
+packages/*/dist
 node_modules
 coverage

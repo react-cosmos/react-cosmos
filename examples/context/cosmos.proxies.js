@@ -1,3 +1,5 @@
+// @flow
+
 import PropTypes from 'prop-types';
 import createContextProxy from 'react-cosmos-context-proxy';
 

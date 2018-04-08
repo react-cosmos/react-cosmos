@@ -2,24 +2,13 @@
 
 import { Router } from 'react-querystring-router';
 import ComponentPlayground from './components/ComponentPlayground';
-import getPageTitle from './utils/page-title';
+import { getPageTitle } from './utils/page-title';
 
 import './utils/global.less';
 
-import type { PlaygroundOpts } from 'react-cosmos-shared/src/types';
+import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
 
 let container;
-
-const createDomContainer = () => {
-  if (!container) {
-    container = document.createElement('div');
-    if (document.body) {
-      document.body.appendChild(container);
-    }
-  }
-
-  return container;
-};
 
 // Use module.exports to avoid having to call .default() when attached to
 // the global window namespace
@@ -42,3 +31,14 @@ module.exports = (opts: PlaygroundOpts) => {
     }
   });
 };
+
+function createDomContainer() {
+  if (!container) {
+    container = document.createElement('div');
+    if (document.body) {
+      document.body.appendChild(container);
+    }
+  }
+
+  return container;
+}

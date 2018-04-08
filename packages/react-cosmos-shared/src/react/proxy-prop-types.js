@@ -1,6 +1,6 @@
 import { shape, func, object } from 'prop-types';
 
-export default {
+export const proxyPropTypes = {
   nextProxy: shape({
     value: func,
     next: func

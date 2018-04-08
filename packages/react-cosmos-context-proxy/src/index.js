@@ -1,14 +1,23 @@
-import React from 'react';
-import { proxyPropTypes } from 'react-cosmos-shared/lib/react';
+// @flow
 
-const defaults = {
-  fixtureKey: 'context'
+import React, { Component } from 'react';
+
+import type { ProxyProps } from 'react-cosmos-flow/proxy';
+
+type Options = {
+  fixtureKey?: string,
+  childContextTypes: {
+    [string]: any // React doesn't really expose types for prop-types
+  }
 };
 
-export default function createContextProxy(options) {
-  const { fixtureKey, childContextTypes } = { ...defaults, ...options };
+export function createContextProxy({
+  fixtureKey = 'context',
+  childContextTypes
+}: Options) {
+  class ContextProxy extends Component<ProxyProps> {
+    static childContextTypes = childContextTypes;
 
-  class ContextProxy extends React.Component {
     getChildContext() {
       return this.props.fixture[fixtureKey] || {};
     }
@@ -24,10 +33,6 @@ export default function createContextProxy(options) {
       });
     }
   }
-
-  ContextProxy.propTypes = proxyPropTypes;
-
-  ContextProxy.childContextTypes = childContextTypes;
 
   return ContextProxy;
 }

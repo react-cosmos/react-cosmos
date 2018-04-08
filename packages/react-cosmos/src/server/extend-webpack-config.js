@@ -4,7 +4,7 @@ import path from 'path';
 import omit from 'lodash.omit';
 import { getCosmosConfig } from 'react-cosmos-config';
 
-import type { Config } from 'react-cosmos-config/src';
+import type { Config } from 'react-cosmos-flow/config';
 
 /**
  * Extend the user config to create the Loader config. Namely,

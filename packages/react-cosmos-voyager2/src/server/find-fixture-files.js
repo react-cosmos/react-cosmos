@@ -3,14 +3,11 @@
 import glob from 'glob';
 import micromatch from 'micromatch';
 import promisify from 'util.promisify';
-import {
-  defaultFileMatch,
-  defaultExclude
-} from 'react-cosmos-shared/lib/server';
+import { defaultFileMatch, defaultExclude } from 'react-cosmos-shared/server';
 import { extractComponentsFromFixtureFile } from './extract-components-from-fixture-file';
 
-import type { ExcludePatterns } from 'react-cosmos-shared/src/types';
-import type { FixtureFile } from '../types';
+import type { ExcludePatterns } from 'react-cosmos-flow/config';
+import type { FixtureFile } from 'react-cosmos-flow/module';
 
 const globAsync = promisify(glob);
 

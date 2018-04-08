@@ -1,32 +1,6 @@
 import isPlainObject from 'lodash.isplainobject';
 
-const isSerializable = obj => {
-  if (
-    obj === undefined ||
-    obj === null ||
-    typeof obj === 'boolean' ||
-    typeof obj === 'number' ||
-    typeof obj === 'string'
-  ) {
-    return true;
-  }
-
-  if (!isPlainObject(obj) && !Array.isArray(obj)) {
-    return false;
-  }
-
-  let serializable = true;
-
-  Object.keys(obj).forEach(key => {
-    if (!isSerializable(obj[key])) {
-      serializable = false;
-    }
-  });
-
-  return serializable;
-};
-
-const splitUnserializableParts = obj => {
+export function splitUnserializableParts(obj) {
   const serializable = {};
   const unserializable = {};
 
@@ -51,6 +25,30 @@ const splitUnserializableParts = obj => {
   });
 
   return { serializable, unserializable };
-};
+}
 
-export default splitUnserializableParts;
+function isSerializable(obj) {
+  if (
+    obj === undefined ||
+    obj === null ||
+    typeof obj === 'boolean' ||
+    typeof obj === 'number' ||
+    typeof obj === 'string'
+  ) {
+    return true;
+  }
+
+  if (!isPlainObject(obj) && !Array.isArray(obj)) {
+    return false;
+  }
+
+  let serializable = true;
+
+  Object.keys(obj).forEach(key => {
+    if (!isSerializable(obj[key])) {
+      serializable = false;
+    }
+  });
+
+  return serializable;
+}

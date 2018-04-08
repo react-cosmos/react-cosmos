@@ -7,7 +7,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import fetchMock from 'fetch-mock';
 import until from 'async-until';
-import createApolloProxy from '..';
+import { createApolloProxy } from '..';
 
 const sampleQuery = gql`
   query SampleQuery($authorId: Int!) {

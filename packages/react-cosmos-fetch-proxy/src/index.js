@@ -1,16 +1,17 @@
+// @flow
+
 import React, { Component } from 'react';
 import fetchMock from 'fetch-mock';
-import { proxyPropTypes } from 'react-cosmos-shared/lib/react';
 
-const defaults = {
-  fixtureKey: 'fetch'
+import type { ProxyProps } from 'react-cosmos-flow/proxy';
+
+type Options = {
+  fixtureKey?: string
 };
 
-export default function createFetchProxy(options) {
-  const { fixtureKey } = { ...defaults, ...options };
-
-  class FetchProxy extends Component {
-    constructor(props) {
+export function createFetchProxy({ fixtureKey = 'fetch' }: Options = {}) {
+  class FetchProxy extends Component<ProxyProps> {
+    constructor(props: ProxyProps) {
       super(props);
 
       this.mock();
@@ -36,7 +37,6 @@ export default function createFetchProxy(options) {
         });
 
         // Allow unmocked requests to fall through
-        // eslint-disable-next-line unicorn/catch-error-name
         fetchMock.catch((...args) => fetchMock.realFetch.apply(window, args));
 
         fetchMock.__prevProxy = this;
@@ -61,8 +61,6 @@ export default function createFetchProxy(options) {
       });
     }
   }
-
-  FetchProxy.propTypes = proxyPropTypes;
 
   return FetchProxy;
 }

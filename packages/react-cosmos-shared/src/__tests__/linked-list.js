@@ -1,4 +1,4 @@
-import createLinkedList from '../linked-list';
+import { createLinkedList } from '../linked-list';
 
 const items = [{}, {}, {}];
 const firstItem = createLinkedList(items);

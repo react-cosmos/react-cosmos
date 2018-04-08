@@ -1,25 +1,44 @@
-import React from 'react';
-import { object } from 'prop-types';
-import { proxyPropTypes } from 'react-cosmos-shared/lib/react';
+// @flow
 
-const defaults = {
-  fixtureKey: 'reduxState',
-  alwaysCreateStore: false,
-  disableLocalState: true
+import React, { Component } from 'react';
+import { object } from 'prop-types';
+
+import type { ProxyProps } from 'react-cosmos-flow/proxy';
+import type { Unsubscribe, ReduxStore, ReduxStoreCreator } from './redux-types';
+
+type Options = {
+  createStore: ReduxStoreCreator,
+  fixtureKey?: string,
+  alwaysCreateStore?: boolean,
+  disableLocalState?: boolean
 };
 
-export default function createReduxProxy(options) {
-  const { fixtureKey, createStore, alwaysCreateStore, disableLocalState } = {
-    ...defaults,
-    ...options
-  };
+type State = {
+  storeId: number
+};
 
-  class ReduxProxy extends React.Component {
-    constructor(props) {
+export function createReduxProxy({
+  createStore,
+  fixtureKey = 'reduxState',
+  alwaysCreateStore = false,
+  disableLocalState = true
+}: Options) {
+  class ReduxProxy extends Component<ProxyProps, State> {
+    static childContextTypes = {
+      store: object
+    };
+
+    store: ReduxStore;
+
+    storeUnsubscribe: Unsubscribe;
+
+    state = {
+      storeId: 0
+    };
+
+    constructor(props: ProxyProps) {
       super(props);
-      this.onStoreChange = this.onStoreChange.bind(this);
       this.rebuildStore(props);
-      this.state = { storeId: 0 };
     }
 
     getChildContext() {
@@ -28,7 +47,7 @@ export default function createReduxProxy(options) {
       };
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps: ProxyProps) {
       const oldReduxState = this.props.fixture[fixtureKey];
       const newReduxState = nextProps.fixture[fixtureKey];
       if (oldReduxState !== newReduxState) {
@@ -44,14 +63,14 @@ export default function createReduxProxy(options) {
       this.unsubscribeFromStore();
     }
 
-    rebuildStore(props) {
+    rebuildStore(props: ProxyProps) {
       const fixtureReduxState = props.fixture[fixtureKey];
       if (alwaysCreateStore || fixtureReduxState) {
         this.store = createStore(fixtureReduxState);
       }
     }
 
-    reloadStore(props) {
+    reloadStore(props: ProxyProps) {
       this.unsubscribeFromStore();
       this.rebuildStore(props);
       this.subscribeToStore();
@@ -71,14 +90,14 @@ export default function createReduxProxy(options) {
       }
     }
 
-    onStoreChange() {
+    onStoreChange = () => {
       const { onFixtureUpdate } = this.props;
       const updatedState = this.store.getState();
 
       onFixtureUpdate({
         [fixtureKey]: updatedState
       });
-    }
+    };
 
     render() {
       const { nextProxy, fixture, onComponentRef } = this.props;
@@ -95,12 +114,6 @@ export default function createReduxProxy(options) {
       });
     }
   }
-
-  ReduxProxy.propTypes = proxyPropTypes;
-
-  ReduxProxy.childContextTypes = {
-    store: object
-  };
 
   return ReduxProxy;
 }

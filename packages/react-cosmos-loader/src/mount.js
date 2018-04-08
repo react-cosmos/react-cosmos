@@ -1,11 +1,12 @@
 // @flow
 
-import createErrorCatchProxy from './components/ErrorCatchProxy';
+import { createErrorCatchProxy } from './components/ErrorCatchProxy';
 import { createDomRenderer } from './dom-renderer';
 import { connectLoader } from './connect-loader';
 
-import type { LoaderOpts } from 'react-cosmos-shared/src/types';
-import type { Proxy, Fixtures } from './types';
+import type { LoaderOpts } from 'react-cosmos-flow/loader';
+import type { Proxy } from 'react-cosmos-flow/proxy';
+import type { Fixtures } from 'react-cosmos-flow/module';
 
 type Args = {
   proxies: Array<Proxy>,

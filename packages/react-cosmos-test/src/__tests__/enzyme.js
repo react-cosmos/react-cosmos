@@ -2,6 +2,7 @@
 
 import { mount as mountEnzyme } from 'enzyme';
 import { createContext as createLoaderContext } from 'react-cosmos-loader';
+import { getMock } from 'react-cosmos-flow/jest';
 import { createContext } from '../enzyme';
 
 jest.mock('react-cosmos-config', () => ({
@@ -32,7 +33,7 @@ jest.mock('react-cosmos-loader', () => ({
 const fixture = { component: () => {} };
 
 function getLastContextArgs() {
-  return createLoaderContext.mock.calls[0][0];
+  return getMock(createLoaderContext).calls[0][0];
 }
 
 beforeEach(() => {

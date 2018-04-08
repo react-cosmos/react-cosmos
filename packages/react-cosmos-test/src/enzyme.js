@@ -6,15 +6,11 @@ import { createContext as createGenericContext } from './generic';
 import type { ComponentType } from 'react';
 import type {
   Wrapper,
-  Renderer,
-  ContextFunctions
-} from 'react-cosmos-loader/src/types';
-import type { TestContextArgs } from './generic';
+  ContextFunctions,
+  EnzymeContextArgs
+} from 'react-cosmos-flow/context';
 
 type Selector = string | ComponentType<*>;
-
-// eslint-disable-next-line no-undef
-export type EnzymeContextArgs = $Diff<TestContextArgs, { renderer: Renderer }>;
 
 type EnzymeWrapper = Wrapper & {
   update: () => any,

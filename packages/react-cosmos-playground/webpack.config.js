@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const src = path.join(__dirname, 'src');
-const lib = path.join(__dirname, 'lib');
+const dist = path.join(__dirname, 'dist');
 const nodeModules = path.join(__dirname, '../../node_modules');
 
 const env = process.env.NODE_ENV || 'development';
@@ -26,7 +26,7 @@ module.exports = {
   output: {
     libraryTarget: 'umd',
     library: 'mountPlayground',
-    path: lib,
+    path: dist,
     filename: 'index.js'
   },
   resolve: {
@@ -36,7 +36,12 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        include: src,
+        include: [
+          src,
+          // Allow building playground from uncompiled monorepo deps
+          /react-cosmos-.+\/src\//,
+          /react-querystring-router\/src\//
+        ],
         use: 'babel-loader'
       },
       {

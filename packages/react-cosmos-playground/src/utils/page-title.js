@@ -1,4 +1,4 @@
-export default params => {
+export function getPageTitle(params) {
   const { component, fixture } = params;
   const title = 'React Cosmos';
 
@@ -8,4 +8,4 @@ export default params => {
   }
 
   return title;
-};
+}

@@ -9,33 +9,11 @@ import {
   resolveUserPath,
   defaultFileMatch,
   defaultExclude
-} from 'react-cosmos-shared/lib/server';
+} from 'react-cosmos-shared/server';
 import { log, warn } from './log';
 import { CRA_COSMOS_CONFIG } from './config-templates';
 
-import type { ExcludePatterns } from 'react-cosmos-shared/src/types';
-
-export type Config = {
-  rootPath: string,
-  fileMatch?: Array<string>,
-  exclude?: ExcludePatterns,
-  globalImports: Array<string>,
-  hostname: string,
-  hot: boolean,
-  port: number,
-  proxiesPath: string,
-  webpackConfigPath: string,
-  outputPath: string,
-  publicPath?: string,
-  publicUrl: string,
-  containerQuerySelector?: string,
-  httpProxy?: {| context: string, target: string |},
-  // Deprecated
-  componentPaths: Array<string>,
-  ignore: Array<RegExp>,
-  fixturesDir: string,
-  fixturePaths: Array<string>
-};
+import type { Config } from 'react-cosmos-flow/config';
 
 const defaults = {
   rootPath: '.',

@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
 import { func, object, arrayOf } from 'prop-types';
 import { createLinkedList } from 'react-cosmos-shared';
-import createModuleType from '../../utils/module-type';
-import PropsProxy from '../PropsProxy';
+import { createModuleType } from '../../utils/module-type';
+import { PropsProxy } from '../PropsProxy';
 
-const noope = () => {};
+export class Loader extends Component {
+  static propTypes = {
+    fixture: createModuleType(object).isRequired,
+    proxies: arrayOf(createModuleType(func)),
+    onComponentRef: func
+  };
 
-const createProxyLinkedList = userProxies =>
-  createLinkedList([...userProxies, PropsProxy]);
+  static defaultProps = {
+    proxies: []
+  };
 
-class Loader extends Component {
   /**
    * Loader for rendering React components in isolation.
    *
@@ -43,14 +48,8 @@ class Loader extends Component {
   }
 }
 
-Loader.propTypes = {
-  fixture: createModuleType(object).isRequired,
-  proxies: arrayOf(createModuleType(func)),
-  onComponentRef: func
-};
+function createProxyLinkedList(userProxies) {
+  return createLinkedList([...userProxies, PropsProxy]);
+}
 
-Loader.defaultProps = {
-  proxies: []
-};
-
-export default Loader;
+function noope() {}

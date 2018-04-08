@@ -1,17 +1,13 @@
 // @flow
 
 import { importModule } from 'react-cosmos-shared';
-import { getComponents } from 'react-cosmos-voyager2/lib/client';
+import { getComponents } from 'react-cosmos-voyager2/client';
 import getUserModules from './user-modules';
 import { mount } from 'react-cosmos-loader';
 import { dismissRuntimeErrors } from 'react-error-overlay';
 
-import type { LoaderOpts } from 'react-cosmos-shared/src/types';
-import type {
-  Modules,
-  FixtureFile,
-  Component
-} from 'react-cosmos-voyager2/src/types';
+import type { LoaderOpts } from 'react-cosmos-flow/loader';
+import type { Modules, FixtureFile, Component } from 'react-cosmos-flow/module';
 
 declare var COSMOS_CONFIG: LoaderOpts;
 

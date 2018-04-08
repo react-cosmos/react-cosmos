@@ -1,6 +1,6 @@
 // @flow
 
-import ReactComponentPlayground from '../components/ComponentPlayground';
+import ComponentPlayground from '../components/ComponentPlayground';
 import { Router } from 'react-querystring-router';
 
 // index.js is not an ES6 module
@@ -37,7 +37,7 @@ describe('Playground mount', () => {
 
     it('uses Playground as router component class', () => {
       const { getComponentClass } = routerArgs[0];
-      expect(getComponentClass()).toBe(ReactComponentPlayground);
+      expect(getComponentClass()).toBe(ComponentPlayground);
     });
 
     it('sends options to Playground', () => {

@@ -1,6 +1,6 @@
 // @flow
 
-import { getMock } from 'react-cosmos-shared/src/jest';
+import { getMock } from 'react-cosmos-flow/jest';
 import { connectLoader } from '../connect-loader';
 import { createDomRenderer } from '../dom-renderer';
 import { mount } from '../mount';
@@ -13,9 +13,9 @@ const mockRenderer = {};
 const mockErrorCatchProxy = {};
 const mockDismissRuntimeErrors = () => {};
 
-jest.mock('../components/ErrorCatchProxy', () =>
-  jest.fn(() => mockErrorCatchProxy)
-);
+jest.mock('../components/ErrorCatchProxy', () => ({
+  createErrorCatchProxy: jest.fn(() => mockErrorCatchProxy)
+}));
 jest.mock('../dom-renderer', () => ({
   createDomRenderer: jest.fn(() => mockRenderer)
 }));

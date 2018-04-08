@@ -2,12 +2,12 @@
 
 import path from 'path';
 import { getCosmosConfig } from 'react-cosmos-config';
-import { moduleExists } from 'react-cosmos-shared/lib/server';
+import { moduleExists } from 'react-cosmos-shared/server';
 import getFilePaths from 'react-cosmos-voyager';
-import { findFixtureFiles } from 'react-cosmos-voyager2/lib/server';
+import { findFixtureFiles } from 'react-cosmos-voyager2/server';
 
-import type { Config } from 'react-cosmos-config/src';
-import type { FixtureFile } from 'react-cosmos-voyager2/src/types';
+import type { Config } from 'react-cosmos-flow/config';
+import type { FixtureFile } from 'react-cosmos-flow/module';
 
 const { keys } = Object;
 
@@ -83,7 +83,8 @@ async function getNormalizedModules(cosmosConfig) {
     return { fixtureFiles, deprecatedComponentModules: components };
   }
 
-  const fixtureFiles = await findFixtureFiles(cosmosConfig);
+  const { rootPath, fileMatch, exclude } = cosmosConfig;
+  const fixtureFiles = await findFixtureFiles({ rootPath, fileMatch, exclude });
 
   return {
     fixtureFiles,

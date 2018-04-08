@@ -3,17 +3,17 @@
 import { create as renderer } from 'react-test-renderer';
 import createStateProxy from 'react-cosmos-state-proxy';
 import { importModule } from 'react-cosmos-shared';
-import { moduleExists } from 'react-cosmos-shared/lib/server';
+import { moduleExists } from 'react-cosmos-shared/server';
 import { getCosmosConfig } from 'react-cosmos-config';
-import { findFixtureFiles } from 'react-cosmos-voyager2/lib/server';
-import { getComponents } from 'react-cosmos-voyager2/lib/client';
+import { findFixtureFiles } from 'react-cosmos-voyager2/server';
+import { getComponents } from 'react-cosmos-voyager2/client';
 import { createContext } from 'react-cosmos-loader';
 
 type Args = {
   cosmosConfigPath?: string
 };
 
-export default async ({ cosmosConfigPath }: Args = {}) => {
+export async function runTests({ cosmosConfigPath }: Args = {}) {
   const cosmosConfig = getCosmosConfig(cosmosConfigPath);
   const {
     rootPath,
@@ -60,12 +60,19 @@ export default async ({ cosmosConfigPath }: Args = {}) => {
         });
         await mount();
 
-        const tree = getWrapper().toJSON();
+        const wrapper = getWrapper();
+        if (typeof wrapper.toJSON !== 'function') {
+          throw new TypeError(
+            `Snapshots can't be generated because test wrapper doesn't have .toJSON method`
+          );
+        }
+
+        const tree = wrapper.toJSON();
         expect(tree).toMatchSnapshot(`${component.name}:${fixture.name}`);
       }
     }
   });
-};
+}
 
 function getFixtureModules(fixtureFiles) {
   return fixtureFiles.reduce(

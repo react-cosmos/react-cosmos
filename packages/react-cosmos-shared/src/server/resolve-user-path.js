@@ -2,9 +2,9 @@ import path from 'path';
 import slash from 'slash';
 import resolveFrom from 'resolve-from';
 
-export default (rootPath, userPath) =>
+export function resolveUserPath(rootPath, userPath) {
   // Convert Windows backslash paths to slash paths
-  slash(
+  return slash(
     // An absolute path is already resolved
     path.isAbsolute(userPath)
       ? userPath
@@ -13,3 +13,4 @@ export default (rootPath, userPath) =>
         // start with ./
         path.join(rootPath, userPath)
   );
+}

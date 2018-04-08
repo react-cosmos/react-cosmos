@@ -78,21 +78,46 @@ Because of the latter, integration tests or examples for older React or webpack 
 
 #### Compiled vs source code
 
-Monorepo packages have source code under `packages/PKG_NAME/src` and compiled code under `packages/PKG_NAME/lib`. Package entries point to the compiled code (ie. `lib/index.js`), so whenever we reference a specific file from another package we must also point to the lib path:
+Monorepo packages have source code under `packages/PACKAGE/src` and compiled code under `packages/PACKAGE/dist`. Each package has one or more _entry points_ (or zero in rare cases, like `react-cosmos-scripts` which exposes only binaries).
+
+**Entry points** are ES5 modules that are published to npm as-in, and they only forward exports from package modules. `package.json#main` usually points the `index.js` entry point. But some packages have multiple entry points. Because they are placed at the package root level, secondary entry points can be imported like this:
 
 ```js
-import { moduleExists } from 'react-cosmos-shared/lib/server';
+import { moduleExists } from 'react-cosmos-shared/server';
 ```
 
-But, if we want to import a Flow type we'll only find it using the src path:
+The main benefit of this structure is that **we can at any time choose to link package entry points to either source or compiled modules.** This is powerful. Before we publish to npm, we make sure the entry points link to compiled output (the `dist` dir). When we develop, however, the entry points link to `src`, which enables the following:
 
-```js
-import type { FixtureFile } from 'react-cosmos-voyager2/src/types';
+* **Flow types are carried over between packages.** So if package B calls an API from package A with incorrect arguments, Flow lets us know right away.
+* **Tests always run against latest source.** In the past each package pointed to the compiled output of its monorepo dependencies. This made it easy to mistakenly run integration (cross-package) tests on part source code, part outdated compiled output.
+* **In watch-mode, one change triggers tests across multiple packages.** Change something in `react-cosmos-shared` and a dozen packages are influenced. Because monorepo dependencies link to _src_, and because Jest is awesome, tests from all related packages are ran.
+* **Test coverage is calculated correctly.** Cross-package integration tests count coverage in all the packages they touch, not just in the package the tests start from.
+
+```bash
+# Link entry points to compiled output
+# Make sure to run `yarn build` beforehand
+yarn link-entries dist
+
+# Link entry points to source code
+# Always do this before committing!
+yarn link-entries src
 ```
 
-Ideally we would always import the source of other packages for Flow to validate types across packages, but if we do this we end up running uncompiled code on the user's machine, which is not cool. Even when Node will support ES modules without a feature flag, we'll still want to compile stuff like Flow or JSX.
+> Note: The versioned packages point to `src`, because it's default mode for Cosmos development. The release script takes care of pointing packages to _dist_ and then back to _src_ again once released to npm. **Make sure to never commit entry points linked to `dist`!**
 
-Please reach out of you have a better idea for handling this!
+#### Flow
+
+The Cosmos monorepo is typed using [Flow](https://github.com/facebook/flow). Most types, especially ones reused, are found in the [react-cosmos-flow](https://github.com/react-cosmos/react-cosmos/tree/e5ed43681969890d5d29bb32bdaab3630cce9ca5/packages/react-cosmos-flow) package. This package is useful in two ways:
+
+* Cosmos packages can easily share types and import them using convenient `react-cosmos-flow/*` paths
+
+  ```js
+  import type { Config } from 'react-cosmos-flow/config';
+  ```
+
+* 3rd party projects can also benefit from Cosmos types by adding `react-cosmos-flow` to their dev dependencies. Useful when writing a [custom proxy](#proxy-boilerplate).
+
+> Cosmos packages mustn't add `react-cosmos-flow` to their `dependencies`, because Flow annotations shouldn't be published along with the compiled output. Let us know if you ever find unwanted Flow types in your node_modules because of Cosmos deps!
 
 ### Playground ⇆ Loader communication
 
@@ -117,7 +142,7 @@ Start from this when creating a new proxy.
 ```js
 import React from 'react';
 
-import type { ProxyProps } from 'react-cosmos-shared/src/react/types';
+import type { ProxyProps } from 'react-cosmos-flow/proxy';
 
 const defaults = {
   // Add option defaults here...
@@ -180,6 +205,9 @@ cd react-cosmos
 # Install deps and link child packages (using Lerna)
 yarn
 
+# Build monorepo packages
+yarn build
+
 # Build example from source and test React Cosmos end to end
 cd examples/context
 yarn start
@@ -206,6 +234,11 @@ When naming a file:
 
 * Use _CamelCase_ for components: `DragHandle.js` or `DragHandle/index.js`
 * Use _kebab-case_ for any other path: `packages/react-cosmos-shared/src/resolve-user-path.js`
+
+When creating a module:
+
+* **Named exports** are preferred over default exports
+* **Function declarations** are preferred over arrow functions at the module level (one reason is that the order doesn't matter when using the former)
 
 Please follow these rules or challenge them if you think it's worth it.
 
