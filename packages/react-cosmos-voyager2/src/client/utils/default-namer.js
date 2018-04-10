@@ -8,7 +8,7 @@ export function createDefaultNamer(baseName: string) {
   let count = 0;
 
   return function defaultNamer(): string {
-    const name = count > 0 ? `${baseName} (${count})` : baseName;
+    const name = count > 0 ? `${baseName} ${count}` : baseName;
     count += 1;
 
     return name;

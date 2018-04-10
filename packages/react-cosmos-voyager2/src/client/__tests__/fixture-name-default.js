@@ -58,10 +58,10 @@ describe('Default names for multi fixture', () => {
   });
 
   it('has name of file', () => {
-    expect(components[0].fixtures[1].name).toBe('foo (1)');
+    expect(components[0].fixtures[1].name).toBe('foo 1');
   });
 
   it('has name of file', () => {
-    expect(components[0].fixtures[2].name).toBe('foo (2)');
+    expect(components[0].fixtures[2].name).toBe('foo 2');
   });
 });
