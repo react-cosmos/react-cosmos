@@ -6,8 +6,8 @@ export type ExcludePatterns = ExcludePattern | Array<ExcludePattern>;
 
 export type Config = {
   rootPath: string,
-  fileMatch?: Array<string>,
-  exclude?: ExcludePatterns,
+  fileMatch: Array<string>,
+  exclude: ExcludePatterns,
   globalImports: Array<string>,
   hostname: string,
   hot: boolean,
