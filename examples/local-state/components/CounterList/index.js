@@ -1,7 +1,7 @@
-import React from 'react';
-import Counter from '../Counter/Counter';
+import React, { Component } from 'react';
+import { Counter } from '../Counter';
 
-export default class CounterList extends React.Component {
+export class CounterList extends Component {
   render() {
     return (
       <div>

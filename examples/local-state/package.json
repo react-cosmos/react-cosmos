@@ -9,7 +9,8 @@
     "test": "node ../../node_modules/jest-cli/bin/jest.js --watch --config ../../jest.config.json"
   },
   "dependencies": {
-    "react-cosmos": "^4.0.0-beta.12"
+    "react-cosmos": "^4.0.0-beta.12",
+    "react-cosmos-test": "^4.0.0-beta.12"
   },
   "xo": false,
   "private": true,
