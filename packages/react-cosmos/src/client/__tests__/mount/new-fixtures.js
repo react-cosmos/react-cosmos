@@ -71,7 +71,7 @@ test('sends fixtures to loader', () => {
     Bar: {
       one,
       'nested/two': two[0],
-      'nested/two (1)': two[1]
+      'nested/two 1': two[1]
     },
     Foo: {
       blank

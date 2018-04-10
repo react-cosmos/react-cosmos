@@ -60,11 +60,11 @@ describe('Multi component defaults', () => {
   });
 
   it('has default name', () => {
-    expect(components[1].name).toBe('Component (1)');
+    expect(components[1].name).toBe('Component 1');
   });
 
   it('has default name', () => {
-    expect(components[2].name).toBe('Component (2)');
+    expect(components[2].name).toBe('Component 2');
   });
 });
 
@@ -109,6 +109,6 @@ describe('Multi component defaults with different namespaces', () => {
   });
 
   it('has default name', () => {
-    expect(components[2].name).toBe('Component (1)');
+    expect(components[2].name).toBe('Component 1');
   });
 });
