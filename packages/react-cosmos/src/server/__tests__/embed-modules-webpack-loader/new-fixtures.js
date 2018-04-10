@@ -52,17 +52,16 @@ jest.mock('react-cosmos-voyager2/server', () => ({
   findFixtureFiles: jest.fn(() => mockFixtureFiles)
 }));
 
-const mockAddDependency = jest.fn();
+const mockAddContextDependency = jest.fn();
 const loaderCallback = jest.fn();
 const loaderInput = `
   fixtureModules: FIXTURE_MODULES,
   fixtureFiles: FIXTURE_FILES,
   deprecatedComponentModules: DEPRECATED_COMPONENT_MODULES,
-  proxies: PROXIES,
-  contexts: CONTEXTS`;
+  proxies: PROXIES`;
 
 beforeEach(() => {
-  mockAddDependency.mockClear();
+  mockAddContextDependency.mockClear();
   loaderCallback.mockClear();
 
   return new Promise(resolve => {
@@ -71,7 +70,7 @@ beforeEach(() => {
         loaderCallback(...args);
         resolve();
       },
-      addDependency: mockAddDependency
+      addContextDependency: mockAddContextDependency
     };
     embedModules.call(loaderContext, loaderInput);
   });
@@ -117,24 +116,8 @@ it('injects proxies', () => {
   );
 });
 
-it('injects contexts', () => {
-  const output = loaderCallback.mock.calls[0][1];
-  const [, contexts] = output.match(/contexts: (.+)(,|$)/);
-
-  const expected = `[
-    require.context('/components/__fixtures__/Foo',false,/\\.jsx?$/),
-    require.context('/components/__fixtures__/Bar',false,/\\.jsx?$/)
-  ]`;
-  expect(contexts).toEqual(expected.replace(/\s/g, ''));
-});
-
-it('registers user dirs as loader deps', () => {
-  expect(mockAddDependency).toHaveBeenCalledWith(
-    '/components/__fixtures__/Foo'
-  );
-  expect(mockAddDependency).toHaveBeenCalledWith(
-    '/components/__fixtures__/Bar'
-  );
+it('registers root path as loader context dep', () => {
+  expect(mockAddContextDependency).toHaveBeenCalledWith('MOCK_ROOT_PATH');
 });
 
 it('injects empty deprecated components', () => {

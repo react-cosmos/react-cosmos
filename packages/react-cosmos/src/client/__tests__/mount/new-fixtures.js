@@ -54,7 +54,6 @@ beforeEach(() => {
   global.PROXIES = proxies;
   global.FIXTURE_FILES = fixtureFiles;
   global.FIXTURE_MODULES = fixtureModules;
-  global.CONTEXTS = [];
   global.DEPRECATED_COMPONENT_MODULES = [];
 
   // Require module after globals have been mocked
