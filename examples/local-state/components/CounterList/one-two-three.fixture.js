@@ -1,4 +1,4 @@
-import CounterList from '../CounterList';
+import { CounterList } from '.';
 
 export default {
   component: CounterList,

@@ -5,9 +5,6 @@
 // context (which will update the bundle automatically when files are added or
 // changed).
 
-// eslint-disable-next-line no-undef, no-unused-expressions
-CONTEXTS;
-
 const getUserModules = () => ({
   /* eslint-disable no-undef */
   fixtureModules: FIXTURE_MODULES,

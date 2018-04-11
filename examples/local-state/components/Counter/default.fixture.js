@@ -1,4 +1,4 @@
-import Counter from '../Counter';
+import { Counter } from '.';
 
 export default {
   component: Counter

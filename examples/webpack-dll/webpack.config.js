@@ -28,6 +28,7 @@ module.exports = {
     }),
     new webpack.DllReferencePlugin({
       context: __dirname,
+      // eslint-disable-next-line import/no-unresolved
       manifest: require('./build/vendor-manifest.json'),
       extensions: ['.js']
     })

@@ -153,6 +153,7 @@
         "files": [
           "jest.framework-setup.js",
           "**/__tests__/**/*.{js,jsx}",
+          "**/?(*.)test.{js,jsx}",
           "**/__mocks__/**/*.js",
           "packages/react-cosmos-telescope/**/*.js"
         ],
@@ -160,12 +161,6 @@
           "jest",
           "browser"
         ]
-      },
-      {
-        "files": "examples/**/*.{js,jsx}",
-        "rules": {
-          "import/no-unresolved": 0
-        }
       },
       {
         "files": [
