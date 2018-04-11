@@ -29,9 +29,9 @@ export const LEFT_NAV_SIZE = '__cosmos__left-nav-size';
 export const FIXTURE_EDITOR_PANE_SIZE = '__cosmos__fixture-editor-pane-size';
 
 export const PENDING = 0;
-export const MISSING = 1;
+export const BUILD_ERROR = 1;
 export const OK = 2;
-export const ERROR = 3;
+export const RUNTIME_ERROR = 3;
 export const READY = 4;
 
 type Props = {
@@ -131,7 +131,7 @@ export default class ComponentPlayground extends Component<Props, State> {
     // initialized, the Loader will safely capture and display runtime errors
     // when they occur
     if (this.state.loaderStatus < READY) {
-      this.setState({ loaderStatus: ERROR });
+      this.setState({ loaderStatus: RUNTIME_ERROR });
     }
   }
 
@@ -263,7 +263,7 @@ export default class ComponentPlayground extends Component<Props, State> {
         });
       } else {
         this.setState({
-          loaderStatus: MISSING
+          loaderStatus: BUILD_ERROR
         });
       }
     }
@@ -330,7 +330,7 @@ export default class ComponentPlayground extends Component<Props, State> {
     const isLoaderVisible =
       (isFixtureSelected && !isMissingFixtureSelected) ||
       // Show loader when it crashes during initializing
-      loaderStatus === ERROR;
+      loaderStatus === RUNTIME_ERROR;
     const classes = classNames(styles.content, {
       [styles.contentPortrait]: orientation === 'portrait',
       [styles.contentLandscape]: orientation === 'landscape'
@@ -341,7 +341,9 @@ export default class ComponentPlayground extends Component<Props, State> {
         {!isLoaderVisible && (
           <StarryBg>
             {loaderStatus === PENDING && <LoadingScreen />}
-            {loaderStatus === MISSING && <NoLoaderScreen options={options} />}
+            {loaderStatus === BUILD_ERROR && (
+              <NoLoaderScreen options={options} />
+            )}
             {loaderStatus === READY &&
               !isFixtureSelected && <WelcomeScreen fixtures={fixtures} />}
             {isMissingFixtureSelected && (
