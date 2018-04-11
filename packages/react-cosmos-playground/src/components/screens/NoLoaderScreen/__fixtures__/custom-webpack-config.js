@@ -1,11 +1,19 @@
+// @flow
+
+import { createFixture } from 'react-cosmos-flow/fixture';
 import NoLoaderScreen from '..';
 
-export default {
+export default createFixture({
   component: NoLoaderScreen,
 
   props: {
     options: {
-      webpackConfigType: 'custom'
+      projectKey: 'foo',
+      loaderUri: '/foo',
+      webpackConfigType: 'custom',
+      deps: {
+        'html-webpack-plugin': false
+      }
     }
   }
-};
+});

@@ -20,7 +20,8 @@ describe('Playground mount', () => {
     routerInstance = mountPlayground({
       loaderUri: '/fake-loader-uri/',
       projectKey: '/fake-project-key/',
-      webpackConfigType: 'custom'
+      webpackConfigType: 'custom',
+      deps: {}
     });
   });
 

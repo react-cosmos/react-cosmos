@@ -12,7 +12,7 @@ export default createFixture({
       loaderUri: '/foo',
       webpackConfigType: 'default',
       deps: {
-        'html-webpack-plugin': false
+        'html-webpack-plugin': true
       }
     }
   }

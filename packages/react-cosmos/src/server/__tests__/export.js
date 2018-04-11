@@ -75,7 +75,10 @@ describe('playground files', () => {
     const optsStr = JSON.stringify({
       loaderUri: './loader/index.html',
       projectKey: mockRootPath,
-      webpackConfigType: 'default'
+      webpackConfigType: 'default',
+      deps: {
+        'html-webpack-plugin': true
+      }
     });
 
     expect(fs.readFileSync(outputPath, 'utf8')).toBe(
