@@ -12,19 +12,13 @@ let container;
 
 // Use module.exports to avoid having to call .default() when attached to
 // the global window namespace
-module.exports = (opts: PlaygroundOpts) => {
-  const { loaderUri, projectKey, webpackConfigType } = opts;
-
+module.exports = (options: PlaygroundOpts) => {
   return new Router({
     container: createDomContainer(),
     getComponentClass: () => ComponentPlayground,
     getComponentProps: params => ({
       ...params,
-      options: {
-        loaderUri,
-        projectKey,
-        webpackConfigType
-      }
+      options
     }),
     onChange: params => {
       document.title = getPageTitle(params);
