@@ -38,17 +38,19 @@ exports[`NoLoaderScreen custom webpack config renders correctly 1`] = `
          
         and restart Cosmos.
       </p>
-      <p>
-        If that doesn't work please
+      <p
+        className="faded"
+      >
+        If you can't figure it out
          
         <a
-          href="https://github.com/react-cosmos/react-cosmos/blob/master/CONTRIBUTING.md"
+          href="https://github.com/react-cosmos/react-cosmos/issues/new"
           target="_blank"
         >
-          create an issue
+          report your error
         </a>
          
-        describing your setup.
+        and we'll do our best to help. Include as much details as you can.
       </p>
     </div>
   </div>
@@ -85,17 +87,19 @@ exports[`NoLoaderScreen default webpack config renders correctly 1`] = `
       <p>
         The default webpack config will include it automatically.
       </p>
-      <p>
-        If that doesn't work please
+      <p
+        className="faded"
+      >
+        If you can't figure it out
          
         <a
-          href="https://github.com/react-cosmos/react-cosmos/blob/master/CONTRIBUTING.md"
+          href="https://github.com/react-cosmos/react-cosmos/issues/new"
           target="_blank"
         >
-          create an issue
+          report your error
         </a>
          
-        describing your setup.
+        and we'll do our best to help. Include as much details as you can.
       </p>
     </div>
   </div>
