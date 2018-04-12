@@ -23,14 +23,10 @@ export function createContextProxy({
     }
 
     render() {
-      const { nextProxy, fixture, onComponentRef } = this.props;
+      const { nextProxy, ...rest } = this.props;
+      const { value: NextProxy, next } = nextProxy;
 
-      return React.createElement(nextProxy.value, {
-        ...this.props,
-        nextProxy: nextProxy.next(),
-        fixture,
-        onComponentRef
-      });
+      return <NextProxy {...rest} nextProxy={next()} />;
     }
   }
 
