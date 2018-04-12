@@ -64,7 +64,7 @@ export function getComponents({
 
       compFixtures.push({
         filePath,
-        name: name || fileFixtureNamer(),
+        name: name || fileFixtureNamer(fixture.component),
         // Note: namespace is updated later, after gathering all fixtures per
         // component
         namespace: '',
