@@ -81,7 +81,10 @@ it('serves index.html on / route with playgrounds opts included', async () => {
       JSON.stringify({
         loaderUri: './loader/index.html',
         projectKey: mockRootPath,
-        webpackConfigType: 'custom'
+        webpackConfigType: 'custom',
+        deps: {
+          'html-webpack-plugin': true
+        }
       })
     )
   );

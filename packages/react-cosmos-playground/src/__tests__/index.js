@@ -13,15 +13,18 @@ jest.mock('react-querystring-router', () => ({
   Router: jest.fn()
 }));
 
+const playgroundOpts = {
+  loaderUri: '/fake-loader-uri/',
+  projectKey: '/fake-project-key/',
+  webpackConfigType: 'custom',
+  deps: {}
+};
+
 describe('Playground mount', () => {
   beforeEach(() => {
     jest.resetAllMocks();
 
-    routerInstance = mountPlayground({
-      loaderUri: '/fake-loader-uri/',
-      projectKey: '/fake-project-key/',
-      webpackConfigType: 'custom'
-    });
+    routerInstance = mountPlayground(playgroundOpts);
   });
 
   it('creates Router instance', () => {
@@ -43,11 +46,7 @@ describe('Playground mount', () => {
     it('sends options to Playground', () => {
       const { getComponentProps } = routerArgs[0];
       const { options } = getComponentProps();
-      expect(options).toEqual({
-        loaderUri: '/fake-loader-uri/',
-        projectKey: '/fake-project-key/',
-        webpackConfigType: 'custom'
-      });
+      expect(options).toEqual(playgroundOpts);
     });
 
     it('returns router instance', () => {
