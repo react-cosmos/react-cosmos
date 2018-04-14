@@ -1,6 +1,7 @@
 // @flow
 
 import path from 'path';
+import { argv } from 'yargs';
 import { importModule } from 'react-cosmos-shared';
 import { moduleExists } from 'react-cosmos-shared/server';
 import getDefaultWebpackConfig from './default-webpack-config';
@@ -13,7 +14,13 @@ export function getUserWebpackConfig(cosmosConfig: Config) {
   if (hasUserCustomWebpackConfig(cosmosConfig)) {
     const relPath = path.relative(process.cwd(), webpackConfigPath);
     console.log(`[Cosmos] Using webpack config found at ${relPath}`);
-    return importModule(require(webpackConfigPath));
+
+    let userConfig = importModule(require(webpackConfigPath));
+    if (typeof userConfig === 'function') {
+      userConfig = userConfig(process.env.NODE_ENV, argv);
+    }
+
+    return userConfig;
   }
 
   console.log('[Cosmos] No webpack config found, using defaults');
