@@ -894,6 +894,23 @@ The default webpack config included in Cosmos checks to see which packages you h
 
 If you already have a hairy webpack config that you'd like to reuse, set the `webpackConfigPath` option to your webpack config's file path and Cosmos will do its best to extend it.
 
+You can also customize your webpack config specifically for Cosmos. Eg. Omitting one plugin from the Cosmos build.
+
+```js
+// cosmos.config.js
+module.exports = {
+  webpack: (config, { env }) => {
+    // Return customized config
+    return {
+      ...config,
+      plugins: config.plugins.filter(
+        p => !p.constructor || p.constructor.name !== 'OfflinePlugin'
+      );
+    };
+  }
+};
+```
+
 #### Custom fixture paths
 
 The `fileMatch` and `exclude` options are used to detect fixture files. The default fileMatch value is meant to accommodate most needs out of the box:
@@ -950,10 +967,18 @@ module.exports = {
     target: 'http://localhost:4000/api'
   },
 
-  // These ones are self explanatory
+  // Reuse existing webpack config
+  webpackConfigPath: './config/webpack.config.dev',
+
+  // Customize webpack config
+  webpack: (config, { env }) => {
+    // Return customized config
+    return config;
+  },
+
+  // Customize dev server
   hostname: 'localhost',
-  port: 8989,
-  webpackConfigPath: './config/webpack.config.dev'
+  port: 8989
 };
 ```
 

@@ -3,6 +3,7 @@
 import path from 'path';
 import omit from 'lodash.omit';
 import { getCosmosConfig } from 'react-cosmos-config';
+import { getEnv } from './get-env';
 
 import type { Config } from 'react-cosmos-flow/config';
 
@@ -29,7 +30,8 @@ export default function extendWebpackConfig({
     containerQuerySelector,
     globalImports,
     hot,
-    outputPath
+    outputPath,
+    webpack: webpackOverride
   } = cosmosConfig;
 
   const entry = [...globalImports];
@@ -108,7 +110,7 @@ export default function extendWebpackConfig({
     }
   }
 
-  return {
+  const webpackConfig = {
     ...userWebpackConfig,
     entry,
     output,
@@ -118,6 +120,12 @@ export default function extendWebpackConfig({
     },
     plugins
   };
+
+  if (typeof webpackOverride !== 'function') {
+    return webpackConfig;
+  }
+
+  return webpackOverride(webpackConfig, { env: getEnv() });
 }
 
 function alreadyHasHmrPlugin({ plugins }) {
