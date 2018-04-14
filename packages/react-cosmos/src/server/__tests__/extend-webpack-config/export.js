@@ -3,9 +3,6 @@ import extendWebpackConfig from '../../extend-webpack-config';
 jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
-    componentPaths: ['src/components'],
-    fixturePaths: ['test/fixtures'],
-    ignore: [],
     globalImports: ['./global.css'],
     hot: true,
     outputPath: '__mock__outputPath',
