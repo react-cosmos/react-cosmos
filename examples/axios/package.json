@@ -5,7 +5,7 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/axios",
   "license": "MIT",
   "scripts": {
-    "start": "cosmos"
+    "start": "babel-node node_modules/.bin/cosmos"
   },
   "dependencies": {
     "axios": "^0.16.2",
