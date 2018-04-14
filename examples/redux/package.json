@@ -5,7 +5,7 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/redux",
   "license": "MIT",
   "scripts": {
-    "start": "cosmos"
+    "start": "babel-node node_modules/.bin/cosmos"
   },
   "dependencies": {
     "react-cosmos": "^4.0.0-beta.16",
