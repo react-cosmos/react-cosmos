@@ -7,6 +7,7 @@ const onConnect = ev => {
 const onUpdate = buffer => {
   console.log('bundle - %d bytes', buffer.length);
 };
+
 const browserify = {
   transform: ['babelify', 'require-globify'],
   extensions: ['.js', '.json', '.jsx']
@@ -24,5 +25,6 @@ budo(path.join(__dirname, 'loader'), {
   live: true,
   host: 'localhost',
   port: 8990,
-  browserify
+  browserify,
+  cors: true
 }).on('update', onUpdate);
