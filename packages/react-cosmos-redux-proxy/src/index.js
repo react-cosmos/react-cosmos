@@ -100,18 +100,21 @@ export function createReduxProxy({
     };
 
     render() {
-      const { nextProxy, fixture, onComponentRef } = this.props;
+      const { nextProxy, ...rest } = this.props;
+      const { value: NextProxy, next } = nextProxy;
 
-      return React.createElement(nextProxy.value, {
-        ...this.props,
-        key: this.state.storeId,
-        nextProxy: nextProxy.next(),
-        fixture,
-        onComponentRef,
-        // Disable StateProxy when Redux state is available, otherwise the entire
-        // Redux store would be duplicated from the connect() component's state
-        disableLocalState: disableLocalState && Boolean(this.store)
-      });
+      return (
+        <NextProxy
+          {...rest}
+          key={this.state.storeId}
+          nextProxy={next()}
+          disableLocalState={
+            // Disable StateProxy when Redux state is available, otherwise the entire
+            // Redux store would be duplicated from the connect() component's state
+            disableLocalState && Boolean(this.store)
+          }
+        />
+      );
     }
   }
 

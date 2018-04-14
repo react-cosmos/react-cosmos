@@ -51,14 +51,10 @@ export function createFetchProxy({ fixtureKey = 'fetch' }: Options = {}) {
     }
 
     render() {
-      const { props } = this;
-      const { nextProxy, onComponentRef } = props;
+      const { nextProxy, ...rest } = this.props;
+      const { value: NextProxy, next } = nextProxy;
 
-      return React.createElement(nextProxy.value, {
-        ...props,
-        nextProxy: nextProxy.next(),
-        onComponentRef
-      });
+      return <NextProxy {...rest} nextProxy={next()} />;
     }
   }
 

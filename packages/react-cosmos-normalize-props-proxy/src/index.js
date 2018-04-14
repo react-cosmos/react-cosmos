@@ -16,13 +16,16 @@ export function createNormalizePropsProxy({
 }: Options = {}) {
   class NormalizePropsProxy extends Component<ProxyProps> {
     render() {
-      const { nextProxy, fixture } = this.props;
+      const { nextProxy, fixture, ...rest } = this.props;
+      const { value: NextProxy, next } = nextProxy;
 
-      return React.createElement(nextProxy.value, {
-        ...this.props,
-        nextProxy: nextProxy.next(),
-        fixture: getFixedFixture(fixture, notProps)
-      });
+      return (
+        <NextProxy
+          {...rest}
+          nextProxy={next()}
+          fixture={getFixedFixture(fixture, notProps)}
+        />
+      );
     }
   }
 
