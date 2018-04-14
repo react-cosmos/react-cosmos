@@ -478,7 +478,9 @@ export default class ComponentPlayground extends Component<Props, State> {
   }
 
   renderLoader(isLoaderVisible: boolean) {
-    const { options: { loaderUri } } = this.props;
+    const {
+      options: { loaderUri }
+    } = this.props;
     const { isDragging } = this.state;
     const loaderStyle = {
       display: isLoaderVisible ? 'block' : 'none'

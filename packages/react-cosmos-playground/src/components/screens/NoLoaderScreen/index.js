@@ -12,7 +12,9 @@ type Props = {
 
 export default class NoLoaderScreen extends Component<Props> {
   render() {
-    const { options: { webpackConfigType, deps } } = this.props;
+    const {
+      options: { webpackConfigType, deps }
+    } = this.props;
 
     if (webpackConfigType === 'custom') {
       return (

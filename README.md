@@ -31,9 +31,9 @@
 
 Cosmos scans your project for components and enables you to:
 
-1. Render components under any combination of props, context and state
-2. Mock _every_ external dependency (eg. API responses, localStorage, etc)
-3. See app state evolve in real-time while interacting with running instances
+1.  Render components under any combination of props, context and state
+2.  Mock _every_ external dependency (eg. API responses, localStorage, etc)
+3.  See app state evolve in real-time while interacting with running instances
 
 ![Component Playground](intro.gif)
 
@@ -287,8 +287,8 @@ How do proxies work? Well duh, they're _Just Components_. As regular React compo
 
 Proxies have two parts:
 
-1. **Configuration.** Done once per project, inside [cosmos.proxies.js](#where-to-put-proxies). Import proxy packages, call their default export (always a _create_ function) and add the result to the list of exported proxies. Some proxies require options, others work out of the box.
-2. **Activation**. Triggered by a special fixture attribute. Eg. The React Router proxy activates when `fixture.url` is defined, otherwise it's a noop. Proxies can also be always-active, but it's a best practice to make proxies opt-in to avoid useless overhead.
+1.  **Configuration.** Done once per project, inside [cosmos.proxies.js](#where-to-put-proxies). Import proxy packages, call their default export (always a _create_ function) and add the result to the list of exported proxies. Some proxies require options, others work out of the box.
+2.  **Activation**. Triggered by a special fixture attribute. Eg. The React Router proxy activates when `fixture.url` is defined, otherwise it's a noop. Proxies can also be always-active, but it's a best practice to make proxies opt-in to avoid useless overhead.
 
 #### Where to put proxies?
 

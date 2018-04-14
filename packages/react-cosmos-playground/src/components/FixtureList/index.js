@@ -24,7 +24,10 @@ export default class FixtureList extends Component {
   }
 
   async componentDidMount() {
-    const { fixtures, options: { projectKey } } = this.props;
+    const {
+      fixtures,
+      options: { projectKey }
+    } = this.props;
     window.addEventListener('keydown', this.onWindowKey);
 
     const savedExpansionState = await getSavedExpansionState(projectKey);
@@ -38,7 +41,10 @@ export default class FixtureList extends Component {
   }
 
   async componentWillReceiveProps(nextProps) {
-    const { fixtures, options: { projectKey } } = nextProps;
+    const {
+      fixtures,
+      options: { projectKey }
+    } = nextProps;
     if (
       JSON.stringify(fixtures) !== JSON.stringify(this.props.fixtures) ||
       projectKey !== this.props.options.projectKey

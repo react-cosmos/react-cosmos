@@ -9031,7 +9031,11 @@ prettier-bytes@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/prettier-bytes/-/prettier-bytes-1.0.4.tgz#994b02aa46f699c50b6257b5faaa7fe2557e62d6"
 
-prettier@1.11.1, prettier@^1.5.3:
+prettier@1.12.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.12.0.tgz#d26fc5894b9230de97629b39cae225b503724ce8"
+
+prettier@^1.5.3:
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.11.1.tgz#61e43fc4cd44e68f2b0dfc2c38cd4bb0fccdcc75"
 
