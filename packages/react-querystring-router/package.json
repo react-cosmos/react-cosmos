@@ -1,6 +1,6 @@
 {
   "name": "react-querystring-router",
-  "version": "4.0.0-beta.13",
+  "version": "4.0.0-beta.16",
   "description": "Bare router for React components, using props as query string",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-querystring-router",
   "license": "MIT",
