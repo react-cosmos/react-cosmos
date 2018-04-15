@@ -4,6 +4,9 @@ type ExcludePattern = string | RegExp;
 
 export type ExcludePatterns = ExcludePattern | Array<ExcludePattern>;
 
+type WebpackConfig = Object;
+type WebpackConfigOverride = (WebpackConfig, { env: string }) => WebpackConfig;
+
 export type Config = {
   rootPath: string,
   fileMatch: Array<string>,
@@ -14,6 +17,7 @@ export type Config = {
   port: number,
   proxiesPath: string,
   webpackConfigPath: string,
+  webpack?: WebpackConfigOverride,
   outputPath: string,
   publicPath?: string,
   publicUrl: string,

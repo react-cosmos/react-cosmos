@@ -83,6 +83,7 @@ Jump to:
   * [More proxies...](#more-proxies)
 * [Integration with popular tools](#integration-with-popular-tools)
   * [Create React App](#create-react-app)
+    * [With react-app-rewired](#with-react-app-rewired)
   * [Next.js](#nextjs)
   * [React Boilerplate](#react-boilerplate)
   * [React Redux Starter Kit](#react-redux-starter-kit)
@@ -809,6 +810,22 @@ Also make sure to:
 
 _CRA + Cosmos example: [Flatris](https://github.com/skidding/flatris)_
 
+##### With react-app-rewired
+
+```diff
+// cosmos.config.js
++const overrides = require('react-app-rewired/config-overrides');
+
+module.exports = {
+  containerQuerySelector: '#root',
+  webpackConfigPath: 'react-scripts/config/webpack.config.dev',
++  webpack: config => overrides.webpack(config),
+  publicPath: 'public',
+  // Optional: Add this when you start using proxies
+  proxiesPath: 'src/cosmos.proxies'
+};
+```
+
 #### Next.js
 
 Add `react-cosmos` to dev dependencies and create `cosmos.config.js`.
@@ -894,6 +911,23 @@ The default webpack config included in Cosmos checks to see which packages you h
 
 If you already have a hairy webpack config that you'd like to reuse, set the `webpackConfigPath` option to your webpack config's file path and Cosmos will do its best to extend it.
 
+You can also customize your webpack config specifically for Cosmos. Eg. Omitting one plugin from the Cosmos build.
+
+```js
+// cosmos.config.js
+module.exports = {
+  webpack: (config, { env }) => {
+    // Return customized config
+    return {
+      ...config,
+      plugins: config.plugins.filter(
+        p => !p.constructor || p.constructor.name !== 'OfflinePlugin'
+      );
+    };
+  }
+};
+```
+
 #### Custom fixture paths
 
 The `fileMatch` and `exclude` options are used to detect fixture files. The default fileMatch value is meant to accommodate most needs out of the box:
@@ -950,10 +984,18 @@ module.exports = {
     target: 'http://localhost:4000/api'
   },
 
-  // These ones are self explanatory
+  // Reuse existing webpack config
+  webpackConfigPath: './config/webpack.config.dev',
+
+  // Customize webpack config
+  webpack: (config, { env }) => {
+    // Return customized config
+    return config;
+  },
+
+  // Customize dev server
   hostname: 'localhost',
-  port: 8989,
-  webpackConfigPath: './config/webpack.config.dev'
+  port: 8989
 };
 ```
 
