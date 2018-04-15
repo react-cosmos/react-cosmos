@@ -83,6 +83,7 @@ Jump to:
   * [More proxies...](#more-proxies)
 * [Integration with popular tools](#integration-with-popular-tools)
   * [Create React App](#create-react-app)
+    * [With react-app-rewired](#with-react-app-rewired)
   * [Next.js](#nextjs)
   * [React Boilerplate](#react-boilerplate)
   * [React Redux Starter Kit](#react-redux-starter-kit)
@@ -808,6 +809,22 @@ Also make sure to:
 * Put [proxies](#proxies) in the `src` dir–the only place included by the CRA Babel loader
 
 _CRA + Cosmos example: [Flatris](https://github.com/skidding/flatris)_
+
+##### With react-app-rewired
+
+```diff
+// cosmos.config.js
++const overrides = require('react-app-rewired/config-overrides');
+
+module.exports = {
+  containerQuerySelector: '#root',
+  webpackConfigPath: 'react-scripts/config/webpack.config.dev',
++  webpack: config => overrides.webpack(config),
+  publicPath: 'public',
+  // Optional: Add this when you start using proxies
+  proxiesPath: 'src/cosmos.proxies'
+};
+```
 
 #### Next.js
 

@@ -121,11 +121,13 @@ export default function extendWebpackConfig({
     plugins
   };
 
-  if (typeof webpackOverride !== 'function') {
-    return webpackConfig;
+  if (typeof webpackOverride === 'function') {
+    console.log(`[Cosmos] Overriding webpack config`);
+
+    return webpackOverride(webpackConfig, { env: getEnv() });
   }
 
-  return webpackOverride(webpackConfig, { env: getEnv() });
+  return webpackConfig;
 }
 
 function alreadyHasHmrPlugin({ plugins }) {
