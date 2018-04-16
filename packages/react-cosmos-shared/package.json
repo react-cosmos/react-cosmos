@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-shared",
-  "version": "4.0.0-beta.17",
+  "version": "4.0.0-rc.1",
   "description": "Libs shared between React Cosmos packages",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-shared",
   "license": "MIT",
