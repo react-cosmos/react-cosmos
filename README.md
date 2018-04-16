@@ -27,7 +27,7 @@
   </a>
 </p>
 
-> **New: [Testing React Components](https://medium.com/@skidding/testing-react-components-30516bc6a1b3)** (with Cosmos)
+> **New: [Cosmos 4.0, the version you’ll tell everyone about](https://medium.com/@skidding/cosmos-4-0-the-version-youll-tell-everyone-about-b10129be3dd8)**
 
 Cosmos scans your project for components and enables you to:
 
