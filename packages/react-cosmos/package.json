@@ -29,5 +29,8 @@
     "cosmos-export": "./bin/cosmos-export.js",
     "print-fixture-files": "./bin/print-fixture-files.js"
   },
-  "xo": false
+  "xo": false,
+  "devDependencies": {
+    "whatwg-fetch": "^2.0.4"
+  }
 }
