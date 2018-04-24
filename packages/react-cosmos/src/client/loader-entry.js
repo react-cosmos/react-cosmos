@@ -1,5 +1,11 @@
 import './react-devtools-hook';
 import './react-error-overlay';
+import 'babel-polyfill';
+import values from 'object.values';
+
+if (!Object.values) {
+  values.shim();
+}
 
 const isDev = process.env.NODE_ENV === 'development';
 

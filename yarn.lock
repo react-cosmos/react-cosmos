@@ -9339,6 +9339,35 @@ react-apollo@^2.0.4:
     lodash.pick "^4.4.0"
     prop-types "^15.5.8"
 
+react-cosmos-playground@../react-cosmos-playground/react-cosmos-playground-4.0.5.tgz:
+  version "4.0.5"
+  resolved "../react-cosmos-playground/react-cosmos-playground-4.0.5.tgz#91d28c8b43177151ba50492866059b79d1b49191"
+
+react-cosmos@../../packages/react-cosmos/react-cosmos-4.0.5.tgz:
+  version "4.0.5"
+  resolved "../../packages/react-cosmos/react-cosmos-4.0.5.tgz#49e4d8de78840fc8753dcb0a9150f54a1f6f3f1c"
+  dependencies:
+    babel-polyfill "^6.26.0"
+    express "^4.15.4"
+    fs-extra "^4.0.1"
+    glob "^7.1.1"
+    http-proxy-middleware "^0.17.4"
+    import-from "^2.1.0"
+    lodash.omit "^4.5.0"
+    object.values "^1.0.4"
+    react-cosmos-config "^4.0.0-rc.1"
+    react-cosmos-loader "^4.0.0-rc.1"
+    react-cosmos-playground "../react-cosmos-playground/react-cosmos-playground-4.0.5.tgz"
+    react-cosmos-shared "^4.0.0-rc.1"
+    react-cosmos-voyager "^4.0.0-rc.1"
+    react-cosmos-voyager2 "^4.0.0-rc.1"
+    react-dev-utils "^4.2.1"
+    react-error-overlay "^4.0.0"
+    resolve-from "^3.0.0"
+    webpack-dev-middleware "^1.12.0"
+    webpack-hot-middleware "^2.18.2"
+    yargs "^11.0.0"
+
 react-dev-utils@^4.2.1:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-4.2.1.tgz#9f2763e7bafa1a1b9c52254d2a479deec280f111"
@@ -11648,6 +11677,10 @@ whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3:
 whatwg-fetch@>=0.10.0:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.3.tgz#9c84ec2dcf68187ff00bc64e1274b442176e1c84"
+
+whatwg-fetch@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.4.tgz#dde6a5df315f9d39991aa17621853d720b85566f"
 
 whatwg-url@^6.4.0:
   version "6.4.0"
