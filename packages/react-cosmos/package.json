@@ -1,19 +1,21 @@
 {
   "name": "react-cosmos",
-  "version": "4.0.0-rc.1",
+  "version": "4.0.5",
   "description": "CLI for running React Cosmos inside webpack-powered apps",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos",
   "license": "MIT",
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "express": "^4.15.4",
     "fs-extra": "^4.0.1",
     "glob": "^7.1.1",
     "http-proxy-middleware": "^0.17.4",
     "import-from": "^2.1.0",
     "lodash.omit": "^4.5.0",
+    "object.values": "^1.0.4",
     "react-cosmos-config": "^4.0.0-rc.1",
     "react-cosmos-loader": "^4.0.0-rc.1",
-    "react-cosmos-playground": "^4.0.0-rc.1",
+    "react-cosmos-playground": "../react-cosmos-playground/react-cosmos-playground-4.0.5.tgz",
     "react-cosmos-shared": "^4.0.0-rc.1",
     "react-cosmos-voyager": "^4.0.0-rc.1",
     "react-cosmos-voyager2": "^4.0.0-rc.1",
@@ -30,7 +32,5 @@
     "print-fixture-files": "./bin/print-fixture-files.js"
   },
   "xo": false,
-  "devDependencies": {
-    "whatwg-fetch": "^2.0.4"
-  }
+  "devDependencies": {}
 }
