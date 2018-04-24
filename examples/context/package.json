@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "prop-types": "^15.5.10",
-    "react-cosmos": "^4.0.0-rc.1",
+    "react-cosmos": "../../packages/react-cosmos/react-cosmos-4.0.5.tgz",
     "react-cosmos-context-proxy": "^4.0.0-rc.1"
   },
   "xo": false,
