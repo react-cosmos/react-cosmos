@@ -5,12 +5,14 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos",
   "license": "MIT",
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "express": "^4.15.4",
     "fs-extra": "^4.0.1",
     "glob": "^7.1.1",
     "http-proxy-middleware": "^0.17.4",
     "import-from": "^2.1.0",
     "lodash.omit": "^4.5.0",
+    "object.values": "^1.0.4",
     "react-cosmos-config": "^4.0.0-rc.1",
     "react-cosmos-loader": "^4.0.0-rc.1",
     "react-cosmos-playground": "^4.0.0-rc.1",
@@ -29,5 +31,6 @@
     "cosmos-export": "./bin/cosmos-export.js",
     "print-fixture-files": "./bin/print-fixture-files.js"
   },
-  "xo": false
+  "xo": false,
+  "devDependencies": {}
 }
