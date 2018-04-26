@@ -15,8 +15,12 @@ import type {
 } from 'react-cosmos-flow/context';
 
 export function createContext(args: TestContextArgs): ContextFunctions {
-  const { fixture, proxies = detectUserProxies(args.cosmosConfigPath) } = args;
-  const decoratedFixture = decorateFixture(fixture);
+  const {
+    fixture,
+    proxies = detectUserProxies(args.cosmosConfigPath),
+    autoMockProps = true
+  } = args;
+  const decoratedFixture = autoMockProps ? decorateFixture(fixture) : fixture;
 
   return createLoaderContext({
     ...args,
@@ -59,7 +63,7 @@ function addJestWrapper(prop: any): Function {
   // HIGHLY EXPERIMENTAL: This is likely to go away if it causes problems. But,
   // in the meantime, as Louie would say, "Weeeee!". This makes it possible to
   // do expect(fixture.props.*).toHaveBeenCalled in Jest without wrapping any
-  // callback with jest.fn() by had.
+  // callback with jest.fn() by hand.
   // eslint-disable-next-line no-undef
   return isFunctionButNotClass(prop) ? jest.fn(prop) : prop;
 }

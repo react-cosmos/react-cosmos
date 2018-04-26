@@ -32,7 +32,8 @@ export type ContextFunctions = {
 };
 
 export type TestContextArgs = ContextArgs & {
-  cosmosConfigPath?: string
+  cosmosConfigPath?: string,
+  autoMockProps?: boolean
 };
 
 export type EnzymeContextArgs = $Diff<TestContextArgs, { renderer: Renderer }>;

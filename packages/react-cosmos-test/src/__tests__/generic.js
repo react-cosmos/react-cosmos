@@ -71,3 +71,22 @@ it('forwards custom config path', () => {
 
   expect(getCosmosConfig).toHaveBeenCalledWith('/foo/path');
 });
+
+it('should automock fixture functions by default', () => {
+  createContext({
+    renderer,
+    fixture: { ...fixture, props: { func: () => {} } }
+  });
+
+  expect(getMock(getLastContextArgs().fixture.props.func)).toBeDefined();
+});
+
+it('should respect disable autoMock', () => {
+  createContext({
+    renderer,
+    fixture: { ...fixture, props: { func: () => {} } },
+    autoMockProps: false
+  });
+
+  expect(getMock(getLastContextArgs().fixture.props.func)).not.toBeDefined();
+});
