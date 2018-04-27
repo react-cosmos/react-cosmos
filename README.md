@@ -1118,6 +1118,12 @@ const { mount } = createTestContext({
 
 // Or pass proxies directly
 const { mount } = createTestContext({ fixture, proxies });
+
+// By default we auto apply jest.fn to all functions in fixture.props recursively.
+// This makes it possible to do expect(fixture.props.*).toHaveBeenCalled in Jest
+// without wrapping any callback with jest.fn() by hand.
+// If this causes issues you can disable this feature, for example the case in https://github.com/react-cosmos/react-cosmos/issues/658
+const { mount } = createTestContext({ fixture, autoMockProps: false });
 ```
 
 ##### Context methods
