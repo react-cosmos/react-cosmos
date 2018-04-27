@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-source-map-example",
-  "version": "4.0.0-rc.2",
+  "version": "4.0.0-rc.3",
   "description": "Example of configuring source maps in the Cosmos build",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/source-map",
   "license": "MIT",
@@ -8,7 +8,7 @@
     "start": "babel-node node_modules/.bin/cosmos"
   },
   "dependencies": {
-    "react-cosmos": "^4.0.0-rc.2"
+    "react-cosmos": "^4.0.0-rc.3"
   },
   "xo": false,
   "private": true
