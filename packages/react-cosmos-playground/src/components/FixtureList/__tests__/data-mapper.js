@@ -325,7 +325,10 @@ test('deals with components with namespaced fixtures', () => {
     'dirA/Component1': ['fixtureA', 'fixtureB'],
     'dirB/Component2': [
       'Some folder/fixtureA',
-      'Some folder/fixtureB',
+      // Note that only one level of fixture namespace is currently supported
+      // This is a regression case for
+      //  https://github.com/react-cosmos/react-cosmos/issues/670
+      'Some folder/nested/fixtureB',
       'Another folder/fixtureC',
       'fixtureD'
     ]
@@ -405,13 +408,21 @@ test('deals with components with namespaced fixtures', () => {
                     component: 'dirB/Component2',
                     fixture: 'Some folder/fixtureA'
                   }
-                },
+                }
+              ]
+            },
+            {
+              name: 'Some folder/nested',
+              type: 'fixtureDirectory',
+              expanded: true,
+              path: 'dirB/Component2/Some folder/nested',
+              children: [
                 {
                   name: 'fixtureB',
                   type: 'fixture',
                   urlParams: {
                     component: 'dirB/Component2',
-                    fixture: 'Some folder/fixtureB'
+                    fixture: 'Some folder/nested/fixtureB'
                   }
                 }
               ]
