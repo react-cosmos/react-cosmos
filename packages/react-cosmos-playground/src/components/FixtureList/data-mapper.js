@@ -15,15 +15,16 @@ function parseFixtureArray(componentName, fixtureArray, savedExpansionState) {
   const unnestedData = [];
 
   fixtureArray.forEach(fixturePath => {
-    const [pre, post] = fixturePath.split('/');
-    if (post) {
-      const [folderName, fixtureName] = [pre, post];
+    // Only one level of indentation is supported by the fixture namespace
+    const parts = fixturePath.split('/');
+    if (parts.length > 1) {
+      const fixtureName = parts.pop();
+      const folderName = parts.join('/');
       // fixturePath contains a folder
       nestedData[folderName] = nestedData[folderName] || [];
       nestedData[folderName].push(fixtureName);
     } else {
-      const fixtureName = pre;
-      unnestedData.push(fixtureName);
+      unnestedData.push(parts[0]);
     }
   });
 
