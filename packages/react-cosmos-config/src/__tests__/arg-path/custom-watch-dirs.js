@@ -3,7 +3,7 @@
 import path from 'path';
 import { getCosmosConfig } from '../..';
 
-const configPath = require.resolve('./__fsmocks__/cosmos.config.js');
+const configPath = require.resolve('./__fsmocks__/cosmos-watch-dirs.config.js');
 const rootPath = path.dirname(configPath);
 
 describe('[arg path] when config exists', () => {
@@ -20,7 +20,7 @@ describe('[arg path] when config exists', () => {
       publicUrl: '/loader/',
       rootPath,
       webpackConfigPath: path.join(rootPath, 'webpack.config'),
-      watchDirs: [rootPath]
+      watchDirs: [path.join(rootPath, 'src'), path.join(rootPath, 'fixtures')]
     });
   });
 });
