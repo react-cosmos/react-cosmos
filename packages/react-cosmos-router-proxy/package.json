@@ -1,12 +1,12 @@
 {
   "name": "react-cosmos-router-proxy",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Mock React Router context via fixtures",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-router-proxy",
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
-    "react-cosmos-shared": "^4.0.0",
+    "react-cosmos-shared": "^4.1.0",
     "url": "^0.11.0"
   },
   "devDependencies": {
