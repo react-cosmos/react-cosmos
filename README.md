@@ -1036,7 +1036,7 @@ test('renders hello', () => {
 });
 ```
 
-> Enzyme v3 requires you to call `wrapper.update` after a component updates, usually in response to an event [enzyme thread](https://github.com/airbnb/enzyme/issues/1163). The cosmos-enzyme wrapper tries to alleviate this by updating the wrapper whenever we call `getWrapper()`. If you find that your components don't seem to be updating in tests this may be due to to assigning `getWrapper()` to a variable and expecting it to change.
+> Enzyme v3 requires us to call `wrapper.update` after a component updates, usually in response to an event ([see thread](https://github.com/airbnb/enzyme/issues/1163)). The `react-cosmos-test/enzyme` wrapper tries to alleviate this by updating the wrapper whenever we call `getWrapper()`. If your components don't seem to be updating in tests this may be due to to assigning `getWrapper()` to a variable and expecting it to change.
 
 But this is not the only way. As we'll see below, we can also mount fixtures using with a custom renderer.
 
