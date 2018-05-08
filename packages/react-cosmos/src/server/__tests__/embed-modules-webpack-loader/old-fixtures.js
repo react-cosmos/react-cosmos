@@ -52,7 +52,7 @@ beforeEach(() => {
 });
 
 it('injects fixture modules', () => {
-  const output = loaderCallback.mock.calls[0][1];
+  const [[, output]] = loaderCallback.mock.calls;
   const [, fixtureModules] = output.match(/fixtureModules: (.+)(,|$)/);
 
   const expected = `{
@@ -64,7 +64,7 @@ it('injects fixture modules', () => {
 });
 
 it('injects fixture files', () => {
-  const output = loaderCallback.mock.calls[0][1];
+  const [[, output]] = loaderCallback.mock.calls;
   const [, fixtureFiles] = output.match(/fixtureFiles: (.+)(,|$)/);
 
   expect(JSON.parse(fixtureFiles)).toEqual([
@@ -99,7 +99,7 @@ it('injects fixture files', () => {
 });
 
 it('injects proxies', () => {
-  const output = loaderCallback.mock.calls[0][1];
+  const [[, output]] = loaderCallback.mock.calls;
   const [, proxies] = output.match(/proxies: (.+)(,|$)/);
 
   expect(proxies).toEqual(
@@ -113,7 +113,7 @@ it('registers root path as loader context dep', () => {
 });
 
 it('injects deprecated components', () => {
-  const output = loaderCallback.mock.calls[0][1];
+  const [[, output]] = loaderCallback.mock.calls;
   const [, deprecatedComponentModules] = output.match(
     /deprecatedComponentModules: (.+)(,|$)/
   );

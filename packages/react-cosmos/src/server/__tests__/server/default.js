@@ -133,7 +133,7 @@ it('does not create static server', () => {
 });
 
 it('starts express server with hostname & port', () => {
-  const [port, hostname] = mockListen.mock.calls[0];
+  const [[port, hostname]] = mockListen.mock.calls;
   expect(port).toBe(9999);
   expect(hostname).toBe('127.0.0.1');
 });

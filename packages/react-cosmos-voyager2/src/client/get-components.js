@@ -95,7 +95,7 @@ export function getComponents({
 
   // Add component meta data around fixtures
   const components = [];
-  const componentPathValues = Array.from(componentPaths.values());
+  const componentPathValues = [...componentPaths.values()];
   const defaultComponentNamer = createDefaultNamer('Component');
   const componentNamers: Map<string, () => string> = new Map();
 

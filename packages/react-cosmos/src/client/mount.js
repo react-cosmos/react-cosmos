@@ -81,7 +81,7 @@ function getNormalizedFixtureModules(
       }
 
       const { components } = fixtureFile;
-      const component1 = components[0];
+      const [component1] = components;
       if (!component1 || !component1.filePath) {
         throw new Error(`Missing component data for fixture path: ${next}`);
       }

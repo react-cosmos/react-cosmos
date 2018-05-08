@@ -97,7 +97,7 @@ it('calls setProps on rootWrapper with fixture props', async () => {
   const props = { propName: 'propValue' };
   setProps(props);
 
-  const mockCall = mockWrapper.setProps.mock.calls[0][0];
+  const [[mockCall]] = mockWrapper.setProps.mock.calls;
   expect(mockCall.fixture.props).toEqual(props);
 });
 
@@ -114,7 +114,7 @@ it('calls setProps on rootWrapper with merged fixture props', async () => {
   const newProps = { propName: 'propValue' };
   setProps(newProps);
 
-  const mockCall = mockWrapper.setProps.mock.calls[0][0];
+  const [[mockCall]] = mockWrapper.setProps.mock.calls;
   expect(mockCall.fixture.props).toEqual({
     existingKey: 'existingProp',
     propName: 'propValue'
@@ -128,7 +128,7 @@ it('overwrites props via set', async () => {
   const newProps = { propName: 'propValue' };
   set('props', newProps);
 
-  const mockCall = mockWrapper.setProps.mock.calls[0][0];
+  const [[mockCall]] = mockWrapper.setProps.mock.calls;
   expect(mockCall.fixture.props).toEqual(newProps);
 });
 
@@ -140,6 +140,6 @@ it('overwrites any fixture part via set', async () => {
   const newState = { baz: 'buzz' };
   set('reduxState', newState);
 
-  const mockCall = mockWrapper.setProps.mock.calls[0][0];
+  const [[mockCall]] = mockWrapper.setProps.mock.calls;
   expect(mockCall.fixture.reduxState).toEqual(newState);
 });

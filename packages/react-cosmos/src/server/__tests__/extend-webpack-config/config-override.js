@@ -28,14 +28,14 @@ const getConfig = () =>
 
 it('calls webpack override method with derived config', () => {
   getConfig();
-  const overrideCall = mockWebpackOverride.mock.calls[0];
+  const [overrideCall] = mockWebpackOverride.mock.calls;
   expect(overrideCall[0].module.rules).toContain(mockRule);
   expect(overrideCall[0].plugins).toContain(mockPlugin);
 });
 
 it('calls webpack override method with env', () => {
   getConfig();
-  const overrideCall = mockWebpackOverride.mock.calls[0];
+  const [overrideCall] = mockWebpackOverride.mock.calls;
   expect(overrideCall[1].env).toContain(process.env.NODE_ENV);
 });
 

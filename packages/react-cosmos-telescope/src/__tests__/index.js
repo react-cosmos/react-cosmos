@@ -60,7 +60,7 @@ test('creates test for all fixtures', () => {
 });
 
 test('expects each fixture to match snapshot', async () => {
-  const testCb = getMock(test).calls[0][1];
+  const [[, testCb]] = getMock(test).calls;
   await testCb();
 
   global.actualExpect(expect).toHaveBeenCalledWith({

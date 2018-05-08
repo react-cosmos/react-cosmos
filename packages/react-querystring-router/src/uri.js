@@ -17,7 +17,7 @@ export function parseLocation(location) {
 
   pairs.forEach(pair => {
     parts = pair.split('=');
-    key = parts[0];
+    [key] = parts;
     value = decodeURIComponent(parts[1]);
 
     try {

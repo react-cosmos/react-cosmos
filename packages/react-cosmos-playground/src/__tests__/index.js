@@ -35,16 +35,16 @@ describe('Playground mount', () => {
     let routerArgs;
 
     beforeEach(() => {
-      routerArgs = Router.mock.calls[0];
+      [routerArgs] = Router.mock.calls;
     });
 
     it('uses Playground as router component class', () => {
-      const { getComponentClass } = routerArgs[0];
+      const [{ getComponentClass }] = routerArgs;
       expect(getComponentClass()).toBe(ComponentPlayground);
     });
 
     it('sends options to Playground', () => {
-      const { getComponentProps } = routerArgs[0];
+      const [{ getComponentProps }] = routerArgs;
       const { options } = getComponentProps();
       expect(options).toEqual(playgroundOpts);
     });
@@ -54,18 +54,18 @@ describe('Playground mount', () => {
     });
 
     it('uses element inside document body for router container', () => {
-      const { container } = routerArgs[0];
+      const [{ container }] = routerArgs;
       expect(container.parentNode).toBe(document.body);
     });
 
     it('sets document title to "React Cosmos" on home route', () => {
-      const { onChange } = routerArgs[0];
+      const [{ onChange }] = routerArgs;
       onChange({});
       expect(document.title).toBe('React Cosmos');
     });
 
     it('sets component and fixture in documet title', () => {
-      const { onChange } = routerArgs[0];
+      const [{ onChange }] = routerArgs;
       onChange({
         component: 'Foo',
         fixture: 'bar'

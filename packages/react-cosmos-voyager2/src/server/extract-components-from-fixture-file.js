@@ -105,7 +105,7 @@ export async function extractComponentsFromFixtureFile(
         // Sometimes the fixture is returned via a proxy function
         // Eg. createFixture({ ... })
         if (t.isCallExpression(fixtureBody)) {
-          fixtureBody = fixtureBody.arguments[0];
+          [fixtureBody] = fixtureBody.arguments;
         }
 
         if (!t.isObjectExpression(fixtureBody)) {
@@ -125,7 +125,7 @@ export async function extractComponentsFromFixtureFile(
 
         // From this point we'll return the component name even if we fail to
         // detect the component file path
-        name = compProp.value.name;
+        ({ name } = compProp.value);
 
         const importPath = getImportPathByName(imports, name);
         if (!importPath) {

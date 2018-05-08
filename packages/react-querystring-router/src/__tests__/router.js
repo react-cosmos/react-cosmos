@@ -43,8 +43,8 @@ const initRouter = () => {
 
   React = require('react');
   ReactDOM = require('react-dom');
-  parseLocation = require('../uri').parseLocation;
-  Router = require('../router').Router;
+  ({ parseLocation } = require('../uri'));
+  ({ Router } = require('../router'));
 
   routerInstance = new Router({
     defaultProps: {
@@ -59,13 +59,13 @@ const initRouter = () => {
 
 const commonTests = () => {
   it('should call getComponentClass with route params', () => {
-    const propsSent = getComponentClass.mock.calls[0][0];
+    const [[propsSent]] = getComponentClass.mock.calls;
     expect(propsSent.component).toBe(mockUriParams.component);
     expect(propsSent.dataUrl).toBe(mockUriParams.dataUrl);
   });
 
   it('should call getComponentProps with route params', () => {
-    const propsSent = getComponentProps.mock.calls[0][0];
+    const [[propsSent]] = getComponentProps.mock.calls;
     expect(propsSent.component).toBe(mockUriParams.component);
     expect(propsSent.dataUrl).toBe(mockUriParams.dataUrl);
   });
@@ -75,7 +75,7 @@ const commonTests = () => {
   });
 
   it('should call createElement with returned props', () => {
-    const propsSent = React.createElement.mock.calls[0][1];
+    const [[, propsSent]] = React.createElement.mock.calls;
     expect(propsSent.foo).toBe('bar');
     expect(propsSent.lorem).toBe('ipsum');
   });
@@ -89,7 +89,7 @@ const commonTests = () => {
   });
 
   it('should call onChange callback with params', () => {
-    const params = onChange.mock.calls[0][0];
+    const [[params]] = onChange.mock.calls;
     expect(params.component).toBe(mockUriParams.component);
     expect(params.dataUrl).toBe(mockUriParams.dataUrl);
   });
