@@ -55,6 +55,11 @@ export default function startServer() {
   const loaderCompiler = webpack(loaderWebpackConfig);
   const app = express();
 
+  loaderCompiler.plugin('invalid', filePath => {
+    const relFilePath = path.relative(process.cwd(), filePath);
+    console.log('[Cosmos] webpack build invalidated by', relFilePath);
+  });
+
   if (httpProxy) {
     const { context, target } = httpProxy;
     app.use(context, httpProxyMiddleware(target));

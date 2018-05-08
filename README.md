@@ -994,6 +994,9 @@ module.exports = {
     return config;
   },
 
+  // Specify where should webpack watch for fixture files (defaults to rootPath)
+  watchDirs: ['src'],
+
   // Customize dev server
   hostname: 'localhost',
   port: 8989

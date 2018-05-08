@@ -27,6 +27,7 @@ const defaults = {
   webpackConfigPath: 'webpack.config',
   outputPath: 'cosmos-export',
   publicUrl: '/loader/',
+  watchDirs: ['.'],
   // Deprecated
   componentPaths: [],
   ignore: [],
@@ -99,6 +100,7 @@ function getNormalizedConfig(relativeConfig: Config, relPath: string): Config {
     proxiesPath,
     publicPath,
     webpackConfigPath,
+    watchDirs,
     // Deprecated
     componentPaths,
     fixturePaths
@@ -112,6 +114,7 @@ function getNormalizedConfig(relativeConfig: Config, relPath: string): Config {
     outputPath: path.resolve(rootPath, outputPath),
     proxiesPath: resolveUserPath(rootPath, proxiesPath),
     webpackConfigPath: resolveUserPath(rootPath, webpackConfigPath),
+    watchDirs: watchDirs.map(p => resolveUserPath(rootPath, p)),
     // Deprecated
     componentPaths: componentPaths.map(p => path.resolve(rootPath, p)),
     fixturePaths: fixturePaths.map(p => path.resolve(rootPath, p))

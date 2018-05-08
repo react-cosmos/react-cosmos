@@ -23,6 +23,7 @@ export type Config = {
   publicUrl: string,
   containerQuerySelector?: string,
   httpProxy?: {| context: string, target: string |},
+  watchDirs: Array<string>,
   // Deprecated
   componentPaths: Array<string>,
   ignore: Array<RegExp>,

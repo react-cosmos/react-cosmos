@@ -14,7 +14,8 @@ jest.mock('react-cosmos-config', () => ({
     fileMatch: mockFileMatch,
     exclude: mockExclude,
     componentPaths: [],
-    proxiesPath: require.resolve('../__fsmocks__/cosmos.proxies')
+    proxiesPath: require.resolve('../__fsmocks__/cosmos.proxies'),
+    watchDirs: ['MOCK_WATCH_DIR1', 'MOCK_WATCH_DIR2']
   })
 }));
 
@@ -117,7 +118,8 @@ it('injects proxies', () => {
 });
 
 it('registers root path as loader context dep', () => {
-  expect(mockAddContextDependency).toHaveBeenCalledWith('MOCK_ROOT_PATH');
+  expect(mockAddContextDependency).toHaveBeenCalledWith('MOCK_WATCH_DIR1');
+  expect(mockAddContextDependency).toHaveBeenCalledWith('MOCK_WATCH_DIR2');
 });
 
 it('injects empty deprecated components', () => {

@@ -20,7 +20,7 @@ module.exports = async function embedModules(source: string) {
   const callback = this.async();
 
   const cosmosConfig: Config = getCosmosConfig();
-  const { rootPath, proxiesPath } = cosmosConfig;
+  const { proxiesPath, watchDirs } = cosmosConfig;
 
   const {
     fixtureFiles,
@@ -39,7 +39,7 @@ module.exports = async function embedModules(source: string) {
   // of require.context, which not only watches for file changes but also
   // automatically bundles new files that match the watcher's query.
   // https://github.com/webpack/webpack/issues/222#issuecomment-40691546
-  this.addContextDependency(rootPath);
+  watchDirs.forEach(watchDir => this.addContextDependency(watchDir));
 
   const result = source
     .replace(/FIXTURE_MODULES/g, fixtureModuleCalls)
