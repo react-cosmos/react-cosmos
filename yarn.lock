@@ -11356,7 +11356,7 @@ url-parse@1.0.x:
     querystringify "0.0.x"
     requires-port "1.0.x"
 
-url-parse@^1.1.7, url-parse@^1.1.8:
+url-parse@^1.1.8:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.2.0.tgz#3a19e8aaa6d023ddd27dcc44cb4fc8f7fec23986"
   dependencies:
@@ -11808,12 +11808,12 @@ xdg-basedir@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/xdg-basedir/-/xdg-basedir-3.0.0.tgz#496b2cc109eca8dbacfe2dc72b603c17c5870ad4"
 
-xhr-mock@^1.9.0:
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/xhr-mock/-/xhr-mock-1.9.1.tgz#5263290be52f02f52bc1c56a8acfa6879f287140"
+xhr-mock@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/xhr-mock/-/xhr-mock-2.3.2.tgz#dc4336229459845e8653843a6ac4f59b0bd33385"
   dependencies:
     global "^4.3.0"
-    url-parse "^1.1.7"
+    url "^0.11.0"
 
 xml-char-classes@^1.0.0:
   version "1.0.0"
