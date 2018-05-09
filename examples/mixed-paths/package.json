@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-mixed-paths-example",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "description": "Example of combining relative and module component paths",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/mixed-paths",
   "license": "MIT",
@@ -8,7 +8,7 @@
     "start": "babel-node node_modules/.bin/cosmos"
   },
   "dependencies": {
-    "react-cosmos": "^4.1.1"
+    "react-cosmos": "^4.1.2"
   },
   "xo": false,
   "private": true

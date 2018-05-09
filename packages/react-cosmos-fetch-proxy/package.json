@@ -1,13 +1,13 @@
 {
   "name": "react-cosmos-fetch-proxy",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "description": "Mock fetch responses via fixtures",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-fetch-proxy",
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
     "fetch-mock": "^5.12.2",
-    "react-cosmos-shared": "^4.1.1"
+    "react-cosmos-shared": "^4.1.2"
   },
   "xo": false
 }
