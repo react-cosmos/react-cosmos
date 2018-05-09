@@ -25,9 +25,8 @@
     "link-entries": "babel-node ./scripts/link-entries.js",
     "pre-release": "yarn clear-build && yarn build && yarn link-entries dist && yarn test",
     "lerna-publish": "lerna publish --registry=https://registry.npmjs.org/ --skip-git",
-    "release": "yarn pre-release && yarn lerna-publish && yarn post-release",
-    "release:next": "yarn pre-release && yarn lerna-publish --npm-tag=next --force-publish=* && yarn post-release",
-    "post-release": "yarn link-entries src"
+    "release": "yarn pre-release && yarn lerna-publish",
+    "release:next": "yarn pre-release && yarn lerna-publish --npm-tag=next --force-publish=*"
   },
   "lint-staged": {
     "*.{js,jsx,css,less}": [
@@ -68,7 +67,7 @@
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^22.2.2",
-    "lerna": "^2.9.1",
+    "lerna": "^2.11.0",
     "less": "^3.0.0",
     "less-loader": "^4.1.0",
     "lint-staged": "^7.0.0",
