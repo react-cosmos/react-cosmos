@@ -46,7 +46,7 @@ beforeEach(() => {
               url: '/user',
               method: 'POST',
               response: (req, res) => {
-                const { id } = req.body();
+                const { id } = JSON.parse(req.body());
                 return res.status(200).body({
                   id,
                   name: 'John Doe'
@@ -146,9 +146,11 @@ describe('xhr mocking', () => {
     xhr.addEventListener('error', err => {
       done.fail(err);
     });
-    xhr.send({
-      id: 5
-    });
+    xhr.send(
+      JSON.stringify({
+        id: 5
+      })
+    );
   });
 
   test('returns error from DELETE request', done => {
