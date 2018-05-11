@@ -1,6 +1,6 @@
 // @flow
 
-import path from 'path';
+import { resolve, join } from 'path';
 import omit from 'lodash.omit';
 import { getCosmosConfig } from 'react-cosmos-config';
 import { getEnv } from './get-env';
@@ -29,6 +29,7 @@ export default function extendWebpackConfig({
     globalImports,
     hot,
     outputPath,
+    publicUrl,
     webpack: webpackOverride
   }: Config = getCosmosConfig();
 
@@ -54,9 +55,9 @@ export default function extendWebpackConfig({
   entry.push(require.resolve('../client/loader-entry'));
 
   let output = {
-    path: shouldExport ? `${outputPath}/loader/` : '/loader/',
+    path: shouldExport ? join(outputPath, publicUrl) : publicUrl,
     filename: '[name].js',
-    publicPath: shouldExport ? './' : '/loader/'
+    publicPath: publicUrl
   };
 
   // Exports are generally meant to run outside of the developer's machine
@@ -65,7 +66,7 @@ export default function extendWebpackConfig({
     output = {
       ...output,
       devtoolModuleFilenameTemplate: info =>
-        path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
+        resolve(info.absoluteResourcePath).replace(/\\/g, '/')
     };
   }
 

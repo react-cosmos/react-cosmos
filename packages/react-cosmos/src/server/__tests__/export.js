@@ -12,6 +12,7 @@ jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
+    publicUrl: '/loader/',
     outputPath: mockOutputPath,
     globalImports: [],
     componentPaths: []
@@ -73,7 +74,7 @@ describe('playground files', () => {
     const inputPath = path.join(__dirname, '../static/index.html');
     const outputPath = path.join(mockOutputPath, 'index.html');
     const optsStr = JSON.stringify({
-      loaderUri: './loader/index.html',
+      loaderUri: '/loader/_loader.html',
       projectKey: mockRootPath,
       webpackConfigType: 'default',
       deps: {

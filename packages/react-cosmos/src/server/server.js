@@ -67,7 +67,9 @@ export default function startServer() {
 
   app.use(
     webpackDevMiddleware(loaderCompiler, {
-      publicPath: '/loader/',
+      // This is the base path for the webpack assets and has to match
+      // webpack.output.path
+      publicPath: publicUrl,
       noInfo: true
     })
   );
@@ -84,6 +86,7 @@ export default function startServer() {
   }
 
   const playgroundHtml = getPlaygroundHtml(cosmosConfig);
+  // TODO: Make sure this overrides publicPath/index.html
   app.get('/', (req, res) => {
     res.send(playgroundHtml);
   });

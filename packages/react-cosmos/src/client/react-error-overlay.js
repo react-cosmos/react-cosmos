@@ -9,7 +9,8 @@ if (process.env.NODE_ENV === 'development') {
       // Let the Playground know when the Loader crashes
       parent.postMessage({ type: 'runtimeError' }, '*');
     },
-    filename: '/loader/main.js'
+    // TODO: Construct this using path.join(config.publicUrl, 'main')
+    filename: '/main.js'
   });
   ErrorOverlay.setEditorHandler(errorLocation =>
     window.fetch(
