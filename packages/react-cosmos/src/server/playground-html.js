@@ -1,6 +1,6 @@
 // @flow
 
-import path from 'path';
+import { join } from 'path';
 import fs from 'fs';
 import { silent as silentResolve } from 'resolve-from';
 import { hasUserCustomWebpackConfig } from './user-webpack-config';
@@ -9,14 +9,11 @@ import type { Config } from 'react-cosmos-flow/config';
 import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
 
 export default function getPlaygroundHtml(cosmosConfig: Config) {
-  const { rootPath } = cosmosConfig;
+  const { rootPath, publicUrl } = cosmosConfig;
 
-  const html = fs.readFileSync(
-    path.join(__dirname, 'static/index.html'),
-    'utf8'
-  );
+  const html = fs.readFileSync(join(__dirname, 'static/index.html'), 'utf8');
   const opts: PlaygroundOpts = {
-    loaderUri: './loader/index.html',
+    loaderUri: join(publicUrl, '_loader.html'),
     projectKey: rootPath,
     webpackConfigType: hasUserCustomWebpackConfig(cosmosConfig)
       ? 'custom'
