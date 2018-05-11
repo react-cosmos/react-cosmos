@@ -86,7 +86,6 @@ export default function startServer() {
   }
 
   const playgroundHtml = getPlaygroundHtml(cosmosConfig);
-  // TODO: Make sure this overrides publicPath/index.html
   app.get('/', (req, res) => {
     res.send(playgroundHtml);
   });
