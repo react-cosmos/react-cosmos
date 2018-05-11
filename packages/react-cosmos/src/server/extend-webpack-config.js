@@ -24,15 +24,20 @@ export default function extendWebpackConfig({
   userWebpackConfig,
   shouldExport = false
 }: Args) {
-  const cosmosConfig: Config = getCosmosConfig();
-
   const {
     containerQuerySelector,
     globalImports,
     hot,
     outputPath,
     webpack: webpackOverride
-  } = cosmosConfig;
+  }: Config = getCosmosConfig();
+
+  let webpackConfig = userWebpackConfig;
+
+  if (typeof webpackOverride === 'function') {
+    console.log(`[Cosmos] Overriding webpack config`);
+    webpackConfig = webpackOverride(webpackConfig, { env: getEnv() });
+  }
 
   const entry = [...globalImports];
 
@@ -64,25 +69,16 @@ export default function extendWebpackConfig({
     };
   }
 
-  // To support webpack 1 and 2 configuration formats. So we use the one that user passes
-  const webpackRulesOptionName =
-    userWebpackConfig.module && userWebpackConfig.module.rules
-      ? 'rules'
-      : 'loaders';
-  const rules =
-    userWebpackConfig.module && userWebpackConfig.module[webpackRulesOptionName]
-      ? [...userWebpackConfig.module[webpackRulesOptionName]]
-      : [];
-  const plugins = userWebpackConfig.plugins
-    ? [...userWebpackConfig.plugins]
-    : [];
+  const rules = [
+    ...getExistingRules(webpackConfig),
+    {
+      loader: require.resolve('./embed-modules-webpack-loader'),
+      include: require.resolve('../client/user-modules')
+    }
+  ];
 
-  rules.push({
-    loader: require.resolve('./embed-modules-webpack-loader'),
-    include: require.resolve('../client/user-modules')
-  });
-
-  plugins.push(
+  const plugins = [
+    ...getExistingPlugins(webpackConfig),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(shouldExport ? 'production' : 'development')
@@ -95,39 +91,22 @@ export default function extendWebpackConfig({
         containerQuerySelector
       })
     }),
-    // Important: Without this webpack tries to apply hot updates for broken
-    // builds and results in duplicate React nodes attached
-    // See https://github.com/webpack/webpack/issues/2117
-    // Note: NoEmitOnErrorsPlugin replaced NoErrorsPlugin since webpack 2.x
-    webpack.NoEmitOnErrorsPlugin
-      ? new webpack.NoEmitOnErrorsPlugin()
-      : new webpack.NoErrorsPlugin()
-  );
+    getNoErrorsPlugin(webpack)
+  ];
 
   if (hot && !shouldExport) {
-    if (!alreadyHasHmrPlugin(userWebpackConfig)) {
+    if (!alreadyHasHmrPlugin(webpackConfig)) {
       plugins.push(new webpack.HotModuleReplacementPlugin());
     }
   }
 
-  const webpackConfig = {
-    ...userWebpackConfig,
+  return {
+    ...webpackConfig,
     entry,
     output,
-    module: {
-      ...omit(userWebpackConfig.module, 'rules', 'loaders'),
-      [webpackRulesOptionName]: rules
-    },
+    module: extendModuleWithRules(webpackConfig, rules),
     plugins
   };
-
-  if (typeof webpackOverride === 'function') {
-    console.log(`[Cosmos] Overriding webpack config`);
-
-    return webpackOverride(webpackConfig, { env: getEnv() });
-  }
-
-  return webpackConfig;
 }
 
 function alreadyHasHmrPlugin({ plugins }) {
@@ -137,4 +116,43 @@ function alreadyHasHmrPlugin({ plugins }) {
       p => p.constructor && p.constructor.name === 'HotModuleReplacementPlugin'
     ).length > 0
   );
+}
+
+function getWebpackRulesOptionName(webpackConfig) {
+  // To support webpack 1 and 2 configuration formats, we use the one that
+  // user passes
+  return webpackConfig.module && webpackConfig.module.rules
+    ? 'rules'
+    : 'loaders';
+}
+
+function getExistingRules(webpackConfig) {
+  const webpackRulesOptionName = getWebpackRulesOptionName(webpackConfig);
+
+  return webpackConfig.module && webpackConfig.module[webpackRulesOptionName]
+    ? [...webpackConfig.module[webpackRulesOptionName]]
+    : [];
+}
+
+function getExistingPlugins(webpackConfig) {
+  return webpackConfig.plugins ? [...webpackConfig.plugins] : [];
+}
+
+function extendModuleWithRules(webpackConfig, rules) {
+  const webpackRulesOptionName = getWebpackRulesOptionName(webpackConfig);
+
+  return {
+    ...omit(webpackConfig.module, 'rules', 'loaders'),
+    [webpackRulesOptionName]: rules
+  };
+}
+
+function getNoErrorsPlugin(webpack) {
+  // Important: Without this webpack tries to apply hot updates for broken
+  // builds and results in duplicate React nodes attached
+  // See https://github.com/webpack/webpack/issues/2117
+  // Note: NoEmitOnErrorsPlugin replaced NoErrorsPlugin since webpack 2.x
+  return webpack.NoEmitOnErrorsPlugin
+    ? new webpack.NoEmitOnErrorsPlugin()
+    : new webpack.NoErrorsPlugin();
 }

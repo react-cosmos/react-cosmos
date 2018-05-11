@@ -1,8 +1,20 @@
 import webpack from 'webpack';
 import extendWebpackConfig from '../../extend-webpack-config';
 
-const mockWebpackOverrideResult = {};
-const mockWebpackOverride = jest.fn(() => mockWebpackOverrideResult);
+const mockUserWebpackConfig = {};
+const mockRule = {};
+const mockPlugin = {};
+
+const mockWebpackOverride = jest.fn(() => {
+  // Note: Normally you extend the keep rules and plugins, as well as other
+  // module options
+  return {
+    module: {
+      rules: [mockRule]
+    },
+    plugins: [mockPlugin]
+  };
+});
 
 jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,
@@ -12,25 +24,16 @@ jest.mock('react-cosmos-config', () => ({
   })
 }));
 
-const mockRule = {};
-const mockPlugin = {};
-
 const getConfig = () =>
   extendWebpackConfig({
     webpack,
-    userWebpackConfig: {
-      module: {
-        rules: [mockRule]
-      },
-      plugins: [mockPlugin]
-    }
+    userWebpackConfig: mockUserWebpackConfig
   });
 
-it('calls webpack override method with derived config', () => {
+it('calls webpack override method with user config', () => {
   getConfig();
   const [overrideCall] = mockWebpackOverride.mock.calls;
-  expect(overrideCall[0].module.rules).toContain(mockRule);
-  expect(overrideCall[0].plugins).toContain(mockPlugin);
+  expect(overrideCall[0]).toBe(mockUserWebpackConfig);
 });
 
 it('calls webpack override method with env', () => {
@@ -39,7 +42,44 @@ it('calls webpack override method with env', () => {
   expect(overrideCall[1].env).toContain(process.env.NODE_ENV);
 });
 
-it('calls returns overriden webpack config', () => {
+it('returns webpack config with added rule', () => {
   const webpackConfig = getConfig();
-  expect(webpackConfig).toBe(mockWebpackOverrideResult);
+  expect(webpackConfig.module.rules).toContain(mockRule);
 });
+
+it('returns webpack config with added plugin', () => {
+  const webpackConfig = getConfig();
+  expect(webpackConfig.plugins).toContain(mockPlugin);
+});
+
+it('keeps core user-modules loader', () => {
+  const webpackConfig = getConfig();
+  const definePlugins = getDefinePlugins(webpackConfig);
+  console.log(definePlugins);
+  expect(webpackConfig.module.rules).toContainEqual({
+    loader: require.resolve('../../embed-modules-webpack-loader'),
+    include: require.resolve('../../../client/user-modules')
+  });
+});
+
+it('keeps DefinePlugin with process.env.NODE_ENV', () => {
+  const webpackConfig = getConfig();
+  expect(
+    getDefinePlugins(webpackConfig).filter(
+      p => p.definitions['process.env'] && p.definitions['process.env'].NODE_ENV
+    )
+  ).toHaveLength(1);
+});
+
+it('keeps DefinePlugin with COSMOS_CONFIG', () => {
+  const webpackConfig = getConfig();
+  expect(
+    getDefinePlugins(webpackConfig).filter(p => p.definitions.COSMOS_CONFIG)
+  ).toHaveLength(1);
+});
+
+function getDefinePlugins({ plugins }) {
+  return plugins.filter(
+    p => p.constructor && p.constructor.name === 'DefinePlugin'
+  );
+}
