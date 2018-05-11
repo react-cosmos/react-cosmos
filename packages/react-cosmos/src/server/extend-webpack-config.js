@@ -82,7 +82,8 @@ export default function extendWebpackConfig({
     ...getExistingPlugins(webpackConfig),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(shouldExport ? 'production' : 'development')
+        NODE_ENV: JSON.stringify(shouldExport ? 'production' : 'development'),
+        PUBLIC_URL: JSON.stringify(publicUrl)
       }
     }),
     new webpack.DefinePlugin({
