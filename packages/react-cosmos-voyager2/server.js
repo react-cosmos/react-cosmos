@@ -1,3 +1,3 @@
 // @flow
 
-exports.findFixtureFiles = require('./dist/server/find-fixture-files').findFixtureFiles;
+exports.findFixtureFiles = require('./src/server/find-fixture-files').findFixtureFiles;
