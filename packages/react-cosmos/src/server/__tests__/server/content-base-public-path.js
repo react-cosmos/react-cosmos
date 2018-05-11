@@ -10,7 +10,7 @@ jest.mock('react-cosmos-config', () => ({
     port: 9999,
     hostname: '127.0.0.1',
     publicPath: 'server/public',
-    publicUrl: '/static/',
+    publicUrl: '/static',
     webpackConfigPath: require.resolve('./__fsmocks__/webpack.config'),
     globalImports: [],
     componentPaths: []
@@ -60,5 +60,7 @@ beforeEach(() => {
 // Note: This test is ment to show that a custom publicPath is used over
 // webpack.devServer.contentBase
 it('creates static server with public path', () => {
-  expect(express.static).toHaveBeenCalledWith('server/public');
+  expect(express.static).toHaveBeenCalledWith('server/public', {
+    index: false
+  });
 });

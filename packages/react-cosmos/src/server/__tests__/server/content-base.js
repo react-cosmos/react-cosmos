@@ -9,7 +9,7 @@ jest.mock('react-cosmos-config', () => ({
     rootPath: mockRootPath,
     port: 9999,
     hostname: '127.0.0.1',
-    publicUrl: '/static/',
+    publicUrl: '/static',
     webpackConfigPath: require.resolve('./__fsmocks__/webpack.config'),
     globalImports: [],
     componentPaths: []
@@ -57,5 +57,7 @@ beforeEach(() => {
 });
 
 it('creates static server with webpack.devServer.contentBase', () => {
-  expect(express.static).toHaveBeenCalledWith('user/server/public');
+  expect(express.static).toHaveBeenCalledWith('user/server/public', {
+    index: false
+  });
 });
