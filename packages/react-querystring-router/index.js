@@ -2,7 +2,7 @@
 
 // Keeping nested "uri" export to maintain backwards compatibility
 exports.uri = {
-  parseLocation: require('./dist/uri').parseLocation,
-  stringifyParams: require('./dist/uri').stringifyParams
+  parseLocation: require('./src/uri').parseLocation,
+  stringifyParams: require('./src/uri').stringifyParams
 };
-exports.Router = require('./dist/router').Router;
+exports.Router = require('./src/router').Router;

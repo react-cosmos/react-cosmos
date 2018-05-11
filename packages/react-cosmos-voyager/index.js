@@ -1,4 +1,4 @@
 // @flow
 
 // Use default export to maintain backwards compatibility
-module.exports = require('./dist/get-file-paths').getFilePaths;
+module.exports = require('./src/get-file-paths').getFilePaths;

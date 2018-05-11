@@ -1,4 +1,4 @@
 // @flow
 
 // Use default export to maintain backwards compatibility
-module.exports = require('./dist').createContextProxy;
+module.exports = require('./src').createContextProxy;

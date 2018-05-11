@@ -1,4 +1,4 @@
 // @flow
 
 // Use default export to maintain backwards compatibility
-module.exports = require('./dist').createXhrProxy;
+module.exports = require('./src').createXhrProxy;

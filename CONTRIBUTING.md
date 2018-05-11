@@ -103,7 +103,7 @@ yarn link-entries dist
 yarn link-entries src
 ```
 
-> Note: The versioned packages point to `dist`. If they pointed to _src_, Lerna would always think all packages changed before publishing, because at that time the entry points are linked to _dist_. The release script takes care of pointing packages to _dist_ as a safety measure. **Make sure to never commit entry points linked to `src`!**
+> Note: The versioned packages point to `src`, because it's default mode for Cosmos development. The release script takes care of pointing packages to _dist_ and then back to _src_ again once released to npm. **Make sure to never commit entry points linked to `dist`!**
 
 #### Flow
 
