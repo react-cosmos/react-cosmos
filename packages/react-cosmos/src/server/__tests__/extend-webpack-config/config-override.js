@@ -54,8 +54,6 @@ it('returns webpack config with added plugin', () => {
 
 it('keeps core user-modules loader', () => {
   const webpackConfig = getConfig();
-  const definePlugins = getDefinePlugins(webpackConfig);
-  console.log(definePlugins);
   expect(webpackConfig.module.rules).toContainEqual({
     loader: require.resolve('../../embed-modules-webpack-loader'),
     include: require.resolve('../../../client/user-modules')

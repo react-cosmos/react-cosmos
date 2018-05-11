@@ -109,12 +109,15 @@ export default function extendWebpackConfig({
   };
 }
 
+function isPluginType(plugin, constructorName) {
+  return plugin.constructor && plugin.constructor.name === constructorName;
+}
+
 function alreadyHasHmrPlugin({ plugins }) {
   return (
     plugins &&
-    plugins.filter(
-      p => p.constructor && p.constructor.name === 'HotModuleReplacementPlugin'
-    ).length > 0
+    plugins.filter(p => isPluginType(p, 'HotModuleReplacementPlugin')).length >
+      0
   );
 }
 
@@ -134,10 +137,6 @@ function getExistingRules(webpackConfig) {
     : [];
 }
 
-function getExistingPlugins(webpackConfig) {
-  return webpackConfig.plugins ? [...webpackConfig.plugins] : [];
-}
-
 function extendModuleWithRules(webpackConfig, rules) {
   const webpackRulesOptionName = getWebpackRulesOptionName(webpackConfig);
 
@@ -145,6 +144,28 @@ function extendModuleWithRules(webpackConfig, rules) {
     ...omit(webpackConfig.module, 'rules', 'loaders'),
     [webpackRulesOptionName]: rules
   };
+}
+
+function getExistingPlugins(webpackConfig) {
+  const plugins = webpackConfig.plugins ? [...webpackConfig.plugins] : [];
+
+  return plugins.map(
+    plugin =>
+      isPluginType(plugin, 'HtmlWebpackPlugin')
+        ? changeHtmlPluginFilename(plugin)
+        : plugin
+  );
+}
+
+function changeHtmlPluginFilename(htmlPlugin) {
+  if (htmlPlugin.options.filename !== 'index.html') {
+    return htmlPlugin;
+  }
+
+  return new htmlPlugin.constructor({
+    ...htmlPlugin.options,
+    filename: '_loader.html'
+  });
 }
 
 function getNoErrorsPlugin(webpack) {
