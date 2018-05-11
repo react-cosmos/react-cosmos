@@ -6,8 +6,8 @@ const mockRule = {};
 const mockPlugin = {};
 
 const mockWebpackOverride = jest.fn(() => {
-  // Note: Normally you extend the keep rules and plugins, as well as other
-  // module options
+  // Note: Normally we extend the user config (1st argument) to keep existing
+  // rules and plugins, as well as other module options
   return {
     module: {
       rules: [mockRule]
