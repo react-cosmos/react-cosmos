@@ -1,3 +1,3 @@
 // @flow
 
-module.exports = require('./dist/enzyme').createContext;
+module.exports = require('./src/enzyme').createContext;

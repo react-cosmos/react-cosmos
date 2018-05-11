@@ -1,3 +1,3 @@
 // @flow
 
-module.exports = require('./dist/generic').createContext;
+module.exports = require('./src/generic').createContext;
