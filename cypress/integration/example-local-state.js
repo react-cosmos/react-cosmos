@@ -80,7 +80,7 @@ describe('Local state example', () => {
       cy
         .get('iframe')
         .should('have.exist')
-        .should('have.attr', 'src', '_loader.html');
+        .should('have.attr', 'src', '/_loader.html');
     });
   });
 

@@ -9,7 +9,7 @@ export default createFixture({
 
   props: {
     options: {
-      loaderUri: '_loader.html',
+      loaderUri: '/_loader.html',
       projectKey: 'test',
       webpackConfigType: 'default',
       deps: {}

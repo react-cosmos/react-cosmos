@@ -17,7 +17,7 @@ describe('[arg path] when config exists', () => {
       port: 9000,
       proxiesPath: path.join(rootPath, 'cosmos.proxies'),
       publicPath: path.join(rootPath, 'static'),
-      publicUrl: '',
+      publicUrl: '/',
       rootPath,
       webpackConfigPath: path.join(rootPath, 'webpack.config'),
       watchDirs: [path.join(rootPath, 'src'), path.join(rootPath, 'fixtures')]

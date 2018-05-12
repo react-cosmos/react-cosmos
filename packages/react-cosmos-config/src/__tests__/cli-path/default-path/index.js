@@ -21,7 +21,7 @@ describe('[CLI path] when config exists at default path', () => {
       outputPath: path.join(mocksPath, 'cosmos-export'),
       port: 9000,
       proxiesPath: path.join(mocksPath, 'cosmos.proxies'),
-      publicUrl: '',
+      publicUrl: '/',
       rootPath: mocksPath,
       webpackConfigPath: path.join(mocksPath, 'webpack.config')
     });
