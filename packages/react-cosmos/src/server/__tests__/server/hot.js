@@ -7,7 +7,7 @@ jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
-    publicUrl: '/loader/',
+    publicUrl: '',
     port: 9999,
     hostname: '127.0.0.1',
     hot: true,

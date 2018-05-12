@@ -5,7 +5,7 @@ jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
     globalImports: ['./global.css'],
-    publicUrl: '/loader/',
+    publicUrl: '/static',
     containerQuerySelector: '__mock__containerQuerySelector'
   })
 }));
@@ -55,7 +55,7 @@ it('defines global process.env.PUBLIC_URL', () => {
     getDefinePlugins(webpackConfig).filter(
       p =>
         p.definitions['process.env'] &&
-        p.definitions['process.env'].PUBLIC_URL === JSON.stringify('/loader/')
+        p.definitions['process.env'].PUBLIC_URL === JSON.stringify('/static')
     )
   ).toHaveLength(1);
 });
@@ -80,7 +80,7 @@ it('creates proper output', () => {
   );
   expect(webpackConfig.output).toMatchObject({
     filename: '[name].js',
-    publicPath: '/loader/'
+    publicPath: '/static'
   });
 });
 

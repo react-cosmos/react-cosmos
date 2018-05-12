@@ -21,7 +21,7 @@ describe('[CLI path] when config exists at custom path', () => {
       outputPath: path.join(mocksPath, 'nested/cosmos-export'),
       port: 9000,
       proxiesPath: path.join(mocksPath, 'nested/cosmos.proxies'),
-      publicUrl: '/',
+      publicUrl: '',
       rootPath: path.join(mocksPath, 'nested'),
       webpackConfigPath: path.join(mocksPath, 'nested/webpack.config')
     });

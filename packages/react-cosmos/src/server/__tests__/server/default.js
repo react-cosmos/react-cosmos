@@ -16,7 +16,7 @@ jest.mock('react-cosmos-config', () => ({
   generateCosmosConfig: jest.fn(),
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
-    publicUrl: '/loader/',
+    publicUrl: '',
     port: 9999,
     hostname: '127.0.0.1',
     globalImports: [],
@@ -85,7 +85,7 @@ it('sends webpack compiler to dev middleware', () => {
 });
 
 it('sends publicPath to dev middleware', () => {
-  expect(webpackDevMiddleware.mock.calls[0][1].publicPath).toBe('/loader/');
+  expect(webpackDevMiddleware.mock.calls[0][1].publicPath).toBe('');
 });
 
 it('adds loader dev middleware to express server', () => {
@@ -105,7 +105,7 @@ it('serves index.html on / route with playgrounds opts included', async () => {
     htmlContents.replace(
       '__PLAYGROUND_OPTS__',
       JSON.stringify({
-        loaderUri: '/loader/_loader.html',
+        loaderUri: '_loader.html',
         projectKey: mockRootPath,
         webpackConfigType: 'default',
         deps: {
