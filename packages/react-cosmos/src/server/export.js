@@ -9,7 +9,7 @@ import getPlaygroundHtml from './playground-html';
 const exportPlaygroundFiles = (cosmosConfig, outputPath) => {
   fs.copySync(
     path.join(__dirname, 'static/favicon.ico'),
-    `${outputPath}/favicon.ico`
+    `${outputPath}/_cosmos.ico`
   );
 
   fs.copySync(

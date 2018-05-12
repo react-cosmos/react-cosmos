@@ -58,8 +58,8 @@ it('calls webpack compiler with mock', () => {
 });
 
 describe('playground files', () => {
-  it('exports favicon.ico', () => {
-    expect(fs.existsSync(path.join(mockOutputPath, 'favicon.ico'))).toBe(true);
+  it('exports _cosmos.ico', () => {
+    expect(fs.existsSync(path.join(mockOutputPath, '_cosmos.ico'))).toBe(true);
   });
 
   it('exports _playground.js', () => {

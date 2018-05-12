@@ -101,7 +101,7 @@ export default function startServer() {
     res.sendFile(require.resolve('react-cosmos-playground'));
   });
 
-  app.get('/favicon.ico', (req, res) => {
+  app.get('/_cosmos.ico', (req, res) => {
     res.sendFile(path.join(__dirname, 'static/favicon.ico'));
   });
 

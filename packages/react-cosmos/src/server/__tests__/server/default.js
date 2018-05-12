@@ -125,9 +125,9 @@ it('serve playground js on /_playground.js route', () => {
   );
 });
 
-it('serve favicon.ico on /favicon.ico route', () => {
+it('serve favicon.ico on /_cosmos.ico route', () => {
   const sendFile = jest.fn();
-  getCbs['/favicon.ico']({}, { sendFile });
+  getCbs['/_cosmos.ico']({}, { sendFile });
 
   expect(sendFile).toHaveBeenCalledWith(
     require.resolve('../../static/favicon.ico')
