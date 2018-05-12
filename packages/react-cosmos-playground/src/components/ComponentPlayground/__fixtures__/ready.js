@@ -9,7 +9,7 @@ export default createFixture({
 
   props: {
     options: {
-      loaderUri: '/mock/loader/index.html',
+      loaderUri: '_loader.html',
       projectKey: 'test',
       webpackConfigType: 'default',
       deps: {}
@@ -19,7 +19,7 @@ export default createFixture({
 
   fetch: [
     {
-      matcher: 'end:/mock/loader/index.html',
+      matcher: 'end:_loader.html',
       response: 200
     }
   ],

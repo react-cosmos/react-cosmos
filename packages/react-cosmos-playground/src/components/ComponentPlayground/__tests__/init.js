@@ -16,6 +16,6 @@ describe('CP init', () => {
   });
 
   test('should render loader iframe with props.loaderUri', () => {
-    expect(getWrapper('iframe').prop('src')).toBe('/mock/loader/index.html');
+    expect(getWrapper('iframe').prop('src')).toBe('_loader.html');
   });
 });
