@@ -5,7 +5,7 @@ jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
     globalImports: ['./global.css'],
-    publicUrl: '/static',
+    publicUrl: '/static/',
     containerQuerySelector: '__mock__containerQuerySelector'
   })
 }));
@@ -80,7 +80,7 @@ it('creates proper output', () => {
   );
   expect(webpackConfig.output).toMatchObject({
     filename: '[name].js',
-    publicPath: '/static'
+    publicPath: '/static/'
   });
 });
 

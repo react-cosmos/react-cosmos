@@ -10,7 +10,7 @@ jest.mock('react-cosmos-config', () => ({
     port: 9999,
     hostname: '127.0.0.1',
     publicPath: 'server/public',
-    publicUrl: '/static',
+    publicUrl: '/static/',
     webpackConfigPath: require.resolve('./__fsmocks__/webpack.config'),
     globalImports: [],
     componentPaths: []

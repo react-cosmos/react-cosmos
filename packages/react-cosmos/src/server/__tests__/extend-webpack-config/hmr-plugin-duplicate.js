@@ -5,6 +5,7 @@ jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
     globalImports: ['./global.css'],
+    publicUrl: '/static/',
     hot: true
   })
 }));

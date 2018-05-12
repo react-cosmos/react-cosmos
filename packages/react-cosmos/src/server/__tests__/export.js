@@ -12,7 +12,7 @@ jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
-    publicUrl: '/static',
+    publicUrl: '/static/',
     outputPath: mockOutputPath,
     globalImports: [],
     componentPaths: []

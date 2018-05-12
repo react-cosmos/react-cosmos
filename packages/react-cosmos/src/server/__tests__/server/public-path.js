@@ -10,7 +10,7 @@ jest.mock('react-cosmos-config', () => ({
     port: 9999,
     hostname: '127.0.0.1',
     publicPath: 'server/public',
-    publicUrl: '/static',
+    publicUrl: '/static/',
     globalImports: [],
     componentPaths: []
   })
@@ -57,7 +57,7 @@ it('creates static server with public path', () => {
 });
 
 it('sends public url to express server', () => {
-  expect(mockUse.mock.calls[1][0]).toBe('/static');
+  expect(mockUse.mock.calls[1][0]).toBe('/static/');
 });
 
 it('sends public url to express server', () => {

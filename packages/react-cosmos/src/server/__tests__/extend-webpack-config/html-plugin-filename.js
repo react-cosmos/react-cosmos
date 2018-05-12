@@ -5,7 +5,8 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
-    globalImports: []
+    globalImports: [],
+    publicUrl: '/static/'
   })
 }));
 

@@ -55,7 +55,7 @@ export default function extendWebpackConfig({
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(shouldExport ? 'production' : 'development'),
-        PUBLIC_URL: JSON.stringify(publicUrl)
+        PUBLIC_URL: JSON.stringify(removeTrailingSlash(publicUrl))
       }
     }),
     new webpack.DefinePlugin({
@@ -188,4 +188,8 @@ function alreadyHasHmrPlugin({ plugins }) {
 
 function isPluginType(plugin, constructorName) {
   return plugin.constructor && plugin.constructor.name === constructorName;
+}
+
+function removeTrailingSlash(str) {
+  return str.replace(/\/$/, '');
 }
