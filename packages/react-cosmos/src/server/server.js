@@ -97,7 +97,7 @@ export default function startServer() {
     res.send(playgroundHtml);
   });
 
-  app.get('/bundle.js', (req, res) => {
+  app.get('/_playground.js', (req, res) => {
     res.sendFile(require.resolve('react-cosmos-playground'));
   });
 

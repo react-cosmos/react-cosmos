@@ -14,7 +14,7 @@ const exportPlaygroundFiles = (cosmosConfig, outputPath) => {
 
   fs.copySync(
     require.resolve('react-cosmos-playground'),
-    `${outputPath}/bundle.js`
+    `${outputPath}/_playground.js`
   );
 
   const playgroundHtml = getPlaygroundHtml(cosmosConfig);

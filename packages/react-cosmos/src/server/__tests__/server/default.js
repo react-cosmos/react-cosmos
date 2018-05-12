@@ -116,6 +116,15 @@ it('serves index.html on / route with playgrounds opts included', async () => {
   );
 });
 
+it('serve playground js on /_playground.js route', () => {
+  const sendFile = jest.fn();
+  getCbs['/_playground.js']({}, { sendFile });
+
+  expect(sendFile).toHaveBeenCalledWith(
+    require.resolve('react-cosmos-playground')
+  );
+});
+
 it('serve favicon.ico on /favicon.ico route', () => {
   const sendFile = jest.fn();
   getCbs['/favicon.ico']({}, { sendFile });

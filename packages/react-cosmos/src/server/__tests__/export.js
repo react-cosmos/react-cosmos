@@ -62,8 +62,10 @@ describe('playground files', () => {
     expect(fs.existsSync(path.join(mockOutputPath, 'favicon.ico'))).toBe(true);
   });
 
-  it('exports bundle.js', () => {
-    expect(fs.existsSync(path.join(mockOutputPath, 'bundle.js'))).toBe(true);
+  it('exports _playground.js', () => {
+    expect(fs.existsSync(path.join(mockOutputPath, '_playground.js'))).toBe(
+      true
+    );
   });
 
   it('exports index.html', () => {
