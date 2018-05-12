@@ -56,8 +56,11 @@ export default function startServer() {
   const app = express();
 
   loaderCompiler.plugin('invalid', filePath => {
-    const relFilePath = path.relative(process.cwd(), filePath);
-    console.log('[Cosmos] webpack build invalidated by', relFilePath);
+    // Old versions of webpack call this hook without a file path argument
+    if (typeof filePath === 'string') {
+      const relFilePath = path.relative(process.cwd(), filePath);
+      console.log('[Cosmos] webpack build invalidated by', relFilePath);
+    }
   });
 
   if (httpProxy) {
