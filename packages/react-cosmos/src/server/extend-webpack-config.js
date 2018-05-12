@@ -24,14 +24,13 @@ export default function extendWebpackConfig({
   userWebpackConfig,
   shouldExport = false
 }: Args) {
+  const cosmosConfig: Config = getCosmosConfig();
   const {
     containerQuerySelector,
-    globalImports,
     hot,
-    outputPath,
     publicUrl,
     webpack: webpackOverride
-  }: Config = getCosmosConfig();
+  } = cosmosConfig;
 
   let webpackConfig = userWebpackConfig;
 
@@ -40,35 +39,8 @@ export default function extendWebpackConfig({
     webpackConfig = webpackOverride(webpackConfig, { env: getEnv() });
   }
 
-  const entry = [...globalImports];
-
-  if (hot && !shouldExport) {
-    // It's crucial for Cosmos to not depend on any user loader. This way the
-    // webpack configs can point solely to the user deps for loaders.
-    entry.push(
-      `${require.resolve(
-        'webpack-hot-middleware/client'
-      )}?reload=true&overlay=false`
-    );
-  }
-
-  entry.push(require.resolve('../client/loader-entry'));
-
-  let output = {
-    path: shouldExport ? join(outputPath, publicUrl) : publicUrl,
-    filename: '[name].js',
-    publicPath: publicUrl
-  };
-
-  // Exports are generally meant to run outside of the developer's machine
-  if (!shouldExport) {
-    // Enable click-to-open source
-    output = {
-      ...output,
-      devtoolModuleFilenameTemplate: info =>
-        resolve(info.absoluteResourcePath).replace(/\\/g, '/')
-    };
-  }
+  const entry = getEntry(cosmosConfig, shouldExport);
+  const output = getOutput(cosmosConfig, shouldExport);
 
   const rules = [
     ...getExistingRules(webpackConfig),
@@ -111,16 +83,42 @@ export default function extendWebpackConfig({
   };
 }
 
-function isPluginType(plugin, constructorName) {
-  return plugin.constructor && plugin.constructor.name === constructorName;
+function getEntry({ globalImports, hot }, shouldExport) {
+  let entry = [...globalImports];
+
+  if (hot && !shouldExport) {
+    // It's crucial for Cosmos to not depend on any user loader. This way the
+    // webpack configs can point solely to the user deps for loaders.
+    entry = [
+      ...entry,
+      `${require.resolve(
+        'webpack-hot-middleware/client'
+      )}?reload=true&overlay=false`
+    ];
+  }
+
+  // Load loader entry last
+  return [...entry, require.resolve('../client/loader-entry')];
 }
 
-function alreadyHasHmrPlugin({ plugins }) {
-  return (
-    plugins &&
-    plugins.filter(p => isPluginType(p, 'HotModuleReplacementPlugin')).length >
-      0
-  );
+function getOutput({ outputPath, publicUrl }, shouldExport) {
+  const filename = '[name].js';
+
+  if (shouldExport) {
+    return {
+      path: join(outputPath, publicUrl),
+      filename,
+      publicPath: publicUrl
+    };
+  }
+
+  return {
+    filename,
+    publicPath: publicUrl,
+    // Enable click-to-open source in react-error-overlay
+    devtoolModuleFilenameTemplate: info =>
+      resolve(info.absoluteResourcePath).replace(/\\/g, '/')
+  };
 }
 
 function getWebpackRulesOptionName(webpackConfig) {
@@ -178,4 +176,16 @@ function getNoErrorsPlugin(webpack) {
   return webpack.NoEmitOnErrorsPlugin
     ? new webpack.NoEmitOnErrorsPlugin()
     : new webpack.NoErrorsPlugin();
+}
+
+function alreadyHasHmrPlugin({ plugins }) {
+  return (
+    plugins &&
+    plugins.filter(p => isPluginType(p, 'HotModuleReplacementPlugin')).length >
+      0
+  );
+}
+
+function isPluginType(plugin, constructorName) {
+  return plugin.constructor && plugin.constructor.name === constructorName;
 }

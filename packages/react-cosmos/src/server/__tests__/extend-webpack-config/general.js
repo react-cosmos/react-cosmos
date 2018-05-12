@@ -79,7 +79,6 @@ it('creates proper output', () => {
     'function'
   );
   expect(webpackConfig.output).toMatchObject({
-    path: '/loader/',
     filename: '[name].js',
     publicPath: '/loader/'
   });
