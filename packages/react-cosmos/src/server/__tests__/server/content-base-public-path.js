@@ -60,5 +60,7 @@ beforeEach(() => {
 // Note: This test is ment to show that a custom publicPath is used over
 // webpack.devServer.contentBase
 it('creates static server with public path', () => {
-  expect(express.static).toHaveBeenCalledWith('server/public');
+  expect(express.static).toHaveBeenCalledWith('server/public', {
+    index: false
+  });
 });

@@ -57,5 +57,7 @@ beforeEach(() => {
 });
 
 it('creates static server with webpack.devServer.contentBase', () => {
-  expect(express.static).toHaveBeenCalledWith('user/server/public');
+  expect(express.static).toHaveBeenCalledWith('user/server/public', {
+    index: false
+  });
 });

@@ -7,6 +7,7 @@ jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
+    publicUrl: '/',
     port: 9999,
     hostname: '127.0.0.1',
     httpProxy: { context: '/api', target: 'http://127.0.0.1:4000/api' },

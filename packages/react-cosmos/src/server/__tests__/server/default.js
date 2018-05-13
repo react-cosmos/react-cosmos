@@ -16,6 +16,7 @@ jest.mock('react-cosmos-config', () => ({
   generateCosmosConfig: jest.fn(),
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
+    publicUrl: '/',
     port: 9999,
     hostname: '127.0.0.1',
     globalImports: [],
@@ -84,7 +85,7 @@ it('sends webpack compiler to dev middleware', () => {
 });
 
 it('sends publicPath to dev middleware', () => {
-  expect(webpackDevMiddleware.mock.calls[0][1].publicPath).toBe('/loader/');
+  expect(webpackDevMiddleware.mock.calls[0][1].publicPath).toBe('/');
 });
 
 it('adds loader dev middleware to express server', () => {
@@ -104,7 +105,7 @@ it('serves index.html on / route with playgrounds opts included', async () => {
     htmlContents.replace(
       '__PLAYGROUND_OPTS__',
       JSON.stringify({
-        loaderUri: './loader/index.html',
+        loaderUri: '/_loader.html',
         projectKey: mockRootPath,
         webpackConfigType: 'default',
         deps: {
@@ -115,9 +116,18 @@ it('serves index.html on / route with playgrounds opts included', async () => {
   );
 });
 
-it('serve favicon.ico on /favicon.ico route', () => {
+it('serve playground js on /_playground.js route', () => {
   const sendFile = jest.fn();
-  getCbs['/favicon.ico']({}, { sendFile });
+  getCbs['/_playground.js']({}, { sendFile });
+
+  expect(sendFile).toHaveBeenCalledWith(
+    require.resolve('react-cosmos-playground')
+  );
+});
+
+it('serve favicon.ico on /_cosmos.ico route', () => {
+  const sendFile = jest.fn();
+  getCbs['/_cosmos.ico']({}, { sendFile });
 
   expect(sendFile).toHaveBeenCalledWith(
     require.resolve('../../static/favicon.ico')

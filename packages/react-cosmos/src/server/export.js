@@ -9,12 +9,12 @@ import getPlaygroundHtml from './playground-html';
 const exportPlaygroundFiles = (cosmosConfig, outputPath) => {
   fs.copySync(
     path.join(__dirname, 'static/favicon.ico'),
-    `${outputPath}/favicon.ico`
+    `${outputPath}/_cosmos.ico`
   );
 
   fs.copySync(
     require.resolve('react-cosmos-playground'),
-    `${outputPath}/bundle.js`
+    `${outputPath}/_playground.js`
   );
 
   const playgroundHtml = getPlaygroundHtml(cosmosConfig);

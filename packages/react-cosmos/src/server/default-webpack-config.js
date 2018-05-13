@@ -62,7 +62,9 @@ export default function getDefaultWebpackConfig(rootPath: string) {
   const plugins = [];
 
   if (HtmlWebpackPlugin) {
-    plugins.push(new HtmlWebpackPlugin({ title: 'React Cosmos' }));
+    plugins.push(
+      new HtmlWebpackPlugin({ title: 'React Cosmos', filename: '_loader.html' })
+    );
   }
 
   let config = {

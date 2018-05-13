@@ -26,7 +26,7 @@ const defaults = {
   proxiesPath: 'cosmos.proxies',
   webpackConfigPath: 'webpack.config',
   outputPath: 'cosmos-export',
-  publicUrl: '/loader/',
+  publicUrl: '/',
   watchDirs: ['.'],
   // Deprecated
   componentPaths: [],

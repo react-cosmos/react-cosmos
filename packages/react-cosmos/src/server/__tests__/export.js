@@ -12,6 +12,7 @@ jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
+    publicUrl: '/static/',
     outputPath: mockOutputPath,
     globalImports: [],
     componentPaths: []
@@ -57,12 +58,14 @@ it('calls webpack compiler with mock', () => {
 });
 
 describe('playground files', () => {
-  it('exports favicon.ico', () => {
-    expect(fs.existsSync(path.join(mockOutputPath, 'favicon.ico'))).toBe(true);
+  it('exports _cosmos.ico', () => {
+    expect(fs.existsSync(path.join(mockOutputPath, '_cosmos.ico'))).toBe(true);
   });
 
-  it('exports bundle.js', () => {
-    expect(fs.existsSync(path.join(mockOutputPath, 'bundle.js'))).toBe(true);
+  it('exports _playground.js', () => {
+    expect(fs.existsSync(path.join(mockOutputPath, '_playground.js'))).toBe(
+      true
+    );
   });
 
   it('exports index.html', () => {
@@ -73,7 +76,7 @@ describe('playground files', () => {
     const inputPath = path.join(__dirname, '../static/index.html');
     const outputPath = path.join(mockOutputPath, 'index.html');
     const optsStr = JSON.stringify({
-      loaderUri: './loader/index.html',
+      loaderUri: '/static/_loader.html',
       projectKey: mockRootPath,
       webpackConfigType: 'default',
       deps: {

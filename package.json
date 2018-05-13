@@ -11,7 +11,7 @@
     "install-react:0.14": "yarn install-react -- react@^0.14.9 react-dom@^0.14.9",
     "install-react:15": "yarn install-react -- react@^15.5.4 react-dom@^15.5.4",
     "precommit": "lint-staged",
-    "prettify": "prettier --write '{{{packages,examples}/*/src,cypress,scripts}/**/,}*.{js,jsx,css,less,md}'",
+    "prettify": "prettier --write '{{packages/*/src,examples,cypress,scripts}/**/,}*.{js,jsx,css,less,md}'",
     "lint": "xo --quiet",
     "test": "yarn flow && yarn lint && jest --coverage --maxWorkers=4 --config jest.config.json",
     "test:watch": "jest --watch --config jest.config.json",
@@ -25,8 +25,9 @@
     "link-entries": "babel-node ./scripts/link-entries.js",
     "pre-release": "yarn clear-build && yarn build && yarn link-entries dist && yarn test",
     "lerna-publish": "lerna publish --registry=https://registry.npmjs.org/ --skip-git",
-    "release": "yarn pre-release && yarn lerna-publish",
-    "release:next": "yarn pre-release && yarn lerna-publish --npm-tag=next --force-publish=*"
+    "release": "yarn pre-release && yarn lerna-publish && yarn post-release",
+    "release:next": "yarn pre-release && yarn lerna-publish --npm-tag=next --force-publish=* && yarn post-release",
+    "post-release": "yarn link-entries src"
   },
   "lint-staged": {
     "*.{js,jsx,css,less}": [

@@ -953,8 +953,8 @@ module.exports = {
   // isn't placed in the project root
   rootPath: '../',
 
-  // Additional entry points that should be present along with any component.
-  // Sad, but inevitable.
+  // Additional entry points that should be present along with any component
+  // Sad, but inevitable
   globalImports: ['./reset.css', './global.css'],
 
   // Customize pattern(s) for matching fixture files
@@ -963,17 +963,19 @@ module.exports = {
   // Fixtures will not be loaded in the playground if their names match these
   exclude: [/not-a-fixture/, /its-complicated/, /its-not-me-its-you/],
 
-  // Where to serve static files from. Like --content-base in webpack-dev-server.
+  // File path to serve static files from. Like --content-base in webpack-dev-server
   publicPath: 'src/public',
 
-  // Set base URL for static assets from public folder
+  // Set base URL for both webpack assets and static files from publicPath
+  // Maps to webpack.output.publicPath
+  // https://webpack.js.org/configuration/output/#output-publicpath
   publicUrl: '/static/',
 
-  // Customize proxies file path. Useful if Babel doesn't compile the root dir.
+  // Customize proxies file path. Useful if Babel doesn't compile the root dir
   proxiesPath: 'src/proxies.cosmos',
 
   // Render inside custom root element. Useful if that root element already
-  // has styles attached, but bad for encapsulation.
+  // has styles attached, but bad for encapsulation
   containerQuerySelector: '#app',
 
   // Disable hot module replacement
@@ -1005,13 +1007,19 @@ module.exports = {
 
 ### Exporting
 
-Static Component Playground? Piece of 🍰! Add this script and run `npm run cosmos:export` or `yarn cosmos:export`.
+Static Component Playground? Piece of 🍰!
+
+Add this script and run `npm run cosmos:export` or `yarn cosmos:export`.
 
 ```diff
 "scripts": {
 +  "cosmos:export": "cosmos-export"
 }
 ```
+
+Now you can deploy the `cosmos-export` directory to any static hosting service.
+
+> Use [http-server](https://github.com/indexzero/http-server) or any static file server to load the export locally.
 
 ### Headless testing
 

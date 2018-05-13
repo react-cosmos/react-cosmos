@@ -51,7 +51,9 @@ beforeEach(() => {
 });
 
 it('creates static server with public path', () => {
-  expect(express.static).toHaveBeenCalledWith('server/public');
+  expect(express.static).toHaveBeenCalledWith('server/public', {
+    index: false
+  });
 });
 
 it('sends public url to express server', () => {

@@ -11,6 +11,7 @@ jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
+    publicUrl: '/',
     port: 9999,
     hostname: '127.0.0.1',
     webpackConfigPath: require.resolve('./__fsmocks__/webpack.config'),
@@ -82,7 +83,7 @@ it('serves index.html on / route with playgrounds opts included', async () => {
     htmlContents.replace(
       '__PLAYGROUND_OPTS__',
       JSON.stringify({
-        loaderUri: './loader/index.html',
+        loaderUri: '/_loader.html',
         projectKey: mockRootPath,
         webpackConfigType: 'custom',
         deps: {
