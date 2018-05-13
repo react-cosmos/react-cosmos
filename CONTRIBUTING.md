@@ -129,9 +129,9 @@ Read about all event payloads and their order [here](docs/playground-loader.md).
 
 The `react-cosmos` CLI extends the user's webpack config or fallbacks to a default config, which automatically detects and includes the user's Babel and CSS loaders.
 
-The entry file of the resulting webpack config mounts `Loader` via `loaderConnect`, together with all the user components, fixtures and proxies. **The component and fixture paths are injected statically in the Loader bundle** via [module-loader.js](packages/react-cosmos/src/module-loader.js)—a custom webpack loader.
+The entry file of the resulting webpack config mounts `Loader` via `loaderConnect`, together with all the user components, fixtures and proxies. **The component and fixture paths are injected statically in the Loader bundle** via [embed-modules-webpack-loader.js](packages/react-cosmos/src/server/embed-modules-webpack-loader.js).
 
-Using webpack-dev-middleware, the webpack config is attached to an Express server, which serves the Playground bundle at `/` and the Loader bundle at `/loader/`. The server will also serve a static directory when the `publicPath` option is used.
+Using webpack-dev-middleware, the webpack config is attached to an Express server, which serves the Playground bundle at `/index.html` and the Loader bundle at `/_loader.html`. The server will also serve a static directory when the `publicPath` option is used.
 
 Static exporting is almost identical to development mode, except that it saves the webpack build to disk instead of attaching it to a running Express server.
 
