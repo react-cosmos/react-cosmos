@@ -11,7 +11,11 @@ import type { Config } from 'react-cosmos-flow/config';
  * Extend the user config to create the Loader config. Namely,
  * - Replace the entry and output
  * - Enable hot reloading
- * - Embed the config path to make user configs available on the client-side
+ * - Embed the user module require calls via embed-modules-webpack-loader
+ * - Embed the playground options to use in the client-side bundle
+ *
+ * It's crucial for Cosmos to not depend on user-installed loaders. All
+ * internal loaders and entries must have absolute path (via require.resolve)
  */
 type Args = {
   webpack: Object,
@@ -87,8 +91,6 @@ function getEntry({ globalImports, hot }, shouldExport) {
   let entry = [...globalImports];
 
   if (hot && !shouldExport) {
-    // It's crucial for Cosmos to not depend on any user loader. This way the
-    // webpack configs can point solely to the user deps for loaders.
     entry = [
       ...entry,
       `${require.resolve(
