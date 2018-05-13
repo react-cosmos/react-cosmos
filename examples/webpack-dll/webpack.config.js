@@ -6,6 +6,7 @@ const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 // work standalone. react-cosmos adds an entry & output when extending this.
 module.exports = {
   mode: 'development',
+  devtool: 'cheap-module-source-map',
   resolve: {
     extensions: ['.js', '.jsx']
   },
