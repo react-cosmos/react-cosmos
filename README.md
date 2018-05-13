@@ -1007,7 +1007,9 @@ module.exports = {
 
 ### Exporting
 
-Static Component Playground? Piece of 🍰! Add this script and run `npm run cosmos:export` or `yarn cosmos:export`.
+Static Component Playground? Piece of 🍰!
+
+Add this script and run `npm run cosmos:export` or `yarn cosmos:export`.
 
 ```diff
 "scripts": {
@@ -1015,7 +1017,9 @@ Static Component Playground? Piece of 🍰! Add this script and run `npm run cos
 }
 ```
 
-> Note: You need a static server to load the export.
+Now you can deploy the `cosmos-export` directory to any static hosting service.
+
+> Use [http-server](https://github.com/indexzero/http-server) or any static file server to load the export locally.
 
 ### Headless testing
 
