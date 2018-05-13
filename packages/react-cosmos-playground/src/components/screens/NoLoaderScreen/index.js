@@ -16,6 +16,19 @@ export default class NoLoaderScreen extends Component<Props> {
       options: { webpackConfigType, deps }
     } = this.props;
 
+    if (deps['html-webpack-plugin']) {
+      return (
+        <DisplayScreen>
+          <p className={style.header}>Almost there...</p>
+          <p>Something is breaking the webpack build :/</p>
+          <p>
+            <strong>Please check the terminal output to investigate.</strong>
+          </p>
+          {this.renderFooter()}
+        </DisplayScreen>
+      );
+    }
+
     if (webpackConfigType === 'custom') {
       return (
         <DisplayScreen>
@@ -42,29 +55,16 @@ export default class NoLoaderScreen extends Component<Props> {
       );
     }
 
-    if (!deps['html-webpack-plugin']) {
-      return (
-        <DisplayScreen>
-          <p className={style.header}>Almost there...</p>
-          <p>
-            <strong>
-              Install <code>html-webpack-plugin</code> in your dev dependencies
-            </strong>{' '}
-            and restart Cosmos.
-          </p>
-          <p>The default webpack config will include it automatically.</p>
-          {this.renderFooter()}
-        </DisplayScreen>
-      );
-    }
-
     return (
       <DisplayScreen>
         <p className={style.header}>Almost there...</p>
-        <p>Something is breaking the webpack build :/</p>
         <p>
-          <strong>Please check the terminal output to investigate.</strong>
+          <strong>
+            Install <code>html-webpack-plugin</code> in your dev dependencies
+          </strong>{' '}
+          and restart Cosmos.
         </p>
+        <p>The default webpack config will include it automatically.</p>
         {this.renderFooter()}
       </DisplayScreen>
     );
