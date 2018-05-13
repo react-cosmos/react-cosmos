@@ -7,7 +7,7 @@ cd ./examples/redux
 yarn start
 ```
 
-Go to http://localhost:8989 and show the browser console and the react-cosmos editor. 
+Go to http://localhost:8989 and show the browser console and the react-cosmos editor.
 
 ![browser console and react-cosmos editor screenshot](./screenshots/ReduxForm_Simple_Example-React_Cosmos.png)
 

@@ -11,7 +11,7 @@
     "install-react:0.14": "yarn install-react -- react@^0.14.9 react-dom@^0.14.9",
     "install-react:15": "yarn install-react -- react@^15.5.4 react-dom@^15.5.4",
     "precommit": "lint-staged",
-    "prettify": "prettier --write '{{{packages,examples}/*/src,cypress,scripts}/**/,}*.{js,jsx,css,less,md}'",
+    "prettify": "prettier --write '{{packages/*/src,examples,cypress,scripts}/**/,}*.{js,jsx,css,less,md}'",
     "lint": "xo --quiet",
     "test": "yarn flow && yarn lint && jest --coverage --maxWorkers=4 --config jest.config.json",
     "test:watch": "jest --watch --config jest.config.json",

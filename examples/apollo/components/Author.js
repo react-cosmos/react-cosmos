@@ -43,7 +43,9 @@ class Author extends Component {
   };
 
   render() {
-    const { data: { loading, error, author } } = this.props;
+    const {
+      data: { loading, error, author }
+    } = this.props;
 
     if (loading) {
       return <div>Loading...</div>;
