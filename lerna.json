@@ -4,8 +4,8 @@
   "useWorkspaces": true,
   "command": {
     "publish": {
-      "ignore": [
-        "README.md"
+      "ignoreChanges": [
+        "packages/*/README.md", "packages/*/*.js"
       ]
     }
   }
