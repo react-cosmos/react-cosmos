@@ -253,7 +253,9 @@ export default class ComponentPlayground extends Component<Props, State> {
       });
     } else {
       // Check if Loader is working
-      const { status } = await fetch(this.props.options.loaderUri);
+      const { status } = await fetch(this.props.options.loaderUri, {
+        credentials: 'same-origin'
+      });
       if (status === 200) {
         // Wait until all session settings are read before rendering
         this.restoreUserSettings(() => {
