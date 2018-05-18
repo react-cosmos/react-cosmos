@@ -13,8 +13,8 @@
   <a href="https://coveralls.io/r/react-cosmos/react-cosmos?branch=master">
     <img alt="Coverage status" src="https://coveralls.io/repos/react-cosmos/react-cosmos/badge.svg?branch=master">
   </a>
-  <a href="https://twitter.com/cosmos_ui">
-    <img alt="Follow @cosmos_ui for updates" src="https://img.shields.io/twitter/follow/cosmos_ui.svg?style=flat&label=Follow">
+  <a href="https://twitter.com/ReactCosmos">
+    <img alt="Follow @ReactCosmos for updates" src="https://img.shields.io/twitter/follow/ReactCosmos.svg?style=flat&label=Follow">
   </a>
   <a href="https://join-react-cosmos.now.sh/">
     <img alt="Slack" src="https://join-react-cosmos.now.sh/badge.svg">
