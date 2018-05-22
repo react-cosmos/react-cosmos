@@ -923,7 +923,7 @@ module.exports = {
       ...config,
       plugins: config.plugins.filter(
         p => !p.constructor || p.constructor.name !== 'OfflinePlugin'
-      );
+      )
     };
   }
 };
