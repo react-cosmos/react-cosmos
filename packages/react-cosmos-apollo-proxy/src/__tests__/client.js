@@ -182,8 +182,8 @@ describe('proxy configured with an endpoint', () => {
     // no network requests issued
     expect(fetchMock.called('https://xyz', 'POST')).toBe(false);
 
-    // no loading because synchronous return of the fixture data
-    expect(getWrappedComponent().props().data.loading).toBe(false);
+    // can be async even if data is mocked
+    await until(() => getWrappedComponent().props().data.loading === false);
 
     expect(getWrappedComponent().props().data.author).toEqual(
       resolveWith.author
