@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { graphql, compose } from 'react-apollo';
+import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
-export const QUERY = gql`
+export const GET_POSTS = gql`
   query PostsForAuthor($authorId: Int!) {
     author(id: $authorId) {
       id
@@ -16,14 +16,7 @@ export const QUERY = gql`
   }
 `;
 
-const withData = graphql(QUERY, {
-  options: ({ authorId }) => ({
-    variables: { authorId }
-  }),
-  alias: 'withData'
-});
-
-export const MUTATION = gql`
+export const UPVOTE_POST = gql`
   mutation UpvotePost($postId: Int!) {
     upvotePost(postId: $postId) {
       id
@@ -33,44 +26,51 @@ export const MUTATION = gql`
   }
 `;
 
-const withMutation = graphql(MUTATION, { alias: 'withMutation' });
-
-class Author extends Component {
-  handleUpvote = postId => () => {
-    return this.props.mutate({
-      variables: { postId }
-    });
-  };
-
+export default class Author extends Component {
   render() {
-    const {
-      data: { loading, error, author }
-    } = this.props;
-
-    if (loading) {
-      return <div>Loading...</div>;
-    }
-
-    if (error) {
-      return <div style={{ color: 'red' }}>{error.message}</div>;
-    }
+    const { authorId, upvoteEnabled } = this.props;
 
     return (
-      <div>
-        Author: {author.firstName}
-        <ul>
-          {author.posts.map(post => (
-            <li key={post.id}>
-              {post.title} - {post.votes} votes
-              {this.props.upvoteEnabled && (
-                <button onClick={this.handleUpvote(post.id)}>Upvote</button>
-              )}
-            </li>
-          ))}
-        </ul>
-      </div>
+      <Query query={GET_POSTS} variables={{ authorId }}>
+        {({ loading, error, data }) => {
+          if (loading) {
+            return <div>Loading...</div>;
+          }
+
+          if (error) {
+            return <div style={{ color: 'red' }}>{error.message}</div>;
+          }
+
+          const { author } = data;
+
+          return (
+            <div>
+              <div>Author: {author.firstName}</div>
+              <ul>
+                {author.posts.map(({ id: postId, title, votes }) => (
+                  <Mutation key={postId} mutation={UPVOTE_POST}>
+                    {(upvotePost, { loading }) => (
+                      <li>
+                        {`${title} ${votes} votes `}
+                        {upvoteEnabled && (
+                          <button
+                            disabled={loading}
+                            onClick={() =>
+                              upvotePost({ variables: { postId } })
+                            }
+                          >
+                            Upvote
+                          </button>
+                        )}
+                      </li>
+                    )}
+                  </Mutation>
+                ))}
+              </ul>
+            </div>
+          );
+        }}
+      </Query>
     );
   }
 }
-
-export default compose(withData, withMutation)(Author);

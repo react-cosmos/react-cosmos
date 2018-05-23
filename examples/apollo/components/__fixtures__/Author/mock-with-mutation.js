@@ -1,4 +1,4 @@
-import Author, { QUERY } from '../../Author';
+import Author, { GET_POSTS } from '../../Author';
 
 export default {
   component: Author,
@@ -29,7 +29,7 @@ export default {
     UpvotePost: {
       resolveWith: ({ cache, variables, fixture }) => {
         const data = cache.readQuery({
-          query: QUERY,
+          query: GET_POSTS,
           variables: { authorId: fixture.props.authorId }
         });
 
