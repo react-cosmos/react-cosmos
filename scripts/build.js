@@ -27,7 +27,7 @@ async function run() {
 
   if (pkgName) {
     if (typeof pkgName !== 'string') {
-      stderr.write(error(`Invalid package name ${bold(pkgName)}!\n`));
+      stderr.write(error(`Invalid package name ${bold(String(pkgName))}!\n`));
       return;
     }
 
