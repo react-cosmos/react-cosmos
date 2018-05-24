@@ -8,7 +8,7 @@
   "dependencies": {
     "lodash.omit": "^4.5.0",
     "react-cosmos-shared": "^4.3.0",
-    "redux": "^3.7.2"
+    "redux": "^4.0.0"
   },
   "xo": false
 }

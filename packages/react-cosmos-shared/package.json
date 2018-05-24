@@ -8,8 +8,8 @@
   "dependencies": {
     "lodash.isplainobject": "^4.0.6",
     "prop-types": "^15.6.1",
-    "resolve-from": "^3.0.0",
-    "slash": "^1.0.0"
+    "resolve-from": "^4.0.0",
+    "slash": "^2.0.0"
   },
   "xo": false
 }

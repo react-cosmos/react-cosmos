@@ -8,9 +8,9 @@
   "devDependencies": {
     "@skidding/react-codemirror": "^1.0.2",
     "classnames": "^2.2.5",
-    "codemirror": "^5.29.0",
+    "codemirror": "^5.38.0",
     "fuzzaldrin-plus": "^0.6.0",
-    "localforage": "^1.5.3",
+    "localforage": "^1.7.1",
     "lodash.flatmapdeep": "^4.10.0",
     "lodash.merge": "^4.6.1",
     "lodash.omitby": "^4.6.0",
