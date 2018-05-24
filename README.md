@@ -931,11 +931,17 @@ module.exports = {
 
 #### Custom fixture paths
 
-The `fileMatch` and `exclude` options are used to detect fixture files. The default fileMatch value is meant to accommodate most needs out of the box:
+The `fileMatch`, `fileMatchIgnore` and `exclude` options are used to detect fixture files. The default `fileMatch` value is meant to accommodate most needs out of the box:
 
 ```
 '**/__fixture?(s)__/**/*.{js,jsx,ts,tsx}',
 '**/?(*.)fixture?(s).{js,jsx,ts,tsx}'
+```
+
+The default `fileMatchIgnore` value is meant to [ignore node_modules folder](docs/file-match-ignore.md):
+
+```
+'**/node_modules/**'
 ```
 
 > Note: Set the `rootPath` to a dir parent to all fixture files when using a [custom config path](#custom-config-path)

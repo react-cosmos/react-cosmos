@@ -8,6 +8,7 @@ import {
   moduleExists,
   resolveUserPath,
   defaultFileMatch,
+  defaultFileMatchIgnore,
   defaultExclude
 } from 'react-cosmos-shared/server';
 import { log, warn } from './log';
@@ -18,6 +19,7 @@ import type { Config } from 'react-cosmos-flow/config';
 const defaults = {
   rootPath: '.',
   fileMatch: defaultFileMatch,
+  fileMatchIgnore: defaultFileMatchIgnore,
   exclude: defaultExclude,
   globalImports: [],
   hostname: 'localhost',

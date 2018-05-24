@@ -5,6 +5,7 @@ const embedModules = require('../../embed-modules-webpack-loader');
 
 // The values of these mocks don't matter, we check for identity
 const mockFileMatch = [];
+const mockFileMatchIgnore = '';
 const mockExclude = [];
 
 jest.mock('react-cosmos-config', () => ({
@@ -12,6 +13,7 @@ jest.mock('react-cosmos-config', () => ({
   getCosmosConfig: () => ({
     rootPath: 'MOCK_ROOT_PATH',
     fileMatch: mockFileMatch,
+    fileMatchIgnore: mockFileMatchIgnore,
     exclude: mockExclude,
     componentPaths: [],
     proxiesPath: require.resolve('../__fsmocks__/cosmos.proxies'),
@@ -83,6 +85,12 @@ it('calls findFixtureFiles with fileMatch with rootPath as cwd', () => {
 
 it('calls findFixtureFiles with fileMatch config', () => {
   expect(findFixtureFiles.mock.calls[0][0].fileMatch).toBe(mockFileMatch);
+});
+
+it('calls findFixtureFiles with fileMatchIgnore config', () => {
+  expect(findFixtureFiles.mock.calls[0][0].fileMatchIgnore).toBe(
+    mockFileMatchIgnore
+  );
 });
 
 it('calls findFixtureFiles with exclude config', () => {
