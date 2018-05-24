@@ -1,16 +1,16 @@
 {
   "name": "react-cosmos-telescope",
-  "version": "4.3.0",
+  "version": "4.4.0",
   "description": "Uses Jest snapshots to test your code for changes",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-telescope",
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
-    "react-cosmos-config": "^4.3.0",
-    "react-cosmos-loader": "^4.3.0",
-    "react-cosmos-shared": "^4.3.0",
-    "react-cosmos-state-proxy": "^4.3.0",
-    "react-cosmos-voyager2": "^4.3.0",
+    "react-cosmos-config": "^4.4.0",
+    "react-cosmos-loader": "^4.4.0",
+    "react-cosmos-shared": "^4.4.0",
+    "react-cosmos-state-proxy": "^4.4.0",
+    "react-cosmos-voyager2": "^4.4.0",
     "react-test-renderer": "^16.4.0"
   },
   "xo": false
