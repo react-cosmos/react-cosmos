@@ -18,6 +18,8 @@ export function createXhrProxy({ fixtureKey = 'xhr' }: Options = {}) {
     constructor(props: ProxyProps) {
       super(props);
 
+      console.log('YO');
+
       // webpack shiz
       // $FlowFixMe
       if (module.hot) {
