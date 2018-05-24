@@ -27,7 +27,7 @@
     "lerna-publish": "lerna publish --registry=https://registry.npmjs.org/ --skip-git",
     "release": "yarn pre-release && yarn lerna-publish && yarn post-release",
     "release:next": "yarn pre-release && yarn lerna-publish --npm-tag=next --force-publish=* && yarn post-release",
-    "post-release": "yarn link-entries src"
+    "post-release": "yarn link-entries src && babel-node ./scripts/commit-release.js"
   },
   "lint-staged": {
     "*.{js,jsx,css,less}": [
