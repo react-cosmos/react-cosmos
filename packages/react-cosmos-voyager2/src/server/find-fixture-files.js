@@ -3,7 +3,11 @@
 import glob from 'glob';
 import micromatch from 'micromatch';
 import promisify from 'util.promisify';
-import { defaultFileMatch, defaultExclude } from 'react-cosmos-shared/server';
+import {
+  defaultFileMatch,
+  defaultFileMatchIgnore,
+  defaultExclude
+} from 'react-cosmos-shared/server';
 import { extractComponentsFromFixtureFile } from './extract-components-from-fixture-file';
 
 import type { ExcludePatterns } from 'react-cosmos-flow/config';
@@ -14,6 +18,7 @@ const globAsync = promisify(glob);
 type Args = ?{
   rootPath?: string,
   fileMatch?: Array<string>,
+  fileMatchIgnore?: string,
   exclude?: ExcludePatterns
 };
 
@@ -26,6 +31,7 @@ export async function findFixtureFiles(
   const {
     rootPath = process.cwd(),
     fileMatch = defaultFileMatch,
+    fileMatchIgnore = defaultFileMatchIgnore,
     exclude = defaultExclude
   } =
     args || {};
@@ -34,7 +40,7 @@ export async function findFixtureFiles(
   const allPaths = await globAsync('**/*', {
     cwd: rootPath,
     absolute: true,
-    ignore: '**/node_modules/**'
+    ignore: fileMatchIgnore
   });
   const fixturePaths = micromatch(allPaths, fileMatch, { dot: true });
   const fixtureFiles = [];

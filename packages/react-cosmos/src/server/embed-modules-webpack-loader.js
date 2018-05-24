@@ -83,8 +83,13 @@ async function getNormalizedModules(cosmosConfig) {
     return { fixtureFiles, deprecatedComponentModules: components };
   }
 
-  const { rootPath, fileMatch, exclude } = cosmosConfig;
-  const fixtureFiles = await findFixtureFiles({ rootPath, fileMatch, exclude });
+  const { rootPath, fileMatch, fileMatchIgnore, exclude } = cosmosConfig;
+  const fixtureFiles = await findFixtureFiles({
+    rootPath,
+    fileMatch,
+    fileMatchIgnore,
+    exclude
+  });
 
   return {
     fixtureFiles,

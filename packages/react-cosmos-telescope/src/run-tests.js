@@ -19,6 +19,7 @@ export async function runTests({ cosmosConfigPath }: Args = {}) {
     rootPath,
     proxiesPath,
     fileMatch,
+    fileMatchIgnore,
     exclude,
     componentPaths
   } = cosmosConfig;
@@ -44,6 +45,7 @@ export async function runTests({ cosmosConfigPath }: Args = {}) {
     const fixtureFiles = await findFixtureFiles({
       rootPath,
       fileMatch,
+      fileMatchIgnore,
       exclude
     });
     const fixtureModules = getFixtureModules(fixtureFiles);

@@ -10,6 +10,7 @@ type WebpackConfigOverride = (WebpackConfig, { env: string }) => WebpackConfig;
 export type Config = {
   rootPath: string,
   fileMatch: Array<string>,
+  fileMatchIgnore: string,
   exclude: ExcludePatterns,
   globalImports: Array<string>,
   hostname: string,
