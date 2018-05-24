@@ -8,8 +8,8 @@
   "dependencies": {
     "async-until": "^1.0.0",
     "deep-equal": "^1.0.1",
-    "lodash.merge": "^4.6.0",
-    "prop-types": "^15.5.10",
+    "lodash.merge": "^4.6.1",
+    "prop-types": "^15.6.1",
     "react-cosmos-shared": "^4.3.0",
     "react-cosmos-state-proxy": "^4.3.0"
   },

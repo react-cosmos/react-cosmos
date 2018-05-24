@@ -11,7 +11,7 @@
     "commondir": "^1.0.1",
     "glob": "^7.1.2",
     "lodash.sortby": "^4.7.0",
-    "micromatch": "^3.1.4",
+    "micromatch": "^3.1.10",
     "react-cosmos-shared": "^4.3.0",
     "util.promisify": "^1.0.0"
   },

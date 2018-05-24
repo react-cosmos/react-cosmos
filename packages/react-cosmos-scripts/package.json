@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {},
   "dependencies": {
-    "jscodeshift": "^0.3.32",
+    "jscodeshift": "^0.5.0",
     "lodash.camelcase": "^4.3.0",
     "lodash.upperfirst": "^4.3.1",
     "react-cosmos-config": "^4.3.0",
