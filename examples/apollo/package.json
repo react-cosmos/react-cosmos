@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start:server": "babel-node server.js",
-    "start": "babel-node node_modules/.bin/cosmos"
+    "start": "babel-node ../../packages/react-cosmos/bin/cosmos.js"
   },
   "dependencies": {
     "apollo-server-express": "^1.3.6",
