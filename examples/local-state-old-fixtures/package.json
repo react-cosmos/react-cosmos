@@ -5,7 +5,7 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/local-state",
   "license": "MIT",
   "scripts": {
-    "start": "babel-node node_modules/.bin/cosmos"
+    "start": "babel-node ../../packages/react-cosmos/bin/cosmos.js"
   },
   "dependencies": {
     "react-cosmos": "^4.4.0"
