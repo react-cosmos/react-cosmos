@@ -7,14 +7,8 @@ import urlParser from 'url';
 
 import type { ProxyProps } from 'react-cosmos-flow/proxy';
 
-type Props = ProxyProps & {
-  route?: string,
-  url?: string,
-  locationState?: Object
-};
-
 export function createRouterProxy() {
-  const RouterProxy = (props: Props) => {
+  const RouterProxy = (props: ProxyProps) => {
     const { nextProxy, fixture, onFixtureUpdate } = props;
     const { value: NextProxy, next } = nextProxy;
     const { route, url, locationState } = fixture;
