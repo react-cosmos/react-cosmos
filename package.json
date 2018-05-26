@@ -67,7 +67,7 @@
     "html-webpack-plugin": "^3.2.0",
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^22.4.4",
+    "jest": "^23.0.0",
     "lerna": "^3.0.0-beta.21",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
@@ -80,7 +80,7 @@
     "rimraf": "^2.5.4",
     "style-loader": "^0.21.0",
     "url-loader": "^1.0.1",
-    "webpack": "^4.8.3",
+    "webpack": "^4.9.1",
     "webpack-cli": "^2.1.4",
     "xo": "^0.21.1",
     "yargs": "^11.0.0"

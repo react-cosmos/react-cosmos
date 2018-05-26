@@ -9,13 +9,10 @@
     "test": "node ../../node_modules/jest-cli/bin/jest.js --watch --config ../../jest.config.json"
   },
   "dependencies": {
+    "async-until": "^1.0.0",
     "react-cosmos": "^4.4.0",
     "react-cosmos-test": "^4.4.0"
   },
   "xo": false,
-  "private": true,
-  "devDependencies": {
-    "async-until": "^1.0.0",
-    "react-cosmos-test": "^4.2.0"
-  }
+  "private": true
 }
