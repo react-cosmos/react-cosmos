@@ -81,7 +81,7 @@
     "style-loader": "^0.21.0",
     "url-loader": "^1.0.1",
     "webpack": "^4.9.1",
-    "webpack-cli": "^2.1.4",
+    "webpack-cli": "^3.0.0",
     "xo": "^0.21.1",
     "yargs": "^11.0.0"
   },
