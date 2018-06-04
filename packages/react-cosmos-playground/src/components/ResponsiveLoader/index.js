@@ -35,6 +35,7 @@ class ResponsiveLoader extends React.Component<Props, State> {
     savedWidth: null,
     savedHeight: null
   };
+
   scalableDiv: ?HTMLElement;
 
   async componentDidMount() {

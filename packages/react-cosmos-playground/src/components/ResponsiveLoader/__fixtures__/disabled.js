@@ -1,4 +1,4 @@
-import ResponsiveLoader from '../index';
+import ResponsiveLoader from '..';
 
 export default {
   component: ResponsiveLoader,
