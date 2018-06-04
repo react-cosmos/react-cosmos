@@ -3,8 +3,17 @@
 import React, { Component } from 'react';
 import TestRenderer from 'react-test-renderer';
 import afterPendingPromises from 'after-pending-promises';
-import Loader from '../components/Loader';
+import { Loader } from '../components/Loader';
 import { createContext as _createContext } from '../create-context';
+
+function mockStateProxy(props) {
+  const { nextProxy } = props;
+  return <nextProxy.value {...props} nextProxy={nextProxy.next()} />;
+}
+
+jest.mock('react-cosmos-state-proxy', () => {
+  return jest.fn().mockImplementation(() => mockStateProxy);
+});
 
 function ProxyA(props) {
   const { nextProxy } = props;
@@ -75,6 +84,17 @@ it('includes user proxies in Loader props', async () => {
   const element = getElementFromLastRendererCall();
   expect(element.props.proxies).toContain(ProxyA);
   expect(element.props.proxies).toContain(ProxyB);
+});
+
+it('includes the StateProxy as the last proxy', async () => {
+  const { mount } = createContext({ renderer, proxies, fixture });
+  await mount();
+
+  const element = getElementFromLastRendererCall();
+
+  expect(element.props.proxies[element.props.proxies.length - 1]).toBe(
+    mockStateProxy
+  );
 });
 
 it('calls renderer with loaderOptions', async () => {

@@ -5,9 +5,9 @@ import path from 'path';
 import promisify from 'util.promisify';
 import * as babylon from 'babylon';
 import * as t from 'babel-types';
-import { resolveUserPath } from 'react-cosmos-shared/lib/server';
+import { resolveUserPath } from 'react-cosmos-shared/server';
 
-import type { ComponentInfo } from '../types';
+import type { ComponentInfo } from 'react-cosmos-flow/module';
 
 const readFileAsync = promisify(fs.readFile);
 
@@ -77,7 +77,7 @@ export async function extractComponentsFromFixtureFile(
     let fixtureNodes;
     if (t.isArrayExpression(fixtureBody)) {
       fixtureNodes = fixtureBody.elements;
-    } else if (t.isObjectExpression(fixtureBody)) {
+    } else if (fixtureBody) {
       fixtureNodes = [fixtureBody];
     }
 
@@ -90,11 +90,23 @@ export async function extractComponentsFromFixtureFile(
       let filePath = null;
 
       try {
+        let fixtureBody = fixtureNode;
+
         // Sometimes the fixture is referencing a previously declared var,
         // other times it is declared inline
-        const fixtureBody = t.isIdentifier(fixtureNode)
-          ? getVarBodyByName(vars, fixtureNode.name)
-          : fixtureNode;
+        if (t.isIdentifier(fixtureBody)) {
+          fixtureBody = getVarBodyByName(vars, fixtureNode.name);
+
+          if (!fixtureBody) {
+            throw new Error('Could not read fixture body');
+          }
+        }
+
+        // Sometimes the fixture is returned via a proxy function
+        // Eg. createFixture({ ... })
+        if (t.isCallExpression(fixtureBody)) {
+          [fixtureBody] = fixtureBody.arguments;
+        }
 
         if (!t.isObjectExpression(fixtureBody)) {
           throw new Error('Could not read fixture body');
@@ -113,7 +125,7 @@ export async function extractComponentsFromFixtureFile(
 
         // From this point we'll return the component name even if we fail to
         // detect the component file path
-        name = compProp.value.name;
+        ({ name } = compProp.value);
 
         const importPath = getImportPathByName(imports, name);
         if (!importPath) {

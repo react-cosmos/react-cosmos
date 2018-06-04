@@ -1,4 +1,4 @@
-import DragHandle from '../index';
+import DragHandle from '..';
 
 export default {
   component: DragHandle,

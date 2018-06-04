@@ -2,8 +2,8 @@
 
 import { render, unmountComponentAtNode } from 'react-dom';
 
-import type { LoaderOpts } from 'react-cosmos-shared/src/types';
-import type { Renderer } from './types';
+import type { LoaderOpts } from 'react-cosmos-flow/loader';
+import type { Renderer } from 'react-cosmos-flow/context';
 
 export function createDomRenderer(opts?: LoaderOpts = {}): Renderer {
   const { containerQuerySelector } = opts;
@@ -28,9 +28,7 @@ function getDomContainer(querySelector?: string): HTMLElement {
   const existingContainer = document.querySelector(querySelector);
   if (!existingContainer) {
     console.warn(
-      `[Cosmos] Could not find ${
-        querySelector
-      } element. Created fresh DOM container.`
+      `[Cosmos] Could not find ${querySelector} element. Created fresh DOM container.`
     );
     return createDomContainer();
   }

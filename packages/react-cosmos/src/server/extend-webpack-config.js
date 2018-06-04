@@ -1,16 +1,21 @@
 // @flow
 
-import path from 'path';
+import { resolve, join } from 'path';
 import omit from 'lodash.omit';
 import { getCosmosConfig } from 'react-cosmos-config';
+import { getEnv } from './get-env';
 
-import type { Config } from 'react-cosmos-config/src';
+import type { Config } from 'react-cosmos-flow/config';
 
 /**
  * Extend the user config to create the Loader config. Namely,
  * - Replace the entry and output
  * - Enable hot reloading
- * - Embed the config path to make user configs available on the client-side
+ * - Embed the user module require calls via embed-modules-webpack-loader
+ * - Embed the playground options to use in the client-side bundle
+ *
+ * It's crucial for Cosmos to not depend on user-installed loaders. All
+ * internal loaders and entries must have absolute path (via require.resolve)
  */
 type Args = {
   webpack: Object,
@@ -24,66 +29,37 @@ export default function extendWebpackConfig({
   shouldExport = false
 }: Args) {
   const cosmosConfig: Config = getCosmosConfig();
-
   const {
     containerQuerySelector,
-    globalImports,
     hot,
-    outputPath
+    publicUrl,
+    webpack: webpackOverride
   } = cosmosConfig;
 
-  const entry = [...globalImports];
+  let webpackConfig = userWebpackConfig;
 
-  if (hot && !shouldExport) {
-    // It's crucial for Cosmos to not depend on any user loader. This way the
-    // webpack configs can point solely to the user deps for loaders.
-    entry.push(
-      `${require.resolve(
-        'webpack-hot-middleware/client'
-      )}?reload=true&overlay=false`
-    );
+  if (typeof webpackOverride === 'function') {
+    console.log(`[Cosmos] Overriding webpack config`);
+    webpackConfig = webpackOverride(webpackConfig, { env: getEnv() });
   }
 
-  entry.push(require.resolve('../client/loader-entry'));
+  const entry = getEntry(cosmosConfig, shouldExport);
+  const output = getOutput(cosmosConfig, shouldExport);
 
-  let output = {
-    path: shouldExport ? `${outputPath}/loader/` : '/loader/',
-    filename: '[name].js',
-    publicPath: shouldExport ? './' : '/loader/'
-  };
+  const rules = [
+    ...getExistingRules(webpackConfig),
+    {
+      loader: require.resolve('./embed-modules-webpack-loader'),
+      include: require.resolve('../client/user-modules')
+    }
+  ];
 
-  // Exports are generally meant to run outside of the developer's machine
-  if (!shouldExport) {
-    // Enable click-to-open source
-    output = {
-      ...output,
-      devtoolModuleFilenameTemplate: info =>
-        path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
-    };
-  }
-
-  // To support webpack 1 and 2 configuration formats. So we use the one that user passes
-  const webpackRulesOptionName =
-    userWebpackConfig.module && userWebpackConfig.module.rules
-      ? 'rules'
-      : 'loaders';
-  const rules =
-    userWebpackConfig.module && userWebpackConfig.module[webpackRulesOptionName]
-      ? [...userWebpackConfig.module[webpackRulesOptionName]]
-      : [];
-  const plugins = userWebpackConfig.plugins
-    ? [...userWebpackConfig.plugins]
-    : [];
-
-  rules.push({
-    loader: require.resolve('./embed-modules-webpack-loader'),
-    include: require.resolve('../client/user-modules')
-  });
-
-  plugins.push(
+  const plugins = [
+    ...getExistingPlugins(webpackConfig),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(shouldExport ? 'production' : 'development')
+        NODE_ENV: JSON.stringify(shouldExport ? 'production' : 'development'),
+        PUBLIC_URL: JSON.stringify(removeTrailingSlash(publicUrl))
       }
     }),
     new webpack.DefinePlugin({
@@ -93,38 +69,132 @@ export default function extendWebpackConfig({
         containerQuerySelector
       })
     }),
-    // Important: Without this webpack tries to apply hot updates for broken
-    // builds and results in duplicate React nodes attached
-    // See https://github.com/webpack/webpack/issues/2117
-    // Note: NoEmitOnErrorsPlugin replaced NoErrorsPlugin since webpack 2.x
-    webpack.NoEmitOnErrorsPlugin
-      ? new webpack.NoEmitOnErrorsPlugin()
-      : new webpack.NoErrorsPlugin()
-  );
+    getNoErrorsPlugin(webpack)
+  ];
 
   if (hot && !shouldExport) {
-    if (!alreadyHasHmrPlugin(userWebpackConfig)) {
+    if (!alreadyHasHmrPlugin(webpackConfig)) {
       plugins.push(new webpack.HotModuleReplacementPlugin());
     }
   }
 
   return {
-    ...userWebpackConfig,
+    ...webpackConfig,
     entry,
     output,
-    module: {
-      ...omit(userWebpackConfig.module, 'rules', 'loaders'),
-      [webpackRulesOptionName]: rules
-    },
+    module: extendModuleWithRules(webpackConfig, rules),
     plugins
   };
+}
+
+function getEntry({ globalImports, hot }, shouldExport) {
+  let entry = [...globalImports];
+
+  if (hot && !shouldExport) {
+    entry = [
+      ...entry,
+      `${require.resolve(
+        'webpack-hot-middleware/client'
+      )}?reload=true&overlay=false`
+    ];
+  }
+
+  // Load loader entry last
+  return [...entry, require.resolve('../client/loader-entry')];
+}
+
+function getOutput({ outputPath, publicUrl }, shouldExport) {
+  const filename = '[name].js';
+
+  if (shouldExport) {
+    return {
+      path: join(outputPath, publicUrl),
+      filename,
+      publicPath: publicUrl
+    };
+  }
+
+  return {
+    // Setting path to `/` in development (where files are saved in memory and
+    // not on disk) is a weird required for old webpack versions
+    path: '/',
+    filename,
+    publicPath: publicUrl,
+    // Enable click-to-open source in react-error-overlay
+    devtoolModuleFilenameTemplate: info =>
+      resolve(info.absoluteResourcePath).replace(/\\/g, '/')
+  };
+}
+
+function getWebpackRulesOptionName(webpackConfig) {
+  // To support webpack 1 and 2 configuration formats, we use the one that
+  // user passes
+  return webpackConfig.module && webpackConfig.module.rules
+    ? 'rules'
+    : 'loaders';
+}
+
+function getExistingRules(webpackConfig) {
+  const webpackRulesOptionName = getWebpackRulesOptionName(webpackConfig);
+
+  return webpackConfig.module && webpackConfig.module[webpackRulesOptionName]
+    ? [...webpackConfig.module[webpackRulesOptionName]]
+    : [];
+}
+
+function extendModuleWithRules(webpackConfig, rules) {
+  const webpackRulesOptionName = getWebpackRulesOptionName(webpackConfig);
+
+  return {
+    ...omit(webpackConfig.module, 'rules', 'loaders'),
+    [webpackRulesOptionName]: rules
+  };
+}
+
+function getExistingPlugins(webpackConfig) {
+  const plugins = webpackConfig.plugins ? [...webpackConfig.plugins] : [];
+
+  return plugins.map(
+    plugin =>
+      isPluginType(plugin, 'HtmlWebpackPlugin')
+        ? changeHtmlPluginFilename(plugin)
+        : plugin
+  );
+}
+
+function changeHtmlPluginFilename(htmlPlugin) {
+  if (htmlPlugin.options.filename !== 'index.html') {
+    return htmlPlugin;
+  }
+
+  return new htmlPlugin.constructor({
+    ...htmlPlugin.options,
+    filename: '_loader.html'
+  });
+}
+
+function getNoErrorsPlugin(webpack) {
+  // Important: Without this webpack tries to apply hot updates for broken
+  // builds and results in duplicate React nodes attached
+  // See https://github.com/webpack/webpack/issues/2117
+  // Note: NoEmitOnErrorsPlugin replaced NoErrorsPlugin since webpack 2.x
+  return webpack.NoEmitOnErrorsPlugin
+    ? new webpack.NoEmitOnErrorsPlugin()
+    : new webpack.NoErrorsPlugin();
 }
 
 function alreadyHasHmrPlugin({ plugins }) {
   return (
     plugins &&
-    plugins.filter(
-      p => p.constructor && p.constructor.name === 'HotModuleReplacementPlugin'
-    ).length > 0
+    plugins.filter(p => isPluginType(p, 'HotModuleReplacementPlugin')).length >
+      0
   );
+}
+
+function isPluginType(plugin, constructorName) {
+  return plugin.constructor && plugin.constructor.name === constructorName;
+}
+
+function removeTrailingSlash(str) {
+  return str.replace(/\/$/, '');
 }

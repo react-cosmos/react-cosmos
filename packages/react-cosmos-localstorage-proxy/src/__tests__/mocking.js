@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import createLocalStorageProxy from '../';
+import { createLocalStorageProxy } from '..';
 
 // Vars populated in beforeEach blocks
 let LocalStorageProxy;

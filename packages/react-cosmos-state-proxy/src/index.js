@@ -1,91 +1,45 @@
+// @flow
+
 import React, { Component } from 'react';
-import { bool } from 'prop-types';
-import { proxyPropTypes } from 'react-cosmos-shared/lib/react';
 import isEqual from 'lodash.isequal';
 import isEmpty from 'lodash.isempty';
 import omit from 'lodash.omit';
 
-const injectState = (component, state, cb) => {
-  const rootState = omit(state, 'children');
+import type { ComponentRef } from 'react-cosmos-flow/react';
+import type { ProxyProps } from 'react-cosmos-flow/proxy';
 
-  component.setState(rootState, () => {
-    const { children } = state;
-
-    if (isEmpty(children)) {
-      cb();
-      return;
-    }
-
-    const { refs } = component;
-    const promises = [];
-
-    Object.keys(refs).forEach(ref => {
-      const child = refs[ref];
-      const childState = children[ref];
-
-      if (!isEmpty(childState)) {
-        promises.push(
-          new Promise(resolve => {
-            injectState(child, childState, resolve);
-          })
-        );
-      }
-    });
-
-    if (promises.length === 0) {
-      cb();
-    } else {
-      Promise.all(promises).then(cb);
-    }
-  });
+type Options = {
+  fixtureKey?: string,
+  updateInterval?: number
 };
 
-const getState = component => {
-  const { state, refs } = component;
-
-  if (!refs) {
-    return state;
-  }
-
-  const children = {};
-
-  Object.keys(refs).forEach(ref => {
-    const child = refs[ref];
-    const childState = getState(child);
-
-    if (!isEmpty(childState)) {
-      children[ref] = childState;
-    }
-  });
-
-  if (isEmpty(children)) {
-    return state;
-  }
-
-  return {
-    ...state,
-    children
-  };
+type Props = ProxyProps & {
+  disableLocalState?: boolean
 };
 
-const defaults = {
-  fixtureKey: 'state',
+export function createStateProxy({
+  fixtureKey = 'state',
   // How often to read current state of loaded component and report it up the
   // chain of proxies
-  updateInterval: 500
-};
+  updateInterval = 500
+}: Options = {}) {
+  class StateProxy extends Component<Props> {
+    static defaultProps = {
+      // Parent proxies can enable this flag to disable this proxy
+      disableLocalState: false
+    };
 
-export default function createStateProxy(options) {
-  const { fixtureKey, updateInterval } = { ...defaults, ...options };
-
-  class StateProxy extends Component {
     prevState = {};
+
+    componentRef: ?ComponentRef;
+
+    timeoutId: ?TimeoutID;
 
     componentWillUnmount() {
       this.clearTimeout();
     }
 
-    onComponentRef = componentRef => {
+    onComponentRef = (componentRef: ?ComponentRef) => {
       // Save component ref to be able to read its state later
       this.componentRef = componentRef;
 
@@ -127,10 +81,12 @@ export default function createStateProxy(options) {
     };
 
     onStateUpdate = () => {
-      this.updateState(getState(this.componentRef));
+      if (this.componentRef) {
+        this.updateState(getState(this.componentRef));
+      }
     };
 
-    updateState(updatedState) {
+    updateState(updatedState: Object) {
       const { onFixtureUpdate } = this.props;
 
       if (!isEqual(updatedState, this.prevState)) {
@@ -150,30 +106,87 @@ export default function createStateProxy(options) {
     }
 
     clearTimeout() {
-      clearTimeout(this.timeoutId);
+      if (this.timeoutId) {
+        clearTimeout(this.timeoutId);
+      }
     }
 
     render() {
-      const { props, onComponentRef } = this;
-      const { nextProxy } = props;
+      const { nextProxy, ...rest } = this.props;
+      const { value: NextProxy, next } = nextProxy;
 
-      return React.createElement(nextProxy.value, {
-        ...props,
-        nextProxy: nextProxy.next(),
-        onComponentRef
-      });
+      return (
+        <NextProxy
+          {...rest}
+          nextProxy={next()}
+          onComponentRef={this.onComponentRef}
+        />
+      );
     }
   }
 
-  StateProxy.defaultProps = {
-    // Parent proxies can enable this flag to disable this proxy
-    disableLocalState: false
-  };
-
-  StateProxy.propTypes = {
-    ...proxyPropTypes,
-    disableLocalState: bool
-  };
-
   return StateProxy;
+}
+
+function injectState(component, state, cb) {
+  const rootState = omit(state, 'children');
+
+  component.setState(rootState, () => {
+    const { children } = state;
+
+    if (isEmpty(children)) {
+      cb();
+      return;
+    }
+
+    const { refs } = component;
+    const promises = [];
+
+    Object.keys(refs).forEach(ref => {
+      const child = refs[ref];
+      const childState = children[ref];
+
+      if (!isEmpty(childState)) {
+        promises.push(
+          new Promise(resolve => {
+            injectState(child, childState, resolve);
+          })
+        );
+      }
+    });
+
+    if (promises.length === 0) {
+      cb();
+    } else {
+      Promise.all(promises).then(cb);
+    }
+  });
+}
+
+function getState(component) {
+  const { state, refs } = component;
+
+  if (!refs) {
+    return state;
+  }
+
+  const children = {};
+
+  Object.keys(refs).forEach(ref => {
+    const child = refs[ref];
+    const childState = getState(child);
+
+    if (!isEmpty(childState)) {
+      children[ref] = childState;
+    }
+  });
+
+  if (isEmpty(children)) {
+    return state;
+  }
+
+  return {
+    ...state,
+    children
+  };
 }

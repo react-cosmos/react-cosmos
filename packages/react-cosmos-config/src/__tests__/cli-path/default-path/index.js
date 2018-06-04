@@ -1,7 +1,7 @@
 // @flow
 
 import path from 'path';
-import { getCosmosConfig } from '../../../';
+import { getCosmosConfig } from '../../..';
 
 jest.mock('yargs', () => ({ argv: {} }));
 
@@ -21,7 +21,7 @@ describe('[CLI path] when config exists at default path', () => {
       outputPath: path.join(mocksPath, 'cosmos-export'),
       port: 9000,
       proxiesPath: path.join(mocksPath, 'cosmos.proxies'),
-      publicUrl: '/loader/',
+      publicUrl: '/',
       rootPath: mocksPath,
       webpackConfigPath: path.join(mocksPath, 'webpack.config')
     });

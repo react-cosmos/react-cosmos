@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import createReactClass from 'create-react-class';
 import { shallow } from 'enzyme';
-import PropsProxy from '../';
+import { PropsProxy } from '..';
 
 const FunctionalComponent = () => {};
 

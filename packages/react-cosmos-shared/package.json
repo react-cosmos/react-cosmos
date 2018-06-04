@@ -1,18 +1,15 @@
 {
   "name": "react-cosmos-shared",
-  "version": "3.1.1",
+  "version": "4.4.0",
   "description": "Libs shared between React Cosmos packages",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-shared",
   "license": "MIT",
-  "files": [
-    "lib"
-  ],
-  "main": "lib/index.js",
+  "main": "index.js",
   "dependencies": {
     "lodash.isplainobject": "^4.0.6",
-    "prop-types": "^15.5.10",
-    "resolve-from": "^3.0.0",
-    "slash": "^1.0.0"
+    "prop-types": "^15.6.1",
+    "resolve-from": "^4.0.0",
+    "slash": "^2.0.0"
   },
   "xo": false
 }

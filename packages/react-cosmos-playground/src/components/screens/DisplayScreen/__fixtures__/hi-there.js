@@ -1,4 +1,4 @@
-import DisplayScreen from '../index';
+import DisplayScreen from '..';
 
 export default {
   component: DisplayScreen,

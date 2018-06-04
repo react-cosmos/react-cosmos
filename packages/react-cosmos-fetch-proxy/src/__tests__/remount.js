@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import createFetchProxy from '../';
+import { createFetchProxy } from '..';
 
 // The final responsibility of proxies is to render the user's component at
 // the end of the proxy chain. While it goes beyond unit testing, testing a

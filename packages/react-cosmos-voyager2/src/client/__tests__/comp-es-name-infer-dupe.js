@@ -38,6 +38,6 @@ describe('Inferred duplicate name for ES Class components', () => {
 
   it('has unique class names', () => {
     expect(components[0].name).toBe('Bold');
-    expect(components[1].name).toBe('Bold (1)');
+    expect(components[1].name).toBe('Bold 1');
   });
 });

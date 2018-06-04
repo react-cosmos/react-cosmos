@@ -9,12 +9,12 @@ import getPlaygroundHtml from './playground-html';
 const exportPlaygroundFiles = (cosmosConfig, outputPath) => {
   fs.copySync(
     path.join(__dirname, 'static/favicon.ico'),
-    `${outputPath}/favicon.ico`
+    `${outputPath}/_cosmos.ico`
   );
 
   fs.copySync(
     require.resolve('react-cosmos-playground'),
-    `${outputPath}/bundle.js`
+    `${outputPath}/_playground.js`
   );
 
   const playgroundHtml = getPlaygroundHtml(cosmosConfig);
@@ -56,7 +56,14 @@ export default function startExport() {
   if (publicPath) {
     if (outputPath.indexOf(publicPath) === -1) {
       const exportPublicPath = path.join(outputPath, publicUrl);
-      fs.copySync(publicPath, exportPublicPath);
+      if (fs.existsSync(publicPath)) {
+        fs.copySync(publicPath, exportPublicPath);
+      } else {
+        console.log(
+          '[Cosmos] Warning: config.publicPath points to missing dir',
+          publicPath
+        );
+      }
     } else {
       console.warn(
         `[Cosmos] Warning: Can't export public path because it contains the export path! (avoiding infinite loop)`

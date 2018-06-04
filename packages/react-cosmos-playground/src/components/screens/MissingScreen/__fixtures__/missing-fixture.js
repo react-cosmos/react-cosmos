@@ -1,4 +1,4 @@
-import MissingScreen from '../index';
+import MissingScreen from '..';
 
 export default {
   component: MissingScreen,

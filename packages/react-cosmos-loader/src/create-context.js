@@ -2,17 +2,19 @@
 
 import until from 'async-until';
 import React from 'react';
-import Loader from './components/Loader';
+import createStateProxy from 'react-cosmos-state-proxy';
+import { Loader } from './components/Loader';
 import { isComponentClass } from './utils/is-component-class';
 
+import type { ComponentRef } from 'react-cosmos-flow/react';
 import type {
-  ComponentRef,
   Wrapper,
   ContextArgs,
   ContextFunctions
-} from './types';
+} from 'react-cosmos-flow/context';
 
 let wrapper: ?Wrapper;
+const StateProxy = createStateProxy({ updateInterval: 50 });
 
 /**
  * Generalized way to render fixtures, without any assumptions on the renderer.
@@ -84,7 +86,7 @@ export function createContext(args: ContextArgs): ContextFunctions {
 
         wrapper = renderer(
           <Loader
-            proxies={proxies}
+            proxies={[...proxies, StateProxy]}
             fixture={updatedFixture}
             onComponentRef={ref => {
               // Sometimes the component unmounts instantly (eg. redirects on

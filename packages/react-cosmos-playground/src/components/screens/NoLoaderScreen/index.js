@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import DisplayScreen from '../DisplayScreen';
 import style from '../DisplayScreen/index.less';
 
-import type { PlaygroundOpts } from 'react-cosmos-shared/src/types';
+import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
 
 type Props = {
   options: PlaygroundOpts
@@ -12,7 +12,22 @@ type Props = {
 
 export default class NoLoaderScreen extends Component<Props> {
   render() {
-    const { options: { webpackConfigType } } = this.props;
+    const {
+      options: { webpackConfigType, deps }
+    } = this.props;
+
+    if (deps['html-webpack-plugin']) {
+      return (
+        <DisplayScreen>
+          <p className={style.header}>Almost there...</p>
+          <p>Something is breaking the webpack build :/</p>
+          <p>
+            <strong>Please check the terminal output to investigate.</strong>
+          </p>
+          {this.renderFooter()}
+        </DisplayScreen>
+      );
+    }
 
     if (webpackConfigType === 'custom') {
       return (
@@ -35,16 +50,7 @@ export default class NoLoaderScreen extends Component<Props> {
             </strong>{' '}
             and restart Cosmos.
           </p>
-          <p>
-            If that doesn't work please{' '}
-            <a
-              target="_blank"
-              href="https://github.com/react-cosmos/react-cosmos/blob/master/CONTRIBUTING.md"
-            >
-              create an issue
-            </a>{' '}
-            describing your setup.
-          </p>
+          {this.renderFooter()}
         </DisplayScreen>
       );
     }
@@ -59,17 +65,23 @@ export default class NoLoaderScreen extends Component<Props> {
           and restart Cosmos.
         </p>
         <p>The default webpack config will include it automatically.</p>
-        <p>
-          If that doesn't work please{' '}
-          <a
-            target="_blank"
-            href="https://github.com/react-cosmos/react-cosmos/blob/master/CONTRIBUTING.md"
-          >
-            create an issue
-          </a>{' '}
-          describing your setup.
-        </p>
+        {this.renderFooter()}
       </DisplayScreen>
+    );
+  }
+
+  renderFooter() {
+    return (
+      <p className={style.faded}>
+        If you can't figure it out{' '}
+        <a
+          target="_blank"
+          href="https://github.com/react-cosmos/react-cosmos/issues/new"
+        >
+          report your error
+        </a>{' '}
+        and we'll do our best to help. Include as much details as you can.
+      </p>
     );
   }
 }

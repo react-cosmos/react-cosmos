@@ -33,7 +33,10 @@ jest.mock('express', () => {
   return mockExpress;
 });
 
-jest.mock('webpack', () => jest.fn(() => 'MOCK_WEBPACK_COMPILER'));
+const mockWebpackCompiler = () => {};
+mockWebpackCompiler.plugin = () => {};
+
+jest.mock('webpack', () => jest.fn(() => mockWebpackCompiler));
 
 jest.mock('webpack-dev-middleware', () => jest.fn(() => 'MOCK_DEV_MIDDLEWARE'));
 jest.mock('webpack-hot-middleware', () => jest.fn(() => 'MOCK_HOT_MIDDLEWARE'));
@@ -54,5 +57,7 @@ beforeEach(() => {
 });
 
 it('creates static server with webpack.devServer.contentBase', () => {
-  expect(express.static).toHaveBeenCalledWith('user/server/public');
+  expect(express.static).toHaveBeenCalledWith('user/server/public', {
+    index: false
+  });
 });

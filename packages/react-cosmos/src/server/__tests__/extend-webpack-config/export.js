@@ -1,26 +1,16 @@
+import webpack from 'webpack';
 import extendWebpackConfig from '../../extend-webpack-config';
 
 jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
-    componentPaths: ['src/components'],
-    fixturePaths: ['test/fixtures'],
-    ignore: [],
     globalImports: ['./global.css'],
+    publicUrl: '/static/',
     hot: true,
     outputPath: '__mock__outputPath',
     containerQuerySelector: '__mock__containerQuerySelector'
   })
 }));
-
-const DefinePlugin = jest.fn();
-const NoEmitOnErrorsPlugin = jest.fn();
-const HotModuleReplacementPlugin = jest.fn();
-const webpack = {
-  DefinePlugin,
-  NoEmitOnErrorsPlugin,
-  HotModuleReplacementPlugin
-};
 
 const getConfig = () =>
   extendWebpackConfig({
@@ -36,9 +26,9 @@ beforeEach(() => {
 it('creates proper output', () => {
   const webpackConfig = getConfig();
   expect(webpackConfig.output).toMatchObject({
-    path: '__mock__outputPath/loader/',
+    path: '__mock__outputPath/static/',
     filename: '[name].js',
-    publicPath: './'
+    publicPath: '/static/'
   });
 });
 
@@ -49,40 +39,43 @@ it('does not add hot middleware client to entries', () => {
   );
 });
 
-it('adds DefinePlugin with NODE_ENV set to production', () => {
-  const plugin = {};
-  webpack.DefinePlugin.mockImplementation(contents => {
-    try {
-      expect(contents).toEqual({
-        'process.env': {
-          NODE_ENV: JSON.stringify('production')
-        }
-      });
-      return plugin;
-    } catch (err) {
-      return {};
-    }
-  });
-
+it('defines global process.env.NODE_ENV as "production"', () => {
   const webpackConfig = getConfig();
-  expect(webpackConfig.plugins).toContain(plugin);
+  expect(
+    getDefinePlugins(webpackConfig).filter(
+      p =>
+        p.definitions['process.env'] &&
+        p.definitions['process.env'].NODE_ENV === JSON.stringify('production')
+    )
+  ).toHaveLength(1);
 });
 
-it('adds DefinePlugin plugin with user config path', () => {
-  const plugin = {};
-  webpack.DefinePlugin.mockImplementation(contents => {
-    try {
-      expect(contents).toEqual({
-        COSMOS_CONFIG: JSON.stringify({
+it('defines global process.env.PUBLIC_URL', () => {
+  const webpackConfig = getConfig();
+  expect(
+    getDefinePlugins(webpackConfig).filter(
+      p =>
+        p.definitions['process.env'] &&
+        p.definitions['process.env'].PUBLIC_URL === JSON.stringify('/static')
+    )
+  ).toHaveLength(1);
+});
+
+it('defines global COSMOS_CONFIG', () => {
+  const webpackConfig = getConfig();
+  expect(
+    getDefinePlugins(webpackConfig).filter(
+      p =>
+        p.definitions.COSMOS_CONFIG ===
+        JSON.stringify({
           containerQuerySelector: '__mock__containerQuerySelector'
         })
-      });
-      return plugin;
-    } catch (err) {
-      return {};
-    }
-  });
-
-  const webpackConfig = getConfig();
-  expect(webpackConfig.plugins).toContain(plugin);
+    )
+  ).toHaveLength(1);
 });
+
+function getDefinePlugins({ plugins }) {
+  return plugins.filter(
+    p => p.constructor && p.constructor.name === 'DefinePlugin'
+  );
+}

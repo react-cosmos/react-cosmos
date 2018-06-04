@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import createFetchProxy from '../';
+import { createFetchProxy } from '..';
 
 // Vars populated in beforeEach blocks
 let FetchProxy;

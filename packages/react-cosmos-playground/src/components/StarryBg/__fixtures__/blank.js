@@ -1,4 +1,4 @@
-import StarryBg from '../index';
+import StarryBg from '..';
 
 export default {
   component: StarryBg,

@@ -9,16 +9,14 @@ let getComponentProps;
 const onChange = jest.fn();
 // \window.location is mocked inside jest.config.json
 const mockUriLocationInitial = 'http://foo.bar/';
-const mockUriLocation = `${
-  mockUriLocationInitial
-}?component=List&dataUrl=users.json`;
+const mockUriLocation = `${mockUriLocationInitial}?component=List&dataUrl=users.json`;
 const mockUriParams = {
   component: 'List',
   dataUrl: 'users.json'
 };
 
 let React;
-let uri;
+let parseLocation;
 let Router;
 let ReactDOM;
 let routerInstance;
@@ -45,8 +43,8 @@ const initRouter = () => {
 
   React = require('react');
   ReactDOM = require('react-dom');
-  uri = require('../uri');
-  Router = require('../').Router;
+  ({ parseLocation } = require('../uri'));
+  ({ Router } = require('../router'));
 
   routerInstance = new Router({
     defaultProps: {
@@ -61,13 +59,13 @@ const initRouter = () => {
 
 const commonTests = () => {
   it('should call getComponentClass with route params', () => {
-    const propsSent = getComponentClass.mock.calls[0][0];
+    const [[propsSent]] = getComponentClass.mock.calls;
     expect(propsSent.component).toBe(mockUriParams.component);
     expect(propsSent.dataUrl).toBe(mockUriParams.dataUrl);
   });
 
   it('should call getComponentProps with route params', () => {
-    const propsSent = getComponentProps.mock.calls[0][0];
+    const [[propsSent]] = getComponentProps.mock.calls;
     expect(propsSent.component).toBe(mockUriParams.component);
     expect(propsSent.dataUrl).toBe(mockUriParams.dataUrl);
   });
@@ -77,7 +75,7 @@ const commonTests = () => {
   });
 
   it('should call createElement with returned props', () => {
-    const propsSent = React.createElement.mock.calls[0][1];
+    const [[, propsSent]] = React.createElement.mock.calls;
     expect(propsSent.foo).toBe('bar');
     expect(propsSent.lorem).toBe('ipsum');
   });
@@ -91,7 +89,7 @@ const commonTests = () => {
   });
 
   it('should call onChange callback with params', () => {
-    const params = onChange.mock.calls[0][0];
+    const [[params]] = onChange.mock.calls;
     expect(params.component).toBe(mockUriParams.component);
     expect(params.dataUrl).toBe(mockUriParams.dataUrl);
   });
@@ -105,7 +103,7 @@ describe('initial location', () => {
   commonTests();
 
   it('should unserialize current location', () => {
-    expect(uri.parseLocation.mock.calls[0][0]).toBe(mockUriLocationInitial);
+    expect(parseLocation.mock.calls[0][0]).toBe(mockUriLocationInitial);
   });
 });
 
@@ -161,13 +159,13 @@ describe('PopState event', () => {
   commonTests();
 
   it('should unserialize current location', () => {
-    expect(uri.parseLocation.mock.calls[1][0]).toBe(mockUriLocation);
+    expect(parseLocation.mock.calls[1][0]).toBe(mockUriLocation);
   });
 
   it('should remove popstate event listener on destroy', () => {
     routerInstance.stop();
     window.dispatchEvent(new Event('popstate'));
 
-    expect(uri.parseLocation.mock.calls.length).toEqual(2);
+    expect(parseLocation.mock.calls.length).toEqual(2);
   });
 });

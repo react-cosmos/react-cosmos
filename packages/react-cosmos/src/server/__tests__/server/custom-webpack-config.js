@@ -11,6 +11,7 @@ jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
+    publicUrl: '/',
     port: 9999,
     hostname: '127.0.0.1',
     webpackConfigPath: require.resolve('./__fsmocks__/webpack.config'),
@@ -36,7 +37,10 @@ jest.mock('express', () => {
   return mockExpress;
 });
 
-jest.mock('webpack', () => jest.fn(() => 'MOCK_WEBPACK_COMPILER'));
+const mockWebpackCompiler = () => {};
+mockWebpackCompiler.plugin = () => {};
+
+jest.mock('webpack', () => jest.fn(() => mockWebpackCompiler));
 
 jest.mock('webpack-dev-middleware', () => jest.fn(() => 'MOCK_DEV_MIDDLEWARE'));
 jest.mock('webpack-hot-middleware', () => jest.fn(() => 'MOCK_HOT_MIDDLEWARE'));
@@ -79,9 +83,12 @@ it('serves index.html on / route with playgrounds opts included', async () => {
     htmlContents.replace(
       '__PLAYGROUND_OPTS__',
       JSON.stringify({
-        loaderUri: './loader/index.html',
+        loaderUri: '/_loader.html',
         projectKey: mockRootPath,
-        webpackConfigType: 'custom'
+        webpackConfigType: 'custom',
+        deps: {
+          'html-webpack-plugin': true
+        }
       })
     )
   );

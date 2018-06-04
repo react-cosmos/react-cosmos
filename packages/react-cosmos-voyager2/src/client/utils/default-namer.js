@@ -5,12 +5,20 @@
  * E.g. default, default (1), default (2), etc.
  */
 export function createDefaultNamer(baseName: string) {
-  let count = 0;
+  const countPerId: WeakMap<mixed, number> = new WeakMap();
+  const defaultId = {};
 
-  return function defaultNamer(): string {
-    const name = count > 0 ? `${baseName} (${count})` : baseName;
-    count += 1;
+  function getPrevCount(id: mixed): number {
+    const count = countPerId.get(id);
 
-    return name;
+    return typeof count === 'number' ? count : 0;
+  }
+
+  return function defaultNamer(id: mixed = defaultId): string {
+    const count = getPrevCount(id);
+
+    countPerId.set(id, count + 1);
+
+    return count > 0 ? `${baseName} ${count}` : baseName;
   };
 }

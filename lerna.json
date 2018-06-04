@@ -1,12 +1,12 @@
 {
-  "lerna": "2.1.0",
-  "version": "3.5.0",
+  "version": "4.4.0",
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "commands": {
+  "command": {
     "publish": {
-      "ignore": [
-        "README.md"
+      "ignoreChanges": [
+        "packages/*/README.md",
+        "packages/*/*.js"
       ]
     }
   }

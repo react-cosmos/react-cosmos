@@ -1,30 +1,14 @@
 const path = require('path');
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const src = path.join(__dirname, 'src');
-const lib = path.join(__dirname, 'lib');
+const dist = path.join(__dirname, 'dist');
 const nodeModules = path.join(__dirname, '../../node_modules');
 
 const env = process.env.NODE_ENV || 'development';
-const plugins = [
-  new webpack.DefinePlugin({
-    'process.env': {
-      NODE_ENV: JSON.stringify(env)
-    }
-  })
-];
+const plugins = [];
 
-if (env === 'production') {
-  // Used when creating build
-  plugins.push(
-    new webpack.optimize.UglifyJsPlugin({
-      compress: true,
-      mangle: false,
-      beautify: true
-    })
-  );
-} else {
+if (env === 'development') {
   // Used by Cosmos config (when loading Playground inside Playground)
   plugins.push(
     new HtmlWebpackPlugin({
@@ -34,14 +18,15 @@ if (env === 'production') {
 }
 
 module.exports = {
+  mode: env,
   // Besides other advantages, cheap-module-source-map is compatible with
   // React.componentDidCatch https://github.com/facebook/react/issues/10441
   devtool: 'cheap-module-source-map',
-  entry: src,
+  entry: ['whatwg-fetch', src],
   output: {
     libraryTarget: 'umd',
     library: 'mountPlayground',
-    path: lib,
+    path: dist,
     filename: 'index.js'
   },
   resolve: {
@@ -51,7 +36,12 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        include: src,
+        include: [
+          src,
+          // Allow building playground from uncompiled monorepo deps
+          /(react-cosmos-.+|react-querystring-router)(\/|\\)src/,
+          /react-cosmos-flow/
+        ],
         use: 'babel-loader'
       },
       {

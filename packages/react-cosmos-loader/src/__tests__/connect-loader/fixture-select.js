@@ -1,6 +1,6 @@
 // @flow
 
-import { getMock } from 'react-cosmos-shared/src/jest';
+import { getMock } from 'react-cosmos-flow/jest';
 import { createContext } from '../../create-context';
 import { connectLoader } from '../../connect-loader';
 import {

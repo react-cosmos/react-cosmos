@@ -1,4 +1,4 @@
-import FixtureEditor from '../index';
+import FixtureEditor from '..';
 
 export default {
   component: FixtureEditor,

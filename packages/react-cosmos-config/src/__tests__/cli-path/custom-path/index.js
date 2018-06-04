@@ -1,7 +1,7 @@
 // @flow
 
 import path from 'path';
-import { getCosmosConfig } from '../../../';
+import { getCosmosConfig } from '../../..';
 
 jest.mock('yargs', () => ({ argv: { config: 'nested/cosmos.config' } }));
 
@@ -21,7 +21,7 @@ describe('[CLI path] when config exists at custom path', () => {
       outputPath: path.join(mocksPath, 'nested/cosmos-export'),
       port: 9000,
       proxiesPath: path.join(mocksPath, 'nested/cosmos.proxies'),
-      publicUrl: '/loader/',
+      publicUrl: '/',
       rootPath: path.join(mocksPath, 'nested'),
       webpackConfigPath: path.join(mocksPath, 'nested/webpack.config')
     });

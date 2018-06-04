@@ -1,10 +1,10 @@
 // @flow
 
-import ReactComponentPlayground from '../components/ComponentPlayground';
+import ComponentPlayground from '../components/ComponentPlayground';
 import { Router } from 'react-querystring-router';
 
 // index.js is not an ES6 module
-const mountPlayground = require('../');
+const mountPlayground = require('..');
 
 // Vars populated in beforeEach blocks
 let routerInstance;
@@ -13,15 +13,18 @@ jest.mock('react-querystring-router', () => ({
   Router: jest.fn()
 }));
 
+const playgroundOpts = {
+  loaderUri: '/fake-loader-uri/',
+  projectKey: '/fake-project-key/',
+  webpackConfigType: 'custom',
+  deps: {}
+};
+
 describe('Playground mount', () => {
   beforeEach(() => {
     jest.resetAllMocks();
 
-    routerInstance = mountPlayground({
-      loaderUri: '/fake-loader-uri/',
-      projectKey: '/fake-project-key/',
-      webpackConfigType: 'custom'
-    });
+    routerInstance = mountPlayground(playgroundOpts);
   });
 
   it('creates Router instance', () => {
@@ -32,22 +35,18 @@ describe('Playground mount', () => {
     let routerArgs;
 
     beforeEach(() => {
-      routerArgs = Router.mock.calls[0];
+      [routerArgs] = Router.mock.calls;
     });
 
     it('uses Playground as router component class', () => {
-      const { getComponentClass } = routerArgs[0];
-      expect(getComponentClass()).toBe(ReactComponentPlayground);
+      const [{ getComponentClass }] = routerArgs;
+      expect(getComponentClass()).toBe(ComponentPlayground);
     });
 
     it('sends options to Playground', () => {
-      const { getComponentProps } = routerArgs[0];
+      const [{ getComponentProps }] = routerArgs;
       const { options } = getComponentProps();
-      expect(options).toEqual({
-        loaderUri: '/fake-loader-uri/',
-        projectKey: '/fake-project-key/',
-        webpackConfigType: 'custom'
-      });
+      expect(options).toEqual(playgroundOpts);
     });
 
     it('returns router instance', () => {
@@ -55,18 +54,18 @@ describe('Playground mount', () => {
     });
 
     it('uses element inside document body for router container', () => {
-      const { container } = routerArgs[0];
+      const [{ container }] = routerArgs;
       expect(container.parentNode).toBe(document.body);
     });
 
     it('sets document title to "React Cosmos" on home route', () => {
-      const { onChange } = routerArgs[0];
+      const [{ onChange }] = routerArgs;
       onChange({});
       expect(document.title).toBe('React Cosmos');
     });
 
     it('sets component and fixture in documet title', () => {
-      const { onChange } = routerArgs[0];
+      const [{ onChange }] = routerArgs;
       onChange({
         component: 'Foo',
         fixture: 'bar'

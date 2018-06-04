@@ -1,6 +1,6 @@
 // @flow
 
-import { getMock } from 'react-cosmos-shared/src/jest';
+import { getMock } from 'react-cosmos-flow/jest';
 import { connectLoader } from '../connect-loader';
 import { createDomRenderer } from '../dom-renderer';
 import { mount } from '../mount';
@@ -10,14 +10,12 @@ const mockProxy = () => {};
 const mockLoaderOpts = { containerQuerySelector: '#app123' };
 
 const mockRenderer = {};
-const mockStateProxy = {};
 const mockErrorCatchProxy = {};
 const mockDismissRuntimeErrors = () => {};
 
-jest.mock('react-cosmos-state-proxy', () => jest.fn(() => mockStateProxy));
-jest.mock('../components/ErrorCatchProxy', () =>
-  jest.fn(() => mockErrorCatchProxy)
-);
+jest.mock('../components/ErrorCatchProxy', () => ({
+  createErrorCatchProxy: jest.fn(() => mockErrorCatchProxy)
+}));
 jest.mock('../dom-renderer', () => ({
   createDomRenderer: jest.fn(() => mockRenderer)
 }));
@@ -57,10 +55,6 @@ it('passes user proxies to loaderConnect', () => {
 
 it('includes ErrorCatchProxy', () => {
   expect(getProxiesFromLastCall()).toContain(mockErrorCatchProxy);
-});
-
-it('includes StateProxy', () => {
-  expect(getProxiesFromLastCall()).toContain(mockStateProxy);
 });
 
 it('passes fixtures to loaderConnect', () => {

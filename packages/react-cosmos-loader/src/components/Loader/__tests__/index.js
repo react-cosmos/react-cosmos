@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import PropsProxy from '../../PropsProxy';
-import Loader from '../';
+import { PropsProxy } from '../../PropsProxy';
+import { Loader } from '..';
 
 // Objects to check identity against
 const ProxyFoo = () => <span />;

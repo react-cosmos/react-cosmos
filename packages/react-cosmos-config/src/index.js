@@ -8,39 +8,18 @@ import {
   moduleExists,
   resolveUserPath,
   defaultFileMatch,
+  defaultFileMatchIgnore,
   defaultExclude
-} from 'react-cosmos-shared/lib/server';
+} from 'react-cosmos-shared/server';
 import { log, warn } from './log';
 import { CRA_COSMOS_CONFIG } from './config-templates';
 
-import type { ExcludePatterns } from 'react-cosmos-shared/src/types';
-
-export type Config = {
-  rootPath: string,
-  fileMatch?: Array<string>,
-  exclude?: ExcludePatterns,
-  globalImports: Array<string>,
-  hostname: string,
-  hot: boolean,
-  port: number,
-  proxiesPath: string,
-  webpackConfigPath: string,
-  outputPath: string,
-  publicPath?: string,
-  publicUrl: string,
-  containerQuerySelector?: string,
-  responsiveDevices: Array<{| label: string, width: number, height: number |}>,
-  httpProxy?: {| context: string, target: string |},
-  // Deprecated
-  componentPaths: Array<string>,
-  ignore: Array<RegExp>,
-  fixturesDir: string,
-  fixturePaths: Array<string>
-};
+import type { Config } from 'react-cosmos-flow/config';
 
 const defaults = {
   rootPath: '.',
   fileMatch: defaultFileMatch,
+  fileMatchIgnore: defaultFileMatchIgnore,
   exclude: defaultExclude,
   globalImports: [],
   hostname: 'localhost',
@@ -49,7 +28,6 @@ const defaults = {
   proxiesPath: 'cosmos.proxies',
   webpackConfigPath: 'webpack.config',
   outputPath: 'cosmos-export',
-  publicUrl: '/loader/',
   responsiveDevices: [
     { label: 'iPhone 5', width: 320, height: 568 },
     { label: 'iPhone 6', width: 375, height: 667 },
@@ -58,6 +36,8 @@ const defaults = {
     { label: 'Large', width: 1440, height: 900 },
     { label: '1080p', width: 1920, height: 1080 }
   ],
+  publicUrl: '/',
+  watchDirs: ['.'],
   // Deprecated
   componentPaths: [],
   ignore: [],
@@ -130,6 +110,7 @@ function getNormalizedConfig(relativeConfig: Config, relPath: string): Config {
     proxiesPath,
     publicPath,
     webpackConfigPath,
+    watchDirs,
     // Deprecated
     componentPaths,
     fixturePaths
@@ -143,6 +124,7 @@ function getNormalizedConfig(relativeConfig: Config, relPath: string): Config {
     outputPath: path.resolve(rootPath, outputPath),
     proxiesPath: resolveUserPath(rootPath, proxiesPath),
     webpackConfigPath: resolveUserPath(rootPath, webpackConfigPath),
+    watchDirs: watchDirs.map(p => resolveUserPath(rootPath, p)),
     // Deprecated
     componentPaths: componentPaths.map(p => path.resolve(rootPath, p)),
     fixturePaths: fixturePaths.map(p => path.resolve(rootPath, p))

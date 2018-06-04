@@ -66,8 +66,10 @@ class ResponsiveLoader extends React.Component<Props, State> {
     if (!this.scalableDiv) {
       return;
     }
-    const nextContainerWidth = this.scalableDiv.getBoundingClientRect().width;
-    const nextContainerHeight = this.scalableDiv.getBoundingClientRect().height;
+    const {
+      width: nextContainerWidth,
+      height: nextContainerHeight
+    } = this.scalableDiv.getBoundingClientRect();
 
     if (
       nextContainerWidth !== this.state.containerWidth ||

@@ -1,32 +1,30 @@
 {
   "name": "react-cosmos-playground",
-  "version": "3.4.0",
+  "version": "4.4.0",
   "description": "Dev tool for creating reusable React components",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-playground",
   "license": "MIT",
-  "files": [
-    "lib"
-  ],
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "devDependencies": {
     "@skidding/react-codemirror": "^1.0.2",
     "classnames": "^2.2.5",
-    "codemirror": "^5.29.0",
-    "fuzzaldrin-plus": "^0.5.0",
-    "localforage": "^1.5.3",
+    "codemirror": "^5.38.0",
+    "fuzzaldrin-plus": "^0.6.0",
+    "localforage": "^1.7.1",
     "lodash.flatmapdeep": "^4.10.0",
-    "lodash.merge": "^4.6.0",
+    "lodash.merge": "^4.6.1",
     "lodash.omitby": "^4.6.0",
     "lodash.reduce": "^4.6.0",
     "lodash.set": "^4.3.2",
     "lodash.some": "^4.6.0",
     "lodash.sortby": "^4.7.0",
-    "prop-types": "^15.5.10",
-    "react-cosmos-fetch-proxy": "^3.1.1",
-    "react-cosmos-loader": "^3.4.0",
-    "react-cosmos-state-proxy": "^3.2.0",
-    "react-cosmos-test": "^3.4.0",
-    "react-querystring-router": "^3.1.1"
+    "prop-types": "^15.6.1",
+    "react-cosmos-fetch-proxy": "^4.4.0",
+    "react-cosmos-loader": "^4.4.0",
+    "react-cosmos-state-proxy": "^4.4.0",
+    "react-cosmos-test": "^4.4.0",
+    "react-querystring-router": "^4.3.0",
+    "whatwg-fetch": "^2.0.4"
   },
   "xo": false
 }

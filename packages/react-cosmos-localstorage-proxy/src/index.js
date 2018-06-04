@@ -1,47 +1,23 @@
+// @flow
+
 import React, { Component } from 'react';
-import { proxyPropTypes } from 'react-cosmos-shared/lib/react';
+import { LocalStorageMock } from './local-storage-mock';
 
-// Mocking localStorage completely ensures no conflict with existing browser
-// data and works in test environments like Jest
-class LocalStorageMock {
-  constructor(store = {}, onUpdate) {
-    this.store = { ...store };
-    this.onUpdate = onUpdate;
-  }
+import type { ProxyProps } from 'react-cosmos-flow/proxy';
 
-  clear() {
-    this.store = {};
-    this.update();
-  }
-
-  getItem(key) {
-    return this.store[key] || null;
-  }
-
-  setItem(key, value) {
-    this.store[key] = value.toString();
-    this.update();
-  }
-
-  removeItem(key) {
-    delete this.store[key];
-    this.update();
-  }
-
-  update() {
-    this.onUpdate(this.store);
-  }
-}
-
-const defaults = {
-  fixtureKey: 'localStorage'
+type Options = {
+  fixtureKey?: string
 };
 
-export default function createLocalStorageProxy(options) {
-  const { fixtureKey } = { ...defaults, ...options };
+export function createLocalStorageProxy({
+  fixtureKey = 'localStorage'
+}: Options = {}) {
+  class LocalStorageProxy extends Component<ProxyProps> {
+    _localStorageOrig: Object;
 
-  class LocalStorageProxy extends Component {
-    constructor(props) {
+    _localStorageMock: LocalStorageMock;
+
+    constructor(props: ProxyProps) {
       super(props);
 
       const mock = this.props.fixture[fixtureKey];
@@ -72,8 +48,6 @@ export default function createLocalStorageProxy(options) {
       return <NextProxy {...this.props} nextProxy={next()} />;
     }
   }
-
-  LocalStorageProxy.propTypes = proxyPropTypes;
 
   return LocalStorageProxy;
 }

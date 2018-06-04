@@ -1,17 +1,14 @@
 {
   "name": "react-cosmos-normalize-props-proxy",
-  "version": "3.1.1",
+  "version": "4.4.0",
   "description": "Proxy for backwards compatibility with old react-cosmos fixture format",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-normalize-props-proxy",
   "license": "MIT",
-  "files": [
-    "lib"
-  ],
-  "main": "lib/index.js",
+  "main": "index.js",
   "dependencies": {
     "lodash.omit": "^4.5.0",
     "lodash.pick": "^4.4.0",
-    "react-cosmos-shared": "^3.1.1"
+    "react-cosmos-shared": "^4.4.0"
   },
   "xo": false
 }

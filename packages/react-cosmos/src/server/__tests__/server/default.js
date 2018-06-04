@@ -16,6 +16,7 @@ jest.mock('react-cosmos-config', () => ({
   generateCosmosConfig: jest.fn(),
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
+    publicUrl: '/',
     port: 9999,
     hostname: '127.0.0.1',
     globalImports: [],
@@ -40,7 +41,10 @@ jest.mock('express', () => {
   return mockExpress;
 });
 
-jest.mock('webpack', () => jest.fn(() => 'MOCK_WEBPACK_COMPILER'));
+const mockWebpackCompiler = () => {};
+mockWebpackCompiler.plugin = () => {};
+
+jest.mock('webpack', () => jest.fn(() => mockWebpackCompiler));
 
 jest.mock('webpack-dev-middleware', () => jest.fn(() => 'MOCK_DEV_MIDDLEWARE'));
 jest.mock('webpack-hot-middleware', () => jest.fn(() => 'MOCK_HOT_MIDDLEWARE'));
@@ -77,11 +81,11 @@ it('creates express server', () => {
 });
 
 it('sends webpack compiler to dev middleware', () => {
-  expect(webpackDevMiddleware.mock.calls[0][0]).toBe('MOCK_WEBPACK_COMPILER');
+  expect(webpackDevMiddleware.mock.calls[0][0]).toBe(mockWebpackCompiler);
 });
 
 it('sends publicPath to dev middleware', () => {
-  expect(webpackDevMiddleware.mock.calls[0][1].publicPath).toBe('/loader/');
+  expect(webpackDevMiddleware.mock.calls[0][1].publicPath).toBe('/');
 });
 
 it('adds loader dev middleware to express server', () => {
@@ -101,17 +105,29 @@ it('serves index.html on / route with playgrounds opts included', async () => {
     htmlContents.replace(
       '__PLAYGROUND_OPTS__',
       JSON.stringify({
-        loaderUri: './loader/index.html',
+        loaderUri: '/_loader.html',
         projectKey: mockRootPath,
-        webpackConfigType: 'default'
+        webpackConfigType: 'default',
+        deps: {
+          'html-webpack-plugin': true
+        }
       })
     )
   );
 });
 
-it('serve favicon.ico on /favicon.ico route', () => {
+it('serve playground js on /_playground.js route', () => {
   const sendFile = jest.fn();
-  getCbs['/favicon.ico']({}, { sendFile });
+  getCbs['/_playground.js']({}, { sendFile });
+
+  expect(sendFile).toHaveBeenCalledWith(
+    require.resolve('react-cosmos-playground')
+  );
+});
+
+it('serve favicon.ico on /_cosmos.ico route', () => {
+  const sendFile = jest.fn();
+  getCbs['/_cosmos.ico']({}, { sendFile });
 
   expect(sendFile).toHaveBeenCalledWith(
     require.resolve('../../static/favicon.ico')
@@ -127,7 +143,7 @@ it('does not create static server', () => {
 });
 
 it('starts express server with hostname & port', () => {
-  const [port, hostname] = mockListen.mock.calls[0];
+  const [[port, hostname]] = mockListen.mock.calls;
   expect(port).toBe(9999);
   expect(hostname).toBe('127.0.0.1');
 });

@@ -1,13 +1,18 @@
-import ComponentPlayground from '../index';
+// @flow
+
+import { createFixture } from 'react-cosmos-flow/fixture';
+import ComponentPlayground from '..';
 import { routerProps, init } from './_shared';
 
-export default {
+export default createFixture({
   component: ComponentPlayground,
 
   props: {
     options: {
-      loaderUri: '/mock/loader/index.html',
-      projectKey: 'test'
+      loaderUri: '/_loader.html',
+      projectKey: 'test',
+      webpackConfigType: 'default',
+      deps: {}
     },
     router: routerProps,
     component: 'ComponentA',
@@ -17,10 +22,10 @@ export default {
 
   fetch: [
     {
-      matcher: 'end:/mock/loader/index.html',
+      matcher: 'end:_loader.html',
       response: 200
     }
   ],
 
   init
-};
+});

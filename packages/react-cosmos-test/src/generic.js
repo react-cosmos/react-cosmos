@@ -2,25 +2,25 @@
 
 import traverse from 'traverse';
 import { importModule } from 'react-cosmos-shared';
-import { moduleExists } from 'react-cosmos-shared/lib/server';
+import { moduleExists } from 'react-cosmos-shared/server';
 import { getCosmosConfig } from 'react-cosmos-config';
 import { createContext as createLoaderContext } from 'react-cosmos-loader';
 
-import type { Config } from 'react-cosmos-config/src';
+import type { Config } from 'react-cosmos-flow/config';
+import type { FixtureType } from 'react-cosmos-flow/fixture';
+import type { Proxy } from 'react-cosmos-flow/proxy';
 import type {
-  Proxy,
-  Fixture,
-  ContextArgs,
-  ContextFunctions
-} from 'react-cosmos-loader/src/types';
-
-export type TestContextArgs = ContextArgs & {
-  cosmosConfigPath?: string
-};
+  ContextFunctions,
+  TestContextArgs
+} from 'react-cosmos-flow/context';
 
 export function createContext(args: TestContextArgs): ContextFunctions {
-  const { fixture, proxies = detectUserProxies(args.cosmosConfigPath) } = args;
-  const decoratedFixture = decorateFixture(fixture);
+  const {
+    fixture,
+    proxies = detectUserProxies(args.cosmosConfigPath),
+    autoMockProps = true
+  } = args;
+  const decoratedFixture = autoMockProps ? decorateFixture(fixture) : fixture;
 
   return createLoaderContext({
     ...args,
@@ -39,7 +39,7 @@ function detectUserProxies(cosmosConfigPath): Array<Proxy> {
   return userProxies;
 }
 
-function decorateFixture(fixture: Fixture): Fixture {
+function decorateFixture<P: {}>(fixture: FixtureType<P>): FixtureType<P> {
   if (!inJestEnv() || !fixture.props) {
     return fixture;
   }
@@ -63,7 +63,7 @@ function addJestWrapper(prop: any): Function {
   // HIGHLY EXPERIMENTAL: This is likely to go away if it causes problems. But,
   // in the meantime, as Louie would say, "Weeeee!". This makes it possible to
   // do expect(fixture.props.*).toHaveBeenCalled in Jest without wrapping any
-  // callback with jest.fn() by had.
+  // callback with jest.fn() by hand.
   // eslint-disable-next-line no-undef
   return isFunctionButNotClass(prop) ? jest.fn(prop) : prop;
 }

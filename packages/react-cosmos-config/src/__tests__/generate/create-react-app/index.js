@@ -4,7 +4,7 @@ import path from 'path';
 import mkdirp from 'mkdirp';
 import touch from 'touch';
 import rimraf from 'rimraf';
-import { generateCosmosConfig } from '../../../';
+import { generateCosmosConfig } from '../../..';
 
 jest.mock('yargs', () => ({ argv: {} }));
 

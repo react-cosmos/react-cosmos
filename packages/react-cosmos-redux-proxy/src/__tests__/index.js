@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import createReduxProxy from '../index';
+import { createReduxProxy } from '..';
 
 const NextProxy = () => {};
 const nextProxyNext = {};
@@ -76,6 +76,10 @@ const commonTests = () => {
   test('bubbles up fixture updates', () => {
     childProps.onFixtureUpdate({});
     expect(onFixtureUpdate.mock.calls).toHaveLength(1);
+  });
+
+  test('sets the key to 0', () => {
+    expect(childWrapper.key()).toBe('0');
   });
 };
 
@@ -158,6 +162,33 @@ describe('fixture with Redux state', () => {
 
   test('disables local state', () => {
     expect(childProps.disableLocalState).toBe(true);
+  });
+
+  describe('on receiving new props', () => {
+    beforeAll(() => {
+      wrapper.setProps({
+        fixture: {
+          reduxState: {
+            counter: 11
+          }
+        }
+      });
+    });
+    it('unsubscribes from current store', () => {
+      expect(storeUnsubscribeMock).toHaveBeenCalled();
+    });
+
+    it('creates a new store with updated state', () => {
+      expect(createStore.mock.calls.length).toBe(2);
+    });
+
+    it('subscribes to new store', () => {
+      expect(storeMock.subscribe.mock.calls.length).toBe(2);
+    });
+
+    it('increments the key of the rendered component', () => {
+      expect(wrapper.key()).toBe('1');
+    });
   });
 
   describe('on unmount', () => {

@@ -34,7 +34,10 @@ jest.mock('express', () => {
   return mockExpress;
 });
 
-jest.mock('webpack', () => jest.fn(() => 'MOCK_WEBPACK_COMPILER'));
+const mockWebpackCompiler = () => {};
+mockWebpackCompiler.plugin = () => {};
+
+jest.mock('webpack', () => jest.fn(() => mockWebpackCompiler));
 
 jest.mock('webpack-dev-middleware', () => jest.fn(() => 'MOCK_DEV_MIDDLEWARE'));
 jest.mock('webpack-hot-middleware', () => jest.fn(() => 'MOCK_HOT_MIDDLEWARE'));
@@ -57,5 +60,7 @@ beforeEach(() => {
 // Note: This test is ment to show that a custom publicPath is used over
 // webpack.devServer.contentBase
 it('creates static server with public path', () => {
-  expect(express.static).toHaveBeenCalledWith('server/public');
+  expect(express.static).toHaveBeenCalledWith('server/public', {
+    index: false
+  });
 });

@@ -2,7 +2,7 @@ import until from 'async-until';
 import localForage from 'localforage';
 import { createContext } from '../../../../utils/enzyme';
 import DragHandle from '../../../DragHandle';
-import { FIXTURE_EDITOR_PANE_SIZE } from '../../';
+import { FIXTURE_EDITOR_PANE_SIZE } from '../..';
 import fixture from '../../__fixtures__/selected-editor';
 
 jest.mock('localforage');

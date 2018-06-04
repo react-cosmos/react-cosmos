@@ -1,20 +1,19 @@
+// @flow
+
 import { importModule } from 'react-cosmos-shared';
-import { getComponents } from 'react-cosmos-voyager2/lib/client';
+import { getComponents } from 'react-cosmos-voyager2/client';
 import getUserModules from './user-modules';
 import { mount } from 'react-cosmos-loader';
 import { dismissRuntimeErrors } from 'react-error-overlay';
 
-import type { LoaderOpts } from 'react-cosmos-shared/src/types';
-import type {
-  Modules,
-  FixtureFile,
-  Component
-} from 'react-cosmos-voyager2/src/types';
+import type { LoaderOpts } from 'react-cosmos-flow/loader';
+import type { Modules, FixtureFile, Component } from 'react-cosmos-flow/module';
 
-// eslint-disable-next-line no-undef
+declare var COSMOS_CONFIG: LoaderOpts;
+
 const loaderOpts: LoaderOpts = COSMOS_CONFIG;
 
-export default function() {
+export default function({ isDev }: { isDev: boolean } = {}) {
   const {
     fixtureModules,
     fixtureFiles,
@@ -48,7 +47,9 @@ export default function() {
     proxies: importModule(proxies),
     fixtures,
     loaderOpts,
-    dismissRuntimeErrors
+    // Send a noop callback for `dismissRuntimeErrors` when exporting, because
+    // react-error-overlay is only initialized in `development` env
+    dismissRuntimeErrors: isDev ? dismissRuntimeErrors : () => {}
   });
 }
 
@@ -75,9 +76,17 @@ function getNormalizedFixtureModules(
 
     try {
       const fixtureFile = fixtureFiles.find(f => f.filePath === next);
+      if (!fixtureFile) {
+        throw new Error(`Missing fixture file for path: ${next}`);
+      }
+
       const { components } = fixtureFile;
-      const componentModule =
-        deprecatedComponentModules[components[0].filePath];
+      const [component1] = components;
+      if (!component1 || !component1.filePath) {
+        throw new Error(`Missing component data for fixture path: ${next}`);
+      }
+
+      const componentModule = deprecatedComponentModules[component1.filePath];
       const component = importModule(componentModule);
 
       alteredFixtures.add(next);

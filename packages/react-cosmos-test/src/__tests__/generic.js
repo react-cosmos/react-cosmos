@@ -2,6 +2,7 @@
 
 import { getCosmosConfig } from 'react-cosmos-config';
 import { createContext as createLoaderContext } from 'react-cosmos-loader';
+import { getMock } from 'react-cosmos-flow/jest';
 import { ProxyFoo, ProxyBar } from './__fsmocks__/cosmos.proxies';
 import { createContext } from '../generic';
 
@@ -27,7 +28,7 @@ const rendererOptions = {};
 const fixture = { component: () => {} };
 
 function getLastContextArgs() {
-  return createLoaderContext.mock.calls[0][0];
+  return getMock(createLoaderContext).calls[0][0];
 }
 
 beforeEach(() => {
@@ -69,4 +70,23 @@ it('forwards custom config path', () => {
   createContext({ renderer, fixture, cosmosConfigPath: '/foo/path' });
 
   expect(getCosmosConfig).toHaveBeenCalledWith('/foo/path');
+});
+
+it('should automock fixture functions by default', () => {
+  createContext({
+    renderer,
+    fixture: { ...fixture, props: { func: () => {} } }
+  });
+
+  expect(getMock(getLastContextArgs().fixture.props.func)).toBeDefined();
+});
+
+it('should respect disable autoMock', () => {
+  createContext({
+    renderer,
+    fixture: { ...fixture, props: { func: () => {} } },
+    autoMockProps: false
+  });
+
+  expect(getMock(getLastContextArgs().fixture.props.func)).not.toBeDefined();
 });

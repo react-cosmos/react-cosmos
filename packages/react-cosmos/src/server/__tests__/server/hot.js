@@ -7,6 +7,7 @@ jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
+    publicUrl: '/',
     port: 9999,
     hostname: '127.0.0.1',
     hot: true,
@@ -32,7 +33,10 @@ jest.mock('express', () => {
   return mockExpress;
 });
 
-jest.mock('webpack', () => jest.fn(() => 'MOCK_WEBPACK_COMPILER'));
+const mockWebpackCompiler = () => {};
+mockWebpackCompiler.plugin = () => {};
+
+jest.mock('webpack', () => jest.fn(() => mockWebpackCompiler));
 
 jest.mock('webpack-dev-middleware', () => jest.fn(() => 'MOCK_DEV_MIDDLEWARE'));
 jest.mock('webpack-hot-middleware', () => jest.fn(() => 'MOCK_HOT_MIDDLEWARE'));
@@ -47,7 +51,7 @@ beforeEach(() => {
 });
 
 it('sends webpack compiler to hot middleware', () => {
-  expect(webpackHotMiddleware.mock.calls[0][0]).toBe('MOCK_WEBPACK_COMPILER');
+  expect(webpackHotMiddleware.mock.calls[0][0]).toBe(mockWebpackCompiler);
 });
 
 it('does not use hot middleware', () => {

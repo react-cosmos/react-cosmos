@@ -1,4 +1,4 @@
-import Tree from '../index';
+import Tree from '..';
 
 const children = [];
 for (let i = 0; i < 100; i++) {

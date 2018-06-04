@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router';
-import createRouterProxy from '../';
+import { createRouterProxy } from '..';
 
 // The final responsibility of proxies is to render the user's component at
 // the end of the proxy chain. While it goes beyond unit testing, testing a

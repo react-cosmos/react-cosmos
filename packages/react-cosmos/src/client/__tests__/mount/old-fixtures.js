@@ -53,14 +53,13 @@ beforeEach(() => {
   global.PROXIES = proxies;
   global.FIXTURE_FILES = fixtureFiles;
   global.FIXTURE_MODULES = fixtureModules;
-  global.CONTEXTS = [];
   global.DEPRECATED_COMPONENT_MODULES = {
     '/components/Bar.js': Bar,
     '/components/Foo.js': Foo
   };
 
   // Require module after globals have been mocked
-  require('../../mount').default();
+  require('../../mount').default({ isDev: true });
 });
 
 it('sends proxies to loader', () => {

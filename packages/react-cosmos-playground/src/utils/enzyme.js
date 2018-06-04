@@ -2,7 +2,7 @@
 
 import createEnzymeContext from 'react-cosmos-test/enzyme';
 
-import type { EnzymeContextArgs } from 'react-cosmos-test/src/enzyme';
+import type { EnzymeContextArgs } from 'react-cosmos-flow/context';
 
 export function createContext(args: EnzymeContextArgs) {
   return createEnzymeContext({

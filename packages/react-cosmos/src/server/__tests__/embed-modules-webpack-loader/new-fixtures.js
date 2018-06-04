@@ -1,10 +1,11 @@
-import { findFixtureFiles } from 'react-cosmos-voyager2/lib/server';
+import { findFixtureFiles } from 'react-cosmos-voyager2/server';
 
 // Requiring because embed-modules-webpack-loader is a CJS module
 const embedModules = require('../../embed-modules-webpack-loader');
 
 // The values of these mocks don't matter, we check for identity
 const mockFileMatch = [];
+const mockFileMatchIgnore = '';
 const mockExclude = [];
 
 jest.mock('react-cosmos-config', () => ({
@@ -12,9 +13,11 @@ jest.mock('react-cosmos-config', () => ({
   getCosmosConfig: () => ({
     rootPath: 'MOCK_ROOT_PATH',
     fileMatch: mockFileMatch,
+    fileMatchIgnore: mockFileMatchIgnore,
     exclude: mockExclude,
     componentPaths: [],
-    proxiesPath: require.resolve('../__fsmocks__/cosmos.proxies')
+    proxiesPath: require.resolve('../__fsmocks__/cosmos.proxies'),
+    watchDirs: ['MOCK_WATCH_DIR1', 'MOCK_WATCH_DIR2']
   })
 }));
 
@@ -48,21 +51,20 @@ const mockFixtureFiles = [
   }
 ];
 
-jest.mock('react-cosmos-voyager2/lib/server/find-fixture-files', () => ({
+jest.mock('react-cosmos-voyager2/server', () => ({
   findFixtureFiles: jest.fn(() => mockFixtureFiles)
 }));
 
-const mockAddDependency = jest.fn();
+const mockAddContextDependency = jest.fn();
 const loaderCallback = jest.fn();
 const loaderInput = `
   fixtureModules: FIXTURE_MODULES,
   fixtureFiles: FIXTURE_FILES,
   deprecatedComponentModules: DEPRECATED_COMPONENT_MODULES,
-  proxies: PROXIES,
-  contexts: CONTEXTS`;
+  proxies: PROXIES`;
 
 beforeEach(() => {
-  mockAddDependency.mockClear();
+  mockAddContextDependency.mockClear();
   loaderCallback.mockClear();
 
   return new Promise(resolve => {
@@ -71,7 +73,7 @@ beforeEach(() => {
         loaderCallback(...args);
         resolve();
       },
-      addDependency: mockAddDependency
+      addContextDependency: mockAddContextDependency
     };
     embedModules.call(loaderContext, loaderInput);
   });
@@ -85,12 +87,18 @@ it('calls findFixtureFiles with fileMatch config', () => {
   expect(findFixtureFiles.mock.calls[0][0].fileMatch).toBe(mockFileMatch);
 });
 
+it('calls findFixtureFiles with fileMatchIgnore config', () => {
+  expect(findFixtureFiles.mock.calls[0][0].fileMatchIgnore).toBe(
+    mockFileMatchIgnore
+  );
+});
+
 it('calls findFixtureFiles with exclude config', () => {
   expect(findFixtureFiles.mock.calls[0][0].exclude).toBe(mockExclude);
 });
 
 it('injects fixture modules', () => {
-  const output = loaderCallback.mock.calls[0][1];
+  const [[, output]] = loaderCallback.mock.calls;
   const [, fixtureModules] = output.match(/fixtureModules: (.+)(,|$)/);
 
   const expected = `{
@@ -102,14 +110,14 @@ it('injects fixture modules', () => {
 });
 
 it('injects fixture files', () => {
-  const output = loaderCallback.mock.calls[0][1];
+  const [[, output]] = loaderCallback.mock.calls;
   const [, fixtureFiles] = output.match(/fixtureFiles: (.+)(,|$)/);
 
   expect(JSON.parse(fixtureFiles)).toEqual(mockFixtureFiles);
 });
 
 it('injects proxies', () => {
-  const output = loaderCallback.mock.calls[0][1];
+  const [[, output]] = loaderCallback.mock.calls;
   const [, proxies] = output.match(/proxies: (.+)(,|$)/);
 
   expect(proxies).toEqual(
@@ -117,28 +125,13 @@ it('injects proxies', () => {
   );
 });
 
-it('injects contexts', () => {
-  const output = loaderCallback.mock.calls[0][1];
-  const [, contexts] = output.match(/contexts: (.+)(,|$)/);
-
-  const expected = `[
-    require.context('/components/__fixtures__/Foo',false,/\\.jsx?$/),
-    require.context('/components/__fixtures__/Bar',false,/\\.jsx?$/)
-  ]`;
-  expect(contexts).toEqual(expected.replace(/\s/g, ''));
-});
-
-it('registers user dirs as loader deps', () => {
-  expect(mockAddDependency).toHaveBeenCalledWith(
-    '/components/__fixtures__/Foo'
-  );
-  expect(mockAddDependency).toHaveBeenCalledWith(
-    '/components/__fixtures__/Bar'
-  );
+it('registers root path as loader context dep', () => {
+  expect(mockAddContextDependency).toHaveBeenCalledWith('MOCK_WATCH_DIR1');
+  expect(mockAddContextDependency).toHaveBeenCalledWith('MOCK_WATCH_DIR2');
 });
 
 it('injects empty deprecated components', () => {
-  const output = loaderCallback.mock.calls[0][1];
+  const [[, output]] = loaderCallback.mock.calls;
   const [, deprecatedComponentModules] = output.match(
     /deprecatedComponentModules: (.+)(,|$)/
   );

@@ -1,4 +1,4 @@
-import SvgIcon from '../index';
+import SvgIcon from '..';
 
 export default {
   component: SvgIcon,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import createXhrProxy from '../';
+import { createXhrProxy } from '..';
 
 // The final responsibility of proxies is to render the user's component at
 // the end of the proxy chain. While it goes beyond unit testing, testing a
@@ -68,7 +68,7 @@ test('returns mocked object from GET request', () => {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', '/users');
-    xhr.onload = () => {
+    xhr.addEventListener('load', () => {
       try {
         expect(xhr.responseText).toEqual([
           { name: 'John' },
@@ -78,10 +78,10 @@ test('returns mocked object from GET request', () => {
       } catch (err) {
         reject(err);
       }
-    };
-    xhr.onerror = err => {
+    });
+    xhr.addEventListener('error', err => {
       reject(err);
-    };
+    });
     xhr.send();
   });
 });

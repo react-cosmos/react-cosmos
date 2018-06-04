@@ -1,149 +1,184 @@
-const path = require('path');
-const glob = require('glob');
-const rimraf = require('rimraf');
-const spawn = require('child-process-promise').spawn;
-const argv = require('yargs').argv;
+// @flow
 
-const COMPONENT_PLAYGROUND = 'react-cosmos-playground';
+import { spawn } from 'child-process-promise';
+import { join } from 'path';
+import { bold, italic } from 'chalk';
+import {
+  AS_IS_PACKAGES,
+  getNodePackages,
+  getBrowserPackages,
+  getUnnamedArg,
+  getBoolArg,
+  done,
+  error
+} from './shared';
 
-/**
- * Builds a package by running it through Babel or Webpack.
- * @param {Object} options
- * @param {Object} options.task
- * @param {String} options.task.name Name of the task to run.
- * @param {String} options.task.args Arguments that will be passed to the task.
- * @param {Boolean} options.watch Whether to apply watch argument.
- * @param {String} options.packageName Name of the React package to build.
- * @returns promise Child process wrapped in a Promise.
- */
-function runBuildTask(options) {
-  const packageName = options.packageName;
+const { stdout, stderr } = process;
 
-  const ignore = ['__tests__', '__mocks__'];
-  if (packageName === 'react-cosmos-voyager') {
-    ignore.push('use-cases');
+const pkgName = getUnnamedArg();
+const watch = getBoolArg('watch');
+
+run();
+
+async function run() {
+  const nodePackages = await getNodePackages();
+  const browserPackages = await getBrowserPackages();
+  const buildablePackages = [...nodePackages, ...browserPackages];
+
+  if (pkgName) {
+    if (typeof pkgName !== 'string') {
+      stderr.write(error(`Invalid package name ${bold(String(pkgName))}!\n`));
+      return;
+    }
+
+    if (AS_IS_PACKAGES.indexOf(pkgName) !== -1) {
+      stderr.write(error(`${bold(pkgName)} doesn't require building!\n`));
+      return;
+    }
+
+    if (buildablePackages.indexOf(pkgName) === -1) {
+      stderr.write(
+        error(
+          `${bold(pkgName)} doesn't exist!\nPackages: ${getFormattedPackageList(
+            buildablePackages
+          )}`
+        )
+      );
+      return;
+    }
+
+    stdout.write(
+      `${watch ? 'Build-watching' : 'Building'} ${bold(pkgName)}...\n`
+    );
+
+    if (nodePackages.indexOf(pkgName) !== -1) {
+      await buildNodePackage(pkgName);
+    } else {
+      await buildBrowserPackage(pkgName);
+    }
+  } else {
+    if (watch) {
+      // The limitation here is that we need to build browser packages after
+      // packages compiled with Babel. This doesn't work out of the box because
+      // `buildNodePackage` hangs forever in watch mode.
+      stderr.write(
+        error(
+          `Can't build-watch all packages! Run ${italic(
+            'build PACKAGE --watch'
+          )} for one or more packages (in separate terminals)\n`
+        )
+      );
+      return;
+    }
+
+    stdout.write(`Building packages...\n`);
+    await Promise.all(nodePackages.map(buildNodePackage));
+
+    stdout.write(`Building browser packages...\n`);
+    await Promise.all(browserPackages.map(buildBrowserPackage));
+
+    stdout.write(`Built ${buildablePackages.length} packages successfully.\n`);
   }
+}
 
-  const babelTask = {
-    name: 'babel',
-    args: [
-      `packages/${packageName}/src`,
-      '--out-dir',
-      `packages/${packageName}/lib`,
-      '--copy-files',
-      '--ignore',
-      ignore.join(',')
-    ]
-  };
+function getFormattedPackageList(pkgNames) {
+  return ['', ...pkgNames].join('\n - ');
+}
 
-  const task = options.task || babelTask;
-  const taskArgs = task.args || [];
+async function buildNodePackage(pkgName) {
+  return runBuildTask({
+    pkgName,
+    cmd: 'babel',
+    args: getBabelCliArgs(pkgName)
+  });
+}
 
-  if (options.watch) {
-    taskArgs.push('--watch');
-  }
+async function buildBrowserPackage(pkgName) {
+  return runBuildTask({
+    pkgName,
+    cmd: 'webpack',
+    args: getWebpackCliArgs(pkgName),
+    env: { NODE_ENV: 'production' }
+  });
+}
 
-  const promise = spawn(task.name, taskArgs, {
-    cwd: path.join(__dirname, '..'),
-    env: Object.assign({}, process.env, options.env)
+type BuildTaskArgs = {
+  pkgName: string,
+  cmd: string,
+  args: Array<string>,
+  env?: Object
+};
+
+async function runBuildTask({ pkgName, cmd, args, env = {} }: BuildTaskArgs) {
+  const promise = spawn(cmd, args, {
+    cwd: join(__dirname, '..'),
+    env: {
+      ...process.env,
+      ...env
+    }
+  });
+  const { childProcess } = promise;
+
+  childProcess.stdout.on('data', data => {
+    stdout.write(data);
   });
 
-  const child = promise.childProcess;
-
-  child.stdout.on('data', data => {
-    process.stdout.write(data);
+  childProcess.stderr.on('data', data => {
+    stderr.write(data);
   });
 
-  child.stderr.on('data', data => {
-    process.stderr.write(data);
-  });
-
-  child.on('close', code => {
+  childProcess.on('close', code => {
     if (code) {
-      process.stderr.write(`${options.packageName} exited with code ${code}`);
+      stderr.write(error(`${bold(pkgName)}\n`));
+    } else {
+      stdout.write(done(`${bold(pkgName)}\n`));
     }
   });
 
   return promise;
 }
 
-/**
- * Build CP only
- * @param watch Apply watch argument
- */
-function runBuildPlaygroundTask(watch) {
-  return runBuildTask({
-    packageName: COMPONENT_PLAYGROUND,
-    task: {
-      name: 'webpack',
-      args: ['--config', `packages/${COMPONENT_PLAYGROUND}/webpack.config.js`]
-    },
-    watch,
-    env: {
-      NODE_ENV: 'production'
-    }
-  });
-}
+function getBabelCliArgs(pkgName) {
+  let args = [
+    `packages/${pkgName}/src`,
+    '--out-dir',
+    `packages/${pkgName}/dist`,
+    '--copy-files',
+    '--ignore',
+    getPackageIgnorePaths(pkgName).join(',')
+  ];
 
-/**
- * Run the build for all packages, the CP requires all other components
- * to be built first.
- * @param packageNames List of package names
- */
-function runBuildAllTask(packageNames) {
-  // Cleanup
-  glob.sync('./packages/*/lib').forEach(packageLibPath => {
-    rimraf.sync(packageLibPath);
-    console.log('INFO: Removed lib directory for', packageLibPath);
-  });
-
-  // Build all packages and after finishing, build CP
-  const promises = packageNames
-    .filter(pkg => pkg !== COMPONENT_PLAYGROUND)
-    .map(packageName => runBuildTask({ packageName }));
-
-  return Promise.all(promises).then(() => runBuildPlaygroundTask());
-}
-
-// Read CLI arguments
-const targetPackage = argv._[0];
-const applyWatch = Boolean(argv.watch);
-
-/**
- * Read all the react-* packages, and decide what to build based
- * on command line arguments.
- */
-glob('./packages/react-*', null, (err, files) => {
-  const allPackageNames = files.map(f => path.basename(f));
-  const formattedPackages = `${[''].concat(allPackageNames).join('\n - ')}`;
-
-  if (!targetPackage) {
-    // Build all packages
-    if (applyWatch) {
-      console.error(
-        `Cannot build all packages with the --watch argument. If you'd like to --watch, please choose one of the existing packages:
-          ${formattedPackages}`
-      );
-    } else {
-      runBuildAllTask(allPackageNames, applyWatch).catch(err => {
-        console.error('Build failed', err);
-      });
-    }
-  } else if (targetPackage === COMPONENT_PLAYGROUND) {
-    runBuildPlaygroundTask(applyWatch).catch(err => {
-      console.error('Playground build failed', err);
-    });
-  } else if (allPackageNames.indexOf(targetPackage) === -1) {
-    console.error(
-      `Invalid package! These are the existing packages:${formattedPackages}`
-    );
+  // Showing Babel output in watch mode because it's nice to get a confirmation
+  // that something happened after saving a file
+  if (watch) {
+    args = [...args, '--watch'];
   } else {
-    // Build a single package
-    runBuildTask({
-      packageName: targetPackage,
-      watch: applyWatch
-    }).catch(err => {
-      console.error(`${targetPackage} build failed`, err);
-    });
+    args = [...args, '--quiet'];
   }
-});
+
+  return args;
+}
+
+function getWebpackCliArgs(pkgName) {
+  let args = ['--config', `packages/${pkgName}/webpack.config.js`];
+
+  // Showing webpack output in watch mode because it's nice to get a confirmation
+  // that something happened after saving a file
+  if (watch) {
+    args = [...args, '--watch'];
+  } else {
+    args = [...args, '--silent'];
+  }
+
+  return args;
+}
+
+function getPackageIgnorePaths(pkgName) {
+  const ignore = ['__tests__', '__mocks__'];
+
+  if (pkgName === 'react-cosmos-voyager') {
+    return [...ignore, 'use-cases'];
+  }
+
+  return ignore;
+}

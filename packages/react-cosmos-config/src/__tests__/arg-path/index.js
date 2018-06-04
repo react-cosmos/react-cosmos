@@ -1,7 +1,7 @@
 // @flow
 
 import path from 'path';
-import { getCosmosConfig } from '../../';
+import { getCosmosConfig } from '../..';
 
 const configPath = require.resolve('./__fsmocks__/cosmos.config.js');
 const rootPath = path.dirname(configPath);
@@ -17,9 +17,10 @@ describe('[arg path] when config exists', () => {
       port: 9000,
       proxiesPath: path.join(rootPath, 'cosmos.proxies'),
       publicPath: path.join(rootPath, 'static'),
-      publicUrl: '/loader/',
+      publicUrl: '/',
       rootPath,
-      webpackConfigPath: path.join(rootPath, 'webpack.config')
+      webpackConfigPath: path.join(rootPath, 'webpack.config'),
+      watchDirs: [rootPath]
     });
   });
 });

@@ -1,4 +1,4 @@
-import Loading from '../index';
+import Loading from '..';
 
 export default {
   component: Loading,

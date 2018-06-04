@@ -2,8 +2,8 @@
 
 import path from 'path';
 import React from 'react';
-import { getMock } from 'react-cosmos-shared/src/jest';
-import runTests from '../';
+import { getMock } from 'react-cosmos-flow/jest';
+import { runTests } from '../run-tests';
 
 jest.mock('./__fsmocks__/fixtures', () => {
   const Foo = ({ what }: { what: string }) => <span>Foo is {what}</span>;
@@ -60,7 +60,7 @@ test('creates test for all fixtures', () => {
 });
 
 test('expects each fixture to match snapshot', async () => {
-  const testCb = getMock(test).calls[0][1];
+  const [[, testCb]] = getMock(test).calls;
   await testCb();
 
   global.actualExpect(expect).toHaveBeenCalledWith({

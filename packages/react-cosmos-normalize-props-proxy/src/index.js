@@ -1,13 +1,38 @@
-import React from 'react';
-import { proxyPropTypes } from 'react-cosmos-shared/lib/react';
+// @flow
+
+import React, { Component } from 'react';
 import omit from 'lodash.omit';
 import pick from 'lodash.pick';
 
-const defaults = {
-  notProps: ['component', 'children', 'state', 'context', 'reduxState']
+import type { ProxyProps } from 'react-cosmos-flow/proxy';
+
+type Options = {
+  fixtureKey?: string,
+  notProps?: Array<string>
 };
 
-const getFixedFixture = (fixture, notProps) => {
+export function createNormalizePropsProxy({
+  notProps = ['component', 'children', 'state', 'context', 'reduxState']
+}: Options = {}) {
+  class NormalizePropsProxy extends Component<ProxyProps> {
+    render() {
+      const { nextProxy, fixture, ...rest } = this.props;
+      const { value: NextProxy, next } = nextProxy;
+
+      return (
+        <NextProxy
+          {...rest}
+          nextProxy={next()}
+          fixture={getFixedFixture(fixture, notProps)}
+        />
+      );
+    }
+  }
+
+  return NormalizePropsProxy;
+}
+
+function getFixedFixture(fixture, notProps) {
   if (fixture.props) {
     // Proxy does not support partially upgraded fixture
     return fixture;
@@ -17,24 +42,4 @@ const getFixedFixture = (fixture, notProps) => {
     ...pick(fixture, notProps),
     props: omit(fixture, notProps)
   };
-};
-
-export default function createNormalizePropsProxy(options) {
-  const { notProps } = { ...defaults, ...options };
-
-  class NormalizePropsProxy extends React.Component {
-    render() {
-      const { nextProxy, fixture } = this.props;
-
-      return React.createElement(nextProxy.value, {
-        ...this.props,
-        nextProxy: nextProxy.next(),
-        fixture: getFixedFixture(fixture, notProps)
-      });
-    }
-  }
-
-  NormalizePropsProxy.propTypes = proxyPropTypes;
-
-  return NormalizePropsProxy;
 }
