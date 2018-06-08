@@ -6,8 +6,8 @@
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
-    "apollo-cache-inmemory": "^1.2.1",
-    "apollo-client": "^2.3.1",
+    "apollo-cache-inmemory": "^1.2.2",
+    "apollo-client": "^2.3.2",
     "apollo-link": "^1.2.2",
     "apollo-link-http": "^1.5.4",
     "graphql": "^0.13.2",

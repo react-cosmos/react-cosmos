@@ -2,9 +2,7 @@
 
 exports[`snapshot is stable 1`] = `
 <withRouter(MyComponent)>
-  <Route
-    render={[Function]}
-  >
+  <Route>
     <MyComponent
       history={
         Object {
