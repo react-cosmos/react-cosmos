@@ -11,7 +11,7 @@ const defaults = {
 };
 
 export function createApolloProxy(options) {
-  const { fixtureKey, endpoint, client } = {
+  const { fixtureKey, endpoint, clientOptions } = {
     ...defaults,
     ...options
   };
@@ -22,13 +22,13 @@ export function createApolloProxy(options) {
     constructor(props) {
       super(props);
 
-      if (!endpoint && !client) {
+      if (!endpoint && !clientOptions) {
         throw new Error(
           `
 It looks like the Apollo Proxy is not configured!
 Give it:
 - a GraphQL endpoint to send GraphQL operations to;
-- a configured Apollo Client (maybe the one you use in your app?);
+- a Apollo Client configuration object (maybe the one you use in your app?);
 Read more at: https://github.com/react-cosmos/react-cosmos#react-apollo-graphql.`
         );
       }
@@ -44,20 +44,20 @@ Read more at: https://github.com/react-cosmos/react-cosmos#react-apollo-graphql.
 
       const cache = new InMemoryCache();
 
-      this.client =
-        client ||
-        new ApolloClient({
+      const options = clientOptions || {
           cache,
           link: new HttpLink({ uri: endpoint })
-        });
+      };
 
-      if (isMockedFixture) {
-        this.client.link = createFixtureLink({
-          apolloFixture,
-          cache,
-          fixture: this.props.fixture
-        });
+      if(isMockedFixture) {
+          options.link = createFixtureLink({
+            apolloFixture,
+            cache,
+            fixture: this.props.fixture
+          });
       }
+
+      this.client = new ApolloClient(options);
 
       // enable the Apollo Client DevTools to recognize the Apollo Client instance
       parent.__APOLLO_CLIENT__ = this.client;
