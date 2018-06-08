@@ -45,16 +45,16 @@ Read more at: https://github.com/react-cosmos/react-cosmos#react-apollo-graphql.
       const cache = new InMemoryCache();
 
       const options = clientOptions || {
-          cache,
-          link: new HttpLink({ uri: endpoint })
+        cache,
+        link: new HttpLink({ uri: endpoint })
       };
 
-      if(isMockedFixture) {
-          options.link = createFixtureLink({
-            apolloFixture,
-            cache,
-            fixture: this.props.fixture
-          });
+      if (isMockedFixture) {
+        options.link = createFixtureLink({
+          apolloFixture,
+          cache,
+          fixture: this.props.fixture
+        });
       }
 
       this.client = new ApolloClient(options);
