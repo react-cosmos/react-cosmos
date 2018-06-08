@@ -19,7 +19,8 @@ type State = {
   containerWidth: number,
   containerHeight: number,
   savedWidth: ?number,
-  savedHeight: ?number
+  savedHeight: ?number,
+  scale: boolean
 };
 
 const RESPONSIVE_FIXTURE_WIDTH = '__cosmos__responsive-fixture-width';
@@ -33,15 +34,17 @@ class ResponsiveLoader extends React.Component<Props, State> {
     containerWidth: 10000,
     containerHeight: 10000,
     savedWidth: null,
-    savedHeight: null
+    savedHeight: null,
+    scale: true
   };
 
   scalableDiv: ?HTMLElement;
 
   async componentDidMount() {
-    window.addEventListener('resize', this.updateContainerWidth);
+    window.addEventListener('resize', this.updateContainerDimensions);
 
-    setTimeout(this.updateContainerWidth, 1000);
+    // Wait for window to render before trying to figure out the dimensions
+    setTimeout(this.updateContainerDimensions, 1000);
 
     const [savedWidth, savedHeight] = await Promise.all([
       localForage.getItem(RESPONSIVE_FIXTURE_WIDTH),
@@ -52,7 +55,7 @@ class ResponsiveLoader extends React.Component<Props, State> {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.updateContainerWidth);
+    window.removeEventListener('resize', this.updateContainerDimensions);
   }
 
   updateDimensions = (width: number, height: number) => {
@@ -63,7 +66,7 @@ class ResponsiveLoader extends React.Component<Props, State> {
     this.setState({ savedWidth: width, savedHeight: height });
   };
 
-  updateContainerWidth = () => {
+  updateContainerDimensions = () => {
     if (!this.scalableDiv) {
       return;
     }
@@ -83,6 +86,10 @@ class ResponsiveLoader extends React.Component<Props, State> {
     }
   };
 
+  setScale = (scale: boolean) => {
+    this.setState({ scale });
+  };
+
   render() {
     const {
       inputRef,
@@ -91,7 +98,7 @@ class ResponsiveLoader extends React.Component<Props, State> {
       showResponsiveControls,
       fixture
     } = this.props;
-    const { savedWidth, savedHeight } = this.state;
+    const { scale, savedWidth, savedHeight } = this.state;
 
     const { viewport = {} } = fixture;
     const width =
@@ -103,9 +110,6 @@ class ResponsiveLoader extends React.Component<Props, State> {
         ? viewport.height
         : savedHeight || 568;
 
-    // Eventually allow toggling of scaled vs absolute viewports
-    const scale = true;
-
     const { containerWidth, containerHeight } = this.state;
     const scaleWidth = Math.min(1, containerWidth / width);
     const scaleHeight = Math.min(1, containerHeight / height);
@@ -116,7 +120,7 @@ class ResponsiveLoader extends React.Component<Props, State> {
     // We can't simply say
     // if (!showResponsiveControls) { return <iframe> };
     // because this causes flicker when switching between responsive and
-    // non responsive mode.
+    // non responsive mode as the React component tree is completely different.
 
     const containerClassName = showResponsiveControls
       ? styles.container
@@ -125,9 +129,13 @@ class ResponsiveLoader extends React.Component<Props, State> {
     const outerWrapperClassName = showResponsiveControls
       ? styles.outerWrapper
       : styles.nonResponsive;
-    const outerWrapperStyle = showResponsiveControls
-      ? { padding: PADDING }
-      : {};
+
+    let outerWrapperStyle = {
+      display: !showResponsiveControls || scale ? 'flex' : 'block'
+    };
+    if (showResponsiveControls) {
+      outerWrapperStyle = { ...outerWrapperStyle, padding: PADDING };
+    }
 
     const middleWrapperClassName = showResponsiveControls
       ? ''
@@ -163,13 +171,12 @@ class ResponsiveLoader extends React.Component<Props, State> {
             containerWidth={containerWidth}
             containerHeight={containerHeight}
             updateDimensions={this.updateDimensions}
+            setScale={this.setScale}
           />
         )}
         <div
           className={outerWrapperClassName}
-          ref={el => {
-            this.scalableDiv = el;
-          }}
+          ref={el => (this.scalableDiv = el)}
           style={outerWrapperStyle}
         >
           <div className={middleWrapperClassName} style={middleWrapperStyle}>

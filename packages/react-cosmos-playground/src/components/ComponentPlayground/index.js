@@ -536,9 +536,6 @@ export default class ComponentPlayground extends Component<Props, State> {
         ? false
         : fixtureBody.viewport || responsive || false;
 
-    // console.log('Rendering Playground');
-    // console.log('Fixture name is', this.props.fixture);
-    // console.log('Fixture object is', fixtureBody);
     return (
       <div className={styles.loaderFrame} style={loaderStyle}>
         <ResponsiveLoader

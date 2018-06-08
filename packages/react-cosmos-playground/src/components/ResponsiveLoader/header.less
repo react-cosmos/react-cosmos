@@ -1,15 +1,18 @@
 @import '../../utils/common.less';
 
+.scaleLink {
+  text-decoration: underline;
+  cursor: pointer;
+  &:hover {
+    color: red;
+  }
+}
+
 .buttonContainer {
   display: flex;
   justify-content: space-around;
   align-content: center;
 }
-
-// <div
-// className="flex justify-around items-center h3"
-// style={{ minHeight: "4rem" }}
-// >
 
 .button {
   border: none;
@@ -17,13 +20,16 @@
   height: 4rem;
   color: white;
   flex: auto;
-  cursor: pointer;
   border-radius: 0;
   background-color: @left-nav-bgcolor;
+  font-size: 14px;
+}
+
+.buttonNotActive {
+  cursor: pointer;
   &:hover {
     background-color: lighten(@left-nav-bgcolor, 10%);
   }
-  font-size: 14px;
 }
 
 .buttonActive {

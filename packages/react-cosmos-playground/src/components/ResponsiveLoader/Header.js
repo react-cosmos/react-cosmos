@@ -23,7 +23,8 @@ const CustomButton = ({
   updateDimensions
 }: CustomButtonProps) => {
   const className = classNames(styles.button, {
-    [styles.buttonActive]: isActive
+    [styles.buttonActive]: isActive,
+    [styles.buttonNotActive]: !isActive
   });
 
   return (
@@ -65,7 +66,9 @@ type SizeButtonProps = {
   isActive: boolean,
   scalable: boolean,
   scale: boolean,
-  updateDimensions: (width: number, height: number) => void
+  scaleFactor: number,
+  updateDimensions: (width: number, height: number) => void,
+  setScale: (scale: boolean) => any
 };
 
 const SizeButton = ({
@@ -75,10 +78,13 @@ const SizeButton = ({
   isActive,
   scalable,
   scale,
-  updateDimensions
+  scaleFactor = 1,
+  updateDimensions,
+  setScale
 }: SizeButtonProps) => {
   const className = classNames(styles.button, {
-    [styles.buttonActive]: isActive
+    [styles.buttonActive]: isActive,
+    [styles.buttonNotActive]: !isActive
   });
   return (
     <button
@@ -87,7 +93,22 @@ const SizeButton = ({
     >
       <div>{label}</div>
       {width} x {height}
-      {scale && scalable && <div>(Scaled)</div>}
+      {scale &&
+        scalable && (
+          <div
+            onClick={() => isActive && setScale(false)}
+            className={isActive ? styles.scaleLink : ''}
+          >
+            (Scaled {parseInt(scaleFactor * 100, 10)}%)
+          </div>
+        )}
+      {!scale &&
+        scalable &&
+        isActive && (
+          <div className={styles.scaleLink} onClick={() => setScale(true)}>
+            Scale
+          </div>
+        )}
     </button>
   );
 };
@@ -97,7 +118,8 @@ type Props = {
   devices: Array<{| label: string, width: number, height: number |}>,
   containerWidth: number,
   containerHeight: number,
-  updateDimensions: (width: number, height: number) => void
+  updateDimensions: (width: number, height: number) => void,
+  setScale: (scale: boolean) => any
 };
 
 const Header = ({
@@ -105,14 +127,14 @@ const Header = ({
   dimensions,
   devices,
   containerWidth,
-  containerHeight
+  containerHeight,
+  setScale
 }: Props) => {
   const { width, height, scale } = dimensions;
   const isCustom = !find(
     devices,
     size => size.width === width && size.height === height
   );
-
   return (
     <div className={styles.buttonContainer}>
       <CustomButton
@@ -125,20 +147,28 @@ const Header = ({
         }
         scale={scale}
       />
-      {devices.map(size => (
-        <SizeButton
-          key={size.label}
-          updateDimensions={updateDimensions}
-          width={size.width}
-          height={size.height}
-          isActive={width === size.width && height === size.height}
-          label={size.label}
-          scalable={
-            containerWidth < size.width || containerHeight < size.height
-          }
-          scale={scale}
-        />
-      ))}
+      {devices.map(size => {
+        const scaleWidth = Math.min(1, containerWidth / size.width);
+        const scaleHeight = Math.min(1, containerHeight / size.height);
+        const scaleFactor = scale ? Math.min(scaleWidth, scaleHeight) : 1;
+
+        return (
+          <SizeButton
+            key={size.label}
+            updateDimensions={updateDimensions}
+            width={size.width}
+            height={size.height}
+            isActive={width === size.width && height === size.height}
+            label={size.label}
+            scalable={
+              containerWidth < size.width || containerHeight < size.height
+            }
+            scaleFactor={scaleFactor}
+            scale={scale}
+            setScale={setScale}
+          />
+        );
+      })}
     </div>
   );
 };
