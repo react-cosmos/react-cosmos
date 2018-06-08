@@ -98,7 +98,7 @@ async function buildBrowserPackage(pkgName) {
     pkgName,
     cmd: 'webpack',
     args: getWebpackCliArgs(pkgName),
-    env: { NODE_ENV: 'production' }
+    env: { NODE_ENV: watch ? 'development' : 'production' }
   });
 }
 
