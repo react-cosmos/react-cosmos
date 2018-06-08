@@ -7,7 +7,7 @@
   "main": "dist/index.js",
   "devDependencies": {
     "@skidding/react-codemirror": "^1.0.2",
-    "classnames": "^2.2.5",
+    "classnames": "^2.2.6",
     "codemirror": "^5.38.0",
     "fuzzaldrin-plus": "^0.6.0",
     "localforage": "^1.7.1",
