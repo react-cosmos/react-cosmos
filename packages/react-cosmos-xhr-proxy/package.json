@@ -7,7 +7,7 @@
   "main": "index.js",
   "dependencies": {
     "react-cosmos-shared": "^4.4.0",
-    "xhr-mock": "^2.3.2"
+    "xhr-mock": "^2.4.0"
   },
   "xo": false
 }
