@@ -50,7 +50,6 @@
     "chalk": "^2.4.1",
     "child-process-promise": "^2.2.0",
     "codecov": "^3.0.2",
-    "coveralls": "^3.0.1",
     "create-react-class": "^15.6.3",
     "css-loader": "^0.28.11",
     "cypress": "^3.0.1",
