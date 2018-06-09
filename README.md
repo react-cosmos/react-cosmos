@@ -10,8 +10,8 @@
   <a href="https://travis-ci.org/react-cosmos/react-cosmos">
     <img alt="Build status" src="https://travis-ci.org/react-cosmos/react-cosmos.svg?branch=master">
   </a>
-  <a href="https://coveralls.io/r/react-cosmos/react-cosmos?branch=master">
-    <img alt="Coverage status" src="https://coveralls.io/repos/react-cosmos/react-cosmos/badge.svg?branch=master">
+  <a href="https://codecov.io/gh/react-cosmos/react-cosmos">
+    <img alt="Codecov status" src="https://img.shields.io/codecov/c/github/react-cosmos/react-cosmos/master.svg">
   </a>
   <a href="https://twitter.com/ReactCosmos">
     <img alt="Follow @ReactCosmos for updates" src="https://img.shields.io/twitter/follow/ReactCosmos.svg?style=flat&label=Follow">
