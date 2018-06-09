@@ -10,7 +10,7 @@ script:
   - yarn test
   - yarn test-smoke-ci
 after_success:
-  - yarn coveralls
+  - yarn codecov
 cache:
   yarn: true
   directories:
