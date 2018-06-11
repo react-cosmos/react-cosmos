@@ -1,3 +1,5 @@
+// @flow
+
 import path from 'path';
 import { silent as silentImport } from 'import-from';
 import express from 'express';
