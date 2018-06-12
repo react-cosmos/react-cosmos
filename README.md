@@ -483,7 +483,7 @@ This proxy wraps your components with the `ApolloProvider` so they can render in
 Provide:
 
 * The GraphQL `endpoint` you send operations to
-* Or The `client` used in your app
+* Or The `client options object` used in your app
 
 ```js
 // cosmos.proxies.js
@@ -505,11 +505,11 @@ import createApolloProxy from 'react-cosmos-apollo-proxy';
 
 // option 2: use the client from your app
 
-import myConfiguredClient from './src/client.js';
+import myConfiguredClientOptions from './src/client.js';
 
 export default [
   createApolloProxy({
-    client: myConfiguredClient
+    clientOptions: myConfiguredClientOptions
   })
   // ...other proxies
 ];
@@ -517,7 +517,7 @@ export default [
 
 ##### "Live" behavior
 
-Once configured, your components enhanced by `react-apollo` will behave as they would normally in your app, sending operation via your own client or to the endpoint passed specified in `cosmos.proxies.js`.
+Once configured, your components enhanced by `react-apollo` will behave as they would normally in your app, sending operation via your own client options object or to the endpoint passed specified in `cosmos.proxies.js`.
 
 ##### Mocking a response with a result or an error
 
