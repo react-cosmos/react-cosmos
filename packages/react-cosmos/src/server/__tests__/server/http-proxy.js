@@ -31,6 +31,7 @@ jest.mock('react-cosmos-config', () => ({
 let stopServer;
 let stopProxyServer;
 
+// Server tests share a single beforeAll case to minimize webpack compilation
 beforeAll(async () => {
   jest.clearAllMocks();
   stopServer = await startServer();
