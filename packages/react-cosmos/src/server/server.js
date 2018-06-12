@@ -1,6 +1,8 @@
 // @flow
 
 import path from 'path';
+import { createServer } from 'http';
+import promisify from 'util.promisify';
 import { silent as silentImport } from 'import-from';
 import express from 'express';
 import httpProxyMiddleware from 'http-proxy-middleware';
@@ -23,7 +25,7 @@ const getPublicPath = (cosmosConfig, userWebpackConfig) => {
   );
 };
 
-export default function startServer() {
+export default async function startServer() {
   if (!hasUserCosmosConfig()) {
     const generatedConfigFor = generateCosmosConfig();
     if (generatedConfigFor) {
@@ -70,14 +72,20 @@ export default function startServer() {
     app.use(context, httpProxyMiddleware(target));
   }
 
-  app.use(
-    webpackDevMiddleware(loaderCompiler, {
-      // This is the base path for the webpack assets and has to match
-      // webpack.output.path
-      publicPath: publicUrl,
-      noInfo: true
-    })
-  );
+  console.log('[Cosmos] Building webpack...');
+  const onWebpackDone = new Promise(resolve => {
+    loaderCompiler.plugin('done', () => {
+      resolve();
+    });
+  });
+
+  const wdmInst = webpackDevMiddleware(loaderCompiler, {
+    // This is the base path for the webpack assets and has to match
+    // webpack.output.path
+    publicPath: publicUrl,
+    logLevel: 'warn'
+  });
+  app.use(wdmInst);
 
   if (hot) {
     app.use(webpackHotMiddleware(loaderCompiler));
@@ -115,10 +123,16 @@ export default function startServer() {
     res.end();
   });
 
-  app.listen(port, hostname, err => {
-    if (err) {
-      throw err;
-    }
-    console.log(`[Cosmos] See you at http://${hostname}:${port}/`);
-  });
+  const server = createServer(app);
+  const listen = promisify(server.listen.bind(server));
+  await listen(port, hostname);
+
+  await onWebpackDone;
+
+  console.log(`[Cosmos] See you at http://${hostname}:${port}/`);
+
+  return async () => {
+    await promisify(wdmInst.close.bind(wdmInst))();
+    await promisify(server.close.bind(server))();
+  };
 }

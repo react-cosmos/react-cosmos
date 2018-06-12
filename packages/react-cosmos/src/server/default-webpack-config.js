@@ -87,7 +87,10 @@ export default function getDefaultWebpackConfig(rootPath: string) {
   const webpack = silentImport(rootPath, 'webpack');
 
   if (webpack.version && parseInt(webpack.version, 10) >= 4) {
-    const mode = process.env.NODE_ENV || 'development';
+    // Disallow non dev/prod environments, like "test" inside Jest, because
+    // they are not supported by webpack
+    const mode =
+      process.env.NODE_ENV === 'production' ? 'production' : 'development';
     config = { ...config, mode };
   }
 

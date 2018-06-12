@@ -1,5 +1,12 @@
+/**
+ * @jest-environment node
+ */
+
+import { createServer } from 'http';
+import request from 'request-promise-native';
+import express from 'express';
+import promisify from 'util.promisify';
 import startServer from '../../server';
-import httpProxyMiddleware from 'http-proxy-middleware';
 
 const mockRootPath = __dirname;
 
@@ -8,56 +15,51 @@ jest.mock('react-cosmos-config', () => ({
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
     publicUrl: '/',
-    port: 9999,
+    port: 9003,
     hostname: '127.0.0.1',
-    httpProxy: { context: '/api', target: 'http://127.0.0.1:4000/api' },
+    httpProxy: {
+      context: '/api',
+      target: 'http://127.0.0.1:4444'
+    },
+    watchDirs: ['.'],
     globalImports: [],
+    // Deprecated options needed for backwards compatibility
     componentPaths: []
   })
 }));
 
-const getCbs = {};
-const mockGet = jest.fn((path, cb) => {
-  getCbs[path] = cb;
-});
-const mockUse = jest.fn();
-const mockListen = jest.fn();
+let stopServer;
+let stopProxyServer;
 
-jest.mock('express', () => {
-  const mockExpress = jest.fn(() => ({
-    get: mockGet,
-    use: mockUse,
-    listen: mockListen
-  }));
-  mockExpress.static = jest.fn();
-  return mockExpress;
-});
-
-const mockWebpackCompiler = () => {};
-mockWebpackCompiler.plugin = () => {};
-
-jest.mock('webpack', () => jest.fn(() => mockWebpackCompiler));
-
-jest.mock('webpack-dev-middleware', () => jest.fn(() => 'MOCK_DEV_MIDDLEWARE'));
-jest.mock('webpack-hot-middleware', () => jest.fn(() => 'MOCK_HOT_MIDDLEWARE'));
-
-jest.mock('http-proxy-middleware', () =>
-  jest.fn(() => 'MOCK_HTTP_PROXY_MIDDLEWARE')
-);
-
-jest.mock('../../extend-webpack-config', () =>
-  jest.fn(() => 'MOCK_WEBPACK_CONFIG')
-);
-
-beforeEach(() => {
+beforeAll(async () => {
   jest.clearAllMocks();
-  startServer();
+  stopServer = await startServer();
+  stopProxyServer = await startProxyServer();
 });
 
-it('sends httpProxy context urls to http-proxy-middleware', () => {
-  expect(mockUse.mock.calls[0][0]).toBe('/api');
-  expect(mockUse.mock.calls[0][1]).toBe('MOCK_HTTP_PROXY_MIDDLEWARE');
-  expect(httpProxyMiddleware.mock.calls[0][0]).toBe(
-    'http://127.0.0.1:4000/api'
-  );
+afterAll(async () => {
+  await stopServer();
+  await stopProxyServer();
 });
+
+it('creates http proxy', async () => {
+  const res = await request({
+    uri: 'http://127.0.0.1:9003/api/test'
+  });
+  expect(res).toBe('Hello World');
+});
+
+async function startProxyServer() {
+  const app = express();
+  app.get('/api/test', (req, res) => {
+    res.send('Hello World');
+  });
+
+  const server = createServer(app);
+  const listen = promisify(server.listen.bind(server));
+  await listen(4444, '127.0.0.1');
+
+  return async () => {
+    await promisify(server.close.bind(server))();
+  };
+}

@@ -1,3 +1,5 @@
+const { join } = require('path');
+
 export default {
   mode: 'development',
   module: {
@@ -8,5 +10,8 @@ export default {
         exclude: /node_modules/
       }
     ]
+  },
+  devServer: {
+    contentBase: join(__dirname, 'static2')
   }
 };

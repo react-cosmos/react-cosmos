@@ -1,11 +1,12 @@
+/**
+ * @jest-environment node
+ */
+
 import fs from 'fs';
-import express from 'express';
-import webpack from 'webpack';
+import EventSource from 'eventsource';
+import request from 'request-promise-native';
 import promisify from 'util.promisify';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
 import startServer from '../../server';
-import extendWebpackConfig from '../../extend-webpack-config';
 import { generateCosmosConfig } from 'react-cosmos-config';
 
 const readFileAsync = promisify(fs.readFile);
@@ -17,92 +18,44 @@ jest.mock('react-cosmos-config', () => ({
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
     publicUrl: '/',
-    port: 9999,
+    port: 9001,
     hostname: '127.0.0.1',
+    watchDirs: ['.'],
     globalImports: [],
+    // Deprecated options needed for backwards compatibility
     componentPaths: []
   })
 }));
 
-const getCbs = {};
-const mockGet = jest.fn((path, cb) => {
-  getCbs[path] = cb;
-});
-const mockUse = jest.fn();
-const mockListen = jest.fn();
+let stopServer;
 
-jest.mock('express', () => {
-  const mockExpress = jest.fn(() => ({
-    get: mockGet,
-    use: mockUse,
-    listen: mockListen
-  }));
-  mockExpress.static = jest.fn();
-  return mockExpress;
-});
-
-const mockWebpackCompiler = () => {};
-mockWebpackCompiler.plugin = () => {};
-
-jest.mock('webpack', () => jest.fn(() => mockWebpackCompiler));
-
-jest.mock('webpack-dev-middleware', () => jest.fn(() => 'MOCK_DEV_MIDDLEWARE'));
-jest.mock('webpack-hot-middleware', () => jest.fn(() => 'MOCK_HOT_MIDDLEWARE'));
-
-jest.mock('../../default-webpack-config', () =>
-  jest.fn(() => 'MOCK_DEFAULT_WEBPACK_CONFIG')
-);
-
-jest.mock('../../extend-webpack-config', () =>
-  jest.fn(() => 'MOCK_WEBPACK_CONFIG')
-);
-
-beforeEach(() => {
+beforeAll(async () => {
   jest.clearAllMocks();
-  startServer();
+  stopServer = await startServer();
 });
 
-it('calls extendWebpackConfig using webpack', () => {
-  expect(extendWebpackConfig.mock.calls[0][0].webpack).toBe(webpack);
+afterAll(async () => {
+  await stopServer();
 });
 
-it('extends webpack config from default config', () => {
-  expect(extendWebpackConfig.mock.calls[0][0].userWebpackConfig).toBe(
-    'MOCK_DEFAULT_WEBPACK_CONFIG'
-  );
-});
+it('serves webpack bundle', async () => {
+  const res = await request({
+    uri: 'http://127.0.0.1:9001/main.js',
+    resolveWithFullResponse: true
+  });
 
-it('compiles webpack using extended config', () => {
-  expect(webpack).toHaveBeenCalledWith('MOCK_WEBPACK_CONFIG');
-});
-
-it('creates express server', () => {
-  expect(express).toHaveBeenCalled();
-});
-
-it('sends webpack compiler to dev middleware', () => {
-  expect(webpackDevMiddleware.mock.calls[0][0]).toBe(mockWebpackCompiler);
-});
-
-it('sends publicPath to dev middleware', () => {
-  expect(webpackDevMiddleware.mock.calls[0][1].publicPath).toBe('/');
-});
-
-it('adds loader dev middleware to express server', () => {
-  expect(mockUse).toHaveBeenCalledWith('MOCK_DEV_MIDDLEWARE');
+  expect(res.statusCode).toBe(200);
 });
 
 it('serves index.html on / route with playgrounds opts included', async () => {
-  const send = jest.fn();
-  getCbs['/']({}, { send });
-
-  const htmlContents = await readFileAsync(
+  const res = await request('http://127.0.0.1:9001/');
+  const source = await readFileAsync(
     require.resolve('../../static/index.html'),
     'utf8'
   );
 
-  expect(send).toHaveBeenCalledWith(
-    htmlContents.replace(
+  expect(res).toEqual(
+    source.replace(
       '__PLAYGROUND_OPTS__',
       JSON.stringify({
         loaderUri: '/_loader.html',
@@ -116,36 +69,35 @@ it('serves index.html on / route with playgrounds opts included', async () => {
   );
 });
 
-it('serve playground js on /_playground.js route', () => {
-  const sendFile = jest.fn();
-  getCbs['/_playground.js']({}, { sendFile });
-
-  expect(sendFile).toHaveBeenCalledWith(
-    require.resolve('react-cosmos-playground')
+it('serves playground js on /_playground.js route', async () => {
+  const res = await request('http://127.0.0.1:9001/_playground.js');
+  const source = await readFileAsync(
+    require.resolve('react-cosmos-playground'),
+    'utf8'
   );
+
+  expect(res).toEqual(source);
 });
 
-it('serve favicon.ico on /_cosmos.ico route', () => {
-  const sendFile = jest.fn();
-  getCbs['/_cosmos.ico']({}, { sendFile });
-
-  expect(sendFile).toHaveBeenCalledWith(
-    require.resolve('../../static/favicon.ico')
+it('serves favicon.ico on /_cosmos.ico route', async () => {
+  const res = await request('http://127.0.0.1:9001/_cosmos.ico');
+  const source = await readFileAsync(
+    require.resolve('../../static/favicon.ico'),
+    'utf8'
   );
+
+  expect(res).toEqual(source);
 });
 
-it('does not use hot middleware', () => {
-  expect(webpackHotMiddleware).not.toHaveBeenCalled();
-});
+it('does not activate webpack hmr', async () => {
+  const es = new EventSource('http://127.0.0.1:9001/__webpack_hmr');
 
-it('does not create static server', () => {
-  expect(express.static).not.toHaveBeenCalled();
-});
+  await new Promise((resolve, reject) => {
+    es.addEventListener('open', reject);
+    es.addEventListener('error', resolve);
+  });
 
-it('starts express server with hostname & port', () => {
-  const [[port, hostname]] = mockListen.mock.calls;
-  expect(port).toBe(9999);
-  expect(hostname).toBe('127.0.0.1');
+  es.close();
 });
 
 it('does not call config generation function', () => {
