@@ -125,9 +125,9 @@ describe('proxy configured with a client', () => {
     expect(wrapper.instance().client.cache).toBe(clientOptions.cache);
   });
 
-  //   it('connects to the Apollo DevTools', () => {
-  //     expect(parent.__APOLLO_CLIENT__).toBe(clientOptions);
-  //   });
+  it('connects to the Apollo DevTools', () => {
+    expect(parent.__APOLLO_CLIENT__).toBe(wrapper.instance().client);
+  });
 });
 
 describe('proxy configured with an endpoint', () => {
