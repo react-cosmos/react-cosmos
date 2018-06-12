@@ -59,8 +59,8 @@ export default async function startWebServer() {
     userWebpackConfig
   });
 
-  await onWebpackDone;
   await startServer();
+  await onWebpackDone;
 
   return async () => {
     await stopWebpack();
