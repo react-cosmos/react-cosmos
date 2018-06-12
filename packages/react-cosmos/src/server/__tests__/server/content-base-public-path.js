@@ -1,66 +1,47 @@
-import express from 'express';
+/**
+ * @jest-environment node
+ */
+
+import { join } from 'path';
+import request from 'request-promise-native';
 import startServer from '../../server';
 
 const mockRootPath = __dirname;
+const mockPublicPath = join(__dirname, '__fsmocks__/static');
 
 jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
-    port: 9999,
+    port: 9008,
     hostname: '127.0.0.1',
-    publicPath: 'server/public',
+    publicPath: mockPublicPath,
     publicUrl: '/static/',
-    webpackConfigPath: require.resolve('./__fsmocks__/webpack.config'),
+    webpackConfigPath: require.resolve(
+      './__fsmocks__/webpack.config-contentbase'
+    ),
+    watchDirs: ['.'],
     globalImports: [],
+    // Deprecated options needed for backwards compatibility
     componentPaths: []
   })
 }));
 
-const getCbs = {};
-const mockGet = jest.fn((path, cb) => {
-  getCbs[path] = cb;
-});
-const mockUse = jest.fn();
-const mockListen = jest.fn();
+let stopServer;
 
-jest.mock('express', () => {
-  const mockExpress = jest.fn(() => ({
-    get: mockGet,
-    use: mockUse,
-    listen: mockListen
-  }));
-  mockExpress.static = jest.fn(() => 'MOCK_EXPRESS_STATIC');
-  return mockExpress;
-});
-
-const mockWebpackCompiler = () => {};
-mockWebpackCompiler.plugin = () => {};
-
-jest.mock('webpack', () => jest.fn(() => mockWebpackCompiler));
-
-jest.mock('webpack-dev-middleware', () => jest.fn(() => 'MOCK_DEV_MIDDLEWARE'));
-jest.mock('webpack-hot-middleware', () => jest.fn(() => 'MOCK_HOT_MIDDLEWARE'));
-
-jest.mock('./__fsmocks__/webpack.config', () => ({
-  devServer: {
-    contentBase: 'user/server/public'
-  }
-}));
-
-jest.mock('../../extend-webpack-config', () =>
-  jest.fn(() => 'MOCK_WEBPACK_CONFIG')
-);
-
-beforeEach(() => {
+// Server tests share a single beforeAll case to minimize webpack compilation
+beforeAll(async () => {
   jest.clearAllMocks();
-  startServer();
+  stopServer = await startServer();
 });
 
-// Note: This test is ment to show that a custom publicPath is used over
+afterAll(async () => {
+  await stopServer();
+});
+
+// Note: This test is ment to show that a custom publicPath overrides
 // webpack.devServer.contentBase
-it('creates static server with public path', () => {
-  expect(express.static).toHaveBeenCalledWith('server/public', {
-    index: false
-  });
+it('serves static assets from Cosmos publicPath', async () => {
+  const res = await request('http://127.0.0.1:9008/static/robots.txt');
+  expect(res).toEqual(`we are the robots\n`);
 });

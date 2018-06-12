@@ -129,9 +129,9 @@ function getOutput({ outputPath, publicUrl }, shouldExport) {
 function getWebpackRulesOptionName(webpackConfig) {
   // To support webpack 1 and 2 configuration formats, we use the one that
   // user passes
-  return webpackConfig.module && webpackConfig.module.rules
-    ? 'rules'
-    : 'loaders';
+  return webpackConfig.module && webpackConfig.module.loaders
+    ? 'loaders'
+    : 'rules';
 }
 
 function getExistingRules(webpackConfig) {

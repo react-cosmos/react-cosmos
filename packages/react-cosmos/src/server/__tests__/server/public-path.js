@@ -1,65 +1,69 @@
-import express from 'express';
+/**
+ * @jest-environment node
+ */
+
+import { readFile } from 'fs';
+import { join } from 'path';
+import request from 'request-promise-native';
+import promisify from 'util.promisify';
 import startServer from '../../server';
 
+const readFileAsync = promisify(readFile);
+
 const mockRootPath = __dirname;
+const mockPublicPath = join(__dirname, '__fsmocks__/static');
 
 jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
-    port: 9999,
+    port: 9004,
     hostname: '127.0.0.1',
-    publicPath: 'server/public',
+    publicPath: mockPublicPath,
     publicUrl: '/static/',
     globalImports: [],
+    watchDirs: ['.'],
+    // Deprecated options needed for backwards compatibility
     componentPaths: []
   })
 }));
 
-const getCbs = {};
-const mockGet = jest.fn((path, cb) => {
-  getCbs[path] = cb;
-});
-const mockUse = jest.fn();
-const mockListen = jest.fn();
+let stopServer;
 
-jest.mock('express', () => {
-  const mockExpress = jest.fn(() => ({
-    get: mockGet,
-    use: mockUse,
-    listen: mockListen
-  }));
-  mockExpress.static = jest.fn(() => 'MOCK_EXPRESS_STATIC');
-  return mockExpress;
-});
-
-const mockWebpackCompiler = () => {};
-mockWebpackCompiler.plugin = () => {};
-
-jest.mock('webpack', () => jest.fn(() => mockWebpackCompiler));
-
-jest.mock('webpack-dev-middleware', () => jest.fn(() => 'MOCK_DEV_MIDDLEWARE'));
-jest.mock('webpack-hot-middleware', () => jest.fn(() => 'MOCK_HOT_MIDDLEWARE'));
-
-jest.mock('../../extend-webpack-config', () =>
-  jest.fn(() => 'MOCK_WEBPACK_CONFIG')
-);
-
-beforeEach(() => {
+// Server tests share a single beforeAll case to minimize webpack compilation
+beforeAll(async () => {
   jest.clearAllMocks();
-  startServer();
+  stopServer = await startServer();
 });
 
-it('creates static server with public path', () => {
-  expect(express.static).toHaveBeenCalledWith('server/public', {
-    index: false
-  });
+afterAll(async () => {
+  await stopServer();
 });
 
-it('sends public url to express server', () => {
-  expect(mockUse.mock.calls[1][0]).toBe('/static/');
+// Ensure that the static server doesn't override the / path
+it('serves index.html on / route with playgrounds opts included', async () => {
+  const res = await request('http://127.0.0.1:9004/');
+  const source = await readFileAsync(
+    require.resolve('../../static/index.html'),
+    'utf8'
+  );
+
+  expect(res).toEqual(
+    source.replace(
+      '__PLAYGROUND_OPTS__',
+      JSON.stringify({
+        loaderUri: '/static/_loader.html',
+        projectKey: mockRootPath,
+        webpackConfigType: 'default',
+        deps: {
+          'html-webpack-plugin': true
+        }
+      })
+    )
+  );
 });
 
-it('sends public url to express server', () => {
-  expect(mockUse.mock.calls[1][1]).toBe('MOCK_EXPRESS_STATIC');
+it('serves static asset', async () => {
+  const res = await request('http://127.0.0.1:9004/static/robots.txt');
+  expect(res).toEqual(`we are the robots\n`);
 });

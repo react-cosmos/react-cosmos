@@ -33,7 +33,7 @@ const runWebpackCompiler = (webpack, config) =>
     });
   });
 
-export default function startExport() {
+export default async function startExport() {
   const cosmosConfig = getCosmosConfig();
   const { rootPath, outputPath, publicPath, publicUrl } = cosmosConfig;
 
@@ -73,7 +73,7 @@ export default function startExport() {
     }
   }
 
-  runWebpackCompiler(webpack, loaderWebpackConfig)
+  await runWebpackCompiler(webpack, loaderWebpackConfig)
     .then(() => {
       exportPlaygroundFiles(cosmosConfig, outputPath);
     })
