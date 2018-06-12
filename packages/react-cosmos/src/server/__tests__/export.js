@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import fs from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { join } from 'path';
 import rimraf from 'rimraf';
 import startExport from '../export';
@@ -35,25 +35,25 @@ afterAll(() => {
 
 describe('webpack files', () => {
   it('exports _loader.html', () => {
-    expect(fs.existsSync(join(mockOutputPath, '_loader.html'))).toBe(true);
+    expect(existsSync(join(mockOutputPath, '_loader.html'))).toBe(true);
   });
 
   it('exports main.js', () => {
-    expect(fs.existsSync(join(mockOutputPath, 'main.js'))).toBe(true);
+    expect(existsSync(join(mockOutputPath, 'main.js'))).toBe(true);
   });
 });
 
 describe('playground files', () => {
   it('exports _cosmos.ico', () => {
-    expect(fs.existsSync(join(mockOutputPath, '_cosmos.ico'))).toBe(true);
+    expect(existsSync(join(mockOutputPath, '_cosmos.ico'))).toBe(true);
   });
 
   it('exports _playground.js', () => {
-    expect(fs.existsSync(join(mockOutputPath, '_playground.js'))).toBe(true);
+    expect(existsSync(join(mockOutputPath, '_playground.js'))).toBe(true);
   });
 
   it('exports index.html', () => {
-    expect(fs.existsSync(join(mockOutputPath, 'index.html'))).toBe(true);
+    expect(existsSync(join(mockOutputPath, 'index.html'))).toBe(true);
   });
 
   it('exports index.html with __PLAYGROUND_OPTS__ replaced', () => {
@@ -68,8 +68,8 @@ describe('playground files', () => {
       }
     });
 
-    expect(fs.readFileSync(outputPath, 'utf8')).toBe(
-      fs.readFileSync(inputPath, 'utf8').replace('__PLAYGROUND_OPTS__', optsStr)
+    expect(readFileSync(outputPath, 'utf8')).toBe(
+      readFileSync(inputPath, 'utf8').replace('__PLAYGROUND_OPTS__', optsStr)
     );
   });
 });
