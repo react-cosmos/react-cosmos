@@ -6,7 +6,7 @@ import fs from 'fs';
 import request from 'request-promise-native';
 import { argv } from 'yargs';
 import promisify from 'util.promisify';
-import startServer from '../../server';
+import startServer from '../../server-web';
 import webpackConfig from './__fsmocks__/webpack.config-fn';
 
 const readFileAsync = promisify(fs.readFile);

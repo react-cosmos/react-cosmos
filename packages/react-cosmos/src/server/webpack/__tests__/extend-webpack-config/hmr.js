@@ -36,7 +36,7 @@ it('adds resolved global imports to entries', () => {
 it('adds loader entry last', () => {
   const webpackConfig = getConfig();
   const cosmosEntry = webpackConfig.entry[webpackConfig.entry.length - 1];
-  expect(cosmosEntry).toBe(require.resolve('../../../client/loader-entry'));
+  expect(cosmosEntry).toBe(require.resolve('../../../../client/loader-entry'));
 });
 
 it('adds hot middleware client to entries', () => {

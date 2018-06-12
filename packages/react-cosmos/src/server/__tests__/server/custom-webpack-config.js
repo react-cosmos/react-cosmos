@@ -5,7 +5,7 @@
 import fs from 'fs';
 import request from 'request-promise-native';
 import promisify from 'util.promisify';
-import startServer from '../../server';
+import startServer from '../../server-web';
 
 const readFileAsync = promisify(fs.readFile);
 const mockRootPath = __dirname;

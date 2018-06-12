@@ -6,7 +6,7 @@ import { readFile } from 'fs';
 import { join } from 'path';
 import request from 'request-promise-native';
 import promisify from 'util.promisify';
-import startServer from '../../server';
+import startServer from '../../server-web';
 
 const readFileAsync = promisify(readFile);
 
