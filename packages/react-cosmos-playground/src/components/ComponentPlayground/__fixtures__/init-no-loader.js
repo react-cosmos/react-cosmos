@@ -8,7 +8,7 @@ export default createFixture({
 
   props: {
     options: {
-      loaderUri: '/_loader.html',
+      loaderUri: '/_loader-mock.html',
       projectKey: 'test',
       webpackConfigType: 'default',
       deps: {}
@@ -18,7 +18,7 @@ export default createFixture({
 
   fetch: [
     {
-      matcher: 'end:_loader.html',
+      matcher: 'end:_loader-mock.html',
       response: 404
     }
   ]
