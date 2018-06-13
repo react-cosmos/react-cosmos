@@ -17,7 +17,7 @@ jest.mock('react-cosmos-config', () => ({
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
     publicUrl: '/',
-    port: 9001,
+    port: 10001,
     hostname: null,
     globalImports: []
   })
@@ -36,7 +36,7 @@ afterAll(async () => {
 });
 
 it('serves index.html on / route with playgrounds opts included', async () => {
-  const res = await request('http://127.0.0.1:9001/');
+  const res = await request('http://127.0.0.1:10001/');
   const source = await readFileAsync(
     require.resolve('../../shared/static/index.html'),
     'utf8'
@@ -52,7 +52,7 @@ it('serves index.html on / route with playgrounds opts included', async () => {
 });
 
 it('serves playground js on /_playground.js route', async () => {
-  const res = await request('http://127.0.0.1:9001/_playground.js');
+  const res = await request('http://127.0.0.1:10001/_playground.js');
   const source = await readFileAsync(
     require.resolve('react-cosmos-playground'),
     'utf8'
@@ -62,7 +62,7 @@ it('serves playground js on /_playground.js route', async () => {
 });
 
 it('serves favicon.ico on /_cosmos.ico route', async () => {
-  const res = await request('http://127.0.0.1:9001/_cosmos.ico');
+  const res = await request('http://127.0.0.1:10001/_cosmos.ico');
   const source = await readFileAsync(
     require.resolve('../../shared/static/favicon.ico'),
     'utf8'
