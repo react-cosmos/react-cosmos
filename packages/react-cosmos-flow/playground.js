@@ -1,8 +1,8 @@
 // @flow
 
 export type PlaygroundWebOpts = {
+  platform: 'web',
   projectKey: string,
-  loaderTransport: 'postMessage',
   loaderUri: string,
   webpackConfigType: 'default' | 'custom',
   deps: {
@@ -11,8 +11,8 @@ export type PlaygroundWebOpts = {
 };
 
 export type PlaygroundNativeOpts = {
-  projectKey: string,
-  loaderTransport: 'websockets'
+  platform: 'native',
+  projectKey: string
 };
 
 export type PlaygroundOpts = PlaygroundWebOpts | PlaygroundNativeOpts;

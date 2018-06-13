@@ -40,8 +40,8 @@ it('serves index.html on / route with playgrounds opts included', async () => {
   );
 
   const playgroundOpts = {
-    projectKey: mockRootPath,
-    loaderTransport: 'websockets'
+    platform: 'native',
+    projectKey: mockRootPath
   };
   expect(res).toEqual(
     source.replace('__PLAYGROUND_OPTS__', JSON.stringify(playgroundOpts))

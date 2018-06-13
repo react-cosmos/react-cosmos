@@ -61,8 +61,8 @@ describe('playground files', () => {
     const inputPath = join(__dirname, '../../shared/static/index.html');
     const outputPath = join(mockOutputPath, 'index.html');
     const optsStr = JSON.stringify({
+      platform: 'web',
       projectKey: mockRootPath,
-      loaderTransport: 'postMessage',
       loaderUri: '/_loader.html',
       webpackConfigType: 'default',
       deps: {

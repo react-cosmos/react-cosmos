@@ -49,8 +49,8 @@ it('serves index.html on / route with playgrounds opts included', async () => {
     source.replace(
       '__PLAYGROUND_OPTS__',
       JSON.stringify({
+        platform: 'web',
         projectKey: mockRootPath,
-        loaderTransport: 'postMessage',
         loaderUri: '/_loader.html',
         webpackConfigType: 'custom', // <<< This is relevant in this test
         deps: {

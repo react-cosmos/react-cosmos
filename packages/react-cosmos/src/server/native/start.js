@@ -33,7 +33,7 @@ export async function startServer() {
 
 function getPlaygroundOpts({ rootPath }) {
   return {
-    projectKey: rootPath,
-    loaderTransport: 'websockets'
+    platform: 'native',
+    projectKey: rootPath
   };
 }

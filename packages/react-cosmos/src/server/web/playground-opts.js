@@ -11,8 +11,8 @@ export function getPlaygroundOpts(cosmosConfig: Config): PlaygroundWebOpts {
   const { rootPath, publicUrl } = cosmosConfig;
 
   return {
+    platform: 'web',
     projectKey: rootPath,
-    loaderTransport: 'postMessage',
     loaderUri: join(publicUrl, '_loader.html'),
     webpackConfigType: hasUserCustomWebpackConfig(cosmosConfig)
       ? 'custom'
