@@ -12,5 +12,5 @@ jest.mock('import-from', () => ({
 
 it('sets config.mode as NODE_ENV', () => {
   const config = getDefaultWebpackConfig('/foo/path');
-  expect(config.mode).toEqual('test'); // NOE_ENV is "test" in Jest
+  expect(config.mode).toEqual('development');
 });

@@ -1,82 +1,66 @@
-import fs from 'fs';
-import path from 'path';
+/**
+ * @jest-environment node
+ */
+
+import { existsSync, readFileSync } from 'fs';
+import { join } from 'path';
 import rimraf from 'rimraf';
-import webpack from 'webpack';
-import extendWebpackConfig from '../extend-webpack-config';
 import startExport from '../export';
 
 const mockRootPath = __dirname;
-const mockOutputPath = path.join(__dirname, './__fsoutput__/export');
+const mockOutputPath = join(__dirname, './__fsoutput__/export');
 
 jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
-    publicUrl: '/static/',
+    publicUrl: '/',
     outputPath: mockOutputPath,
+    watchDirs: ['.'],
     globalImports: [],
+    // Deprecated options needed for backwards compatibility
     componentPaths: []
   })
 }));
 
-jest.mock('webpack', () =>
-  jest.fn(() => ({
-    run: jest.fn(cb => {
-      cb(null, {});
-    })
-  }))
-);
-
-jest.mock('../default-webpack-config', () =>
-  jest.fn(() => 'MOCK_DEFAULT_WEBPACK_CONFIG')
-);
-
-jest.mock('../extend-webpack-config', () =>
-  jest.fn(() => 'MOCK_WEBPACK_CONFIG')
-);
-
-// Warning: Export tests share a single beforeAll case to minimize fs writes
-beforeAll(() => {
+// Export tests share a single beforeAll case to minimize fs writes
+beforeAll(async () => {
   jest.clearAllMocks();
-  startExport();
+  await startExport();
 });
 
 afterAll(() => {
-  rimraf.sync(path.join(mockOutputPath, '**/*'));
+  rimraf.sync(join(mockOutputPath, '**/*'));
 });
 
-it('extends default webpack config with export flag', () => {
-  expect(extendWebpackConfig).toHaveBeenCalledWith({
-    webpack,
-    userWebpackConfig: 'MOCK_DEFAULT_WEBPACK_CONFIG',
-    shouldExport: true
+describe('webpack files', () => {
+  it('exports _loader.html', () => {
+    expect(existsSync(join(mockOutputPath, '_loader.html'))).toBe(true);
   });
-});
 
-it('calls webpack compiler with mock', () => {
-  expect(webpack).toHaveBeenCalledWith('MOCK_WEBPACK_CONFIG');
+  it('exports main.js', () => {
+    expect(existsSync(join(mockOutputPath, 'main.js'))).toBe(true);
+  });
 });
 
 describe('playground files', () => {
   it('exports _cosmos.ico', () => {
-    expect(fs.existsSync(path.join(mockOutputPath, '_cosmos.ico'))).toBe(true);
+    expect(existsSync(join(mockOutputPath, '_cosmos.ico'))).toBe(true);
   });
 
   it('exports _playground.js', () => {
-    expect(fs.existsSync(path.join(mockOutputPath, '_playground.js'))).toBe(
-      true
-    );
+    expect(existsSync(join(mockOutputPath, '_playground.js'))).toBe(true);
   });
 
   it('exports index.html', () => {
-    expect(fs.existsSync(path.join(mockOutputPath, 'index.html'))).toBe(true);
+    expect(existsSync(join(mockOutputPath, 'index.html'))).toBe(true);
   });
 
   it('exports index.html with __PLAYGROUND_OPTS__ replaced', () => {
-    const inputPath = path.join(__dirname, '../static/index.html');
-    const outputPath = path.join(mockOutputPath, 'index.html');
+    const inputPath = join(__dirname, '../static/index.html');
+    const outputPath = join(mockOutputPath, 'index.html');
     const optsStr = JSON.stringify({
-      loaderUri: '/static/_loader.html',
+      loaderUri: '/_loader.html',
       projectKey: mockRootPath,
       webpackConfigType: 'default',
       deps: {
@@ -84,8 +68,8 @@ describe('playground files', () => {
       }
     });
 
-    expect(fs.readFileSync(outputPath, 'utf8')).toBe(
-      fs.readFileSync(inputPath, 'utf8').replace('__PLAYGROUND_OPTS__', optsStr)
+    expect(readFileSync(outputPath, 'utf8')).toBe(
+      readFileSync(inputPath, 'utf8').replace('__PLAYGROUND_OPTS__', optsStr)
     );
   });
 });

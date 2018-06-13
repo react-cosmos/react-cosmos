@@ -17,14 +17,14 @@ const webpack = {
   HotModuleReplacementPlugin
 };
 
-const userRule = {};
+const userLoader = {};
 const getConfig = () =>
   extendWebpackConfig({
     webpack,
     userWebpackConfig: {
       module: {
         additionalOption: 'foo',
-        rules: [userRule]
+        loaders: [userLoader]
       }
     }
   });
@@ -35,20 +35,20 @@ beforeEach(() => {
 
 it('keeps user loaders', () => {
   const webpackConfig = getConfig();
-  expect(webpackConfig.module.rules).toContain(userRule);
+  expect(webpackConfig.module.loaders).toContain(userLoader);
 });
 
 it('adds module loader to module.loaders', () => {
   const webpackConfig = getConfig();
-  expect(webpackConfig.module.rules).toContainEqual({
+  expect(webpackConfig.module.loaders).toContainEqual({
     loader: require.resolve('../../embed-modules-webpack-loader'),
-    include: require.resolve('../../../client/user-modules')
+    include: require.resolve('../../../../client/user-modules')
   });
 });
 
-it('does not create module.loaders', () => {
+it('does not create module.rules', () => {
   const webpackConfig = getConfig();
-  expect(webpackConfig.module.loaders).toBe(undefined);
+  expect(webpackConfig.module.rules).toBe(undefined);
 });
 
 it('preserves additional module options', () => {

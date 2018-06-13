@@ -1,5 +1,9 @@
+/**
+ * @jest-environment node
+ */
+
 import { hasUserCosmosConfig, generateCosmosConfig } from 'react-cosmos-config';
-import startServer from '../../server';
+import startServer from '../../server-web';
 
 const mockRootPath = __dirname;
 
@@ -12,43 +16,23 @@ jest.mock('react-cosmos-config', () => ({
     port: 9999,
     hostname: '127.0.0.1',
     hot: true,
+    watchDirs: ['.'],
     globalImports: [],
+    // Deprecated options needed for backwards compatibility
     componentPaths: []
   })
 }));
 
-const getCbs = {};
-const mockGet = jest.fn((path, cb) => {
-  getCbs[path] = cb;
-});
-const mockUse = jest.fn();
-const mockListen = jest.fn();
+let stopServer;
 
-jest.mock('express', () => {
-  const mockExpress = jest.fn(() => ({
-    get: mockGet,
-    use: mockUse,
-    listen: mockListen
-  }));
-  mockExpress.static = jest.fn();
-  return mockExpress;
-});
-
-const mockWebpackCompiler = () => {};
-mockWebpackCompiler.plugin = () => {};
-
-jest.mock('webpack', () => jest.fn(() => mockWebpackCompiler));
-
-jest.mock('webpack-dev-middleware', () => jest.fn(() => 'MOCK_DEV_MIDDLEWARE'));
-jest.mock('webpack-hot-middleware', () => jest.fn(() => 'MOCK_HOT_MIDDLEWARE'));
-
-jest.mock('../../extend-webpack-config', () =>
-  jest.fn(() => 'MOCK_WEBPACK_CONFIG')
-);
-
-beforeEach(() => {
+// Server tests share a single beforeAll case to minimize webpack compilation
+beforeAll(async () => {
   jest.clearAllMocks();
-  startServer();
+  stopServer = await startServer();
+});
+
+afterAll(async () => {
+  await stopServer();
 });
 
 it('checks if user has cosmos config', () => {

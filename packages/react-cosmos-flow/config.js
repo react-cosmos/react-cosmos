@@ -13,7 +13,7 @@ export type Config = {
   fileMatchIgnore: string,
   exclude: ExcludePatterns,
   globalImports: Array<string>,
-  hostname: string,
+  hostname: ?string,
   hot: boolean,
   port: number,
   proxiesPath: string,
@@ -27,6 +27,7 @@ export type Config = {
   httpProxy?: {| context: string, target: string |},
   watchDirs: Array<string>,
   // Deprecated
+  proxies?: Array<string>,
   componentPaths: Array<string>,
   ignore: Array<RegExp>,
   fixturesDir: string,

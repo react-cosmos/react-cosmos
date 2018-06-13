@@ -87,8 +87,21 @@ export default function getDefaultWebpackConfig(rootPath: string) {
   const webpack = silentImport(rootPath, 'webpack');
 
   if (webpack.version && parseInt(webpack.version, 10) >= 4) {
-    const mode = process.env.NODE_ENV || 'development';
-    config = { ...config, mode };
+    // Disallow non dev/prod environments, like "test" inside Jest, because
+    // they are not supported by webpack
+    const mode =
+      process.env.NODE_ENV === 'production' ? 'production' : 'development';
+
+    config = {
+      ...config,
+      mode,
+      optimization: {
+        // Cosmos reads component names at run-time, so it is crucial to not
+        // minify even when building with production env (ie. when exporting)
+        // https://github.com/react-cosmos/react-cosmos/issues/701
+        minimize: false
+      }
+    };
   }
 
   return config;

@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-webpack-commons-chunk-example",
-  "version": "4.4.0",
+  "version": "4.5.0",
   "description": "Example of webpack & optimization.splitChunks",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/webpack-commons-chunk",
   "license": "MIT",
@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "moment": "^2.22.2",
-    "react-cosmos": "^4.4.0"
+    "react-cosmos": "^4.5.0"
   },
   "xo": false,
   "private": true

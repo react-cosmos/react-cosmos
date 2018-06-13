@@ -1,2 +1,3 @@
 // Sometimes Travis is very slow...
-jest.setTimeout(30000);
+// Especially slow are the server tests which test webpack compilation
+jest.setTimeout(120000); // 2min

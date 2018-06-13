@@ -3,7 +3,7 @@
 import { resolve, join } from 'path';
 import omit from 'lodash.omit';
 import { getCosmosConfig } from 'react-cosmos-config';
-import { getEnv } from './get-env';
+import { getEnv } from '../get-env';
 
 import type { Config } from 'react-cosmos-flow/config';
 
@@ -18,7 +18,7 @@ import type { Config } from 'react-cosmos-flow/config';
  * internal loaders and entries must have absolute path (via require.resolve)
  */
 type Args = {
-  webpack: Object,
+  webpack: Function,
   userWebpackConfig: Object,
   shouldExport?: boolean
 };
@@ -50,7 +50,7 @@ export default function extendWebpackConfig({
     ...getExistingRules(webpackConfig),
     {
       loader: require.resolve('./embed-modules-webpack-loader'),
-      include: require.resolve('../client/user-modules')
+      include: require.resolve('../../client/user-modules')
     }
   ];
 
@@ -100,7 +100,7 @@ function getEntry({ globalImports, hot }, shouldExport) {
   }
 
   // Load loader entry last
-  return [...entry, require.resolve('../client/loader-entry')];
+  return [...entry, require.resolve('../../client/loader-entry')];
 }
 
 function getOutput({ outputPath, publicUrl }, shouldExport) {
@@ -129,9 +129,9 @@ function getOutput({ outputPath, publicUrl }, shouldExport) {
 function getWebpackRulesOptionName(webpackConfig) {
   // To support webpack 1 and 2 configuration formats, we use the one that
   // user passes
-  return webpackConfig.module && webpackConfig.module.rules
-    ? 'rules'
-    : 'loaders';
+  return webpackConfig.module && webpackConfig.module.loaders
+    ? 'loaders'
+    : 'rules';
 }
 
 function getExistingRules(webpackConfig) {

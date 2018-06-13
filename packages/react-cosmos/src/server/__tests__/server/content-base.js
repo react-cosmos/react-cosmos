@@ -1,5 +1,9 @@
-import express from 'express';
-import startServer from '../../server';
+/**
+ * @jest-environment node
+ */
+
+import request from 'request-promise-native';
+import startServer from '../../server-web';
 
 const mockRootPath = __dirname;
 
@@ -7,57 +11,32 @@ jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
-    port: 9999,
+    port: 9007,
     hostname: '127.0.0.1',
     publicUrl: '/static/',
-    webpackConfigPath: require.resolve('./__fsmocks__/webpack.config'),
+    webpackConfigPath: require.resolve(
+      './__fsmocks__/webpack.config-contentbase'
+    ),
+    watchDirs: ['.'],
     globalImports: [],
+    // Deprecated options needed for backwards compatibility
     componentPaths: []
   })
 }));
 
-const getCbs = {};
-const mockGet = jest.fn((path, cb) => {
-  getCbs[path] = cb;
-});
-const mockUse = jest.fn();
-const mockListen = jest.fn();
+let stopServer;
 
-jest.mock('express', () => {
-  const mockExpress = jest.fn(() => ({
-    get: mockGet,
-    use: mockUse,
-    listen: mockListen
-  }));
-  mockExpress.static = jest.fn(() => 'MOCK_EXPRESS_STATIC');
-  return mockExpress;
-});
-
-const mockWebpackCompiler = () => {};
-mockWebpackCompiler.plugin = () => {};
-
-jest.mock('webpack', () => jest.fn(() => mockWebpackCompiler));
-
-jest.mock('webpack-dev-middleware', () => jest.fn(() => 'MOCK_DEV_MIDDLEWARE'));
-jest.mock('webpack-hot-middleware', () => jest.fn(() => 'MOCK_HOT_MIDDLEWARE'));
-
-jest.mock('./__fsmocks__/webpack.config', () => ({
-  devServer: {
-    contentBase: 'user/server/public'
-  }
-}));
-
-jest.mock('../../extend-webpack-config', () =>
-  jest.fn(() => 'MOCK_WEBPACK_CONFIG')
-);
-
-beforeEach(() => {
+// Server tests share a single beforeAll case to minimize webpack compilation
+beforeAll(async () => {
   jest.clearAllMocks();
-  startServer();
+  stopServer = await startServer();
 });
 
-it('creates static server with webpack.devServer.contentBase', () => {
-  expect(express.static).toHaveBeenCalledWith('user/server/public', {
-    index: false
-  });
+afterAll(async () => {
+  await stopServer();
+});
+
+it('serves static assets from webpack.devServer.contentBase', async () => {
+  const res = await request('http://127.0.0.1:9007/static/robots.txt');
+  expect(res).toEqual(`we are the people\n`);
 });

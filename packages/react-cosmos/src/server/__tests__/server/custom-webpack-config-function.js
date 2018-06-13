@@ -1,9 +1,13 @@
+/**
+ * @jest-environment node
+ */
+
 import fs from 'fs';
-import webpack from 'webpack';
+import request from 'request-promise-native';
 import { argv } from 'yargs';
 import promisify from 'util.promisify';
-import startServer from '../../server';
-import extendWebpackConfig from '../../extend-webpack-config';
+import startServer from '../../server-web';
+import webpackConfig from './__fsmocks__/webpack.config-fn';
 
 const readFileAsync = promisify(fs.readFile);
 const mockRootPath = __dirname;
@@ -13,89 +17,50 @@ jest.mock('react-cosmos-config', () => ({
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
     publicUrl: '/',
-    port: 9999,
+    port: 9006,
     hostname: '127.0.0.1',
-    webpackConfigPath: require.resolve('./__fsmocks__/webpack.config'),
+    webpackConfigPath: require.resolve('./__fsmocks__/webpack.config-fn'),
+    watchDirs: ['.'],
     globalImports: [],
+    // Deprecated options needed for backwards compatibility
     componentPaths: []
   })
 }));
 
-const getCbs = {};
-const mockGet = jest.fn((path, cb) => {
-  getCbs[path] = cb;
-});
-const mockUse = jest.fn();
-const mockListen = jest.fn();
-const mockWebpackConfig = jest.fn(() => 'MOCK_CUSTOM_WEBPACK_CONFIG');
+let stopServer;
 
-jest.mock('express', () => {
-  const mockExpress = jest.fn(() => ({
-    get: mockGet,
-    use: mockUse,
-    listen: mockListen
-  }));
-  mockExpress.static = jest.fn();
-  return mockExpress;
-});
-
-const mockWebpackCompiler = () => {};
-mockWebpackCompiler.plugin = () => {};
-
-jest.mock('webpack', () => jest.fn(() => mockWebpackCompiler));
-
-jest.mock('webpack-dev-middleware', () => jest.fn(() => 'MOCK_DEV_MIDDLEWARE'));
-jest.mock('webpack-hot-middleware', () => jest.fn(() => 'MOCK_HOT_MIDDLEWARE'));
-
-jest.mock('./__fsmocks__/webpack.config', () => mockWebpackConfig);
-
-jest.mock('../../extend-webpack-config', () =>
-  jest.fn(() => 'MOCK_WEBPACK_CONFIG')
-);
-
-beforeEach(() => {
+// Server tests share a single beforeAll case to minimize webpack compilation
+beforeAll(async () => {
   jest.clearAllMocks();
-  startServer();
+  stopServer = await startServer();
 });
 
-it('calls extendWebpackConfig using webpack', () => {
-  expect(extendWebpackConfig.mock.calls[0][0].webpack).toBe(webpack);
+afterAll(async () => {
+  await stopServer();
 });
 
 it('calls webpack config function with env', () => {
-  expect(mockWebpackConfig.mock.calls[0][0]).toBe(process.env.NODE_ENV);
+  expect(webpackConfig.mock.calls[0][0]).toBe(process.env.NODE_ENV);
 });
 
 it('calls webpack config function with argv', () => {
-  expect(mockWebpackConfig.mock.calls[0][1]).toEqual(argv);
-});
-
-it('extends webpack config from user config', () => {
-  expect(extendWebpackConfig.mock.calls[0][0].userWebpackConfig).toBe(
-    'MOCK_CUSTOM_WEBPACK_CONFIG'
-  );
-});
-
-it('compiles webpack using extended config', () => {
-  expect(webpack).toHaveBeenCalledWith('MOCK_WEBPACK_CONFIG');
+  expect(webpackConfig.mock.calls[0][1]).toEqual(argv);
 });
 
 it('serves index.html on / route with playgrounds opts included', async () => {
-  const send = jest.fn();
-  getCbs['/']({}, { send });
-
-  const htmlContents = await readFileAsync(
+  const res = await request('http://127.0.0.1:9006/');
+  const source = await readFileAsync(
     require.resolve('../../static/index.html'),
     'utf8'
   );
 
-  expect(send).toHaveBeenCalledWith(
-    htmlContents.replace(
+  expect(res).toEqual(
+    source.replace(
       '__PLAYGROUND_OPTS__',
       JSON.stringify({
         loaderUri: '/_loader.html',
         projectKey: mockRootPath,
-        webpackConfigType: 'custom',
+        webpackConfigType: 'custom', // <<< This is relevant in this test
         deps: {
           'html-webpack-plugin': true
         }

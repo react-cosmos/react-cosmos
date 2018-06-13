@@ -3,7 +3,7 @@
 import { join } from 'path';
 import fs from 'fs';
 import { silent as silentResolve } from 'resolve-from';
-import { hasUserCustomWebpackConfig } from './user-webpack-config';
+import { hasUserCustomWebpackConfig } from './webpack/user-webpack-config';
 
 import type { Config } from 'react-cosmos-flow/config';
 import type { PlaygroundOpts } from 'react-cosmos-flow/playground';

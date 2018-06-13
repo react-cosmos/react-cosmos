@@ -1,4 +1,4 @@
-export default {
+export default jest.fn(() => ({
   mode: 'development',
   module: {
     rules: [
@@ -9,4 +9,4 @@ export default {
       }
     ]
   }
-};
+}));
