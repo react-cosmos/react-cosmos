@@ -91,7 +91,17 @@ export default function getDefaultWebpackConfig(rootPath: string) {
     // they are not supported by webpack
     const mode =
       process.env.NODE_ENV === 'production' ? 'production' : 'development';
-    config = { ...config, mode };
+
+    config = {
+      ...config,
+      mode,
+      optimization: {
+        // Cosmos reads component names at run-time, so it is crucial to not
+        // minify even when building with production env (ie. when exporting)
+        // https://github.com/react-cosmos/react-cosmos/issues/701
+        minimize: false
+      }
+    };
   }
 
   return config;

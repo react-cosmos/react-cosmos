@@ -4,17 +4,17 @@ You seem to be interested in the inner workings of Cosmos. Good news, we've been
 
 Jump to:
 
-* [Mission](#mission)
-* [Goals](#goals)
-* [Roadmap](#roadmap)
-* [Tracking](#tracking)
-* [Architecture](#architecture)
-  * [Monorepo](#monorepo)
-  * [Playground & Loader](#playground--loader-communication)
-  * [webpack](#webpack)
-* [Proxy boilerplate](#proxy-boilerplate)
-  * [Testing proxies](#testing-proxies)
-* [How to contribute](#how-to-contribute)
+- [Mission](#mission)
+- [Goals](#goals)
+- [Roadmap](#roadmap)
+- [Tracking](#tracking)
+- [Architecture](#architecture)
+  - [Monorepo](#monorepo)
+  - [Playground & Loader](#playground--loader-communication)
+  - [webpack](#webpack)
+- [Proxy boilerplate](#proxy-boilerplate)
+  - [Testing proxies](#testing-proxies)
+- [How to contribute](#how-to-contribute)
 
 ## Mission
 
@@ -26,11 +26,11 @@ Cosmos is built on the assumption that complexity in large apps stems from hidde
 
 All contributions should be in line with these long term goals. Contributions that advance these goals have higher priority.
 
-* [#PainlessOnboarding](https://github.com/react-cosmos/react-cosmos/labels/%23PainlessOnboarding) DX is king. Minimize initial config and integrate easily with popular tools and starter kits.
+- [#PainlessOnboarding](https://github.com/react-cosmos/react-cosmos/labels/%23PainlessOnboarding) DX is king. Minimize initial config and integrate easily with popular tools and starter kits.
 
-* [#MockEverything](https://github.com/react-cosmos/react-cosmos/labels/%23MockEverything) Every component input can and should be mocked. Redux state, Router context, API responses. No input left unmocked.
+- [#MockEverything](https://github.com/react-cosmos/react-cosmos/labels/%23MockEverything) Every component input can and should be mocked. Redux state, Router context, API responses. No input left unmocked.
 
-* [#UniversalComponentPlayground](https://github.com/react-cosmos/react-cosmos/labels/%23UniversalComponentPlayground) Abstract the core from the React loader and allow other rendering engines to plug into Cosmos.
+- [#UniversalComponentPlayground](https://github.com/react-cosmos/react-cosmos/labels/%23UniversalComponentPlayground) Abstract the core from the React loader and allow other rendering engines to plug into Cosmos.
 
 ## Roadmap
 
@@ -38,9 +38,9 @@ High impact initiatives. By working on these exciting topics, you have the oppor
 
 > Warning: These are high-level tasks and they require further analysis and collaboration before they can be turned into concrete tasks
 
-* ~~[Redesign filesystem API](https://github.com/react-cosmos/react-cosmos/issues/440)~~
-* [Config generation](https://github.com/react-cosmos/react-cosmos/issues/452)
-* [Create Cosmos server](https://github.com/react-cosmos/react-cosmos/pull/383#issuecomment-328297128)
+- ~~[Redesign filesystem API](https://github.com/react-cosmos/react-cosmos/issues/440)~~
+- [Config generation](https://github.com/react-cosmos/react-cosmos/issues/452)
+- [Create Cosmos server](https://github.com/react-cosmos/react-cosmos/pull/383#issuecomment-328297128)
 
 ## Tracking
 
@@ -48,15 +48,15 @@ High impact initiatives. By working on these exciting topics, you have the oppor
 
 #### Issue labels
 
-* `hmm` Questions and support
-* `oops` Bugs
-* `i have a dream` Feature proposals
+- `hmm` Questions and support
+- `oops` Bugs
+- `i have a dream` Feature proposals
 
 Drafts progress through the following phases:
 
-* `needs love` Require feedback and a sound plan
-* `free for all` Ready to be picked up by anyone
-* _Assigned_
+- `needs love` Require feedback and a sound plan
+- `free for all` Ready to be picked up by anyone
+- _Assigned_
 
 There's also a label for each [long term goal](#goals).
 
@@ -70,9 +70,9 @@ React Cosmos is a [monorepo](packages) powered by [Yarn Workspaces](https://yarn
 
 Important to note:
 
-* **Test and build tools are installed globally in the root node_modules.** This includes Jest, Babel, webpack, and their corresponding plugins and loaders. ESLint is also applied globally. Creating a new package has less overhead because of this.
+- **Test and build tools are installed globally in the root node_modules.** This includes Jest, Babel, webpack, and their corresponding plugins and loaders. ESLint is also applied globally. Creating a new package has less overhead because of this.
 
-* **React and webpack deps are installed globally in the root node_modules.** The linked packages and examples are sibling directories, so they each have a separate node_modules dir. But, when Cosmos packages are installed in a user codebase, they all share a common node_modules. We simulate the real life scenario by deduplicate these dependencies.
+- **React and webpack deps are installed globally in the root node_modules.** The linked packages and examples are sibling directories, so they each have a separate node_modules dir. But, when Cosmos packages are installed in a user codebase, they all share a common node_modules. We simulate the real life scenario by deduplicate these dependencies.
 
 Because of the latter, integration tests or examples for older React or webpack version are not possible inside the monorepo. We should create external repos for testing React 0.14.x or webpack 1.x.
 
@@ -88,10 +88,10 @@ import { moduleExists } from 'react-cosmos-shared/server';
 
 The main benefit of this structure is that **we can at any time choose to link package entry points to either source or compiled modules.** This is powerful. Before we publish to npm, we make sure the entry points link to compiled output (the `dist` dir). When we develop, however, the entry points link to `src`, which enables the following:
 
-* **Flow types are carried over between packages.** So if package B calls an API from package A with incorrect arguments, Flow lets us know right away.
-* **Tests always run against latest source.** In the past each package pointed to the compiled output of its monorepo dependencies. This made it easy to mistakenly run integration (cross-package) tests on part source code, part outdated compiled output.
-* **In watch-mode, one change triggers tests across multiple packages.** Change something in `react-cosmos-shared` and a dozen packages are influenced. Because monorepo dependencies link to _src_, and because Jest is awesome, tests from all related packages are ran.
-* **Test coverage is calculated correctly.** Cross-package integration tests count coverage in all the packages they touch, not just in the package the tests start from.
+- **Flow types are carried over between packages.** So if package B calls an API from package A with incorrect arguments, Flow lets us know right away.
+- **Tests always run against latest source.** In the past each package pointed to the compiled output of its monorepo dependencies. This made it easy to mistakenly run integration (cross-package) tests on part source code, part outdated compiled output.
+- **In watch-mode, one change triggers tests across multiple packages.** Change something in `react-cosmos-shared` and a dozen packages are influenced. Because monorepo dependencies link to _src_, and because Jest is awesome, tests from all related packages are ran.
+- **Test coverage is calculated correctly.** Cross-package integration tests count coverage in all the packages they touch, not just in the package the tests start from.
 
 ```bash
 # Link entry points to compiled output
@@ -109,13 +109,13 @@ yarn link-entries src
 
 The Cosmos monorepo is typed using [Flow](https://github.com/facebook/flow). Most types, especially ones reused, are found in the [react-cosmos-flow](https://github.com/react-cosmos/react-cosmos/tree/e5ed43681969890d5d29bb32bdaab3630cce9ca5/packages/react-cosmos-flow) package. This package is useful in two ways:
 
-* Cosmos packages can easily share types and import them using convenient `react-cosmos-flow/*` paths
+- Cosmos packages can easily share types and import them using convenient `react-cosmos-flow/*` paths
 
   ```js
   import type { Config } from 'react-cosmos-flow/config';
   ```
 
-* 3rd party projects can also benefit from Cosmos types by adding `react-cosmos-flow` to their dev dependencies. Useful when writing a [custom proxy](#proxy-boilerplate).
+- 3rd party projects can also benefit from Cosmos types by adding `react-cosmos-flow` to their dev dependencies. Useful when writing a [custom proxy](#proxy-boilerplate).
 
 > Cosmos packages mustn't add `react-cosmos-flow` to their `dependencies`, because Flow annotations shouldn't be published along with the compiled output. Let us know if you ever find unwanted Flow types in your node_modules because of Cosmos deps!
 
@@ -166,15 +166,15 @@ export default () => {
 
 Notice the core requirements of a proxy:
 
-* Renders next proxy with same props
-* Advances the proxy chain – sends `props.nextProxy.next()` to next proxy
-* Implements or extends default proxy PropTypes
+- Renders next proxy with same props
+- Advances the proxy chain – sends `props.nextProxy.next()` to next proxy
+- Implements or extends default proxy PropTypes
 
 This is a very basic example. Here's what proxies might also do:
 
-* Implement lifecycle methods (mock stuff in constructor, revert it in componentWillUnmount)
-* Add extra DOM markup around NextProxy
-* Transform props of props.fixture (careful, tho.)
+- Implement lifecycle methods (mock stuff in constructor, revert it in componentWillUnmount)
+- Add extra DOM markup around NextProxy
+- Transform props of props.fixture (careful, tho.)
 
 ### Testing proxies
 
@@ -232,20 +232,20 @@ Make sure `yarn run lint` passes and add [xo](https://github.com/sindresorhus/xo
 
 When naming a file:
 
-* Use _CamelCase_ for components: `DragHandle.js` or `DragHandle/index.js`
-* Use _kebab-case_ for any other path: `packages/react-cosmos-shared/src/resolve-user-path.js`
+- Use _CamelCase_ for components: `DragHandle.js` or `DragHandle/index.js`
+- Use _kebab-case_ for any other path: `packages/react-cosmos-shared/src/resolve-user-path.js`
 
 When creating a module:
 
-* **Named exports** are preferred over default exports
-* **Function declarations** are preferred over arrow functions at the module level (one reason is that the order doesn't matter when using the former)
+- **Named exports** are preferred over default exports
+- **Function declarations** are preferred over arrow functions at the module level (one reason is that the order doesn't matter when using the former)
 
 Please follow these rules or challenge them if you think it's worth it.
 
 #### Use Git conscientiously
 
-* [GitHub Flow](https://guides.github.com/introduction/flow/)
-* [Conventional Commits](https://conventionalcommits.org/) (important for generating release notes)
+- [GitHub Flow](https://guides.github.com/introduction/flow/)
+- [Conventional Commits](https://conventionalcommits.org/) (important for generating release notes)
 
 ---
 

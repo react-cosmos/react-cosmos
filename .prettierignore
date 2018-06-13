@@ -1,4 +1,5 @@
 package.json
 lerna.json
 examples/*/package.json
+examples/local-state/cosmos-export
 packages/*/package.json
