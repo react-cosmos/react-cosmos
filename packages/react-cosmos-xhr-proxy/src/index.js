@@ -24,6 +24,8 @@ export function createXhrProxy({ fixtureKey = 'xhr' }: Options = {}) {
         module.hot.status(status => {
           if (status === 'check') {
             xhrMock.teardown();
+          } else if (status === 'apply') {
+            this.mock();
           }
         });
       }
