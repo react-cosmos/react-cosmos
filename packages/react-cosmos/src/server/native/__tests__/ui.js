@@ -3,23 +3,20 @@
  * @jest-environment node
  */
 
-import fs from 'fs';
+import { readFile } from 'fs';
 import request from 'request-promise-native';
 import promisify from 'util.promisify';
 import { startServer } from '../start';
 
-const readFileAsync = promisify(fs.readFile);
+const readFileAsync = promisify(readFile);
 const mockRootPath = __dirname;
 
 jest.mock('react-cosmos-config', () => ({
-  hasUserCosmosConfig: () => true,
-  generateCosmosConfig: jest.fn(),
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
-    publicUrl: '/',
     port: 10001,
     hostname: null,
-    globalImports: []
+    publicUrl: '/'
   })
 }));
 

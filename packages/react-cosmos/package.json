@@ -22,9 +22,13 @@
     "react-dev-utils": "^5.0.1",
     "react-error-overlay": "^4.0.0",
     "resolve-from": "^4.0.0",
+    "socket.io": "^2.1.1",
     "webpack-dev-middleware": "^2.0.6",
     "webpack-hot-middleware": "^2.22.2",
     "yargs": "^11.0.0"
+  },
+  "devDependencies": {
+    "socket.io-client": "^2.1.1"
   },
   "bin": {
     "cosmos": "./bin/cosmos.js",

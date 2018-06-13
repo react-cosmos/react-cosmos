@@ -3,7 +3,7 @@
 - [ ] RN server
   - [x] Extract non-webpack core from react-cosmos/server
   - [x] Create RN server cmd
-  - [ ] Create socket server (forwarding messages between clients)
+  - [x] Create sockets server (forwarding messages between clients)
   - [ ] Generate user modules file
   - [ ] Onboarding
     - [ ] Generate Cosmos config

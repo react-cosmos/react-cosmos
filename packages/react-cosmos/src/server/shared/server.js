@@ -58,7 +58,7 @@ export function createServer(cosmosConfig: Config, app: express$Application) {
     await promisify(server.close.bind(server))();
   }
 
-  return { startServer, stopServer };
+  return { server, startServer, stopServer };
 }
 
 export function serveStaticDir(

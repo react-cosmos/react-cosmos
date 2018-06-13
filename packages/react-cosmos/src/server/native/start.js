@@ -6,6 +6,7 @@ import {
   createServer,
   serveStaticDir
 } from '../shared/server';
+import { attachSockets } from './socket';
 
 export async function startServer() {
   const cosmosConfig = getCosmosConfig();
@@ -15,15 +16,17 @@ export async function startServer() {
     cosmosConfig,
     playgroundOpts: getPlaygroundOpts(cosmosConfig)
   });
-  const { startServer, stopServer } = createServer(cosmosConfig, app);
+  const { server, startServer, stopServer } = createServer(cosmosConfig, app);
 
   if (publicPath) {
     serveStaticDir(app, publicUrl, publicPath);
   }
 
+  const closeSockets = attachSockets(server);
   await startServer();
 
   return async () => {
+    await closeSockets();
     await stopServer();
   };
 }
