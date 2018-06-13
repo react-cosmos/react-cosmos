@@ -6,7 +6,7 @@ import fs from 'fs';
 import EventSource from 'eventsource';
 import request from 'request-promise-native';
 import promisify from 'util.promisify';
-import startServer from '../../server';
+import startServer from '../../server-web';
 import { generateCosmosConfig } from 'react-cosmos-config';
 
 const readFileAsync = promisify(fs.readFile);

@@ -3,7 +3,7 @@
  */
 
 import EventSource from 'eventsource';
-import startServer from '../../server';
+import startServer from '../../server-web';
 
 const mockRootPath = __dirname;
 

@@ -4,7 +4,7 @@
 
 import { join } from 'path';
 import request from 'request-promise-native';
-import startServer from '../../server';
+import startServer from '../../server-web';
 
 const mockRootPath = __dirname;
 const mockPublicPath = join(__dirname, '__fsmocks__/static');

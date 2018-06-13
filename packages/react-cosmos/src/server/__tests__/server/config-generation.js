@@ -3,7 +3,7 @@
  */
 
 import { hasUserCosmosConfig, generateCosmosConfig } from 'react-cosmos-config';
-import startServer from '../../server';
+import startServer from '../../server-web';
 
 const mockRootPath = __dirname;
 

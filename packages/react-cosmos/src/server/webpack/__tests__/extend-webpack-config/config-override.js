@@ -57,7 +57,7 @@ it('keeps core user-modules loader', () => {
   const webpackConfig = getConfig();
   expect(webpackConfig.module.rules).toContainEqual({
     loader: require.resolve('../../embed-modules-webpack-loader'),
-    include: require.resolve('../../../client/user-modules')
+    include: require.resolve('../../../../client/user-modules')
   });
 });
 

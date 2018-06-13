@@ -6,7 +6,7 @@ import { createServer } from 'http';
 import request from 'request-promise-native';
 import express from 'express';
 import promisify from 'util.promisify';
-import startServer from '../../server';
+import startServer from '../../server-web';
 
 const mockRootPath = __dirname;
 

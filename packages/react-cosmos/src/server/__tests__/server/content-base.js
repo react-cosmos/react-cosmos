@@ -3,7 +3,7 @@
  */
 
 import request from 'request-promise-native';
-import startServer from '../../server';
+import startServer from '../../server-web';
 
 const mockRootPath = __dirname;
 
