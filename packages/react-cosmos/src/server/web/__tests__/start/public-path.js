@@ -1,4 +1,5 @@
 /**
+ * @flow
  * @jest-environment node
  */
 
@@ -6,7 +7,7 @@ import { readFile } from 'fs';
 import { join } from 'path';
 import request from 'request-promise-native';
 import promisify from 'util.promisify';
-import startServer from '../../server-web';
+import { startServer } from '../../start';
 
 const readFileAsync = promisify(readFile);
 
@@ -44,7 +45,7 @@ afterAll(async () => {
 it('serves index.html on / route with playgrounds opts included', async () => {
   const res = await request('http://127.0.0.1:9004/');
   const source = await readFileAsync(
-    require.resolve('../../static/index.html'),
+    require.resolve('../../../shared/static/index.html'),
     'utf8'
   );
 
@@ -52,8 +53,9 @@ it('serves index.html on / route with playgrounds opts included', async () => {
     source.replace(
       '__PLAYGROUND_OPTS__',
       JSON.stringify({
-        loaderUri: '/static/_loader.html',
         projectKey: mockRootPath,
+        loaderTransport: 'postMessage',
+        loaderUri: '/static/_loader.html',
         webpackConfigType: 'default',
         deps: {
           'html-webpack-plugin': true

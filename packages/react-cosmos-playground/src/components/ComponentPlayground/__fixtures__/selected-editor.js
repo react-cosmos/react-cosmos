@@ -9,8 +9,9 @@ export default createFixture({
 
   props: {
     options: {
-      loaderUri: '/_loader-mock.html',
       projectKey: 'test',
+      loaderTransport: 'postMessage',
+      loaderUri: '/_loader-mock.html',
       webpackConfigType: 'default',
       deps: {}
     },

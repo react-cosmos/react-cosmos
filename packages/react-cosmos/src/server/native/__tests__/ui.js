@@ -1,13 +1,12 @@
 /**
+ * @flow
  * @jest-environment node
  */
 
 import fs from 'fs';
-import EventSource from 'eventsource';
 import request from 'request-promise-native';
 import promisify from 'util.promisify';
-import startServer from '../../server-web';
-import { generateCosmosConfig } from 'react-cosmos-config';
+import { startServer } from '../start';
 
 const readFileAsync = promisify(fs.readFile);
 const mockRootPath = __dirname;
@@ -19,11 +18,8 @@ jest.mock('react-cosmos-config', () => ({
     rootPath: mockRootPath,
     publicUrl: '/',
     port: 9001,
-    hostname: '127.0.0.1',
-    watchDirs: ['.'],
-    globalImports: [],
-    // Deprecated options needed for backwards compatibility
-    componentPaths: []
+    hostname: null,
+    globalImports: []
   })
 }));
 
@@ -39,34 +35,19 @@ afterAll(async () => {
   await stopServer();
 });
 
-it('serves webpack bundle', async () => {
-  const res = await request({
-    uri: 'http://127.0.0.1:9001/main.js',
-    resolveWithFullResponse: true
-  });
-
-  expect(res.statusCode).toBe(200);
-});
-
 it('serves index.html on / route with playgrounds opts included', async () => {
   const res = await request('http://127.0.0.1:9001/');
   const source = await readFileAsync(
-    require.resolve('../../static/index.html'),
+    require.resolve('../../shared/static/index.html'),
     'utf8'
   );
 
+  const playgroundOpts = {
+    projectKey: mockRootPath,
+    loaderTransport: 'websockets'
+  };
   expect(res).toEqual(
-    source.replace(
-      '__PLAYGROUND_OPTS__',
-      JSON.stringify({
-        loaderUri: '/_loader.html',
-        projectKey: mockRootPath,
-        webpackConfigType: 'default',
-        deps: {
-          'html-webpack-plugin': true
-        }
-      })
-    )
+    source.replace('__PLAYGROUND_OPTS__', JSON.stringify(playgroundOpts))
   );
 });
 
@@ -83,24 +64,9 @@ it('serves playground js on /_playground.js route', async () => {
 it('serves favicon.ico on /_cosmos.ico route', async () => {
   const res = await request('http://127.0.0.1:9001/_cosmos.ico');
   const source = await readFileAsync(
-    require.resolve('../../static/favicon.ico'),
+    require.resolve('../../shared/static/favicon.ico'),
     'utf8'
   );
 
   expect(res).toEqual(source);
-});
-
-it('does not activate webpack hmr', async () => {
-  const es = new EventSource('http://127.0.0.1:9001/__webpack_hmr');
-
-  await new Promise((resolve, reject) => {
-    es.addEventListener('open', reject);
-    es.addEventListener('error', resolve);
-  });
-
-  es.close();
-});
-
-it('does not call config generation function', () => {
-  expect(generateCosmosConfig).not.toHaveBeenCalled();
 });

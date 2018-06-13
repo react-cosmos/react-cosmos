@@ -1,13 +1,12 @@
 /**
+ * @flow
  * @jest-environment node
  */
 
 import fs from 'fs';
 import request from 'request-promise-native';
-import { argv } from 'yargs';
 import promisify from 'util.promisify';
-import startServer from '../../server-web';
-import webpackConfig from './__fsmocks__/webpack.config-fn';
+import { startServer } from '../../start';
 
 const readFileAsync = promisify(fs.readFile);
 const mockRootPath = __dirname;
@@ -17,9 +16,9 @@ jest.mock('react-cosmos-config', () => ({
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
     publicUrl: '/',
-    port: 9006,
+    port: 9005,
     hostname: '127.0.0.1',
-    webpackConfigPath: require.resolve('./__fsmocks__/webpack.config-fn'),
+    webpackConfigPath: require.resolve('./__fsmocks__/webpack.config'),
     watchDirs: ['.'],
     globalImports: [],
     // Deprecated options needed for backwards compatibility
@@ -39,18 +38,10 @@ afterAll(async () => {
   await stopServer();
 });
 
-it('calls webpack config function with env', () => {
-  expect(webpackConfig.mock.calls[0][0]).toBe(process.env.NODE_ENV);
-});
-
-it('calls webpack config function with argv', () => {
-  expect(webpackConfig.mock.calls[0][1]).toEqual(argv);
-});
-
 it('serves index.html on / route with playgrounds opts included', async () => {
-  const res = await request('http://127.0.0.1:9006/');
+  const res = await request('http://127.0.0.1:9005/');
   const source = await readFileAsync(
-    require.resolve('../../static/index.html'),
+    require.resolve('../../../shared/static/index.html'),
     'utf8'
   );
 
@@ -58,8 +49,9 @@ it('serves index.html on / route with playgrounds opts included', async () => {
     source.replace(
       '__PLAYGROUND_OPTS__',
       JSON.stringify({
-        loaderUri: '/_loader.html',
         projectKey: mockRootPath,
+        loaderTransport: 'postMessage',
+        loaderUri: '/_loader.html',
         webpackConfigType: 'custom', // <<< This is relevant in this test
         deps: {
           'html-webpack-plugin': true

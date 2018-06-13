@@ -4,13 +4,14 @@ import path from 'path';
 import fs from 'fs-extra';
 import { silent as silentImport } from 'import-from';
 import { getCosmosConfig } from 'react-cosmos-config';
+import { getPlaygroundHtml } from '../shared/playground-html';
 import extendWebpackConfig from './webpack/extend-webpack-config';
 import { getUserWebpackConfig } from './webpack/user-webpack-config';
-import getPlaygroundHtml from './playground-html';
+import { getPlaygroundOpts } from './playground-opts';
 
 const exportPlaygroundFiles = (cosmosConfig, outputPath) => {
   fs.copySync(
-    path.join(__dirname, 'static/favicon.ico'),
+    path.join(__dirname, '../shared/static/favicon.ico'),
     `${outputPath}/_cosmos.ico`
   );
 
@@ -19,7 +20,8 @@ const exportPlaygroundFiles = (cosmosConfig, outputPath) => {
     `${outputPath}/_playground.js`
   );
 
-  const playgroundHtml = getPlaygroundHtml(cosmosConfig);
+  const playgroundOpts = getPlaygroundOpts(cosmosConfig);
+  const playgroundHtml = getPlaygroundHtml(cosmosConfig, playgroundOpts);
   fs.writeFileSync(`${outputPath}/index.html`, playgroundHtml);
 };
 
@@ -35,7 +37,7 @@ const runWebpackCompiler = (webpack, config) =>
     });
   });
 
-export default async function startExport() {
+export async function generateExport() {
   const cosmosConfig = getCosmosConfig();
   const { rootPath, outputPath, publicPath, publicUrl } = cosmosConfig;
 

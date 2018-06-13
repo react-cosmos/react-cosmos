@@ -14,8 +14,9 @@ jest.mock('react-querystring-router', () => ({
 }));
 
 const playgroundOpts = {
-  loaderUri: '/fake-loader-uri/',
   projectKey: '/fake-project-key/',
+  loaderTransport: 'postMessage',
+  loaderUri: '/fake-loader-uri/',
   webpackConfigType: 'custom',
   deps: {}
 };

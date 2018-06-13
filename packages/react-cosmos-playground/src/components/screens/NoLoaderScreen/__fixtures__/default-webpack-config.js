@@ -9,6 +9,7 @@ export default createFixture({
   props: {
     options: {
       projectKey: 'foo',
+      loaderTransport: 'postMessage',
       loaderUri: '/foo',
       webpackConfigType: 'default',
       deps: {

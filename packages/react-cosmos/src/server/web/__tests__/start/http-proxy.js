@@ -1,4 +1,5 @@
 /**
+ * @flow
  * @jest-environment node
  */
 
@@ -6,7 +7,7 @@ import { createServer } from 'http';
 import request from 'request-promise-native';
 import express from 'express';
 import promisify from 'util.promisify';
-import startServer from '../../server-web';
+import { startServer } from '../../start';
 
 const mockRootPath = __dirname;
 
@@ -52,7 +53,7 @@ it('creates http proxy', async () => {
 
 async function startProxyServer() {
   const app = express();
-  app.get('/api/test', (req, res) => {
+  app.get('/api/test', (req: express$Request, res: express$Response) => {
     res.send('Hello World');
   });
 

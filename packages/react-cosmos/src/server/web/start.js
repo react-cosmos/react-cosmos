@@ -12,10 +12,11 @@ import {
   createServer,
   serveStaticDir,
   attachStackFrameEditorLauncher
-} from './server';
+} from '../shared/server';
 import { attachWebpack } from './webpack/attach-webpack';
+import { getPlaygroundOpts } from './playground-opts';
 
-export default async function startWebServer() {
+export async function startServer() {
   if (!hasUserCosmosConfig()) {
     const generatedConfigFor = generateCosmosConfig();
     if (generatedConfigFor) {
@@ -38,11 +39,15 @@ export default async function startWebServer() {
   if (!webpack) {
     console.warn('[Cosmos] webpack dependency missing!');
     console.log('Install using "yarn add webpack" or "npm install webpack"');
-    return;
+
+    return () => {};
   }
 
   const userWebpackConfig = getUserWebpackConfig(cosmosConfig);
-  const app = createServerApp(cosmosConfig);
+  const app = createServerApp({
+    cosmosConfig,
+    playgroundOpts: getPlaygroundOpts(cosmosConfig)
+  });
   const { startServer, stopServer } = createServer(cosmosConfig, app);
 
   const publicPath = getPublicPath(cosmosConfig, userWebpackConfig);

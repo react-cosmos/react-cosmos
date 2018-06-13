@@ -1,27 +1,24 @@
 // @flow
 
 import { join } from 'path';
-import fs from 'fs';
 import { silent as silentResolve } from 'resolve-from';
 import { hasUserCustomWebpackConfig } from './webpack/user-webpack-config';
 
 import type { Config } from 'react-cosmos-flow/config';
-import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
+import type { PlaygroundWebOpts } from 'react-cosmos-flow/playground';
 
-export default function getPlaygroundHtml(cosmosConfig: Config) {
+export function getPlaygroundOpts(cosmosConfig: Config): PlaygroundWebOpts {
   const { rootPath, publicUrl } = cosmosConfig;
 
-  const html = fs.readFileSync(join(__dirname, 'static/index.html'), 'utf8');
-  const opts: PlaygroundOpts = {
-    loaderUri: join(publicUrl, '_loader.html'),
+  return {
     projectKey: rootPath,
+    loaderTransport: 'postMessage',
+    loaderUri: join(publicUrl, '_loader.html'),
     webpackConfigType: hasUserCustomWebpackConfig(cosmosConfig)
       ? 'custom'
       : 'default',
     deps: getDeps(cosmosConfig)
   };
-
-  return html.replace('__PLAYGROUND_OPTS__', JSON.stringify(opts));
 }
 
 function getDeps({ rootPath }: Config) {

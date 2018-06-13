@@ -1,21 +1,23 @@
 /**
+ * @flow
  * @jest-environment node
  */
 
-import { hasUserCosmosConfig, generateCosmosConfig } from 'react-cosmos-config';
-import startServer from '../../server-web';
+import request from 'request-promise-native';
+import { startServer } from '../../start';
 
 const mockRootPath = __dirname;
 
 jest.mock('react-cosmos-config', () => ({
-  hasUserCosmosConfig: jest.fn(() => false),
-  generateCosmosConfig: jest.fn(),
+  hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
     rootPath: mockRootPath,
-    publicUrl: '/',
-    port: 9999,
+    port: 9007,
     hostname: '127.0.0.1',
-    hot: true,
+    publicUrl: '/static/',
+    webpackConfigPath: require.resolve(
+      './__fsmocks__/webpack.config-contentbase'
+    ),
     watchDirs: ['.'],
     globalImports: [],
     // Deprecated options needed for backwards compatibility
@@ -35,10 +37,7 @@ afterAll(async () => {
   await stopServer();
 });
 
-it('checks if user has cosmos config', () => {
-  expect(hasUserCosmosConfig).toHaveBeenCalled();
-});
-
-it('calls config generation function', () => {
-  expect(generateCosmosConfig).toHaveBeenCalled();
+it('serves static assets from webpack.devServer.contentBase', async () => {
+  const res = await request('http://127.0.0.1:9007/static/robots.txt');
+  expect(res).toEqual(`we are the people\n`);
 });

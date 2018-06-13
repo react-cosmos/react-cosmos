@@ -1,9 +1,10 @@
 /**
+ * @flow
  * @jest-environment node
  */
 
 import EventSource from 'eventsource';
-import startServer from '../../server-web';
+import { startServer } from '../../start';
 
 const mockRootPath = __dirname;
 

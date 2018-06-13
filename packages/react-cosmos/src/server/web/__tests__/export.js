@@ -1,11 +1,12 @@
 /**
+ * @flow
  * @jest-environment node
  */
 
 import { existsSync, readFileSync } from 'fs';
 import { join } from 'path';
 import rimraf from 'rimraf';
-import startExport from '../export';
+import { generateExport } from '../export';
 
 const mockRootPath = __dirname;
 const mockOutputPath = join(__dirname, './__fsoutput__/export');
@@ -26,7 +27,7 @@ jest.mock('react-cosmos-config', () => ({
 // Export tests share a single beforeAll case to minimize fs writes
 beforeAll(async () => {
   jest.clearAllMocks();
-  await startExport();
+  await generateExport();
 });
 
 afterAll(() => {
@@ -57,11 +58,12 @@ describe('playground files', () => {
   });
 
   it('exports index.html with __PLAYGROUND_OPTS__ replaced', () => {
-    const inputPath = join(__dirname, '../static/index.html');
+    const inputPath = join(__dirname, '../../shared/static/index.html');
     const outputPath = join(mockOutputPath, 'index.html');
     const optsStr = JSON.stringify({
-      loaderUri: '/_loader.html',
       projectKey: mockRootPath,
+      loaderTransport: 'postMessage',
+      loaderUri: '/_loader.html',
       webpackConfigType: 'default',
       deps: {
         'html-webpack-plugin': true

@@ -2,11 +2,11 @@
 
 - [ ] RN server
   - [x] Extract non-webpack core from react-cosmos/server
-  - [ ] Create RN server cmd
+  - [x] Create RN server cmd
   - [ ] Create socket server (forwarding messages between clients)
   - [ ] Generate user modules file
   - [ ] Onboarding
-    - [ ] Add Cosmos config
+    - [ ] Generate Cosmos config
     - [ ] Add `cosmos.modules` to gitignore
     - [ ] Create new App file that forks between App.dev and App.cosmos
     - [ ] Add package.json script

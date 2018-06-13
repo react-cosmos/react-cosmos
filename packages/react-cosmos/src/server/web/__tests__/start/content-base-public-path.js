@@ -1,10 +1,11 @@
 /**
+ * @flow
  * @jest-environment node
  */
 
 import { join } from 'path';
 import request from 'request-promise-native';
-import startServer from '../../server-web';
+import { startServer } from '../../start';
 
 const mockRootPath = __dirname;
 const mockPublicPath = join(__dirname, '__fsmocks__/static');

@@ -1,16 +1,23 @@
 // @flow
 
-import path from 'path';
+import { join, relative } from 'path';
 import { createServer as createHttpServer } from 'http';
 import promisify from 'util.promisify';
 import express from 'express';
 import httpProxyMiddleware from 'http-proxy-middleware';
 import launchEditor from 'react-dev-utils/launchEditor';
-import getPlaygroundHtml from './playground-html';
+import { getPlaygroundHtml } from './playground-html';
 
 import type { Config } from 'react-cosmos-flow/config';
+import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
 
-export function createServerApp(cosmosConfig: Config) {
+export function createServerApp({
+  cosmosConfig,
+  playgroundOpts
+}: {
+  cosmosConfig: Config,
+  playgroundOpts: PlaygroundOpts
+}) {
   const { httpProxy } = cosmosConfig;
   const app = express();
 
@@ -19,7 +26,7 @@ export function createServerApp(cosmosConfig: Config) {
     app.use(context, httpProxyMiddleware(target));
   }
 
-  const playgroundHtml = getPlaygroundHtml(cosmosConfig);
+  const playgroundHtml = getPlaygroundHtml(cosmosConfig, playgroundOpts);
   app.get('/', (req: express$Request, res: express$Response) => {
     res.send(playgroundHtml);
   });
@@ -29,7 +36,7 @@ export function createServerApp(cosmosConfig: Config) {
   });
 
   app.get('/_cosmos.ico', (req: express$Request, res: express$Response) => {
-    res.sendFile(path.join(__dirname, 'static/favicon.ico'));
+    res.sendFile(join(__dirname, 'static/favicon.ico'));
   });
 
   return app;
@@ -59,7 +66,7 @@ export function serveStaticDir(
   publicUrl: string,
   publicPath: string
 ) {
-  const relPublicPath = path.relative(process.cwd(), publicPath);
+  const relPublicPath = relative(process.cwd(), publicPath);
   console.log(`[Cosmos] Serving static files from ${relPublicPath}`);
 
   app.use(
