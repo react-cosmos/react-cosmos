@@ -13,7 +13,7 @@ export type Config = {
   fileMatchIgnore: string,
   exclude: ExcludePatterns,
   globalImports: Array<string>,
-  hostname: string,
+  hostname: ?string,
   hot: boolean,
   port: number,
   proxiesPath: string,

@@ -11,7 +11,7 @@
     <img alt="Build status" src="https://travis-ci.org/react-cosmos/react-cosmos.svg?branch=master">
   </a>
   <a href="https://codecov.io/gh/react-cosmos/react-cosmos">
-    <img alt="Codecov status" src="https://img.shields.io/codecov/c/github/react-cosmos/react-cosmos/master.svg">
+    <img alt="Codecov status" src="https://codecov.io/gh/react-cosmos/react-cosmos/branch/master/graph/badge.svg">
   </a>
   <a href="https://twitter.com/ReactCosmos">
     <img alt="Follow @ReactCosmos for updates" src="https://img.shields.io/twitter/follow/ReactCosmos.svg?style=flat&label=Follow">

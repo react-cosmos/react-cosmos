@@ -16,7 +16,7 @@ describe('[CLI path] when no config exists at explicit path', () => {
     const config = getCosmosConfig();
     expect(config).toMatchObject({
       globalImports: [],
-      hostname: 'localhost',
+      hostname: null,
       hot: true,
       outputPath: path.join(mocksPath, 'cosmos-export'),
       port: 8989,
