@@ -53,54 +53,54 @@ To find out more about the Cosmos project, check out [Mission](CONTRIBUTING.md#m
 
 Requirements:
 
-* [x] React >=0.14.9
-* [x] webpack or Browserify (or roll your own integration)
-* [ ] [Fixtures](#fixtures) (you'll create them after getting started)
+- [x] React >=0.14.9
+- [x] webpack or Browserify (or roll your own integration)
+- [ ] [Fixtures](#fixtures) (you'll create them after getting started)
 
 React Cosmos works best with webpack. Making it work with other bundlers takes extra work, but a complete [Browserify example](examples/browserify) is available.
 
 Jump to:
 
-* **[Getting started](#getting-started)**
-* [Fixtures](#fixtures)
-  * [What's a fixture?](#whats-a-fixture)
-  * [Where to put fixtures?](#where-to-put-fixtures)
-  * [Props](#props)
-  * [Children](#children)
-  * [State](#state)
-  * [Init hook](#init-hook)
-  * [Fixture name and namespace](#fixture-name-and-namespace)
-* [Proxies](#proxies)
-  * [What's a proxy?](#whats-a-proxy)
-  * [Where to put proxies?](#where-to-put-proxies)
-  * [Context](#context)
-  * [Redux](#redux)
-  * [React Router](#react-router)
-  * [React Apollo (GraphQL)](#react-apollo-graphql)
-  * [Fetch](#fetch)
-  * [XHR](#xhr)
-  * [LocalStorage](#localstorage)
-  * [More proxies...](#more-proxies)
-* [Integration with popular tools](#integration-with-popular-tools)
-  * [Create React App](#create-react-app)
-    * [With react-app-rewired](#with-react-app-rewired)
-  * [Next.js](#nextjs)
-  * [React Boilerplate](#react-boilerplate)
-  * [React Redux Starter Kit](#react-redux-starter-kit)
-* [Config](#config)
-  * [Custom config path](#custom-config-path)
-  * [Custom webpack config](#custom-webpack-config)
-  * [Custom fixture paths](#custom-fixture-paths)
-  * [Option dump](#option-dump)
-* [Exporting](#exporting)
-* [Headless testing](#headless-testing)
-  * [Using Enzyme](#using-enzyme)
-  * [Using a custom renderer](#using-a-custom-renderer)
-  * [Capturing state changes](#capturing-state-changes)
-  * [Updating fixtures in tests](#updating-fixtures-in-tests)
-  * [createTestContext API](#createtestcontext-api)
-  * [Global Jest snapshot](#global-jest-snapshot)
-* [Experimental: Flow integration](#experimental-flow-integration)
+- **[Getting started](#getting-started)**
+- [Fixtures](#fixtures)
+  - [What's a fixture?](#whats-a-fixture)
+  - [Where to put fixtures?](#where-to-put-fixtures)
+  - [Props](#props)
+  - [Children](#children)
+  - [State](#state)
+  - [Init hook](#init-hook)
+  - [Fixture name and namespace](#fixture-name-and-namespace)
+- [Proxies](#proxies)
+  - [What's a proxy?](#whats-a-proxy)
+  - [Where to put proxies?](#where-to-put-proxies)
+  - [Context](#context)
+  - [Redux](#redux)
+  - [React Router](#react-router)
+  - [React Apollo (GraphQL)](#react-apollo-graphql)
+  - [Fetch](#fetch)
+  - [XHR](#xhr)
+  - [LocalStorage](#localstorage)
+  - [More proxies...](#more-proxies)
+- [Integration with popular tools](#integration-with-popular-tools)
+  - [Create React App](#create-react-app)
+    - [With react-app-rewired](#with-react-app-rewired)
+  - [Next.js](#nextjs)
+  - [React Boilerplate](#react-boilerplate)
+  - [React Redux Starter Kit](#react-redux-starter-kit)
+- [Config](#config)
+  - [Custom config path](#custom-config-path)
+  - [Custom webpack config](#custom-webpack-config)
+  - [Custom fixture paths](#custom-fixture-paths)
+  - [Option dump](#option-dump)
+- [Exporting](#exporting)
+- [Headless testing](#headless-testing)
+  - [Using Enzyme](#using-enzyme)
+  - [Using a custom renderer](#using-a-custom-renderer)
+  - [Capturing state changes](#capturing-state-changes)
+  - [Updating fixtures in tests](#updating-fixtures-in-tests)
+  - [createTestContext API](#createtestcontext-api)
+  - [Global Jest snapshot](#global-jest-snapshot)
+- [Experimental: Flow integration](#experimental-flow-integration)
 
 _Have a question or idea to share? See you on [Slack](https://join-react-cosmos.now.sh/)._
 
@@ -141,15 +141,15 @@ Run `npm run cosmos` or `yarn cosmos` and go to [localhost:8989](http://localhos
 
 If everything's working
 
-* **Create your first [fixture](#fixtures)**
-* Configure or create [proxies](#proxies) (e.g. Redux integration)
+- **Create your first [fixture](#fixtures)**
+- Configure or create [proxies](#proxies) (e.g. Redux integration)
 
 If something's wrong
 
-* Extend existing [webpack config](#custom-webpack-config)
-* See [popular integrations](#integration-with-popular-tools) (e.g. CRA or Next.js)
-* Extend your [config](#config)
-* Be kind and [report what went wrong](https://github.com/react-cosmos/react-cosmos/issues)
+- Extend existing [webpack config](#custom-webpack-config)
+- See [popular integrations](#integration-with-popular-tools) (e.g. CRA or Next.js)
+- Extend your [config](#config)
+- Be kind and [report what went wrong](https://github.com/react-cosmos/react-cosmos/issues)
 
 ### Fixtures
 
@@ -340,14 +340,14 @@ export default [
 
 Jump to:
 
-* [Context](#context)
-* [Redux](#redux)
-* [React Router](#react-router)
-* [React Apollo (GraphQL)](#react-apollo-graphql)
-* [Fetch](#fetch)
-* [XHR](#xhr)
-* [LocalStorage](#localstorage)
-* [More proxies...](#more-proxies)
+- [Context](#context)
+- [Redux](#redux)
+- [React Router](#react-router)
+- [React Apollo (GraphQL)](#react-apollo-graphql)
+- [Fetch](#fetch)
+- [XHR](#xhr)
+- [LocalStorage](#localstorage)
+- [More proxies...](#more-proxies)
 
 #### Context
 
@@ -473,8 +473,8 @@ Check out the [React Router example](examples/react-router) to see the proxy in 
 
 If you use the [React integration](http://dev.apollodata.com/react/) of [Apollo Client](http://dev.apollodata.com/) to provide data in your app, you may want to:
 
-* Work on your data components in isolation
-* Provide static or dynamic mocks to prototype your components
+- Work on your data components in isolation
+- Provide static or dynamic mocks to prototype your components
 
 This proxy wraps your components with the `ApolloProvider` so they can render in Cosmos like they would normally in your app. Then, you'll be able to consume directly your API or mock its response.
 
@@ -482,8 +482,8 @@ This proxy wraps your components with the `ApolloProvider` so they can render in
 
 Provide:
 
-* The GraphQL `endpoint` you send operations to
-* Or The `client options object` used in your app
+- The GraphQL `endpoint` you send operations to
+- Or The `client options object` used in your app
 
 ```js
 // cosmos.proxies.js
@@ -774,8 +774,8 @@ export default {
 
 Other proxies created by the Cosmos community:
 
-* [alp82/react-cosmos-glamorous-proxy](https://github.com/alp82/react-cosmos-glamorous-proxy) A simple proxy for react-cosmos to load glamorous themes
-* [jozsi/react-cosmos-wrapper-proxy](https://github.com/jozsi/react-cosmos-wrapper-proxy) Easily wrap components using react-cosmos
+- [alp82/react-cosmos-glamorous-proxy](https://github.com/alp82/react-cosmos-glamorous-proxy) A simple proxy for react-cosmos to load glamorous themes
+- [jozsi/react-cosmos-wrapper-proxy](https://github.com/jozsi/react-cosmos-wrapper-proxy) Easily wrap components using react-cosmos
 
 _What proxy would you create to improve DX?_
 
@@ -807,7 +807,7 @@ If you are using the `NODE_PATH` environment variable for absolute imports, make
 
 Also make sure to:
 
-* Put [proxies](#proxies) in the `src` dir–the only place included by the CRA Babel loader
+- Put [proxies](#proxies) in the `src` dir–the only place included by the CRA Babel loader
 
 _CRA + Cosmos example: [Flatris](https://github.com/skidding/flatris)_
 
@@ -843,8 +843,8 @@ module.exports = {
 
 Also make sure to:
 
-* Add `html-webpack-plugin` to your dev dependencies
-* Define `.babelrc` for the Cosmos webpack config to rely on the Next.js preset:
+- Add `html-webpack-plugin` to your dev dependencies
+- Define `.babelrc` for the Cosmos webpack config to rely on the Next.js preset:
 
 ```json
 {
@@ -880,7 +880,7 @@ module.exports = {
 
 Also make sure to:
 
-* Set up the [Redux proxy](#react-cosmos-context-proxy) :)
+- Set up the [Redux proxy](#react-cosmos-context-proxy) :)
 
 ### Config
 
@@ -1080,8 +1080,8 @@ test('matches snapshot', () => {
 
 The fixture does more than just defining component input. Like a sticky fly trap, the fixture captures state changes that occur during the component's lifecycle, which we can then inspect. For example:
 
-* If Redux state changes, the latest state can be read via `get('reduxState')`
-* If Router URL changes, the latest URL can be read via `get('url')`
+- If Redux state changes, the latest state can be read via `get('reduxState')`
+- If Router URL changes, the latest URL can be read via `get('url')`
 
 Instead of polluting our tests with various store and provider initialization, we let the [Proxies](#proxies) take care of it and then collect state changes from the updated fixture.
 
@@ -1147,12 +1147,12 @@ const { mount } = createTestContext({ fixture, autoMockProps: false });
 
 ##### Context methods
 
-* _async_ `mount` Mounts component via renderer (usually called in `beforeEach`)
-* `unmount` Calls unmount method of wrapper returned by renderer
-* `getWrapper` Returns wrapper returned by renderer
-* `getRef` Get component ref (exclusively for Class components)
-* `getField(fixtureKey)` (or `get` for brevity) Returns updated fixture field
-* `setProps(newProps)` _Merges_ passed in props with existing fixture props (triggers re-render)
+- _async_ `mount` Mounts component via renderer (usually called in `beforeEach`)
+- `unmount` Calls unmount method of wrapper returned by renderer
+- `getWrapper` Returns wrapper returned by renderer
+- `getRef` Get component ref (exclusively for Class components)
+- `getField(fixtureKey)` (or `get` for brevity) Returns updated fixture field
+- `setProps(newProps)` _Merges_ passed in props with existing fixture props (triggers re-render)
 
 #### Global Jest snapshot
 
@@ -1193,8 +1193,8 @@ export default createFixture({
 
 Since `react-cosmos-flow/fixture` is an import from node_modules, it will likely not be compiled by Babel inside your codebase. Here are some common ways to solve this:
 
-* Add a babel-loader rule with `include: /react-cosmos-flow/` to your webpack config (the default webpack config generated by Cosmos does this automatically)
-* Add `"transformIgnorePatterns": ["/node_modules/(?!react-cosmos-flow)"]` to your Jest config
+- Add a babel-loader rule with `include: /react-cosmos-flow/` to your webpack config (the default webpack config generated by Cosmos does this automatically)
+- Add `"transformIgnorePatterns": ["/node_modules/(?!react-cosmos-flow)"]` to your Jest config
 
 ## Join the component revolution!
 

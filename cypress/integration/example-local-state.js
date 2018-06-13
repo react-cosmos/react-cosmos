@@ -5,8 +5,7 @@ const fixtureButtonSel = getSelector('index__fixture');
 const editorButtonSel = `${getSelector('index__button')}:eq(1)`;
 
 function selectFixture(fixtureName) {
-  cy
-    .get(fixtureButtonSel)
+  cy.get(fixtureButtonSel)
     .contains(fixtureName)
     .click();
 }
@@ -52,8 +51,7 @@ describe('Local state example', () => {
 
     it('should match only one fixture', () => {
       const fixtureSel = getSelector('index__fixture');
-      cy
-        .get(fixtureSel)
+      cy.get(fixtureSel)
         .should('have.length', 1)
         .eq(0)
         .should('contain', 'one-two-three');
@@ -66,8 +64,7 @@ describe('Local state example', () => {
     });
 
     it('should add active class to fixture button', () => {
-      cy
-        .get(fixtureButtonSel)
+      cy.get(fixtureButtonSel)
         .contains('one-two-three')
         .parent(fixtureButtonSel)
         .then($fixtureButton => {
@@ -77,8 +74,7 @@ describe('Local state example', () => {
     });
 
     it('should render Loader iframe', () => {
-      cy
-        .get('iframe')
+      cy.get('iframe')
         .should('have.exist')
         .should('have.attr', 'src', '/_loader.html');
     });
@@ -91,8 +87,7 @@ describe('Local state example', () => {
     });
 
     it('should add active class to editor button', () => {
-      cy
-        .get(editorButtonSel)
+      cy.get(editorButtonSel)
         .then($fixtureButton => {
           return $fixtureButton.attr('class');
         })
@@ -116,8 +111,7 @@ describe('Local state example', () => {
       toggleFixtureEditor();
 
       // Click three times on the first button
-      cy
-        .get('iframe')
+      cy.get('iframe')
         .then($iframe => {
           const $firstButton = $iframe.contents().find('button:first');
           $firstButton.trigger('click');
@@ -131,8 +125,7 @@ describe('Local state example', () => {
     it('should preseve state after HMR update', () => {
       cy.get('iframe').then($iframe => {
         $iframe[0].contentWindow.__runCosmosLoader();
-        cy
-          .wait(100) // Wait for postMessage communication to occur
+        cy.wait(100) // Wait for postMessage communication to occur
           .get('.CodeMirror-line:eq(4)')
           .should('have.text', '        "value": 4');
       });
