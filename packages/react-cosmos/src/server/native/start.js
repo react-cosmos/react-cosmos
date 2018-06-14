@@ -6,11 +6,14 @@ import {
   createServer,
   serveStaticDir
 } from '../shared/server';
+import { generateModulesFile } from './generate-modules-file';
 import { attachSockets } from './socket';
 
 export async function startServer() {
   const cosmosConfig = getCosmosConfig();
   const { publicPath, publicUrl } = cosmosConfig;
+
+  await generateModulesFile(cosmosConfig);
 
   const app = createServerApp({
     cosmosConfig,

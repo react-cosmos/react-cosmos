@@ -4,7 +4,8 @@
   - [x] Extract non-webpack core from react-cosmos/server
   - [x] Create RN server cmd
   - [x] Create sockets server (forwarding messages between clients)
-  - [ ] Generate user modules file
+  - [x] Generate user modules file
+  - [ ] Update user modules file on changes
   - [ ] Onboarding
     - [ ] Generate Cosmos config
     - [ ] Add `cosmos.modules` to gitignore
