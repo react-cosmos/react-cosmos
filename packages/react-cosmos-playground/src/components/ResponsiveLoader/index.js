@@ -176,7 +176,9 @@ class ResponsiveLoader extends React.Component<Props, State> {
         )}
         <div
           className={outerWrapperClassName}
-          ref={el => (this.scalableDiv = el)}
+          ref={el => {
+            this.scalableDiv = el;
+          }}
           style={outerWrapperStyle}
         >
           <div className={middleWrapperClassName} style={middleWrapperStyle}>
