@@ -549,7 +549,7 @@ export default class ComponentPlayground extends Component<Props, State> {
               ...updatedFields
             })
           }
-          fixture={fixtureBody}
+          fixture={fixtureBody.name ? fixtureBody : null}
         />
         <div
           className={styles.loaderFrameOverlay}

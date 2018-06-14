@@ -12,7 +12,7 @@ type Props = {
   showResponsiveControls: boolean,
   onFixtureUpdate: any,
   devices: Array<{| label: string, width: number, height: number |}>,
-  fixture: Object
+  fixture: ?Object
 };
 
 type State = {
@@ -43,8 +43,9 @@ class ResponsiveLoader extends React.Component<Props, State> {
   async componentDidMount() {
     window.addEventListener('resize', this.updateContainerDimensions);
 
-    // Wait for window to render before trying to figure out the dimensions
-    setTimeout(this.updateContainerDimensions, 1000);
+    if (this.props.fixture) {
+      this.updateContainerDimensions();
+    }
 
     const [savedWidth, savedHeight] = await Promise.all([
       localForage.getItem(RESPONSIVE_FIXTURE_WIDTH),
@@ -56,6 +57,12 @@ class ResponsiveLoader extends React.Component<Props, State> {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateContainerDimensions);
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    if (this.props.fixture && !prevProps.fixture) {
+      this.updateContainerDimensions();
+    }
   }
 
   updateDimensions = (width: number, height: number) => {
@@ -100,7 +107,8 @@ class ResponsiveLoader extends React.Component<Props, State> {
     } = this.props;
     const { scale, savedWidth, savedHeight } = this.state;
 
-    const { viewport = {} } = fixture;
+    const viewport = (fixture && fixture.viewport) || {};
+
     const width =
       viewport.width === 0 || viewport.width
         ? viewport.width
@@ -134,7 +142,11 @@ class ResponsiveLoader extends React.Component<Props, State> {
       display: !showResponsiveControls || scale ? 'flex' : 'block'
     };
     if (showResponsiveControls) {
-      outerWrapperStyle = { ...outerWrapperStyle, padding: PADDING };
+      outerWrapperStyle = {
+        ...outerWrapperStyle,
+        padding: PADDING,
+        overflow: scale ? 'hidden' : 'scroll'
+      };
     }
 
     const middleWrapperClassName = showResponsiveControls
