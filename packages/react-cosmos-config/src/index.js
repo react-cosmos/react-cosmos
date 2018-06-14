@@ -37,7 +37,7 @@ const defaults = {
   watchDirs: ['.'],
   // Only used by the React Native server, modulesPath specifies where to
   // generate the file with imports to all user fixtures and proxies.
-  // Whereas most of the other paths as used to import modules, modulesPath is
+  // Whereas most of the other paths are used to import modules, modulesPath is
   // used as an output file path and it requires a file extension.
   modulesPath: 'cosmos.modules.js',
   // Deprecated
