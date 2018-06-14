@@ -26,6 +26,7 @@ export type Config = {
   responsiveDevices: Array<{| label: string, width: number, height: number |}>,
   httpProxy?: {| context: string, target: string |},
   watchDirs: Array<string>,
+  modulesPath: string,
   // Deprecated
   proxies?: Array<string>,
   componentPaths: Array<string>,

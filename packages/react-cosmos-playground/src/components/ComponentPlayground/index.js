@@ -24,7 +24,7 @@ import type {
   FixtureUpdateMessageData,
   LoaderMessage
 } from 'react-cosmos-flow/loader';
-import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
+import type { PlaygroundWebOpts } from 'react-cosmos-flow/playground';
 
 export const LEFT_NAV_SIZE = '__cosmos__left-nav-size';
 export const FIXTURE_EDITOR_PANE_SIZE = '__cosmos__fixture-editor-pane-size';
@@ -37,7 +37,7 @@ export const READY = 4;
 
 type Props = {
   router: Object,
-  options: PlaygroundOpts,
+  options: PlaygroundWebOpts,
   component?: string,
   fixture?: string,
   editor?: boolean,
