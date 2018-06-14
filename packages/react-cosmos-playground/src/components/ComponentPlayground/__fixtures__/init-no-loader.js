@@ -8,8 +8,9 @@ export default createFixture({
 
   props: {
     options: {
-      loaderUri: '/_loader-mock.html',
+      platform: 'web',
       projectKey: 'test',
+      loaderUri: '/_loader-mock.html',
       webpackConfigType: 'default',
       deps: {}
     },

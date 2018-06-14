@@ -8,6 +8,7 @@ export default createFixture({
 
   props: {
     options: {
+      platform: 'web',
       projectKey: 'foo',
       loaderUri: '/foo',
       webpackConfigType: 'default',

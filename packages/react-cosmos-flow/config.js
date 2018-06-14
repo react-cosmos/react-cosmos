@@ -25,6 +25,7 @@ export type Config = {
   containerQuerySelector?: string,
   httpProxy?: {| context: string, target: string |},
   watchDirs: Array<string>,
+  modulesPath: string,
   // Deprecated
   proxies?: Array<string>,
   componentPaths: Array<string>,

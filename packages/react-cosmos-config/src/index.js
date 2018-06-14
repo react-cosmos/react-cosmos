@@ -35,6 +35,11 @@ const defaults = {
   outputPath: 'cosmos-export',
   publicUrl: '/',
   watchDirs: ['.'],
+  // Only used by the React Native server, modulesPath specifies where to
+  // generate the file with imports to all user fixtures and proxies.
+  // Whereas most of the other paths are used to import modules, modulesPath is
+  // used as an output file path and it requires a file extension.
+  modulesPath: 'cosmos.modules.js',
   // Deprecated
   componentPaths: [],
   ignore: [],
@@ -108,6 +113,7 @@ function getNormalizedConfig(relativeConfig: Config, relPath: string): Config {
     publicPath,
     webpackConfigPath,
     watchDirs,
+    modulesPath,
     // Deprecated
     componentPaths,
     fixturePaths
@@ -122,6 +128,7 @@ function getNormalizedConfig(relativeConfig: Config, relPath: string): Config {
     proxiesPath: resolveUserPath(rootPath, proxiesPath),
     webpackConfigPath: resolveUserPath(rootPath, webpackConfigPath),
     watchDirs: watchDirs.map(p => resolveUserPath(rootPath, p)),
+    modulesPath: resolveUserPath(rootPath, modulesPath),
     // Deprecated
     componentPaths: componentPaths.map(p => path.resolve(rootPath, p)),
     fixturePaths: fixturePaths.map(p => path.resolve(rootPath, p))

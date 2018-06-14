@@ -10,7 +10,7 @@ export function resolveUserPath(rootPath, userPath) {
       ? userPath
       : resolveFrom.silent(rootPath, userPath) ||
         // Final attempt to resolve path, for when relative paths that don't
-        // start with ./
+        // start with ./ and for output file paths
         path.join(rootPath, userPath)
   );
 }

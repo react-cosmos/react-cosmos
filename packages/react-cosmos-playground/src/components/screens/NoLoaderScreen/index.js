@@ -4,10 +4,10 @@ import React, { Component } from 'react';
 import DisplayScreen from '../DisplayScreen';
 import style from '../DisplayScreen/index.less';
 
-import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
+import type { PlaygroundWebOpts } from 'react-cosmos-flow/playground';
 
 type Props = {
-  options: PlaygroundOpts
+  options: PlaygroundWebOpts
 };
 
 export default class NoLoaderScreen extends Component<Props> {
