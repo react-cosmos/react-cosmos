@@ -1,10 +1,9 @@
 // @flow
 
-import path from 'path';
-import commondir from 'commondir';
 import { sortBy } from 'lodash';
 import { inferComponentName } from './utils/infer-component-name';
 import { createDefaultNamer } from './utils/default-namer';
+import { getDir, getCommonDir } from './utils/dir';
 
 import type { ComponentType } from 'react';
 import type {
@@ -89,7 +88,7 @@ export function getComponents({
   });
 
   if (incompatFixtures.size > 0) {
-    const fixtureCommonDir = getCommonDirFromPaths(Object.keys(fixtureModules));
+    const fixtureCommonDir = getCommonDir(Object.keys(fixtureModules));
     warnAboutIncompatFixtures(incompatFixtures, fixtureCommonDir);
   }
 
@@ -133,7 +132,7 @@ export function getComponents({
 
     // We had to wait until now to be able to determine the common dir between
     // all fixtures belonging to the same component
-    const compFixtureCommonDir = getCommonDirFromPaths(
+    const compFixtureCommonDir = getCommonDir(
       compFixtures.map(f => f.filePath)
     );
     const fixturesWithNamespace = compFixtures.map(f => ({
@@ -163,20 +162,16 @@ function getFileNameFromPath(filePath: string) {
     .split('.')[0];
 }
 
-function getCommonDirFromPaths(paths: Array<string>) {
-  return paths.length > 0 ? commondir(paths) : '';
-}
-
 function getFileNamespace(commonDir: string, filePath: ?string) {
   // Warning: This function works well only when the filePath starts with /
-  return filePath ? path.dirname(filePath).slice(commonDir.length + 1) : '';
+  return filePath ? getDir(filePath).slice(commonDir.length + 1) : '';
 }
 
 function getCollapsedComponentNamespace(
   componentPaths: Array<string>,
   filePath: ?string
 ) {
-  const componentCommonDir = getCommonDirFromPaths(componentPaths);
+  const componentCommonDir = getCommonDir(componentPaths);
   const namespace = getFileNamespace(componentCommonDir, filePath);
 
   // Nothing to collapse
@@ -197,10 +192,7 @@ function getCollapsedComponentNamespace(
 
   // Collapse path by one level to prevent an extra nesting (eg "Button/Button")
   // when there is only one component in a directory
-  return namespace
-    .split('/')
-    .slice(0, -1)
-    .join('/');
+  return getDir(namespace);
 }
 
 function warnAboutIncompatFixtures(
