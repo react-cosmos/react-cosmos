@@ -3,8 +3,6 @@ npm-debug.log
 yarn-error.log
 
 packages/*/dist
-examples/local-state/cosmos-export
-examples/webpack-dll/build
 
 coverage
 cypress/screenshots
