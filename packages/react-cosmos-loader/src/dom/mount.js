@@ -36,7 +36,7 @@ export async function mount(args: Args) {
     dismissRuntimeErrors
   });
 
-  return () => {
+  return function destroy() {
     destroyLoader();
   };
 }

@@ -17,6 +17,7 @@ import DragHandle from '../DragHandle';
 import FixtureEditor from '../FixtureEditor';
 import styles from './index.less';
 
+import type { FixtureNames } from 'react-cosmos-flow/module';
 import type {
   LoaderReadyMessage,
   FixtureListUpdateMessage,
@@ -53,7 +54,7 @@ type State = {
   fixtureEditorPaneSize: number,
   orientation: 'landscape' | 'portrait',
   fixtureBody: Object,
-  fixtures: Object
+  fixtures: FixtureNames
 };
 
 let socket;
@@ -111,7 +112,12 @@ export default class ComponentPlayground extends Component<Props, State> {
       const fixtureChanged =
         component !== this.props.component || fixture !== this.props.fixture;
 
-      if (fixtureChanged && fixtureExists(fixtures, component, fixture)) {
+      if (
+        fixtureChanged &&
+        component &&
+        fixture &&
+        fixtureExists(fixtures, component, fixture)
+      ) {
         this.postMessage({
           type: 'fixtureSelect',
           component,
@@ -194,11 +200,13 @@ export default class ComponentPlayground extends Component<Props, State> {
   onUrlChange = (location: string) => {
     if (location === window.location.href) {
       const { component, fixture } = this.props;
-      this.postMessage({
-        type: 'fixtureSelect',
-        component,
-        fixture
-      });
+      if (component && fixture) {
+        this.postMessage({
+          type: 'fixtureSelect',
+          component,
+          fixture
+        });
+      }
     } else {
       this.props.router.goTo(location);
     }
@@ -529,7 +537,7 @@ function isNumber(val) {
   return typeof val !== 'number';
 }
 
-function fixtureExists(fixtures, component, fixture) {
+function fixtureExists(fixtures: FixtureNames, component, fixture) {
   return (
     component &&
     fixture &&

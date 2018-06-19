@@ -1,5 +1,7 @@
 // @flow
 
+import type { FixtureNames } from './module';
+
 export type LoaderWebOpts = {
   containerQuerySelector?: string
 };
@@ -16,18 +18,18 @@ export type RuntimeErrorMessage = {
 
 export type LoaderReadyMessage = {
   type: 'loaderReady',
-  fixtures: Object
+  fixtures: FixtureNames
 };
 
 export type FixtureListUpdateMessage = {
   type: 'fixtureListUpdate',
-  fixtures: Object
+  fixtures: FixtureNames
 };
 
 export type FixtureSelectMessage = {
   type: 'fixtureSelect',
-  component: ?string,
-  fixture: ?string
+  component: string,
+  fixture: string
 };
 
 export type FixtureLoadMessage = {

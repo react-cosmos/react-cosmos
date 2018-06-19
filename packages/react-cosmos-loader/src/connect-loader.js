@@ -98,12 +98,7 @@ export async function connectLoader(args: Args) {
   async function onMessage(msg: LoaderMessage) {
     if (msg.type === 'fixtureSelect') {
       const { component, fixture } = msg;
-      if (
-        component &&
-        fixture &&
-        fixtures[component] &&
-        fixtures[component][fixture]
-      ) {
+      if (fixtures[component] && fixtures[component][fixture]) {
         selected = { component, fixture };
 
         // No need for a cache at this point. Until a fixtureUpdate or
