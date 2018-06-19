@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import omitBy from 'lodash.omitby';
 import localForage from 'localforage';
+import io from 'socket.io-client';
 import { uri } from 'react-querystring-router';
 import { HomeIcon, FullScreenIcon, CodeIcon } from '../SvgIcon';
 import StarryBg from '../StarryBg';
@@ -16,14 +17,15 @@ import DragHandle from '../DragHandle';
 import FixtureEditor from '../FixtureEditor';
 import styles from './index.less';
 
+import type { FixtureNames } from 'react-cosmos-flow/module';
 import type {
-  LoaderReadyMessageData,
-  FixtureListUpdateMessageData,
-  FixtureLoadMessageData,
-  FixtureUpdateMessageData,
+  LoaderReadyMessage,
+  FixtureListUpdateMessage,
+  FixtureLoadMessage,
+  FixtureUpdateMessage,
   LoaderMessage
 } from 'react-cosmos-flow/loader';
-import type { PlaygroundWebOpts } from 'react-cosmos-flow/playground';
+import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
 
 export const LEFT_NAV_SIZE = '__cosmos__left-nav-size';
 export const FIXTURE_EDITOR_PANE_SIZE = '__cosmos__fixture-editor-pane-size';
@@ -36,7 +38,7 @@ export const READY = 4;
 
 type Props = {
   router: Object,
-  options: PlaygroundWebOpts,
+  options: PlaygroundOpts,
   component?: string,
   fixture?: string,
   editor?: boolean,
@@ -52,13 +54,15 @@ type State = {
   fixtureEditorPaneSize: number,
   orientation: 'landscape' | 'portrait',
   fixtureBody: Object,
-  fixtures: Object
+  fixtures: FixtureNames
 };
+
+let socket;
 
 export default class ComponentPlayground extends Component<Props, State> {
   contentNode: ?HTMLElement;
 
-  loaderFrame: ?HTMLElement;
+  loaderFrame: ?window;
 
   static defaultProps = {
     editor: false,
@@ -80,10 +84,20 @@ export default class ComponentPlayground extends Component<Props, State> {
   };
 
   componentDidMount() {
+    const { options } = this.props;
+
     window.addEventListener('message', this.onMessage, false);
     window.addEventListener('resize', this.onResize, false);
 
-    this.checkLoaderStatus();
+    if (options.platform === 'web') {
+      this.checkLoaderIframeStatus(options.loaderUri);
+    } else {
+      socket = io();
+      socket.on('cosmos-cmd', msg => {
+        // TODO: Log messages using debug package
+        this.onMessage({ data: msg });
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -98,8 +112,13 @@ export default class ComponentPlayground extends Component<Props, State> {
       const fixtureChanged =
         component !== this.props.component || fixture !== this.props.fixture;
 
-      if (fixtureChanged && fixtureExists(fixtures, component, fixture)) {
-        postMessageToFrame(this.loaderFrame, {
+      if (
+        fixtureChanged &&
+        component &&
+        fixture &&
+        fixtureExists(fixtures, component, fixture)
+      ) {
+        this.postMessage({
           type: 'fixtureSelect',
           component,
           fixture
@@ -108,7 +127,7 @@ export default class ComponentPlayground extends Component<Props, State> {
     }
   }
 
-  onMessage = ({ data }: LoaderMessage) => {
+  onMessage = ({ data }: { data: LoaderMessage }) => {
     if (data.type === 'runtimeError') {
       this.onRuntimeError();
     } else if (data.type === 'loaderReady') {
@@ -135,9 +154,7 @@ export default class ComponentPlayground extends Component<Props, State> {
     }
   }
 
-  onLoaderReady({ fixtures }: LoaderReadyMessageData) {
-    const { loaderFrame } = this;
-
+  onLoaderReady({ fixtures }: LoaderReadyMessage) {
     this.setState(
       {
         loaderStatus: READY,
@@ -150,7 +167,7 @@ export default class ComponentPlayground extends Component<Props, State> {
 
     const { component, fixture } = this.props;
     if (component && fixture && fixtureExists(fixtures, component, fixture)) {
-      postMessageToFrame(loaderFrame, {
+      this.postMessage({
         type: 'fixtureSelect',
         component,
         fixture
@@ -158,19 +175,19 @@ export default class ComponentPlayground extends Component<Props, State> {
     }
   }
 
-  onFixtureListUpdate({ fixtures }: FixtureListUpdateMessageData) {
+  onFixtureListUpdate({ fixtures }: FixtureListUpdateMessage) {
     this.setState({
       fixtures
     });
   }
 
-  onFixtureLoad({ fixtureBody }: FixtureLoadMessageData) {
+  onFixtureLoad({ fixtureBody }: FixtureLoadMessage) {
     this.setState({
       fixtureBody
     });
   }
 
-  onFixtureUpdate({ fixtureBody }: FixtureUpdateMessageData) {
+  onFixtureUpdate({ fixtureBody }: FixtureUpdateMessage) {
     this.setState({
       // Fixture updates are partial
       fixtureBody: {
@@ -183,11 +200,13 @@ export default class ComponentPlayground extends Component<Props, State> {
   onUrlChange = (location: string) => {
     if (location === window.location.href) {
       const { component, fixture } = this.props;
-      postMessageToFrame(this.loaderFrame, {
-        type: 'fixtureSelect',
-        component,
-        fixture
-      });
+      if (component && fixture) {
+        this.postMessage({
+          type: 'fixtureSelect',
+          component,
+          fixture
+        });
+      }
     } else {
       this.props.router.goTo(location);
     }
@@ -227,7 +246,7 @@ export default class ComponentPlayground extends Component<Props, State> {
       fixtureBody
     });
 
-    postMessageToFrame(this.loaderFrame, {
+    this.postMessage({
       type: 'fixtureEdit',
       fixtureBody
     });
@@ -237,11 +256,11 @@ export default class ComponentPlayground extends Component<Props, State> {
     this.contentNode = node;
   };
 
-  handleIframeRef = (node: ?HTMLElement) => {
+  handleIframeRef = (node: ?window) => {
     this.loaderFrame = node;
   };
 
-  async checkLoaderStatus() {
+  async checkLoaderIframeStatus(loaderUri: string) {
     // We can't do fetch requests when Cosmos exports are opened without a
     // web server (ie. via file:/// protocol), so we might as well be optimistic
     // and assume the Loader iframe responds 200
@@ -253,7 +272,7 @@ export default class ComponentPlayground extends Component<Props, State> {
       });
     } else {
       // Check if Loader is working
-      const { status } = await fetch(this.props.options.loaderUri, {
+      const { status } = await fetch(loaderUri, {
         credentials: 'same-origin'
       });
       if (status === 200) {
@@ -343,9 +362,10 @@ export default class ComponentPlayground extends Component<Props, State> {
         {!isLoaderVisible && (
           <StarryBg>
             {loaderStatus === PENDING && <LoadingScreen />}
-            {loaderStatus === BUILD_ERROR && (
-              <NoLoaderScreen options={options} />
-            )}
+            {options.platform === 'web' &&
+              loaderStatus === BUILD_ERROR && (
+                <NoLoaderScreen options={options} />
+              )}
             {loaderStatus === READY &&
               !isFixtureSelected && <WelcomeScreen fixtures={fixtures} />}
             {isMissingFixtureSelected && (
@@ -354,7 +374,9 @@ export default class ComponentPlayground extends Component<Props, State> {
           </StarryBg>
         )}
         {editor && isLoaderVisible && this.renderFixtureEditor()}
-        {loaderStatus >= OK && this.renderLoader(isLoaderVisible)}
+        {options.platform === 'web' &&
+          loaderStatus >= OK &&
+          this.renderLoader(isLoaderVisible, options.loaderUri)}
       </div>
     );
   }
@@ -479,10 +501,7 @@ export default class ComponentPlayground extends Component<Props, State> {
     );
   }
 
-  renderLoader(isLoaderVisible: boolean) {
-    const {
-      options: { loaderUri }
-    } = this.props;
+  renderLoader(isLoaderVisible: boolean, loaderUri: string) {
     const { isDragging } = this.state;
     const loaderStyle = {
       display: isLoaderVisible ? 'block' : 'none'
@@ -501,21 +520,28 @@ export default class ComponentPlayground extends Component<Props, State> {
       </div>
     );
   }
+
+  postMessage(data: LoaderMessage) {
+    // TODO: Log messages using debug package
+    if (this.props.options.platform === 'web') {
+      if (this.loaderFrame) {
+        this.loaderFrame.contentWindow.postMessage(data, '*');
+      }
+    } else {
+      socket.emit('cosmos-cmd', data);
+    }
+  }
 }
 
 function isNumber(val) {
   return typeof val !== 'number';
 }
 
-function fixtureExists(fixtures, component, fixture) {
+function fixtureExists(fixtures: FixtureNames, component, fixture) {
   return (
     component &&
     fixture &&
     fixtures[component] &&
     fixtures[component].indexOf(fixture) !== -1
   );
-}
-
-function postMessageToFrame(frame: window, data) {
-  return frame.contentWindow.postMessage(data, '*');
 }

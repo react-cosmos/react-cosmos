@@ -37,7 +37,7 @@
   "devDependencies": {
     "after-pending-promises": "^0.0.1",
     "after-pending-timers": "^0.0.1",
-    "async-until": "^1.0.0",
+    "async-until": "^1.0.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
@@ -76,6 +76,7 @@
     "prop-types": "^15.6.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
+    "react-native": "^0.55.4",
     "react-test-renderer": "^16.4.0",
     "request": "^2.87.0",
     "request-promise-native": "^1.0.5",
@@ -127,6 +128,7 @@
         "error",
         "as-needed"
       ],
+      "valid-jsdoc": 0,
       "unicorn/filename-case": 0,
       "import/no-unassigned-import": 0,
       "import/no-extraneous-dependencies": 0,

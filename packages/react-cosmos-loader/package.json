@@ -6,12 +6,15 @@
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
-    "async-until": "^1.0.0",
+    "async-until": "^1.0.1",
     "deep-equal": "^1.0.1",
     "lodash.merge": "^4.6.1",
     "prop-types": "^15.6.1",
     "react-cosmos-shared": "^4.4.0",
-    "react-cosmos-state-proxy": "^4.4.0"
+    "react-cosmos-state-proxy": "^4.4.0",
+    "react-cosmos-voyager2": "^4.4.0",
+    "socket.io-client": "^2.1.1",
+    "url-parse": "^1.4.1"
   },
   "xo": false
 }

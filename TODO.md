@@ -12,8 +12,12 @@
     - [ ] Create new App file that forks between App.dev and App.cosmos
     - [ ] Add package.json script
 - [ ] RN UI
-  - [ ] Add support for websocket communication (choose between sockets or postMessage)
-  - [ ] Create RN-specific onboarding screen
+  - [x] Add support for websocket communication (choose between sockets or postMessage)
+  - [ ] Create RN-specific onboarding screens
+  - [ ] Test socket transport
 - [ ] RN loader
-  - [ ] Extract non ReactDOM-specific core from react-cosmos-loader
-  - [ ] Create RN loader and proxies
+  - [x] Extract non ReactDOM-specific core from react-cosmos-loader
+  - [x] Create RN loader
+  - [ ] Check if existing proxies are compatible
+  - [ ] Test socket transport
+- [ ] Create React Native App example

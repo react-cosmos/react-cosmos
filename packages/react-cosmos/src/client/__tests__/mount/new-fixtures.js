@@ -1,10 +1,9 @@
-import { mount as mountLoader } from 'react-cosmos-loader';
+import { mount as mountLoader } from 'react-cosmos-loader/dom';
 import { dismissRuntimeErrors } from 'react-error-overlay';
 
-jest.mock('react-cosmos-loader', () => ({
+jest.mock('react-cosmos-loader/dom', () => ({
   __esModule: true,
-  mount: jest.fn(),
-  unmount: jest.fn()
+  mount: jest.fn()
 }));
 
 const ProxyA = () => {};
