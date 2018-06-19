@@ -14,7 +14,10 @@
 - [ ] RN UI
   - [x] Add support for websocket communication (choose between sockets or postMessage)
   - [ ] Create RN-specific onboarding screens
+  - [ ] Test socket transport
 - [ ] RN loader
   - [x] Extract non ReactDOM-specific core from react-cosmos-loader
   - [x] Create RN loader
   - [ ] Check if existing proxies are compatible
+  - [ ] Test socket transport
+- [ ] Create React Native App example
