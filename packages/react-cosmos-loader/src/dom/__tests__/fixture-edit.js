@@ -2,38 +2,30 @@
 
 import { getMock } from 'react-cosmos-flow/jest';
 import { createContext } from '../../create-context';
-import { connectLoader } from '../../connect-loader';
+import { mount } from '../mount';
 import {
-  renderer,
   proxies,
   fixtures,
   fixtureFoo,
   subscribeToWindowMessages,
-  getLastWindowMessage,
   untilEvent,
   postWindowMessage
 } from './_shared';
 
 const mockMount = jest.fn();
-let onContextUpdate;
 
 jest.mock('../../create-context', () => ({
-  createContext: jest.fn(({ onUpdate }) => {
-    onContextUpdate = onUpdate;
-    return { mount: mockMount };
-  })
+  createContext: jest.fn(() => ({ mount: mockMount }))
 }));
 
 subscribeToWindowMessages();
 
-const updateFn = () => {};
 let destroy;
 
 beforeEach(async () => {
   jest.clearAllMocks();
 
-  destroy = await connectLoader({
-    renderer,
+  destroy = await mount({
     proxies,
     fixtures
   });
@@ -48,32 +40,36 @@ beforeEach(async () => {
 
   await untilEvent('fixtureLoad');
 
-  onContextUpdate({ update: true, updateFn });
+  postWindowMessage({
+    type: 'fixtureEdit',
+    fixtureBody: {
+      edit: true
+    }
+  });
 
-  await untilEvent('fixtureUpdate');
+  await untilEvent('fixtureEdit');
 });
 
 // Ensure state doesn't leak between tests
 afterEach(() => destroy());
 
-it('sends serializable part of updated fixture body to parent', async () => {
-  expect(getLastWindowMessage()).toEqual({
-    type: 'fixtureUpdate',
-    // Note: fixture.updateFn is unserializable so it's omitted
-    fixtureBody: {
-      update: true
-    }
+it('creates context with merged fixture', () => {
+  expect(getMock(createContext).calls[1][0].fixture).toEqual({
+    // Note that the serializable part of fixtureFoo is preserved, on top
+    // of which the serializable fixture part is applied
+    component: fixtureFoo.component,
+    fooFn: fixtureFoo.fooFn,
+    edit: true
   });
 });
 
-it('does not mount context again', () => {
-  expect(mockMount).toHaveBeenCalledTimes(1);
+it('mounts context again', () => {
+  expect(mockMount).toHaveBeenCalledTimes(2);
 });
 
 describe('after fixture source change', () => {
   beforeEach(async () => {
-    destroy = await connectLoader({
-      renderer,
+    destroy = await mount({
       proxies,
       fixtures: {
         ...fixtures,
@@ -87,11 +83,11 @@ describe('after fixture source change', () => {
     });
   });
 
-  it('ignores change and creates context with cached fixture fields', async () => {
-    expect(getMock(createContext).calls[1][0].fixture).toEqual({
-      ...fixtureFoo,
-      update: true,
-      updateFn
+  it('ignores change and creates context with edited fixture fields', async () => {
+    expect(getMock(createContext).calls[2][0].fixture).toEqual({
+      component: fixtureFoo.component,
+      fooFn: fixtureFoo.fooFn,
+      edit: true
     });
   });
 
@@ -106,8 +102,8 @@ describe('after fixture source change', () => {
       await untilEvent('fixtureSelect');
     });
 
-    it('discards update and creates context with latest fixture source', () => {
-      expect(getMock(createContext).calls[2][0].fixture).toEqual({
+    it('creates new context with latest fixture source', () => {
+      expect(getMock(createContext).calls[3][0].fixture).toEqual({
         ...fixtureFoo,
         change: true
       });
@@ -115,8 +111,7 @@ describe('after fixture source change', () => {
 
     describe('after fixture source change', () => {
       beforeEach(async () => {
-        destroy = await connectLoader({
-          renderer,
+        destroy = await mount({
           proxies,
           fixtures: {
             ...fixtures,
@@ -130,8 +125,8 @@ describe('after fixture source change', () => {
         });
       });
 
-      it('creates context with latest fixture source', async () => {
-        expect(getMock(createContext).calls[3][0].fixture).toEqual({
+      it('creates a new context', async () => {
+        expect(getMock(createContext).calls[4][0].fixture).toEqual({
           ...fixtureFoo,
           change2: true
         });

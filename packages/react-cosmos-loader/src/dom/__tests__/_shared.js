@@ -4,8 +4,7 @@ import React from 'react';
 import until from 'async-until';
 import deepEqual from 'deep-equal';
 
-import type { Renderer } from 'react-cosmos-flow/context';
-import type { LoaderMessageData } from 'react-cosmos-flow/loader';
+import type { LoaderMessage } from 'react-cosmos-flow/loader';
 
 export const ProxyFoo = () => <span />;
 export const proxies = [ProxyFoo];
@@ -20,13 +19,6 @@ export const fixtures = {
     bar: fixtureBar
   }
 };
-
-export const unmount: () => any = jest.fn();
-export const renderer: Renderer = jest.fn(() => {
-  return {
-    unmount
-  };
-});
 
 export const handleMessage: () => any = jest.fn();
 
@@ -69,7 +61,7 @@ export async function untilEventSeq(eventTypes: Array<string>) {
   }
 }
 
-export function postWindowMessage(msg: LoaderMessageData) {
+export function postWindowMessage(msg: LoaderMessage) {
   window.postMessage(msg, '*');
 }
 

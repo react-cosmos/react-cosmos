@@ -2,9 +2,8 @@
 
 import { getMock } from 'react-cosmos-flow/jest';
 import { createContext } from '../../create-context';
-import { connectLoader } from '../../connect-loader';
+import { mount } from '../mount';
 import {
-  renderer,
   proxies,
   fixtures,
   fixtureFoo,
@@ -28,8 +27,7 @@ let destroy;
 beforeEach(async () => {
   jest.clearAllMocks();
 
-  destroy = await connectLoader({
-    renderer,
+  destroy = await mount({
     proxies,
     fixtures
   });
@@ -45,8 +43,7 @@ beforeEach(async () => {
   await untilEvent('fixtureSelect');
   await untilEvent('fixtureLoad');
 
-  destroy = await connectLoader({
-    renderer,
+  destroy = await mount({
     proxies,
     fixtures: {
       ...fixtures,

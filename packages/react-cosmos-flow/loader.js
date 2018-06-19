@@ -1,53 +1,55 @@
 // @flow
 
-export type LoaderOpts = {
+export type LoaderWebOpts = {
   containerQuerySelector?: string
 };
 
-export type RuntimeErrorMessageData = {
+export type LoaderNativeOpts = {
+  port: number
+};
+
+export type LoaderOpts = LoaderWebOpts | LoaderNativeOpts;
+
+export type RuntimeErrorMessage = {
   type: 'runtimeError'
 };
 
-export type LoaderReadyMessageData = {
+export type LoaderReadyMessage = {
   type: 'loaderReady',
   fixtures: Object
 };
 
-export type FixtureListUpdateMessageData = {
+export type FixtureListUpdateMessage = {
   type: 'fixtureListUpdate',
   fixtures: Object
 };
 
-export type FixtureSelectMessageData = {
+export type FixtureSelectMessage = {
   type: 'fixtureSelect',
-  component: string,
-  fixture: string
+  component: ?string,
+  fixture: ?string
 };
 
-export type FixtureLoadMessageData = {
+export type FixtureLoadMessage = {
   type: 'fixtureLoad',
   fixtureBody: Object
 };
 
-export type FixtureUpdateMessageData = {
+export type FixtureUpdateMessage = {
   type: 'fixtureUpdate',
   fixtureBody: Object
 };
 
-export type FixtureEditMessageData = {
+export type FixtureEditMessage = {
   type: 'fixtureEdit',
   fixtureBody: Object
 };
 
-export type LoaderMessageData =
-  | RuntimeErrorMessageData
-  | LoaderReadyMessageData
-  | FixtureListUpdateMessageData
-  | FixtureSelectMessageData
-  | FixtureLoadMessageData
-  | FixtureUpdateMessageData
-  | FixtureEditMessageData;
-
-export type LoaderMessage = {
-  data: LoaderMessageData
-};
+export type LoaderMessage =
+  | RuntimeErrorMessage
+  | LoaderReadyMessage
+  | FixtureListUpdateMessage
+  | FixtureSelectMessage
+  | FixtureLoadMessage
+  | FixtureUpdateMessage
+  | FixtureEditMessage;

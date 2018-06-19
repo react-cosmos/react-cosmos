@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
-import { createDomRenderer } from '../dom-renderer';
+import { createDomRenderer } from '../renderer';
 
 jest.mock('react-dom', () => ({
   render: jest.fn(),

@@ -1,8 +1,7 @@
 // @flow
 
-import { connectLoader } from '../../connect-loader';
+import { mount } from '../mount';
 import {
-  renderer,
   proxies,
   fixtures,
   subscribeToWindowMessages,
@@ -17,8 +16,7 @@ let destroy;
 beforeEach(async () => {
   jest.clearAllMocks();
 
-  destroy = await connectLoader({
-    renderer,
+  destroy = await mount({
     proxies,
     fixtures
   });
@@ -30,8 +28,7 @@ beforeEach(async () => {
 afterEach(() => destroy());
 
 it('notifies parent frame with latest fixture names', async () => {
-  connectLoader({
-    renderer,
+  destroy = await mount({
     proxies,
     fixtures: {
       ...fixtures,

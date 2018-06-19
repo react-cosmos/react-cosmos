@@ -2,9 +2,8 @@
 
 import { getMock } from 'react-cosmos-flow/jest';
 import { createContext } from '../../create-context';
-import { connectLoader } from '../../connect-loader';
+import { mount } from '../mount';
 import {
-  renderer,
   proxies,
   fixtures,
   fixtureFoo,
@@ -29,8 +28,7 @@ let destroy;
 beforeEach(async () => {
   jest.clearAllMocks();
 
-  destroy = await connectLoader({
-    renderer,
+  destroy = await mount({
     proxies,
     fixtures,
     dismissRuntimeErrors: mockDismissRuntimeErrors
@@ -51,11 +49,11 @@ beforeEach(async () => {
 afterEach(() => destroy());
 
 it('creates context with fixture "Foo/foo"', () => {
-  expect(getMock(createContext).calls[0][0]).toMatchObject({
-    renderer,
-    proxies,
-    fixture: fixtureFoo
-  });
+  const [[params]] = getMock(createContext).calls;
+
+  expect(params.renderer).toEqual(expect.any(Function));
+  expect(params.proxies).toContain(...proxies);
+  expect(params.fixture).toBe(fixtureFoo);
 });
 
 it('mounts context', () => {

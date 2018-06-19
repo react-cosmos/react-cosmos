@@ -3,15 +3,15 @@
 import { importModule } from 'react-cosmos-shared';
 import { getComponents } from 'react-cosmos-voyager2/client';
 import getUserModules from './user-modules';
-import { mount } from 'react-cosmos-loader';
+import { mount } from 'react-cosmos-loader/dom';
 import { dismissRuntimeErrors } from 'react-error-overlay';
 
-import type { LoaderOpts } from 'react-cosmos-flow/loader';
+import type { LoaderWebOpts } from 'react-cosmos-flow/loader';
 import type { Modules, FixtureFile, Component } from 'react-cosmos-flow/module';
 
-declare var COSMOS_CONFIG: LoaderOpts;
+declare var COSMOS_CONFIG: LoaderWebOpts;
 
-const loaderOpts: LoaderOpts = COSMOS_CONFIG;
+const loaderOpts: LoaderWebOpts = COSMOS_CONFIG;
 
 export default function({ isDev }: { isDev: boolean } = {}) {
   const {

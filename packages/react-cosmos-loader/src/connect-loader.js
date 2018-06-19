@@ -14,6 +14,9 @@ type Args = {
   renderer: Renderer,
   proxies: Array<Proxy>,
   fixtures: Fixtures,
+  subscribe: (onMessage: (msg: LoaderMessage) => any) => void,
+  unsubscribe: () => void,
+  sendMessage: (msg: LoaderMessage) => void,
   dismissRuntimeErrors?: Function
 };
 
@@ -32,17 +35,22 @@ let selected: ?{
 let fixtureCache: ?FixtureType<*>;
 
 /**
- * Connect fixture context to remote Playground UI via window.postMessage.
- * In the future we'll replace window.postMessage with a fully remote (likely
- * websockets) communication channel, which will allow the Playground and the
- * Loader to live in completely different environments (eg. Control a Native
- * component instance from a web Playground UI).
+ * Connect fixture context (Loader) to remote Cosmos UI via configurable
+ * communication channel (eg. window.postMessage or websockets)
  *
- * It both receives fixture edits from parent frame and forwards fixture
- * updates bubbled up from proxy chain (due to state changes) to parent frame.
+ * It both receives fixture edits from UI and forwards fixture updates bubbled
+ * up from proxy chain (due to state changes) to UI.
  */
 export async function connectLoader(args: Args) {
-  const { proxies, fixtures, renderer, dismissRuntimeErrors } = args;
+  const {
+    proxies,
+    fixtures,
+    renderer,
+    subscribe,
+    unsubscribe,
+    sendMessage,
+    dismissRuntimeErrors
+  } = args;
 
   async function loadFixture(fixture: FixtureType<*>, notifyParent = true) {
     const { mount } = createContext({
@@ -57,7 +65,7 @@ export async function connectLoader(args: Args) {
     if (notifyParent) {
       // Notify back parent with the serializable contents of the loaded fixture
       const { serializable } = splitUnserializableParts(fixture);
-      postMessageToParent({
+      sendMessage({
         type: 'fixtureLoad',
         fixtureBody: serializable
       });
@@ -81,16 +89,21 @@ export async function connectLoader(args: Args) {
 
     // ...but only the serializable part can be sent to parent
     const { serializable } = splitUnserializableParts(fixturePart);
-    postMessageToParent({
+    sendMessage({
       type: 'fixtureUpdate',
       fixtureBody: serializable
     });
   }
 
-  async function onMessage({ data }: LoaderMessage) {
-    if (data.type === 'fixtureSelect') {
-      const { component, fixture } = data;
-      if (fixtures[component] && fixtures[component][fixture]) {
+  async function onMessage(msg: LoaderMessage) {
+    if (msg.type === 'fixtureSelect') {
+      const { component, fixture } = msg;
+      if (
+        component &&
+        fixture &&
+        fixtures[component] &&
+        fixtures[component][fixture]
+      ) {
         selected = { component, fixture };
 
         // No need for a cache at this point. Until a fixtureUpdate or
@@ -105,9 +118,11 @@ export async function connectLoader(args: Args) {
           dismissRuntimeErrors();
         }
       } else {
-        console.error(`[Cosmos] Missing fixture for ${component}:${fixture}`);
+        console.error(
+          `[Cosmos] Missing fixture for ${String(component)}:${String(fixture)}`
+        );
       }
-    } else if (data.type === 'fixtureEdit') {
+    } else if (msg.type === 'fixtureEdit') {
       if (!selected) {
         console.error('[Cosmos] No selected fixture to edit');
       } else {
@@ -118,7 +133,7 @@ export async function connectLoader(args: Args) {
         }
 
         // NOTE: Edits override the entire (serializable) fixture body
-        fixtureCache = applyFixtureBody(fixtureCache, data.fixtureBody);
+        fixtureCache = applyFixtureBody(fixtureCache, msg.fixtureBody);
 
         // Note: Creating fixture context from scratch on every fixture edit.
         // This means that the component will always go down the
@@ -131,11 +146,11 @@ export async function connectLoader(args: Args) {
   }
 
   function bind() {
-    window.addEventListener('message', onMessage, false);
+    subscribe(onMessage);
   }
 
   function unbind() {
-    window.removeEventListener('message', onMessage);
+    unsubscribe();
     unbindPrev = undefined;
   }
 
@@ -153,13 +168,13 @@ export async function connectLoader(args: Args) {
   if (isFirstCall) {
     // Let parent know loader is ready to render, along with the initial
     // fixture list (which might update later due to HMR)
-    postMessageToParent({
+    sendMessage({
       type: 'loaderReady',
       fixtures: extractFixtureNames(fixtures)
     });
   } else {
     // Keep parent up to date with fixture list
-    postMessageToParent({
+    sendMessage({
       type: 'fixtureListUpdate',
       fixtures: extractFixtureNames(fixtures)
     });
@@ -192,10 +207,6 @@ export async function connectLoader(args: Args) {
       fixtureCache = undefined;
     }
   };
-}
-
-function postMessageToParent(data) {
-  parent.postMessage(data, '*');
 }
 
 function extractFixtureNames(fixtures: Fixtures): FixtureNames {
