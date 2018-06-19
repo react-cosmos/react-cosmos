@@ -6,13 +6,15 @@
   - [x] Create sockets server (forwarding messages between clients)
   - [x] Generate user modules file
   - [ ] Update user modules file on changes
+  - [ ] Add loaderOpts to cosmos.modules
   - [ ] Onboarding
     - [ ] Generate Cosmos config
     - [ ] Add `cosmos.modules` to gitignore
-    - [ ] Create new App file that forks between App.dev and App.cosmos
+    - [ ] Create new App file that forks between App.main and App.cosmos
     - [ ] Add package.json script
 - [ ] RN UI
   - [x] Add support for websocket communication (choose between sockets or postMessage)
+  - [ ] Ask loader for fixtures on boot
   - [ ] Create RN-specific onboarding screens
   - [ ] Test socket transport
 - [ ] RN loader
@@ -20,4 +22,4 @@
   - [x] Create RN loader
   - [ ] Check if existing proxies are compatible
   - [ ] Test socket transport
-- [ ] Create React Native App example
+- [x] Create React Native App example
