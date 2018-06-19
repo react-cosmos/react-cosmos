@@ -6,11 +6,11 @@ import React, { Component } from 'react';
 import { View, Text, NativeModules } from 'react-native';
 import io from 'socket.io-client';
 import parse from 'url-parse';
-import { getComponents } from 'react-cosmos-voyager2/client';
 import {
-  getOldSchoolFixturesFromNewStyleComponents,
-  normalizeFixtureModules
-} from './utils/fixtures-format';
+  getNormalizedFixtureModules,
+  getOldSchoolFixturesFromNewStyleComponents
+} from 'react-cosmos-shared';
+import { getComponents } from 'react-cosmos-voyager2/client';
 import { connectLoader } from './connect-loader';
 
 import type { Element } from 'react';
@@ -32,6 +32,7 @@ type State = {
 };
 
 let socket;
+let destroyLoader;
 
 export class CosmosNativeLoader extends Component<Props, State> {
   state = {
@@ -39,6 +40,28 @@ export class CosmosNativeLoader extends Component<Props, State> {
   };
 
   componentDidMount() {
+    this.initLoader();
+  }
+
+  componentWillUnmount() {
+    if (destroyLoader) {
+      destroyLoader();
+    }
+  }
+
+  render() {
+    const { element } = this.state;
+
+    return (
+      element || (
+        <View>
+          <Text>No fixture selected</Text>
+        </View>
+      )
+    );
+  }
+
+  initLoader = async () => {
     const {
       options: { port },
       modules: { fixtureFiles, fixtureModules, proxies }
@@ -46,13 +69,13 @@ export class CosmosNativeLoader extends Component<Props, State> {
 
     const components = getComponents({
       fixtureFiles,
-      fixtureModules: normalizeFixtureModules(fixtureModules)
+      fixtureModules: getNormalizedFixtureModules(fixtureModules, fixtureFiles)
     });
-
     const fixtures = getOldSchoolFixturesFromNewStyleComponents(components);
 
     socket = io(getSocketUrl(port));
-    connectLoader({
+
+    destroyLoader = await connectLoader({
       renderer: this.loaderRenderer,
       proxies,
       fixtures,
@@ -60,21 +83,7 @@ export class CosmosNativeLoader extends Component<Props, State> {
       unsubscribe,
       sendMessage
     });
-  }
-
-  render() {
-    const { element } = this.state;
-
-    if (!element) {
-      return (
-        <View>
-          <Text>No fixture selected</Text>
-        </View>
-      );
-    }
-
-    return element;
-  }
+  };
 
   loaderRenderer = (element: Element<*>) => {
     this.setState({

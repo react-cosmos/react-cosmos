@@ -1,4 +1,4 @@
-import { mount } from 'react-cosmos-loader';
+import { mount } from 'react-cosmos-loader/dom';
 import { prepareOldSchoolFixtures } from './prepare-modules';
 
 module.exports = mount({
