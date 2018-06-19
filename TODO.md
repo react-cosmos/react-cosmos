@@ -14,7 +14,7 @@
     - [ ] Add package.json script
 - [ ] RN UI
   - [x] Add support for websocket communication (choose between sockets or postMessage)
-  - [ ] Ask loader for fixtures on load
+  - [x] Ask loader for fixtures on load
   - [ ] Create RN-specific onboarding screens
   - [ ] Test socket transport
   - [ ] Log using `debug` on the client

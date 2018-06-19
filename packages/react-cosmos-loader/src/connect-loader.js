@@ -96,7 +96,13 @@ export async function connectLoader(args: Args) {
   }
 
   async function onMessage(msg: LoaderMessage) {
-    if (msg.type === 'fixtureSelect') {
+    if (msg.type === 'uiReady') {
+      // This is called in the native loader, where the UI can load second
+      sendMessage({
+        type: 'loaderReady',
+        fixtures: extractFixtureNames(fixtures)
+      });
+    } else if (msg.type === 'fixtureSelect') {
       const { component, fixture } = msg;
       if (fixtures[component] && fixtures[component][fixture]) {
         selected = { component, fixture };
