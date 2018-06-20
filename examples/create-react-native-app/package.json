@@ -1,5 +1,5 @@
 {
-  "name": "create-react-native-app",
+  "name": "react-cosmos-create-react-native-app-example",
   "version": "4.5.0",
   "description": "Example of using Cosmos with Create React Native App",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/local-state",
