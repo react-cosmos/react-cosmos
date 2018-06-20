@@ -21,6 +21,6 @@
 - [ ] RN loader
   - [x] Extract non ReactDOM-specific core from react-cosmos-loader
   - [x] Create RN loader
+  - [x] Test socket transport
   - [ ] Check if existing proxies are compatible
-  - [ ] Test socket transport
 - [ ] Create React Native App example
