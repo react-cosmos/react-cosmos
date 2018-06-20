@@ -97,6 +97,11 @@ export default class ComponentPlayground extends Component<Props, State> {
         // TODO: Log messages using debug package
         this.onMessage({ data: msg });
       });
+
+      // This is required when the loader was opened before the UI.
+      // The `uiReady` message is not relevant for the web platform because
+      // the iframe loader always loads _after_ the parent UI frame.
+      this.postMessage({ type: 'uiReady' });
     }
   }
 
