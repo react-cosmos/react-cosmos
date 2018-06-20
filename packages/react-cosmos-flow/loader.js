@@ -12,6 +12,10 @@ export type LoaderNativeOpts = {
 
 export type LoaderOpts = LoaderWebOpts | LoaderNativeOpts;
 
+export type UiReadyMessage = {
+  type: 'uiReady'
+};
+
 export type RuntimeErrorMessage = {
   type: 'runtimeError'
 };
@@ -48,6 +52,7 @@ export type FixtureEditMessage = {
 };
 
 export type LoaderMessage =
+  | UiReadyMessage
   | RuntimeErrorMessage
   | LoaderReadyMessage
   | FixtureListUpdateMessage
