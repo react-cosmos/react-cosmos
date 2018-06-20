@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { CosmosNativeLoader } from 'react-cosmos-loader/native';
-import { getUserModules } from './cosmos.modules';
+/* eslint-disable-next-line import/no-unresolved */
+import { options, getUserModules } from './cosmos.modules';
 
 export default class App extends Component {
   render() {
-    return (
-      <CosmosNativeLoader options={{ port: 8989 }} modules={getUserModules()} />
-    );
+    return <CosmosNativeLoader options={options} modules={getUserModules()} />;
   }
 }
