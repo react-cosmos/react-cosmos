@@ -1,3 +1,11 @@
+## Roadmap: Summer of Cosmos
+
+- [React Native integration](#react-native-integration)
+- Pluggable UI
+- Explore: JSX fixtures
+- UI control panel
+- Redesign docs
+
 ## React Native integration
 
 - [ ] RN server
