@@ -18,7 +18,7 @@
   - [ ] Onboarding
     - [ ] Generate Cosmos config
     - [ ] Add `cosmos.modules` to gitignore
-    - [ ] Create new App file that forks between App.dev and App.cosmos
+    - [ ] Create new App file that forks between App.main and App.cosmos
     - [ ] Add package.json script
 - [ ] RN UI
   - [x] Add support for websocket communication (choose between sockets or postMessage)
@@ -31,4 +31,4 @@
   - [x] Create RN loader
   - [x] Test socket transport
   - [ ] Check if existing proxies are compatible
-- [ ] Create React Native App example
+- [x] Create React Native App example
