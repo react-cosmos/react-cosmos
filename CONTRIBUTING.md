@@ -5,9 +5,7 @@ You seem to be interested in the inner workings of Cosmos. Good news, we've been
 Jump to:
 
 - [Mission](#mission)
-- [Goals](#goals)
 - [Roadmap](#roadmap)
-- [Tracking](#tracking)
 - [Architecture](#architecture)
   - [Monorepo](#monorepo)
   - [Playground & Loader](#playground--loader-communication)
@@ -22,29 +20,11 @@ Jump to:
 
 Cosmos is built on the assumption that complexity in large apps stems from hidden links between parts. Tedious as it can be to uncover each and every component dependency, committing to it promises predictability and long term sanity.
 
-## Goals
-
-All contributions should be in line with these long term goals. Contributions that advance these goals have higher priority.
-
-- [#PainlessOnboarding](https://github.com/react-cosmos/react-cosmos/labels/%23PainlessOnboarding) DX is king. Minimize initial config and integrate easily with popular tools and starter kits.
-
-- [#MockEverything](https://github.com/react-cosmos/react-cosmos/labels/%23MockEverything) Every component input can and should be mocked. Redux state, Router context, API responses. No input left unmocked.
-
-- [#UniversalComponentPlayground](https://github.com/react-cosmos/react-cosmos/labels/%23UniversalComponentPlayground) Abstract the core from the React loader and allow other rendering engines to plug into Cosmos.
-
 ## Roadmap
 
-High impact initiatives. By working on these exciting topics, you have the opportunity to make a significant project contribution and radically advance the Cosmos mission.
+Roadmap are high-level planning is found inside [TODO.md](TODO.md).
 
-> Warning: These are high-level tasks and they require further analysis and collaboration before they can be turned into concrete tasks
-
-- ~~[Redesign filesystem API](https://github.com/react-cosmos/react-cosmos/issues/440)~~
-- [Config generation](https://github.com/react-cosmos/react-cosmos/issues/452)
-- [Create Cosmos server](https://github.com/react-cosmos/react-cosmos/pull/383#issuecomment-328297128)
-
-## Tracking
-
-[Projects](https://github.com/react-cosmos/react-cosmos/projects) are used to track large releases. [Issues](https://github.com/react-cosmos/react-cosmos/issues) are used for everything else.
+[Issues](https://github.com/react-cosmos/react-cosmos/issues) cover specific threads.
 
 #### Issue labels
 
@@ -57,8 +37,6 @@ Drafts progress through the following phases:
 - `needs love` Require feedback and a sound plan
 - `free for all` Ready to be picked up by anyone
 - _Assigned_
-
-There's also a label for each [long term goal](#goals).
 
 ## Architecture
 
@@ -182,7 +160,7 @@ Writing tests for a new proxy often takes more than its implementation. Extend t
 
 ## How to contribute
 
-A great way to start is by picking up a [`free for all`](https://github.com/react-cosmos/react-cosmos/issues?q=is%3Aopen+is%3Aissue+label%3A%22free+for+all%22) issue. Keep the project [goals](#goals) in mind.
+A great way to start is by picking up a [`free for all`](https://github.com/react-cosmos/react-cosmos/issues?q=is%3Aopen+is%3Aissue+label%3A%22free+for+all%22) issue.
 
 #### Be kind and thoughtful
 
