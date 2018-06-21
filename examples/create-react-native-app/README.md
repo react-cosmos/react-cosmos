@@ -1,3 +1,8 @@
+> **Warning**: This example does not work until these PRs are released
+>
+> - https://github.com/viewstools/yarn-workspaces-cra-crna/pull/17
+> - https://github.com/viewstools/yarn-workspaces-cra-crna/pull/18
+
 ## Cosmos with Create React Native App
 
 > Run `yarn` in the root directory first.
