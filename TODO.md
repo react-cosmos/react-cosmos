@@ -32,3 +32,4 @@
   - [x] Test socket transport
   - [ ] Check if existing proxies are compatible
 - [x] Create React Native App example
+- [ ] Add (experimental) README section
