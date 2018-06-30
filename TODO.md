@@ -13,7 +13,7 @@
   - [x] Create RN server cmd
   - [x] Create sockets server (forwarding messages between clients)
   - [x] Generate user modules file
-  - [ ] Update user modules file on changes
+  - [x] Update user modules file on fixture file changes
   - [x] Add loaderOpts to cosmos.modules
   - [ ] Onboarding
     - [ ] Generate Cosmos config
