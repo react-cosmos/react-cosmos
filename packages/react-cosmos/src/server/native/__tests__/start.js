@@ -143,7 +143,7 @@ describe('on new fixture file', () => {
     const untilOpts = {
       loopDelay: 200,
       timeout: 2000,
-      failMsg: 'Modules file has not been updated'
+      failMsg: 'cosmos.modules file has not been updated'
     };
     await until(async () => {
       const output = await readFileAsync(mockModulesPath, 'utf8');
