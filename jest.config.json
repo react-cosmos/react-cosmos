@@ -10,7 +10,7 @@
     "/__fsmocks__/",
     "/_shared"
   ],
-  "watchPathIgnorePatterns": ["/__fsoutput__/"],
+  "watchPathIgnorePatterns": ["/__fsoutput__/", "jestnowatch"],
   "transformIgnorePatterns": [
     "/node_modules/(?!(react-cosmos.+|react-native))"
   ],

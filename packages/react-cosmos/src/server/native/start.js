@@ -1,5 +1,7 @@
 // @flow
 
+import chokidar from 'chokidar';
+import { debounce } from 'lodash';
 import { getCosmosConfig } from 'react-cosmos-config';
 import {
   createServerApp,
@@ -28,7 +30,10 @@ export async function startServer() {
   const closeSockets = attachSockets(server);
   await startServer();
 
+  const watcher = await startFixtureFileWatcher(cosmosConfig);
+
   return async () => {
+    watcher.close();
     await closeSockets();
     await stopServer();
   };
@@ -39,4 +44,31 @@ function getPlaygroundOpts({ rootPath }) {
     platform: 'native',
     projectKey: rootPath
   };
+}
+
+async function startFixtureFileWatcher(cosmosConfig) {
+  const { rootPath, fileMatch } = cosmosConfig;
+
+  return new Promise(resolve => {
+    const watcher = chokidar
+      .watch(fileMatch, {
+        ignored: getNormalizedIgnores(cosmosConfig),
+        ignoreInitial: true,
+        cwd: rootPath
+      })
+      .on('ready', () => resolve(watcher))
+      .on(
+        'all',
+        debounce(() => {
+          // Rebuild cosmos.modules file on fixture file changes
+          generateModulesFile(cosmosConfig);
+        }, 50)
+      );
+  });
+}
+
+function getNormalizedIgnores({ fileMatchIgnore, exclude }) {
+  return Array.isArray(exclude)
+    ? [fileMatchIgnore, ...exclude]
+    : [fileMatchIgnore, exclude];
 }

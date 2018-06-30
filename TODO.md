@@ -13,7 +13,7 @@
   - [x] Create RN server cmd
   - [x] Create sockets server (forwarding messages between clients)
   - [x] Generate user modules file
-  - [ ] Update user modules file on changes
+  - [x] Update cosmos.modules file on fixture file changes
   - [x] Add loaderOpts to cosmos.modules
   - [ ] Onboarding
     - [ ] Generate Cosmos config
@@ -32,3 +32,4 @@
   - [x] Test socket transport
   - [ ] Check if existing proxies are compatible
 - [x] Create React Native App example
+- [ ] Add (experimental) README section

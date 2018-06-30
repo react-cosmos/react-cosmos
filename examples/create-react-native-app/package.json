@@ -17,8 +17,8 @@
     "react-native": "^0.55.4"
   },
   "devDependencies": {
-    "crna-make-symlinks-for-yarn-workspaces": "^1.0.1",
-    "metro-bundler-config-yarn-workspaces": "^1.0.3",
+    "@skidding/crna-make-symlinks-for-yarn-workspaces": "^1.0.1",
+    "@skidding/metro-bundler-config-yarn-workspaces": "^1.0.5",
     "react-native-scripts": "^1.14.0"
   },
   "xo": false,

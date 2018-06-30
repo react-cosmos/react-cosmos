@@ -4,9 +4,8 @@
  */
 
 import { join } from 'path';
-import { readFile, unlink } from 'fs';
+import { readFile, remove } from 'fs-extra';
 import request from 'request-promise-native';
-import promisify from 'util.promisify';
 import {
   defaultFileMatch as mockFileMatch,
   defaultFileMatchIgnore as mockFileMatchIgnore,
@@ -14,9 +13,6 @@ import {
 } from 'react-cosmos-shared/server';
 import io from 'socket.io-client';
 import { startServer } from '../start';
-
-const readFileAsync = promisify(readFile);
-const unlinkAsync = promisify(unlink);
 
 const mockRootPath = join(__dirname, '__fsmocks__');
 const mockProxiesPath = join(mockRootPath, 'cosmos.proxies');
@@ -45,12 +41,12 @@ beforeEach(async () => {
 
 afterEach(async () => {
   await stopServer();
-  await unlinkAsync(mockModulesPath);
+  await remove(mockModulesPath);
 });
 
 it('serves index.html on / route with playgrounds opts included', async () => {
   const res = await request('http://127.0.0.1:10001/');
-  const source = await readFileAsync(
+  const source = await readFile(
     require.resolve('../../shared/static/index.html'),
     'utf8'
   );
@@ -66,7 +62,7 @@ it('serves index.html on / route with playgrounds opts included', async () => {
 
 it('serves playground js on /_playground.js route', async () => {
   const res = await request('http://127.0.0.1:10001/_playground.js');
-  const source = await readFileAsync(
+  const source = await readFile(
     require.resolve('react-cosmos-playground'),
     'utf8'
   );
@@ -76,7 +72,7 @@ it('serves playground js on /_playground.js route', async () => {
 
 it('serves favicon.ico on /_cosmos.ico route', async () => {
   const res = await request('http://127.0.0.1:10001/_cosmos.ico');
-  const source = await readFileAsync(
+  const source = await readFile(
     require.resolve('../../shared/static/favicon.ico'),
     'utf8'
   );
@@ -101,7 +97,7 @@ it('broadcasts events to between clients', async () => {
 });
 
 it('generates modules file', async () => {
-  const output = await readFileAsync(mockModulesPath, 'utf8');
+  const output = await readFile(mockModulesPath, 'utf8');
 
   const fixturePath = join(mockRootPath, 'MyComponent.fixture.js');
   const componentPath = join(mockRootPath, 'MyComponent.js');

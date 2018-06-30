@@ -280,6 +280,9 @@ export default class ComponentPlayground extends Component<Props, State> {
       const { status } = await fetch(loaderUri, {
         credentials: 'same-origin'
       });
+      // WARN: At this point the component could be unmounted and we'll get the
+      // following React warning:
+      // > Can't call setState (or forceUpdate) on an unmounted component.
       if (status === 200) {
         // Wait until all session settings are read before rendering
         this.restoreUserSettings(() => {
