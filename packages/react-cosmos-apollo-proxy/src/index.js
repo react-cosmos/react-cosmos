@@ -50,9 +50,11 @@ Read more at: https://github.com/react-cosmos/react-cosmos#react-apollo-graphql.
       };
 
       if (isMockedFixture) {
+        // ensure that the cache is not persisted between mocked fixtures
+        options.cache = cache;
         options.link = createFixtureLink({
           apolloFixture,
-          cache,
+          cache: options.cache,
           fixture: this.props.fixture
         });
       }
