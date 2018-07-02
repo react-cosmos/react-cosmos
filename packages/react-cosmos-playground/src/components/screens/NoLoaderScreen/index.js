@@ -10,6 +10,7 @@ type Props = {
   options: PlaygroundWebOpts
 };
 
+// TODO: Rename to WebIndexErrorScreen
 export default class NoLoaderScreen extends Component<Props> {
   render() {
     const {

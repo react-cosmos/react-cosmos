@@ -15,28 +15,35 @@ const KEY_S = 83;
 const KEY_ESC = 27;
 
 export default class FixtureList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      searchText: '',
-      fixtureTree: null
-    };
-  }
+  unmounted = false;
+
+  state = {
+    searchText: '',
+    fixtureTree: null
+  };
 
   async componentDidMount() {
     const {
       fixtures,
       options: { projectKey }
     } = this.props;
+
     window.addEventListener('keydown', this.onWindowKey);
 
     const savedExpansionState = await getSavedExpansionState(projectKey);
+
+    if (this.unmounted === true) {
+      return;
+    }
+
     const fixtureTree = fixturesToTreeData(fixtures, savedExpansionState);
     pruneUnusedExpansionState(projectKey, savedExpansionState, fixtureTree);
     this.setState({ fixtureTree });
   }
 
   componentWillUnmount() {
+    this.unmounted = true;
+
     window.removeEventListener('keydown', this.onWindowKey);
   }
 

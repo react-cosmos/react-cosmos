@@ -30,11 +30,15 @@ import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
 export const LEFT_NAV_SIZE = '__cosmos__left-nav-size';
 export const FIXTURE_EDITOR_PANE_SIZE = '__cosmos__fixture-editor-pane-size';
 
-export const PENDING = 0;
-export const BUILD_ERROR = 1;
-export const OK = 2;
-export const RUNTIME_ERROR = 3;
-export const READY = 4;
+type LoaderStatus =
+  | 'WEB_PENDING'
+  | 'WEB_INDEX_ERROR'
+  | 'WEB_INDEX_OK'
+  | 'NATIVE_PENDING'
+  // This occurs when a runtime error error in reported before the loaderReady
+  // event
+  | 'BOOT_RUNTIME_ERROR'
+  | 'READY';
 
 type Props = {
   router: Object,
@@ -46,9 +50,7 @@ type Props = {
 };
 
 type State = {
-  // There doesn't seem to be a way to use const values as types. Let me know
-  // if you can think of a better way to express this!
-  loaderStatus: 0 | 1 | 2 | 3 | 4,
+  loaderStatus: LoaderStatus,
   isDragging: boolean,
   leftNavSize: number,
   fixtureEditorPaneSize: number,
@@ -60,10 +62,6 @@ type State = {
 let socket;
 
 export default class ComponentPlayground extends Component<Props, State> {
-  contentNode: ?HTMLElement;
-
-  loaderFrame: ?window;
-
   static defaultProps = {
     editor: false,
     fullScreen: false
@@ -73,8 +71,15 @@ export default class ComponentPlayground extends Component<Props, State> {
   static getCleanUrlParams = (params: {}) =>
     omitBy(params, (val, key) => ComponentPlayground.defaultProps[key] === val);
 
+  contentNode: ?HTMLElement;
+
+  loaderFrame: ?window;
+
+  unmounted: boolean = false;
+
   state = {
-    loaderStatus: PENDING,
+    loaderStatus:
+      this.props.options.platform === 'web' ? 'WEB_PENDING' : 'NATIVE_PENDING',
     isDragging: false,
     leftNavSize: 250,
     fixtureEditorPaneSize: 250,
@@ -106,6 +111,8 @@ export default class ComponentPlayground extends Component<Props, State> {
   }
 
   componentWillUnmount() {
+    this.unmounted = true;
+
     window.removeEventListener('message', this.onMessage);
     window.removeEventListener('resize', this.onResize);
   }
@@ -113,7 +120,7 @@ export default class ComponentPlayground extends Component<Props, State> {
   componentWillReceiveProps({ component, fixture }: Props) {
     const { loaderStatus, fixtures } = this.state;
 
-    if (loaderStatus === READY) {
+    if (loaderStatus === 'READY') {
       const fixtureChanged =
         component !== this.props.component || fixture !== this.props.fixture;
 
@@ -154,15 +161,16 @@ export default class ComponentPlayground extends Component<Props, State> {
     // We only care about runtime errors before Loader is ready. Once
     // initialized, the Loader will safely capture and display runtime errors
     // when they occur
-    if (this.state.loaderStatus < READY) {
-      this.setState({ loaderStatus: RUNTIME_ERROR });
+    if (this.state.loaderStatus !== 'READY') {
+      // TODO: Suppurt BOOT_RUNTIME_ERROR for native
+      this.setState({ loaderStatus: 'BOOT_RUNTIME_ERROR' });
     }
   }
 
   onLoaderReady({ fixtures }: LoaderReadyMessage) {
     this.setState(
       {
-        loaderStatus: READY,
+        loaderStatus: 'READY',
         fixtures
       },
       // We update the content orientation because the content width decreases
@@ -272,7 +280,7 @@ export default class ComponentPlayground extends Component<Props, State> {
     if (location.protocol === 'file:') {
       this.restoreUserSettings(() => {
         this.setState({
-          loaderStatus: OK
+          loaderStatus: 'WEB_INDEX_OK'
         });
       });
     } else {
@@ -280,19 +288,22 @@ export default class ComponentPlayground extends Component<Props, State> {
       const { status } = await fetch(loaderUri, {
         credentials: 'same-origin'
       });
-      // WARN: At this point the component could be unmounted and we'll get the
-      // following React warning:
-      // > Can't call setState (or forceUpdate) on an unmounted component.
+
+      // At this point the component could be unmounted
+      if (this.unmounted) {
+        return;
+      }
+
       if (status === 200) {
         // Wait until all session settings are read before rendering
         this.restoreUserSettings(() => {
           this.setState({
-            loaderStatus: OK
+            loaderStatus: 'WEB_INDEX_OK'
           });
         });
       } else {
         this.setState({
-          loaderStatus: BUILD_ERROR
+          loaderStatus: 'WEB_INDEX_ERROR'
         });
       }
     }
@@ -341,7 +352,7 @@ export default class ComponentPlayground extends Component<Props, State> {
     const { loaderStatus } = this.state;
 
     // Can't show left nav until we receive fixture list with READY event
-    if (loaderStatus < READY || fullScreen) {
+    if (loaderStatus !== 'READY' || fullScreen) {
       return this.renderContent();
     }
 
@@ -351,30 +362,34 @@ export default class ComponentPlayground extends Component<Props, State> {
   renderContent() {
     const { component, fixture, editor, options } = this.props;
     const { loaderStatus, fixtures, orientation } = this.state;
+
     // We can only check if a fixture exists once loader is READY and fixture
     // list has been received
-    const isFixtureSelected = loaderStatus === READY && Boolean(fixture);
+    const isFixtureSelected = loaderStatus === 'READY' && Boolean(fixture);
     const isMissingFixtureSelected =
       isFixtureSelected && !fixtureExists(fixtures, component, fixture);
     const isLoaderVisible =
       (isFixtureSelected && !isMissingFixtureSelected) ||
       // Show loader when it crashes during initializing
-      loaderStatus === RUNTIME_ERROR;
+      loaderStatus === 'BOOT_RUNTIME_ERROR';
+
     const classes = classNames(styles.content, {
       [styles.contentPortrait]: orientation === 'portrait',
       [styles.contentLandscape]: orientation === 'landscape'
     });
 
+    // TODO: Create screen for loaderStatus=NATIVE_PENDING
+    // TODO: Create screen for options.platform=native && loaderStatus=READY
     return (
       <div key="content" ref={this.handleContentRef} className={classes}>
         {!isLoaderVisible && (
           <StarryBg>
-            {loaderStatus === PENDING && <LoadingScreen />}
+            {loaderStatus === 'WEB_PENDING' && <LoadingScreen />}
             {options.platform === 'web' &&
-              loaderStatus === BUILD_ERROR && (
+              loaderStatus === 'WEB_INDEX_ERROR' && (
                 <NoLoaderScreen options={options} />
               )}
-            {loaderStatus === READY &&
+            {loaderStatus === 'READY' &&
               !isFixtureSelected && <WelcomeScreen fixtures={fixtures} />}
             {isMissingFixtureSelected && (
               <MissingScreen componentName={component} fixtureName={fixture} />
@@ -383,7 +398,9 @@ export default class ComponentPlayground extends Component<Props, State> {
         )}
         {editor && isLoaderVisible && this.renderFixtureEditor()}
         {options.platform === 'web' &&
-          loaderStatus >= OK &&
+          (loaderStatus === 'READY' ||
+            loaderStatus === 'BOOT_RUNTIME_ERROR' ||
+            loaderStatus === 'WEB_INDEX_OK') &&
           this.renderLoader(isLoaderVisible, options.loaderUri)}
       </div>
     );
