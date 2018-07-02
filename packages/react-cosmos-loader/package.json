@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
-    "async-until": "^1.1.0",
+    "async-until": "^1.1.1",
     "deep-equal": "^1.0.1",
     "lodash.merge": "^4.6.1",
     "prop-types": "^15.6.1",
