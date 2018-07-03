@@ -166,7 +166,7 @@ export default class ComponentPlayground extends Component<Props, State> {
     // initialized, the Loader will safely capture and display runtime errors
     // when they occur
     if (this.state.loaderStatus !== 'READY') {
-      // TODO: Suppurt BOOT_RUNTIME_ERROR for native
+      // TODO: Support BOOT_RUNTIME_ERROR for native
       this.setState({ loaderStatus: 'BOOT_RUNTIME_ERROR' });
     }
   }
@@ -428,7 +428,7 @@ export default class ComponentPlayground extends Component<Props, State> {
 
     if (loaderStatus === 'WEB_INDEX_OK') {
       // Warning: Ensure <Fragment><Loader> node hierarchy in return value to
-      // preserve loader instance between renders
+      // reuse iframe DOM element between renders
       return (
         <Fragment>
           <StarryBg />
@@ -440,7 +440,7 @@ export default class ComponentPlayground extends Component<Props, State> {
     if (loaderStatus === 'BOOT_RUNTIME_ERROR') {
       return (
         // Warning: Ensure <Fragment><Loader> node hierarchy in return value to
-        // preserve loader instance between renders
+        // reuse iframe DOM element between renders
         <Fragment>
           {this.renderLoader({ loaderUri, showLoader: true })}
         </Fragment>
@@ -449,13 +449,13 @@ export default class ComponentPlayground extends Component<Props, State> {
 
     if (loaderStatus !== 'READY') {
       throw new Error(
-        `Trying to load web loader with '${loaderStatus}' loader status`
+        `Trying to load web loader with '${loaderStatus}' status`
       );
     }
 
     if (!isFixtureSelected) {
       // Warning: Ensure <Fragment><Loader> node hierarchy in return value to
-      // preserve loader instance between renders
+      // reuse iframe DOM element between renders
       return (
         <Fragment>
           <StarryBg>
@@ -468,7 +468,7 @@ export default class ComponentPlayground extends Component<Props, State> {
 
     if (!isFixtureSelectedFound) {
       // Warning: Ensure <Fragment><Loader> node hierarchy in return value to
-      // preserve loader instance between renders
+      // reuse iframe DOM element between renders
       return (
         <Fragment>
           <StarryBg>
@@ -507,7 +507,7 @@ export default class ComponentPlayground extends Component<Props, State> {
 
     if (loaderStatus !== 'READY') {
       throw new Error(
-        `Trying to load native loader with '${loaderStatus}' loader status`
+        `Trying to load native loader with '${loaderStatus}' status`
       );
     }
 
