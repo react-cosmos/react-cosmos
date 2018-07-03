@@ -23,7 +23,7 @@
 - [ ] RN UI
   - [x] Add support for websocket communication (choose between sockets or postMessage)
   - [x] Ask loader for fixtures on load
-  - [ ] Create RN-specific onboarding screens
+  - [x] Create RN-specific onboarding screens
   - [ ] Test socket transport
   - [ ] Log using `debug` on the client
 - [ ] RN loader

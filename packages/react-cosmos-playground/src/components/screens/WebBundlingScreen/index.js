@@ -1,10 +1,10 @@
 // @flow
 
 import React, { Component } from 'react';
-import DisplayScreen from '../DisplayScreen';
-import style from '../DisplayScreen/index.less';
+import DisplayScreen from '../shared/DisplayScreen';
+import style from '../shared/DisplayScreen/index.less';
 
-export default class LoadingScreen extends Component<{}> {
+export default class WebBundlingScreen extends Component<{}> {
   render() {
     return (
       <DisplayScreen delayed>

@@ -39,7 +39,7 @@ module.exports = {
         include: [
           src,
           // Allow building playground from uncompiled monorepo deps
-          /(react-cosmos-.+|react-querystring-router)(\/|\\)src/,
+          /(react-cosmos.+|react-querystring-router)(\/|\\)src/,
           /react-cosmos-flow/
         ],
         use: 'babel-loader'

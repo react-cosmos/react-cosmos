@@ -1,4 +1,4 @@
-import { createContext } from '../../../../utils/enzyme';
+import { createContext } from '../../../../../utils/enzyme';
 import fixture from '../__fixtures__/hi-there';
 
 const { mount, getWrapper } = createContext({ fixture });

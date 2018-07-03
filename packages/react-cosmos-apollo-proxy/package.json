@@ -16,7 +16,7 @@
   },
   "xo": false,
   "devDependencies": {
-    "async-until": "^1.1.0",
+    "async-until": "^1.1.1",
     "fetch-mock": "^5.12.2",
     "graphql-tag": "^2.9.2"
   }

@@ -4,7 +4,7 @@ import fixture from '../__fixtures__/default';
 
 const { mount, getWrapper } = createContext({ renderer, fixture });
 
-describe('LoadingScreen', () => {
+describe('NativePendingScreen', () => {
   beforeEach(mount);
 
   it('renders correctly', () => {

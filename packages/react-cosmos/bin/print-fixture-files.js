@@ -4,6 +4,6 @@
 process.env.BABEL_ENV = process.env.BABEL_ENV || 'development';
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-const { printFixtureFiles } = require('../dist/server/print-fixture-files');
+const { printFixtureFiles } = require('../src/server/print-fixture-files');
 
 printFixtureFiles();

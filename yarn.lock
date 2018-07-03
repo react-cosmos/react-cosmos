@@ -2005,9 +2005,11 @@ async-limiter@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.0.tgz#78faed8c3d074ab81f22b4e985d79e8738f720f8"
 
-async-until@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/async-until/-/async-until-1.1.0.tgz#1da7f40f53199d19e8982c18ea7ac82e49c6d07c"
+async-until@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/async-until/-/async-until-1.1.1.tgz#a846158966ef1801f0e97241ada20b04a4364742"
+  dependencies:
+    babel-runtime "^6.26.0"
 
 async@2.1.4:
   version "2.1.4"
