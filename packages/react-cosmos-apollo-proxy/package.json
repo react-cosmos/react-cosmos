@@ -6,12 +6,12 @@
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
-    "apollo-cache-inmemory": "^1.2.2",
-    "apollo-client": "^2.3.2",
+    "apollo-cache-inmemory": "^1.2.5",
+    "apollo-client": "^2.3.5",
     "apollo-link": "^1.2.2",
     "apollo-link-http": "^1.5.4",
     "graphql": "^0.13.2",
-    "react-apollo": "^2.1.4",
+    "react-apollo": "^2.1.8",
     "react-cosmos-shared": "^4.4.0"
   },
   "xo": false,

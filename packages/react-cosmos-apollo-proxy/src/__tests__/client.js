@@ -160,7 +160,7 @@ describe('proxy configured with an endpoint', () => {
     // wait for the fake network request to complete
     await until(() => !getWrappedComponent().props().data.loading);
 
-    expect(getWrappedComponent().props().data.author).toEqual(
+    expect(getWrappedComponent().props().data.author).toMatchObject(
       resolveWith.author
     );
   });
@@ -184,7 +184,7 @@ describe('proxy configured with an endpoint', () => {
     // can be async even if data is mocked
     await until(() => getWrappedComponent().props().data.loading === false);
 
-    expect(getWrappedComponent().props().data.author).toEqual(
+    expect(getWrappedComponent().props().data.author).toMatchObject(
       resolveWith.author
     );
   });
