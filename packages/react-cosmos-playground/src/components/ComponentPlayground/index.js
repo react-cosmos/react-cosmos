@@ -11,8 +11,8 @@ import StarryBg from '../StarryBg';
 import FixtureList from '../FixtureList';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import MissingScreen from '../screens/MissingScreen';
-import NoLoaderScreen from '../screens/NoLoaderScreen';
-import LoadingScreen from '../screens/LoadingScreen';
+import WebIndexErrorScreen from '../screens/WebIndexErrorScreen';
+import WebBundlingScreen from '../screens/WebBundlingScreen';
 import DragHandle from '../DragHandle';
 import FixtureEditor from '../FixtureEditor';
 import styles from './index.less';
@@ -384,10 +384,10 @@ export default class ComponentPlayground extends Component<Props, State> {
       <div key="content" ref={this.handleContentRef} className={classes}>
         {!isLoaderVisible && (
           <StarryBg>
-            {loaderStatus === 'WEB_PENDING' && <LoadingScreen />}
+            {loaderStatus === 'WEB_PENDING' && <WebBundlingScreen />}
             {options.platform === 'web' &&
               loaderStatus === 'WEB_INDEX_ERROR' && (
-                <NoLoaderScreen options={options} />
+                <WebIndexErrorScreen options={options} />
               )}
             {loaderStatus === 'READY' &&
               !isFixtureSelected && <WelcomeScreen fixtures={fixtures} />}

@@ -4,8 +4,7 @@ import React, { Component } from 'react';
 import DisplayScreen from '../DisplayScreen';
 import style from '../DisplayScreen/index.less';
 
-// TODO: Rename to WebBundlingScreen
-export default class LoadingScreen extends Component<{}> {
+export default class WebBundlingScreen extends Component<{}> {
   render() {
     return (
       <DisplayScreen delayed>

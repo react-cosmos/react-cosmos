@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`NoLoaderScreen custom webpack config renders correctly 1`] = `
+exports[`WebIndexErrorScreen custom webpack config renders correctly 1`] = `
 <div
   className="root"
 >
@@ -57,7 +57,7 @@ exports[`NoLoaderScreen custom webpack config renders correctly 1`] = `
 </div>
 `;
 
-exports[`NoLoaderScreen default webpack config renders correctly 1`] = `
+exports[`WebIndexErrorScreen default webpack config renders correctly 1`] = `
 <div
   className="root"
 >
