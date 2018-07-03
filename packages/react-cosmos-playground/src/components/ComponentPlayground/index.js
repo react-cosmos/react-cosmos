@@ -14,6 +14,7 @@ import MissingScreen from '../screens/MissingScreen';
 import WebIndexErrorScreen from '../screens/WebIndexErrorScreen';
 import WebBundlingScreen from '../screens/WebBundlingScreen';
 import { NativePendingScreen } from '../screens/NativePendingScreen';
+import { NativeSelectedScreen } from '../screens/NativeSelectedScreen';
 import DragHandle from '../DragHandle';
 import FixtureEditor from '../FixtureEditor';
 import styles from './index.less';
@@ -526,7 +527,11 @@ export default class ComponentPlayground extends Component<Props, State> {
       );
     }
 
-    // TODO: Render NativeFixtureScreen
+    return (
+      <StarryBg>
+        <NativeSelectedScreen />
+      </StarryBg>
+    );
   }
 
   renderLeftNav() {

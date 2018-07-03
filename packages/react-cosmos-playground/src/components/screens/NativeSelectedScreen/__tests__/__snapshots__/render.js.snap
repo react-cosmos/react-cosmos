@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`NativePendingScreen renders correctly 1`] = `
+exports[`NativeSelectedScreen renders correctly 1`] = `
 <div
   className="root"
 >
@@ -14,28 +14,12 @@ exports[`NativePendingScreen renders correctly 1`] = `
       <p
         className="header"
       >
-        Standing by...
+        Fixture loaded remotely
       </p>
       <p>
         <strong>
-          Waiting for a signal from your React Native build.
+          Check your device or simulator to see the loaded fixture.
         </strong>
-      </p>
-      <p>
-        Make sure 
-        <code>
-          App.js
-        </code>
-         points to Cosmos and your app is running. See the
-         
-        <a
-          href="https://github.com/react-cosmos/react-cosmos/tree/master/examples/create-react-native-app"
-          target="_blank"
-        >
-          CRNA example
-        </a>
-         
-        for inspiration.
       </p>
       <p
         className="faded"

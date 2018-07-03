@@ -41,7 +41,7 @@ exports[`WebIndexErrorScreen custom webpack config renders correctly 1`] = `
       <p
         className="faded"
       >
-        If you can't figure it out
+        If something's wrong,
          
         <a
           href="https://github.com/react-cosmos/react-cosmos/issues/new"
@@ -90,7 +90,7 @@ exports[`WebIndexErrorScreen default webpack config renders correctly 1`] = `
       <p
         className="faded"
       >
-        If you can't figure it out
+        If something's wrong,
          
         <a
           href="https://github.com/react-cosmos/react-cosmos/issues/new"
