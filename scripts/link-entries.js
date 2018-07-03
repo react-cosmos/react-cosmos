@@ -47,14 +47,17 @@ async function linkFileRequiresToDir(filePath, targetDir: TargetDir) {
   // NOTE: Use Babel transform + Prettier if future requires it.
   // For now this is JustFine™
   const prevContents = await readFileAsync(filePath, 'utf8');
-  const regExp = new RegExp(`require\\('./(${SRC_DIR}|${DIST_DIR})`, 'g');
-  const nextContents = prevContents.replace(regExp, `require('./${targetDir}`);
+  const regExp = new RegExp(
+    `require\\('(\\.{1,2})/(${SRC_DIR}|${DIST_DIR})`,
+    'g'
+  );
+  const nextContents = prevContents.replace(regExp, `require('$1/${targetDir}`);
 
   writeFileAsync(filePath, nextContents, 'utf8');
 }
 
 async function getPackageEntryPoints(packages) {
-  return globAsync(`./packages/{${packages.join(',')}}/*.js`);
+  return globAsync(`./packages/{${packages.join(',')}}/{*,bin/*}.js`);
 }
 
 function getTargetDir(): TargetDir {
