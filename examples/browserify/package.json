@@ -10,7 +10,7 @@
   "dependencies": {
     "babelify": "^7.3.0",
     "budo": "^9.2.1",
-    "prop-types": "^15.6.1",
+    "prop-types": "^15.6.2",
     "react-cosmos-loader": "^4.4.0",
     "react-cosmos-playground": "^4.5.0",
     "react-cosmos-shared": "^4.4.0",

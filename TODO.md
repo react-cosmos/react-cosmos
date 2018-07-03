@@ -5,6 +5,7 @@
 - Explore: JSX fixtures
 - UI control panel
 - Redesign docs
+- Create high-level examples (eg. Next.js, CRA, Gatsby)
 
 ## React Native integration
 
