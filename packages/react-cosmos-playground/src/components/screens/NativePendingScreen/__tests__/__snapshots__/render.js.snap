@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NativePendingScreen renders correctly 1`] = `
+<div
+  className="root"
+>
+  <div
+    className="inner"
+  >
+    <img
+      src={Object {}}
+    />
+    <div>
+      <p
+        className="header"
+      >
+        Standing by...
+      </p>
+      <p>
+        <strong>
+          Waiting for a signal from your React Native build.
+        </strong>
+      </p>
+      <p>
+        Make sure 
+        <code>
+          App.js
+        </code>
+         points to Cosmos and your app is running. See the
+         
+        <a
+          href="https://github.com/react-cosmos/react-cosmos/tree/master/examples/create-react-native-app"
+          target="_blank"
+        >
+          CRNA example
+        </a>
+         
+        for inspiration.
+      </p>
+      <p
+        className="faded"
+      >
+        If you can't figure it out
+         
+        <a
+          href="https://github.com/react-cosmos/react-cosmos/issues/new"
+          target="_blank"
+        >
+          report your error
+        </a>
+         
+        and we'll do our best to help. Include as much details as you can.
+      </p>
+    </div>
+  </div>
+</div>
+`;

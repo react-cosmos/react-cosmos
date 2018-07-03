@@ -1,8 +1,9 @@
 // @flow
 
 import React, { Component } from 'react';
-import DisplayScreen from '../DisplayScreen';
-import style from '../DisplayScreen/index.less';
+import DisplayScreen from '../shared/DisplayScreen';
+import style from '../shared/DisplayScreen/index.less';
+import { helpFooter } from '../shared/help-footer';
 
 import type { PlaygroundWebOpts } from 'react-cosmos-flow/playground';
 
@@ -24,7 +25,7 @@ export default class WebIndexErrorScreen extends Component<Props> {
           <p>
             <strong>Please check the terminal output to investigate.</strong>
           </p>
-          {this.renderFooter()}
+          {helpFooter}
         </DisplayScreen>
       );
     }
@@ -50,7 +51,7 @@ export default class WebIndexErrorScreen extends Component<Props> {
             </strong>{' '}
             and restart Cosmos.
           </p>
-          {this.renderFooter()}
+          {helpFooter}
         </DisplayScreen>
       );
     }
@@ -65,23 +66,8 @@ export default class WebIndexErrorScreen extends Component<Props> {
           and restart Cosmos.
         </p>
         <p>The default webpack config will include it automatically.</p>
-        {this.renderFooter()}
+        {helpFooter}
       </DisplayScreen>
-    );
-  }
-
-  renderFooter() {
-    return (
-      <p className={style.faded}>
-        If you can't figure it out{' '}
-        <a
-          target="_blank"
-          href="https://github.com/react-cosmos/react-cosmos/issues/new"
-        >
-          report your error
-        </a>{' '}
-        and we'll do our best to help. Include as much details as you can.
-      </p>
     );
   }
 }

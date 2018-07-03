@@ -13,6 +13,7 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import MissingScreen from '../screens/MissingScreen';
 import WebIndexErrorScreen from '../screens/WebIndexErrorScreen';
 import WebBundlingScreen from '../screens/WebBundlingScreen';
+import { NativePendingScreen } from '../screens/NativePendingScreen';
 import DragHandle from '../DragHandle';
 import FixtureEditor from '../FixtureEditor';
 import styles from './index.less';
@@ -378,13 +379,13 @@ export default class ComponentPlayground extends Component<Props, State> {
       [styles.contentLandscape]: orientation === 'landscape'
     });
 
-    // TODO: Create screen for loaderStatus=NATIVE_PENDING
     // TODO: Create screen for options.platform=native && loaderStatus=READY
     return (
       <div key="content" ref={this.handleContentRef} className={classes}>
         {!isLoaderVisible && (
           <StarryBg>
             {loaderStatus === 'WEB_PENDING' && <WebBundlingScreen />}
+            {loaderStatus === 'NATIVE_PENDING' && <NativePendingScreen />}
             {options.platform === 'web' &&
               loaderStatus === 'WEB_INDEX_ERROR' && (
                 <WebIndexErrorScreen options={options} />
