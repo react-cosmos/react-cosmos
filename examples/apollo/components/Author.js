@@ -49,21 +49,31 @@ export default class Author extends Component {
               <ul>
                 {author.posts.map(({ id: postId, title, votes }) => (
                   <Mutation key={postId} mutation={UPVOTE_POST}>
-                    {(upvotePost, { loading }) => (
-                      <li>
-                        {`${title} ${votes} votes `}
-                        {upvoteEnabled && (
-                          <button
-                            disabled={loading}
-                            onClick={() =>
-                              upvotePost({ variables: { postId } })
-                            }
-                          >
-                            Upvote
-                          </button>
-                        )}
-                      </li>
-                    )}
+                    {(upvotePost, { loading, error }) => {
+                      return (
+                        <li>
+                          {`${title} ${votes} votes `}
+                          {upvoteEnabled && (
+                            <button
+                              disabled={loading}
+                              onClick={() =>
+                                upvotePost({ variables: { postId } })
+                              }
+                            >
+                              Upvote
+                            </button>
+                          )}
+                          {error &&
+                            error.graphQLErrors && (
+                              <span style={{ color: 'red' }}>
+                                {error.graphQLErrors
+                                  .map(error => error.message)
+                                  .join(', ')}
+                              </span>
+                            )}
+                        </li>
+                      );
+                    }}
                   </Mutation>
                 ))}
               </ul>

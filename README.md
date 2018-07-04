@@ -630,6 +630,8 @@ export default {
 
 ##### Failing response
 
+You can use the `failWith` option to mock an apollo 'networkError', i.e. you did not get a successful response from the server (perhaps the internet connection is offline, or a 500 response was returned):
+
 ```js
 export default {
   component: Author,
@@ -639,6 +641,31 @@ export default {
   apollo: {
     failWith: {
       message: 'Something went bad, please try again!'
+    }
+  }
+};
+```
+
+To mock a valid response from an API which contains an errors object, you can use the following format:
+
+```js
+export default {
+  component: Author,
+  props: {
+    authorId: -1
+  },
+  apollo: {
+    resolveWith: {
+      data: {
+        author: null
+      },
+      errors: [
+        {
+          path: ['author'],
+          message: ['Author id -1 not found'],
+          locations: [{ line: 1, column: 0 }]
+        }
+      ]
     }
   }
 };
