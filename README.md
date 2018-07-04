@@ -27,7 +27,7 @@
   </a>
 </p>
 
-> **New: [Cosmos 4.0, the version you’ll tell everyone about](https://medium.com/@skidding/cosmos-4-0-the-version-youll-tell-everyone-about-b10129be3dd8)**
+> **New: [Try out Cosmos with React Native!](#experimental-react-native)**
 
 Cosmos scans your project for components and enables you to:
 
@@ -1197,7 +1197,7 @@ Start your native app's dev server, and in another terminal run `npm run cosmos-
 Next steps:
 
 - Add auto-generated file `cosmos.modules.js` to gitignore
-- Split App.js entry point between into `App.cosmos.js` and `App.main.js` — Check out [the CRNA example](https://github.com/react-cosmos/react-cosmos/tree/11d8c4d7e1e308e0d439c5e1bb497c09cb22e836/examples/create-react-native-app) for inspiration
+- Split App.js into `App.cosmos.js` and `App.main.js` — Check out [the CRNA example](https://github.com/react-cosmos/react-cosmos/tree/11d8c4d7e1e308e0d439c5e1bb497c09cb22e836/examples/create-react-native-app) for inspiration
 - [Report an issue](https://github.com/react-cosmos/react-cosmos/issues/new) or [share some feedback](https://join-react-cosmos.now.sh/)
 
 ### Experimental: Flow integration
