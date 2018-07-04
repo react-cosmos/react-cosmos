@@ -24,6 +24,6 @@ describe('local state example', () => {
       .find('button')
       .simulate('click');
 
-    await until(() => get('state').value === 6, { timeout: 1000 });
+    await until(() => get('state').value === 6, { timeout: 2000 });
   });
 });
