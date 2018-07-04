@@ -9,7 +9,7 @@
 
 ## React Native integration
 
-- [ ] RN server
+- [x] RN server
   - [x] Extract non-webpack core from react-cosmos/server
   - [x] Create RN server cmd
   - [x] Create sockets server (forwarding messages between clients)
@@ -21,7 +21,7 @@
     - [ ] Add `cosmos.modules` to gitignore
     - [ ] Create new App file that forks between App.main and App.cosmos
     - [ ] Add package.json script
-- [ ] RN UI
+- [x] RN UI
   - [x] Add support for websocket communication (choose between sockets or postMessage)
   - [x] Ask loader for fixtures on load
   - [x] Create RN-specific onboarding screens
@@ -33,4 +33,4 @@
   - [x] Test socket transport
   - [ ] Check if existing proxies are compatible
 - [x] Create React Native App example
-- [ ] Add (experimental) README section
+- [x] Add (experimental) README section

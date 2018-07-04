@@ -14,7 +14,7 @@
     <img alt="Codecov status" src="https://codecov.io/gh/react-cosmos/react-cosmos/branch/master/graph/badge.svg">
   </a>
   <a href="https://twitter.com/ReactCosmos">
-    <img alt="Follow @ReactCosmos for updates" src="https://img.shields.io/twitter/follow/ReactCosmos.svg?style=flat&label=Follow">
+    <img alt="Follow @ReactCosmos" src="https://img.shields.io/twitter/follow/ReactCosmos.svg?style=flat&label=Follow">
   </a>
   <a href="https://join-react-cosmos.now.sh/">
     <img alt="Slack" src="https://join-react-cosmos.now.sh/badge.svg">
@@ -98,6 +98,7 @@ Jump to:
   - [Updating fixtures in tests](#updating-fixtures-in-tests)
   - [createTestContext API](#createtestcontext-api)
   - [Global Jest snapshot](#global-jest-snapshot)
+- [Experimental: React Native](#experimental-react-native)
 - [Experimental: Flow integration](#experimental-flow-integration)
 
 _Have a question or idea to share? See you on [Slack](https://join-react-cosmos.now.sh/)._
@@ -1164,6 +1165,40 @@ runTests({
   cosmosConfigPath: require.resolve('./cosmos.config.js')
 });
 ```
+
+### Experimental: React Native
+
+> Install `react-cosmos@next` to try out Cosmos with React Native
+
+Add package.json script
+
+```diff
+"scripts": {
++  "cosmos-native": "cosmos-native"
+}
+```
+
+(Temporarily) Replace `App.js` (your app's entry point) with this:
+
+```jsx
+import React, { Component } from 'react';
+import { CosmosNativeLoader } from 'react-cosmos-loader/native';
+import { options, getUserModules } from './cosmos.modules';
+
+export default class App extends Component {
+  render() {
+    return <CosmosNativeLoader options={options} modules={getUserModules()} />;
+  }
+}
+```
+
+Start your native app's dev server, and in another terminal run `npm run cosmos-native` or `yarn cosmos-native` and go to [localhost:8989](http://localhost:8989) 🔥
+
+Next steps:
+
+- Add auto-generated file `cosmos.modules.js` to gitignore
+- Split App.js entry point between into `App.cosmos.js` and `App.main.js` — Check out [the CRNA example](https://github.com/react-cosmos/react-cosmos/tree/11d8c4d7e1e308e0d439c5e1bb497c09cb22e836/examples/create-react-native-app) for inspiration
+- [Report an issue](https://github.com/react-cosmos/react-cosmos/issues/new) or [share some feedback](https://join-react-cosmos.now.sh/)
 
 ### Experimental: Flow integration
 
