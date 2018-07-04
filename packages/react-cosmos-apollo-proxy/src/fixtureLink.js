@@ -15,7 +15,12 @@ export function createFixtureLink({ apolloFixture, cache, fixture }) {
           data:
             typeof resolveWith === 'function'
               ? resolveWith({ cache, variables, fixture })
-              : resolveWith
+              : resolveWith.data
+                ? resolveWith.data
+                : resolveWith,
+          errors:
+            (typeof resolveWith !== 'function' && resolveWith.errors) ||
+            undefined
         });
 
         observer.complete();

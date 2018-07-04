@@ -22,6 +22,15 @@ const SampleComponent = ({ data }) => {
     return <span>Loading</span>;
   }
 
+  if (data.error && data.error.graphQLErrors) {
+    return (
+      <span>
+        GraphQL Errors Found:{' '}
+        {data.error.graphQLErrors.map(error => error.message).join(', ')}
+      </span>
+    );
+  }
+
   if (data.error) {
     throw new Error(data.error);
   }
@@ -187,5 +196,60 @@ describe('proxy configured with an endpoint', () => {
     expect(getWrappedComponent().props().data.author).toMatchObject(
       resolveWith.author
     );
+  });
+
+  it('allows resolveWith to have a root data key', async () => {
+    setupTestWrapper({
+      proxyConfig: {
+        endpoint: 'https://xyz'
+      },
+      fixture: {
+        ...sampleFixture,
+        apollo: {
+          resolveWith: { data: resolveWith }
+        }
+      }
+    });
+
+    // can be async even if data is mocked
+    await until(() => getWrappedComponent().props().data.loading === false);
+
+    expect(getWrappedComponent().props().data.author).toMatchObject(
+      resolveWith.author
+    );
+  });
+
+  it('allows resolveWith to have an errors object', async () => {
+    const resolveWith = {
+      errors: [
+        {
+          path: ['author'],
+          message: 'Author id 1 not found',
+          locations: [{ line: 1, column: 0 }]
+        }
+      ],
+      data: {
+        author: null
+      }
+    };
+
+    setupTestWrapper({
+      proxyConfig: {
+        endpoint: 'https://xyz'
+      },
+      fixture: {
+        ...sampleFixture,
+        apollo: {
+          resolveWith
+        }
+      }
+    });
+
+    // can be async even if data is mocked
+    await until(() => getWrappedComponent().props().data.loading === false);
+
+    expect(
+      getWrappedComponent().props().data.error.graphQLErrors
+    ).toMatchObject(resolveWith.errors);
   });
 });
