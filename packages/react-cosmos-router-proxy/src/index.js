@@ -11,7 +11,7 @@ export function createRouterProxy() {
   const RouterProxy = (props: ProxyProps) => {
     const { nextProxy, fixture, onFixtureUpdate } = props;
     const { value: NextProxy, next } = nextProxy;
-    const { route, url, locationState } = fixture;
+    const { route, url, locationState, provideRouterProps } = fixture;
     const nextProxyEl = <NextProxy {...props} nextProxy={next()} />;
 
     if (locationState && !url) {
@@ -39,7 +39,23 @@ export function createRouterProxy() {
           onLocationStateChange={handleLocationStateChange}
         >
           {route ? (
-            <Route path={route} render={() => nextProxyEl} />
+            <Route
+              path={route}
+              render={routerProps => {
+                if (provideRouterProps) {
+                  const newProxyProps = {
+                    ...props,
+                    fixture: {
+                      ...props.fixture,
+                      props: { ...props.fixture.props, ...routerProps }
+                    }
+                  };
+                  return <NextProxy {...newProxyProps} nextProxy={next()} />;
+                } else {
+                  return nextProxyEl;
+                }
+              }}
+            />
           ) : (
             nextProxyEl
           )}
