@@ -1,6 +1,5 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { MemoryRouter, Route } from 'react-router';
 import { createRouterProxy } from '..';
 
 // The final responsibility of proxies is to render the user's component at

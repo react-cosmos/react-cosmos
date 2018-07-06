@@ -51,9 +51,9 @@ export function createRouterProxy() {
                     }
                   };
                   return <NextProxy {...newProxyProps} nextProxy={next()} />;
-                } else {
-                  return nextProxyEl;
                 }
+
+                return nextProxyEl;
               }}
             />
           ) : (
