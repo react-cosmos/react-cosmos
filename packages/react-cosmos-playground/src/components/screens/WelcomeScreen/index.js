@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { objectOf, arrayOf, string } from 'prop-types';
 import reduce from 'lodash.reduce';
-import DisplayScreen from '../DisplayScreen';
-import styles from '../DisplayScreen/index.less';
+import DisplayScreen from '../shared/DisplayScreen';
+import styles from '../shared/DisplayScreen/index.less';
 
 const { keys } = Object;
 

@@ -1,5 +1,6 @@
 {
   "rootDir": "./",
+  "preset": "react-native",
   "testEnvironment": "jsdom",
   "setupFiles": ["./jest.setup.js"],
   "setupTestFrameworkScriptFile": "./jest.framework-setup.js",
@@ -9,8 +10,10 @@
     "/__fsmocks__/",
     "/_shared"
   ],
-  "watchPathIgnorePatterns": ["/__fsoutput__/"],
-  "transformIgnorePatterns": ["/node_modules/(?!react-cosmos.+)"],
+  "watchPathIgnorePatterns": ["/__fsoutput__/", "jestnowatch"],
+  "transformIgnorePatterns": [
+    "/node_modules/(?!(react-cosmos.+|react-native))"
+  ],
   "collectCoverageFrom": [
     "**/src/**/*.{js,jsx}",
     "!**/__fixtures__/**",

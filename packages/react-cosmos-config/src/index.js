@@ -135,7 +135,7 @@ function getNormalizedConfig(relativeConfig: Config, relPath: string): Config {
     outputPath: path.resolve(rootPath, outputPath),
     proxiesPath: resolveUserPath(rootPath, proxiesPath),
     webpackConfigPath: resolveUserPath(rootPath, webpackConfigPath),
-    watchDirs: watchDirs.map(p => resolveUserPath(rootPath, p)),
+    watchDirs: watchDirs.map(p => path.resolve(rootPath, p)),
     modulesPath: resolveUserPath(rootPath, modulesPath),
     // Deprecated
     componentPaths: componentPaths.map(p => path.resolve(rootPath, p)),

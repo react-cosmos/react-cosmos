@@ -1,7 +1,7 @@
 // @flow
 
 import { resolve, join } from 'path';
-import omit from 'lodash.omit';
+import { omit } from 'lodash';
 import { getCosmosConfig } from 'react-cosmos-config';
 
 import type { Config } from 'react-cosmos-flow/config';

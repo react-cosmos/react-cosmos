@@ -1,11 +1,17 @@
 // @flow
 
+export type ResponsiveDevices = Array<{|
+  label: string,
+  width: number,
+  height: number
+|}>;
+
 export type PlaygroundWebOpts = {
   platform: 'web',
   projectKey: string,
   loaderUri: string,
   webpackConfigType: 'default' | 'custom',
-  responsiveDevices?: Array<{| label: string, width: number, height: number |}>,
+  responsiveDevices?: ResponsiveDevices,
   deps: {
     [string]: boolean
   }

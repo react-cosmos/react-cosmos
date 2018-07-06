@@ -1,31 +1,26 @@
 // @flow
 
-import { importModule } from 'react-cosmos-shared';
+import {
+  getNormalizedFixtureModules,
+  getOldSchoolFixturesFromNewStyleComponents
+} from 'react-cosmos-shared';
 import { getComponents } from 'react-cosmos-voyager2/client';
 
 const { keys } = Object;
 
-const rawFixtureModules = require('./components/__fixtures__/**/*.js', {
+const fixtureModules = require('./components/__fixtures__/**/*.js', {
   mode: 'hash',
   resolve: ['path']
 });
 
 export function prepareOldSchoolFixtures() {
-  const fixtureModules = getNormalizedModules(rawFixtureModules);
   const fixtureFiles = getFixtureFilesFromModules(fixtureModules);
-  const components = getComponents({ fixtureFiles, fixtureModules });
+  const components = getComponents({
+    fixtureFiles,
+    fixtureModules: getNormalizedFixtureModules(fixtureModules, fixtureFiles)
+  });
 
   return getOldSchoolFixturesFromNewStyleComponents(components);
-}
-
-function getNormalizedModules(modules) {
-  return keys(modules).reduce(
-    (acc, relPath) => ({
-      ...acc,
-      [relToAbsPath(relPath)]: importModule(modules[relPath])
-    }),
-    {}
-  );
 }
 
 function getFixtureFilesFromModules(modules) {
@@ -35,28 +30,4 @@ function getFixtureFilesFromModules(modules) {
       components: []
     };
   });
-}
-
-function getOldSchoolFixturesFromNewStyleComponents(newStyleComponents) {
-  const fixtures = {};
-
-  newStyleComponents.forEach(c => {
-    const componentName = getObjectPath(c);
-    fixtures[componentName] = {};
-
-    c.fixtures.forEach(f => {
-      const fixtureName = getObjectPath(f);
-      fixtures[componentName][fixtureName] = f.source;
-    });
-  });
-
-  return fixtures;
-}
-
-function relToAbsPath(relPath) {
-  return relPath.slice(1);
-}
-
-function getObjectPath(obj) {
-  return obj.namespace ? `${obj.namespace}/${obj.name}` : obj.name;
 }

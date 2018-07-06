@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
 import { string } from 'prop-types';
-import DisplayScreen from '../DisplayScreen';
-import style from '../DisplayScreen/index.less';
+import DisplayScreen from '../shared/DisplayScreen';
+import style from '../shared/DisplayScreen/index.less';
 
-class MissingScreen extends Component {
+export default class MissingScreen extends Component {
+  static propTypes = {
+    componentName: string,
+    fixtureName: string
+  };
+
+  static defaultProps = {
+    componentName: '',
+    fixtureName: ''
+  };
+
   render() {
     const { componentName, fixtureName } = this.props;
 
@@ -21,15 +31,3 @@ class MissingScreen extends Component {
     );
   }
 }
-
-MissingScreen.propTypes = {
-  componentName: string,
-  fixtureName: string
-};
-
-MissingScreen.defaultProps = {
-  componentName: '',
-  fixtureName: ''
-};
-
-export default MissingScreen;

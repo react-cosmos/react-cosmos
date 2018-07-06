@@ -1,43 +1,55 @@
 // @flow
 
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import classNames from 'classnames';
 import omitBy from 'lodash.omitby';
 import localForage from 'localforage';
+import io from 'socket.io-client';
 import { uri } from 'react-querystring-router';
 import { HomeIcon, FullScreenIcon, CodeIcon, ResponsiveIcon } from '../SvgIcon';
 import StarryBg from '../StarryBg';
 import FixtureList from '../FixtureList';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import MissingScreen from '../screens/MissingScreen';
-import NoLoaderScreen from '../screens/NoLoaderScreen';
-import LoadingScreen from '../screens/LoadingScreen';
+import WebIndexErrorScreen from '../screens/WebIndexErrorScreen';
+import WebBundlingScreen from '../screens/WebBundlingScreen';
+import { NativePendingScreen } from '../screens/NativePendingScreen';
+import { NativeSelectedScreen } from '../screens/NativeSelectedScreen';
 import DragHandle from '../DragHandle';
 import FixtureEditor from '../FixtureEditor';
 import styles from './index.less';
 import ResponsiveLoader from '../ResponsiveLoader';
 
+import type { FixtureNames } from 'react-cosmos-flow/module';
 import type {
-  LoaderReadyMessageData,
-  FixtureListUpdateMessageData,
-  FixtureLoadMessageData,
-  FixtureUpdateMessageData,
+  LoaderReadyMessage,
+  FixtureListUpdateMessage,
+  FixtureLoadMessage,
+  FixtureUpdateMessage,
   LoaderMessage
 } from 'react-cosmos-flow/loader';
-import type { PlaygroundWebOpts } from 'react-cosmos-flow/playground';
+import type {
+  PlaygroundOpts,
+  PlaygroundWebOpts,
+  PlaygroundNativeOpts,
+  ResponsiveDevices
+} from 'react-cosmos-flow/playground';
 
 export const LEFT_NAV_SIZE = '__cosmos__left-nav-size';
 export const FIXTURE_EDITOR_PANE_SIZE = '__cosmos__fixture-editor-pane-size';
 
-export const PENDING = 0;
-export const BUILD_ERROR = 1;
-export const OK = 2;
-export const RUNTIME_ERROR = 3;
-export const READY = 4;
+type LoaderStatus =
+  | 'PENDING'
+  | 'WEB_INDEX_ERROR'
+  | 'WEB_INDEX_OK'
+  // This occurs when a runtime error error in reported before the loaderReady
+  // event
+  | 'BOOT_RUNTIME_ERROR'
+  | 'READY';
 
 type Props = {
   router: Object,
-  options: PlaygroundWebOpts,
+  options: PlaygroundOpts,
   component?: string,
   fixture?: string,
   editor?: boolean,
@@ -46,22 +58,18 @@ type Props = {
 };
 
 type State = {
-  // There doesn't seem to be a way to use const values as types. Let me know
-  // if you can think of a better way to express this!
-  loaderStatus: 0 | 1 | 2 | 3 | 4,
+  loaderStatus: LoaderStatus,
   isDragging: boolean,
   leftNavSize: number,
   fixtureEditorPaneSize: number,
   orientation: 'landscape' | 'portrait',
   fixtureBody: Object,
-  fixtures: Object
+  fixtures: FixtureNames
 };
 
+let socket;
+
 export default class ComponentPlayground extends Component<Props, State> {
-  contentNode: ?HTMLElement;
-
-  loaderFrame: ?HTMLElement;
-
   static defaultProps = {
     editor: false,
     fullScreen: false,
@@ -72,8 +80,14 @@ export default class ComponentPlayground extends Component<Props, State> {
   static getCleanUrlParams = (params: {}) =>
     omitBy(params, (val, key) => ComponentPlayground.defaultProps[key] === val);
 
+  contentNode: ?HTMLElement;
+
+  loaderFrame: ?window;
+
+  unmounted: boolean = false;
+
   state = {
-    loaderStatus: PENDING,
+    loaderStatus: 'PENDING',
     isDragging: false,
     leftNavSize: 250,
     fixtureEditorPaneSize: 250,
@@ -83,13 +97,30 @@ export default class ComponentPlayground extends Component<Props, State> {
   };
 
   componentDidMount() {
+    const { options } = this.props;
+
     window.addEventListener('message', this.onMessage, false);
     window.addEventListener('resize', this.onResize, false);
 
-    this.checkLoaderStatus();
+    if (options.platform === 'web') {
+      this.checkLoaderIframeStatus(options.loaderUri);
+    } else {
+      socket = io();
+      socket.on('cosmos-cmd', msg => {
+        // TODO: Log messages using debug package
+        this.onMessage({ data: msg });
+      });
+
+      // This is required when the loader was opened before the UI.
+      // The `uiReady` message is not relevant for the web platform because
+      // the iframe loader always loads _after_ the parent UI frame.
+      this.postMessage({ type: 'uiReady' });
+    }
   }
 
   componentWillUnmount() {
+    this.unmounted = true;
+
     window.removeEventListener('message', this.onMessage);
     window.removeEventListener('resize', this.onResize);
   }
@@ -97,12 +128,17 @@ export default class ComponentPlayground extends Component<Props, State> {
   componentWillReceiveProps({ component, fixture }: Props) {
     const { loaderStatus, fixtures } = this.state;
 
-    if (loaderStatus === READY) {
+    if (loaderStatus === 'READY') {
       const fixtureChanged =
         component !== this.props.component || fixture !== this.props.fixture;
 
-      if (fixtureChanged && fixtureExists(fixtures, component, fixture)) {
-        postMessageToFrame(this.loaderFrame, {
+      if (
+        fixtureChanged &&
+        component &&
+        fixture &&
+        fixtureExists(fixtures, component, fixture)
+      ) {
+        this.postMessage({
           type: 'fixtureSelect',
           component,
           fixture
@@ -111,7 +147,7 @@ export default class ComponentPlayground extends Component<Props, State> {
     }
   }
 
-  onMessage = ({ data }: LoaderMessage) => {
+  onMessage = ({ data }: { data: LoaderMessage }) => {
     if (data.type === 'runtimeError') {
       this.onRuntimeError();
     } else if (data.type === 'loaderReady') {
@@ -133,17 +169,16 @@ export default class ComponentPlayground extends Component<Props, State> {
     // We only care about runtime errors before Loader is ready. Once
     // initialized, the Loader will safely capture and display runtime errors
     // when they occur
-    if (this.state.loaderStatus < READY) {
-      this.setState({ loaderStatus: RUNTIME_ERROR });
+    if (this.state.loaderStatus !== 'READY') {
+      // TODO: Support BOOT_RUNTIME_ERROR for native
+      this.setState({ loaderStatus: 'BOOT_RUNTIME_ERROR' });
     }
   }
 
-  onLoaderReady({ fixtures }: LoaderReadyMessageData) {
-    const { loaderFrame } = this;
-
+  onLoaderReady({ fixtures }: LoaderReadyMessage) {
     this.setState(
       {
-        loaderStatus: READY,
+        loaderStatus: 'READY',
         fixtures
       },
       // We update the content orientation because the content width decreases
@@ -153,7 +188,7 @@ export default class ComponentPlayground extends Component<Props, State> {
 
     const { component, fixture } = this.props;
     if (component && fixture && fixtureExists(fixtures, component, fixture)) {
-      postMessageToFrame(loaderFrame, {
+      this.postMessage({
         type: 'fixtureSelect',
         component,
         fixture
@@ -161,19 +196,19 @@ export default class ComponentPlayground extends Component<Props, State> {
     }
   }
 
-  onFixtureListUpdate({ fixtures }: FixtureListUpdateMessageData) {
+  onFixtureListUpdate({ fixtures }: FixtureListUpdateMessage) {
     this.setState({
       fixtures
     });
   }
 
-  onFixtureLoad({ fixtureBody }: FixtureLoadMessageData) {
+  onFixtureLoad({ fixtureBody }: FixtureLoadMessage) {
     this.setState({
       fixtureBody
     });
   }
 
-  onFixtureUpdate({ fixtureBody }: FixtureUpdateMessageData) {
+  onFixtureUpdate({ fixtureBody }: FixtureUpdateMessage) {
     this.setState({
       // Fixture updates are partial
       fixtureBody: {
@@ -186,11 +221,13 @@ export default class ComponentPlayground extends Component<Props, State> {
   onUrlChange = (location: string) => {
     if (location === window.location.href) {
       const { component, fixture } = this.props;
-      postMessageToFrame(this.loaderFrame, {
-        type: 'fixtureSelect',
-        component,
-        fixture
-      });
+      if (component && fixture) {
+        this.postMessage({
+          type: 'fixtureSelect',
+          component,
+          fixture
+        });
+      }
     } else {
       this.props.router.goTo(location);
     }
@@ -230,7 +267,7 @@ export default class ComponentPlayground extends Component<Props, State> {
       fixtureBody
     });
 
-    postMessageToFrame(this.loaderFrame, {
+    this.postMessage({
       type: 'fixtureEdit',
       fixtureBody
     });
@@ -240,35 +277,41 @@ export default class ComponentPlayground extends Component<Props, State> {
     this.contentNode = node;
   };
 
-  handleIframeRef = (node: ?HTMLElement) => {
+  handleIframeRef = (node: ?window) => {
     this.loaderFrame = node;
   };
 
-  async checkLoaderStatus() {
+  async checkLoaderIframeStatus(loaderUri: string) {
     // We can't do fetch requests when Cosmos exports are opened without a
     // web server (ie. via file:/// protocol), so we might as well be optimistic
     // and assume the Loader iframe responds 200
     if (location.protocol === 'file:') {
       this.restoreUserSettings(() => {
         this.setState({
-          loaderStatus: OK
+          loaderStatus: 'WEB_INDEX_OK'
         });
       });
     } else {
       // Check if Loader is working
-      const { status } = await fetch(this.props.options.loaderUri, {
+      const { status } = await fetch(loaderUri, {
         credentials: 'same-origin'
       });
+
+      // At this point the component could be unmounted
+      if (this.unmounted) {
+        return;
+      }
+
       if (status === 200) {
         // Wait until all session settings are read before rendering
         this.restoreUserSettings(() => {
           this.setState({
-            loaderStatus: OK
+            loaderStatus: 'WEB_INDEX_OK'
           });
         });
       } else {
         this.setState({
-          loaderStatus: BUILD_ERROR
+          loaderStatus: 'WEB_INDEX_ERROR'
         });
       }
     }
@@ -317,25 +360,24 @@ export default class ComponentPlayground extends Component<Props, State> {
     const { loaderStatus } = this.state;
 
     // Can't show left nav until we receive fixture list with READY event
-    if (loaderStatus < READY || fullScreen) {
-      return this.renderContent();
+    if (loaderStatus !== 'READY' || fullScreen) {
+      return this.renderMainPane();
     }
 
-    return [this.renderLeftNav(), this.renderContent()];
+    return [this.renderLeftNav(), this.renderMainPane()];
   }
 
-  renderContent() {
-    const { component, fixture, editor, options } = this.props;
+  renderMainPane() {
+    const { options, component, fixture, editor } = this.props;
     const { loaderStatus, fixtures, orientation } = this.state;
+
     // We can only check if a fixture exists once loader is READY and fixture
     // list has been received
-    const isFixtureSelected = loaderStatus === READY && Boolean(fixture);
-    const isMissingFixtureSelected =
-      isFixtureSelected && !fixtureExists(fixtures, component, fixture);
-    const isLoaderVisible =
-      (isFixtureSelected && !isMissingFixtureSelected) ||
-      // Show loader when it crashes during initializing
-      loaderStatus === RUNTIME_ERROR;
+    const isFixtureSelected =
+      loaderStatus === 'READY' && Boolean(component && fixture);
+    const isFixtureSelectedFound =
+      isFixtureSelected && fixtureExists(fixtures, component, fixture);
+
     const classes = classNames(styles.content, {
       [styles.contentPortrait]: orientation === 'portrait',
       [styles.contentLandscape]: orientation === 'landscape'
@@ -343,22 +385,174 @@ export default class ComponentPlayground extends Component<Props, State> {
 
     return (
       <div key="content" ref={this.handleContentRef} className={classes}>
-        {!isLoaderVisible && (
-          <StarryBg>
-            {loaderStatus === PENDING && <LoadingScreen />}
-            {loaderStatus === BUILD_ERROR && (
-              <NoLoaderScreen options={options} />
-            )}
-            {loaderStatus === READY &&
-              !isFixtureSelected && <WelcomeScreen fixtures={fixtures} />}
-            {isMissingFixtureSelected && (
-              <MissingScreen componentName={component} fixtureName={fixture} />
-            )}
-          </StarryBg>
-        )}
-        {editor && isLoaderVisible && this.renderFixtureEditor()}
-        {loaderStatus >= OK && this.renderLoader(isLoaderVisible)}
+        {editor && isFixtureSelected && this.renderFixtureEditor()}
+        {options.platform === 'web'
+          ? this.renderWebScreen({
+              options,
+              isFixtureSelected,
+              isFixtureSelectedFound
+            })
+          : this.renderNativeScreen({
+              options,
+              isFixtureSelected,
+              isFixtureSelectedFound
+            })}
       </div>
+    );
+  }
+
+  renderWebScreen({
+    options,
+    isFixtureSelected,
+    isFixtureSelectedFound
+  }: {
+    options: PlaygroundWebOpts,
+    isFixtureSelected: boolean,
+    isFixtureSelectedFound: boolean
+  }) {
+    const { component, fixture } = this.props;
+    const { loaderStatus, fixtures } = this.state;
+    const { loaderUri, responsiveDevices } = options;
+
+    if (loaderStatus === 'PENDING') {
+      return (
+        <StarryBg>
+          <WebBundlingScreen />
+        </StarryBg>
+      );
+    }
+
+    if (loaderStatus === 'WEB_INDEX_ERROR') {
+      return (
+        <StarryBg>
+          <WebIndexErrorScreen options={options} />
+        </StarryBg>
+      );
+    }
+
+    if (loaderStatus === 'WEB_INDEX_OK') {
+      // Warning: Ensure <Fragment><Loader> node hierarchy in return value to
+      // reuse iframe DOM element between renders
+      return (
+        <Fragment>
+          <StarryBg />
+          {this.renderLoader({
+            loaderUri,
+            responsiveDevices,
+            showLoader: false
+          })}
+        </Fragment>
+      );
+    }
+
+    if (loaderStatus === 'BOOT_RUNTIME_ERROR') {
+      return (
+        // Warning: Ensure <Fragment><Loader> node hierarchy in return value to
+        // reuse iframe DOM element between renders
+        <Fragment>
+          {this.renderLoader({
+            loaderUri,
+            responsiveDevices,
+            showLoader: true
+          })}
+        </Fragment>
+      );
+    }
+
+    if (loaderStatus !== 'READY') {
+      throw new Error(
+        `Trying to load web loader with '${loaderStatus}' status`
+      );
+    }
+
+    if (!isFixtureSelected) {
+      // Warning: Ensure <Fragment><Loader> node hierarchy in return value to
+      // reuse iframe DOM element between renders
+      return (
+        <Fragment>
+          <StarryBg>
+            <WelcomeScreen fixtures={fixtures} />
+          </StarryBg>
+          {this.renderLoader({
+            loaderUri,
+            responsiveDevices,
+            showLoader: false
+          })}
+        </Fragment>
+      );
+    }
+
+    if (!isFixtureSelectedFound) {
+      // Warning: Ensure <Fragment><Loader> node hierarchy in return value to
+      // reuse iframe DOM element between renders
+      return (
+        <Fragment>
+          <StarryBg>
+            <MissingScreen componentName={component} fixtureName={fixture} />
+          </StarryBg>
+          {this.renderLoader({
+            loaderUri,
+            responsiveDevices,
+            showLoader: false
+          })}
+        </Fragment>
+      );
+    }
+
+    return (
+      // Warning: Ensure <Fragment><Loader> return value to preserve loader
+      // instance between renders
+      <Fragment>
+        {this.renderLoader({ loaderUri, responsiveDevices, showLoader: true })}
+      </Fragment>
+    );
+  }
+
+  renderNativeScreen({
+    isFixtureSelected,
+    isFixtureSelectedFound
+  }: {
+    options: PlaygroundNativeOpts,
+    isFixtureSelected: boolean,
+    isFixtureSelectedFound: boolean
+  }) {
+    const { component, fixture } = this.props;
+    const { loaderStatus, fixtures } = this.state;
+
+    if (loaderStatus === 'PENDING') {
+      return (
+        <StarryBg>
+          <NativePendingScreen />
+        </StarryBg>
+      );
+    }
+
+    if (loaderStatus !== 'READY') {
+      throw new Error(
+        `Trying to load native loader with '${loaderStatus}' status`
+      );
+    }
+
+    if (!isFixtureSelected) {
+      return (
+        <StarryBg>
+          <WelcomeScreen fixtures={fixtures} />
+        </StarryBg>
+      );
+    }
+
+    if (!isFixtureSelectedFound) {
+      return (
+        <StarryBg>
+          <MissingScreen componentName={component} fixtureName={fixture} />
+        </StarryBg>
+      );
+    }
+
+    return (
+      <StarryBg>
+        <NativeSelectedScreen />
+      </StarryBg>
     );
   }
 
@@ -519,14 +713,19 @@ export default class ComponentPlayground extends Component<Props, State> {
     );
   }
 
-  renderLoader(isLoaderVisible: boolean) {
-    const {
-      options: { loaderUri, responsiveDevices },
-      responsive
-    } = this.props;
+  renderLoader({
+    loaderUri,
+    responsiveDevices,
+    showLoader
+  }: {
+    loaderUri: string,
+    responsiveDevices: ?ResponsiveDevices,
+    showLoader: boolean
+  }) {
+    const { responsive } = this.props;
     const { isDragging, fixtureBody } = this.state;
     const loaderStyle = {
-      display: isLoaderVisible ? 'flex' : 'none'
+      display: showLoader ? 'flex' : 'none'
     };
     const loaderFrameOverlayStyle = {
       display: isDragging ? 'block' : 'none'
@@ -537,7 +736,7 @@ export default class ComponentPlayground extends Component<Props, State> {
         : fixtureBody.viewport || responsive || false;
 
     return (
-      <div className={styles.loaderFrame} style={loaderStyle}>
+      <div key="loader" className={styles.loaderFrame} style={loaderStyle}>
         <ResponsiveLoader
           showResponsiveControls={showResponsiveControls}
           inputRef={this.handleIframeRef}
@@ -558,21 +757,25 @@ export default class ComponentPlayground extends Component<Props, State> {
       </div>
     );
   }
+
+  postMessage(data: LoaderMessage) {
+    // TODO: Log messages using debug package
+    if (this.props.options.platform === 'web') {
+      if (this.loaderFrame) {
+        this.loaderFrame.contentWindow.postMessage(data, '*');
+      }
+    } else {
+      socket.emit('cosmos-cmd', data);
+    }
+  }
 }
 
 function isNumber(val) {
   return typeof val !== 'number';
 }
 
-function fixtureExists(fixtures, component, fixture) {
-  return (
-    component &&
-    fixture &&
-    fixtures[component] &&
-    fixtures[component].indexOf(fixture) !== -1
-  );
-}
-
-function postMessageToFrame(frame: window, data) {
-  return frame.contentWindow.postMessage(data, '*');
+function fixtureExists(fixtures: FixtureNames, component, fixture): boolean {
+  return component && fixture
+    ? fixtures[component] && fixtures[component].indexOf(fixture) !== -1
+    : false;
 }

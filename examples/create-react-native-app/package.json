@@ -1,0 +1,26 @@
+{
+  "name": "react-cosmos-create-react-native-app-example",
+  "version": "4.6.0-1",
+  "description": "Example of using Cosmos with Create React Native App",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/local-state",
+  "license": "MIT",
+  "main": "crna-entry.js",
+  "scripts": {
+    "prestart": "node link-workspaces.js",
+    "start": "react-native-scripts start",
+    "start:cosmos": "babel-node ../../packages/react-cosmos/bin/cosmos-native.js"
+  },
+  "dependencies": {
+    "expo": "^28.0.0",
+    "react-cosmos": "^4.6.0-1",
+    "react-cosmos-loader": "^4.6.0-1",
+    "react-native": "^0.55.4"
+  },
+  "devDependencies": {
+    "@skidding/crna-make-symlinks-for-yarn-workspaces": "^1.0.1",
+    "@skidding/metro-bundler-config-yarn-workspaces": "^1.0.5",
+    "react-native-scripts": "^1.14.0"
+  },
+  "xo": false,
+  "private": true
+}

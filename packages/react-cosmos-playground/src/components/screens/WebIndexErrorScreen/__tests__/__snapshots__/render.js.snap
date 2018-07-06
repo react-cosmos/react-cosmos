@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WebIndexErrorScreen custom webpack config renders correctly 1`] = `
+<div
+  className="root"
+>
+  <div
+    className="inner"
+  >
+    <img
+      src={Object {}}
+    />
+    <div>
+      <p
+        className="header"
+      >
+        Almost there...
+      </p>
+      <p>
+        It looks like you're using a custom webpack config that isn't outputting an 
+        <code>
+          index.html
+        </code>
+      </p>
+      <p>
+        <strong>
+          Add
+           
+          <a
+            href="https://github.com/jantimon/html-webpack-plugin"
+            target="_blank"
+          >
+            html-webpack-plugin
+          </a>
+           
+          to your webpack config
+        </strong>
+         
+        and restart Cosmos.
+      </p>
+      <p
+        className="faded"
+      >
+        If something's wrong,
+         
+        <a
+          href="https://github.com/react-cosmos/react-cosmos/issues/new"
+          target="_blank"
+        >
+          report your error
+        </a>
+         
+        and we'll do our best to help. Include as much details as you can.
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`WebIndexErrorScreen default webpack config renders correctly 1`] = `
+<div
+  className="root"
+>
+  <div
+    className="inner"
+  >
+    <img
+      src={Object {}}
+    />
+    <div>
+      <p
+        className="header"
+      >
+        Almost there...
+      </p>
+      <p>
+        <strong>
+          Install 
+          <code>
+            html-webpack-plugin
+          </code>
+           in your dev dependencies
+        </strong>
+         
+        and restart Cosmos.
+      </p>
+      <p>
+        The default webpack config will include it automatically.
+      </p>
+      <p
+        className="faded"
+      >
+        If something's wrong,
+         
+        <a
+          href="https://github.com/react-cosmos/react-cosmos/issues/new"
+          target="_blank"
+        >
+          report your error
+        </a>
+         
+        and we'll do our best to help. Include as much details as you can.
+      </p>
+    </div>
+  </div>
+</div>
+`;

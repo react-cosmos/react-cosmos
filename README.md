@@ -14,7 +14,7 @@
     <img alt="Codecov status" src="https://codecov.io/gh/react-cosmos/react-cosmos/branch/master/graph/badge.svg">
   </a>
   <a href="https://twitter.com/ReactCosmos">
-    <img alt="Follow @ReactCosmos for updates" src="https://img.shields.io/twitter/follow/ReactCosmos.svg?style=flat&label=Follow">
+    <img alt="Follow @ReactCosmos" src="https://img.shields.io/twitter/follow/ReactCosmos.svg?style=flat&label=Follow">
   </a>
   <a href="https://join-react-cosmos.now.sh/">
     <img alt="Slack" src="https://join-react-cosmos.now.sh/badge.svg">
@@ -27,7 +27,7 @@
   </a>
 </p>
 
-> **New: [Cosmos 4.0, the version you’ll tell everyone about](https://medium.com/@skidding/cosmos-4-0-the-version-youll-tell-everyone-about-b10129be3dd8)**
+> **New: [Try out Cosmos with React Native!](#experimental-react-native)**
 
 Cosmos scans your project for components and enables you to:
 
@@ -43,11 +43,9 @@ Read the story of React Cosmos: [Fighting for Component Independence](https://me
 
 ## Why Cosmos?
 
-Many other component explorers emerged in the past years. [Storybook](https://github.com/storybooks/storybook) and [React Styleguidist](https://github.com/styleguidist/react-styleguidist) are good examples, but you can find an extensive list of options [here](https://react-styleguidist.js.org/docs/cookbook.html#are-there-any-other-projects-like-this). To decide which tool is best for you check for each project's goals, how much they match your needs, and how well the project is maintained.
+Many other component explorers emerged in the past years. [Storybook](https://github.com/storybooks/storybook) and [React Styleguidist](https://github.com/styleguidist/react-styleguidist) are good examples, but you can find an extensive list of options [here](https://react-styleguidist.js.org/docs/cookbook.html#are-there-any-other-projects-like-this). Check how much each tool matches your needs to decide which is best for you.
 
 **Cosmos is a dev tool first, made to improve _all_ components, big and small, not just the stateless UI bits.** The [fixture](#fixtures) and [proxy](#proxies) architecture doubles as an [automated testing utility](#headless-testing), providing a complete solution for developing robust and reusable components. Cosmos also makes it easy to create a living style guide, but it's a secondary goal and you might get more value from alternatives if this is your chief concern.
-
-To find out more about the Cosmos project, check out [Mission](CONTRIBUTING.md#mission), [Goals](CONTRIBUTING.md#goals) and [Architecture](CONTRIBUTING.md#architecture).
 
 ## Usage
 
@@ -100,6 +98,7 @@ Jump to:
   - [Updating fixtures in tests](#updating-fixtures-in-tests)
   - [createTestContext API](#createtestcontext-api)
   - [Global Jest snapshot](#global-jest-snapshot)
+- [Experimental: React Native](#experimental-react-native)
 - [Experimental: Flow integration](#experimental-flow-integration)
 
 _Have a question or idea to share? See you on [Slack](https://join-react-cosmos.now.sh/)._
@@ -631,6 +630,8 @@ export default {
 
 ##### Failing response
 
+You can use the `failWith` option to mock an apollo 'networkError', i.e. you did not get a successful response from the server (perhaps the internet connection is offline, or a 500 response was returned):
+
 ```js
 export default {
   component: Author,
@@ -640,6 +641,31 @@ export default {
   apollo: {
     failWith: {
       message: 'Something went bad, please try again!'
+    }
+  }
+};
+```
+
+To mock a valid response from an API which contains an errors object, you can use the following format:
+
+```js
+export default {
+  component: Author,
+  props: {
+    authorId: -1
+  },
+  apollo: {
+    resolveWith: {
+      data: {
+        author: null
+      },
+      errors: [
+        {
+          path: ['author'],
+          message: ['Author id -1 not found'],
+          locations: [{ line: 1, column: 0 }]
+        }
+      ]
     }
   }
 };
@@ -776,6 +802,7 @@ Other proxies created by the Cosmos community:
 
 - [alp82/react-cosmos-glamorous-proxy](https://github.com/alp82/react-cosmos-glamorous-proxy) A simple proxy for react-cosmos to load glamorous themes
 - [jozsi/react-cosmos-wrapper-proxy](https://github.com/jozsi/react-cosmos-wrapper-proxy) Easily wrap components using react-cosmos
+- [concept-not-found/react-cosmos-reach-router-proxy](https://github.com/concept-not-found/react-cosmos-reach-router-proxy) A proxy for [@reach/router](https://github.com/reach/router)
 
 _What proxy would you create to improve DX?_
 
@@ -1165,6 +1192,40 @@ runTests({
   cosmosConfigPath: require.resolve('./cosmos.config.js')
 });
 ```
+
+### Experimental: React Native
+
+> Install `react-cosmos@next` to try out Cosmos with React Native
+
+Add package.json script
+
+```diff
+"scripts": {
++  "cosmos-native": "cosmos-native"
+}
+```
+
+(Temporarily) Replace `App.js` (your app's entry point) with this:
+
+```jsx
+import React, { Component } from 'react';
+import { CosmosNativeLoader } from 'react-cosmos-loader/native';
+import { options, getUserModules } from './cosmos.modules';
+
+export default class App extends Component {
+  render() {
+    return <CosmosNativeLoader options={options} modules={getUserModules()} />;
+  }
+}
+```
+
+Start your native app's dev server, and in another terminal run `npm run cosmos-native` or `yarn cosmos-native` and go to [localhost:8989](http://localhost:8989) 🔥
+
+Next steps:
+
+- Add auto-generated file `cosmos.modules.js` to gitignore
+- Split App.js into `App.cosmos.js` and `App.main.js` — Check out [the CRNA example](https://github.com/react-cosmos/react-cosmos/tree/11d8c4d7e1e308e0d439c5e1bb497c09cb22e836/examples/create-react-native-app) for inspiration
+- [Report an issue](https://github.com/react-cosmos/react-cosmos/issues/new) or [share some feedback](https://join-react-cosmos.now.sh/)
 
 ### Experimental: Flow integration
 

@@ -1,22 +1,22 @@
 {
   "name": "react-cosmos-apollo-proxy",
-  "version": "4.5.0",
+  "version": "4.6.0-1",
   "description": "Mock Apollo Client requests via fixtures",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-apollo-proxy",
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
-    "apollo-cache-inmemory": "^1.2.2",
-    "apollo-client": "^2.3.2",
+    "apollo-cache-inmemory": "^1.2.5",
+    "apollo-client": "^2.3.5",
     "apollo-link": "^1.2.2",
     "apollo-link-http": "^1.5.4",
     "graphql": "^0.13.2",
-    "react-apollo": "^2.1.4",
-    "react-cosmos-shared": "^4.4.0"
+    "react-apollo": "^2.1.8",
+    "react-cosmos-shared": "^4.6.0-1"
   },
   "xo": false,
   "devDependencies": {
-    "async-until": "^1.0.0",
+    "async-until": "^1.1.1",
     "fetch-mock": "^5.12.2",
     "graphql-tag": "^2.9.2"
   }

@@ -1,5 +1,5 @@
-// flow-typed signature: 106bbf49ff0c0b351c95d483d617ffba
-// flow-typed version: 7fe23c8e85/express_v4.16.x/flow_>=v0.32.x
+// flow-typed signature: cc24a4e737d9dfb8e1381c3bd4ebaa65
+// flow-typed version: d11eab7bb5/express_v4.16.x/flow_>=v0.32.x
 
 import type { Server } from 'http';
 import type { Socket } from 'net';
@@ -197,13 +197,11 @@ declare class express$Router extends express$Route {
       id: string
     ) => mixed
   ): void;
-
-  // Can't use regular callable signature syntax due to https://github.com/facebook/flow/issues/3084
-  $call: (
+  (
     req: http$IncomingMessage,
     res: http$ServerResponse,
     next?: ?express$NextFunction
-  ) => void;
+  ): void;
 }
 
 /*
@@ -249,6 +247,12 @@ declare class express$Application extends express$Router
     callback: express$RenderCallback
   ): void;
   handle(
+    req: http$IncomingMessage,
+    res: http$ServerResponse,
+    next?: ?express$NextFunction
+  ): void;
+  // callable signature is not inherited
+  (
     req: http$IncomingMessage,
     res: http$ServerResponse,
     next?: ?express$NextFunction
