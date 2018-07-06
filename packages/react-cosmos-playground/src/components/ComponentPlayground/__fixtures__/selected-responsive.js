@@ -6,6 +6,7 @@ export default {
 
   props: {
     options: {
+      platform: 'web',
       loaderUri: '/mock/loader/index.html',
       projectKey: 'test',
       responsiveDevices: [

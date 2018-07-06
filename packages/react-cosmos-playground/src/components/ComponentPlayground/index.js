@@ -653,22 +653,22 @@ export default class ComponentPlayground extends Component<Props, State> {
               )}
               {isFixtureSelected && (
                 <a
-                  ref="fullScreenButton"
-                  className={styles.button}
-                  href={fullScreenUrl}
-                  onClick={router.routeLink}
-                >
-                  <FullScreenIcon />
-                </a>
-              )}
-              {isFixtureSelected && (
-                <a
                   ref="responsiveButton"
                   className={responsiveClassNames}
                   href={responsiveUrl}
                   onClick={router.routeLink}
                 >
                   <ResponsiveIcon />
+                </a>
+              )}
+              {isFixtureSelected && (
+                <a
+                  ref="fullScreenButton"
+                  className={styles.button}
+                  href={fullScreenUrl}
+                  onClick={router.routeLink}
+                >
+                  <FullScreenIcon />
                 </a>
               )}
             </div>
