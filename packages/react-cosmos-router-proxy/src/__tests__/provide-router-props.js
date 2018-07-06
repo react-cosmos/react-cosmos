@@ -7,7 +7,12 @@ import { createRouterProxy } from '..';
 // the end of the proxy chain. While it goes beyond unit testing, testing a
 // complete proxy chain provides a clearer picture than solely dissecting the
 // props that the tested proxy passes to the next.
-const Component = () => <span>__COMPONENT_MOCK__</span>;
+const Component = ({ location }) => {
+  if (!location) {
+    throw new Error('Expected props.location');
+  }
+  return <span>__COMPONENT_MOCK__</span>;
+};
 
 const NextProxy = props => {
   const { value: P, next } = props.nextProxy;
@@ -15,7 +20,7 @@ const NextProxy = props => {
   return <P {...props} nextProxy={next()} />;
 };
 
-const LastProxy = ({ fixture }) => <fixture.component />;
+const LastProxy = ({ fixture }) => <fixture.component {...fixture.props} />;
 
 // Vars populated from scratch before each test
 let onFixtureUpdate;
