@@ -64,6 +64,9 @@ test('renders next proxy', () => {
 
 test('renders component', () => {
   expect(wrapper.text()).toEqual('__COMPONENT_MOCK__');
+  // We don't expect any props passed to the Component unless provideRouterProps
+  // is true. See provide-router-props.js test file.
+  expect(wrapper.find(Component).props()).toEqual({});
 });
 
 describe('next proxy props', () => {
