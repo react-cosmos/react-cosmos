@@ -466,7 +466,7 @@ export default {
 };
 ```
 
-If your component needs props from the `Route` component (history, location, and match), you can enabled the `provideRouterProps` flag.
+If your component needs props from the `Route` component (history, location, and match), you can enable the `provideRouterProps` flag.
 
 ```js
 // __fixtures__/example.js
