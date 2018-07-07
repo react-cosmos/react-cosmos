@@ -23,6 +23,7 @@ export type Config = {
   publicPath?: string,
   publicUrl: string,
   containerQuerySelector?: string,
+  responsiveDevices: Array<{| label: string, width: number, height: number |}>,
   httpProxy?: {| context: string, target: string |},
   watchDirs: Array<string>,
   modulesPath: string,

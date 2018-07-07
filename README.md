@@ -466,6 +466,18 @@ export default {
 };
 ```
 
+If your component needs props from the `Route` component (history, location, and match), you can enable the `provideRouterProps` flag.
+
+```js
+// __fixtures__/example.js
+export default {
+  component: MyComponent,
+  url: '/users/5',
+  route: '/users/:userId',
+  provideRouterProps: true
+};
+```
+
 Check out the [React Router example](examples/react-router) to see the proxy in action.
 
 #### React Apollo (GraphQL)

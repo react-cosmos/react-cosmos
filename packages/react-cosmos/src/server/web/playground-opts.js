@@ -8,11 +8,12 @@ import type { Config } from 'react-cosmos-flow/config';
 import type { PlaygroundWebOpts } from 'react-cosmos-flow/playground';
 
 export function getPlaygroundOpts(cosmosConfig: Config): PlaygroundWebOpts {
-  const { rootPath, publicUrl } = cosmosConfig;
+  const { rootPath, responsiveDevices, publicUrl } = cosmosConfig;
 
   return {
     platform: 'web',
     projectKey: rootPath,
+    responsiveDevices,
     loaderUri: join(publicUrl, '_loader.html'),
     webpackConfigType: hasUserCustomWebpackConfig(cosmosConfig)
       ? 'custom'
