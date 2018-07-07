@@ -386,17 +386,19 @@ export default class ComponentPlayground extends Component<Props, State> {
     return (
       <div key="content" ref={this.handleContentRef} className={classes}>
         {editor && isFixtureSelected && this.renderFixtureEditor()}
-        {options.platform === 'web'
-          ? this.renderWebScreen({
-              options,
-              isFixtureSelected,
-              isFixtureSelectedFound
-            })
-          : this.renderNativeScreen({
-              options,
-              isFixtureSelected,
-              isFixtureSelectedFound
-            })}
+        <div className={styles.mainPane}>
+          {options.platform === 'web'
+            ? this.renderWebScreen({
+                options,
+                isFixtureSelected,
+                isFixtureSelectedFound
+              })
+            : this.renderNativeScreen({
+                options,
+                isFixtureSelected,
+                isFixtureSelectedFound
+              })}
+        </div>
       </div>
     );
   }

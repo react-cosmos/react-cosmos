@@ -1,11 +1,15 @@
 ## Roadmap: Summer of Cosmos
 
 - [React Native integration](#react-native-integration)
-- Pluggable UI
+- [Pluggable UI](#pluggable-ui)
 - Explore: JSX fixtures
 - UI control panel
 - Redesign docs
 - Create high-level examples (eg. Next.js, CRA, Gatsby)
+
+## Pluggable UI
+
+- [ ] Design plugin API
 
 ## React Native integration
 
@@ -32,5 +36,6 @@
   - [x] Create RN loader
   - [x] Test socket transport
   - [ ] Check if existing proxies are compatible
+  - [ ] Check if testing API is compatible
 - [x] Create React Native App example
 - [x] Add (experimental) README section

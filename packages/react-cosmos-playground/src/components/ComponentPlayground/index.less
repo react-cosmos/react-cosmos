@@ -116,6 +116,11 @@
   position: relative;
 }
 
+.mainPane {
+  position: relative;
+  flex: 1;
+}
+
 // The overlay sits on top of the loader iframe while the user is dragging the
 // panes, because otherwise the drag events would be discontinued when the
 // mouse cursor goes over the iframe
@@ -128,8 +133,9 @@
 }
 
 .loaderFrame {
-  position: relative;
-  flex: 1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   display: flex;
 }
