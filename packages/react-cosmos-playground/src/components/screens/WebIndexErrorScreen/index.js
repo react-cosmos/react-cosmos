@@ -23,7 +23,9 @@ export default class WebIndexErrorScreen extends Component<Props> {
           <p className={style.header}>Almost there...</p>
           <p>Something is breaking the webpack build :/</p>
           <p>
-            <strong>Please check the terminal output to investigate.</strong>
+            <strong>
+              Please check your terminal and browser console for errors.
+            </strong>
           </p>
           {helpFooter}
         </DisplayScreen>
