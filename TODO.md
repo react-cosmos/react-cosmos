@@ -31,7 +31,7 @@
   - [x] Create RN-specific onboarding screens
   - [ ] Test socket transport
   - [ ] Log using `debug` on the client
-- [ ] RN loader
+- [x] RN loader
   - [x] Extract non ReactDOM-specific core from react-cosmos-loader
   - [x] Create RN loader
   - [x] Test socket transport
