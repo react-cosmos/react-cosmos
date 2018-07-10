@@ -27,7 +27,7 @@
   </a>
 </p>
 
-> **New: [Try out Cosmos with React Native!](#experimental-react-native)**
+> **New: [Try out Cosmos with React Native!](#beta-react-native)**
 
 Cosmos scans your project for components and enables you to:
 
@@ -98,7 +98,7 @@ Jump to:
   - [Updating fixtures in tests](#updating-fixtures-in-tests)
   - [createTestContext API](#createtestcontext-api)
   - [Global Jest snapshot](#global-jest-snapshot)
-- [Experimental: React Native](#experimental-react-native)
+- [Beta: React Native](#beta-react-native)
 - [Experimental: Flow integration](#experimental-flow-integration)
 
 _Have a question or idea to share? See you on [Slack](https://join-react-cosmos.now.sh/)._
@@ -1205,7 +1205,7 @@ runTests({
 });
 ```
 
-### Experimental: React Native
+### Beta: React Native
 
 > Install `react-cosmos@next` to try out Cosmos with React Native
 

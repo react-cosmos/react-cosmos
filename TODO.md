@@ -31,11 +31,11 @@
   - [x] Create RN-specific onboarding screens
   - [ ] Test socket transport
   - [ ] Log using `debug` on the client
-- [ ] RN loader
+- [x] RN loader
   - [x] Extract non ReactDOM-specific core from react-cosmos-loader
   - [x] Create RN loader
   - [x] Test socket transport
   - [ ] Check if existing proxies are compatible
-  - [ ] Check if testing API is compatible
+  - [x] Check if testing API is compatible
 - [x] Create React Native App example
 - [x] Add (experimental) README section
