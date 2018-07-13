@@ -1,9 +1,12 @@
 import webpack from 'webpack';
-import extendWebpackConfig from '../../extend-webpack-config';
+import enhanceWebpackConfig from '../../enhance-webpack-config';
+
+const mockRootPath = __dirname;
 
 jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
+    rootPath: mockRootPath,
     globalImports: ['./global.css'],
     publicUrl: '/static/',
     containerQuerySelector: '__mock__containerQuerySelector'
@@ -12,7 +15,7 @@ jest.mock('react-cosmos-config', () => ({
 
 const plugins = [{}, {}];
 const getConfig = () =>
-  extendWebpackConfig({
+  enhanceWebpackConfig({
     webpack,
     userWebpackConfig: { plugins }
   });

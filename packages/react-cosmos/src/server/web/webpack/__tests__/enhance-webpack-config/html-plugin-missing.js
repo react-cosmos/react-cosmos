@@ -1,24 +1,34 @@
+// @flow
+
 import webpack from 'webpack';
-import extendWebpackConfig from '../../extend-webpack-config';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+import enhanceWebpackConfig from '../../enhance-webpack-config';
+
+const mockRootPath = __dirname;
 
 jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,
   getCosmosConfig: () => ({
+    rootPath: mockRootPath,
     globalImports: [],
     publicUrl: '/'
   })
 }));
 
 const getConfig = () =>
-  extendWebpackConfig({
+  enhanceWebpackConfig({
     webpack,
     userWebpackConfig: {
-      plugins: [new HtmlWebpackPlugin()]
+      plugins: []
     }
   });
 
-it('replaces the filename of html-webpack-plugin to _loader.html', () => {
+it('adds html-webpack-plugin', () => {
+  const webpackConfig = getConfig();
+  const htmlPlugin = getHtmlWebpackPlugin(webpackConfig);
+  expect(htmlPlugin).toBeTruthy();
+});
+
+it('sets the filename of html-webpack-plugin to _loader.html', () => {
   const webpackConfig = getConfig();
   const htmlPlugin = getHtmlWebpackPlugin(webpackConfig);
   expect(htmlPlugin.options.filename).toBe('_loader.html');

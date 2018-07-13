@@ -2,12 +2,13 @@
 
 import { resolve, join } from 'path';
 import { omit } from 'lodash';
+import { silent as silentImport } from 'import-from';
 import { getCosmosConfig } from 'react-cosmos-config';
 
 import type { Config } from 'react-cosmos-flow/config';
 
 /**
- * Extend the user config to create the Loader config. Namely,
+ * Enhance the user config to create the Loader config. Namely,
  * - Replace the entry and output
  * - Enable hot reloading
  * - Embed the user module require calls via embed-modules-webpack-loader
@@ -22,13 +23,14 @@ type Args = {
   shouldExport?: boolean
 };
 
-export default function extendWebpackConfig({
+export default function enhanceWebpackConfig({
   webpack,
   userWebpackConfig,
   shouldExport = false
 }: Args) {
   const cosmosConfig: Config = getCosmosConfig();
   const {
+    rootPath,
     containerQuerySelector,
     hot,
     publicUrl,
@@ -53,7 +55,7 @@ export default function extendWebpackConfig({
     }
   ];
 
-  const plugins = [
+  let plugins = [
     ...getExistingPlugins(webpackConfig),
     new webpack.DefinePlugin({
       'process.env': {
@@ -71,9 +73,23 @@ export default function extendWebpackConfig({
     getNoErrorsPlugin(webpack)
   ];
 
+  if (!alreadyHasPlugin(webpackConfig, 'HtmlWebpackPlugin')) {
+    const HtmlWebpackPlugin = silentImport(rootPath, 'html-webpack-plugin');
+
+    if (HtmlWebpackPlugin) {
+      plugins = [
+        ...plugins,
+        new HtmlWebpackPlugin({
+          title: 'React Cosmos',
+          filename: '_loader.html'
+        })
+      ];
+    }
+  }
+
   if (hot && !shouldExport) {
-    if (!alreadyHasHmrPlugin(webpackConfig)) {
-      plugins.push(new webpack.HotModuleReplacementPlugin());
+    if (!alreadyHasPlugin(webpackConfig, 'HotModuleReplacementPlugin')) {
+      plugins = [...plugins, new webpack.HotModuleReplacementPlugin()];
     }
   }
 
@@ -182,12 +198,8 @@ function getNoErrorsPlugin(webpack) {
     : new webpack.NoErrorsPlugin();
 }
 
-function alreadyHasHmrPlugin({ plugins }) {
-  return (
-    plugins &&
-    plugins.filter(p => isPluginType(p, 'HotModuleReplacementPlugin')).length >
-      0
-  );
+function alreadyHasPlugin({ plugins }, pluginName) {
+  return plugins && plugins.filter(p => isPluginType(p, pluginName)).length > 0;
 }
 
 function isPluginType(plugin, constructorName) {
