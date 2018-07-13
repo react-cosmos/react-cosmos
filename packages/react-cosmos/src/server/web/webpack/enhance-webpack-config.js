@@ -2,6 +2,7 @@
 
 import { resolve, join } from 'path';
 import { omit } from 'lodash';
+import { silent as silentImport } from 'import-from';
 import { getCosmosConfig } from 'react-cosmos-config';
 
 import type { Config } from 'react-cosmos-flow/config';
@@ -29,6 +30,7 @@ export default function enhanceWebpackConfig({
 }: Args) {
   const cosmosConfig: Config = getCosmosConfig();
   const {
+    rootPath,
     containerQuerySelector,
     hot,
     publicUrl,
@@ -53,7 +55,7 @@ export default function enhanceWebpackConfig({
     }
   ];
 
-  const plugins = [
+  let plugins = [
     ...getExistingPlugins(webpackConfig),
     new webpack.DefinePlugin({
       'process.env': {
@@ -71,9 +73,23 @@ export default function enhanceWebpackConfig({
     getNoErrorsPlugin(webpack)
   ];
 
+  if (!alreadyHasPlugin(webpackConfig, 'HtmlWebpackPlugin')) {
+    const HtmlWebpackPlugin = silentImport(rootPath, 'html-webpack-plugin');
+
+    if (HtmlWebpackPlugin) {
+      plugins = [
+        ...plugins,
+        new HtmlWebpackPlugin({
+          title: 'React Cosmos',
+          filename: '_loader.html'
+        })
+      ];
+    }
+  }
+
   if (hot && !shouldExport) {
-    if (!alreadyHasHmrPlugin(webpackConfig)) {
-      plugins.push(new webpack.HotModuleReplacementPlugin());
+    if (!alreadyHasPlugin(webpackConfig, 'HotModuleReplacementPlugin')) {
+      plugins = [...plugins, new webpack.HotModuleReplacementPlugin()];
     }
   }
 
@@ -182,12 +198,8 @@ function getNoErrorsPlugin(webpack) {
     : new webpack.NoErrorsPlugin();
 }
 
-function alreadyHasHmrPlugin({ plugins }) {
-  return (
-    plugins &&
-    plugins.filter(p => isPluginType(p, 'HotModuleReplacementPlugin')).length >
-      0
-  );
+function alreadyHasPlugin({ plugins }, pluginName) {
+  return plugins && plugins.filter(p => isPluginType(p, pluginName)).length > 0;
 }
 
 function isPluginType(plugin, constructorName) {
