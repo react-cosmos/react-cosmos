@@ -4,18 +4,22 @@ about: Create a report to help us improve
 
 ---
 
-**Describe the bug**
+### What's wrong?
+
 A clear and concise description of what the bug is.
 
-**Steps to reproduce**
-1. Go to...
-2. Click on...
-3. See...
+### Steps to reproduce
 
-**Screenshots**
+1.  Go to...
+2.  Click on...
+3.  See...
+
+### Screenshots
+
 If applicable, add screenshots to help explain your problem.
 
-**User information**
+### User info
+
 - Server terminal output
 - Browser console output
 - Cosmos version
@@ -24,5 +28,6 @@ If applicable, add screenshots to help explain your problem.
 - If applicable: webpack version
 - If applicable: webpack config
 
-**Additional context**
+### Additional context
+
 Add any other context about the problem here.
