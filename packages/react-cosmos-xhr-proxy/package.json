@@ -1,12 +1,12 @@
 {
   "name": "react-cosmos-xhr-proxy",
-  "version": "4.6.0-2",
+  "version": "4.6.0-3",
   "description": "Mock XMLHttpRequests responses via fixtures",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-xhr-proxy",
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
-    "react-cosmos-shared": "^4.6.0-2",
+    "react-cosmos-shared": "^4.6.0-3",
     "xhr-mock": "^2.4.0"
   },
   "xo": false
