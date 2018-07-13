@@ -4,7 +4,7 @@ import path from 'path';
 import promisify from 'util.promisify';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import extendWebpackConfig from './extend-webpack-config';
+import enhanceWebpackConfig from './enhance-webpack-config';
 
 import type { Config } from 'react-cosmos-flow/config';
 
@@ -21,7 +21,7 @@ export function attachWebpack({
 }) {
   const { publicUrl, hot } = cosmosConfig;
 
-  const loaderWebpackConfig = extendWebpackConfig({
+  const loaderWebpackConfig = enhanceWebpackConfig({
     webpack,
     userWebpackConfig
   });

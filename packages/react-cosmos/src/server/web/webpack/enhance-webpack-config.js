@@ -7,7 +7,7 @@ import { getCosmosConfig } from 'react-cosmos-config';
 import type { Config } from 'react-cosmos-flow/config';
 
 /**
- * Extend the user config to create the Loader config. Namely,
+ * Enhance the user config to create the Loader config. Namely,
  * - Replace the entry and output
  * - Enable hot reloading
  * - Embed the user module require calls via embed-modules-webpack-loader
@@ -22,7 +22,7 @@ type Args = {
   shouldExport?: boolean
 };
 
-export default function extendWebpackConfig({
+export default function enhanceWebpackConfig({
   webpack,
   userWebpackConfig,
   shouldExport = false

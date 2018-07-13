@@ -1,5 +1,5 @@
 import webpack from 'webpack';
-import extendWebpackConfig from '../../extend-webpack-config';
+import enhanceWebpackConfig from '../../enhance-webpack-config';
 
 jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,
@@ -12,7 +12,7 @@ jest.mock('react-cosmos-config', () => ({
 
 const plugins = [{}, {}];
 const getConfig = () =>
-  extendWebpackConfig({
+  enhanceWebpackConfig({
     webpack,
     userWebpackConfig: { plugins }
   });

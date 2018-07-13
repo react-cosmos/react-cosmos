@@ -5,7 +5,7 @@ import fs from 'fs-extra';
 import { silent as silentImport } from 'import-from';
 import { getCosmosConfig } from 'react-cosmos-config';
 import { getPlaygroundHtml } from '../shared/playground-html';
-import extendWebpackConfig from './webpack/extend-webpack-config';
+import enhanceWebpackConfig from './webpack/enhance-webpack-config';
 import { getUserWebpackConfig } from './webpack/user-webpack-config';
 import { getPlaygroundOpts } from './playground-opts';
 
@@ -49,7 +49,7 @@ export async function generateExport() {
   }
 
   const userWebpackConfig = getUserWebpackConfig(cosmosConfig);
-  const loaderWebpackConfig = extendWebpackConfig({
+  const loaderWebpackConfig = enhanceWebpackConfig({
     webpack,
     userWebpackConfig,
     shouldExport: true
