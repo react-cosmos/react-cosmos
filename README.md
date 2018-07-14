@@ -815,6 +815,7 @@ Other proxies created by the Cosmos community:
 - [alp82/react-cosmos-glamorous-proxy](https://github.com/alp82/react-cosmos-glamorous-proxy) A simple proxy for react-cosmos to load glamorous themes
 - [jozsi/react-cosmos-wrapper-proxy](https://github.com/jozsi/react-cosmos-wrapper-proxy) Easily wrap components using react-cosmos
 - [concept-not-found/react-cosmos-reach-router-proxy](https://github.com/concept-not-found/react-cosmos-reach-router-proxy) A proxy for [@reach/router](https://github.com/reach/router)
+- [react-intl-proxy](https://github.com/react-cosmos/react-cosmos/issues/636#issuecomment-377745222) A proxy for [yahoo/react-intl](https://github.com/yahoo/react-intl)
 
 _What proxy would you create to improve DX?_
 
