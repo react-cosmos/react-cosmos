@@ -1163,6 +1163,10 @@
     flatten "^1.0.2"
     glob "^7.1.2"
 
+"@skidding/linked-list@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@skidding/linked-list/-/linked-list-1.0.1.tgz#9138fc58830741c72af31ac5f4e4e70971be7e6c"
+
 "@skidding/metro-bundler-config-yarn-workspaces@^1.0.5":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@skidding/metro-bundler-config-yarn-workspaces/-/metro-bundler-config-yarn-workspaces-1.0.5.tgz#592a48d4cead22f8c459443c031a4e804c25dd02"

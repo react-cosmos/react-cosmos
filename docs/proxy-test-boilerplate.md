@@ -3,7 +3,7 @@
 ```js
 import React from 'react';
 import { mount } from 'enzyme';
-import { createLinkedList } from 'react-cosmos-shared';
+import createLinkedList from '@skidding/linked-list';
 import createFooProxy from '../';
 
 // The final responsibility of proxies is to render the user's component at
