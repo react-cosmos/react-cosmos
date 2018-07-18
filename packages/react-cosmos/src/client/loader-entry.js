@@ -1,7 +1,19 @@
 import './react-devtools-hook';
 import './react-error-overlay';
-import 'babel-polyfill';
 import values from 'object.values';
+// import babel-polyfill only if it needed
+if (
+  (typeof window !== 'undefined' && !window._babelPolyfill) ||
+  (typeof global !== 'undefined' && !global._babelPolyfill)
+) {
+  import('babel-polyfill')
+    .then(polyfill => {
+      polyfill.open();
+    })
+    .catch(error => {
+      console.warn('Error open babel-polyfill');
+    });
+}
 
 if (!Object.values) {
   values.shim();
