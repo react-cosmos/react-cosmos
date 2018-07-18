@@ -1,6 +1,5 @@
 import './react-devtools-hook';
 import './react-error-overlay';
-import 'babel-polyfill';
 import values from 'object.values';
 
 if (!Object.values) {
