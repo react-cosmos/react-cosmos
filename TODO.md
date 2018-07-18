@@ -5,7 +5,6 @@
 - Explore: JSX fixtures
 - UI control panel
 - Redesign docs
-- Create high-level examples (eg. Next.js, CRA, Gatsby)
 
 ## Pluggable UI
 
@@ -15,7 +14,7 @@
   - [ ] Hidden: Enable toggling plugins at run time
   - [ ] Turn ResponsiveLoader into a plugin
 - [ ] Design package API
-  - [ ] Turn existing plugins into packages
+  - [ ] Turn existing plugins into packages (type: `ui-plugin`)
 - [ ] Create UI for browsing and toggling plugins
   - [ ] Design config API for enabled plugins
 - [ ] Create UI from installing packages
@@ -49,3 +48,9 @@
   - [x] Check if testing API is compatible
 - [x] Create React Native App example
 - [x] Add (experimental) README section
+
+## Redesign docs
+
+- [ ] Create search UI for examples (by tags extracted from README)
+- [ ] Create search UI for plugins
+- [ ] Create high-level examples (eg. Next.js, CRA, Gatsby)
