@@ -5,7 +5,6 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos",
   "license": "MIT",
   "dependencies": {
-    "babel-polyfill": "^6.26.0",
     "chokidar": "^2.0.4",
     "express": "^4.16.3",
     "fs-extra": "^6.0.1",
