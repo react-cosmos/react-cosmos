@@ -9,9 +9,8 @@
 ## Pluggable UI
 
 - [ ] Design plugin API
-  - [ ] Sketch plugin breakdown of current UI
-  - [ ] Turn FixtureEditor into a plugin
-  - [ ] Hidden: Enable toggling plugins at run time
+  - [x] Create rough plugin structure for existing UI
+  - [x] Enable toggling plugins at run time
   - [ ] Turn ResponsiveLoader into a plugin
 - [ ] Design package API
   - [ ] Turn existing plugins into packages (type: `ui-plugin`)
