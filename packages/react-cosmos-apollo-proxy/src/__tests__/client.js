@@ -252,4 +252,59 @@ describe('proxy configured with an endpoint', () => {
       getWrappedComponent().props().data.error.graphQLErrors
     ).toMatchObject(resolveWith.errors);
   });
+
+  it('allows resolveWith to return a promise', async () => {
+    setupTestWrapper({
+      proxyConfig: {
+        endpoint: 'https://xyz'
+      },
+      fixture: {
+        ...sampleFixture,
+        apollo: {
+          resolveWith: () => Promise.resolve(resolveWith)
+        }
+      }
+    });
+
+    // can be async even if data is mocked
+    await until(() => getWrappedComponent().props().data.loading === false);
+
+    expect(getWrappedComponent().props().data.author).toMatchObject(
+      resolveWith.author
+    );
+  });
+
+  it('allows resolveWith to reject a promise', async () => {
+    const resolveWith = {
+      errors: [
+        {
+          path: ['author'],
+          message: 'Author id 1 not found',
+          locations: [{ line: 1, column: 0 }]
+        }
+      ],
+      data: {
+        author: null
+      }
+    };
+
+    setupTestWrapper({
+      proxyConfig: {
+        endpoint: 'https://xyz'
+      },
+      fixture: {
+        ...sampleFixture,
+        apollo: {
+          resolveWith: () => Promise.reject(resolveWith.errors)
+        }
+      }
+    });
+
+    // can be async even if data is mocked
+    await until(() => getWrappedComponent().props().data.loading === false);
+
+    expect(
+      getWrappedComponent().props().data.error.graphQLErrors
+    ).toMatchObject(resolveWith.errors);
+  });
 });

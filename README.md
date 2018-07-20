@@ -534,7 +534,11 @@ Once configured, your components enhanced by `react-apollo` will behave as they 
 
 Mocking at the fixture level is done by specifying an `apollo` key in your fixture.
 
-The proxy will look for a `resolveWith` or a `failWith` key in order to return the appropriate mock value: this can be an object or a function returning an object.
+The proxy will look for a `resolveWith` or a `failWith` key in order to return the appropriate mock value. This mocked return can be one of;
+
+- an object
+- a function returning an object
+- a function that returns a Promise that either resolves or rejects with an object
 
 See examples below or check [the fixtures defined in the Apollo example](examples/apollo/components/__fixtures__/Author).
 
@@ -568,6 +572,26 @@ export default {
   },
   apollo: {
     resolveWith: ({ cache, variables, fixture }) => ({
+      author: {
+        __typename: 'Author',
+        id: variables.authorId,
+        firstName: variables.authorId === 123 ? 'Ovidiu' : 'Xavier'
+      }
+    })
+  }
+};
+```
+
+##### Promise response
+
+```js
+export default {
+  component: Author,
+  props: {
+    authorId: 123
+  },
+  apollo: {
+    resolveWith: ({ cache, variables, fixture }) => Promise.resolve({
       author: {
         __typename: 'Author',
         id: variables.authorId,
