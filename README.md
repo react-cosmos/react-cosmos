@@ -249,6 +249,24 @@ export default {
 };
 ```
 
+#### Component
+
+You may identify a component directly, or provide a function. This allows for quick wrapping of components. If you find yourself doing this often with the same component, it might be time to try [proxies](#proxies).
+
+```js
+export default {
+  component: props => (
+    <Well>
+      <SearchBox {...props} />
+    </Well>
+  ),
+  state: {
+    searchQuery: 'Who let the dogs out?'
+  }
+};
+```
+
+
 #### Init hook
 
 This is an advanced feature and should only be used when a desired state can't be reproduced via [proxies](#proxies).
