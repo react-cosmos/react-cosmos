@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { func, object, arrayOf } from 'prop-types';
-import { createLinkedList } from 'react-cosmos-shared';
+import createLinkedList from '@skidding/linked-list';
 import { createModuleType } from '../../utils/module-type';
 import { PropsProxy } from '../PropsProxy';
 

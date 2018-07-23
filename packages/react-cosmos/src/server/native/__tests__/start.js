@@ -34,12 +34,13 @@ jest.mock('react-cosmos-config', () => ({
 
 let stopServer;
 
-beforeEach(async () => {
+// Server tests share setup because they take a lot of time
+beforeAll(async () => {
   jest.clearAllMocks();
   stopServer = await startServer();
 });
 
-afterEach(async () => {
+afterAll(async () => {
   await stopServer();
   await remove(mockModulesPath);
 });

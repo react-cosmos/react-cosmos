@@ -1,7 +1,11 @@
 // @flow
 
 import type { ComponentType } from 'react';
-import type { LinkedItem } from './linked-list';
+
+type LinkedItem<Item> = {
+  value: Item,
+  next: () => LinkedItem<Item>
+};
 
 export type ProxyProps = {
   nextProxy: LinkedItem<ComponentType<ProxyProps>>,

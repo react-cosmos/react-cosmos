@@ -51,6 +51,10 @@ class DragHandle extends Component {
   };
 
   onMouseUp = () => {
+    if (!this.state.isDragging) {
+      return;
+    }
+
     this.setState(
       {
         isDragging: false

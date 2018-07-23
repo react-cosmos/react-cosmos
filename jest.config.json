@@ -17,7 +17,8 @@
   "collectCoverageFrom": [
     "**/src/**/*.{js,jsx}",
     "!**/__fixtures__/**",
-    "!**/react-cosmos-voyager/src/use-cases/**"
+    "!**/react-cosmos-voyager/src/use-cases/**",
+    "!**/react-cosmos-playground/src/next/**"
   ],
   "coverageDirectory": "./coverage",
   "coverageReporters": ["lcov", "text"],

@@ -5,6 +5,7 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-playground",
   "license": "MIT",
   "main": "dist/index.js",
+  "dependencies": {},
   "devDependencies": {
     "@skidding/react-codemirror": "^1.0.2",
     "classnames": "^2.2.6",
@@ -22,8 +23,10 @@
     "react-cosmos-loader": "^4.6.0-3",
     "react-cosmos-state-proxy": "^4.6.0-3",
     "react-cosmos-test": "^4.6.0-3",
+    "react-plugin": "^0.1.0",
     "react-querystring-router": "^4.3.0",
     "socket.io-client": "^2.1.1",
+    "styled-components": "^3.3.3",
     "whatwg-fetch": "^2.0.4"
   },
   "xo": false
