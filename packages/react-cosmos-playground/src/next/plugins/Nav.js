@@ -1,7 +1,9 @@
 // @flow
 
 import React from 'react';
+import styled from 'styled-components';
 import { Plugin, Plug, Slot } from 'react-plugin';
+import { Section } from '../Section';
 
 export default (
   <Plugin name="Nav">
@@ -12,11 +14,47 @@ export default (
 function Nav() {
   return (
     <Slot name="root">
-      <div>
-        <Slot name="nav-header" />
-        <div>Nav here</div>
-      </div>
-      <Slot name="preview" />
+      <Container>
+        <Left>
+          <NavHeader>
+            <Slot name="nav-header" />
+          </NavHeader>
+          <NavBody>
+            <Section label="Nav" />
+          </NavBody>
+        </Left>
+        <Right>
+          <Slot name="preview" />
+        </Right>
+      </Container>
     </Slot>
   );
 }
+
+const Container = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+`;
+
+const Left = styled.div`
+  flex-shrink: 0;
+  width: 256px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Right = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
+
+const NavHeader = styled.div`
+  flex-shrink: 0;
+`;
+
+const NavBody = styled.div`
+  flex: 1;
+  display: flex;
+`;

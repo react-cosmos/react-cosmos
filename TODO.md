@@ -11,7 +11,7 @@
 - [ ] Design plugin API
   - [x] Create rough plugin structure for existing UI
   - [x] Enable toggling plugins at run time
-  - [ ] Turn ResponsiveLoader into a plugin
+  - [ ] Refactor ResponsiveLoader into a plugin
 - [ ] Design package API
   - [ ] Turn existing plugins into packages (type: `ui-plugin`)
 - [ ] Create UI for browsing and toggling plugins
