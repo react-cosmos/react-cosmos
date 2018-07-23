@@ -66,6 +66,7 @@ Jump to:
   - [Props](#props)
   - [Children](#children)
   - [State](#state)
+  - [Wrapper component](#wrapper-component)
   - [Init hook](#init-hook)
   - [Fixture name and namespace](#fixture-name-and-namespace)
 - [Proxies](#proxies)
@@ -260,9 +261,11 @@ export default {
       <SearchBox {...props, placeholder={'What are you looking for?'}} />
     </Well>
   ),
+  props: {
+    value: 'apples'
+  }
 };
 ```
-
 
 #### Init hook
 
