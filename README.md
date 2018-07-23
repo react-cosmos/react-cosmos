@@ -249,7 +249,7 @@ export default {
 };
 ```
 
-#### Component
+#### Wrapper component
 
 You may identify a component directly, or provide a function. This allows for quick wrapping of components. If you find yourself doing this often with the same component, it might be time to try [proxies](#proxies).
 
@@ -257,12 +257,9 @@ You may identify a component directly, or provide a function. This allows for qu
 export default {
   component: props => (
     <Well>
-      <SearchBox {...props} />
+      <SearchBox {...props, placeholder={'What are you looking for?'}} />
     </Well>
   ),
-  state: {
-    searchQuery: 'Who let the dogs out?'
-  }
 };
 ```
 
