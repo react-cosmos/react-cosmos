@@ -10,7 +10,7 @@ export default class WebBundlingScreen extends Component<{}> {
       <DisplayScreen>
         <p className={style.header}>Loading...</p>
         <p>
-          <em>Everyday I'm bundling, ev-everyday I'm bundling 🎵</em>
+          <em>Everyday I'm bundling, ev-everyday I'm bundling...</em>
         </p>
       </DisplayScreen>
     );
