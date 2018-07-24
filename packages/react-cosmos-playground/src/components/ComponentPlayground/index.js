@@ -15,6 +15,7 @@ import WebIndexErrorScreen from '../screens/WebIndexErrorScreen';
 import WebBundlingScreen from '../screens/WebBundlingScreen';
 import { NativePendingScreen } from '../screens/NativePendingScreen';
 import { NativeSelectedScreen } from '../screens/NativeSelectedScreen';
+import { FadeIn } from '../screens/shared/FadeIn';
 import DragHandle from '../DragHandle';
 import FixtureEditor from '../FixtureEditor';
 import styles from './index.less';
@@ -419,7 +420,9 @@ export default class ComponentPlayground extends Component<Props, State> {
     if (loaderStatus === 'PENDING') {
       return (
         <StarryBg>
-          <WebBundlingScreen />
+          <FadeIn>
+            <WebBundlingScreen delay={2} />
+          </FadeIn>
         </StarryBg>
       );
     }
@@ -427,7 +430,9 @@ export default class ComponentPlayground extends Component<Props, State> {
     if (loaderStatus === 'WEB_INDEX_ERROR') {
       return (
         <StarryBg>
-          <WebIndexErrorScreen options={options} />
+          <FadeIn>
+            <WebIndexErrorScreen options={options} />
+          </FadeIn>
         </StarryBg>
       );
     }
@@ -473,7 +478,9 @@ export default class ComponentPlayground extends Component<Props, State> {
       return (
         <Fragment>
           <StarryBg>
-            <WelcomeScreen fixtures={fixtures} />
+            <FadeIn>
+              <WelcomeScreen fixtures={fixtures} />
+            </FadeIn>
           </StarryBg>
           {this.renderLoader({
             loaderUri,
@@ -490,7 +497,9 @@ export default class ComponentPlayground extends Component<Props, State> {
       return (
         <Fragment>
           <StarryBg>
-            <MissingScreen componentName={component} fixtureName={fixture} />
+            <FadeIn>
+              <MissingScreen componentName={component} fixtureName={fixture} />
+            </FadeIn>
           </StarryBg>
           {this.renderLoader({
             loaderUri,
@@ -524,7 +533,9 @@ export default class ComponentPlayground extends Component<Props, State> {
     if (loaderStatus === 'PENDING') {
       return (
         <StarryBg>
-          <NativePendingScreen />
+          <FadeIn>
+            <NativePendingScreen />
+          </FadeIn>
         </StarryBg>
       );
     }
@@ -538,7 +549,9 @@ export default class ComponentPlayground extends Component<Props, State> {
     if (!isFixtureSelected) {
       return (
         <StarryBg>
-          <WelcomeScreen fixtures={fixtures} />
+          <FadeIn>
+            <WelcomeScreen fixtures={fixtures} />
+          </FadeIn>
         </StarryBg>
       );
     }
@@ -546,14 +559,18 @@ export default class ComponentPlayground extends Component<Props, State> {
     if (!isFixtureSelectedFound) {
       return (
         <StarryBg>
-          <MissingScreen componentName={component} fixtureName={fixture} />
+          <FadeIn>
+            <MissingScreen componentName={component} fixtureName={fixture} />
+          </FadeIn>
         </StarryBg>
       );
     }
 
     return (
       <StarryBg>
-        <NativeSelectedScreen />
+        <FadeIn>
+          <NativeSelectedScreen />
+        </FadeIn>
       </StarryBg>
     );
   }
