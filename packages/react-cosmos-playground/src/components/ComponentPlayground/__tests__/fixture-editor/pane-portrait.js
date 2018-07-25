@@ -12,14 +12,14 @@ const { mount, getWrapper, getRef } = createContext({
   fixture,
   async beforeInit() {
     // Fake node width/height
-    getRef().contentNode = {
+    getRef().contentEl = {
       // Landscape
       offsetWidth: 200,
       offsetHeight: 300
     };
 
-    await until(() => getRef().loaderFrame);
-    getRef().loaderFrame = {
+    await until(() => getRef().previewIframeEl);
+    getRef().previewIframeEl = {
       contentWindow: {
         postMessage
       }

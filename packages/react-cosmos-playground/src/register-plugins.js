@@ -2,7 +2,7 @@
 
 import { register } from 'react-plugin';
 
-register(require('./plugins/responsive-preview').default);
+register(require('./plugins/ResponsivePreview').default);
 
 // NOTE: Uncomment this to play with the experimental plugin-based UI
 // register(require('./next/plugins/Preview').default);

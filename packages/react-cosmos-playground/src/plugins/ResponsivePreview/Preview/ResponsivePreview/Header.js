@@ -1,9 +1,9 @@
 // @flow
 
 import React from 'react';
-import styles from './header.less';
 import classNames from 'classnames';
 import find from 'lodash/find';
+import styles from './Header.less';
 
 type CustomButtonProps = {
   width: number,
@@ -11,7 +11,7 @@ type CustomButtonProps = {
   isActive: boolean,
   scalable: boolean,
   scale: boolean,
-  updateDimensions: (width: number, height: number) => void
+  onViewportChange: (width: number, height: number) => void
 };
 
 const CustomButton = ({
@@ -20,7 +20,7 @@ const CustomButton = ({
   isActive,
   scalable,
   scale,
-  updateDimensions
+  onViewportChange
 }: CustomButtonProps) => {
   const className = classNames(styles.button, {
     [styles.buttonActive]: isActive,
@@ -30,26 +30,26 @@ const CustomButton = ({
   return (
     <button
       className={className}
-      onClick={() => (isActive ? null : updateDimensions(400, 400))}
+      onClick={() => (isActive ? null : onViewportChange(400, 400))}
     >
       <div>Custom</div>
       {isActive && (
         <span>
           <input
-            type="text"
+            type="number"
             value={width || ''}
             style={{ width: 40, height: 20 }}
             onChange={e =>
-              updateDimensions(parseInt(e.target.value, 10) || 0, height)
+              onViewportChange(parseInt(e.target.value, 10) || 0, height)
             }
           />{' '}
           x{' '}
           <input
-            type="text"
+            type="number"
             value={height || ''}
             style={{ width: 40, height: 20 }}
             onChange={e =>
-              updateDimensions(width, parseInt(e.target.value, 10) || 0)
+              onViewportChange(width, parseInt(e.target.value, 10) || 0)
             }
           />
         </span>
@@ -67,7 +67,7 @@ type SizeButtonProps = {
   scalable: boolean,
   scale: boolean,
   scaleFactor: number,
-  updateDimensions: (width: number, height: number) => void,
+  onViewportChange: (width: number, height: number) => void,
   setScale: (scale: boolean) => any
 };
 
@@ -79,7 +79,7 @@ const SizeButton = ({
   scalable,
   scale,
   scaleFactor = 1,
-  updateDimensions,
+  onViewportChange,
   setScale
 }: SizeButtonProps) => {
   const className = classNames(styles.button, {
@@ -89,7 +89,7 @@ const SizeButton = ({
   return (
     <button
       className={className}
-      onClick={() => updateDimensions(width, height)}
+      onClick={() => onViewportChange(width, height)}
     >
       <div>{label}</div>
       {width} x {height}
@@ -118,12 +118,12 @@ type Props = {
   devices: Array<{| label: string, width: number, height: number |}>,
   containerWidth: number,
   containerHeight: number,
-  updateDimensions: (width: number, height: number) => void,
+  onViewportChange: (width: number, height: number) => void,
   setScale: (scale: boolean) => any
 };
 
 const Header = ({
-  updateDimensions,
+  onViewportChange,
   dimensions,
   devices,
   containerWidth,
@@ -138,7 +138,7 @@ const Header = ({
   return (
     <div className={styles.buttonContainer}>
       <CustomButton
-        updateDimensions={updateDimensions}
+        onViewportChange={onViewportChange}
         width={width}
         height={height}
         isActive={isCustom}
@@ -155,7 +155,7 @@ const Header = ({
         return (
           <SizeButton
             key={size.label}
-            updateDimensions={updateDimensions}
+            onViewportChange={onViewportChange}
             width={size.width}
             height={size.height}
             isActive={width === size.width && height === size.height}

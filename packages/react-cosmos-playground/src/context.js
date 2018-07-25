@@ -6,11 +6,11 @@ import { defaultState } from './components/ComponentPlayground';
 import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
 import type { State } from './components/ComponentPlayground';
 
-type UrlParams = {
+export type UrlParams = {
   component?: string,
   fixture?: string,
   editor?: boolean,
-  responsive?: boolean | 'forceHide'
+  fullScreen?: boolean
 };
 
 export type UiContextParams = {

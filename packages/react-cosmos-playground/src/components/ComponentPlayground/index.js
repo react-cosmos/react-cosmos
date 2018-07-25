@@ -35,6 +35,7 @@ import type {
   PlaygroundWebOpts,
   PlaygroundNativeOpts
 } from 'react-cosmos-flow/playground';
+import type { UrlParams } from '../../context';
 
 export const LEFT_NAV_SIZE = '__cosmos__left-nav-size';
 export const FIXTURE_EDITOR_PANE_SIZE = '__cosmos__fixture-editor-pane-size';
@@ -50,13 +51,8 @@ type LoaderStatus =
 
 type Props = {
   router: Object,
-  options: PlaygroundOpts,
-  component?: string,
-  fixture?: string,
-  editor?: boolean,
-  fullScreen?: boolean,
-  responsive?: boolean
-};
+  options: PlaygroundOpts
+} & UrlParams;
 
 export type State = {
   loaderStatus: LoaderStatus,
@@ -83,20 +79,17 @@ export const defaultState = {
 export default class ComponentPlayground extends Component<Props, State> {
   static defaultProps = {
     editor: false,
-    fullScreen: false,
-    responsive: false
+    fullScreen: false
   };
 
   // Exclude params with default values
   static getCleanUrlParams = (params: {}) =>
     omitBy(params, (val, key) => ComponentPlayground.defaultProps[key] === val);
 
-  contentNode: ?HTMLElement;
-
-  loaderFrame: ?window;
+  contentEl: ?HTMLElement;
+  previewIframeEl: ?window;
 
   unmounted: boolean = false;
-
   state = defaultState;
 
   componentDidMount() {
@@ -277,11 +270,11 @@ export default class ComponentPlayground extends Component<Props, State> {
   };
 
   handleContentRef = (node: ?HTMLElement) => {
-    this.contentNode = node;
+    this.contentEl = node;
   };
 
   handleIframeRef = (node: ?window) => {
-    this.loaderFrame = node;
+    this.previewIframeEl = node;
   };
 
   async checkLoaderIframeStatus(loaderUri: string) {
@@ -342,11 +335,11 @@ export default class ComponentPlayground extends Component<Props, State> {
   };
 
   updateContentOrientation(cb?: Function) {
-    if (!this.contentNode) {
+    if (!this.contentEl) {
       return;
     }
 
-    const { offsetHeight, offsetWidth } = this.contentNode;
+    const { offsetHeight, offsetWidth } = this.contentEl;
     const state = {
       orientation: offsetHeight > offsetWidth ? 'portrait' : 'landscape'
     };
@@ -361,7 +354,6 @@ export default class ComponentPlayground extends Component<Props, State> {
       fixture,
       editor,
       fullScreen,
-      responsive,
       router
     } = this.props;
 
@@ -369,7 +361,7 @@ export default class ComponentPlayground extends Component<Props, State> {
       <UiContext.Provider
         value={{
           options,
-          urlParams: { component, fixture, editor, fullScreen, responsive },
+          urlParams: { component, fixture, editor, fullScreen },
           state: this.state,
           onFixtureEdit: this.onFixtureEdit,
           router,
@@ -602,7 +594,6 @@ export default class ComponentPlayground extends Component<Props, State> {
       fixture,
       editor,
       fullScreen,
-      responsive,
       options
     } = this.props;
     const { fixtures, leftNavSize } = this.state;
@@ -611,10 +602,7 @@ export default class ComponentPlayground extends Component<Props, State> {
       component,
       fixture,
       editor,
-      fullScreen,
-      // We don't persist the `forceHide` value when changing fixtures
-      // TODO: Remove need for this
-      responsive: responsive === 'forceHide' ? false : responsive
+      fullScreen
     });
 
     const isFixtureSelected = Boolean(fixture);
@@ -629,8 +617,7 @@ export default class ComponentPlayground extends Component<Props, State> {
       getCleanUrlParams({
         component,
         fixture,
-        editor: !editor,
-        responsive
+        editor: !editor
       })
     );
     const fullScreenUrl = uri.stringifyParams({
@@ -731,19 +718,16 @@ export default class ComponentPlayground extends Component<Props, State> {
     const previewStyle = {
       display: showLoader ? 'flex' : 'none'
     };
-    const loaderFrameOverlayStyle = {
+    const previewOverlayStyle = {
       display: isDragging ? 'block' : 'none'
     };
 
     return (
-      <div key="preview" className={styles.loaderFrame} style={previewStyle}>
+      <div key="preview" className={styles.preview} style={previewStyle}>
         <Slot name="preview">
           <iframe ref={this.handleIframeRef} src={loaderUri} frameBorder={0} />
         </Slot>
-        <div
-          className={styles.loaderFrameOverlay}
-          style={loaderFrameOverlayStyle}
-        />
+        <div className={styles.previewOverlay} style={previewOverlayStyle} />
       </div>
     );
   }
@@ -751,8 +735,8 @@ export default class ComponentPlayground extends Component<Props, State> {
   postMessage(data: LoaderMessage) {
     // TODO: Log messages using debug package
     if (this.props.options.platform === 'web') {
-      if (this.loaderFrame) {
-        this.loaderFrame.contentWindow.postMessage(data, '*');
+      if (this.previewIframeEl) {
+        this.previewIframeEl.contentWindow.postMessage(data, '*');
       }
     } else {
       socket.emit('cosmos-cmd', data);

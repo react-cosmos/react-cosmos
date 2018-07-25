@@ -83,9 +83,7 @@ describe('CP left nav drag', () => {
       });
       dragHandleElement.dispatchEvent(downEvent);
 
-      expect(getWrapper('.loaderFrameOverlay').prop('style').display).toBe(
-        'block'
-      );
+      expect(getWrapper('.previewOverlay').prop('style').display).toBe('block');
     });
 
     it('is not visible after dragging', () => {
@@ -102,9 +100,7 @@ describe('CP left nav drag', () => {
       const upEvent = new MouseEvent('mouseup');
       document.dispatchEvent(upEvent);
 
-      expect(getWrapper('.loaderFrameOverlay').prop('style').display).toBe(
-        'none'
-      );
+      expect(getWrapper('.previewOverlay').prop('style').display).toBe('none');
     });
   });
 });

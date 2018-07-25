@@ -17,7 +17,16 @@ export default {
     router: routerProps,
     component: 'ComponentA',
     fixture: 'foo',
-    responsive: true
+    editor: true
+  },
+
+  state: {
+    fixtureBody: {
+      viewport: {
+        width: 375,
+        height: 667
+      }
+    }
   },
 
   fetch: [

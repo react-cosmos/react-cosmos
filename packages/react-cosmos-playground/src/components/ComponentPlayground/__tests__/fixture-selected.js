@@ -9,8 +9,8 @@ const postMessage = jest.fn();
 const { mount, unmount, getWrapper, getRef } = createContext({
   fixture,
   async beforeInit() {
-    await until(() => getRef().loaderFrame);
-    getRef().loaderFrame = {
+    await until(() => getRef().previewIframeEl);
+    getRef().previewIframeEl = {
       contentWindow: {
         postMessage
       }

@@ -12,14 +12,14 @@ const { mount, getWrapper, getRef } = createContext({
   fixture,
   async beforeInit() {
     // Fake node width/height
-    getRef().contentNode = {
+    getRef().contentEl = {
       // Landscape
       offsetWidth: 300,
       offsetHeight: 200
     };
 
-    await until(() => getRef().loaderFrame);
-    getRef().loaderFrame = {
+    await until(() => getRef().previewIframeEl);
+    getRef().previewIframeEl = {
       contentWindow: {
         postMessage
       }
@@ -92,7 +92,7 @@ describe('Landscape fixture editor pane', () => {
         });
         dragHandleElement.dispatchEvent(downEvent);
 
-        expect(getWrapper('.loaderFrameOverlay').prop('style').display).toBe(
+        expect(getWrapper('.previewOverlay').prop('style').display).toBe(
           'block'
         );
       });
@@ -111,7 +111,7 @@ describe('Landscape fixture editor pane', () => {
         const upEvent = new MouseEvent('mouseup');
         document.dispatchEvent(upEvent);
 
-        expect(getWrapper('.loaderFrameOverlay').prop('style').display).toBe(
+        expect(getWrapper('.previewOverlay').prop('style').display).toBe(
           'none'
         );
       });

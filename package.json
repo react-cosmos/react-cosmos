@@ -136,6 +136,7 @@
       "import/order": 0,
       "import/default": 0,
       "no-mixed-operators": 0,
+      "lines-between-class-members": 0,
       "react/jsx-uses-vars": 1,
       "react/jsx-uses-react": 1,
       "flowtype/generic-spacing": 0

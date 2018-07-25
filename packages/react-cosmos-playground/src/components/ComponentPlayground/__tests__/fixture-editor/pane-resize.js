@@ -11,14 +11,14 @@ const { mount, getWrapper, getRef } = createContext({
   fixture,
   async beforeInit() {
     // Fake node width/height
-    getRef().contentNode = {
+    getRef().contentEl = {
       // Landscape
       offsetWidth: 300,
       offsetHeight: 200
     };
 
-    await until(() => getRef().loaderFrame);
-    getRef().loaderFrame = {
+    await until(() => getRef().previewIframeEl);
+    getRef().previewIframeEl = {
       contentWindow: {
         postMessage
       }
@@ -49,7 +49,7 @@ describe('Resize fixture editor pane', () => {
 
   describe('from landscape to portrait', () => {
     beforeEach(() => {
-      getRef().contentNode = {
+      getRef().contentEl = {
         // Portrait
         offsetWidth: 200,
         offsetHeight: 300
