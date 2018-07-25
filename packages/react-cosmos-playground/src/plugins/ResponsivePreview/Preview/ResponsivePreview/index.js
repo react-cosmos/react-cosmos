@@ -70,11 +70,7 @@ export class ResponsivePreview extends Component<Props, State> {
     if (!viewport || !outerContainer) {
       return (
         <div>
-          <div
-            key="preview"
-            ref={this.handleContainerRef}
-            style={{ display: 'flex' }}
-          >
+          <div key="preview" ref={this.handleContainerRef}>
             <div>
               <div>{children}</div>
             </div>
