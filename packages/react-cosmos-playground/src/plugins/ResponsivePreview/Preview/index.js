@@ -29,7 +29,7 @@ export function PreviewSlot({ children }: Props) {
           return (
             <ResponsivePreview
               devices={responsiveDevices || []}
-              viewport={fixtureBody.viewport}
+              fixtureViewport={fixtureBody.viewport}
               onViewportChange={viewport => {
                 onFixtureEdit({
                   ...fixtureBody,

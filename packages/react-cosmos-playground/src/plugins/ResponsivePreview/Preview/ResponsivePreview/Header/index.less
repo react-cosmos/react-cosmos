@@ -1,0 +1,52 @@
+@import '../../../../../utils/common.less';
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+  background: @left-nav-bgcolor-darker;
+}
+
+.button {
+  flex: 1;
+  border: none;
+  height: 70px;
+  border-radius: 0;
+  background: none;
+  font-family: @default-font-family;
+  font-size: @default-font-size;
+  line-height: 18px;
+  -webkit-font-smoothing: antialiased;
+  color: @left-nav-color;
+  outline: none;
+  overflow: hidden;
+
+  &:hover {
+    background: @left-nav-bgcolor-selected;
+  }
+}
+
+.buttonActive {
+  background: @left-nav-bgcolor-selected;
+  color: @left-nav-color-selected;
+}
+
+.label {
+  font-weight: 600;
+  color: @left-nav-color-selected;
+}
+
+.nowrap {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.scaleLink {
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+    color: red;
+  }
+}

@@ -7,6 +7,12 @@ export type ExcludePatterns = ExcludePattern | Array<ExcludePattern>;
 type WebpackConfig = Object;
 type WebpackConfigOverride = (WebpackConfig, { env: string }) => WebpackConfig;
 
+export type ResponsiveDevices = Array<{|
+  label: string,
+  width: number,
+  height: number
+|}>;
+
 export type Config = {
   rootPath: string,
   fileMatch: Array<string>,
@@ -23,7 +29,7 @@ export type Config = {
   publicPath?: string,
   publicUrl: string,
   containerQuerySelector?: string,
-  responsiveDevices: Array<{| label: string, width: number, height: number |}>,
+  responsiveDevices: ResponsiveDevices,
   httpProxy?: {| context: string, target: string |},
   watchDirs: Array<string>,
   modulesPath: string,

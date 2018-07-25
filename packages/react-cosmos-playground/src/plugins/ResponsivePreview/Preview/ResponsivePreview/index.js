@@ -2,17 +2,18 @@
 
 import React, { Component } from 'react';
 import { isEqual } from 'lodash';
-import Header from './Header';
+import { Header } from './Header';
 import classNames from 'classnames';
 import styles from './index.less';
 
 import type { Node } from 'react';
+import type { ResponsiveDevices } from 'react-cosmos-flow/config';
 import type { Viewport } from '../../types';
 
 type Props = {
   children: Node,
-  devices: Array<{| label: string, width: number, height: number |}>,
-  viewport: ?Viewport,
+  devices: ResponsiveDevices,
+  fixtureViewport: ?Viewport,
   onViewportChange: Viewport => any
 };
 
@@ -49,7 +50,7 @@ export class ResponsivePreview extends Component<Props, State> {
     this.containerEl = el;
   };
 
-  handleViewportChange = (width: number, height: number) => {
+  handleViewportChange = ({ width, height }: Viewport) => {
     const { onViewportChange } = this.props;
     onViewportChange({ width, height });
   };
@@ -59,15 +60,15 @@ export class ResponsivePreview extends Component<Props, State> {
   };
 
   render() {
-    const { children, devices, viewport } = this.props;
+    const { children, devices, fixtureViewport } = this.props;
     const { container: outerContainer, scale } = this.state;
 
     // We can't simply say
-    //   if (!viewport) { return children };
+    //   if (!fixtureViewport) { return children };
     // because this causes flicker when switching between responsive and
     // non responsive mode as the React component tree is completely different.
     // The key to preserving the child iframe is the "preview" key.
-    if (!viewport || !outerContainer) {
+    if (!fixtureViewport || !outerContainer) {
       return (
         <div>
           <div key="preview" ref={this.handleContainerRef}>
@@ -83,7 +84,7 @@ export class ResponsivePreview extends Component<Props, State> {
       width: outerContainer.width - 2 * (PADDING + BORDER_WIDTH),
       height: outerContainer.height - 2 * (PADDING + BORDER_WIDTH)
     };
-    const { width, height } = viewport;
+    const { width, height } = fixtureViewport;
 
     const scaleWidth = Math.min(1, container.width / width);
     const scaleHeight = Math.min(1, container.height / height);
@@ -119,17 +120,13 @@ export class ResponsivePreview extends Component<Props, State> {
 
     return (
       <div className={styles.container}>
-        {viewport && (
+        {fixtureViewport && (
           <Header
             devices={devices}
-            dimensions={{
-              width: viewport.width,
-              height: viewport.height,
-              scale
-            }}
-            containerWidth={container.width}
-            containerHeight={container.height}
-            onViewportChange={this.handleViewportChange}
+            fixtureViewport={fixtureViewport}
+            container={container}
+            scale={scale}
+            changeViewport={this.handleViewportChange}
             setScale={this.handleScaleChange}
           />
         )}
