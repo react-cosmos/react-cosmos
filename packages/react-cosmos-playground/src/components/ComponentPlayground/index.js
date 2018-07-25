@@ -735,13 +735,8 @@ export default class ComponentPlayground extends Component<Props, State> {
       display: isDragging ? 'block' : 'none'
     };
 
-    // TODO: Don't show checkerboard twice
     return (
-      <div
-        key="preview"
-        className={`${styles.loaderFrame} ${styles.checkerboard}`}
-        style={previewStyle}
-      >
+      <div key="preview" className={styles.loaderFrame} style={previewStyle}>
         <Slot name="preview">
           <iframe ref={this.handleIframeRef} src={loaderUri} frameBorder={0} />
         </Slot>

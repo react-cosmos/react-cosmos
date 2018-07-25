@@ -7,7 +7,7 @@ import { uri } from 'react-querystring-router';
 import { UiContext } from '../context';
 import { ResponsiveIcon } from '../components/SvgIcon';
 import ResponsivePreview from '../components/ResponsiveLoader';
-// TODO: How to share styles with plugins?
+// TODO: Refactor CP and export styled-components to use in plugins
 import styles from '../components/ComponentPlayground/index.less';
 
 import type { UiContextParams } from '../context';
