@@ -6,9 +6,10 @@ import classNames from 'classnames';
 import localForage from 'localforage';
 import styles from './index.less';
 
+import type { Node } from 'react';
+
 type Props = {
-  inputRef: (node: ?HTMLElement) => void,
-  src: string,
+  children: Node,
   showResponsiveControls: boolean,
   onFixtureUpdate: any,
   devices: Array<{| label: string, width: number, height: number |}>,
@@ -98,13 +99,7 @@ class ResponsiveLoader extends React.Component<Props, State> {
   };
 
   render() {
-    const {
-      inputRef,
-      src,
-      devices,
-      showResponsiveControls,
-      fixture
-    } = this.props;
+    const { children, devices, showResponsiveControls, fixture } = this.props;
     const { scale, savedWidth, savedHeight } = this.state;
 
     const viewport = (fixture && fixture.viewport) || {};
@@ -195,7 +190,7 @@ class ResponsiveLoader extends React.Component<Props, State> {
         >
           <div className={middleWrapperClassName} style={middleWrapperStyle}>
             <div className={innerWrapperClassName} style={innerWrapperStyle}>
-              <iframe ref={inputRef} src={src} frameBorder={0} />
+              {children}
             </div>
           </div>
         </div>

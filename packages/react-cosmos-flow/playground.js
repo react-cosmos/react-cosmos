@@ -11,6 +11,7 @@ export type PlaygroundWebOpts = {
   projectKey: string,
   loaderUri: string,
   webpackConfigType: 'default' | 'custom',
+  // TODO: responsivePreview.devices
   responsiveDevices?: ResponsiveDevices,
   deps: {
     [string]: boolean

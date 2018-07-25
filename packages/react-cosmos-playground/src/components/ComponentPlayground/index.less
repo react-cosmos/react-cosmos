@@ -138,4 +138,34 @@
   height: 100%;
   overflow: hidden;
   display: flex;
+
+  iframe {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+}
+
+.checkerboard {
+  // Checkerboard effect on background
+  background-color: #fff;
+  background-image: linear-gradient(
+      45deg,
+      @checkerboard-color 25%,
+      transparent 25%,
+      transparent 75%,
+      @checkerboard-color 75%,
+      @checkerboard-color 100%
+    ),
+    linear-gradient(
+      45deg,
+      @checkerboard-color 25%,
+      transparent 25%,
+      transparent 75%,
+      @checkerboard-color 75%,
+      @checkerboard-color 100%
+    );
+  background-size: 2 * @checkerboard-square-size 2 * @checkerboard-square-size;
+  background-position: 0 0, @checkerboard-square-size @checkerboard-square-size;
 }

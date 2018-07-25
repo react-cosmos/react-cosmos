@@ -6,7 +6,9 @@ import omitBy from 'lodash.omitby';
 import localForage from 'localforage';
 import io from 'socket.io-client';
 import { uri } from 'react-querystring-router';
-import { HomeIcon, FullScreenIcon, CodeIcon, ResponsiveIcon } from '../SvgIcon';
+import { Slot } from 'react-plugin';
+import { UiContext } from '../../context';
+import { HomeIcon, FullScreenIcon, CodeIcon } from '../SvgIcon';
 import StarryBg from '../StarryBg';
 import FixtureList from '../FixtureList';
 import WelcomeScreen from '../screens/WelcomeScreen';
@@ -19,7 +21,6 @@ import { FadeIn } from '../screens/shared/FadeIn';
 import DragHandle from '../DragHandle';
 import FixtureEditor from '../FixtureEditor';
 import styles from './index.less';
-import ResponsiveLoader from '../ResponsiveLoader';
 
 import type { FixtureNames } from 'react-cosmos-flow/module';
 import type {
@@ -32,8 +33,7 @@ import type {
 import type {
   PlaygroundOpts,
   PlaygroundWebOpts,
-  PlaygroundNativeOpts,
-  ResponsiveDevices
+  PlaygroundNativeOpts
 } from 'react-cosmos-flow/playground';
 
 export const LEFT_NAV_SIZE = '__cosmos__left-nav-size';
@@ -58,7 +58,7 @@ type Props = {
   responsive?: boolean
 };
 
-type State = {
+export type State = {
   loaderStatus: LoaderStatus,
   isDragging: boolean,
   leftNavSize: number,
@@ -263,7 +263,7 @@ export default class ComponentPlayground extends Component<Props, State> {
     this.setState({ isDragging: false });
   };
 
-  onFixtureEditorChange = (fixtureBody: Object) => {
+  onFixtureEdit = (fixtureBody: Object) => {
     this.setState({
       fixtureBody
     });
@@ -353,7 +353,30 @@ export default class ComponentPlayground extends Component<Props, State> {
   }
 
   render() {
-    return <div className={styles.root}>{this.renderInner()}</div>;
+    const {
+      options,
+      component,
+      fixture,
+      editor,
+      fullScreen,
+      responsive,
+      router
+    } = this.props;
+
+    return (
+      <UiContext.Provider
+        value={{
+          options,
+          urlParams: { component, fixture, editor, fullScreen, responsive },
+          state: this.state,
+          onFixtureEdit: this.onFixtureEdit,
+          router,
+          getCleanUrlParams: ComponentPlayground.getCleanUrlParams
+        }}
+      >
+        <div className={styles.root}>{this.renderInner()}</div>
+      </UiContext.Provider>
+    );
   }
 
   renderInner() {
@@ -415,7 +438,7 @@ export default class ComponentPlayground extends Component<Props, State> {
   }) {
     const { component, fixture } = this.props;
     const { loaderStatus, fixtures } = this.state;
-    const { loaderUri, responsiveDevices } = options;
+    const { loaderUri } = options;
 
     if (loaderStatus === 'PENDING') {
       return (
@@ -445,7 +468,6 @@ export default class ComponentPlayground extends Component<Props, State> {
           <StarryBg />
           {this.renderLoader({
             loaderUri,
-            responsiveDevices,
             showLoader: false
           })}
         </Fragment>
@@ -459,7 +481,6 @@ export default class ComponentPlayground extends Component<Props, State> {
         <Fragment>
           {this.renderLoader({
             loaderUri,
-            responsiveDevices,
             showLoader: true
           })}
         </Fragment>
@@ -484,7 +505,6 @@ export default class ComponentPlayground extends Component<Props, State> {
           </StarryBg>
           {this.renderLoader({
             loaderUri,
-            responsiveDevices,
             showLoader: false
           })}
         </Fragment>
@@ -503,7 +523,6 @@ export default class ComponentPlayground extends Component<Props, State> {
           </StarryBg>
           {this.renderLoader({
             loaderUri,
-            responsiveDevices,
             showLoader: false
           })}
         </Fragment>
@@ -513,9 +532,7 @@ export default class ComponentPlayground extends Component<Props, State> {
     return (
       // Warning: Ensure <Fragment><Loader> return value to preserve loader
       // instance between renders
-      <Fragment>
-        {this.renderLoader({ loaderUri, responsiveDevices, showLoader: true })}
-      </Fragment>
+      <Fragment>{this.renderLoader({ loaderUri, showLoader: true })}</Fragment>
     );
   }
 
@@ -586,26 +603,17 @@ export default class ComponentPlayground extends Component<Props, State> {
       responsive,
       options
     } = this.props;
-    const { fixtures, fixtureBody, leftNavSize } = this.state;
+    const { fixtures, leftNavSize } = this.state;
 
     const urlParams = getCleanUrlParams({
       component,
       fixture,
       editor,
       fullScreen,
-      // We don't persist the `forceHide` value when changing fixturess
+      // We don't persist the `forceHide` value when changing fixtures
+      // TODO: Remove need for this
       responsive: responsive === 'forceHide' ? false : responsive
     });
-
-    const showResponsiveControls =
-      responsive === 'forceHide' ? false : fixtureBody.viewport || responsive;
-
-    const nextResponsive =
-      responsive === 'forceHide'
-        ? true
-        : fixtureBody.viewport
-          ? 'forceHide'
-          : !responsive;
 
     const isFixtureSelected = Boolean(fixture);
     const homeClassNames = classNames(styles.button, {
@@ -614,9 +622,7 @@ export default class ComponentPlayground extends Component<Props, State> {
     const fixtureEditorClassNames = classNames(styles.button, {
       [styles.selectedButton]: editor
     });
-    const responsiveClassNames = classNames(styles.button, {
-      [styles.selectedButton]: showResponsiveControls
-    });
+
     const fixtureEditorUrl = uri.stringifyParams(
       getCleanUrlParams({
         component,
@@ -631,14 +637,6 @@ export default class ComponentPlayground extends Component<Props, State> {
       fullScreen: true
     });
 
-    const responsiveUrl = uri.stringifyParams(
-      getCleanUrlParams({
-        component,
-        fixture,
-        editor,
-        responsive: nextResponsive
-      })
-    );
     return (
       <div
         key="leftNav"
@@ -670,16 +668,7 @@ export default class ComponentPlayground extends Component<Props, State> {
                   <CodeIcon />
                 </a>
               )}
-              {isFixtureSelected && (
-                <a
-                  ref="responsiveButton"
-                  className={responsiveClassNames}
-                  href={responsiveUrl}
-                  onClick={router.routeLink}
-                >
-                  <ResponsiveIcon />
-                </a>
-              )}
+              <Slot name="header-buttons" />
               {isFixtureSelected && (
                 <a
                   ref="fullScreenButton"
@@ -717,10 +706,7 @@ export default class ComponentPlayground extends Component<Props, State> {
     return (
       <div className={styles.fixtureEditorPane} style={style}>
         <div className={styles.fixtureEditor}>
-          <FixtureEditor
-            value={fixtureBody}
-            onChange={this.onFixtureEditorChange}
-          />
+          <FixtureEditor value={fixtureBody} onChange={this.onFixtureEdit} />
         </div>
         <DragHandle
           vertical={orientation === 'portrait'}
@@ -734,41 +720,29 @@ export default class ComponentPlayground extends Component<Props, State> {
 
   renderLoader({
     loaderUri,
-    responsiveDevices,
     showLoader
   }: {
     loaderUri: string,
-    responsiveDevices: ?ResponsiveDevices,
     showLoader: boolean
   }) {
-    const { responsive } = this.props;
-    const { isDragging, fixtureBody } = this.state;
-    const loaderStyle = {
+    const { isDragging } = this.state;
+    const previewStyle = {
       display: showLoader ? 'flex' : 'none'
     };
     const loaderFrameOverlayStyle = {
       display: isDragging ? 'block' : 'none'
     };
-    const showResponsiveControls =
-      responsive === 'forceHide'
-        ? false
-        : fixtureBody.viewport || responsive || false;
 
+    // TODO: Don't show checkerboard twice
     return (
-      <div key="loader" className={styles.loaderFrame} style={loaderStyle}>
-        <ResponsiveLoader
-          showResponsiveControls={showResponsiveControls}
-          inputRef={this.handleIframeRef}
-          src={loaderUri}
-          devices={responsiveDevices || []}
-          onFixtureUpdate={updatedFields =>
-            this.onFixtureEditorChange({
-              ...fixtureBody,
-              ...updatedFields
-            })
-          }
-          fixture={fixtureBody.name ? fixtureBody : null}
-        />
+      <div
+        key="preview"
+        className={`${styles.loaderFrame} ${styles.checkerboard}`}
+        style={previewStyle}
+      >
+        <Slot name="preview">
+          <iframe ref={this.handleIframeRef} src={loaderUri} frameBorder={0} />
+        </Slot>
         <div
           className={styles.loaderFrameOverlay}
           style={loaderFrameOverlayStyle}

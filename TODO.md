@@ -12,6 +12,8 @@
   - [x] Create rough plugin structure for existing UI
   - [x] Enable toggling plugins at run time
   - [ ] Refactor ResponsiveLoader into a plugin
+    - [x] Create UiContext with playgroundOpts, URL params, UI state and fixtureEdit callback
+    - [ ] Derive responsive state from fixture body
 - [ ] Design package API
   - [ ] Turn existing plugins into packages (type: `ui-plugin`)
 - [ ] Create UI for browsing and toggling plugins

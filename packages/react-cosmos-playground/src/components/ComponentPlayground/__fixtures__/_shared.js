@@ -27,12 +27,12 @@ export async function init({ compRef }: { compRef: ?ComponentRef }) {
 
   // Wait until fetch mock has responded and component state is ready to receive
   // messages from inside the Loader frame
-  await until(hasLoaderStatus(compRef, 'WEB_INDEX_OK'));
+  await until(hasLoaderStatus(compRef, 'WEB_INDEX_OK'), { timeout: 1000 });
 
   window.postMessage(readyMessage, '*');
 
   // Wait until Playground state has been updated before running any assertions
-  await until(hasLoaderStatus(compRef, 'READY'));
+  await until(hasLoaderStatus(compRef, 'READY'), { timeout: 1000 });
 }
 
 function hasLoaderStatus(compInstance, status) {

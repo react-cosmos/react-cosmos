@@ -54,7 +54,7 @@
     "css-loader": "^1.0.0",
     "cypress": "^3.0.2",
     "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-adapter-react-16": "npm:enzyme-react-adapter-future",
     "eslint-config-xo-react": "^0.17.0",
     "eslint-import-resolver-webpack": "^0.10.1",
     "eslint-plugin-flowtype": "^2.49.3",

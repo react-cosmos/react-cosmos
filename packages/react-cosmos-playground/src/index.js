@@ -3,7 +3,7 @@
 import { Router } from 'react-querystring-router';
 import ComponentPlayground from './components/ComponentPlayground';
 import { getPageTitle } from './utils/page-title';
-
+import './register-plugins';
 import './utils/global.less';
 
 import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
