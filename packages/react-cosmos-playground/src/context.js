@@ -1,6 +1,7 @@
 // @flow
 
 import { createContext } from 'react';
+import { defaultState } from './components/ComponentPlayground';
 
 import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
 import type { State } from './components/ComponentPlayground';
@@ -13,7 +14,7 @@ type UrlParams = {
 };
 
 export type UiContextParams = {
-  options: PlaygroundOpts,
+  options: { platform: 'unknown' } | PlaygroundOpts,
   urlParams: UrlParams,
   state: State,
   onFixtureEdit: (fixturePart: Object) => any,
@@ -24,26 +25,13 @@ export type UiContextParams = {
   getCleanUrlParams: (urlParams: UrlParams) => UrlParams
 };
 
-// TODO: Figure out how to handle default context state
+// Match the shape of the populated UI context
 export const UiContext = createContext({
   options: {
-    projectKey: 'default',
-    platform: 'web',
-    loaderUri: '/_loader.html',
-    responsiveDevices: [],
-    deps: {},
-    webpackConfigType: 'default'
+    platform: 'unknown'
   },
   urlParams: {},
-  state: {
-    loaderStatus: 'PENDING',
-    isDragging: false,
-    leftNavSize: 250,
-    fixtureEditorPaneSize: 250,
-    orientation: 'landscape',
-    fixtureBody: {},
-    fixtures: {}
-  },
+  state: defaultState,
   onFixtureEdit: () => {},
   router: {
     goTo: () => {},

@@ -70,6 +70,16 @@ export type State = {
 
 let socket;
 
+export const defaultState = {
+  loaderStatus: 'PENDING',
+  isDragging: false,
+  leftNavSize: 250,
+  fixtureEditorPaneSize: 250,
+  orientation: 'landscape',
+  fixtureBody: {},
+  fixtures: {}
+};
+
 export default class ComponentPlayground extends Component<Props, State> {
   static defaultProps = {
     editor: false,
@@ -87,15 +97,7 @@ export default class ComponentPlayground extends Component<Props, State> {
 
   unmounted: boolean = false;
 
-  state = {
-    loaderStatus: 'PENDING',
-    isDragging: false,
-    leftNavSize: 250,
-    fixtureEditorPaneSize: 250,
-    orientation: 'landscape',
-    fixtureBody: {},
-    fixtures: {}
-  };
+  state = defaultState;
 
   componentDidMount() {
     const { options } = this.props;
