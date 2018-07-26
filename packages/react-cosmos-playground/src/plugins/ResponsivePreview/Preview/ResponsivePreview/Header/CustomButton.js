@@ -36,11 +36,10 @@ export const CustomButton = ({
     >
       <div className={classNames(styles.label, styles.nowrap)}>Custom</div>
       {isActive && (
-        <span>
+        <div className={classNames(styles.customInputs, styles.nowrap)}>
           <input
             type="number"
             value={width || ''}
-            style={{ width: 40, height: 20 }}
             onChange={e =>
               changeViewport({
                 width: parseInt(e.target.value, 10) || 0,
@@ -52,7 +51,6 @@ export const CustomButton = ({
           <input
             type="number"
             value={height || ''}
-            style={{ width: 40, height: 20 }}
             onChange={e =>
               changeViewport({
                 width,
@@ -60,7 +58,7 @@ export const CustomButton = ({
               })
             }
           />
-        </span>
+        </div>
       )}
       {scale &&
         scalable && (
