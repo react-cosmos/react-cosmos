@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, forwardRef } from 'react';
 import createReactClass from 'create-react-class';
 import { shallow } from 'enzyme';
 import { PropsProxy } from '..';
@@ -8,6 +8,10 @@ const FunctionalComponent = () => {};
 class ClassComponent extends Component {
   render() {}
 }
+
+const forwardedClassComponent = forwardRef((props, ref) => (
+  <ClassComponent {...props} ref={ref} />
+));
 
 const ClassicComponent = createReactClass({
   render: () => {}
@@ -86,6 +90,40 @@ describe('ES6 Class Component', () => {
 
   test('renders component', () => {
     expect(childWrapper.type()).toEqual(ClassComponent);
+  });
+
+  test('sends fixture props to component', () => {
+    expect(childProps.foo).toBe('bar');
+  });
+
+  test('sets onComponentRef as component ref callback', () => {
+    expect(childWrapper.get(0).ref).toBe(onComponentRef);
+  });
+
+  test('passes prop children to component', () => {
+    expect(childChildren.length).toEqual(1);
+    expect(childChildren.at(0).equals(fixture.props.children[0])).toBe(true);
+  });
+});
+
+describe('ES6 Class Component with forwardRef', () => {
+  beforeEach(() => {
+    wrapper = shallow(
+      <PropsProxy
+        fixture={{
+          component: forwardedClassComponent,
+          ...fixture
+        }}
+        onComponentRef={onComponentRef}
+      />
+    );
+    childWrapper = wrapper.at(0);
+    childProps = childWrapper.props();
+    childChildren = childWrapper.children();
+  });
+
+  test('renders component', () => {
+    expect(childWrapper.type()).toEqual(forwardedClassComponent);
   });
 
   test('sends fixture props to component', () => {

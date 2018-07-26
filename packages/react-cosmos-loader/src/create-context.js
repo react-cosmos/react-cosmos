@@ -4,7 +4,7 @@ import until from 'async-until';
 import React from 'react';
 import createStateProxy from 'react-cosmos-state-proxy';
 import { Loader } from './components/Loader';
-import { isComponentClass } from './utils/is-component-class';
+import { isRefSupported } from './utils/is-ref-supported';
 
 import type { ComponentRef } from 'react-cosmos-flow/react';
 import type {
@@ -103,7 +103,7 @@ export function createContext(args: ContextArgs): ContextFunctions {
 
         // Ensure component ref is available when mounting is resolved (esp.
         // convenient in headless tests)
-        if (isComponentClass(fixture.component)) {
+        if (isRefSupported(fixture.component)) {
           await until(() => compRefCalled);
         }
 
