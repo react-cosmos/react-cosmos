@@ -19,16 +19,34 @@
   -webkit-font-smoothing: antialiased;
   color: @left-nav-color;
   outline: none;
-  overflow: hidden;
 
   &:hover {
     background: @left-nav-bgcolor-selected;
   }
 }
 
+.scaleButton {
+  width: 60px;
+  flex: auto;
+  flex-grow: 0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  svg {
+    fill: @left-nav-color;
+  }
+}
+
 .buttonActive {
   background: @left-nav-bgcolor-selected;
   color: @left-nav-color-selected;
+
+  svg {
+    fill: @left-nav-color-selected;
+  }
 }
 
 .label {
@@ -36,17 +54,11 @@
   color: @left-nav-color-selected;
 }
 
-.nowrap {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+.scaled {
+  font-size: 13px;
 }
 
-.scaleLink {
-  text-decoration: underline;
-  cursor: pointer;
-
-  &:hover {
-    color: red;
-  }
+.nowrap {
+  padding: 0 8px;
+  white-space: nowrap;
 }

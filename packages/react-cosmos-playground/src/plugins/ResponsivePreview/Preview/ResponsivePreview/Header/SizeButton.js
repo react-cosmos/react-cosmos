@@ -14,8 +14,7 @@ type Props = {
   scalable: boolean,
   scale: boolean,
   scaleFactor: number,
-  changeViewport: (viewport: Viewport) => void,
-  setScale: (scale: boolean) => any
+  changeViewport: (viewport: Viewport) => void
 };
 
 export const SizeButton = ({
@@ -26,8 +25,7 @@ export const SizeButton = ({
   scalable,
   scale,
   scaleFactor = 1,
-  changeViewport,
-  setScale
+  changeViewport
 }: Props) => {
   const className = classNames(styles.button, {
     [styles.buttonActive]: isActive
@@ -41,24 +39,12 @@ export const SizeButton = ({
       <div className={styles.nowrap}>
         {width} x {height}
       </div>
-      <div className={styles.nowrap}>
-        {scale &&
-          scalable && (
-            <div
-              onClick={() => isActive && setScale(false)}
-              className={isActive ? styles.scaleLink : ''}
-            >
-              (Scaled {parseInt(scaleFactor * 100, 10)}%)
-            </div>
-          )}
-        {!scale &&
-          scalable &&
-          isActive && (
-            <div className={styles.scaleLink} onClick={() => setScale(true)}>
-              Scale
-            </div>
-          )}
-      </div>
+      {scale &&
+        scalable && (
+          <div className={classNames(styles.scaled, styles.nowrap)}>
+            {`(Scaled ${parseInt(scaleFactor * 100, 10)}%)`}
+          </div>
+        )}
     </button>
   );
 };

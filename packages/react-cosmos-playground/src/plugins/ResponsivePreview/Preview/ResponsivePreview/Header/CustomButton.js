@@ -62,7 +62,12 @@ export const CustomButton = ({
           />
         </span>
       )}
-      {scale && scalable && <div>(Scaled)</div>}
+      {scale &&
+        scalable && (
+          <div
+            className={classNames(styles.scaled, styles.nowrap)}
+          >{`(Scaled)`}</div>
+        )}
     </button>
   );
 };

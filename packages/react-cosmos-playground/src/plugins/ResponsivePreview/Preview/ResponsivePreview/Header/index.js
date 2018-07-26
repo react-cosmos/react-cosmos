@@ -4,6 +4,7 @@ import React from 'react';
 import find from 'lodash/find';
 import { SizeButton } from './SizeButton';
 import { CustomButton } from './CustomButton';
+import { ScaleButton } from './ScaleButton';
 import styles from './index.less';
 
 import type { ResponsiveDevices } from 'react-cosmos-flow/config';
@@ -60,10 +61,10 @@ export const Header = ({
             scaleFactor={scaleFactor}
             scale={scale}
             changeViewport={changeViewport}
-            setScale={setScale}
           />
         );
       })}
+      <ScaleButton scale={scale} setScale={setScale} />
     </div>
   );
 };
