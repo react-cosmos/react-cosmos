@@ -12,7 +12,7 @@ import type { Viewport } from '../../../types';
 
 type Props = {
   devices: ResponsiveDevices,
-  fixtureViewport: Viewport,
+  viewport: Viewport,
   container: Viewport,
   scale: boolean,
   changeViewport: (viewport: Viewport) => void,
@@ -21,7 +21,7 @@ type Props = {
 
 export const Header = ({
   devices,
-  fixtureViewport: { width, height },
+  viewport: { width, height },
   container,
   scale,
   changeViewport,

@@ -60,8 +60,10 @@ export type State = {
   leftNavSize: number,
   fixtureEditorPaneSize: number,
   orientation: 'landscape' | 'portrait',
+  fixtures: FixtureNames,
+  fixtureLoaded: boolean,
   fixtureBody: Object,
-  fixtures: FixtureNames
+  plugin: { [prop: string]: mixed }
 };
 
 let socket;
@@ -72,8 +74,10 @@ export const defaultState = {
   leftNavSize: 250,
   fixtureEditorPaneSize: 250,
   orientation: 'landscape',
+  fixtures: {},
+  fixtureLoaded: false,
   fixtureBody: {},
-  fixtures: {}
+  plugin: {}
 };
 
 export default class ComponentPlayground extends Component<Props, State> {
@@ -128,17 +132,18 @@ export default class ComponentPlayground extends Component<Props, State> {
       const fixtureChanged =
         component !== this.props.component || fixture !== this.props.fixture;
 
-      if (
-        fixtureChanged &&
-        component &&
-        fixture &&
-        fixtureExists(fixtures, component, fixture)
-      ) {
-        this.postMessage({
-          type: 'fixtureSelect',
-          component,
-          fixture
-        });
+      if (fixtureChanged) {
+        if (
+          component &&
+          fixture &&
+          fixtureExists(fixtures, component, fixture)
+        ) {
+          this.selectFixture(component, fixture);
+        } else {
+          // Keep clean state when no fixture is selected. Helps plugins get the
+          // right cue.
+          this.clearFixtureState();
+        }
       }
     }
   }
@@ -184,11 +189,7 @@ export default class ComponentPlayground extends Component<Props, State> {
 
     const { component, fixture } = this.props;
     if (component && fixture && fixtureExists(fixtures, component, fixture)) {
-      this.postMessage({
-        type: 'fixtureSelect',
-        component,
-        fixture
-      });
+      this.selectFixture(component, fixture);
     }
   }
 
@@ -200,6 +201,7 @@ export default class ComponentPlayground extends Component<Props, State> {
 
   onFixtureLoad({ fixtureBody }: FixtureLoadMessage) {
     this.setState({
+      fixtureLoaded: true,
       fixtureBody
     });
   }
@@ -218,13 +220,11 @@ export default class ComponentPlayground extends Component<Props, State> {
     if (location === window.location.href) {
       const { component, fixture } = this.props;
       if (component && fixture) {
-        this.postMessage({
-          type: 'fixtureSelect',
-          component,
-          fixture
-        });
+        // Reset already selected fixture
+        this.selectFixture(component, fixture);
       }
     } else {
+      // Go to new URL and rely on componentWillReceiveProps flow
       this.props.router.goTo(location);
     }
   };
@@ -266,6 +266,15 @@ export default class ComponentPlayground extends Component<Props, State> {
     this.postMessage({
       type: 'fixtureEdit',
       fixtureBody
+    });
+  };
+
+  handleSetPluginState = (partialState: Object) => {
+    this.setState({
+      plugin: {
+        ...this.state.plugin,
+        ...partialState
+      }
     });
   };
 
@@ -363,7 +372,8 @@ export default class ComponentPlayground extends Component<Props, State> {
           options,
           urlParams: { component, fixture, editor, fullScreen },
           state: this.state,
-          onFixtureEdit: this.onFixtureEdit,
+          setPluginState: this.handleSetPluginState,
+          editFixture: this.onFixtureEdit,
           router,
           getCleanUrlParams: ComponentPlayground.getCleanUrlParams
         }}
@@ -741,6 +751,31 @@ export default class ComponentPlayground extends Component<Props, State> {
     } else {
       socket.emit('cosmos-cmd', data);
     }
+  }
+
+  clearFixtureState() {
+    // TODO: Message Loader to unselect current fixture
+    // this.postMessage({
+    //   type: 'fixtureClear'
+    // });
+
+    this.setState({
+      fixtureLoaded: false
+      // Allow plugins to use attributes from previous fixtureBody until next
+      // fixture loads. Together with fixtureLoaded flag, invalidated states
+      // with data from previous fixture can be created.
+      // fixtureBody: {}
+    });
+  }
+
+  selectFixture(component: string, fixture: string) {
+    this.clearFixtureState();
+
+    this.postMessage({
+      type: 'fixtureSelect',
+      component,
+      fixture
+    });
   }
 }
 

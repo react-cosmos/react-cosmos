@@ -17,7 +17,8 @@ export type UiContextParams = {
   options: { platform: 'unknown' } | PlaygroundOpts,
   urlParams: UrlParams,
   state: State,
-  onFixtureEdit: (fixturePart: Object) => any,
+  editFixture: (fixturePart: Object) => any,
+  setPluginState: (state: Object) => void,
   router: {
     goTo: (e: SyntheticEvent<HTMLAnchorElement>) => any,
     routeLink: (location: string) => any
@@ -32,7 +33,8 @@ export const UiContext = createContext({
   },
   urlParams: {},
   state: defaultState,
-  onFixtureEdit: () => {},
+  editFixture: () => {},
+  setPluginState: () => {},
   router: {
     goTo: () => {},
     routeLink: () => {}

@@ -8,11 +8,12 @@ import styles from './index.less';
 
 import type { Node } from 'react';
 import type { ResponsiveDevices } from 'react-cosmos-flow/config';
-import type { Viewport } from '../../types';
+import type { Viewport, PluginState } from '../../types';
 
 type Props = {
   children: Node,
   devices: ResponsiveDevices,
+  pluginState: PluginState,
   fixtureViewport: ?Viewport,
   onViewportChange: Viewport => any
 };
@@ -60,15 +61,17 @@ export class ResponsivePreview extends Component<Props, State> {
   };
 
   render() {
-    const { children, devices, fixtureViewport } = this.props;
-    const { container: outerContainer, scale } = this.state;
+    const { children, devices, pluginState, fixtureViewport } = this.props;
+    const { container, scale } = this.state;
+    const viewport =
+      fixtureViewport || (pluginState.enabled && pluginState.viewport);
 
     // We can't simply say
-    //   if (!fixtureViewport) { return children };
+    //   if (!viewport) { return children };
     // because this causes flicker when switching between responsive and
     // non responsive mode as the React component tree is completely different.
     // The key to preserving the child iframe is the "preview" key.
-    if (!fixtureViewport || !outerContainer) {
+    if (!container || !viewport) {
       return (
         <div>
           <div key="preview" ref={this.handleContainerRef}>
@@ -80,14 +83,14 @@ export class ResponsivePreview extends Component<Props, State> {
       );
     }
 
-    const container = {
-      width: outerContainer.width - 2 * (PADDING + BORDER_WIDTH),
-      height: outerContainer.height - 2 * (PADDING + BORDER_WIDTH)
+    const innerContainer = {
+      width: container.width - 2 * (PADDING + BORDER_WIDTH),
+      height: container.height - 2 * (PADDING + BORDER_WIDTH)
     };
-    const { width, height } = fixtureViewport;
+    const { width, height } = viewport;
 
-    const scaleWidth = Math.min(1, container.width / width);
-    const scaleHeight = Math.min(1, container.height / height);
+    const scaleWidth = Math.min(1, innerContainer.width / width);
+    const scaleHeight = Math.min(1, innerContainer.height / height);
     const scaleFactor = scale ? Math.min(scaleWidth, scaleHeight) : 1;
     const scaledWidth = width * scaleFactor;
     const scaledHeight = height * scaleFactor;
@@ -120,16 +123,14 @@ export class ResponsivePreview extends Component<Props, State> {
 
     return (
       <div className={styles.container}>
-        {fixtureViewport && (
-          <Header
-            devices={devices}
-            fixtureViewport={fixtureViewport}
-            container={container}
-            scale={scale}
-            changeViewport={this.handleViewportChange}
-            setScale={this.handleScaleChange}
-          />
-        )}
+        <Header
+          devices={devices}
+          viewport={viewport}
+          container={container}
+          scale={scale}
+          changeViewport={this.handleViewportChange}
+          setScale={this.handleScaleChange}
+        />
         <div
           key="preview"
           className={styles.outerWrapper}

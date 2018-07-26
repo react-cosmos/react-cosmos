@@ -4,10 +4,16 @@ import React from 'react';
 import { Slot } from 'react-plugin';
 import { UiContext } from '../../../context';
 import { ResponsivePreview } from './ResponsivePreview';
-import { storeViewportInBrowserHistory } from '../shared';
+import {
+  getPluginState,
+  setPluginState,
+  getFixtureViewport,
+  storeViewportInBrowserHistory
+} from '../shared';
 
 import type { Node } from 'react';
 import type { UiContextParams } from '../../../context';
+import type { Viewport } from '../types';
 
 type Props = {
   children: Node
@@ -17,24 +23,36 @@ export function PreviewSlot({ children }: Props) {
   return (
     <Slot name="preview">
       <UiContext.Consumer>
-        {({ options, state, onFixtureEdit }: UiContextParams) => {
+        {(uiContext: UiContextParams) => {
+          const { options, state, editFixture } = uiContext;
+
           if (options.platform !== 'web') {
             return children;
           }
 
           const { responsiveDevices } = options;
-          const { fixtureBody } = state;
+          const pluginState = getPluginState(uiContext);
+          const fixtureViewport = getFixtureViewport(uiContext);
 
           // TODO: Remove "|| []"
           return (
             <ResponsivePreview
               devices={responsiveDevices || []}
-              fixtureViewport={fixtureBody.viewport}
-              onViewportChange={viewport => {
-                onFixtureEdit({
-                  ...fixtureBody,
+              pluginState={pluginState}
+              fixtureViewport={fixtureViewport}
+              onViewportChange={(viewport: Viewport) => {
+                editFixture({
+                  ...state.fixtureBody,
                   viewport
                 });
+
+                setPluginState(
+                  uiContext,
+                  pluginState.enabled
+                    ? { enabled: true, viewport }
+                    : { enabled: false, viewport }
+                );
+
                 storeViewportInBrowserHistory(viewport);
               }}
             >
