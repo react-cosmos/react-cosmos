@@ -104,11 +104,7 @@ export class Preview extends Component<Props, State> {
     if (!container || !viewport) {
       return (
         <div className={styles.container}>
-          <div
-            key="preview"
-            ref={this.handleContainerRef}
-            className={styles.outerWrapper}
-          >
+          <div key="preview" ref={this.handleContainerRef}>
             <div>
               <div>{children}</div>
             </div>
