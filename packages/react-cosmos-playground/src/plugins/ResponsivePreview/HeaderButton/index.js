@@ -1,9 +1,7 @@
 // @flow
 
 import React, { Component, Fragment } from 'react';
-import { Slot } from 'react-plugin';
 import classNames from 'classnames';
-import { UiContext } from '../../../context';
 import { ResponsiveIcon } from '../../../components/SvgIcon';
 import {
   getPluginState,
@@ -17,27 +15,11 @@ import type { Node } from 'react';
 import type { UiContextParams } from '../../../context';
 
 type Props = {
-  children: Node
-};
-
-export function HeaderButtonsSlot({ children }: Props) {
-  return (
-    <Slot name="header-buttons">
-      <UiContext.Consumer>
-        {(uiContext: UiContextParams) => (
-          <HeaderButton uiContext={uiContext}>{children}</HeaderButton>
-        )}
-      </UiContext.Consumer>
-    </Slot>
-  );
-}
-
-type HeaderButtonProps = {
   children: Node,
   uiContext: UiContextParams
 };
 
-class HeaderButton extends Component<HeaderButtonProps> {
+export class HeaderButton extends Component<Props> {
   handleButtonClick = async () => {
     const { uiContext } = this.props;
     const { state, editFixture } = this.props.uiContext;

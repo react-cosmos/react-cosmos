@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 import styles from './index.less';
 
-import type { Viewport } from '../../../types';
+import type { Viewport } from '../../types';
 
 type Props = {
   label: string,

@@ -7,7 +7,7 @@ import { CustomButton } from './CustomButton';
 import { ScaleButton } from './ScaleButton';
 import styles from './index.less';
 
-import type { Devices, Viewport } from '../../../types';
+import type { Devices, Viewport } from '../../types';
 
 type Props = {
   devices: Devices,

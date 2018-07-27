@@ -2,7 +2,7 @@
 
 import React from 'react';
 import classNames from 'classnames';
-import { ResponsiveScaleIcon } from '../../../../../components/SvgIcon';
+import { ResponsiveScaleIcon } from '../../../../components/SvgIcon';
 import styles from './index.less';
 
 type Props = {
