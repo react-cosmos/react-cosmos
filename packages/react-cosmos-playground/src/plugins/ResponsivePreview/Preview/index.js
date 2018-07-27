@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import { isEqual } from 'lodash';
 import { Header } from './Header';
-import classNames from 'classnames';
 import {
   getPluginConfig,
   getPluginState,
