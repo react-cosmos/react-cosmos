@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import { isEqual } from 'lodash';
 import { Header } from './Header';
-import classNames from 'classnames';
 import {
   getPluginConfig,
   getPluginState,
@@ -137,10 +136,6 @@ export class Preview extends Component<Props, State> {
       height: scaledHeight + 2 * BORDER_WIDTH
     };
 
-    const innerWrapperClassName = classNames(
-      styles.innerWrapper,
-      styles.checkerboard
-    );
     const innerWrapperStyle = {
       borderWidth: BORDER_WIDTH,
       width: width + 2 * BORDER_WIDTH,
@@ -165,7 +160,7 @@ export class Preview extends Component<Props, State> {
           style={outerWrapperStyle}
         >
           <div style={middleWrapperStyle}>
-            <div className={innerWrapperClassName} style={innerWrapperStyle}>
+            <div className={styles.innerWrapper} style={innerWrapperStyle}>
               {children}
             </div>
           </div>

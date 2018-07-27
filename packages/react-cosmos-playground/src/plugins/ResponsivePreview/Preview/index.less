@@ -28,27 +28,28 @@
   border-color: fade(@left-nav-bgcolor, 50%);
   border-style: dashed;
   transform-origin: 0% 0%;
-}
 
-.checkerboard {
-  // Checkerboard effect on background
-  background-color: #fff;
-  background-image: linear-gradient(
-      45deg,
-      @checkerboard-color 25%,
-      transparent 25%,
-      transparent 75%,
-      @checkerboard-color 75%,
-      @checkerboard-color 100%
-    ),
-    linear-gradient(
-      45deg,
-      @checkerboard-color 25%,
-      transparent 25%,
-      transparent 75%,
-      @checkerboard-color 75%,
-      @checkerboard-color 100%
-    );
-  background-size: 2 * @checkerboard-square-size 2 * @checkerboard-square-size;
-  background-position: 0 0, @checkerboard-square-size @checkerboard-square-size;
+  > iframe {
+    background-color: #fff;
+    // Checkerboard effect on background
+    background-image: linear-gradient(
+        45deg,
+        @checkerboard-color 25%,
+        transparent 25%,
+        transparent 75%,
+        @checkerboard-color 75%,
+        @checkerboard-color 100%
+      ),
+      linear-gradient(
+        45deg,
+        @checkerboard-color 25%,
+        transparent 25%,
+        transparent 75%,
+        @checkerboard-color 75%,
+        @checkerboard-color 100%
+      );
+    background-size: 2 * @checkerboard-square-size 2 * @checkerboard-square-size;
+    background-position: 0 0,
+      @checkerboard-square-size @checkerboard-square-size;
+  }
 }
