@@ -3,6 +3,23 @@
 import until from 'async-until';
 
 import type { ComponentRef } from 'react-cosmos-flow/react';
+import type { PluginConfig } from 'react-cosmos-flow/config';
+import type { PlaygroundWebOpts } from 'react-cosmos-flow/playground';
+
+export const getOptions = ({
+  plugin = {}
+}: {
+  plugin: PluginConfig
+} = {}): PlaygroundWebOpts => {
+  return {
+    platform: 'web',
+    projectKey: 'test',
+    loaderUri: '/_loader-mock.html',
+    webpackConfigType: 'default',
+    deps: {},
+    plugin
+  };
+};
 
 export const routerProps = {
   goTo: (url: string) => console.log('go to', url),

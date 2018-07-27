@@ -7,12 +7,11 @@ import classNames from 'classnames';
 import styles from './index.less';
 
 import type { Node } from 'react';
-import type { ResponsiveDevices } from 'react-cosmos-flow/config';
-import type { Viewport, PluginState } from '../../types';
+import type { Devices, Viewport, PluginState } from '../../types';
 
 type Props = {
   children: Node,
-  devices: ResponsiveDevices,
+  devices: Devices,
   pluginState: PluginState,
   fixtureViewport: ?Viewport,
   onViewportChange: Viewport => any

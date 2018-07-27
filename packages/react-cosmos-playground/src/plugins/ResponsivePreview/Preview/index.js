@@ -5,6 +5,7 @@ import { Slot } from 'react-plugin';
 import { UiContext } from '../../../context';
 import { ResponsivePreview } from './ResponsivePreview';
 import {
+  getPluginConfig,
   getPluginState,
   setPluginState,
   getFixtureViewport,
@@ -30,14 +31,13 @@ export function PreviewSlot({ children }: Props) {
             return children;
           }
 
-          const { responsiveDevices } = options;
+          const { devices } = getPluginConfig(uiContext);
           const pluginState = getPluginState(uiContext);
           const fixtureViewport = getFixtureViewport(uiContext);
 
-          // TODO: Remove "|| []"
           return (
             <ResponsivePreview
-              devices={responsiveDevices || []}
+              devices={devices}
               pluginState={pluginState}
               fixtureViewport={fixtureViewport}
               onViewportChange={(viewport: Viewport) => {

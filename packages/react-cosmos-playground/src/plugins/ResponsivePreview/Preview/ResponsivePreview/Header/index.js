@@ -7,11 +7,10 @@ import { CustomButton } from './CustomButton';
 import { ScaleButton } from './ScaleButton';
 import styles from './index.less';
 
-import type { ResponsiveDevices } from 'react-cosmos-flow/config';
-import type { Viewport } from '../../../types';
+import type { Devices, Viewport } from '../../../types';
 
 type Props = {
-  devices: ResponsiveDevices,
+  devices: Devices,
   viewport: Viewport,
   container: Viewport,
   scale: boolean,
