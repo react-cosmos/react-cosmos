@@ -103,8 +103,12 @@ export class Preview extends Component<Props, State> {
     // The key to preserving the child iframe is the "preview" key.
     if (!container || !viewport) {
       return (
-        <div>
-          <div key="preview" ref={this.handleContainerRef}>
+        <div className={styles.container}>
+          <div
+            key="preview"
+            ref={this.handleContainerRef}
+            className={styles.outerWrapper}
+          >
             <div>
               <div>{children}</div>
             </div>
@@ -126,14 +130,13 @@ export class Preview extends Component<Props, State> {
     const scaledHeight = height * scaleFactor;
 
     const outerWrapperStyle = {
-      display: scale ? 'flex' : 'block',
+      justifyContent: scale || scaleWidth === 1 ? 'space-around' : 'flex-start',
+      alignItems: scale || scaleHeight === 1 ? 'center' : 'flex-start',
       padding: PADDING,
       overflow: scale ? 'hidden' : 'scroll'
     };
 
-    const middleWrapperClassName = '';
     const middleWrapperStyle = {
-      lineHeight: 0,
       width: scaledWidth + 2 * BORDER_WIDTH,
       height: scaledHeight + 2 * BORDER_WIDTH
     };
@@ -146,8 +149,6 @@ export class Preview extends Component<Props, State> {
       borderWidth: BORDER_WIDTH,
       width: width + 2 * BORDER_WIDTH,
       height: height + 2 * BORDER_WIDTH,
-      alignSelf: scaleHeight === 1 ? 'center' : 'flex-start',
-      justifySelf: scaleWidth === 1 ? 'center' : 'flex-start',
       transform: `scale( ${scaleFactor} )`
     };
 
@@ -167,7 +168,7 @@ export class Preview extends Component<Props, State> {
           ref={this.handleContainerRef}
           style={outerWrapperStyle}
         >
-          <div className={middleWrapperClassName} style={middleWrapperStyle}>
+          <div style={middleWrapperStyle}>
             <div className={innerWrapperClassName} style={innerWrapperStyle}>
               {children}
             </div>
