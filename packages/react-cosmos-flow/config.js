@@ -7,6 +7,8 @@ export type ExcludePatterns = ExcludePattern | Array<ExcludePattern>;
 type WebpackConfig = Object;
 type WebpackConfigOverride = (WebpackConfig, { env: string }) => WebpackConfig;
 
+export type PluginConfig = { [prop: string]: mixed };
+
 export type Config = {
   rootPath: string,
   fileMatch: Array<string>,
@@ -23,10 +25,10 @@ export type Config = {
   publicPath?: string,
   publicUrl: string,
   containerQuerySelector?: string,
-  responsiveDevices: Array<{| label: string, width: number, height: number |}>,
   httpProxy?: {| context: string, target: string |},
   watchDirs: Array<string>,
   modulesPath: string,
+  plugin: PluginConfig,
   // Deprecated
   proxies?: Array<string>,
   componentPaths: Array<string>,

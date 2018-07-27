@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './demo.less';
+import styles from './Demo.less';
 
 const Demo = () => (
   <div style={{ fontSize: 50, backgroundColor: 'deepskyblue' }}>

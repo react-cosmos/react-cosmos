@@ -6,7 +6,9 @@ import omitBy from 'lodash.omitby';
 import localForage from 'localforage';
 import io from 'socket.io-client';
 import { uri } from 'react-querystring-router';
-import { HomeIcon, FullScreenIcon, CodeIcon, ResponsiveIcon } from '../SvgIcon';
+import { Slot } from 'react-plugin';
+import { UiContext } from '../../context';
+import { HomeIcon, FullScreenIcon, CodeIcon } from '../SvgIcon';
 import StarryBg from '../StarryBg';
 import FixtureList from '../FixtureList';
 import WelcomeScreen from '../screens/WelcomeScreen';
@@ -15,10 +17,10 @@ import WebIndexErrorScreen from '../screens/WebIndexErrorScreen';
 import WebBundlingScreen from '../screens/WebBundlingScreen';
 import { NativePendingScreen } from '../screens/NativePendingScreen';
 import { NativeSelectedScreen } from '../screens/NativeSelectedScreen';
+import { FadeIn } from '../screens/shared/FadeIn';
 import DragHandle from '../DragHandle';
 import FixtureEditor from '../FixtureEditor';
 import styles from './index.less';
-import ResponsiveLoader from '../ResponsiveLoader';
 
 import type { FixtureNames } from 'react-cosmos-flow/module';
 import type {
@@ -31,9 +33,9 @@ import type {
 import type {
   PlaygroundOpts,
   PlaygroundWebOpts,
-  PlaygroundNativeOpts,
-  ResponsiveDevices
+  PlaygroundNativeOpts
 } from 'react-cosmos-flow/playground';
+import type { UrlParams } from '../../context';
 
 export const LEFT_NAV_SIZE = '__cosmos__left-nav-size';
 export const FIXTURE_EDITOR_PANE_SIZE = '__cosmos__fixture-editor-pane-size';
@@ -49,52 +51,50 @@ type LoaderStatus =
 
 type Props = {
   router: Object,
-  options: PlaygroundOpts,
-  component?: string,
-  fixture?: string,
-  editor?: boolean,
-  fullScreen?: boolean,
-  responsive?: boolean
-};
+  options: PlaygroundOpts
+} & UrlParams;
 
-type State = {
+export type State = {
   loaderStatus: LoaderStatus,
   isDragging: boolean,
   leftNavSize: number,
   fixtureEditorPaneSize: number,
   orientation: 'landscape' | 'portrait',
+  fixtures: FixtureNames,
+  fixtureLoaded: boolean,
   fixtureBody: Object,
-  fixtures: FixtureNames
+  plugin: { [prop: string]: mixed }
 };
 
 let socket;
 
+export const defaultState = {
+  loaderStatus: 'PENDING',
+  isDragging: false,
+  leftNavSize: 250,
+  fixtureEditorPaneSize: 250,
+  orientation: 'landscape',
+  fixtures: {},
+  fixtureLoaded: false,
+  fixtureBody: {},
+  plugin: {}
+};
+
 export default class ComponentPlayground extends Component<Props, State> {
   static defaultProps = {
     editor: false,
-    fullScreen: false,
-    responsive: false
+    fullScreen: false
   };
 
   // Exclude params with default values
   static getCleanUrlParams = (params: {}) =>
     omitBy(params, (val, key) => ComponentPlayground.defaultProps[key] === val);
 
-  contentNode: ?HTMLElement;
-
-  loaderFrame: ?window;
+  contentEl: ?HTMLElement;
+  previewIframeEl: ?window;
 
   unmounted: boolean = false;
-
-  state = {
-    loaderStatus: 'PENDING',
-    isDragging: false,
-    leftNavSize: 250,
-    fixtureEditorPaneSize: 250,
-    orientation: 'landscape',
-    fixtureBody: {},
-    fixtures: {}
-  };
+  state = defaultState;
 
   componentDidMount() {
     const { options } = this.props;
@@ -132,17 +132,18 @@ export default class ComponentPlayground extends Component<Props, State> {
       const fixtureChanged =
         component !== this.props.component || fixture !== this.props.fixture;
 
-      if (
-        fixtureChanged &&
-        component &&
-        fixture &&
-        fixtureExists(fixtures, component, fixture)
-      ) {
-        this.postMessage({
-          type: 'fixtureSelect',
-          component,
-          fixture
-        });
+      if (fixtureChanged) {
+        if (
+          component &&
+          fixture &&
+          fixtureExists(fixtures, component, fixture)
+        ) {
+          this.selectFixture(component, fixture);
+        } else {
+          // Keep clean state when no fixture is selected. Helps plugins get the
+          // right cue.
+          this.clearFixtureState();
+        }
       }
     }
   }
@@ -188,11 +189,7 @@ export default class ComponentPlayground extends Component<Props, State> {
 
     const { component, fixture } = this.props;
     if (component && fixture && fixtureExists(fixtures, component, fixture)) {
-      this.postMessage({
-        type: 'fixtureSelect',
-        component,
-        fixture
-      });
+      this.selectFixture(component, fixture);
     }
   }
 
@@ -204,6 +201,7 @@ export default class ComponentPlayground extends Component<Props, State> {
 
   onFixtureLoad({ fixtureBody }: FixtureLoadMessage) {
     this.setState({
+      fixtureLoaded: true,
       fixtureBody
     });
   }
@@ -222,13 +220,11 @@ export default class ComponentPlayground extends Component<Props, State> {
     if (location === window.location.href) {
       const { component, fixture } = this.props;
       if (component && fixture) {
-        this.postMessage({
-          type: 'fixtureSelect',
-          component,
-          fixture
-        });
+        // Reset already selected fixture
+        this.selectFixture(component, fixture);
       }
     } else {
+      // Go to new URL and rely on componentWillReceiveProps flow
       this.props.router.goTo(location);
     }
   };
@@ -262,7 +258,7 @@ export default class ComponentPlayground extends Component<Props, State> {
     this.setState({ isDragging: false });
   };
 
-  onFixtureEditorChange = (fixtureBody: Object) => {
+  onFixtureEdit = (fixtureBody: Object) => {
     this.setState({
       fixtureBody
     });
@@ -273,12 +269,21 @@ export default class ComponentPlayground extends Component<Props, State> {
     });
   };
 
+  handleSetPluginState = (partialState: Object) => {
+    this.setState({
+      plugin: {
+        ...this.state.plugin,
+        ...partialState
+      }
+    });
+  };
+
   handleContentRef = (node: ?HTMLElement) => {
-    this.contentNode = node;
+    this.contentEl = node;
   };
 
   handleIframeRef = (node: ?window) => {
-    this.loaderFrame = node;
+    this.previewIframeEl = node;
   };
 
   async checkLoaderIframeStatus(loaderUri: string) {
@@ -339,11 +344,11 @@ export default class ComponentPlayground extends Component<Props, State> {
   };
 
   updateContentOrientation(cb?: Function) {
-    if (!this.contentNode) {
+    if (!this.contentEl) {
       return;
     }
 
-    const { offsetHeight, offsetWidth } = this.contentNode;
+    const { offsetHeight, offsetWidth } = this.contentEl;
     const state = {
       orientation: offsetHeight > offsetWidth ? 'portrait' : 'landscape'
     };
@@ -352,7 +357,30 @@ export default class ComponentPlayground extends Component<Props, State> {
   }
 
   render() {
-    return <div className={styles.root}>{this.renderInner()}</div>;
+    const {
+      options,
+      component,
+      fixture,
+      editor,
+      fullScreen,
+      router
+    } = this.props;
+
+    return (
+      <UiContext.Provider
+        value={{
+          options,
+          urlParams: { component, fixture, editor, fullScreen },
+          state: this.state,
+          setPluginState: this.handleSetPluginState,
+          editFixture: this.onFixtureEdit,
+          router,
+          getCleanUrlParams: ComponentPlayground.getCleanUrlParams
+        }}
+      >
+        <div className={styles.root}>{this.renderInner()}</div>
+      </UiContext.Provider>
+    );
   }
 
   renderInner() {
@@ -414,12 +442,14 @@ export default class ComponentPlayground extends Component<Props, State> {
   }) {
     const { component, fixture } = this.props;
     const { loaderStatus, fixtures } = this.state;
-    const { loaderUri, responsiveDevices } = options;
+    const { loaderUri } = options;
 
     if (loaderStatus === 'PENDING') {
       return (
         <StarryBg>
-          <WebBundlingScreen />
+          <FadeIn>
+            <WebBundlingScreen delay={2} />
+          </FadeIn>
         </StarryBg>
       );
     }
@@ -427,7 +457,9 @@ export default class ComponentPlayground extends Component<Props, State> {
     if (loaderStatus === 'WEB_INDEX_ERROR') {
       return (
         <StarryBg>
-          <WebIndexErrorScreen options={options} />
+          <FadeIn>
+            <WebIndexErrorScreen options={options} />
+          </FadeIn>
         </StarryBg>
       );
     }
@@ -440,7 +472,6 @@ export default class ComponentPlayground extends Component<Props, State> {
           <StarryBg />
           {this.renderLoader({
             loaderUri,
-            responsiveDevices,
             showLoader: false
           })}
         </Fragment>
@@ -454,7 +485,6 @@ export default class ComponentPlayground extends Component<Props, State> {
         <Fragment>
           {this.renderLoader({
             loaderUri,
-            responsiveDevices,
             showLoader: true
           })}
         </Fragment>
@@ -473,11 +503,12 @@ export default class ComponentPlayground extends Component<Props, State> {
       return (
         <Fragment>
           <StarryBg>
-            <WelcomeScreen fixtures={fixtures} />
+            <FadeIn>
+              <WelcomeScreen fixtures={fixtures} />
+            </FadeIn>
           </StarryBg>
           {this.renderLoader({
             loaderUri,
-            responsiveDevices,
             showLoader: false
           })}
         </Fragment>
@@ -490,11 +521,12 @@ export default class ComponentPlayground extends Component<Props, State> {
       return (
         <Fragment>
           <StarryBg>
-            <MissingScreen componentName={component} fixtureName={fixture} />
+            <FadeIn>
+              <MissingScreen componentName={component} fixtureName={fixture} />
+            </FadeIn>
           </StarryBg>
           {this.renderLoader({
             loaderUri,
-            responsiveDevices,
             showLoader: false
           })}
         </Fragment>
@@ -504,9 +536,7 @@ export default class ComponentPlayground extends Component<Props, State> {
     return (
       // Warning: Ensure <Fragment><Loader> return value to preserve loader
       // instance between renders
-      <Fragment>
-        {this.renderLoader({ loaderUri, responsiveDevices, showLoader: true })}
-      </Fragment>
+      <Fragment>{this.renderLoader({ loaderUri, showLoader: true })}</Fragment>
     );
   }
 
@@ -524,7 +554,9 @@ export default class ComponentPlayground extends Component<Props, State> {
     if (loaderStatus === 'PENDING') {
       return (
         <StarryBg>
-          <NativePendingScreen />
+          <FadeIn>
+            <NativePendingScreen />
+          </FadeIn>
         </StarryBg>
       );
     }
@@ -538,7 +570,9 @@ export default class ComponentPlayground extends Component<Props, State> {
     if (!isFixtureSelected) {
       return (
         <StarryBg>
-          <WelcomeScreen fixtures={fixtures} />
+          <FadeIn>
+            <WelcomeScreen fixtures={fixtures} />
+          </FadeIn>
         </StarryBg>
       );
     }
@@ -546,14 +580,18 @@ export default class ComponentPlayground extends Component<Props, State> {
     if (!isFixtureSelectedFound) {
       return (
         <StarryBg>
-          <MissingScreen componentName={component} fixtureName={fixture} />
+          <FadeIn>
+            <MissingScreen componentName={component} fixtureName={fixture} />
+          </FadeIn>
         </StarryBg>
       );
     }
 
     return (
       <StarryBg>
-        <NativeSelectedScreen />
+        <FadeIn>
+          <NativeSelectedScreen />
+        </FadeIn>
       </StarryBg>
     );
   }
@@ -566,29 +604,16 @@ export default class ComponentPlayground extends Component<Props, State> {
       fixture,
       editor,
       fullScreen,
-      responsive,
       options
     } = this.props;
-    const { fixtures, fixtureBody, leftNavSize } = this.state;
+    const { fixtures, leftNavSize } = this.state;
 
     const urlParams = getCleanUrlParams({
       component,
       fixture,
       editor,
-      fullScreen,
-      // We don't persist the `forceHide` value when changing fixturess
-      responsive: responsive === 'forceHide' ? false : responsive
+      fullScreen
     });
-
-    const showResponsiveControls =
-      responsive === 'forceHide' ? false : fixtureBody.viewport || responsive;
-
-    const nextResponsive =
-      responsive === 'forceHide'
-        ? true
-        : fixtureBody.viewport
-          ? 'forceHide'
-          : !responsive;
 
     const isFixtureSelected = Boolean(fixture);
     const homeClassNames = classNames(styles.button, {
@@ -597,15 +622,12 @@ export default class ComponentPlayground extends Component<Props, State> {
     const fixtureEditorClassNames = classNames(styles.button, {
       [styles.selectedButton]: editor
     });
-    const responsiveClassNames = classNames(styles.button, {
-      [styles.selectedButton]: showResponsiveControls
-    });
+
     const fixtureEditorUrl = uri.stringifyParams(
       getCleanUrlParams({
         component,
         fixture,
-        editor: !editor,
-        responsive
+        editor: !editor
       })
     );
     const fullScreenUrl = uri.stringifyParams({
@@ -614,14 +636,6 @@ export default class ComponentPlayground extends Component<Props, State> {
       fullScreen: true
     });
 
-    const responsiveUrl = uri.stringifyParams(
-      getCleanUrlParams({
-        component,
-        fixture,
-        editor,
-        responsive: nextResponsive
-      })
-    );
     return (
       <div
         key="leftNav"
@@ -653,16 +667,7 @@ export default class ComponentPlayground extends Component<Props, State> {
                   <CodeIcon />
                 </a>
               )}
-              {isFixtureSelected && (
-                <a
-                  ref="responsiveButton"
-                  className={responsiveClassNames}
-                  href={responsiveUrl}
-                  onClick={router.routeLink}
-                >
-                  <ResponsiveIcon />
-                </a>
-              )}
+              <Slot name="header-buttons" />
               {isFixtureSelected && (
                 <a
                   ref="fullScreenButton"
@@ -700,10 +705,7 @@ export default class ComponentPlayground extends Component<Props, State> {
     return (
       <div className={styles.fixtureEditorPane} style={style}>
         <div className={styles.fixtureEditor}>
-          <FixtureEditor
-            value={fixtureBody}
-            onChange={this.onFixtureEditorChange}
-          />
+          <FixtureEditor value={fixtureBody} onChange={this.onFixtureEdit} />
         </div>
         <DragHandle
           vertical={orientation === 'portrait'}
@@ -717,45 +719,25 @@ export default class ComponentPlayground extends Component<Props, State> {
 
   renderLoader({
     loaderUri,
-    responsiveDevices,
     showLoader
   }: {
     loaderUri: string,
-    responsiveDevices: ?ResponsiveDevices,
     showLoader: boolean
   }) {
-    const { responsive } = this.props;
-    const { isDragging, fixtureBody } = this.state;
-    const loaderStyle = {
+    const { isDragging } = this.state;
+    const previewStyle = {
       display: showLoader ? 'flex' : 'none'
     };
-    const loaderFrameOverlayStyle = {
+    const previewOverlayStyle = {
       display: isDragging ? 'block' : 'none'
     };
-    const showResponsiveControls =
-      responsive === 'forceHide'
-        ? false
-        : fixtureBody.viewport || responsive || false;
 
     return (
-      <div key="loader" className={styles.loaderFrame} style={loaderStyle}>
-        <ResponsiveLoader
-          showResponsiveControls={showResponsiveControls}
-          inputRef={this.handleIframeRef}
-          src={loaderUri}
-          devices={responsiveDevices || []}
-          onFixtureUpdate={updatedFields =>
-            this.onFixtureEditorChange({
-              ...fixtureBody,
-              ...updatedFields
-            })
-          }
-          fixture={fixtureBody.name ? fixtureBody : null}
-        />
-        <div
-          className={styles.loaderFrameOverlay}
-          style={loaderFrameOverlayStyle}
-        />
+      <div key="preview" className={styles.preview} style={previewStyle}>
+        <Slot name="preview">
+          <iframe ref={this.handleIframeRef} src={loaderUri} frameBorder={0} />
+        </Slot>
+        <div className={styles.previewOverlay} style={previewOverlayStyle} />
       </div>
     );
   }
@@ -763,12 +745,37 @@ export default class ComponentPlayground extends Component<Props, State> {
   postMessage(data: LoaderMessage) {
     // TODO: Log messages using debug package
     if (this.props.options.platform === 'web') {
-      if (this.loaderFrame) {
-        this.loaderFrame.contentWindow.postMessage(data, '*');
+      if (this.previewIframeEl) {
+        this.previewIframeEl.contentWindow.postMessage(data, '*');
       }
     } else {
       socket.emit('cosmos-cmd', data);
     }
+  }
+
+  clearFixtureState() {
+    // TODO: Message Loader to unselect current fixture
+    // this.postMessage({
+    //   type: 'fixtureClear'
+    // });
+
+    this.setState({
+      fixtureLoaded: false
+      // Allow plugins to use attributes from previous fixtureBody until next
+      // fixture loads. Together with fixtureLoaded flag, invalidated states
+      // with data from previous fixture can be created.
+      // fixtureBody: {}
+    });
+  }
+
+  selectFixture(component: string, fixture: string) {
+    this.clearFixtureState();
+
+    this.postMessage({
+      type: 'fixtureSelect',
+      component,
+      fixture
+    });
   }
 }
 

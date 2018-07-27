@@ -5,7 +5,7 @@ exports[`WebBundlingScreen renders correctly 1`] = `
   className="root"
 >
   <div
-    className="inner innerDelayed"
+    className="inner"
   >
     <img
       src={Object {}}
@@ -18,7 +18,7 @@ exports[`WebBundlingScreen renders correctly 1`] = `
       </p>
       <p>
         <em>
-          Everyday I'm bundling, ev-everyday I'm bundling 🎵
+          Everyday I'm bundling, ev-everyday I'm bundling...
         </em>
       </p>
     </div>

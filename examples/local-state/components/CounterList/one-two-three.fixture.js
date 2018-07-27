@@ -15,5 +15,10 @@ export default {
         value: 3
       }
     }
+  },
+
+  viewport: {
+    width: 375,
+    height: 667
   }
 };

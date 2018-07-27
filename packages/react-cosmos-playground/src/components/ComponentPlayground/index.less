@@ -55,7 +55,11 @@
   align-items: center;
   width: @header-button-size;
   height: @header-button-size;
+  background: transparent;
   border-radius: 100%;
+  border: none;
+  cursor: pointer;
+  outline: none;
 
   &:hover {
     background-color: @left-nav-bgcolor-selected;
@@ -124,7 +128,7 @@
 // The overlay sits on top of the loader iframe while the user is dragging the
 // panes, because otherwise the drag events would be discontinued when the
 // mouse cursor goes over the iframe
-.loaderFrameOverlay {
+.previewOverlay {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -132,10 +136,40 @@
   right: 0;
 }
 
-.loaderFrame {
+.preview {
   position: absolute;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  display: flex;
+  // Checkerboard effect on background
+  background-color: #fff;
+  background-image: linear-gradient(
+      45deg,
+      @checkerboard-color 25%,
+      transparent 25%,
+      transparent 75%,
+      @checkerboard-color 75%,
+      @checkerboard-color 100%
+    ),
+    linear-gradient(
+      45deg,
+      @checkerboard-color 25%,
+      transparent 25%,
+      transparent 75%,
+      @checkerboard-color 75%,
+      @checkerboard-color 100%
+    );
+  background-size: 2 * @checkerboard-square-size 2 * @checkerboard-square-size;
+  background-position: 0 0, @checkerboard-square-size @checkerboard-square-size;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
 }

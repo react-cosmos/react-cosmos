@@ -18,7 +18,8 @@ const playgroundOpts = {
   projectKey: '/fake-project-key/',
   loaderUri: '/fake-loader-uri/',
   webpackConfigType: 'custom',
-  deps: {}
+  deps: {},
+  plugin: {}
 };
 
 describe('Playground mount', () => {

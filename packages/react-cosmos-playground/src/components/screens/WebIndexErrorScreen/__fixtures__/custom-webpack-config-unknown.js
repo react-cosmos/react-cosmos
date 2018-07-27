@@ -2,19 +2,15 @@
 
 import { createFixture } from 'react-cosmos-flow/fixture';
 import WebIndexErrorScreen from '..';
+import { getOptions } from './_shared';
 
 export default createFixture({
   component: WebIndexErrorScreen,
 
   props: {
-    options: {
-      platform: 'web',
-      projectKey: 'foo',
-      loaderUri: '/foo',
+    options: getOptions({
       webpackConfigType: 'custom',
-      deps: {
-        'html-webpack-plugin': true
-      }
-    }
+      htmlPlugin: true
+    })
   }
 });

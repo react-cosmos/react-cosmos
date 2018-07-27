@@ -1,16 +1,11 @@
 import React from 'react';
-import classNames from 'classnames';
 import CosmosImg from '../../../../static/cosmos.png';
 import styles from './index.less';
 
-const DisplayScreen = ({ children, delayed = false }) => {
-  const innerClasses = classNames(styles.inner, {
-    [styles.innerDelayed]: delayed
-  });
-
+const DisplayScreen = ({ children }) => {
   return (
     <div className={styles.root}>
-      <div className={innerClasses}>
+      <div className={styles.inner}>
         <img src={CosmosImg} />
         <div>{children}</div>
       </div>

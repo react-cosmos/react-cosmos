@@ -1,31 +1,45 @@
-import ComponentPlayground from '..';
-import { routerProps, init } from './_shared';
+// @flow
 
-export default {
+import { createFixture } from 'react-cosmos-flow/fixture';
+import ComponentPlayground from '..';
+import { getOptions, routerProps, init } from './_shared';
+
+export default createFixture({
   component: ComponentPlayground,
 
   props: {
-    options: {
-      platform: 'web',
-      loaderUri: '/mock/loader/index.html',
-      projectKey: 'test',
-      responsiveDevices: [
-        { label: 'iPhone 5', width: 320, height: 568 },
-        { label: 'iPhone 6', width: 375, height: 667 }
-      ]
-    },
+    options: getOptions({
+      plugin: {
+        responsivePreview: {
+          devices: [
+            { label: 'iPhone 5', width: 320, height: 568 },
+            { label: 'iPhone 6', width: 375, height: 667 },
+            { label: 'iPhone 6 Plus', width: 414, height: 736 }
+          ]
+        }
+      }
+    }),
     router: routerProps,
     component: 'ComponentA',
     fixture: 'foo',
-    responsive: true
+    editor: false
+  },
+
+  state: {
+    fixtureBody: {
+      viewport: {
+        width: 375,
+        height: 667
+      }
+    }
   },
 
   fetch: [
     {
-      matcher: 'end:/mock/loader/index.html',
+      matcher: 'end:_loader-mock.html',
       response: 200
     }
   ],
 
   init
-};
+});

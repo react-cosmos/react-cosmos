@@ -39,10 +39,11 @@ export async function startServer() {
   };
 }
 
-function getPlaygroundOpts({ rootPath }) {
+function getPlaygroundOpts({ rootPath, plugin }) {
   return {
     platform: 'native',
-    projectKey: rootPath
+    projectKey: rootPath,
+    plugin
   };
 }
 
