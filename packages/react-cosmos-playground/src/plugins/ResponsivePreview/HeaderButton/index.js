@@ -20,6 +20,11 @@ type Props = {
 };
 
 export class HeaderButton extends Component<Props> {
+  static defaultProps = {
+    // React Nodes can be undefined, but render methods cannot return undefined.
+    children: null
+  };
+
   handleButtonClick = async () => {
     const { uiContext } = this.props;
     const { state, editFixture } = this.props.uiContext;

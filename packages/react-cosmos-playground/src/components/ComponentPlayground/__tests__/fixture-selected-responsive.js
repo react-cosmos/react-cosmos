@@ -54,7 +54,7 @@ describe('CP with fixture with responsive viewport', () => {
   });
 
   it('renders header button', () => {
-    // There's no better way that to check for the icon atm
+    // There's no better way than to check for the icon atm
     expect(getWrapper(ResponsiveIcon)).toHaveLength(1);
   });
 });
