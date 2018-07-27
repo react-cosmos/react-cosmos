@@ -2,6 +2,6 @@ import Demo from '../Demo';
 
 export default {
   component: Demo,
-  name: 'Demo - Default',
+  name: 'No viewport',
   props: {}
 };
