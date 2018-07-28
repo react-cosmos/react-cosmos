@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-state-proxy",
-  "version": "4.6.0-4",
+  "version": "4.6.0-5",
   "description": "Mock React component state via fixtures",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-state-proxy",
   "license": "MIT",
@@ -9,7 +9,7 @@
     "lodash.isempty": "^4.4.0",
     "lodash.isequal": "^4.4.0",
     "lodash.omit": "^4.5.0",
-    "react-cosmos-shared": "^4.6.0-4"
+    "react-cosmos-shared": "^4.6.0-5"
   },
   "xo": false
 }

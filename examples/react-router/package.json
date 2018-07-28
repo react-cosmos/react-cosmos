@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-react-router-example",
-  "version": "4.6.0-4",
+  "version": "4.6.0-5",
   "description": "Example of React Router proxy integration",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/react-router",
   "license": "MIT",
@@ -8,8 +8,8 @@
     "start": "babel-node ../../packages/react-cosmos/bin/cosmos.js"
   },
   "dependencies": {
-    "react-cosmos": "^4.6.0-4",
-    "react-cosmos-router-proxy": "^4.6.0-4",
+    "react-cosmos": "^4.6.0-5",
+    "react-cosmos-router-proxy": "^4.6.0-5",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1"
   },

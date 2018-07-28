@@ -1,12 +1,12 @@
 {
   "name": "react-cosmos-config",
-  "version": "4.6.0-4",
+  "version": "4.6.0-5",
   "description": "Reads user cosmos config and extends defaults",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-config",
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
-    "react-cosmos-shared": "^4.6.0-4",
+    "react-cosmos-shared": "^4.6.0-5",
     "yargs": "^12.0.1"
   },
   "devDependencies": {
