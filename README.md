@@ -609,13 +609,14 @@ export default {
     authorId: 123
   },
   apollo: {
-    resolveWith: ({ cache, variables, fixture }) => Promise.resolve({
-      author: {
-        __typename: 'Author',
-        id: variables.authorId,
-        firstName: variables.authorId === 123 ? 'Ovidiu' : 'Xavier'
-      }
-    })
+    resolveWith: ({ cache, variables, fixture }) =>
+      Promise.resolve({
+        author: {
+          __typename: 'Author',
+          id: variables.authorId,
+          firstName: variables.authorId === 123 ? 'Ovidiu' : 'Xavier'
+        }
+      })
   }
 };
 ```
@@ -1251,7 +1252,7 @@ runTests({
 
 ### Beta: React Native
 
-> Install `react-cosmos@next` to try out Cosmos with React Native
+> Follow these steps once you have `react-cosmos` installed.
 
 Add package.json script
 
@@ -1280,7 +1281,7 @@ Start your native app's dev server, and in another terminal run `npm run cosmos-
 Next steps:
 
 - Add auto-generated file `cosmos.modules.js` to gitignore
-- Split App.js into `App.cosmos.js` and `App.main.js` — Check out [the CRNA example](https://github.com/react-cosmos/react-cosmos/tree/11d8c4d7e1e308e0d439c5e1bb497c09cb22e836/examples/create-react-native-app) for inspiration
+- Split App.js into `App.cosmos.js` and `App.main.js` — Check out [the CRNA example](https://github.com/react-cosmos/react-cosmos/tree/master/examples/create-react-native-app) for inspiration
 - [Report an issue](https://github.com/react-cosmos/react-cosmos/issues/new) or [share some feedback](https://join-react-cosmos.now.sh/)
 
 ### Experimental: Flow integration

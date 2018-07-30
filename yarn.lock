@@ -1167,6 +1167,10 @@
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@skidding/linked-list/-/linked-list-1.0.1.tgz#9138fc58830741c72af31ac5f4e4e70971be7e6c"
 
+"@skidding/linked-list@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@skidding/linked-list/-/linked-list-1.0.2.tgz#e3fc74a22a5f745d61a2baae1e396813014ef115"
+
 "@skidding/metro-bundler-config-yarn-workspaces@^1.0.5":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@skidding/metro-bundler-config-yarn-workspaces/-/metro-bundler-config-yarn-workspaces-1.0.5.tgz#592a48d4cead22f8c459443c031a4e804c25dd02"
@@ -11071,9 +11075,9 @@ prettier-bytes@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/prettier-bytes/-/prettier-bytes-1.0.4.tgz#994b02aa46f699c50b6257b5faaa7fe2557e62d6"
 
-prettier@1.13.7:
-  version "1.13.7"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.13.7.tgz#850f3b8af784a49a6ea2d2eaa7ed1428a34b7281"
+prettier@1.14.0:
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.14.0.tgz#847c235522035fd988100f1f43cf20a7d24f9372"
 
 prettier@^1.12.1:
   version "1.12.1"
@@ -11643,9 +11647,9 @@ react-native@^0.55.4:
     xmldoc "^0.4.0"
     yargs "^9.0.0"
 
-react-plugin@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/react-plugin/-/react-plugin-0.1.0.tgz#755f1a83cc8f53764d8b99ccb7a7dc1aa424c571"
+react-plugin@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-plugin/-/react-plugin-0.1.1.tgz#c95791dca61a1dc5643cba1443ad4d2f06aa1800"
   dependencies:
     "@skidding/linked-list" "^1.0.1"
     array-find-index "^1.0.2"
