@@ -1,13 +1,13 @@
 {
   "name": "react-cosmos-redux-proxy",
-  "version": "4.6.0-6",
+  "version": "4.6.0",
   "description": "A proxy to provide redux-related context to react-cosmos",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-redux-proxy",
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
     "lodash.omit": "^4.5.0",
-    "react-cosmos-shared": "^4.6.0-6",
+    "react-cosmos-shared": "^4.6.0",
     "redux": "^4.0.0"
   },
   "xo": false
