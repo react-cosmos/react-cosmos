@@ -1278,6 +1278,20 @@ export default class App extends Component {
 
 Start your native app's dev server, and in another terminal run `npm run cosmos-native` or `yarn cosmos-native` and go to [localhost:8989](http://localhost:8989) 🔥
 
+> Since *\_\_fixtures\_\_* dirs are [blacklisted by default in RN](https://github.com/facebook/react-native/blob/9176fc00b59d1a384008f26d72ba57a2a08e0726/local-cli/util/Config.js#L55-L57), **you may need to override the `getBlacklistRE` setting.**
+
+```js
+// rn-cli.config.js
+const blacklist = require('metro/src/blacklist');
+
+module.exports = {
+  getBlacklistRE() {
+    // __fixtures__ are blacklisted by default
+    return blacklist([]);
+  }
+};
+```
+
 Next steps:
 
 - Add auto-generated file `cosmos.modules.js` to gitignore
