@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-axios-example",
-  "version": "4.6.1",
+  "version": "4.6.2",
   "description": "Example of mocking Axios (XMLHttpRequest)",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/axios",
   "license": "MIT",
@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "react-cosmos": "^4.6.1",
+    "react-cosmos": "^4.6.2",
     "react-cosmos-xhr-proxy": "^4.6.1"
   },
   "xo": false,
