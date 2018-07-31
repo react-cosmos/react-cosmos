@@ -7,6 +7,7 @@ import { View, Text, NativeModules } from 'react-native';
 import io from 'socket.io-client';
 import parse from 'url-parse';
 import {
+  importModule,
   getNormalizedFixtureModules,
   getOldSchoolFixturesFromNewStyleComponents
 } from 'react-cosmos-shared';
@@ -18,12 +19,17 @@ import type { Modules, FixtureFile } from 'react-cosmos-flow/module';
 import type { Proxy } from 'react-cosmos-flow/proxy';
 import type { LoaderNativeOpts, LoaderMessage } from 'react-cosmos-flow/loader';
 
+type EsModule<DefaultExport> = {
+  __esModule: true,
+  default: DefaultExport
+};
+
 type Props = {
   options: LoaderNativeOpts,
   modules: {
     fixtureModules: Modules,
     fixtureFiles: Array<FixtureFile>,
-    proxies: Array<Proxy>
+    proxies: Array<Proxy> | EsModule<Array<Proxy>>
   }
 };
 
@@ -39,11 +45,15 @@ export class CosmosNativeLoader extends Component<Props, State> {
     element: null
   };
 
+  unmounted = false;
+
   componentDidMount() {
     this.initLoader();
   }
 
   componentWillUnmount() {
+    this.unmounted = true;
+
     if (destroyLoader) {
       destroyLoader();
     }
@@ -77,7 +87,7 @@ export class CosmosNativeLoader extends Component<Props, State> {
 
     destroyLoader = await connectLoader({
       renderer: this.loaderRenderer,
-      proxies,
+      proxies: importModule(proxies),
       fixtures,
       subscribe,
       unsubscribe,
@@ -92,9 +102,11 @@ export class CosmosNativeLoader extends Component<Props, State> {
 
     return {
       unmount: () => {
-        this.setState({
-          element: null
-        });
+        if (!this.unmounted) {
+          this.setState({
+            element: null
+          });
+        }
       }
     };
   };
