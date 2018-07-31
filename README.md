@@ -27,7 +27,7 @@
   </a>
 </p>
 
-> **New: [Try out Cosmos with React Native!](#beta-react-native)**
+> **New: [Cosmos 4.6 (React Native support and responsive display mode)](https://medium.com/@skidding/cosmos-4-6-a-minor-version-with-major-updates-27654de7f0c8)**
 
 Cosmos scans your project for components and enables you to:
 
