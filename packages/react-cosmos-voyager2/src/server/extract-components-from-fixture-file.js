@@ -113,9 +113,7 @@ export async function extractComponentsFromFixtureFile(
         }
 
         // $FlowFixMe
-        const compProp = fixtureBody.properties.find(
-          prop => prop.key.name === 'component'
-        );
+        const compProp = findThroughSpread(fixtureBody, vars);
         if (!compProp) {
           throw new Error('Fixture component property is missing');
         }
@@ -186,4 +184,24 @@ function getVarBodyByName(vars, varName: string): any | null {
   );
 
   return varBody;
+}
+
+function findThroughSpread(node, vars) {
+  if (!node) {
+    return;
+  }
+  for (const prop of node.properties) {
+    if (prop.key && prop.key.name === 'component') {
+      return prop;
+    }
+    if (prop.type === 'SpreadProperty') {
+      const searchedNode = findThroughSpread(
+        getVarBodyByName(vars, prop.argument.loc.identifierName),
+        vars
+      );
+      if (searchedNode) {
+        return searchedNode;
+      }
+    }
+  }
 }
