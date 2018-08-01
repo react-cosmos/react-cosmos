@@ -3,12 +3,10 @@
  * @jest-environment node
  */
 
-import fs from 'fs';
+import { readFileSync } from 'fs';
 import request from 'request-promise-native';
-import promisify from 'util.promisify';
 import { startServer } from '../../start';
 
-const readFileAsync = promisify(fs.readFile);
 const mockRootPath = __dirname;
 
 jest.mock('react-cosmos-config', () => ({
@@ -40,7 +38,7 @@ afterAll(async () => {
 
 it('serves index.html on / route with playgrounds opts included', async () => {
   const res = await request('http://127.0.0.1:9005/');
-  const source = await readFileAsync(
+  const source = readFileSync(
     require.resolve('../../../shared/static/index.html'),
     'utf8'
   );

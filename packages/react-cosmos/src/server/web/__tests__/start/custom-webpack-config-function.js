@@ -3,14 +3,12 @@
  * @jest-environment node
  */
 
-import fs from 'fs';
+import { readFileSync } from 'fs';
 import request from 'request-promise-native';
 import { argv } from 'yargs';
-import promisify from 'util.promisify';
 import { startServer } from '../../start';
 import webpackConfig from './__fsmocks__/webpack.config-fn';
 
-const readFileAsync = promisify(fs.readFile);
 const mockRootPath = __dirname;
 
 jest.mock('react-cosmos-config', () => ({
@@ -50,7 +48,7 @@ it('calls webpack config function with argv', () => {
 
 it('serves index.html on / route with playgrounds opts included', async () => {
   const res = await request('http://127.0.0.1:9006/');
-  const source = await readFileAsync(
+  const source = readFileSync(
     require.resolve('../../../shared/static/index.html'),
     'utf8'
   );

@@ -3,14 +3,12 @@
  * @jest-environment node
  */
 
-import fs from 'fs';
+import { readFileSync } from 'fs';
 import EventSource from 'eventsource';
 import request from 'request-promise-native';
-import promisify from 'util.promisify';
 import { startServer } from '../../start';
 import { generateCosmosConfig } from 'react-cosmos-config';
 
-const readFileAsync = promisify(fs.readFile);
 const mockRootPath = __dirname;
 
 jest.mock('react-cosmos-config', () => ({
@@ -43,7 +41,8 @@ afterAll(async () => {
 it('serves webpack bundle', async () => {
   const res = await request({
     uri: 'http://127.0.0.1:9001/main.js',
-    resolveWithFullResponse: true
+    resolveWithFullResponse: true,
+    encoding: null
   });
 
   expect(res.statusCode).toBe(200);
@@ -51,7 +50,7 @@ it('serves webpack bundle', async () => {
 
 it('serves index.html on / route with playgrounds opts included', async () => {
   const res = await request('http://127.0.0.1:9001/');
-  const source = await readFileAsync(
+  const source = readFileSync(
     require.resolve('../../../shared/static/index.html'),
     'utf8'
   );
@@ -73,20 +72,22 @@ it('serves index.html on / route with playgrounds opts included', async () => {
 });
 
 it('serves playground js on /_playground.js route', async () => {
-  const res = await request('http://127.0.0.1:9001/_playground.js');
-  const source = await readFileAsync(
-    require.resolve('react-cosmos-playground'),
-    'utf8'
-  );
+  const res = await request('http://127.0.0.1:9001/_playground.js', {
+    encoding: null
+  });
+  // Note: It turns out that readFileSync is much faster than readFileAsync
+  // when running multiple tests in parallel
+  const source = readFileSync(require.resolve('react-cosmos-playground'));
 
   expect(res).toEqual(source);
 });
 
 it('serves favicon.ico on /_cosmos.ico route', async () => {
-  const res = await request('http://127.0.0.1:9001/_cosmos.ico');
-  const source = await readFileAsync(
-    require.resolve('../../../shared/static/favicon.ico'),
-    'utf8'
+  const res = await request('http://127.0.0.1:9001/_cosmos.ico', {
+    encoding: null
+  });
+  const source = readFileSync(
+    require.resolve('../../../shared/static/favicon.ico')
   );
 
   expect(res).toEqual(source);
