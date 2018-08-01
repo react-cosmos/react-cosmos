@@ -6,7 +6,8 @@
     "publish": {
       "ignoreChanges": [
         "packages/*/README.md",
-        "packages/*/*.js"
+        "packages/*/*.js",
+        "packages/*/bin/*.js"
       ]
     }
   }
