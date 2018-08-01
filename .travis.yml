@@ -10,7 +10,7 @@ before_install:
   - export PATH=$HOME/.yarn/bin:$PATH
 script:
   - yarn build
-  - yarn test
+  - yarn test-ci
   - yarn test-smoke-ci
 after_success:
   - yarn codecov
