@@ -4,6 +4,7 @@ import path from 'path';
 import promisify from 'util.promisify';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
+import { getRootUrl } from '../../shared/server';
 import enhanceWebpackConfig from './enhance-webpack-config';
 
 import type { Config } from 'react-cosmos-flow/config';
@@ -41,9 +42,9 @@ export function attachWebpack({
 
   console.log('[Cosmos] Building webpack...');
   const wdmInst = webpackDevMiddleware(webpackCompiler, {
-    // This is the base path for the webpack assets and has to match
+    // publicPath is the base path for the webpack assets and has to match
     // webpack.output.path
-    publicPath: publicUrl,
+    publicPath: getRootUrl(publicUrl),
     logLevel: 'warn'
   });
 
