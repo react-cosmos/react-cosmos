@@ -3,13 +3,10 @@
  * @jest-environment node
  */
 
-import { readFile } from 'fs';
+import { readFileSync } from 'fs';
 import { join } from 'path';
 import request from 'request-promise-native';
-import promisify from 'util.promisify';
 import { startServer } from '../../start';
-
-const readFileAsync = promisify(readFile);
 
 const mockRootPath = __dirname;
 const mockPublicPath = join(__dirname, '__fsmocks__/static');
@@ -44,7 +41,7 @@ afterAll(async () => {
 // Ensure that the static server doesn't override the / path
 it('serves index.html on / route with playgrounds opts included', async () => {
   const res = await request('http://127.0.0.1:9004/');
-  const source = await readFileAsync(
+  const source = readFileSync(
     require.resolve('../../../shared/static/index.html'),
     'utf8'
   );
