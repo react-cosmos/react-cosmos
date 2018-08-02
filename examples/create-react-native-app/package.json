@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-create-react-native-app-example",
-  "version": "4.6.3",
+  "version": "4.6.4",
   "description": "Example of using Cosmos with Create React Native App",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/local-state",
   "license": "MIT",
@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "expo": "^28.0.0",
-    "react-cosmos": "^4.6.3",
-    "react-cosmos-loader": "^4.6.2",
-    "react-cosmos-test": "^4.6.2",
+    "react-cosmos": "^4.6.4",
+    "react-cosmos-loader": "^4.6.4",
+    "react-cosmos-test": "^4.6.4",
     "react-native": "^0.55.4"
   },
   "devDependencies": {
