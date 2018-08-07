@@ -24,6 +24,7 @@ export default function getDefaultWebpackConfig(rootPath: string) {
 
     // This only applies to users who install `react-cosmos-flow`, which
     // requires them to have Flow compilation included in their Babel config
+    // Deprecated by: https://github.com/react-cosmos/react-cosmos/pull/785
     rules.push({
       test: /\.js$/,
       loader: babelLoaderPath,
