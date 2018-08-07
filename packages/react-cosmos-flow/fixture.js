@@ -1,7 +1,6 @@
 // @flow
 
-import type { Node, ComponentType } from 'react';
-import type { ComponentRef } from './react';
+import type { Node, ComponentType, ElementRef } from 'react';
 
 export type FixtureType<P: {}> = {
   component: ComponentType<P>,
@@ -9,9 +8,9 @@ export type FixtureType<P: {}> = {
   namespace?: string,
   props?: P,
   children?: Node, // Deprecated in favor of props.children
-  init?: ({ compRef: ?ComponentRef }) => Promise<any>
+  init?: ({ compRef: ?ElementRef<ComponentType<P>> }) => Promise<any>
 };
 
-export function createFixture<P: {}>(fixture: FixtureType<P>) {
+export function createFixture<P: {}, F: FixtureType<P>>(fixture: F): F {
   return fixture;
 }
