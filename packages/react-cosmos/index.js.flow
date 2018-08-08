@@ -2,7 +2,9 @@
 
 import type { Node, ComponentType, ElementRef } from 'react';
 
-export type FixtureType<P: {}> = {
+// Definition is duplicated from react-cosmos-flow/fixture.js to avoid
+// downloading entire react-cosmos-flow package in user's node_modules
+declare type FixtureType<P: {}> = {
   component: ComponentType<P>,
   name?: string,
   namespace?: string,
@@ -11,8 +13,4 @@ export type FixtureType<P: {}> = {
   init?: ({ compRef: ?ElementRef<ComponentType<P>> }) => Promise<any>
 };
 
-// Deprecated. Use this instead:
-//  import { createFixture } from 'react-cosmos'
-export function createFixture<P: {}, F: FixtureType<P>>(fixture: F): F {
-  return fixture;
-}
+declare export function createFixture<P: {}, F: FixtureType<P>>(fixture: F): F;
