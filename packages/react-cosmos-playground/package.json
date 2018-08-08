@@ -25,7 +25,7 @@
     "react-plugin": "^0.1.1",
     "react-querystring-router": "^4.6.1",
     "socket.io-client": "^2.1.1",
-    "styled-components": "^3.4.2",
+    "styled-components": "^3.3.3",
     "whatwg-fetch": "^2.0.4"
   },
   "xo": false

@@ -10,8 +10,6 @@ export class LocalStorageMock {
 
   onUpdate: onUpdate;
 
-  // Apparently onUpdate type is used before it's defined...
-  // eslint-disable-next-line no-use-before-define
   constructor(store: Store = {}, onUpdate: onUpdate) {
     this.store = { ...store };
     this.onUpdate = onUpdate;
