@@ -122,7 +122,7 @@ Add package.json scripts
 
 ```diff
 "scripts": {
-+  "cosmos": "cosmos"
++  "cosmos": "cosmos",
 +  "cosmos:export": "cosmos-export"
 }
 ```
