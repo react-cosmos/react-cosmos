@@ -34,7 +34,8 @@ export function getPluginConfig(uiContext: UiContextParams): PluginConfig {
     return DEFAULT_CONFIG;
   }
 
-  const { responsivePreview: config } = uiContext.options.plugin;
+  const { plugin = {} } = uiContext.options;
+  const { responsivePreview: config } = plugin;
 
   if (!config || typeof config !== 'object') {
     return DEFAULT_CONFIG;
