@@ -3,6 +3,7 @@
 const mountPlayground = require('react-cosmos-playground');
 
 module.exports = mountPlayground({
+  projectKey: 'browserify-example',
   platform: 'web',
   loaderUri: 'http://localhost:8990/'
 });
