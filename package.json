@@ -77,7 +77,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-native": "^0.55.4",
+    "react-native": "^0.56.0",
     "react-test-renderer": "^16.4.1",
     "request": "^2.87.0",
     "request-promise-native": "^1.0.5",
