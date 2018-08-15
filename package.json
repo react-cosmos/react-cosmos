@@ -13,11 +13,11 @@
     "precommit": "lint-staged",
     "prettify": "prettier --write '{{packages/*/src,examples,cypress,scripts}/**/,}*.{js,jsx,css,less,md}'",
     "lint": "xo --quiet",
-    "test": "yarn flow && yarn lint && jest --coverage --config jest.config.json",
-    "test-ci": "yarn flow && yarn lint && jest --coverage --maxWorkers=4 --config jest.config.json",
-    "test:watch": "jest --watch --config jest.config.json",
+    "test": "yarn flow && yarn lint && jest --coverage --config .jest/config.js",
+    "test:ci": "jest --coverage --maxWorkers=4 --config .jest/config.js",
+    "test:watch": "jest --watch --config .jest/config.js",
     "test-smoke": "cypress run",
-    "test-smoke-ci": "yarn start & cypress run",
+    "test-smoke:ci": "yarn start & cypress run",
     "start": "babel-node ./packages/react-cosmos/bin/cosmos --config examples/local-state/cosmos.config.js",
     "start:playground": "babel-node ./packages/react-cosmos/bin/cosmos.js --config packages/react-cosmos-playground/cosmos.config.js",
     "clear-build": "babel-node ./scripts/clear-build.js",
@@ -158,9 +158,15 @@
       },
       {
         "files": [
-          "jest.framework-setup.js",
+          ".jest/**/*.js"
+        ],
+        "env": [
+          "jest"
+        ]
+      },
+      {
+        "files": [
           "**/__tests__/**/*.{js,jsx}",
-          "**/__skip-tests__/**/*.{js,jsx}",
           "**/?(*.)test.{js,jsx}",
           "**/__mocks__/**/*.js",
           "packages/react-cosmos-telescope/**/*.js"

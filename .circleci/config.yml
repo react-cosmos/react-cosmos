@@ -31,8 +31,10 @@ jobs:
       - run: yarn build
 
       # Run tests!
-      - run: yarn test-ci
-      - run: yarn test-smoke-ci
+      - run: yarn flow
+      - run: yarn lint
+      - run: yarn test:ci
+      - run: yarn test-smoke:ci
 
       # Report coverage
       - run: yarn codecov

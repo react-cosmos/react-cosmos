@@ -9,7 +9,7 @@ import rimraf from 'rimraf';
 import { generateExport } from '../export';
 
 const mockRootPath = __dirname;
-const mockOutputPath = join(__dirname, './__fsoutput__/export');
+const mockOutputPath = join(__dirname, './__jestnowatch__/export');
 
 jest.mock('react-cosmos-config', () => ({
   hasUserCosmosConfig: () => true,

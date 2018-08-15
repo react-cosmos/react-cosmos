@@ -8,8 +8,7 @@ import { generateCosmosConfig } from '../../..';
 
 jest.mock('yargs', () => ({ argv: {} }));
 
-// Note: __fsoutput__ are in Jest's watchPathIgnorePatterns
-const outputPath = path.join(__dirname, '__fsoutput__');
+const outputPath = path.join(__dirname, '__jestnowatch__');
 const craWebpackConfigPath = path.join(
   outputPath,
   'node_modules/react-scripts/config/webpack.config.dev'
