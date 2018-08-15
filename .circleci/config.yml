@@ -10,7 +10,7 @@ jobs:
       # https://github.com/cypress-io/cypress-docker-images
       - image: cypress/base
     working_directory: ~/app
-    parallelism: 4
+    parallelism: 1
     steps:
       # Clone repository to working directory
       - checkout
