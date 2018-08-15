@@ -7,6 +7,7 @@ jobs:
   node-base: &node-base
     docker:
       # https://docs.cypress.io/guides/guides/continuous-integration.html#Example-circle-yml-v2-config-file-with-yarn
+      # https://github.com/cypress-io/cypress-docker-images
       - image: cypress/base
 
     working_directory: ~/app
@@ -19,7 +20,7 @@ jobs:
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
 
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --frozen-lockfile --ignore-engines
 
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
