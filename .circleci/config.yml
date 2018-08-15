@@ -10,6 +10,7 @@ jobs:
       # https://github.com/cypress-io/cypress-docker-images
       - image: cypress/base
     working_directory: ~/app
+    parallelism: 4
     steps:
       # Clone repository to working directory
       - checkout
@@ -30,7 +31,7 @@ jobs:
       - run: yarn build
 
       # Run tests!
-      - run: yarn test-ci
+      - run: yarn test
       - run: yarn test-smoke-ci
 
       # Report coverage
