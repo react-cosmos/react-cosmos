@@ -6,30 +6,25 @@ version: 2
 jobs:
   build:
     docker:
-      -
-        # https://docs.cypress.io/guides/guides/continuous-integration.html#Example-circle-yml-v2-config-file-with-yarn
-        image: cypress/base:8
-        #environment:
-          # Enable colors in the output
-        #  TERM: xterm
+      # https://docs.cypress.io/guides/guides/continuous-integration.html#Example-circle-yml-v2-config-file-with-yarn
+      - image: cypress/base:8
 
     working_directory: ~/app
-    steps:
+
+    steps
+      # Clone repository to working directory
       - checkout
 
       # Download and cache dependencies
       - restore_cache:
-          keys:
-            - v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
-            - v1-deps-{{ .Branch }}
-            - v1-deps
+          key: dependency-cache-{{ checksum "package.json" }}
 
       - run: yarn install --frozen-lockfile
 
       - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
           paths:
-            - ~/.cache
-          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+            - ./node_modules
 
       - run: yarn build
 
