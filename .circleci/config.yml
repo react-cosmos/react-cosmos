@@ -9,24 +9,24 @@ jobs:
       # https://docs.cypress.io/guides/guides/continuous-integration.html#Example-circle-yml-v2-config-file-with-yarn
       # https://github.com/cypress-io/cypress-docker-images
       - image: cypress/base
-
     working_directory: ~/app
-
     steps:
       # Clone repository to working directory
       - checkout
 
       # Download and cache dependencies
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-
+          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+          key: v1-deps-{{ .Branch }}
+          key: v1-deps
       - run: yarn install --frozen-lockfile --ignore-engines
-
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
-            - ./node_modules
+            # Cache both yarn and Cypress
+            - ~/.cache
 
+      # Compile all Cosmos packages
       - run: yarn build
 
       # Run tests!
