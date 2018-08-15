@@ -4,10 +4,10 @@
 #
 version: 2
 jobs:
-  build:
+  node-base: &node-base
     docker:
       # https://docs.cypress.io/guides/guides/continuous-integration.html#Example-circle-yml-v2-config-file-with-yarn
-      - image: cypress/base:8
+      - image: cypress/base
 
     working_directory: ~/app
 
@@ -34,3 +34,25 @@ jobs:
 
       # Report coverage
       - run: yarn codecov
+
+  node-v6:
+    <<: *node-base
+    docker:
+      - image: cypress/base:6
+  node-v8:
+    <<: *node-base
+    docker:
+      - image: cypress/base:8
+  node-v10:
+    <<: *node-base
+    docker:
+      - image: cypress/base:10
+
+# https://github.com/teppeis-sandbox/circleci2-multiple-node-versions/tree/yarn-with-test-report
+workflows:
+  version: 2
+  node-multi-build:
+    jobs:
+      - node-v6
+      - node-v8
+      - node-v10
