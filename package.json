@@ -14,7 +14,7 @@
     "prettify": "prettier --write '{{packages/*/src,examples,cypress,scripts}/**/,}*.{js,jsx,css,less,md}'",
     "lint": "xo --quiet",
     "test": "yarn flow && yarn lint && jest --coverage --config jest.config.json",
-    "test-ci": "yarn flow && yarn lint && jest --coverage --config jest.config.json --maxWorkers=4 --runInBand",
+    "test-ci": "yarn flow && yarn lint && jest --coverage --runInBand --config jest.config.json",
     "test:watch": "jest --watch --config jest.config.json",
     "test-smoke": "cypress run",
     "test-smoke-ci": "yarn start & cypress run",
