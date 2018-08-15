@@ -31,7 +31,7 @@ jobs:
       - run: yarn build
 
       # Run tests!
-      - run: yarn test
+      - run: yarn test-ci
       - run: yarn test-smoke-ci
 
       # Report coverage
