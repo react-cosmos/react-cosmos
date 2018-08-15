@@ -7,31 +7,28 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:8.11
+      - image: cypress/base:8
+          environment:
+            ## this enables colors in the output
+            TERM: xterm
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
-    working_directory: ~/repo
-
+    working_directory: ~/app
     steps:
       - checkout
 
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+            - v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+            - v1-deps-{{ .Branch }}
+            - v1-deps
 
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
 
       - save_cache:
           paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+            - ~/.cache
+          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
 
       - run: yarn build
 
