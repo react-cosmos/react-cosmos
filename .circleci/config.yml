@@ -9,9 +9,9 @@ jobs:
       -
         # https://docs.cypress.io/guides/guides/continuous-integration.html#Example-circle-yml-v2-config-file-with-yarn
         image: cypress/base:8
-        environment:
+        #environment:
           # Enable colors in the output
-          TERM: xterm
+        #  TERM: xterm
 
     working_directory: ~/app
     steps:
