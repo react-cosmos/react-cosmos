@@ -1,0 +1,62 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  node-base: &node-base
+    docker:
+      # https://docs.cypress.io/guides/guides/continuous-integration.html#Example-circle-yml-v2-config-file-with-yarn
+      # https://github.com/cypress-io/cypress-docker-images
+      - image: cypress/base
+    working_directory: ~/app
+    parallelism: 1
+    steps:
+      # Clone repository to working directory
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+          key: v1-deps-{{ .Branch }}
+          key: v1-deps
+      - run: yarn install --frozen-lockfile --ignore-engines
+      - save_cache:
+          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            # Cache both yarn and Cypress
+            - ~/.cache
+
+      # Compile all Cosmos packages
+      - run: yarn build
+
+      # Run tests!
+      - run: yarn flow
+      - run: yarn lint
+      - run: yarn test:ci
+      - run: yarn test-smoke:ci
+
+      # Report coverage
+      - run: yarn codecov
+
+  node-v6:
+    <<: *node-base
+    docker:
+      - image: cypress/base:6
+  node-v8:
+    <<: *node-base
+    docker:
+      - image: cypress/base:8
+  node-v10:
+    <<: *node-base
+    docker:
+      - image: cypress/base:10
+
+# https://github.com/teppeis-sandbox/circleci2-multiple-node-versions/tree/yarn-with-test-report
+workflows:
+  version: 2
+  node-multi-build:
+    jobs:
+      - node-v6
+      - node-v8
+      - node-v10

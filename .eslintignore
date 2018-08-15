@@ -2,3 +2,4 @@ docs
 packages/*/dist
 node_modules
 coverage
+!.jest

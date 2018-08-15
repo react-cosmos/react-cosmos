@@ -16,7 +16,7 @@ import { startServer } from '../start';
 
 const mockRootPath = join(__dirname, '__fsmocks__');
 const mockProxiesPath = join(mockRootPath, 'cosmos.proxies');
-const mockModulesPath = join(__dirname, '__fsoutput__/cosmos.modules.js');
+const mockModulesPath = join(__dirname, '__jestnowatch__/cosmos.modules.js');
 
 jest.mock('react-cosmos-config', () => ({
   getCosmosConfig: () => ({
