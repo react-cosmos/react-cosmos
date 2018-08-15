@@ -160,6 +160,7 @@
         "files": [
           "jest.framework-setup.js",
           "**/__tests__/**/*.{js,jsx}",
+          "**/__skip-tests__/**/*.{js,jsx}",
           "**/?(*.)test.{js,jsx}",
           "**/__mocks__/**/*.js",
           "packages/react-cosmos-telescope/**/*.js"
