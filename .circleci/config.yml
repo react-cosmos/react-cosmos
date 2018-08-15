@@ -6,11 +6,12 @@ version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
-      - image: cypress/base:8
-          environment:
-            ## this enables colors in the output
-            TERM: xterm
+      -
+        # https://docs.cypress.io/guides/guides/continuous-integration.html#Example-circle-yml-v2-config-file-with-yarn
+        image: cypress/base:8
+        environment:
+          # Enable colors in the output
+          TERM: xterm
 
     working_directory: ~/app
     steps:
@@ -32,9 +33,9 @@ jobs:
 
       - run: yarn build
 
-      # run tests!
+      # Run tests!
       - run: yarn test-ci
       - run: yarn test-smoke-ci
 
-      # report coverage
+      # Report coverage
       - run: yarn codecov
