@@ -11,7 +11,7 @@ jobs:
 
     working_directory: ~/app
 
-    steps
+    steps:
       # Clone repository to working directory
       - checkout
 
