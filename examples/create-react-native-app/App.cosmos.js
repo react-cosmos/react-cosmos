@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { CosmosNativeLoader } from 'react-cosmos-loader/native';
-/* eslint-disable-next-line import/no-unresolved, import/extensions */
+/* eslint-disable-next-line import/no-unresolved */
 import { options, getUserModules } from './cosmos.modules';
 
 export default class App extends Component {
