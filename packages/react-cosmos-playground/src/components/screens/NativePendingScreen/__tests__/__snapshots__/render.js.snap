@@ -22,12 +22,12 @@ exports[`NativePendingScreen renders correctly 1`] = `
         </strong>
       </p>
       <p>
-        Make sure
+        Make sure 
         <code>
           App.js
         </code>
          points to Cosmos and your app is running. See the
-
+         
         <a
           href="https://github.com/react-cosmos/create-react-native-app-example"
           rel="noopener noreferrer"
@@ -35,14 +35,14 @@ exports[`NativePendingScreen renders correctly 1`] = `
         >
           CRNA example
         </a>
-
+         
         for inspiration.
       </p>
       <p
         className="faded"
       >
         If something's wrong,
-
+         
         <a
           href="https://github.com/react-cosmos/react-cosmos/issues/new"
           rel="noopener noreferrer"
@@ -50,7 +50,7 @@ exports[`NativePendingScreen renders correctly 1`] = `
         >
           report your error
         </a>
-
+         
         and we'll do our best to help. Include as much details as you can.
       </p>
     </div>
