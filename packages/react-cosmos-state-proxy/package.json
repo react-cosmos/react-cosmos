@@ -10,6 +10,5 @@
     "lodash.isequal": "^4.4.0",
     "lodash.omit": "^4.5.0",
     "react-cosmos-shared": "^4.6.1"
-  },
-  "xo": false
+  }
 }

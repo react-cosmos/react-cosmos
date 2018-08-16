@@ -9,6 +9,5 @@
     "react-cosmos-loader": "^4.6.4",
     "react-cosmos-shared": "^4.6.1",
     "traverse": "^0.6.6"
-  },
-  "xo": false
+  }
 }

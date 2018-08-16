@@ -8,6 +8,5 @@
   "dependencies": {
     "fetch-mock": "^5.12.2",
     "react-cosmos-shared": "^4.6.1"
-  },
-  "xo": false
+  }
 }

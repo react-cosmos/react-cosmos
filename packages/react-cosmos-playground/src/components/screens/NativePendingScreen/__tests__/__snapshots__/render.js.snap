@@ -30,6 +30,7 @@ exports[`NativePendingScreen renders correctly 1`] = `
          
         <a
           href="https://github.com/react-cosmos/react-cosmos/tree/master/examples/create-react-native-app"
+          rel="noopener noreferrer"
           target="_blank"
         >
           CRNA example
@@ -44,6 +45,7 @@ exports[`NativePendingScreen renders correctly 1`] = `
          
         <a
           href="https://github.com/react-cosmos/react-cosmos/issues/new"
+          rel="noopener noreferrer"
           target="_blank"
         >
           report your error

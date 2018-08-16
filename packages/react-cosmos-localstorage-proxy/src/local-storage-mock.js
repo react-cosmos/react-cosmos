@@ -10,6 +10,7 @@ export class LocalStorageMock {
 
   onUpdate: onUpdate;
 
+  // eslint-disable-next-line no-use-before-define
   constructor(store: Store = {}, onUpdate: onUpdate) {
     this.store = { ...store };
     this.onUpdate = onUpdate;

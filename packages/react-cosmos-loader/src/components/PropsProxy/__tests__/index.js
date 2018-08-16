@@ -6,7 +6,9 @@ import { PropsProxy } from '..';
 const FunctionalComponent = () => {};
 
 class ClassComponent extends Component {
-  render() {}
+  render() {
+    return null;
+  }
 }
 
 const forwardedClassComponent = forwardRef((props, ref) => (
@@ -14,7 +16,7 @@ const forwardedClassComponent = forwardRef((props, ref) => (
 ));
 
 const ClassicComponent = createReactClass({
-  render: () => {}
+  render: () => null
 });
 
 const fixture = {

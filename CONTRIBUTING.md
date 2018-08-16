@@ -206,7 +206,7 @@ Use [Jest](https://facebook.github.io/jest/) for unit testing. Look inside `__te
 
 #### Keep coding style consistent
 
-Make sure `yarn run lint` passes and add [xo](https://github.com/sindresorhus/xo) to your editor if possible.
+Make sure `yarn run lint` passes and add [ESLint](https://eslint.org/docs/user-guide/integrations#editors) to your editor if possible.
 
 When naming a file:
 

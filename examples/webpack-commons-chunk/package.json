@@ -11,6 +11,5 @@
     "moment": "^2.22.2",
     "react-cosmos": "^4.7.0-2"
   },
-  "xo": false,
   "private": true
 }

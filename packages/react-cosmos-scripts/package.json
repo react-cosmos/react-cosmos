@@ -14,6 +14,5 @@
   },
   "bin": {
     "cosmos-upgrade-fixtures": "./bin/upgrade-fixtures.js"
-  },
-  "xo": false
+  }
 }

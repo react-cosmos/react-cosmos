@@ -13,6 +13,5 @@
     "react-cosmos": "^4.7.0-2",
     "react-cosmos-test": "^4.6.4"
   },
-  "xo": false,
   "private": true
 }

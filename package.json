@@ -12,7 +12,7 @@
     "install-react:15": "yarn install-react -- react@^15.5.4 react-dom@^15.5.4",
     "precommit": "lint-staged",
     "prettify": "prettier --write '{{packages/*/src,examples,cypress,scripts}/**/,}*.{js,jsx,css,less,md}'",
-    "lint": "xo --quiet",
+    "lint": "eslint '**/*.js'",
     "test": "yarn flow && yarn lint && jest --coverage --config .jest/config.js",
     "test:ci": "jest --coverage --maxWorkers=2 --config .jest/config.js",
     "test:watch": "jest --watch --config .jest/config.js",
@@ -41,8 +41,8 @@
     "async-until": "^1.1.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
-    "babel-eslint": "^8.2.5",
-    "babel-loader": "^7.1.4",
+    "babel-eslint": "^8.2.6",
+    "babel-loader": "^7.1.5",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",
@@ -50,143 +50,42 @@
     "babel-preset-react": "^6.11.1",
     "chalk": "^2.4.1",
     "child-process-promise": "^2.2.0",
-    "codecov": "^3.0.2",
+    "codecov": "^3.0.4",
     "create-react-class": "^15.6.3",
     "css-loader": "^1.0.0",
-    "cypress": "^3.0.2",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "npm:enzyme-react-adapter-future",
-    "eslint-config-xo-react": "^0.17.0",
-    "eslint-import-resolver-webpack": "^0.10.1",
-    "eslint-plugin-flowtype": "^2.49.3",
-    "eslint-plugin-react": "^7.10.0",
+    "cypress": "^3.1.0",
+    "enzyme": "^3.4.2",
+    "enzyme-adapter-react-16": "^1.2.0",
+    "eslint": "^5.3.0",
+    "eslint-plugin-flowtype": "^2.50.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-react": "^7.11.1",
     "eventsource": "^1.0.5",
     "file-loader": "^1.1.11",
     "flow-bin": "^0.78.0",
-    "flow-typed": "^2.4.0",
+    "flow-typed": "^2.5.1",
     "glob": "^7.1.2",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^23.2.0",
-    "lerna": "^3.0.0-beta.21",
-    "less": "^3.0.4",
+    "jest": "^23.5.0",
+    "lerna": "^3.0.6",
+    "less": "^3.8.1",
     "less-loader": "^4.1.0",
-    "lint-staged": "^7.2.0",
-    "prettier": "1.14.0",
+    "lint-staged": "^7.2.2",
+    "prettier": "1.14.2",
     "prop-types": "^15.6.2",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
     "react-native": "^0.55.4",
-    "react-test-renderer": "^16.4.1",
-    "request": "^2.87.0",
+    "react-test-renderer": "^16.4.2",
+    "request": "^2.88.0",
     "request-promise-native": "^1.0.5",
     "rimraf": "^2.5.4",
-    "style-loader": "^0.21.0",
-    "url-loader": "^1.0.1",
-    "webpack": "^4.14.0",
-    "webpack-cli": "^3.0.8",
-    "xo": "^0.21.1",
+    "style-loader": "^0.22.1",
+    "url-loader": "^1.1.0",
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0",
     "yargs": "^12.0.1"
-  },
-  "xo": {
-    "space": true,
-    "parser": "babel-eslint",
-    "plugins": [
-      "react",
-      "flowtype"
-    ],
-    "extends": [
-      "plugin:flowtype/recommended"
-    ],
-    "settings": {
-      "import/resolver": {
-        "webpack": {
-          "config": {
-            "resolve": {
-              "extensions": [
-                ".js",
-                ".jsx"
-              ]
-            }
-          }
-        }
-      },
-      "import/extensions": [
-        ".js",
-        ".jsx"
-      ]
-    },
-    "rules": {
-      "indent": 0,
-      "object-curly-spacing": 0,
-      "operator-linebreak": 0,
-      "capitalized-comments": 0,
-      "space-before-function-paren": 0,
-      "no-await-in-loop": 0,
-      "no-negated-condition": 0,
-      "func-names": [
-        "error",
-        "as-needed"
-      ],
-      "valid-jsdoc": 0,
-      "unicorn/filename-case": 0,
-      "import/no-unassigned-import": 0,
-      "import/no-extraneous-dependencies": 0,
-      "import/prefer-default-export": 0,
-      "import/order": 0,
-      "import/default": 0,
-      "no-mixed-operators": 0,
-      "lines-between-class-members": 0,
-      "react/jsx-uses-vars": 1,
-      "react/jsx-uses-react": 1,
-      "flowtype/generic-spacing": 0
-    },
-    "ignores": [
-      "**/__fsmocks__/**",
-      "flow-typed/**"
-    ],
-    "overrides": [
-      {
-        "files": [
-          "packages/*/src/**/*.{js,jsx}",
-          "!**/__tests__/**/*.*"
-        ],
-        "env": [
-          "browser"
-        ]
-      },
-      {
-        "files": [
-          ".jest/**/*.js"
-        ],
-        "env": [
-          "jest"
-        ]
-      },
-      {
-        "files": [
-          "**/__tests__/**/*.{js,jsx}",
-          "**/?(*.)test.{js,jsx}",
-          "**/__mocks__/**/*.js",
-          "packages/react-cosmos-telescope/**/*.js"
-        ],
-        "env": [
-          "jest",
-          "browser"
-        ]
-      },
-      {
-        "files": [
-          "cypress/**/*.{js,jsx}"
-        ],
-        "env": [
-          "mocha"
-        ],
-        "globals": [
-          "cy"
-        ]
-      }
-    ]
   }
 }

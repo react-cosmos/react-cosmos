@@ -7,6 +7,7 @@ export const helpFooter = (
     <a
       target="_blank"
       href="https://github.com/react-cosmos/react-cosmos/issues/new"
+      rel="noopener noreferrer"
     >
       report your error
     </a>{' '}

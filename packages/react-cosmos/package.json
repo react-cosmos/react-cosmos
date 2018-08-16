@@ -25,7 +25,7 @@
     "resolve-from": "^4.0.0",
     "socket.io": "^2.1.1",
     "webpack-dev-middleware": "^2.0.6",
-    "webpack-hot-middleware": "^2.22.2",
+    "webpack-hot-middleware": "^2.22.3",
     "yargs": "^12.0.1"
   },
   "devDependencies": {
@@ -36,6 +36,5 @@
     "cosmos-export": "./bin/cosmos-export.js",
     "cosmos-native": "./bin/cosmos-native.js",
     "print-fixture-files": "./bin/print-fixture-files.js"
-  },
-  "xo": false
+  }
 }

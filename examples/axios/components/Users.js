@@ -32,6 +32,12 @@ export default class Users extends Component {
       return <div style={{ color: 'red' }}>{error}</div>;
     }
 
-    return <ul>{users.map(user => <li key={user.id}>{user.name}</li>)}</ul>;
+    return (
+      <ul>
+        {users.map(user => (
+          <li key={user.id}>{user.name}</li>
+        ))}
+      </ul>
+    );
   }
 }

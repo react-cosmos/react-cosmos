@@ -12,6 +12,5 @@
   "devDependencies": {
     "enzyme-to-json": "^3.3.4",
     "react-router": "^4.3.1"
-  },
-  "xo": false
+  }
 }

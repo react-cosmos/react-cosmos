@@ -22,6 +22,5 @@
     "@skidding/metro-bundler-config-yarn-workspaces": "^1.0.5",
     "react-native-scripts": "^1.14.0"
   },
-  "xo": false,
   "private": true
 }
