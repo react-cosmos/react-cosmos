@@ -2,7 +2,7 @@
   "name": "react-cosmos-fetch-example",
   "version": "4.7.0-2",
   "description": "Example of mocking the fetch API",
-  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/fetch",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples",
   "license": "MIT",
   "scripts": {
     "start": "babel-node ../../packages/react-cosmos/bin/cosmos.js"

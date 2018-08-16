@@ -2,7 +2,7 @@
   "name": "react-cosmos-mixed-paths-example",
   "version": "4.7.0-2",
   "description": "Example of combining relative and module component paths",
-  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/mixed-paths",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples",
   "license": "MIT",
   "scripts": {
     "start": "babel-node ../../packages/react-cosmos/bin/cosmos.js"

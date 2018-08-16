@@ -2,7 +2,7 @@
   "name": "react-cosmos-browserify-example",
   "version": "4.6.4",
   "description": "Example of using Cosmos with Browserify",
-  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/browserify",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples",
   "license": "MIT",
   "scripts": {
     "start": "node ./server.js"

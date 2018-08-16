@@ -2,7 +2,7 @@
   "name": "react-cosmos-webpack-dll-example",
   "version": "4.7.0-2",
   "description": "Example of webpack & DllPlugin",
-  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/webpack-dll",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples",
   "license": "MIT",
   "scripts": {
     "build-dll": "../../node_modules/.bin/webpack --config webpack.vendor.config.js",
