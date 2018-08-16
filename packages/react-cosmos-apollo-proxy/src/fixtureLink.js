@@ -29,32 +29,39 @@ export function createFixtureLink({ apolloFixture, cache, fixture }) {
   return new ApolloLink(
     ({ operationName, variables, ...others }) =>
       new Observable(observer => {
-        const { failWith, resolveWith } =
+        const { failWith, resolveWith, latency = 0 } =
           apolloFixture[operationName] || apolloFixture;
 
         if (failWith) {
           observer.error(failWith);
         }
 
-        if (typeof resolveWith === 'function') {
-          resolveFunctionOrPromise(
-            resolveWith({
-              cache,
-              variables,
-              fixture,
-              operationName,
-              ...others
-            }),
-            observer
-          );
-        } else {
-          observer.next({
-            data: resolveWith.data ? resolveWith.data : resolveWith,
-            errors: resolveWith.errors
-          });
-
-          observer.complete();
+        // never resolve query, endless loading state
+        if (latency === -1) {
+          return;
         }
+
+        setTimeout(() => {
+          if (typeof resolveWith === 'function') {
+            resolveFunctionOrPromise(
+              resolveWith({
+                cache,
+                variables,
+                fixture,
+                operationName,
+                ...others
+              }),
+              observer
+            );
+          } else {
+            observer.next({
+              data: resolveWith.data ? resolveWith.data : resolveWith,
+              errors: resolveWith.errors
+            });
+
+            observer.complete();
+          }
+        }, latency * 1000);
       })
   );
 }

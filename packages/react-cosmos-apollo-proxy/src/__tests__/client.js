@@ -307,4 +307,55 @@ describe('proxy configured with an endpoint', () => {
       getWrappedComponent().props().data.error.graphQLErrors
     ).toMatchObject(resolveWith.errors);
   });
+
+  it('allows simulating latency', async () => {
+    jest.useFakeTimers();
+
+    setupTestWrapper({
+      proxyConfig: {
+        endpoint: 'https://xyz'
+      },
+      fixture: {
+        ...sampleFixture,
+        apollo: {
+          resolveWith,
+          latency: 3
+        }
+      }
+    });
+
+    expect(getWrappedComponent().props().data.loading).toBe(true);
+
+    jest.advanceTimersByTime(3000);
+
+    expect(getWrappedComponent().props().data.loading).toBe(false);
+
+    expect(getWrappedComponent().props().data.author).toMatchObject(
+      resolveWith.author
+    );
+  });
+
+  it('allows simulating endless loading', async () => {
+    setupTestWrapper({
+      proxyConfig: {
+        endpoint: 'https://xyz'
+      },
+      fixture: {
+        ...sampleFixture,
+        apollo: {
+          resolveWith,
+          latency: -1
+        }
+      }
+    });
+
+    const failMsg =
+      'You shall never resolve and be condemned to endless loading state.';
+
+    expect(
+      until(() => getWrappedComponent().props().data.loading === false, {
+        failMsg
+      })
+    ).rejects.toMatch(failMsg);
+  });
 });
