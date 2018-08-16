@@ -33,8 +33,7 @@ export async function findFixtureFiles(
     fileMatch = defaultFileMatch,
     fileMatchIgnore = defaultFileMatchIgnore,
     exclude = defaultExclude
-  } =
-    args || {};
+  } = args || {};
 
   const excludeList = Array.isArray(exclude) ? exclude : [exclude];
   const allPaths = await globAsync('**/*', {
