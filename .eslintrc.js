@@ -52,7 +52,6 @@ module.exports = {
       'packages/react-cosmos-playground/webpack.config.js',
       'examples/apollo/server.js',
       'examples/browserify/server.js',
-      'examples/create-react-native-app/{rn-cli.config,link-workspaces}.js',
       'examples/mixed-paths/webpack.config.js',
       'examples/webpack-dll/{webpack.config,webpack.vendor.config}.js'
     ]),
@@ -74,8 +73,7 @@ module.exports = {
     ]),
     cypressEnv(['cypress/**/*.js']),
     enableProcessEnv([
-      'packages/react-cosmos/src/client/{react-error-overlay,react-devtools-hook,loader-entry}.js',
-      'examples/create-react-native-app/crna-entry.js'
+      'packages/react-cosmos/src/client/{react-error-overlay,react-devtools-hook,loader-entry}.js'
     ])
   ]
 };

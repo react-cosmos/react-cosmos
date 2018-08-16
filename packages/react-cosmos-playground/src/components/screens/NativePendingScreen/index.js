@@ -16,7 +16,7 @@ export class NativePendingScreen extends Component {
           running. See the{' '}
           <a
             target="_blank"
-            href="https://github.com/react-cosmos/react-cosmos/tree/master/examples/create-react-native-app"
+            href="https://github.com/react-cosmos/create-react-native-app-example"
             rel="noopener noreferrer"
           >
             CRNA example

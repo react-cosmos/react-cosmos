@@ -29,7 +29,7 @@ exports[`NativePendingScreen renders correctly 1`] = `
          points to Cosmos and your app is running. See the
          
         <a
-          href="https://github.com/react-cosmos/react-cosmos/tree/master/examples/create-react-native-app"
+          href="https://github.com/react-cosmos/create-react-native-app-example"
           rel="noopener noreferrer"
           target="_blank"
         >

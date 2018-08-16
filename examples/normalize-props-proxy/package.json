@@ -2,7 +2,7 @@
   "name": "react-cosmos-normalize-props-proxy-example",
   "version": "4.7.0-2",
   "description": "Example of using normalize-props-proxy",
-  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/normalize-props-proxy",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples",
   "license": "MIT",
   "scripts": {
     "start": "babel-node ../../packages/react-cosmos/bin/cosmos.js"

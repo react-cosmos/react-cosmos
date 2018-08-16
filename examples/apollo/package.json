@@ -2,7 +2,7 @@
   "name": "react-cosmos-apollo-example",
   "version": "4.7.0-2",
   "description": "Example of mocking the Apollo Client",
-  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples/apollo",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples",
   "license": "MIT",
   "scripts": {
     "start:server": "babel-node server.js",
