@@ -1295,7 +1295,7 @@ module.exports = {
 Next steps:
 
 - Add auto-generated file `cosmos.modules.js` to gitignore
-- Split App.js into `App.cosmos.js` and `App.main.js` — Check out [the CRNA example](https://github.com/react-cosmos/react-cosmos/tree/master/examples/create-react-native-app) for inspiration
+- Split App.js into `App.cosmos.js` and `App.main.js` — Check out [the CRNA example](https://github.com/react-cosmos/create-react-native-app-example) for inspiration
 - [Report an issue](https://github.com/react-cosmos/react-cosmos/issues/new) or [share some feedback](https://join-react-cosmos.now.sh/)
 
 ### Flow integration
