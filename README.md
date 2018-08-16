@@ -8,7 +8,7 @@
 
 <p align="center">
   <a href="https://circleci.com/gh/react-cosmos/react-cosmos">
-    <img alt="Build status" src="https://img.shields.io/circleci/project/github/react-cosmos/react-cosmos.svg">
+    <img alt="Build status" src="https://img.shields.io/circleci/project/github/react-cosmos/react-cosmos/master.svg">
   </a>
   <a href="https://codecov.io/gh/react-cosmos/react-cosmos">
     <img alt="Codecov status" src="https://codecov.io/gh/react-cosmos/react-cosmos/branch/master/graph/badge.svg">
