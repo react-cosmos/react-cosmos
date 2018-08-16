@@ -4,8 +4,9 @@
  */
 
 import { join } from 'path';
-import { readFile, remove } from 'fs-extra';
+import { readFile, copy, remove } from 'fs-extra';
 import request from 'request-promise-native';
+import until from 'async-until';
 import {
   defaultFileMatch as mockFileMatch,
   defaultFileMatchIgnore as mockFileMatchIgnore,
@@ -16,6 +17,7 @@ import { startServer } from '../start';
 
 const mockRootPath = join(__dirname, '__fsmocks__');
 const mockProxiesPath = join(mockRootPath, 'cosmos.proxies');
+const mockNewFixturePath = join(mockRootPath, 'jestnowatch.fixture.js');
 const mockModulesPath = join(__dirname, '__jestnowatch__/cosmos.modules.js');
 
 jest.mock('react-cosmos-config', () => ({
@@ -43,6 +45,7 @@ beforeAll(async () => {
 afterAll(async () => {
   await stopServer();
   await remove(mockModulesPath);
+  await remove(mockNewFixturePath);
 });
 
 it('serves index.html on / route with playgrounds opts included', async () => {
@@ -121,8 +124,27 @@ export function getUserModules() {
 };\n`);
 });
 
+it('re-generates modules file on new fixture file ', async () => {
+  expect((await getFixtureFilesFromModules()).length).toBe(1);
+
+  await copy(join(mockRootPath, 'MyComponent.fixture.js'), mockNewFixturePath);
+
+  // Wait for fs event to be picked up
+  await until(async () => (await getFixtureFilesFromModules()).length === 2, {
+    loopDelay: 200,
+    timeout: 2000,
+    failMsg: 'cosmos.modules file has not been updated'
+  });
+});
+
 function untilConnected(socket) {
   return new Promise(resolve => {
     socket.on('connect', resolve);
   });
+}
+
+async function getFixtureFilesFromModules() {
+  const output = await readFile(mockModulesPath, 'utf8');
+
+  return JSON.parse(output.match(/fixtureFiles: (.+?),\n/)[1]);
 }
