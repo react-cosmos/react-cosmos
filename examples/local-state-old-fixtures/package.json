@@ -10,6 +10,5 @@
   "dependencies": {
     "react-cosmos": "^4.7.0-2"
   },
-  "xo": false,
   "private": true
 }

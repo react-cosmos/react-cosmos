@@ -10,6 +10,5 @@
     "prop-types": "^15.6.2",
     "resolve-from": "^4.0.0",
     "slash": "^2.0.0"
-  },
-  "xo": false
+  }
 }

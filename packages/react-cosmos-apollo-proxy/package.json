@@ -14,7 +14,6 @@
     "react-apollo": "^2.1.11",
     "react-cosmos-shared": "^4.6.1"
   },
-  "xo": false,
   "devDependencies": {
     "async-until": "^1.1.1",
     "fetch-mock": "^5.12.2",

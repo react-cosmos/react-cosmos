@@ -22,7 +22,6 @@
     "react-cosmos-apollo-proxy": "^4.6.1",
     "react-cosmos-shared": "^4.6.1"
   },
-  "xo": false,
   "private": true,
   "devDependencies": {
     "babel-cli": "^6.26.0"

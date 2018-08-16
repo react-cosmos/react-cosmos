@@ -8,6 +8,5 @@
   "dependencies": {
     "react-cosmos-shared": "^4.6.1",
     "xhr-mock": "^2.4.1"
-  },
-  "xo": false
+  }
 }

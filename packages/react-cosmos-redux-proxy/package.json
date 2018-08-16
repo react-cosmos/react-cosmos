@@ -9,6 +9,5 @@
     "lodash.omit": "^4.5.0",
     "react-cosmos-shared": "^4.6.1",
     "redux": "^4.0.0"
-  },
-  "xo": false
+  }
 }

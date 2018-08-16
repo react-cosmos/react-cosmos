@@ -28,6 +28,7 @@ exports[`WebIndexErrorScreen custom webpack config renders correctly 1`] = `
            
           <a
             href="https://github.com/jantimon/html-webpack-plugin"
+            rel="noopener noreferrer"
             target="_blank"
           >
             html-webpack-plugin
@@ -45,6 +46,7 @@ exports[`WebIndexErrorScreen custom webpack config renders correctly 1`] = `
          
         <a
           href="https://github.com/react-cosmos/react-cosmos/issues/new"
+          rel="noopener noreferrer"
           target="_blank"
         >
           report your error
@@ -94,6 +96,7 @@ exports[`WebIndexErrorScreen default webpack config renders correctly 1`] = `
          
         <a
           href="https://github.com/react-cosmos/react-cosmos/issues/new"
+          rel="noopener noreferrer"
           target="_blank"
         >
           report your error

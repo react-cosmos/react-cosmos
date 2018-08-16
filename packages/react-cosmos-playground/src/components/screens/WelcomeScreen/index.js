@@ -29,6 +29,7 @@ class WelcomeScreen extends Component {
               <a
                 target="_blank"
                 href="https://github.com/react-cosmos/react-cosmos#proxies"
+                rel="noopener noreferrer"
               >
                 proxies
               </a>
@@ -41,6 +42,7 @@ class WelcomeScreen extends Component {
               <a
                 target="_blank"
                 href="https://github.com/jeancroy/fuzz-aldrin-plus"
+                rel="noopener noreferrer"
               >
                 fuzzy
               </a>
@@ -51,6 +53,7 @@ class WelcomeScreen extends Component {
               <a
                 target="_blank"
                 href="https://github.com/react-cosmos/react-cosmos#configuration"
+                rel="noopener noreferrer"
               >
                 globally
               </a>
@@ -62,6 +65,7 @@ class WelcomeScreen extends Component {
             <a
               target="_blank"
               href="https://github.com/react-cosmos/react-cosmos/blob/master/CONTRIBUTING.md"
+              rel="noopener noreferrer"
             >
               contributor
             </a>
@@ -87,6 +91,7 @@ class WelcomeScreen extends Component {
             <a
               target="_blank"
               href="https://github.com/react-cosmos/react-cosmos#fixtures"
+              rel="noopener noreferrer"
             >
               fixture
             </a>{' '}
@@ -97,6 +102,7 @@ class WelcomeScreen extends Component {
             <a
               target="_blank"
               href="https://github.com/react-cosmos/react-cosmos/issues/new"
+              rel="noopener noreferrer"
             >
               GitHub issue
             </a>{' '}

@@ -46,6 +46,7 @@ export default class WebIndexErrorScreen extends Component<Props> {
               <a
                 target="_blank"
                 href="https://github.com/jantimon/html-webpack-plugin"
+                rel="noopener noreferrer"
               >
                 html-webpack-plugin
               </a>{' '}

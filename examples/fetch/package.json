@@ -11,6 +11,5 @@
     "react-cosmos": "^4.7.0-2",
     "react-cosmos-fetch-proxy": "^4.6.1"
   },
-  "xo": false,
   "private": true
 }

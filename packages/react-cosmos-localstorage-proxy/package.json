@@ -7,6 +7,5 @@
   "main": "index.js",
   "dependencies": {
     "react-cosmos-shared": "^4.6.1"
-  },
-  "xo": false
+  }
 }

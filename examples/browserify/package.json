@@ -17,6 +17,5 @@
     "react-cosmos-voyager2": "^4.6.4",
     "require-globify": "^1.4.1"
   },
-  "xo": false,
   "private": true
 }

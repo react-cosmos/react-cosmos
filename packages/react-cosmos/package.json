@@ -36,6 +36,5 @@
     "cosmos-export": "./bin/cosmos-export.js",
     "cosmos-native": "./bin/cosmos-native.js",
     "print-fixture-files": "./bin/print-fixture-files.js"
-  },
-  "xo": false
+  }
 }
