@@ -25,3 +25,13 @@ it('renders fixture with mocked count', () => {
     )
   ).toBe('5 times');
 });
+
+it('renders fixture with (implicit) mocked count', () => {
+  expect(
+    render(
+      <ComponentState state={{ count: 5 }}>
+        <Counter />
+      </ComponentState>
+    )
+  ).toBe('5 times');
+});
