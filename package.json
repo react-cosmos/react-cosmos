@@ -62,7 +62,7 @@
     "eslint-plugin-react": "^7.11.1",
     "eventsource": "^1.0.5",
     "file-loader": "^1.1.11",
-    "flow-bin": "^0.78.0",
+    "flow-bin": "^0.79.0",
     "flow-typed": "^2.5.1",
     "glob": "^7.1.2",
     "html-webpack-plugin": "^3.2.0",
