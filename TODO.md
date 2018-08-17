@@ -18,7 +18,7 @@
     - [ ] LocalStorage
     - [ ] Fetch
     - [ ] XHR
-  - [ ] Create fixture communication layer
+  - [ ] Collect fixture data in Render context
 - [ ] Support JSX format in fixture files
 
 ## Pluggable UI
