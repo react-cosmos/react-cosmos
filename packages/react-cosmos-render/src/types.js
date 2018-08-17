@@ -1,5 +1,5 @@
 // @flow
 
-import type { Element, ComponentType } from 'react';
+import type { Node, ComponentType } from 'react';
 
-export type Fixture = string | Element<any> | ComponentType<any>;
+export type Fixture = Node | ComponentType<any>;
