@@ -9,6 +9,14 @@
 ## Explore: JSX fixtures
 
 - [ ] Create test cases for desired API
+  - [x] Props
+  - [x] State
+  - [ ] Context
+  - [ ] Redux
+  - [ ] React Router
+  - [ ] LocalStorage
+  - [ ] Fetch
+  - [ ] XHR
 
 ## Pluggable UI
 
