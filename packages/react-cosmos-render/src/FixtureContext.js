@@ -8,7 +8,7 @@ export const EMPTY_FIXTURE_DATA: FixtureData = {};
 
 const updateFixtureData: UpdateFixtureData = () => {};
 
-export const RenderContext = createContext({
+export const FixtureContext = createContext({
   fixtureData: EMPTY_FIXTURE_DATA,
   updateFixtureData
 });

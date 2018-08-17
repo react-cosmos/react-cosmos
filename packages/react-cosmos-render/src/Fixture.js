@@ -3,7 +3,7 @@
 import { isElement } from 'react-is';
 import React, { Component } from 'react';
 import { CaptureProps } from './CaptureProps';
-import { RenderContext, EMPTY_FIXTURE_DATA } from './RenderContext';
+import { FixtureContext, EMPTY_FIXTURE_DATA } from './FixtureContext';
 
 import type { Node, Element } from 'react';
 import type { FixtureData, UpdateFixtureData } from './types';
@@ -18,7 +18,7 @@ type State = {
 };
 
 // TODO: Listen to remote fixture data update (eg. how to override props?)
-export class Render extends Component<Props, State> {
+export class Fixture extends Component<Props, State> {
   updateFixtureData = (key: string, value: mixed) => {
     const { fixtureData } = this.state;
 
@@ -49,9 +49,9 @@ export class Render extends Component<Props, State> {
     const element: Element<any> = children;
 
     return (
-      <RenderContext.Provider value={this.state}>
+      <FixtureContext.Provider value={this.state}>
         <CaptureProps>{element}</CaptureProps>
-      </RenderContext.Provider>
+      </FixtureContext.Provider>
     );
   }
 }

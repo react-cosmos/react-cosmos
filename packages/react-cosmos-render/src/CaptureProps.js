@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { RenderContext } from './RenderContext';
+import { FixtureContext } from './FixtureContext';
 import { OnMount } from './OnMount';
 import { extractPropsFromObject } from './shared';
 
@@ -22,8 +22,9 @@ export class CaptureProps extends Component<Props> {
       return children;
     }
 
+    // TODO: Use fixtureData.props
     return (
-      <RenderContext.Consumer>
+      <FixtureContext.Consumer>
         {({ updateFixtureData }) => (
           <OnMount
             cb={() => updateFixtureData('props', extractPropsFromObject(props))}
@@ -31,7 +32,7 @@ export class CaptureProps extends Component<Props> {
             {children}
           </OnMount>
         )}
-      </RenderContext.Consumer>
+      </FixtureContext.Consumer>
     );
   }
 }

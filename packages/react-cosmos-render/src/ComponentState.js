@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { RenderContext } from './RenderContext';
+import { FixtureContext } from './FixtureContext';
 import { CaptureProps } from './CaptureProps';
 import { extractPropsFromObject } from './shared';
 
@@ -17,7 +17,7 @@ type Props = {
 
 export function ComponentState({ children, state }: Props) {
   return (
-    <RenderContext.Consumer>
+    <FixtureContext.Consumer>
       {({ updateFixtureData }) => (
         <ComponentStateInner
           state={state}
@@ -26,7 +26,7 @@ export function ComponentState({ children, state }: Props) {
           {children}
         </ComponentStateInner>
       )}
-    </RenderContext.Consumer>
+    </FixtureContext.Consumer>
   );
 }
 

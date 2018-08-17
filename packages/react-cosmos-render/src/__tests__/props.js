@@ -1,7 +1,8 @@
 // @flow
 
 import React, { Component } from 'react';
-import { render } from './_shared';
+import { create as render } from 'react-test-renderer';
+import { Fixture } from '../Fixture';
 
 class HelloMessage extends Component<{ name: string }> {
   render() {
@@ -10,5 +11,13 @@ class HelloMessage extends Component<{ name: string }> {
 }
 
 it('renders fixture with props', () => {
-  expect(render(<HelloMessage name="Satoshi" />)).toBe('Hello, Satoshi!');
+  expect(
+    render(
+      <Fixture>
+        <HelloMessage name="Satoshi" />
+      </Fixture>
+    ).toJSON()
+  ).toBe('Hello, Satoshi!');
 });
+
+// TODO: Test fixtureData.props
