@@ -1,29 +1,46 @@
 // @flow
 
 import React, { Component } from 'react';
+import { RenderContext } from './RenderContext';
 import { CaptureProps } from './CaptureProps';
+import { extractPropsFromObject } from './shared';
 
 import type { Element, ElementRef } from 'react';
+import type { UpdateFixtureData } from './types';
 
 type RefCb = (ref: ?ElementRef<any>) => mixed;
 
 type Props = {
   children: Element<any> | (RefCb => Element<any>),
-  state: Object
+  state?: Object
 };
 
-export class ComponentState extends Component<Props> {
-  static cosmosCaptureProps = false;
+export function ComponentState({ children, state }: Props) {
+  return (
+    <RenderContext.Consumer>
+      {({ updateFixtureData }) => (
+        <ComponentStateInner
+          state={state}
+          updateFixtureData={updateFixtureData}
+        >
+          {children}
+        </ComponentStateInner>
+      )}
+    </RenderContext.Consumer>
+  );
+}
 
+ComponentState.cosmosCaptureProps = false;
+
+type InnerProps = Props & {
+  updateFixtureData: UpdateFixtureData
+};
+
+// TODO: Listen and update fixture data on state changes
+class ComponentStateInner extends Component<InnerProps> {
   render() {
     return <CaptureProps>{this.getChildren()}</CaptureProps>;
   }
-
-  handleRef = (ref: ?ElementRef<any>) => {
-    if (ref) {
-      ref.setState(this.props.state);
-    }
-  };
 
   getChildren() {
     const { children } = this.props;
@@ -35,4 +52,18 @@ export class ComponentState extends Component<Props> {
     // Hack alert: Editing React Element by hand
     return <children.type {...children.props} ref={this.handleRef} />;
   }
+
+  handleRef = (ref: ?ElementRef<any>) => {
+    if (ref) {
+      const { state, updateFixtureData } = this.props;
+
+      if (ref.state) {
+        updateFixtureData('state', extractPropsFromObject(ref.state));
+      }
+
+      if (state) {
+        ref.setState(state);
+      }
+    }
+  };
 }

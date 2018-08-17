@@ -1,5 +1,5 @@
 // @flow
 
-import type { Node, ComponentType } from 'react';
+export type FixtureData = { [key: string]: mixed };
 
-export type Fixture = Node | ComponentType<any>;
+export type UpdateFixtureData = (key: string, value: mixed) => mixed;

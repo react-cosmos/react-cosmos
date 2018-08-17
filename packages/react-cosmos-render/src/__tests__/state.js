@@ -35,3 +35,5 @@ it('renders fixture with (implicit) mocked count', () => {
     )
   ).toBe('5 times');
 });
+
+// TODO: Test ComponentState without state

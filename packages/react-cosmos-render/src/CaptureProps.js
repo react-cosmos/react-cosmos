@@ -1,6 +1,9 @@
 // @flow
 
-import { Component } from 'react';
+import React, { Component } from 'react';
+import { RenderContext } from './RenderContext';
+import { OnMount } from './OnMount';
+import { extractPropsFromObject } from './shared';
 
 import type { Element } from 'react';
 
@@ -11,18 +14,24 @@ type Props = {
 export class CaptureProps extends Component<Props> {
   static cosmosCaptureProps = false;
 
-  componentDidMount() {
-    const { type, props } = this.props.children;
-
-    if (type.cosmosCaptureProps !== false) {
-      // TODO: Communicate via Context
-      console.log('Captured component props', props);
-    }
-  }
-
   render() {
     const { children } = this.props;
+    const { type, props } = children;
 
-    return children;
+    if (type.cosmosCaptureProps === false) {
+      return children;
+    }
+
+    return (
+      <RenderContext.Consumer>
+        {({ updateFixtureData }) => (
+          <OnMount
+            cb={() => updateFixtureData('props', extractPropsFromObject(props))}
+          >
+            {children}
+          </OnMount>
+        )}
+      </RenderContext.Consumer>
+    );
   }
 }
