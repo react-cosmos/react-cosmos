@@ -2,9 +2,13 @@
 
 - [React Native integration](#react-native-integration)
 - [Pluggable UI](#pluggable-ui)
-- Explore: JSX fixtures
+- [Explore: JSX fixtures](#explore-jsx-fixtures)
 - UI control panel
 - Redesign docs
+
+## Explore: JSX fixtures
+
+- [ ] Create test cases for desired API
 
 ## Pluggable UI
 

@@ -1,0 +1,14 @@
+{
+  "name": "react-cosmos-render",
+  "version": "4.6.4",
+  "description": "Renderer for React Cosmos fixtures",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-render",
+  "license": "MIT",
+  "main": "index.js",
+  "dependencies": {
+    "prop-types": "^15.6.2",
+    "react-cosmos-shared": "^4.6.1",
+    "react-is": "^16.4.2",
+    "socket.io-client": "^2.1.1"
+  }
+}
