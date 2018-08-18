@@ -30,13 +30,13 @@ export class Fixture extends Component<Props, FixtureContextValue> {
     return null;
   }
 
-  updateFixtureData = (key: string, value: mixed) => {
+  updateFixtureData = (fixtureDataParts: $Shape<FixtureData>) => {
     const { fixtureData, onUpdate } = this.props;
 
     if (typeof onUpdate === 'function') {
       onUpdate({
         ...fixtureData,
-        [key]: value
+        ...fixtureDataParts
       });
     }
   };

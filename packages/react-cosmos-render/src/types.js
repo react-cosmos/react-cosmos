@@ -1,20 +1,29 @@
 // @flow
 
-export type FixtureDataProp = {
+type FixtureDataValue = {
   serializable: boolean,
   key: string,
   value: mixed
 };
 
-// TODO: Tie props data to component (uniqueId + displayName)
-export type FixtureDataProps = Array<FixtureDataProp>;
+export type FixtureDataValues = Array<FixtureDataValue>;
+
+export type ComponentMetadata = {
+  id: number,
+  name: string
+};
+
+export type FixtureDataProps = Array<{
+  component: ComponentMetadata,
+  values: FixtureDataValues
+}>;
 
 export type FixtureData = {
   props?: FixtureDataProps,
   [key: string]: mixed
 };
 
-export type UpdateFixtureData = (key: string, value: mixed) => mixed;
+export type UpdateFixtureData = ($Shape<FixtureData>) => mixed;
 
 export type FixtureContextValue = {
   fixtureData: FixtureData,

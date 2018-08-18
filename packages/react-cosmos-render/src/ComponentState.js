@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { FixtureContext } from './FixtureContext';
 import { CaptureProps } from './CaptureProps';
-import { extractPropsFromObject } from './shared';
+import { extractValuesFromObject } from './shared/values';
 
 import type { Element, ElementRef } from 'react';
 import type { UpdateFixtureData } from './types';
@@ -58,10 +58,11 @@ class ComponentStateInner extends Component<InnerProps> {
       const { state, updateFixtureData } = this.props;
 
       if (ref.state) {
-        updateFixtureData('state', extractPropsFromObject(ref.state));
+        updateFixtureData({ state: extractValuesFromObject(ref.state) });
       }
 
       if (state) {
+        // TODO: Read from fixtureData
         ref.setState(state);
       }
     }

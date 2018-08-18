@@ -1,8 +1,13 @@
 // @flow
 
+import find from 'lodash/find';
 import React, { Component, cloneElement } from 'react';
 import { FixtureContext } from './FixtureContext';
-import { extractPropsFromObject } from './shared';
+import { extractValuesFromObject } from './shared/values';
+import {
+  getComponentMetadata,
+  getComponentId
+} from './shared/component-metadata';
 
 import type { Element } from 'react';
 import type { FixtureData, UpdateFixtureData } from './types';
@@ -45,10 +50,24 @@ type InnerProps = {
 
 class CapturePropsInner extends Component<InnerProps> {
   componentDidMount() {
-    const { children, updateFixtureData } = this.props;
+    const { children, fixtureData, updateFixtureData } = this.props;
+    const component = getComponentMetadata(children.type);
+
+    const existingFixtureDataProps = fixtureData.props || [];
+    const propsForOtherComponents = existingFixtureDataProps.filter(
+      props => props.component.id !== component.id
+    );
 
     // Update fixture data with original component props defined in fixture.
-    updateFixtureData('props', extractPropsFromObject(children.props));
+    updateFixtureData({
+      props: [
+        ...propsForOtherComponents,
+        {
+          component,
+          values: extractValuesFromObject(children.props)
+        }
+      ]
+    });
   }
 
   shouldComponentUpdate(nextProps) {
@@ -60,21 +79,35 @@ class CapturePropsInner extends Component<InnerProps> {
 
     return cloneElement(
       children,
-      extendOriginalPropsWithFixtureData(children.props, fixtureData)
+      extendOriginalPropsWithFixtureData(children, fixtureData)
     );
   }
 }
 
-function extendOriginalPropsWithFixtureData(originalProps, fixtureData) {
-  if (!fixtureData.props) {
+function extendOriginalPropsWithFixtureData(element, fixtureData) {
+  const { type, props: originalProps } = element;
+
+  if (!fixtureData.props || fixtureData.props.length === 0) {
     return originalProps;
   }
 
+  const componentId = getComponentId(type);
+  const relatedProps = find(
+    fixtureData.props,
+    props => props.component.id === componentId
+  );
+
+  if (!relatedProps) {
+    // At this point fixtureData has props, but only related to other components
+    return originalProps;
+  }
+
+  const { values } = relatedProps;
   const mergedProps = {};
 
   // Use latest prop value for serializable props, and fall back to original
   // value for unserializable props.
-  fixtureData.props.forEach(({ serializable, key, value }) => {
+  values.forEach(({ serializable, key, value }) => {
     mergedProps[key] = serializable ? value : originalProps[key];
   });
 

@@ -28,15 +28,25 @@ it('captures props', () => {
     </Fixture>
   );
 
-  expect(onUpdate).toHaveBeenCalledWith({
-    props: [
-      {
-        serializable: true,
-        key: 'name',
-        value: 'Satoshi'
-      }
-    ]
-  });
+  expect(onUpdate).toBeCalledWith(
+    expect.objectContaining({
+      props: [
+        {
+          component: {
+            id: expect.any(Number),
+            name: 'HelloMessage'
+          },
+          values: [
+            {
+              serializable: true,
+              key: 'name',
+              value: 'Satoshi'
+            }
+          ]
+        }
+      ]
+    })
+  );
 });
 
 it('overwrites prop', () => {
@@ -46,9 +56,14 @@ it('overwrites prop', () => {
         fixtureData={{
           props: [
             {
-              serializable: true,
-              key: 'name',
-              value: 'Vitalik'
+              component: { id: 1, name: 'Test' },
+              values: [
+                {
+                  serializable: true,
+                  key: 'name',
+                  value: 'Vitalik'
+                }
+              ]
             }
           ]
         }}
@@ -59,12 +74,17 @@ it('overwrites prop', () => {
   ).toBe('Hello, Vitalik!');
 });
 
-it('removes prop', () => {
+it('clears props', () => {
   expect(
     render(
       <Fixture
         fixtureData={{
-          props: []
+          props: [
+            {
+              component: { id: 1, name: 'Test' },
+              values: []
+            }
+          ]
         }}
       >
         <HelloMessage name="Satoshi" />
