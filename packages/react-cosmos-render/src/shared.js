@@ -1,12 +1,6 @@
 // @flow
 
-type FixtureDataProp = {
-  serializable: boolean,
-  key: string,
-  value: mixed
-};
-
-type FixtureDataProps = Array<FixtureDataProp>;
+import type { FixtureDataProps } from './types';
 
 // Why store unserializable props in fixture data?
 // - Because they still provides value in the Cosmos UI. They let the user know

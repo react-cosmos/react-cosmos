@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { create } from 'react-test-renderer';
+import { create as render } from 'react-test-renderer';
 import { Fixture } from '../Fixture';
 import { ComponentState } from '../ComponentState';
 
@@ -13,17 +13,17 @@ class Counter extends Component<{}, { count: number }> {
   }
 }
 
-it('renders fixture with initial count', () => {
+it('renders initial count', () => {
   expect(
     render(
       <Fixture>
         <Counter />
       </Fixture>
-    )
+    ).toJSON()
   ).toBe('0 times');
 });
 
-it('renders fixture with (explicit) mocked count', () => {
+it('renders (explicit) mocked count', () => {
   expect(
     render(
       <Fixture>
@@ -31,11 +31,11 @@ it('renders fixture with (explicit) mocked count', () => {
           {ref => <Counter ref={ref} />}
         </ComponentState>
       </Fixture>
-    )
+    ).toJSON()
   ).toBe('5 times');
 });
 
-it('renders fixture with (implicit) mocked count', () => {
+it('renders (implicit) mocked count', () => {
   expect(
     render(
       <Fixture>
@@ -43,12 +43,8 @@ it('renders fixture with (implicit) mocked count', () => {
           <Counter />
         </ComponentState>
       </Fixture>
-    )
+    ).toJSON()
   ).toBe('5 times');
 });
 
 // TODO: ComponentState without state
-
-function render(node) {
-  return create(node).toJSON();
-}
