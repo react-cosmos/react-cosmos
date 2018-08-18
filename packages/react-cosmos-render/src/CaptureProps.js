@@ -23,10 +23,16 @@ export class CaptureProps extends Component<Props> {
     }
 
     // TODO: Use fixtureData.props
+    // Merge {
+    //   ...props.children.props,
+    //   pickSerializableProps(fixtureData.props)
+    // }
+    // shouldComponentUpdate = false if fixtureData.props don't change
     return (
       <FixtureContext.Consumer>
         {({ updateFixtureData }) => (
           <OnMount
+            // TODO: Tie props data to component (uniqueId + displayName)
             cb={() => updateFixtureData('props', extractPropsFromObject(props))}
           >
             {children}

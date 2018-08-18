@@ -1,11 +1,18 @@
 // @flow
 
-type FixtureDataProps = Array<{ key: string, value: mixed }>;
+type FixtureDataProp = {
+  serializable: boolean,
+  key: string,
+  value: mixed
+};
 
-// TODO: Mark serializable/unserializable props
+type FixtureDataProps = Array<FixtureDataProp>;
+
 export function extractPropsFromObject(object: {}): FixtureDataProps {
-  return Object.keys(object).reduce(
-    (data, key) => [...data, { key, value: object[key] }],
-    []
-  );
+  return Object.keys(object).map(key => ({
+    // TODO: Detect unserializable props and stringify values
+    serializable: true,
+    key,
+    value: object[key]
+  }));
 }

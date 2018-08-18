@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { create as render } from 'react-test-renderer';
+import { create } from 'react-test-renderer';
 import { Fixture } from '../Fixture';
 import { ComponentState } from '../ComponentState';
 
@@ -19,7 +19,7 @@ it('renders fixture with initial count', () => {
       <Fixture>
         <Counter />
       </Fixture>
-    ).toJSON()
+    )
   ).toBe('0 times');
 });
 
@@ -31,7 +31,7 @@ it('renders fixture with (explicit) mocked count', () => {
           {ref => <Counter ref={ref} />}
         </ComponentState>
       </Fixture>
-    ).toJSON()
+    )
   ).toBe('5 times');
 });
 
@@ -43,8 +43,12 @@ it('renders fixture with (implicit) mocked count', () => {
           <Counter />
         </ComponentState>
       </Fixture>
-    ).toJSON()
+    )
   ).toBe('5 times');
 });
 
-// TODO: Test ComponentState without state
+// TODO: ComponentState without state
+
+function render(node) {
+  return create(node).toJSON();
+}

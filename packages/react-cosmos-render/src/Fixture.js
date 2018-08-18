@@ -6,35 +6,45 @@ import { CaptureProps } from './CaptureProps';
 import { FixtureContext, EMPTY_FIXTURE_DATA } from './FixtureContext';
 
 import type { Node, Element } from 'react';
-import type { FixtureData, UpdateFixtureData } from './types';
+import type { FixtureData, FixtureContextValue } from './types';
 
 type Props = {
-  children: Node
-};
-
-type State = {
+  children: Node,
   fixtureData: FixtureData,
-  updateFixtureData: UpdateFixtureData
+  onUpdate?: (fixtureData: FixtureData) => mixed
 };
 
-// TODO: Listen to remote fixture data update (eg. how to override props?)
-export class Fixture extends Component<Props, State> {
-  updateFixtureData = (key: string, value: mixed) => {
-    const { fixtureData } = this.state;
-
-    // TODO: Publish fixture data remotely
-    console.log('Fixture data update', { key, value });
-
-    this.setState({
-      fixtureData: {
-        ...fixtureData,
-        [key]: value
-      }
-    });
+export class Fixture extends Component<Props, FixtureContextValue> {
+  static defaultProps = {
+    fixtureData: EMPTY_FIXTURE_DATA
   };
 
+  static getDerivedStateFromProps(props: Props, state: FixtureContextValue) {
+    if (props.fixtureData !== state.fixtureData) {
+      return {
+        fixtureData: props.fixtureData,
+        updateFixtureData: state.updateFixtureData
+      };
+    }
+
+    return null;
+  }
+
+  updateFixtureData = (key: string, value: mixed) => {
+    const { fixtureData, onUpdate } = this.props;
+
+    if (typeof onUpdate === 'function') {
+      onUpdate({
+        ...fixtureData,
+        [key]: value
+      });
+    }
+  };
+
+  // Provider value is stored in an object with reference identity to prevent
+  // unintentional renders https://reactjs.org/docs/context.html#caveats
   state = {
-    fixtureData: EMPTY_FIXTURE_DATA,
+    fixtureData: this.props.fixtureData,
     updateFixtureData: this.updateFixtureData
   };
 
