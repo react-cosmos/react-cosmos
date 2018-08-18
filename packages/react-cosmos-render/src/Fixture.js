@@ -14,6 +14,11 @@ type Props = {
   onUpdate?: (fixtureData: FixtureData) => mixed
 };
 
+// NOTE: Maybe rename to FixtureProvider, and open up Fixture component for
+// naming and other customization. Eg.
+// <Fixture name="An interesting state" namespace="nested/as/follows">
+//   <Button>Click me</button>
+// </Fixture>
 export class Fixture extends Component<Props, FixtureContextValue> {
   static defaultProps = {
     fixtureData: EMPTY_FIXTURE_DATA
