@@ -33,6 +33,7 @@ export class CaptureProps extends Component<Props> {
         {({ updateFixtureData }) => (
           <OnMount
             // TODO: Tie props data to component (uniqueId + displayName)
+            // fixtureData.props[c].renderKey
             cb={() => updateFixtureData('props', extractPropsFromObject(props))}
           >
             {children}
