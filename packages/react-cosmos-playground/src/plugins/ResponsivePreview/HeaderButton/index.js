@@ -44,15 +44,18 @@ export class HeaderButton extends Component<Props> {
       setPluginState(uiContext, {
         enabled: false
       });
-    } else if (pluginState.viewport) {
-      setPluginState(uiContext, {
-        enabled: true,
-        viewport: pluginState.viewport
-      });
     } else {
+      const viewport =
+        pluginState.viewport || (await getLastViewportFromBrowserHistory());
+
+      editFixture({
+        ...state.fixtureBody,
+        viewport
+      });
+
       setPluginState(uiContext, {
         enabled: true,
-        viewport: await getLastViewportFromBrowserHistory()
+        viewport
       });
     }
   };
