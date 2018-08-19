@@ -17,12 +17,12 @@ async function runTask(version: string) {
     'yarn',
     [
       'lerna',
-      'publish',
-      '--skip-npm',
-      // '--skip-git', // Uncomment for a dry run
-      '--yes',
-      '--repo-version',
-      version
+      'version',
+      version,
+      // Uncomment for a dry run
+      // '--no-git-tag-version',
+      // '--no-push',
+      '--yes'
     ],
     {
       cwd: join(__dirname, '..')
