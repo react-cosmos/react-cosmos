@@ -24,7 +24,7 @@
     "build": "babel-node ./scripts/build.js",
     "link-entries": "babel-node ./scripts/link-entries.js",
     "pre-release": "yarn clear-build && yarn build && yarn link-entries dist && yarn test",
-    "lerna-publish": "lerna publish --registry=https://registry.npmjs.org/ --skip-git",
+    "lerna-publish": "lerna publish --registry=https://registry.npmjs.org/ --no-git-tag-version --no-push",
     "release": "yarn pre-release && yarn lerna-publish && yarn post-release",
     "release:next": "yarn pre-release && yarn lerna-publish --npm-tag=next && yarn post-release",
     "post-release": "yarn link-entries src && babel-node ./scripts/commit-release.js"
