@@ -54,18 +54,7 @@ it('overwrites prop', () => {
     create(
       <Fixture
         fixtureState={{
-          props: [
-            {
-              component: { id: 1, name: 'Test' },
-              values: [
-                {
-                  serializable: true,
-                  key: 'name',
-                  value: 'Vitalik'
-                }
-              ]
-            }
-          ]
+          props: getPropsWithName('Vitalik')
         }}
       >
         <HelloMessage name="Satoshi" />
@@ -74,17 +63,12 @@ it('overwrites prop', () => {
   ).toBe('Hello, Vitalik!');
 });
 
-it('clears props', () => {
+it('clears prop', () => {
   expect(
     create(
       <Fixture
         fixtureState={{
-          props: [
-            {
-              component: { id: 1, name: 'Test' },
-              values: []
-            }
-          ]
+          props: getPropsWithNoValues()
         }}
       >
         <HelloMessage name="Satoshi" />
@@ -93,51 +77,71 @@ it('clears props', () => {
   ).toBe('Hello, Guest!');
 });
 
-it('overwrites prop again on update', () => {
-  function getPropsWithName(name) {
-    return [
-      {
-        component: { id: 1, name: 'Test' },
-        values: [
-          {
-            serializable: true,
-            key: 'name',
-            value: name
-          }
-        ]
-      }
-    ];
-  }
-
-  const instance = create(
-    <Fixture
-      fixtureState={{
-        props: getPropsWithName('Vitalik')
-      }}
-    >
+it('overwrites prop on update', () => {
+  const MyFixture = ({ props }) => (
+    <Fixture fixtureState={{ props }}>
       <HelloMessage name="Satoshi" />
     </Fixture>
   );
 
-  instance.update(
-    <Fixture
-      fixtureState={{
-        props: getPropsWithName('Elon')
-      }}
-    >
-      <HelloMessage name="Satoshi" />
-    </Fixture>
-  );
+  const instance = create(<MyFixture props={getPropsWithName('Vitalik')} />);
+  instance.update(<MyFixture props={getPropsWithName('Elon')} />);
 
   expect(instance.toJSON()).toBe('Hello, Elon!');
 });
 
-// TODO: fixtureState change
+it('clears prop on update', () => {
+  const MyFixture = ({ props }) => (
+    <Fixture fixtureState={{ props }}>
+      <HelloMessage name="Satoshi" />
+    </Fixture>
+  );
 
-// TODO: fixtureState change to null
+  const instance = create(<MyFixture props={getPropsWithName('Vitalik')} />);
+  instance.update(<MyFixture props={getPropsWithNoValues()} />);
+
+  expect(instance.toJSON()).toBe('Hello, Guest!');
+});
+
+it('reverts to original prop on update', () => {
+  const MyFixture = ({ props }) => (
+    <Fixture fixtureState={{ props }}>
+      <HelloMessage name="Satoshi" />
+    </Fixture>
+  );
+
+  const instance = create(<MyFixture props={getPropsWithName('Vitalik')} />);
+  instance.update(<MyFixture props={[]} />);
+
+  expect(instance.toJSON()).toBe('Hello, Satoshi!');
+});
 
 // TODO: fixtureState change creates new instance (new key)
 
 // TODO: fixtureState change transitions props (reuse key)
 
 // TODO: captures props from multiple components
+
+function getPropsWithName(name) {
+  return [
+    {
+      component: { id: 1, name: 'Test' },
+      values: [
+        {
+          serializable: true,
+          key: 'name',
+          value: name
+        }
+      ]
+    }
+  ];
+}
+
+function getPropsWithNoValues() {
+  return [
+    {
+      component: { id: 1, name: 'Test' },
+      values: []
+    }
+  ];
+}
