@@ -36,9 +36,9 @@ export function attachWebpack({
     }
   });
 
-  const onWebpackDone = new Promise(resolve =>
-    webpackCompiler.plugin('done', resolve)
-  );
+  const onWebpackDone: Promise<boolean> = new Promise(resolve => {
+    webpackCompiler.plugin('done', () => resolve(true));
+  });
 
   console.log('[Cosmos] Building webpack...');
   const wdmInst = webpackDevMiddleware(webpackCompiler, {
