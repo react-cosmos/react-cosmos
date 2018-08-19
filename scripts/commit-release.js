@@ -18,12 +18,11 @@ async function runTask(version: string) {
     [
       'lerna',
       'version',
+      version,
       // Uncomment for a dry run
       // '--no-git-tag-version',
       // '--no-push',
-      '--yes',
-      '--repo-version',
-      version
+      '--yes'
     ],
     {
       cwd: join(__dirname, '..')
