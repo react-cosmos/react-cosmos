@@ -1,31 +1,31 @@
 // @flow
 
-type FixtureDataValue = {
+type FixtureStateValue = {
   serializable: boolean,
   key: string,
   value: mixed
 };
 
-export type FixtureDataValues = Array<FixtureDataValue>;
+export type FixtureStateValues = Array<FixtureStateValue>;
 
 export type ComponentMetadata = {
   id: number,
   name: string
 };
 
-export type FixtureDataProps = Array<{
+export type FixtureStateProps = Array<{
   component: ComponentMetadata,
-  values: FixtureDataValues
+  values: FixtureStateValues
 }>;
 
-export type FixtureData = {
-  props?: FixtureDataProps,
+export type FixtureState = {
+  props?: FixtureStateProps,
   [key: string]: mixed
 };
 
-export type UpdateFixtureData = ($Shape<FixtureData>) => mixed;
+export type SetFixtureState = ($Shape<FixtureState>) => mixed;
 
 export type FixtureContextValue = {
-  fixtureData: FixtureData,
-  updateFixtureData: UpdateFixtureData
+  fixtureState: FixtureState,
+  setFixtureState: SetFixtureState
 };

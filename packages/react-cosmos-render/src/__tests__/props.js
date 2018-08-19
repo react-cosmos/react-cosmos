@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { create as render } from 'react-test-renderer';
+import { create } from 'react-test-renderer';
 import { Fixture } from '../Fixture';
 
 class HelloMessage extends Component<{ name: string }> {
@@ -12,7 +12,7 @@ class HelloMessage extends Component<{ name: string }> {
 
 it('renders with props', () => {
   expect(
-    render(
+    create(
       <Fixture>
         <HelloMessage name="Satoshi" />
       </Fixture>
@@ -22,7 +22,7 @@ it('renders with props', () => {
 
 it('captures props', () => {
   const onUpdate = jest.fn();
-  render(
+  create(
     <Fixture onUpdate={onUpdate}>
       <HelloMessage name="Satoshi" />
     </Fixture>
@@ -51,9 +51,9 @@ it('captures props', () => {
 
 it('overwrites prop', () => {
   expect(
-    render(
+    create(
       <Fixture
-        fixtureData={{
+        fixtureState={{
           props: [
             {
               component: { id: 1, name: 'Test' },
@@ -76,9 +76,9 @@ it('overwrites prop', () => {
 
 it('clears props', () => {
   expect(
-    render(
+    create(
       <Fixture
-        fixtureData={{
+        fixtureState={{
           props: [
             {
               component: { id: 1, name: 'Test' },
@@ -93,12 +93,51 @@ it('clears props', () => {
   ).toBe('Hello, Guest!');
 });
 
-// TODO: fixtureData change
+it('overwrites prop again on update', () => {
+  function getPropsWithName(name) {
+    return [
+      {
+        component: { id: 1, name: 'Test' },
+        values: [
+          {
+            serializable: true,
+            key: 'name',
+            value: name
+          }
+        ]
+      }
+    ];
+  }
 
-// TODO: fixtureData change to null
+  const instance = create(
+    <Fixture
+      fixtureState={{
+        props: getPropsWithName('Vitalik')
+      }}
+    >
+      <HelloMessage name="Satoshi" />
+    </Fixture>
+  );
 
-// TODO: fixtureData change creates new instance (new key)
+  instance.update(
+    <Fixture
+      fixtureState={{
+        props: getPropsWithName('Elon')
+      }}
+    >
+      <HelloMessage name="Satoshi" />
+    </Fixture>
+  );
 
-// TODO: fixtureData change transitions props (reuse key)
+  expect(instance.toJSON()).toBe('Hello, Elon!');
+});
+
+// TODO: fixtureState change
+
+// TODO: fixtureState change to null
+
+// TODO: fixtureState change creates new instance (new key)
+
+// TODO: fixtureState change transitions props (reuse key)
 
 // TODO: captures props from multiple components

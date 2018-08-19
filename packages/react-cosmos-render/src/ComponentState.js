@@ -6,7 +6,7 @@ import { CaptureProps } from './CaptureProps';
 import { extractValuesFromObject } from './shared/values';
 
 import type { Element, ElementRef } from 'react';
-import type { UpdateFixtureData } from './types';
+import type { SetFixtureState } from './types';
 
 type RefCb = (ref: ?ElementRef<any>) => mixed;
 
@@ -18,11 +18,8 @@ type Props = {
 export function ComponentState({ children, state }: Props) {
   return (
     <FixtureContext.Consumer>
-      {({ updateFixtureData }) => (
-        <ComponentStateInner
-          state={state}
-          updateFixtureData={updateFixtureData}
-        >
+      {({ setFixtureState }) => (
+        <ComponentStateInner state={state} setFixtureState={setFixtureState}>
           {children}
         </ComponentStateInner>
       )}
@@ -33,10 +30,10 @@ export function ComponentState({ children, state }: Props) {
 ComponentState.cosmosCaptureProps = false;
 
 type InnerProps = Props & {
-  updateFixtureData: UpdateFixtureData
+  setFixtureState: SetFixtureState
 };
 
-// TODO: Listen and update fixture data on state changes
+// TODO: Listen and update fixture state on component state changes
 class ComponentStateInner extends Component<InnerProps> {
   render() {
     return <CaptureProps>{this.getChildren()}</CaptureProps>;
@@ -55,10 +52,10 @@ class ComponentStateInner extends Component<InnerProps> {
 
   handleRef = (ref: ?ElementRef<any>) => {
     if (ref) {
-      const { state, updateFixtureData } = this.props;
+      const { state, setFixtureState } = this.props;
 
       if (ref.state) {
-        updateFixtureData({ state: extractValuesFromObject(ref.state) });
+        setFixtureState({ state: extractValuesFromObject(ref.state) });
       }
 
       if (state) {

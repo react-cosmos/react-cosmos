@@ -10,7 +10,7 @@ import {
 } from './shared/component-metadata';
 
 import type { Element } from 'react';
-import type { FixtureData, UpdateFixtureData } from './types';
+import type { FixtureState, SetFixtureState } from './types';
 
 type Props = {
   children: Element<any>
@@ -29,10 +29,10 @@ export class CaptureProps extends Component<Props> {
 
     return (
       <FixtureContext.Consumer>
-        {({ fixtureData, updateFixtureData }) => (
+        {({ fixtureState, setFixtureState }) => (
           <CapturePropsInner
-            fixtureData={fixtureData}
-            updateFixtureData={updateFixtureData}
+            fixtureState={fixtureState}
+            setFixtureState={setFixtureState}
           >
             {children}
           </CapturePropsInner>
@@ -44,22 +44,22 @@ export class CaptureProps extends Component<Props> {
 
 type InnerProps = {
   children: Element<any>,
-  fixtureData: FixtureData,
-  updateFixtureData: UpdateFixtureData
+  fixtureState: FixtureState,
+  setFixtureState: SetFixtureState
 };
 
 class CapturePropsInner extends Component<InnerProps> {
   componentDidMount() {
-    const { children, fixtureData, updateFixtureData } = this.props;
+    const { children, fixtureState, setFixtureState } = this.props;
     const component = getComponentMetadata(children.type);
 
-    const existingFixtureDataProps = fixtureData.props || [];
-    const propsForOtherComponents = existingFixtureDataProps.filter(
+    const existingFixtureStateProps = fixtureState.props || [];
+    const propsForOtherComponents = existingFixtureStateProps.filter(
       props => props.component.id !== component.id
     );
 
-    // Update fixture data with original component props defined in fixture.
-    updateFixtureData({
+    // Update fixture state with original component props defined in fixture.
+    setFixtureState({
       props: [
         ...propsForOtherComponents,
         {
@@ -71,34 +71,34 @@ class CapturePropsInner extends Component<InnerProps> {
   }
 
   shouldComponentUpdate(nextProps) {
-    return nextProps.fixtureData.props !== this.props.fixtureData.props;
+    return nextProps.fixtureState.props !== this.props.fixtureState.props;
   }
 
   render() {
-    const { children, fixtureData } = this.props;
+    const { children, fixtureState } = this.props;
 
     return cloneElement(
       children,
-      extendOriginalPropsWithFixtureData(children, fixtureData)
+      extendOriginalPropsWithFixtureState(children, fixtureState)
     );
   }
 }
 
-function extendOriginalPropsWithFixtureData(element, fixtureData) {
+function extendOriginalPropsWithFixtureState(element, fixtureState) {
   const { type, props: originalProps } = element;
 
-  if (!fixtureData.props || fixtureData.props.length === 0) {
+  if (!fixtureState.props || fixtureState.props.length === 0) {
     return originalProps;
   }
 
   const componentId = getComponentId(type);
   const relatedProps = find(
-    fixtureData.props,
+    fixtureState.props,
     props => props.component.id === componentId
   );
 
   if (!relatedProps) {
-    // At this point fixtureData has props, but only related to other components
+    // At this point fixtureState has props, but only related to other components
     return originalProps;
   }
 
@@ -111,7 +111,7 @@ function extendOriginalPropsWithFixtureData(element, fixtureData) {
     mergedProps[key] = serializable ? value : originalProps[key];
   });
 
-  // Clear original props that were removed from fixtureData. This allows users
+  // Clear original props that were removed from fixtureState. This allows users
   // to remove original props. We need to to this because React.cloneElement
   // merges new props with original ones
   // https://reactjs.org/docs/react-api.html#cloneelement

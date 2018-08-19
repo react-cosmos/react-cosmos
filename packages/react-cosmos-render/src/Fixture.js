@@ -3,15 +3,15 @@
 import { isElement } from 'react-is';
 import React, { Component } from 'react';
 import { CaptureProps } from './CaptureProps';
-import { FixtureContext, EMPTY_FIXTURE_DATA } from './FixtureContext';
+import { FixtureContext, EMPTY_FIXTURE_STATE } from './FixtureContext';
 
 import type { Node, Element } from 'react';
-import type { FixtureData, FixtureContextValue } from './types';
+import type { FixtureState, FixtureContextValue } from './types';
 
 type Props = {
   children: Node,
-  fixtureData: FixtureData,
-  onUpdate?: (fixtureData: FixtureData) => mixed
+  fixtureState: FixtureState,
+  onUpdate?: (fixtureState: FixtureState) => mixed
 };
 
 // NOTE: Maybe rename to FixtureProvider, and open up Fixture component for
@@ -21,27 +21,27 @@ type Props = {
 // </Fixture>
 export class Fixture extends Component<Props, FixtureContextValue> {
   static defaultProps = {
-    fixtureData: EMPTY_FIXTURE_DATA
+    fixtureState: EMPTY_FIXTURE_STATE
   };
 
   static getDerivedStateFromProps(props: Props, state: FixtureContextValue) {
-    if (props.fixtureData !== state.fixtureData) {
+    if (props.fixtureState !== state.fixtureState) {
       return {
-        fixtureData: props.fixtureData,
-        updateFixtureData: state.updateFixtureData
+        fixtureState: props.fixtureState,
+        setFixtureState: state.setFixtureState
       };
     }
 
     return null;
   }
 
-  updateFixtureData = (fixtureDataParts: $Shape<FixtureData>) => {
-    const { fixtureData, onUpdate } = this.props;
+  setFixtureState = (fixtureStateParts: $Shape<FixtureState>) => {
+    const { fixtureState, onUpdate } = this.props;
 
     if (typeof onUpdate === 'function') {
       onUpdate({
-        ...fixtureData,
-        ...fixtureDataParts
+        ...fixtureState,
+        ...fixtureStateParts
       });
     }
   };
@@ -49,8 +49,8 @@ export class Fixture extends Component<Props, FixtureContextValue> {
   // Provider value is stored in an object with reference identity to prevent
   // unintentional renders https://reactjs.org/docs/context.html#caveats
   state = {
-    fixtureData: this.props.fixtureData,
-    updateFixtureData: this.updateFixtureData
+    fixtureState: this.props.fixtureState,
+    setFixtureState: this.setFixtureState
   };
 
   render() {
