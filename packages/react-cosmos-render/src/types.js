@@ -15,6 +15,7 @@ export type ComponentMetadata = {
 
 export type FixtureStateProps = Array<{
   component: ComponentMetadata,
+  renderKey: number,
   values: FixtureStateValues
 }>;
 

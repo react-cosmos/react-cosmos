@@ -1,7 +1,7 @@
 // @flow
 
 import find from 'lodash/find';
-import React, { Component, cloneElement } from 'react';
+import React, { Component } from 'react';
 import { FixtureContext } from './FixtureContext';
 import { extractValuesFromObject } from './shared/values';
 import {
@@ -15,6 +15,8 @@ import type { FixtureState, SetFixtureState } from './types';
 type Props = {
   children: Element<any>
 };
+
+const DEFAULT_RENDER_KEY = 0;
 
 export class CaptureProps extends Component<Props> {
   static cosmosCaptureProps = false;
@@ -70,6 +72,7 @@ class CapturePropsInner extends Component<InnerProps> {
           ...unrelatedProps,
           {
             component,
+            renderKey: DEFAULT_RENDER_KEY,
             values: extractValuesFromObject(children.props)
           }
         ]
@@ -82,49 +85,59 @@ class CapturePropsInner extends Component<InnerProps> {
   }
 
   render() {
-    const { children } = this.props;
-
-    return cloneElement(children, this.extendOriginalPropsWithFixtureState());
-  }
-
-  extendOriginalPropsWithFixtureState() {
     const { children, fixtureState } = this.props;
-    const { props: originalProps } = children;
+    const relatedProps = getRelatedFixtureStateProps(fixtureState, this);
 
-    if (!fixtureState.props || fixtureState.props.length === 0) {
-      return originalProps;
-    }
-
-    const instanceId = getInstanceId(this);
-    const relatedProps = find(
-      fixtureState.props,
-      props => props.component.instanceId === instanceId
-    );
-
-    if (!relatedProps) {
-      // At this point fixtureState has props, but only related to other components
-      return originalProps;
-    }
-
-    const { values } = relatedProps;
-    const mergedProps = {};
-
-    // Use latest prop value for serializable props, and fall back to original
-    // value for unserializable props.
-    values.forEach(({ serializable, key, value }) => {
-      mergedProps[key] = serializable ? value : originalProps[key];
-    });
-
-    // Clear original props that were removed from fixtureState. This allows users
-    // to remove original props. We need to to this because React.cloneElement
-    // merges new props with original ones
-    // https://reactjs.org/docs/react-api.html#cloneelement
-    Object.keys(originalProps).forEach(key => {
-      if (Object.keys(mergedProps).indexOf(key) === -1) {
-        mergedProps[key] = undefined;
-      }
-    });
-
-    return mergedProps;
+    // HACK alert: Editing React Element by hand
+    // This is blasphemy, but there are two reasons why React.cloneElement
+    // isn't ideal:
+    //   1. Props need to overridden (not merged)
+    //   2. element.key has to be set to control whether the previous instance
+    //      should be reused on not
+    // Also note that any previous key is irrelevant, as CaptureProps only
+    // accepts a *single* React.Element as children.
+    // Still, in case this method causes trouble in the future, both reasons
+    // can be overcome in the following ways:
+    //   1. Set original props that aren't present in fixture state to undefined
+    //   2. Create a wrapper component or element and to set the key on
+    // Useful links:
+    //   - https://reactjs.org/docs/react-api.html#cloneelement
+    //   - https://github.com/facebook/react/blob/15a8f031838a553e41c0b66eb1bcf1da8448104d/packages/react/src/ReactElement.js#L293-L362
+    return {
+      ...children,
+      props: extendOriginalPropsWithFixtureState(children.props, relatedProps),
+      key: relatedProps ? relatedProps.renderKey : DEFAULT_RENDER_KEY
+    };
   }
+}
+
+function getRelatedFixtureStateProps(fixtureState, instance) {
+  if (!fixtureState.props || fixtureState.props.length === 0) {
+    return null;
+  }
+
+  const instanceId = getInstanceId(instance);
+
+  return find(
+    fixtureState.props,
+    props => props.component.instanceId === instanceId
+  );
+}
+
+function extendOriginalPropsWithFixtureState(originalProps, relatedProps) {
+  if (!relatedProps) {
+    // At this point fixtureState has props, but only related to other components
+    return originalProps;
+  }
+
+  const { values } = relatedProps;
+  const mergedProps = {};
+
+  // Use latest prop value for serializable props, and fall back to original
+  // value for unserializable props.
+  values.forEach(({ serializable, key, value }) => {
+    mergedProps[key] = serializable ? value : originalProps[key];
+  });
+
+  return mergedProps;
 }

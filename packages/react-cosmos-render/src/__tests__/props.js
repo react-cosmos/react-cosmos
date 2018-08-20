@@ -5,6 +5,8 @@ import { create } from 'react-test-renderer';
 import { CaptureProps } from '../CaptureProps';
 import { FixtureProvider } from '../FixtureProvider';
 
+import type { ComponentMetadata } from '../types';
+
 class HelloMessage extends Component<{ name: string }> {
   render() {
     return `Hello, ${this.props.name || 'Guest'}!`;
@@ -36,6 +38,7 @@ it('captures props', () => {
             instanceId: expect.any(Number),
             name: 'HelloMessage'
           },
+          renderKey: expect.any(Number),
           values: [
             {
               serializable: true,
@@ -118,9 +121,91 @@ it('reverts to original prop', () => {
   expect(instance.toJSON()).toBe('Hello, Satoshi!');
 });
 
-// TODO: fixtureState change creates new instance (new key)
+it('reuses instance on props with same renderKey', () => {
+  let ref1, ref2;
 
-// TODO: fixtureState change transitions props (reuse key)
+  const instance = create(
+    <FixtureProvider>
+      <HelloMessage
+        name="Satoshi"
+        ref={ref => {
+          if (ref) {
+            ref1 = ref;
+          }
+        }}
+      />
+    </FixtureProvider>
+  );
+
+  const { fixtureState } = instance.getInstance().state;
+  const [{ component, renderKey }] = fixtureState.props;
+
+  instance.update(
+    <FixtureProvider
+      fixtureState={{
+        props: [getPropsWithName({ name: 'Vitalik', component, renderKey })]
+      }}
+    >
+      <HelloMessage
+        name="Satoshi"
+        ref={ref => {
+          if (ref) {
+            ref2 = ref;
+          }
+        }}
+      />
+    </FixtureProvider>
+  );
+
+  expect(ref1).not.toBeFalsy();
+  expect(ref1).toBe(ref2);
+});
+
+it('creates new instance on props with different renderKey', () => {
+  let ref1, ref2;
+
+  const instance = create(
+    <FixtureProvider>
+      <HelloMessage
+        name="Satoshi"
+        ref={ref => {
+          if (ref) {
+            ref1 = ref;
+          }
+        }}
+      />
+    </FixtureProvider>
+  );
+
+  const { fixtureState } = instance.getInstance().state;
+  const [{ component, renderKey }] = fixtureState.props;
+
+  instance.update(
+    <FixtureProvider
+      fixtureState={{
+        props: [
+          getPropsWithName({
+            name: 'Vitalik',
+            component,
+            renderKey: renderKey + 1
+          })
+        ]
+      }}
+    >
+      <HelloMessage
+        name="Satoshi"
+        ref={ref => {
+          if (ref) {
+            ref2 = ref;
+          }
+        }}
+      />
+    </FixtureProvider>
+  );
+
+  expect(ref1).not.toBeFalsy();
+  expect(ref1).not.toBe(ref2);
+});
 
 it('captures props from multiple components (explicit capture)', () => {
   const { getInstance } = create(
@@ -142,6 +227,7 @@ it('captures props from multiple components (explicit capture)', () => {
             instanceId: expect.any(Number),
             name: 'HelloMessage'
           },
+          renderKey: expect.any(Number),
           values: [
             {
               serializable: true,
@@ -155,6 +241,7 @@ it('captures props from multiple components (explicit capture)', () => {
             instanceId: expect.any(Number),
             name: 'HelloMessage'
           },
+          renderKey: expect.any(Number),
           values: [
             {
               serializable: true,
@@ -172,9 +259,18 @@ it('captures props from multiple components (explicit capture)', () => {
 
 // TODO: overwrites props in multiple components
 
-function getPropsWithName({ component, name }) {
+function getPropsWithName({
+  component,
+  name,
+  renderKey = 0
+}: {
+  component: ComponentMetadata,
+  name: string,
+  renderKey?: number
+}) {
   return {
     component,
+    renderKey,
     values: [
       {
         serializable: true,
@@ -188,6 +284,7 @@ function getPropsWithName({ component, name }) {
 function getPropsWithNoValues({ component }) {
   return {
     component,
+    renderKey: 0,
     values: []
   };
 }
