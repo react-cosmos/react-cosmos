@@ -62,31 +62,30 @@ class CapturePropsInner extends Component<InnerProps> {
     // from different CapturePropsInner instances. To ensure each state
     // transformation is honored we use a state updater callback.
     setFixtureState(fixtureState => {
-      const existingProps = fixtureState.props || [];
-      const unrelatedProps = existingProps.filter(
+      const propsForAllInstances = fixtureState.props || [];
+      const propsForOtherInstances = propsForAllInstances.filter(
         props => props.component.instanceId !== component.instanceId
       );
+      const propsForThisInstance = {
+        component,
+        renderKey: DEFAULT_RENDER_KEY,
+        values: extractValuesFromObject(children.props)
+      };
 
       return {
-        props: [
-          ...unrelatedProps,
-          {
-            component,
-            renderKey: DEFAULT_RENDER_KEY,
-            values: extractValuesFromObject(children.props)
-          }
-        ]
+        props: [...propsForOtherInstances, propsForThisInstance]
       };
     });
   }
 
   shouldComponentUpdate(nextProps) {
+    // TODO: Return false if related fixtureState didn't change
     return nextProps.fixtureState.props !== this.props.fixtureState.props;
   }
 
   render() {
     const { children, fixtureState } = this.props;
-    const relatedProps = getRelatedFixtureStateProps(fixtureState, this);
+    const fixtureProps = getRelatedFixtureState(fixtureState, this);
 
     // HACK alert: Editing React Element by hand
     // This is blasphemy, but there are two reasons why React.cloneElement
@@ -105,13 +104,13 @@ class CapturePropsInner extends Component<InnerProps> {
     //   - https://github.com/facebook/react/blob/15a8f031838a553e41c0b66eb1bcf1da8448104d/packages/react/src/ReactElement.js#L293-L362
     return {
       ...children,
-      props: extendOriginalPropsWithFixtureState(children.props, relatedProps),
-      key: relatedProps ? relatedProps.renderKey : DEFAULT_RENDER_KEY
+      props: extendOriginalPropsWithFixtureState(children.props, fixtureProps),
+      key: fixtureProps ? fixtureProps.renderKey : DEFAULT_RENDER_KEY
     };
   }
 }
 
-function getRelatedFixtureStateProps(fixtureState, instance) {
+function getRelatedFixtureState(fixtureState, instance) {
   if (!fixtureState.props || fixtureState.props.length === 0) {
     return null;
   }
@@ -124,13 +123,13 @@ function getRelatedFixtureStateProps(fixtureState, instance) {
   );
 }
 
-function extendOriginalPropsWithFixtureState(originalProps, relatedProps) {
-  if (!relatedProps) {
+function extendOriginalPropsWithFixtureState(originalProps, fixtureProps) {
+  if (!fixtureProps) {
     // At this point fixtureState has props, but only related to other components
     return originalProps;
   }
 
-  const { values } = relatedProps;
+  const { values } = fixtureProps;
   const mergedProps = {};
 
   // Use latest prop value for serializable props, and fall back to original

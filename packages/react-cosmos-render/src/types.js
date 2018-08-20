@@ -13,15 +13,21 @@ export type ComponentMetadata = {
   name: string
 };
 
-export type FixtureStateProps = Array<{
+export type FixtureStateProps = {
   component: ComponentMetadata,
   renderKey: number,
   values: FixtureStateValues
-}>;
+};
+
+export type FixtureStateState = {
+  component: ComponentMetadata,
+  renderKey: number,
+  values: FixtureStateValues
+};
 
 export type FixtureState = {
-  props?: FixtureStateProps,
-  // TODO: Add explicit type for state
+  props?: Array<FixtureStateProps>,
+  state?: Array<FixtureStateState>,
   [key: string]: mixed
 };
 
