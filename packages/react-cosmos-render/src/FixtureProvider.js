@@ -18,11 +18,10 @@ type Props = {
   fixtureState: FixtureState
 };
 
-// NOTE: Maybe rename to FixtureProvider, and open up Fixture component for
-// naming and other customization. Eg.
-// <Fixture name="An interesting state" namespace="nested/as/follows">
-//   <Button>Click me</button>
-// </Fixture>
+// NOTE: Maybe open up Fixture component for naming and other customization. Eg.
+//   <Fixture name="An interesting state" namespace="nested/as/follows">
+//     <Button>Click me</button>
+//   </Fixture>
 export class FixtureProvider extends Component<Props, FixtureContextValue> {
   static defaultProps = {
     fixtureState: EMPTY_FIXTURE_STATE
@@ -69,15 +68,20 @@ export class FixtureProvider extends Component<Props, FixtureContextValue> {
   getChildren() {
     const { children } = this.props;
 
-    // TODO: Also capture props on array of children
-    if (!isElement(children)) {
-      return children;
+    return Array.isArray(children)
+      ? children.map((child, index) => this.getWrappedChild(child, index))
+      : this.getWrappedChild(children);
+  }
+
+  getWrappedChild(node: Node, index?: number) {
+    if (!isElement(node)) {
+      return node;
     }
 
     // $FlowFixMe Flow can't get cues from react-is package
-    const element: Element<any> = children;
+    const element: Element<any> = node;
 
     // Automatically capture the props of the root node if it's an element
-    return <CaptureProps>{element}</CaptureProps>;
+    return <CaptureProps key={index}>{element}</CaptureProps>;
   }
 }

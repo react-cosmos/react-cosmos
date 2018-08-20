@@ -255,9 +255,79 @@ it('captures props from multiple components (explicit capture)', () => {
   );
 });
 
-// TODO: captures props from multiple components (direct children)
+it('captures props from multiple components (direct children)', () => {
+  const { getInstance } = create(
+    <FixtureProvider>
+      <HelloMessage name="Satoshi" />
+      <HelloMessage name="Vitalik" />
+    </FixtureProvider>
+  );
 
-// TODO: overwrites props in multiple components
+  expect(getInstance().state.fixtureState).toEqual(
+    expect.objectContaining({
+      props: [
+        {
+          component: {
+            instanceId: expect.any(Number),
+            name: 'HelloMessage'
+          },
+          renderKey: expect.any(Number),
+          values: [
+            {
+              serializable: true,
+              key: 'name',
+              value: 'Satoshi'
+            }
+          ]
+        },
+        {
+          component: {
+            instanceId: expect.any(Number),
+            name: 'HelloMessage'
+          },
+          renderKey: expect.any(Number),
+          values: [
+            {
+              serializable: true,
+              key: 'name',
+              value: 'Vitalik'
+            }
+          ]
+        }
+      ]
+    })
+  );
+});
+
+it('overwrites props in multiple components', () => {
+  const instance = create(
+    <FixtureProvider>
+      <HelloMessage name="Satoshi" />
+      <HelloMessage name="Vitalik" />
+    </FixtureProvider>
+  );
+
+  const [
+    { component: component1 },
+    { component: component2 }
+  ] = instance.getInstance().state.fixtureState.props;
+
+  instance.update(
+    <FixtureProvider
+      fixtureState={{
+        props: [
+          getPropsWithName({ name: 'SATOSHI', component: component1 }),
+          getPropsWithName({ name: 'VITALIK', component: component2 })
+        ]
+      }}
+    >
+      <HelloMessage name="Satoshi" />
+      <HelloMessage name="Vitalik" />
+    </FixtureProvider>
+  );
+
+  expect(instance.toJSON()).toEqual(['Hello, SATOSHI!', 'Hello, VITALIK!']);
+});
 
 function getPropsWithName({
   component,
