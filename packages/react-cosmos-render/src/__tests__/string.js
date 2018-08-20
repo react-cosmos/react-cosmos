@@ -2,8 +2,10 @@
 
 import React from 'react';
 import { create as render } from 'react-test-renderer';
-import { Fixture } from '../Fixture';
+import { FixtureProvider } from '../FixtureProvider';
 
 it('renders string node', () => {
-  expect(render(<Fixture>Hello world!</Fixture>).toJSON()).toBe('Hello world!');
+  expect(render(<FixtureProvider>Hello world!</FixtureProvider>).toJSON()).toBe(
+    'Hello world!'
+  );
 });

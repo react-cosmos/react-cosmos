@@ -3,8 +3,7 @@
 import React, { Component } from 'react';
 import { create } from 'react-test-renderer';
 import { CaptureProps } from '../CaptureProps';
-import { Fixture } from '../Fixture';
-import { FixtureConnect } from '../FixtureConnect';
+import { FixtureProvider } from '../FixtureProvider';
 
 class HelloMessage extends Component<{ name: string }> {
   render() {
@@ -15,21 +14,21 @@ class HelloMessage extends Component<{ name: string }> {
 it('renders with props', () => {
   expect(
     create(
-      <Fixture>
+      <FixtureProvider>
         <HelloMessage name="Satoshi" />
-      </Fixture>
+      </FixtureProvider>
     ).toJSON()
   ).toBe('Hello, Satoshi!');
 });
 
 it('captures props', () => {
   const { getInstance } = create(
-    <FixtureConnect>
+    <FixtureProvider>
       <HelloMessage name="Satoshi" />
-    </FixtureConnect>
+    </FixtureProvider>
   );
 
-  expect(getInstance().state).toEqual(
+  expect(getInstance().state.fixtureState).toEqual(
     expect.objectContaining({
       props: [
         {
@@ -52,21 +51,20 @@ it('captures props', () => {
 
 it('overwrites prop', () => {
   const instance = create(
-    <FixtureConnect>
+    <FixtureProvider>
       <HelloMessage name="Satoshi" />
-    </FixtureConnect>
+    </FixtureProvider>
   );
-  const { state } = instance.getInstance();
-  const { component } = state.props[0];
+  const [{ component }] = instance.getInstance().state.fixtureState.props;
 
   instance.update(
-    <FixtureConnect
+    <FixtureProvider
       fixtureState={{
         props: [getPropsWithName({ name: 'Vitalik', component })]
       }}
     >
       <HelloMessage name="Satoshi" />
-    </FixtureConnect>
+    </FixtureProvider>
   );
 
   expect(instance.toJSON()).toBe('Hello, Vitalik!');
@@ -74,21 +72,20 @@ it('overwrites prop', () => {
 
 it('clears prop', () => {
   const instance = create(
-    <FixtureConnect>
+    <FixtureProvider>
       <HelloMessage name="Satoshi" />
-    </FixtureConnect>
+    </FixtureProvider>
   );
-  const { state } = instance.getInstance();
-  const { component } = state.props[0];
+  const [{ component }] = instance.getInstance().state.fixtureState.props;
 
   instance.update(
-    <FixtureConnect
+    <FixtureProvider
       fixtureState={{
         props: [getPropsWithNoValues({ component })]
       }}
     >
       <HelloMessage name="Satoshi" />
-    </FixtureConnect>
+    </FixtureProvider>
   );
 
   expect(instance.toJSON()).toBe('Hello, Guest!');
@@ -96,26 +93,26 @@ it('clears prop', () => {
 
 it('reverts to original prop', () => {
   const instance = create(
-    <FixtureConnect>
+    <FixtureProvider>
       <HelloMessage name="Satoshi" />
-    </FixtureConnect>
+    </FixtureProvider>
   );
-  const { state } = instance.getInstance();
-  const { component } = state.props[0];
+
+  const [{ component }] = instance.getInstance().state.fixtureState.props;
 
   instance.update(
-    <FixtureConnect
+    <FixtureProvider
       fixtureState={{
         props: [getPropsWithName({ name: 'Vitalik', component })]
       }}
     >
       <HelloMessage name="Satoshi" />
-    </FixtureConnect>
+    </FixtureProvider>
   );
   instance.update(
-    <FixtureConnect fixtureState={{ props: [] }}>
+    <FixtureProvider fixtureState={{ props: [] }}>
       <HelloMessage name="Satoshi" />
-    </FixtureConnect>
+    </FixtureProvider>
   );
 
   expect(instance.toJSON()).toBe('Hello, Satoshi!');
@@ -127,17 +124,17 @@ it('reverts to original prop', () => {
 
 it('captures props from multiple components (explicit capture)', () => {
   const { getInstance } = create(
-    <FixtureConnect>
+    <FixtureProvider>
       <CaptureProps>
         <HelloMessage name="Satoshi" />
       </CaptureProps>
       <CaptureProps>
         <HelloMessage name="Vitalik" />
       </CaptureProps>
-    </FixtureConnect>
+    </FixtureProvider>
   );
 
-  expect(getInstance().state).toEqual(
+  expect(getInstance().state.fixtureState).toEqual(
     expect.objectContaining({
       props: [
         {

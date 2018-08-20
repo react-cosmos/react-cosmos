@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { create as render } from 'react-test-renderer';
-import { Fixture } from '../Fixture';
+import { FixtureProvider } from '../FixtureProvider';
 import { ComponentState } from '../ComponentState';
 
 class Counter extends Component<{}, { count: number }> {
@@ -16,9 +16,9 @@ class Counter extends Component<{}, { count: number }> {
 it('renders initial count', () => {
   expect(
     render(
-      <Fixture>
+      <FixtureProvider>
         <Counter />
-      </Fixture>
+      </FixtureProvider>
     ).toJSON()
   ).toBe('0 times');
 });
@@ -26,11 +26,11 @@ it('renders initial count', () => {
 it('renders (explicit) mocked count', () => {
   expect(
     render(
-      <Fixture>
+      <FixtureProvider>
         <ComponentState state={{ count: 5 }}>
           {ref => <Counter ref={ref} />}
         </ComponentState>
-      </Fixture>
+      </FixtureProvider>
     ).toJSON()
   ).toBe('5 times');
 });
@@ -38,11 +38,11 @@ it('renders (explicit) mocked count', () => {
 it('renders (implicit) mocked count', () => {
   expect(
     render(
-      <Fixture>
+      <FixtureProvider>
         <ComponentState state={{ count: 5 }}>
           <Counter />
         </ComponentState>
-      </Fixture>
+      </FixtureProvider>
     ).toJSON()
   ).toBe('5 times');
 });

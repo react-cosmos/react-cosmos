@@ -14,10 +14,8 @@ import type {
 
 type Props = {
   children: Node,
-  fixtureState: FixtureState,
-  onFixtureStateChange?: (
-    fixtureState: FixtureState | (FixtureState => $Shape<FixtureState>)
-  ) => mixed
+  // This prop exists for testing purposes. Normally fixture state is contained.
+  fixtureState: FixtureState
 };
 
 // NOTE: Maybe rename to FixtureProvider, and open up Fixture component for
@@ -25,28 +23,32 @@ type Props = {
 // <Fixture name="An interesting state" namespace="nested/as/follows">
 //   <Button>Click me</button>
 // </Fixture>
-export class Fixture extends Component<Props, FixtureContextValue> {
+export class FixtureProvider extends Component<Props, FixtureContextValue> {
   static defaultProps = {
     fixtureState: EMPTY_FIXTURE_STATE
   };
 
-  static getDerivedStateFromProps(props: Props, state: FixtureContextValue) {
-    if (props.fixtureState !== state.fixtureState) {
-      return {
-        fixtureState: props.fixtureState,
-        setFixtureState: state.setFixtureState
-      };
+  // TODO: Remove fixtureState prop once remote protocol is implemented
+  UNSAFE_componentWillReceiveProps({ fixtureState }: Props) {
+    if (fixtureState !== this.props.fixtureState) {
+      this.setState({
+        fixtureState
+      });
     }
-
-    return null;
   }
 
   setFixtureState: SetFixtureState = updater => {
-    const { onFixtureStateChange } = this.props;
+    this.setState(({ fixtureState }) => {
+      const fixtureChange =
+        typeof updater === 'function' ? updater(fixtureState) : updater;
 
-    if (typeof onFixtureStateChange === 'function') {
-      onFixtureStateChange(updater);
-    }
+      return {
+        fixtureState: {
+          ...fixtureState,
+          ...fixtureChange
+        }
+      };
+    });
   };
 
   // Provider value is stored in an object with reference identity to prevent
