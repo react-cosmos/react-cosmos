@@ -1,17 +1,18 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Fixture } from '../Fixture';
+import { Fixture } from './Fixture';
 
 import type { Node } from 'react';
-import type { FixtureState } from '../types';
+import type { FixtureState } from './types';
 
 type Props = {
   children: Node,
+  // This prop exists for testing purposes. Normally fixture state is contained.
   fixtureState?: FixtureState
 };
 
-export class StatefulFixture extends Component<Props, FixtureState> {
+export class FixtureConnect extends Component<Props, FixtureState> {
   state = {};
 
   static getDerivedStateFromProps(props: Props, state: FixtureState) {
