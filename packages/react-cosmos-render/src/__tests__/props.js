@@ -3,6 +3,8 @@
 import React, { Component } from 'react';
 import { create } from 'react-test-renderer';
 import { Fixture } from '../Fixture';
+import { CaptureProps } from '../CaptureProps';
+import { StatefulFixture } from './_shared';
 
 class HelloMessage extends Component<{ name: string }> {
   render() {
@@ -21,19 +23,18 @@ it('renders with props', () => {
 });
 
 it('captures props', () => {
-  const onUpdate = jest.fn();
-  create(
-    <Fixture onUpdate={onUpdate}>
+  const { getInstance } = create(
+    <StatefulFixture>
       <HelloMessage name="Satoshi" />
-    </Fixture>
+    </StatefulFixture>
   );
 
-  expect(onUpdate).toBeCalledWith(
+  expect(getInstance().state).toEqual(
     expect.objectContaining({
       props: [
         {
           component: {
-            id: expect.any(Number),
+            instanceId: expect.any(Number),
             name: 'HelloMessage'
           },
           values: [
@@ -50,68 +51,72 @@ it('captures props', () => {
 });
 
 it('overwrites prop', () => {
-  expect(
-    create(
-      <Fixture
-        fixtureState={{
-          props: getPropsWithName('Vitalik')
-        }}
-      >
-        <HelloMessage name="Satoshi" />
-      </Fixture>
-    ).toJSON()
-  ).toBe('Hello, Vitalik!');
+  const instance = create(
+    <StatefulFixture>
+      <HelloMessage name="Satoshi" />
+    </StatefulFixture>
+  );
+  const { state } = instance.getInstance();
+  const { component } = state.props[0];
+
+  instance.update(
+    <StatefulFixture
+      fixtureState={{
+        props: [getPropsWithName({ name: 'Vitalik', component })]
+      }}
+    >
+      <HelloMessage name="Satoshi" />
+    </StatefulFixture>
+  );
+
+  expect(instance.toJSON()).toBe('Hello, Vitalik!');
 });
 
 it('clears prop', () => {
-  expect(
-    create(
-      <Fixture
-        fixtureState={{
-          props: getPropsWithNoValues()
-        }}
-      >
-        <HelloMessage name="Satoshi" />
-      </Fixture>
-    ).toJSON()
-  ).toBe('Hello, Guest!');
-});
-
-it('overwrites prop on update', () => {
-  const MyFixture = ({ props }) => (
-    <Fixture fixtureState={{ props }}>
+  const instance = create(
+    <StatefulFixture>
       <HelloMessage name="Satoshi" />
-    </Fixture>
+    </StatefulFixture>
   );
+  const { state } = instance.getInstance();
+  const { component } = state.props[0];
 
-  const instance = create(<MyFixture props={getPropsWithName('Vitalik')} />);
-  instance.update(<MyFixture props={getPropsWithName('Elon')} />);
-
-  expect(instance.toJSON()).toBe('Hello, Elon!');
-});
-
-it('clears prop on update', () => {
-  const MyFixture = ({ props }) => (
-    <Fixture fixtureState={{ props }}>
+  instance.update(
+    <StatefulFixture
+      fixtureState={{
+        props: [getPropsWithNoValues({ component })]
+      }}
+    >
       <HelloMessage name="Satoshi" />
-    </Fixture>
+    </StatefulFixture>
   );
-
-  const instance = create(<MyFixture props={getPropsWithName('Vitalik')} />);
-  instance.update(<MyFixture props={getPropsWithNoValues()} />);
 
   expect(instance.toJSON()).toBe('Hello, Guest!');
 });
 
-it('reverts to original prop on update', () => {
-  const MyFixture = ({ props }) => (
-    <Fixture fixtureState={{ props }}>
+it('reverts to original prop', () => {
+  const instance = create(
+    <StatefulFixture>
       <HelloMessage name="Satoshi" />
-    </Fixture>
+    </StatefulFixture>
   );
+  const { state } = instance.getInstance();
+  const { component } = state.props[0];
 
-  const instance = create(<MyFixture props={getPropsWithName('Vitalik')} />);
-  instance.update(<MyFixture props={[]} />);
+  instance.update(
+    <StatefulFixture
+      fixtureState={{
+        props: [getPropsWithName({ name: 'Vitalik', component })]
+      }}
+    >
+      <HelloMessage name="Satoshi" />
+    </StatefulFixture>
+  );
+  instance.update(
+    <StatefulFixture fixtureState={{ props: [] }}>
+      <HelloMessage name="Satoshi" />
+    </StatefulFixture>
+  );
 
   expect(instance.toJSON()).toBe('Hello, Satoshi!');
 });
@@ -120,28 +125,72 @@ it('reverts to original prop on update', () => {
 
 // TODO: fixtureState change transitions props (reuse key)
 
-// TODO: captures props from multiple components
+it('captures props from multiple components (explicit capture)', () => {
+  const { getInstance } = create(
+    <StatefulFixture>
+      <CaptureProps>
+        <HelloMessage name="Satoshi" />
+      </CaptureProps>
+      <CaptureProps>
+        <HelloMessage name="Vitalik" />
+      </CaptureProps>
+    </StatefulFixture>
+  );
 
-function getPropsWithName(name) {
-  return [
-    {
-      component: { id: 1, name: 'Test' },
-      values: [
+  expect(getInstance().state).toEqual(
+    expect.objectContaining({
+      props: [
         {
-          serializable: true,
-          key: 'name',
-          value: name
+          component: {
+            instanceId: expect.any(Number),
+            name: 'HelloMessage'
+          },
+          values: [
+            {
+              serializable: true,
+              key: 'name',
+              value: 'Satoshi'
+            }
+          ]
+        },
+        {
+          component: {
+            instanceId: expect.any(Number),
+            name: 'HelloMessage'
+          },
+          values: [
+            {
+              serializable: true,
+              key: 'name',
+              value: 'Vitalik'
+            }
+          ]
         }
       ]
-    }
-  ];
+    })
+  );
+});
+
+// TODO: captures props from multiple components (direct children)
+
+// TODO: overwrites props in multiple components
+
+function getPropsWithName({ component, name }) {
+  return {
+    component,
+    values: [
+      {
+        serializable: true,
+        key: 'name',
+        value: name
+      }
+    ]
+  };
 }
 
-function getPropsWithNoValues() {
-  return [
-    {
-      component: { id: 1, name: 'Test' },
-      values: []
-    }
-  ];
+function getPropsWithNoValues({ component }) {
+  return {
+    component,
+    values: []
+  };
 }

@@ -6,7 +6,7 @@ import { FixtureContext } from './FixtureContext';
 import { extractValuesFromObject } from './shared/values';
 import {
   getComponentMetadata,
-  getComponentId
+  getInstanceId
 } from './shared/component-metadata';
 
 import type { Element } from 'react';
@@ -50,23 +50,30 @@ type InnerProps = {
 
 class CapturePropsInner extends Component<InnerProps> {
   componentDidMount() {
-    const { children, fixtureState, setFixtureState } = this.props;
-    const component = getComponentMetadata(children.type);
+    const { children, setFixtureState } = this.props;
+    const component = getComponentMetadata(children.type, this);
 
-    const existingFixtureStateProps = fixtureState.props || [];
-    const propsForOtherComponents = existingFixtureStateProps.filter(
-      props => props.component.id !== component.id
-    );
+    // Add original component props (defined in fixture) to fixture state.
+    // Because fixtureState changes are async and multiple CapturePropsInner
+    // instances can mount before a state change propagates, merging prop
+    // values over props.fixtureState can cancel out other identical operations
+    // from different CapturePropsInner instances. To ensure each state
+    // transformation is honored we use a state updater callback.
+    setFixtureState(fixtureState => {
+      const existingProps = fixtureState.props || [];
+      const unrelatedProps = existingProps.filter(
+        props => props.component.instanceId !== component.instanceId
+      );
 
-    // Update fixture state with original component props defined in fixture.
-    setFixtureState({
-      props: [
-        ...propsForOtherComponents,
-        {
-          component,
-          values: extractValuesFromObject(children.props)
-        }
-      ]
+      return {
+        props: [
+          ...unrelatedProps,
+          {
+            component,
+            values: extractValuesFromObject(children.props)
+          }
+        ]
+      };
     });
   }
 
@@ -75,51 +82,49 @@ class CapturePropsInner extends Component<InnerProps> {
   }
 
   render() {
+    const { children } = this.props;
+
+    return cloneElement(children, this.extendOriginalPropsWithFixtureState());
+  }
+
+  extendOriginalPropsWithFixtureState() {
     const { children, fixtureState } = this.props;
+    const { props: originalProps } = children;
 
-    return cloneElement(
-      children,
-      extendOriginalPropsWithFixtureState(children, fixtureState)
-    );
-  }
-}
-
-function extendOriginalPropsWithFixtureState(element, fixtureState) {
-  const { type, props: originalProps } = element;
-
-  if (!fixtureState.props || fixtureState.props.length === 0) {
-    return originalProps;
-  }
-
-  const componentId = getComponentId(type);
-  const relatedProps = find(
-    fixtureState.props,
-    props => props.component.id === componentId
-  );
-
-  if (!relatedProps) {
-    // At this point fixtureState has props, but only related to other components
-    return originalProps;
-  }
-
-  const { values } = relatedProps;
-  const mergedProps = {};
-
-  // Use latest prop value for serializable props, and fall back to original
-  // value for unserializable props.
-  values.forEach(({ serializable, key, value }) => {
-    mergedProps[key] = serializable ? value : originalProps[key];
-  });
-
-  // Clear original props that were removed from fixtureState. This allows users
-  // to remove original props. We need to to this because React.cloneElement
-  // merges new props with original ones
-  // https://reactjs.org/docs/react-api.html#cloneelement
-  Object.keys(originalProps).forEach(key => {
-    if (Object.keys(mergedProps).indexOf(key) === -1) {
-      mergedProps[key] = undefined;
+    if (!fixtureState.props || fixtureState.props.length === 0) {
+      return originalProps;
     }
-  });
 
-  return mergedProps;
+    const instanceId = getInstanceId(this);
+    const relatedProps = find(
+      fixtureState.props,
+      props => props.component.instanceId === instanceId
+    );
+
+    if (!relatedProps) {
+      // At this point fixtureState has props, but only related to other components
+      return originalProps;
+    }
+
+    const { values } = relatedProps;
+    const mergedProps = {};
+
+    // Use latest prop value for serializable props, and fall back to original
+    // value for unserializable props.
+    values.forEach(({ serializable, key, value }) => {
+      mergedProps[key] = serializable ? value : originalProps[key];
+    });
+
+    // Clear original props that were removed from fixtureState. This allows users
+    // to remove original props. We need to to this because React.cloneElement
+    // merges new props with original ones
+    // https://reactjs.org/docs/react-api.html#cloneelement
+    Object.keys(originalProps).forEach(key => {
+      if (Object.keys(mergedProps).indexOf(key) === -1) {
+        mergedProps[key] = undefined;
+      }
+    });
+
+    return mergedProps;
+  }
 }

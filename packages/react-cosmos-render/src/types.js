@@ -9,7 +9,7 @@ type FixtureStateValue = {
 export type FixtureStateValues = Array<FixtureStateValue>;
 
 export type ComponentMetadata = {
-  id: number,
+  instanceId: number,
   name: string
 };
 
@@ -20,10 +20,13 @@ export type FixtureStateProps = Array<{
 
 export type FixtureState = {
   props?: FixtureStateProps,
+  // TODO: Add explicit type for state
   [key: string]: mixed
 };
 
-export type SetFixtureState = ($Shape<FixtureState>) => mixed;
+export type SetFixtureState = (
+  $Shape<FixtureState> | (FixtureState => $Shape<FixtureState>)
+) => mixed;
 
 export type FixtureContextValue = {
   fixtureState: FixtureState,

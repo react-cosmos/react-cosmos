@@ -6,12 +6,18 @@ import { CaptureProps } from './CaptureProps';
 import { FixtureContext, EMPTY_FIXTURE_STATE } from './FixtureContext';
 
 import type { Node, Element } from 'react';
-import type { FixtureState, FixtureContextValue } from './types';
+import type {
+  FixtureState,
+  SetFixtureState,
+  FixtureContextValue
+} from './types';
 
 type Props = {
   children: Node,
   fixtureState: FixtureState,
-  onUpdate?: (fixtureState: FixtureState) => mixed
+  onFixtureStateChange?: (
+    fixtureState: FixtureState | (FixtureState => $Shape<FixtureState>)
+  ) => mixed
 };
 
 // NOTE: Maybe rename to FixtureProvider, and open up Fixture component for
@@ -35,14 +41,11 @@ export class Fixture extends Component<Props, FixtureContextValue> {
     return null;
   }
 
-  setFixtureState = (fixtureStateParts: $Shape<FixtureState>) => {
-    const { fixtureState, onUpdate } = this.props;
+  setFixtureState: SetFixtureState = updater => {
+    const { onFixtureStateChange } = this.props;
 
-    if (typeof onUpdate === 'function') {
-      onUpdate({
-        ...fixtureState,
-        ...fixtureStateParts
-      });
+    if (typeof onFixtureStateChange === 'function') {
+      onFixtureStateChange(updater);
     }
   };
 
@@ -54,8 +57,17 @@ export class Fixture extends Component<Props, FixtureContextValue> {
   };
 
   render() {
+    return (
+      <FixtureContext.Provider value={this.state}>
+        {this.getChildren()}
+      </FixtureContext.Provider>
+    );
+  }
+
+  getChildren() {
     const { children } = this.props;
 
+    // TODO: Also capture props on array of children
     if (!isElement(children)) {
       return children;
     }
@@ -63,10 +75,7 @@ export class Fixture extends Component<Props, FixtureContextValue> {
     // $FlowFixMe Flow can't get cues from react-is package
     const element: Element<any> = children;
 
-    return (
-      <FixtureContext.Provider value={this.state}>
-        <CaptureProps>{element}</CaptureProps>
-      </FixtureContext.Provider>
-    );
+    // Automatically capture the props of the root node if it's an element
+    return <CaptureProps>{element}</CaptureProps>;
   }
 }
