@@ -58,19 +58,15 @@ export class FixtureProvider extends Component<Props, FixtureContextValue> {
   };
 
   render() {
-    return (
-      <FixtureContext.Provider value={this.state}>
-        {this.getChildren()}
-      </FixtureContext.Provider>
-    );
-  }
-
-  getChildren() {
     const { children } = this.props;
 
-    return Array.isArray(children)
-      ? children.map((child, index) => this.getWrappedChild(child, index))
-      : this.getWrappedChild(children);
+    return (
+      <FixtureContext.Provider value={this.state}>
+        {Array.isArray(children)
+          ? children.map((child, index) => this.getWrappedChild(child, index))
+          : this.getWrappedChild(children)}
+      </FixtureContext.Provider>
+    );
   }
 
   getWrappedChild(node: Node, index?: number) {
