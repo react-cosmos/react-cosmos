@@ -8,18 +8,24 @@
 
 ## Explore: JSX fixtures
 
-- [ ] Create new declarative renderer
-  - [ ] Create test cases for desired API
-    - [x] Props
-    - [x] State
-    - [ ] Context
-    - [ ] Redux
-    - [ ] React Router
-    - [ ] LocalStorage
-    - [ ] Fetch
-    - [ ] XHR
-  - [ ] Collect fixture data in Render context
-- [ ] Support JSX format in fixture files
+- [ ] Create new declarative renderer: FixtureProvider
+  - [x] Context API reading and updating fixture state
+  - [ ] Core decorators
+    - [x] Capture props
+    - [ ] Capture state
+    - [ ] Capture context
+  - [ ] Remote protocol
+    - [ ] window.postMessage
+    - [ ] WebSockets
+  - [ ] Testing API
+- [ ] Support JSX fixture files
+- [ ] Port 3rd party render plugins
+  - [ ] Redux
+  - [ ] React Router
+  - [ ] LocalStorage
+  - [ ] Fetch
+  - [ ] XHR
+- [ ] Connect new fixture state format to UI
 
 ## Pluggable UI
 
