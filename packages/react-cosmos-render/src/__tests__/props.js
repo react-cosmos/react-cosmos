@@ -24,32 +24,27 @@ it('renders with props', () => {
 });
 
 it('captures props', () => {
-  const { getInstance } = create(
+  const instance = create(
     <FixtureProvider>
       <HelloMessage name="Satoshi" />
     </FixtureProvider>
   );
 
-  expect(getInstance().state.fixtureState).toEqual(
-    expect.objectContaining({
-      props: [
-        {
-          component: {
-            instanceId: expect.any(Number),
-            name: 'HelloMessage'
-          },
-          renderKey: expect.any(Number),
-          values: [
-            {
-              serializable: true,
-              key: 'name',
-              value: 'Satoshi'
-            }
-          ]
-        }
-      ]
-    })
-  );
+  const [props] = instance.getInstance().state.fixtureState.props;
+  expect(props).toEqual({
+    component: {
+      instanceId: expect.any(Number),
+      name: 'HelloMessage'
+    },
+    renderKey: expect.any(Number),
+    values: [
+      {
+        serializable: true,
+        key: 'name',
+        value: 'Satoshi'
+      }
+    ]
+  });
 });
 
 it('overwrites prop', () => {
@@ -208,7 +203,7 @@ it('creates new instance on props with different renderKey', () => {
 });
 
 it('captures props from multiple components (explicit capture)', () => {
-  const { getInstance } = create(
+  const instance = create(
     <FixtureProvider>
       <CaptureProps>
         <HelloMessage name="Satoshi" />
@@ -219,84 +214,74 @@ it('captures props from multiple components (explicit capture)', () => {
     </FixtureProvider>
   );
 
-  expect(getInstance().state.fixtureState).toEqual(
-    expect.objectContaining({
-      props: [
-        {
-          component: {
-            instanceId: expect.any(Number),
-            name: 'HelloMessage'
-          },
-          renderKey: expect.any(Number),
-          values: [
-            {
-              serializable: true,
-              key: 'name',
-              value: 'Satoshi'
-            }
-          ]
-        },
-        {
-          component: {
-            instanceId: expect.any(Number),
-            name: 'HelloMessage'
-          },
-          renderKey: expect.any(Number),
-          values: [
-            {
-              serializable: true,
-              key: 'name',
-              value: 'Vitalik'
-            }
-          ]
-        }
-      ]
-    })
-  );
+  const [props1, props2] = instance.getInstance().state.fixtureState.props;
+  expect(props1).toEqual({
+    component: {
+      instanceId: expect.any(Number),
+      name: 'HelloMessage'
+    },
+    renderKey: expect.any(Number),
+    values: [
+      {
+        serializable: true,
+        key: 'name',
+        value: 'Satoshi'
+      }
+    ]
+  });
+  expect(props2).toEqual({
+    component: {
+      instanceId: expect.any(Number),
+      name: 'HelloMessage'
+    },
+    renderKey: expect.any(Number),
+    values: [
+      {
+        serializable: true,
+        key: 'name',
+        value: 'Vitalik'
+      }
+    ]
+  });
 });
 
 it('captures props from multiple components (direct children)', () => {
-  const { getInstance } = create(
+  const instance = create(
     <FixtureProvider>
       <HelloMessage name="Satoshi" />
       <HelloMessage name="Vitalik" />
     </FixtureProvider>
   );
 
-  expect(getInstance().state.fixtureState).toEqual(
-    expect.objectContaining({
-      props: [
-        {
-          component: {
-            instanceId: expect.any(Number),
-            name: 'HelloMessage'
-          },
-          renderKey: expect.any(Number),
-          values: [
-            {
-              serializable: true,
-              key: 'name',
-              value: 'Satoshi'
-            }
-          ]
-        },
-        {
-          component: {
-            instanceId: expect.any(Number),
-            name: 'HelloMessage'
-          },
-          renderKey: expect.any(Number),
-          values: [
-            {
-              serializable: true,
-              key: 'name',
-              value: 'Vitalik'
-            }
-          ]
-        }
-      ]
-    })
-  );
+  const [props1, props2] = instance.getInstance().state.fixtureState.props;
+  expect(props1).toEqual({
+    component: {
+      instanceId: expect.any(Number),
+      name: 'HelloMessage'
+    },
+    renderKey: expect.any(Number),
+    values: [
+      {
+        serializable: true,
+        key: 'name',
+        value: 'Satoshi'
+      }
+    ]
+  });
+  expect(props2).toEqual({
+    component: {
+      instanceId: expect.any(Number),
+      name: 'HelloMessage'
+    },
+    renderKey: expect.any(Number),
+    values: [
+      {
+        serializable: true,
+        key: 'name',
+        value: 'Vitalik'
+      }
+    ]
+  });
 });
 
 it('overwrites props in multiple components', () => {

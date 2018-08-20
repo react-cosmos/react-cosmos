@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { create as render } from 'react-test-renderer';
+import { create } from 'react-test-renderer';
 import { FixtureProvider } from '../FixtureProvider';
 import { ComponentState } from '../ComponentState';
 
@@ -15,9 +15,11 @@ class Counter extends Component<{}, { count: number }> {
 
 it('renders initial count', () => {
   expect(
-    render(
+    create(
       <FixtureProvider>
-        <Counter />
+        <ComponentState>
+          <Counter />
+        </ComponentState>
       </FixtureProvider>
     ).toJSON()
   ).toBe('0 times');
@@ -25,7 +27,7 @@ it('renders initial count', () => {
 
 it('renders (explicit) mocked count', () => {
   expect(
-    render(
+    create(
       <FixtureProvider>
         <ComponentState state={{ count: 5 }}>
           {ref => <Counter ref={ref} />}
@@ -37,7 +39,7 @@ it('renders (explicit) mocked count', () => {
 
 it('renders (implicit) mocked count', () => {
   expect(
-    render(
+    create(
       <FixtureProvider>
         <ComponentState state={{ count: 5 }}>
           <Counter />
@@ -47,4 +49,36 @@ it('renders (implicit) mocked count', () => {
   ).toBe('5 times');
 });
 
-// TODO: ComponentState without state
+it('captures initial state', () => {
+  const instance = create(
+    <FixtureProvider>
+      <ComponentState>
+        <Counter />
+      </ComponentState>
+    </FixtureProvider>
+  );
+
+  // [state]
+  const state = instance.getInstance().state.fixtureState.state;
+  expect(state).toEqual([
+    {
+      serializable: true,
+      key: 'count',
+      value: 0
+    }
+  ]);
+  // expect(state).toEqual({
+  //   component: {
+  //     instanceId: expect.any(Number),
+  //     name: 'HelloMessage'
+  //   },
+  //   renderKey: expect.any(Number),
+  //   values: [
+  //     {
+  //       serializable: true,
+  //       key: 'count',
+  //       value: 0
+  //     }
+  //   ]
+  // });
+});

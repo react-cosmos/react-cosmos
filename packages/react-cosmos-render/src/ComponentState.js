@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react';
+import React, { Component, cloneElement } from 'react';
 import { FixtureContext } from './FixtureContext';
 import { CaptureProps } from './CaptureProps';
 import { extractValuesFromObject } from './shared/values';
@@ -46,8 +46,7 @@ class ComponentStateInner extends Component<InnerProps> {
       return children(this.handleRef);
     }
 
-    // Hack alert: Editing React Element by hand
-    return <children.type {...children.props} ref={this.handleRef} />;
+    return cloneElement(children, { ref: this.handleRef });
   }
 
   handleRef = (ref: ?ElementRef<any>) => {
