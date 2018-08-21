@@ -79,7 +79,7 @@ it('removes prop', () => {
   instance.update(
     <FixtureProvider
       fixtureState={{
-        props: [getPropsWithNoValues({ component })]
+        props: [getEmptyProps({ component })]
       }}
     >
       <HelloMessage name="Satoshi" />
@@ -89,6 +89,26 @@ it('removes prop', () => {
   expect(instance.toJSON()).toBe('Hello, Guest!');
 });
 
+// XXX: This is broken use case. CaptureProps will never update props in
+// fixture state from this point on. It populates fixture props on mount, which
+// means that props should only be reset together with changing renderKey
+// NOTE: If fixture state were grouped per component instance, the following
+// structure could work:
+// fixtureState {
+//   components: [
+//     {
+//       instanceId: 1,
+//       name: 'HelloWorld',
+//       renderKey: 7,
+//       props: [{...}],
+//       state: [{...}]
+//     }
+//   ]
+// }
+// In this case component[x].props could be erased and component[x].renderKey
+// bumped to achieve a reset case.
+// TODO: Apply same thinking for CaptureProps
+// TODO: Instance id needs be childRef instead of decoratorRef
 it('reverts to original props', () => {
   const instance = create(
     <FixtureProvider>
@@ -336,7 +356,7 @@ function getPropsWithName({
   };
 }
 
-function getPropsWithNoValues({ component }) {
+function getEmptyProps({ component }) {
   return {
     component,
     renderKey: 0,
