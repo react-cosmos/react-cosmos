@@ -89,14 +89,27 @@ class ComponentStateInner extends Component<InnerProps> {
     const { fixtureState, state: mockedState } = this.props;
     const fixtureStateState = getRelatedFixtureState(fixtureState, this);
 
-    childRef.setState(
-      extendOriginalStateWithFixtureState({
-        initialState: this.initialState,
-        currentState: childRef.state,
-        mockedState,
-        fixtureStateState
-      })
-    );
+    if (fixtureStateState) {
+      childRef.setState(
+        extendOriginalStateWithFixtureState({
+          currentState: childRef.state,
+          mockedState,
+          fixtureStateState
+        })
+      );
+    } else {
+      // We get here when the fixture state associated with this instance
+      // (first populated at mount, inside handleRef) has been emptied.
+      // This is a signal to reset the fixture state for this instance.
+      this.updateFixtureState(
+        // Prevent leaking previous state properties when resetting state
+        resetOriginalProps(childRef.state, {
+          ...this.initialState,
+          ...mockedState
+        }),
+        childRef
+      );
+    }
   }
 
   componentWillUnmount() {
@@ -131,17 +144,17 @@ class ComponentStateInner extends Component<InnerProps> {
       // fixtureState.state with the values of the mocked state, as well as
       // (most imporantly) inject the mocked state into the component.
       childRef.setState(mockedState);
-      this.setFixtureStateState(mockedState, childRef);
+      this.updateFixtureState(mockedState, childRef);
     } else if (childRef.state) {
       // State isn't mocked, but component has initial state => Populate
       // fixtureState.state with component's initial state
-      this.setFixtureStateState(childRef.state, childRef);
+      this.updateFixtureState(childRef.state, childRef);
     }
   };
 
-  // This method receives childRef as an argument because it is called from
-  // places where the existance of this.childRef has already been checked
-  setFixtureStateState(componentState, childRef) {
+  // updateFixtureState receives childRef as an argument because it is called
+  // from places where the existance of this.childRef has already been checked
+  updateFixtureState(componentState, childRef) {
     const { setFixtureState } = this.props;
 
     setFixtureState(fixtureState => {
@@ -167,7 +180,7 @@ class ComponentStateInner extends Component<InnerProps> {
 
     if (childRef.state !== this.prevState) {
       this.prevState = childRef.state;
-      this.setFixtureStateState(childRef.state, childRef);
+      this.updateFixtureState(childRef.state, childRef);
     } else {
       this.scheduleStateCheck();
     }
@@ -191,21 +204,10 @@ function getRelatedFixtureState(
 }
 
 function extendOriginalStateWithFixtureState({
-  initialState,
   currentState,
   mockedState = {},
   fixtureStateState
 }) {
-  if (!fixtureStateState) {
-    // At this point fixtureState only has state related to other components
-    // Merge mocked state with initial state, but clear any extra state
-    // properties added previously
-    return resetOriginalProps(currentState, {
-      ...initialState,
-      ...mockedState
-    });
-  }
-
   const { values } = fixtureStateState;
   const mergedState = {};
 
@@ -247,9 +249,9 @@ function updateComponentStateInFixtureState({
   childRef: ElementRef<typeof Component>
 }) {
   const component = getComponentMetadata(getRefType(childRef), decoratorRef);
-  const allComponentState = fixtureState.state || [];
-  const otherComponentStates = allComponentState.filter(
-    createComponentStateMatcher(component)
+  const allComponentStates = fixtureState.state || [];
+  const otherComponentStates = allComponentStates.filter(
+    state => state.component.instanceId !== component.instanceId
   );
 
   return {
@@ -267,8 +269,4 @@ function getRefType(elRef) {
   // NOTE: This assumes ref is a Class instance, something React might
   // change in the future
   return elRef.constructor;
-}
-
-function createComponentStateMatcher(component) {
-  return state => state.component.instanceId !== component.instanceId;
 }

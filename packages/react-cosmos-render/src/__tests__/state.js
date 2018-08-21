@@ -145,32 +145,6 @@ it('overwrites mocked state', () => {
   expect(instance.toJSON()).toBe('100 times');
 });
 
-it('removes state property', () => {
-  const instance = create(
-    <FixtureProvider>
-      <ComponentState state={{ count: 5 }}>
-        <Counter />
-      </ComponentState>
-    </FixtureProvider>
-  );
-
-  const [{ component }] = instance.getInstance().state.fixtureState.state;
-
-  instance.update(
-    <FixtureProvider
-      fixtureState={{
-        state: [getEmptyState({ component })]
-      }}
-    >
-      <ComponentState state={{ count: 5 }}>
-        <Counter />
-      </ComponentState>
-    </FixtureProvider>
-  );
-
-  expect(instance.toJSON()).toBe('Missing count');
-});
-
 it('removes initial state property', () => {
   const instance = create(
     <FixtureProvider>
@@ -197,10 +171,49 @@ it('removes initial state property', () => {
   expect(instance.toJSON()).toBe('Missing count');
 });
 
-it('reverts to initial state', () => {
+it('removes mocked state property', () => {
   const instance = create(
     <FixtureProvider>
       <ComponentState state={{ count: 5 }}>
+        <Counter />
+      </ComponentState>
+    </FixtureProvider>
+  );
+
+  const [{ component }] = instance.getInstance().state.fixtureState.state;
+
+  instance.update(
+    <FixtureProvider
+      fixtureState={{
+        state: [getEmptyState({ component })]
+      }}
+    >
+      <ComponentState state={{ count: 5 }}>
+        <Counter />
+      </ComponentState>
+    </FixtureProvider>
+  );
+
+  expect(instance.toJSON()).toBe('Missing count');
+});
+
+it('reverts to initial state', () => {
+  const instance = create(
+    <FixtureProvider>
+      <ComponentState>
+        <Counter />
+      </ComponentState>
+    </FixtureProvider>
+  );
+
+  const [{ component }] = instance.getInstance().state.fixtureState.state;
+  instance.update(
+    <FixtureProvider
+      fixtureState={{
+        state: [getStateWithCount({ count: 5, component })]
+      }}
+    >
+      <ComponentState>
         <Counter />
       </ComponentState>
     </FixtureProvider>
@@ -219,11 +232,39 @@ it('reverts to initial state', () => {
   );
 
   expect(instance.toJSON()).toBe('0 times');
+
+  const [state] = instance.getInstance().state.fixtureState.state;
+  expect(state).toEqual({
+    component: {
+      instanceId: expect.any(Number),
+      name: 'Counter'
+    },
+    values: [
+      {
+        serializable: true,
+        key: 'count',
+        value: 0
+      }
+    ]
+  });
 });
 
 it('reverts to mocked state', () => {
   const instance = create(
     <FixtureProvider>
+      <ComponentState state={{ count: 5 }}>
+        <Counter />
+      </ComponentState>
+    </FixtureProvider>
+  );
+
+  const [{ component }] = instance.getInstance().state.fixtureState.state;
+  instance.update(
+    <FixtureProvider
+      fixtureState={{
+        state: [getStateWithCount({ count: 10, component })]
+      }}
+    >
       <ComponentState state={{ count: 5 }}>
         <Counter />
       </ComponentState>
@@ -236,13 +277,28 @@ it('reverts to mocked state', () => {
         state: []
       }}
     >
-      <ComponentState state={{ count: 10 }}>
+      <ComponentState state={{ count: 5 }}>
         <Counter />
       </ComponentState>
     </FixtureProvider>
   );
 
-  expect(instance.toJSON()).toBe('10 times');
+  expect(instance.toJSON()).toBe('5 times');
+
+  const [state] = instance.getInstance().state.fixtureState.state;
+  expect(state).toEqual({
+    component: {
+      instanceId: expect.any(Number),
+      name: 'Counter'
+    },
+    values: [
+      {
+        serializable: true,
+        key: 'count',
+        value: 5
+      }
+    ]
+  });
 });
 
 it('captures component state changes', async () => {
@@ -272,8 +328,6 @@ it('captures component state changes', async () => {
 
   counterRef.setState({ count: 13 });
   await until(() => getCountValueFromTestInstance(instance) === 13);
-
-  expect(getCountValueFromTestInstance(instance)).toBe(13);
 });
 
 it('mocks state in multiple instances', () => {

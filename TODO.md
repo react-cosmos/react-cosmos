@@ -10,6 +10,7 @@
 
 - [ ] Create new declarative renderer: FixtureProvider
   - [x] Context API reading and updating fixture state
+  - [ ] Handle unserializable fixture state
   - [ ] Core decorators
     - [x] Capture props
     - [x] Capture state
