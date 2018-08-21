@@ -370,6 +370,20 @@ it('overwrites mocked state in multiple instances', () => {
   expect(instance.toJSON()).toEqual(['50 times', '100 times']);
 });
 
+it('unmounts gracefully', () => {
+  const instance = create(
+    <FixtureProvider>
+      <ComponentState state={{ count: 5 }}>
+        <Counter />
+      </ComponentState>
+    </FixtureProvider>
+  );
+
+  expect(() => {
+    instance.unmount();
+  }).not.toThrow();
+});
+
 function getStateWithCount({
   component,
   count
