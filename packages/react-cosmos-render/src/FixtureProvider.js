@@ -1,7 +1,7 @@
 // @flow
 
 import { isElement } from 'react-is';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { CaptureProps } from './CaptureProps';
 import { FixtureContext, EMPTY_FIXTURE_STATE } from './FixtureContext';
 
@@ -76,6 +76,13 @@ export class FixtureProvider extends Component<Props, FixtureContextValue> {
 
     // $FlowFixMe Flow can't get cues from react-is package
     const element: Element<any> = node;
+
+    // It wouldn't make sense to capture a Fragment's props, but it wouldn't
+    // work either. The fragment type is Symbol, which is considered a primitive
+    // type and isn't accepted as a WeakMap key
+    if (element.type === Fragment) {
+      return element;
+    }
 
     // Automatically capture the props of the root node if it's an element
     return <CaptureProps key={index}>{element}</CaptureProps>;

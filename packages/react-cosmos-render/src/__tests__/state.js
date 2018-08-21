@@ -1,7 +1,7 @@
 // @flow
 
 import until from 'async-until';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { create } from 'react-test-renderer';
 import { FixtureProvider } from '../FixtureProvider';
 import { ComponentState } from '../ComponentState';
@@ -94,13 +94,12 @@ it('captures mocked state', () => {
 });
 
 it('overwrites initial state', () => {
-  const instance = create(
-    <FixtureProvider>
-      <ComponentState>
-        <Counter />
-      </ComponentState>
-    </FixtureProvider>
+  const fixture = (
+    <ComponentState>
+      <Counter />
+    </ComponentState>
   );
+  const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
 
   const [{ component }] = instance.getInstance().state.fixtureState.state;
 
@@ -110,9 +109,7 @@ it('overwrites initial state', () => {
         state: [getStateWithCount({ count: 5, component })]
       }}
     >
-      <ComponentState>
-        <Counter />
-      </ComponentState>
+      {fixture}
     </FixtureProvider>
   );
 
@@ -120,13 +117,12 @@ it('overwrites initial state', () => {
 });
 
 it('overwrites mocked state', () => {
-  const instance = create(
-    <FixtureProvider>
-      <ComponentState state={{ count: 5 }}>
-        <Counter />
-      </ComponentState>
-    </FixtureProvider>
+  const fixture = (
+    <ComponentState state={{ count: 5 }}>
+      <Counter />
+    </ComponentState>
   );
+  const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
 
   const [{ component }] = instance.getInstance().state.fixtureState.state;
 
@@ -136,9 +132,7 @@ it('overwrites mocked state', () => {
         state: [getStateWithCount({ count: 100, component })]
       }}
     >
-      <ComponentState state={{ count: 5 }}>
-        <Counter />
-      </ComponentState>
+      {fixture}
     </FixtureProvider>
   );
 
@@ -146,13 +140,12 @@ it('overwrites mocked state', () => {
 });
 
 it('removes initial state property', () => {
-  const instance = create(
-    <FixtureProvider>
-      <ComponentState>
-        <Counter />
-      </ComponentState>
-    </FixtureProvider>
+  const fixture = (
+    <ComponentState>
+      <Counter />
+    </ComponentState>
   );
+  const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
 
   const [{ component }] = instance.getInstance().state.fixtureState.state;
 
@@ -162,9 +155,7 @@ it('removes initial state property', () => {
         state: [getEmptyState({ component })]
       }}
     >
-      <ComponentState>
-        <Counter />
-      </ComponentState>
+      {fixture}
     </FixtureProvider>
   );
 
@@ -172,13 +163,12 @@ it('removes initial state property', () => {
 });
 
 it('removes mocked state property', () => {
-  const instance = create(
-    <FixtureProvider>
-      <ComponentState state={{ count: 5 }}>
-        <Counter />
-      </ComponentState>
-    </FixtureProvider>
+  const fixture = (
+    <ComponentState state={{ count: 5 }}>
+      <Counter />
+    </ComponentState>
   );
+  const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
 
   const [{ component }] = instance.getInstance().state.fixtureState.state;
 
@@ -188,9 +178,7 @@ it('removes mocked state property', () => {
         state: [getEmptyState({ component })]
       }}
     >
-      <ComponentState state={{ count: 5 }}>
-        <Counter />
-      </ComponentState>
+      {fixture}
     </FixtureProvider>
   );
 
@@ -198,13 +186,12 @@ it('removes mocked state property', () => {
 });
 
 it('reverts to initial state', () => {
-  const instance = create(
-    <FixtureProvider>
-      <ComponentState>
-        <Counter />
-      </ComponentState>
-    </FixtureProvider>
+  const fixture = (
+    <ComponentState>
+      <Counter />
+    </ComponentState>
   );
+  const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
 
   const [{ component }] = instance.getInstance().state.fixtureState.state;
   instance.update(
@@ -213,9 +200,7 @@ it('reverts to initial state', () => {
         state: [getStateWithCount({ count: 5, component })]
       }}
     >
-      <ComponentState>
-        <Counter />
-      </ComponentState>
+      {fixture}
     </FixtureProvider>
   );
 
@@ -225,9 +210,7 @@ it('reverts to initial state', () => {
         state: []
       }}
     >
-      <ComponentState>
-        <Counter />
-      </ComponentState>
+      {fixture}
     </FixtureProvider>
   );
 
@@ -250,13 +233,12 @@ it('reverts to initial state', () => {
 });
 
 it('reverts to mocked state', () => {
-  const instance = create(
-    <FixtureProvider>
-      <ComponentState state={{ count: 5 }}>
-        <Counter />
-      </ComponentState>
-    </FixtureProvider>
+  const fixture = (
+    <ComponentState state={{ count: 5 }}>
+      <Counter />
+    </ComponentState>
   );
+  const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
 
   const [{ component }] = instance.getInstance().state.fixtureState.state;
   instance.update(
@@ -265,9 +247,7 @@ it('reverts to mocked state', () => {
         state: [getStateWithCount({ count: 10, component })]
       }}
     >
-      <ComponentState state={{ count: 5 }}>
-        <Counter />
-      </ComponentState>
+      {fixture}
     </FixtureProvider>
   );
 
@@ -277,9 +257,7 @@ it('reverts to mocked state', () => {
         state: []
       }}
     >
-      <ComponentState state={{ count: 5 }}>
-        <Counter />
-      </ComponentState>
+      {fixture}
     </FixtureProvider>
   );
 
@@ -387,16 +365,17 @@ it('captures mocked state from multiple instances', () => {
 });
 
 it('overwrites mocked state in multiple instances', () => {
-  const instance = create(
-    <FixtureProvider>
+  const fixture = (
+    <Fragment>
       <ComponentState state={{ count: 5 }}>
         <Counter />
       </ComponentState>
       <ComponentState state={{ count: 10 }}>
         <Counter />
       </ComponentState>
-    </FixtureProvider>
+    </Fragment>
   );
+  const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
 
   const [
     { component: component1 },
@@ -412,12 +391,7 @@ it('overwrites mocked state in multiple instances', () => {
         ]
       }}
     >
-      <ComponentState state={{ count: 5 }}>
-        <Counter />
-      </ComponentState>
-      <ComponentState state={{ count: 10 }}>
-        <Counter />
-      </ComponentState>
+      {fixture}
     </FixtureProvider>
   );
 
