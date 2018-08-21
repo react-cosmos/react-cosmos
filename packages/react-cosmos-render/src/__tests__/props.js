@@ -83,19 +83,31 @@ it('removes prop', () => {
   expect(instance.toJSON()).toBe('Hello, Guest!');
 });
 
-// XXX: This is broken use case. CaptureProps will never update props in
-// fixture state from this point on. It populates fixture props on mount, which
-// means that props should only be reset together with changing renderKey
 it('reverts to original props', () => {
   const fixture = <HelloMessage name="Satoshi" />;
   const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
 
-  const [{ component }] = instance.getInstance().state.fixtureState.props;
+  const [
+    { component, renderKey }
+  ] = instance.getInstance().state.fixtureState.props;
 
   instance.update(
     <FixtureProvider
       fixtureState={{
-        props: [getPropsWithName({ name: 'Vitalik', component })]
+        props: [
+          getPropsWithName({
+            name: 'Vitalik',
+            component,
+            // We also bump the render key for the instance to be recreated and
+            // the element props reset in the fixtureState.
+            // NOTE: Clearing fixtureState.props[i] without bumping renderKey
+            // is a broken use case. CaptureProps will never update props in
+            // fixture state from that point on. CaptureProps only adds props
+            // to fixture state on mount, which means that props should only be
+            // reset together with changing renderKey.
+            renderKey: renderKey + 1
+          })
+        ]
       }}
     >
       {fixture}
