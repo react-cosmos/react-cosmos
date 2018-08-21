@@ -17,7 +17,16 @@ class Counter extends Component<{}, { count: number }> {
   }
 }
 
-it('renders initial count', () => {
+// TODO
+// - removes state property
+// - reverts to original state (use initialState?)
+// - reuses instance on state with same renderKey
+// - creates new instance on state with different renderKey
+// - mocks state in multiple components
+// - captures mocked state from multiple components
+// - overwrites mocked state with fixture state in multiple components
+
+it('uses initial state', () => {
   expect(
     create(
       <FixtureProvider>
@@ -29,7 +38,7 @@ it('renders initial count', () => {
   ).toBe('0 times');
 });
 
-it('renders mocked count', () => {
+it('mocks state', () => {
   expect(
     create(
       <FixtureProvider>
@@ -56,7 +65,6 @@ it('captures initial state', () => {
       instanceId: expect.any(Number),
       name: 'Counter'
     },
-    renderKey: expect.any(Number),
     values: [
       {
         serializable: true,
@@ -67,7 +75,7 @@ it('captures initial state', () => {
   });
 });
 
-it('captures defined state', () => {
+it('captures mocked state', () => {
   const instance = create(
     <FixtureProvider>
       <ComponentState state={{ count: 5 }}>
@@ -82,7 +90,6 @@ it('captures defined state', () => {
       instanceId: expect.any(Number),
       name: 'Counter'
     },
-    renderKey: expect.any(Number),
     values: [
       {
         serializable: true,
@@ -119,7 +126,7 @@ it('overwrites initial state', () => {
   expect(instance.toJSON()).toBe('5 times');
 });
 
-it('overwrites mocked state', () => {
+it('overwrites mocked state with fixture state', () => {
   const instance = create(
     <FixtureProvider>
       <ComponentState state={{ count: 5 }}>
@@ -144,8 +151,6 @@ it('overwrites mocked state', () => {
 
   expect(instance.toJSON()).toBe('100 times');
 });
-
-// TODO: renderKey
 
 it('captures component state changes', async () => {
   let counterRef: ?ElementRef<typeof Counter>;
@@ -180,16 +185,13 @@ it('captures component state changes', async () => {
 
 function getStateWithCount({
   component,
-  count,
-  renderKey = 0
+  count
 }: {
   component: ComponentMetadata,
-  count: number,
-  renderKey?: number
+  count: number
 }) {
   return {
     component,
-    renderKey,
     values: [
       {
         serializable: true,

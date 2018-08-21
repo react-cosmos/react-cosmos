@@ -18,8 +18,6 @@ type Props = {
   state?: Object
 };
 
-const DEFAULT_RENDER_KEY = 0;
-
 // How often to check the state of loaded component and update the fixture
 // state if it changed
 const REFRESH_INTERVAL = 200;
@@ -140,7 +138,6 @@ class ComponentStateInner extends Component<InnerProps> {
       );
       const stateForThisInstance = {
         component,
-        renderKey: DEFAULT_RENDER_KEY,
         values: extractValuesFromObject(componentState)
       };
 

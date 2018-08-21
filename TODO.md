@@ -12,7 +12,8 @@
   - [x] Context API reading and updating fixture state
   - [ ] Core decorators
     - [x] Capture props
-    - [ ] Capture state
+    - [x] Capture state
+      - [ ] Implement remaining test cases
     - [ ] Capture context
   - [ ] Remote protocol
     - [ ] window.postMessage

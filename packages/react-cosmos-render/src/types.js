@@ -21,7 +21,6 @@ export type FixtureStateProps = {
 
 export type FixtureStateState = {
   component: ComponentMetadata,
-  renderKey: number,
   values: FixtureStateValues
 };
 

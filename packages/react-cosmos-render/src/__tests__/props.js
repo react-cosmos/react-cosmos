@@ -68,7 +68,7 @@ it('overwrites prop', () => {
   expect(instance.toJSON()).toBe('Hello, Vitalik!');
 });
 
-it('clears prop', () => {
+it('removes prop', () => {
   const instance = create(
     <FixtureProvider>
       <HelloMessage name="Satoshi" />
@@ -89,7 +89,7 @@ it('clears prop', () => {
   expect(instance.toJSON()).toBe('Hello, Guest!');
 });
 
-it('reverts to original prop', () => {
+it('reverts to original props', () => {
   const instance = create(
     <FixtureProvider>
       <HelloMessage name="Satoshi" />
