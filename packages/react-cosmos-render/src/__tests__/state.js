@@ -19,13 +19,6 @@ class Counter extends Component<{}, { count: number }> {
   }
 }
 
-// TODO
-// - reuses instance on state with same renderKey
-// - creates new instance on state with different renderKey
-// - mocks state in multiple components
-// - captures mocked state from multiple components
-// - overwrites mocked state with fixture state in multiple components
-
 it('uses initial state', () => {
   expect(
     create(
@@ -100,7 +93,7 @@ it('captures mocked state', () => {
   });
 });
 
-it('overwrites initial state with fixture state', () => {
+it('overwrites initial state', () => {
   const instance = create(
     <FixtureProvider>
       <ComponentState>
@@ -126,7 +119,7 @@ it('overwrites initial state with fixture state', () => {
   expect(instance.toJSON()).toBe('5 times');
 });
 
-it('overwrites mocked state with fixture state', () => {
+it('overwrites mocked state', () => {
   const instance = create(
     <FixtureProvider>
       <ComponentState state={{ count: 5 }}>
@@ -143,7 +136,7 @@ it('overwrites mocked state with fixture state', () => {
         state: [getStateWithCount({ count: 100, component })]
       }}
     >
-      <ComponentState>
+      <ComponentState state={{ count: 5 }}>
         <Counter />
       </ComponentState>
     </FixtureProvider>
@@ -281,6 +274,100 @@ it('captures component state changes', async () => {
   await until(() => getCountValueFromTestInstance(instance) === 13);
 
   expect(getCountValueFromTestInstance(instance)).toBe(13);
+});
+
+it('mocks state in multiple instances', () => {
+  expect(
+    create(
+      <FixtureProvider>
+        <ComponentState state={{ count: 5 }}>
+          <Counter />
+        </ComponentState>
+        <ComponentState state={{ count: 10 }}>
+          <Counter />
+        </ComponentState>
+      </FixtureProvider>
+    ).toJSON()
+  ).toEqual(['5 times', '10 times']);
+});
+
+it('captures mocked state from multiple instances', () => {
+  const instance = create(
+    <FixtureProvider>
+      <ComponentState state={{ count: 5 }}>
+        <Counter />
+      </ComponentState>
+      <ComponentState state={{ count: 10 }}>
+        <Counter />
+      </ComponentState>
+    </FixtureProvider>
+  );
+
+  const [state1, state2] = instance.getInstance().state.fixtureState.state;
+  expect(state1).toEqual({
+    component: {
+      instanceId: expect.any(Number),
+      name: 'Counter'
+    },
+    values: [
+      {
+        serializable: true,
+        key: 'count',
+        value: 5
+      }
+    ]
+  });
+  expect(state2).toEqual({
+    component: {
+      instanceId: expect.any(Number),
+      name: 'Counter'
+    },
+    values: [
+      {
+        serializable: true,
+        key: 'count',
+        value: 10
+      }
+    ]
+  });
+});
+
+it('overwrites mocked state in multiple instances', () => {
+  const instance = create(
+    <FixtureProvider>
+      <ComponentState state={{ count: 5 }}>
+        <Counter />
+      </ComponentState>
+      <ComponentState state={{ count: 10 }}>
+        <Counter />
+      </ComponentState>
+    </FixtureProvider>
+  );
+
+  const [
+    { component: component1 },
+    { component: component2 }
+  ] = instance.getInstance().state.fixtureState.state;
+
+  instance.update(
+    <FixtureProvider
+      fixtureState={{
+        state: [
+          getStateWithCount({ count: 50, component: component1 }),
+          getStateWithCount({ count: 100, component: component2 })
+        ]
+      }}
+    >
+      <ComponentState state={{ count: 5 }}>
+        <Counter />
+      </ComponentState>
+      <ComponentState state={{ count: 10 }}>
+        <Counter />
+      </ComponentState>
+    </FixtureProvider>
+  );
+
+  expect(instance.toJSON()).toEqual(['50 times', '100 times']);
 });
 
 function getStateWithCount({

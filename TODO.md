@@ -13,10 +13,9 @@
   - [ ] Core decorators
     - [x] Capture props
     - [x] Capture state
-      - [ ] Implement remaining test cases
     - [ ] Capture context
   - [ ] Remote protocol
-    - [ ] window.postMessage
+    - [x] window.postMessage
     - [ ] WebSockets
   - [ ] Testing API
 - [ ] Support JSX fixture files

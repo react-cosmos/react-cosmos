@@ -202,7 +202,7 @@ it('creates new instance on props with different renderKey', () => {
   expect(ref1).not.toBe(ref2);
 });
 
-it('captures props from multiple components (explicit capture)', () => {
+it('captures props from multiple instances (explicit capture)', () => {
   const instance = create(
     <FixtureProvider>
       <CaptureProps>
@@ -245,7 +245,7 @@ it('captures props from multiple components (explicit capture)', () => {
   });
 });
 
-it('captures props from multiple components (direct children)', () => {
+it('captures props from multiple instances (direct children)', () => {
   const instance = create(
     <FixtureProvider>
       <HelloMessage name="Satoshi" />
@@ -284,7 +284,7 @@ it('captures props from multiple components (direct children)', () => {
   });
 });
 
-it('overwrites props in multiple components', () => {
+it('overwrites props in multiple instances', () => {
   const instance = create(
     <FixtureProvider>
       <HelloMessage name="Satoshi" />
