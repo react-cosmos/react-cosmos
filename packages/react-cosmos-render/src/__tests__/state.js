@@ -13,12 +13,13 @@ class Counter extends Component<{}, { count: number }> {
   state = { count: 0 };
 
   render() {
-    return `${this.state.count} times`;
+    const { count } = this.state;
+
+    return typeof count === 'number' ? `${count} times` : 'Missing count';
   }
 }
 
 // TODO
-// - removes state property
 // - reverts to original state (use initialState?)
 // - reuses instance on state with same renderKey
 // - creates new instance on state with different renderKey
@@ -100,7 +101,7 @@ it('captures mocked state', () => {
   });
 });
 
-it('overwrites initial state', () => {
+it('overwrites initial state with fixture state', () => {
   const instance = create(
     <FixtureProvider>
       <ComponentState>
@@ -152,6 +153,58 @@ it('overwrites mocked state with fixture state', () => {
   expect(instance.toJSON()).toBe('100 times');
 });
 
+it('removes state property', () => {
+  const instance = create(
+    <FixtureProvider>
+      <ComponentState state={{ count: 5 }}>
+        <Counter />
+      </ComponentState>
+    </FixtureProvider>
+  );
+
+  const [{ component }] = instance.getInstance().state.fixtureState.state;
+
+  instance.update(
+    <FixtureProvider
+      fixtureState={{
+        state: [getEmptyState({ component })]
+      }}
+    >
+      <ComponentState state={{ count: 5 }}>
+        <Counter />
+      </ComponentState>
+    </FixtureProvider>
+  );
+
+  expect(instance.toJSON()).toBe('Missing count');
+});
+
+it('removes initial state property', () => {
+  const instance = create(
+    <FixtureProvider>
+      <ComponentState>
+        <Counter />
+      </ComponentState>
+    </FixtureProvider>
+  );
+
+  const [{ component }] = instance.getInstance().state.fixtureState.state;
+
+  instance.update(
+    <FixtureProvider
+      fixtureState={{
+        state: [getEmptyState({ component })]
+      }}
+    >
+      <ComponentState>
+        <Counter />
+      </ComponentState>
+    </FixtureProvider>
+  );
+
+  expect(instance.toJSON()).toBe('Missing count');
+});
+
 it('captures component state changes', async () => {
   let counterRef: ?ElementRef<typeof Counter>;
 
@@ -199,6 +252,13 @@ function getStateWithCount({
         value: count
       }
     ]
+  };
+}
+
+function getEmptyState({ component }) {
+  return {
+    component,
+    values: []
   };
 }
 

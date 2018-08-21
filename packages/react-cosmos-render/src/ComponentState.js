@@ -1,6 +1,6 @@
 // @flow
 
-import find from 'lodash/find';
+import { find, uniq } from 'lodash';
 import React, { Component, cloneElement } from 'react';
 import { FixtureContext } from './FixtureContext';
 import { CaptureProps } from './CaptureProps';
@@ -54,6 +54,10 @@ class ComponentStateInner extends Component<InnerProps> {
 
   timeoutId: ?TimeoutID;
 
+  // Remember the child component's initial state to know when to remove
+  // properties. See extendOriginalStateWithFixtureState
+  initialState = {};
+
   render() {
     const { children } = this.props;
 
@@ -77,14 +81,20 @@ class ComponentStateInner extends Component<InnerProps> {
       return;
     }
 
-    const { fixtureState, state: originalState } = this.props;
+    const { fixtureState, state: mockedState } = this.props;
     const fixtureStateState = getRelatedFixtureState(fixtureState, this);
 
+    // TODO: Create test case that fails because state isn't updated when
+    // fixture state is flushed for this instance (then remove this if)
     if (fixtureStateState) {
       // Fixture context already has state for this instance => Inject merged
       // state (...original mock, ...fixture state) into the component.
       childRef.setState(
-        extendOriginalStateWithFixtureState(originalState, fixtureStateState)
+        extendOriginalStateWithFixtureState(
+          this.initialState,
+          mockedState,
+          fixtureStateState
+        )
       );
     }
   }
@@ -95,55 +105,49 @@ class ComponentStateInner extends Component<InnerProps> {
     }
   }
 
-  handleRef = (elRef: ?ElementRef<any>) => {
+  handleRef = (childRef: ?ElementRef<any>) => {
     const {
       children: { ref: prevRef },
-      state: originalState
+      state: mockedState
     } = this.props;
 
-    this.childRef = elRef;
+    this.childRef = childRef;
 
     // Call any previously defined ref from the child element
     if (prevRef) {
-      prevRef(elRef);
+      prevRef(childRef);
     }
 
-    if (!elRef) {
+    if (!childRef) {
       return;
     }
 
-    if (originalState) {
+    if (mockedState) {
       // State is mocked, but there's no fixture state yet => Populate
       // fixtureState.state with the values of the mocked state, as well as
       // (most imporantly) inject the mocked state into the component.
-      elRef.setState(originalState);
-      this.setFixtureStateState(originalState, elRef);
-    } else if (elRef.state) {
+      childRef.setState(mockedState);
+      this.setFixtureStateState(mockedState, childRef);
+    } else if (childRef.state) {
+      this.initialState = childRef.state;
       // State isn't mocked, but component has initial state => Populate
       // fixtureState.state with component's initial state
-      this.setFixtureStateState(elRef.state, elRef);
+      this.setFixtureStateState(childRef.state, childRef);
     }
   };
 
+  // This method receives childRef as an argument because it is called from
+  // places where the existance of this.childRef has already been checked
   setFixtureStateState(componentState, childRef) {
     const { setFixtureState } = this.props;
-    // NOTE: This assumes ref is a Class instance, something React might
-    // change in the future
-    const component = getComponentMetadata(childRef.constructor, this);
 
     setFixtureState(fixtureState => {
-      const stateForAllInstances = fixtureState.state || [];
-      const stateForOtherInstances = stateForAllInstances.filter(
-        state => state.component.instanceId !== component.instanceId
-      );
-      const stateForThisInstance = {
-        component,
-        values: extractValuesFromObject(componentState)
-      };
-
-      return {
-        state: [...stateForOtherInstances, stateForThisInstance]
-      };
+      return updateComponentStateInFixtureState({
+        fixtureState,
+        componentState,
+        decoratorRef: this,
+        childRef
+      });
     }, this.scheduleStateCheck);
   }
 
@@ -172,12 +176,15 @@ class ComponentStateInner extends Component<InnerProps> {
   }
 }
 
-function getRelatedFixtureState(fixtureState, instance): ?FixtureStateState {
+function getRelatedFixtureState(
+  fixtureState,
+  decoratorRef
+): ?FixtureStateState {
   if (!fixtureState.state || fixtureState.state.length === 0) {
     return null;
   }
 
-  const instanceId = getInstanceId(instance);
+  const instanceId = getInstanceId(decoratorRef);
 
   return find(
     fixtureState.state,
@@ -186,32 +193,74 @@ function getRelatedFixtureState(fixtureState, instance): ?FixtureStateState {
 }
 
 function extendOriginalStateWithFixtureState(
-  originalState = {},
-  fixtureStateState
+  initialState,
+  mockedState = {},
+  relatedFixtureState
 ) {
-  if (!fixtureStateState) {
-    // At this point fixtureState has state, but only related to other components
-    return originalState;
+  if (!relatedFixtureState) {
+    // At this point fixtureState only has state related to other components
+    return mockedState;
   }
 
-  const { values } = fixtureStateState;
+  const { values } = relatedFixtureState;
   const mergedState = {};
 
   // Use latest prop value for serializable props, and fall back to original
   // value for unserializable props.
   values.forEach(({ serializable, key, value }) => {
-    mergedState[key] = serializable ? value : originalState[key];
+    mergedState[key] = serializable ? value : mockedState[key];
   });
 
   // Clear original state that was removed from fixtureState. This allows users
   // to remove state attributes defined in fixture. We need to to this because
   // React doesn't provide a replaceState method (anymore).
   // https://reactjs.org/docs/react-component.html#setstate
-  Object.keys(originalState).forEach(key => {
-    if (Object.keys(mergedState).indexOf(key) === -1) {
+  const { keys } = Object;
+  const allKeys = uniq([...keys(initialState), ...keys(mockedState)]);
+
+  allKeys.forEach(key => {
+    if (keys(mergedState).indexOf(key) === -1) {
       mergedState[key] = undefined;
     }
   });
 
   return mergedState;
+}
+
+function updateComponentStateInFixtureState({
+  fixtureState,
+  componentState,
+  decoratorRef,
+  childRef
+}: {
+  fixtureState: FixtureState,
+  componentState: Object,
+  decoratorRef: ElementRef<typeof Component>,
+  childRef: ElementRef<typeof Component>
+}) {
+  const component = getComponentMetadata(getRefType(childRef), decoratorRef);
+  const allComponentState = fixtureState.state || [];
+  const otherComponentStates = allComponentState.filter(
+    createComponentStateMatcher(component)
+  );
+
+  return {
+    state: [
+      ...otherComponentStates,
+      {
+        component,
+        values: extractValuesFromObject(componentState)
+      }
+    ]
+  };
+}
+
+function getRefType(elRef) {
+  // NOTE: This assumes ref is a Class instance, something React might
+  // change in the future
+  return elRef.constructor;
+}
+
+function createComponentStateMatcher(component) {
+  return state => state.component.instanceId !== component.instanceId;
 }
