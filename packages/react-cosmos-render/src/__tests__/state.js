@@ -1,10 +1,12 @@
 // @flow
 
+import until from 'async-until';
 import React, { Component } from 'react';
 import { create } from 'react-test-renderer';
 import { FixtureProvider } from '../FixtureProvider';
 import { ComponentState } from '../ComponentState';
 
+import type { ElementRef } from 'react';
 import type { ComponentMetadata } from '../types';
 
 class Counter extends Component<{}, { count: number }> {
@@ -145,7 +147,36 @@ it('overwrites mocked state', () => {
 
 // TODO: renderKey
 
-// TODO: captures component state change
+it('captures component state changes', async () => {
+  let counterRef: ?ElementRef<typeof Counter>;
+
+  const instance = create(
+    <FixtureProvider>
+      <ComponentState>
+        <Counter
+          ref={elRef => {
+            if (elRef) {
+              counterRef = elRef;
+            }
+          }}
+        />
+      </ComponentState>
+    </FixtureProvider>
+  );
+
+  await until(() => counterRef);
+  if (!counterRef) {
+    throw new Error('Counter ref missing');
+  }
+
+  counterRef.setState({ count: 7 });
+  await until(() => getCountValueFromTestInstance(instance) === 7);
+
+  counterRef.setState({ count: 13 });
+  await until(() => getCountValueFromTestInstance(instance) === 13);
+
+  expect(getCountValueFromTestInstance(instance)).toBe(13);
+});
 
 function getStateWithCount({
   component,
@@ -167,4 +198,10 @@ function getStateWithCount({
       }
     ]
   };
+}
+
+function getCountValueFromTestInstance(instance) {
+  const [{ values }] = instance.getInstance().state.fixtureState.state;
+
+  return values.find(v => v.key === 'count').value;
 }

@@ -36,7 +36,7 @@ export class FixtureProvider extends Component<Props, FixtureContextValue> {
     }
   }
 
-  setFixtureState: SetFixtureState = updater => {
+  setFixtureState: SetFixtureState = (updater, cb) => {
     this.setState(({ fixtureState }) => {
       const fixtureChange =
         typeof updater === 'function' ? updater(fixtureState) : updater;
@@ -47,7 +47,7 @@ export class FixtureProvider extends Component<Props, FixtureContextValue> {
           ...fixtureChange
         }
       };
-    });
+    }, cb);
   };
 
   // Provider value is stored in an object with reference identity to prevent

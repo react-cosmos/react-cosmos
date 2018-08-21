@@ -20,6 +20,10 @@ type Props = {
 
 const DEFAULT_RENDER_KEY = 0;
 
+// How often to check the state of loaded component and update the fixture
+// state if it changed
+const REFRESH_INTERVAL = 200;
+
 // BEWARE: this module's confusing as hell. We're juggling two types of state:
 // - Fixture state: Data related to the loaded fixture (props, state, etc)
 // - Component state: A part of the fixture state related to component state
@@ -47,9 +51,10 @@ type InnerProps = Props & {
   setFixtureState: SetFixtureState
 };
 
-// TODO: Listen and update fixture state on component state changes
 class ComponentStateInner extends Component<InnerProps> {
-  instance: ?ElementRef<any>;
+  childRef: ?ElementRef<any>;
+
+  timeoutId: ?TimeoutID;
 
   render() {
     const { children } = this.props;
@@ -66,30 +71,11 @@ class ComponentStateInner extends Component<InnerProps> {
     return nextProps.fixtureState.state !== this.props.fixtureState.state;
   }
 
+  // Because of shouldComponentUpdate we can assume that fixture state
+  // relevant to this instance changed in componentDidUpdate
   componentDidUpdate() {
-    // Because of shouldComponentUpdate we can assume that fixture state
-    // relevant to this instance changed
-    const { instance } = this;
-    if (!instance) {
-      return;
-    }
-
-    const { fixtureState, state: originalState } = this.props;
-    const fixtureStateState = getRelatedFixtureState(fixtureState, this);
-
-    if (fixtureStateState) {
-      // Fixture state already has data on this instance => Inject merged
-      // state (...original mock, ...fixture state) into the component.
-      instance.setState(
-        extendOriginalStateWithFixtureState(originalState, fixtureStateState)
-      );
-    }
-  }
-
-  handleRef = (ref: ?ElementRef<any>) => {
-    this.instance = ref;
-
-    if (!ref) {
+    const { childRef } = this;
+    if (!childRef) {
       return;
     }
 
@@ -99,27 +85,53 @@ class ComponentStateInner extends Component<InnerProps> {
     if (fixtureStateState) {
       // Fixture context already has state for this instance => Inject merged
       // state (...original mock, ...fixture state) into the component.
-      ref.setState(
+      childRef.setState(
         extendOriginalStateWithFixtureState(originalState, fixtureStateState)
       );
-    } else if (originalState) {
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+    }
+  }
+
+  handleRef = (elRef: ?ElementRef<any>) => {
+    const {
+      children: { ref: prevRef },
+      state: originalState
+    } = this.props;
+
+    this.childRef = elRef;
+
+    // Call any previously defined ref from the child element
+    if (prevRef) {
+      prevRef(elRef);
+    }
+
+    if (!elRef) {
+      return;
+    }
+
+    if (originalState) {
       // State is mocked, but there's no fixture state yet => Populate
       // fixtureState.state with the values of the mocked state, as well as
       // (most imporantly) inject the mocked state into the component.
-      ref.setState(originalState);
-      this.setFixtureState(originalState, ref);
-    } else if (ref.state) {
+      elRef.setState(originalState);
+      this.setFixtureStateState(originalState, elRef);
+    } else if (elRef.state) {
       // State isn't mocked, but component has initial state => Populate
       // fixtureState.state with component's initial state
-      this.setFixtureState(ref.state, ref);
+      this.setFixtureStateState(elRef.state, elRef);
     }
   };
 
-  setFixtureState(componentState, instance) {
+  setFixtureStateState(componentState, childRef) {
     const { setFixtureState } = this.props;
     // NOTE: This assumes ref is a Class instance, something React might
     // change in the future
-    const component = getComponentMetadata(instance.constructor, this);
+    const component = getComponentMetadata(childRef.constructor, this);
 
     setFixtureState(fixtureState => {
       const stateForAllInstances = fixtureState.state || [];
@@ -135,7 +147,31 @@ class ComponentStateInner extends Component<InnerProps> {
       return {
         state: [...stateForOtherInstances, stateForThisInstance]
       };
-    });
+    }, this.scheduleStateCheck);
+  }
+
+  scheduleStateCheck = () => {
+    // Is there a better way to listen to component state changes?
+    this.timeoutId = setTimeout(this.checkState, REFRESH_INTERVAL);
+  };
+
+  checkState = () => {
+    const { childRef } = this;
+    if (!childRef) {
+      return;
+    }
+
+    if (this.hasComponentStateChanged()) {
+      this.setFixtureStateState(childRef.state, childRef);
+    } else {
+      this.scheduleStateCheck();
+    }
+  };
+
+  hasComponentStateChanged() {
+    // TODO: Implement
+    // We should probably keep a copy of the last component state
+    return true;
   }
 }
 

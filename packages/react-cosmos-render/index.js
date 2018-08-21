@@ -1,3 +1,3 @@
 // @flow
 
-// TODO: Export CosmosRenderer and ComponentState with Flow types
+// TODO: Export FixtureProvider, CaptureProps and ComponentState with Flow types

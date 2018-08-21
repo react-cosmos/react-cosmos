@@ -32,7 +32,8 @@ export type FixtureState = {
 };
 
 export type SetFixtureState = (
-  $Shape<FixtureState> | (FixtureState => $Shape<FixtureState>)
+  update: $Shape<FixtureState> | (FixtureState => $Shape<FixtureState>),
+  callback?: () => mixed
 ) => mixed;
 
 export type FixtureContextValue = {
