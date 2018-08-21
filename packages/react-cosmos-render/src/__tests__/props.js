@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { create } from 'react-test-renderer';
 import { CaptureProps } from '../CaptureProps';
 import { FixtureProvider } from '../FixtureProvider';
@@ -48,11 +48,8 @@ it('captures props', () => {
 });
 
 it('overwrites prop', () => {
-  const instance = create(
-    <FixtureProvider>
-      <HelloMessage name="Satoshi" />
-    </FixtureProvider>
-  );
+  const fixture = <HelloMessage name="Satoshi" />;
+  const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
   const [{ component }] = instance.getInstance().state.fixtureState.props;
 
   instance.update(
@@ -61,7 +58,7 @@ it('overwrites prop', () => {
         props: [getPropsWithName({ name: 'Vitalik', component })]
       }}
     >
-      <HelloMessage name="Satoshi" />
+      {fixture}
     </FixtureProvider>
   );
 
@@ -69,11 +66,8 @@ it('overwrites prop', () => {
 });
 
 it('removes prop', () => {
-  const instance = create(
-    <FixtureProvider>
-      <HelloMessage name="Satoshi" />
-    </FixtureProvider>
-  );
+  const fixture = <HelloMessage name="Satoshi" />;
+  const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
   const [{ component }] = instance.getInstance().state.fixtureState.props;
 
   instance.update(
@@ -82,7 +76,7 @@ it('removes prop', () => {
         props: [getEmptyProps({ component })]
       }}
     >
-      <HelloMessage name="Satoshi" />
+      {fixture}
     </FixtureProvider>
   );
 
@@ -92,29 +86,9 @@ it('removes prop', () => {
 // XXX: This is broken use case. CaptureProps will never update props in
 // fixture state from this point on. It populates fixture props on mount, which
 // means that props should only be reset together with changing renderKey
-// NOTE: If fixture state were grouped per component instance, the following
-// structure could work:
-// fixtureState {
-//   components: [
-//     {
-//       instanceId: 1,
-//       name: 'HelloWorld',
-//       renderKey: 7,
-//       props: [{...}],
-//       state: [{...}]
-//     }
-//   ]
-// }
-// In this case component[x].props could be erased and component[x].renderKey
-// bumped to achieve a reset case.
-// TODO: Apply same thinking for CaptureProps
-// TODO: Instance id needs be childRef instead of decoratorRef
 it('reverts to original props', () => {
-  const instance = create(
-    <FixtureProvider>
-      <HelloMessage name="Satoshi" />
-    </FixtureProvider>
-  );
+  const fixture = <HelloMessage name="Satoshi" />;
+  const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
 
   const [{ component }] = instance.getInstance().state.fixtureState.props;
 
@@ -124,13 +98,11 @@ it('reverts to original props', () => {
         props: [getPropsWithName({ name: 'Vitalik', component })]
       }}
     >
-      <HelloMessage name="Satoshi" />
+      {fixture}
     </FixtureProvider>
   );
   instance.update(
-    <FixtureProvider fixtureState={{ props: [] }}>
-      <HelloMessage name="Satoshi" />
-    </FixtureProvider>
+    <FixtureProvider fixtureState={{ props: [] }}>{fixture}</FixtureProvider>
   );
 
   expect(instance.toJSON()).toBe('Hello, Satoshi!');
@@ -305,12 +277,13 @@ it('captures props from multiple instances (direct children)', () => {
 });
 
 it('overwrites props in multiple instances', () => {
-  const instance = create(
-    <FixtureProvider>
+  const fixture = (
+    <Fragment>
       <HelloMessage name="Satoshi" />
       <HelloMessage name="Vitalik" />
-    </FixtureProvider>
+    </Fragment>
   );
+  const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
 
   const [
     { component: component1 },
@@ -326,8 +299,7 @@ it('overwrites props in multiple instances', () => {
         ]
       }}
     >
-      <HelloMessage name="Satoshi" />
-      <HelloMessage name="Vitalik" />
+      {fixture}
     </FixtureProvider>
   );
 
