@@ -1,6 +1,6 @@
 // @flow
 
-import { find, uniq } from 'lodash';
+import { find } from 'lodash';
 import React, { Component, cloneElement } from 'react';
 import { FixtureContext } from './FixtureContext';
 import { CaptureProps } from './CaptureProps';
@@ -54,8 +54,8 @@ class ComponentStateInner extends Component<InnerProps> {
 
   timeoutId: ?TimeoutID;
 
-  // Remember the child component's initial state to know when to remove
-  // properties. See extendOriginalStateWithFixtureState
+  // Remember the child component's initial state to use as a baseline when
+  // state properties get removed via fixture state
   initialState = {};
 
   render() {
@@ -69,8 +69,11 @@ class ComponentStateInner extends Component<InnerProps> {
   }
 
   shouldComponentUpdate(nextProps) {
-    // TODO: Return false if related fixtureState didn't change
-    return nextProps.fixtureState.state !== this.props.fixtureState.state;
+    return (
+      nextProps.state !== this.props.state ||
+      // TODO: Return false if related fixtureState didn't change
+      nextProps.fixtureState.state !== this.props.fixtureState.state
+    );
   }
 
   // Because of shouldComponentUpdate we can assume that fixture state
@@ -84,19 +87,14 @@ class ComponentStateInner extends Component<InnerProps> {
     const { fixtureState, state: mockedState } = this.props;
     const fixtureStateState = getRelatedFixtureState(fixtureState, this);
 
-    // TODO: Create test case that fails because state isn't updated when
-    // fixture state is flushed for this instance (then remove this if)
-    if (fixtureStateState) {
-      // Fixture context already has state for this instance => Inject merged
-      // state (...original mock, ...fixture state) into the component.
-      childRef.setState(
-        extendOriginalStateWithFixtureState(
-          this.initialState,
-          mockedState,
-          fixtureStateState
-        )
-      );
-    }
+    childRef.setState(
+      extendOriginalStateWithFixtureState({
+        initialState: this.initialState,
+        currentState: childRef.state,
+        mockedState,
+        fixtureStateState
+      })
+    );
   }
 
   componentWillUnmount() {
@@ -122,6 +120,10 @@ class ComponentStateInner extends Component<InnerProps> {
       return;
     }
 
+    if (childRef.state) {
+      this.initialState = childRef.state;
+    }
+
     if (mockedState) {
       // State is mocked, but there's no fixture state yet => Populate
       // fixtureState.state with the values of the mocked state, as well as
@@ -129,7 +131,6 @@ class ComponentStateInner extends Component<InnerProps> {
       childRef.setState(mockedState);
       this.setFixtureStateState(mockedState, childRef);
     } else if (childRef.state) {
-      this.initialState = childRef.state;
       // State isn't mocked, but component has initial state => Populate
       // fixtureState.state with component's initial state
       this.setFixtureStateState(childRef.state, childRef);
@@ -162,16 +163,16 @@ class ComponentStateInner extends Component<InnerProps> {
       return;
     }
 
-    if (this.hasComponentStateChanged()) {
+    if (this.didComponentChangeSinceLastCheck()) {
       this.setFixtureStateState(childRef.state, childRef);
     } else {
       this.scheduleStateCheck();
     }
   };
 
-  hasComponentStateChanged() {
+  didComponentChangeSinceLastCheck() {
     // TODO: Implement
-    // We should probably keep a copy of the last component state
+    // Maybe keep a copy of the last component state?
     return true;
   }
 }
@@ -192,39 +193,49 @@ function getRelatedFixtureState(
   );
 }
 
-function extendOriginalStateWithFixtureState(
+function extendOriginalStateWithFixtureState({
   initialState,
+  currentState,
   mockedState = {},
-  relatedFixtureState
-) {
-  if (!relatedFixtureState) {
+  fixtureStateState
+}) {
+  if (!fixtureStateState) {
     // At this point fixtureState only has state related to other components
-    return mockedState;
+    // Merge mocked state with initial state, but clear any extra state
+    // properties added previously
+    return resetOriginalProps(currentState, {
+      ...initialState,
+      ...mockedState
+    });
   }
 
-  const { values } = relatedFixtureState;
+  const { values } = fixtureStateState;
   const mergedState = {};
 
-  // Use latest prop value for serializable props, and fall back to original
-  // value for unserializable props.
+  // Use latest prop value for serializable props, and fall back to mocked
+  // values for unserializable props.
   values.forEach(({ serializable, key, value }) => {
     mergedState[key] = serializable ? value : mockedState[key];
   });
 
-  // Clear original state that was removed from fixtureState. This allows users
-  // to remove state attributes defined in fixture. We need to to this because
-  // React doesn't provide a replaceState method (anymore).
-  // https://reactjs.org/docs/react-component.html#setstate
+  // Only use state properties defined in fixtureState. This allows users to:
+  // - Removed mocked state properties (defined in fixture)
+  // - Removed initial state properties
+  return resetOriginalProps(currentState, mergedState);
+}
+
+// We need to do this because React doesn't provide a replaceState method
+// (anymore) https://reactjs.org/docs/react-component.html#setstate
+function resetOriginalProps(original, current) {
   const { keys } = Object;
-  const allKeys = uniq([...keys(initialState), ...keys(mockedState)]);
 
-  allKeys.forEach(key => {
-    if (keys(mergedState).indexOf(key) === -1) {
-      mergedState[key] = undefined;
-    }
-  });
-
-  return mergedState;
+  return keys(original).reduce(
+    (result, key) =>
+      keys(result).indexOf(key) === -1
+        ? { ...result, [key]: undefined }
+        : result,
+    current
+  );
 }
 
 function updateComponentStateInFixtureState({

@@ -20,7 +20,6 @@ class Counter extends Component<{}, { count: number }> {
 }
 
 // TODO
-// - reverts to original state (use initialState?)
 // - reuses instance on state with same renderKey
 // - creates new instance on state with different renderKey
 // - mocks state in multiple components
@@ -203,6 +202,54 @@ it('removes initial state property', () => {
   );
 
   expect(instance.toJSON()).toBe('Missing count');
+});
+
+it('reverts to initial state', () => {
+  const instance = create(
+    <FixtureProvider>
+      <ComponentState state={{ count: 5 }}>
+        <Counter />
+      </ComponentState>
+    </FixtureProvider>
+  );
+
+  instance.update(
+    <FixtureProvider
+      fixtureState={{
+        state: []
+      }}
+    >
+      <ComponentState>
+        <Counter />
+      </ComponentState>
+    </FixtureProvider>
+  );
+
+  expect(instance.toJSON()).toBe('0 times');
+});
+
+it('reverts to mocked state', () => {
+  const instance = create(
+    <FixtureProvider>
+      <ComponentState state={{ count: 5 }}>
+        <Counter />
+      </ComponentState>
+    </FixtureProvider>
+  );
+
+  instance.update(
+    <FixtureProvider
+      fixtureState={{
+        state: []
+      }}
+    >
+      <ComponentState state={{ count: 10 }}>
+        <Counter />
+      </ComponentState>
+    </FixtureProvider>
+  );
+
+  expect(instance.toJSON()).toBe('10 times');
 });
 
 it('captures component state changes', async () => {
