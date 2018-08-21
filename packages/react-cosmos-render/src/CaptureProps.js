@@ -79,7 +79,7 @@ class CapturePropsInner extends Component<InnerProps> {
   }
 
   shouldComponentUpdate(nextProps) {
-    // TODO: Return false if related fixtureState didn't change
+    // TODO: Return false if related fixtureState values didn't change
     return nextProps.fixtureState.props !== this.props.fixtureState.props;
   }
 

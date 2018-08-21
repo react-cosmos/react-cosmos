@@ -54,9 +54,11 @@ class ComponentStateInner extends Component<InnerProps> {
 
   timeoutId: ?TimeoutID;
 
-  // Remember the child component's initial state to use as a baseline when
-  // state properties get removed via fixture state
+  // Remember the child component's initial state to use as a baseline for
+  // mocked state (when fixture state is empty)
   initialState = {};
+
+  prevState: ?Object;
 
   render() {
     const { children } = this.props;
@@ -71,7 +73,7 @@ class ComponentStateInner extends Component<InnerProps> {
   shouldComponentUpdate(nextProps) {
     return (
       nextProps.state !== this.props.state ||
-      // TODO: Return false if related fixtureState didn't change
+      // TODO: Return false if related fixtureState values didn't change
       nextProps.fixtureState.state !== this.props.fixtureState.state
     );
   }
@@ -163,18 +165,13 @@ class ComponentStateInner extends Component<InnerProps> {
       return;
     }
 
-    if (this.didComponentChangeSinceLastCheck()) {
+    if (childRef.state !== this.prevState) {
+      this.prevState = childRef.state;
       this.setFixtureStateState(childRef.state, childRef);
     } else {
       this.scheduleStateCheck();
     }
   };
-
-  didComponentChangeSinceLastCheck() {
-    // TODO: Implement
-    // Maybe keep a copy of the last component state?
-    return true;
-  }
 }
 
 function getRelatedFixtureState(
