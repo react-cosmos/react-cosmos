@@ -74,7 +74,8 @@ class ComponentStateInner extends Component<InnerProps> {
   shouldComponentUpdate(nextProps) {
     return (
       nextProps.state !== this.props.state ||
-      // TODO: Return false if related fixtureState values didn't change
+      // TODO: Avoid renders when fixture state values for this instance are
+      // the same. Do this after implementing logic for unserializable values.
       nextProps.fixtureState.state !== this.props.fixtureState.state
     );
   }
@@ -102,14 +103,14 @@ class ComponentStateInner extends Component<InnerProps> {
       // We get here when the fixture state associated with this instance
       // (first populated at mount, inside handleRef) has been emptied.
       // This is a signal to reset the fixture state for this instance.
-      this.updateFixtureState(
+      const cleanState =
         // Prevent leaking previous state properties when resetting state
         resetOriginalProps(childRef.state, {
           ...this.initialState,
           ...mockedState
-        }),
-        childRef
-      );
+        });
+      childRef.setState(cleanState);
+      this.updateFixtureState(cleanState, childRef);
     }
   }
 

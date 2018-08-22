@@ -78,7 +78,8 @@ class CapturePropsInner extends Component<InnerProps> {
   }
 
   shouldComponentUpdate(nextProps) {
-    // TODO: Return false if related fixtureState values didn't change
+    // TODO: Avoid renders when fixture state values for this instance are
+    // the same. Do this after implementing logic for unserializable values.
     return nextProps.fixtureState.props !== this.props.fixtureState.props;
   }
 

@@ -16,8 +16,9 @@
     - [x] Capture state
     - [ ] Capture context
     - [ ] Catch errors
+    - [ ] Customize fixture name
   - [ ] Remote protocol
-    - [x] window.postMessage
+    - [ ] window.postMessage
     - [ ] WebSockets
   - [ ] Testing API
 - [ ] Support JSX fixture files

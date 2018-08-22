@@ -4,17 +4,12 @@ import React, { Component, Fragment } from 'react';
 import { create } from 'react-test-renderer';
 import { CaptureProps } from '../CaptureProps';
 import { FixtureProvider } from '../FixtureProvider';
-
-class HelloMessage extends Component<{ name: string }> {
-  render() {
-    return `Hello, ${this.props.name || 'Guest'}!`;
-  }
-}
+import { updateFixtureState, getProps, setProps, resetProps } from './_shared';
 
 it('renders with props', () => {
   expect(
     create(
-      <FixtureProvider>
+      <FixtureProvider fixtureState={{}} setFixtureState={() => {}}>
         <HelloMessage name="Satoshi" />
       </FixtureProvider>
     ).toJSON()
@@ -22,14 +17,22 @@ it('renders with props', () => {
 });
 
 it('captures props', () => {
-  const instance = create(
-    <FixtureProvider>
+  let fixtureState = {};
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureState(fixtureState, updater, cb);
+  };
+
+  create(
+    <FixtureProvider
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
+    >
       <HelloMessage name="Satoshi" />
     </FixtureProvider>
   );
 
-  const [props] = instance.getInstance().state.fixtureState.props;
-  expect(props).toEqual({
+  const [props1] = getProps(fixtureState);
+  expect(props1).toEqual({
     instanceId: expect.any(Number),
     componentName: 'HelloMessage',
     renderKey: expect.any(Number),
@@ -44,15 +47,28 @@ it('captures props', () => {
 });
 
 it('overwrites prop', () => {
+  let fixtureState = {};
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureState(fixtureState, updater, cb);
+  };
+
   const fixture = <HelloMessage name="Satoshi" />;
-  const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
-  const [{ instanceId }] = instance.getInstance().state.fixtureState.props;
+
+  const instance = create(
+    <FixtureProvider
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
+    >
+      {fixture}
+    </FixtureProvider>
+  );
+
+  fixtureState = setProps(fixtureState, { name: 'Vitalik' });
 
   instance.update(
     <FixtureProvider
-      fixtureState={{
-        props: [getPropsWithName({ name: 'Vitalik', instanceId })]
-      }}
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
     >
       {fixture}
     </FixtureProvider>
@@ -62,15 +78,28 @@ it('overwrites prop', () => {
 });
 
 it('removes prop', () => {
+  let fixtureState = {};
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureState(fixtureState, updater, cb);
+  };
+
   const fixture = <HelloMessage name="Satoshi" />;
-  const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
-  const [{ instanceId }] = instance.getInstance().state.fixtureState.props;
+
+  const instance = create(
+    <FixtureProvider
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
+    >
+      {fixture}
+    </FixtureProvider>
+  );
+
+  fixtureState = setProps(fixtureState, {});
 
   instance.update(
     <FixtureProvider
-      fixtureState={{
-        props: [getEmptyProps({ instanceId })]
-      }}
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
     >
       {fixture}
     </FixtureProvider>
@@ -79,48 +108,67 @@ it('removes prop', () => {
   expect(instance.toJSON()).toBe('Hello, Guest!');
 });
 
+// XXX: This is dead end use case. Props for this instance will stay empty from
+// this point on, because CaptureProps only adds props to fixture state on
+// mount.
+// TODO: Inside CapturePropsInner.componentDidUpdate reset props in fixture
+// state if they are missing.
 it('reverts to original props', () => {
+  let fixtureState = {};
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureState(fixtureState, updater, cb);
+  };
+
   const fixture = <HelloMessage name="Satoshi" />;
-  const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
 
-  const [
-    { instanceId, renderKey }
-  ] = instance.getInstance().state.fixtureState.props;
-
-  instance.update(
+  const instance = create(
     <FixtureProvider
-      fixtureState={{
-        props: [
-          getPropsWithName({
-            name: 'Vitalik',
-            instanceId,
-            // We also bump the render key for the instance to be recreated and
-            // the element props reset in the fixtureState.
-            // NOTE: Clearing fixtureState.props[i] without bumping renderKey
-            // is a broken use case. CaptureProps will never update props in
-            // fixture state from that point on. CaptureProps only adds props
-            // to fixture state on mount, which means that props should only be
-            // reset together with changing renderKey.
-            renderKey: renderKey + 1
-          })
-        ]
-      }}
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
     >
       {fixture}
     </FixtureProvider>
   );
+
+  fixtureState = setProps(fixtureState, { name: 'Vitalik' });
+
   instance.update(
-    <FixtureProvider fixtureState={{ props: [] }}>{fixture}</FixtureProvider>
+    <FixtureProvider
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
+    >
+      {fixture}
+    </FixtureProvider>
+  );
+
+  expect(instance.toJSON()).toBe('Hello, Vitalik!');
+
+  setFixtureState({ props: [] });
+
+  instance.update(
+    <FixtureProvider
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
+    >
+      {fixture}
+    </FixtureProvider>
   );
 
   expect(instance.toJSON()).toBe('Hello, Satoshi!');
 });
 
-it('reuses instance on props with same renderKey', () => {
-  let ref1, ref2;
+it('reuses instance on props transition', () => {
+  let fixtureState = {};
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureState(fixtureState, updater, cb);
+  };
 
+  let ref1;
   const instance = create(
-    <FixtureProvider>
+    <FixtureProvider
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
+    >
       <HelloMessage
         name="Satoshi"
         ref={ref => {
@@ -132,14 +180,13 @@ it('reuses instance on props with same renderKey', () => {
     </FixtureProvider>
   );
 
-  const { fixtureState } = instance.getInstance().state;
-  const [{ instanceId, renderKey }] = fixtureState.props;
+  fixtureState = setProps(fixtureState, { name: 'Vitalik' });
 
+  let ref2;
   instance.update(
     <FixtureProvider
-      fixtureState={{
-        props: [getPropsWithName({ name: 'Vitalik', instanceId, renderKey })]
-      }}
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
     >
       <HelloMessage
         name="Satoshi"
@@ -151,16 +198,25 @@ it('reuses instance on props with same renderKey', () => {
       />
     </FixtureProvider>
   );
+
+  expect(instance.toJSON()).toBe('Hello, Vitalik!');
 
   expect(ref1).not.toBeFalsy();
   expect(ref1).toBe(ref2);
 });
 
-it('creates new instance on props with different renderKey', () => {
-  let ref1, ref2;
+it('creates new instance on props reset', () => {
+  let fixtureState = {};
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureState(fixtureState, updater, cb);
+  };
 
+  let ref1;
   const instance = create(
-    <FixtureProvider>
+    <FixtureProvider
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
+    >
       <HelloMessage
         name="Satoshi"
         ref={ref => {
@@ -172,20 +228,13 @@ it('creates new instance on props with different renderKey', () => {
     </FixtureProvider>
   );
 
-  const { fixtureState } = instance.getInstance().state;
-  const [{ instanceId, renderKey }] = fixtureState.props;
+  fixtureState = resetProps(fixtureState, { name: 'Vitalik' });
 
+  let ref2;
   instance.update(
     <FixtureProvider
-      fixtureState={{
-        props: [
-          getPropsWithName({
-            name: 'Vitalik',
-            instanceId,
-            renderKey: renderKey + 1
-          })
-        ]
-      }}
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
     >
       <HelloMessage
         name="Satoshi"
@@ -197,14 +246,24 @@ it('creates new instance on props with different renderKey', () => {
       />
     </FixtureProvider>
   );
+
+  expect(instance.toJSON()).toBe('Hello, Vitalik!');
 
   expect(ref1).not.toBeFalsy();
   expect(ref1).not.toBe(ref2);
 });
 
 it('captures props from multiple instances (explicit capture)', () => {
-  const instance = create(
-    <FixtureProvider>
+  let fixtureState = {};
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureState(fixtureState, updater, cb);
+  };
+
+  create(
+    <FixtureProvider
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
+    >
       <CaptureProps>
         <HelloMessage name="Satoshi" />
       </CaptureProps>
@@ -214,7 +273,7 @@ it('captures props from multiple instances (explicit capture)', () => {
     </FixtureProvider>
   );
 
-  const [props1, props2] = instance.getInstance().state.fixtureState.props;
+  const [props1, props2] = getProps(fixtureState);
   expect(props1).toEqual({
     instanceId: expect.any(Number),
     componentName: 'HelloMessage',
@@ -242,14 +301,22 @@ it('captures props from multiple instances (explicit capture)', () => {
 });
 
 it('captures props from multiple instances (direct children)', () => {
-  const instance = create(
-    <FixtureProvider>
+  let fixtureState = {};
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureState(fixtureState, updater, cb);
+  };
+
+  create(
+    <FixtureProvider
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
+    >
       <HelloMessage name="Satoshi" />
       <HelloMessage name="Vitalik" />
     </FixtureProvider>
   );
 
-  const [props1, props2] = instance.getInstance().state.fixtureState.props;
+  const [props1, props2] = getProps(fixtureState);
   expect(props1).toEqual({
     instanceId: expect.any(Number),
     componentName: 'HelloMessage',
@@ -277,27 +344,37 @@ it('captures props from multiple instances (direct children)', () => {
 });
 
 it('overwrites props in multiple instances', () => {
+  let fixtureState = {};
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureState(fixtureState, updater, cb);
+  };
+
   const fixture = (
     <Fragment>
       <HelloMessage name="Satoshi" />
       <HelloMessage name="Vitalik" />
     </Fragment>
   );
-  const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
 
-  const [
-    { instanceId: instanceId1 },
-    { instanceId: instanceId2 }
-  ] = instance.getInstance().state.fixtureState.props;
+  const instance = create(
+    <FixtureProvider
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
+    >
+      {fixture}
+    </FixtureProvider>
+  );
+
+  fixtureState = setProps(
+    fixtureState,
+    { name: 'SATOSHI' },
+    { name: 'VITALIK' }
+  );
 
   instance.update(
     <FixtureProvider
-      fixtureState={{
-        props: [
-          getPropsWithName({ name: 'SATOSHI', instanceId: instanceId1 }),
-          getPropsWithName({ name: 'VITALIK', instanceId: instanceId2 })
-        ]
-      }}
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
     >
       {fixture}
     </FixtureProvider>
@@ -306,34 +383,10 @@ it('overwrites props in multiple instances', () => {
   expect(instance.toJSON()).toEqual(['Hello, SATOSHI!', 'Hello, VITALIK!']);
 });
 
-function getPropsWithName({
-  instanceId,
-  name,
-  renderKey = 0
-}: {
-  instanceId: number,
-  name: string,
-  renderKey?: number
-}) {
-  return {
-    instanceId,
-    componentName: 'HelloWorld',
-    renderKey,
-    values: [
-      {
-        serializable: true,
-        key: 'name',
-        value: name
-      }
-    ]
-  };
-}
+// End of tests
 
-function getEmptyProps({ instanceId }) {
-  return {
-    instanceId,
-    componentName: 'HelloWorld',
-    renderKey: 0,
-    values: []
-  };
+class HelloMessage extends Component<{ name: string }> {
+  render() {
+    return `Hello, ${this.props.name || 'Guest'}!`;
+  }
 }

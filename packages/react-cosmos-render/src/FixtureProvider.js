@@ -2,9 +2,8 @@
 
 import { isElement } from 'react-is';
 import React, { Component, Fragment } from 'react';
-import { setFixtureUpdater } from './shared/fixture-state';
 import { CaptureProps } from './CaptureProps';
-import { FixtureContext, EMPTY_FIXTURE_STATE } from './FixtureContext';
+import { FixtureContext } from './FixtureContext';
 
 import type { Node, Element } from 'react';
 import type {
@@ -15,8 +14,8 @@ import type {
 
 type Props = {
   children: Node,
-  // This prop exists for testing purposes. Normally fixture state is contained.
-  fixtureState: FixtureState
+  fixtureState: FixtureState,
+  setFixtureState: SetFixtureState
 };
 
 // NOTE: Maybe open up Fixture component for naming and other customization. Eg.
@@ -24,26 +23,21 @@ type Props = {
 //     <Button>Click me</button>
 //   </Fixture>
 export class FixtureProvider extends Component<Props, FixtureContextValue> {
-  static defaultProps = {
-    fixtureState: EMPTY_FIXTURE_STATE
-  };
-
-  // TODO: Remove fixtureState prop once remote protocol is implemented
-  UNSAFE_componentWillReceiveProps({ fixtureState }: Props) {
-    if (fixtureState !== this.props.fixtureState) {
-      this.setState({
-        fixtureState
-      });
+  // NOTE: gDSFP method is fired on every render, regardless of the cause.
+  // https://reactjs.org/docs/react-component.html#static-getderivedstatefromprops
+  static getDerivedStateFromProps(props: Props, state: FixtureContextValue) {
+    if (props.fixtureState !== state.fixtureState) {
+      return {
+        fixtureState: props.fixtureState,
+        setFixtureState: state.setFixtureState
+      };
     }
+
+    return null;
   }
 
   setFixtureState: SetFixtureState = (updater, cb) => {
-    this.setState(
-      ({ fixtureState }) => ({
-        fixtureState: setFixtureUpdater(fixtureState, updater)
-      }),
-      cb
-    );
+    this.props.setFixtureState(updater, cb);
   };
 
   // Provider value is stored in an object with reference identity to prevent

@@ -4,77 +4,62 @@ import React, { Component } from 'react';
 import { create } from 'react-test-renderer';
 import { ComponentState } from '../ComponentState';
 import { FixtureProvider } from '../FixtureProvider';
-
-class Counter extends Component<{}, { count: number }> {
-  state = { count: 0 };
-
-  render() {
-    return `${this.state.count} times`;
-  }
-}
+import {
+  updateFixtureState,
+  setProps,
+  resetProps,
+  getState,
+  setState
+} from './_shared';
 
 it('resets state when resetting props', () => {
-  const countValue = {
-    serializable: true,
-    key: 'count',
-    value: 5
+  let fixtureState = {};
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureState(fixtureState, updater, cb);
   };
 
   const fixture = (
     <ComponentState>
-      <Counter />
+      <Counter suffix="times" />
     </ComponentState>
   );
-  const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
 
-  const { fixtureState } = instance.getInstance().state;
-  const [props] = fixtureState.props;
-  const [state] = fixtureState.state;
-
-  instance.update(
+  const instance = create(
     <FixtureProvider
-      fixtureState={{
-        state: [
-          {
-            instanceId: state.instanceId,
-            componentName: 'Counter',
-            values: [countValue]
-          }
-        ]
-      }}
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
     >
       {fixture}
     </FixtureProvider>
   );
 
+  fixtureState = setState(fixtureState, { count: 5 });
+
   instance.update(
     <FixtureProvider
-      fixtureState={{
-        props: [
-          {
-            instanceId: props.instanceId,
-            componentName: 'Counter',
-            // This is resetting the component instance
-            renderKey: props.renderKey + 1,
-            values: []
-          }
-        ],
-        state: [
-          {
-            instanceId: state.instanceId,
-            componentName: 'Counter',
-            values: [countValue]
-          }
-        ]
-      }}
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
     >
       {fixture}
     </FixtureProvider>
   );
 
-  expect(instance.toJSON()).toBe('0 times');
+  expect(instance.toJSON()).toBe('5 times');
 
-  const [state2] = instance.getInstance().state.fixtureState.state;
+  fixtureState = resetProps(fixtureState, { suffix: 'timez' });
+
+  instance.update(
+    <FixtureProvider
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
+    >
+      {fixture}
+    </FixtureProvider>
+  );
+
+  expect(instance.toJSON()).toBe('0 timez');
+
+  const [state2] = getState(fixtureState);
   expect(state2.values).toEqual([
     {
       serializable: true,
@@ -83,3 +68,70 @@ it('resets state when resetting props', () => {
     }
   ]);
 });
+
+it('keeps state when transitioning props', () => {
+  let fixtureState = {};
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureState(fixtureState, updater, cb);
+  };
+
+  const fixture = (
+    <ComponentState>
+      <Counter suffix="times" />
+    </ComponentState>
+  );
+
+  const instance = create(
+    <FixtureProvider
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
+    >
+      {fixture}
+    </FixtureProvider>
+  );
+
+  fixtureState = setState(fixtureState, { count: 5 });
+
+  instance.update(
+    <FixtureProvider
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
+    >
+      {fixture}
+    </FixtureProvider>
+  );
+
+  expect(instance.toJSON()).toBe('5 times');
+
+  fixtureState = setProps(fixtureState, { suffix: 'timez' });
+
+  instance.update(
+    <FixtureProvider
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
+    >
+      {fixture}
+    </FixtureProvider>
+  );
+
+  expect(instance.toJSON()).toBe('5 timez');
+
+  const [state2] = getState(fixtureState);
+  expect(state2.values).toEqual([
+    {
+      serializable: true,
+      key: 'count',
+      value: 5
+    }
+  ]);
+});
+
+// End of tests
+
+class Counter extends Component<{ suffix: string }, { count: number }> {
+  state = { count: 0 };
+
+  render() {
+    return `${this.state.count} ${this.props.suffix}`;
+  }
+}
