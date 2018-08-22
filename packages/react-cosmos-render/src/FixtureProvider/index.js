@@ -23,7 +23,7 @@ type Props = {
 //     <Button>Click me</button>
 //   </Fixture>
 export class FixtureProvider extends Component<Props, FixtureContextValue> {
-  // NOTE: gDSFP method is fired on every render, regardless of the cause.
+  // FYI: gDSFP method is fired on every render, regardless of the cause.
   // https://reactjs.org/docs/react-component.html#static-getderivedstatefromprops
   static getDerivedStateFromProps(props: Props, state: FixtureContextValue) {
     if (props.fixtureState !== state.fixtureState) {

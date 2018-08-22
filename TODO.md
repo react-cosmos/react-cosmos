@@ -18,7 +18,7 @@
     - [ ] Catch errors
     - [ ] Customize fixture name
   - [x] Remote protocol
-    - [ ] Define message types
+    - [x] Define renderer message types
     - [ ] window.postMessage
     - [ ] WebSockets
   - [ ] Testing API
