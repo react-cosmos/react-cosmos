@@ -29,7 +29,7 @@ export type RendererErrorMsg = {
 };
 
 // Announce a new remote (eg. Cosmos UI), essentially requesting a
-// `rendererReady` event from running renderers
+// `rendererReady` message from running renderers
 export type RemoteReadyMsg = {
   type: 'remoteReady'
 };
@@ -55,9 +55,11 @@ export type SetFixtureStateMsg = {
   }
 };
 
-// Confirmation that a fixture state changed has been applied by a renderer
-export type FixtureStateChangeMsg = {
-  type: 'fixtureStateChange',
+// An update on the fixture state inside a renderer, covering more scenarios:
+// - Initial fixture state after a selectFixture message
+// - Confirmation for a setFixtureState message
+export type FixtureStateMsg = {
+  type: 'fixtureState',
   payload: {
     rendererId: RendererId,
     // Only one fixture can be loaded at a time by a renderer, but the path is
@@ -74,4 +76,4 @@ export type RenderMessage =
   | RemoteReadyMsg
   | SelectFixtureMsg
   | SetFixtureStateMsg
-  | FixtureStateChangeMsg;
+  | FixtureStateMsg;
