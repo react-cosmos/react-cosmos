@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { create } from 'react-test-renderer';
-import { FixtureProvider } from '../FixtureProvider';
+import { FixtureProvider } from '../../FixtureProvider';
 
 it('renders string node', () => {
   expect(

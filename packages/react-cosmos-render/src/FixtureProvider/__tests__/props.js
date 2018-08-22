@@ -2,8 +2,8 @@
 
 import React, { Component, Fragment } from 'react';
 import { create } from 'react-test-renderer';
-import { CaptureProps } from '../CaptureProps';
-import { FixtureProvider } from '../FixtureProvider';
+import { CaptureProps } from '../../CaptureProps';
+import { FixtureProvider } from '../../FixtureProvider';
 import { updateFixtureState, getProps, setProps, resetProps } from './_shared';
 
 it('renders with props', () => {

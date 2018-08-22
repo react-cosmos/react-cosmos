@@ -3,8 +3,8 @@
 import until from 'async-until';
 import React, { Component, Fragment } from 'react';
 import { create } from 'react-test-renderer';
-import { FixtureProvider } from '../FixtureProvider';
-import { ComponentState } from '../ComponentState';
+import { FixtureProvider } from '../../FixtureProvider';
+import { ComponentState } from '../../ComponentState';
 import { updateFixtureState, getState, setState } from './_shared';
 
 import type { ElementRef } from 'react';

@@ -2,15 +2,15 @@
 
 import { isElement } from 'react-is';
 import React, { Component, Fragment } from 'react';
-import { CaptureProps } from './CaptureProps';
-import { FixtureContext } from './FixtureContext';
+import { CaptureProps } from '../CaptureProps';
+import { FixtureContext } from '../FixtureContext';
 
 import type { Node, Element } from 'react';
 import type {
   FixtureState,
   SetFixtureState,
   FixtureContextValue
-} from './types';
+} from '../types';
 
 type Props = {
   children: Node,

@@ -2,8 +2,8 @@
 
 import React, { Component } from 'react';
 import { create } from 'react-test-renderer';
-import { ComponentState } from '../ComponentState';
-import { FixtureProvider } from '../FixtureProvider';
+import { ComponentState } from '../../ComponentState';
+import { FixtureProvider } from '../../FixtureProvider';
 import {
   updateFixtureState,
   setProps,
