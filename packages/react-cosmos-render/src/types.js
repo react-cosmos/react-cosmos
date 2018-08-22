@@ -27,8 +27,12 @@ export type FixtureState = {
   [key: string]: mixed
 };
 
+export type FixtureStateUpdater =
+  | $Shape<FixtureState>
+  | (FixtureState => $Shape<FixtureState>);
+
 export type SetFixtureState = (
-  update: $Shape<FixtureState> | (FixtureState => $Shape<FixtureState>),
+  updater: FixtureStateUpdater,
   callback?: () => mixed
 ) => mixed;
 

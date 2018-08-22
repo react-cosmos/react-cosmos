@@ -2,6 +2,7 @@
 
 import { isElement } from 'react-is';
 import React, { Component, Fragment } from 'react';
+import { setFixtureUpdater } from './shared/fixture-state';
 import { CaptureProps } from './CaptureProps';
 import { FixtureContext, EMPTY_FIXTURE_STATE } from './FixtureContext';
 
@@ -37,17 +38,12 @@ export class FixtureProvider extends Component<Props, FixtureContextValue> {
   }
 
   setFixtureState: SetFixtureState = (updater, cb) => {
-    this.setState(({ fixtureState }) => {
-      const fixtureChange =
-        typeof updater === 'function' ? updater(fixtureState) : updater;
-
-      return {
-        fixtureState: {
-          ...fixtureState,
-          ...fixtureChange
-        }
-      };
-    }, cb);
+    this.setState(
+      ({ fixtureState }) => ({
+        fixtureState: setFixtureUpdater(fixtureState, updater)
+      }),
+      cb
+    );
   };
 
   // Provider value is stored in an object with reference identity to prevent
