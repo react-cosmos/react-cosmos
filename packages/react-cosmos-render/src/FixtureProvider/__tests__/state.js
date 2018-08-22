@@ -480,8 +480,16 @@ it('overwrites mocked state in multiple instances', () => {
 });
 
 it('unmounts gracefully', () => {
+  let fixtureState = {};
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureState(fixtureState, updater, cb);
+  };
+
   const instance = create(
-    <FixtureProvider fixtureState={{}} setFixtureState={() => {}}>
+    <FixtureProvider
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
+    >
       <ComponentState state={{ count: 5 }}>
         <Counter />
       </ComponentState>
