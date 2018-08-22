@@ -3,7 +3,10 @@
 import { extractValuesFromObject } from '../../shared/values';
 import { setFixtureUpdater } from '../../shared/fixture-state';
 
-import type { FixtureState, FixtureStateUpdater } from '../../types/fixture';
+import type {
+  FixtureState,
+  FixtureStateUpdater
+} from '../../types/fixture-state';
 
 export function updateFixtureState(
   prevState: FixtureState,

@@ -1,6 +1,6 @@
 // @flow
 
-import type { FixtureStateValues } from '../types/fixture';
+import type { FixtureStateValues } from '../types/fixture-state';
 
 // Why store unserializable props in fixture state?
 // - Because they still provides value in the Cosmos UI. They let the user know
