@@ -2,7 +2,7 @@
 
 import { createContext } from 'react';
 
-import type { FixtureState, FixtureContextValue } from './types';
+import type { FixtureState, FixtureContextValue } from './types/fixture';
 
 export const EMPTY_FIXTURE_STATE: FixtureState = {};
 

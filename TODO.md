@@ -17,7 +17,8 @@
     - [ ] Capture context
     - [ ] Catch errors
     - [ ] Customize fixture name
-  - [ ] Remote protocol
+  - [x] Remote protocol
+    - [ ] Define message types
     - [ ] window.postMessage
     - [ ] WebSockets
   - [ ] Testing API

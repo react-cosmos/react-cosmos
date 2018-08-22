@@ -1,6 +1,6 @@
 // @flow
 
-import type { FixtureState, FixtureStateUpdater } from '../types';
+import type { FixtureState, FixtureStateUpdater } from '../types/fixture';
 
 export function setFixtureUpdater(
   fixtureState: FixtureState,

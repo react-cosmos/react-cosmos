@@ -1,5 +1,7 @@
 // @flow
 
+import type { Node } from 'react';
+
 type FixtureStateValue = {
   serializable: boolean,
   key: string,
@@ -39,4 +41,8 @@ export type SetFixtureState = (
 export type FixtureContextValue = {
   fixtureState: FixtureState,
   setFixtureState: SetFixtureState
+};
+
+export type Fixtures = {
+  [path: string]: Node
 };
