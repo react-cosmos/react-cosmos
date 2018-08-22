@@ -15,6 +15,7 @@
     - [x] Capture props
     - [x] Capture state
     - [ ] Capture context
+    - [ ] Catch errors
   - [ ] Remote protocol
     - [x] window.postMessage
     - [ ] WebSockets

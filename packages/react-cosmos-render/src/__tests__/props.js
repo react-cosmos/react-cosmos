@@ -5,8 +5,6 @@ import { create } from 'react-test-renderer';
 import { CaptureProps } from '../CaptureProps';
 import { FixtureProvider } from '../FixtureProvider';
 
-import type { ComponentMetadata } from '../types';
-
 class HelloMessage extends Component<{ name: string }> {
   render() {
     return `Hello, ${this.props.name || 'Guest'}!`;
@@ -32,10 +30,8 @@ it('captures props', () => {
 
   const [props] = instance.getInstance().state.fixtureState.props;
   expect(props).toEqual({
-    component: {
-      instanceId: expect.any(Number),
-      name: 'HelloMessage'
-    },
+    instanceId: expect.any(Number),
+    componentName: 'HelloMessage',
     renderKey: expect.any(Number),
     values: [
       {
@@ -50,12 +46,12 @@ it('captures props', () => {
 it('overwrites prop', () => {
   const fixture = <HelloMessage name="Satoshi" />;
   const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
-  const [{ component }] = instance.getInstance().state.fixtureState.props;
+  const [{ instanceId }] = instance.getInstance().state.fixtureState.props;
 
   instance.update(
     <FixtureProvider
       fixtureState={{
-        props: [getPropsWithName({ name: 'Vitalik', component })]
+        props: [getPropsWithName({ name: 'Vitalik', instanceId })]
       }}
     >
       {fixture}
@@ -68,12 +64,12 @@ it('overwrites prop', () => {
 it('removes prop', () => {
   const fixture = <HelloMessage name="Satoshi" />;
   const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
-  const [{ component }] = instance.getInstance().state.fixtureState.props;
+  const [{ instanceId }] = instance.getInstance().state.fixtureState.props;
 
   instance.update(
     <FixtureProvider
       fixtureState={{
-        props: [getEmptyProps({ component })]
+        props: [getEmptyProps({ instanceId })]
       }}
     >
       {fixture}
@@ -88,7 +84,7 @@ it('reverts to original props', () => {
   const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
 
   const [
-    { component, renderKey }
+    { instanceId, renderKey }
   ] = instance.getInstance().state.fixtureState.props;
 
   instance.update(
@@ -97,7 +93,7 @@ it('reverts to original props', () => {
         props: [
           getPropsWithName({
             name: 'Vitalik',
-            component,
+            instanceId,
             // We also bump the render key for the instance to be recreated and
             // the element props reset in the fixtureState.
             // NOTE: Clearing fixtureState.props[i] without bumping renderKey
@@ -137,12 +133,12 @@ it('reuses instance on props with same renderKey', () => {
   );
 
   const { fixtureState } = instance.getInstance().state;
-  const [{ component, renderKey }] = fixtureState.props;
+  const [{ instanceId, renderKey }] = fixtureState.props;
 
   instance.update(
     <FixtureProvider
       fixtureState={{
-        props: [getPropsWithName({ name: 'Vitalik', component, renderKey })]
+        props: [getPropsWithName({ name: 'Vitalik', instanceId, renderKey })]
       }}
     >
       <HelloMessage
@@ -177,7 +173,7 @@ it('creates new instance on props with different renderKey', () => {
   );
 
   const { fixtureState } = instance.getInstance().state;
-  const [{ component, renderKey }] = fixtureState.props;
+  const [{ instanceId, renderKey }] = fixtureState.props;
 
   instance.update(
     <FixtureProvider
@@ -185,7 +181,7 @@ it('creates new instance on props with different renderKey', () => {
         props: [
           getPropsWithName({
             name: 'Vitalik',
-            component,
+            instanceId,
             renderKey: renderKey + 1
           })
         ]
@@ -220,10 +216,8 @@ it('captures props from multiple instances (explicit capture)', () => {
 
   const [props1, props2] = instance.getInstance().state.fixtureState.props;
   expect(props1).toEqual({
-    component: {
-      instanceId: expect.any(Number),
-      name: 'HelloMessage'
-    },
+    instanceId: expect.any(Number),
+    componentName: 'HelloMessage',
     renderKey: expect.any(Number),
     values: [
       {
@@ -234,10 +228,8 @@ it('captures props from multiple instances (explicit capture)', () => {
     ]
   });
   expect(props2).toEqual({
-    component: {
-      instanceId: expect.any(Number),
-      name: 'HelloMessage'
-    },
+    instanceId: expect.any(Number),
+    componentName: 'HelloMessage',
     renderKey: expect.any(Number),
     values: [
       {
@@ -259,10 +251,8 @@ it('captures props from multiple instances (direct children)', () => {
 
   const [props1, props2] = instance.getInstance().state.fixtureState.props;
   expect(props1).toEqual({
-    component: {
-      instanceId: expect.any(Number),
-      name: 'HelloMessage'
-    },
+    instanceId: expect.any(Number),
+    componentName: 'HelloMessage',
     renderKey: expect.any(Number),
     values: [
       {
@@ -273,10 +263,8 @@ it('captures props from multiple instances (direct children)', () => {
     ]
   });
   expect(props2).toEqual({
-    component: {
-      instanceId: expect.any(Number),
-      name: 'HelloMessage'
-    },
+    instanceId: expect.any(Number),
+    componentName: 'HelloMessage',
     renderKey: expect.any(Number),
     values: [
       {
@@ -298,16 +286,16 @@ it('overwrites props in multiple instances', () => {
   const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
 
   const [
-    { component: component1 },
-    { component: component2 }
+    { instanceId: instanceId1 },
+    { instanceId: instanceId2 }
   ] = instance.getInstance().state.fixtureState.props;
 
   instance.update(
     <FixtureProvider
       fixtureState={{
         props: [
-          getPropsWithName({ name: 'SATOSHI', component: component1 }),
-          getPropsWithName({ name: 'VITALIK', component: component2 })
+          getPropsWithName({ name: 'SATOSHI', instanceId: instanceId1 }),
+          getPropsWithName({ name: 'VITALIK', instanceId: instanceId2 })
         ]
       }}
     >
@@ -319,16 +307,17 @@ it('overwrites props in multiple instances', () => {
 });
 
 function getPropsWithName({
-  component,
+  instanceId,
   name,
   renderKey = 0
 }: {
-  component: ComponentMetadata,
+  instanceId: number,
   name: string,
   renderKey?: number
 }) {
   return {
-    component,
+    instanceId,
+    componentName: 'HelloWorld',
     renderKey,
     values: [
       {
@@ -340,9 +329,10 @@ function getPropsWithName({
   };
 }
 
-function getEmptyProps({ component }) {
+function getEmptyProps({ instanceId }) {
   return {
-    component,
+    instanceId,
+    componentName: 'HelloWorld',
     renderKey: 0,
     values: []
   };

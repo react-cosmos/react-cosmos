@@ -36,7 +36,8 @@ it('resets state when resetting props', () => {
       fixtureState={{
         state: [
           {
-            component: state.component,
+            instanceId: state.instanceId,
+            componentName: 'Counter',
             values: [countValue]
           }
         ]
@@ -51,7 +52,8 @@ it('resets state when resetting props', () => {
       fixtureState={{
         props: [
           {
-            component: props.component,
+            instanceId: props.instanceId,
+            componentName: 'Counter',
             // This is resetting the component instance
             renderKey: props.renderKey + 1,
             values: []
@@ -59,7 +61,8 @@ it('resets state when resetting props', () => {
         ],
         state: [
           {
-            component: state.component,
+            instanceId: state.instanceId,
+            componentName: 'Counter',
             values: [countValue]
           }
         ]

@@ -5,13 +5,14 @@ import React, { Component, cloneElement } from 'react';
 import { FixtureContext } from './FixtureContext';
 import { CaptureProps } from './CaptureProps';
 import { extractValuesFromObject } from './shared/values';
-import {
-  getComponentMetadata,
-  getInstanceId
-} from './shared/component-metadata';
+import { getInstanceId, getComponentName } from './shared/decorator';
 
 import type { Element, ElementRef } from 'react';
-import type { FixtureState, FixtureStateState, SetFixtureState } from './types';
+import type {
+  FixtureState,
+  FixtureStateInstanceState,
+  SetFixtureState
+} from './types';
 
 type Props = {
   children: Element<any>,
@@ -190,17 +191,14 @@ class ComponentStateInner extends Component<InnerProps> {
 function getRelatedFixtureState(
   fixtureState,
   decoratorRef
-): ?FixtureStateState {
+): ?FixtureStateInstanceState {
   if (!fixtureState.state || fixtureState.state.length === 0) {
     return null;
   }
 
   const instanceId = getInstanceId(decoratorRef);
 
-  return find(
-    fixtureState.state,
-    state => state.component.instanceId === instanceId
-  );
+  return find(fixtureState.state, state => state.instanceId === instanceId);
 }
 
 function extendOriginalStateWithFixtureState({
@@ -248,17 +246,19 @@ function updateComponentStateInFixtureState({
   decoratorRef: ElementRef<typeof Component>,
   childRef: ElementRef<typeof Component>
 }) {
-  const component = getComponentMetadata(getRefType(childRef), decoratorRef);
+  const instanceId = getInstanceId(decoratorRef);
+  const componentName = getComponentName(getRefType(childRef));
   const allComponentStates = fixtureState.state || [];
   const otherComponentStates = allComponentStates.filter(
-    state => state.component.instanceId !== component.instanceId
+    state => state.instanceId !== instanceId
   );
 
   return {
     state: [
       ...otherComponentStates,
       {
-        component,
+        instanceId,
+        componentName,
         values: extractValuesFromObject(componentState)
       }
     ]

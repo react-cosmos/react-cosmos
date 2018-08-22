@@ -7,7 +7,6 @@ import { FixtureProvider } from '../FixtureProvider';
 import { ComponentState } from '../ComponentState';
 
 import type { ElementRef } from 'react';
-import type { ComponentMetadata } from '../types';
 
 class Counter extends Component<{}, { count: number }> {
   state = { count: 0 };
@@ -54,10 +53,8 @@ it('captures initial state', () => {
 
   const [state] = instance.getInstance().state.fixtureState.state;
   expect(state).toEqual({
-    component: {
-      instanceId: expect.any(Number),
-      name: 'Counter'
-    },
+    instanceId: expect.any(Number),
+    componentName: 'Counter',
     values: [
       {
         serializable: true,
@@ -79,10 +76,8 @@ it('captures mocked state', () => {
 
   const [state] = instance.getInstance().state.fixtureState.state;
   expect(state).toEqual({
-    component: {
-      instanceId: expect.any(Number),
-      name: 'Counter'
-    },
+    instanceId: expect.any(Number),
+    componentName: 'Counter',
     values: [
       {
         serializable: true,
@@ -101,12 +96,12 @@ it('overwrites initial state', () => {
   );
   const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
 
-  const [{ component }] = instance.getInstance().state.fixtureState.state;
+  const [{ instanceId }] = instance.getInstance().state.fixtureState.state;
 
   instance.update(
     <FixtureProvider
       fixtureState={{
-        state: [getStateWithCount({ count: 5, component })]
+        state: [getStateWithCount({ count: 5, instanceId })]
       }}
     >
       {fixture}
@@ -124,12 +119,12 @@ it('overwrites mocked state', () => {
   );
   const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
 
-  const [{ component }] = instance.getInstance().state.fixtureState.state;
+  const [{ instanceId }] = instance.getInstance().state.fixtureState.state;
 
   instance.update(
     <FixtureProvider
       fixtureState={{
-        state: [getStateWithCount({ count: 100, component })]
+        state: [getStateWithCount({ count: 100, instanceId })]
       }}
     >
       {fixture}
@@ -147,12 +142,12 @@ it('removes initial state property', () => {
   );
   const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
 
-  const [{ component }] = instance.getInstance().state.fixtureState.state;
+  const [{ instanceId }] = instance.getInstance().state.fixtureState.state;
 
   instance.update(
     <FixtureProvider
       fixtureState={{
-        state: [getEmptyState({ component })]
+        state: [getEmptyState({ instanceId })]
       }}
     >
       {fixture}
@@ -170,12 +165,12 @@ it('removes mocked state property', () => {
   );
   const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
 
-  const [{ component }] = instance.getInstance().state.fixtureState.state;
+  const [{ instanceId }] = instance.getInstance().state.fixtureState.state;
 
   instance.update(
     <FixtureProvider
       fixtureState={{
-        state: [getEmptyState({ component })]
+        state: [getEmptyState({ instanceId })]
       }}
     >
       {fixture}
@@ -193,11 +188,11 @@ it('reverts to initial state', () => {
   );
   const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
 
-  const [{ component }] = instance.getInstance().state.fixtureState.state;
+  const [{ instanceId }] = instance.getInstance().state.fixtureState.state;
   instance.update(
     <FixtureProvider
       fixtureState={{
-        state: [getStateWithCount({ count: 5, component })]
+        state: [getStateWithCount({ count: 5, instanceId })]
       }}
     >
       {fixture}
@@ -218,10 +213,8 @@ it('reverts to initial state', () => {
 
   const [state] = instance.getInstance().state.fixtureState.state;
   expect(state).toEqual({
-    component: {
-      instanceId: expect.any(Number),
-      name: 'Counter'
-    },
+    instanceId: expect.any(Number),
+    componentName: 'Counter',
     values: [
       {
         serializable: true,
@@ -240,11 +233,11 @@ it('reverts to mocked state', () => {
   );
   const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
 
-  const [{ component }] = instance.getInstance().state.fixtureState.state;
+  const [{ instanceId }] = instance.getInstance().state.fixtureState.state;
   instance.update(
     <FixtureProvider
       fixtureState={{
-        state: [getStateWithCount({ count: 10, component })]
+        state: [getStateWithCount({ count: 10, instanceId })]
       }}
     >
       {fixture}
@@ -265,10 +258,8 @@ it('reverts to mocked state', () => {
 
   const [state] = instance.getInstance().state.fixtureState.state;
   expect(state).toEqual({
-    component: {
-      instanceId: expect.any(Number),
-      name: 'Counter'
-    },
+    instanceId: expect.any(Number),
+    componentName: 'Counter',
     values: [
       {
         serializable: true,
@@ -337,10 +328,8 @@ it('captures mocked state from multiple instances', () => {
 
   const [state1, state2] = instance.getInstance().state.fixtureState.state;
   expect(state1).toEqual({
-    component: {
-      instanceId: expect.any(Number),
-      name: 'Counter'
-    },
+    instanceId: expect.any(Number),
+    componentName: 'Counter',
     values: [
       {
         serializable: true,
@@ -350,10 +339,8 @@ it('captures mocked state from multiple instances', () => {
     ]
   });
   expect(state2).toEqual({
-    component: {
-      instanceId: expect.any(Number),
-      name: 'Counter'
-    },
+    instanceId: expect.any(Number),
+    componentName: 'Counter',
     values: [
       {
         serializable: true,
@@ -378,16 +365,16 @@ it('overwrites mocked state in multiple instances', () => {
   const instance = create(<FixtureProvider>{fixture}</FixtureProvider>);
 
   const [
-    { component: component1 },
-    { component: component2 }
+    { instanceId: instanceId1 },
+    { instanceId: instanceId2 }
   ] = instance.getInstance().state.fixtureState.state;
 
   instance.update(
     <FixtureProvider
       fixtureState={{
         state: [
-          getStateWithCount({ count: 50, component: component1 }),
-          getStateWithCount({ count: 100, component: component2 })
+          getStateWithCount({ count: 50, instanceId: instanceId1 }),
+          getStateWithCount({ count: 100, instanceId: instanceId2 })
         ]
       }}
     >
@@ -413,14 +400,15 @@ it('unmounts gracefully', () => {
 });
 
 function getStateWithCount({
-  component,
+  instanceId,
   count
 }: {
-  component: ComponentMetadata,
+  instanceId: number,
   count: number
 }) {
   return {
-    component,
+    instanceId,
+    componentName: 'Counter',
     values: [
       {
         serializable: true,
@@ -431,9 +419,10 @@ function getStateWithCount({
   };
 }
 
-function getEmptyState({ component }) {
+function getEmptyState({ instanceId }) {
   return {
-    component,
+    instanceId,
+    componentName: 'Counter',
     values: []
   };
 }

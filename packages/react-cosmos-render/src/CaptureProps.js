@@ -4,10 +4,7 @@ import find from 'lodash/find';
 import React, { Component } from 'react';
 import { FixtureContext } from './FixtureContext';
 import { extractValuesFromObject } from './shared/values';
-import {
-  getComponentMetadata,
-  getInstanceId
-} from './shared/component-metadata';
+import { getInstanceId, getComponentName } from './shared/decorator';
 
 import type { Element } from 'react';
 import type { FixtureState, SetFixtureState } from './types';
@@ -53,7 +50,8 @@ type InnerProps = {
 class CapturePropsInner extends Component<InnerProps> {
   componentDidMount() {
     const { children, setFixtureState } = this.props;
-    const component = getComponentMetadata(children.type, this);
+    const instanceId = getInstanceId(this);
+    const componentName = getComponentName(children.type);
 
     // Add original component props (defined in fixture) to fixture state.
     // Because fixtureState changes are async and multiple CapturePropsInner
@@ -64,10 +62,11 @@ class CapturePropsInner extends Component<InnerProps> {
     setFixtureState(fixtureState => {
       const propsForAllInstances = fixtureState.props || [];
       const propsForOtherInstances = propsForAllInstances.filter(
-        props => props.component.instanceId !== component.instanceId
+        props => props.instanceId !== instanceId
       );
       const propsForThisInstance = {
-        component,
+        instanceId,
+        componentName,
         renderKey: DEFAULT_RENDER_KEY,
         values: extractValuesFromObject(children.props)
       };
@@ -117,10 +116,7 @@ function getRelatedFixtureState(fixtureState, instance) {
 
   const instanceId = getInstanceId(instance);
 
-  return find(
-    fixtureState.props,
-    props => props.component.instanceId === instanceId
-  );
+  return find(fixtureState.props, props => props.instanceId === instanceId);
 }
 
 function extendOriginalPropsWithFixtureState(originalProps, fixtureProps) {
