@@ -36,7 +36,7 @@ export function setProps(
   const instance = find(allProps, i => i.instanceId === instanceId);
 
   if (!instance) {
-    throw new Error(`Missing props with ${instanceId} instanceId`);
+    throw new Error(`Missing props with instanceId: ${instanceId}`);
   }
 
   return updateFixtureState(fixtureState, {
@@ -55,7 +55,7 @@ export function resetProps(
   const instance = find(allProps, i => i.instanceId === instanceId);
 
   if (!instance) {
-    throw new Error(`Missing props with ${instanceId} instanceId`);
+    throw new Error(`Missing props with instanceId: ${instanceId}`);
   }
 
   return updateFixtureState(fixtureState, {
@@ -83,7 +83,7 @@ export function setState(
   const stateInstance = find(allStates, i => i.instanceId === instanceId);
 
   if (!stateInstance) {
-    throw new Error(`Missing state with ${instanceId} instanceId`);
+    throw new Error(`Missing state with instanceId: ${instanceId}`);
   }
 
   return updateFixtureState(fixtureState, {
