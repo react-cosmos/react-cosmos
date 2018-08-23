@@ -3,15 +3,19 @@
 import React from 'react';
 import { create } from 'react-test-renderer';
 import { getProps, setProps } from '../../shared/fixture-state';
+import { uuid } from '../../shared/uuid';
 import { FixtureConnect } from '..';
 
 import type { RemoteMessage } from '../../types/messages';
 
 type OnRemoteMessage = RemoteMessage => any;
 
+const rendererId = uuid();
+
 it('renders blank state message', () => {
   const instance = create(
     <FixtureConnect
+      rendererId={rendererId}
       fixtures={{}}
       subscribe={() => {}}
       unsubscribe={() => {}}
@@ -31,6 +35,7 @@ it('posts ready message on mount', () => {
 
   create(
     <FixtureConnect
+      rendererId={rendererId}
       fixtures={fixtures}
       subscribe={() => {}}
       unsubscribe={() => {}}
@@ -57,6 +62,7 @@ it('posts ready message again on remote request', () => {
   let msgHandler;
   create(
     <FixtureConnect
+      rendererId={rendererId}
       fixtures={fixtures}
       subscribe={handler => {
         msgHandler = handler;
@@ -90,6 +96,7 @@ it('renders selected fixture', () => {
   let msgHandler;
   const instance = create(
     <FixtureConnect
+      rendererId={rendererId}
       fixtures={fixtures}
       subscribe={handler => {
         msgHandler = handler;
@@ -100,7 +107,6 @@ it('renders selected fixture', () => {
   );
 
   const postRemoteMsg = getMsgHandler(msgHandler);
-  const rendererId = getRendererIdFromReadyMsg(postMessage);
   postRemoteMsg({
     type: 'selectFixture',
     payload: {
@@ -131,6 +137,7 @@ it('ignores select fixture message for different renderer', () => {
   let msgHandler;
   const instance = create(
     <FixtureConnect
+      rendererId={rendererId}
       fixtures={fixtures}
       subscribe={handler => {
         msgHandler = handler;
@@ -160,8 +167,10 @@ it('errors when selecting invalid fixture path', () => {
   const postMessage = jest.fn();
 
   let msgHandler;
+  // TODO: Wrap component in error boundry for nicer output
   create(
     <FixtureConnect
+      rendererId={rendererId}
       fixtures={fixtures}
       subscribe={handler => {
         msgHandler = handler;
@@ -172,9 +181,6 @@ it('errors when selecting invalid fixture path', () => {
   );
 
   const postRemoteMsg = getMsgHandler(msgHandler);
-  const rendererId = getRendererIdFromReadyMsg(postMessage);
-
-  // TODO: Capture rendererError message (when error boundary is implemented)
   expect(() => {
     postRemoteMsg({
       type: 'selectFixture',
@@ -199,6 +205,7 @@ it('sets fixture state on selected fixture', () => {
   let msgHandler;
   const instance = create(
     <FixtureConnect
+      rendererId={rendererId}
       fixtures={fixtures}
       subscribe={handler => {
         msgHandler = handler;
@@ -209,7 +216,6 @@ it('sets fixture state on selected fixture', () => {
   );
 
   const postRemoteMsg = getMsgHandler(msgHandler);
-  const rendererId = getRendererIdFromReadyMsg(postMessage);
   postRemoteMsg({
     type: 'selectFixture',
     payload: {
@@ -262,6 +268,7 @@ it('unsubscribes on unmount', () => {
   const unsubscribe = jest.fn();
   const instance = create(
     <FixtureConnect
+      rendererId={rendererId}
       fixtures={{}}
       subscribe={() => {}}
       unsubscribe={unsubscribe}
@@ -296,14 +303,4 @@ function getMsgHandler(msgHandler): OnRemoteMessage {
   }
 
   return msgHandler;
-}
-
-function getRendererIdFromReadyMsg(postMessage) {
-  const [msg: PostMessage] = postMessage.mock.calls[0];
-
-  if (msg.type !== 'rendererReady') {
-    throw new Error(`First message is not 'rendererReady'`);
-  }
-
-  return msg.payload.rendererId;
 }

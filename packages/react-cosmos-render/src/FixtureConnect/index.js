@@ -4,7 +4,6 @@ import type { Node } from 'react';
 
 import React, { Component } from 'react';
 import { FixtureProvider } from '../FixtureProvider';
-import { uuid } from '../shared/uuid';
 import { updateFixtureState } from '../shared/fixture-state';
 
 import type { FixtureState, SetFixtureState } from '../types/fixture-state';
@@ -15,6 +14,7 @@ type Fixtures = {
 };
 
 type Props = {
+  rendererId: string,
   fixtures: Fixtures,
   subscribe: (onMessage: (RemoteMessage) => mixed) => mixed,
   unsubscribe: () => mixed,
@@ -27,8 +27,6 @@ type State = {
 };
 
 export class FixtureConnect extends Component<Props, State> {
-  rendererId = uuid();
-
   state = {
     fixturePath: null,
     fixtureState: {}
@@ -43,7 +41,7 @@ export class FixtureConnect extends Component<Props, State> {
 
   componentDidUpdate(prevProps: Props, prevState: State) {
     // TODO: Adapt to props.fixtures change (eg. current fixture gets removed)
-    const { postMessage } = this.props;
+    const { rendererId, postMessage } = this.props;
     const { fixturePath, fixtureState } = this.state;
 
     // Fixture state changes are broadcast in componentDidUpdate instead of
@@ -53,7 +51,7 @@ export class FixtureConnect extends Component<Props, State> {
       postMessage({
         type: 'fixtureState',
         payload: {
-          rendererId: this.rendererId,
+          rendererId,
           fixturePath,
           fixtureState
         }
@@ -93,7 +91,7 @@ export class FixtureConnect extends Component<Props, State> {
     }
 
     const { rendererId } = msg.payload;
-    if (rendererId !== this.rendererId) {
+    if (rendererId !== this.props.rendererId) {
       return;
     }
 
@@ -117,12 +115,12 @@ export class FixtureConnect extends Component<Props, State> {
   };
 
   postReadyMessage() {
-    const { fixtures, postMessage } = this.props;
+    const { rendererId, fixtures, postMessage } = this.props;
 
     postMessage({
       type: 'rendererReady',
       payload: {
-        rendererId: this.rendererId,
+        rendererId,
         fixtures: Object.keys(fixtures)
       }
     });
