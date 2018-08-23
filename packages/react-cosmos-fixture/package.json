@@ -1,8 +1,8 @@
 {
-  "name": "react-cosmos-render",
-  "version": "4.6.4",
-  "description": "Renderer for React Cosmos fixtures",
-  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-render",
+  "name": "react-cosmos-fixture",
+  "version": "4.7.0-3",
+  "description": "APIs for loading React Cosmos fixtures",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-fixture",
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
