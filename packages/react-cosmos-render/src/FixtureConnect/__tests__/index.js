@@ -167,7 +167,9 @@ it('errors when selecting invalid fixture path', () => {
   const postMessage = jest.fn();
 
   let msgHandler;
-  // TODO: Wrap component in error boundry for nicer output
+  // NOTE: React logs the caught exception even when wrapping FixtureConnext
+  // in an error boundary, so there's no nice way to prevent panicky redness
+  // from showing up in the test output :(
   create(
     <FixtureConnect
       rendererId={rendererId}
