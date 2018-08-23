@@ -1,3 +1,5 @@
+> **Warning:** These notions refer to the next generation of React Cosmos which is still in the works. Consult the [roadmap](TODO.md) for more information.
+
 #### Fixture
 
 Any React [Node](https://flow.org/en/docs/react/types/#toc-react-node). Describes the state of one or more components.
@@ -20,7 +22,7 @@ Manages a list of fixtures and the state of the selected fixture. Controlled rem
 
 #### Fixture renderer
 
-Renders _FixtureConnect_ in an isolated environment. Bundled using the user's source code and configuration.
+Renders _FixtureConnect_ in an isolated environment. Bundled using the user's source code and configuration. Platform specific.
 
 #### Playground
 
