@@ -39,8 +39,8 @@ it('mocks state', () => {
 
 it('captures initial state', () => {
   let fixtureState = {};
-  const setFixtureState = updater => {
-    fixtureState = updateFixtureState(fixtureState, updater);
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureStateWithCb(fixtureState, updater, cb);
   };
 
   create(
@@ -60,8 +60,8 @@ it('captures initial state', () => {
 
 it('captures mocked state', () => {
   let fixtureState = {};
-  const setFixtureState = updater => {
-    fixtureState = updateFixtureState(fixtureState, updater);
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureStateWithCb(fixtureState, updater, cb);
   };
 
   create(
@@ -81,8 +81,8 @@ it('captures mocked state', () => {
 
 it('overwrites initial state', () => {
   let fixtureState = {};
-  const setFixtureState = updater => {
-    fixtureState = updateFixtureState(fixtureState, updater);
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureStateWithCb(fixtureState, updater, cb);
   };
 
   const fixture = (
@@ -117,8 +117,8 @@ it('overwrites initial state', () => {
 
 it('overwrites mocked state', () => {
   let fixtureState = {};
-  const setFixtureState = updater => {
-    fixtureState = updateFixtureState(fixtureState, updater);
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureStateWithCb(fixtureState, updater, cb);
   };
 
   const fixture = (
@@ -153,8 +153,8 @@ it('overwrites mocked state', () => {
 
 it('removes initial state property', () => {
   let fixtureState = {};
-  const setFixtureState = updater => {
-    fixtureState = updateFixtureState(fixtureState, updater);
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureStateWithCb(fixtureState, updater, cb);
   };
 
   const fixture = (
@@ -189,8 +189,8 @@ it('removes initial state property', () => {
 
 it('removes mocked state property', () => {
   let fixtureState = {};
-  const setFixtureState = updater => {
-    fixtureState = updateFixtureState(fixtureState, updater);
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureStateWithCb(fixtureState, updater, cb);
   };
 
   const fixture = (
@@ -225,8 +225,8 @@ it('removes mocked state property', () => {
 
 it('reverts to initial state', () => {
   let fixtureState = {};
-  const setFixtureState = updater => {
-    fixtureState = updateFixtureState(fixtureState, updater);
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureStateWithCb(fixtureState, updater, cb);
   };
 
   const fixture = (
@@ -274,8 +274,8 @@ it('reverts to initial state', () => {
 
 it('reverts to mocked state', () => {
   let fixtureState = {};
-  const setFixtureState = updater => {
-    fixtureState = updateFixtureState(fixtureState, updater);
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureStateWithCb(fixtureState, updater, cb);
   };
 
   const fixture = (
@@ -327,13 +327,7 @@ it('reverts to mocked state', () => {
 it('captures component state changes', async () => {
   let fixtureState = {};
   const setFixtureState = (updater, cb) => {
-    fixtureState = updateFixtureState(fixtureState, updater);
-
-    // Relevant in this test because ComponentState schedules state checks in
-    // the setState callback
-    if (typeof cb === 'function') {
-      cb();
-    }
+    fixtureState = updateFixtureStateWithCb(fixtureState, updater, cb);
   };
 
   let counterRef: ?ElementRef<typeof Counter>;
@@ -383,8 +377,8 @@ it('mocks state in multiple instances', () => {
 
 it('captures mocked state from multiple instances', () => {
   let fixtureState = {};
-  const setFixtureState = updater => {
-    fixtureState = updateFixtureState(fixtureState, updater);
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureStateWithCb(fixtureState, updater, cb);
   };
 
   create(
@@ -408,8 +402,8 @@ it('captures mocked state from multiple instances', () => {
 
 it('overwrites mocked state in multiple instances', () => {
   let fixtureState = {};
-  const setFixtureState = updater => {
-    fixtureState = updateFixtureState(fixtureState, updater);
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureStateWithCb(fixtureState, updater, cb);
   };
 
   const fixture = (
@@ -449,8 +443,8 @@ it('overwrites mocked state in multiple instances', () => {
 
 it('unmounts gracefully', () => {
   let fixtureState = {};
-  const setFixtureState = updater => {
-    fixtureState = updateFixtureState(fixtureState, updater);
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureStateWithCb(fixtureState, updater, cb);
   };
 
   const instance = create(
@@ -480,6 +474,19 @@ class Counter extends Component<{}, { count: number }> {
     return typeof count === 'number' ? `${count} times` : 'Missing count';
   }
 }
+
+const updateFixtureStateWithCb = (fixtureState, updater, cb) => {
+  const nextFixtureState = updateFixtureState(fixtureState, updater);
+
+  // Calling the set state callback after a state update is relevant in these
+  // tests becaused ComponentState hooks into it for scheduling periodic state
+  // change checks on the loaded component
+  if (typeof cb === 'function') {
+    cb();
+  }
+
+  return nextFixtureState;
+};
 
 function getStateInstanceShape(count) {
   return {
