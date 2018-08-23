@@ -8,22 +8,22 @@ type FixtureStateValue = {
 
 export type FixtureStateValues = Array<FixtureStateValue>;
 
-export type FixtureStateInstanceProps = {
+export type FixtureStatePropsInstance = {
   instanceId: number,
   componentName: string,
   renderKey: number,
   values: FixtureStateValues
 };
 
-export type FixtureStateInstanceState = {
+export type FixtureStateStateInstance = {
   instanceId: number,
   componentName: string,
   values: FixtureStateValues
 };
 
 export type FixtureState = {
-  props?: Array<FixtureStateInstanceProps>,
-  state?: Array<FixtureStateInstanceState>,
+  props?: Array<FixtureStatePropsInstance>,
+  state?: Array<FixtureStateStateInstance>,
   [key: string]: mixed
 };
 

@@ -10,7 +10,7 @@ import { getInstanceId, getComponentName } from './shared/decorator';
 import type { Element, ElementRef } from 'react';
 import type {
   FixtureState,
-  FixtureStateInstanceState,
+  FixtureStateStateInstance,
   SetFixtureState
 } from './types/fixture-state';
 
@@ -192,7 +192,7 @@ class ComponentStateInner extends Component<InnerProps> {
 function getRelatedFixtureState(
   fixtureState,
   decoratorRef
-): ?FixtureStateInstanceState {
+): ?FixtureStateStateInstance {
   if (!fixtureState.state || fixtureState.state.length === 0) {
     return null;
   }

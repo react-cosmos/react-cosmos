@@ -6,16 +6,17 @@ import { ComponentState } from '../../ComponentState';
 import { FixtureProvider } from '../../FixtureProvider';
 import {
   updateFixtureState,
+  getProps,
   setProps,
   resetProps,
   getState,
   setState
-} from './_shared';
+} from '../../shared/fixture-state';
 
 it('resets state when resetting props', () => {
   let fixtureState = {};
-  const setFixtureState = (updater, cb) => {
-    fixtureState = updateFixtureState(fixtureState, updater, cb);
+  const setFixtureState = updater => {
+    fixtureState = updateFixtureState(fixtureState, updater);
   };
 
   const fixture = (
@@ -33,7 +34,8 @@ it('resets state when resetting props', () => {
     </FixtureProvider>
   );
 
-  fixtureState = setState(fixtureState, { count: 5 });
+  const [{ instanceId: stateInstanceId }] = getState(fixtureState);
+  fixtureState = setState(fixtureState, stateInstanceId, { count: 5 });
 
   instance.update(
     <FixtureProvider
@@ -46,7 +48,10 @@ it('resets state when resetting props', () => {
 
   expect(instance.toJSON()).toBe('5 times');
 
-  fixtureState = resetProps(fixtureState, { suffix: 'timez' });
+  const [{ instanceId: propsInstanceId }] = getProps(fixtureState);
+  fixtureState = resetProps(fixtureState, propsInstanceId, {
+    suffix: 'timez'
+  });
 
   instance.update(
     <FixtureProvider
@@ -59,8 +64,8 @@ it('resets state when resetting props', () => {
 
   expect(instance.toJSON()).toBe('0 timez');
 
-  const [state2] = getState(fixtureState);
-  expect(state2.values).toEqual([
+  const [{ values }] = getState(fixtureState);
+  expect(values).toEqual([
     {
       serializable: true,
       key: 'count',
@@ -71,8 +76,8 @@ it('resets state when resetting props', () => {
 
 it('keeps state when transitioning props', () => {
   let fixtureState = {};
-  const setFixtureState = (updater, cb) => {
-    fixtureState = updateFixtureState(fixtureState, updater, cb);
+  const setFixtureState = updater => {
+    fixtureState = updateFixtureState(fixtureState, updater);
   };
 
   const fixture = (
@@ -90,7 +95,8 @@ it('keeps state when transitioning props', () => {
     </FixtureProvider>
   );
 
-  fixtureState = setState(fixtureState, { count: 5 });
+  const [{ instanceId: stateInstanceId }] = getState(fixtureState);
+  fixtureState = setState(fixtureState, stateInstanceId, { count: 5 });
 
   instance.update(
     <FixtureProvider
@@ -103,7 +109,8 @@ it('keeps state when transitioning props', () => {
 
   expect(instance.toJSON()).toBe('5 times');
 
-  fixtureState = setProps(fixtureState, { suffix: 'timez' });
+  const [{ instanceId: propsInstanceId }] = getProps(fixtureState);
+  fixtureState = setProps(fixtureState, propsInstanceId, { suffix: 'timez' });
 
   instance.update(
     <FixtureProvider
@@ -116,8 +123,8 @@ it('keeps state when transitioning props', () => {
 
   expect(instance.toJSON()).toBe('5 timez');
 
-  const [state2] = getState(fixtureState);
-  expect(state2.values).toEqual([
+  const [{ values }] = getState(fixtureState);
+  expect(values).toEqual([
     {
       serializable: true,
       key: 'count',
