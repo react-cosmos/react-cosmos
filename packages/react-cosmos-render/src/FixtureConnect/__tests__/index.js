@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { create } from 'react-test-renderer';
+import { getProps, setProps } from '../../shared/fixture-state';
 import { FixtureConnect } from '..';
 
 import type { RemoteMessage } from '../../types/messages';
@@ -37,7 +38,7 @@ it('posts ready message on mount', () => {
     />
   );
 
-  expect(postMessage).toBeCalledWith({
+  expect(postMessage).lastCalledWith({
     type: 'rendererReady',
     payload: {
       rendererId: expect.any(String),
@@ -182,7 +183,79 @@ it('errors when selecting invalid fixture path', () => {
         fixturePath: 'third'
       }
     });
-  }).toThrow('Invalid fixture path third');
+  }).toThrow();
+});
+
+// Warning: This test has a bunch of steps incorporated because I thought it's
+// easier to follow the flow in a single run than in several tests with a lot
+// of initial repetition
+it('sets fixture state on selected fixture', () => {
+  const MyComponent = ({ name }) => `Hello ${name}`;
+  const fixtures = {
+    first: <MyComponent name="Bianca" />
+  };
+  const postMessage = jest.fn();
+
+  let msgHandler;
+  const instance = create(
+    <FixtureConnect
+      fixtures={fixtures}
+      subscribe={handler => {
+        msgHandler = handler;
+      }}
+      unsubscribe={() => {}}
+      postMessage={postMessage}
+    />
+  );
+
+  const postRemoteMsg = getMsgHandler(msgHandler);
+  const rendererId = getRendererIdFromReadyMsg(postMessage);
+  postRemoteMsg({
+    type: 'selectFixture',
+    payload: {
+      rendererId,
+      fixturePath: 'first'
+    }
+  });
+
+  expect(instance.toJSON()).toBe('Hello Bianca');
+
+  expect(postMessage).lastCalledWith({
+    type: 'fixtureState',
+    payload: {
+      rendererId,
+      fixturePath: 'first',
+      fixtureState: {
+        props: [getPropsInstanceShape('Bianca')]
+      }
+    }
+  });
+
+  const { fixtureState } = instance.getInstance().state;
+  const [{ instanceId }] = getProps(fixtureState);
+  postRemoteMsg({
+    type: 'setFixtureState',
+    payload: {
+      rendererId,
+      fixturePath: 'first',
+      fixtureState: setProps(fixtureState, instanceId, {
+        name: 'B'
+      })
+    }
+  });
+
+  expect(instance.toJSON()).toBe('Hello B');
+
+  expect(postMessage).lastCalledWith({
+    type: 'fixtureState',
+    payload: {
+      rendererId,
+      fixturePath: 'first',
+      fixtureState: {
+        props: [getPropsInstanceShape('B')]
+      }
+    }
+  });
 });
 
 it('unsubscribes on unmount', () => {
@@ -200,10 +273,22 @@ it('unsubscribes on unmount', () => {
   expect(unsubscribe).toBeCalled();
 });
 
-// TODO: fixtureState message
-// TODO: setFixtureState message
-
 // End of tests
+
+function getPropsInstanceShape(name) {
+  return {
+    instanceId: expect.any(Number),
+    componentName: 'MyComponent',
+    renderKey: expect.any(Number),
+    values: [
+      {
+        serializable: true,
+        key: 'name',
+        value: name
+      }
+    ]
+  };
+}
 
 function getMsgHandler(msgHandler): OnRemoteMessage {
   if (!msgHandler) {
