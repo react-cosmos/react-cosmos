@@ -19,41 +19,15 @@ export type RendererReadyMsg = {
 
 // Announce an error caught inside a renderer, which is useful when the
 // renderer isn't visible or if it errors before dispatching `rendererReady`
-export type RendererErrorMsg = {
-  type: 'rendererError',
-  payload: {
-    rendererId: RendererId
-    // TODO: Including error payload might be useful for remotes which aren't
-    // running alongside renderers (eg. Browser UI with React Native renderer)
-  }
-};
-
-// Announce a new remote (eg. Cosmos UI), essentially requesting a
-// `rendererReady` message from running renderers
-export type RemoteReadyMsg = {
-  type: 'remoteReady'
-};
-
-// Ask a remote renderer to load a fixture
-export type SelectFixtureMsg = {
-  type: 'selectFixture',
-  payload: {
-    rendererId: RendererId,
-    fixturePath: string
-  }
-};
-
-// Ask a remote renderer to alter its fixture state
-export type SetFixtureStateMsg = {
-  type: 'setFixtureState',
-  payload: {
-    rendererId: RendererId,
-    // Only one fixture can be loaded at a time by a renderer, but the path is
-    // sent anyway to ensure the message applies to the current fixture
-    fixturePath: string,
-    fixtureState: $Shape<FixtureState>
-  }
-};
+// TODO: Integrate
+// export type RendererErrorMsg = {
+//   type: 'rendererError',
+//   payload: {
+//     rendererId: RendererId
+//     // TODO: Including error payload might be useful for remotes which aren't
+//     // running alongside renderers (eg. Browser UI with React Native renderer)
+//   }
+// };
 
 // An update on the fixture state inside a renderer, covering more scenarios:
 // - Initial fixture state after a selectFixture message
@@ -70,10 +44,40 @@ export type FixtureStateMsg = {
   }
 };
 
-export type RenderMessage =
+export type RendererMessage =
   | RendererReadyMsg
-  | RendererErrorMsg
+  // | RendererErrorMsg
+  | FixtureStateMsg;
+
+// Announce a new remote (eg. Cosmos UI), essentially requesting a
+// `rendererReady` message from running renderers
+export type RemoteReadyMsg = {
+  type: 'remoteReady'
+};
+
+// Ask a remote renderer to load a fixture
+export type SelectFixtureMsg = {
+  type: 'selectFixture',
+  payload: {
+    rendererId: RendererId,
+    // A null fixturePath means unselecting current fixture
+    fixturePath: ?string
+  }
+};
+
+// Ask a remote renderer to alter its fixture state
+export type SetFixtureStateMsg = {
+  type: 'setFixtureState',
+  payload: {
+    rendererId: RendererId,
+    // Only one fixture can be loaded at a time by a renderer, but the path is
+    // sent anyway to ensure the message applies to the current fixture
+    fixturePath: string,
+    fixtureState: $Shape<FixtureState>
+  }
+};
+
+export type RemoteMessage =
   | RemoteReadyMsg
   | SelectFixtureMsg
-  | SetFixtureStateMsg
-  | FixtureStateMsg;
+  | SetFixtureStateMsg;

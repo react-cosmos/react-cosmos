@@ -17,13 +17,14 @@
     - [ ] Capture context
     - [ ] Catch errors
     - [ ] Customize fixture name
-  - [x] Remote protocol
+  - [ ] Remote protocol
     - [x] Define renderer message types
     - [ ] window.postMessage
     - [ ] WebSockets
   - [ ] Testing API
 - [ ] Support JSX fixture files
 - [ ] Port 3rd party render plugins
+  - [ ] Create API for render plugins (decorators)
   - [ ] Redux
   - [ ] React Router
   - [ ] LocalStorage
