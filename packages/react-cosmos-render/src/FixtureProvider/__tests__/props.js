@@ -37,18 +37,7 @@ it('captures props', () => {
   );
 
   const [props1] = getProps(fixtureState);
-  expect(props1).toEqual({
-    instanceId: expect.any(Number),
-    componentName: 'HelloMessage',
-    renderKey: expect.any(Number),
-    values: [
-      {
-        serializable: true,
-        key: 'name',
-        value: 'Satoshi'
-      }
-    ]
-  });
+  expect(props1).toEqual(getPropsInstanceShape('Satoshi'));
 });
 
 it('overwrites prop', () => {
@@ -284,30 +273,8 @@ it('captures props from multiple instances (explicit capture)', () => {
   );
 
   const [props1, props2] = getProps(fixtureState);
-  expect(props1).toEqual({
-    instanceId: expect.any(Number),
-    componentName: 'HelloMessage',
-    renderKey: expect.any(Number),
-    values: [
-      {
-        serializable: true,
-        key: 'name',
-        value: 'Satoshi'
-      }
-    ]
-  });
-  expect(props2).toEqual({
-    instanceId: expect.any(Number),
-    componentName: 'HelloMessage',
-    renderKey: expect.any(Number),
-    values: [
-      {
-        serializable: true,
-        key: 'name',
-        value: 'Vitalik'
-      }
-    ]
-  });
+  expect(props1).toEqual(getPropsInstanceShape('Satoshi'));
+  expect(props2).toEqual(getPropsInstanceShape('Vitalik'));
 });
 
 it('captures props from multiple instances (direct children)', () => {
@@ -327,30 +294,8 @@ it('captures props from multiple instances (direct children)', () => {
   );
 
   const [props1, props2] = getProps(fixtureState);
-  expect(props1).toEqual({
-    instanceId: expect.any(Number),
-    componentName: 'HelloMessage',
-    renderKey: expect.any(Number),
-    values: [
-      {
-        serializable: true,
-        key: 'name',
-        value: 'Satoshi'
-      }
-    ]
-  });
-  expect(props2).toEqual({
-    instanceId: expect.any(Number),
-    componentName: 'HelloMessage',
-    renderKey: expect.any(Number),
-    values: [
-      {
-        serializable: true,
-        key: 'name',
-        value: 'Vitalik'
-      }
-    ]
-  });
+  expect(props1).toEqual(getPropsInstanceShape('Satoshi'));
+  expect(props2).toEqual(getPropsInstanceShape('Vitalik'));
 });
 
 it('overwrites props in multiple instances', () => {
@@ -397,4 +342,19 @@ class HelloMessage extends Component<{ name: string }> {
   render() {
     return `Hello, ${this.props.name || 'Guest'}!`;
   }
+}
+
+function getPropsInstanceShape(name) {
+  return {
+    instanceId: expect.any(Number),
+    componentName: 'HelloMessage',
+    renderKey: expect.any(Number),
+    values: [
+      {
+        serializable: true,
+        key: 'name',
+        value: name
+      }
+    ]
+  };
 }

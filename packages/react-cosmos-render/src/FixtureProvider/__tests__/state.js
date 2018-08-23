@@ -55,17 +55,7 @@ it('captures initial state', () => {
   );
 
   const [state] = getState(fixtureState);
-  expect(state).toEqual({
-    instanceId: expect.any(Number),
-    componentName: 'Counter',
-    values: [
-      {
-        serializable: true,
-        key: 'count',
-        value: 0
-      }
-    ]
-  });
+  expect(state).toEqual(getStateInstanceShape(0));
 });
 
 it('captures mocked state', () => {
@@ -86,17 +76,7 @@ it('captures mocked state', () => {
   );
 
   const [state] = getState(fixtureState);
-  expect(state).toEqual({
-    instanceId: expect.any(Number),
-    componentName: 'Counter',
-    values: [
-      {
-        serializable: true,
-        key: 'count',
-        value: 5
-      }
-    ]
-  });
+  expect(state).toEqual(getStateInstanceShape(5));
 });
 
 it('overwrites initial state', () => {
@@ -341,17 +321,7 @@ it('reverts to mocked state', () => {
   expect(instance.toJSON()).toBe('5 times');
 
   const [state] = getState(fixtureState);
-  expect(state).toEqual({
-    instanceId: expect.any(Number),
-    componentName: 'Counter',
-    values: [
-      {
-        serializable: true,
-        key: 'count',
-        value: 5
-      }
-    ]
-  });
+  expect(state).toEqual(getStateInstanceShape(5));
 });
 
 it('captures component state changes', async () => {
@@ -432,28 +402,8 @@ it('captures mocked state from multiple instances', () => {
   );
 
   const [state1, state2] = getState(fixtureState);
-  expect(state1).toEqual({
-    instanceId: expect.any(Number),
-    componentName: 'Counter',
-    values: [
-      {
-        serializable: true,
-        key: 'count',
-        value: 5
-      }
-    ]
-  });
-  expect(state2).toEqual({
-    instanceId: expect.any(Number),
-    componentName: 'Counter',
-    values: [
-      {
-        serializable: true,
-        key: 'count',
-        value: 10
-      }
-    ]
-  });
+  expect(state1).toEqual(getStateInstanceShape(5));
+  expect(state2).toEqual(getStateInstanceShape(10));
 });
 
 it('overwrites mocked state in multiple instances', () => {
@@ -529,6 +479,20 @@ class Counter extends Component<{}, { count: number }> {
 
     return typeof count === 'number' ? `${count} times` : 'Missing count';
   }
+}
+
+function getStateInstanceShape(count) {
+  return {
+    instanceId: expect.any(Number),
+    componentName: 'Counter',
+    values: [
+      {
+        serializable: true,
+        key: 'count',
+        value: count
+      }
+    ]
+  };
 }
 
 function getCountValue(fixtureState) {
