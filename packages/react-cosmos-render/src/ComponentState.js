@@ -4,6 +4,7 @@ import { find } from 'lodash';
 import React, { Component, cloneElement } from 'react';
 import { FixtureContext } from './FixtureContext';
 import { CaptureProps } from './CaptureProps';
+import { replaceOrAddItem } from './shared/utility';
 import { extractValuesFromObject } from './shared/values';
 import { getInstanceId, getComponentName } from './shared/decorator';
 
@@ -249,20 +250,18 @@ function updateComponentStateInFixtureState({
 }) {
   const instanceId = getInstanceId(decoratorRef);
   const componentName = getComponentName(getRefType(childRef));
-  const allComponentStates = fixtureState.state || [];
-  const otherComponentStates = allComponentStates.filter(
-    state => state.instanceId !== instanceId
-  );
+  const stateInstance = {
+    instanceId,
+    componentName,
+    values: extractValuesFromObject(componentState)
+  };
 
   return {
-    state: [
-      ...otherComponentStates,
-      {
-        instanceId,
-        componentName,
-        values: extractValuesFromObject(componentState)
-      }
-    ]
+    state: replaceOrAddItem(
+      fixtureState.state,
+      state => state.instanceId === instanceId,
+      stateInstance
+    )
   };
 }
 

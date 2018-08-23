@@ -3,6 +3,7 @@
 import find from 'lodash/find';
 import React, { Component } from 'react';
 import { FixtureContext } from './FixtureContext';
+import { replaceOrAddItem } from './shared/utility';
 import { extractValuesFromObject } from './shared/values';
 import { getInstanceId, getComponentName } from './shared/decorator';
 
@@ -60,11 +61,7 @@ class CapturePropsInner extends Component<InnerProps> {
     // from different CapturePropsInner instances. To ensure each state
     // transformation is honored we use a state updater callback.
     setFixtureState(fixtureState => {
-      const propsForAllInstances = fixtureState.props || [];
-      const propsForOtherInstances = propsForAllInstances.filter(
-        props => props.instanceId !== instanceId
-      );
-      const propsForThisInstance = {
+      const propsInstance = {
         instanceId,
         componentName,
         renderKey: DEFAULT_RENDER_KEY,
@@ -72,7 +69,11 @@ class CapturePropsInner extends Component<InnerProps> {
       };
 
       return {
-        props: [...propsForOtherInstances, propsForThisInstance]
+        props: replaceOrAddItem(
+          fixtureState.props,
+          props => props.instanceId === instanceId,
+          propsInstance
+        )
       };
     });
   }
