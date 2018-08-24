@@ -996,6 +996,13 @@ The default webpack config included in Cosmos checks to see which packages you h
 
 If you already have a hairy webpack config that you'd like to reuse, set the `webpackConfigPath` option to your webpack config's file path and Cosmos will do its best to extend it.
 
+```js
+// cosmos.config.js
+module.exports = {
+  webpackConfigPath: './config/webpack.config.dev.js'
+};
+```
+
 You can also customize your webpack config specifically for Cosmos. Eg. Omitting one plugin from the Cosmos build.
 
 ```js
