@@ -27,7 +27,7 @@
   </a>
 </p>
 
-> **Major changes are afoot!** In a nutshell, you'll get an easier, more flexible to express fixtures, as well as a powerful plugin API for extending the Cosmos UI. The plan is outlined [here](TODO.md).
+> **Major changes are afoot!** In a nutshell, you'll get an easier, more flexible way to express fixtures, as well as a powerful plugin API for extending the Cosmos UI. The plan is outlined [here](TODO.md).
 >
 > Meanwhile, I apologize if this creates a period of confusion. Soon I'll dark launch new functionality that Cosmos early adopters can enable to peak into the future and help shape it. Follow [@ReactCosmos](https://twitter.com/ReactCosmos) to get notified.
 >
