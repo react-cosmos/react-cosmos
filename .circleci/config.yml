@@ -57,6 +57,8 @@ workflows:
   version: 2
   node-multi-build:
     jobs:
-      - node-v6
-      - node-v8
+      # TEMP: Limitting CircleCI usage
+      # TODO: Bring back before merging jsx-fixture branch.
+      #- node-v6
+      #- node-v8
       - node-v10

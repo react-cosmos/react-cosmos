@@ -4,6 +4,7 @@
   "useWorkspaces": true,
   "command": {
     "publish": {
+      "allowBranch": "master",
       "ignoreChanges": [
         "packages/*/README.md",
         "packages/*/*.js",

@@ -2,9 +2,46 @@
 
 - [React Native integration](#react-native-integration)
 - [Pluggable UI](#pluggable-ui)
-- Explore: JSX fixtures
+- [Explore: JSX fixtures](#explore-jsx-fixtures)
 - UI control panel
 - Redesign docs
+
+## Explore: JSX fixtures
+
+- [ ] Create new declarative renderer: FixtureProvider
+  - [x] Context API reading and updating fixture state
+  - [ ] Handle unserializable fixture state
+  - [ ] Core decorators
+    - [x] Capture props
+    - [x] Capture state
+    - [ ] Capture context
+    - [ ] Catch errors
+    - [ ] Customize fixture name
+    - [ ] New decorator API
+  - [ ] Remote protocol
+    - [x] Define renderer message types
+    - [x] window.postMessage
+    - [ ] WebSockets
+  - [ ] Testing API
+- [ ] Support JSX fixture files
+- [ ] Port 3rd party render plugins
+  - [ ] Create API for render plugins (decorators)
+  - [ ] Redux
+  - [ ] React Router
+  - [ ] LocalStorage
+  - [ ] Fetch
+  - [ ] XHR
+- [ ] Connect new fixture state format to UI
+
+#### Dark launch strategy
+
+> JSX fixtures are a big shift from the traditional fixture format in Cosmos. Before planning the migration, the new APIs need to be tested and validated by Cosmos users. Below are the steps to make the new fixture API available under a _feature flag._
+
+- [ ] Create `{ next: true }` config option
+- [ ] Detect new fixture file types under `__jsxfixtures__`
+- [ ] Create secondary `/next` route
+- [ ] Map new renderer messages to old ones
+- [ ] Create secondary `/_renderer.html` build
 
 ## Pluggable UI
 
@@ -12,7 +49,7 @@
   - [x] Create rough plugin structure for existing UI
   - [x] Enable toggling plugins at run time
   - [x] Refactor ResponsiveLoader into a plugin
-    - [x] Create UiContext with playgroundOpts, URL params, UI state and fixtureEdit callback
+    - [x] Create shared UI context with Playground options, URL params, UI state and fixtureEdit callback
     - [x] Derive state from fixture.viewport
   - [x] Decouple plugin config from core config
   - [ ] Decouple URL params from core UI
