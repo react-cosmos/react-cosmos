@@ -61,7 +61,7 @@ class CapturePropsInner extends Component<InnerProps> {
     // from different CapturePropsInner instances. To ensure each state
     // transformation is honored we use a state updater callback.
     setFixtureState(fixtureState => {
-      const propsInstance = {
+      const instanceProps = {
         instanceId,
         componentName,
         renderKey: DEFAULT_RENDER_KEY,
@@ -72,7 +72,7 @@ class CapturePropsInner extends Component<InnerProps> {
         props: replaceOrAddItem(
           getProps(fixtureState),
           props => props.instanceId === instanceId,
-          propsInstance
+          instanceProps
         )
       };
     });
@@ -96,7 +96,7 @@ class CapturePropsInner extends Component<InnerProps> {
   render() {
     const { children, fixtureState } = this.props;
     const instanceId = getInstanceId(this);
-    const fixtureProps = getPropsInstance(fixtureState, instanceId);
+    const propsInstance = getPropsInstance(fixtureState, instanceId);
 
     // HACK alert: Editing React Element by hand
     // This is blasphemy, but there are two reasons why React.cloneElement
@@ -115,18 +115,18 @@ class CapturePropsInner extends Component<InnerProps> {
     //   - https://github.com/facebook/react/blob/15a8f031838a553e41c0b66eb1bcf1da8448104d/packages/react/src/ReactElement.js#L293-L362
     return {
       ...children,
-      props: extendOriginalPropsWithFixtureState(children.props, fixtureProps),
-      key: fixtureProps ? fixtureProps.renderKey : DEFAULT_RENDER_KEY
+      props: extendOriginalPropsWithFixtureState(children.props, propsInstance),
+      key: propsInstance ? propsInstance.renderKey : DEFAULT_RENDER_KEY
     };
   }
 }
 
-function extendOriginalPropsWithFixtureState(originalProps, fixtureProps) {
-  if (!fixtureProps) {
+function extendOriginalPropsWithFixtureState(originalProps, propsInstance) {
+  if (!propsInstance) {
     return originalProps;
   }
 
-  const { values } = fixtureProps;
+  const { values } = propsInstance;
   const mergedProps = {};
 
   // Use latest prop value for serializable props, and fall back to original

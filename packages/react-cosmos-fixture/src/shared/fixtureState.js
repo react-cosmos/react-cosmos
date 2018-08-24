@@ -33,17 +33,17 @@ export function getPropsInstance(
 export function setProps(
   fixtureState: ?FixtureState,
   instanceId: number,
-  instanceProps: { [key: string]: mixed }
+  newProps: { [key: string]: mixed }
 ) {
-  const instance = getPropsInstance(fixtureState, instanceId);
+  const propsInstance = getPropsInstance(fixtureState, instanceId);
 
-  if (!instance) {
+  if (!propsInstance) {
     throw new Error(`Missing props with instanceId: ${instanceId}`);
   }
 
   return updateFixtureState(fixtureState, {
-    props: updateItem(getProps(fixtureState), instance, {
-      values: extractValuesFromObject(instanceProps)
+    props: updateItem(getProps(fixtureState), propsInstance, {
+      values: extractValuesFromObject(newProps)
     })
   });
 }
@@ -51,18 +51,18 @@ export function setProps(
 export function resetProps(
   fixtureState: FixtureState,
   instanceId: number,
-  instanceProps: { [key: string]: mixed }
+  newProps: { [key: string]: mixed }
 ) {
-  const instance = getPropsInstance(fixtureState, instanceId);
+  const propsInstance = getPropsInstance(fixtureState, instanceId);
 
-  if (!instance) {
+  if (!propsInstance) {
     throw new Error(`Missing props with instanceId: ${instanceId}`);
   }
 
   return updateFixtureState(fixtureState, {
-    props: updateItem(getProps(fixtureState), instance, {
-      renderKey: instance.renderKey + 1,
-      values: extractValuesFromObject(instanceProps)
+    props: updateItem(getProps(fixtureState), propsInstance, {
+      renderKey: propsInstance.renderKey + 1,
+      values: extractValuesFromObject(newProps)
     })
   });
 }
@@ -81,7 +81,7 @@ export function getStateInstance(
 export function setState(
   fixtureState: ?FixtureState,
   instanceId: number,
-  instanceState: { [key: string]: mixed }
+  newState: { [key: string]: mixed }
 ) {
   const stateInstance = getStateInstance(fixtureState, instanceId);
 
@@ -91,7 +91,7 @@ export function setState(
 
   return updateFixtureState(fixtureState, {
     state: updateItem(getState(fixtureState), stateInstance, {
-      values: extractValuesFromObject(instanceState)
+      values: extractValuesFromObject(newState)
     })
   });
 }
