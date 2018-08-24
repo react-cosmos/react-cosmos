@@ -4,7 +4,7 @@ import { find } from 'lodash';
 import { updateItem } from './utility';
 import { extractValuesFromObject } from './values';
 
-import type { FixtureState, FixtureStateUpdater } from '../types/fixture-state';
+import type { FixtureState, FixtureStateUpdater } from '../types/fixtureState';
 
 export function updateFixtureState(
   fixtureState: FixtureState,
