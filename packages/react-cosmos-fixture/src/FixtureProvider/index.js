@@ -36,15 +36,11 @@ export class FixtureProvider extends Component<Props, FixtureContextValue> {
     return null;
   }
 
-  setFixtureState: SetFixtureState = (updater, cb) => {
-    this.props.setFixtureState(updater, cb);
-  };
-
   // Provider value is stored in an object with reference identity to prevent
   // unintentional renders https://reactjs.org/docs/context.html#caveats
   state = {
     fixtureState: this.props.fixtureState,
-    setFixtureState: this.setFixtureState
+    setFixtureState: this.props.setFixtureState
   };
 
   render() {
