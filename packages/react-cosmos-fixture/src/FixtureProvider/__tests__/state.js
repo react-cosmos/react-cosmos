@@ -16,7 +16,7 @@ import type { ElementRef } from 'react';
 it('uses initial state', () => {
   expect(
     create(
-      <FixtureProvider fixtureState={{}} setFixtureState={() => {}}>
+      <FixtureProvider fixtureState={null} setFixtureState={() => {}}>
         <ComponentState>
           <Counter />
         </ComponentState>
@@ -28,7 +28,7 @@ it('uses initial state', () => {
 it('mocks state', () => {
   expect(
     create(
-      <FixtureProvider fixtureState={{}} setFixtureState={() => {}}>
+      <FixtureProvider fixtureState={null} setFixtureState={() => {}}>
         <ComponentState state={{ count: 5 }}>
           <Counter />
         </ComponentState>
@@ -363,7 +363,7 @@ it('captures component state changes', async () => {
 it('mocks state in multiple instances', () => {
   expect(
     create(
-      <FixtureProvider fixtureState={{}} setFixtureState={() => {}}>
+      <FixtureProvider fixtureState={null} setFixtureState={() => {}}>
         <ComponentState state={{ count: 5 }}>
           <Counter />
         </ComponentState>

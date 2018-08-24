@@ -7,7 +7,7 @@ import { extractValuesFromObject } from './values';
 import type { FixtureState, FixtureStateUpdater } from '../types/fixtureState';
 
 export function updateFixtureState(
-  fixtureState: FixtureState,
+  fixtureState: ?FixtureState,
   updater: FixtureStateUpdater
 ) {
   const fixtureChange =
@@ -19,28 +19,30 @@ export function updateFixtureState(
   };
 }
 
-export function getProps({ props }: FixtureState) {
-  if (!props) {
-    throw new Error(`Missing props in fixture state`);
-  }
+export function getProps(fixtureState: ?FixtureState) {
+  return (fixtureState && fixtureState.props) || [];
+}
 
-  return props;
+export function getPropsInstance(
+  fixtureState: ?FixtureState,
+  instanceId: number
+) {
+  return find(getProps(fixtureState), i => i.instanceId === instanceId);
 }
 
 export function setProps(
-  fixtureState: FixtureState,
+  fixtureState: ?FixtureState,
   instanceId: number,
   instanceProps: { [key: string]: mixed }
 ) {
-  const allProps = getProps(fixtureState);
-  const instance = find(allProps, i => i.instanceId === instanceId);
+  const instance = getPropsInstance(fixtureState, instanceId);
 
   if (!instance) {
     throw new Error(`Missing props with instanceId: ${instanceId}`);
   }
 
   return updateFixtureState(fixtureState, {
-    props: updateItem(allProps, instance, {
+    props: updateItem(getProps(fixtureState), instance, {
       values: extractValuesFromObject(instanceProps)
     })
   });
@@ -51,43 +53,44 @@ export function resetProps(
   instanceId: number,
   instanceProps: { [key: string]: mixed }
 ) {
-  const allProps = getProps(fixtureState);
-  const instance = find(allProps, i => i.instanceId === instanceId);
+  const instance = getPropsInstance(fixtureState, instanceId);
 
   if (!instance) {
     throw new Error(`Missing props with instanceId: ${instanceId}`);
   }
 
   return updateFixtureState(fixtureState, {
-    props: updateItem(allProps, instance, {
+    props: updateItem(getProps(fixtureState), instance, {
       renderKey: instance.renderKey + 1,
       values: extractValuesFromObject(instanceProps)
     })
   });
 }
 
-export function getState({ state }: FixtureState) {
-  if (!state) {
-    throw new Error(`Missing state in fixture state`);
-  }
+export function getState(fixtureState: ?FixtureState) {
+  return (fixtureState && fixtureState.state) || [];
+}
 
-  return state;
+export function getStateInstance(
+  fixtureState: ?FixtureState,
+  instanceId: number
+) {
+  return find(getState(fixtureState), i => i.instanceId === instanceId);
 }
 
 export function setState(
-  fixtureState: FixtureState,
+  fixtureState: ?FixtureState,
   instanceId: number,
   instanceState: { [key: string]: mixed }
 ) {
-  const allStates = getState(fixtureState);
-  const stateInstance = find(allStates, i => i.instanceId === instanceId);
+  const stateInstance = getStateInstance(fixtureState, instanceId);
 
   if (!stateInstance) {
     throw new Error(`Missing state with instanceId: ${instanceId}`);
   }
 
   return updateFixtureState(fixtureState, {
-    state: updateItem(allStates, stateInstance, {
+    state: updateItem(getState(fixtureState), stateInstance, {
       values: extractValuesFromObject(instanceState)
     })
   });

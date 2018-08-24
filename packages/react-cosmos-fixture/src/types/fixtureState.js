@@ -29,7 +29,7 @@ export type FixtureState = {
 
 export type FixtureStateUpdater =
   | $Shape<FixtureState>
-  | (FixtureState => $Shape<FixtureState>);
+  | ((prevState: ?FixtureState) => $Shape<FixtureState>);
 
 export type SetFixtureState = (
   updater: FixtureStateUpdater,
@@ -37,6 +37,6 @@ export type SetFixtureState = (
 ) => mixed;
 
 export type FixtureContextValue = {
-  fixtureState: FixtureState,
+  fixtureState: ?FixtureState,
   setFixtureState: SetFixtureState
 };

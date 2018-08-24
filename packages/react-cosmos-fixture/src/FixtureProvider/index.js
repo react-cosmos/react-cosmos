@@ -14,7 +14,7 @@ import type {
 
 type Props = {
   children: Node,
-  fixtureState: FixtureState,
+  fixtureState: ?FixtureState,
   setFixtureState: SetFixtureState
 };
 

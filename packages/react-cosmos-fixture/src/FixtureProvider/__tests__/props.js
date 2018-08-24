@@ -14,7 +14,7 @@ import { FixtureProvider } from '../../FixtureProvider';
 it('renders with props', () => {
   expect(
     create(
-      <FixtureProvider fixtureState={{}} setFixtureState={() => {}}>
+      <FixtureProvider fixtureState={null} setFixtureState={() => {}}>
         <HelloMessage name="Satoshi" />
       </FixtureProvider>
     ).toJSON()

@@ -1,11 +1,11 @@
 // @flow
 
-import find from 'lodash/find';
 import React, { Component } from 'react';
 import { FixtureContext } from './FixtureContext';
 import { replaceOrAddItem } from './shared/utility';
 import { extractValuesFromObject } from './shared/values';
 import { getInstanceId, getComponentName } from './shared/decorator';
+import { getProps, getPropsInstance } from './shared/fixtureState';
 
 import type { Element } from 'react';
 import type { FixtureState, SetFixtureState } from './types/fixtureState';
@@ -44,7 +44,7 @@ export class CaptureProps extends Component<Props> {
 
 type InnerProps = {
   children: Element<any>,
-  fixtureState: FixtureState,
+  fixtureState: ?FixtureState,
   setFixtureState: SetFixtureState
 };
 
@@ -70,7 +70,7 @@ class CapturePropsInner extends Component<InnerProps> {
 
       return {
         props: replaceOrAddItem(
-          fixtureState.props,
+          getProps(fixtureState),
           props => props.instanceId === instanceId,
           propsInstance
         )
@@ -79,14 +79,24 @@ class CapturePropsInner extends Component<InnerProps> {
   }
 
   shouldComponentUpdate(nextProps) {
+    if (nextProps.fixtureState === this.props.fixtureState) {
+      return false;
+    }
+
+    const instanceId = getInstanceId(this);
+
     // TODO: Avoid renders when fixture state values for this instance are
     // the same. Do this after implementing logic for unserializable values.
-    return nextProps.fixtureState.props !== this.props.fixtureState.props;
+    return (
+      getPropsInstance(nextProps.fixtureState, instanceId) !==
+      getPropsInstance(this.props.fixtureState, instanceId)
+    );
   }
 
   render() {
     const { children, fixtureState } = this.props;
-    const fixtureProps = getRelatedFixtureState(fixtureState, this);
+    const instanceId = getInstanceId(this);
+    const fixtureProps = getPropsInstance(fixtureState, instanceId);
 
     // HACK alert: Editing React Element by hand
     // This is blasphemy, but there are two reasons why React.cloneElement
@@ -109,16 +119,6 @@ class CapturePropsInner extends Component<InnerProps> {
       key: fixtureProps ? fixtureProps.renderKey : DEFAULT_RENDER_KEY
     };
   }
-}
-
-function getRelatedFixtureState(fixtureState, instance) {
-  if (!fixtureState.props || fixtureState.props.length === 0) {
-    return null;
-  }
-
-  const instanceId = getInstanceId(instance);
-
-  return find(fixtureState.props, props => props.instanceId === instanceId);
 }
 
 function extendOriginalPropsWithFixtureState(originalProps, fixtureProps) {

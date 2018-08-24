@@ -1,19 +1,15 @@
 // @flow
 
-import { find } from 'lodash';
 import React, { Component, cloneElement } from 'react';
 import { FixtureContext } from './FixtureContext';
 import { CaptureProps } from './CaptureProps';
 import { replaceOrAddItem } from './shared/utility';
 import { extractValuesFromObject } from './shared/values';
 import { getInstanceId, getComponentName } from './shared/decorator';
+import { getState, getStateInstance } from './shared/fixtureState';
 
 import type { Element, ElementRef } from 'react';
-import type {
-  FixtureState,
-  FixtureStateStateInstance,
-  SetFixtureState
-} from './types/fixtureState';
+import type { FixtureState, SetFixtureState } from './types/fixtureState';
 
 type Props = {
   children: Element<any>,
@@ -47,7 +43,7 @@ export function ComponentState({ children, state }: Props) {
 ComponentState.cosmosCaptureProps = false;
 
 type InnerProps = Props & {
-  fixtureState: FixtureState,
+  fixtureState: ?FixtureState,
   setFixtureState: SetFixtureState
 };
 
@@ -73,11 +69,17 @@ class ComponentStateInner extends Component<InnerProps> {
   }
 
   shouldComponentUpdate(nextProps) {
+    if (nextProps.fixtureState === this.props.fixtureState) {
+      return false;
+    }
+
+    const instanceId = getInstanceId(this);
+
+    // TODO: Avoid renders when fixture state values for this instance are
+    // the same. Do this after implementing logic for unserializable values.
     return (
-      nextProps.state !== this.props.state ||
-      // TODO: Avoid renders when fixture state values for this instance are
-      // the same. Do this after implementing logic for unserializable values.
-      nextProps.fixtureState.state !== this.props.fixtureState.state
+      getStateInstance(nextProps.fixtureState, instanceId) !==
+      getStateInstance(this.props.fixtureState, instanceId)
     );
   }
 
@@ -90,14 +92,15 @@ class ComponentStateInner extends Component<InnerProps> {
     }
 
     const { fixtureState, state: mockedState } = this.props;
-    const fixtureStateState = getRelatedFixtureState(fixtureState, this);
+    const instanceId = getInstanceId(this);
+    const stateInstance = getStateInstance(fixtureState, instanceId);
 
-    if (fixtureStateState) {
+    if (stateInstance) {
       childRef.setState(
         extendOriginalStateWithFixtureState({
           currentState: childRef.state,
           mockedState,
-          fixtureStateState
+          stateInstance
         })
       );
     } else {
@@ -190,25 +193,12 @@ class ComponentStateInner extends Component<InnerProps> {
   };
 }
 
-function getRelatedFixtureState(
-  fixtureState,
-  decoratorRef
-): ?FixtureStateStateInstance {
-  if (!fixtureState.state || fixtureState.state.length === 0) {
-    return null;
-  }
-
-  const instanceId = getInstanceId(decoratorRef);
-
-  return find(fixtureState.state, state => state.instanceId === instanceId);
-}
-
 function extendOriginalStateWithFixtureState({
   currentState,
   mockedState = {},
-  fixtureStateState
+  stateInstance
 }) {
-  const { values } = fixtureStateState;
+  const { values } = stateInstance;
   const mergedState = {};
 
   // Use latest prop value for serializable props, and fall back to mocked
@@ -243,7 +233,7 @@ function updateComponentStateInFixtureState({
   decoratorRef,
   childRef
 }: {
-  fixtureState: FixtureState,
+  fixtureState: ?FixtureState,
   componentState: Object,
   decoratorRef: ElementRef<typeof Component>,
   childRef: ElementRef<typeof Component>
@@ -258,7 +248,7 @@ function updateComponentStateInFixtureState({
 
   return {
     state: replaceOrAddItem(
-      fixtureState.state,
+      getState(fixtureState),
       state => state.instanceId === instanceId,
       stateInstance
     )

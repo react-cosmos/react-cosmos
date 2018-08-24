@@ -7,7 +7,7 @@ import { FixtureProvider } from '../../FixtureProvider';
 it('renders string node', () => {
   expect(
     create(
-      <FixtureProvider fixtureState={{}} setFixtureState={() => {}}>
+      <FixtureProvider fixtureState={null} setFixtureState={() => {}}>
         Hello world!
       </FixtureProvider>
     ).toJSON()
