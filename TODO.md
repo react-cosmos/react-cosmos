@@ -19,7 +19,7 @@
     - [ ] Customize fixture name
   - [ ] Remote protocol
     - [x] Define renderer message types
-    - [ ] window.postMessage
+    - [x] window.postMessage
     - [ ] WebSockets
   - [ ] Testing API
 - [ ] Support JSX fixture files

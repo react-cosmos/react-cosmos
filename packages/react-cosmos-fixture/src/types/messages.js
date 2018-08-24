@@ -81,3 +81,13 @@ export type RemoteMessage =
   | RemoteReadyMsg
   | SelectFixtureMsg
   | SetFixtureStateMsg;
+
+export type OnRemoteMessage = RemoteMessage => mixed;
+
+export type OnRendererMessage = RendererMessage => mixed;
+
+export type RemoteRendererApi = {
+  subscribe: OnRemoteMessage => mixed,
+  unsubscribe: () => mixed,
+  postMessage: OnRendererMessage
+};

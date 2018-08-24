@@ -7,7 +7,7 @@ import { FixtureProvider } from '../FixtureProvider';
 import { updateFixtureState } from '../shared/fixtureState';
 
 import type { FixtureState, SetFixtureState } from '../types/fixtureState';
-import type { RendererMessage, RemoteMessage } from '../types/messages';
+import type { RemoteMessage, RemoteRendererApi } from '../types/messages';
 
 type Fixtures = {
   [path: string]: Node
@@ -15,21 +15,18 @@ type Fixtures = {
 
 type Props = {
   rendererId: string,
-  fixtures: Fixtures,
-  subscribe: (onMessage: (RemoteMessage) => mixed) => mixed,
-  unsubscribe: () => mixed,
-  postMessage: RendererMessage => mixed
-};
+  fixtures: Fixtures
+} & RemoteRendererApi;
 
 type State = {
   fixturePath: ?string,
-  fixtureState: FixtureState
+  fixtureState: ?FixtureState
 };
 
 export class FixtureConnect extends Component<Props, State> {
   state = {
     fixturePath: null,
-    fixtureState: {}
+    fixtureState: null
   };
 
   componentDidMount() {
@@ -47,7 +44,11 @@ export class FixtureConnect extends Component<Props, State> {
     // Fixture state changes are broadcast in componentDidUpdate instead of
     // when they arrive because React batches setState calls, so by waiting for
     // React to apply subsequent state changes we also benefit from batching.
-    if (fixturePath && fixtureState !== prevState.fixtureState) {
+    if (
+      fixturePath &&
+      fixtureState &&
+      fixtureState !== prevState.fixtureState
+    ) {
       postMessage({
         type: 'fixtureState',
         payload: {
@@ -68,11 +69,11 @@ export class FixtureConnect extends Component<Props, State> {
     const { fixturePath, fixtureState } = this.state;
 
     if (!fixturePath) {
-      return 'No fixture loaded';
+      return 'No fixture loaded.';
     }
 
     if (!fixtures[fixturePath]) {
-      throw new Error(`Invalid fixture path ${fixturePath}`);
+      return `Fixture path not found: ${fixturePath}`;
     }
 
     return (
@@ -102,7 +103,7 @@ export class FixtureConnect extends Component<Props, State> {
         fixturePath,
         // Reset fixture state when selecting new fixture (or when reselecting
         // current fixture)
-        fixtureState: {}
+        fixtureState: null
       });
     } else if (msg.type === 'setFixtureState') {
       const { fixturePath, fixtureState } = msg.payload;
