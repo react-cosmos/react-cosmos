@@ -16,7 +16,7 @@ type Props = {
   state?: Object
 };
 
-// How often to check the state of loaded component and update the fixture
+// How often to check the state of the loaded component and update the fixture
 // state if it changed
 const REFRESH_INTERVAL = 200;
 
@@ -52,7 +52,7 @@ class ComponentStateInner extends Component<InnerProps> {
 
   timeoutId: ?TimeoutID;
 
-  // Remember the child component's initial state to use as a baseline for
+  // Remember the child component's initial state to use as a baseline for the
   // mocked state (when fixture state is empty)
   initialState = {};
 

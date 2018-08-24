@@ -123,7 +123,6 @@ class CapturePropsInner extends Component<InnerProps> {
 
 function extendOriginalPropsWithFixtureState(originalProps, fixtureProps) {
   if (!fixtureProps) {
-    // At this point fixtureState has props, but only related to other components
     return originalProps;
   }
 
