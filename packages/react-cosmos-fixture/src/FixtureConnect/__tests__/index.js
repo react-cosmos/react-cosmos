@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { create } from 'react-test-renderer';
-import { getProps, setProps } from '../../shared/fixture-state';
+import { getProps, setProps } from '../../shared/fixtureState';
 import { uuid } from '../../shared/uuid';
 import { FixtureConnect } from '..';
 

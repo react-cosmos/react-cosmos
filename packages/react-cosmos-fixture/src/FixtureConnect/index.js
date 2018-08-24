@@ -4,9 +4,9 @@ import type { Node } from 'react';
 
 import React, { Component } from 'react';
 import { FixtureProvider } from '../FixtureProvider';
-import { updateFixtureState } from '../shared/fixture-state';
+import { updateFixtureState } from '../shared/fixtureState';
 
-import type { FixtureState, SetFixtureState } from '../types/fixture-state';
+import type { FixtureState, SetFixtureState } from '../types/fixtureState';
 import type { RendererMessage, RemoteMessage } from '../types/messages';
 
 type Fixtures = {

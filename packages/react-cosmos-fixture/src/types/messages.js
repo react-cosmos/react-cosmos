@@ -1,6 +1,6 @@
 // @flow
 
-import type { FixtureState } from './fixture-state';
+import type { FixtureState } from './fixtureState';
 
 // NOTE: Renderer ids are self assigned in remote environments, so uniqueness
 // cannot be established by consensus
