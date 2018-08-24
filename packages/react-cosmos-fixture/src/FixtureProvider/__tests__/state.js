@@ -7,7 +7,7 @@ import {
   updateFixtureState,
   getState,
   setState
-} from '../../shared/fixture-state';
+} from '../../shared/fixtureState';
 import { FixtureProvider } from '../../FixtureProvider';
 import { ComponentState } from '../../ComponentState';
 

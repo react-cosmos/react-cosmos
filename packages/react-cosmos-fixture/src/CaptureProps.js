@@ -8,7 +8,7 @@ import { extractValuesFromObject } from './shared/values';
 import { getInstanceId, getComponentName } from './shared/decorator';
 
 import type { Element } from 'react';
-import type { FixtureState, SetFixtureState } from './types/fixture-state';
+import type { FixtureState, SetFixtureState } from './types/fixtureState';
 
 type Props = {
   children: Element<any>

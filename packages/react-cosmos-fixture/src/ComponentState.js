@@ -13,7 +13,7 @@ import type {
   FixtureState,
   FixtureStateStateInstance,
   SetFixtureState
-} from './types/fixture-state';
+} from './types/fixtureState';
 
 type Props = {
   children: Element<any>,

@@ -11,7 +11,7 @@ import {
   resetProps,
   getState,
   setState
-} from '../../shared/fixture-state';
+} from '../../shared/fixtureState';
 
 it('resets state when resetting props', () => {
   let fixtureState = {};

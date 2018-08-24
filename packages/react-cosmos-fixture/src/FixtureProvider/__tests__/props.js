@@ -7,7 +7,7 @@ import {
   getProps,
   setProps,
   resetProps
-} from '../../shared/fixture-state';
+} from '../../shared/fixtureState';
 import { CaptureProps } from '../../CaptureProps';
 import { FixtureProvider } from '../../FixtureProvider';
 
