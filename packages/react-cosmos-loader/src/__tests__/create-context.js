@@ -32,7 +32,8 @@ class FooComp extends Component<{}> {
 }
 
 const wrapper = {
-  unmount: jest.fn()
+  unmount: jest.fn(),
+  toJSON: () => null
 };
 const renderer = jest.fn(element => {
   TestRenderer.create(element);

@@ -107,7 +107,8 @@ export class CosmosNativeLoader extends Component<Props, State> {
             element: null
           });
         }
-      }
+      },
+      toJSON: () => null
     };
   };
 }
@@ -117,6 +118,9 @@ function subscribe(msgHandler) {
 }
 
 function unsubscribe() {
+  // .off without a fn is actually supported
+  // https://github.com/component/emitter#emitteroffevent-fn
+  // $FlowFixMe
   socket.off('cosmos-cmd');
 }
 

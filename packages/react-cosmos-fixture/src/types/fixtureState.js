@@ -6,7 +6,7 @@ type FixtureStateValue = {
   value: mixed
 };
 
-export type FixtureStateValues = Array<FixtureStateValue>;
+export type FixtureStateValues = FixtureStateValue[];
 
 export type FixtureStatePropsInstance = {
   instanceId: number,
@@ -22,8 +22,8 @@ export type FixtureStateStateInstance = {
 };
 
 export type FixtureState = {
-  props?: Array<FixtureStatePropsInstance>,
-  state?: Array<FixtureStateStateInstance>,
+  props?: FixtureStatePropsInstance[],
+  state?: FixtureStateStateInstance[],
   [key: string]: mixed
 };
 

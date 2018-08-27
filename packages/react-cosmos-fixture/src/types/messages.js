@@ -6,7 +6,7 @@ import type { FixtureState } from './fixtureState';
 // cannot be established by consensus
 export type RendererId = string;
 
-export type FixtureNames = Array<string>;
+export type FixtureNames = string[];
 
 // Announce a new renderer or refresh a renderer's fixture data
 export type RendererReadyMsg = {
