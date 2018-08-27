@@ -8,22 +8,22 @@
 
 <p align="center">
   <a href="https://circleci.com/gh/react-cosmos/react-cosmos">
-    <img alt="Build status" src="https://img.shields.io/circleci/project/github/react-cosmos/react-cosmos/master.svg">
+    <img alt="Build" src="https://img.shields.io/circleci/project/github/react-cosmos/react-cosmos/master.svg">
   </a>
   <a href="https://codecov.io/gh/react-cosmos/react-cosmos">
-    <img alt="Codecov status" src="https://codecov.io/gh/react-cosmos/react-cosmos/branch/master/graph/badge.svg">
+    <img alt="Coverage" src="https://codecov.io/gh/react-cosmos/react-cosmos/branch/master/graph/badge.svg">
   </a>
   <a href="https://twitter.com/ReactCosmos">
-    <img alt="Follow @ReactCosmos" src="https://img.shields.io/twitter/follow/ReactCosmos.svg?style=flat&label=Follow">
+    <img alt="@ReactCosmos" src="https://img.shields.io/twitter/follow/ReactCosmos.svg?style=flat&label=Follow">
   </a>
   <a href="https://join-react-cosmos.now.sh/">
     <img alt="Slack" src="https://join-react-cosmos.now.sh/badge.svg">
   </a>
   <a href="https://spectrum.chat/cosmos">
-    <img alt="Join the community on Spectrum" src="https://withspectrum.github.io/badge/badge.svg" />
+    <img alt="Spectrum" src="https://withspectrum.github.io/badge/badge.svg" />
   </a>
   <a href="CONTRIBUTING.md#how-to-contribute">
-    <img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg">
+    <img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg">
   </a>
 </p>
 
