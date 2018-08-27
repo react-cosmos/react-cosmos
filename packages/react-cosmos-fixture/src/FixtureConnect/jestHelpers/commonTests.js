@@ -298,7 +298,11 @@ export async function expectMessageSeq(
   getMessages: () => Array<Message>,
   types: Array<string>
 ) {
-  await until(() => getMessages().length >= types.length, { timeout: 1000 });
+  try {
+    await until(() => getMessages().length >= types.length, { timeout: 1000 });
+  } catch (err) {
+    // Let the following expect call fail with a proper output
+  }
 
   expect(getMessageSeq(getMessages())).toEqual(types);
 }
