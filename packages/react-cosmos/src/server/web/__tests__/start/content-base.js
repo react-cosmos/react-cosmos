@@ -39,5 +39,5 @@ afterAll(async () => {
 
 it('serves static assets from webpack.devServer.contentBase', async () => {
   const res = await request('http://127.0.0.1:9007/static/robots.txt');
-  expect(res).toEqual(`we are the people\n`);
+  expect(res.replace(/\s+$/, '')).toEqual(`we are the people`);
 });
