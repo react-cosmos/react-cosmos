@@ -22,7 +22,7 @@ type Message = RendererMessage | RemoteMessage;
 
 export type MockRemoteArgs = {
   lastMessage: () => Message,
-  messageSeq: (...Array<string>) => Promise<mixed>,
+  messageSeq: (...string[]) => Promise<mixed>,
   postMessage: (msg: Object) => Promise<mixed>
 };
 
@@ -282,7 +282,7 @@ export function testFixtureConnect({ mockRemoteApi, getRemoteApi }: Args) {
   });
 }
 
-export function getLastMessage(messages: Array<Message>) {
+export function getLastMessage(messages: Message[]) {
   if (messages.length === 0) {
     throw new Error('No message has been posted');
   }
@@ -290,13 +290,13 @@ export function getLastMessage(messages: Array<Message>) {
   return messages[messages.length - 1];
 }
 
-export function getMessageSeq(messages: Array<Message>): Array<string> {
+export function getMessageSeq(messages: Message[]): string[] {
   return messages.map(msg => msg.type);
 }
 
 export async function expectMessageSeq(
-  getMessages: () => Array<Message>,
-  types: Array<string>
+  getMessages: () => Message[],
+  types: string[]
 ) {
   try {
     await until(() => getMessages().length >= types.length, { timeout: 1000 });
