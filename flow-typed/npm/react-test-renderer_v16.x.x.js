@@ -46,8 +46,7 @@ type TestRendererOptions = {
 };
 
 declare module 'react-test-renderer' {
-  // XXX: Do not override, this has been added manually. ReactTestRenderer is
-  // not exported in the original file from installed via flow-typed.
+  // XXX: https://github.com/flow-typed/flow-typed/pull/2674
   declare export type ReactTestRenderer = {
     toJSON(): null | ReactTestRendererJSON,
     toTree(): null | ReactTestRendererTree,
