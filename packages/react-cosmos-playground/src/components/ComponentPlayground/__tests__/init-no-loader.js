@@ -1,10 +1,11 @@
+import until from 'async-until';
 import { createContext } from '../../../utils/enzyme';
 import StarryBg from '../../StarryBg';
 import WebIndexErrorScreen from '../../screens/WebIndexErrorScreen';
 import WebBundlingScreen from '../../screens/WebBundlingScreen';
 import fixture from '../__fixtures__/init-no-loader';
 
-const { mount, getWrapper } = createContext({ fixture });
+const { mount, getWrapper, getRef } = createContext({ fixture });
 
 describe('CP init', () => {
   test('renders loading screen', () => {
@@ -15,7 +16,10 @@ describe('CP init', () => {
   });
 
   describe('after loader status is confirmed', () => {
-    beforeEach(mount);
+    beforeEach(async () => {
+      await mount();
+      await until(() => getRef().state.loaderStatus === 'WEB_INDEX_ERROR');
+    });
 
     test('should render starry background', () => {
       expect(getWrapper(StarryBg)).toHaveLength(1);
