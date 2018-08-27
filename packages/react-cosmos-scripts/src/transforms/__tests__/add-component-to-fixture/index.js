@@ -46,5 +46,5 @@ test('es-module-first-jsx', () => {
 });
 
 function normalize(str) {
-  return str.replace(/\r\n/g, /\n/);
+  return str.replace(/\r\n/g, `\n`);
 }
