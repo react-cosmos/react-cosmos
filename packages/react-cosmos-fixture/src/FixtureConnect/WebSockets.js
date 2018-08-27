@@ -2,8 +2,10 @@
 // @flow
 
 import { Component } from 'react';
+import io from 'socket.io-client';
 
 import type { Element } from 'react';
+import type { Socket } from 'socket.io-client';
 import type {
   RendererMessage,
   RemoteMessage,
@@ -12,10 +14,14 @@ import type {
 } from '../types/messages';
 
 type Props = {
-  children: RemoteRendererApi => Element<any>
+  children: RemoteRendererApi => Element<any>,
+  url: string
 };
 
-export class PostMessage extends Component<Props> {
+export const EVENT_NAME = 'cosmos-cmd';
+
+export class WebSockets extends Component<Props> {
+  socket: ?Socket;
   onMessage: ?OnRemoteMessage = null;
 
   render() {
@@ -29,23 +35,31 @@ export class PostMessage extends Component<Props> {
     });
   }
 
-  handleMessage = (msg: { data: RemoteMessage }) => {
+  handleMessage = (msg: RemoteMessage) => {
     if (this.onMessage) {
-      this.onMessage(msg.data);
+      this.onMessage(msg);
     }
   };
 
   subscribe = (onMessage: OnRemoteMessage) => {
     this.onMessage = onMessage;
-    window.addEventListener('message', this.handleMessage, false);
+
+    this.socket = io(this.props.url);
+    this.socket.on(EVENT_NAME, this.handleMessage);
   };
 
   unsubscribe = () => {
-    window.removeEventListener('message', this.handleMessage);
-    this.onMessage = null;
+    if (this.socket) {
+      this.socket.off(EVENT_NAME, this.handleMessage);
+
+      this.socket = null;
+      this.onMessage = null;
+    }
   };
 
   postMessage = (msg: RendererMessage) => {
-    parent.postMessage(msg, '*');
+    if (this.socket) {
+      this.socket.emit(EVENT_NAME, msg);
+    }
   };
 }

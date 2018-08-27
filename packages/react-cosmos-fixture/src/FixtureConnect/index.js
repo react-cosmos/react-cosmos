@@ -9,7 +9,7 @@ import { updateFixtureState } from '../shared/fixtureState';
 import type { FixtureState, SetFixtureState } from '../types/fixtureState';
 import type { RemoteMessage, RemoteRendererApi } from '../types/messages';
 
-type Fixtures = {
+export type Fixtures = {
   [path: string]: Node
 };
 
@@ -23,6 +23,8 @@ type State = {
   fixtureState: ?FixtureState
 };
 
+// TODO: Add props for customizing blank/missing states: `renderNoFixture` and
+// `renderMissingFixture`
 export class FixtureConnect extends Component<Props, State> {
   state = {
     fixturePath: null,
