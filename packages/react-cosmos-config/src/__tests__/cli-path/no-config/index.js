@@ -1,11 +1,11 @@
 // @flow
 
-import path from 'path';
+import { slash } from 'react-cosmos-shared/server';
 import { getCosmosConfig, hasUserCosmosConfig } from '../../..';
 
 jest.mock('yargs', () => ({ argv: {} }));
 
-const mocksPath = path.join(__dirname, '__fsmocks__');
+const mocksPath = slash(__dirname, '__fsmocks__');
 
 beforeEach(() => {
   global.process.cwd = () => mocksPath;
@@ -18,12 +18,12 @@ describe('[CLI path] when no config exists', () => {
       globalImports: [],
       hostname: null,
       hot: true,
-      outputPath: path.join(mocksPath, 'cosmos-export'),
+      outputPath: slash(mocksPath, 'cosmos-export'),
       port: 8989,
-      proxiesPath: path.join(mocksPath, 'cosmos.proxies'),
+      proxiesPath: slash(mocksPath, 'cosmos.proxies'),
       publicUrl: '/',
       rootPath: mocksPath,
-      webpackConfigPath: path.join(mocksPath, 'webpack.config')
+      webpackConfigPath: slash(mocksPath, 'webpack.config')
     });
   });
 

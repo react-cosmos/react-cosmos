@@ -1,9 +1,10 @@
 // @flow
 
-import fs from 'fs';
-import path from 'path';
+import { readFileSync, writeFileSync } from 'fs';
+import { dirname, relative } from 'path';
 import camelCase from 'lodash.camelcase';
 import upperFirst from 'lodash.upperfirst';
+import { slash } from 'react-cosmos-shared/server';
 import { getCosmosConfig } from 'react-cosmos-config';
 import getFilePaths from 'react-cosmos-voyager';
 import { addComponentToFixture } from './transforms/add-component-to-fixture';
@@ -25,18 +26,17 @@ export default function upgradeFixtures() {
     keys(fixtures[componentName]).forEach(fixtureName => {
       const fixturePath = fixtures[componentName][fixtureName];
       const componentPathAbs = components[componentName];
-      const componentPath = path.relative(
-        path.dirname(fixturePath),
-        componentPathAbs
+      const componentPath = slash(
+        relative(dirname(fixturePath), componentPathAbs)
       );
 
-      const fixtureCode = fs.readFileSync(fixturePath, 'utf8');
+      const fixtureCode = readFileSync(fixturePath, 'utf8');
       const newFixtureCode = addComponentToFixture({
         fixtureCode,
         componentPath,
         componentName: getIdentifiableComponentName(componentName)
       });
-      fs.writeFileSync(fixturePath, newFixtureCode, 'utf8');
+      writeFileSync(fixturePath, newFixtureCode, 'utf8');
     });
   });
 }

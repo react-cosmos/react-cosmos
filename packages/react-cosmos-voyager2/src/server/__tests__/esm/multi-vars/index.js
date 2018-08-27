@@ -1,6 +1,6 @@
 // @flow
 
-import { join } from 'path';
+import { slash } from 'react-cosmos-shared/server';
 import { findFixtureFiles } from '../../../find-fixture-files';
 
 const { resolve } = require;
@@ -10,13 +10,15 @@ describe('ES module / Multi fixture with vars', () => {
 
   beforeEach(async () => {
     files = await findFixtureFiles({
-      rootPath: join(__dirname, '__fsmocks__')
+      rootPath: slash(__dirname, '__fsmocks__')
     });
   });
 
   describe('joined list var', () => {
     it('has fixture path', () => {
-      expect(files[0].filePath).toBe(resolve('./__fsmocks__/joined.fixture'));
+      expect(files[0].filePath).toBe(
+        slash(resolve('./__fsmocks__/joined.fixture'))
+      );
     });
 
     it('has component name', () => {
@@ -25,14 +27,16 @@ describe('ES module / Multi fixture with vars', () => {
 
     it('has component path', () => {
       expect(files[0].components[0].filePath).toBe(
-        resolve('./__fsmocks__/Italic')
+        slash(resolve('./__fsmocks__/Italic'))
       );
     });
   });
 
   describe('separate object vars', () => {
     it('has fixture path', () => {
-      expect(files[1].filePath).toBe(resolve('./__fsmocks__/separate.fixture'));
+      expect(files[1].filePath).toBe(
+        slash(resolve('./__fsmocks__/separate.fixture'))
+      );
     });
 
     it('has component name', () => {
@@ -41,7 +45,7 @@ describe('ES module / Multi fixture with vars', () => {
 
     it('has component path', () => {
       expect(files[1].components[0].filePath).toBe(
-        resolve('./__fsmocks__/Italic')
+        slash(resolve('./__fsmocks__/Italic'))
       );
     });
   });

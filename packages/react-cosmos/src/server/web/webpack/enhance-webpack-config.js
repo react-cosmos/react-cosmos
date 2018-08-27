@@ -1,8 +1,9 @@
 // @flow
 
-import { resolve, join } from 'path';
+import { resolve } from 'path';
 import { omit } from 'lodash';
 import { silent as silentImport } from 'import-from';
+import { slash } from 'react-cosmos-shared/server';
 import { getCosmosConfig } from 'react-cosmos-config';
 
 import type { Config } from 'react-cosmos-flow/config';
@@ -123,7 +124,7 @@ function getOutput({ outputPath, publicUrl }, shouldExport) {
 
   if (shouldExport) {
     return {
-      path: join(outputPath, publicUrl),
+      path: slash(outputPath, publicUrl),
       filename,
       publicPath: publicUrl
     };

@@ -1,10 +1,8 @@
-import path from 'path';
-import slash from 'slash';
+import { slash } from 'react-cosmos-shared/server';
 import traverse from 'traverse';
 import { getFilePaths } from '../get-file-paths';
 
-const resolvePath = relPath =>
-  slash(path.join(__dirname, '../use-cases', relPath));
+const resolvePath = relPath => slash(__dirname, '../use-cases', relPath);
 
 const testUseCase = ({
   useCase,

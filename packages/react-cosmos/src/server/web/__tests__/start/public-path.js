@@ -64,5 +64,5 @@ it('serves index.html on / route with playgrounds opts included', async () => {
 
 it('serves static asset', async () => {
   const res = await request('http://127.0.0.1:9004/static/robots.txt');
-  expect(res).toEqual(`we are the robots\n`);
+  expect(res.replace(/\s+$/, '')).toEqual(`we are the robots`);
 });

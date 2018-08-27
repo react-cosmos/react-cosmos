@@ -1,6 +1,7 @@
 // @flow
 
-import path from 'path';
+import { dirname } from 'path';
+import { slash } from 'react-cosmos-shared/server';
 import mkdirp from 'mkdirp';
 import touch from 'touch';
 import rimraf from 'rimraf';
@@ -8,22 +9,22 @@ import { generateCosmosConfig } from '../../..';
 
 jest.mock('yargs', () => ({ argv: {} }));
 
-const outputPath = path.join(__dirname, '__jestnowatch__');
-const craWebpackConfigPath = path.join(
+const outputPath = slash(__dirname, '__jestnowatch__');
+const craWebpackConfigPath = slash(
   outputPath,
   'node_modules/react-scripts/config/webpack.config.dev'
 );
-const cosmosConfigPath = path.join(outputPath, 'cosmos.config.js');
+const cosmosConfigPath = slash(outputPath, 'cosmos.config.js');
 
 beforeEach(() => {
   global.process.cwd = () => outputPath;
 
-  mkdirp.sync(path.dirname(craWebpackConfigPath));
+  mkdirp.sync(dirname(craWebpackConfigPath));
   touch.sync(craWebpackConfigPath);
 });
 
 afterEach(() => {
-  rimraf.sync(path.join(outputPath, 'node_modules'));
+  rimraf.sync(slash(outputPath, 'node_modules'));
   rimraf.sync(cosmosConfigPath);
 });
 

@@ -1,7 +1,7 @@
 // @flow
 
-import fs from 'fs';
-import path from 'path';
+import { existsSync, writeFileSync } from 'fs';
+import { dirname, relative, resolve } from 'path';
 import { argv } from 'yargs';
 import { importModule } from 'react-cosmos-shared';
 import {
@@ -9,7 +9,8 @@ import {
   resolveUserPath,
   defaultFileMatch,
   defaultFileMatchIgnore,
-  defaultExclude
+  defaultExclude,
+  slash
 } from 'react-cosmos-shared/server';
 import { log, warn } from './log';
 import { CRA_COSMOS_CONFIG } from './config-templates';
@@ -50,11 +51,11 @@ const defaults = {
 
 export function getCosmosConfig(cosmosConfigPath?: string): Config {
   const configPath = getUserConfigPath(cosmosConfigPath);
-  const relPath = path.dirname(configPath);
+  const relPath = dirname(configPath);
 
   if (!configExist(configPath)) {
     if (argv.config) {
-      const relPath = path.relative(process.cwd(), configPath);
+      const relPath = relative(process.cwd(), configPath);
       warn(`[Cosmos] No config file found at ${relPath}, using defaults`);
     } else {
       log(`[Cosmos] No config file found, using defaults`);
@@ -79,18 +80,18 @@ export function hasUserCosmosConfig(): boolean {
 export function generateCosmosConfig(): ?string {
   // Warning: This code assumes the user hasn't created cosmos.config by now
   const configPath = getUserConfigPath();
-  const rootPath = path.dirname(configPath);
+  const rootPath = dirname(configPath);
   const craWebpackConfigPath = 'react-scripts/config/webpack.config.dev';
 
   if (moduleExists(resolveUserPath(rootPath, craWebpackConfigPath))) {
-    fs.writeFileSync(configPath, CRA_COSMOS_CONFIG, 'utf8');
+    writeFileSync(configPath, CRA_COSMOS_CONFIG, 'utf8');
 
     return 'Create React App';
   }
 }
 
 function getUserConfigPath(customConfigPath?: string) {
-  const loosePath = path.resolve(
+  const loosePath = resolve(
     process.cwd(),
     customConfigPath || argv.config || 'cosmos.config.js'
   );
@@ -103,7 +104,7 @@ function configExist(path: string): boolean {
   // Only resolve config path once we know it exists, otherwise the path will
   // be cached to a missing module for the rest of the process execution.
   // This allows us to generate the config at run time and import it later.
-  return fs.existsSync(path);
+  return existsSync(path);
 }
 
 function getNormalizedConfig(relativeConfig: Config, relPath: string): Config {
@@ -120,23 +121,23 @@ function getNormalizedConfig(relativeConfig: Config, relPath: string): Config {
     fixturePaths
   } = relativeConfig;
 
-  const rootPath = path.resolve(relPath, relativeConfig.rootPath);
+  const rootPath = slash(resolve(relPath, relativeConfig.rootPath));
   const config = {
     ...relativeConfig,
     rootPath,
     globalImports: globalImports.map(p => resolveUserPath(rootPath, p)),
-    outputPath: path.resolve(rootPath, outputPath),
+    outputPath: slash(resolve(rootPath, outputPath)),
     proxiesPath: resolveUserPath(rootPath, proxiesPath),
     webpackConfigPath: resolveUserPath(rootPath, webpackConfigPath),
-    watchDirs: watchDirs.map(p => path.resolve(rootPath, p)),
+    watchDirs: watchDirs.map(p => slash(resolve(rootPath, p))),
     modulesPath: resolveUserPath(rootPath, modulesPath),
     // Deprecated
-    componentPaths: componentPaths.map(p => path.resolve(rootPath, p)),
-    fixturePaths: fixturePaths.map(p => path.resolve(rootPath, p))
+    componentPaths: componentPaths.map(p => slash(resolve(rootPath, p))),
+    fixturePaths: fixturePaths.map(p => slash(resolve(rootPath, p)))
   };
 
   if (publicPath) {
-    config.publicPath = path.resolve(rootPath, publicPath);
+    config.publicPath = slash(resolve(rootPath, publicPath));
   }
 
   return config;

@@ -1,6 +1,6 @@
 // @flow
 
-import { join } from 'path';
+import { slash } from 'react-cosmos-shared/server';
 import { silent as silentResolve } from 'resolve-from';
 import { hasUserCustomWebpackConfig } from './webpack/user-webpack-config';
 
@@ -13,7 +13,7 @@ export function getPlaygroundOpts(cosmosConfig: Config): PlaygroundWebOpts {
   return {
     platform: 'web',
     projectKey: rootPath,
-    loaderUri: join(publicUrl, '_loader.html'),
+    loaderUri: slash(publicUrl, '_loader.html'),
     webpackConfigType: hasUserCustomWebpackConfig(cosmosConfig)
       ? 'custom'
       : 'default',
