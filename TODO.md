@@ -18,10 +18,10 @@
     - [ ] Catch errors
     - [ ] Customize fixture name
     - [ ] New decorator API
-  - [ ] Remote protocol
+  - [x] Remote protocol
     - [x] Define renderer message types
     - [x] window.postMessage
-    - [ ] WebSockets
+    - [x] WebSockets
   - [ ] Testing API
 - [ ] Support JSX fixture files
 - [ ] Port 3rd party render plugins
