@@ -3,12 +3,6 @@
   "plugins": [
     "transform-object-rest-spread",
     "transform-class-properties",
-    [
-      "transform-runtime",
-      {
-        "polyfill": false,
-        "regenerator": true
-      }
-    ]
+    "transform-runtime"
   ]
 }
