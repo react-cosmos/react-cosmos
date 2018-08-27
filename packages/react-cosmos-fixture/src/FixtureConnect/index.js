@@ -23,8 +23,8 @@ type State = {
   fixtureState: ?FixtureState
 };
 
-// TODO: Add props for customizing blank/missing states: `renderNoFixture` and
-// `renderMissingFixture`
+// TODO: Add props for customizing blank/missing states: `getBlankState` and
+// `getMissingState`
 export class FixtureConnect extends Component<Props, State> {
   state = {
     fixturePath: null,
