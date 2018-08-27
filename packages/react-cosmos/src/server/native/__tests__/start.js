@@ -3,22 +3,22 @@
  * @jest-environment node
  */
 
-import { join } from 'path';
 import { readFile, copy, remove } from 'fs-extra';
 import request from 'request-promise-native';
 import until from 'async-until';
 import {
   defaultFileMatch as mockFileMatch,
   defaultFileMatchIgnore as mockFileMatchIgnore,
-  defaultExclude as mockExclude
+  defaultExclude as mockExclude,
+  slash
 } from 'react-cosmos-shared/server';
 import io from 'socket.io-client';
 import { startServer } from '../start';
 
-const mockRootPath = join(__dirname, '__fsmocks__');
-const mockProxiesPath = join(mockRootPath, 'cosmos.proxies');
-const mockNewFixturePath = join(mockRootPath, 'jestnowatch.fixture.js');
-const mockModulesPath = join(__dirname, '__jestnowatch__/cosmos.modules.js');
+const mockRootPath = slash(__dirname, '__fsmocks__');
+const mockProxiesPath = slash(mockRootPath, 'cosmos.proxies');
+const mockNewFixturePath = slash(mockRootPath, 'jestnowatch.fixture.js');
+const mockModulesPath = slash(__dirname, '__jestnowatch__/cosmos.modules.js');
 
 jest.mock('react-cosmos-config', () => ({
   getCosmosConfig: () => ({
@@ -103,8 +103,8 @@ it('broadcasts events to between clients', async () => {
 it('generates modules file', async () => {
   const output = await readFile(mockModulesPath, 'utf8');
 
-  const fixturePath = join(mockRootPath, 'MyComponent.fixture.js');
-  const componentPath = join(mockRootPath, 'MyComponent.js');
+  const fixturePath = slash(mockRootPath, 'MyComponent.fixture.js');
+  const componentPath = slash(mockRootPath, 'MyComponent.js');
   const fixtureFile = {
     filePath: fixturePath,
     components: [{ name: 'MyComponent', filePath: componentPath }]
@@ -127,7 +127,7 @@ export function getUserModules() {
 it('re-generates modules file on new fixture file ', async () => {
   expect((await getFixtureFilesFromModules()).length).toBe(1);
 
-  await copy(join(mockRootPath, 'MyComponent.fixture.js'), mockNewFixturePath);
+  await copy(slash(mockRootPath, 'MyComponent.fixture.js'), mockNewFixturePath);
 
   // Wait for fs event to be picked up
   await until(async () => (await getFixtureFilesFromModules()).length === 2, {

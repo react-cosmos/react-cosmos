@@ -1,11 +1,11 @@
 // @flow
 
 import fs from 'fs';
-import path from 'path';
+import { dirname } from 'path';
 import promisify from 'util.promisify';
 import * as babylon from 'babylon';
 import * as t from 'babel-types';
-import { resolveUserPath } from 'react-cosmos-shared/server';
+import { resolveUserPath, slash } from 'react-cosmos-shared/server';
 
 import type { ComponentInfo } from 'react-cosmos-flow/module';
 
@@ -143,8 +143,8 @@ export async function extractComponentsFromFixtureFile(
         // Eg: components/Button
         const isModulePath = importPath.match(/^[^./]/);
         filePath = isModulePath
-          ? path.join(rootPath, importPath)
-          : resolveUserPath(path.dirname(fixturePath), importPath);
+          ? slash(rootPath, importPath)
+          : resolveUserPath(dirname(fixturePath), importPath);
       } catch (err) {
         // TODO: Allow user to see these errors when debugging
         // console.log(err.message);

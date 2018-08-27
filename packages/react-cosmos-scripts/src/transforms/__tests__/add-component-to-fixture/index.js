@@ -28,7 +28,7 @@ function readMockFile(fileName) {
       componentName: 'Button'
     });
 
-    expect(newCode).toBe(output);
+    expect(normalize(newCode)).toBe(output);
   });
 });
 
@@ -42,5 +42,9 @@ test('es-module-first-jsx', () => {
     componentName: 'Button'
   });
 
-  expect(newCode).toBe(output);
+  expect(normalize(newCode)).toBe(output);
 });
+
+function normalize(str) {
+  return str.replace(/\r\n/g, /\n/);
+}
