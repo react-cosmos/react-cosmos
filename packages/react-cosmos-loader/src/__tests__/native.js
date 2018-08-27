@@ -113,10 +113,20 @@ describe('on select', () => {
   });
 
   it('renders proxy', () => {
-    expect(wrapper.toJSON().children[0].children).toContain('I am proxy');
+    expect(getWrapperChildren()[0].children).toContain('I am proxy');
   });
 
   it('renders selected fixture component', async () => {
-    expect(wrapper.toJSON().children).toContain('I am component');
+    expect(getWrapperChildren()).toContain('I am component');
   });
 });
+
+function getWrapperChildren() {
+  const output = wrapper.toJSON();
+
+  if (!output || !Array.isArray(output.children)) {
+    throw new Error('Wrapper children are missing');
+  }
+
+  return output.children;
+}

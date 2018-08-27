@@ -6,9 +6,9 @@ import type { Proxy } from './proxy';
 import type { ComponentRef } from './react';
 
 export type Wrapper = {
-  unmount: () => any,
-  // Some renderers, like react-test-renderer, implement a toJSON method
-  toJSON?: () => {}
+  unmount(): any,
+  // Renderers, like react-test-renderer, implement a toJSON method
+  toJSON(): ?Object
 };
 
 export type Renderer = (element: Element<any>, options?: Object) => Wrapper;

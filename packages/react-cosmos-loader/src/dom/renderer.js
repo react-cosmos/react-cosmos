@@ -15,7 +15,8 @@ export function createDomRenderer(opts?: LoaderWebOpts = {}): Renderer {
     return {
       unmount() {
         unmountComponentAtNode(container);
-      }
+      },
+      toJSON: () => null
     };
   };
 }
