@@ -1,3 +1,4 @@
+import { join } from 'path';
 import webpack from 'webpack';
 import enhanceWebpackConfig from '../../enhance-webpack-config';
 
@@ -26,7 +27,7 @@ beforeEach(() => {
 it('creates proper output', () => {
   const webpackConfig = getConfig();
   expect(webpackConfig.output).toMatchObject({
-    path: '__mock__outputPath/static/',
+    path: join('__mock__outputPath', '/static/'),
     filename: '[name].js',
     publicPath: '/static/'
   });
