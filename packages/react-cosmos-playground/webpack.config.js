@@ -25,6 +25,7 @@ module.exports = {
   entry: ['whatwg-fetch', src],
   output: {
     libraryTarget: 'umd',
+    libraryExport: 'default',
     library: 'mountPlayground',
     path: dist,
     filename: 'index.js'

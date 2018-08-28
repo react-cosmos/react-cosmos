@@ -20,7 +20,7 @@
     "start": "babel-node ./packages/react-cosmos/bin/cosmos --config examples/local-state/cosmos.config.js",
     "start:playground": "babel-node ./packages/react-cosmos/bin/cosmos.js --config packages/react-cosmos-playground/cosmos.config.js",
     "build:clear": "babel-node ./scripts/clear-build.js",
-    "build": "yarn build:clear && babel-node ./scripts/build.js",
+    "build": "babel-node ./scripts/build.js",
     "link-entries": "babel-node ./scripts/link-entries.js",
     "src": "yarn link-entries src",
     "dist": "yarn link-entries dist",

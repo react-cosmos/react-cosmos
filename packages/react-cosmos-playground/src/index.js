@@ -10,9 +10,7 @@ import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
 
 let container;
 
-// Use module.exports to avoid having to call .default() when attached to
-// the global window namespace
-module.exports = (options: PlaygroundOpts) => {
+export default (options: PlaygroundOpts) => {
   return new Router({
     container: createDomContainer(),
     getComponentClass: () => ComponentPlayground,
