@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import classNames from 'classnames';
 import omitBy from 'lodash.omitby';
 import localForage from 'localforage';
@@ -468,13 +468,13 @@ export default class ComponentPlayground extends Component<Props, State> {
       // Warning: Ensure <Fragment><Loader> node hierarchy in return value to
       // reuse iframe DOM element between renders
       return (
-        <Fragment>
+        <>
           <StarryBg />
           {this.renderLoader({
             loaderUri,
             showLoader: false
           })}
-        </Fragment>
+        </>
       );
     }
 
@@ -482,12 +482,12 @@ export default class ComponentPlayground extends Component<Props, State> {
       return (
         // Warning: Ensure <Fragment><Loader> node hierarchy in return value to
         // reuse iframe DOM element between renders
-        <Fragment>
+        <>
           {this.renderLoader({
             loaderUri,
             showLoader: true
           })}
-        </Fragment>
+        </>
       );
     }
 
@@ -501,7 +501,7 @@ export default class ComponentPlayground extends Component<Props, State> {
       // Warning: Ensure <Fragment><Loader> node hierarchy in return value to
       // reuse iframe DOM element between renders
       return (
-        <Fragment>
+        <>
           <StarryBg>
             <FadeIn>
               <WelcomeScreen fixtures={fixtures} />
@@ -511,7 +511,7 @@ export default class ComponentPlayground extends Component<Props, State> {
             loaderUri,
             showLoader: false
           })}
-        </Fragment>
+        </>
       );
     }
 
@@ -519,7 +519,7 @@ export default class ComponentPlayground extends Component<Props, State> {
       // Warning: Ensure <Fragment><Loader> node hierarchy in return value to
       // reuse iframe DOM element between renders
       return (
-        <Fragment>
+        <>
           <StarryBg>
             <FadeIn>
               <MissingScreen componentName={component} fixtureName={fixture} />
@@ -529,14 +529,14 @@ export default class ComponentPlayground extends Component<Props, State> {
             loaderUri,
             showLoader: false
           })}
-        </Fragment>
+        </>
       );
     }
 
     return (
       // Warning: Ensure <Fragment><Loader> return value to preserve loader
       // instance between renders
-      <Fragment>{this.renderLoader({ loaderUri, showLoader: true })}</Fragment>
+      <>{this.renderLoader({ loaderUri, showLoader: true })}</>
     );
   }
 

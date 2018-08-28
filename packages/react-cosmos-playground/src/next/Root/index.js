@@ -1,7 +1,7 @@
 // @flow
 
 import styled from 'styled-components';
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Slot, PluginsConsumer } from 'react-plugin';
 import { Section } from '../Section';
 
@@ -13,12 +13,12 @@ export class Root extends Component<any> {
         <Section label="Root">
           <PluginsConsumer>
             {({ plugins }) => (
-              <Fragment>
+              <>
                 <Plugins plugins={plugins} />
                 <Slot name="root">
                   <Slot name="preview" />
                 </Slot>
-              </Fragment>
+              </>
             )}
           </PluginsConsumer>
         </Section>

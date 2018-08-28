@@ -1,7 +1,7 @@
 // @flow
 
 import until from 'async-until';
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { create } from 'react-test-renderer';
 import {
   updateFixtureState,
@@ -410,14 +410,14 @@ it('overwrites mocked state in multiple instances', () => {
   };
 
   const fixture = (
-    <Fragment>
+    <>
       <ComponentState state={{ count: 5 }}>
         <Counter />
       </ComponentState>
       <ComponentState state={{ count: 10 }}>
         <Counter />
       </ComponentState>
-    </Fragment>
+    </>
   );
   const instance = create(
     <FixtureProvider

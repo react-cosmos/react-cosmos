@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import classNames from 'classnames';
 import { ResponsiveIcon } from '../../../components/SvgIcon';
 import {
@@ -77,7 +77,7 @@ export class HeaderButton extends Component<Props> {
     });
 
     return (
-      <Fragment>
+      <>
         {children}
         {fixture && (
           <button
@@ -87,7 +87,7 @@ export class HeaderButton extends Component<Props> {
             <ResponsiveIcon />
           </button>
         )}
-      </Fragment>
+      </>
     );
   }
 }
