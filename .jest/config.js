@@ -31,7 +31,9 @@ module.exports = {
     '/_shared'
   ],
   watchPathIgnorePatterns: ['jestnowatch'],
-  transformIgnorePatterns: ['/node_modules/(?!(react-cosmos.+|react-native))'],
+  transformIgnorePatterns: [
+    '/node_modules/(?!(react-querystring-router|react-cosmos.+|react-native))'
+  ],
   moduleNameMapper: {
     '\\.(css|less)$': 'identity-obj-proxy',
     '\\.(jpg|png)$': '<rootDir>/packages/react-cosmos-playground/img-stub.js'

@@ -4,6 +4,7 @@ import { spawn } from 'child-process-promise';
 import { join } from 'path';
 import { bold, italic } from 'chalk';
 import {
+  rimrafAsync,
   AS_IS_PACKAGES,
   getNodePackages,
   getBrowserPackages,
@@ -86,11 +87,17 @@ function getFormattedPackageList(pkgNames) {
 }
 
 async function buildNodePackage(pkgName) {
-  return runBuildTask({
+  await runBuildTask({
     pkgName,
     cmd: 'babel',
     args: getBabelCliArgs(pkgName)
   });
+
+  await Promise.all[
+    getPackageIgnorePaths(pkgName).map(ignorePath => {
+      rimrafAsync(`./packages/${pkgName}/dist/${ignorePath}`);
+    })
+  ];
 }
 
 async function buildBrowserPackage(pkgName) {
@@ -143,9 +150,7 @@ function getBabelCliArgs(pkgName) {
     `packages/${pkgName}/src`,
     '--out-dir',
     `packages/${pkgName}/dist`,
-    '--copy-files',
-    '--ignore',
-    getPackageIgnorePaths(pkgName).join(',')
+    '--copy-files'
   ];
 
   // Showing Babel output in watch mode because it's nice to get a confirmation
@@ -174,10 +179,10 @@ function getWebpackCliArgs(pkgName) {
 }
 
 function getPackageIgnorePaths(pkgName) {
-  const ignore = ['__tests__', '__mocks__'];
+  const ignore = ['**/__tests__/**', '**/__mocks__/**'];
 
   if (pkgName === 'react-cosmos-voyager') {
-    return [...ignore, 'use-cases'];
+    return [...ignore, '**/use-cases/**'];
   }
 
   return ignore;
