@@ -2,9 +2,7 @@
 
 import ComponentPlayground from '../components/ComponentPlayground';
 import { Router } from 'react-querystring-router';
-
-// index.js is not an ES6 module
-const mountPlayground = require('..');
+import mountPlayground from '..';
 
 // Vars populated in beforeEach blocks
 let routerInstance;
