@@ -1,4 +1,4 @@
 // @flow
 
 // Use default export to maintain backwards compatibility
-module.exports = require('./src').createRouterProxy;
+module.exports = require('./dist').createRouterProxy;

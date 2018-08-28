@@ -13,6 +13,9 @@ import { ComponentState } from '../../ComponentState';
 
 import type { ElementRef } from 'react';
 
+// Slow runners can fail with default timeout
+const untilOpts = { timeout: 1000 };
+
 it('uses initial state', () => {
   expect(
     create(
@@ -348,16 +351,16 @@ it('captures component state changes', async () => {
     </FixtureProvider>
   );
 
-  await until(() => counterRef);
+  await until(() => counterRef, untilOpts);
   if (!counterRef) {
     throw new Error('Counter ref missing');
   }
 
   counterRef.setState({ count: 7 });
-  await until(() => getCountValue(fixtureState) === 7);
+  await until(() => getCountValue(fixtureState) === 7, untilOpts);
 
   counterRef.setState({ count: 13 });
-  await until(() => getCountValue(fixtureState) === 13);
+  await until(() => getCountValue(fixtureState) === 13, untilOpts);
 });
 
 it('mocks state in multiple instances', () => {

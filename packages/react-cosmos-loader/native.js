@@ -1,3 +1,3 @@
 // @flow
 
-exports.CosmosNativeLoader = require('./src/native').CosmosNativeLoader;
+exports.CosmosNativeLoader = require('./dist/native').CosmosNativeLoader;

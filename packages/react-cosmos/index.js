@@ -1,3 +1,3 @@
 // @flow
 
-exports.createFixture = require('./src').createFixture;
+exports.createFixture = require('./dist').createFixture;
