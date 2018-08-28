@@ -13,19 +13,21 @@
     "precommit": "lint-staged",
     "prettify": "prettier --write \"{{packages/*/src,examples,cypress,scripts}/**/,}*.{js,jsx,css,less,md}\"",
     "lint": "eslint \"**/*.js\"",
-    "test": "yarn flow && yarn lint && yarn test:unit",
     "test:unit": "jest --coverage --config .jest/config.js",
     "test:watch": "jest --watch --config .jest/config.js",
+    "test": "yarn flow && yarn lint && yarn test:unit",
     "test:e2e": "cypress run",
     "start": "babel-node ./packages/react-cosmos/bin/cosmos --config examples/local-state/cosmos.config.js",
     "start:playground": "babel-node ./packages/react-cosmos/bin/cosmos.js --config packages/react-cosmos-playground/cosmos.config.js",
     "clear-build": "babel-node ./scripts/clear-build.js",
     "build": "babel-node ./scripts/build.js",
     "link-entries": "babel-node ./scripts/link-entries.js",
-    "pre-release": "yarn link-entries src && yarn flow && yarn lint && yarn build && yarn link-entries dist && yarn test:unit",
-    "lerna-publish": "lerna publish --registry=https://registry.npmjs.org/",
-    "release": "yarn pre-release && yarn lerna-publish",
-    "release:next": "yarn pre-release && yarn lerna-publish --npm-tag=next"
+    "src": "yarn link-entries src",
+    "dist": "yarn link-entries dist",
+    "release:check": "yarn link-entries src && yarn flow && yarn lint && yarn build && yarn link-entries dist && yarn test:unit",
+    "release:lerna": "lerna publish --registry=https://registry.npmjs.org/",
+    "release": "yarn release:check && yarn release:lerna",
+    "release:next": "yarn release:check && yarn release:lerna --npm-tag=next"
   },
   "lint-staged": {
     "*.{js,jsx,css,less}": [
