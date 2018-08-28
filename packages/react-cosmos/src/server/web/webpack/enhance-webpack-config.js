@@ -1,6 +1,6 @@
 // @flow
 
-import { resolve, join } from 'path';
+import { join, resolve } from 'path';
 import { omit } from 'lodash';
 import { silent as silentImport } from 'import-from';
 import { getCosmosConfig } from 'react-cosmos-config';
@@ -123,6 +123,8 @@ function getOutput({ outputPath, publicUrl }, shouldExport) {
 
   if (shouldExport) {
     return {
+      // Most paths are created using forward slashes regardless of the OS for
+      // consistency, but this one needs to have backslashes on Windows!
       path: join(outputPath, publicUrl),
       filename,
       publicPath: publicUrl

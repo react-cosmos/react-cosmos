@@ -44,5 +44,5 @@ afterAll(async () => {
 // webpack.devServer.contentBase
 it('serves static assets from Cosmos publicPath', async () => {
   const res = await request('http://127.0.0.1:9008/static/robots.txt');
-  expect(res).toEqual(`we are the robots\n`);
+  expect(res.replace(/\s+$/, '')).toEqual(`we are the robots`);
 });

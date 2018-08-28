@@ -1,3 +1,15 @@
+Q: Why does the user webpack build require _babel-polyfill_ on IE 11, but the Playground webpack build doesn't?
+
+Which package relies on (unpolyfilled) Promises?
+
+Answer: `async-until` (addressed in https://github.com/skidding/async-until/pull/3)
+
+Not sure why I was setting `polyfill: false` to `transform-runtime` plugin in every Babel config. I think it only makes sense if you're certain a global polyfill (like _babel-polyfill_) is always imported before the compiled code. Not a good idea for libraries!
+
+Fixed in: https://github.com/react-cosmos/react-cosmos/pull/820
+
+---
+
 Q: How to link fixture state to specific component instances?
 
 Context: A fixture can render more than one component element, which means it can hold state for more than one component instance (of the same type or of different types) at the same time. We need an identifier for each component instance.

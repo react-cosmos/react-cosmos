@@ -1,0 +1,21 @@
+language: node_js
+sudo: required
+node_js:
+  - 10
+  - 8
+  - 6
+before_install:
+  - sudo sysctl fs.inotify.max_user_watches=524288
+install: "yarn install --ignore-engines"
+script:
+  - yarn build
+  - yarn flow
+  - yarn lint
+  - yarn test:ci
+  - yarn test-smoke:ci
+after_success:
+  - yarn codecov
+cache:
+  yarn: true
+  directories:
+    - /home/travis/.cypress/Cypress

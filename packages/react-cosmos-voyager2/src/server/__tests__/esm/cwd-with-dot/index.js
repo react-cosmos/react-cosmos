@@ -1,6 +1,6 @@
 // @flow
 
-import { join } from 'path';
+import { slash } from 'react-cosmos-shared/server';
 import { findFixtureFiles } from '../../../find-fixture-files';
 
 const { resolve } = require;
@@ -10,12 +10,14 @@ describe('ES module / Current working directory path includes "."', () => {
 
   beforeEach(async () => {
     files = await findFixtureFiles({
-      rootPath: join(__dirname, '.dot/__fsmocks__')
+      rootPath: slash(__dirname, '.dot/__fsmocks__')
     });
   });
 
   it('has fixture path', () => {
-    expect(files[0].filePath).toBe(resolve('./.dot/__fsmocks__/fixture'));
+    expect(files[0].filePath).toBe(
+      slash(resolve('./.dot/__fsmocks__/fixture'))
+    );
   });
 
   it('has component name', () => {
@@ -24,7 +26,7 @@ describe('ES module / Current working directory path includes "."', () => {
 
   it('has component path', () => {
     expect(files[0].components[0].filePath).toBe(
-      resolve('./.dot/__fsmocks__/Italic')
+      slash(resolve('./.dot/__fsmocks__/Italic'))
     );
   });
 });

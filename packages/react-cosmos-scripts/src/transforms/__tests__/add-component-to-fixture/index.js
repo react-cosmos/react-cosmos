@@ -1,12 +1,12 @@
 // @flow
 
-import fs from 'fs';
-import path from 'path';
+import { readFileSync } from 'fs';
+import { slash } from 'react-cosmos-shared/server';
 import { addComponentToFixture } from '../../add-component-to-fixture';
 
 function readMockFile(fileName) {
-  return fs.readFileSync(
-    path.join(__dirname, '__fsmocks__', `${fileName}.js`),
+  return readFileSync(
+    slash(__dirname, '__fsmocks__', `${fileName}.js`),
     'utf8'
   );
 }
@@ -28,7 +28,7 @@ function readMockFile(fileName) {
       componentName: 'Button'
     });
 
-    expect(newCode).toBe(output);
+    expect(normalize(newCode)).toBe(normalize(output));
   });
 });
 
@@ -42,5 +42,10 @@ test('es-module-first-jsx', () => {
     componentName: 'Button'
   });
 
-  expect(newCode).toBe(output);
+  expect(normalize(newCode)).toBe(normalize(output));
 });
+
+// Normalize new lines between operating systems
+function normalize(str) {
+  return str.replace(/(\r?\n)+/g, `\n`);
+}

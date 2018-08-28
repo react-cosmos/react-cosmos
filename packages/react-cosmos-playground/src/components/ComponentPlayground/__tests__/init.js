@@ -1,11 +1,15 @@
+import until from 'async-until';
 import { createContext } from '../../../utils/enzyme';
 import StarryBg from '../../StarryBg';
 import fixture from '../__fixtures__/init';
 
-const { mount, getWrapper } = createContext({ fixture });
+const { mount, getWrapper, getRef } = createContext({ fixture });
 
 describe('CP init', () => {
-  beforeEach(mount);
+  beforeEach(async () => {
+    await mount();
+    await until(() => getRef().state.loaderStatus === 'WEB_INDEX_OK');
+  });
 
   test('should starry background', () => {
     expect(getWrapper(StarryBg)).toHaveLength(1);
