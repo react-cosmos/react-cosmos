@@ -58,7 +58,7 @@ Because of the latter, integration tests or examples for older React or webpack 
 
 Monorepo packages have source code under `packages/PACKAGE/src` and compiled code under `packages/PACKAGE/dist`. Each package has one or more _entry points_ (or zero in rare cases, like `react-cosmos-scripts` which exposes only binaries).
 
-**Entry points** are ES5 modules that are published to npm as-in, and they only forward exports from package modules. `package.json#main` usually points the `index.js` entry point. But some packages have multiple entry points. Because they are placed at the package root level, secondary entry points can be imported like this:
+**Entry points** are ES5 modules that are published to npm as-in, and they only forward exports from package modules. `package.json#main` usually points the `index.js` entry point. But some packages have multiple entry points. Because they are placed at the root package level, _named_ entry points can be imported like this:
 
 ```js
 import { moduleExists } from 'react-cosmos-shared/server';
@@ -77,11 +77,14 @@ The main benefit of this structure is that **we can at any time choose to link p
 yarn link-entries dist
 
 # Link entry points to source code
-# Always do this before committing!
+# Run when working on more packages at once or
+# to calculate cross-package test coverage
 yarn link-entries src
 ```
 
-> Note: The versioned packages point to `src`, because it's default mode for Cosmos development. The release script takes care of pointing packages to _dist_ and then back to _src_ again once released to npm. **Make sure to never commit entry points linked to `dist`!**
+> Note: The versioned packages point to `dist`, because it's how they are published to npm. Having code parity between git and npm also makes it easier to work with Lerna, which [doesn't like publishing uncommitted changes from working tree](https://github.com/lerna/lerna/issues/1581). The release script takes care of pointing packages to _dist_. **Don't commit entry points linked to `src`!**
+
+To understand `link-entries` better, see how it's used in the context of the [release](https://github.com/react-cosmos/react-cosmos/blob/7f860e355bd25f03c1af496b2e31c071ec15e8a1/package.json#L27) and [CI](https://github.com/react-cosmos/react-cosmos/blob/7f860e355bd25f03c1af496b2e31c071ec15e8a1/.travis.yml#L11-L21) flows.
 
 #### Flow
 
