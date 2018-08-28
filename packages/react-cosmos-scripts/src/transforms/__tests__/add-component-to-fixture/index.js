@@ -28,7 +28,7 @@ function readMockFile(fileName) {
       componentName: 'Button'
     });
 
-    expect(normalize(newCode)).toBe(output);
+    expect(normalize(newCode)).toBe(normalize(output));
   });
 });
 
@@ -42,9 +42,10 @@ test('es-module-first-jsx', () => {
     componentName: 'Button'
   });
 
-  expect(normalize(newCode)).toBe(output);
+  expect(normalize(newCode)).toBe(normalize(output));
 });
 
+// Normalize new lines between operating systems
 function normalize(str) {
-  return str.replace(/\r\n/g, `\n`);
+  return str.replace(/(\r?\n)+/g, `\n`);
 }
