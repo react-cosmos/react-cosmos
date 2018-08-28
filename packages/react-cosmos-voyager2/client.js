@@ -1,3 +1,3 @@
 // @flow
 
-exports.getComponents = require('./src/client/get-components').getComponents;
+exports.getComponents = require('./dist/client/get-components').getComponents;

@@ -4,6 +4,6 @@
 process.env.BABEL_ENV = process.env.BABEL_ENV || 'production';
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
-const { generateExport } = require('../src/server/web/export');
+const { generateExport } = require('../dist/server/web/export');
 
 generateExport();

@@ -4,6 +4,6 @@
 process.env.BABEL_ENV = process.env.BABEL_ENV || 'development';
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-const { startServer } = require('../src/server/web/start');
+const { startServer } = require('../dist/server/web/start');
 
 startServer();

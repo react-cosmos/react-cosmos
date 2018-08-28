@@ -1,3 +1,3 @@
 // @flow
 
-exports.mount = require('./src/dom/mount').mount;
+exports.mount = require('./dist/dom/mount').mount;

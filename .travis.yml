@@ -6,14 +6,19 @@ node_js:
   - 6
 before_install:
   - sudo sysctl fs.inotify.max_user_watches=524288
-install: "yarn install --ignore-engines"
+install: 'yarn install --ignore-engines'
 script:
-  - yarn build
+  # Test source (with cross-package coverage)
+  - yarn link-entries src
   - yarn flow
   - yarn lint
-  - yarn test:ci
-  - yarn test-smoke:ci
+  - yarn test:unit --maxWorkers=2
+  # Test build
+  - yarn build
+  - yarn link-entries dist
+  - yarn start & yarn test:e2e
 after_success:
+  # Report coverage
   - yarn codecov
 cache:
   yarn: true
