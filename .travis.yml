@@ -6,6 +6,8 @@ node_js:
   - 6
 before_install:
   - sudo sysctl fs.inotify.max_user_watches=524288
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH=$HOME/.yarn/bin:$PATH
 install: 'yarn install --ignore-engines'
 script:
   # Building upfront because some react-cosmos/server unit tests require
