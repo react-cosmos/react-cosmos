@@ -75,8 +75,10 @@ class ComponentStateInner extends Component<InnerProps> {
 
     const instanceId = getInstanceId(this);
 
-    // TODO: Avoid renders when fixture state values for this instance are
-    // the same. Do this after implementing logic for unserializable values.
+    // Checking reference equality for the specific state instance in the
+    // fixture state is enough for determining a relevant change. An identity
+    // change in a part of the fixture state that didn't change its values
+    // represents a mishandling in how the fixture state object is updated
     return (
       getStateInstance(nextProps.fixtureState, instanceId) !==
       getStateInstance(this.props.fixtureState, instanceId)

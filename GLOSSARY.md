@@ -18,7 +18,7 @@ Provides the required context for a fixture (along with fixture plugins) to rend
 
 #### FixtureConnect
 
-Manages a list of fixtures and the state of the selected fixture. Controlled remotely via `WebSockets` or `window.postMessage`.
+Manages a list of fixtures and the state of the selected fixture. Controlled remotely via `WebSockets` or `window.postMessage`. Platform agnostic.
 
 #### Fixture renderer
 
