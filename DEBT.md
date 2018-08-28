@@ -31,3 +31,4 @@ Exceptions are logging in Cosmos are ad-hoc and minimalistic. `throw new Error` 
 
 - Research what other big projects are doing
 - Avoid unnecessary features
+- Server-side vs client-side (and code that runs in both)
