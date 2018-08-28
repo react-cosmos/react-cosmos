@@ -32,7 +32,7 @@ module.exports = {
   ],
   watchPathIgnorePatterns: ['jestnowatch'],
   transformIgnorePatterns: [
-    '/node_modules/(?!(react-querystring-router|react-cosmos.+|react-native))'
+    '/node_modules/(?!(react-cosmos.*|react-querystring-router|react-native))'
   ],
   moduleNameMapper: {
     '\\.(css|less)$': 'identity-obj-proxy',
