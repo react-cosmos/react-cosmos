@@ -15,7 +15,10 @@ export const writeFileAsync = asyncify(writeFile);
 export const rimrafAsync = asyncify(rimraf);
 
 export const AS_IS_PACKAGES = ['react-cosmos-flow'];
-export const BROWSER_PACKAGES = ['react-cosmos-playground'];
+export const BROWSER_PACKAGES = [
+  'react-cosmos-playground',
+  'react-cosmos-playground2'
+];
 
 export async function getNodePackages(): Promise<PackageNames> {
   const allPackages = await getAllPackages();

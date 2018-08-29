@@ -6,6 +6,7 @@
 import { readFileSync } from 'fs';
 import request from 'request-promise-native';
 import { argv } from 'yargs';
+import { replaceKeys } from '../../../shared/template';
 import { startServer } from '../../start';
 import webpackConfig from './__fsmocks__/webpack.config-fn';
 
@@ -46,7 +47,7 @@ it('calls webpack config function with argv', () => {
   expect(webpackConfig.mock.calls[0][1]).toEqual(argv);
 });
 
-it('serves index.html on / route with playgrounds opts included', async () => {
+it('serves index.html on / route with template vars replaced', async () => {
   const res = await request('http://127.0.0.1:9006/');
   const source = readFileSync(
     require.resolve('../../../shared/static/index.html'),
@@ -54,9 +55,9 @@ it('serves index.html on / route with playgrounds opts included', async () => {
   );
 
   expect(res).toEqual(
-    source.replace(
-      '__PLAYGROUND_OPTS__',
-      JSON.stringify({
+    replaceKeys(source, {
+      __SCRIPT_SRC__: '_playground.js',
+      __PLAYGROUND_OPTS__: JSON.stringify({
         platform: 'web',
         projectKey: mockRootPath,
         loaderUri: '/_loader.html',
@@ -65,6 +66,6 @@ it('serves index.html on / route with playgrounds opts included', async () => {
           'html-webpack-plugin': true
         }
       })
-    )
+    })
   );
 });

@@ -54,7 +54,8 @@ module.exports = {
     '**/src/**/*.{js,jsx}',
     '!**/__fixtures__/**',
     '!**/react-cosmos-voyager/src/use-cases/**',
-    '!**/react-cosmos-playground/src/next/**'
+    // Ignore coverage from experimental features
+    '!**/react-cosmos-playground2/src/**'
   ],
   coverageDirectory: '<rootDir>/coverage',
   coverageReporters: ['lcov', 'text']

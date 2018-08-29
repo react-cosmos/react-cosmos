@@ -13,6 +13,7 @@ import {
   slash
 } from 'react-cosmos-shared/server';
 import io from 'socket.io-client';
+import { replaceKeys } from '../../shared/template';
 import { startServer } from '../start';
 
 const mockRootPath = slash(__dirname, '__fsmocks__');
@@ -48,7 +49,7 @@ afterAll(async () => {
   await remove(mockNewFixturePath);
 });
 
-it('serves index.html on / route with playgrounds opts included', async () => {
+it('serves index.html on / route with template vars replaced', async () => {
   const res = await request('http://127.0.0.1:10001/');
   const source = await readFile(
     require.resolve('../../shared/static/index.html'),
@@ -60,7 +61,10 @@ it('serves index.html on / route with playgrounds opts included', async () => {
     projectKey: mockRootPath
   };
   expect(res).toEqual(
-    source.replace('__PLAYGROUND_OPTS__', JSON.stringify(playgroundOpts))
+    replaceKeys(source, {
+      __SCRIPT_SRC__: '_playground.js',
+      __PLAYGROUND_OPTS__: JSON.stringify(playgroundOpts)
+    })
   );
 });
 

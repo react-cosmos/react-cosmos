@@ -6,7 +6,7 @@ import promisify from 'util.promisify';
 import express from 'express';
 import httpProxyMiddleware from 'http-proxy-middleware';
 import launchEditor from 'react-dev-utils/launchEditor';
-import { getPlaygroundHtml } from './playground-html';
+import { getPlaygroundHtml, getPlaygroundHtmlNext } from './playground-html';
 
 import type { Config } from 'react-cosmos-flow/config';
 import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
@@ -18,7 +18,7 @@ export function createServerApp({
   cosmosConfig: Config,
   playgroundOpts: PlaygroundOpts
 }) {
-  const { httpProxy } = cosmosConfig;
+  const { next, httpProxy } = cosmosConfig;
   const app = express();
 
   if (httpProxy) {
@@ -26,18 +26,34 @@ export function createServerApp({
     app.use(context, httpProxyMiddleware(target));
   }
 
-  const playgroundHtml = getPlaygroundHtml(cosmosConfig, playgroundOpts);
+  const scriptSrc = '_playground.js';
+  const playgroundHtml = getPlaygroundHtml(scriptSrc, playgroundOpts);
   app.get('/', (req: express$Request, res: express$Response) => {
     res.send(playgroundHtml);
   });
 
-  app.get('/_playground.js', (req: express$Request, res: express$Response) => {
+  app.get(`/${scriptSrc}`, (req: express$Request, res: express$Response) => {
     res.sendFile(require.resolve('react-cosmos-playground'));
   });
 
   app.get('/_cosmos.ico', (req: express$Request, res: express$Response) => {
     res.sendFile(join(__dirname, 'static/favicon.ico'));
   });
+
+  if (next) {
+    const scriptSrcNext = '_playground.next.js';
+    const playgroundHtmlNext = getPlaygroundHtmlNext(scriptSrcNext);
+    app.get('/next', (req: express$Request, res: express$Response) => {
+      res.send(playgroundHtmlNext);
+    });
+
+    app.get(
+      `/${scriptSrcNext}`,
+      (req: express$Request, res: express$Response) => {
+        res.sendFile(require.resolve('react-cosmos-playground2'));
+      }
+    );
+  }
 
   return app;
 }

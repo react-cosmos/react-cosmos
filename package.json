@@ -19,6 +19,7 @@
     "test:e2e": "cypress run",
     "start": "babel-node ./packages/react-cosmos/bin/cosmos --config examples/local-state/cosmos.config.js",
     "start:playground": "babel-node ./packages/react-cosmos/bin/cosmos.js --config packages/react-cosmos-playground/cosmos.config.js",
+    "start:playground:next": "babel-node ./packages/react-cosmos/bin/cosmos.js --config packages/react-cosmos-playground2/cosmos.config.js",
     "build:clear": "babel-node ./scripts/clear-build.js",
     "build": "babel-node ./scripts/build.js",
     "link-entries": "babel-node ./scripts/link-entries.js",

@@ -5,6 +5,7 @@
 
 import { readFileSync } from 'fs';
 import request from 'request-promise-native';
+import { replaceKeys } from '../../../shared/template';
 import { startServer } from '../../start';
 
 const mockRootPath = __dirname;
@@ -36,7 +37,7 @@ afterAll(async () => {
   await stopServer();
 });
 
-it('serves index.html on / route with playgrounds opts included', async () => {
+it('serves index.html on / route with template vars replaced', async () => {
   const res = await request('http://127.0.0.1:9005/');
   const source = readFileSync(
     require.resolve('../../../shared/static/index.html'),
@@ -44,9 +45,9 @@ it('serves index.html on / route with playgrounds opts included', async () => {
   );
 
   expect(res).toEqual(
-    source.replace(
-      '__PLAYGROUND_OPTS__',
-      JSON.stringify({
+    replaceKeys(source, {
+      __SCRIPT_SRC__: '_playground.js',
+      __PLAYGROUND_OPTS__: JSON.stringify({
         platform: 'web',
         projectKey: mockRootPath,
         loaderUri: '/_loader.html',
@@ -55,6 +56,6 @@ it('serves index.html on / route with playgrounds opts included', async () => {
           'html-webpack-plugin': true
         }
       })
-    )
+    })
   );
 });

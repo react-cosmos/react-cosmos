@@ -6,8 +6,9 @@
 import { readFileSync } from 'fs';
 import EventSource from 'eventsource';
 import request from 'request-promise-native';
-import { startServer } from '../../start';
 import { generateCosmosConfig } from 'react-cosmos-config';
+import { replaceKeys } from '../../../shared/template';
+import { startServer } from '../../start';
 
 const mockRootPath = __dirname;
 
@@ -48,7 +49,7 @@ it('serves webpack bundle', async () => {
   expect(res.statusCode).toBe(200);
 });
 
-it('serves index.html on / route with playgrounds opts included', async () => {
+it('serves index.html on / route with template vars replaced', async () => {
   const res = await request('http://127.0.0.1:9001/');
   const source = readFileSync(
     require.resolve('../../../shared/static/index.html'),
@@ -56,9 +57,9 @@ it('serves index.html on / route with playgrounds opts included', async () => {
   );
 
   expect(res).toEqual(
-    source.replace(
-      '__PLAYGROUND_OPTS__',
-      JSON.stringify({
+    replaceKeys(source, {
+      __SCRIPT_SRC__: '_playground.js',
+      __PLAYGROUND_OPTS__: JSON.stringify({
         platform: 'web',
         projectKey: mockRootPath,
         loaderUri: '/_loader.html',
@@ -67,7 +68,7 @@ it('serves index.html on / route with playgrounds opts included', async () => {
           'html-webpack-plugin': true
         }
       })
-    )
+    })
   );
 });
 
