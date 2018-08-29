@@ -25,6 +25,7 @@ module.exports = {
   entry: ['whatwg-fetch', src],
   output: {
     libraryTarget: 'umd',
+    libraryExport: 'default',
     library: 'mountPlayground',
     path: dist,
     filename: 'index.js'
@@ -39,7 +40,7 @@ module.exports = {
         include: [
           src,
           // Allow building playground from uncompiled monorepo deps
-          /(react-cosmos.+|react-querystring-router)(\/|\\)src/,
+          /(react-cosmos[a-z-]*|react-querystring-router)(\/|\\)src/,
           /react-cosmos-flow/
         ],
         use: 'babel-loader'

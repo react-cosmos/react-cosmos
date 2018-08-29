@@ -31,7 +31,12 @@ module.exports = {
     '/_shared'
   ],
   watchPathIgnorePatterns: ['jestnowatch'],
-  transformIgnorePatterns: ['/node_modules/(?!(react-cosmos.+|react-native))'],
+  transformIgnorePatterns: [
+    // Ignore node_modules compilation except for
+    // - src/ paths from other packages in the monorepo
+    // - node_modules/react-native/
+    '/node_modules/(?!((react-cosmos.*|react-querystring-router)/src|react-native/))'
+  ],
   moduleNameMapper: {
     '\\.(css|less)$': 'identity-obj-proxy',
     '\\.(jpg|png)$': '<rootDir>/packages/react-cosmos-playground/img-stub.js'

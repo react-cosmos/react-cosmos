@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { create } from 'react-test-renderer';
 import {
   updateFixtureState,
@@ -305,10 +305,10 @@ it('overwrites props in multiple instances', () => {
   };
 
   const fixture = (
-    <Fragment>
+    <>
       <HelloMessage name="Satoshi" />
       <HelloMessage name="Vitalik" />
-    </Fragment>
+    </>
   );
 
   const instance = create(
