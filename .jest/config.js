@@ -32,7 +32,10 @@ module.exports = {
   ],
   watchPathIgnorePatterns: ['jestnowatch'],
   transformIgnorePatterns: [
-    '/node_modules/(?!(react-cosmos.*|react-querystring-router|react-native))'
+    // Ignore node_modules compilation except for
+    // - src/ paths from other packages in the monorepo
+    // - react-native/Libraries/
+    '/node_modules/(?!((react-cosmos.*|react-querystring-router)/src|react-native/Libraries))'
   ],
   moduleNameMapper: {
     '\\.(css|less)$': 'identity-obj-proxy',
