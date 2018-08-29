@@ -34,7 +34,7 @@ module.exports = {
   transformIgnorePatterns: [
     // Ignore node_modules compilation except for
     // - src/ paths from other packages in the monorepo
-    // - react-native/Libraries/
+    // - node_modules/react-native/
     '/node_modules/(?!((react-cosmos.*|react-querystring-router)/src|react-native/))'
   ],
   moduleNameMapper: {
