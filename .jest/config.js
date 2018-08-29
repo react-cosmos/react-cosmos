@@ -35,7 +35,7 @@ module.exports = {
     // Ignore node_modules compilation except for
     // - src/ paths from other packages in the monorepo
     // - react-native/Libraries/
-    '/node_modules/(?!((react-cosmos.*|react-querystring-router)/src|react-native/Libraries))'
+    '/node_modules/(?!((react-cosmos.*|react-querystring-router)/src|react-native/))'
   ],
   moduleNameMapper: {
     '\\.(css|less)$': 'identity-obj-proxy',
