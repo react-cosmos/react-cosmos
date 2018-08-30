@@ -7,7 +7,7 @@ import rimraf from 'rimraf';
 import { argv } from 'yargs';
 import chalk from 'chalk';
 
-type PackageNames = Array<string>;
+type PackageNames = string[];
 
 export const globAsync = asyncify(glob);
 export const readFileAsync = asyncify(readFile);
@@ -37,6 +37,10 @@ export async function getAllPackages(): Promise<PackageNames> {
   const files = await globAsync('./packages/react-*');
 
   return files.map(f => path.basename(f));
+}
+
+export function getFormattedPackageList(pkgNames: PackageNames) {
+  return ['', ...pkgNames].join('\n - ');
 }
 
 export function getUnnamedArg(index: number = 0): void | number | string {

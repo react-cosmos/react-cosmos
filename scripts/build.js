@@ -8,6 +8,7 @@ import {
   AS_IS_PACKAGES,
   getNodePackages,
   getBrowserPackages,
+  getFormattedPackageList,
   getUnnamedArg,
   getBoolArg,
   done,
@@ -16,7 +17,7 @@ import {
 
 const { stdout, stderr } = process;
 
-const pkgName = getUnnamedArg();
+// NOTE: The watch flag is used as a global in this script
 const watch = getBoolArg('watch');
 
 run();
@@ -25,6 +26,7 @@ async function run() {
   const nodePackages = await getNodePackages();
   const browserPackages = await getBrowserPackages();
   const buildablePackages = [...nodePackages, ...browserPackages];
+  const pkgName = getUnnamedArg();
 
   if (pkgName) {
     if (typeof pkgName !== 'string') {
@@ -82,10 +84,6 @@ async function run() {
   }
 }
 
-function getFormattedPackageList(pkgNames) {
-  return ['', ...pkgNames].join('\n - ');
-}
-
 async function buildNodePackage(pkgName) {
   await runBuildTask({
     pkgName,
@@ -112,7 +110,7 @@ async function buildBrowserPackage(pkgName) {
 type BuildTaskArgs = {
   pkgName: string,
   cmd: string,
-  args: Array<string>,
+  args: string[],
   env?: Object
 };
 
