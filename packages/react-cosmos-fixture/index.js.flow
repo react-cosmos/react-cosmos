@@ -4,6 +4,8 @@ import type { ComponentType, Context } from 'react';
 
 import type {
   FixtureConnectProps,
+  PostMessageProps,
+  WebSocketsProps,
   FixtureProviderProps,
   FixtureContextValue,
   CapturePropsProps,
@@ -11,6 +13,8 @@ import type {
 } from './types';
 
 declare export var FixtureConnect: ComponentType<FixtureConnectProps>;
+declare export var PostMessage: ComponentType<PostMessageProps>;
+declare export var WebSockets: ComponentType<WebSocketsProps>;
 declare export var FixtureProvider: ComponentType<FixtureProviderProps>;
 
 declare export var FixtureContext: Context<FixtureContextValue>;

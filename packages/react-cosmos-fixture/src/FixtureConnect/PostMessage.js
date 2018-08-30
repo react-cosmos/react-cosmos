@@ -3,19 +3,14 @@
 
 import { Component } from 'react';
 
-import type { Element } from 'react';
 import type {
   RendererMessage,
   RemoteMessage,
   OnRemoteMessage
 } from 'react-cosmos-shared2';
-import type { RemoteRendererApi } from '../../types';
+import type { PostMessageProps } from '../../types';
 
-type Props = {
-  children: RemoteRendererApi => Element<any>
-};
-
-export class PostMessage extends Component<Props> {
+export class PostMessage extends Component<PostMessageProps> {
   onMessage: ?OnRemoteMessage = null;
 
   render() {

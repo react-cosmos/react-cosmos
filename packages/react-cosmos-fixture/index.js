@@ -1,12 +1,14 @@
 // @flow
 
-// For use in custom integrations
-exports.FixtureConnect = require('./dist/FixtureConnect');
-exports.FixtureProvider = require('./dist/FixtureProvider');
+// Use in custom integrations
+exports.FixtureConnect = require('./dist/FixtureConnect').FixtureConnect;
+exports.PostMessage = require('./dist/FixtureConnect/PostMessage').PostMessage;
+exports.WebSockets = require('./dist/FixtureConnect/WebSockets').WebSockets;
+exports.FixtureProvider = require('./dist/FixtureProvider').FixtureProvider;
 
-// For use in decorators
-exports.FixtureContext = require('./dist/FixtureContext');
+// Use in decorators
+exports.FixtureContext = require('./dist/FixtureContext').FixtureContext;
 
-// For use in fixtures
-exports.CaptureProps = require('./dist/CaptureProps');
-exports.ComponentState = require('./dist/ComponentState');
+// Use in fixtures
+exports.CaptureProps = require('./dist/CaptureProps').CaptureProps;
+exports.ComponentState = require('./dist/ComponentState').ComponentState;

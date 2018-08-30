@@ -23,6 +23,15 @@ export type FixtureConnectProps = {
   fixtures: Fixtures
 } & RemoteRendererApi;
 
+export type PostMessageProps = {
+  children: RemoteRendererApi => Element<any>
+};
+
+export type WebSocketsProps = {
+  children: RemoteRendererApi => Element<any>,
+  url: string
+};
+
 export type FixtureProviderProps = {
   children: Node,
   fixtureState: ?FixtureState,

@@ -4,23 +4,17 @@
 import { Component } from 'react';
 import io from 'socket.io-client';
 
-import type { Element } from 'react';
 import type { Socket } from 'socket.io-client';
 import type {
   RendererMessage,
   RemoteMessage,
   OnRemoteMessage
 } from 'react-cosmos-shared2';
-import type { RemoteRendererApi } from '../../types';
-
-type Props = {
-  children: RemoteRendererApi => Element<any>,
-  url: string
-};
+import type { WebSocketsProps } from '../../types';
 
 export const EVENT_NAME = 'cosmos-cmd';
 
-export class WebSockets extends Component<Props> {
+export class WebSockets extends Component<WebSocketsProps> {
   socket: ?Socket;
   onMessage: ?OnRemoteMessage = null;
 
