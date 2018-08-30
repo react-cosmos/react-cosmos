@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Plugin, Plug, Slot } from 'react-plugin';
-import { Section } from '../Section';
+import { PlaygroundContext } from '../context';
 
 export default (
   <Plugin name="Preview">
@@ -13,7 +13,9 @@ export default (
 function Preview() {
   return (
     <Slot name="preview">
-      <Section label="Preview" />
+      <PlaygroundContext.Consumer>
+        {({ options }) => <iframe src={options.rendererUrl} frameBorder={0} />}
+      </PlaygroundContext.Consumer>
     </Slot>
   );
 }

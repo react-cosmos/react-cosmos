@@ -2,50 +2,38 @@
 
 import styled from 'styled-components';
 import React, { Component } from 'react';
-import { Slot, PluginsConsumer } from 'react-plugin';
-import { Section } from '../Section';
+import { Slot } from 'react-plugin';
+import { PlaygroundContext } from '../context';
 
-// Experimental plugin-based UI structure
-export class Root extends Component<any> {
+import type { PlaygroundOptions, PlaygroundContextValue } from '../../types';
+
+type Props = {
+  options: PlaygroundOptions
+};
+
+export class Root extends Component<Props, PlaygroundContextValue> {
+  setFixtureState = () => {};
+
+  state = {
+    options: this.props.options,
+    fixtureState: null,
+    setFixtureState: this.setFixtureState
+  };
+
   render() {
+    const { fixtureState } = this.state;
+
     return (
-      <Container>
-        <Section label="Root">
-          <PluginsConsumer>
-            {({ plugins }) => (
-              <>
-                <Plugins plugins={plugins} />
-                <Slot name="root">
-                  <Slot name="preview" />
-                </Slot>
-              </>
-            )}
-          </PluginsConsumer>
-        </Section>
-      </Container>
+      <PlaygroundContext.Provider value={this.state}>
+        <Container>
+          {!fixtureState && 'Waiting for renderer...'}
+          <Slot name="root">
+            <Slot name="preview" />
+          </Slot>
+        </Container>
+      </PlaygroundContext.Provider>
     );
   }
-}
-
-function Plugins({ plugins }) {
-  return (
-    <PluginsContainer>
-      <ul>
-        {plugins.map(({ id, name, enabled, enable, disable }) => (
-          <li key={id}>
-            <label>
-              <input
-                type="checkbox"
-                checked={enabled}
-                onChange={() => (enabled ? disable() : enable())}
-              />{' '}
-              {name}
-            </label>
-          </li>
-        ))}
-      </ul>
-    </PluginsContainer>
-  );
 }
 
 const Container = styled.div`
@@ -57,20 +45,4 @@ const Container = styled.div`
   font-family: sans-serif;
   font-size: 16px;
   display: flex;
-`;
-
-const PluginsContainer = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 6px;
-  padding: 16px 24px;
-  line-height: 28px;
-
-  ul {
-    list-style: none;
-    user-select: none;
-  }
 `;

@@ -6,9 +6,11 @@ import { render } from 'react-dom';
 import { Root } from './Root';
 import './register-plugins';
 
-export default () => {
-  render(<Root />, getDomContainer());
-};
+import type { PlaygroundOptions } from '../types';
+
+export default function mount(options: PlaygroundOptions) {
+  render(<Root options={options} />, getDomContainer());
+}
 
 let container;
 
@@ -17,7 +19,7 @@ function getDomContainer() {
     container = document.createElement('div');
 
     if (!document.body) {
-      throw new Error(`document.body missing while mounting Playground`);
+      throw new Error(`document.body missing, can't mount Playground`);
     }
 
     document.body.appendChild(container);

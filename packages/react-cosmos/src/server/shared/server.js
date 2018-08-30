@@ -26,9 +26,11 @@ export function createServerApp({
     app.use(context, httpProxyMiddleware(target));
   }
 
-  const playgroundHtml = next
-    ? getPlaygroundHtmlNext()
-    : getPlaygroundHtml(playgroundOpts);
+  const playgroundHtml =
+    // TODO: Support JSX fixtures for any platform
+    next && playgroundOpts.platform === 'web'
+      ? getPlaygroundHtmlNext({ rendererUrl: playgroundOpts.loaderUri })
+      : getPlaygroundHtml(playgroundOpts);
   app.get('/', (req: express$Request, res: express$Response) => {
     res.send(playgroundHtml);
   });
@@ -36,7 +38,7 @@ export function createServerApp({
   app.get('/_playground.js', (req: express$Request, res: express$Response) => {
     res.sendFile(
       require.resolve(
-        next ? 'react-cosmos-playground2' : 'react-cosmos-playground'
+        next ? 'react-cosmos-playground2/dist/index' : 'react-cosmos-playground'
       )
     );
   });
