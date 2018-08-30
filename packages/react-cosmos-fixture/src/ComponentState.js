@@ -8,13 +8,9 @@ import { extractValuesFromObject } from './shared/values';
 import { getInstanceId, getComponentName } from './shared/decorator';
 import { getState, getStateInstance } from './shared/fixtureState';
 
-import type { Element, ElementRef } from 'react';
-import type { FixtureState, SetFixtureState } from './types/fixtureState';
-
-type Props = {
-  children: Element<any>,
-  state?: Object
-};
+import type { ElementRef } from 'react';
+import type { FixtureState, SetFixtureState } from '../types/fixtureState';
+import type { ComponentStateProps } from '../types/components';
 
 // How often to check the state of the loaded component and update the fixture
 // state if it changed
@@ -24,7 +20,7 @@ const REFRESH_INTERVAL = 200;
 // - Fixture state: Data related to the loaded fixture (props, state, etc)
 // - Component state: A part of the fixture state related to component state
 // Flow types are used more than necessary in this file to decrease confusion.
-export function ComponentState({ children, state }: Props) {
+export function ComponentState({ children, state }: ComponentStateProps) {
   return (
     <FixtureContext.Consumer>
       {({ fixtureState, setFixtureState }) => (
@@ -42,7 +38,7 @@ export function ComponentState({ children, state }: Props) {
 
 ComponentState.cosmosCaptureProps = false;
 
-type InnerProps = Props & {
+type InnerProps = ComponentStateProps & {
   fixtureState: ?FixtureState,
   setFixtureState: SetFixtureState
 };

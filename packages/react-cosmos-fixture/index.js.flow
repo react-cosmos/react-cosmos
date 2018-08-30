@@ -1,0 +1,21 @@
+// @flow
+
+export type { FixtureState, SetFixtureState } from './types/fixtureState';
+
+import type { ComponentType, Context } from 'react';
+import type { FixtureContextValue } from './types/fixtureState';
+
+import type {
+  FixtureConnectProps,
+  FixtureProviderProps,
+  CapturePropsProps,
+  ComponentStateProps
+} from './types/components';
+
+declare export var FixtureConnect: ComponentType<FixtureConnectProps>;
+declare export var FixtureProvider: ComponentType<FixtureProviderProps>;
+
+declare export var FixtureContext: Context<FixtureContextValue>;
+
+declare export var CaptureProps: ComponentType<CapturePropsProps>;
+declare export var ComponentState: ComponentType<ComponentStateProps>;

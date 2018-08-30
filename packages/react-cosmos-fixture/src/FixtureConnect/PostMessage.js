@@ -9,7 +9,7 @@ import type {
   RemoteMessage,
   OnRemoteMessage,
   RemoteRendererApi
-} from '../types/messages';
+} from '../../types/messages';
 
 type Props = {
   children: RemoteRendererApi => Element<any>

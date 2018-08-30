@@ -1,22 +1,12 @@
 // @flow
 
-import type { Node } from 'react';
-
 import React, { Component } from 'react';
 import { FixtureProvider } from '../FixtureProvider';
 import { updateFixtureState } from '../shared/fixtureState';
 
-import type { FixtureState, SetFixtureState } from '../types/fixtureState';
-import type { RemoteMessage, RemoteRendererApi } from '../types/messages';
-
-export type Fixtures = {
-  [path: string]: Node
-};
-
-type Props = {
-  rendererId: string,
-  fixtures: Fixtures
-} & RemoteRendererApi;
+import type { FixtureState, SetFixtureState } from '../../types/fixtureState';
+import type { RemoteMessage } from '../../types/messages';
+import type { FixtureConnectProps } from '../../types/components';
 
 type State = {
   fixturePath: ?string,
@@ -25,7 +15,7 @@ type State = {
 
 // TODO: Add props for customizing blank/missing states: `getBlankState` and
 // `getMissingState`
-export class FixtureConnect extends Component<Props, State> {
+export class FixtureConnect extends Component<FixtureConnectProps, State> {
   state = {
     fixturePath: null,
     fixtureState: null
@@ -38,7 +28,7 @@ export class FixtureConnect extends Component<Props, State> {
     this.postReadyMessage();
   }
 
-  componentDidUpdate(prevProps: Props, prevState: State) {
+  componentDidUpdate(prevProps: FixtureConnectProps, prevState: State) {
     // TODO: Adapt to props.fixtures change (eg. current fixture gets removed)
     const { rendererId, postMessage } = this.props;
     const { fixturePath, fixtureState } = this.state;

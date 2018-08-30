@@ -7,16 +7,12 @@ import { extractValuesFromObject } from './shared/values';
 import { getInstanceId, getComponentName } from './shared/decorator';
 import { getProps, getPropsInstance } from './shared/fixtureState';
 
-import type { Element } from 'react';
-import type { FixtureState, SetFixtureState } from './types/fixtureState';
-
-type Props = {
-  children: Element<any>
-};
+import type { FixtureState, SetFixtureState } from '../types/fixtureState';
+import type { CapturePropsProps } from '../types/components';
 
 const DEFAULT_RENDER_KEY = 0;
 
-export class CaptureProps extends Component<Props> {
+export class CaptureProps extends Component<CapturePropsProps> {
   static cosmosCaptureProps = false;
 
   render() {
@@ -42,8 +38,7 @@ export class CaptureProps extends Component<Props> {
   }
 }
 
-type InnerProps = {
-  children: Element<any>,
+type InnerProps = CapturePropsProps & {
   fixtureState: ?FixtureState,
   setFixtureState: SetFixtureState
 };

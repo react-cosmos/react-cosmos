@@ -15,8 +15,8 @@ import type {
   RendererMessage,
   RemoteMessage,
   RemoteRendererApi
-} from '../../types/messages';
-import type { Fixtures } from '..';
+} from '../../../types/messages';
+import type { Fixtures } from '../../../types/fixtures';
 
 type Message = RendererMessage | RemoteMessage;
 
