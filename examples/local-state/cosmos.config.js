@@ -1,3 +1,1 @@
-module.exports = {
-  next: true
-};
+module.exports = {};

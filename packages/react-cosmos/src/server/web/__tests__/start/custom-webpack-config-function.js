@@ -56,7 +56,6 @@ it('serves index.html on / route with template vars replaced', async () => {
 
   expect(res).toEqual(
     replaceKeys(source, {
-      __SCRIPT_SRC__: '_playground.js',
       __PLAYGROUND_OPTS__: JSON.stringify({
         platform: 'web',
         projectKey: mockRootPath,

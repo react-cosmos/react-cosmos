@@ -38,10 +38,11 @@
 > JSX fixtures are a big shift from the traditional fixture format in Cosmos. Before planning the migration, the new APIs need to be tested and validated by Cosmos users. Below are the steps to make the new fixture API available under a _feature flag._
 
 - [x] Create `{ next: true }` config option
-- [x] Create secondary `/next` route
 - [x] Create new Playground package
+- [ ] Create new DOM renderer
+- [ ] Serve new Playground and renderer when _next_ option is true
 - [ ] Detect new fixture file types under `__jsxfixtures__`
-- [ ] Map new Playground to react-cosmos-fixture
+- [ ] Map new Playground to new fixture format
 
 ## Pluggable UI
 

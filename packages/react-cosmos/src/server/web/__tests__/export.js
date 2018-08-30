@@ -73,7 +73,6 @@ describe('playground files', () => {
 
     expect(readFileSync(outputPath, 'utf8')).toBe(
       replaceKeys(readFileSync(inputPath, 'utf8'), {
-        __SCRIPT_SRC__: '_playground.js',
         __PLAYGROUND_OPTS__: optsStr
       })
     );

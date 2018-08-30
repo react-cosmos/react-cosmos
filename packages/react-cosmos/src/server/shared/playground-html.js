@@ -6,19 +6,14 @@ import { replaceKeys } from './template';
 
 import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
 
-export function getPlaygroundHtml(
-  scriptSrc: string,
-  playgroundOpts: PlaygroundOpts
-) {
+export function getPlaygroundHtml(playgroundOpts: PlaygroundOpts) {
   return replaceKeys(getHtmlTemplate(), {
-    __SCRIPT_SRC__: scriptSrc,
     __PLAYGROUND_OPTS__: JSON.stringify(playgroundOpts)
   });
 }
 
-export function getPlaygroundHtmlNext(scriptSrc: string) {
+export function getPlaygroundHtmlNext() {
   return replaceKeys(getHtmlTemplate(), {
-    __SCRIPT_SRC__: scriptSrc,
     __PLAYGROUND_OPTS__: JSON.stringify({})
   });
 }
