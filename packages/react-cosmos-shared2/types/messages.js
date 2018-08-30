@@ -4,9 +4,9 @@ import type { FixtureState } from './fixtureState';
 
 // NOTE: Renderer ids are self assigned in remote environments, so uniqueness
 // cannot be established by consensus
-export type RendererId = string;
+type RendererId = string;
 
-export type FixtureNames = string[];
+type FixtureNames = string[];
 
 // Announce a new renderer or refresh a renderer's fixture data
 export type RendererReadyMsg = {
@@ -82,12 +82,5 @@ export type RemoteMessage =
   | SelectFixtureMsg
   | SetFixtureStateMsg;
 
-export type OnRemoteMessage = RemoteMessage => mixed;
-
 export type OnRendererMessage = RendererMessage => mixed;
-
-export type RemoteRendererApi = {
-  subscribe: OnRemoteMessage => mixed,
-  unsubscribe: () => mixed,
-  postMessage: OnRendererMessage
-};
+export type OnRemoteMessage = RemoteMessage => mixed;

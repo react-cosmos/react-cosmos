@@ -7,8 +7,8 @@ import { extractValuesFromObject } from './shared/values';
 import { getInstanceId, getComponentName } from './shared/decorator';
 import { getProps, getPropsInstance } from './shared/fixtureState';
 
-import type { FixtureState, SetFixtureState } from '../types/fixtureState';
-import type { CapturePropsProps } from '../types/components';
+import type { FixtureState, SetFixtureState } from 'react-cosmos-shared2';
+import type { CapturePropsProps } from '../types';
 
 const DEFAULT_RENDER_KEY = 0;
 

@@ -4,9 +4,12 @@ import React, { Component } from 'react';
 import { FixtureProvider } from '../FixtureProvider';
 import { updateFixtureState } from '../shared/fixtureState';
 
-import type { FixtureState, SetFixtureState } from '../../types/fixtureState';
-import type { RemoteMessage } from '../../types/messages';
-import type { FixtureConnectProps } from '../../types/components';
+import type {
+  FixtureState,
+  SetFixtureState,
+  RemoteMessage
+} from 'react-cosmos-shared2';
+import type { FixtureConnectProps } from '../../types';
 
 type State = {
   fixturePath: ?string,

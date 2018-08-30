@@ -11,12 +11,8 @@ import { FixtureConnect } from '..';
 
 import type { Element } from 'react';
 import type { ReactTestRenderer } from 'react-test-renderer';
-import type {
-  RendererMessage,
-  RemoteMessage,
-  RemoteRendererApi
-} from '../../../types/messages';
-import type { Fixtures } from '../../../types/fixtures';
+import type { RendererMessage, RemoteMessage } from 'react-cosmos-shared2';
+import type { Fixtures, RemoteRendererApi } from '../../../types';
 
 type Message = RendererMessage | RemoteMessage;
 

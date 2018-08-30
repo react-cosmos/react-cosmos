@@ -7,9 +7,9 @@ import type { Element } from 'react';
 import type {
   RendererMessage,
   RemoteMessage,
-  OnRemoteMessage,
-  RemoteRendererApi
-} from '../../types/messages';
+  OnRemoteMessage
+} from 'react-cosmos-shared2';
+import type { RemoteRendererApi } from '../../types';
 
 type Props = {
   children: RemoteRendererApi => Element<any>

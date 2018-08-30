@@ -8,14 +8,14 @@ type FixtureStateValue = {
 
 export type FixtureStateValues = FixtureStateValue[];
 
-export type FixtureStatePropsInstance = {
+type FixtureStatePropsInstance = {
   instanceId: number,
   componentName: string,
   renderKey: number,
   values: FixtureStateValues
 };
 
-export type FixtureStateStateInstance = {
+type FixtureStateStateInstance = {
   instanceId: number,
   componentName: string,
   values: FixtureStateValues
@@ -35,8 +35,3 @@ export type SetFixtureState = (
   updater: FixtureStateUpdater,
   callback?: () => mixed
 ) => mixed;
-
-export type FixtureContextValue = {
-  fixtureState: ?FixtureState,
-  setFixtureState: SetFixtureState
-};

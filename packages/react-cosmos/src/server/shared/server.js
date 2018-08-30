@@ -67,7 +67,7 @@ export function createServer(cosmosConfig: Config, app: express$Application) {
     await listen(port, hostname);
 
     const hostnameDisplay = hostname || 'localhost';
-    console.log(`[Cosmos] See you at http://${hostnameDisplay}:${port}/`);
+    console.log(`[Cosmos] See you at http://${hostnameDisplay}:${port}`);
   }
 
   async function stopServer() {

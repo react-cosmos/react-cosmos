@@ -1,9 +1,22 @@
 // @flow
 
 import type { Node, Element } from 'react';
-import type { Fixtures } from './fixtures';
-import type { FixtureState, SetFixtureState } from './fixtureState';
-import type { RemoteRendererApi } from './messages';
+import type {
+  FixtureState,
+  SetFixtureState,
+  OnRendererMessage,
+  OnRemoteMessage
+} from 'react-cosmos-shared2';
+
+export type Fixtures = {
+  [path: string]: Node
+};
+
+export type RemoteRendererApi = {
+  subscribe: OnRemoteMessage => mixed,
+  unsubscribe: () => mixed,
+  postMessage: OnRendererMessage
+};
 
 export type FixtureConnectProps = {
   rendererId: string,
@@ -12,6 +25,11 @@ export type FixtureConnectProps = {
 
 export type FixtureProviderProps = {
   children: Node,
+  fixtureState: ?FixtureState,
+  setFixtureState: SetFixtureState
+};
+
+export type FixtureContextValue = {
   fixtureState: ?FixtureState,
   setFixtureState: SetFixtureState
 };

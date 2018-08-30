@@ -4,10 +4,7 @@ import { find } from 'lodash';
 import { updateItem } from './utility';
 import { extractValuesFromObject } from './values';
 
-import type {
-  FixtureState,
-  FixtureStateUpdater
-} from '../../types/fixtureState';
+import type { FixtureState, FixtureStateUpdater } from 'react-cosmos-shared2';
 
 export function updateFixtureState(
   fixtureState: ?FixtureState,
