@@ -3,16 +3,35 @@
 // @flow
 
 import './react-devtools-hook';
-import React from 'react';
+import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { RENDERER_ID } from 'react-cosmos-shared2';
-import { PostMessage, FixtureConnect } from 'react-cosmos-fixture';
+import {
+  PostMessage,
+  FixtureConnect,
+  ComponentState
+} from 'react-cosmos-fixture';
 
 function HelloWorld({ name }) {
   return <div>Hello {name}!</div>;
 }
 
-// TODO: ComponentState
+class Counter extends Component<{}, { count: number }> {
+  state = { count: 0 };
+
+  render() {
+    const { count } = this.state;
+
+    return (
+      <button
+        onClick={() => this.setState(({ count }) => ({ count: count + 1 }))}
+      >
+        {count} times
+      </button>
+    );
+  }
+}
+
 const fixtures = {
   foo: <HelloWorld name="yo" />,
   bar: <HelloWorld name="ya" />,
@@ -20,6 +39,12 @@ const fixtures = {
     <>
       <HelloWorld name="yo" />
       <HelloWorld name="ya" />
+      <ComponentState>
+        <Counter />
+      </ComponentState>
+      <ComponentState state={{ count: 5 }}>
+        <Counter />
+      </ComponentState>
     </>
   )
 };

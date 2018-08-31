@@ -7,7 +7,8 @@ import {
   RENDERER_ID,
   remoteItem,
   updateState,
-  setFixtureStateProps
+  setFixtureStateProps,
+  setFixtureStateState
 } from 'react-cosmos-shared2';
 import { PlaygroundContext } from '../context';
 
@@ -104,6 +105,24 @@ export class Root extends Component<Props, PlaygroundContextValue> {
                 </div>
               ))
             )}
+          {fixtureState &&
+            fixtureState.state &&
+            fixtureState.state.map(({ instanceId, values }) =>
+              values.map(({ key, value, serializable }) => (
+                <div key={key}>
+                  {key}:{' '}
+                  <input
+                    type="text"
+                    value={value}
+                    disabled={!serializable}
+                    onChange={this.createStateValueChangeHandler(
+                      instanceId,
+                      key
+                    )}
+                  />
+                </div>
+              ))
+            )}
           <ul>
             {uiState.fixtures.map((fixturePath, idx) => (
               <li key={idx}>
@@ -139,13 +158,43 @@ export class Root extends Component<Props, PlaygroundContextValue> {
       payload: {
         rendererId: RENDERER_ID,
         fixturePath,
-        // TODO: Only send fixtureState.props?
+        // TODO: Only send fixtureState.state?
         fixtureState: setFixtureStateProps(fixtureState, instanceId, {
           [key]: value
         })
       }
     });
   };
+
+  createStateValueChangeHandler = (instanceId: number, key: string) => (
+    e: SyntheticEvent<HTMLInputElement>
+  ) => {
+    const { value } = e.currentTarget;
+    const { uiState, fixtureState } = this.state;
+    const { fixturePath } = uiState;
+
+    if (!fixturePath) {
+      throw new Error(
+        'Trying to set fixture state when no fixture is selected'
+      );
+    }
+
+    this.postMessage({
+      type: 'setFixtureState',
+      payload: {
+        rendererId: RENDERER_ID,
+        fixturePath,
+        // TODO: Only send fixtureState.state?
+        fixtureState: setFixtureStateState(fixtureState, instanceId, {
+          // TODO: Rely on pre-established type
+          [key]: isNaN(value) ? value : Number(value)
+        })
+      }
+    });
+  };
+
+  // TODO: Extract common arts of createPropValueChangeHandler and
+  // createStateValueChangeHandler in `postFixtureStateChange`
 
   createFixtureSelectHandler = (fixturePath: string) => () => {
     this.setUiState({ fixturePath });
