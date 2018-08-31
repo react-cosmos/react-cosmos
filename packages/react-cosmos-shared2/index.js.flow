@@ -1,10 +1,11 @@
 // @flow
 
+export type { StateUpdater, SetState } from './types/state';
+
 export type {
   FixtureStateValue,
   FixtureStateValues,
-  FixtureState,
-  SetFixtureState
+  FixtureState
 } from './types/fixtureState';
 
 export type {

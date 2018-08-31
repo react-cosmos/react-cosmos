@@ -1,7 +1,5 @@
 // @flow
 
-import type { SetState } from './state';
-
 export type FixtureStateValue = {
   serializable: boolean,
   key: string,
@@ -28,5 +26,3 @@ export type FixtureState = {
   state?: FixtureStateState[],
   [key: string]: mixed
 };
-
-export type SetFixtureState = SetState<FixtureState>;

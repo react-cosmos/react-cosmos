@@ -10,7 +10,7 @@ import {
 import { getInstanceId, getComponentName } from './shared/decorator';
 import { FixtureContext } from './FixtureContext';
 
-import type { FixtureState, SetFixtureState } from 'react-cosmos-shared2';
+import type { SetState, FixtureState } from 'react-cosmos-shared2';
 import type { CapturePropsProps } from '../types';
 
 const DEFAULT_RENDER_KEY = 0;
@@ -43,7 +43,7 @@ export class CaptureProps extends Component<CapturePropsProps> {
 
 type InnerProps = CapturePropsProps & {
   fixtureState: ?FixtureState,
-  setFixtureState: SetFixtureState
+  setFixtureState: SetState<FixtureState>
 };
 
 class CapturePropsInner extends Component<InnerProps> {

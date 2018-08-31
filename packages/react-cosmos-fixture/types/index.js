@@ -2,8 +2,8 @@
 
 import type { Node, Element } from 'react';
 import type {
+  SetState,
   FixtureState,
-  SetFixtureState,
   OnRendererMessage,
   OnRemoteMessage
 } from 'react-cosmos-shared2';
@@ -32,16 +32,14 @@ export type WebSocketsProps = {
   url: string
 };
 
-export type FixtureProviderProps = {
-  children: Node,
-  fixtureState: ?FixtureState,
-  setFixtureState: SetFixtureState
-};
-
 export type FixtureContextValue = {
   fixtureState: ?FixtureState,
-  setFixtureState: SetFixtureState
+  setFixtureState: SetState<FixtureState>
 };
+
+export type FixtureProviderProps = {
+  children: Node
+} & FixtureContextValue;
 
 export type CapturePropsProps = {
   children: Element<any>

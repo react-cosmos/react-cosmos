@@ -12,7 +12,7 @@ import { CaptureProps } from './CaptureProps';
 import { getInstanceId, getComponentName } from './shared/decorator';
 
 import type { ElementRef } from 'react';
-import type { FixtureState, SetFixtureState } from 'react-cosmos-shared2';
+import type { SetState, FixtureState } from 'react-cosmos-shared2';
 import type { ComponentStateProps } from '../types';
 
 // How often to check the state of the loaded component and update the fixture
@@ -43,7 +43,7 @@ ComponentState.cosmosCaptureProps = false;
 
 type InnerProps = ComponentStateProps & {
   fixtureState: ?FixtureState,
-  setFixtureState: SetFixtureState
+  setFixtureState: SetState<FixtureState>
 };
 
 class ComponentStateInner extends Component<InnerProps> {

@@ -5,8 +5,8 @@ import { FixtureProvider } from '../FixtureProvider';
 import { updateState } from 'react-cosmos-shared2';
 
 import type {
+  SetState,
   FixtureState,
-  SetFixtureState,
   RemoteMessage
 } from 'react-cosmos-shared2';
 import type { FixtureConnectProps } from '../../types';
@@ -123,7 +123,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     });
   }
 
-  setFixtureState: SetFixtureState = (updater, cb) => {
+  setFixtureState: SetState<FixtureState> = (updater, cb) => {
     // Multiple state changes can be dispatched by fixture plugins at almost
     // the same time. Since state changes are batched in React, current state
     // (this.state.fixtureState) can be stale at dispatch time, and extending
