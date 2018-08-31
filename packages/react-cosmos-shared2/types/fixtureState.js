@@ -1,6 +1,8 @@
 // @flow
 
-type FixtureStateValue = {
+import type { SetState } from './state';
+
+export type FixtureStateValue = {
   serializable: boolean,
   key: string,
   value: mixed
@@ -8,30 +10,23 @@ type FixtureStateValue = {
 
 export type FixtureStateValues = FixtureStateValue[];
 
-type FixtureStatePropsInstance = {
+export type FixtureStateProps = {
   instanceId: number,
   componentName: string,
   renderKey: number,
   values: FixtureStateValues
 };
 
-type FixtureStateStateInstance = {
+export type FixtureStateState = {
   instanceId: number,
   componentName: string,
   values: FixtureStateValues
 };
 
 export type FixtureState = {
-  props?: FixtureStatePropsInstance[],
-  state?: FixtureStateStateInstance[],
+  props?: FixtureStateProps[],
+  state?: FixtureStateState[],
   [key: string]: mixed
 };
 
-export type FixtureStateUpdater =
-  | $Shape<FixtureState>
-  | ((prevState: ?FixtureState) => $Shape<FixtureState>);
-
-export type SetFixtureState = (
-  updater: FixtureStateUpdater,
-  callback?: () => mixed
-) => mixed;
+export type SetFixtureState = SetState<FixtureState>;

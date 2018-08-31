@@ -3,11 +3,11 @@
 import React, { Component } from 'react';
 import { create } from 'react-test-renderer';
 import {
-  updateFixtureState,
-  getProps,
-  setProps,
-  resetProps
-} from '../../shared/fixtureState';
+  updateState,
+  getFixtureStateProps,
+  setFixtureStateProps,
+  resetFixtureStateProps
+} from 'react-cosmos-shared2';
 import { CaptureProps } from '../../CaptureProps';
 import { FixtureProvider } from '../../FixtureProvider';
 
@@ -24,7 +24,7 @@ it('renders with props', () => {
 it('captures props', () => {
   let fixtureState = {};
   const setFixtureState = updater => {
-    fixtureState = updateFixtureState(fixtureState, updater);
+    fixtureState = updateState(fixtureState, updater);
   };
 
   create(
@@ -36,14 +36,14 @@ it('captures props', () => {
     </FixtureProvider>
   );
 
-  const [props1] = getProps(fixtureState);
+  const [props1] = getFixtureStateProps(fixtureState);
   expect(props1).toEqual(getPropsInstanceShape('Satoshi'));
 });
 
 it('overwrites prop', () => {
   let fixtureState = {};
   const setFixtureState = updater => {
-    fixtureState = updateFixtureState(fixtureState, updater);
+    fixtureState = updateState(fixtureState, updater);
   };
 
   const fixture = <HelloMessage name="Satoshi" />;
@@ -57,8 +57,10 @@ it('overwrites prop', () => {
     </FixtureProvider>
   );
 
-  const [{ instanceId }] = getProps(fixtureState);
-  fixtureState = setProps(fixtureState, instanceId, { name: 'Vitalik' });
+  const [{ instanceId }] = getFixtureStateProps(fixtureState);
+  fixtureState = setFixtureStateProps(fixtureState, instanceId, {
+    name: 'Vitalik'
+  });
 
   instance.update(
     <FixtureProvider
@@ -75,7 +77,7 @@ it('overwrites prop', () => {
 it('removes prop', () => {
   let fixtureState = {};
   const setFixtureState = updater => {
-    fixtureState = updateFixtureState(fixtureState, updater);
+    fixtureState = updateState(fixtureState, updater);
   };
 
   const fixture = <HelloMessage name="Satoshi" />;
@@ -89,8 +91,8 @@ it('removes prop', () => {
     </FixtureProvider>
   );
 
-  const [{ instanceId }] = getProps(fixtureState);
-  fixtureState = setProps(fixtureState, instanceId, {});
+  const [{ instanceId }] = getFixtureStateProps(fixtureState);
+  fixtureState = setFixtureStateProps(fixtureState, instanceId, {});
 
   instance.update(
     <FixtureProvider
@@ -112,7 +114,7 @@ it('removes prop', () => {
 it('reverts to original props', () => {
   let fixtureState = {};
   const setFixtureState = updater => {
-    fixtureState = updateFixtureState(fixtureState, updater);
+    fixtureState = updateState(fixtureState, updater);
   };
 
   const fixture = <HelloMessage name="Satoshi" />;
@@ -126,8 +128,10 @@ it('reverts to original props', () => {
     </FixtureProvider>
   );
 
-  const [{ instanceId }] = getProps(fixtureState);
-  fixtureState = setProps(fixtureState, instanceId, { name: 'Vitalik' });
+  const [{ instanceId }] = getFixtureStateProps(fixtureState);
+  fixtureState = setFixtureStateProps(fixtureState, instanceId, {
+    name: 'Vitalik'
+  });
 
   instance.update(
     <FixtureProvider
@@ -157,7 +161,7 @@ it('reverts to original props', () => {
 it('reuses instance on props transition', () => {
   let fixtureState = {};
   const setFixtureState = updater => {
-    fixtureState = updateFixtureState(fixtureState, updater);
+    fixtureState = updateState(fixtureState, updater);
   };
 
   let ref1;
@@ -177,8 +181,10 @@ it('reuses instance on props transition', () => {
     </FixtureProvider>
   );
 
-  const [{ instanceId }] = getProps(fixtureState);
-  fixtureState = setProps(fixtureState, instanceId, { name: 'Vitalik' });
+  const [{ instanceId }] = getFixtureStateProps(fixtureState);
+  fixtureState = setFixtureStateProps(fixtureState, instanceId, {
+    name: 'Vitalik'
+  });
 
   let ref2;
   instance.update(
@@ -206,7 +212,7 @@ it('reuses instance on props transition', () => {
 it('creates new instance on props reset', () => {
   let fixtureState = {};
   const setFixtureState = updater => {
-    fixtureState = updateFixtureState(fixtureState, updater);
+    fixtureState = updateState(fixtureState, updater);
   };
 
   let ref1;
@@ -226,8 +232,10 @@ it('creates new instance on props reset', () => {
     </FixtureProvider>
   );
 
-  const [{ instanceId }] = getProps(fixtureState);
-  fixtureState = resetProps(fixtureState, instanceId, { name: 'Vitalik' });
+  const [{ instanceId }] = getFixtureStateProps(fixtureState);
+  fixtureState = resetFixtureStateProps(fixtureState, instanceId, {
+    name: 'Vitalik'
+  });
 
   let ref2;
   instance.update(
@@ -255,7 +263,7 @@ it('creates new instance on props reset', () => {
 it('captures props from multiple instances (explicit capture)', () => {
   let fixtureState = {};
   const setFixtureState = updater => {
-    fixtureState = updateFixtureState(fixtureState, updater);
+    fixtureState = updateState(fixtureState, updater);
   };
 
   create(
@@ -272,7 +280,7 @@ it('captures props from multiple instances (explicit capture)', () => {
     </FixtureProvider>
   );
 
-  const [props1, props2] = getProps(fixtureState);
+  const [props1, props2] = getFixtureStateProps(fixtureState);
   expect(props1).toEqual(getPropsInstanceShape('Satoshi'));
   expect(props2).toEqual(getPropsInstanceShape('Vitalik'));
 });
@@ -280,7 +288,7 @@ it('captures props from multiple instances (explicit capture)', () => {
 it('captures props from multiple instances (direct children)', () => {
   let fixtureState = {};
   const setFixtureState = updater => {
-    fixtureState = updateFixtureState(fixtureState, updater);
+    fixtureState = updateState(fixtureState, updater);
   };
 
   create(
@@ -293,7 +301,7 @@ it('captures props from multiple instances (direct children)', () => {
     </FixtureProvider>
   );
 
-  const [props1, props2] = getProps(fixtureState);
+  const [props1, props2] = getFixtureStateProps(fixtureState);
   expect(props1).toEqual(getPropsInstanceShape('Satoshi'));
   expect(props2).toEqual(getPropsInstanceShape('Vitalik'));
 });
@@ -301,7 +309,7 @@ it('captures props from multiple instances (direct children)', () => {
 it('overwrites props in multiple instances', () => {
   let fixtureState = {};
   const setFixtureState = updater => {
-    fixtureState = updateFixtureState(fixtureState, updater);
+    fixtureState = updateState(fixtureState, updater);
   };
 
   const fixture = (
@@ -320,9 +328,13 @@ it('overwrites props in multiple instances', () => {
     </FixtureProvider>
   );
 
-  const [props1, props2] = getProps(fixtureState);
-  fixtureState = setProps(fixtureState, props1.instanceId, { name: 'SATOSHI' });
-  fixtureState = setProps(fixtureState, props2.instanceId, { name: 'VITALIK' });
+  const [props1, props2] = getFixtureStateProps(fixtureState);
+  fixtureState = setFixtureStateProps(fixtureState, props1.instanceId, {
+    name: 'SATOSHI'
+  });
+  fixtureState = setFixtureStateProps(fixtureState, props2.instanceId, {
+    name: 'VITALIK'
+  });
 
   instance.update(
     <FixtureProvider

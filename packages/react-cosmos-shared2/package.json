@@ -5,5 +5,7 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-shared2",
   "license": "MIT",
   "main": "index.js",
-  "dependencies": {}
+  "dependencies": {
+    "lodash": "^4.17.10"
+  }
 }

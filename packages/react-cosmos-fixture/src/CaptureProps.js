@@ -1,11 +1,14 @@
 // @flow
 
 import React, { Component } from 'react';
-import { FixtureContext } from './FixtureContext';
-import { replaceOrAddItem } from './shared/utility';
-import { extractValuesFromObject } from './shared/values';
+import {
+  replaceOrAddItem,
+  extractValuesFromObject,
+  getFixtureStateProps,
+  getFixtureStatePropsInst
+} from 'react-cosmos-shared2';
 import { getInstanceId, getComponentName } from './shared/decorator';
-import { getProps, getPropsInstance } from './shared/fixtureState';
+import { FixtureContext } from './FixtureContext';
 
 import type { FixtureState, SetFixtureState } from 'react-cosmos-shared2';
 import type { CapturePropsProps } from '../types';
@@ -65,7 +68,7 @@ class CapturePropsInner extends Component<InnerProps> {
 
       return {
         props: replaceOrAddItem(
-          getProps(fixtureState),
+          getFixtureStateProps(fixtureState),
           props => props.instanceId === instanceId,
           instanceProps
         )
@@ -85,15 +88,15 @@ class CapturePropsInner extends Component<InnerProps> {
     // change in a part of the fixture state that didn't change its values
     // represents a mishandling in how the fixture state object is updated
     return (
-      getPropsInstance(nextProps.fixtureState, instanceId) !==
-      getPropsInstance(this.props.fixtureState, instanceId)
+      getFixtureStatePropsInst(nextProps.fixtureState, instanceId) !==
+      getFixtureStatePropsInst(this.props.fixtureState, instanceId)
     );
   }
 
   render() {
     const { children, fixtureState } = this.props;
     const instanceId = getInstanceId(this);
-    const propsInstance = getPropsInstance(fixtureState, instanceId);
+    const propsInstance = getFixtureStatePropsInst(fixtureState, instanceId);
 
     // HACK alert: Editing React Element by hand
     // This is blasphemy, but there are two reasons why React.cloneElement

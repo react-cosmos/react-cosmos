@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { FixtureProvider } from '../FixtureProvider';
-import { updateFixtureState } from '../shared/fixtureState';
+import { updateState } from 'react-cosmos-shared2';
 
 import type {
   FixtureState,
@@ -73,6 +73,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
 
     return (
       <FixtureProvider
+        key={fixturePath}
         fixtureState={fixtureState}
         setFixtureState={this.setFixtureState}
       >
@@ -131,7 +132,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     // every state change is honored, regardless of timing.
     this.setState(
       ({ fixtureState }) => ({
-        fixtureState: updateFixtureState(fixtureState, updater)
+        fixtureState: updateState(fixtureState, updater)
       }),
       cb
     );

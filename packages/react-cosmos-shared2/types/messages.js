@@ -4,9 +4,9 @@ import type { FixtureState } from './fixtureState';
 
 // NOTE: Renderer ids are self assigned in remote environments, so uniqueness
 // cannot be established by consensus
-type RendererId = string;
+export type RendererId = string;
 
-type FixtureNames = string[];
+export type FixtureNames = string[];
 
 // Announce a new renderer or refresh a renderer's fixture data
 export type RendererReadyMsg = {

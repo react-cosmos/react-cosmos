@@ -1,12 +1,15 @@
 // @flow
 
 import React, { Component, cloneElement } from 'react';
+import {
+  replaceOrAddItem,
+  extractValuesFromObject,
+  getFixtureStateState,
+  getFixtureStateStateInst
+} from 'react-cosmos-shared2';
 import { FixtureContext } from './FixtureContext';
 import { CaptureProps } from './CaptureProps';
-import { replaceOrAddItem } from './shared/utility';
-import { extractValuesFromObject } from './shared/values';
 import { getInstanceId, getComponentName } from './shared/decorator';
-import { getState, getStateInstance } from './shared/fixtureState';
 
 import type { ElementRef } from 'react';
 import type { FixtureState, SetFixtureState } from 'react-cosmos-shared2';
@@ -76,8 +79,8 @@ class ComponentStateInner extends Component<InnerProps> {
     // change in a part of the fixture state that didn't change its values
     // represents a mishandling in how the fixture state object is updated
     return (
-      getStateInstance(nextProps.fixtureState, instanceId) !==
-      getStateInstance(this.props.fixtureState, instanceId)
+      getFixtureStateStateInst(nextProps.fixtureState, instanceId) !==
+      getFixtureStateStateInst(this.props.fixtureState, instanceId)
     );
   }
 
@@ -91,7 +94,7 @@ class ComponentStateInner extends Component<InnerProps> {
 
     const { fixtureState, state: mockedState } = this.props;
     const instanceId = getInstanceId(this);
-    const stateInstance = getStateInstance(fixtureState, instanceId);
+    const stateInstance = getFixtureStateStateInst(fixtureState, instanceId);
 
     if (stateInstance) {
       childRef.setState(
@@ -246,7 +249,7 @@ function updateComponentStateInFixtureState({
 
   return {
     state: replaceOrAddItem(
-      getState(fixtureState),
+      getFixtureStateState(fixtureState),
       state => state.instanceId === instanceId,
       stateInstance
     )

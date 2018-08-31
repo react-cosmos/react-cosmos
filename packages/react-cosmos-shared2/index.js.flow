@@ -1,15 +1,86 @@
 // @flow
 
 export type {
+  FixtureStateValue,
   FixtureStateValues,
   FixtureState,
-  FixtureStateUpdater,
   SetFixtureState
 } from './types/fixtureState';
 
 export type {
+  RendererId,
+  FixtureNames,
   RendererMessage,
   RemoteMessage,
   OnRendererMessage,
   OnRemoteMessage
 } from './types/messages';
+
+import type { Predicate } from 'lodash';
+import type { StateUpdater } from './types/state';
+import type {
+  FixtureStateValues,
+  FixtureStateProps,
+  FixtureStateState,
+  FixtureState
+} from './types/fixtureState';
+import type { RendererId } from './types/messages';
+
+declare export var RENDERER_ID: RendererId;
+
+declare export function updateItem<T>(
+  items: $ReadOnlyArray<T>,
+  item: T,
+  update: $Shape<T>
+): Array<T>;
+
+declare export function replaceOrAddItem<T>(
+  items: $ReadOnlyArray<T>,
+  matcher: Predicate<T>,
+  item: T
+): Array<T>;
+
+declare export function extractValuesFromObject(obj: {
+  [string]: mixed
+}): FixtureStateValues;
+
+declare export function updateState<T>(
+  fixtureState: ?T,
+  updater: StateUpdater<T>
+): T;
+
+declare export function getFixtureStateProps(
+  fixtureState: ?FixtureState
+): FixtureStateProps[];
+
+declare export function getFixtureStatePropsInst(
+  fixtureState: ?FixtureState,
+  instanceId: number
+): FixtureStateProps;
+
+declare export function setFixtureStateProps(
+  fixtureState: ?FixtureState,
+  instanceId: number,
+  newProps: { [key: string]: mixed }
+): FixtureState;
+
+declare export function resetFixtureStateProps(
+  fixtureState: FixtureState,
+  instanceId: number,
+  newProps: { [key: string]: mixed }
+): FixtureState;
+
+declare export function getFixtureStateState(
+  fixtureState: ?FixtureState
+): FixtureStateState[];
+
+declare export function getFixtureStateStateInst(
+  fixtureState: ?FixtureState,
+  instanceId: number
+): FixtureStateState;
+
+declare export function setFixtureStateState(
+  fixtureState: ?FixtureState,
+  instanceId: number,
+  newState: { [key: string]: mixed }
+): FixtureState;

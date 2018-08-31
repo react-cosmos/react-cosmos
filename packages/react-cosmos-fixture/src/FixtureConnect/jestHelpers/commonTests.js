@@ -5,8 +5,11 @@
 import React from 'react';
 import until from 'async-until';
 import { create } from 'react-test-renderer';
+import {
+  getFixtureStateProps,
+  setFixtureStateProps
+} from 'react-cosmos-shared2';
 import { uuid } from '../../shared/uuid';
-import { getProps, setProps } from '../../shared/fixtureState';
 import { FixtureConnect } from '..';
 
 import type { Element } from 'react';
@@ -241,13 +244,13 @@ export function testFixtureConnect({ mockRemoteApi, getRemoteApi }: Args) {
         }
 
         const { fixtureState } = lastMsg.payload;
-        const [{ instanceId }] = getProps(fixtureState);
+        const [{ instanceId }] = getFixtureStateProps(fixtureState);
         await postMessage({
           type: 'setFixtureState',
           payload: {
             rendererId,
             fixturePath: 'first',
-            fixtureState: setProps(fixtureState, instanceId, {
+            fixtureState: setFixtureStateProps(fixtureState, instanceId, {
               name: 'B'
             })
           }
