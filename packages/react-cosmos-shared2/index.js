@@ -4,6 +4,7 @@ exports.RENDERER_ID = 'only-one-renderer-connection-supported-atm';
 
 exports.updateItem = require('./dist/utility').updateItem;
 exports.replaceOrAddItem = require('./dist/utility').replaceOrAddItem;
+exports.removeItem = require('./dist/utility').removeItem;
 
 exports.extractValuesFromObject = require('./dist/values').extractValuesFromObject;
 

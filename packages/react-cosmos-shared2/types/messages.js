@@ -73,6 +73,7 @@ export type SetFixtureStateMsg = {
     // Only one fixture can be loaded at a time by a renderer, but the path is
     // sent anyway to ensure the message applies to the current fixture
     fixturePath: string,
+    // TODO: Rename to fixtureStateChange
     fixtureState: $Shape<FixtureState>
   }
 };

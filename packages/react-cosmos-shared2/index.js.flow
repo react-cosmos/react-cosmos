@@ -41,6 +41,11 @@ declare export function replaceOrAddItem<T>(
   item: T
 ): Array<T>;
 
+declare export function remoteItem<T>(
+  items: $ReadOnlyArray<T>,
+  item: T
+): Array<T>;
+
 declare export function extractValuesFromObject(obj: {
   [string]: mixed
 }): FixtureStateValues;

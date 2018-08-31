@@ -102,7 +102,7 @@ export default function enhanceWebpackConfig({
   };
 }
 
-function getEntry({ globalImports, hot }, shouldExport) {
+function getEntry({ next, globalImports, hot }, shouldExport) {
   let entry = [...globalImports];
 
   if (hot && !shouldExport) {
@@ -115,7 +115,14 @@ function getEntry({ globalImports, hot }, shouldExport) {
   }
 
   // Load loader entry last
-  return [...entry, require.resolve('../../../client/loader-entry')];
+  return [
+    ...entry,
+    require.resolve(
+      next
+        ? '../../../client/loader-entry-next'
+        : '../../../client/loader-entry'
+    )
+  ];
 }
 
 function getOutput({ outputPath, publicUrl }, shouldExport) {

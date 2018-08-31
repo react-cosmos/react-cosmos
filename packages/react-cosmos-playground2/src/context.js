@@ -8,6 +8,14 @@ export const PlaygroundContext = createContext<PlaygroundContextValue>({
   options: {
     rendererUrl: ''
   },
+  uiState: {
+    fixtures: [],
+    fixturePath: null
+  },
+  setUiState: () => {},
   fixtureState: null,
-  setFixtureState: () => {}
+  setFixtureState: () => {},
+
+  postMessage: () => {},
+  onMessage: () => () => {}
 });

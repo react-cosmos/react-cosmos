@@ -29,3 +29,16 @@ export function replaceOrAddItem<T>(
     ? [...items.slice(0, index), item, ...items.slice(index + 1)]
     : [...items, item];
 }
+
+export function removeItem<T>(
+  items: $ReadOnlyArray<T> = [],
+  item: T
+): Array<T> {
+  const index = items.indexOf(item);
+
+  if (index === -1) {
+    throw new Error(`Trying to remove missing list item`);
+  }
+
+  return [...items.slice(0, index), ...items.slice(index + 1)];
+}
