@@ -27,7 +27,7 @@ jobs:
             # Cache both yarn and Cypress
             - ~/.cache
 
-      # Building upfront because some react-cosmos/server unit tests require 
+      # Building upfront because some react-cosmos/server unit tests require
       # react-cosmos-playground to be built
       - run: yarn build
 
@@ -35,7 +35,7 @@ jobs:
       - run: yarn link-entries src
       - run: yarn flow
       - run: yarn lint
-      - run: yarn test:unit --maxWorkers=2
+      - run: yarn test:unit --maxWorkers=2 --coverage
 
       # Test build
       - run: yarn link-entries dist

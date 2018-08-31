@@ -17,7 +17,7 @@ script:
   - yarn link-entries src
   - yarn flow
   - yarn lint
-  - yarn test:unit --maxWorkers=2
+  - yarn test:unit --maxWorkers=2 --coverage
   # Test build
   - yarn link-entries dist
   - yarn start & yarn test:e2e
