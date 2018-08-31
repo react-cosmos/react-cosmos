@@ -10,7 +10,7 @@
     "install-react": "yarn remove react react-dom && yarn add",
     "install-react:0.14": "yarn install-react -- react@^0.14.9 react-dom@^0.14.9",
     "install-react:15": "yarn install-react -- react@^15.5.4 react-dom@^15.5.4",
-    "precommit": "lint-staged",
+    "precommit": "yarn dist && lint-staged",
     "prettify": "prettier --write \"{{packages/*/src,examples,cypress,scripts}/**/,}*.{js,jsx,css,less,md}\"",
     "lint": "eslint \"**/*.js\"",
     "test:unit": "jest --config .jest/config.js",
