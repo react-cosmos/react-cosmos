@@ -8,7 +8,7 @@ import type {
   OnRendererRequest,
   RendererResponse
 } from 'react-cosmos-shared2/renderer';
-import type { PostMessageProps } from '../../types';
+import type { PostMessageProps } from '../index.js.flow';
 
 export class PostMessage extends Component<PostMessageProps> {
   onMessage: ?OnRendererRequest = null;

@@ -10,7 +10,7 @@ import type {
   OnRendererRequest,
   RendererResponse
 } from 'react-cosmos-shared2/renderer';
-import type { WebSocketsProps } from '../../types';
+import type { WebSocketsProps } from '../index.js.flow';
 
 export const EVENT_NAME = 'cosmos-cmd';
 

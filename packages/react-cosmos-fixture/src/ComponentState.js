@@ -16,7 +16,7 @@ import { getInstanceId, getComponentName } from './shared/decorator';
 import type { ElementRef } from 'react';
 import type { SetState } from 'react-cosmos-shared2/util';
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import type { ComponentStateProps } from '../types';
+import type { ComponentStateProps } from './index.js.flow';
 
 // How often to check the state of the loaded component and update the fixture
 // state if it changed

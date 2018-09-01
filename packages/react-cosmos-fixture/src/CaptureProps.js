@@ -13,7 +13,7 @@ import { FixtureContext } from './FixtureContext';
 
 import type { SetState } from 'react-cosmos-shared2/util';
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import type { CapturePropsProps } from '../types';
+import type { CapturePropsProps } from './index.js.flow';
 
 const DEFAULT_RENDER_KEY = 0;
 

@@ -18,7 +18,7 @@ import type {
   RendererRequest,
   RendererResponse
 } from 'react-cosmos-shared2/renderer';
-import type { Fixtures, RemoteRendererApi } from '../../../types';
+import type { Fixtures, RemoteRendererApi } from '../../index.js.flow';
 
 type Message = RendererResponse | RendererRequest;
 

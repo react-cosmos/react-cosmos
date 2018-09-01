@@ -7,7 +7,7 @@ import { updateState } from 'react-cosmos-shared2/util';
 import type { SetState } from 'react-cosmos-shared2/util';
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { RendererRequest } from 'react-cosmos-shared2/renderer';
-import type { FixtureConnectProps } from '../../types';
+import type { FixtureConnectProps } from '../index.js.flow';
 
 type State = {
   fixturePath: ?string,

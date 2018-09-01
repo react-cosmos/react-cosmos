@@ -6,7 +6,10 @@ import { CaptureProps } from '../CaptureProps';
 import { FixtureContext } from '../FixtureContext';
 
 import type { Node, Element } from 'react';
-import type { FixtureProviderProps, FixtureContextValue } from '../../types';
+import type {
+  FixtureProviderProps,
+  FixtureContextValue
+} from '../index.js.flow';
 
 // NOTE: Maybe open up Fixture component for naming and other customization. Eg.
 //   <Fixture name="An interesting state" namespace="nested/as/follows">
