@@ -17,6 +17,8 @@ Goal: Reuse types internally and externally. Two possible solutions come to mind
 1. Gradually move all Flow types to `index.js.flow` files tied to specific packages.
 2. Create script that generates a public `.js.flow` file from source files that aren't published to npm.
 
+> Some thoughts and experiments on generating Flow lib defs: https://github.com/skidding/gen-flow-libdefs
+
 PS. Include TypeScript in the solution.
 
 ## Unstable (and undocumented) package APIs
