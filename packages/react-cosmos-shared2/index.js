@@ -1,6 +1,6 @@
 // @flow
 
-exports.RENDERER_ID = 'only-one-renderer-connection-supported-atm';
+exports.RENDERER_ID = require('./dist/index').RENDERER_ID;
 
 exports.updateItem = require('./dist/utility').updateItem;
 exports.replaceOrAddItem = require('./dist/utility').replaceOrAddItem;
