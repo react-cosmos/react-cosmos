@@ -68,6 +68,12 @@ export class FixtureProvider extends Component<
       );
     }
 
+    // Fixture decorators to opt out from their props being captured. Eg.
+    // Adding ComponentState's props to fixture state would be unwanted noise.
+    if (element.type.cosmosCaptureProps === false) {
+      return element;
+    }
+
     // Automatically capture the props of the root node if it's an element
     return <CaptureProps key={index}>{element}</CaptureProps>;
   }

@@ -20,11 +20,6 @@ export class CaptureProps extends Component<CapturePropsProps> {
 
   render() {
     const { children } = this.props;
-    const { type } = children;
-
-    if (type.cosmosCaptureProps === false) {
-      return children;
-    }
 
     return (
       <FixtureContext.Consumer>
@@ -83,10 +78,11 @@ class CapturePropsInner extends Component<InnerProps> {
 
     const instanceId = getInstanceId(this);
 
-    // Checking reference equality for the specific props instance in the
-    // fixture state is enough for determining a relevant change. An identity
-    // change in a part of the fixture state that didn't change its values
-    // represents a mishandling in how the fixture state object is updated
+    // Because serialized fixture state changes are received remotely, a change
+    // in one fixtureState.props instance will change the identity of all
+    // fixtureState.props instances. Not a big deal, though, as fixture state
+    // has to be deterministic otherwise everything else falls apart.
+    // TODO: Deep check value equality to minimize renders.
     return (
       getFixtureStatePropsInst(nextProps.fixtureState, instanceId) !==
       getFixtureStatePropsInst(this.props.fixtureState, instanceId)
