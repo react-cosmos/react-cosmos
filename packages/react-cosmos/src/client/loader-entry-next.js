@@ -5,7 +5,7 @@
 import './react-devtools-hook';
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { RENDERER_ID } from 'react-cosmos-shared2';
+import { RENDERER_ID } from 'react-cosmos-shared2/renderer';
 import {
   PostMessage,
   FixtureConnect,
