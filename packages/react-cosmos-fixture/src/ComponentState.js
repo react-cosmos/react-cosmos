@@ -1,5 +1,6 @@
 // @flow
 
+import { isEqual } from 'lodash';
 import React, { Component, cloneElement } from 'react';
 import {
   replaceOrAddItem,
@@ -74,10 +75,11 @@ class ComponentStateInner extends Component<InnerProps> {
 
     const instanceId = getInstanceId(this);
 
-    // Checking reference equality for the specific state instance in the
-    // fixture state is enough for determining a relevant change. An identity
-    // change in a part of the fixture state that didn't change its values
-    // represents a mishandling in how the fixture state object is updated
+    // Because serialized fixture state changes are received remotely, a change
+    // in one fixtureState.state instance will change the identity of all
+    // fixtureState.state instances. Not a big deal, though, as fixture state
+    // has to be deterministic otherwise everything else falls apart.
+    // TODO: Deep check value equality to minimize renders.
     return (
       getFixtureStateStateInst(nextProps.fixtureState, instanceId) !==
       getFixtureStateStateInst(this.props.fixtureState, instanceId)
@@ -97,13 +99,18 @@ class ComponentStateInner extends Component<InnerProps> {
     const stateInstance = getFixtureStateStateInst(fixtureState, instanceId);
 
     if (stateInstance) {
-      childRef.setState(
-        extendOriginalStateWithFixtureState({
-          currentState: childRef.state,
-          mockedState,
-          stateInstance
-        })
-      );
+      const nextState = extendOriginalStateWithFixtureState({
+        currentState: childRef.state,
+        mockedState,
+        stateInstance
+      });
+
+      // This update might be caused by an organic state change from within the
+      // wrapped component. Blindly setting the state here would result in an
+      // infinite loop of state changes.
+      if (!isEqual(nextState, childRef.state)) {
+        childRef.setState(nextState);
+      }
     } else {
       // We get here when the fixture state associated with this instance
       // (first populated at mount, inside handleRef) has been emptied.
@@ -114,6 +121,7 @@ class ComponentStateInner extends Component<InnerProps> {
           ...this.initialState,
           ...mockedState
         });
+
       childRef.setState(cleanState);
       this.updateFixtureState(cleanState, childRef);
     }
