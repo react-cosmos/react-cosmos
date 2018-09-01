@@ -2,11 +2,11 @@
 
 import React, { Component } from 'react';
 import { create } from 'react-test-renderer';
+import { updateState } from 'react-cosmos-shared2/util';
 import {
-  updateState,
   getFixtureStateProps,
   updateFixtureStateProps
-} from 'react-cosmos-shared2';
+} from 'react-cosmos-shared2/fixtureState';
 import { CaptureProps } from '../../CaptureProps';
 import { FixtureProvider } from '../../FixtureProvider';
 

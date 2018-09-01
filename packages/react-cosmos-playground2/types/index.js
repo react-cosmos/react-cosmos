@@ -1,11 +1,11 @@
 // @flow
 
+import type { SetState } from 'react-cosmos-shared2/util';
+import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type {
-  SetState,
-  FixtureState,
   FixtureNames,
   RendererRequest
-} from 'react-cosmos-shared2';
+} from 'react-cosmos-shared2/renderer';
 
 export type PlaygroundOptions = {
   rendererUrl: string

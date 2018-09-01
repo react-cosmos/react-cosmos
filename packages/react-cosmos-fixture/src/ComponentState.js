@@ -2,19 +2,20 @@
 
 import { isEqual } from 'lodash';
 import React, { Component, cloneElement } from 'react';
+import { replaceOrAddItem } from 'react-cosmos-shared2/util';
 import {
-  replaceOrAddItem,
   extractValuesFromObject,
   areValuesEqual,
   getFixtureStateState,
   getFixtureStateStateInst
-} from 'react-cosmos-shared2';
+} from 'react-cosmos-shared2/fixtureState';
 import { FixtureContext } from './FixtureContext';
 import { CaptureProps } from './CaptureProps';
 import { getInstanceId, getComponentName } from './shared/decorator';
 
 import type { ElementRef } from 'react';
-import type { SetState, FixtureState } from 'react-cosmos-shared2';
+import type { SetState } from 'react-cosmos-shared2/util';
+import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { ComponentStateProps } from '../types';
 
 // How often to check the state of the loaded component and update the fixture

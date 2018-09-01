@@ -3,16 +3,16 @@
 import styled from 'styled-components';
 import React, { Component } from 'react';
 import { Slot } from 'react-plugin';
+import { removeItem, updateState } from 'react-cosmos-shared2/util';
+import { RENDERER_ID } from 'react-cosmos-shared2/renderer';
 import {
-  RENDERER_ID,
-  remoteItem,
-  updateState,
   updateFixtureStateProps,
   updateFixtureStateState
-} from 'react-cosmos-shared2';
+} from 'react-cosmos-shared2/fixtureState';
 import { PlaygroundContext } from '../context';
 
-import type { SetState, RendererRequest } from 'react-cosmos-shared2';
+import type { SetState } from 'react-cosmos-shared2/util';
+import type { RendererRequest } from 'react-cosmos-shared2/renderer';
 import type {
   PlaygroundOptions,
   UiState,
@@ -51,7 +51,7 @@ export class Root extends Component<Props, PlaygroundContextValue> {
     this.requestListeners.push(listener);
 
     return () => {
-      this.requestListeners = remoteItem(this.requestListeners, listener);
+      this.requestListeners = removeItem(this.requestListeners, listener);
     };
   };
 

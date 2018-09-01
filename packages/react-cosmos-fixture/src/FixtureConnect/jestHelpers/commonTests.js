@@ -8,13 +8,16 @@ import { create } from 'react-test-renderer';
 import {
   getFixtureStateProps,
   updateFixtureStateProps
-} from 'react-cosmos-shared2';
+} from 'react-cosmos-shared2/fixtureState';
 import { uuid } from '../../shared/uuid';
 import { FixtureConnect } from '..';
 
 import type { Element } from 'react';
 import type { ReactTestRenderer } from 'react-test-renderer';
-import type { RendererRequest, RendererResponse } from 'react-cosmos-shared2';
+import type {
+  RendererRequest,
+  RendererResponse
+} from 'react-cosmos-shared2/renderer';
 import type { Fixtures, RemoteRendererApi } from '../../../types';
 
 type Message = RendererResponse | RendererRequest;

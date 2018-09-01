@@ -3,6 +3,7 @@
 import { findIndex } from 'lodash';
 
 import type { Predicate } from 'lodash';
+import type { StateUpdater } from './util.js.flow';
 
 export function updateItem<T>(
   items: $ReadOnlyArray<T>,
@@ -38,4 +39,14 @@ export function removeItem<T>(items: $ReadOnlyArray<T>, item: T): Array<T> {
   }
 
   return [...items.slice(0, index), ...items.slice(index + 1)];
+}
+
+export function updateState<T>(prevState: ?T, updater: StateUpdater<T>): T {
+  const fixtureChange =
+    typeof updater === 'function' ? updater(prevState) : updater;
+
+  return {
+    ...prevState,
+    ...fixtureChange
+  };
 }

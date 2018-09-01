@@ -2,13 +2,11 @@
 
 import React, { Component } from 'react';
 import { FixtureProvider } from '../FixtureProvider';
-import { updateState } from 'react-cosmos-shared2';
+import { updateState } from 'react-cosmos-shared2/util';
 
-import type {
-  SetState,
-  FixtureState,
-  RendererRequest
-} from 'react-cosmos-shared2';
+import type { SetState } from 'react-cosmos-shared2/util';
+import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
+import type { RendererRequest } from 'react-cosmos-shared2/renderer';
 import type { FixtureConnectProps } from '../../types';
 
 type State = {

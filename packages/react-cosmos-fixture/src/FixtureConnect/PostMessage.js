@@ -7,7 +7,7 @@ import type {
   RendererRequest,
   OnRendererRequest,
   RendererResponse
-} from 'react-cosmos-shared2';
+} from 'react-cosmos-shared2/renderer';
 import type { PostMessageProps } from '../../types';
 
 export class PostMessage extends Component<PostMessageProps> {

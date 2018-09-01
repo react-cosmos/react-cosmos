@@ -4,13 +4,13 @@ import React, { Component } from 'react';
 import { create } from 'react-test-renderer';
 import { ComponentState } from '../../ComponentState';
 import { FixtureProvider } from '../../FixtureProvider';
+import { updateState } from 'react-cosmos-shared2/util';
 import {
-  updateState,
   getFixtureStateProps,
   updateFixtureStateProps,
   getFixtureStateState,
   updateFixtureStateState
-} from 'react-cosmos-shared2';
+} from 'react-cosmos-shared2/fixtureState';
 
 it('resets state when resetting props', () => {
   let fixtureState = {};

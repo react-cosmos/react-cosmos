@@ -5,12 +5,12 @@ import React, { Component } from 'react';
 import { Plugin, Plug, Slot } from 'react-plugin';
 import { PlaygroundContext } from '../context';
 
+import type { SetState } from 'react-cosmos-shared2/util';
+import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type {
-  SetState,
-  FixtureState,
   RendererRequest,
   RendererResponse
-} from 'react-cosmos-shared2';
+} from 'react-cosmos-shared2/renderer';
 import type {
   UiState,
   ReplaceFixtureState,

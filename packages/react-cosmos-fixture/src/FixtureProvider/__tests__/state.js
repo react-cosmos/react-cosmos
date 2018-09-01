@@ -3,11 +3,11 @@
 import until from 'async-until';
 import React, { Component } from 'react';
 import { create } from 'react-test-renderer';
+import { updateState } from 'react-cosmos-shared2/util';
 import {
-  updateState,
   getFixtureStateState,
   updateFixtureStateState
-} from 'react-cosmos-shared2';
+} from 'react-cosmos-shared2/fixtureState';
 import { FixtureProvider } from '../../FixtureProvider';
 import { ComponentState } from '../../ComponentState';
 

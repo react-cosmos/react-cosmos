@@ -1,12 +1,12 @@
 // @flow
 
 import type { Node, Element } from 'react';
+import type { SetState } from 'react-cosmos-shared2/util';
+import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type {
-  SetState,
-  FixtureState,
   OnRendererRequest,
   OnRendererResponse
-} from 'react-cosmos-shared2';
+} from 'react-cosmos-shared2/renderer';
 
 export type Fixtures = {
   [path: string]: Node

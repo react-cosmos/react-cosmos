@@ -1,17 +1,18 @@
 // @flow
 
 import React, { Component } from 'react';
+import { replaceOrAddItem } from 'react-cosmos-shared2/util';
 import {
-  replaceOrAddItem,
   extractValuesFromObject,
   areValuesEqual,
   getFixtureStateProps,
   getFixtureStatePropsInst
-} from 'react-cosmos-shared2';
+} from 'react-cosmos-shared2/fixtureState';
 import { getInstanceId, getComponentName } from './shared/decorator';
 import { FixtureContext } from './FixtureContext';
 
-import type { SetState, FixtureState } from 'react-cosmos-shared2';
+import type { SetState } from 'react-cosmos-shared2/util';
+import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { CapturePropsProps } from '../types';
 
 const DEFAULT_RENDER_KEY = 0;
