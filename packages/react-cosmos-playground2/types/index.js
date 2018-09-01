@@ -4,7 +4,7 @@ import type {
   SetState,
   FixtureState,
   FixtureNames,
-  RemoteMessage
+  RendererRequest
 } from 'react-cosmos-shared2';
 
 export type PlaygroundOptions = {
@@ -17,10 +17,9 @@ export type UiState = {
   fixturePath: ?string
 };
 
-export type RemoteListener = RemoteMessage => mixed;
-export type OnRemoteMessage =
-  // Returns unsubscribe fn
-  RemoteListener => () => mixed;
+export type ReplaceFixtureState = (FixtureState, cb?: () => mixed) => mixed;
+
+export type RendererRequestListener = RendererRequest => mixed;
 
 // TODO: Add remaining context fields
 // export type UrlParams = {};
@@ -33,8 +32,8 @@ export type PlaygroundContextValue = {
   uiState: UiState,
   setUiState: SetState<UiState>,
   fixtureState: ?FixtureState,
-  setFixtureState: SetState<FixtureState>,
-  postMessage: RemoteMessage => mixed,
-  // Less common API for plugins that orchestrate communication with renderers
-  onMessage: OnRemoteMessage
+  replaceFixtureState: ReplaceFixtureState,
+  postRendererRequest: RendererRequest => mixed,
+  // Returns unsubscribe function
+  onRendererRequest: RendererRequestListener => () => mixed
 };

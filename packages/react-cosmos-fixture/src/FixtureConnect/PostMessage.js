@@ -4,14 +4,14 @@
 import { Component } from 'react';
 
 import type {
-  RendererMessage,
-  RemoteMessage,
-  OnRemoteMessage
+  RendererRequest,
+  OnRendererRequest,
+  RendererResponse
 } from 'react-cosmos-shared2';
 import type { PostMessageProps } from '../../types';
 
 export class PostMessage extends Component<PostMessageProps> {
-  onMessage: ?OnRemoteMessage = null;
+  onMessage: ?OnRendererRequest = null;
 
   render() {
     const { children } = this.props;
@@ -24,13 +24,13 @@ export class PostMessage extends Component<PostMessageProps> {
     });
   }
 
-  handleMessage = (msg: { data: RemoteMessage }) => {
+  handleMessage = (msg: { data: RendererRequest }) => {
     if (this.onMessage) {
       this.onMessage(msg.data);
     }
   };
 
-  subscribe = (onMessage: OnRemoteMessage) => {
+  subscribe = (onMessage: OnRendererRequest) => {
     this.onMessage = onMessage;
     window.addEventListener('message', this.handleMessage, false);
   };
@@ -40,7 +40,7 @@ export class PostMessage extends Component<PostMessageProps> {
     this.onMessage = null;
   };
 
-  postMessage = (msg: RendererMessage) => {
+  postMessage = (msg: RendererResponse) => {
     parent.postMessage(msg, '*');
   };
 }

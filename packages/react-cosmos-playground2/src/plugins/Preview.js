@@ -8,18 +8,22 @@ import { PlaygroundContext } from '../context';
 import type {
   SetState,
   FixtureState,
-  RendererMessage,
-  RemoteMessage
+  RendererRequest,
+  RendererResponse
 } from 'react-cosmos-shared2';
-import type { UiState, OnRemoteMessage } from '../../types';
+import type {
+  UiState,
+  ReplaceFixtureState,
+  RendererRequestListener
+} from '../../types';
 
 type Props = {
   rendererUrl: string,
   fixturePath: ?string,
   fixtureState: ?FixtureState,
   setUiState: SetState<UiState>,
-  setFixtureState: SetState<FixtureState>,
-  onMessage: OnRemoteMessage
+  onRendererRequest: (listener: RendererRequestListener) => () => mixed,
+  replaceFixtureState: ReplaceFixtureState
 };
 
 class IframePreview extends Component<Props> {
@@ -38,7 +42,7 @@ class IframePreview extends Component<Props> {
   componentDidMount() {
     window.addEventListener('message', this.handleMessage, false);
 
-    this.unsubscribe = this.props.onMessage(this.sendMessage);
+    this.unsubscribe = this.props.onRendererRequest(this.postIframeMessage);
   }
 
   componentWillUnmount() {
@@ -53,11 +57,11 @@ class IframePreview extends Component<Props> {
     this.iframeRef = iframeRef;
   };
 
-  handleMessage = ({ data }: { data: RendererMessage }) => {
-    const { setUiState, setFixtureState } = this.props;
+  handleMessage = ({ data }: { data: RendererResponse }) => {
+    const { setUiState, replaceFixtureState } = this.props;
 
     switch (data.type) {
-      case 'rendererReady': {
+      case 'fixtureList': {
         const { fixtures } = data.payload;
 
         return setUiState({ fixtures });
@@ -65,18 +69,18 @@ class IframePreview extends Component<Props> {
       case 'fixtureState': {
         const { fixtureState } = data.payload;
 
-        return setFixtureState(fixtureState);
+        return replaceFixtureState(fixtureState);
       }
       default:
       // It's common for unrelated messages to be intercepted. No need to make
       // a fuss about it, though. Except, yeah, the type on this method's
-      // arguments are false. The incoming message should be typed as a generic
-      // object type and the RendererMessage should be ensured via type
+      // arguments is wrong. The incoming message should be typed as a generic
+      // object type and the RendererResponse type should be ensured via type
       // refinements. But instead of doing that I wrote this comment. Peace.
     }
   };
 
-  sendMessage = (msg: RemoteMessage) => {
+  postIframeMessage = (msg: RendererRequest) => {
     if (this.iframeRef) {
       this.iframeRef.contentWindow.postMessage(msg, '*');
     }
@@ -97,16 +101,16 @@ export default (
               uiState,
               setUiState,
               fixtureState,
-              setFixtureState,
-              onMessage
+              replaceFixtureState,
+              onRendererRequest
             }) => (
               <IframePreview
                 rendererUrl={options.rendererUrl}
                 fixturePath={uiState.fixturePath}
                 fixtureState={fixtureState}
                 setUiState={setUiState}
-                setFixtureState={setFixtureState}
-                onMessage={onMessage}
+                replaceFixtureState={replaceFixtureState}
+                onRendererRequest={onRendererRequest}
               />
             )}
           </PlaygroundContext.Consumer>

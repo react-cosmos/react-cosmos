@@ -6,9 +6,9 @@ import io from 'socket.io-client';
 
 import type { Socket } from 'socket.io-client';
 import type {
-  RendererMessage,
-  RemoteMessage,
-  OnRemoteMessage
+  RendererRequest,
+  OnRendererRequest,
+  RendererResponse
 } from 'react-cosmos-shared2';
 import type { WebSocketsProps } from '../../types';
 
@@ -16,7 +16,7 @@ export const EVENT_NAME = 'cosmos-cmd';
 
 export class WebSockets extends Component<WebSocketsProps> {
   socket: ?Socket;
-  onMessage: ?OnRemoteMessage = null;
+  onMessage: ?OnRendererRequest = null;
 
   render() {
     const { children } = this.props;
@@ -29,13 +29,13 @@ export class WebSockets extends Component<WebSocketsProps> {
     });
   }
 
-  handleMessage = (msg: RemoteMessage) => {
+  handleMessage = (msg: RendererRequest) => {
     if (this.onMessage) {
       this.onMessage(msg);
     }
   };
 
-  subscribe = (onMessage: OnRemoteMessage) => {
+  subscribe = (onMessage: OnRendererRequest) => {
     this.onMessage = onMessage;
 
     this.socket = io(this.props.url);
@@ -51,7 +51,7 @@ export class WebSockets extends Component<WebSocketsProps> {
     }
   };
 
-  postMessage = (msg: RendererMessage) => {
+  postMessage = (msg: RendererResponse) => {
     if (this.socket) {
       this.socket.emit(EVENT_NAME, msg);
     }

@@ -4,8 +4,8 @@ import type { Node, Element } from 'react';
 import type {
   SetState,
   FixtureState,
-  OnRendererMessage,
-  OnRemoteMessage
+  OnRendererRequest,
+  OnRendererResponse
 } from 'react-cosmos-shared2';
 
 export type Fixtures = {
@@ -13,9 +13,9 @@ export type Fixtures = {
 };
 
 export type RemoteRendererApi = {
-  subscribe: OnRemoteMessage => mixed,
+  subscribe: OnRendererRequest => mixed,
   unsubscribe: () => mixed,
-  postMessage: OnRendererMessage
+  postMessage: OnRendererResponse
 };
 
 export type FixtureConnectProps = {

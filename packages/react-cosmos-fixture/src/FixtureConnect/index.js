@@ -7,7 +7,7 @@ import { updateState } from 'react-cosmos-shared2';
 import type {
   SetState,
   FixtureState,
-  RemoteMessage
+  RendererRequest
 } from 'react-cosmos-shared2';
 import type { FixtureConnectProps } from '../../types';
 
@@ -27,7 +27,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
   componentDidMount() {
     const { subscribe } = this.props;
 
-    subscribe(this.handleMessage);
+    subscribe(this.handleRequest);
     this.postReadyMessage();
   }
 
@@ -82,8 +82,8 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     );
   }
 
-  handleMessage = (msg: RemoteMessage) => {
-    if (msg.type === 'remoteReady') {
+  handleRequest = (msg: RendererRequest) => {
+    if (msg.type === 'requestFixtureList') {
       return this.postReadyMessage();
     }
 
@@ -102,11 +102,11 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
         fixtureState: null
       });
     } else if (msg.type === 'setFixtureState') {
-      const { fixturePath, fixtureState } = msg.payload;
+      const { fixturePath, fixtureStateChange } = msg.payload;
 
       // Ensure fixture state applies to currently selected fixture
       if (fixturePath === this.state.fixturePath) {
-        this.setFixtureState(fixtureState);
+        this.setFixtureState(fixtureStateChange);
       }
     }
   };
@@ -115,7 +115,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     const { rendererId, fixtures, postMessage } = this.props;
 
     postMessage({
-      type: 'rendererReady',
+      type: 'fixtureList',
       payload: {
         rendererId,
         fixtures: Object.keys(fixtures)

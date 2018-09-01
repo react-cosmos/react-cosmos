@@ -12,16 +12,12 @@ import {
 } from 'react-cosmos-shared2';
 import { PlaygroundContext } from '../context';
 
-import type {
-  SetState,
-  FixtureState,
-  RemoteMessage
-} from 'react-cosmos-shared2';
+import type { SetState, RendererRequest } from 'react-cosmos-shared2';
 import type {
   PlaygroundOptions,
   UiState,
-  RemoteListener,
-  OnRemoteMessage,
+  ReplaceFixtureState,
+  RendererRequestListener,
   PlaygroundContextValue
 } from '../../types';
 
@@ -30,15 +26,7 @@ type Props = {
 };
 
 export class Root extends Component<Props, PlaygroundContextValue> {
-  remoteListeners: RemoteListener[] = [];
-
-  onMessage: OnRemoteMessage = listener => {
-    this.remoteListeners.push(listener);
-
-    return () => {
-      this.remoteListeners = remoteItem(this.remoteListeners, listener);
-    };
-  };
+  requestListeners: RendererRequestListener[] = [];
 
   setUiState: SetState<UiState> = (stateChange, cb) => {
     this.setState(
@@ -49,19 +37,22 @@ export class Root extends Component<Props, PlaygroundContextValue> {
     );
   };
 
-  setFixtureState: SetState<FixtureState> = (stateChange, cb) => {
-    this.setState(
-      ({ fixtureState }) => ({
-        fixtureState: updateState(fixtureState, stateChange)
-      }),
-      cb
-    );
+  replaceFixtureState: ReplaceFixtureState = (fixtureState, cb) => {
+    this.setState({ fixtureState }, cb);
   };
 
-  postMessage = (msg: RemoteMessage) => {
-    this.remoteListeners.forEach(listener => {
+  postRendererRequest = (msg: RendererRequest) => {
+    this.requestListeners.forEach(listener => {
       listener(msg);
     });
+  };
+
+  onRendererRequest = (listener: RendererRequestListener) => {
+    this.requestListeners.push(listener);
+
+    return () => {
+      this.requestListeners = remoteItem(this.requestListeners, listener);
+    };
   };
 
   state = {
@@ -72,9 +63,9 @@ export class Root extends Component<Props, PlaygroundContextValue> {
     },
     setUiState: this.setUiState,
     fixtureState: null,
-    setFixtureState: this.setFixtureState,
-    postMessage: this.postMessage,
-    onMessage: this.onMessage
+    replaceFixtureState: this.replaceFixtureState,
+    postRendererRequest: this.postRendererRequest,
+    onRendererRequest: this.onRendererRequest
   };
 
   render() {
@@ -153,13 +144,13 @@ export class Root extends Component<Props, PlaygroundContextValue> {
       );
     }
 
-    this.postMessage({
+    this.postRendererRequest({
       type: 'setFixtureState',
       payload: {
         rendererId: RENDERER_ID,
         fixturePath,
         // TODO: Only send fixtureState.state?
-        fixtureState: setFixtureStateProps(fixtureState, instanceId, {
+        fixtureStateChange: setFixtureStateProps(fixtureState, instanceId, {
           [key]: value
         })
       }
@@ -179,13 +170,13 @@ export class Root extends Component<Props, PlaygroundContextValue> {
       );
     }
 
-    this.postMessage({
+    this.postRendererRequest({
       type: 'setFixtureState',
       payload: {
         rendererId: RENDERER_ID,
         fixturePath,
         // TODO: Only send fixtureState.state?
-        fixtureState: setFixtureStateState(fixtureState, instanceId, {
+        fixtureStateChange: setFixtureStateState(fixtureState, instanceId, {
           // TODO: Rely on pre-established type
           [key]: isNaN(value) ? value : Number(value)
         })
@@ -199,7 +190,7 @@ export class Root extends Component<Props, PlaygroundContextValue> {
   createFixtureSelectHandler = (fixturePath: string) => () => {
     this.setUiState({ fixturePath });
 
-    this.postMessage({
+    this.postRendererRequest({
       type: 'selectFixture',
       payload: {
         rendererId: RENDERER_ID,

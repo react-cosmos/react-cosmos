@@ -14,10 +14,10 @@ import { FixtureConnect } from '..';
 
 import type { Element } from 'react';
 import type { ReactTestRenderer } from 'react-test-renderer';
-import type { RendererMessage, RemoteMessage } from 'react-cosmos-shared2';
+import type { RendererRequest, RendererResponse } from 'react-cosmos-shared2';
 import type { Fixtures, RemoteRendererApi } from '../../../types';
 
-type Message = RendererMessage | RemoteMessage;
+type Message = RendererResponse | RendererRequest;
 
 export type MockRemoteArgs = {
   lastMessage: () => Message,
@@ -65,15 +65,15 @@ export function testFixtureConnect({ mockRemoteApi, getRemoteApi }: Args) {
       await mount({}, async ({ instance }) => {
         expect(instance.toJSON()).toEqual('No fixture loaded.');
 
-        // NOTE: Waiting for the rendererReady message to register isn't relevant
-        // to this test, but if we don't it will leak into the following test, as
-        // `message` window events are delayed.
-        await messageSeq('rendererReady');
+        // NOTE: Waiting for the fixtureList message to come isn't relevant
+        // to this test, but if we don't it will leak into the following test,
+        // as 'message' window events are delayed.
+        await messageSeq('fixtureList');
       });
     });
   });
 
-  it('posts ready message on mount', async () => {
+  it('posts fixture list on mount', async () => {
     const fixtures = {
       first: 'First fixture',
       second: 'Second fixture'
@@ -81,10 +81,10 @@ export function testFixtureConnect({ mockRemoteApi, getRemoteApi }: Args) {
 
     await mockRemoteApi(async ({ lastMessage, messageSeq }) => {
       await mount(fixtures, async () => {
-        await messageSeq('rendererReady');
+        await messageSeq('fixtureList');
 
         expect(lastMessage()).toEqual({
-          type: 'rendererReady',
+          type: 'fixtureList',
           payload: {
             rendererId: expect.any(String),
             fixtures: ['first', 'second']
@@ -94,7 +94,7 @@ export function testFixtureConnect({ mockRemoteApi, getRemoteApi }: Args) {
     });
   });
 
-  it('posts ready message again on remote request', async () => {
+  it('posts fixture list message again on request', async () => {
     const fixtures = {
       first: 'First fixture',
       second: 'Second fixture'
@@ -102,18 +102,18 @@ export function testFixtureConnect({ mockRemoteApi, getRemoteApi }: Args) {
 
     await mockRemoteApi(async ({ lastMessage, messageSeq, postMessage }) => {
       await mount(fixtures, async () => {
-        await messageSeq('rendererReady');
+        await messageSeq('fixtureList');
 
         await postMessage({
-          type: 'remoteReady'
+          type: 'requestFixtureList'
         });
 
         // No `fixtureState` event was fired because the fixtures used are
         // string nodes without props or state
-        await messageSeq('rendererReady', 'remoteReady', 'rendererReady');
+        await messageSeq('fixtureList', 'requestFixtureList', 'fixtureList');
 
         expect(lastMessage()).toEqual({
-          type: 'rendererReady',
+          type: 'fixtureList',
           payload: {
             rendererId: expect.any(String),
             fixtures: ['first', 'second']
@@ -131,7 +131,7 @@ export function testFixtureConnect({ mockRemoteApi, getRemoteApi }: Args) {
 
     await mockRemoteApi(async ({ messageSeq, postMessage }) => {
       await mount(fixtures, async ({ instance }) => {
-        await messageSeq('rendererReady');
+        await messageSeq('fixtureList');
 
         await postMessage({
           type: 'selectFixture',
@@ -164,7 +164,7 @@ export function testFixtureConnect({ mockRemoteApi, getRemoteApi }: Args) {
 
     await mockRemoteApi(async ({ postMessage, messageSeq }) => {
       await mount(fixtures, async ({ instance }) => {
-        await messageSeq('rendererReady');
+        await messageSeq('fixtureList');
 
         await postMessage({
           type: 'selectFixture',
@@ -187,7 +187,7 @@ export function testFixtureConnect({ mockRemoteApi, getRemoteApi }: Args) {
 
     await mockRemoteApi(async ({ postMessage, messageSeq }) => {
       await mount(fixtures, async ({ instance }) => {
-        await messageSeq('rendererReady');
+        await messageSeq('fixtureList');
 
         await postMessage({
           type: 'selectFixture',
@@ -213,7 +213,7 @@ export function testFixtureConnect({ mockRemoteApi, getRemoteApi }: Args) {
 
     await mockRemoteApi(async ({ lastMessage, messageSeq, postMessage }) => {
       await mount(fixtures, async ({ instance }) => {
-        await messageSeq('rendererReady');
+        await messageSeq('fixtureList');
 
         await postMessage({
           type: 'selectFixture',
@@ -225,7 +225,7 @@ export function testFixtureConnect({ mockRemoteApi, getRemoteApi }: Args) {
 
         expect(instance.toJSON()).toBe('Hello Bianca');
 
-        await messageSeq('rendererReady', 'selectFixture', 'fixtureState');
+        await messageSeq('fixtureList', 'selectFixture', 'fixtureState');
 
         expect(lastMessage()).toEqual({
           type: 'fixtureState',
@@ -250,14 +250,14 @@ export function testFixtureConnect({ mockRemoteApi, getRemoteApi }: Args) {
           payload: {
             rendererId,
             fixturePath: 'first',
-            fixtureState: setFixtureStateProps(fixtureState, instanceId, {
+            fixtureStateChange: setFixtureStateProps(fixtureState, instanceId, {
               name: 'B'
             })
           }
         });
 
         await messageSeq(
-          'rendererReady',
+          'fixtureList',
           'selectFixture',
           'fixtureState',
           'setFixtureState',

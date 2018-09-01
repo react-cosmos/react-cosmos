@@ -11,10 +11,10 @@ export type {
 export type {
   RendererId,
   FixtureNames,
-  RendererMessage,
-  RemoteMessage,
-  OnRendererMessage,
-  OnRemoteMessage
+  RendererRequest,
+  OnRendererRequest,
+  RendererResponse,
+  OnRendererResponse
 } from './types/messages';
 
 import type { Predicate } from 'lodash';
