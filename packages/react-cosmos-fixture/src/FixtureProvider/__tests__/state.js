@@ -156,6 +156,23 @@ it('overwrites mocked state', () => {
   );
 
   expect(instance.toJSON()).toBe('100 times');
+
+  // A second update will provide code coverage for a different branch: the
+  // transition between fixture state values
+  fixtureState = updateState(fixtureState, {
+    state: updateFixtureStateState(fixtureState, instanceId, { count: 200 })
+  });
+
+  instance.update(
+    <FixtureProvider
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
+    >
+      {fixture}
+    </FixtureProvider>
+  );
+
+  expect(instance.toJSON()).toBe('200 times');
 });
 
 it('removes initial state property', () => {
