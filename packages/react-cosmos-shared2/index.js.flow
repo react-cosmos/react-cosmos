@@ -50,6 +50,11 @@ declare export function extractValuesFromObject(obj: {
   [string]: mixed
 }): FixtureStateValues;
 
+declare export function areValuesEqual(
+  a: FixtureStateValues,
+  b: FixtureStateValues
+): boolean;
+
 declare export function updateState<T>(
   fixtureState: ?T,
   updater: StateUpdater<T>
@@ -62,7 +67,7 @@ declare export function getFixtureStateProps(
 declare export function getFixtureStatePropsInst(
   fixtureState: ?FixtureState,
   instanceId: number
-): FixtureStateProps;
+): ?FixtureStateProps;
 
 declare export function updateFixtureStateProps(
   fixtureState: ?FixtureState,
@@ -78,7 +83,7 @@ declare export function getFixtureStateState(
 declare export function getFixtureStateStateInst(
   fixtureState: ?FixtureState,
   instanceId: number
-): FixtureStateState;
+): ?FixtureStateState;
 
 declare export function updateFixtureStateState(
   fixtureState: ?FixtureState,

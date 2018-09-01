@@ -1,6 +1,10 @@
 // @flow
 
-import type { FixtureStateValues } from '../types/fixtureState';
+// TODO: Move to fixtureState
+import type {
+  FixtureStateValue,
+  FixtureStateValues
+} from '../types/fixtureState';
 
 // Why store unserializable props in fixture state?
 // - Because they still provides value in the Cosmos UI. They let the user know
@@ -17,4 +21,18 @@ export function extractValuesFromObject(obj: {
     key,
     value: obj[key]
   }));
+}
+
+export function areValuesEqual(a: FixtureStateValues, b: FixtureStateValues) {
+  return (
+    // If the number of values changed then clearly they're not equal
+    a.length === b.length &&
+    a.reduce((res, aVal, idx) => res && isValueEqual(aVal, b[idx]), true)
+  );
+}
+
+function isValueEqual(a: FixtureStateValue, b: FixtureStateValue) {
+  // In theory .value shouldn't be compared if the value is not serializable.
+  // But since unserializable values never change, the comparison still holds.
+  return a.key === b.key && a.value === b.value;
 }

@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import {
   replaceOrAddItem,
   extractValuesFromObject,
+  areValuesEqual,
   getFixtureStateProps,
   getFixtureStatePropsInst
 } from 'react-cosmos-shared2';
@@ -71,22 +72,32 @@ class CapturePropsInner extends Component<InnerProps> {
     });
   }
 
-  shouldComponentUpdate(nextProps) {
-    if (nextProps.fixtureState === this.props.fixtureState) {
+  shouldComponentUpdate({ fixtureState: nextFixtureState }) {
+    const { fixtureState } = this.props;
+
+    if (nextFixtureState === fixtureState) {
       return false;
     }
 
     const instanceId = getInstanceId(this);
+    const next = getFixtureStatePropsInst(nextFixtureState, instanceId);
+    const prev = getFixtureStatePropsInst(fixtureState, instanceId);
+
+    if (next === prev) {
+      return false;
+    }
+
+    // This step by step comparison is a bit dull, but it helps Flow understand
+    // that by this point both next and prev are *not* null.
+    if (!next || !prev || next.renderKey !== prev.renderKey) {
+      return true;
+    }
 
     // Because serialized fixture state changes are received remotely, a change
     // in one fixtureState.props instance will change the identity of all
-    // fixtureState.props instances. Not a big deal, though, as fixture state
-    // has to be deterministic otherwise everything else falls apart.
-    // TODO: Deep check value equality to minimize renders.
-    return (
-      getFixtureStatePropsInst(nextProps.fixtureState, instanceId) !==
-      getFixtureStatePropsInst(this.props.fixtureState, instanceId)
-    );
+    // fixtureState.props instances. So the only way to avoid useless re-renders
+    // is to check if any value from the fixture state props changed.
+    return !areValuesEqual(next.values, prev.values);
   }
 
   render() {

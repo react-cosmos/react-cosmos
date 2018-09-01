@@ -5,6 +5,7 @@ import React, { Component, cloneElement } from 'react';
 import {
   replaceOrAddItem,
   extractValuesFromObject,
+  areValuesEqual,
   getFixtureStateState,
   getFixtureStateStateInst
 } from 'react-cosmos-shared2';
@@ -60,30 +61,42 @@ class ComponentStateInner extends Component<InnerProps> {
 
   render() {
     const { children } = this.props;
+    const clonedEl = cloneElement(children, { ref: this.handleRef });
 
-    return (
-      <CaptureProps>
-        {cloneElement(children, { ref: this.handleRef })}
-      </CaptureProps>
-    );
+    // Allow fixture decorators to opt out from their props being captured
+    if (clonedEl.type.cosmosCaptureProps === false) {
+      return clonedEl;
+    }
+
+    return <CaptureProps>{clonedEl}</CaptureProps>;
   }
 
-  shouldComponentUpdate(nextProps) {
-    if (nextProps.fixtureState === this.props.fixtureState) {
+  shouldComponentUpdate({ fixtureState: nextFixtureState }) {
+    const { fixtureState } = this.props;
+
+    if (nextFixtureState === fixtureState) {
       return false;
     }
 
     const instanceId = getInstanceId(this);
+    const next = getFixtureStateStateInst(nextFixtureState, instanceId);
+    const prev = getFixtureStateStateInst(fixtureState, instanceId);
+
+    if (next === prev) {
+      return false;
+    }
+
+    // This step by step comparison is a bit dull, but it helps Flow understand
+    // that by this point both next and prev are *not* null.
+    if (!next || !prev) {
+      return true;
+    }
 
     // Because serialized fixture state changes are received remotely, a change
     // in one fixtureState.state instance will change the identity of all
-    // fixtureState.state instances. Not a big deal, though, as fixture state
-    // has to be deterministic otherwise everything else falls apart.
-    // TODO: Deep check value equality to minimize renders.
-    return (
-      getFixtureStateStateInst(nextProps.fixtureState, instanceId) !==
-      getFixtureStateStateInst(this.props.fixtureState, instanceId)
-    );
+    // fixtureState.state instances. So the only way to avoid useless re-renders
+    // is to check if any value from the fixture state state changed.
+    return !areValuesEqual(next.values, prev.values);
   }
 
   // Because of shouldComponentUpdate we can assume that fixture state

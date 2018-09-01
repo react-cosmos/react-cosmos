@@ -7,6 +7,7 @@ exports.replaceOrAddItem = require('./dist/utility').replaceOrAddItem;
 exports.removeItem = require('./dist/utility').removeItem;
 
 exports.extractValuesFromObject = require('./dist/values').extractValuesFromObject;
+exports.areValuesEqual = require('./dist/values').areValuesEqual;
 
 exports.updateState = require('./dist/state').updateState;
 

@@ -1,3 +1,11 @@
+Q: Why do components wrapped in `ComponentState` re-render when props of an unrelated component change in the fixture state?
+
+A: Because `ComponentState` also wraps its children in `CaptureProps`, which re-renders whenever any _fixtureState.props_ instance changes.
+
+Fix: Implement deep equality check for fixtureState props/state instance transitions.
+
+---
+
 Q: Why does the user webpack build require _babel-polyfill_ on IE 11, but the Playground webpack build doesn't?
 
 Which package relies on (unpolyfilled) Promises?
