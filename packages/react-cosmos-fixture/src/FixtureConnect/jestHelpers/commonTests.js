@@ -7,7 +7,7 @@ import until from 'async-until';
 import { create } from 'react-test-renderer';
 import {
   getFixtureStateProps,
-  setFixtureStateProps
+  updateFixtureStateProps
 } from 'react-cosmos-shared2';
 import { uuid } from '../../shared/uuid';
 import { FixtureConnect } from '..';
@@ -250,9 +250,11 @@ export function testFixtureConnect({ mockRemoteApi, getRemoteApi }: Args) {
           payload: {
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: setFixtureStateProps(fixtureState, instanceId, {
-              name: 'B'
-            })
+            fixtureStateChange: {
+              props: updateFixtureStateProps(fixtureState, instanceId, {
+                name: 'B'
+              })
+            }
           }
         });
 

@@ -7,8 +7,8 @@ import {
   RENDERER_ID,
   remoteItem,
   updateState,
-  setFixtureStateProps,
-  setFixtureStateState
+  updateFixtureStateProps,
+  updateFixtureStateState
 } from 'react-cosmos-shared2';
 import { PlaygroundContext } from '../context';
 
@@ -149,10 +149,11 @@ export class Root extends Component<Props, PlaygroundContextValue> {
       payload: {
         rendererId: RENDERER_ID,
         fixturePath,
-        // TODO: Only send fixtureState.state?
-        fixtureStateChange: setFixtureStateProps(fixtureState, instanceId, {
-          [key]: value
-        })
+        fixtureStateChange: {
+          props: updateFixtureStateProps(fixtureState, instanceId, {
+            [key]: value
+          })
+        }
       }
     });
   };
@@ -175,11 +176,12 @@ export class Root extends Component<Props, PlaygroundContextValue> {
       payload: {
         rendererId: RENDERER_ID,
         fixturePath,
-        // TODO: Only send fixtureState.state?
-        fixtureStateChange: setFixtureStateState(fixtureState, instanceId, {
-          // TODO: Rely on pre-established type
-          [key]: isNaN(value) ? value : Number(value)
-        })
+        fixtureStateChange: {
+          state: updateFixtureStateState(fixtureState, instanceId, {
+            // TODO: Rely on pre-established type
+            [key]: isNaN(value) ? value : Number(value)
+          })
+        }
       }
     });
   };

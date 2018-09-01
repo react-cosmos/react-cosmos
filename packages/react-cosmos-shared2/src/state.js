@@ -2,12 +2,12 @@
 
 import type { StateUpdater } from '../types/state';
 
-export function updateState<T>(fixtureState: ?T, updater: StateUpdater<T>): T {
+export function updateState<T>(prevState: ?T, updater: StateUpdater<T>): T {
   const fixtureChange =
-    typeof updater === 'function' ? updater(fixtureState) : updater;
+    typeof updater === 'function' ? updater(prevState) : updater;
 
   return {
-    ...fixtureState,
+    ...prevState,
     ...fixtureChange
   };
 }

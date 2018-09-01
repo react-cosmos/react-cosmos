@@ -64,17 +64,12 @@ declare export function getFixtureStatePropsInst(
   instanceId: number
 ): FixtureStateProps;
 
-declare export function setFixtureStateProps(
+declare export function updateFixtureStateProps(
   fixtureState: ?FixtureState,
   instanceId: number,
-  newProps: { [key: string]: mixed }
-): FixtureState;
-
-declare export function resetFixtureStateProps(
-  fixtureState: FixtureState,
-  instanceId: number,
-  newProps: { [key: string]: mixed }
-): FixtureState;
+  newProps: { [key: string]: mixed },
+  resetInstance?: boolean
+): FixtureStateProps[];
 
 declare export function getFixtureStateState(
   fixtureState: ?FixtureState
@@ -85,8 +80,8 @@ declare export function getFixtureStateStateInst(
   instanceId: number
 ): FixtureStateState;
 
-declare export function setFixtureStateState(
+declare export function updateFixtureStateState(
   fixtureState: ?FixtureState,
   instanceId: number,
   newState: { [key: string]: mixed }
-): FixtureState;
+): FixtureStateState[];

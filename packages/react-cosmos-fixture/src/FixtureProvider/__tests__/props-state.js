@@ -7,10 +7,9 @@ import { FixtureProvider } from '../../FixtureProvider';
 import {
   updateState,
   getFixtureStateProps,
-  setFixtureStateProps,
-  resetFixtureStateProps,
+  updateFixtureStateProps,
   getFixtureStateState,
-  setFixtureStateState
+  updateFixtureStateState
 } from 'react-cosmos-shared2';
 
 it('resets state when resetting props', () => {
@@ -35,8 +34,10 @@ it('resets state when resetting props', () => {
   );
 
   const [{ instanceId: stateInstanceId }] = getFixtureStateState(fixtureState);
-  fixtureState = setFixtureStateState(fixtureState, stateInstanceId, {
-    count: 5
+  fixtureState = updateState(fixtureState, {
+    state: updateFixtureStateState(fixtureState, stateInstanceId, {
+      count: 5
+    })
   });
 
   instance.update(
@@ -51,8 +52,13 @@ it('resets state when resetting props', () => {
   expect(instance.toJSON()).toBe('5 times');
 
   const [{ instanceId: propsInstanceId }] = getFixtureStateProps(fixtureState);
-  fixtureState = resetFixtureStateProps(fixtureState, propsInstanceId, {
-    suffix: 'timez'
+  fixtureState = updateState(fixtureState, {
+    props: updateFixtureStateProps(
+      fixtureState,
+      propsInstanceId,
+      { suffix: 'timez' },
+      true
+    )
   });
 
   instance.update(
@@ -98,8 +104,10 @@ it('keeps state when transitioning props', () => {
   );
 
   const [{ instanceId: stateInstanceId }] = getFixtureStateState(fixtureState);
-  fixtureState = setFixtureStateState(fixtureState, stateInstanceId, {
-    count: 5
+  fixtureState = updateState(fixtureState, {
+    state: updateFixtureStateState(fixtureState, stateInstanceId, {
+      count: 5
+    })
   });
 
   instance.update(
@@ -114,8 +122,10 @@ it('keeps state when transitioning props', () => {
   expect(instance.toJSON()).toBe('5 times');
 
   const [{ instanceId: propsInstanceId }] = getFixtureStateProps(fixtureState);
-  fixtureState = setFixtureStateProps(fixtureState, propsInstanceId, {
-    suffix: 'timez'
+  fixtureState = updateState(fixtureState, {
+    props: updateFixtureStateProps(fixtureState, propsInstanceId, {
+      suffix: 'timez'
+    })
   });
 
   instance.update(

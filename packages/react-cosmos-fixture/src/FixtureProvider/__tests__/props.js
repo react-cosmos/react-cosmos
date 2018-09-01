@@ -5,8 +5,7 @@ import { create } from 'react-test-renderer';
 import {
   updateState,
   getFixtureStateProps,
-  setFixtureStateProps,
-  resetFixtureStateProps
+  updateFixtureStateProps
 } from 'react-cosmos-shared2';
 import { CaptureProps } from '../../CaptureProps';
 import { FixtureProvider } from '../../FixtureProvider';
@@ -58,8 +57,10 @@ it('overwrites prop', () => {
   );
 
   const [{ instanceId }] = getFixtureStateProps(fixtureState);
-  fixtureState = setFixtureStateProps(fixtureState, instanceId, {
-    name: 'Vitalik'
+  fixtureState = updateState(fixtureState, {
+    props: updateFixtureStateProps(fixtureState, instanceId, {
+      name: 'Vitalik'
+    })
   });
 
   instance.update(
@@ -92,7 +93,9 @@ it('removes prop', () => {
   );
 
   const [{ instanceId }] = getFixtureStateProps(fixtureState);
-  fixtureState = setFixtureStateProps(fixtureState, instanceId, {});
+  fixtureState = updateState(fixtureState, {
+    props: updateFixtureStateProps(fixtureState, instanceId, {})
+  });
 
   instance.update(
     <FixtureProvider
@@ -129,8 +132,10 @@ it('reverts to original props', () => {
   );
 
   const [{ instanceId }] = getFixtureStateProps(fixtureState);
-  fixtureState = setFixtureStateProps(fixtureState, instanceId, {
-    name: 'Vitalik'
+  fixtureState = updateState(fixtureState, {
+    props: updateFixtureStateProps(fixtureState, instanceId, {
+      name: 'Vitalik'
+    })
   });
 
   instance.update(
@@ -182,8 +187,10 @@ it('reuses instance on props transition', () => {
   );
 
   const [{ instanceId }] = getFixtureStateProps(fixtureState);
-  fixtureState = setFixtureStateProps(fixtureState, instanceId, {
-    name: 'Vitalik'
+  fixtureState = updateState(fixtureState, {
+    props: updateFixtureStateProps(fixtureState, instanceId, {
+      name: 'Vitalik'
+    })
   });
 
   let ref2;
@@ -233,8 +240,13 @@ it('creates new instance on props reset', () => {
   );
 
   const [{ instanceId }] = getFixtureStateProps(fixtureState);
-  fixtureState = resetFixtureStateProps(fixtureState, instanceId, {
-    name: 'Vitalik'
+  fixtureState = updateState(fixtureState, {
+    props: updateFixtureStateProps(
+      fixtureState,
+      instanceId,
+      { name: 'Vitalik' },
+      true
+    )
   });
 
   let ref2;
@@ -329,11 +341,15 @@ it('overwrites props in multiple instances', () => {
   );
 
   const [props1, props2] = getFixtureStateProps(fixtureState);
-  fixtureState = setFixtureStateProps(fixtureState, props1.instanceId, {
-    name: 'SATOSHI'
+  fixtureState = updateState(fixtureState, {
+    props: updateFixtureStateProps(fixtureState, props1.instanceId, {
+      name: 'SATOSHI'
+    })
   });
-  fixtureState = setFixtureStateProps(fixtureState, props2.instanceId, {
-    name: 'VITALIK'
+  fixtureState = updateState(fixtureState, {
+    props: updateFixtureStateProps(fixtureState, props2.instanceId, {
+      name: 'VITALIK'
+    })
   });
 
   instance.update(

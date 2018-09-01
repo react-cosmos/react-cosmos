@@ -19,7 +19,7 @@ export function updateItem<T>(
 }
 
 export function replaceOrAddItem<T>(
-  items: $ReadOnlyArray<T> = [],
+  items: $ReadOnlyArray<T>,
   matcher: Predicate<T>,
   item: T
 ): Array<T> {
@@ -30,10 +30,7 @@ export function replaceOrAddItem<T>(
     : [...items, item];
 }
 
-export function removeItem<T>(
-  items: $ReadOnlyArray<T> = [],
-  item: T
-): Array<T> {
+export function removeItem<T>(items: $ReadOnlyArray<T>, item: T): Array<T> {
   const index = items.indexOf(item);
 
   if (index === -1) {

@@ -3,7 +3,6 @@
 import { find } from 'lodash';
 import { updateItem } from './utility';
 import { extractValuesFromObject } from './values';
-import { updateState } from './state';
 
 import type { FixtureState } from '../types/fixtureState';
 
@@ -21,10 +20,11 @@ export function getFixtureStatePropsInst(
   );
 }
 
-export function setFixtureStateProps(
+export function updateFixtureStateProps(
   fixtureState: ?FixtureState,
   instanceId: number,
-  newProps: { [key: string]: mixed }
+  newProps: { [key: string]: mixed },
+  resetInstance?: boolean = false
 ) {
   const propsInstance = getFixtureStatePropsInst(fixtureState, instanceId);
 
@@ -32,29 +32,11 @@ export function setFixtureStateProps(
     throw new Error(`Missing props with instanceId: ${instanceId}`);
   }
 
-  return updateState(fixtureState, {
-    props: updateItem(getFixtureStateProps(fixtureState), propsInstance, {
-      values: extractValuesFromObject(newProps)
-    })
-  });
-}
+  const { renderKey } = propsInstance;
 
-export function resetFixtureStateProps(
-  fixtureState: FixtureState,
-  instanceId: number,
-  newProps: { [key: string]: mixed }
-) {
-  const propsInstance = getFixtureStatePropsInst(fixtureState, instanceId);
-
-  if (!propsInstance) {
-    throw new Error(`Missing props with instanceId: ${instanceId}`);
-  }
-
-  return updateState(fixtureState, {
-    props: updateItem(getFixtureStateProps(fixtureState), propsInstance, {
-      renderKey: propsInstance.renderKey + 1,
-      values: extractValuesFromObject(newProps)
-    })
+  return updateItem(getFixtureStateProps(fixtureState), propsInstance, {
+    renderKey: resetInstance ? renderKey + 1 : renderKey,
+    values: extractValuesFromObject(newProps)
   });
 }
 
@@ -72,7 +54,7 @@ export function getFixtureStateStateInst(
   );
 }
 
-export function setFixtureStateState(
+export function updateFixtureStateState(
   fixtureState: ?FixtureState,
   instanceId: number,
   newState: { [key: string]: mixed }
@@ -83,9 +65,7 @@ export function setFixtureStateState(
     throw new Error(`Missing state with instanceId: ${instanceId}`);
   }
 
-  return updateState(fixtureState, {
-    state: updateItem(getFixtureStateState(fixtureState), stateInstance, {
-      values: extractValuesFromObject(newState)
-    })
+  return updateItem(getFixtureStateState(fixtureState), stateInstance, {
+    values: extractValuesFromObject(newState)
   });
 }

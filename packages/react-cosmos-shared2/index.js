@@ -12,8 +12,7 @@ exports.updateState = require('./dist/state').updateState;
 
 exports.getFixtureStateProps = require('./dist/fixtureState').getFixtureStateProps;
 exports.getFixtureStatePropsInst = require('./dist/fixtureState').getFixtureStatePropsInst;
-exports.setFixtureStateProps = require('./dist/fixtureState').setFixtureStateProps;
-exports.resetFixtureStateProps = require('./dist/fixtureState').resetFixtureStateProps;
+exports.updateFixtureStateProps = require('./dist/fixtureState').updateFixtureStateProps;
 exports.getFixtureStateState = require('./dist/fixtureState').getFixtureStateState;
 exports.getFixtureStateStateInst = require('./dist/fixtureState').getFixtureStateStateInst;
-exports.setFixtureStateState = require('./dist/fixtureState').setFixtureStateState;
+exports.updateFixtureStateState = require('./dist/fixtureState').updateFixtureStateState;
