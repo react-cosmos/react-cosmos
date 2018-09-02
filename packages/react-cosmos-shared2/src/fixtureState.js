@@ -40,7 +40,7 @@ export function getFixtureStateProps(fixtureState: ?FixtureState) {
 
 export function getFixtureStatePropsInst(
   fixtureState: ?FixtureState,
-  instanceId: number
+  instanceId: FixtureStateInstanceId
 ) {
   return find(
     getFixtureStateProps(fixtureState),
@@ -50,7 +50,7 @@ export function getFixtureStatePropsInst(
 
 export function updateFixtureStateProps(
   fixtureState: ?FixtureState,
-  instanceId: number,
+  instanceId: FixtureStateInstanceId,
   newProps: { [key: string]: mixed },
   resetInstance?: boolean = false
 ) {
@@ -74,7 +74,7 @@ export function getFixtureStateState(fixtureState: ?FixtureState) {
 
 export function getFixtureStateStateInst(
   fixtureState: ?FixtureState,
-  instanceId: number
+  instanceId: FixtureStateInstanceId
 ) {
   return find(
     getFixtureStateState(fixtureState),
@@ -84,7 +84,7 @@ export function getFixtureStateStateInst(
 
 export function updateFixtureStateState(
   fixtureState: ?FixtureState,
-  instanceId: number,
+  instanceId: FixtureStateInstanceId,
   newState: { [key: string]: mixed }
 ) {
   const stateInstance = getFixtureStateStateInst(fixtureState, instanceId);

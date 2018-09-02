@@ -1,5 +1,7 @@
 // @flow
 
+export type FixtureStateInstanceId = number;
+
 export type FixtureStateValue = {
   serializable: boolean,
   key: string,
@@ -9,14 +11,14 @@ export type FixtureStateValue = {
 export type FixtureStateValues = FixtureStateValue[];
 
 export type FixtureStateProps = {
-  instanceId: number,
+  instanceId: FixtureStateInstanceId,
   componentName: string,
   renderKey: number,
   values: FixtureStateValues
 };
 
 export type FixtureStateState = {
-  instanceId: number,
+  instanceId: FixtureStateInstanceId,
   componentName: string,
   values: FixtureStateValues
 };
@@ -42,12 +44,12 @@ declare export function getFixtureStateProps(
 
 declare export function getFixtureStatePropsInst(
   fixtureState: ?FixtureState,
-  instanceId: number
+  instanceId: FixtureStateInstanceId
 ): ?FixtureStateProps;
 
 declare export function updateFixtureStateProps(
   fixtureState: ?FixtureState,
-  instanceId: number,
+  instanceId: FixtureStateInstanceId,
   newProps: { [key: string]: mixed },
   resetInstance?: boolean
 ): FixtureStateProps[];
@@ -58,11 +60,11 @@ declare export function getFixtureStateState(
 
 declare export function getFixtureStateStateInst(
   fixtureState: ?FixtureState,
-  instanceId: number
+  instanceId: FixtureStateInstanceId
 ): ?FixtureStateState;
 
 declare export function updateFixtureStateState(
   fixtureState: ?FixtureState,
-  instanceId: number,
+  instanceId: FixtureStateInstanceId,
   newState: { [key: string]: mixed }
 ): FixtureStateState[];
