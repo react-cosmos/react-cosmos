@@ -6,7 +6,7 @@ import { render } from 'react-dom';
 import { Root } from './Root';
 import './register-plugins';
 
-import type { PlaygroundOptions } from '../types';
+import type { PlaygroundOptions } from './index.js.flow';
 
 export default function mount(options: PlaygroundOptions) {
   render(<Root options={options} />, getDomContainer());

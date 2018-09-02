@@ -15,7 +15,7 @@ import type {
   UiState,
   ReplaceFixtureState,
   RendererRequestListener
-} from '../../types';
+} from '../index.js.flow';
 
 type Props = {
   rendererUrl: string,

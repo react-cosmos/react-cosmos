@@ -2,7 +2,7 @@
 
 import { createContext } from 'react';
 
-import type { PlaygroundContextValue } from '../types';
+import type { PlaygroundContextValue } from './index.js.flow';
 
 export const PlaygroundContext = createContext<PlaygroundContextValue>({
   options: {

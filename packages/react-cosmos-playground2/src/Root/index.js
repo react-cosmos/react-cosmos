@@ -19,7 +19,7 @@ import type {
   ReplaceFixtureState,
   RendererRequestListener,
   PlaygroundContextValue
-} from '../../types';
+} from '../index.js.flow';
 
 type Props = {
   options: PlaygroundOptions
@@ -186,7 +186,7 @@ export class Root extends Component<Props, PlaygroundContextValue> {
     });
   };
 
-  // TODO: Extract common arts of createPropValueChangeHandler and
+  // TODO: Extract common parts of createPropValueChangeHandler and
   // createStateValueChangeHandler in `postFixtureStateChange`
 
   createFixtureSelectHandler = (fixturePath: string) => () => {
