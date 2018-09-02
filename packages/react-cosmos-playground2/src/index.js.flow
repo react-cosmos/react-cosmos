@@ -3,6 +3,7 @@
 import type { SetState } from 'react-cosmos-shared2/util';
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type {
+  RendererId,
   FixtureNames,
   RendererRequest
 } from 'react-cosmos-shared2/renderer';
@@ -12,6 +13,7 @@ export type PlaygroundOptions = {
 };
 
 export type UiState = {
+  renderers: RendererId[],
   fixtures: FixtureNames,
   // TODO: Move fixturePath to urlParams when adding router
   fixturePath: ?string

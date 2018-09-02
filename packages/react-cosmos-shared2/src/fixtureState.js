@@ -4,6 +4,7 @@ import { find } from 'lodash';
 import { updateItem } from './util';
 
 import type {
+  FixtureStateInstanceId,
   FixtureStateValue,
   FixtureStateValues,
   FixtureState

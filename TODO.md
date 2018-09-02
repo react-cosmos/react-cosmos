@@ -3,7 +3,7 @@
 - [React Native integration](#react-native-integration)
 - [Pluggable UI](#pluggable-ui)
 - [Explore: JSX fixtures](#explore-jsx-fixtures)
-- UI control panel
+- [UI control panel](#ui-control-panel)
 - Redesign docs
 
 ## Explore: JSX fixtures
@@ -39,10 +39,10 @@
 
 - [x] Create `{ next: true }` config option
 - [x] Create new Playground package
-- [ ] Create new DOM renderer
-- [ ] Serve new Playground and renderer when _next_ option is true
+- [x] Create new DOM renderer
+- [x] Serve new Playground and renderer when _next_ option is true
+- [x] Map new Playground to new fixture format
 - [ ] Detect new fixture file types under `__jsxfixtures__`
-- [ ] Map new Playground to new fixture format
 
 ## Pluggable UI
 
@@ -90,6 +90,10 @@
   - [x] Check if testing API is compatible
 - [x] Create React Native App example
 - [x] Add (experimental) README section
+
+## UI control panel
+
+- [x] Create POC with JSX fixtures
 
 ## Redesign docs
 

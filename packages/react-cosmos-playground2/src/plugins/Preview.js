@@ -1,6 +1,7 @@
 /* eslint-env browser */
 // @flow
 
+import styled from 'styled-components';
 import React, { Component } from 'react';
 import { Plugin, Plug, Slot } from 'react-plugin';
 import { PlaygroundContext } from '../context';
@@ -19,7 +20,7 @@ import type {
 
 type Props = {
   rendererUrl: string,
-  fixturePath: ?string,
+  uiState: UiState,
   fixtureState: ?FixtureState,
   setUiState: SetState<UiState>,
   onRendererRequest: (listener: RendererRequestListener) => () => mixed,
@@ -35,7 +36,11 @@ class IframePreview extends Component<Props> {
     const { rendererUrl } = this.props;
 
     return (
-      <iframe ref={this.handleIframeRef} src={rendererUrl} frameBorder={0} />
+      <Iframe
+        innerRef={this.handleIframeRef}
+        src={rendererUrl}
+        frameBorder={0}
+      />
     );
   }
 
@@ -58,13 +63,20 @@ class IframePreview extends Component<Props> {
   };
 
   handleMessage = ({ data }: { data: RendererResponse }) => {
-    const { setUiState, replaceFixtureState } = this.props;
+    const { uiState, setUiState, replaceFixtureState } = this.props;
 
     switch (data.type) {
       case 'fixtureList': {
-        const { fixtures } = data.payload;
+        const { rendererId, fixtures } = data.payload;
+        const { renderers } = uiState;
 
-        return setUiState({ fixtures });
+        return setUiState({
+          renderers:
+            renderers.indexOf(rendererId) === -1
+              ? [...renderers, rendererId]
+              : renderers,
+          fixtures
+        });
       }
       case 'fixtureState': {
         const { fixtureState } = data.payload;
@@ -106,7 +118,7 @@ export default (
             }) => (
               <IframePreview
                 rendererUrl={options.rendererUrl}
-                fixturePath={uiState.fixturePath}
+                uiState={uiState}
                 fixtureState={fixtureState}
                 setUiState={setUiState}
                 replaceFixtureState={replaceFixtureState}
@@ -119,3 +131,7 @@ export default (
     />
   </Plugin>
 );
+
+const Iframe = styled.iframe`
+  background: #f1f1f1;
+`;

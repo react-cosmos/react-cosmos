@@ -4,14 +4,17 @@ import { createContext } from 'react';
 
 import type { PlaygroundContextValue } from './index.js.flow';
 
+export const defaultUiState = {
+  renderers: [],
+  fixtures: [],
+  fixturePath: null
+};
+
 export const PlaygroundContext = createContext<PlaygroundContextValue>({
   options: {
     rendererUrl: ''
   },
-  uiState: {
-    fixtures: [],
-    fixturePath: null
-  },
+  uiState: defaultUiState,
   setUiState: () => {},
   fixtureState: null,
   replaceFixtureState: () => {},
