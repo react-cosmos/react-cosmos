@@ -66,9 +66,12 @@ export class FixtureProvider extends Component<
     // work either. The fragment type is Symbol, which is considered a primitive
     // type and isn't accepted as a WeakMap key
     if (element.type === Fragment) {
-      return element.props.children.map((child, index) =>
-        this.getWrappedChild(child, index)
-      );
+      const { children } = element.props;
+
+      // Edge-case: Fragments can also have a single child
+      return Array.isArray(children)
+        ? children.map((child, index) => this.getWrappedChild(child, index))
+        : this.getWrappedChild(children, index);
     }
 
     // Fixture decorators can opt out from their props being captured. Eg.
