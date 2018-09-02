@@ -73,7 +73,7 @@ class ComponentStateInner extends Component<InnerProps> {
   }
 
   shouldComponentUpdate({ fixtureState: nextFixtureState }) {
-    const { fixtureState } = this.props;
+    const { state: mockedState, fixtureState } = this.props;
 
     if (nextFixtureState === fixtureState) {
       return false;
@@ -87,17 +87,24 @@ class ComponentStateInner extends Component<InnerProps> {
       return false;
     }
 
-    // This step by step comparison is a bit dull, but it helps Flow understand
-    // that by this point both next and prev are *not* null.
-    if (!next || !prev) {
+    // Fixture state for this instance is populated on mount, so a transition
+    // to an empty state means that this instance is expected to reset
+    if (!next) {
       return true;
     }
+
+    // If the fixture state for this instance has just been populated, we need
+    // to compare its values against the default values, otherwise an additional
+    // render cycle will be always run on init
+    const prevValues = prev
+      ? prev.values
+      : extractValuesFromObject(mockedState || this.initialState);
 
     // Because serialized fixture state changes are received remotely, a change
     // in one fixtureState.state instance will change the identity of all
     // fixtureState.state instances. So the only way to avoid useless re-renders
     // is to check if any value from the fixture state state changed.
-    return !areValuesEqual(next.values, prev.values);
+    return !areValuesEqual(next.values, prevValues);
   }
 
   // Because of shouldComponentUpdate we can assume that fixture state
@@ -177,7 +184,7 @@ class ComponentStateInner extends Component<InnerProps> {
     } else if (childRef.state) {
       // State isn't mocked, but component has initial state => Populate
       // fixtureState.state with component's initial state
-      this.updateFixtureState(childRef.state, childRef);
+      this.updateFixtureState(this.initialState, childRef);
     }
   };
 
@@ -187,12 +194,21 @@ class ComponentStateInner extends Component<InnerProps> {
     const { setFixtureState } = this.props;
 
     setFixtureState(fixtureState => {
-      return updateComponentStateInFixtureState({
-        fixtureState,
-        componentState,
-        decoratorRef: this,
-        childRef
-      });
+      const instanceId = getInstanceId(this);
+      const componentName = getComponentName(getRefType(childRef));
+      const stateInstance = {
+        instanceId,
+        componentName,
+        values: extractValuesFromObject(componentState)
+      };
+
+      return {
+        state: replaceOrAddItem(
+          getFixtureStateState(fixtureState),
+          state => state.instanceId === instanceId,
+          stateInstance
+        )
+      };
     }, this.scheduleStateCheck);
   }
 
@@ -248,34 +264,6 @@ function resetOriginalProps(original, current) {
         : result,
     current
   );
-}
-
-function updateComponentStateInFixtureState({
-  fixtureState,
-  componentState,
-  decoratorRef,
-  childRef
-}: {
-  fixtureState: ?FixtureState,
-  componentState: Object,
-  decoratorRef: ElementRef<typeof Component>,
-  childRef: ElementRef<typeof Component>
-}) {
-  const instanceId = getInstanceId(decoratorRef);
-  const componentName = getComponentName(getRefType(childRef));
-  const stateInstance = {
-    instanceId,
-    componentName,
-    values: extractValuesFromObject(componentState)
-  };
-
-  return {
-    state: replaceOrAddItem(
-      getFixtureStateState(fixtureState),
-      state => state.instanceId === instanceId,
-      stateInstance
-    )
-  };
 }
 
 function getRefType(elRef) {

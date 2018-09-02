@@ -74,7 +74,7 @@ class CapturePropsInner extends Component<InnerProps> {
   }
 
   shouldComponentUpdate({ fixtureState: nextFixtureState }) {
-    const { fixtureState } = this.props;
+    const { children, fixtureState } = this.props;
 
     if (nextFixtureState === fixtureState) {
       return false;
@@ -88,9 +88,21 @@ class CapturePropsInner extends Component<InnerProps> {
       return false;
     }
 
-    // This step by step comparison is a bit dull, but it helps Flow understand
-    // that by this point both next and prev are *not* null.
-    if (!next || !prev || next.renderKey !== prev.renderKey) {
+    // Fixture state for this instance is populated on mount, so a transition
+    // to an empty state means that this instance is expected to reset
+    if (!next) {
+      return true;
+    }
+
+    // If the fixture state for this instance has just been populated, we need
+    // to compare its values against the default values, otherwise an additional
+    // render cycle will be always run on init
+    const prevKey = prev ? prev.renderKey : DEFAULT_RENDER_KEY;
+    const prevValues = prev
+      ? prev.values
+      : extractValuesFromObject(children.props);
+
+    if (next.renderKey !== prevKey) {
       return true;
     }
 
@@ -98,7 +110,7 @@ class CapturePropsInner extends Component<InnerProps> {
     // in one fixtureState.props instance will change the identity of all
     // fixtureState.props instances. So the only way to avoid useless re-renders
     // is to check if any value from the fixture state props changed.
-    return !areValuesEqual(next.values, prev.values);
+    return !areValuesEqual(next.values, prevValues);
   }
 
   render() {
