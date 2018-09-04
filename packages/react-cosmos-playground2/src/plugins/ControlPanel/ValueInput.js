@@ -30,6 +30,6 @@ export class ValueInput extends Component<Props> {
     const { value } = e.currentTarget;
     const { onChange } = this.props;
 
-    onChange(isNaN(value) ? value : Number(value));
+    onChange(value === '' || isNaN(value) ? value : Number(value));
   };
 }
