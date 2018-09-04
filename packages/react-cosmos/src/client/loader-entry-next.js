@@ -5,10 +5,13 @@ import './react-devtools-hook';
 import React from 'react';
 import { render } from 'react-dom';
 import { RENDERER_ID } from 'react-cosmos-shared2/renderer';
+import { getDomContainer } from 'react-cosmos-shared2/dom';
 import { PostMessage, FixtureConnect } from 'react-cosmos-fixture';
 import { fixtures } from './user-modules-next';
 
 mount();
+
+// TODO: HMR
 
 function mount() {
   render(
@@ -25,21 +28,4 @@ function mount() {
     </PostMessage>,
     getDomContainer()
   );
-}
-
-let container;
-
-// TODO: Create abstraction in react-cosmos-shared2 and reuse in Playground2
-function getDomContainer() {
-  if (!container) {
-    container = document.createElement('div');
-
-    if (!document.body) {
-      throw new Error(`document.body missing, can't mount renderer`);
-    }
-
-    document.body.appendChild(container);
-  }
-
-  return container;
 }
