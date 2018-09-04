@@ -2,7 +2,7 @@ Q: Why do components wrapped in `ComponentState` re-render when props of an unre
 
 A: Because `ComponentState` also wraps its children in `CaptureProps`, which re-renders whenever any _fixtureState.props_ instance changes.
 
-Fix: Implement deep equality check for fixtureState props/state instance transitions.
+Fix: ~~Implement deep equality check for fixtureState props/state instance transitions.~~ [Done](https://github.com/react-cosmos/react-cosmos/commit/44bb9cec91dbb8dc4a788fdca50d897d841171e9) and [done](https://github.com/react-cosmos/react-cosmos/commit/126fda74a1e97bbce061443c7ab08f1b8fdc023c).
 
 ---
 
