@@ -42,14 +42,15 @@
   - [ ] Minimal UI for beta-testing JSX fixtures in the wild
     - [x] Map state to new renderer events
     - [x] Renderer preview
-    - [ ] Fixture list
-    - [ ] Fixture control panel
+    - [x] Fixture list
+    - [x] Fixture control panel
 - [ ] New DOM renderer
   - [x] Integrate with new FixtureConnect API
-  - [ ] Integrate (ES only, for now) fixture files
-- [ ] Server
+  - [x] Integrate (ES only, for now) fixture files
+  - [ ] HMR
+- [x] Server
   - [x] Serve new Playground and renderer on `{ next: true }` config option
-  - [ ] Detect new fixture file types under `__jsxfixtures__`
+  - [x] Detect new fixture file types under `__jsxfixtures__`
 
 ## Pluggable UI
 

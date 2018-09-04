@@ -30,6 +30,7 @@ export default function enhanceWebpackConfig({
 }: Args) {
   const cosmosConfig: Config = getCosmosConfig();
   const {
+    next,
     rootPath,
     containerQuerySelector,
     hot,
@@ -49,10 +50,15 @@ export default function enhanceWebpackConfig({
 
   const rules = [
     ...getExistingRules(webpackConfig),
-    {
-      loader: require.resolve('./embed-modules-webpack-loader'),
-      include: require.resolve('../../../client/user-modules')
-    }
+    next
+      ? {
+          loader: require.resolve('./embed-modules-webpack-loader-next'),
+          include: require.resolve('../../../client/user-modules-next')
+        }
+      : {
+          loader: require.resolve('./embed-modules-webpack-loader'),
+          include: require.resolve('../../../client/user-modules')
+        }
   ];
 
   let plugins = [
