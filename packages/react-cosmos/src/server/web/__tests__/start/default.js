@@ -7,7 +7,7 @@ import { readFileSync } from 'fs';
 import EventSource from 'eventsource';
 import request from 'request-promise-native';
 import { generateCosmosConfig } from 'react-cosmos-config';
-import { replaceKeys } from '../../../shared/template';
+import { replaceKeys } from 'react-cosmos-shared2/util';
 import { startServer } from '../../start';
 
 const mockRootPath = __dirname;

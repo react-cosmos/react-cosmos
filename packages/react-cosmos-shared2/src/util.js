@@ -50,3 +50,7 @@ export function updateState<T>(prevState: ?T, updater: StateUpdater<T>): T {
     ...fixtureChange
   };
 }
+
+export function replaceKeys(str: string, map: { [key: string]: string }) {
+  return Object.keys(map).reduce((res, key) => res.replace(key, map[key]), str);
+}

@@ -13,7 +13,7 @@ import {
   slash
 } from 'react-cosmos-shared/server';
 import io from 'socket.io-client';
-import { replaceKeys } from '../../shared/template';
+import { replaceKeys } from 'react-cosmos-shared2/util';
 import { startServer } from '../start';
 
 const mockRootPath = slash(__dirname, '__fsmocks__');

@@ -6,7 +6,7 @@
 import { readFileSync } from 'fs';
 import request from 'request-promise-native';
 import { argv } from 'yargs';
-import { replaceKeys } from '../../../shared/template';
+import { replaceKeys } from 'react-cosmos-shared2/util';
 import { startServer } from '../../start';
 import webpackConfig from './__fsmocks__/webpack.config-fn';
 

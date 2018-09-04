@@ -6,7 +6,7 @@
 import { existsSync, readFileSync } from 'fs';
 import rimraf from 'rimraf';
 import { slash } from 'react-cosmos-shared/server';
-import { replaceKeys } from '../../shared/template';
+import { replaceKeys } from 'react-cosmos-shared2/util';
 import { generateExport } from '../export';
 
 const mockRootPath = __dirname;

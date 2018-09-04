@@ -2,7 +2,7 @@
 
 import { join } from 'path';
 import { readFileSync } from 'fs';
-import { replaceKeys } from './template';
+import { replaceKeys } from 'react-cosmos-shared2/util';
 
 import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
 import type { PlaygroundOptions } from 'react-cosmos-playground2';
