@@ -38,12 +38,11 @@
 
 > JSX fixtures are a big shift from the traditional fixture format in Cosmos. Before planning the migration, the new APIs need to be tested and validated by Cosmos users. Below are the steps to make the new fixture API available under a _feature flag._
 
-- [ ] New Playground
-  - [ ] Minimal UI for beta-testing JSX fixtures in the wild
-    - [x] Map state to new renderer events
-    - [x] Renderer preview
-    - [x] Fixture list
-    - [x] Fixture control panel
+- [ ] New (minimal) Playground
+  - [x] Map state to new renderer events
+  - [x] Renderer preview
+  - [x] Fixture list
+  - [x] Fixture control panel
 - [ ] New DOM renderer
   - [x] Integrate with new FixtureConnect API
   - [x] Integrate (ES only, for now) fixture files
