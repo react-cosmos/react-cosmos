@@ -95,11 +95,6 @@ it('removes prop', () => {
   expect(instance.toJSON()).toBe('Hello, Guest!');
 });
 
-// XXX: This is dead end use case. Props for this instance will stay empty from
-// this point on, because CaptureProps only adds props to fixture state on
-// mount.
-// TODO: Inside CapturePropsInner.componentDidUpdate reset props in fixture
-// state if they are missing.
 it('reverts to original props', () => {
   let fixtureState = {};
   const setFixtureState = updater => {
@@ -133,6 +128,11 @@ it('reverts to original props', () => {
   instance.update(createElement());
 
   expect(instance.toJSON()).toBe('Hello, Satoshi!');
+
+  // Not only does the fixture revert to original props, but it also
+  // re-populates the fixture state
+  const [props] = getFixtureStateProps(fixtureState);
+  expect(props).toEqual(getPropsInstanceShape('Satoshi'));
 });
 
 it('reuses instance on props transition', () => {
@@ -342,6 +342,50 @@ it('renders replaced component type', () => {
   instance.update(createElement(YoMessage));
 
   expect(instance.toJSON()).toBe('Yo, Satoshi!');
+});
+
+it('overwrites fixture state on fixture change', () => {
+  let fixtureState = {};
+  const setFixtureState = updater => {
+    fixtureState = updateState(fixtureState, updater);
+  };
+
+  const createElement = name => (
+    <FixtureProvider
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
+    >
+      <HelloMessage name={name} />
+    </FixtureProvider>
+  );
+
+  const instance = create(createElement('Satoshi'));
+
+  expect(instance.toJSON()).toBe('Hello, Satoshi!');
+
+  const [{ instanceId }] = getFixtureStateProps(fixtureState);
+  fixtureState = updateState(fixtureState, {
+    props: updateFixtureStateProps(fixtureState, instanceId, {
+      name: 'Satoshi N.'
+    })
+  });
+
+  // When using the same prop as initially, the fixture state takes priority
+  instance.update(createElement('Satoshi'));
+
+  expect(instance.toJSON()).toBe('Hello, Satoshi N.!');
+
+  // When the fixture changes, however, the fixture state follows along
+  instance.update(createElement('Vitalik'));
+
+  const [props] = getFixtureStateProps(fixtureState);
+  expect(props).toEqual(getPropsInstanceShape('Vitalik'));
+
+  // Another update is required for the updated fixture state to pass down as
+  // props.fixtureState
+  instance.update(createElement('Vitalik'));
+
+  expect(instance.toJSON()).toBe('Hello, Vitalik!');
 });
 
 // End of tests

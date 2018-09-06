@@ -1,5 +1,6 @@
 // @flow
 
+import { isEqual } from 'lodash';
 import React, { Component } from 'react';
 import { replaceOrAddItem } from 'react-cosmos-shared2/util';
 import {
@@ -44,7 +45,104 @@ type InnerProps = CapturePropsProps & {
 };
 
 class CapturePropsInner extends Component<InnerProps> {
+  render() {
+    const { children, fixtureState } = this.props;
+    const instanceId = getInstanceId(this);
+    const propsInstance = getFixtureStatePropsInst(fixtureState, instanceId);
+
+    // HACK alert: Editing React Element by hand
+    // This is blasphemy, but there are two reasons why React.cloneElement
+    // isn't ideal:
+    //   1. Props need to overridden (not merged)
+    //   2. element.key has to be set to control whether the previous instance
+    //      should be reused on not
+    // Also note that any previous key is irrelevant, as CaptureProps only
+    // accepts a *single* React.Element as children.
+    // Still, in case this method causes trouble in the future, both reasons
+    // can be overcome in the following ways:
+    //   1. Set original props that aren't present in fixture state to undefined
+    //   2. Create a wrapper component or element and to set the key on
+    // Useful links:
+    //   - https://reactjs.org/docs/react-api.html#cloneelement
+    //   - https://github.com/facebook/react/blob/15a8f031838a553e41c0b66eb1bcf1da8448104d/packages/react/src/ReactElement.js#L293-L362
+    return {
+      ...children,
+      props: propsInstance
+        ? extendOriginalPropsWithFixtureState(children.props, propsInstance)
+        : children.props,
+      key: propsInstance ? propsInstance.renderKey : DEFAULT_RENDER_KEY
+    };
+  }
+
   componentDidMount() {
+    this.updateFixtureState();
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const { children, fixtureState } = this.props;
+
+    // Re-render if child type or props changed (eg. via webpack HMR)
+    if (!isEqual(nextProps.children, children)) {
+      return true;
+    }
+
+    if (nextProps.fixtureState === fixtureState) {
+      return false;
+    }
+
+    const instanceId = getInstanceId(this);
+    const next = getFixtureStatePropsInst(nextProps.fixtureState, instanceId);
+    const prev = getFixtureStatePropsInst(fixtureState, instanceId);
+
+    if (next === prev) {
+      return false;
+    }
+
+    // Fixture state for this instance is populated on mount, so a transition
+    // to an empty state means that this instance is expected to reset
+    if (!next) {
+      return true;
+    }
+
+    // If the fixture state for this instance has just been populated, we need
+    // to compare its values against the default values, otherwise an additional
+    // render cycle will be always run on init
+    const prevKey = prev ? prev.renderKey : DEFAULT_RENDER_KEY;
+    const prevValues = prev
+      ? prev.values
+      : extractValuesFromObject(children.props);
+
+    if (next.renderKey !== prevKey) {
+      return true;
+    }
+
+    // Because serialized fixture state changes are received remotely, a change
+    // in one fixtureState.props instance will change the identity of all
+    // fixtureState.props instances. So the only way to avoid useless re-renders
+    // is to check if any value from the fixture state props changed.
+    return !areValuesEqual(next.values, prevValues);
+  }
+
+  componentDidUpdate(nextProps) {
+    const { children, fixtureState } = this.props;
+    const instanceId = getInstanceId(this);
+    const propsInstance = getFixtureStatePropsInst(fixtureState, instanceId);
+
+    // Rebuild fixture state if...
+    if (
+      // ...the fixture state associated with this instance (initially created
+      // in componentDidMount) has been emptied deliberately. This is an edge
+      // case that occurs when a user interacting with a fixture desires to
+      // discard the current fixture state and load the fixture from scatch.
+      !propsInstance ||
+      // ...fixture props changed, likely via webpack HMR
+      !isEqual(nextProps.children.props, children.props)
+    ) {
+      this.updateFixtureState();
+    }
+  }
+
+  updateFixtureState() {
     const { children, setFixtureState } = this.props;
     const instanceId = getInstanceId(this);
     const componentName = getComponentName(children.type);
@@ -72,89 +170,9 @@ class CapturePropsInner extends Component<InnerProps> {
       };
     });
   }
-
-  shouldComponentUpdate({
-    children: { type: nextType },
-    fixtureState: nextFixtureState
-  }) {
-    const {
-      children: { type, props },
-      fixtureState
-    } = this.props;
-
-    // Re-render if component type has been replaced (eg. via webpack HMR)
-    if (nextType !== type) {
-      return true;
-    }
-
-    if (nextFixtureState === fixtureState) {
-      return false;
-    }
-
-    const instanceId = getInstanceId(this);
-    const next = getFixtureStatePropsInst(nextFixtureState, instanceId);
-    const prev = getFixtureStatePropsInst(fixtureState, instanceId);
-
-    if (next === prev) {
-      return false;
-    }
-
-    // Fixture state for this instance is populated on mount, so a transition
-    // to an empty state means that this instance is expected to reset
-    if (!next) {
-      return true;
-    }
-
-    // If the fixture state for this instance has just been populated, we need
-    // to compare its values against the default values, otherwise an additional
-    // render cycle will be always run on init
-    const prevKey = prev ? prev.renderKey : DEFAULT_RENDER_KEY;
-    const prevValues = prev ? prev.values : extractValuesFromObject(props);
-
-    if (next.renderKey !== prevKey) {
-      return true;
-    }
-
-    // Because serialized fixture state changes are received remotely, a change
-    // in one fixtureState.props instance will change the identity of all
-    // fixtureState.props instances. So the only way to avoid useless re-renders
-    // is to check if any value from the fixture state props changed.
-    return !areValuesEqual(next.values, prevValues);
-  }
-
-  render() {
-    const { children, fixtureState } = this.props;
-    const instanceId = getInstanceId(this);
-    const propsInstance = getFixtureStatePropsInst(fixtureState, instanceId);
-
-    // HACK alert: Editing React Element by hand
-    // This is blasphemy, but there are two reasons why React.cloneElement
-    // isn't ideal:
-    //   1. Props need to overridden (not merged)
-    //   2. element.key has to be set to control whether the previous instance
-    //      should be reused on not
-    // Also note that any previous key is irrelevant, as CaptureProps only
-    // accepts a *single* React.Element as children.
-    // Still, in case this method causes trouble in the future, both reasons
-    // can be overcome in the following ways:
-    //   1. Set original props that aren't present in fixture state to undefined
-    //   2. Create a wrapper component or element and to set the key on
-    // Useful links:
-    //   - https://reactjs.org/docs/react-api.html#cloneelement
-    //   - https://github.com/facebook/react/blob/15a8f031838a553e41c0b66eb1bcf1da8448104d/packages/react/src/ReactElement.js#L293-L362
-    return {
-      ...children,
-      props: extendOriginalPropsWithFixtureState(children.props, propsInstance),
-      key: propsInstance ? propsInstance.renderKey : DEFAULT_RENDER_KEY
-    };
-  }
 }
 
 function extendOriginalPropsWithFixtureState(originalProps, propsInstance) {
-  if (!propsInstance) {
-    return originalProps;
-  }
-
   const { values } = propsInstance;
   const mergedProps = {};
 
