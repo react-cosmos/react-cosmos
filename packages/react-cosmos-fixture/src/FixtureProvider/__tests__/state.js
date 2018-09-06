@@ -88,34 +88,25 @@ it('overwrites initial state', () => {
     fixtureState = updateFixtureStateWithCb(fixtureState, updater, cb);
   };
 
-  const fixture = (
-    <ComponentState>
-      <Counter />
-    </ComponentState>
-  );
-
-  const instance = create(
+  const createElement = () => (
     <FixtureProvider
       fixtureState={fixtureState}
       setFixtureState={setFixtureState}
     >
-      {fixture}
+      <ComponentState>
+        <Counter />
+      </ComponentState>
     </FixtureProvider>
   );
+
+  const instance = create(createElement());
 
   const [{ instanceId }] = getFixtureStateState(fixtureState);
   fixtureState = updateState(fixtureState, {
     state: updateFixtureStateState(fixtureState, instanceId, { count: 5 })
   });
 
-  instance.update(
-    <FixtureProvider
-      fixtureState={fixtureState}
-      setFixtureState={setFixtureState}
-    >
-      {fixture}
-    </FixtureProvider>
-  );
+  instance.update(createElement());
 
   expect(instance.toJSON()).toBe('5 times');
 });
@@ -126,34 +117,25 @@ it('overwrites mocked state', () => {
     fixtureState = updateFixtureStateWithCb(fixtureState, updater, cb);
   };
 
-  const fixture = (
-    <ComponentState state={{ count: 5 }}>
-      <Counter />
-    </ComponentState>
-  );
-
-  const instance = create(
+  const createElement = () => (
     <FixtureProvider
       fixtureState={fixtureState}
       setFixtureState={setFixtureState}
     >
-      {fixture}
+      <ComponentState state={{ count: 5 }}>
+        <Counter />
+      </ComponentState>
     </FixtureProvider>
   );
+
+  const instance = create(createElement());
 
   const [{ instanceId }] = getFixtureStateState(fixtureState);
   fixtureState = updateState(fixtureState, {
     state: updateFixtureStateState(fixtureState, instanceId, { count: 100 })
   });
 
-  instance.update(
-    <FixtureProvider
-      fixtureState={fixtureState}
-      setFixtureState={setFixtureState}
-    >
-      {fixture}
-    </FixtureProvider>
-  );
+  instance.update(createElement());
 
   expect(instance.toJSON()).toBe('100 times');
 
@@ -163,14 +145,7 @@ it('overwrites mocked state', () => {
     state: updateFixtureStateState(fixtureState, instanceId, { count: 200 })
   });
 
-  instance.update(
-    <FixtureProvider
-      fixtureState={fixtureState}
-      setFixtureState={setFixtureState}
-    >
-      {fixture}
-    </FixtureProvider>
-  );
+  instance.update(createElement());
 
   expect(instance.toJSON()).toBe('200 times');
 });
@@ -181,34 +156,25 @@ it('removes initial state property', () => {
     fixtureState = updateFixtureStateWithCb(fixtureState, updater, cb);
   };
 
-  const fixture = (
-    <ComponentState>
-      <Counter />
-    </ComponentState>
-  );
-
-  const instance = create(
+  const createElement = () => (
     <FixtureProvider
       fixtureState={fixtureState}
       setFixtureState={setFixtureState}
     >
-      {fixture}
+      <ComponentState>
+        <Counter />
+      </ComponentState>
     </FixtureProvider>
   );
+
+  const instance = create(createElement());
 
   const [{ instanceId }] = getFixtureStateState(fixtureState);
   fixtureState = updateState(fixtureState, {
     state: updateFixtureStateState(fixtureState, instanceId, {})
   });
 
-  instance.update(
-    <FixtureProvider
-      fixtureState={fixtureState}
-      setFixtureState={setFixtureState}
-    >
-      {fixture}
-    </FixtureProvider>
-  );
+  instance.update(createElement());
 
   expect(instance.toJSON()).toBe('Missing count');
 });
@@ -219,34 +185,25 @@ it('removes mocked state property', () => {
     fixtureState = updateFixtureStateWithCb(fixtureState, updater, cb);
   };
 
-  const fixture = (
-    <ComponentState state={{ count: 5 }}>
-      <Counter />
-    </ComponentState>
-  );
-
-  const instance = create(
+  const createElement = () => (
     <FixtureProvider
       fixtureState={fixtureState}
       setFixtureState={setFixtureState}
     >
-      {fixture}
+      <ComponentState state={{ count: 5 }}>
+        <Counter />
+      </ComponentState>
     </FixtureProvider>
   );
+
+  const instance = create(createElement());
 
   const [{ instanceId }] = getFixtureStateState(fixtureState);
   fixtureState = updateState(fixtureState, {
     state: updateFixtureStateState(fixtureState, instanceId, {})
   });
 
-  instance.update(
-    <FixtureProvider
-      fixtureState={fixtureState}
-      setFixtureState={setFixtureState}
-    >
-      {fixture}
-    </FixtureProvider>
-  );
+  instance.update(createElement());
 
   expect(instance.toJSON()).toBe('Missing count');
 });
@@ -257,47 +214,31 @@ it('reverts to initial state', () => {
     fixtureState = updateFixtureStateWithCb(fixtureState, updater, cb);
   };
 
-  const fixture = (
-    <ComponentState>
-      <Counter />
-    </ComponentState>
-  );
-
-  const instance = create(
+  const createElement = () => (
     <FixtureProvider
       fixtureState={fixtureState}
       setFixtureState={setFixtureState}
     >
-      {fixture}
+      <ComponentState>
+        <Counter />
+      </ComponentState>
     </FixtureProvider>
   );
+
+  const instance = create(createElement());
 
   const [{ instanceId }] = getFixtureStateState(fixtureState);
   fixtureState = updateState(fixtureState, {
     state: updateFixtureStateState(fixtureState, instanceId, { count: 5 })
   });
 
-  instance.update(
-    <FixtureProvider
-      fixtureState={fixtureState}
-      setFixtureState={setFixtureState}
-    >
-      {fixture}
-    </FixtureProvider>
-  );
+  instance.update(createElement());
 
   expect(instance.toJSON()).toBe('5 times');
 
   fixtureState = updateState({ state: [] });
 
-  instance.update(
-    <FixtureProvider
-      fixtureState={fixtureState}
-      setFixtureState={setFixtureState}
-    >
-      {fixture}
-    </FixtureProvider>
-  );
+  instance.update(createElement());
 
   expect(instance.toJSON()).toBe('0 times');
 });
@@ -308,47 +249,31 @@ it('reverts to mocked state', () => {
     fixtureState = updateFixtureStateWithCb(fixtureState, updater, cb);
   };
 
-  const fixture = (
-    <ComponentState state={{ count: 5 }}>
-      <Counter />
-    </ComponentState>
-  );
-
-  const instance = create(
+  const createElement = () => (
     <FixtureProvider
       fixtureState={fixtureState}
       setFixtureState={setFixtureState}
     >
-      {fixture}
+      <ComponentState state={{ count: 5 }}>
+        <Counter />
+      </ComponentState>
     </FixtureProvider>
   );
+
+  const instance = create(createElement());
 
   const [{ instanceId }] = getFixtureStateState(fixtureState);
   fixtureState = updateState(fixtureState, {
     state: updateFixtureStateState(fixtureState, instanceId, { count: 10 })
   });
 
-  instance.update(
-    <FixtureProvider
-      fixtureState={fixtureState}
-      setFixtureState={setFixtureState}
-    >
-      {fixture}
-    </FixtureProvider>
-  );
+  instance.update(createElement());
 
   expect(instance.toJSON()).toBe('10 times');
 
   fixtureState = updateState(fixtureState, { state: [] });
 
-  instance.update(
-    <FixtureProvider
-      fixtureState={fixtureState}
-      setFixtureState={setFixtureState}
-    >
-      {fixture}
-    </FixtureProvider>
-  );
+  instance.update(createElement());
 
   expect(instance.toJSON()).toBe('5 times');
 
@@ -438,24 +363,21 @@ it('overwrites mocked state in multiple instances', () => {
     fixtureState = updateFixtureStateWithCb(fixtureState, updater, cb);
   };
 
-  const fixture = (
-    <>
+  const createElement = () => (
+    <FixtureProvider
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
+    >
       <ComponentState state={{ count: 5 }}>
         <Counter />
       </ComponentState>
       <ComponentState state={{ count: 10 }}>
         <Counter />
       </ComponentState>
-    </>
-  );
-  const instance = create(
-    <FixtureProvider
-      fixtureState={fixtureState}
-      setFixtureState={setFixtureState}
-    >
-      {fixture}
     </FixtureProvider>
   );
+
+  const instance = create(createElement());
 
   const [state1, state2] = getFixtureStateState(fixtureState);
   fixtureState = updateState(fixtureState, {
@@ -469,14 +391,7 @@ it('overwrites mocked state in multiple instances', () => {
     })
   });
 
-  instance.update(
-    <FixtureProvider
-      fixtureState={fixtureState}
-      setFixtureState={setFixtureState}
-    >
-      {fixture}
-    </FixtureProvider>
-  );
+  instance.update(createElement());
 
   expect(instance.toJSON()).toEqual(['50 times', '100 times']);
 });

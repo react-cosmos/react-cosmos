@@ -45,16 +45,16 @@ it('overwrites prop', () => {
     fixtureState = updateState(fixtureState, updater);
   };
 
-  const fixture = <HelloMessage name="Satoshi" />;
-
-  const instance = create(
+  const createElement = () => (
     <FixtureProvider
       fixtureState={fixtureState}
       setFixtureState={setFixtureState}
     >
-      {fixture}
+      <HelloMessage name="Satoshi" />
     </FixtureProvider>
   );
+
+  const instance = create(createElement());
 
   const [{ instanceId }] = getFixtureStateProps(fixtureState);
   fixtureState = updateState(fixtureState, {
@@ -63,14 +63,7 @@ it('overwrites prop', () => {
     })
   });
 
-  instance.update(
-    <FixtureProvider
-      fixtureState={fixtureState}
-      setFixtureState={setFixtureState}
-    >
-      {fixture}
-    </FixtureProvider>
-  );
+  instance.update(createElement());
 
   expect(instance.toJSON()).toBe('Hello, Vitalik!');
 });
@@ -81,30 +74,23 @@ it('removes prop', () => {
     fixtureState = updateState(fixtureState, updater);
   };
 
-  const fixture = <HelloMessage name="Satoshi" />;
-
-  const instance = create(
+  const createElement = () => (
     <FixtureProvider
       fixtureState={fixtureState}
       setFixtureState={setFixtureState}
     >
-      {fixture}
+      <HelloMessage name="Satoshi" />
     </FixtureProvider>
   );
+
+  const instance = create(createElement());
 
   const [{ instanceId }] = getFixtureStateProps(fixtureState);
   fixtureState = updateState(fixtureState, {
     props: updateFixtureStateProps(fixtureState, instanceId, {})
   });
 
-  instance.update(
-    <FixtureProvider
-      fixtureState={fixtureState}
-      setFixtureState={setFixtureState}
-    >
-      {fixture}
-    </FixtureProvider>
-  );
+  instance.update(createElement());
 
   expect(instance.toJSON()).toBe('Hello, Guest!');
 });
@@ -120,16 +106,16 @@ it('reverts to original props', () => {
     fixtureState = updateState(fixtureState, updater);
   };
 
-  const fixture = <HelloMessage name="Satoshi" />;
-
-  const instance = create(
+  const createElement = () => (
     <FixtureProvider
       fixtureState={fixtureState}
       setFixtureState={setFixtureState}
     >
-      {fixture}
+      <HelloMessage name="Satoshi" />
     </FixtureProvider>
   );
+
+  const instance = create(createElement());
 
   const [{ instanceId }] = getFixtureStateProps(fixtureState);
   fixtureState = updateState(fixtureState, {
@@ -138,27 +124,13 @@ it('reverts to original props', () => {
     })
   });
 
-  instance.update(
-    <FixtureProvider
-      fixtureState={fixtureState}
-      setFixtureState={setFixtureState}
-    >
-      {fixture}
-    </FixtureProvider>
-  );
+  instance.update(createElement());
 
   expect(instance.toJSON()).toBe('Hello, Vitalik!');
 
   setFixtureState({ props: [] });
 
-  instance.update(
-    <FixtureProvider
-      fixtureState={fixtureState}
-      setFixtureState={setFixtureState}
-    >
-      {fixture}
-    </FixtureProvider>
-  );
+  instance.update(createElement());
 
   expect(instance.toJSON()).toBe('Hello, Satoshi!');
 });
@@ -222,12 +194,18 @@ it('creates new instance on props reset', () => {
     fixtureState = updateState(fixtureState, updater);
   };
 
-  let ref1;
-  const instance = create(
+  const createElement = fixture => (
     <FixtureProvider
       fixtureState={fixtureState}
       setFixtureState={setFixtureState}
     >
+      {fixture}
+    </FixtureProvider>
+  );
+
+  let ref1;
+  const instance = create(
+    createElement(
       <HelloMessage
         name="Satoshi"
         ref={ref => {
@@ -236,7 +214,7 @@ it('creates new instance on props reset', () => {
           }
         }}
       />
-    </FixtureProvider>
+    )
   );
 
   const [{ instanceId }] = getFixtureStateProps(fixtureState);
@@ -251,10 +229,7 @@ it('creates new instance on props reset', () => {
 
   let ref2;
   instance.update(
-    <FixtureProvider
-      fixtureState={fixtureState}
-      setFixtureState={setFixtureState}
-    >
+    createElement(
       <HelloMessage
         name="Satoshi"
         ref={ref => {
@@ -263,7 +238,7 @@ it('creates new instance on props reset', () => {
           }
         }}
       />
-    </FixtureProvider>
+    )
   );
 
   expect(instance.toJSON()).toBe('Hello, Vitalik!');
@@ -324,21 +299,19 @@ it('overwrites props in multiple instances', () => {
     fixtureState = updateState(fixtureState, updater);
   };
 
-  const fixture = (
-    <>
-      <HelloMessage name="Satoshi" />
-      <HelloMessage name="Vitalik" />
-    </>
-  );
-
-  const instance = create(
+  const createElement = () => (
     <FixtureProvider
       fixtureState={fixtureState}
       setFixtureState={setFixtureState}
     >
-      {fixture}
+      <>
+        <HelloMessage name="Satoshi" />
+        <HelloMessage name="Vitalik" />
+      </>
     </FixtureProvider>
   );
+
+  const instance = create(createElement());
 
   const [props1, props2] = getFixtureStateProps(fixtureState);
   fixtureState = updateState(fixtureState, {
@@ -352,28 +325,21 @@ it('overwrites props in multiple instances', () => {
     })
   });
 
-  instance.update(
-    <FixtureProvider
-      fixtureState={fixtureState}
-      setFixtureState={setFixtureState}
-    >
-      {fixture}
-    </FixtureProvider>
-  );
+  instance.update(createElement());
 
   expect(instance.toJSON()).toEqual(['Hello, SATOSHI!', 'Hello, VITALIK!']);
 });
 
 it('renders replaced component type', () => {
-  const getElement = MessageType => (
+  const createElement = MessageType => (
     <FixtureProvider fixtureState={null} setFixtureState={() => {}}>
       <MessageType name="Satoshi" />
     </FixtureProvider>
   );
 
-  const instance = create(getElement(HelloMessage));
+  const instance = create(createElement(HelloMessage));
 
-  instance.update(getElement(YoMessage));
+  instance.update(createElement(YoMessage));
 
   expect(instance.toJSON()).toBe('Yo, Satoshi!');
 });
