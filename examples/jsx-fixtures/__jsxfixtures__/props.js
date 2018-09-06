@@ -2,4 +2,8 @@
 
 import React from 'react';
 
-export default <h1>Hello world!</h1>;
+const HelloWorld = ({ name }: { name: string }) => (
+  <h1>Hello {name || 'Guest'}!</h1>
+);
+
+export default <HelloWorld name="Maggie" />;
