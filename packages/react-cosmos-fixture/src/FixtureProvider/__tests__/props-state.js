@@ -12,7 +12,7 @@ import {
   updateFixtureStateState
 } from 'react-cosmos-shared2/fixtureState';
 
-it('resets state when resetting props', () => {
+it('keeps state when resetting props', () => {
   let fixtureState = {};
   const setFixtureState = updater => {
     fixtureState = updateState(fixtureState, updater);
@@ -24,7 +24,7 @@ it('resets state when resetting props', () => {
     </ComponentState>
   );
 
-  const instance = create(
+  const getElement = () => (
     <FixtureProvider
       fixtureState={fixtureState}
       setFixtureState={setFixtureState}
@@ -32,6 +32,8 @@ it('resets state when resetting props', () => {
       {fixture}
     </FixtureProvider>
   );
+
+  const instance = create(getElement());
 
   const [{ instanceId: stateInstanceId }] = getFixtureStateState(fixtureState);
   fixtureState = updateState(fixtureState, {
@@ -40,14 +42,7 @@ it('resets state when resetting props', () => {
     })
   });
 
-  instance.update(
-    <FixtureProvider
-      fixtureState={fixtureState}
-      setFixtureState={setFixtureState}
-    >
-      {fixture}
-    </FixtureProvider>
-  );
+  instance.update(getElement());
 
   expect(instance.toJSON()).toBe('5 times');
 
@@ -61,23 +56,16 @@ it('resets state when resetting props', () => {
     )
   });
 
-  instance.update(
-    <FixtureProvider
-      fixtureState={fixtureState}
-      setFixtureState={setFixtureState}
-    >
-      {fixture}
-    </FixtureProvider>
-  );
+  instance.update(getElement());
 
-  expect(instance.toJSON()).toBe('0 timez');
+  expect(instance.toJSON()).toBe('5 timez');
 
   const [{ values }] = getFixtureStateState(fixtureState);
   expect(values).toEqual([
     {
       serializable: true,
       key: 'count',
-      value: 0
+      value: 5
     }
   ]);
 });
@@ -94,7 +82,7 @@ it('keeps state when transitioning props', () => {
     </ComponentState>
   );
 
-  const instance = create(
+  const getElement = () => (
     <FixtureProvider
       fixtureState={fixtureState}
       setFixtureState={setFixtureState}
@@ -102,6 +90,8 @@ it('keeps state when transitioning props', () => {
       {fixture}
     </FixtureProvider>
   );
+
+  const instance = create(getElement());
 
   const [{ instanceId: stateInstanceId }] = getFixtureStateState(fixtureState);
   fixtureState = updateState(fixtureState, {
@@ -110,14 +100,7 @@ it('keeps state when transitioning props', () => {
     })
   });
 
-  instance.update(
-    <FixtureProvider
-      fixtureState={fixtureState}
-      setFixtureState={setFixtureState}
-    >
-      {fixture}
-    </FixtureProvider>
-  );
+  instance.update(getElement());
 
   expect(instance.toJSON()).toBe('5 times');
 
@@ -128,14 +111,7 @@ it('keeps state when transitioning props', () => {
     })
   });
 
-  instance.update(
-    <FixtureProvider
-      fixtureState={fixtureState}
-      setFixtureState={setFixtureState}
-    >
-      {fixture}
-    </FixtureProvider>
-  );
+  instance.update(getElement());
 
   expect(instance.toJSON()).toBe('5 timez');
 

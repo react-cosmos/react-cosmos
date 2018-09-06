@@ -72,8 +72,20 @@ class ComponentStateInner extends Component<InnerProps> {
     return <CaptureProps>{clonedEl}</CaptureProps>;
   }
 
-  shouldComponentUpdate({ fixtureState: nextFixtureState }) {
-    const { state: mockedState, fixtureState } = this.props;
+  shouldComponentUpdate({
+    children: { type: nextType },
+    fixtureState: nextFixtureState
+  }) {
+    const {
+      children: { type },
+      state: mockedState,
+      fixtureState
+    } = this.props;
+
+    // Re-render if component type has been replaced (eg. via webpack HMR)
+    if (nextType !== type) {
+      return true;
+    }
 
     if (nextFixtureState === fixtureState) {
       return false;
@@ -120,11 +132,7 @@ class ComponentStateInner extends Component<InnerProps> {
     const stateInstance = getFixtureStateStateInst(fixtureState, instanceId);
 
     if (stateInstance) {
-      const nextState = extendOriginalStateWithFixtureState({
-        currentState: childRef.state,
-        mockedState,
-        stateInstance
-      });
+      const nextState = this.getExtendedComponentState(childRef, stateInstance);
 
       // This update might be caused by an organic state change from within the
       // wrapped component. Blindly setting the state here would result in an
@@ -157,7 +165,8 @@ class ComponentStateInner extends Component<InnerProps> {
   handleRef = (childRef: ?ElementRef<any>) => {
     const {
       children: { ref: prevRef },
-      state: mockedState
+      state: mockedState,
+      fixtureState
     } = this.props;
 
     this.childRef = childRef;
@@ -169,6 +178,20 @@ class ComponentStateInner extends Component<InnerProps> {
 
     if (!childRef) {
       return;
+    }
+
+    const instanceId = getInstanceId(this);
+    const stateInstance = getFixtureStateStateInst(fixtureState, instanceId);
+
+    // Fixture state already exists for this instance, which means that this
+    // isn't the first child ref. The child type has likely been replaced
+    // (eg. via webpack HMR). Conversely, the child instance might reset due
+    // to resetting the renderKey in CaptureProps. Regardless, apply the
+    // fixture state to the new child instance.
+    if (stateInstance) {
+      return childRef.setState(
+        this.getExtendedComponentState(childRef, stateInstance)
+      );
     }
 
     if (childRef.state) {
@@ -230,26 +253,26 @@ class ComponentStateInner extends Component<InnerProps> {
       this.scheduleStateCheck();
     }
   };
-}
 
-function extendOriginalStateWithFixtureState({
-  currentState,
-  mockedState = {},
-  stateInstance
-}) {
-  const { values } = stateInstance;
-  const mergedState = {};
+  getExtendedComponentState(childRef, stateInstance) {
+    const { state: mockedState = {} } = this.props;
+    const currentState = childRef.state;
 
-  // Use latest prop value for serializable props, and fall back to mocked
-  // values for unserializable props.
-  values.forEach(({ serializable, key, value }) => {
-    mergedState[key] = serializable ? value : mockedState[key];
-  });
+    // Use latest prop value for serializable props, and fall back to mocked
+    // values for unserializable props.
+    const mergedState = stateInstance.values.reduce(
+      (acc, { serializable, key, value }) => ({
+        ...acc,
+        [key]: serializable ? value : mockedState[key]
+      }),
+      {}
+    );
 
-  // Only use state properties defined in fixtureState. This allows users to:
-  // - Removed mocked state properties (defined in fixture)
-  // - Removed initial state properties
-  return resetOriginalProps(currentState, mergedState);
+    // Only use state properties defined in fixtureState. This allows users to:
+    // - Removed mocked state properties (defined in fixture)
+    // - Removed initial state properties
+    return resetOriginalProps(currentState, mergedState);
+  }
 }
 
 // We need to do this because React doesn't provide a replaceState method

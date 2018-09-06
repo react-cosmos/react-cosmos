@@ -503,6 +503,62 @@ it('unmounts gracefully', () => {
   }).not.toThrow();
 });
 
+it('renders replaced component type', () => {
+  const getElement = CounterType => (
+    <FixtureProvider fixtureState={{}} setFixtureState={() => {}}>
+      <ComponentState>
+        <CounterType />
+      </ComponentState>
+    </FixtureProvider>
+  );
+
+  const instance = create(getElement(Counter));
+
+  instance.update(getElement(CoolCounter));
+
+  expect(instance.toJSON()).toBe('0 timez');
+});
+
+it('applies fixture state to replaced component type', () => {
+  let fixtureState = {};
+  const setFixtureState = (updater, cb) => {
+    fixtureState = updateFixtureStateWithCb(fixtureState, updater, cb);
+  };
+
+  const getElement = CounterType => (
+    <FixtureProvider
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
+    >
+      <ComponentState state={{ count: 5 }}>
+        <CounterType />
+      </ComponentState>
+    </FixtureProvider>
+  );
+
+  const instance = create(getElement(Counter));
+
+  const [{ instanceId }] = getFixtureStateState(fixtureState);
+  fixtureState = updateState(fixtureState, {
+    state: updateFixtureStateState(fixtureState, instanceId, { count: 50 })
+  });
+
+  instance.update(getElement(Counter));
+
+  expect(instance.toJSON()).toBe('50 times');
+
+  instance.update(getElement(CoolCounter));
+
+  expect(instance.toJSON()).toBe('50 timez');
+
+  // Why update again? Because ComponentState can have side effects in
+  // componentDidUpdate, so the previous update could've caused a state change
+  // that we can only observe by rendering again with the latest fixtureState
+  instance.update(getElement(CoolCounter));
+
+  expect(instance.toJSON()).toBe('50 timez');
+});
+
 // End of tests
 
 class Counter extends Component<{}, { count: number }> {
@@ -512,6 +568,16 @@ class Counter extends Component<{}, { count: number }> {
     const { count } = this.state;
 
     return typeof count === 'number' ? `${count} times` : 'Missing count';
+  }
+}
+
+class CoolCounter extends Component<{}, { count: number }> {
+  state = { count: 0 };
+
+  render() {
+    const { count } = this.state;
+
+    return typeof count === 'number' ? `${count} timez` : 'Missing countz';
   }
 }
 

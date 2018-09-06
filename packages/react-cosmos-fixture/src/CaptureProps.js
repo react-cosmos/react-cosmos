@@ -73,8 +73,19 @@ class CapturePropsInner extends Component<InnerProps> {
     });
   }
 
-  shouldComponentUpdate({ fixtureState: nextFixtureState }) {
-    const { children, fixtureState } = this.props;
+  shouldComponentUpdate({
+    children: { type: nextType },
+    fixtureState: nextFixtureState
+  }) {
+    const {
+      children: { type, props },
+      fixtureState
+    } = this.props;
+
+    // Re-render if component type has been replaced (eg. via webpack HMR)
+    if (nextType !== type) {
+      return true;
+    }
 
     if (nextFixtureState === fixtureState) {
       return false;
@@ -98,9 +109,7 @@ class CapturePropsInner extends Component<InnerProps> {
     // to compare its values against the default values, otherwise an additional
     // render cycle will be always run on init
     const prevKey = prev ? prev.renderKey : DEFAULT_RENDER_KEY;
-    const prevValues = prev
-      ? prev.values
-      : extractValuesFromObject(children.props);
+    const prevValues = prev ? prev.values : extractValuesFromObject(props);
 
     if (next.renderKey !== prevKey) {
       return true;

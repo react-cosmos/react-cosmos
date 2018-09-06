@@ -364,11 +364,31 @@ it('overwrites props in multiple instances', () => {
   expect(instance.toJSON()).toEqual(['Hello, SATOSHI!', 'Hello, VITALIK!']);
 });
 
+it('renders replaced component type', () => {
+  const getElement = MessageType => (
+    <FixtureProvider fixtureState={null} setFixtureState={() => {}}>
+      <MessageType name="Satoshi" />
+    </FixtureProvider>
+  );
+
+  const instance = create(getElement(HelloMessage));
+
+  instance.update(getElement(YoMessage));
+
+  expect(instance.toJSON()).toBe('Yo, Satoshi!');
+});
+
 // End of tests
 
 class HelloMessage extends Component<{ name: string }> {
   render() {
     return `Hello, ${this.props.name || 'Guest'}!`;
+  }
+}
+
+class YoMessage extends Component<{ name: string }> {
+  render() {
+    return `Yo, ${this.props.name || 'Guest'}!`;
   }
 }
 
