@@ -6,25 +6,20 @@ import { CaptureProps } from '../CaptureProps';
 import { FixtureContext } from '../FixtureContext';
 
 import type { Node, Element } from 'react';
-import type {
-  FixtureProviderProps,
-  FixtureContextValue
-} from '../index.js.flow';
+import type { FixtureContextValue } from '../index.js.flow';
+
+type Props = {
+  children: Node
+} & FixtureContextValue;
 
 // NOTE: Maybe open up Fixture component for naming and other customization. Eg.
 //   <Fixture name="An interesting state" namespace="nested/as/follows">
 //     <Button>Click me</button>
 //   </Fixture>
-export class FixtureProvider extends Component<
-  FixtureProviderProps,
-  FixtureContextValue
-> {
+export class FixtureProvider extends Component<Props, FixtureContextValue> {
   // FYI: gDSFP method is fired on every render, regardless of the cause.
   // https://reactjs.org/docs/react-component.html#static-getderivedstatefromprops
-  static getDerivedStateFromProps(
-    props: FixtureProviderProps,
-    state: FixtureContextValue
-  ) {
+  static getDerivedStateFromProps(props: Props, state: FixtureContextValue) {
     if (props.fixtureState !== state.fixtureState) {
       return {
         fixtureState: props.fixtureState,

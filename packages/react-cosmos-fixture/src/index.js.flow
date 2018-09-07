@@ -37,9 +37,9 @@ export type FixtureContextValue = {
   setFixtureState: SetState<FixtureState>
 };
 
-export type FixtureProviderProps = {
+export type FixtureContainerProps = {
   children: Node
-} & FixtureContextValue;
+};
 
 export type CapturePropsProps = {
   children: Element<any>
@@ -53,7 +53,7 @@ export type ComponentStateProps = {
 declare export var FixtureConnect: ComponentType<FixtureConnectProps>;
 declare export var PostMessage: ComponentType<PostMessageProps>;
 declare export var WebSockets: ComponentType<WebSocketsProps>;
-declare export var FixtureProvider: ComponentType<FixtureProviderProps>;
+declare export var FixtureContainer: ComponentType<FixtureContainerProps>;
 
 declare export var FixtureContext: Context<FixtureContextValue>;
 

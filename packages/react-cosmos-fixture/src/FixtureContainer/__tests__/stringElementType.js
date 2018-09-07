@@ -2,14 +2,14 @@
 
 import React from 'react';
 import { create } from 'react-test-renderer';
-import { FixtureProvider } from '../../FixtureProvider';
+import { FixtureContainer } from '../../FixtureContainer';
 
 it('renders string element type', () => {
   expect(
     create(
-      <FixtureProvider fixtureState={null} setFixtureState={() => {}}>
+      <FixtureContainer>
         <div>Hello world!</div>
-      </FixtureProvider>
+      </FixtureContainer>
     ).toJSON()
   ).toEqual({ type: 'div', props: {}, children: ['Hello world!'] });
 });
