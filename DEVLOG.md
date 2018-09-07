@@ -1,3 +1,15 @@
+Q: Why does the fixture state duplicate when hot reloading `ComponentState`?
+
+First off, the fixture doesn't unselect (like below) because ComponentState isn't imported by FixtureConnect or any of its imports. So the previous fixture state is kept. And when the new ComponentState type mounts, it will have a new instance ID and create a new fixture state entry, oblivious of the existing state entry initiated by the old ComponentState type.
+
+---
+
+Q: Why does the fixture unselect when hot reloading `CaptureProps`?
+
+Because FixtureConnect (which imports FixtureProvider, which imports CaptureProps) gets hot-reloaded and remounts.
+
+---
+
 Q: Why do components wrapped in `ComponentState` re-render when props of an unrelated component change in the fixture state?
 
 A: Because `ComponentState` also wraps its children in `CaptureProps`, which re-renders whenever any _fixtureState.props_ instance changes.

@@ -132,12 +132,12 @@ class ComponentStateInner extends Component<InnerProps> {
     const instanceId = getInstanceId(this);
     const stateInstance = getFixtureStateStateInst(fixtureState, instanceId);
 
-    // Reset fixture state if...
+    // Reset fixture state if... x
     if (
       // ...the fixture state associated with this instance (initially created
-      // in componentDidMount) has been emptied deliberately. This is an edge
-      // case that occurs when a user interacting with a fixture desires to
-      // discard the current fixture state and load the fixture from scatch.
+      // in handleRef) has been emptied deliberately. This is an edge case that
+      // occurs when a user interacting with a fixture desires to discard the
+      // current fixture state and load the fixture from scatch.
       !stateInstance ||
       // ...mocked state from fixture element changed, likely via webpack HMR.
       !isEqual(mockedState, prevMockedState)
@@ -205,11 +205,11 @@ class ComponentStateInner extends Component<InnerProps> {
       // fixtureState.state with the values of the mocked state, as well as
       // (most imporantly) inject the mocked state into the component.
       childRef.setState(mockedState);
-      this.updateFixtureState(mockedState, childRef);
+      this.setFixtureState(mockedState, childRef);
     } else if (childRef.state) {
       // State isn't mocked, but component has initial state => Populate
-      // fixtureState.state with component's initial state
-      this.updateFixtureState(this.initialState, childRef);
+      // fixture state with component's initial state
+      this.setFixtureState(this.initialState, childRef);
     }
   };
 
@@ -217,18 +217,18 @@ class ComponentStateInner extends Component<InnerProps> {
     const { state: mockedState } = this.props;
     const cleanState =
       // Prevent leaking previous state properties when resetting state
-      resetOriginalProps(childRef.state, {
+      resetOriginalKeys(childRef.state, {
         ...this.initialState,
         ...mockedState
       });
 
     childRef.setState(cleanState);
-    this.updateFixtureState(cleanState, childRef);
+    this.setFixtureState(cleanState, childRef);
   }
 
-  // updateFixtureState receives childRef as an argument because it is called
+  // setFixtureState receives childRef as an argument because it is called
   // from places where the existance of this.childRef has already been checked
-  updateFixtureState(componentState, childRef) {
+  setFixtureState(componentState, childRef) {
     const { setFixtureState } = this.props;
 
     setFixtureState(fixtureState => {
@@ -263,7 +263,7 @@ class ComponentStateInner extends Component<InnerProps> {
 
     if (childRef.state !== this.prevState) {
       this.prevState = childRef.state;
-      this.updateFixtureState(childRef.state, childRef);
+      this.setFixtureState(childRef.state, childRef);
     } else {
       this.scheduleStateCheck();
     }
@@ -286,13 +286,13 @@ class ComponentStateInner extends Component<InnerProps> {
     // Only use state properties defined in fixtureState. This allows users to:
     // - Removed mocked state properties (defined in fixture)
     // - Removed initial state properties
-    return resetOriginalProps(currentState, mergedState);
+    return resetOriginalKeys(currentState, mergedState);
   }
 }
 
 // We need to do this because React doesn't provide a replaceState method
 // (anymore) https://reactjs.org/docs/react-component.html#setstate
-function resetOriginalProps(original, current) {
+function resetOriginalKeys(original, current) {
   const { keys } = Object;
 
   return keys(original).reduce(

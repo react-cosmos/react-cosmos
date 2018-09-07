@@ -75,7 +75,7 @@ class CapturePropsInner extends Component<InnerProps> {
   }
 
   componentDidMount() {
-    this.updateFixtureState();
+    this.setFixtureState();
   }
 
   shouldComponentUpdate(nextProps) {
@@ -138,11 +138,11 @@ class CapturePropsInner extends Component<InnerProps> {
       // ...mocked props from fixture elemented changed, likely via webpack HMR.
       !isEqual(children.props, prevProps.children.props)
     ) {
-      this.updateFixtureState();
+      this.setFixtureState();
     }
   }
 
-  updateFixtureState() {
+  setFixtureState() {
     const { children, setFixtureState } = this.props;
     const instanceId = getInstanceId(this);
     const componentName = getComponentName(children.type);
