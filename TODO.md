@@ -43,10 +43,10 @@
   - [x] Renderer preview
   - [x] Fixture list
   - [x] Fixture control panel
-- [ ] New DOM renderer
+- [x] New DOM renderer
   - [x] Integrate with new FixtureConnect API
   - [x] Integrate (ES only, for now) fixture files
-  - [ ] HMR
+  - [x] HMR
 - [x] Server
   - [x] Serve new Playground and renderer on `{ next: true }` config option
   - [x] Detect new fixture file types under `__jsxfixtures__`

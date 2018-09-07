@@ -1,14 +1,10 @@
 /* eslint-env browser */
 // @flow
 
-let container;
+const CONTAINER_ID = 'root';
 
 export function getDomContainer() {
-  if (!container) {
-    createDomContainer();
-  }
-
-  return container;
+  return document.getElementById(CONTAINER_ID) || createDomContainer();
 }
 
 function createDomContainer() {
@@ -20,6 +16,10 @@ function createDomContainer() {
     );
   }
 
-  container = document.createElement('div');
+  const container = document.createElement('div');
+  container.setAttribute('id', CONTAINER_ID);
+
   body.appendChild(container);
+
+  return container;
 }
