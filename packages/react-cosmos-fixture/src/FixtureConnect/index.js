@@ -11,7 +11,8 @@ import type { FixtureConnectProps } from '../index.js.flow';
 
 type State = {
   fixturePath: ?string,
-  fixtureState: ?FixtureState
+  fixtureState: ?FixtureState,
+  renderKey: number
 };
 
 // TODO: Add props for customizing blank/missing states: `getBlankState` and
@@ -19,7 +20,9 @@ type State = {
 export class FixtureConnect extends Component<FixtureConnectProps, State> {
   state = {
     fixturePath: null,
-    fixtureState: null
+    fixtureState: null,
+    // Used to reset FixtureProvider instance on fixturePath change
+    renderKey: 0
   };
 
   componentDidMount() {
@@ -59,7 +62,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
 
   render() {
     const { fixtures } = this.props;
-    const { fixturePath, fixtureState } = this.state;
+    const { fixturePath, fixtureState, renderKey } = this.state;
 
     if (!fixturePath) {
       return 'No fixture loaded.';
@@ -71,7 +74,9 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
 
     return (
       <FixtureProvider
-        key={fixturePath}
+        // Ensure no state leaks between fixture selections, even though under
+        // normal circumstances f(fixture, fixtureState) is deterministic.
+        key={renderKey}
         fixtureState={fixtureState}
         setFixtureState={this.setFixtureState}
       >
@@ -97,7 +102,8 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
         fixturePath,
         // Reset fixture state when selecting new fixture (or when reselecting
         // current fixture)
-        fixtureState: null
+        fixtureState: null,
+        renderKey: this.state.renderKey + 1
       });
     } else if (msg.type === 'setFixtureState') {
       const { fixturePath, fixtureStateChange } = msg.payload;
