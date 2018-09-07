@@ -4,6 +4,8 @@
 // Type definitions for react-test-renderer 16.x.x
 // Ported from: https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/react-test-renderer
 
+type ReactComponentInstance = React$Component<any>;
+
 type ReactTestRendererJSON = {
   type: string,
   props: { [propName: string]: any },
@@ -12,12 +14,12 @@ type ReactTestRendererJSON = {
 
 type ReactTestRendererTree = ReactTestRendererJSON & {
   nodeType: 'component' | 'host',
-  instance: any,
+  instance: ?ReactComponentInstance,
   rendered: null | ReactTestRendererTree
 };
 
 type ReactTestInstance = {
-  instance: any,
+  instance: ?ReactComponentInstance,
   type: string,
   props: { [propName: string]: any },
   parent: null | ReactTestInstance,
@@ -51,7 +53,7 @@ declare module 'react-test-renderer' {
     toTree(): null | ReactTestRendererTree,
     unmount(nextElement?: React$Element<any>): void,
     update(nextElement: React$Element<any>): void,
-    getInstance(): null | ReactTestInstance,
+    getInstance(): ?ReactComponentInstance,
     root: ReactTestInstance
   };
 
