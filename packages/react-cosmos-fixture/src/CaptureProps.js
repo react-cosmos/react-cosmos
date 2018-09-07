@@ -68,7 +68,7 @@ class CapturePropsInner extends Component<InnerProps> {
     return {
       ...children,
       props: propsInstance
-        ? extendOriginalPropsWithFixtureState(children.props, propsInstance)
+        ? extendPropsWithFixtureState(children.props, propsInstance)
         : children.props,
       key: propsInstance ? propsInstance.renderKey : DEFAULT_RENDER_KEY
     };
@@ -123,20 +123,20 @@ class CapturePropsInner extends Component<InnerProps> {
     return !areValuesEqual(next.values, prevValues);
   }
 
-  componentDidUpdate(nextProps) {
+  componentDidUpdate(prevProps) {
     const { children, fixtureState } = this.props;
     const instanceId = getInstanceId(this);
     const propsInstance = getFixtureStatePropsInst(fixtureState, instanceId);
 
-    // Rebuild fixture state if...
+    // Reset fixture state if...
     if (
       // ...the fixture state associated with this instance (initially created
       // in componentDidMount) has been emptied deliberately. This is an edge
       // case that occurs when a user interacting with a fixture desires to
       // discard the current fixture state and load the fixture from scatch.
       !propsInstance ||
-      // ...fixture props changed, likely via webpack HMR
-      !isEqual(nextProps.children.props, children.props)
+      // ...mocked props from fixture elemented changed, likely via webpack HMR.
+      !isEqual(children.props, prevProps.children.props)
     ) {
       this.updateFixtureState();
     }
@@ -172,7 +172,7 @@ class CapturePropsInner extends Component<InnerProps> {
   }
 }
 
-function extendOriginalPropsWithFixtureState(originalProps, propsInstance) {
+function extendPropsWithFixtureState(originalProps, propsInstance) {
   const { values } = propsInstance;
   const mergedProps = {};
 

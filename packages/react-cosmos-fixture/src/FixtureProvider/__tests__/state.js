@@ -474,6 +474,53 @@ it('applies fixture state to replaced component type', () => {
   expect(instance.toJSON()).toBe('50 timez');
 });
 
+it('overwrites fixture state on fixture change', () => {
+  let fixtureState = {};
+  const setFixtureState = updater => {
+    fixtureState = updateState(fixtureState, updater);
+  };
+
+  const createElement = count => (
+    <FixtureProvider
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
+    >
+      <ComponentState state={{ count }}>
+        <Counter />
+      </ComponentState>
+    </FixtureProvider>
+  );
+
+  const instance = create(createElement(5));
+
+  expect(instance.toJSON()).toBe('5 times');
+
+  const [{ instanceId }] = getFixtureStateState(fixtureState);
+  fixtureState = updateState(fixtureState, {
+    state: updateFixtureStateState(fixtureState, instanceId, {
+      count: 6
+    })
+  });
+
+  // When using the same mocked state as initially, the fixture state takes
+  // priority
+  instance.update(createElement(5));
+
+  expect(instance.toJSON()).toBe('6 times');
+
+  // When the fixture changes, however, the fixture state follows along
+  instance.update(createElement(50));
+
+  const [state] = getFixtureStateState(fixtureState);
+  expect(state).toEqual(getStateInstanceShape(50));
+
+  // Another update is required for the updated fixture state to pass down as
+  // props.fixtureState
+  instance.update(createElement(50));
+
+  expect(instance.toJSON()).toBe('50 times');
+});
+
 // End of tests
 
 class Counter extends Component<{}, { count: number }> {

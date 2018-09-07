@@ -74,6 +74,7 @@ class ComponentStateInner extends Component<InnerProps> {
 
   shouldComponentUpdate({
     children: { type: nextType },
+    state: nextMockedState,
     fixtureState: nextFixtureState
   }) {
     const {
@@ -82,8 +83,8 @@ class ComponentStateInner extends Component<InnerProps> {
       fixtureState
     } = this.props;
 
-    // Re-render if component type has been replaced (eg. via webpack HMR)
-    if (nextType !== type) {
+    // Re-render if child type or mocked fixture changed (eg. via webpack HMR)
+    if (nextType !== type || !isEqual(nextMockedState, mockedState)) {
       return true;
     }
 
@@ -121,7 +122,7 @@ class ComponentStateInner extends Component<InnerProps> {
 
   // Because of shouldComponentUpdate we can assume that fixture state
   // relevant to this instance changed in componentDidUpdate
-  componentDidUpdate() {
+  componentDidUpdate({ state: prevMockedState }) {
     const { childRef } = this;
     if (!childRef) {
       return;
@@ -131,28 +132,29 @@ class ComponentStateInner extends Component<InnerProps> {
     const instanceId = getInstanceId(this);
     const stateInstance = getFixtureStateStateInst(fixtureState, instanceId);
 
-    if (stateInstance) {
-      const nextState = this.getExtendedComponentState(childRef, stateInstance);
+    // Reset fixture state if...
+    if (
+      // ...the fixture state associated with this instance (initially created
+      // in componentDidMount) has been emptied deliberately. This is an edge
+      // case that occurs when a user interacting with a fixture desires to
+      // discard the current fixture state and load the fixture from scatch.
+      !stateInstance ||
+      // ...mocked state from fixture element changed, likely via webpack HMR.
+      !isEqual(mockedState, prevMockedState)
+    ) {
+      return this.resetState(childRef);
+    }
 
-      // This update might be caused by an organic state change from within the
-      // wrapped component. Blindly setting the state here would result in an
-      // infinite loop of state changes.
-      if (!isEqual(nextState, childRef.state)) {
-        childRef.setState(nextState);
-      }
-    } else {
-      // We get here when the fixture state associated with this instance
-      // (first populated at mount, inside handleRef) has been emptied.
-      // This is a signal to reset the fixture state for this instance.
-      const cleanState =
-        // Prevent leaking previous state properties when resetting state
-        resetOriginalProps(childRef.state, {
-          ...this.initialState,
-          ...mockedState
-        });
+    const nextState = this.extendComponentStateWithFixtureState(
+      childRef,
+      stateInstance
+    );
 
-      childRef.setState(cleanState);
-      this.updateFixtureState(cleanState, childRef);
+    // This update might be caused by an organic state change from within the
+    // wrapped component. Blindly setting the state here would result in an
+    // infinite loop of state changes.
+    if (!isEqual(nextState, childRef.state)) {
+      childRef.setState(nextState);
     }
   }
 
@@ -190,7 +192,7 @@ class ComponentStateInner extends Component<InnerProps> {
     // fixture state to the new child instance.
     if (stateInstance) {
       return childRef.setState(
-        this.getExtendedComponentState(childRef, stateInstance)
+        this.extendComponentStateWithFixtureState(childRef, stateInstance)
       );
     }
 
@@ -210,6 +212,19 @@ class ComponentStateInner extends Component<InnerProps> {
       this.updateFixtureState(this.initialState, childRef);
     }
   };
+
+  resetState(childRef) {
+    const { state: mockedState } = this.props;
+    const cleanState =
+      // Prevent leaking previous state properties when resetting state
+      resetOriginalProps(childRef.state, {
+        ...this.initialState,
+        ...mockedState
+      });
+
+    childRef.setState(cleanState);
+    this.updateFixtureState(cleanState, childRef);
+  }
 
   // updateFixtureState receives childRef as an argument because it is called
   // from places where the existance of this.childRef has already been checked
@@ -254,7 +269,7 @@ class ComponentStateInner extends Component<InnerProps> {
     }
   };
 
-  getExtendedComponentState(childRef, stateInstance) {
+  extendComponentStateWithFixtureState(childRef, stateInstance) {
     const { state: mockedState = {} } = this.props;
     const currentState = childRef.state;
 
