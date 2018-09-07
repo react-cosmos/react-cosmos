@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { ComponentState } from 'react-cosmos-fixture';
 
-class Counter extends Component<{}, { count: number }> {
+class Counter extends Component<{ suffix: string }, { count: number }> {
   state = { count: 0 };
 
   render() {
@@ -11,14 +11,14 @@ class Counter extends Component<{}, { count: number }> {
       <button
         onClick={() => this.setState(({ count }) => ({ count: count + 1 }))}
       >
-        {this.state.count} times
+        {this.state.count} {this.props.suffix}
       </button>
     );
   }
 }
 
 export default (
-  <ComponentState state={{ count: 3 }}>
-    <Counter />
+  <ComponentState state={{ count: 5 }}>
+    <Counter suffix="times" />
   </ComponentState>
 );
