@@ -239,6 +239,9 @@ function tests(mockConnect) {
             expect(await getCount()).toBe(7);
           }
 
+          // Simulate a small pause between updates
+          await new Promise(res => setTimeout(res, 500));
+
           counterRef.setState({ count: 13 });
           try {
             await until(async () => (await getCount()) === 13, { timeout });
