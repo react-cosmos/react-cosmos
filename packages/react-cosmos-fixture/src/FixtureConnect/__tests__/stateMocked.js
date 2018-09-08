@@ -1,20 +1,36 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import until from 'async-until';
 import {
   getFixtureStateState,
   updateFixtureStateState
 } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from '../../shared/uuid';
-import { Counter, CoolCounter } from '../jestHelpers/shared';
+import { ComponentState } from '../../ComponentState';
 import { mockConnect as mockPostMessage } from '../jestHelpers/postMessage';
 import { mockConnect as mockWebSockets } from '../jestHelpers/webSockets';
 import { mount } from '../jestHelpers/mount';
-// NOTE: ComponentState must be imported after mockWebSockets
-import { ComponentState } from '../../';
 
 import type { ElementRef } from 'react';
+
+export class Counter extends Component<{}, { count: number }> {
+  state = { count: 0 };
+
+  render() {
+    const { count } = this.state;
+
+    return typeof count === 'number' ? `${count} times` : 'Missing count';
+  }
+}
+
+export class CoolCounter extends Component<{}, { count: number }> {
+  state = { count: 0 };
+
+  render() {
+    return `${this.state.count} timez`;
+  }
+}
 
 const rendererId = uuid();
 const fixtures = {

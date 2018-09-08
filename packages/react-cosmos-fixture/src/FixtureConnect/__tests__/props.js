@@ -1,15 +1,20 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import {
   getFixtureStateProps,
   updateFixtureStateProps
 } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from '../../shared/uuid';
-import { HelloMessage } from '../jestHelpers/shared';
 import { mockConnect as mockPostMessage } from '../jestHelpers/postMessage';
 import { mockConnect as mockWebSockets } from '../jestHelpers/webSockets';
 import { mount } from '../jestHelpers/mount';
+
+export class HelloMessage extends Component<{ name?: string }> {
+  render() {
+    return `Hello ${this.props.name || 'Stranger'}`;
+  }
+}
 
 const rendererId = uuid();
 const fixtures = {

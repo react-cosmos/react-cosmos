@@ -2,7 +2,6 @@
 /* istanbul ignore file */
 // @flow
 
-import { Component } from 'react';
 import until from 'async-until';
 import type { Element } from 'react';
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
@@ -13,7 +12,7 @@ import type {
 } from 'react-cosmos-shared2/renderer';
 import type { Fixtures } from '../../index.js.flow';
 
-export type Message = RendererResponse | RendererRequest;
+type Message = RendererResponse | RendererRequest;
 
 export type GetTestElement = ({
   fixtures: Fixtures,
@@ -22,7 +21,7 @@ export type GetTestElement = ({
 
 export type ConnectMockApi = {
   getElement: GetTestElement,
-  postMessage: (msg: Message) => Promise<mixed>,
+  postMessage: (msg: RendererRequest) => Promise<mixed>,
   untilMessage: (msg: {}) => Promise<mixed>,
   lastFixtureState: () => FixtureState,
   selectFixture: ({ rendererId: RendererId, fixturePath: ?string }) => Promise<
@@ -121,28 +120,4 @@ function getLastMessage(messages: Message[]) {
   }
 
   return messages[messages.length - 1];
-}
-
-export class HelloMessage extends Component<{ name?: string }> {
-  render() {
-    return `Hello ${this.props.name || 'Stranger'}`;
-  }
-}
-
-export class Counter extends Component<{}, { count: number }> {
-  state = { count: 0 };
-
-  render() {
-    const { count } = this.state;
-
-    return typeof count === 'number' ? `${count} times` : 'Missing count';
-  }
-}
-
-export class CoolCounter extends Component<{}, { count: number }> {
-  state = { count: 0 };
-
-  render() {
-    return `${this.state.count} timez`;
-  }
 }
