@@ -1,30 +1,31 @@
 // @flow
 
-import React, { Component } from 'react';
+import React from 'react';
 import {
   getFixtureStateProps,
   updateFixtureStateProps
 } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from '../../shared/uuid';
+import { HelloMessage } from '../jestHelpers/shared';
 import { mockConnect as mockPostMessage } from '../jestHelpers/postMessage';
 import { mockConnect as mockWebSockets } from '../jestHelpers/webSockets';
 import { mount } from '../jestHelpers/mount';
+
+const rendererId = uuid();
+const fixtures = {
+  first: (
+    <>
+      <HelloMessage name="Bianca" />
+      <HelloMessage name="B" />
+    </>
+  )
+};
 
 tests(mockPostMessage);
 tests(mockWebSockets);
 
 function tests(mockConnect) {
   it('posts fixture state with props instances', async () => {
-    const rendererId = uuid();
-    const fixtures = {
-      first: (
-        <>
-          <MyComponent name="Bianca" />
-          <MyComponent name="B" />
-        </>
-      )
-    };
-
     await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
       await mount(getElement({ rendererId, fixtures }), async instance => {
         await selectFixture({
@@ -52,16 +53,6 @@ function tests(mockConnect) {
   });
 
   it('overwrites prop in second instance', async () => {
-    const rendererId = uuid();
-    const fixtures = {
-      first: (
-        <>
-          <MyComponent name="Bianca" />
-          <MyComponent name="B" />
-        </>
-      )
-    };
-
     await mockConnect(
       async ({
         getElement,
@@ -110,16 +101,10 @@ function tests(mockConnect) {
   });
 }
 
-class MyComponent extends Component<{ name?: string }> {
-  render() {
-    return `Hello ${this.props.name || 'Stranger'}`;
-  }
-}
-
 function getPropsInstanceShape(name) {
   return {
     instanceId: expect.any(Number),
-    componentName: 'MyComponent',
+    componentName: 'HelloMessage',
     renderKey: expect.any(Number),
     values: [
       {

@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 // @flow
 
+import { Component } from 'react';
 import until from 'async-until';
 import type { Element } from 'react';
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
@@ -120,4 +121,10 @@ function getLastMessage(messages: Message[]) {
   }
 
   return messages[messages.length - 1];
+}
+
+export class HelloMessage extends Component<{ name?: string }> {
+  render() {
+    return `Hello ${this.props.name || 'Stranger'}`;
+  }
 }
