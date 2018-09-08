@@ -1,11 +1,12 @@
 // @flow
 
-import React, { Component } from 'react';
+import React from 'react';
 import {
   getFixtureStateState,
   updateFixtureStateState
 } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from '../../shared/uuid';
+import { Counter } from '../jestHelpers/shared';
 import { mockConnect as mockPostMessage } from '../jestHelpers/postMessage';
 import { mockConnect as mockWebSockets } from '../jestHelpers/webSockets';
 import { mount } from '../jestHelpers/mount';
@@ -102,16 +103,6 @@ function tests(mockConnect) {
       }
     );
   });
-}
-
-class Counter extends Component<{}, { count: number }> {
-  state = { count: 0 };
-
-  render() {
-    const { count } = this.state;
-
-    return typeof count === 'number' ? `${count} times` : 'Missing count';
-  }
 }
 
 function getEmptyPropsInstanceShape() {

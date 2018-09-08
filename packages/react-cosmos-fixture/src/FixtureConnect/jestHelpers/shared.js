@@ -128,3 +128,21 @@ export class HelloMessage extends Component<{ name?: string }> {
     return `Hello ${this.props.name || 'Stranger'}`;
   }
 }
+
+export class Counter extends Component<{}, { count: number }> {
+  state = { count: 0 };
+
+  render() {
+    const { count } = this.state;
+
+    return typeof count === 'number' ? `${count} times` : 'Missing count';
+  }
+}
+
+export class CoolCounter extends Component<{}, { count: number }> {
+  state = { count: 0 };
+
+  render() {
+    return `${this.state.count} timez`;
+  }
+}

@@ -25,7 +25,7 @@ tests(mockPostMessage);
 tests(mockWebSockets);
 
 function tests(mockConnect) {
-  it('posts fixture state with props instances', async () => {
+  it('captures multiple props instances', async () => {
     await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
       await mount(getElement({ rendererId, fixtures }), async instance => {
         await selectFixture({
