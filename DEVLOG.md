@@ -1,3 +1,11 @@
+Q: Should fixture state-related tests run against a single fixture or a fixture list (ie. FixtureContainer or FixtureConnect)?
+
+The fixture state's purpose is to serve the remote coordination between the Playground and the renderer. So the tests should run against the API that communicates with remote clients such as the Playground. Actually, `fixtureState` itself shouldn't be the test subject, but the remote messages sent and received.
+
+Moreover, at the moment the fixture state is just a private detail of FixtureContainer (the API used to render fixtures in unit tests).
+
+---
+
 Q: Why does the fixture state duplicate when hot reloading `ComponentState`?
 
 First off, the fixture doesn't unselect (like below) because ComponentState isn't imported by FixtureConnect or any of its imports. So the previous fixture state is kept. And when the new ComponentState type mounts, it will have a new instance ID and create a new fixture state entry, oblivious of the existing state entry initiated by the old ComponentState type.

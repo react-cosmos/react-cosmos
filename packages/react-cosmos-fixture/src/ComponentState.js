@@ -50,7 +50,7 @@ type InnerProps = ComponentStateProps & {
 };
 
 class ComponentStateInner extends Component<InnerProps> {
-  childRef: ?ElementRef<any>;
+  childRef: ?ElementRef<typeof Component>;
 
   timeoutId: ?TimeoutID;
 
@@ -164,7 +164,7 @@ class ComponentStateInner extends Component<InnerProps> {
     }
   }
 
-  handleRef = (childRef: ?ElementRef<any>) => {
+  handleRef = (childRef: ?ElementRef<typeof Component>) => {
     const {
       children: { ref: prevRef },
       state: mockedState,

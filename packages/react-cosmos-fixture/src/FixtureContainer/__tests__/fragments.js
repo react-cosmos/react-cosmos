@@ -2,17 +2,17 @@
 
 import React from 'react';
 import { create } from 'react-test-renderer';
-import { FixtureProvider } from '../../FixtureProvider';
+import { FixtureContainer } from '../../FixtureContainer';
 
 it('renders fragment with multiple children', () => {
   expect(
     create(
-      <FixtureProvider fixtureState={null} setFixtureState={() => {}}>
+      <FixtureContainer>
         <>
           <Hello />
           <Hello />
         </>
-      </FixtureProvider>
+      </FixtureContainer>
     ).toJSON()
   ).toEqual(['Hello!', 'Hello!']);
 });
@@ -20,11 +20,11 @@ it('renders fragment with multiple children', () => {
 it('renders fragment with single child', () => {
   expect(
     create(
-      <FixtureProvider fixtureState={null} setFixtureState={() => {}}>
+      <FixtureContainer>
         <>
           <Hello />
         </>
-      </FixtureProvider>
+      </FixtureContainer>
     ).toJSON()
   ).toBe('Hello!');
 });
