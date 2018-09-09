@@ -33,7 +33,7 @@ export function createRouterProxy() {
     const location = buildLocation(url, locationState);
 
     return (
-      <MemoryRouter initialEntries={[location]}>
+      <MemoryRouter keyLength={0} initialEntries={[location]}>
         <LocationInterceptor
           onUrlChange={handleUrlChange}
           onLocationStateChange={handleLocationStateChange}
