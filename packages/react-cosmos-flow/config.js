@@ -10,6 +10,7 @@ type WebpackConfigOverride = (WebpackConfig, { env: string }) => WebpackConfig;
 export type PluginConfig = { [prop: string]: mixed };
 
 export type Config = {
+  next: boolean,
   rootPath: string,
   fileMatch: Array<string>,
   fileMatchIgnore: string,

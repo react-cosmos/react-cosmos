@@ -3,11 +3,12 @@
 import { spawn } from 'child-process-promise';
 import { join } from 'path';
 import { bold, italic } from 'chalk';
+import cpy from 'cpy';
 import {
-  rimrafAsync,
   AS_IS_PACKAGES,
   getNodePackages,
   getBrowserPackages,
+  getFormattedPackageList,
   getUnnamedArg,
   getBoolArg,
   done,
@@ -16,7 +17,7 @@ import {
 
 const { stdout, stderr } = process;
 
-const pkgName = getUnnamedArg();
+// NOTE: The watch flag is used as a global in this script
 const watch = getBoolArg('watch');
 
 run();
@@ -25,6 +26,7 @@ async function run() {
   const nodePackages = await getNodePackages();
   const browserPackages = await getBrowserPackages();
   const buildablePackages = [...nodePackages, ...browserPackages];
+  const pkgName = getUnnamedArg();
 
   if (pkgName) {
     if (typeof pkgName !== 'string') {
@@ -82,22 +84,15 @@ async function run() {
   }
 }
 
-function getFormattedPackageList(pkgNames) {
-  return ['', ...pkgNames].join('\n - ');
-}
-
 async function buildNodePackage(pkgName) {
+  await copyFlowDefs(pkgName);
+  await copyStaticAssets(pkgName);
+
   await runBuildTask({
     pkgName,
     cmd: 'babel',
     args: getBabelCliArgs(pkgName)
   });
-
-  await Promise.all[
-    getPackageIgnorePaths(pkgName).map(ignorePath => {
-      rimrafAsync(`./packages/${pkgName}/dist/${ignorePath}`);
-    })
-  ];
 }
 
 async function buildBrowserPackage(pkgName) {
@@ -112,7 +107,7 @@ async function buildBrowserPackage(pkgName) {
 type BuildTaskArgs = {
   pkgName: string,
   cmd: string,
-  args: Array<string>,
+  args: string[],
   env?: Object
 };
 
@@ -150,7 +145,8 @@ function getBabelCliArgs(pkgName) {
     `packages/${pkgName}/src`,
     '--out-dir',
     `packages/${pkgName}/dist`,
-    '--copy-files'
+    '--ignore',
+    getPackageIgnorePaths(pkgName).join(',')
   ];
 
   // Showing Babel output in watch mode because it's nice to get a confirmation
@@ -186,4 +182,20 @@ function getPackageIgnorePaths(pkgName) {
   }
 
   return ignore;
+}
+
+async function copyFlowDefs(pkgName) {
+  return cpy('**/*.js.flow', `../dist`, {
+    cwd: join(__dirname, `../packages/${pkgName}/src`),
+    parents: true
+  });
+}
+
+async function copyStaticAssets(pkgName) {
+  if (pkgName === 'react-cosmos') {
+    return cpy('src/server/shared/static/**', `dist/server/shared/static`, {
+      cwd: join(__dirname, `../packages/react-cosmos`),
+      parents: false
+    });
+  }
 }

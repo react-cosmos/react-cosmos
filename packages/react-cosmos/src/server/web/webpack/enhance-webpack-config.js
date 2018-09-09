@@ -30,6 +30,7 @@ export default function enhanceWebpackConfig({
 }: Args) {
   const cosmosConfig: Config = getCosmosConfig();
   const {
+    next,
     rootPath,
     containerQuerySelector,
     hot,
@@ -49,10 +50,15 @@ export default function enhanceWebpackConfig({
 
   const rules = [
     ...getExistingRules(webpackConfig),
-    {
-      loader: require.resolve('./embed-modules-webpack-loader'),
-      include: require.resolve('../../../client/user-modules')
-    }
+    next
+      ? {
+          loader: require.resolve('./embed-modules-webpack-loader-next'),
+          include: require.resolve('../../../client/user-modules-next')
+        }
+      : {
+          loader: require.resolve('./embed-modules-webpack-loader'),
+          include: require.resolve('../../../client/user-modules')
+        }
   ];
 
   let plugins = [
@@ -102,7 +108,7 @@ export default function enhanceWebpackConfig({
   };
 }
 
-function getEntry({ globalImports, hot }, shouldExport) {
+function getEntry({ next, globalImports, hot }, shouldExport) {
   let entry = [...globalImports];
 
   if (hot && !shouldExport) {
@@ -115,7 +121,14 @@ function getEntry({ globalImports, hot }, shouldExport) {
   }
 
   // Load loader entry last
-  return [...entry, require.resolve('../../../client/loader-entry')];
+  return [
+    ...entry,
+    require.resolve(
+      next
+        ? '../../../client/loader-entry-next'
+        : '../../../client/loader-entry'
+    )
+  ];
 }
 
 function getOutput({ outputPath, publicUrl }, shouldExport) {

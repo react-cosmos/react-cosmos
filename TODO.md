@@ -3,7 +3,7 @@
 - [React Native integration](#react-native-integration)
 - [Pluggable UI](#pluggable-ui)
 - [Explore: JSX fixtures](#explore-jsx-fixtures)
-- UI control panel
+- [UI control panel](#ui-control-panel)
 - Redesign docs
 
 ## Explore: JSX fixtures
@@ -23,9 +23,11 @@
     - [x] window.postMessage
     - [x] WebSockets
   - [ ] Testing API
-- [ ] Support JSX fixture files
-- [ ] Port 3rd party render plugins
-  - [ ] Create API for render plugins (decorators)
+- [ ] Integrate JSX fixture files
+  - [x] Support default export
+  - [ ] Support multiple named exports
+  - [ ] Support decorator files
+- [ ] Port 3rd party fixture plugins (decorators)
   - [ ] Redux
   - [ ] React Router
   - [ ] LocalStorage
@@ -37,11 +39,18 @@
 
 > JSX fixtures are a big shift from the traditional fixture format in Cosmos. Before planning the migration, the new APIs need to be tested and validated by Cosmos users. Below are the steps to make the new fixture API available under a _feature flag._
 
-- [ ] Create `{ next: true }` config option
-- [ ] Detect new fixture file types under `__jsxfixtures__`
-- [ ] Create secondary `/next` route
-- [ ] Map new renderer messages to old ones
-- [ ] Create secondary `/_renderer.html` build
+- [x] New (minimal) Playground
+  - [x] Map state to new renderer events
+  - [x] Renderer preview
+  - [x] Fixture list
+  - [x] Fixture control panel
+- [x] New DOM renderer
+  - [x] Integrate with new FixtureConnect API
+  - [x] Integrate (ES only, for now) fixture files
+  - [x] HMR
+- [x] Server
+  - [x] Serve new Playground and renderer on `{ next: true }` config option
+  - [x] Detect new fixture file types under `__jsxfixtures__`
 
 ## Pluggable UI
 
@@ -89,6 +98,10 @@
   - [x] Check if testing API is compatible
 - [x] Create React Native App example
 - [x] Add (experimental) README section
+
+## UI control panel
+
+- [x] Create POC with JSX fixtures
 
 ## Redesign docs
 

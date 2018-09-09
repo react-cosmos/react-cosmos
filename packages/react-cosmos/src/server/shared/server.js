@@ -6,7 +6,7 @@ import promisify from 'util.promisify';
 import express from 'express';
 import httpProxyMiddleware from 'http-proxy-middleware';
 import launchEditor from 'react-dev-utils/launchEditor';
-import { getPlaygroundHtml } from './playground-html';
+import { getPlaygroundHtml, getPlaygroundHtmlNext } from './playground-html';
 
 import type { Config } from 'react-cosmos-flow/config';
 import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
@@ -18,7 +18,7 @@ export function createServerApp({
   cosmosConfig: Config,
   playgroundOpts: PlaygroundOpts
 }) {
-  const { httpProxy } = cosmosConfig;
+  const { next, httpProxy } = cosmosConfig;
   const app = express();
 
   if (httpProxy) {
@@ -26,13 +26,21 @@ export function createServerApp({
     app.use(context, httpProxyMiddleware(target));
   }
 
-  const playgroundHtml = getPlaygroundHtml(cosmosConfig, playgroundOpts);
+  const playgroundHtml =
+    // TODO: Support JSX fixtures for any platform
+    next && playgroundOpts.platform === 'web'
+      ? getPlaygroundHtmlNext({ rendererUrl: playgroundOpts.loaderUri })
+      : getPlaygroundHtml(playgroundOpts);
   app.get('/', (req: express$Request, res: express$Response) => {
     res.send(playgroundHtml);
   });
 
   app.get('/_playground.js', (req: express$Request, res: express$Response) => {
-    res.sendFile(require.resolve('react-cosmos-playground'));
+    res.sendFile(
+      require.resolve(
+        next ? 'react-cosmos-playground2' : 'react-cosmos-playground'
+      )
+    );
   });
 
   app.get('/_cosmos.ico', (req: express$Request, res: express$Response) => {
@@ -51,7 +59,7 @@ export function createServer(cosmosConfig: Config, app: express$Application) {
     await listen(port, hostname);
 
     const hostnameDisplay = hostname || 'localhost';
-    console.log(`[Cosmos] See you at http://${hostnameDisplay}:${port}/`);
+    console.log(`[Cosmos] See you at http://${hostnameDisplay}:${port}`);
   }
 
   async function stopServer() {

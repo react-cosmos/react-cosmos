@@ -35,7 +35,7 @@ module.exports = {
     // Ignore node_modules compilation except for
     // - src/ paths from other packages in the monorepo
     // - node_modules/react-native/
-    '/node_modules/(?!((react-cosmos.*|react-querystring-router)/src|react-native/))'
+    '/node_modules/(?!((react-cosmos[a-z0-9-]*|react-querystring-router)/src|react-native/))'
   ],
   moduleNameMapper: {
     '\\.(css|less)$': 'identity-obj-proxy',
@@ -54,7 +54,11 @@ module.exports = {
     '**/src/**/*.{js,jsx}',
     '!**/__fixtures__/**',
     '!**/react-cosmos-voyager/src/use-cases/**',
-    '!**/react-cosmos-playground/src/next/**'
+    // Ignore coverage from dark launched APIs
+    '!**/react-cosmos-playground2/src/**',
+    '!**/react-cosmos/src/client/*-next.js',
+    '!**/react-cosmos/src/server/web/webpack/embed-modules-webpack-loader-next.js',
+    '!**/react-cosmos-shared2/src/server/findUserModulePaths.js'
   ],
   coverageDirectory: '<rootDir>/coverage',
   coverageReporters: ['lcov', 'text']

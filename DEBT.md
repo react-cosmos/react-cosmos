@@ -1,6 +1,6 @@
 Annoying aspects of the project that _work_ but their solution leaves a lot to be desired. Usually high-hanging fruit, but can also reflect a blind spot of the author so new perspectives are welcome!
 
-## `web-dev-middleware` warning
+## web-dev-middleware warning
 
 > DeprecationWarning: Tapable.plugin is deprecated. Use new API on `.hooks` instead
 
@@ -16,6 +16,8 @@ Goal: Reuse types internally and externally. Two possible solutions come to mind
 
 1. Gradually move all Flow types to `index.js.flow` files tied to specific packages.
 2. Create script that generates a public `.js.flow` file from source files that aren't published to npm.
+
+> Some thoughts and experiments on generating Flow lib defs: https://github.com/skidding/gen-flow-libdefs
 
 PS. Include TypeScript in the solution.
 

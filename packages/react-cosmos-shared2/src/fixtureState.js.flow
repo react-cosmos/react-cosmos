@@ -1,0 +1,70 @@
+// @flow
+
+export type FixtureStateInstanceId = number;
+
+export type FixtureStateValue = {
+  serializable: boolean,
+  key: string,
+  value: mixed
+};
+
+export type FixtureStateValues = FixtureStateValue[];
+
+export type FixtureStateProps = {
+  instanceId: FixtureStateInstanceId,
+  componentName: string,
+  renderKey: number,
+  values: FixtureStateValues
+};
+
+export type FixtureStateState = {
+  instanceId: FixtureStateInstanceId,
+  componentName: string,
+  values: FixtureStateValues
+};
+
+export type FixtureState = {
+  props?: FixtureStateProps[],
+  state?: FixtureStateState[],
+  [key: string]: mixed
+};
+
+declare export function extractValuesFromObject(obj: {
+  [string]: mixed
+}): FixtureStateValues;
+
+declare export function areValuesEqual(
+  a: FixtureStateValues,
+  b: FixtureStateValues
+): boolean;
+
+declare export function getFixtureStateProps(
+  fixtureState: ?FixtureState
+): FixtureStateProps[];
+
+declare export function getFixtureStatePropsInst(
+  fixtureState: ?FixtureState,
+  instanceId: FixtureStateInstanceId
+): ?FixtureStateProps;
+
+declare export function updateFixtureStateProps(
+  fixtureState: ?FixtureState,
+  instanceId: FixtureStateInstanceId,
+  newProps: { [key: string]: mixed },
+  resetInstance?: boolean
+): FixtureStateProps[];
+
+declare export function getFixtureStateState(
+  fixtureState: ?FixtureState
+): FixtureStateState[];
+
+declare export function getFixtureStateStateInst(
+  fixtureState: ?FixtureState,
+  instanceId: FixtureStateInstanceId
+): ?FixtureStateState;
+
+declare export function updateFixtureStateState(
+  fixtureState: ?FixtureState,
+  instanceId: FixtureStateInstanceId,
+  newState: { [key: string]: mixed }
+): FixtureStateState[];

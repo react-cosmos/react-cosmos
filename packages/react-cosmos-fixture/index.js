@@ -1,3 +1,3 @@
 // @flow
 
-// TODO: Export FixtureConnect, FixtureProvider, CaptureProps and ComponentState with Flow/TS types
+module.exports = require('./dist/index');

@@ -1,0 +1,15 @@
+// @flow
+
+export type FindUserModulePathsArgs = {
+  rootDir: string,
+  fixturesDir: string
+};
+
+export type UserModulePaths = {
+  fixturePaths: string[],
+  decoratorPaths: string[]
+};
+
+declare export function findUserModulePaths(
+  FindUserModulePathsArgs
+): Promise<UserModulePaths>;

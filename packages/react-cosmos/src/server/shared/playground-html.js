@@ -2,15 +2,23 @@
 
 import { join } from 'path';
 import { readFileSync } from 'fs';
+import { replaceKeys } from 'react-cosmos-shared2/util';
 
-import type { Config } from 'react-cosmos-flow/config';
 import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
+import type { PlaygroundOptions } from 'react-cosmos-playground2';
 
-export function getPlaygroundHtml(
-  cosmosConfig: Config,
-  playgroundOpts: PlaygroundOpts
-) {
-  const html = readFileSync(join(__dirname, 'static/index.html'), 'utf8');
+export function getPlaygroundHtml(playgroundOpts: PlaygroundOpts) {
+  return replaceKeys(getHtmlTemplate(), {
+    __PLAYGROUND_OPTS__: JSON.stringify(playgroundOpts)
+  });
+}
 
-  return html.replace('__PLAYGROUND_OPTS__', JSON.stringify(playgroundOpts));
+export function getPlaygroundHtmlNext(options: PlaygroundOptions) {
+  return replaceKeys(getHtmlTemplate(), {
+    __PLAYGROUND_OPTS__: JSON.stringify(options)
+  });
+}
+
+function getHtmlTemplate() {
+  return readFileSync(join(__dirname, 'static/index.html'), 'utf8');
 }

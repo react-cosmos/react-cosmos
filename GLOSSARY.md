@@ -4,17 +4,17 @@
 
 Any React [Node](https://flow.org/en/docs/react/types/#toc-react-node). Describes the state of one or more components.
 
-#### Fixture plugin
+#### Fixture decorator
 
-Component decorator for enhancing a fixture's capabilities.
+Component wrapper for enhancing a fixture's capabilities.
 
 #### Fixture state
 
-State related to a rendered fixture, like component props, state or other data provided by fixture plugins. Changes to the fixture state alter the fixture elements (and in turn their output).
+State related to a rendered fixture, like component props, state or other data provided by fixture decorators. Changes to the fixture state alter the fixture elements (and in turn their output).
 
-#### FixtureProvider
+#### FixtureContainer
 
-Provides the required context for a fixture (along with fixture plugins) to render.
+Hosts fixture state and provides the required context for a fixture (and its decorators) to render.
 
 #### FixtureConnect
 

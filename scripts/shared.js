@@ -7,7 +7,7 @@ import rimraf from 'rimraf';
 import { argv } from 'yargs';
 import chalk from 'chalk';
 
-type PackageNames = Array<string>;
+type PackageNames = string[];
 
 export const globAsync = asyncify(glob);
 export const readFileAsync = asyncify(readFile);
@@ -15,7 +15,10 @@ export const writeFileAsync = asyncify(writeFile);
 export const rimrafAsync = asyncify(rimraf);
 
 export const AS_IS_PACKAGES = ['react-cosmos-flow'];
-export const BROWSER_PACKAGES = ['react-cosmos-playground'];
+export const BROWSER_PACKAGES = [
+  'react-cosmos-playground',
+  'react-cosmos-playground2'
+];
 
 export async function getNodePackages(): Promise<PackageNames> {
   const allPackages = await getAllPackages();
@@ -34,6 +37,10 @@ export async function getAllPackages(): Promise<PackageNames> {
   const files = await globAsync('./packages/react-*');
 
   return files.map(f => path.basename(f));
+}
+
+export function getFormattedPackageList(pkgNames: PackageNames) {
+  return ['', ...pkgNames].join('\n - ');
 }
 
 export function getUnnamedArg(index: number = 0): void | number | string {

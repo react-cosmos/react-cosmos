@@ -21,7 +21,7 @@ const exportPlaygroundFiles = (cosmosConfig, outputPath) => {
   );
 
   const playgroundOpts = getPlaygroundOpts(cosmosConfig);
-  const playgroundHtml = getPlaygroundHtml(cosmosConfig, playgroundOpts);
+  const playgroundHtml = getPlaygroundHtml(playgroundOpts);
   fs.writeFileSync(`${outputPath}/index.html`, playgroundHtml);
 };
 

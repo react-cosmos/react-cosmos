@@ -6,6 +6,7 @@
 import { existsSync, readFileSync } from 'fs';
 import rimraf from 'rimraf';
 import { slash } from 'react-cosmos-shared/server';
+import { replaceKeys } from 'react-cosmos-shared2/util';
 import { generateExport } from '../export';
 
 const mockRootPath = __dirname;
@@ -57,7 +58,7 @@ describe('playground files', () => {
     expect(existsSync(slash(mockOutputPath, 'index.html'))).toBe(true);
   });
 
-  it('exports index.html with __PLAYGROUND_OPTS__ replaced', () => {
+  it('exports index.html with template vars replaced', () => {
     const inputPath = slash(__dirname, '../../shared/static/index.html');
     const outputPath = slash(mockOutputPath, 'index.html');
     const optsStr = JSON.stringify({
@@ -71,7 +72,9 @@ describe('playground files', () => {
     });
 
     expect(readFileSync(outputPath, 'utf8')).toBe(
-      readFileSync(inputPath, 'utf8').replace('__PLAYGROUND_OPTS__', optsStr)
+      replaceKeys(readFileSync(inputPath, 'utf8'), {
+        __PLAYGROUND_OPTS__: optsStr
+      })
     );
   });
 });

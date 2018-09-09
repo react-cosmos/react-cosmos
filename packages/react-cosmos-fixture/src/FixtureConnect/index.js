@@ -1,44 +1,38 @@
 // @flow
 
-import type { Node } from 'react';
-
 import React, { Component } from 'react';
 import { FixtureProvider } from '../FixtureProvider';
-import { updateFixtureState } from '../shared/fixtureState';
+import { updateState } from 'react-cosmos-shared2/util';
 
-import type { FixtureState, SetFixtureState } from '../types/fixtureState';
-import type { RemoteMessage, RemoteRendererApi } from '../types/messages';
-
-export type Fixtures = {
-  [path: string]: Node
-};
-
-type Props = {
-  rendererId: string,
-  fixtures: Fixtures
-} & RemoteRendererApi;
+import type { SetState } from 'react-cosmos-shared2/util';
+import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
+import type { RendererRequest } from 'react-cosmos-shared2/renderer';
+import type { FixtureConnectProps } from '../index.js.flow';
 
 type State = {
   fixturePath: ?string,
-  fixtureState: ?FixtureState
+  fixtureState: ?FixtureState,
+  renderKey: number
 };
 
 // TODO: Add props for customizing blank/missing states: `getBlankState` and
 // `getMissingState`
-export class FixtureConnect extends Component<Props, State> {
+export class FixtureConnect extends Component<FixtureConnectProps, State> {
   state = {
     fixturePath: null,
-    fixtureState: null
+    fixtureState: null,
+    // Used to reset FixtureProvider instance on fixturePath change
+    renderKey: 0
   };
 
   componentDidMount() {
     const { subscribe } = this.props;
 
-    subscribe(this.handleMessage);
+    subscribe(this.handleRequest);
     this.postReadyMessage();
   }
 
-  componentDidUpdate(prevProps: Props, prevState: State) {
+  componentDidUpdate(prevProps: FixtureConnectProps, prevState: State) {
     // TODO: Adapt to props.fixtures change (eg. current fixture gets removed)
     const { rendererId, postMessage } = this.props;
     const { fixturePath, fixtureState } = this.state;
@@ -68,7 +62,7 @@ export class FixtureConnect extends Component<Props, State> {
 
   render() {
     const { fixtures } = this.props;
-    const { fixturePath, fixtureState } = this.state;
+    const { fixturePath, fixtureState, renderKey } = this.state;
 
     if (!fixturePath) {
       return 'No fixture loaded.';
@@ -80,6 +74,9 @@ export class FixtureConnect extends Component<Props, State> {
 
     return (
       <FixtureProvider
+        // Ensure no state leaks between fixture selections, even though under
+        // normal circumstances f(fixture, fixtureState) is deterministic.
+        key={renderKey}
         fixtureState={fixtureState}
         setFixtureState={this.setFixtureState}
       >
@@ -88,8 +85,8 @@ export class FixtureConnect extends Component<Props, State> {
     );
   }
 
-  handleMessage = (msg: RemoteMessage) => {
-    if (msg.type === 'remoteReady') {
+  handleRequest = (msg: RendererRequest) => {
+    if (msg.type === 'requestFixtureList') {
       return this.postReadyMessage();
     }
 
@@ -105,14 +102,15 @@ export class FixtureConnect extends Component<Props, State> {
         fixturePath,
         // Reset fixture state when selecting new fixture (or when reselecting
         // current fixture)
-        fixtureState: null
+        fixtureState: null,
+        renderKey: this.state.renderKey + 1
       });
     } else if (msg.type === 'setFixtureState') {
-      const { fixturePath, fixtureState } = msg.payload;
+      const { fixturePath, fixtureStateChange } = msg.payload;
 
       // Ensure fixture state applies to currently selected fixture
       if (fixturePath === this.state.fixturePath) {
-        this.setFixtureState(fixtureState);
+        this.setFixtureState(fixtureStateChange);
       }
     }
   };
@@ -121,7 +119,7 @@ export class FixtureConnect extends Component<Props, State> {
     const { rendererId, fixtures, postMessage } = this.props;
 
     postMessage({
-      type: 'rendererReady',
+      type: 'fixtureList',
       payload: {
         rendererId,
         fixtures: Object.keys(fixtures)
@@ -129,7 +127,7 @@ export class FixtureConnect extends Component<Props, State> {
     });
   }
 
-  setFixtureState: SetFixtureState = (updater, cb) => {
+  setFixtureState: SetState<FixtureState> = (updater, cb) => {
     // Multiple state changes can be dispatched by fixture plugins at almost
     // the same time. Since state changes are batched in React, current state
     // (this.state.fixtureState) can be stale at dispatch time, and extending
@@ -138,7 +136,7 @@ export class FixtureConnect extends Component<Props, State> {
     // every state change is honored, regardless of timing.
     this.setState(
       ({ fixtureState }) => ({
-        fixtureState: updateFixtureState(fixtureState, updater)
+        fixtureState: updateState(fixtureState, updater)
       }),
       cb
     );

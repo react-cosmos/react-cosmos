@@ -2,7 +2,7 @@
 
 import { Component } from 'react';
 
-import type { ComponentType, ElementRef } from 'react';
+import type { ComponentType, ElementRef, ElementType } from 'react';
 
 const instanceIds: WeakMap<
   ElementRef<typeof Component>,
@@ -25,7 +25,11 @@ export function getInstanceId(instance: ElementRef<typeof Component>): number {
 
 const componentNames: WeakMap<ComponentType<any>, string> = new WeakMap();
 
-export function getComponentName(type: ComponentType<any>): string {
+export function getComponentName(type: ElementType): string {
+  if (typeof type === 'string') {
+    return type;
+  }
+
   if (componentNames.has(type)) {
     // $FlowFixMe https://github.com/facebook/flow/issues/2751
     return componentNames.get(type);

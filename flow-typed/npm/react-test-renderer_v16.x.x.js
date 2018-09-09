@@ -1,8 +1,11 @@
-// flow-typed signature: cd91208a3c81125a801eb305516651a1
-// flow-typed version: 6b56f6033e/react-test-renderer_v16.x.x/flow_>=v0.47.x
+// flow-typed signature: 2c70223ccadf23513c28ebff4469aaa0
+// flow-typed version: 8cdcc6637e/react-test-renderer_v16.x.x/flow_>=v0.47.x
 
 // Type definitions for react-test-renderer 16.x.x
 // Ported from: https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/react-test-renderer
+
+// https://github.com/flow-typed/flow-typed/pull/2715
+type ReactComponentInstance = React$Component<any>;
 
 type ReactTestRendererJSON = {
   type: string,
@@ -12,12 +15,12 @@ type ReactTestRendererJSON = {
 
 type ReactTestRendererTree = ReactTestRendererJSON & {
   nodeType: 'component' | 'host',
-  instance: any,
+  instance: ?ReactComponentInstance,
   rendered: null | ReactTestRendererTree
 };
 
 type ReactTestInstance = {
-  instance: any,
+  instance: ?ReactComponentInstance,
   type: string,
   props: { [propName: string]: any },
   parent: null | ReactTestInstance,
@@ -46,13 +49,12 @@ type TestRendererOptions = {
 };
 
 declare module 'react-test-renderer' {
-  // XXX: https://github.com/flow-typed/flow-typed/pull/2674
   declare export type ReactTestRenderer = {
     toJSON(): null | ReactTestRendererJSON,
     toTree(): null | ReactTestRendererTree,
     unmount(nextElement?: React$Element<any>): void,
     update(nextElement: React$Element<any>): void,
-    getInstance(): null | ReactTestInstance,
+    getInstance(): ?ReactComponentInstance,
     root: ReactTestInstance
   };
 
