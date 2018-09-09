@@ -33,6 +33,8 @@ export function createRouterProxy() {
     const location = buildLocation(url, locationState);
 
     return (
+      // keyLength=0 generates empty "" history keys, leading to deterministic
+      // test snapshots https://github.com/react-cosmos/react-cosmos/pull/803
       <MemoryRouter keyLength={0} initialEntries={[location]}>
         <LocationInterceptor
           onUrlChange={handleUrlChange}
