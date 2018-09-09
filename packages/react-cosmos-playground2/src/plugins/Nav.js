@@ -44,6 +44,7 @@ class Nav extends Component<Props> {
     postRendererRequest({
       type: 'selectFixture',
       payload: {
+        // TODO: Use rendererIds from uiState
         rendererId: RENDERER_ID,
         fixturePath
       }

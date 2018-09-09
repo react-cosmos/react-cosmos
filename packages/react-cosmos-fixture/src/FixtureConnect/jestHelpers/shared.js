@@ -14,7 +14,7 @@ import type { Fixtures } from '../../index.js.flow';
 
 type Message = RendererResponse | RendererRequest;
 
-export type GetTestElement = ({
+type GetTestElement = ({
   fixtures: Fixtures,
   rendererId: RendererId
 }) => Element<any>;

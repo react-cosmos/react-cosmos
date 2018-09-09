@@ -53,9 +53,9 @@ export type ComponentStateProps = {
 declare export var FixtureConnect: ComponentType<FixtureConnectProps>;
 declare export var PostMessage: ComponentType<PostMessageProps>;
 declare export var WebSockets: ComponentType<WebSocketsProps>;
-declare export var FixtureContainer: ComponentType<FixtureContainerProps>;
 
 declare export var FixtureContext: Context<FixtureContextValue>;
+declare export var FixtureContainer: ComponentType<FixtureContainerProps>;
 
 declare export var CaptureProps: ComponentType<CapturePropsProps>;
 declare export var ComponentState: ComponentType<ComponentStateProps>;

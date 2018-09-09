@@ -24,9 +24,10 @@
     - [x] WebSockets
   - [ ] Testing API
 - [ ] Integrate JSX fixture files
+  - [x] Support default export
   - [ ] Support multiple named exports
-- [ ] Port 3rd party render plugins
-  - [ ] Create API for render plugins (decorators)
+  - [ ] Support decorator files
+- [ ] Port 3rd party fixture plugins (decorators)
   - [ ] Redux
   - [ ] React Router
   - [ ] LocalStorage
@@ -38,7 +39,7 @@
 
 > JSX fixtures are a big shift from the traditional fixture format in Cosmos. Before planning the migration, the new APIs need to be tested and validated by Cosmos users. Below are the steps to make the new fixture API available under a _feature flag._
 
-- [ ] New (minimal) Playground
+- [x] New (minimal) Playground
   - [x] Map state to new renderer events
   - [x] Renderer preview
   - [x] Fixture list

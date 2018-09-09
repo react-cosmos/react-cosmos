@@ -38,7 +38,7 @@ export function createServerApp({
   app.get('/_playground.js', (req: express$Request, res: express$Response) => {
     res.sendFile(
       require.resolve(
-        next ? 'react-cosmos-playground2/dist/index' : 'react-cosmos-playground'
+        next ? 'react-cosmos-playground2' : 'react-cosmos-playground'
       )
     );
   });

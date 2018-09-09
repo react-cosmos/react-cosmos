@@ -4,7 +4,7 @@
   "description": "Visual interface for browsing React Cosmos fixtures",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-playground2",
   "license": "MIT",
-  "main": "index.js",
+  "main": "dist/index.js",
   "devDependencies": {
     "lodash": "^4.17.10",
     "react": "^16.4.2",
