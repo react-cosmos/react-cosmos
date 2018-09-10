@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {},
   "dependencies": {
+    "@babel/runtime-corejs2": "^7.0.0",
     "babel-types": "^6.26.0",
     "babylon": "^6.18.0",
     "glob": "^7.1.3",

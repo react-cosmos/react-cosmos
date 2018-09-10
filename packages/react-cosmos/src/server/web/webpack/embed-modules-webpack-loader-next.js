@@ -46,6 +46,7 @@ function genModuleMapStr({ paths, rootDir, fixturesDir }) {
 }
 
 function getModuleStr({ path, rootDir, fixturesDir }) {
+  // TODO: Use slash to normalize path
   const relPath = relative(rootDir, path);
   const cleanPath = relPath
     .replace(new RegExp(`${fixturesDir}/`, 'g'), '')

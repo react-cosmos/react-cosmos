@@ -4,5 +4,8 @@
   "description": "Bare router for React components, using props as query string",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-querystring-router",
   "license": "MIT",
-  "main": "index.js"
+  "main": "index.js",
+  "dependencies": {
+    "@babel/runtime-corejs2": "^7.0.0"
+  }
 }
