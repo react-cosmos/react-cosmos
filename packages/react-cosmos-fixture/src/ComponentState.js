@@ -62,6 +62,14 @@ class ComponentStateInner extends Component<InnerProps> {
 
   render() {
     const { children } = this.props;
+
+    // Flow users will get a static error when trying to wrap more elements
+    // inside ComponentState. But the rest might miss this restriction and
+    // find out at run time.
+    if (Array.isArray(children)) {
+      throw new Error('ComponentState only accepts a single child element');
+    }
+
     const clonedEl = cloneElement(children, { ref: this.handleRef });
 
     // Allow fixture decorators to opt out from their props being captured
