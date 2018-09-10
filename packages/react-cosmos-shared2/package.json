@@ -5,6 +5,7 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-shared2",
   "license": "MIT",
   "dependencies": {
+    "@babel/runtime-corejs2": "^7.0.0",
     "lodash": "^4.17.10"
   }
 }

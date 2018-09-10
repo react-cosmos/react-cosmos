@@ -31,11 +31,13 @@ async function run() {
   if (pkgName) {
     if (typeof pkgName !== 'string') {
       stderr.write(error(`Invalid package name ${bold(String(pkgName))}!\n`));
+      process.exit(1);
       return;
     }
 
     if (AS_IS_PACKAGES.indexOf(pkgName) !== -1) {
       stderr.write(error(`${bold(pkgName)} doesn't require building!\n`));
+      process.exit(1);
       return;
     }
 
@@ -47,6 +49,7 @@ async function run() {
           )}`
         )
       );
+      process.exit(1);
       return;
     }
 
@@ -71,6 +74,7 @@ async function run() {
           )} for one or more packages (in separate terminals)\n`
         )
       );
+      process.exit(1);
       return;
     }
 

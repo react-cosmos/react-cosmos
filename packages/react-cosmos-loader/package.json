@@ -6,6 +6,7 @@
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
+    "@babel/runtime-corejs2": "^7.0.0",
     "@skidding/linked-list": "^1.0.2",
     "async-until": "^1.2.0",
     "deep-equal": "^1.0.1",

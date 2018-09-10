@@ -6,6 +6,7 @@
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
+    "@babel/runtime-corejs2": "^7.0.0",
     "lodash.isempty": "^4.4.0",
     "lodash.isequal": "^4.4.0",
     "lodash.omit": "^4.5.0",
