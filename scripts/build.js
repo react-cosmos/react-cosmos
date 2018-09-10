@@ -175,7 +175,7 @@ function getWebpackCliArgs(pkgName) {
 }
 
 function getPackageIgnorePaths(pkgName) {
-  const ignore = ['**/__tests__/**', '**/__mocks__/**'];
+  const ignore = ['**/__tests__/**', '**/__mocks__/**', '**/jestHelpers/**'];
 
   if (pkgName === 'react-cosmos-voyager') {
     return [...ignore, '**/use-cases/**'];
