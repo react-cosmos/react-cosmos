@@ -2477,11 +2477,11 @@ async-limiter@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.0.tgz#78faed8c3d074ab81f22b4e985d79e8738f720f8"
 
-async-until@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/async-until/-/async-until-1.2.0.tgz#da2a54a120248ecd541677c7c44c5498a66f72ef"
+async-until@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/async-until/-/async-until-1.2.1.tgz#daed8d3910e0952839f411342a16f123104d1664"
   dependencies:
-    babel-runtime "^6.26.0"
+    "@babel/runtime-corejs2" "^7.0.0"
 
 async@2.4.0:
   version "2.4.0"

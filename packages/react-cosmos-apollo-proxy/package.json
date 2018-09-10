@@ -16,7 +16,7 @@
     "react-cosmos-shared": "^4.7.0-5"
   },
   "devDependencies": {
-    "async-until": "^1.2.0",
+    "async-until": "^1.2.1",
     "fetch-mock": "^5.12.2",
     "graphql-tag": "^2.9.2"
   }

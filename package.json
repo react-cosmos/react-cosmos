@@ -51,7 +51,7 @@
     "@babel/runtime-corejs2": "^7.0.0",
     "after-pending-promises": "^0.0.1",
     "after-pending-timers": "^0.0.1",
-    "async-until": "^1.2.0",
+    "async-until": "^1.2.1",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^9.0.0",
     "babel-jest": "^23.4.2",
