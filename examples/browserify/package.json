@@ -8,8 +8,8 @@
     "start": "node ./server.js"
   },
   "dependencies": {
-    "babelify": "^7.3.0",
-    "budo": "^9.2.1",
+    "babelify": "^10.0.0",
+    "budo": "^11.3.2",
     "prop-types": "^15.6.2",
     "react-cosmos-loader": "^4.7.0-6",
     "react-cosmos-playground": "^4.7.0-6",

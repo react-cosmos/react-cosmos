@@ -1,3 +1,6 @@
+const { useRootBabelConfig } = require('../webpack');
+
 module.exports = {
-  next: true
+  next: true,
+  webpack: useRootBabelConfig
 };

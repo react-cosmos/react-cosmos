@@ -9,7 +9,7 @@ const onUpdate = buffer => {
 };
 
 const browserify = {
-  transform: ['babelify', 'require-globify'],
+  transform: [['babelify', require('../../babel.config')], 'require-globify'],
   extensions: ['.js', '.json', '.jsx']
 };
 
