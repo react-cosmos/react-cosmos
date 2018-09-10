@@ -102,6 +102,8 @@
 ## UI control panel
 
 - [x] Create POC with JSX fixtures
+- [ ] Show unserializable values as read-only fields
+- [ ] Use JSON editor for complex values
 
 ## Redesign docs
 
