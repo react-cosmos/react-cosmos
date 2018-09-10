@@ -70,7 +70,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-react": "^7.11.1",
     "eventsource": "^1.0.7",
-    "file-loader": "^1.1.11",
+    "file-loader": "^2.0.0",
     "flow-bin": "^0.80.0",
     "flow-typed": "^2.5.1",
     "glob": "^7.1.3",
