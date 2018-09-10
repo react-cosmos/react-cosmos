@@ -211,22 +211,22 @@ Use [Jest](https://facebook.github.io/jest/) for unit testing. Look inside `__te
 
 Make sure `yarn run lint` passes and add [ESLint](https://eslint.org/docs/user-guide/integrations#editors) to your editor if possible.
 
-When naming a file:
+When naming files:
 
-- Use _CamelCase_ for components: `DragHandle.js` or `DragHandle/index.js`
-- Use _kebab-case_ for any other path: `packages/react-cosmos-shared/src/resolve-user-path.js`
+- Use _camelCase_ for files (eg. `fixtureState.js`). Capitalize components (eg. `DragHandle.js`).
+- Use _kebab-case_ for package names (eg. `react-cosmos-fixture`).
 
 When creating a module:
 
-- **Named exports** are preferred over default exports
-- **Function declarations** are preferred over arrow functions at the module level (one reason is that the order doesn't matter when using the former)
+- **Named exports** are preferred over default exports.
+- **Function declarations** are preferred over arrow functions at the module level (one reason is that the order doesn't matter when using the former).
 
 Please follow these rules or challenge them if you think it's worth it.
 
 #### Use Git conscientiously
 
 - [GitHub Flow](https://guides.github.com/introduction/flow/)
-- [Conventional Commits](https://conventionalcommits.org/) (important for generating release notes)
+- [Conventional Commits](https://conventionalcommits.org/) (aids release note generation)
 
 ---
 
