@@ -11,12 +11,12 @@
     "apollo-client": "^2.4.1",
     "apollo-link": "^1.2.2",
     "apollo-link-http": "^1.5.4",
-    "graphql": "^0.13.2",
+    "graphql": "^14.0.2",
     "react-apollo": "^2.1.11",
     "react-cosmos-shared": "^4.7.0-6"
   },
   "devDependencies": {
-    "async-until": "^1.2.1",
+    "async-until": "^1.2.2",
     "fetch-mock": "^5.12.2",
     "graphql-tag": "^2.9.2"
   }

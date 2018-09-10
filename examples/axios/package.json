@@ -5,7 +5,7 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples",
   "license": "MIT",
   "scripts": {
-    "start": "babel-node ../../packages/react-cosmos/bin/cosmos.js"
+    "start": "cosmos"
   },
   "dependencies": {
     "axios": "^0.18.0",
