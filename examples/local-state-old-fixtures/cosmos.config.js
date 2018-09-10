@@ -1,3 +1,6 @@
+const { useRootBabelConfig } = require('../webpack');
+
 module.exports = {
-  componentPaths: ['components']
+  componentPaths: ['components'],
+  webpack: useRootBabelConfig
 };

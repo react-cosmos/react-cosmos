@@ -5,8 +5,9 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples",
   "license": "MIT",
   "scripts": {
+    "babel-node-root": "babel-node --config-file ../../babel.config.js --ignore ../../node_modules",
     "build-dll": "../../node_modules/.bin/webpack --config webpack.vendor.config.js",
-    "start": "yarn run build-dll && babel-node ../../packages/react-cosmos/bin/cosmos.js"
+    "start": "yarn run build-dll && yarn babel-node-root ../../packages/react-cosmos/bin/cosmos.js"
   },
   "dependencies": {
     "moment": "^2.22.2",
