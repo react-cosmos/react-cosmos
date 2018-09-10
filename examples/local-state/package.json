@@ -9,7 +9,7 @@
     "export": "babel-node ../../packages/react-cosmos/bin/cosmos-export.js"
   },
   "dependencies": {
-    "async-until": "^1.2.1",
+    "async-until": "^1.2.2",
     "react-cosmos": "^4.7.0-6",
     "react-cosmos-test": "^4.7.0-6"
   },
