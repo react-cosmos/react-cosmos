@@ -39,6 +39,12 @@ export async function getAllPackages(): Promise<PackageNames> {
   return files.map(f => path.basename(f));
 }
 
+export async function getExamples(): Promise<PackageNames> {
+  const files = await globAsync('./examples/*/');
+
+  return files.map(f => path.basename(f));
+}
+
 export function getFormattedPackageList(pkgNames: PackageNames) {
   return ['', ...pkgNames].join('\n - ');
 }
