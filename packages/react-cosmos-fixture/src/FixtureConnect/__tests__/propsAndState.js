@@ -154,6 +154,44 @@ function tests(mockConnect) {
       }
     );
   });
+
+  it('updates props on fixture change', async () => {
+    await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
+      await mount(getElement({ rendererId, fixtures }), async instance => {
+        await selectFixture({
+          rendererId,
+          fixturePath: 'first'
+        });
+
+        instance.update(
+          getElement({
+            rendererId,
+            fixtures: {
+              first: (
+                <ComponentState>
+                  <Counter suffix="timez" />
+                </ComponentState>
+              )
+            }
+          })
+        );
+
+        expect(instance.toJSON()).toBe('0 timez');
+
+        await untilMessage({
+          type: 'fixtureState',
+          payload: {
+            rendererId,
+            fixturePath: 'first',
+            fixtureState: {
+              props: [getPropsInstanceShape('timez')],
+              state: [getStateInstanceShape(0)]
+            }
+          }
+        });
+      });
+    });
+  });
 }
 
 function createSuffixPropValue(suffix) {
