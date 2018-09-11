@@ -5,6 +5,8 @@ export type FixtureStateInstanceId = number;
 export type FixtureStateValue = {
   serializable: boolean,
   key: string,
+  // TODO
+  // stringified: string
   value: mixed
 };
 
@@ -29,6 +31,10 @@ export type FixtureState = {
   [key: string]: mixed
 };
 
+export type FixtureStateValueMap = {
+  [key: string]: mixed
+};
+
 declare export function extractValuesFromObject(obj: {
   [string]: mixed
 }): FixtureStateValues;
@@ -47,13 +53,6 @@ declare export function getFixtureStatePropsInst(
   instanceId: FixtureStateInstanceId
 ): ?FixtureStateProps;
 
-declare export function updateFixtureStateProps(
-  fixtureState: ?FixtureState,
-  instanceId: FixtureStateInstanceId,
-  newProps: { [key: string]: mixed },
-  resetInstance?: boolean
-): FixtureStateProps[];
-
 declare export function getFixtureStateState(
   fixtureState: ?FixtureState
 ): FixtureStateState[];
@@ -63,8 +62,19 @@ declare export function getFixtureStateStateInst(
   instanceId: FixtureStateInstanceId
 ): ?FixtureStateState;
 
+declare export function extractValueMapFromInst(
+  inst: FixtureStateProps | FixtureStateState
+): FixtureStateValueMap;
+
 declare export function updateFixtureStateState(
   fixtureState: ?FixtureState,
   instanceId: FixtureStateInstanceId,
-  newState: { [key: string]: mixed }
+  newState: FixtureStateValueMap
 ): FixtureStateState[];
+
+declare export function updateFixtureStateProps(
+  fixtureState: ?FixtureState,
+  instanceId: FixtureStateInstanceId,
+  newProps: FixtureStateValueMap,
+  resetInstance?: boolean
+): FixtureStateProps[];

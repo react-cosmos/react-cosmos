@@ -3,7 +3,11 @@
 // import styled from 'styled-components';
 import React, { Component } from 'react';
 import { RENDERER_ID } from 'react-cosmos-shared2/renderer';
-import { updateFixtureStateState } from 'react-cosmos-shared2/fixtureState';
+import {
+  getFixtureStateStateInst,
+  extractValueMapFromInst,
+  updateFixtureStateState
+} from 'react-cosmos-shared2/fixtureState';
 import { ValueInput } from './ValueInput';
 
 import type {
@@ -53,6 +57,17 @@ export class StatePanel extends Component<Props> {
     key: string
   ) => (value: mixed) => {
     const { fixturePath, fixtureState, postRendererRequest } = this.props;
+    const stateInst = getFixtureStateStateInst(fixtureState, instanceId);
+
+    if (!stateInst) {
+      console.warn(`State instance id ${instanceId} no longer exists`);
+      return;
+    }
+
+    const state = updateFixtureStateState(fixtureState, instanceId, {
+      ...extractValueMapFromInst(stateInst),
+      [key]: value
+    });
 
     postRendererRequest({
       type: 'setFixtureState',
@@ -60,9 +75,7 @@ export class StatePanel extends Component<Props> {
         rendererId: RENDERER_ID,
         fixturePath,
         fixtureStateChange: {
-          state: updateFixtureStateState(fixtureState, instanceId, {
-            [key]: value
-          })
+          state
         }
       }
     });

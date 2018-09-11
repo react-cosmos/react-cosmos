@@ -7,7 +7,10 @@ import type {
   FixtureStateInstanceId,
   FixtureStateValue,
   FixtureStateValues,
-  FixtureState
+  FixtureStateProps,
+  FixtureStateState,
+  FixtureState,
+  FixtureStateValueMap
 } from './fixtureState.js.flow';
 
 // Why store unserializable props in fixture state?
@@ -19,12 +22,16 @@ import type {
 export function extractValuesFromObject(obj: {
   [string]: mixed
 }): FixtureStateValues {
-  return Object.keys(obj).map(key => ({
-    // TODO: Detect unserializable props and stringify values
+  return Object.keys(obj).map(key => serializeValue(key, obj[key]));
+}
+
+function serializeValue(key: string, value: mixed): FixtureStateValue {
+  // TODO: Detect unserializable props and stringify values
+  return {
     serializable: true,
     key,
-    value: obj[key]
-  }));
+    value
+  };
 }
 
 export function areValuesEqual(a: FixtureStateValues, b: FixtureStateValues) {
@@ -49,10 +56,33 @@ export function getFixtureStatePropsInst(
   );
 }
 
+export function getFixtureStateState(fixtureState: ?FixtureState) {
+  return (fixtureState && fixtureState.state) || [];
+}
+
+export function getFixtureStateStateInst(
+  fixtureState: ?FixtureState,
+  instanceId: FixtureStateInstanceId
+) {
+  return find(
+    getFixtureStateState(fixtureState),
+    i => i.instanceId === instanceId
+  );
+}
+
+export function extractValueMapFromInst(
+  inst: FixtureStateProps | FixtureStateState
+): FixtureStateValueMap {
+  return inst.values.reduce(
+    (acc, { key, value }) => ({ ...acc, [key]: value }),
+    {}
+  );
+}
+
 export function updateFixtureStateProps(
   fixtureState: ?FixtureState,
   instanceId: FixtureStateInstanceId,
-  newProps: { [key: string]: mixed },
+  newProps: FixtureStateValueMap,
   resetInstance?: boolean = false
 ) {
   const propsInstance = getFixtureStatePropsInst(fixtureState, instanceId);
@@ -69,24 +99,10 @@ export function updateFixtureStateProps(
   });
 }
 
-export function getFixtureStateState(fixtureState: ?FixtureState) {
-  return (fixtureState && fixtureState.state) || [];
-}
-
-export function getFixtureStateStateInst(
-  fixtureState: ?FixtureState,
-  instanceId: FixtureStateInstanceId
-) {
-  return find(
-    getFixtureStateState(fixtureState),
-    i => i.instanceId === instanceId
-  );
-}
-
 export function updateFixtureStateState(
   fixtureState: ?FixtureState,
   instanceId: FixtureStateInstanceId,
-  newState: { [key: string]: mixed }
+  newState: FixtureStateValueMap
 ) {
   const stateInstance = getFixtureStateStateInst(fixtureState, instanceId);
 
