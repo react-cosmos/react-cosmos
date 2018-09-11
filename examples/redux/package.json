@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-redux-example",
-  "version": "4.7.0-6",
+  "version": "4.7.0-7",
   "description": "Example of redux components",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples",
   "license": "MIT",
@@ -8,7 +8,7 @@
     "start": "cosmos"
   },
   "dependencies": {
-    "react-cosmos": "^4.7.0-6",
+    "react-cosmos": "^4.7.0-7",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.5",
