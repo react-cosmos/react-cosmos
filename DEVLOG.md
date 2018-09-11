@@ -1,3 +1,11 @@
+Q: Why does Lerna what to publish new versions for packages that haven't changed?
+
+Eg. `lerna changed` returns `react-cosmos-shared`. But `lerna diff react-cosmos-shared` returns null.
+
+So, although the source hadn't changed, [this piece of code](https://github.com/lerna/lerna/blob/ac0baa7b1d5c378f794c960ab13d70242d19ddc8/utils/collect-updates/collect-updates.js#L56-L57) determines that a package _needsBump_. The decision process seems convoluted, but my deduction is that once a package has a pre-release version, it will keep getting bumped until the monorepo enters a regular release cycle.
+
+---
+
 Q: Should fixture state-related tests run against a single fixture or a fixture list (ie. FixtureContainer or FixtureConnect)?
 
 The fixture state's purpose is to serve the remote coordination between the Playground and the renderer. So the tests should run against the API that communicates with remote clients such as the Playground. Actually, `fixtureState` itself shouldn't be the test subject, but the remote messages sent and received.
