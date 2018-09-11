@@ -367,6 +367,53 @@ function tests(mockConnect) {
       }
     );
   });
+
+  it('removes state from fixture state on unmount', async () => {
+    await mockConnect(async ({ getElement, untilMessage, selectFixture }) => {
+      await mount(getElement({ rendererId, fixtures }), async instance => {
+        await selectFixture({
+          rendererId,
+          fixturePath: 'first'
+        });
+
+        await untilMessage({
+          type: 'fixtureState',
+          payload: {
+            rendererId,
+            fixturePath: 'first',
+            fixtureState: {
+              props: [getEmptyPropsInstanceShape()],
+              state: [getStateInstanceShape(5)]
+            }
+          }
+        });
+
+        instance.update(
+          getElement({
+            rendererId,
+            fixtures: {
+              // This will cause both the CaptureProps and ComponentState
+              // instance correspondings to the previous fixture element to
+              // unmount
+              first: null
+            }
+          })
+        );
+
+        await untilMessage({
+          type: 'fixtureState',
+          payload: {
+            rendererId,
+            fixturePath: 'first',
+            fixtureState: {
+              props: [],
+              state: []
+            }
+          }
+        });
+      });
+    });
+  });
 }
 
 function getEmptyPropsInstanceShape() {

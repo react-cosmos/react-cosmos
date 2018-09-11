@@ -146,6 +146,7 @@ class CapturePropsInner extends Component<InnerProps> {
     const { setFixtureState } = this.props;
     const instanceId = getInstanceId(this);
 
+    // Remove corresponding fixture state
     setFixtureState(fixtureState => {
       return {
         props: removeItemMatch(

@@ -2,7 +2,7 @@
 
 import { isEqual } from 'lodash';
 import React, { Component, cloneElement } from 'react';
-import { replaceOrAddItem } from 'react-cosmos-shared2/util';
+import { replaceOrAddItem, removeItemMatch } from 'react-cosmos-shared2/util';
 import {
   extractValuesFromObject,
   areValuesEqual,
@@ -167,6 +167,19 @@ class ComponentStateInner extends Component<InnerProps> {
   }
 
   componentWillUnmount() {
+    const { setFixtureState } = this.props;
+    const instanceId = getInstanceId(this);
+
+    // Remove corresponding fixture state
+    setFixtureState(fixtureState => {
+      return {
+        state: removeItemMatch(
+          getFixtureStateState(fixtureState),
+          state => state.instanceId === instanceId
+        )
+      };
+    });
+
     if (this.timeoutId) {
       clearTimeout(this.timeoutId);
     }
@@ -286,6 +299,8 @@ class ComponentStateInner extends Component<InnerProps> {
     const mergedState = stateInstance.values.reduce(
       (acc, { serializable, key, value }) => ({
         ...acc,
+        // TODO: Parse serialized value
+        // [key]: serializable ? JSON.parse(value) : mockedState[key];
         [key]: serializable ? value : mockedState[key]
       }),
       {}
