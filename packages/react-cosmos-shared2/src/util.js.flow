@@ -21,6 +21,11 @@ declare export function replaceOrAddItem<T>(
   item: T
 ): Array<T>;
 
+declare export function removeItemMatch<T>(
+  items: $ReadOnlyArray<T>,
+  matcher: Predicate<T>
+): Array<T>;
+
 declare export function removeItem<T>(
   items: $ReadOnlyArray<T>,
   item: T

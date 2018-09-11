@@ -308,57 +308,95 @@ function tests(mockConnect) {
         selectFixture,
         setFixtureState
       }) => {
-        await mount(
-          getElement({
+        await mount(getElement({ rendererId, fixtures }), async instance => {
+          await selectFixture({
             rendererId,
-            fixtures
-          }),
-          async instance => {
-            await selectFixture({
+            fixturePath: 'first'
+          });
+
+          const fixtureState = await lastFixtureState();
+          const [{ instanceId }] = getFixtureStateProps(fixtureState);
+
+          await setFixtureState({
+            rendererId,
+            fixturePath: 'first',
+            fixtureStateChange: {
+              props: updateFixtureStateProps(fixtureState, instanceId, {
+                name: 'B'
+              })
+            }
+          });
+
+          expect(instance.toJSON()).toBe('Hello B');
+
+          instance.update(
+            getElement({
               rendererId,
-              fixturePath: 'first'
-            });
+              fixtures: {
+                first: <HelloMessage name="Petec" />
+              }
+            })
+          );
 
-            const fixtureState = await lastFixtureState();
-            const [{ instanceId }] = getFixtureStateProps(fixtureState);
-
-            await setFixtureState({
+          await untilMessage({
+            type: 'fixtureState',
+            payload: {
               rendererId,
               fixturePath: 'first',
-              fixtureStateChange: {
-                props: updateFixtureStateProps(fixtureState, instanceId, {
-                  name: 'B'
-                })
+              fixtureState: {
+                props: [getPropsInstanceShape('Petec')]
               }
-            });
+            }
+          });
 
-            expect(instance.toJSON()).toBe('Hello B');
-
-            instance.update(
-              getElement({
-                rendererId,
-                fixtures: {
-                  first: <HelloMessage name="Petec" />
-                }
-              })
-            );
-
-            await untilMessage({
-              type: 'fixtureState',
-              payload: {
-                rendererId,
-                fixturePath: 'first',
-                fixtureState: {
-                  props: [getPropsInstanceShape('Petec')]
-                }
-              }
-            });
-
-            expect(instance.toJSON()).toBe('Hello Petec');
-          }
-        );
+          expect(instance.toJSON()).toBe('Hello Petec');
+        });
       }
     );
+  });
+
+  it('removes props from fixture state on unmount', async () => {
+    await mockConnect(async ({ getElement, untilMessage, selectFixture }) => {
+      await mount(getElement({ rendererId, fixtures }), async instance => {
+        await selectFixture({
+          rendererId,
+          fixturePath: 'first'
+        });
+
+        await untilMessage({
+          type: 'fixtureState',
+          payload: {
+            rendererId,
+            fixturePath: 'first',
+            fixtureState: {
+              props: [getPropsInstanceShape('Bianca')]
+            }
+          }
+        });
+
+        instance.update(
+          getElement({
+            rendererId,
+            fixtures: {
+              // This will cause the CaptureProps instance corresponding to the
+              // previous fixture element to unmount
+              first: null
+            }
+          })
+        );
+
+        await untilMessage({
+          type: 'fixtureState',
+          payload: {
+            rendererId,
+            fixturePath: 'first',
+            fixtureState: {
+              props: []
+            }
+          }
+        });
+      });
+    });
   });
 }
 
