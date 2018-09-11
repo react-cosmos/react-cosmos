@@ -41,6 +41,7 @@ export class PropsPanel extends Component<Props> {
             {values.map(({ key, serializable, value }) => (
               <ValueInput
                 key={key}
+                id={`${instanceId}-${key}`}
                 label={key}
                 value={value}
                 disabled={!serializable}

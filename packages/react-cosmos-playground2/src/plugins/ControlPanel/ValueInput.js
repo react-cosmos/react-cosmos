@@ -1,9 +1,10 @@
 // @flow
 
-// import styled from 'styled-components';
+import styled from 'styled-components';
 import React, { Component } from 'react';
 
 type Props = {
+  id: string,
   label: string,
   value: mixed,
   disabled: boolean,
@@ -12,15 +13,20 @@ type Props = {
 
 export class ValueInput extends Component<Props> {
   render() {
-    const { label, value, disabled } = this.props;
+    const { id, label, value, disabled } = this.props;
 
     return (
       <div>
-        {label}{' '}
+        <Label htmlFor={id}>{label}</Label>
         {disabled ? (
-          <input type="text" value={value} disabled />
+          <input id={id} type="text" value={value} disabled />
         ) : (
-          <input type="text" value={value} onChange={this.handleChange} />
+          <input
+            id={id}
+            type="text"
+            value={value}
+            onChange={this.handleChange}
+          />
         )}
       </div>
     );
@@ -31,5 +37,11 @@ export class ValueInput extends Component<Props> {
     const { onChange } = this.props;
 
     onChange(value === '' || isNaN(value) ? value : Number(value));
+    // TODO: onChange(value);
   };
 }
+
+const Label = styled.label`
+  display: block;
+  font-size: 14px;
+`;
