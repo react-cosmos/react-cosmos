@@ -5,9 +5,7 @@ export type FixtureStateInstanceId = number;
 export type FixtureStateValue = {
   serializable: boolean,
   key: string,
-  // TODO
-  // stringified: string
-  value: mixed
+  stringified: string
 };
 
 export type FixtureStateValues = FixtureStateValue[];
@@ -28,10 +26,6 @@ export type FixtureStateState = {
 export type FixtureState = {
   props?: FixtureStateProps[],
   state?: FixtureStateState[],
-  [key: string]: mixed
-};
-
-export type FixtureStateValueMap = {
   [key: string]: mixed
 };
 
@@ -62,19 +56,15 @@ declare export function getFixtureStateStateInst(
   instanceId: FixtureStateInstanceId
 ): ?FixtureStateState;
 
-declare export function extractValueMapFromInst(
-  inst: FixtureStateProps | FixtureStateState
-): FixtureStateValueMap;
-
 declare export function updateFixtureStateState(
   fixtureState: ?FixtureState,
   instanceId: FixtureStateInstanceId,
-  newState: FixtureStateValueMap
+  values: FixtureStateValues
 ): FixtureStateState[];
 
 declare export function updateFixtureStateProps(
   fixtureState: ?FixtureState,
   instanceId: FixtureStateInstanceId,
-  newProps: FixtureStateValueMap,
+  values: FixtureStateValues,
   resetInstance?: boolean
 ): FixtureStateProps[];

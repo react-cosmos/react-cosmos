@@ -193,10 +193,10 @@ function extendPropsWithFixtureState(originalProps, propsInstance) {
 
   // Use latest prop value for serializable props, and fall back to original
   // value for unserializable props.
-  values.forEach(({ serializable, key, value }) => {
-    // TODO: Parse serialized value
-    // mergedProps[key] = serializable ? JSON.parse(value) : originalProps[key];
-    mergedProps[key] = serializable ? value : originalProps[key];
+  values.forEach(({ serializable, key, stringified }) => {
+    mergedProps[key] = serializable
+      ? JSON.parse(stringified)
+      : originalProps[key];
   });
 
   return mergedProps;

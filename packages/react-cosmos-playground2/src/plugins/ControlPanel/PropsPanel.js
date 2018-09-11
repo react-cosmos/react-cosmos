@@ -3,9 +3,9 @@
 // import styled from 'styled-components';
 import React, { Component } from 'react';
 import { RENDERER_ID } from 'react-cosmos-shared2/renderer';
+import { replaceOrAddItem } from 'react-cosmos-shared2/util';
 import {
   getFixtureStatePropsInst,
-  extractValueMapFromInst,
   updateFixtureStateProps
 } from 'react-cosmos-shared2/fixtureState';
 import { ValueInput } from './ValueInput';
@@ -38,12 +38,12 @@ export class PropsPanel extends Component<Props> {
             <p>
               <strong>Props</strong> ({componentName})
             </p>
-            {values.map(({ key, serializable, value }) => (
+            {values.map(({ key, serializable, stringified }) => (
               <ValueInput
                 key={key}
                 id={`${instanceId}-${key}`}
                 label={key}
-                value={value}
+                value={stringified}
                 disabled={!serializable}
                 onChange={this.createPropValueChangeHandler(instanceId, key)}
               />
@@ -56,7 +56,7 @@ export class PropsPanel extends Component<Props> {
   createPropValueChangeHandler = (
     instanceId: FixtureStateInstanceId,
     key: string
-  ) => (value: mixed) => {
+  ) => (value: string) => {
     const { fixturePath, fixtureState, postRendererRequest } = this.props;
     const propsInst = getFixtureStatePropsInst(fixtureState, instanceId);
 
@@ -65,10 +65,15 @@ export class PropsPanel extends Component<Props> {
       return;
     }
 
-    const props = updateFixtureStateProps(fixtureState, instanceId, {
-      ...extractValueMapFromInst(propsInst),
-      [key]: value
-    });
+    const props = updateFixtureStateProps(
+      fixtureState,
+      instanceId,
+      replaceOrAddItem(propsInst.values, value => value.key === key, {
+        serializable: true,
+        key,
+        stringified: value
+      })
+    );
 
     postRendererRequest({
       type: 'setFixtureState',

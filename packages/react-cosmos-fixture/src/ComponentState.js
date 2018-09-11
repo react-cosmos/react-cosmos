@@ -297,11 +297,9 @@ class ComponentStateInner extends Component<InnerProps> {
     // Use latest prop value for serializable props, and fall back to mocked
     // values for unserializable props.
     const mergedState = stateInstance.values.reduce(
-      (acc, { serializable, key, value }) => ({
+      (acc, { serializable, key, stringified }) => ({
         ...acc,
-        // TODO: Parse serialized value
-        // [key]: serializable ? JSON.parse(value) : mockedState[key];
-        [key]: serializable ? value : mockedState[key]
+        [key]: serializable ? JSON.parse(stringified) : mockedState[key]
       }),
       {}
     );

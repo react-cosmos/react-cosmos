@@ -79,9 +79,9 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              props: updateFixtureStateProps(fixtureState, instanceId, {
-                name: 'Petec'
-              })
+              props: updateFixtureStateProps(fixtureState, instanceId, [
+                createNamePropValue('Petec')
+              ])
             }
           });
 
@@ -106,7 +106,15 @@ function tests(mockConnect) {
   });
 }
 
-function getPropsInstanceShape(name) {
+function createNamePropValue(name) {
+  return {
+    serializable: true,
+    key: 'name',
+    stringified: `"${name}"`
+  };
+}
+
+function getPropsInstanceShape(suffix) {
   return {
     instanceId: expect.any(Number),
     componentName: 'HelloMessage',
@@ -115,7 +123,7 @@ function getPropsInstanceShape(name) {
       {
         serializable: true,
         key: 'name',
-        value: name
+        stringified: `"${suffix}"`
       }
     ]
   };

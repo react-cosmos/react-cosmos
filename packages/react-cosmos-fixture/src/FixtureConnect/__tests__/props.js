@@ -71,9 +71,9 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              props: updateFixtureStateProps(fixtureState, instanceId, {
-                name: 'B'
-              })
+              props: updateFixtureStateProps(fixtureState, instanceId, [
+                createNamePropValue('B')
+              ])
             }
           });
 
@@ -115,7 +115,7 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              props: updateFixtureStateProps(fixtureState, instanceId, {})
+              props: updateFixtureStateProps(fixtureState, instanceId, [])
             }
           });
 
@@ -147,9 +147,9 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              props: updateFixtureStateProps(fixtureState, instanceId, {
-                name: 'B'
-              })
+              props: updateFixtureStateProps(fixtureState, instanceId, [
+                createNamePropValue('B')
+              ])
             }
           });
 
@@ -214,9 +214,9 @@ function tests(mockConnect) {
               rendererId,
               fixturePath: 'first',
               fixtureStateChange: {
-                props: updateFixtureStateProps(fixtureState, instanceId, {
-                  name: 'B'
-                })
+                props: updateFixtureStateProps(fixtureState, instanceId, [
+                  createNamePropValue('B')
+                ])
               }
             });
 
@@ -274,9 +274,7 @@ function tests(mockConnect) {
                 props: updateFixtureStateProps(
                   fixtureState,
                   instanceId,
-                  {
-                    name: 'B'
-                  },
+                  [createNamePropValue('B')],
                   true
                 )
               }
@@ -321,9 +319,9 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              props: updateFixtureStateProps(fixtureState, instanceId, {
-                name: 'B'
-              })
+              props: updateFixtureStateProps(fixtureState, instanceId, [
+                createNamePropValue('B')
+              ])
             }
           });
 
@@ -400,6 +398,14 @@ function tests(mockConnect) {
   });
 }
 
+function createNamePropValue(name) {
+  return {
+    serializable: true,
+    key: 'name',
+    stringified: `"${name}"`
+  };
+}
+
 function getPropsInstanceShape(name) {
   return {
     instanceId: expect.any(Number),
@@ -409,7 +415,7 @@ function getPropsInstanceShape(name) {
       {
         serializable: true,
         key: 'name',
-        value: name
+        stringified: `"${name}"`
       }
     ]
   };
