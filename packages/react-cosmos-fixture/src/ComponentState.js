@@ -2,7 +2,7 @@
 
 import { isEqual } from 'lodash';
 import React, { Component, cloneElement } from 'react';
-import { replaceOrAddItem } from 'react-cosmos-shared2/util';
+import { replaceOrAddItem, removeItemMatch } from 'react-cosmos-shared2/util';
 import {
   extractValuesFromObject,
   areValuesEqual,
@@ -62,6 +62,14 @@ class ComponentStateInner extends Component<InnerProps> {
 
   render() {
     const { children } = this.props;
+
+    // Flow users will get a static error when trying to wrap more elements
+    // inside ComponentState. But the rest might miss this restriction and
+    // find out at run time.
+    if (Array.isArray(children)) {
+      throw new Error('ComponentState only accepts a single child element');
+    }
+
     const clonedEl = cloneElement(children, { ref: this.handleRef });
 
     // Allow fixture decorators to opt out from their props being captured
@@ -159,6 +167,19 @@ class ComponentStateInner extends Component<InnerProps> {
   }
 
   componentWillUnmount() {
+    const { setFixtureState } = this.props;
+    const instanceId = getInstanceId(this);
+
+    // Remove corresponding fixture state
+    setFixtureState(fixtureState => {
+      return {
+        state: removeItemMatch(
+          getFixtureStateState(fixtureState),
+          state => state.instanceId === instanceId
+        )
+      };
+    });
+
     if (this.timeoutId) {
       clearTimeout(this.timeoutId);
     }
@@ -276,9 +297,9 @@ class ComponentStateInner extends Component<InnerProps> {
     // Use latest prop value for serializable props, and fall back to mocked
     // values for unserializable props.
     const mergedState = stateInstance.values.reduce(
-      (acc, { serializable, key, value }) => ({
+      (acc, { serializable, key, stringified }) => ({
         ...acc,
-        [key]: serializable ? value : mockedState[key]
+        [key]: serializable ? JSON.parse(stringified) : mockedState[key]
       }),
       {}
     );

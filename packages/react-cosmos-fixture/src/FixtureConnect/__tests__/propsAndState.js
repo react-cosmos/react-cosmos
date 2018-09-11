@@ -57,9 +57,9 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              state: updateFixtureStateState(fixtureState, state.instanceId, {
-                count: 5
-              })
+              state: updateFixtureStateState(fixtureState, state.instanceId, [
+                createCountStateValue(5)
+              ])
             }
           });
 
@@ -72,9 +72,7 @@ function tests(mockConnect) {
               props: updateFixtureStateProps(
                 fixtureState,
                 props.instanceId,
-                {
-                  suffix: 'timez'
-                },
+                [createSuffixPropValue('timez')],
                 true
               )
             }
@@ -121,9 +119,9 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              state: updateFixtureStateState(fixtureState, state.instanceId, {
-                count: 5
-              })
+              state: updateFixtureStateState(fixtureState, state.instanceId, [
+                createCountStateValue(5)
+              ])
             }
           });
 
@@ -133,9 +131,9 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              props: updateFixtureStateProps(fixtureState, props.instanceId, {
-                suffix: 'timez'
-              })
+              props: updateFixtureStateProps(fixtureState, props.instanceId, [
+                createSuffixPropValue('timez')
+              ])
             }
           });
 
@@ -158,6 +156,14 @@ function tests(mockConnect) {
   });
 }
 
+function createSuffixPropValue(suffix) {
+  return {
+    serializable: true,
+    key: 'suffix',
+    stringified: `"${suffix}"`
+  };
+}
+
 function getPropsInstanceShape(suffix) {
   return {
     instanceId: expect.any(Number),
@@ -167,13 +173,21 @@ function getPropsInstanceShape(suffix) {
       {
         serializable: true,
         key: 'suffix',
-        value: suffix
+        stringified: `"${suffix}"`
       }
     ]
   };
 }
 
-function getStateInstanceShape(count) {
+function createCountStateValue(count: number) {
+  return {
+    serializable: true,
+    key: 'count',
+    stringified: `${count}`
+  };
+}
+
+function getStateInstanceShape(count: number) {
   return {
     instanceId: expect.any(Number),
     componentName: 'Counter',
@@ -181,7 +195,7 @@ function getStateInstanceShape(count) {
       {
         serializable: true,
         key: 'count',
-        value: count
+        stringified: `${count}`
       }
     ]
   };

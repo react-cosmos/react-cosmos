@@ -31,6 +31,17 @@ export function replaceOrAddItem<T>(
     : [...items, item];
 }
 
+export function removeItemMatch<T>(
+  items: $ReadOnlyArray<T>,
+  matcher: Predicate<T>
+): Array<T> {
+  const index = findIndex(items, matcher);
+
+  return index === -1
+    ? [...items]
+    : [...items.slice(0, index), ...items.slice(index + 1)];
+}
+
 export function removeItem<T>(items: $ReadOnlyArray<T>, item: T): Array<T> {
   const index = items.indexOf(item);
 

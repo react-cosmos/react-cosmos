@@ -90,9 +90,9 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              state: updateFixtureStateState(fixtureState, instanceId, {
-                count: 100
-              })
+              state: updateFixtureStateState(fixtureState, instanceId, [
+                createCountStateValue(100)
+              ])
             }
           });
 
@@ -104,9 +104,9 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              state: updateFixtureStateState(fixtureState, instanceId, {
-                count: 200
-              })
+              state: updateFixtureStateState(fixtureState, instanceId, [
+                createCountStateValue(200)
+              ])
             }
           });
 
@@ -136,7 +136,7 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              state: updateFixtureStateState(fixtureState, instanceId, {})
+              state: updateFixtureStateState(fixtureState, instanceId, [])
             }
           });
 
@@ -167,9 +167,9 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              state: updateFixtureStateState(fixtureState, instanceId, {
-                count: 10
-              })
+              state: updateFixtureStateState(fixtureState, instanceId, [
+                createCountStateValue(10)
+              ])
             }
           });
 
@@ -254,7 +254,7 @@ function tests(mockConnect) {
           const fixtureState = await lastFixtureState();
           const [{ values }] = getFixtureStateState(fixtureState);
 
-          return values[0].value;
+          return JSON.parse(values[0].stringified);
         }
       }
     );
@@ -280,9 +280,9 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              state: updateFixtureStateState(fixtureState, instanceId, {
-                count: 50
-              })
+              state: updateFixtureStateState(fixtureState, instanceId, [
+                createCountStateValue(50)
+              ])
             }
           });
 
@@ -328,9 +328,9 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              state: updateFixtureStateState(fixtureState, instanceId, {
-                count: 6
-              })
+              state: updateFixtureStateState(fixtureState, instanceId, [
+                createCountStateValue(6)
+              ])
             }
           });
 
@@ -367,6 +367,61 @@ function tests(mockConnect) {
       }
     );
   });
+
+  it('removes state from fixture state on unmount', async () => {
+    await mockConnect(async ({ getElement, untilMessage, selectFixture }) => {
+      await mount(getElement({ rendererId, fixtures }), async instance => {
+        await selectFixture({
+          rendererId,
+          fixturePath: 'first'
+        });
+
+        await untilMessage({
+          type: 'fixtureState',
+          payload: {
+            rendererId,
+            fixturePath: 'first',
+            fixtureState: {
+              props: [getEmptyPropsInstanceShape()],
+              state: [getStateInstanceShape(5)]
+            }
+          }
+        });
+
+        instance.update(
+          getElement({
+            rendererId,
+            fixtures: {
+              // This will cause both the CaptureProps and ComponentState
+              // instance correspondings to the previous fixture element to
+              // unmount
+              first: null
+            }
+          })
+        );
+
+        await untilMessage({
+          type: 'fixtureState',
+          payload: {
+            rendererId,
+            fixturePath: 'first',
+            fixtureState: {
+              props: [],
+              state: []
+            }
+          }
+        });
+      });
+    });
+  });
+}
+
+function createCountStateValue(count: number) {
+  return {
+    serializable: true,
+    key: 'count',
+    stringified: `${count}`
+  };
 }
 
 function getEmptyPropsInstanceShape() {
@@ -378,7 +433,7 @@ function getEmptyPropsInstanceShape() {
   };
 }
 
-function getStateInstanceShape(count) {
+function getStateInstanceShape(count: number) {
   return {
     instanceId: expect.any(Number),
     componentName: 'Counter',
@@ -386,7 +441,7 @@ function getStateInstanceShape(count) {
       {
         serializable: true,
         key: 'count',
-        value: count
+        stringified: `${count}`
       }
     ]
   };

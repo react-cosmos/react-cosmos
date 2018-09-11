@@ -5,7 +5,7 @@ export type FixtureStateInstanceId = number;
 export type FixtureStateValue = {
   serializable: boolean,
   key: string,
-  value: mixed
+  stringified: string
 };
 
 export type FixtureStateValues = FixtureStateValue[];
@@ -47,13 +47,6 @@ declare export function getFixtureStatePropsInst(
   instanceId: FixtureStateInstanceId
 ): ?FixtureStateProps;
 
-declare export function updateFixtureStateProps(
-  fixtureState: ?FixtureState,
-  instanceId: FixtureStateInstanceId,
-  newProps: { [key: string]: mixed },
-  resetInstance?: boolean
-): FixtureStateProps[];
-
 declare export function getFixtureStateState(
   fixtureState: ?FixtureState
 ): FixtureStateState[];
@@ -66,5 +59,12 @@ declare export function getFixtureStateStateInst(
 declare export function updateFixtureStateState(
   fixtureState: ?FixtureState,
   instanceId: FixtureStateInstanceId,
-  newState: { [key: string]: mixed }
+  values: FixtureStateValues
 ): FixtureStateState[];
+
+declare export function updateFixtureStateProps(
+  fixtureState: ?FixtureState,
+  instanceId: FixtureStateInstanceId,
+  values: FixtureStateValues,
+  resetInstance?: boolean
+): FixtureStateProps[];

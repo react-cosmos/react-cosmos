@@ -79,9 +79,9 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              state: updateFixtureStateState(fixtureState, instanceId, {
-                count: 5
-              })
+              state: updateFixtureStateState(fixtureState, instanceId, [
+                createCountStateValue(5)
+              ])
             }
           });
 
@@ -111,7 +111,7 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              state: updateFixtureStateState(fixtureState, instanceId, {})
+              state: updateFixtureStateState(fixtureState, instanceId, [])
             }
           });
 
@@ -141,9 +141,9 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              state: updateFixtureStateState(fixtureState, instanceId, {
-                count: 5
-              })
+              state: updateFixtureStateState(fixtureState, instanceId, [
+                createCountStateValue(5)
+              ])
             }
           });
 
@@ -164,6 +164,14 @@ function tests(mockConnect) {
   });
 }
 
+function createCountStateValue(count: number) {
+  return {
+    serializable: true,
+    key: 'count',
+    stringified: `${count}`
+  };
+}
+
 function getEmptyPropsInstanceShape() {
   return {
     instanceId: expect.any(Number),
@@ -173,7 +181,7 @@ function getEmptyPropsInstanceShape() {
   };
 }
 
-function getStateInstanceShape(count) {
+function getStateInstanceShape(count: number) {
   return {
     instanceId: expect.any(Number),
     componentName: 'Counter',
@@ -181,7 +189,7 @@ function getStateInstanceShape(count) {
       {
         serializable: true,
         key: 'count',
-        value: count
+        stringified: `${count}`
       }
     ]
   };

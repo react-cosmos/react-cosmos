@@ -2,7 +2,7 @@
 
 import { isEqual } from 'lodash';
 import React, { Component } from 'react';
-import { replaceOrAddItem } from 'react-cosmos-shared2/util';
+import { replaceOrAddItem, removeItemMatch } from 'react-cosmos-shared2/util';
 import {
   extractValuesFromObject,
   areValuesEqual,
@@ -142,6 +142,21 @@ class CapturePropsInner extends Component<InnerProps> {
     }
   }
 
+  componentWillUnmount() {
+    const { setFixtureState } = this.props;
+    const instanceId = getInstanceId(this);
+
+    // Remove corresponding fixture state
+    setFixtureState(fixtureState => {
+      return {
+        props: removeItemMatch(
+          getFixtureStateProps(fixtureState),
+          props => props.instanceId === instanceId
+        )
+      };
+    });
+  }
+
   setFixtureState() {
     const { children, setFixtureState } = this.props;
     const instanceId = getInstanceId(this);
@@ -178,8 +193,10 @@ function extendPropsWithFixtureState(originalProps, propsInstance) {
 
   // Use latest prop value for serializable props, and fall back to original
   // value for unserializable props.
-  values.forEach(({ serializable, key, value }) => {
-    mergedProps[key] = serializable ? value : originalProps[key];
+  values.forEach(({ serializable, key, stringified }) => {
+    mergedProps[key] = serializable
+      ? JSON.parse(stringified)
+      : originalProps[key];
   });
 
   return mergedProps;
