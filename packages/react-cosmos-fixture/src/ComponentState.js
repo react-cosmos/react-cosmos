@@ -81,18 +81,17 @@ class ComponentStateInner extends Component<InnerProps> {
   }
 
   shouldComponentUpdate({
-    children: { type: nextType },
+    children: nextChildren,
     state: nextMockedState,
     fixtureState: nextFixtureState
   }) {
-    const {
-      children: { type },
-      state: mockedState,
-      fixtureState
-    } = this.props;
+    const { children, state: mockedState, fixtureState } = this.props;
 
-    // Re-render if child type or mocked fixture changed (eg. via webpack HMR)
-    if (nextType !== type || !isEqual(nextMockedState, mockedState)) {
+    // Re-render if child type or props changed (eg. via webpack HMR)
+    if (
+      !isEqual(nextChildren, children) ||
+      !isEqual(nextMockedState, mockedState)
+    ) {
       return true;
     }
 
