@@ -7,8 +7,8 @@
   "main": "index.js",
   "dependencies": {
     "@babel/runtime-corejs2": "^7.0.0",
-    "apollo-cache-inmemory": "^1.2.9",
-    "apollo-client": "^2.4.1",
+    "apollo-cache-inmemory": "^1.2.10",
+    "apollo-client": "^2.4.2",
     "apollo-link": "^1.2.2",
     "apollo-link-http": "^1.5.4",
     "graphql": "^14.0.2",

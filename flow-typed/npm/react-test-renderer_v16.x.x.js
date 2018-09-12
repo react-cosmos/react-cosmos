@@ -1,10 +1,9 @@
-// flow-typed signature: 2c70223ccadf23513c28ebff4469aaa0
-// flow-typed version: 8cdcc6637e/react-test-renderer_v16.x.x/flow_>=v0.47.x
+// flow-typed signature: 9b9f4128694a7f68659d945b81fb78ff
+// flow-typed version: 46dfe79a54/react-test-renderer_v16.x.x/flow_>=v0.47.x
 
 // Type definitions for react-test-renderer 16.x.x
 // Ported from: https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/react-test-renderer
 
-// https://github.com/flow-typed/flow-typed/pull/2715
 type ReactComponentInstance = React$Component<any>;
 
 type ReactTestRendererJSON = {
