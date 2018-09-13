@@ -102,7 +102,7 @@ class ComponentStateInner extends Component<InnerProps> {
     const next = getFixtureStateStateInst(nextFixtureState, instanceId);
     const prev = getFixtureStateStateInst(fixtureState, instanceId);
 
-    // More deep comparisons are made in componentDidMount to avoid redundant
+    // Deeper comparisons are made in componentDidUpdate to avoid redundant
     // setState calls to child ref
     return next !== prev;
   }
