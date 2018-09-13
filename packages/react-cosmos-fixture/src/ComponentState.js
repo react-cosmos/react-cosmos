@@ -5,7 +5,6 @@ import React, { Component, cloneElement } from 'react';
 import { replaceOrAddItem, removeItemMatch } from 'react-cosmos-shared2/util';
 import {
   extractValuesFromObject,
-  areValuesEqual,
   getFixtureStateState,
   getFixtureStateStateInst
 } from 'react-cosmos-shared2/fixtureState';
@@ -26,6 +25,7 @@ const REFRESH_INTERVAL = 200;
 // - Fixture state: Data related to the loaded fixture (props, state, etc)
 // - Component state: A part of the fixture state related to component state
 // Flow types are used more than necessary in this file to decrease confusion.
+// NOTE: ComponentState expects component.state to be an object
 export function ComponentState({ children, state }: ComponentStateProps) {
   return (
     <FixtureContext.Consumer>
@@ -103,28 +103,9 @@ class ComponentStateInner extends Component<InnerProps> {
     const next = getFixtureStateStateInst(nextFixtureState, instanceId);
     const prev = getFixtureStateStateInst(fixtureState, instanceId);
 
-    if (next === prev) {
-      return false;
-    }
-
-    // Fixture state for this instance is populated on mount, so a transition
-    // to an empty state means that this instance is expected to reset
-    if (!next) {
-      return true;
-    }
-
-    // If the fixture state for this instance has just been populated, we need
-    // to compare its values against the default values, otherwise an additional
-    // render cycle will be always run on init
-    const prevValues = prev
-      ? prev.values
-      : extractValuesFromObject(mockedState || this.initialState);
-
-    // Because serialized fixture state changes are received remotely, a change
-    // in one fixtureState.state instance will change the identity of all
-    // fixtureState.state instances. So the only way to avoid useless re-renders
-    // is to check if any value from the fixture state state changed.
-    return !areValuesEqual(next.values, prevValues);
+    // Deeper comparisons are made in componentDidUpdate to avoid redundant
+    // setState calls to child ref
+    return next !== prev;
   }
 
   // Because of shouldComponentUpdate we can assume that fixture state
@@ -139,7 +120,7 @@ class ComponentStateInner extends Component<InnerProps> {
     const instanceId = getInstanceId(this);
     const stateInstance = getFixtureStateStateInst(fixtureState, instanceId);
 
-    // Reset fixture state if... x
+    // Reset fixture state if...
     if (
       // ...the fixture state associated with this instance (initially created
       // in handleRef) has been emptied deliberately. This is an edge case that
@@ -152,17 +133,10 @@ class ComponentStateInner extends Component<InnerProps> {
       return this.resetState(childRef);
     }
 
-    const nextState = this.extendComponentStateWithFixtureState(
+    this.replaceState(
       childRef,
-      stateInstance
+      extendMockedStateWithFixtureState(mockedState, stateInstance)
     );
-
-    // This update might be caused by an organic state change from within the
-    // wrapped component. Blindly setting the state here would result in an
-    // infinite loop of state changes.
-    if (!isEqual(nextState, childRef.state)) {
-      childRef.setState(nextState);
-    }
   }
 
   componentWillUnmount() {
@@ -211,8 +185,9 @@ class ComponentStateInner extends Component<InnerProps> {
     // to resetting the renderKey in CaptureProps. Regardless, apply the
     // fixture state to the new child instance.
     if (stateInstance) {
-      return childRef.setState(
-        this.extendComponentStateWithFixtureState(childRef, stateInstance)
+      return this.replaceState(
+        childRef,
+        extendMockedStateWithFixtureState(mockedState, stateInstance)
       );
     }
 
@@ -224,33 +199,37 @@ class ComponentStateInner extends Component<InnerProps> {
       // State is mocked, but there's no fixture state yet => Populate
       // fixtureState.state with the values of the mocked state, as well as
       // (most imporantly) inject the mocked state into the component.
-      childRef.setState(mockedState);
+      this.replaceState(childRef, mockedState);
       this.setFixtureState(mockedState, childRef);
     } else if (childRef.state) {
       // State isn't mocked, but component has initial state => Populate
       // fixture state with component's initial state
-      this.setFixtureState(this.initialState, childRef);
+      this.setFixtureState(childRef.state, childRef);
     }
   };
 
+  // We need to do this because React doesn't provide a replaceState method
+  // (anymore) https://reactjs.org/docs/react-component.html#setstate
+  replaceState(childRef, nextState) {
+    const fullState = resetOriginalKeys(childRef.state, nextState);
+
+    if (!isEqual(fullState, childRef.state)) {
+      childRef.setState(fullState);
+    }
+  }
+
   resetState(childRef) {
     const { state: mockedState } = this.props;
-    const cleanState =
-      // Prevent leaking previous state properties when resetting state
-      resetOriginalKeys(childRef.state, {
-        ...this.initialState,
-        ...mockedState
-      });
+    const initialState = mockedState || this.initialState;
 
-    childRef.setState(cleanState);
-    this.setFixtureState(cleanState, childRef);
+    this.replaceState(childRef, initialState);
+    this.setFixtureState(initialState, childRef);
   }
 
   // setFixtureState receives childRef as an argument because it is called
   // from places where the existance of this.childRef has already been checked
   setFixtureState(componentState, childRef) {
     const { setFixtureState } = this.props;
-
     setFixtureState(fixtureState => {
       const instanceId = getInstanceId(this);
       const componentName = getComponentName(getRefType(childRef));
@@ -281,37 +260,28 @@ class ComponentStateInner extends Component<InnerProps> {
       return;
     }
 
-    if (childRef.state !== this.prevState) {
-      this.prevState = childRef.state;
-      this.setFixtureState(childRef.state, childRef);
+    const currState = childRef.state || {};
+    if (!isEqual(currState, this.prevState)) {
+      this.prevState = currState;
+      this.setFixtureState(currState, childRef);
     } else {
       this.scheduleStateCheck();
     }
   };
-
-  extendComponentStateWithFixtureState(childRef, stateInstance) {
-    const { state: mockedState = {} } = this.props;
-    const currentState = childRef.state;
-
-    // Use latest prop value for serializable props, and fall back to mocked
-    // values for unserializable props.
-    const mergedState = stateInstance.values.reduce(
-      (acc, { serializable, key, stringified }) => ({
-        ...acc,
-        [key]: serializable ? JSON.parse(stringified) : mockedState[key]
-      }),
-      {}
-    );
-
-    // Only use state properties defined in fixtureState. This allows users to:
-    // - Removed mocked state properties (defined in fixture)
-    // - Removed initial state properties
-    return resetOriginalKeys(currentState, mergedState);
-  }
 }
 
-// We need to do this because React doesn't provide a replaceState method
-// (anymore) https://reactjs.org/docs/react-component.html#setstate
+function extendMockedStateWithFixtureState(mockedState = {}, stateInstance) {
+  // Use fixture state for serializable state, and fall back to mocked values
+  // for unserializable state.
+  return stateInstance.values.reduce(
+    (acc, { serializable, key, stringified }) => ({
+      ...acc,
+      [key]: serializable ? JSON.parse(stringified) : mockedState[key]
+    }),
+    {}
+  );
+}
+
 function resetOriginalKeys(original, current) {
   const { keys } = Object;
 
@@ -324,7 +294,9 @@ function resetOriginalKeys(original, current) {
   );
 }
 
-function getRefType(elRef) {
+function getRefType(
+  elRef: ElementRef<typeof Component>
+): Class<Component<any>> {
   // NOTE: This assumes ref is a Class instance, something React might
   // change in the future
   return elRef.constructor;

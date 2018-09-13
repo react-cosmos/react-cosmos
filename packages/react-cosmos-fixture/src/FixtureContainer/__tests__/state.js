@@ -78,6 +78,18 @@ it('renders replaced component type', () => {
   expect(instance.toJSON()).toBe('0 timez');
 });
 
+it('overwrites initial state', () => {
+  const instance = create(
+    <FixtureContainer>
+      <ComponentState state={{}}>
+        <Counter />
+      </ComponentState>
+    </FixtureContainer>
+  );
+
+  expect(instance.toJSON()).toBe('undefined times');
+});
+
 // End of tests
 
 class Counter extends Component<{}, { count: number }> {
