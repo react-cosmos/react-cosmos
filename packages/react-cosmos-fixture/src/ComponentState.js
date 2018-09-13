@@ -232,7 +232,6 @@ class ComponentStateInner extends Component<InnerProps> {
     const { setFixtureState } = this.props;
     setFixtureState(fixtureState => {
       const instanceId = getInstanceId(this);
-      (childRef: ElementRef<typeof Component>);
       const componentName = getComponentName(getRefType(childRef));
       const stateInstance = {
         instanceId,
