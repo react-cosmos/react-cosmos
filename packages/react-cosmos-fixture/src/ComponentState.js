@@ -132,17 +132,10 @@ class ComponentStateInner extends Component<InnerProps> {
       return this.resetState(childRef);
     }
 
-    const nextState = this.extendComponentStateWithFixtureState(
+    this.replaceState(
       childRef,
-      stateInstance
+      this.extendComponentStateWithFixtureState(childRef, stateInstance)
     );
-
-    // This update might be caused by an organic state change from within the
-    // wrapped component. Blindly setting the state here would result in an
-    // infinite loop of state changes.
-    if (!isEqual(nextState, childRef.state)) {
-      this.replaceState(childRef, nextState);
-    }
   }
 
   componentWillUnmount() {
@@ -217,8 +210,11 @@ class ComponentStateInner extends Component<InnerProps> {
   // We need to do this because React doesn't provide a replaceState method
   // (anymore) https://reactjs.org/docs/react-component.html#setstate
   replaceState(childRef, nextState) {
-    const cleanState = resetOriginalKeys(childRef.state, nextState);
-    childRef.setState(cleanState);
+    const fullState = resetOriginalKeys(childRef.state, nextState);
+
+    if (!isEqual(fullState, childRef.state)) {
+      childRef.setState(fullState);
+    }
   }
 
   resetState(childRef) {
