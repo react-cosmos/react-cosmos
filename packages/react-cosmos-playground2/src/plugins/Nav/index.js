@@ -4,14 +4,15 @@ import styled from 'styled-components';
 import React, { Component } from 'react';
 import { Plugin, Plug, Slot } from 'react-plugin';
 import { RENDERER_ID } from 'react-cosmos-shared2/renderer';
-import { PlaygroundContext } from '../context';
+import { PlaygroundContext } from '../../context';
+import { FixtureTree } from './FixtureTree';
 
 import type { SetState } from 'react-cosmos-shared2/util';
 import type {
   FixtureNames,
   RendererRequest
 } from 'react-cosmos-shared2/renderer';
-import type { UiState } from '../index.js.flow';
+import type { UiState } from '../../index.js.flow';
 
 type Props = {
   fixtures: FixtureNames,
@@ -24,23 +25,14 @@ class Nav extends Component<Props> {
     const { fixtures } = this.props;
 
     return (
-      <ul>
-        {fixtures.map((fixturePath, idx) => (
-          <li key={idx}>
-            <button onClick={this.createFixtureSelectHandler(fixturePath)}>
-              {fixturePath}
-            </button>
-          </li>
-        ))}
-      </ul>
+      <FixtureTree fixtures={fixtures} onSelect={this.handleFixtureSelect} />
     );
   }
 
-  createFixtureSelectHandler = (fixturePath: string) => () => {
+  handleFixtureSelect = (fixturePath: string) => {
     const { setUiState, postRendererRequest } = this.props;
 
     setUiState({ fixturePath });
-
     postRendererRequest({
       type: 'selectFixture',
       payload: {
