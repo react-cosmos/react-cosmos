@@ -25,6 +25,7 @@ const REFRESH_INTERVAL = 200;
 // - Fixture state: Data related to the loaded fixture (props, state, etc)
 // - Component state: A part of the fixture state related to component state
 // Flow types are used more than necessary in this file to decrease confusion.
+// NOTE: ComponentState expects component.state to be an object
 export function ComponentState({ children, state }: ComponentStateProps) {
   return (
     <FixtureContext.Consumer>
@@ -134,7 +135,7 @@ class ComponentStateInner extends Component<InnerProps> {
 
     this.replaceState(
       childRef,
-      this.extendComponentStateWithFixtureState(childRef, stateInstance)
+      extendMockedStateWithFixtureState(mockedState, stateInstance)
     );
   }
 
@@ -186,7 +187,7 @@ class ComponentStateInner extends Component<InnerProps> {
     if (stateInstance) {
       return this.replaceState(
         childRef,
-        this.extendComponentStateWithFixtureState(childRef, stateInstance)
+        extendMockedStateWithFixtureState(mockedState, stateInstance)
       );
     }
 
@@ -268,20 +269,18 @@ class ComponentStateInner extends Component<InnerProps> {
       this.scheduleStateCheck();
     }
   };
+}
 
-  extendComponentStateWithFixtureState(childRef, stateInstance) {
-    const { state: mockedState = {} } = this.props;
-
-    // Use latest prop value for serializable props, and fall back to mocked
-    // values for unserializable props.
-    return stateInstance.values.reduce(
-      (acc, { serializable, key, stringified }) => ({
-        ...acc,
-        [key]: serializable ? JSON.parse(stringified) : mockedState[key]
-      }),
-      {}
-    );
-  }
+function extendMockedStateWithFixtureState(mockedState = {}, stateInstance) {
+  // Use fixture state for serializable state, and fall back to mocked values
+  // for unserializable state.
+  return stateInstance.values.reduce(
+    (acc, { serializable, key, stringified }) => ({
+      ...acc,
+      [key]: serializable ? JSON.parse(stringified) : mockedState[key]
+    }),
+    {}
+  );
 }
 
 function resetOriginalKeys(original, current) {

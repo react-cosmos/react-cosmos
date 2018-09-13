@@ -68,7 +68,7 @@ class CapturePropsInner extends Component<InnerProps> {
     return {
       ...children,
       props: propsInstance
-        ? extendPropsWithFixtureState(children.props, propsInstance)
+        ? extendMockedPropsWithFixtureState(children.props, propsInstance)
         : children.props,
       key: propsInstance ? propsInstance.renderKey : DEFAULT_RENDER_KEY
     };
@@ -162,7 +162,7 @@ class CapturePropsInner extends Component<InnerProps> {
     const instanceId = getInstanceId(this);
     const componentName = getComponentName(children.type);
 
-    // Add original component props (defined in fixture) to fixture state.
+    // Add mocked component props (defined in fixture) to fixture state.
     // Because fixtureState changes are async and multiple CapturePropsInner
     // instances can mount before a state change propagates, merging prop
     // values over props.fixtureState can cancel out other identical operations
@@ -187,16 +187,16 @@ class CapturePropsInner extends Component<InnerProps> {
   }
 }
 
-function extendPropsWithFixtureState(originalProps, propsInstance) {
+function extendMockedPropsWithFixtureState(mockedProps, propsInstance) {
   const { values } = propsInstance;
   const mergedProps = {};
 
-  // Use latest prop value for serializable props, and fall back to original
-  // value for unserializable props.
+  // Use fixture state for serializable props, and fall back to mocked values
+  // for unserializable props.
   values.forEach(({ serializable, key, stringified }) => {
     mergedProps[key] = serializable
       ? JSON.parse(stringified)
-      : originalProps[key];
+      : mockedProps[key];
   });
 
   return mergedProps;
