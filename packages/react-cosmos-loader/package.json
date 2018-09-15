@@ -15,7 +15,7 @@
     "react-cosmos-shared": "^4.7.0-9",
     "react-cosmos-state-proxy": "^4.7.0-9",
     "react-cosmos-voyager2": "^4.7.0-9",
-    "react-is": "^16.5.0",
+    "react-is": "^16.5.1",
     "socket.io-client": "^2.1.1",
     "url-parse": "^1.4.3"
   }
