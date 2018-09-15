@@ -73,7 +73,7 @@ function tests(mockConnect) {
         lastFixtureState,
         setFixtureState
       }) => {
-        await mount(getElement({ rendererId, fixtures }), async instance => {
+        await mount(getElement({ rendererId, fixtures }), async renderer => {
           await selectFixture({
             rendererId,
             fixturePath: 'first'
@@ -92,7 +92,7 @@ function tests(mockConnect) {
             }
           });
 
-          expect(instance.toJSON()).toEqual(['5 times', '100 times']);
+          expect(renderer.toJSON()).toEqual(['5 times', '100 times']);
         });
       }
     );

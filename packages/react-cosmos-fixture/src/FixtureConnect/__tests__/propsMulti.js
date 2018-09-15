@@ -32,13 +32,13 @@ tests(mockWebSockets);
 function tests(mockConnect) {
   it('captures multiple props instances', async () => {
     await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
-      await mount(getElement({ rendererId, fixtures }), async instance => {
+      await mount(getElement({ rendererId, fixtures }), async renderer => {
         await selectFixture({
           rendererId,
           fixturePath: 'first'
         });
 
-        expect(instance.toJSON()).toEqual(['Hello Bianca', 'Hello B']);
+        expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B']);
 
         await untilMessage({
           type: 'fixtureState',
@@ -66,7 +66,7 @@ function tests(mockConnect) {
         lastFixtureState,
         setFixtureState
       }) => {
-        await mount(getElement({ rendererId, fixtures }), async instance => {
+        await mount(getElement({ rendererId, fixtures }), async renderer => {
           await selectFixture({
             rendererId,
             fixturePath: 'first'
@@ -85,7 +85,7 @@ function tests(mockConnect) {
             }
           });
 
-          expect(instance.toJSON()).toEqual(['Hello Bianca', 'Hello Petec']);
+          expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello Petec']);
 
           await untilMessage({
             type: 'fixtureState',

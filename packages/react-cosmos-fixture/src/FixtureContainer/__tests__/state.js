@@ -45,7 +45,7 @@ it('renders multiple mocked states', () => {
 });
 
 it('unmounts gracefully', () => {
-  const instance = create(
+  const renderer = create(
     <FixtureContainer>
       <ComponentState state={{ count: 5 }}>
         <Counter />
@@ -54,12 +54,12 @@ it('unmounts gracefully', () => {
   );
 
   expect(() => {
-    instance.unmount();
+    renderer.unmount();
   }).not.toThrow();
 });
 
 it('renders replaced component type', () => {
-  const instance = create(
+  const renderer = create(
     <FixtureContainer>
       <ComponentState>
         <Counter />
@@ -67,7 +67,7 @@ it('renders replaced component type', () => {
     </FixtureContainer>
   );
 
-  instance.update(
+  renderer.update(
     <FixtureContainer>
       <ComponentState>
         <CoolCounter />
@@ -75,11 +75,11 @@ it('renders replaced component type', () => {
     </FixtureContainer>
   );
 
-  expect(instance.toJSON()).toBe('0 timez');
+  expect(renderer.toJSON()).toBe('0 timez');
 });
 
 it('overwrites initial state', () => {
-  const instance = create(
+  const renderer = create(
     <FixtureContainer>
       <ComponentState state={{}}>
         <Counter />
@@ -87,7 +87,7 @@ it('overwrites initial state', () => {
     </FixtureContainer>
   );
 
-  expect(instance.toJSON()).toBe('undefined times');
+  expect(renderer.toJSON()).toBe('undefined times');
 });
 
 // End of tests
