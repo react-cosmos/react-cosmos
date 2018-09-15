@@ -26,6 +26,7 @@ module.exports = {
     }
   },
   rules: {
+    'spaced-comment': 2,
     // Cosmos uses console.log/warn/error to inform users ¯\_(ツ)_/¯
     // Not ideal, because temporary console calls can be committed by mistake.
     'no-console': 0,
