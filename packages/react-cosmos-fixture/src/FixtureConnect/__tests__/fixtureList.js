@@ -14,8 +14,8 @@ tests(mockWebSockets);
 function tests(mockConnect) {
   it('renders blank state message', async () => {
     await mockConnect(async ({ getElement }) => {
-      await mount(getElement({ rendererId, fixtures }), async instance => {
-        expect(instance.toJSON()).toEqual('No fixture loaded.');
+      await mount(getElement({ rendererId, fixtures }), async renderer => {
+        expect(renderer.toJSON()).toEqual('No fixture loaded.');
       });
     });
   });
@@ -36,7 +36,7 @@ function tests(mockConnect) {
 
   it('posts fixture list again on request', async () => {
     await mockConnect(async ({ getElement, untilMessage, postMessage }) => {
-      await mount(getElement({ rendererId, fixtures }), async instance => {
+      await mount(getElement({ rendererId, fixtures }), async renderer => {
         await untilMessage({
           type: 'fixtureList',
           payload: {
@@ -45,7 +45,7 @@ function tests(mockConnect) {
           }
         });
 
-        instance.update(
+        renderer.update(
           getElement({
             rendererId,
             fixtures: {

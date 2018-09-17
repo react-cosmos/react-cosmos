@@ -43,7 +43,7 @@ function tests(mockConnect) {
         lastFixtureState,
         setFixtureState
       }) => {
-        await mount(getElement({ rendererId, fixtures }), async instance => {
+        await mount(getElement({ rendererId, fixtures }), async renderer => {
           await selectFixture({
             rendererId,
             fixturePath: 'first'
@@ -63,7 +63,7 @@ function tests(mockConnect) {
             }
           });
 
-          expect(instance.toJSON()).toBe('5 times');
+          expect(renderer.toJSON()).toBe('5 times');
 
           await setFixtureState({
             rendererId,
@@ -78,7 +78,7 @@ function tests(mockConnect) {
             }
           });
 
-          expect(instance.toJSON()).toBe('5 timez');
+          expect(renderer.toJSON()).toBe('5 timez');
 
           await untilMessage({
             type: 'fixtureState',
@@ -105,7 +105,7 @@ function tests(mockConnect) {
         lastFixtureState,
         setFixtureState
       }) => {
-        await mount(getElement({ rendererId, fixtures }), async instance => {
+        await mount(getElement({ rendererId, fixtures }), async renderer => {
           await selectFixture({
             rendererId,
             fixturePath: 'first'
@@ -125,7 +125,7 @@ function tests(mockConnect) {
             }
           });
 
-          expect(instance.toJSON()).toBe('5 times');
+          expect(renderer.toJSON()).toBe('5 times');
 
           await setFixtureState({
             rendererId,
@@ -137,7 +137,7 @@ function tests(mockConnect) {
             }
           });
 
-          expect(instance.toJSON()).toBe('5 timez');
+          expect(renderer.toJSON()).toBe('5 timez');
 
           await untilMessage({
             type: 'fixtureState',
@@ -157,13 +157,13 @@ function tests(mockConnect) {
 
   it('updates props on fixture change', async () => {
     await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
-      await mount(getElement({ rendererId, fixtures }), async instance => {
+      await mount(getElement({ rendererId, fixtures }), async renderer => {
         await selectFixture({
           rendererId,
           fixturePath: 'first'
         });
 
-        instance.update(
+        renderer.update(
           getElement({
             rendererId,
             fixtures: {
@@ -176,7 +176,7 @@ function tests(mockConnect) {
           })
         );
 
-        expect(instance.toJSON()).toBe('0 timez');
+        expect(renderer.toJSON()).toBe('0 timez');
 
         await untilMessage({
           type: 'fixtureState',

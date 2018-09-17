@@ -47,13 +47,13 @@ tests(mockWebSockets);
 function tests(mockConnect) {
   it('captures mocked state', async () => {
     await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
-      await mount(getElement({ rendererId, fixtures }), async instance => {
+      await mount(getElement({ rendererId, fixtures }), async renderer => {
         await selectFixture({
           rendererId,
           fixturePath: 'first'
         });
 
-        expect(instance.toJSON()).toBe('5 times');
+        expect(renderer.toJSON()).toBe('5 times');
 
         await untilMessage({
           type: 'fixtureState',
@@ -78,7 +78,7 @@ function tests(mockConnect) {
         lastFixtureState,
         setFixtureState
       }) => {
-        await mount(getElement({ rendererId, fixtures }), async instance => {
+        await mount(getElement({ rendererId, fixtures }), async renderer => {
           await selectFixture({
             rendererId,
             fixturePath: 'first'
@@ -96,7 +96,7 @@ function tests(mockConnect) {
             }
           });
 
-          expect(instance.toJSON()).toBe('100 times');
+          expect(renderer.toJSON()).toBe('100 times');
 
           // A second update will provide code coverage for a different branch:
           // the transition between fixture state values
@@ -110,7 +110,7 @@ function tests(mockConnect) {
             }
           });
 
-          expect(instance.toJSON()).toBe('200 times');
+          expect(renderer.toJSON()).toBe('200 times');
         });
       }
     );
@@ -124,7 +124,7 @@ function tests(mockConnect) {
         lastFixtureState,
         setFixtureState
       }) => {
-        await mount(getElement({ rendererId, fixtures }), async instance => {
+        await mount(getElement({ rendererId, fixtures }), async renderer => {
           await selectFixture({
             rendererId,
             fixturePath: 'first'
@@ -140,7 +140,7 @@ function tests(mockConnect) {
             }
           });
 
-          expect(instance.toJSON()).toBe('Missing count');
+          expect(renderer.toJSON()).toBe('Missing count');
         });
       }
     );
@@ -155,7 +155,7 @@ function tests(mockConnect) {
         lastFixtureState,
         setFixtureState
       }) => {
-        await mount(getElement({ rendererId, fixtures }), async instance => {
+        await mount(getElement({ rendererId, fixtures }), async renderer => {
           await selectFixture({
             rendererId,
             fixturePath: 'first'
@@ -173,7 +173,7 @@ function tests(mockConnect) {
             }
           });
 
-          expect(instance.toJSON()).toBe('10 times');
+          expect(renderer.toJSON()).toBe('10 times');
 
           await setFixtureState({
             rendererId,
@@ -183,7 +183,7 @@ function tests(mockConnect) {
             }
           });
 
-          expect(instance.toJSON()).toBe('5 times');
+          expect(renderer.toJSON()).toBe('5 times');
 
           await untilMessage({
             type: 'fixtureState',
@@ -268,7 +268,7 @@ function tests(mockConnect) {
         lastFixtureState,
         setFixtureState
       }) => {
-        await mount(getElement({ rendererId, fixtures }), async instance => {
+        await mount(getElement({ rendererId, fixtures }), async renderer => {
           await selectFixture({
             rendererId,
             fixturePath: 'first'
@@ -286,9 +286,9 @@ function tests(mockConnect) {
             }
           });
 
-          expect(instance.toJSON()).toBe('50 times');
+          expect(renderer.toJSON()).toBe('50 times');
 
-          instance.update(
+          renderer.update(
             getElement({
               rendererId,
               fixtures: {
@@ -301,7 +301,7 @@ function tests(mockConnect) {
             })
           );
 
-          expect(instance.toJSON()).toBe('50 timez');
+          expect(renderer.toJSON()).toBe('50 timez');
         });
       }
     );
@@ -316,7 +316,7 @@ function tests(mockConnect) {
         lastFixtureState,
         setFixtureState
       }) => {
-        await mount(getElement({ rendererId, fixtures }), async instance => {
+        await mount(getElement({ rendererId, fixtures }), async renderer => {
           await selectFixture({
             rendererId,
             fixturePath: 'first'
@@ -334,10 +334,10 @@ function tests(mockConnect) {
             }
           });
 
-          expect(instance.toJSON()).toBe('6 times');
+          expect(renderer.toJSON()).toBe('6 times');
 
           // When the fixture changes, however, the fixture state follows along
-          instance.update(
+          renderer.update(
             getElement({
               rendererId,
               fixtures: {
@@ -362,7 +362,7 @@ function tests(mockConnect) {
             }
           });
 
-          expect(instance.toJSON()).toBe('50 times');
+          expect(renderer.toJSON()).toBe('50 times');
         });
       }
     );
@@ -370,7 +370,7 @@ function tests(mockConnect) {
 
   it('removes state from fixture state on unmount', async () => {
     await mockConnect(async ({ getElement, untilMessage, selectFixture }) => {
-      await mount(getElement({ rendererId, fixtures }), async instance => {
+      await mount(getElement({ rendererId, fixtures }), async renderer => {
         await selectFixture({
           rendererId,
           fixturePath: 'first'
@@ -388,7 +388,7 @@ function tests(mockConnect) {
           }
         });
 
-        instance.update(
+        renderer.update(
           getElement({
             rendererId,
             fixtures: {

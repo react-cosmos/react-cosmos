@@ -10,8 +10,8 @@ import type { RendererRequest } from 'react-cosmos-shared2/renderer';
 import type { FixtureConnectProps } from '../index.js.flow';
 
 type State = {
-  fixturePath: ?string,
-  fixtureState: ?FixtureState,
+  fixturePath: null | string,
+  fixtureState: null | FixtureState,
   renderKey: number
 };
 
@@ -19,7 +19,7 @@ type State = {
 // `getMissingState`
 export class FixtureConnect extends Component<FixtureConnectProps, State> {
   state = {
-    fixturePath: null,
+    fixturePath: this.props.initFixturePath || null,
     fixtureState: null,
     // Used to reset FixtureProvider instance on fixturePath change
     renderKey: 0
@@ -90,7 +90,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
       return this.postReadyMessage();
     }
 
-    const { rendererId } = msg.payload;
+    const { rendererId } = msg.payload || {};
     if (rendererId !== this.props.rendererId) {
       return;
     }

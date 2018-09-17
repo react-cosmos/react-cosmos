@@ -13,10 +13,10 @@ export async function mount(
 ) {
   expect.hasAssertions();
 
-  const instance = create(element);
+  const renderer = create(element);
   try {
-    await children(instance);
+    await children(renderer);
   } finally {
-    instance.unmount();
+    renderer.unmount();
   }
 }

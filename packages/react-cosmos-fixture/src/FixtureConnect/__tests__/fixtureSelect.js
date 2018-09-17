@@ -17,20 +17,20 @@ tests(mockWebSockets);
 function tests(mockConnect) {
   it('renders selected fixture', async () => {
     await mockConnect(async ({ getElement, selectFixture }) => {
-      await mount(getElement({ rendererId, fixtures }), async instance => {
+      await mount(getElement({ rendererId, fixtures }), async renderer => {
         await selectFixture({
           rendererId,
           fixturePath: 'second'
         });
 
-        expect(instance.toJSON()).toBe('Second');
+        expect(renderer.toJSON()).toBe('Second');
       });
     });
   });
 
   it('renders blank state after unselecting fixture', async () => {
     await mockConnect(async ({ getElement, selectFixture }) => {
-      await mount(getElement({ rendererId, fixtures }), async instance => {
+      await mount(getElement({ rendererId, fixtures }), async renderer => {
         await selectFixture({
           rendererId,
           fixturePath: 'second'
@@ -41,33 +41,33 @@ function tests(mockConnect) {
           fixturePath: null
         });
 
-        expect(instance.toJSON()).toBe('No fixture loaded.');
+        expect(renderer.toJSON()).toBe('No fixture loaded.');
       });
     });
   });
 
   it('ignores "selectFixture" message for different renderer', async () => {
     await mockConnect(async ({ getElement, selectFixture }) => {
-      await mount(getElement({ rendererId, fixtures }), async instance => {
+      await mount(getElement({ rendererId, fixtures }), async renderer => {
         await selectFixture({
           rendererId: 'foobar',
           fixturePath: 'second'
         });
 
-        expect(instance.toJSON()).toBe('No fixture loaded.');
+        expect(renderer.toJSON()).toBe('No fixture loaded.');
       });
     });
   });
 
   it('renders missing state on unknown fixture path', async () => {
     await mockConnect(async ({ getElement, selectFixture }) => {
-      await mount(getElement({ rendererId, fixtures }), async instance => {
+      await mount(getElement({ rendererId, fixtures }), async renderer => {
         await selectFixture({
           rendererId,
           fixturePath: 'third'
         });
 
-        expect(instance.toJSON()).toBe('Fixture path not found: third');
+        expect(renderer.toJSON()).toBe('Fixture path not found: third');
       });
     });
   });

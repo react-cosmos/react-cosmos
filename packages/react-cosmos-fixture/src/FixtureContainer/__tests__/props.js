@@ -42,19 +42,19 @@ it('renders multiple (explicit) props captures', () => {
 });
 
 it('renders replaced component type', () => {
-  const instance = create(
+  const renderer = create(
     <FixtureContainer>
       <HelloMessage name="Satoshi" />
     </FixtureContainer>
   );
 
-  instance.update(
+  renderer.update(
     <FixtureContainer>
       <YoMessage name="Satoshi" />
     </FixtureContainer>
   );
 
-  expect(instance.toJSON()).toBe('Yo, Satoshi!');
+  expect(renderer.toJSON()).toBe('Yo, Satoshi!');
 });
 
 // End of tests
