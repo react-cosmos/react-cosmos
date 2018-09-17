@@ -31,6 +31,11 @@ const runWebpackCompiler = (webpack, config) =>
     compiler.run((err, stats) => {
       if (err) {
         reject(err);
+      } else if (stats.hasErrors()) {
+        const error = new Error('Errors occurred');
+        //$FlowFixMe
+        error.webpackErrors = stats.toJson().errors;
+        reject(error);
       } else {
         resolve(stats);
       }
@@ -87,8 +92,15 @@ export async function generateExport() {
         console.log(outputPath);
       },
       err => {
-        console.error('[Cosmos] Export Failed! See error below:');
-        console.error(err);
+        console.error('[Cosmos] Export Failed! See errors below:\n');
+        if (err.webpackErrors) {
+          err.webpackErrors.forEach(error => {
+            console.error(`${error}\n`);
+          });
+        } else {
+          console.error(err);
+        }
+        process.exit(1);
       }
     );
 }
