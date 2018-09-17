@@ -33,7 +33,7 @@ const runWebpackCompiler = (webpack, config) =>
         reject(err);
       } else if (stats.hasErrors()) {
         const error = new Error('Errors occurred');
-        //$FlowFixMe
+        // $FlowFixMe
         error.webpackErrors = stats.toJson().errors;
         reject(error);
       } else {
