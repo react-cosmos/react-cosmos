@@ -10,8 +10,8 @@ import type { RendererRequest } from 'react-cosmos-shared2/renderer';
 import type { FixtureConnectProps } from '../index.js.flow';
 
 type State = {
-  fixturePath: ?string,
-  fixtureState: ?FixtureState,
+  fixturePath: null | string,
+  fixtureState: null | FixtureState,
   renderKey: number
 };
 
