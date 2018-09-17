@@ -90,7 +90,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
       return this.postReadyMessage();
     }
 
-    const { rendererId } = msg.payload;
+    const { rendererId } = msg.payload || {};
     if (rendererId !== this.props.rendererId) {
       return;
     }

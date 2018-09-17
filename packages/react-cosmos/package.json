@@ -15,6 +15,7 @@
     "import-from": "^2.1.0",
     "lodash": "^4.17.10",
     "object.values": "^1.0.4",
+    "query-string": "^6.1.0",
     "react-cosmos-config": "^4.7.0-9",
     "react-cosmos-fixture": "^4.7.0-9",
     "react-cosmos-loader": "^4.7.0-9",

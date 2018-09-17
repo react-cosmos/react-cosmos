@@ -3,6 +3,7 @@
 import styled from 'styled-components';
 import React, { Component } from 'react';
 import { Plugin, Plug, Slot } from 'react-plugin';
+import qs from 'query-string';
 import { PlaygroundContext } from '../../context';
 import { PropsPanel } from './PropsPanel';
 import { StatePanel } from './StatePanel';
@@ -11,6 +12,7 @@ import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { RendererRequest } from 'react-cosmos-shared2/renderer';
 
 type Props = {
+  rendererUrl: string,
   fixturePath: ?string,
   fixtureState: ?FixtureState,
   postRendererRequest: RendererRequest => mixed
@@ -18,14 +20,22 @@ type Props = {
 
 class ControlPanel extends Component<Props> {
   render() {
-    const { fixturePath, fixtureState, postRendererRequest } = this.props;
+    const {
+      rendererUrl,
+      fixturePath,
+      fixtureState,
+      postRendererRequest
+    } = this.props;
 
     if (!fixturePath || !fixtureState) {
       return null;
     }
 
+    const fullScreenUrl = `${rendererUrl}?${qs.stringify({ f: fixturePath })}`;
+
     return (
       <>
+        <a href={fullScreenUrl}>Full screen</a>
         <PropsPanel
           fixturePath={fixturePath}
           fixtureState={fixtureState}
@@ -49,8 +59,9 @@ export default (
         <Container>
           <Left>
             <PlaygroundContext.Consumer>
-              {({ uiState, fixtureState, postRendererRequest }) => (
+              {({ options, uiState, fixtureState, postRendererRequest }) => (
                 <ControlPanel
+                  rendererUrl={options.rendererUrl}
                   fixturePath={uiState.fixturePath}
                   fixtureState={fixtureState}
                   postRendererRequest={postRendererRequest}
