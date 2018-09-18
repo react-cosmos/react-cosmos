@@ -4,24 +4,35 @@ import path from 'path';
 import fs from 'fs-extra';
 import { silent as silentImport } from 'import-from';
 import { getCosmosConfig } from 'react-cosmos-config';
-import { getPlaygroundHtml } from '../shared/playground-html';
+import {
+  getPlaygroundHtml,
+  getPlaygroundHtmlNext
+} from '../shared/playground-html';
 import enhanceWebpackConfig from './webpack/enhance-webpack-config';
 import { getUserWebpackConfig } from './webpack/user-webpack-config';
 import { getPlaygroundOpts } from './playground-opts';
 
 const exportPlaygroundFiles = (cosmosConfig, outputPath) => {
+  const { next } = cosmosConfig;
+
   fs.copySync(
     path.join(__dirname, '../shared/static/favicon.ico'),
     `${outputPath}/_cosmos.ico`
   );
 
   fs.copySync(
-    require.resolve('react-cosmos-playground'),
+    require.resolve(
+      next ? 'react-cosmos-playground2' : 'react-cosmos-playground'
+    ),
     `${outputPath}/_playground.js`
   );
 
   const playgroundOpts = getPlaygroundOpts(cosmosConfig);
-  const playgroundHtml = getPlaygroundHtml(playgroundOpts);
+  const playgroundHtml =
+    // TODO: Support JSX fixtures for any platform
+    next && playgroundOpts.platform === 'web'
+      ? getPlaygroundHtmlNext({ rendererUrl: playgroundOpts.loaderUri })
+      : getPlaygroundHtml(playgroundOpts);
   fs.writeFileSync(`${outputPath}/index.html`, playgroundHtml);
 };
 
