@@ -33,7 +33,7 @@
   - [ ] LocalStorage
   - [ ] Fetch
   - [ ] XHR
-- [ ] Connect new fixture state format to UI
+- [x] Connect new fixture state format to UI
 
 #### Dark launch strategy
 
@@ -51,6 +51,7 @@
 - [x] Server
   - [x] Serve new Playground and renderer on `{ next: true }` config option
   - [x] Detect new fixture file types under `__jsxfixtures__`
+- [ ] Usable control panel (new Playground)
 
 ## Pluggable UI
 
@@ -102,8 +103,11 @@
 ## UI control panel
 
 - [x] Create POC with JSX fixtures
-- [ ] Show unserializable values as read-only fields
-- [ ] Use JSON editor for complex values
+- [x] Show unserializable values as read-only fields
+- [x] Use JSON editor for complex values
+  - [ ] Prettify JSON
+- [ ] Auto-expand fields to value height (number of lines)
+- [ ] Style
 
 ## Redesign docs
 
