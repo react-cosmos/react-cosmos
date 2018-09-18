@@ -1,13 +1,13 @@
 {
   "name": "jsx-fixtures-example",
-  "version": "4.7.0-10",
+  "version": "4.7.0-11",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples",
   "license": "MIT",
   "scripts": {
     "start": "cosmos"
   },
   "dependencies": {
-    "react-cosmos": "^4.7.0-10"
+    "react-cosmos": "^4.7.0-11"
   },
   "private": true
 }
