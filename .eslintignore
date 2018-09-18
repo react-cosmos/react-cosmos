@@ -2,7 +2,7 @@ node_modules
 flow-typed/**
 
 packages/*/dist
-examples/local-state/cosmos-export
+examples/*/cosmos-export
 examples/webpack-dll/build
 
 **/__fsmocks__/**
