@@ -1056,7 +1056,7 @@ module.exports = {
 
   // Additional entry points that should be present along with any component
   // Sad, but inevitable
-  globalImports: ['./reset.css', './global.css'],
+  globalImports: ['./reset.css', './global.css', 'babel-polyfill'],
 
   // Customize pattern(s) for matching fixture files
   fileMatch: ['**/fixtures-in-here/**/*.js'],
