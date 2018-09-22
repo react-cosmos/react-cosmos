@@ -6,38 +6,36 @@ import { Fragment } from 'react';
 
 import type { Node, Element } from 'react';
 
-export function findElementPaths(node: Node, curPath: string = ''): string[] {
-  if (
-    !node ||
-    typeof node === 'boolean' ||
-    typeof node === 'string' ||
-    typeof node === 'number'
-  ) {
-    return [];
-  }
-
-  if (Array.isArray(node)) {
+export function findElementPaths(
+  children: Node | (any => Node),
+  curPath: string = ''
+): string[] {
+  if (Array.isArray(children)) {
     return flatten(
-      node.map((oneNode, idx) =>
-        findElementPaths(oneNode, `${curPath}[${idx}]`)
+      children.map((child, idx) =>
+        findElementPaths(child, `${curPath}[${idx}]`)
       )
     );
   }
 
-  if (isElement(node)) {
+  if (isElement(children)) {
     // $FlowFixMe Flow can't get cues from react-is package
-    const elNode: Element<any> = node;
+    const childEl: Element<any> = children;
 
     const childPaths = findElementPaths(
-      elNode.props.children,
+      childEl.props.children,
       curPath === '' ? 'props.children' : `${curPath}.props.children`
     );
 
     // Ignore Fragment elements
-    return elNode.type === Fragment ? childPaths : [curPath, ...childPaths];
+    return childEl.type === Fragment ? childPaths : [curPath, ...childPaths];
   }
 
-  return [curPath];
+  // At this point children can be null, boolean, string, number, Portal, etc.
+  // https://github.com/facebook/flow/blob/172d28f542f49bbc1e765131c9dfb9e31780f3a2/lib/react.js#L13-L20
+  // Children can also be a function.
+  // https://reactjs.org/docs/jsx-in-depth.html#functions-as-children
+  return [];
 }
 
 export function setChildElement(
