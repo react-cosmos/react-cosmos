@@ -6,28 +6,36 @@ import { Fragment } from 'react';
 
 import type { Node, Element } from 'react';
 
-// Children can also be a function.
-// https://reactjs.org/docs/jsx-in-depth.html#functions-as-children
+/**
+ * Utility for extending React Elements from a tree of React Nodes.
+ *
+ * The root Node is the `children` prop of a parent Element. Besides the Node
+ * type, children can also be a function.
+ * https://reactjs.org/docs/jsx-in-depth.html#functions-as-children
+ */
+
 type Children = Node | (any => Node);
 
 export function findElementPaths(
-  node: Children,
+  children: Children,
   curPath: string = ''
 ): string[] {
-  if (Array.isArray(node)) {
+  if (Array.isArray(children)) {
     return flatten(
-      node.map((child, idx) => findElementPaths(child, `${curPath}[${idx}]`))
+      children.map((child, idx) =>
+        findElementPaths(child, `${curPath}[${idx}]`)
+      )
     );
   }
 
-  if (!isElement(node)) {
+  if (!isElement(children)) {
     // At this point children can be null, boolean, string, number, Portal, etc.
     // https://github.com/facebook/flow/blob/172d28f542f49bbc1e765131c9dfb9e31780f3a2/lib/react.js#L13-L20
     return [];
   }
 
   // $FlowFixMe Flow can't get cues from react-is package
-  const element: Element<any> = node;
+  const element: Element<any> = children;
 
   const elPaths = findElementPaths(
     element.props.children,
@@ -40,15 +48,17 @@ export function findElementPaths(
 
 // NiceToHave: Assert child path validity
 export function getElementAtPath(
-  node: Children,
+  children: Children,
   elPath: string
 ): null | Element<any> {
   // Only elements or array of elements have child nodes
-  if (!node || typeof node !== 'object') {
+  if (!children || typeof children !== 'object') {
     return null;
   }
 
-  const childNode: Children = isRootPath(elPath) ? node : get(node, elPath);
+  const childNode: Children = isRootPath(elPath)
+    ? children
+    : get(children, elPath);
 
   if (!isElement(childNode)) {
     // Why be silent about trying to fetch a node that isn't an element?
@@ -63,16 +73,16 @@ export function getElementAtPath(
 }
 
 export function setElementAtPath(
-  node: Children,
+  children: Children,
   elPath: string,
   updater: (Element<any>) => Element<any>
 ) {
   // Only elements or array of elements have child nodes
-  if (!node || typeof node !== 'object') {
+  if (!children || typeof children !== 'object') {
     throw new Error(`Can't edit non-element node`);
   }
 
-  const childEl = getElementAtPath(node, elPath);
+  const childEl = getElementAtPath(children, elPath);
 
   if (!childEl) {
     throw new Error(`Missing element at path: ${elPath}`);
@@ -84,7 +94,7 @@ export function setElementAtPath(
     return newEl;
   }
 
-  return set(cloneDeep(node), elPath, newEl);
+  return set(cloneDeep(children), elPath, newEl);
 }
 
 function isRootPath(elPath) {
