@@ -1,11 +1,11 @@
 // @flow
 
 import React from 'react';
-import { setChildElement } from '..';
+import { setElementAtPath } from '..';
 
 it('sets root child', () => {
   const node = <div />;
-  const newNode = setChildElement(node, '', element => ({
+  const newNode = setElementAtPath(node, '', element => ({
     ...element,
     props: {
       className: 'root'
@@ -24,7 +24,7 @@ it('sets fragment child', () => {
       <div />
     </>
   );
-  const newNode = setChildElement(node, 'props.children', element => ({
+  const newNode = setElementAtPath(node, 'props.children', element => ({
     ...element,
     props: {
       className: 'root'
@@ -47,7 +47,7 @@ it('sets fragment child', () => {
 
 it('sets array child', () => {
   const node = [<div key="0" />];
-  const newNode = setChildElement(node, '[0]', element => ({
+  const newNode = setElementAtPath(node, '[0]', element => ({
     ...element,
     props: {
       className: 'root'
@@ -78,7 +78,7 @@ it('sets nested children', () => {
     </div>
   );
 
-  let newNode = setChildElement(
+  let newNode = setElementAtPath(
     node,
     'props.children[0].props.children',
     element => ({
@@ -89,7 +89,7 @@ it('sets nested children', () => {
     })
   );
 
-  newNode = setChildElement(
+  newNode = setElementAtPath(
     newNode,
     'props.children[2].props.children.props.children.props.children[1]',
     element => ({
