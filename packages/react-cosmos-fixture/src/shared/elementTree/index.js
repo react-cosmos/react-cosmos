@@ -29,28 +29,26 @@ export function findElementPaths(
   // $FlowFixMe Flow can't get cues from react-is package
   const element: Element<any> = node;
 
-  const childPaths = findElementPaths(
+  const elPaths = findElementPaths(
     element.props.children,
     isRootPath(curPath) ? 'props.children' : `${curPath}.props.children`
   );
 
   // Ignore Fragment elements, but include their children
-  return element.type === Fragment ? childPaths : [curPath, ...childPaths];
+  return element.type === Fragment ? elPaths : [curPath, ...elPaths];
 }
 
 // NiceToHave: Assert child path validity
 export function getElementAtPath(
   node: Children,
-  childPath: string
+  elPath: string
 ): null | Element<any> {
   // Only elements or array of elements have child nodes
   if (!node || typeof node !== 'object') {
     return null;
   }
 
-  const childNode: Children = isRootPath(childPath)
-    ? node
-    : get(node, childPath);
+  const childNode: Children = isRootPath(elPath) ? node : get(node, elPath);
 
   if (!isElement(childNode)) {
     // Why be silent about trying to fetch a node that isn't an element?
@@ -66,29 +64,29 @@ export function getElementAtPath(
 
 export function setElementAtPath(
   node: Children,
-  childPath: string,
+  elPath: string,
   updater: (Element<any>) => Element<any>
 ) {
   // Only elements or array of elements have child nodes
   if (!node || typeof node !== 'object') {
-    throw new Error(`Trying to edit non-element node`);
+    throw new Error(`Can't edit non-element node`);
   }
 
-  const childEl = getElementAtPath(node, childPath);
+  const childEl = getElementAtPath(node, elPath);
 
   if (!childEl) {
-    throw new Error(`Missing element at path ${childPath}`);
+    throw new Error(`Missing element at path: ${elPath}`);
   }
 
   const newEl = updater(childEl);
 
-  if (isRootPath(childPath)) {
+  if (isRootPath(elPath)) {
     return newEl;
   }
 
-  return set(cloneDeep(node), childPath, newEl);
+  return set(cloneDeep(node), elPath, newEl);
 }
 
-function isRootPath(childPath) {
-  return childPath === '';
+function isRootPath(elPath) {
+  return elPath === '';
 }
