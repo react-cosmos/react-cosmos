@@ -2,43 +2,39 @@
 
 import { Component } from 'react';
 
-import type { ComponentType, ElementRef, ElementType } from 'react';
+import type { ElementRef } from 'react';
+import type { FixtureDecoratorId } from 'react-cosmos-shared2/fixtureState';
 
-const instanceIds: WeakMap<
+const decoratorIds: WeakMap<
   ElementRef<typeof Component>,
-  number
+  FixtureDecoratorId
 > = new WeakMap();
 
 let lastInstanceId = 0;
 
-export function getInstanceId(instance: ElementRef<typeof Component>): number {
-  if (instanceIds.has(instance)) {
+export function getDecoratorId(
+  instance: ElementRef<typeof Component>
+): FixtureDecoratorId {
+  if (decoratorIds.has(instance)) {
     // $FlowFixMe https://github.com/facebook/flow/issues/2751
-    return instanceIds.get(instance);
+    return decoratorIds.get(instance);
   }
 
   const componentId = ++lastInstanceId;
-  instanceIds.set(instance, componentId);
+  decoratorIds.set(instance, componentId);
 
   return componentId;
 }
 
-const componentNames: WeakMap<ComponentType<any>, string> = new WeakMap();
+export function createFxStateMatcher(decoratorId: FixtureDecoratorId) {
+  return (propsFxState: { decoratorId: FixtureDecoratorId }) =>
+    propsFxState.decoratorId === decoratorId;
+}
 
-export function getComponentName(type: ElementType): string {
-  if (typeof type === 'string') {
-    return type;
-  }
-
-  if (componentNames.has(type)) {
-    // $FlowFixMe https://github.com/facebook/flow/issues/2751
-    return componentNames.get(type);
-  }
-
-  // TODO: Improve name detection
-  // See packages/react-cosmos-voyager2/src/client/utils/infer-component-name.js
-  const { name } = type;
-  componentNames.set(type, name);
-
-  return name;
+export function createElFxStateMatcher(
+  decoratorId: FixtureDecoratorId,
+  elPath: string
+) {
+  return (propsFxState: { decoratorId: FixtureDecoratorId, elPath: string }) =>
+    propsFxState.decoratorId === decoratorId && propsFxState.elPath === elPath;
 }

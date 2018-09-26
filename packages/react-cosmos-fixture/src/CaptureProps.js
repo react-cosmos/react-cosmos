@@ -1,43 +1,50 @@
 // @flow
 
-import { isEqual } from 'lodash';
+import { isEqual, find } from 'lodash';
 import React, { Component } from 'react';
 import { replaceOrAddItem, removeItemMatch } from 'react-cosmos-shared2/util';
 import {
   extractValuesFromObject,
-  areValuesEqual,
-  getFixtureStateProps,
-  getFixtureStatePropsInst
+  getPropsFixtureState
 } from 'react-cosmos-shared2/fixtureState';
-import { getInstanceId, getComponentName } from './shared/decorator';
+import {
+  getDecoratorId,
+  createFxStateMatcher,
+  createElFxStateMatcher
+} from './shared/decorator';
+import { getComponentName } from './shared/getComponentName';
+import {
+  findElementPaths,
+  getElementAtPath,
+  getExpectedElementAtPath,
+  setElementAtPath,
+  areChildrenEqual
+} from './shared/childrenTree';
 import { FixtureContext } from './FixtureContext';
 
 import type { SetState } from 'react-cosmos-shared2/util';
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
+import type { Children } from './shared/childrenTree';
 import type { CapturePropsProps } from './index.js.flow';
 
 const DEFAULT_RENDER_KEY = 0;
 
-export class CaptureProps extends Component<CapturePropsProps> {
-  static cosmosCaptureProps = false;
-
-  render() {
-    const { children } = this.props;
-
-    return (
-      <FixtureContext.Consumer>
-        {({ fixtureState, setFixtureState }) => (
-          <CapturePropsInner
-            fixtureState={fixtureState}
-            setFixtureState={setFixtureState}
-          >
-            {children}
-          </CapturePropsInner>
-        )}
-      </FixtureContext.Consumer>
-    );
-  }
+export function CaptureProps({ children }: CapturePropsProps) {
+  return (
+    <FixtureContext.Consumer>
+      {({ fixtureState, setFixtureState }) => (
+        <CapturePropsInner
+          fixtureState={fixtureState}
+          setFixtureState={setFixtureState}
+        >
+          {children}
+        </CapturePropsInner>
+      )}
+    </FixtureContext.Consumer>
+  );
 }
+
+CaptureProps.cosmosCaptureProps = false;
 
 type InnerProps = CapturePropsProps & {
   fixtureState: ?FixtureState,
@@ -47,148 +54,185 @@ type InnerProps = CapturePropsProps & {
 class CapturePropsInner extends Component<InnerProps> {
   render() {
     const { children, fixtureState } = this.props;
-    const instanceId = getInstanceId(this);
-    const propsInstance = getFixtureStatePropsInst(fixtureState, instanceId);
+    const decoratorId = getDecoratorId(this);
 
-    // HACK alert: Editing React Element by hand
-    // This is blasphemy, but there are two reasons why React.cloneElement
-    // isn't ideal:
-    //   1. Props need to overridden (not merged)
-    //   2. element.key has to be set to control whether the previous instance
-    //      should be reused on not
-    // Also note that any previous key is irrelevant, as CaptureProps only
-    // accepts a *single* React.Element as children.
-    // Still, in case this method causes trouble in the future, both reasons
-    // can be overcome in the following ways:
-    //   1. Set original props that aren't present in fixture state to undefined
-    //   2. Create a wrapper component or element and to set the key on
-    // Useful links:
-    //   - https://reactjs.org/docs/react-api.html#cloneelement
-    //   - https://github.com/facebook/react/blob/15a8f031838a553e41c0b66eb1bcf1da8448104d/packages/react/src/ReactElement.js#L293-L362
-    return {
-      ...children,
-      props: propsInstance
-        ? extendMockedPropsWithFixtureState(children.props, propsInstance)
-        : children.props,
-      key: propsInstance ? propsInstance.renderKey : DEFAULT_RENDER_KEY
-    };
+    return extendChildrenWithFixtureState(children, fixtureState, decoratorId);
   }
 
   componentDidMount() {
-    this.setFixtureState();
+    findRelevantElementPaths(this.props.children).forEach(elPath =>
+      this.replaceOrAddFixtureState(elPath)
+    );
+  }
+
+  componentWillUnmount() {
+    const { fixtureState } = this.props;
+
+    // Remove fixture state corresponding to this decorator instance
+    if (fixtureState && fixtureState.props) {
+      this.removeFixtureState();
+    }
   }
 
   shouldComponentUpdate(nextProps) {
     const { children, fixtureState } = this.props;
 
-    // Re-render if child type or props changed (eg. via webpack HMR)
-    if (!isEqual(nextProps.children, children)) {
+    // Children change when the fixture is updated at runtime (eg. via HMR)
+    if (!areChildrenEqual(nextProps.children, children)) {
       return true;
     }
 
+    // Quick identity check first
     if (nextProps.fixtureState === fixtureState) {
       return false;
     }
 
-    const instanceId = getInstanceId(this);
-    const next = getFixtureStatePropsInst(nextProps.fixtureState, instanceId);
-    const prev = getFixtureStatePropsInst(fixtureState, instanceId);
+    const decoratorId = getDecoratorId(this);
+    const matcher = createFxStateMatcher(decoratorId);
 
-    if (next === prev) {
-      return false;
-    }
-
-    // Fixture state for this instance is populated on mount, so a transition
-    // to an empty state means that this instance is expected to reset
-    if (!next) {
-      return true;
-    }
-
-    // If the fixture state for this instance has just been populated, we need
-    // to compare its values against the default values, otherwise an additional
-    // render cycle will be always run on init
-    const prevKey = prev ? prev.renderKey : DEFAULT_RENDER_KEY;
-    const prevValues = prev
-      ? prev.values
-      : extractValuesFromObject(children.props);
-
-    if (next.renderKey !== prevKey) {
-      return true;
-    }
-
-    // Because serialized fixture state changes are received remotely, a change
-    // in one fixtureState.props instance will change the identity of all
-    // fixtureState.props instances. So the only way to avoid useless re-renders
-    // is to check if any value from the fixture state props changed.
-    return !areValuesEqual(next.values, prevValues);
+    // No need to update unless children and/or fixture state values changed.
+    return !isEqual(
+      getPropsFixtureState(nextProps.fixtureState, matcher),
+      getPropsFixtureState(fixtureState, matcher)
+    );
   }
 
   componentDidUpdate(prevProps) {
     const { children, fixtureState } = this.props;
-    const instanceId = getInstanceId(this);
-    const propsInstance = getFixtureStatePropsInst(fixtureState, instanceId);
+    const elPaths = findRelevantElementPaths(children);
 
-    // Reset fixture state if...
-    if (
-      // ...the fixture state associated with this instance (initially created
-      // in componentDidMount) has been emptied deliberately. This is an edge
-      // case that occurs when a user interacting with a fixture desires to
-      // discard the current fixture state and load the fixture from scatch.
-      !propsInstance ||
-      // ...mocked props from fixture elemented changed, likely via webpack HMR.
-      !isEqual(children.props, prevProps.children.props)
-    ) {
-      this.setFixtureState();
-    }
+    const decoratorId = getDecoratorId(this);
+    const propsFxStates = getPropsFixtureState(
+      fixtureState,
+      createFxStateMatcher(decoratorId)
+    );
+
+    // Remove fixture state for removed child elements (likely via HMR).
+    propsFxStates.forEach(({ elPath }) => {
+      if (elPaths.indexOf(elPath) === -1) {
+        this.removeFixtureState(elPath);
+      }
+    });
+
+    // Update fixture state for existing child paths
+    elPaths.map(elPath => {
+      const propsFxState = find(propsFxStates, i => i.elPath === elPath);
+
+      // Reset fixture state when...
+      if (
+        // a) the fixture state for this element has been emptied deliberately.
+        // Happens when user discards the fixture state to reload the fixture.
+        !propsFxState ||
+        // b) mocked props from fixture elemented changed (likely via HMR).
+        !isEqual(
+          getElementAtPath(children, elPath),
+          getElementAtPath(prevProps.children, elPath)
+        )
+      ) {
+        this.replaceOrAddFixtureState(elPath);
+      }
+    });
   }
 
-  componentWillUnmount() {
-    const { setFixtureState } = this.props;
-    const instanceId = getInstanceId(this);
+  replaceOrAddFixtureState(elPath) {
+    const { children, setFixtureState } = this.props;
+    const decoratorId = getDecoratorId(this);
+    const { type, props } = getExpectedElementAtPath(children, elPath);
+    const componentName = getComponentName(type);
 
-    // Remove corresponding fixture state
+    // Use state updater callback to ensure concurrent setFixtureState calls
+    // don't cancel out each other.
     setFixtureState(fixtureState => {
+      const propsFxState = {
+        decoratorId,
+        elPath: elPath,
+        componentName,
+        renderKey: DEFAULT_RENDER_KEY,
+        values: extractValuesFromObject(props)
+      };
+
       return {
-        props: removeItemMatch(
-          getFixtureStateProps(fixtureState),
-          props => props.instanceId === instanceId
+        props: replaceOrAddItem(
+          getPropsFixtureState(fixtureState),
+          createElFxStateMatcher(decoratorId, elPath),
+          propsFxState
         )
       };
     });
   }
 
-  setFixtureState() {
-    const { children, setFixtureState } = this.props;
-    const instanceId = getInstanceId(this);
-    const componentName = getComponentName(children.type);
+  removeFixtureState(elPath?: string) {
+    const { setFixtureState } = this.props;
+    const decoratorId = getDecoratorId(this);
+    const matcher = elPath
+      ? createElFxStateMatcher(decoratorId, elPath)
+      : createFxStateMatcher(decoratorId);
 
-    // Add mocked component props (defined in fixture) to fixture state.
-    // Because fixtureState changes are async and multiple CapturePropsInner
-    // instances can mount before a state change propagates, merging prop
-    // values over props.fixtureState can cancel out other identical operations
-    // from different CapturePropsInner instances. To ensure each state
-    // transformation is honored we use a state updater callback.
+    // Use state updater callback to ensure concurrent setFixtureState calls
+    // don't cancel out each other.
     setFixtureState(fixtureState => {
-      const instanceProps = {
-        instanceId,
-        componentName,
-        renderKey: DEFAULT_RENDER_KEY,
-        values: extractValuesFromObject(children.props)
-      };
-
       return {
-        props: replaceOrAddItem(
-          getFixtureStateProps(fixtureState),
-          props => props.instanceId === instanceId,
-          instanceProps
-        )
+        props: removeItemMatch(getPropsFixtureState(fixtureState), matcher)
       };
     });
   }
 }
 
-function extendMockedPropsWithFixtureState(mockedProps, propsInstance) {
-  const { values } = propsInstance;
+function extendChildrenWithFixtureState(children, fixtureState, decoratorId) {
+  const elPaths = findRelevantElementPaths(children);
+
+  return elPaths.reduce((extendedChildren, elPath): Children => {
+    const [propsFxState] = getPropsFixtureState(
+      fixtureState,
+      createElFxStateMatcher(decoratorId, elPath)
+    );
+
+    return setElementAtPath(extendedChildren, elPath, element => {
+      if (!propsFxState) {
+        return {
+          ...element,
+          key: getElRenderKey(elPath, DEFAULT_RENDER_KEY)
+        };
+      }
+
+      // HACK alert: Editing React Element by hand
+      // This is blasphemy, but there are two reasons why React.cloneElement
+      // isn't ideal:
+      //   1. Props need to overridden (not merged)
+      //   2. element.key has to be set to control whether the prev instance
+      //      should be reused on not
+      // Still, in case this method causes trouble in the future, both reasons
+      // can be overcome in the following ways:
+      //   1. Set original props that aren't present in fixture state to
+      //      undefined
+      //   2. Create a wrapper component or element and to set the key on
+      // Useful links:
+      //   - https://reactjs.org/docs/react-api.html#cloneelement
+      //   - https://github.com/facebook/react/blob/15a8f031838a553e41c0b66eb1bcf1da8448104d/packages/react/src/ReactElement.js#L293-L362
+      const { props } = element;
+      const { renderKey } = propsFxState;
+
+      return {
+        ...element,
+        props: extendPropsWithFixtureState(props, propsFxState),
+        key: getElRenderKey(elPath, renderKey)
+      };
+    });
+  }, children);
+}
+
+function findRelevantElementPaths(children) {
+  const elPaths = findElementPaths(children);
+
+  return elPaths.filter(elPath => {
+    const { type } = getExpectedElementAtPath(children, elPath);
+
+    return type.cosmosCaptureProps !== false;
+  });
+}
+
+function extendPropsWithFixtureState(mockedProps, propsFxState) {
+  const { values } = propsFxState;
   const mergedProps = {};
 
   // Use fixture state for serializable props, and fall back to mocked values
@@ -200,4 +244,8 @@ function extendMockedPropsWithFixtureState(mockedProps, propsInstance) {
   });
 
   return mergedProps;
+}
+
+function getElRenderKey(elPath, renderKey) {
+  return `${elPath}-${renderKey}`;
 }

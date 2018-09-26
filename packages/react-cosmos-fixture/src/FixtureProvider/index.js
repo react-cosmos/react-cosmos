@@ -1,11 +1,11 @@
 // @flow
 
-import { isElement } from 'react-is';
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { CaptureProps } from '../CaptureProps';
+import { CaptureState } from '../CaptureState';
 import { FixtureContext } from '../FixtureContext';
 
-import type { Node, Element } from 'react';
+import type { Node } from 'react';
 import type { FixtureContextValue } from '../index.js.flow';
 
 type Props = {
@@ -42,40 +42,10 @@ export class FixtureProvider extends Component<Props, FixtureContextValue> {
 
     return (
       <FixtureContext.Provider value={this.state}>
-        {Array.isArray(children)
-          ? children.map((child, index) => this.getWrappedChild(child, index))
-          : this.getWrappedChild(children)}
+        <CaptureState>
+          <CaptureProps>{children}</CaptureProps>
+        </CaptureState>
       </FixtureContext.Provider>
     );
-  }
-
-  getWrappedChild(node: Node, index?: number) {
-    if (!isElement(node)) {
-      return node;
-    }
-
-    // $FlowFixMe Flow can't get cues from react-is package
-    const element: Element<any> = node;
-
-    // It wouldn't make sense to capture a Fragment's props, but it wouldn't
-    // work either. The fragment type is Symbol, which is considered a primitive
-    // type and isn't accepted as a WeakMap key
-    if (element.type === Fragment) {
-      const { children } = element.props;
-
-      // Edge-case: Fragments can also have a single child
-      return Array.isArray(children)
-        ? children.map((child, index) => this.getWrappedChild(child, index))
-        : this.getWrappedChild(children, index);
-    }
-
-    // Fixture decorators can opt out from their props being captured. Eg.
-    // Adding ComponentState's props to fixture state would be unwanted noise.
-    if (element.type.cosmosCaptureProps === false) {
-      return element;
-    }
-
-    // Automatically capture the props of the root node if it's an element
-    return <CaptureProps key={index}>{element}</CaptureProps>;
   }
 }

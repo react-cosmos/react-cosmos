@@ -1,6 +1,6 @@
 // @flow
 
-export type FixtureStateInstanceId = number;
+export type FixtureDecoratorId = number;
 
 export type FixtureStateValue = {
   serializable: boolean,
@@ -10,22 +10,24 @@ export type FixtureStateValue = {
 
 export type FixtureStateValues = FixtureStateValue[];
 
-export type FixtureStateProps = {
-  instanceId: FixtureStateInstanceId,
+export type PropsFixtureState = {
+  decoratorId: FixtureDecoratorId,
+  elPath: string,
   componentName: string,
   renderKey: number,
   values: FixtureStateValues
 };
 
-export type FixtureStateState = {
-  instanceId: FixtureStateInstanceId,
+export type StateFixtureState = {
+  decoratorId: FixtureDecoratorId,
+  elPath: string,
   componentName: string,
   values: FixtureStateValues
 };
 
 export type FixtureState = {
-  props?: FixtureStateProps[],
-  state?: FixtureStateState[],
+  props?: PropsFixtureState[],
+  state?: StateFixtureState[],
   [key: string]: mixed
 };
 
@@ -33,38 +35,27 @@ declare export function extractValuesFromObject(obj: {
   [string]: mixed
 }): FixtureStateValues;
 
-declare export function areValuesEqual(
-  a: FixtureStateValues,
-  b: FixtureStateValues
-): boolean;
-
-declare export function getFixtureStateProps(
-  fixtureState: ?FixtureState
-): FixtureStateProps[];
-
-declare export function getFixtureStatePropsInst(
+declare export function getPropsFixtureState(
   fixtureState: ?FixtureState,
-  instanceId: FixtureStateInstanceId
-): ?FixtureStateProps;
+  matcher?: (PropsFixtureState) => boolean
+): PropsFixtureState[];
 
-declare export function getFixtureStateState(
-  fixtureState: ?FixtureState
-): FixtureStateState[];
-
-declare export function getFixtureStateStateInst(
+declare export function updatePropsFixtureState({
   fixtureState: ?FixtureState,
-  instanceId: FixtureStateInstanceId
-): ?FixtureStateState;
-
-declare export function updateFixtureStateState(
-  fixtureState: ?FixtureState,
-  instanceId: FixtureStateInstanceId,
-  values: FixtureStateValues
-): FixtureStateState[];
-
-declare export function updateFixtureStateProps(
-  fixtureState: ?FixtureState,
-  instanceId: FixtureStateInstanceId,
+  decoratorId: FixtureDecoratorId,
+  elPath: string,
   values: FixtureStateValues,
   resetInstance?: boolean
-): FixtureStateProps[];
+}): PropsFixtureState[];
+
+declare export function getStateFixtureState(
+  fixtureState: ?FixtureState,
+  matcher?: (PropsFixtureState) => boolean
+): StateFixtureState[];
+
+declare export function updateStateFixtureState({
+  fixtureState: ?FixtureState,
+  decoratorId: FixtureDecoratorId,
+  elPath: string,
+  values: FixtureStateValues
+}): StateFixtureState[];

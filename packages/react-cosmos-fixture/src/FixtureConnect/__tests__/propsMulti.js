@@ -2,8 +2,8 @@
 
 import React, { Component } from 'react';
 import {
-  getFixtureStateProps,
-  updateFixtureStateProps
+  getPropsFixtureState,
+  updatePropsFixtureState
 } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from '../../shared/uuid';
 import { mockConnect as mockPostMessage } from '../jestHelpers/postMessage';
@@ -47,8 +47,14 @@ function tests(mockConnect) {
             fixturePath: 'first',
             fixtureState: {
               props: [
-                getPropsInstanceShape('Bianca'),
-                getPropsInstanceShape('B')
+                getPropsInstanceShape({
+                  name: 'Bianca',
+                  elPath: 'props.children[0]'
+                }),
+                getPropsInstanceShape({
+                  name: 'B',
+                  elPath: 'props.children[1]'
+                })
               ]
             }
           }
@@ -73,15 +79,19 @@ function tests(mockConnect) {
           });
 
           const fixtureState = await lastFixtureState();
-          const [, { instanceId }] = getFixtureStateProps(fixtureState);
-
+          const [, { decoratorId, elPath }] = getPropsFixtureState(
+            fixtureState
+          );
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              props: updateFixtureStateProps(fixtureState, instanceId, [
-                createNamePropValue('Petec')
-              ])
+              props: updatePropsFixtureState({
+                fixtureState,
+                decoratorId,
+                elPath,
+                values: [createNamePropValue('Petec')]
+              })
             }
           });
 
@@ -94,8 +104,14 @@ function tests(mockConnect) {
               fixturePath: 'first',
               fixtureState: {
                 props: [
-                  getPropsInstanceShape('Bianca'),
-                  getPropsInstanceShape('Petec')
+                  getPropsInstanceShape({
+                    name: 'Bianca',
+                    elPath: 'props.children[0]'
+                  }),
+                  getPropsInstanceShape({
+                    name: 'Petec',
+                    elPath: 'props.children[1]'
+                  })
                 ]
               }
             }
@@ -114,16 +130,17 @@ function createNamePropValue(name) {
   };
 }
 
-function getPropsInstanceShape(suffix) {
+function getPropsInstanceShape({ name, elPath }) {
   return {
-    instanceId: expect.any(Number),
+    decoratorId: expect.any(Number),
+    elPath,
     componentName: 'HelloMessage',
     renderKey: expect.any(Number),
     values: [
       {
         serializable: true,
         key: 'name',
-        stringified: `"${suffix}"`
+        stringified: `"${name}"`
       }
     ]
   };

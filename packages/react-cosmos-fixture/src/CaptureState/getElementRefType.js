@@ -4,7 +4,7 @@ import { Component } from 'react';
 
 import type { ElementRef } from 'react';
 
-export function getRefType(
+export function getElementRefType(
   elRef: ElementRef<typeof Component>
 ): Class<Component<any>> {
   // NOTE: This assumes ref is a Class instance, something React might

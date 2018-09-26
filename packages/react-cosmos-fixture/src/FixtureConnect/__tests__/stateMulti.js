@@ -2,11 +2,11 @@
 
 import React, { Component } from 'react';
 import {
-  getFixtureStateState,
-  updateFixtureStateState
+  getStateFixtureState,
+  updateStateFixtureState
 } from 'react-cosmos-shared2/fixtureState';
+import { StateMock } from '@react-mock/state';
 import { uuid } from '../../shared/uuid';
-import { ComponentState } from '../../ComponentState';
 import { mockConnect as mockPostMessage } from '../jestHelpers/postMessage';
 import { mockConnect as mockWebSockets } from '../jestHelpers/webSockets';
 import { mount } from '../jestHelpers/mount';
@@ -25,12 +25,12 @@ const rendererId = uuid();
 const fixtures = {
   first: (
     <>
-      <ComponentState state={{ count: 5 }}>
+      <StateMock state={{ count: 5 }}>
         <Counter />
-      </ComponentState>
-      <ComponentState state={{ count: 10 }}>
+      </StateMock>
+      <StateMock state={{ count: 10 }}>
         <Counter />
-      </ComponentState>
+      </StateMock>
     </>
   )
 };
@@ -80,15 +80,20 @@ function tests(mockConnect) {
           });
 
           const fixtureState = await lastFixtureState();
-          const [, { instanceId }] = getFixtureStateState(fixtureState);
+          const [, { decoratorId, elPath }] = getStateFixtureState(
+            fixtureState
+          );
 
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              state: updateFixtureStateState(fixtureState, instanceId, [
-                createCountStateValue(100)
-              ])
+              state: updateStateFixtureState({
+                fixtureState,
+                decoratorId,
+                elPath,
+                values: [createCountStateValue(100)]
+              })
             }
           });
 
@@ -109,7 +114,8 @@ function createCountStateValue(count: number) {
 
 function getEmptyPropsInstanceShape() {
   return {
-    instanceId: expect.any(Number),
+    decoratorId: expect.any(Number),
+    elPath: expect.any(String),
     componentName: 'Counter',
     renderKey: expect.any(Number),
     values: []
@@ -118,7 +124,8 @@ function getEmptyPropsInstanceShape() {
 
 function getStateInstanceShape(count: number) {
   return {
-    instanceId: expect.any(Number),
+    decoratorId: expect.any(Number),
+    elPath: expect.any(String),
     componentName: 'Counter',
     values: [
       {

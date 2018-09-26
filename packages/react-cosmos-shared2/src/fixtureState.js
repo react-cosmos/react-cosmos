@@ -1,14 +1,16 @@
 // @flow
 
-import { find, isEqual } from 'lodash';
+import { isEqual } from 'lodash';
 import { isElement } from 'react-is';
 import reactElementToJSXString from 'react-element-to-jsx-string';
 import { updateItem } from './util';
 
 import type {
-  FixtureStateInstanceId,
+  FixtureDecoratorId,
   FixtureStateValue,
   FixtureStateValues,
+  PropsFixtureState,
+  StateFixtureState,
   FixtureState
 } from './fixtureState.js.flow';
 
@@ -21,85 +23,94 @@ import type {
 export function extractValuesFromObject(obj: {
   [string]: mixed
 }): FixtureStateValues {
-  return Object.keys(obj).map(key => stringifyValue(key, obj[key]));
-}
-
-export function areValuesEqual(a: FixtureStateValues, b: FixtureStateValues) {
   return (
-    // If the number of values changed then clearly they're not equal
-    a.length === b.length &&
-    a.reduce((res, aVal, idx) => res && isValueEqual(aVal, b[idx]), true)
+    Object.keys(obj)
+      // Ignore noise from attrs defined as undefined (eg. props.children is
+      // often `undefined` if element has no children)
+      .filter(key => obj[key] !== undefined)
+      .map(key => stringifyValue(key, obj[key]))
   );
 }
 
-export function getFixtureStateProps(fixtureState: ?FixtureState) {
-  return (fixtureState && fixtureState.props) || [];
-}
-
-export function getFixtureStatePropsInst(
+export function getPropsFixtureState(
   fixtureState: ?FixtureState,
-  instanceId: FixtureStateInstanceId
+  matcher?: PropsFixtureState => boolean
 ) {
-  return find(
-    getFixtureStateProps(fixtureState),
-    i => i.instanceId === instanceId
-  );
-}
-
-export function getFixtureStateState(fixtureState: ?FixtureState) {
-  return (fixtureState && fixtureState.state) || [];
-}
-
-export function getFixtureStateStateInst(
-  fixtureState: ?FixtureState,
-  instanceId: FixtureStateInstanceId
-) {
-  return find(
-    getFixtureStateState(fixtureState),
-    i => i.instanceId === instanceId
-  );
-}
-
-export function updateFixtureStateProps(
-  fixtureState: ?FixtureState,
-  instanceId: FixtureStateInstanceId,
-  values: FixtureStateValues,
-  resetInstance?: boolean = false
-) {
-  const propsInstance = getFixtureStatePropsInst(fixtureState, instanceId);
-
-  if (!propsInstance) {
-    throw new Error(`Missing props with instanceId: ${instanceId}`);
+  if (!fixtureState || !fixtureState.props) {
+    return [];
   }
 
-  const { renderKey } = propsInstance;
+  return matcher ? fixtureState.props.filter(matcher) : fixtureState.props;
+}
 
-  return updateItem(getFixtureStateProps(fixtureState), propsInstance, {
+export function updatePropsFixtureState({
+  fixtureState,
+  decoratorId,
+  elPath,
+  values,
+  resetInstance = false
+}: {
+  fixtureState: ?FixtureState,
+  decoratorId: FixtureDecoratorId,
+  elPath: string,
+  values: FixtureStateValues,
+  resetInstance?: boolean
+}) {
+  const [propsFxState] = getPropsFixtureState(
+    fixtureState,
+    i => i.decoratorId === decoratorId && i.elPath === elPath
+  );
+
+  if (!propsFxState) {
+    throw new Error(
+      `No props fixture state with decoratorId '${decoratorId}' and elPath '${elPath}'`
+    );
+  }
+
+  const { renderKey } = propsFxState;
+
+  return updateItem(getPropsFixtureState(fixtureState), propsFxState, {
     renderKey: resetInstance ? renderKey + 1 : renderKey,
     values
   });
 }
 
-export function updateFixtureStateState(
+export function getStateFixtureState(
   fixtureState: ?FixtureState,
-  instanceId: FixtureStateInstanceId,
-  values: FixtureStateValues
+  matcher?: StateFixtureState => boolean
 ) {
-  const stateInstance = getFixtureStateStateInst(fixtureState, instanceId);
-
-  if (!stateInstance) {
-    throw new Error(`Missing state with instanceId: ${instanceId}`);
+  if (!fixtureState || !fixtureState.state) {
+    return [];
   }
 
-  return updateItem(getFixtureStateState(fixtureState), stateInstance, {
-    values
-  });
+  return matcher ? fixtureState.state.filter(matcher) : fixtureState.state;
 }
 
-function isValueEqual(a: FixtureStateValue, b: FixtureStateValue) {
-  // In theory .value shouldn't be compared if the value is not serializable.
-  // But since unserializable values never change, the comparison still holds.
-  return a.key === b.key && a.stringified === b.stringified;
+export function updateStateFixtureState({
+  fixtureState,
+  decoratorId,
+  elPath,
+  values
+}: {
+  fixtureState: ?FixtureState,
+  decoratorId: FixtureDecoratorId,
+  elPath: string,
+  values: FixtureStateValues
+}) {
+  const [stateFxState] = getStateFixtureState(
+    fixtureState,
+    i => i.decoratorId === decoratorId && i.elPath === elPath
+  );
+
+  if (!stateFxState) {
+    throw new Error(
+      `No state fixture state with decoratorId '${decoratorId}' and elPath '${elPath}'`
+    );
+  }
+
+  return updateItem(getStateFixtureState(fixtureState), stateFxState, {
+    values
+  });
 }
 
 function stringifyValue(key: string, value: mixed): FixtureStateValue {

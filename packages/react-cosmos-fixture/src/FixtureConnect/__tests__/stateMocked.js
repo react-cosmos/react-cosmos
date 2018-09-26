@@ -2,12 +2,12 @@
 
 import React, { Component } from 'react';
 import until from 'async-until';
+import { StateMock } from '@react-mock/state';
 import {
-  getFixtureStateState,
-  updateFixtureStateState
+  getStateFixtureState,
+  updateStateFixtureState
 } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from '../../shared/uuid';
-import { ComponentState } from '../../ComponentState';
 import { mockConnect as mockPostMessage } from '../jestHelpers/postMessage';
 import { mockConnect as mockWebSockets } from '../jestHelpers/webSockets';
 import { mount } from '../jestHelpers/mount';
@@ -35,9 +35,9 @@ export class CoolCounter extends Component<{}, { count: number }> {
 const rendererId = uuid();
 const fixtures = {
   first: (
-    <ComponentState state={{ count: 5 }}>
+    <StateMock state={{ count: 5 }}>
       <Counter />
-    </ComponentState>
+    </StateMock>
   )
 };
 
@@ -85,14 +85,17 @@ function tests(mockConnect) {
           });
 
           const fixtureState = await lastFixtureState();
-          const [{ instanceId }] = getFixtureStateState(fixtureState);
+          const [{ decoratorId, elPath }] = getStateFixtureState(fixtureState);
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              state: updateFixtureStateState(fixtureState, instanceId, [
-                createCountStateValue(100)
-              ])
+              state: updateStateFixtureState({
+                fixtureState,
+                decoratorId,
+                elPath,
+                values: [createCountStateValue(100)]
+              })
             }
           });
 
@@ -104,9 +107,12 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              state: updateFixtureStateState(fixtureState, instanceId, [
-                createCountStateValue(200)
-              ])
+              state: updateStateFixtureState({
+                fixtureState,
+                decoratorId,
+                elPath,
+                values: [createCountStateValue(200)]
+              })
             }
           });
 
@@ -131,12 +137,17 @@ function tests(mockConnect) {
           });
 
           const fixtureState = await lastFixtureState();
-          const [{ instanceId }] = getFixtureStateState(fixtureState);
+          const [{ decoratorId, elPath }] = getStateFixtureState(fixtureState);
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              state: updateFixtureStateState(fixtureState, instanceId, [])
+              state: updateStateFixtureState({
+                fixtureState,
+                decoratorId,
+                elPath,
+                values: []
+              })
             }
           });
 
@@ -162,14 +173,17 @@ function tests(mockConnect) {
           });
 
           const fixtureState = await lastFixtureState();
-          const [{ instanceId }] = getFixtureStateState(fixtureState);
+          const [{ decoratorId, elPath }] = getStateFixtureState(fixtureState);
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              state: updateFixtureStateState(fixtureState, instanceId, [
-                createCountStateValue(10)
-              ])
+              state: updateStateFixtureState({
+                fixtureState,
+                decoratorId,
+                elPath,
+                values: [createCountStateValue(10)]
+              })
             }
           });
 
@@ -207,7 +221,7 @@ function tests(mockConnect) {
 
     const fixtures = {
       first: (
-        <ComponentState state={{ count: 5 }}>
+        <StateMock state={{ count: 5 }}>
           <Counter
             ref={elRef => {
               if (elRef) {
@@ -215,7 +229,7 @@ function tests(mockConnect) {
               }
             }}
           />
-        </ComponentState>
+        </StateMock>
       )
     };
 
@@ -252,7 +266,7 @@ function tests(mockConnect) {
 
         async function getCount() {
           const fixtureState = await lastFixtureState();
-          const [{ values }] = getFixtureStateState(fixtureState);
+          const [{ values }] = getStateFixtureState(fixtureState);
 
           return JSON.parse(values[0].stringified);
         }
@@ -275,14 +289,17 @@ function tests(mockConnect) {
           });
 
           const fixtureState = await lastFixtureState();
-          const [{ instanceId }] = getFixtureStateState(fixtureState);
+          const [{ decoratorId, elPath }] = getStateFixtureState(fixtureState);
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              state: updateFixtureStateState(fixtureState, instanceId, [
-                createCountStateValue(50)
-              ])
+              state: updateStateFixtureState({
+                fixtureState,
+                decoratorId,
+                elPath,
+                values: [createCountStateValue(50)]
+              })
             }
           });
 
@@ -293,9 +310,9 @@ function tests(mockConnect) {
               rendererId,
               fixtures: {
                 first: (
-                  <ComponentState state={{ count: 5 }}>
+                  <StateMock state={{ count: 5 }}>
                     <CoolCounter />
-                  </ComponentState>
+                  </StateMock>
                 )
               }
             })
@@ -323,14 +340,17 @@ function tests(mockConnect) {
           });
 
           const fixtureState = await lastFixtureState();
-          const [{ instanceId }] = getFixtureStateState(fixtureState);
+          const [{ decoratorId, elPath }] = getStateFixtureState(fixtureState);
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              state: updateFixtureStateState(fixtureState, instanceId, [
-                createCountStateValue(6)
-              ])
+              state: updateStateFixtureState({
+                fixtureState,
+                decoratorId,
+                elPath,
+                values: [createCountStateValue(6)]
+              })
             }
           });
 
@@ -342,9 +362,9 @@ function tests(mockConnect) {
               rendererId,
               fixtures: {
                 first: (
-                  <ComponentState state={{ count: 50 }}>
+                  <StateMock state={{ count: 50 }}>
                     <Counter />
-                  </ComponentState>
+                  </StateMock>
                 )
               }
             })
@@ -368,7 +388,7 @@ function tests(mockConnect) {
     );
   });
 
-  it('removes state from fixture state on unmount', async () => {
+  it('clears fixture state for removed fixture element', async () => {
     await mockConnect(async ({ getElement, untilMessage, selectFixture }) => {
       await mount(getElement({ rendererId, fixtures }), async renderer => {
         await selectFixture({
@@ -392,13 +412,14 @@ function tests(mockConnect) {
           getElement({
             rendererId,
             fixtures: {
-              // This will cause both the CaptureProps and ComponentState
-              // instance correspondings to the previous fixture element to
-              // unmount
-              first: null
+              // Counter element from fixture is gone, and so should the
+              // fixture state related to it.
+              first: 'No counts for you.'
             }
           })
         );
+
+        expect(renderer.toJSON()).toBe('No counts for you.');
 
         await untilMessage({
           type: 'fixtureState',
@@ -426,7 +447,8 @@ function createCountStateValue(count: number) {
 
 function getEmptyPropsInstanceShape() {
   return {
-    instanceId: expect.any(Number),
+    decoratorId: expect.any(Number),
+    elPath: expect.any(String),
     componentName: 'Counter',
     renderKey: expect.any(Number),
     values: []
@@ -435,7 +457,8 @@ function getEmptyPropsInstanceShape() {
 
 function getStateInstanceShape(count: number) {
   return {
-    instanceId: expect.any(Number),
+    decoratorId: expect.any(Number),
+    elPath: expect.any(String),
     componentName: 'Counter',
     values: [
       {

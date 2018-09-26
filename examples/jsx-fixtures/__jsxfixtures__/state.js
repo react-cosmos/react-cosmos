@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { ComponentState } from 'react-cosmos-fixture';
+import { StateMock } from '@react-mock/state';
 
 class Counter extends Component<{ suffix: string }, { count: number }> {
   state = { count: 0 };
@@ -18,7 +18,7 @@ class Counter extends Component<{ suffix: string }, { count: number }> {
 }
 
 export default (
-  <ComponentState state={{ count: 5 }}>
+  <StateMock state={{ count: 5 }}>
     <Counter suffix="times" />
-  </ComponentState>
+  </StateMock>
 );

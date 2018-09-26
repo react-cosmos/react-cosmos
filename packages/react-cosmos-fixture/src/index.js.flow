@@ -43,12 +43,11 @@ export type FixtureContainerProps = {
 };
 
 export type CapturePropsProps = {
-  children: Element<any>
+  children: Node
 };
 
-export type ComponentStateProps = {
-  children: Element<any>,
-  state?: Object
+export type CaptureStateProps = {
+  children: Node
 };
 
 declare export var FixtureConnect: ComponentType<FixtureConnectProps>;
@@ -59,4 +58,4 @@ declare export var FixtureContext: Context<FixtureContextValue>;
 declare export var FixtureContainer: ComponentType<FixtureContainerProps>;
 
 declare export var CaptureProps: ComponentType<CapturePropsProps>;
-declare export var ComponentState: ComponentType<ComponentStateProps>;
+declare export var CaptureState: ComponentType<CaptureStateProps>;

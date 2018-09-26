@@ -68,7 +68,9 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
       return 'No fixture loaded.';
     }
 
-    if (!fixtures[fixturePath]) {
+    // Falsy check doesn't do because fixtures can be any Node, including
+    // null or undefined.
+    if (!(fixturePath in fixtures)) {
       return `Fixture path not found: ${fixturePath}`;
     }
 
