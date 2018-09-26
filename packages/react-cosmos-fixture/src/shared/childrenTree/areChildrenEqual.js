@@ -7,26 +7,30 @@ import type { Element } from 'react';
 import type { Children } from './shared';
 
 export function areChildrenEqual(a: Children, b: Children): boolean {
-  if (Array.isArray(a) && Array.isArray(b)) {
-    const bNodes: Array<Node> = b;
+  return isEqual(stripInternalNodeAttrs(a), stripInternalNodeAttrs(b));
+}
 
-    return a.reduce((res, n, i) => res && areChildrenEqual(n, bNodes[i]), true);
+// Don't compare private element attrs like _owner and _store, which hold
+// internal details and have auto increment-type attrs
+function stripInternalNodeAttrs(node: Children) {
+  if (Array.isArray(node)) {
+    return node.map(n => stripInternalNodeAttrs(n));
   }
 
-  if (isElement(a) && isElement(b)) {
+  if (isElement(node)) {
     // $FlowFixMe Flow can't get cues from react-is package
-    return areElementsEqual(a, b);
+    const el: Element<any> = node;
+    const { props } = el;
+    const { children } = props;
+
+    return {
+      ...pick(el, 'type', 'key', 'ref'),
+      props: {
+        ...props,
+        children: children && stripInternalNodeAttrs(children)
+      }
+    };
   }
 
-  return isEqual(a, b);
-}
-
-function areElementsEqual(elA: Element<any>, elB: Element<any>) {
-  return isEqual(pickElAttrs(elA), pickElAttrs(elB));
-}
-
-function pickElAttrs(el: Element<any>) {
-  // Avoid comparing private element attrs like _owner and _store, which
-  // have auto increment-type attrs
-  return pick(el, 'type', 'key', 'ref', 'props');
+  return node;
 }

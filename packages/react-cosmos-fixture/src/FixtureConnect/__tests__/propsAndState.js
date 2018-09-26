@@ -22,7 +22,15 @@ class Counter extends Component<{ suffix: string }, { count: number }> {
 
 const rendererId = uuid();
 const fixtures = {
-  first: <Counter suffix="times" />
+  first: (
+    // The extra levels of nesting capture a complex case regarding deep
+    // comparison of children nodes
+    <>
+      <>
+        <Counter suffix="times" />
+      </>
+    </>
+  )
 };
 
 tests(mockPostMessage);
@@ -138,6 +146,71 @@ function tests(mockConnect) {
                 decoratorId: props.decoratorId,
                 elPath: props.elPath,
                 values: [createSuffixPropValue('timez')]
+              })
+            }
+          });
+
+          expect(renderer.toJSON()).toBe('5 timez');
+
+          await untilMessage({
+            type: 'fixtureState',
+            payload: {
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: {
+                props: [getPropsInstanceShape('timez')],
+                state: [getStateInstanceShape(5)]
+              }
+            }
+          });
+        });
+      }
+    );
+  });
+
+  it('keeps props when changing state', async () => {
+    await mockConnect(
+      async ({
+        getElement,
+        selectFixture,
+        untilMessage,
+        lastFixtureState,
+        setFixtureState
+      }) => {
+        await mount(getElement({ rendererId, fixtures }), async renderer => {
+          await selectFixture({
+            rendererId,
+            fixturePath: 'first'
+          });
+
+          const fixtureState = await lastFixtureState();
+          const [props] = getPropsFixtureState(fixtureState);
+          const [state] = getStateFixtureState(fixtureState);
+
+          await setFixtureState({
+            rendererId,
+            fixturePath: 'first',
+            fixtureStateChange: {
+              props: updatePropsFixtureState({
+                fixtureState,
+                decoratorId: props.decoratorId,
+                elPath: props.elPath,
+                values: [createSuffixPropValue('timez')]
+              })
+            }
+          });
+
+          expect(renderer.toJSON()).toBe('0 timez');
+
+          await setFixtureState({
+            rendererId,
+            fixturePath: 'first',
+            fixtureStateChange: {
+              state: updateStateFixtureState({
+                fixtureState,
+                decoratorId: state.decoratorId,
+                elPath: state.elPath,
+                values: [createCountStateValue(5)]
               })
             }
           });
