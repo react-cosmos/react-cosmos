@@ -35,7 +35,7 @@ export class PropsPanel extends Component<Props> {
     return props.map(
       ({ decoratorId, elPath, componentName, values }) =>
         values.length > 0 && (
-          <div key={decoratorId}>
+          <div key={`${decoratorId}-${elPath}`}>
             <p>
               <strong>Props</strong> ({componentName})
             </p>

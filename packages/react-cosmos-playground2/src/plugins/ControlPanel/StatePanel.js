@@ -35,7 +35,7 @@ export class StatePanel extends Component<Props> {
     return state.map(
       ({ decoratorId, elPath, componentName, values }) =>
         values.length > 0 && (
-          <div key={decoratorId}>
+          <div key={`${decoratorId}-${elPath}`}>
             <p>
               <strong>State</strong> ({componentName})
             </p>
