@@ -14,7 +14,7 @@ import { mount } from '../jestHelpers/mount';
 
 import type { ElementRef } from 'react';
 
-export class Counter extends Component<{}, { count: number }> {
+class Counter extends Component<{}, { count: number }> {
   state = { count: 0 };
 
   render() {
@@ -24,7 +24,7 @@ export class Counter extends Component<{}, { count: number }> {
   }
 }
 
-export class CoolCounter extends Component<{}, { count: number }> {
+class CoolCounter extends Component<{}, { count: number }> {
   state = { count: 0 };
 
   render() {

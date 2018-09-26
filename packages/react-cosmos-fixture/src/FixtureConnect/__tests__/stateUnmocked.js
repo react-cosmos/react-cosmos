@@ -10,7 +10,7 @@ import { mockConnect as mockPostMessage } from '../jestHelpers/postMessage';
 import { mockConnect as mockWebSockets } from '../jestHelpers/webSockets';
 import { mount } from '../jestHelpers/mount';
 
-export class Counter extends Component<{}, { count: number }> {
+class Counter extends Component<{}, { count: number }> {
   state = { count: 0 };
 
   render() {

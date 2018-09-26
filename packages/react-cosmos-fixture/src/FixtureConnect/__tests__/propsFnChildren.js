@@ -7,7 +7,7 @@ import { mockConnect as mockPostMessage } from '../jestHelpers/postMessage';
 import { mockConnect as mockWebSockets } from '../jestHelpers/webSockets';
 import { mount } from '../jestHelpers/mount';
 
-export class HelloMessage extends Component<{ name?: string }> {
+class HelloMessage extends Component<{ name?: string }> {
   render() {
     return `Hello ${this.props.name || 'Stranger'}`;
   }
