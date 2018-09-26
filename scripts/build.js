@@ -156,9 +156,7 @@ function getBabelCliArgs(pkgName) {
   // Showing Babel output in watch mode because it's nice to get a confirmation
   // that something happened after saving a file
   if (watch) {
-    args = [...args, '--watch'];
-  } else {
-    args = [...args, '--quiet'];
+    args = [...args, '--watch', '--verbose'];
   }
 
   return args;
