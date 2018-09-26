@@ -226,9 +226,7 @@ class CaptureStateInner extends Component<InnerProps> {
 
     if (stateFxState) {
       replaceState(elRef, extendStateWithFxState(elRef.state, stateFxState));
-    }
-    // Only stateful components will generate state-related fixture state
-    else if (elRef.state) {
+    } else {
       this.replaceOrAddFixtureState(elPath);
     }
   };
