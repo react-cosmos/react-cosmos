@@ -5,13 +5,11 @@ import React, { Component, cloneElement } from 'react';
 import { replaceOrAddItem, removeItemMatch } from 'react-cosmos-shared2/util';
 import {
   extractValuesFromObject,
-  getStateFixtureState
-} from 'react-cosmos-shared2/fixtureState';
-import {
-  getDecoratorId,
+  getStateFixtureState,
   createFxStateMatcher,
   createElFxStateMatcher
-} from '../shared/decorator';
+} from 'react-cosmos-shared2/fixtureState';
+import { getDecoratorId } from '../shared/decorator';
 import { getComponentName } from '../shared/getComponentName';
 import {
   findElementPaths,

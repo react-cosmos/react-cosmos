@@ -25,16 +25,3 @@ export function getDecoratorId(
 
   return componentId;
 }
-
-export function createFxStateMatcher(decoratorId: FixtureDecoratorId) {
-  return (propsFxState: { decoratorId: FixtureDecoratorId }) =>
-    propsFxState.decoratorId === decoratorId;
-}
-
-export function createElFxStateMatcher(
-  decoratorId: FixtureDecoratorId,
-  elPath: string
-) {
-  return (propsFxState: { decoratorId: FixtureDecoratorId, elPath: string }) =>
-    propsFxState.decoratorId === decoratorId && propsFxState.elPath === elPath;
-}

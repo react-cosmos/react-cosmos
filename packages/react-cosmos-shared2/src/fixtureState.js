@@ -113,6 +113,19 @@ export function updateStateFixtureState({
   });
 }
 
+export function createFxStateMatcher(decoratorId: FixtureDecoratorId) {
+  return (fxState: { decoratorId: FixtureDecoratorId }) =>
+    fxState.decoratorId === decoratorId;
+}
+
+export function createElFxStateMatcher(
+  decoratorId: FixtureDecoratorId,
+  elPath: string
+) {
+  return (fxState: { decoratorId: FixtureDecoratorId, elPath: string }) =>
+    fxState.decoratorId === decoratorId && fxState.elPath === elPath;
+}
+
 function stringifyValue(key: string, value: mixed): FixtureStateValue {
   try {
     // XXX: Is this optimal?

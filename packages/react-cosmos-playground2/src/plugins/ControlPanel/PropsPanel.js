@@ -6,7 +6,8 @@ import { RENDERER_ID } from 'react-cosmos-shared2/renderer';
 import { replaceOrAddItem } from 'react-cosmos-shared2/util';
 import {
   getPropsFixtureState,
-  updatePropsFixtureState
+  updatePropsFixtureState,
+  createElFxStateMatcher
 } from 'react-cosmos-shared2/fixtureState';
 import { ValueInput } from './ValueInput';
 
@@ -65,7 +66,7 @@ export class PropsPanel extends Component<Props> {
     const { fixturePath, fixtureState, postRendererRequest } = this.props;
     const [propsFxState] = getPropsFixtureState(
       fixtureState,
-      s => s.decoratorId === decoratorId && s.elPath === elPath
+      createElFxStateMatcher(decoratorId, elPath)
     );
 
     if (!propsFxState) {

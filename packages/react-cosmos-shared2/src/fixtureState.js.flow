@@ -31,6 +31,8 @@ export type FixtureState = {
   [key: string]: mixed
 };
 
+export type FixtureStateMatcher = StateFixtureState => boolean;
+
 declare export function extractValuesFromObject(obj: {
   [string]: mixed
 }): FixtureStateValues;
@@ -59,3 +61,12 @@ declare export function updateStateFixtureState({
   elPath: string,
   values: FixtureStateValues
 }): StateFixtureState[];
+
+declare export function createFxStateMatcher(
+  decoratorId: FixtureDecoratorId
+): FixtureStateMatcher;
+
+declare export function createElFxStateMatcher(
+  decoratorId: FixtureDecoratorId,
+  elPath: string
+): FixtureStateMatcher;
