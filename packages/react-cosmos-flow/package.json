@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-flow",
-  "version": "4.7.0-11",
+  "version": "4.7.0-12",
   "description": "Flow types for React Cosmos",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-flow",
   "license": "MIT"
