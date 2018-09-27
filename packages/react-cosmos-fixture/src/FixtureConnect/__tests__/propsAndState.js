@@ -2,13 +2,12 @@
 
 import React, { Component } from 'react';
 import {
-  getFixtureStateProps,
-  getFixtureStateState,
-  updateFixtureStateProps,
-  updateFixtureStateState
+  getPropsFixtureState,
+  getStateFixtureState,
+  updatePropsFixtureState,
+  updateStateFixtureState
 } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from '../../shared/uuid';
-import { ComponentState } from '../../ComponentState';
 import { mockConnect as mockPostMessage } from '../jestHelpers/postMessage';
 import { mockConnect as mockWebSockets } from '../jestHelpers/webSockets';
 import { mount } from '../jestHelpers/mount';
@@ -24,9 +23,13 @@ class Counter extends Component<{ suffix: string }, { count: number }> {
 const rendererId = uuid();
 const fixtures = {
   first: (
-    <ComponentState>
-      <Counter suffix="times" />
-    </ComponentState>
+    // The extra levels of nesting capture a complex case regarding deep
+    // comparison of children nodes
+    <>
+      <>
+        <Counter suffix="times" />
+      </>
+    </>
   )
 };
 
@@ -50,16 +53,19 @@ function tests(mockConnect) {
           });
 
           const fixtureState = await lastFixtureState();
-          const [props] = getFixtureStateProps(fixtureState);
-          const [state] = getFixtureStateState(fixtureState);
+          const [props] = getPropsFixtureState(fixtureState);
+          const [state] = getStateFixtureState(fixtureState);
 
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              state: updateFixtureStateState(fixtureState, state.instanceId, [
-                createCountStateValue(5)
-              ])
+              state: updateStateFixtureState({
+                fixtureState,
+                elPath: state.elPath,
+                decoratorId: state.decoratorId,
+                values: [createCountStateValue(5)]
+              })
             }
           });
 
@@ -69,12 +75,13 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              props: updateFixtureStateProps(
+              props: updatePropsFixtureState({
                 fixtureState,
-                props.instanceId,
-                [createSuffixPropValue('timez')],
-                true
-              )
+                decoratorId: props.decoratorId,
+                elPath: props.elPath,
+                values: [createSuffixPropValue('timez')],
+                resetInstance: true
+              })
             }
           });
 
@@ -112,16 +119,19 @@ function tests(mockConnect) {
           });
 
           const fixtureState = await lastFixtureState();
-          const [props] = getFixtureStateProps(fixtureState);
-          const [state] = getFixtureStateState(fixtureState);
+          const [props] = getPropsFixtureState(fixtureState);
+          const [state] = getStateFixtureState(fixtureState);
 
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              state: updateFixtureStateState(fixtureState, state.instanceId, [
-                createCountStateValue(5)
-              ])
+              state: updateStateFixtureState({
+                fixtureState,
+                decoratorId: state.decoratorId,
+                elPath: state.elPath,
+                values: [createCountStateValue(5)]
+              })
             }
           });
 
@@ -131,9 +141,77 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              props: updateFixtureStateProps(fixtureState, props.instanceId, [
-                createSuffixPropValue('timez')
-              ])
+              props: updatePropsFixtureState({
+                fixtureState,
+                decoratorId: props.decoratorId,
+                elPath: props.elPath,
+                values: [createSuffixPropValue('timez')]
+              })
+            }
+          });
+
+          expect(renderer.toJSON()).toBe('5 timez');
+
+          await untilMessage({
+            type: 'fixtureState',
+            payload: {
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: {
+                props: [getPropsInstanceShape('timez')],
+                state: [getStateInstanceShape(5)]
+              }
+            }
+          });
+        });
+      }
+    );
+  });
+
+  it('keeps props when changing state', async () => {
+    await mockConnect(
+      async ({
+        getElement,
+        selectFixture,
+        untilMessage,
+        lastFixtureState,
+        setFixtureState
+      }) => {
+        await mount(getElement({ rendererId, fixtures }), async renderer => {
+          await selectFixture({
+            rendererId,
+            fixturePath: 'first'
+          });
+
+          const fixtureState = await lastFixtureState();
+          const [props] = getPropsFixtureState(fixtureState);
+          const [state] = getStateFixtureState(fixtureState);
+
+          await setFixtureState({
+            rendererId,
+            fixturePath: 'first',
+            fixtureStateChange: {
+              props: updatePropsFixtureState({
+                fixtureState,
+                decoratorId: props.decoratorId,
+                elPath: props.elPath,
+                values: [createSuffixPropValue('timez')]
+              })
+            }
+          });
+
+          expect(renderer.toJSON()).toBe('0 timez');
+
+          await setFixtureState({
+            rendererId,
+            fixturePath: 'first',
+            fixtureStateChange: {
+              state: updateStateFixtureState({
+                fixtureState,
+                decoratorId: state.decoratorId,
+                elPath: state.elPath,
+                values: [createCountStateValue(5)]
+              })
             }
           });
 
@@ -167,11 +245,7 @@ function tests(mockConnect) {
           getElement({
             rendererId,
             fixtures: {
-              first: (
-                <ComponentState>
-                  <Counter suffix="timez" />
-                </ComponentState>
-              )
+              first: <Counter suffix="timez" />
             }
           })
         );
@@ -204,7 +278,8 @@ function createSuffixPropValue(suffix) {
 
 function getPropsInstanceShape(suffix) {
   return {
-    instanceId: expect.any(Number),
+    decoratorId: expect.any(Number),
+    elPath: expect.any(String),
     componentName: 'Counter',
     renderKey: expect.any(Number),
     values: [
@@ -227,7 +302,8 @@ function createCountStateValue(count: number) {
 
 function getStateInstanceShape(count: number) {
   return {
-    instanceId: expect.any(Number),
+    decoratorId: expect.any(Number),
+    elPath: expect.any(String),
     componentName: 'Counter',
     values: [
       {

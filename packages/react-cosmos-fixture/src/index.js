@@ -10,7 +10,7 @@ export { FixtureContext } from './FixtureContext';
 
 // Use in fixtures
 export { CaptureProps } from './CaptureProps';
-export { ComponentState } from './ComponentState';
+export { CaptureState } from './CaptureState';
 
 // Use to render fixture anywhere (eg. in unit test)
 export { FixtureContainer } from './FixtureContainer';

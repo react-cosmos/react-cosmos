@@ -1058,6 +1058,12 @@
     core-js "^2.5.7"
     regenerator-runtime "^0.12.0"
 
+"@babel/runtime@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0.tgz#adeb78fedfc855aa05bc041640f3f6f98e85424c"
+  dependencies:
+    regenerator-runtime "^0.12.0"
+
 "@babel/template@7.0.0-rc.1", "@babel/template@^7.0.0-beta":
   version "7.0.0-rc.1"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.0.0-rc.1.tgz#5f9c0a481c9f22ecdb84697b3c3a34eadeeca23c"
@@ -1688,6 +1694,13 @@
     lodash "^4.17.4"
     node-fetch "^2.1.1"
     url-template "^2.0.8"
+
+"@react-mock/state@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@react-mock/state/-/state-0.1.2.tgz#98cbfb242065fbe3954409374c1f936fc6b18659"
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    lodash "^4.17.11"
 
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"

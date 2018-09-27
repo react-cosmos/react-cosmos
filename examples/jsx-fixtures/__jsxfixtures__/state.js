@@ -1,24 +1,11 @@
 // @flow
 
-import React, { Component } from 'react';
-import { ComponentState } from 'react-cosmos-fixture';
-
-class Counter extends Component<{ suffix: string }, { count: number }> {
-  state = { count: 0 };
-
-  render() {
-    return (
-      <button
-        onClick={() => this.setState(({ count }) => ({ count: count + 1 }))}
-      >
-        {this.state.count} {this.props.suffix}
-      </button>
-    );
-  }
-}
+import React from 'react';
+import { StateMock } from '@react-mock/state';
+import { Counter } from '../components/Counter';
 
 export default (
-  <ComponentState state={{ count: 5 }}>
+  <StateMock state={{ count: 5 }}>
     <Counter suffix="times" />
-  </ComponentState>
+  </StateMock>
 );

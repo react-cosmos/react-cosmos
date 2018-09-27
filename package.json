@@ -49,6 +49,7 @@
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/runtime-corejs2": "^7.0.0",
+    "@react-mock/state": "^0.1.2",
     "after-pending-promises": "^0.0.1",
     "after-pending-timers": "^0.0.1",
     "async-until": "^1.2.2",

@@ -2,15 +2,15 @@
 
 import React, { Component } from 'react';
 import {
-  getFixtureStateProps,
-  updateFixtureStateProps
+  getPropsFixtureState,
+  updatePropsFixtureState
 } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from '../../shared/uuid';
 import { mockConnect as mockPostMessage } from '../jestHelpers/postMessage';
 import { mockConnect as mockWebSockets } from '../jestHelpers/webSockets';
 import { mount } from '../jestHelpers/mount';
 
-export class HelloMessage extends Component<{ name?: string }> {
+class HelloMessage extends Component<{ name?: string }> {
   render() {
     return `Hello ${this.props.name || 'Stranger'}`;
   }
@@ -65,15 +65,18 @@ function tests(mockConnect) {
           });
 
           const fixtureState = await lastFixtureState();
-          const [{ instanceId }] = getFixtureStateProps(fixtureState);
+          const [{ decoratorId, elPath }] = getPropsFixtureState(fixtureState);
 
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              props: updateFixtureStateProps(fixtureState, instanceId, [
-                createNamePropValue('B')
-              ])
+              props: updatePropsFixtureState({
+                fixtureState,
+                decoratorId,
+                elPath,
+                values: [createNamePropValue('B')]
+              })
             }
           });
 
@@ -109,13 +112,18 @@ function tests(mockConnect) {
           });
 
           const fixtureState = await lastFixtureState();
-          const [{ instanceId }] = getFixtureStateProps(fixtureState);
+          const [{ decoratorId, elPath }] = getPropsFixtureState(fixtureState);
 
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              props: updateFixtureStateProps(fixtureState, instanceId, [])
+              props: updatePropsFixtureState({
+                fixtureState,
+                decoratorId,
+                elPath,
+                values: []
+              })
             }
           });
 
@@ -125,7 +133,7 @@ function tests(mockConnect) {
     );
   });
 
-  it('removes prop', async () => {
+  it('clears props', async () => {
     await mockConnect(
       async ({
         getElement,
@@ -141,15 +149,18 @@ function tests(mockConnect) {
           });
 
           const fixtureState = await lastFixtureState();
-          const [{ instanceId }] = getFixtureStateProps(fixtureState);
+          const [{ decoratorId, elPath }] = getPropsFixtureState(fixtureState);
 
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              props: updateFixtureStateProps(fixtureState, instanceId, [
-                createNamePropValue('B')
-              ])
+              props: updatePropsFixtureState({
+                fixtureState,
+                decoratorId,
+                elPath,
+                values: [createNamePropValue('B')]
+              })
             }
           });
 
@@ -208,15 +219,20 @@ function tests(mockConnect) {
             });
 
             const fixtureState = await lastFixtureState();
-            const [{ instanceId }] = getFixtureStateProps(fixtureState);
+            const [{ decoratorId, elPath }] = getPropsFixtureState(
+              fixtureState
+            );
 
             await setFixtureState({
               rendererId,
               fixturePath: 'first',
               fixtureStateChange: {
-                props: updateFixtureStateProps(fixtureState, instanceId, [
-                  createNamePropValue('B')
-                ])
+                props: updatePropsFixtureState({
+                  fixtureState,
+                  decoratorId,
+                  elPath,
+                  values: [createNamePropValue('B')]
+                })
               }
             });
 
@@ -265,18 +281,21 @@ function tests(mockConnect) {
             });
 
             const fixtureState = await lastFixtureState();
-            const [{ instanceId }] = getFixtureStateProps(fixtureState);
+            const [{ decoratorId, elPath }] = getPropsFixtureState(
+              fixtureState
+            );
 
             await setFixtureState({
               rendererId,
               fixturePath: 'first',
               fixtureStateChange: {
-                props: updateFixtureStateProps(
+                props: updatePropsFixtureState({
                   fixtureState,
-                  instanceId,
-                  [createNamePropValue('B')],
-                  true
-                )
+                  decoratorId,
+                  elPath,
+                  values: [createNamePropValue('B')],
+                  resetInstance: true
+                })
               }
             });
 
@@ -313,15 +332,18 @@ function tests(mockConnect) {
           });
 
           const fixtureState = await lastFixtureState();
-          const [{ instanceId }] = getFixtureStateProps(fixtureState);
+          const [{ decoratorId, elPath }] = getPropsFixtureState(fixtureState);
 
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              props: updateFixtureStateProps(fixtureState, instanceId, [
-                createNamePropValue('B')
-              ])
+              props: updatePropsFixtureState({
+                fixtureState,
+                decoratorId,
+                elPath,
+                values: [createNamePropValue('B')]
+              })
             }
           });
 
@@ -353,7 +375,7 @@ function tests(mockConnect) {
     );
   });
 
-  it('removes props from fixture state on unmount', async () => {
+  it('clears fixture state for removed fixture element', async () => {
     await mockConnect(async ({ getElement, untilMessage, selectFixture }) => {
       await mount(getElement({ rendererId, fixtures }), async renderer => {
         await selectFixture({
@@ -376,12 +398,14 @@ function tests(mockConnect) {
           getElement({
             rendererId,
             fixtures: {
-              // This will cause the CaptureProps instance corresponding to the
-              // previous fixture element to unmount
-              first: null
+              // HelloMessage element from fixture is gone, and so should the
+              // fixture state related to it.
+              first: 'Hello all'
             }
           })
         );
+
+        expect(renderer.toJSON()).toBe('Hello all');
 
         await untilMessage({
           type: 'fixtureState',
@@ -408,7 +432,8 @@ function createNamePropValue(name) {
 
 function getPropsInstanceShape(name) {
   return {
-    instanceId: expect.any(Number),
+    decoratorId: expect.any(Number),
+    elPath: expect.any(String),
     componentName: 'HelloMessage',
     renderKey: expect.any(Number),
     values: [

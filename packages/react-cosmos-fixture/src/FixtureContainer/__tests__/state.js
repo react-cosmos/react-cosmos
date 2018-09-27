@@ -2,16 +2,14 @@
 
 import React, { Component } from 'react';
 import { create } from 'react-test-renderer';
-import { ComponentState } from '../../ComponentState';
+import { StateMock } from '@react-mock/state';
 import { FixtureContainer } from '../../FixtureContainer';
 
 it('renders initial state', () => {
   expect(
     create(
       <FixtureContainer>
-        <ComponentState>
-          <Counter />
-        </ComponentState>
+        <Counter />
       </FixtureContainer>
     ).toJSON()
   ).toBe('0 times');
@@ -21,9 +19,9 @@ it('renders mocked state', () => {
   expect(
     create(
       <FixtureContainer>
-        <ComponentState state={{ count: 5 }}>
+        <StateMock state={{ count: 5 }}>
           <Counter />
-        </ComponentState>
+        </StateMock>
       </FixtureContainer>
     ).toJSON()
   ).toBe('5 times');
@@ -33,12 +31,12 @@ it('renders multiple mocked states', () => {
   expect(
     create(
       <FixtureContainer>
-        <ComponentState state={{ count: 5 }}>
+        <StateMock state={{ count: 5 }}>
           <Counter />
-        </ComponentState>
-        <ComponentState state={{ count: 10 }}>
+        </StateMock>
+        <StateMock state={{ count: 10 }}>
           <Counter />
-        </ComponentState>
+        </StateMock>
       </FixtureContainer>
     ).toJSON()
   ).toEqual(['5 times', '10 times']);
@@ -47,9 +45,9 @@ it('renders multiple mocked states', () => {
 it('unmounts gracefully', () => {
   const renderer = create(
     <FixtureContainer>
-      <ComponentState state={{ count: 5 }}>
+      <StateMock state={{ count: 5 }}>
         <Counter />
-      </ComponentState>
+      </StateMock>
     </FixtureContainer>
   );
 
@@ -61,17 +59,17 @@ it('unmounts gracefully', () => {
 it('renders replaced component type', () => {
   const renderer = create(
     <FixtureContainer>
-      <ComponentState>
+      <StateMock>
         <Counter />
-      </ComponentState>
+      </StateMock>
     </FixtureContainer>
   );
 
   renderer.update(
     <FixtureContainer>
-      <ComponentState>
+      <StateMock>
         <CoolCounter />
-      </ComponentState>
+      </StateMock>
     </FixtureContainer>
   );
 
@@ -81,9 +79,9 @@ it('renders replaced component type', () => {
 it('overwrites initial state', () => {
   const renderer = create(
     <FixtureContainer>
-      <ComponentState state={{}}>
+      <StateMock state={{}}>
         <Counter />
-      </ComponentState>
+      </StateMock>
     </FixtureContainer>
   );
 

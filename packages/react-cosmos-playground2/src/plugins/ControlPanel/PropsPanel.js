@@ -5,13 +5,14 @@ import React, { Component } from 'react';
 import { RENDERER_ID } from 'react-cosmos-shared2/renderer';
 import { replaceOrAddItem } from 'react-cosmos-shared2/util';
 import {
-  getFixtureStatePropsInst,
-  updateFixtureStateProps
+  getPropsFixtureState,
+  updatePropsFixtureState,
+  createElFxStateMatcher
 } from 'react-cosmos-shared2/fixtureState';
 import { ValueInput } from './ValueInput';
 
 import type {
-  FixtureStateInstanceId,
+  FixtureDecoratorId,
   FixtureState
 } from 'react-cosmos-shared2/fixtureState';
 import type { RendererRequest } from 'react-cosmos-shared2/renderer';
@@ -31,21 +32,26 @@ export class PropsPanel extends Component<Props> {
       return null;
     }
 
+    // TODO: Show elPath
     return props.map(
-      ({ instanceId, componentName, values }) =>
+      ({ decoratorId, elPath, componentName, values }) =>
         values.length > 0 && (
-          <div key={instanceId}>
+          <div key={`${decoratorId}-${elPath}`}>
             <p>
               <strong>Props</strong> ({componentName})
             </p>
             {values.map(({ key, serializable, stringified }) => (
               <ValueInput
                 key={key}
-                id={`${instanceId}-${key}`}
+                id={`${decoratorId}-${elPath}-${key}`}
                 label={key}
                 value={stringified}
                 disabled={!serializable}
-                onChange={this.createPropValueChangeHandler(instanceId, key)}
+                onChange={this.createPropValueChangeHandler(
+                  decoratorId,
+                  elPath,
+                  key
+                )}
               />
             ))}
           </div>
@@ -54,26 +60,32 @@ export class PropsPanel extends Component<Props> {
   }
 
   createPropValueChangeHandler = (
-    instanceId: FixtureStateInstanceId,
+    decoratorId: FixtureDecoratorId,
+    elPath: string,
     key: string
   ) => (value: string) => {
     const { fixturePath, fixtureState, postRendererRequest } = this.props;
-    const propsInst = getFixtureStatePropsInst(fixtureState, instanceId);
+    const [propsFxState] = getPropsFixtureState(
+      fixtureState,
+      createElFxStateMatcher(decoratorId, elPath)
+    );
 
-    if (!propsInst) {
-      console.warn(`Props instance id ${instanceId} no longer exists`);
+    if (!propsFxState) {
+      console.warn(`Props instance id ${decoratorId} no longer exists`);
       return;
     }
 
-    const props = updateFixtureStateProps(
+    const { values } = propsFxState;
+    const props = updatePropsFixtureState({
       fixtureState,
-      instanceId,
-      replaceOrAddItem(propsInst.values, value => value.key === key, {
+      decoratorId,
+      elPath,
+      values: replaceOrAddItem(values, value => value.key === key, {
         serializable: true,
         key,
         stringified: value
       })
-    );
+    });
 
     postRendererRequest({
       type: 'setFixtureState',

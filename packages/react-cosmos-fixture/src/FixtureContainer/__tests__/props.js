@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { create } from 'react-test-renderer';
-import { CaptureProps } from '../../CaptureProps';
 import { FixtureContainer } from '../../FixtureContainer';
 
 it('renders props', () => {
@@ -15,27 +14,12 @@ it('renders props', () => {
   ).toBe('Hello, Satoshi!');
 });
 
-it('renders multiple (implicit) props captures', () => {
+it('renders props of multiple elements', () => {
   expect(
     create(
       <FixtureContainer>
         <HelloMessage name="Satoshi" />
         <HelloMessage name="Vitalik" />
-      </FixtureContainer>
-    ).toJSON()
-  ).toEqual(['Hello, Satoshi!', 'Hello, Vitalik!']);
-});
-
-it('renders multiple (explicit) props captures', () => {
-  expect(
-    create(
-      <FixtureContainer>
-        <CaptureProps>
-          <HelloMessage name="Satoshi" />
-        </CaptureProps>
-        <CaptureProps>
-          <HelloMessage name="Vitalik" />
-        </CaptureProps>
       </FixtureContainer>
     ).toJSON()
   ).toEqual(['Hello, Satoshi!', 'Hello, Vitalik!']);
