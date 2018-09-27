@@ -5,7 +5,6 @@ import React, { Component } from 'react';
 import { replaceOrAddItem, removeItemMatch } from 'react-cosmos-shared2/util';
 import {
   extractValuesFromObject,
-  extendObjectWithValues,
   getPropsFixtureState,
   createFxStateMatcher,
   createElFxStateMatcher
@@ -13,20 +12,18 @@ import {
 import { getDecoratorId } from '../shared/decorator';
 import { getComponentName } from '../shared/getComponentName';
 import {
-  findElementPaths,
   getElementAtPath,
   getExpectedElementAtPath,
-  setElementAtPath,
   areChildrenEqual
 } from '../shared/childrenTree';
 import { FixtureContext } from '../FixtureContext';
+import { DEFAULT_RENDER_KEY } from './shared';
+import { findRelevantElementPaths } from './findRelevantElementPaths';
+import { extendChildrenWithFixtureState } from './extendChildrenWithFixtureState';
 
 import type { SetState } from 'react-cosmos-shared2/util';
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import type { Children } from '../shared/childrenTree';
 import type { CapturePropsProps } from '../index.js.flow';
-
-const DEFAULT_RENDER_KEY = 0;
 
 export function CaptureProps({ children }: CapturePropsProps) {
   return (
@@ -175,61 +172,4 @@ class CapturePropsInner extends Component<InnerProps> {
       };
     });
   }
-}
-
-function extendChildrenWithFixtureState(children, fixtureState, decoratorId) {
-  const elPaths = findRelevantElementPaths(children);
-
-  return elPaths.reduce((extendedChildren, elPath): Children => {
-    const [propsFxState] = getPropsFixtureState(
-      fixtureState,
-      createElFxStateMatcher(decoratorId, elPath)
-    );
-
-    return setElementAtPath(extendedChildren, elPath, element => {
-      if (!propsFxState) {
-        return {
-          ...element,
-          key: getElRenderKey(elPath, DEFAULT_RENDER_KEY)
-        };
-      }
-
-      // HACK alert: Editing React Element by hand
-      // This is blasphemy, but there are two reasons why React.cloneElement
-      // isn't ideal:
-      //   1. Props need to overridden (not merged)
-      //   2. element.key has to be set to control whether the prev instance
-      //      should be reused on not
-      // Still, in case this method causes trouble in the future, both reasons
-      // can be overcome in the following ways:
-      //   1. Set original props that aren't present in fixture state to
-      //      undefined
-      //   2. Create a wrapper component or element and to set the key on
-      // Useful links:
-      //   - https://reactjs.org/docs/react-api.html#cloneelement
-      //   - https://github.com/facebook/react/blob/15a8f031838a553e41c0b66eb1bcf1da8448104d/packages/react/src/ReactElement.js#L293-L362
-      const { props } = element;
-      const { renderKey } = propsFxState;
-
-      return {
-        ...element,
-        props: extendObjectWithValues(props, propsFxState.values),
-        key: getElRenderKey(elPath, renderKey)
-      };
-    });
-  }, children);
-}
-
-function findRelevantElementPaths(children) {
-  const elPaths = findElementPaths(children);
-
-  return elPaths.filter(elPath => {
-    const { type } = getExpectedElementAtPath(children, elPath);
-
-    return type.cosmosCaptureProps !== false;
-  });
-}
-
-function getElRenderKey(elPath, renderKey) {
-  return `${elPath}-${renderKey}`;
 }
