@@ -12,17 +12,12 @@ import {
 } from 'react-cosmos-shared2/fixtureState';
 import { getDecoratorId } from '../shared/decorator';
 import { getComponentName } from '../shared/getComponentName';
-import {
-  findElementPaths,
-  getExpectedElementAtPath,
-  setElementAtPath,
-  areChildrenEqual
-} from '../shared/childrenTree';
+import { setElementAtPath, areChildrenEqual } from '../shared/childrenTree';
 import { FixtureContext } from '../FixtureContext';
 import { compose } from './compose';
 import { getElementRefType } from './getElementRefType';
 import { createRefHandler } from './createRefHandler';
-import { isRefSupported } from './isRefSupported';
+import { findRelevantElementPaths } from './findRelevantElementPaths';
 import { replaceState } from './replaceState';
 
 import type { Ref, ElementRef } from 'react';
@@ -382,16 +377,6 @@ function attachRefsToChildren(children, getElRefHandler) {
       });
     });
   }, children);
-}
-
-function findRelevantElementPaths(children) {
-  const elPaths = findElementPaths(children);
-
-  return elPaths.filter(elPath => {
-    const { type } = getExpectedElementAtPath(children, elPath);
-
-    return isRefSupported(type) && type.cosmosCaptureState !== false;
-  });
 }
 
 function isFixtureStateInSyncWithState(state, stateFxState) {
