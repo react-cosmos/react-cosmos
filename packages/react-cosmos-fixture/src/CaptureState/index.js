@@ -59,26 +59,32 @@ type InnerProps = CaptureStateProps & {
   setFixtureState: SetState<FixtureState>
 };
 
+type ComponentRef = ElementRef<typeof Component>;
+
 class CaptureStateInner extends Component<InnerProps> {
   // Ref handlers are reused because every time we pass a new ref handler to
   // a React element it gets called in the next render loop, even when the
   // associated element instance has been preserved. Having ref handlers fire
   // on every render loop results in unwanted operations and race conditions.
-  elRefHandlers: Map<
-    string,
-    {
+  elRefHandlers: {
+    [elPath: string]: {
       origRef: ?Ref<any>,
-      handler: (elRef: ?ElementRef<any>) => mixed
+      handler: (elRef: ?ComponentRef) => mixed
     }
-  > = new Map();
+  } = {};
 
   elRefs: {
-    [elPath: string]: ElementRef<typeof Component>
+    [elPath: string]: ComponentRef
   } = {};
 
   // Remember initial state of child components to use as a default when
   // resetting fixture state
-  initialStates: WeakMap<Class<Component<any>>, {}> = new WeakMap();
+  initialStates: {
+    [elPath: string]: {
+      type: Class<Component<any>>,
+      state: {}
+    }
+  } = {};
 
   timeoutId: ?TimeoutID;
 
@@ -103,6 +109,11 @@ class CaptureStateInner extends Component<InnerProps> {
     if (this.timeoutId) {
       clearTimeout(this.timeoutId);
     }
+
+    // Take out the trash
+    this.elRefs = {};
+    this.elRefHandlers = {};
+    this.initialStates = {};
   }
 
   shouldComponentUpdate(nextProps) {
@@ -140,6 +151,7 @@ class CaptureStateInner extends Component<InnerProps> {
     stateFxStates.forEach(({ elPath }) => {
       if (elPaths.indexOf(elPath) === -1) {
         this.removeFixtureState(elPath);
+        this.flushEl(elPath);
       }
     });
 
@@ -180,10 +192,10 @@ class CaptureStateInner extends Component<InnerProps> {
 
   // Attach ref while still honoring original ref
   getElRefHandler = (elPath, origRef) => {
-    const foundEntry = this.elRefHandlers.get(elPath);
+    const found = this.elRefHandlers[elPath];
 
-    if (foundEntry && foundEntry.origRef === origRef) {
-      return foundEntry.handler;
+    if (found && found.origRef === origRef) {
+      return found.handler;
     }
 
     const rootHandler = this.createElRefHandler(elPath);
@@ -194,7 +206,7 @@ class CaptureStateInner extends Component<InnerProps> {
         )
       : rootHandler;
 
-    this.elRefHandlers.set(elPath, { origRef, handler });
+    this.elRefHandlers[elPath] = { origRef, handler };
 
     return handler;
   };
@@ -209,11 +221,7 @@ class CaptureStateInner extends Component<InnerProps> {
     }
 
     this.elRefs[elPath] = elRef;
-
-    const type = getElementRefType(elRef);
-    if (!this.initialStates.has(type)) {
-      this.initialStates.set(type, elRef.state);
-    }
+    this.setElInitialState(elPath, elRef);
 
     const { fixtureState } = this.props;
     const decoratorId = getDecoratorId(this);
@@ -229,9 +237,28 @@ class CaptureStateInner extends Component<InnerProps> {
     }
   };
 
-  resetState(elPath, elRef) {
+  getElInitialState(elPath, elRef) {
+    const found = this.initialStates[elPath];
     const type = getElementRefType(elRef);
-    const state = this.initialStates.get(type);
+
+    return found && found.type === type ? found.state : null;
+  }
+
+  setElInitialState(elPath, elRef) {
+    if (this.getElInitialState(elPath, elRef)) {
+      return;
+    }
+
+    const type = getElementRefType(elRef);
+    const { state } = elRef;
+
+    if (state) {
+      this.initialStates[elPath] = { type, state };
+    }
+  }
+
+  resetState(elPath, elRef) {
+    const state = this.getElInitialState(elPath, elRef);
 
     // Don't track fixture state for stateless component
     if (!state) {
@@ -304,11 +331,16 @@ class CaptureStateInner extends Component<InnerProps> {
   };
 
   checkState = async () => {
-    const { fixtureState } = this.props;
+    const { children, fixtureState } = this.props;
+    const elPaths = findRelevantElementPaths(children);
     const decoratorId = getDecoratorId(this);
 
     await Promise.all(
       Object.keys(this.elRefs).map(async elPath => {
+        if (elPaths.indexOf(elPath) === -1) {
+          throw new Error(`Child ref has missing element path "${elPath}"`);
+        }
+
         const elRef = this.elRefs[elPath];
         const [stateFxState] = getStateFixtureState(
           fixtureState,
@@ -324,6 +356,12 @@ class CaptureStateInner extends Component<InnerProps> {
     // Schedule next check after all setters have been fulfilled
     this.scheduleStateCheck();
   };
+
+  flushEl(elPath) {
+    delete this.elRefs[elPath];
+    delete this.elRefHandlers[elPath];
+    delete this.initialStates[elPath];
+  }
 }
 
 function extendStateWithFxState(baseState = {}, stateFxState) {
