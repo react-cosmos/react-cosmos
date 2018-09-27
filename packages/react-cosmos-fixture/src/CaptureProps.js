@@ -122,7 +122,7 @@ class CapturePropsInner extends Component<InnerProps> {
         // Happens when user discards the fixture state to reload the fixture.
         !propsFxState ||
         // b) mocked props from fixture elemented changed (likely via HMR).
-        !isEqual(
+        !areChildrenEqual(
           getElementAtPath(children, elPath),
           getElementAtPath(prevProps.children, elPath)
         )
