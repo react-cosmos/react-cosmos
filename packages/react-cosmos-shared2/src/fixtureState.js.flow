@@ -1,5 +1,8 @@
 // @flow
 
+// This type might be silly, but it should be stricter than `Object`
+export type KeyValue = { [string]: mixed };
+
 export type FixtureDecoratorId = number;
 
 export type FixtureStateValue = {
@@ -33,9 +36,14 @@ export type FixtureState = {
 
 export type FixtureStateMatcher = StateFixtureState => boolean;
 
-declare export function extractValuesFromObject(obj: {
-  [string]: mixed
-}): FixtureStateValues;
+declare export function extractValuesFromObject(
+  obj: KeyValue
+): FixtureStateValues;
+
+declare export function extendObjectWithValues(
+  obj: KeyValue,
+  values: FixtureStateValues
+): KeyValue;
 
 declare export function getPropsFixtureState(
   fixtureState: ?FixtureState,

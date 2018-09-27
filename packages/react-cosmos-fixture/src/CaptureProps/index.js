@@ -5,25 +5,26 @@ import React, { Component } from 'react';
 import { replaceOrAddItem, removeItemMatch } from 'react-cosmos-shared2/util';
 import {
   extractValuesFromObject,
+  extendObjectWithValues,
   getPropsFixtureState,
   createFxStateMatcher,
   createElFxStateMatcher
 } from 'react-cosmos-shared2/fixtureState';
-import { getDecoratorId } from './shared/decorator';
-import { getComponentName } from './shared/getComponentName';
+import { getDecoratorId } from '../shared/decorator';
+import { getComponentName } from '../shared/getComponentName';
 import {
   findElementPaths,
   getElementAtPath,
   getExpectedElementAtPath,
   setElementAtPath,
   areChildrenEqual
-} from './shared/childrenTree';
-import { FixtureContext } from './FixtureContext';
+} from '../shared/childrenTree';
+import { FixtureContext } from '../FixtureContext';
 
 import type { SetState } from 'react-cosmos-shared2/util';
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import type { Children } from './shared/childrenTree';
-import type { CapturePropsProps } from './index.js.flow';
+import type { Children } from '../shared/childrenTree';
+import type { CapturePropsProps } from '../index.js.flow';
 
 const DEFAULT_RENDER_KEY = 0;
 
@@ -212,7 +213,7 @@ function extendChildrenWithFixtureState(children, fixtureState, decoratorId) {
 
       return {
         ...element,
-        props: extendPropsWithFixtureState(props, propsFxState),
+        props: extendObjectWithValues(props, propsFxState.values),
         key: getElRenderKey(elPath, renderKey)
       };
     });
@@ -227,21 +228,6 @@ function findRelevantElementPaths(children) {
 
     return type.cosmosCaptureProps !== false;
   });
-}
-
-function extendPropsWithFixtureState(mockedProps, propsFxState) {
-  const { values } = propsFxState;
-  const mergedProps = {};
-
-  // Use fixture state for serializable props, and fall back to mocked values
-  // for unserializable props.
-  values.forEach(({ serializable, key, stringified }) => {
-    mergedProps[key] = serializable
-      ? JSON.parse(stringified)
-      : mockedProps[key];
-  });
-
-  return mergedProps;
 }
 
 function getElRenderKey(elPath, renderKey) {

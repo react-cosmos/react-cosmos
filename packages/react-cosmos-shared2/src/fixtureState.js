@@ -6,6 +6,7 @@ import reactElementToJSXString from 'react-element-to-jsx-string';
 import { updateItem } from './util';
 
 import type {
+  KeyValue,
   FixtureDecoratorId,
   FixtureStateValue,
   FixtureStateValues,
@@ -20,15 +21,27 @@ import type {
 // - More importantly, because the fixture state controls which props to render.
 //   This way, if a prop is read-only and cannot be edited in the UI, it can
 //   still be removed.
-export function extractValuesFromObject(obj: {
-  [string]: mixed
-}): FixtureStateValues {
+export function extractValuesFromObject(obj: KeyValue): FixtureStateValues {
   return (
     Object.keys(obj)
       // Ignore noise from attrs defined as undefined (eg. props.children is
       // often `undefined` if element has no children)
       .filter(key => obj[key] !== undefined)
       .map(key => stringifyValue(key, obj[key]))
+  );
+}
+
+// Use fixture state for serializable values and fall back to base values
+export function extendObjectWithValues(
+  obj: KeyValue,
+  values: FixtureStateValues
+): KeyValue {
+  return values.reduce(
+    (acc, { serializable, key, stringified }) => ({
+      ...acc,
+      [key]: serializable ? JSON.parse(stringified) : obj[key]
+    }),
+    {}
   );
 }
 

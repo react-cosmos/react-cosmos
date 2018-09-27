@@ -5,6 +5,7 @@ import React, { Component, cloneElement } from 'react';
 import { replaceOrAddItem, removeItemMatch } from 'react-cosmos-shared2/util';
 import {
   extractValuesFromObject,
+  extendObjectWithValues,
   getStateFixtureState,
   createFxStateMatcher,
   createElFxStateMatcher
@@ -22,6 +23,7 @@ import { compose } from './compose';
 import { getElementRefType } from './getElementRefType';
 import { createRefHandler } from './createRefHandler';
 import { isRefSupported } from './isRefSupported';
+import { replaceState } from './replaceState';
 
 import type { Ref, ElementRef } from 'react';
 import type { SetState } from 'react-cosmos-shared2/util';
@@ -185,7 +187,10 @@ class CaptureStateInner extends Component<InnerProps> {
         createElFxStateMatcher(decoratorId, elPath)
       );
       if (prevStateFxState && !isEqual(prevStateFxState, stateFxState)) {
-        replaceState(elRef, extendStateWithFxState(elRef.state, stateFxState));
+        replaceState(
+          elRef,
+          extendObjectWithValues(elRef.state, stateFxState.values)
+        );
       }
     });
   }
@@ -231,7 +236,10 @@ class CaptureStateInner extends Component<InnerProps> {
     );
 
     if (stateFxState) {
-      replaceState(elRef, extendStateWithFxState(elRef.state, stateFxState));
+      replaceState(
+        elRef,
+        extendObjectWithValues(elRef.state, stateFxState.values)
+      );
     } else {
       this.replaceOrAddFixtureState(elPath);
     }
@@ -364,18 +372,6 @@ class CaptureStateInner extends Component<InnerProps> {
   }
 }
 
-function extendStateWithFxState(baseState = {}, stateFxState) {
-  // Use fixture state for serializable state, and fall back to mocked values
-  // for unserializable state.
-  return stateFxState.values.reduce(
-    (acc, { serializable, key, stringified }) => ({
-      ...acc,
-      [key]: serializable ? JSON.parse(stringified) : baseState[key]
-    }),
-    {}
-  );
-}
-
 function attachRefsToChildren(children, getElRefHandler) {
   const elPaths = findRelevantElementPaths(children);
 
@@ -398,30 +394,9 @@ function findRelevantElementPaths(children) {
   });
 }
 
-// We need to do this because React doesn't provide a replaceState method
-// (anymore) https://reactjs.org/docs/react-component.html#setstate
-function replaceState(elRef, nextState, cb) {
-  const fullState = resetOriginalKeys(elRef.state, nextState);
-
-  if (!isEqual(fullState, elRef.state)) {
-    elRef.setState(fullState, cb);
-  }
-}
-
 function isFixtureStateInSyncWithState(state, stateFxState) {
   return (
-    stateFxState && isEqual(state, extendStateWithFxState(state, stateFxState))
-  );
-}
-
-function resetOriginalKeys(original, current) {
-  const { keys } = Object;
-
-  return keys(original).reduce(
-    (result, key) =>
-      keys(result).indexOf(key) === -1
-        ? { ...result, [key]: undefined }
-        : result,
-    current
+    stateFxState &&
+    isEqual(state, extendObjectWithValues(state, stateFxState.values))
   );
 }
