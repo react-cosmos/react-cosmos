@@ -32,6 +32,7 @@ export class PropsPanel extends Component<Props> {
       return null;
     }
 
+    // TODO: Show elPath
     return props.map(
       ({ decoratorId, elPath, componentName, values }) =>
         values.length > 0 && (

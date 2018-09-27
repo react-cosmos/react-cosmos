@@ -32,6 +32,7 @@ export class StatePanel extends Component<Props> {
       return null;
     }
 
+    // TODO: Show elPath
     return state.map(
       ({ decoratorId, elPath, componentName, values }) =>
         values.length > 0 && (

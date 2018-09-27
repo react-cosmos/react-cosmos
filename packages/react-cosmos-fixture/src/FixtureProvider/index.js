@@ -40,6 +40,10 @@ export class FixtureProvider extends Component<Props, FixtureContextValue> {
   render() {
     const { children } = this.props;
 
+    // TODO: Group CaptureProps & CaptureState into FixtureCapture
+    // - Make CaptureProps & CaptureState private
+    // - Normalize elPath?
+    // - Share decoratorId?
     return (
       <FixtureContext.Provider value={this.state}>
         <CaptureState>
