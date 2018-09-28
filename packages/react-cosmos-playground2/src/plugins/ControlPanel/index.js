@@ -5,8 +5,7 @@ import React, { Component } from 'react';
 import { Plugin, Plug, Slot } from 'react-plugin';
 import qs from 'query-string';
 import { PlaygroundContext } from '../../context';
-import { PropsPanel } from './PropsPanel';
-import { StatePanel } from './StatePanel';
+import { PropsState } from './PropsState';
 
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { RendererRequest } from 'react-cosmos-shared2/renderer';
@@ -36,12 +35,7 @@ class ControlPanel extends Component<Props> {
     return (
       <>
         <a href={fullScreenUrl}>Full screen</a>
-        <PropsPanel
-          fixturePath={fixturePath}
-          fixtureState={fixtureState}
-          postRendererRequest={postRendererRequest}
-        />
-        <StatePanel
+        <PropsState
           fixturePath={fixturePath}
           fixtureState={fixtureState}
           postRendererRequest={postRendererRequest}

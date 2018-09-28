@@ -23,7 +23,7 @@ export type ConnectMockApi = {
   getElement: GetTestElement,
   postMessage: (msg: RendererRequest) => Promise<mixed>,
   untilMessage: (msg: {}) => Promise<mixed>,
-  lastFixtureState: () => FixtureState,
+  lastFixtureState: () => Promise<FixtureState>,
   selectFixture: ({ rendererId: RendererId, fixturePath: ?string }) => Promise<
     mixed
   >,

@@ -1,25 +1,17 @@
 // @flow
 
-import React, { Component } from 'react';
-import {
-  getStateFixtureState,
-  updateStateFixtureState
-} from 'react-cosmos-shared2/fixtureState';
+import React from 'react';
 import { StateMock } from '@react-mock/state';
+import {
+  getCompFixtureStates,
+  updateCompFixtureState
+} from 'react-cosmos-shared2/fixtureState';
 import { uuid } from '../../shared/uuid';
+import { Counter } from '../jestHelpers/components';
+import { createCompFxState, createFxValues } from '../jestHelpers/fixtureState';
 import { mockConnect as mockPostMessage } from '../jestHelpers/postMessage';
 import { mockConnect as mockWebSockets } from '../jestHelpers/webSockets';
 import { mount } from '../jestHelpers/mount';
-
-class Counter extends Component<{}, { count: number }> {
-  state = { count: 0 };
-
-  render() {
-    const { count } = this.state;
-
-    return typeof count === 'number' ? `${count} times` : 'Missing count';
-  }
-}
 
 const rendererId = uuid();
 const fixtures = {
@@ -53,11 +45,16 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureState: {
-              props: [
-                getEmptyPropsInstanceShape(),
-                getEmptyPropsInstanceShape()
-              ],
-              state: [getStateInstanceShape(5), getStateInstanceShape(10)]
+              components: [
+                createCompFxState({
+                  props: [],
+                  state: createFxValues({ count: 5 })
+                }),
+                createCompFxState({
+                  props: [],
+                  state: createFxValues({ count: 10 })
+                })
+              ]
             }
           }
         });
@@ -80,7 +77,7 @@ function tests(mockConnect) {
           });
 
           const fixtureState = await lastFixtureState();
-          const [, { decoratorId, elPath }] = getStateFixtureState(
+          const [, { decoratorId, elPath }] = getCompFixtureStates(
             fixtureState
           );
 
@@ -88,11 +85,11 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              state: updateStateFixtureState({
+              components: updateCompFixtureState({
                 fixtureState,
                 decoratorId,
                 elPath,
-                values: [createCountStateValue(100)]
+                state: createFxValues({ count: 100 })
               })
             }
           });
@@ -102,37 +99,4 @@ function tests(mockConnect) {
       }
     );
   });
-}
-
-function createCountStateValue(count: number) {
-  return {
-    serializable: true,
-    key: 'count',
-    stringified: `${count}`
-  };
-}
-
-function getEmptyPropsInstanceShape() {
-  return {
-    decoratorId: expect.any(Number),
-    elPath: expect.any(String),
-    componentName: 'Counter',
-    renderKey: expect.any(Number),
-    values: []
-  };
-}
-
-function getStateInstanceShape(count: number) {
-  return {
-    decoratorId: expect.any(Number),
-    elPath: expect.any(String),
-    componentName: 'Counter',
-    values: [
-      {
-        serializable: true,
-        key: 'count',
-        stringified: `${count}`
-      }
-    ]
-  };
 }

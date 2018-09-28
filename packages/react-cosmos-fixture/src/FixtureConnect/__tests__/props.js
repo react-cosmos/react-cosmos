@@ -1,20 +1,16 @@
 // @flow
 
-import React, { Component } from 'react';
+import React from 'react';
 import {
-  getPropsFixtureState,
-  updatePropsFixtureState
+  getCompFixtureStates,
+  updateCompFixtureState
 } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from '../../shared/uuid';
+import { HelloMessage } from '../jestHelpers/components';
+import { createCompFxState, createFxValues } from '../jestHelpers/fixtureState';
 import { mockConnect as mockPostMessage } from '../jestHelpers/postMessage';
 import { mockConnect as mockWebSockets } from '../jestHelpers/webSockets';
 import { mount } from '../jestHelpers/mount';
-
-class HelloMessage extends Component<{ name?: string }> {
-  render() {
-    return `Hello ${this.props.name || 'Stranger'}`;
-  }
-}
 
 const rendererId = uuid();
 const fixtures = {
@@ -41,7 +37,12 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureState: {
-              props: [getPropsInstanceShape('Bianca')]
+              components: [
+                createCompFxState({
+                  componentName: 'HelloMessage',
+                  props: createFxValues({ name: 'Bianca' })
+                })
+              ]
             }
           }
         });
@@ -65,17 +66,17 @@ function tests(mockConnect) {
           });
 
           const fixtureState = await lastFixtureState();
-          const [{ decoratorId, elPath }] = getPropsFixtureState(fixtureState);
+          const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
 
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              props: updatePropsFixtureState({
+              components: updateCompFixtureState({
                 fixtureState,
                 decoratorId,
                 elPath,
-                values: [createNamePropValue('B')]
+                props: createFxValues({ name: 'B' })
               })
             }
           });
@@ -88,7 +89,12 @@ function tests(mockConnect) {
               rendererId,
               fixturePath: 'first',
               fixtureState: {
-                props: [getPropsInstanceShape('B')]
+                components: [
+                  createCompFxState({
+                    componentName: 'HelloMessage',
+                    props: createFxValues({ name: 'B' })
+                  })
+                ]
               }
             }
           });
@@ -112,17 +118,17 @@ function tests(mockConnect) {
           });
 
           const fixtureState = await lastFixtureState();
-          const [{ decoratorId, elPath }] = getPropsFixtureState(fixtureState);
+          const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
 
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              props: updatePropsFixtureState({
+              components: updateCompFixtureState({
                 fixtureState,
                 decoratorId,
                 elPath,
-                values: []
+                props: []
               })
             }
           });
@@ -149,17 +155,17 @@ function tests(mockConnect) {
           });
 
           const fixtureState = await lastFixtureState();
-          const [{ decoratorId, elPath }] = getPropsFixtureState(fixtureState);
+          const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
 
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              props: updatePropsFixtureState({
+              components: updateCompFixtureState({
                 fixtureState,
                 decoratorId,
                 elPath,
-                values: [createNamePropValue('B')]
+                props: createFxValues({ name: 'B' })
               })
             }
           });
@@ -170,7 +176,12 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              props: []
+              components: updateCompFixtureState({
+                fixtureState,
+                decoratorId,
+                elPath,
+                props: null
+              })
             }
           });
 
@@ -182,7 +193,12 @@ function tests(mockConnect) {
               rendererId,
               fixturePath: 'first',
               fixtureState: {
-                props: [getPropsInstanceShape('Bianca')]
+                components: [
+                  createCompFxState({
+                    componentName: 'HelloMessage',
+                    props: createFxValues({ name: 'Bianca' })
+                  })
+                ]
               }
             }
           });
@@ -191,7 +207,7 @@ function tests(mockConnect) {
     );
   });
 
-  it('transitions instance props', async () => {
+  it('transitions props (reuses component instance)', async () => {
     await mockConnect(
       async ({
         getElement,
@@ -219,7 +235,7 @@ function tests(mockConnect) {
             });
 
             const fixtureState = await lastFixtureState();
-            const [{ decoratorId, elPath }] = getPropsFixtureState(
+            const [{ decoratorId, elPath }] = getCompFixtureStates(
               fixtureState
             );
 
@@ -227,11 +243,11 @@ function tests(mockConnect) {
               rendererId,
               fixturePath: 'first',
               fixtureStateChange: {
-                props: updatePropsFixtureState({
+                components: updateCompFixtureState({
                   fixtureState,
                   decoratorId,
                   elPath,
-                  values: [createNamePropValue('B')]
+                  props: createFxValues({ name: 'B' })
                 })
               }
             });
@@ -253,7 +269,7 @@ function tests(mockConnect) {
     );
   });
 
-  it('resets instance with props', async () => {
+  it('resets props (creates new component instance)', async () => {
     await mockConnect(
       async ({
         getElement,
@@ -281,7 +297,7 @@ function tests(mockConnect) {
             });
 
             const fixtureState = await lastFixtureState();
-            const [{ decoratorId, elPath }] = getPropsFixtureState(
+            const [{ decoratorId, elPath }] = getCompFixtureStates(
               fixtureState
             );
 
@@ -289,11 +305,11 @@ function tests(mockConnect) {
               rendererId,
               fixturePath: 'first',
               fixtureStateChange: {
-                props: updatePropsFixtureState({
+                components: updateCompFixtureState({
                   fixtureState,
                   decoratorId,
                   elPath,
-                  values: [createNamePropValue('B')],
+                  props: createFxValues({ name: 'B' }),
                   resetInstance: true
                 })
               }
@@ -332,17 +348,17 @@ function tests(mockConnect) {
           });
 
           const fixtureState = await lastFixtureState();
-          const [{ decoratorId, elPath }] = getPropsFixtureState(fixtureState);
+          const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
 
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              props: updatePropsFixtureState({
+              components: updateCompFixtureState({
                 fixtureState,
                 decoratorId,
                 elPath,
-                values: [createNamePropValue('B')]
+                props: createFxValues({ name: 'B' })
               })
             }
           });
@@ -364,7 +380,12 @@ function tests(mockConnect) {
               rendererId,
               fixturePath: 'first',
               fixtureState: {
-                props: [getPropsInstanceShape('Petec')]
+                components: [
+                  createCompFxState({
+                    componentName: 'HelloMessage',
+                    props: createFxValues({ name: 'Petec' })
+                  })
+                ]
               }
             }
           });
@@ -389,7 +410,12 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureState: {
-              props: [getPropsInstanceShape('Bianca')]
+              components: [
+                createCompFxState({
+                  componentName: 'HelloMessage',
+                  props: createFxValues({ name: 'Bianca' })
+                })
+              ]
             }
           }
         });
@@ -413,35 +439,11 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureState: {
-              props: []
+              components: []
             }
           }
         });
       });
     });
   });
-}
-
-function createNamePropValue(name) {
-  return {
-    serializable: true,
-    key: 'name',
-    stringified: `"${name}"`
-  };
-}
-
-function getPropsInstanceShape(name) {
-  return {
-    decoratorId: expect.any(Number),
-    elPath: expect.any(String),
-    componentName: 'HelloMessage',
-    renderKey: expect.any(Number),
-    values: [
-      {
-        serializable: true,
-        key: 'name',
-        stringified: `"${name}"`
-      }
-    ]
-  };
 }

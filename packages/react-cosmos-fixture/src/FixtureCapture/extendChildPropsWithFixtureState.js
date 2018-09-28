@@ -1,21 +1,20 @@
 // @flow
 
 import {
-  extendObjectWithValues,
-  getPropsFixtureState,
-  createElFxStateMatcher
+  DEFAULT_RENDER_KEY,
+  extendObjWithValues,
+  findCompFixtureState
 } from 'react-cosmos-shared2/fixtureState';
-import { setElementAtPath } from '../shared/childrenTree';
-import { DEFAULT_RENDER_KEY } from './shared';
+import { setElementAtPath } from './childrenTree';
 import { findRelevantElementPaths } from './findRelevantElementPaths';
 
 import type {
   FixtureDecoratorId,
   FixtureState
 } from 'react-cosmos-shared2/fixtureState';
-import type { Children } from '../shared/childrenTree';
+import type { Children } from './childrenTree';
 
-export function extendChildrenWithFixtureState(
+export function extendChildPropsWithFixtureState(
   children: Children,
   fixtureState: ?FixtureState,
   decoratorId: FixtureDecoratorId
@@ -23,13 +22,10 @@ export function extendChildrenWithFixtureState(
   const elPaths = findRelevantElementPaths(children);
 
   return elPaths.reduce((extendedChildren, elPath): Children => {
-    const [propsFxState] = getPropsFixtureState(
-      fixtureState,
-      createElFxStateMatcher(decoratorId, elPath)
-    );
+    const compFxState = findCompFixtureState(fixtureState, decoratorId, elPath);
 
     return setElementAtPath(extendedChildren, elPath, element => {
-      if (!propsFxState) {
+      if (!compFxState || !compFxState.props) {
         return {
           ...element,
           key: getElRenderKey(elPath, DEFAULT_RENDER_KEY)
@@ -51,12 +47,11 @@ export function extendChildrenWithFixtureState(
       //   - https://reactjs.org/docs/react-api.html#cloneelement
       //   - https://github.com/facebook/react/blob/15a8f031838a553e41c0b66eb1bcf1da8448104d/packages/react/src/ReactElement.js#L293-L362
       const { props } = element;
-      const { renderKey } = propsFxState;
 
       return {
         ...element,
-        props: extendObjectWithValues(props, propsFxState.values),
-        key: getElRenderKey(elPath, renderKey)
+        props: extendObjWithValues(props, compFxState.props),
+        key: getElRenderKey(elPath, compFxState.renderKey)
       };
     });
   }, children);
