@@ -30,10 +30,7 @@ import {
 import { replaceState } from './replaceState';
 
 import type { SetState } from 'react-cosmos-shared2/util';
-import type {
-  FixtureStateValues,
-  FixtureState
-} from 'react-cosmos-shared2/fixtureState';
+import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { FixtureCaptureProps } from '../index.js.flow';
 import type { ComponentRef } from './shared';
 
@@ -89,6 +86,10 @@ class FixtureCaptureInner extends Component<InnerProps> {
   }
 
   componentDidMount() {
+    findRelevantElementPaths(this.props.children).forEach(elPath => {
+      this.createFixtureState(elPath);
+    });
+
     this.scheduleStateCheck();
   }
 
@@ -144,27 +145,17 @@ class FixtureCaptureInner extends Component<InnerProps> {
 
     // Update fixture state and component state at remaining child paths
     elPaths.forEach(elPath => {
-      const elRef = this.elRefs[elPath];
-
-      if (!elRef) {
-        // The el ref is missing when child components unmount and compDidUpdate
-        // is called before the new children mount. When this happens, the new
-        // children will be handled when their refs fire
-        return;
-      }
-
       const compFxState = findCompFixtureState(
         fixtureState,
         decoratorId,
         elPath
       );
-
       if (!compFxState) {
-        return this.createFixtureState(elPath, elRef);
+        return this.createFixtureState(elPath);
       }
 
       this.transitionElProps({ elPath, compFxState, prevProps });
-      this.transitionElState({ elPath, elRef, compFxState, prevProps });
+      this.transitionElState({ elPath, compFxState, prevProps });
     });
   }
 
@@ -181,20 +172,34 @@ class FixtureCaptureInner extends Component<InnerProps> {
       // b) mocked props from fixture elemented changed (likely via HMR).
       !areChildrenEqual(childEl, getElementAtPath(prevProps.children, elPath))
     ) {
-      this.updateFixtureState(elPath, {
-        props: extractValuesFromObj(childEl.props)
-      });
+      this.updateFixtureState({ elPath, props: childEl.props });
     }
   }
 
   transitionElState({
     elPath,
-    elRef,
     compFxState: { state: stateFxState },
     prevProps
   }) {
+    const elRef = this.elRefs[elPath];
+
+    // The el ref is missing when child components unmount and compDidUpdate
+    // is called before the new children mount. When this happens, the new
+    // children will be handled when their refs fire
+    if (!elRef) {
+      return;
+    }
+
     if (!stateFxState) {
-      return this.resetState(elPath, elRef);
+      const state = this.getElInitialState(elPath, elRef);
+
+      // Only track state in fixture state for stateful components #mountful
+      return (
+        state &&
+        replaceState(elRef, state, () => {
+          this.updateFixtureState({ elPath, state });
+        })
+      );
     }
 
     // The child's state can be out of sync with the fixture state for two
@@ -216,12 +221,12 @@ class FixtureCaptureInner extends Component<InnerProps> {
     }
   }
 
-  createFixtureState(elPath, elRef) {
+  createFixtureState(elPath) {
     const { children, setFixtureState } = this.props;
     const decoratorId = this.getDecoratorId();
     const { type, props } = getExpectedElementAtPath(children, elPath);
     const componentName = getComponentName(type);
-    const { state } = elRef;
+    const elRef = this.elRefs[elPath];
 
     // Use state updater callback to ensure concurrent setFixtureState calls
     // don't cancel out each other.
@@ -232,18 +237,20 @@ class FixtureCaptureInner extends Component<InnerProps> {
         elPath,
         componentName,
         props: extractValuesFromObj(props),
-        state: state ? extractValuesFromObj(state) : null
+        state: elRef && elRef.state ? extractValuesFromObj(elRef.state) : null
       })
     }));
   }
 
-  updateFixtureState(
+  updateFixtureState({
     elPath,
-    update: $Shape<{
-      props: null | FixtureStateValues,
-      state: null | FixtureStateValues
-    }>
-  ) {
+    props,
+    state
+  }: {
+    elPath: string,
+    props?: {},
+    state?: {}
+  }) {
     const { setFixtureState } = this.props;
     const decoratorId = this.getDecoratorId();
 
@@ -257,7 +264,10 @@ class FixtureCaptureInner extends Component<InnerProps> {
             fixtureState,
             decoratorId,
             elPath,
-            ...update
+            // Returning undefined for props or state will not override the
+            // previous values
+            props: props && extractValuesFromObj(props),
+            state: state && extractValuesFromObj(state)
           })
         }),
         res
@@ -297,8 +307,6 @@ class FixtureCaptureInner extends Component<InnerProps> {
 
     if (compFxState && compFxState.state) {
       replaceState(elRef, extendObjWithValues(elRef.state, compFxState.state));
-    } else {
-      this.createFixtureState(elPath, elRef);
     }
   };
 
@@ -319,17 +327,6 @@ class FixtureCaptureInner extends Component<InnerProps> {
 
     if (state) {
       this.initialStates[elPath] = { type, state };
-    }
-  }
-
-  resetState(elPath, elRef) {
-    const state = this.getElInitialState(elPath, elRef);
-
-    // Only track state in fixture state for stateful components #mountful
-    if (state) {
-      replaceState(elRef, state, () => {
-        this.updateFixtureState(elPath, { state: extractValuesFromObj(state) });
-      });
     }
   }
 
@@ -360,9 +357,7 @@ class FixtureCaptureInner extends Component<InnerProps> {
             findCompFixtureState(fixtureState, decoratorId, elPath)
           )
         ) {
-          await this.updateFixtureState(elPath, {
-            state: extractValuesFromObj(state)
-          });
+          await this.updateFixtureState({ elPath, state });
         }
       })
     );
@@ -372,9 +367,11 @@ class FixtureCaptureInner extends Component<InnerProps> {
   };
 
   flushEl(elPath) {
-    delete this.elRefs[elPath];
-    delete this.initialStates[elPath];
-    deleteRefHandler(this.getDecoratorId(), elPath);
+    if (this.elRefs[elPath]) {
+      delete this.elRefs[elPath];
+      delete this.initialStates[elPath];
+      deleteRefHandler(this.getDecoratorId(), elPath);
+    }
   }
 
   getDecoratorId() {

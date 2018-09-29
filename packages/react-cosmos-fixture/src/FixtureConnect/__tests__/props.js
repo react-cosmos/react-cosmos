@@ -6,7 +6,7 @@ import {
   updateCompFixtureState
 } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from '../../shared/uuid';
-import { HelloMessage } from '../jestHelpers/components';
+import { HelloMessage, HelloMessageCls } from '../jestHelpers/components';
 import { createCompFxState, createFxValues } from '../jestHelpers/fixtureState';
 import { mockConnect as mockPostMessage } from '../jestHelpers/postMessage';
 import { mockConnect as mockWebSockets } from '../jestHelpers/webSockets';
@@ -217,7 +217,7 @@ function tests(mockConnect) {
       }) => {
         const rendererId = uuid();
         const getFixtures = ref => ({
-          first: <HelloMessage ref={ref} name="Bianca" />
+          first: <HelloMessageCls ref={ref} name="Bianca" />
         });
         let ref1, ref2;
 
@@ -279,7 +279,7 @@ function tests(mockConnect) {
       }) => {
         const rendererId = uuid();
         const getFixtures = ref => ({
-          first: <HelloMessage ref={ref} name="Bianca" />
+          first: <HelloMessageCls ref={ref} name="Bianca" />
         });
         let ref1, ref2;
 

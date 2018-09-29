@@ -4,7 +4,12 @@
 
 import { Component } from 'react';
 
-export class HelloMessage extends Component<{ name?: string }> {
+export function HelloMessage({ name }: { name?: string }) {
+  return `Hello ${name || 'Stranger'}`;
+}
+
+// This one is meant for attaching refs
+export class HelloMessageCls extends Component<{ name?: string }> {
   render() {
     return `Hello ${this.props.name || 'Stranger'}`;
   }
