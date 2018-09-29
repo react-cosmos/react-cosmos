@@ -34,19 +34,11 @@ export type WebSocketsProps = {
 };
 
 export type FixtureContextValue = {
-  fixtureState: ?FixtureState,
+  fixtureState: null | FixtureState,
   setFixtureState: SetState<FixtureState>
 };
 
-export type FixtureContainerProps = {
-  children: Node
-};
-
-export type CapturePropsProps = {
-  children: Node
-};
-
-export type CaptureStateProps = {
+export type FixtureCaptureProps = {
   children: Node
 };
 
@@ -55,7 +47,4 @@ declare export var PostMessage: ComponentType<PostMessageProps>;
 declare export var WebSockets: ComponentType<WebSocketsProps>;
 
 declare export var FixtureContext: Context<FixtureContextValue>;
-declare export var FixtureContainer: ComponentType<FixtureContainerProps>;
-
-declare export var CaptureProps: ComponentType<CapturePropsProps>;
-declare export var CaptureState: ComponentType<CaptureStateProps>;
+declare export var FixtureCapture: ComponentType<FixtureCaptureProps>;

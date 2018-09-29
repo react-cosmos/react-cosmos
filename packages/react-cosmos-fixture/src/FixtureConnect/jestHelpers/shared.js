@@ -23,10 +23,11 @@ export type ConnectMockApi = {
   getElement: GetTestElement,
   postMessage: (msg: RendererRequest) => Promise<mixed>,
   untilMessage: (msg: {}) => Promise<mixed>,
-  lastFixtureState: () => FixtureState,
-  selectFixture: ({ rendererId: RendererId, fixturePath: ?string }) => Promise<
-    mixed
-  >,
+  lastFixtureState: () => Promise<FixtureState>,
+  selectFixture: ({
+    rendererId: RendererId,
+    fixturePath: null | string
+  }) => Promise<mixed>,
   setFixtureState: ({
     rendererId: RendererId,
     fixturePath: string,
@@ -81,7 +82,10 @@ export async function untilLastMessageEquals(
 
 export async function postSelectFixture(
   postMessage: Message => mixed,
-  { rendererId, fixturePath }: { rendererId: RendererId, fixturePath: ?string }
+  {
+    rendererId,
+    fixturePath
+  }: { rendererId: RendererId, fixturePath: null | string }
 ) {
   return postMessage({
     type: 'selectFixture',

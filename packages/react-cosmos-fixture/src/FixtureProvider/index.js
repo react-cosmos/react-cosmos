@@ -1,8 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { CaptureProps } from '../CaptureProps';
-import { CaptureState } from '../CaptureState';
+import { FixtureCapture } from '../FixtureCapture';
 import { FixtureContext } from '../FixtureContext';
 
 import type { Node } from 'react';
@@ -40,15 +39,9 @@ export class FixtureProvider extends Component<Props, FixtureContextValue> {
   render() {
     const { children } = this.props;
 
-    // TODO: Group CaptureProps & CaptureState into FixtureCapture
-    // - Make CaptureProps & CaptureState private
-    // - Normalize elPath?
-    // - Share decoratorId?
     return (
       <FixtureContext.Provider value={this.state}>
-        <CaptureState>
-          <CaptureProps>{children}</CaptureProps>
-        </CaptureState>
+        <FixtureCapture>{children}</FixtureCapture>
       </FixtureContext.Provider>
     );
   }

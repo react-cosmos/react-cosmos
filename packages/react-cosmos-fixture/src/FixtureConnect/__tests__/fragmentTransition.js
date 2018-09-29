@@ -1,21 +1,13 @@
 // @flow
 
-import React, { Component } from 'react';
+import React from 'react';
 import { StateMock } from '@react-mock/state';
 import { uuid } from '../../shared/uuid';
+import { Counter } from '../jestHelpers/components';
+import { createCompFxState, createFxValues } from '../jestHelpers/fixtureState';
 import { mockConnect as mockPostMessage } from '../jestHelpers/postMessage';
 import { mockConnect as mockWebSockets } from '../jestHelpers/webSockets';
 import { mount } from '../jestHelpers/mount';
-
-class Counter extends Component<{}, { count: number }> {
-  state = { count: 0 };
-
-  render() {
-    const { count } = this.state;
-
-    return typeof count === 'number' ? `${count} times` : 'Missing count';
-  }
-}
 
 const rendererId = uuid();
 const fixtures = {
@@ -66,46 +58,30 @@ function tests(mockConnect) {
           })
         );
 
+        // Do not remove this line: It captures a regression regarding an error
+        // that occurred when component state was read asynchronously
+        await new Promise(res => setTimeout(res, 500));
+
         await untilMessage({
           type: 'fixtureState',
           payload: {
             rendererId,
             fixturePath: 'first',
             fixtureState: {
-              props: [
-                getEmptyPropsInstanceShape(),
-                getEmptyPropsInstanceShape()
-              ],
-              state: [getStateInstanceShape(5), getStateInstanceShape(10)]
+              components: [
+                createCompFxState({
+                  props: [],
+                  state: createFxValues({ count: 5 })
+                }),
+                createCompFxState({
+                  props: [],
+                  state: createFxValues({ count: 10 })
+                })
+              ]
             }
           }
         });
       });
     });
   });
-}
-
-function getEmptyPropsInstanceShape() {
-  return {
-    decoratorId: expect.any(Number),
-    elPath: expect.any(String),
-    componentName: 'Counter',
-    renderKey: expect.any(Number),
-    values: []
-  };
-}
-
-function getStateInstanceShape(count: number) {
-  return {
-    decoratorId: expect.any(Number),
-    elPath: expect.any(String),
-    componentName: 'Counter',
-    values: [
-      {
-        serializable: true,
-        key: 'count',
-        stringified: `${count}`
-      }
-    ]
-  };
 }

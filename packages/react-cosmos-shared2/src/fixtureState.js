@@ -1,19 +1,20 @@
 // @flow
 
-import { isEqual } from 'lodash';
+import { isEqual, find } from 'lodash';
 import { isElement } from 'react-is';
 import reactElementToJSXString from 'react-element-to-jsx-string';
-import { updateItem } from './util';
+import { updateItem, replaceOrAddItem } from './util';
 
 import type {
   KeyValue,
   FixtureDecoratorId,
   FixtureStateValue,
   FixtureStateValues,
-  PropsFixtureState,
-  StateFixtureState,
+  ComponentFixtureState,
   FixtureState
 } from './fixtureState.js.flow';
+
+export const DEFAULT_RENDER_KEY = 0;
 
 // Why store unserializable values in fixture state?
 // - Because they still provides value in the Cosmos UI. They let the user know
@@ -21,7 +22,7 @@ import type {
 // - More importantly, because the fixture state controls which props to render.
 //   This way, if a prop is read-only and cannot be edited in the UI, it can
 //   still be removed.
-export function extractValuesFromObject(obj: KeyValue): FixtureStateValues {
+export function extractValuesFromObj(obj: KeyValue): FixtureStateValues {
   return (
     Object.keys(obj)
       // Ignore noise from attrs defined as undefined (eg. props.children is
@@ -32,7 +33,7 @@ export function extractValuesFromObject(obj: KeyValue): FixtureStateValues {
 }
 
 // Use fixture state for serializable values and fall back to base values
-export function extendObjectWithValues(
+export function extendObjWithValues(
   obj: KeyValue,
   values: FixtureStateValues
 ): KeyValue {
@@ -45,103 +46,113 @@ export function extendObjectWithValues(
   );
 }
 
-export function getPropsFixtureState(
-  fixtureState: ?FixtureState,
-  matcher?: PropsFixtureState => boolean
-) {
-  if (!fixtureState || !fixtureState.props) {
+export function getCompFixtureStates(
+  fixtureState: null | FixtureState,
+  decoratorId?: FixtureDecoratorId
+): ComponentFixtureState[] {
+  if (!fixtureState) {
     return [];
   }
 
-  return matcher ? fixtureState.props.filter(matcher) : fixtureState.props;
-}
+  const { components } = fixtureState;
 
-export function updatePropsFixtureState({
-  fixtureState,
-  decoratorId,
-  elPath,
-  values,
-  resetInstance = false
-}: {
-  fixtureState: ?FixtureState,
-  decoratorId: FixtureDecoratorId,
-  elPath: string,
-  values: FixtureStateValues,
-  resetInstance?: boolean
-}) {
-  const [propsFxState] = getPropsFixtureState(
-    fixtureState,
-    i => i.decoratorId === decoratorId && i.elPath === elPath
-  );
-
-  if (!propsFxState) {
-    throw new Error(
-      `No props fixture state with decoratorId '${decoratorId}' and elPath '${elPath}'`
-    );
+  if (typeof decoratorId === 'undefined') {
+    return components;
   }
 
-  const { renderKey } = propsFxState;
-
-  return updateItem(getPropsFixtureState(fixtureState), propsFxState, {
-    renderKey: resetInstance ? renderKey + 1 : renderKey,
-    values
-  });
+  return components.filter(c => c.decoratorId === decoratorId);
 }
 
-export function getStateFixtureState(
-  fixtureState: ?FixtureState,
-  matcher?: StateFixtureState => boolean
-) {
-  if (!fixtureState || !fixtureState.state) {
-    return [];
-  }
-
-  return matcher ? fixtureState.state.filter(matcher) : fixtureState.state;
-}
-
-export function updateStateFixtureState({
-  fixtureState,
-  decoratorId,
-  elPath,
-  values
-}: {
-  fixtureState: ?FixtureState,
-  decoratorId: FixtureDecoratorId,
-  elPath: string,
-  values: FixtureStateValues
-}) {
-  const [stateFxState] = getStateFixtureState(
-    fixtureState,
-    i => i.decoratorId === decoratorId && i.elPath === elPath
-  );
-
-  if (!stateFxState) {
-    throw new Error(
-      `No state fixture state with decoratorId '${decoratorId}' and elPath '${elPath}'`
-    );
-  }
-
-  return updateItem(getStateFixtureState(fixtureState), stateFxState, {
-    values
-  });
-}
-
-export function createFxStateMatcher(decoratorId: FixtureDecoratorId) {
-  return (fxState: { decoratorId: FixtureDecoratorId }) =>
-    fxState.decoratorId === decoratorId;
-}
-
-export function createElFxStateMatcher(
+export function findCompFixtureState(
+  fixtureState: null | FixtureState,
   decoratorId: FixtureDecoratorId,
   elPath: string
-) {
-  return (fxState: { decoratorId: FixtureDecoratorId, elPath: string }) =>
-    fxState.decoratorId === decoratorId && fxState.elPath === elPath;
+): ?ComponentFixtureState {
+  return find(
+    getCompFixtureStates(fixtureState),
+    c => c.decoratorId === decoratorId && c.elPath === elPath
+  );
+}
+
+export function createCompFixtureState({
+  fixtureState,
+  decoratorId,
+  elPath,
+  componentName,
+  props,
+  state
+}: {
+  fixtureState: null | FixtureState,
+  decoratorId: FixtureDecoratorId,
+  elPath: string,
+  componentName: string,
+  props: null | FixtureStateValues,
+  state: null | FixtureStateValues
+}): ComponentFixtureState[] {
+  return replaceOrAddItem(
+    getCompFixtureStates(fixtureState),
+    createFxStateMatcher(decoratorId, elPath),
+    createCompFxState({ decoratorId, elPath, componentName, props, state })
+  );
+}
+
+export function updateCompFixtureState({
+  fixtureState,
+  decoratorId,
+  elPath,
+  props,
+  state,
+  resetInstance = false
+}: {
+  fixtureState: null | FixtureState,
+  decoratorId: FixtureDecoratorId,
+  elPath: string,
+  props?: null | FixtureStateValues,
+  state?: null | FixtureStateValues,
+  resetInstance?: boolean
+}): ComponentFixtureState[] {
+  const compFxState = findCompFixtureState(fixtureState, decoratorId, elPath);
+
+  if (!compFxState) {
+    throw new Error(
+      `[fixtureState] Component state not found for decoratorId "${decoratorId}" and elPath "${elPath}"`
+    );
+  }
+
+  return updateItem(getCompFixtureStates(fixtureState), compFxState, {
+    ...compFxState,
+    renderKey: resetInstance
+      ? compFxState.renderKey + 1
+      : compFxState.renderKey,
+    props: typeof props !== 'undefined' ? props : compFxState.props,
+    state: typeof state !== 'undefined' ? state : compFxState.state
+  });
+}
+
+function createCompFxState({
+  decoratorId,
+  elPath,
+  componentName,
+  props,
+  state
+}) {
+  return {
+    decoratorId,
+    elPath,
+    componentName,
+    renderKey: DEFAULT_RENDER_KEY,
+    props,
+    state
+  };
+}
+
+function createFxStateMatcher(decoratorId, elPath) {
+  return s => s.decoratorId === decoratorId && s.elPath === elPath;
 }
 
 function stringifyValue(key: string, value: mixed): FixtureStateValue {
   try {
-    // XXX: Is this optimal?
+    // NOTE: Is this optimal?
     if (!isEqual(JSON.parse(JSON.stringify(value)), value)) {
       throw new Error('Unserializable value');
     }

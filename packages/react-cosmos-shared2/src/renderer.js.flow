@@ -17,7 +17,7 @@ export type SelectFixtureMsg = {
   payload: {
     rendererId: RendererId,
     // A null fixturePath means unselecting current fixture
-    fixturePath: ?string
+    fixturePath: null | string
   }
 };
 

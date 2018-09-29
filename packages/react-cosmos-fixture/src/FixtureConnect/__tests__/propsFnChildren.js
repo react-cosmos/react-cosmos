@@ -1,23 +1,19 @@
 // @flow
 
-import React, { Component } from 'react';
+import React from 'react';
 import { uuid } from '../../shared/uuid';
-import { CaptureProps } from '../../CaptureProps';
+import { FixtureCapture } from '../../FixtureCapture';
+import { HelloMessage } from '../jestHelpers/components';
+import { createCompFxState, createFxValues } from '../jestHelpers/fixtureState';
 import { mockConnect as mockPostMessage } from '../jestHelpers/postMessage';
 import { mockConnect as mockWebSockets } from '../jestHelpers/webSockets';
 import { mount } from '../jestHelpers/mount';
-
-class HelloMessage extends Component<{ name?: string }> {
-  render() {
-    return `Hello ${this.props.name || 'Stranger'}`;
-  }
-}
 
 function Wrap({ children }) {
   return children();
 }
 
-Wrap.cosmosCaptureProps = false;
+Wrap.cosmosCapture = false;
 
 const rendererId = uuid();
 const fixtures = {
@@ -26,9 +22,9 @@ const fixtures = {
       <Wrap>{() => <HelloMessage name="Bianca" />}</Wrap>
       <Wrap>
         {() => (
-          <CaptureProps>
+          <FixtureCapture>
             <HelloMessage name="B" />
-          </CaptureProps>
+          </FixtureCapture>
         )}
       </Wrap>
     </>
@@ -55,27 +51,15 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureState: {
-              props: [getPropsInstanceShape({ name: 'B' })]
+              components: [
+                createCompFxState({
+                  props: createFxValues({ name: 'B' })
+                })
+              ]
             }
           }
         });
       });
     });
   });
-}
-
-function getPropsInstanceShape({ name }) {
-  return {
-    decoratorId: expect.any(Number),
-    componentName: 'HelloMessage',
-    elPath: expect.any(String),
-    renderKey: expect.any(Number),
-    values: [
-      {
-        serializable: true,
-        key: 'name',
-        stringified: `"${name}"`
-      }
-    ]
-  };
 }

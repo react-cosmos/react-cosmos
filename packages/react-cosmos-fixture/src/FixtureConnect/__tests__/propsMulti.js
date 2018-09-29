@@ -1,20 +1,16 @@
 // @flow
 
-import React, { Component } from 'react';
+import React from 'react';
 import {
-  getPropsFixtureState,
-  updatePropsFixtureState
+  getCompFixtureStates,
+  updateCompFixtureState
 } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from '../../shared/uuid';
+import { HelloMessage } from '../jestHelpers/components';
+import { createCompFxState, createFxValues } from '../jestHelpers/fixtureState';
 import { mockConnect as mockPostMessage } from '../jestHelpers/postMessage';
 import { mockConnect as mockWebSockets } from '../jestHelpers/webSockets';
 import { mount } from '../jestHelpers/mount';
-
-class HelloMessage extends Component<{ name?: string }> {
-  render() {
-    return `Hello ${this.props.name || 'Stranger'}`;
-  }
-}
 
 const rendererId = uuid();
 const fixtures = {
@@ -46,14 +42,16 @@ function tests(mockConnect) {
             rendererId,
             fixturePath: 'first',
             fixtureState: {
-              props: [
-                getPropsInstanceShape({
-                  name: 'Bianca',
-                  elPath: 'props.children[0]'
+              components: [
+                createCompFxState({
+                  componentName: 'HelloMessage',
+                  elPath: 'props.children[0]',
+                  props: createFxValues({ name: 'Bianca' })
                 }),
-                getPropsInstanceShape({
-                  name: 'B',
-                  elPath: 'props.children[1]'
+                createCompFxState({
+                  componentName: 'HelloMessage',
+                  elPath: 'props.children[1]',
+                  props: createFxValues({ name: 'B' })
                 })
               ]
             }
@@ -79,18 +77,18 @@ function tests(mockConnect) {
           });
 
           const fixtureState = await lastFixtureState();
-          const [, { decoratorId, elPath }] = getPropsFixtureState(
+          const [, { decoratorId, elPath }] = getCompFixtureStates(
             fixtureState
           );
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
             fixtureStateChange: {
-              props: updatePropsFixtureState({
+              components: updateCompFixtureState({
                 fixtureState,
                 decoratorId,
                 elPath,
-                values: [createNamePropValue('Petec')]
+                props: createFxValues({ name: 'Petec' })
               })
             }
           });
@@ -103,14 +101,14 @@ function tests(mockConnect) {
               rendererId,
               fixturePath: 'first',
               fixtureState: {
-                props: [
-                  getPropsInstanceShape({
-                    name: 'Bianca',
-                    elPath: 'props.children[0]'
+                components: [
+                  createCompFxState({
+                    elPath: 'props.children[0]',
+                    props: createFxValues({ name: 'Bianca' })
                   }),
-                  getPropsInstanceShape({
-                    name: 'Petec',
-                    elPath: 'props.children[1]'
+                  createCompFxState({
+                    elPath: 'props.children[1]',
+                    props: createFxValues({ name: 'Petec' })
                   })
                 ]
               }
@@ -120,28 +118,4 @@ function tests(mockConnect) {
       }
     );
   });
-}
-
-function createNamePropValue(name) {
-  return {
-    serializable: true,
-    key: 'name',
-    stringified: `"${name}"`
-  };
-}
-
-function getPropsInstanceShape({ name, elPath }) {
-  return {
-    decoratorId: expect.any(Number),
-    elPath,
-    componentName: 'HelloMessage',
-    renderKey: expect.any(Number),
-    values: [
-      {
-        serializable: true,
-        key: 'name',
-        stringified: `"${name}"`
-      }
-    ]
-  };
 }

@@ -12,7 +12,7 @@ Component wrapper for enhancing a fixture's capabilities.
 
 State related to a rendered fixture, like component props, state or other data provided by fixture decorators. Changes to the fixture state alter the fixture elements (and in turn their output).
 
-#### FixtureContainer
+#### FixtureProvider
 
 Hosts fixture state and provides the required context for a fixture (and its decorators) to render.
 

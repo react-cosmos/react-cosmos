@@ -1,4 +1,8 @@
+## Roadmap: New Horizons
+
 ## Roadmap: Summer of Cosmos
+
+> Oct 1st, 2018: TODO Compose summary and kick off new roadmap.
 
 - [React Native integration](#react-native-integration)
 - [Pluggable UI](#pluggable-ui)
@@ -10,11 +14,10 @@
 
 - [ ] Create new declarative renderer: FixtureProvider
   - [x] Context API reading and updating fixture state
-  - [ ] Handle unserializable fixture state
+  - [x] Handle unserializable fixture state
   - [ ] Core decorators
     - [x] Capture props
     - [x] Capture state
-    - [ ] Capture context
     - [ ] Catch errors
     - [ ] Customize fixture name
     - [ ] New decorator API

@@ -3,6 +3,8 @@
 // This type might be silly, but it should be stricter than `Object`
 export type KeyValue = { [string]: mixed };
 
+export type FixtureRenderKey = number;
+
 export type FixtureDecoratorId = number;
 
 export type FixtureStateValue = {
@@ -13,68 +15,54 @@ export type FixtureStateValue = {
 
 export type FixtureStateValues = FixtureStateValue[];
 
-export type PropsFixtureState = {
+export type ComponentFixtureState = {
   decoratorId: FixtureDecoratorId,
   elPath: string,
   componentName: string,
-  renderKey: number,
-  values: FixtureStateValues
-};
-
-export type StateFixtureState = {
-  decoratorId: FixtureDecoratorId,
-  elPath: string,
-  componentName: string,
-  values: FixtureStateValues
+  renderKey: FixtureRenderKey,
+  props: null | FixtureStateValues,
+  state: null | FixtureStateValues
 };
 
 export type FixtureState = {
-  props?: PropsFixtureState[],
-  state?: StateFixtureState[],
+  components: ComponentFixtureState[],
   [key: string]: mixed
 };
 
-export type FixtureStateMatcher = StateFixtureState => boolean;
+declare export var DEFAULT_RENDER_KEY: FixtureRenderKey;
 
-declare export function extractValuesFromObject(
-  obj: KeyValue
-): FixtureStateValues;
+declare export function extractValuesFromObj(obj: KeyValue): FixtureStateValues;
 
-declare export function extendObjectWithValues(
+declare export function extendObjWithValues(
   obj: KeyValue,
   values: FixtureStateValues
 ): KeyValue;
 
-declare export function getPropsFixtureState(
-  fixtureState: ?FixtureState,
-  matcher?: (PropsFixtureState) => boolean
-): PropsFixtureState[];
+declare export function getCompFixtureStates(
+  fixtureState: null | FixtureState,
+  decoratorId?: FixtureDecoratorId
+): ComponentFixtureState[];
 
-declare export function updatePropsFixtureState({
-  fixtureState: ?FixtureState,
-  decoratorId: FixtureDecoratorId,
-  elPath: string,
-  values: FixtureStateValues,
-  resetInstance?: boolean
-}): PropsFixtureState[];
-
-declare export function getStateFixtureState(
-  fixtureState: ?FixtureState,
-  matcher?: (PropsFixtureState) => boolean
-): StateFixtureState[];
-
-declare export function updateStateFixtureState({
-  fixtureState: ?FixtureState,
-  decoratorId: FixtureDecoratorId,
-  elPath: string,
-  values: FixtureStateValues
-}): StateFixtureState[];
-
-declare export function createFxStateMatcher(
-  decoratorId: FixtureDecoratorId
-): FixtureStateMatcher;
-
-declare export function createElFxStateMatcher(
+declare export function findCompFixtureState(
+  fixtureState: null | FixtureState,
   decoratorId: FixtureDecoratorId,
   elPath: string
-): FixtureStateMatcher;
+): ?ComponentFixtureState;
+
+declare export function createCompFixtureState({
+  fixtureState: null | FixtureState,
+  decoratorId: FixtureDecoratorId,
+  elPath: string,
+  componentName: string,
+  props: null | FixtureStateValues,
+  state: null | FixtureStateValues
+}): ComponentFixtureState[];
+
+declare export function updateCompFixtureState({
+  fixtureState: null | FixtureState,
+  decoratorId: FixtureDecoratorId,
+  elPath: string,
+  props?: null | FixtureStateValues,
+  state?: null | FixtureStateValues,
+  resetInstance?: boolean
+}): ComponentFixtureState[];
