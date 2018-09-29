@@ -135,8 +135,7 @@ class FixtureCaptureInner extends Component<InnerProps> {
     const decoratorId = this.getDecoratorId();
 
     // Remove fixture state for removed child elements (likely via HMR)
-    const compFxStates = getCompFixtureStates(fixtureState, decoratorId);
-    compFxStates.forEach(({ elPath }) => {
+    getCompFixtureStates(fixtureState, decoratorId).forEach(({ elPath }) => {
       if (elPaths.indexOf(elPath) === -1) {
         this.removeFixtureState(elPath);
         this.flushEl(elPath);
@@ -150,6 +149,7 @@ class FixtureCaptureInner extends Component<InnerProps> {
         decoratorId,
         elPath
       );
+
       if (!compFxState) {
         return this.createFixtureState(elPath);
       }
@@ -216,6 +216,27 @@ class FixtureCaptureInner extends Component<InnerProps> {
       );
     }
   }
+
+  handleRef = (elPath: string, elRef: ?ComponentRef) => {
+    if (!elRef) {
+      delete this.elRefs[elPath];
+
+      return;
+    }
+
+    this.elRefs[elPath] = elRef;
+    this.setElInitialState(elPath, elRef);
+
+    const { fixtureState } = this.props;
+    const decoratorId = this.getDecoratorId();
+    const compFxState = findCompFixtureState(fixtureState, decoratorId, elPath);
+
+    if (!compFxState) {
+      this.createFixtureState(elPath);
+    } else if (compFxState.state) {
+      replaceState(elRef, extendObjWithValues(elRef.state, compFxState.state));
+    }
+  };
 
   createFixtureState(elPath) {
     const { children, setFixtureState } = this.props;
@@ -286,27 +307,6 @@ class FixtureCaptureInner extends Component<InnerProps> {
       };
     });
   }
-
-  handleRef = (elPath: string, elRef: ?ComponentRef) => {
-    if (!elRef) {
-      delete this.elRefs[elPath];
-
-      return;
-    }
-
-    this.elRefs[elPath] = elRef;
-    this.setElInitialState(elPath, elRef);
-
-    const { fixtureState } = this.props;
-    const decoratorId = this.getDecoratorId();
-    const compFxState = findCompFixtureState(fixtureState, decoratorId, elPath);
-
-    if (compFxState && compFxState.state) {
-      replaceState(elRef, extendObjWithValues(elRef.state, compFxState.state));
-    } else {
-      this.createFixtureState(elPath);
-    }
-  };
 
   getElInitialState(elPath, elRef) {
     const found = this.initialStates[elPath];
