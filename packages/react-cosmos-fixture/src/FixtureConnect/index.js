@@ -11,7 +11,7 @@ import type { FixtureConnectProps } from '../index.js.flow';
 
 type State = {
   fixturePath: null | string,
-  fixtureState: ?FixtureState,
+  fixtureState: null | FixtureState,
   renderKey: number
 };
 

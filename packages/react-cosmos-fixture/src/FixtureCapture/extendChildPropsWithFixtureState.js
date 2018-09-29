@@ -16,7 +16,7 @@ import type { Children } from './childrenTree';
 
 export function extendChildPropsWithFixtureState(
   children: Children,
-  fixtureState: ?FixtureState,
+  fixtureState: null | FixtureState,
   decoratorId: FixtureDecoratorId
 ): Children {
   const elPaths = findRelevantElementPaths(children);

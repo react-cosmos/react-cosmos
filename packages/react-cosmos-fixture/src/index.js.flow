@@ -34,7 +34,7 @@ export type WebSocketsProps = {
 };
 
 export type FixtureContextValue = {
-  fixtureState: ?FixtureState,
+  fixtureState: null | FixtureState,
   setFixtureState: SetState<FixtureState>
 };
 

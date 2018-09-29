@@ -20,8 +20,8 @@ export type ComponentFixtureState = {
   elPath: string,
   componentName: string,
   renderKey: FixtureRenderKey,
-  props: ?FixtureStateValues,
-  state: ?FixtureStateValues
+  props: null | FixtureStateValues,
+  state: null | FixtureStateValues
 };
 
 export type FixtureState = {
@@ -39,30 +39,30 @@ declare export function extendObjWithValues(
 ): KeyValue;
 
 declare export function getCompFixtureStates(
-  fixtureState: ?FixtureState,
+  fixtureState: null | FixtureState,
   decoratorId?: FixtureDecoratorId
 ): ComponentFixtureState[];
 
 declare export function findCompFixtureState(
-  fixtureState: ?FixtureState,
+  fixtureState: null | FixtureState,
   decoratorId: FixtureDecoratorId,
   elPath: string
 ): ?ComponentFixtureState;
 
 declare export function createCompFixtureState({
-  fixtureState: ?FixtureState,
+  fixtureState: null | FixtureState,
   decoratorId: FixtureDecoratorId,
   elPath: string,
   componentName: string,
-  props: ?FixtureStateValues,
-  state: ?FixtureStateValues
+  props: null | FixtureStateValues,
+  state: null | FixtureStateValues
 }): ComponentFixtureState[];
 
 declare export function updateCompFixtureState({
-  fixtureState: ?FixtureState,
+  fixtureState: null | FixtureState,
   decoratorId: FixtureDecoratorId,
   elPath: string,
-  props?: ?FixtureStateValues,
-  state?: ?FixtureStateValues,
+  props?: null | FixtureStateValues,
+  state?: null | FixtureStateValues,
   resetInstance?: boolean
 }): ComponentFixtureState[];

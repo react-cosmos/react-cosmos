@@ -53,7 +53,7 @@ export function FixtureCapture({ children }: FixtureCaptureProps) {
 }
 
 type InnerProps = FixtureCaptureProps & {
-  fixtureState: ?FixtureState,
+  fixtureState: null | FixtureState,
   setFixtureState: SetState<FixtureState>
 };
 

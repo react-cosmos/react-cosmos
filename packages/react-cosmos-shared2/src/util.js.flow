@@ -2,7 +2,7 @@
 
 import type { Predicate } from 'lodash';
 
-export type StateUpdater<T> = $Shape<T> | ((prevState: ?T) => $Shape<T>);
+export type StateUpdater<T> = $Shape<T> | ((prevState: null | T) => $Shape<T>);
 
 export type SetState<T> = (
   updater: StateUpdater<T>,
@@ -32,7 +32,7 @@ declare export function removeItem<T>(
 ): Array<T>;
 
 declare export function updateState<T>(
-  fixtureState: ?T,
+  fixtureState: null | T,
   updater: StateUpdater<T>
 ): T;
 

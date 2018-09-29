@@ -47,7 +47,7 @@ export function extendObjWithValues(
 }
 
 export function getCompFixtureStates(
-  fixtureState: ?FixtureState,
+  fixtureState: null | FixtureState,
   decoratorId?: FixtureDecoratorId
 ): ComponentFixtureState[] {
   if (!fixtureState) {
@@ -64,7 +64,7 @@ export function getCompFixtureStates(
 }
 
 export function findCompFixtureState(
-  fixtureState: ?FixtureState,
+  fixtureState: null | FixtureState,
   decoratorId: FixtureDecoratorId,
   elPath: string
 ): ?ComponentFixtureState {
@@ -82,12 +82,12 @@ export function createCompFixtureState({
   props,
   state
 }: {
-  fixtureState: ?FixtureState,
+  fixtureState: null | FixtureState,
   decoratorId: FixtureDecoratorId,
   elPath: string,
   componentName: string,
-  props: ?FixtureStateValues,
-  state: ?FixtureStateValues
+  props: null | FixtureStateValues,
+  state: null | FixtureStateValues
 }): ComponentFixtureState[] {
   return replaceOrAddItem(
     getCompFixtureStates(fixtureState),
@@ -104,11 +104,11 @@ export function updateCompFixtureState({
   state,
   resetInstance = false
 }: {
-  fixtureState: ?FixtureState,
+  fixtureState: null | FixtureState,
   decoratorId: FixtureDecoratorId,
   elPath: string,
-  props?: ?FixtureStateValues,
-  state?: ?FixtureStateValues,
+  props?: null | FixtureStateValues,
+  state?: null | FixtureStateValues,
   resetInstance?: boolean
 }): ComponentFixtureState[] {
   const compFxState = findCompFixtureState(fixtureState, decoratorId, elPath);
