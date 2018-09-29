@@ -214,6 +214,10 @@ class FixtureCaptureInner extends Component<InnerProps> {
       elPath
     );
     if (prevCompFxState && !isEqual(prevCompFxState.state, stateFxState)) {
+      // TODO: Remove after debugging
+      console.warn('replaceState', {
+        nextState: extendObjWithValues(elRef.state, stateFxState)
+      });
       return replaceState(
         elRef,
         extendObjWithValues(elRef.state, stateFxState)
