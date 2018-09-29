@@ -68,7 +68,9 @@ class FixtureCaptureInner extends Component<InnerProps> {
   initialStates: {
     [elPath: string]: {
       type: Class<Component<any>>,
-      state: {}
+      // "The state [...] should be a plain JavaScript object."
+      // https://reactjs.org/docs/react-component.html#state
+      state: Object
     }
   } = {};
 
@@ -149,7 +151,6 @@ class FixtureCaptureInner extends Component<InnerProps> {
         decoratorId,
         elPath
       );
-
       if (!compFxState) {
         return this.createFixtureState(elPath);
       }
@@ -183,19 +184,22 @@ class FixtureCaptureInner extends Component<InnerProps> {
   }) {
     const elRef = this.elRefs[elPath];
 
-    if (
-      // The el ref is missing when child components unmount and compDidUpdate
-      // is called before the new children mount. When this happens, the new
-      // children will be handled when their refs fire
-      !elRef ||
-      // Only track state in fixture state for stateful components #mountful
-      !elRef.state
-    ) {
+    // The el ref can be missing for three reasons:
+    //   1. Element type is stateless
+    //   2. Element type is a class, but doesn't have state. An instance exists
+    //      but has been discarded because of its lack of state.
+    //   3. Element instance unmounted and is about to remount. When this
+    //      happens, the new instance will be handled when its ref fires again.
+    if (!elRef) {
       return;
     }
 
     if (!stateFxState) {
-      return this.resetState(elPath, elRef);
+      const { state } = this.initialStates[elPath];
+
+      return replaceState(elRef, state, () => {
+        this.updateFixtureState({ elPath, state });
+      });
     }
 
     // The child's state can be out of sync with the fixture state for two
@@ -224,6 +228,12 @@ class FixtureCaptureInner extends Component<InnerProps> {
       return;
     }
 
+    // Only track instances with state
+    const { state } = elRef;
+    if (!state) {
+      return;
+    }
+
     this.elRefs[elPath] = elRef;
     this.setElInitialState(elPath, elRef);
 
@@ -233,8 +243,10 @@ class FixtureCaptureInner extends Component<InnerProps> {
 
     if (!compFxState) {
       this.createFixtureState(elPath);
-    } else if (compFxState.state) {
-      replaceState(elRef, extendObjWithValues(elRef.state, compFxState.state));
+    } else if (!compFxState.state) {
+      this.updateFixtureState({ elPath, state });
+    } else {
+      replaceState(elRef, extendObjWithValues(state, compFxState.state));
     }
   };
 
@@ -308,36 +320,19 @@ class FixtureCaptureInner extends Component<InnerProps> {
     });
   }
 
-  getElInitialState(elPath, elRef) {
+  setElInitialState(elPath, elRef) {
     const found = this.initialStates[elPath];
     const type = getElementRefType(elRef);
 
-    return found && found.type === type ? found.state : null;
-  }
-
-  setElInitialState(elPath, elRef) {
-    if (this.getElInitialState(elPath, elRef)) {
+    // Keep the first state recevied for this type
+    if (found && found.type === type) {
       return;
     }
 
-    const type = getElementRefType(elRef);
     const { state } = elRef;
-
     if (state) {
       this.initialStates[elPath] = { type, state };
     }
-  }
-
-  resetState(elPath, elRef) {
-    const state = this.getElInitialState(elPath, elRef);
-
-    if (!state) {
-      throw new Error(`Missing initial state for child at "${elPath}"`);
-    }
-
-    replaceState(elRef, state, () => {
-      this.updateFixtureState({ elPath, state });
-    });
   }
 
   scheduleStateCheck = () => {
@@ -359,14 +354,13 @@ class FixtureCaptureInner extends Component<InnerProps> {
         }
 
         const { state } = this.elRefs[elPath];
+        const compFxState = findCompFixtureState(
+          fixtureState,
+          decoratorId,
+          elPath
+        );
 
-        if (
-          state &&
-          !isFixtureStateInSyncWithState(
-            state,
-            findCompFixtureState(fixtureState, decoratorId, elPath)
-          )
-        ) {
+        if (state && !doesFixtureStateMatchState(state, compFxState)) {
           await this.updateFixtureState({ elPath, state });
         }
       })
@@ -389,7 +383,7 @@ class FixtureCaptureInner extends Component<InnerProps> {
   }
 }
 
-function isFixtureStateInSyncWithState(state, compFxState) {
+function doesFixtureStateMatchState(state, compFxState) {
   return (
     compFxState &&
     compFxState.state &&
