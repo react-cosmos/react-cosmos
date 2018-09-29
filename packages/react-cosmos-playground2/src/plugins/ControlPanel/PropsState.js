@@ -154,7 +154,3 @@ export class PropsState extends Component<Props> {
     });
   };
 }
-
-const ElPath = styled.div`
-  font-size: 14px;
-`;
