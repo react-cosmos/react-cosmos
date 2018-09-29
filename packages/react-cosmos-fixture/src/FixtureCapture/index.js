@@ -307,6 +307,8 @@ class FixtureCaptureInner extends Component<InnerProps> {
 
     if (compFxState && compFxState.state) {
       replaceState(elRef, extendObjWithValues(elRef.state, compFxState.state));
+    } else {
+      this.createFixtureState(elPath);
     }
   };
 
