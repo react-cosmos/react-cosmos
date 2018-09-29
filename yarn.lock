@@ -1695,9 +1695,9 @@
     node-fetch "^2.1.1"
     url-template "^2.0.8"
 
-"@react-mock/state@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@react-mock/state/-/state-0.1.2.tgz#98cbfb242065fbe3954409374c1f936fc6b18659"
+"@react-mock/state@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@react-mock/state/-/state-0.1.3.tgz#d3d7329affba107c7de58d2eef9da30bd3bb7b83"
   dependencies:
     "@babel/runtime" "^7.0.0"
     lodash "^4.17.11"
