@@ -183,23 +183,19 @@ class FixtureCaptureInner extends Component<InnerProps> {
   }) {
     const elRef = this.elRefs[elPath];
 
-    // The el ref is missing when child components unmount and compDidUpdate
-    // is called before the new children mount. When this happens, the new
-    // children will be handled when their refs fire
-    if (!elRef) {
+    if (
+      // The el ref is missing when child components unmount and compDidUpdate
+      // is called before the new children mount. When this happens, the new
+      // children will be handled when their refs fire
+      !elRef ||
+      // Only track state in fixture state for stateful components #mountful
+      !elRef.state
+    ) {
       return;
     }
 
     if (!stateFxState) {
-      const state = this.getElInitialState(elPath, elRef);
-
-      // Only track state in fixture state for stateful components #mountful
-      return (
-        state &&
-        replaceState(elRef, state, () => {
-          this.updateFixtureState({ elPath, state });
-        })
-      );
+      return this.resetState(elPath, elRef);
     }
 
     // The child's state can be out of sync with the fixture state for two
@@ -330,6 +326,18 @@ class FixtureCaptureInner extends Component<InnerProps> {
     if (state) {
       this.initialStates[elPath] = { type, state };
     }
+  }
+
+  resetState(elPath, elRef) {
+    const state = this.getElInitialState(elPath, elRef);
+
+    if (!state) {
+      throw new Error(`Missing initial state for child at "${elPath}"`);
+    }
+
+    replaceState(elRef, state, () => {
+      this.updateFixtureState({ elPath, state });
+    });
   }
 
   scheduleStateCheck = () => {
