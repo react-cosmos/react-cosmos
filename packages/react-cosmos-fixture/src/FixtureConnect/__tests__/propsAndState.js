@@ -237,15 +237,11 @@ function tests(mockConnect) {
     );
   });
 
-  // FIXME
-  it.skip('keeps props when state changes', async () => {
-    const timeout = 1000;
+  it('keeps props when state changes', async () => {
     let counterRef: ?ElementRef<typeof SuffixCounter>;
 
     const fixtures = {
       first: (
-        // The extra levels of nesting capture a complex case regarding deep
-        // comparison of children nodes
         <SuffixCounter
           ref={elRef => {
             if (elRef) {
@@ -289,7 +285,7 @@ function tests(mockConnect) {
 
           expect(renderer.toJSON()).toBe('0 timez');
 
-          await until(() => counterRef, { timeout });
+          await until(() => counterRef, { timeout: 1000 });
           if (!counterRef) {
             throw new Error('Counter ref missing');
           }

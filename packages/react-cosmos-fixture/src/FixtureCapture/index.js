@@ -8,7 +8,8 @@ import {
   extendObjWithValues,
   getCompFixtureStates,
   findCompFixtureState,
-  createCompFixtureState
+  createCompFixtureState,
+  updateCompFixtureState
 } from 'react-cosmos-shared2/fixtureState';
 import { FixtureContext } from '../FixtureContext';
 import {
@@ -29,7 +30,10 @@ import {
 import { replaceState } from './replaceState';
 
 import type { SetState } from 'react-cosmos-shared2/util';
-import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
+import type {
+  FixtureStateValues,
+  FixtureState
+} from 'react-cosmos-shared2/fixtureState';
 import type { FixtureCaptureProps } from '../index.js.flow';
 import type { ComponentRef } from './shared';
 
@@ -154,34 +158,42 @@ class FixtureCaptureInner extends Component<InnerProps> {
         decoratorId,
         elPath
       );
-      const propsFxValues = compFxState ? compFxState.props : null;
-      const stateFxValues = compFxState ? compFxState.state : null;
 
-      this.transitionElProps({ elPath, propsFxValues, prevProps });
-      this.transitionElState({ elPath, elRef, stateFxValues, prevProps });
+      if (!compFxState) {
+        return this.createFixtureState(elPath, elRef);
+      }
+
+      this.transitionElProps({ elPath, compFxState, prevProps });
+      this.transitionElState({ elPath, elRef, compFxState, prevProps });
     });
   }
 
-  transitionElProps({ elPath, propsFxValues, prevProps }) {
+  transitionElProps({ elPath, compFxState, prevProps }) {
     const { children } = this.props;
+    const childEl = getExpectedElementAtPath(children, elPath);
 
-    // Reset fixture state when...
+    // Reset props fixture state when...
     if (
-      // a) the fixture state for this element has been emptied deliberately.
-      // Happens when user discards the fixture state to reload the fixture.
-      !propsFxValues ||
+      // a) the props fixture state for this element have been emptied
+      // deliberately. Happens when user discards the fixture state to reload
+      // the fixture.
+      !compFxState.props ||
       // b) mocked props from fixture elemented changed (likely via HMR).
-      !areChildrenEqual(
-        getElementAtPath(children, elPath),
-        getElementAtPath(prevProps.children, elPath)
-      )
+      !areChildrenEqual(childEl, getElementAtPath(prevProps.children, elPath))
     ) {
-      this.createCompFixtureState(elPath);
+      this.updateFixtureState(elPath, {
+        props: extractValuesFromObj(childEl.props)
+      });
     }
   }
 
-  transitionElState({ elPath, elRef, stateFxValues, prevProps }) {
-    if (!stateFxValues) {
+  transitionElState({
+    elPath,
+    elRef,
+    compFxState: { state: stateFxState },
+    prevProps
+  }) {
+    if (!stateFxState) {
       return this.resetState(elPath, elRef);
     }
 
@@ -196,29 +208,44 @@ class FixtureCaptureInner extends Component<InnerProps> {
       this.getDecoratorId(),
       elPath
     );
-    if (prevCompFxState && !isEqual(prevCompFxState.state, stateFxValues)) {
+    if (prevCompFxState && !isEqual(prevCompFxState.state, stateFxState)) {
       return replaceState(
         elRef,
-        extendObjWithValues(elRef.state, stateFxValues)
+        extendObjWithValues(elRef.state, stateFxState)
       );
     }
   }
 
-  // TODO: Create update method
-  createCompFixtureState(elPath) {
+  createFixtureState(elPath, elRef) {
     const { children, setFixtureState } = this.props;
-    const elRef = this.elRefs[elPath];
-
-    if (!elRef) {
-      throw new Error(
-        `[FixtureCapture] No child ref for element path "${elPath}"`
-      );
-    }
-
     const decoratorId = this.getDecoratorId();
     const { type, props } = getExpectedElementAtPath(children, elPath);
     const componentName = getComponentName(type);
     const { state } = elRef;
+
+    // Use state updater callback to ensure concurrent setFixtureState calls
+    // don't cancel out each other.
+    setFixtureState(fixtureState => ({
+      components: createCompFixtureState({
+        fixtureState,
+        decoratorId,
+        elPath,
+        componentName,
+        props: extractValuesFromObj(props),
+        state: state ? extractValuesFromObj(state) : null
+      })
+    }));
+  }
+
+  updateFixtureState(
+    elPath,
+    update: $Shape<{
+      props: null | FixtureStateValues,
+      state: null | FixtureStateValues
+    }>
+  ) {
+    const { setFixtureState } = this.props;
+    const decoratorId = this.getDecoratorId();
 
     // Make method await-able
     return new Promise(res => {
@@ -226,13 +253,11 @@ class FixtureCaptureInner extends Component<InnerProps> {
       // don't cancel out each other.
       setFixtureState(
         fixtureState => ({
-          components: createCompFixtureState({
+          components: updateCompFixtureState({
             fixtureState,
             decoratorId,
             elPath,
-            componentName,
-            props: extractValuesFromObj(props),
-            state: state ? extractValuesFromObj(state) : null
+            ...update
           })
         }),
         res
@@ -273,7 +298,7 @@ class FixtureCaptureInner extends Component<InnerProps> {
     if (compFxState && compFxState.state) {
       replaceState(elRef, extendObjWithValues(elRef.state, compFxState.state));
     } else {
-      this.createCompFixtureState(elPath);
+      this.createFixtureState(elPath, elRef);
     }
   };
 
@@ -303,7 +328,7 @@ class FixtureCaptureInner extends Component<InnerProps> {
     // Only track state in fixture state for stateful components #mountful
     if (state) {
       replaceState(elRef, state, () => {
-        this.createCompFixtureState(elPath);
+        this.updateFixtureState(elPath, { state: extractValuesFromObj(state) });
       });
     }
   }
@@ -326,15 +351,18 @@ class FixtureCaptureInner extends Component<InnerProps> {
           );
         }
 
-        const elRef = this.elRefs[elPath];
-        const compFxState = findCompFixtureState(
-          fixtureState,
-          decoratorId,
-          elPath
-        );
+        const { state } = this.elRefs[elPath];
 
-        if (!isFixtureStateInSyncWithState(elRef.state, compFxState)) {
-          await this.createCompFixtureState(elPath);
+        if (
+          state &&
+          !isFixtureStateInSyncWithState(
+            state,
+            findCompFixtureState(fixtureState, decoratorId, elPath)
+          )
+        ) {
+          await this.updateFixtureState(elPath, {
+            state: extractValuesFromObj(state)
+          });
         }
       })
     );
