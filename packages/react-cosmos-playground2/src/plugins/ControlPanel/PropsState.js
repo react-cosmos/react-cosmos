@@ -1,6 +1,6 @@
 // @flow
 
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import React, { Component } from 'react';
 import { RENDERER_ID } from 'react-cosmos-shared2/renderer';
 import { replaceOrAddItem } from 'react-cosmos-shared2/util';
