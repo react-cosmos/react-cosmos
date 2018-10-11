@@ -22,8 +22,15 @@ export function createServerApp({
   const app = express();
 
   if (httpProxy) {
-    const { context, target } = httpProxy;
-    app.use(context, httpProxyMiddleware(target));
+    if (httpProxy.context) {
+      const { context, ...options } = httpProxy;
+      app.use(context, httpProxyMiddleware(options));
+    } else {
+      Object.keys(httpProxy).forEach(context => {
+        const options = httpProxy[context];
+        app.use(context, httpProxyMiddleware(options));
+      });
+    }
   }
 
   const playgroundHtml =

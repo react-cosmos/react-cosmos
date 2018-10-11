@@ -9,6 +9,14 @@ type WebpackConfigOverride = (WebpackConfig, { env: string }) => WebpackConfig;
 
 export type PluginConfig = { [prop: string]: mixed };
 
+type BasicHttpProxyConfig = { context: string };
+
+type AdvancedHttpProxyConfig = {
+  [context: string]: {}
+};
+
+type HttpProxyConfig = BasicHttpProxyConfig | AdvancedHttpProxyConfig;
+
 export type Config = {
   next: boolean,
   rootPath: string,
@@ -26,7 +34,7 @@ export type Config = {
   publicPath?: string,
   publicUrl: string,
   containerQuerySelector?: string,
-  httpProxy?: {| context: string, target: string |},
+  httpProxy?: HttpProxyConfig,
   watchDirs: Array<string>,
   modulesPath: string,
   plugin: PluginConfig,
