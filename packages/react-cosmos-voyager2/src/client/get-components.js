@@ -152,7 +152,7 @@ export function getComponents({
     });
   }
 
-  return sortBy(components, getObjectPath);
+  return sortBy(components, sortComponentsBy);
 }
 
 function getFileNameFromPath(filePath: string) {
@@ -215,4 +215,14 @@ function warnAboutIncompatFixtures(
 
 function getObjectPath(obj: { name: string, namespace: string }): string {
   return obj.namespace ? `${obj.namespace}/${obj.name}` : obj.name;
+}
+
+function sortComponentsBy(obj: { name: string, namespace: string }): string {
+  // remove all trailing ')', split string by '(' and get the first part.
+  // This gives the component name removed of all potential HOC names.
+  const componentName = obj.name
+    .replace(/\)/g, '')
+    .split('(')
+    .pop();
+  return obj.namespace ? `${obj.namespace}/${componentName}` : componentName;
 }
