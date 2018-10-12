@@ -31,12 +31,19 @@ export default class FixtureList extends Component {
     window.addEventListener('keydown', this.onWindowKey);
 
     const savedExpansionState = await getSavedExpansionState(projectKey);
+    const preferCollapsedFixtures =
+      this.props.options.runtimeConfig &&
+      this.props.options.runtimeConfig.preferCollapsedFixtures;
 
     if (this.unmounted === true) {
       return;
     }
 
-    const fixtureTree = fixturesToTreeData(fixtures, savedExpansionState);
+    const fixtureTree = fixturesToTreeData(
+      fixtures,
+      savedExpansionState,
+      preferCollapsedFixtures
+    );
     pruneUnusedExpansionState(projectKey, savedExpansionState, fixtureTree);
     this.setState({ fixtureTree });
   }
