@@ -59,7 +59,7 @@ Requirements:
 - [x] webpack or Browserify (or roll your own integration)
 - [ ] [Fixtures](#fixtures) (you'll create them after getting started)
 
-React Cosmos works best with webpack. Making it work with other bundlers takes extra work, but a complete [Browserify example](examples/browserify) is available.
+React Cosmos works best with webpack. Making it work with other bundlers takes extra work, but both a [Browserify example](examples/browserify) and a [Parcel example](https://github.com/react-cosmos/parcel-ts-example) are available.
 
 Jump to:
 
