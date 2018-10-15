@@ -271,6 +271,30 @@ export default {
 };
 ```
 
+You may also want to specify a display name for this component. To do so, you can a separate variable for the wrapper component and assign it a `displayName`:
+
+```js
+const WrapperComponent = props => (
+  <Well>
+    <SearchBox {...props, placeholder={'What are you looking for?'}} />
+  </Well>
+);
+
+// The fixture will be shown in the tree as SearchBox
+WrapperComponent.displayName = "SearchBox";
+
+// separating names with a / will make the fixture SearchBox
+// appear in a nested folder called "styleguide".
+// WrapperComponent.displayName = "styleguide/SearchBox";
+
+export default {
+  component: WrapperComponent,
+  props: {
+    value: 'apples'
+  }
+};
+```
+
 #### Init hook
 
 This is an advanced feature and should only be used when a desired state can't be reproduced via [proxies](#proxies).
