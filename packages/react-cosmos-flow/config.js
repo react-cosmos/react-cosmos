@@ -7,8 +7,6 @@ export type ExcludePatterns = ExcludePattern | Array<ExcludePattern>;
 type WebpackConfig = Object;
 type WebpackConfigOverride = (WebpackConfig, { env: string }) => WebpackConfig;
 
-type RuntimeConfig = { preferCollapsedFixtures: boolean };
-
 export type PluginConfig = { [prop: string]: mixed };
 
 export type Config = {
@@ -32,7 +30,6 @@ export type Config = {
   watchDirs: Array<string>,
   modulesPath: string,
   plugin: PluginConfig,
-  runtimeOptions?: RuntimeConfig,
   // Deprecated
   proxies?: Array<string>,
   componentPaths: Array<string>,

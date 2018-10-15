@@ -18,7 +18,7 @@ export function createServerApp({
   cosmosConfig: Config,
   playgroundOpts: PlaygroundOpts
 }) {
-  const { next, httpProxy, runtimeConfig } = cosmosConfig;
+  const { next, httpProxy } = cosmosConfig;
   const app = express();
 
   if (httpProxy) {
@@ -30,7 +30,7 @@ export function createServerApp({
     // TODO: Support JSX fixtures for any platform
     next && playgroundOpts.platform === 'web'
       ? getPlaygroundHtmlNext({ rendererUrl: playgroundOpts.loaderUri })
-      : getPlaygroundHtml({ runtimeConfig, ...playgroundOpts });
+      : getPlaygroundHtml(playgroundOpts);
   app.get('/', (req: express$Request, res: express$Response) => {
     res.send(playgroundHtml);
   });

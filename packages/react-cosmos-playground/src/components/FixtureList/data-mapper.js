@@ -4,7 +4,7 @@ import sortBy from 'lodash.sortby';
 
 const NODE_ORDER_BY_TYPE = ['directory', 'component'];
 
-function getExandedValue(savedExpansionState, path, defaultValue = true) {
+function getExandedValue(savedExpansionState, path, defaultValue) {
   return Object.prototype.hasOwnProperty.call(savedExpansionState, path)
     ? savedExpansionState[path]
     : defaultValue;
@@ -33,7 +33,7 @@ function parseFixtureArray(componentName, fixtureArray, savedExpansionState) {
     const newPath = `${componentName}/${folderName}`;
     return {
       name: folderName,
-      expanded: getExandedValue(savedExpansionState, newPath),
+      expanded: getExandedValue(savedExpansionState, newPath, false),
       type: 'fixtureDirectory',
       path: newPath,
       children: nestedData[folderName].map(fixture => ({
@@ -84,12 +84,7 @@ const generateDisplayData = name => {
   };
 };
 
-const dataObjectToNestedArray = (
-  base,
-  savedExpansionState,
-  preferCollapsedFixtures,
-  path = ''
-) => {
+const dataObjectToNestedArray = (base, savedExpansionState, path = '') => {
   const returnChildren = [];
   for (const key in base) {
     if (typeof base[key] === 'object') {
@@ -97,7 +92,6 @@ const dataObjectToNestedArray = (
       const children = dataObjectToNestedArray(
         base[key],
         savedExpansionState,
-        preferCollapsedFixtures,
         newPath
       );
       const isDirectory = some(
@@ -113,11 +107,7 @@ const dataObjectToNestedArray = (
       returnChildren.push({
         name: key,
         path: newPath,
-        expanded: getExandedValue(
-          savedExpansionState,
-          newPath,
-          isDirectory ? true : !preferCollapsedFixtures
-        ),
+        expanded: getExandedValue(savedExpansionState, newPath, isDirectory),
         type: isDirectory ? 'directory' : 'component',
         displayData,
         children
@@ -133,11 +123,7 @@ const dataObjectToNestedArray = (
   return sortBy(returnChildren, node => NODE_ORDER_BY_TYPE.indexOf(node.type));
 };
 
-const fixturesToTreeData = (
-  fixtures,
-  savedExpansionState,
-  preferCollapsedFixtures
-) => {
+const fixturesToTreeData = (fixtures, savedExpansionState) => {
   const components = Object.keys(fixtures);
   const data = {};
 
@@ -147,11 +133,7 @@ const fixturesToTreeData = (
     set(data, pathArray, fixturesAtPath);
   });
 
-  return dataObjectToNestedArray(
-    data,
-    savedExpansionState,
-    preferCollapsedFixtures
-  );
+  return dataObjectToNestedArray(data, savedExpansionState);
 };
 
 export default fixturesToTreeData;
