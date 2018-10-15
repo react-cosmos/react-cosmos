@@ -42,21 +42,21 @@ Read more at: https://github.com/react-cosmos/react-cosmos#react-apollo-graphql.
         mockKeys.find(key => fixtureApolloKeys.includes(key))
       );
 
-      const cache = new InMemoryCache();
-
       let options = clientOptions || {
-        cache,
+        cache: new InMemoryCache(),
         link: new HttpLink({ uri: endpoint })
       };
 
       if (isMockedFixture) {
+        const fixtureCache = new InMemoryCache(options.cache.config);
+
         options = {
           ...options,
           // ensure that the cache is not persisted between mocked fixtures
-          cache,
+          cache: fixtureCache,
           link: createFixtureLink({
             apolloFixture,
-            cache: options.cache,
+            cache: fixtureCache,
             fixture: this.props.fixture
           })
         };

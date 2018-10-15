@@ -123,19 +123,40 @@ describe('proxy configured with a client', () => {
 
   beforeEach(() => {
     clientOptions = {
-      cache: new InMemoryCache(),
+      cache: new InMemoryCache({
+        addTypename: false,
+        dataIdFromObject: object => object.key || null
+      }),
       link: new HttpLink({ uri: 'https://xyz' })
     };
-
-    setupTestWrapper({ proxyConfig: { clientOptions } });
   });
 
   it('uses the clientOptions passed in the config', () => {
+    setupTestWrapper({ proxyConfig: { clientOptions } });
+
     expect(wrapper.instance().client.cache).toBe(clientOptions.cache);
   });
 
   it('connects to the Apollo DevTools', () => {
+    setupTestWrapper({ proxyConfig: { clientOptions } });
+
     expect(parent.__APOLLO_CLIENT__).toBe(wrapper.instance().client);
+  });
+
+  it('uses the clientOptions cache config for mocked fixture', () => {
+    setupTestWrapper({
+      proxyConfig: { clientOptions },
+      fixture: {
+        ...sampleFixture,
+        apollo: {
+          resolveWith
+        }
+      }
+    });
+
+    expect(wrapper.instance().client.cache.config).toEqual(
+      clientOptions.cache.config
+    );
   });
 });
 
