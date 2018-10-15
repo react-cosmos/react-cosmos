@@ -800,7 +800,7 @@ export default {
 };
 ```
 
-Built on top of [fetch-mock](http://www.wheresrhys.co.uk/fetch-mock/api). Check out the [Fetch example](examples/fetch) to see the proxy in action.
+Built on top of [fetch-mock](http://www.wheresrhys.co.uk/fetch-mock). Check out the [Fetch example](examples/fetch) to see the proxy in action.
 
 #### XHR
 
