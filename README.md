@@ -1107,6 +1107,7 @@ module.exports = {
   hot: false,
 
   // HTTP proxy specific requests to a different target
+  // For advanced usage see https://github.com/react-cosmos/react-cosmos/pull/875
   httpProxy: {
     context: '/api',
     target: 'http://localhost:4000/api'

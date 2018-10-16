@@ -8,7 +8,7 @@ import httpProxyMiddleware from 'http-proxy-middleware';
 import launchEditor from 'react-dev-utils/launchEditor';
 import { getPlaygroundHtml, getPlaygroundHtmlNext } from './playground-html';
 
-import type { Config } from 'react-cosmos-flow/config';
+import type { Config, HttpProxyConfig } from 'react-cosmos-flow/config';
 import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
 
 export function createServerApp({
@@ -22,15 +22,7 @@ export function createServerApp({
   const app = express();
 
   if (httpProxy) {
-    if (httpProxy.context) {
-      const { context, ...options } = httpProxy;
-      app.use(context, httpProxyMiddleware(options));
-    } else {
-      Object.keys(httpProxy).forEach(context => {
-        const options = httpProxy[context];
-        app.use(context, httpProxyMiddleware(options));
-      });
-    }
+    setupHttpProxy(app, httpProxy);
   }
 
   const playgroundHtml =
@@ -102,6 +94,18 @@ export function attachStackFrameEditorLauncher(app: express$Application) {
       res.end();
     }
   );
+}
+
+function setupHttpProxy(app: express$Application, httpProxy: HttpProxyConfig) {
+  if (httpProxy.context) {
+    const { context, ...options } = httpProxy;
+    app.use(context, httpProxyMiddleware(options));
+  } else {
+    Object.keys(httpProxy).forEach(contextKey => {
+      const options = httpProxy[contextKey];
+      app.use(contextKey, httpProxyMiddleware(options));
+    });
+  }
 }
 
 export function getRootUrl(publicUrl: string) {
