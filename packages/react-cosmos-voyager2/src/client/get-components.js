@@ -152,7 +152,7 @@ export function getComponents({
     });
   }
 
-  return sortBy(components, getObjectPath);
+  return sortBy(components, stripHocNamesFromComponentName);
 }
 
 function getFileNameFromPath(filePath: string) {
@@ -215,4 +215,15 @@ function warnAboutIncompatFixtures(
 
 function getObjectPath(obj: { name: string, namespace: string }): string {
   return obj.namespace ? `${obj.namespace}/${obj.name}` : obj.name;
+}
+
+function stripHocNamesFromComponentName(obj: {
+  name: string,
+  namespace: string
+}): string {
+  // withRouter(connect(MyComponent)) -> MyComponent
+  // connect(MyComponent)) -> MyComponent
+  // MyComponent -> MyComponent
+  const componentName = obj.name.replace(/^(.*\()?(.+?)\)*$/, '$2');
+  return obj.namespace ? `${obj.namespace}/${componentName}` : componentName;
 }
