@@ -34,34 +34,34 @@ export function createFixtureLink({ apolloFixture, cache, fixture }) {
 
         if (failWith) {
           observer.error(failWith);
-        }
-
-        // never resolve query, endless loading state
-        if (latency === -1) {
-          return;
-        }
-
-        setTimeout(() => {
-          if (typeof resolveWith === 'function') {
-            resolveFunctionOrPromise(
-              resolveWith({
-                cache,
-                variables,
-                fixture,
-                operationName,
-                ...others
-              }),
-              observer
-            );
-          } else {
-            observer.next({
-              data: resolveWith.data ? resolveWith.data : resolveWith,
-              errors: resolveWith.errors
-            });
-
-            observer.complete();
+        } else {
+          // never resolve query, endless loading state
+          if (latency === -1) {
+            return;
           }
-        }, latency * 1000);
+
+          setTimeout(() => {
+            if (typeof resolveWith === 'function') {
+              resolveFunctionOrPromise(
+                resolveWith({
+                  cache,
+                  variables,
+                  fixture,
+                  operationName,
+                  ...others
+                }),
+                observer
+              );
+            } else {
+              observer.next({
+                data: resolveWith.data ? resolveWith.data : resolveWith,
+                errors: resolveWith.errors
+              });
+
+              observer.complete();
+            }
+          }, latency * 1000);
+        }
       })
   );
 }
