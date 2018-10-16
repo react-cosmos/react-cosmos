@@ -7,6 +7,8 @@ export type ExcludePatterns = ExcludePattern | Array<ExcludePattern>;
 type WebpackConfig = Object;
 type WebpackConfigOverride = (WebpackConfig, { env: string }) => WebpackConfig;
 
+export type PluginConfig = { [prop: string]: mixed };
+
 type BasicHttpProxyConfig = { context: string };
 type AdvancedHttpProxyConfig = { [contextKey: string]: string | {} };
 export type HttpProxyConfig = BasicHttpProxyConfig | AdvancedHttpProxyConfig;

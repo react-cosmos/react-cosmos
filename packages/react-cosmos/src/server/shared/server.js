@@ -97,8 +97,8 @@ export function attachStackFrameEditorLauncher(app: express$Application) {
 }
 
 function setupHttpProxy(app: express$Application, httpProxy: HttpProxyConfig) {
-  if (httpProxy.context) {
-    const { context, ...options } = httpProxy;
+  const { context, ...options } = httpProxy;
+  if (typeof context === 'string') {
     app.use(context, httpProxyMiddleware(options));
   } else {
     Object.keys(httpProxy).forEach(contextKey => {
