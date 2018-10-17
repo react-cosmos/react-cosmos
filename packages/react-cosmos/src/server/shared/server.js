@@ -4,9 +4,9 @@ import { join, relative } from 'path';
 import { createServer as createHttpServer } from 'http';
 import promisify from 'util.promisify';
 import express from 'express';
-import httpProxyMiddleware from 'http-proxy-middleware';
 import launchEditor from 'react-dev-utils/launchEditor';
 import { getPlaygroundHtml, getPlaygroundHtmlNext } from './playground-html';
+import { setupHttpProxy } from './http-proxy';
 
 import type { Config } from 'react-cosmos-flow/config';
 import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
@@ -22,8 +22,7 @@ export function createServerApp({
   const app = express();
 
   if (httpProxy) {
-    const { context, target } = httpProxy;
-    app.use(context, httpProxyMiddleware(target));
+    setupHttpProxy(app, httpProxy);
   }
 
   const playgroundHtml =
