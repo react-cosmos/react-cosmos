@@ -1,13 +1,26 @@
 import { getSelector } from '../support/utils/css-modules';
 
+const componentButtonSel = getSelector('index__componentName');
 const fixtureButtonSel = getSelector('index__fixture');
 // The first menu button is the fixture editor toggle
 const editorButtonSel = `${getSelector('index__button')}:eq(1)`;
 
-function selectFixture(fixtureName) {
+function selectFixture(componentName, fixtureName) {
   cy.get(fixtureButtonSel)
     .contains(fixtureName)
-    .click();
+    .then($fixtureBtn => {
+      if ($fixtureBtn.is(':visible')) {
+        return $fixtureBtn.click();
+      }
+
+      return cy
+        .get(componentButtonSel)
+        .contains(componentName)
+        .then($componentBtn => {
+          $componentBtn.click();
+          $fixtureBtn.click();
+        });
+    });
 }
 
 function toggleFixtureEditor() {
@@ -60,7 +73,7 @@ describe('Local state example', () => {
 
   context('select fixture', () => {
     beforeEach(() => {
-      selectFixture('one-two-three');
+      selectFixture('CounterList', 'one-two-three');
     });
 
     it('should add active class to fixture button', () => {
@@ -82,7 +95,7 @@ describe('Local state example', () => {
 
   context('fixture editor', () => {
     beforeEach(() => {
-      selectFixture('one-two-three');
+      selectFixture('CounterList', 'one-two-three');
       toggleFixtureEditor();
     });
 
@@ -107,7 +120,7 @@ describe('Local state example', () => {
 
   context('fixture update', () => {
     beforeEach(() => {
-      selectFixture('one-two-three');
+      selectFixture('CounterList', 'one-two-three');
       toggleFixtureEditor();
 
       // Click three times on the first button
