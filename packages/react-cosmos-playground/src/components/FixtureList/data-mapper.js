@@ -4,10 +4,10 @@ import sortBy from 'lodash.sortby';
 
 const NODE_ORDER_BY_TYPE = ['directory', 'component'];
 
-function getExandedValue(savedExpansionState, path) {
+function getExandedValue(savedExpansionState, path, defaultValue) {
   return Object.prototype.hasOwnProperty.call(savedExpansionState, path)
     ? savedExpansionState[path]
-    : true;
+    : defaultValue;
 }
 
 function parseFixtureArray(componentName, fixtureArray, savedExpansionState) {
@@ -33,7 +33,7 @@ function parseFixtureArray(componentName, fixtureArray, savedExpansionState) {
     const newPath = `${componentName}/${folderName}`;
     return {
       name: folderName,
-      expanded: getExandedValue(savedExpansionState, newPath),
+      expanded: getExandedValue(savedExpansionState, newPath, false),
       type: 'fixtureDirectory',
       path: newPath,
       children: nestedData[folderName].map(fixture => ({
@@ -107,7 +107,7 @@ const dataObjectToNestedArray = (base, savedExpansionState, path = '') => {
       returnChildren.push({
         name: key,
         path: newPath,
-        expanded: getExandedValue(savedExpansionState, newPath),
+        expanded: getExandedValue(savedExpansionState, newPath, isDirectory),
         type: isDirectory ? 'directory' : 'component',
         displayData,
         children
