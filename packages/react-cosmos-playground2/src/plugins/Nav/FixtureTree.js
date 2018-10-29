@@ -43,6 +43,8 @@ class FixtureTreeNode extends Component<FixtureTreeProps> {
     const childDirs = Object.keys(children);
 
     // Skip nodes with a single child and no values (eg. __fixtures__ dirs)
+    // FIXME: foo/bar/__fixtures__/fixture.js becomes foo/fixture.js (the "bar"
+    // is relevant and should be kept)
     if (values.length === 0 && childDirs.length === 1) {
       const [soleDir] = childDirs;
 
