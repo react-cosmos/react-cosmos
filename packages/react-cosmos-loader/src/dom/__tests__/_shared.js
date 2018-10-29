@@ -9,8 +9,8 @@ import type { LoaderMessage } from 'react-cosmos-flow/loader';
 export const ProxyFoo = () => <span />;
 export const proxies = [ProxyFoo];
 
-export const fixtureFoo = { component: () => {}, foo: true, fooFn: () => {} };
-export const fixtureBar = { component: () => {}, bar: true };
+export const fixtureFoo = { component: () => null, foo: true, fooFn: () => {} };
+export const fixtureBar = { component: () => null, bar: true };
 export const fixtures = {
   Foo: {
     foo: fixtureFoo

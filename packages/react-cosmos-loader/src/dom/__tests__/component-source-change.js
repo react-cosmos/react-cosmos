@@ -25,9 +25,9 @@ jest.mock('../../create-context', () => ({
 
 subscribeToWindowMessages();
 
-const componentNew = () => {};
-const componentNew2 = () => {};
-const componentNew3 = () => {};
+const componentNew = () => null;
+const componentNew2 = () => null;
+const componentNew3 = () => null;
 let destroy;
 
 beforeEach(async () => {

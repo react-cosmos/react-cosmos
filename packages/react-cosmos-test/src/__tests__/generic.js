@@ -25,7 +25,7 @@ jest.mock('react-cosmos-loader', () => ({
 
 const renderer = jest.fn();
 const rendererOptions = {};
-const fixture = { component: () => {} };
+const fixture = { component: () => null };
 
 function getLastContextArgs() {
   return getMock(createLoaderContext).calls[0][0];
@@ -60,7 +60,7 @@ it('detects proxies from user config', () => {
 });
 
 it('prefers specified proxies', () => {
-  const ProxyBaz = () => {};
+  const ProxyBaz = () => null;
   createContext({ renderer, fixture, proxies: [ProxyBaz] });
 
   expect(getLastContextArgs().proxies).toEqual([ProxyBaz]);

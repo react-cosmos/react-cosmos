@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
-    "@babel/runtime-corejs2": "^7.0.0",
+    "@babel/runtime-corejs2": "^7.1.2",
     "fetch-mock": "^5.12.2",
     "react-cosmos-shared": "^4.7.0-16"
   }

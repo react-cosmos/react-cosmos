@@ -33,7 +33,7 @@ it('notifies parent frame with latest fixture names', async () => {
     fixtures: {
       ...fixtures,
       Baz: {
-        baz: { component: () => {} }
+        baz: { component: () => null }
       }
     }
   });

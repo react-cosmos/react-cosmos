@@ -9,7 +9,7 @@
     "@skidding/react-codemirror": "^1.0.2",
     "classnames": "^2.2.6",
     "fuzzaldrin-plus": "^0.6.0",
-    "localforage": "^1.7.2",
+    "localforage": "^1.7.3",
     "lodash.flatmapdeep": "^4.10.0",
     "lodash.merge": "^4.6.1",
     "lodash.omitby": "^4.6.0",

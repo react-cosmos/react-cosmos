@@ -5,8 +5,8 @@ import { connectLoader } from '../../connect-loader';
 import { createDomRenderer } from '../renderer';
 import { mount } from '../mount';
 
-const mockFixture = { component: () => {} };
-const mockProxy = () => {};
+const mockFixture = { component: () => null };
+const mockProxy = () => null;
 const mockLoaderOpts = { containerQuerySelector: '#app123' };
 
 const mockRenderer = {};
