@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-fixture",
-  "version": "4.7.0-16",
+  "version": "4.7.0-17",
   "description": "APIs for loading React Cosmos fixtures",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-fixture",
   "license": "MIT",
@@ -8,7 +8,7 @@
   "dependencies": {
     "@babel/runtime-corejs2": "^7.1.2",
     "lodash": "^4.17.11",
-    "react-cosmos-shared2": "^4.7.0-16",
+    "react-cosmos-shared2": "^4.7.0-17",
     "react-is": "^16.6.0",
     "socket.io-client": "^2.1.1"
   }
