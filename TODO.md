@@ -1,8 +1,33 @@
-## Roadmap: New Horizons
+# Roadmap: Cosmos Next
 
-## Roadmap: Summer of Cosmos
+The innovations included in the next generation of Cosmos have already been designed, tested and implemented for the most part. This roadmap will put the the all-new **JSX fixtures** and **Pluggable UI** into the user's hands.
 
-> Oct 1st, 2018: TODO Compose summary and kick off new roadmap.
+The aim for _Cosmos Next_ is to provide ~80% parity with Cosmos 4.x along with brand new features. The upgrade will be **opt-in** and there will be a exhaustive beta phase before a transition plan is devised for the stable channel.
+
+## Step 1: Port UI to plugin architecture
+
+> Note: The development of JSX fixtures is coupled to the new Pluggable UI. JSX fixtures use a new communication protocol that only the new UI understands and vice-versa. So they both need to be released at the same time. This was a risky engineering endeavor, but it allowed leapfrogging intermediate development steps.
+
+We need a decent parity with the existing Cosmos UI to test JSX fixtures. This is the main requirement for releasing Cosmos Next for beta testing.
+
+- [ ] Establish testing practices for new UI package
+- [ ] Feature parity
+  - [ ] Full screen
+    - [ ] Is it OK to add params to renderer URL? (They might conflict with user URL params)
+  - [ ] Searchable left nav
+  - [ ] Responsive mode
+
+**Not** included in the first beta release: The Fixture Editor. This is because it'll be replaced by something _much_ more powerful (a new Control Panel). But this section will have arrive later, after the core of Cosmos Next has been thoroughly tested.
+
+## Next Steps
+
+- [ ] Basic Control Panel (props/state visualization and editing)
+- [ ] Refine and document UI plugin API
+- [ ] Redesign Cosmos docs
+
+# Roadmap: Summer of Cosmos
+
+> **Oct 29, 2018:** This was a long and fruitful summer for Cosmos. Time to draw a line and draft a new roadmap.
 
 - [React Native integration](#react-native-integration)
 - [Pluggable UI](#pluggable-ui)
