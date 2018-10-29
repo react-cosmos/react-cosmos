@@ -104,6 +104,7 @@ function getDevicesFromUntypedObject(obj: mixed): Devices {
 
   return obj.reduce((devices, d) => {
     const device = getDeviceFromUntypedObject(d);
+
     return device ? [...devices, device] : devices;
   }, []);
 }

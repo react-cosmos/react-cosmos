@@ -47,6 +47,7 @@ beforeEach(() => {
               method: 'POST',
               response: (req, res) => {
                 const { id } = JSON.parse(req.body());
+
                 return res.status(200).body({
                   id,
                   name: 'John Doe'

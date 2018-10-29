@@ -52,6 +52,7 @@ export function createRouterProxy() {
                       props: { ...props.fixture.props, ...routerProps }
                     }
                   };
+
                   return <NextProxy {...newProxyProps} nextProxy={next()} />;
                 }
 
@@ -71,6 +72,7 @@ export function createRouterProxy() {
 
 function buildLocation(url, locationState) {
   const { pathname, search, hash } = urlParser.parse(url);
+
   return {
     pathname,
     search,

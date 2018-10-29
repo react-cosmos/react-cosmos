@@ -44,6 +44,7 @@ export function createErrorCatchProxy() {
 
     renderNextProxy() {
       const { nextProxy } = this.props;
+
       return <nextProxy.value {...this.props} nextProxy={nextProxy.next()} />;
     }
   }

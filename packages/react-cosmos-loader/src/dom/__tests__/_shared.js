@@ -34,6 +34,7 @@ export function subscribeToWindowMessages() {
 
 export function getLastWindowMessage() {
   const { calls } = handleMessage.mock;
+
   return calls[calls.length - 1][0].data;
 }
 

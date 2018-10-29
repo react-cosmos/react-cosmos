@@ -8,5 +8,6 @@ const reducer = combineReducers({
 
 export default function(initialState) {
   const store = createStore(reducer, initialState, devToolsEnhancer());
+
   return store;
 }

@@ -225,5 +225,6 @@ function stripHocNamesFromComponentName(obj: {
   // connect(MyComponent)) -> MyComponent
   // MyComponent -> MyComponent
   const componentName = obj.name.replace(/^(.*\()?(.+?)\)*$/, '$2');
+
   return obj.namespace ? `${obj.namespace}/${componentName}` : componentName;
 }

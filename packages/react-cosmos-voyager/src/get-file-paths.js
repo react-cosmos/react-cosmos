@@ -52,6 +52,7 @@ const getMatchingFixtures = (fixtures, componentName, fixturesDir) =>
       componentName,
       fixturesDir
     );
+
     return fixtureName
       ? {
           ...matchingFixtures,

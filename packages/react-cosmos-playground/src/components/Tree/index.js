@@ -123,6 +123,7 @@ const TreeFolder = ({
     [styles.componentName]: true,
     [styles.fixtureDirectory]: node.type === 'fixtureDirectory'
   });
+
   return (
     <div
       className={styles.component}
@@ -247,6 +248,7 @@ class Tree extends React.Component {
             );
           }
           const isSelected = nodeIsSelected(node, selected);
+
           return (
             <div
               ref={el => {

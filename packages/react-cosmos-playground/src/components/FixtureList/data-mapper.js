@@ -31,6 +31,7 @@ function parseFixtureArray(componentName, fixtureArray, savedExpansionState) {
   // Nested folders go first
   const result = Object.keys(nestedData).map(folderName => {
     const newPath = `${componentName}/${folderName}`;
+
     return {
       name: folderName,
       expanded: getExandedValue(savedExpansionState, newPath, false),
@@ -77,6 +78,7 @@ const extractHocNames = string => {
 
 const generateDisplayData = name => {
   const { componentName, hocs } = extractHocNames(name);
+
   return {
     componentName,
     hocs,

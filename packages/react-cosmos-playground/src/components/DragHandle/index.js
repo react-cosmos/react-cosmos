@@ -70,6 +70,7 @@ class DragHandle extends Component {
       [styles.vertical]: vertical,
       [styles.horizontal]: !vertical
     });
+
     return (
       <div
         className={className}

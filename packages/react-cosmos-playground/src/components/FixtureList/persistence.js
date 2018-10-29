@@ -7,6 +7,7 @@ export async function getSavedExpansionState(projectKey) {
   const value = await localForage.getItem(
     `${TREE_EXPANSION_STATE}-${projectKey}`
   );
+
   return value !== null ? value : {};
 }
 

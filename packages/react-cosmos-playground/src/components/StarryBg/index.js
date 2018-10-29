@@ -4,6 +4,7 @@ import styles from './index.less';
 class StarryBg extends Component {
   render() {
     const { children } = this.props;
+
     return (
       <div className={styles.root}>
         <div className={styles.stars} />

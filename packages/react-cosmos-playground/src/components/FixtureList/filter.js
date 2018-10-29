@@ -8,6 +8,7 @@ function matcher(filterText, node) {
     : node.displayData
       ? node.displayData.search
       : node.name;
+
   return match(matchText, filterText).length > 0;
 }
 
@@ -27,6 +28,7 @@ function filterNode(node, filterText) {
   }
   // If not then only keep the ones that match or have matching descendants
   const filteredChildren = filterNodeArray(node.children, filterText);
+
   return { ...node, expanded: true, children: filteredChildren };
 }
 
