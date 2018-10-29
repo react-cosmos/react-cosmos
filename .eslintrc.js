@@ -27,6 +27,10 @@ module.exports = {
   },
   rules: {
     'spaced-comment': 2,
+    'padding-line-between-statements': [
+      'error',
+      { blankLine: 'always', prev: ['const', 'let', 'var'], next: 'return' }
+    ],
     // Cosmos uses console.log/warn/error to inform users ¯\_(ツ)_/¯
     // Not ideal, because temporary console calls can be committed by mistake.
     'no-console': 0,

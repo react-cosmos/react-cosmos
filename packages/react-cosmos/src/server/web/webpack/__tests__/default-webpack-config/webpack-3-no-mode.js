@@ -6,6 +6,7 @@ jest.mock('import-from', () => ({
     const mocks = {
       webpack: { version: '3.5.0' }
     };
+
     return mocks[loaderName];
   }
 }));

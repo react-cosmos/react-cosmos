@@ -11,6 +11,7 @@ const Component = props => <span>{props.user.name}</span>;
 
 const NextProxy = props => {
   const { nextProxy } = props;
+
   return <nextProxy.value {...props} nextProxy={nextProxy.next()} />;
 };
 

@@ -30,6 +30,7 @@ export const Header = ({
     devices,
     size => size.width === width && size.height === height
   );
+
   return (
     <div className={styles.buttonContainer}>
       <CustomButton

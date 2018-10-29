@@ -6,6 +6,7 @@ jest.mock('import-from', () => ({
     const mocks = {
       webpack: {}
     };
+
     return mocks[loaderName];
   }
 }));

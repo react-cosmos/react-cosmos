@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "react-cosmos": "^4.7.0-16",
-    "react-redux": "^5.0.7",
-    "redux": "^4.0.0",
+    "react-redux": "^5.1.0",
+    "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.5",
     "redux-form": "^7.4.2"
   },

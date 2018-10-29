@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
-    "@babel/runtime-corejs2": "^7.0.0",
+    "@babel/runtime-corejs2": "^7.1.2",
     "lodash.isplainobject": "^4.0.6",
     "prop-types": "^15.6.2",
     "resolve-from": "^4.0.0",

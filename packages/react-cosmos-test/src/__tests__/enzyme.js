@@ -30,7 +30,7 @@ jest.mock('react-cosmos-loader', () => ({
   createContext: jest.fn(() => mockContext)
 }));
 
-const fixture = { component: () => {} };
+const fixture = { component: () => null };
 
 function getLastContextArgs() {
   return getMock(createLoaderContext).calls[0][0];

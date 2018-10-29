@@ -36,11 +36,7 @@ class IframePreview extends Component<Props> {
     const { rendererUrl } = this.props;
 
     return (
-      <Iframe
-        innerRef={this.handleIframeRef}
-        src={rendererUrl}
-        frameBorder={0}
-      />
+      <Iframe ref={this.handleIframeRef} src={rendererUrl} frameBorder={0} />
     );
   }
 

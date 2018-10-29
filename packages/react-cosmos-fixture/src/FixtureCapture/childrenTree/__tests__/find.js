@@ -5,8 +5,10 @@ import React from 'react';
 import { isElement } from 'react-is';
 import { findElementPaths } from '..';
 
+import type { Node } from 'react';
+
 it('finds no paths on empty node', () => {
-  const noChildrenNodes = [undefined, null, true, false, 'Hello', 7];
+  const noChildrenNodes: Node[] = [null, true, false, 'Hello', 7];
 
   noChildrenNodes.forEach(node => {
     expect(findElementPaths(node)).toEqual([]);
@@ -74,11 +76,11 @@ it('finds nested paths', () => {
 });
 
 it('finds no paths on function children', () => {
-  expect(findElementPaths(() => {})).toEqual([]);
+  expect(findElementPaths(() => null)).toEqual([]);
 });
 
 it('only finds paths outside function children', () => {
-  const Comp = () => {};
+  const Comp = () => null;
   expect(
     findElementPaths(
       <div>

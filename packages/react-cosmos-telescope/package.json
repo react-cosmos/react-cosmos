@@ -6,12 +6,12 @@
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
-    "@babel/runtime-corejs2": "^7.0.0",
+    "@babel/runtime-corejs2": "^7.1.2",
     "react-cosmos-config": "^4.7.0-16",
     "react-cosmos-loader": "^4.7.0-16",
     "react-cosmos-shared": "^4.7.0-16",
     "react-cosmos-state-proxy": "^4.7.0-16",
     "react-cosmos-voyager2": "^4.7.0-16",
-    "react-test-renderer": "^16.5.2"
+    "react-test-renderer": "^16.6.0"
   }
 }

@@ -8,6 +8,7 @@ import { createContext as _createContext } from '../create-context';
 
 function mockStateProxy(props) {
   const { nextProxy } = props;
+
   return <nextProxy.value {...props} nextProxy={nextProxy.next()} />;
 }
 
@@ -17,11 +18,13 @@ jest.mock('react-cosmos-state-proxy', () => {
 
 function ProxyA(props) {
   const { nextProxy } = props;
+
   return <nextProxy.value {...props} nextProxy={nextProxy.next()} />;
 }
 
 function ProxyB(props) {
   const { nextProxy } = props;
+
   return <nextProxy.value {...props} nextProxy={nextProxy.next()} />;
 }
 
@@ -53,6 +56,7 @@ const createContext = args => {
 
 function getElementFromLastRendererCall() {
   const { calls } = renderer.mock;
+
   return calls[calls.length - 1][0];
 }
 

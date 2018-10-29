@@ -30,6 +30,7 @@ export const SizeButton = ({
   const className = classNames(styles.button, {
     [styles.buttonActive]: isActive
   });
+
   return (
     <button
       className={className}

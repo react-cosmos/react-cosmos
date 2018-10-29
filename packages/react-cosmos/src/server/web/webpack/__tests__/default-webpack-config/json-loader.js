@@ -5,6 +5,7 @@ jest.mock('resolve-from', () => ({
     const mocks = {
       'json-loader': '/json/path'
     };
+
     return mocks[loaderName];
   }
 }));
@@ -13,6 +14,7 @@ jest.mock('import-from', () => ({
     const mocks = {
       webpack: {}
     };
+
     return mocks[loaderName];
   }
 }));

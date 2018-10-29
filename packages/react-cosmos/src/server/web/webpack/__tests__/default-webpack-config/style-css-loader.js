@@ -6,6 +6,7 @@ jest.mock('resolve-from', () => ({
       'style-loader': '/style/path',
       'css-loader': '/css/path'
     };
+
     return mocks[loaderName];
   }
 }));
@@ -14,6 +15,7 @@ jest.mock('import-from', () => ({
     const mocks = {
       webpack: {}
     };
+
     return mocks[loaderName];
   }
 }));

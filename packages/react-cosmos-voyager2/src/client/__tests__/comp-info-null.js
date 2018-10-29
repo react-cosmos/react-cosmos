@@ -14,7 +14,7 @@ describe('Single component defaults', () => {
     ];
     const fixtureModules = {
       '/path/to/foo.js': {
-        component: () => {}
+        component: () => null
       }
     };
     components = await getComponents({ fixtureFiles, fixtureModules });
@@ -42,13 +42,13 @@ describe('Multi component defaults', () => {
     const fixtureModules = {
       '/path/to/foo.js': [
         {
-          component: () => {}
+          component: () => null
         },
         {
-          component: () => {}
+          component: () => null
         },
         {
-          component: () => {}
+          component: () => null
         }
       ]
     };
