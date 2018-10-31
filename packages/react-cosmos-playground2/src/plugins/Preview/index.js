@@ -3,8 +3,8 @@
 
 import styled from 'styled-components';
 import React, { Component } from 'react';
-import { Plugin, Plug, Slot } from 'react-plugin';
-import { PlaygroundContext } from '../context';
+import { register, Plugin, Plug, Slot } from 'react-plugin';
+import { PlaygroundContext } from '../../context';
 
 import type { SetState } from 'react-cosmos-shared2/util';
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
@@ -16,7 +16,7 @@ import type {
   UiState,
   ReplaceFixtureState,
   RendererRequestListener
-} from '../index.js.flow';
+} from '../../index.js.flow';
 
 type Props = {
   rendererUrl: string,
@@ -58,6 +58,9 @@ class IframePreview extends Component<Props> {
     this.iframeRef = iframeRef;
   };
 
+  // TODO:
+  // - handleAnyMessage
+  // - handleCosmosMessage
   handleMessage = ({ data }: { data: RendererResponse }) => {
     const { uiState, setUiState, replaceFixtureState } = this.props;
 
@@ -97,7 +100,7 @@ class IframePreview extends Component<Props> {
 
 // The root <Slot name="preview"> allows other plugins to further decorate
 // the "preview" plugin slot.
-export default (
+register(
   <Plugin name="Preview">
     <Plug
       slot="preview"

@@ -2,7 +2,7 @@
 
 import styled from 'styled-components';
 import React, { Component } from 'react';
-import { Plugin, Plug, Slot } from 'react-plugin';
+import { register, Plugin, Plug, Slot } from 'react-plugin';
 import { RENDERER_ID } from 'react-cosmos-shared2/renderer';
 import { PlaygroundContext } from '../../context';
 import { FixtureTree } from './FixtureTree';
@@ -44,7 +44,7 @@ class Nav extends Component<Props> {
   };
 }
 
-export default (
+register(
   <Plugin name="Preview">
     <Plug
       slot="preview"

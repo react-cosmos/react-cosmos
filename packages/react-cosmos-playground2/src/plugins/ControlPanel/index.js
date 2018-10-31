@@ -2,7 +2,7 @@
 
 import styled from 'styled-components';
 import React, { Component } from 'react';
-import { Plugin, Plug, Slot } from 'react-plugin';
+import { register, Plugin, Plug, Slot } from 'react-plugin';
 import qs from 'query-string';
 import { PlaygroundContext } from '../../context';
 import { PropsState } from './PropsState';
@@ -45,7 +45,7 @@ class ControlPanel extends Component<Props> {
   }
 }
 
-export default (
+register(
   <Plugin name="Preview">
     <Plug
       slot="preview"
