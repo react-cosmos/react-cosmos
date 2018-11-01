@@ -2,10 +2,10 @@
 
 import styled from 'styled-components';
 import React, { Component } from 'react';
-import { Slot } from 'react-plugin';
 import { removeItem, updateState } from 'react-cosmos-shared2/util';
 import { defaultUiState, PlaygroundContext } from '../context';
 
+import type { Node } from 'react';
 import type { SetState } from 'react-cosmos-shared2/util';
 import type { RendererRequest } from 'react-cosmos-shared2/renderer';
 import type {
@@ -17,6 +17,7 @@ import type {
 } from '../index.js.flow';
 
 type Props = {
+  children: Node,
   options: PlaygroundOptions
 };
 
@@ -61,18 +62,11 @@ export class Root extends Component<Props, PlaygroundContextValue> {
   };
 
   render() {
-    const {
-      uiState: { renderers }
-    } = this.state;
+    const { children } = this.props;
 
     return (
       <PlaygroundContext.Provider value={this.state}>
-        <Container>
-          {renderers.length === 0 && <p>Waiting for renderer...</p>}
-          <Slot name="root">
-            <Slot name="preview" />
-          </Slot>
-        </Container>
+        <Container>{children}</Container>
       </PlaygroundContext.Provider>
     );
   }

@@ -1,31 +1,21 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { wait, render, cleanup } from 'react-testing-library';
 import { Slot } from 'react-plugin';
-import { PlaygroundContext, defaultUiState } from '../../context';
+import { PlaygroundContext } from '../../context';
+import { Root } from '../../Root';
 
 // Plugins have side-effects: they register themselves
 import '.';
 
-import type { PlaygroundContextValue } from '../../index.js.flow';
-
 afterEach(cleanup);
 
 it('renders iframe with options.rendererUrl src', () => {
-  const renderer = renderSlot();
+  const renderer = renderPlayground();
 
   expect(getIframe(renderer)).toBeTruthy();
   expect(getIframe(renderer).src).toMatch('foo-renderer');
-});
-
-it('subscribes to renderer requests', async () => {
-  const onRendererRequest = jest.fn();
-  renderSlot({ onRendererRequest });
-
-  await wait(() =>
-    expect(onRendererRequest).toBeCalledWith(expect.any(Function))
-  );
 });
 
 it('posts renderer request message to iframe', async () => {
@@ -37,56 +27,48 @@ it('posts renderer request message to iframe', async () => {
     }
   };
 
-  let requestListener;
-  const renderer = renderSlot({
-    onRendererRequest: listener => {
-      requestListener = listener;
-
-      // Return unsubscribe function
-      return () => {};
-    }
+  const TestComponent = createTestComponent(context => {
+    context.postRendererRequest(selectFixtureMsg);
   });
-
+  const renderer = renderPlayground(<TestComponent />);
   const iframe = getIframe(renderer);
 
   await mockIframeMessage(iframe, async ({ onMessage }) => {
-    requestListener(selectFixtureMsg);
-
-    await wait(() => expect(onMessage).toBeCalled());
-
-    const firstCall = onMessage.mock.calls[0];
-    expect(firstCall[0].data).toEqual(selectFixtureMsg);
+    await wait(() =>
+      expect(onMessage.mock.calls[0][0].data).toEqual(selectFixtureMsg)
+    );
   });
 });
 
-function renderSlot({
-  setUiState = () => {},
-  replaceFixtureState = () => {},
-  postRendererRequest = () => {},
-  onRendererRequest = () => () => {}
-}: $Shape<PlaygroundContextValue> = {}) {
-  // TODO: Render Root instead
+function renderPlayground(otherNodes) {
   return render(
-    <PlaygroundContext.Provider
-      value={{
-        options: {
-          rendererUrl: 'foo-renderer'
-        },
-        uiState: defaultUiState,
-        fixtureState: null,
-        setUiState,
-        replaceFixtureState,
-        postRendererRequest,
-        onRendererRequest
+    <Root
+      options={{
+        rendererUrl: 'foo-renderer'
       }}
     >
       <Slot name="preview" />
-    </PlaygroundContext.Provider>
+      {otherNodes}
+    </Root>
   );
 }
 
 function getIframe({ getByTestId }) {
   return getByTestId('preview-iframe');
+}
+
+function createTestComponent(onMount) {
+  return class TestComponent extends Component<{}> {
+    static contextType = PlaygroundContext;
+
+    componentDidMount() {
+      onMount(this.context);
+    }
+
+    render() {
+      return null;
+    }
+  };
 }
 
 async function mockIframeMessage(iframe, children) {
