@@ -6,44 +6,37 @@ import React, { Component } from 'react';
 import { register, Plugin, Plug, Slot } from 'react-plugin';
 import { PlaygroundContext } from '../../context';
 
-import type { SetState } from 'react-cosmos-shared2/util';
-import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type {
   RendererRequest,
   RendererResponse
 } from 'react-cosmos-shared2/renderer';
-import type {
-  UiState,
-  ReplaceFixtureState,
-  RendererRequestListener
-} from '../../index.js.flow';
 
-type Props = {
-  rendererUrl: string,
-  uiState: UiState,
-  fixtureState: ?FixtureState,
-  setUiState: SetState<UiState>,
-  onRendererRequest: (listener: RendererRequestListener) => () => mixed,
-  replaceFixtureState: ReplaceFixtureState
-};
+class IframePreview extends Component<{}> {
+  static contextType = PlaygroundContext;
 
-class IframePreview extends Component<Props> {
   iframeRef: ?window;
 
   unsubscribe: ?() => mixed;
 
   render() {
-    const { rendererUrl } = this.props;
+    const {
+      options: { rendererUrl }
+    } = this.context;
 
     return (
-      <Iframe ref={this.handleIframeRef} src={rendererUrl} frameBorder={0} />
+      <Iframe
+        data-testid="preview-iframe"
+        ref={this.handleIframeRef}
+        src={rendererUrl}
+        frameBorder={0}
+      />
     );
   }
 
   componentDidMount() {
     window.addEventListener('message', this.handleMessage, false);
 
-    this.unsubscribe = this.props.onRendererRequest(this.postIframeMessage);
+    this.unsubscribe = this.context.onRendererRequest(this.postIframeMessage);
   }
 
   componentWillUnmount() {
@@ -62,7 +55,7 @@ class IframePreview extends Component<Props> {
   // - handleAnyMessage
   // - handleCosmosMessage
   handleMessage = ({ data }: { data: RendererResponse }) => {
-    const { uiState, setUiState, replaceFixtureState } = this.props;
+    const { uiState, setUiState, replaceFixtureState } = this.context;
 
     switch (data.type) {
       case 'fixtureList': {
@@ -106,25 +99,7 @@ register(
       slot="preview"
       render={() => (
         <Slot name="preview">
-          <PlaygroundContext.Consumer>
-            {({
-              options,
-              uiState,
-              setUiState,
-              fixtureState,
-              replaceFixtureState,
-              onRendererRequest
-            }) => (
-              <IframePreview
-                rendererUrl={options.rendererUrl}
-                uiState={uiState}
-                fixtureState={fixtureState}
-                setUiState={setUiState}
-                replaceFixtureState={replaceFixtureState}
-                onRendererRequest={onRendererRequest}
-              />
-            )}
-          </PlaygroundContext.Consumer>
+          <IframePreview />
         </Slot>
       )}
     />

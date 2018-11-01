@@ -1,26 +1,35 @@
 // @flow
 
 import React from 'react';
-import { create as render } from 'react-test-renderer';
+import { wait, render } from 'react-testing-library';
 import { Slot } from 'react-plugin';
 import { PlaygroundContext, defaultUiState } from '../../context';
 
 // Plugins have side-effects: they register themselves
 import '.';
 
+import type { PlaygroundContextValue } from '../../index.js.flow';
+
 it('renders iframe with options.rendererUrl src', () => {
   const renderer = renderSlot();
 
   expect(getIframe(renderer)).toBeTruthy();
-  expect(getIframe(renderer).props.src).toBe('foo-renderer');
+  expect(getIframe(renderer).src).toMatch('foo-renderer');
 });
 
-function renderSlot() {
-  const setUiState = jest.fn();
-  const replaceFixtureState = jest.fn();
-  const postRendererRequest = jest.fn();
+it('subscribes to renderer requests', async () => {
   const onRendererRequest = jest.fn();
+  renderSlot({ onRendererRequest });
 
+  await wait(() => expect(onRendererRequest).toBeCalled());
+});
+
+function renderSlot({
+  setUiState = () => {},
+  replaceFixtureState = () => {},
+  postRendererRequest = () => {},
+  onRendererRequest = () => () => {}
+}: $Shape<PlaygroundContextValue> = {}) {
   return render(
     <PlaygroundContext.Provider
       value={{
@@ -40,6 +49,6 @@ function renderSlot() {
   );
 }
 
-function getIframe(renderer) {
-  return renderer.root.findByType('iframe');
+function getIframe({ getByTestId }) {
+  return getByTestId('preview-iframe');
 }
