@@ -24,7 +24,7 @@ it('posts renderer request message to iframe', async () => {
   const selectFixtureMsg = {
     type: 'selectFixture',
     payload: {
-      rendererId: 'foo-rendererId',
+      rendererId: 'foo-renderer',
       fixturePath: 'bar-fixturePath'
     }
   };

@@ -7,12 +7,16 @@ import { defaultUiState, PlaygroundContext } from '../PlaygroundContext';
 
 import type { Node } from 'react';
 import type { SetState } from 'react-cosmos-shared2/util';
-import type { RendererRequest } from 'react-cosmos-shared2/renderer';
+import type {
+  RendererRequest,
+  RendererResponse
+} from 'react-cosmos-shared2/renderer';
 import type {
   PlaygroundOptions,
   UiState,
   ReplaceFixtureState,
   RendererRequestListener,
+  RendererResponseListener,
   PlaygroundContextValue
 } from '../index.js.flow';
 
@@ -25,8 +29,6 @@ export class PlaygroundProvider extends Component<
   Props,
   PlaygroundContextValue
 > {
-  requestListeners: RendererRequestListener[] = [];
-
   setUiState: SetState<UiState> = (stateChange, cb) => {
     this.setState(
       ({ uiState }) => ({
@@ -40,10 +42,10 @@ export class PlaygroundProvider extends Component<
     this.setState({ fixtureState }, cb);
   };
 
+  requestListeners: RendererRequestListener[] = [];
+
   postRendererRequest = (msg: RendererRequest) => {
-    this.requestListeners.forEach(listener => {
-      listener(msg);
-    });
+    this.requestListeners.forEach(listener => listener(msg));
   };
 
   onRendererRequest = (listener: RendererRequestListener) => {
@@ -54,6 +56,20 @@ export class PlaygroundProvider extends Component<
     };
   };
 
+  responseListeners: RendererResponseListener[] = [];
+
+  receiveRendererResponse = (msg: RendererResponse) => {
+    this.responseListeners.forEach(listener => listener(msg));
+  };
+
+  onRendererResponse = (listener: RendererResponseListener) => {
+    this.responseListeners.push(listener);
+
+    return () => {
+      this.responseListeners = removeItem(this.responseListeners, listener);
+    };
+  };
+
   state = {
     options: this.props.options,
     uiState: defaultUiState,
@@ -61,7 +77,9 @@ export class PlaygroundProvider extends Component<
     fixtureState: null,
     replaceFixtureState: this.replaceFixtureState,
     postRendererRequest: this.postRendererRequest,
-    onRendererRequest: this.onRendererRequest
+    onRendererRequest: this.onRendererRequest,
+    receiveRendererResponse: this.receiveRendererResponse,
+    onRendererResponse: this.onRendererResponse
   };
 
   render() {
@@ -73,6 +91,44 @@ export class PlaygroundProvider extends Component<
       </PlaygroundContext.Provider>
     );
   }
+
+  unsubscribe: ?() => mixed;
+
+  componentDidMount() {
+    this.unsubscribe = this.onRendererResponse(this.handleRendererResponse);
+  }
+
+  componentWilMount() {
+    if (typeof this.unsubscribe === 'function') {
+      this.unsubscribe();
+    }
+  }
+
+  handleRendererResponse = (msg: RendererResponse) => {
+    const { uiState, setUiState, replaceFixtureState } = this.state;
+
+    switch (msg.type) {
+      case 'fixtureList': {
+        const { rendererId, fixtures } = msg.payload;
+        const { renderers } = uiState;
+
+        return setUiState({
+          renderers:
+            renderers.indexOf(rendererId) === -1
+              ? [...renderers, rendererId]
+              : renderers,
+          fixtures
+        });
+      }
+      case 'fixtureState': {
+        const { fixtureState } = msg.payload;
+
+        return replaceFixtureState(fixtureState);
+      }
+      default:
+      // No need to handle every message. Maybe some plugin cares about it.
+    }
+  };
 }
 
 const Container = styled.div`

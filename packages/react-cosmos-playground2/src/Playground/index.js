@@ -11,9 +11,12 @@ type Props = {
 };
 
 export function Playground({ options }: Props) {
+  // TODO: Replace "preview" slot with something else for non-web environments
   return (
     <PlaygroundProvider options={options}>
-      <Slot name="preview" />
+      <Slot name="root">
+        <Slot name="preview" />
+      </Slot>
     </PlaygroundProvider>
   );
 }

@@ -6,10 +6,7 @@ import React, { Component } from 'react';
 import { register, Plugin, Plug, Slot } from 'react-plugin';
 import { PlaygroundContext } from '../../PlaygroundContext';
 
-import type {
-  RendererRequest,
-  RendererResponse
-} from 'react-cosmos-shared2/renderer';
+import type { RendererRequest } from 'react-cosmos-shared2/renderer';
 
 class IframePreview extends Component<{}> {
   static contextType = PlaygroundContext;
@@ -34,13 +31,13 @@ class IframePreview extends Component<{}> {
   }
 
   componentDidMount() {
-    window.addEventListener('message', this.handleMessage, false);
+    window.addEventListener('message', this.handleWindowMsg, false);
 
     this.unsubscribe = this.context.onRendererRequest(this.postIframeMessage);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('message', this.handleMessage, false);
+    window.removeEventListener('message', this.handleWindowMsg, false);
 
     if (typeof this.unsubscribe === 'function') {
       this.unsubscribe();
@@ -51,37 +48,9 @@ class IframePreview extends Component<{}> {
     this.iframeRef = iframeRef;
   };
 
-  // TODO:
-  // - handleAnyMessage
-  // - handleCosmosMessage
-  handleMessage = ({ data }: { data: RendererResponse }) => {
-    const { uiState, setUiState, replaceFixtureState } = this.context;
-
-    switch (data.type) {
-      case 'fixtureList': {
-        const { rendererId, fixtures } = data.payload;
-        const { renderers } = uiState;
-
-        return setUiState({
-          renderers:
-            renderers.indexOf(rendererId) === -1
-              ? [...renderers, rendererId]
-              : renderers,
-          fixtures
-        });
-      }
-      case 'fixtureState': {
-        const { fixtureState } = data.payload;
-
-        return replaceFixtureState(fixtureState);
-      }
-      default:
-      // It's common for unrelated messages to be intercepted. No need to make
-      // a fuss about it, though. Except, yeah, the type on this method's
-      // arguments is wrong. The incoming message should be typed as a generic
-      // object type and the RendererResponse type should be ensured via type
-      // refinements. But instead of doing that I wrote this comment. Peace.
-    }
+  handleWindowMsg = msg => {
+    // TODO: Validate
+    this.context.receiveRendererResponse(msg.data);
   };
 
   postIframeMessage = (msg: RendererRequest) => {

@@ -19,5 +19,7 @@ export const PlaygroundContext = createContext<PlaygroundContextValue>({
   fixtureState: null,
   replaceFixtureState: () => {},
   postRendererRequest: () => {},
-  onRendererRequest: () => () => {}
+  onRendererRequest: () => () => {},
+  receiveRendererResponse: () => {},
+  onRendererResponse: () => () => {}
 });

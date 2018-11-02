@@ -5,7 +5,8 @@ import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type {
   RendererId,
   FixtureNames,
-  RendererRequest
+  RendererRequest,
+  RendererResponse
 } from 'react-cosmos-shared2/renderer';
 
 export type PlaygroundOptions = {
@@ -22,6 +23,7 @@ export type UiState = {
 export type ReplaceFixtureState = (FixtureState, cb?: () => mixed) => mixed;
 
 export type RendererRequestListener = RendererRequest => mixed;
+export type RendererResponseListener = RendererResponse => mixed;
 
 // TODO: Add remaining context fields
 // export type UrlParams = {};
@@ -36,6 +38,7 @@ export type PlaygroundContextValue = {
   fixtureState: ?FixtureState,
   replaceFixtureState: ReplaceFixtureState,
   postRendererRequest: RendererRequest => mixed,
-  // Returns unsubscribe function
-  onRendererRequest: RendererRequestListener => () => mixed
+  onRendererRequest: RendererRequestListener => () => mixed, // returns unsubscribe function
+  receiveRendererResponse: RendererResponse => mixed,
+  onRendererResponse: RendererResponseListener => () => mixed // returns unsubscribe function
 };
