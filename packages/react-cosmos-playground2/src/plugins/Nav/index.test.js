@@ -2,15 +2,24 @@
 /* eslint-env browser */
 
 import React, { Component } from 'react';
-import { render, cleanup, waitForElement } from 'react-testing-library';
+import {
+  render,
+  cleanup,
+  waitForElement,
+  fireEvent
+} from 'react-testing-library';
 import { Slot } from 'react-plugin';
+import { RENDERER_ID } from 'react-cosmos-shared2/renderer';
 import { PlaygroundContext } from '../../PlaygroundContext';
 import { PlaygroundProvider } from '../../PlaygroundProvider';
 
 // Plugins have side-effects: they register themselves
 import '.';
 
-import type { RendererResponse } from 'react-cosmos-shared2/renderer';
+import type {
+  RendererRequest,
+  RendererResponse
+} from 'react-cosmos-shared2/renderer';
 
 afterEach(cleanup);
 
@@ -41,7 +50,34 @@ it('renders fixture list received from renderer', async () => {
   await waitForElement(() => getByText(/drei/i));
 });
 
-// TODO: sends fixtureSelect msg on fixture click
+it('sends fixtureSelect msg on fixture click', async () => {
+  const fixtureListMsg = {
+    type: 'fixtureList',
+    payload: {
+      rendererId: 'foo-renderer',
+      // TODO: Test other variations
+      fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js']
+    }
+  };
+
+  const rendererRequestHandler = jest.fn();
+  const { getByText } = renderPlayground(
+    <>
+      <ReceiveRendererResponse msg={fixtureListMsg} />
+      <OnRendererRequest handler={rendererRequestHandler} />
+    </>
+  );
+
+  fireEvent.click(await waitForElement(() => getByText(/zwei/i)));
+
+  expect(rendererRequestHandler).toBeCalledWith({
+    type: 'selectFixture',
+    payload: {
+      rendererId: RENDERER_ID,
+      fixturePath: 'fixtures/zwei.js'
+    }
+  });
+});
 
 function renderPlayground(otherNodes) {
   return render(
@@ -62,7 +98,21 @@ class ReceiveRendererResponse extends Component<{ msg: RendererResponse }> {
   componentDidMount() {
     setTimeout(() => {
       this.context.receiveRendererResponse(this.props.msg);
-    }, 100);
+    });
+  }
+
+  render() {
+    return null;
+  }
+}
+
+class OnRendererRequest extends Component<{
+  handler: RendererRequest => mixed
+}> {
+  static contextType = PlaygroundContext;
+
+  componentDidMount() {
+    this.context.onRendererRequest(this.props.handler);
   }
 
   render() {
