@@ -9,6 +9,8 @@ import { Root } from '../../Root';
 // Plugins have side-effects: they register themselves
 import '.';
 
+import type { RendererRequest } from 'react-cosmos-shared2/renderer';
+
 afterEach(cleanup);
 
 it('renders iframe with options.rendererUrl src', () => {
@@ -27,10 +29,11 @@ it('posts renderer request message to iframe', async () => {
     }
   };
 
-  const TestComponent = createTestComponent(context => {
-    context.postRendererRequest(selectFixtureMsg);
-  });
-  const renderer = renderPlayground(<TestComponent />);
+  // Fake another plugin that posts a renderer request (via
+  // PlaygroundContext.postRendererRequest)
+  const renderer = renderPlayground(
+    <PostRendererRequest msg={selectFixtureMsg} />
+  );
   const iframe = getIframe(renderer);
 
   await mockIframeMessage(iframe, async ({ onMessage }) => {
@@ -57,18 +60,16 @@ function getIframe({ getByTestId }) {
   return getByTestId('preview-iframe');
 }
 
-function createTestComponent(onMount) {
-  return class TestComponent extends Component<{}> {
-    static contextType = PlaygroundContext;
+class PostRendererRequest extends Component<{ msg: RendererRequest }> {
+  static contextType = PlaygroundContext;
 
-    componentDidMount() {
-      onMount(this.context);
-    }
+  componentDidMount() {
+    this.context.postRendererRequest(this.props.msg);
+  }
 
-    render() {
-      return null;
-    }
-  };
+  render() {
+    return null;
+  }
 }
 
 async function mockIframeMessage(iframe, children) {
