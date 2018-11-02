@@ -3,8 +3,8 @@
 import React, { Component } from 'react';
 import { wait, render, cleanup } from 'react-testing-library';
 import { Slot } from 'react-plugin';
-import { PlaygroundContext } from '../../context';
-import { Root } from '../../Root';
+import { PlaygroundContext } from '../../PlaygroundContext';
+import { PlaygroundProvider } from '../../PlaygroundProvider';
 
 // Plugins have side-effects: they register themselves
 import '.';
@@ -45,14 +45,14 @@ it('posts renderer request message to iframe', async () => {
 
 function renderPlayground(otherNodes) {
   return render(
-    <Root
+    <PlaygroundProvider
       options={{
         rendererUrl: 'foo-renderer'
       }}
     >
       <Slot name="preview" />
       {otherNodes}
-    </Root>
+    </PlaygroundProvider>
   );
 }
 

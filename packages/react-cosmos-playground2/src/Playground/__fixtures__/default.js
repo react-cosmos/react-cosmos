@@ -1,9 +1,9 @@
 // @flow
 
-import { Root } from '..';
+import { Playground } from '..';
 
 export default {
-  component: Root,
+  component: Playground,
   props: {
     options: {
       rendererUrl: 'foo-renderer'

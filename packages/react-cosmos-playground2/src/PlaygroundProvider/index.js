@@ -3,7 +3,7 @@
 import styled from 'styled-components';
 import React, { Component } from 'react';
 import { removeItem, updateState } from 'react-cosmos-shared2/util';
-import { defaultUiState, PlaygroundContext } from '../context';
+import { defaultUiState, PlaygroundContext } from '../PlaygroundContext';
 
 import type { Node } from 'react';
 import type { SetState } from 'react-cosmos-shared2/util';
@@ -21,7 +21,10 @@ type Props = {
   options: PlaygroundOptions
 };
 
-export class Root extends Component<Props, PlaygroundContextValue> {
+export class PlaygroundProvider extends Component<
+  Props,
+  PlaygroundContextValue
+> {
   requestListeners: RendererRequestListener[] = [];
 
   setUiState: SetState<UiState> = (stateChange, cb) => {

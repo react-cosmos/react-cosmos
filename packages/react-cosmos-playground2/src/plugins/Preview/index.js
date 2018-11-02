@@ -4,7 +4,7 @@
 import styled from 'styled-components';
 import React, { Component } from 'react';
 import { register, Plugin, Plug, Slot } from 'react-plugin';
-import { PlaygroundContext } from '../../context';
+import { PlaygroundContext } from '../../PlaygroundContext';
 
 import type {
   RendererRequest,

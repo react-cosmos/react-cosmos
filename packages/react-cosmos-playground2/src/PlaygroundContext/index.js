@@ -2,7 +2,7 @@
 
 import { createContext } from 'react';
 
-import type { PlaygroundContextValue } from './index.js.flow';
+import type { PlaygroundContextValue } from '../index.js.flow';
 
 export const defaultUiState = {
   renderers: [],

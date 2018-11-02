@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import React, { Component } from 'react';
 import { register, Plugin, Plug, Slot } from 'react-plugin';
 import { RENDERER_ID } from 'react-cosmos-shared2/renderer';
-import { PlaygroundContext } from '../../context';
+import { PlaygroundContext } from '../../PlaygroundContext';
 import { FixtureTree } from './FixtureTree';
 
 import type { SetState } from 'react-cosmos-shared2/util';

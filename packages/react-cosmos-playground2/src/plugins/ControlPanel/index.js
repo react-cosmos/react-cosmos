@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import React, { Component } from 'react';
 import { register, Plugin, Plug, Slot } from 'react-plugin';
 import qs from 'query-string';
-import { PlaygroundContext } from '../../context';
+import { PlaygroundContext } from '../../PlaygroundContext';
 import { PropsState } from './PropsState';
 
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
