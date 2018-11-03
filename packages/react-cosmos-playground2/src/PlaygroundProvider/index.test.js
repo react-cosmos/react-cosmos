@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { wait, render, cleanup } from 'react-testing-library';
-import { RENDERER_ID } from 'react-cosmos-shared2/renderer';
 import { OnRendererRequest } from '../jestHelpers/OnRendererRequest';
+import { OnRendererResponse } from '../jestHelpers/OnRendererResponse';
 import { ReceiveRendererResponse } from '../jestHelpers/ReceiveRendererResponse';
 import { pushUrlParams, popUrlParams, resetUrl } from '../jestHelpers/url';
 import { PlaygroundProvider } from '.';
@@ -24,14 +24,14 @@ const fixtureListMsg = {
 it('sends fixtureSelect request on initial "fixture" URL param', async () => {
   pushUrlParams({ fixture: 'fixtures/zwei.js' });
 
-  const rendererRequestHandler = jest.fn();
-  renderPlayground({ rendererRequestHandler });
+  const rendererReqHandler = jest.fn();
+  renderPlayground({ rendererReqHandler });
 
   await wait(() =>
-    expect(rendererRequestHandler).toBeCalledWith({
+    expect(rendererReqHandler).toBeCalledWith({
       type: 'selectFixture',
       payload: {
-        rendererId: RENDERER_ID,
+        rendererId: 'foo-renderer',
         fixturePath: 'fixtures/zwei.js'
       }
     })
@@ -39,15 +39,19 @@ it('sends fixtureSelect request on initial "fixture" URL param', async () => {
 });
 
 it('sends fixtureSelect request on "fixture" URL param', async () => {
-  const rendererRequestHandler = jest.fn();
-  renderPlayground({ rendererRequestHandler });
+  const rendererReqHandler = jest.fn();
+  const rendererResHandler = jest.fn();
+  renderPlayground({ rendererReqHandler, rendererResHandler });
+
+  // Wait for fixture list to be received
+  await wait(() => expect(rendererResHandler).toBeCalledWith(fixtureListMsg));
 
   popUrlParams({ fixture: 'fixtures/zwei.js' });
 
-  expect(rendererRequestHandler).toBeCalledWith({
+  expect(rendererReqHandler).toBeCalledWith({
     type: 'selectFixture',
     payload: {
-      rendererId: RENDERER_ID,
+      rendererId: 'foo-renderer',
       fixturePath: 'fixtures/zwei.js'
     }
   });
@@ -56,22 +60,32 @@ it('sends fixtureSelect request on "fixture" URL param', async () => {
 it('sends null fixtureSelect request on removed "fixture" URL param', async () => {
   pushUrlParams({ fixture: 'fixtures/zwei.js' });
 
-  const rendererRequestHandler = jest.fn();
-  renderPlayground({ rendererRequestHandler });
+  const rendererReqHandler = jest.fn();
+  const rendererResHandler = jest.fn();
+  renderPlayground({ rendererReqHandler, rendererResHandler });
+
+  // Wait for fixture list to be received
+  await wait(() => expect(rendererResHandler).toBeCalledWith(fixtureListMsg));
 
   // This simulation is akin to going back home after selecting a fixture
   popUrlParams({});
 
-  expect(rendererRequestHandler).toBeCalledWith({
+  expect(rendererReqHandler).toBeCalledWith({
     type: 'selectFixture',
     payload: {
-      rendererId: RENDERER_ID,
+      rendererId: 'foo-renderer',
       fixturePath: null
     }
   });
 });
 
-function renderPlayground({ rendererRequestHandler }) {
+function renderPlayground({
+  rendererReqHandler,
+  rendererResHandler = jest.fn()
+}: {
+  rendererReqHandler: Function,
+  rendererResHandler?: Function
+}) {
   return render(
     <PlaygroundProvider
       options={{
@@ -79,7 +93,8 @@ function renderPlayground({ rendererRequestHandler }) {
       }}
     >
       <ReceiveRendererResponse msg={fixtureListMsg} />
-      <OnRendererRequest handler={rendererRequestHandler} />
+      <OnRendererRequest handler={rendererReqHandler} />
+      <OnRendererResponse handler={rendererResHandler} />
     </PlaygroundProvider>
   );
 }

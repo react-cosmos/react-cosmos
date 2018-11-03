@@ -3,7 +3,6 @@
 import styled from 'styled-components';
 import React, { Component } from 'react';
 import { removeItem, updateState } from 'react-cosmos-shared2/util';
-import { RENDERER_ID } from 'react-cosmos-shared2/renderer';
 import { defaultUiState, PlaygroundContext } from '../PlaygroundContext';
 import { getUrlParams, pushUrlParams, onUrlChange } from './router';
 
@@ -11,7 +10,9 @@ import type { Node } from 'react';
 import type { SetState } from 'react-cosmos-shared2/util';
 import type {
   RendererRequest,
-  RendererResponse
+  RendererResponse,
+  FixtureListMsg,
+  FixtureStateMsg
 } from 'react-cosmos-shared2/renderer';
 import type {
   PlaygroundOptions,
@@ -131,48 +132,58 @@ export class PlaygroundProvider extends Component<
   }
 
   handleRendererResponse = (msg: RendererResponse) => {
-    const { urlParams, uiState, setUiState, replaceFixtureState } = this.state;
-
     switch (msg.type) {
-      case 'fixtureList': {
-        const { rendererId, fixtures } = msg.payload;
-        const { fixture } = urlParams;
-        const { renderers } = uiState;
-
-        // We use the `fixtureList` message as a queue that the renderer is
-        // ready and tell it to load the selected fixture
-        if (fixture) {
-          this.selectFixture(fixture);
-        }
-
-        return setUiState({
-          renderers:
-            renderers.indexOf(rendererId) === -1
-              ? [...renderers, rendererId]
-              : renderers,
-          fixtures
-        });
-      }
-      case 'fixtureState': {
-        const { fixtureState } = msg.payload;
-
-        return replaceFixtureState(fixtureState);
-      }
+      case 'fixtureList':
+        return this.handleFixtureListResponse(msg);
+      case 'fixtureState':
+        return this.handleFixtureStateResponse(msg);
       default:
       // No need to handle every message. Maybe some plugin cares about it.
     }
   };
 
-  selectFixture(fixturePath: null | string) {
-    const { postRendererRequest } = this.state;
+  handleFixtureListResponse({ payload }: FixtureListMsg) {
+    const {
+      uiState: { renderers }
+    } = this.state;
+    const { rendererId, fixtures } = payload;
 
-    postRendererRequest({
-      type: 'selectFixture',
-      payload: {
-        // TODO: Use rendererIds from uiState
-        rendererId: RENDERER_ID,
-        fixturePath
+    const stateChange = {
+      renderers:
+        renderers.indexOf(rendererId) === -1
+          ? [...renderers, rendererId]
+          : renderers,
+      fixtures
+    };
+
+    this.setUiState(stateChange, () => {
+      // We use the `fixtureList` message as a queue that the renderer is
+      // ready and tell it to load the selected fixture
+      const { fixture } = this.state.urlParams;
+
+      if (fixture) {
+        this.selectFixture(fixture);
       }
+    });
+  }
+
+  handleFixtureStateResponse({ payload }: FixtureStateMsg) {
+    this.replaceFixtureState(payload.fixtureState);
+  }
+
+  selectFixture(fixturePath: null | string) {
+    const {
+      uiState: { renderers }
+    } = this.state;
+
+    renderers.forEach(rendererId => {
+      this.postRendererRequest({
+        type: 'selectFixture',
+        payload: {
+          rendererId,
+          fixturePath
+        }
+      });
     });
   }
 }
