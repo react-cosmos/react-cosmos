@@ -9,6 +9,7 @@ export function getUrlParams() {
   return qs.parse(location.search);
 }
 
+// IDEA: Store fixtureState in history object and apply it on `popstate` event
 export function pushUrlParams(urlParams: UrlParams) {
   const query = qs.stringify(urlParams);
 
