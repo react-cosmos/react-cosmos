@@ -3,7 +3,9 @@
 import styled from 'styled-components';
 import React, { Component } from 'react';
 import { removeItem, updateState } from 'react-cosmos-shared2/util';
+import { RENDERER_ID } from 'react-cosmos-shared2/renderer';
 import { defaultUiState, PlaygroundContext } from '../PlaygroundContext';
+import { getUrlParams, pushUrlParams, onUrlChange } from './router';
 
 import type { Node } from 'react';
 import type { SetState } from 'react-cosmos-shared2/util';
@@ -13,6 +15,7 @@ import type {
 } from 'react-cosmos-shared2/renderer';
 import type {
   PlaygroundOptions,
+  UrlParams,
   UiState,
   ReplaceFixtureState,
   RendererRequestListener,
@@ -29,11 +32,19 @@ export class PlaygroundProvider extends Component<
   Props,
   PlaygroundContextValue
 > {
+  setUrlParams: SetState<UrlParams> = (paramChange, cb) => {
+    this.setState(
+      ({ urlParams }) => ({ urlParams: updateState(urlParams, paramChange) }),
+      () => {
+        pushUrlParams(this.state.urlParams);
+        callPotentialFunction(cb);
+      }
+    );
+  };
+
   setUiState: SetState<UiState> = (stateChange, cb) => {
     this.setState(
-      ({ uiState }) => ({
-        uiState: updateState(uiState, stateChange)
-      }),
+      ({ uiState }) => ({ uiState: updateState(uiState, stateChange) }),
       cb
     );
   };
@@ -72,6 +83,8 @@ export class PlaygroundProvider extends Component<
 
   state = {
     options: this.props.options,
+    urlParams: getUrlParams(),
+    setUrlParams: this.setUrlParams,
     uiState: defaultUiState,
     setUiState: this.setUiState,
     fixtureState: null,
@@ -92,25 +105,45 @@ export class PlaygroundProvider extends Component<
     );
   }
 
-  unsubscribe: ?() => mixed;
+  unsubscribeFromRendererResponses: ?() => mixed;
+  unsubscribeFromUrlChanges: ?() => mixed;
 
   componentDidMount() {
-    this.unsubscribe = this.onRendererResponse(this.handleRendererResponse);
+    this.unsubscribeFromRendererResponses = this.onRendererResponse(
+      this.handleRendererResponse
+    );
+    this.unsubscribeFromUrlChanges = onUrlChange(urlParams => {
+      this.setState({ urlParams });
+    });
   }
 
-  componentWillUnmount() {
-    if (typeof this.unsubscribe === 'function') {
-      this.unsubscribe();
+  componentDidUpdate(prevProps: Props, prevState: PlaygroundContextValue) {
+    const { fixture } = this.state.urlParams;
+
+    if (fixture !== prevState.urlParams.fixture) {
+      this.selectFixture(fixture || null);
     }
   }
 
+  componentWillUnmount() {
+    callPotentialFunction(this.unsubscribeFromRendererResponses);
+    callPotentialFunction(this.unsubscribeFromUrlChanges);
+  }
+
   handleRendererResponse = (msg: RendererResponse) => {
-    const { uiState, setUiState, replaceFixtureState } = this.state;
+    const { urlParams, uiState, setUiState, replaceFixtureState } = this.state;
 
     switch (msg.type) {
       case 'fixtureList': {
         const { rendererId, fixtures } = msg.payload;
+        const { fixture } = urlParams;
         const { renderers } = uiState;
+
+        // We use the `fixtureList` message as a queue that the renderer is
+        // ready and tell it to load the selected fixture
+        if (fixture) {
+          this.selectFixture(fixture);
+        }
 
         return setUiState({
           renderers:
@@ -129,6 +162,25 @@ export class PlaygroundProvider extends Component<
       // No need to handle every message. Maybe some plugin cares about it.
     }
   };
+
+  selectFixture(fixturePath: null | string) {
+    const { postRendererRequest } = this.state;
+
+    postRendererRequest({
+      type: 'selectFixture',
+      payload: {
+        // TODO: Use rendererIds from uiState
+        rendererId: RENDERER_ID,
+        fixturePath
+      }
+    });
+  }
+}
+
+function callPotentialFunction(fn: ?Function) {
+  if (typeof fn === 'function') {
+    fn();
+  }
 }
 
 const Container = styled.div`

@@ -43,9 +43,9 @@ register(
         <Container>
           <Left>
             <PlaygroundContext.Consumer>
-              {({ uiState, fixtureState, postRendererRequest }) => (
+              {({ urlParams, fixtureState, postRendererRequest }) => (
                 <ControlPanel
-                  fixturePath={uiState.fixturePath}
+                  fixturePath={urlParams.fixture}
                   fixtureState={fixtureState}
                   postRendererRequest={postRendererRequest}
                 />

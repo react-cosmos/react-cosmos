@@ -3,7 +3,6 @@
 import styled from 'styled-components';
 import React, { Component } from 'react';
 import { register, Plugin, Plug } from 'react-plugin';
-import { RENDERER_ID } from 'react-cosmos-shared2/renderer';
 import { PlaygroundContext } from '../../PlaygroundContext';
 import { FixtureTree } from './FixtureTree';
 
@@ -21,17 +20,9 @@ class Nav extends Component<{}> {
   }
 
   handleFixtureSelect = (fixturePath: string) => {
-    const { setUiState, postRendererRequest } = this.context;
+    const { setUrlParams } = this.context;
 
-    setUiState({ fixturePath });
-    postRendererRequest({
-      type: 'selectFixture',
-      payload: {
-        // TODO: Use rendererIds from uiState
-        rendererId: RENDERER_ID,
-        fixturePath
-      }
-    });
+    setUrlParams({ fixture: fixturePath });
   };
 }
 

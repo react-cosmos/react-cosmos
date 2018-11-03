@@ -15,9 +15,7 @@ export type PlaygroundOptions = {
 
 export type UiState = {
   renderers: RendererId[],
-  fixtures: FixtureNames,
-  // TODO: Move fixturePath to urlParams when adding router
-  fixturePath: ?string
+  fixtures: FixtureNames
 };
 
 export type ReplaceFixtureState = (FixtureState, cb?: () => mixed) => mixed;
@@ -25,14 +23,19 @@ export type ReplaceFixtureState = (FixtureState, cb?: () => mixed) => mixed;
 export type RendererRequestListener = RendererRequest => mixed;
 export type RendererResponseListener = RendererResponse => mixed;
 
+export type UrlParams = {
+  fixture?: string
+};
+export type SetUrlParams = ($Shape<UrlParams>) => mixed;
+
 // TODO: Add remaining context fields
-// export type UrlParams = {};
-// export type SetUrlParams = ($Shape<UrlParams>) => mixed;
 // export type PluginState = { [prop: string]: mixed };
 // export type SetPluginState = ($Shape<PluginState>) => mixed;
 
 export type PlaygroundContextValue = {
   options: PlaygroundOptions,
+  urlParams: UrlParams,
+  setUrlParams: SetState<UrlParams>,
   uiState: UiState,
   setUiState: SetState<UiState>,
   fixtureState: ?FixtureState,

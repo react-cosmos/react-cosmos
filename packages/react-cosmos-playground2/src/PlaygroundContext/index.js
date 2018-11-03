@@ -6,20 +6,25 @@ import type { PlaygroundContextValue } from '../index.js.flow';
 
 export const defaultUiState = {
   renderers: [],
-  fixtures: [],
-  fixturePath: null
+  fixtures: []
 };
 
+const noopFn = () => {};
+const noopSubscribe = () => () => {};
+
+// IDEA: Create high level methods. Eg. selectFixture
 export const PlaygroundContext = createContext<PlaygroundContextValue>({
   options: {
     rendererUrl: ''
   },
+  urlParams: {},
+  setUrlParams: noopFn,
   uiState: defaultUiState,
-  setUiState: () => {},
+  setUiState: noopSubscribe,
   fixtureState: null,
-  replaceFixtureState: () => {},
-  postRendererRequest: () => {},
-  onRendererRequest: () => () => {},
-  receiveRendererResponse: () => {},
-  onRendererResponse: () => () => {}
+  replaceFixtureState: noopFn,
+  postRendererRequest: noopFn,
+  onRendererRequest: noopSubscribe,
+  receiveRendererResponse: noopFn,
+  onRendererResponse: noopSubscribe
 });

@@ -3,15 +3,15 @@
 import { Component } from 'react';
 import { PlaygroundContext } from '../PlaygroundContext';
 
-import type { RendererResponse } from 'react-cosmos-shared2/renderer';
+import type { RendererRequest } from 'react-cosmos-shared2/renderer';
 
-export class OnRendererResponse extends Component<{
-  handler: RendererResponse => mixed
+export class OnRendererRequest extends Component<{
+  handler: RendererRequest => mixed
 }> {
   static contextType = PlaygroundContext;
 
   componentDidMount() {
-    this.context.onRendererResponse(this.props.handler);
+    this.context.onRendererRequest(this.props.handler);
   }
 
   render() {
