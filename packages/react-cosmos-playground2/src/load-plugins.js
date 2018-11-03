@@ -2,4 +2,4 @@
 
 import './plugins/Preview';
 import './plugins/Nav';
-import './plugins/ControlPanel';
+// import './plugins/ControlPanel';
