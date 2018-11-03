@@ -1,3 +1,4 @@
+/* eslint-env browser */
 // @flow
 
 import React, { Component } from 'react';
@@ -29,8 +30,7 @@ it('posts renderer request message to iframe', async () => {
     }
   };
 
-  // Fake another plugin that posts a renderer request (via
-  // PlaygroundContext.postRendererRequest)
+  // Fake another plugin that posts a renderer request
   const renderer = renderPlayground(
     <PostRendererRequest msg={selectFixtureMsg} />
   );
@@ -41,6 +41,27 @@ it('posts renderer request message to iframe', async () => {
       expect(onMessage.mock.calls[0][0].data).toEqual(selectFixtureMsg)
     );
   });
+});
+
+it('receives renderer response message from iframe', async () => {
+  const fixtureListMsg = {
+    type: 'fixtureList',
+    payload: {
+      rendererId: 'foo-renderer',
+      // TODO: Test other variations
+      fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js']
+    }
+  };
+
+  // Fake another plugin that listens to renderer responses
+  const rendererResponseHandler = jest.fn();
+  renderPlayground(<OnRendererResponse handler={rendererResponseHandler} />);
+
+  window.postMessage(fixtureListMsg, '*');
+
+  await wait(() =>
+    expect(rendererResponseHandler).toBeCalledWith(fixtureListMsg)
+  );
 });
 
 function renderPlayground(otherNodes) {
@@ -65,6 +86,18 @@ class PostRendererRequest extends Component<{ msg: RendererRequest }> {
 
   componentDidMount() {
     this.context.postRendererRequest(this.props.msg);
+  }
+
+  render() {
+    return null;
+  }
+}
+
+class OnRendererResponse extends Component<{ handler: Response => mixed }> {
+  static contextType = PlaygroundContext;
+
+  componentDidMount() {
+    this.context.onRendererResponse(this.props.handler);
   }
 
   render() {

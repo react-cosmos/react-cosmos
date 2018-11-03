@@ -60,6 +60,9 @@ it('sends fixtureSelect msg on fixture click', async () => {
     }
   };
 
+  // Fake two other plugins:
+  // 2. That receives renderer responses
+  // 2. That listens to renderer requests
   const rendererRequestHandler = jest.fn();
   const { getByText } = renderPlayground(
     <>
