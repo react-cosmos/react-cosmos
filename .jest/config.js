@@ -53,6 +53,7 @@ module.exports = {
   collectCoverageFrom: [
     '**/src/**/*.{js,jsx}',
     '!**/__fixtures__/**',
+    '!**/jestHelpers/**',
     '!**/react-cosmos-voyager/src/use-cases/**',
     // Ignore coverage from dark launched APIs
     '!**/react-cosmos-playground2/src/plugins/ControlPanel/**',

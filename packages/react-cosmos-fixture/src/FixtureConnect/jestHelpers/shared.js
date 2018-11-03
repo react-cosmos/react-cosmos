@@ -1,5 +1,3 @@
-/* eslint-env jest */
-/* istanbul ignore file */
 // @flow
 
 import until from 'async-until';
