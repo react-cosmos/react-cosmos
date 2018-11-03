@@ -1,15 +1,12 @@
 // @flow
-/* eslint-env browser */
 
 import React from 'react';
-import qs from 'query-string';
 import { wait, render, cleanup } from 'react-testing-library';
 import { RENDERER_ID } from 'react-cosmos-shared2/renderer';
 import { OnRendererRequest } from '../jestHelpers/OnRendererRequest';
 import { ReceiveRendererResponse } from '../jestHelpers/ReceiveRendererResponse';
+import { pushUrlParams, popUrlParams, resetUrl } from '../jestHelpers/url';
 import { PlaygroundProvider } from '.';
-
-import type { UrlParams } from '../index.js.flow';
 
 afterEach(() => {
   cleanup();
@@ -24,7 +21,7 @@ const fixtureListMsg = {
   }
 };
 
-it('sends fixtureSelect request on initial urlParams.fixture', async () => {
+it('sends fixtureSelect request on initial "fixture" URL param', async () => {
   pushUrlParams({ fixture: 'fixtures/zwei.js' });
 
   const rendererRequestHandler = jest.fn();
@@ -41,13 +38,11 @@ it('sends fixtureSelect request on initial urlParams.fixture', async () => {
   );
 });
 
-it('sends fixtureSelect request on urlParams.fixture change', async () => {
+it('sends fixtureSelect request on "fixture" URL param', async () => {
   const rendererRequestHandler = jest.fn();
   renderPlayground({ rendererRequestHandler });
 
-  pushUrlParams({ fixture: 'fixtures/zwei.js' });
-  // Simulate `popstate` event, like using back/fwd browser buttons
-  window.dispatchEvent(new Event('popstate'));
+  popUrlParams({ fixture: 'fixtures/zwei.js' });
 
   expect(rendererRequestHandler).toBeCalledWith({
     type: 'selectFixture',
@@ -58,7 +53,23 @@ it('sends fixtureSelect request on urlParams.fixture change', async () => {
   });
 });
 
-// TODO: Test fixturePath: null
+it('sends null fixtureSelect request on removed "fixture" URL param', async () => {
+  pushUrlParams({ fixture: 'fixtures/zwei.js' });
+
+  const rendererRequestHandler = jest.fn();
+  renderPlayground({ rendererRequestHandler });
+
+  // This simulation is akin to going back home after selecting a fixture
+  popUrlParams({});
+
+  expect(rendererRequestHandler).toBeCalledWith({
+    type: 'selectFixture',
+    payload: {
+      rendererId: RENDERER_ID,
+      fixturePath: null
+    }
+  });
+});
 
 function renderPlayground({ rendererRequestHandler }) {
   return render(
@@ -71,13 +82,4 @@ function renderPlayground({ rendererRequestHandler }) {
       <OnRendererRequest handler={rendererRequestHandler} />
     </PlaygroundProvider>
   );
-}
-
-function pushUrlParams(params: UrlParams) {
-  const query = qs.stringify(params);
-  history.pushState({}, '', `?${query}`);
-}
-
-function resetUrl() {
-  pushUrlParams({});
 }
