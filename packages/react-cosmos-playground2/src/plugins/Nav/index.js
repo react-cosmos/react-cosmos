@@ -2,9 +2,9 @@
 
 import styled from 'styled-components';
 import React, { Component } from 'react';
-import { Plugin, Plug, Slot } from 'react-plugin';
+import { register, Plugin, Plug } from 'react-plugin';
 import { RENDERER_ID } from 'react-cosmos-shared2/renderer';
-import { PlaygroundContext } from '../../context';
+import { PlaygroundContext } from '../../PlaygroundContext';
 import { FixtureTree } from './FixtureTree';
 
 import type { SetState } from 'react-cosmos-shared2/util';
@@ -44,10 +44,10 @@ class Nav extends Component<Props> {
   };
 }
 
-export default (
+register(
   <Plugin name="Preview">
     <Plug
-      slot="preview"
+      slot="root"
       render={({ children }) => (
         <Container>
           <Left>
@@ -61,9 +61,7 @@ export default (
               )}
             </PlaygroundContext.Consumer>
           </Left>
-          <Right>
-            <Slot name="preview">{children}</Slot>
-          </Right>
+          <Right>{children}</Right>
         </Container>
       )}
     />

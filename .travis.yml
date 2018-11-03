@@ -1,9 +1,9 @@
 language: node_js
 sudo: required
 node_js:
-  # - 10
+  - 10
   - 8
-  - 6
+  # - 6
 before_install:
   - sudo sysctl fs.inotify.max_user_watches=524288
   - curl -o- -L https://yarnpkg.com/install.sh | bash
