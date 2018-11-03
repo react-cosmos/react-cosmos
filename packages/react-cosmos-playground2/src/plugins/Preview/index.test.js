@@ -1,16 +1,16 @@
 /* eslint-env browser */
 // @flow
 
-import React, { Component } from 'react';
+import React from 'react';
 import { wait, render, cleanup } from 'react-testing-library';
 import { Slot } from 'react-plugin';
-import { PlaygroundContext } from '../../PlaygroundContext';
 import { PlaygroundProvider } from '../../PlaygroundProvider';
+import { PostRendererRequest } from '../../jestHelpers/PostRendererRequest';
+import { OnRendererResponse } from '../../jestHelpers/OnRendererResponse';
+import { mockIframeMessage } from '../../jestHelpers/mockIframeMessage';
 
 // Plugins have side-effects: they register themselves
 import '.';
-
-import type { RendererRequest } from 'react-cosmos-shared2/renderer';
 
 afterEach(cleanup);
 
@@ -78,43 +78,4 @@ function renderPlayground(otherNodes) {
 
 function getIframe({ getByTestId }) {
   return getByTestId('preview-iframe');
-}
-
-class PostRendererRequest extends Component<{ msg: RendererRequest }> {
-  static contextType = PlaygroundContext;
-
-  componentDidMount() {
-    this.context.postRendererRequest(this.props.msg);
-  }
-
-  render() {
-    return null;
-  }
-}
-
-class OnRendererResponse extends Component<{ handler: Response => mixed }> {
-  static contextType = PlaygroundContext;
-
-  componentDidMount() {
-    this.context.onRendererResponse(this.props.handler);
-  }
-
-  render() {
-    return null;
-  }
-}
-
-async function mockIframeMessage(iframe, children) {
-  const { contentWindow } = iframe;
-  const onMessage = jest.fn();
-
-  try {
-    contentWindow.addEventListener('message', onMessage, false);
-    await children({ onMessage });
-  } catch (err) {
-    // Make errors visible
-    throw err;
-  } finally {
-    contentWindow.removeEventListener('message', onMessage);
-  }
 }
