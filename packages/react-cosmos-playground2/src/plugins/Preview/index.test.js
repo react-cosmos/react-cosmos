@@ -48,7 +48,6 @@ it('receives renderer response message from iframe', async () => {
     type: 'fixtureList',
     payload: {
       rendererId: 'foo-renderer',
-      // TODO: Test other variations
       fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js']
     }
   };

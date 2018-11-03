@@ -36,7 +36,6 @@ it('renders fixture list received from renderer', async () => {
     type: 'fixtureList',
     payload: {
       rendererId: 'foo-renderer',
-      // TODO: Test other variations
       fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js']
     }
   };
@@ -55,7 +54,6 @@ it('sends fixtureSelect msg on fixture click', async () => {
     type: 'fixtureList',
     payload: {
       rendererId: 'foo-renderer',
-      // TODO: Test other variations
       fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js']
     }
   };
