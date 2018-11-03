@@ -10,7 +10,7 @@ The aim for _Cosmos Next_ is to provide ~80% parity with Cosmos 4.x along with b
 
 We need a decent parity with the existing Cosmos UI to test JSX fixtures. This is the main requirement for releasing Cosmos Next for beta testing.
 
-- [ ] Establish testing practices for new UI package
+- [x] Establish testing practices for new UI package
 - [ ] Feature parity
   - [ ] Full screen
     - [ ] Is it OK to add params to renderer URL? (They might conflict with user URL params)
