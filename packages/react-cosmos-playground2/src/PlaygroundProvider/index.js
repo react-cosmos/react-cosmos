@@ -98,7 +98,7 @@ export class PlaygroundProvider extends Component<
     this.unsubscribe = this.onRendererResponse(this.handleRendererResponse);
   }
 
-  componentWilMount() {
+  componentWillUnmount() {
     if (typeof this.unsubscribe === 'function') {
       this.unsubscribe();
     }
