@@ -7,22 +7,13 @@ import { RENDERER_ID } from 'react-cosmos-shared2/renderer';
 import { PlaygroundContext } from '../../PlaygroundContext';
 import { FixtureTree } from './FixtureTree';
 
-import type { SetState } from 'react-cosmos-shared2/util';
-import type {
-  FixtureNames,
-  RendererRequest
-} from 'react-cosmos-shared2/renderer';
-import type { UiState } from '../../index.js.flow';
+class Nav extends Component<{}> {
+  static contextType = PlaygroundContext;
 
-type Props = {
-  fixtures: FixtureNames,
-  setUiState: SetState<UiState>,
-  postRendererRequest: RendererRequest => mixed
-};
-
-class Nav extends Component<Props> {
   render() {
-    const { fixtures } = this.props;
+    const {
+      uiState: { fixtures }
+    } = this.context;
 
     return (
       <FixtureTree fixtures={fixtures} onSelect={this.handleFixtureSelect} />
@@ -30,7 +21,7 @@ class Nav extends Component<Props> {
   }
 
   handleFixtureSelect = (fixturePath: string) => {
-    const { setUiState, postRendererRequest } = this.props;
+    const { setUiState, postRendererRequest } = this.context;
 
     setUiState({ fixturePath });
     postRendererRequest({
@@ -51,15 +42,7 @@ register(
       render={({ children }) => (
         <Container>
           <Left>
-            <PlaygroundContext.Consumer>
-              {({ uiState, setUiState, postRendererRequest }) => (
-                <Nav
-                  fixtures={uiState.fixtures}
-                  setUiState={setUiState}
-                  postRendererRequest={postRendererRequest}
-                />
-              )}
-            </PlaygroundContext.Consumer>
+            <Nav />
           </Left>
           <Right>{children}</Right>
         </Container>
