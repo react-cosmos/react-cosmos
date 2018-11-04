@@ -38,7 +38,7 @@ it('sends fixtureSelect request on initial "fixture" URL param', async () => {
   );
 });
 
-it('sends fixtureSelect request on "fixture" URL param', async () => {
+it('sends fixtureSelect request on added "fixture" URL param', async () => {
   const rendererReqHandler = jest.fn();
   const rendererResHandler = jest.fn();
   renderPlayground({ rendererReqHandler, rendererResHandler });
