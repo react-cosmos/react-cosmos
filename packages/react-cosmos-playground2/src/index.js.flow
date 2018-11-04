@@ -33,6 +33,8 @@ export type SetUrlParams = ($Shape<UrlParams>) => mixed;
 // export type PluginState = { [prop: string]: mixed };
 // export type SetPluginState = ($Shape<PluginState>) => mixed;
 
+type OnOff<T> = T => () => mixed; // returns unsubscribe function
+
 export type PlaygroundContextValue = {
   options: PlaygroundOptions,
   urlParams: UrlParams,
@@ -42,7 +44,7 @@ export type PlaygroundContextValue = {
   fixtureState: ?FixtureState,
   replaceFixtureState: ReplaceFixtureState,
   postRendererRequest: RendererRequest => mixed,
-  onRendererRequest: RendererRequestListener => () => mixed, // returns unsubscribe function
+  onRendererRequest: OnOff<RendererRequestListener>,
   receiveRendererResponse: RendererResponse => mixed,
-  onRendererResponse: RendererResponseListener => () => mixed // returns unsubscribe function
+  onRendererResponse: OnOff<RendererResponseListener>
 };
