@@ -20,7 +20,7 @@ export const PlaygroundContext = createContext<PlaygroundContextValue>({
   urlParams: {},
   setUrlParams: noopFn,
   uiState: defaultUiState,
-  setUiState: noopSubscribe,
+  setUiState: noopFn,
   fixtureState: null,
   replaceFixtureState: noopFn,
   postRendererRequest: noopFn,
