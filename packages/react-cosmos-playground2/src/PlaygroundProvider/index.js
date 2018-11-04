@@ -4,15 +4,20 @@ import styled from 'styled-components';
 import React, { Component } from 'react';
 import { removeItem, updateState } from 'react-cosmos-shared2/util';
 import { defaultUiState, PlaygroundContext } from '../PlaygroundContext';
+import { getUrlParams, pushUrlParams, onUrlChange } from './router';
 
 import type { Node } from 'react';
 import type { SetState } from 'react-cosmos-shared2/util';
 import type {
+  RendererId,
   RendererRequest,
-  RendererResponse
+  RendererResponse,
+  FixtureListMsg,
+  FixtureStateMsg
 } from 'react-cosmos-shared2/renderer';
 import type {
   PlaygroundOptions,
+  UrlParams,
   UiState,
   ReplaceFixtureState,
   RendererRequestListener,
@@ -29,11 +34,19 @@ export class PlaygroundProvider extends Component<
   Props,
   PlaygroundContextValue
 > {
+  setUrlParams: SetState<UrlParams> = (paramChange, cb) => {
+    this.setState(
+      ({ urlParams }) => ({ urlParams: updateState(urlParams, paramChange) }),
+      () => {
+        pushUrlParams(this.state.urlParams);
+        callPotentialFunction(cb);
+      }
+    );
+  };
+
   setUiState: SetState<UiState> = (stateChange, cb) => {
     this.setState(
-      ({ uiState }) => ({
-        uiState: updateState(uiState, stateChange)
-      }),
+      ({ uiState }) => ({ uiState: updateState(uiState, stateChange) }),
       cb
     );
   };
@@ -72,6 +85,8 @@ export class PlaygroundProvider extends Component<
 
   state = {
     options: this.props.options,
+    urlParams: getUrlParams(),
+    setUrlParams: this.setUrlParams,
     uiState: defaultUiState,
     setUiState: this.setUiState,
     fixtureState: null,
@@ -92,43 +107,90 @@ export class PlaygroundProvider extends Component<
     );
   }
 
-  unsubscribe: ?() => mixed;
+  unsubscribeFromRendererResponses: ?() => mixed;
+  unsubscribeFromUrlChanges: ?() => mixed;
 
   componentDidMount() {
-    this.unsubscribe = this.onRendererResponse(this.handleRendererResponse);
+    this.unsubscribeFromRendererResponses = this.onRendererResponse(
+      this.handleRendererResponse
+    );
+    this.unsubscribeFromUrlChanges = onUrlChange(urlParams => {
+      this.setState({ urlParams });
+    });
   }
 
-  componentWillUnmount() {
-    if (typeof this.unsubscribe === 'function') {
-      this.unsubscribe();
+  componentDidUpdate(prevProps: Props, prevState: PlaygroundContextValue) {
+    const {
+      urlParams: { fixture },
+      uiState: { renderers }
+    } = this.state;
+
+    if (fixture !== prevState.urlParams.fixture) {
+      renderers.forEach(rendererId => {
+        this.selectFixture(rendererId, fixture || null);
+      });
     }
   }
 
+  componentWillUnmount() {
+    callPotentialFunction(this.unsubscribeFromRendererResponses);
+    callPotentialFunction(this.unsubscribeFromUrlChanges);
+  }
+
   handleRendererResponse = (msg: RendererResponse) => {
-    const { uiState, setUiState, replaceFixtureState } = this.state;
-
     switch (msg.type) {
-      case 'fixtureList': {
-        const { rendererId, fixtures } = msg.payload;
-        const { renderers } = uiState;
-
-        return setUiState({
-          renderers:
-            renderers.indexOf(rendererId) === -1
-              ? [...renderers, rendererId]
-              : renderers,
-          fixtures
-        });
-      }
-      case 'fixtureState': {
-        const { fixtureState } = msg.payload;
-
-        return replaceFixtureState(fixtureState);
-      }
+      case 'fixtureList':
+        return this.handleFixtureListResponse(msg);
+      case 'fixtureState':
+        return this.handleFixtureStateResponse(msg);
       default:
       // No need to handle every message. Maybe some plugin cares about it.
     }
   };
+
+  handleFixtureListResponse({ payload }: FixtureListMsg) {
+    const {
+      urlParams: { fixture },
+      uiState: { renderers }
+    } = this.state;
+    const { rendererId, fixtures } = payload;
+
+    const stateChange = {
+      renderers:
+        renderers.indexOf(rendererId) === -1
+          ? [...renderers, rendererId]
+          : renderers,
+      fixtures
+    };
+
+    this.setUiState(stateChange);
+
+    // We use the `fixtureList` message as a cue that the renderer is
+    // ready and tell it to load the selected fixture
+    if (fixture) {
+      this.selectFixture(rendererId, fixture);
+    }
+  }
+
+  handleFixtureStateResponse({ payload }: FixtureStateMsg) {
+    this.replaceFixtureState(payload.fixtureState);
+  }
+
+  selectFixture(rendererId: RendererId, fixturePath: null | string) {
+    this.postRendererRequest({
+      type: 'selectFixture',
+      payload: {
+        rendererId,
+        fixturePath
+      }
+    });
+  }
+}
+
+function callPotentialFunction(fn: ?Function) {
+  if (typeof fn === 'function') {
+    fn();
+  }
 }
 
 const Container = styled.div`

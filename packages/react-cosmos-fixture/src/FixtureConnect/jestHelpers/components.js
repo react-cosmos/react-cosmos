@@ -1,5 +1,3 @@
-/* eslint-env jest */
-/* istanbul ignore file */
 // @flow
 
 import { Component } from 'react';

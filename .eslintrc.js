@@ -74,6 +74,7 @@ module.exports = {
       '**/__mocks__/**/*.js',
       '**/__tests__/**/*.js',
       '**/?(*.)test.js',
+      '**/jestHelpers/**/*.js',
       'packages/react-cosmos-telescope/src/**/*.js'
     ]),
     cypressEnv(['cypress/**/*.js']),

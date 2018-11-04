@@ -1,5 +1,4 @@
-/* eslint-env browser, jest */
-/* istanbul ignore file */
+/* eslint-env browser */
 // @flow
 
 import React from 'react';

@@ -19,7 +19,7 @@ type State = {
 // `getMissingState`
 export class FixtureConnect extends Component<FixtureConnectProps, State> {
   state = {
-    fixturePath: this.props.initFixturePath || null,
+    fixturePath: null,
     fixtureState: null,
     // Used to reset FixtureProvider instance on fixturePath change
     renderKey: 0
