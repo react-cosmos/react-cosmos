@@ -21,18 +21,20 @@ class Root extends Component<Props> {
       urlParams: { fullscreen }
     } = this.context;
 
+    const content = (
+      <Content data-testid="content" key="right">
+        {children}
+      </Content>
+    );
+
     if (fullscreen) {
-      return (
-        <Container>
-          <Right key="right">{children}</Right>
-        </Container>
-      );
+      return <Container>{content}</Container>;
     }
 
     return (
       <Container>
-        <Nav />
-        <Right key="right">{children}</Right>
+        <Nav data-testid="nav" />
+        {content}
       </Container>
     );
   }
@@ -48,7 +50,7 @@ class Nav extends Component<{}> {
     } = this.context;
 
     return (
-      <Left>
+      <NavContainer>
         {fixture && (
           <Buttons>
             <button onClick={this.handleGoHome}>home</button>
@@ -56,7 +58,7 @@ class Nav extends Component<{}> {
           </Buttons>
         )}
         <FixtureTree fixtures={fixtures} onSelect={this.handleFixtureSelect} />
-      </Left>
+      </NavContainer>
     );
   }
 
@@ -85,14 +87,14 @@ const Container = styled.div`
   flex-direction: row;
 `;
 
-const Left = styled.div`
+const NavContainer = styled.div`
   flex-shrink: 0;
   width: 256px;
   display: flex;
   flex-direction: column;
 `;
 
-const Right = styled.div`
+const Content = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
