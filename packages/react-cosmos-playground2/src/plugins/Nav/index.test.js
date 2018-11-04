@@ -2,7 +2,6 @@
 /* eslint-env browser */
 
 import React from 'react';
-import qs from 'query-string';
 import {
   render,
   cleanup,
@@ -12,6 +11,7 @@ import {
 import { Slot } from 'react-plugin';
 import { PlaygroundProvider } from '../../PlaygroundProvider';
 import { ReceiveRendererResponse } from '../../jestHelpers/ReceiveRendererResponse';
+import { getUrlParams, pushUrlParams } from '../../jestHelpers/url';
 
 // Plugins have side-effects: they register themselves
 import '.';
@@ -45,9 +45,31 @@ it('renders fixture list received from renderer', async () => {
 it('pushes fixture path to URL on fixture click', async () => {
   const { getByText } = renderPlayground();
 
+  // waitForElement is needed because the fixture list isn't shown immediately
   fireEvent.click(await waitForElement(() => getByText(/zwei/i)));
 
-  expect(qs.parse(location.search).fixture).toEqual('fixtures/zwei.js');
+  expect(getUrlParams().fixture).toEqual('fixtures/zwei.js');
+});
+
+it('removes fixture path from URL on home button click', async () => {
+  pushUrlParams({ fixture: 'fixtures/zwei.js' });
+
+  const { getByText } = renderPlayground();
+
+  fireEvent.click(getByText(/home/i));
+
+  expect(getUrlParams().fixture).toEqual(undefined);
+});
+
+it('only renders content in full screen mode', async () => {
+  pushUrlParams({ fixture: 'fixtures/zwei.js' });
+
+  const { getByText, getByTestId, queryByTestId } = renderPlayground();
+
+  fireEvent.click(getByText(/fullscreen/i));
+
+  await waitForElement(() => getByTestId('content'));
+  expect(queryByTestId('nav')).toBeNull();
 });
 
 function renderPlayground() {
