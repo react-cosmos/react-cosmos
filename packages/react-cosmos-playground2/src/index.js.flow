@@ -24,7 +24,8 @@ export type RendererRequestListener = RendererRequest => mixed;
 export type RendererResponseListener = RendererResponse => mixed;
 
 export type UrlParams = {
-  fixture?: string
+  fixture?: string,
+  fullscreen?: boolean
 };
 export type SetUrlParams = ($Shape<UrlParams>) => mixed;
 
