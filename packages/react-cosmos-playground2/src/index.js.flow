@@ -35,6 +35,11 @@ export type SetUrlParams = ($Shape<UrlParams>) => mixed;
 
 type OnOff<T> = T => () => mixed; // returns unsubscribe function
 
+// NOTE(vision): Most of the playground context will be absorbed by private
+// plugin state and public plugin methods. Plugins will communicate through
+// globally-bound public methods and won't need to import and depend on any
+// statically-bound context. Also not all plugins have UI, so the plugin API
+// needs to be React agnostic.
 export type PlaygroundContextValue = {
   options: PlaygroundOptions,
   urlParams: UrlParams,
