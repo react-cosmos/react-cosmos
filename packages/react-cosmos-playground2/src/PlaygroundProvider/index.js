@@ -9,6 +9,7 @@ import { getUrlParams, pushUrlParams, onUrlChange } from './router';
 import type { Node } from 'react';
 import type { SetState } from 'react-cosmos-shared2/util';
 import type {
+  RendererId,
   RendererRequest,
   RendererResponse,
   FixtureListMsg,
@@ -119,10 +120,15 @@ export class PlaygroundProvider extends Component<
   }
 
   componentDidUpdate(prevProps: Props, prevState: PlaygroundContextValue) {
-    const { fixture } = this.state.urlParams;
+    const {
+      urlParams: { fixture },
+      uiState: { renderers }
+    } = this.state;
 
     if (fixture !== prevState.urlParams.fixture) {
-      this.selectFixture(fixture || null);
+      renderers.forEach(rendererId => {
+        this.selectFixture(rendererId, fixture || null);
+      });
     }
   }
 
@@ -144,6 +150,7 @@ export class PlaygroundProvider extends Component<
 
   handleFixtureListResponse({ payload }: FixtureListMsg) {
     const {
+      urlParams: { fixture },
       uiState: { renderers }
     } = this.state;
     const { rendererId, fixtures } = payload;
@@ -156,34 +163,26 @@ export class PlaygroundProvider extends Component<
       fixtures
     };
 
-    this.setUiState(stateChange, () => {
-      // We use the `fixtureList` message as a queue that the renderer is
-      // ready and tell it to load the selected fixture
-      const { fixture } = this.state.urlParams;
+    this.setUiState(stateChange);
 
-      if (fixture) {
-        this.selectFixture(fixture);
-      }
-    });
+    // We use the `fixtureList` message as a cue that the renderer is
+    // ready and tell it to load the selected fixture
+    if (fixture) {
+      this.selectFixture(rendererId, fixture);
+    }
   }
 
   handleFixtureStateResponse({ payload }: FixtureStateMsg) {
     this.replaceFixtureState(payload.fixtureState);
   }
 
-  selectFixture(fixturePath: null | string) {
-    const {
-      uiState: { renderers }
-    } = this.state;
-
-    renderers.forEach(rendererId => {
-      this.postRendererRequest({
-        type: 'selectFixture',
-        payload: {
-          rendererId,
-          fixturePath
-        }
-      });
+  selectFixture(rendererId: RendererId, fixturePath: null | string) {
+    this.postRendererRequest({
+      type: 'selectFixture',
+      payload: {
+        rendererId,
+        fixturePath
+      }
     });
   }
 }
