@@ -1,55 +1,39 @@
 // @flow
 
-import type { SetState } from 'react-cosmos-shared2/util';
-import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import type {
-  RendererId,
-  FixtureNames,
-  RendererRequest,
-  RendererResponse
-} from 'react-cosmos-shared2/renderer';
+import type { StateUpdater } from 'react-cosmos-shared2/util';
+import type { RendererId, FixtureNames } from 'react-cosmos-shared2/renderer';
 
 export type PlaygroundOptions = {
   rendererUrl: string
 };
 
-export type UiState = {
-  renderers: RendererId[],
-  fixtures: FixtureNames
+export type PlaygroundState = {
+  core: {
+    renderers: RendererId[],
+    fixtures: FixtureNames
+  },
+  [pluginName: string]: Object
 };
 
-export type ReplaceFixtureState = (FixtureState, cb?: () => mixed) => mixed;
-
-export type RendererRequestListener = RendererRequest => mixed;
-export type RendererResponseListener = RendererResponse => mixed;
-
-export type UrlParams = {
-  fixture?: string,
-  fullscreen?: boolean
-};
-export type SetUrlParams = ($Shape<UrlParams>) => mixed;
-
-// TODO: Add remaining context fields
-// export type PluginState = { [prop: string]: mixed };
-// export type SetPluginState = ($Shape<PluginState>) => mixed;
-
-type OnOff<T> = T => () => mixed; // returns unsubscribe function
+export type Methods = { [methodName: string]: Function };
 
 // NOTE(vision): Most of the playground context will be absorbed by private
 // plugin state and public plugin methods. Plugins will communicate through
 // globally-bound public methods and won't need to import and depend on any
-// statically-bound context. Also not all plugins have UI, so the plugin API
-// needs to be React agnostic.
+// statically-bound context. Also not all plugins have UI, so the plugin state
+// API needs to be React agnostic.
 export type PlaygroundContextValue = {
   options: PlaygroundOptions,
-  urlParams: UrlParams,
-  setUrlParams: SetState<UrlParams>,
-  uiState: UiState,
-  setUiState: SetState<UiState>,
-  fixtureState: ?FixtureState,
-  replaceFixtureState: ReplaceFixtureState,
-  postRendererRequest: RendererRequest => mixed,
-  onRendererRequest: OnOff<RendererRequestListener>,
-  receiveRendererResponse: RendererResponse => mixed,
-  onRendererResponse: OnOff<RendererResponseListener>
+  state: PlaygroundState,
+  setState: <T>(
+    pluginName: string,
+    stateChange: StateUpdater<T>,
+    cb?: () => mixed
+  ) => void,
+  // returns unsubscribe function
+  registerMethods: Methods => () => void,
+  callMethod: (methodName: string, ...args: any) => any,
+  // returns unsubscribe function
+  addEventListener: (eventName: string, listener: Function) => () => void,
+  emitEvent: (eventName: string, ...args: any) => void
 };

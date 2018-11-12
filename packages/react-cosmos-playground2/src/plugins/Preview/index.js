@@ -7,13 +7,18 @@ import { register, Plugin, Plug, Slot } from 'react-plugin';
 import { PlaygroundContext } from '../../PlaygroundContext';
 
 import type { RendererRequest } from 'react-cosmos-shared2/renderer';
+import type { PlaygroundContextValue } from '../../index.js.flow';
 
+// TODO s/IframePreview/RendererIframe
 class IframePreview extends Component<{}> {
   static contextType = PlaygroundContext;
 
+  // FIXME: React team, why is this needed with static contextType?
+  context: PlaygroundContextValue;
+
   iframeRef: ?window;
 
-  unsubscribe: ?() => mixed;
+  unregisterMethods = () => {};
 
   render() {
     const {
@@ -33,15 +38,15 @@ class IframePreview extends Component<{}> {
   componentDidMount() {
     window.addEventListener('message', this.handleWindowMsg, false);
 
-    this.unsubscribe = this.context.onRendererRequest(this.postIframeMessage);
+    this.unregisterMethods = this.context.registerMethods({
+      'renderer.postRequest': this.postIframeMessage
+    });
   }
 
   componentWillUnmount() {
     window.removeEventListener('message', this.handleWindowMsg, false);
 
-    if (typeof this.unsubscribe === 'function') {
-      this.unsubscribe();
-    }
+    this.unregisterMethods();
   }
 
   handleIframeRef = (iframeRef: ?window) => {
@@ -50,7 +55,7 @@ class IframePreview extends Component<{}> {
 
   handleWindowMsg = msg => {
     // TODO: Validate
-    this.context.receiveRendererResponse(msg.data);
+    this.context.emitEvent('renderer.onResponse', msg.data);
   };
 
   postIframeMessage = (msg: RendererRequest) => {

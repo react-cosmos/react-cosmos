@@ -3,7 +3,7 @@
 
 import qs from 'query-string';
 
-import type { UrlParams } from '../index.js.flow';
+import type { UrlParams } from '../plugins/Router/shared';
 
 export function getUrlParams() {
   return qs.parse(location.search);

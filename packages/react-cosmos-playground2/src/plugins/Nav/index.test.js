@@ -10,8 +10,9 @@ import {
 } from 'react-testing-library';
 import { Slot } from 'react-plugin';
 import { PlaygroundProvider } from '../../PlaygroundProvider';
-import { ReceiveRendererResponse } from '../../jestHelpers/ReceiveRendererResponse';
-import { getUrlParams, pushUrlParams } from '../../jestHelpers/url';
+import { EmitEvent } from '../../jestHelpers/EmitEvent';
+import { RegisterMethod } from '../../jestHelpers/RegisterMethod';
+import { SetPluginState } from '../../jestHelpers/SetPluginState';
 
 // Plugins have side-effects: they register themselves
 import '.';
@@ -21,9 +22,7 @@ afterEach(cleanup);
 it('renders content from "root" slot', async () => {
   const { getByText } = renderPlayground();
 
-  await waitForElement(() =>
-    getByText(/content that will be shown alongside navigation/i)
-  );
+  await waitForElement(() => getByText(/content shown alongside navigation/i));
 });
 
 const fixtureListMsg = {
@@ -43,45 +42,77 @@ it('renders fixture list received from renderer', async () => {
 });
 
 it('pushes fixture path to URL on fixture click', async () => {
-  const { getByText } = renderPlayground();
+  const setUrlParams = jest.fn();
+  const { getByText } = renderPlayground(
+    <RegisterMethod methodName="router.setUrlParams" handler={setUrlParams} />
+  );
 
   // waitForElement is needed because the fixture list isn't shown immediately
   fireEvent.click(await waitForElement(() => getByText(/zwei/i)));
 
-  expect(getUrlParams().fixture).toEqual('fixtures/zwei.js');
+  expect(setUrlParams).toBeCalledWith({ fixture: 'fixtures/zwei.js' });
 });
 
-it('removes fixture path from URL on home button click', async () => {
-  pushUrlParams({ fixture: 'fixtures/zwei.js' });
-
-  const { getByText } = renderPlayground();
+it('calls "router.setUrlParams" with blank params on home button', async () => {
+  const setUrlParams = jest.fn();
+  const { getByText } = renderPlayground(
+    <>
+      <SetPluginState
+        pluginName="router"
+        state={{ fixture: 'fixtures/zwei.js' }}
+      />
+      <RegisterMethod methodName="router.setUrlParams" handler={setUrlParams} />
+    </>
+  );
 
   fireEvent.click(getByText(/home/i));
 
-  expect(getUrlParams().fixture).toEqual(undefined);
+  expect(setUrlParams).toBeCalledWith({});
+});
+
+it('calls "router.setUrlParams" on fullscreen button', () => {
+  const setUrlParams = jest.fn();
+  const { getByText } = renderPlayground(
+    <>
+      <SetPluginState
+        pluginName="router"
+        state={{ fixture: 'fixtures/zwei.js' }}
+      />
+      <RegisterMethod methodName="router.setUrlParams" handler={setUrlParams} />
+    </>
+  );
+
+  fireEvent.click(getByText(/fullscreen/i));
+
+  expect(setUrlParams).toBeCalledWith({
+    fixture: 'fixtures/zwei.js',
+    fullscreen: true
+  });
 });
 
 it('only renders content in full screen mode', async () => {
-  pushUrlParams({ fixture: 'fixtures/zwei.js' });
-
-  const { getByText, getByTestId, queryByTestId } = renderPlayground();
-
-  fireEvent.click(getByText(/fullscreen/i));
+  const { getByTestId, queryByTestId } = renderPlayground(
+    <SetPluginState
+      pluginName="router"
+      state={{ fixture: 'fixtures/zwei.js', fullscreen: true }}
+    />
+  );
 
   await waitForElement(() => getByTestId('content'));
   expect(queryByTestId('nav')).toBeNull();
 });
 
-function renderPlayground() {
+function renderPlayground(otherNodes) {
   return render(
     <PlaygroundProvider
       options={{
         rendererUrl: 'foo-renderer'
       }}
     >
-      <Slot name="root">Content that will be shown alongside navigation</Slot>
+      <Slot name="root">Content shown alongside navigation</Slot>
       {/* Fake a plugin that receives renderer responses */}
-      <ReceiveRendererResponse msg={fixtureListMsg} />
+      <EmitEvent eventName="renderer.onResponse" args={[fixtureListMsg]} />
+      {otherNodes}
     </PlaygroundProvider>
   );
 }

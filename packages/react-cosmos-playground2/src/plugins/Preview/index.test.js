@@ -5,8 +5,8 @@ import React from 'react';
 import { wait, render, cleanup } from 'react-testing-library';
 import { Slot } from 'react-plugin';
 import { PlaygroundProvider } from '../../PlaygroundProvider';
-import { PostRendererRequest } from '../../jestHelpers/PostRendererRequest';
-import { OnRendererResponse } from '../../jestHelpers/OnRendererResponse';
+import { CallMethod } from '../../jestHelpers/CallMethod';
+import { OnEvent } from '../../jestHelpers/OnEvent';
 import { mockIframeMessage } from '../../jestHelpers/mockIframeMessage';
 
 // Plugins have side-effects: they register themselves
@@ -32,7 +32,7 @@ it('posts renderer request message to iframe', async () => {
 
   // Fake another plugin that posts a renderer request
   const renderer = renderPlayground(
-    <PostRendererRequest msg={selectFixtureMsg} />
+    <CallMethod methodName="renderer.postRequest" args={[selectFixtureMsg]} />
   );
   const iframe = getIframe(renderer);
 
@@ -43,7 +43,7 @@ it('posts renderer request message to iframe', async () => {
   });
 });
 
-it('receives renderer response message from iframe', async () => {
+it('broadcasts renderer response message from iframe', async () => {
   const fixtureListMsg = {
     type: 'fixtureList',
     payload: {
@@ -53,14 +53,14 @@ it('receives renderer response message from iframe', async () => {
   };
 
   // Fake another plugin that listens to renderer responses
-  const rendererResponseHandler = jest.fn();
-  renderPlayground(<OnRendererResponse handler={rendererResponseHandler} />);
+  const handleRendererReq = jest.fn();
+  renderPlayground(
+    <OnEvent eventName="renderer.onResponse" handler={handleRendererReq} />
+  );
 
   window.postMessage(fixtureListMsg, '*');
 
-  await wait(() =>
-    expect(rendererResponseHandler).toBeCalledWith(fixtureListMsg)
-  );
+  await wait(() => expect(handleRendererReq).toBeCalledWith(fixtureListMsg));
 });
 
 function renderPlayground(otherNodes) {

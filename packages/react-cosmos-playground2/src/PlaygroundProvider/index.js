@@ -2,26 +2,19 @@
 
 import styled from 'styled-components';
 import React, { Component } from 'react';
-import { removeItem, updateState } from 'react-cosmos-shared2/util';
-import { defaultUiState, PlaygroundContext } from '../PlaygroundContext';
-import { getUrlParams, pushUrlParams, onUrlChange } from './router';
+import { removeItem } from 'react-cosmos-shared2/util';
+import { defaultState, PlaygroundContext } from '../PlaygroundContext';
 
 import type { Node } from 'react';
-import type { SetState } from 'react-cosmos-shared2/util';
+import type { StateUpdater } from 'react-cosmos-shared2/util';
 import type {
-  RendererId,
-  RendererRequest,
   RendererResponse,
   FixtureListMsg,
   FixtureStateMsg
 } from 'react-cosmos-shared2/renderer';
 import type {
   PlaygroundOptions,
-  UrlParams,
-  UiState,
-  ReplaceFixtureState,
-  RendererRequestListener,
-  RendererResponseListener,
+  Methods,
   PlaygroundContextValue
 } from '../index.js.flow';
 
@@ -34,67 +27,101 @@ export class PlaygroundProvider extends Component<
   Props,
   PlaygroundContextValue
 > {
-  setUrlParams: SetState<UrlParams> = (paramChange, cb) => {
-    this.setState(
-      ({ urlParams }) => ({ urlParams: updateState(urlParams, paramChange) }),
-      () => {
-        pushUrlParams(this.state.urlParams);
-        callPotentialFunction(cb);
-      }
-    );
-  };
+  setPluginState = <T>(
+    pluginName: string,
+    stateChange: StateUpdater<T>,
+    cb?: () => mixed
+  ) => {
+    console.info(`Set plugin "${pluginName}" state`, stateChange);
 
-  setUiState: SetState<UiState> = (stateChange, cb) => {
+    // FIXME: Fix state.state confusion (eg. getState(pluginName))
     this.setState(
-      ({ uiState }) => ({ uiState: updateState(uiState, stateChange) }),
+      ({ state }) => ({
+        state: {
+          ...state,
+          // $FlowFixMe
+          [pluginName]: updateState(state[pluginName], stateChange)
+        }
+      }),
       cb
     );
   };
 
-  replaceFixtureState: ReplaceFixtureState = (fixtureState, cb) => {
-    this.setState({ fixtureState }, cb);
-  };
+  pluginMethods = {};
 
-  requestListeners: RendererRequestListener[] = [];
+  registerMethods = (methods: Methods) => {
+    console.info(`Register methods`, methods);
 
-  postRendererRequest = (msg: RendererRequest) => {
-    this.requestListeners.forEach(listener => listener(msg));
-  };
+    const methodNames = Object.keys(methods);
 
-  onRendererRequest = (listener: RendererRequestListener) => {
-    this.requestListeners.push(listener);
+    methodNames.forEach(methodName => {
+      this.pluginMethods[methodName] = methods[methodName];
+    });
 
     return () => {
-      this.requestListeners = removeItem(this.requestListeners, listener);
+      methodNames.forEach(methodName => {
+        delete this.pluginMethods[methodName];
+      });
     };
   };
 
-  responseListeners: RendererResponseListener[] = [];
+  callMethod = (methodName: string, ...args: any) => {
+    console.info(`Call method "${methodName}"`, args);
 
-  receiveRendererResponse = (msg: RendererResponse) => {
-    this.responseListeners.forEach(listener => listener(msg));
+    if (!this.pluginMethods[methodName]) {
+      throw new Error(`Method not found: ${methodName}`);
+    }
+
+    this.pluginMethods[methodName](...args);
   };
 
-  onRendererResponse = (listener: RendererResponseListener) => {
-    this.responseListeners.push(listener);
+  eventListeners = {};
+
+  addEventListener = (eventName: string, listener: Function) => {
+    console.info(`Add listener for "${eventName}" event`);
+
+    if (!this.eventListeners[eventName]) {
+      this.eventListeners[eventName] = [];
+    }
+
+    this.eventListeners[eventName].push(listener);
 
     return () => {
-      this.responseListeners = removeItem(this.responseListeners, listener);
+      this.eventListeners[eventName] = removeItem(
+        this.eventListeners[eventName],
+        listener
+      );
+
+      if (this.eventListeners[eventName].length === 0) {
+        delete this.eventListeners[eventName];
+      }
     };
+  };
+
+  emitEvent = (eventName: string, ...args: any) => {
+    console.info(`Event "${eventName}" emitted`, args);
+
+    if (
+      !this.eventListeners[eventName] ||
+      this.eventListeners[eventName].length === 0
+    ) {
+      console.warn(`Event "${eventName}" emitted with nobody listening`);
+      return;
+    }
+
+    this.eventListeners[eventName].forEach(listener => {
+      listener(...args);
+    });
   };
 
   state = {
     options: this.props.options,
-    urlParams: getUrlParams(),
-    setUrlParams: this.setUrlParams,
-    uiState: defaultUiState,
-    setUiState: this.setUiState,
-    fixtureState: null,
-    replaceFixtureState: this.replaceFixtureState,
-    postRendererRequest: this.postRendererRequest,
-    onRendererRequest: this.onRendererRequest,
-    receiveRendererResponse: this.receiveRendererResponse,
-    onRendererResponse: this.onRendererResponse
+    state: defaultState,
+    setState: this.setPluginState,
+    registerMethods: this.registerMethods,
+    callMethod: this.callMethod,
+    addEventListener: this.addEventListener,
+    emitEvent: this.emitEvent
   };
 
   render() {
@@ -107,34 +134,17 @@ export class PlaygroundProvider extends Component<
     );
   }
 
-  unsubscribeFromRendererResponses: ?() => mixed;
-  unsubscribeFromUrlChanges: ?() => mixed;
+  removeRendererResponseListener = () => {};
 
   componentDidMount() {
-    this.unsubscribeFromRendererResponses = this.onRendererResponse(
+    this.removeRendererResponseListener = this.addEventListener(
+      'renderer.onResponse',
       this.handleRendererResponse
     );
-    this.unsubscribeFromUrlChanges = onUrlChange(urlParams => {
-      this.setState({ urlParams });
-    });
-  }
-
-  componentDidUpdate(prevProps: Props, prevState: PlaygroundContextValue) {
-    const {
-      urlParams: { fixture },
-      uiState: { renderers }
-    } = this.state;
-
-    if (fixture !== prevState.urlParams.fixture) {
-      renderers.forEach(rendererId => {
-        this.selectFixture(rendererId, fixture || null);
-      });
-    }
   }
 
   componentWillUnmount() {
-    callPotentialFunction(this.unsubscribeFromRendererResponses);
-    callPotentialFunction(this.unsubscribeFromUrlChanges);
+    this.removeRendererResponseListener();
   }
 
   handleRendererResponse = (msg: RendererResponse) => {
@@ -150,47 +160,30 @@ export class PlaygroundProvider extends Component<
 
   handleFixtureListResponse({ payload }: FixtureListMsg) {
     const {
-      urlParams: { fixture },
-      uiState: { renderers }
-    } = this.state;
+      core: { renderers }
+    } = this.state.state;
     const { rendererId, fixtures } = payload;
 
-    const stateChange = {
+    this.setPluginState('core', {
       renderers:
         renderers.indexOf(rendererId) === -1
           ? [...renderers, rendererId]
           : renderers,
       fixtures
-    };
-
-    this.setUiState(stateChange);
-
-    // We use the `fixtureList` message as a cue that the renderer is
-    // ready and tell it to load the selected fixture
-    if (fixture) {
-      this.selectFixture(rendererId, fixture);
-    }
+    });
   }
 
   handleFixtureStateResponse({ payload }: FixtureStateMsg) {
-    this.replaceFixtureState(payload.fixtureState);
-  }
-
-  selectFixture(rendererId: RendererId, fixturePath: null | string) {
-    this.postRendererRequest({
-      type: 'selectFixture',
-      payload: {
-        rendererId,
-        fixturePath
-      }
-    });
+    // TODO: Can PlaygroundProvider not depend on any plugin? RendererCore
+    this.setPluginState('fixtureState', payload.fixtureState);
   }
 }
 
-function callPotentialFunction(fn: ?Function) {
-  if (typeof fn === 'function') {
-    fn();
-  }
+export function updateState<T>(
+  prevState: null | T,
+  updater: StateUpdater<T>
+): T {
+  return typeof updater === 'function' ? updater(prevState) : updater;
 }
 
 const Container = styled.div`

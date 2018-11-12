@@ -7,19 +7,26 @@ import { PlaygroundContext } from '../../PlaygroundContext';
 import { FixtureTree } from './FixtureTree';
 
 import type { Node } from 'react';
+import type { PlaygroundContextValue } from '../../index.js.flow';
 
 type Props = {
   children: Node
 };
 
+type UrlParams = {
+  fixture?: string,
+  fullscreen?: boolean
+};
+
 class Root extends Component<Props> {
   static contextType = PlaygroundContext;
 
+  // FIXME: React team, why is this needed with static contextType?
+  context: PlaygroundContextValue;
+
   render() {
     const { children } = this.props;
-    const {
-      urlParams: { fullscreen }
-    } = this.context;
+    const { fullscreen }: UrlParams = this.context.state.router || {};
 
     const content = (
       <Content data-testid="content" key="right">
@@ -33,7 +40,7 @@ class Root extends Component<Props> {
 
     return (
       <Container>
-        <Nav data-testid="nav" />
+        <Nav />
         {content}
       </Container>
     );
@@ -43,14 +50,20 @@ class Root extends Component<Props> {
 class Nav extends Component<{}> {
   static contextType = PlaygroundContext;
 
+  // FIXME: React team, why is this needed with static contextType?
+  context: PlaygroundContextValue;
+
   render() {
     const {
-      urlParams: { fixture },
-      uiState: { fixtures }
-    } = this.context;
+      core: { fixtures },
+      router
+    } = this.context.state;
+    // FIXME: Should this be read from state or from router.getUrlParams method?
+    // It needs to be reactive.
+    const { fixture }: UrlParams = router || {};
 
     return (
-      <NavContainer>
+      <NavContainer data-testid="nav">
         {fixture && (
           <Buttons>
             <button onClick={this.handleGoHome}>home</button>
@@ -63,15 +76,19 @@ class Nav extends Component<{}> {
   }
 
   handleGoHome = () => {
-    this.context.setUrlParams({ fixture: undefined });
+    this.context.callMethod('router.setUrlParams', {});
   };
 
   handleFixtureSelect = (fixturePath: string) => {
-    this.context.setUrlParams({ fixture: fixturePath });
+    this.context.callMethod('router.setUrlParams', { fixture: fixturePath });
   };
 
   handleGoFullScreen = () => {
-    this.context.setUrlParams({ fullscreen: true });
+    const { fixture } = this.context.state.router;
+    this.context.callMethod('router.setUrlParams', {
+      fixture,
+      fullscreen: true
+    });
   };
 }
 
