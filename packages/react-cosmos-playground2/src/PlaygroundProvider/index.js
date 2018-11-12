@@ -3,15 +3,10 @@
 import styled from 'styled-components';
 import React, { Component } from 'react';
 import { removeItem } from 'react-cosmos-shared2/util';
-import { defaultState, PlaygroundContext } from '../PlaygroundContext';
+import { PlaygroundContext } from '../PlaygroundContext';
 
 import type { Node } from 'react';
 import type { StateUpdater } from 'react-cosmos-shared2/util';
-import type {
-  RendererResponse,
-  FixtureListMsg,
-  FixtureStateMsg
-} from 'react-cosmos-shared2/renderer';
 import type {
   PlaygroundOptions,
   Methods,
@@ -116,7 +111,7 @@ export class PlaygroundProvider extends Component<
 
   state = {
     options: this.props.options,
-    state: defaultState,
+    state: getInitialState(),
     setState: this.setPluginState,
     registerMethods: this.registerMethods,
     callMethod: this.callMethod,
@@ -133,52 +128,17 @@ export class PlaygroundProvider extends Component<
       </PlaygroundContext.Provider>
     );
   }
-
-  removeRendererResponseListener = () => {};
-
-  componentDidMount() {
-    this.removeRendererResponseListener = this.addEventListener(
-      'renderer.onResponse',
-      this.handleRendererResponse
-    );
-  }
-
-  componentWillUnmount() {
-    this.removeRendererResponseListener();
-  }
-
-  handleRendererResponse = (msg: RendererResponse) => {
-    switch (msg.type) {
-      case 'fixtureList':
-        return this.handleFixtureListResponse(msg);
-      case 'fixtureState':
-        return this.handleFixtureStateResponse(msg);
-      default:
-      // No need to handle every message. Maybe some plugin cares about it.
-    }
-  };
-
-  handleFixtureListResponse({ payload }: FixtureListMsg) {
-    const {
-      core: { renderers }
-    } = this.state.state;
-    const { rendererId, fixtures } = payload;
-
-    this.setPluginState('core', {
-      renderers:
-        renderers.indexOf(rendererId) === -1
-          ? [...renderers, rendererId]
-          : renderers,
-      fixtures
-    });
-  }
-
-  handleFixtureStateResponse({ payload }: FixtureStateMsg) {
-    // TODO: Can PlaygroundProvider not depend on any plugin? RendererCore
-    this.setPluginState('fixtureState', payload.fixtureState);
-  }
 }
 
+// TODO: Pick up initial states automatically via plugin API
+function getInitialState() {
+  return {
+    renderer: require('../plugins/RendererResponseHandler/getInitialState').getInitialState(),
+    router: require('../plugins/Router/getInitialState').getInitialState()
+  };
+}
+
+// TODO: s/updateState/replaceState
 export function updateState<T>(
   prevState: null | T,
   updater: StateUpdater<T>

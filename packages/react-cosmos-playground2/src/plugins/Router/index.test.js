@@ -5,10 +5,10 @@ import { wait, waitForElement, render, cleanup } from 'react-testing-library';
 import { register, Plugin, Plug, Slot } from 'react-plugin';
 import { PlaygroundProvider } from '../../PlaygroundProvider';
 import { RegisterMethod } from '../../jestHelpers/RegisterMethod';
-import { OnEvent } from '../../jestHelpers/OnEvent';
 import { EmitEvent } from '../../jestHelpers/EmitEvent';
 import { CallMethod } from '../../jestHelpers/CallMethod';
 import { OnPluginState } from '../../jestHelpers/OnPluginState';
+import { SetPluginState } from '../../jestHelpers/SetPluginState';
 import {
   getUrlParams,
   pushUrlParams,
@@ -48,14 +48,6 @@ it('renders content from "root" slot', async () => {
   await waitForElement(() => getByText(/content renderered by other plugins/i));
 });
 
-const fixtureListMsg = {
-  type: 'fixtureList',
-  payload: {
-    rendererId: 'foo-renderer',
-    fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js']
-  }
-};
-
 it('sends fixtureSelect request on initial "fixture" URL param', async () => {
   pushUrlParams({ fixture: 'fixtures/zwei.js' });
 
@@ -77,19 +69,9 @@ it('sends fixtureSelect request on initial "fixture" URL param', async () => {
 
 it('sends fixtureSelect request on added "fixture" URL param', async () => {
   const handlePostReq = jest.fn();
-  const handleRendererRes = jest.fn();
   renderPlayground(
-    <>
-      <RegisterMethod
-        methodName="renderer.postRequest"
-        handler={handlePostReq}
-      />
-      <OnEvent eventName="renderer.onResponse" handler={handleRendererRes} />
-    </>
+    <RegisterMethod methodName="renderer.postRequest" handler={handlePostReq} />
   );
-
-  // Wait for fixture list to be received
-  await wait(() => expect(handleRendererRes).toBeCalledWith(fixtureListMsg));
 
   popUrlParams({ fixture: 'fixtures/zwei.js' });
 
@@ -106,19 +88,9 @@ it('sends null fixtureSelect request on removed "fixture" URL param', async () =
   pushUrlParams({ fixture: 'fixtures/zwei.js' });
 
   const handlePostReq = jest.fn();
-  const handleRendererRes = jest.fn();
   renderPlayground(
-    <>
-      <RegisterMethod
-        methodName="renderer.postRequest"
-        handler={handlePostReq}
-      />
-      <OnEvent eventName="renderer.onResponse" handler={handleRendererRes} />
-    </>
+    <RegisterMethod methodName="renderer.postRequest" handler={handlePostReq} />
   );
-
-  // Wait for fixture list to be received
-  await wait(() => expect(handleRendererRes).toBeCalledWith(fixtureListMsg));
 
   // This simulation is akin to going back home after selecting a fixture
   popUrlParams({});
@@ -167,6 +139,26 @@ it('sets URL params on "setUrlParams" method', async () => {
   );
 });
 
+const mockRendererId = 'foo-renderer';
+const mockFixtures = [
+  'fixtures/ein.js',
+  'fixtures/zwei.js',
+  'fixtures/drei.js'
+];
+
+const mockRendererState = {
+  rendererIds: [mockRendererId],
+  fixtures: mockFixtures
+};
+
+const fixtureListMsg = {
+  type: 'fixtureList',
+  payload: {
+    rendererId: mockRendererId,
+    fixtures: mockFixtures
+  }
+};
+
 function renderPlayground(otherNodes) {
   return render(
     <PlaygroundProvider
@@ -175,6 +167,7 @@ function renderPlayground(otherNodes) {
       }}
     >
       <Slot name="root">Content renderered by other plugins</Slot>
+      <SetPluginState pluginName="renderer" state={mockRendererState} />
       <EmitEvent eventName="renderer.onResponse" args={[fixtureListMsg]} />
       {otherNodes}
     </PlaygroundProvider>

@@ -1,17 +1,12 @@
 // @flow
 
 import type { StateUpdater } from 'react-cosmos-shared2/util';
-import type { RendererId, FixtureNames } from 'react-cosmos-shared2/renderer';
 
 export type PlaygroundOptions = {
   rendererUrl: string
 };
 
 export type PlaygroundState = {
-  core: {
-    renderers: RendererId[],
-    fixtures: FixtureNames
-  },
   [pluginName: string]: Object
 };
 

@@ -10,7 +10,6 @@ import {
 } from 'react-testing-library';
 import { Slot } from 'react-plugin';
 import { PlaygroundProvider } from '../../PlaygroundProvider';
-import { EmitEvent } from '../../jestHelpers/EmitEvent';
 import { RegisterMethod } from '../../jestHelpers/RegisterMethod';
 import { SetPluginState } from '../../jestHelpers/SetPluginState';
 
@@ -24,14 +23,6 @@ it('renders content from "root" slot', async () => {
 
   await waitForElement(() => getByText(/content shown alongside navigation/i));
 });
-
-const fixtureListMsg = {
-  type: 'fixtureList',
-  payload: {
-    rendererId: 'foo-renderer',
-    fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js']
-  }
-};
 
 it('renders fixture list received from renderer', async () => {
   const { getByText } = renderPlayground();
@@ -102,6 +93,11 @@ it('only renders content in full screen mode', async () => {
   expect(queryByTestId('nav')).toBeNull();
 });
 
+const mockRendererState = {
+  rendererIds: ['foo-renderer'],
+  fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js']
+};
+
 function renderPlayground(otherNodes) {
   return render(
     <PlaygroundProvider
@@ -110,8 +106,7 @@ function renderPlayground(otherNodes) {
       }}
     >
       <Slot name="root">Content shown alongside navigation</Slot>
-      {/* Fake a plugin that receives renderer responses */}
-      <EmitEvent eventName="renderer.onResponse" args={[fixtureListMsg]} />
+      <SetPluginState pluginName="renderer" state={mockRendererState} />
       {otherNodes}
     </PlaygroundProvider>
   );

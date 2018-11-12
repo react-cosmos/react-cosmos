@@ -38,6 +38,8 @@ class IframePreview extends Component<{}> {
   componentDidMount() {
     window.addEventListener('message', this.handleWindowMsg, false);
 
+    // TODO(vision): Support multiple renderers at the same time. Should this be
+    // renderer.onRequest event?
     this.unregisterMethods = this.context.registerMethods({
       'renderer.postRequest': this.postIframeMessage
     });

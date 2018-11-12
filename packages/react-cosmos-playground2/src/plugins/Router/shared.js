@@ -1,6 +1,6 @@
 // @flow
 
-export type UrlParams = {
+export type RouterState = {
   fixture?: string,
   fullscreen?: boolean
 };

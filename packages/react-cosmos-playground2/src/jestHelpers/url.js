@@ -3,18 +3,16 @@
 
 import qs from 'query-string';
 
-import type { UrlParams } from '../plugins/Router/shared';
-
 export function getUrlParams() {
   return qs.parse(location.search);
 }
 
-export function pushUrlParams(params: UrlParams) {
+export function pushUrlParams(params: Object) {
   const query = qs.stringify(params);
   history.pushState({}, '', `?${query}`);
 }
 
-export function popUrlParams(params: UrlParams) {
+export function popUrlParams(params: Object) {
   pushUrlParams(params);
   // Simulate `popstate` event, like using back/fwd browser buttons
   window.dispatchEvent(new Event('popstate'));
