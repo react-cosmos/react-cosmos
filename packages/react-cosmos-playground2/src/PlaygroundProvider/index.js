@@ -2,7 +2,7 @@
 
 import styled from 'styled-components';
 import React, { Component } from 'react';
-import { removeItem } from 'react-cosmos-shared2/util';
+import { removeItem, replaceState } from 'react-cosmos-shared2/util';
 import { PlaygroundContext } from '../PlaygroundContext';
 import { getInitialState } from './getInitialState';
 
@@ -36,7 +36,7 @@ export class PlaygroundProvider extends Component<
         state: {
           ...state,
           // $FlowFixMe
-          [pluginName]: updateState(state[pluginName], stateChange)
+          [pluginName]: replaceState(state[pluginName], stateChange)
         }
       }),
       cb
@@ -129,14 +129,6 @@ export class PlaygroundProvider extends Component<
       </PlaygroundContext.Provider>
     );
   }
-}
-
-// TODO: s/updateState/replaceState
-export function updateState<T>(
-  prevState: null | T,
-  updater: StateUpdater<T>
-): T {
-  return typeof updater === 'function' ? updater(prevState) : updater;
 }
 
 const Container = styled.div`
