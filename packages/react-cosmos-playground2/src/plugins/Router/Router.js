@@ -29,7 +29,7 @@ export class Router extends Component<Props> {
   }
 
   getOwnState(): RouterState {
-    return this.context.state.router;
+    return this.context.getState('router');
   }
 
   setOwnState(state: RouterState, cb?: Function) {
@@ -91,12 +91,12 @@ export class Router extends Component<Props> {
       if (hasFixtureChanged || areUrlParamsEqual) {
         this.renderCurrentFixture();
       }
-      pushUrlParamsToHistory(this.context.state.router);
+      pushUrlParamsToHistory(this.context.getState('router'));
     });
   };
 
   renderCurrentFixture() {
-    const { rendererIds }: RendererState = this.context.state.renderer;
+    const { rendererIds }: RendererState = this.context.getState('renderer');
     const { fixture } = this.getOwnState();
 
     rendererIds.forEach(rendererId => {

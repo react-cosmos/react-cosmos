@@ -16,9 +16,9 @@ export class Nav extends Component<{}> {
   context: PlaygroundContextValue;
 
   render() {
-    const { state } = this.context;
-    const { fixtures }: RendererState = state.renderer;
-    const { fixture }: RouterState = state.router;
+    const { getState } = this.context;
+    const { fixtures }: RendererState = getState('renderer');
+    const { fixture }: RouterState = getState('router');
 
     return (
       <Container data-testid="nav">
@@ -42,8 +42,10 @@ export class Nav extends Component<{}> {
   };
 
   handleGoFullScreen = () => {
-    const { fixture } = this.context.state.router;
-    this.context.callMethod('router.setUrlParams', {
+    const { getState, callMethod } = this.context;
+    const { fixture }: RouterState = getState('router');
+
+    callMethod('router.setUrlParams', {
       fixture,
       fullscreen: true
     });

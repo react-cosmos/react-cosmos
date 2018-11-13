@@ -21,7 +21,7 @@ export class Root extends Component<Props> {
 
   render() {
     const { children } = this.props;
-    const { fullscreen }: RouterState = this.context.state.router;
+    const { fullscreen }: RouterState = this.context.getState('router');
 
     const content = (
       <Content data-testid="content" key="right">

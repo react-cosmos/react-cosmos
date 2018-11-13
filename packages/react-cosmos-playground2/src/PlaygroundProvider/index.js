@@ -23,6 +23,10 @@ export class PlaygroundProvider extends Component<
   Props,
   PlaygroundContextValue
 > {
+  getPluginState = (pluginName: string) => {
+    return this.state.pluginState[pluginName];
+  };
+
   setPluginState = <T>(
     pluginName: string,
     stateChange: StateUpdater<T>,
@@ -30,13 +34,11 @@ export class PlaygroundProvider extends Component<
   ) => {
     console.info(`Set plugin "${pluginName}" state`, stateChange);
 
-    // FIXME: Fix state.state confusion (eg. getState(pluginName))
     this.setState(
-      ({ state }) => ({
-        state: {
-          ...state,
-          // $FlowFixMe
-          [pluginName]: replaceState(state[pluginName], stateChange)
+      ({ pluginState }) => ({
+        pluginState: {
+          ...pluginState,
+          [pluginName]: replaceState(pluginState[pluginName], stateChange)
         }
       }),
       cb
@@ -112,7 +114,8 @@ export class PlaygroundProvider extends Component<
 
   state = {
     options: this.props.options,
-    state: getInitialState(),
+    pluginState: getInitialState(),
+    getState: this.getPluginState,
     setState: this.setPluginState,
     registerMethods: this.registerMethods,
     callMethod: this.callMethod,

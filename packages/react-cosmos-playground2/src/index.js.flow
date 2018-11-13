@@ -6,8 +6,8 @@ export type PlaygroundOptions = {
   rendererUrl: string
 };
 
-export type PlaygroundState = {
-  [pluginName: string]: Object
+type PluginState = {
+  [pluginName: string]: any
 };
 
 export type Methods = { [methodName: string]: Function };
@@ -19,16 +19,18 @@ export type Methods = { [methodName: string]: Function };
 // API needs to be React agnostic.
 export type PlaygroundContextValue = {
   options: PlaygroundOptions,
-  state: PlaygroundState,
+  pluginState: PluginState,
+  // State has to be typed manually after getting it
+  getState: (pluginName: string) => any,
   setState: <T>(
     pluginName: string,
     stateChange: StateUpdater<T>,
     cb?: () => mixed
   ) => void,
-  // returns unsubscribe function
+  // Returns unsubscribe function
   registerMethods: Methods => () => void,
   callMethod: (methodName: string, ...args: any) => any,
-  // returns unsubscribe function
+  // Returns unsubscribe function
   addEventListener: (eventName: string, listener: Function) => () => void,
   emitEvent: (eventName: string, ...args: any) => void
 };

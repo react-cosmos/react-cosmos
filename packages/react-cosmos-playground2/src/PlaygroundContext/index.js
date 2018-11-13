@@ -11,7 +11,8 @@ export const PlaygroundContext = createContext<PlaygroundContextValue>({
   options: {
     rendererUrl: ''
   },
-  state: {},
+  pluginState: {},
+  getState: noopFn,
   setState: noopFn,
   registerMethods: noopSubFn,
   callMethod: noopFn,

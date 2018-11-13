@@ -27,7 +27,7 @@ export class RendererResponseHandler extends Component<Props> {
   }
 
   getOwnState(): RendererState {
-    return this.context.state.renderer;
+    return this.context.getState('renderer');
   }
 
   setOwnState(state: RendererState) {

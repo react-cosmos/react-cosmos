@@ -19,9 +19,9 @@ export class ControlPanel extends Component<Props> {
   context: PlaygroundContextValue;
 
   render() {
-    const { state } = this.context;
-    const { fixtureState }: RendererState = state.renderer;
-    const { fixture: fixturePath }: RouterState = state.router;
+    const { getState } = this.context;
+    const { fixtureState }: RendererState = getState('renderer');
+    const { fixture: fixturePath }: RouterState = getState('router');
 
     if (!fixturePath || !fixtureState) {
       return null;
