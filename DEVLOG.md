@@ -1,3 +1,11 @@
+Q: What's the different between a method and an event in the plugin API?
+
+- Calling a method that doesn't hasn't been registered fails. Emitting an event that nobody's listening to doesn't.
+- A method can return a value. An event listener can't.
+- Only one handler can be registered for a method name. Multiple listeners can be added for an event name.
+
+---
+
 Q: What's the vision for the plugin UI and the shortcomings in the current implementation?
 
 The vision is for the plugin API to go beyond React. Not because I want to use other renderers, but because not all plugin parts are related to rendering. Here are the main plugin parts:
