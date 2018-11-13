@@ -19,7 +19,7 @@ type Props = {
 export class RendererResponseHandler extends Component<Props> {
   static contextType = PlaygroundContext;
 
-  // FIXME: React team, why is this needed with static contextType?
+  // https://github.com/facebook/flow/issues/7166
   context: PlaygroundContextValue;
 
   render() {

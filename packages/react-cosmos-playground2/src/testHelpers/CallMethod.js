@@ -8,7 +8,7 @@ import type { PlaygroundContextValue } from '../index.js.flow';
 export class CallMethod extends Component<{ methodName: string, args: any[] }> {
   static contextType = PlaygroundContext;
 
-  // FIXME: React team, why is this needed with static contextType?
+  // https://github.com/facebook/flow/issues/7166
   context: PlaygroundContextValue;
 
   componentDidMount() {
