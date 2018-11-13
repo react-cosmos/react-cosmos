@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import React, { Component } from 'react';
 import { removeItem } from 'react-cosmos-shared2/util';
 import { PlaygroundContext } from '../PlaygroundContext';
+import { getInitialState } from './getInitialState';
 
 import type { Node } from 'react';
 import type { StateUpdater } from 'react-cosmos-shared2/util';
@@ -128,14 +129,6 @@ export class PlaygroundProvider extends Component<
       </PlaygroundContext.Provider>
     );
   }
-}
-
-// TODO: Pick up initial states automatically via plugin API
-function getInitialState() {
-  return {
-    renderer: require('../plugins/RendererResponseHandler/getInitialState').getInitialState(),
-    router: require('../plugins/Router/getInitialState').getInitialState()
-  };
 }
 
 // TODO: s/updateState/replaceState
