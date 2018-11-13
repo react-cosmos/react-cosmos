@@ -9,6 +9,7 @@ import {
 } from 'react-cosmos-shared2/fixtureState';
 import { ValueInput } from './ValueInput';
 
+import type { Element } from 'react';
 import type {
   FixtureDecoratorId,
   FixtureState,
@@ -33,7 +34,7 @@ export class PropsState extends Component<Props> {
       return null;
     }
 
-    return components.map(
+    return components.map<Element<any>>(
       ({ decoratorId, elPath, componentName, props, state }) => (
         <div key={`${decoratorId}-${elPath}`}>
           <p>
