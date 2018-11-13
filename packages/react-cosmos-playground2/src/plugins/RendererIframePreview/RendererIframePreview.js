@@ -3,14 +3,12 @@
 
 import styled from 'styled-components';
 import React, { Component } from 'react';
-import { register, Plugin, Plug, Slot } from 'react-plugin';
 import { PlaygroundContext } from '../../PlaygroundContext';
 
 import type { RendererRequest } from 'react-cosmos-shared2/renderer';
 import type { PlaygroundContextValue } from '../../index.js.flow';
 
-// TODO s/IframePreview/RendererIframe
-class IframePreview extends Component<{}> {
+export class RendererIframePreview extends Component<{}> {
   static contextType = PlaygroundContext;
 
   // FIXME: React team, why is this needed with static contextType?
@@ -55,7 +53,7 @@ class IframePreview extends Component<{}> {
     this.iframeRef = iframeRef;
   };
 
-  handleWindowMsg = msg => {
+  handleWindowMsg = (msg: Object) => {
     // TODO: Validate
     this.context.emitEvent('renderer.onResponse', msg.data);
   };
@@ -66,21 +64,6 @@ class IframePreview extends Component<{}> {
     }
   };
 }
-
-// The root <Slot name="preview"> allows other plugins to further decorate
-// the "preview" plugin slot.
-register(
-  <Plugin name="Preview">
-    <Plug
-      slot="preview"
-      render={() => (
-        <Slot name="preview">
-          <IframePreview />
-        </Slot>
-      )}
-    />
-  </Plugin>
-);
 
 const Iframe = styled.iframe`
   width: 100%;
