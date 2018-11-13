@@ -3,7 +3,8 @@
 import React from 'react';
 import { register, Plugin, Plug } from 'react-plugin';
 
-// Use to test if a plugin decorates an existing plugin instead of overriding it
+// Use to test if a Plug continues to expose the slot it occupies for other
+// plugins to act as decorators.
 export function registerTestPlugin(slotName: string) {
   register(
     <Plugin name="Test">

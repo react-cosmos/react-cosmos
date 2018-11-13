@@ -18,7 +18,6 @@ export class RegisterMethod extends Component<{
 
   componentDidMount() {
     const { methodName, handler } = this.props;
-
     this.unregisterMethods = this.context.registerMethods({
       [methodName]: handler
     });

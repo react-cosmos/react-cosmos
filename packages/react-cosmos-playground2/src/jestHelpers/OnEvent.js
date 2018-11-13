@@ -18,7 +18,6 @@ export class OnEvent extends Component<{
 
   componentDidMount() {
     const { eventName, handler } = this.props;
-
     this.removeListener = this.context.addEventListener(eventName, handler);
   }
 

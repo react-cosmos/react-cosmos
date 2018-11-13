@@ -16,7 +16,6 @@ export class OnPluginState extends Component<{
 
   render() {
     const { pluginName, handler } = this.props;
-
     handler(this.context.getState(pluginName));
 
     return null;

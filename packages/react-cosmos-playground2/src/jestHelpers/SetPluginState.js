@@ -16,7 +16,6 @@ export class SetPluginState extends Component<{
 
   componentDidMount() {
     const { pluginName, state } = this.props;
-
     this.context.setState(pluginName, state);
   }
 
