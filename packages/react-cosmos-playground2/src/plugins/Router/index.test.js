@@ -2,13 +2,14 @@
 
 import React from 'react';
 import { wait, waitForElement, render, cleanup } from 'react-testing-library';
-import { register, Plugin, Plug, Slot } from 'react-plugin';
+import { Slot } from 'react-plugin';
 import { PlaygroundProvider } from '../../PlaygroundProvider';
 import { RegisterMethod } from '../../jestHelpers/RegisterMethod';
 import { EmitEvent } from '../../jestHelpers/EmitEvent';
 import { CallMethod } from '../../jestHelpers/CallMethod';
 import { OnPluginState } from '../../jestHelpers/OnPluginState';
 import { SetPluginState } from '../../jestHelpers/SetPluginState';
+import { registerTestPlugin } from '../../jestHelpers/testPlugin';
 import {
   getUrlParams,
   pushUrlParams,
@@ -17,17 +18,8 @@ import {
 } from '../../jestHelpers/url';
 
 // Plugins have side-effects: they register themselves
-import '.';
-
-// TODO: Explain
-register(
-  <Plugin name="Test">
-    <Plug
-      slot="root"
-      render={({ children }) => <div data-testid="test-plugin">{children}</div>}
-    />
-  </Plugin>
-);
+require('.');
+registerTestPlugin('root');
 
 afterEach(() => {
   cleanup();
@@ -140,6 +132,7 @@ it('sets URL params on "setUrlParams" method', async () => {
 });
 
 const mockRendererId = 'foo-renderer';
+
 const mockFixtures = [
   'fixtures/ein.js',
   'fixtures/zwei.js',
@@ -151,7 +144,7 @@ const mockRendererState = {
   fixtures: mockFixtures
 };
 
-const fixtureListMsg = {
+const mockFixtureListMsg = {
   type: 'fixtureList',
   payload: {
     rendererId: mockRendererId,
@@ -163,12 +156,12 @@ function renderPlayground(otherNodes) {
   return render(
     <PlaygroundProvider
       options={{
-        rendererUrl: 'foo-renderer'
+        rendererUrl: mockRendererId
       }}
     >
       <Slot name="root">Content renderered by other plugins</Slot>
       <SetPluginState pluginName="renderer" state={mockRendererState} />
-      <EmitEvent eventName="renderer.onResponse" args={[fixtureListMsg]} />
+      <EmitEvent eventName="renderer.onResponse" args={[mockFixtureListMsg]} />
       {otherNodes}
     </PlaygroundProvider>
   );

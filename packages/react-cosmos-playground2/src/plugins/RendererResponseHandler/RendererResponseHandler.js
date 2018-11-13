@@ -1,7 +1,6 @@
 // @flow
 
-import React, { Component } from 'react';
-import { Slot } from 'react-plugin';
+import { Component } from 'react';
 import { PlaygroundContext } from '../../PlaygroundContext';
 
 import type { Node } from 'react';
@@ -24,7 +23,7 @@ export class RendererResponseHandler extends Component<Props> {
   context: PlaygroundContextValue;
 
   render() {
-    return <Slot name="root">{this.props.children}</Slot>;
+    return this.props.children;
   }
 
   getOwnState(): RendererState {
