@@ -10,8 +10,8 @@ import {
 } from 'react-testing-library';
 import { Slot } from 'react-plugin';
 import { PlaygroundProvider } from '../../PlaygroundProvider';
-import { RegisterMethod } from '../../jestHelpers/RegisterMethod';
-import { SetPluginState } from '../../jestHelpers/SetPluginState';
+import { RegisterMethod } from '../../testHelpers/RegisterMethod';
+import { SetPluginState } from '../../testHelpers/SetPluginState';
 
 // Plugins have side-effects: they register themselves
 import '.';

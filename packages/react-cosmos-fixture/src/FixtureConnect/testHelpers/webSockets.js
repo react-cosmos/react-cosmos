@@ -6,7 +6,7 @@ import {
   untilLastMessageEquals,
   postSelectFixture,
   postSetFixtureState
-} from '../jestHelpers/shared';
+} from '../testHelpers/shared';
 import { WebSockets, EVENT_NAME } from '../WebSockets';
 import { FixtureConnect } from '..';
 

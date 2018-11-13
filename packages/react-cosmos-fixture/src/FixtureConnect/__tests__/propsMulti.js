@@ -6,11 +6,11 @@ import {
   updateCompFixtureState
 } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from '../../shared/uuid';
-import { HelloMessage } from '../jestHelpers/components';
-import { createCompFxState, createFxValues } from '../jestHelpers/fixtureState';
-import { mockConnect as mockPostMessage } from '../jestHelpers/postMessage';
-import { mockConnect as mockWebSockets } from '../jestHelpers/webSockets';
-import { mount } from '../jestHelpers/mount';
+import { HelloMessage } from '../testHelpers/components';
+import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
+import { mockConnect as mockPostMessage } from '../testHelpers/postMessage';
+import { mockConnect as mockWebSockets } from '../testHelpers/webSockets';
+import { mount } from '../testHelpers/mount';
 
 const rendererId = uuid();
 const fixtures = {

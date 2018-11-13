@@ -7,7 +7,7 @@ import {
   untilLastMessageEquals,
   postSelectFixture,
   postSetFixtureState
-} from '../jestHelpers/shared';
+} from '../testHelpers/shared';
 import { PostMessage } from '../PostMessage';
 import { FixtureConnect } from '..';
 

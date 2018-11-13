@@ -5,9 +5,9 @@ import React from 'react';
 import { wait, render, cleanup } from 'react-testing-library';
 import { Slot } from 'react-plugin';
 import { PlaygroundProvider } from '../../PlaygroundProvider';
-import { EmitEvent } from '../../jestHelpers/EmitEvent';
-import { OnEvent } from '../../jestHelpers/OnEvent';
-import { mockIframeMessage } from '../../jestHelpers/mockIframeMessage';
+import { EmitEvent } from '../../testHelpers/EmitEvent';
+import { OnEvent } from '../../testHelpers/OnEvent';
+import { mockIframeMessage } from '../../testHelpers/mockIframeMessage';
 
 // Plugins have side-effects: they register themselves
 import '.';

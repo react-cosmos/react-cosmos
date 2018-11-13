@@ -4,18 +4,18 @@ import React from 'react';
 import { wait, waitForElement, render, cleanup } from 'react-testing-library';
 import { Slot } from 'react-plugin';
 import { PlaygroundProvider } from '../../PlaygroundProvider';
-import { OnEvent } from '../../jestHelpers/OnEvent';
-import { EmitEvent } from '../../jestHelpers/EmitEvent';
-import { CallMethod } from '../../jestHelpers/CallMethod';
-import { OnPluginState } from '../../jestHelpers/OnPluginState';
-import { SetPluginState } from '../../jestHelpers/SetPluginState';
-import { registerTestPlugin } from '../../jestHelpers/testPlugin';
+import { OnEvent } from '../../testHelpers/OnEvent';
+import { EmitEvent } from '../../testHelpers/EmitEvent';
+import { CallMethod } from '../../testHelpers/CallMethod';
+import { OnPluginState } from '../../testHelpers/OnPluginState';
+import { SetPluginState } from '../../testHelpers/SetPluginState';
+import { registerTestPlugin } from '../../testHelpers/testPlugin';
 import {
   getUrlParams,
   pushUrlParams,
   popUrlParams,
   resetUrl
-} from '../../jestHelpers/url';
+} from '../../testHelpers/url';
 
 // Plugins have side-effects: they register themselves
 require('.');

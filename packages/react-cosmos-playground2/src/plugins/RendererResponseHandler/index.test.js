@@ -4,9 +4,9 @@ import React from 'react';
 import { wait, waitForElement, render, cleanup } from 'react-testing-library';
 import { Slot } from 'react-plugin';
 import { PlaygroundProvider } from '../../PlaygroundProvider';
-import { EmitEvent } from '../../jestHelpers/EmitEvent';
-import { OnPluginState } from '../../jestHelpers/OnPluginState';
-import { registerTestPlugin } from '../../jestHelpers/testPlugin';
+import { EmitEvent } from '../../testHelpers/EmitEvent';
+import { OnPluginState } from '../../testHelpers/OnPluginState';
+import { registerTestPlugin } from '../../testHelpers/testPlugin';
 
 // Plugins have side-effects: they register themselves
 require('.');

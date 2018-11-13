@@ -1,9 +1,9 @@
 // @flow
 
 import { uuid } from '../../shared/uuid';
-import { mockConnect as mockPostMessage } from '../jestHelpers/postMessage';
-import { mockConnect as mockWebSockets } from '../jestHelpers/webSockets';
-import { mount } from '../jestHelpers/mount';
+import { mockConnect as mockPostMessage } from '../testHelpers/postMessage';
+import { mockConnect as mockWebSockets } from '../testHelpers/webSockets';
+import { mount } from '../testHelpers/mount';
 
 const rendererId = uuid();
 const fixtures = { first: null, second: null };

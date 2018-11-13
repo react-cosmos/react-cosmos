@@ -8,11 +8,11 @@ import {
   updateCompFixtureState
 } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from '../../shared/uuid';
-import { Counter, CoolCounter } from '../jestHelpers/components';
-import { createCompFxState, createFxValues } from '../jestHelpers/fixtureState';
-import { mockConnect as mockPostMessage } from '../jestHelpers/postMessage';
-import { mockConnect as mockWebSockets } from '../jestHelpers/webSockets';
-import { mount } from '../jestHelpers/mount';
+import { Counter, CoolCounter } from '../testHelpers/components';
+import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
+import { mockConnect as mockPostMessage } from '../testHelpers/postMessage';
+import { mockConnect as mockWebSockets } from '../testHelpers/webSockets';
+import { mount } from '../testHelpers/mount';
 
 import type { ElementRef } from 'react';
 
