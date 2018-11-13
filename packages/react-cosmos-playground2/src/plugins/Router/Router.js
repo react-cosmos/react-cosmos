@@ -1,8 +1,7 @@
 // @flow
 
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { isEqual } from 'lodash';
-import { Slot } from 'react-plugin';
 import { PlaygroundContext } from '../../PlaygroundContext';
 import { pushUrlParamsToHistory, subscribeToLocationChanges } from './window';
 
@@ -26,7 +25,7 @@ export class Router extends Component<Props> {
   context: PlaygroundContextValue;
 
   render() {
-    return <Slot name="root">{this.props.children}</Slot>;
+    return this.props.children;
   }
 
   getOwnState(): RouterState {
