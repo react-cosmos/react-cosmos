@@ -5,6 +5,7 @@ import type { RendererState } from './shared';
 export function getInitialState(): RendererState {
   return {
     rendererIds: [],
-    fixtures: []
+    fixtures: [],
+    fixtureState: null
   };
 }
