@@ -4,7 +4,6 @@ import React from 'react';
 import { wait, waitForElement, render, cleanup } from 'react-testing-library';
 import { Slot } from 'react-plugin';
 import { PlaygroundProvider } from '../../PlaygroundProvider';
-import { RegisterMethod } from '../../jestHelpers/RegisterMethod';
 import { EmitEvent } from '../../jestHelpers/EmitEvent';
 import { OnPluginState } from '../../jestHelpers/OnPluginState';
 import { registerTestPlugin } from '../../jestHelpers/testPlugin';
@@ -16,9 +15,7 @@ registerTestPlugin('root');
 afterEach(cleanup);
 
 it('renders "root" slot', async () => {
-  const { getByTestId } = renderPlayground(
-    <RegisterMethod methodName="renderer.postRequest" handler={jest.fn()} />
-  );
+  const { getByTestId } = renderPlayground();
 
   await waitForElement(() => getByTestId('test-plugin'));
 });
@@ -34,7 +31,7 @@ it('adds rendererIds to state on "fixtureList" renderer response', async () => {
   renderPlayground(
     <>
       <OnPluginState pluginName="renderer" handler={handlePluginState} />
-      <EmitEvent eventName="renderer.onResponse" args={[mockFixtureListMsg]} />
+      <EmitEvent eventName="renderer.response" args={[mockFixtureListMsg]} />
     </>
   );
 
@@ -52,7 +49,7 @@ it('adds fixtures to state on "fixtureList" renderer response', async () => {
   renderPlayground(
     <>
       <OnPluginState pluginName="renderer" handler={handlePluginState} />
-      <EmitEvent eventName="renderer.onResponse" args={[mockFixtureListMsg]} />
+      <EmitEvent eventName="renderer.response" args={[mockFixtureListMsg]} />
     </>
   );
 
@@ -70,8 +67,8 @@ it('adds fixture state to state on "fixtureState" renderer response', async () =
   renderPlayground(
     <>
       <OnPluginState pluginName="renderer" handler={handlePluginState} />
-      <EmitEvent eventName="renderer.onResponse" args={[mockFixtureListMsg]} />
-      <EmitEvent eventName="renderer.onResponse" args={[mockFixtureStateMsg]} />
+      <EmitEvent eventName="renderer.response" args={[mockFixtureListMsg]} />
+      <EmitEvent eventName="renderer.response" args={[mockFixtureStateMsg]} />
     </>
   );
 

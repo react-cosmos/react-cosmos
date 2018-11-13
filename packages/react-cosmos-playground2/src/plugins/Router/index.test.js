@@ -4,7 +4,7 @@ import React from 'react';
 import { wait, waitForElement, render, cleanup } from 'react-testing-library';
 import { Slot } from 'react-plugin';
 import { PlaygroundProvider } from '../../PlaygroundProvider';
-import { RegisterMethod } from '../../jestHelpers/RegisterMethod';
+import { OnEvent } from '../../jestHelpers/OnEvent';
 import { EmitEvent } from '../../jestHelpers/EmitEvent';
 import { CallMethod } from '../../jestHelpers/CallMethod';
 import { OnPluginState } from '../../jestHelpers/OnPluginState';
@@ -27,9 +27,7 @@ afterEach(() => {
 });
 
 it('renders "root" slot', async () => {
-  const { getByTestId } = renderPlayground(
-    <RegisterMethod methodName="renderer.postRequest" handler={jest.fn()} />
-  );
+  const { getByTestId } = renderPlayground();
 
   await waitForElement(() => getByTestId('test-plugin'));
 });
@@ -45,7 +43,7 @@ it('sends fixtureSelect request on initial "fixture" URL param', async () => {
 
   const handlePostReq = jest.fn();
   renderPlayground(
-    <RegisterMethod methodName="renderer.postRequest" handler={handlePostReq} />
+    <OnEvent eventName="renderer.request" handler={handlePostReq} />
   );
 
   await wait(() =>
@@ -62,7 +60,7 @@ it('sends fixtureSelect request on initial "fixture" URL param', async () => {
 it('sends fixtureSelect request on added "fixture" URL param', async () => {
   const handlePostReq = jest.fn();
   renderPlayground(
-    <RegisterMethod methodName="renderer.postRequest" handler={handlePostReq} />
+    <OnEvent eventName="renderer.request" handler={handlePostReq} />
   );
 
   popUrlParams({ fixture: 'fixtures/zwei.js' });
@@ -81,7 +79,7 @@ it('sends null fixtureSelect request on removed "fixture" URL param', async () =
 
   const handlePostReq = jest.fn();
   renderPlayground(
-    <RegisterMethod methodName="renderer.postRequest" handler={handlePostReq} />
+    <OnEvent eventName="renderer.request" handler={handlePostReq} />
   );
 
   // This simulation is akin to going back home after selecting a fixture
@@ -100,7 +98,7 @@ it('updates router state on "setUrlParams" method', async () => {
   const handlePluginState = jest.fn();
   renderPlayground(
     <>
-      <RegisterMethod methodName="renderer.postRequest" handler={jest.fn()} />
+      <OnEvent eventName="renderer.request" handler={jest.fn()} />
       <OnPluginState pluginName="router" handler={handlePluginState} />
       <CallMethod
         methodName="router.setUrlParams"
@@ -118,7 +116,7 @@ it('updates router state on "setUrlParams" method', async () => {
 it('sets URL params on "setUrlParams" method', async () => {
   renderPlayground(
     <>
-      <RegisterMethod methodName="renderer.postRequest" handler={jest.fn()} />
+      <OnEvent eventName="renderer.request" handler={jest.fn()} />
       <CallMethod
         methodName="router.setUrlParams"
         args={[{ fixture: 'fixtures/zwei.js' }]}
@@ -161,7 +159,7 @@ function renderPlayground(otherNodes) {
     >
       <Slot name="root">Content renderered by other plugins</Slot>
       <SetPluginState pluginName="renderer" state={mockRendererState} />
-      <EmitEvent eventName="renderer.onResponse" args={[mockFixtureListMsg]} />
+      <EmitEvent eventName="renderer.response" args={[mockFixtureListMsg]} />
       {otherNodes}
     </PlaygroundProvider>
   );

@@ -16,7 +16,7 @@ export class RendererIframePreview extends Component<{}> {
 
   iframeRef: ?window;
 
-  unregisterMethods = () => {};
+  removeRendererRequestListener = () => {};
 
   render() {
     const {
@@ -36,17 +36,16 @@ export class RendererIframePreview extends Component<{}> {
   componentDidMount() {
     window.addEventListener('message', this.handleWindowMsg, false);
 
-    // TODO(vision): Support multiple renderers at the same time. Should this be
-    // renderer.onRequest event?
-    this.unregisterMethods = this.context.registerMethods({
-      'renderer.postRequest': this.postIframeMessage
-    });
+    this.removeRendererRequestListener = this.context.addEventListener(
+      'renderer.request',
+      this.postIframeMessage
+    );
   }
 
   componentWillUnmount() {
     window.removeEventListener('message', this.handleWindowMsg, false);
 
-    this.unregisterMethods();
+    this.removeRendererRequestListener();
   }
 
   handleIframeRef = (iframeRef: ?window) => {
@@ -55,7 +54,7 @@ export class RendererIframePreview extends Component<{}> {
 
   handleWindowMsg = (msg: Object) => {
     // TODO: Validate
-    this.context.emitEvent('renderer.onResponse', msg.data);
+    this.context.emitEvent('renderer.response', msg.data);
   };
 
   postIframeMessage = (msg: RendererRequest) => {

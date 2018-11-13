@@ -45,7 +45,7 @@ export class ControlPanel extends Component<Props> {
     fixturePath: string,
     components: ComponentFixtureState[]
   }) => {
-    this.context.callMethod('renderer.postRequest', {
+    this.context.emitEvent('renderer.request', {
       type: 'setFixtureState',
       payload: {
         rendererId: RENDERER_ID,

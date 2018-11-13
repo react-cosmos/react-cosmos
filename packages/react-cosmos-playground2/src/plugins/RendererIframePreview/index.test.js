@@ -5,7 +5,7 @@ import React from 'react';
 import { wait, render, cleanup } from 'react-testing-library';
 import { Slot } from 'react-plugin';
 import { PlaygroundProvider } from '../../PlaygroundProvider';
-import { CallMethod } from '../../jestHelpers/CallMethod';
+import { EmitEvent } from '../../jestHelpers/EmitEvent';
 import { OnEvent } from '../../jestHelpers/OnEvent';
 import { mockIframeMessage } from '../../jestHelpers/mockIframeMessage';
 
@@ -32,7 +32,7 @@ it('posts renderer request message to iframe', async () => {
 
   // Fake another plugin that posts a renderer request
   const renderer = renderPlayground(
-    <CallMethod methodName="renderer.postRequest" args={[selectFixtureMsg]} />
+    <EmitEvent eventName="renderer.request" args={[selectFixtureMsg]} />
   );
   const iframe = getIframe(renderer);
 
@@ -55,7 +55,7 @@ it('broadcasts renderer response message from iframe', async () => {
   // Fake another plugin that listens to renderer responses
   const handleRendererReq = jest.fn();
   renderPlayground(
-    <OnEvent eventName="renderer.onResponse" handler={handleRendererReq} />
+    <OnEvent eventName="renderer.response" handler={handleRendererReq} />
   );
 
   window.postMessage(fixtureListMsg, '*');

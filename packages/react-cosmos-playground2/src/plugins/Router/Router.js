@@ -47,7 +47,7 @@ export class Router extends Component<Props> {
 
     const { registerMethods, addEventListener } = this.context;
     this.unsubscribeFromRendererResponses = addEventListener(
-      'renderer.onResponse',
+      'renderer.response',
       this.handleRendererResponse
     );
     this.unregisterMethods = registerMethods({
@@ -105,9 +105,9 @@ export class Router extends Component<Props> {
   }
 
   postSelectFixtureRequest(rendererId: RendererId, fixturePath: string | null) {
-    const { callMethod } = this.context;
+    const { emitEvent } = this.context;
 
-    callMethod('renderer.postRequest', {
+    emitEvent('renderer.request', {
       type: 'selectFixture',
       payload: {
         rendererId,

@@ -38,7 +38,7 @@ export class RendererResponseHandler extends Component<Props> {
 
   componentDidMount() {
     this.removeRendererResponseListener = this.context.addEventListener(
-      'renderer.onResponse',
+      'renderer.response',
       this.handleRendererResponse
     );
   }
