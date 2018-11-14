@@ -1,6 +1,6 @@
 Q: What's the different between a method and an event in the plugin API?
 
-- Calling a method that doesn't hasn't been registered fails. Emitting an event that nobody's listening to doesn't.
+- Calling a method that hasn't been registered fails. Emitting an event that nobody's listening to doesn't.
 - A method can return a value. An event listener can't.
 - Only one handler can be registered for a method name. Multiple listeners can be added for an event name.
 
