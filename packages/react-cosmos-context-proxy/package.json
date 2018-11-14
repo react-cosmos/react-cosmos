@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
-    "@babel/runtime-corejs2": "^7.1.2",
+    "@babel/runtime-corejs2": "^7.1.5",
     "lodash.omit": "^4.5.0",
     "react-cosmos-shared": "^4.7.0-17"
   }

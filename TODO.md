@@ -17,16 +17,23 @@ We need a decent parity with the existing Cosmos UI to test JSX fixtures. This i
     - [x] Remove renderer full screen mode (renderer URL belongs to user)
   - [ ] Searchable left nav
   - [ ] Responsive mode
+  - [ ] RN renderer (WebSockets)
+  - [ ] Style
 
 **Not** included in the first beta release: The Fixture Editor. This is because it'll be replaced by something _much_ more powerful (a new Control Panel). But this section will have arrive later, after the core of Cosmos Next has been thoroughly tested.
 
 ## Step 2: Get feedback on JSX fixtures
 
-## Step 3: Consolidate plugin architecture
+- [ ] "How to use" document for beta testers
+- [ ] Step 2B: JSX decorators
+
+## Step 4: Consolidate plugin architecture
 
 ## Next Steps
 
 - [ ] Basic Control Panel (props/state visualization and editing)
+- [ ] Port onboarding screens to new UI
+- [ ] More Control Panel features
 - [ ] Refine and document UI plugin API
 - [ ] Redesign Cosmos docs
 

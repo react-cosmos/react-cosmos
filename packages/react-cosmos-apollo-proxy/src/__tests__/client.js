@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { InMemoryCache, ID_KEY } from 'apollo-cache-inmemory';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -107,8 +107,7 @@ describe('proxy configured with a client', () => {
     author: {
       __typename: 'Author',
       id: 1,
-      firstName: 'Jane Dough',
-      [ID_KEY]: 'Author:1'
+      firstName: 'Jane Dough'
     }
   };
   let clientOptions;
@@ -165,8 +164,7 @@ describe('proxy configured with an endpoint', () => {
     author: {
       __typename: 'Author',
       id: 1,
-      firstName: 'Jane Dough',
-      [ID_KEY]: 'Author:1'
+      firstName: 'Jane Dough'
     }
   };
 
