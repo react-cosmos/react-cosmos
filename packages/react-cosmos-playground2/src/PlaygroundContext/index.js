@@ -9,7 +9,8 @@ const noopSubFn = () => () => {};
 
 export const PlaygroundContext = createContext<PlaygroundContextValue>({
   options: {
-    rendererPreviewUrl: ''
+    rendererPreviewUrl: null,
+    enableRemoteRenderers: false
   },
   pluginState: {},
   getState: noopFn,
