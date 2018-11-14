@@ -67,10 +67,10 @@ function renderPlayground(otherNodes) {
   return render(
     <PlaygroundProvider
       options={{
-        rendererUrl: 'mockRendererUrl'
+        rendererPreviewUrl: 'mockRendererUrl'
       }}
     >
-      <Slot name="preview" />
+      <Slot name="rendererPreview" />
       {otherNodes}
     </PlaygroundProvider>
   );
