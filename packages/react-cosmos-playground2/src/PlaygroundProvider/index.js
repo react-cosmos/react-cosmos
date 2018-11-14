@@ -1,6 +1,5 @@
 // @flow
 
-import styled from 'styled-components';
 import React, { Component } from 'react';
 import { removeItem, replaceState } from 'react-cosmos-shared2/util';
 import { PlaygroundContext } from '../PlaygroundContext';
@@ -128,19 +127,8 @@ export class PlaygroundProvider extends Component<
 
     return (
       <PlaygroundContext.Provider value={this.state}>
-        <Container>{children}</Container>
+        {children}
       </PlaygroundContext.Provider>
     );
   }
 }
-
-const Container = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  font-family: sans-serif;
-  font-size: 16px;
-  display: flex;
-`;
