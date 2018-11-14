@@ -25,7 +25,7 @@ afterEach(() => {
 });
 
 it('sends fixtureSelect request on initial "fixture" URL param', async () => {
-  pushUrlParams({ fixture: 'fixtures/zwei.js' });
+  pushUrlParams({ fixturePath: 'fixtures/zwei.js' });
 
   const handlePostReq = jest.fn();
   renderPlayground(
@@ -49,7 +49,7 @@ it('sends fixtureSelect request on added "fixture" URL param', async () => {
     <OnEvent eventName="renderer.request" handler={handlePostReq} />
   );
 
-  popUrlParams({ fixture: 'fixtures/zwei.js' });
+  popUrlParams({ fixturePath: 'fixtures/zwei.js' });
 
   expect(handlePostReq).toBeCalledWith({
     type: 'selectFixture',
@@ -61,7 +61,7 @@ it('sends fixtureSelect request on added "fixture" URL param', async () => {
 });
 
 it('sends null fixtureSelect request on removed "fixture" URL param', async () => {
-  pushUrlParams({ fixture: 'fixtures/zwei.js' });
+  pushUrlParams({ fixturePath: 'fixtures/zwei.js' });
 
   const handlePostReq = jest.fn();
   renderPlayground(
@@ -81,21 +81,23 @@ it('sends null fixtureSelect request on removed "fixture" URL param', async () =
 });
 
 it('updates router state on "setUrlParams" method', async () => {
-  const handlePluginState = jest.fn();
+  const handleSetUrlParams = jest.fn();
   renderPlayground(
     <>
       <OnEvent eventName="renderer.request" handler={jest.fn()} />
-      <OnPluginState pluginName="router" handler={handlePluginState} />
+      <OnPluginState pluginName="urlParams" handler={handleSetUrlParams} />
       <CallMethod
         methodName="router.setUrlParams"
-        args={[{ fixture: 'fixtures/zwei.js' }]}
+        args={[{ fixturePath: 'fixtures/zwei.js' }]}
       />
     </>
   );
 
   // Wait for plugin state to propagate
   await wait(() =>
-    expect(handlePluginState).toBeCalledWith({ fixture: 'fixtures/zwei.js' })
+    expect(handleSetUrlParams).toBeCalledWith({
+      fixturePath: 'fixtures/zwei.js'
+    })
   );
 });
 
@@ -105,13 +107,13 @@ it('sets URL params on "setUrlParams" method', async () => {
       <OnEvent eventName="renderer.request" handler={jest.fn()} />
       <CallMethod
         methodName="router.setUrlParams"
-        args={[{ fixture: 'fixtures/zwei.js' }]}
+        args={[{ fixturePath: 'fixtures/zwei.js' }]}
       />
     </>
   );
 
   await wait(() =>
-    expect(getUrlParams()).toEqual({ fixture: 'fixtures/zwei.js' })
+    expect(getUrlParams()).toEqual({ fixturePath: 'fixtures/zwei.js' })
   );
 });
 

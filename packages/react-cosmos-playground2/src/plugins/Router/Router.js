@@ -11,7 +11,7 @@ import type {
 } from 'react-cosmos-shared2/renderer';
 import type { PlaygroundContextValue } from '../../index.js.flow';
 import type { RendererState } from '../RendererResponseHandler';
-import type { RouterState } from './shared';
+import type { UrlParams } from './shared';
 
 export class Router extends Component<{}> {
   static contextType = PlaygroundContext;
@@ -23,12 +23,12 @@ export class Router extends Component<{}> {
     return null;
   }
 
-  getOwnState(): RouterState {
-    return this.context.getState('router');
+  getOwnState(): UrlParams {
+    return this.context.getState('urlParams');
   }
 
-  setOwnState(state: RouterState, cb?: Function) {
-    this.context.setState('router', state, cb);
+  setOwnState(state: UrlParams, cb?: Function) {
+    this.context.setState('urlParams', state, cb);
   }
 
   unsubscribeFromUrlChanges = () => {};
@@ -56,9 +56,9 @@ export class Router extends Component<{}> {
     this.unregisterMethods();
   }
 
-  handleLocationChange = (urlParams: RouterState) => {
-    const { fixture } = this.getOwnState();
-    const hasFixtureChanged = urlParams.fixture !== fixture;
+  handleLocationChange = (urlParams: UrlParams) => {
+    const { fixturePath } = this.getOwnState();
+    const hasFixtureChanged = urlParams.fixturePath !== fixturePath;
 
     this.setOwnState(urlParams, () => {
       if (hasFixtureChanged) {
@@ -68,17 +68,18 @@ export class Router extends Component<{}> {
   };
 
   handleRendererResponse = (msg: RendererResponse) => {
-    const { fixture } = this.getOwnState();
+    const { fixturePath } = this.getOwnState();
 
-    if (msg.type === 'fixtureList' && fixture) {
+    if (msg.type === 'fixtureList' && fixturePath) {
       const { rendererId } = msg.payload;
-      this.postSelectFixtureRequest(rendererId, fixture);
+      this.postSelectFixtureRequest(rendererId, fixturePath);
     }
   };
 
-  handleSetUrlParams = (nextUrlParams: RouterState) => {
+  handleSetUrlParams = (nextUrlParams: UrlParams) => {
     const urlParams = this.getOwnState();
-    const hasFixtureChanged = nextUrlParams.fixture !== urlParams.fixture;
+    const hasFixtureChanged =
+      nextUrlParams.fixturePath !== urlParams.fixturePath;
     const areUrlParamsEqual = isEqual(nextUrlParams, urlParams);
 
     this.setOwnState(nextUrlParams, () => {
@@ -86,16 +87,16 @@ export class Router extends Component<{}> {
       if (hasFixtureChanged || areUrlParamsEqual) {
         this.renderCurrentFixture();
       }
-      pushUrlParamsToHistory(this.context.getState('router'));
+      pushUrlParamsToHistory(this.getOwnState());
     });
   };
 
   renderCurrentFixture() {
     const { rendererIds }: RendererState = this.context.getState('renderer');
-    const { fixture } = this.getOwnState();
+    const { fixturePath } = this.getOwnState();
 
     rendererIds.forEach(rendererId => {
-      this.postSelectFixtureRequest(rendererId, fixture || null);
+      this.postSelectFixtureRequest(rendererId, fixturePath || null);
     });
   }
 

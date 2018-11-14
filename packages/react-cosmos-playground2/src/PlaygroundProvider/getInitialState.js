@@ -4,6 +4,6 @@
 export function getInitialState() {
   return {
     renderer: require('../plugins/RendererResponseHandler/getInitialState').getInitialState(),
-    router: require('../plugins/Router/getInitialState').getInitialState()
+    urlParams: require('../plugins/Router/getInitialState').getInitialState()
   };
 }

@@ -9,7 +9,7 @@ import { PropsState } from './PropsState';
 import type { ComponentFixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { PlaygroundContextValue } from '../../index.js.flow';
 import type { RendererState } from '../RendererResponseHandler';
-import type { RouterState } from '../Router';
+import type { UrlParams } from '../Router';
 
 type Props = {};
 
@@ -22,16 +22,16 @@ export class ControlPanel extends Component<Props> {
   render() {
     const { getState } = this.context;
     const { fixtureState }: RendererState = getState('renderer');
-    const { fixture, fullscreen }: RouterState = getState('router');
+    const { fixturePath, fullScreen }: UrlParams = getState('urlParams');
 
-    if (fullscreen || !fixture || !fixtureState) {
+    if (fullScreen || !fixturePath || !fixtureState) {
       return null;
     }
 
     return (
       <Container>
         <PropsState
-          fixturePath={fixture}
+          fixturePath={fixturePath}
           fixtureState={fixtureState}
           setFixtureState={this.setFixtureState}
         />

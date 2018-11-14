@@ -2,8 +2,8 @@
 
 import { getUrlParamsFromLocation } from './window';
 
-import type { RouterState } from './shared';
+import type { UrlParams } from './shared';
 
-export function getInitialState(): RouterState {
+export function getInitialState(): UrlParams {
   return getUrlParamsFromLocation();
 }

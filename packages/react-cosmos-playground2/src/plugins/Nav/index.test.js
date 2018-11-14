@@ -37,7 +37,7 @@ it('pushes fixture path to URL on fixture click', async () => {
   // waitForElement is needed because the fixture list isn't shown immediately
   fireEvent.click(await waitForElement(() => getByText(/zwei/i)));
 
-  expect(setUrlParams).toBeCalledWith({ fixture: 'fixtures/zwei.js' });
+  expect(setUrlParams).toBeCalledWith({ fixturePath: 'fixtures/zwei.js' });
 });
 
 it('calls "router.setUrlParams" with blank params on home button', async () => {
@@ -45,8 +45,8 @@ it('calls "router.setUrlParams" with blank params on home button', async () => {
   const { getByText } = renderPlayground(
     <>
       <SetPluginState
-        pluginName="router"
-        state={{ fixture: 'fixtures/zwei.js' }}
+        pluginName="urlParams"
+        state={{ fixturePath: 'fixtures/zwei.js' }}
       />
       <RegisterMethod methodName="router.setUrlParams" handler={setUrlParams} />
     </>
@@ -62,8 +62,8 @@ it('calls "router.setUrlParams" on fullscreen button', () => {
   const { getByText } = renderPlayground(
     <>
       <SetPluginState
-        pluginName="router"
-        state={{ fixture: 'fixtures/zwei.js' }}
+        pluginName="urlParams"
+        state={{ fixturePath: 'fixtures/zwei.js' }}
       />
       <RegisterMethod methodName="router.setUrlParams" handler={setUrlParams} />
     </>
@@ -72,16 +72,16 @@ it('calls "router.setUrlParams" on fullscreen button', () => {
   fireEvent.click(getByText(/fullscreen/i));
 
   expect(setUrlParams).toBeCalledWith({
-    fixture: 'fixtures/zwei.js',
-    fullscreen: true
+    fixturePath: 'fixtures/zwei.js',
+    fullScreen: true
   });
 });
 
 it('does not render in full screen mode', async () => {
   const { queryByTestId } = renderPlayground(
     <SetPluginState
-      pluginName="router"
-      state={{ fixture: 'fixtures/zwei.js', fullscreen: true }}
+      pluginName="urlParams"
+      state={{ fixturePath: 'fixtures/zwei.js', fullScreen: true }}
     />
   );
 

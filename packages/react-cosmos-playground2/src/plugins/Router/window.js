@@ -3,14 +3,14 @@
 
 import qs from 'query-string';
 
-import type { RouterState } from './shared';
+import type { UrlParams } from './shared';
 
 export function getUrlParamsFromLocation() {
   return qs.parse(location.search);
 }
 
 // IDEA: Store fixtureState in history object and apply it on `popstate` event
-export function pushUrlParamsToHistory(urlParams: RouterState) {
+export function pushUrlParamsToHistory(urlParams: UrlParams) {
   const query = qs.stringify(urlParams);
 
   // Refresh page completely when pushState isn't supported
@@ -22,7 +22,7 @@ export function pushUrlParamsToHistory(urlParams: RouterState) {
   history.pushState({}, '', `?${query}`);
 }
 
-export function subscribeToLocationChanges(userHandler: RouterState => mixed) {
+export function subscribeToLocationChanges(userHandler: UrlParams => mixed) {
   const handler = () => {
     userHandler(getUrlParamsFromLocation());
   };

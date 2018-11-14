@@ -7,7 +7,7 @@ import { FixtureTree } from './FixtureTree';
 
 import type { PlaygroundContextValue } from '../../index.js.flow';
 import type { RendererState } from '../RendererResponseHandler';
-import type { RouterState } from '../Router';
+import type { UrlParams } from '../Router';
 
 export class Nav extends Component<{}> {
   static contextType = PlaygroundContext;
@@ -18,15 +18,15 @@ export class Nav extends Component<{}> {
   render() {
     const { getState } = this.context;
     const { fixtures }: RendererState = getState('renderer');
-    const { fixture, fullscreen }: RouterState = getState('router');
+    const { fixturePath, fullScreen }: UrlParams = getState('urlParams');
 
-    if (fullscreen) {
+    if (fullScreen) {
       return null;
     }
 
     return (
       <Container data-testid="nav">
-        {fixture && (
+        {fixturePath && (
           <Buttons>
             <button onClick={this.handleGoHome}>home</button>
             <button onClick={this.handleGoFullScreen}>fullscreen</button>
@@ -42,16 +42,16 @@ export class Nav extends Component<{}> {
   };
 
   handleFixtureSelect = (fixturePath: string) => {
-    this.context.callMethod('router.setUrlParams', { fixture: fixturePath });
+    this.context.callMethod('router.setUrlParams', { fixturePath });
   };
 
   handleGoFullScreen = () => {
     const { getState, callMethod } = this.context;
-    const { fixture }: RouterState = getState('router');
+    const { fixturePath }: UrlParams = getState('urlParams');
 
     callMethod('router.setUrlParams', {
-      fixture,
-      fullscreen: true
+      fixturePath,
+      fullScreen: true
     });
   };
 }
