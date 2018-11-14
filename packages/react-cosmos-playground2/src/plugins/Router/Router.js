@@ -5,7 +5,6 @@ import { isEqual } from 'lodash';
 import { PlaygroundContext } from '../../PlaygroundContext';
 import { pushUrlParamsToHistory, subscribeToLocationChanges } from './window';
 
-import type { Node } from 'react';
 import type {
   RendererId,
   RendererResponse
@@ -14,18 +13,14 @@ import type { PlaygroundContextValue } from '../../index.js.flow';
 import type { RendererState } from '../RendererResponseHandler';
 import type { RouterState } from './shared';
 
-type Props = {
-  children: Node
-};
-
-export class Router extends Component<Props> {
+export class Router extends Component<{}> {
   static contextType = PlaygroundContext;
 
   // https://github.com/facebook/flow/issues/7166
   context: PlaygroundContextValue;
 
   render() {
-    return this.props.children;
+    return null;
   }
 
   getOwnState(): RouterState {

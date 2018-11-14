@@ -3,7 +3,6 @@
 import { Component } from 'react';
 import { PlaygroundContext } from '../../PlaygroundContext';
 
-import type { Node } from 'react';
 import type {
   RendererResponse,
   FixtureListMsg,
@@ -12,18 +11,14 @@ import type {
 import type { PlaygroundContextValue } from '../../index.js.flow';
 import type { RendererState } from './shared';
 
-type Props = {
-  children: Node
-};
-
-export class RendererResponseHandler extends Component<Props> {
+export class RendererResponseHandler extends Component<{}> {
   static contextType = PlaygroundContext;
 
   // https://github.com/facebook/flow/issues/7166
   context: PlaygroundContextValue;
 
   render() {
-    return this.props.children;
+    return null;
   }
 
   getOwnState(): RendererState {

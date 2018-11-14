@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { wait, waitForElement, render, cleanup } from 'react-testing-library';
+import { wait, render, cleanup } from 'react-testing-library';
 import { Slot } from 'react-plugin';
 import { PlaygroundProvider } from '../../PlaygroundProvider';
 import { OnEvent } from '../../testHelpers/OnEvent';
@@ -9,7 +9,6 @@ import { EmitEvent } from '../../testHelpers/EmitEvent';
 import { CallMethod } from '../../testHelpers/CallMethod';
 import { OnPluginState } from '../../testHelpers/OnPluginState';
 import { SetPluginState } from '../../testHelpers/SetPluginState';
-import { registerTestPlugin } from '../../testHelpers/testPlugin';
 import {
   getUrlParams,
   pushUrlParams,
@@ -18,24 +17,11 @@ import {
 } from '../../testHelpers/url';
 
 // Plugins have side-effects: they register themselves
-require('.');
-registerTestPlugin('root');
+import '.';
 
 afterEach(() => {
   cleanup();
   resetUrl();
-});
-
-it('renders "root" slot', async () => {
-  const { getByTestId } = renderPlayground();
-
-  await waitForElement(() => getByTestId('test-plugin'));
-});
-
-it('renders content from "root" slot', async () => {
-  const { getByText } = renderPlayground();
-
-  await waitForElement(() => getByText(/content renderered by other plugins/i));
 });
 
 it('sends fixtureSelect request on initial "fixture" URL param', async () => {
@@ -157,7 +143,7 @@ function renderPlayground(otherNodes) {
         rendererUrl: mockRendererId
       }}
     >
-      <Slot name="root">Content renderered by other plugins</Slot>
+      <Slot name="global" />
       <SetPluginState pluginName="renderer" state={mockRendererState} />
       <EmitEvent eventName="renderer.response" args={[mockFixtureListMsg]} />
       {otherNodes}

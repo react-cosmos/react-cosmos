@@ -1,30 +1,16 @@
 // @flow
 
 import React from 'react';
-import { wait, waitForElement, render, cleanup } from 'react-testing-library';
+import { wait, render, cleanup } from 'react-testing-library';
 import { Slot } from 'react-plugin';
 import { PlaygroundProvider } from '../../PlaygroundProvider';
 import { EmitEvent } from '../../testHelpers/EmitEvent';
 import { OnPluginState } from '../../testHelpers/OnPluginState';
-import { registerTestPlugin } from '../../testHelpers/testPlugin';
 
 // Plugins have side-effects: they register themselves
-require('.');
-registerTestPlugin('root');
+import '.';
 
 afterEach(cleanup);
-
-it('renders "root" slot', async () => {
-  const { getByTestId } = renderPlayground();
-
-  await waitForElement(() => getByTestId('test-plugin'));
-});
-
-it('renders content from "root" slot', async () => {
-  const { getByText } = renderPlayground();
-
-  await waitForElement(() => getByText(/content renderered by other plugins/i));
-});
 
 it('adds rendererIds to state on "fixtureList" renderer response', async () => {
   const handlePluginState = jest.fn();
@@ -117,7 +103,7 @@ function renderPlayground(otherNodes) {
         rendererUrl: 'foo-renderer'
       }}
     >
-      <Slot name="root">Content renderered by other plugins</Slot>
+      <Slot name="global" />
       {otherNodes}
     </PlaygroundProvider>
   );

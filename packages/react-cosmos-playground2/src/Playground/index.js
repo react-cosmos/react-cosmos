@@ -13,10 +13,9 @@ type Props = {
 
 export function Playground({ options }: Props) {
   // TODO: Replace "preview" slot with something else for non-web environments
-  // TODO: s/root/global
   return (
     <PlaygroundProvider options={options}>
-      <Slot name="root" />
+      <Slot name="global" />
       <Container>
         <Slot name="left" />
         <Slot name="preview" />
