@@ -3,14 +3,14 @@
 
 import qs from 'query-string';
 
-import type { UrlParams } from '../index.js.flow';
+import type { UrlParams } from './shared';
 
-export function getUrlParams() {
+export function getUrlParamsFromLocation() {
   return qs.parse(location.search);
 }
 
 // IDEA: Store fixtureState in history object and apply it on `popstate` event
-export function pushUrlParams(urlParams: UrlParams) {
+export function pushUrlParamsToHistory(urlParams: UrlParams) {
   const query = qs.stringify(urlParams);
 
   // Refresh page completely when pushState isn't supported
@@ -22,9 +22,9 @@ export function pushUrlParams(urlParams: UrlParams) {
   history.pushState({}, '', `?${query}`);
 }
 
-export function onUrlChange(userHandler: UrlParams => mixed) {
+export function subscribeToLocationChanges(userHandler: UrlParams => mixed) {
   const handler = () => {
-    userHandler(getUrlParams());
+    userHandler(getUrlParamsFromLocation());
   };
 
   window.addEventListener('popstate', handler);

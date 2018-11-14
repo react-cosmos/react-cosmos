@@ -77,10 +77,12 @@ export class ValueInput extends Component<Props, State> {
 
     try {
       JSON.parse(value);
-      onChange(value);
     } catch (err) {
       console.warn(`Not a valid JSON value: ${value}`);
+      return;
     }
+
+    onChange(value);
   };
 }
 

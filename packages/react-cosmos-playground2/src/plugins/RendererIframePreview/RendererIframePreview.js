@@ -3,17 +3,20 @@
 
 import styled from 'styled-components';
 import React, { Component } from 'react';
-import { register, Plugin, Plug, Slot } from 'react-plugin';
 import { PlaygroundContext } from '../../PlaygroundContext';
 
 import type { RendererRequest } from 'react-cosmos-shared2/renderer';
+import type { PlaygroundContextValue } from '../../index.js.flow';
 
-class IframePreview extends Component<{}> {
+export class RendererIframePreview extends Component<{}> {
   static contextType = PlaygroundContext;
+
+  // https://github.com/facebook/flow/issues/7166
+  context: PlaygroundContextValue;
 
   iframeRef: ?window;
 
-  unsubscribe: ?() => mixed;
+  removeRendererRequestListener = () => {};
 
   render() {
     const {
@@ -33,24 +36,25 @@ class IframePreview extends Component<{}> {
   componentDidMount() {
     window.addEventListener('message', this.handleWindowMsg, false);
 
-    this.unsubscribe = this.context.onRendererRequest(this.postIframeMessage);
+    this.removeRendererRequestListener = this.context.addEventListener(
+      'renderer.request',
+      this.postIframeMessage
+    );
   }
 
   componentWillUnmount() {
     window.removeEventListener('message', this.handleWindowMsg, false);
 
-    if (typeof this.unsubscribe === 'function') {
-      this.unsubscribe();
-    }
+    this.removeRendererRequestListener();
   }
 
   handleIframeRef = (iframeRef: ?window) => {
     this.iframeRef = iframeRef;
   };
 
-  handleWindowMsg = msg => {
+  handleWindowMsg = (msg: Object) => {
     // TODO: Validate
-    this.context.receiveRendererResponse(msg.data);
+    this.context.emitEvent('renderer.response', msg.data);
   };
 
   postIframeMessage = (msg: RendererRequest) => {
@@ -59,21 +63,6 @@ class IframePreview extends Component<{}> {
     }
   };
 }
-
-// The root <Slot name="preview"> allows other plugins to further decorate
-// the "preview" plugin slot.
-register(
-  <Plugin name="Preview">
-    <Plug
-      slot="preview"
-      render={() => (
-        <Slot name="preview">
-          <IframePreview />
-        </Slot>
-      )}
-    />
-  </Plugin>
-);
 
 const Iframe = styled.iframe`
   width: 100%;

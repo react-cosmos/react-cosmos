@@ -5,9 +5,9 @@ import React from 'react';
 import { wait, render, cleanup } from 'react-testing-library';
 import { Slot } from 'react-plugin';
 import { PlaygroundProvider } from '../../PlaygroundProvider';
-import { PostRendererRequest } from '../../jestHelpers/PostRendererRequest';
-import { OnRendererResponse } from '../../jestHelpers/OnRendererResponse';
-import { mockIframeMessage } from '../../jestHelpers/mockIframeMessage';
+import { EmitEvent } from '../../testHelpers/EmitEvent';
+import { OnEvent } from '../../testHelpers/OnEvent';
+import { mockIframeMessage } from '../../testHelpers/mockIframeMessage';
 
 // Plugins have side-effects: they register themselves
 import '.';
@@ -18,7 +18,7 @@ it('renders iframe with options.rendererUrl src', () => {
   const renderer = renderPlayground();
 
   expect(getIframe(renderer)).toBeTruthy();
-  expect(getIframe(renderer).src).toMatch('foo-renderer');
+  expect(getIframe(renderer).src).toMatch('mockRendererUrl');
 });
 
 it('posts renderer request message to iframe', async () => {
@@ -30,9 +30,8 @@ it('posts renderer request message to iframe', async () => {
     }
   };
 
-  // Fake another plugin that posts a renderer request
   const renderer = renderPlayground(
-    <PostRendererRequest msg={selectFixtureMsg} />
+    <EmitEvent eventName="renderer.request" args={[selectFixtureMsg]} />
   );
   const iframe = getIframe(renderer);
 
@@ -43,7 +42,7 @@ it('posts renderer request message to iframe', async () => {
   });
 });
 
-it('receives renderer response message from iframe', async () => {
+it('broadcasts renderer response message from iframe', async () => {
   const fixtureListMsg = {
     type: 'fixtureList',
     payload: {
@@ -52,14 +51,15 @@ it('receives renderer response message from iframe', async () => {
     }
   };
 
-  // Fake another plugin that listens to renderer responses
-  const rendererResponseHandler = jest.fn();
-  renderPlayground(<OnRendererResponse handler={rendererResponseHandler} />);
+  const handleRendererResponse = jest.fn();
+  renderPlayground(
+    <OnEvent eventName="renderer.response" handler={handleRendererResponse} />
+  );
 
   window.postMessage(fixtureListMsg, '*');
 
   await wait(() =>
-    expect(rendererResponseHandler).toBeCalledWith(fixtureListMsg)
+    expect(handleRendererResponse).toBeCalledWith(fixtureListMsg)
   );
 });
 
@@ -67,7 +67,7 @@ function renderPlayground(otherNodes) {
   return render(
     <PlaygroundProvider
       options={{
-        rendererUrl: 'foo-renderer'
+        rendererUrl: 'mockRendererUrl'
       }}
     >
       <Slot name="preview" />

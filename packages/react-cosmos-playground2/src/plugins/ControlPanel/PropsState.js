@@ -2,7 +2,6 @@
 
 // import styled from 'styled-components';
 import React, { Component } from 'react';
-import { RENDERER_ID } from 'react-cosmos-shared2/renderer';
 import { replaceOrAddItem } from 'react-cosmos-shared2/util';
 import {
   findCompFixtureState,
@@ -10,16 +9,20 @@ import {
 } from 'react-cosmos-shared2/fixtureState';
 import { ValueInput } from './ValueInput';
 
+import type { Element } from 'react';
 import type {
   FixtureDecoratorId,
-  FixtureState
+  FixtureState,
+  ComponentFixtureState
 } from 'react-cosmos-shared2/fixtureState';
-import type { RendererRequest } from 'react-cosmos-shared2/renderer';
 
 type Props = {
   fixturePath: string,
   fixtureState: FixtureState,
-  postRendererRequest: RendererRequest => mixed
+  setFixtureState: ({
+    fixturePath: string,
+    components: ComponentFixtureState[]
+  }) => mixed
 };
 
 export class PropsState extends Component<Props> {
@@ -31,7 +34,7 @@ export class PropsState extends Component<Props> {
       return null;
     }
 
-    return components.map(
+    return components.map<Element<any>>(
       ({ decoratorId, elPath, componentName, props, state }) => (
         <div key={`${decoratorId}-${elPath}`}>
           <p>
@@ -85,7 +88,7 @@ export class PropsState extends Component<Props> {
     elPath: string,
     key: string
   ) => (value: string) => {
-    const { fixturePath, fixtureState, postRendererRequest } = this.props;
+    const { fixturePath, fixtureState, setFixtureState } = this.props;
     const compFxState = findCompFixtureState(fixtureState, decoratorId, elPath);
 
     if (!compFxState || !compFxState.props) {
@@ -105,15 +108,9 @@ export class PropsState extends Component<Props> {
       })
     });
 
-    postRendererRequest({
-      type: 'setFixtureState',
-      payload: {
-        rendererId: RENDERER_ID,
-        fixturePath,
-        fixtureStateChange: {
-          components
-        }
-      }
+    setFixtureState({
+      fixturePath,
+      components
     });
   };
 
@@ -122,7 +119,7 @@ export class PropsState extends Component<Props> {
     elPath: string,
     key: string
   ) => (value: string) => {
-    const { fixturePath, fixtureState, postRendererRequest } = this.props;
+    const { fixturePath, fixtureState, setFixtureState } = this.props;
     const compFxState = findCompFixtureState(fixtureState, decoratorId, elPath);
 
     if (!compFxState || !compFxState.state) {
@@ -142,15 +139,9 @@ export class PropsState extends Component<Props> {
       })
     });
 
-    postRendererRequest({
-      type: 'setFixtureState',
-      payload: {
-        rendererId: RENDERER_ID,
-        fixturePath,
-        fixtureStateChange: {
-          components
-        }
-      }
+    setFixtureState({
+      fixturePath,
+      components
     });
   };
 }

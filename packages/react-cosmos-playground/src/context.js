@@ -27,7 +27,7 @@ export type UiContextParams = {
 };
 
 // Match the shape of the populated UI context
-export const UiContext = createContext({
+export const UiContext = createContext<UiContextParams>({
   options: {
     platform: 'unknown'
   },

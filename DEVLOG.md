@@ -1,3 +1,31 @@
+Q: What's the different between a method and an event in the plugin API?
+
+- Calling a method that hasn't been registered fails. Emitting an event that nobody's listening to doesn't.
+- A method can return a value. An event listener can't.
+- Only one handler can be registered for a method name. Multiple listeners can be added for an event name.
+
+---
+
+Q: What's the vision for the plugin UI and the shortcomings in the current implementation?
+
+The vision is for the plugin API to go beyond React. Not because I want to use other renderers, but because not all plugin parts are related to rendering. Here are the main plugin parts:
+
+1. Shared state
+2. Public methods
+3. Plugin event listeners
+4. Other event listeners (eg. on window scroll)
+5. Render output
+
+Each plugin handler has access to a _plugin context_. With the plugin context we can read and write shared state, call public methods of other plugins and emit events. All this is possible outside React's context. So _a lot_ of what goes on in a UI plugin doesn't result in visual output (eg. DOM nodes).
+
+The existing UI plugins have already been designed around this architecture, but the current plugin API is not quite _there_ yet. Until I have time to design the _ultimate UI plugin API_, all plugins parts are forced into the React lifecycle. This allowed me to focus on shipping Cosmos and not get completely sidetracked by the plugin API (as exciting as it is).
+
+Notes to remember when iterating on the plugin API:
+
+- Add support for `slotProps` — props that are passed to a UI _slot_ at run time by the slot's parent component
+
+---
+
 Q: Why does Lerna what to publish new versions for packages that haven't changed?
 
 Eg. `lerna changed` returns `react-cosmos-shared`. But `lerna diff react-cosmos-shared` returns null.

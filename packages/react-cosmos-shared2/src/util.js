@@ -65,6 +65,13 @@ export function updateState<T>(
   };
 }
 
+export function replaceState<T>(
+  prevState: null | T,
+  updater: StateUpdater<T>
+): T {
+  return typeof updater === 'function' ? updater(prevState) : updater;
+}
+
 export function replaceKeys(str: string, map: { [key: string]: string }) {
   return Object.keys(map).reduce((res, key) => res.replace(key, map[key]), str);
 }
