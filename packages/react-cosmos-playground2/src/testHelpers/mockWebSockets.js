@@ -1,6 +1,6 @@
 // @flow
 
-import { RENDERER_MESSAGE_EVENT_NAME } from '../plugins/RendererRemote/RendererRemote';
+import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
 
 let onMessage;
 let handlers;

@@ -3,6 +3,7 @@
 
 import { Component } from 'react';
 import io from 'socket.io-client';
+import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
 
 import type { Socket } from 'socket.io-client';
 import type {
@@ -11,8 +12,6 @@ import type {
   RendererResponse
 } from 'react-cosmos-shared2/renderer';
 import type { WebSocketsProps } from '../index.js.flow';
-
-export const EVENT_NAME = 'cosmos-cmd';
 
 export class WebSockets extends Component<WebSocketsProps> {
   socket: ?Socket;
@@ -39,12 +38,12 @@ export class WebSockets extends Component<WebSocketsProps> {
     this.onMessage = onMessage;
 
     this.socket = io(this.props.url);
-    this.socket.on(EVENT_NAME, this.handleMessage);
+    this.socket.on(RENDERER_MESSAGE_EVENT_NAME, this.handleMessage);
   };
 
   unsubscribe = () => {
     if (this.socket) {
-      this.socket.off(EVENT_NAME, this.handleMessage);
+      this.socket.off(RENDERER_MESSAGE_EVENT_NAME, this.handleMessage);
 
       this.socket = null;
       this.onMessage = null;
@@ -53,7 +52,7 @@ export class WebSockets extends Component<WebSocketsProps> {
 
   postMessage = (msg: RendererResponse) => {
     if (this.socket) {
-      this.socket.emit(EVENT_NAME, msg);
+      this.socket.emit(RENDERER_MESSAGE_EVENT_NAME, msg);
     }
   };
 }

@@ -2,13 +2,12 @@
 
 import { Component } from 'react';
 import io from 'socket.io-client';
+import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
 import { PlaygroundContext } from '../../PlaygroundContext';
 
 import type { Socket } from 'socket.io-client';
 import type { RendererRequest } from 'react-cosmos-shared2/renderer';
 import type { PlaygroundContextValue } from '../../index.js.flow';
-
-export const RENDERER_MESSAGE_EVENT_NAME = 'cosmos-renderer-message';
 
 export class RendererRemote extends Component<{}> {
   static contextType = PlaygroundContext;
