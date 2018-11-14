@@ -18,14 +18,10 @@ import '.';
 
 afterEach(cleanup);
 
-it('renders content from "root" slot', async () => {
-  const { getByText } = renderPlayground();
-
-  await waitForElement(() => getByText(/content shown alongside navigation/i));
-});
-
 it('renders fixture list received from renderer', async () => {
-  const { getByText } = renderPlayground();
+  const { queryByTestId, getByText } = renderPlayground();
+
+  expect(queryByTestId('nav')).toBeTruthy();
 
   await waitForElement(() => getByText(/ein/i));
   await waitForElement(() => getByText(/zwei/i));
@@ -81,15 +77,14 @@ it('calls "router.setUrlParams" on fullscreen button', () => {
   });
 });
 
-it('only renders content in full screen mode', async () => {
-  const { getByTestId, queryByTestId } = renderPlayground(
+it('does not render in full screen mode', async () => {
+  const { queryByTestId } = renderPlayground(
     <SetPluginState
       pluginName="router"
       state={{ fixture: 'fixtures/zwei.js', fullscreen: true }}
     />
   );
 
-  await waitForElement(() => getByTestId('content'));
   expect(queryByTestId('nav')).toBeNull();
 });
 
@@ -105,7 +100,7 @@ function renderPlayground(otherNodes) {
         rendererUrl: 'foo-renderer'
       }}
     >
-      <Slot name="root">Content shown alongside navigation</Slot>
+      <Slot name="left" />
       <SetPluginState pluginName="renderer" state={mockRendererState} />
       {otherNodes}
     </PlaygroundProvider>

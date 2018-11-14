@@ -18,7 +18,11 @@ export class Nav extends Component<{}> {
   render() {
     const { getState } = this.context;
     const { fixtures }: RendererState = getState('renderer');
-    const { fixture }: RouterState = getState('router');
+    const { fixture, fullscreen }: RouterState = getState('router');
+
+    if (fullscreen) {
+      return null;
+    }
 
     return (
       <Container data-testid="nav">

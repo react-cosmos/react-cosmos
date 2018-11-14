@@ -2,10 +2,10 @@
 
 import React from 'react';
 import { register, Plugin, Plug } from 'react-plugin';
-import { Preview } from './Preview';
+import { ControlPanel } from './ControlPanel';
 
 register(
   <Plugin name="ControlPanel">
-    <Plug slot="preview" render={Preview} />
+    <Plug slot="right" render={ControlPanel} />
   </Plugin>
 );

@@ -1,6 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import { RENDERER_ID } from 'react-cosmos-shared2/renderer';
 import { PlaygroundContext } from '../../PlaygroundContext';
 import { PropsState } from './PropsState';
@@ -21,20 +22,20 @@ export class ControlPanel extends Component<Props> {
   render() {
     const { getState } = this.context;
     const { fixtureState }: RendererState = getState('renderer');
-    const { fixture: fixturePath }: RouterState = getState('router');
+    const { fixture, fullscreen }: RouterState = getState('router');
 
-    if (!fixturePath || !fixtureState) {
+    if (fullscreen || !fixture || !fixtureState) {
       return null;
     }
 
     return (
-      <>
+      <Container>
         <PropsState
-          fixturePath={fixturePath}
+          fixturePath={fixture}
           fixtureState={fixtureState}
           setFixtureState={this.setFixtureState}
         />
-      </>
+      </Container>
     );
   }
 
@@ -57,3 +58,10 @@ export class ControlPanel extends Component<Props> {
     });
   };
 }
+
+const Container = styled.div`
+  flex-shrink: 0;
+  width: 256px;
+  display: flex;
+  flex-direction: column;
+`;
