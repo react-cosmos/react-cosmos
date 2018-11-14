@@ -6,7 +6,7 @@ export default {
   component: Playground,
   props: {
     options: {
-      rendererUrl: 'foo-renderer'
+      rendererUrl: 'mockRendererUrl'
     }
   }
 };

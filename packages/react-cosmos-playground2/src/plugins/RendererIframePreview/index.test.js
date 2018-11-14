@@ -18,7 +18,7 @@ it('renders iframe with options.rendererUrl src', () => {
   const renderer = renderPlayground();
 
   expect(getIframe(renderer)).toBeTruthy();
-  expect(getIframe(renderer).src).toMatch('foo-renderer');
+  expect(getIframe(renderer).src).toMatch('mockRendererUrl');
 });
 
 it('posts renderer request message to iframe', async () => {
@@ -30,7 +30,6 @@ it('posts renderer request message to iframe', async () => {
     }
   };
 
-  // Fake another plugin that posts a renderer request
   const renderer = renderPlayground(
     <EmitEvent eventName="renderer.request" args={[selectFixtureMsg]} />
   );
@@ -52,22 +51,23 @@ it('broadcasts renderer response message from iframe', async () => {
     }
   };
 
-  // Fake another plugin that listens to renderer responses
-  const handleRendererReq = jest.fn();
+  const handleRendererResponse = jest.fn();
   renderPlayground(
-    <OnEvent eventName="renderer.response" handler={handleRendererReq} />
+    <OnEvent eventName="renderer.response" handler={handleRendererResponse} />
   );
 
   window.postMessage(fixtureListMsg, '*');
 
-  await wait(() => expect(handleRendererReq).toBeCalledWith(fixtureListMsg));
+  await wait(() =>
+    expect(handleRendererResponse).toBeCalledWith(fixtureListMsg)
+  );
 });
 
 function renderPlayground(otherNodes) {
   return render(
     <PlaygroundProvider
       options={{
-        rendererUrl: 'foo-renderer'
+        rendererUrl: 'mockRendererUrl'
       }}
     >
       <Slot name="preview" />

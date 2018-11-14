@@ -12,17 +12,38 @@ import '.';
 
 afterEach(cleanup);
 
-it('adds rendererIds to state on "fixtureList" renderer response', async () => {
-  const handlePluginState = jest.fn();
+const mockRendererId = 'foo-renderer';
+
+const mockFixtureListMsg = {
+  type: 'fixtureList',
+  payload: {
+    rendererId: mockRendererId,
+    fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js']
+  }
+};
+
+const mockFixtureStateMsg = {
+  type: 'fixtureState',
+  payload: {
+    rendererId: mockRendererId,
+    fixturePath: 'fixtures/zwei.js',
+    fixtureState: {
+      components: []
+    }
+  }
+};
+
+it('sets "rendererIds" renderer state on "fixtureList" renderer response', async () => {
+  const handleSetRendererState = jest.fn();
   renderPlayground(
     <>
-      <OnPluginState pluginName="renderer" handler={handlePluginState} />
+      <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
       <EmitEvent eventName="renderer.response" args={[mockFixtureListMsg]} />
     </>
   );
 
   await wait(() =>
-    expect(handlePluginState).toBeCalledWith(
+    expect(handleSetRendererState).toBeCalledWith(
       expect.objectContaining({
         rendererIds: [mockRendererId]
       })
@@ -30,77 +51,50 @@ it('adds rendererIds to state on "fixtureList" renderer response', async () => {
   );
 });
 
-it('adds fixtures to state on "fixtureList" renderer response', async () => {
-  const handlePluginState = jest.fn();
+it('sets "fixtures" renderer state on "fixtureList" renderer response', async () => {
+  const handleSetRendererState = jest.fn();
   renderPlayground(
     <>
-      <OnPluginState pluginName="renderer" handler={handlePluginState} />
+      <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
       <EmitEvent eventName="renderer.response" args={[mockFixtureListMsg]} />
     </>
   );
 
   await wait(() =>
-    expect(handlePluginState).toBeCalledWith(
+    expect(handleSetRendererState).toBeCalledWith(
       expect.objectContaining({
-        fixtures: mockFixtures
+        fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js']
       })
     )
   );
 });
 
-it('adds fixture state to state on "fixtureState" renderer response', async () => {
-  const handlePluginState = jest.fn();
+it('sets "fixtureState" renderer state on "fixtureState" renderer response', async () => {
+  const handleSetRendererState = jest.fn();
   renderPlayground(
     <>
-      <OnPluginState pluginName="renderer" handler={handlePluginState} />
+      <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
       <EmitEvent eventName="renderer.response" args={[mockFixtureListMsg]} />
       <EmitEvent eventName="renderer.response" args={[mockFixtureStateMsg]} />
     </>
   );
 
   await wait(() =>
-    expect(handlePluginState).toBeCalledWith(
+    expect(handleSetRendererState).toBeCalledWith(
       expect.objectContaining({
-        fixtureState: mockFixtureState
+        fixtureState: {
+          components: []
+        }
       })
     )
   );
 });
 
-const mockRendererId = 'foo-renderer';
-
-const mockFixtures = [
-  'fixtures/ein.js',
-  'fixtures/zwei.js',
-  'fixtures/drei.js'
-];
-
-const mockFixtureListMsg = {
-  type: 'fixtureList',
-  payload: {
-    rendererId: mockRendererId,
-    fixtures: mockFixtures
-  }
-};
-
-const mockFixtureState = {
-  components: []
-};
-
-const mockFixtureStateMsg = {
-  type: 'fixtureState',
-  payload: {
-    rendererId: mockRendererId,
-    fixturePath: mockFixtures[1],
-    fixtureState: mockFixtureState
-  }
-};
-
 function renderPlayground(otherNodes) {
   return render(
     <PlaygroundProvider
       options={{
-        rendererUrl: 'foo-renderer'
+        rendererUrl: 'mockRendererUrl'
       }}
     >
       <Slot name="global" />

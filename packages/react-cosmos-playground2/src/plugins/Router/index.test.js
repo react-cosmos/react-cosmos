@@ -24,99 +24,6 @@ afterEach(() => {
   resetUrl();
 });
 
-it('sends fixtureSelect request on initial "fixture" URL param', async () => {
-  pushUrlParams({ fixturePath: 'fixtures/zwei.js' });
-
-  const handlePostReq = jest.fn();
-  renderPlayground(
-    <OnEvent eventName="renderer.request" handler={handlePostReq} />
-  );
-
-  await wait(() =>
-    expect(handlePostReq).toBeCalledWith({
-      type: 'selectFixture',
-      payload: {
-        rendererId: 'foo-renderer',
-        fixturePath: 'fixtures/zwei.js'
-      }
-    })
-  );
-});
-
-it('sends fixtureSelect request on added "fixture" URL param', async () => {
-  const handlePostReq = jest.fn();
-  renderPlayground(
-    <OnEvent eventName="renderer.request" handler={handlePostReq} />
-  );
-
-  popUrlParams({ fixturePath: 'fixtures/zwei.js' });
-
-  expect(handlePostReq).toBeCalledWith({
-    type: 'selectFixture',
-    payload: {
-      rendererId: 'foo-renderer',
-      fixturePath: 'fixtures/zwei.js'
-    }
-  });
-});
-
-it('sends null fixtureSelect request on removed "fixture" URL param', async () => {
-  pushUrlParams({ fixturePath: 'fixtures/zwei.js' });
-
-  const handlePostReq = jest.fn();
-  renderPlayground(
-    <OnEvent eventName="renderer.request" handler={handlePostReq} />
-  );
-
-  // This simulation is akin to going back home after selecting a fixture
-  popUrlParams({});
-
-  expect(handlePostReq).toBeCalledWith({
-    type: 'selectFixture',
-    payload: {
-      rendererId: 'foo-renderer',
-      fixturePath: null
-    }
-  });
-});
-
-it('updates router state on "setUrlParams" method', async () => {
-  const handleSetUrlParams = jest.fn();
-  renderPlayground(
-    <>
-      <OnEvent eventName="renderer.request" handler={jest.fn()} />
-      <OnPluginState pluginName="urlParams" handler={handleSetUrlParams} />
-      <CallMethod
-        methodName="router.setUrlParams"
-        args={[{ fixturePath: 'fixtures/zwei.js' }]}
-      />
-    </>
-  );
-
-  // Wait for plugin state to propagate
-  await wait(() =>
-    expect(handleSetUrlParams).toBeCalledWith({
-      fixturePath: 'fixtures/zwei.js'
-    })
-  );
-});
-
-it('sets URL params on "setUrlParams" method', async () => {
-  renderPlayground(
-    <>
-      <OnEvent eventName="renderer.request" handler={jest.fn()} />
-      <CallMethod
-        methodName="router.setUrlParams"
-        args={[{ fixturePath: 'fixtures/zwei.js' }]}
-      />
-    </>
-  );
-
-  await wait(() =>
-    expect(getUrlParams()).toEqual({ fixturePath: 'fixtures/zwei.js' })
-  );
-});
-
 const mockRendererId = 'foo-renderer';
 
 const mockFixtures = [
@@ -138,6 +45,100 @@ const mockFixtureListMsg = {
   }
 };
 
+it('posts "fixtureSelect" renderer request on "fixtureList" renderer response', async () => {
+  pushUrlParams({ fixturePath: 'fixtures/zwei.js' });
+
+  const handleRendererRequest = jest.fn();
+  renderPlayground(
+    <>
+      <EmitEvent eventName="renderer.response" args={[mockFixtureListMsg]} />
+      <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
+    </>
+  );
+
+  await wait(() =>
+    expect(handleRendererRequest).toBeCalledWith({
+      type: 'selectFixture',
+      payload: {
+        rendererId: 'foo-renderer',
+        fixturePath: 'fixtures/zwei.js'
+      }
+    })
+  );
+});
+
+it('posts "fixtureSelect" renderer request on "fixturePath" URL param change', async () => {
+  const handleRendererRequest = jest.fn();
+  renderPlayground(
+    <>
+      <SetPluginState pluginName="renderer" state={mockRendererState} />
+      <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
+    </>
+  );
+
+  popUrlParams({ fixturePath: 'fixtures/zwei.js' });
+
+  expect(handleRendererRequest).toBeCalledWith({
+    type: 'selectFixture',
+    payload: {
+      rendererId: 'foo-renderer',
+      fixturePath: 'fixtures/zwei.js'
+    }
+  });
+});
+
+it('posts null "fixtureSelect" renderer request on removed "fixturePath" URL param', async () => {
+  pushUrlParams({ fixturePath: 'fixtures/zwei.js' });
+
+  const handleRendererRequest = jest.fn();
+  renderPlayground(
+    <>
+      <SetPluginState pluginName="renderer" state={mockRendererState} />
+      <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
+    </>
+  );
+
+  // This simulation is akin to going back home after selecting a fixture
+  popUrlParams({});
+
+  expect(handleRendererRequest).toBeCalledWith({
+    type: 'selectFixture',
+    payload: {
+      rendererId: 'foo-renderer',
+      fixturePath: null
+    }
+  });
+});
+
+describe('on "setUrlParams" method', () => {
+  it('sets "urlParams" state', () => {
+    const handleSetUrlParams = jest.fn();
+    renderPlaygroundAndCallSetUrlParams(handleSetUrlParams);
+
+    expect(handleSetUrlParams).toBeCalledWith({
+      fixturePath: 'fixtures/zwei.js'
+    });
+  });
+
+  it('sets URL params', () => {
+    renderPlaygroundAndCallSetUrlParams();
+
+    expect(getUrlParams()).toEqual({ fixturePath: 'fixtures/zwei.js' });
+  });
+
+  function renderPlaygroundAndCallSetUrlParams(handleSetUrlParams = jest.fn()) {
+    renderPlayground(
+      <>
+        <OnPluginState pluginName="urlParams" handler={handleSetUrlParams} />
+        <CallMethod
+          methodName="router.setUrlParams"
+          args={[{ fixturePath: 'fixtures/zwei.js' }]}
+        />
+      </>
+    );
+  }
+});
+
 function renderPlayground(otherNodes) {
   return render(
     <PlaygroundProvider
@@ -146,8 +147,6 @@ function renderPlayground(otherNodes) {
       }}
     >
       <Slot name="global" />
-      <SetPluginState pluginName="renderer" state={mockRendererState} />
-      <EmitEvent eventName="renderer.response" args={[mockFixtureListMsg]} />
       {otherNodes}
     </PlaygroundProvider>
   );
