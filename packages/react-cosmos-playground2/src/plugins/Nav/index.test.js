@@ -109,7 +109,8 @@ function renderPlayground(otherNodes) {
   return render(
     <PlaygroundProvider
       options={{
-        rendererPreviewUrl: 'mockRendererUrl'
+        rendererPreviewUrl: 'mockRendererUrl',
+        enableRemoteRenderers: false
       }}
     >
       <Slot name="left" />
