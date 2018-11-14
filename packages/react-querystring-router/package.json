@@ -6,6 +6,6 @@
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
-    "@babel/runtime-corejs2": "^7.1.2"
+    "@babel/runtime-corejs2": "^7.1.5"
   }
 }

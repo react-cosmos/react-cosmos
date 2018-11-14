@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "react-cosmos": "^4.7.0-17",
-    "react-redux": "^5.1.0",
+    "react-redux": "^5.1.1",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.5",
     "redux-form": "^7.4.2"
