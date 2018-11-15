@@ -2,32 +2,19 @@
 
 import React from 'react';
 import { uuid } from 'react-cosmos-shared2/util';
-import { FixtureCapture } from '../../FixtureCapture';
-import { HelloMessage } from '../testHelpers/components';
+import { StateMock } from '@react-mock/state';
+import { Counter } from '../testHelpers/components';
 import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
 import { mockConnect as mockPostMessage } from '../testHelpers/postMessage';
 import { mockConnect as mockWebSockets } from '../testHelpers/webSockets';
 import { mount } from '../testHelpers/mount';
 
-function Wrap({ children }) {
-  return children();
-}
-
-Wrap.cosmosCapture = false;
-
 const rendererId = uuid();
 const fixtures = {
   first: (
-    <>
-      <Wrap>{() => <HelloMessage name="Bianca" />}</Wrap>
-      <Wrap>
-        {() => (
-          <FixtureCapture decoratorId="mockDecoratorId">
-            <HelloMessage name="B" />
-          </FixtureCapture>
-        )}
-      </Wrap>
-    </>
+    <StateMock state={{ count: 5 }}>
+      <Counter />
+    </StateMock>
   )
 };
 
@@ -35,15 +22,20 @@ tests(mockPostMessage);
 tests(mockWebSockets);
 
 function tests(mockConnect) {
-  it('captures props from render callback', async () => {
+  // NOTE: This is a regression test that was created for a bug that initally
+  // slipped unnoticed in {INSERT_GITHUB_ISSUE_LINK}
+  it('captures initial state after re-selecting fixture', async () => {
     await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
-      await mount(getElement({ rendererId, fixtures }), async renderer => {
+      await mount(getElement({ rendererId, fixtures }), async () => {
         await selectFixture({
           rendererId,
           fixturePath: 'first'
         });
 
-        expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B']);
+        await selectFixture({
+          rendererId,
+          fixturePath: 'first'
+        });
 
         await untilMessage({
           type: 'fixtureState',
@@ -53,8 +45,9 @@ function tests(mockConnect) {
             fixtureState: {
               components: [
                 createCompFxState({
-                  decoratorId: 'mockDecoratorId',
-                  props: createFxValues({ name: 'B' })
+                  componentName: 'Counter',
+                  props: [],
+                  state: createFxValues({ count: 5 })
                 })
               ]
             }

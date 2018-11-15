@@ -17,7 +17,6 @@ import {
   getExpectedElementAtPath,
   areChildrenEqual
 } from './childrenTree';
-import { getDecoratorId } from './getDecoratorId';
 import { getComponentName } from './getComponentName';
 import { getElementRefType } from './getElementRefType';
 import { findRelevantElementPaths } from './findRelevantElementPaths';
@@ -34,11 +33,12 @@ import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { FixtureCaptureProps } from '../index.js.flow';
 import type { ComponentRef } from './shared';
 
-export function FixtureCapture({ children }: FixtureCaptureProps) {
+export function FixtureCapture({ children, decoratorId }: FixtureCaptureProps) {
   return (
     <FixtureContext.Consumer>
       {({ fixtureState, setFixtureState }) => (
         <FixtureCaptureInner
+          decoratorId={decoratorId}
           fixtureState={fixtureState}
           setFixtureState={setFixtureState}
         >
@@ -77,14 +77,18 @@ class FixtureCaptureInner extends Component<InnerProps> {
   timeoutId: ?TimeoutID;
 
   render() {
-    const { children, fixtureState } = this.props;
-    const decoratorId = this.getDecoratorId();
+    const { children, decoratorId, fixtureState } = this.props;
 
-    return attachChildRefs(
-      extendChildPropsWithFixtureState(children, fixtureState, decoratorId),
-      this.handleRef,
+    return attachChildRefs({
+      children: extendChildPropsWithFixtureState(
+        children,
+        fixtureState,
+        decoratorId
+      ),
+      onRef: this.handleRef,
+      decoratorElRef: this,
       decoratorId
-    );
+    });
   }
 
   componentDidMount() {
@@ -106,11 +110,11 @@ class FixtureCaptureInner extends Component<InnerProps> {
     // Take out the trash
     this.elRefs = {};
     this.initialStates = {};
-    deleteRefHandlers(this.getDecoratorId());
+    deleteRefHandlers(this);
   }
 
   shouldComponentUpdate(nextProps) {
-    const { children, fixtureState } = this.props;
+    const { children, decoratorId, fixtureState } = this.props;
 
     // Children change when the fixture is updated at runtime (eg. via HMR)
     if (!areChildrenEqual(nextProps.children, children)) {
@@ -122,8 +126,6 @@ class FixtureCaptureInner extends Component<InnerProps> {
       return false;
     }
 
-    const decoratorId = this.getDecoratorId();
-
     // No need to update unless children and/or fixture state values changed.
     return !isEqual(
       getCompFixtureStates(nextProps.fixtureState, decoratorId),
@@ -132,9 +134,8 @@ class FixtureCaptureInner extends Component<InnerProps> {
   }
 
   componentDidUpdate(prevProps) {
-    const { children, fixtureState } = this.props;
+    const { children, decoratorId, fixtureState } = this.props;
     const elPaths = findRelevantElementPaths(children);
-    const decoratorId = this.getDecoratorId();
 
     // Remove fixture state for removed child elements (likely via HMR)
     getCompFixtureStates(fixtureState, decoratorId).forEach(({ elPath }) => {
@@ -210,7 +211,7 @@ class FixtureCaptureInner extends Component<InnerProps> {
     // we want to let the component state override the fixture state.
     const prevCompFxState = findCompFixtureState(
       prevProps.fixtureState,
-      this.getDecoratorId(),
+      this.props.decoratorId,
       elPath
     );
     if (prevCompFxState && !isEqual(prevCompFxState.state, stateFxState)) {
@@ -237,22 +238,24 @@ class FixtureCaptureInner extends Component<InnerProps> {
     this.elRefs[elPath] = elRef;
     this.setElInitialState(elPath, elRef);
 
-    const { fixtureState } = this.props;
-    const decoratorId = this.getDecoratorId();
+    const { decoratorId, fixtureState } = this.props;
     const compFxState = findCompFixtureState(fixtureState, decoratorId, elPath);
 
     if (!compFxState) {
-      this.createFixtureState(elPath);
-    } else if (!compFxState.state) {
+      return this.createFixtureState(elPath);
+    }
+
+    const { state: stateFxState } = compFxState;
+
+    if (!stateFxState) {
       this.updateFixtureState({ elPath, state });
     } else {
-      replaceState(elRef, extendObjWithValues(state, compFxState.state));
+      replaceState(elRef, extendObjWithValues(state, stateFxState));
     }
   };
 
   createFixtureState(elPath) {
-    const { children, setFixtureState } = this.props;
-    const decoratorId = this.getDecoratorId();
+    const { children, decoratorId, setFixtureState } = this.props;
     const { type, props } = getExpectedElementAtPath(children, elPath);
     const componentName = getComponentName(type);
     const elRef = this.elRefs[elPath];
@@ -280,8 +283,7 @@ class FixtureCaptureInner extends Component<InnerProps> {
     props?: {},
     state?: {}
   }) {
-    const { setFixtureState } = this.props;
-    const decoratorId = this.getDecoratorId();
+    const { decoratorId, setFixtureState } = this.props;
 
     // Make method await-able
     return new Promise(res => {
@@ -305,8 +307,7 @@ class FixtureCaptureInner extends Component<InnerProps> {
   }
 
   removeFixtureState(elPath?: string) {
-    const { setFixtureState } = this.props;
-    const decoratorId = this.getDecoratorId();
+    const { decoratorId, setFixtureState } = this.props;
     const matcher = elPath
       ? s => s.decoratorId === decoratorId && s.elPath === elPath
       : s => s.decoratorId === decoratorId;
@@ -341,9 +342,8 @@ class FixtureCaptureInner extends Component<InnerProps> {
   };
 
   checkState = async () => {
-    const { children, fixtureState } = this.props;
+    const { children, decoratorId, fixtureState } = this.props;
     const elPaths = findRelevantElementPaths(children);
-    const decoratorId = this.getDecoratorId();
 
     await Promise.all(
       Object.keys(this.elRefs).map(async elPath => {
@@ -374,12 +374,8 @@ class FixtureCaptureInner extends Component<InnerProps> {
     if (this.elRefs[elPath]) {
       delete this.elRefs[elPath];
       delete this.initialStates[elPath];
-      deleteRefHandler(this.getDecoratorId(), elPath);
+      deleteRefHandler(this, this.props.decoratorId, elPath);
     }
-  }
-
-  getDecoratorId() {
-    return getDecoratorId(this);
   }
 }
 

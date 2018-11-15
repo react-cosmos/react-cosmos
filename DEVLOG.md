@@ -1,3 +1,11 @@
+Q: Can the fixture state be deterministic between renderers?
+
+The current limitation is that FixtureCapture instances get assigned auto-incremented unique IDs (ie. `FixtureDecoratorId`). The rest of `fixtureState` is already deterministic.
+
+Solution: Manually set ID to FixtureCapture elements instead of deriving it from the run-time instance. This requires an extra prop when using FixtureCapture by hand (eg. to capture props/state of elements inside render functions). But this is an edge case. The main usage of FixtureCapture is implicit: FixtureProvider wraps the entire fixture with an FixtureCapture element and it can give it a "root" ID that the user never sees.
+
+---
+
 Q: What's the different between a method and an event in the plugin API?
 
 - Calling a method that hasn't been registered fails. Emitting an event that nobody's listening to doesn't.

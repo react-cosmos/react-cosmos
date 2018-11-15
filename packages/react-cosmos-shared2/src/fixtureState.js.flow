@@ -5,7 +5,7 @@ export type KeyValue = { [string]: mixed };
 
 export type FixtureRenderKey = number;
 
-export type FixtureDecoratorId = number;
+export type FixtureDecoratorId = string;
 
 export type FixtureStateValue = {
   serializable: boolean,

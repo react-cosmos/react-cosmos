@@ -1,25 +1,28 @@
 // @flow
 
 import type {
+  FixtureDecoratorId,
   KeyValue,
   FixtureStateValues
 } from 'react-cosmos-shared2/fixtureState';
 
 export function createCompFxState(args: {
-  componentName?: string,
+  decoratorId?: FixtureDecoratorId,
   elPath?: string,
+  componentName?: string,
   props?: FixtureStateValues,
   state?: FixtureStateValues
 }) {
   const {
-    componentName = expect.any(String),
+    decoratorId = expect.any(String),
     elPath = expect.any(String),
+    componentName = expect.any(String),
     props = null,
     state = null
   } = args;
 
   return {
-    decoratorId: expect.any(Number),
+    decoratorId,
     elPath,
     componentName,
     renderKey: expect.any(Number),
