@@ -3,8 +3,8 @@
 import type { StateUpdater } from 'react-cosmos-shared2/util';
 
 export type PlaygroundOptions = {
-  enableRemoteRenderers: boolean,
-  rendererPreviewUrl: ?string
+  rendererPreviewUrl: ?string,
+  enableRemoteRenderers: boolean
 };
 
 type PluginState = {

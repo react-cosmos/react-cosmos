@@ -15,8 +15,8 @@ We need a decent parity with the existing Cosmos UI to test JSX fixtures. This i
 - [ ] MVP feature set for new UI
   - [x] Full screen mode
     - [x] Remove renderer full screen mode (renderer URL belongs to user)
-  - [ ] Remote renderer (WebSockets)
-    - [ ] Enable remote renderer on web
+  - [x] Remote renderer (WebSockets)
+    - [ ] Enable remote renderer(s) on web
   - [ ] Searchable left nav
   - [ ] Responsive mode
   - [ ] Style
