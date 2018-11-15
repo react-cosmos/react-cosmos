@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { RENDERER_ID } from 'react-cosmos-shared2/renderer';
 import { PlaygroundContext } from '../../PlaygroundContext';
 import { PropsState } from './PropsState';
 
@@ -46,15 +45,19 @@ export class ControlPanel extends Component<Props> {
     fixturePath: string,
     components: ComponentFixtureState[]
   }) => {
-    this.context.emitEvent('renderer.request', {
-      type: 'setFixtureState',
-      payload: {
-        rendererId: RENDERER_ID,
-        fixturePath,
-        fixtureStateChange: {
-          components
+    const { rendererIds }: RendererState = this.context.getState('renderer');
+
+    rendererIds.forEach(rendererId => {
+      this.context.emitEvent('renderer.request', {
+        type: 'setFixtureState',
+        payload: {
+          rendererId,
+          fixturePath,
+          fixtureStateChange: {
+            components
+          }
         }
-      }
+      });
     });
   };
 }

@@ -80,5 +80,3 @@ export type RendererResponse = FixtureListMsg | FixtureStateMsg;
 export type OnRendererResponse = RendererResponse => mixed;
 
 declare export var RENDERER_MESSAGE_EVENT_NAME: string;
-
-declare export var RENDERER_ID: RendererId;
