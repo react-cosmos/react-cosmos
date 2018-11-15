@@ -24,13 +24,20 @@ export class RendererRemote extends Component<{}> {
   }
 
   componentDidMount() {
+    const { addEventListener, emitEvent } = this.context;
+
     this.socket = io();
     this.socket.on(RENDERER_MESSAGE_EVENT_NAME, this.handleMessage);
 
-    this.removeRendererRequestListener = this.context.addEventListener(
+    this.removeRendererRequestListener = addEventListener(
       'renderer.request',
       this.postMessage
     );
+
+    // Discover remote renderers by asking all to share their fixture list
+    emitEvent('renderer.request', {
+      type: 'requestFixtureList'
+    });
   }
 
   componentWillUnmount() {
