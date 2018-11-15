@@ -28,11 +28,12 @@ const exportPlaygroundFiles = (cosmosConfig, outputPath) => {
   );
 
   const playgroundOpts = getPlaygroundOpts(cosmosConfig);
-  const playgroundHtml =
-    // TODO: Support JSX fixtures for any platform
-    next && playgroundOpts.platform === 'web'
-      ? getPlaygroundHtmlNext({ rendererUrl: playgroundOpts.loaderUri })
-      : getPlaygroundHtml(playgroundOpts);
+  const playgroundHtml = next
+    ? getPlaygroundHtmlNext({
+        rendererPreviewUrl: playgroundOpts.loaderUri,
+        enableRemoteRenderers: false
+      })
+    : getPlaygroundHtml(playgroundOpts);
   fs.writeFileSync(`${outputPath}/index.html`, playgroundHtml);
 };
 

@@ -94,7 +94,8 @@ function renderPlayground(otherNodes) {
   return render(
     <PlaygroundProvider
       options={{
-        rendererUrl: 'mockRendererUrl'
+        rendererPreviewUrl: 'mockRendererUrl',
+        enableRemoteRenderers: false
       }}
     >
       <Slot name="global" />

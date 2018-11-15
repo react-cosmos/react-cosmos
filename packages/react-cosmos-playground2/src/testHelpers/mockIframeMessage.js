@@ -1,4 +1,3 @@
-/* eslint-env jest */
 // @flow
 
 export async function mockIframeMessage(

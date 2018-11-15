@@ -8,7 +8,11 @@ import { PlaygroundContext } from '../../PlaygroundContext';
 import type { RendererRequest } from 'react-cosmos-shared2/renderer';
 import type { PlaygroundContextValue } from '../../index.js.flow';
 
-export class RendererIframePreview extends Component<{}> {
+type Props = {
+  rendererPreviewUrl: string
+};
+
+export class RendererIframePreview extends Component<Props> {
   static contextType = PlaygroundContext;
 
   // https://github.com/facebook/flow/issues/7166
@@ -19,15 +23,13 @@ export class RendererIframePreview extends Component<{}> {
   removeRendererRequestListener = () => {};
 
   render() {
-    const {
-      options: { rendererUrl }
-    } = this.context;
+    const { rendererPreviewUrl } = this.props;
 
     return (
       <Iframe
         data-testid="preview-iframe"
         ref={this.handleIframeRef}
-        src={rendererUrl}
+        src={rendererPreviewUrl}
         frameBorder={0}
       />
     );

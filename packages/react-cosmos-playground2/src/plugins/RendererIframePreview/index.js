@@ -1,19 +1,22 @@
 // @flow
 
 import React from 'react';
-import { register, Plugin, Plug, Slot } from 'react-plugin';
+import { register, Plugin, Plug } from 'react-plugin';
+import { PlaygroundContext } from '../../PlaygroundContext';
 import { RendererIframePreview } from './RendererIframePreview';
 
-// The root <Slot name="preview"> allows other plugins to further decorate
-// the "preview" plugin slot.
 register(
   <Plugin name="RendererIframePreview">
     <Plug
-      slot="preview"
+      slot="rendererPreview"
       render={() => (
-        <Slot name="preview">
-          <RendererIframePreview />
-        </Slot>
+        <PlaygroundContext.Consumer>
+          {({ options: { rendererPreviewUrl } }) =>
+            rendererPreviewUrl ? (
+              <RendererIframePreview rendererPreviewUrl={rendererPreviewUrl} />
+            ) : null
+          }
+        </PlaygroundContext.Consumer>
       )}
     />
   </Plugin>

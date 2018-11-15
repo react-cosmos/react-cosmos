@@ -25,11 +25,14 @@ export function createServerApp({
     setupHttpProxy(app, httpProxy);
   }
 
-  const playgroundHtml =
-    // TODO: Support JSX fixtures for any platform
-    next && playgroundOpts.platform === 'web'
-      ? getPlaygroundHtmlNext({ rendererUrl: playgroundOpts.loaderUri })
-      : getPlaygroundHtml(playgroundOpts);
+  const playgroundHtml = next
+    ? // TODO: Enable remote renderers in web mode as well
+      getPlaygroundHtmlNext({
+        rendererPreviewUrl:
+          playgroundOpts.platform === 'web' ? playgroundOpts.loaderUri : null,
+        enableRemoteRenderers: playgroundOpts.platform === 'native'
+      })
+    : getPlaygroundHtml(playgroundOpts);
   app.get('/', (req: express$Request, res: express$Response) => {
     res.send(playgroundHtml);
   });

@@ -1,4 +1,3 @@
-/* eslint-env browser */
 // @flow
 
 import React from 'react';
@@ -7,21 +6,14 @@ import { Slot } from 'react-plugin';
 import { PlaygroundProvider } from '../../PlaygroundProvider';
 import { EmitEvent } from '../../testHelpers/EmitEvent';
 import { OnEvent } from '../../testHelpers/OnEvent';
-import { mockIframeMessage } from '../../testHelpers/mockIframeMessage';
+import { mockWebSockets } from '../../testHelpers/mockWebSockets';
 
 // Plugins have side-effects: they register themselves
 import '.';
 
 afterEach(cleanup);
 
-it('renders iframe with options.rendererPreviewUrl src', () => {
-  const renderer = renderPlayground();
-
-  expect(getIframe(renderer)).toBeTruthy();
-  expect(getIframe(renderer).src).toMatch('mockRendererUrl');
-});
-
-it('posts renderer request message to iframe', async () => {
+it('posts renderer request message via websockets', async () => {
   const selectFixtureMsg = {
     type: 'selectFixture',
     payload: {
@@ -30,19 +22,16 @@ it('posts renderer request message to iframe', async () => {
     }
   };
 
-  const renderer = renderPlayground(
+  renderPlayground(
     <EmitEvent eventName="renderer.request" args={[selectFixtureMsg]} />
   );
-  const iframe = getIframe(renderer);
 
-  await mockIframeMessage(iframe, async ({ onMessage }) => {
-    await wait(() =>
-      expect(onMessage.mock.calls[0][0].data).toEqual(selectFixtureMsg)
-    );
+  await mockWebSockets(async ({ onMessage }) => {
+    await wait(() => expect(onMessage).toBeCalledWith(selectFixtureMsg));
   });
 });
 
-it('broadcasts renderer response message from iframe', async () => {
+it('broadcasts renderer response message from websocket event', async () => {
   const fixtureListMsg = {
     type: 'fixtureList',
     payload: {
@@ -56,27 +45,25 @@ it('broadcasts renderer response message from iframe', async () => {
     <OnEvent eventName="renderer.response" handler={handleRendererResponse} />
   );
 
-  window.postMessage(fixtureListMsg, '*');
+  await mockWebSockets(async ({ postMessage }) => {
+    postMessage(fixtureListMsg);
 
-  await wait(() =>
-    expect(handleRendererResponse).toBeCalledWith(fixtureListMsg)
-  );
+    await wait(() =>
+      expect(handleRendererResponse).toBeCalledWith(fixtureListMsg)
+    );
+  });
 });
 
 function renderPlayground(otherNodes) {
   return render(
     <PlaygroundProvider
       options={{
-        rendererPreviewUrl: 'mockRendererUrl',
-        enableRemoteRenderers: false
+        rendererPreviewUrl: null,
+        enableRemoteRenderers: true
       }}
     >
-      <Slot name="rendererPreview" />
+      <Slot name="global" />
       {otherNodes}
     </PlaygroundProvider>
   );
-}
-
-function getIframe({ getByTestId }) {
-  return getByTestId('preview-iframe');
 }

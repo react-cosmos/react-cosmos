@@ -1,13 +1,14 @@
 // @flow
 
 import React from 'react';
+import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
 import {
   getLastFixtureState,
   untilLastMessageEquals,
   postSelectFixture,
   postSetFixtureState
 } from '../testHelpers/shared';
-import { WebSockets, EVENT_NAME } from '../WebSockets';
+import { WebSockets } from '../WebSockets';
 import { FixtureConnect } from '..';
 
 import type { ConnectMockApi } from './shared';
@@ -22,7 +23,7 @@ const mockSocket = {
   }),
   off: jest.fn(),
   emit: jest.fn((path, msg) => {
-    if (path === EVENT_NAME) {
+    if (path === RENDERER_MESSAGE_EVENT_NAME) {
       messages.push(msg);
     }
   })
@@ -49,7 +50,7 @@ export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
 
   async function postMessage(msg) {
     messages.push(msg);
-    handlers[EVENT_NAME](msg);
+    handlers[RENDERER_MESSAGE_EVENT_NAME](msg);
   }
 
   async function selectFixture({ rendererId, fixturePath }) {
