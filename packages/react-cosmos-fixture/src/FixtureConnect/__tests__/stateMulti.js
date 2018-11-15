@@ -6,7 +6,7 @@ import {
   getCompFixtureStates,
   updateCompFixtureState
 } from 'react-cosmos-shared2/fixtureState';
-import { uuid } from '../../shared/uuid';
+import { uuid } from 'react-cosmos-shared2/util';
 import { Counter } from '../testHelpers/components';
 import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
 import { mockConnect as mockPostMessage } from '../testHelpers/postMessage';

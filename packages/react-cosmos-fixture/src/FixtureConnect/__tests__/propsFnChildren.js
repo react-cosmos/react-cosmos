@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { uuid } from '../../shared/uuid';
+import { uuid } from 'react-cosmos-shared2/util';
 import { FixtureCapture } from '../../FixtureCapture';
 import { HelloMessage } from '../testHelpers/components';
 import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';

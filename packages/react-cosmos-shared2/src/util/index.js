@@ -3,7 +3,7 @@
 import { findIndex } from 'lodash';
 
 import type { Predicate } from 'lodash';
-import type { StateUpdater } from './util.js.flow';
+import type { StateUpdater } from './index.js.flow';
 
 export function updateItem<T>(
   items: $ReadOnlyArray<T>,
@@ -75,3 +75,5 @@ export function replaceState<T>(
 export function replaceKeys(str: string, map: { [key: string]: string }) {
   return Object.keys(map).reduce((res, key) => res.replace(key, map[key]), str);
 }
+
+export { uuid } from './uuid';
