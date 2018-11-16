@@ -33,7 +33,7 @@ function tests(mockConnect) {
         });
 
         await untilMessage({
-          type: 'fixtureState',
+          type: 'fixtureStateChange',
           payload: {
             rendererId,
             fixturePath: 'first',

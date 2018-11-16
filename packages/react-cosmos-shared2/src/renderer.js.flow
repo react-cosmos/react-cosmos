@@ -25,8 +25,8 @@ export type SetFixtureStateMsg = {
   type: 'setFixtureState',
   payload: {
     rendererId: RendererId,
-    // Only one fixture can be loaded at a time by a renderer, but the path is
-    // sent anyway to ensure the message applies to the current fixture
+    // The fixture path is sent alongside the fixture state change to ensure
+    // that the fixture state is only paired with its corresponding fixture
     fixturePath: string,
     fixtureStateChange: $Shape<FixtureState>
   }
@@ -47,15 +47,29 @@ export type FixtureListMsg = {
   }
 };
 
-// An update on the fixture state inside a renderer, covering more scenarios:
-// - Initial fixture state after a selectFixture request
-// - Confirmation for a setFixtureState request
-export type FixtureStateMsg = {
-  type: 'fixtureState',
+// Caused by an organic state change inside the renderer. Also dispatched
+// after a fixtureSelect request, when rendering stateful components, as their
+// initial state is read.
+export type FixtureStateChangeMsg = {
+  type: 'fixtureStateChange',
   payload: {
     rendererId: RendererId,
-    // Only one fixture can be loaded at a time by a renderer, but the path is
-    // sent anyway to ensure the message applies to the current fixture
+    // The fixture path is sent alongside the fixture state to ensure that the
+    // fixture state is only paired with its corresponding fixture
+    fixturePath: string,
+    // Entire fixture state is included
+    fixtureState: FixtureState
+  }
+};
+
+// Confirmation for a setFixtureState request, together with the entire
+// resulting fixtureState.
+export type FixtureStateSyncMsg = {
+  type: 'fixtureStateSync',
+  payload: {
+    rendererId: RendererId,
+    // The fixture path is sent alongside the fixture state to ensure that the
+    // fixture state is only paired with its corresponding fixture
     fixturePath: string,
     // Entire fixture state is included
     fixtureState: FixtureState
@@ -75,7 +89,10 @@ export type FixtureStateMsg = {
 //   }
 // };
 
-export type RendererResponse = FixtureListMsg | FixtureStateMsg;
+export type RendererResponse =
+  | FixtureListMsg
+  | FixtureStateChangeMsg
+  | FixtureStateSyncMsg;
 
 export type OnRendererResponse = RendererResponse => mixed;
 

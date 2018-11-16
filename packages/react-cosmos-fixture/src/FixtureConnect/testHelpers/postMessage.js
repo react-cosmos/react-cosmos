@@ -3,7 +3,8 @@
 
 import React from 'react';
 import {
-  getLastFixtureState,
+  getFixtureStateFromLastChange,
+  getFixtureStateFromLastSync,
   untilLastMessageEquals,
   postSelectFixture,
   postSetFixtureState
@@ -20,8 +21,12 @@ export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
     return onMessage.mock.calls.map(call => call[0].data);
   }
 
-  async function lastFixtureState() {
-    return getLastFixtureState(getMessages);
+  async function getFxStateFromLastChange() {
+    return getFixtureStateFromLastChange(getMessages);
+  }
+
+  async function getFxStateFromLastSync() {
+    return getFixtureStateFromLastSync(getMessages);
   }
 
   async function untilMessage(msg) {
@@ -60,7 +65,8 @@ export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
     await children({
       getElement,
       untilMessage,
-      lastFixtureState,
+      getFxStateFromLastChange,
+      getFxStateFromLastSync,
       postMessage,
       selectFixture,
       setFixtureState

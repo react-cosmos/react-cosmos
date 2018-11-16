@@ -32,7 +32,7 @@ function tests(mockConnect) {
         expect(renderer.toJSON()).toBe('0 times');
 
         await untilMessage({
-          type: 'fixtureState',
+          type: 'fixtureStateChange',
           payload: {
             rendererId,
             fixturePath: 'first',
@@ -56,7 +56,7 @@ function tests(mockConnect) {
       async ({
         getElement,
         selectFixture,
-        lastFixtureState,
+        getFxStateFromLastChange,
         setFixtureState
       }) => {
         await mount(getElement({ rendererId, fixtures }), async renderer => {
@@ -65,7 +65,7 @@ function tests(mockConnect) {
             fixturePath: 'first'
           });
 
-          const fixtureState = await lastFixtureState();
+          const fixtureState = await getFxStateFromLastChange();
           const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
           await setFixtureState({
             rendererId,
@@ -91,7 +91,7 @@ function tests(mockConnect) {
       async ({
         getElement,
         selectFixture,
-        lastFixtureState,
+        getFxStateFromLastChange,
         setFixtureState
       }) => {
         await mount(getElement({ rendererId, fixtures }), async renderer => {
@@ -100,7 +100,7 @@ function tests(mockConnect) {
             fixturePath: 'first'
           });
 
-          const fixtureState = await lastFixtureState();
+          const fixtureState = await getFxStateFromLastChange();
           const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
           await setFixtureState({
             rendererId,
@@ -126,7 +126,7 @@ function tests(mockConnect) {
       async ({
         getElement,
         selectFixture,
-        lastFixtureState,
+        getFxStateFromLastChange,
         setFixtureState
       }) => {
         await mount(getElement({ rendererId, fixtures }), async renderer => {
@@ -135,7 +135,7 @@ function tests(mockConnect) {
             fixturePath: 'first'
           });
 
-          const fixtureState = await lastFixtureState();
+          const fixtureState = await getFxStateFromLastChange();
           const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
           await setFixtureState({
             rendererId,

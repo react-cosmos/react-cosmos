@@ -32,30 +32,6 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     this.postReadyMessage();
   }
 
-  componentDidUpdate(prevProps: FixtureConnectProps, prevState: State) {
-    // TODO: Adapt to props.fixtures change (eg. current fixture gets removed)
-    const { rendererId, postMessage } = this.props;
-    const { fixturePath, fixtureState } = this.state;
-
-    // Fixture state changes are broadcast in componentDidUpdate instead of
-    // when they arrive because React batches setState calls, so by waiting for
-    // React to apply subsequent state changes we also benefit from batching.
-    if (
-      fixturePath &&
-      fixtureState &&
-      fixtureState !== prevState.fixtureState
-    ) {
-      postMessage({
-        type: 'fixtureState',
-        payload: {
-          rendererId,
-          fixturePath,
-          fixtureState
-        }
-      });
-    }
-  }
-
   componentWillUnmount() {
     this.props.unsubscribe();
   }
@@ -112,7 +88,9 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
 
       // Ensure fixture state applies to currently selected fixture
       if (fixturePath === this.state.fixturePath) {
-        this.setFixtureState(fixtureStateChange);
+        this.applyFixtureStateChange(fixtureStateChange, () => {
+          this.postFixtureStateSync(fixturePath);
+        });
       }
     }
   };
@@ -129,7 +107,14 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     });
   }
 
-  setFixtureState: SetState<FixtureState> = (updater, cb) => {
+  setFixtureState: SetState<FixtureState> = (stateChange, cb) => {
+    this.applyFixtureStateChange(stateChange, () => {
+      if (typeof cb === 'function') cb();
+      this.postFixtureStateChange();
+    });
+  };
+
+  applyFixtureStateChange: SetState<FixtureState> = (stateChange, cb) => {
     // Multiple state changes can be dispatched by fixture plugins at almost
     // the same time. Since state changes are batched in React, current state
     // (this.state.fixtureState) can be stale at dispatch time, and extending
@@ -138,9 +123,53 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     // every state change is honored, regardless of timing.
     this.setState(
       ({ fixtureState }) => ({
-        fixtureState: updateState(fixtureState, updater)
+        fixtureState: updateState(fixtureState, stateChange)
       }),
       cb
     );
+  };
+
+  postFixtureStateChange = () => {
+    const { rendererId, postMessage } = this.props;
+    const { fixturePath, fixtureState } = this.state;
+
+    if (!fixturePath) {
+      // Possible scenario: Fixture is unselected before state is read
+      console.info(
+        '[FixtureConnect] Trying to post fixtureStateChange with no fixture selected'
+      );
+      return;
+    }
+
+    if (!fixtureState) {
+      throw new Error(`Can't post fixtureStateChange with null fixtureState`);
+    }
+
+    postMessage({
+      type: 'fixtureStateChange',
+      payload: {
+        rendererId,
+        fixturePath,
+        fixtureState
+      }
+    });
+  };
+
+  postFixtureStateSync = (fixturePath: string) => {
+    const { rendererId, postMessage } = this.props;
+    const { fixtureState } = this.state;
+
+    if (!fixtureState) {
+      throw new Error(`Can't post fixtureStateSync with null fixtureState`);
+    }
+
+    postMessage({
+      type: 'fixtureStateSync',
+      payload: {
+        rendererId,
+        fixturePath,
+        fixtureState
+      }
+    });
   };
 }

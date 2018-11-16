@@ -17,11 +17,14 @@ type GetTestElement = ({
   rendererId: RendererId
 }) => Element<any>;
 
+type GetMessages = () => Message[];
+
 export type ConnectMockApi = {
   getElement: GetTestElement,
   postMessage: (msg: RendererRequest) => Promise<mixed>,
   untilMessage: (msg: {}) => Promise<mixed>,
-  lastFixtureState: () => Promise<FixtureState>,
+  getFxStateFromLastChange: () => Promise<FixtureState>,
+  getFxStateFromLastSync: () => Promise<FixtureState>,
   selectFixture: ({
     rendererId: RendererId,
     fixturePath: null | string
@@ -35,27 +38,16 @@ export type ConnectMockApi = {
 
 const timeout = 1000;
 
-export async function getLastFixtureState(getMessages: () => Message[]) {
-  await until(
-    () => {
-      const lastMsg = getLastMessage(getMessages());
+export async function getFixtureStateFromLastChange(getMessages: GetMessages) {
+  return getFixtureStateFromLastMsgOfType(getMessages, 'fixtureStateChange');
+}
 
-      return lastMsg && lastMsg.type === 'fixtureState';
-    },
-    { timeout }
-  );
-
-  const lastMsg = getLastMessage(getMessages());
-
-  if (!lastMsg || lastMsg.type !== 'fixtureState') {
-    throw new Error('Last message type should be "fixtureState"');
-  }
-
-  return lastMsg.payload.fixtureState;
+export async function getFixtureStateFromLastSync(getMessages: GetMessages) {
+  return getFixtureStateFromLastMsgOfType(getMessages, 'fixtureStateSync');
 }
 
 export async function untilLastMessageEquals(
-  getMessages: () => Message[],
+  getMessages: GetMessages,
   msg: {}
 ) {
   try {
@@ -122,4 +114,26 @@ function getLastMessage(messages: Message[]) {
   }
 
   return messages[messages.length - 1];
+}
+
+async function getFixtureStateFromLastMsgOfType(
+  getMessages: GetMessages,
+  msgType: 'fixtureStateChange' | 'fixtureStateSync'
+) {
+  await until(
+    () => {
+      const lastMsg = getLastMessage(getMessages());
+
+      return lastMsg && lastMsg.type === msgType;
+    },
+    { timeout }
+  );
+
+  const lastMsg = getLastMessage(getMessages());
+
+  if (!lastMsg || lastMsg.type !== msgType) {
+    throw new Error(`Last message type should be "${msgType}"`);
+  }
+
+  return lastMsg.payload.fixtureState;
 }

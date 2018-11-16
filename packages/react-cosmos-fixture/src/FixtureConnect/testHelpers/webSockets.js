@@ -3,7 +3,8 @@
 import React from 'react';
 import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
 import {
-  getLastFixtureState,
+  getFixtureStateFromLastChange,
+  getFixtureStateFromLastSync,
   untilLastMessageEquals,
   postSelectFixture,
   postSetFixtureState
@@ -40,8 +41,16 @@ jest.mock('socket.io-client', () =>
 );
 
 export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
-  async function lastFixtureState() {
-    return getLastFixtureState(() => messages);
+  function getMessages() {
+    return messages;
+  }
+
+  async function getFxStateFromLastChange() {
+    return getFixtureStateFromLastChange(getMessages);
+  }
+
+  async function getFxStateFromLastSync() {
+    return getFixtureStateFromLastSync(getMessages);
   }
 
   async function untilMessage(msg) {
@@ -76,7 +85,8 @@ export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
     await children({
       getElement,
       untilMessage,
-      lastFixtureState,
+      getFxStateFromLastChange,
+      getFxStateFromLastSync,
       postMessage,
       selectFixture,
       setFixtureState

@@ -46,7 +46,7 @@ function tests(mockConnect) {
         expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B']);
 
         await untilMessage({
-          type: 'fixtureState',
+          type: 'fixtureStateChange',
           payload: {
             rendererId,
             fixturePath: 'first',

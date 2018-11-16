@@ -63,7 +63,7 @@ function tests(mockConnect) {
         await new Promise(res => setTimeout(res, 500));
 
         await untilMessage({
-          type: 'fixtureState',
+          type: 'fixtureStateChange',
           payload: {
             rendererId,
             fixturePath: 'first',
