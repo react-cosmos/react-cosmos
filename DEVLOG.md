@@ -4,9 +4,9 @@ Q: How can the Playground sync fixture state between multiple renderers?
 
 There's currently a single `fixtureState` renderer response dispatched both on organic state changes as well as on state changes caused by `setFixtureState` requests.
 
-The `fixtureState` response is also used to sync fixture states between renderers as follows. When a `fixtureState` response arrives from a renderer, a `setFixtureState` request (with the received state) is dispatched to all other renderers. But each of these requests then generate corresponding `fixtureState` responses which in turn creates an infinite loop.
+Initial (flawed) solution: The `fixtureState` response is also used to sync fixture states between renderers as follows. When a `fixtureState` response arrives from a renderer, a `setFixtureState` request (with the received state) is dispatched to all other renderers. But each of these requests then generate corresponding `fixtureState` responses which in turn creates an infinite loop.
 
-Solution: Split `fixtureState` renderer response in two separate messages:
+Working solution: Split `fixtureState` renderer response in two separate messages:
 
 1. A `fixtureStateSync` message in response to a `setFixtureState` request. It's meant to confirm the request and let the requester know the resulting state. Doesn't involve other renderers.
 2. A `fixtureStateChange` message in response to an organic state change inside a renderer. The remote client (the Playground) can broadcast the state change to all other renderers to keep them in sync.
