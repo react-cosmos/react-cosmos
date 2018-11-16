@@ -5,8 +5,8 @@ import { PlaygroundContext } from '../../PlaygroundContext';
 
 import type {
   RendererResponse,
-  FixtureListMsg,
-  FixtureStateMsg
+  FixtureListResponse,
+  FixtureStateChangeResponse
 } from 'react-cosmos-shared2/renderer';
 import type { PlaygroundContextValue } from '../../index.js.flow';
 import type { RendererState } from './shared';
@@ -46,14 +46,14 @@ export class RendererResponseHandler extends Component<{}> {
     switch (msg.type) {
       case 'fixtureList':
         return this.handleFixtureListResponse(msg);
-      case 'fixtureState':
+      case 'fixtureStateChange':
         return this.handleFixtureStateResponse(msg);
       default:
       // No need to handle every message. Maybe some plugin cares about it.
     }
   };
 
-  handleFixtureListResponse({ payload }: FixtureListMsg) {
+  handleFixtureListResponse({ payload }: FixtureListResponse) {
     const { rendererId, fixtures } = payload;
     const state = this.getOwnState();
     const { rendererIds } = state;
@@ -68,7 +68,7 @@ export class RendererResponseHandler extends Component<{}> {
     });
   }
 
-  handleFixtureStateResponse({ payload }: FixtureStateMsg) {
+  handleFixtureStateResponse({ payload }: FixtureStateChangeResponse) {
     const { fixtureState } = payload;
     const state = this.getOwnState();
 
