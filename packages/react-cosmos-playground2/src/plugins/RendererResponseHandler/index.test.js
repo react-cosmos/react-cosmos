@@ -23,7 +23,7 @@ const mockFixtureListMsg = {
 };
 
 const mockFixtureStateMsg = {
-  type: 'fixtureState',
+  type: 'fixtureStateChange',
   payload: {
     rendererId: mockRendererId,
     fixturePath: 'fixtures/zwei.js',
