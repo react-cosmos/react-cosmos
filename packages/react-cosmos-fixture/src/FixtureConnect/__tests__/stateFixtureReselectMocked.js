@@ -23,7 +23,7 @@ tests(mockWebSockets);
 
 function tests(mockConnect) {
   // NOTE: This is a regression test that was created for a bug that initally
-  // slipped unnoticed in {INSERT_GITHUB_ISSUE_LINK}
+  // slipped unnoticed in https://github.com/react-cosmos/react-cosmos/pull/893
   it('captures initial state after re-selecting fixture', async () => {
     await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
       await mount(getElement({ rendererId, fixtures }), async () => {
