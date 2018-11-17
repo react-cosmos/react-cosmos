@@ -1,3 +1,11 @@
+Q: How to send selected fixture (from URL params) to renderers on Playground load?
+
+Should _Router_ know about (and listen to) the `fixtureList` renderer response? Because we can't select a fixture until the renderer responds with the user's fixture list. Or should _RendererMessageHandler_ know about the `urlParams` state?
+
+Maybe a third, more elegant option will surface later. But for now the latter, because _RendererMessageHandler_ already listens to `fixtureList` responses.
+
+---
+
 Q: How can the Playground sync fixture state between multiple renderers?
 
 ...and prevent infinite loops.
