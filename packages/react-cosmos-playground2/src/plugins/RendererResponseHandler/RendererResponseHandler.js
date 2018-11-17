@@ -1,14 +1,19 @@
 // @flow
 
 import { Component } from 'react';
+import { isEqual } from 'lodash';
 import { PlaygroundContext } from '../../PlaygroundContext';
 
 import type {
+  RendererId,
   RendererResponse,
   FixtureListResponse,
-  FixtureStateChangeResponse
+  FixtureStateChangeResponse,
+  FixtureStateSyncResponse
 } from 'react-cosmos-shared2/renderer';
+import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { PlaygroundContextValue } from '../../index.js.flow';
+import type { UrlParams } from '../Router';
 import type { RendererState } from './shared';
 
 export class RendererResponseHandler extends Component<{}> {
@@ -25,8 +30,8 @@ export class RendererResponseHandler extends Component<{}> {
     return this.context.getState('renderer');
   }
 
-  setOwnState(state: RendererState) {
-    this.context.setState('renderer', state);
+  setOwnState(state: RendererState, cb?: Function) {
+    this.context.setState('renderer', state, cb);
   }
 
   removeRendererResponseListener = () => {};
@@ -47,7 +52,9 @@ export class RendererResponseHandler extends Component<{}> {
       case 'fixtureList':
         return this.handleFixtureListResponse(msg);
       case 'fixtureStateChange':
-        return this.handleFixtureStateResponse(msg);
+        return this.handleFixtureStateChangeResponse(msg);
+      case 'fixtureStateSync':
+        return this.handleFixtureStateSyncResponse(msg);
       default:
       // No need to handle every message. Maybe some plugin cares about it.
     }
@@ -68,13 +75,76 @@ export class RendererResponseHandler extends Component<{}> {
     });
   }
 
-  handleFixtureStateResponse({ payload }: FixtureStateChangeResponse) {
-    const { fixtureState } = payload;
+  handleFixtureStateChangeResponse({ payload }: FixtureStateChangeResponse) {
+    const { rendererId, fixturePath, fixtureState } = payload;
     const state = this.getOwnState();
+    const urlParams: UrlParams = this.context.getState('urlParams');
+
+    if (isEqual(fixtureState, state.fixtureState)) {
+      console.warn(
+        '[RendererResponseHandler] fixtureStateChange response ignored ' +
+          'because existing fixture state is identical'
+      );
+      return;
+    }
+
+    if (fixturePath !== urlParams.fixturePath) {
+      console.warn(
+        '[RendererResponseHandler] fixtureStateChange response ignored ' +
+          `because it doesn't match the selected fixture`
+      );
+      return;
+    }
+
+    this.setOwnState({ ...state, fixtureState }, () => {
+      this.sendFixtureStateChangeToOtherRenderers(
+        rendererId,
+        fixturePath,
+        fixtureState
+      );
+    });
+  }
+
+  handleFixtureStateSyncResponse({ payload }: FixtureStateSyncResponse) {
+    const { fixturePath, fixtureState } = payload;
+    const state = this.getOwnState();
+    const urlParams: UrlParams = this.context.getState('urlParams');
+
+    if (fixturePath !== urlParams.fixturePath) {
+      console.warn(
+        '[RendererResponseHandler] fixtureStateSync response ignored ' +
+          `because it doesn't match the selected fixture`
+      );
+      return;
+    }
 
     this.setOwnState({
       ...state,
       fixtureState
     });
+  }
+
+  sendFixtureStateChangeToOtherRenderers(
+    changedRendererId: RendererId,
+    fixturePath: string,
+    fixtureState: FixtureState
+  ) {
+    const { rendererIds } = this.getOwnState();
+
+    if (rendererIds.length > 1) {
+      const otherRendererIds = rendererIds.filter(
+        rendererId => rendererId !== changedRendererId
+      );
+      otherRendererIds.forEach(rendererId => {
+        this.context.emitEvent('renderer.request', {
+          type: 'setFixtureState',
+          payload: {
+            rendererId,
+            fixturePath,
+            fixtureStateChange: fixtureState
+          }
+        });
+      });
+    }
   }
 }
