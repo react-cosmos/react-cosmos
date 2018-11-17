@@ -16,7 +16,7 @@ import type { PlaygroundContextValue } from '../../index.js.flow';
 import type { UrlParams } from '../Router';
 import type { RendererState } from './shared';
 
-export class RendererResponseHandler extends Component<{}> {
+export class RendererMessageHandler extends Component<{}> {
   static contextType = PlaygroundContext;
 
   // https://github.com/facebook/flow/issues/7166
@@ -82,7 +82,7 @@ export class RendererResponseHandler extends Component<{}> {
 
     if (isEqual(fixtureState, state.fixtureState)) {
       console.warn(
-        '[RendererResponseHandler] fixtureStateChange response ignored ' +
+        '[RendererMessageHandler] fixtureStateChange response ignored ' +
           'because existing fixture state is identical'
       );
       return;
@@ -90,7 +90,7 @@ export class RendererResponseHandler extends Component<{}> {
 
     if (fixturePath !== urlParams.fixturePath) {
       console.warn(
-        '[RendererResponseHandler] fixtureStateChange response ignored ' +
+        '[RendererMessageHandler] fixtureStateChange response ignored ' +
           `because it doesn't match the selected fixture`
       );
       return;
@@ -112,7 +112,7 @@ export class RendererResponseHandler extends Component<{}> {
 
     if (fixturePath !== urlParams.fixturePath) {
       console.warn(
-        '[RendererResponseHandler] fixtureStateSync response ignored ' +
+        '[RendererMessageHandler] fixtureStateSync response ignored ' +
           `because it doesn't match the selected fixture`
       );
       return;

@@ -10,7 +10,7 @@ import type {
   RendererResponse
 } from 'react-cosmos-shared2/renderer';
 import type { PlaygroundContextValue } from '../../index.js.flow';
-import type { RendererState } from '../RendererResponseHandler';
+import type { RendererState } from '../RendererMessageHandler';
 import type { UrlParams } from './shared';
 
 export class Router extends Component<{}> {

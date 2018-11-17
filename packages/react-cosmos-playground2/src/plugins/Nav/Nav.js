@@ -6,7 +6,7 @@ import { PlaygroundContext } from '../../PlaygroundContext';
 import { FixtureTree } from './FixtureTree';
 
 import type { PlaygroundContextValue } from '../../index.js.flow';
-import type { RendererState } from '../RendererResponseHandler';
+import type { RendererState } from '../RendererMessageHandler';
 import type { UrlParams } from '../Router';
 
 export class Nav extends Component<{}> {

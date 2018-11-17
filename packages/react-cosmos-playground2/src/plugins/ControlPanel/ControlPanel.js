@@ -7,7 +7,7 @@ import { PropsState } from './PropsState';
 
 import type { ComponentFixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { PlaygroundContextValue } from '../../index.js.flow';
-import type { RendererState } from '../RendererResponseHandler';
+import type { RendererState } from '../RendererMessageHandler';
 import type { UrlParams } from '../Router';
 
 type Props = {};
