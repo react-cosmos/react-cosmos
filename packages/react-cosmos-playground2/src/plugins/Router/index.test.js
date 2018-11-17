@@ -1,11 +1,10 @@
 // @flow
 
 import React from 'react';
-import { wait, render, cleanup } from 'react-testing-library';
+import { render, cleanup } from 'react-testing-library';
 import { Slot } from 'react-plugin';
 import { PlaygroundProvider } from '../../PlaygroundProvider';
 import { OnEvent } from '../../testHelpers/OnEvent';
-import { EmitEvent } from '../../testHelpers/EmitEvent';
 import { CallMethod } from '../../testHelpers/CallMethod';
 import { OnPluginState } from '../../testHelpers/OnPluginState';
 import { SetPluginState } from '../../testHelpers/SetPluginState';
@@ -36,36 +35,6 @@ const mockRendererState = {
   rendererIds: [mockRendererId],
   fixtures: mockFixtures
 };
-
-const mockFixtureListMsg = {
-  type: 'fixtureList',
-  payload: {
-    rendererId: mockRendererId,
-    fixtures: mockFixtures
-  }
-};
-
-it('posts "fixtureSelect" renderer request on "fixtureList" renderer response', async () => {
-  pushUrlParams({ fixturePath: 'fixtures/zwei.js' });
-
-  const handleRendererRequest = jest.fn();
-  renderPlayground(
-    <>
-      <EmitEvent eventName="renderer.response" args={[mockFixtureListMsg]} />
-      <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
-    </>
-  );
-
-  await wait(() =>
-    expect(handleRendererRequest).toBeCalledWith({
-      type: 'selectFixture',
-      payload: {
-        rendererId: 'foo-renderer',
-        fixturePath: 'fixtures/zwei.js'
-      }
-    })
-  );
-});
 
 it('posts "fixtureSelect" renderer request on "fixturePath" URL param change', async () => {
   const handleRendererRequest = jest.fn();

@@ -5,10 +5,7 @@ import { isEqual } from 'lodash';
 import { PlaygroundContext } from '../../PlaygroundContext';
 import { pushUrlParamsToHistory, subscribeToLocationChanges } from './window';
 
-import type {
-  RendererId,
-  RendererResponse
-} from 'react-cosmos-shared2/renderer';
+import type { RendererId } from 'react-cosmos-shared2/renderer';
 import type { PlaygroundContextValue } from '../../index.js.flow';
 import type { RendererState } from '../RendererMessageHandler';
 import type { UrlParams } from './shared';
@@ -40,12 +37,7 @@ export class Router extends Component<{}> {
       this.handleLocationChange
     );
 
-    const { registerMethods, addEventListener } = this.context;
-    this.unsubscribeFromRendererResponses = addEventListener(
-      'renderer.response',
-      this.handleRendererResponse
-    );
-    this.unregisterMethods = registerMethods({
+    this.unregisterMethods = this.context.registerMethods({
       'router.setUrlParams': this.handleSetUrlParams
     });
   }
@@ -62,18 +54,9 @@ export class Router extends Component<{}> {
 
     this.setOwnState(urlParams, () => {
       if (hasFixtureChanged) {
-        this.renderCurrentFixture();
+        this.selectCurrentFixture();
       }
     });
-  };
-
-  handleRendererResponse = (msg: RendererResponse) => {
-    const { fixturePath } = this.getOwnState();
-
-    if (msg.type === 'fixtureList' && fixturePath) {
-      const { rendererId } = msg.payload;
-      this.postSelectFixtureRequest(rendererId, fixturePath);
-    }
   };
 
   handleSetUrlParams = (nextUrlParams: UrlParams) => {
@@ -85,13 +68,13 @@ export class Router extends Component<{}> {
     this.setOwnState(nextUrlParams, () => {
       // Setting identical url params is considered a "reset" request
       if (hasFixtureChanged || areUrlParamsEqual) {
-        this.renderCurrentFixture();
+        this.selectCurrentFixture();
       }
       pushUrlParamsToHistory(this.getOwnState());
     });
   };
 
-  renderCurrentFixture() {
+  selectCurrentFixture() {
     const { rendererIds }: RendererState = this.context.getState('renderer');
     const { fixturePath } = this.getOwnState();
 
