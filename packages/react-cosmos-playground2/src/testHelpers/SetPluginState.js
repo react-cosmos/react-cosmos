@@ -6,8 +6,8 @@ import { PlaygroundContext } from '../PlaygroundContext';
 import type { PlaygroundContextValue } from '../index.js.flow';
 
 export class SetPluginState extends Component<{
-  pluginName: string,
-  state: Object
+  stateKey: string,
+  value: Object
 }> {
   static contextType = PlaygroundContext;
 
@@ -15,8 +15,8 @@ export class SetPluginState extends Component<{
   context: PlaygroundContextValue;
 
   componentDidMount() {
-    const { pluginName, state } = this.props;
-    this.context.setState(pluginName, state);
+    const { stateKey, value } = this.props;
+    this.context.setState(stateKey, value);
   }
 
   render() {

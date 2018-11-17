@@ -25,7 +25,7 @@ const mockRendererState = {
 
 it('renders fixture list from renderer state', async () => {
   const { getByText } = renderPlayground(
-    <SetPluginState pluginName="renderer" state={mockRendererState} />
+    <SetPluginState stateKey="renderer" value={mockRendererState} />
   );
 
   await waitForElement(() => getByText(/ein/i));
@@ -37,7 +37,7 @@ it('sets "fixturePath" router param on fixture click', async () => {
   const setUrlParams = jest.fn();
   const { getByText } = renderPlayground(
     <>
-      <SetPluginState pluginName="renderer" state={mockRendererState} />
+      <SetPluginState stateKey="renderer" value={mockRendererState} />
       <RegisterMethod methodName="router.setUrlParams" handler={setUrlParams} />
     </>
   );
@@ -51,10 +51,10 @@ it('clears router params on home button click', async () => {
   const setUrlParams = jest.fn();
   const { getByText } = renderPlayground(
     <>
-      <SetPluginState pluginName="renderer" state={mockRendererState} />
+      <SetPluginState stateKey="renderer" value={mockRendererState} />
       <SetPluginState
-        pluginName="urlParams"
-        state={{ fixturePath: 'fixtures/zwei.js' }}
+        stateKey="urlParams"
+        value={{ fixturePath: 'fixtures/zwei.js' }}
       />
       <RegisterMethod methodName="router.setUrlParams" handler={setUrlParams} />
     </>
@@ -69,10 +69,10 @@ it('sets "fullScreen" router param on fullscreen button click', () => {
   const setUrlParams = jest.fn();
   const { getByText } = renderPlayground(
     <>
-      <SetPluginState pluginName="renderer" state={mockRendererState} />
+      <SetPluginState stateKey="renderer" value={mockRendererState} />
       <SetPluginState
-        pluginName="urlParams"
-        state={{ fixturePath: 'fixtures/zwei.js' }}
+        stateKey="urlParams"
+        value={{ fixturePath: 'fixtures/zwei.js' }}
       />
       <RegisterMethod methodName="router.setUrlParams" handler={setUrlParams} />
     </>
@@ -97,8 +97,8 @@ it('renders nav element', () => {
 it('does not render nav element in full screen mode', async () => {
   const { queryByTestId } = renderPlayground(
     <SetPluginState
-      pluginName="urlParams"
-      state={{ fixturePath: 'fixtures/zwei.js', fullScreen: true }}
+      stateKey="urlParams"
+      value={{ fixturePath: 'fixtures/zwei.js', fullScreen: true }}
     />
   );
 

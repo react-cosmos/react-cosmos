@@ -73,8 +73,8 @@ it('sets "fixtureState" renderer state on "fixtureStateSync" renderer response',
     <>
       <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
       <SetPluginState
-        pluginName="urlParams"
-        state={{ fixturePath: 'fixtures/zwei.js' }}
+        stateKey="urlParams"
+        value={{ fixturePath: 'fixtures/zwei.js' }}
       />
       <EmitEvent
         eventName="renderer.response"
@@ -116,8 +116,8 @@ describe('on "fixtureStateChange" renderer response', () => {
       <>
         <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
         <SetPluginState
-          pluginName="urlParams"
-          state={{ fixturePath: 'fixtures/zwei.js' }}
+          stateKey="urlParams"
+          value={{ fixturePath: 'fixtures/zwei.js' }}
         />
         <EmitEvent
           eventName="renderer.response"
@@ -147,8 +147,8 @@ describe('on "fixtureStateChange" renderer response', () => {
       <>
         <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
         <SetPluginState
-          pluginName="urlParams"
-          state={{ fixturePath: 'fixtures/zwei.js' }}
+          stateKey="urlParams"
+          value={{ fixturePath: 'fixtures/zwei.js' }}
         />
         <EmitEvent
           eventName="renderer.response"

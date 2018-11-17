@@ -71,7 +71,7 @@ it('posts "fixtureSelect" renderer request on "fixturePath" URL param change', a
   const handleRendererRequest = jest.fn();
   renderPlayground(
     <>
-      <SetPluginState pluginName="renderer" state={mockRendererState} />
+      <SetPluginState stateKey="renderer" value={mockRendererState} />
       <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
     </>
   );
@@ -93,7 +93,7 @@ it('posts null "fixtureSelect" renderer request on removed "fixturePath" URL par
   const handleRendererRequest = jest.fn();
   renderPlayground(
     <>
-      <SetPluginState pluginName="renderer" state={mockRendererState} />
+      <SetPluginState stateKey="renderer" value={mockRendererState} />
       <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
     </>
   );
