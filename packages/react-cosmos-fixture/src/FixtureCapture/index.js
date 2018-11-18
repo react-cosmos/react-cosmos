@@ -100,9 +100,6 @@ class FixtureCaptureInner extends Component<InnerProps> {
   }
 
   componentWillUnmount() {
-    // Remove fixture state related to this decorator
-    this.removeFixtureState();
-
     if (this.timeoutId) {
       clearTimeout(this.timeoutId);
     }
@@ -306,7 +303,7 @@ class FixtureCaptureInner extends Component<InnerProps> {
     });
   }
 
-  removeFixtureState(elPath?: string) {
+  removeFixtureState(elPath: string) {
     const { decoratorId, setFixtureState } = this.props;
     const matcher = elPath
       ? s => s.decoratorId === decoratorId && s.elPath === elPath
