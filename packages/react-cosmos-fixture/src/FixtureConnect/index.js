@@ -15,6 +15,8 @@ type State = {
   renderKey: number
 };
 
+type SetFixtureState = SetState<null | FixtureState>;
+
 // TODO: Add props for customizing blank/missing states: `getBlankState` and
 // `getMissingState`
 export class FixtureConnect extends Component<FixtureConnectProps, State> {
@@ -84,11 +86,11 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
         renderKey: this.state.renderKey + 1
       });
     } else if (msg.type === 'setFixtureState') {
-      const { fixturePath, fixtureStateChange } = msg.payload;
+      const { fixturePath, fixtureState } = msg.payload;
 
       // Ensure fixture state applies to currently selected fixture
       if (fixturePath === this.state.fixturePath) {
-        this.applyFixtureStateChange(fixtureStateChange, () => {
+        this.applyFixtureStateChange(fixtureState, () => {
           this.postFixtureStateSync(fixturePath);
         });
       }
@@ -107,14 +109,23 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     });
   }
 
-  setFixtureState: SetState<FixtureState> = (stateChange, cb) => {
+  setFixtureState: SetFixtureState = (stateChange, cb) => {
+    const { fixturePath } = this.state;
+
+    if (!fixturePath) {
+      console.warn(
+        '[FixtureConnect] Trying to set fixture state with no fixture selected'
+      );
+      return;
+    }
+
     this.applyFixtureStateChange(stateChange, () => {
       if (typeof cb === 'function') cb();
-      this.postFixtureStateChange();
+      this.postFixtureStateChange(fixturePath);
     });
   };
 
-  applyFixtureStateChange: SetState<FixtureState> = (stateChange, cb) => {
+  applyFixtureStateChange: SetFixtureState = (stateChange, cb) => {
     // Multiple state changes can be dispatched by fixture plugins at almost
     // the same time. Since state changes are batched in React, current state
     // (this.state.fixtureState) can be stale at dispatch time, and extending
@@ -129,21 +140,9 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     );
   };
 
-  postFixtureStateChange = () => {
+  postFixtureStateChange = (fixturePath: string) => {
     const { rendererId, postMessage } = this.props;
-    const { fixturePath, fixtureState } = this.state;
-
-    if (!fixturePath) {
-      // Possible scenario: Fixture is unselected before state is read
-      console.info(
-        '[FixtureConnect] Trying to post fixtureStateChange with no fixture selected'
-      );
-      return;
-    }
-
-    if (!fixtureState) {
-      throw new Error(`Can't post fixtureStateChange with null fixtureState`);
-    }
+    const { fixtureState } = this.state;
 
     postMessage({
       type: 'fixtureStateChange',
@@ -158,10 +157,6 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
   postFixtureStateSync = (fixturePath: string) => {
     const { rendererId, postMessage } = this.props;
     const { fixtureState } = this.state;
-
-    if (!fixtureState) {
-      throw new Error(`Can't post fixtureStateSync with null fixtureState`);
-    }
 
     postMessage({
       type: 'fixtureStateSync',

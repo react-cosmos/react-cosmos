@@ -48,15 +48,11 @@ export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
     });
   }
 
-  async function setFixtureState({
-    rendererId,
-    fixturePath,
-    fixtureStateChange
-  }) {
+  async function setFixtureState({ rendererId, fixturePath, fixtureState }) {
     return postSetFixtureState(postMessage, {
       rendererId,
       fixturePath,
-      fixtureStateChange
+      fixtureState
     });
   }
 

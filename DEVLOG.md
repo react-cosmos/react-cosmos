@@ -1,3 +1,13 @@
+Q: Should the `setFixtureState` renderer request contain partial or full fixture state? Or both in separate message types?
+
+There's a clear need for a request message that sends the entire fixture state: When sending a new fixture state received from one renderer to the other connected renderers, to keep them in sync. This can't happen with a message that sends partial fixture state for the renderer to merge, because removing a part of the fixture state will not work.
+
+So is there still value in requesting partial fixture state changes? Payload size isn't an issue in a dev tool. What about concurrency? Even though fixture state change requests are sent in full, before a new fixture state is dispatched from Playground to renderers, fixture state changes are applied using updater functions of type `prevState => nextState`, which ensures that all state changes from Playground plugins are honored, regardless of timing.
+
+Given that no drawback is obvious at this time, and for simplicity, I'll go with a single `setFixtureState` renderer requests that contain the fixture state in full.
+
+---
+
 Q: How to send selected fixture (from URL params) to renderers on Playground load?
 
 Should _Router_ know about (and listen to) the `fixtureList` renderer response? Because we can't select a fixture until the renderer responds with the user's fixture list. Or should _RendererMessageHandler_ know about the `urlParams` state?

@@ -4,6 +4,7 @@ import { Component } from 'react';
 import { isEqual } from 'lodash';
 import { PlaygroundContext } from '../../PlaygroundContext';
 
+import type { StateUpdater } from 'react-cosmos-shared2/util';
 import type {
   RendererId,
   RendererResponse,
@@ -30,7 +31,7 @@ export class RendererMessageHandler extends Component<{}> {
     return this.context.getState('renderer');
   }
 
-  setOwnState(state: RendererState, cb?: Function) {
+  setOwnState(state: StateUpdater<RendererState>, cb?: Function) {
     this.context.setState('renderer', state, cb);
   }
 
@@ -62,16 +63,26 @@ export class RendererMessageHandler extends Component<{}> {
 
   handleFixtureListResponse({ payload }: FixtureListResponse) {
     const { rendererId, fixtures } = payload;
-    const state = this.getOwnState();
-    const { rendererIds } = state;
 
-    this.setOwnState({
-      ...state,
-      rendererIds:
-        rendererIds.indexOf(rendererId) === -1
-          ? [...rendererIds, rendererId]
-          : rendererIds,
-      fixtures
+    const updater = prevState => {
+      const { rendererIds } = prevState;
+
+      return {
+        ...prevState,
+        rendererIds:
+          rendererIds.indexOf(rendererId) === -1
+            ? [...rendererIds, rendererId]
+            : rendererIds,
+        fixtures
+      };
+    };
+
+    this.setOwnState(updater, () => {
+      const { fixturePath }: UrlParams = this.context.getState('urlParams');
+
+      if (fixturePath) {
+        this.postSelectFixtureRequest(rendererId, fixturePath);
+      }
     });
   }
 
@@ -97,7 +108,7 @@ export class RendererMessageHandler extends Component<{}> {
     }
 
     this.setOwnState({ ...state, fixtureState }, () => {
-      this.sendFixtureStateChangeToOtherRenderers(
+      this.syncFixtureStateChangeBetweenRenderers(
         rendererId,
         fixturePath,
         fixtureState
@@ -124,10 +135,20 @@ export class RendererMessageHandler extends Component<{}> {
     });
   }
 
-  sendFixtureStateChangeToOtherRenderers(
+  postSelectFixtureRequest(rendererId: RendererId, fixturePath: string) {
+    this.context.emitEvent('renderer.request', {
+      type: 'selectFixture',
+      payload: {
+        rendererId,
+        fixturePath
+      }
+    });
+  }
+
+  syncFixtureStateChangeBetweenRenderers(
     changedRendererId: RendererId,
     fixturePath: string,
-    fixtureState: FixtureState
+    fixtureState: null | FixtureState
   ) {
     const { rendererIds } = this.getOwnState();
 
@@ -141,7 +162,7 @@ export class RendererMessageHandler extends Component<{}> {
           payload: {
             rendererId,
             fixturePath,
-            fixtureStateChange: fixtureState
+            fixtureState
           }
         });
       });

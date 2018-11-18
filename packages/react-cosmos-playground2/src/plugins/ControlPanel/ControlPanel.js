@@ -53,7 +53,7 @@ export class ControlPanel extends Component<Props> {
         payload: {
           rendererId,
           fixturePath,
-          fixtureStateChange: {
+          fixtureState: {
             components
           }
         }

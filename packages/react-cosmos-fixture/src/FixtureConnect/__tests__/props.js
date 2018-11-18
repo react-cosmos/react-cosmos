@@ -71,7 +71,7 @@ function tests(mockConnect) {
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
+            fixtureState: {
               components: updateCompFixtureState({
                 fixtureState,
                 decoratorId,
@@ -123,7 +123,7 @@ function tests(mockConnect) {
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
+            fixtureState: {
               components: updateCompFixtureState({
                 fixtureState,
                 decoratorId,
@@ -160,7 +160,7 @@ function tests(mockConnect) {
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
+            fixtureState: {
               components: updateCompFixtureState({
                 fixtureState,
                 decoratorId,
@@ -175,7 +175,7 @@ function tests(mockConnect) {
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
+            fixtureState: {
               components: updateCompFixtureState({
                 fixtureState,
                 decoratorId,
@@ -244,7 +244,7 @@ function tests(mockConnect) {
             await setFixtureState({
               rendererId,
               fixturePath: 'first',
-              fixtureStateChange: {
+              fixtureState: {
                 components: updateCompFixtureState({
                   fixtureState,
                   decoratorId,
@@ -306,7 +306,7 @@ function tests(mockConnect) {
             await setFixtureState({
               rendererId,
               fixturePath: 'first',
-              fixtureStateChange: {
+              fixtureState: {
                 components: updateCompFixtureState({
                   fixtureState,
                   decoratorId,
@@ -355,7 +355,7 @@ function tests(mockConnect) {
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
+            fixtureState: {
               components: updateCompFixtureState({
                 fixtureState,
                 decoratorId,

@@ -23,8 +23,8 @@ export type ConnectMockApi = {
   getElement: GetTestElement,
   postMessage: (msg: RendererRequest) => Promise<mixed>,
   untilMessage: (msg: {}) => Promise<mixed>,
-  getFxStateFromLastChange: () => Promise<FixtureState>,
-  getFxStateFromLastSync: () => Promise<FixtureState>,
+  getFxStateFromLastChange: () => Promise<null | FixtureState>,
+  getFxStateFromLastSync: () => Promise<null | FixtureState>,
   selectFixture: ({
     rendererId: RendererId,
     fixturePath: null | string
@@ -32,7 +32,7 @@ export type ConnectMockApi = {
   setFixtureState: ({
     rendererId: RendererId,
     fixturePath: string,
-    fixtureStateChange: $Shape<FixtureState>
+    fixtureState: null | FixtureState
   }) => Promise<mixed>
 };
 
@@ -91,11 +91,11 @@ export async function postSetFixtureState(
   {
     rendererId,
     fixturePath,
-    fixtureStateChange
+    fixtureState
   }: {
     rendererId: RendererId,
     fixturePath: string,
-    fixtureStateChange: $Shape<FixtureState>
+    fixtureState: null | FixtureState
   }
 ) {
   return postMessage({
@@ -103,7 +103,7 @@ export async function postSetFixtureState(
     payload: {
       rendererId,
       fixturePath,
-      fixtureStateChange
+      fixtureState
     }
   });
 }

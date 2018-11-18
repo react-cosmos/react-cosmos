@@ -54,7 +54,7 @@ function tests(mockConnect) {
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
+            fixtureState: {
               components: updateCompFixtureState({
                 fixtureState,
                 elPath,
@@ -69,7 +69,7 @@ function tests(mockConnect) {
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
+            fixtureState: {
               components: updateCompFixtureState({
                 fixtureState: await getFxStateFromLastSync(),
                 decoratorId,
@@ -124,7 +124,7 @@ function tests(mockConnect) {
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
+            fixtureState: {
               components: updateCompFixtureState({
                 fixtureState,
                 decoratorId,
@@ -139,7 +139,7 @@ function tests(mockConnect) {
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
+            fixtureState: {
               components: updateCompFixtureState({
                 fixtureState: await getFxStateFromLastSync(),
                 decoratorId,
@@ -193,7 +193,7 @@ function tests(mockConnect) {
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
+            fixtureState: {
               components: updateCompFixtureState({
                 fixtureState,
                 decoratorId,
@@ -208,7 +208,7 @@ function tests(mockConnect) {
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
+            fixtureState: {
               components: updateCompFixtureState({
                 fixtureState: await getFxStateFromLastSync(),
                 decoratorId,
@@ -276,7 +276,7 @@ function tests(mockConnect) {
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
+            fixtureState: {
               components: updateCompFixtureState({
                 fixtureState,
                 decoratorId,

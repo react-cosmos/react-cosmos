@@ -56,6 +56,33 @@ it('sets "fixtures" renderer state on "fixtureList" renderer response', async ()
   );
 });
 
+it('posts "selectFixture" renderer request on "fixtureList" renderer response', async () => {
+  const handleRendererRequest = jest.fn();
+  renderPlayground(
+    <>
+      <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
+      <SetPluginState
+        stateKey="urlParams"
+        value={{ fixturePath: 'fixtures/zwei.js' }}
+      />
+      <EmitEvent
+        eventName="renderer.response"
+        args={[getFixtureListResponse('foo-renderer')]}
+      />
+    </>
+  );
+
+  await wait(() =>
+    expect(handleRendererRequest).toBeCalledWith({
+      type: 'selectFixture',
+      payload: {
+        rendererId: 'foo-renderer',
+        fixturePath: 'fixtures/zwei.js'
+      }
+    })
+  );
+});
+
 it('sets "fixtureState" renderer state on "fixtureStateSync" renderer response', async () => {
   const mockFixtureStateChangeMsg = {
     type: 'fixtureStateSync',
@@ -171,7 +198,7 @@ describe('on "fixtureStateChange" renderer response', () => {
         payload: {
           rendererId: 'bar-renderer',
           fixturePath: 'fixtures/zwei.js',
-          fixtureStateChange: {
+          fixtureState: {
             components: []
           }
         }

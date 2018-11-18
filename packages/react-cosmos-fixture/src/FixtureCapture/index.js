@@ -51,7 +51,7 @@ export function FixtureCapture({ children, decoratorId }: FixtureCaptureProps) {
 
 type InnerProps = FixtureCaptureProps & {
   fixtureState: null | FixtureState,
-  setFixtureState: SetState<FixtureState>
+  setFixtureState: SetState<null | FixtureState>
 };
 
 // How often to check the state of the loaded component and update the fixture

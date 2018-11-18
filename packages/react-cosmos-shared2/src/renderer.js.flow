@@ -28,7 +28,7 @@ export type SetFixtureStateRequest = {
     // The fixture path is sent alongside the fixture state change to ensure
     // that the fixture state is only paired with its corresponding fixture
     fixturePath: string,
-    fixtureStateChange: $Shape<FixtureState>
+    fixtureState: null | FixtureState
   }
 };
 
@@ -58,7 +58,7 @@ export type FixtureStateChangeResponse = {
     // fixture state is only paired with its corresponding fixture
     fixturePath: string,
     // Entire fixture state is included
-    fixtureState: FixtureState
+    fixtureState: null | FixtureState
   }
 };
 
@@ -72,7 +72,7 @@ export type FixtureStateSyncResponse = {
     // fixture state is only paired with its corresponding fixture
     fixturePath: string,
     // Entire fixture state is included
-    fixtureState: FixtureState
+    fixtureState: null | FixtureState
   }
 };
 
