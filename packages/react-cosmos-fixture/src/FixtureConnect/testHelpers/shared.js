@@ -24,7 +24,6 @@ export type ConnectMockApi = {
   postMessage: (msg: RendererRequest) => Promise<mixed>,
   untilMessage: (msg: {}) => Promise<mixed>,
   getFxStateFromLastChange: () => Promise<null | FixtureState>,
-  getFxStateFromLastSync: () => Promise<null | FixtureState>,
   selectFixture: ({
     rendererId: RendererId,
     fixturePath: null | string
@@ -39,11 +38,24 @@ export type ConnectMockApi = {
 const timeout = 1000;
 
 export async function getFixtureStateFromLastChange(getMessages: GetMessages) {
-  return getFixtureStateFromLastMsgOfType(getMessages, 'fixtureStateChange');
-}
+  const msgType = 'fixtureStateChange';
 
-export async function getFixtureStateFromLastSync(getMessages: GetMessages) {
-  return getFixtureStateFromLastMsgOfType(getMessages, 'fixtureStateSync');
+  await until(
+    () => {
+      const lastMsg = getLastMessage(getMessages());
+
+      return lastMsg && lastMsg.type === msgType;
+    },
+    { timeout }
+  );
+
+  const lastMsg = getLastMessage(getMessages());
+
+  if (!lastMsg || lastMsg.type !== msgType) {
+    throw new Error(`Last message type should be "${msgType}"`);
+  }
+
+  return lastMsg.payload.fixtureState;
 }
 
 export async function untilLastMessageEquals(
@@ -114,26 +126,4 @@ function getLastMessage(messages: Message[]) {
   }
 
   return messages[messages.length - 1];
-}
-
-async function getFixtureStateFromLastMsgOfType(
-  getMessages: GetMessages,
-  msgType: 'fixtureStateChange' | 'fixtureStateSync'
-) {
-  await until(
-    () => {
-      const lastMsg = getLastMessage(getMessages());
-
-      return lastMsg && lastMsg.type === msgType;
-    },
-    { timeout }
-  );
-
-  const lastMsg = getLastMessage(getMessages());
-
-  if (!lastMsg || lastMsg.type !== msgType) {
-    throw new Error(`Last message type should be "${msgType}"`);
-  }
-
-  return lastMsg.payload.fixtureState;
 }

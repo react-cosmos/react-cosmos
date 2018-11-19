@@ -83,48 +83,6 @@ it('posts "selectFixture" renderer request on "fixtureList" renderer response', 
   );
 });
 
-it('sets "fixtureState" renderer state on "fixtureStateSync" renderer response', async () => {
-  const mockFixtureStateChangeMsg = {
-    type: 'fixtureStateSync',
-    payload: {
-      rendererId: 'foo-renderer',
-      fixturePath: 'fixtures/zwei.js',
-      fixtureState: {
-        components: []
-      }
-    }
-  };
-
-  const handleSetRendererState = jest.fn();
-  renderPlayground(
-    <>
-      <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
-      <SetPluginState
-        stateKey="urlParams"
-        value={{ fixturePath: 'fixtures/zwei.js' }}
-      />
-      <EmitEvent
-        eventName="renderer.response"
-        args={[getFixtureListResponse('foo-renderer')]}
-      />
-      <EmitEvent
-        eventName="renderer.response"
-        args={[mockFixtureStateChangeMsg]}
-      />
-    </>
-  );
-
-  await wait(() =>
-    expect(handleSetRendererState).toBeCalledWith(
-      expect.objectContaining({
-        fixtureState: {
-          components: []
-        }
-      })
-    )
-  );
-});
-
 describe('on "fixtureStateChange" renderer response', () => {
   const mockFixtureStateChangeMsg = {
     type: 'fixtureStateChange',

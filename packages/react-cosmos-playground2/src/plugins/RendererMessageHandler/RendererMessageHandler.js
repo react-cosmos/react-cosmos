@@ -9,8 +9,7 @@ import type {
   RendererId,
   RendererResponse,
   FixtureListResponse,
-  FixtureStateChangeResponse,
-  FixtureStateSyncResponse
+  FixtureStateChangeResponse
 } from 'react-cosmos-shared2/renderer';
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { PlaygroundContextValue } from '../../index.js.flow';
@@ -54,8 +53,6 @@ export class RendererMessageHandler extends Component<{}> {
         return this.handleFixtureListResponse(msg);
       case 'fixtureStateChange':
         return this.handleFixtureStateChangeResponse(msg);
-      case 'fixtureStateSync':
-        return this.handleFixtureStateSyncResponse(msg);
       default:
       // No need to handle every message. Maybe some plugin cares about it.
     }
@@ -113,25 +110,6 @@ export class RendererMessageHandler extends Component<{}> {
         fixturePath,
         fixtureState
       );
-    });
-  }
-
-  handleFixtureStateSyncResponse({ payload }: FixtureStateSyncResponse) {
-    const { fixturePath, fixtureState } = payload;
-    const state = this.getOwnState();
-    const urlParams: UrlParams = this.context.getState('urlParams');
-
-    if (fixturePath !== urlParams.fixturePath) {
-      console.warn(
-        '[RendererMessageHandler] fixtureStateSync response ignored ' +
-          `because it doesn't match the selected fixture`
-      );
-      return;
-    }
-
-    this.setOwnState({
-      ...state,
-      fixtureState
     });
   }
 

@@ -66,7 +66,6 @@ function tests(mockConnect) {
       async ({
         getElement,
         selectFixture,
-        untilMessage,
         getFxStateFromLastChange,
         setFixtureState
       }) => {
@@ -94,26 +93,6 @@ function tests(mockConnect) {
           });
 
           expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello Petec']);
-
-          await untilMessage({
-            type: 'fixtureStateSync',
-            payload: {
-              rendererId,
-              fixturePath: 'first',
-              fixtureState: {
-                components: [
-                  createCompFxState({
-                    elPath: 'props.children[0]',
-                    props: createFxValues({ name: 'Bianca' })
-                  }),
-                  createCompFxState({
-                    elPath: 'props.children[1]',
-                    props: createFxValues({ name: 'Petec' })
-                  })
-                ]
-              }
-            }
-          });
         });
       }
     );

@@ -1,3 +1,14 @@
+Q: Does `fixtureStateSync` renderer response provide any value?
+
+Not anymore, since the `setFixtureState` renderer request now contains the full fixture state, which has already been computed by the Playground before dispatching it to the renderers (akin to an optimistic update). A confirmation sounds nice in theory, but it's problematic in two ways:
+
+- More than one `setFixtureState` request can be dispatched before a `fixtureStateSync` response returns. Since we don't have an linked message architecture in place (and it's unlikely we'll ever need one as this is a local dev tool and the volume of messages is low), we can't really tell if the "sync" response is valid and what request it refers to.
+- We're not using the confirmation in any way at the moment.
+
+Removing it.
+
+---
+
 Q: Should the `setFixtureState` renderer request contain partial or full fixture state? Or both in separate message types?
 
 There's a clear need for a request message that sends the entire fixture state: When sending a new fixture state received from one renderer to the other connected renderers, to keep them in sync. This can't happen with a message that sends partial fixture state for the renderer to merge, because removing a part of the fixture state will not work.

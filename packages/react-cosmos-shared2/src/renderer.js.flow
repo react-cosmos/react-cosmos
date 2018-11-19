@@ -62,20 +62,6 @@ export type FixtureStateChangeResponse = {
   }
 };
 
-// Confirmation for a setFixtureState request, together with the entire
-// resulting fixtureState.
-export type FixtureStateSyncResponse = {
-  type: 'fixtureStateSync',
-  payload: {
-    rendererId: RendererId,
-    // The fixture path is sent alongside the fixture state to ensure that the
-    // fixture state is only paired with its corresponding fixture
-    fixturePath: string,
-    // Entire fixture state is included
-    fixtureState: null | FixtureState
-  }
-};
-
 // Announce an error caught inside a renderer, which is useful when the
 // renderer is remote or if it errors before dispatching `fixtureList`
 // TODO: Integrate
@@ -89,10 +75,7 @@ export type FixtureStateSyncResponse = {
 //   }
 // };
 
-export type RendererResponse =
-  | FixtureListResponse
-  | FixtureStateChangeResponse
-  | FixtureStateSyncResponse;
+export type RendererResponse = FixtureListResponse | FixtureStateChangeResponse;
 
 export type OnRendererResponse = RendererResponse => mixed;
 

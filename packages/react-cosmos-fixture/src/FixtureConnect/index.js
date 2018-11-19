@@ -90,9 +90,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
 
       // Ensure fixture state applies to currently selected fixture
       if (fixturePath === this.state.fixturePath) {
-        this.applyFixtureStateChange(fixtureState, () => {
-          this.postFixtureStateSync(fixturePath);
-        });
+        this.applyFixtureStateChange(fixtureState);
       }
     }
   };
@@ -146,20 +144,6 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
 
     postMessage({
       type: 'fixtureStateChange',
-      payload: {
-        rendererId,
-        fixturePath,
-        fixtureState
-      }
-    });
-  };
-
-  postFixtureStateSync = (fixturePath: string) => {
-    const { rendererId, postMessage } = this.props;
-    const { fixtureState } = this.state;
-
-    postMessage({
-      type: 'fixtureStateSync',
       payload: {
         rendererId,
         fixturePath,

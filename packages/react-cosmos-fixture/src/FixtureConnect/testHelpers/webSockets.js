@@ -4,7 +4,6 @@ import React from 'react';
 import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
 import {
   getFixtureStateFromLastChange,
-  getFixtureStateFromLastSync,
   untilLastMessageEquals,
   postSelectFixture,
   postSetFixtureState
@@ -49,10 +48,6 @@ export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
     return getFixtureStateFromLastChange(getMessages);
   }
 
-  async function getFxStateFromLastSync() {
-    return getFixtureStateFromLastSync(getMessages);
-  }
-
   async function untilMessage(msg) {
     return untilLastMessageEquals(() => messages, msg);
   }
@@ -82,7 +77,6 @@ export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
       getElement,
       untilMessage,
       getFxStateFromLastChange,
-      getFxStateFromLastSync,
       postMessage,
       selectFixture,
       setFixtureState

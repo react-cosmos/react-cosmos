@@ -55,7 +55,6 @@ function tests(mockConnect) {
       async ({
         getElement,
         selectFixture,
-        untilMessage,
         getFxStateFromLastChange,
         setFixtureState
       }) => {
@@ -82,22 +81,6 @@ function tests(mockConnect) {
           });
 
           expect(renderer.toJSON()).toBe('Hello B');
-
-          await untilMessage({
-            type: 'fixtureStateSync',
-            payload: {
-              rendererId,
-              fixturePath: 'first',
-              fixtureState: {
-                components: [
-                  createCompFxState({
-                    componentName: 'HelloMessage',
-                    props: createFxValues({ name: 'B' })
-                  })
-                ]
-              }
-            }
-          });
         });
       }
     );
