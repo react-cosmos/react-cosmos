@@ -13,7 +13,10 @@ export class CallMethod extends Component<{ methodName: string, args: any[] }> {
 
   componentDidMount() {
     const { methodName, args } = this.props;
-    this.context.callMethod(methodName, ...args);
+
+    setTimeout(() => {
+      this.context.callMethod(methodName, ...args);
+    });
   }
 
   render() {

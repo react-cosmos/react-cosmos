@@ -5,9 +5,7 @@ import { isEqual } from 'lodash';
 import { PlaygroundContext } from '../../PlaygroundContext';
 import { pushUrlParamsToHistory, subscribeToLocationChanges } from './window';
 
-import type { RendererId } from 'react-cosmos-shared2/renderer';
 import type { PlaygroundContextValue } from '../../index.js.flow';
-import type { RendererState } from '../RendererMessageHandler';
 import type { UrlParams } from './shared';
 
 export class Router extends Component<{}> {
@@ -75,23 +73,8 @@ export class Router extends Component<{}> {
   };
 
   selectCurrentFixture() {
-    const { rendererIds }: RendererState = this.context.getState('renderer');
-    const { fixturePath } = this.getOwnState();
+    const { fixturePath = null } = this.getOwnState();
 
-    rendererIds.forEach(rendererId => {
-      this.postSelectFixtureRequest(rendererId, fixturePath || null);
-    });
-  }
-
-  postSelectFixtureRequest(rendererId: RendererId, fixturePath: string | null) {
-    const { emitEvent } = this.context;
-
-    emitEvent('renderer.request', {
-      type: 'selectFixture',
-      payload: {
-        rendererId,
-        fixturePath
-      }
-    });
+    this.context.callMethod('renderer.selectFixture', fixturePath);
   }
 }
