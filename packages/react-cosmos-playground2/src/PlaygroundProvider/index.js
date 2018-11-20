@@ -31,7 +31,10 @@ export class PlaygroundProvider extends Component<
     stateChange: StateUpdater<T>,
     cb?: () => mixed
   ) => {
-    console.info(`Set plugin "${pluginName}" state`, stateChange);
+    console.info(
+      `Set plugin "${pluginName}" state`,
+      typeof stateChange === 'function' ? '(updater fn)' : stateChange
+    );
 
     this.setState(
       ({ pluginState }) => ({
