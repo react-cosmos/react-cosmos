@@ -22,7 +22,7 @@ afterEach(() => {
   resetUrl();
 });
 
-it('posts "fixtureSelect" renderer request on "fixturePath" URL param change', async () => {
+it('posts "selectFixture" renderer request on "fixturePath" URL param change', async () => {
   const handleSelectFixture = jest.fn();
   renderPlayground(
     <>
@@ -38,21 +38,21 @@ it('posts "fixtureSelect" renderer request on "fixturePath" URL param change', a
   expect(handleSelectFixture).toBeCalledWith('fixtures/zwei.js');
 });
 
-it('posts null "fixtureSelect" renderer request on removed "fixturePath" URL param', async () => {
+it('posts "unselectFixture" renderer request on removed "fixturePath" URL param', async () => {
   pushUrlParams({ fixturePath: 'fixtures/zwei.js' });
 
-  const handleSelectFixture = jest.fn();
+  const handleUnselectFixture = jest.fn();
   renderPlayground(
     <RegisterMethod
-      methodName="renderer.selectFixture"
-      handler={handleSelectFixture}
+      methodName="renderer.unselectFixture"
+      handler={handleUnselectFixture}
     />
   );
 
   // This simulation is akin to going back home after selecting a fixture
   popUrlParams({});
 
-  expect(handleSelectFixture).toBeCalledWith(null);
+  expect(handleUnselectFixture).toBeCalled();
 });
 
 describe('on "setUrlParams" method', () => {

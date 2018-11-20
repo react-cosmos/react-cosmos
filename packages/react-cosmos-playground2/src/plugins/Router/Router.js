@@ -73,7 +73,11 @@ export class Router extends Component<{}> {
   };
 
   selectCurrentFixture() {
-    const { fixturePath = null } = this.getOwnState();
+    const { fixturePath } = this.getOwnState();
+
+    if (!fixturePath) {
+      return this.context.callMethod('renderer.unselectFixture');
+    }
 
     this.context.callMethod('renderer.selectFixture', fixturePath);
   }
