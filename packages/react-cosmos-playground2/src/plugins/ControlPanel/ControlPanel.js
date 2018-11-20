@@ -21,14 +21,15 @@ export class ControlPanel extends Component<Props> {
   render() {
     const { getState } = this.context;
     const renderersState = getState('renderers');
-    const rendererState = getPrimaryRendererState(renderersState);
+    const { primaryRendererId, renderers } = renderersState;
+    const primaryRendererState = getPrimaryRendererState(renderersState);
 
-    if (!rendererState) {
+    if (!primaryRendererState) {
       return null;
     }
 
-    const rendererIds = Object.keys(renderersState.renderers);
-    const { fixtureState } = rendererState;
+    const rendererIds = Object.keys(renderers);
+    const { fixtureState } = primaryRendererState;
     const { fixturePath, fullScreen }: UrlParams = getState('urlParams');
 
     if (fullScreen || !fixturePath || !fixtureState) {
@@ -47,7 +48,14 @@ export class ControlPanel extends Component<Props> {
             <ul>
               {rendererIds.map(rendererId => (
                 <li key={rendererId}>
-                  <small>{rendererId}</small>
+                  <small
+                    style={{
+                      fontWeight:
+                        rendererId === primaryRendererId ? 'bold' : 'normal'
+                    }}
+                  >
+                    {rendererId}
+                  </small>
                 </li>
               ))}
             </ul>
