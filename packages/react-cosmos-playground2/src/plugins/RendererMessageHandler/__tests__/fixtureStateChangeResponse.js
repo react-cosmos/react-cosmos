@@ -7,6 +7,7 @@ import { PlaygroundProvider } from '../../../PlaygroundProvider';
 import { EmitEvent } from '../../../testHelpers/EmitEvent';
 import { SetPluginState } from '../../../testHelpers/SetPluginState';
 import { OnPluginState } from '../../../testHelpers/OnPluginState';
+import { getRendererState } from '../testHelpers';
 
 // Plugins have side-effects: they register themselves
 import '..';
@@ -78,11 +79,4 @@ function renderPlayground(otherNodes) {
       {otherNodes}
     </PlaygroundProvider>
   );
-}
-
-function getRendererState({ fixtureState }) {
-  return {
-    fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js'],
-    fixtureState
-  };
 }

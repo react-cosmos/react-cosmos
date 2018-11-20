@@ -8,13 +8,12 @@ import { OnEvent } from '../../../testHelpers/OnEvent';
 import { SetPluginState } from '../../../testHelpers/SetPluginState';
 import { OnPluginState } from '../../../testHelpers/OnPluginState';
 import { CallMethod } from '../../../testHelpers/CallMethod';
+import { fixtures } from '../testHelpers';
 
 // Plugins have side-effects: they register themselves
 import '..';
 
 afterEach(cleanup);
-
-const fixtures = ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js'];
 
 const renderersState = {
   primaryRendererId: 'foo-renderer',

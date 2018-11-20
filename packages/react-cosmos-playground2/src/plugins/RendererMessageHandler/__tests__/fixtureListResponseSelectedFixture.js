@@ -7,13 +7,12 @@ import { PlaygroundProvider } from '../../../PlaygroundProvider';
 import { EmitEvent } from '../../../testHelpers/EmitEvent';
 import { OnEvent } from '../../../testHelpers/OnEvent';
 import { SetPluginState } from '../../../testHelpers/SetPluginState';
+import { getFixtureListResponse, getRendererState } from '../testHelpers';
 
 // Plugins have side-effects: they register themselves
 import '..';
 
 afterEach(cleanup);
-
-const fixtures = ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js'];
 
 it('posts "selectFixture" renderer request', async () => {
   const handleRendererRequest = jest.fn();
@@ -98,21 +97,4 @@ function renderPlayground(otherNodes) {
       {otherNodes}
     </PlaygroundProvider>
   );
-}
-
-function getFixtureListResponse(rendererId) {
-  return {
-    type: 'fixtureList',
-    payload: {
-      rendererId,
-      fixtures
-    }
-  };
-}
-
-function getRendererState({ fixtureState }) {
-  return {
-    fixtures,
-    fixtureState
-  };
 }
