@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { PlaygroundContext } from '../../PlaygroundContext';
-import { getSelRendererState } from '../RendererMessageHandler/selectors';
+import { getPrimaryRendererState } from '../RendererMessageHandler/selectors';
 import { PropsState } from './PropsState';
 
 import type { ComponentFixtureState } from 'react-cosmos-shared2/fixtureState';
@@ -20,14 +20,14 @@ export class ControlPanel extends Component<Props> {
 
   render() {
     const { getState } = this.context;
-    const rendererStates = getState('renderers');
-    const rendererState = getSelRendererState(rendererStates);
+    const renderersState = getState('renderers');
+    const rendererState = getPrimaryRendererState(renderersState);
 
     if (!rendererState) {
       return null;
     }
 
-    const rendererIds = Object.keys(rendererStates);
+    const rendererIds = Object.keys(renderersState.renderers);
     const { fixtureState } = rendererState;
     const { fixturePath, fullScreen }: UrlParams = getState('urlParams');
 

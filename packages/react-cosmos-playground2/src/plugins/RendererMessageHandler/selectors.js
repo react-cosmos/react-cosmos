@@ -1,21 +1,29 @@
 // @flow
 
-import type { RendererState, RendererStates } from './shared';
+import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
+import type { RendererState, RenderersState } from './shared';
 
-export function getSelRendererState(
-  rendererStates: RendererStates
-): null | RendererState {
-  const rendererIds = Object.keys(rendererStates);
+export function getExistingFixtureState(
+  renderersState: RenderersState
+): null | FixtureState {
+  const primaryRendererState = getPrimaryRendererState(renderersState);
 
-  if (rendererIds.length === 0) {
+  return primaryRendererState ? primaryRendererState.fixtureState : null;
+}
+
+export function getPrimaryRendererState({
+  primaryRendererId,
+  renderers
+}: RenderersState): null | RendererState {
+  if (!primaryRendererId) {
     return null;
   }
 
-  // NOTE: This merely selects the first renderer state. No better heuristic
-  // comes to mind, because renderer states are kept in sync. Possible
-  // alternative: Keep selectedRendererId in state (and possibly allow user to
-  // select from dropdown). But no existing use case benefits from this for now.
-  const [selRendererId] = rendererIds;
+  if (!renderers[primaryRendererId]) {
+    throw new Error(
+      `primaryRendererId "${primaryRendererId}" points to missing renderer state`
+    );
+  }
 
-  return rendererStates[selRendererId];
+  return renderers[primaryRendererId];
 }

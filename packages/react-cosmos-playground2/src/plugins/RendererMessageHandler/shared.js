@@ -8,6 +8,9 @@ export type RendererState = {
   fixtureState: null | FixtureState
 };
 
-export type RendererStates = {
-  [rendererId: RendererId]: RendererState
+export type RenderersState = {
+  primaryRendererId: null | RendererId,
+  renderers: {
+    [rendererId: RendererId]: RendererState
+  }
 };

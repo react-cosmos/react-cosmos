@@ -6,7 +6,6 @@ import { Slot } from 'react-plugin';
 import { PlaygroundProvider } from '../../PlaygroundProvider';
 import { CallMethod } from '../../testHelpers/CallMethod';
 import { OnPluginState } from '../../testHelpers/OnPluginState';
-import { SetPluginState } from '../../testHelpers/SetPluginState';
 import { RegisterMethod } from '../../testHelpers/RegisterMethod';
 import {
   getUrlParams,
@@ -23,26 +22,10 @@ afterEach(() => {
   resetUrl();
 });
 
-const mockRendererId = 'foo-renderer';
-
-const mockFixtures = [
-  'fixtures/ein.js',
-  'fixtures/zwei.js',
-  'fixtures/drei.js'
-];
-
-const mockRendererStates = {
-  [mockRendererId]: {
-    fixtures: mockFixtures,
-    fixtureState: null
-  }
-};
-
 it('posts "fixtureSelect" renderer request on "fixturePath" URL param change', async () => {
   const handleSelectFixture = jest.fn();
   renderPlayground(
     <>
-      <SetPluginState stateKey="renderers" value={mockRendererStates} />
       <RegisterMethod
         methodName="renderer.selectFixture"
         handler={handleSelectFixture}
@@ -60,13 +43,10 @@ it('posts null "fixtureSelect" renderer request on removed "fixturePath" URL par
 
   const handleSelectFixture = jest.fn();
   renderPlayground(
-    <>
-      <SetPluginState stateKey="renderers" value={mockRendererStates} />
-      <RegisterMethod
-        methodName="renderer.selectFixture"
-        handler={handleSelectFixture}
-      />
-    </>
+    <RegisterMethod
+      methodName="renderer.selectFixture"
+      handler={handleSelectFixture}
+    />
   );
 
   // This simulation is akin to going back home after selecting a fixture
@@ -136,7 +116,7 @@ function renderPlayground(otherNodes) {
   return render(
     <PlaygroundProvider
       options={{
-        rendererPreviewUrl: mockRendererId,
+        rendererPreviewUrl: 'mockRendererUrl',
         enableRemoteRenderers: false
       }}
     >

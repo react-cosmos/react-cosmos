@@ -3,7 +3,7 @@
 import styled from 'styled-components';
 import React, { Component } from 'react';
 import { PlaygroundContext } from '../../PlaygroundContext';
-import { getSelRendererState } from '../RendererMessageHandler/selectors';
+import { getPrimaryRendererState } from '../RendererMessageHandler/selectors';
 import { FixtureTree } from './FixtureTree';
 
 import type { PlaygroundContextValue } from '../../index.js.flow';
@@ -17,7 +17,7 @@ export class Nav extends Component<{}> {
 
   render() {
     const { getState } = this.context;
-    const rendererState = getSelRendererState(getState('renderers'));
+    const rendererState = getPrimaryRendererState(getState('renderers'));
 
     if (!rendererState) {
       return null;

@@ -4,6 +4,7 @@ import { Component } from 'react';
 import { isEqual, mapValues, forEach } from 'lodash';
 import { updateState } from 'react-cosmos-shared2/util';
 import { PlaygroundContext } from '../../PlaygroundContext';
+import { getExistingFixtureState } from './selectors';
 
 import type { StateUpdater, SetState } from 'react-cosmos-shared2/util';
 import type {
@@ -16,7 +17,7 @@ import type {
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { PlaygroundContextValue } from '../../index.js.flow';
 import type { UrlParams } from '../Router';
-import type { RendererState, RendererStates } from './shared';
+import type { RendererState, RenderersState } from './shared';
 
 const defaultRendererState = {
   fixtureState: null
@@ -32,22 +33,22 @@ export class RendererMessageHandler extends Component<{}> {
     return null;
   }
 
-  getOwnState(): RendererStates {
+  getOwnState(): RenderersState {
     return this.context.getState('renderers');
   }
 
-  setOwnState(state: StateUpdater<RendererStates>, cb?: Function) {
+  setOwnState(state: StateUpdater<RenderersState>, cb?: Function) {
     this.context.setState('renderers', state, cb);
   }
 
   getRendererState(rendererId: RendererId) {
-    const rendererStates = this.getOwnState();
+    const { renderers } = this.getOwnState();
 
-    if (!rendererStates[rendererId]) {
+    if (!renderers[rendererId]) {
       throw new Error(`Missing renderer state for rendererId ${rendererId}`);
     }
 
-    return rendererStates[rendererId];
+    return renderers[rendererId];
   }
 
   setRendererState(
@@ -56,13 +57,18 @@ export class RendererMessageHandler extends Component<{}> {
     cb?: Function
   ) {
     this.setOwnState(prevState => {
-      const rendererState = prevState[rendererId] || defaultRendererState;
+      const { primaryRendererId, renderers } = prevState;
+      const rendererState = renderers[rendererId] || defaultRendererState;
 
       return {
         ...prevState,
-        [rendererId]: {
-          ...rendererState,
-          ...state
+        primaryRendererId: primaryRendererId || rendererId,
+        renderers: {
+          ...renderers,
+          [rendererId]: {
+            ...rendererState,
+            ...state
+          }
         }
       };
     }, cb);
@@ -91,13 +97,15 @@ export class RendererMessageHandler extends Component<{}> {
 
   handleSelectFixture = (fixturePath: string) => {
     this.setOwnState(
-      prevState =>
-        mapValues(prevState, rendererState => ({
+      prevState => ({
+        ...prevState,
+        renderers: mapValues(prevState.renderers, rendererState => ({
           ...rendererState,
           ...defaultRendererState
-        })),
+        }))
+      }),
       () => {
-        this.postMassSelectFixtureRequest(fixturePath);
+        this.postMassSelectFixtureRequest(fixturePath, null);
       }
     );
   };
@@ -113,11 +121,13 @@ export class RendererMessageHandler extends Component<{}> {
     }
 
     this.setOwnState(
-      prevState =>
-        mapValues(prevState, rendererState => ({
+      prevState => ({
+        ...prevState,
+        renderers: mapValues(prevState.renderers, rendererState => ({
           ...rendererState,
           fixtureState: updateState(rendererState.fixtureState, stateChange)
-        })),
+        }))
+      }),
       () => {
         if (typeof cb === 'function') cb();
         this.postMassSetFixtureStateRequest(fixturePath);
@@ -138,12 +148,13 @@ export class RendererMessageHandler extends Component<{}> {
 
   handleFixtureListResponse({ payload }: FixtureListResponse) {
     const { rendererId, fixtures } = payload;
+    const fixtureState = getExistingFixtureState(this.getOwnState());
 
-    this.setRendererState(rendererId, { fixtures }, () => {
+    this.setRendererState(rendererId, { fixtures, fixtureState }, () => {
       const { fixturePath }: UrlParams = this.context.getState('urlParams');
 
       if (fixturePath) {
-        this.postSelectFixtureRequest(rendererId, fixturePath);
+        this.postSelectFixtureRequest(rendererId, fixturePath, fixtureState);
       }
     });
   }
@@ -172,28 +183,36 @@ export class RendererMessageHandler extends Component<{}> {
     this.setRendererState(rendererId, { fixtureState });
   }
 
-  postMassSelectFixtureRequest(fixturePath: string) {
-    const rendererStates = this.getOwnState();
+  postMassSelectFixtureRequest(
+    fixturePath: string,
+    fixtureState: null | FixtureState
+  ) {
+    const { renderers } = this.getOwnState();
 
-    forEach(rendererStates, (rendererState, rendererId) => {
-      this.postSelectFixtureRequest(rendererId, fixturePath);
+    forEach(renderers, (rendererState, rendererId) => {
+      this.postSelectFixtureRequest(rendererId, fixturePath, fixtureState);
     });
   }
 
   postMassSetFixtureStateRequest(fixturePath: string) {
-    const rendererStates = this.getOwnState();
+    const { renderers } = this.getOwnState();
 
-    forEach(rendererStates, ({ fixtureState }, rendererId) => {
+    forEach(renderers, ({ fixtureState }, rendererId) => {
       this.postSetFixtureStateRequest(rendererId, fixturePath, fixtureState);
     });
   }
 
-  postSelectFixtureRequest(rendererId: RendererId, fixturePath: string) {
+  postSelectFixtureRequest(
+    rendererId: RendererId,
+    fixturePath: string,
+    fixtureState: null | FixtureState
+  ) {
     this.postRendererRequest({
       type: 'selectFixture',
       payload: {
         rendererId,
-        fixturePath
+        fixturePath,
+        fixtureState
       }
     });
   }

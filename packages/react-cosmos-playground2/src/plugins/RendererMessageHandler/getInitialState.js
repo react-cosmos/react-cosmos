@@ -1,7 +1,10 @@
 // @flow
 
-import type { RendererStates } from './shared';
+import type { RenderersState } from './shared';
 
-export function getInitialState(): RendererStates {
-  return {};
+export function getInitialState(): RenderersState {
+  return {
+    primaryRendererId: null,
+    renderers: {}
+  };
 }
