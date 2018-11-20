@@ -19,7 +19,7 @@ import type { PlaygroundContextValue } from '../../index.js.flow';
 import type { UrlParams } from '../Router';
 import type { RendererState, RenderersState } from './shared';
 
-const defaultRendererState = {
+const DEFAULT_RENDERER_STATE = {
   fixtureState: null
 };
 
@@ -52,26 +52,38 @@ export class RendererMessageHandler extends Component<{}> {
   }
 
   setRendererState(
-    rendererId: RendererId,
-    state: $Shape<RendererState>,
-    cb?: Function
+    updater: (RendererState, RendererId) => RendererState,
+    cb?: () => mixed
   ) {
-    this.setOwnState(prevState => {
-      const { primaryRendererId, renderers } = prevState;
-      const rendererState = renderers[rendererId] || defaultRendererState;
-
-      return {
+    this.setOwnState(
+      prevState => ({
         ...prevState,
-        primaryRendererId: primaryRendererId || rendererId,
-        renderers: {
-          ...renderers,
-          [rendererId]: {
-            ...rendererState,
-            ...state
-          }
-        }
-      };
-    }, cb);
+        renderers: mapValues(prevState.renderers, updater)
+      }),
+      cb
+    );
+  }
+
+  resetRendererState(cb?: () => mixed) {
+    this.setRendererState(
+      rendererState => ({
+        ...rendererState,
+        ...DEFAULT_RENDERER_STATE
+      }),
+      cb
+    );
+  }
+
+  setSingleRendererState(
+    rendererId: RendererId,
+    updater: RendererState => RendererState,
+    cb?: () => mixed
+  ) {
+    this.setRendererState(
+      (rendererState, curRendererId) =>
+        curRendererId === rendererId ? updater(rendererState) : rendererState,
+      cb
+    );
   }
 
   removeRendererResponseListener = () => {};
@@ -82,6 +94,7 @@ export class RendererMessageHandler extends Component<{}> {
 
     this.unregisterMethods = registerMethods({
       'renderer.selectFixture': this.handleSelectFixture,
+      'renderer.unselectFixture': this.handleUnselectFixture,
       'renderer.setFixtureState': this.handleSetFixtureState
     });
     this.removeRendererResponseListener = addEventListener(
@@ -96,18 +109,19 @@ export class RendererMessageHandler extends Component<{}> {
   }
 
   handleSelectFixture = (fixturePath: string) => {
-    this.setOwnState(
-      prevState => ({
-        ...prevState,
-        renderers: mapValues(prevState.renderers, rendererState => ({
-          ...rendererState,
-          ...defaultRendererState
-        }))
-      }),
-      () => {
-        this.postMassSelectFixtureRequest(fixturePath, null);
-      }
-    );
+    this.resetRendererState(() => {
+      this.forEachRenderer(rendererId =>
+        this.postSelectFixtureRequest(rendererId, fixturePath, null)
+      );
+    });
+  };
+
+  handleUnselectFixture = () => {
+    this.resetRendererState(() => {
+      this.forEachRenderer(rendererId =>
+        this.postUnselectFixtureRequest(rendererId)
+      );
+    });
   };
 
   handleSetFixtureState: SetState<null | FixtureState> = (stateChange, cb) => {
@@ -120,17 +134,17 @@ export class RendererMessageHandler extends Component<{}> {
       return;
     }
 
-    this.setOwnState(
-      prevState => ({
-        ...prevState,
-        renderers: mapValues(prevState.renderers, rendererState => ({
-          ...rendererState,
-          fixtureState: updateState(rendererState.fixtureState, stateChange)
-        }))
+    this.setRendererState(
+      rendererState => ({
+        ...rendererState,
+        fixtureState: updateState(rendererState.fixtureState, stateChange)
       }),
       () => {
         if (typeof cb === 'function') cb();
-        this.postMassSetFixtureStateRequest(fixturePath);
+
+        this.forEachRenderer((rendererId, { fixtureState }) =>
+          this.postSetFixtureStateRequest(rendererId, fixturePath, fixtureState)
+        );
       }
     );
   };
@@ -150,7 +164,24 @@ export class RendererMessageHandler extends Component<{}> {
     const { rendererId, fixtures } = payload;
     const fixtureState = getExistingFixtureState(this.getOwnState());
 
-    this.setRendererState(rendererId, { fixtures, fixtureState }, () => {
+    const updater = ({ primaryRendererId, renderers, ...otherState }) => {
+      const rendererState = renderers[rendererId] || DEFAULT_RENDERER_STATE;
+
+      return {
+        ...otherState,
+        primaryRendererId: primaryRendererId || rendererId,
+        renderers: {
+          ...renderers,
+          [rendererId]: {
+            ...rendererState,
+            fixtures,
+            fixtureState
+          }
+        }
+      };
+    };
+
+    this.setOwnState(updater, () => {
       const { fixturePath }: UrlParams = this.context.getState('urlParams');
 
       if (fixturePath) {
@@ -180,25 +211,19 @@ export class RendererMessageHandler extends Component<{}> {
       return;
     }
 
-    this.setRendererState(rendererId, { fixtureState });
+    this.setSingleRendererState(rendererId, rendererState => ({
+      ...rendererState,
+      fixtureState
+    }));
   }
 
-  postMassSelectFixtureRequest(
-    fixturePath: string,
-    fixtureState: null | FixtureState
+  forEachRenderer(
+    cb: (rendererId: RendererId, rendererState: RendererState) => mixed
   ) {
     const { renderers } = this.getOwnState();
 
     forEach(renderers, (rendererState, rendererId) => {
-      this.postSelectFixtureRequest(rendererId, fixturePath, fixtureState);
-    });
-  }
-
-  postMassSetFixtureStateRequest(fixturePath: string) {
-    const { renderers } = this.getOwnState();
-
-    forEach(renderers, ({ fixtureState }, rendererId) => {
-      this.postSetFixtureStateRequest(rendererId, fixturePath, fixtureState);
+      cb(rendererId, rendererState);
     });
   }
 
@@ -213,6 +238,15 @@ export class RendererMessageHandler extends Component<{}> {
         rendererId,
         fixturePath,
         fixtureState
+      }
+    });
+  }
+
+  postUnselectFixtureRequest(rendererId: RendererId) {
+    this.postRendererRequest({
+      type: 'unselectFixture',
+      payload: {
+        rendererId
       }
     });
   }
