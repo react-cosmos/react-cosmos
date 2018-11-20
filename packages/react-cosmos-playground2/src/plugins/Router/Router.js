@@ -68,7 +68,10 @@ export class Router extends Component<{}> {
       if (hasFixtureChanged || areUrlParamsEqual) {
         this.selectCurrentFixture();
       }
-      pushUrlParamsToHistory(this.getOwnState());
+
+      if (!areUrlParamsEqual) {
+        pushUrlParamsToHistory(this.getOwnState());
+      }
     });
   };
 
