@@ -20,10 +20,7 @@ describe('on "fixtureList" renderer response', () => {
     const handleSetRendererStates = jest.fn();
     renderPlayground(
       <>
-        <OnPluginState
-          pluginName="renderers"
-          handler={handleSetRendererStates}
-        />
+        <OnPluginState stateKey="renderers" handler={handleSetRendererStates} />
         <EmitEvent
           eventName="renderer.response"
           args={[getFixtureListResponse('foo-renderer')]}
@@ -91,10 +88,7 @@ describe('on "fixtureStateChange" renderer response', () => {
     const handleSetRendererStates = jest.fn();
     renderPlayground(
       <>
-        <OnPluginState
-          pluginName="renderers"
-          handler={handleSetRendererStates}
-        />
+        <OnPluginState stateKey="renderers" handler={handleSetRendererStates} />
         <SetPluginState
           stateKey="urlParams"
           value={{ fixturePath: 'fixtures/zwei.js' }}
@@ -129,10 +123,7 @@ describe('on "fixtureStateChange" renderer response', () => {
     const handleRendererRequest = jest.fn();
     renderPlayground(
       <>
-        <OnPluginState
-          pluginName="renderers"
-          handler={handleSetRendererStates}
-        />
+        <OnPluginState stateKey="renderers" handler={handleSetRendererStates} />
         <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
         <SetPluginState
           stateKey="urlParams"
@@ -198,10 +189,7 @@ describe('on "renderer.selectFixture" method', () => {
     const handleSetRendererStates = jest.fn();
     renderPlayground(
       <>
-        <OnPluginState
-          pluginName="renderers"
-          handler={handleSetRendererStates}
-        />
+        <OnPluginState stateKey="renderers" handler={handleSetRendererStates} />
         <SetPluginState stateKey="renderers" value={rendererStates} />
         <CallMethod
           methodName="renderer.selectFixture"
@@ -274,10 +262,7 @@ describe('on "renderer.setFixtureState" method', () => {
     const handleSetRendererStates = jest.fn();
     renderPlayground(
       <>
-        <OnPluginState
-          pluginName="renderers"
-          handler={handleSetRendererStates}
-        />
+        <OnPluginState stateKey="renderers" handler={handleSetRendererStates} />
         <SetPluginState
           stateKey="urlParams"
           value={{ fixturePath: 'fixtures/zwei.js' }}
