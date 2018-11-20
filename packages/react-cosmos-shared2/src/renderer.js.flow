@@ -16,8 +16,15 @@ export type SelectFixtureRequest = {
   type: 'selectFixture',
   payload: {
     rendererId: RendererId,
-    // A null fixturePath means unselecting current fixture
-    fixturePath: null | string
+    fixturePath: string,
+    fixtureState: null | FixtureState
+  }
+};
+
+export type UnselectFixtureRequest = {
+  type: 'unselectFixture',
+  payload: {
+    rendererId: RendererId
   }
 };
 
@@ -35,6 +42,7 @@ export type SetFixtureStateRequest = {
 export type RendererRequest =
   | FixtureListRequest
   | SelectFixtureRequest
+  | UnselectFixtureRequest
   | SetFixtureStateRequest;
 
 export type OnRendererRequest = RendererRequest => mixed;

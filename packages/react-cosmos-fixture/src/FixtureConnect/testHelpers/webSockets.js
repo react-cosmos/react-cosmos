@@ -6,6 +6,7 @@ import {
   getFixtureStateFromLastChange,
   untilLastMessageEquals,
   postSelectFixture,
+  postUnselectFixture,
   postSetFixtureState
 } from '../testHelpers/shared';
 import { WebSockets } from '../WebSockets';
@@ -57,10 +58,17 @@ export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
     handlers[RENDERER_MESSAGE_EVENT_NAME](msg);
   }
 
-  async function selectFixture({ rendererId, fixturePath }) {
+  async function selectFixture({ rendererId, fixturePath, fixtureState }) {
     return postSelectFixture(postMessage, {
       rendererId,
-      fixturePath
+      fixturePath,
+      fixtureState
+    });
+  }
+
+  async function unselectFixture({ rendererId }) {
+    return postUnselectFixture(postMessage, {
+      rendererId
     });
   }
 
@@ -79,6 +87,7 @@ export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
       getFxStateFromLastChange,
       postMessage,
       selectFixture,
+      unselectFixture,
       setFixtureState
     });
   } finally {

@@ -29,7 +29,8 @@ function tests(mockConnect) {
       await mount(getElement({ rendererId, fixtures }), async renderer => {
         await selectFixture({
           rendererId,
-          fixturePath: 'first'
+          fixturePath: 'first',
+          fixtureState: null
         });
 
         renderer.update(

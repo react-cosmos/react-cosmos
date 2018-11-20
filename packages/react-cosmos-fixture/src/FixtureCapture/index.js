@@ -92,8 +92,21 @@ class FixtureCaptureInner extends Component<InnerProps> {
   }
 
   componentDidMount() {
-    findRelevantElementPaths(this.props.children).forEach(elPath => {
-      this.createFixtureState(elPath);
+    const { children, decoratorId, fixtureState } = this.props;
+
+    findRelevantElementPaths(children).forEach(elPath => {
+      const compFxState = findCompFixtureState(
+        fixtureState,
+        decoratorId,
+        elPath
+      );
+
+      // Component fixture state can be provided before the fixture mounts (eg.
+      // a previous snapshot of a fixture state or the current fixture state
+      // from another renderer)
+      if (!compFxState) {
+        this.createFixtureState(elPath);
+      }
     });
 
     this.scheduleStateCheck();

@@ -31,7 +31,8 @@ function tests(mockConnect) {
       await mount(getElement({ rendererId, fixtures }), async renderer => {
         await selectFixture({
           rendererId,
-          fixturePath: 'first'
+          fixturePath: 'first',
+          fixtureState: null
         });
 
         expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B']);
@@ -72,7 +73,8 @@ function tests(mockConnect) {
         await mount(getElement({ rendererId, fixtures }), async renderer => {
           await selectFixture({
             rendererId,
-            fixturePath: 'first'
+            fixturePath: 'first',
+            fixtureState: null
           });
 
           const fixtureState = await getFxStateFromLastChange();

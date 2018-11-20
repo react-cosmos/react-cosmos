@@ -43,7 +43,8 @@ function tests(mockConnect) {
         await mount(getElement({ rendererId, fixtures }), async renderer => {
           await selectFixture({
             rendererId,
-            fixturePath: 'first'
+            fixturePath: 'first',
+            fixtureState: null
           });
 
           let fixtureState = await getFxStateFromLastChange();
@@ -96,7 +97,8 @@ function tests(mockConnect) {
         await mount(getElement({ rendererId, fixtures }), async renderer => {
           await selectFixture({
             rendererId,
-            fixturePath: 'first'
+            fixturePath: 'first',
+            fixtureState: null
           });
 
           let fixtureState = await getFxStateFromLastChange();
@@ -148,7 +150,8 @@ function tests(mockConnect) {
         await mount(getElement({ rendererId, fixtures }), async renderer => {
           await selectFixture({
             rendererId,
-            fixturePath: 'first'
+            fixturePath: 'first',
+            fixtureState: null
           });
 
           let fixtureState = await getFxStateFromLastChange();
@@ -216,7 +219,8 @@ function tests(mockConnect) {
         await mount(getElement({ rendererId, fixtures }), async renderer => {
           await selectFixture({
             rendererId,
-            fixturePath: 'first'
+            fixturePath: 'first',
+            fixtureState: null
           });
 
           const fixtureState = await getFxStateFromLastChange();
@@ -274,7 +278,8 @@ function tests(mockConnect) {
       await mount(getElement({ rendererId, fixtures }), async renderer => {
         await selectFixture({
           rendererId,
-          fixturePath: 'first'
+          fixturePath: 'first',
+          fixtureState: null
         });
 
         renderer.update(

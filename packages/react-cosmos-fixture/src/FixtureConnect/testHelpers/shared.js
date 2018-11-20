@@ -26,7 +26,11 @@ export type ConnectMockApi = {
   getFxStateFromLastChange: () => Promise<null | FixtureState>,
   selectFixture: ({
     rendererId: RendererId,
-    fixturePath: null | string
+    fixturePath: string,
+    fixtureState: null | FixtureState
+  }) => Promise<mixed>,
+  unselectFixture: ({
+    rendererId: RendererId
   }) => Promise<mixed>,
   setFixtureState: ({
     rendererId: RendererId,
@@ -86,14 +90,32 @@ export async function postSelectFixture(
   postMessage: Message => mixed,
   {
     rendererId,
-    fixturePath
-  }: { rendererId: RendererId, fixturePath: null | string }
+    fixturePath,
+    fixtureState
+  }: {
+    rendererId: RendererId,
+    fixturePath: string,
+    fixtureState: null | FixtureState
+  }
 ) {
   return postMessage({
     type: 'selectFixture',
     payload: {
       rendererId,
-      fixturePath
+      fixturePath,
+      fixtureState
+    }
+  });
+}
+
+export async function postUnselectFixture(
+  postMessage: Message => mixed,
+  { rendererId }: { rendererId: RendererId }
+) {
+  return postMessage({
+    type: 'unselectFixture',
+    payload: {
+      rendererId
     }
   });
 }

@@ -76,14 +76,18 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     }
 
     if (msg.type === 'selectFixture') {
-      const { fixturePath } = msg.payload;
+      const { fixturePath, fixtureState } = msg.payload;
 
       this.setState({
         fixturePath,
-        // Reset fixture state when selecting new fixture (or when reselecting
-        // current fixture)
-        fixtureState: null,
+        fixtureState,
         renderKey: this.state.renderKey + 1
+      });
+    } else if (msg.type === 'unselectFixture') {
+      this.setState({
+        fixturePath: null,
+        fixtureState: null,
+        renderKey: 0
       });
     } else if (msg.type === 'setFixtureState') {
       const { fixturePath, fixtureState } = msg.payload;
