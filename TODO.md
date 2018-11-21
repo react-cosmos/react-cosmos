@@ -16,7 +16,8 @@ We need a decent parity with the existing Cosmos UI to test JSX fixtures. This i
   - [x] Full screen mode
     - [x] Remove renderer full screen mode (renderer URL belongs to user)
   - [x] Remote renderer (WebSockets)
-    - [ ] Enable remote renderer(s) on web
+    - [x] Enable remote renderer(s) on web
+    - [x] Sync fixture state between renderers (this wasn't required at this step but is _so_ cool)
   - [ ] Searchable left nav
   - [ ] Responsive mode
   - [ ] Style
