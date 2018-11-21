@@ -74,18 +74,6 @@ export class RendererMessageHandler extends Component<{}> {
     );
   }
 
-  setSingleRendererState(
-    rendererId: RendererId,
-    updater: RendererState => RendererState,
-    cb?: () => mixed
-  ) {
-    this.setRendererState(
-      (rendererState, curRendererId) =>
-        curRendererId === rendererId ? updater(rendererState) : rendererState,
-      cb
-    );
-  }
-
   removeRendererResponseListener = () => {};
   unregisterMethods = () => {};
 
