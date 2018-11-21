@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { removeItem, replaceState } from 'react-cosmos-shared2/util';
+import { removeItem, updateState } from 'react-cosmos-shared2/util';
 import { PlaygroundContext } from '../PlaygroundContext';
 import { getInitialState } from './getInitialState';
 
@@ -31,13 +31,16 @@ export class PlaygroundProvider extends Component<
     stateChange: StateUpdater<T>,
     cb?: () => mixed
   ) => {
-    console.info(`Set plugin "${pluginName}" state`, stateChange);
+    console.info(
+      `Set plugin "${pluginName}" state`,
+      typeof stateChange === 'function' ? '(updater fn)' : stateChange
+    );
 
     this.setState(
       ({ pluginState }) => ({
         pluginState: {
           ...pluginState,
-          [pluginName]: replaceState(pluginState[pluginName], stateChange)
+          [pluginName]: updateState(pluginState[pluginName], stateChange)
         }
       }),
       cb

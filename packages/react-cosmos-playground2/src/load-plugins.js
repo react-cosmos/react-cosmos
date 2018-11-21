@@ -1,6 +1,6 @@
 // @flow
 
-import './plugins/RendererResponseHandler';
+import './plugins/RendererMessageHandler';
 import './plugins/RendererIframePreview';
 import './plugins/RendererRemote';
 import './plugins/Router';

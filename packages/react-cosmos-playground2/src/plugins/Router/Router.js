@@ -5,12 +5,7 @@ import { isEqual } from 'lodash';
 import { PlaygroundContext } from '../../PlaygroundContext';
 import { pushUrlParamsToHistory, subscribeToLocationChanges } from './window';
 
-import type {
-  RendererId,
-  RendererResponse
-} from 'react-cosmos-shared2/renderer';
 import type { PlaygroundContextValue } from '../../index.js.flow';
-import type { RendererState } from '../RendererResponseHandler';
 import type { UrlParams } from './shared';
 
 export class Router extends Component<{}> {
@@ -32,7 +27,6 @@ export class Router extends Component<{}> {
   }
 
   unsubscribeFromUrlChanges = () => {};
-  unsubscribeFromRendererResponses = () => {};
   unregisterMethods = () => {};
 
   componentDidMount() {
@@ -40,19 +34,13 @@ export class Router extends Component<{}> {
       this.handleLocationChange
     );
 
-    const { registerMethods, addEventListener } = this.context;
-    this.unsubscribeFromRendererResponses = addEventListener(
-      'renderer.response',
-      this.handleRendererResponse
-    );
-    this.unregisterMethods = registerMethods({
+    this.unregisterMethods = this.context.registerMethods({
       'router.setUrlParams': this.handleSetUrlParams
     });
   }
 
   componentWillUnmount() {
     this.unsubscribeFromUrlChanges();
-    this.unsubscribeFromRendererResponses();
     this.unregisterMethods();
   }
 
@@ -62,18 +50,9 @@ export class Router extends Component<{}> {
 
     this.setOwnState(urlParams, () => {
       if (hasFixtureChanged) {
-        this.renderCurrentFixture();
+        this.selectCurrentFixture();
       }
     });
-  };
-
-  handleRendererResponse = (msg: RendererResponse) => {
-    const { fixturePath } = this.getOwnState();
-
-    if (msg.type === 'fixtureList' && fixturePath) {
-      const { rendererId } = msg.payload;
-      this.postSelectFixtureRequest(rendererId, fixturePath);
-    }
   };
 
   handleSetUrlParams = (nextUrlParams: UrlParams) => {
@@ -85,30 +64,22 @@ export class Router extends Component<{}> {
     this.setOwnState(nextUrlParams, () => {
       // Setting identical url params is considered a "reset" request
       if (hasFixtureChanged || areUrlParamsEqual) {
-        this.renderCurrentFixture();
+        this.selectCurrentFixture();
       }
-      pushUrlParamsToHistory(this.getOwnState());
+
+      if (!areUrlParamsEqual) {
+        pushUrlParamsToHistory(this.getOwnState());
+      }
     });
   };
 
-  renderCurrentFixture() {
-    const { rendererIds }: RendererState = this.context.getState('renderer');
+  selectCurrentFixture() {
     const { fixturePath } = this.getOwnState();
 
-    rendererIds.forEach(rendererId => {
-      this.postSelectFixtureRequest(rendererId, fixturePath || null);
-    });
-  }
+    if (!fixturePath) {
+      return this.context.callMethod('renderer.unselectFixture');
+    }
 
-  postSelectFixtureRequest(rendererId: RendererId, fixturePath: string | null) {
-    const { emitEvent } = this.context;
-
-    emitEvent('renderer.request', {
-      type: 'selectFixture',
-      payload: {
-        rendererId,
-        fixturePath
-      }
-    });
+    this.context.callMethod('renderer.selectFixture', fixturePath);
   }
 }

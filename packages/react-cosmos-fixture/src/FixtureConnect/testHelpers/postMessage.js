@@ -3,9 +3,10 @@
 
 import React from 'react';
 import {
-  getLastFixtureState,
+  getFixtureStateFromLastChange,
   untilLastMessageEquals,
   postSelectFixture,
+  postUnselectFixture,
   postSetFixtureState
 } from '../testHelpers/shared';
 import { PostMessage } from '../PostMessage';
@@ -20,8 +21,8 @@ export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
     return onMessage.mock.calls.map(call => call[0].data);
   }
 
-  async function lastFixtureState() {
-    return getLastFixtureState(getMessages);
+  async function getFxStateFromLastChange() {
+    return getFixtureStateFromLastChange(getMessages);
   }
 
   async function untilMessage(msg) {
@@ -36,22 +37,25 @@ export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
     await untilMessage(msg);
   }
 
-  async function selectFixture({ rendererId, fixturePath }) {
+  async function selectFixture({ rendererId, fixturePath, fixtureState }) {
     return postSelectFixture(postMessage, {
       rendererId,
-      fixturePath
+      fixturePath,
+      fixtureState
     });
   }
 
-  async function setFixtureState({
-    rendererId,
-    fixturePath,
-    fixtureStateChange
-  }) {
+  async function unselectFixture({ rendererId }) {
+    return postUnselectFixture(postMessage, {
+      rendererId
+    });
+  }
+
+  async function setFixtureState({ rendererId, fixturePath, fixtureState }) {
     return postSetFixtureState(postMessage, {
       rendererId,
       fixturePath,
-      fixtureStateChange
+      fixtureState
     });
   }
 
@@ -60,9 +64,10 @@ export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
     await children({
       getElement,
       untilMessage,
-      lastFixtureState,
+      getFxStateFromLastChange,
       postMessage,
       selectFixture,
+      unselectFixture,
       setFixtureState
     });
   } finally {

@@ -6,7 +6,7 @@ import {
   getCompFixtureStates,
   updateCompFixtureState
 } from 'react-cosmos-shared2/fixtureState';
-import { uuid } from '../../shared/uuid';
+import { uuid } from 'react-cosmos-shared2/util';
 import { SuffixCounter } from '../testHelpers/components';
 import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
 import { mockConnect as mockPostMessage } from '../testHelpers/postMessage';
@@ -37,30 +37,31 @@ function tests(mockConnect) {
       async ({
         getElement,
         selectFixture,
-        untilMessage,
-        lastFixtureState,
+        getFxStateFromLastChange,
         setFixtureState
       }) => {
         await mount(getElement({ rendererId, fixtures }), async renderer => {
           await selectFixture({
             rendererId,
-            fixturePath: 'first'
+            fixturePath: 'first',
+            fixtureState: null
           });
 
-          const fixtureState = await lastFixtureState();
+          let fixtureState = await getFxStateFromLastChange();
           const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
 
+          fixtureState = {
+            components: updateCompFixtureState({
+              fixtureState,
+              elPath,
+              decoratorId,
+              state: createFxValues({ count: 5 })
+            })
+          };
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
-              components: updateCompFixtureState({
-                fixtureState,
-                elPath,
-                decoratorId,
-                state: createFxValues({ count: 5 })
-              })
-            }
+            fixtureState
           });
 
           expect(renderer.toJSON()).toBe('5 times');
@@ -68,9 +69,9 @@ function tests(mockConnect) {
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
+            fixtureState: {
               components: updateCompFixtureState({
-                fixtureState: await lastFixtureState(),
+                fixtureState,
                 decoratorId,
                 elPath,
                 props: createFxValues({ suffix: 'timez' }),
@@ -80,22 +81,6 @@ function tests(mockConnect) {
           });
 
           expect(renderer.toJSON()).toBe('5 timez');
-
-          await untilMessage({
-            type: 'fixtureState',
-            payload: {
-              rendererId,
-              fixturePath: 'first',
-              fixtureState: {
-                components: [
-                  createCompFxState({
-                    props: createFxValues({ suffix: 'timez' }),
-                    state: createFxValues({ count: 5 })
-                  })
-                ]
-              }
-            }
-          });
         });
       }
     );
@@ -106,30 +91,31 @@ function tests(mockConnect) {
       async ({
         getElement,
         selectFixture,
-        untilMessage,
-        lastFixtureState,
+        getFxStateFromLastChange,
         setFixtureState
       }) => {
         await mount(getElement({ rendererId, fixtures }), async renderer => {
           await selectFixture({
             rendererId,
-            fixturePath: 'first'
+            fixturePath: 'first',
+            fixtureState: null
           });
 
-          const fixtureState = await lastFixtureState();
+          let fixtureState = await getFxStateFromLastChange();
           const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
 
+          fixtureState = {
+            components: updateCompFixtureState({
+              fixtureState,
+              decoratorId,
+              elPath,
+              state: createFxValues({ count: 5 })
+            })
+          };
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
-              components: updateCompFixtureState({
-                fixtureState,
-                decoratorId,
-                elPath,
-                state: createFxValues({ count: 5 })
-              })
-            }
+            fixtureState
           });
 
           expect(renderer.toJSON()).toBe('5 times');
@@ -137,9 +123,9 @@ function tests(mockConnect) {
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
+            fixtureState: {
               components: updateCompFixtureState({
-                fixtureState: await lastFixtureState(),
+                fixtureState,
                 decoratorId,
                 elPath,
                 props: createFxValues({ suffix: 'timez' })
@@ -148,22 +134,6 @@ function tests(mockConnect) {
           });
 
           expect(renderer.toJSON()).toBe('5 timez');
-
-          await untilMessage({
-            type: 'fixtureState',
-            payload: {
-              rendererId,
-              fixturePath: 'first',
-              fixtureState: {
-                components: [
-                  createCompFxState({
-                    props: createFxValues({ suffix: 'timez' }),
-                    state: createFxValues({ count: 5 })
-                  })
-                ]
-              }
-            }
-          });
         });
       }
     );
@@ -174,30 +144,31 @@ function tests(mockConnect) {
       async ({
         getElement,
         selectFixture,
-        untilMessage,
-        lastFixtureState,
+        getFxStateFromLastChange,
         setFixtureState
       }) => {
         await mount(getElement({ rendererId, fixtures }), async renderer => {
           await selectFixture({
             rendererId,
-            fixturePath: 'first'
+            fixturePath: 'first',
+            fixtureState: null
           });
 
-          const fixtureState = await lastFixtureState();
+          let fixtureState = await getFxStateFromLastChange();
           const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
 
+          fixtureState = {
+            components: updateCompFixtureState({
+              fixtureState,
+              decoratorId,
+              elPath,
+              props: createFxValues({ suffix: 'timez' })
+            })
+          };
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
-              components: updateCompFixtureState({
-                fixtureState,
-                decoratorId,
-                elPath,
-                props: createFxValues({ suffix: 'timez' })
-              })
-            }
+            fixtureState
           });
 
           expect(renderer.toJSON()).toBe('0 timez');
@@ -205,9 +176,9 @@ function tests(mockConnect) {
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
+            fixtureState: {
               components: updateCompFixtureState({
-                fixtureState: await lastFixtureState(),
+                fixtureState,
                 decoratorId,
                 elPath,
                 state: createFxValues({ count: 5 })
@@ -216,22 +187,6 @@ function tests(mockConnect) {
           });
 
           expect(renderer.toJSON()).toBe('5 timez');
-
-          await untilMessage({
-            type: 'fixtureState',
-            payload: {
-              rendererId,
-              fixturePath: 'first',
-              fixtureState: {
-                components: [
-                  createCompFxState({
-                    props: createFxValues({ suffix: 'timez' }),
-                    state: createFxValues({ count: 5 })
-                  })
-                ]
-              }
-            }
-          });
         });
       }
     );
@@ -258,22 +213,23 @@ function tests(mockConnect) {
         getElement,
         selectFixture,
         untilMessage,
-        lastFixtureState,
+        getFxStateFromLastChange,
         setFixtureState
       }) => {
         await mount(getElement({ rendererId, fixtures }), async renderer => {
           await selectFixture({
             rendererId,
-            fixturePath: 'first'
+            fixturePath: 'first',
+            fixtureState: null
           });
 
-          const fixtureState = await lastFixtureState();
+          const fixtureState = await getFxStateFromLastChange();
           const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
 
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
+            fixtureState: {
               components: updateCompFixtureState({
                 fixtureState,
                 decoratorId,
@@ -298,7 +254,7 @@ function tests(mockConnect) {
           expect(renderer.toJSON()).toBe('7 timez');
 
           await untilMessage({
-            type: 'fixtureState',
+            type: 'fixtureStateChange',
             payload: {
               rendererId,
               fixturePath: 'first',
@@ -322,7 +278,8 @@ function tests(mockConnect) {
       await mount(getElement({ rendererId, fixtures }), async renderer => {
         await selectFixture({
           rendererId,
-          fixturePath: 'first'
+          fixturePath: 'first',
+          fixtureState: null
         });
 
         renderer.update(
@@ -337,7 +294,7 @@ function tests(mockConnect) {
         expect(renderer.toJSON()).toBe('0 timez');
 
         await untilMessage({
-          type: 'fixtureState',
+          type: 'fixtureStateChange',
           payload: {
             rendererId,
             fixturePath: 'first',

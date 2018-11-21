@@ -8,8 +8,8 @@ import {
   createServer,
   serveStaticDir
 } from '../shared/server';
+import { attachSockets } from '../shared/socket';
 import { generateModulesFile } from './generate-modules-file';
-import { attachSockets } from './socket';
 
 export async function startServer() {
   const cosmosConfig = getCosmosConfig();

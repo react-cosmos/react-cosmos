@@ -7,7 +7,7 @@ import type { Element } from 'react';
 
 export async function mount(
   element: Element<any>,
-  children: (instance: ReactTestRenderer) => Promise<mixed>
+  children: (renderer: ReactTestRenderer) => Promise<mixed>
 ) {
   expect.hasAssertions();
 

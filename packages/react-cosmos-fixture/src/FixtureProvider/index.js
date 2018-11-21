@@ -41,7 +41,7 @@ export class FixtureProvider extends Component<Props, FixtureContextValue> {
 
     return (
       <FixtureContext.Provider value={this.state}>
-        <FixtureCapture>{children}</FixtureCapture>
+        <FixtureCapture decoratorId="root">{children}</FixtureCapture>
       </FixtureContext.Provider>
     );
   }

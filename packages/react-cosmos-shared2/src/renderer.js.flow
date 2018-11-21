@@ -8,38 +8,46 @@ export type RendererId = string;
 
 export type FixtureNames = string[];
 
-export type RequestFixtureListMsg = {
+export type FixtureListRequest = {
   type: 'requestFixtureList'
 };
 
-export type SelectFixtureMsg = {
+export type SelectFixtureRequest = {
   type: 'selectFixture',
   payload: {
     rendererId: RendererId,
-    // A null fixturePath means unselecting current fixture
-    fixturePath: null | string
+    fixturePath: string,
+    fixtureState: null | FixtureState
   }
 };
 
-export type SetFixtureStateMsg = {
+export type UnselectFixtureRequest = {
+  type: 'unselectFixture',
+  payload: {
+    rendererId: RendererId
+  }
+};
+
+export type SetFixtureStateRequest = {
   type: 'setFixtureState',
   payload: {
     rendererId: RendererId,
-    // Only one fixture can be loaded at a time by a renderer, but the path is
-    // sent anyway to ensure the message applies to the current fixture
+    // The fixture path is sent alongside the fixture state change to ensure
+    // that the fixture state is only paired with its corresponding fixture
     fixturePath: string,
-    fixtureStateChange: $Shape<FixtureState>
+    fixtureState: null | FixtureState
   }
 };
 
 export type RendererRequest =
-  | RequestFixtureListMsg
-  | SelectFixtureMsg
-  | SetFixtureStateMsg;
+  | FixtureListRequest
+  | SelectFixtureRequest
+  | UnselectFixtureRequest
+  | SetFixtureStateRequest;
 
 export type OnRendererRequest = RendererRequest => mixed;
 
-export type FixtureListMsg = {
+export type FixtureListResponse = {
   type: 'fixtureList',
   payload: {
     rendererId: RendererId,
@@ -47,25 +55,25 @@ export type FixtureListMsg = {
   }
 };
 
-// An update on the fixture state inside a renderer, covering more scenarios:
-// - Initial fixture state after a selectFixture request
-// - Confirmation for a setFixtureState request
-export type FixtureStateMsg = {
-  type: 'fixtureState',
+// Caused by an organic state change inside the renderer. Also dispatched
+// after a fixtureSelect request, when rendering stateful components, as their
+// initial state is read.
+export type FixtureStateChangeResponse = {
+  type: 'fixtureStateChange',
   payload: {
     rendererId: RendererId,
-    // Only one fixture can be loaded at a time by a renderer, but the path is
-    // sent anyway to ensure the message applies to the current fixture
+    // The fixture path is sent alongside the fixture state to ensure that the
+    // fixture state is only paired with its corresponding fixture
     fixturePath: string,
     // Entire fixture state is included
-    fixtureState: FixtureState
+    fixtureState: null | FixtureState
   }
 };
 
 // Announce an error caught inside a renderer, which is useful when the
 // renderer is remote or if it errors before dispatching `fixtureList`
 // TODO: Integrate
-// export type RendererErrorMsg = {
+// export type RendererErrorResponse = {
 //   type: 'rendererError',
 //   payload: {
 //     rendererId: RendererId
@@ -75,10 +83,8 @@ export type FixtureStateMsg = {
 //   }
 // };
 
-export type RendererResponse = FixtureListMsg | FixtureStateMsg;
+export type RendererResponse = FixtureListResponse | FixtureStateChangeResponse;
 
 export type OnRendererResponse = RendererResponse => mixed;
 
 declare export var RENDERER_MESSAGE_EVENT_NAME: string;
-
-declare export var RENDERER_ID: RendererId;

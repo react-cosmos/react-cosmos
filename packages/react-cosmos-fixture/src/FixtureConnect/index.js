@@ -4,8 +4,10 @@ import React, { Component } from 'react';
 import { FixtureProvider } from '../FixtureProvider';
 import { updateState } from 'react-cosmos-shared2/util';
 
-import type { SetState } from 'react-cosmos-shared2/util';
-import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
+import type {
+  FixtureState,
+  SetFixtureState
+} from 'react-cosmos-shared2/fixtureState';
 import type { RendererRequest } from 'react-cosmos-shared2/renderer';
 import type { FixtureConnectProps } from '../index.js.flow';
 
@@ -30,30 +32,6 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
 
     subscribe(this.handleRequest);
     this.postReadyMessage();
-  }
-
-  componentDidUpdate(prevProps: FixtureConnectProps, prevState: State) {
-    // TODO: Adapt to props.fixtures change (eg. current fixture gets removed)
-    const { rendererId, postMessage } = this.props;
-    const { fixturePath, fixtureState } = this.state;
-
-    // Fixture state changes are broadcast in componentDidUpdate instead of
-    // when they arrive because React batches setState calls, so by waiting for
-    // React to apply subsequent state changes we also benefit from batching.
-    if (
-      fixturePath &&
-      fixtureState &&
-      fixtureState !== prevState.fixtureState
-    ) {
-      postMessage({
-        type: 'fixtureState',
-        payload: {
-          rendererId,
-          fixturePath,
-          fixtureState
-        }
-      });
-    }
   }
 
   componentWillUnmount() {
@@ -98,21 +76,25 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     }
 
     if (msg.type === 'selectFixture') {
-      const { fixturePath } = msg.payload;
+      const { fixturePath, fixtureState } = msg.payload;
 
       this.setState({
         fixturePath,
-        // Reset fixture state when selecting new fixture (or when reselecting
-        // current fixture)
-        fixtureState: null,
+        fixtureState,
         renderKey: this.state.renderKey + 1
       });
+    } else if (msg.type === 'unselectFixture') {
+      this.setState({
+        fixturePath: null,
+        fixtureState: null,
+        renderKey: 0
+      });
     } else if (msg.type === 'setFixtureState') {
-      const { fixturePath, fixtureStateChange } = msg.payload;
+      const { fixturePath, fixtureState } = msg.payload;
 
       // Ensure fixture state applies to currently selected fixture
       if (fixturePath === this.state.fixturePath) {
-        this.setFixtureState(fixtureStateChange);
+        this.applyFixtureStateChange(fixtureState);
       }
     }
   };
@@ -129,7 +111,23 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     });
   }
 
-  setFixtureState: SetState<FixtureState> = (updater, cb) => {
+  setFixtureState: SetFixtureState = (stateChange, cb) => {
+    const { fixturePath } = this.state;
+
+    if (!fixturePath) {
+      console.warn(
+        '[FixtureConnect] Trying to set fixture state with no fixture selected'
+      );
+      return;
+    }
+
+    this.applyFixtureStateChange(stateChange, () => {
+      if (typeof cb === 'function') cb();
+      this.postFixtureStateChange(fixturePath);
+    });
+  };
+
+  applyFixtureStateChange: SetFixtureState = (stateChange, cb) => {
     // Multiple state changes can be dispatched by fixture plugins at almost
     // the same time. Since state changes are batched in React, current state
     // (this.state.fixtureState) can be stale at dispatch time, and extending
@@ -138,9 +136,23 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     // every state change is honored, regardless of timing.
     this.setState(
       ({ fixtureState }) => ({
-        fixtureState: updateState(fixtureState, updater)
+        fixtureState: updateState(fixtureState, stateChange)
       }),
       cb
     );
+  };
+
+  postFixtureStateChange = (fixturePath: string) => {
+    const { rendererId, postMessage } = this.props;
+    const { fixtureState } = this.state;
+
+    postMessage({
+      type: 'fixtureStateChange',
+      payload: {
+        rendererId,
+        fixturePath,
+        fixtureState
+      }
+    });
   };
 }

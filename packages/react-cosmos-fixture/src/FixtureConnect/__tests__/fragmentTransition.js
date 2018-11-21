@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { StateMock } from '@react-mock/state';
-import { uuid } from '../../shared/uuid';
+import { uuid } from 'react-cosmos-shared2/util';
 import { Counter } from '../testHelpers/components';
 import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
 import { mockConnect as mockPostMessage } from '../testHelpers/postMessage';
@@ -29,7 +29,8 @@ function tests(mockConnect) {
       await mount(getElement({ rendererId, fixtures }), async renderer => {
         await selectFixture({
           rendererId,
-          fixturePath: 'first'
+          fixturePath: 'first',
+          fixtureState: null
         });
 
         renderer.update(
@@ -63,7 +64,7 @@ function tests(mockConnect) {
         await new Promise(res => setTimeout(res, 500));
 
         await untilMessage({
-          type: 'fixtureState',
+          type: 'fixtureStateChange',
           payload: {
             rendererId,
             fixturePath: 'first',

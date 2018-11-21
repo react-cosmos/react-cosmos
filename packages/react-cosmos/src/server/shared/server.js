@@ -26,11 +26,10 @@ export function createServerApp({
   }
 
   const playgroundHtml = next
-    ? // TODO: Enable remote renderers in web mode as well
-      getPlaygroundHtmlNext({
+    ? getPlaygroundHtmlNext({
         rendererPreviewUrl:
           playgroundOpts.platform === 'web' ? playgroundOpts.loaderUri : null,
-        enableRemoteRenderers: playgroundOpts.platform === 'native'
+        enableRemoteRenderers: true
       })
     : getPlaygroundHtml(playgroundOpts);
   app.get('/', (req: express$Request, res: express$Response) => {

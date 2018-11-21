@@ -2,49 +2,42 @@
 
 import React from 'react';
 import { uuid } from 'react-cosmos-shared2/util';
-import { FixtureCapture } from '../../FixtureCapture';
-import { HelloMessage } from '../testHelpers/components';
+import { Counter } from '../testHelpers/components';
 import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
 import { mockConnect as mockPostMessage } from '../testHelpers/postMessage';
 import { mockConnect as mockWebSockets } from '../testHelpers/webSockets';
 import { mount } from '../testHelpers/mount';
 
-function Wrap({ children }) {
-  return children();
-}
-
-Wrap.cosmosCapture = false;
-
 const rendererId = uuid();
 const fixtures = {
-  first: (
-    <>
-      <Wrap>{() => <HelloMessage name="Bianca" />}</Wrap>
-      <Wrap>
-        {() => (
-          <FixtureCapture decoratorId="mockDecoratorId">
-            <HelloMessage name="B" />
-          </FixtureCapture>
-        )}
-      </Wrap>
-    </>
-  )
+  first: <Counter />
 };
 
 tests(mockPostMessage);
 tests(mockWebSockets);
 
 function tests(mockConnect) {
-  it('captures props from render callback', async () => {
+  // NOTE: This is a regression test that was created for a bug that initally
+  // slipped unnoticed in https://github.com/react-cosmos/react-cosmos/pull/893.
+  // Because element refs from unmounted FixtureCapture instances were
+  // incorrectly reused, component state was no longer picked up after
+  // FixtureCapture remounted. This was related to the refactor of
+  // FixtureCapture/attachChildRefs in
+  // https://github.com/react-cosmos/react-cosmos/commit/56494b6ea10785cc3db8dda7a7fbcad62c8e1c12
+  it('captures initial state after re-selecting fixture', async () => {
     await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
-      await mount(getElement({ rendererId, fixtures }), async renderer => {
+      await mount(getElement({ rendererId, fixtures }), async () => {
         await selectFixture({
           rendererId,
           fixturePath: 'first',
           fixtureState: null
         });
 
-        expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B']);
+        await selectFixture({
+          rendererId,
+          fixturePath: 'first',
+          fixtureState: null
+        });
 
         await untilMessage({
           type: 'fixtureStateChange',
@@ -54,8 +47,9 @@ function tests(mockConnect) {
             fixtureState: {
               components: [
                 createCompFxState({
-                  decoratorId: 'mockDecoratorId',
-                  props: createFxValues({ name: 'B' })
+                  componentName: 'Counter',
+                  props: [],
+                  state: createFxValues({ count: 0 })
                 })
               ]
             }

@@ -1,13 +1,13 @@
 // @flow
 
-import { cloneElement } from 'react';
+import { cloneElement, Component } from 'react';
 import { setElementAtPath } from '../childrenTree';
 import { findRelevantElementPaths } from '../findRelevantElementPaths';
 import { compose } from './compose';
 import { isRefSupported } from './isRefSupported';
 import { createRefHandler } from './createRefHandler';
 
-import type { Ref } from 'react';
+import type { ElementRef, Ref } from 'react';
 import type { FixtureDecoratorId } from 'react-cosmos-shared2/fixtureState';
 import type { Children } from '../childrenTree';
 import type { ComponentRef } from '../shared';
@@ -25,15 +25,22 @@ type RefWrappers = {
 // a React element it gets called in the next render loop, even when the
 // associated element instance has been preserved. Having ref handlers fire
 // on every render loop results in unwanted operations and race conditions.
-const refHandlers: {
-  [FixtureDecoratorId]: RefWrappers
-} = {};
+const refHandlers: WeakMap<
+  ElementRef<typeof Component>,
+  RefWrappers
+> = new WeakMap();
 
-export function attachChildRefs(
+export function attachChildRefs({
+  children,
+  onRef,
+  decoratorElRef,
+  decoratorId
+}: {
   children: Children,
   onRef: (elPath: string, elRef: ?ComponentRef) => mixed,
+  decoratorElRef: ElementRef<typeof Component>,
   decoratorId: FixtureDecoratorId
-) {
+}) {
   const elPaths = findRelevantElementPaths(children);
 
   return elPaths.reduce((extendedChildren, elPath): Children => {
@@ -44,10 +51,11 @@ export function attachChildRefs(
 
       return cloneElement(element, {
         ref: getWrappedRefHandler({
-          elPath,
           origRef: element.ref,
           onRef,
-          decoratorId
+          decoratorElRef,
+          decoratorId,
+          elPath
         })
       });
     });
@@ -55,19 +63,32 @@ export function attachChildRefs(
 }
 
 export function deleteRefHandler(
+  decoratorElRef: ElementRef<typeof Component>,
   decoratorId: FixtureDecoratorId,
   elPath: string
 ) {
-  delete refHandlers[decoratorId][elPath];
+  const handlers = refHandlers.get(decoratorElRef);
+  if (handlers) {
+    delete handlers[getHandlerPath({ decoratorId, elPath })];
+  }
 }
 
-export function deleteRefHandlers(decoratorId: FixtureDecoratorId) {
-  delete refHandlers[decoratorId];
+export function deleteRefHandlers(
+  decoratorElRef: ElementRef<typeof Component>
+) {
+  delete refHandlers.delete(decoratorElRef);
 }
 
-function getWrappedRefHandler({ elPath, origRef, onRef, decoratorId }) {
-  const handlers = refHandlers[decoratorId] || {};
-  const found = handlers[elPath];
+function getWrappedRefHandler({
+  origRef,
+  onRef,
+  decoratorElRef,
+  decoratorId,
+  elPath
+}) {
+  const handlers = refHandlers.get(decoratorElRef) || {};
+  const handlerPath = getHandlerPath({ decoratorId, elPath });
+  const found = handlers[handlerPath];
 
   if (found && found.origRef === origRef) {
     return found.handler;
@@ -81,10 +102,14 @@ function getWrappedRefHandler({ elPath, origRef, onRef, decoratorId }) {
       )
     : rootHandler;
 
-  refHandlers[decoratorId] = {
-    ...refHandlers[decoratorId],
-    [elPath]: { origRef, handler }
-  };
+  refHandlers.set(decoratorElRef, {
+    ...handlers,
+    [handlerPath]: { origRef, handler }
+  });
 
   return handler;
+}
+
+function getHandlerPath({ decoratorId, elPath }) {
+  return `${decoratorId}-${elPath}`;
 }

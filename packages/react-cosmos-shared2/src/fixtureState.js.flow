@@ -1,11 +1,13 @@
 // @flow
 
+import type { SetState } from './util';
+
 // This type might be silly, but it should be stricter than `Object`
 export type KeyValue = { [string]: mixed };
 
 export type FixtureRenderKey = number;
 
-export type FixtureDecoratorId = number;
+export type FixtureDecoratorId = string;
 
 export type FixtureStateValue = {
   serializable: boolean,
@@ -28,6 +30,8 @@ export type FixtureState = {
   components: ComponentFixtureState[],
   [key: string]: mixed
 };
+
+export type SetFixtureState = SetState<null | FixtureState>;
 
 declare export var DEFAULT_RENDER_KEY: FixtureRenderKey;
 

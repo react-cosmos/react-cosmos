@@ -54,6 +54,19 @@ it('broadcasts renderer response message from websocket event', async () => {
   });
 });
 
+it('posts "requestFixtureList" renderer request on mount', async () => {
+  const handleRendererRequest = jest.fn();
+  renderPlayground(
+    <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
+  );
+
+  await wait(() =>
+    expect(handleRendererRequest).toBeCalledWith({
+      type: 'requestFixtureList'
+    })
+  );
+});
+
 function renderPlayground(otherNodes) {
   return render(
     <PlaygroundProvider
@@ -62,8 +75,8 @@ function renderPlayground(otherNodes) {
         enableRemoteRenderers: true
       }}
     >
-      <Slot name="global" />
       {otherNodes}
+      <Slot name="global" />
     </PlaygroundProvider>
   );
 }

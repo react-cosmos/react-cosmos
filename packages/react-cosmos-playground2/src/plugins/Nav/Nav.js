@@ -3,10 +3,10 @@
 import styled from 'styled-components';
 import React, { Component } from 'react';
 import { PlaygroundContext } from '../../PlaygroundContext';
+import { getPrimaryRendererState } from '../RendererMessageHandler/selectors';
 import { FixtureTree } from './FixtureTree';
 
 import type { PlaygroundContextValue } from '../../index.js.flow';
-import type { RendererState } from '../RendererResponseHandler';
 import type { UrlParams } from '../Router';
 
 export class Nav extends Component<{}> {
@@ -17,7 +17,13 @@ export class Nav extends Component<{}> {
 
   render() {
     const { getState } = this.context;
-    const { fixtures }: RendererState = getState('renderer');
+    const rendererState = getPrimaryRendererState(getState('renderers'));
+
+    if (!rendererState) {
+      return null;
+    }
+
+    const { fixtures } = rendererState;
     const { fixturePath, fullScreen }: UrlParams = getState('urlParams');
 
     if (fullScreen) {

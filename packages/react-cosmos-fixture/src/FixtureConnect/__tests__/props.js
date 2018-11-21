@@ -5,7 +5,7 @@ import {
   getCompFixtureStates,
   updateCompFixtureState
 } from 'react-cosmos-shared2/fixtureState';
-import { uuid } from '../../shared/uuid';
+import { uuid } from 'react-cosmos-shared2/util';
 import { HelloMessage, HelloMessageCls } from '../testHelpers/components';
 import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
 import { mockConnect as mockPostMessage } from '../testHelpers/postMessage';
@@ -26,13 +26,14 @@ function tests(mockConnect) {
       await mount(getElement({ rendererId, fixtures }), async renderer => {
         await selectFixture({
           rendererId,
-          fixturePath: 'first'
+          fixturePath: 'first',
+          fixtureState: null
         });
 
         expect(renderer.toJSON()).toBe('Hello Bianca');
 
         await untilMessage({
-          type: 'fixtureState',
+          type: 'fixtureStateChange',
           payload: {
             rendererId,
             fixturePath: 'first',
@@ -55,23 +56,23 @@ function tests(mockConnect) {
       async ({
         getElement,
         selectFixture,
-        untilMessage,
-        lastFixtureState,
+        getFxStateFromLastChange,
         setFixtureState
       }) => {
         await mount(getElement({ rendererId, fixtures }), async renderer => {
           await selectFixture({
             rendererId,
-            fixturePath: 'first'
+            fixturePath: 'first',
+            fixtureState: null
           });
 
-          const fixtureState = await lastFixtureState();
+          const fixtureState = await getFxStateFromLastChange();
           const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
 
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
+            fixtureState: {
               components: updateCompFixtureState({
                 fixtureState,
                 decoratorId,
@@ -82,22 +83,6 @@ function tests(mockConnect) {
           });
 
           expect(renderer.toJSON()).toBe('Hello B');
-
-          await untilMessage({
-            type: 'fixtureState',
-            payload: {
-              rendererId,
-              fixturePath: 'first',
-              fixtureState: {
-                components: [
-                  createCompFxState({
-                    componentName: 'HelloMessage',
-                    props: createFxValues({ name: 'B' })
-                  })
-                ]
-              }
-            }
-          });
         });
       }
     );
@@ -108,22 +93,23 @@ function tests(mockConnect) {
       async ({
         getElement,
         selectFixture,
-        lastFixtureState,
+        getFxStateFromLastChange,
         setFixtureState
       }) => {
         await mount(getElement({ rendererId, fixtures }), async renderer => {
           await selectFixture({
             rendererId,
-            fixturePath: 'first'
+            fixturePath: 'first',
+            fixtureState: null
           });
 
-          const fixtureState = await lastFixtureState();
+          const fixtureState = await getFxStateFromLastChange();
           const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
 
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
+            fixtureState: {
               components: updateCompFixtureState({
                 fixtureState,
                 decoratorId,
@@ -145,22 +131,23 @@ function tests(mockConnect) {
         getElement,
         selectFixture,
         untilMessage,
-        lastFixtureState,
+        getFxStateFromLastChange,
         setFixtureState
       }) => {
         await mount(getElement({ rendererId, fixtures }), async renderer => {
           await selectFixture({
             rendererId,
-            fixturePath: 'first'
+            fixturePath: 'first',
+            fixtureState: null
           });
 
-          const fixtureState = await lastFixtureState();
+          const fixtureState = await getFxStateFromLastChange();
           const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
 
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
+            fixtureState: {
               components: updateCompFixtureState({
                 fixtureState,
                 decoratorId,
@@ -175,7 +162,7 @@ function tests(mockConnect) {
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
+            fixtureState: {
               components: updateCompFixtureState({
                 fixtureState,
                 decoratorId,
@@ -187,8 +174,10 @@ function tests(mockConnect) {
 
           expect(renderer.toJSON()).toBe('Hello Bianca');
 
+          // After the props are removed from the fixture state, the original
+          // props are added back through a fixtureStateChange message
           await untilMessage({
-            type: 'fixtureState',
+            type: 'fixtureStateChange',
             payload: {
               rendererId,
               fixturePath: 'first',
@@ -212,7 +201,7 @@ function tests(mockConnect) {
       async ({
         getElement,
         selectFixture,
-        lastFixtureState,
+        getFxStateFromLastChange,
         setFixtureState
       }) => {
         const rendererId = uuid();
@@ -231,10 +220,11 @@ function tests(mockConnect) {
           async renderer => {
             await selectFixture({
               rendererId,
-              fixturePath: 'first'
+              fixturePath: 'first',
+              fixtureState: null
             });
 
-            const fixtureState = await lastFixtureState();
+            const fixtureState = await getFxStateFromLastChange();
             const [{ decoratorId, elPath }] = getCompFixtureStates(
               fixtureState
             );
@@ -242,7 +232,7 @@ function tests(mockConnect) {
             await setFixtureState({
               rendererId,
               fixturePath: 'first',
-              fixtureStateChange: {
+              fixtureState: {
                 components: updateCompFixtureState({
                   fixtureState,
                   decoratorId,
@@ -274,7 +264,7 @@ function tests(mockConnect) {
       async ({
         getElement,
         selectFixture,
-        lastFixtureState,
+        getFxStateFromLastChange,
         setFixtureState
       }) => {
         const rendererId = uuid();
@@ -293,10 +283,11 @@ function tests(mockConnect) {
           async renderer => {
             await selectFixture({
               rendererId,
-              fixturePath: 'first'
+              fixturePath: 'first',
+              fixtureState: null
             });
 
-            const fixtureState = await lastFixtureState();
+            const fixtureState = await getFxStateFromLastChange();
             const [{ decoratorId, elPath }] = getCompFixtureStates(
               fixtureState
             );
@@ -304,7 +295,7 @@ function tests(mockConnect) {
             await setFixtureState({
               rendererId,
               fixturePath: 'first',
-              fixtureStateChange: {
+              fixtureState: {
                 components: updateCompFixtureState({
                   fixtureState,
                   decoratorId,
@@ -337,23 +328,24 @@ function tests(mockConnect) {
       async ({
         getElement,
         untilMessage,
-        lastFixtureState,
+        getFxStateFromLastChange,
         selectFixture,
         setFixtureState
       }) => {
         await mount(getElement({ rendererId, fixtures }), async renderer => {
           await selectFixture({
             rendererId,
-            fixturePath: 'first'
+            fixturePath: 'first',
+            fixtureState: null
           });
 
-          const fixtureState = await lastFixtureState();
+          const fixtureState = await getFxStateFromLastChange();
           const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
 
           await setFixtureState({
             rendererId,
             fixturePath: 'first',
-            fixtureStateChange: {
+            fixtureState: {
               components: updateCompFixtureState({
                 fixtureState,
                 decoratorId,
@@ -375,7 +367,7 @@ function tests(mockConnect) {
           );
 
           await untilMessage({
-            type: 'fixtureState',
+            type: 'fixtureStateChange',
             payload: {
               rendererId,
               fixturePath: 'first',
@@ -401,11 +393,12 @@ function tests(mockConnect) {
       await mount(getElement({ rendererId, fixtures }), async renderer => {
         await selectFixture({
           rendererId,
-          fixturePath: 'first'
+          fixturePath: 'first',
+          fixtureState: null
         });
 
         await untilMessage({
-          type: 'fixtureState',
+          type: 'fixtureStateChange',
           payload: {
             rendererId,
             fixturePath: 'first',
@@ -434,7 +427,7 @@ function tests(mockConnect) {
         expect(renderer.toJSON()).toBe('Hello all');
 
         await untilMessage({
-          type: 'fixtureState',
+          type: 'fixtureStateChange',
           payload: {
             rendererId,
             fixturePath: 'first',

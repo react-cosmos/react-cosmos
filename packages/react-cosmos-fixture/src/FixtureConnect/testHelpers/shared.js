@@ -17,45 +17,53 @@ type GetTestElement = ({
   rendererId: RendererId
 }) => Element<any>;
 
+type GetMessages = () => Message[];
+
 export type ConnectMockApi = {
   getElement: GetTestElement,
   postMessage: (msg: RendererRequest) => Promise<mixed>,
   untilMessage: (msg: {}) => Promise<mixed>,
-  lastFixtureState: () => Promise<FixtureState>,
+  getFxStateFromLastChange: () => Promise<null | FixtureState>,
   selectFixture: ({
     rendererId: RendererId,
-    fixturePath: null | string
+    fixturePath: string,
+    fixtureState: null | FixtureState
+  }) => Promise<mixed>,
+  unselectFixture: ({
+    rendererId: RendererId
   }) => Promise<mixed>,
   setFixtureState: ({
     rendererId: RendererId,
     fixturePath: string,
-    fixtureStateChange: $Shape<FixtureState>
+    fixtureState: null | FixtureState
   }) => Promise<mixed>
 };
 
 const timeout = 1000;
 
-export async function getLastFixtureState(getMessages: () => Message[]) {
+export async function getFixtureStateFromLastChange(getMessages: GetMessages) {
+  const msgType = 'fixtureStateChange';
+
   await until(
     () => {
       const lastMsg = getLastMessage(getMessages());
 
-      return lastMsg && lastMsg.type === 'fixtureState';
+      return lastMsg && lastMsg.type === msgType;
     },
     { timeout }
   );
 
   const lastMsg = getLastMessage(getMessages());
 
-  if (!lastMsg || lastMsg.type !== 'fixtureState') {
-    throw new Error('Last message type should be "fixtureState"');
+  if (!lastMsg || lastMsg.type !== msgType) {
+    throw new Error(`Last message type should be "${msgType}"`);
   }
 
   return lastMsg.payload.fixtureState;
 }
 
 export async function untilLastMessageEquals(
-  getMessages: () => Message[],
+  getMessages: GetMessages,
   msg: {}
 ) {
   try {
@@ -82,14 +90,32 @@ export async function postSelectFixture(
   postMessage: Message => mixed,
   {
     rendererId,
-    fixturePath
-  }: { rendererId: RendererId, fixturePath: null | string }
+    fixturePath,
+    fixtureState
+  }: {
+    rendererId: RendererId,
+    fixturePath: string,
+    fixtureState: null | FixtureState
+  }
 ) {
   return postMessage({
     type: 'selectFixture',
     payload: {
       rendererId,
-      fixturePath
+      fixturePath,
+      fixtureState
+    }
+  });
+}
+
+export async function postUnselectFixture(
+  postMessage: Message => mixed,
+  { rendererId }: { rendererId: RendererId }
+) {
+  return postMessage({
+    type: 'unselectFixture',
+    payload: {
+      rendererId
     }
   });
 }
@@ -99,11 +125,11 @@ export async function postSetFixtureState(
   {
     rendererId,
     fixturePath,
-    fixtureStateChange
+    fixtureState
   }: {
     rendererId: RendererId,
     fixturePath: string,
-    fixtureStateChange: $Shape<FixtureState>
+    fixtureState: null | FixtureState
   }
 ) {
   return postMessage({
@@ -111,7 +137,7 @@ export async function postSetFixtureState(
     payload: {
       rendererId,
       fixturePath,
-      fixtureStateChange
+      fixtureState
     }
   });
 }

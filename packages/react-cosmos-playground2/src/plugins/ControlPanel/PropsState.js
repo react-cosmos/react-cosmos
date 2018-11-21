@@ -17,12 +17,8 @@ import type {
 } from 'react-cosmos-shared2/fixtureState';
 
 type Props = {
-  fixturePath: string,
   fixtureState: FixtureState,
-  setFixtureState: ({
-    fixturePath: string,
-    components: ComponentFixtureState[]
-  }) => mixed
+  setFixtureState: (components: ComponentFixtureState[]) => mixed
 };
 
 export class PropsState extends Component<Props> {
@@ -88,7 +84,7 @@ export class PropsState extends Component<Props> {
     elPath: string,
     key: string
   ) => (value: string) => {
-    const { fixturePath, fixtureState, setFixtureState } = this.props;
+    const { fixtureState, setFixtureState } = this.props;
     const compFxState = findCompFixtureState(fixtureState, decoratorId, elPath);
 
     if (!compFxState || !compFxState.props) {
@@ -108,10 +104,7 @@ export class PropsState extends Component<Props> {
       })
     });
 
-    setFixtureState({
-      fixturePath,
-      components
-    });
+    setFixtureState(components);
   };
 
   createStateValueChangeHandler = (
@@ -119,7 +112,7 @@ export class PropsState extends Component<Props> {
     elPath: string,
     key: string
   ) => (value: string) => {
-    const { fixturePath, fixtureState, setFixtureState } = this.props;
+    const { fixtureState, setFixtureState } = this.props;
     const compFxState = findCompFixtureState(fixtureState, decoratorId, elPath);
 
     if (!compFxState || !compFxState.state) {
@@ -139,9 +132,6 @@ export class PropsState extends Component<Props> {
       })
     });
 
-    setFixtureState({
-      fixturePath,
-      components
-    });
+    setFixtureState(components);
   };
 }

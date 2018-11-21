@@ -1,3 +1,55 @@
+Q: Does `fixtureStateSync` renderer response provide any value?
+
+Not anymore, since the `setFixtureState` renderer request now contains the full fixture state, which has already been computed by the Playground before dispatching it to the renderers (akin to an optimistic update). A confirmation sounds nice in theory, but it's problematic in two ways:
+
+- More than one `setFixtureState` request can be dispatched before a `fixtureStateSync` response returns. Since we don't have an linked message architecture in place (and it's unlikely we'll ever need one as this is a local dev tool and the volume of messages is low), we can't really tell if the "sync" response is valid and what request it refers to.
+- We're not using the confirmation in any way at the moment.
+
+Removing it.
+
+---
+
+Q: Should the `setFixtureState` renderer request contain partial or full fixture state? Or both in separate message types?
+
+There's a clear need for a request message that sends the entire fixture state: When sending a new fixture state received from one renderer to the other connected renderers, to keep them in sync. This can't happen with a message that sends partial fixture state for the renderer to merge, because removing a part of the fixture state will not work.
+
+So is there still value in requesting partial fixture state changes? Payload size isn't an issue in a dev tool. What about concurrency? Even though fixture state change requests are sent in full, before a new fixture state is dispatched from Playground to renderers, fixture state changes are applied using updater functions of type `prevState => nextState`, which ensures that all state changes from Playground plugins are honored, regardless of timing.
+
+Given that no drawback is obvious at this time, and for simplicity, I'll go with a single `setFixtureState` renderer request that contain the fixture state in full.
+
+---
+
+Q: How to send selected fixture (from URL params) to renderers on Playground load?
+
+Should _Router_ know about (and listen to) the `fixtureList` renderer response? Because we can't select a fixture until the renderer responds with the user's fixture list. Or should _RendererMessageHandler_ know about the `urlParams` state?
+
+Maybe a third, more elegant option will surface later. But for now the latter, because _RendererMessageHandler_ already listens to `fixtureList` responses.
+
+---
+
+Q: How can the Playground sync fixture state between multiple renderers?
+
+...and prevent infinite loops.
+
+There's currently a single `fixtureState` renderer response dispatched both on organic state changes as well as on state changes caused by `setFixtureState` requests.
+
+Initial (flawed) solution: The `fixtureState` response is also used to sync fixture states between renderers as follows. When a `fixtureState` response arrives from a renderer, a `setFixtureState` request (with the received state) is dispatched to all other renderers. But each of these requests then generate corresponding `fixtureState` responses which in turn creates an infinite loop.
+
+Working solution: Split `fixtureState` renderer response in two separate messages:
+
+1. A `fixtureStateSync` message in response to a `setFixtureState` request. It's meant to confirm the request and let the requester know the resulting state. Doesn't involve other renderers.
+2. A `fixtureStateChange` message in response to an organic state change inside a renderer. The remote client (the Playground) can broadcast the state change to all other renderers to keep them in sync.
+
+---
+
+Q: Can the fixture state be deterministic between renderers?
+
+The current limitation is that FixtureCapture instances get assigned auto-incremented unique IDs (ie. `FixtureDecoratorId`). The rest of `fixtureState` is already deterministic.
+
+Solution: Manually set ID to FixtureCapture elements instead of deriving it from the run-time instance. This requires an extra prop when using FixtureCapture by hand (eg. to capture props/state of elements inside render functions). But this is an edge case. The main usage of FixtureCapture is implicit: FixtureProvider wraps the entire fixture with an FixtureCapture element and it can give it a "root" ID that the user never sees.
+
+---
+
 Q: What's the different between a method and an event in the plugin API?
 
 - Calling a method that hasn't been registered fails. Emitting an event that nobody's listening to doesn't.

@@ -2,13 +2,13 @@
 
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { RENDERER_ID } from 'react-cosmos-shared2/renderer';
 import { PlaygroundContext } from '../../PlaygroundContext';
+import { getPrimaryRendererState } from '../RendererMessageHandler/selectors';
 import { PropsState } from './PropsState';
 
+import type { RendererId } from 'react-cosmos-shared2/renderer';
 import type { ComponentFixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { PlaygroundContextValue } from '../../index.js.flow';
-import type { RendererState } from '../RendererResponseHandler';
 import type { UrlParams } from '../Router';
 
 type Props = {};
@@ -21,7 +21,16 @@ export class ControlPanel extends Component<Props> {
 
   render() {
     const { getState } = this.context;
-    const { fixtureState }: RendererState = getState('renderer');
+    const renderersState = getState('renderers');
+    const { primaryRendererId, renderers } = renderersState;
+    const primaryRendererState = getPrimaryRendererState(renderersState);
+
+    if (!primaryRendererState) {
+      return null;
+    }
+
+    const rendererIds = Object.keys(renderers);
+    const { fixtureState } = primaryRendererState;
     const { fixturePath, fullScreen }: UrlParams = getState('urlParams');
 
     if (fullScreen || !fixturePath || !fixtureState) {
@@ -31,31 +40,46 @@ export class ControlPanel extends Component<Props> {
     return (
       <Container>
         <PropsState
-          fixturePath={fixturePath}
           fixtureState={fixtureState}
           setFixtureState={this.setFixtureState}
         />
+        {rendererIds.length > 1 && (
+          <div>
+            <p>Renderers ({rendererIds.length})</p>
+            <ul>
+              {rendererIds.map(rendererId => (
+                <li key={rendererId}>
+                  <small
+                    onClick={this.createRendererSelectHandler(rendererId)}
+                    style={{
+                      cursor: 'pointer',
+                      fontWeight:
+                        rendererId === primaryRendererId ? 'bold' : 'normal'
+                    }}
+                  >
+                    {rendererId}
+                  </small>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </Container>
     );
   }
 
-  setFixtureState = ({
-    fixturePath,
-    components
-  }: {
-    fixturePath: string,
-    components: ComponentFixtureState[]
-  }) => {
-    this.context.emitEvent('renderer.request', {
-      type: 'setFixtureState',
-      payload: {
-        rendererId: RENDERER_ID,
-        fixturePath,
-        fixtureStateChange: {
-          components
-        }
-      }
-    });
+  setFixtureState = (components: ComponentFixtureState[]) => {
+    this.context.callMethod('renderer.setFixtureState', fixtureState => ({
+      ...fixtureState,
+      components
+    }));
+  };
+
+  createRendererSelectHandler = (rendererId: RendererId) => () => {
+    this.context.setState('renderers', prevState => ({
+      ...prevState,
+      primaryRendererId: rendererId
+    }));
   };
 }
 

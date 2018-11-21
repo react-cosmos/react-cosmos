@@ -1,6 +1,6 @@
 // @flow
 
-import { uuid } from '../../shared/uuid';
+import { uuid } from 'react-cosmos-shared2/util';
 import { mockConnect as mockPostMessage } from '../testHelpers/postMessage';
 import { mockConnect as mockWebSockets } from '../testHelpers/webSockets';
 import { mount } from '../testHelpers/mount';
