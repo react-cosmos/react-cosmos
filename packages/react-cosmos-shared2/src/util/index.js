@@ -53,16 +53,6 @@ export function removeItem<T>(items: $ReadOnlyArray<T>, item: T): Array<T> {
 }
 
 export function updateState<T>(prevState: T, updater: StateUpdater<T>): T {
-  const fixtureChange =
-    typeof updater === 'function' ? updater(prevState) : updater;
-
-  return {
-    ...prevState,
-    ...fixtureChange
-  };
-}
-
-export function replaceState<T>(prevState: T, updater: StateUpdater<T>): T {
   return typeof updater === 'function' ? updater(prevState) : updater;
 }
 

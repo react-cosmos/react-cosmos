@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { removeItem, replaceState } from 'react-cosmos-shared2/util';
+import { removeItem, updateState } from 'react-cosmos-shared2/util';
 import { PlaygroundContext } from '../PlaygroundContext';
 import { getInitialState } from './getInitialState';
 
@@ -40,7 +40,7 @@ export class PlaygroundProvider extends Component<
       ({ pluginState }) => ({
         pluginState: {
           ...pluginState,
-          [pluginName]: replaceState(pluginState[pluginName], stateChange)
+          [pluginName]: updateState(pluginState[pluginName], stateChange)
         }
       }),
       cb

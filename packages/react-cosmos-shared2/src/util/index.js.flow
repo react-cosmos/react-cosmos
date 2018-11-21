@@ -36,11 +36,6 @@ declare export function updateState<T>(
   updater: StateUpdater<T>
 ): T;
 
-declare export function replaceState<T>(
-  prevState: T,
-  updater: StateUpdater<T>
-): T;
-
 declare export function replaceKeys(string, { [key: string]: string }): string;
 
 declare export function uuid(a?: string): string;
