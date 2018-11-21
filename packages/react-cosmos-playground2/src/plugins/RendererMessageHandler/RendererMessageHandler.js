@@ -187,7 +187,7 @@ export class RendererMessageHandler extends Component<{}> {
     const rendererState = this.getRendererState(rendererId);
 
     if (isEqual(fixtureState, rendererState.fixtureState)) {
-      console.warn(
+      console.info(
         '[RendererMessageHandler] fixtureStateChange response ignored ' +
           'because existing fixture state is identical'
       );
