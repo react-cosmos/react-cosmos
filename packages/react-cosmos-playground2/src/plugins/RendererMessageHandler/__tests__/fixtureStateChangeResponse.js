@@ -59,7 +59,7 @@ it('sets "fixtureState" renderer state', async () => {
   );
 });
 
-it('sets all "fixtureState" renderer states', async () => {
+it('sets primary and secondary "fixtureState" renderer states', async () => {
   const handleSetRenderersState = jest.fn();
   renderPlayground(
     <>
@@ -95,6 +95,52 @@ it('sets all "fixtureState" renderer states', async () => {
         renderers: {
           'foo-renderer': expect.objectContaining({
             fixtureState: mockFixtureState
+          }),
+          'bar-renderer': expect.objectContaining({
+            fixtureState: mockFixtureState
+          })
+        }
+      })
+    )
+  );
+});
+
+it('only sets secondary "fixtureState" renderer state', async () => {
+  const handleSetRenderersState = jest.fn();
+  renderPlayground(
+    <>
+      <OnPluginState stateKey="renderers" handler={handleSetRenderersState} />
+      <SetPluginState
+        stateKey="urlParams"
+        value={{ fixturePath: 'fixtures/zwei.js' }}
+      />
+      <SetPluginState
+        stateKey="renderers"
+        value={{
+          primaryRendererId: 'foo-renderer',
+          renderers: {
+            'foo-renderer': getRendererState({
+              fixtureState: null
+            }),
+            'bar-renderer': getRendererState({
+              fixtureState: null
+            })
+          }
+        }}
+      />
+      <EmitEvent
+        eventName="renderer.response"
+        args={[getFixtureStateChangeRequest('bar-renderer')]}
+      />
+    </>
+  );
+
+  await wait(() =>
+    expect(handleSetRenderersState).toBeCalledWith(
+      expect.objectContaining({
+        renderers: {
+          'foo-renderer': expect.objectContaining({
+            fixtureState: null
           }),
           'bar-renderer': expect.objectContaining({
             fixtureState: mockFixtureState
