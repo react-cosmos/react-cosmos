@@ -15,7 +15,7 @@ There's a clear need for a request message that sends the entire fixture state: 
 
 So is there still value in requesting partial fixture state changes? Payload size isn't an issue in a dev tool. What about concurrency? Even though fixture state change requests are sent in full, before a new fixture state is dispatched from Playground to renderers, fixture state changes are applied using updater functions of type `prevState => nextState`, which ensures that all state changes from Playground plugins are honored, regardless of timing.
 
-Given that no drawback is obvious at this time, and for simplicity, I'll go with a single `setFixtureState` renderer requests that contain the fixture state in full.
+Given that no drawback is obvious at this time, and for simplicity, I'll go with a single `setFixtureState` renderer request that contain the fixture state in full.
 
 ---
 
