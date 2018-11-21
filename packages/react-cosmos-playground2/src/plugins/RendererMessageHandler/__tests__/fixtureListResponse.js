@@ -77,7 +77,7 @@ it('creates multiple renderer states', async () => {
   );
 });
 
-it('creates renderer state with existing fixture state', async () => {
+it('creates renderer state with fixture state of primary renderer', async () => {
   const handleSetRenderersState = jest.fn();
   renderPlayground(
     <>

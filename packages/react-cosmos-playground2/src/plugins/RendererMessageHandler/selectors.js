@@ -1,15 +1,6 @@
 // @flow
 
-import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { RendererState, RenderersState } from './shared';
-
-export function getExistingFixtureState(
-  renderersState: RenderersState
-): null | FixtureState {
-  const primaryRendererState = getPrimaryRendererState(renderersState);
-
-  return primaryRendererState ? primaryRendererState.fixtureState : null;
-}
 
 export function getPrimaryRendererState({
   primaryRendererId,

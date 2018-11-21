@@ -46,7 +46,7 @@ it('posts "selectFixture" renderer request', async () => {
   );
 });
 
-it('posts "selectFixture" renderer request with existing fixture state', async () => {
+it('posts "selectFixture" renderer request with fixture state of primary renderer', async () => {
   const handleRendererRequest = jest.fn();
   renderPlayground(
     <>

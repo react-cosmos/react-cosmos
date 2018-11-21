@@ -4,7 +4,7 @@ import { Component } from 'react';
 import { isEqual, mapValues, forEach } from 'lodash';
 import { updateState } from 'react-cosmos-shared2/util';
 import { PlaygroundContext } from '../../PlaygroundContext';
-import { getExistingFixtureState } from './selectors';
+import { getPrimaryRendererState } from './selectors';
 
 import type { StateUpdater } from 'react-cosmos-shared2/util';
 import type {
@@ -153,7 +153,11 @@ export class RendererMessageHandler extends Component<{}> {
 
   handleFixtureListResponse({ payload }: FixtureListResponse) {
     const { rendererId, fixtures } = payload;
-    const fixtureState = getExistingFixtureState(this.getOwnState());
+
+    const primaryRendererState = getPrimaryRendererState(this.getOwnState());
+    const fixtureState = primaryRendererState
+      ? primaryRendererState.fixtureState
+      : null;
 
     const updater = ({ primaryRendererId, renderers, ...otherState }) => {
       const rendererState = renderers[rendererId] || DEFAULT_RENDERER_STATE;
