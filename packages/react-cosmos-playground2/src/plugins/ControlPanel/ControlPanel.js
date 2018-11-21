@@ -6,6 +6,7 @@ import { PlaygroundContext } from '../../PlaygroundContext';
 import { getPrimaryRendererState } from '../RendererMessageHandler/selectors';
 import { PropsState } from './PropsState';
 
+import type { RendererId } from 'react-cosmos-shared2/renderer';
 import type { ComponentFixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { PlaygroundContextValue } from '../../index.js.flow';
 import type { UrlParams } from '../Router';
@@ -49,7 +50,9 @@ export class ControlPanel extends Component<Props> {
               {rendererIds.map(rendererId => (
                 <li key={rendererId}>
                   <small
+                    onClick={this.createRendererSelectHandler(rendererId)}
                     style={{
+                      cursor: 'pointer',
                       fontWeight:
                         rendererId === primaryRendererId ? 'bold' : 'normal'
                     }}
@@ -69,6 +72,13 @@ export class ControlPanel extends Component<Props> {
     this.context.callMethod('renderer.setFixtureState', fixtureState => ({
       ...fixtureState,
       components
+    }));
+  };
+
+  createRendererSelectHandler = (rendererId: RendererId) => () => {
+    this.context.setState('renderers', prevState => ({
+      ...prevState,
+      primaryRendererId: rendererId
     }));
   };
 }
