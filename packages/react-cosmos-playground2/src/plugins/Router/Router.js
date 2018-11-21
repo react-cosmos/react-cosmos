@@ -27,7 +27,6 @@ export class Router extends Component<{}> {
   }
 
   unsubscribeFromUrlChanges = () => {};
-  unsubscribeFromRendererResponses = () => {};
   unregisterMethods = () => {};
 
   componentDidMount() {
@@ -42,7 +41,6 @@ export class Router extends Component<{}> {
 
   componentWillUnmount() {
     this.unsubscribeFromUrlChanges();
-    this.unsubscribeFromRendererResponses();
     this.unregisterMethods();
   }
 
