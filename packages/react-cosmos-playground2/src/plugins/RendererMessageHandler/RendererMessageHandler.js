@@ -206,13 +206,10 @@ export class RendererMessageHandler extends Component<{}> {
     const isPrimaryRenderer = rendererId === primaryRendererId;
 
     this.setRendererState(
-      (rendererState, curRendererId) => {
-        if (curRendererId === rendererId || isPrimaryRenderer) {
-          return { ...rendererState, fixtureState };
-        }
-
-        return rendererState;
-      },
+      (rendererState, curRendererId) =>
+        curRendererId === rendererId || isPrimaryRenderer
+          ? { ...rendererState, fixtureState }
+          : rendererState,
       () => {
         // Sync secondary renderers with changed primary renderer fixture state
         if (isPrimaryRenderer) {
