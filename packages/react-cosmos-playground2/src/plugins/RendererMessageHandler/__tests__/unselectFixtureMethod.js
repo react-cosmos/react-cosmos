@@ -55,7 +55,7 @@ it('resets fixture state for all renderers', async () => {
   );
 });
 
-it('posts "selectFixture" renderer requests', async () => {
+it('posts "unselectFixture" renderer requests', async () => {
   const handleRendererRequest = jest.fn();
   renderPlayground(
     <>

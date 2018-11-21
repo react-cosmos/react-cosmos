@@ -151,7 +151,7 @@ it('only sets secondary "fixtureState" renderer state', async () => {
   );
 });
 
-it('posts "setFixtureState" request to secondary renderers', async () => {
+it('posts "setFixtureState" request to secondary renderer', async () => {
   const handleRendererRequest = jest.fn();
   renderPlayground(
     <>
