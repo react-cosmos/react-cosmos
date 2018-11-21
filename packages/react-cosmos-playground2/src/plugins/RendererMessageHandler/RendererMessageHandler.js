@@ -6,7 +6,7 @@ import { updateState } from 'react-cosmos-shared2/util';
 import { PlaygroundContext } from '../../PlaygroundContext';
 import { getExistingFixtureState } from './selectors';
 
-import type { StateUpdater, SetState } from 'react-cosmos-shared2/util';
+import type { StateUpdater } from 'react-cosmos-shared2/util';
 import type {
   RendererId,
   RendererRequest,
@@ -14,7 +14,10 @@ import type {
   FixtureListResponse,
   FixtureStateChangeResponse
 } from 'react-cosmos-shared2/renderer';
-import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
+import type {
+  FixtureState,
+  SetFixtureState
+} from 'react-cosmos-shared2/fixtureState';
 import type { PlaygroundContextValue } from '../../index.js.flow';
 import type { UrlParams } from '../Router';
 import type { RendererState, RenderersState } from './shared';
@@ -112,7 +115,7 @@ export class RendererMessageHandler extends Component<{}> {
     });
   };
 
-  handleSetFixtureState: SetState<null | FixtureState> = (stateChange, cb) => {
+  handleSetFixtureState: SetFixtureState = (stateChange, cb) => {
     const { fixturePath }: UrlParams = this.context.getState('urlParams');
 
     if (!fixturePath) {

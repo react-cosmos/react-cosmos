@@ -1,5 +1,7 @@
 // @flow
 
+import type { SetState } from './util';
+
 // This type might be silly, but it should be stricter than `Object`
 export type KeyValue = { [string]: mixed };
 
@@ -28,6 +30,8 @@ export type FixtureState = {
   components: ComponentFixtureState[],
   [key: string]: mixed
 };
+
+export type SetFixtureState = SetState<null | FixtureState>;
 
 declare export var DEFAULT_RENDER_KEY: FixtureRenderKey;
 

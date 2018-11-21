@@ -1,10 +1,10 @@
 // @flow
 
 import type { Node, Element, ComponentType, Context } from 'react';
-import type { SetState } from 'react-cosmos-shared2/util';
 import type {
   FixtureDecoratorId,
-  FixtureState
+  FixtureState,
+  SetFixtureState
 } from 'react-cosmos-shared2/fixtureState';
 import type {
   OnRendererRequest,
@@ -37,7 +37,7 @@ export type WebSocketsProps = {
 
 export type FixtureContextValue = {
   fixtureState: null | FixtureState,
-  setFixtureState: SetState<null | FixtureState>
+  setFixtureState: SetFixtureState
 };
 
 export type FixtureCaptureProps = {

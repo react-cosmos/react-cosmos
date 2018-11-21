@@ -28,8 +28,10 @@ import {
 } from './attachChildRefs';
 import { replaceState } from './replaceState';
 
-import type { SetState } from 'react-cosmos-shared2/util';
-import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
+import type {
+  FixtureState,
+  SetFixtureState
+} from 'react-cosmos-shared2/fixtureState';
 import type { FixtureCaptureProps } from '../index.js.flow';
 import type { ComponentRef } from './shared';
 
@@ -51,7 +53,7 @@ export function FixtureCapture({ children, decoratorId }: FixtureCaptureProps) {
 
 type InnerProps = FixtureCaptureProps & {
   fixtureState: null | FixtureState,
-  setFixtureState: SetState<null | FixtureState>
+  setFixtureState: SetFixtureState
 };
 
 // How often to check the state of the loaded component and update the fixture
