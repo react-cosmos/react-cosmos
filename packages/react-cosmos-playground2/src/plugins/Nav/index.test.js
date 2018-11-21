@@ -113,8 +113,7 @@ it('does not render nav element in full screen mode', async () => {
     </>
   );
 
-  // Wait a bit to be sure the nav element doesn't appear after the next event
-  // loops
+  // Make sure the nav element doesn't appear after in next event loops
   await new Promise(res => setTimeout(res, 300));
 
   expect(queryByTestId('nav')).toBeNull();
