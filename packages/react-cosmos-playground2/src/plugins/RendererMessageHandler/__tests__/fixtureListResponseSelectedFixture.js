@@ -7,7 +7,11 @@ import { PlaygroundProvider } from '../../../PlaygroundProvider';
 import { EmitEvent } from '../../../testHelpers/EmitEvent';
 import { OnEvent } from '../../../testHelpers/OnEvent';
 import { SetPluginState } from '../../../testHelpers/SetPluginState';
-import { getFixtureListResponse, getRendererState } from '../testHelpers';
+import {
+  mockFixtureState,
+  getFixtureListResponse,
+  getRendererState
+} from '../testHelpers';
 
 // Plugins have side-effects: they register themselves
 import '..';
@@ -57,9 +61,7 @@ it('posts "selectFixture" renderer request with existing fixture state', async (
           primaryRendererId: 'foo-renderer',
           renderers: {
             'foo-renderer': getRendererState({
-              fixtureState: {
-                components: []
-              }
+              fixtureState: mockFixtureState
             })
           }
         }}
@@ -77,9 +79,7 @@ it('posts "selectFixture" renderer request with existing fixture state', async (
       payload: {
         rendererId: 'bar-renderer',
         fixturePath: 'fixtures/zwei.js',
-        fixtureState: {
-          components: []
-        }
+        fixtureState: mockFixtureState
       }
     })
   );

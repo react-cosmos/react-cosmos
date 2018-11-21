@@ -7,7 +7,11 @@ import { PlaygroundProvider } from '../../../PlaygroundProvider';
 import { EmitEvent } from '../../../testHelpers/EmitEvent';
 import { SetPluginState } from '../../../testHelpers/SetPluginState';
 import { OnPluginState } from '../../../testHelpers/OnPluginState';
-import { getFixtureListResponse, getRendererState } from '../testHelpers';
+import {
+  mockFixtureState,
+  getFixtureListResponse,
+  getRendererState
+} from '../testHelpers';
 
 // Plugins have side-effects: they register themselves
 import '..';
@@ -84,9 +88,7 @@ it('creates renderer state with existing fixture state', async () => {
           primaryRendererId: 'foo-renderer',
           renderers: {
             'foo-renderer': getRendererState({
-              fixtureState: {
-                components: []
-              }
+              fixtureState: mockFixtureState
             })
           }
         }}
@@ -103,9 +105,7 @@ it('creates renderer state with existing fixture state', async () => {
       expect.objectContaining({
         renderers: expect.objectContaining({
           'bar-renderer': expect.objectContaining({
-            fixtureState: {
-              components: []
-            }
+            fixtureState: mockFixtureState
           })
         })
       })

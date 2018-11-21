@@ -8,7 +8,11 @@ import { EmitEvent } from '../../../testHelpers/EmitEvent';
 import { OnEvent } from '../../../testHelpers/OnEvent';
 import { SetPluginState } from '../../../testHelpers/SetPluginState';
 import { OnPluginState } from '../../../testHelpers/OnPluginState';
-import { getRendererState, getFixtureStateChangeRequest } from '../testHelpers';
+import {
+  mockFixtureState,
+  getRendererState,
+  getFixtureStateChangeRequest
+} from '../testHelpers';
 
 // Plugins have side-effects: they register themselves
 import '..';
@@ -47,9 +51,7 @@ it('sets "fixtureState" renderer state', async () => {
       expect.objectContaining({
         renderers: {
           'foo-renderer': expect.objectContaining({
-            fixtureState: {
-              components: []
-            }
+            fixtureState: mockFixtureState
           })
         }
       })
@@ -92,14 +94,10 @@ it('sets all "fixtureState" renderer states', async () => {
       expect.objectContaining({
         renderers: {
           'foo-renderer': expect.objectContaining({
-            fixtureState: {
-              components: []
-            }
+            fixtureState: mockFixtureState
           }),
           'bar-renderer': expect.objectContaining({
-            fixtureState: {
-              components: []
-            }
+            fixtureState: mockFixtureState
           })
         }
       })
@@ -143,9 +141,7 @@ it('posts "setFixtureState" request to secondary renderers', async () => {
       payload: {
         rendererId: 'bar-renderer',
         fixturePath: 'fixtures/zwei.js',
-        fixtureState: {
-          components: []
-        }
+        fixtureState: mockFixtureState
       }
     })
   );

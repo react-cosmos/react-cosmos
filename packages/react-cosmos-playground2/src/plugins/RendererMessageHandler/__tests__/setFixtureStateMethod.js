@@ -8,7 +8,7 @@ import { OnEvent } from '../../../testHelpers/OnEvent';
 import { SetPluginState } from '../../../testHelpers/SetPluginState';
 import { OnPluginState } from '../../../testHelpers/OnPluginState';
 import { CallMethod } from '../../../testHelpers/CallMethod';
-import { fixtures } from '../testHelpers';
+import { mockFixtures, mockFixtureState } from '../testHelpers';
 
 // Plugins have side-effects: they register themselves
 import '..';
@@ -19,17 +19,15 @@ const renderersState = {
   primaryRendererId: 'foo-renderer',
   renderers: {
     'foo-renderer': {
-      fixtures,
+      fixtures: mockFixtures,
       fixtureState: null
     },
     'bar-renderer': {
-      fixtures,
+      fixtures: mockFixtures,
       fixtureState: null
     }
   }
 };
-
-const fixtureState = { components: [] };
 
 it('sets fixture state for all renderers', async () => {
   const handleSetRenderersState = jest.fn();
@@ -41,7 +39,10 @@ it('sets fixture state for all renderers', async () => {
         value={{ fixturePath: 'fixtures/zwei.js' }}
       />
       <SetPluginState stateKey="renderers" value={renderersState} />
-      <CallMethod methodName="renderer.setFixtureState" args={[fixtureState]} />
+      <CallMethod
+        methodName="renderer.setFixtureState"
+        args={[mockFixtureState]}
+      />
     </>
   );
 
@@ -50,10 +51,10 @@ it('sets fixture state for all renderers', async () => {
       expect.objectContaining({
         renderers: {
           'foo-renderer': expect.objectContaining({
-            fixtureState
+            fixtureState: mockFixtureState
           }),
           'bar-renderer': expect.objectContaining({
-            fixtureState
+            fixtureState: mockFixtureState
           })
         }
       })
@@ -71,7 +72,10 @@ it('posts "setFixtureState" renderer requests', async () => {
         value={{ fixturePath: 'fixtures/zwei.js' }}
       />
       <SetPluginState stateKey="renderers" value={renderersState} />
-      <CallMethod methodName="renderer.setFixtureState" args={[fixtureState]} />
+      <CallMethod
+        methodName="renderer.setFixtureState"
+        args={[mockFixtureState]}
+      />
     </>
   );
 
@@ -81,7 +85,7 @@ it('posts "setFixtureState" renderer requests', async () => {
       payload: {
         rendererId: 'foo-renderer',
         fixturePath: 'fixtures/zwei.js',
-        fixtureState
+        fixtureState: mockFixtureState
       }
     })
   );
@@ -92,7 +96,7 @@ it('posts "setFixtureState" renderer requests', async () => {
       payload: {
         rendererId: 'bar-renderer',
         fixturePath: 'fixtures/zwei.js',
-        fixtureState
+        fixtureState: mockFixtureState
       }
     })
   );

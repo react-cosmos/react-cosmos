@@ -3,18 +3,22 @@
 import type { RendererId } from 'react-cosmos-shared2/renderer';
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 
-export const fixtures = [
+export const mockFixtures = [
   'fixtures/ein.js',
   'fixtures/zwei.js',
   'fixtures/drei.js'
 ];
+
+export const mockFixtureState = {
+  components: []
+};
 
 export function getFixtureListResponse(rendererId: RendererId) {
   return {
     type: 'fixtureList',
     payload: {
       rendererId,
-      fixtures
+      fixtures: mockFixtures
     }
   };
 }
@@ -25,7 +29,7 @@ export function getRendererState({
   fixtureState: null | FixtureState
 }) {
   return {
-    fixtures,
+    fixtures: mockFixtures,
     fixtureState
   };
 }
@@ -36,9 +40,7 @@ export function getFixtureStateChangeRequest(rendererId: RendererId) {
     payload: {
       rendererId,
       fixturePath: 'fixtures/zwei.js',
-      fixtureState: {
-        components: []
-      }
+      fixtureState: mockFixtureState
     }
   };
 }

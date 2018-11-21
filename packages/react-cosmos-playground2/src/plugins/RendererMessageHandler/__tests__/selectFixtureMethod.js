@@ -8,25 +8,23 @@ import { OnEvent } from '../../../testHelpers/OnEvent';
 import { SetPluginState } from '../../../testHelpers/SetPluginState';
 import { OnPluginState } from '../../../testHelpers/OnPluginState';
 import { CallMethod } from '../../../testHelpers/CallMethod';
-import { fixtures } from '../testHelpers';
+import { mockFixtures, mockFixtureState } from '../testHelpers';
 
 // Plugins have side-effects: they register themselves
 import '..';
 
 afterEach(cleanup);
 
-const nonEmptyFixtureState = { components: [] };
-
 const renderersState = {
   primaryRendererId: 'foo-renderer',
   renderers: {
     'foo-renderer': {
-      fixtures,
-      fixtureState: nonEmptyFixtureState
+      fixtures: mockFixtures,
+      fixtureState: mockFixtureState
     },
     'bar-renderer': {
-      fixtures,
-      fixtureState: nonEmptyFixtureState
+      fixtures: mockFixtures,
+      fixtureState: mockFixtureState
     }
   }
 };
