@@ -29,3 +29,16 @@ export function getRendererState({
     fixtureState
   };
 }
+
+export function getFixtureStateChangeRequest(rendererId: RendererId) {
+  return {
+    type: 'fixtureStateChange',
+    payload: {
+      rendererId,
+      fixturePath: 'fixtures/zwei.js',
+      fixtureState: {
+        components: []
+      }
+    }
+  };
+}

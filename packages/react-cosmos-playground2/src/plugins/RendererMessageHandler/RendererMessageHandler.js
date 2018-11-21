@@ -211,10 +211,32 @@ export class RendererMessageHandler extends Component<{}> {
       return;
     }
 
-    this.setSingleRendererState(rendererId, rendererState => ({
-      ...rendererState,
-      fixtureState
-    }));
+    const { primaryRendererId } = this.getOwnState();
+    const isPrimaryRenderer = rendererId === primaryRendererId;
+
+    this.setRendererState(
+      (rendererState, curRendererId) => {
+        if (curRendererId === rendererId || isPrimaryRenderer) {
+          return { ...rendererState, fixtureState };
+        }
+
+        return rendererState;
+      },
+      () => {
+        // Sync secondary renderers with changed primary renderer fixture state
+        if (isPrimaryRenderer) {
+          this.forEachRenderer(curRendererId => {
+            if (curRendererId !== rendererId) {
+              this.postSetFixtureStateRequest(
+                curRendererId,
+                fixturePath,
+                fixtureState
+              );
+            }
+          });
+        }
+      }
+    );
   }
 
   forEachRenderer(
