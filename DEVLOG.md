@@ -1,3 +1,19 @@
+Q: How to turn PlaygroundOptions into plugin _meta data_?
+
+The Playground options are now part of the plugin API. But this should change for two reasons:
+
+1. The plugin API must be generic.
+2. Plugins either only care about some playground options, or care about none. At the moment all options need to be fed into the plugin context regardless of which plugins are loaded. This bloats the plugin testing setup.
+
+Q: What _is_ plugin config?
+
+- Immutable plugin options
+- Defined initially by plugin, with default values
+- App or test case can override with custom values
+- Config values should be defined declaratively (and thus not leak between plugin context instances)
+
+---
+
 Q: Does `fixtureStateSync` renderer response provide any value?
 
 Not anymore, since the `setFixtureState` renderer request now contains the full fixture state, which has already been computed by the Playground before dispatching it to the renderers (akin to an optimistic update). A confirmation sounds nice in theory, but it's problematic in two ways:

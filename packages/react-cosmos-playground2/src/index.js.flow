@@ -1,35 +1,6 @@
 // @flow
 
-import type { StateUpdater } from 'react-cosmos-shared2/util';
-
 export type PlaygroundOptions = {
   rendererPreviewUrl: ?string,
   enableRemoteRenderers: boolean
-};
-
-type PluginState = {
-  [pluginName: string]: any
-};
-
-export type Methods = { [methodName: string]: Function };
-
-// NOTE(vision): The playground context will be absorbed the plugin API. When
-// that happens we'll need to find a way to make PlaygroundOptions available
-// in the plugin context.
-export type PlaygroundContextValue = {
-  options: PlaygroundOptions,
-  pluginState: PluginState,
-  // State has to be typed manually after getting it
-  getState: (pluginName: string) => any,
-  setState: <T>(
-    pluginName: string,
-    stateChange: StateUpdater<T>,
-    cb?: () => mixed
-  ) => void,
-  // Returns unsubscribe function
-  registerMethods: Methods => () => void,
-  callMethod: (methodName: string, ...args: any) => any,
-  // Returns unsubscribe function
-  addEventListener: (eventName: string, listener: Function) => () => void,
-  emitEvent: (eventName: string, ...args: any) => void
 };

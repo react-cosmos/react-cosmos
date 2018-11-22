@@ -1,18 +1,18 @@
 // @flow
 
 import { Component } from 'react';
-import { PlaygroundContext } from '../PlaygroundContext';
+import { PluginContext } from '../plugin';
 
-import type { PlaygroundContextValue } from '../index.js.flow';
+import type { PluginContextValue } from '../plugin';
 
 export class CallMethod extends Component<{
   methodName: string,
   args?: any[]
 }> {
-  static contextType = PlaygroundContext;
+  static contextType = PluginContext;
 
   // https://github.com/facebook/flow/issues/7166
-  context: PlaygroundContextValue;
+  context: PluginContextValue;
 
   componentDidMount() {
     const { methodName, args = [] } = this.props;

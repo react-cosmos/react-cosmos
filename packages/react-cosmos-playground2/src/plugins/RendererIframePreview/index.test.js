@@ -4,7 +4,7 @@
 import React from 'react';
 import { wait, render, cleanup } from 'react-testing-library';
 import { Slot } from 'react-plugin';
-import { PlaygroundProvider } from '../../PlaygroundProvider';
+import { PluginProvider } from '../../plugin';
 import { EmitEvent } from '../../testHelpers/EmitEvent';
 import { OnEvent } from '../../testHelpers/OnEvent';
 import { mockIframeMessage } from '../../testHelpers/mockIframeMessage';
@@ -65,15 +65,10 @@ it('broadcasts renderer response message from iframe', async () => {
 
 function renderPlayground(otherNodes) {
   return render(
-    <PlaygroundProvider
-      options={{
-        rendererPreviewUrl: 'mockRendererUrl',
-        enableRemoteRenderers: false
-      }}
-    >
+    <PluginProvider config={{ rendererPreviewUrl: 'mockRendererUrl' }}>
       <Slot name="rendererPreview" />
       {otherNodes}
-    </PlaygroundProvider>
+    </PluginProvider>
   );
 }
 

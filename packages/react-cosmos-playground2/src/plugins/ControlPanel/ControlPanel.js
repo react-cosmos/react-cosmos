@@ -2,22 +2,22 @@
 
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { PlaygroundContext } from '../../PlaygroundContext';
+import { PluginContext } from '../../plugin';
 import { getPrimaryRendererState } from '../RendererMessageHandler/selectors';
 import { PropsState } from './PropsState';
 
 import type { RendererId } from 'react-cosmos-shared2/renderer';
 import type { ComponentFixtureState } from 'react-cosmos-shared2/fixtureState';
-import type { PlaygroundContextValue } from '../../index.js.flow';
+import type { PluginContextValue } from '../../plugin';
 import type { UrlParams } from '../Router';
 
 type Props = {};
 
 export class ControlPanel extends Component<Props> {
-  static contextType = PlaygroundContext;
+  static contextType = PluginContext;
 
   // https://github.com/facebook/flow/issues/7166
-  context: PlaygroundContextValue;
+  context: PluginContextValue;
 
   render() {
     const { getState } = this.context;

@@ -3,7 +3,7 @@
 import React from 'react';
 import { render, wait, cleanup } from 'react-testing-library';
 import { Slot } from 'react-plugin';
-import { PlaygroundProvider } from '../../PlaygroundProvider';
+import { PluginProvider } from '../../plugin';
 import { CallMethod } from '../../testHelpers/CallMethod';
 import { OnPluginState } from '../../testHelpers/OnPluginState';
 import { RegisterMethod } from '../../testHelpers/RegisterMethod';
@@ -114,14 +114,9 @@ describe('on "setUrlParams" method', () => {
 
 function renderPlayground(otherNodes) {
   return render(
-    <PlaygroundProvider
-      options={{
-        rendererPreviewUrl: 'mockRendererUrl',
-        enableRemoteRenderers: false
-      }}
-    >
+    <PluginProvider>
       <Slot name="global" />
       {otherNodes}
-    </PlaygroundProvider>
+    </PluginProvider>
   );
 }

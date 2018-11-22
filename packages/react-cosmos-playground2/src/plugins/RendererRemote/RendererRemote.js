@@ -3,17 +3,17 @@
 import { Component } from 'react';
 import io from 'socket.io-client';
 import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
-import { PlaygroundContext } from '../../PlaygroundContext';
+import { PluginContext } from '../../plugin';
 
 import type { Socket } from 'socket.io-client';
 import type { RendererRequest } from 'react-cosmos-shared2/renderer';
-import type { PlaygroundContextValue } from '../../index.js.flow';
+import type { PluginContextValue } from '../../plugin';
 
 export class RendererRemote extends Component<{}> {
-  static contextType = PlaygroundContext;
+  static contextType = PluginContext;
 
   // https://github.com/facebook/flow/issues/7166
-  context: PlaygroundContextValue;
+  context: PluginContextValue;
 
   socket: ?Socket;
 

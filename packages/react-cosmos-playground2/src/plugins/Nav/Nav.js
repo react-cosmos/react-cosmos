@@ -2,18 +2,18 @@
 
 import styled from 'styled-components';
 import React, { Component } from 'react';
-import { PlaygroundContext } from '../../PlaygroundContext';
+import { PluginContext } from '../../plugin';
 import { getPrimaryRendererState } from '../RendererMessageHandler/selectors';
 import { FixtureTree } from './FixtureTree';
 
-import type { PlaygroundContextValue } from '../../index.js.flow';
+import type { PluginContextValue } from '../../plugin';
 import type { UrlParams } from '../Router';
 
 export class Nav extends Component<{}> {
-  static contextType = PlaygroundContext;
+  static contextType = PluginContext;
 
   // https://github.com/facebook/flow/issues/7166
-  context: PlaygroundContextValue;
+  context: PluginContextValue;
 
   render() {
     const { getState } = this.context;

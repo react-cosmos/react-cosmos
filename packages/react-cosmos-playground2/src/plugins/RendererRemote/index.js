@@ -1,14 +1,16 @@
 // @flow
 
 import React from 'react';
-import { PlaygroundContext } from '../../PlaygroundContext';
+import { registerDefaultPluginConfig, PluginContext } from '../../plugin';
 import { registerGlobalPlugin } from '../../Playground/registerGlobalPlugin';
 import { RendererRemote } from './RendererRemote';
 
+registerDefaultPluginConfig('enableRemoteRenderers', false);
+
 registerGlobalPlugin('RendererRemote', () => (
-  <PlaygroundContext.Consumer>
-    {({ options: { enableRemoteRenderers } }) =>
-      enableRemoteRenderers ? <RendererRemote /> : null
+  <PluginContext.Consumer>
+    {({ getConfig }) =>
+      getConfig('enableRemoteRenderers') ? <RendererRemote /> : null
     }
-  </PlaygroundContext.Consumer>
+  </PluginContext.Consumer>
 ));

@@ -3,7 +3,7 @@
 import React from 'react';
 import { wait, render, cleanup } from 'react-testing-library';
 import { Slot } from 'react-plugin';
-import { PlaygroundProvider } from '../../../PlaygroundProvider';
+import { PluginProvider } from '../../../plugin';
 import { EmitEvent } from '../../../testHelpers/EmitEvent';
 import { OnEvent } from '../../../testHelpers/OnEvent';
 import { SetPluginState } from '../../../testHelpers/SetPluginState';
@@ -15,6 +15,7 @@ import {
 } from '../testHelpers';
 
 // Plugins have side-effects: they register themselves
+import '../../Router';
 import '..';
 
 afterEach(cleanup);
@@ -195,14 +196,9 @@ it('posts "setFixtureState" request to secondary renderer', async () => {
 
 function renderPlayground(otherNodes) {
   return render(
-    <PlaygroundProvider
-      options={{
-        rendererPreviewUrl: 'mockRendererUrl',
-        enableRemoteRenderers: false
-      }}
-    >
+    <PluginProvider>
       <Slot name="global" />
       {otherNodes}
-    </PlaygroundProvider>
+    </PluginProvider>
   );
 }

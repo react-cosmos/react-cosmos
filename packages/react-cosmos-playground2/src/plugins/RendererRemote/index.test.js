@@ -3,7 +3,7 @@
 import React from 'react';
 import { wait, render, cleanup } from 'react-testing-library';
 import { Slot } from 'react-plugin';
-import { PlaygroundProvider } from '../../PlaygroundProvider';
+import { PluginProvider } from '../../plugin';
 import { EmitEvent } from '../../testHelpers/EmitEvent';
 import { OnEvent } from '../../testHelpers/OnEvent';
 import { mockWebSockets } from '../../testHelpers/mockWebSockets';
@@ -69,14 +69,9 @@ it('posts "requestFixtureList" renderer request on mount', async () => {
 
 function renderPlayground(otherNodes) {
   return render(
-    <PlaygroundProvider
-      options={{
-        rendererPreviewUrl: null,
-        enableRemoteRenderers: true
-      }}
-    >
+    <PluginProvider config={{ enableRemoteRenderers: true }}>
       {otherNodes}
       <Slot name="global" />
-    </PlaygroundProvider>
+    </PluginProvider>
   );
 }
