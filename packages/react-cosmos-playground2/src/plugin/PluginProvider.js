@@ -11,7 +11,7 @@ import type { Node } from 'react';
 import type { StateUpdater } from 'react-cosmos-shared2/util';
 import type { Methods, PluginContextValue } from './shared';
 
-export type Props = {
+type Props = {
   children: Node,
   config: Object
 };
