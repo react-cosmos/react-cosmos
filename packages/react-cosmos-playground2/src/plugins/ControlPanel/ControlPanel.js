@@ -20,7 +20,7 @@ export class ControlPanel extends Component<Props> {
   context: PluginContextValue;
 
   render() {
-    const { getState } = this.context;
+    const { getConfig, getState } = this.context;
     const renderersState = getState('renderers');
     const { primaryRendererId, renderers } = renderersState;
     const primaryRendererState = getPrimaryRendererState(renderersState);
@@ -37,8 +37,19 @@ export class ControlPanel extends Component<Props> {
       return null;
     }
 
+    const rendererPreviewUrl = getConfig('rendererPreviewUrl');
+
     return (
       <Container>
+        {rendererPreviewUrl && (
+          <a
+            target="_blank"
+            href={rendererPreviewUrl}
+            rel="noopener noreferrer"
+          >
+            Open renderer in new window
+          </a>
+        )}
         <PropsState
           fixtureState={fixtureState}
           setFixtureState={this.setFixtureState}
