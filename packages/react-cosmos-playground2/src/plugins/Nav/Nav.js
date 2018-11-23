@@ -16,7 +16,7 @@ export class Nav extends Component<{}> {
   context: PluginContextValue;
 
   render() {
-    const { getState } = this.context;
+    const { getConfig, getState } = this.context;
     const rendererState = getPrimaryRendererState(getState('renderers'));
 
     if (!rendererState) {
@@ -38,7 +38,11 @@ export class Nav extends Component<{}> {
             <button onClick={this.handleGoFullScreen}>fullscreen</button>
           </Buttons>
         )}
-        <FixtureTree fixtures={fixtures} onSelect={this.handleFixtureSelect} />
+        <FixtureTree
+          fixturesDir={getConfig('fixturesDir')}
+          fixtures={fixtures}
+          onSelect={this.handleFixtureSelect}
+        />
       </Container>
     );
   }

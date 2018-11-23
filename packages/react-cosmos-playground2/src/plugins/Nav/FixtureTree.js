@@ -13,6 +13,7 @@ type TreeNode<T> = {
 };
 
 type Props = {
+  fixturesDir: string,
   fixtures: FixtureNames,
   onSelect: (path: string) => mixed
 };
