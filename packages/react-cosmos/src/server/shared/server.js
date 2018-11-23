@@ -7,6 +7,7 @@ import express from 'express';
 import launchEditor from 'react-dev-utils/launchEditor';
 import { getPlaygroundHtml, getPlaygroundHtmlNext } from './playground-html';
 import { setupHttpProxy } from './http-proxy';
+import { getPlaygroundOptions } from './config-next';
 
 import type { Config } from 'react-cosmos-flow/config';
 import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
@@ -26,11 +27,13 @@ export function createServerApp({
   }
 
   const playgroundHtml = next
-    ? getPlaygroundHtmlNext({
-        rendererPreviewUrl:
-          playgroundOpts.platform === 'web' ? playgroundOpts.loaderUri : null,
-        enableRemoteRenderers: true
-      })
+    ? getPlaygroundHtmlNext(
+        getPlaygroundOptions({
+          rendererPreviewUrl:
+            playgroundOpts.platform === 'web' ? playgroundOpts.loaderUri : null,
+          enableRemoteRenderers: true
+        })
+      )
     : getPlaygroundHtml(playgroundOpts);
   app.get('/', (req: express$Request, res: express$Response) => {
     res.send(playgroundHtml);

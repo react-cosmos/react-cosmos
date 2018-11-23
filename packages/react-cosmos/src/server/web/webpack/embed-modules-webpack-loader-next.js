@@ -4,12 +4,9 @@ import { relative } from 'path';
 import { getCosmosConfig } from 'react-cosmos-config';
 import { slash } from 'react-cosmos-shared/server';
 import { findUserModulePaths } from 'react-cosmos-shared2/server';
+import { FIXTURES_DIR } from '../../shared/config-next';
 
 import type { Config } from 'react-cosmos-flow/config';
-
-// TODO: Make fixturesDir configurable
-// See: https://github.com/react-cosmos/react-cosmos/issues/488
-const FIXTURES_DIR = '__jsxfixtures__';
 
 module.exports = async function embedModules(source: string) {
   const callback = this.async();

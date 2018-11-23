@@ -1,6 +1,7 @@
 // @flow
 
 export type PlaygroundOptions = {
-  rendererPreviewUrl: ?string,
+  fixturesDir: string,
+  rendererPreviewUrl: null | string,
   enableRemoteRenderers: boolean
 };
