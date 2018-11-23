@@ -12,7 +12,16 @@ module.exports = async function embedModules(source: string) {
   const callback = this.async();
 
   const cosmosConfig: Config = getCosmosConfig();
-  const { rootPath: rootDir } = cosmosConfig;
+  const { rootPath: rootDir, watchDirs } = cosmosConfig;
+
+  // This ensures this loader is invalidated whenever a new file is added to or
+  // removed from user's project, which in turn triggers react-cosmos-voyager2
+  // to detect fixture files and finally update fixture list inside Playground.
+  // Note that while this may not be very performant, it's not the equivalent
+  // of require.context, which not only watches for file changes but also
+  // automatically bundles new files that match the watcher's query.
+  // https://github.com/webpack/webpack/issues/222#issuecomment-40691546
+  watchDirs.forEach(watchDir => this.addContextDependency(watchDir));
 
   const fixturesDir = FIXTURES_DIR;
   const { fixturePaths, decoratorPaths } = await findUserModulePaths({
