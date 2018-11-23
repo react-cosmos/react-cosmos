@@ -14,7 +14,7 @@ register(
       render={() => (
         <PluginContext.Consumer>
           {({ getConfig }) => {
-            const rendererPreviewUrl: string = getConfig('rendererPreviewUrl');
+            const rendererPreviewUrl = getConfig('rendererPreviewUrl');
 
             return rendererPreviewUrl ? (
               <RendererIframePreview rendererPreviewUrl={rendererPreviewUrl} />
