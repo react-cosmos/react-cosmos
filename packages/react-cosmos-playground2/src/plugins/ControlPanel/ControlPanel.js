@@ -1,4 +1,5 @@
 // @flow
+/* eslint-env browser */
 
 import React, { Component } from 'react';
 import styled from 'styled-components';
@@ -42,13 +43,13 @@ export class ControlPanel extends Component<Props> {
     return (
       <Container>
         {rendererPreviewUrl && (
-          <a
-            target="_blank"
-            href={rendererPreviewUrl}
-            rel="noopener noreferrer"
+          <button
+            onClick={() => {
+              copyToClipboard(getFullUrl(rendererPreviewUrl));
+            }}
           >
-            Open renderer in new window
-          </a>
+            Copy rendererer URL
+          </button>
         )}
         <PropsState
           fixtureState={fixtureState}
@@ -100,3 +101,24 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+function getFullUrl(relativeUrl) {
+  return `${location.origin}${relativeUrl}`;
+}
+
+async function copyToClipboard(text) {
+  const { permissions, clipboard } = navigator;
+
+  const { state } = await permissions.query({ name: 'clipboard-write' });
+  if (state !== 'granted' && state !== 'prompt') {
+    // clipboard permission denied
+    return;
+  }
+
+  try {
+    await clipboard.writeText(text);
+    // clipboard successfully set
+  } catch (err) {
+    // clipboard write failed
+  }
+}

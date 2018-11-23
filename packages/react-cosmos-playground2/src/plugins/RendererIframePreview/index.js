@@ -5,6 +5,7 @@ import { register, Plugin, Plug } from 'react-plugin';
 import { registerDefaultPluginConfig, PluginContext } from '../../plugin';
 import { RendererIframePreview } from './RendererIframePreview';
 
+// FIXME: Is this config tied to this plugin? Maybe call it `webRendererUrl`?
 registerDefaultPluginConfig('rendererPreviewUrl', null);
 
 register(
