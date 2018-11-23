@@ -3,7 +3,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Slot } from 'react-plugin';
-import { PlaygroundProvider } from '../PlaygroundProvider';
+import { PluginProvider } from '../plugin';
 
 import type { PlaygroundOptions } from '../index.js.flow';
 
@@ -13,14 +13,14 @@ type Props = {
 
 export function Playground({ options }: Props) {
   return (
-    <PlaygroundProvider options={options}>
+    <PluginProvider config={options}>
       <Slot name="global" />
       <Container>
         <Slot name="left" />
         <Slot name="rendererPreview" />
         <Slot name="right" />
       </Container>
-    </PlaygroundProvider>
+    </PluginProvider>
   );
 }
 

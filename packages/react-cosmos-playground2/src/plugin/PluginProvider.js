@@ -1,29 +1,32 @@
 // @flow
 
 import React, { Component } from 'react';
+import { get } from 'lodash';
 import { removeItem, updateState } from 'react-cosmos-shared2/util';
-import { PlaygroundContext } from '../PlaygroundContext';
-import { getInitialState } from './getInitialState';
+import { PluginContext } from './PluginContext';
+import { getPluginConfig } from './config';
+import { getInitialPluginState } from './state';
 
 import type { Node } from 'react';
 import type { StateUpdater } from 'react-cosmos-shared2/util';
-import type {
-  PlaygroundOptions,
-  Methods,
-  PlaygroundContextValue
-} from '../index.js.flow';
+import type { Methods, PluginContextValue } from './shared';
 
 type Props = {
   children: Node,
-  options: PlaygroundOptions
+  config: Object
 };
 
-export class PlaygroundProvider extends Component<
-  Props,
-  PlaygroundContextValue
-> {
-  getPluginState = (pluginName: string) => {
-    return this.state.pluginState[pluginName];
+export class PluginProvider extends Component<Props, PluginContextValue> {
+  static defaultProps = {
+    config: {}
+  };
+
+  getPluginConfig = (configPath: string) => {
+    return get(this.state.pluginConfig, configPath);
+  };
+
+  getPluginState = (stateKey: string) => {
+    return this.state.pluginState[stateKey];
   };
 
   setPluginState = <T>(
@@ -115,8 +118,9 @@ export class PlaygroundProvider extends Component<
   };
 
   state = {
-    options: this.props.options,
-    pluginState: getInitialState(),
+    pluginConfig: getPluginConfig(this.props.config),
+    getConfig: this.getPluginConfig,
+    pluginState: getInitialPluginState(),
     getState: this.getPluginState,
     setState: this.setPluginState,
     registerMethods: this.registerMethods,
@@ -129,9 +133,9 @@ export class PlaygroundProvider extends Component<
     const { children } = this.props;
 
     return (
-      <PlaygroundContext.Provider value={this.state}>
+      <PluginContext.Provider value={this.state}>
         {children}
-      </PlaygroundContext.Provider>
+      </PluginContext.Provider>
     );
   }
 }

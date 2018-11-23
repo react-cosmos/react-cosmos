@@ -2,16 +2,14 @@
 
 import { createContext } from 'react';
 
-import type { PlaygroundContextValue } from '../index.js.flow';
+import type { PluginContextValue } from './shared';
 
 const noopFn = () => {};
 const noopSubFn = () => () => {};
 
-export const PlaygroundContext = createContext<PlaygroundContextValue>({
-  options: {
-    rendererPreviewUrl: null,
-    enableRemoteRenderers: false
-  },
+export const PluginContext = createContext<PluginContextValue>({
+  pluginConfig: {},
+  getConfig: noopFn,
   pluginState: {},
   getState: noopFn,
   setState: noopFn,

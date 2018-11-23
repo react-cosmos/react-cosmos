@@ -2,17 +2,17 @@
 
 import { Component } from 'react';
 import { isEqual } from 'lodash';
-import { PlaygroundContext } from '../../PlaygroundContext';
+import { PluginContext } from '../../plugin';
 import { pushUrlParamsToHistory, subscribeToLocationChanges } from './window';
 
-import type { PlaygroundContextValue } from '../../index.js.flow';
+import type { PluginContextValue } from '../../plugin';
 import type { UrlParams } from './shared';
 
 export class Router extends Component<{}> {
-  static contextType = PlaygroundContext;
+  static contextType = PluginContext;
 
   // https://github.com/facebook/flow/issues/7166
-  context: PlaygroundContextValue;
+  context: PluginContextValue;
 
   render() {
     return null;

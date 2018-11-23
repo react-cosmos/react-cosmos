@@ -3,20 +3,20 @@
 
 import styled from 'styled-components';
 import React, { Component } from 'react';
-import { PlaygroundContext } from '../../PlaygroundContext';
+import { PluginContext } from '../../plugin';
 
 import type { RendererRequest } from 'react-cosmos-shared2/renderer';
-import type { PlaygroundContextValue } from '../../index.js.flow';
+import type { PluginContextValue } from '../../plugin';
 
 type Props = {
   rendererPreviewUrl: string
 };
 
 export class RendererIframePreview extends Component<Props> {
-  static contextType = PlaygroundContext;
+  static contextType = PluginContext;
 
   // https://github.com/facebook/flow/issues/7166
-  context: PlaygroundContextValue;
+  context: PluginContextValue;
 
   iframeRef: ?window;
 

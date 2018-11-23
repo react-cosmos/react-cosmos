@@ -3,7 +3,7 @@
 import { Component } from 'react';
 import { isEqual, mapValues, forEach } from 'lodash';
 import { updateState } from 'react-cosmos-shared2/util';
-import { PlaygroundContext } from '../../PlaygroundContext';
+import { PluginContext } from '../../plugin';
 import { getPrimaryRendererState } from './selectors';
 
 import type { StateUpdater } from 'react-cosmos-shared2/util';
@@ -18,7 +18,7 @@ import type {
   FixtureState,
   SetFixtureState
 } from 'react-cosmos-shared2/fixtureState';
-import type { PlaygroundContextValue } from '../../index.js.flow';
+import type { PluginContextValue } from '../../plugin';
 import type { UrlParams } from '../Router';
 import type { RendererState, RenderersState } from './shared';
 
@@ -27,10 +27,10 @@ const DEFAULT_RENDERER_STATE = {
 };
 
 export class RendererMessageHandler extends Component<{}> {
-  static contextType = PlaygroundContext;
+  static contextType = PluginContext;
 
   // https://github.com/facebook/flow/issues/7166
-  context: PlaygroundContextValue;
+  context: PluginContextValue;
 
   render() {
     return null;

@@ -10,11 +10,14 @@ import {
   fireEvent
 } from 'react-testing-library';
 import { Slot } from 'react-plugin';
-import { PlaygroundProvider } from '../../PlaygroundProvider';
+import { PluginProvider } from '../../plugin';
 import { RegisterMethod } from '../../testHelpers/RegisterMethod';
 import { SetPluginState } from '../../testHelpers/SetPluginState';
 
 // Plugins have side-effects: they register themselves
+// "renderers" and "urlParams" state is required for Nav plugin to work
+import '../RendererMessageHandler';
+import '../Router';
 import '.';
 
 afterEach(cleanup);
@@ -121,14 +124,9 @@ it('does not render nav element in full screen mode', async () => {
 
 function renderPlayground(otherNodes) {
   return render(
-    <PlaygroundProvider
-      options={{
-        rendererPreviewUrl: 'mockRendererUrl',
-        enableRemoteRenderers: false
-      }}
-    >
+    <PluginProvider>
       <Slot name="left" />
       {otherNodes}
-    </PlaygroundProvider>
+    </PluginProvider>
   );
 }
