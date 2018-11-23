@@ -100,6 +100,8 @@ async function buildNodePackage(pkgName) {
 }
 
 async function buildBrowserPackage(pkgName) {
+  await copyFlowDefs(pkgName);
+
   return runBuildTask({
     pkgName,
     cmd: 'webpack',
