@@ -36,6 +36,32 @@ function tests(mockConnect) {
 
   it('posts fixture list again on request', async () => {
     await mockConnect(async ({ getElement, untilMessage, postMessage }) => {
+      await mount(getElement({ rendererId, fixtures }), async () => {
+        await untilMessage({
+          type: 'fixtureList',
+          payload: {
+            rendererId,
+            fixtures: ['first', 'second']
+          }
+        });
+
+        await postMessage({
+          type: 'requestFixtureList'
+        });
+
+        await untilMessage({
+          type: 'fixtureList',
+          payload: {
+            rendererId,
+            fixtures: ['first', 'second']
+          }
+        });
+      });
+    });
+  });
+
+  it('posts fixture list again on "fixtures" prop change', async () => {
+    await mockConnect(async ({ getElement, untilMessage }) => {
       await mount(getElement({ rendererId, fixtures }), async renderer => {
         await untilMessage({
           type: 'fixtureList',
@@ -54,10 +80,6 @@ function tests(mockConnect) {
             }
           })
         );
-
-        await postMessage({
-          type: 'requestFixtureList'
-        });
 
         await untilMessage({
           type: 'fixtureList',
