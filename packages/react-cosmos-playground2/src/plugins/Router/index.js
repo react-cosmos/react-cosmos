@@ -5,8 +5,14 @@ import { registerGlobalPlugin } from '../../Playground/registerGlobalPlugin';
 import { Router } from './Router';
 import { getUrlParamsFromLocation } from './window';
 
-export type { UrlParams } from './shared';
+import type { RouterState } from './shared';
+export type { UrlParams, RouterState } from './shared';
 
-registerInitialPluginState('urlParams', getUrlParamsFromLocation);
+registerInitialPluginState(
+  'router',
+  (): RouterState => ({
+    urlParams: getUrlParamsFromLocation
+  })
+);
 
 registerGlobalPlugin('router', Router);

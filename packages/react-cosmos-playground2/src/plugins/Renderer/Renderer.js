@@ -40,8 +40,12 @@ export class Renderer extends Component<{}> {
     return this.context.getState('renderer');
   }
 
-  setOwnState(state: StateUpdater<RendererState>, cb?: Function) {
-    this.context.setState('renderer', state, cb);
+  setOwnState(stateChange: StateUpdater<RendererState>, cb?: Function) {
+    this.context.setState('renderer', stateChange, cb);
+  }
+
+  getUrlParams(): UrlParams {
+    return this.context.getState('router').urlParams;
   }
 
   getRendererItemState(rendererId: RendererId) {
@@ -116,7 +120,7 @@ export class Renderer extends Component<{}> {
   };
 
   handleSetFixtureState: SetFixtureState = (stateChange, cb) => {
-    const { fixturePath }: UrlParams = this.context.getState('urlParams');
+    const { fixturePath } = this.getUrlParams();
 
     if (!fixturePath) {
       console.warn(
@@ -177,7 +181,7 @@ export class Renderer extends Component<{}> {
     };
 
     this.setOwnState(updater, () => {
-      const { fixturePath }: UrlParams = this.context.getState('urlParams');
+      const { fixturePath } = this.getUrlParams();
 
       if (fixturePath) {
         this.postSelectFixtureRequest(rendererId, fixturePath, fixtureState);
@@ -187,7 +191,7 @@ export class Renderer extends Component<{}> {
 
   handleFixtureStateChangeResponse({ payload }: FixtureStateChangeResponse) {
     const { rendererId, fixturePath, fixtureState } = payload;
-    const urlParams: UrlParams = this.context.getState('urlParams');
+    const urlParams = this.getUrlParams();
     const rendererItemState = this.getRendererItemState(rendererId);
 
     if (isEqual(fixtureState, rendererItemState.fixtureState)) {

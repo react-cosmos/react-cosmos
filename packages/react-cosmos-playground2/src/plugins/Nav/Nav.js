@@ -16,6 +16,10 @@ export class Nav extends Component<{}> {
   // https://github.com/facebook/flow/issues/7166
   context: PluginContextValue;
 
+  getUrlParams(): UrlParams {
+    return this.context.getState('router').urlParams;
+  }
+
   render() {
     const { getConfig, getState } = this.context;
     const primaryRendererState = getPrimaryRendererState(getState('renderer'));
@@ -25,7 +29,7 @@ export class Nav extends Component<{}> {
     }
 
     const { fixtures } = primaryRendererState;
-    const { fixturePath, fullScreen }: UrlParams = getState('urlParams');
+    const { fixturePath, fullScreen } = this.getUrlParams();
 
     if (fullScreen) {
       return null;
@@ -59,8 +63,8 @@ export class Nav extends Component<{}> {
   };
 
   handleGoFullScreen = () => {
-    const { getState, callMethod } = this.context;
-    const { fixturePath }: UrlParams = getState('urlParams');
+    const { callMethod } = this.context;
+    const { fixturePath } = this.getUrlParams();
 
     callMethod('router.setUrlParams', {
       fixturePath,

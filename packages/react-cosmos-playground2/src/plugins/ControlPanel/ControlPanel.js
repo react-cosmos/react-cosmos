@@ -20,6 +20,10 @@ export class ControlPanel extends Component<Props> {
   // https://github.com/facebook/flow/issues/7166
   context: PluginContextValue;
 
+  getUrlParams(): UrlParams {
+    return this.context.getState('router').urlParams;
+  }
+
   render() {
     const { getConfig, getState } = this.context;
     const rendererState = getState('renderer');
@@ -32,7 +36,7 @@ export class ControlPanel extends Component<Props> {
 
     const rendererIds = Object.keys(renderers);
     const { fixtureState } = primaryRendererState;
-    const { fixturePath, fullScreen }: UrlParams = getState('urlParams');
+    const { fixturePath, fullScreen } = this.getUrlParams();
 
     if (fullScreen || !fixturePath || !fixtureState) {
       return null;

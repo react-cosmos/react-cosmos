@@ -5,8 +5,9 @@ import { isEqual } from 'lodash';
 import { PluginContext } from '../../plugin';
 import { pushUrlParamsToHistory, subscribeToLocationChanges } from './window';
 
+import type { StateUpdater } from 'react-cosmos-shared2/util';
 import type { PluginContextValue } from '../../plugin';
-import type { UrlParams } from './shared';
+import type { UrlParams, RouterState } from './shared';
 
 export class Router extends Component<{}> {
   static contextType = PluginContext;
@@ -18,12 +19,20 @@ export class Router extends Component<{}> {
     return null;
   }
 
-  getOwnState(): UrlParams {
-    return this.context.getState('urlParams');
+  getOwnState(): RouterState {
+    return this.context.getState('router');
   }
 
-  setOwnState(state: UrlParams, cb?: Function) {
-    this.context.setState('urlParams', state, cb);
+  setOwnState(stateChange: StateUpdater<RouterState>, cb?: Function) {
+    this.context.setState('router', stateChange, cb);
+  }
+
+  getUrlParams(): UrlParams {
+    return this.getUrlParams();
+  }
+
+  setUrlParams(urlParams: UrlParams, cb?: Function) {
+    this.setOwnState(prevState => ({ ...prevState, urlParams }), cb);
   }
 
   unsubscribeFromUrlChanges = () => {};
@@ -45,10 +54,10 @@ export class Router extends Component<{}> {
   }
 
   handleLocationChange = (urlParams: UrlParams) => {
-    const { fixturePath } = this.getOwnState();
+    const { fixturePath } = this.getUrlParams();
     const hasFixtureChanged = urlParams.fixturePath !== fixturePath;
 
-    this.setOwnState(urlParams, () => {
+    this.setUrlParams(urlParams, () => {
       if (hasFixtureChanged) {
         this.selectCurrentFixture();
       }
@@ -56,25 +65,25 @@ export class Router extends Component<{}> {
   };
 
   handleSetUrlParams = (nextUrlParams: UrlParams) => {
-    const urlParams = this.getOwnState();
+    const urlParams = this.getUrlParams();
     const hasFixtureChanged =
       nextUrlParams.fixturePath !== urlParams.fixturePath;
     const areUrlParamsEqual = isEqual(nextUrlParams, urlParams);
 
-    this.setOwnState(nextUrlParams, () => {
+    this.setUrlParams(nextUrlParams, () => {
       // Setting identical url params is considered a "reset" request
       if (hasFixtureChanged || areUrlParamsEqual) {
         this.selectCurrentFixture();
       }
 
       if (!areUrlParamsEqual) {
-        pushUrlParamsToHistory(this.getOwnState());
+        pushUrlParamsToHistory(this.getUrlParams());
       }
     });
   };
 
   selectCurrentFixture() {
-    const { fixturePath } = this.getOwnState();
+    const { fixturePath } = this.getUrlParams();
 
     if (!fixturePath) {
       return this.context.callMethod('renderer.unselectFixture');
