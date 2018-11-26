@@ -17,7 +17,7 @@ import '..';
 
 afterEach(cleanup);
 
-const renderersState = {
+const rendererState = {
   primaryRendererId: 'foo-renderer',
   renderers: {
     'foo-renderer': {
@@ -36,7 +36,7 @@ it('resets fixture state for all renderers', async () => {
   renderPlayground(
     <>
       <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
-      <SetPluginState pluginName="renderer" value={renderersState} />
+      <SetPluginState pluginName="renderer" value={rendererState} />
       <CallMethod methodName="renderer.unselectFixture" />
     </>
   );
@@ -62,7 +62,7 @@ it('posts "unselectFixture" renderer requests', async () => {
   renderPlayground(
     <>
       <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
-      <SetPluginState pluginName="renderer" value={renderersState} />
+      <SetPluginState pluginName="renderer" value={rendererState} />
       <CallMethod
         methodName="renderer.unselectFixture"
         args={['fixtures/zwei.js']}

@@ -17,7 +17,7 @@ import '..';
 
 afterEach(cleanup);
 
-const renderersState = {
+const rendererState = {
   primaryRendererId: 'foo-renderer',
   renderers: {
     'foo-renderer': {
@@ -40,7 +40,7 @@ it('sets fixture state for all renderers', async () => {
         pluginName="router"
         value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
       />
-      <SetPluginState pluginName="renderer" value={renderersState} />
+      <SetPluginState pluginName="renderer" value={rendererState} />
       <CallMethod
         methodName="renderer.setFixtureState"
         args={[mockFixtureState]}
@@ -73,7 +73,7 @@ it('posts "setFixtureState" renderer requests', async () => {
         pluginName="router"
         value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
       />
-      <SetPluginState pluginName="renderer" value={renderersState} />
+      <SetPluginState pluginName="renderer" value={rendererState} />
       <CallMethod
         methodName="renderer.setFixtureState"
         args={[mockFixtureState]}

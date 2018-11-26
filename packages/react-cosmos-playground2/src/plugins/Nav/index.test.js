@@ -22,7 +22,7 @@ import '.';
 
 afterEach(cleanup);
 
-const mockRenderersState = {
+const mockRendererState = {
   primaryRendererId: 'foo-renderer',
   renderers: {
     'foo-renderer': {
@@ -34,7 +34,7 @@ const mockRenderersState = {
 
 it('renders fixture list from renderer state', async () => {
   const { getByText } = renderPlayground(
-    <SetPluginState pluginName="renderer" value={mockRenderersState} />
+    <SetPluginState pluginName="renderer" value={mockRendererState} />
   );
 
   await waitForElement(() => getByText(/ein/i));
@@ -46,7 +46,7 @@ it('sets "fixturePath" router param on fixture click', async () => {
   const setUrlParams = jest.fn();
   const { getByText } = renderPlayground(
     <>
-      <SetPluginState pluginName="renderer" value={mockRenderersState} />
+      <SetPluginState pluginName="renderer" value={mockRendererState} />
       <RegisterMethod methodName="router.setUrlParams" handler={setUrlParams} />
     </>
   );
@@ -62,7 +62,7 @@ it('clears router params on home button click', async () => {
   const setUrlParams = jest.fn();
   const { getByText } = renderPlayground(
     <>
-      <SetPluginState pluginName="renderer" value={mockRenderersState} />
+      <SetPluginState pluginName="renderer" value={mockRendererState} />
       <SetPluginState
         pluginName="router"
         value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
@@ -80,7 +80,7 @@ it('sets "fullScreen" router param on fullscreen button click', () => {
   const setUrlParams = jest.fn();
   const { getByText } = renderPlayground(
     <>
-      <SetPluginState pluginName="renderer" value={mockRenderersState} />
+      <SetPluginState pluginName="renderer" value={mockRendererState} />
       <SetPluginState
         pluginName="router"
         value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
@@ -101,7 +101,7 @@ it('sets "fullScreen" router param on fullscreen button click', () => {
 // conditions, and thus the validity of the "full screen" test
 it('renders nav element', async () => {
   const { queryByTestId } = renderPlayground(
-    <SetPluginState pluginName="renderer" value={mockRenderersState} />
+    <SetPluginState pluginName="renderer" value={mockRendererState} />
   );
 
   await wait(() => expect(queryByTestId('nav')).toBeTruthy());
@@ -110,7 +110,7 @@ it('renders nav element', async () => {
 it('does not render nav element in full screen mode', async () => {
   const { queryByTestId } = renderPlayground(
     <>
-      <SetPluginState pluginName="renderer" value={mockRenderersState} />
+      <SetPluginState pluginName="renderer" value={mockRendererState} />
       <SetPluginState
         pluginName="router"
         value={{
