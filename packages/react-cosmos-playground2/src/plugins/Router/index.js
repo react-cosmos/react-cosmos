@@ -11,7 +11,7 @@ export type { UrlParams, RouterState } from './shared';
 registerInitialPluginState(
   'router',
   (): RouterState => ({
-    urlParams: getUrlParamsFromLocation
+    urlParams: getUrlParamsFromLocation()
   })
 );
 

@@ -11,7 +11,7 @@ import { CallMethod } from '../../../testHelpers/CallMethod';
 import { mockFixtures, mockFixtureState } from '../testHelpers';
 
 // Plugins have side-effects: they register themselves
-// "urlParams" state is required for Renderer plugin to work
+// "router" state is required for Renderer plugin to work
 import '../../Router';
 import '..';
 
@@ -32,15 +32,15 @@ const renderersState = {
 };
 
 it('sets fixture state for all renderers', async () => {
-  const handleSetRenderersState = jest.fn();
+  const handleSetRendererState = jest.fn();
   renderPlayground(
     <>
-      <OnPluginState stateKey="renderers" handler={handleSetRenderersState} />
+      <OnPluginState stateKey="renderer" handler={handleSetRendererState} />
       <SetPluginState
-        stateKey="urlParams"
-        value={{ fixturePath: 'fixtures/zwei.js' }}
+        stateKey="router"
+        value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
       />
-      <SetPluginState stateKey="renderers" value={renderersState} />
+      <SetPluginState stateKey="renderer" value={renderersState} />
       <CallMethod
         methodName="renderer.setFixtureState"
         args={[mockFixtureState]}
@@ -49,7 +49,7 @@ it('sets fixture state for all renderers', async () => {
   );
 
   await wait(() =>
-    expect(handleSetRenderersState).toBeCalledWith(
+    expect(handleSetRendererState).toBeCalledWith(
       expect.objectContaining({
         renderers: {
           'foo-renderer': expect.objectContaining({
@@ -70,10 +70,10 @@ it('posts "setFixtureState" renderer requests', async () => {
     <>
       <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
       <SetPluginState
-        stateKey="urlParams"
-        value={{ fixturePath: 'fixtures/zwei.js' }}
+        stateKey="router"
+        value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
       />
-      <SetPluginState stateKey="renderers" value={renderersState} />
+      <SetPluginState stateKey="renderer" value={renderersState} />
       <CallMethod
         methodName="renderer.setFixtureState"
         args={[mockFixtureState]}

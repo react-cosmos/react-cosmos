@@ -28,7 +28,7 @@ export class Router extends Component<{}> {
   }
 
   getUrlParams(): UrlParams {
-    return this.getUrlParams();
+    return this.getOwnState().urlParams;
   }
 
   setUrlParams(urlParams: UrlParams, cb?: Function) {

@@ -11,7 +11,7 @@ import { CallMethod } from '../../../testHelpers/CallMethod';
 import { mockFixtures, mockFixtureState } from '../testHelpers';
 
 // Plugins have side-effects: they register themselves
-// "urlParams" state is required for Renderer plugin to work
+// "router" state is required for Renderer plugin to work
 import '../../Router';
 import '..';
 
@@ -32,17 +32,17 @@ const renderersState = {
 };
 
 it('resets fixture state for all renderers', async () => {
-  const handleSetRenderersState = jest.fn();
+  const handleSetRendererState = jest.fn();
   renderPlayground(
     <>
-      <OnPluginState stateKey="renderers" handler={handleSetRenderersState} />
-      <SetPluginState stateKey="renderers" value={renderersState} />
+      <OnPluginState stateKey="renderer" handler={handleSetRendererState} />
+      <SetPluginState stateKey="renderer" value={renderersState} />
       <CallMethod methodName="renderer.unselectFixture" />
     </>
   );
 
   await wait(() =>
-    expect(handleSetRenderersState).toBeCalledWith(
+    expect(handleSetRendererState).toBeCalledWith(
       expect.objectContaining({
         renderers: {
           'foo-renderer': expect.objectContaining({
@@ -62,7 +62,7 @@ it('posts "unselectFixture" renderer requests', async () => {
   renderPlayground(
     <>
       <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
-      <SetPluginState stateKey="renderers" value={renderersState} />
+      <SetPluginState stateKey="renderer" value={renderersState} />
       <CallMethod
         methodName="renderer.unselectFixture"
         args={['fixtures/zwei.js']}

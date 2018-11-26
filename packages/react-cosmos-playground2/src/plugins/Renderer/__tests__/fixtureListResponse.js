@@ -14,17 +14,17 @@ import {
 } from '../testHelpers';
 
 // Plugins have side-effects: they register themselves
-// "urlParams" state is required for Renderer plugin to work
+// "router" state is required for Renderer plugin to work
 import '../../Router';
 import '..';
 
 afterEach(cleanup);
 
 it('creates renderer state', async () => {
-  const handleSetRenderersState = jest.fn();
+  const handleSetRendererState = jest.fn();
   renderPlayground(
     <>
-      <OnPluginState stateKey="renderers" handler={handleSetRenderersState} />
+      <OnPluginState stateKey="renderer" handler={handleSetRendererState} />
       <EmitEvent
         eventName="renderer.response"
         args={[getFixtureListResponse('foo-renderer')]}
@@ -33,7 +33,7 @@ it('creates renderer state', async () => {
   );
 
   await wait(() =>
-    expect(handleSetRenderersState).toBeCalledWith(
+    expect(handleSetRendererState).toBeCalledWith(
       expect.objectContaining({
         primaryRendererId: 'foo-renderer',
         renderers: {
@@ -47,10 +47,10 @@ it('creates renderer state', async () => {
 });
 
 it('creates multiple renderer states', async () => {
-  const handleSetRenderersState = jest.fn();
+  const handleSetRendererState = jest.fn();
   renderPlayground(
     <>
-      <OnPluginState stateKey="renderers" handler={handleSetRenderersState} />
+      <OnPluginState stateKey="renderer" handler={handleSetRendererState} />
       <EmitEvent
         eventName="renderer.response"
         args={[getFixtureListResponse('foo-renderer')]}
@@ -63,7 +63,7 @@ it('creates multiple renderer states', async () => {
   );
 
   await wait(() =>
-    expect(handleSetRenderersState).toBeCalledWith(
+    expect(handleSetRendererState).toBeCalledWith(
       expect.objectContaining({
         primaryRendererId: 'foo-renderer',
         renderers: {
@@ -80,12 +80,12 @@ it('creates multiple renderer states', async () => {
 });
 
 it('creates renderer state with fixture state of primary renderer', async () => {
-  const handleSetRenderersState = jest.fn();
+  const handleSetRendererState = jest.fn();
   renderPlayground(
     <>
-      <OnPluginState stateKey="renderers" handler={handleSetRenderersState} />
+      <OnPluginState stateKey="renderer" handler={handleSetRendererState} />
       <SetPluginState
-        stateKey="renderers"
+        stateKey="renderer"
         value={{
           primaryRendererId: 'foo-renderer',
           renderers: {
@@ -103,7 +103,7 @@ it('creates renderer state with fixture state of primary renderer', async () => 
   );
 
   await wait(() =>
-    expect(handleSetRenderersState).toBeCalledWith(
+    expect(handleSetRendererState).toBeCalledWith(
       expect.objectContaining({
         renderers: expect.objectContaining({
           'bar-renderer': expect.objectContaining({
