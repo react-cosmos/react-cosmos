@@ -53,7 +53,9 @@ it('sets "fixturePath" router param on fixture click', async () => {
 
   fireEvent.click(getByText(/zwei/i));
 
-  expect(setUrlParams).toBeCalledWith({ fixturePath: 'fixtures/zwei.js' });
+  expect(setUrlParams).toBeCalledWith({
+    fixturePath: 'fixtures/zwei.js'
+  });
 });
 
 it('clears router params on home button click', async () => {
@@ -124,7 +126,7 @@ it('does not render nav element in full screen mode', async () => {
 
 function renderPlayground(otherNodes) {
   return render(
-    <PluginProvider>
+    <PluginProvider config={{ fixturesDir: 'fixtures' }}>
       <Slot name="left" />
       {otherNodes}
     </PluginProvider>

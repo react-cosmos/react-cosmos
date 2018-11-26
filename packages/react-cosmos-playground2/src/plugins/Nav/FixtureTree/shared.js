@@ -6,3 +6,7 @@ export type TreeNode<T> = {
     [dir: string]: TreeNode<T>
   }
 };
+
+export type TreeExpansion = {
+  [nodePath: string]: boolean
+};
