@@ -12,17 +12,20 @@ import { FixtureTree } from '.';
 
 afterEach(cleanup);
 
+const projectId = 'mockProjectId';
 const fixturesDir = 'fixtures';
 const fixtures = [
   'fixtures/ein.js',
   'fixtures/zwei.js',
   'fixtures/nested/drei.js'
 ];
+const treeExpansionStorageKey = `${projectId}-treeExpansion`;
 
 it('hides nested fixture', async () => {
   const { queryByText } = render(
     <FixtureTree
       storageApi={{ getItem: jest.fn(), setItem: jest.fn() }}
+      projectId={projectId}
       fixturesDir={fixturesDir}
       fixtures={fixtures}
       onSelect={jest.fn()}
@@ -36,6 +39,7 @@ it('shows nested fixture upon expanding dir', async () => {
   const { getByText } = render(
     <FixtureTree
       storageApi={{ getItem: jest.fn(), setItem: jest.fn() }}
+      projectId={projectId}
       fixturesDir={fixturesDir}
       fixtures={fixtures}
       onSelect={jest.fn()}
@@ -51,6 +55,7 @@ it('hides nested fixture upon collapsing dir', async () => {
   const { queryByText, getByText } = render(
     <FixtureTree
       storageApi={{ getItem: jest.fn(), setItem: jest.fn() }}
+      projectId={projectId}
       fixturesDir={fixturesDir}
       fixtures={fixtures}
       onSelect={jest.fn()}
@@ -65,7 +70,7 @@ it('hides nested fixture upon collapsing dir', async () => {
 
 it('loads persistent tree expansion state', async () => {
   const storage = {
-    treeExpansion: {
+    [treeExpansionStorageKey]: {
       nested: true
     }
   };
@@ -76,6 +81,7 @@ it('loads persistent tree expansion state', async () => {
         getItem: key => Promise.resolve(storage[key]),
         setItem: jest.fn()
       }}
+      projectId={projectId}
       fixturesDir={fixturesDir}
       fixtures={fixtures}
       onSelect={jest.fn()}
@@ -87,7 +93,7 @@ it('loads persistent tree expansion state', async () => {
 
 it('persists tree expansion state', async () => {
   let storage = {
-    treeExpansion: {}
+    [treeExpansionStorageKey]: {}
   };
 
   const { getByText } = render(
@@ -98,6 +104,7 @@ it('persists tree expansion state', async () => {
           storage[key] = value;
         }
       }}
+      projectId={projectId}
       fixturesDir={fixturesDir}
       fixtures={fixtures}
       onSelect={jest.fn()}
@@ -106,5 +113,5 @@ it('persists tree expansion state', async () => {
 
   fireEvent.click(getByText(/nested/i));
 
-  await wait(() => expect(storage.treeExpansion.nested).toBe(true));
+  await wait(() => expect(storage[treeExpansionStorageKey].nested).toBe(true));
 });

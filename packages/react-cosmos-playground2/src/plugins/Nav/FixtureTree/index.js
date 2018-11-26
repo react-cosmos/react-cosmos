@@ -12,6 +12,7 @@ type Props = {
     +getItem: string => any,
     +setItem: (string, any) => any
   },
+  projectId: string,
   fixturesDir: string,
   fixtures: FixtureNames,
   onSelect: (path: string) => mixed
@@ -59,7 +60,8 @@ export class FixtureTree extends Component<Props, State> {
 
   async restoreTreeExpansion() {
     const { storageApi } = this.props;
-    const treeExpansion = (await storageApi.getItem('treeExpansion')) || {};
+    const treeExpansion =
+      (await storageApi.getItem(this.getStorageKey())) || {};
 
     this.setState({ treeExpansion });
   }
@@ -68,6 +70,10 @@ export class FixtureTree extends Component<Props, State> {
     const { storageApi } = this.props;
     const { treeExpansion } = this.state;
 
-    storageApi.setItem('treeExpansion', treeExpansion);
+    storageApi.setItem(this.getStorageKey(), treeExpansion);
+  }
+
+  getStorageKey() {
+    return `${this.props.projectId}-treeExpansion`;
   }
 }

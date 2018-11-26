@@ -32,6 +32,7 @@ const exportPlaygroundFiles = (cosmosConfig, outputPath) => {
   const playgroundHtml = next
     ? getPlaygroundHtmlNext(
         getPlaygroundOptions({
+          projectId: playgroundOpts.projectKey,
           rendererPreviewUrl: playgroundOpts.loaderUri,
           enableRemoteRenderers: false
         })

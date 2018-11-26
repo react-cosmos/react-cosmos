@@ -2,6 +2,7 @@
 
 import styled from 'styled-components';
 import React, { Component } from 'react';
+import localForage from 'localforage';
 import { PluginContext } from '../../plugin';
 import { getPrimaryRendererState } from '../RendererMessageHandler/selectors';
 import { FixtureTree } from './FixtureTree';
@@ -39,6 +40,8 @@ export class Nav extends Component<{}> {
           </Buttons>
         )}
         <FixtureTree
+          storageApi={localForage}
+          projectId={getConfig('projectId')}
           fixturesDir={getConfig('fixturesDir')}
           fixtures={fixtures}
           onSelect={this.handleFixtureSelect}

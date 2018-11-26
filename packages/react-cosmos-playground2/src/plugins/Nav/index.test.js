@@ -126,7 +126,12 @@ it('does not render nav element in full screen mode', async () => {
 
 function renderPlayground(otherNodes) {
   return render(
-    <PluginProvider config={{ fixturesDir: 'fixtures' }}>
+    <PluginProvider
+      config={{
+        projectId: 'mockProjectId',
+        fixturesDir: 'fixtures'
+      }}
+    >
       <Slot name="left" />
       {otherNodes}
     </PluginProvider>
