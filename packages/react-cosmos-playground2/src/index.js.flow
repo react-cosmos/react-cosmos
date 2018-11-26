@@ -3,6 +3,8 @@
 export type PlaygroundOptions = {
   projectId: string,
   fixturesDir: string,
-  rendererPreviewUrl: null | string,
-  enableRemoteRenderers: boolean
+  renderer: {
+    webUrl: null | string,
+    enableRemoteConnect: boolean
+  }
 };

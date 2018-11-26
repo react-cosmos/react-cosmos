@@ -69,7 +69,7 @@ it('posts "requestFixtureList" renderer request on mount', async () => {
 
 function renderPlayground(otherNodes) {
   return render(
-    <PluginProvider config={{ enableRemoteRenderers: true }}>
+    <PluginProvider config={{ renderer: { enableRemoteConnect: true } }}>
       {otherNodes}
       <Slot name="global" />
     </PluginProvider>

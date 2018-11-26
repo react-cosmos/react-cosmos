@@ -38,14 +38,14 @@ export class ControlPanel extends Component<Props> {
       return null;
     }
 
-    const rendererPreviewUrl = getConfig('rendererPreviewUrl');
+    const webRendererUrl = getConfig('renderer.webUrl');
 
     return (
       <Container>
-        {rendererPreviewUrl && (
+        {webRendererUrl && (
           <button
             onClick={() => {
-              copyToClipboard(getFullUrl(rendererPreviewUrl));
+              copyToClipboard(getFullUrl(webRendererUrl));
             }}
           >
             Copy rendererer URL

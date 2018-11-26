@@ -30,9 +30,13 @@ export function createServerApp({
     ? getPlaygroundHtmlNext(
         getPlaygroundOptions({
           projectId: playgroundOpts.projectKey,
-          rendererPreviewUrl:
-            playgroundOpts.platform === 'web' ? playgroundOpts.loaderUri : null,
-          enableRemoteRenderers: true
+          renderer: {
+            webUrl:
+              playgroundOpts.platform === 'web'
+                ? playgroundOpts.loaderUri
+                : null,
+            enableRemoteConnect: true
+          }
         })
       )
     : getPlaygroundHtml(playgroundOpts);

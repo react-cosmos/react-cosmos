@@ -14,7 +14,7 @@ import '.';
 
 afterEach(cleanup);
 
-it('renders iframe with options.rendererPreviewUrl src', () => {
+it('renders iframe with config.renderer.webUrl src', () => {
   const renderer = renderPlayground();
 
   expect(getIframe(renderer)).toBeTruthy();
@@ -65,7 +65,7 @@ it('broadcasts renderer response message from iframe', async () => {
 
 function renderPlayground(otherNodes) {
   return render(
-    <PluginProvider config={{ rendererPreviewUrl: 'mockRendererUrl' }}>
+    <PluginProvider config={{ renderer: { webUrl: 'mockRendererUrl' } }}>
       <Slot name="rendererPreview" />
       {otherNodes}
     </PluginProvider>

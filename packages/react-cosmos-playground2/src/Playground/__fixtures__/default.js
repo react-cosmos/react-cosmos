@@ -9,8 +9,10 @@ export default {
   component: Playground,
   props: {
     options: {
-      rendererPreviewUrl: 'mockRendererUrl',
-      enableRemoteRenderers: false
+      renderer: {
+        webUrl: 'mockRendererUrl',
+        enableRemoteConnect: false
+      }
     }
   }
 };
