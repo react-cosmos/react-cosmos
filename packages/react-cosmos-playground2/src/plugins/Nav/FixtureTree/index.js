@@ -74,6 +74,6 @@ export class FixtureTree extends Component<Props, State> {
   }
 
   getStorageKey() {
-    return `${this.props.projectId}-treeExpansion`;
+    return `cosmos-treeExpansion-${this.props.projectId}`;
   }
 }

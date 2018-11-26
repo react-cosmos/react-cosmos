@@ -19,7 +19,7 @@ const fixtures = [
   'fixtures/zwei.js',
   'fixtures/nested/drei.js'
 ];
-const treeExpansionStorageKey = `${projectId}-treeExpansion`;
+const treeExpansionStorageKey = `cosmos-treeExpansion-${projectId}`;
 
 it('hides nested fixture', async () => {
   const { queryByText } = render(
