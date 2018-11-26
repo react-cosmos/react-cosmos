@@ -5,6 +5,7 @@ import { register, Plugin, Plug } from 'react-plugin';
 import { registerDefaultPluginConfig, PluginContext } from '../../plugin';
 import { RendererIframePreview } from './RendererIframePreview';
 
+// FIXME: Is this config tied to this plugin? Maybe call it `webRendererUrl`?
 registerDefaultPluginConfig('rendererPreviewUrl', null);
 
 register(
@@ -14,7 +15,7 @@ register(
       render={() => (
         <PluginContext.Consumer>
           {({ getConfig }) => {
-            const rendererPreviewUrl: string = getConfig('rendererPreviewUrl');
+            const rendererPreviewUrl = getConfig('rendererPreviewUrl');
 
             return rendererPreviewUrl ? (
               <RendererIframePreview rendererPreviewUrl={rendererPreviewUrl} />

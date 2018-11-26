@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { StateMock } from '@react-mock/state';
-import { Counter } from '../components/Counter';
+import { Counter } from '../..';
 
 export default (
   <StateMock state={{ count: 5 }}>

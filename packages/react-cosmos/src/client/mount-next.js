@@ -41,14 +41,16 @@ function isInsideIframe() {
   }
 }
 
-// Renderer ID is preserved to avoid announcing a new renderer when reloading
-// the renderer window
+// Renderer ID is remembered to avoid announcing a new renderer when reloading
+// the renderer window. Note that each tab has creates a new session and thus
+// a new rendererId.
+// https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage
 function getRendererId() {
-  let rendererId = localStorage.getItem('cosmosRendererId');
+  let rendererId = sessionStorage.getItem('cosmosRendererId');
 
   if (!rendererId) {
     rendererId = uuid();
-    localStorage.setItem('cosmosRendererId', rendererId);
+    sessionStorage.setItem('cosmosRendererId', rendererId);
   }
 
   return rendererId;

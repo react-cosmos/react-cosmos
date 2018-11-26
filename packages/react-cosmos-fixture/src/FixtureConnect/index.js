@@ -1,6 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
+import { isEqual } from 'lodash';
 import { FixtureProvider } from '../FixtureProvider';
 import { updateState } from 'react-cosmos-shared2/util';
 
@@ -31,7 +32,15 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     const { subscribe } = this.props;
 
     subscribe(this.handleRequest);
-    this.postReadyMessage();
+    this.postFixtureList();
+  }
+
+  componentDidUpdate(prevProps: FixtureConnectProps) {
+    const { fixtures } = this.props;
+
+    if (!isEqual(fixtures, prevProps.fixtures)) {
+      this.postFixtureList();
+    }
   }
 
   componentWillUnmount() {
@@ -67,7 +76,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
 
   handleRequest = (msg: RendererRequest) => {
     if (msg.type === 'requestFixtureList') {
-      return this.postReadyMessage();
+      return this.postFixtureList();
     }
 
     const { rendererId } = msg.payload || {};
@@ -99,7 +108,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     }
   };
 
-  postReadyMessage() {
+  postFixtureList() {
     const { rendererId, fixtures, postMessage } = this.props;
 
     postMessage({

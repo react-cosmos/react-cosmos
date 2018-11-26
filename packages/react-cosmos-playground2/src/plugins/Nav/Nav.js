@@ -2,6 +2,7 @@
 
 import styled from 'styled-components';
 import React, { Component } from 'react';
+import localForage from 'localforage';
 import { PluginContext } from '../../plugin';
 import { getPrimaryRendererState } from '../RendererMessageHandler/selectors';
 import { FixtureTree } from './FixtureTree';
@@ -16,7 +17,7 @@ export class Nav extends Component<{}> {
   context: PluginContextValue;
 
   render() {
-    const { getState } = this.context;
+    const { getConfig, getState } = this.context;
     const rendererState = getPrimaryRendererState(getState('renderers'));
 
     if (!rendererState) {
@@ -38,7 +39,13 @@ export class Nav extends Component<{}> {
             <button onClick={this.handleGoFullScreen}>fullscreen</button>
           </Buttons>
         )}
-        <FixtureTree fixtures={fixtures} onSelect={this.handleFixtureSelect} />
+        <FixtureTree
+          storageApi={localForage}
+          projectId={getConfig('projectId')}
+          fixturesDir={getConfig('fixturesDir')}
+          fixtures={fixtures}
+          onSelect={this.handleFixtureSelect}
+        />
       </Container>
     );
   }

@@ -1,4 +1,5 @@
 // @flow
+/* eslint-env browser */
 
 import React, { Component } from 'react';
 import styled from 'styled-components';
@@ -20,7 +21,7 @@ export class ControlPanel extends Component<Props> {
   context: PluginContextValue;
 
   render() {
-    const { getState } = this.context;
+    const { getConfig, getState } = this.context;
     const renderersState = getState('renderers');
     const { primaryRendererId, renderers } = renderersState;
     const primaryRendererState = getPrimaryRendererState(renderersState);
@@ -37,8 +38,19 @@ export class ControlPanel extends Component<Props> {
       return null;
     }
 
+    const rendererPreviewUrl = getConfig('rendererPreviewUrl');
+
     return (
       <Container>
+        {rendererPreviewUrl && (
+          <button
+            onClick={() => {
+              copyToClipboard(getFullUrl(rendererPreviewUrl));
+            }}
+          >
+            Copy rendererer URL
+          </button>
+        )}
         <PropsState
           fixtureState={fixtureState}
           setFixtureState={this.setFixtureState}
@@ -89,3 +101,24 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+function getFullUrl(relativeUrl) {
+  return `${location.origin}${relativeUrl}`;
+}
+
+async function copyToClipboard(text) {
+  const { permissions, clipboard } = navigator;
+
+  const { state } = await permissions.query({ name: 'clipboard-write' });
+  if (state !== 'granted' && state !== 'prompt') {
+    // clipboard permission denied
+    return;
+  }
+
+  try {
+    await clipboard.writeText(text);
+    // clipboard successfully set
+  } catch (err) {
+    // clipboard write failed
+  }
+}
