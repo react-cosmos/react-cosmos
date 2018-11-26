@@ -11,7 +11,7 @@ export default {
     options: {
       renderer: {
         webUrl: 'mockRendererUrl',
-        enableRemoteConnect: false
+        enableRemote: false
       }
     }
   }

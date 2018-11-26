@@ -12,7 +12,7 @@ type Props = {
   rendererUrl: string
 };
 
-export class RendererIframePreview extends Component<Props> {
+export class RendererPreview extends Component<Props> {
   static contextType = PluginContext;
 
   // https://github.com/facebook/flow/issues/7166

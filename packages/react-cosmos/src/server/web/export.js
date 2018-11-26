@@ -35,7 +35,7 @@ const exportPlaygroundFiles = (cosmosConfig, outputPath) => {
           projectId: playgroundOpts.projectKey,
           renderer: {
             webUrl: playgroundOpts.loaderUri,
-            enableRemoteConnect: false
+            enableRemote: false
           }
         })
       )

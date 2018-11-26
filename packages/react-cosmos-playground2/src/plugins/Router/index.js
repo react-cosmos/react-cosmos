@@ -9,4 +9,4 @@ export type { UrlParams } from './shared';
 
 registerInitialPluginState('urlParams', getUrlParamsFromLocation);
 
-registerGlobalPlugin('Router', Router);
+registerGlobalPlugin('router', Router);

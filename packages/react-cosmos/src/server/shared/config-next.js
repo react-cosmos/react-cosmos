@@ -12,7 +12,7 @@ const defaultOptions = {
   fixturesDir: FIXTURES_DIR,
   renderer: {
     webUrl: null,
-    enableRemoteConnect: false
+    enableRemote: false
   }
 };
 

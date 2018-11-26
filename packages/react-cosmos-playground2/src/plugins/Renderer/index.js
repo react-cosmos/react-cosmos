@@ -12,7 +12,7 @@ export type { RendererItemState, RendererState } from './shared';
 
 registerDefaultPluginConfig('renderer', {
   webUrl: null,
-  enableRemoteConnect: false
+  enableRemote: false
 });
 
 registerInitialPluginState(

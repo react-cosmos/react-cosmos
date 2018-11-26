@@ -3,14 +3,12 @@
 import React from 'react';
 import { PluginContext } from '../../plugin';
 import { registerGlobalPlugin } from '../../Playground/registerGlobalPlugin';
-import { RendererRemoteConnect } from './RendererRemoteConnect';
+import { RendererRemote } from './RendererRemote';
 
-registerGlobalPlugin('RendererRemoteConnect', () => (
+registerGlobalPlugin('renderer-remote', () => (
   <PluginContext.Consumer>
     {({ getConfig }) =>
-      getConfig('renderer.enableRemoteConnect') ? (
-        <RendererRemoteConnect />
-      ) : null
+      getConfig('renderer.enableRemote') ? <RendererRemote /> : null
     }
   </PluginContext.Consumer>
 ));

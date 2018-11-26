@@ -9,7 +9,7 @@ import type { Socket } from 'socket.io-client';
 import type { RendererRequest } from 'react-cosmos-shared2/renderer';
 import type { PluginContextValue } from '../../plugin';
 
-export class RendererRemoteConnect extends Component<{}> {
+export class RendererRemote extends Component<{}> {
   static contextType = PluginContext;
 
   // https://github.com/facebook/flow/issues/7166

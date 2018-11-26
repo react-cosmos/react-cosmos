@@ -35,7 +35,7 @@ export function createServerApp({
               playgroundOpts.platform === 'web'
                 ? playgroundOpts.loaderUri
                 : null,
-            enableRemoteConnect: true
+            enableRemote: true
           }
         })
       )

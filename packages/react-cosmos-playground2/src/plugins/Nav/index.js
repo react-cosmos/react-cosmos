@@ -5,7 +5,7 @@ import { register, Plugin, Plug } from 'react-plugin';
 import { Nav } from './Nav';
 
 register(
-  <Plugin name="Preview">
+  <Plugin name="nav">
     <Plug slot="left" render={Nav} />
   </Plugin>
 );

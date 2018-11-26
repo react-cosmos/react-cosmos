@@ -3,10 +3,10 @@
 import React from 'react';
 import { register, Plugin, Plug } from 'react-plugin';
 import { PluginContext } from '../../plugin';
-import { RendererIframePreview } from './RendererIframePreview';
+import { RendererPreview } from './RendererPreview';
 
 register(
-  <Plugin name="RendererIframePreview">
+  <Plugin name="renderer-preview">
     <Plug
       slot="rendererPreview"
       render={() => (
@@ -15,7 +15,7 @@ register(
             const rendererUrl = getConfig('renderer.webUrl');
 
             return rendererUrl ? (
-              <RendererIframePreview rendererUrl={rendererUrl} />
+              <RendererPreview rendererUrl={rendererUrl} />
             ) : null;
           }}
         </PluginContext.Consumer>

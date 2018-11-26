@@ -5,6 +5,6 @@ export type PlaygroundOptions = {
   fixturesDir: string,
   renderer: {
     webUrl: null | string,
-    enableRemoteConnect: boolean
+    enableRemote: boolean
   }
 };
