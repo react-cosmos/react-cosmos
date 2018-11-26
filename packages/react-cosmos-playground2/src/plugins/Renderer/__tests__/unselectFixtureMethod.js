@@ -11,7 +11,7 @@ import { CallMethod } from '../../../testHelpers/CallMethod';
 import { mockFixtures, mockFixtureState } from '../testHelpers';
 
 // Plugins have side-effects: they register themselves
-// "urlParams" state is required for RendererCore plugin to work
+// "urlParams" state is required for Renderer plugin to work
 import '../../Router';
 import '..';
 
@@ -37,10 +37,7 @@ it('resets fixture state for all renderers', async () => {
     <>
       <OnPluginState stateKey="renderers" handler={handleSetRenderersState} />
       <SetPluginState stateKey="renderers" value={renderersState} />
-      <CallMethod
-        methodName="renderer.selectFixture"
-        args={['fixtures/zwei.js']}
-      />
+      <CallMethod methodName="renderer.unselectFixture" />
     </>
   );
 
@@ -60,14 +57,14 @@ it('resets fixture state for all renderers', async () => {
   );
 });
 
-it('posts "selectFixture" renderer requests', async () => {
+it('posts "unselectFixture" renderer requests', async () => {
   const handleRendererRequest = jest.fn();
   renderPlayground(
     <>
       <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
       <SetPluginState stateKey="renderers" value={renderersState} />
       <CallMethod
-        methodName="renderer.selectFixture"
+        methodName="renderer.unselectFixture"
         args={['fixtures/zwei.js']}
       />
     </>
@@ -75,22 +72,18 @@ it('posts "selectFixture" renderer requests', async () => {
 
   await wait(() =>
     expect(handleRendererRequest).toBeCalledWith({
-      type: 'selectFixture',
+      type: 'unselectFixture',
       payload: {
-        rendererId: 'foo-renderer',
-        fixturePath: 'fixtures/zwei.js',
-        fixtureState: null
+        rendererId: 'foo-renderer'
       }
     })
   );
 
   await wait(() =>
     expect(handleRendererRequest).toBeCalledWith({
-      type: 'selectFixture',
+      type: 'unselectFixture',
       payload: {
-        rendererId: 'bar-renderer',
-        fixturePath: 'fixtures/zwei.js',
-        fixtureState: null
+        rendererId: 'bar-renderer'
       }
     })
   );

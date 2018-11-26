@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import React, { Component } from 'react';
 import localForage from 'localforage';
 import { PluginContext } from '../../plugin';
-import { getPrimaryRendererState } from '../RendererCore/selectors';
+import { getPrimaryRendererState } from '../Renderer/selectors';
 import { FixtureTree } from './FixtureTree';
 
 import type { PluginContextValue } from '../../plugin';
@@ -18,13 +18,13 @@ export class Nav extends Component<{}> {
 
   render() {
     const { getConfig, getState } = this.context;
-    const rendererState = getPrimaryRendererState(getState('renderers'));
+    const primaryRendererState = getPrimaryRendererState(getState('renderer'));
 
-    if (!rendererState) {
+    if (!primaryRendererState) {
       return null;
     }
 
-    const { fixtures } = rendererState;
+    const { fixtures } = primaryRendererState;
     const { fixturePath, fullScreen }: UrlParams = getState('urlParams');
 
     if (fullScreen) {

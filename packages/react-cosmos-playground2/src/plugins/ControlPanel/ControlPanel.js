@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { PluginContext } from '../../plugin';
-import { getPrimaryRendererState } from '../RendererCore/selectors';
+import { getPrimaryRendererState } from '../Renderer/selectors';
 import { PropsState } from './PropsState';
 
 import type { RendererId } from 'react-cosmos-shared2/renderer';
@@ -22,9 +22,9 @@ export class ControlPanel extends Component<Props> {
 
   render() {
     const { getConfig, getState } = this.context;
-    const renderersState = getState('renderers');
-    const { primaryRendererId, renderers } = renderersState;
-    const primaryRendererState = getPrimaryRendererState(renderersState);
+    const rendererState = getState('renderer');
+    const { primaryRendererId, renderers } = rendererState;
+    const primaryRendererState = getPrimaryRendererState(rendererState);
 
     if (!primaryRendererState) {
       return null;
@@ -88,7 +88,7 @@ export class ControlPanel extends Component<Props> {
   };
 
   createRendererSelectHandler = (rendererId: RendererId) => () => {
-    this.context.setState('renderers', prevState => ({
+    this.context.setState('renderer', prevState => ({
       ...prevState,
       primaryRendererId: rendererId
     }));

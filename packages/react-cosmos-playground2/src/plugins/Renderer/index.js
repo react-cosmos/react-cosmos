@@ -5,23 +5,22 @@ import {
   registerInitialPluginState
 } from '../../plugin';
 import { registerGlobalPlugin } from '../../Playground/registerGlobalPlugin';
-import { RendererCore } from './RendererCore';
+import { Renderer } from './Renderer';
 
-import type { RenderersState } from './shared';
-export type { RendererState, RenderersState } from './shared';
+import type { RendererState } from './shared';
+export type { RendererItemState, RendererState } from './shared';
 
-// TODO: Use same plugin name ("renderer") for config, state and ui
 registerDefaultPluginConfig('renderer', {
   webUrl: null,
   enableRemoteConnect: false
 });
 
 registerInitialPluginState(
-  'renderers',
-  (): RenderersState => ({
+  'renderer',
+  (): RendererState => ({
     primaryRendererId: null,
     renderers: {}
   })
 );
 
-registerGlobalPlugin('RendererCore', RendererCore);
+registerGlobalPlugin('renderer', Renderer);

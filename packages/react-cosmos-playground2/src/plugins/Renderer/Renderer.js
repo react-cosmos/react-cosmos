@@ -20,13 +20,13 @@ import type {
 } from 'react-cosmos-shared2/fixtureState';
 import type { PluginContextValue } from '../../plugin';
 import type { UrlParams } from '../Router';
-import type { RendererState, RenderersState } from './shared';
+import type { RendererState, RendererItemState } from './shared';
 
 const DEFAULT_RENDERER_STATE = {
   fixtureState: null
 };
 
-export class RendererCore extends Component<{}> {
+export class Renderer extends Component<{}> {
   static contextType = PluginContext;
 
   // https://github.com/facebook/flow/issues/7166
@@ -36,15 +36,15 @@ export class RendererCore extends Component<{}> {
     return null;
   }
 
-  getOwnState(): RenderersState {
-    return this.context.getState('renderers');
+  getOwnState(): RendererState {
+    return this.context.getState('renderer');
   }
 
-  setOwnState(state: StateUpdater<RenderersState>, cb?: Function) {
-    this.context.setState('renderers', state, cb);
+  setOwnState(state: StateUpdater<RendererState>, cb?: Function) {
+    this.context.setState('renderer', state, cb);
   }
 
-  getRendererState(rendererId: RendererId) {
+  getRendererItemState(rendererId: RendererId) {
     const { renderers } = this.getOwnState();
 
     if (!renderers[rendererId]) {
@@ -55,7 +55,7 @@ export class RendererCore extends Component<{}> {
   }
 
   setRendererState(
-    updater: (RendererState, RendererId) => RendererState,
+    updater: (RendererItemState, RendererId) => RendererItemState,
     cb?: () => mixed
   ) {
     this.setOwnState(
@@ -69,8 +69,8 @@ export class RendererCore extends Component<{}> {
 
   resetRendererState(cb?: () => mixed) {
     this.setRendererState(
-      rendererState => ({
-        ...rendererState,
+      rendererItemState => ({
+        ...rendererItemState,
         ...DEFAULT_RENDERER_STATE
       }),
       cb
@@ -120,15 +120,15 @@ export class RendererCore extends Component<{}> {
 
     if (!fixturePath) {
       console.warn(
-        '[RendererCore] Trying to set fixture state with no fixture selected'
+        '[Renderer] Trying to set fixture state with no fixture selected'
       );
       return;
     }
 
     this.setRendererState(
-      rendererState => ({
-        ...rendererState,
-        fixtureState: updateState(rendererState.fixtureState, stateChange)
+      rendererItemState => ({
+        ...rendererItemState,
+        fixtureState: updateState(rendererItemState.fixtureState, stateChange)
       }),
       () => {
         if (typeof cb === 'function') cb();
@@ -160,7 +160,7 @@ export class RendererCore extends Component<{}> {
       : null;
 
     const updater = ({ primaryRendererId, renderers, ...otherState }) => {
-      const rendererState = renderers[rendererId] || DEFAULT_RENDERER_STATE;
+      const rendererItemState = renderers[rendererId] || DEFAULT_RENDERER_STATE;
 
       return {
         ...otherState,
@@ -168,7 +168,7 @@ export class RendererCore extends Component<{}> {
         renderers: {
           ...renderers,
           [rendererId]: {
-            ...rendererState,
+            ...rendererItemState,
             fixtures,
             fixtureState
           }
@@ -188,11 +188,11 @@ export class RendererCore extends Component<{}> {
   handleFixtureStateChangeResponse({ payload }: FixtureStateChangeResponse) {
     const { rendererId, fixturePath, fixtureState } = payload;
     const urlParams: UrlParams = this.context.getState('urlParams');
-    const rendererState = this.getRendererState(rendererId);
+    const rendererItemState = this.getRendererItemState(rendererId);
 
-    if (isEqual(fixtureState, rendererState.fixtureState)) {
+    if (isEqual(fixtureState, rendererItemState.fixtureState)) {
       console.info(
-        '[RendererCore] fixtureStateChange response ignored ' +
+        '[Renderer] fixtureStateChange response ignored ' +
           'because existing fixture state is identical'
       );
       return;
@@ -200,7 +200,7 @@ export class RendererCore extends Component<{}> {
 
     if (fixturePath !== urlParams.fixturePath) {
       console.warn(
-        '[RendererCore] fixtureStateChange response ignored ' +
+        '[Renderer] fixtureStateChange response ignored ' +
           `because it doesn't match the selected fixture`
       );
       return;
@@ -210,10 +210,10 @@ export class RendererCore extends Component<{}> {
     const isPrimaryRenderer = rendererId === primaryRendererId;
 
     this.setRendererState(
-      (rendererState, curRendererId) =>
+      (rendererItemState, curRendererId) =>
         curRendererId === rendererId || isPrimaryRenderer
-          ? { ...rendererState, fixtureState }
-          : rendererState,
+          ? { ...rendererItemState, fixtureState }
+          : rendererItemState,
       () => {
         // Sync secondary renderers with changed primary renderer fixture state
         if (isPrimaryRenderer) {
@@ -232,12 +232,12 @@ export class RendererCore extends Component<{}> {
   }
 
   forEachRenderer(
-    cb: (rendererId: RendererId, rendererState: RendererState) => mixed
+    cb: (rendererId: RendererId, rendererItemState: RendererItemState) => mixed
   ) {
     const { renderers } = this.getOwnState();
 
-    forEach(renderers, (rendererState, rendererId) => {
-      cb(rendererId, rendererState);
+    forEach(renderers, (rendererItemState, rendererId) => {
+      cb(rendererId, rendererItemState);
     });
   }
 

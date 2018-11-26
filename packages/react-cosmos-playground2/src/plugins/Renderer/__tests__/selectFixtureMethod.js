@@ -11,7 +11,7 @@ import { CallMethod } from '../../../testHelpers/CallMethod';
 import { mockFixtures, mockFixtureState } from '../testHelpers';
 
 // Plugins have side-effects: they register themselves
-// "urlParams" state is required for RendererCore plugin to work
+// "urlParams" state is required for Renderer plugin to work
 import '../../Router';
 import '..';
 
@@ -37,7 +37,10 @@ it('resets fixture state for all renderers', async () => {
     <>
       <OnPluginState stateKey="renderers" handler={handleSetRenderersState} />
       <SetPluginState stateKey="renderers" value={renderersState} />
-      <CallMethod methodName="renderer.unselectFixture" />
+      <CallMethod
+        methodName="renderer.selectFixture"
+        args={['fixtures/zwei.js']}
+      />
     </>
   );
 
@@ -57,14 +60,14 @@ it('resets fixture state for all renderers', async () => {
   );
 });
 
-it('posts "unselectFixture" renderer requests', async () => {
+it('posts "selectFixture" renderer requests', async () => {
   const handleRendererRequest = jest.fn();
   renderPlayground(
     <>
       <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
       <SetPluginState stateKey="renderers" value={renderersState} />
       <CallMethod
-        methodName="renderer.unselectFixture"
+        methodName="renderer.selectFixture"
         args={['fixtures/zwei.js']}
       />
     </>
@@ -72,18 +75,22 @@ it('posts "unselectFixture" renderer requests', async () => {
 
   await wait(() =>
     expect(handleRendererRequest).toBeCalledWith({
-      type: 'unselectFixture',
+      type: 'selectFixture',
       payload: {
-        rendererId: 'foo-renderer'
+        rendererId: 'foo-renderer',
+        fixturePath: 'fixtures/zwei.js',
+        fixtureState: null
       }
     })
   );
 
   await wait(() =>
     expect(handleRendererRequest).toBeCalledWith({
-      type: 'unselectFixture',
+      type: 'selectFixture',
       payload: {
-        rendererId: 'bar-renderer'
+        rendererId: 'bar-renderer',
+        fixturePath: 'fixtures/zwei.js',
+        fixtureState: null
       }
     })
   );

@@ -11,7 +11,7 @@ import { CallMethod } from '../../../testHelpers/CallMethod';
 import { mockFixtures, mockFixtureState } from '../testHelpers';
 
 // Plugins have side-effects: they register themselves
-// "urlParams" state is required for RendererCore plugin to work
+// "urlParams" state is required for Renderer plugin to work
 import '../../Router';
 import '..';
 
