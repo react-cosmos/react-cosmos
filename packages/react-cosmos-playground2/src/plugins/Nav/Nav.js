@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import React, { Component } from 'react';
 import localForage from 'localforage';
 import { PluginContext } from '../../plugin';
-import { getPrimaryRendererState } from '../RendererMessageHandler/selectors';
+import { getPrimaryRendererState } from '../RendererCore/selectors';
 import { FixtureTree } from './FixtureTree';
 
 import type { PluginContextValue } from '../../plugin';

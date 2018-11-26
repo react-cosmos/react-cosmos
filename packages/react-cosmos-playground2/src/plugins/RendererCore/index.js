@@ -5,11 +5,12 @@ import {
   registerInitialPluginState
 } from '../../plugin';
 import { registerGlobalPlugin } from '../../Playground/registerGlobalPlugin';
-import { RendererMessageHandler } from './RendererMessageHandler';
+import { RendererCore } from './RendererCore';
 
 import type { RenderersState } from './shared';
 export type { RendererState, RenderersState } from './shared';
 
+// TODO: Use same plugin name ("renderer") for config, state and ui
 registerDefaultPluginConfig('renderer', {
   webUrl: null,
   enableRemoteConnect: false
@@ -23,4 +24,4 @@ registerInitialPluginState(
   })
 );
 
-registerGlobalPlugin('RendererMessageHandler', RendererMessageHandler);
+registerGlobalPlugin('RendererCore', RendererCore);

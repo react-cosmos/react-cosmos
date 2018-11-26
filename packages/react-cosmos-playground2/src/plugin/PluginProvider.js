@@ -21,6 +21,7 @@ export class PluginProvider extends Component<Props, PluginContextValue> {
     config: {}
   };
 
+  // TODO getPluginConfig = (pluginName: string, key: string) => {
   getPluginConfig = (configPath: string) => {
     return get(this.state.pluginConfig, configPath);
   };

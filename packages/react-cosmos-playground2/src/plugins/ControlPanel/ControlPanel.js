@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { PluginContext } from '../../plugin';
-import { getPrimaryRendererState } from '../RendererMessageHandler/selectors';
+import { getPrimaryRendererState } from '../RendererCore/selectors';
 import { PropsState } from './PropsState';
 
 import type { RendererId } from 'react-cosmos-shared2/renderer';

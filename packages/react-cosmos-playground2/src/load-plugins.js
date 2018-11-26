@@ -1,8 +1,8 @@
 // @flow
 
-import './plugins/RendererMessageHandler';
+import './plugins/RendererCore';
 import './plugins/RendererIframePreview';
-import './plugins/RendererRemote';
+import './plugins/RendererRemoteConnect';
 import './plugins/Router';
 import './plugins/Nav';
 // import './plugins/ControlPanel';

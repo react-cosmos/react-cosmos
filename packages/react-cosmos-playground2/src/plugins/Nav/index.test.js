@@ -16,7 +16,7 @@ import { SetPluginState } from '../../testHelpers/SetPluginState';
 
 // Plugins have side-effects: they register themselves
 // "renderers" and "urlParams" state is required for Nav plugin to work
-import '../RendererMessageHandler';
+import '../RendererCore';
 import '../Router';
 import '.';
 

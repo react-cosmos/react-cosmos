@@ -26,7 +26,7 @@ const DEFAULT_RENDERER_STATE = {
   fixtureState: null
 };
 
-export class RendererMessageHandler extends Component<{}> {
+export class RendererCore extends Component<{}> {
   static contextType = PluginContext;
 
   // https://github.com/facebook/flow/issues/7166
@@ -120,7 +120,7 @@ export class RendererMessageHandler extends Component<{}> {
 
     if (!fixturePath) {
       console.warn(
-        '[RendererMessageHandler] Trying to set fixture state with no fixture selected'
+        '[RendererCore] Trying to set fixture state with no fixture selected'
       );
       return;
     }
@@ -192,7 +192,7 @@ export class RendererMessageHandler extends Component<{}> {
 
     if (isEqual(fixtureState, rendererState.fixtureState)) {
       console.info(
-        '[RendererMessageHandler] fixtureStateChange response ignored ' +
+        '[RendererCore] fixtureStateChange response ignored ' +
           'because existing fixture state is identical'
       );
       return;
@@ -200,7 +200,7 @@ export class RendererMessageHandler extends Component<{}> {
 
     if (fixturePath !== urlParams.fixturePath) {
       console.warn(
-        '[RendererMessageHandler] fixtureStateChange response ignored ' +
+        '[RendererCore] fixtureStateChange response ignored ' +
           `because it doesn't match the selected fixture`
       );
       return;
