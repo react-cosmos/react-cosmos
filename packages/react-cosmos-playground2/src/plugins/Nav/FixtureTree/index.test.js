@@ -8,7 +8,6 @@ import {
   wait,
   fireEvent
 } from 'react-testing-library';
-import { StateMock } from '@react-mock/state';
 import { FixtureTree } from '.';
 
 afterEach(cleanup);
@@ -23,6 +22,7 @@ const fixtures = [
 it('hides nested fixture', async () => {
   const { queryByText } = render(
     <FixtureTree
+      storageApi={{ getItem: jest.fn(), setItem: jest.fn() }}
       fixturesDir={fixturesDir}
       fixtures={fixtures}
       onSelect={jest.fn()}
@@ -35,6 +35,7 @@ it('hides nested fixture', async () => {
 it('shows nested fixture upon expanding dir', async () => {
   const { getByText } = render(
     <FixtureTree
+      storageApi={{ getItem: jest.fn(), setItem: jest.fn() }}
       fixturesDir={fixturesDir}
       fixtures={fixtures}
       onSelect={jest.fn()}
@@ -49,6 +50,7 @@ it('shows nested fixture upon expanding dir', async () => {
 it('hides nested fixture upon collapsing dir', async () => {
   const { queryByText, getByText } = render(
     <FixtureTree
+      storageApi={{ getItem: jest.fn(), setItem: jest.fn() }}
       fixturesDir={fixturesDir}
       fixtures={fixtures}
       onSelect={jest.fn()}
@@ -61,23 +63,48 @@ it('hides nested fixture upon collapsing dir', async () => {
   await wait(() => expect(queryByText('drei')).toBeNull());
 });
 
-it('shows nested fixture when dir is already expanded', async () => {
+it('loads persistent tree expansion state', async () => {
+  const storage = {
+    treeExpansion: {
+      nested: true
+    }
+  };
+
   const { getByText } = render(
-    // TODO: Move this to persistent storage
-    <StateMock
-      state={{
-        treeExpansion: {
-          nested: true
-        }
+    <FixtureTree
+      storageApi={{
+        getItem: key => Promise.resolve(storage[key]),
+        setItem: jest.fn()
       }}
-    >
-      <FixtureTree
-        fixturesDir={fixturesDir}
-        fixtures={fixtures}
-        onSelect={jest.fn()}
-      />
-    </StateMock>
+      fixturesDir={fixturesDir}
+      fixtures={fixtures}
+      onSelect={jest.fn()}
+    />
   );
 
   await waitForElement(() => getByText('drei'));
+});
+
+it('persists tree expansion state', async () => {
+  let storage = {
+    treeExpansion: {}
+  };
+
+  const { getByText } = render(
+    <FixtureTree
+      storageApi={{
+        getItem: jest.fn(),
+        setItem: (key, value) => {
+          storage[key] = value;
+        }
+      }}
+      fixturesDir={fixturesDir}
+      fixtures={fixtures}
+      onSelect={jest.fn()}
+    />
+  );
+
+  fireEvent.click(getByText(/nested/i));
+
+  await wait(() => expect(storage.treeExpansion.nested).toBe(true));
 });

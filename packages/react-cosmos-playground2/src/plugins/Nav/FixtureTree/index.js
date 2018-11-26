@@ -8,6 +8,10 @@ import type { FixtureNames } from 'react-cosmos-shared2/renderer';
 import type { TreeExpansion } from './shared';
 
 type Props = {
+  storageApi: {
+    +getItem: string => any,
+    +setItem: (string, any) => any
+  },
   fixturesDir: string,
   fixtures: FixtureNames,
   onSelect: (path: string) => mixed
@@ -19,9 +23,12 @@ type State = {
 
 export class FixtureTree extends Component<Props, State> {
   state = {
-    // TODO: Persist in local storage
     treeExpansion: {}
   };
+
+  componentDidMount() {
+    this.restoreTreeExpansion();
+  }
 
   render() {
     const { fixtures, fixturesDir, onSelect } = this.props;
@@ -42,8 +49,25 @@ export class FixtureTree extends Component<Props, State> {
   }
 
   handleToggleExpansion = (nodePath: string, expanded: boolean) => {
-    this.setState(({ treeExpansion }) => ({
-      treeExpansion: { ...treeExpansion, [nodePath]: expanded }
-    }));
+    this.setState(
+      ({ treeExpansion }) => ({
+        treeExpansion: { ...treeExpansion, [nodePath]: expanded }
+      }),
+      this.persistTreeExpansion
+    );
   };
+
+  async restoreTreeExpansion() {
+    const { storageApi } = this.props;
+    const treeExpansion = (await storageApi.getItem('treeExpansion')) || {};
+
+    this.setState({ treeExpansion });
+  }
+
+  persistTreeExpansion() {
+    const { storageApi } = this.props;
+    const { treeExpansion } = this.state;
+
+    storageApi.setItem('treeExpansion', treeExpansion);
+  }
 }
