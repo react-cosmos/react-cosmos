@@ -26,7 +26,7 @@ it('posts "selectFixture" renderer request', async () => {
     <>
       <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
       <SetPluginState
-        stateKey="router"
+        pluginName="router"
         value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
       />
       <EmitEvent
@@ -54,11 +54,11 @@ it('posts "selectFixture" renderer request with fixture state of primary rendere
     <>
       <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
       <SetPluginState
-        stateKey="router"
+        pluginName="router"
         value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
       />
       <SetPluginState
-        stateKey="renderer"
+        pluginName="renderer"
         value={{
           primaryRendererId: 'foo-renderer',
           renderers: {

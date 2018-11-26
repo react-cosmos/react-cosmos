@@ -24,7 +24,7 @@ it('creates renderer state', async () => {
   const handleSetRendererState = jest.fn();
   renderPlayground(
     <>
-      <OnPluginState stateKey="renderer" handler={handleSetRendererState} />
+      <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
       <EmitEvent
         eventName="renderer.response"
         args={[getFixtureListResponse('foo-renderer')]}
@@ -50,7 +50,7 @@ it('creates multiple renderer states', async () => {
   const handleSetRendererState = jest.fn();
   renderPlayground(
     <>
-      <OnPluginState stateKey="renderer" handler={handleSetRendererState} />
+      <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
       <EmitEvent
         eventName="renderer.response"
         args={[getFixtureListResponse('foo-renderer')]}
@@ -83,9 +83,9 @@ it('creates renderer state with fixture state of primary renderer', async () => 
   const handleSetRendererState = jest.fn();
   renderPlayground(
     <>
-      <OnPluginState stateKey="renderer" handler={handleSetRendererState} />
+      <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
       <SetPluginState
-        stateKey="renderer"
+        pluginName="renderer"
         value={{
           primaryRendererId: 'foo-renderer',
           renderers: {

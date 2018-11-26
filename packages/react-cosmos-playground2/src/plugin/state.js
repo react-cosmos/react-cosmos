@@ -3,20 +3,20 @@
 let initialStateGetters = {};
 
 export function registerInitialPluginState(
-  stateKey: string,
+  pluginName: string,
   getter: () => any
 ) {
   initialStateGetters = {
     ...initialStateGetters,
-    [stateKey]: getter
+    [pluginName]: getter
   };
 }
 
 export function getInitialPluginState() {
-  return Object.keys(initialStateGetters).reduce((initialState, stateKey) => {
+  return Object.keys(initialStateGetters).reduce((initialState, pluginName) => {
     return {
       ...initialState,
-      [stateKey]: initialStateGetters[stateKey]()
+      [pluginName]: initialStateGetters[pluginName]()
     };
   }, {});
 }

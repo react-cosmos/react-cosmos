@@ -26,8 +26,8 @@ export class PluginProvider extends Component<Props, PluginContextValue> {
     return get(this.state.pluginConfig, configPath);
   };
 
-  getPluginState = (stateKey: string) => {
-    return this.state.pluginState[stateKey];
+  getPluginState = (pluginName: string) => {
+    return this.state.pluginState[pluginName];
   };
 
   setPluginState = <T>(

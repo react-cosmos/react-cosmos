@@ -35,12 +35,12 @@ it('sets fixture state for all renderers', async () => {
   const handleSetRendererState = jest.fn();
   renderPlayground(
     <>
-      <OnPluginState stateKey="renderer" handler={handleSetRendererState} />
+      <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
       <SetPluginState
-        stateKey="router"
+        pluginName="router"
         value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
       />
-      <SetPluginState stateKey="renderer" value={renderersState} />
+      <SetPluginState pluginName="renderer" value={renderersState} />
       <CallMethod
         methodName="renderer.setFixtureState"
         args={[mockFixtureState]}
@@ -70,10 +70,10 @@ it('posts "setFixtureState" renderer requests', async () => {
     <>
       <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
       <SetPluginState
-        stateKey="router"
+        pluginName="router"
         value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
       />
-      <SetPluginState stateKey="renderer" value={renderersState} />
+      <SetPluginState pluginName="renderer" value={renderersState} />
       <CallMethod
         methodName="renderer.setFixtureState"
         args={[mockFixtureState]}

@@ -35,8 +35,8 @@ it('resets fixture state for all renderers', async () => {
   const handleSetRendererState = jest.fn();
   renderPlayground(
     <>
-      <OnPluginState stateKey="renderer" handler={handleSetRendererState} />
-      <SetPluginState stateKey="renderer" value={renderersState} />
+      <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
+      <SetPluginState pluginName="renderer" value={renderersState} />
       <CallMethod
         methodName="renderer.selectFixture"
         args={['fixtures/zwei.js']}
@@ -65,7 +65,7 @@ it('posts "selectFixture" renderer requests', async () => {
   renderPlayground(
     <>
       <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
-      <SetPluginState stateKey="renderer" value={renderersState} />
+      <SetPluginState pluginName="renderer" value={renderersState} />
       <CallMethod
         methodName="renderer.selectFixture"
         args={['fixtures/zwei.js']}

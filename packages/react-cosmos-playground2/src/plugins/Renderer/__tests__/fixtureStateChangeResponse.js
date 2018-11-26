@@ -25,13 +25,13 @@ it('sets "fixtureState" renderer state', async () => {
   const handleSetRendererState = jest.fn();
   renderPlayground(
     <>
-      <OnPluginState stateKey="renderer" handler={handleSetRendererState} />
+      <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
       <SetPluginState
-        stateKey="router"
+        pluginName="router"
         value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
       />
       <SetPluginState
-        stateKey="renderer"
+        pluginName="renderer"
         value={{
           primaryRendererId: 'foo-renderer',
           renderers: {
@@ -65,13 +65,13 @@ it('sets primary and secondary "fixtureState" renderer states', async () => {
   const handleSetRendererState = jest.fn();
   renderPlayground(
     <>
-      <OnPluginState stateKey="renderer" handler={handleSetRendererState} />
+      <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
       <SetPluginState
-        stateKey="router"
+        pluginName="router"
         value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
       />
       <SetPluginState
-        stateKey="renderer"
+        pluginName="renderer"
         value={{
           primaryRendererId: 'foo-renderer',
           renderers: {
@@ -111,13 +111,13 @@ it('only sets secondary "fixtureState" renderer state', async () => {
   const handleSetRendererState = jest.fn();
   renderPlayground(
     <>
-      <OnPluginState stateKey="renderer" handler={handleSetRendererState} />
+      <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
       <SetPluginState
-        stateKey="router"
+        pluginName="router"
         value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
       />
       <SetPluginState
-        stateKey="renderer"
+        pluginName="renderer"
         value={{
           primaryRendererId: 'foo-renderer',
           renderers: {
@@ -159,11 +159,11 @@ it('posts "setFixtureState" request to secondary renderer', async () => {
     <>
       <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
       <SetPluginState
-        stateKey="router"
+        pluginName="router"
         value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
       />
       <SetPluginState
-        stateKey="renderer"
+        pluginName="renderer"
         value={{
           primaryRendererId: 'foo-renderer',
           renderers: {

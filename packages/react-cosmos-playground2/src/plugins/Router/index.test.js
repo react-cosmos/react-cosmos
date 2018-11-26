@@ -60,7 +60,7 @@ describe('on "setUrlParams" method', () => {
     const handleSetUrlParams = jest.fn();
     renderPlaygroundAndCallSetUrlParams(
       <>
-        <OnPluginState stateKey="router" handler={handleSetUrlParams} />
+        <OnPluginState pluginName="router" handler={handleSetUrlParams} />
         <RegisterMethod
           methodName="renderer.selectFixture"
           handler={() => {}}
