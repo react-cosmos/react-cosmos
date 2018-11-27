@@ -1,3 +1,48 @@
+Q: How to structure responsive-preview's state type?
+
+It has three possible states:
+
+1. `{ enabled: true, viewport: Viewport }`
+2. `{ enabled: false, viewport: Viewport }`
+3. `{ enabled: false, viewport: null }`
+
+In other words, _viewport_ can't be null when _enabled_ is true. But this is giving Flow a hard time. This code, for example, is invalid:
+
+```js
+type Viewport = { width: number, height: number };
+
+type Enabled = {
+  enabled: true,
+  viewport: Viewport
+};
+
+type DisabledViewport = {
+  enabled: false,
+  viewport: Viewport
+};
+
+type DisabledNoViewport = {
+  enabled: false,
+  viewport: null
+};
+
+export type ResponsivePreviewState =
+  | Enabled
+  | DisabledViewport
+  | DisabledNoViewport;
+
+function disable(state: ResponsivePreviewState): ResponsivePreviewState {
+  return { enabled: false, viewport: state.viewport };
+  // ^ Could not decide which case to select. Since case 2 [1] may work but if
+  // it doesn't case 3 [2] looks promising too. To fix add a type annotation to
+  // property `viewport` [3].
+}
+```
+
+`$FlowFixMe`-ed for now. I don't understand why Flow needs to choose one case for the return value. [Why can't it also be a union type as the input value?](https://github.com/facebook/flow/issues/2892#issuecomment-263055197). This works in TypeScript :(.
+
+---
+
 Q: How to turn PlaygroundOptions into plugin _meta data_?
 
 The Playground options are now part of the plugin API. But this should change for two reasons:

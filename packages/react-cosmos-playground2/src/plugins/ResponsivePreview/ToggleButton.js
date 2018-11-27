@@ -25,7 +25,9 @@ export class ToggleButton extends Component<{}> {
   handleClick = () => {
     this.setOwnState(({ enabled, viewport }) =>
       enabled
-        ? { enabled: false, viewport: null }
+        ? // https://github.com/facebook/flow/issues/2892#issuecomment-263055197
+          // $FlowFixMe
+          { enabled: false, viewport }
         : { enabled: true, viewport: viewport || DEFAULT_VIEWPORT }
     );
   };

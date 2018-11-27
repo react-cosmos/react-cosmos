@@ -25,7 +25,7 @@ it('sets enabled state', async () => {
   fireEvent.click(getByText(/responsive/i));
 
   await wait(() =>
-    expect(handleSetReponsivePreviewState).toBeCalledWith({
+    expect(handleSetReponsivePreviewState).lastCalledWith({
       enabled: true,
       viewport: DEFAULT_VIEWPORT
     })
@@ -46,9 +46,10 @@ it('sets disabled state', async () => {
   fireEvent.click(getButton);
 
   await wait(() =>
-    expect(handleSetReponsivePreviewState).toBeCalledWith({
+    expect(handleSetReponsivePreviewState).lastCalledWith({
       enabled: false,
-      viewport: null
+      // Previous viewport is kept
+      viewport: DEFAULT_VIEWPORT
     })
   );
 });
