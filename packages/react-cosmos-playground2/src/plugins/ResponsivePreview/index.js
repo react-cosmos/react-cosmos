@@ -26,8 +26,8 @@ const defaultConfig: ResponsivePreviewConfig = {
 };
 
 const initialState: ResponsivePreviewState = {
-  enabled: true,
-  viewport: { width: 320, height: 640 }
+  enabled: false,
+  viewport: null
 };
 
 registerDefaultPluginConfig(PLUGIN_NAME, defaultConfig);

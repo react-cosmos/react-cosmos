@@ -24,7 +24,7 @@ function renderPlayground(otherNodes) {
         <div data-testid="preview-mock" />
       </Slot>
       <SetPluginState
-        pluginName="rendererPreview"
+        pluginName="renderer-preview"
         value={{ enabled: false, viewport: null }}
       />
       {otherNodes}
