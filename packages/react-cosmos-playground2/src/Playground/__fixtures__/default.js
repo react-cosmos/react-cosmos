@@ -7,12 +7,5 @@ import { Playground } from '..';
 // create fixtures for bits of the Playground (nav, menus, etc).
 export default {
   component: Playground,
-  props: {
-    options: {
-      renderer: {
-        webUrl: 'mockRendererUrl',
-        enableRemote: false
-      }
-    }
-  }
+  props: {}
 };
