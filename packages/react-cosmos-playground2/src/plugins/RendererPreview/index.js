@@ -16,7 +16,7 @@ register(
           {({ getConfig }) => {
             const { webUrl }: RendererConfig = getConfig('renderer');
 
-            return webUrl ? <RendererPreview rendererUrl={webUrl} /> : null;
+            return webUrl && <RendererPreview rendererUrl={webUrl} />;
           }}
         </PluginContext.Consumer>
       )}
