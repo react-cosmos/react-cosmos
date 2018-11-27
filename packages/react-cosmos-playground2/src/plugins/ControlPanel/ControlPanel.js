@@ -39,7 +39,7 @@ export class ControlPanel extends Component<Props> {
     const { fixtureState } = primaryRendererState;
     const { fixturePath, fullScreen } = this.getUrlParams();
 
-    if (fullScreen || !fixturePath || !fixtureState) {
+    if (fullScreen || !fixturePath) {
       return null;
     }
 
@@ -56,10 +56,12 @@ export class ControlPanel extends Component<Props> {
             Copy rendererer URL
           </button>
         )}
-        <PropsState
-          fixtureState={fixtureState}
-          setFixtureState={this.setFixtureState}
-        />
+        {fixtureState && (
+          <PropsState
+            fixtureState={fixtureState}
+            setFixtureState={this.setFixtureState}
+          />
+        )}
         {rendererIds.length > 1 && (
           <div>
             <p>Renderers ({rendererIds.length})</p>
