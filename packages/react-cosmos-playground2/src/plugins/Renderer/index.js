@@ -19,13 +19,13 @@ const defaultConfig: RendererConfig = {
   enableRemote: false
 };
 
-registerDefaultPluginConfig('renderer', defaultConfig);
-
 const initialState: RendererState = {
   primaryRendererId: null,
   renderers: {}
 };
 
-registerInitialPluginState('renderer', initialState);
+const PLUGIN_NAME = 'renderer';
 
-registerGlobalPlugin('renderer', Renderer);
+registerDefaultPluginConfig(PLUGIN_NAME, defaultConfig);
+registerInitialPluginState(PLUGIN_NAME, initialState);
+registerGlobalPlugin(PLUGIN_NAME, Renderer);
