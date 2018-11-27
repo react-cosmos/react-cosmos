@@ -28,6 +28,7 @@ We need a decent parity with the existing Cosmos UI to test JSX fixtures. This i
 ## Step 2: Get feedback on JSX fixtures
 
 - [ ] "How to use" document for beta testers
+- [ ] Release 4.7
 - [ ] Step 2B: JSX decorators
 
 ## Step 4: Consolidate plugin architecture

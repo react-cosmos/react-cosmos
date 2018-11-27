@@ -9,9 +9,9 @@ export type PluginContextValue = {
   getConfig: (configPath: string) => any,
   pluginState: Object,
   // State has to be typed manually after getting it
-  getState: (stateKey: string) => any,
+  getState: (pluginName: string) => any,
   setState: <T>(
-    stateKey: string,
+    pluginName: string,
     stateChange: StateUpdater<T>,
     cb?: () => mixed
   ) => void,

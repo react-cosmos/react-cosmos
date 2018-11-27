@@ -1,8 +1,10 @@
 // @flow
 
-export type PlaygroundOptions = {
+export type CoreConfig = {
   projectId: string,
-  fixturesDir: string,
-  rendererPreviewUrl: null | string,
-  enableRemoteRenderers: boolean
+  fixturesDir: string
+};
+
+export type PlaygroundConfig = {
+  core: CoreConfig
 };

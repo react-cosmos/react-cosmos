@@ -15,14 +15,14 @@ import { RegisterMethod } from '../../testHelpers/RegisterMethod';
 import { SetPluginState } from '../../testHelpers/SetPluginState';
 
 // Plugins have side-effects: they register themselves
-// "renderers" and "urlParams" state is required for Nav plugin to work
-import '../RendererMessageHandler';
+// "renderers" and "router" state is required for Nav plugin to work
+import '../Renderer';
 import '../Router';
 import '.';
 
 afterEach(cleanup);
 
-const mockRenderersState = {
+const mockRendererState = {
   primaryRendererId: 'foo-renderer',
   renderers: {
     'foo-renderer': {
@@ -34,7 +34,7 @@ const mockRenderersState = {
 
 it('renders fixture list from renderer state', async () => {
   const { getByText } = renderPlayground(
-    <SetPluginState stateKey="renderers" value={mockRenderersState} />
+    <SetPluginState pluginName="renderer" value={mockRendererState} />
   );
 
   await waitForElement(() => getByText(/ein/i));
@@ -46,7 +46,7 @@ it('sets "fixturePath" router param on fixture click', async () => {
   const setUrlParams = jest.fn();
   const { getByText } = renderPlayground(
     <>
-      <SetPluginState stateKey="renderers" value={mockRenderersState} />
+      <SetPluginState pluginName="renderer" value={mockRendererState} />
       <RegisterMethod methodName="router.setUrlParams" handler={setUrlParams} />
     </>
   );
@@ -62,10 +62,10 @@ it('clears router params on home button click', async () => {
   const setUrlParams = jest.fn();
   const { getByText } = renderPlayground(
     <>
-      <SetPluginState stateKey="renderers" value={mockRenderersState} />
+      <SetPluginState pluginName="renderer" value={mockRendererState} />
       <SetPluginState
-        stateKey="urlParams"
-        value={{ fixturePath: 'fixtures/zwei.js' }}
+        pluginName="router"
+        value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
       />
       <RegisterMethod methodName="router.setUrlParams" handler={setUrlParams} />
     </>
@@ -80,10 +80,10 @@ it('sets "fullScreen" router param on fullscreen button click', () => {
   const setUrlParams = jest.fn();
   const { getByText } = renderPlayground(
     <>
-      <SetPluginState stateKey="renderers" value={mockRenderersState} />
+      <SetPluginState pluginName="renderer" value={mockRendererState} />
       <SetPluginState
-        stateKey="urlParams"
-        value={{ fixturePath: 'fixtures/zwei.js' }}
+        pluginName="router"
+        value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
       />
       <RegisterMethod methodName="router.setUrlParams" handler={setUrlParams} />
     </>
@@ -101,7 +101,7 @@ it('sets "fullScreen" router param on fullscreen button click', () => {
 // conditions, and thus the validity of the "full screen" test
 it('renders nav element', async () => {
   const { queryByTestId } = renderPlayground(
-    <SetPluginState stateKey="renderers" value={mockRenderersState} />
+    <SetPluginState pluginName="renderer" value={mockRendererState} />
   );
 
   await wait(() => expect(queryByTestId('nav')).toBeTruthy());
@@ -110,10 +110,12 @@ it('renders nav element', async () => {
 it('does not render nav element in full screen mode', async () => {
   const { queryByTestId } = renderPlayground(
     <>
-      <SetPluginState stateKey="renderers" value={mockRenderersState} />
+      <SetPluginState pluginName="renderer" value={mockRendererState} />
       <SetPluginState
-        stateKey="urlParams"
-        value={{ fixturePath: 'fixtures/zwei.js', fullScreen: true }}
+        pluginName="router"
+        value={{
+          urlParams: { fixturePath: 'fixtures/zwei.js', fullScreen: true }
+        }}
       />
     </>
   );
@@ -128,8 +130,10 @@ function renderPlayground(otherNodes) {
   return render(
     <PluginProvider
       config={{
-        projectId: 'mockProjectId',
-        fixturesDir: 'fixtures'
+        core: {
+          projectId: 'mockProjectId',
+          fixturesDir: 'fixtures'
+        }
       }}
     >
       <Slot name="left" />

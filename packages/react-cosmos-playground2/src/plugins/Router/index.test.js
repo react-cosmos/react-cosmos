@@ -56,11 +56,11 @@ it('posts "unselectFixture" renderer request on removed "fixturePath" URL param'
 });
 
 describe('on "setUrlParams" method', () => {
-  it('sets "urlParams" state', async () => {
+  it('sets "router" state', async () => {
     const handleSetUrlParams = jest.fn();
     renderPlaygroundAndCallSetUrlParams(
       <>
-        <OnPluginState stateKey="urlParams" handler={handleSetUrlParams} />
+        <OnPluginState pluginName="router" handler={handleSetUrlParams} />
         <RegisterMethod
           methodName="renderer.selectFixture"
           handler={() => {}}
@@ -70,7 +70,7 @@ describe('on "setUrlParams" method', () => {
 
     await wait(() =>
       expect(handleSetUrlParams).toBeCalledWith({
-        fixturePath: 'fixtures/zwei.js'
+        urlParams: { fixturePath: 'fixtures/zwei.js' }
       })
     );
   });

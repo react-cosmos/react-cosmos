@@ -1,7 +1,7 @@
 // @flow
 
-import './plugins/RendererMessageHandler';
-import './plugins/RendererIframePreview';
+import './plugins/Renderer';
+import './plugins/RendererPreview';
 import './plugins/RendererRemote';
 import './plugins/Router';
 import './plugins/Nav';

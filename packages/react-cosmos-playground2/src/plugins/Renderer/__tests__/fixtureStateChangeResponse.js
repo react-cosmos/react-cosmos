@@ -15,23 +15,23 @@ import {
 } from '../testHelpers';
 
 // Plugins have side-effects: they register themselves
-// "urlParams" state is required for RendererMessageHandler plugin to work
+// "router" state is required for Renderer plugin to work
 import '../../Router';
 import '..';
 
 afterEach(cleanup);
 
 it('sets "fixtureState" renderer state', async () => {
-  const handleSetRenderersState = jest.fn();
+  const handleSetRendererState = jest.fn();
   renderPlayground(
     <>
-      <OnPluginState stateKey="renderers" handler={handleSetRenderersState} />
+      <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
       <SetPluginState
-        stateKey="urlParams"
-        value={{ fixturePath: 'fixtures/zwei.js' }}
+        pluginName="router"
+        value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
       />
       <SetPluginState
-        stateKey="renderers"
+        pluginName="renderer"
         value={{
           primaryRendererId: 'foo-renderer',
           renderers: {
@@ -49,7 +49,7 @@ it('sets "fixtureState" renderer state', async () => {
   );
 
   await wait(() =>
-    expect(handleSetRenderersState).toBeCalledWith(
+    expect(handleSetRendererState).toBeCalledWith(
       expect.objectContaining({
         renderers: {
           'foo-renderer': expect.objectContaining({
@@ -62,16 +62,16 @@ it('sets "fixtureState" renderer state', async () => {
 });
 
 it('sets primary and secondary "fixtureState" renderer states', async () => {
-  const handleSetRenderersState = jest.fn();
+  const handleSetRendererState = jest.fn();
   renderPlayground(
     <>
-      <OnPluginState stateKey="renderers" handler={handleSetRenderersState} />
+      <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
       <SetPluginState
-        stateKey="urlParams"
-        value={{ fixturePath: 'fixtures/zwei.js' }}
+        pluginName="router"
+        value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
       />
       <SetPluginState
-        stateKey="renderers"
+        pluginName="renderer"
         value={{
           primaryRendererId: 'foo-renderer',
           renderers: {
@@ -92,7 +92,7 @@ it('sets primary and secondary "fixtureState" renderer states', async () => {
   );
 
   await wait(() =>
-    expect(handleSetRenderersState).toBeCalledWith(
+    expect(handleSetRendererState).toBeCalledWith(
       expect.objectContaining({
         renderers: {
           'foo-renderer': expect.objectContaining({
@@ -108,16 +108,16 @@ it('sets primary and secondary "fixtureState" renderer states', async () => {
 });
 
 it('only sets secondary "fixtureState" renderer state', async () => {
-  const handleSetRenderersState = jest.fn();
+  const handleSetRendererState = jest.fn();
   renderPlayground(
     <>
-      <OnPluginState stateKey="renderers" handler={handleSetRenderersState} />
+      <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
       <SetPluginState
-        stateKey="urlParams"
-        value={{ fixturePath: 'fixtures/zwei.js' }}
+        pluginName="router"
+        value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
       />
       <SetPluginState
-        stateKey="renderers"
+        pluginName="renderer"
         value={{
           primaryRendererId: 'foo-renderer',
           renderers: {
@@ -138,7 +138,7 @@ it('only sets secondary "fixtureState" renderer state', async () => {
   );
 
   await wait(() =>
-    expect(handleSetRenderersState).toBeCalledWith(
+    expect(handleSetRendererState).toBeCalledWith(
       expect.objectContaining({
         renderers: {
           'foo-renderer': expect.objectContaining({
@@ -159,11 +159,11 @@ it('posts "setFixtureState" request to secondary renderer', async () => {
     <>
       <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
       <SetPluginState
-        stateKey="urlParams"
-        value={{ fixturePath: 'fixtures/zwei.js' }}
+        pluginName="router"
+        value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
       />
       <SetPluginState
-        stateKey="renderers"
+        pluginName="renderer"
         value={{
           primaryRendererId: 'foo-renderer',
           renderers: {

@@ -9,10 +9,10 @@ import type { RendererRequest } from 'react-cosmos-shared2/renderer';
 import type { PluginContextValue } from '../../plugin';
 
 type Props = {
-  rendererPreviewUrl: string
+  rendererUrl: string
 };
 
-export class RendererIframePreview extends Component<Props> {
+export class RendererPreview extends Component<Props> {
   static contextType = PluginContext;
 
   // https://github.com/facebook/flow/issues/7166
@@ -23,13 +23,13 @@ export class RendererIframePreview extends Component<Props> {
   removeRendererRequestListener = () => {};
 
   render() {
-    const { rendererPreviewUrl } = this.props;
+    const { rendererUrl } = this.props;
 
     return (
       <Iframe
         data-testid="preview-iframe"
         ref={this.handleIframeRef}
-        src={rendererPreviewUrl}
+        src={rendererUrl}
         frameBorder={0}
       />
     );

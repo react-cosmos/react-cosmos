@@ -3,10 +3,14 @@
 import { registerInitialPluginState } from '../../plugin';
 import { registerGlobalPlugin } from '../../Playground/registerGlobalPlugin';
 import { Router } from './Router';
-import { getUrlParamsFromLocation } from './window';
 
-export type { UrlParams } from './shared';
+import type { RouterState } from './shared';
+export type { UrlParams, RouterState } from './shared';
 
-registerInitialPluginState('urlParams', getUrlParamsFromLocation);
+const initialState: RouterState = {
+  urlParams: {}
+};
 
-registerGlobalPlugin('Router', Router);
+registerInitialPluginState('router', initialState);
+
+registerGlobalPlugin('router', Router);

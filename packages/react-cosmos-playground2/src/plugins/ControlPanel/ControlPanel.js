@@ -4,12 +4,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { PluginContext } from '../../plugin';
-import { getPrimaryRendererState } from '../RendererMessageHandler/selectors';
+import { getPrimaryRendererState } from '../Renderer/selectors';
 import { PropsState } from './PropsState';
 
 import type { RendererId } from 'react-cosmos-shared2/renderer';
 import type { ComponentFixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { PluginContextValue } from '../../plugin';
+import type { RendererConfig } from '../Renderer';
 import type { UrlParams } from '../Router';
 
 type Props = {};
@@ -20,11 +21,15 @@ export class ControlPanel extends Component<Props> {
   // https://github.com/facebook/flow/issues/7166
   context: PluginContextValue;
 
+  getUrlParams(): UrlParams {
+    return this.context.getState('router').urlParams;
+  }
+
   render() {
     const { getConfig, getState } = this.context;
-    const renderersState = getState('renderers');
-    const { primaryRendererId, renderers } = renderersState;
-    const primaryRendererState = getPrimaryRendererState(renderersState);
+    const rendererState = getState('renderer');
+    const { primaryRendererId, renderers } = rendererState;
+    const primaryRendererState = getPrimaryRendererState(rendererState);
 
     if (!primaryRendererState) {
       return null;
@@ -32,20 +37,20 @@ export class ControlPanel extends Component<Props> {
 
     const rendererIds = Object.keys(renderers);
     const { fixtureState } = primaryRendererState;
-    const { fixturePath, fullScreen }: UrlParams = getState('urlParams');
+    const { fixturePath, fullScreen } = this.getUrlParams();
 
     if (fullScreen || !fixturePath || !fixtureState) {
       return null;
     }
 
-    const rendererPreviewUrl = getConfig('rendererPreviewUrl');
+    const { webUrl }: RendererConfig = getConfig('renderer');
 
     return (
       <Container>
-        {rendererPreviewUrl && (
+        {webUrl && (
           <button
             onClick={() => {
-              copyToClipboard(getFullUrl(rendererPreviewUrl));
+              copyToClipboard(getFullUrl(webUrl));
             }}
           >
             Copy rendererer URL
@@ -88,7 +93,7 @@ export class ControlPanel extends Component<Props> {
   };
 
   createRendererSelectHandler = (rendererId: RendererId) => () => {
-    this.context.setState('renderers', prevState => ({
+    this.context.setState('renderer', prevState => ({
       ...prevState,
       primaryRendererId: rendererId
     }));

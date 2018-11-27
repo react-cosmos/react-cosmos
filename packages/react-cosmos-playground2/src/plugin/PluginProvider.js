@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { get } from 'lodash';
+import { has, get } from 'lodash';
 import { removeItem, updateState } from 'react-cosmos-shared2/util';
 import { PluginContext } from './PluginContext';
 import { getPluginConfig } from './config';
@@ -22,11 +22,23 @@ export class PluginProvider extends Component<Props, PluginContextValue> {
   };
 
   getPluginConfig = (configPath: string) => {
-    return get(this.state.pluginConfig, configPath);
+    const { pluginConfig } = this.state;
+
+    if (!has(pluginConfig, configPath)) {
+      throw new Error(`Config not found: ${configPath}`);
+    }
+
+    return get(pluginConfig, configPath);
   };
 
-  getPluginState = (stateKey: string) => {
-    return this.state.pluginState[stateKey];
+  getPluginState = (pluginName: string) => {
+    const { pluginState } = this.state;
+
+    if (!pluginState[pluginName]) {
+      throw new Error(`Plugin state not found: ${pluginName}`);
+    }
+
+    return pluginState[pluginName];
   };
 
   setPluginState = <T>(

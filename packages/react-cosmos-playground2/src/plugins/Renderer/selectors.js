@@ -1,11 +1,11 @@
 // @flow
 
-import type { RendererState, RenderersState } from './shared';
+import type { RendererState, RendererItemState } from './shared';
 
 export function getPrimaryRendererState({
   primaryRendererId,
   renderers
-}: RenderersState): null | RendererState {
+}: RendererState): null | RendererItemState {
   if (!primaryRendererId) {
     return null;
   }

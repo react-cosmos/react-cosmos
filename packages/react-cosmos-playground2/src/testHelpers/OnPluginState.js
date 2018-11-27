@@ -6,7 +6,7 @@ import { PluginContext } from '../plugin';
 import type { PluginContextValue } from '../plugin';
 
 export class OnPluginState extends Component<{
-  stateKey: string,
+  pluginName: string,
   handler: Function
 }> {
   static contextType = PluginContext;
@@ -15,8 +15,8 @@ export class OnPluginState extends Component<{
   context: PluginContextValue;
 
   render() {
-    const { stateKey, handler } = this.props;
-    handler(this.context.getState(stateKey));
+    const { pluginName, handler } = this.props;
+    handler(this.context.getState(pluginName));
 
     return null;
   }

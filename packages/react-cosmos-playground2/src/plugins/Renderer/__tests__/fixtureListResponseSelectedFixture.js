@@ -14,7 +14,7 @@ import {
 } from '../testHelpers';
 
 // Plugins have side-effects: they register themselves
-// "urlParams" state is required for RendererMessageHandler plugin to work
+// "router" state is required for Renderer plugin to work
 import '../../Router';
 import '..';
 
@@ -26,8 +26,8 @@ it('posts "selectFixture" renderer request', async () => {
     <>
       <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
       <SetPluginState
-        stateKey="urlParams"
-        value={{ fixturePath: 'fixtures/zwei.js' }}
+        pluginName="router"
+        value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
       />
       <EmitEvent
         eventName="renderer.response"
@@ -54,11 +54,11 @@ it('posts "selectFixture" renderer request with fixture state of primary rendere
     <>
       <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
       <SetPluginState
-        stateKey="urlParams"
-        value={{ fixturePath: 'fixtures/zwei.js' }}
+        pluginName="router"
+        value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
       />
       <SetPluginState
-        stateKey="renderers"
+        pluginName="renderer"
         value={{
           primaryRendererId: 'foo-renderer',
           renderers: {

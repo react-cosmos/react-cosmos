@@ -11,52 +11,48 @@ import { CallMethod } from '../../../testHelpers/CallMethod';
 import { mockFixtures, mockFixtureState } from '../testHelpers';
 
 // Plugins have side-effects: they register themselves
-// "urlParams" state is required for RendererMessageHandler plugin to work
+// "router" state is required for Renderer plugin to work
 import '../../Router';
 import '..';
 
 afterEach(cleanup);
 
-const renderersState = {
+const rendererState = {
   primaryRendererId: 'foo-renderer',
   renderers: {
     'foo-renderer': {
       fixtures: mockFixtures,
-      fixtureState: null
+      fixtureState: mockFixtureState
     },
     'bar-renderer': {
       fixtures: mockFixtures,
-      fixtureState: null
+      fixtureState: mockFixtureState
     }
   }
 };
 
-it('sets fixture state for all renderers', async () => {
-  const handleSetRenderersState = jest.fn();
+it('resets fixture state for all renderers', async () => {
+  const handleSetRendererState = jest.fn();
   renderPlayground(
     <>
-      <OnPluginState stateKey="renderers" handler={handleSetRenderersState} />
-      <SetPluginState
-        stateKey="urlParams"
-        value={{ fixturePath: 'fixtures/zwei.js' }}
-      />
-      <SetPluginState stateKey="renderers" value={renderersState} />
+      <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
+      <SetPluginState pluginName="renderer" value={rendererState} />
       <CallMethod
-        methodName="renderer.setFixtureState"
-        args={[mockFixtureState]}
+        methodName="renderer.selectFixture"
+        args={['fixtures/zwei.js']}
       />
     </>
   );
 
   await wait(() =>
-    expect(handleSetRenderersState).toBeCalledWith(
+    expect(handleSetRendererState).toBeCalledWith(
       expect.objectContaining({
         renderers: {
           'foo-renderer': expect.objectContaining({
-            fixtureState: mockFixtureState
+            fixtureState: null
           }),
           'bar-renderer': expect.objectContaining({
-            fixtureState: mockFixtureState
+            fixtureState: null
           })
         }
       })
@@ -64,41 +60,37 @@ it('sets fixture state for all renderers', async () => {
   );
 });
 
-it('posts "setFixtureState" renderer requests', async () => {
+it('posts "selectFixture" renderer requests', async () => {
   const handleRendererRequest = jest.fn();
   renderPlayground(
     <>
       <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
-      <SetPluginState
-        stateKey="urlParams"
-        value={{ fixturePath: 'fixtures/zwei.js' }}
-      />
-      <SetPluginState stateKey="renderers" value={renderersState} />
+      <SetPluginState pluginName="renderer" value={rendererState} />
       <CallMethod
-        methodName="renderer.setFixtureState"
-        args={[mockFixtureState]}
+        methodName="renderer.selectFixture"
+        args={['fixtures/zwei.js']}
       />
     </>
   );
 
   await wait(() =>
     expect(handleRendererRequest).toBeCalledWith({
-      type: 'setFixtureState',
+      type: 'selectFixture',
       payload: {
         rendererId: 'foo-renderer',
         fixturePath: 'fixtures/zwei.js',
-        fixtureState: mockFixtureState
+        fixtureState: null
       }
     })
   );
 
   await wait(() =>
     expect(handleRendererRequest).toBeCalledWith({
-      type: 'setFixtureState',
+      type: 'selectFixture',
       payload: {
         rendererId: 'bar-renderer',
         fixturePath: 'fixtures/zwei.js',
-        fixtureState: mockFixtureState
+        fixtureState: null
       }
     })
   );
