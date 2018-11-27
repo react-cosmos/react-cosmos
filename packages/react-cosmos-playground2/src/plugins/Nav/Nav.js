@@ -44,8 +44,8 @@ export class Nav extends Component<{}> {
         {fixturePath && (
           <Buttons>
             <button onClick={this.handleGoHome}>home</button>
-            <button onClick={this.handleGoFullScreen}>fullscreen</button>
             <Slot name="header-buttons" />
+            <button onClick={this.handleGoFullScreen}>fullscreen</button>
           </Buttons>
         )}
         <FixtureTree
