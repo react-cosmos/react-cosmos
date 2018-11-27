@@ -1,22 +1,14 @@
 // @flow
 
-let initialStateGetters = {};
+let initialState = {};
 
-export function registerInitialPluginState(
-  pluginName: string,
-  getter: () => any
-) {
-  initialStateGetters = {
-    ...initialStateGetters,
-    [pluginName]: getter
+export function registerInitialPluginState(pluginName: string, value: any) {
+  initialState = {
+    ...initialState,
+    [pluginName]: value
   };
 }
 
 export function getInitialPluginState() {
-  return Object.keys(initialStateGetters).reduce((initialState, pluginName) => {
-    return {
-      ...initialState,
-      [pluginName]: initialStateGetters[pluginName]()
-    };
-  }, {});
+  return initialState;
 }

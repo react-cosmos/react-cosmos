@@ -21,12 +21,11 @@ const defaultConfig: RendererConfig = {
 
 registerDefaultPluginConfig('renderer', defaultConfig);
 
-registerInitialPluginState(
-  'renderer',
-  (): RendererState => ({
-    primaryRendererId: null,
-    renderers: {}
-  })
-);
+const initialState: RendererState = {
+  primaryRendererId: null,
+  renderers: {}
+};
+
+registerInitialPluginState('renderer', initialState);
 
 registerGlobalPlugin('renderer', Renderer);

@@ -3,7 +3,11 @@
 import { Component } from 'react';
 import { isEqual } from 'lodash';
 import { PluginContext } from '../../plugin';
-import { pushUrlParamsToHistory, subscribeToLocationChanges } from './window';
+import {
+  getUrlParamsFromLocation,
+  pushUrlParamsToHistory,
+  subscribeToLocationChanges
+} from './window';
 
 import type { StateUpdater } from 'react-cosmos-shared2/util';
 import type { PluginContextValue } from '../../plugin';
@@ -46,6 +50,8 @@ export class Router extends Component<{}> {
     this.unregisterMethods = this.context.registerMethods({
       'router.setUrlParams': this.handleSetUrlParams
     });
+
+    this.setUrlParams(getUrlParamsFromLocation());
   }
 
   componentWillUnmount() {
