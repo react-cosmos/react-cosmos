@@ -1,9 +1,9 @@
 // @flow
 
-export type TreeNode<T> = {
-  values?: T[],
-  children: {
-    [dir: string]: TreeNode<T>
+export type TreeNode = {
+  fixtures?: string[],
+  dirs: {
+    [dirName: string]: TreeNode
   }
 };
 

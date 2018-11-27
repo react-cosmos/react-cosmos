@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import type { TreeNode, TreeExpansion } from './shared';
 
 type Props = {
-  node: TreeNode<string>,
+  node: TreeNode,
   parents: string[],
   treeExpansion: TreeExpansion,
   onSelect: (path: string) => mixed,
@@ -21,8 +21,8 @@ export class FixtureTreeNode extends Component<Props> {
       onSelect,
       onToggleExpansion
     } = this.props;
-    const { values = [], children } = node;
-    const childKeys = Object.keys(children);
+    const { fixtures = [], dirs } = node;
+    const dirNames = Object.keys(dirs);
     const nodePath = getNodePath(parents);
     const isRootNode = parents.length === 0;
     const isExpanded = isRootNode || treeExpansion[nodePath];
@@ -48,7 +48,7 @@ export class FixtureTreeNode extends Component<Props> {
         )}
         {isExpanded && (
           <>
-            {values.map(fixturePath => (
+            {fixtures.map(fixturePath => (
               <li
                 key={fixturePath}
                 style={{ marginLeft: getLeftMargin(parents.length) }}
@@ -58,13 +58,13 @@ export class FixtureTreeNode extends Component<Props> {
                 </a>
               </li>
             ))}
-            {childKeys.map(dir => {
-              const nextParents = [...parents, dir];
+            {dirNames.map(dirName => {
+              const nextParents = [...parents, dirName];
 
               return (
                 <FixtureTreeNode
                   key={getNodePath(nextParents)}
-                  node={children[dir]}
+                  node={dirs[dirName]}
                   parents={nextParents}
                   treeExpansion={treeExpansion}
                   onSelect={onSelect}
