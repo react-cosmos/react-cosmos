@@ -10,11 +10,11 @@ import type { ComponentType } from 'react';
 // TODO(vision): These plugins doesn't have UI so they shouldn't be React
 // components. The plugin UI should have an API at a higher level than React.
 export function registerGlobalPlugin(
-  name: string,
+  pluginName: string,
   PluginType: ComponentType<any>
 ) {
   register(
-    <Plugin name={name}>
+    <Plugin name={pluginName}>
       <Plug
         slot="global"
         render={({ children }) => (

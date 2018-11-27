@@ -3,6 +3,7 @@
 import styled from 'styled-components';
 import React, { Component } from 'react';
 import localForage from 'localforage';
+import { Slot } from 'react-plugin';
 import { PluginContext } from '../../plugin';
 import { getPrimaryRendererState } from '../Renderer/selectors';
 import { FixtureTree } from './FixtureTree';
@@ -44,6 +45,7 @@ export class Nav extends Component<{}> {
           <Buttons>
             <button onClick={this.handleGoHome}>home</button>
             <button onClick={this.handleGoFullScreen}>fullscreen</button>
+            <Slot name="header-buttons" />
           </Buttons>
         )}
         <FixtureTree

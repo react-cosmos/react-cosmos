@@ -7,7 +7,9 @@ import {
   PluginContext
 } from '../../plugin';
 import { register, Plugin, Plug } from 'react-plugin';
+import { createHeaderButtonSlot } from '../Nav/headerButton';
 import { ResponsivePreview } from './ResponsivePreview';
+import { ToggleButton } from './ToggleButton';
 
 import type { ResponsivePreviewConfig, ResponsivePreviewState } from './shared';
 export type { ResponsivePreviewConfig, ResponsivePreviewState } from './shared';
@@ -47,5 +49,6 @@ register(
         </PluginContext.Consumer>
       )}
     />
+    {createHeaderButtonSlot(ToggleButton)}
   </Plugin>
 );
