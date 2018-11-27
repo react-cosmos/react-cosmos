@@ -5,7 +5,7 @@ import { readFileSync } from 'fs';
 import { replaceKeys } from 'react-cosmos-shared2/util';
 
 import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
-import type { PlaygroundOptions } from 'react-cosmos-playground2';
+import type { PlaygroundConfig } from 'react-cosmos-playground2';
 
 export function getPlaygroundHtml(playgroundOpts: PlaygroundOpts) {
   return replaceKeys(getHtmlTemplate(), {
@@ -13,9 +13,9 @@ export function getPlaygroundHtml(playgroundOpts: PlaygroundOpts) {
   });
 }
 
-export function getPlaygroundHtmlNext(options: PlaygroundOptions) {
+export function getPlaygroundHtmlNext(config: PlaygroundConfig) {
   return replaceKeys(getHtmlTemplate(), {
-    __PLAYGROUND_OPTS__: JSON.stringify(options)
+    __PLAYGROUND_OPTS__: JSON.stringify(config)
   });
 }
 

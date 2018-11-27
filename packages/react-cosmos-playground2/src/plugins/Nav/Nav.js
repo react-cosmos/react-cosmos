@@ -7,6 +7,7 @@ import { PluginContext } from '../../plugin';
 import { getPrimaryRendererState } from '../Renderer/selectors';
 import { FixtureTree } from './FixtureTree';
 
+import type { CoreConfig } from '../../index.js.flow';
 import type { PluginContextValue } from '../../plugin';
 import type { UrlParams } from '../Router';
 
@@ -35,6 +36,8 @@ export class Nav extends Component<{}> {
       return null;
     }
 
+    const { projectId, fixturesDir }: CoreConfig = getConfig('core');
+
     return (
       <Container data-testid="nav">
         {fixturePath && (
@@ -45,8 +48,8 @@ export class Nav extends Component<{}> {
         )}
         <FixtureTree
           storageApi={localForage}
-          projectId={getConfig('projectId')}
-          fixturesDir={getConfig('fixturesDir')}
+          projectId={projectId}
+          fixturesDir={fixturesDir}
           fixtures={fixtures}
           onSelect={this.handleFixtureSelect}
         />

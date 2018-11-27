@@ -7,7 +7,7 @@ import express from 'express';
 import launchEditor from 'react-dev-utils/launchEditor';
 import { getPlaygroundHtml, getPlaygroundHtmlNext } from './playground-html';
 import { setupHttpProxy } from './http-proxy';
-import { getPlaygroundOptions } from './config-next';
+import { getPlaygroundConfig } from './config-next';
 
 import type { Config } from 'react-cosmos-flow/config';
 import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
@@ -28,15 +28,9 @@ export function createServerApp({
 
   const playgroundHtml = next
     ? getPlaygroundHtmlNext(
-        getPlaygroundOptions({
-          projectId: playgroundOpts.projectKey,
-          renderer: {
-            webUrl:
-              playgroundOpts.platform === 'web'
-                ? playgroundOpts.loaderUri
-                : null,
-            enableRemote: true
-          }
+        getPlaygroundConfig({
+          playgroundOpts,
+          enableRemoteRenderers: true
         })
       )
     : getPlaygroundHtml(playgroundOpts);

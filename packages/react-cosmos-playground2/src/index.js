@@ -7,8 +7,8 @@ import { getDomContainer } from 'react-cosmos-shared2/dom';
 import { Playground } from './Playground';
 import './load-plugins';
 
-import type { PlaygroundOptions } from './index.js.flow';
+import type { PlaygroundConfig } from './index.js.flow';
 
-export default function mount(options: PlaygroundOptions) {
-  render(<Playground options={options} />, getDomContainer());
+export default function mount(config: PlaygroundConfig) {
+  render(<Playground config={config} />, getDomContainer());
 }

@@ -1,6 +1,7 @@
 // @flow
 
-import type { PlaygroundOptions } from 'react-cosmos-playground2';
+import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
+import type { PlaygroundConfig } from 'react-cosmos-playground2';
 
 // TODO: Convert constants from this file into user config. But keep these
 // values hardcoded in the beta-testing period. This simplifies development and
@@ -8,19 +9,22 @@ import type { PlaygroundOptions } from 'react-cosmos-playground2';
 // Related https://github.com/react-cosmos/react-cosmos/issues/488
 export const FIXTURES_DIR = '__jsxfixtures__';
 
-const defaultOptions = {
-  fixturesDir: FIXTURES_DIR,
-  renderer: {
-    webUrl: null,
-    enableRemote: false
-  }
-};
-
-export function getPlaygroundOptions(
-  options: $Shape<PlaygroundOptions>
-): PlaygroundOptions {
+export function getPlaygroundConfig({
+  playgroundOpts,
+  enableRemoteRenderers
+}: {
+  playgroundOpts: PlaygroundOpts,
+  enableRemoteRenderers: boolean
+}): PlaygroundConfig {
   return {
-    ...defaultOptions,
-    ...options
+    core: {
+      projectId: playgroundOpts.projectKey,
+      fixturesDir: FIXTURES_DIR
+    },
+    renderer: {
+      webUrl:
+        playgroundOpts.platform === 'web' ? playgroundOpts.loaderUri : null,
+      enableRemote: enableRemoteRenderers
+    }
   };
 }

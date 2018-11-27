@@ -5,6 +5,8 @@ import { register, Plugin, Plug } from 'react-plugin';
 import { PluginContext } from '../../plugin';
 import { RendererPreview } from './RendererPreview';
 
+import type { RendererConfig } from '../Renderer';
+
 register(
   <Plugin name="renderer-preview">
     <Plug
@@ -12,11 +14,9 @@ register(
       render={() => (
         <PluginContext.Consumer>
           {({ getConfig }) => {
-            const rendererUrl = getConfig('renderer.webUrl');
+            const { webUrl }: RendererConfig = getConfig('renderer');
 
-            return rendererUrl ? (
-              <RendererPreview rendererUrl={rendererUrl} />
-            ) : null;
+            return webUrl ? <RendererPreview rendererUrl={webUrl} /> : null;
           }}
         </PluginContext.Consumer>
       )}

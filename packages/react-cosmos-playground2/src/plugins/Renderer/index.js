@@ -7,13 +7,19 @@ import {
 import { registerGlobalPlugin } from '../../Playground/registerGlobalPlugin';
 import { Renderer } from './Renderer';
 
-import type { RendererState } from './shared';
-export type { RendererItemState, RendererState } from './shared';
+import type { RendererConfig, RendererState } from './shared';
+export type {
+  RendererConfig,
+  RendererItemState,
+  RendererState
+} from './shared';
 
-registerDefaultPluginConfig('renderer', {
+const defaultConfig: RendererConfig = {
   webUrl: null,
   enableRemote: false
-});
+};
+
+registerDefaultPluginConfig('renderer', defaultConfig);
 
 registerInitialPluginState(
   'renderer',

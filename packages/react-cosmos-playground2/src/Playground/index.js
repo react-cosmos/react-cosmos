@@ -5,15 +5,15 @@ import styled from 'styled-components';
 import { Slot } from 'react-plugin';
 import { PluginProvider } from '../plugin';
 
-import type { PlaygroundOptions } from '../index.js.flow';
+import type { PlaygroundConfig } from '../index.js.flow';
 
 type Props = {
-  options: PlaygroundOptions
+  config: PlaygroundConfig
 };
 
-export function Playground({ options }: Props) {
+export function Playground({ config }: Props) {
   return (
-    <PluginProvider config={options}>
+    <PluginProvider config={config}>
       <Slot name="global" />
       <Container>
         <Slot name="left" />

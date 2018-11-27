@@ -8,7 +8,7 @@ import {
   getPlaygroundHtml,
   getPlaygroundHtmlNext
 } from '../shared/playground-html';
-import { getPlaygroundOptions } from '../shared/config-next';
+import { getPlaygroundConfig } from '../shared/config-next';
 import enhanceWebpackConfig from './webpack/enhance-webpack-config';
 import { getUserWebpackConfig } from './webpack/user-webpack-config';
 import { getPlaygroundOpts } from './playground-opts';
@@ -31,12 +31,9 @@ const exportPlaygroundFiles = (cosmosConfig, outputPath) => {
   const playgroundOpts = getPlaygroundOpts(cosmosConfig);
   const playgroundHtml = next
     ? getPlaygroundHtmlNext(
-        getPlaygroundOptions({
-          projectId: playgroundOpts.projectKey,
-          renderer: {
-            webUrl: playgroundOpts.loaderUri,
-            enableRemote: false
-          }
+        getPlaygroundConfig({
+          playgroundOpts,
+          enableRemoteRenderers: false
         })
       )
     : getPlaygroundHtml(playgroundOpts);

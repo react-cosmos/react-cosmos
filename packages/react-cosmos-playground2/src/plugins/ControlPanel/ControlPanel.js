@@ -10,6 +10,7 @@ import { PropsState } from './PropsState';
 import type { RendererId } from 'react-cosmos-shared2/renderer';
 import type { ComponentFixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { PluginContextValue } from '../../plugin';
+import type { RendererConfig } from '../Renderer';
 import type { UrlParams } from '../Router';
 
 type Props = {};
@@ -42,14 +43,14 @@ export class ControlPanel extends Component<Props> {
       return null;
     }
 
-    const webRendererUrl = getConfig('renderer.webUrl');
+    const { webUrl }: RendererConfig = getConfig('renderer');
 
     return (
       <Container>
-        {webRendererUrl && (
+        {webUrl && (
           <button
             onClick={() => {
-              copyToClipboard(getFullUrl(webRendererUrl));
+              copyToClipboard(getFullUrl(webUrl));
             }}
           >
             Copy rendererer URL
