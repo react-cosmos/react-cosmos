@@ -140,8 +140,8 @@ Run `npm run cosmos` or `yarn cosmos` and go to [localhost:8989](http://localhos
 >   "presets": ["@babel/env", "@babel/react"]
 > }
 > ```
-
-_NOTE: Babel v8 works differently than v7 and the package naming conventions changed. The above steps and Babel config are for the latest v8 version._
+>
+> _NOTE: The above `.babelrc` and `@babel/*` namespaced packages only apply to [Babel 7.x and above.](https://babeljs.io/docs/en/v7-migration)_
 
 #### Next steps
 
