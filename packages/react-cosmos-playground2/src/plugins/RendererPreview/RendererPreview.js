@@ -1,4 +1,3 @@
-/* eslint-env browser */
 // @flow
 
 import styled from 'styled-components';

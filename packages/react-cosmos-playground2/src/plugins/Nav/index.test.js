@@ -1,5 +1,4 @@
 // @flow
-/* eslint-env browser */
 
 import React from 'react';
 import {
