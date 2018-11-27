@@ -130,8 +130,10 @@ function renderPlayground(otherNodes) {
   return render(
     <PluginProvider
       config={{
-        projectId: 'mockProjectId',
-        fixturesDir: 'fixtures'
+        core: {
+          projectId: 'mockProjectId',
+          fixturesDir: 'fixtures'
+        }
       }}
     >
       <Slot name="left" />
