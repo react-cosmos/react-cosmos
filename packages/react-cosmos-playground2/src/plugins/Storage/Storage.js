@@ -19,8 +19,6 @@ export class Storage extends Component<{}> {
   unregisterMethods = () => {};
 
   componentDidMount() {
-    console.log(localForage);
-
     this.unregisterMethods = this.context.registerMethods({
       'storage.getItem': this.handleGetItem,
       'storage.setItem': this.handleSetItem
