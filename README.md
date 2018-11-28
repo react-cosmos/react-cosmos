@@ -133,13 +133,15 @@ Add package.json scripts
 
 Run `npm run cosmos` or `yarn cosmos` and go to [localhost:8989](http://localhost:8989) 🎉
 
-> If you rely on the default webpack config, make sure to install the Babel and webpack plugins yourself. Depending on your needs, you'll probably want `babel-preset-env babel-preset-react babel-loader style-loader css-loader html-webpack-plugin`. Finally, add `.babelrc` to your project root.
+> If you rely on the default webpack config, make sure to install the Babel and webpack plugins yourself. Depending on your needs, you'll probably want `@babel/core @babel/preset-env @babel/preset-react babel-loader style-loader css-loader html-webpack-plugin`. Finally, add `.babelrc` to your project root.
 >
 > ```
 > {
->   "presets": ["env", "react"]
+>   "presets": ["@babel/env", "@babel/react"]
 > }
 > ```
+>
+> _NOTE: The above `.babelrc` and `@babel/*` namespaced packages only apply to [Babel 7.x and above.](https://babeljs.io/docs/en/v7-migration)_
 
 #### Next steps
 
