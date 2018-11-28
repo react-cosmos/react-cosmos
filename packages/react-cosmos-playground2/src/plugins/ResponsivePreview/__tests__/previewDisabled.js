@@ -14,9 +14,9 @@ import '..';
 afterEach(cleanup);
 
 it('renders children of "rendererPreviewOuter" slot', () => {
-  const { queryByTestId } = renderPlayground();
+  const { getByTestId } = renderPlayground();
 
-  expect(queryByTestId('preview-mock')).toBeTruthy();
+  getByTestId('preview-mock');
 });
 
 it('does not render responsive header', () => {

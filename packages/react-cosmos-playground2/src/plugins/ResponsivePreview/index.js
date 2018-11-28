@@ -10,6 +10,7 @@ import { register, Plugin, Plug } from 'react-plugin';
 import { createHeaderButtonSlot } from '../Nav/headerButton';
 import { ResponsivePreview } from './ResponsivePreview';
 import { ToggleButton } from './ToggleButton';
+import { DEFAULT_DEVICES } from './shared';
 
 import type { ResponsivePreviewConfig, ResponsivePreviewState } from './shared';
 export type { ResponsivePreviewConfig, ResponsivePreviewState } from './shared';
@@ -17,14 +18,7 @@ export type { ResponsivePreviewConfig, ResponsivePreviewState } from './shared';
 const PLUGIN_NAME = 'responsive-preview';
 
 const defaultConfig: ResponsivePreviewConfig = {
-  devices: [
-    { label: 'iPhone 5', width: 320, height: 568 },
-    { label: 'iPhone 6', width: 375, height: 667 },
-    { label: 'iPhone 6 Plus', width: 414, height: 736 },
-    { label: 'Medium', width: 1024, height: 768 },
-    { label: 'Large', width: 1440, height: 900 },
-    { label: '1080p', width: 1920, height: 1080 }
-  ]
+  devices: DEFAULT_DEVICES
 };
 
 const initialState: ResponsivePreviewState = {

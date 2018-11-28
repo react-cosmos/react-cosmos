@@ -1,10 +1,12 @@
 // @flow
 
 import React from 'react';
-import { render, cleanup } from 'react-testing-library';
+import { wait, render, cleanup, fireEvent } from 'react-testing-library';
 import { Slot } from 'react-plugin';
 import { PluginProvider } from '../../../plugin';
 import { SetPluginState } from '../../../testHelpers/SetPluginState';
+import { OnPluginState } from '../../../testHelpers/OnPluginState';
+import { DEFAULT_DEVICES } from '../shared';
 
 // Plugins have side-effects: they register themselves
 // "router" state is required for the ResponsivePreview plugin to work
@@ -14,15 +16,15 @@ import '..';
 afterEach(cleanup);
 
 it('renders children of "rendererPreviewOuter" slot', () => {
-  const { queryByTestId } = renderPlayground();
+  const { getByTestId } = renderPlayground();
 
-  expect(queryByTestId('preview-mock')).toBeTruthy();
+  getByTestId('preview-mock');
 });
 
 it('renders responsive header', () => {
-  const { queryByTestId } = renderPlayground();
+  const { getByTestId } = renderPlayground();
 
-  expect(queryByTestId('responsive-header')).toBeTruthy();
+  getByTestId('responsive-header');
 });
 
 it('does not render responsive header in full screen mode', () => {
@@ -36,9 +38,41 @@ it('does not render responsive header in full screen mode', () => {
   expect(queryByTestId('responsive-header')).toBeNull();
 });
 
+it('renders responsive device labels', () => {
+  const { getByText } = renderPlayground();
+
+  DEFAULT_DEVICES.forEach(({ label }) => {
+    getByText(label);
+  });
+});
+
+it('sets "responsive-preview" state on device select', async () => {
+  const handleSetResponsivePreviewState = jest.fn();
+  const { getByText } = renderPlayground(
+    <OnPluginState
+      pluginName="responsive-preview"
+      handler={handleSetResponsivePreviewState}
+    />
+  );
+
+  fireEvent.click(getByText(/iphone 6 plus/i));
+
+  await wait(() =>
+    expect(handleSetResponsivePreviewState).lastCalledWith({
+      enabled: true,
+      viewport: { width: 414, height: 736 }
+    })
+  );
+});
+
 function renderPlayground(otherNodes) {
   return render(
-    <PluginProvider config={{ renderer: { webUrl: 'mockRendererUrl' } }}>
+    <PluginProvider
+      config={{
+        renderer: { webUrl: 'mockRendererUrl' },
+        responsivePreview: { devices: DEFAULT_DEVICES }
+      }}
+    >
       <Slot name="rendererPreviewOuter">
         <div data-testid="preview-mock" />
       </Slot>

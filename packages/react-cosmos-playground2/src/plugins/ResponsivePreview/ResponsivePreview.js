@@ -5,9 +5,14 @@ import styled from 'styled-components';
 import { PluginContext } from '../../plugin';
 
 import type { Node } from 'react';
+import type { SetState } from 'react-cosmos-shared2/util';
 import type { PluginContextValue } from '../../plugin';
 import type { UrlParams } from '../Router';
-import type { ResponsivePreviewState } from './shared';
+import type {
+  Viewport,
+  ResponsivePreviewConfig,
+  ResponsivePreviewState
+} from './shared';
 
 type Props = {
   children: Node
@@ -19,9 +24,17 @@ export class ResponsivePreview extends Component<Props> {
   // https://github.com/facebook/flow/issues/7166
   context: PluginContextValue;
 
+  getOwnConfig(): ResponsivePreviewConfig {
+    return this.context.getConfig('responsive-preview');
+  }
+
   getOwnState(): ResponsivePreviewState {
     return this.context.getState('responsive-preview');
   }
+
+  setOwnState: SetState<ResponsivePreviewState> = (stateChange, cb) => {
+    this.context.setState('responsive-preview', stateChange, cb);
+  };
 
   getUrlParams(): UrlParams {
     return this.context.getState('router').urlParams;
@@ -29,7 +42,7 @@ export class ResponsivePreview extends Component<Props> {
 
   render() {
     const { children } = this.props;
-    const { enabled } = this.getOwnState();
+    const { enabled, viewport } = this.getOwnState();
     const { fullScreen } = this.getUrlParams();
 
     // We don't simply do `return children` because it would cause a flicker
@@ -44,15 +57,36 @@ export class ResponsivePreview extends Component<Props> {
       );
     }
 
+    const { devices } = this.getOwnConfig();
+
     return (
       <Container>
         <Header data-testid="responsive-header">
-          Responsive controls go here
+          {devices.map(({ label, width, height }, idx) => {
+            const isSelected =
+              viewport &&
+              viewport.width === width &&
+              viewport.height === height;
+
+            return (
+              <button
+                key={idx}
+                disabled={isSelected}
+                onClick={this.createSelectViewportHandler({ width, height })}
+              >
+                {label}
+              </button>
+            );
+          })}
         </Header>
         <Preview key="preview">{children}</Preview>
       </Container>
     );
   }
+
+  createSelectViewportHandler = (viewport: Viewport) => () => {
+    this.setOwnState({ enabled: true, viewport });
+  };
 }
 
 const Container = styled.div`
