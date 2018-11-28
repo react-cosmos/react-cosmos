@@ -43,3 +43,7 @@ export const DEFAULT_VIEWPORT = {
   width: 320,
   height: 568
 };
+
+export function getResponsivePreviewStorageKey(projectId: string) {
+  return `cosmos-responsivePreview-${projectId}`;
+}

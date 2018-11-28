@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { PluginContext } from '../../plugin';
-import { DEFAULT_VIEWPORT } from './shared';
+import { DEFAULT_VIEWPORT, getResponsivePreviewStorageKey } from './shared';
 
 import type { SetState } from 'react-cosmos-shared2/util';
 import type { PluginContextValue } from '../../plugin';
@@ -22,13 +22,20 @@ export class ToggleButton extends Component<{}> {
     return <button onClick={this.handleClick}>responsive</button>;
   }
 
-  handleClick = () => {
+  handleClick = async () => {
+    const { getConfig, callMethod } = this.context;
+    const storageKey = getResponsivePreviewStorageKey(
+      getConfig('core.projectId')
+    );
+    const defaultViewport =
+      (await callMethod('storage.getItem', storageKey)) || DEFAULT_VIEWPORT;
+
     this.setOwnState(({ enabled, viewport }) =>
       enabled
         ? // https://github.com/facebook/flow/issues/2892#issuecomment-263055197
           // $FlowFixMe
           { enabled: false, viewport }
-        : { enabled: true, viewport: viewport || DEFAULT_VIEWPORT }
+        : { enabled: true, viewport: viewport || defaultViewport }
     );
   };
 }

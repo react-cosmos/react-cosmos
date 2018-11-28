@@ -4,22 +4,28 @@ import React from 'react';
 import { wait, render, cleanup, fireEvent } from 'react-testing-library';
 import { Slot } from 'react-plugin';
 import { PluginProvider } from '../../../plugin';
+import { RegisterMethod } from '../../../testHelpers/RegisterMethod';
 import { SetPluginState } from '../../../testHelpers/SetPluginState';
 import { OnPluginState } from '../../../testHelpers/OnPluginState';
-import { DEFAULT_VIEWPORT } from '../shared';
+import { DEFAULT_VIEWPORT, getResponsivePreviewStorageKey } from '../shared';
 
 // Plugins have side-effects: they register themselves
 import '..';
+
+const storageKey = getResponsivePreviewStorageKey('mockProjectId');
 
 afterEach(cleanup);
 
 it('sets enabled state', async () => {
   const handleSetReponsivePreviewState = jest.fn();
   const { getByText } = renderPlayground(
-    <OnPluginState
-      pluginName="responsive-preview"
-      handler={handleSetReponsivePreviewState}
-    />
+    <>
+      <RegisterMethod methodName="storage.getItem" handler={() => null} />
+      <OnPluginState
+        pluginName="responsive-preview"
+        handler={handleSetReponsivePreviewState}
+      />
+    </>
   );
 
   fireEvent.click(getByText(/responsive/i));
@@ -32,13 +38,44 @@ it('sets enabled state', async () => {
   );
 });
 
+it('sets enabled state with stored viewport', async () => {
+  const storage = {
+    [storageKey]: { width: 420, height: 420 }
+  };
+  const handleSetReponsivePreviewState = jest.fn();
+  const { getByText } = renderPlayground(
+    <>
+      <RegisterMethod
+        methodName="storage.getItem"
+        handler={key => Promise.resolve(storage[key])}
+      />
+      <OnPluginState
+        pluginName="responsive-preview"
+        handler={handleSetReponsivePreviewState}
+      />
+    </>
+  );
+
+  fireEvent.click(getByText(/responsive/i));
+
+  await wait(() =>
+    expect(handleSetReponsivePreviewState).lastCalledWith({
+      enabled: true,
+      viewport: { width: 420, height: 420 }
+    })
+  );
+});
+
 it('sets disabled state', async () => {
   const handleSetReponsivePreviewState = jest.fn();
   const { getByText } = renderPlayground(
-    <OnPluginState
-      pluginName="responsive-preview"
-      handler={handleSetReponsivePreviewState}
-    />
+    <>
+      <RegisterMethod methodName="storage.getItem" handler={() => null} />
+      <OnPluginState
+        pluginName="responsive-preview"
+        handler={handleSetReponsivePreviewState}
+      />
+    </>
   );
 
   const getButton = getByText(/responsive/i);
@@ -48,15 +85,49 @@ it('sets disabled state', async () => {
   await wait(() =>
     expect(handleSetReponsivePreviewState).lastCalledWith({
       enabled: false,
-      // Previous viewport is kept
       viewport: DEFAULT_VIEWPORT
+    })
+  );
+});
+
+it('sets disabled state with stored viewport', async () => {
+  const storage = {
+    [storageKey]: { width: 420, height: 420 }
+  };
+  const handleSetReponsivePreviewState = jest.fn();
+  const { getByText } = renderPlayground(
+    <>
+      <RegisterMethod
+        methodName="storage.getItem"
+        handler={key => Promise.resolve(storage[key])}
+      />
+      <OnPluginState
+        pluginName="responsive-preview"
+        handler={handleSetReponsivePreviewState}
+      />
+    </>
+  );
+
+  const getButton = getByText(/responsive/i);
+  fireEvent.click(getButton);
+  fireEvent.click(getButton);
+
+  await wait(() =>
+    expect(handleSetReponsivePreviewState).lastCalledWith({
+      enabled: false,
+      viewport: { width: 420, height: 420 }
     })
   );
 });
 
 function renderPlayground(otherNodes) {
   return render(
-    <PluginProvider config={{ renderer: { webUrl: 'mockRendererUrl' } }}>
+    <PluginProvider
+      config={{
+        core: { projectId: 'mockProjectId' },
+        renderer: { webUrl: 'mockRendererUrl' }
+      }}
+    >
       <Slot name="header-buttons" />
       <SetPluginState
         pluginName="responsive-preview"
