@@ -4,9 +4,10 @@ import React from 'react';
 import { wait, render, cleanup, fireEvent } from 'react-testing-library';
 import { Slot } from 'react-plugin';
 import { PluginProvider } from '../../../plugin';
+import { RegisterMethod } from '../../../testHelpers/RegisterMethod';
 import { SetPluginState } from '../../../testHelpers/SetPluginState';
 import { OnPluginState } from '../../../testHelpers/OnPluginState';
-import { DEFAULT_DEVICES } from '../shared';
+import { DEFAULT_DEVICES, getResponsivePreviewStorageKey } from '../shared';
 
 // Plugins have side-effects: they register themselves
 // "router" state is required for the ResponsivePreview plugin to work
@@ -14,6 +15,8 @@ import '../../Router';
 import '..';
 
 afterEach(cleanup);
+
+const storageKey = getResponsivePreviewStorageKey('mockProjectId');
 
 it('renders children of "rendererPreviewOuter" slot', () => {
   const { getByTestId } = renderPlayground();
@@ -49,10 +52,13 @@ it('renders responsive device labels', () => {
 it('sets "responsive-preview" state on device select', async () => {
   const handleSetResponsivePreviewState = jest.fn();
   const { getByText } = renderPlayground(
-    <OnPluginState
-      pluginName="responsive-preview"
-      handler={handleSetResponsivePreviewState}
-    />
+    <>
+      <RegisterMethod methodName="storage.setItem" handler={() => {}} />
+      <OnPluginState
+        pluginName="responsive-preview"
+        handler={handleSetResponsivePreviewState}
+      />
+    </>
   );
 
   fireEvent.click(getByText(/iphone 6 plus/i));
@@ -65,10 +71,28 @@ it('sets "responsive-preview" state on device select', async () => {
   );
 });
 
+it('saves viewport in storage on device select', async () => {
+  let storage = {};
+
+  const { getByText } = renderPlayground(
+    <RegisterMethod
+      methodName="storage.setItem"
+      handler={(key, value) => Promise.resolve((storage[key] = value))}
+    />
+  );
+
+  fireEvent.click(getByText(/iphone 6 plus/i));
+
+  await wait(() =>
+    expect(storage[storageKey]).toEqual({ width: 414, height: 736 })
+  );
+});
+
 function renderPlayground(otherNodes) {
   return render(
     <PluginProvider
       config={{
+        core: { projectId: 'mockProjectId' },
         renderer: { webUrl: 'mockRendererUrl' },
         responsivePreview: { devices: DEFAULT_DEVICES }
       }}
