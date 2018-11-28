@@ -23,12 +23,7 @@ export class ToggleButton extends Component<{}> {
   }
 
   handleClick = async () => {
-    const { getConfig, callMethod } = this.context;
-    const storageKey = getResponsivePreviewStorageKey(
-      getConfig('core.projectId')
-    );
-    const defaultViewport =
-      (await callMethod('storage.getItem', storageKey)) || DEFAULT_VIEWPORT;
+    const defaultViewport = await getDefaultViewport(this.context);
 
     this.setOwnState(({ enabled, viewport }) =>
       enabled
@@ -38,4 +33,12 @@ export class ToggleButton extends Component<{}> {
         : { enabled: true, viewport: viewport || defaultViewport }
     );
   };
+}
+
+async function getDefaultViewport({ getConfig, callMethod }) {
+  const projectId = getConfig('core.projectId');
+  const storageKey = getResponsivePreviewStorageKey(projectId);
+  const storedViewport = await callMethod('storage.getItem', storageKey);
+
+  return storedViewport || DEFAULT_VIEWPORT;
 }
