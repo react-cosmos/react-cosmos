@@ -99,11 +99,11 @@ it('sets "fullScreen" router param on fullscreen button click', () => {
 // This test confirms the existence of the "nav" element under normal
 // conditions, and thus the validity of the "full screen" test
 it('renders nav element', async () => {
-  const { queryByTestId } = renderPlayground(
+  const { getByTestId } = renderPlayground(
     <SetPluginState pluginName="renderer" value={mockRendererState} />
   );
 
-  await wait(() => expect(queryByTestId('nav')).toBeTruthy());
+  await waitForElement(() => getByTestId('nav'));
 });
 
 it('does not render nav element in full screen mode', async () => {
