@@ -8,6 +8,8 @@ import {
   wait,
   fireEvent
 } from 'react-testing-library';
+import { PluginProvider } from '../../../plugin';
+import { RegisterMethod } from '../../../testHelpers/RegisterMethod';
 import { FixtureTree } from '.';
 
 afterEach(cleanup);
@@ -21,29 +23,48 @@ const fixtures = [
 ];
 const treeExpansionStorageKey = `cosmos-treeExpansion-${projectId}`;
 
+const noopStorageGetItem = (
+  <RegisterMethod
+    methodName="storage.getItem"
+    handler={() => Promise.resolve(null)}
+  />
+);
+
+const noopStorageSetItem = (
+  <RegisterMethod
+    methodName="storage.setItem"
+    handler={() => Promise.resolve(null)}
+  />
+);
+
 it('hides nested fixture', async () => {
-  const { queryByText } = render(
-    <FixtureTree
-      storageApi={{ getItem: jest.fn(), setItem: jest.fn() }}
-      projectId={projectId}
-      fixturesDir={fixturesDir}
-      fixtures={fixtures}
-      onSelect={jest.fn()}
-    />
+  const { queryByText } = renderPlayground(
+    <>
+      {noopStorageGetItem}
+      <FixtureTree
+        projectId={projectId}
+        fixturesDir={fixturesDir}
+        fixtures={fixtures}
+        onSelect={jest.fn()}
+      />
+    </>
   );
 
   await wait(() => expect(queryByText('drei')).toBeNull());
 });
 
 it('shows nested fixture upon expanding dir', async () => {
-  const { getByText } = render(
-    <FixtureTree
-      storageApi={{ getItem: jest.fn(), setItem: jest.fn() }}
-      projectId={projectId}
-      fixturesDir={fixturesDir}
-      fixtures={fixtures}
-      onSelect={jest.fn()}
-    />
+  const { getByText } = renderPlayground(
+    <>
+      {noopStorageGetItem}
+      {noopStorageSetItem}
+      <FixtureTree
+        projectId={projectId}
+        fixturesDir={fixturesDir}
+        fixtures={fixtures}
+        onSelect={jest.fn()}
+      />
+    </>
   );
 
   fireEvent.click(getByText(/nested/i));
@@ -52,14 +73,17 @@ it('shows nested fixture upon expanding dir', async () => {
 });
 
 it('hides nested fixture upon collapsing dir', async () => {
-  const { queryByText, getByText } = render(
-    <FixtureTree
-      storageApi={{ getItem: jest.fn(), setItem: jest.fn() }}
-      projectId={projectId}
-      fixturesDir={fixturesDir}
-      fixtures={fixtures}
-      onSelect={jest.fn()}
-    />
+  const { queryByText, getByText } = renderPlayground(
+    <>
+      {noopStorageGetItem}
+      {noopStorageSetItem}
+      <FixtureTree
+        projectId={projectId}
+        fixturesDir={fixturesDir}
+        fixtures={fixtures}
+        onSelect={jest.fn()}
+      />
+    </>
   );
 
   fireEvent.click(getByText(/nested/i));
@@ -75,17 +99,20 @@ it('loads persistent tree expansion state', async () => {
     }
   };
 
-  const { getByText } = render(
-    <FixtureTree
-      storageApi={{
-        getItem: key => Promise.resolve(storage[key]),
-        setItem: jest.fn()
-      }}
-      projectId={projectId}
-      fixturesDir={fixturesDir}
-      fixtures={fixtures}
-      onSelect={jest.fn()}
-    />
+  const { getByText } = renderPlayground(
+    <>
+      <RegisterMethod
+        methodName="storage.getItem"
+        handler={key => Promise.resolve(storage[key])}
+      />
+      {noopStorageSetItem}
+      <FixtureTree
+        projectId={projectId}
+        fixturesDir={fixturesDir}
+        fixtures={fixtures}
+        onSelect={jest.fn()}
+      />
+    </>
   );
 
   await waitForElement(() => getByText('drei'));
@@ -96,22 +123,27 @@ it('persists tree expansion state', async () => {
     [treeExpansionStorageKey]: {}
   };
 
-  const { getByText } = render(
-    <FixtureTree
-      storageApi={{
-        getItem: jest.fn(),
-        setItem: (key, value) => {
-          storage[key] = value;
-        }
-      }}
-      projectId={projectId}
-      fixturesDir={fixturesDir}
-      fixtures={fixtures}
-      onSelect={jest.fn()}
-    />
+  const { getByText } = renderPlayground(
+    <>
+      {noopStorageGetItem}
+      <RegisterMethod
+        methodName="storage.setItem"
+        handler={(key, value) => Promise.resolve((storage[key] = value))}
+      />
+      <FixtureTree
+        projectId={projectId}
+        fixturesDir={fixturesDir}
+        fixtures={fixtures}
+        onSelect={jest.fn()}
+      />
+    </>
   );
 
   fireEvent.click(getByText(/nested/i));
 
   await wait(() => expect(storage[treeExpansionStorageKey].nested).toBe(true));
 });
+
+function renderPlayground(children) {
+  return render(<PluginProvider>{children}</PluginProvider>);
+}

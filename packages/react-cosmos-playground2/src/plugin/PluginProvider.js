@@ -87,7 +87,7 @@ export class PluginProvider extends Component<Props, PluginContextValue> {
       throw new Error(`Method not found: ${methodName}`);
     }
 
-    this.pluginMethods[methodName](...args);
+    return this.pluginMethods[methodName](...args);
   };
 
   eventListeners = {};
