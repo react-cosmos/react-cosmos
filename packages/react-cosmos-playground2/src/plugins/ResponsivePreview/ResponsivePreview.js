@@ -3,7 +3,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { PluginContext } from '../../plugin';
-import { getResponsiveViewportStorageKey } from './shared';
+import { getResponsivePreviewState } from './shared';
+import { storeViewport } from './storage';
 
 import type { Node } from 'react';
 import type { SetState } from 'react-cosmos-shared2/util';
@@ -90,21 +91,6 @@ export class ResponsivePreview extends Component<Props> {
       storeViewport(this.context);
     });
   };
-
-  storeViewport = () => {};
-}
-
-function getResponsivePreviewState({ getState }): ResponsivePreviewState {
-  return getState('responsive-preview');
-}
-
-function storeViewport(context) {
-  const { getConfig, callMethod } = context;
-  const projectId = getConfig('core.projectId');
-  const storageKey = getResponsiveViewportStorageKey(projectId);
-  const { viewport } = getResponsivePreviewState(context);
-
-  callMethod('storage.setItem', storageKey, viewport);
 }
 
 const Container = styled.div`

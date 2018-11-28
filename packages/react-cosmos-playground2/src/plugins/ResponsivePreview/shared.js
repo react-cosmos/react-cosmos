@@ -1,5 +1,7 @@
 // @flow
 
+import type { PluginContextValue } from '../../plugin';
+
 export type Viewport = { width: number, height: number };
 
 export type Device = Viewport & {
@@ -46,4 +48,10 @@ export const DEFAULT_VIEWPORT = {
 
 export function getResponsiveViewportStorageKey(projectId: string) {
   return `cosmos-responsiveViewport-${projectId}`;
+}
+
+export function getResponsivePreviewState({
+  getState
+}: PluginContextValue): ResponsivePreviewState {
+  return getState('responsive-preview');
 }
