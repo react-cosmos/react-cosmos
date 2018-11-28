@@ -13,13 +13,13 @@ import '..';
 
 afterEach(cleanup);
 
-it('renders "rendererPreviewOuter" children', () => {
+it('renders children of "rendererPreviewOuter" slot', () => {
   const { queryByTestId } = renderPlayground();
 
   expect(queryByTestId('preview-mock')).toBeTruthy();
 });
 
-it('does not render header', () => {
+it('does not render responsive header', () => {
   const { queryByTestId } = renderPlayground();
 
   expect(queryByTestId('responsive-header')).toBeNull();

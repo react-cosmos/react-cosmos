@@ -13,19 +13,19 @@ import '..';
 
 afterEach(cleanup);
 
-it('renders "rendererPreviewOuter" children', () => {
+it('renders children of "rendererPreviewOuter" slot', () => {
   const { queryByTestId } = renderPlayground();
 
   expect(queryByTestId('preview-mock')).toBeTruthy();
 });
 
-it('renders header', () => {
+it('renders responsive header', () => {
   const { queryByTestId } = renderPlayground();
 
   expect(queryByTestId('responsive-header')).toBeTruthy();
 });
 
-it('does not render header in full screen mode', () => {
+it('does not render responsive header in full screen mode', () => {
   const { queryByTestId } = renderPlayground(
     <SetPluginState
       pluginName="router"
