@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { PluginContext } from '../../plugin';
-import { getResponsivePreviewStorageKey } from './shared';
+import { getResponsiveViewportStorageKey } from './shared';
 
 import type { Node } from 'react';
 import type { SetState } from 'react-cosmos-shared2/util';
@@ -101,7 +101,7 @@ function getResponsivePreviewState({ getState }): ResponsivePreviewState {
 function storeViewport(context) {
   const { getConfig, callMethod } = context;
   const projectId = getConfig('core.projectId');
-  const storageKey = getResponsivePreviewStorageKey(projectId);
+  const storageKey = getResponsiveViewportStorageKey(projectId);
   const { viewport } = getResponsivePreviewState(context);
 
   callMethod('storage.setItem', storageKey, viewport);

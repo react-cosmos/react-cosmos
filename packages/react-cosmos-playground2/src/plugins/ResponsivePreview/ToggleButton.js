@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { PluginContext } from '../../plugin';
-import { DEFAULT_VIEWPORT, getResponsivePreviewStorageKey } from './shared';
+import { DEFAULT_VIEWPORT, getResponsiveViewportStorageKey } from './shared';
 
 import type { SetState } from 'react-cosmos-shared2/util';
 import type { PluginContextValue } from '../../plugin';
@@ -37,7 +37,7 @@ export class ToggleButton extends Component<{}> {
 
 async function getDefaultViewport({ getConfig, callMethod }) {
   const projectId = getConfig('core.projectId');
-  const storageKey = getResponsivePreviewStorageKey(projectId);
+  const storageKey = getResponsiveViewportStorageKey(projectId);
   const storedViewport = await callMethod('storage.getItem', storageKey);
 
   return storedViewport || DEFAULT_VIEWPORT;

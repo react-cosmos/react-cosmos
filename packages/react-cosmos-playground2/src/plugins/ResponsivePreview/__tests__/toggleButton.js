@@ -7,12 +7,12 @@ import { PluginProvider } from '../../../plugin';
 import { RegisterMethod } from '../../../testHelpers/RegisterMethod';
 import { SetPluginState } from '../../../testHelpers/SetPluginState';
 import { OnPluginState } from '../../../testHelpers/OnPluginState';
-import { DEFAULT_VIEWPORT, getResponsivePreviewStorageKey } from '../shared';
+import { DEFAULT_VIEWPORT, getResponsiveViewportStorageKey } from '../shared';
 
 // Plugins have side-effects: they register themselves
 import '..';
 
-const storageKey = getResponsivePreviewStorageKey('mockProjectId');
+const storageKey = getResponsiveViewportStorageKey('mockProjectId');
 
 afterEach(cleanup);
 

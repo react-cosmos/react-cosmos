@@ -7,7 +7,7 @@ import { PluginProvider } from '../../../plugin';
 import { RegisterMethod } from '../../../testHelpers/RegisterMethod';
 import { SetPluginState } from '../../../testHelpers/SetPluginState';
 import { OnPluginState } from '../../../testHelpers/OnPluginState';
-import { DEFAULT_DEVICES, getResponsivePreviewStorageKey } from '../shared';
+import { DEFAULT_DEVICES, getResponsiveViewportStorageKey } from '../shared';
 
 // Plugins have side-effects: they register themselves
 // "router" state is required for the ResponsivePreview plugin to work
@@ -16,7 +16,7 @@ import '..';
 
 afterEach(cleanup);
 
-const storageKey = getResponsivePreviewStorageKey('mockProjectId');
+const storageKey = getResponsiveViewportStorageKey('mockProjectId');
 
 it('renders children of "rendererPreviewOuter" slot', () => {
   const { getByTestId } = renderPlayground();
