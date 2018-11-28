@@ -5,7 +5,6 @@ import {
   render,
   cleanup,
   waitForElement,
-  wait,
   fireEvent
 } from 'react-testing-library';
 import { Slot } from 'react-plugin';
