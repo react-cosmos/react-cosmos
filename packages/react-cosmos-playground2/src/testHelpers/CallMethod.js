@@ -7,7 +7,8 @@ import type { PluginContextValue } from '../plugin';
 
 export class CallMethod extends Component<{
   methodName: string,
-  args?: any[]
+  args?: any[],
+  onReturn?: Function
 }> {
   static contextType = PluginContext;
 
@@ -15,10 +16,14 @@ export class CallMethod extends Component<{
   context: PluginContextValue;
 
   componentDidMount() {
-    const { methodName, args = [] } = this.props;
+    const { methodName, args = [], onReturn } = this.props;
 
     setTimeout(() => {
-      this.context.callMethod(methodName, ...args);
+      const returnVal = this.context.callMethod(methodName, ...args);
+
+      if (typeof onReturn === 'function') {
+        onReturn(returnVal);
+      }
     });
   }
 

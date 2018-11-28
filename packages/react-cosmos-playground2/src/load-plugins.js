@@ -1,5 +1,6 @@
 // @flow
 
+import './plugins/Storage';
 import './plugins/Renderer';
 import './plugins/RendererPreview';
 import './plugins/RendererRemote';
