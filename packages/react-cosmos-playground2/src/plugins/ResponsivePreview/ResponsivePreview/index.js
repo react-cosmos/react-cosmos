@@ -53,10 +53,6 @@ export class ResponsivePreview extends Component<Props, State> {
     return this.context.getConfig('responsive-preview');
   }
 
-  getOwnState() {
-    return getResponsivePreviewState(this.context);
-  }
-
   setOwnState: SetState<ResponsivePreviewState> = (stateChange, cb) => {
     this.context.setState('responsive-preview', stateChange, cb);
   };
