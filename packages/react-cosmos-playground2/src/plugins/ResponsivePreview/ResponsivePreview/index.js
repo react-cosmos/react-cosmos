@@ -6,6 +6,7 @@ import { isEqual } from 'lodash';
 import styled from 'styled-components';
 import { PluginContext } from '../../../plugin';
 import { getResponsivePreviewState } from '../shared';
+import { getPrimaryRendererState } from '../../Renderer/selectors';
 
 import type { Node } from 'react';
 import type { SetState } from 'react-cosmos-shared2/util';
@@ -64,17 +65,14 @@ export class ResponsivePreview extends Component<Props, State> {
   render() {
     const { children } = this.props;
     const { container, scale } = this.state;
-    const pluginState = this.getOwnState();
-    const { fullScreen } = this.getUrlParams();
-
-    // TODO: Read viewport from fixture state first
-    const viewport = pluginState.enabled && pluginState.viewport;
+    const { fixturePath, fullScreen } = this.getUrlParams();
+    const viewport = getViewport(this.context);
 
     // We don't simply do `return children` because it would cause a flicker
     // whenever switching between responsive and non responsive mode. By
     // returning the same element nesting between states for Preview the
     // component instances are preserved and the transition is seamless.
-    if (!viewport || fullScreen || !container) {
+    if (!fixturePath || fullScreen || !viewport || !container) {
       return (
         <Container>
           <Preview key="preview" ref={this.handleContainerRef}>
@@ -165,6 +163,22 @@ function getContainerSize(containerEl: ?HTMLElement) {
   const { width, height } = containerEl.getBoundingClientRect();
 
   return { width, height };
+}
+
+function getViewport(context: PluginContextValue): null | Viewport {
+  const { enabled, viewport } = getResponsivePreviewState(context);
+
+  return getFixtureViewport(context) || (enabled ? viewport : null);
+}
+
+function getFixtureViewport({ getState }: PluginContextValue): null | Viewport {
+  const primaryRendererState = getPrimaryRendererState(getState('renderer'));
+
+  return (
+    primaryRendererState &&
+    primaryRendererState.fixtureState &&
+    primaryRendererState.fixtureState.viewport
+  );
 }
 
 const Container = styled.div`

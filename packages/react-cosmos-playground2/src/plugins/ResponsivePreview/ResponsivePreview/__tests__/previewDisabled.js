@@ -7,7 +7,9 @@ import { PluginProvider } from '../../../../plugin';
 import { SetPluginState } from '../../../../testHelpers/SetPluginState';
 
 // Plugins have side-effects: they register themselves
-// "router" state is required for the ResponsivePreview plugin to work
+// "renderer" and "router" states are required for the ResponsivePreview plugin
+// to work
+import '../../../Renderer';
 import '../../../Router';
 import '../..';
 
@@ -20,14 +22,47 @@ it('renders children of "rendererPreviewOuter" slot', () => {
 });
 
 it('does not render responsive header', () => {
-  const { queryByTestId } = renderPlayground();
+  const { queryByTestId } = renderPlayground(
+    <SetPluginState
+      pluginName="router"
+      value={{ urlParams: { fixturePath: 'fooFixture.js' } }}
+    />
+  );
 
   expect(queryByTestId('responsive-header')).toBeNull();
+});
+
+it('renders responsive header when fixture has viewport', () => {
+  const { getByTestId } = renderPlayground(
+    <>
+      <SetPluginState
+        pluginName="router"
+        value={{ urlParams: { fixturePath: 'fooFixture.js' } }}
+      />
+      <SetPluginState
+        pluginName="renderer"
+        value={{
+          primaryRendererId: 'fooRendererId',
+          renderers: {
+            fooRendererId: {
+              fixtures: ['fooFixture.js'],
+              fixtureState: {
+                viewport: { width: 420, height: 420 }
+              }
+            }
+          }
+        }}
+      />
+    </>
+  );
+
+  getByTestId('responsive-header');
 });
 
 function renderPlayground(otherNodes) {
   return render(
     <PluginProvider config={{ renderer: { webUrl: 'mockRendererUrl' } }}>
+      {otherNodes}
       <Slot name="rendererPreviewOuter">
         <div data-testid="preview-mock" />
       </Slot>
@@ -35,7 +70,6 @@ function renderPlayground(otherNodes) {
         pluginName="responsive-preview"
         value={{ enabled: false, viewport: null }}
       />
-      {otherNodes}
     </PluginProvider>
   );
 }

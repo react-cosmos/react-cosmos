@@ -10,7 +10,9 @@ import { OnPluginState } from '../../../../testHelpers/OnPluginState';
 import { DEFAULT_DEVICES, getResponsiveViewportStorageKey } from '../../shared';
 
 // Plugins have side-effects: they register themselves
-// "router" state is required for the ResponsivePreview plugin to work
+// "renderer" and "router" states are required for the ResponsivePreview plugin
+// to work
+import '../../../Renderer';
 import '../../../Router';
 import '../..';
 
@@ -24,25 +26,41 @@ it('renders children of "rendererPreviewOuter" slot', () => {
   getByTestId('preview-mock');
 });
 
-it('renders responsive header', () => {
-  const { getByTestId } = renderPlayground();
+it('does not render responsive header when no fixture is selected', () => {
+  const { queryByTestId } = renderPlayground();
 
-  getByTestId('responsive-header');
+  expect(queryByTestId('responsive-header')).toBeNull();
 });
 
 it('does not render responsive header in full screen mode', () => {
   const { queryByTestId } = renderPlayground(
     <SetPluginState
       pluginName="router"
-      value={{ urlParams: { fullScreen: true } }}
+      value={{ urlParams: { fixturePath: 'fooFixture.js', fullScreen: true } }}
     />
   );
 
   expect(queryByTestId('responsive-header')).toBeNull();
 });
 
+it('renders responsive header', () => {
+  const { getByTestId } = renderPlayground(
+    <SetPluginState
+      pluginName="router"
+      value={{ urlParams: { fixturePath: 'fooFixture.js' } }}
+    />
+  );
+
+  getByTestId('responsive-header');
+});
+
 it('renders responsive device labels', () => {
-  const { getByText } = renderPlayground();
+  const { getByText } = renderPlayground(
+    <SetPluginState
+      pluginName="router"
+      value={{ urlParams: { fixturePath: 'fooFixture.js' } }}
+    />
+  );
 
   DEFAULT_DEVICES.forEach(({ label }) => {
     getByText(label);
@@ -54,6 +72,10 @@ it('sets "responsive-preview" state on device select', async () => {
   const { getByText } = renderPlayground(
     <>
       <RegisterMethod methodName="storage.setItem" handler={() => {}} />
+      <SetPluginState
+        pluginName="router"
+        value={{ urlParams: { fixturePath: 'fooFixture.js' } }}
+      />
       <OnPluginState
         pluginName="responsive-preview"
         handler={handleSetResponsivePreviewState}
@@ -75,10 +97,16 @@ it('saves viewport in storage on device select', async () => {
   let storage = {};
 
   const { getByText } = renderPlayground(
-    <RegisterMethod
-      methodName="storage.setItem"
-      handler={(key, value) => Promise.resolve((storage[key] = value))}
-    />
+    <>
+      <RegisterMethod
+        methodName="storage.setItem"
+        handler={(key, value) => Promise.resolve((storage[key] = value))}
+      />
+      <SetPluginState
+        pluginName="router"
+        value={{ urlParams: { fixturePath: 'fooFixture.js' } }}
+      />
+    </>
   );
 
   fireEvent.click(getByText(/iphone 6 plus/i));
@@ -97,6 +125,7 @@ function renderPlayground(otherNodes) {
         responsivePreview: { devices: DEFAULT_DEVICES }
       }}
     >
+      {otherNodes}
       <Slot name="rendererPreviewOuter">
         <div data-testid="preview-mock" />
       </Slot>
@@ -104,7 +133,6 @@ function renderPlayground(otherNodes) {
         pluginName="responsive-preview"
         value={{ enabled: true, viewport: { width: 320, height: 480 } }}
       />
-      {otherNodes}
     </PluginProvider>
   );
 }
