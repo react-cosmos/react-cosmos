@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { PluginContext } from '../../../plugin';
+import { getUrlParams } from '../../Router/selectors';
 import {
   getResponsivePreviewState,
   getFixtureViewport,
@@ -24,6 +25,10 @@ export class ToggleButton extends Component<{}> {
   };
 
   render() {
+    if (!getUrlParams(this.context).fixturePath) {
+      return null;
+    }
+
     return (
       <label style={{ userSelect: 'none' }}>
         <input

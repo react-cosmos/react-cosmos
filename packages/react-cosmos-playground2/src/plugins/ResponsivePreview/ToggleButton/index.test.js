@@ -204,6 +204,10 @@ function renderPlayground(otherNodes) {
       }}
     >
       <Slot name="header-buttons" />
+      <SetPluginState
+        pluginName="router"
+        value={{ urlParams: { fixturePath: 'fooFixture.js' } }}
+      />
       <SetPluginState pluginName="renderer" value={mockRendererState} />
       <SetPluginState
         pluginName="responsive-preview"
