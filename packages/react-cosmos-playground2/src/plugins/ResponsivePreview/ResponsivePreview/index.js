@@ -5,7 +5,14 @@ import React, { Component } from 'react';
 import { isEqual } from 'lodash';
 import styled from 'styled-components';
 import { PluginContext } from '../../../plugin';
-import { getResponsivePreviewState, getFixtureViewport } from '../shared';
+import {
+  getResponsivePreviewState,
+  getFixtureViewport,
+  setFixtureStateViewport
+} from '../shared';
+import { storeViewport } from '../storage';
+import { Header } from './Header';
+import { stretchStyle, getStyles } from './style';
 
 import type { Node } from 'react';
 import type { SetState } from 'react-cosmos-shared2/util';
@@ -16,9 +23,6 @@ import type {
   ResponsivePreviewConfig,
   ResponsivePreviewState
 } from '../shared';
-import { storeViewport } from '../storage';
-import { Header } from './Header';
-import { stretchStyle, getStyles } from './style';
 
 type Props = {
   children: Node
@@ -135,6 +139,7 @@ export class ResponsivePreview extends Component<Props, State> {
 
   createSelectViewportHandler = (viewport: Viewport) => () => {
     this.setOwnState({ enabled: true, viewport }, () => {
+      setFixtureStateViewport(this.context);
       storeViewport(this.context);
     });
   };

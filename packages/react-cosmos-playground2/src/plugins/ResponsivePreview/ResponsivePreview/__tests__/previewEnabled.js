@@ -3,6 +3,7 @@
 import React from 'react';
 import { wait, render, cleanup, fireEvent } from 'react-testing-library';
 import { Slot } from 'react-plugin';
+import { updateState } from 'react-cosmos-shared2/util';
 import { PluginProvider } from '../../../../plugin';
 import { RegisterMethod } from '../../../../testHelpers/RegisterMethod';
 import { SetPluginState } from '../../../../testHelpers/SetPluginState';
@@ -67,53 +68,90 @@ it('renders responsive device labels', () => {
   });
 });
 
-it('sets "responsive-preview" state on device select', async () => {
-  const handleSetResponsivePreviewState = jest.fn();
-  const { getByText } = renderPlayground(
-    <>
-      <RegisterMethod methodName="storage.setItem" handler={() => {}} />
-      <SetPluginState
-        pluginName="router"
-        value={{ urlParams: { fixturePath: 'fooFixture.js' } }}
-      />
-      <OnPluginState
-        pluginName="responsive-preview"
-        handler={handleSetResponsivePreviewState}
-      />
-    </>
-  );
+describe('on device select', () => {
+  it('sets "responsive-preview" state', async () => {
+    const handleSetResponsivePreviewState = jest.fn();
+    const { getByText } = renderPlayground(
+      <>
+        <RegisterMethod methodName="storage.setItem" handler={() => {}} />
+        <RegisterMethod
+          methodName="renderer.setFixtureState"
+          handler={() => {}}
+        />
+        <SetPluginState
+          pluginName="router"
+          value={{ urlParams: { fixturePath: 'fooFixture.js' } }}
+        />
+        <OnPluginState
+          pluginName="responsive-preview"
+          handler={handleSetResponsivePreviewState}
+        />
+      </>
+    );
 
-  fireEvent.click(getByText(/iphone 6 plus/i));
+    fireEvent.click(getByText(/iphone 6 plus/i));
 
-  await wait(() =>
-    expect(handleSetResponsivePreviewState).lastCalledWith({
-      enabled: true,
-      viewport: { width: 414, height: 736 }
-    })
-  );
-});
+    await wait(() =>
+      expect(handleSetResponsivePreviewState).lastCalledWith({
+        enabled: true,
+        viewport: { width: 414, height: 736 }
+      })
+    );
+  });
 
-it('saves viewport in storage on device select', async () => {
-  let storage = {};
+  it('sets viewport in fixture state', async () => {
+    let fixtureState = {};
+    const handleSetFixtureState = stateChange => {
+      fixtureState = updateState(fixtureState, stateChange);
+    };
 
-  const { getByText } = renderPlayground(
-    <>
-      <RegisterMethod
-        methodName="storage.setItem"
-        handler={(key, value) => Promise.resolve((storage[key] = value))}
-      />
-      <SetPluginState
-        pluginName="router"
-        value={{ urlParams: { fixturePath: 'fooFixture.js' } }}
-      />
-    </>
-  );
+    const { getByText } = renderPlayground(
+      <>
+        <RegisterMethod methodName="storage.setItem" handler={() => {}} />
+        <RegisterMethod
+          methodName="renderer.setFixtureState"
+          handler={handleSetFixtureState}
+        />
+        <SetPluginState
+          pluginName="router"
+          value={{ urlParams: { fixturePath: 'fooFixture.js' } }}
+        />
+      </>
+    );
 
-  fireEvent.click(getByText(/iphone 6 plus/i));
+    fireEvent.click(getByText(/iphone 6 plus/i));
 
-  await wait(() =>
-    expect(storage[storageKey]).toEqual({ width: 414, height: 736 })
-  );
+    await wait(() =>
+      expect(fixtureState.viewport).toEqual({ width: 414, height: 736 })
+    );
+  });
+
+  it('saves viewport in storage', async () => {
+    let storage = {};
+
+    const { getByText } = renderPlayground(
+      <>
+        <RegisterMethod
+          methodName="storage.setItem"
+          handler={(key, value) => Promise.resolve((storage[key] = value))}
+        />
+        <RegisterMethod
+          methodName="renderer.setFixtureState"
+          handler={() => {}}
+        />
+        <SetPluginState
+          pluginName="router"
+          value={{ urlParams: { fixturePath: 'fooFixture.js' } }}
+        />
+      </>
+    );
+
+    fireEvent.click(getByText(/iphone 6 plus/i));
+
+    await wait(() =>
+      expect(storage[storageKey]).toEqual({ width: 414, height: 736 })
+    );
+  });
 });
 
 function renderPlayground(otherNodes) {

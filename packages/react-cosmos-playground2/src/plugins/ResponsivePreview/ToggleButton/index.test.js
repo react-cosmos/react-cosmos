@@ -3,6 +3,7 @@
 import React from 'react';
 import { wait, render, cleanup, fireEvent } from 'react-testing-library';
 import { Slot } from 'react-plugin';
+import { updateState } from 'react-cosmos-shared2/util';
 import { PluginProvider } from '../../../plugin';
 import { RegisterMethod } from '../../../testHelpers/RegisterMethod';
 import { SetPluginState } from '../../../testHelpers/SetPluginState';
@@ -35,6 +36,10 @@ it('sets enabled state', async () => {
   const { getByText } = renderPlayground(
     <>
       <RegisterMethod methodName="storage.getItem" handler={() => null} />
+      <RegisterMethod
+        methodName="renderer.setFixtureState"
+        handler={() => {}}
+      />
       <OnPluginState
         pluginName="responsive-preview"
         handler={handleSetReponsivePreviewState}
@@ -63,6 +68,10 @@ it('sets enabled state with stored viewport', async () => {
         methodName="storage.getItem"
         handler={key => Promise.resolve(storage[key])}
       />
+      <RegisterMethod
+        methodName="renderer.setFixtureState"
+        handler={() => {}}
+      />
       <OnPluginState
         pluginName="responsive-preview"
         handler={handleSetReponsivePreviewState}
@@ -81,29 +90,24 @@ it('sets enabled state with stored viewport', async () => {
 });
 
 it('sets viewport in fixture state', async () => {
-  const handleSetRendererState = jest.fn();
+  let fixtureState = {};
+  const handleSetFixtureState = stateChange => {
+    fixtureState = updateState(fixtureState, stateChange);
+  };
+
   const { getByText } = renderPlayground(
     <>
       <RegisterMethod methodName="storage.getItem" handler={() => null} />
-      <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
+      <RegisterMethod
+        methodName="renderer.setFixtureState"
+        handler={handleSetFixtureState}
+      />
     </>
   );
 
   fireEvent.click(getByText(/responsive/i));
 
-  await wait(() =>
-    expect(handleSetRendererState).lastCalledWith({
-      primaryRendererId: 'fooRendererId',
-      renderers: {
-        fooRendererId: {
-          fixtures: ['fooFixture.js'],
-          fixtureState: {
-            viewport: DEFAULT_VIEWPORT
-          }
-        }
-      }
-    })
-  );
+  await wait(() => expect(fixtureState.viewport).toEqual(DEFAULT_VIEWPORT));
 });
 
 it('sets disabled state', async () => {
@@ -111,6 +115,10 @@ it('sets disabled state', async () => {
   const { getByText } = renderPlayground(
     <>
       <RegisterMethod methodName="storage.getItem" handler={() => null} />
+      <RegisterMethod
+        methodName="renderer.setFixtureState"
+        handler={() => {}}
+      />
       <OnPluginState
         pluginName="responsive-preview"
         handler={handleSetReponsivePreviewState}
@@ -141,6 +149,10 @@ it('sets disabled state with stored viewport', async () => {
         methodName="storage.getItem"
         handler={key => Promise.resolve(storage[key])}
       />
+      <RegisterMethod
+        methodName="renderer.setFixtureState"
+        handler={() => {}}
+      />
       <OnPluginState
         pluginName="responsive-preview"
         handler={handleSetReponsivePreviewState}
@@ -161,11 +173,18 @@ it('sets disabled state with stored viewport', async () => {
 });
 
 it('clears viewport in fixture state', async () => {
-  const handleSetRendererState = jest.fn();
+  let fixtureState = {};
+  const handleSetFixtureState = stateChange => {
+    fixtureState = updateState(fixtureState, stateChange);
+  };
+
   const { getByText } = renderPlayground(
     <>
       <RegisterMethod methodName="storage.getItem" handler={() => null} />
-      <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
+      <RegisterMethod
+        methodName="renderer.setFixtureState"
+        handler={handleSetFixtureState}
+      />
     </>
   );
 
@@ -173,19 +192,7 @@ it('clears viewport in fixture state', async () => {
   fireEvent.click(getButton);
   fireEvent.click(getButton);
 
-  await wait(() =>
-    expect(handleSetRendererState).lastCalledWith({
-      primaryRendererId: 'fooRendererId',
-      renderers: {
-        fooRendererId: {
-          fixtures: ['fooFixture.js'],
-          fixtureState: {
-            viewport: null
-          }
-        }
-      }
-    })
-  );
+  await wait(() => expect(fixtureState.viewport).toBe(null));
 });
 
 function renderPlayground(otherNodes) {

@@ -69,3 +69,12 @@ export function getFixtureViewport({
     primaryRendererState.fixtureState.viewport
   );
 }
+
+export function setFixtureStateViewport(context: PluginContextValue) {
+  const { enabled, viewport } = getResponsivePreviewState(context);
+
+  context.callMethod('renderer.setFixtureState', fixtureState => ({
+    ...fixtureState,
+    viewport: enabled ? viewport : null
+  }));
+}
