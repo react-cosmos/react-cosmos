@@ -890,6 +890,7 @@ Other proxies created by the Cosmos community:
 - [concept-not-found/react-cosmos-reach-router-proxy](https://github.com/concept-not-found/react-cosmos-reach-router-proxy) A proxy for [@reach/router](https://github.com/reach/router)
 - [react-intl-proxy](https://github.com/react-cosmos/react-cosmos/issues/636#issuecomment-377745222) A proxy for [yahoo/react-intl](https://github.com/yahoo/react-intl)
 - [simeonc/react-cosmos-background-proxy](https://github.com/SimeonC/react-cosmos-background-proxy) A simple proxy for applying global styles and modifying the fixture background (via applying styles on the playground iFrame body)
+- [omarzion/react-cosmos-stateful-proxy](https://github.com/omarzion/react-cosmos-stateful-proxy) A simple proxy wrapper to handle state for stateless components
 
 _What proxy would you create to improve DX?_
 
