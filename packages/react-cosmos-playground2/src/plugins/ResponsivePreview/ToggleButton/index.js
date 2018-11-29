@@ -1,12 +1,12 @@
 // @flow
 
 import React, { Component } from 'react';
-import { PluginContext } from '../../plugin';
-import { getDefaultViewport } from './storage';
+import { PluginContext } from '../../../plugin';
+import { getDefaultViewport } from '../storage';
 
 import type { SetState } from 'react-cosmos-shared2/util';
-import type { PluginContextValue } from '../../plugin';
-import type { ResponsivePreviewState } from './shared';
+import type { PluginContextValue } from '../../../plugin';
+import type { ResponsivePreviewState } from '../shared';
 
 export class ToggleButton extends Component<{}> {
   static contextType = PluginContext;

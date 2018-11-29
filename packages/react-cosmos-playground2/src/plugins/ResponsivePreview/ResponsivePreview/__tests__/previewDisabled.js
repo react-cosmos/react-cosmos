@@ -3,13 +3,13 @@
 import React from 'react';
 import { render, cleanup } from 'react-testing-library';
 import { Slot } from 'react-plugin';
-import { PluginProvider } from '../../../plugin';
-import { SetPluginState } from '../../../testHelpers/SetPluginState';
+import { PluginProvider } from '../../../../plugin';
+import { SetPluginState } from '../../../../testHelpers/SetPluginState';
 
 // Plugins have side-effects: they register themselves
 // "router" state is required for the ResponsivePreview plugin to work
-import '../../Router';
-import '..';
+import '../../../Router';
+import '../..';
 
 afterEach(cleanup);
 
