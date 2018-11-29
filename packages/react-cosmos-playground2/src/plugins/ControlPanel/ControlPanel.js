@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { PluginContext } from '../../plugin';
+import { getUrlParams } from '../Router/selectors';
 import { getPrimaryRendererState } from '../Renderer/selectors';
 import { PropsState } from './PropsState';
 
@@ -11,7 +12,6 @@ import type { RendererId } from 'react-cosmos-shared2/renderer';
 import type { ComponentFixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { PluginContextValue } from '../../plugin';
 import type { RendererConfig } from '../Renderer';
-import type { UrlParams } from '../Router';
 
 type Props = {};
 
@@ -20,10 +20,6 @@ export class ControlPanel extends Component<Props> {
 
   // https://github.com/facebook/flow/issues/7166
   context: PluginContextValue;
-
-  getUrlParams(): UrlParams {
-    return this.context.getState('router').urlParams;
-  }
 
   render() {
     const { getConfig, getState } = this.context;
@@ -37,7 +33,7 @@ export class ControlPanel extends Component<Props> {
 
     const rendererIds = Object.keys(renderers);
     const { fixtureState } = primaryRendererState;
-    const { fixturePath, fullScreen } = this.getUrlParams();
+    const { fixturePath, fullScreen } = getUrlParams(this.context);
 
     if (fullScreen || !fixturePath) {
       return null;

@@ -8,6 +8,7 @@ import {
   pushUrlParamsToHistory,
   subscribeToLocationChanges
 } from './window';
+import { getUrlParams } from './selectors';
 
 import type { StateUpdater } from 'react-cosmos-shared2/util';
 import type { PluginContextValue } from '../../plugin';
@@ -29,10 +30,6 @@ export class Router extends Component<{}> {
 
   setOwnState(stateChange: StateUpdater<RouterState>, cb?: Function) {
     this.context.setState('router', stateChange, cb);
-  }
-
-  getUrlParams(): UrlParams {
-    return this.getOwnState().urlParams;
   }
 
   setUrlParams(urlParams: UrlParams, cb?: Function) {
@@ -60,7 +57,7 @@ export class Router extends Component<{}> {
   }
 
   handleLocationChange = (urlParams: UrlParams) => {
-    const { fixturePath } = this.getUrlParams();
+    const { fixturePath } = getUrlParams(this.context);
     const hasFixtureChanged = urlParams.fixturePath !== fixturePath;
 
     this.setUrlParams(urlParams, () => {
@@ -71,7 +68,7 @@ export class Router extends Component<{}> {
   };
 
   handleSetUrlParams = (nextUrlParams: UrlParams) => {
-    const urlParams = this.getUrlParams();
+    const urlParams = getUrlParams(this.context);
     const hasFixtureChanged =
       nextUrlParams.fixturePath !== urlParams.fixturePath;
     const areUrlParamsEqual = isEqual(nextUrlParams, urlParams);
@@ -83,13 +80,13 @@ export class Router extends Component<{}> {
       }
 
       if (!areUrlParamsEqual) {
-        pushUrlParamsToHistory(this.getUrlParams());
+        pushUrlParamsToHistory(getUrlParams(this.context));
       }
     });
   };
 
   selectCurrentFixture() {
-    const { fixturePath } = this.getUrlParams();
+    const { fixturePath } = getUrlParams(this.context);
 
     if (!fixturePath) {
       return this.context.callMethod('renderer.unselectFixture');

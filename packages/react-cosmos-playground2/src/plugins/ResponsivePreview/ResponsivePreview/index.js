@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { isEqual } from 'lodash';
 import styled from 'styled-components';
 import { PluginContext } from '../../../plugin';
+import { getUrlParams } from '../../Router/selectors';
 import {
   getResponsivePreviewState,
   getFixtureViewport,
@@ -61,14 +62,10 @@ export class ResponsivePreview extends Component<Props, State> {
     this.context.setState('responsive-preview', stateChange, cb);
   };
 
-  getUrlParams(): UrlParams {
-    return this.context.getState('router').urlParams;
-  }
-
   render() {
     const { children } = this.props;
     const { container, scale } = this.state;
-    const { fixturePath, fullScreen } = this.getUrlParams();
+    const { fixturePath, fullScreen } = getUrlParams(this.context);
     const viewport = getViewport(this.context);
 
     // We don't simply do `return children` because it would cause a flicker

@@ -4,6 +4,7 @@ import { Component } from 'react';
 import { isEqual, mapValues, forEach } from 'lodash';
 import { updateState } from 'react-cosmos-shared2/util';
 import { PluginContext } from '../../plugin';
+import { getUrlParams } from '../Router/selectors';
 import { getPrimaryRendererState } from './selectors';
 
 import type { StateUpdater } from 'react-cosmos-shared2/util';
@@ -42,10 +43,6 @@ export class Renderer extends Component<{}> {
 
   setOwnState(stateChange: StateUpdater<RendererState>, cb?: Function) {
     this.context.setState('renderer', stateChange, cb);
-  }
-
-  getUrlParams(): UrlParams {
-    return this.context.getState('router').urlParams;
   }
 
   getRendererItemState(rendererId: RendererId) {
@@ -120,7 +117,7 @@ export class Renderer extends Component<{}> {
   };
 
   handleSetFixtureState: SetFixtureState = (stateChange, cb) => {
-    const { fixturePath } = this.getUrlParams();
+    const { fixturePath } = getUrlParams(this.context);
 
     if (!fixturePath) {
       console.warn(
@@ -181,7 +178,7 @@ export class Renderer extends Component<{}> {
     };
 
     this.setOwnState(updater, () => {
-      const { fixturePath } = this.getUrlParams();
+      const { fixturePath } = getUrlParams(this.context);
 
       if (fixturePath) {
         this.postSelectFixtureRequest(rendererId, fixturePath, fixtureState);
@@ -191,7 +188,7 @@ export class Renderer extends Component<{}> {
 
   handleFixtureStateChangeResponse({ payload }: FixtureStateChangeResponse) {
     const { rendererId, fixturePath, fixtureState } = payload;
-    const urlParams = this.getUrlParams();
+    const urlParams = getUrlParams(this.context);
     const rendererItemState = this.getRendererItemState(rendererId);
 
     if (isEqual(fixtureState, rendererItemState.fixtureState)) {
