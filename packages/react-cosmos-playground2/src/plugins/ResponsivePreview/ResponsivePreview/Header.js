@@ -41,7 +41,7 @@ export class Header extends Component<Props> {
         })}
         <label style={{ userSelect: 'none' }}>
           <input type="checkbox" checked={scale} onChange={toggleScale} />
-          Scale
+          scale
         </label>
       </Container>
     );

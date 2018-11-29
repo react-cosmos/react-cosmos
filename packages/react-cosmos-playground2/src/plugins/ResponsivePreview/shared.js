@@ -1,5 +1,7 @@
 // @flow
 
+import { getPrimaryRendererState } from '../Renderer/selectors';
+
 import type { PluginContextValue } from '../../plugin';
 
 export type Viewport = { width: number, height: number };
@@ -54,4 +56,16 @@ export function getResponsivePreviewState({
   getState
 }: PluginContextValue): ResponsivePreviewState {
   return getState('responsive-preview');
+}
+
+export function getFixtureViewport({
+  getState
+}: PluginContextValue): null | Viewport {
+  const primaryRendererState = getPrimaryRendererState(getState('renderer'));
+
+  return (
+    primaryRendererState &&
+    primaryRendererState.fixtureState &&
+    primaryRendererState.fixtureState.viewport
+  );
 }

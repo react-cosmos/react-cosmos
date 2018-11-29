@@ -5,8 +5,7 @@ import React, { Component } from 'react';
 import { isEqual } from 'lodash';
 import styled from 'styled-components';
 import { PluginContext } from '../../../plugin';
-import { getResponsivePreviewState } from '../shared';
-import { getPrimaryRendererState } from '../../Renderer/selectors';
+import { getResponsivePreviewState, getFixtureViewport } from '../shared';
 
 import type { Node } from 'react';
 import type { SetState } from 'react-cosmos-shared2/util';
@@ -169,16 +168,6 @@ function getViewport(context: PluginContextValue): null | Viewport {
   const { enabled, viewport } = getResponsivePreviewState(context);
 
   return getFixtureViewport(context) || (enabled ? viewport : null);
-}
-
-function getFixtureViewport({ getState }: PluginContextValue): null | Viewport {
-  const primaryRendererState = getPrimaryRendererState(getState('renderer'));
-
-  return (
-    primaryRendererState &&
-    primaryRendererState.fixtureState &&
-    primaryRendererState.fixtureState.viewport
-  );
 }
 
 const Container = styled.div`
