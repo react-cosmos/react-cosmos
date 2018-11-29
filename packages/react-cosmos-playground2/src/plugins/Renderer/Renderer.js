@@ -20,7 +20,6 @@ import type {
   SetFixtureState
 } from 'react-cosmos-shared2/fixtureState';
 import type { PluginContextValue } from '../../plugin';
-import type { UrlParams } from '../Router';
 import type { RendererState, RendererItemState } from './shared';
 
 const DEFAULT_RENDERER_STATE = {

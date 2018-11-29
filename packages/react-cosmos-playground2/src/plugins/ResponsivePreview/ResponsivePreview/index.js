@@ -18,7 +18,6 @@ import { stretchStyle, getStyles } from './style';
 import type { Node } from 'react';
 import type { SetState } from 'react-cosmos-shared2/util';
 import type { PluginContextValue } from '../../../plugin';
-import type { UrlParams } from '../../Router';
 import type {
   Viewport,
   ResponsivePreviewConfig,
