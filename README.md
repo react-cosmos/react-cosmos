@@ -133,13 +133,15 @@ Add package.json scripts
 
 Run `npm run cosmos` or `yarn cosmos` and go to [localhost:8989](http://localhost:8989) 🎉
 
-> If you rely on the default webpack config, make sure to install the Babel and webpack plugins yourself. Depending on your needs, you'll probably want `babel-preset-env babel-preset-react babel-loader style-loader css-loader html-webpack-plugin`. Finally, add `.babelrc` to your project root.
+> If you rely on the default webpack config, make sure to install the Babel and webpack plugins yourself. Depending on your needs, you'll probably want `@babel/core @babel/preset-env @babel/preset-react babel-loader style-loader css-loader html-webpack-plugin`. Finally, add `.babelrc` to your project root.
 >
 > ```
 > {
->   "presets": ["env", "react"]
+>   "presets": ["@babel/env", "@babel/react"]
 > }
 > ```
+>
+> _NOTE: The above `.babelrc` and `@babel/*` namespaced packages only apply to [Babel 7.x and above.](https://babeljs.io/docs/en/v7-migration)_
 
 #### Next steps
 
@@ -888,6 +890,7 @@ Other proxies created by the Cosmos community:
 - [concept-not-found/react-cosmos-reach-router-proxy](https://github.com/concept-not-found/react-cosmos-reach-router-proxy) A proxy for [@reach/router](https://github.com/reach/router)
 - [react-intl-proxy](https://github.com/react-cosmos/react-cosmos/issues/636#issuecomment-377745222) A proxy for [yahoo/react-intl](https://github.com/yahoo/react-intl)
 - [simeonc/react-cosmos-background-proxy](https://github.com/SimeonC/react-cosmos-background-proxy) A simple proxy for applying global styles and modifying the fixture background (via applying styles on the playground iFrame body)
+- [omarzion/react-cosmos-stateful-proxy](https://github.com/omarzion/react-cosmos-stateful-proxy) A simple proxy wrapper to handle state for stateless components
 
 _What proxy would you create to improve DX?_
 
