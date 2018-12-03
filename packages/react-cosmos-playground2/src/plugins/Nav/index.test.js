@@ -1,12 +1,10 @@
 // @flow
-/* eslint-env browser */
 
 import React from 'react';
 import {
   render,
   cleanup,
   waitForElement,
-  wait,
   fireEvent
 } from 'react-testing-library';
 import { Slot } from 'react-plugin';
@@ -31,6 +29,13 @@ const mockRendererState = {
     }
   }
 };
+
+const noopStorageGetItem = (
+  <RegisterMethod
+    methodName="storage.getItem"
+    handler={() => Promise.resolve(null)}
+  />
+);
 
 it('renders fixture list from renderer state', async () => {
   const { getByText } = renderPlayground(
@@ -76,6 +81,17 @@ it('clears router params on home button click', async () => {
   expect(setUrlParams).toBeCalledWith({});
 });
 
+it('hides fullscreen button when no fixture is selected', () => {
+  const { queryByText } = renderPlayground(
+    <>
+      <SetPluginState pluginName="renderer" value={mockRendererState} />
+      <SetPluginState pluginName="router" value={{ urlParams: {} }} />
+    </>
+  );
+
+  expect(queryByText(/fullscreen/i)).toBeNull();
+});
+
 it('sets "fullScreen" router param on fullscreen button click', () => {
   const setUrlParams = jest.fn();
   const { getByText } = renderPlayground(
@@ -100,11 +116,11 @@ it('sets "fullScreen" router param on fullscreen button click', () => {
 // This test confirms the existence of the "nav" element under normal
 // conditions, and thus the validity of the "full screen" test
 it('renders nav element', async () => {
-  const { queryByTestId } = renderPlayground(
+  const { getByTestId } = renderPlayground(
     <SetPluginState pluginName="renderer" value={mockRendererState} />
   );
 
-  await wait(() => expect(queryByTestId('nav')).toBeTruthy());
+  await waitForElement(() => getByTestId('nav'));
 });
 
 it('does not render nav element in full screen mode', async () => {
@@ -137,6 +153,7 @@ function renderPlayground(otherNodes) {
       }}
     >
       <Slot name="left" />
+      {noopStorageGetItem}
       {otherNodes}
     </PluginProvider>
   );

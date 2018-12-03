@@ -6,7 +6,6 @@ import { Slot } from 'react-plugin';
 import { PluginProvider } from '../../../plugin';
 import { OnEvent } from '../../../testHelpers/OnEvent';
 import { SetPluginState } from '../../../testHelpers/SetPluginState';
-import { OnPluginState } from '../../../testHelpers/OnPluginState';
 import { CallMethod } from '../../../testHelpers/CallMethod';
 import { mockFixtures, mockFixtureState } from '../testHelpers';
 
@@ -30,35 +29,6 @@ const rendererState = {
     }
   }
 };
-
-it('resets fixture state for all renderers', async () => {
-  const handleSetRendererState = jest.fn();
-  renderPlayground(
-    <>
-      <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
-      <SetPluginState pluginName="renderer" value={rendererState} />
-      <CallMethod
-        methodName="renderer.selectFixture"
-        args={['fixtures/zwei.js']}
-      />
-    </>
-  );
-
-  await wait(() =>
-    expect(handleSetRendererState).toBeCalledWith(
-      expect.objectContaining({
-        renderers: {
-          'foo-renderer': expect.objectContaining({
-            fixtureState: null
-          }),
-          'bar-renderer': expect.objectContaining({
-            fixtureState: null
-          })
-        }
-      })
-    )
-  );
-});
 
 it('posts "selectFixture" renderer requests', async () => {
   const handleRendererRequest = jest.fn();

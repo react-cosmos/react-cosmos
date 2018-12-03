@@ -275,6 +275,7 @@ class FixtureCaptureInner extends Component<InnerProps> {
     // Use state updater callback to ensure concurrent setFixtureState calls
     // don't cancel out each other.
     setFixtureState(fixtureState => ({
+      ...fixtureState,
       components: createCompFixtureState({
         fixtureState,
         decoratorId,
@@ -303,6 +304,7 @@ class FixtureCaptureInner extends Component<InnerProps> {
       // don't cancel out each other.
       setFixtureState(
         fixtureState => ({
+          ...fixtureState,
           components: updateCompFixtureState({
             fixtureState,
             decoratorId,
@@ -328,6 +330,7 @@ class FixtureCaptureInner extends Component<InnerProps> {
     // don't cancel out each other.
     setFixtureState(fixtureState => {
       return {
+        ...fixtureState,
         components: removeItemMatch(getCompFixtureStates(fixtureState), matcher)
       };
     });

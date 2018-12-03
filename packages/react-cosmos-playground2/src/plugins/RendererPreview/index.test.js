@@ -17,8 +17,8 @@ afterEach(cleanup);
 it('renders iframe with config.renderer.webUrl src', () => {
   const renderer = renderPlayground();
 
-  expect(getIframe(renderer)).toBeTruthy();
-  expect(getIframe(renderer).src).toMatch('mockRendererUrl');
+  const iframe = getIframe(renderer);
+  expect(iframe.src).toMatch('mockRendererUrl');
 });
 
 it('posts renderer request message to iframe', async () => {

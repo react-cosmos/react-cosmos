@@ -50,7 +50,7 @@ export function getCompFixtureStates(
   fixtureState: null | FixtureState,
   decoratorId?: FixtureDecoratorId
 ): ComponentFixtureState[] {
-  if (!fixtureState) {
+  if (!fixtureState || !fixtureState.components) {
     return [];
   }
 

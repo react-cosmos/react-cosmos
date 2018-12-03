@@ -11,6 +11,7 @@ const initialState: RouterState = {
   urlParams: {}
 };
 
-registerInitialPluginState('router', initialState);
+const PLUGIN_NAME = 'router';
 
-registerGlobalPlugin('router', Router);
+registerInitialPluginState(PLUGIN_NAME, initialState);
+registerGlobalPlugin(PLUGIN_NAME, Router);

@@ -2,24 +2,20 @@
 
 import styled from 'styled-components';
 import React, { Component } from 'react';
-import localForage from 'localforage';
+import { Slot } from 'react-plugin';
 import { PluginContext } from '../../plugin';
+import { getUrlParams } from '../Router/selectors';
 import { getPrimaryRendererState } from '../Renderer/selectors';
 import { FixtureTree } from './FixtureTree';
 
 import type { CoreConfig } from '../../index.js.flow';
 import type { PluginContextValue } from '../../plugin';
-import type { UrlParams } from '../Router';
 
 export class Nav extends Component<{}> {
   static contextType = PluginContext;
 
   // https://github.com/facebook/flow/issues/7166
   context: PluginContextValue;
-
-  getUrlParams(): UrlParams {
-    return this.context.getState('router').urlParams;
-  }
 
   render() {
     const { getConfig, getState } = this.context;
@@ -30,7 +26,7 @@ export class Nav extends Component<{}> {
     }
 
     const { fixtures } = primaryRendererState;
-    const { fixturePath, fullScreen } = this.getUrlParams();
+    const { fixturePath, fullScreen } = getUrlParams(this.context);
 
     if (fullScreen) {
       return null;
@@ -40,14 +36,16 @@ export class Nav extends Component<{}> {
 
     return (
       <Container data-testid="nav">
-        {fixturePath && (
-          <Buttons>
-            <button onClick={this.handleGoHome}>home</button>
+        <Buttons>
+          <button disabled={!fixturePath} onClick={this.handleGoHome}>
+            home
+          </button>
+          <Slot name="header-buttons" />
+          {fixturePath && (
             <button onClick={this.handleGoFullScreen}>fullscreen</button>
-          </Buttons>
-        )}
+          )}
+        </Buttons>
         <FixtureTree
-          storageApi={localForage}
           projectId={projectId}
           fixturesDir={fixturesDir}
           fixtures={fixtures}
@@ -67,7 +65,7 @@ export class Nav extends Component<{}> {
 
   handleGoFullScreen = () => {
     const { callMethod } = this.context;
-    const { fixturePath } = this.getUrlParams();
+    const { fixturePath } = getUrlParams(this.context);
 
     callMethod('router.setUrlParams', {
       fixturePath,

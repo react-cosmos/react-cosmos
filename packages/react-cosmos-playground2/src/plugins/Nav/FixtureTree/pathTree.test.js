@@ -10,27 +10,27 @@ const paths = [
 ];
 
 const tree = {
-  values: [],
-  children: {
+  fixtures: [],
+  dirs: {
     __jsxfixtures__: {
-      children: {},
-      values: ['__jsxfixtures__/welcomeMessage.js']
+      dirs: {},
+      fixtures: ['__jsxfixtures__/welcomeMessage.js']
     },
     components: {
-      children: {
+      dirs: {
         Counter: {
-          children: {
+          dirs: {
             __jsxfixtures__: {
-              children: {
+              dirs: {
                 mockedState: {
-                  children: {},
-                  values: [
+                  dirs: {},
+                  fixtures: [
                     'components/Counter/__jsxfixtures__/mockedState/largeNumber.js',
                     'components/Counter/__jsxfixtures__/mockedState/smallNumber.js'
                   ]
                 }
               },
-              values: ['components/Counter/__jsxfixtures__/defaultState.js']
+              fixtures: ['components/Counter/__jsxfixtures__/defaultState.js']
             }
           }
         }
@@ -40,21 +40,21 @@ const tree = {
 };
 
 const collapsedTree = {
-  values: ['__jsxfixtures__/welcomeMessage.js'],
-  children: {
+  fixtures: ['__jsxfixtures__/welcomeMessage.js'],
+  dirs: {
     components: {
-      children: {
+      dirs: {
         Counter: {
-          children: {
+          dirs: {
             mockedState: {
-              children: {},
-              values: [
+              dirs: {},
+              fixtures: [
                 'components/Counter/__jsxfixtures__/mockedState/largeNumber.js',
                 'components/Counter/__jsxfixtures__/mockedState/smallNumber.js'
               ]
             }
           },
-          values: ['components/Counter/__jsxfixtures__/defaultState.js']
+          fixtures: ['components/Counter/__jsxfixtures__/defaultState.js']
         }
       }
     }

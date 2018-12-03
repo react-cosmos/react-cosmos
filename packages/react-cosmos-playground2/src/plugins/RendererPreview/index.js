@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { register, Plugin, Plug } from 'react-plugin';
+import { register, Plugin, Plug, Slot } from 'react-plugin';
 import { PluginContext } from '../../plugin';
 import { RendererPreview } from './RendererPreview';
 
@@ -16,7 +16,13 @@ register(
           {({ getConfig }) => {
             const { webUrl }: RendererConfig = getConfig('renderer');
 
-            return webUrl ? <RendererPreview rendererUrl={webUrl} /> : null;
+            return (
+              webUrl && (
+                <Slot name="rendererPreviewOuter">
+                  <RendererPreview rendererUrl={webUrl} />
+                </Slot>
+              )
+            );
           }}
         </PluginContext.Consumer>
       )}

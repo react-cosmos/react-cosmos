@@ -4,20 +4,20 @@ import { get, set, forEach } from 'lodash';
 
 import type { TreeNode } from './shared';
 
-export function getPathTree(paths: string[]): TreeNode<string> {
+export function getPathTree(paths: string[]): TreeNode {
   const tree = getBlankNode();
 
   paths.forEach(path => {
     const namespace = path.split('/');
     namespace.pop();
 
-    const nodePath = namespace.map(p => `children.${p}`).join('.');
+    const nodePath = namespace.map(p => `dirs.${p}`).join('.');
     const node = get(tree, nodePath) || getBlankNode();
 
-    const { children, values = [] } = node;
+    const { dirs, fixtures = [] } = node;
     set(tree, nodePath, {
-      children,
-      values: [...values, path]
+      dirs,
+      fixtures: [...fixtures, path]
     });
   });
 
@@ -25,37 +25,37 @@ export function getPathTree(paths: string[]): TreeNode<string> {
 }
 
 export function collapsePathTreeDirs(
-  treeNode: TreeNode<string>,
+  treeNode: TreeNode,
   collapsedDirName: string
-): TreeNode<string> {
-  let values = treeNode.values ? [...treeNode.values] : [];
-  let children = {};
+): TreeNode {
+  let fixtures = treeNode.fixtures ? [...treeNode.fixtures] : [];
+  let dirs = {};
 
-  forEach(treeNode.children, (childNode, childDir) => {
-    if (childDir !== collapsedDirName) {
-      children = {
-        ...children,
-        [childDir]: collapsePathTreeDirs(childNode, collapsedDirName)
+  forEach(treeNode.dirs, (dirNode, dirName) => {
+    if (dirName !== collapsedDirName) {
+      dirs = {
+        ...dirs,
+        [dirName]: collapsePathTreeDirs(dirNode, collapsedDirName)
       };
 
       return;
     }
 
-    if (childNode.values) {
-      values.push(...childNode.values);
+    if (dirNode.fixtures) {
+      fixtures.push(...dirNode.fixtures);
     }
 
-    forEach(childNode.children, (gchildNode, gchildDir) => {
-      children[gchildDir] = collapsePathTreeDirs(gchildNode, collapsedDirName);
+    forEach(dirNode.dirs, (childDirNode, childDirName) => {
+      dirs[childDirName] = collapsePathTreeDirs(childDirNode, collapsedDirName);
     });
   });
 
-  return values.length > 0 ? { values, children } : { children };
+  return fixtures.length > 0 ? { fixtures, dirs } : { dirs };
 }
 
-function getBlankNode() {
+function getBlankNode(): TreeNode {
   return {
-    values: [],
-    children: {}
+    fixtures: [],
+    dirs: {}
   };
 }

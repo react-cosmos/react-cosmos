@@ -4,6 +4,7 @@ import { Component } from 'react';
 import { isEqual, mapValues, forEach } from 'lodash';
 import { updateState } from 'react-cosmos-shared2/util';
 import { PluginContext } from '../../plugin';
+import { getUrlParams } from '../Router/selectors';
 import { getPrimaryRendererState } from './selectors';
 
 import type { StateUpdater } from 'react-cosmos-shared2/util';
@@ -19,7 +20,6 @@ import type {
   SetFixtureState
 } from 'react-cosmos-shared2/fixtureState';
 import type { PluginContextValue } from '../../plugin';
-import type { UrlParams } from '../Router';
 import type { RendererState, RendererItemState } from './shared';
 
 const DEFAULT_RENDERER_STATE = {
@@ -42,10 +42,6 @@ export class Renderer extends Component<{}> {
 
   setOwnState(stateChange: StateUpdater<RendererState>, cb?: Function) {
     this.context.setState('renderer', stateChange, cb);
-  }
-
-  getUrlParams(): UrlParams {
-    return this.context.getState('router').urlParams;
   }
 
   getRendererItemState(rendererId: RendererId) {
@@ -104,11 +100,16 @@ export class Renderer extends Component<{}> {
   }
 
   handleSelectFixture = (fixturePath: string) => {
-    this.resetRendererState(() => {
-      this.forEachRenderer(rendererId =>
-        this.postSelectFixtureRequest(rendererId, fixturePath, null)
-      );
-    });
+    // NOTE: The fixture state used to be reset in the local renderer state
+    // before posting the "selectFixture" request, but that no longer happens.
+    // Resetting renderer state when selecting a fixture makes sense in
+    // abstract, but it creates an unnecessary flash of layout whenever
+    // reselecting the current fixture, or when selecting a fixture of the same
+    // component. By keeping the fixture state until the new fixture state is
+    // received from the renderer the transition between fixtures is smoother.
+    this.forEachRenderer(rendererId =>
+      this.postSelectFixtureRequest(rendererId, fixturePath, null)
+    );
   };
 
   handleUnselectFixture = () => {
@@ -120,7 +121,7 @@ export class Renderer extends Component<{}> {
   };
 
   handleSetFixtureState: SetFixtureState = (stateChange, cb) => {
-    const { fixturePath } = this.getUrlParams();
+    const { fixturePath } = getUrlParams(this.context);
 
     if (!fixturePath) {
       console.warn(
@@ -181,7 +182,7 @@ export class Renderer extends Component<{}> {
     };
 
     this.setOwnState(updater, () => {
-      const { fixturePath } = this.getUrlParams();
+      const { fixturePath } = getUrlParams(this.context);
 
       if (fixturePath) {
         this.postSelectFixtureRequest(rendererId, fixturePath, fixtureState);
@@ -191,7 +192,7 @@ export class Renderer extends Component<{}> {
 
   handleFixtureStateChangeResponse({ payload }: FixtureStateChangeResponse) {
     const { rendererId, fixturePath, fixtureState } = payload;
-    const urlParams = this.getUrlParams();
+    const urlParams = getUrlParams(this.context);
     const rendererItemState = this.getRendererItemState(rendererId);
 
     if (isEqual(fixtureState, rendererItemState.fixtureState)) {

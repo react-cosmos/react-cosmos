@@ -1,4 +1,3 @@
-/* eslint-env browser */
 // @flow
 
 import styled from 'styled-components';
@@ -55,7 +54,9 @@ export class RendererPreview extends Component<Props> {
   };
 
   handleWindowMsg = (msg: Object) => {
-    // TODO: Validate
+    // TODO: Validate message shape
+    // TODO: Filter out alien messages (maybe tag msgs with source: "cosmos")
+    // TODO: https://github.com/facebook/react-devtools/issues/812#issuecomment-308827334
     this.context.emitEvent('renderer.response', msg.data);
   };
 
@@ -67,7 +68,30 @@ export class RendererPreview extends Component<Props> {
 }
 
 const Iframe = styled.iframe`
+  display: block;
   width: 100%;
   height: 100%;
-  background: #f1f1f1;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: #fff;
+  /* Checkerboard effect on background */
+  background-image: linear-gradient(
+      45deg,
+      #f8f8f8 25%,
+      transparent 25%,
+      transparent 75%,
+      #f8f8f8 75%,
+      #f8f8f8 100%
+    ),
+    linear-gradient(
+      45deg,
+      #f8f8f8 25%,
+      transparent 25%,
+      transparent 75%,
+      #f8f8f8 75%,
+      #f8f8f8 100%
+    );
+  background-size: 50px 50px;
+  background-position: 0 0, 25px 25px;
 `;

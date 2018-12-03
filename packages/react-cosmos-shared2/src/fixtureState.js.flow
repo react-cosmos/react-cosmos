@@ -28,7 +28,7 @@ export type ComponentFixtureState = {
 
 export type FixtureState = {
   components: ComponentFixtureState[],
-  [key: string]: mixed
+  [key: string]: any
 };
 
 export type SetFixtureState = SetState<null | FixtureState>;
