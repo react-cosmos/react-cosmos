@@ -4,18 +4,18 @@ import React from 'react';
 import { wait, render, cleanup, fireEvent } from 'react-testing-library';
 import { Slot } from 'react-plugin';
 import { updateState } from 'react-cosmos-shared2/util';
-import { PluginProvider } from '../../../../plugin';
-import { RegisterMethod } from '../../../../testHelpers/RegisterMethod';
-import { SetPluginState } from '../../../../testHelpers/SetPluginState';
-import { OnPluginState } from '../../../../testHelpers/OnPluginState';
-import { DEFAULT_DEVICES, getResponsiveViewportStorageKey } from '../../shared';
+import { PluginProvider } from '../../../plugin';
+import { RegisterMethod } from '../../../testHelpers/RegisterMethod';
+import { SetPluginState } from '../../../testHelpers/SetPluginState';
+import { OnPluginState } from '../../../testHelpers/OnPluginState';
+import { DEFAULT_DEVICES, getResponsiveViewportStorageKey } from '../shared';
 
 // Plugins have side-effects: they register themselves
 // "renderer" and "router" states are required for the ResponsivePreview plugin
 // to work
-import '../../../Renderer';
-import '../../../Router';
-import '../..';
+import '../../Renderer';
+import '../../Router';
+import '..';
 
 afterEach(cleanup);
 

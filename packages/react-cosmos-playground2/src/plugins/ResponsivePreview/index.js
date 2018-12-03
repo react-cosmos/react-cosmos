@@ -3,8 +3,7 @@
 import React from 'react';
 import {
   registerDefaultPluginConfig,
-  registerInitialPluginState,
-  PluginContext
+  registerInitialPluginState
 } from '../../plugin';
 import { register, Plugin, Plug } from 'react-plugin';
 import { createHeaderButtonSlot } from '../Nav/headerButton';
@@ -34,13 +33,7 @@ register(
     <Plug
       slot="rendererPreviewOuter"
       render={({ children }) => (
-        <PluginContext.Consumer>
-          {({ getConfig }) =>
-            getConfig('renderer.webUrl') && (
-              <ResponsivePreview>{children}</ResponsivePreview>
-            )
-          }
-        </PluginContext.Consumer>
+        <ResponsivePreview>{children}</ResponsivePreview>
       )}
     />
     {createHeaderButtonSlot(ToggleButton)}
