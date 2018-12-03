@@ -39,10 +39,7 @@ const noopStorageGetItem = (
 
 it('renders fixture list from renderer state', async () => {
   const { getByText } = renderPlayground(
-    <>
-      {noopStorageGetItem}
-      <SetPluginState pluginName="renderer" value={mockRendererState} />
-    </>
+    <SetPluginState pluginName="renderer" value={mockRendererState} />
   );
 
   await waitForElement(() => getByText(/ein/i));
@@ -54,7 +51,6 @@ it('sets "fixturePath" router param on fixture click', async () => {
   const setUrlParams = jest.fn();
   const { getByText } = renderPlayground(
     <>
-      {noopStorageGetItem}
       <SetPluginState pluginName="renderer" value={mockRendererState} />
       <RegisterMethod methodName="router.setUrlParams" handler={setUrlParams} />
     </>
@@ -71,7 +67,6 @@ it('clears router params on home button click', async () => {
   const setUrlParams = jest.fn();
   const { getByText } = renderPlayground(
     <>
-      {noopStorageGetItem}
       <SetPluginState pluginName="renderer" value={mockRendererState} />
       <SetPluginState
         pluginName="router"
@@ -89,7 +84,6 @@ it('clears router params on home button click', async () => {
 it('hides fullscreen button when no fixture is selected', () => {
   const { queryByText } = renderPlayground(
     <>
-      {noopStorageGetItem}
       <SetPluginState pluginName="renderer" value={mockRendererState} />
       <SetPluginState pluginName="router" value={{ urlParams: {} }} />
     </>
@@ -102,7 +96,6 @@ it('sets "fullScreen" router param on fullscreen button click', () => {
   const setUrlParams = jest.fn();
   const { getByText } = renderPlayground(
     <>
-      {noopStorageGetItem}
       <SetPluginState pluginName="renderer" value={mockRendererState} />
       <SetPluginState
         pluginName="router"
@@ -124,10 +117,7 @@ it('sets "fullScreen" router param on fullscreen button click', () => {
 // conditions, and thus the validity of the "full screen" test
 it('renders nav element', async () => {
   const { getByTestId } = renderPlayground(
-    <>
-      {noopStorageGetItem}
-      <SetPluginState pluginName="renderer" value={mockRendererState} />
-    </>
+    <SetPluginState pluginName="renderer" value={mockRendererState} />
   );
 
   await waitForElement(() => getByTestId('nav'));
@@ -136,7 +126,6 @@ it('renders nav element', async () => {
 it('does not render nav element in full screen mode', async () => {
   const { queryByTestId } = renderPlayground(
     <>
-      {noopStorageGetItem}
       <SetPluginState pluginName="renderer" value={mockRendererState} />
       <SetPluginState
         pluginName="router"
@@ -164,6 +153,7 @@ function renderPlayground(otherNodes) {
       }}
     >
       <Slot name="left" />
+      {noopStorageGetItem}
       {otherNodes}
     </PluginProvider>
   );
