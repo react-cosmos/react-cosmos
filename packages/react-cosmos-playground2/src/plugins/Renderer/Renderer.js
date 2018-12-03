@@ -104,9 +104,9 @@ export class Renderer extends Component<{}> {
     // before posting the "selectFixture" request, but that no longer happens.
     // Resetting renderer state when selecting a fixture makes sense in
     // abstract, but it creates an unnecessary flash of layout whenever
-    // reselecting the current fixture, or selecting a fixture of the same
+    // reselecting the current fixture, or when selecting a fixture of the same
     // component. By keeping the fixture state until the new fixture state is
-    // received from the renderer, the transition between fixtures is smoother.
+    // received from the renderer the transition between fixtures is smoother.
     this.forEachRenderer(rendererId =>
       this.postSelectFixtureRequest(rendererId, fixturePath, null)
     );
