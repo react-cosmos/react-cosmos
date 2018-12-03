@@ -35,6 +35,9 @@ it('gets item from localForage', async () => {
   );
 
   await wait(async () => {
+    // NOTE: This would be more elegant, but it provices false positives:
+    //  expect(handleGetItemReturn).toBeCalledWith(Promise.resolve('fooValue'))
+    // It passes regardless of the resolved value.
     const [[returnValue]] = handleGetItemReturn.mock.calls;
     expect(await returnValue).toBe('fooValue');
   });
