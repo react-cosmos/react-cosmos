@@ -54,7 +54,9 @@ export class RendererPreview extends Component<Props> {
   };
 
   handleWindowMsg = (msg: Object) => {
-    // TODO: Validate
+    // TODO: Validate message shape
+    // TODO: Filter out alien messages (maybe source: "cosmos")
+    // TODO: https://github.com/facebook/react-devtools/issues/812#issuecomment-308827334
     this.context.emitEvent('renderer.response', msg.data);
   };
 
