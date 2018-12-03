@@ -36,13 +36,15 @@ export class Nav extends Component<{}> {
 
     return (
       <Container data-testid="nav">
-        {fixturePath && (
-          <Buttons>
-            <button onClick={this.handleGoHome}>home</button>
-            <Slot name="header-buttons" />
+        <Buttons>
+          <button disabled={!fixturePath} onClick={this.handleGoHome}>
+            home
+          </button>
+          <Slot name="header-buttons" />
+          {fixturePath && (
             <button onClick={this.handleGoFullScreen}>fullscreen</button>
-          </Buttons>
-        )}
+          )}
+        </Buttons>
         <FixtureTree
           projectId={projectId}
           fixturesDir={fixturesDir}

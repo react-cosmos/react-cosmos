@@ -86,6 +86,18 @@ it('clears router params on home button click', async () => {
   expect(setUrlParams).toBeCalledWith({});
 });
 
+it('hides fullscreen button when no fixture is selected', () => {
+  const { queryByText } = renderPlayground(
+    <>
+      {noopStorageGetItem}
+      <SetPluginState pluginName="renderer" value={mockRendererState} />
+      <SetPluginState pluginName="router" value={{ urlParams: {} }} />
+    </>
+  );
+
+  expect(queryByText(/fullscreen/i)).toBeNull();
+});
+
 it('sets "fullScreen" router param on fullscreen button click', () => {
   const setUrlParams = jest.fn();
   const { getByText } = renderPlayground(
