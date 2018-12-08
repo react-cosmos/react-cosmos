@@ -1,22 +1,13 @@
 // @flow
 
-import React from 'react';
-import { wait, render, cleanup } from 'react-testing-library';
-import { Slot } from 'react-plugin';
-import { PluginProvider } from '../../../plugin';
-import { OnEvent } from '../../../testHelpers/OnEvent';
-import { SetPluginState } from '../../../testHelpers/SetPluginState';
-import { CallMethod } from '../../../testHelpers/CallMethod';
+import { wait } from 'react-testing-library';
+import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
 import { mockFixtures, mockFixtureState } from '../testHelpers';
+import { register } from '..';
 
-// Plugins have side-effects: they register themselves
-// "router" state is required for Renderer plugin to work
-import '../../Router';
-import '..';
+afterEach(resetPlugins);
 
-afterEach(cleanup);
-
-const rendererState = {
+const initialRendererState = {
   primaryRendererId: 'foo-renderer',
   renderers: {
     'foo-renderer': {
@@ -32,19 +23,17 @@ const rendererState = {
 
 it('posts "selectFixture" renderer requests', async () => {
   const handleRendererRequest = jest.fn();
-  renderPlayground(
-    <>
-      <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
-      <SetPluginState pluginName="renderer" value={rendererState} />
-      <CallMethod
-        methodName="renderer.selectFixture"
-        args={['fixtures/zwei.js']}
-      />
-    </>
-  );
+
+  loadTestPlugins(() => {
+    const { init, on } = registerPlugin({ name: 'test' });
+    on('renderer.request', handleRendererRequest);
+    init(({ callMethod }) => {
+      callMethod('renderer.selectFixture', 'fixtures/zwei.js');
+    });
+  });
 
   await wait(() =>
-    expect(handleRendererRequest).toBeCalledWith({
+    expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {
       type: 'selectFixture',
       payload: {
         rendererId: 'foo-renderer',
@@ -55,7 +44,7 @@ it('posts "selectFixture" renderer requests', async () => {
   );
 
   await wait(() =>
-    expect(handleRendererRequest).toBeCalledWith({
+    expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {
       type: 'selectFixture',
       payload: {
         rendererId: 'bar-renderer',
@@ -66,11 +55,12 @@ it('posts "selectFixture" renderer requests', async () => {
   );
 });
 
-function renderPlayground(otherNodes) {
-  return render(
-    <PluginProvider>
-      <Slot name="global" />
-      {otherNodes}
-    </PluginProvider>
-  );
+function loadTestPlugins(extraSetup = () => {}) {
+  register();
+  extraSetup();
+  loadPlugins({
+    state: {
+      renderer: initialRendererState
+    }
+  });
 }

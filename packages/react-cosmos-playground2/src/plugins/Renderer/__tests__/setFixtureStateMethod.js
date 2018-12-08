@@ -1,23 +1,13 @@
 // @flow
 
-import React from 'react';
-import { wait, render, cleanup } from 'react-testing-library';
-import { Slot } from 'react-plugin';
-import { PluginProvider } from '../../../plugin';
-import { OnEvent } from '../../../testHelpers/OnEvent';
-import { SetPluginState } from '../../../testHelpers/SetPluginState';
-import { OnPluginState } from '../../../testHelpers/OnPluginState';
-import { CallMethod } from '../../../testHelpers/CallMethod';
+import { wait } from 'react-testing-library';
+import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
 import { mockFixtures, mockFixtureState } from '../testHelpers';
+import { register } from '..';
 
-// Plugins have side-effects: they register themselves
-// "router" state is required for Renderer plugin to work
-import '../../Router';
-import '..';
+afterEach(resetPlugins);
 
-afterEach(cleanup);
-
-const rendererState = {
+const initialRendererState = {
   primaryRendererId: 'foo-renderer',
   renderers: {
     'foo-renderer': {
@@ -32,57 +22,46 @@ const rendererState = {
 };
 
 it('sets fixture state for all renderers', async () => {
-  const handleSetRendererState = jest.fn();
-  renderPlayground(
-    <>
-      <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
-      <SetPluginState
-        pluginName="router"
-        value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
-      />
-      <SetPluginState pluginName="renderer" value={rendererState} />
-      <CallMethod
-        methodName="renderer.setFixtureState"
-        args={[mockFixtureState]}
-      />
-    </>
-  );
+  let rendererState;
+
+  loadTestPlugins(() => {
+    const { init, onState } = registerPlugin({ name: 'test' });
+    onState(({ getStateOf }) => {
+      rendererState = getStateOf('renderer');
+    });
+    init(({ callMethod }) => {
+      callMethod('renderer.setFixtureState', mockFixtureState);
+    });
+  });
 
   await wait(() =>
-    expect(handleSetRendererState).toBeCalledWith(
-      expect.objectContaining({
-        renderers: {
-          'foo-renderer': expect.objectContaining({
-            fixtureState: mockFixtureState
-          }),
-          'bar-renderer': expect.objectContaining({
-            fixtureState: mockFixtureState
-          })
-        }
-      })
-    )
+    expect(rendererState).toEqual({
+      primaryRendererId: 'foo-renderer',
+      renderers: {
+        'foo-renderer': expect.objectContaining({
+          fixtureState: mockFixtureState
+        }),
+        'bar-renderer': expect.objectContaining({
+          fixtureState: mockFixtureState
+        })
+      }
+    })
   );
 });
 
 it('posts "setFixtureState" renderer requests', async () => {
   const handleRendererRequest = jest.fn();
-  renderPlayground(
-    <>
-      <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
-      <SetPluginState
-        pluginName="router"
-        value={{ urlParams: { fixturePath: 'fixtures/zwei.js' } }}
-      />
-      <SetPluginState pluginName="renderer" value={rendererState} />
-      <CallMethod
-        methodName="renderer.setFixtureState"
-        args={[mockFixtureState]}
-      />
-    </>
-  );
+
+  loadTestPlugins(() => {
+    const { init, on } = registerPlugin({ name: 'test' });
+    on('renderer.request', handleRendererRequest);
+    init(({ callMethod }) => {
+      callMethod('renderer.setFixtureState', mockFixtureState);
+    });
+  });
 
   await wait(() =>
-    expect(handleRendererRequest).toBeCalledWith({
+    expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {
       type: 'setFixtureState',
       payload: {
         rendererId: 'foo-renderer',
@@ -93,7 +72,7 @@ it('posts "setFixtureState" renderer requests', async () => {
   );
 
   await wait(() =>
-    expect(handleRendererRequest).toBeCalledWith({
+    expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {
       type: 'setFixtureState',
       payload: {
         rendererId: 'bar-renderer',
@@ -104,11 +83,14 @@ it('posts "setFixtureState" renderer requests', async () => {
   );
 });
 
-function renderPlayground(otherNodes) {
-  return render(
-    <PluginProvider>
-      <Slot name="global" />
-      {otherNodes}
-    </PluginProvider>
-  );
+function loadTestPlugins(extraSetup = () => {}) {
+  register();
+  registerPlugin({ name: 'router', initialState: { urlParams: {} } });
+  extraSetup();
+  loadPlugins({
+    state: {
+      router: { urlParams: { fixturePath: 'fixtures/zwei.js' } },
+      renderer: initialRendererState
+    }
+  });
 }
