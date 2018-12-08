@@ -7,13 +7,12 @@ import {
   pushUrlParamsToHistory,
   subscribeToLocationChanges
 } from './window';
-import { getUrlParams } from './selectors';
 
-import type { UrlParams } from './shared';
+import type { UrlParams, RouterState } from './shared';
 export type { UrlParams, RouterState } from './shared';
 
 export function register() {
-  const { init, method } = registerPlugin({
+  const { init, method } = registerPlugin<{}, RouterState>({
     name: 'router',
     initialState: { urlParams: {} }
   });
@@ -66,4 +65,8 @@ function selectCurrentFixture(context) {
   }
 
   callMethod('renderer.selectFixture', fixturePath);
+}
+
+function getUrlParams(context) {
+  return context.getState().urlParams;
 }
