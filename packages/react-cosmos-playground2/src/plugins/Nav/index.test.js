@@ -138,7 +138,7 @@ function loadTestPlugins(extraSetup = () => {}) {
   method('getItem', () => Promise.resolve(null));
   method('setItem', () => Promise.resolve(undefined));
 
-  registerPlugin({ name: 'playground' });
+  registerPlugin({ name: 'core' });
   registerPlugin({ name: 'renderer' });
   extraSetup();
 

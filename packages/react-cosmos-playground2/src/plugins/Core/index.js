@@ -2,26 +2,32 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import { Slot } from 'react-plugin';
-import { PluginProvider } from '../plugin';
+import { registerPlugin, Slot } from 'react-plugin';
 
-import type { PlaygroundConfig } from '../index.js.flow';
-
-type Props = {
-  config: PlaygroundConfig
+export type CoreConfig = {
+  projectId: string,
+  fixturesDir: string
 };
 
-export function Playground({ config }: Props) {
-  return (
-    <PluginProvider config={config}>
-      <Slot name="global" />
+export function register() {
+  const { plug } = registerPlugin({
+    name: 'core',
+    defaultConfig: {
+      projectId: 'defaultProjectId',
+      fixturesDir: '__fixtures__'
+    }
+  });
+
+  plug({
+    slotName: 'root',
+    render: (
       <Container>
         <Slot name="left" />
         <Slot name="rendererPreview" />
         <Slot name="right" />
       </Container>
-    </PluginProvider>
-  );
+    )
+  });
 }
 
 const Container = styled.div`

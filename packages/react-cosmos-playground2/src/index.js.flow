@@ -1,10 +1,9 @@
 // @flow
 
-export type CoreConfig = {
-  projectId: string,
-  fixturesDir: string
-};
+import type { CoreConfig } from './plugins/Core';
+import type { RendererConfig } from './plugins/Renderer';
 
 export type PlaygroundConfig = {
-  core: CoreConfig
+  core: CoreConfig,
+  renderer?: RendererConfig
 };
