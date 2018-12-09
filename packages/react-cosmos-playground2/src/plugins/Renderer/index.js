@@ -13,6 +13,7 @@ import type {
   FixtureStateChangeResponse
 } from 'react-cosmos-shared2/renderer';
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
+import type { RouterState } from '../Router';
 import type {
   RendererConfig,
   RendererState,
@@ -293,5 +294,7 @@ function setRendererState(
 }
 
 function getUrlParams({ getStateOf }) {
-  return getStateOf('router').urlParams;
+  const { urlParams }: RouterState = getStateOf('router');
+
+  return urlParams;
 }
