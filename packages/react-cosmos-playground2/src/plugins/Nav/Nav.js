@@ -7,6 +7,7 @@ import { FixtureTree } from './FixtureTree';
 
 import type { RendererItemState } from '../Renderer';
 import type { UrlParams } from '../Router';
+import type { Storage } from '../Storage';
 
 type Props = {
   projectId: string,
@@ -14,10 +15,7 @@ type Props = {
   urlParams: UrlParams,
   primaryRendererState: null | RendererItemState,
   setUrlParams: (urlParams: UrlParams) => void,
-  storage: {
-    getItem: (key: string) => Promise<any>,
-    setItem: (key: string, value: any) => Promise<void>
-  }
+  storage: Storage
 };
 
 export class Nav extends Component<Props> {

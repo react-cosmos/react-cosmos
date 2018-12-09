@@ -3,6 +3,11 @@
 import localForage from 'localforage';
 import { registerPlugin } from 'react-plugin';
 
+export type Storage = {
+  getItem: (key: string) => Promise<any>,
+  setItem: (key: string, value: any) => Promise<void>
+};
+
 export function register() {
   const { method } = registerPlugin({ name: 'storage' });
 

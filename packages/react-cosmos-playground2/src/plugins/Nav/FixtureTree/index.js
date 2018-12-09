@@ -5,6 +5,7 @@ import { getPathTree, collapsePathTreeDirs } from './pathTree';
 import { FixtureTreeNode } from './FixtureTreeNode';
 
 import type { FixtureNames } from 'react-cosmos-shared2/renderer';
+import type { Storage } from '../../Storage';
 import type { TreeExpansion } from './shared';
 
 type Props = {
@@ -12,10 +13,7 @@ type Props = {
   fixturesDir: string,
   fixtures: FixtureNames,
   onSelect: (path: string) => mixed,
-  storage: {
-    getItem: (key: string) => Promise<any>,
-    setItem: (key: string, value: any) => Promise<void>
-  }
+  storage: Storage
 };
 
 type State = {
