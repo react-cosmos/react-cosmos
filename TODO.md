@@ -31,13 +31,12 @@ We need a decent parity with the existing Cosmos UI to test JSX fixtures. This i
 - [ ] Release 4.7
 - [ ] Step 2B: JSX decorators
 
-## Step 4: Consolidate plugin architecture
-
 ## Next Steps
 
 - [ ] Basic Control Panel (props/state visualization and editing)
 - [ ] Port onboarding screens to new UI
 - [ ] More Control Panel features
+- [ ] UI-generated fixture variations
 - [ ] Refine and document UI plugin API
 - [ ] Redesign Cosmos docs
 
