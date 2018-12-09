@@ -41,9 +41,13 @@ export function register() {
     });
 
     function handleWindowMsg(msg: Object) {
-      // TODO: Validate message shape
-      // TODO: Filter out alien messages (maybe tag msgs with source: "cosmos")
+      // TODO: Create convention to filter out alien messages reliably (eg.
+      // maybe tag msgs with source: "cosmos")
       // TODO: https://github.com/facebook/react-devtools/issues/812#issuecomment-308827334
+      if (msg.data.source) {
+        return;
+      }
+
       callMethod('renderer.receiveResponse', msg.data);
     }
 
