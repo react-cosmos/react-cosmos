@@ -23,7 +23,7 @@ export function register() {
         projectId,
         fixturesDir,
         urlParams,
-        rendererState: getPrimaryRendererState(rendererState),
+        primaryRendererState: getPrimaryRendererState(rendererState),
         setUrlParams: newUrlParams => {
           callMethod('router.setUrlParams', newUrlParams);
         },

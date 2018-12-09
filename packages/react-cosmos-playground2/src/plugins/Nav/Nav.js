@@ -12,7 +12,7 @@ type Props = {
   projectId: string,
   fixturesDir: string,
   urlParams: UrlParams,
-  rendererState: null | RendererItemState,
+  primaryRendererState: null | RendererItemState,
   setUrlParams: (urlParams: UrlParams) => void,
   storage: {
     getItem: (key: string) => Promise<any>,
@@ -26,15 +26,15 @@ export class Nav extends Component<Props> {
       projectId,
       fixturesDir,
       urlParams,
-      rendererState,
+      primaryRendererState,
       storage
     } = this.props;
 
-    if (!rendererState) {
+    if (!primaryRendererState) {
       return null;
     }
 
-    const { fixtures } = rendererState;
+    const { fixtures } = primaryRendererState;
     const { fixturePath, fullScreen } = urlParams;
 
     if (fullScreen) {
