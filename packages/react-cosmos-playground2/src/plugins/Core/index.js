@@ -4,13 +4,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { registerPlugin, Slot } from 'react-plugin';
 
-export type CoreConfig = {
-  projectId: string,
-  fixturesDir: string
-};
+import type { CoreConfig } from '../../index.js.flow';
+export type { CoreConfig } from '../../index.js.flow';
 
 export function register() {
-  const { plug } = registerPlugin({
+  const { plug } = registerPlugin<CoreConfig, void>({
     name: 'core',
     defaultConfig: {
       projectId: 'defaultProjectId',

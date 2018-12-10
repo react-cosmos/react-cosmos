@@ -1,7 +1,14 @@
 // @flow
 
-import type { CoreConfig } from './plugins/Core';
-import type { RendererConfig } from './plugins/Renderer';
+export type CoreConfig = {
+  projectId: string,
+  fixturesDir: string
+};
+
+export type RendererConfig = {
+  webUrl: null | string,
+  enableRemote: boolean
+};
 
 export type PlaygroundConfig = {
   core: CoreConfig,

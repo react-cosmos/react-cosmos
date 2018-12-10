@@ -14,17 +14,11 @@ import type {
 } from 'react-cosmos-shared2/renderer';
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { RouterState } from '../Router';
-import type {
-  RendererConfig,
-  RendererState,
-  RendererItemState
-} from './shared';
+import type { RendererConfig } from '../../index.js.flow';
+import type { RendererState, RendererItemState } from './shared';
 
-export type {
-  RendererConfig,
-  RendererItemState,
-  RendererState
-} from './shared';
+export type { RendererConfig } from '../../index.js.flow';
+export type { RendererItemState, RendererState } from './shared';
 
 const DEFAULT_RENDERER_STATE = {
   fixtureState: null

@@ -8,7 +8,9 @@ import type { RouterState } from '../Router';
 import type { RendererConfig, RendererState } from '../Renderer';
 
 export function register() {
-  const { plug } = registerPlugin({ name: 'controlPanel' });
+  const { plug } = registerPlugin<RendererConfig, RendererState>({
+    name: 'controlPanel'
+  });
 
   plug({
     slotName: 'right',
