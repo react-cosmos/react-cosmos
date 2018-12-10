@@ -144,8 +144,7 @@ function loadTestPlugins(extraSetup = () => {}) {
 
   loadPlugins({
     config: {
-      playground: {
-        projectId: 'mockProjectId',
+      core: {
         fixturesDir: 'fixtures'
       }
     },
