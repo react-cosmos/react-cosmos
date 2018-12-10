@@ -1,31 +1,30 @@
 // @flow
 
 import React, { Component } from 'react';
-import { PluginContext } from '../../../plugin';
-import { getUrlParams } from '../../Router/selectors';
-import {
-  getResponsivePreviewState,
-  getFixtureViewport,
-  setFixtureStateViewport
-} from '../shared';
+import { getFixtureViewport } from '../shared';
 import { getDefaultViewport } from '../storage';
 
 import type { SetState } from 'react-cosmos-shared2/util';
-import type { PluginContextValue } from '../../../plugin';
+import type { RendererItemState } from '../../Renderer';
+import type { UrlParams } from '../../Router';
+import type { Storage } from '../../Storage';
 import type { ResponsivePreviewState } from '../shared';
 
-export class ToggleButton extends Component<{}> {
-  static contextType = PluginContext;
+export type Props = {
+  state: ResponsivePreviewState,
+  projectId: string,
+  urlParams: UrlParams,
+  primaryRendererState: null | RendererItemState,
+  setState: SetState<ResponsivePreviewState>,
+  setFixtureStateViewport: () => void,
+  storage: Storage
+};
 
-  // https://github.com/facebook/flow/issues/7166
-  context: PluginContextValue;
-
-  setOwnState: SetState<ResponsivePreviewState> = (stateChange, cb) => {
-    this.context.setState('responsive-preview', stateChange, cb);
-  };
-
+export class ToggleButton extends Component<Props> {
   render() {
-    if (!getUrlParams(this.context).fixturePath) {
+    const { state, urlParams, primaryRendererState } = this.props;
+
+    if (!urlParams.fixturePath) {
       return null;
     }
 
@@ -33,7 +32,7 @@ export class ToggleButton extends Component<{}> {
       <label style={{ userSelect: 'none' }}>
         <input
           type="checkbox"
-          checked={isResponsiveModeOn(this.context)}
+          checked={isResponsiveModeOn(state.enabled, primaryRendererState)}
           onChange={this.handleToggle}
         />
         responsive
@@ -42,24 +41,31 @@ export class ToggleButton extends Component<{}> {
   }
 
   handleToggle = async () => {
-    const defaultViewport = await getDefaultViewport(this.context);
+    const {
+      projectId,
+      primaryRendererState,
+      setFixtureStateViewport,
+      storage
+    } = this.props;
+    const defaultViewport = await getDefaultViewport(projectId, storage);
 
-    this.setOwnState(
-      ({ viewport }) =>
-        isResponsiveModeOn(this.context)
+    this.props.setState(
+      ({ enabled, viewport }) =>
+        isResponsiveModeOn(enabled, primaryRendererState)
           ? // https://github.com/facebook/flow/issues/2892#issuecomment-263055197
             // $FlowFixMe
             { enabled: false, viewport }
           : { enabled: true, viewport: viewport || defaultViewport },
       () => {
-        setFixtureStateViewport(this.context);
+        setFixtureStateViewport();
       }
     );
   };
 }
 
-function isResponsiveModeOn(context: PluginContextValue): boolean {
-  const { enabled } = getResponsivePreviewState(context);
-
-  return getFixtureViewport(context) ? true : enabled;
+function isResponsiveModeOn(
+  enabled: boolean,
+  primaryRendererState: null | RendererItemState
+): boolean {
+  return getFixtureViewport(primaryRendererState) ? true : enabled;
 }

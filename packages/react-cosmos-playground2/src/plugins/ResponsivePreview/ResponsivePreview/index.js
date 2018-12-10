@@ -4,20 +4,16 @@
 import React, { Component } from 'react';
 import { isEqual } from 'lodash';
 import styled from 'styled-components';
-import { PluginContext } from '../../../plugin';
-import { getUrlParams } from '../../Router/selectors';
-import {
-  getResponsivePreviewState,
-  getFixtureViewport,
-  setFixtureStateViewport
-} from '../shared';
+import { getFixtureViewport } from '../shared';
 import { storeViewport } from '../storage';
 import { Header } from './Header';
 import { stretchStyle, getStyles } from './style';
 
 import type { Node } from 'react';
 import type { SetState } from 'react-cosmos-shared2/util';
-import type { PluginContextValue } from '../../../plugin';
+import type { Storage } from '../../Storage';
+import type { UrlParams } from '../../Router';
+import type { RendererItemState } from '../../Renderer';
 import type {
   Viewport,
   ResponsivePreviewConfig,
@@ -25,7 +21,15 @@ import type {
 } from '../shared';
 
 type Props = {
-  children: Node
+  children: Node,
+  config: ResponsivePreviewConfig,
+  state: ResponsivePreviewState,
+  projectId: string,
+  urlParams: UrlParams,
+  primaryRendererState: null | RendererItemState,
+  setState: SetState<ResponsivePreviewState>,
+  setFixtureStateViewport: () => void,
+  storage: Storage
 };
 
 type State = {
@@ -37,11 +41,6 @@ type State = {
 };
 
 export class ResponsivePreview extends Component<Props, State> {
-  static contextType = PluginContext;
-
-  // https://github.com/facebook/flow/issues/7166
-  context: PluginContextValue;
-
   state = {
     container: null,
     scale: true
@@ -49,19 +48,17 @@ export class ResponsivePreview extends Component<Props, State> {
 
   containerEl: ?HTMLElement;
 
-  getOwnConfig(): ResponsivePreviewConfig {
-    return this.context.getConfig('responsive-preview');
-  }
-
-  setOwnState: SetState<ResponsivePreviewState> = (stateChange, cb) => {
-    this.context.setState('responsive-preview', stateChange, cb);
-  };
-
   render() {
-    const { children } = this.props;
+    const {
+      children,
+      config,
+      state,
+      urlParams,
+      primaryRendererState
+    } = this.props;
     const { container, scale } = this.state;
-    const { fixturePath, fullScreen } = getUrlParams(this.context);
-    const viewport = getViewport(this.context);
+    const { fixturePath, fullScreen } = urlParams;
+    const viewport = getViewport(state, primaryRendererState);
 
     // We don't simply do `return children` because it would cause a flicker
     // whenever switching between responsive and non responsive mode. By
@@ -79,7 +76,7 @@ export class ResponsivePreview extends Component<Props, State> {
       );
     }
 
-    const { devices } = this.getOwnConfig();
+    const { devices } = config;
     const {
       outerWrapperStyle,
       middleWrapperStyle,
@@ -130,9 +127,16 @@ export class ResponsivePreview extends Component<Props, State> {
   };
 
   createSelectViewportHandler = (viewport: Viewport) => () => {
-    this.setOwnState({ enabled: true, viewport }, () => {
-      setFixtureStateViewport(this.context);
-      storeViewport(this.context);
+    const {
+      projectId,
+      setState,
+      setFixtureStateViewport,
+      storage
+    } = this.props;
+
+    setState({ enabled: true, viewport }, () => {
+      setFixtureStateViewport();
+      storeViewport(projectId, viewport, storage);
     });
   };
 
@@ -161,10 +165,14 @@ function getContainerSize(containerEl: ?HTMLElement) {
   return { width, height };
 }
 
-function getViewport(context: PluginContextValue): null | Viewport {
-  const { enabled, viewport } = getResponsivePreviewState(context);
-
-  return getFixtureViewport(context) || (enabled ? viewport : null);
+function getViewport(
+  state: ResponsivePreviewState,
+  primaryRendererState: null | RendererItemState
+): null | Viewport {
+  return (
+    getFixtureViewport(primaryRendererState) ||
+    (state.enabled ? state.viewport : null)
+  );
 }
 
 const Container = styled.div`

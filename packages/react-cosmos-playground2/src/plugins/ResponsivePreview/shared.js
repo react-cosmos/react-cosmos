@@ -1,8 +1,7 @@
 // @flow
 
-import { getPrimaryRendererState } from '../Renderer/selectors';
-
-import type { PluginContextValue } from '../../plugin';
+import type { IPluginContext } from 'react-plugin';
+import type { RendererItemState } from '../Renderer';
 
 export type Viewport = { width: number, height: number };
 
@@ -34,6 +33,11 @@ export type ResponsivePreviewState =
   | DisabledViewport
   | DisabledNoViewport;
 
+export type ResponsivePreviewPluginContext = IPluginContext<
+  ResponsivePreviewConfig,
+  ResponsivePreviewState
+>;
+
 export const DEFAULT_DEVICES = [
   { label: 'iPhone 5', width: 320, height: 568 },
   { label: 'iPhone 6', width: 375, height: 667 },
@@ -52,29 +56,12 @@ export function getResponsiveViewportStorageKey(projectId: string) {
   return `cosmos-responsiveViewport-${projectId}`;
 }
 
-export function getResponsivePreviewState({
-  getState
-}: PluginContextValue): ResponsivePreviewState {
-  return getState('responsive-preview');
-}
-
-export function getFixtureViewport({
-  getState
-}: PluginContextValue): null | Viewport {
-  const primaryRendererState = getPrimaryRendererState(getState('renderer'));
-
+export function getFixtureViewport(
+  primaryRendererState: null | RendererItemState
+): null | Viewport {
   return (
     primaryRendererState &&
     primaryRendererState.fixtureState &&
     primaryRendererState.fixtureState.viewport
   );
-}
-
-export function setFixtureStateViewport(context: PluginContextValue) {
-  const { enabled, viewport } = getResponsivePreviewState(context);
-
-  context.callMethod('renderer.setFixtureState', fixtureState => ({
-    ...fixtureState,
-    viewport: enabled ? viewport : null
-  }));
 }
