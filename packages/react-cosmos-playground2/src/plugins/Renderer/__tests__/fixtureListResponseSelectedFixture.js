@@ -14,7 +14,7 @@ afterEach(resetPlugins);
 it('posts "selectFixture" renderer request', async () => {
   const handleRendererRequest = jest.fn();
 
-  loadTestPlugins({}, () => {
+  loadTestPlugins(null, () => {
     const { init, on } = registerPlugin({ name: 'test' });
     on('renderer.request', handleRendererRequest);
     init(({ callMethod }) => {

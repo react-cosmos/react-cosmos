@@ -14,7 +14,7 @@ afterEach(resetPlugins);
 it('creates renderer state', async () => {
   let rendererState;
 
-  loadTestPlugins({}, () => {
+  loadTestPlugins(null, () => {
     const { init, onState } = registerPlugin({ name: 'test' });
     onState(({ getStateOf }) => {
       rendererState = getStateOf('renderer');
@@ -39,7 +39,7 @@ it('creates renderer state', async () => {
 it('creates multiple renderer states', async () => {
   let rendererState;
 
-  loadTestPlugins({}, () => {
+  loadTestPlugins(null, () => {
     const { init, onState } = registerPlugin({ name: 'test' });
     onState(({ getStateOf }) => {
       rendererState = getStateOf('renderer');
