@@ -1,13 +1,8 @@
 // @flow
 
 import { wait } from 'react-testing-library';
-import {
-  resetPlugins,
-  registerPlugin,
-  loadPlugins,
-  onStateChange,
-  getPluginContext
-} from 'react-plugin';
+import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
+import { getPluginState } from '../../../testHelpers/plugin';
 import {
   mockFixtureState,
   getFixtureListRes,
@@ -18,20 +13,15 @@ import { register } from '..';
 afterEach(resetPlugins);
 
 it('creates renderer state', async () => {
-  let rendererState;
-
   loadTestPlugins(null, () => {
     const { init } = registerPlugin({ name: 'test' });
     init(({ callMethod }) => {
       callMethod('renderer.receiveResponse', getFixtureListRes('foo-renderer'));
     });
-    onStateChange(() => {
-      rendererState = getPluginContext('renderer').getState();
-    });
   });
 
   await wait(() =>
-    expect(rendererState).toEqual({
+    expect(getPluginState('renderer')).toEqual({
       primaryRendererId: 'foo-renderer',
       renderers: {
         'foo-renderer': expect.objectContaining({
@@ -43,21 +33,16 @@ it('creates renderer state', async () => {
 });
 
 it('creates multiple renderer states', async () => {
-  let rendererState;
-
   loadTestPlugins(null, () => {
     const { init } = registerPlugin({ name: 'test' });
     init(({ callMethod }) => {
       callMethod('renderer.receiveResponse', getFixtureListRes('foo-renderer'));
       callMethod('renderer.receiveResponse', getFixtureListRes('bar-renderer'));
     });
-    onStateChange(() => {
-      rendererState = getPluginContext('renderer').getState();
-    });
   });
 
   await wait(() =>
-    expect(rendererState).toEqual({
+    expect(getPluginState('renderer')).toEqual({
       primaryRendererId: 'foo-renderer',
       renderers: {
         'foo-renderer': expect.objectContaining({
@@ -80,20 +65,16 @@ it('creates renderer state with fixture state of primary renderer', async () => 
       })
     }
   };
-  let rendererState;
 
   loadTestPlugins(initialRendererState, () => {
     const { init } = registerPlugin({ name: 'test' });
     init(({ callMethod }) => {
       callMethod('renderer.receiveResponse', getFixtureListRes('bar-renderer'));
     });
-    onStateChange(() => {
-      rendererState = getPluginContext('renderer').getState();
-    });
   });
 
   await wait(() =>
-    expect(rendererState).toEqual({
+    expect(getPluginState('renderer')).toEqual({
       primaryRendererId: 'foo-renderer',
       renderers: expect.objectContaining({
         'bar-renderer': expect.objectContaining({

@@ -1,19 +1,14 @@
 // @flow
 
 import { wait } from 'react-testing-library';
-import {
-  resetPlugins,
-  registerPlugin,
-  loadPlugins,
-  onStateChange,
-  getPluginContext
-} from 'react-plugin';
+import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
 import {
   getUrlParams,
   pushUrlParams,
   popUrlParams,
   resetUrl
 } from '../../testHelpers/url';
+import { getPluginState } from '../../testHelpers/plugin';
 import { register } from '.';
 
 afterEach(() => {
@@ -69,18 +64,15 @@ describe('on "setUrlParams" method', () => {
   }
 
   it('sets "router" state', async () => {
-    let urlParams;
-
     loadTestPlugins(() => {
       mockRendererSelectFixtureMethod();
       mockSetUrlParamsCall();
-      onStateChange(() => {
-        urlParams = getPluginContext('router').getState().urlParams;
-      });
     });
 
     await wait(() =>
-      expect(urlParams).toEqual({ fixturePath: 'fixtures/zwei.js' })
+      expect(getPluginState('router').urlParams).toEqual({
+        fixturePath: 'fixtures/zwei.js'
+      })
     );
   });
 

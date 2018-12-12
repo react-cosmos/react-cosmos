@@ -2,15 +2,9 @@
 
 import React from 'react';
 import { wait, render, cleanup, fireEvent } from 'react-testing-library';
-import {
-  resetPlugins,
-  registerPlugin,
-  loadPlugins,
-  Slot,
-  onStateChange,
-  getPluginContext
-} from 'react-plugin';
+import { resetPlugins, registerPlugin, loadPlugins, Slot } from 'react-plugin';
 import { updateState } from 'react-cosmos-shared2/util';
+import { getPluginState } from '../../../testHelpers/plugin';
 import { DEFAULT_VIEWPORT, getResponsiveViewportStorageKey } from '../shared';
 import { register } from '..';
 
@@ -34,20 +28,15 @@ const mockRendererState = {
 };
 
 it('sets enabled state', async () => {
-  let state;
-
   const { getByText } = loadTestPlugins(() => {
     registerStoragePlugin();
     registerRendererPlugin();
-    onStateChange(() => {
-      state = getPluginContext('responsivePreview').getState();
-    });
   });
 
   fireEvent.click(getByText(/responsive/i));
 
   await wait(() =>
-    expect(state).toEqual({
+    expect(getPluginState('responsivePreview')).toEqual({
       enabled: true,
       viewport: DEFAULT_VIEWPORT
     })
@@ -58,20 +47,16 @@ it('sets enabled state with stored viewport', async () => {
   const storage = {
     [storageKey]: { width: 420, height: 420 }
   };
-  let state;
 
   const { getByText } = loadTestPlugins(() => {
     registerStoragePlugin((context, key) => Promise.resolve(storage[key]));
     registerRendererPlugin();
-    onStateChange(() => {
-      state = getPluginContext('responsivePreview').getState();
-    });
   });
 
   fireEvent.click(getByText(/responsive/i));
 
   await wait(() =>
-    expect(state).toEqual({
+    expect(getPluginState('responsivePreview')).toEqual({
       enabled: true,
       viewport: { width: 420, height: 420 }
     })
@@ -95,14 +80,9 @@ it('sets viewport in fixture state', async () => {
 });
 
 it('sets disabled state', async () => {
-  let state;
-
   const { getByText } = loadTestPlugins(() => {
     registerStoragePlugin();
     registerRendererPlugin();
-    onStateChange(() => {
-      state = getPluginContext('responsivePreview').getState();
-    });
   });
 
   const getButton = getByText(/responsive/i);
@@ -110,7 +90,7 @@ it('sets disabled state', async () => {
   fireEvent.click(getButton);
 
   await wait(() =>
-    expect(state).toEqual({
+    expect(getPluginState('responsivePreview')).toEqual({
       enabled: false,
       viewport: DEFAULT_VIEWPORT
     })
@@ -121,14 +101,10 @@ it('sets disabled state with stored viewport', async () => {
   const storage = {
     [storageKey]: { width: 420, height: 420 }
   };
-  let state;
 
   const { getByText } = loadTestPlugins(() => {
     registerStoragePlugin((context, key) => Promise.resolve(storage[key]));
     registerRendererPlugin();
-    onStateChange(() => {
-      state = getPluginContext('responsivePreview').getState();
-    });
   });
 
   const getButton = getByText(/responsive/i);
@@ -136,7 +112,7 @@ it('sets disabled state with stored viewport', async () => {
   fireEvent.click(getButton);
 
   await wait(() =>
-    expect(state).toEqual({
+    expect(getPluginState('responsivePreview')).toEqual({
       enabled: false,
       viewport: { width: 420, height: 420 }
     })

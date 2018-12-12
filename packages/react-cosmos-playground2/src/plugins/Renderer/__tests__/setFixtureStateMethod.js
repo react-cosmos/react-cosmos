@@ -1,13 +1,8 @@
 // @flow
 
 import { wait } from 'react-testing-library';
-import {
-  resetPlugins,
-  registerPlugin,
-  loadPlugins,
-  onStateChange,
-  getPluginContext
-} from 'react-plugin';
+import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
+import { getPluginState } from '../../../testHelpers/plugin';
 import { mockFixtures, mockFixtureState } from '../testHelpers';
 import { register } from '..';
 
@@ -28,20 +23,15 @@ const initialRendererState = {
 };
 
 it('sets fixture state for all renderers', async () => {
-  let rendererState;
-
   loadTestPlugins(() => {
     const { init } = registerPlugin({ name: 'test' });
     init(({ callMethod }) => {
       callMethod('renderer.setFixtureState', mockFixtureState);
     });
-    onStateChange(() => {
-      rendererState = getPluginContext('renderer').getState();
-    });
   });
 
   await wait(() =>
-    expect(rendererState).toEqual({
+    expect(getPluginState('renderer')).toEqual({
       primaryRendererId: 'foo-renderer',
       renderers: {
         'foo-renderer': expect.objectContaining({

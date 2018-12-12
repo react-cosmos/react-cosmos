@@ -2,14 +2,8 @@
 
 import React from 'react';
 import { wait, render, cleanup, fireEvent } from 'react-testing-library';
-import {
-  resetPlugins,
-  registerPlugin,
-  loadPlugins,
-  Slot,
-  onStateChange,
-  getPluginContext
-} from 'react-plugin';
+import { resetPlugins, registerPlugin, loadPlugins, Slot } from 'react-plugin';
+import { getPluginState } from '../../../testHelpers/plugin';
 import { updateState } from 'react-cosmos-shared2/util';
 import { DEFAULT_DEVICES, getResponsiveViewportStorageKey } from '../shared';
 import { register } from '..';
@@ -70,21 +64,16 @@ it('renders responsive device labels', () => {
 
 describe('on device select', () => {
   it('sets "responsive-preview" state', async () => {
-    let state;
-
     const { getByText } = loadTestPlugins(() => {
       registerStoragePlugin();
       registerRouterPlugin({ fixturePath: 'fooFixture.js' });
       registerRendererPlugin();
-      onStateChange(() => {
-        state = getPluginContext('responsivePreview').getState();
-      });
     });
 
     fireEvent.click(getByText(/iphone 6 plus/i));
 
     await wait(() =>
-      expect(state).toEqual({
+      expect(getPluginState('responsivePreview')).toEqual({
         enabled: true,
         viewport: { width: 414, height: 736 }
       })

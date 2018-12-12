@@ -1,13 +1,8 @@
 // @flow
 
 import { wait } from 'react-testing-library';
-import {
-  resetPlugins,
-  registerPlugin,
-  loadPlugins,
-  onStateChange,
-  getPluginContext
-} from 'react-plugin';
+import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
+import { getPluginState } from '../../../testHelpers/plugin';
 import {
   mockFixtureState,
   getRendererState,
@@ -26,7 +21,6 @@ it('sets "fixtureState" renderer state', async () => {
       })
     }
   };
-  let rendererState;
 
   loadTestPlugins(initialRendererState, () => {
     const { init } = registerPlugin({ name: 'test' });
@@ -36,13 +30,10 @@ it('sets "fixtureState" renderer state', async () => {
         getFixtureStateChangeReq('foo-renderer')
       );
     });
-    onStateChange(() => {
-      rendererState = getPluginContext('renderer').getState();
-    });
   });
 
   await wait(() =>
-    expect(rendererState).toEqual({
+    expect(getPluginState('renderer')).toEqual({
       primaryRendererId: 'foo-renderer',
       renderers: {
         'foo-renderer': expect.objectContaining({
@@ -65,7 +56,6 @@ it('sets primary and secondary "fixtureState" renderer states', async () => {
       })
     }
   };
-  let rendererState;
 
   loadTestPlugins(initialRendererState, () => {
     const { init } = registerPlugin({ name: 'test' });
@@ -75,13 +65,10 @@ it('sets primary and secondary "fixtureState" renderer states', async () => {
         getFixtureStateChangeReq('foo-renderer')
       );
     });
-    onStateChange(() => {
-      rendererState = getPluginContext('renderer').getState();
-    });
   });
 
   await wait(() =>
-    expect(rendererState).toEqual({
+    expect(getPluginState('renderer')).toEqual({
       primaryRendererId: 'foo-renderer',
       renderers: {
         'foo-renderer': expect.objectContaining({
@@ -107,7 +94,6 @@ it('only sets secondary "fixtureState" renderer state', async () => {
       })
     }
   };
-  let rendererState;
 
   loadTestPlugins(initialRendererState, () => {
     const { init } = registerPlugin({ name: 'test' });
@@ -117,13 +103,10 @@ it('only sets secondary "fixtureState" renderer state', async () => {
         getFixtureStateChangeReq('bar-renderer')
       );
     });
-    onStateChange(() => {
-      rendererState = getPluginContext('renderer').getState();
-    });
   });
 
   await wait(() =>
-    expect(rendererState).toEqual({
+    expect(getPluginState('renderer')).toEqual({
       primaryRendererId: 'foo-renderer',
       renderers: {
         'foo-renderer': expect.objectContaining({
