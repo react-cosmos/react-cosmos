@@ -1,7 +1,7 @@
 // @flow
 
 import { wait } from 'react-testing-library';
-import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
+import { resetPlugins, loadPlugins } from 'react-plugin';
 import { getPluginState, mockInitCall } from '../../../testHelpers/plugin';
 import { mockFixtures } from '../testHelpers';
 import { register } from '..';
