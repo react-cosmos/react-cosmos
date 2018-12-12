@@ -8,7 +8,7 @@ import {
   popUrlParams,
   resetUrl
 } from '../../testHelpers/url';
-import { getPluginState } from '../../testHelpers/plugin';
+import { getPluginState, callOnInit } from '../../testHelpers/plugin';
 import { register } from '.';
 
 afterEach(() => {
@@ -58,9 +58,7 @@ describe('on "setUrlParams" method', () => {
   }
 
   function mockSetUrlParamsCall() {
-    registerPlugin({ name: 'testSetUrlParams' }).init(({ callMethod }) => {
-      callMethod('router.setUrlParams', { fixturePath: 'fixtures/zwei.js' });
-    });
+    callOnInit('router.setUrlParams', { fixturePath: 'fixtures/zwei.js' });
   }
 
   it('sets "router" state', async () => {

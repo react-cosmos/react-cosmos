@@ -2,7 +2,7 @@
 
 import { wait } from 'react-testing-library';
 import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
-import { getPluginState } from '../../../testHelpers/plugin';
+import { getPluginState, callOnInit } from '../../../testHelpers/plugin';
 import { mockFixtures } from '../testHelpers';
 import { register } from '..';
 
@@ -24,10 +24,7 @@ const initialRendererState = {
 
 it('sets primary renderer ID in state', async () => {
   loadTestPlugins(() => {
-    const { init } = registerPlugin({ name: 'test' });
-    init(({ callMethod }) => {
-      callMethod('renderer.selectPrimaryRenderer', 'bar-renderer');
-    });
+    callOnInit('renderer.selectPrimaryRenderer', 'bar-renderer');
   });
 
   await wait(() =>

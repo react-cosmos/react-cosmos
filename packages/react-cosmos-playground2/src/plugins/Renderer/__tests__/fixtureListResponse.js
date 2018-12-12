@@ -2,10 +2,10 @@
 
 import { wait } from 'react-testing-library';
 import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
-import { getPluginState } from '../../../testHelpers/plugin';
+import { getPluginState, callOnInit } from '../../../testHelpers/plugin';
 import {
   mockFixtureState,
-  getFixtureListRes,
+  getFxListRes,
   getRendererState
 } from '../testHelpers';
 import { register } from '..';
@@ -14,10 +14,7 @@ afterEach(resetPlugins);
 
 it('creates renderer state', async () => {
   loadTestPlugins(null, () => {
-    const { init } = registerPlugin({ name: 'test' });
-    init(({ callMethod }) => {
-      callMethod('renderer.receiveResponse', getFixtureListRes('foo-renderer'));
-    });
+    callOnInit('renderer.receiveResponse', getFxListRes('foo-renderer'));
   });
 
   await wait(() =>
@@ -34,11 +31,8 @@ it('creates renderer state', async () => {
 
 it('creates multiple renderer states', async () => {
   loadTestPlugins(null, () => {
-    const { init } = registerPlugin({ name: 'test' });
-    init(({ callMethod }) => {
-      callMethod('renderer.receiveResponse', getFixtureListRes('foo-renderer'));
-      callMethod('renderer.receiveResponse', getFixtureListRes('bar-renderer'));
-    });
+    callOnInit('renderer.receiveResponse', getFxListRes('foo-renderer'));
+    callOnInit('renderer.receiveResponse', getFxListRes('bar-renderer'));
   });
 
   await wait(() =>
@@ -67,10 +61,7 @@ it('creates renderer state with fixture state of primary renderer', async () => 
   };
 
   loadTestPlugins(initialRendererState, () => {
-    const { init } = registerPlugin({ name: 'test' });
-    init(({ callMethod }) => {
-      callMethod('renderer.receiveResponse', getFixtureListRes('bar-renderer'));
-    });
+    callOnInit('renderer.receiveResponse', getFxListRes('bar-renderer'));
   });
 
   await wait(() =>

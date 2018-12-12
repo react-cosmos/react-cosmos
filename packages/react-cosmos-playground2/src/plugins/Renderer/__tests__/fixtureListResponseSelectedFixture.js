@@ -2,9 +2,10 @@
 
 import { wait } from 'react-testing-library';
 import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
+import { callOnInit } from '../../../testHelpers/plugin';
 import {
   mockFixtureState,
-  getFixtureListRes,
+  getFxListRes,
   getRendererState
 } from '../testHelpers';
 import { register } from '..';
@@ -15,11 +16,9 @@ it('posts "selectFixture" renderer request', async () => {
   const handleRendererRequest = jest.fn();
 
   loadTestPlugins(null, () => {
-    const { init, on } = registerPlugin({ name: 'test' });
+    const { on } = registerPlugin({ name: 'test' });
     on('renderer.request', handleRendererRequest);
-    init(({ callMethod }) => {
-      callMethod('renderer.receiveResponse', getFixtureListRes('foo-renderer'));
-    });
+    callOnInit('renderer.receiveResponse', getFxListRes('foo-renderer'));
   });
 
   await wait(() =>
@@ -46,11 +45,9 @@ it('posts "selectFixture" renderer request with fixture state of primary rendere
   const handleRendererRequest = jest.fn();
 
   loadTestPlugins(initialRendererState, () => {
-    const { init, on } = registerPlugin({ name: 'test' });
+    const { on } = registerPlugin({ name: 'test' });
     on('renderer.request', handleRendererRequest);
-    init(({ callMethod }) => {
-      callMethod('renderer.receiveResponse', getFixtureListRes('bar-renderer'));
-    });
+    callOnInit('renderer.receiveResponse', getFxListRes('bar-renderer'));
   });
 
   await wait(() =>

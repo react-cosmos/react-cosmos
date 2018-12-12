@@ -2,11 +2,11 @@
 
 import { wait } from 'react-testing-library';
 import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
-import { getPluginState } from '../../../testHelpers/plugin';
+import { getPluginState, callOnInit } from '../../../testHelpers/plugin';
 import {
   mockFixtureState,
   getRendererState,
-  getFixtureStateChangeReq
+  getFxStateChangeReq
 } from '../testHelpers';
 import { register } from '..';
 
@@ -23,13 +23,7 @@ it('sets "fixtureState" renderer state', async () => {
   };
 
   loadTestPlugins(initialRendererState, () => {
-    const { init } = registerPlugin({ name: 'test' });
-    init(({ callMethod }) => {
-      callMethod(
-        'renderer.receiveResponse',
-        getFixtureStateChangeReq('foo-renderer')
-      );
-    });
+    callOnInit('renderer.receiveResponse', getFxStateChangeReq('foo-renderer'));
   });
 
   await wait(() =>
@@ -58,13 +52,7 @@ it('sets primary and secondary "fixtureState" renderer states', async () => {
   };
 
   loadTestPlugins(initialRendererState, () => {
-    const { init } = registerPlugin({ name: 'test' });
-    init(({ callMethod }) => {
-      callMethod(
-        'renderer.receiveResponse',
-        getFixtureStateChangeReq('foo-renderer')
-      );
-    });
+    callOnInit('renderer.receiveResponse', getFxStateChangeReq('foo-renderer'));
   });
 
   await wait(() =>
@@ -96,13 +84,7 @@ it('only sets secondary "fixtureState" renderer state', async () => {
   };
 
   loadTestPlugins(initialRendererState, () => {
-    const { init } = registerPlugin({ name: 'test' });
-    init(({ callMethod }) => {
-      callMethod(
-        'renderer.receiveResponse',
-        getFixtureStateChangeReq('bar-renderer')
-      );
-    });
+    callOnInit('renderer.receiveResponse', getFxStateChangeReq('bar-renderer'));
   });
 
   await wait(() =>
@@ -135,14 +117,9 @@ it('posts "setFixtureState" request to secondary renderer', async () => {
   const handleRendererRequest = jest.fn();
 
   loadTestPlugins(initialRendererState, () => {
-    const { init, on } = registerPlugin({ name: 'test' });
+    const { on } = registerPlugin({ name: 'test' });
     on('renderer.request', handleRendererRequest);
-    init(({ callMethod }) => {
-      callMethod(
-        'renderer.receiveResponse',
-        getFixtureStateChangeReq('foo-renderer')
-      );
-    });
+    callOnInit('renderer.receiveResponse', getFxStateChangeReq('foo-renderer'));
   });
 
   await wait(() =>

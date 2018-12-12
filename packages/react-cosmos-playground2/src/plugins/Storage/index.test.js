@@ -1,6 +1,7 @@
 // @flow
 
-import { registerPlugin, resetPlugins, loadPlugins } from 'react-plugin';
+import { resetPlugins, loadPlugins } from 'react-plugin';
+import { callOnInit } from '../../testHelpers/plugin';
 import { register } from '.';
 
 const mockSetItem = jest.fn();
@@ -18,33 +19,21 @@ afterEach(() => {
   mockSetItem.mockClear();
 });
 
-it('gets item from localForage', done => {
-  expect.hasAssertions();
+it('gets item from localForage', async () => {
   register();
 
-  const { init } = registerPlugin({ name: 'test' });
-  init(({ callMethod }) => {
-    callMethod('storage.getItem', 'fooKey').then(returnVal => {
-      expect(returnVal).toEqual('fooKeyValue');
-      done();
-    });
-  });
-
+  const callReturn = callOnInit('storage.getItem', 'fooKey');
   loadPlugins();
+
+  expect(await callReturn).toEqual('fooKeyValue');
 });
 
-it('sets item to localForage', done => {
-  expect.hasAssertions();
+it('sets item to localForage', async () => {
   register();
 
-  const { init } = registerPlugin({ name: 'test' });
-  init(({ callMethod }) => {
-    callMethod('storage.setItem', 'fooKey', 'fooValue').then(returnVal => {
-      expect(mockSetItem).toBeCalledWith('fooKey', 'fooValue');
-      expect(returnVal).toEqual('setReturnValue');
-      done();
-    });
-  });
-
+  const callReturn = callOnInit('storage.setItem', 'fooKey', 'fooValue');
   loadPlugins();
+
+  expect(mockSetItem).toBeCalledWith('fooKey', 'fooValue');
+  expect(await callReturn).toEqual('setReturnValue');
 });
