@@ -3,6 +3,7 @@
 
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { PluginsConsumer } from 'react-plugin';
 import { getPrimaryRendererState } from '../Renderer/selectors';
 import { PropsState } from './PropsState';
 
@@ -75,6 +76,27 @@ export class ControlPanel extends Component<Props> {
             </ul>
           </div>
         )}
+        <div>
+          <p>Plugins</p>
+          <ul>
+            <PluginsConsumer>
+              {(plugins, enable) =>
+                plugins.map(({ name, enabled }) => (
+                  <li key={name}>
+                    <label
+                      onMouseDown={() => {
+                        enable(name, !enabled);
+                      }}
+                    >
+                      <input type="checkbox" checked={enabled} readOnly />{' '}
+                      {name}
+                    </label>
+                  </li>
+                ))
+              }
+            </PluginsConsumer>
+          </ul>
+        </div>
       </Container>
     );
   }
