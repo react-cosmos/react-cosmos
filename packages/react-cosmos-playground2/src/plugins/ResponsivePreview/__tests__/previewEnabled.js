@@ -1,24 +1,25 @@
 // @flow
 
 import React from 'react';
-import { wait, render, cleanup, fireEvent } from 'react-testing-library';
-import { resetPlugins, registerPlugin, loadPlugins, Slot } from 'react-plugin';
-import { getPluginState } from '../../../testHelpers/plugin';
+import { wait, render, fireEvent } from 'react-testing-library';
+import { registerPlugin, loadPlugins, Slot } from 'react-plugin';
+import {
+  cleanup,
+  getPluginState,
+  mockMethod
+} from '../../../testHelpers/plugin';
 import { updateState } from 'react-cosmos-shared2/util';
 import { DEFAULT_DEVICES, getResponsiveViewportStorageKey } from '../shared';
 import { register } from '..';
 
-afterEach(() => {
-  cleanup();
-  resetPlugins();
-});
+afterEach(cleanup);
 
 const storageKey = getResponsiveViewportStorageKey('mockProjectId');
 
 it('renders children of "rendererPreviewOuter" slot', () => {
   const { getByTestId } = loadTestPlugins(() => {
     registerRouterPlugin();
-    registerRendererPlugin();
+    mockMethod('renderer.setFixtureState', () => {});
   });
 
   getByTestId('preview-mock');
@@ -27,7 +28,7 @@ it('renders children of "rendererPreviewOuter" slot', () => {
 it('does not render responsive header when no fixture is selected', () => {
   const { queryByTestId } = loadTestPlugins(() => {
     registerRouterPlugin();
-    registerRendererPlugin();
+    mockMethod('renderer.setFixtureState', () => {});
   });
 
   expect(queryByTestId('responsive-header')).toBeNull();
@@ -36,7 +37,7 @@ it('does not render responsive header when no fixture is selected', () => {
 it('does not render responsive header in full screen mode', () => {
   const { queryByTestId } = loadTestPlugins(() => {
     registerRouterPlugin({ fixturePath: 'fooFixture.js', fullScreen: true });
-    registerRendererPlugin();
+    mockMethod('renderer.setFixtureState', () => {});
   });
 
   expect(queryByTestId('responsive-header')).toBeNull();
@@ -45,7 +46,7 @@ it('does not render responsive header in full screen mode', () => {
 it('renders responsive header', () => {
   const { getByTestId } = loadTestPlugins(() => {
     registerRouterPlugin({ fixturePath: 'fooFixture.js' });
-    registerRendererPlugin();
+    mockMethod('renderer.setFixtureState', () => {});
   });
 
   getByTestId('responsive-header');
@@ -54,7 +55,7 @@ it('renders responsive header', () => {
 it('renders responsive device labels', () => {
   const { getByText } = loadTestPlugins(() => {
     registerRouterPlugin({ fixturePath: 'fooFixture.js' });
-    registerRendererPlugin();
+    mockMethod('renderer.setFixtureState', () => {});
   });
 
   DEFAULT_DEVICES.forEach(({ label }) => {
@@ -65,9 +66,9 @@ it('renders responsive device labels', () => {
 describe('on device select', () => {
   it('sets "responsive-preview" state', async () => {
     const { getByText } = loadTestPlugins(() => {
-      registerStoragePlugin();
+      mockMethod('storage.setItem', () => {});
       registerRouterPlugin({ fixturePath: 'fooFixture.js' });
-      registerRendererPlugin();
+      mockMethod('renderer.setFixtureState', () => {});
     });
 
     fireEvent.click(getByText(/iphone 6 plus/i));
@@ -87,9 +88,9 @@ describe('on device select', () => {
     };
 
     const { getByText } = loadTestPlugins(() => {
-      registerStoragePlugin();
+      mockMethod('storage.setItem', () => {});
       registerRouterPlugin({ fixturePath: 'fooFixture.js' });
-      registerRendererPlugin(handleSetFixtureState);
+      mockMethod('renderer.setFixtureState', handleSetFixtureState);
     });
 
     fireEvent.click(getByText(/iphone 6 plus/i));
@@ -103,11 +104,11 @@ describe('on device select', () => {
     let storage = {};
 
     const { getByText } = loadTestPlugins(() => {
-      registerStoragePlugin((context, key, value) =>
+      mockMethod('storage.setItem', (context, key, value) =>
         Promise.resolve((storage[key] = value))
       );
       registerRouterPlugin({ fixturePath: 'fooFixture.js' });
-      registerRendererPlugin();
+      mockMethod('renderer.setFixtureState', () => {});
     });
 
     fireEvent.click(getByText(/iphone 6 plus/i));
@@ -129,6 +130,7 @@ function loadTestPlugins(extraSetup = () => {}) {
       renderer: { webUrl: 'mockRendererUrl' }
     },
     state: {
+      renderer: { primaryRendererId: null, renderers: {} },
       responsivePreview: {
         enabled: true,
         viewport: { width: 320, height: 480 }
@@ -142,18 +144,7 @@ function loadTestPlugins(extraSetup = () => {}) {
     </Slot>
   );
 }
-function registerStoragePlugin(setItem = () => {}) {
-  registerPlugin({ name: 'storage' }).method('setItem', setItem);
-}
 
 function registerRouterPlugin(urlParams = {}) {
   registerPlugin({ name: 'router', initialState: { urlParams } });
-}
-
-function registerRendererPlugin(setFixtureState = () => {}) {
-  const { method } = registerPlugin({
-    name: 'renderer',
-    initialState: { primaryRendererId: null, renderers: {} }
-  });
-  method('setFixtureState', setFixtureState);
 }

@@ -1,11 +1,12 @@
 // @flow
 
 import { wait } from 'react-testing-library';
-import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
+import { loadPlugins } from 'react-plugin';
 import { mockWebSockets } from '../../testHelpers/mockWebSockets';
+import { cleanup, mockMethod, mockInitEmit } from '../../testHelpers/plugin';
 import { register } from '.';
 
-afterEach(resetPlugins);
+afterEach(cleanup);
 
 it('posts renderer request message via websockets', async () => {
   const selectFixtureMsg = {
@@ -17,11 +18,8 @@ it('posts renderer request message via websockets', async () => {
   };
 
   loadTestPlugins(() => {
-    const { init, method } = registerPlugin({ name: 'renderer' });
-    method('postRequest', () => {});
-    init(({ emitEvent }) => {
-      emitEvent('request', selectFixtureMsg);
-    });
+    mockMethod('renderer.postRequest', () => {});
+    mockInitEmit('renderer.request', selectFixtureMsg);
   });
 
   await mockWebSockets(async ({ onMessage }) => {
@@ -40,9 +38,8 @@ it('broadcasts renderer response message from websocket event', async () => {
   const handleReceiveResponse = jest.fn();
 
   loadTestPlugins(() => {
-    const { method } = registerPlugin({ name: 'renderer' });
-    method('postRequest', () => {});
-    method('receiveResponse', handleReceiveResponse);
+    mockMethod('renderer.postRequest', () => {});
+    mockMethod('renderer.receiveResponse', handleReceiveResponse);
   });
 
   await mockWebSockets(async ({ postMessage }) => {
@@ -61,8 +58,7 @@ it('posts "requestFixtureList" renderer request on mount', async () => {
   const handlePostRequest = jest.fn();
 
   loadTestPlugins(() => {
-    const { method } = registerPlugin({ name: 'renderer' });
-    method('postRequest', handlePostRequest);
+    mockMethod('renderer.postRequest', handlePostRequest);
   });
 
   await wait(() =>

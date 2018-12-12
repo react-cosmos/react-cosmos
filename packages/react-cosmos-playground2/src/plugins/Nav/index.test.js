@@ -27,10 +27,7 @@ const mockRendererState = {
 
 it('renders fixture list from renderer state', async () => {
   const { getByText } = loadTestPlugins(() => {
-    registerPlugin({
-      name: 'router',
-      initialState: { urlParams: {} }
-    });
+    registerRouter();
   });
 
   await waitForElement(() => getByText(/ein/i));
@@ -42,10 +39,7 @@ it('sets "fixturePath" router param on fixture click', async () => {
   const handleSetUrlParams = jest.fn();
 
   const { getByText } = loadTestPlugins(() => {
-    const { method } = registerPlugin({
-      name: 'router',
-      initialState: { urlParams: {} }
-    });
+    const { method } = registerRouter();
     method('setUrlParams', handleSetUrlParams);
   });
 
@@ -60,10 +54,7 @@ it('clears router params on home button click', async () => {
   const handleSetUrlParams = jest.fn();
 
   const { getByText } = loadTestPlugins(() => {
-    const { method } = registerPlugin({
-      name: 'router',
-      initialState: { urlParams: { fixturePath: 'fixtures/zwei.js' } }
-    });
+    const { method } = registerRouter({ fixturePath: 'fixtures/zwei.js' });
     method('setUrlParams', handleSetUrlParams);
   });
 
@@ -74,10 +65,7 @@ it('clears router params on home button click', async () => {
 
 it('hides fullscreen button when no fixture is selected', () => {
   const { queryByText } = loadTestPlugins(() => {
-    registerPlugin({
-      name: 'router',
-      initialState: { urlParams: {} }
-    });
+    registerRouter();
   });
 
   expect(queryByText(/fullscreen/i)).toBeNull();
@@ -87,10 +75,7 @@ it('sets "fullScreen" router param on fullscreen button click', () => {
   const handleSetUrlParams = jest.fn();
 
   const { getByText } = loadTestPlugins(() => {
-    const { method } = registerPlugin({
-      name: 'router',
-      initialState: { urlParams: { fixturePath: 'fixtures/zwei.js' } }
-    });
+    const { method } = registerRouter({ fixturePath: 'fixtures/zwei.js' });
     method('setUrlParams', handleSetUrlParams);
   });
 
@@ -106,10 +91,7 @@ it('sets "fullScreen" router param on fullscreen button click', () => {
 // conditions, and thus the validity of the "full screen" test
 it('renders nav element', async () => {
   const { getByTestId } = loadTestPlugins(() => {
-    registerPlugin({
-      name: 'router',
-      initialState: { urlParams: {} }
-    });
+    registerRouter();
   });
 
   await waitForElement(() => getByTestId('nav'));
@@ -154,4 +136,11 @@ function loadTestPlugins(extraSetup = () => {}) {
   });
 
   return render(<Slot name="left" />);
+}
+
+function registerRouter(urlParams = {}) {
+  return registerPlugin({
+    name: 'router',
+    initialState: { urlParams }
+  });
 }

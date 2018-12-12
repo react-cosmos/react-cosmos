@@ -1,17 +1,18 @@
 // @flow
 
 import React from 'react';
-import { wait, render, cleanup, fireEvent } from 'react-testing-library';
-import { resetPlugins, registerPlugin, loadPlugins, Slot } from 'react-plugin';
+import { wait, render, fireEvent } from 'react-testing-library';
+import { registerPlugin, loadPlugins, Slot } from 'react-plugin';
 import { updateState } from 'react-cosmos-shared2/util';
-import { getPluginState } from '../../../testHelpers/plugin';
+import {
+  cleanup,
+  getPluginState,
+  mockMethod
+} from '../../../testHelpers/plugin';
 import { DEFAULT_VIEWPORT, getResponsiveViewportStorageKey } from '../shared';
 import { register } from '..';
 
-afterEach(() => {
-  cleanup();
-  resetPlugins();
-});
+afterEach(cleanup);
 
 const storageKey = getResponsiveViewportStorageKey('mockProjectId');
 
@@ -29,8 +30,8 @@ const mockRendererState = {
 
 it('sets enabled state', async () => {
   const { getByText } = loadTestPlugins(() => {
-    registerStoragePlugin();
-    registerRendererPlugin();
+    mockMethod('storage.getItem', () => {});
+    mockMethod('renderer.setFixtureState', () => {});
   });
 
   fireEvent.click(getByText(/responsive/i));
@@ -49,8 +50,10 @@ it('sets enabled state with stored viewport', async () => {
   };
 
   const { getByText } = loadTestPlugins(() => {
-    registerStoragePlugin((context, key) => Promise.resolve(storage[key]));
-    registerRendererPlugin();
+    mockMethod('storage.getItem', (context, key) =>
+      Promise.resolve(storage[key])
+    );
+    mockMethod('renderer.setFixtureState', () => {});
   });
 
   fireEvent.click(getByText(/responsive/i));
@@ -70,8 +73,8 @@ it('sets viewport in fixture state', async () => {
   };
 
   const { getByText } = loadTestPlugins(() => {
-    registerStoragePlugin();
-    registerRendererPlugin(handleSetFixtureState);
+    mockMethod('storage.getItem', () => {});
+    mockMethod('renderer.setFixtureState', handleSetFixtureState);
   });
 
   fireEvent.click(getByText(/responsive/i));
@@ -81,8 +84,8 @@ it('sets viewport in fixture state', async () => {
 
 it('sets disabled state', async () => {
   const { getByText } = loadTestPlugins(() => {
-    registerStoragePlugin();
-    registerRendererPlugin();
+    mockMethod('storage.getItem', () => {});
+    mockMethod('renderer.setFixtureState', () => {});
   });
 
   const getButton = getByText(/responsive/i);
@@ -103,8 +106,10 @@ it('sets disabled state with stored viewport', async () => {
   };
 
   const { getByText } = loadTestPlugins(() => {
-    registerStoragePlugin((context, key) => Promise.resolve(storage[key]));
-    registerRendererPlugin();
+    mockMethod('storage.getItem', (context, key) =>
+      Promise.resolve(storage[key])
+    );
+    mockMethod('renderer.setFixtureState', () => {});
   });
 
   const getButton = getByText(/responsive/i);
@@ -126,8 +131,8 @@ it('clears viewport in fixture state', async () => {
   };
 
   const { getByText } = loadTestPlugins(() => {
-    registerStoragePlugin();
-    registerRendererPlugin(handleSetFixtureState);
+    mockMethod('storage.getItem', () => {});
+    mockMethod('renderer.setFixtureState', handleSetFixtureState);
   });
 
   const getButton = getByText(/responsive/i);
@@ -155,13 +160,4 @@ function loadTestPlugins(extraSetup = () => {}) {
   });
 
   return render(<Slot name="header-buttons" />);
-}
-
-function registerStoragePlugin(getItem = () => {}) {
-  registerPlugin({ name: 'storage' }).method('getItem', getItem);
-}
-
-function registerRendererPlugin(setFixtureState = () => {}) {
-  const { method } = registerPlugin({ name: 'renderer' });
-  method('setFixtureState', setFixtureState);
 }

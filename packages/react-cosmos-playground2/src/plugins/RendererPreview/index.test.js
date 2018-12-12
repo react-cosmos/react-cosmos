@@ -2,15 +2,13 @@
 // @flow
 
 import React from 'react';
-import { wait, render, cleanup } from 'react-testing-library';
-import { resetPlugins, registerPlugin, loadPlugins, Slot } from 'react-plugin';
+import { wait, render } from 'react-testing-library';
+import { registerPlugin, loadPlugins, Slot } from 'react-plugin';
 import { mockIframeMessage } from '../../testHelpers/mockIframeMessage';
+import { cleanup, mockMethod } from '../../testHelpers/plugin';
 import { register } from '.';
 
-afterEach(() => {
-  cleanup();
-  resetPlugins();
-});
+afterEach(cleanup);
 
 it('renders iframe with config.renderer.webUrl src', () => {
   const renderer = loadTestPlugins(() => {
@@ -58,8 +56,7 @@ it('broadcasts renderer response message from iframe', async () => {
   const handleReceiveResponse = jest.fn();
 
   loadTestPlugins(() => {
-    const { method } = registerPlugin({ name: 'renderer' });
-    method('receiveResponse', handleReceiveResponse);
+    mockMethod('renderer.receiveResponse', handleReceiveResponse);
   });
 
   window.postMessage(fixtureListMsg, '*');
