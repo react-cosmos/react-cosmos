@@ -1,6 +1,7 @@
 // @flow
 
 import { wait } from 'react-testing-library';
+import { onStateChange, getPluginContext } from 'ui-plugin';
 import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
 import { mockFixtures, mockFixtureState } from '../testHelpers';
 import { register } from '..';
@@ -25,12 +26,12 @@ it('resets fixture state for all renderers', async () => {
   let rendererState;
 
   loadTestPlugins(() => {
-    const { init, onState } = registerPlugin({ name: 'test' });
-    onState(({ getStateOf }) => {
-      rendererState = getStateOf('renderer');
-    });
+    const { init } = registerPlugin({ name: 'test' });
     init(({ callMethod }) => {
       callMethod('renderer.unselectFixture');
+    });
+    onStateChange(() => {
+      rendererState = getPluginContext('renderer').getState();
     });
   });
 

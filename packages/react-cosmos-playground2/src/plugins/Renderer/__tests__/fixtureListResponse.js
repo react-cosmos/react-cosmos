@@ -1,6 +1,7 @@
 // @flow
 
 import { wait } from 'react-testing-library';
+import { onStateChange, getPluginContext } from 'ui-plugin';
 import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
 import {
   mockFixtureState,
@@ -15,12 +16,12 @@ it('creates renderer state', async () => {
   let rendererState;
 
   loadTestPlugins(null, () => {
-    const { init, onState } = registerPlugin({ name: 'test' });
-    onState(({ getStateOf }) => {
-      rendererState = getStateOf('renderer');
-    });
+    const { init } = registerPlugin({ name: 'test' });
     init(({ callMethod }) => {
       callMethod('renderer.receiveResponse', getFixtureListRes('foo-renderer'));
+    });
+    onStateChange(() => {
+      rendererState = getPluginContext('renderer').getState();
     });
   });
 
@@ -40,13 +41,13 @@ it('creates multiple renderer states', async () => {
   let rendererState;
 
   loadTestPlugins(null, () => {
-    const { init, onState } = registerPlugin({ name: 'test' });
-    onState(({ getStateOf }) => {
-      rendererState = getStateOf('renderer');
-    });
+    const { init } = registerPlugin({ name: 'test' });
     init(({ callMethod }) => {
       callMethod('renderer.receiveResponse', getFixtureListRes('foo-renderer'));
       callMethod('renderer.receiveResponse', getFixtureListRes('bar-renderer'));
+    });
+    onStateChange(() => {
+      rendererState = getPluginContext('renderer').getState();
     });
   });
 
@@ -77,12 +78,12 @@ it('creates renderer state with fixture state of primary renderer', async () => 
   let rendererState;
 
   loadTestPlugins(initialRendererState, () => {
-    const { init, onState } = registerPlugin({ name: 'test' });
-    onState(({ getStateOf }) => {
-      rendererState = getStateOf('renderer');
-    });
+    const { init } = registerPlugin({ name: 'test' });
     init(({ callMethod }) => {
       callMethod('renderer.receiveResponse', getFixtureListRes('bar-renderer'));
+    });
+    onStateChange(() => {
+      rendererState = getPluginContext('renderer').getState();
     });
   });
 

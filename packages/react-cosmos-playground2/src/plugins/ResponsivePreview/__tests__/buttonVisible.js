@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { wait, render, cleanup, fireEvent } from 'react-testing-library';
+import { onStateChange, getPluginContext } from 'ui-plugin';
 import { resetPlugins, registerPlugin, loadPlugins, Slot } from 'react-plugin';
 import { updateState } from 'react-cosmos-shared2/util';
 import { DEFAULT_VIEWPORT, getResponsiveViewportStorageKey } from '../shared';
@@ -32,8 +33,8 @@ it('sets enabled state', async () => {
   const { getByText } = loadTestPlugins(() => {
     registerStoragePlugin();
     registerRendererPlugin();
-    registerPlugin({ name: 'test' }).onState(({ getStateOf }) => {
-      state = getStateOf('responsivePreview');
+    onStateChange(() => {
+      state = getPluginContext('responsivePreview').getState();
     });
   });
 
@@ -56,8 +57,8 @@ it('sets enabled state with stored viewport', async () => {
   const { getByText } = loadTestPlugins(() => {
     registerStoragePlugin((context, key) => Promise.resolve(storage[key]));
     registerRendererPlugin();
-    registerPlugin({ name: 'test' }).onState(({ getStateOf }) => {
-      state = getStateOf('responsivePreview');
+    onStateChange(() => {
+      state = getPluginContext('responsivePreview').getState();
     });
   });
 
@@ -93,8 +94,8 @@ it('sets disabled state', async () => {
   const { getByText } = loadTestPlugins(() => {
     registerStoragePlugin();
     registerRendererPlugin();
-    registerPlugin({ name: 'test' }).onState(({ getStateOf }) => {
-      state = getStateOf('responsivePreview');
+    onStateChange(() => {
+      state = getPluginContext('responsivePreview').getState();
     });
   });
 
@@ -119,8 +120,8 @@ it('sets disabled state with stored viewport', async () => {
   const { getByText } = loadTestPlugins(() => {
     registerStoragePlugin((context, key) => Promise.resolve(storage[key]));
     registerRendererPlugin();
-    registerPlugin({ name: 'test' }).onState(({ getStateOf }) => {
-      state = getStateOf('responsivePreview');
+    onStateChange(() => {
+      state = getPluginContext('responsivePreview').getState();
     });
   });
 

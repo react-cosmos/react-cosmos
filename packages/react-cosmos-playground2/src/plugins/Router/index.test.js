@@ -1,6 +1,7 @@
 // @flow
 
 import { wait } from 'react-testing-library';
+import { onStateChange, getPluginContext } from 'ui-plugin';
 import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
 import {
   getUrlParams,
@@ -68,8 +69,8 @@ describe('on "setUrlParams" method', () => {
     loadTestPlugins(() => {
       mockRendererSelectFixtureMethod();
       mockSetUrlParamsCall();
-      registerPlugin({ name: 'test' }).onState(({ getStateOf }) => {
-        urlParams = getStateOf('router').urlParams;
+      onStateChange(() => {
+        urlParams = getPluginContext('router').getState().urlParams;
       });
     });
 

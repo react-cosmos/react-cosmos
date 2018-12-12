@@ -1,6 +1,7 @@
 // @flow
 
 import { wait } from 'react-testing-library';
+import { onStateChange, getPluginContext } from 'ui-plugin';
 import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
 import {
   mockFixtureState,
@@ -23,15 +24,15 @@ it('sets "fixtureState" renderer state', async () => {
   let rendererState;
 
   loadTestPlugins(initialRendererState, () => {
-    const { init, onState } = registerPlugin({ name: 'test' });
-    onState(({ getStateOf }) => {
-      rendererState = getStateOf('renderer');
-    });
+    const { init } = registerPlugin({ name: 'test' });
     init(({ callMethod }) => {
       callMethod(
         'renderer.receiveResponse',
         getFixtureStateChangeReq('foo-renderer')
       );
+    });
+    onStateChange(() => {
+      rendererState = getPluginContext('renderer').getState();
     });
   });
 
@@ -62,15 +63,15 @@ it('sets primary and secondary "fixtureState" renderer states', async () => {
   let rendererState;
 
   loadTestPlugins(initialRendererState, () => {
-    const { init, onState } = registerPlugin({ name: 'test' });
-    onState(({ getStateOf }) => {
-      rendererState = getStateOf('renderer');
-    });
+    const { init } = registerPlugin({ name: 'test' });
     init(({ callMethod }) => {
       callMethod(
         'renderer.receiveResponse',
         getFixtureStateChangeReq('foo-renderer')
       );
+    });
+    onStateChange(() => {
+      rendererState = getPluginContext('renderer').getState();
     });
   });
 
@@ -104,15 +105,15 @@ it('only sets secondary "fixtureState" renderer state', async () => {
   let rendererState;
 
   loadTestPlugins(initialRendererState, () => {
-    const { init, onState } = registerPlugin({ name: 'test' });
-    onState(({ getStateOf }) => {
-      rendererState = getStateOf('renderer');
-    });
+    const { init } = registerPlugin({ name: 'test' });
     init(({ callMethod }) => {
       callMethod(
         'renderer.receiveResponse',
         getFixtureStateChangeReq('bar-renderer')
       );
+    });
+    onStateChange(() => {
+      rendererState = getPluginContext('renderer').getState();
     });
   });
 
