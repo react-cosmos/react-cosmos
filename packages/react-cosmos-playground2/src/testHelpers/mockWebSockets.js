@@ -18,7 +18,6 @@ const mockSocket = {
   },
   off: () => {},
   emit: (path, msg) => {
-    console.log('emit', { path, msg });
     if (path === RENDERER_MESSAGE_EVENT_NAME) {
       onMessage(msg);
     }
