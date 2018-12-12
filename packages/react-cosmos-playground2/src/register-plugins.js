@@ -1,5 +1,6 @@
 // @flow
 
+// TODO: Discover plugins in codebase automatically
 require('./plugins/Storage').register();
 require('./plugins/Core').register();
 require('./plugins/Renderer').register();
