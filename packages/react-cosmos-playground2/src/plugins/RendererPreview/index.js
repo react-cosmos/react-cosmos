@@ -14,31 +14,10 @@ export function register() {
 
   on('renderer.request', handleRendererRequest);
 
-  init(({ getConfigOf, callMethod }) => {
-    const { webUrl }: RendererConfig = getConfigOf('renderer');
-
-    if (!webUrl) {
+  init(context => {
+    if (!getRendererUrl(context)) {
       return;
     }
-
-    // Defining plugin parts inside handlers sounds like a bad idea in general.
-    // I'm making an exception in this case because renderer requests (the
-    // only event this plugin listens to at the moment of this writing) sent
-    // from other plugins' init handlers would be ignored anyway, since renderer
-    // requests can only be honored once the iframe element ref is available.
-    plug({
-      slotName: 'rendererPreview',
-      render: (
-        <Slot name="rendererPreviewOuter">
-          <RendererPreview
-            rendererUrl={webUrl}
-            onIframeRef={elRef => {
-              iframeRef = elRef;
-            }}
-          />
-        </Slot>
-      )
-    });
 
     function handleWindowMsg(msg: Object) {
       // TODO: Create convention to filter out alien messages reliably (eg.
@@ -48,7 +27,7 @@ export function register() {
         return;
       }
 
-      callMethod('renderer.receiveResponse', msg.data);
+      context.callMethod('renderer.receiveResponse', msg.data);
     }
 
     window.addEventListener('message', handleWindowMsg, false);
@@ -57,6 +36,32 @@ export function register() {
       window.removeEventListener('message', handleWindowMsg, false);
     };
   });
+
+  plug({
+    slotName: 'rendererPreview',
+    render: ({ rendererUrl }) =>
+      rendererUrl && (
+        <Slot name="rendererPreviewOuter">
+          <RendererPreview
+            rendererUrl={rendererUrl}
+            onIframeRef={elRef => {
+              iframeRef = elRef;
+            }}
+          />
+        </Slot>
+      ),
+    getProps: context => {
+      return {
+        rendererUrl: getRendererUrl(context)
+      };
+    }
+  });
+}
+
+function getRendererUrl({ getConfigOf }) {
+  const { webUrl }: RendererConfig = getConfigOf('renderer');
+
+  return webUrl;
 }
 
 function handleRendererRequest(context, msg: RendererRequest) {
