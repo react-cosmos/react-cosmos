@@ -2,7 +2,11 @@
 
 import { wait } from 'react-testing-library';
 import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
-import { getPluginState, callOnInit } from '../../../testHelpers/plugin';
+import {
+  getPluginState,
+  onEvent,
+  callOnInit
+} from '../../../testHelpers/plugin';
 import {
   mockFixtureState,
   getRendererState,
@@ -117,8 +121,7 @@ it('posts "setFixtureState" request to secondary renderer', async () => {
   const handleRendererRequest = jest.fn();
 
   loadTestPlugins(initialRendererState, () => {
-    const { on } = registerPlugin({ name: 'test' });
-    on('renderer.request', handleRendererRequest);
+    onEvent('renderer.request', handleRendererRequest);
     callOnInit('renderer.receiveResponse', getFxStateChangeReq('foo-renderer'));
   });
 

@@ -2,7 +2,11 @@
 
 import { wait } from 'react-testing-library';
 import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
-import { getPluginState, callOnInit } from '../../../testHelpers/plugin';
+import {
+  getPluginState,
+  onEvent,
+  callOnInit
+} from '../../../testHelpers/plugin';
 import { mockFixtures, mockFixtureState } from '../testHelpers';
 import { register } from '..';
 
@@ -46,8 +50,7 @@ it('posts "setFixtureState" renderer requests', async () => {
   const handleRendererRequest = jest.fn();
 
   loadTestPlugins(() => {
-    const { on } = registerPlugin({ name: 'test' });
-    on('renderer.request', handleRendererRequest);
+    onEvent('renderer.request', handleRendererRequest);
     callOnInit('renderer.setFixtureState', mockFixtureState);
   });
 

@@ -8,6 +8,10 @@ export function getPluginState(pluginName: string) {
   return getPluginContext(pluginName).getState();
 }
 
+export function onEvent(eventPath: string, handler: Function) {
+  registerFreshPlugin().on(eventPath, handler);
+}
+
 export function callOnInit(methodPath: string, ...args: any[]): Promise<any> {
   return new Promise(resolve => {
     registerFreshPlugin().init(({ callMethod }) => {
