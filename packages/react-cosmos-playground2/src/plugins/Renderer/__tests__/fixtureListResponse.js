@@ -1,8 +1,13 @@
 // @flow
 
 import { wait } from 'react-testing-library';
-import { onStateChange, getPluginContext } from 'ui-plugin';
-import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
+import {
+  resetPlugins,
+  registerPlugin,
+  loadPlugins,
+  onStateChange,
+  getPluginContext
+} from 'react-plugin';
 import {
   mockFixtureState,
   getFixtureListRes,

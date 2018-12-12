@@ -2,8 +2,14 @@
 
 import React from 'react';
 import { wait, render, cleanup, fireEvent } from 'react-testing-library';
-import { onStateChange, getPluginContext } from 'ui-plugin';
-import { resetPlugins, registerPlugin, loadPlugins, Slot } from 'react-plugin';
+import {
+  resetPlugins,
+  registerPlugin,
+  loadPlugins,
+  Slot,
+  onStateChange,
+  getPluginContext
+} from 'react-plugin';
 import { updateState } from 'react-cosmos-shared2/util';
 import { DEFAULT_DEVICES, getResponsiveViewportStorageKey } from '../shared';
 import { register } from '..';
