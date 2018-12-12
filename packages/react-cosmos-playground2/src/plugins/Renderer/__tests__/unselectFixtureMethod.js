@@ -4,8 +4,8 @@ import { wait } from 'react-testing-library';
 import { resetPlugins, loadPlugins } from 'react-plugin';
 import {
   getPluginState,
-  onEvent,
-  callOnInit
+  mockEvent,
+  mockInitCall
 } from '../../../testHelpers/plugin';
 import { mockFixtures, mockFixtureState } from '../testHelpers';
 import { register } from '..';
@@ -28,7 +28,7 @@ const initialRendererState = {
 
 it('resets fixture state for all renderers', async () => {
   loadTestPlugins(() => {
-    callOnInit('renderer.unselectFixture');
+    mockInitCall('renderer.unselectFixture');
   });
 
   await wait(() =>
@@ -50,8 +50,8 @@ it('posts "unselectFixture" renderer requests', async () => {
   const handleRendererRequest = jest.fn();
 
   loadTestPlugins(() => {
-    onEvent('renderer.request', handleRendererRequest);
-    callOnInit('renderer.unselectFixture');
+    mockEvent('renderer.request', handleRendererRequest);
+    mockInitCall('renderer.unselectFixture');
   });
 
   await wait(() =>

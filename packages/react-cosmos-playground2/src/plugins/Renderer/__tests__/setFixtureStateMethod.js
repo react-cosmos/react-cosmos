@@ -4,8 +4,8 @@ import { wait } from 'react-testing-library';
 import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
 import {
   getPluginState,
-  onEvent,
-  callOnInit
+  mockEvent,
+  mockInitCall
 } from '../../../testHelpers/plugin';
 import { mockFixtures, mockFixtureState } from '../testHelpers';
 import { register } from '..';
@@ -28,7 +28,7 @@ const initialRendererState = {
 
 it('sets fixture state for all renderers', async () => {
   loadTestPlugins(() => {
-    callOnInit('renderer.setFixtureState', mockFixtureState);
+    mockInitCall('renderer.setFixtureState', mockFixtureState);
   });
 
   await wait(() =>
@@ -50,8 +50,8 @@ it('posts "setFixtureState" renderer requests', async () => {
   const handleRendererRequest = jest.fn();
 
   loadTestPlugins(() => {
-    onEvent('renderer.request', handleRendererRequest);
-    callOnInit('renderer.setFixtureState', mockFixtureState);
+    mockEvent('renderer.request', handleRendererRequest);
+    mockInitCall('renderer.setFixtureState', mockFixtureState);
   });
 
   await wait(() =>

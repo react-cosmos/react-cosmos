@@ -2,7 +2,7 @@
 
 import { wait } from 'react-testing-library';
 import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
-import { onEvent, callOnInit } from '../../../testHelpers/plugin';
+import { mockEvent, mockInitCall } from '../../../testHelpers/plugin';
 import { mockFixtures, mockFixtureState } from '../testHelpers';
 import { register } from '..';
 
@@ -26,8 +26,8 @@ it('posts "selectFixture" renderer requests', async () => {
   const handleRendererRequest = jest.fn();
 
   loadTestPlugins(() => {
-    onEvent('renderer.request', handleRendererRequest);
-    callOnInit('renderer.selectFixture', 'fixtures/zwei.js');
+    mockEvent('renderer.request', handleRendererRequest);
+    mockInitCall('renderer.selectFixture', 'fixtures/zwei.js');
   });
 
   await wait(() =>

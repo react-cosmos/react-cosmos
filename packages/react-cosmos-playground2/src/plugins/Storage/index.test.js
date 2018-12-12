@@ -1,7 +1,7 @@
 // @flow
 
 import { resetPlugins, loadPlugins } from 'react-plugin';
-import { callOnInit } from '../../testHelpers/plugin';
+import { mockInitCall } from '../../testHelpers/plugin';
 import { register } from '.';
 
 const mockSetItem = jest.fn();
@@ -22,7 +22,7 @@ afterEach(() => {
 it('gets item from localForage', async () => {
   register();
 
-  const callReturn = callOnInit('storage.getItem', 'fooKey');
+  const callReturn = mockInitCall('storage.getItem', 'fooKey');
   loadPlugins();
 
   expect(await callReturn).toEqual('fooKeyValue');
@@ -31,7 +31,7 @@ it('gets item from localForage', async () => {
 it('sets item to localForage', async () => {
   register();
 
-  const callReturn = callOnInit('storage.setItem', 'fooKey', 'fooValue');
+  const callReturn = mockInitCall('storage.setItem', 'fooKey', 'fooValue');
   loadPlugins();
 
   expect(mockSetItem).toBeCalledWith('fooKey', 'fooValue');

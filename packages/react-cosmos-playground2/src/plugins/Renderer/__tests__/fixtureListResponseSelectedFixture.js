@@ -2,7 +2,7 @@
 
 import { wait } from 'react-testing-library';
 import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
-import { onEvent, callOnInit } from '../../../testHelpers/plugin';
+import { mockEvent, mockInitCall } from '../../../testHelpers/plugin';
 import {
   mockFixtureState,
   getFxListRes,
@@ -16,8 +16,8 @@ it('posts "selectFixture" renderer request', async () => {
   const handleRendererRequest = jest.fn();
 
   loadTestPlugins(null, () => {
-    onEvent('renderer.request', handleRendererRequest);
-    callOnInit('renderer.receiveResponse', getFxListRes('foo-renderer'));
+    mockEvent('renderer.request', handleRendererRequest);
+    mockInitCall('renderer.receiveResponse', getFxListRes('foo-renderer'));
   });
 
   await wait(() =>
@@ -44,8 +44,8 @@ it('posts "selectFixture" renderer request with fixture state of primary rendere
   const handleRendererRequest = jest.fn();
 
   loadTestPlugins(initialRendererState, () => {
-    onEvent('renderer.request', handleRendererRequest);
-    callOnInit('renderer.receiveResponse', getFxListRes('bar-renderer'));
+    mockEvent('renderer.request', handleRendererRequest);
+    mockInitCall('renderer.receiveResponse', getFxListRes('bar-renderer'));
   });
 
   await wait(() =>
