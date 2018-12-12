@@ -13114,16 +13114,16 @@ react-plugin@^0.1.1:
     prop-types "^15.6.2"
     react-is "^16.4.1"
 
-react-plugin@^1.0.0-alpha.1:
-  version "1.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/react-plugin/-/react-plugin-1.0.0-alpha.1.tgz#3b6f03c542703d6337c7623bf0cbd497c3ba5d43"
-  integrity sha512-jOAKW3i3x7DY2IJnLEaWwLt0Y1NYamzYZwkqDZzIFsam40N8ZJ3xS4kL/fWhI3VEl9IYyya0fP5Tfj9VkEv7+Q==
+react-plugin@^1.0.0-alpha.4:
+  version "1.0.0-alpha.4"
+  resolved "https://registry.yarnpkg.com/react-plugin/-/react-plugin-1.0.0-alpha.4.tgz#a7d087b83517a1b65cbcf1c6fb614e164794f7a3"
+  integrity sha512-SunIgrwWHOVFI3CmbkxWdHyvSJCmeDQ3lR6CkAjBAnp+18+Fdc8ClvcdQ3SLq19XKR0MmytUTT4pnWgzp/8zZg==
   dependencies:
     "@skidding/linked-list" "^1.0.2"
     array-find-index "^1.0.2"
     lodash "^4.17.11"
     react-is "^16.6.3"
-    ui-plugin "^1.0.0-alpha.4"
+    ui-plugin "^1.0.0-alpha.6"
 
 react-proxy@^1.1.7:
   version "1.1.8"
@@ -15444,10 +15444,10 @@ uglifyjs-webpack-plugin@^1.2.4:
     webpack-sources "^1.1.0"
     worker-farm "^1.5.2"
 
-ui-plugin@^1.0.0-alpha.4:
-  version "1.0.0-alpha.4"
-  resolved "https://registry.yarnpkg.com/ui-plugin/-/ui-plugin-1.0.0-alpha.4.tgz#b0a3944f3b1d2e5e5937977706d7b7b0b54e75f3"
-  integrity sha512-pLArXMUPrLSSUsQtl30qekSLdYMkQrmCdMNF9r3AwAGVbdZbB2q0C9imWqfUFAi32H4HTLevfAKDPrqys+iY6g==
+ui-plugin@^1.0.0-alpha.6:
+  version "1.0.0-alpha.6"
+  resolved "https://registry.yarnpkg.com/ui-plugin/-/ui-plugin-1.0.0-alpha.6.tgz#4f354d503399b08deba51755db484eb373b0a6f0"
+  integrity sha512-w9/H6NRv17dZ9s5X0u4r2ksECaNkmAKc7aDDRXKUAotm2YQjX8pNFKeZ0oBeHjI6blJBwj4ZgbPdlFVdzYou5g==
   dependencies:
     lodash "^4.17.11"
 
