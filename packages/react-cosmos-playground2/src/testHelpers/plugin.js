@@ -1,18 +1,19 @@
 // @flow
 
 import * as rtl from 'react-testing-library';
-import { resetPlugins, registerPlugin, getPluginContext } from 'react-plugin';
-// WARN: Using internal API. This module might become part of
-// ui-plugin/react-plugin in the future
-import { getPlugins } from 'ui-plugin/dist/pluginStore';
+import {
+  resetPlugins,
+  registerPlugin,
+  getPlugins,
+  getPluginContext,
+  getPluginApi
+} from 'react-plugin';
 
-let cachedPluginApis = {};
 let pluginId: number = 0;
 
 export function cleanup() {
   rtl.cleanup();
   resetPlugins();
-  cachedPluginApis = {};
 }
 
 export function getPluginState(pluginName: string) {
@@ -62,14 +63,11 @@ export function mockInitEmit(eventPath: string, ...args: any[]) {
 }
 
 function ensurePlugin(name: string) {
-  if (cachedPluginApis[name]) {
-    return cachedPluginApis[name];
+  if (!getPlugins()[name]) {
+    registerPlugin({ name });
   }
 
-  const pluginApi = registerPlugin({ name });
-  cachedPluginApis[name] = pluginApi;
-
-  return pluginApi;
+  return getPluginApi(name);
 }
 
 function registerFreshPlugin() {
