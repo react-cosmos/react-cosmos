@@ -1,7 +1,7 @@
 // @flow
 
-import { resetPlugins, loadPlugins } from 'react-plugin';
-import { mockInitCall } from '../../testHelpers/plugin';
+import { loadPlugins } from 'react-plugin';
+import { cleanup, mockInitCall } from '../../testHelpers/plugin';
 import { register } from '.';
 
 const mockSetItem = jest.fn();
@@ -15,7 +15,7 @@ jest.mock('localforage', () => ({
 }));
 
 afterEach(() => {
-  resetPlugins();
+  cleanup();
   mockSetItem.mockClear();
 });
 

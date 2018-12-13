@@ -1,64 +1,29 @@
 // @flow
 
 import React from 'react';
-import { render, cleanup } from 'react-testing-library';
-import { resetPlugins, registerPlugin, loadPlugins, Slot } from 'react-plugin';
+import { render } from 'react-testing-library';
+import { loadPlugins, Slot } from 'react-plugin';
+import { cleanup, mockConfig, mockState } from '../../../testHelpers/plugin';
 import { register } from '..';
 
-afterEach(() => {
-  cleanup();
-  resetPlugins();
-});
+afterEach(cleanup);
 
-it('renders children of "rendererPreviewOuter" slot', () => {
-  const { getByTestId } = loadTestPlugins(() => {
-    registerRouterPlugin();
-    registerRendererPlugin();
-  });
+const defaultRendererState = { primaryRendererId: null, renderers: {} };
 
-  getByTestId('preview-mock');
-});
-
-it('does not render responsive header', () => {
-  const { queryByTestId } = loadTestPlugins(() => {
-    registerRouterPlugin({ fixturePath: 'fooFixture.js' });
-    registerRendererPlugin();
-  });
-
-  expect(queryByTestId('responsive-header')).toBeNull();
-});
-
-it('renders responsive header when fixture has viewport', () => {
-  const { getByTestId } = loadTestPlugins(() => {
-    registerRouterPlugin({ fixturePath: 'fooFixture.js' });
-    registerRendererPlugin({
-      primaryRendererId: 'fooRendererId',
-      renderers: {
-        fooRendererId: {
-          fixtures: ['fooFixture.js'],
-          fixtureState: {
-            viewport: { width: 420, height: 420 }
-          }
-        }
-      }
-    });
-  });
-
-  getByTestId('responsive-header');
-});
-
-function loadTestPlugins(extraSetup = () => {}) {
+function registerTestPlugins({
+  urlParams = {},
+  rendererState = defaultRendererState
+}: { urlParams?: {}, rendererState?: {} } = {}) {
   register();
-  registerPlugin({ name: 'core' });
-  extraSetup();
+  mockConfig('core', { projectId: 'mockProjectId' });
+  mockConfig('renderer', { webUrl: 'mockRendererUrl' });
+  mockState('router', { urlParams });
+  mockState('renderer', rendererState);
+}
 
+function loadTestPlugins() {
   loadPlugins({
-    config: {
-      renderer: { webUrl: 'mockRendererUrl' }
-    },
-    state: {
-      responsivePreview: { enabled: false, viewport: null }
-    }
+    state: { responsivePreview: { enabled: false, viewport: null } }
   });
 
   return render(
@@ -68,12 +33,36 @@ function loadTestPlugins(extraSetup = () => {}) {
   );
 }
 
-function registerRouterPlugin(urlParams = {}) {
-  registerPlugin({ name: 'router', initialState: { urlParams } });
-}
+it('renders children of "rendererPreviewOuter" slot', () => {
+  registerTestPlugins();
 
-function registerRendererPlugin(
-  state = { primaryRendererId: null, renderers: {} }
-) {
-  registerPlugin({ name: 'renderer', initialState: state });
-}
+  const { getByTestId } = loadTestPlugins();
+  getByTestId('preview-mock');
+});
+
+it('does not render responsive header', () => {
+  registerTestPlugins({ urlParams: { fixturePath: 'fooFixture.js' } });
+
+  const { queryByTestId } = loadTestPlugins();
+  expect(queryByTestId('responsive-header')).toBeNull();
+});
+
+it('renders responsive header when fixture has viewport', () => {
+  registerTestPlugins({
+    urlParams: { fixturePath: 'fooFixture.js' },
+    rendererState: {
+      primaryRendererId: 'fooRendererId',
+      renderers: {
+        fooRendererId: {
+          fixtures: ['fooFixture.js'],
+          fixtureState: {
+            viewport: { width: 420, height: 420 }
+          }
+        }
+      }
+    }
+  });
+
+  const { getByTestId } = loadTestPlugins();
+  getByTestId('responsive-header');
+});

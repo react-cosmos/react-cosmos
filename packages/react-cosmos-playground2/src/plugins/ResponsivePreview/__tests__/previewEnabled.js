@@ -2,10 +2,12 @@
 
 import React from 'react';
 import { wait, render, fireEvent } from 'react-testing-library';
-import { registerPlugin, loadPlugins, Slot } from 'react-plugin';
+import { loadPlugins, Slot } from 'react-plugin';
 import {
   cleanup,
   getPluginState,
+  mockConfig,
+  mockState,
   mockMethod
 } from '../../../testHelpers/plugin';
 import { updateState } from 'react-cosmos-shared2/util';
@@ -16,48 +18,69 @@ afterEach(cleanup);
 
 const storageKey = getResponsiveViewportStorageKey('mockProjectId');
 
-it('renders children of "rendererPreviewOuter" slot', () => {
-  const { getByTestId } = loadTestPlugins(() => {
-    registerRouterPlugin();
-    mockMethod('renderer.setFixtureState', () => {});
+function registerTestPlugins({
+  urlParams = {},
+  handleSetFixtureState = () => {}
+}: { urlParams?: {}, handleSetFixtureState?: Function } = {}) {
+  register();
+  mockConfig('core', { projectId: 'mockProjectId' });
+  mockConfig('renderer', { webUrl: 'mockRendererUrl' });
+  mockState('router', { urlParams });
+  mockState('renderer', { primaryRendererId: null, renderers: {} });
+  mockMethod('renderer.setFixtureState', handleSetFixtureState);
+}
+
+function loadTestPlugins() {
+  loadPlugins({
+    state: {
+      responsivePreview: {
+        enabled: true,
+        viewport: { width: 320, height: 480 }
+      }
+    }
   });
 
+  return render(
+    <Slot name="rendererPreviewOuter">
+      <div data-testid="preview-mock" />
+    </Slot>
+  );
+}
+
+it('renders children of "rendererPreviewOuter" slot', () => {
+  registerTestPlugins();
+
+  const { getByTestId } = loadTestPlugins();
   getByTestId('preview-mock');
 });
 
 it('does not render responsive header when no fixture is selected', () => {
-  const { queryByTestId } = loadTestPlugins(() => {
-    registerRouterPlugin();
-    mockMethod('renderer.setFixtureState', () => {});
-  });
+  registerTestPlugins();
 
+  const { queryByTestId } = loadTestPlugins();
   expect(queryByTestId('responsive-header')).toBeNull();
 });
 
 it('does not render responsive header in full screen mode', () => {
-  const { queryByTestId } = loadTestPlugins(() => {
-    registerRouterPlugin({ fixturePath: 'fooFixture.js', fullScreen: true });
-    mockMethod('renderer.setFixtureState', () => {});
+  registerTestPlugins({
+    urlParams: { fixturePath: 'fooFixture.js', fullScreen: true }
   });
 
+  const { queryByTestId } = loadTestPlugins();
   expect(queryByTestId('responsive-header')).toBeNull();
 });
 
 it('renders responsive header', () => {
-  const { getByTestId } = loadTestPlugins(() => {
-    registerRouterPlugin({ fixturePath: 'fooFixture.js' });
-    mockMethod('renderer.setFixtureState', () => {});
-  });
+  registerTestPlugins({ urlParams: { fixturePath: 'fooFixture.js' } });
 
+  const { getByTestId } = loadTestPlugins();
   getByTestId('responsive-header');
 });
 
 it('renders responsive device labels', () => {
-  const { getByText } = loadTestPlugins(() => {
-    registerRouterPlugin({ fixturePath: 'fooFixture.js' });
-    mockMethod('renderer.setFixtureState', () => {});
-  });
+  registerTestPlugins({ urlParams: { fixturePath: 'fooFixture.js' } });
 
+  const { getByText } = loadTestPlugins();
   DEFAULT_DEVICES.forEach(({ label }) => {
     getByText(label);
   });
@@ -65,12 +88,10 @@ it('renders responsive device labels', () => {
 
 describe('on device select', () => {
   it('sets "responsive-preview" state', async () => {
-    const { getByText } = loadTestPlugins(() => {
-      mockMethod('storage.setItem', () => {});
-      registerRouterPlugin({ fixturePath: 'fooFixture.js' });
-      mockMethod('renderer.setFixtureState', () => {});
-    });
+    registerTestPlugins({ urlParams: { fixturePath: 'fooFixture.js' } });
+    mockMethod('storage.setItem', () => {});
 
+    const { getByText } = loadTestPlugins();
     fireEvent.click(getByText(/iphone 6 plus/i));
 
     await wait(() =>
@@ -87,12 +108,13 @@ describe('on device select', () => {
       fixtureState = updateState(fixtureState, stateChange);
     };
 
-    const { getByText } = loadTestPlugins(() => {
-      mockMethod('storage.setItem', () => {});
-      registerRouterPlugin({ fixturePath: 'fooFixture.js' });
-      mockMethod('renderer.setFixtureState', handleSetFixtureState);
+    registerTestPlugins({
+      urlParams: { fixturePath: 'fooFixture.js' },
+      handleSetFixtureState
     });
+    mockMethod('storage.setItem', () => {});
 
+    const { getByText } = loadTestPlugins();
     fireEvent.click(getByText(/iphone 6 plus/i));
 
     await wait(() =>
@@ -101,16 +123,14 @@ describe('on device select', () => {
   });
 
   it('saves viewport in storage', async () => {
+    registerTestPlugins({ urlParams: { fixturePath: 'fooFixture.js' } });
+
     let storage = {};
+    mockMethod('storage.setItem', (context, key, value) =>
+      Promise.resolve((storage[key] = value))
+    );
 
-    const { getByText } = loadTestPlugins(() => {
-      mockMethod('storage.setItem', (context, key, value) =>
-        Promise.resolve((storage[key] = value))
-      );
-      registerRouterPlugin({ fixturePath: 'fooFixture.js' });
-      mockMethod('renderer.setFixtureState', () => {});
-    });
-
+    const { getByText } = loadTestPlugins();
     fireEvent.click(getByText(/iphone 6 plus/i));
 
     await wait(() =>
@@ -118,33 +138,3 @@ describe('on device select', () => {
     );
   });
 });
-
-function loadTestPlugins(extraSetup = () => {}) {
-  register();
-  registerPlugin({ name: 'core' });
-  extraSetup();
-
-  loadPlugins({
-    config: {
-      core: { projectId: 'mockProjectId' },
-      renderer: { webUrl: 'mockRendererUrl' }
-    },
-    state: {
-      renderer: { primaryRendererId: null, renderers: {} },
-      responsivePreview: {
-        enabled: true,
-        viewport: { width: 320, height: 480 }
-      }
-    }
-  });
-
-  return render(
-    <Slot name="rendererPreviewOuter">
-      <div data-testid="preview-mock" />
-    </Slot>
-  );
-}
-
-function registerRouterPlugin(urlParams = {}) {
-  registerPlugin({ name: 'router', initialState: { urlParams } });
-}

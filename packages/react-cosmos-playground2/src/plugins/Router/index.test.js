@@ -22,11 +22,12 @@ afterEach(() => {
 });
 
 it('posts "selectFixture" renderer request on "fixturePath" URL param change', () => {
-  const handleSelectFixture = jest.fn();
+  register();
 
-  loadTestPlugins(() => {
-    mockMethod('renderer.selectFixture', handleSelectFixture);
-  });
+  const handleSelectFixture = jest.fn();
+  mockMethod('renderer.selectFixture', handleSelectFixture);
+
+  loadPlugins();
 
   popUrlParams({ fixturePath: 'fixtures/zwei.js' });
 
@@ -37,12 +38,13 @@ it('posts "selectFixture" renderer request on "fixturePath" URL param change', (
 });
 
 it('posts "unselectFixture" renderer request on removed "fixturePath" URL param', async () => {
-  const handleUnselectFixture = jest.fn();
+  register();
 
-  loadTestPlugins(() => {
-    mockMethod('renderer.unselectFixture', handleUnselectFixture);
-    pushUrlParams({ fixturePath: 'fixtures/zwei.js' });
-  });
+  const handleUnselectFixture = jest.fn();
+  mockMethod('renderer.unselectFixture', handleUnselectFixture);
+
+  pushUrlParams({ fixturePath: 'fixtures/zwei.js' });
+  loadPlugins();
 
   // This simulation is akin to going back home after selecting a fixture
   popUrlParams({});
@@ -56,10 +58,11 @@ describe('on "setUrlParams" method', () => {
   }
 
   it('sets "router" state', async () => {
-    loadTestPlugins(() => {
-      mockMethod('renderer.selectFixture', () => {});
-      mockSetUrlParamsCall();
-    });
+    register();
+    mockMethod('renderer.selectFixture', () => {});
+    mockSetUrlParamsCall();
+
+    loadPlugins();
 
     await wait(() =>
       expect(getPluginState('router').urlParams).toEqual({
@@ -69,10 +72,11 @@ describe('on "setUrlParams" method', () => {
   });
 
   it('sets URL params', async () => {
-    loadTestPlugins(() => {
-      mockMethod('renderer.selectFixture', () => {});
-      mockSetUrlParamsCall();
-    });
+    register();
+    mockMethod('renderer.selectFixture', () => {});
+    mockSetUrlParamsCall();
+
+    loadPlugins();
 
     await wait(() =>
       expect(getUrlParams()).toEqual({ fixturePath: 'fixtures/zwei.js' })
@@ -80,12 +84,13 @@ describe('on "setUrlParams" method', () => {
   });
 
   it('calls "renderer.selectFixture" method', async () => {
-    const handleSelectFixture = jest.fn();
+    register();
+    mockSetUrlParamsCall();
 
-    loadTestPlugins(() => {
-      mockMethod('renderer.selectFixture', handleSelectFixture);
-      mockSetUrlParamsCall();
-    });
+    const handleSelectFixture = jest.fn();
+    mockMethod('renderer.selectFixture', handleSelectFixture);
+
+    loadPlugins();
 
     await wait(() =>
       expect(handleSelectFixture).toBeCalledWith(
@@ -95,9 +100,3 @@ describe('on "setUrlParams" method', () => {
     );
   });
 });
-
-function loadTestPlugins(extraSetup = () => {}) {
-  register();
-  extraSetup();
-  loadPlugins();
-}
