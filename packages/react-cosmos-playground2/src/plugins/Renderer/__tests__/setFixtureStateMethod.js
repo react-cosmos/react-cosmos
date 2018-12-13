@@ -30,17 +30,13 @@ const initialRendererState = {
 
 function registerTestPlugins() {
   register();
-  mockState('router', { urlParams: {} });
+  mockState('router', { urlParams: { fixturePath: 'fixtures/zwei.js' } });
+  mockState('renderer', initialRendererState);
   mockInitCall('renderer.setFixtureState', mockFixtureState);
 }
 
 function loadTestPlugins() {
-  loadPlugins({
-    state: {
-      router: { urlParams: { fixturePath: 'fixtures/zwei.js' } },
-      renderer: initialRendererState
-    }
-  });
+  loadPlugins();
 }
 
 it('sets fixture state for all renderers', async () => {
