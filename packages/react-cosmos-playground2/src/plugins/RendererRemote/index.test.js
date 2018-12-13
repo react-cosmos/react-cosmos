@@ -8,7 +8,18 @@ import { register } from '.';
 
 afterEach(cleanup);
 
+function registerTestPlugins({ handlePostRequest = () => {} } = {}) {
+  register();
+  mockMethod('renderer.postRequest', handlePostRequest);
+}
+
+function loadTestPlugins() {
+  loadPlugins({ config: { renderer: { enableRemote: true } } });
+}
+
 it('posts renderer request message via websockets', async () => {
+  registerTestPlugins();
+
   const selectFixtureMsg = {
     type: 'selectFixture',
     payload: {
@@ -16,11 +27,9 @@ it('posts renderer request message via websockets', async () => {
       fixturePath: 'bar-fixturePath'
     }
   };
+  mockInitEmit('renderer.request', selectFixtureMsg);
 
-  loadTestPlugins(() => {
-    mockMethod('renderer.postRequest', () => {});
-    mockInitEmit('renderer.request', selectFixtureMsg);
-  });
+  loadTestPlugins();
 
   await mockWebSockets(async ({ onMessage }) => {
     await wait(() => expect(onMessage).toBeCalledWith(selectFixtureMsg));
@@ -28,21 +37,21 @@ it('posts renderer request message via websockets', async () => {
 });
 
 it('broadcasts renderer response message from websocket event', async () => {
-  const fixtureListMsg = {
-    type: 'fixtureList',
-    payload: {
-      rendererId: 'foo-renderer',
-      fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js']
-    }
-  };
-  const handleReceiveResponse = jest.fn();
+  registerTestPlugins();
 
-  loadTestPlugins(() => {
-    mockMethod('renderer.postRequest', () => {});
-    mockMethod('renderer.receiveResponse', handleReceiveResponse);
-  });
+  const handleReceiveResponse = jest.fn();
+  mockMethod('renderer.receiveResponse', handleReceiveResponse);
+
+  loadTestPlugins();
 
   await mockWebSockets(async ({ postMessage }) => {
+    const fixtureListMsg = {
+      type: 'fixtureList',
+      payload: {
+        rendererId: 'foo-renderer',
+        fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js']
+      }
+    };
     postMessage(fixtureListMsg);
 
     await wait(() =>
@@ -56,10 +65,9 @@ it('broadcasts renderer response message from websocket event', async () => {
 
 it('posts "requestFixtureList" renderer request on mount', async () => {
   const handlePostRequest = jest.fn();
+  registerTestPlugins({ handlePostRequest });
 
-  loadTestPlugins(() => {
-    mockMethod('renderer.postRequest', handlePostRequest);
-  });
+  loadTestPlugins();
 
   await wait(() =>
     expect(handlePostRequest).toBeCalledWith(expect.any(Object), {
@@ -67,9 +75,3 @@ it('posts "requestFixtureList" renderer request on mount', async () => {
     })
   );
 });
-
-function loadTestPlugins(extraSetup = () => {}) {
-  register();
-  extraSetup();
-  loadPlugins({ config: { renderer: { enableRemote: true } } });
-}

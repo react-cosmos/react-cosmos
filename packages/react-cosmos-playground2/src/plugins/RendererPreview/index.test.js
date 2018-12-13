@@ -3,22 +3,43 @@
 
 import React from 'react';
 import { wait, render } from 'react-testing-library';
-import { registerPlugin, loadPlugins, Slot } from 'react-plugin';
+import { loadPlugins, Slot } from 'react-plugin';
 import { mockIframeMessage } from '../../testHelpers/mockIframeMessage';
-import { cleanup, mockMethod } from '../../testHelpers/plugin';
+import {
+  cleanup,
+  mockConfig,
+  mockMethod,
+  mockInit
+} from '../../testHelpers/plugin';
 import { register } from '.';
 
 afterEach(cleanup);
 
+function registerTestPlugins() {
+  register();
+  mockConfig('renderer', { webUrl: 'mockRendererUrl' });
+}
+
+function loadTestPlugins() {
+  loadPlugins();
+
+  return render(<Slot name="rendererPreview" />);
+}
+
+function getIframe({ getByTestId }) {
+  return getByTestId('preview-iframe');
+}
+
 it('renders iframe with config.renderer.webUrl src', () => {
-  const renderer = loadTestPlugins(() => {
-    registerPlugin({ name: 'renderer' });
-  });
+  registerTestPlugins();
+  const renderer = loadTestPlugins();
 
   expect(getIframe(renderer).src).toMatch('mockRendererUrl');
 });
 
 it('posts renderer request message to iframe', async () => {
+  registerTestPlugins();
+
   const selectFixtureMsg = {
     type: 'selectFixture',
     payload: {
@@ -26,15 +47,14 @@ it('posts renderer request message to iframe', async () => {
       fixturePath: 'bar-fixturePath'
     }
   };
-
-  const renderer = loadTestPlugins(() => {
-    registerPlugin({ name: 'renderer' }).init(({ emitEvent }) => {
-      // Wait for iframe ref to be received
-      setTimeout(() => {
-        emitEvent('request', selectFixtureMsg);
-      });
+  mockInit('renderer', ({ emitEvent }) => {
+    // Wait for iframe ref to be received
+    setTimeout(() => {
+      emitEvent('request', selectFixtureMsg);
     });
   });
+
+  const renderer = loadTestPlugins();
 
   await mockIframeMessage(getIframe(renderer), async ({ onMessage }) => {
     await wait(() =>
@@ -46,6 +66,13 @@ it('posts renderer request message to iframe', async () => {
 });
 
 it('broadcasts renderer response message from iframe', async () => {
+  registerTestPlugins();
+
+  const handleReceiveResponse = jest.fn();
+  mockMethod('renderer.receiveResponse', handleReceiveResponse);
+
+  loadTestPlugins();
+
   const fixtureListMsg = {
     type: 'fixtureList',
     payload: {
@@ -53,12 +80,6 @@ it('broadcasts renderer response message from iframe', async () => {
       fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js']
     }
   };
-  const handleReceiveResponse = jest.fn();
-
-  loadTestPlugins(() => {
-    mockMethod('renderer.receiveResponse', handleReceiveResponse);
-  });
-
   window.postMessage(fixtureListMsg, '*');
 
   await wait(() =>
@@ -68,15 +89,3 @@ it('broadcasts renderer response message from iframe', async () => {
     )
   );
 });
-
-function loadTestPlugins(extraSetup = () => {}) {
-  register();
-  extraSetup();
-  loadPlugins({ config: { renderer: { webUrl: 'mockRendererUrl' } } });
-
-  return render(<Slot name="rendererPreview" />);
-}
-
-function getIframe({ getByTestId }) {
-  return getByTestId('preview-iframe');
-}

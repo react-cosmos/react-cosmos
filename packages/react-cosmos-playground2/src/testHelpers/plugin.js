@@ -36,6 +36,14 @@ export function mockMethod(methodPath: string, handler: Function) {
   ensurePlugin(pluginName).method(methodName, handler);
 }
 
+export function mockInit(pluginName: string, handler: Function) {
+  ensurePlugin(pluginName).init(handler);
+}
+
+export function mockPlug(plug: Object) {
+  registerFreshPlugin().plug(plug);
+}
+
 export function mockInitCall(methodPath: string, ...args: any[]): Promise<any> {
   return new Promise(resolve => {
     registerFreshPlugin().init(({ callMethod }) => {
@@ -45,9 +53,9 @@ export function mockInitCall(methodPath: string, ...args: any[]): Promise<any> {
 }
 
 export function mockInitEmit(eventPath: string, ...args: any[]) {
-  const [pluginName, methodName] = eventPath.split('.');
+  const [pluginName, eventName] = eventPath.split('.');
   ensurePlugin(pluginName).init(({ emitEvent }) => {
-    emitEvent(methodName, ...args);
+    emitEvent(eventName, ...args);
   });
 }
 

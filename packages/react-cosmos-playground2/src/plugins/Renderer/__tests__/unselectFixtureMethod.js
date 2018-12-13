@@ -1,8 +1,9 @@
 // @flow
 
 import { wait } from 'react-testing-library';
-import { resetPlugins, loadPlugins } from 'react-plugin';
+import { loadPlugins } from 'react-plugin';
 import {
+  cleanup,
   getPluginState,
   mockEvent,
   mockInitCall
@@ -10,7 +11,7 @@ import {
 import { mockFixtures, mockFixtureState } from '../testHelpers';
 import { register } from '..';
 
-afterEach(resetPlugins);
+afterEach(cleanup);
 
 const initialRendererState = {
   primaryRendererId: 'foo-renderer',

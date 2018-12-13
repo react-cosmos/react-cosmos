@@ -1,65 +1,50 @@
 // @flow
 
 import React from 'react';
-import { render, cleanup, waitForElement } from 'react-testing-library';
-import { Slot, resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
+import { render, waitForElement } from 'react-testing-library';
+import { Slot, loadPlugins } from 'react-plugin';
+import { cleanup, mockPlug } from '../../testHelpers/plugin';
 import { register } from '.';
 
-afterEach(() => {
-  cleanup();
-  resetPlugins();
-});
+afterEach(cleanup);
 
-it('renders left Slot', async () => {
-  const { getByText } = loadTestPlugins(() => {
-    registerTestPlug({
-      slotName: 'left',
-      render: 'we are the robots'
-    });
-  });
-
-  await waitForElement(() => getByText(/we are the robots/i));
-});
-
-it('renders rendererPreview Slot', async () => {
-  const { getByText } = loadTestPlugins(() => {
-    registerTestPlug({
-      slotName: 'rendererPreview',
-      render: 'we are the robots'
-    });
-  });
-
-  await waitForElement(() => getByText(/we are the robots/i));
-});
-
-it('renders right Slot', async () => {
-  const { getByText } = loadTestPlugins(() => {
-    registerTestPlug({
-      slotName: 'right',
-      render: 'we are the robots'
-    });
-  });
-
-  await waitForElement(() => getByText(/we are the robots/i));
-});
-
-function loadTestPlugins(extraSetup = () => {}) {
+function registerTestPlugins({ slotName, slotText }) {
   register();
-  extraSetup();
+  mockPlug({ slotName, render: slotText });
+}
+
+function loadTestPlugins() {
   loadPlugins();
 
   return render(<Slot name="root" />);
 }
 
-function registerTestPlug({
-  slotName,
-  render
-}: {
-  slotName: string,
-  render: string
-}) {
-  registerPlugin({ name: 'test' }).plug({
-    slotName,
-    render
+it('renders left Slot', async () => {
+  registerTestPlugins({
+    slotName: 'left',
+    slotText: 'we are the robots'
   });
-}
+  const { getByText } = loadTestPlugins();
+
+  await waitForElement(() => getByText(/we are the robots/i));
+});
+
+it('renders rendererPreview Slot', async () => {
+  registerTestPlugins({
+    slotName: 'rendererPreview',
+    slotText: 'we are the robots'
+  });
+  const { getByText } = loadTestPlugins();
+
+  await waitForElement(() => getByText(/we are the robots/i));
+});
+
+it('renders right Slot', async () => {
+  registerTestPlugins({
+    slotName: 'right',
+    slotText: 'we are the robots'
+  });
+  const { getByText } = loadTestPlugins();
+
+  await waitForElement(() => getByText(/we are the robots/i));
+});
