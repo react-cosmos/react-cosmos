@@ -2,6 +2,8 @@
 
 import * as rtl from 'react-testing-library';
 import { resetPlugins, registerPlugin, getPluginContext } from 'react-plugin';
+// WARN: Using internal API. This module might become part of
+// ui-plugin/react-plugin in the future
 import { getPlugins } from 'ui-plugin/dist/pluginStore';
 
 let cachedPluginApis = {};
