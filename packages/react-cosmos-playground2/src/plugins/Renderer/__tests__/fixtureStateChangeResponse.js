@@ -1,9 +1,11 @@
 // @flow
 
 import { wait } from 'react-testing-library';
-import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
+import { loadPlugins } from 'react-plugin';
 import {
+  cleanup,
   getPluginState,
+  mockState,
   mockEvent,
   mockInitCall
 } from '../../../testHelpers/plugin';
@@ -14,23 +16,30 @@ import {
 } from '../testHelpers';
 import { register } from '..';
 
-afterEach(resetPlugins);
+afterEach(cleanup);
+
+function registerTestPlugins() {
+  register();
+  mockState('router', { urlParams: { fixturePath: 'fixtures/zwei.js' } });
+}
+
+function loadTestPlugins({ rendererState = null } = {}) {
+  loadPlugins({ state: { renderer: rendererState } });
+}
 
 it('sets "fixtureState" renderer state', async () => {
-  const initialRendererState = {
-    primaryRendererId: 'foo-renderer',
-    renderers: {
-      'foo-renderer': getRendererState({
-        fixtureState: null
-      })
-    }
-  };
+  registerTestPlugins();
+  mockInitCall('renderer.receiveResponse', getFxStateChangeReq('foo-renderer'));
 
-  loadTestPlugins(initialRendererState, () => {
-    mockInitCall(
-      'renderer.receiveResponse',
-      getFxStateChangeReq('foo-renderer')
-    );
+  loadTestPlugins({
+    rendererState: {
+      primaryRendererId: 'foo-renderer',
+      renderers: {
+        'foo-renderer': getRendererState({
+          fixtureState: null
+        })
+      }
+    }
   });
 
   await wait(() =>
@@ -46,23 +55,21 @@ it('sets "fixtureState" renderer state', async () => {
 });
 
 it('sets primary and secondary "fixtureState" renderer states', async () => {
-  const initialRendererState = {
-    primaryRendererId: 'foo-renderer',
-    renderers: {
-      'foo-renderer': getRendererState({
-        fixtureState: null
-      }),
-      'bar-renderer': getRendererState({
-        fixtureState: null
-      })
-    }
-  };
+  registerTestPlugins();
+  mockInitCall('renderer.receiveResponse', getFxStateChangeReq('foo-renderer'));
 
-  loadTestPlugins(initialRendererState, () => {
-    mockInitCall(
-      'renderer.receiveResponse',
-      getFxStateChangeReq('foo-renderer')
-    );
+  loadTestPlugins({
+    rendererState: {
+      primaryRendererId: 'foo-renderer',
+      renderers: {
+        'foo-renderer': getRendererState({
+          fixtureState: null
+        }),
+        'bar-renderer': getRendererState({
+          fixtureState: null
+        })
+      }
+    }
   });
 
   await wait(() =>
@@ -81,23 +88,21 @@ it('sets primary and secondary "fixtureState" renderer states', async () => {
 });
 
 it('only sets secondary "fixtureState" renderer state', async () => {
-  const initialRendererState = {
-    primaryRendererId: 'foo-renderer',
-    renderers: {
-      'foo-renderer': getRendererState({
-        fixtureState: null
-      }),
-      'bar-renderer': getRendererState({
-        fixtureState: null
-      })
-    }
-  };
+  registerTestPlugins();
+  mockInitCall('renderer.receiveResponse', getFxStateChangeReq('bar-renderer'));
 
-  loadTestPlugins(initialRendererState, () => {
-    mockInitCall(
-      'renderer.receiveResponse',
-      getFxStateChangeReq('bar-renderer')
-    );
+  loadTestPlugins({
+    rendererState: {
+      primaryRendererId: 'foo-renderer',
+      renderers: {
+        'foo-renderer': getRendererState({
+          fixtureState: null
+        }),
+        'bar-renderer': getRendererState({
+          fixtureState: null
+        })
+      }
+    }
   });
 
   await wait(() =>
@@ -116,25 +121,25 @@ it('only sets secondary "fixtureState" renderer state', async () => {
 });
 
 it('posts "setFixtureState" request to secondary renderer', async () => {
-  const initialRendererState = {
-    primaryRendererId: 'foo-renderer',
-    renderers: {
-      'foo-renderer': getRendererState({
-        fixtureState: null
-      }),
-      'bar-renderer': getRendererState({
-        fixtureState: null
-      })
-    }
-  };
-  const handleRendererRequest = jest.fn();
+  registerTestPlugins();
 
-  loadTestPlugins(initialRendererState, () => {
-    mockEvent('renderer.request', handleRendererRequest);
-    mockInitCall(
-      'renderer.receiveResponse',
-      getFxStateChangeReq('foo-renderer')
-    );
+  const handleRendererRequest = jest.fn();
+  mockEvent('renderer.request', handleRendererRequest);
+
+  mockInitCall('renderer.receiveResponse', getFxStateChangeReq('foo-renderer'));
+
+  loadTestPlugins({
+    rendererState: {
+      primaryRendererId: 'foo-renderer',
+      renderers: {
+        'foo-renderer': getRendererState({
+          fixtureState: null
+        }),
+        'bar-renderer': getRendererState({
+          fixtureState: null
+        })
+      }
+    }
   });
 
   await wait(() =>
@@ -148,15 +153,3 @@ it('posts "setFixtureState" request to secondary renderer', async () => {
     })
   );
 });
-
-function loadTestPlugins(initialState, extraSetup = () => {}) {
-  register();
-  registerPlugin({ name: 'router', initialState: { urlParams: {} } });
-  extraSetup();
-  loadPlugins({
-    state: {
-      router: { urlParams: { fixturePath: 'fixtures/zwei.js' } },
-      renderer: initialState
-    }
-  });
-}

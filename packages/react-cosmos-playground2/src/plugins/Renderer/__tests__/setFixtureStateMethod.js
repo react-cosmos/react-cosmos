@@ -1,35 +1,51 @@
 // @flow
 
 import { wait } from 'react-testing-library';
-import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
+import { loadPlugins } from 'react-plugin';
 import {
+  cleanup,
   getPluginState,
+  mockState,
   mockEvent,
   mockInitCall
 } from '../../../testHelpers/plugin';
 import { mockFixtures, mockFixtureState } from '../testHelpers';
 import { register } from '..';
 
-afterEach(resetPlugins);
+afterEach(cleanup);
 
 const initialRendererState = {
   primaryRendererId: 'foo-renderer',
   renderers: {
     'foo-renderer': {
       fixtures: mockFixtures,
-      fixtureState: null
+      fixtureState: mockFixtureState
     },
     'bar-renderer': {
       fixtures: mockFixtures,
-      fixtureState: null
+      fixtureState: mockFixtureState
     }
   }
 };
 
-it('sets fixture state for all renderers', async () => {
-  loadTestPlugins(() => {
-    mockInitCall('renderer.setFixtureState', mockFixtureState);
+function registerTestPlugins() {
+  register();
+  mockState('router', { urlParams: {} });
+  mockInitCall('renderer.setFixtureState', mockFixtureState);
+}
+
+function loadTestPlugins() {
+  loadPlugins({
+    state: {
+      router: { urlParams: { fixturePath: 'fixtures/zwei.js' } },
+      renderer: initialRendererState
+    }
   });
+}
+
+it('sets fixture state for all renderers', async () => {
+  registerTestPlugins();
+  loadTestPlugins();
 
   await wait(() =>
     expect(getPluginState('renderer')).toEqual({
@@ -47,12 +63,12 @@ it('sets fixture state for all renderers', async () => {
 });
 
 it('posts "setFixtureState" renderer requests', async () => {
-  const handleRendererRequest = jest.fn();
+  registerTestPlugins();
 
-  loadTestPlugins(() => {
-    mockEvent('renderer.request', handleRendererRequest);
-    mockInitCall('renderer.setFixtureState', mockFixtureState);
-  });
+  const handleRendererRequest = jest.fn();
+  mockEvent('renderer.request', handleRendererRequest);
+
+  loadTestPlugins();
 
   await wait(() =>
     expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {
@@ -76,15 +92,3 @@ it('posts "setFixtureState" renderer requests', async () => {
     })
   );
 });
-
-function loadTestPlugins(extraSetup = () => {}) {
-  register();
-  registerPlugin({ name: 'router', initialState: { urlParams: {} } });
-  extraSetup();
-  loadPlugins({
-    state: {
-      router: { urlParams: { fixturePath: 'fixtures/zwei.js' } },
-      renderer: initialRendererState
-    }
-  });
-}

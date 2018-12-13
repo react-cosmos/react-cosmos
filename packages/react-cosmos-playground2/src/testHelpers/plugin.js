@@ -2,18 +2,29 @@
 
 import * as rtl from 'react-testing-library';
 import { resetPlugins, registerPlugin, getPluginContext } from 'react-plugin';
+import { getPlugins } from 'ui-plugin/dist/pluginStore';
 
-let plugins = {};
+let cachedPluginApis = {};
 let pluginId: number = 0;
 
 export function cleanup() {
   rtl.cleanup();
   resetPlugins();
-  plugins = {};
+  cachedPluginApis = {};
 }
 
 export function getPluginState(pluginName: string) {
   return getPluginContext(pluginName).getState();
+}
+
+export function mockConfig(pluginName: string, config: {}) {
+  ensurePlugin(pluginName);
+  getPlugins()[pluginName].defaultConfig = config;
+}
+
+export function mockState(pluginName: string, state: any) {
+  ensurePlugin(pluginName);
+  getPlugins()[pluginName].initialState = state;
 }
 
 export function mockEvent(eventPath: string, handler: Function) {
@@ -22,7 +33,7 @@ export function mockEvent(eventPath: string, handler: Function) {
 
 export function mockMethod(methodPath: string, handler: Function) {
   const [pluginName, methodName] = methodPath.split('.');
-  getNamedPlugin(pluginName).method(methodName, handler);
+  ensurePlugin(pluginName).method(methodName, handler);
 }
 
 export function mockInitCall(methodPath: string, ...args: any[]): Promise<any> {
@@ -35,20 +46,20 @@ export function mockInitCall(methodPath: string, ...args: any[]): Promise<any> {
 
 export function mockInitEmit(eventPath: string, ...args: any[]) {
   const [pluginName, methodName] = eventPath.split('.');
-  getNamedPlugin(pluginName).init(({ emitEvent }) => {
+  ensurePlugin(pluginName).init(({ emitEvent }) => {
     emitEvent(methodName, ...args);
   });
 }
 
-function getNamedPlugin(name: string) {
-  if (plugins[name]) {
-    return plugins[name];
+function ensurePlugin(name: string) {
+  if (cachedPluginApis[name]) {
+    return cachedPluginApis[name];
   }
 
-  const plugin = registerPlugin({ name });
-  plugins[name] = plugin;
+  const pluginApi = registerPlugin({ name });
+  cachedPluginApis[name] = pluginApi;
 
-  return plugin;
+  return pluginApi;
 }
 
 function registerFreshPlugin() {

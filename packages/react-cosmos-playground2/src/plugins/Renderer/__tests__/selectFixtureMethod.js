@@ -1,12 +1,12 @@
 // @flow
 
 import { wait } from 'react-testing-library';
-import { resetPlugins, loadPlugins } from 'react-plugin';
-import { mockEvent, mockInitCall } from '../../../testHelpers/plugin';
+import { loadPlugins } from 'react-plugin';
+import { cleanup, mockEvent, mockInitCall } from '../../../testHelpers/plugin';
 import { mockFixtures, mockFixtureState } from '../testHelpers';
 import { register } from '..';
 
-afterEach(resetPlugins);
+afterEach(cleanup);
 
 const initialRendererState = {
   primaryRendererId: 'foo-renderer',
@@ -23,12 +23,14 @@ const initialRendererState = {
 };
 
 it('posts "selectFixture" renderer requests', async () => {
-  const handleRendererRequest = jest.fn();
+  register();
 
-  loadTestPlugins(() => {
-    mockEvent('renderer.request', handleRendererRequest);
-    mockInitCall('renderer.selectFixture', 'fixtures/zwei.js');
-  });
+  const handleRendererRequest = jest.fn();
+  mockEvent('renderer.request', handleRendererRequest);
+
+  mockInitCall('renderer.selectFixture', 'fixtures/zwei.js');
+
+  loadPlugins({ state: { renderer: initialRendererState } });
 
   await wait(() =>
     expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {
@@ -52,13 +54,3 @@ it('posts "selectFixture" renderer requests', async () => {
     })
   );
 });
-
-function loadTestPlugins(extraSetup = () => {}) {
-  register();
-  extraSetup();
-  loadPlugins({
-    state: {
-      renderer: initialRendererState
-    }
-  });
-}

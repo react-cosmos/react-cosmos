@@ -1,8 +1,13 @@
 // @flow
 
 import { wait } from 'react-testing-library';
-import { resetPlugins, registerPlugin, loadPlugins } from 'react-plugin';
-import { getPluginState, mockInitCall } from '../../../testHelpers/plugin';
+import { loadPlugins } from 'react-plugin';
+import {
+  cleanup,
+  getPluginState,
+  mockState,
+  mockInitCall
+} from '../../../testHelpers/plugin';
 import {
   mockFixtureState,
   getFxListRes,
@@ -10,12 +15,22 @@ import {
 } from '../testHelpers';
 import { register } from '..';
 
-afterEach(resetPlugins);
+afterEach(cleanup);
+
+function registerTestPlugins() {
+  register();
+  mockState('router', { urlParams: {} });
+}
+
+function loadTestPlugins({ rendererState = null } = {}) {
+  loadPlugins({ state: { renderer: rendererState } });
+}
 
 it('creates renderer state', async () => {
-  loadTestPlugins(null, () => {
-    mockInitCall('renderer.receiveResponse', getFxListRes('foo-renderer'));
-  });
+  registerTestPlugins();
+  mockInitCall('renderer.receiveResponse', getFxListRes('foo-renderer'));
+
+  loadTestPlugins();
 
   await wait(() =>
     expect(getPluginState('renderer')).toEqual({
@@ -30,10 +45,11 @@ it('creates renderer state', async () => {
 });
 
 it('creates multiple renderer states', async () => {
-  loadTestPlugins(null, () => {
-    mockInitCall('renderer.receiveResponse', getFxListRes('foo-renderer'));
-    mockInitCall('renderer.receiveResponse', getFxListRes('bar-renderer'));
-  });
+  registerTestPlugins();
+  mockInitCall('renderer.receiveResponse', getFxListRes('foo-renderer'));
+  mockInitCall('renderer.receiveResponse', getFxListRes('bar-renderer'));
+
+  loadTestPlugins();
 
   await wait(() =>
     expect(getPluginState('renderer')).toEqual({
@@ -51,17 +67,18 @@ it('creates multiple renderer states', async () => {
 });
 
 it('creates renderer state with fixture state of primary renderer', async () => {
-  const initialRendererState = {
-    primaryRendererId: 'foo-renderer',
-    renderers: {
-      'foo-renderer': getRendererState({
-        fixtureState: mockFixtureState
-      })
-    }
-  };
+  registerTestPlugins();
+  mockInitCall('renderer.receiveResponse', getFxListRes('bar-renderer'));
 
-  loadTestPlugins(initialRendererState, () => {
-    mockInitCall('renderer.receiveResponse', getFxListRes('bar-renderer'));
+  loadTestPlugins({
+    rendererState: {
+      primaryRendererId: 'foo-renderer',
+      renderers: {
+        'foo-renderer': getRendererState({
+          fixtureState: mockFixtureState
+        })
+      }
+    }
   });
 
   await wait(() =>
@@ -75,14 +92,3 @@ it('creates renderer state with fixture state of primary renderer', async () => 
     })
   );
 });
-
-function loadTestPlugins(initialState, extraSetup = () => {}) {
-  register();
-  registerPlugin({ name: 'router', initialState: { urlParams: {} } });
-  extraSetup();
-  loadPlugins({
-    state: {
-      renderer: initialState
-    }
-  });
-}

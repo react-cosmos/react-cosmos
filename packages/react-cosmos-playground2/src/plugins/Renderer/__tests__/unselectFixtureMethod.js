@@ -26,10 +26,18 @@ const initialRendererState = {
   }
 };
 
+function registerTestPlugins() {
+  register();
+  mockInitCall('renderer.unselectFixture');
+}
+
+function loadTestPlugins() {
+  loadPlugins({ state: { renderer: initialRendererState } });
+}
+
 it('resets fixture state for all renderers', async () => {
-  loadTestPlugins(() => {
-    mockInitCall('renderer.unselectFixture');
-  });
+  registerTestPlugins();
+  loadTestPlugins();
 
   await wait(() =>
     expect(getPluginState('renderer')).toEqual({
@@ -47,12 +55,12 @@ it('resets fixture state for all renderers', async () => {
 });
 
 it('posts "unselectFixture" renderer requests', async () => {
-  const handleRendererRequest = jest.fn();
+  registerTestPlugins();
 
-  loadTestPlugins(() => {
-    mockEvent('renderer.request', handleRendererRequest);
-    mockInitCall('renderer.unselectFixture');
-  });
+  const handleRendererRequest = jest.fn();
+  mockEvent('renderer.request', handleRendererRequest);
+
+  loadTestPlugins();
 
   await wait(() =>
     expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {
@@ -72,13 +80,3 @@ it('posts "unselectFixture" renderer requests', async () => {
     })
   );
 });
-
-function loadTestPlugins(extraSetup = () => {}) {
-  register();
-  extraSetup();
-  loadPlugins({
-    state: {
-      renderer: initialRendererState
-    }
-  });
-}

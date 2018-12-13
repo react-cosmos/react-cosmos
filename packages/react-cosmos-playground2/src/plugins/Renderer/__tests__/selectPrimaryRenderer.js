@@ -1,12 +1,16 @@
 // @flow
 
 import { wait } from 'react-testing-library';
-import { resetPlugins, loadPlugins } from 'react-plugin';
-import { getPluginState, mockInitCall } from '../../../testHelpers/plugin';
+import { loadPlugins } from 'react-plugin';
+import {
+  cleanup,
+  getPluginState,
+  mockInitCall
+} from '../../../testHelpers/plugin';
 import { mockFixtures } from '../testHelpers';
 import { register } from '..';
 
-afterEach(resetPlugins);
+afterEach(cleanup);
 
 const initialRendererState = {
   primaryRendererId: 'foo-renderer',
@@ -23,9 +27,10 @@ const initialRendererState = {
 };
 
 it('sets primary renderer ID in state', async () => {
-  loadTestPlugins(() => {
-    mockInitCall('renderer.selectPrimaryRenderer', 'bar-renderer');
-  });
+  register();
+  mockInitCall('renderer.selectPrimaryRenderer', 'bar-renderer');
+
+  loadPlugins({ state: { renderer: initialRendererState } });
 
   await wait(() =>
     expect(getPluginState('renderer')).toEqual({
@@ -41,13 +46,3 @@ it('sets primary renderer ID in state', async () => {
     })
   );
 });
-
-function loadTestPlugins(extraSetup = () => {}) {
-  register();
-  extraSetup();
-  loadPlugins({
-    state: {
-      renderer: initialRendererState
-    }
-  });
-}
