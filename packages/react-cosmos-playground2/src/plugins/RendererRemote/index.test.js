@@ -8,9 +8,9 @@ import { register } from '.';
 
 afterEach(cleanup);
 
-function registerTestPlugins({ handlePostRequest = () => {} } = {}) {
+function registerTestPlugins({ handleRequestFixtureList = () => {} } = {}) {
   register();
-  mockMethod('renderer.postRequest', handlePostRequest);
+  mockMethod('renderer.requestFixtureList', handleRequestFixtureList);
 }
 
 function loadTestPlugins() {
@@ -64,14 +64,10 @@ it('broadcasts renderer response message from websocket event', async () => {
 });
 
 it('posts "requestFixtureList" renderer request on mount', async () => {
-  const handlePostRequest = jest.fn();
-  registerTestPlugins({ handlePostRequest });
+  const handleRequestFixtureList = jest.fn();
+  registerTestPlugins({ handleRequestFixtureList });
 
   loadTestPlugins();
 
-  await wait(() =>
-    expect(handlePostRequest).toBeCalledWith(expect.any(Object), {
-      type: 'requestFixtureList'
-    })
-  );
+  await wait(() => expect(handleRequestFixtureList).toBeCalled());
 });

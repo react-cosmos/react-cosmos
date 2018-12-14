@@ -37,12 +37,18 @@ export function register() {
     }
   });
 
+  method('requestFixtureList', handleRequestFixtureList);
   method('selectFixture', handleSelectFixture);
   method('unselectFixture', handleUnselectFixture);
   method('setFixtureState', handleSetFixtureState);
   method('selectPrimaryRenderer', handleSelectPrimaryRenderer);
-  method('postRequest', handlePostRequest);
   method('receiveResponse', handleReceiveResponse);
+}
+
+function handleRequestFixtureList(context) {
+  postRendererRequest(context, {
+    type: 'requestFixtureList'
+  });
 }
 
 function handleSelectFixture(context, fixturePath: string) {
@@ -105,10 +111,6 @@ function handleSelectPrimaryRenderer(
     ...prevState,
     primaryRendererId
   }));
-}
-
-function handlePostRequest(context, msg: RendererRequest) {
-  context.emitEvent('renderer.request', msg);
 }
 
 function handleReceiveResponse(context, msg: RendererResponse) {
