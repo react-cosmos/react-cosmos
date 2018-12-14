@@ -21,13 +21,13 @@ export function getPluginState(pluginName: string) {
 }
 
 export function mockConfig(pluginName: string, config: {}) {
-  ensurePlugin(pluginName);
-  getPlugins()[pluginName].defaultConfig = config;
+  const { pluginId } = ensurePlugin(pluginName);
+  getPluginById(pluginId).defaultConfig = config;
 }
 
 export function mockState(pluginName: string, state: any) {
-  ensurePlugin(pluginName);
-  getPlugins()[pluginName].initialState = state;
+  const { pluginId } = ensurePlugin(pluginName);
+  getPluginById(pluginId).initialState = state;
 }
 
 export function mockEvent(eventPath: string, handler: Function) {
@@ -63,13 +63,34 @@ export function mockInitEmit(eventPath: string, ...args: any[]) {
 }
 
 function ensurePlugin(name: string) {
-  if (!getPlugins()[name]) {
-    registerPlugin({ name });
+  const pluginId = findPluginIdForName(name);
+
+  if (!pluginId) {
+    return registerPlugin({ name });
   }
 
-  return getPluginApi(name);
+  return getPluginApi(pluginId);
 }
 
 function registerFreshPlugin() {
   return registerPlugin({ name: `test${pluginId++}` });
+}
+
+// NOTE: This utility doesn't support multiple plugins with the same name
+function findPluginIdForName(name: string): null | number {
+  let pluginId = null;
+
+  Object.keys(getPlugins()).forEach(idKey => {
+    const pId = Number(idKey);
+
+    if (getPluginById(pId).name === name) {
+      pluginId = pId;
+    }
+  });
+
+  return pluginId;
+}
+
+function getPluginById(id: number) {
+  return getPlugins()[id];
 }

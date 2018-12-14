@@ -80,15 +80,20 @@ export class ControlPanel extends Component<Props> {
           <p>Plugins</p>
           <ul>
             <PluginsConsumer>
-              {(plugins, enable) =>
-                plugins.map(({ name, enabled }) => (
-                  <li key={name}>
+              {({ plugins, enable, isShadowed }) =>
+                plugins.map(({ id, name, enabled }) => (
+                  <li key={id} style={{ opacity: isShadowed(id) ? 0.5 : 1 }}>
                     <label
                       onMouseDown={() => {
-                        enable(name, !enabled);
+                        enable(id, !enabled);
                       }}
                     >
-                      <input type="checkbox" checked={enabled} readOnly />{' '}
+                      <input
+                        type="checkbox"
+                        checked={enabled}
+                        readOnly
+                        disabled={isShadowed(id)}
+                      />{' '}
                       {name}
                     </label>
                   </li>
