@@ -440,6 +440,8 @@ Check out the [context example](examples/context) to see the proxy in action.
 
 #### Redux
 
+> `react-cosmos-redux-proxy` doesn't work with react-redux v6 yet. If you'd like to help check out [this thread](https://github.com/react-cosmos/react-cosmos/issues/903).
+
 Most components in a [Redux](http://redux.js.org/) app depend on Redux state, either they're a _container_ or one of their descendants is. This proxy creates a store using initial data from fixtures and puts it in the context, just like the [Provider](http://redux.js.org/docs/basics/UsageWithReact.html#passing-the-store) does.
 
 ##### Configuration
