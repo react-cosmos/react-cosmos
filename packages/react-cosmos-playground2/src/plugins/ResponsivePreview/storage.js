@@ -1,29 +1,22 @@
 // @flow
 
-import {
-  DEFAULT_VIEWPORT,
-  getResponsiveViewportStorageKey,
-  getResponsivePreviewState
-} from './shared';
+import { DEFAULT_VIEWPORT, getResponsiveViewportStorageKey } from './shared';
 
-import type { PluginContextValue } from '../../plugin';
+import type { Storage } from '../Storage';
+import type { Viewport } from './shared';
 
-export async function getDefaultViewport({
-  getConfig,
-  callMethod
-}: PluginContextValue) {
-  const projectId = getConfig('core.projectId');
+export async function getDefaultViewport(projectId: string, storage: Storage) {
   const storageKey = getResponsiveViewportStorageKey(projectId);
-  const storedViewport = await callMethod('storage.getItem', storageKey);
+  const storedViewport = await storage.getItem(storageKey);
 
   return storedViewport || DEFAULT_VIEWPORT;
 }
 
-export function storeViewport(context: PluginContextValue) {
-  const { getConfig, callMethod } = context;
-  const projectId = getConfig('core.projectId');
+export function storeViewport(
+  projectId: string,
+  viewport: Viewport,
+  storage: Storage
+) {
   const storageKey = getResponsiveViewportStorageKey(projectId);
-  const { viewport } = getResponsivePreviewState(context);
-
-  callMethod('storage.setItem', storageKey, viewport);
+  storage.setItem(storageKey, viewport);
 }

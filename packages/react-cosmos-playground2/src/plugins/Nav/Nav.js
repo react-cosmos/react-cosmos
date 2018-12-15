@@ -3,36 +3,41 @@
 import styled from 'styled-components';
 import React, { Component } from 'react';
 import { Slot } from 'react-plugin';
-import { PluginContext } from '../../plugin';
-import { getUrlParams } from '../Router/selectors';
-import { getPrimaryRendererState } from '../Renderer/selectors';
 import { FixtureTree } from './FixtureTree';
 
-import type { CoreConfig } from '../../index.js.flow';
-import type { PluginContextValue } from '../../plugin';
+import type { RendererItemState } from '../Renderer';
+import type { UrlParams } from '../Router';
+import type { Storage } from '../Storage';
 
-export class Nav extends Component<{}> {
-  static contextType = PluginContext;
+type Props = {
+  projectId: string,
+  fixturesDir: string,
+  urlParams: UrlParams,
+  primaryRendererState: null | RendererItemState,
+  setUrlParams: (urlParams: UrlParams) => void,
+  storage: Storage
+};
 
-  // https://github.com/facebook/flow/issues/7166
-  context: PluginContextValue;
-
+export class Nav extends Component<Props> {
   render() {
-    const { getConfig, getState } = this.context;
-    const primaryRendererState = getPrimaryRendererState(getState('renderer'));
+    const {
+      projectId,
+      fixturesDir,
+      urlParams,
+      primaryRendererState,
+      storage
+    } = this.props;
 
     if (!primaryRendererState) {
       return null;
     }
 
     const { fixtures } = primaryRendererState;
-    const { fixturePath, fullScreen } = getUrlParams(this.context);
+    const { fixturePath, fullScreen } = urlParams;
 
     if (fullScreen) {
       return null;
     }
-
-    const { projectId, fixturesDir }: CoreConfig = getConfig('core');
 
     return (
       <Container data-testid="nav">
@@ -50,27 +55,27 @@ export class Nav extends Component<{}> {
           fixturesDir={fixturesDir}
           fixtures={fixtures}
           onSelect={this.handleFixtureSelect}
+          storage={storage}
         />
       </Container>
     );
   }
 
   handleGoHome = () => {
-    this.context.callMethod('router.setUrlParams', {});
+    this.props.setUrlParams({});
   };
 
   handleFixtureSelect = (fixturePath: string) => {
-    this.context.callMethod('router.setUrlParams', { fixturePath });
+    this.props.setUrlParams({ fixturePath });
   };
 
   handleGoFullScreen = () => {
-    const { callMethod } = this.context;
-    const { fixturePath } = getUrlParams(this.context);
+    const {
+      urlParams: { fixturePath },
+      setUrlParams
+    } = this.props;
 
-    callMethod('router.setUrlParams', {
-      fixturePath,
-      fullScreen: true
-    });
+    setUrlParams({ fixturePath, fullScreen: true });
   };
 }
 

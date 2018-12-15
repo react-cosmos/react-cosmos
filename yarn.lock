@@ -6006,6 +6006,11 @@ del@^3.0.0:
     pify "^3.0.0"
     rimraf "^2.2.8"
 
+delay@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/delay/-/delay-4.1.0.tgz#474cd28809da41d1a048a70a1d835f47ac377cd2"
+  integrity sha512-8Hea6/aOu3bPdDBQhSRUEUzF0QwuWmSPuIK+sxNdvcJtSfzb6HXrTd9DFJBCJcV9o83fFECqTgllqdnmUfq9+w==
+
 delayed-stream@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
@@ -13114,6 +13119,17 @@ react-plugin@^0.1.1:
     prop-types "^15.6.2"
     react-is "^16.4.1"
 
+react-plugin@^1.0.0-alpha.10:
+  version "1.0.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/react-plugin/-/react-plugin-1.0.0-alpha.10.tgz#b9f3804f202204ca1f0ac1d2830c93e238f2c3d2"
+  integrity sha512-GgG3jRBIeuxszlqsiKzGjCRehrAujsPZttpeqtTInjaMn1yMW5jEWWh91ETOXgo3GmDPB9/QXSj4MS7WLGv46w==
+  dependencies:
+    "@skidding/linked-list" "^1.0.2"
+    array-find-index "^1.0.2"
+    lodash "^4.17.11"
+    react-is "^16.6.3"
+    ui-plugin "^1.0.0-alpha.17"
+
 react-proxy@^1.1.7:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/react-proxy/-/react-proxy-1.1.8.tgz#9dbfd9d927528c3aa9f444e4558c37830ab8c26a"
@@ -15432,6 +15448,13 @@ uglifyjs-webpack-plugin@^1.2.4:
     uglify-es "^3.3.4"
     webpack-sources "^1.1.0"
     worker-farm "^1.5.2"
+
+ui-plugin@^1.0.0-alpha.17:
+  version "1.0.0-alpha.17"
+  resolved "https://registry.yarnpkg.com/ui-plugin/-/ui-plugin-1.0.0-alpha.17.tgz#48265533dfb6f9d7d2b743902847057cc615cab3"
+  integrity sha512-e02zwSrN8hbBlTZm5yuIFkaoEvN1IKB8g7zatN0YJz1ryGAUtk3qsgJ9FGZb0Wn6cNeJF8YyCuCxkXMBoH1Qow==
+  dependencies:
+    lodash "^4.17.11"
 
 uid-number@0.0.6, uid-number@^0.0.6:
   version "0.0.6"

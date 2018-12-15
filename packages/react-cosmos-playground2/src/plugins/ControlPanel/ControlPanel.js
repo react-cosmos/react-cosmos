@@ -3,27 +3,26 @@
 
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { PluginContext } from '../../plugin';
-import { getUrlParams } from '../Router/selectors';
+import { PluginsConsumer } from 'react-plugin';
 import { getPrimaryRendererState } from '../Renderer/selectors';
 import { PropsState } from './PropsState';
 
 import type { RendererId } from 'react-cosmos-shared2/renderer';
 import type { ComponentFixtureState } from 'react-cosmos-shared2/fixtureState';
-import type { PluginContextValue } from '../../plugin';
-import type { RendererConfig } from '../Renderer';
+import type { UrlParams } from '../Router';
+import type { RendererState } from '../Renderer';
 
-type Props = {};
+type Props = {
+  webUrl: null | string,
+  urlParams: UrlParams,
+  rendererState: RendererState,
+  setComponentsFixtureState: (components: ComponentFixtureState[]) => void,
+  selectPrimaryRenderer: (rendererId: RendererId) => void
+};
 
 export class ControlPanel extends Component<Props> {
-  static contextType = PluginContext;
-
-  // https://github.com/facebook/flow/issues/7166
-  context: PluginContextValue;
-
   render() {
-    const { getConfig, getState } = this.context;
-    const rendererState = getState('renderer');
+    const { webUrl, urlParams, rendererState } = this.props;
     const { primaryRendererId, renderers } = rendererState;
     const primaryRendererState = getPrimaryRendererState(rendererState);
 
@@ -33,13 +32,11 @@ export class ControlPanel extends Component<Props> {
 
     const rendererIds = Object.keys(renderers);
     const { fixtureState } = primaryRendererState;
-    const { fixturePath, fullScreen } = getUrlParams(this.context);
+    const { fixturePath, fullScreen } = urlParams;
 
     if (fullScreen || !fixturePath) {
       return null;
     }
-
-    const { webUrl }: RendererConfig = getConfig('renderer');
 
     return (
       <Container>
@@ -55,7 +52,7 @@ export class ControlPanel extends Component<Props> {
         {fixtureState && (
           <PropsState
             fixtureState={fixtureState}
-            setFixtureState={this.setFixtureState}
+            setFixtureState={this.setComponentsFixtureState}
           />
         )}
         {rendererIds.length > 1 && (
@@ -79,22 +76,42 @@ export class ControlPanel extends Component<Props> {
             </ul>
           </div>
         )}
+        <div>
+          <p>Plugins</p>
+          <ul>
+            <PluginsConsumer>
+              {({ plugins, enable, isShadowed }) =>
+                plugins.map(({ id, name, enabled }) => (
+                  <li key={id} style={{ opacity: isShadowed(id) ? 0.5 : 1 }}>
+                    <label
+                      onMouseDown={() => {
+                        enable(id, !enabled);
+                      }}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={enabled}
+                        readOnly
+                        disabled={isShadowed(id)}
+                      />{' '}
+                      {name}
+                    </label>
+                  </li>
+                ))
+              }
+            </PluginsConsumer>
+          </ul>
+        </div>
       </Container>
     );
   }
 
-  setFixtureState = (components: ComponentFixtureState[]) => {
-    this.context.callMethod('renderer.setFixtureState', fixtureState => ({
-      ...fixtureState,
-      components
-    }));
+  setComponentsFixtureState = (components: ComponentFixtureState[]) => {
+    this.props.setComponentsFixtureState(components);
   };
 
   createRendererSelectHandler = (rendererId: RendererId) => () => {
-    this.context.setState('renderer', prevState => ({
-      ...prevState,
-      primaryRendererId: rendererId
-    }));
+    this.props.selectPrimaryRenderer(rendererId);
   };
 }
 

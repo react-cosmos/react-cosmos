@@ -13,7 +13,7 @@ export const mockFixtureState = {
   components: []
 };
 
-export function getFixtureListResponse(rendererId: RendererId) {
+export function getFxListRes(rendererId: RendererId) {
   return {
     type: 'fixtureList',
     payload: {
@@ -34,7 +34,7 @@ export function getRendererState({
   };
 }
 
-export function getFixtureStateChangeRequest(rendererId: RendererId) {
+export function getFxStateChangeReq(rendererId: RendererId) {
   return {
     type: 'fixtureStateChange',
     payload: {

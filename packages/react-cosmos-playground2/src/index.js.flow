@@ -5,6 +5,12 @@ export type CoreConfig = {
   fixturesDir: string
 };
 
+export type RendererConfig = {
+  webUrl: null | string,
+  enableRemote: boolean
+};
+
 export type PlaygroundConfig = {
-  core: CoreConfig
+  core: CoreConfig,
+  renderer?: RendererConfig
 };

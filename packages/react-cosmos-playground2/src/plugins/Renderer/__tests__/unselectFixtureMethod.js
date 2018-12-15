@@ -1,23 +1,19 @@
 // @flow
 
-import React from 'react';
-import { wait, render, cleanup } from 'react-testing-library';
-import { Slot } from 'react-plugin';
-import { PluginProvider } from '../../../plugin';
-import { OnEvent } from '../../../testHelpers/OnEvent';
-import { SetPluginState } from '../../../testHelpers/SetPluginState';
-import { OnPluginState } from '../../../testHelpers/OnPluginState';
-import { CallMethod } from '../../../testHelpers/CallMethod';
+import { wait } from 'react-testing-library';
+import { loadPlugins } from 'react-plugin';
+import {
+  cleanup,
+  getPluginState,
+  mockEvent,
+  mockInitCall
+} from '../../../testHelpers/plugin';
 import { mockFixtures, mockFixtureState } from '../testHelpers';
-
-// Plugins have side-effects: they register themselves
-// "router" state is required for Renderer plugin to work
-import '../../Router';
-import '..';
+import { register } from '..';
 
 afterEach(cleanup);
 
-const rendererState = {
+const initialRendererState = {
   primaryRendererId: 'foo-renderer',
   renderers: {
     'foo-renderer': {
@@ -31,47 +27,44 @@ const rendererState = {
   }
 };
 
+function registerTestPlugins() {
+  register();
+  mockInitCall('renderer.unselectFixture');
+}
+
+function loadTestPlugins() {
+  loadPlugins({ state: { renderer: initialRendererState } });
+}
+
 it('resets fixture state for all renderers', async () => {
-  const handleSetRendererState = jest.fn();
-  renderPlayground(
-    <>
-      <OnPluginState pluginName="renderer" handler={handleSetRendererState} />
-      <SetPluginState pluginName="renderer" value={rendererState} />
-      <CallMethod methodName="renderer.unselectFixture" />
-    </>
-  );
+  registerTestPlugins();
+  loadTestPlugins();
 
   await wait(() =>
-    expect(handleSetRendererState).toBeCalledWith(
-      expect.objectContaining({
-        renderers: {
-          'foo-renderer': expect.objectContaining({
-            fixtureState: null
-          }),
-          'bar-renderer': expect.objectContaining({
-            fixtureState: null
-          })
-        }
-      })
-    )
+    expect(getPluginState('renderer')).toEqual({
+      primaryRendererId: 'foo-renderer',
+      renderers: {
+        'foo-renderer': expect.objectContaining({
+          fixtureState: null
+        }),
+        'bar-renderer': expect.objectContaining({
+          fixtureState: null
+        })
+      }
+    })
   );
 });
 
 it('posts "unselectFixture" renderer requests', async () => {
+  registerTestPlugins();
+
   const handleRendererRequest = jest.fn();
-  renderPlayground(
-    <>
-      <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
-      <SetPluginState pluginName="renderer" value={rendererState} />
-      <CallMethod
-        methodName="renderer.unselectFixture"
-        args={['fixtures/zwei.js']}
-      />
-    </>
-  );
+  mockEvent('renderer.request', handleRendererRequest);
+
+  loadTestPlugins();
 
   await wait(() =>
-    expect(handleRendererRequest).toBeCalledWith({
+    expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {
       type: 'unselectFixture',
       payload: {
         rendererId: 'foo-renderer'
@@ -80,7 +73,7 @@ it('posts "unselectFixture" renderer requests', async () => {
   );
 
   await wait(() =>
-    expect(handleRendererRequest).toBeCalledWith({
+    expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {
       type: 'unselectFixture',
       payload: {
         rendererId: 'bar-renderer'
@@ -88,12 +81,3 @@ it('posts "unselectFixture" renderer requests', async () => {
     })
   );
 });
-
-function renderPlayground(otherNodes) {
-  return render(
-    <PluginProvider>
-      <Slot name="global" />
-      {otherNodes}
-    </PluginProvider>
-  );
-}

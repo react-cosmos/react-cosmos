@@ -1,25 +1,22 @@
 // @flow
 
 import React from 'react';
-import { wait, render, cleanup, fireEvent } from 'react-testing-library';
-import { Slot } from 'react-plugin';
+import { wait, render, fireEvent } from 'react-testing-library';
+import { loadPlugins, Slot } from 'react-plugin';
 import { updateState } from 'react-cosmos-shared2/util';
-import { PluginProvider } from '../../../plugin';
-import { RegisterMethod } from '../../../testHelpers/RegisterMethod';
-import { SetPluginState } from '../../../testHelpers/SetPluginState';
-import { OnPluginState } from '../../../testHelpers/OnPluginState';
+import {
+  cleanup,
+  getPluginState,
+  mockConfig,
+  mockState,
+  mockMethod
+} from '../../../testHelpers/plugin';
 import { DEFAULT_VIEWPORT, getResponsiveViewportStorageKey } from '../shared';
-
-// Plugins have side-effects: they register themselves
-// "renderer" and "router" states are required for the ResponsivePreview plugin
-// to work
-import '../../Renderer';
-import '../../Router';
-import '..';
-
-const storageKey = getResponsiveViewportStorageKey('mockProjectId');
+import { register } from '..';
 
 afterEach(cleanup);
+
+const storageKey = getResponsiveViewportStorageKey('mockProjectId');
 
 const mockRendererState = {
   primaryRendererId: 'fooRendererId',
@@ -31,26 +28,29 @@ const mockRendererState = {
   }
 };
 
-it('sets enabled state', async () => {
-  const handleSetReponsivePreviewState = jest.fn();
-  const { getByText } = renderPlayground(
-    <>
-      <RegisterMethod methodName="storage.getItem" handler={() => null} />
-      <RegisterMethod
-        methodName="renderer.setFixtureState"
-        handler={() => {}}
-      />
-      <OnPluginState
-        pluginName="responsive-preview"
-        handler={handleSetReponsivePreviewState}
-      />
-    </>
-  );
+function registerTestPlugins() {
+  register();
+  mockConfig('core', { projectId: 'mockProjectId' });
+  mockState('renderer', mockRendererState);
+  mockState('router', { urlParams: { fixturePath: 'fooFixture.js' } });
+}
 
+function loadTestPlugins() {
+  loadPlugins();
+
+  return render(<Slot name="header-buttons" />);
+}
+
+it('sets enabled state', async () => {
+  registerTestPlugins();
+  mockMethod('storage.getItem', () => {});
+  mockMethod('renderer.setFixtureState', () => {});
+
+  const { getByText } = loadTestPlugins();
   fireEvent.click(getByText(/responsive/i));
 
   await wait(() =>
-    expect(handleSetReponsivePreviewState).lastCalledWith({
+    expect(getPluginState('responsivePreview')).toEqual({
       enabled: true,
       viewport: DEFAULT_VIEWPORT
     })
@@ -58,31 +58,21 @@ it('sets enabled state', async () => {
 });
 
 it('sets enabled state with stored viewport', async () => {
+  registerTestPlugins();
+  mockMethod('renderer.setFixtureState', () => {});
+
   const storage = {
     [storageKey]: { width: 420, height: 420 }
   };
-  const handleSetReponsivePreviewState = jest.fn();
-  const { getByText } = renderPlayground(
-    <>
-      <RegisterMethod
-        methodName="storage.getItem"
-        handler={key => Promise.resolve(storage[key])}
-      />
-      <RegisterMethod
-        methodName="renderer.setFixtureState"
-        handler={() => {}}
-      />
-      <OnPluginState
-        pluginName="responsive-preview"
-        handler={handleSetReponsivePreviewState}
-      />
-    </>
+  mockMethod('storage.getItem', (context, key) =>
+    Promise.resolve(storage[key])
   );
 
+  const { getByText } = loadTestPlugins();
   fireEvent.click(getByText(/responsive/i));
 
   await wait(() =>
-    expect(handleSetReponsivePreviewState).lastCalledWith({
+    expect(getPluginState('responsivePreview')).toEqual({
       enabled: true,
       viewport: { width: 420, height: 420 }
     })
@@ -90,48 +80,34 @@ it('sets enabled state with stored viewport', async () => {
 });
 
 it('sets viewport in fixture state', async () => {
+  registerTestPlugins();
+  mockMethod('storage.getItem', () => {});
+
   let fixtureState = {};
-  const handleSetFixtureState = stateChange => {
+  const handleSetFixtureState = (context, stateChange) => {
     fixtureState = updateState(fixtureState, stateChange);
   };
+  mockMethod('renderer.setFixtureState', handleSetFixtureState);
 
-  const { getByText } = renderPlayground(
-    <>
-      <RegisterMethod methodName="storage.getItem" handler={() => null} />
-      <RegisterMethod
-        methodName="renderer.setFixtureState"
-        handler={handleSetFixtureState}
-      />
-    </>
-  );
-
+  const { getByText } = loadTestPlugins();
   fireEvent.click(getByText(/responsive/i));
 
   await wait(() => expect(fixtureState.viewport).toEqual(DEFAULT_VIEWPORT));
 });
 
 it('sets disabled state', async () => {
-  const handleSetReponsivePreviewState = jest.fn();
-  const { getByText } = renderPlayground(
-    <>
-      <RegisterMethod methodName="storage.getItem" handler={() => null} />
-      <RegisterMethod
-        methodName="renderer.setFixtureState"
-        handler={() => {}}
-      />
-      <OnPluginState
-        pluginName="responsive-preview"
-        handler={handleSetReponsivePreviewState}
-      />
-    </>
-  );
+  registerTestPlugins();
+  mockMethod('storage.getItem', () => {});
+  mockMethod('renderer.setFixtureState', () => {});
+
+  const { getByText } = loadTestPlugins();
 
   const getButton = getByText(/responsive/i);
   fireEvent.click(getButton);
   fireEvent.click(getButton);
 
   await wait(() =>
-    expect(handleSetReponsivePreviewState).lastCalledWith({
+    expect(getPluginState('responsivePreview')).toEqual({
       enabled: false,
       viewport: DEFAULT_VIEWPORT
     })
@@ -139,33 +115,23 @@ it('sets disabled state', async () => {
 });
 
 it('sets disabled state with stored viewport', async () => {
+  registerTestPlugins();
+  mockMethod('renderer.setFixtureState', () => {});
+
   const storage = {
     [storageKey]: { width: 420, height: 420 }
   };
-  const handleSetReponsivePreviewState = jest.fn();
-  const { getByText } = renderPlayground(
-    <>
-      <RegisterMethod
-        methodName="storage.getItem"
-        handler={key => Promise.resolve(storage[key])}
-      />
-      <RegisterMethod
-        methodName="renderer.setFixtureState"
-        handler={() => {}}
-      />
-      <OnPluginState
-        pluginName="responsive-preview"
-        handler={handleSetReponsivePreviewState}
-      />
-    </>
+  mockMethod('storage.getItem', (context, key) =>
+    Promise.resolve(storage[key])
   );
 
+  const { getByText } = loadTestPlugins();
   const getButton = getByText(/responsive/i);
   fireEvent.click(getButton);
   fireEvent.click(getButton);
 
   await wait(() =>
-    expect(handleSetReponsivePreviewState).lastCalledWith({
+    expect(getPluginState('responsivePreview')).toEqual({
       enabled: false,
       viewport: { width: 420, height: 420 }
     })
@@ -173,47 +139,19 @@ it('sets disabled state with stored viewport', async () => {
 });
 
 it('clears viewport in fixture state', async () => {
+  registerTestPlugins();
+  mockMethod('storage.getItem', () => {});
+
   let fixtureState = {};
-  const handleSetFixtureState = stateChange => {
+  const handleSetFixtureState = (context, stateChange) => {
     fixtureState = updateState(fixtureState, stateChange);
   };
+  mockMethod('renderer.setFixtureState', handleSetFixtureState);
 
-  const { getByText } = renderPlayground(
-    <>
-      <RegisterMethod methodName="storage.getItem" handler={() => null} />
-      <RegisterMethod
-        methodName="renderer.setFixtureState"
-        handler={handleSetFixtureState}
-      />
-    </>
-  );
-
+  const { getByText } = loadTestPlugins();
   const getButton = getByText(/responsive/i);
   fireEvent.click(getButton);
   fireEvent.click(getButton);
 
   await wait(() => expect(fixtureState.viewport).toBe(null));
 });
-
-function renderPlayground(otherNodes) {
-  return render(
-    <PluginProvider
-      config={{
-        core: { projectId: 'mockProjectId' },
-        renderer: { webUrl: 'mockRendererUrl' }
-      }}
-    >
-      <Slot name="header-buttons" />
-      <SetPluginState
-        pluginName="router"
-        value={{ urlParams: { fixturePath: 'fooFixture.js' } }}
-      />
-      <SetPluginState pluginName="renderer" value={mockRendererState} />
-      <SetPluginState
-        pluginName="responsive-preview"
-        value={{ enabled: false, viewport: null }}
-      />
-      {otherNodes}
-    </PluginProvider>
-  );
-}

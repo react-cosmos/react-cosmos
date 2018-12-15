@@ -3,17 +3,17 @@
 import React, { Component } from 'react';
 import { getPathTree, collapsePathTreeDirs } from './pathTree';
 import { FixtureTreeNode } from './FixtureTreeNode';
-import { PluginContext } from '../../../plugin';
 
 import type { FixtureNames } from 'react-cosmos-shared2/renderer';
-import type { PluginContextValue } from '../../../plugin';
+import type { Storage } from '../../Storage';
 import type { TreeExpansion } from './shared';
 
 type Props = {
   projectId: string,
   fixturesDir: string,
   fixtures: FixtureNames,
-  onSelect: (path: string) => mixed
+  onSelect: (path: string) => mixed,
+  storage: Storage
 };
 
 type State = {
@@ -21,11 +21,6 @@ type State = {
 };
 
 export class FixtureTree extends Component<Props, State> {
-  static contextType = PluginContext;
-
-  // https://github.com/facebook/flow/issues/7166
-  context: PluginContextValue;
-
   state = {
     treeExpansion: {}
   };
@@ -62,19 +57,17 @@ export class FixtureTree extends Component<Props, State> {
   };
 
   async restoreTreeExpansion() {
-    const { callMethod } = this.context;
-
-    const treeExpansion =
-      (await callMethod('storage.getItem', this.getStorageKey())) || {};
+    const { storage } = this.props;
+    const treeExpansion = (await storage.getItem(this.getStorageKey())) || {};
 
     this.setState({ treeExpansion });
   }
 
   persistTreeExpansion() {
-    const { callMethod } = this.context;
+    const { storage } = this.props;
     const { treeExpansion } = this.state;
 
-    callMethod('storage.setItem', this.getStorageKey(), treeExpansion);
+    storage.setItem(this.getStorageKey(), treeExpansion);
   }
 
   getStorageKey() {

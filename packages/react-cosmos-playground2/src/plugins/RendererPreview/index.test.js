@@ -2,26 +2,44 @@
 // @flow
 
 import React from 'react';
-import { wait, render, cleanup } from 'react-testing-library';
-import { Slot } from 'react-plugin';
-import { PluginProvider } from '../../plugin';
-import { EmitEvent } from '../../testHelpers/EmitEvent';
-import { OnEvent } from '../../testHelpers/OnEvent';
+import { wait, render } from 'react-testing-library';
+import { loadPlugins, Slot } from 'react-plugin';
 import { mockIframeMessage } from '../../testHelpers/mockIframeMessage';
-
-// Plugins have side-effects: they register themselves
-import '.';
+import {
+  cleanup,
+  mockConfig,
+  mockMethod,
+  mockInit
+} from '../../testHelpers/plugin';
+import { register } from '.';
 
 afterEach(cleanup);
 
-it('renders iframe with config.renderer.webUrl src', () => {
-  const renderer = renderPlayground();
+function registerTestPlugins() {
+  register();
+  mockConfig('renderer', { webUrl: 'mockRendererUrl' });
+}
 
-  const iframe = getIframe(renderer);
-  expect(iframe.src).toMatch('mockRendererUrl');
+function loadTestPlugins() {
+  loadPlugins();
+
+  return render(<Slot name="rendererPreview" />);
+}
+
+function getIframe({ getByTestId }) {
+  return getByTestId('preview-iframe');
+}
+
+it('renders iframe with config.renderer.webUrl src', () => {
+  registerTestPlugins();
+  const renderer = loadTestPlugins();
+
+  expect(getIframe(renderer).src).toMatch('mockRendererUrl');
 });
 
 it('posts renderer request message to iframe', async () => {
+  registerTestPlugins();
+
   const selectFixtureMsg = {
     type: 'selectFixture',
     payload: {
@@ -29,20 +47,32 @@ it('posts renderer request message to iframe', async () => {
       fixturePath: 'bar-fixturePath'
     }
   };
+  mockInit('renderer', ({ emitEvent }) => {
+    // Wait for iframe ref to be received
+    setTimeout(() => {
+      emitEvent('request', selectFixtureMsg);
+    });
+  });
 
-  const renderer = renderPlayground(
-    <EmitEvent eventName="renderer.request" args={[selectFixtureMsg]} />
-  );
-  const iframe = getIframe(renderer);
+  const renderer = loadTestPlugins();
 
-  await mockIframeMessage(iframe, async ({ onMessage }) => {
+  await mockIframeMessage(getIframe(renderer), async ({ onMessage }) => {
     await wait(() =>
+      // NOTE: toBeCalledWith doesn't work because trying to compare the
+      // message event leads to out of memory errors
       expect(onMessage.mock.calls[0][0].data).toEqual(selectFixtureMsg)
     );
   });
 });
 
 it('broadcasts renderer response message from iframe', async () => {
+  registerTestPlugins();
+
+  const handleReceiveResponse = jest.fn();
+  mockMethod('renderer.receiveResponse', handleReceiveResponse);
+
+  loadTestPlugins();
+
   const fixtureListMsg = {
     type: 'fixtureList',
     payload: {
@@ -50,28 +80,12 @@ it('broadcasts renderer response message from iframe', async () => {
       fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js']
     }
   };
-
-  const handleRendererResponse = jest.fn();
-  renderPlayground(
-    <OnEvent eventName="renderer.response" handler={handleRendererResponse} />
-  );
-
   window.postMessage(fixtureListMsg, '*');
 
   await wait(() =>
-    expect(handleRendererResponse).toBeCalledWith(fixtureListMsg)
+    expect(handleReceiveResponse).toBeCalledWith(
+      expect.any(Object),
+      fixtureListMsg
+    )
   );
 });
-
-function renderPlayground(otherNodes) {
-  return render(
-    <PluginProvider config={{ renderer: { webUrl: 'mockRendererUrl' } }}>
-      <Slot name="rendererPreview" />
-      {otherNodes}
-    </PluginProvider>
-  );
-}
-
-function getIframe({ getByTestId }) {
-  return getByTestId('preview-iframe');
-}

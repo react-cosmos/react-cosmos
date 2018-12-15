@@ -20,7 +20,7 @@ We need a decent parity with the existing Cosmos UI to test JSX fixtures. This i
     - [x] Sync fixture state between renderers (this wasn't required at this step but is _so_ cool)
   - [x] Collapsable fixture tree view
     - [x] Persist state
-  - [ ] Responsive mode
+  - [x] Responsive mode
   - [ ] Style
 
 **Not** included in the first beta release: The Fixture Editor. This is because it'll be replaced by something _much_ more powerful (a new Control Panel). But this section will have arrive later, after the core of Cosmos Next has been thoroughly tested.
@@ -31,13 +31,13 @@ We need a decent parity with the existing Cosmos UI to test JSX fixtures. This i
 - [ ] Release 4.7
 - [ ] Step 2B: JSX decorators
 
-## Step 4: Consolidate plugin architecture
-
 ## Next Steps
 
 - [ ] Basic Control Panel (props/state visualization and editing)
 - [ ] Port onboarding screens to new UI
 - [ ] More Control Panel features
+  - [ ] General purpose UI controls mapped to render props
+- [ ] UI-generated fixture variations
 - [ ] Refine and document UI plugin API
 - [ ] Redesign Cosmos docs
 

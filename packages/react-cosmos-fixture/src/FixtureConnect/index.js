@@ -15,6 +15,7 @@ import type { FixtureConnectProps } from '../index.js.flow';
 type State = {
   fixturePath: null | string,
   fixtureState: null | FixtureState,
+  syncedFixtureState: null | FixtureState,
   renderKey: number
 };
 
@@ -24,6 +25,14 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
   state = {
     fixturePath: null,
     fixtureState: null,
+    // Why is this copy of the fixtureState needed? Two reasons:
+    // - To avoid posting fixtureStateChange messages with no changes from
+    //   the last message
+    // - To piggy back on React's setState batching and only send a
+    //   fixtureStateChange message when FixtureConnect updates (via cDU),
+    //   instead of posting messages in rapid succession as fixture state
+    //   changes are dispatched by fixture plugins
+    syncedFixtureState: null,
     // Used to reset FixtureProvider instance on fixturePath change
     renderKey: 0
   };
@@ -37,9 +46,17 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
 
   componentDidUpdate(prevProps: FixtureConnectProps) {
     const { fixtures } = this.props;
+    const { fixturePath, fixtureState, syncedFixtureState } = this.state;
 
     if (!isEqual(fixtures, prevProps.fixtures)) {
       this.postFixtureList();
+    }
+
+    if (fixturePath && !isEqual(fixtureState, syncedFixtureState)) {
+      this.postFixtureStateChange(fixturePath, fixtureState);
+      this.setState({
+        syncedFixtureState: fixtureState
+      });
     }
   }
 
@@ -103,7 +120,10 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
 
       // Ensure fixture state applies to currently selected fixture
       if (fixturePath === this.state.fixturePath) {
-        this.applyFixtureStateChange(fixtureState);
+        this.setState({
+          fixtureState,
+          syncedFixtureState: fixtureState
+        });
       }
     }
   };
@@ -120,7 +140,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     });
   }
 
-  setFixtureState: SetFixtureState = (stateChange, cb) => {
+  setFixtureState: SetFixtureState = (fixtureStateChange, cb) => {
     const { fixturePath } = this.state;
 
     if (!fixturePath) {
@@ -130,13 +150,6 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
       return;
     }
 
-    this.applyFixtureStateChange(stateChange, () => {
-      if (typeof cb === 'function') cb();
-      this.postFixtureStateChange(fixturePath);
-    });
-  };
-
-  applyFixtureStateChange: SetFixtureState = (stateChange, cb) => {
     // Multiple state changes can be dispatched by fixture plugins at almost
     // the same time. Since state changes are batched in React, current state
     // (this.state.fixtureState) can be stale at dispatch time, and extending
@@ -145,15 +158,17 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     // every state change is honored, regardless of timing.
     this.setState(
       ({ fixtureState }) => ({
-        fixtureState: updateState(fixtureState, stateChange)
+        fixtureState: updateState(fixtureState, fixtureStateChange)
       }),
       cb
     );
   };
 
-  postFixtureStateChange = (fixturePath: string) => {
+  postFixtureStateChange = (
+    fixturePath: string,
+    fixtureState: null | FixtureState
+  ) => {
     const { rendererId, postMessage } = this.props;
-    const { fixtureState } = this.state;
 
     postMessage({
       type: 'fixtureStateChange',

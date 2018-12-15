@@ -1,41 +1,21 @@
 // @flow
 
 import React from 'react';
-import { render, cleanup } from 'react-testing-library';
-import { Slot } from 'react-plugin';
-import { PluginProvider } from '../../../plugin';
-import { SetPluginState } from '../../../testHelpers/SetPluginState';
-
-// Plugins have side-effects: they register themselves
-// "renderer" and "router" states are required for the ResponsivePreview plugin
-// to work
-import '../../Renderer';
-import '../../Router';
-import '..';
+import { render } from 'react-testing-library';
+import { loadPlugins, Slot } from 'react-plugin';
+import { cleanup, mockConfig, mockState } from '../../../testHelpers/plugin';
+import { register } from '..';
 
 afterEach(cleanup);
 
 it('does not show button', async () => {
-  const { queryByText } = renderPlayground();
+  register();
+  mockConfig('core', { projectId: 'mockProjectId' });
+  mockState('renderer', { primaryRendererId: null, renderers: {} });
+  mockState('router', { urlParams: {} });
+
+  loadPlugins();
+  const { queryByText } = render(<Slot name="header-buttons" />);
 
   expect(queryByText(/responsive/i)).toBeNull();
 });
-
-function renderPlayground(otherNodes) {
-  return render(
-    <PluginProvider
-      config={{
-        core: { projectId: 'mockProjectId' },
-        renderer: { webUrl: 'mockRendererUrl' }
-      }}
-    >
-      <Slot name="header-buttons" />
-      <SetPluginState pluginName="router" value={{ urlParams: {} }} />
-      <SetPluginState
-        pluginName="responsive-preview"
-        value={{ enabled: false, viewport: null }}
-      />
-      {otherNodes}
-    </PluginProvider>
-  );
-}

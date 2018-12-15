@@ -1,21 +1,16 @@
 // @flow
 
-import React from 'react';
-import { wait, render, cleanup } from 'react-testing-library';
-import { Slot } from 'react-plugin';
-import { PluginProvider } from '../../plugin';
-import { CallMethod } from '../../testHelpers/CallMethod';
-
-// Plugins have side-effects: they register themselves
-import '.';
+import { loadPlugins } from 'react-plugin';
+import { cleanup, mockInitCall } from '../../testHelpers/plugin';
+import { register } from '.';
 
 const mockSetItem = jest.fn();
 
 jest.mock('localforage', () => ({
-  getItem: () => Promise.resolve('fooValue'),
-  setItem: (...args) => {
-    mockSetItem(...args);
-    return Promise.resolve('setReturnFooValue');
+  getItem: key => Promise.resolve(`${key}Value`),
+  setItem: (key, value) => {
+    mockSetItem(key, value);
+    return Promise.resolve('setReturnValue');
   }
 }));
 
@@ -25,47 +20,20 @@ afterEach(() => {
 });
 
 it('gets item from localForage', async () => {
-  const handleGetItemReturn = jest.fn();
-  renderPlayground(
-    <CallMethod
-      methodName="storage.getItem"
-      args={['fooKey']}
-      onReturn={handleGetItemReturn}
-    />
-  );
+  register();
 
-  await wait(async () => {
-    // NOTE: This would be more elegant, but it provices false positives:
-    //  expect(handleGetItemReturn).toBeCalledWith(Promise.resolve('fooValue'))
-    // It passes regardless of the resolved value.
-    const [[returnValue]] = handleGetItemReturn.mock.calls;
-    expect(await returnValue).toBe('fooValue');
-  });
+  const callReturn = mockInitCall('storage.getItem', 'fooKey');
+  loadPlugins();
+
+  expect(await callReturn).toEqual('fooKeyValue');
 });
 
 it('sets item to localForage', async () => {
-  const handleSetItemReturn = jest.fn();
-  renderPlayground(
-    <CallMethod
-      methodName="storage.setItem"
-      args={['fooKey', 'fooValue']}
-      onReturn={handleSetItemReturn}
-    />
-  );
+  register();
 
-  await wait(() => expect(mockSetItem).toBeCalledWith('fooKey', 'fooValue'));
+  const callReturn = mockInitCall('storage.setItem', 'fooKey', 'fooValue');
+  loadPlugins();
 
-  await wait(async () => {
-    const [[returnValue]] = handleSetItemReturn.mock.calls;
-    expect(await returnValue).toBe('setReturnFooValue');
-  });
+  expect(mockSetItem).toBeCalledWith('fooKey', 'fooValue');
+  expect(await callReturn).toEqual('setReturnValue');
 });
-
-function renderPlayground(otherNodes) {
-  return render(
-    <PluginProvider>
-      <Slot name="global" />
-      {otherNodes}
-    </PluginProvider>
-  );
-}

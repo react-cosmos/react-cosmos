@@ -1,11 +1,39 @@
 // @flow
 
-import React from 'react';
-import { register, Plugin, Plug } from 'react-plugin';
+import { registerPlugin } from 'react-plugin';
 import { ControlPanel } from './ControlPanel';
 
-register(
-  <Plugin name="control-panel">
-    <Plug slot="right" render={ControlPanel} />
-  </Plugin>
-);
+import type { RendererId } from 'react-cosmos-shared2/renderer';
+import type { RouterState } from '../Router';
+import type { RendererConfig, RendererState } from '../Renderer';
+
+export function register() {
+  const { plug } = registerPlugin<RendererConfig, RendererState>({
+    name: 'controlPanel'
+  });
+
+  plug({
+    slotName: 'right',
+    render: ControlPanel,
+    getProps: ({ getConfigOf, getStateOf, callMethod }) => {
+      const { urlParams }: RouterState = getStateOf('router');
+      const { webUrl }: RendererConfig = getConfigOf('renderer');
+      const rendererState: RendererState = getStateOf('renderer');
+
+      return {
+        webUrl,
+        urlParams,
+        rendererState,
+        setComponentsFixtureState: components => {
+          callMethod('renderer.setFixtureState', fixtureState => ({
+            ...fixtureState,
+            components
+          }));
+        },
+        selectPrimaryRenderer: (rendererId: RendererId) => {
+          callMethod('renderer.selectPrimaryRenderer', rendererId);
+        }
+      };
+    }
+  });
+}

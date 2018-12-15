@@ -1,19 +1,26 @@
 // @flow
 
-import React from 'react';
-import { wait, render, cleanup } from 'react-testing-library';
-import { Slot } from 'react-plugin';
-import { PluginProvider } from '../../plugin';
-import { EmitEvent } from '../../testHelpers/EmitEvent';
-import { OnEvent } from '../../testHelpers/OnEvent';
+import { wait } from 'react-testing-library';
+import { loadPlugins } from 'react-plugin';
 import { mockWebSockets } from '../../testHelpers/mockWebSockets';
-
-// Plugins have side-effects: they register themselves
-import '.';
+import {
+  cleanup,
+  mockConfig,
+  mockMethod,
+  mockInitEmit
+} from '../../testHelpers/plugin';
+import { register } from '.';
 
 afterEach(cleanup);
 
+function registerTestPlugins() {
+  register();
+  mockConfig('renderer', { enableRemote: true });
+}
+
 it('posts renderer request message via websockets', async () => {
+  registerTestPlugins();
+
   const selectFixtureMsg = {
     type: 'selectFixture',
     payload: {
@@ -21,10 +28,9 @@ it('posts renderer request message via websockets', async () => {
       fixturePath: 'bar-fixturePath'
     }
   };
+  mockInitEmit('renderer.request', selectFixtureMsg);
 
-  renderPlayground(
-    <EmitEvent eventName="renderer.request" args={[selectFixtureMsg]} />
-  );
+  loadPlugins();
 
   await mockWebSockets(async ({ onMessage }) => {
     await wait(() => expect(onMessage).toBeCalledWith(selectFixtureMsg));
@@ -32,46 +38,42 @@ it('posts renderer request message via websockets', async () => {
 });
 
 it('broadcasts renderer response message from websocket event', async () => {
-  const fixtureListMsg = {
-    type: 'fixtureList',
-    payload: {
-      rendererId: 'foo-renderer',
-      fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js']
-    }
-  };
+  registerTestPlugins();
 
-  const handleRendererResponse = jest.fn();
-  renderPlayground(
-    <OnEvent eventName="renderer.response" handler={handleRendererResponse} />
-  );
+  const handleReceiveResponse = jest.fn();
+  mockMethod('renderer.receiveResponse', handleReceiveResponse);
+
+  loadPlugins();
 
   await mockWebSockets(async ({ postMessage }) => {
+    const fixtureListMsg = {
+      type: 'fixtureList',
+      payload: {
+        rendererId: 'foo-renderer',
+        fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js']
+      }
+    };
     postMessage(fixtureListMsg);
 
     await wait(() =>
-      expect(handleRendererResponse).toBeCalledWith(fixtureListMsg)
+      expect(handleReceiveResponse).toBeCalledWith(
+        expect.any(Object),
+        fixtureListMsg
+      )
     );
   });
 });
 
 it('posts "requestFixtureList" renderer request on mount', async () => {
-  const handleRendererRequest = jest.fn();
-  renderPlayground(
-    <OnEvent eventName="renderer.request" handler={handleRendererRequest} />
-  );
+  registerTestPlugins();
 
-  await wait(() =>
-    expect(handleRendererRequest).toBeCalledWith({
-      type: 'requestFixtureList'
-    })
-  );
+  loadPlugins();
+
+  await mockWebSockets(async ({ onMessage }) => {
+    await wait(() =>
+      expect(onMessage).toBeCalledWith({
+        type: 'requestFixtureList'
+      })
+    );
+  });
 });
-
-function renderPlayground(otherNodes) {
-  return render(
-    <PluginProvider config={{ renderer: { enableRemote: true } }}>
-      {otherNodes}
-      <Slot name="global" />
-    </PluginProvider>
-  );
-}
