@@ -63,14 +63,13 @@ export default class Author extends Component {
                               Upvote
                             </button>
                           )}
-                          {error &&
-                            error.graphQLErrors && (
-                              <span style={{ color: 'red' }}>
-                                {error.graphQLErrors
-                                  .map(error => error.message)
-                                  .join(', ')}
-                              </span>
-                            )}
+                          {error && error.graphQLErrors && (
+                            <span style={{ color: 'red' }}>
+                              {error.graphQLErrors
+                                .map(error => error.message)
+                                .join(', ')}
+                            </span>
+                          )}
                         </li>
                       );
                     }}

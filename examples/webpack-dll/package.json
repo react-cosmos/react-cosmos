@@ -9,7 +9,7 @@
     "start": "yarn run build-dll && cosmos"
   },
   "dependencies": {
-    "moment": "^2.22.2",
+    "moment": "^2.23.0",
     "react-cosmos": "^4.7.0-17"
   },
   "devDependencies": {

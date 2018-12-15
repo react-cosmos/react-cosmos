@@ -13,7 +13,7 @@
     "react-cosmos-shared2": "^4.7.0-17",
     "react-dom": "^16.6.3",
     "react-plugin": "^1.0.0-alpha.10",
-    "socket.io-client": "^2.1.1",
-    "styled-components": "^4.1.1"
+    "socket.io-client": "^2.2.0",
+    "styled-components": "^4.1.2"
   }
 }

@@ -19,11 +19,11 @@ export function replaceState(
   }
 }
 
-function resetOriginalKeys(original, current) {
+function resetOriginalKeys(original, current): Object {
   const { keys } = Object;
 
   return keys(original).reduce(
-    (result, key) =>
+    (result: Object, key) =>
       keys(result).indexOf(key) === -1
         ? { ...result, [key]: undefined }
         : result,

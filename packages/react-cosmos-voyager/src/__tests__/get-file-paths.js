@@ -19,8 +19,8 @@ const testUseCase = ({
 }) => {
   const testName = variation ? `${useCase} (${variation})` : useCase;
   describe(testName, () => {
-    const expectation = traverse(output).map(
-      val => (typeof val === 'string' ? resolvePath(`${useCase}/${val}`) : val)
+    const expectation = traverse(output).map(val =>
+      typeof val === 'string' ? resolvePath(`${useCase}/${val}`) : val
     );
     let result;
 

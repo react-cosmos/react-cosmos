@@ -24,8 +24,8 @@
     "react-cosmos-test": "^4.7.0-17",
     "react-plugin": "^0.1.1",
     "react-querystring-router": "^4.7.0-17",
-    "socket.io-client": "^2.1.1",
-    "styled-components": "^4.1.1",
+    "socket.io-client": "^2.2.0",
+    "styled-components": "^4.1.2",
     "whatwg-fetch": "^3.0.0"
   }
 }

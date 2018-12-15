@@ -11,8 +11,8 @@ import type { ComponentType, Node } from 'react';
 // into the "header-buttons" slot.
 export function createHeaderButton<T>(
   BtnComponent: ComponentType<T>
-): ComponentType<T & { children: Node }> {
-  return ({ children, ...otherProps }: T & { children: Node }) => (
+): ComponentType<{ ...T, children: Node }> {
+  return ({ children, ...otherProps }: { ...T, children: Node }) => (
     <>
       {children}
       <BtnComponent {...otherProps} />
