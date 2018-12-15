@@ -11,8 +11,8 @@ export function resolveUserPath(rootPath: string, userPath: string) {
     isAbsolute(userPath)
       ? userPath
       : resolveSilent(rootPath, userPath) ||
-        // Final attempt to resolve path, for when relative paths that don't
-        // start with ./ and for output file paths
-        join(rootPath, userPath)
+          // Final attempt to resolve path, for when relative paths that don't
+          // start with ./ and for output file paths
+          join(rootPath, userPath)
   );
 }

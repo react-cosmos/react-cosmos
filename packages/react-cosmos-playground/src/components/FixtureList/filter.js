@@ -6,8 +6,8 @@ function matcher(filterText, node) {
   const matchText = node.urlParams
     ? `${node.urlParams.component}${node.urlParams.fixture}`
     : node.displayData
-      ? node.displayData.search
-      : node.name;
+    ? node.displayData.search
+    : node.name;
 
   return match(matchText, filterText).length > 0;
 }

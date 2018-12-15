@@ -40,12 +40,11 @@ export const SizeButton = ({
       <div className={styles.nowrap}>
         {width} x {height}
       </div>
-      {scale &&
-        scalable && (
-          <div className={classNames(styles.scaled, styles.nowrap)}>
-            {`(Scaled ${parseInt(scaleFactor * 100, 10)}%)`}
-          </div>
-        )}
+      {scale && scalable && (
+        <div className={classNames(styles.scaled, styles.nowrap)}>
+          {`(Scaled ${parseInt(scaleFactor * 100, 10)}%)`}
+        </div>
+      )}
     </button>
   );
 };

@@ -184,11 +184,10 @@ function extendModuleWithRules(webpackConfig, rules) {
 function getExistingPlugins(webpackConfig) {
   const plugins = webpackConfig.plugins ? [...webpackConfig.plugins] : [];
 
-  return plugins.map(
-    plugin =>
-      isPluginType(plugin, 'HtmlWebpackPlugin')
-        ? changeHtmlPluginFilename(plugin)
-        : plugin
+  return plugins.map(plugin =>
+    isPluginType(plugin, 'HtmlWebpackPlugin')
+      ? changeHtmlPluginFilename(plugin)
+      : plugin
   );
 }
 
