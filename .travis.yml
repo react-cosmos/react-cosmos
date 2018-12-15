@@ -15,7 +15,7 @@ script:
   - yarn build
   # Test source (with cross-package coverage)
   - yarn link-entries src
-  - yarn flow
+  - yarn flow --retries 12
   - yarn lint
   - yarn test:unit --maxWorkers=2 --coverage
   # Test build
