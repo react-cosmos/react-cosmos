@@ -12,10 +12,14 @@ export function register() {
 
   let socket: void | Socket;
 
-  on('renderer.request', (context, msg: RendererRequest) => {
+  function postMessage(msg: RendererRequest) {
     if (socket) {
       socket.emit(RENDERER_MESSAGE_EVENT_NAME, msg);
     }
+  }
+
+  on('renderer.request', (context, msg: RendererRequest) => {
+    postMessage(msg);
   });
 
   init(({ getConfigOf, callMethod }) => {
@@ -32,7 +36,9 @@ export function register() {
     socket.on(RENDERER_MESSAGE_EVENT_NAME, handleMessage);
 
     // Discover remote renderers by asking all to share their fixture list
-    callMethod('renderer.requestFixtureList');
+    postMessage({
+      type: 'requestFixtureList'
+    });
 
     return () => {
       if (socket) {

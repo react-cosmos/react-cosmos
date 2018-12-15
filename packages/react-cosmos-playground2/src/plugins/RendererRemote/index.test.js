@@ -3,18 +3,19 @@
 import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
 import { mockWebSockets } from '../../testHelpers/mockWebSockets';
-import { cleanup, mockMethod, mockInitEmit } from '../../testHelpers/plugin';
+import {
+  cleanup,
+  mockConfig,
+  mockMethod,
+  mockInitEmit
+} from '../../testHelpers/plugin';
 import { register } from '.';
 
 afterEach(cleanup);
 
-function registerTestPlugins({ handleRequestFixtureList = () => {} } = {}) {
+function registerTestPlugins() {
   register();
-  mockMethod('renderer.requestFixtureList', handleRequestFixtureList);
-}
-
-function loadTestPlugins() {
-  loadPlugins({ config: { renderer: { enableRemote: true } } });
+  mockConfig('renderer', { enableRemote: true });
 }
 
 it('posts renderer request message via websockets', async () => {
@@ -29,7 +30,7 @@ it('posts renderer request message via websockets', async () => {
   };
   mockInitEmit('renderer.request', selectFixtureMsg);
 
-  loadTestPlugins();
+  loadPlugins();
 
   await mockWebSockets(async ({ onMessage }) => {
     await wait(() => expect(onMessage).toBeCalledWith(selectFixtureMsg));
@@ -42,7 +43,7 @@ it('broadcasts renderer response message from websocket event', async () => {
   const handleReceiveResponse = jest.fn();
   mockMethod('renderer.receiveResponse', handleReceiveResponse);
 
-  loadTestPlugins();
+  loadPlugins();
 
   await mockWebSockets(async ({ postMessage }) => {
     const fixtureListMsg = {
@@ -64,10 +65,15 @@ it('broadcasts renderer response message from websocket event', async () => {
 });
 
 it('posts "requestFixtureList" renderer request on mount', async () => {
-  const handleRequestFixtureList = jest.fn();
-  registerTestPlugins({ handleRequestFixtureList });
+  registerTestPlugins();
 
-  loadTestPlugins();
+  loadPlugins();
 
-  await wait(() => expect(handleRequestFixtureList).toBeCalled());
+  await mockWebSockets(async ({ onMessage }) => {
+    await wait(() =>
+      expect(onMessage).toBeCalledWith({
+        type: 'requestFixtureList'
+      })
+    );
+  });
 });

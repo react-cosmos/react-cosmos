@@ -37,18 +37,11 @@ export function register() {
     }
   });
 
-  method('requestFixtureList', handleRequestFixtureList);
   method('selectFixture', handleSelectFixture);
   method('unselectFixture', handleUnselectFixture);
   method('setFixtureState', handleSetFixtureState);
   method('selectPrimaryRenderer', handleSelectPrimaryRenderer);
   method('receiveResponse', handleReceiveResponse);
-}
-
-function handleRequestFixtureList(context) {
-  postRendererRequest(context, {
-    type: 'requestFixtureList'
-  });
 }
 
 function handleSelectFixture(context, fixturePath: string) {
