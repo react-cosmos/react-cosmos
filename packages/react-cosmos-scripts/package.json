@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-scripts",
-  "version": "4.7.0-18",
+  "version": "4.7.0-19",
   "description": "Scripts for Cosmos-related bidniss",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-scripts",
   "license": "MIT",
@@ -10,9 +10,9 @@
     "jscodeshift": "^0.5.1",
     "lodash.camelcase": "^4.3.0",
     "lodash.upperfirst": "^4.3.1",
-    "react-cosmos-config": "^4.7.0-18",
-    "react-cosmos-shared": "^4.7.0-18",
-    "react-cosmos-voyager": "^4.7.0-18"
+    "react-cosmos-config": "^4.7.0-19",
+    "react-cosmos-shared": "^4.7.0-19",
+    "react-cosmos-voyager": "^4.7.0-19"
   },
   "bin": {
     "cosmos-upgrade-fixtures": "./bin/upgrade-fixtures.js"
