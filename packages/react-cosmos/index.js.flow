@@ -13,4 +13,6 @@ declare type FixtureType<P: {}> = {
   init?: ({ compRef: ?ElementRef<ComponentType<P>> }) => Promise<any>
 };
 
-declare export function createFixture<P: {}, F: FixtureType<P>>(fixture: F): F;
+declare export function createFixture<P: {}, F: FixtureType<P>>(
+  fixture: F
+): FixtureType<{}>;
