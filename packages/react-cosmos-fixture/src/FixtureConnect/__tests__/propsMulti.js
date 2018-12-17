@@ -21,6 +21,7 @@ const fixtures = {
     </>
   )
 };
+const decorators = {};
 
 tests(mockPostMessage);
 tests(mockWebSockets);
@@ -28,37 +29,40 @@ tests(mockWebSockets);
 function tests(mockConnect) {
   it('captures multiple props instances', async () => {
     await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
-      await mount(getElement({ rendererId, fixtures }), async renderer => {
-        await selectFixture({
-          rendererId,
-          fixturePath: 'first',
-          fixtureState: null
-        });
-
-        expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B']);
-
-        await untilMessage({
-          type: 'fixtureStateChange',
-          payload: {
+      await mount(
+        getElement({ rendererId, fixtures, decorators }),
+        async renderer => {
+          await selectFixture({
             rendererId,
             fixturePath: 'first',
-            fixtureState: {
-              components: [
-                createCompFxState({
-                  componentName: 'HelloMessage',
-                  elPath: 'props.children[0]',
-                  props: createFxValues({ name: 'Bianca' })
-                }),
-                createCompFxState({
-                  componentName: 'HelloMessage',
-                  elPath: 'props.children[1]',
-                  props: createFxValues({ name: 'B' })
-                })
-              ]
+            fixtureState: null
+          });
+
+          expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B']);
+
+          await untilMessage({
+            type: 'fixtureStateChange',
+            payload: {
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: {
+                components: [
+                  createCompFxState({
+                    componentName: 'HelloMessage',
+                    elPath: 'props.children[0]',
+                    props: createFxValues({ name: 'Bianca' })
+                  }),
+                  createCompFxState({
+                    componentName: 'HelloMessage',
+                    elPath: 'props.children[1]',
+                    props: createFxValues({ name: 'B' })
+                  })
+                ]
+              }
             }
-          }
-        });
-      });
+          });
+        }
+      );
     });
   });
 
@@ -70,32 +74,35 @@ function tests(mockConnect) {
         getFxStateFromLastChange,
         setFixtureState
       }) => {
-        await mount(getElement({ rendererId, fixtures }), async renderer => {
-          await selectFixture({
-            rendererId,
-            fixturePath: 'first',
-            fixtureState: null
-          });
+        await mount(
+          getElement({ rendererId, fixtures, decorators }),
+          async renderer => {
+            await selectFixture({
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: null
+            });
 
-          const fixtureState = await getFxStateFromLastChange();
-          const [, { decoratorId, elPath }] = getCompFixtureStates(
-            fixtureState
-          );
-          await setFixtureState({
-            rendererId,
-            fixturePath: 'first',
-            fixtureState: {
-              components: updateCompFixtureState({
-                fixtureState,
-                decoratorId,
-                elPath,
-                props: createFxValues({ name: 'Petec' })
-              })
-            }
-          });
+            const fixtureState = await getFxStateFromLastChange();
+            const [, { decoratorId, elPath }] = getCompFixtureStates(
+              fixtureState
+            );
+            await setFixtureState({
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: {
+                components: updateCompFixtureState({
+                  fixtureState,
+                  decoratorId,
+                  elPath,
+                  props: createFxValues({ name: 'Petec' })
+                })
+              }
+            });
 
-          expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello Petec']);
-        });
+            expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello Petec']);
+          }
+        );
       }
     );
   });

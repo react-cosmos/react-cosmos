@@ -8,12 +8,13 @@ import type {
   RendererRequest,
   RendererResponse
 } from 'react-cosmos-shared2/renderer';
-import type { Fixtures } from '../../index.js.flow';
+import type { Fixtures, Decorators } from '../../index.js.flow';
 
 type Message = RendererResponse | RendererRequest;
 
 type GetTestElement = ({
   fixtures: Fixtures,
+  decorators: Decorators,
   rendererId: RendererId
 }) => Element<any>;
 

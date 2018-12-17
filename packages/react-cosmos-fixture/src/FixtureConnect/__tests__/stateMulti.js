@@ -26,6 +26,7 @@ const fixtures = {
     </>
   )
 };
+const decorators = {};
 
 tests(mockPostMessage);
 tests(mockWebSockets);
@@ -33,33 +34,36 @@ tests(mockWebSockets);
 function tests(mockConnect) {
   it('captures mocked state from multiple instances', async () => {
     await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
-      await mount(getElement({ rendererId, fixtures }), async () => {
-        await selectFixture({
-          rendererId,
-          fixturePath: 'first',
-          fixtureState: null
-        });
-
-        await untilMessage({
-          type: 'fixtureStateChange',
-          payload: {
+      await mount(
+        getElement({ rendererId, fixtures, decorators }),
+        async () => {
+          await selectFixture({
             rendererId,
             fixturePath: 'first',
-            fixtureState: {
-              components: [
-                createCompFxState({
-                  props: [],
-                  state: createFxValues({ count: 5 })
-                }),
-                createCompFxState({
-                  props: [],
-                  state: createFxValues({ count: 10 })
-                })
-              ]
+            fixtureState: null
+          });
+
+          await untilMessage({
+            type: 'fixtureStateChange',
+            payload: {
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: {
+                components: [
+                  createCompFxState({
+                    props: [],
+                    state: createFxValues({ count: 5 })
+                  }),
+                  createCompFxState({
+                    props: [],
+                    state: createFxValues({ count: 10 })
+                  })
+                ]
+              }
             }
-          }
-        });
-      });
+          });
+        }
+      );
     });
   });
 
@@ -71,33 +75,36 @@ function tests(mockConnect) {
         getFxStateFromLastChange,
         setFixtureState
       }) => {
-        await mount(getElement({ rendererId, fixtures }), async renderer => {
-          await selectFixture({
-            rendererId,
-            fixturePath: 'first',
-            fixtureState: null
-          });
+        await mount(
+          getElement({ rendererId, fixtures, decorators }),
+          async renderer => {
+            await selectFixture({
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: null
+            });
 
-          const fixtureState = await getFxStateFromLastChange();
-          const [, { decoratorId, elPath }] = getCompFixtureStates(
-            fixtureState
-          );
+            const fixtureState = await getFxStateFromLastChange();
+            const [, { decoratorId, elPath }] = getCompFixtureStates(
+              fixtureState
+            );
 
-          await setFixtureState({
-            rendererId,
-            fixturePath: 'first',
-            fixtureState: {
-              components: updateCompFixtureState({
-                fixtureState,
-                decoratorId,
-                elPath,
-                state: createFxValues({ count: 100 })
-              })
-            }
-          });
+            await setFixtureState({
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: {
+                components: updateCompFixtureState({
+                  fixtureState,
+                  decoratorId,
+                  elPath,
+                  state: createFxValues({ count: 100 })
+                })
+              }
+            });
 
-          expect(renderer.toJSON()).toEqual(['5 times', '100 times']);
-        });
+            expect(renderer.toJSON()).toEqual(['5 times', '100 times']);
+          }
+        );
       }
     );
   });

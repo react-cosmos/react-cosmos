@@ -16,6 +16,7 @@ const rendererId = uuid();
 const fixtures = {
   first: <Counter />
 };
+const decorators = {};
 
 tests(mockPostMessage);
 tests(mockWebSockets);
@@ -23,32 +24,35 @@ tests(mockWebSockets);
 function tests(mockConnect) {
   it('captures initial state', async () => {
     await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
-      await mount(getElement({ rendererId, fixtures }), async renderer => {
-        await selectFixture({
-          rendererId,
-          fixturePath: 'first',
-          fixtureState: null
-        });
-
-        expect(renderer.toJSON()).toBe('0 times');
-
-        await untilMessage({
-          type: 'fixtureStateChange',
-          payload: {
+      await mount(
+        getElement({ rendererId, fixtures, decorators }),
+        async renderer => {
+          await selectFixture({
             rendererId,
             fixturePath: 'first',
-            fixtureState: {
-              components: [
-                createCompFxState({
-                  componentName: 'Counter',
-                  props: [],
-                  state: createFxValues({ count: 0 })
-                })
-              ]
+            fixtureState: null
+          });
+
+          expect(renderer.toJSON()).toBe('0 times');
+
+          await untilMessage({
+            type: 'fixtureStateChange',
+            payload: {
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: {
+                components: [
+                  createCompFxState({
+                    componentName: 'Counter',
+                    props: [],
+                    state: createFxValues({ count: 0 })
+                  })
+                ]
+              }
             }
-          }
-        });
-      });
+          });
+        }
+      );
     });
   });
 
@@ -60,30 +64,35 @@ function tests(mockConnect) {
         getFxStateFromLastChange,
         setFixtureState
       }) => {
-        await mount(getElement({ rendererId, fixtures }), async renderer => {
-          await selectFixture({
-            rendererId,
-            fixturePath: 'first',
-            fixtureState: null
-          });
+        await mount(
+          getElement({ rendererId, fixtures, decorators }),
+          async renderer => {
+            await selectFixture({
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: null
+            });
 
-          const fixtureState = await getFxStateFromLastChange();
-          const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
-          await setFixtureState({
-            rendererId,
-            fixturePath: 'first',
-            fixtureState: {
-              components: updateCompFixtureState({
-                fixtureState,
-                decoratorId,
-                elPath,
-                state: createFxValues({ count: 5 })
-              })
-            }
-          });
+            const fixtureState = await getFxStateFromLastChange();
+            const [{ decoratorId, elPath }] = getCompFixtureStates(
+              fixtureState
+            );
+            await setFixtureState({
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: {
+                components: updateCompFixtureState({
+                  fixtureState,
+                  decoratorId,
+                  elPath,
+                  state: createFxValues({ count: 5 })
+                })
+              }
+            });
 
-          expect(renderer.toJSON()).toBe('5 times');
-        });
+            expect(renderer.toJSON()).toBe('5 times');
+          }
+        );
       }
     );
   });
@@ -96,30 +105,35 @@ function tests(mockConnect) {
         getFxStateFromLastChange,
         setFixtureState
       }) => {
-        await mount(getElement({ rendererId, fixtures }), async renderer => {
-          await selectFixture({
-            rendererId,
-            fixturePath: 'first',
-            fixtureState: null
-          });
+        await mount(
+          getElement({ rendererId, fixtures, decorators }),
+          async renderer => {
+            await selectFixture({
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: null
+            });
 
-          const fixtureState = await getFxStateFromLastChange();
-          const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
-          await setFixtureState({
-            rendererId,
-            fixturePath: 'first',
-            fixtureState: {
-              components: updateCompFixtureState({
-                fixtureState,
-                decoratorId,
-                elPath,
-                state: []
-              })
-            }
-          });
+            const fixtureState = await getFxStateFromLastChange();
+            const [{ decoratorId, elPath }] = getCompFixtureStates(
+              fixtureState
+            );
+            await setFixtureState({
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: {
+                components: updateCompFixtureState({
+                  fixtureState,
+                  decoratorId,
+                  elPath,
+                  state: []
+                })
+              }
+            });
 
-          expect(renderer.toJSON()).toBe('Missing count');
-        });
+            expect(renderer.toJSON()).toBe('Missing count');
+          }
+        );
       }
     );
   });
@@ -132,45 +146,50 @@ function tests(mockConnect) {
         getFxStateFromLastChange,
         setFixtureState
       }) => {
-        await mount(getElement({ rendererId, fixtures }), async renderer => {
-          await selectFixture({
-            rendererId,
-            fixturePath: 'first',
-            fixtureState: null
-          });
+        await mount(
+          getElement({ rendererId, fixtures, decorators }),
+          async renderer => {
+            await selectFixture({
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: null
+            });
 
-          const fixtureState = await getFxStateFromLastChange();
-          const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
-          await setFixtureState({
-            rendererId,
-            fixturePath: 'first',
-            fixtureState: {
-              components: updateCompFixtureState({
-                fixtureState,
-                decoratorId,
-                elPath,
-                state: createFxValues({ count: 5 })
-              })
-            }
-          });
+            const fixtureState = await getFxStateFromLastChange();
+            const [{ decoratorId, elPath }] = getCompFixtureStates(
+              fixtureState
+            );
+            await setFixtureState({
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: {
+                components: updateCompFixtureState({
+                  fixtureState,
+                  decoratorId,
+                  elPath,
+                  state: createFxValues({ count: 5 })
+                })
+              }
+            });
 
-          expect(renderer.toJSON()).toBe('5 times');
+            expect(renderer.toJSON()).toBe('5 times');
 
-          await setFixtureState({
-            rendererId,
-            fixturePath: 'first',
-            fixtureState: {
-              components: updateCompFixtureState({
-                fixtureState,
-                decoratorId,
-                elPath,
-                state: null
-              })
-            }
-          });
+            await setFixtureState({
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: {
+                components: updateCompFixtureState({
+                  fixtureState,
+                  decoratorId,
+                  elPath,
+                  state: null
+                })
+              }
+            });
 
-          expect(renderer.toJSON()).toBe('0 times');
-        });
+            expect(renderer.toJSON()).toBe('0 times');
+          }
+        );
       }
     );
   });

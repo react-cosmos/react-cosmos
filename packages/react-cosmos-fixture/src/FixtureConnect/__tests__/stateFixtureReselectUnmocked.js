@@ -12,6 +12,7 @@ const rendererId = uuid();
 const fixtures = {
   first: <Counter />
 };
+const decorators = {};
 
 tests(mockPostMessage);
 tests(mockWebSockets);
@@ -26,36 +27,39 @@ function tests(mockConnect) {
   // https://github.com/react-cosmos/react-cosmos/commit/56494b6ea10785cc3db8dda7a7fbcad62c8e1c12
   it('captures initial state after re-selecting fixture', async () => {
     await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
-      await mount(getElement({ rendererId, fixtures }), async () => {
-        await selectFixture({
-          rendererId,
-          fixturePath: 'first',
-          fixtureState: null
-        });
-
-        await selectFixture({
-          rendererId,
-          fixturePath: 'first',
-          fixtureState: null
-        });
-
-        await untilMessage({
-          type: 'fixtureStateChange',
-          payload: {
+      await mount(
+        getElement({ rendererId, fixtures, decorators }),
+        async () => {
+          await selectFixture({
             rendererId,
             fixturePath: 'first',
-            fixtureState: {
-              components: [
-                createCompFxState({
-                  componentName: 'Counter',
-                  props: [],
-                  state: createFxValues({ count: 0 })
-                })
-              ]
+            fixtureState: null
+          });
+
+          await selectFixture({
+            rendererId,
+            fixturePath: 'first',
+            fixtureState: null
+          });
+
+          await untilMessage({
+            type: 'fixtureStateChange',
+            payload: {
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: {
+                components: [
+                  createCompFxState({
+                    componentName: 'Counter',
+                    props: [],
+                    state: createFxValues({ count: 0 })
+                  })
+                ]
+              }
             }
-          }
-        });
-      });
+          });
+        }
+      );
     });
   });
 }
