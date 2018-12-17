@@ -65,7 +65,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
   }
 
   render() {
-    const { fixtures } = this.props;
+    const { fixtures, decorators } = this.props;
     const { fixturePath, fixtureState, renderKey } = this.state;
 
     if (!fixturePath) {
@@ -83,6 +83,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
         // Ensure no state leaks between fixture selections, even though under
         // normal circumstances f(fixture, fixtureState) is deterministic.
         key={renderKey}
+        decorators={decorators}
         fixtureState={fixtureState}
         setFixtureState={this.setFixtureState}
       >

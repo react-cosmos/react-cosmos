@@ -15,6 +15,10 @@ export type Fixtures = {
   [path: string]: Node
 };
 
+export type Decorators = {
+  [path: string]: ComponentType<any>
+};
+
 export type RemoteRendererApi = {
   subscribe: OnRendererRequest => mixed,
   unsubscribe: () => mixed,
@@ -23,7 +27,8 @@ export type RemoteRendererApi = {
 
 export type FixtureConnectProps = {
   rendererId: string,
-  fixtures: Fixtures
+  fixtures: Fixtures,
+  decorators: Decorators
 } & RemoteRendererApi;
 
 export type PostMessageProps = {

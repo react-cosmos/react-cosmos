@@ -23,159 +23,17 @@ tests(mockWebSockets);
 function tests(mockConnect) {
   it('captures props', async () => {
     await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
-      await mount(getElement({ rendererId, fixtures }), async renderer => {
-        await selectFixture({
-          rendererId,
-          fixturePath: 'first',
-          fixtureState: null
-        });
-
-        expect(renderer.toJSON()).toBe('Hello Bianca');
-
-        await untilMessage({
-          type: 'fixtureStateChange',
-          payload: {
-            rendererId,
-            fixturePath: 'first',
-            fixtureState: {
-              components: [
-                createCompFxState({
-                  componentName: 'HelloMessage',
-                  props: createFxValues({ name: 'Bianca' })
-                })
-              ]
-            }
-          }
-        });
-      });
-    });
-  });
-
-  it('overwrites prop', async () => {
-    await mockConnect(
-      async ({
-        getElement,
-        selectFixture,
-        getFxStateFromLastChange,
-        setFixtureState
-      }) => {
-        await mount(getElement({ rendererId, fixtures }), async renderer => {
+      await mount(
+        getElement({ rendererId, fixtures, decorators: {} }),
+        async renderer => {
           await selectFixture({
             rendererId,
             fixturePath: 'first',
             fixtureState: null
-          });
-
-          const fixtureState = await getFxStateFromLastChange();
-          const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
-
-          await setFixtureState({
-            rendererId,
-            fixturePath: 'first',
-            fixtureState: {
-              components: updateCompFixtureState({
-                fixtureState,
-                decoratorId,
-                elPath,
-                props: createFxValues({ name: 'B' })
-              })
-            }
-          });
-
-          expect(renderer.toJSON()).toBe('Hello B');
-        });
-      }
-    );
-  });
-
-  it('removes prop', async () => {
-    await mockConnect(
-      async ({
-        getElement,
-        selectFixture,
-        getFxStateFromLastChange,
-        setFixtureState
-      }) => {
-        await mount(getElement({ rendererId, fixtures }), async renderer => {
-          await selectFixture({
-            rendererId,
-            fixturePath: 'first',
-            fixtureState: null
-          });
-
-          const fixtureState = await getFxStateFromLastChange();
-          const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
-
-          await setFixtureState({
-            rendererId,
-            fixturePath: 'first',
-            fixtureState: {
-              components: updateCompFixtureState({
-                fixtureState,
-                decoratorId,
-                elPath,
-                props: []
-              })
-            }
-          });
-
-          expect(renderer.toJSON()).toBe('Hello Stranger');
-        });
-      }
-    );
-  });
-
-  it('clears props', async () => {
-    await mockConnect(
-      async ({
-        getElement,
-        selectFixture,
-        untilMessage,
-        getFxStateFromLastChange,
-        setFixtureState
-      }) => {
-        await mount(getElement({ rendererId, fixtures }), async renderer => {
-          await selectFixture({
-            rendererId,
-            fixturePath: 'first',
-            fixtureState: null
-          });
-
-          const fixtureState = await getFxStateFromLastChange();
-          const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
-
-          await setFixtureState({
-            rendererId,
-            fixturePath: 'first',
-            fixtureState: {
-              components: updateCompFixtureState({
-                fixtureState,
-                decoratorId,
-                elPath,
-                props: createFxValues({ name: 'B' })
-              })
-            }
-          });
-
-          expect(renderer.toJSON()).toBe('Hello B');
-
-          await setFixtureState({
-            rendererId,
-            fixturePath: 'first',
-            fixtureState: {
-              components: updateCompFixtureState({
-                fixtureState,
-                decoratorId,
-                elPath,
-                props: null
-              })
-            }
           });
 
           expect(renderer.toJSON()).toBe('Hello Bianca');
 
-          // After the props are removed from the fixture state, the original
-          // props are added back through a fixtureStateChange message
           await untilMessage({
             type: 'fixtureStateChange',
             payload: {
@@ -191,7 +49,167 @@ function tests(mockConnect) {
               }
             }
           });
-        });
+        }
+      );
+    });
+  });
+
+  it('overwrites prop', async () => {
+    await mockConnect(
+      async ({
+        getElement,
+        selectFixture,
+        getFxStateFromLastChange,
+        setFixtureState
+      }) => {
+        await mount(
+          getElement({ rendererId, fixtures, decorators: {} }),
+          async renderer => {
+            await selectFixture({
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: null
+            });
+
+            const fixtureState = await getFxStateFromLastChange();
+            const [{ decoratorId, elPath }] = getCompFixtureStates(
+              fixtureState
+            );
+
+            await setFixtureState({
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: {
+                components: updateCompFixtureState({
+                  fixtureState,
+                  decoratorId,
+                  elPath,
+                  props: createFxValues({ name: 'B' })
+                })
+              }
+            });
+
+            expect(renderer.toJSON()).toBe('Hello B');
+          }
+        );
+      }
+    );
+  });
+
+  it('removes prop', async () => {
+    await mockConnect(
+      async ({
+        getElement,
+        selectFixture,
+        getFxStateFromLastChange,
+        setFixtureState
+      }) => {
+        await mount(
+          getElement({ rendererId, fixtures, decorators: {} }),
+          async renderer => {
+            await selectFixture({
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: null
+            });
+
+            const fixtureState = await getFxStateFromLastChange();
+            const [{ decoratorId, elPath }] = getCompFixtureStates(
+              fixtureState
+            );
+
+            await setFixtureState({
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: {
+                components: updateCompFixtureState({
+                  fixtureState,
+                  decoratorId,
+                  elPath,
+                  props: []
+                })
+              }
+            });
+
+            expect(renderer.toJSON()).toBe('Hello Stranger');
+          }
+        );
+      }
+    );
+  });
+
+  it('clears props', async () => {
+    await mockConnect(
+      async ({
+        getElement,
+        selectFixture,
+        untilMessage,
+        getFxStateFromLastChange,
+        setFixtureState
+      }) => {
+        await mount(
+          getElement({ rendererId, fixtures, decorators: {} }),
+          async renderer => {
+            await selectFixture({
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: null
+            });
+
+            const fixtureState = await getFxStateFromLastChange();
+            const [{ decoratorId, elPath }] = getCompFixtureStates(
+              fixtureState
+            );
+
+            await setFixtureState({
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: {
+                components: updateCompFixtureState({
+                  fixtureState,
+                  decoratorId,
+                  elPath,
+                  props: createFxValues({ name: 'B' })
+                })
+              }
+            });
+
+            expect(renderer.toJSON()).toBe('Hello B');
+
+            await setFixtureState({
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: {
+                components: updateCompFixtureState({
+                  fixtureState,
+                  decoratorId,
+                  elPath,
+                  props: null
+                })
+              }
+            });
+
+            expect(renderer.toJSON()).toBe('Hello Bianca');
+
+            // After the props are removed from the fixture state, the original
+            // props are added back through a fixtureStateChange message
+            await untilMessage({
+              type: 'fixtureStateChange',
+              payload: {
+                rendererId,
+                fixturePath: 'first',
+                fixtureState: {
+                  components: [
+                    createCompFxState({
+                      componentName: 'HelloMessage',
+                      props: createFxValues({ name: 'Bianca' })
+                    })
+                  ]
+                }
+              }
+            });
+          }
+        );
       }
     );
   });
@@ -215,7 +233,8 @@ function tests(mockConnect) {
             rendererId,
             fixtures: getFixtures(elRef => {
               if (elRef && !ref1) ref1 = elRef;
-            })
+            }),
+            decorators: {}
           }),
           async renderer => {
             await selectFixture({
@@ -247,7 +266,8 @@ function tests(mockConnect) {
                 rendererId,
                 fixtures: getFixtures(elRef => {
                   if (elRef) ref2 = elRef;
-                })
+                }),
+                decorators: {}
               })
             );
 
@@ -278,7 +298,8 @@ function tests(mockConnect) {
             rendererId,
             fixtures: getFixtures(elRef => {
               if (elRef && !ref1) ref1 = elRef;
-            })
+            }),
+            decorators: {}
           }),
           async renderer => {
             await selectFixture({
@@ -311,7 +332,8 @@ function tests(mockConnect) {
                 rendererId,
                 fixtures: getFixtures(elRef => {
                   if (elRef) ref2 = elRef;
-                })
+                }),
+                decorators: {}
               })
             );
 
@@ -332,39 +354,78 @@ function tests(mockConnect) {
         selectFixture,
         setFixtureState
       }) => {
-        await mount(getElement({ rendererId, fixtures }), async renderer => {
+        await mount(
+          getElement({ rendererId, fixtures, decorators: {} }),
+          async renderer => {
+            await selectFixture({
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: null
+            });
+
+            const fixtureState = await getFxStateFromLastChange();
+            const [{ decoratorId, elPath }] = getCompFixtureStates(
+              fixtureState
+            );
+
+            await setFixtureState({
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: {
+                components: updateCompFixtureState({
+                  fixtureState,
+                  decoratorId,
+                  elPath,
+                  props: createFxValues({ name: 'B' })
+                })
+              }
+            });
+
+            expect(renderer.toJSON()).toBe('Hello B');
+
+            renderer.update(
+              getElement({
+                rendererId,
+                fixtures: {
+                  first: <HelloMessage name="Petec" />
+                },
+                decorators: {}
+              })
+            );
+
+            await untilMessage({
+              type: 'fixtureStateChange',
+              payload: {
+                rendererId,
+                fixturePath: 'first',
+                fixtureState: {
+                  components: [
+                    createCompFxState({
+                      componentName: 'HelloMessage',
+                      props: createFxValues({ name: 'Petec' })
+                    })
+                  ]
+                }
+              }
+            });
+
+            expect(renderer.toJSON()).toBe('Hello Petec');
+          }
+        );
+      }
+    );
+  });
+
+  it('clears fixture state for removed fixture element', async () => {
+    await mockConnect(async ({ getElement, untilMessage, selectFixture }) => {
+      await mount(
+        getElement({ rendererId, fixtures, decorators: {} }),
+        async renderer => {
           await selectFixture({
             rendererId,
             fixturePath: 'first',
             fixtureState: null
           });
-
-          const fixtureState = await getFxStateFromLastChange();
-          const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
-
-          await setFixtureState({
-            rendererId,
-            fixturePath: 'first',
-            fixtureState: {
-              components: updateCompFixtureState({
-                fixtureState,
-                decoratorId,
-                elPath,
-                props: createFxValues({ name: 'B' })
-              })
-            }
-          });
-
-          expect(renderer.toJSON()).toBe('Hello B');
-
-          renderer.update(
-            getElement({
-              rendererId,
-              fixtures: {
-                first: <HelloMessage name="Petec" />
-              }
-            })
-          );
 
           await untilMessage({
             type: 'fixtureStateChange',
@@ -375,68 +436,39 @@ function tests(mockConnect) {
                 components: [
                   createCompFxState({
                     componentName: 'HelloMessage',
-                    props: createFxValues({ name: 'Petec' })
+                    props: createFxValues({ name: 'Bianca' })
                   })
                 ]
               }
             }
           });
 
-          expect(renderer.toJSON()).toBe('Hello Petec');
-        });
-      }
-    );
-  });
+          renderer.update(
+            getElement({
+              rendererId,
+              fixtures: {
+                // HelloMessage element from fixture is gone, and so should the
+                // fixture state related to it.
+                first: 'Hello all'
+              },
+              decorators: {}
+            })
+          );
 
-  it('clears fixture state for removed fixture element', async () => {
-    await mockConnect(async ({ getElement, untilMessage, selectFixture }) => {
-      await mount(getElement({ rendererId, fixtures }), async renderer => {
-        await selectFixture({
-          rendererId,
-          fixturePath: 'first',
-          fixtureState: null
-        });
+          expect(renderer.toJSON()).toBe('Hello all');
 
-        await untilMessage({
-          type: 'fixtureStateChange',
-          payload: {
-            rendererId,
-            fixturePath: 'first',
-            fixtureState: {
-              components: [
-                createCompFxState({
-                  componentName: 'HelloMessage',
-                  props: createFxValues({ name: 'Bianca' })
-                })
-              ]
+          await untilMessage({
+            type: 'fixtureStateChange',
+            payload: {
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: {
+                components: []
+              }
             }
-          }
-        });
-
-        renderer.update(
-          getElement({
-            rendererId,
-            fixtures: {
-              // HelloMessage element from fixture is gone, and so should the
-              // fixture state related to it.
-              first: 'Hello all'
-            }
-          })
-        );
-
-        expect(renderer.toJSON()).toBe('Hello all');
-
-        await untilMessage({
-          type: 'fixtureStateChange',
-          payload: {
-            rendererId,
-            fixturePath: 'first',
-            fixtureState: {
-              components: []
-            }
-          }
-        });
-      });
+          });
+        }
+      );
     });
   });
 }

@@ -37,31 +37,34 @@ tests(mockWebSockets);
 function tests(mockConnect) {
   it('captures props from render callback', async () => {
     await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
-      await mount(getElement({ rendererId, fixtures }), async renderer => {
-        await selectFixture({
-          rendererId,
-          fixturePath: 'first',
-          fixtureState: null
-        });
-
-        expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B']);
-
-        await untilMessage({
-          type: 'fixtureStateChange',
-          payload: {
+      await mount(
+        getElement({ rendererId, fixtures, decorators: {} }),
+        async renderer => {
+          await selectFixture({
             rendererId,
             fixturePath: 'first',
-            fixtureState: {
-              components: [
-                createCompFxState({
-                  decoratorId: 'mockDecoratorId',
-                  props: createFxValues({ name: 'B' })
-                })
-              ]
+            fixtureState: null
+          });
+
+          expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B']);
+
+          await untilMessage({
+            type: 'fixtureStateChange',
+            payload: {
+              rendererId,
+              fixturePath: 'first',
+              fixtureState: {
+                components: [
+                  createCompFxState({
+                    decoratorId: 'mockDecoratorId',
+                    props: createFxValues({ name: 'B' })
+                  })
+                ]
+              }
             }
-          }
-        });
-      });
+          });
+        }
+      );
     });
   });
 }

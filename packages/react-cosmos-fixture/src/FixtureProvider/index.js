@@ -5,9 +5,10 @@ import { FixtureCapture } from '../FixtureCapture';
 import { FixtureContext } from '../FixtureContext';
 
 import type { Node } from 'react';
-import type { FixtureContextValue } from '../index.js.flow';
+import type { Decorators, FixtureContextValue } from '../index.js.flow';
 
 type Props = {
+  decorators: Decorators,
   children: Node
 } & FixtureContextValue;
 
@@ -37,12 +38,24 @@ export class FixtureProvider extends Component<Props, FixtureContextValue> {
   };
 
   render() {
-    const { children } = this.props;
+    const { decorators, children } = this.props;
+    const fixtureElement = (
+      <FixtureCapture decoratorId="root">{children}</FixtureCapture>
+    );
 
     return (
       <FixtureContext.Provider value={this.state}>
-        <FixtureCapture decoratorId="root">{children}</FixtureCapture>
+        {wrapElementInDecorators(fixtureElement, decorators)}
       </FixtureContext.Provider>
     );
   }
+}
+
+function wrapElementInDecorators(element, decorators) {
+  // IDEA: Enfore order based on decorator paths
+  return Object.keys(decorators).reduce(
+    (prevElement, decoratorPath) =>
+      React.createElement(decorators[decoratorPath], {}, prevElement),
+    element
+  );
 }
