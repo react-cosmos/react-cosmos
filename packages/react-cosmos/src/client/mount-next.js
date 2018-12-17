@@ -5,7 +5,7 @@ import { render } from 'react-dom';
 import { uuid } from 'react-cosmos-shared2/util';
 import { getDomContainer } from 'react-cosmos-shared2/dom';
 import { PostMessage, WebSockets, FixtureConnect } from 'react-cosmos-fixture';
-import { fixtures } from './user-modules-next';
+import { fixtures, decorators } from './user-modules-next';
 
 const rendererId = getRendererId();
 
@@ -26,6 +26,7 @@ function renderFixtureConnect({ subscribe, unsubscribe, postMessage }) {
     <FixtureConnect
       rendererId={rendererId}
       fixtures={fixtures}
+      decorators={decorators}
       subscribe={subscribe}
       unsubscribe={unsubscribe}
       postMessage={postMessage}
