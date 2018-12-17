@@ -7,6 +7,7 @@ import { mount } from '../testHelpers/mount';
 
 const rendererId = uuid();
 const fixtures = { first: null, second: null };
+const decorators = {};
 
 tests(mockPostMessage);
 tests(mockWebSockets);
@@ -15,7 +16,7 @@ function tests(mockConnect) {
   it('renders blank state message', async () => {
     await mockConnect(async ({ getElement }) => {
       await mount(
-        getElement({ rendererId, fixtures, decorators: {} }),
+        getElement({ rendererId, fixtures, decorators }),
         async renderer => {
           expect(renderer.toJSON()).toEqual('No fixture loaded.');
         }
@@ -26,7 +27,7 @@ function tests(mockConnect) {
   it('posts fixture list on mount', async () => {
     await mockConnect(async ({ getElement, untilMessage }) => {
       await mount(
-        getElement({ rendererId, fixtures, decorators: {} }),
+        getElement({ rendererId, fixtures, decorators }),
         async () => {
           await untilMessage({
             type: 'fixtureList',
@@ -43,7 +44,7 @@ function tests(mockConnect) {
   it('posts fixture list again on request', async () => {
     await mockConnect(async ({ getElement, untilMessage, postMessage }) => {
       await mount(
-        getElement({ rendererId, fixtures, decorators: {} }),
+        getElement({ rendererId, fixtures, decorators }),
         async () => {
           await untilMessage({
             type: 'fixtureList',
@@ -72,7 +73,7 @@ function tests(mockConnect) {
   it('posts fixture list again on "fixtures" prop change', async () => {
     await mockConnect(async ({ getElement, untilMessage }) => {
       await mount(
-        getElement({ rendererId, fixtures, decorators: {} }),
+        getElement({ rendererId, fixtures, decorators }),
         async renderer => {
           await untilMessage({
             type: 'fixtureList',
@@ -89,7 +90,7 @@ function tests(mockConnect) {
                 ...fixtures,
                 third: null
               },
-              decorators: {}
+              decorators
             })
           );
 

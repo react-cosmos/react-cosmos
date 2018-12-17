@@ -19,6 +19,7 @@ const fixtures = {
     </>
   )
 };
+const decorators = {};
 
 tests(mockPostMessage);
 tests(mockWebSockets);
@@ -27,7 +28,7 @@ function tests(mockConnect) {
   it('transitions Fragment from single to multi children', async () => {
     await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
       await mount(
-        getElement({ rendererId, fixtures, decorators: {} }),
+        getElement({ rendererId, fixtures, decorators }),
         async renderer => {
           await selectFixture({
             rendererId,
@@ -58,7 +59,7 @@ function tests(mockConnect) {
                   </>
                 )
               },
-              decorators: {}
+              decorators
             })
           );
 

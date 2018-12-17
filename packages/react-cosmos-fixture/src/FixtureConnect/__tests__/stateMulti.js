@@ -26,6 +26,7 @@ const fixtures = {
     </>
   )
 };
+const decorators = {};
 
 tests(mockPostMessage);
 tests(mockWebSockets);
@@ -34,7 +35,7 @@ function tests(mockConnect) {
   it('captures mocked state from multiple instances', async () => {
     await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
       await mount(
-        getElement({ rendererId, fixtures, decorators: {} }),
+        getElement({ rendererId, fixtures, decorators }),
         async () => {
           await selectFixture({
             rendererId,
@@ -75,7 +76,7 @@ function tests(mockConnect) {
         setFixtureState
       }) => {
         await mount(
-          getElement({ rendererId, fixtures, decorators: {} }),
+          getElement({ rendererId, fixtures, decorators }),
           async renderer => {
             await selectFixture({
               rendererId,

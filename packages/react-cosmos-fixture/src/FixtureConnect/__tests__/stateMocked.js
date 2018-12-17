@@ -24,6 +24,7 @@ const fixtures = {
     </StateMock>
   )
 };
+const decorators = {};
 
 tests(mockPostMessage);
 tests(mockWebSockets);
@@ -32,7 +33,7 @@ function tests(mockConnect) {
   it('captures mocked state', async () => {
     await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
       await mount(
-        getElement({ rendererId, fixtures, decorators: {} }),
+        getElement({ rendererId, fixtures, decorators }),
         async renderer => {
           await selectFixture({
             rendererId,
@@ -71,7 +72,7 @@ function tests(mockConnect) {
         setFixtureState
       }) => {
         await mount(
-          getElement({ rendererId, fixtures, decorators: {} }),
+          getElement({ rendererId, fixtures, decorators }),
           async renderer => {
             await selectFixture({
               rendererId,
@@ -129,7 +130,7 @@ function tests(mockConnect) {
         setFixtureState
       }) => {
         await mount(
-          getElement({ rendererId, fixtures, decorators: {} }),
+          getElement({ rendererId, fixtures, decorators }),
           async renderer => {
             await selectFixture({
               rendererId,
@@ -171,7 +172,7 @@ function tests(mockConnect) {
         setFixtureState
       }) => {
         await mount(
-          getElement({ rendererId, fixtures, decorators: {} }),
+          getElement({ rendererId, fixtures, decorators }),
           async renderer => {
             await selectFixture({
               rendererId,
@@ -257,7 +258,7 @@ function tests(mockConnect) {
     await mockConnect(
       async ({ getElement, selectFixture, getFxStateFromLastChange }) => {
         await mount(
-          getElement({ rendererId, fixtures, decorators: {} }),
+          getElement({ rendererId, fixtures, decorators }),
           async () => {
             await selectFixture({
               rendererId,
@@ -308,7 +309,7 @@ function tests(mockConnect) {
         setFixtureState
       }) => {
         await mount(
-          getElement({ rendererId, fixtures, decorators: {} }),
+          getElement({ rendererId, fixtures, decorators }),
           async renderer => {
             await selectFixture({
               rendererId,
@@ -345,7 +346,7 @@ function tests(mockConnect) {
                     </StateMock>
                   )
                 },
-                decorators: {}
+                decorators
               })
             );
 
@@ -366,7 +367,7 @@ function tests(mockConnect) {
         setFixtureState
       }) => {
         await mount(
-          getElement({ rendererId, fixtures, decorators: {} }),
+          getElement({ rendererId, fixtures, decorators }),
           async renderer => {
             await selectFixture({
               rendererId,
@@ -404,7 +405,7 @@ function tests(mockConnect) {
                     </StateMock>
                   )
                 },
-                decorators: {}
+                decorators
               })
             );
 
@@ -434,7 +435,7 @@ function tests(mockConnect) {
   it('clears fixture state for removed fixture element', async () => {
     await mockConnect(async ({ getElement, untilMessage, selectFixture }) => {
       await mount(
-        getElement({ rendererId, fixtures, decorators: {} }),
+        getElement({ rendererId, fixtures, decorators }),
         async renderer => {
           await selectFixture({
             rendererId,
@@ -466,7 +467,7 @@ function tests(mockConnect) {
                 // fixture state related to it.
                 first: 'No counts for you.'
               },
-              decorators: {}
+              decorators
             })
           );
 

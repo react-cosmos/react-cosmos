@@ -27,6 +27,7 @@ const fixtures = {
     </>
   )
 };
+const decorators = {};
 
 tests(mockPostMessage);
 tests(mockWebSockets);
@@ -41,7 +42,7 @@ function tests(mockConnect) {
         setFixtureState
       }) => {
         await mount(
-          getElement({ rendererId, fixtures, decorators: {} }),
+          getElement({ rendererId, fixtures, decorators }),
           async renderer => {
             await selectFixture({
               rendererId,
@@ -100,7 +101,7 @@ function tests(mockConnect) {
         setFixtureState
       }) => {
         await mount(
-          getElement({ rendererId, fixtures, decorators: {} }),
+          getElement({ rendererId, fixtures, decorators }),
           async renderer => {
             await selectFixture({
               rendererId,
@@ -158,7 +159,7 @@ function tests(mockConnect) {
         setFixtureState
       }) => {
         await mount(
-          getElement({ rendererId, fixtures, decorators: {} }),
+          getElement({ rendererId, fixtures, decorators }),
           async renderer => {
             await selectFixture({
               rendererId,
@@ -232,7 +233,7 @@ function tests(mockConnect) {
         setFixtureState
       }) => {
         await mount(
-          getElement({ rendererId, fixtures, decorators: {} }),
+          getElement({ rendererId, fixtures, decorators }),
           async renderer => {
             await selectFixture({
               rendererId,
@@ -296,7 +297,7 @@ function tests(mockConnect) {
   it('updates props on fixture change', async () => {
     await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
       await mount(
-        getElement({ rendererId, fixtures, decorators: {} }),
+        getElement({ rendererId, fixtures, decorators }),
         async renderer => {
           await selectFixture({
             rendererId,
@@ -310,7 +311,7 @@ function tests(mockConnect) {
               fixtures: {
                 first: <SuffixCounter suffix="timez" />
               },
-              decorators: {}
+              decorators
             })
           );
 

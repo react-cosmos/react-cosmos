@@ -16,6 +16,7 @@ const rendererId = uuid();
 const fixtures = {
   first: <HelloMessage name="Bianca" />
 };
+const decorators = {};
 
 tests(mockPostMessage);
 tests(mockWebSockets);
@@ -24,7 +25,7 @@ function tests(mockConnect) {
   it('captures props', async () => {
     await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
       await mount(
-        getElement({ rendererId, fixtures, decorators: {} }),
+        getElement({ rendererId, fixtures, decorators }),
         async renderer => {
           await selectFixture({
             rendererId,
@@ -63,7 +64,7 @@ function tests(mockConnect) {
         setFixtureState
       }) => {
         await mount(
-          getElement({ rendererId, fixtures, decorators: {} }),
+          getElement({ rendererId, fixtures, decorators }),
           async renderer => {
             await selectFixture({
               rendererId,
@@ -105,7 +106,7 @@ function tests(mockConnect) {
         setFixtureState
       }) => {
         await mount(
-          getElement({ rendererId, fixtures, decorators: {} }),
+          getElement({ rendererId, fixtures, decorators }),
           async renderer => {
             await selectFixture({
               rendererId,
@@ -148,7 +149,7 @@ function tests(mockConnect) {
         setFixtureState
       }) => {
         await mount(
-          getElement({ rendererId, fixtures, decorators: {} }),
+          getElement({ rendererId, fixtures, decorators }),
           async renderer => {
             await selectFixture({
               rendererId,
@@ -234,7 +235,7 @@ function tests(mockConnect) {
             fixtures: getFixtures(elRef => {
               if (elRef && !ref1) ref1 = elRef;
             }),
-            decorators: {}
+            decorators
           }),
           async renderer => {
             await selectFixture({
@@ -267,7 +268,7 @@ function tests(mockConnect) {
                 fixtures: getFixtures(elRef => {
                   if (elRef) ref2 = elRef;
                 }),
-                decorators: {}
+                decorators
               })
             );
 
@@ -299,7 +300,7 @@ function tests(mockConnect) {
             fixtures: getFixtures(elRef => {
               if (elRef && !ref1) ref1 = elRef;
             }),
-            decorators: {}
+            decorators
           }),
           async renderer => {
             await selectFixture({
@@ -333,7 +334,7 @@ function tests(mockConnect) {
                 fixtures: getFixtures(elRef => {
                   if (elRef) ref2 = elRef;
                 }),
-                decorators: {}
+                decorators
               })
             );
 
@@ -355,7 +356,7 @@ function tests(mockConnect) {
         setFixtureState
       }) => {
         await mount(
-          getElement({ rendererId, fixtures, decorators: {} }),
+          getElement({ rendererId, fixtures, decorators }),
           async renderer => {
             await selectFixture({
               rendererId,
@@ -389,7 +390,7 @@ function tests(mockConnect) {
                 fixtures: {
                   first: <HelloMessage name="Petec" />
                 },
-                decorators: {}
+                decorators
               })
             );
 
@@ -419,7 +420,7 @@ function tests(mockConnect) {
   it('clears fixture state for removed fixture element', async () => {
     await mockConnect(async ({ getElement, untilMessage, selectFixture }) => {
       await mount(
-        getElement({ rendererId, fixtures, decorators: {} }),
+        getElement({ rendererId, fixtures, decorators }),
         async renderer => {
           await selectFixture({
             rendererId,
@@ -451,7 +452,7 @@ function tests(mockConnect) {
                 // fixture state related to it.
                 first: 'Hello all'
               },
-              decorators: {}
+              decorators
             })
           );
 

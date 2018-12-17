@@ -12,6 +12,7 @@ const rendererId = uuid();
 const fixtures = {
   first: <Counter />
 };
+const decorators = {};
 
 tests(mockPostMessage);
 tests(mockWebSockets);
@@ -27,7 +28,7 @@ function tests(mockConnect) {
   it('captures initial state after re-selecting fixture', async () => {
     await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
       await mount(
-        getElement({ rendererId, fixtures, decorators: {} }),
+        getElement({ rendererId, fixtures, decorators }),
         async () => {
           await selectFixture({
             rendererId,
