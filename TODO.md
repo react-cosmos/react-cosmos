@@ -22,6 +22,8 @@ We need a decent parity with the existing Cosmos UI to test JSX fixtures. This i
     - [x] Persist state
   - [x] Responsive mode
   - [ ] Style
+    - [ ] Style minimalistic renderer blank state
+  - [x] JSX decorators
 
 **Not** included in the first beta release: The Fixture Editor. This is because it'll be replaced by something _much_ more powerful (a new Control Panel). But this section will have arrive later, after the core of Cosmos Next has been thoroughly tested.
 
@@ -29,7 +31,7 @@ We need a decent parity with the existing Cosmos UI to test JSX fixtures. This i
 
 - [ ] "How to use" document for beta testers
 - [ ] Release 4.7
-- [ ] Step 2B: JSX decorators
+  - [ ] Blog post
 
 ## Next Steps
 
