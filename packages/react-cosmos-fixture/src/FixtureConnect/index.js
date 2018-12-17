@@ -83,7 +83,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
         // Ensure no state leaks between fixture selections, even though under
         // normal circumstances f(fixture, fixtureState) is deterministic.
         key={renderKey}
-        decorators={decorators}
+        decorators={getDecoratorsForFixturePath(decorators, fixturePath)}
         fixtureState={fixtureState}
         setFixtureState={this.setFixtureState}
       >
@@ -180,4 +180,15 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
       }
     });
   };
+}
+
+function getDecoratorsForFixturePath(decorators, fixturePath) {
+  return Object.keys(decorators)
+    .filter(decPath => fixturePath.indexOf(`${getParentPath(decPath)}/`) === 0)
+    .reduce((acc, decPath) => ({ ...acc, [decPath]: decorators[decPath] }), {});
+}
+
+function getParentPath(nestedPath) {
+  // Remove everything right of the right-most forward slash
+  return nestedPath.replace(/^(.+)\/.+$/, '$1');
 }

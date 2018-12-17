@@ -7,13 +7,12 @@ import { mount } from '../testHelpers/mount';
 
 const rendererId = uuid();
 const fixtures = {
-  first: 'First',
-  second: 'Second'
+  'src/foo/__fixtures__/default.js': 'Hello!'
 };
 const decorators = {
-  'foo-path': ({ children }) => ['Decorated by foo', children],
-  'foo-path/bar-path': ({ children }) => ['Decorated by bar', children],
-  'foo-path/baz-path': ({ children }) => ['Decorated by baz', children]
+  'src/decorator.js': ({ children }) => ['Decorated at src', children],
+  'src/foo/decorator.js': ({ children }) => ['Decorated at src/foo', children],
+  'src/bar/decorator.js': ({ children }) => ['Decorated at src/bar', children]
 };
 
 tests(mockPostMessage);
@@ -25,17 +24,19 @@ function tests(mockConnect) {
       await mount(
         getElement({ rendererId, fixtures, decorators }),
         async renderer => {
+          const [fixturePath] = Object.keys(fixtures);
           await selectFixture({
             rendererId,
-            fixturePath: 'first',
+            fixturePath,
             fixtureState: null
           });
 
+          // "src/bar/decorator" should be omitted because it's not a placed in
+          // a parent directory of the selected fixture
           expect(renderer.toJSON()).toEqual([
-            'Decorated by foo',
-            'Decorated by bar',
-            'Decorated by baz',
-            'First'
+            'Decorated at src',
+            'Decorated at src/foo',
+            'Hello!'
           ]);
         }
       );
