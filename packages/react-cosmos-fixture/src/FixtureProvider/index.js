@@ -52,10 +52,20 @@ export class FixtureProvider extends Component<Props, FixtureContextValue> {
 }
 
 function wrapElementInDecorators(element, decorators) {
-  // IDEA: Enfore order based on decorator paths
-  return Object.keys(decorators).reduce(
+  return sortPathsDescByDepth(Object.keys(decorators)).reduce(
     (prevElement, decoratorPath) =>
       React.createElement(decorators[decoratorPath], {}, prevElement),
     element
   );
+}
+
+function sortPathsDescByDepth(paths) {
+  return [...paths].sort(
+    (a, b) =>
+      getPathNestingLevel(b) - getPathNestingLevel(a) || b.localeCompare(a)
+  );
+}
+
+function getPathNestingLevel(path) {
+  return path.split('/').length;
 }
