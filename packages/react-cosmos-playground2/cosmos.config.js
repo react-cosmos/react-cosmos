@@ -1,4 +1,5 @@
 module.exports = {
-  globalImports: ['src/load-plugins'],
+  next: true,
+  globalImports: ['src/register-plugins'],
   port: 8091
 };
