@@ -109,7 +109,9 @@ export default function enhanceWebpackConfig({
 }
 
 function getEntry({ next, globalImports, hot }, shouldExport) {
-  let entry = [...globalImports];
+  // The React devtools hook needs to be imported before any other module which
+  // might import React
+  let entry = [resolveClientPath('react-devtools-hook'), ...globalImports];
 
   if (hot && !shouldExport) {
     entry = [
@@ -120,15 +122,14 @@ function getEntry({ next, globalImports, hot }, shouldExport) {
     ];
   }
 
-  // Load loader entry last
   return [
     ...entry,
-    require.resolve(
-      next
-        ? '../../../client/loader-entry-next'
-        : '../../../client/loader-entry'
-    )
+    resolveClientPath(next ? 'loader-entry-next' : 'loader-entry')
   ];
+}
+
+function resolveClientPath(p) {
+  return require.resolve(`../../../client/${p}`);
 }
 
 function getOutput({ outputPath, publicUrl }, shouldExport) {
