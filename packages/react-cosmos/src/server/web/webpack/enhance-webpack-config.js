@@ -111,7 +111,13 @@ export default function enhanceWebpackConfig({
 function getEntry({ next, globalImports, hot }, shouldExport) {
   // The React devtools hook needs to be imported before any other module which
   // might import React
-  let entry = [resolveClientPath('react-devtools-hook'), ...globalImports];
+  let entry = [resolveClientPath('react-devtools-hook')];
+
+  // Global imports are injected in the user modules file in Cosmos Next, to
+  // make them hot reload-able
+  if (!next) {
+    entry = [...entry, ...globalImports];
+  }
 
   if (hot && !shouldExport) {
     entry = [

@@ -12,7 +12,7 @@ module.exports = async function embedModules(source: string) {
   const callback = this.async();
 
   const cosmosConfig: Config = getCosmosConfig();
-  const { rootPath: rootDir, watchDirs } = cosmosConfig;
+  const { rootPath: rootDir, watchDirs, globalImports } = cosmosConfig;
 
   // This ensures this loader is invalidated whenever a new file is added to or
   // removed from user's project, which in turn triggers react-cosmos-voyager2
@@ -30,6 +30,10 @@ module.exports = async function embedModules(source: string) {
   });
 
   const res = source
+    .replace(
+      `/* __INJECT_GLOBAL_IMPORTS__ */`,
+      globalImports.map(importPath => `require('${importPath}');`).join(`\n`)
+    )
     .replace(
       '= __COSMOS_FIXTURES',
       `= ${genModuleMapStr({ paths: fixturePaths, rootDir })}`
