@@ -120,21 +120,22 @@ function handleReceiveResponse(context, msg: RendererResponse) {
 function handleFixtureListResponse(context, { payload }: FixtureListResponse) {
   const { rendererId, fixtures } = payload;
 
-  const primaryRendererState = getPrimaryRendererState(context.getState());
+  const state = context.getState();
+  const isNewRenderer = !state.renderers[rendererId];
+  const primaryRendererState = getPrimaryRendererState(state);
   const fixtureState = primaryRendererState
     ? primaryRendererState.fixtureState
     : null;
 
   const updater = ({ primaryRendererId, renderers, ...otherState }) => {
-    const rendererItemState = renderers[rendererId] || DEFAULT_RENDERER_STATE;
-
     return {
       ...otherState,
+      // The first announced renderer becomes the primary one
       primaryRendererId: primaryRendererId || rendererId,
       renderers: {
         ...renderers,
         [rendererId]: {
-          ...rendererItemState,
+          ...(renderers[rendererId] || DEFAULT_RENDERER_STATE),
           fixtures,
           fixtureState
         }
@@ -145,7 +146,10 @@ function handleFixtureListResponse(context, { payload }: FixtureListResponse) {
   context.setState(updater, () => {
     const { fixturePath } = getUrlParams(context);
 
-    if (fixturePath) {
+    // Tell the renderer to select the fixture path from the URL when a new
+    // renderer announces itself (via the fixtureList response). This is needed
+    // when opening the UI on a URL that contains a selected fixture path.
+    if (isNewRenderer && fixturePath) {
       postSelectFixtureRequest(context, rendererId, fixturePath, fixtureState);
     }
   });
