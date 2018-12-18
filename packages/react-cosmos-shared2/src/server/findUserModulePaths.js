@@ -30,6 +30,8 @@ export async function findUserModulePaths({
   );
   const decoratorPaths = getMatchingPaths(paths, DECORATOR_MATCH);
 
+  // IDEA: Omit fixture paths that are also decorator paths. Relevant only if
+  // it becomes useful to put decorator files inside fixture dirs.
   return { fixturePaths, decoratorPaths };
 }
 
