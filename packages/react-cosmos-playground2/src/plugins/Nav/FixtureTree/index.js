@@ -25,8 +25,14 @@ export class FixtureTree extends Component<Props, State> {
     treeExpansion: {}
   };
 
+  unmounted = false;
+
   componentDidMount() {
     this.restoreTreeExpansion();
+  }
+
+  componentWillUnmount() {
+    this.unmounted = true;
   }
 
   render() {
@@ -60,7 +66,9 @@ export class FixtureTree extends Component<Props, State> {
     const { storage } = this.props;
     const treeExpansion = (await storage.getItem(this.getStorageKey())) || {};
 
-    this.setState({ treeExpansion });
+    if (!this.unmounted) {
+      this.setState({ treeExpansion });
+    }
   }
 
   persistTreeExpansion() {
