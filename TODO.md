@@ -39,8 +39,10 @@ We need a decent parity with the existing Cosmos UI to test JSX fixtures. This i
 - [ ] Port onboarding screens to new UI
 - [ ] More Control Panel features
   - [ ] General purpose UI controls mapped to render props
+  - [ ] Option to reset or transition props (it currently does former)
 - [ ] UI-generated fixture variations
 - [ ] Refine and document UI plugin API
+  - [ ] Avoid superfluous React updates on plugin state change
 - [ ] Redesign Cosmos docs
 
 # Roadmap: Summer of Cosmos
