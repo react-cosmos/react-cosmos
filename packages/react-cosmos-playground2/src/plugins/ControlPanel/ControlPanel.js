@@ -118,8 +118,11 @@ export class ControlPanel extends Component<Props> {
 const Container = styled.div`
   flex-shrink: 0;
   width: 256px;
+  background: var(--grey1);
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
 `;
 
 function getFullUrl(relativeUrl) {
