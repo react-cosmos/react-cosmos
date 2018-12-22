@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import delay from 'delay';
 import { render, fireEvent, waitForElement } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
 import {
@@ -28,6 +29,15 @@ it('renders blank state', async () => {
   registerTestPlugins();
   const { getByText } = loadTestPlugins();
   await waitForElement(() => getByText(/no fixture selected/i));
+});
+
+it('does not render in fullscreen mode', async () => {
+  registerTestPlugins({ urlParams: { fixturePath: 'foo', fullScreen: true } });
+  const { queryByText } = loadTestPlugins();
+
+  // Make sure the nav element doesn't appear after in next event loops
+  await delay(100);
+  expect(queryByText(/no fixture selected/i)).toBeNull();
 });
 
 it('renders close button', async () => {
