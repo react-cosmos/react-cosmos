@@ -21,7 +21,7 @@ We need a decent parity with the existing Cosmos UI to test JSX fixtures. This i
   - [x] Collapsable fixture tree view
     - [x] Persist state
   - [x] Responsive mode
-  - [ ] Style
+  - [x] Style
     - [ ] Style minimalistic renderer blank state
   - [x] JSX decorators
 
