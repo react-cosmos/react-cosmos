@@ -38,7 +38,7 @@ function registerTestPlugins() {
 function loadTestPlugins() {
   loadPlugins();
 
-  return render(<Slot name="header-buttons" />);
+  return render(<Slot name="fixtureActions" />);
 }
 
 it('sets enabled state', async () => {

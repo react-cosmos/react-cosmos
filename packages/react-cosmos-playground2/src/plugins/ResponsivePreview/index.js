@@ -1,7 +1,7 @@
 // @flow
 
 import { registerPlugin } from 'react-plugin';
-import { createHeaderButton } from '../Nav/headerButton';
+import { createFixtureAction } from '../FixtureHeader/createFixtureAction';
 import { getPrimaryRendererState } from '../Renderer/selectors';
 import { ResponsivePreview } from './ResponsivePreview';
 import { ToggleButton } from './ToggleButton';
@@ -39,8 +39,8 @@ export function register() {
   });
 
   plug({
-    slotName: 'header-buttons',
-    render: createHeaderButton(ToggleButton),
+    slotName: 'fixtureActions',
+    render: createFixtureAction(ToggleButton),
     getProps: context => {
       return getCommonProps(context);
     }
