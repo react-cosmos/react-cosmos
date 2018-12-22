@@ -4,7 +4,7 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
   html {
-    --quick: 0.2s;
+    --quick: 0.32s;
     --font-family: -apple-system, BlinkMacSystemFont, Ubuntu, 'Helvetica Neue', Helvetica, sans-serif;
     --hue-primary: 230;
     --hue-accent: 328;

@@ -10,6 +10,7 @@ require('./plugins/RendererPreview').register();
 require('./plugins/RendererRemote').register();
 require('./plugins/Router').register();
 require('./plugins/Nav').register();
+require('./plugins/FixtureHeader').register();
 const ctrlPanelId = require('./plugins/ControlPanel').register();
 require('./plugins/ResponsivePreview').register();
 

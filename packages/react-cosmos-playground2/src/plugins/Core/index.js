@@ -22,7 +22,7 @@ export function register() {
       <Container>
         <Slot name="left" />
         <Center>
-          <Slot name="fixtureActions" />
+          <Slot name="fixtureHeader" />
           <Slot name="rendererPreview" />
         </Center>
         <Slot name="right" />
