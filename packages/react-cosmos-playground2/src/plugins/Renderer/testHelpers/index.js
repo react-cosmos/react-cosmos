@@ -1,6 +1,6 @@
 // @flow
 
-import type { RendererId, Fixtures } from 'react-cosmos-shared2/renderer';
+import type { RendererId } from 'react-cosmos-shared2/renderer';
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 
 export const mockFixtures = [

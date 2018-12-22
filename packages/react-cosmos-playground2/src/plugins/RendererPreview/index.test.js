@@ -73,19 +73,19 @@ it('broadcasts renderer response message from iframe', async () => {
 
   loadTestPlugins();
 
-  const fixtureListMsg = {
-    type: 'fixtureList',
+  const rendererReadyMsg = {
+    type: 'rendererReady',
     payload: {
       rendererId: 'foo-renderer',
       fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js']
     }
   };
-  window.postMessage(fixtureListMsg, '*');
+  window.postMessage(rendererReadyMsg, '*');
 
   await wait(() =>
     expect(handleReceiveResponse).toBeCalledWith(
       expect.any(Object),
-      fixtureListMsg
+      rendererReadyMsg
     )
   );
 });
