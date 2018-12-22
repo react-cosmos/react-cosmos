@@ -52,7 +52,8 @@ module.exports = {
   },
   collectCoverageFrom: [
     '**/src/**/*.{js,jsx}',
-    '!**/__fixtures__/**',
+    '!**/{__fixtures__,__jsxfixtures__}/**',
+    '!**/cosmos.decorator.js',
     '!**/testHelpers/**',
     '!**/react-cosmos-voyager/src/use-cases/**',
     // Ignore coverage from dark launched APIs
