@@ -30,19 +30,19 @@ const Iframe = styled.iframe`
   /* Checkerboard effect on background */
   background-image: linear-gradient(
       45deg,
-      #f8f8f8 25%,
+      var(--grey7) 25%,
       transparent 25%,
       transparent 75%,
-      #f8f8f8 75%,
-      #f8f8f8 100%
+      var(--grey7) 75%,
+      var(--grey7) 100%
     ),
     linear-gradient(
       45deg,
-      #f8f8f8 25%,
+      var(--grey7) 25%,
       transparent 25%,
       transparent 75%,
-      #f8f8f8 75%,
-      #f8f8f8 100%
+      var(--grey7) 75%,
+      var(--grey7) 100%
     );
   background-size: 50px 50px;
   background-position: 0 0, 25px 25px;
