@@ -52,21 +52,8 @@ export class Nav extends Component<Props> {
     );
   }
 
-  handleGoHome = () => {
-    this.props.setUrlParams({});
-  };
-
   handleFixtureSelect = (fixturePath: string) => {
     this.props.setUrlParams({ fixturePath });
-  };
-
-  handleGoFullScreen = () => {
-    const {
-      urlParams: { fixturePath },
-      setUrlParams
-    } = this.props;
-
-    setUrlParams({ fixturePath, fullScreen: true });
   };
 }
 
