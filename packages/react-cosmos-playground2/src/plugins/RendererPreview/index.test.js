@@ -27,7 +27,7 @@ function loadTestPlugins() {
 }
 
 function getIframe({ getByTestId }) {
-  return getByTestId('preview-iframe');
+  return getByTestId('previewIframe');
 }
 
 it('renders iframe with config.renderer.webUrl src', () => {

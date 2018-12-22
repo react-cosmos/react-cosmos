@@ -28,7 +28,7 @@ function loadTestPlugins() {
 
   return render(
     <Slot name="rendererPreviewOuter">
-      <div data-testid="preview-mock" />
+      <div data-testid="previewMock" />
     </Slot>
   );
 }
@@ -37,14 +37,14 @@ it('renders children of "rendererPreviewOuter" slot', () => {
   registerTestPlugins();
 
   const { getByTestId } = loadTestPlugins();
-  getByTestId('preview-mock');
+  getByTestId('previewMock');
 });
 
 it('does not render responsive header', () => {
   registerTestPlugins({ urlParams: { fixturePath: 'fooFixture.js' } });
 
   const { queryByTestId } = loadTestPlugins();
-  expect(queryByTestId('responsive-header')).toBeNull();
+  expect(queryByTestId('responsiveHeader')).toBeNull();
 });
 
 it('renders responsive header when fixture has viewport', () => {
@@ -64,5 +64,5 @@ it('renders responsive header when fixture has viewport', () => {
   });
 
   const { getByTestId } = loadTestPlugins();
-  getByTestId('responsive-header');
+  getByTestId('responsiveHeader');
 });

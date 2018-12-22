@@ -31,7 +31,7 @@ export class Header extends Component<Props> {
     const isScalable = scaleFactor < 1;
 
     return (
-      <Container data-testid="responsive-header">
+      <Container data-testid="responsiveHeader">
         <Devices>
           {devices.map(({ label, width, height }, idx) => {
             const isSelected =

@@ -11,7 +11,7 @@ type Props = {
 export function RendererPreview({ rendererUrl, onIframeRef }: Props) {
   return (
     <Iframe
-      data-testid="preview-iframe"
+      data-testid="previewIframe"
       ref={onIframeRef}
       src={rendererUrl}
       frameBorder={0}

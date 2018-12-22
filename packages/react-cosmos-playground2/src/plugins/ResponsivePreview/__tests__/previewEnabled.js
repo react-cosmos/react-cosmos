@@ -42,7 +42,7 @@ function loadTestPlugins() {
 
   return render(
     <Slot name="rendererPreviewOuter">
-      <div data-testid="preview-mock" />
+      <div data-testid="previewMock" />
     </Slot>
   );
 }
@@ -51,14 +51,14 @@ it('renders children of "rendererPreviewOuter" slot', () => {
   registerTestPlugins();
 
   const { getByTestId } = loadTestPlugins();
-  getByTestId('preview-mock');
+  getByTestId('previewMock');
 });
 
 it('does not render responsive header when no fixture is selected', () => {
   registerTestPlugins();
 
   const { queryByTestId } = loadTestPlugins();
-  expect(queryByTestId('responsive-header')).toBeNull();
+  expect(queryByTestId('responsiveHeader')).toBeNull();
 });
 
 it('does not render responsive header in full screen mode', () => {
@@ -67,14 +67,14 @@ it('does not render responsive header in full screen mode', () => {
   });
 
   const { queryByTestId } = loadTestPlugins();
-  expect(queryByTestId('responsive-header')).toBeNull();
+  expect(queryByTestId('responsiveHeader')).toBeNull();
 });
 
 it('renders responsive header', () => {
   registerTestPlugins({ urlParams: { fixturePath: 'fooFixture.js' } });
 
   const { getByTestId } = loadTestPlugins();
-  getByTestId('responsive-header');
+  getByTestId('responsiveHeader');
 });
 
 it('renders responsive device labels', () => {
