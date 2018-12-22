@@ -9,8 +9,9 @@ import {
   mockInitCall
 } from '../../../testHelpers/plugin';
 import {
+  mockFixtures,
   mockFixtureState,
-  getFxListRes,
+  getReadyRes,
   getRendererState
 } from '../testHelpers';
 import { register } from '..';
@@ -28,7 +29,7 @@ function loadTestPlugins({ rendererState = null } = {}) {
 
 it('creates renderer state', async () => {
   registerTestPlugins();
-  mockInitCall('renderer.receiveResponse', getFxListRes('foo-renderer'));
+  mockInitCall('renderer.receiveResponse', getReadyRes('foo-renderer'));
 
   loadTestPlugins();
 
@@ -36,9 +37,10 @@ it('creates renderer state', async () => {
     expect(getPluginState('renderer')).toEqual({
       primaryRendererId: 'foo-renderer',
       renderers: {
-        'foo-renderer': expect.objectContaining({
+        'foo-renderer': {
+          fixtures: mockFixtures,
           fixtureState: null
-        })
+        }
       }
     })
   );
@@ -46,8 +48,8 @@ it('creates renderer state', async () => {
 
 it('creates multiple renderer states', async () => {
   registerTestPlugins();
-  mockInitCall('renderer.receiveResponse', getFxListRes('foo-renderer'));
-  mockInitCall('renderer.receiveResponse', getFxListRes('bar-renderer'));
+  mockInitCall('renderer.receiveResponse', getReadyRes('foo-renderer'));
+  mockInitCall('renderer.receiveResponse', getReadyRes('bar-renderer'));
 
   loadTestPlugins();
 
@@ -68,7 +70,7 @@ it('creates multiple renderer states', async () => {
 
 it('creates renderer state with fixture state of primary renderer', async () => {
   registerTestPlugins();
-  mockInitCall('renderer.receiveResponse', getFxListRes('bar-renderer'));
+  mockInitCall('renderer.receiveResponse', getReadyRes('bar-renderer'));
 
   loadTestPlugins({
     rendererState: {

@@ -8,8 +8,8 @@ export type RendererId = string;
 
 export type FixtureNames = string[];
 
-export type FixtureListRequest = {
-  type: 'requestFixtureList'
+export type pingRenderersRequest = {
+  type: 'pingRenderers'
 };
 
 export type SelectFixtureRequest = {
@@ -40,15 +40,23 @@ export type SetFixtureStateRequest = {
 };
 
 export type RendererRequest =
-  | FixtureListRequest
+  | pingRenderersRequest
   | SelectFixtureRequest
   | UnselectFixtureRequest
   | SetFixtureStateRequest;
 
 export type OnRendererRequest = RendererRequest => mixed;
 
-export type FixtureListResponse = {
-  type: 'fixtureList',
+export type RendererReadyResponse = {
+  type: 'rendererReady',
+  payload: {
+    rendererId: RendererId,
+    fixtures: FixtureNames
+  }
+};
+
+export type FixtureListChangeResponse = {
+  type: 'fixtureListChange',
   payload: {
     rendererId: RendererId,
     fixtures: FixtureNames
@@ -83,7 +91,10 @@ export type FixtureStateChangeResponse = {
 //   }
 // };
 
-export type RendererResponse = FixtureListResponse | FixtureStateChangeResponse;
+export type RendererResponse =
+  | RendererReadyResponse
+  | FixtureListChangeResponse
+  | FixtureStateChangeResponse;
 
 export type OnRendererResponse = RendererResponse => mixed;
 

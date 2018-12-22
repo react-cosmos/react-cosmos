@@ -1,6 +1,5 @@
 // @flow
 
-import delay from 'delay';
 import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
 import {
@@ -11,7 +10,7 @@ import {
 } from '../../../testHelpers/plugin';
 import {
   mockFixtureState,
-  getFxListRes,
+  getReadyRes,
   getRendererState
 } from '../testHelpers';
 import { register } from '..';
@@ -32,7 +31,7 @@ it('posts "selectFixture" renderer request', async () => {
   const handleRendererRequest = jest.fn();
   registerTestPlugins({ handleRendererRequest });
 
-  mockInitCall('renderer.receiveResponse', getFxListRes('foo-renderer'));
+  mockInitCall('renderer.receiveResponse', getReadyRes('foo-renderer'));
 
   loadTestPlugins();
 
@@ -52,7 +51,7 @@ it('posts "selectFixture" renderer request with fixture state of primary rendere
   const handleRendererRequest = jest.fn();
   registerTestPlugins({ handleRendererRequest });
 
-  mockInitCall('renderer.receiveResponse', getFxListRes('bar-renderer'));
+  mockInitCall('renderer.receiveResponse', getReadyRes('bar-renderer'));
 
   loadTestPlugins({
     rendererState: {
@@ -75,20 +74,4 @@ it('posts "selectFixture" renderer request with fixture state of primary rendere
       }
     })
   );
-});
-
-it('posts only one "selectFixture" renderer request', async () => {
-  const handleRendererRequest = jest.fn();
-  registerTestPlugins({ handleRendererRequest });
-
-  // The renderer should be requested to load the fixture path from the URL
-  // when it broadcasts its fixture list for the first them. But subsequent
-  // fixtureList responses shouldn't trigger more selectFixture requests.
-  mockInitCall('renderer.receiveResponse', getFxListRes('foo-renderer'));
-  mockInitCall('renderer.receiveResponse', getFxListRes('foo-renderer'));
-
-  loadTestPlugins();
-
-  await delay(100);
-  expect(handleRendererRequest).toBeCalledTimes(1);
 });
