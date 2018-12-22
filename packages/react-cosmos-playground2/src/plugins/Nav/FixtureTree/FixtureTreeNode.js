@@ -108,6 +108,7 @@ const ListItem = styled.div`
   color: ${props => (props.selected ? 'var(--grey6)' : 'var(--grey4)')};
   line-height: var(--height);
   user-select: none;
+  cursor: default;
   transition: background var(--quick), color var(--quick);
 
   :hover {
