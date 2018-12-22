@@ -2,8 +2,6 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import { IconLabel } from './IconLabel';
-import { Label } from './Label';
 
 type Props = {
   label: React$Node,
@@ -22,7 +20,8 @@ export function Button({
 }: Props) {
   return (
     <StyledButton selected={selected} disabled={disabled} onClick={onClick}>
-      {icon ? <IconLabel icon={icon} label={label} /> : <Label>{label}</Label>}
+      {icon && <Icon>{icon}</Icon>}
+      {label}
     </StyledButton>
   );
 }
@@ -32,6 +31,9 @@ const StyledButton = styled.button`
   --hover-bg: hsl(var(--hue-primary), 25%, 95%);
   --press-bg: hsl(var(--hue-primary), 25%, 93%);
 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   margin: 0 0 0 4px;
   padding: 0 8px;
   min-height: 32px;
@@ -40,6 +42,7 @@ const StyledButton = styled.button`
   background: ${props =>
     props.selected ? 'var(--selected-bg)' : 'transparent'};
   color: ${props => (props.selected ? 'var(--grey1)' : 'var(--grey2)')};
+  white-space: nowrap;
   user-select: none;
   outline: none;
   transition: background var(--quick), color var(--quick), opacity var(--quick);
@@ -64,4 +67,12 @@ const StyledButton = styled.button`
     cursor: default;
     opacity: 0.5;
   }
+`;
+
+const Icon = styled.span`
+  --size: 16px;
+  width: var(--size);
+  height: var(--size);
+  padding: 2px 6px 0 0;
+  color: var(--grey3);
 `;
