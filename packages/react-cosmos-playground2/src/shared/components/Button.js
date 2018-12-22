@@ -59,6 +59,7 @@ const StyledButton = styled.button`
   }
 
   :disabled {
+    background: transparent;
     cursor: default;
     opacity: 0.5;
   }
