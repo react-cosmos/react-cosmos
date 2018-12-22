@@ -59,7 +59,8 @@ const StyledButton = styled.button`
   }
 
   :disabled {
-    background: transparent;
+    background: ${props =>
+      props.selected ? 'var(--selected-bg)' : 'transparent'};
     cursor: default;
     opacity: 0.5;
   }
