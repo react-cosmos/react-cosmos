@@ -94,3 +94,36 @@ it('creates renderer state with fixture state of primary renderer', async () => 
     })
   );
 });
+
+it('resets fixture state in all renderer states', async () => {
+  registerTestPlugins();
+  mockInitCall('renderer.receiveResponse', getReadyRes('foo-renderer'));
+
+  loadTestPlugins({
+    rendererState: {
+      primaryRendererId: 'foo-renderer',
+      renderers: {
+        'foo-renderer': getRendererState({
+          fixtureState: mockFixtureState
+        }),
+        'bar-renderer': getRendererState({
+          fixtureState: mockFixtureState
+        })
+      }
+    }
+  });
+
+  await wait(() =>
+    expect(getPluginState('renderer')).toEqual({
+      primaryRendererId: 'foo-renderer',
+      renderers: expect.objectContaining({
+        'foo-renderer': expect.objectContaining({
+          fixtureState: null
+        }),
+        'bar-renderer': expect.objectContaining({
+          fixtureState: null
+        })
+      })
+    })
+  );
+});

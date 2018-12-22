@@ -126,23 +126,30 @@ function handleRendererReadyResponse(
 ) {
   const { rendererId, fixtures } = payload;
 
-  const state = context.getState();
-  const primaryRendererState = getPrimaryRendererState(state);
-  const fixtureState = primaryRendererState
-    ? primaryRendererState.fixtureState
-    : null;
+  const updater = prevState => {
+    // The first announced renderer becomes the primary one
+    const primaryRendererId = prevState.primaryRendererId || rendererId;
+    const isPrimaryRenderer = rendererId === primaryRendererId;
 
-  const updater = ({ primaryRendererId, renderers, ...otherState }) => {
+    // Reset fixture state of all renderers when primary renderer resets
+    const prevRenderers = isPrimaryRenderer
+      ? mapValues(prevState.renderers, rendererItemState => ({
+          rendererItemState,
+          fixtureState: null
+        }))
+      : prevState.renderers;
+
     return {
-      ...otherState,
-      // The first announced renderer becomes the primary one
-      primaryRendererId: primaryRendererId || rendererId,
+      ...prevState,
+      primaryRendererId,
       renderers: {
-        ...renderers,
+        ...prevRenderers,
         [rendererId]: {
           ...DEFAULT_RENDERER_STATE,
           fixtures,
-          fixtureState
+          fixtureState: isPrimaryRenderer
+            ? null
+            : getPrimaryRendererFixtureState(prevState)
         }
       }
     };
@@ -155,6 +162,7 @@ function handleRendererReadyResponse(
     // renderer announces itself (via the rendererReady response). This occurs
     // when opening the UI on a URL that contains a selected fixture path.
     if (fixturePath) {
+      const { fixtureState } = context.getState().renderers[rendererId];
       postSelectFixtureRequest(context, rendererId, fixturePath, fixtureState);
     }
   });
@@ -319,4 +327,10 @@ function getUrlParams({ getStateOf }) {
   const { urlParams }: RouterState = getStateOf('router');
 
   return urlParams;
+}
+
+function getPrimaryRendererFixtureState(state) {
+  const primaryRendererState = getPrimaryRendererState(state);
+
+  return primaryRendererState ? primaryRendererState.fixtureState : null;
 }
