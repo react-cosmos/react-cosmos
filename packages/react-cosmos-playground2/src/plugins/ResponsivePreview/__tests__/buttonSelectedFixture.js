@@ -33,6 +33,7 @@ function registerTestPlugins() {
   mockConfig('core', { projectId: 'mockProjectId' });
   mockState('renderer', mockRendererState);
   mockState('router', { urlParams: { fixturePath: 'fooFixture.js' } });
+  mockMethod('renderer.isFixturePathValid', () => true);
 }
 
 function loadTestPlugins() {

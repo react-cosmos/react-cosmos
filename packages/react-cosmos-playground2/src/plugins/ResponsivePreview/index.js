@@ -48,7 +48,7 @@ export function register() {
 }
 
 function getCommonProps(context) {
-  const { getConfigOf, getState, getStateOf, setState } = context;
+  const { getConfigOf, getState, getStateOf, setState, callMethod } = context;
   const { projectId }: CoreConfig = getConfigOf('core');
   const { urlParams }: RouterState = getStateOf('router');
   const rendererState: RendererState = getStateOf('renderer');
@@ -58,6 +58,8 @@ function getCommonProps(context) {
     projectId,
     urlParams,
     primaryRendererState: getPrimaryRendererState(rendererState),
+    isFixturePathValid: (fixturePath: string): boolean =>
+      callMethod('renderer.isFixturePathValid', fixturePath),
     setState,
     setFixtureStateViewport: () => setFixtureStateViewport(context),
     storage: getStorageApi(context)
