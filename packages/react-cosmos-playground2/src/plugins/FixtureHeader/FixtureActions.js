@@ -66,6 +66,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   height: 40px;
   padding: 0 12px;
   border-bottom: 1px solid var(--grey5);
@@ -74,7 +75,7 @@ const Container = styled.div`
 `;
 
 const Left = styled.div`
-  flex: 1;
+  flex: 0;
   display: flex;
   flex-direction: row;
   align-items: center;
