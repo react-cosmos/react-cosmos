@@ -8,8 +8,6 @@ import { Button } from '../../shared/components';
 
 import type { UrlParams } from '../Router';
 
-export type { CoreConfig } from '../../index.js.flow';
-
 type Props = {
   urlParams: UrlParams,
   setUrlParams: UrlParams => void
