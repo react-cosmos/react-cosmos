@@ -96,15 +96,14 @@ export class FixtureTreeNode extends Component<Props> {
 
 const ListItem = styled.div`
   --height: 28px;
-  --selected-bg: rgba(0, 0, 0, 0.3);
+  --hover-bg: hsl(var(--hue-primary), 19%, 21%);
 
   display: flex;
   flex-direction: row;
   align-items: center;
   height: var(--height);
   padding: 0 16px 0 ${props => getLeftPadding(props.indentLevel)}px;
-  background: ${props =>
-    props.selected ? 'var(--selected-bg)' : 'transparent'};
+  background: ${props => (props.selected ? 'var(--darkest)' : 'transparent')};
   color: ${props => (props.selected ? 'var(--grey6)' : 'var(--grey4)')};
   line-height: var(--height);
   user-select: none;
@@ -113,7 +112,7 @@ const ListItem = styled.div`
 
   :hover {
     background: ${props =>
-      props.selected ? 'var(--selected-bg)' : 'var(--grey1b)'};
+      props.selected ? 'var(--darkest)' : 'var(--hover-bg)'};
   }
 `;
 

@@ -11,6 +11,7 @@ export const GlobalStyle = createGlobalStyle`
     --hue-success: 120;
     --hue-warning: 48;
     --hue-error: 358;
+    --darkest: hsl(var(--hue-primary), 23%, 11%);
     --primary1: hsl(var(--hue-primary), 52%, 22%);
     --primary2: hsl(var(--hue-primary), 54%, 32%);
     --primary3: hsl(var(--hue-primary), 51%, 43%);
@@ -19,7 +20,6 @@ export const GlobalStyle = createGlobalStyle`
     --primary6: hsl(var(--hue-primary), 72%, 90%);
     --primary7: hsl(var(--hue-primary), 88%, 97%);
     --grey1: hsl(var(--hue-primary), 21%, 16%);
-    --grey1b: hsl(var(--hue-primary), 19%, 21%);
     --grey2: hsl(var(--hue-primary), 17%, 30%);
     --grey3: hsl(var(--hue-primary), 12%, 49%);
     --grey4: hsl(var(--hue-primary), 25%, 74%);

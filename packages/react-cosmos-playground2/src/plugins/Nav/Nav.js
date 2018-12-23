@@ -60,6 +60,6 @@ export class Nav extends Component<Props> {
 const Container = styled.div`
   width: 256px;
   background: var(--grey1);
-  border-right: 1px solid rgba(0, 0, 0, 0.3);
+  border-right: 1px solid var(--darkest);
   overflow: auto;
 `;
