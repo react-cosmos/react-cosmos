@@ -17,6 +17,7 @@ export type Props = {
   projectId: string,
   urlParams: UrlParams,
   primaryRendererState: null | RendererItemState,
+  isFixturePathValid: (fixturePath: string) => boolean,
   setState: SetState<ResponsivePreviewState>,
   setFixtureStateViewport: () => void,
   storage: Storage
@@ -24,9 +25,14 @@ export type Props = {
 
 export class ToggleButton extends Component<Props> {
   render() {
-    const { state, urlParams, primaryRendererState } = this.props;
+    const {
+      state,
+      urlParams: { fixturePath },
+      primaryRendererState,
+      isFixturePathValid
+    } = this.props;
 
-    if (!urlParams.fixturePath) {
+    if (!fixturePath || !isFixturePathValid(fixturePath)) {
       return <Button icon={<SmartphoneIcon />} label="responsive" disabled />;
     }
 

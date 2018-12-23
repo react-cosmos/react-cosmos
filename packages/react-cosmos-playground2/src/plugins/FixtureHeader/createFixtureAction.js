@@ -11,7 +11,7 @@ import type { ComponentType, Node } from 'react';
 // into the "fixtureActions" slot.
 export function createFixtureAction<T>(
   BtnComponent: ComponentType<T>
-): ComponentType<{ ...T, children: Node }> {
+): ComponentType<T & { children: Node }> {
   return ({ children, ...otherProps }: { ...T, children: Node }) => (
     <>
       {children}

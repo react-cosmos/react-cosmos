@@ -27,6 +27,7 @@ function registerTestPlugins({
   mockConfig('renderer', { webUrl: 'mockRendererUrl' });
   mockState('router', { urlParams });
   mockState('renderer', { primaryRendererId: null, renderers: {} });
+  mockMethod('renderer.getPrimaryRendererState', () => null);
   mockMethod('renderer.setFixtureState', handleSetFixtureState);
 }
 

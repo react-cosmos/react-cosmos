@@ -10,11 +10,16 @@ import type { UrlParams } from '../Router';
 
 type Props = {
   urlParams: UrlParams,
-  setUrlParams: UrlParams => void
+  setUrlParams: UrlParams => void,
+  isFixturePathValid: (fixturePath: string) => boolean
 };
 
 // TODO: Improve UX of refresh button, which seems like it's not doing anything
-export function FixtureHeader({ urlParams, setUrlParams }: Props) {
+export function FixtureHeader({
+  urlParams,
+  setUrlParams,
+  isFixturePathValid
+}: Props) {
   const { fixturePath, fullScreen } = urlParams;
 
   if (fullScreen) {
@@ -26,6 +31,25 @@ export function FixtureHeader({ urlParams, setUrlParams }: Props) {
       <Container>
         <Left>
           <BlankMessage>No fixture selected</BlankMessage>
+        </Left>
+        <Right>
+          <Slot name="fixtureActions" />
+          <Button disabled icon={<MaximizeIcon />} label="fullscreen" />
+        </Right>
+      </Container>
+    );
+  }
+
+  if (!isFixturePathValid(fixturePath)) {
+    return (
+      <Container>
+        <Left>
+          <BlankMessage>Fixture not found</BlankMessage>
+          <Button
+            icon={<XCircleIcon />}
+            label="close"
+            onClick={() => setUrlParams({})}
+          />
         </Left>
         <Right>
           <Slot name="fixtureActions" />
@@ -87,6 +111,6 @@ const Right = styled.div`
 `;
 
 const BlankMessage = styled.span`
-  margin-left: 4px;
+  margin: 0 4px;
   color: var(--grey3);
 `;
