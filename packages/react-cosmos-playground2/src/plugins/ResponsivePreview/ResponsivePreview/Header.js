@@ -55,7 +55,6 @@ export class Header extends Component<Props> {
             {`${viewport.width} × ${viewport.height}`}
           </ViewportSize>
           <Button
-            disabled={!isScalable}
             icon={<Minimize2Icon />}
             label={
               <>
@@ -65,6 +64,7 @@ export class Header extends Component<Props> {
                 )}
               </>
             }
+            disabled={!isScalable}
             selected={isScalable && scale}
             onClick={toggleScale}
           />
