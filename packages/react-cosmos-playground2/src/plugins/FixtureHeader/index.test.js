@@ -35,7 +35,7 @@ it('does not render in fullscreen mode', async () => {
   registerTestPlugins({ urlParams: { fixturePath: 'foo', fullScreen: true } });
   const { queryByText } = loadTestPlugins();
 
-  // Make sure the nav element doesn't appear after in next event loops
+  // Make sure the element doesn't appear async in the next event loops
   await delay(100);
   expect(queryByText(/no fixture selected/i)).toBeNull();
 });

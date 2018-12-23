@@ -77,7 +77,7 @@ it('does not render nav element in full screen mode', async () => {
   });
   const { queryByTestId } = loadTestPlugins();
 
-  // Make sure the nav element doesn't appear after in next event loops
+  // Make sure the nav element doesn't appear async in the next event loops
   await delay(100);
 
   expect(queryByTestId('nav')).toBeNull();
