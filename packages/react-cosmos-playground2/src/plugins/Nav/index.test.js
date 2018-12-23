@@ -14,6 +14,11 @@ import { register } from '.';
 
 afterEach(cleanup);
 
+const primaryRendererState = {
+  fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js'],
+  fixtureState: null
+};
+
 function registerTestPlugins({ urlParams = {} } = {}) {
   register();
 
@@ -21,14 +26,10 @@ function registerTestPlugins({ urlParams = {} } = {}) {
   mockState('router', { urlParams });
   mockState('renderer', {
     primaryRendererId: 'foo-renderer',
-    renderers: {
-      'foo-renderer': {
-        fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js'],
-        fixtureState: null
-      }
-    }
+    renderers: { 'foo-renderer': primaryRendererState }
   });
 
+  mockMethod('renderer.getPrimaryRendererState', () => primaryRendererState);
   mockMethod('storage.getItem', () => Promise.resolve(null));
   mockMethod('storage.setItem', () => Promise.resolve(undefined));
 }

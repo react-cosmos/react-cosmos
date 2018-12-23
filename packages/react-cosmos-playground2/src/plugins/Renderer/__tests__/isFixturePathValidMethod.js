@@ -23,8 +23,8 @@ it('return false on missing fixture', async () => {
     'renderer.isFixturePathValid',
     'fixtures/sechs.js'
   );
-  loadPlugins({ state: { renderer: initialRendererState } });
 
+  loadPlugins({ state: { renderer: initialRendererState } });
   expect(await callReturn).toBe(false);
 });
 
@@ -34,7 +34,7 @@ it('return true on existing fixture', async () => {
     'renderer.isFixturePathValid',
     'fixtures/drei.js'
   );
-  loadPlugins({ state: { renderer: initialRendererState } });
 
+  loadPlugins({ state: { renderer: initialRendererState } });
   expect(await callReturn).toBe(true);
 });

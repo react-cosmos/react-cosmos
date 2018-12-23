@@ -24,6 +24,7 @@ export function register() {
         webUrl,
         urlParams,
         rendererState,
+        primaryRendererState: callMethod('renderer.getPrimaryRendererState'),
         setComponentsFixtureState: components => {
           callMethod('renderer.setFixtureState', fixtureState => ({
             ...fixtureState,

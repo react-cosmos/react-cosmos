@@ -2,13 +2,11 @@
 
 import { registerPlugin } from 'react-plugin';
 import { createFixtureAction } from '../FixtureHeader/createFixtureAction';
-import { getPrimaryRendererState } from '../Renderer/selectors';
 import { ResponsivePreview } from './ResponsivePreview';
 import { ToggleButton } from './ToggleButton';
 import { DEFAULT_DEVICES } from './shared';
 
 import type { CoreConfig } from '../Core';
-import type { RendererState } from '../Renderer';
 import type { RouterState } from '../Router';
 import type { ResponsivePreviewConfig, ResponsivePreviewState } from './shared';
 
@@ -51,13 +49,12 @@ function getCommonProps(context) {
   const { getConfigOf, getState, getStateOf, setState, callMethod } = context;
   const { projectId }: CoreConfig = getConfigOf('core');
   const { urlParams }: RouterState = getStateOf('router');
-  const rendererState: RendererState = getStateOf('renderer');
 
   return {
     state: getState(),
     projectId,
     urlParams,
-    primaryRendererState: getPrimaryRendererState(rendererState),
+    primaryRendererState: callMethod('renderer.getPrimaryRendererState'),
     isFixturePathValid: (fixturePath: string): boolean =>
       callMethod('renderer.isFixturePathValid', fixturePath),
     setState,

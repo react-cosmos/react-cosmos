@@ -13,7 +13,19 @@ import { register } from '..';
 
 afterEach(cleanup);
 
-const initialRendererState = { primaryRendererId: null, renderers: {} };
+const primaryRendererState = {
+  fixtures: ['fooFixture.js'],
+  fixtureState: {
+    components: [],
+    viewport: { width: 420, height: 420 }
+  }
+};
+const initialRendererState = {
+  primaryRendererId: 'fooRendererId',
+  renderers: {
+    fooRendererId: primaryRendererState
+  }
+};
 
 function registerTestPlugins() {
   register();
@@ -21,7 +33,7 @@ function registerTestPlugins() {
   mockConfig('renderer', { webUrl: 'mockRendererUrl' });
   mockState('router', { urlParams: { fixturePath: 'fooFixture.js' } });
   mockState('renderer', initialRendererState);
-  mockMethod('renderer.getPrimaryRendererState', () => null);
+  mockMethod('renderer.getPrimaryRendererState', () => primaryRendererState);
 }
 
 function loadTestPlugins() {
@@ -36,16 +48,9 @@ function loadTestPlugins() {
   );
 }
 
-it('renders children of "rendererPreviewOuter" slot', () => {
+it('renders responsive header', () => {
   registerTestPlugins();
 
   const { getByTestId } = loadTestPlugins();
-  getByTestId('previewMock');
-});
-
-it('does not render responsive header', () => {
-  registerTestPlugins();
-
-  const { queryByTestId } = loadTestPlugins();
-  expect(queryByTestId('responsiveHeader')).toBeNull();
+  getByTestId('responsiveHeader');
 });

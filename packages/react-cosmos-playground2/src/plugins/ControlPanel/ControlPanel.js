@@ -4,27 +4,31 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { PluginsConsumer } from 'react-plugin';
-import { getPrimaryRendererState } from '../Renderer/selectors';
 import { PropsState } from './PropsState';
 
 import type { RendererId } from 'react-cosmos-shared2/renderer';
 import type { ComponentFixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { UrlParams } from '../Router';
-import type { RendererState } from '../Renderer';
+import type { RendererState, RendererItemState } from '../Renderer';
 
 type Props = {
   webUrl: null | string,
   urlParams: UrlParams,
   rendererState: RendererState,
+  primaryRendererState: null | RendererItemState,
   setComponentsFixtureState: (components: ComponentFixtureState[]) => void,
   selectPrimaryRenderer: (rendererId: RendererId) => void
 };
 
 export class ControlPanel extends Component<Props> {
   render() {
-    const { webUrl, urlParams, rendererState } = this.props;
+    const {
+      webUrl,
+      urlParams,
+      rendererState,
+      primaryRendererState
+    } = this.props;
     const { primaryRendererId, renderers } = rendererState;
-    const primaryRendererState = getPrimaryRendererState(rendererState);
 
     if (!primaryRendererState) {
       return null;

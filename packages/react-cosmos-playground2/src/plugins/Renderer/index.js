@@ -3,7 +3,6 @@
 import { isEqual, mapValues, forEach } from 'lodash';
 import { updateState } from 'react-cosmos-shared2/util';
 import { registerPlugin } from 'react-plugin';
-import { getPrimaryRendererState } from './selectors';
 
 import type {
   RendererId,
@@ -38,12 +37,17 @@ export function register() {
     }
   });
 
+  method('getPrimaryRendererState', handleGetPrimaryRendererState);
   method('isFixturePathValid', handleIsFixturePathValid);
   method('selectFixture', handleSelectFixture);
   method('unselectFixture', handleUnselectFixture);
   method('setFixtureState', handleSetFixtureState);
   method('selectPrimaryRenderer', handleSelectPrimaryRenderer);
   method('receiveResponse', handleReceiveResponse);
+}
+
+function handleGetPrimaryRendererState({ getState }) {
+  return getPrimaryRendererState(getState());
 }
 
 function handleIsFixturePathValid({ getState }, fixturePath: string) {
@@ -336,6 +340,23 @@ function getUrlParams({ getStateOf }) {
   const { urlParams }: RouterState = getStateOf('router');
 
   return urlParams;
+}
+
+function getPrimaryRendererState({
+  primaryRendererId,
+  renderers
+}: RendererState): null | RendererItemState {
+  if (!primaryRendererId) {
+    return null;
+  }
+
+  if (!renderers[primaryRendererId]) {
+    throw new Error(
+      `primaryRendererId "${primaryRendererId}" points to missing renderer state`
+    );
+  }
+
+  return renderers[primaryRendererId];
 }
 
 function getPrimaryRendererFixtureState(state) {

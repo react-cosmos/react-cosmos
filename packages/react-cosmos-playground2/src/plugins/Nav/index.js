@@ -1,11 +1,9 @@
 // @flow
 
 import { registerPlugin } from 'react-plugin';
-import { getPrimaryRendererState } from '../Renderer/selectors';
 import { Nav } from './Nav';
 
 import type { CoreConfig } from '../Core';
-import type { RendererState } from '../Renderer';
 import type { RouterState } from '../Router';
 
 export function register() {
@@ -16,14 +14,13 @@ export function register() {
     render: Nav,
     getProps: ({ getConfigOf, getStateOf, callMethod }) => {
       const { projectId, fixturesDir }: CoreConfig = getConfigOf('core');
-      const rendererState: RendererState = getStateOf('renderer');
       const { urlParams }: RouterState = getStateOf('router');
 
       return {
         projectId,
         fixturesDir,
         urlParams,
-        primaryRendererState: getPrimaryRendererState(rendererState),
+        primaryRendererState: callMethod('renderer.getPrimaryRendererState'),
         setUrlParams: newUrlParams => {
           callMethod('router.setUrlParams', newUrlParams);
         },
