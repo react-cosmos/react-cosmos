@@ -46,19 +46,19 @@ it('broadcasts renderer response message from websocket event', async () => {
   loadPlugins();
 
   await mockWebSockets(async ({ postMessage }) => {
-    const fixtureListMsg = {
-      type: 'fixtureList',
+    const rendererReadyMsg = {
+      type: 'rendererReady',
       payload: {
         rendererId: 'foo-renderer',
         fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js']
       }
     };
-    postMessage(fixtureListMsg);
+    postMessage(rendererReadyMsg);
 
     await wait(() =>
       expect(handleReceiveResponse).toBeCalledWith(
         expect.any(Object),
-        fixtureListMsg
+        rendererReadyMsg
       )
     );
   });
@@ -72,7 +72,7 @@ it('posts "requestFixtureList" renderer request on mount', async () => {
   await mockWebSockets(async ({ onMessage }) => {
     await wait(() =>
       expect(onMessage).toBeCalledWith({
-        type: 'requestFixtureList'
+        type: 'pingRenderers'
       })
     );
   });

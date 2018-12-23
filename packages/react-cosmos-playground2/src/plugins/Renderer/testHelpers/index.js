@@ -13,12 +13,22 @@ export const mockFixtureState = {
   components: []
 };
 
-export function getFxListRes(rendererId: RendererId) {
+export function getReadyRes(rendererId: RendererId) {
   return {
-    type: 'fixtureList',
+    type: 'rendererReady',
     payload: {
       rendererId,
       fixtures: mockFixtures
+    }
+  };
+}
+
+export function getFxListChangeRes(rendererId: RendererId, fixtures: string[]) {
+  return {
+    type: 'fixtureListChange',
+    payload: {
+      rendererId,
+      fixtures
     }
   };
 }

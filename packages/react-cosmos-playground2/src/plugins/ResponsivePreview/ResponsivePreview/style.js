@@ -2,10 +2,10 @@
 
 import type { Viewport } from '../shared';
 
-const PADDING = 16;
-const BORDER_WIDTH = 2;
+const PADDING = [4, 12, 12, 12];
+const BORDER_WIDTH = 1;
 
-export const stretchStyle = { width: '100%', height: '100%' };
+export const stretchStyle = { display: 'flex', flex: 1 };
 
 export function getStyles({
   container,
@@ -18,28 +18,25 @@ export function getStyles({
 }) {
   const { width, height } = viewport;
 
-  const innerContainer = {
-    width: container.width - 2 * (PADDING + BORDER_WIDTH),
-    height: container.height - 2 * (PADDING + BORDER_WIDTH)
-  };
-
-  const widthScale = Math.min(1, innerContainer.width / width);
-  const heightScale = Math.min(1, innerContainer.height / height);
+  const availableViewport = getAvailableViewport(container);
+  const widthScale = Math.min(1, availableViewport.width / width);
+  const heightScale = Math.min(1, availableViewport.height / height);
   const scaleFactor = scale ? Math.min(widthScale, heightScale) : 1;
   const scaledWidth = width * scaleFactor;
   const scaledHeight = height * scaleFactor;
 
   return {
-    outerWrapperStyle: getOuterWrapperStyle({
+    maskContainerStyle: getMaskContainerStyle({
       scale,
       widthScale,
       heightScale
     }),
-    middleWrapperStyle: getMiddleWrapperStyle({
+    padContainerStyle: getPadContainerStyle(),
+    alignContainerStyle: getAlignContainerStyle({
       scaledWidth,
       scaledHeight
     }),
-    innerWrapperStyle: getInnerWrapperStyle({
+    scaleContainerStyle: getScaleContainerStyle({
       width,
       height,
       scaleFactor
@@ -47,34 +44,57 @@ export function getStyles({
   };
 }
 
-function getOuterWrapperStyle({ scale, widthScale, heightScale }) {
+export function getAvailableViewport(container: Viewport) {
   return {
+    width: container.width - getHorPadding(),
+    height: container.height - getVerPadding()
+  };
+}
+
+function getMaskContainerStyle({ scale, widthScale, heightScale }) {
+  return {
+    flex: 1,
     display: 'flex',
-    padding: PADDING,
-    backgroundColor: 'rgba(0, 0, 0, 0.06)',
     justifyContent: scale || widthScale === 1 ? 'space-around' : 'flex-start',
     alignItems: scale || heightScale === 1 ? 'center' : 'flex-start',
     overflow: scale ? 'hidden' : 'scroll'
   };
 }
 
-function getMiddleWrapperStyle({ scaledWidth, scaledHeight }) {
+function getPadContainerStyle() {
+  const [paddingTop, paddingRight, paddingBottom, paddingLeft] = PADDING;
+
   return {
-    width: scaledWidth + 2 * BORDER_WIDTH,
-    height: scaledHeight + 2 * BORDER_WIDTH
+    paddingTop,
+    paddingBottom,
+    paddingLeft,
+    paddingRight
   };
 }
 
-function getInnerWrapperStyle({ width, height, scaleFactor }) {
+function getAlignContainerStyle({ scaledWidth, scaledHeight }) {
   return {
-    boxSizing: 'border-box',
-    width: width + 2 * BORDER_WIDTH,
-    height: height + 2 * BORDER_WIDTH,
-    borderStyle: 'dashed',
-    borderWidth: BORDER_WIDTH,
-    borderColor: 'rgba(0, 0, 0, 0.3)',
-    overflow: 'hidden',
+    width: scaledWidth,
+    height: scaledHeight,
+    border: `${BORDER_WIDTH}px solid var(--grey5)`,
+    boxShadow: '0 2px 10px 0 var(--grey5)',
+    overflow: 'hidden'
+  };
+}
+
+function getScaleContainerStyle({ width, height, scaleFactor }) {
+  return {
+    width,
+    height,
     transformOrigin: '0% 0%',
     transform: `scale(${scaleFactor})`
   };
+}
+
+function getHorPadding() {
+  return PADDING[1] + PADDING[3] + 2 * BORDER_WIDTH;
+}
+
+function getVerPadding() {
+  return PADDING[0] + PADDING[2] + 2 * BORDER_WIDTH;
 }

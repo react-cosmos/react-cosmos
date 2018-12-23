@@ -19,7 +19,7 @@ function loadTestPlugins() {
   return render(<Slot name="root" />);
 }
 
-it('renders left Slot', async () => {
+it('renders "left" slot', async () => {
   registerTestPlugins({
     slotName: 'left',
     slotText: 'we are the robots'
@@ -29,7 +29,17 @@ it('renders left Slot', async () => {
   await waitForElement(() => getByText(/we are the robots/i));
 });
 
-it('renders rendererPreview Slot', async () => {
+it('renders "fixtureHeader" slot', async () => {
+  registerTestPlugins({
+    slotName: 'fixtureHeader',
+    slotText: 'we are the robots'
+  });
+  const { getByText } = loadTestPlugins();
+
+  await waitForElement(() => getByText(/we are the robots/i));
+});
+
+it('renders "rendererPreview" slot', async () => {
   registerTestPlugins({
     slotName: 'rendererPreview',
     slotText: 'we are the robots'
@@ -39,7 +49,7 @@ it('renders rendererPreview Slot', async () => {
   await waitForElement(() => getByText(/we are the robots/i));
 });
 
-it('renders right Slot', async () => {
+it('renders "right" slot', async () => {
   registerTestPlugins({
     slotName: 'right',
     slotText: 'we are the robots'

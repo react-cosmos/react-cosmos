@@ -1,5 +1,6 @@
 // @flow
 
+import styled from 'styled-components';
 import React, { Component } from 'react';
 import { getPathTree, collapsePathTreeDirs } from './pathTree';
 import { FixtureTreeNode } from './FixtureTreeNode';
@@ -12,6 +13,7 @@ type Props = {
   projectId: string,
   fixturesDir: string,
   fixtures: FixtureNames,
+  selectedFixturePath: null | string,
   onSelect: (path: string) => mixed,
   storage: Storage
 };
@@ -25,25 +27,32 @@ export class FixtureTree extends Component<Props, State> {
     treeExpansion: {}
   };
 
+  unmounted = false;
+
   componentDidMount() {
     this.restoreTreeExpansion();
   }
 
+  componentWillUnmount() {
+    this.unmounted = true;
+  }
+
   render() {
-    const { fixtures, fixturesDir, onSelect } = this.props;
+    const { fixturesDir, fixtures, selectedFixturePath, onSelect } = this.props;
     const { treeExpansion } = this.state;
     const rootNode = collapsePathTreeDirs(getPathTree(fixtures), fixturesDir);
 
     return (
-      <ul>
+      <Container>
         <FixtureTreeNode
           node={rootNode}
           parents={[]}
           treeExpansion={treeExpansion}
+          selectedFixturePath={selectedFixturePath}
           onSelect={onSelect}
           onToggleExpansion={this.handleToggleExpansion}
         />
-      </ul>
+      </Container>
     );
   }
 
@@ -60,7 +69,9 @@ export class FixtureTree extends Component<Props, State> {
     const { storage } = this.props;
     const treeExpansion = (await storage.getItem(this.getStorageKey())) || {};
 
-    this.setState({ treeExpansion });
+    if (!this.unmounted) {
+      this.setState({ treeExpansion });
+    }
   }
 
   persistTreeExpansion() {
@@ -74,3 +85,9 @@ export class FixtureTree extends Component<Props, State> {
     return `cosmos-treeExpansion-${this.props.projectId}`;
   }
 }
+
+// Reason for inline-block: https://stackoverflow.com/a/53895622/128816
+const Container = styled.div`
+  display: inline-block;
+  min-width: 100%;
+`;

@@ -10,7 +10,7 @@ import {
 } from '../../../testHelpers/plugin';
 import {
   mockFixtureState,
-  getFxListRes,
+  getReadyRes,
   getRendererState
 } from '../testHelpers';
 import { register } from '..';
@@ -31,7 +31,7 @@ it('posts "selectFixture" renderer request', async () => {
   const handleRendererRequest = jest.fn();
   registerTestPlugins({ handleRendererRequest });
 
-  mockInitCall('renderer.receiveResponse', getFxListRes('foo-renderer'));
+  mockInitCall('renderer.receiveResponse', getReadyRes('foo-renderer'));
 
   loadTestPlugins();
 
@@ -51,7 +51,7 @@ it('posts "selectFixture" renderer request with fixture state of primary rendere
   const handleRendererRequest = jest.fn();
   registerTestPlugins({ handleRendererRequest });
 
-  mockInitCall('renderer.receiveResponse', getFxListRes('bar-renderer'));
+  mockInitCall('renderer.receiveResponse', getReadyRes('bar-renderer'));
 
   loadTestPlugins({
     rendererState: {

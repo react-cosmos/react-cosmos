@@ -3,6 +3,8 @@
 import React, { Component } from 'react';
 import { getFixtureViewport } from '../shared';
 import { getDefaultViewport } from '../storage';
+import { SmartphoneIcon } from '../../../shared/icons';
+import { Button } from '../../../shared/components';
 
 import type { SetState } from 'react-cosmos-shared2/util';
 import type { RendererItemState } from '../../Renderer';
@@ -25,18 +27,16 @@ export class ToggleButton extends Component<Props> {
     const { state, urlParams, primaryRendererState } = this.props;
 
     if (!urlParams.fixturePath) {
-      return null;
+      return <Button icon={<SmartphoneIcon />} label="responsive" disabled />;
     }
 
     return (
-      <label style={{ userSelect: 'none' }}>
-        <input
-          type="checkbox"
-          checked={isResponsiveModeOn(state.enabled, primaryRendererState)}
-          onChange={this.handleToggle}
-        />
-        responsive
-      </label>
+      <Button
+        icon={<SmartphoneIcon />}
+        label="responsive"
+        selected={isResponsiveModeOn(state.enabled, primaryRendererState)}
+        onClick={this.handleToggle}
+      />
     );
   }
 

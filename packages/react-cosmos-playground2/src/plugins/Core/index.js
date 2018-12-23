@@ -21,7 +21,10 @@ export function register() {
     render: (
       <Container>
         <Slot name="left" />
-        <Slot name="rendererPreview" />
+        <Center>
+          <Slot name="fixtureHeader" />
+          <Slot name="rendererPreview" />
+        </Center>
         <Slot name="right" />
       </Container>
     )
@@ -34,7 +37,16 @@ const Container = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  font-family: sans-serif;
-  font-size: 16px;
   display: flex;
+  background: var(--grey1);
+  color: var(--grey4);
+`;
+
+const Center = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background: var(--grey6);
+  color: var(--grey2);
+  overflow: hidden;
 `;

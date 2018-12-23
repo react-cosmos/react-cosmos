@@ -1,6 +1,6 @@
 /* global window */
 
-// This has to be done before React is imported. So this files has to be
+// This has to be done before React is imported. So this file has to be
 // imported before anything which might import React
 // https://github.com/facebook/react-devtools/issues/76#issuecomment-128091900
 if (process.env.NODE_ENV === 'development') {

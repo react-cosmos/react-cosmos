@@ -80,6 +80,7 @@
     "husky": "^1.2.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^23.6.0",
+    "jest-dom": "^3.0.0",
     "lerna": "^3.6.0",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",

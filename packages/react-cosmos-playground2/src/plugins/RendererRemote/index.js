@@ -35,9 +35,9 @@ export function register() {
     socket = io();
     socket.on(RENDERER_MESSAGE_EVENT_NAME, handleMessage);
 
-    // Discover remote renderers by asking all to share their fixture list
+    // Discover remote renderers by asking all to announce themselves
     postMessage({
-      type: 'requestFixtureList'
+      type: 'pingRenderers'
     });
 
     return () => {

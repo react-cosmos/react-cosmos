@@ -9,7 +9,8 @@ import type {
   RendererId,
   RendererRequest,
   RendererResponse,
-  FixtureListResponse,
+  RendererReadyResponse,
+  FixtureListChangeResponse,
   FixtureStateChangeResponse
 } from 'react-cosmos-shared2/renderer';
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
@@ -108,8 +109,10 @@ function handleSelectPrimaryRenderer(
 
 function handleReceiveResponse(context, msg: RendererResponse) {
   switch (msg.type) {
-    case 'fixtureList':
-      return handleFixtureListResponse(context, msg);
+    case 'rendererReady':
+      return handleRendererReadyResponse(context, msg);
+    case 'fixtureListChange':
+      return handleFixtureListChangeResponse(context, msg);
     case 'fixtureStateChange':
       return handleFixtureStateChangeResponse(context, msg);
     default:
@@ -117,26 +120,36 @@ function handleReceiveResponse(context, msg: RendererResponse) {
   }
 }
 
-function handleFixtureListResponse(context, { payload }: FixtureListResponse) {
+function handleRendererReadyResponse(
+  context,
+  { payload }: RendererReadyResponse
+) {
   const { rendererId, fixtures } = payload;
 
-  const primaryRendererState = getPrimaryRendererState(context.getState());
-  const fixtureState = primaryRendererState
-    ? primaryRendererState.fixtureState
-    : null;
+  const updater = prevState => {
+    // The first announced renderer becomes the primary one
+    const primaryRendererId = prevState.primaryRendererId || rendererId;
+    const isPrimaryRenderer = rendererId === primaryRendererId;
 
-  const updater = ({ primaryRendererId, renderers, ...otherState }) => {
-    const rendererItemState = renderers[rendererId] || DEFAULT_RENDERER_STATE;
+    // Reset fixture state of all renderers when primary renderer resets
+    const prevRenderers = isPrimaryRenderer
+      ? mapValues(prevState.renderers, rendererItemState => ({
+          rendererItemState,
+          fixtureState: null
+        }))
+      : prevState.renderers;
 
     return {
-      ...otherState,
-      primaryRendererId: primaryRendererId || rendererId,
+      ...prevState,
+      primaryRendererId,
       renderers: {
-        ...renderers,
+        ...prevRenderers,
         [rendererId]: {
-          ...rendererItemState,
+          ...DEFAULT_RENDERER_STATE,
           fixtures,
-          fixtureState
+          fixtureState: isPrimaryRenderer
+            ? null
+            : getPrimaryRendererFixtureState(prevState)
         }
       }
     };
@@ -145,10 +158,27 @@ function handleFixtureListResponse(context, { payload }: FixtureListResponse) {
   context.setState(updater, () => {
     const { fixturePath } = getUrlParams(context);
 
+    // Tell the renderer to select the fixture path from the URL when a new
+    // renderer announces itself (via the rendererReady response). This occurs
+    // when opening the UI on a URL that contains a selected fixture path.
     if (fixturePath) {
+      const { fixtureState } = context.getState().renderers[rendererId];
       postSelectFixtureRequest(context, rendererId, fixturePath, fixtureState);
     }
   });
+}
+
+function handleFixtureListChangeResponse(
+  context,
+  { payload }: FixtureListChangeResponse
+) {
+  const { rendererId, fixtures } = payload;
+
+  setRendererState(context, (rendererItemState, curRendererId) =>
+    curRendererId === rendererId
+      ? { ...rendererItemState, fixtures }
+      : rendererItemState
+  );
 }
 
 function handleFixtureStateChangeResponse(
@@ -297,4 +327,10 @@ function getUrlParams({ getStateOf }) {
   const { urlParams }: RouterState = getStateOf('router');
 
   return urlParams;
+}
+
+function getPrimaryRendererFixtureState(state) {
+  const primaryRendererState = getPrimaryRendererState(state);
+
+  return primaryRendererState ? primaryRendererState.fixtureState : null;
 }

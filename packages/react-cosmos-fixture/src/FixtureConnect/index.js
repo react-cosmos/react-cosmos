@@ -41,7 +41,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     const { subscribe } = this.props;
 
     subscribe(this.handleRequest);
-    this.postFixtureList();
+    this.postReadyState();
   }
 
   componentDidUpdate(prevProps: FixtureConnectProps) {
@@ -49,7 +49,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     const { fixturePath, fixtureState, syncedFixtureState } = this.state;
 
     if (!isEqual(fixtures, prevProps.fixtures)) {
-      this.postFixtureList();
+      this.postFixtureListChange();
     }
 
     if (fixturePath && !isEqual(fixtureState, syncedFixtureState)) {
@@ -93,8 +93,8 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
   }
 
   handleRequest = (msg: RendererRequest) => {
-    if (msg.type === 'requestFixtureList') {
-      return this.postFixtureList();
+    if (msg.type === 'pingRenderers') {
+      return this.postReadyState();
     }
 
     const { rendererId } = msg.payload || {};
@@ -129,14 +129,26 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     }
   };
 
-  postFixtureList() {
-    const { rendererId, fixtures, postMessage } = this.props;
+  postReadyState() {
+    const { rendererId, postMessage } = this.props;
 
     postMessage({
-      type: 'fixtureList',
+      type: 'rendererReady',
       payload: {
         rendererId,
-        fixtures: Object.keys(fixtures)
+        fixtures: this.getFixtureNames()
+      }
+    });
+  }
+
+  postFixtureListChange() {
+    const { rendererId, postMessage } = this.props;
+
+    postMessage({
+      type: 'fixtureListChange',
+      payload: {
+        rendererId,
+        fixtures: this.getFixtureNames()
       }
     });
   }
@@ -180,6 +192,10 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
       }
     });
   };
+
+  getFixtureNames(): string[] {
+    return Object.keys(this.props.fixtures);
+  }
 }
 
 function getDecoratorsForFixturePath(decorators, fixturePath) {

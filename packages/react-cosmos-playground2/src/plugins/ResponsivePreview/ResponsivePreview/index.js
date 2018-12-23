@@ -67,20 +67,23 @@ export class ResponsivePreview extends Component<Props, State> {
     if (!fixturePath || fullScreen || !viewport || !container) {
       return (
         <Container>
-          <Preview key="preview" ref={this.handleContainerRef}>
+          <div key="preview" ref={this.handleContainerRef} style={stretchStyle}>
             <div style={stretchStyle}>
-              <div style={stretchStyle}>{children}</div>
+              <div style={stretchStyle}>
+                <div style={stretchStyle}>{children}</div>
+              </div>
             </div>
-          </Preview>
+          </div>
         </Container>
       );
     }
 
     const { devices } = config;
     const {
-      outerWrapperStyle,
-      middleWrapperStyle,
-      innerWrapperStyle
+      maskContainerStyle,
+      padContainerStyle,
+      alignContainerStyle,
+      scaleContainerStyle
     } = getStyles({ container, viewport, scale });
 
     return (
@@ -88,19 +91,22 @@ export class ResponsivePreview extends Component<Props, State> {
         <Header
           devices={devices}
           viewport={viewport}
+          container={container}
           scale={scale}
           createSelectViewportHandler={this.createSelectViewportHandler}
           toggleScale={this.toggleScale}
         />
-        <Preview
+        <div
           key="preview"
           ref={this.handleContainerRef}
-          style={outerWrapperStyle}
+          style={maskContainerStyle}
         >
-          <div style={middleWrapperStyle}>
-            <div style={innerWrapperStyle}>{children}</div>
+          <div style={padContainerStyle}>
+            <div style={alignContainerStyle}>
+              <div style={scaleContainerStyle}>{children}</div>
+            </div>
           </div>
-        </Preview>
+        </div>
       </Container>
     );
   }
@@ -180,8 +186,5 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-`;
-
-const Preview = styled.div`
-  flex: 1;
+  background: var(--grey6);
 `;

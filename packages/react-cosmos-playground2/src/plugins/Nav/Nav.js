@@ -2,7 +2,6 @@
 
 import styled from 'styled-components';
 import React, { Component } from 'react';
-import { Slot } from 'react-plugin';
 import { FixtureTree } from './FixtureTree';
 
 import type { RendererItemState } from '../Renderer';
@@ -33,7 +32,7 @@ export class Nav extends Component<Props> {
     }
 
     const { fixtures } = primaryRendererState;
-    const { fixturePath, fullScreen } = urlParams;
+    const { fixturePath = null, fullScreen } = urlParams;
 
     if (fullScreen) {
       return null;
@@ -41,19 +40,11 @@ export class Nav extends Component<Props> {
 
     return (
       <Container data-testid="nav">
-        <Buttons>
-          <button disabled={!fixturePath} onClick={this.handleGoHome}>
-            home
-          </button>
-          <Slot name="header-buttons" />
-          {fixturePath && (
-            <button onClick={this.handleGoFullScreen}>fullscreen</button>
-          )}
-        </Buttons>
         <FixtureTree
           projectId={projectId}
           fixturesDir={fixturesDir}
           fixtures={fixtures}
+          selectedFixturePath={fixturePath}
           onSelect={this.handleFixtureSelect}
           storage={storage}
         />
@@ -61,32 +52,14 @@ export class Nav extends Component<Props> {
     );
   }
 
-  handleGoHome = () => {
-    this.props.setUrlParams({});
-  };
-
   handleFixtureSelect = (fixturePath: string) => {
     this.props.setUrlParams({ fixturePath });
-  };
-
-  handleGoFullScreen = () => {
-    const {
-      urlParams: { fixturePath },
-      setUrlParams
-    } = this.props;
-
-    setUrlParams({ fixturePath, fullScreen: true });
   };
 }
 
 const Container = styled.div`
-  flex-shrink: 0;
   width: 256px;
-  display: flex;
-  flex-direction: column;
-`;
-
-const Buttons = styled.div`
-  display: flex;
-  flex-direction: row;
+  background: var(--grey1);
+  border-right: 1px solid var(--darkest);
+  overflow: auto;
 `;

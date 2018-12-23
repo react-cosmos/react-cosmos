@@ -4,6 +4,9 @@ import React from 'react';
 import { render } from 'react-dom';
 import { getDomContainer } from 'react-cosmos-shared2/dom';
 import * as ReactPlugin from 'react-plugin';
+import { GlobalStyle } from './globalStyle';
+
+// Statefulness alert!
 import './register-plugins';
 
 import type { PlaygroundConfig } from './index.js.flow';
@@ -16,5 +19,11 @@ export default function mount(config: PlaygroundConfig) {
   const { loadPlugins, Slot } = ReactPlugin;
 
   loadPlugins({ config });
-  render(<Slot name="root" />, getDomContainer());
+  render(
+    <>
+      <GlobalStyle />
+      <Slot name="root" />
+    </>,
+    getDomContainer()
+  );
 }

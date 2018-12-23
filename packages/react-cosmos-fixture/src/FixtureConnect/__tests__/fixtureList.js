@@ -24,13 +24,13 @@ function tests(mockConnect) {
     });
   });
 
-  it('posts fixture list on mount', async () => {
+  it('posts ready response on mount', async () => {
     await mockConnect(async ({ getElement, untilMessage }) => {
       await mount(
         getElement({ rendererId, fixtures, decorators }),
         async () => {
           await untilMessage({
-            type: 'fixtureList',
+            type: 'rendererReady',
             payload: {
               rendererId,
               fixtures: ['first', 'second']
@@ -41,13 +41,13 @@ function tests(mockConnect) {
     });
   });
 
-  it('posts fixture list again on request', async () => {
+  it('posts ready response again on ping request', async () => {
     await mockConnect(async ({ getElement, untilMessage, postMessage }) => {
       await mount(
         getElement({ rendererId, fixtures, decorators }),
         async () => {
           await untilMessage({
-            type: 'fixtureList',
+            type: 'rendererReady',
             payload: {
               rendererId,
               fixtures: ['first', 'second']
@@ -55,11 +55,11 @@ function tests(mockConnect) {
           });
 
           await postMessage({
-            type: 'requestFixtureList'
+            type: 'pingRenderers'
           });
 
           await untilMessage({
-            type: 'fixtureList',
+            type: 'rendererReady',
             payload: {
               rendererId,
               fixtures: ['first', 'second']
@@ -70,13 +70,13 @@ function tests(mockConnect) {
     });
   });
 
-  it('posts fixture list again on "fixtures" prop change', async () => {
+  it('posts fixture list on "fixtures" prop change', async () => {
     await mockConnect(async ({ getElement, untilMessage }) => {
       await mount(
         getElement({ rendererId, fixtures, decorators }),
         async renderer => {
           await untilMessage({
-            type: 'fixtureList',
+            type: 'rendererReady',
             payload: {
               rendererId,
               fixtures: ['first', 'second']
@@ -95,7 +95,7 @@ function tests(mockConnect) {
           );
 
           await untilMessage({
-            type: 'fixtureList',
+            type: 'fixtureListChange',
             payload: {
               rendererId,
               fixtures: ['first', 'second', 'third']

@@ -62,40 +62,6 @@ it('sets "fixturePath" router param on fixture click', async () => {
   });
 });
 
-it('clears router params on home button click', async () => {
-  registerTestPlugins({ urlParams: { fixturePath: 'fixtures/zwei.js' } });
-
-  const handleSetUrlParams = jest.fn();
-  mockMethod('router.setUrlParams', handleSetUrlParams);
-
-  const { getByText } = loadTestPlugins();
-  fireEvent.click(getByText(/home/i));
-
-  expect(handleSetUrlParams).toBeCalledWith(expect.any(Object), {});
-});
-
-it('hides fullscreen button when no fixture is selected', () => {
-  registerTestPlugins();
-  const { queryByText } = loadTestPlugins();
-
-  expect(queryByText(/fullscreen/i)).toBeNull();
-});
-
-it('sets "fullScreen" router param on fullscreen button click', () => {
-  registerTestPlugins({ urlParams: { fixturePath: 'fixtures/zwei.js' } });
-
-  const handleSetUrlParams = jest.fn();
-  mockMethod('router.setUrlParams', handleSetUrlParams);
-
-  const { getByText } = loadTestPlugins();
-  fireEvent.click(getByText(/fullscreen/i));
-
-  expect(handleSetUrlParams).toBeCalledWith(expect.any(Object), {
-    fixturePath: 'fixtures/zwei.js',
-    fullScreen: true
-  });
-});
-
 // This test confirms the existence of the "nav" element under normal
 // conditions, and thus the validity of the "full screen" test
 it('renders nav element', async () => {
@@ -111,7 +77,7 @@ it('does not render nav element in full screen mode', async () => {
   });
   const { queryByTestId } = loadTestPlugins();
 
-  // Make sure the nav element doesn't appear after in next event loops
+  // Make sure the nav element doesn't appear async in the next event loops
   await delay(100);
 
   expect(queryByTestId('nav')).toBeNull();

@@ -1,4 +1,3 @@
-import './react-devtools-hook';
 import './react-error-overlay';
 import values from 'object.values';
 
