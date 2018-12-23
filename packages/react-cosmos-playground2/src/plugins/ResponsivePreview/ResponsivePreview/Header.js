@@ -56,7 +56,7 @@ export class Header extends Component<Props> {
           </ViewportSize>
           <Button
             disabled={!isScalable}
-            icon={scale ? <Minimize2Icon /> : <Minimize2Icon />}
+            icon={<Minimize2Icon />}
             label={
               <>
                 scale
