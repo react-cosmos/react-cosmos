@@ -14,7 +14,7 @@ type Props = {
 };
 
 // TODO: Improve UX of refresh button, which seems like it's not doing anything
-export function FixtureActions({ urlParams, setUrlParams }: Props) {
+export function FixtureHeader({ urlParams, setUrlParams }: Props) {
   const { fixturePath, fullScreen } = urlParams;
 
   if (fullScreen) {

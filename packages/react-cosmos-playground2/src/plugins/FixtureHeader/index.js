@@ -1,7 +1,7 @@
 // @flow
 
 import { registerPlugin } from 'react-plugin';
-import { FixtureActions } from './FixtureActions';
+import { FixtureHeader } from './FixtureHeader';
 
 import type { RouterState } from '../Router';
 
@@ -10,7 +10,7 @@ export function register() {
 
   plug({
     slotName: 'fixtureHeader',
-    render: FixtureActions,
+    render: FixtureHeader,
     getProps: ({ getStateOf, callMethod }) => {
       const { urlParams }: RouterState = getStateOf('router');
 
