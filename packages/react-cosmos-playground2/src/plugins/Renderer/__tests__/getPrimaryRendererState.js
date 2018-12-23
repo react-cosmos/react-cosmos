@@ -7,7 +7,7 @@ import { register } from '..';
 
 afterEach(cleanup);
 
-it('return null', async () => {
+it('returns null', async () => {
   register();
   const callReturn = mockInitCall('renderer.getPrimaryRendererState');
 
@@ -15,7 +15,7 @@ it('return null', async () => {
   expect(await callReturn).toBe(null);
 });
 
-it('return primary renderer state', async () => {
+it('returns primary renderer state', async () => {
   register();
   const callReturn = mockInitCall('renderer.getPrimaryRendererState');
 
@@ -38,7 +38,7 @@ it('return primary renderer state', async () => {
   });
 });
 
-it('return primary renderer state', async () => {
+it('returns primary renderer state', async () => {
   register();
   const callReturn = mockInitCall('renderer.getPrimaryRendererState');
 

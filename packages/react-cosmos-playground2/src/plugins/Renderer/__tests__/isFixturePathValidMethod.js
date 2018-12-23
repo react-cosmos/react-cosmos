@@ -17,7 +17,7 @@ const initialRendererState = {
   }
 };
 
-it('return false on missing fixture', async () => {
+it('returns false on missing fixture', async () => {
   register();
   const callReturn = mockInitCall(
     'renderer.isFixturePathValid',
@@ -28,7 +28,7 @@ it('return false on missing fixture', async () => {
   expect(await callReturn).toBe(false);
 });
 
-it('return true on existing fixture', async () => {
+it('returns true on existing fixture', async () => {
   register();
   const callReturn = mockInitCall(
     'renderer.isFixturePathValid',
