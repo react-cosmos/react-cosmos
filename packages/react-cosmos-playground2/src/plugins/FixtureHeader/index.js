@@ -16,9 +16,10 @@ export function register() {
 
       return {
         urlParams,
-        setUrlParams: newUrlParams => {
-          callMethod('router.setUrlParams', newUrlParams);
-        }
+        setUrlParams: newUrlParams =>
+          callMethod('router.setUrlParams', newUrlParams),
+        isFixturePathValid: fixturePath =>
+          callMethod('renderer.isFixturePathValid', fixturePath)
       };
     }
   });

@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import delay from 'delay';
 import { render, fireEvent, waitForElement } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
 import {
@@ -9,14 +8,16 @@ import {
   mockState,
   mockMethod,
   mockPlug
-} from '../../testHelpers/plugin';
-import { register } from '.';
+} from '../../../testHelpers/plugin';
+import { register } from '..';
 
 afterEach(cleanup);
 
-function registerTestPlugins({ urlParams = {} } = {}) {
+function registerTestPlugins(handleSetUrlParams = () => {}) {
   register();
-  mockState('router', { urlParams });
+  mockState('router', { urlParams: { fixturePath: 'foo' } });
+  mockMethod('router.setUrlParams', handleSetUrlParams);
+  mockMethod('renderer.isFixturePathValid', () => true);
 }
 
 function loadTestPlugins() {
@@ -25,26 +26,9 @@ function loadTestPlugins() {
   return render(<Slot name="fixtureHeader" />);
 }
 
-it('renders blank state', async () => {
-  registerTestPlugins();
-  const { getByText } = loadTestPlugins();
-  await waitForElement(() => getByText(/no fixture selected/i));
-});
-
-it('does not render in fullscreen mode', async () => {
-  registerTestPlugins({ urlParams: { fixturePath: 'foo', fullScreen: true } });
-  const { queryByText } = loadTestPlugins();
-
-  // Make sure the element doesn't appear async in the next event loops
-  await delay(100);
-  expect(queryByText(/no fixture selected/i)).toBeNull();
-});
-
 it('renders close button', async () => {
-  registerTestPlugins({ urlParams: { fixturePath: 'foo' } });
-
   const handleSetUrlParams = jest.fn();
-  mockMethod('router.setUrlParams', handleSetUrlParams);
+  registerTestPlugins(handleSetUrlParams);
 
   const { getByText } = loadTestPlugins();
   fireEvent.click(getByText(/close/));
@@ -53,10 +37,8 @@ it('renders close button', async () => {
 });
 
 it('renders refresh button', async () => {
-  registerTestPlugins({ urlParams: { fixturePath: 'foo' } });
-
   const handleSetUrlParams = jest.fn();
-  mockMethod('router.setUrlParams', handleSetUrlParams);
+  registerTestPlugins(handleSetUrlParams);
 
   const { getByText } = loadTestPlugins();
   fireEvent.click(getByText(/refresh/));
@@ -67,10 +49,8 @@ it('renders refresh button', async () => {
 });
 
 it('renders fullscreen button', async () => {
-  registerTestPlugins({ urlParams: { fixturePath: 'foo' } });
-
   const handleSetUrlParams = jest.fn();
-  mockMethod('router.setUrlParams', handleSetUrlParams);
+  registerTestPlugins(handleSetUrlParams);
 
   const { getByText } = loadTestPlugins();
   fireEvent.click(getByText(/fullscreen/));
@@ -82,7 +62,7 @@ it('renders fullscreen button', async () => {
 });
 
 it('renders "fixtureActions" slot', async () => {
-  registerTestPlugins({ urlParams: { fixturePath: 'foo' } });
+  registerTestPlugins();
   mockPlug({ slotName: 'fixtureActions', render: 'pluggable actions' });
 
   const { getByText } = loadTestPlugins();
