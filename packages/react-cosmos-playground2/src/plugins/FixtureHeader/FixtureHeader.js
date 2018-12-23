@@ -75,14 +75,12 @@ const Container = styled.div`
 `;
 
 const Left = styled.div`
-  flex: 0;
   display: flex;
   flex-direction: row;
   align-items: center;
 `;
 
 const Right = styled.div`
-  flex: 0;
   display: flex;
   flex-direction: row;
   align-items: center;
