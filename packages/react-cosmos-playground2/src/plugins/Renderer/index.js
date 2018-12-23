@@ -38,11 +38,20 @@ export function register() {
     }
   });
 
+  method('isFixturePathValid', handleIsFixturePathValid);
   method('selectFixture', handleSelectFixture);
   method('unselectFixture', handleUnselectFixture);
   method('setFixtureState', handleSetFixtureState);
   method('selectPrimaryRenderer', handleSelectPrimaryRenderer);
   method('receiveResponse', handleReceiveResponse);
+}
+
+function handleIsFixturePathValid({ getState }, fixturePath: string) {
+  const primaryRendererState = getPrimaryRendererState(getState());
+
+  return primaryRendererState
+    ? primaryRendererState.fixtures.indexOf(fixturePath) !== -1
+    : false;
 }
 
 function handleSelectFixture(context, fixturePath: string) {
