@@ -18,8 +18,8 @@ function registerTestPlugins() {
   mockState('router', { urlParams: {} });
 }
 
-function loadTestPlugins({ rendererState = null } = {}) {
-  loadPlugins({ state: { renderer: rendererState } });
+function loadTestPlugins() {
+  loadPlugins();
 }
 
 it('updates fixture list in renderer state', async () => {
