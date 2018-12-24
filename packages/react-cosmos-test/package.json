@@ -1,14 +1,14 @@
 {
   "name": "react-cosmos-test",
-  "version": "4.7.0-19",
+  "version": "4.7.0-20",
   "description": "APIs for testing Cosmos fixtures in headless environments",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-test",
   "license": "MIT",
   "dependencies": {
     "@babel/runtime-corejs2": "^7.2.0",
-    "react-cosmos-config": "^4.7.0-19",
-    "react-cosmos-loader": "^4.7.0-19",
-    "react-cosmos-shared": "^4.7.0-19",
+    "react-cosmos-config": "^4.7.0-20",
+    "react-cosmos-loader": "^4.7.0-20",
+    "react-cosmos-shared": "^4.7.0-20",
     "traverse": "^0.6.6"
   }
 }

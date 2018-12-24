@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-browserify-example",
-  "version": "4.7.0-19",
+  "version": "4.7.0-20",
   "description": "Example of using Cosmos with Browserify",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples",
   "license": "MIT",
@@ -11,10 +11,10 @@
     "babelify": "^10.0.0",
     "budo": "^9.2.1",
     "prop-types": "^15.6.2",
-    "react-cosmos-loader": "^4.7.0-19",
-    "react-cosmos-playground": "^4.7.0-19",
-    "react-cosmos-shared": "^4.7.0-19",
-    "react-cosmos-voyager2": "^4.7.0-19",
+    "react-cosmos-loader": "^4.7.0-20",
+    "react-cosmos-playground": "^4.7.0-20",
+    "react-cosmos-shared": "^4.7.0-20",
+    "react-cosmos-voyager2": "^4.7.0-20",
     "require-globify": "^1.4.1"
   },
   "private": true
