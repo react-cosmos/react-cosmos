@@ -7,6 +7,7 @@ require('./plugins/Storage').register();
 require('./plugins/Core').register();
 require('./plugins/Renderer').register();
 require('./plugins/RendererPreview').register();
+require('./plugins/RendererPreviewOverlay').register();
 require('./plugins/RendererRemote').register();
 require('./plugins/Router').register();
 require('./plugins/Nav').register();
