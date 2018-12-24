@@ -58,4 +58,5 @@ const PreviewContainer = styled.div`
   flex: 1;
   display: flex;
   position: relative;
+  overflow: hidden;
 `;

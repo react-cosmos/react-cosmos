@@ -58,6 +58,7 @@ export class Nav extends Component<Props> {
 }
 
 const Container = styled.div`
+  flex-shrink: 0;
   width: 256px;
   background: var(--grey1);
   border-right: 1px solid var(--darkest);
