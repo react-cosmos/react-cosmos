@@ -12,7 +12,7 @@ We need a decent parity with the existing Cosmos UI to test JSX fixtures. This i
 
 - [x] Establish testing practices for new UI package
 - [x] Create router for new UI
-- [ ] MVP feature set for new UI
+- [x] MVP feature set for new UI
   - [x] Full screen mode
     - [x] Remove renderer full screen mode (renderer URL belongs to user)
   - [x] Remote renderer (WebSockets)
@@ -23,7 +23,7 @@ We need a decent parity with the existing Cosmos UI to test JSX fixtures. This i
   - [x] Responsive mode
   - [x] Style
     - [x] Fixture blank state
-    - [ ] Fixture error state
+    - [x] Fixture error state
   - [x] JSX decorators
 
 **Not** included in the first beta release: The Fixture Editor. This is because it'll be replaced by something _much_ more powerful (a new Control Panel). But this section will have arrive later, after the core of Cosmos Next has been thoroughly tested.
