@@ -39,11 +39,12 @@ export function register() {
 
   plug({
     slotName: 'rendererPreview',
-    render: ({ rendererUrl }) =>
+    render: ({ rendererUrl, isFixtureLoaded }) =>
       rendererUrl && (
         <Slot name="rendererPreviewOuter">
           <RendererPreview
             rendererUrl={rendererUrl}
+            isFixtureLoaded={isFixtureLoaded}
             onIframeRef={elRef => {
               iframeRef = elRef;
             }}
@@ -52,7 +53,8 @@ export function register() {
       ),
     getProps: context => {
       return {
-        rendererUrl: getRendererUrl(context)
+        rendererUrl: getRendererUrl(context),
+        isFixtureLoaded: isFixtureloaded(context)
       };
     }
   });
@@ -62,6 +64,12 @@ function getRendererUrl({ getConfigOf }) {
   const { webUrl }: RendererConfig = getConfigOf('renderer');
 
   return webUrl;
+}
+
+function isFixtureloaded({ callMethod }) {
+  const primaryRendererState = callMethod('renderer.getPrimaryRendererState');
+
+  return Boolean(primaryRendererState && primaryRendererState.fixtureState);
 }
 
 function handleRendererRequest(context, msg: RendererRequest) {
