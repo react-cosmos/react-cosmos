@@ -49,6 +49,16 @@ it('renders "rendererPreview" slot', async () => {
   await waitForElement(() => getByText(/we are the robots/i));
 });
 
+it('renders "rendererPreviewOverlay" slot', async () => {
+  registerTestPlugins({
+    slotName: 'rendererPreviewOverlay',
+    slotText: 'we are the robots'
+  });
+  const { getByText } = loadTestPlugins();
+
+  await waitForElement(() => getByText(/we are the robots/i));
+});
+
 it('renders "right" slot', async () => {
   registerTestPlugins({
     slotName: 'right',

@@ -22,7 +22,7 @@ We need a decent parity with the existing Cosmos UI to test JSX fixtures. This i
     - [x] Persist state
   - [x] Responsive mode
   - [x] Style
-    - [ ] Fixture blank state
+    - [x] Fixture blank state
     - [ ] Fixture error state
   - [x] JSX decorators
 
