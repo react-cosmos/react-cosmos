@@ -23,7 +23,10 @@ export function register() {
         <Slot name="left" />
         <Center>
           <Slot name="fixtureHeader" />
-          <Slot name="rendererPreview" />
+          <PreviewContainer>
+            <Slot name="rendererPreviewOverlay" />
+            <Slot name="rendererPreview" />
+          </PreviewContainer>
         </Center>
         <Slot name="right" />
       </Container>
@@ -49,4 +52,10 @@ const Center = styled.div`
   background: var(--grey6);
   color: var(--grey2);
   overflow: hidden;
+`;
+
+const PreviewContainer = styled.div`
+  flex: 1;
+  display: flex;
+  position: relative;
 `;

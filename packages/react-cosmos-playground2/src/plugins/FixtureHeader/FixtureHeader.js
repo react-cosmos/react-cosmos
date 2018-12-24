@@ -3,27 +3,45 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Slot } from 'react-plugin';
-import { XCircleIcon, RefreshCwIcon, MaximizeIcon } from '../../shared/icons';
+import {
+  XCircleIcon,
+  RefreshCwIcon,
+  MaximizeIcon,
+  HomeIcon
+} from '../../shared/icons';
 import { Button } from '../../shared/components';
 
 import type { UrlParams } from '../Router';
+import type { RendererItemState } from '../Renderer';
 
 type Props = {
   urlParams: UrlParams,
+  primaryRendererState: null | RendererItemState,
   setUrlParams: UrlParams => void,
-  isFixturePathValid: (fixturePath: string) => boolean
+  isValidFixturePath: (fixturePath: string) => boolean
 };
 
 // TODO: Improve UX of refresh button, which seems like it's not doing anything
 export function FixtureHeader({
   urlParams,
+  primaryRendererState,
   setUrlParams,
-  isFixturePathValid
+  isValidFixturePath
 }: Props) {
   const { fixturePath, fullScreen } = urlParams;
 
   if (fullScreen) {
     return null;
+  }
+
+  if (!primaryRendererState) {
+    return (
+      <Container>
+        <Left>
+          <BlankMessage>Waiting for renderer...</BlankMessage>
+        </Left>
+      </Container>
+    );
   }
 
   if (!fixturePath) {
@@ -40,14 +58,14 @@ export function FixtureHeader({
     );
   }
 
-  if (!isFixturePathValid(fixturePath)) {
+  if (!isValidFixturePath(fixturePath)) {
     return (
       <Container>
         <Left>
           <BlankMessage>Fixture not found</BlankMessage>
           <Button
-            icon={<XCircleIcon />}
-            label="close"
+            icon={<HomeIcon />}
+            label="home"
             onClick={() => setUrlParams({})}
           />
         </Left>

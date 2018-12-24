@@ -11,8 +11,7 @@ afterEach(cleanup);
 function registerTestPlugins() {
   register();
   mockState('router', { urlParams: {} });
-  mockMethod('renderer.getPrimaryRendererState', () => ({}));
-  mockMethod('renderer.isValidFixturePath', () => false);
+  mockMethod('renderer.getPrimaryRendererState', () => null);
 }
 
 function loadTestPlugins() {
@@ -25,12 +24,5 @@ it('renders blank state message', async () => {
   registerTestPlugins();
   const { getByText } = loadTestPlugins();
 
-  await waitForElement(() => getByText(/no fixture selected/i));
-});
-
-it('renders disabled fullscreen button', async () => {
-  registerTestPlugins();
-  const { getByText } = loadTestPlugins();
-
-  expect(getByText(/fullscreen/i)).toHaveAttribute('disabled');
+  await waitForElement(() => getByText(/waiting for renderer/i));
 });

@@ -35,7 +35,7 @@ jobs:
       - run: yarn link-entries src
       - run: yarn flow --retries 12
       - run: yarn lint
-      - run: yarn test:unit --maxWorkers=2 --coverage
+      - run: yarn test:unit --maxWorkers=1 --coverage
 
       # Test build
       - run: yarn link-entries dist

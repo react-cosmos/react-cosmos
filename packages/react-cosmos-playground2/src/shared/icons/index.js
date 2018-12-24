@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import styled from 'styled-components';
+import { Icon } from '../svg';
 
 export const ChevronRightIcon = () => (
   <Icon>
@@ -59,30 +59,9 @@ export const RefreshCwIcon = () => (
   </Icon>
 );
 
-type SvgElementType = React$Element<
-  'path' | 'polyline' | 'line' | 'circle' | 'rect'
->;
-
-function Icon({ children }: { children: SvgElementType | SvgElementType[] }) {
-  return (
-    <Svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      {children}
-    </Svg>
-  );
-}
-
-const Svg = styled.svg`
-  display: block;
-  width: 100%;
-  height: 100%;
-`;
+export const HomeIcon = () => (
+  <Icon>
+    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+    <polyline points="9 22 9 12 15 12 15 22" />
+  </Icon>
+);
