@@ -7,9 +7,11 @@ import { XCircleIcon, RefreshCwIcon, MaximizeIcon } from '../../shared/icons';
 import { Button } from '../../shared/components';
 
 import type { UrlParams } from '../Router';
+import type { RendererItemState } from '../Renderer';
 
 type Props = {
   urlParams: UrlParams,
+  primaryRendererState: null | RendererItemState,
   setUrlParams: UrlParams => void,
   isFixturePathValid: (fixturePath: string) => boolean
 };
@@ -17,6 +19,7 @@ type Props = {
 // TODO: Improve UX of refresh button, which seems like it's not doing anything
 export function FixtureHeader({
   urlParams,
+  primaryRendererState,
   setUrlParams,
   isFixturePathValid
 }: Props) {
@@ -24,6 +27,16 @@ export function FixtureHeader({
 
   if (fullScreen) {
     return null;
+  }
+
+  if (!primaryRendererState) {
+    return (
+      <Container>
+        <Left>
+          <BlankMessage>Waiting for renderer...</BlankMessage>
+        </Left>
+      </Container>
+    );
   }
 
   if (!fixturePath) {

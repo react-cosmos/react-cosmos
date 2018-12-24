@@ -17,6 +17,7 @@ function registerTestPlugins(handleSetUrlParams = () => {}) {
   register();
   mockState('router', { urlParams: { fixturePath: 'foo' } });
   mockMethod('router.setUrlParams', handleSetUrlParams);
+  mockMethod('renderer.getPrimaryRendererState', () => ({}));
   mockMethod('renderer.isFixturePathValid', () => true);
 }
 
