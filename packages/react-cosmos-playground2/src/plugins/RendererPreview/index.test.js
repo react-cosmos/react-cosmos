@@ -15,7 +15,7 @@ import { register } from '.';
 
 afterEach(cleanup);
 
-function registerTestPlugins({ fixtureState = null } = {}) {
+function registerTestPlugins(fixtureState = null) {
   register();
   mockConfig('renderer', { webUrl: 'mockRendererUrl' });
   mockMethod('renderer.getPrimaryRendererState', () => ({
@@ -42,14 +42,14 @@ it('renders iframe with config.renderer.webUrl src', () => {
 });
 
 it(`hides iframe when fixture isn't loaded`, () => {
-  registerTestPlugins({ fixtureState: null });
+  registerTestPlugins();
   const renderer = loadTestPlugins();
 
   expect(getIframe(renderer).style.visibility).toBe('hidden');
 });
 
 it('shows iframe when fixture is loaded', () => {
-  registerTestPlugins({ fixtureState: {} });
+  registerTestPlugins({});
   const renderer = loadTestPlugins();
 
   expect(getIframe(renderer).style.visibility).toBe('visible');
