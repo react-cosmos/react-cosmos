@@ -20,7 +20,7 @@ const initialRendererState = {
 it('returns false on missing fixture', async () => {
   register();
   const callReturn = mockInitCall(
-    'renderer.isFixturePathValid',
+    'renderer.isValidFixturePath',
     'fixtures/sechs.js'
   );
 
@@ -31,7 +31,7 @@ it('returns false on missing fixture', async () => {
 it('returns true on existing fixture', async () => {
   register();
   const callReturn = mockInitCall(
-    'renderer.isFixturePathValid',
+    'renderer.isValidFixturePath',
     'fixtures/drei.js'
   );
 

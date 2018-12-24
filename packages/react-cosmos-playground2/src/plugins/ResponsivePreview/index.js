@@ -55,8 +55,8 @@ function getCommonProps(context) {
     projectId,
     urlParams,
     primaryRendererState: callMethod('renderer.getPrimaryRendererState'),
-    isFixturePathValid: (fixturePath: string): boolean =>
-      callMethod('renderer.isFixturePathValid', fixturePath),
+    isValidFixturePath: (fixturePath: string): boolean =>
+      callMethod('renderer.isValidFixturePath', fixturePath),
     setState,
     setFixtureStateViewport: () => setFixtureStateViewport(context),
     storage: getStorageApi(context)

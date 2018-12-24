@@ -22,8 +22,8 @@ export function register() {
         primaryRendererState,
         setUrlParams: newUrlParams =>
           callMethod('router.setUrlParams', newUrlParams),
-        isFixturePathValid: fixturePath =>
-          callMethod('renderer.isFixturePathValid', fixturePath)
+        isValidFixturePath: fixturePath =>
+          callMethod('renderer.isValidFixturePath', fixturePath)
       };
     }
   });

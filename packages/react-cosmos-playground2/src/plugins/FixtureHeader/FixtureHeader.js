@@ -13,7 +13,7 @@ type Props = {
   urlParams: UrlParams,
   primaryRendererState: null | RendererItemState,
   setUrlParams: UrlParams => void,
-  isFixturePathValid: (fixturePath: string) => boolean
+  isValidFixturePath: (fixturePath: string) => boolean
 };
 
 // TODO: Improve UX of refresh button, which seems like it's not doing anything
@@ -21,7 +21,7 @@ export function FixtureHeader({
   urlParams,
   primaryRendererState,
   setUrlParams,
-  isFixturePathValid
+  isValidFixturePath
 }: Props) {
   const { fixturePath, fullScreen } = urlParams;
 
@@ -53,7 +53,7 @@ export function FixtureHeader({
     );
   }
 
-  if (!isFixturePathValid(fixturePath)) {
+  if (!isValidFixturePath(fixturePath)) {
     return (
       <Container>
         <Left>

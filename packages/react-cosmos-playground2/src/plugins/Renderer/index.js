@@ -38,7 +38,7 @@ export function register() {
   });
 
   method('getPrimaryRendererState', handleGetPrimaryRendererState);
-  method('isFixturePathValid', handleIsFixturePathValid);
+  method('isValidFixturePath', handleIsFixturePathValid);
   method('selectFixture', handleSelectFixture);
   method('unselectFixture', handleUnselectFixture);
   method('setFixtureState', handleSetFixtureState);

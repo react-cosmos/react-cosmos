@@ -1,21 +1,21 @@
-/* eslint-env browser */
 // @flow
 
 import React from 'react';
 import { render } from 'react-testing-library';
 import { loadPlugins, Slot } from 'react-plugin';
-import { cleanup, mockState } from '../../testHelpers/plugin';
-import { register } from '.';
+import { cleanup, mockState, mockMethod } from '../../../testHelpers/plugin';
+import { register } from '..';
 
 afterEach(cleanup);
 
-function registerTestPlugins({ urlParams = {} } = {}) {
+function registerTestPlugins(urlParams) {
   register();
   mockState('router', { urlParams });
+  mockMethod('renderer.isValidFixturePath', () => false);
 }
 
 function getBlankCanvasIllustration({ queryByTestId }) {
-  return queryByTestId('blankCanvasIcon');
+  return queryByTestId('blankCanvas');
 }
 
 function loadTestPlugins() {
@@ -24,15 +24,15 @@ function loadTestPlugins() {
   return render(<Slot name="rendererPreviewOverlay" />);
 }
 
-it('does not render "blank canvas" illustration', () => {
-  registerTestPlugins();
+it('renders "blank canvas" illustration', () => {
+  registerTestPlugins({});
   const renderer = loadTestPlugins();
 
   expect(getBlankCanvasIllustration(renderer)).not.toBeNull();
 });
 
-it('renders "blank canvas" illustration', () => {
-  registerTestPlugins({ urlParams: { fixturePath: 'foo.js' } });
+it('does not render "blank canvas" illustration', () => {
+  registerTestPlugins({ fixturePath: 'foo.js' });
   const renderer = loadTestPlugins();
 
   expect(getBlankCanvasIllustration(renderer)).toBeNull();
