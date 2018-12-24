@@ -26,17 +26,17 @@ export class Nav extends Component<Props> {
       primaryRendererState,
       storage
     } = this.props;
-
-    if (!primaryRendererState) {
-      return null;
-    }
-
-    const { fixtures } = primaryRendererState;
     const { fixturePath = null, fullScreen } = urlParams;
 
     if (fullScreen) {
       return null;
     }
+
+    if (!primaryRendererState) {
+      return <Container />;
+    }
+
+    const { fixtures } = primaryRendererState;
 
     return (
       <Container data-testid="nav">
