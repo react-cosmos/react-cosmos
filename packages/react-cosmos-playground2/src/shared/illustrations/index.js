@@ -1,4 +1,4 @@
 // @flow
 
-export { BlankCanvas } from './BlankCanvas';
-export { Empty } from './Empty';
+export { BlankCanvasIllustration } from './BlankCanvasIllustration';
+export { EmptyIllustration } from './EmptyIllustration';

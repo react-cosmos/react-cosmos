@@ -5,7 +5,7 @@ import { Illustration } from '../svg';
 
 const fillColor = 'var(--primary4)';
 
-export const BlankCanvas = () => (
+export const BlankCanvasIllustration = () => (
   <Illustration viewBox="0 0 998.95 833.99">
     <defs>
       <linearGradient

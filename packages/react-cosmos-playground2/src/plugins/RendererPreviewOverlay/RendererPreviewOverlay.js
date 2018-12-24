@@ -2,7 +2,10 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import { BlankCanvas, Empty } from '../../shared/illustrations';
+import {
+  BlankCanvasIllustration,
+  EmptyIllustration
+} from '../../shared/illustrations';
 
 type Props = {
   fixturePath: null | string,
@@ -17,7 +20,7 @@ export function RendererPreviewOverlay({
     return (
       <Container>
         <IllustrationContainer data-testid="blankCanvas">
-          <BlankCanvas />
+          <BlankCanvasIllustration />
         </IllustrationContainer>
       </Container>
     );
@@ -27,7 +30,7 @@ export function RendererPreviewOverlay({
     return (
       <Container>
         <IllustrationContainer data-testid="empty">
-          <Empty />
+          <EmptyIllustration />
         </IllustrationContainer>
       </Container>
     );
