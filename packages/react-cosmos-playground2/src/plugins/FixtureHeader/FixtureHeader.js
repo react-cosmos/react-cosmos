@@ -3,7 +3,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Slot } from 'react-plugin';
-import { XCircleIcon, RefreshCwIcon, MaximizeIcon } from '../../shared/icons';
+import {
+  XCircleIcon,
+  RefreshCwIcon,
+  MaximizeIcon,
+  HomeIcon
+} from '../../shared/icons';
 import { Button } from '../../shared/components';
 
 import type { UrlParams } from '../Router';
@@ -59,8 +64,8 @@ export function FixtureHeader({
         <Left>
           <BlankMessage>Fixture not found</BlankMessage>
           <Button
-            icon={<XCircleIcon />}
-            label="close"
+            icon={<HomeIcon />}
+            label="home"
             onClick={() => setUrlParams({})}
           />
         </Left>

@@ -29,12 +29,12 @@ it('renders missing state message', async () => {
   await waitForElement(() => getByText(/fixture not found/i));
 });
 
-it('renders close button', async () => {
+it('renders home button', async () => {
   const handleSetUrlParams = jest.fn();
   registerTestPlugins(handleSetUrlParams);
 
   const { getByText } = loadTestPlugins();
-  fireEvent.click(getByText(/close/));
+  fireEvent.click(getByText(/home/));
 
   expect(handleSetUrlParams).toBeCalledWith(expect.any(Object), {});
 });
