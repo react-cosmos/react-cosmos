@@ -47,6 +47,7 @@ Finally, you can create different package.json scripts to target each Cosmos con
 Cosmos Next introduces a more natural format for component fixtures: **Plain JSX elements.**
 
 ```jsx
+// __jsxfixtures__/disabled.js
 export default <Button disabled>Click me</Button>;
 ```
 
