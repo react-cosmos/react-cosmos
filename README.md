@@ -27,9 +27,9 @@
   </a>
 </p>
 
-> **[Cosmos Next is ready for beta testers](NEXT.md)** 🔥
+> _Cosmos Next_ is available for beta testers! 🎉
 >
-> Try it out in a new or existing project and let us know what you think!
+> **[Check out this guide to get started](NEXT.md)**
 
 Cosmos scans your project for components and enables you to:
 
