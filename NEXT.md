@@ -63,7 +63,7 @@ The JSX fixture format has a few advantages compared to the old format:
 
 ## Decorators
 
-Wrapping components inside fixtures is now easy, but can become repetitive. _Decorators_ can be used to apply one or more component wrappers to a group fixtures of automatically.
+Wrapping components inside fixtures is now easy, but can become repetitive. _Decorators_ can be used to apply one or more component wrappers to a group of fixtures automatically.
 
 A `cosmos.decorator` file looks like this:
 
