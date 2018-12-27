@@ -27,7 +27,7 @@
   </a>
 </p>
 
-> **[Cosmos Next is ready for beta testers 🔥](NEXT.md)**
+> **[Cosmos Next is ready for beta testers](NEXT.md)** 🔥
 >
 > Try it out in a new or existing project and let us know what you think!
 
