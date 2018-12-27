@@ -53,7 +53,7 @@ export default <Button disabled>Click me</Button>;
 
 The JSX fixture format has a few advantages compared to the old format:
 
-- Fixtures are no longer bound per one component
+- Fixtures are no longer bound to a single component
 - Adding one or more component wrappers per fixture is easy
 - Fixtures can be copy pasted inside the project source code
 - Props are easier to type-check
