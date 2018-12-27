@@ -28,7 +28,6 @@
 </p>
 
 > _Cosmos Next_ is available for beta testers! 🎉
->
 > **[Check out this guide to get started](NEXT.md)**
 
 Cosmos scans your project for components and enables you to:
