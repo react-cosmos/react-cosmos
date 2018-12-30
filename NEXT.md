@@ -2,7 +2,9 @@
 
 _Cosmos Next_ is available for beta testers! 🎉
 
-**Install `react-cosmos@next` to try it out.**
+**Install `react-cosmos@next` to get started.**
+
+> The [jsx-fixtures](examples/jsx-fixtures) example is a useful complement to this guide.
 
 ![Cosmos Next](next.png)
 
@@ -80,6 +82,8 @@ A main feature of the Cosmos Next redesign is the brand-new UI plugin architectu
 
 While we get feedback for the new JSX fixtures and decorators, I will continue to add feature parity with the old Cosmos UI and gradually release the powerful plugin API for mass consumption. Exciting things ahead!
 
-**Thanks for taking the time to try out the Cosmos Next beta! 🙏**
+---
+
+**Thanks for taking the time to try out the Cosmos Next preview! 🙏**
 
 For feedback [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new), [start a Spectrum thread](https://spectrum.chat/cosmos) or [go on Slack](https://join-react-cosmos.now.sh/).
