@@ -22,9 +22,7 @@ module.exports = {
 
 ### Hybrid setup (for existing Cosmos users)
 
-> Old fixtures don't work with the Cosmos Next (at least for now), and JSX fixtures don't work with the old Cosmos setup. But this doesn't mean you have to upgrade at once or choose between one Cosmos version in one project.
-
-You can create two Cosmos configs with different ports to keep your existing Cosmos setup as you experiment with Cosmos Next.
+Old fixtures don't work with the Cosmos Next (at least for now), and JSX fixtures don't work with the old Cosmos setup. But this doesn't mean you have to upgrade at once. You can create two Cosmos configs with different ports to keep your existing Cosmos setup as you experiment with Cosmos Next.
 
 ```js
 // cosmos-next.config.js
@@ -61,7 +59,7 @@ The JSX fixture format has a few advantages compared to the old format:
 - Props are easier to type-check
 - Writing fixtures doesn't feel like writing code for Cosmos
 
-> In the beta testing period **JSX fixtures need to be placed inside `__jsxfixtures__` directories.** This allows existing and _next_ Cosmos setups to coexist in the same project.
+> In the beta testing period **JSX fixtures need to be placed inside `__jsxfixtures__` directories.** This allows old and _next_ Cosmos setups to coexist in the same project.
 
 ## Decorators
 
