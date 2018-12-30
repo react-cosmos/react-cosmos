@@ -10,7 +10,7 @@ _Cosmos Next_ is available for beta testers! 🎉
 
 ## Config
 
-Add `next: true` to your existing Cosmos config (or to an empty config file). This will run the new version of React Cosmos.
+Add `next: true` to your existing Cosmos config (or to an empty config file). This will run Cosmos Next.
 
 ```js
 // cosmos.config.js
@@ -22,7 +22,7 @@ module.exports = {
 
 ### Hybrid setup (for existing Cosmos users)
 
-> Old fixtures don't work with the _next_ Cosmos setup (at least for now), and new fixtures don't work with the old Cosmos setup. But this doesn't mean you have to upgrade at once or choose between one Cosmos version in one project.
+> Old fixtures don't work with the Cosmos Next (at least for now), and JSX fixtures don't work with the old Cosmos setup. But this doesn't mean you have to upgrade at once or choose between one Cosmos version in one project.
 
 You can create two Cosmos configs with different ports to keep your existing Cosmos setup as you experiment with Cosmos Next.
 
