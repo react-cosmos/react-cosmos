@@ -118,9 +118,11 @@ it('resets fixture state in all renderer states', async () => {
       primaryRendererId: 'foo-renderer',
       renderers: expect.objectContaining({
         'foo-renderer': expect.objectContaining({
+          fixtures: mockFixtures,
           fixtureState: null
         }),
         'bar-renderer': expect.objectContaining({
+          fixtures: mockFixtures,
           fixtureState: null
         })
       })
