@@ -15,7 +15,7 @@ export function mount() {
       <PostMessage>{renderFixtureConnect}</PostMessage>
     ) : (
       // TODO: Allow user to input URL
-      <WebSockets url="localhost:8989">{renderFixtureConnect}</WebSockets>
+      <WebSockets url={location.origin}>{renderFixtureConnect}</WebSockets>
     ),
     getDomContainer()
   );
