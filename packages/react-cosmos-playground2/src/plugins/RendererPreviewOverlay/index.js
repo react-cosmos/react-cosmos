@@ -14,9 +14,13 @@ export function register() {
     getProps: ({ getStateOf, callMethod }) => {
       const { urlParams }: RouterState = getStateOf('router');
       const { fixturePath = null } = urlParams;
+      const primaryRendererState = callMethod(
+        'renderer.getPrimaryRendererState'
+      );
 
       return {
         fixturePath,
+        waitingForRenderer: !primaryRendererState,
         isValidFixturePath: fixturePath =>
           callMethod('renderer.isValidFixturePath', fixturePath)
       };

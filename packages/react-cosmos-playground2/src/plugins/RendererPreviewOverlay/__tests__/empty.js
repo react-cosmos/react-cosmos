@@ -12,6 +12,7 @@ function registerTestPlugins(isValidFixturePath) {
   register();
   mockState('router', { urlParams: { fixturePath: 'foo.js' } });
   mockMethod('renderer.isValidFixturePath', () => isValidFixturePath);
+  mockMethod('renderer.getPrimaryRendererState', () => ({}));
 }
 
 function getEmptyIllustration({ queryByTestId }) {
