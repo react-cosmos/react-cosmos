@@ -5,7 +5,8 @@ import React, { Component } from 'react';
 import {
   getPathTree,
   collapsePathTreeDirs,
-  hideFixtureSuffix
+  hideFixtureSuffix,
+  collapseSoloIndexes
 } from './pathTree';
 import { FixtureTreeNode } from './FixtureTreeNode';
 
@@ -51,9 +52,11 @@ export class FixtureTree extends Component<Props, State> {
       onSelect
     } = this.props;
     const { treeExpansion } = this.state;
-    const rootNode = hideFixtureSuffix(
-      collapsePathTreeDirs(getPathTree(fixtures), fixturesDir),
-      fixtureFileSuffix
+    const rootNode = collapseSoloIndexes(
+      hideFixtureSuffix(
+        collapsePathTreeDirs(getPathTree(fixtures), fixturesDir),
+        fixtureFileSuffix
+      )
     );
 
     return (

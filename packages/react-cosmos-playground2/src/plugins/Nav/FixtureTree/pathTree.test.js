@@ -3,24 +3,19 @@
 import {
   getPathTree,
   collapsePathTreeDirs,
-  hideFixtureSuffix
+  hideFixtureSuffix,
+  collapseSoloIndexes
 } from './pathTree';
 
 const paths = [
-  '__jsxfixtures__/welcomeMessage.js',
   'components/Counter/__jsxfixtures__/mockedState/largeNumber.js',
   'components/Counter/__jsxfixtures__/mockedState/smallNumber.js',
+  'components/WelcomeMessage/index.jsxfixture.js',
   'components/Counter/defaultState.jsxfixture.js'
 ];
 
 const tree = {
   dirs: {
-    __jsxfixtures__: {
-      dirs: {},
-      fixtures: {
-        welcomeMessage: '__jsxfixtures__/welcomeMessage.js'
-      }
-    },
     components: {
       dirs: {
         Counter: {
@@ -43,6 +38,12 @@ const tree = {
             'defaultState.jsxfixture':
               'components/Counter/defaultState.jsxfixture.js'
           }
+        },
+        WelcomeMessage: {
+          dirs: {},
+          fixtures: {
+            'index.jsxfixture': 'components/WelcomeMessage/index.jsxfixture.js'
+          }
         }
       }
     }
@@ -50,9 +51,6 @@ const tree = {
 };
 
 const collapsedTree = {
-  fixtures: {
-    welcomeMessage: '__jsxfixtures__/welcomeMessage.js'
-  },
   dirs: {
     components: {
       dirs: {
@@ -72,6 +70,12 @@ const collapsedTree = {
             'defaultState.jsxfixture':
               'components/Counter/defaultState.jsxfixture.js'
           }
+        },
+        WelcomeMessage: {
+          dirs: {},
+          fixtures: {
+            'index.jsxfixture': 'components/WelcomeMessage/index.jsxfixture.js'
+          }
         }
       }
     }
@@ -79,11 +83,42 @@ const collapsedTree = {
 };
 
 const suffixHiddenTree = {
-  fixtures: {
-    welcomeMessage: '__jsxfixtures__/welcomeMessage.js'
-  },
   dirs: {
     components: {
+      dirs: {
+        Counter: {
+          dirs: {
+            mockedState: {
+              dirs: {},
+              fixtures: {
+                largeNumber:
+                  'components/Counter/__jsxfixtures__/mockedState/largeNumber.js',
+                smallNumber:
+                  'components/Counter/__jsxfixtures__/mockedState/smallNumber.js'
+              }
+            }
+          },
+          fixtures: {
+            defaultState: 'components/Counter/defaultState.jsxfixture.js'
+          }
+        },
+        WelcomeMessage: {
+          dirs: {},
+          fixtures: {
+            index: 'components/WelcomeMessage/index.jsxfixture.js'
+          }
+        }
+      }
+    }
+  }
+};
+
+const collapsedIndexTree = {
+  dirs: {
+    components: {
+      fixtures: {
+        WelcomeMessage: 'components/WelcomeMessage/index.jsxfixture.js'
+      },
       dirs: {
         Counter: {
           dirs: {
@@ -118,4 +153,8 @@ it('hides .jsxfixture suffix', () => {
   expect(hideFixtureSuffix(collapsedTree, 'jsxfixture')).toEqual(
     suffixHiddenTree
   );
+});
+
+it('collapses solo index fixture', () => {
+  expect(collapseSoloIndexes(suffixHiddenTree)).toEqual(collapsedIndexTree);
 });

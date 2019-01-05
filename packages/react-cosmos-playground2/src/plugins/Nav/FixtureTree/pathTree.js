@@ -76,6 +76,31 @@ export function hideFixtureSuffix(
   };
 }
 
+export function collapseSoloIndexes(treeNode: TreeNode) {
+  let fixtures = treeNode.fixtures ? { ...treeNode.fixtures } : {};
+  let dirs = {};
+
+  forEach(treeNode.dirs, (dirNode, dirName) => {
+    const dirFixtures = dirNode.fixtures || {};
+    const containsSoloIndex =
+      Object.keys(dirFixtures).length === 1 && dirFixtures.index;
+
+    if (containsSoloIndex) {
+      fixtures = {
+        ...fixtures,
+        [dirName]: dirFixtures.index
+      };
+    } else {
+      dirs = {
+        ...dirs,
+        [dirName]: collapseSoloIndexes(dirNode)
+      };
+    }
+  });
+
+  return Object.keys(fixtures).length > 0 ? { fixtures, dirs } : { dirs };
+}
+
 function getBlankNode(): TreeNode {
   return {
     dirs: {}

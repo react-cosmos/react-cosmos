@@ -1,3 +1,3 @@
 // @flow
 
-export default 'Hello world!';
+export default 'Hello World!';
