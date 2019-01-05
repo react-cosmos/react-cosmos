@@ -95,23 +95,38 @@ class FixtureCaptureInner extends Component<InnerProps> {
   }
 
   componentDidMount() {
-    const { children, decoratorId, fixtureState } = this.props;
+    const { children, decoratorId, fixtureState, setFixtureState } = this.props;
+    const elPaths = findRelevantElementPaths(children);
 
-    findRelevantElementPaths(children).forEach(elPath => {
-      const compFxState = findCompFixtureState(
-        fixtureState,
-        decoratorId,
-        elPath
+    if (elPaths.length === 0) {
+      // Create empty fixture state (edge-case: but only if another
+      // FixtureCapture instance hasn't created any fixture state)
+      setFixtureState(
+        fixtureState =>
+          fixtureState || {
+            components: []
+          }
       );
+    } else {
+      elPaths.forEach(elPath => {
+        const compFxState = findCompFixtureState(
+          fixtureState,
+          decoratorId,
+          elPath
+        );
 
-      // Component fixture state can be provided before the fixture mounts (eg.
-      // a previous snapshot of a fixture state or the current fixture state
-      // from another renderer)
-      if (!compFxState) {
-        this.createFixtureState(elPath);
-      }
-    });
+        // Component fixture state can be provided before the fixture mounts (eg.
+        // a previous snapshot of a fixture state or the current fixture state
+        // from another renderer)
+        if (!compFxState) {
+          this.createFixtureState(elPath);
+        }
+      });
+    }
 
+    // The check should run even if no element paths are found at mount, because
+    // the fixture can change during the lifecycle of a FixtureCapture instance
+    // and the updated fixture might contain elements of stateful components
     this.scheduleStateCheck();
   }
 

@@ -32,6 +32,32 @@ function tests(mockConnect) {
     });
   });
 
+  it('creates empty fixture state', async () => {
+    await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
+      await mount(
+        getElement({ rendererId, fixtures, decorators: {} }),
+        async () => {
+          await selectFixture({
+            rendererId,
+            fixturePath: 'second',
+            fixtureState: null
+          });
+
+          await untilMessage({
+            type: 'fixtureStateChange',
+            payload: {
+              rendererId,
+              fixturePath: 'second',
+              fixtureState: {
+                components: []
+              }
+            }
+          });
+        }
+      );
+    });
+  });
+
   it('renders blank state after unselecting fixture', async () => {
     await mockConnect(
       async ({ getElement, selectFixture, unselectFixture }) => {
