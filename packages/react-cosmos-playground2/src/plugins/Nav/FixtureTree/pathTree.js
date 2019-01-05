@@ -1,6 +1,6 @@
 // @flow
 
-import { get, set, forEach } from 'lodash';
+import { get, set, forEach, mapValues, mapKeys } from 'lodash';
 
 import type { TreeNode } from './shared';
 
@@ -14,10 +14,10 @@ export function getPathTree(paths: string[]): TreeNode {
     const nodePath = namespace.map(p => `dirs.${p}`).join('.');
     const node = get(tree, nodePath) || getBlankNode();
 
-    const { dirs, fixtures = [] } = node;
+    const { dirs, fixtures = {} } = node;
     set(tree, nodePath, {
       dirs,
-      fixtures: [...fixtures, path]
+      fixtures: { ...fixtures, [getCleanFixtureName(path)]: path }
     });
   });
 
@@ -28,7 +28,7 @@ export function collapsePathTreeDirs(
   treeNode: TreeNode,
   collapsedDirName: string
 ): TreeNode {
-  let fixtures = treeNode.fixtures ? [...treeNode.fixtures] : [];
+  let fixtures = treeNode.fixtures ? { ...treeNode.fixtures } : {};
   let dirs = {};
 
   forEach(treeNode.dirs, (dirNode, dirName) => {
@@ -42,7 +42,10 @@ export function collapsePathTreeDirs(
     }
 
     if (dirNode.fixtures) {
-      fixtures.push(...dirNode.fixtures);
+      fixtures = {
+        ...fixtures,
+        ...dirNode.fixtures
+      };
     }
 
     forEach(dirNode.dirs, (childDirNode, childDirName) => {
@@ -50,12 +53,38 @@ export function collapsePathTreeDirs(
     });
   });
 
-  return fixtures.length > 0 ? { fixtures, dirs } : { dirs };
+  return Object.keys(fixtures).length > 0 ? { fixtures, dirs } : { dirs };
+}
+
+export function hideFixtureSuffix(
+  treeNode: TreeNode,
+  suffix: string
+): TreeNode {
+  const dirs = mapValues(treeNode.dirs, dirNode =>
+    hideFixtureSuffix(dirNode, suffix)
+  );
+
+  if (!treeNode.fixtures) {
+    return { dirs };
+  }
+
+  return {
+    fixtures: mapKeys(treeNode.fixtures, (fixturePath, fixtureName) =>
+      fixtureName.replace(`.${suffix}`, '')
+    ),
+    dirs
+  };
 }
 
 function getBlankNode(): TreeNode {
   return {
-    fixtures: [],
     dirs: {}
   };
+}
+
+function getCleanFixtureName(fixturePath) {
+  return fixturePath
+    .split('/')
+    .pop()
+    .replace(/\.(j|t)sx?$/, '');
 }

@@ -14,6 +14,7 @@ afterEach(cleanup);
 
 const projectId = 'mockProjectId';
 const fixturesDir = 'fixtures';
+const fixtureFileSuffix = 'fixture';
 const fixtures = [
   'fixtures/ein.js',
   'fixtures/zwei.js',
@@ -26,6 +27,7 @@ it('hides nested fixture', async () => {
     <FixtureTree
       projectId={projectId}
       fixturesDir={fixturesDir}
+      fixtureFileSuffix={fixtureFileSuffix}
       fixtures={fixtures}
       selectedFixturePath={null}
       onSelect={jest.fn()}
@@ -44,6 +46,7 @@ it('shows nested fixture upon expanding dir', async () => {
     <FixtureTree
       projectId={projectId}
       fixturesDir={fixturesDir}
+      fixtureFileSuffix={fixtureFileSuffix}
       fixtures={fixtures}
       selectedFixturePath={null}
       onSelect={jest.fn()}
@@ -64,6 +67,7 @@ it('hides nested fixture upon collapsing dir', async () => {
     <FixtureTree
       projectId={projectId}
       fixturesDir={fixturesDir}
+      fixtureFileSuffix={fixtureFileSuffix}
       fixtures={fixtures}
       selectedFixturePath={null}
       onSelect={jest.fn()}
@@ -91,6 +95,7 @@ it('loads persistent tree expansion state', async () => {
     <FixtureTree
       projectId={projectId}
       fixturesDir={fixturesDir}
+      fixtureFileSuffix={fixtureFileSuffix}
       fixtures={fixtures}
       selectedFixturePath={null}
       onSelect={jest.fn()}
@@ -113,6 +118,7 @@ it('persists tree expansion state', async () => {
     <FixtureTree
       projectId={projectId}
       fixturesDir={fixturesDir}
+      fixtureFileSuffix={fixtureFileSuffix}
       fixtures={fixtures}
       selectedFixturePath={null}
       onSelect={jest.fn()}

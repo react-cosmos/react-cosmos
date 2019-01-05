@@ -13,12 +13,17 @@ export function register() {
     slotName: 'left',
     render: Nav,
     getProps: ({ getConfigOf, getStateOf, callMethod }) => {
-      const { projectId, fixturesDir }: CoreConfig = getConfigOf('core');
+      const {
+        projectId,
+        fixturesDir,
+        fixtureFileSuffix
+      }: CoreConfig = getConfigOf('core');
       const { urlParams }: RouterState = getStateOf('router');
 
       return {
         projectId,
         fixturesDir,
+        fixtureFileSuffix,
         urlParams,
         primaryRendererState: callMethod('renderer.getPrimaryRendererState'),
         setUrlParams: newUrlParams => {

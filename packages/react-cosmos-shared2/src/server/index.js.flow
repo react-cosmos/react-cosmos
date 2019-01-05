@@ -2,7 +2,8 @@
 
 export type FindUserModulePathsArgs = {
   rootDir: string,
-  fixturesDir: string
+  fixturesDir: string,
+  fixtureFileSuffix: string
 };
 
 export type UserModulePaths = {

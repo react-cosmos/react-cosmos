@@ -11,12 +11,16 @@ const globAsync = promisify(glob);
 
 // TODO: Make paths configurable
 const FILE_PATH_IGNORE = '**/node_modules/**';
-const FIXTURE_MATCH = '**/<fixturesDir>/**/*.{js,jsx,ts,tsx}';
-const DECORATOR_MATCH = '**/cosmos.decorator.{js,jsx,ts,tsx}';
+const FIXTURE_PATTERNS = [
+  '**/<fixturesDir>/**/*.{js,jsx,ts,tsx}',
+  '**/*.<fixtureFileSuffix>.{js,jsx,ts,tsx}'
+];
+const DECORATOR_PATTERNS = ['**/cosmos.decorator.{js,jsx,ts,tsx}'];
 
 export async function findUserModulePaths({
   rootDir,
-  fixturesDir
+  fixturesDir,
+  fixtureFileSuffix
 }: FindUserModulePathsArgs): Promise<UserModulePaths> {
   const paths = await globAsync('**/*', {
     cwd: rootDir,
@@ -24,21 +28,24 @@ export async function findUserModulePaths({
     ignore: FILE_PATH_IGNORE
   });
 
-  const fixturePaths = getMatchingPaths(
-    paths,
-    getFixtureMatch({ fixturesDir })
-  );
-  const decoratorPaths = getMatchingPaths(paths, DECORATOR_MATCH);
+  const patterns = getFixturePatterns({ fixturesDir, fixtureFileSuffix });
+  const fixturePaths = getMatchingPaths(paths, patterns);
+  const decoratorPaths = getMatchingPaths(paths, DECORATOR_PATTERNS);
 
   // IDEA: Omit fixture paths that are also decorator paths. Relevant only if
   // it becomes useful to put decorator files inside fixture dirs.
   return { fixturePaths, decoratorPaths };
 }
 
-function getMatchingPaths(paths, match): string[] {
-  return micromatch(paths, match, { dot: true });
+function getMatchingPaths(paths, pattern): string[] {
+  return micromatch(paths, pattern, { dot: true });
 }
 
-function getFixtureMatch({ fixturesDir }): string {
-  return replaceKeys(FIXTURE_MATCH, { '<fixturesDir>': fixturesDir });
+function getFixturePatterns({ fixturesDir, fixtureFileSuffix }): string[] {
+  return FIXTURE_PATTERNS.map(pattern =>
+    replaceKeys(pattern, {
+      '<fixturesDir>': fixturesDir,
+      '<fixtureFileSuffix>': fixtureFileSuffix
+    })
+  );
 }

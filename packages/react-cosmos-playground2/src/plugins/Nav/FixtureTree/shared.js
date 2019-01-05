@@ -1,7 +1,11 @@
 // @flow
 
+type Fixtures = {
+  [fixtureName: string]: string
+};
+
 export type TreeNode = {
-  fixtures?: string[],
+  fixtures?: Fixtures,
   dirs: {
     [dirName: string]: TreeNode
   }
