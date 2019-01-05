@@ -11,10 +11,14 @@ export function findRelevantElementPaths(children: Children): string[] {
     const { type } = getExpectedElementAtPath(children, elPath);
 
     // TODO: Make this customizable
-    return (
-      typeof type !== 'string' &&
-      type.cosmosCapture !== false &&
-      type.name !== 'StyledComponent'
-    );
+    if (type === 'string') {
+      return isInterestingTag(type);
+    }
+
+    return type.cosmosCapture !== false && type.name !== 'StyledComponent';
   });
+}
+
+function isInterestingTag(tagName: string) {
+  return tagName !== 'div' && tagName !== 'span';
 }
