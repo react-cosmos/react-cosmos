@@ -12,11 +12,10 @@ import {
 import { Button } from '../../shared/components';
 
 import type { UrlParams } from '../Router';
-import type { RendererItemState } from '../Renderer';
 
 type Props = {
   urlParams: UrlParams,
-  primaryRendererState: null | RendererItemState,
+  waitingForRenderer: boolean,
   setUrlParams: UrlParams => void,
   isValidFixturePath: (fixturePath: string) => boolean
 };
@@ -24,7 +23,7 @@ type Props = {
 // TODO: Improve UX of refresh button, which seems like it's not doing anything
 export function FixtureHeader({
   urlParams,
-  primaryRendererState,
+  waitingForRenderer,
   setUrlParams,
   isValidFixturePath
 }: Props) {
@@ -34,7 +33,7 @@ export function FixtureHeader({
     return null;
   }
 
-  if (!primaryRendererState) {
+  if (waitingForRenderer) {
     return (
       <Container>
         <Left>

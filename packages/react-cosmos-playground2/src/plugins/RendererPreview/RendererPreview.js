@@ -21,7 +21,7 @@ export function RendererPreview({
         ref={onIframeRef}
         src={rendererUrl}
         frameBorder={0}
-        style={{ visibility: isFixtureLoaded ? 'visible' : 'hidden' }}
+        style={{ display: isFixtureLoaded ? 'block' : 'none' }}
       />
     </Container>
   );

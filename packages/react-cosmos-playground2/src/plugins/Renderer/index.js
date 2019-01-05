@@ -147,7 +147,7 @@ function handleRendererReadyResponse(
     // Reset fixture state of all renderers when primary renderer resets
     const prevRenderers = isPrimaryRenderer
       ? mapValues(prevState.renderers, rendererItemState => ({
-          rendererItemState,
+          ...rendererItemState,
           fixtureState: null
         }))
       : prevState.renderers;

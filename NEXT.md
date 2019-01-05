@@ -44,7 +44,9 @@ Finally, you can create different package.json scripts to target each Cosmos con
 
 ## JSX fixtures
 
-Cosmos Next introduces a more natural format for component fixtures: **Plain JSX elements.**
+Cosmos Next introduces a more natural format for component fixtures: **React elements.**
+
+> Think of JSX fixtures as the return value of a render function, or the first argument to `React.render`.
 
 ```jsx
 // __jsxfixtures__/disabled.js
@@ -58,6 +60,8 @@ The JSX fixture format has a few advantages compared to the old format:
 - Fixtures can be copy pasted inside the project source code
 - Props are easier to type-check
 - Writing fixtures doesn't feel like writing code for Cosmos
+
+The JSX fixture format also comes with a minor drawback: `React` must be imported in every fixture file.
 
 > In the beta testing period **JSX fixtures need to be placed inside `__jsxfixtures__` directories.** This allows old and _next_ Cosmos setups to coexist in the same project.
 

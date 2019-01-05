@@ -19,7 +19,7 @@ export function register() {
 
       return {
         urlParams,
-        primaryRendererState,
+        waitingForRenderer: !primaryRendererState,
         setUrlParams: newUrlParams =>
           callMethod('router.setUrlParams', newUrlParams),
         isValidFixturePath: fixturePath =>

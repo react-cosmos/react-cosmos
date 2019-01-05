@@ -20,7 +20,7 @@ function loadTestPlugins() {
   return render(<Slot name="fixtureHeader" />);
 }
 
-it('renders blank state message', async () => {
+it('renders waiting state message', async () => {
   registerTestPlugins();
   const { getByText } = loadTestPlugins();
 

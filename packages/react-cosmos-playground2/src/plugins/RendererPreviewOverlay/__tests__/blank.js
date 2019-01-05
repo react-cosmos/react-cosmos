@@ -12,10 +12,11 @@ function registerTestPlugins(urlParams) {
   register();
   mockState('router', { urlParams });
   mockMethod('renderer.isValidFixturePath', () => false);
+  mockMethod('renderer.getPrimaryRendererState', () => ({}));
 }
 
-function getBlankCanvasIllustration({ queryByTestId }) {
-  return queryByTestId('blankCanvas');
+function getBlankIllustration({ queryByTestId }) {
+  return queryByTestId('blank');
 }
 
 function loadTestPlugins() {
@@ -24,16 +25,16 @@ function loadTestPlugins() {
   return render(<Slot name="rendererPreviewOverlay" />);
 }
 
-it('renders "blank canvas" illustration', () => {
+it('renders "blank" illustration', () => {
   registerTestPlugins({});
   const renderer = loadTestPlugins();
 
-  expect(getBlankCanvasIllustration(renderer)).not.toBeNull();
+  expect(getBlankIllustration(renderer)).not.toBeNull();
 });
 
-it('does not render "blank canvas" illustration', () => {
+it('does not render "blank" illustration', () => {
   registerTestPlugins({ fixturePath: 'foo.js' });
   const renderer = loadTestPlugins();
 
-  expect(getBlankCanvasIllustration(renderer)).toBeNull();
+  expect(getBlankIllustration(renderer)).toBeNull();
 });
