@@ -30,17 +30,20 @@ We need a decent parity with the existing Cosmos UI to test JSX fixtures. This i
 
 ## Step 2: Get feedback on JSX fixtures
 
-- [ ] "How to use" document for beta testers
+- [x] "How to use" document for beta testers
 - [ ] Release 4.7
   - [ ] Blog post
 
 ## Next Steps
 
 - [ ] Basic Control Panel (props/state visualization and editing)
-- [ ] Port onboarding screens to new UI
 - [ ] More Control Panel features
   - [ ] General purpose UI controls mapped to render props
   - [ ] Option to reset or transition props (it currently does former)
+  - [ ] Capture state from Hooks
+- [ ] Multiple fixtures per file
+  - [ ] Named exports
+  - [ ] Dynamically generated n-fixtures
 - [ ] UI-generated fixture variations
 - [ ] Refine and document UI plugin API
   - [ ] Avoid superfluous React updates on plugin state change

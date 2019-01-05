@@ -35,6 +35,7 @@ import type {
 import type { FixtureCaptureProps } from '../index.js.flow';
 import type { ComponentRef } from './shared';
 
+// QUESTION: How can class component state capture be a FixtureCapture plugin?
 export function FixtureCapture({ children, decoratorId }: FixtureCaptureProps) {
   return (
     <FixtureContext.Consumer>
