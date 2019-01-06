@@ -75,7 +75,7 @@ Examples:
 1. `blankState.jsxfixture.js`
 2. `__jsxfixtures__/blankState.js`
 
-> In the beta testing period the file name convention is fixed to allow old and _next_ Cosmos setup to coexist. In the future it will be configurable.
+> In the beta testing period the file name convention is fixed to allow old and _next_ Cosmos setups to coexist. In the future it will be configurable.
 
 ## Decorators
 
