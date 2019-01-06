@@ -1,6 +1,6 @@
 // @flow
 
 import React from 'react';
-import { Counter } from '..';
+import { Counter } from '.';
 
 export default <Counter suffix="times" />;

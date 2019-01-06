@@ -1,6 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
+import { map } from 'lodash';
 import styled from 'styled-components';
 import {
   ChevronRightIcon,
@@ -29,7 +30,7 @@ export class FixtureTreeNode extends Component<Props> {
       onSelect,
       onToggleExpansion
     } = this.props;
-    const { fixtures = [], dirs } = node;
+    const { fixtures, dirs } = node;
     const dirNames = Object.keys(dirs);
     const nodePath = getNodePath(parents);
     const isRootNode = parents.length === 0;
@@ -55,14 +56,14 @@ export class FixtureTreeNode extends Component<Props> {
         )}
         {isExpanded && (
           <>
-            {fixtures.map(fixturePath => (
+            {map(fixtures, (fixturePath, fixtureName) => (
               <ListItem
                 key={fixturePath}
                 indentLevel={parents.length}
                 selected={fixturePath === selectedFixturePath}
                 onClick={this.createSelectHandler(fixturePath)}
               >
-                <Label>{getCleanFixtureName(fixturePath)}</Label>
+                <Label>{fixtureName}</Label>
               </ListItem>
             ))}
             {dirNames.map(dirName => {
@@ -146,11 +147,4 @@ function getLeftPadding(depth) {
 
 function getNodePath(nodeParents: string[]) {
   return nodeParents.join('/');
-}
-
-function getCleanFixtureName(fixturePath) {
-  return fixturePath
-    .split('/')
-    .pop()
-    .replace(/\.(j|t)sx?$/, '');
 }

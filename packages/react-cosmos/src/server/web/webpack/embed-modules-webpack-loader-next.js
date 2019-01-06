@@ -4,7 +4,7 @@ import { relative } from 'path';
 import { getCosmosConfig } from 'react-cosmos-config';
 import { slash } from 'react-cosmos-shared/server';
 import { findUserModulePaths } from 'react-cosmos-shared2/server';
-import { FIXTURES_DIR } from '../../shared/config-next';
+import { FIXTURES_DIR, FIXTURE_FILE_SUFFIX } from '../../shared/config-next';
 
 import type { Config } from 'react-cosmos-flow/config';
 
@@ -23,10 +23,10 @@ module.exports = async function embedModules(source: string) {
   // https://github.com/webpack/webpack/issues/222#issuecomment-40691546
   watchDirs.forEach(watchDir => this.addContextDependency(watchDir));
 
-  const fixturesDir = FIXTURES_DIR;
   const { fixturePaths, decoratorPaths } = await findUserModulePaths({
     rootDir,
-    fixturesDir
+    fixturesDir: FIXTURES_DIR,
+    fixtureFileSuffix: FIXTURE_FILE_SUFFIX
   });
 
   const res = source

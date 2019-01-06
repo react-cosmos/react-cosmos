@@ -2,7 +2,8 @@
 
 export type CoreConfig = {
   projectId: string,
-  fixturesDir: string
+  fixturesDir: string,
+  fixtureFileSuffix: string
 };
 
 export type RendererConfig = {

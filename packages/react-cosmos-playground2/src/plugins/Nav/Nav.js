@@ -11,6 +11,7 @@ import type { Storage } from '../Storage';
 type Props = {
   projectId: string,
   fixturesDir: string,
+  fixtureFileSuffix: string,
   urlParams: UrlParams,
   primaryRendererState: null | RendererItemState,
   setUrlParams: (urlParams: UrlParams) => void,
@@ -22,6 +23,7 @@ export class Nav extends Component<Props> {
     const {
       projectId,
       fixturesDir,
+      fixtureFileSuffix,
       urlParams,
       primaryRendererState,
       storage
@@ -43,6 +45,7 @@ export class Nav extends Component<Props> {
         <FixtureTree
           projectId={projectId}
           fixturesDir={fixturesDir}
+          fixtureFileSuffix={fixtureFileSuffix}
           fixtures={fixtures}
           selectedFixturePath={fixturePath}
           onSelect={this.handleFixtureSelect}

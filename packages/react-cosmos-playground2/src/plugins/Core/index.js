@@ -12,7 +12,8 @@ export function register() {
     name: 'core',
     defaultConfig: {
       projectId: 'defaultProjectId',
-      fixturesDir: '__fixtures__'
+      fixturesDir: '__fixtures__',
+      fixtureFileSuffix: 'fixture'
     }
   });
 

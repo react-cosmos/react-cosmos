@@ -2,7 +2,12 @@
 
 import styled from 'styled-components';
 import React, { Component } from 'react';
-import { getPathTree, collapsePathTreeDirs } from './pathTree';
+import {
+  getPathTree,
+  collapsePathTreeDirs,
+  hideFixtureSuffix,
+  collapseSoloIndexes
+} from './pathTree';
 import { FixtureTreeNode } from './FixtureTreeNode';
 
 import type { FixtureNames } from 'react-cosmos-shared2/renderer';
@@ -12,6 +17,7 @@ import type { TreeExpansion } from './shared';
 type Props = {
   projectId: string,
   fixturesDir: string,
+  fixtureFileSuffix: string,
   fixtures: FixtureNames,
   selectedFixturePath: null | string,
   onSelect: (path: string) => mixed,
@@ -38,9 +44,20 @@ export class FixtureTree extends Component<Props, State> {
   }
 
   render() {
-    const { fixturesDir, fixtures, selectedFixturePath, onSelect } = this.props;
+    const {
+      fixturesDir,
+      fixtureFileSuffix,
+      fixtures,
+      selectedFixturePath,
+      onSelect
+    } = this.props;
     const { treeExpansion } = this.state;
-    const rootNode = collapsePathTreeDirs(getPathTree(fixtures), fixturesDir);
+
+    const rootNode = getTreeFromFixtures({
+      fixtures,
+      fixturesDir,
+      fixtureFileSuffix
+    });
 
     return (
       <Container>
@@ -84,6 +101,15 @@ export class FixtureTree extends Component<Props, State> {
   getStorageKey() {
     return `cosmos-treeExpansion-${this.props.projectId}`;
   }
+}
+
+function getTreeFromFixtures({ fixtures, fixturesDir, fixtureFileSuffix }) {
+  let rootNode = getPathTree(fixtures);
+  rootNode = collapsePathTreeDirs(rootNode, fixturesDir);
+  rootNode = hideFixtureSuffix(rootNode, fixtureFileSuffix);
+  rootNode = collapseSoloIndexes(rootNode);
+
+  return rootNode;
 }
 
 // Reason for inline-block: https://stackoverflow.com/a/53895622/128816

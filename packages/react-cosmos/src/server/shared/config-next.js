@@ -8,6 +8,7 @@ import type { PlaygroundConfig } from 'react-cosmos-playground2';
 // promotes designing of good defaults.
 // Related https://github.com/react-cosmos/react-cosmos/issues/488
 export const FIXTURES_DIR = '__jsxfixtures__';
+export const FIXTURE_FILE_SUFFIX = 'jsxfixture';
 
 export function getPlaygroundConfig({
   playgroundOpts,
@@ -19,7 +20,8 @@ export function getPlaygroundConfig({
   return {
     core: {
       projectId: playgroundOpts.projectKey,
-      fixturesDir: FIXTURES_DIR
+      fixturesDir: FIXTURES_DIR,
+      fixtureFileSuffix: FIXTURE_FILE_SUFFIX
     },
     renderer: {
       webUrl:
