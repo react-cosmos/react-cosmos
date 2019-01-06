@@ -30,7 +30,7 @@ export class FixtureTreeNode extends Component<Props> {
       onSelect,
       onToggleExpansion
     } = this.props;
-    const { fixtures = {}, dirs } = node;
+    const { fixtures, dirs } = node;
     const dirNames = Object.keys(dirs);
     const nodePath = getNodePath(parents);
     const isRootNode = parents.length === 0;

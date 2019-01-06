@@ -5,7 +5,7 @@ type Fixtures = {
 };
 
 export type TreeNode = {
-  fixtures?: Fixtures,
+  fixtures: Fixtures,
   dirs: {
     [dirName: string]: TreeNode
   }

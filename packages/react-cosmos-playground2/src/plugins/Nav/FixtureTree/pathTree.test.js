@@ -8,6 +8,7 @@ import {
 } from './pathTree';
 
 const paths = [
+  'helloWorld.jsxfixture.js',
   'components/Counter/__jsxfixtures__/mockedState/largeNumber.js',
   'components/Counter/__jsxfixtures__/mockedState/smallNumber.js',
   'components/WelcomeMessage/index.jsxfixture.js',
@@ -15,12 +16,21 @@ const paths = [
 ];
 
 const tree = {
+  fixtures: {
+    'helloWorld.jsxfixture': 'helloWorld.jsxfixture.js'
+  },
   dirs: {
     components: {
+      fixtures: {},
       dirs: {
         Counter: {
+          fixtures: {
+            'defaultState.jsxfixture':
+              'components/Counter/defaultState.jsxfixture.js'
+          },
           dirs: {
             __jsxfixtures__: {
+              fixtures: {},
               dirs: {
                 mockedState: {
                   dirs: {},
@@ -33,17 +43,13 @@ const tree = {
                 }
               }
             }
-          },
-          fixtures: {
-            'defaultState.jsxfixture':
-              'components/Counter/defaultState.jsxfixture.js'
           }
         },
         WelcomeMessage: {
-          dirs: {},
           fixtures: {
             'index.jsxfixture': 'components/WelcomeMessage/index.jsxfixture.js'
-          }
+          },
+          dirs: {}
         }
       }
     }
@@ -51,19 +57,23 @@ const tree = {
 };
 
 const collapsedTree = {
+  fixtures: {
+    'helloWorld.jsxfixture': 'helloWorld.jsxfixture.js'
+  },
   dirs: {
     components: {
+      fixtures: {},
       dirs: {
         Counter: {
           dirs: {
             mockedState: {
-              dirs: {},
               fixtures: {
                 largeNumber:
                   'components/Counter/__jsxfixtures__/mockedState/largeNumber.js',
                 smallNumber:
                   'components/Counter/__jsxfixtures__/mockedState/smallNumber.js'
-              }
+              },
+              dirs: {}
             }
           },
           fixtures: {
@@ -72,10 +82,10 @@ const collapsedTree = {
           }
         },
         WelcomeMessage: {
-          dirs: {},
           fixtures: {
             'index.jsxfixture': 'components/WelcomeMessage/index.jsxfixture.js'
-          }
+          },
+          dirs: {}
         }
       }
     }
@@ -83,10 +93,17 @@ const collapsedTree = {
 };
 
 const suffixHiddenTree = {
+  fixtures: {
+    helloWorld: 'helloWorld.jsxfixture.js'
+  },
   dirs: {
     components: {
+      fixtures: {},
       dirs: {
         Counter: {
+          fixtures: {
+            defaultState: 'components/Counter/defaultState.jsxfixture.js'
+          },
           dirs: {
             mockedState: {
               dirs: {},
@@ -97,16 +114,13 @@ const suffixHiddenTree = {
                   'components/Counter/__jsxfixtures__/mockedState/smallNumber.js'
               }
             }
-          },
-          fixtures: {
-            defaultState: 'components/Counter/defaultState.jsxfixture.js'
           }
         },
         WelcomeMessage: {
-          dirs: {},
           fixtures: {
             index: 'components/WelcomeMessage/index.jsxfixture.js'
-          }
+          },
+          dirs: {}
         }
       }
     }
@@ -114,6 +128,9 @@ const suffixHiddenTree = {
 };
 
 const collapsedIndexTree = {
+  fixtures: {
+    helloWorld: 'helloWorld.jsxfixture.js'
+  },
   dirs: {
     components: {
       fixtures: {
@@ -121,19 +138,19 @@ const collapsedIndexTree = {
       },
       dirs: {
         Counter: {
+          fixtures: {
+            defaultState: 'components/Counter/defaultState.jsxfixture.js'
+          },
           dirs: {
             mockedState: {
-              dirs: {},
               fixtures: {
                 largeNumber:
                   'components/Counter/__jsxfixtures__/mockedState/largeNumber.js',
                 smallNumber:
                   'components/Counter/__jsxfixtures__/mockedState/smallNumber.js'
-              }
+              },
+              dirs: {}
             }
-          },
-          fixtures: {
-            defaultState: 'components/Counter/defaultState.jsxfixture.js'
           }
         }
       }

@@ -5,38 +5,22 @@ import { get, set, forEach, mapValues, mapKeys } from 'lodash';
 import type { TreeNode } from './shared';
 
 export function getPathTree(paths: string[]): TreeNode {
-  const tree = getBlankNode();
+  const rootNode = getBlankNode();
+  paths.forEach(path => addFixtureToTree(rootNode, path));
 
-  paths.forEach(path => {
-    const namespace = path.split('/');
-    namespace.pop();
-
-    const nodePath = namespace.map(p => `dirs.${p}`).join('.');
-    const node = get(tree, nodePath) || getBlankNode();
-
-    const { dirs, fixtures = {} } = node;
-    set(tree, nodePath, {
-      dirs,
-      fixtures: { ...fixtures, [getCleanFixtureName(path)]: path }
-    });
-  });
-
-  return tree;
+  return rootNode;
 }
 
 export function collapsePathTreeDirs(
   treeNode: TreeNode,
   collapsedDirName: string
 ): TreeNode {
-  let fixtures = treeNode.fixtures ? { ...treeNode.fixtures } : {};
+  let fixtures = { ...treeNode.fixtures };
   let dirs = {};
 
   forEach(treeNode.dirs, (dirNode, dirName) => {
     if (dirName !== collapsedDirName) {
-      dirs = {
-        ...dirs,
-        [dirName]: collapsePathTreeDirs(dirNode, collapsedDirName)
-      };
+      dirs[dirName] = collapsePathTreeDirs(dirNode, collapsedDirName);
 
       return;
     }
@@ -53,7 +37,7 @@ export function collapsePathTreeDirs(
     });
   });
 
-  return Object.keys(fixtures).length > 0 ? { fixtures, dirs } : { dirs };
+  return { fixtures, dirs };
 }
 
 export function hideFixtureSuffix(
@@ -63,21 +47,15 @@ export function hideFixtureSuffix(
   const dirs = mapValues(treeNode.dirs, dirNode =>
     hideFixtureSuffix(dirNode, suffix)
   );
+  const fixtures = mapKeys(treeNode.fixtures, (fixturePath, fixtureName) =>
+    fixtureName.replace(new RegExp(`\\.${suffix}$`), '')
+  );
 
-  if (!treeNode.fixtures) {
-    return { dirs };
-  }
-
-  return {
-    fixtures: mapKeys(treeNode.fixtures, (fixturePath, fixtureName) =>
-      fixtureName.replace(new RegExp(`\\.${suffix}$`), '')
-    ),
-    dirs
-  };
+  return { fixtures, dirs };
 }
 
-export function collapseSoloIndexes(treeNode: TreeNode) {
-  let fixtures = treeNode.fixtures ? { ...treeNode.fixtures } : {};
+export function collapseSoloIndexes(treeNode: TreeNode): TreeNode {
+  let fixtures = { ...treeNode.fixtures };
   let dirs = {};
 
   forEach(treeNode.dirs, (dirNode, dirName) => {
@@ -86,30 +64,50 @@ export function collapseSoloIndexes(treeNode: TreeNode) {
       Object.keys(dirFixtures).length === 1 && dirFixtures.index;
 
     if (containsSoloIndex) {
-      fixtures = {
-        ...fixtures,
-        [dirName]: dirFixtures.index
-      };
+      fixtures[dirName] = dirFixtures.index;
     } else {
-      dirs = {
-        ...dirs,
-        [dirName]: collapseSoloIndexes(dirNode)
-      };
+      dirs[dirName] = collapseSoloIndexes(dirNode);
     }
   });
 
-  return Object.keys(fixtures).length > 0 ? { fixtures, dirs } : { dirs };
+  return { fixtures, dirs };
+}
+
+function addFixtureToTree(rootNode: TreeNode, fixturePath: string) {
+  const namespace = fixturePath.split('/');
+  const fixtureName = getCleanFixtureName(namespace.pop());
+
+  if (namespace.length === 0) {
+    rootNode.fixtures[fixtureName] = fixturePath;
+
+    return;
+  }
+
+  let curNodeDepth = 1;
+  let curNode;
+  do {
+    const partialNamespace = namespace.slice(0, curNodeDepth);
+    const partialPath = partialNamespace.map(p => `dirs.${p}`).join('.');
+
+    curNode = get(rootNode, partialPath);
+    if (!curNode) {
+      curNode = getBlankNode();
+      set(rootNode, partialPath, curNode);
+    }
+
+    curNodeDepth += 1;
+  } while (curNodeDepth <= namespace.length);
+
+  curNode.fixtures[fixtureName] = fixturePath;
 }
 
 function getBlankNode(): TreeNode {
   return {
+    fixtures: {},
     dirs: {}
   };
 }
 
-function getCleanFixtureName(fixturePath) {
-  return fixturePath
-    .split('/')
-    .pop()
-    .replace(/\.(j|t)sx?$/, '');
+function getCleanFixtureName(fixtureName) {
+  return fixtureName.replace(/\.(j|t)sx?$/, '');
 }
