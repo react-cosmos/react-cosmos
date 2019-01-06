@@ -70,7 +70,7 @@ export function hideFixtureSuffix(
 
   return {
     fixtures: mapKeys(treeNode.fixtures, (fixturePath, fixtureName) =>
-      fixtureName.replace(`.${suffix}`, '')
+      fixtureName.replace(new RegExp(`\\.${suffix}$`), '')
     ),
     dirs
   };
