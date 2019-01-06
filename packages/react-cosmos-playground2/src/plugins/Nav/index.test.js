@@ -22,7 +22,7 @@ const primaryRendererState = {
 function registerTestPlugins({ urlParams = {} } = {}) {
   register();
 
-  mockConfig('core', { fixturesDir: 'fixtures' });
+  mockConfig('core', { fixturesDir: 'fixtures', fixtureFileSuffix: 'fixture' });
   mockState('router', { urlParams });
   mockState('renderer', {
     primaryRendererId: 'foo-renderer',
