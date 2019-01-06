@@ -63,7 +63,19 @@ The JSX fixture format has a few advantages compared to the old format:
 
 The JSX fixture format also comes with a minor drawback: `React` must be imported in every fixture file.
 
-> In the beta testing period **JSX fixtures need to be placed inside `__jsxfixtures__` directories.** This allows old and _next_ Cosmos setups to coexist in the same project.
+## How to create fixture files
+
+Two options:
+
+1. End fixture file names with `.jsxfixture.{js,jsx,ts,tsx}`
+2. Put fixture files inside `__jsxfixtures__`
+
+Examples:
+
+1. `blankState.jsxfixture.js`
+2. `__jsxfixtures__/blankState.js`
+
+> In the beta testing period the file name convention is fixed to allow old and _next_ Cosmos setup to coexist. In the future it will be configurable.
 
 ## Decorators
 
