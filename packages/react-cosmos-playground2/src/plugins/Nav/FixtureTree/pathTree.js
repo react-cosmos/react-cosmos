@@ -48,7 +48,7 @@ export function hideFixtureSuffix(
     hideFixtureSuffix(dirNode, suffix)
   );
   const fixtures = mapKeys(treeNode.fixtures, (fixturePath, fixtureName) =>
-    fixtureName.replace(new RegExp(`\\.${suffix}$`), '')
+    removeFixtureNameSuffix(fixtureName, suffix)
   );
 
   return { fixtures, dirs };
@@ -75,7 +75,7 @@ export function collapseSoloIndexes(treeNode: TreeNode): TreeNode {
 
 function addFixtureToTree(rootNode: TreeNode, fixturePath: string) {
   const namespace = fixturePath.split('/');
-  const fixtureName = getCleanFixtureName(namespace.pop());
+  const fixtureName = removeFixtureNameExtension(namespace.pop());
 
   if (namespace.length === 0) {
     rootNode.fixtures[fixtureName] = fixturePath;
@@ -108,6 +108,10 @@ function getBlankNode(): TreeNode {
   };
 }
 
-function getCleanFixtureName(fixtureName) {
+function removeFixtureNameExtension(fixtureName) {
   return fixtureName.replace(/\.(j|t)sx?$/, '');
+}
+
+function removeFixtureNameSuffix(fixtureNameWithoutExtension, suffix) {
+  return fixtureNameWithoutExtension.replace(new RegExp(`\\.${suffix}$`), '');
 }
