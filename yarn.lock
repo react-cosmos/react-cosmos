@@ -13397,10 +13397,10 @@ react-plugin@^0.1.1:
     prop-types "^15.6.2"
     react-is "^16.4.1"
 
-react-plugin@^1.0.0-alpha.14:
-  version "1.0.0-alpha.14"
-  resolved "https://registry.yarnpkg.com/react-plugin/-/react-plugin-1.0.0-alpha.14.tgz#3083ee3969e6d3c7ab58a6259d4c4c1158561965"
-  integrity sha512-7ccc8GppZLQBIAmK6dHHCJFR6UBmdK7xlB45Hsy1AcXsUFWPgc2ZGKKkDd3YnsmDQg2DW4nnS3eX90LLcTlUnA==
+react-plugin@^1.0.0-alpha.15:
+  version "1.0.0-alpha.15"
+  resolved "https://registry.yarnpkg.com/react-plugin/-/react-plugin-1.0.0-alpha.15.tgz#6c9d4df1077e567a6ebd391be638751918d90ddf"
+  integrity sha512-k+z22JBbbzCa5EqZe2taQ0ZM74nFgd8Q1wWsK+RGUf4YZjFRwvdTcbC2jCB54omIK2n1hhb5gYXbrRKqQtw8QQ==
   dependencies:
     "@skidding/linked-list" "^1.0.2"
     array-find-index "^1.0.2"
