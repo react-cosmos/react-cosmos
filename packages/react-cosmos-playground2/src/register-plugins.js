@@ -1,6 +1,10 @@
 // @flow
 
-import { enablePlugin } from 'react-plugin';
+import { unregisterPlugins, enablePlugin } from 'react-plugin';
+
+// Unregistering plugins first makes this file hot-reloadable because a plugin
+// can only be registered once with a given name
+unregisterPlugins();
 
 // TODO: Discover plugins in codebase automatically
 require('./plugins/Storage').register();
