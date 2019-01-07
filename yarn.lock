@@ -13397,16 +13397,16 @@ react-plugin@^0.1.1:
     prop-types "^15.6.2"
     react-is "^16.4.1"
 
-react-plugin@^1.0.0-alpha.12:
-  version "1.0.0-alpha.12"
-  resolved "https://registry.yarnpkg.com/react-plugin/-/react-plugin-1.0.0-alpha.12.tgz#4c94c96d4c965a41acaf6faef9bbdcb240bdf0f2"
-  integrity sha512-MFzFSB/cqt4bqr7u7nf5shYJJYAqQbyQVw+wHNI+njCTSzSWlH50D73XZiWta3OmN7OG9IlButCbNWTezpdaVg==
+react-plugin@^1.0.0-alpha.13:
+  version "1.0.0-alpha.13"
+  resolved "https://registry.yarnpkg.com/react-plugin/-/react-plugin-1.0.0-alpha.13.tgz#8e5b87cd16b4f9e1bf547ce530074506d7eb1328"
+  integrity sha512-HcHizQmuHVO+nQZ2yZ1r14GFd1J/6HIA0/E2pDO5wZSgax3k2Iuvnpvg2xyEl+yaUvgh4rCIof+SfLgvSnUHMg==
   dependencies:
     "@skidding/linked-list" "^1.0.2"
     array-find-index "^1.0.2"
     lodash "^4.17.11"
     react-is "^16.6.3"
-    ui-plugin "^1.0.0-alpha.20"
+    ui-plugin "^1.0.0-alpha.21"
 
 react-proxy@^1.1.7:
   version "1.1.8"
@@ -15718,10 +15718,10 @@ uglify-to-browserify@~1.0.0:
   resolved "https://registry.yarnpkg.com/uglify-to-browserify/-/uglify-to-browserify-1.0.2.tgz#6e0924d6bda6b5afe349e39a6d632850a0f882b7"
   integrity sha1-bgkk1r2mta/jSeOabWMoUKD4grc=
 
-ui-plugin@^1.0.0-alpha.20:
-  version "1.0.0-alpha.20"
-  resolved "https://registry.yarnpkg.com/ui-plugin/-/ui-plugin-1.0.0-alpha.20.tgz#c4f37518d94155c522c581db74ca2fc007dfdbbe"
-  integrity sha512-fed1QtPMhpG0jmOPUQuquei1yOK3+118GQzzmRbX2wM5uLmWl9Pp8hhk3U96YBzCUrSS/7VKx7jjQ9w5y8QgGw==
+ui-plugin@^1.0.0-alpha.21:
+  version "1.0.0-alpha.21"
+  resolved "https://registry.yarnpkg.com/ui-plugin/-/ui-plugin-1.0.0-alpha.21.tgz#addc35c8635317cbc19ce9c4ce3a9819b4430f9a"
+  integrity sha512-aPzl6J9Mg174OQh+909rgOXso6FTmXSeQGvPnLDXon1vdW1z5rimWTCiwIhVyO0+cAaVVNgezWqfcWP1lYzffw==
   dependencies:
     lodash "^4.17.11"
 

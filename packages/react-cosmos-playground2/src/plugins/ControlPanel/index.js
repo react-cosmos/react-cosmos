@@ -8,7 +8,7 @@ import type { RouterState } from '../Router';
 import type { RendererConfig, RendererState } from '../Renderer';
 
 export function register() {
-  const { pluginId, plug } = registerPlugin<RendererConfig, RendererState>({
+  const { plug } = registerPlugin<RendererConfig, RendererState>({
     name: 'controlPanel'
   });
 
@@ -37,6 +37,4 @@ export function register() {
       };
     }
   });
-
-  return pluginId;
 }
