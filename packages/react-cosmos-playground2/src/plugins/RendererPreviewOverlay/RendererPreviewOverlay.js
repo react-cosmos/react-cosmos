@@ -69,6 +69,7 @@ const Container = styled.div`
 
 const IllustrationContainer = styled.div`
   --size: 256px;
+  display: flex;
   width: var(--size);
   height: var(--size);
 `;
