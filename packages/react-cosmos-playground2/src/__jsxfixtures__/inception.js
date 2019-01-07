@@ -1,19 +1,6 @@
 // @flow
 
 import React from 'react';
-import { loadPlugins, Slot } from 'react-plugin';
-
-loadPlugins({
-  config: {
-    core: {
-      projectId: 'testProjectId',
-      fixturesDir: '__jsxfixtures__'
-    },
-    renderer: {
-      webUrl: '/_loader.html',
-      enableRemote: false
-    }
-  }
-});
+import { Slot } from 'react-plugin';
 
 export default <Slot name="root" />;
