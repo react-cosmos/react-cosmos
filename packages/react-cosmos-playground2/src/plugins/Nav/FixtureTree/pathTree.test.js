@@ -11,8 +11,8 @@ const paths = [
   'helloWorld.jsxfixture.js',
   'components/Counter/__jsxfixtures__/mockedState/largeNumber.js',
   'components/Counter/__jsxfixtures__/mockedState/smallNumber.js',
-  'components/WelcomeMessage/index.jsxfixture.js',
-  'components/Counter/defaultState.jsxfixture.js'
+  'components/Counter/defaultState.jsxfixture.js',
+  'components/WelcomeMessage/index.jsxfixture.js'
 ];
 
 const tree = {
