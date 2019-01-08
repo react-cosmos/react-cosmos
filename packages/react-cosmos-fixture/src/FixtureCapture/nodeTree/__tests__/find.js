@@ -75,10 +75,6 @@ it('finds nested paths', () => {
   });
 });
 
-it('finds no paths on function children', () => {
-  expect(findElementPaths(() => null)).toEqual([]);
-});
-
 it('only finds paths outside function children', () => {
   const Comp = () => null;
   expect(

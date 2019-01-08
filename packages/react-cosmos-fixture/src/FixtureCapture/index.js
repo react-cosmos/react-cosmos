@@ -15,12 +15,12 @@ import { FixtureContext } from '../FixtureContext';
 import {
   getElementAtPath,
   getExpectedElementAtPath,
-  areChildrenEqual
-} from './childrenTree';
+  areNodesEqual
+} from './nodeTree';
 import { getComponentName } from './getComponentName';
 import { getElementRefType } from './getElementRefType';
 import { findRelevantElementPaths } from './findRelevantElementPaths';
-import { extendChildPropsWithFixtureState } from './extendChildPropsWithFixtureState';
+import { extendPropsWithFixtureState } from './extendPropsWithFixtureState';
 import {
   attachChildRefs,
   deleteRefHandler,
@@ -83,11 +83,7 @@ class FixtureCaptureInner extends Component<InnerProps> {
     const { children, decoratorId, fixtureState } = this.props;
 
     return attachChildRefs({
-      children: extendChildPropsWithFixtureState(
-        children,
-        fixtureState,
-        decoratorId
-      ),
+      node: extendPropsWithFixtureState(children, fixtureState, decoratorId),
       onRef: this.handleRef,
       decoratorElRef: this,
       decoratorId
@@ -145,7 +141,7 @@ class FixtureCaptureInner extends Component<InnerProps> {
     const { children, decoratorId, fixtureState } = this.props;
 
     // Children change when the fixture is updated at runtime (eg. via HMR)
-    if (!areChildrenEqual(nextProps.children, children)) {
+    if (!areNodesEqual(nextProps.children, children)) {
       return true;
     }
 
@@ -200,7 +196,7 @@ class FixtureCaptureInner extends Component<InnerProps> {
       // the fixture.
       !compFxState.props ||
       // b) mocked props from fixture elemented changed (likely via HMR).
-      !areChildrenEqual(childEl, getElementAtPath(prevProps.children, elPath))
+      !areNodesEqual(childEl, getElementAtPath(prevProps.children, elPath))
     ) {
       this.updateFixtureState({ elPath, props: childEl.props });
     }

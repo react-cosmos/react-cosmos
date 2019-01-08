@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { isEqual } from 'lodash';
+import memoize from 'memoize-one';
 import { FixtureProvider } from '../FixtureProvider';
 import { updateState } from 'react-cosmos-shared2/util';
 
@@ -10,7 +11,7 @@ import type {
   SetFixtureState
 } from 'react-cosmos-shared2/fixtureState';
 import type { RendererRequest } from 'react-cosmos-shared2/renderer';
-import type { FixtureConnectProps } from '../index.js.flow';
+import type { Decorators, FixtureConnectProps } from '../index.js.flow';
 
 type State = {
   fixturePath: null | string,
@@ -64,6 +65,12 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     this.props.unsubscribe();
   }
 
+  shouldComponentUpdate(prevProps: FixtureConnectProps, prevState: State) {
+    // This check exists mainly to prevent updating the fixture tree when
+    // fixture state setters resulted in no fixture state change
+    return !isEqual(this.props, prevProps) || !isEqual(this.state, prevState);
+  }
+
   render() {
     const { fixtures, decorators } = this.props;
     const { fixturePath, fixtureState, renderKey } = this.state;
@@ -83,7 +90,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
         // Ensure no state leaks between fixture selections, even though under
         // normal circumstances f(fixture, fixtureState) is deterministic.
         key={renderKey}
-        decorators={getDecoratorsForFixturePath(decorators, fixturePath)}
+        decorators={this.getDecoratorsForFixturePath(decorators, fixturePath)}
         fixtureState={fixtureState}
         setFixtureState={this.setFixtureState}
       >
@@ -91,6 +98,12 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
       </FixtureProvider>
     );
   }
+
+  // Prevent FixtureProvider from thinking decorators changed when they haven't
+  getDecoratorsForFixturePath = memoize(
+    (decorators: Decorators, fixturePath: string) =>
+      getDecoratorsForFixturePath(decorators, fixturePath)
+  );
 
   handleRequest = (msg: RendererRequest) => {
     if (msg.type === 'pingRenderers') {

@@ -1,15 +1,14 @@
 // @flow
 
 import { cloneElement, Component } from 'react';
-import { setElementAtPath } from '../childrenTree';
+import { setElementAtPath } from '../nodeTree';
 import { findRelevantElementPaths } from '../findRelevantElementPaths';
 import { compose } from './compose';
 import { isRefSupported } from './isRefSupported';
 import { createRefHandler } from './createRefHandler';
 
-import type { ElementRef, Ref } from 'react';
+import type { Node, ElementRef, Ref } from 'react';
 import type { FixtureDecoratorId } from 'react-cosmos-shared2/fixtureState';
-import type { Children } from '../childrenTree';
 import type { ComponentRef } from '../shared';
 
 type RefWrapper = {
@@ -31,20 +30,20 @@ const refHandlers: WeakMap<
 > = new WeakMap();
 
 export function attachChildRefs({
-  children,
+  node,
   onRef,
   decoratorElRef,
   decoratorId
 }: {
-  children: Children,
+  node: Node,
   onRef: (elPath: string, elRef: ?ComponentRef) => mixed,
   decoratorElRef: ElementRef<typeof Component>,
   decoratorId: FixtureDecoratorId
 }) {
-  const elPaths = findRelevantElementPaths(children);
+  const elPaths = findRelevantElementPaths(node);
 
-  return elPaths.reduce((extendedChildren, elPath): Children => {
-    return setElementAtPath(extendedChildren, elPath, element => {
+  return elPaths.reduce((extendedNode, elPath): Node => {
+    return setElementAtPath(extendedNode, elPath, element => {
       if (!isRefSupported(element.type)) {
         return element;
       }
@@ -59,7 +58,7 @@ export function attachChildRefs({
         })
       });
     });
-  }, children);
+  }, node);
 }
 
 export function deleteRefHandler(

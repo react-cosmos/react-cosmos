@@ -5,23 +5,23 @@ import {
   extendObjWithValues,
   findCompFixtureState
 } from 'react-cosmos-shared2/fixtureState';
-import { setElementAtPath } from './childrenTree';
+import { setElementAtPath } from './nodeTree';
 import { findRelevantElementPaths } from './findRelevantElementPaths';
 
+import type { Node } from 'react';
 import type {
   FixtureDecoratorId,
   FixtureState
 } from 'react-cosmos-shared2/fixtureState';
-import type { Children } from './childrenTree';
 
-export function extendChildPropsWithFixtureState(
-  children: Children,
+export function extendPropsWithFixtureState(
+  node: Node,
   fixtureState: null | FixtureState,
   decoratorId: FixtureDecoratorId
-): Children {
-  const elPaths = findRelevantElementPaths(children);
+): Node {
+  const elPaths = findRelevantElementPaths(node);
 
-  return elPaths.reduce((extendedChildren, elPath): Children => {
+  return elPaths.reduce((extendedChildren, elPath): Node => {
     const compFxState = findCompFixtureState(fixtureState, decoratorId, elPath);
 
     return setElementAtPath(extendedChildren, elPath, element => {
@@ -54,7 +54,7 @@ export function extendChildPropsWithFixtureState(
         key: getElRenderKey(elPath, compFxState.renderKey)
       };
     });
-  }, children);
+  }, node);
 }
 
 function getElRenderKey(elPath, renderKey) {
