@@ -65,6 +65,12 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     this.props.unsubscribe();
   }
 
+  shouldComponentUpdate(prevProps: FixtureConnectProps, prevState: State) {
+    // This check exists mainly to prevent updating the fixture tree when
+    // fixture state setters resulted in no fixture state change
+    return !isEqual(this.props, prevProps) || !isEqual(this.state, prevState);
+  }
+
   render() {
     const { fixtures, decorators } = this.props;
     const { fixturePath, fixtureState, renderKey } = this.state;
