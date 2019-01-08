@@ -1,14 +1,14 @@
 // @flow
 
-import { findElementPaths, getExpectedElementAtPath } from './childrenTree';
+import { findElementPaths, getExpectedElementAtPath } from './nodeTree';
 
-import type { Children } from './childrenTree';
+import type { Node } from 'react';
 
-export function findRelevantElementPaths(children: Children): string[] {
-  const elPaths = findElementPaths(children);
+export function findRelevantElementPaths(node: Node): string[] {
+  const elPaths = findElementPaths(node);
 
   return elPaths.filter(elPath => {
-    const { type } = getExpectedElementAtPath(children, elPath);
+    const { type } = getExpectedElementAtPath(node, elPath);
 
     // TODO: Make this customizable
     if (type === 'string') {

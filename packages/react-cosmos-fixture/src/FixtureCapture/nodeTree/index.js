@@ -8,9 +8,7 @@
  * https://reactjs.org/docs/jsx-in-depth.html#functions-as-children
  */
 
-export type { Children } from './shared';
-
 export { findElementPaths } from './findElementPaths';
 export { getElementAtPath, getExpectedElementAtPath } from './getElementAtPath';
 export { setElementAtPath } from './setElementAtPath';
-export { areChildrenEqual } from './areChildrenEqual';
+export { areNodesEqual } from './areNodesEqual';

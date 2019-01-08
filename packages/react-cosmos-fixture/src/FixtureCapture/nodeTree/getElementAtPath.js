@@ -4,8 +4,7 @@ import { get } from 'lodash';
 import { isElement } from 'react-is';
 import { isRootPath } from './shared';
 
-import type { Element } from 'react';
-import type { Children } from './shared';
+import type { Node, Element } from 'react';
 
 // Why be silent about trying to fetch a node that isn't an element?
 // Because users of this utility only care about elements. Whether the child
@@ -13,15 +12,15 @@ import type { Children } from './shared';
 // array of elements, etc.) is irrelevant.
 // NICETOHAVE: Assert child path validity
 export function getElementAtPath(
-  children: Children,
+  node: Node,
   elPath: string
 ): null | Element<any> {
-  if (!isElement(children) && !Array.isArray(children)) {
+  if (!isElement(node) && !Array.isArray(node)) {
     return null;
   }
 
   // $FlowFixMe Flow can't get cues from react-is package
-  const rootNode: Element<any> | Node[] = children;
+  const rootNode: Element<any> | Node[] = node;
   const childNode = isRootPath(elPath) ? rootNode : get(rootNode, elPath);
 
   if (!isElement(childNode)) {
@@ -35,10 +34,10 @@ export function getElementAtPath(
 }
 
 export function getExpectedElementAtPath(
-  children: Children,
+  node: Node,
   elPath: string
 ): Element<any> {
-  const el = getElementAtPath(children, elPath);
+  const el = getElementAtPath(node, elPath);
 
   if (!el) {
     throw new Error(`Element not found at path: ${elPath}`);

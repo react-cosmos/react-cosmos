@@ -5,15 +5,14 @@ import { isElement } from 'react-is';
 import { isRootPath } from './shared';
 import { getExpectedElementAtPath } from './getElementAtPath';
 
-import type { Element } from 'react';
-import type { Children } from './shared';
+import type { Node, Element } from 'react';
 
 export function setElementAtPath(
-  children: Children,
+  node: Node,
   elPath: string,
   updater: (Element<any>) => Element<any>
-): Children {
-  const childEl = getExpectedElementAtPath(children, elPath);
+): Node {
+  const childEl = getExpectedElementAtPath(node, elPath);
   const newEl = updater(childEl);
 
   if (isRootPath(elPath)) {
@@ -23,12 +22,12 @@ export function setElementAtPath(
   // _.set also accepts arrays
   // https://github.com/lodash/lodash/blob/6018350ac10d5ce6a5b7db625140b82aeab804df/isObject.js#L15-L16
   // $FlowFixMe
-  return set(cloneChildren(children), elPath, newEl);
+  return set(cloneNode(node), elPath, newEl);
 }
 
-function cloneChildren<T>(value: T): T {
+function cloneNode<T>(value: T): T {
   if (Array.isArray(value)) {
-    return value.map(n => cloneChildren(n));
+    return value.map(n => cloneNode(n));
   }
 
   if (isElement(value)) {
@@ -41,7 +40,7 @@ function cloneChildren<T>(value: T): T {
       ...el,
       props: {
         ...otherProps,
-        children: cloneChildren(children)
+        children: cloneNode(children)
       }
     };
   }
