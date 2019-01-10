@@ -9,13 +9,13 @@ import type { RendererRequest } from 'react-cosmos-shared2/renderer';
 import type { RendererConfig } from '../Renderer';
 import type { RendererPreviewState } from './shared';
 
-export type { RendererPreviewState } from './shared';
+export type { RendererStatus, RendererPreviewState } from './shared';
 
 export function register() {
   const { init, on, plug } = registerPlugin<{}, RendererPreviewState>({
     name: 'rendererPreview',
     initialState: {
-      compileError: false
+      status: 'waiting'
     }
   });
 

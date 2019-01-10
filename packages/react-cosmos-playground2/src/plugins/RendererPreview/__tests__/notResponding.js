@@ -31,11 +31,11 @@ function loadTestPlugins() {
   return render(<Slot name="rendererPreview" />);
 }
 
-it('sets compile error state flag', async () => {
+it('sets "notResponding" status', async () => {
   registerTestPlugins();
   loadTestPlugins();
 
   await wait(() =>
-    expect(getPluginState('rendererPreview').compileError).toBe(true)
+    expect(getPluginState('rendererPreview').status).toBe('notResponding')
   );
 });

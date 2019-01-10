@@ -14,17 +14,11 @@ export function register() {
     render: RendererHeader,
     getProps: ({ getStateOf, callMethod }) => {
       const { urlParams }: RouterState = getStateOf('router');
-      const { compileError }: RendererPreviewState = getStateOf(
-        'rendererPreview'
-      );
-      const primaryRendererState = callMethod(
-        'renderer.getPrimaryRendererState'
-      );
+      const { status }: RendererPreviewState = getStateOf('rendererPreview');
 
       return {
         urlParams,
-        waitingForRenderer: !primaryRendererState,
-        rendererPreviewCompileError: compileError,
+        rendererStatus: status,
         setUrlParams: newUrlParams =>
           callMethod('router.setUrlParams', newUrlParams),
         isValidFixturePath: fixturePath =>

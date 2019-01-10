@@ -9,7 +9,8 @@ import {
   cleanup,
   mockConfig,
   mockMethod,
-  mockInit
+  mockInit,
+  getPluginState
 } from '../../../testHelpers/plugin';
 import { register } from '..';
 
@@ -38,6 +39,13 @@ function loadTestPlugins() {
 function getIframe({ getByTestId }) {
   return getByTestId('previewIframe');
 }
+
+it('sets "ok" status', async () => {
+  registerTestPlugins();
+  loadTestPlugins();
+
+  await wait(() => expect(getPluginState('rendererPreview').status).toBe('ok'));
+});
 
 it('renders iframe with config.renderer.webUrl src', () => {
   registerTestPlugins();

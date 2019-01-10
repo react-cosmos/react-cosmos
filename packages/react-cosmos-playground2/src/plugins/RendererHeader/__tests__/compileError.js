@@ -11,9 +11,8 @@ afterEach(cleanup);
 function registerTestPlugins(handleSetUrlParams = () => {}) {
   register();
   mockState('router', { urlParams: {} });
-  mockState('rendererPreview', { compileError: true });
+  mockState('rendererPreview', { status: 'notResponding' });
   mockMethod('router.setUrlParams', handleSetUrlParams);
-  mockMethod('renderer.getPrimaryRendererState', () => ({}));
   mockMethod('renderer.isValidFixturePath', () => false);
 }
 

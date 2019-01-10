@@ -3,7 +3,7 @@
 import React from 'react';
 import { render, waitForElement } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
-import { cleanup, mockState, mockMethod } from '../../../testHelpers/plugin';
+import { cleanup, mockState } from '../../../testHelpers/plugin';
 import { register } from '..';
 
 afterEach(cleanup);
@@ -11,8 +11,7 @@ afterEach(cleanup);
 function registerTestPlugins() {
   register();
   mockState('router', { urlParams: {} });
-  mockState('rendererPreview', { compileError: false });
-  mockMethod('renderer.getPrimaryRendererState', () => null);
+  mockState('rendererPreview', { status: 'waiting' });
 }
 
 function loadTestPlugins() {

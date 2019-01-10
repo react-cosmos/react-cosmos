@@ -23,9 +23,10 @@ export function checkRendererStatus(
       return;
     }
 
-    if (status !== 200) {
-      context.setState(state => ({ ...state, compileError: true }));
-    }
+    context.setState(state => ({
+      ...state,
+      status: status === 200 ? 'ok' : 'notResponding'
+    }));
   });
 
   return () => {

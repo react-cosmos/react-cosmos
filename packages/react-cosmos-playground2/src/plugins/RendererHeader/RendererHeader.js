@@ -13,27 +13,25 @@ import { Button } from '../../shared/components';
 import { HelpLink } from './HelpLink';
 
 import type { UrlParams } from '../Router';
+import type { RendererStatus } from '../RendererPreview';
 
 type Props = {
   urlParams: UrlParams,
-  waitingForRenderer: boolean,
-  rendererPreviewCompileError: boolean,
+  rendererStatus: RendererStatus,
   setUrlParams: UrlParams => void,
   isValidFixturePath: (fixturePath: string) => boolean
 };
 
 // TODO: Improve UX of refresh button, which seems like it's not doing anything
-// TODO: s/RendererHeader/RendererHeader
 export function RendererHeader({
   urlParams,
-  waitingForRenderer,
-  rendererPreviewCompileError,
+  rendererStatus,
   setUrlParams,
   isValidFixturePath
 }: Props) {
   const { fixturePath, fullScreen } = urlParams;
 
-  if (rendererPreviewCompileError) {
+  if (rendererStatus === 'notResponding') {
     return (
       <Container error>
         <Left>
@@ -53,7 +51,7 @@ export function RendererHeader({
     return null;
   }
 
-  if (waitingForRenderer) {
+  if (rendererStatus === 'waiting') {
     return (
       <Container>
         <Left>
