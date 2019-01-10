@@ -4,16 +4,20 @@
 import React from 'react';
 import { wait, render } from 'react-testing-library';
 import { loadPlugins, Slot } from 'react-plugin';
-import { mockIframeMessage } from '../../testHelpers/mockIframeMessage';
+import { mockIframeMessage } from '../../../testHelpers/mockIframeMessage';
 import {
   cleanup,
   mockConfig,
   mockMethod,
   mockInit
-} from '../../testHelpers/plugin';
-import { register } from '.';
+} from '../../../testHelpers/plugin';
+import { register } from '..';
 
 afterEach(cleanup);
+
+function fakeSuccessfulFetchCalls() {
+  global.fetch = jest.fn(() => Promise.resolve({ status: 200 }));
+}
 
 function registerTestPlugins(fixtureState = null) {
   register();
@@ -25,6 +29,7 @@ function registerTestPlugins(fixtureState = null) {
 }
 
 function loadTestPlugins() {
+  fakeSuccessfulFetchCalls();
   loadPlugins();
 
   return render(<Slot name="rendererPreview" />);

@@ -1,62 +1,53 @@
 // @flow
 
-import React from 'react';
-import { registerPlugin, Slot } from 'react-plugin';
+import { registerPlugin } from 'react-plugin';
+import { checkRendererStatus } from './checkRendererStatus';
+import { handleWindowMessages } from './handleWindowMessages';
 import { RendererPreview } from './RendererPreview';
 
 import type { RendererRequest } from 'react-cosmos-shared2/renderer';
 import type { RendererConfig } from '../Renderer';
+import type { RendererPreviewState } from './shared';
 
 export type { RendererPreviewState } from './shared';
 
-let iframeRef: null | window = null;
-
 export function register() {
-  const { init, on, plug } = registerPlugin({ name: 'rendererPreview' });
+  const { init, on, plug } = registerPlugin<{}, RendererPreviewState>({
+    name: 'rendererPreview',
+    initialState: {
+      compileError: false
+    }
+  });
 
-  on('renderer.request', handleRendererRequest);
+  let iframeRef: null | window = null;
+
+  on('renderer.request', (context, msg: RendererRequest) => {
+    if (iframeRef) {
+      iframeRef.contentWindow.postMessage(msg, '*');
+    }
+  });
 
   init(context => {
-    if (!getRendererUrl(context)) {
-      return;
+    const rendererUrl = getRendererUrl(context);
+
+    if (rendererUrl) {
+      return [
+        checkRendererStatus(context, rendererUrl),
+        handleWindowMessages(context)
+      ];
     }
-
-    function handleWindowMsg(msg: Object) {
-      // TODO: Create convention to filter out alien messages reliably (eg.
-      // maybe tag msgs with source: "cosmos")
-      // TODO: https://github.com/facebook/react-devtools/issues/812#issuecomment-308827334
-      if (msg.data.source) {
-        return;
-      }
-
-      context.callMethod('renderer.receiveResponse', msg.data);
-    }
-
-    window.addEventListener('message', handleWindowMsg, false);
-
-    return () => {
-      window.removeEventListener('message', handleWindowMsg, false);
-    };
   });
 
   plug({
     slotName: 'rendererPreview',
-    render: ({ rendererUrl, isFixtureLoaded }) =>
-      rendererUrl && (
-        <Slot name="rendererPreviewOuter">
-          <RendererPreview
-            rendererUrl={rendererUrl}
-            isFixtureLoaded={isFixtureLoaded}
-            onIframeRef={elRef => {
-              iframeRef = elRef;
-            }}
-          />
-        </Slot>
-      ),
+    render: RendererPreview,
     getProps: context => {
       return {
         rendererUrl: getRendererUrl(context),
-        isFixtureLoaded: isFixtureloaded(context)
+        isFixtureLoaded: isFixtureloaded(context),
+        onIframeRef: elRef => {
+          iframeRef = elRef;
+        }
       };
     }
   });
@@ -72,10 +63,4 @@ function isFixtureloaded({ callMethod }) {
   const primaryRendererState = callMethod('renderer.getPrimaryRendererState');
 
   return Boolean(primaryRendererState && primaryRendererState.fixtureState);
-}
-
-function handleRendererRequest(context, msg: RendererRequest) {
-  if (iframeRef) {
-    iframeRef.contentWindow.postMessage(msg, '*');
-  }
 }
