@@ -13,11 +13,11 @@ import { Button } from '../../shared/components';
 import { HelpLink } from './HelpLink';
 
 import type { UrlParams } from '../Router';
-import type { RendererStatus } from '../RendererPreview';
+import type { RendererPreviewStatus } from '../RendererPreview';
 
 type Props = {
   urlParams: UrlParams,
-  rendererPreviewStatus: RendererStatus,
+  rendererPreviewStatus: RendererPreviewStatus,
   setUrlParams: UrlParams => void,
   isValidFixturePath: (fixturePath: string) => boolean
 };
