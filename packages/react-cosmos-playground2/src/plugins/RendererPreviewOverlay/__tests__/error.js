@@ -10,9 +10,8 @@ afterEach(cleanup);
 
 function registerTestPlugins() {
   register();
-  mockState('router', { urlParams: { fixturePath: 'foo.js' } });
-  mockState('rendererPreview', { status: 'ok' });
-  mockMethod('renderer.isValidFixturePath', () => false);
+  mockState('router', { urlParams: {} });
+  mockState('rendererPreview', { status: 'notResponding' });
   mockMethod('renderer.getPrimaryRendererState', () => ({}));
 }
 
@@ -22,9 +21,9 @@ function loadTestPlugins() {
   return render(<Slot name="rendererPreviewOverlay" />);
 }
 
-it('renders "empty" state', () => {
+it('renders "error" state', () => {
   registerTestPlugins();
   const { queryByTestId } = loadTestPlugins();
 
-  expect(queryByTestId('empty')).not.toBeNull();
+  expect(queryByTestId('error')).not.toBeNull();
 });

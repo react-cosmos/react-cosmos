@@ -8,15 +8,12 @@ import { register } from '..';
 
 afterEach(cleanup);
 
-function registerTestPlugins(primaryRendererState) {
+function registerTestPlugins(rendererPreviewStatus) {
   register();
   mockState('router', { urlParams: {} });
+  mockState('rendererPreview', { status: rendererPreviewStatus });
   mockMethod('renderer.isValidFixturePath', () => true);
-  mockMethod('renderer.getPrimaryRendererState', () => primaryRendererState);
-}
-
-function getWaitingIllustration({ queryByTestId }) {
-  return queryByTestId('waiting');
+  mockMethod('renderer.getPrimaryRendererState', () => null);
 }
 
 function loadTestPlugins() {
@@ -25,16 +22,16 @@ function loadTestPlugins() {
   return render(<Slot name="rendererPreviewOverlay" />);
 }
 
-it('renders "waiting" illustration', () => {
-  registerTestPlugins(null);
-  const renderer = loadTestPlugins();
+it('renders "waiting" state', () => {
+  registerTestPlugins('waiting');
+  const { queryByTestId } = loadTestPlugins();
 
-  expect(getWaitingIllustration(renderer)).not.toBeNull();
+  expect(queryByTestId('waiting')).not.toBeNull();
 });
 
-it('does not render "waiting" illustration', () => {
-  registerTestPlugins({});
-  const renderer = loadTestPlugins();
+it('renders "waiting" state when renderer state is null', () => {
+  registerTestPlugins('ok');
+  const { queryByTestId } = loadTestPlugins();
 
-  expect(getWaitingIllustration(renderer)).toBeNull();
+  expect(queryByTestId('waiting')).not.toBeNull();
 });

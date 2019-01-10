@@ -8,15 +8,12 @@ import { register } from '..';
 
 afterEach(cleanup);
 
-function registerTestPlugins(urlParams) {
+function registerTestPlugins() {
   register();
-  mockState('router', { urlParams });
+  mockState('router', { urlParams: {} });
+  mockState('rendererPreview', { status: 'ok' });
   mockMethod('renderer.isValidFixturePath', () => false);
   mockMethod('renderer.getPrimaryRendererState', () => ({}));
-}
-
-function getBlankIllustration({ queryByTestId }) {
-  return queryByTestId('blank');
 }
 
 function loadTestPlugins() {
@@ -25,16 +22,9 @@ function loadTestPlugins() {
   return render(<Slot name="rendererPreviewOverlay" />);
 }
 
-it('renders "blank" illustration', () => {
-  registerTestPlugins({});
-  const renderer = loadTestPlugins();
+it('renders "blank" state', () => {
+  registerTestPlugins();
+  const { queryByTestId } = loadTestPlugins();
 
-  expect(getBlankIllustration(renderer)).not.toBeNull();
-});
-
-it('does not render "blank" illustration', () => {
-  registerTestPlugins({ fixturePath: 'foo.js' });
-  const renderer = loadTestPlugins();
-
-  expect(getBlankIllustration(renderer)).toBeNull();
+  expect(queryByTestId('blank')).not.toBeNull();
 });

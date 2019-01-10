@@ -4,6 +4,7 @@ import { registerPlugin } from 'react-plugin';
 import { RendererPreviewOverlay } from './RendererPreviewOverlay';
 
 import type { RouterState } from '../Router';
+import type { RendererPreviewState } from '../RendererPreview';
 
 export function register() {
   const { plug } = registerPlugin({ name: 'rendererPreviewOverlay' });
@@ -13,6 +14,7 @@ export function register() {
     render: RendererPreviewOverlay,
     getProps: ({ getStateOf, callMethod }) => {
       const { urlParams }: RouterState = getStateOf('router');
+      const { status }: RendererPreviewState = getStateOf('rendererPreview');
       const { fixturePath = null } = urlParams;
       const primaryRendererState = callMethod(
         'renderer.getPrimaryRendererState'
@@ -20,7 +22,8 @@ export function register() {
 
       return {
         fixturePath,
-        waitingForRenderer: !primaryRendererState,
+        rendererPreviewStatus: status,
+        rendererReady: Boolean(primaryRendererState),
         isValidFixturePath: fixturePath =>
           callMethod('renderer.isValidFixturePath', fixturePath)
       };

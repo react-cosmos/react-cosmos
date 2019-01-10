@@ -8,18 +8,32 @@ import {
   DreamerIllustration
 } from '../../shared/illustrations';
 
+import type { RendererPreviewStatus } from '../RendererPreview';
+
 type Props = {
   fixturePath: null | string,
-  isValidFixturePath: string => boolean,
-  waitingForRenderer: boolean
+  rendererReady: boolean,
+  rendererPreviewStatus: RendererPreviewStatus,
+  isValidFixturePath: string => boolean
 };
 
 export function RendererPreviewOverlay({
   fixturePath,
-  waitingForRenderer,
+  rendererReady,
+  rendererPreviewStatus,
   isValidFixturePath
 }: Props) {
-  if (waitingForRenderer) {
+  if (rendererPreviewStatus === 'notResponding') {
+    return (
+      <Container>
+        <IllustrationContainer data-testid="error">
+          <DreamerIllustration />
+        </IllustrationContainer>
+      </Container>
+    );
+  }
+
+  if (rendererPreviewStatus === 'waiting' || !rendererReady) {
     // Delay "waiting for renderer" state to avoid rapidly changing visual
     // states when renderer is already compiled and will respond immediately
     return (

@@ -12,7 +12,7 @@ function registerTestPlugins() {
   register();
   mockState('router', { urlParams: { fixturePath: 'foo.js' } });
   mockState('rendererPreview', { status: 'ok' });
-  mockMethod('renderer.isValidFixturePath', () => false);
+  mockMethod('renderer.isValidFixturePath', () => true);
   mockMethod('renderer.getPrimaryRendererState', () => ({}));
 }
 
@@ -22,9 +22,9 @@ function loadTestPlugins() {
   return render(<Slot name="rendererPreviewOverlay" />);
 }
 
-it('renders "empty" state', () => {
+it('does not render anything', () => {
   registerTestPlugins();
-  const { queryByTestId } = loadTestPlugins();
+  const { container } = loadTestPlugins();
 
-  expect(queryByTestId('empty')).not.toBeNull();
+  expect(container).toMatchInlineSnapshot(`<div />`);
 });
