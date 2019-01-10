@@ -10,12 +10,14 @@ import {
   HomeIcon
 } from '../../shared/icons';
 import { Button } from '../../shared/components';
+import { HelpLink } from './HelpLink';
 
 import type { UrlParams } from '../Router';
 
 type Props = {
   urlParams: UrlParams,
   waitingForRenderer: boolean,
+  rendererPreviewCompileError: boolean,
   setUrlParams: UrlParams => void,
   isValidFixturePath: (fixturePath: string) => boolean
 };
@@ -24,10 +26,27 @@ type Props = {
 export function FixtureHeader({
   urlParams,
   waitingForRenderer,
+  rendererPreviewCompileError,
   setUrlParams,
   isValidFixturePath
 }: Props) {
   const { fixturePath, fullScreen } = urlParams;
+
+  if (rendererPreviewCompileError) {
+    return (
+      <ErrorContainer>
+        <Left>
+          <Message>
+            <strong>Renderer not responding</strong>. Check your terminal for
+            errors...
+          </Message>
+        </Left>
+        <Right>
+          <HelpLink />
+        </Right>
+      </ErrorContainer>
+    );
+  }
 
   if (fullScreen) {
     return null;
@@ -37,7 +56,7 @@ export function FixtureHeader({
     return (
       <Container>
         <Left>
-          <BlankMessage>Waiting for renderer...</BlankMessage>
+          <Message>Waiting for renderer...</Message>
         </Left>
       </Container>
     );
@@ -47,7 +66,7 @@ export function FixtureHeader({
     return (
       <Container>
         <Left>
-          <BlankMessage>No fixture selected</BlankMessage>
+          <Message>No fixture selected</Message>
         </Left>
         <Right>
           <Slot name="fixtureActions" />
@@ -61,7 +80,7 @@ export function FixtureHeader({
     return (
       <Container>
         <Left>
-          <BlankMessage>Fixture not found</BlankMessage>
+          <Message>Fixture not found</Message>
           <Button
             icon={<HomeIcon />}
             label="home"
@@ -111,8 +130,17 @@ const Container = styled.div`
   height: 40px;
   padding: 0 12px;
   border-bottom: 1px solid var(--grey5);
+  background: var(--grey6);
+  color: var(--grey3);
   white-space: nowrap;
   overflow-x: auto;
+  transition: background var(--quick), color var(--quick), border var(--quick);
+`;
+
+const ErrorContainer = styled(Container)`
+  background: var(--error6);
+  color: var(--error3);
+  border-color: var(--error5);
 `;
 
 const Left = styled.div`
@@ -127,7 +155,10 @@ const Right = styled.div`
   align-items: center;
 `;
 
-const BlankMessage = styled.span`
+const Message = styled.span`
   margin: 0 4px;
-  color: var(--grey3);
+
+  strong {
+    font-weight: 600;
+  }
 `;

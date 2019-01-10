@@ -8,10 +8,11 @@ import { register } from '..';
 
 afterEach(cleanup);
 
-function registerTestPlugins() {
+function registerTestPlugins(handleSetUrlParams = () => {}) {
   register();
   mockState('router', { urlParams: {} });
-  mockState('rendererPreview', { compileError: false });
+  mockState('rendererPreview', { compileError: true });
+  mockMethod('router.setUrlParams', handleSetUrlParams);
   mockMethod('renderer.getPrimaryRendererState', () => ({}));
   mockMethod('renderer.isValidFixturePath', () => false);
 }
@@ -22,16 +23,19 @@ function loadTestPlugins() {
   return render(<Slot name="fixtureHeader" />);
 }
 
-it('renders blank state message', async () => {
+it('renders renderer-related error message', async () => {
   registerTestPlugins();
   const { getByText } = loadTestPlugins();
 
-  await waitForElement(() => getByText(/no fixture selected/i));
+  await waitForElement(() => getByText(/renderer not responding/i));
 });
 
-it('renders disabled fullscreen button', async () => {
+it('renders link to ask for help', async () => {
   registerTestPlugins();
   const { getByText } = loadTestPlugins();
 
-  expect(getByText(/fullscreen/i)).toHaveAttribute('disabled');
+  const getLink = () => getByText(/ask for help/i);
+  await waitForElement(getLink);
+
+  expect(getLink().href).toMatch('https://join-react-cosmos.now.sh');
 });

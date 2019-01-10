@@ -7,6 +7,8 @@ import { RendererPreview } from './RendererPreview';
 import type { RendererRequest } from 'react-cosmos-shared2/renderer';
 import type { RendererConfig } from '../Renderer';
 
+export type { RendererPreviewState } from './shared';
+
 let iframeRef: null | window = null;
 
 export function register() {

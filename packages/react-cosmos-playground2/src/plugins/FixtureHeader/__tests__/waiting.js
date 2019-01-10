@@ -11,6 +11,7 @@ afterEach(cleanup);
 function registerTestPlugins() {
   register();
   mockState('router', { urlParams: {} });
+  mockState('rendererPreview', { compileError: false });
   mockMethod('renderer.getPrimaryRendererState', () => null);
 }
 

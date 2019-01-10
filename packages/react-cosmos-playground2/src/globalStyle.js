@@ -51,7 +51,7 @@ export const GlobalStyle = createGlobalStyle`
     --error2: hsl(var(--hue-error), 54%, 32%);
     --error3: hsl(var(--hue-error), 54%, 45%);
     --error4: hsl(var(--hue-error), 72%, 63%);
-    --error5: hsl(var(--hue-error), 74%, 76%);
+    --error5: hsl(var(--hue-error), 74%, 78%);
     --error6: hsl(var(--hue-error), 85%, 90%);
     --error7: hsl(var(--hue-error), 88%, 97%);
     font-family: var(--font-family);
