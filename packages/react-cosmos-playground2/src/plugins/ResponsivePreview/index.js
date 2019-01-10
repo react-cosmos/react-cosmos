@@ -1,7 +1,7 @@
 // @flow
 
 import { registerPlugin } from 'react-plugin';
-import { createFixtureAction } from '../FixtureHeader/createFixtureAction';
+import { createFixtureAction } from '../RendererHeader/createFixtureAction';
 import { ResponsivePreview } from './ResponsivePreview';
 import { ToggleButton } from './ToggleButton';
 import { DEFAULT_DEVICES } from './shared';

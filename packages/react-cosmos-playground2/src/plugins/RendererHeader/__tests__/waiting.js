@@ -18,7 +18,7 @@ function registerTestPlugins() {
 function loadTestPlugins() {
   loadPlugins();
 
-  return render(<Slot name="fixtureHeader" />);
+  return render(<Slot name="rendererHeader" />);
 }
 
 it('renders waiting state message', async () => {

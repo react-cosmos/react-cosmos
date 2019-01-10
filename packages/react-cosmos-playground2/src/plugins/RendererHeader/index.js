@@ -1,17 +1,17 @@
 // @flow
 
 import { registerPlugin } from 'react-plugin';
-import { FixtureHeader } from './FixtureHeader';
+import { RendererHeader } from './RendererHeader';
 
 import type { RouterState } from '../Router';
 import type { RendererPreviewState } from '../RendererPreview';
 
 export function register() {
-  const { plug } = registerPlugin({ name: 'fixtureHeader' });
+  const { plug } = registerPlugin({ name: 'rendererHeader' });
 
   plug({
-    slotName: 'fixtureHeader',
-    render: FixtureHeader,
+    slotName: 'rendererHeader',
+    render: RendererHeader,
     getProps: ({ getStateOf, callMethod }) => {
       const { urlParams }: RouterState = getStateOf('router');
       const { compileError }: RendererPreviewState = getStateOf(

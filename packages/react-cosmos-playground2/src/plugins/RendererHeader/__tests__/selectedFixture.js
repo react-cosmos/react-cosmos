@@ -25,7 +25,7 @@ function registerTestPlugins(handleSetUrlParams = () => {}) {
 function loadTestPlugins() {
   loadPlugins();
 
-  return render(<Slot name="fixtureHeader" />);
+  return render(<Slot name="rendererHeader" />);
 }
 
 it('renders close button', async () => {

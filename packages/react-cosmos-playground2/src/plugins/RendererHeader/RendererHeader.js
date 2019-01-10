@@ -23,7 +23,8 @@ type Props = {
 };
 
 // TODO: Improve UX of refresh button, which seems like it's not doing anything
-export function FixtureHeader({
+// TODO: s/RendererHeader/RendererHeader
+export function RendererHeader({
   urlParams,
   waitingForRenderer,
   rendererPreviewCompileError,

@@ -25,7 +25,7 @@ function registerTestPlugins() {
 function loadTestPlugins() {
   loadPlugins();
 
-  return render(<Slot name="fixtureHeader" />);
+  return render(<Slot name="rendererHeader" />);
 }
 
 it('does not render close button', async () => {

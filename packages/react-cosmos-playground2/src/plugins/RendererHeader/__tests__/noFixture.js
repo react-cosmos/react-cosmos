@@ -1,18 +1,17 @@
 // @flow
 
 import React from 'react';
-import { render, fireEvent, waitForElement } from 'react-testing-library';
+import { render, waitForElement } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
 import { cleanup, mockState, mockMethod } from '../../../testHelpers/plugin';
 import { register } from '..';
 
 afterEach(cleanup);
 
-function registerTestPlugins(handleSetUrlParams = () => {}) {
+function registerTestPlugins() {
   register();
-  mockState('router', { urlParams: { fixturePath: 'foo' } });
+  mockState('router', { urlParams: {} });
   mockState('rendererPreview', { compileError: false });
-  mockMethod('router.setUrlParams', handleSetUrlParams);
   mockMethod('renderer.getPrimaryRendererState', () => ({}));
   mockMethod('renderer.isValidFixturePath', () => false);
 }
@@ -20,24 +19,14 @@ function registerTestPlugins(handleSetUrlParams = () => {}) {
 function loadTestPlugins() {
   loadPlugins();
 
-  return render(<Slot name="fixtureHeader" />);
+  return render(<Slot name="rendererHeader" />);
 }
 
-it('renders missing state message', async () => {
+it('renders blank state message', async () => {
   registerTestPlugins();
   const { getByText } = loadTestPlugins();
 
-  await waitForElement(() => getByText(/fixture not found/i));
-});
-
-it('renders home button', async () => {
-  const handleSetUrlParams = jest.fn();
-  registerTestPlugins(handleSetUrlParams);
-
-  const { getByText } = loadTestPlugins();
-  fireEvent.click(getByText(/home/));
-
-  expect(handleSetUrlParams).toBeCalledWith(expect.any(Object), {});
+  await waitForElement(() => getByText(/no fixture selected/i));
 });
 
 it('renders disabled fullscreen button', async () => {

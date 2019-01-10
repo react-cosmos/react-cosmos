@@ -10,12 +10,12 @@ unregisterPlugins();
 require('./plugins/Storage').register();
 require('./plugins/Core').register();
 require('./plugins/Renderer').register();
+require('./plugins/RendererRemote').register();
 require('./plugins/RendererPreview').register();
 require('./plugins/RendererPreviewOverlay').register();
-require('./plugins/RendererRemote').register();
+require('./plugins/RendererHeader').register();
 require('./plugins/Router').register();
 require('./plugins/Nav').register();
-require('./plugins/FixtureHeader').register();
 require('./plugins/ControlPanel').register();
 require('./plugins/ResponsivePreview').register();
 

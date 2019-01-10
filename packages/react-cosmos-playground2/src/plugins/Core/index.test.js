@@ -29,9 +29,9 @@ it('renders "left" slot', async () => {
   await waitForElement(() => getByText(/we are the robots/i));
 });
 
-it('renders "fixtureHeader" slot', async () => {
+it('renders "rendererHeader" slot', async () => {
   registerTestPlugins({
-    slotName: 'fixtureHeader',
+    slotName: 'rendererHeader',
     slotText: 'we are the robots'
   });
   const { getByText } = loadTestPlugins();
