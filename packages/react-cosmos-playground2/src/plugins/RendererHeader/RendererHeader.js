@@ -35,7 +35,7 @@ export function RendererHeader({
 
   if (rendererPreviewCompileError) {
     return (
-      <ErrorContainer>
+      <Container error>
         <Left>
           <Message>
             <strong>Renderer not responding</strong>. Check your terminal for
@@ -45,7 +45,7 @@ export function RendererHeader({
         <Right>
           <HelpLink />
         </Right>
-      </ErrorContainer>
+      </Container>
     );
   }
 
@@ -130,18 +130,13 @@ const Container = styled.div`
   justify-content: space-between;
   height: 40px;
   padding: 0 12px;
-  border-bottom: 1px solid var(--grey5);
-  background: var(--grey6);
-  color: var(--grey3);
+  border-bottom: 1px solid
+    ${props => (props.error ? 'var(--error5)' : 'var(--grey5)')};
+  background: ${props => (props.error ? 'var(--error6)' : 'var(--grey6)')};
+  color: ${props => (props.error ? 'var(--error3)' : 'var(--grey3)')};
   white-space: nowrap;
   overflow-x: auto;
   transition: background var(--quick), color var(--quick), border var(--quick);
-`;
-
-const ErrorContainer = styled(Container)`
-  background: var(--error6);
-  color: var(--error3);
-  border-color: var(--error5);
 `;
 
 const Left = styled.div`
