@@ -17,7 +17,7 @@ import type { RendererStatus } from '../RendererPreview';
 
 type Props = {
   urlParams: UrlParams,
-  rendererStatus: RendererStatus,
+  rendererPreviewStatus: RendererStatus,
   setUrlParams: UrlParams => void,
   isValidFixturePath: (fixturePath: string) => boolean
 };
@@ -25,13 +25,13 @@ type Props = {
 // TODO: Improve UX of refresh button, which seems like it's not doing anything
 export function RendererHeader({
   urlParams,
-  rendererStatus,
+  rendererPreviewStatus,
   setUrlParams,
   isValidFixturePath
 }: Props) {
   const { fixturePath, fullScreen } = urlParams;
 
-  if (rendererStatus === 'notResponding') {
+  if (rendererPreviewStatus === 'notResponding') {
     return (
       <Container error>
         <Left>
@@ -51,7 +51,7 @@ export function RendererHeader({
     return null;
   }
 
-  if (rendererStatus === 'waiting') {
+  if (rendererPreviewStatus === 'waiting') {
     return (
       <Container>
         <Left>
