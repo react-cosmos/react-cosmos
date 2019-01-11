@@ -12,8 +12,9 @@ function registerTestPlugins() {
   register();
   mockState('router', { urlParams: {} });
   mockState('rendererPreview', { urlStatus: 'unknown' });
+  mockMethod('renderer.isReady', () => true);
   mockMethod('renderer.isValidFixturePath', () => false);
-  mockMethod('renderer.getPrimaryRendererState', () => ({}));
+  mockMethod('rendererPreview.shouldShow', () => false);
 }
 
 function loadTestPlugins() {

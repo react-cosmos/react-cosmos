@@ -7,40 +7,33 @@ import {
   EmptyIllustration,
   DreamerIllustration
 } from '../../shared/illustrations';
+import { RendererPreviewUrlError } from './RendererPreviewUrlError';
 
 import type { RendererPreviewUrlStatus } from '../RendererPreview';
 
 type Props = {
   fixturePath: null | string,
+  validFixturePath: boolean,
   rendererReady: boolean,
   rendererPreviewUrlStatus: RendererPreviewUrlStatus,
-  isValidFixturePath: string => boolean
+  shouldShowRendererPreview: boolean
 };
 
 export function ContentOverlay({
   fixturePath,
+  validFixturePath,
   rendererReady,
   rendererPreviewUrlStatus,
-  isValidFixturePath
+  shouldShowRendererPreview
 }: Props) {
+  if (shouldShowRendererPreview) {
+    return null;
+  }
+
   if (rendererPreviewUrlStatus === 'error') {
     return (
       <Container data-testid="rendererPreviewError">
-        <p>Renderer not responding.</p>
-        <p>
-          1. Please check your terminal for errors. Your build might be broken.
-        </p>
-        <p>
-          2. If you use a custom webpack config, maybe your build isn't
-          generating an index.html page.
-        </p>
-        <a
-          href="https://join-react-cosmos.now.sh"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          Ask for help
-        </a>
+        <RendererPreviewUrlError />
       </Container>
     );
   }
@@ -69,7 +62,7 @@ export function ContentOverlay({
     );
   }
 
-  if (!isValidFixturePath(fixturePath)) {
+  if (!validFixturePath) {
     return (
       <Container data-testid="empty">
         <IllustrationContainer>
@@ -79,7 +72,7 @@ export function ContentOverlay({
     );
   }
 
-  return null;
+  throw new Error('Invalid ContentOverlay state');
 }
 
 const Container = styled.div`

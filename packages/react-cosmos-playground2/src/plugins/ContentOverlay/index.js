@@ -12,21 +12,25 @@ export function register() {
   plug({
     slotName: 'contentOverlay',
     render: ContentOverlay,
-    getProps: ({ getStateOf, callMethod }) => {
-      const { urlParams }: RouterState = getStateOf('router');
-      const { fixturePath = null } = urlParams;
-      const primaryRendererState = callMethod(
-        'renderer.getPrimaryRendererState'
-      );
-      const { urlStatus }: RendererPreviewState = getStateOf('rendererPreview');
-
-      return {
-        fixturePath,
-        rendererReady: Boolean(primaryRendererState),
-        rendererPreviewUrlStatus: urlStatus,
-        isValidFixturePath: fixturePath =>
-          callMethod('renderer.isValidFixturePath', fixturePath)
-      };
-    }
+    getProps: getContentOverlayProps
   });
+}
+
+function getContentOverlayProps({ getStateOf, callMethod }) {
+  const { urlParams }: RouterState = getStateOf('router');
+  const { fixturePath = null } = urlParams;
+  const rendererReady = callMethod('renderer.isReady');
+  const { urlStatus }: RendererPreviewState = getStateOf('rendererPreview');
+  const shouldShowRendererPreview = callMethod('rendererPreview.shouldShow');
+  const validFixturePath = fixturePath
+    ? callMethod('renderer.isValidFixturePath', fixturePath)
+    : false;
+
+  return {
+    fixturePath,
+    validFixturePath,
+    rendererReady,
+    rendererPreviewUrlStatus: urlStatus,
+    shouldShowRendererPreview
+  };
 }

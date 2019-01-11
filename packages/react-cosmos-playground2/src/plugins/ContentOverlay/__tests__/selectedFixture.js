@@ -12,8 +12,9 @@ function registerTestPlugins() {
   register();
   mockState('router', { urlParams: { fixturePath: 'foo.js' } });
   mockState('rendererPreview', { urlStatus: 'unknown' });
+  mockMethod('renderer.isReady', () => true);
   mockMethod('renderer.isValidFixturePath', () => true);
-  mockMethod('renderer.getPrimaryRendererState', () => ({}));
+  mockMethod('rendererPreview.shouldShow', () => true);
 }
 
 function loadTestPlugins() {
