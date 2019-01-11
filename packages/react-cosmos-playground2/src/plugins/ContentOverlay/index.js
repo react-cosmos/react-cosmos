@@ -1,16 +1,16 @@
 // @flow
 
 import { registerPlugin } from 'react-plugin';
-import { RendererPreviewOverlay } from './RendererPreviewOverlay';
+import { ContentOverlay } from './ContentOverlay';
 
 import type { RouterState } from '../Router';
 
 export function register() {
-  const { plug } = registerPlugin({ name: 'rendererPreviewOverlay' });
+  const { plug } = registerPlugin({ name: 'contentOverlay' });
 
   plug({
-    slotName: 'rendererPreviewOverlay',
-    render: RendererPreviewOverlay,
+    slotName: 'contentOverlay',
+    render: ContentOverlay,
     getProps: ({ getStateOf, callMethod }) => {
       const { urlParams }: RouterState = getStateOf('router');
       const { fixturePath = null } = urlParams;

@@ -49,9 +49,9 @@ it('renders "rendererPreview" slot', async () => {
   await waitForElement(() => getByText(/we are the robots/i));
 });
 
-it('renders "rendererPreviewOverlay" slot', async () => {
+it('renders "contentOverlay" slot', async () => {
   registerTestPlugins({
-    slotName: 'rendererPreviewOverlay',
+    slotName: 'contentOverlay',
     slotText: 'we are the robots'
   });
   const { getByText } = loadTestPlugins();

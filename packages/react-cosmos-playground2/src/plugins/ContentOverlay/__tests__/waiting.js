@@ -19,7 +19,7 @@ function registerTestPlugins(rendererPreviewStatus) {
 function loadTestPlugins() {
   loadPlugins();
 
-  return render(<Slot name="rendererPreviewOverlay" />);
+  return render(<Slot name="contentOverlay" />);
 }
 
 it('renders "waiting" state', () => {

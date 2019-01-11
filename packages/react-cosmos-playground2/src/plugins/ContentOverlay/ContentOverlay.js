@@ -14,7 +14,7 @@ type Props = {
   isValidFixturePath: string => boolean
 };
 
-export function RendererPreviewOverlay({
+export function ContentOverlay({
   fixturePath,
   rendererReady,
   isValidFixturePath

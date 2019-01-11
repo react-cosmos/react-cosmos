@@ -25,8 +25,8 @@ export function register() {
         <Center>
           <Slot name="rendererHeader" />
           <PreviewContainer>
-            <Slot name="rendererPreviewOverlay" />
             <Slot name="rendererPreview" />
+            <Slot name="contentOverlay" />
           </PreviewContainer>
         </Center>
         <Slot name="right" />

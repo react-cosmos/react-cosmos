@@ -19,7 +19,7 @@ function registerTestPlugins() {
 function loadTestPlugins() {
   loadPlugins();
 
-  return render(<Slot name="rendererPreviewOverlay" />);
+  return render(<Slot name="contentOverlay" />);
 }
 
 it('does not render anything', () => {
