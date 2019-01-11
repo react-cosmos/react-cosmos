@@ -52,11 +52,11 @@ export function mockCall(methodPath: string, ...args: any[]): Promise<any> {
   return callMethod(methodPath, ...args);
 }
 
-export function mockInitEmit(eventPath: string, ...args: any[]) {
+export function mockEmit(eventPath: string, ...args: any[]) {
   const [pluginName, eventName] = eventPath.split('.');
-  ensurePluginApi(pluginName).init(({ emitEvent }) => {
-    emitEvent(eventName, ...args);
-  });
+  const { emitEvent } = getPluginContext(pluginName);
+
+  emitEvent(eventName, ...args);
 }
 
 function registerFreshPlugin() {

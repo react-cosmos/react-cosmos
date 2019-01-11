@@ -7,7 +7,7 @@ import {
   cleanup,
   mockConfig,
   mockMethod,
-  mockInitEmit
+  mockEmit
 } from '../../testHelpers/plugin';
 import { register } from '.';
 
@@ -20,6 +20,7 @@ function registerTestPlugins() {
 
 it('posts renderer request message via websockets', async () => {
   registerTestPlugins();
+  loadPlugins();
 
   const selectFixtureMsg = {
     type: 'selectFixture',
@@ -28,9 +29,7 @@ it('posts renderer request message via websockets', async () => {
       fixturePath: 'bar-fixturePath'
     }
   };
-  mockInitEmit('renderer.request', selectFixtureMsg);
-
-  loadPlugins();
+  mockEmit('renderer.request', selectFixtureMsg);
 
   await mockWebSockets(async ({ onMessage }) => {
     await wait(() => expect(onMessage).toBeCalledWith(selectFixtureMsg));
