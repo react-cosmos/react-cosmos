@@ -11,7 +11,7 @@ it('returns null', async () => {
   register();
   loadPlugins({ state: { renderer: null } });
 
-  expect(await mockCall('renderer.getPrimaryRendererState')).toBe(null);
+  expect(mockCall('renderer.getPrimaryRendererState')).toBe(null);
 });
 
 it('returns primary renderer state', async () => {
@@ -30,7 +30,7 @@ it('returns primary renderer state', async () => {
     }
   });
 
-  expect(await mockCall('renderer.getPrimaryRendererState')).toEqual({
+  expect(mockCall('renderer.getPrimaryRendererState')).toEqual({
     fixtures: mockFixtures,
     fixtureState: mockFixtureState
   });
@@ -56,7 +56,7 @@ it('returns primary renderer state', async () => {
     }
   });
 
-  expect(await mockCall('renderer.getPrimaryRendererState')).toEqual({
+  expect(mockCall('renderer.getPrimaryRendererState')).toEqual({
     fixtures: mockFixtures,
     fixtureState: null
   });

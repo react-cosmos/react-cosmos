@@ -21,16 +21,14 @@ it('returns false on missing fixture', async () => {
   register();
   loadPlugins({ state: { renderer: initialRendererState } });
 
-  expect(
-    await mockCall('renderer.isValidFixturePath', 'fixtures/sechs.js')
-  ).toBe(false);
+  const isValid = mockCall('renderer.isValidFixturePath', 'fixtures/sechs.js');
+  expect(isValid).toBe(false);
 });
 
 it('returns true on existing fixture', async () => {
   register();
   loadPlugins({ state: { renderer: initialRendererState } });
 
-  expect(
-    await mockCall('renderer.isValidFixturePath', 'fixtures/drei.js')
-  ).toBe(true);
+  const isValid = mockCall('renderer.isValidFixturePath', 'fixtures/drei.js');
+  expect(isValid).toBe(true);
 });

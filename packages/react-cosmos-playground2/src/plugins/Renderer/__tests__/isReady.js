@@ -13,7 +13,7 @@ it('returns false on missing fixture', async () => {
   register();
   loadPlugins({ state: { renderer: rendererState } });
 
-  expect(await mockCall('renderer.isReady')).toBe(false);
+  expect(mockCall('renderer.isReady')).toBe(false);
 });
 
 it('returns true on existing fixture', async () => {
@@ -30,5 +30,5 @@ it('returns true on existing fixture', async () => {
   register();
   loadPlugins({ state: { renderer: rendererState } });
 
-  expect(await mockCall('renderer.isReady')).toBe(true);
+  expect(mockCall('renderer.isReady')).toBe(true);
 });
