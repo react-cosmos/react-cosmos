@@ -50,7 +50,7 @@ function reportRuntimeErrorsToParent() {
 function getLaunchEditorUrl(errorLocation) {
   const fileName = encodeURIComponent(errorLocation.fileName);
   const lineNumber = encodeURIComponent(errorLocation.lineNumber || 1);
-  const colNumber = encodeURIComponent(colNumber.fileName || 1);
+  const colNumber = encodeURIComponent(errorLocation.fileName || 1);
 
   return `${LAUNCH_EDITOR_ENDPOINT}?fileName=${fileName}&lineNumber=${lineNumber}&colNumber=${colNumber}`;
 }
