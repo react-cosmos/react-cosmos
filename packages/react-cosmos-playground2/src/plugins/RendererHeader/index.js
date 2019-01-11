@@ -4,7 +4,6 @@ import { registerPlugin } from 'react-plugin';
 import { RendererHeader } from './RendererHeader';
 
 import type { RouterState } from '../Router';
-import type { RendererPreviewState } from '../RendererPreview';
 
 export function register() {
   const { plug } = registerPlugin({ name: 'rendererHeader' });
@@ -14,11 +13,13 @@ export function register() {
     render: RendererHeader,
     getProps: ({ getStateOf, callMethod }) => {
       const { urlParams }: RouterState = getStateOf('router');
-      const { status }: RendererPreviewState = getStateOf('rendererPreview');
+      const primaryRendererState = callMethod(
+        'renderer.getPrimaryRendererState'
+      );
 
       return {
         urlParams,
-        rendererPreviewStatus: status,
+        rendererReady: Boolean(primaryRendererState),
         setUrlParams: newUrlParams =>
           callMethod('router.setUrlParams', newUrlParams),
         isValidFixturePath: fixturePath =>

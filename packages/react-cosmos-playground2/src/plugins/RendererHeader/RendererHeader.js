@@ -10,14 +10,12 @@ import {
   HomeIcon
 } from '../../shared/icons';
 import { Button } from '../../shared/components';
-import { HelpLink } from './HelpLink';
 
 import type { UrlParams } from '../Router';
-import type { RendererPreviewStatus } from '../RendererPreview';
 
 type Props = {
   urlParams: UrlParams,
-  rendererPreviewStatus: RendererPreviewStatus,
+  rendererReady: boolean,
   setUrlParams: UrlParams => void,
   isValidFixturePath: (fixturePath: string) => boolean
 };
@@ -25,33 +23,17 @@ type Props = {
 // TODO: Improve UX of refresh button, which seems like it's not doing anything
 export function RendererHeader({
   urlParams,
-  rendererPreviewStatus,
+  rendererReady,
   setUrlParams,
   isValidFixturePath
 }: Props) {
   const { fixturePath, fullScreen } = urlParams;
 
-  if (rendererPreviewStatus === 'notResponding') {
-    return (
-      <Container error>
-        <Left>
-          <Message>
-            <strong>Renderer not responding</strong>. Check your terminal for
-            errors...
-          </Message>
-        </Left>
-        <Right>
-          <HelpLink />
-        </Right>
-      </Container>
-    );
-  }
-
   if (fullScreen) {
     return null;
   }
 
-  if (rendererPreviewStatus === 'waiting') {
+  if (!rendererReady) {
     return (
       <Container>
         <Left>
@@ -128,13 +110,11 @@ const Container = styled.div`
   justify-content: space-between;
   height: 40px;
   padding: 0 12px;
-  border-bottom: 1px solid
-    ${props => (props.error ? 'var(--error5)' : 'var(--grey5)')};
-  background: ${props => (props.error ? 'var(--error6)' : 'var(--grey6)')};
-  color: ${props => (props.error ? 'var(--error3)' : 'var(--grey3)')};
+  border-bottom: 1px solid var(--grey5);
+  background: var(--grey6);
+  color: var(--grey3);
   white-space: nowrap;
   overflow-x: auto;
-  transition: background var(--quick), color var(--quick), border var(--quick);
 `;
 
 const Left = styled.div`

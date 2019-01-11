@@ -17,7 +17,7 @@ afterEach(cleanup);
 function registerTestPlugins() {
   register();
   mockState('router', { urlParams: { fixturePath: 'foo', fullScreen: true } });
-  mockState('rendererPreview', { status: 'ok' });
+  mockMethod('renderer.getPrimaryRendererState', () => null);
   mockMethod('renderer.isValidFixturePath', () => true);
 }
 
