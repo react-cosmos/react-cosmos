@@ -52,17 +52,7 @@ export function ContentOverlay({
     );
   }
 
-  if (!fixturePath) {
-    return (
-      <Container data-testid="blank">
-        <IllustrationContainer>
-          <BlankCanvasIllustration />
-        </IllustrationContainer>
-      </Container>
-    );
-  }
-
-  if (!validFixturePath) {
+  if (fixturePath && !validFixturePath) {
     return (
       <Container data-testid="empty">
         <IllustrationContainer>
@@ -72,7 +62,13 @@ export function ContentOverlay({
     );
   }
 
-  throw new Error('Invalid ContentOverlay state');
+  return (
+    <Container data-testid="blank">
+      <IllustrationContainer>
+        <BlankCanvasIllustration />
+      </IllustrationContainer>
+    </Container>
+  );
 }
 
 const Container = styled.div`
