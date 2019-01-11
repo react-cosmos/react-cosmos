@@ -40,6 +40,7 @@ export function register() {
   method('getPrimaryRendererState', handleGetPrimaryRendererState);
   method('isReady', handleIsReady);
   method('isValidFixturePath', handleIsFixturePathValid);
+  method('isFixtureLoaded', handleIsFixtureLoaded);
   method('selectFixture', handleSelectFixture);
   method('unselectFixture', handleUnselectFixture);
   method('setFixtureState', handleSetFixtureState);
@@ -60,6 +61,14 @@ function handleIsFixturePathValid({ getState }, fixturePath: string) {
 
   return primaryRendererState
     ? primaryRendererState.fixtures.indexOf(fixturePath) !== -1
+    : false;
+}
+
+function handleIsFixtureLoaded({ getState }) {
+  const primaryRendererState = getPrimaryRendererState(getState());
+
+  return primaryRendererState
+    ? primaryRendererState.fixtureState !== null
     : false;
 }
 
