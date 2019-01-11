@@ -2,10 +2,10 @@
 
 import type { IPluginContext } from 'react-plugin';
 
-export type RendererPreviewStatus = 'waiting' | 'ok' | 'notResponding';
+export type RendererPreviewUrlStatus = 'unknown' | 'ok' | 'error';
 
 export type RendererPreviewState = {
-  status: RendererPreviewStatus
+  urlStatus: RendererPreviewUrlStatus
 };
 
 export type RendererPreviewContext = IPluginContext<{}, RendererPreviewState>;

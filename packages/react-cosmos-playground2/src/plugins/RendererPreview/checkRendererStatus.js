@@ -25,7 +25,7 @@ export function checkRendererStatus(
 
     context.setState(state => ({
       ...state,
-      status: status === 200 ? 'ok' : 'notResponding'
+      urlStatus: status === 200 ? 'ok' : 'error'
     }));
   });
 

@@ -11,7 +11,7 @@ afterEach(cleanup);
 function registerTestPlugins() {
   register();
   mockState('router', { urlParams: { fixturePath: 'foo.js' } });
-  mockState('rendererPreview', { status: 'ok' });
+  mockState('rendererPreview', { urlStatus: 'unknown' });
   mockMethod('renderer.isValidFixturePath', () => true);
   mockMethod('renderer.getPrimaryRendererState', () => ({}));
 }

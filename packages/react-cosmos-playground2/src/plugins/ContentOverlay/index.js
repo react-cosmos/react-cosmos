@@ -4,6 +4,7 @@ import { registerPlugin } from 'react-plugin';
 import { ContentOverlay } from './ContentOverlay';
 
 import type { RouterState } from '../Router';
+import type { RendererPreviewState } from '../RendererPreview';
 
 export function register() {
   const { plug } = registerPlugin({ name: 'contentOverlay' });
@@ -17,10 +18,12 @@ export function register() {
       const primaryRendererState = callMethod(
         'renderer.getPrimaryRendererState'
       );
+      const { urlStatus }: RendererPreviewState = getStateOf('rendererPreview');
 
       return {
         fixturePath,
         rendererReady: Boolean(primaryRendererState),
+        rendererPreviewUrlStatus: urlStatus,
         isValidFixturePath: fixturePath =>
           callMethod('renderer.isValidFixturePath', fixturePath)
       };

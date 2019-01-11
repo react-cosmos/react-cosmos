@@ -8,10 +8,10 @@ import { register } from '..';
 
 afterEach(cleanup);
 
-function registerTestPlugins(rendererPreviewStatus) {
+function registerTestPlugins() {
   register();
   mockState('router', { urlParams: {} });
-  mockState('rendererPreview', { status: rendererPreviewStatus });
+  mockState('rendererPreview', { urlStatus: 'unknown' });
   mockMethod('renderer.isValidFixturePath', () => true);
   mockMethod('renderer.getPrimaryRendererState', () => null);
 }
@@ -23,14 +23,7 @@ function loadTestPlugins() {
 }
 
 it('renders "waiting" state', () => {
-  registerTestPlugins('waiting');
-  const { queryByTestId } = loadTestPlugins();
-
-  expect(queryByTestId('waiting')).not.toBeNull();
-});
-
-it('renders "waiting" state when renderer state is null', () => {
-  registerTestPlugins('ok');
+  registerTestPlugins();
   const { queryByTestId } = loadTestPlugins();
 
   expect(queryByTestId('waiting')).not.toBeNull();

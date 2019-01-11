@@ -10,9 +10,9 @@ afterEach(cleanup);
 
 function registerTestPlugins() {
   register();
-  mockState('router', { urlParams: { fixturePath: 'foo.js' } });
-  mockState('rendererPreview', { urlStatus: 'unknown' });
-  mockMethod('renderer.isValidFixturePath', () => false);
+  mockState('router', { urlParams: {} });
+  mockState('rendererPreview', { urlStatus: 'error' });
+  mockMethod('renderer.isValidFixturePath', () => true);
   mockMethod('renderer.getPrimaryRendererState', () => ({}));
 }
 
@@ -22,9 +22,17 @@ function loadTestPlugins() {
   return render(<Slot name="contentOverlay" />);
 }
 
-it('renders "empty" state', () => {
+it('renders "error" message', () => {
   registerTestPlugins();
-  const { queryByTestId } = loadTestPlugins();
+  const { getByText } = loadTestPlugins();
 
-  expect(queryByTestId('empty')).not.toBeNull();
+  getByText(/renderer not responding/i);
+});
+
+it('renders "help" link', () => {
+  registerTestPlugins();
+  const { getByText } = loadTestPlugins();
+
+  const helpLink = getByText(/ask for help/i);
+  expect(helpLink.href).toMatch('https://join-react-cosmos.now.sh');
 });

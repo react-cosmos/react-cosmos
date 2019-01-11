@@ -8,23 +8,49 @@ import {
   DreamerIllustration
 } from '../../shared/illustrations';
 
+import type { RendererPreviewUrlStatus } from '../RendererPreview';
+
 type Props = {
   fixturePath: null | string,
   rendererReady: boolean,
+  rendererPreviewUrlStatus: RendererPreviewUrlStatus,
   isValidFixturePath: string => boolean
 };
 
 export function ContentOverlay({
   fixturePath,
   rendererReady,
+  rendererPreviewUrlStatus,
   isValidFixturePath
 }: Props) {
+  if (rendererPreviewUrlStatus === 'error') {
+    return (
+      <Container data-testid="rendererPreviewError">
+        <p>Renderer not responding.</p>
+        <p>
+          1. Please check your terminal for errors. Your build might be broken.
+        </p>
+        <p>
+          2. If you use a custom webpack config, maybe your build isn't
+          generating an index.html page.
+        </p>
+        <a
+          href="https://join-react-cosmos.now.sh"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Ask for help
+        </a>
+      </Container>
+    );
+  }
+
   if (!rendererReady) {
     // Delay "waiting for renderer" state to avoid rapidly changing visual
     // states when renderer is already compiled and will respond immediately
     return (
-      <Container>
-        <IllustrationContainer data-testid="waiting">
+      <Container data-testid="waiting">
+        <IllustrationContainer>
           <Delay>
             <DreamerIllustration />
           </Delay>
@@ -35,8 +61,8 @@ export function ContentOverlay({
 
   if (!fixturePath) {
     return (
-      <Container>
-        <IllustrationContainer data-testid="blank">
+      <Container data-testid="blank">
+        <IllustrationContainer>
           <BlankCanvasIllustration />
         </IllustrationContainer>
       </Container>
@@ -45,8 +71,8 @@ export function ContentOverlay({
 
   if (!isValidFixturePath(fixturePath)) {
     return (
-      <Container>
-        <IllustrationContainer data-testid="empty">
+      <Container data-testid="empty">
+        <IllustrationContainer>
           <EmptyIllustration />
         </IllustrationContainer>
       </Container>
