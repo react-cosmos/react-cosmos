@@ -4,6 +4,7 @@ import { join, relative } from 'path';
 import { createServer as createHttpServer } from 'http';
 import promisify from 'util.promisify';
 import express from 'express';
+// IDEA: Maybe replace react-dev-utils with https://github.com/yyx990803/launch-editor
 import launchEditor from 'react-dev-utils/launchEditor';
 import { getPlaygroundHtml, getPlaygroundHtmlNext } from './playground-html';
 import { setupHttpProxy } from './http-proxy';
@@ -94,7 +95,9 @@ export function attachStackFrameEditorLauncher(app: express$Application) {
   app.get(
     '/__open-stack-frame-in-editor',
     (req: express$Request, res: express$Response) => {
-      launchEditor(req.query.fileName, req.query.lineNumber);
+      const lineNumber = parseInt(req.query.lineNumber, 10) || 1;
+      const colNumber = parseInt(req.query.colNumber, 10) || 1;
+      launchEditor(req.query.fileName, lineNumber, colNumber);
       res.end();
     }
   );

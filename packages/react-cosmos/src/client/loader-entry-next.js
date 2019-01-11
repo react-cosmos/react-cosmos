@@ -1,4 +1,9 @@
 // @flow
+/* global process */
+
+if (process.env.NODE_ENV === 'development') {
+  require('./react-error-overlay-next');
+}
 
 function mount() {
   // Use modules are reloaded on every webpack hot reload event
