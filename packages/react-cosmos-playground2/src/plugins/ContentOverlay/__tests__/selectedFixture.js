@@ -8,13 +8,13 @@ import { register } from '..';
 
 afterEach(cleanup);
 
-function registerTestPlugins() {
+function registerTestPlugins({ rendererPreviewVisible }) {
   register();
   mockState('router', { urlParams: { fixturePath: 'foo.js' } });
   mockState('rendererPreview', { urlStatus: 'unknown' });
   mockMethod('renderer.isReady', () => true);
   mockMethod('renderer.isValidFixturePath', () => true);
-  mockMethod('rendererPreview.isVisible', () => true);
+  mockMethod('rendererPreview.isVisible', () => rendererPreviewVisible);
 }
 
 function loadTestPlugins() {
@@ -23,9 +23,18 @@ function loadTestPlugins() {
   return render(<Slot name="contentOverlay" />);
 }
 
-it('does not render anything', () => {
-  registerTestPlugins();
-  const { container } = loadTestPlugins();
+describe('does not render anything', () => {
+  it('when renderer preview is visible', () => {
+    registerTestPlugins({ rendererPreviewVisible: true });
+    const { container } = loadTestPlugins();
 
-  expect(container).toMatchInlineSnapshot(`<div />`);
+    expect(container).toMatchInlineSnapshot(`<div />`);
+  });
+
+  it('when renderer preview is NOT visible', () => {
+    registerTestPlugins({ rendererPreviewVisible: false });
+    const { container } = loadTestPlugins();
+
+    expect(container).toMatchInlineSnapshot(`<div />`);
+  });
 });

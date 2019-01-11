@@ -52,7 +52,17 @@ export function ContentOverlay({
     );
   }
 
-  if (fixturePath && !validFixturePath) {
+  if (!fixturePath) {
+    return (
+      <Container data-testid="blank">
+        <IllustrationContainer>
+          <BlankCanvasIllustration />
+        </IllustrationContainer>
+      </Container>
+    );
+  }
+
+  if (!validFixturePath) {
     return (
       <Container data-testid="empty">
         <IllustrationContainer>
@@ -62,13 +72,8 @@ export function ContentOverlay({
     );
   }
 
-  return (
-    <Container data-testid="blank">
-      <IllustrationContainer>
-        <BlankCanvasIllustration />
-      </IllustrationContainer>
-    </Container>
-  );
+  // Nothing to show, whatever's underneath will be visible
+  return null;
 }
 
 const Container = styled.div`
