@@ -35,19 +35,19 @@ it('return false', async () => {
   registerTestPlugins({ isFixtureLoaded: false });
   loadTestPlugins({ runtimeError: false });
 
-  expect(mockCall('rendererPreview.shouldShow')).toBe(false);
+  expect(mockCall('rendererPreview.isVisible')).toBe(false);
 });
 
 it('return true on loaded fixture', async () => {
   registerTestPlugins({ isFixtureLoaded: true });
   loadTestPlugins({ runtimeError: false });
 
-  expect(mockCall('rendererPreview.shouldShow')).toBe(true);
+  expect(mockCall('rendererPreview.isVisible')).toBe(true);
 });
 
 it('return true on runtime error', async () => {
   registerTestPlugins({ isFixtureLoaded: false });
   loadTestPlugins({ runtimeError: true });
 
-  expect(mockCall('rendererPreview.shouldShow')).toBe(true);
+  expect(mockCall('rendererPreview.isVisible')).toBe(true);
 });

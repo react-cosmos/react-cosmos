@@ -16,7 +16,7 @@ type Props = {
   validFixturePath: boolean,
   rendererReady: boolean,
   rendererPreviewUrlStatus: RendererPreviewUrlStatus,
-  shouldShowRendererPreview: boolean
+  rendererPreviewVisible: boolean
 };
 
 export function ContentOverlay({
@@ -24,9 +24,9 @@ export function ContentOverlay({
   validFixturePath,
   rendererReady,
   rendererPreviewUrlStatus,
-  shouldShowRendererPreview
+  rendererPreviewVisible
 }: Props) {
-  if (shouldShowRendererPreview) {
+  if (rendererPreviewVisible) {
     return null;
   }
 

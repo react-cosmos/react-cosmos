@@ -14,7 +14,7 @@ function registerTestPlugins() {
   mockState('rendererPreview', { urlStatus: 'unknown' });
   mockMethod('renderer.isReady', () => true);
   mockMethod('renderer.isValidFixturePath', () => true);
-  mockMethod('rendererPreview.shouldShow', () => true);
+  mockMethod('rendererPreview.isVisible', () => true);
 }
 
 function loadTestPlugins() {

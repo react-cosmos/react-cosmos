@@ -2,7 +2,7 @@
 
 import type { RendererPreviewContext } from './shared';
 
-export function shouldShow(context: RendererPreviewContext) {
+export function isVisible(context: RendererPreviewContext) {
   const { runtimeError } = context.getState();
 
   // Here's a scenario when it's required to show the renderer preview iframe

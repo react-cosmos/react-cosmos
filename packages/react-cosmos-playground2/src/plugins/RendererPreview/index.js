@@ -3,7 +3,7 @@
 import { registerPlugin } from 'react-plugin';
 import { checkRendererStatus } from './checkRendererStatus';
 import { handleWindowMessages } from './handleWindowMessages';
-import { shouldShow } from './shouldShow';
+import { isVisible } from './isVisible';
 import { RendererPreview } from './RendererPreview';
 
 import type { RendererRequest } from 'react-cosmos-shared2/renderer';
@@ -25,9 +25,9 @@ export function register() {
 
   on('renderer.request', handleRendererRequest);
 
-  // This method tells plugins that overlay the "rendererPreview" slot when
+  // This method lets plugins that overlay the "rendererPreview" slot know when
   // to get out of the way
-  method('shouldShow', shouldShow);
+  method('isVisible', isVisible);
 
   init(context => {
     const rendererUrl = getRendererUrl(context);
@@ -50,7 +50,7 @@ export function register() {
 function getRendererPreviewProps(context) {
   return {
     rendererUrl: getRendererUrl(context),
-    shouldShow: shouldShow(context),
+    isVisible: isVisible(context),
     onIframeRef: elRef => {
       iframeRef = elRef;
     }
