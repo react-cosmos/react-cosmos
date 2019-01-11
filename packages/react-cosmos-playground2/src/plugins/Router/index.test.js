@@ -12,7 +12,7 @@ import {
   cleanup,
   getPluginState,
   mockMethod,
-  mockInitCall
+  mockCall
 } from '../../testHelpers/plugin';
 import { register } from '.';
 
@@ -54,15 +54,15 @@ it('posts "unselectFixture" renderer request on removed "fixturePath" URL param'
 
 describe('on "setUrlParams" method', () => {
   function mockSetUrlParamsCall() {
-    mockInitCall('router.setUrlParams', { fixturePath: 'fixtures/zwei.js' });
+    mockCall('router.setUrlParams', { fixturePath: 'fixtures/zwei.js' });
   }
 
   it('sets "router" state', async () => {
     register();
     mockMethod('renderer.selectFixture', () => {});
-    mockSetUrlParamsCall();
 
     loadPlugins();
+    mockSetUrlParamsCall();
 
     await wait(() =>
       expect(getPluginState('router').urlParams).toEqual({
@@ -74,9 +74,9 @@ describe('on "setUrlParams" method', () => {
   it('sets URL params', async () => {
     register();
     mockMethod('renderer.selectFixture', () => {});
-    mockSetUrlParamsCall();
 
     loadPlugins();
+    mockSetUrlParamsCall();
 
     await wait(() =>
       expect(getUrlParams()).toEqual({ fixturePath: 'fixtures/zwei.js' })
@@ -85,12 +85,12 @@ describe('on "setUrlParams" method', () => {
 
   it('calls "renderer.selectFixture" method', async () => {
     register();
-    mockSetUrlParamsCall();
 
     const handleSelectFixture = jest.fn();
     mockMethod('renderer.selectFixture', handleSelectFixture);
 
     loadPlugins();
+    mockSetUrlParamsCall();
 
     await wait(() =>
       expect(handleSelectFixture).toBeCalledWith(

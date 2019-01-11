@@ -45,14 +45,6 @@ export function mockPlug(plug: Object) {
   registerFreshPlugin().plug(plug);
 }
 
-export function mockInitCall(methodPath: string, ...args: any[]): Promise<any> {
-  return new Promise(resolve => {
-    registerFreshPlugin().init(({ callMethod }) => {
-      resolve(callMethod(methodPath, ...args));
-    });
-  });
-}
-
 export function mockCall(methodPath: string, ...args: any[]): Promise<any> {
   const [pluginName] = methodPath.split('.');
   const { callMethod } = getPluginContext(pluginName);

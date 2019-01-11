@@ -6,7 +6,7 @@ import {
   cleanup,
   getPluginState,
   mockState,
-  mockInitCall
+  mockCall
 } from '../../../testHelpers/plugin';
 import { mockFixtures, getReadyRes, getFxListChangeRes } from '../testHelpers';
 import { register } from '..';
@@ -24,13 +24,13 @@ function loadTestPlugins() {
 
 it('updates fixture list in renderer state', async () => {
   registerTestPlugins();
-  mockInitCall('renderer.receiveResponse', getReadyRes('foo-renderer'));
-  mockInitCall(
+  loadTestPlugins();
+
+  mockCall('renderer.receiveResponse', getReadyRes('foo-renderer'));
+  mockCall(
     'renderer.receiveResponse',
     getFxListChangeRes('foo-renderer', [...mockFixtures, 'fixtures/vier.js'])
   );
-
-  loadTestPlugins();
 
   await wait(() =>
     expect(getPluginState('renderer')).toEqual({

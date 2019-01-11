@@ -6,7 +6,7 @@ import {
   cleanup,
   mockState,
   mockEvent,
-  mockInitCall
+  mockCall
 } from '../../../testHelpers/plugin';
 import {
   mockFixtureState,
@@ -30,10 +30,9 @@ function loadTestPlugins({ rendererState = null } = {}) {
 it('posts "selectFixture" renderer request', async () => {
   const handleRendererRequest = jest.fn();
   registerTestPlugins({ handleRendererRequest });
-
-  mockInitCall('renderer.receiveResponse', getReadyRes('foo-renderer'));
-
   loadTestPlugins();
+
+  mockCall('renderer.receiveResponse', getReadyRes('foo-renderer'));
 
   await wait(() =>
     expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {
@@ -50,9 +49,6 @@ it('posts "selectFixture" renderer request', async () => {
 it('posts "selectFixture" renderer request with fixture state of primary renderer', async () => {
   const handleRendererRequest = jest.fn();
   registerTestPlugins({ handleRendererRequest });
-
-  mockInitCall('renderer.receiveResponse', getReadyRes('bar-renderer'));
-
   loadTestPlugins({
     rendererState: {
       primaryRendererId: 'foo-renderer',
@@ -63,6 +59,8 @@ it('posts "selectFixture" renderer request with fixture state of primary rendere
       }
     }
   });
+
+  mockCall('renderer.receiveResponse', getReadyRes('bar-renderer'));
 
   await wait(() =>
     expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {

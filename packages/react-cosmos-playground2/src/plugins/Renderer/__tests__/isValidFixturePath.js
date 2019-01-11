@@ -1,7 +1,7 @@
 // @flow
 
 import { loadPlugins } from 'react-plugin';
-import { cleanup, mockInitCall } from '../../../testHelpers/plugin';
+import { cleanup, mockCall } from '../../../testHelpers/plugin';
 import { mockFixtures } from '../testHelpers';
 import { register } from '..';
 
@@ -19,22 +19,18 @@ const initialRendererState = {
 
 it('returns false on missing fixture', async () => {
   register();
-  const callReturn = mockInitCall(
-    'renderer.isValidFixturePath',
-    'fixtures/sechs.js'
-  );
-
   loadPlugins({ state: { renderer: initialRendererState } });
-  expect(await callReturn).toBe(false);
+
+  expect(
+    await mockCall('renderer.isValidFixturePath', 'fixtures/sechs.js')
+  ).toBe(false);
 });
 
 it('returns true on existing fixture', async () => {
   register();
-  const callReturn = mockInitCall(
-    'renderer.isValidFixturePath',
-    'fixtures/drei.js'
-  );
-
   loadPlugins({ state: { renderer: initialRendererState } });
-  expect(await callReturn).toBe(true);
+
+  expect(
+    await mockCall('renderer.isValidFixturePath', 'fixtures/drei.js')
+  ).toBe(true);
 });

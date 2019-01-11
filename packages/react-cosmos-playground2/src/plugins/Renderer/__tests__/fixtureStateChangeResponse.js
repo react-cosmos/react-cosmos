@@ -7,7 +7,7 @@ import {
   getPluginState,
   mockState,
   mockEvent,
-  mockInitCall
+  mockCall
 } from '../../../testHelpers/plugin';
 import {
   mockFixtureState,
@@ -29,8 +29,6 @@ function loadTestPlugins({ rendererState = null } = {}) {
 
 it('sets "fixtureState" renderer state', async () => {
   registerTestPlugins();
-  mockInitCall('renderer.receiveResponse', getFxStateChangeReq('foo-renderer'));
-
   loadTestPlugins({
     rendererState: {
       primaryRendererId: 'foo-renderer',
@@ -41,6 +39,8 @@ it('sets "fixtureState" renderer state', async () => {
       }
     }
   });
+
+  mockCall('renderer.receiveResponse', getFxStateChangeReq('foo-renderer'));
 
   await wait(() =>
     expect(getPluginState('renderer')).toEqual({
@@ -56,8 +56,6 @@ it('sets "fixtureState" renderer state', async () => {
 
 it('sets primary and secondary "fixtureState" renderer states', async () => {
   registerTestPlugins();
-  mockInitCall('renderer.receiveResponse', getFxStateChangeReq('foo-renderer'));
-
   loadTestPlugins({
     rendererState: {
       primaryRendererId: 'foo-renderer',
@@ -71,6 +69,8 @@ it('sets primary and secondary "fixtureState" renderer states', async () => {
       }
     }
   });
+
+  mockCall('renderer.receiveResponse', getFxStateChangeReq('foo-renderer'));
 
   await wait(() =>
     expect(getPluginState('renderer')).toEqual({
@@ -89,8 +89,6 @@ it('sets primary and secondary "fixtureState" renderer states', async () => {
 
 it('only sets secondary "fixtureState" renderer state', async () => {
   registerTestPlugins();
-  mockInitCall('renderer.receiveResponse', getFxStateChangeReq('bar-renderer'));
-
   loadTestPlugins({
     rendererState: {
       primaryRendererId: 'foo-renderer',
@@ -104,6 +102,8 @@ it('only sets secondary "fixtureState" renderer state', async () => {
       }
     }
   });
+
+  mockCall('renderer.receiveResponse', getFxStateChangeReq('bar-renderer'));
 
   await wait(() =>
     expect(getPluginState('renderer')).toEqual({
@@ -126,8 +126,6 @@ it('posts "setFixtureState" request to secondary renderer', async () => {
   const handleRendererRequest = jest.fn();
   mockEvent('renderer.request', handleRendererRequest);
 
-  mockInitCall('renderer.receiveResponse', getFxStateChangeReq('foo-renderer'));
-
   loadTestPlugins({
     rendererState: {
       primaryRendererId: 'foo-renderer',
@@ -141,6 +139,8 @@ it('posts "setFixtureState" request to secondary renderer', async () => {
       }
     }
   });
+
+  mockCall('renderer.receiveResponse', getFxStateChangeReq('foo-renderer'));
 
   await wait(() =>
     expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {

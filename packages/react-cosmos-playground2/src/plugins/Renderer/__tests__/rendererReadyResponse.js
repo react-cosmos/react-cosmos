@@ -6,7 +6,7 @@ import {
   cleanup,
   getPluginState,
   mockState,
-  mockInitCall
+  mockCall
 } from '../../../testHelpers/plugin';
 import {
   mockFixtures,
@@ -29,9 +29,9 @@ function loadTestPlugins({ rendererState = null } = {}) {
 
 it('creates renderer state', async () => {
   registerTestPlugins();
-  mockInitCall('renderer.receiveResponse', getReadyRes('foo-renderer'));
-
   loadTestPlugins();
+
+  mockCall('renderer.receiveResponse', getReadyRes('foo-renderer'));
 
   await wait(() =>
     expect(getPluginState('renderer')).toEqual({
@@ -48,10 +48,10 @@ it('creates renderer state', async () => {
 
 it('creates multiple renderer states', async () => {
   registerTestPlugins();
-  mockInitCall('renderer.receiveResponse', getReadyRes('foo-renderer'));
-  mockInitCall('renderer.receiveResponse', getReadyRes('bar-renderer'));
-
   loadTestPlugins();
+
+  mockCall('renderer.receiveResponse', getReadyRes('foo-renderer'));
+  mockCall('renderer.receiveResponse', getReadyRes('bar-renderer'));
 
   await wait(() =>
     expect(getPluginState('renderer')).toEqual({
@@ -70,8 +70,6 @@ it('creates multiple renderer states', async () => {
 
 it('creates renderer state with fixture state of primary renderer', async () => {
   registerTestPlugins();
-  mockInitCall('renderer.receiveResponse', getReadyRes('bar-renderer'));
-
   loadTestPlugins({
     rendererState: {
       primaryRendererId: 'foo-renderer',
@@ -82,6 +80,8 @@ it('creates renderer state with fixture state of primary renderer', async () => 
       }
     }
   });
+
+  mockCall('renderer.receiveResponse', getReadyRes('bar-renderer'));
 
   await wait(() =>
     expect(getPluginState('renderer')).toEqual({
@@ -97,8 +97,6 @@ it('creates renderer state with fixture state of primary renderer', async () => 
 
 it('resets fixture state in all renderer states', async () => {
   registerTestPlugins();
-  mockInitCall('renderer.receiveResponse', getReadyRes('foo-renderer'));
-
   loadTestPlugins({
     rendererState: {
       primaryRendererId: 'foo-renderer',
@@ -112,6 +110,8 @@ it('resets fixture state in all renderer states', async () => {
       }
     }
   });
+
+  mockCall('renderer.receiveResponse', getReadyRes('foo-renderer'));
 
   await wait(() =>
     expect(getPluginState('renderer')).toEqual({

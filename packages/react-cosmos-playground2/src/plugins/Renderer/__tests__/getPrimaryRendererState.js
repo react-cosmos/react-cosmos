@@ -1,7 +1,7 @@
 // @flow
 
 import { loadPlugins } from 'react-plugin';
-import { cleanup, mockInitCall } from '../../../testHelpers/plugin';
+import { cleanup, mockCall } from '../../../testHelpers/plugin';
 import { mockFixtures, mockFixtureState } from '../testHelpers';
 import { register } from '..';
 
@@ -9,16 +9,13 @@ afterEach(cleanup);
 
 it('returns null', async () => {
   register();
-  const callReturn = mockInitCall('renderer.getPrimaryRendererState');
-
   loadPlugins({ state: { renderer: null } });
-  expect(await callReturn).toBe(null);
+
+  expect(await mockCall('renderer.getPrimaryRendererState')).toBe(null);
 });
 
 it('returns primary renderer state', async () => {
   register();
-  const callReturn = mockInitCall('renderer.getPrimaryRendererState');
-
   loadPlugins({
     state: {
       renderer: {
@@ -32,7 +29,8 @@ it('returns primary renderer state', async () => {
       }
     }
   });
-  expect(await callReturn).toEqual({
+
+  expect(await mockCall('renderer.getPrimaryRendererState')).toEqual({
     fixtures: mockFixtures,
     fixtureState: mockFixtureState
   });
@@ -40,8 +38,6 @@ it('returns primary renderer state', async () => {
 
 it('returns primary renderer state', async () => {
   register();
-  const callReturn = mockInitCall('renderer.getPrimaryRendererState');
-
   loadPlugins({
     state: {
       renderer: {
@@ -59,7 +55,8 @@ it('returns primary renderer state', async () => {
       }
     }
   });
-  expect(await callReturn).toEqual({
+
+  expect(await mockCall('renderer.getPrimaryRendererState')).toEqual({
     fixtures: mockFixtures,
     fixtureState: null
   });

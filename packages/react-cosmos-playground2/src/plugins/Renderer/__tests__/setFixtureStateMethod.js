@@ -7,7 +7,7 @@ import {
   getPluginState,
   mockState,
   mockEvent,
-  mockInitCall
+  mockCall
 } from '../../../testHelpers/plugin';
 import { mockFixtures, mockFixtureState } from '../testHelpers';
 import { register } from '..';
@@ -32,11 +32,11 @@ function registerTestPlugins() {
   register();
   mockState('router', { urlParams: { fixturePath: 'fixtures/zwei.js' } });
   mockState('renderer', initialRendererState);
-  mockInitCall('renderer.setFixtureState', mockFixtureState);
 }
 
 function loadTestPlugins() {
   loadPlugins();
+  mockCall('renderer.setFixtureState', mockFixtureState);
 }
 
 it('sets fixture state for all renderers', async () => {

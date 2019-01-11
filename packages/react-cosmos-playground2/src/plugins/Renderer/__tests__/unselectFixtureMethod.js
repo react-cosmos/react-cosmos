@@ -6,7 +6,7 @@ import {
   cleanup,
   getPluginState,
   mockEvent,
-  mockInitCall
+  mockCall
 } from '../../../testHelpers/plugin';
 import { mockFixtures, mockFixtureState } from '../testHelpers';
 import { register } from '..';
@@ -27,17 +27,13 @@ const initialRendererState = {
   }
 };
 
-function registerTestPlugins() {
-  register();
-  mockInitCall('renderer.unselectFixture');
-}
-
 function loadTestPlugins() {
   loadPlugins({ state: { renderer: initialRendererState } });
+  mockCall('renderer.unselectFixture');
 }
 
 it('resets fixture state for all renderers', async () => {
-  registerTestPlugins();
+  register();
   loadTestPlugins();
 
   await wait(() =>
@@ -56,7 +52,7 @@ it('resets fixture state for all renderers', async () => {
 });
 
 it('posts "unselectFixture" renderer requests', async () => {
-  registerTestPlugins();
+  register();
 
   const handleRendererRequest = jest.fn();
   mockEvent('renderer.request', handleRendererRequest);
