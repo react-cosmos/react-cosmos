@@ -20,13 +20,10 @@ function fakeSuccessfulFetchCalls() {
   global.fetch = jest.fn(() => Promise.resolve({ status: 200 }));
 }
 
-function registerTestPlugins(fixtureState = null) {
+function registerTestPlugins() {
   register();
   mockConfig('renderer', { webUrl: 'mockRendererUrl' });
-  mockMethod('renderer.getPrimaryRendererState', () => ({
-    fixtures: ['foo.js'],
-    fixtureState
-  }));
+  mockMethod('renderer.isFixtureLoaded', () => false);
 }
 
 function loadTestPlugins() {
@@ -61,13 +58,6 @@ it(`hides iframe when fixture isn't loaded`, () => {
   const renderer = loadTestPlugins();
 
   expect(getIframe(renderer).style.display).toBe('none');
-});
-
-it('shows iframe when fixture is loaded', () => {
-  registerTestPlugins({});
-  const renderer = loadTestPlugins();
-
-  expect(getIframe(renderer).style.display).toBe('block');
 });
 
 it('posts renderer request message to iframe', async () => {

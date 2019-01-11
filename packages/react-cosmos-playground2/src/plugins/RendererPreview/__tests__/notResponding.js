@@ -21,7 +21,7 @@ function fakeFailedFetchCalls() {
 function registerTestPlugins() {
   register();
   mockConfig('renderer', { webUrl: 'mockRendererUrl' });
-  mockMethod('renderer.getPrimaryRendererState', () => null);
+  mockMethod('renderer.isFixtureLoaded', () => false);
 }
 
 function loadTestPlugins() {

@@ -6,13 +6,13 @@ import { Slot } from 'react-plugin';
 
 type Props = {
   rendererUrl: null | string,
-  isFixtureLoaded: boolean,
+  shouldShow: boolean,
   onIframeRef: (elRef: null | window) => void
 };
 
 export function RendererPreview({
   rendererUrl,
-  isFixtureLoaded,
+  shouldShow,
   onIframeRef
 }: Props) {
   return (
@@ -25,7 +25,7 @@ export function RendererPreview({
             src={rendererUrl}
             frameBorder={0}
             style={{
-              display: isFixtureLoaded ? 'block' : 'none'
+              display: shouldShow ? 'block' : 'none'
             }}
           />
         </Container>
