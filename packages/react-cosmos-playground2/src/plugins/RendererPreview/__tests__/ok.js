@@ -44,7 +44,9 @@ it('sets "ok" status', async () => {
   registerTestPlugins();
   loadTestPlugins();
 
-  await wait(() => expect(getPluginState('rendererPreview').status).toBe('ok'));
+  await wait(() =>
+    expect(getPluginState('rendererPreview').urlStatus).toBe('ok')
+  );
 });
 
 it('renders iframe with config.renderer.webUrl src', () => {

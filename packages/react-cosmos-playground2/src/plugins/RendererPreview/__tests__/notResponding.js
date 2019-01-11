@@ -36,6 +36,6 @@ it('sets "notResponding" status', async () => {
   loadTestPlugins();
 
   await wait(() =>
-    expect(getPluginState('rendererPreview').status).toBe('notResponding')
+    expect(getPluginState('rendererPreview').urlStatus).toBe('error')
   );
 });
