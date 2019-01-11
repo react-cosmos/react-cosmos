@@ -38,12 +38,17 @@ export function register() {
   });
 
   method('getPrimaryRendererState', handleGetPrimaryRendererState);
+  method('isReady', handleIsReady);
   method('isValidFixturePath', handleIsFixturePathValid);
   method('selectFixture', handleSelectFixture);
   method('unselectFixture', handleUnselectFixture);
   method('setFixtureState', handleSetFixtureState);
   method('selectPrimaryRenderer', handleSelectPrimaryRenderer);
   method('receiveResponse', handleReceiveResponse);
+}
+
+function handleIsReady({ getState }) {
+  return getPrimaryRendererState(getState()) !== null;
 }
 
 function handleGetPrimaryRendererState({ getState }) {

@@ -53,6 +53,13 @@ export function mockInitCall(methodPath: string, ...args: any[]): Promise<any> {
   });
 }
 
+export function mockCall(methodPath: string, ...args: any[]): Promise<any> {
+  const [pluginName] = methodPath.split('.');
+  const { callMethod } = getPluginContext(pluginName);
+
+  return callMethod(methodPath, ...args);
+}
+
 export function mockInitEmit(eventPath: string, ...args: any[]) {
   const [pluginName, eventName] = eventPath.split('.');
   ensurePluginApi(pluginName).init(({ emitEvent }) => {
