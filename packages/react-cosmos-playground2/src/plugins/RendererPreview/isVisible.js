@@ -27,5 +27,7 @@ function isVisibleToRevealRuntimeError(context) {
 }
 
 function isFixtureSelected({ getStateOf }) {
-  return Boolean(getStateOf('router').urlParams.fixturePath);
+  const { fixturePath } = getStateOf('router').urlParams;
+
+  return fixturePath !== undefined;
 }
