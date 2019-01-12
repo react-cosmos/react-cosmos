@@ -25,10 +25,11 @@ We need a decent parity with the existing Cosmos UI to test JSX fixtures. This i
     - [x] Fixture blank state
     - [x] Fixture error state
   - [x] JSX decorators
-  - [ ] Renderer (web) error handling (using react-error-overlay)
-    - [ ] Renderer load compile error
-    - [ ] Renderer reload (HMR) compile error
-    - [ ] Renderer run-time error
+  - [x] Renderer error handling
+    - [x] Renderer preview URL error
+    - [x] react-error-overlay integration
+      - [x] Always show preview iframe after error occurred
+      - [x] Dismiss overlay when changing fixture
 
 **Not** included in the first beta release: The Fixture Editor. This is because it'll be replaced by something _much_ more powerful (a new Control Panel). But this section will have arrive later, after the core of Cosmos Next has been thoroughly tested.
 
