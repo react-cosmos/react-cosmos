@@ -4,6 +4,7 @@ import { registerPlugin } from 'react-plugin';
 import { checkRendererStatus } from './checkRendererStatus';
 import { handleWindowMessages } from './handleWindowMessages';
 import { isVisible } from './isVisible';
+import { handleRendererRuntimeErrors } from './handleRendererRuntimeErrors';
 import { RendererPreview } from './RendererPreview';
 
 import type { RendererRequest } from 'react-cosmos-shared2/renderer';
@@ -35,7 +36,8 @@ export function register() {
     if (rendererUrl) {
       return [
         checkRendererStatus(context, rendererUrl),
-        handleWindowMessages(context)
+        handleWindowMessages(context),
+        handleRendererRuntimeErrors(context)
       ];
     }
   });
