@@ -19,7 +19,7 @@ it('renders disabled button', async () => {
   mockState('renderer', { primaryRendererId: null, renderers: {} });
   mockState('router', { urlParams: { fixturePath: 'fooFixture.js' } });
   mockMethod('renderer.getPrimaryRendererState', () => null);
-  mockMethod('renderer.isValidFixturePath', () => false);
+  mockMethod('renderer.isValidFixtureSelected', () => false);
 
   loadPlugins();
   const { getByText } = render(<Slot name="fixtureActions" />);

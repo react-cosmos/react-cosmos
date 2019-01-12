@@ -1,7 +1,7 @@
 // @flow
 
 import { loadPlugins } from 'react-plugin';
-import { cleanup, mockCall } from '../../../testHelpers/plugin';
+import { cleanup, mockState, mockCall } from '../../../testHelpers/plugin';
 import { mockFixtures } from '../testHelpers';
 import { register } from '..';
 
@@ -17,18 +17,22 @@ const initialRendererState = {
   }
 };
 
+function mockFixturePath(fixturePath) {
+  mockState('router', { urlParams: { fixturePath } });
+}
+
 it('returns false on missing fixture', async () => {
   register();
+  mockFixturePath('fixtures/sechs.js');
   loadPlugins({ state: { renderer: initialRendererState } });
 
-  const isValid = mockCall('renderer.isValidFixturePath', 'fixtures/sechs.js');
-  expect(isValid).toBe(false);
+  expect(mockCall('renderer.isValidFixtureSelected')).toBe(false);
 });
 
 it('returns true on existing fixture', async () => {
   register();
+  mockFixturePath('fixtures/drei.js');
   loadPlugins({ state: { renderer: initialRendererState } });
 
-  const isValid = mockCall('renderer.isValidFixturePath', 'fixtures/drei.js');
-  expect(isValid).toBe(true);
+  expect(mockCall('renderer.isValidFixtureSelected')).toBe(true);
 });

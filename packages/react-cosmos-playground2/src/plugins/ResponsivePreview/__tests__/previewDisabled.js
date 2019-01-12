@@ -22,6 +22,7 @@ function registerTestPlugins() {
   mockState('router', { urlParams: { fixturePath: 'fooFixture.js' } });
   mockState('renderer', initialRendererState);
   mockMethod('renderer.getPrimaryRendererState', () => null);
+  mockMethod('renderer.isValidFixtureSelected', () => false);
 }
 
 function loadTestPlugins() {

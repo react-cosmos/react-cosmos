@@ -21,13 +21,16 @@ const storageKey = getResponsiveViewportStorageKey('mockProjectId');
 function registerTestPlugins({
   urlParams = {},
   handleSetFixtureState = () => {}
-}: { urlParams?: {}, handleSetFixtureState?: Function } = {}) {
+}: { urlParams?: Object, handleSetFixtureState?: Function } = {}) {
   register();
   mockConfig('core', { projectId: 'mockProjectId' });
   mockConfig('renderer', { webUrl: 'mockRendererUrl' });
   mockState('router', { urlParams });
   mockState('renderer', { primaryRendererId: null, renderers: {} });
   mockMethod('renderer.getPrimaryRendererState', () => null);
+  mockMethod('renderer.isValidFixtureSelected', () =>
+    Boolean(urlParams.fixturePath)
+  );
   mockMethod('renderer.setFixtureState', handleSetFixtureState);
 }
 

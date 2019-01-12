@@ -29,9 +29,14 @@ export function register() {
     slotName: 'rendererPreviewOuter',
     render: ResponsivePreview,
     getProps: context => {
+      const {
+        urlParams: { fullScreen }
+      }: RouterState = context.getStateOf('router');
+
       return {
+        ...getCommonProps(context),
         config: context.getConfig(),
-        ...getCommonProps(context)
+        fullScreen: fullScreen !== undefined
       };
     }
   });
@@ -39,24 +44,19 @@ export function register() {
   plug({
     slotName: 'fixtureActions',
     render: createFixtureAction(ToggleButton),
-    getProps: context => {
-      return getCommonProps(context);
-    }
+    getProps: context => getCommonProps(context)
   });
 }
 
 function getCommonProps(context) {
-  const { getConfigOf, getState, getStateOf, setState, callMethod } = context;
+  const { getConfigOf, getState, setState, callMethod } = context;
   const { projectId }: CoreConfig = getConfigOf('core');
-  const { urlParams }: RouterState = getStateOf('router');
 
   return {
     state: getState(),
     projectId,
-    urlParams,
     primaryRendererState: callMethod('renderer.getPrimaryRendererState'),
-    isValidFixturePath: (fixturePath: string): boolean =>
-      callMethod('renderer.isValidFixturePath', fixturePath),
+    validFixtureSelected: context.callMethod('renderer.isValidFixtureSelected'),
     setState,
     setFixtureStateViewport: () => setFixtureStateViewport(context),
     storage: getStorageApi(context)

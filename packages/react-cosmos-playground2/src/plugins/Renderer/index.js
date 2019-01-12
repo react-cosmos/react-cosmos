@@ -40,7 +40,7 @@ export function register() {
   // TODO: Break down methods into files before adding more
   method('getPrimaryRendererState', handleGetPrimaryRendererState);
   method('isReady', handleIsReady);
-  method('isValidFixturePath', handleIsFixturePathValid);
+  method('isValidFixtureSelected', handleIsValidFixtureSelected);
   method('isFixtureLoaded', handleIsFixtureLoaded);
   method('selectFixture', handleSelectFixture);
   method('unselectFixture', handleUnselectFixture);
@@ -57,8 +57,14 @@ function handleGetPrimaryRendererState({ getState }) {
   return getPrimaryRendererState(getState());
 }
 
-function handleIsFixturePathValid({ getState }, fixturePath: string) {
-  const primaryRendererState = getPrimaryRendererState(getState());
+function handleIsValidFixtureSelected(context) {
+  const { fixturePath } = getUrlParams(context);
+
+  if (fixturePath === undefined) {
+    return false;
+  }
+
+  const primaryRendererState = getPrimaryRendererState(context.getState());
 
   return primaryRendererState
     ? primaryRendererState.fixtures.indexOf(fixturePath) !== -1

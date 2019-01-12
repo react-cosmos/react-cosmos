@@ -12,7 +12,6 @@ import { stretchStyle, getStyles } from './style';
 import type { Node } from 'react';
 import type { SetState } from 'react-cosmos-shared2/util';
 import type { Storage } from '../../Storage';
-import type { UrlParams } from '../../Router';
 import type { RendererItemState } from '../../Renderer';
 import type {
   Viewport,
@@ -25,8 +24,9 @@ type Props = {
   config: ResponsivePreviewConfig,
   state: ResponsivePreviewState,
   projectId: string,
-  urlParams: UrlParams,
+  fullScreen: boolean,
   primaryRendererState: null | RendererItemState,
+  validFixtureSelected: boolean,
   setState: SetState<ResponsivePreviewState>,
   setFixtureStateViewport: () => void,
   storage: Storage
@@ -53,18 +53,18 @@ export class ResponsivePreview extends Component<Props, State> {
       children,
       config,
       state,
-      urlParams,
-      primaryRendererState
+      fullScreen,
+      primaryRendererState,
+      validFixtureSelected
     } = this.props;
     const { container, scale } = this.state;
-    const { fixturePath, fullScreen } = urlParams;
     const viewport = getViewport(state, primaryRendererState);
 
     // We don't simply do `return children` because it would cause a flicker
     // whenever switching between responsive and non responsive mode. By
     // returning the same element nesting between states for Preview the
     // component instances are preserved and the transition is seamless.
-    if (!fixturePath || fullScreen || !viewport || !container) {
+    if (!validFixtureSelected || fullScreen || !viewport || !container) {
       return (
         <Container>
           <div key="preview" ref={this.handleContainerRef} style={stretchStyle}>

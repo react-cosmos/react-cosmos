@@ -12,6 +12,7 @@ function registerTestPlugins() {
   register();
   mockState('router', { urlParams: {} });
   mockMethod('renderer.isReady', () => false);
+  mockMethod('renderer.isValidFixtureSelected', () => false);
 }
 
 function loadTestPlugins() {

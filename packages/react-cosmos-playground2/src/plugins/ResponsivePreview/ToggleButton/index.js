@@ -8,16 +8,14 @@ import { Button } from '../../../shared/components';
 
 import type { SetState } from 'react-cosmos-shared2/util';
 import type { RendererItemState } from '../../Renderer';
-import type { UrlParams } from '../../Router';
 import type { Storage } from '../../Storage';
 import type { ResponsivePreviewState } from '../shared';
 
 export type Props = {
   state: ResponsivePreviewState,
   projectId: string,
-  urlParams: UrlParams,
   primaryRendererState: null | RendererItemState,
-  isValidFixturePath: (fixturePath: string) => boolean,
+  validFixtureSelected: boolean,
   setState: SetState<ResponsivePreviewState>,
   setFixtureStateViewport: () => void,
   storage: Storage
@@ -25,14 +23,9 @@ export type Props = {
 
 export class ToggleButton extends Component<Props> {
   render() {
-    const {
-      state,
-      urlParams: { fixturePath },
-      primaryRendererState,
-      isValidFixturePath
-    } = this.props;
+    const { state, primaryRendererState, validFixtureSelected } = this.props;
 
-    if (!fixturePath || !isValidFixturePath(fixturePath)) {
+    if (!validFixtureSelected) {
       return <Button icon={<SmartphoneIcon />} label="responsive" disabled />;
     }
 

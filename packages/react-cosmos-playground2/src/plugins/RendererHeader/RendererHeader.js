@@ -16,16 +16,16 @@ import type { UrlParams } from '../Router';
 type Props = {
   urlParams: UrlParams,
   rendererReady: boolean,
-  setUrlParams: UrlParams => void,
-  isValidFixturePath: (fixturePath: string) => boolean
+  validFixtureSelected: boolean,
+  setUrlParams: UrlParams => void
 };
 
 // TODO: Improve UX of refresh button, which seems like it's not doing anything
 export function RendererHeader({
   urlParams,
   rendererReady,
-  setUrlParams,
-  isValidFixturePath
+  validFixtureSelected,
+  setUrlParams
 }: Props) {
   const { fixturePath, fullScreen } = urlParams;
 
@@ -57,7 +57,7 @@ export function RendererHeader({
     );
   }
 
-  if (!isValidFixturePath(fixturePath)) {
+  if (!validFixtureSelected) {
     return (
       <Container>
         <Left>
