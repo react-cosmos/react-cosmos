@@ -11,7 +11,7 @@ import {
 import {
   mockFixtures,
   mockFixtureState,
-  getFxListChangeRes
+  getFxListUpdateRes
 } from '../testHelpers';
 import { register } from '..';
 
@@ -46,7 +46,7 @@ it('posts "selectFixture" renderer request', async () => {
 
   mockCall(
     'renderer.receiveResponse',
-    getFxListChangeRes('foo-renderer', mockFixtures)
+    getFxListUpdateRes('foo-renderer', mockFixtures)
   );
 
   await wait(() =>
@@ -68,7 +68,7 @@ it('posts "selectFixture" renderer request with existing fixture state', async (
 
   mockCall(
     'renderer.receiveResponse',
-    getFxListChangeRes('foo-renderer', mockFixtures)
+    getFxListUpdateRes('foo-renderer', mockFixtures)
   );
 
   await wait(() =>

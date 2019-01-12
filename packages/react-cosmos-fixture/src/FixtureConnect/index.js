@@ -50,7 +50,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     const { fixturePath, fixtureState, syncedFixtureState } = this.state;
 
     if (!isEqual(fixtures, prevProps.fixtures)) {
-      this.postFixtureListChange();
+      this.postFixtureListUpdate();
     }
 
     if (fixturePath && !isEqual(fixtureState, syncedFixtureState)) {
@@ -154,11 +154,11 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     });
   }
 
-  postFixtureListChange() {
+  postFixtureListUpdate() {
     const { rendererId, postMessage } = this.props;
 
     postMessage({
-      type: 'fixtureListChange',
+      type: 'fixtureListUpdate',
       payload: {
         rendererId,
         fixtures: this.getFixtureNames()

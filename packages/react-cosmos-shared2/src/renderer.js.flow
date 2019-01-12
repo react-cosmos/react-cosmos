@@ -55,8 +55,8 @@ export type RendererReadyResponse = {
   }
 };
 
-export type FixtureListChangeResponse = {
-  type: 'fixtureListChange',
+export type FixtureListUpdateResponse = {
+  type: 'fixtureListUpdate',
   payload: {
     rendererId: RendererId,
     fixtures: FixtureNames
@@ -93,7 +93,7 @@ export type FixtureStateChangeResponse = {
 
 export type RendererResponse =
   | RendererReadyResponse
-  | FixtureListChangeResponse
+  | FixtureListUpdateResponse
   | FixtureStateChangeResponse;
 
 export type OnRendererResponse = RendererResponse => mixed;

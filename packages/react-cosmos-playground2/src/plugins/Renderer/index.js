@@ -9,7 +9,7 @@ import type {
   RendererRequest,
   RendererResponse,
   RendererReadyResponse,
-  FixtureListChangeResponse,
+  FixtureListUpdateResponse,
   FixtureStateChangeResponse
 } from 'react-cosmos-shared2/renderer';
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
@@ -139,8 +139,8 @@ function handleReceiveResponse(context, msg: RendererResponse) {
   switch (msg.type) {
     case 'rendererReady':
       return handleRendererReadyResponse(context, msg);
-    case 'fixtureListChange':
-      return handleFixtureListChangeResponse(context, msg);
+    case 'fixtureListUpdate':
+      return handleFixtureListUpdateResponse(context, msg);
     case 'fixtureStateChange':
       return handleFixtureStateChangeResponse(context, msg);
     default:
@@ -188,9 +188,9 @@ function handleRendererReadyResponse(
   );
 }
 
-function handleFixtureListChangeResponse(
+function handleFixtureListUpdateResponse(
   context,
-  { payload }: FixtureListChangeResponse
+  { payload }: FixtureListUpdateResponse
 ) {
   const { rendererId, fixtures } = payload;
 

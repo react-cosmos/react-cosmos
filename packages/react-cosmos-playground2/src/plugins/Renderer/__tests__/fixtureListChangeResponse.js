@@ -8,7 +8,7 @@ import {
   mockState,
   mockCall
 } from '../../../testHelpers/plugin';
-import { mockFixtures, getFxListChangeRes } from '../testHelpers';
+import { mockFixtures, getFxListUpdateRes } from '../testHelpers';
 import { register } from '..';
 
 afterEach(cleanup);
@@ -40,7 +40,7 @@ it('updates fixture list in renderer state', async () => {
 
   mockCall(
     'renderer.receiveResponse',
-    getFxListChangeRes('foo-renderer', [...mockFixtures, 'fixtures/vier.js'])
+    getFxListUpdateRes('foo-renderer', [...mockFixtures, 'fixtures/vier.js'])
   );
 
   await wait(() =>

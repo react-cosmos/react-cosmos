@@ -95,7 +95,7 @@ function tests(mockConnect) {
           );
 
           await untilMessage({
-            type: 'fixtureListChange',
+            type: 'fixtureListUpdate',
             payload: {
               rendererId,
               fixtures: ['first', 'second', 'third']

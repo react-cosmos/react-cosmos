@@ -23,9 +23,9 @@ export function getReadyRes(rendererId: RendererId) {
   };
 }
 
-export function getFxListChangeRes(rendererId: RendererId, fixtures: string[]) {
+export function getFxListUpdateRes(rendererId: RendererId, fixtures: string[]) {
   return {
-    type: 'fixtureListChange',
+    type: 'fixtureListUpdate',
     payload: {
       rendererId,
       fixtures
