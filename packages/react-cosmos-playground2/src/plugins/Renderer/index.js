@@ -37,6 +37,7 @@ export function register() {
     }
   });
 
+  // TODO: Break down methods into files before adding more
   method('getPrimaryRendererState', handleGetPrimaryRendererState);
   method('isReady', handleIsReady);
   method('isValidFixturePath', handleIsFixturePathValid);
@@ -182,17 +183,9 @@ function handleRendererReadyResponse(
     };
   };
 
-  context.setState(updater, () => {
-    const { fixturePath } = getUrlParams(context);
-
-    // Tell the renderer to select the fixture path from the URL when a new
-    // renderer announces itself (via the rendererReady response). This occurs
-    // when opening the UI on a URL that contains a selected fixture path.
-    if (fixturePath) {
-      const { fixtureState } = context.getState().renderers[rendererId];
-      postSelectFixtureRequest(context, rendererId, fixturePath, fixtureState);
-    }
-  });
+  context.setState(updater, () =>
+    selectFixtureFromUrlParams(context, rendererId)
+  );
 }
 
 function handleFixtureListChangeResponse(
@@ -201,11 +194,23 @@ function handleFixtureListChangeResponse(
 ) {
   const { rendererId, fixtures } = payload;
 
-  setRendererState(context, (rendererItemState, curRendererId) =>
+  const updater = (rendererItemState, curRendererId) =>
     curRendererId === rendererId
       ? { ...rendererItemState, fixtures }
-      : rendererItemState
+      : rendererItemState;
+
+  setRendererState(context, updater, () =>
+    selectFixtureFromUrlParams(context, rendererId)
   );
+}
+
+function selectFixtureFromUrlParams(context, rendererId) {
+  const { fixturePath } = getUrlParams(context);
+
+  if (fixturePath) {
+    const { fixtureState } = context.getState().renderers[rendererId];
+    postSelectFixtureRequest(context, rendererId, fixturePath, fixtureState);
+  }
 }
 
 function handleFixtureStateChangeResponse(

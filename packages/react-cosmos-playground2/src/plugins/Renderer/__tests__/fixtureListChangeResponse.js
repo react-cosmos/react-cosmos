@@ -8,7 +8,7 @@ import {
   mockState,
   mockCall
 } from '../../../testHelpers/plugin';
-import { mockFixtures, getReadyRes, getFxListChangeRes } from '../testHelpers';
+import { mockFixtures, getFxListChangeRes } from '../testHelpers';
 import { register } from '..';
 
 afterEach(cleanup);
@@ -19,14 +19,25 @@ function registerTestPlugins() {
 }
 
 function loadTestPlugins() {
-  loadPlugins();
+  loadPlugins({
+    state: {
+      renderer: {
+        primaryRendererId: 'foo-renderer',
+        renderers: {
+          'foo-renderer': {
+            fixtures: mockFixtures,
+            fixtureState: null
+          }
+        }
+      }
+    }
+  });
 }
 
 it('updates fixture list in renderer state', async () => {
   registerTestPlugins();
   loadTestPlugins();
 
-  mockCall('renderer.receiveResponse', getReadyRes('foo-renderer'));
   mockCall(
     'renderer.receiveResponse',
     getFxListChangeRes('foo-renderer', [...mockFixtures, 'fixtures/vier.js'])
