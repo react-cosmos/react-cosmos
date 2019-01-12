@@ -37,10 +37,6 @@ export function mockMethod(methodPath: string, handler: Function) {
   ensurePluginApi(pluginName).method(methodName, handler);
 }
 
-export function mockInit(pluginName: string, handler: Function) {
-  ensurePluginApi(pluginName).init(handler);
-}
-
 export function mockPlug(plug: Object) {
   registerFreshPlugin().plug(plug);
 }

@@ -10,6 +10,7 @@ import {
   mockConfig,
   mockMethod,
   mockInit,
+  mockEmit,
   getPluginState
 } from '../../../testHelpers/plugin';
 import { register } from '..';
@@ -62,6 +63,7 @@ it(`hides iframe when fixture isn't loaded`, () => {
 
 it('posts renderer request message to iframe', async () => {
   registerTestPlugins();
+  const renderer = loadTestPlugins();
 
   const selectFixtureMsg = {
     type: 'selectFixture',
@@ -70,14 +72,7 @@ it('posts renderer request message to iframe', async () => {
       fixturePath: 'bar-fixturePath'
     }
   };
-  mockInit('renderer', ({ emitEvent }) => {
-    // Wait for iframe ref to be received
-    setTimeout(() => {
-      emitEvent('request', selectFixtureMsg);
-    });
-  });
-
-  const renderer = loadTestPlugins();
+  mockEmit('renderer.request', selectFixtureMsg);
 
   await mockIframeMessage(getIframe(renderer), async ({ onMessage }) => {
     await wait(() =>
