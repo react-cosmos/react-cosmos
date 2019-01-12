@@ -28,7 +28,7 @@ export class Nav extends Component<Props> {
       primaryRendererState,
       storage
     } = this.props;
-    const { fixturePath = null, fullScreen } = urlParams;
+    const { fixturePath, fullScreen } = urlParams;
 
     if (fullScreen) {
       return null;
@@ -47,7 +47,7 @@ export class Nav extends Component<Props> {
           fixturesDir={fixturesDir}
           fixtureFileSuffix={fixtureFileSuffix}
           fixtures={fixtures}
-          selectedFixturePath={fixturePath}
+          selectedFixturePath={fixturePath || null}
           onSelect={this.handleFixtureSelect}
           storage={storage}
         />
