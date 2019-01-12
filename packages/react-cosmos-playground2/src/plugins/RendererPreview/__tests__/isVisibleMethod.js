@@ -7,6 +7,7 @@ import { loadPlugins, Slot } from 'react-plugin';
 import {
   cleanup,
   mockConfig,
+  mockState,
   mockMethod,
   mockCall
 } from '../../../testHelpers/plugin';
@@ -18,10 +19,10 @@ function fakeSuccessfulFetchCalls() {
   global.fetch = jest.fn(() => Promise.resolve({ status: 200 }));
 }
 
-function registerTestPlugins({ isFixtureLoaded }) {
+function registerTestPlugins() {
   register();
+  mockState('router', { urlParams: {} });
   mockConfig('renderer', { webUrl: 'mockRendererUrl' });
-  mockMethod('renderer.isFixtureLoaded', () => isFixtureLoaded);
 }
 
 function loadTestPlugins({ runtimeError }) {
@@ -32,21 +33,34 @@ function loadTestPlugins({ runtimeError }) {
 }
 
 it('return false', async () => {
-  registerTestPlugins({ isFixtureLoaded: false });
+  registerTestPlugins();
+  mockMethod('renderer.isFixtureLoaded', () => false);
   loadTestPlugins({ runtimeError: false });
 
   expect(mockCall('rendererPreview.isVisible')).toBe(false);
 });
 
 it('return true on loaded fixture', async () => {
-  registerTestPlugins({ isFixtureLoaded: true });
+  registerTestPlugins();
+  mockMethod('renderer.isFixtureLoaded', () => true);
   loadTestPlugins({ runtimeError: false });
 
   expect(mockCall('rendererPreview.isVisible')).toBe(true);
 });
 
-it('return true on runtime error', async () => {
-  registerTestPlugins({ isFixtureLoaded: false });
+it('return false on runtime error with renderer ready', async () => {
+  registerTestPlugins();
+  mockMethod('renderer.isReady', () => true);
+  mockMethod('renderer.isFixtureLoaded', () => false);
+  loadTestPlugins({ runtimeError: true });
+
+  expect(mockCall('rendererPreview.isVisible')).toBe(false);
+});
+
+it('return true on runtime error with renderer NOT ready', async () => {
+  registerTestPlugins();
+  mockMethod('renderer.isReady', () => false);
+  mockMethod('renderer.isFixtureLoaded', () => false);
   loadTestPlugins({ runtimeError: true });
 
   expect(mockCall('rendererPreview.isVisible')).toBe(true);
