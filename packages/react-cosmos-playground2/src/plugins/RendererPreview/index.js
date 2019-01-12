@@ -2,20 +2,23 @@
 
 import { registerPlugin } from 'react-plugin';
 import { checkRendererStatus } from './checkRendererStatus';
+import { createRendererRequestHandler } from './handleRendererRequest';
 import { handleWindowMessages } from './handleWindowMessages';
 import { isVisible } from './isVisible';
 import { handleRendererRuntimeErrors } from './handleRendererRuntimeErrors';
 import { RendererPreview } from './RendererPreview';
 
-import type { RendererRequest } from 'react-cosmos-shared2/renderer';
 import type { RendererConfig } from '../Renderer';
 import type { RendererPreviewState } from './shared';
 
 export type { RendererPreviewUrlStatus, RendererPreviewState } from './shared';
 
-let iframeRef: null | window = null;
-
 export function register() {
+  const {
+    handleRendererRequest,
+    setIframeRef
+  } = createRendererRequestHandler();
+
   const { init, on, method, plug } = registerPlugin<{}, RendererPreviewState>({
     name: 'rendererPreview',
     initialState: {
@@ -45,24 +48,16 @@ export function register() {
   plug({
     slotName: 'rendererPreview',
     render: RendererPreview,
-    getProps: getRendererPreviewProps
+    getProps: context => getRendererPreviewProps(context, setIframeRef)
   });
 }
 
-function getRendererPreviewProps(context) {
+function getRendererPreviewProps(context, onIframeRef) {
   return {
     rendererUrl: getRendererUrl(context),
     isVisible: isVisible(context),
-    onIframeRef: elRef => {
-      iframeRef = elRef;
-    }
+    onIframeRef
   };
-}
-
-function handleRendererRequest(context, msg: RendererRequest) {
-  if (iframeRef) {
-    iframeRef.contentWindow.postMessage(msg, '*');
-  }
 }
 
 function getRendererUrl({ getConfigOf }) {

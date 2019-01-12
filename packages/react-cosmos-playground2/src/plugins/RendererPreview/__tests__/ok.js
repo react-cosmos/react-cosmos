@@ -9,7 +9,6 @@ import {
   cleanup,
   mockConfig,
   mockMethod,
-  mockInit,
   mockEmit,
   getPluginState
 } from '../../../testHelpers/plugin';
