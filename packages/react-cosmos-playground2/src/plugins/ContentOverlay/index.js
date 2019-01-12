@@ -18,17 +18,17 @@ export function register() {
 
 function getContentOverlayProps({ getStateOf, callMethod }) {
   const { urlParams }: RouterState = getStateOf('router');
-  const { fixturePath = null } = urlParams;
+  const { fixturePath } = urlParams;
+  const fixtureSelected = fixturePath !== undefined;
+  const validFixtureSelected =
+    fixtureSelected && callMethod('renderer.isValidFixturePath', fixturePath);
   const rendererReady = callMethod('renderer.isReady');
   const { urlStatus }: RendererPreviewState = getStateOf('rendererPreview');
   const rendererPreviewVisible = callMethod('rendererPreview.isVisible');
-  const validFixturePath = fixturePath
-    ? callMethod('renderer.isValidFixturePath', fixturePath)
-    : false;
 
   return {
-    fixturePath,
-    validFixturePath,
+    fixtureSelected,
+    validFixtureSelected,
     rendererReady,
     rendererPreviewUrlStatus: urlStatus,
     rendererPreviewVisible

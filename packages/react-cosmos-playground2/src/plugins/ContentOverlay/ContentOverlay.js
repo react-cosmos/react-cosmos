@@ -12,16 +12,16 @@ import { RendererPreviewUrlError } from './RendererPreviewUrlError';
 import type { RendererPreviewUrlStatus } from '../RendererPreview';
 
 type Props = {
-  fixturePath: null | string,
-  validFixturePath: boolean,
+  fixtureSelected: boolean,
+  validFixtureSelected: boolean,
   rendererReady: boolean,
   rendererPreviewUrlStatus: RendererPreviewUrlStatus,
   rendererPreviewVisible: boolean
 };
 
 export function ContentOverlay({
-  fixturePath,
-  validFixturePath,
+  fixtureSelected,
+  validFixtureSelected,
   rendererReady,
   rendererPreviewUrlStatus,
   rendererPreviewVisible
@@ -52,7 +52,7 @@ export function ContentOverlay({
     );
   }
 
-  if (!fixturePath) {
+  if (!fixtureSelected) {
     return (
       <Container data-testid="blank">
         <IllustrationContainer>
@@ -62,7 +62,7 @@ export function ContentOverlay({
     );
   }
 
-  if (!validFixturePath) {
+  if (!validFixtureSelected) {
     return (
       <Container data-testid="empty">
         <IllustrationContainer>
