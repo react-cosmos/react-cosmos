@@ -115,6 +115,10 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
       return;
     }
 
+    if (doesRequestChangeFixture(msg)) {
+      this.fireChangeCallback();
+    }
+
     if (msg.type === 'selectFixture') {
       const { fixturePath, fixtureState } = msg.payload;
 
@@ -209,6 +213,14 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
   getFixtureNames(): string[] {
     return Object.keys(this.props.fixtures);
   }
+
+  fireChangeCallback() {
+    const { onFixtureChange } = this.props;
+
+    if (typeof onFixtureChange === 'function') {
+      onFixtureChange();
+    }
+  }
 }
 
 function getDecoratorsForFixturePath(decorators, fixturePath) {
@@ -220,4 +232,8 @@ function getDecoratorsForFixturePath(decorators, fixturePath) {
 function getParentPath(nestedPath) {
   // Remove everything right of the right-most forward slash
   return nestedPath.replace(/^(.+)\/.+$/, '$1');
+}
+
+function doesRequestChangeFixture(r: RendererRequest) {
+  return r.type === 'selectFixture' || r.type === 'unselectFixture';
 }

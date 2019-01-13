@@ -28,7 +28,8 @@ export type RemoteRendererApi = {
 export type FixtureConnectProps = {
   rendererId: string,
   fixtures: Fixtures,
-  decorators: Decorators
+  decorators: Decorators,
+  onFixtureChange?: () => mixed
 } & RemoteRendererApi;
 
 export type PostMessageProps = {

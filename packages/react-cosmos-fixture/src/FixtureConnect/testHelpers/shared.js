@@ -15,7 +15,8 @@ type Message = RendererResponse | RendererRequest;
 type GetTestElement = ({
   fixtures: Fixtures,
   decorators: Decorators,
-  rendererId: RendererId
+  rendererId: RendererId,
+  onFixtureChange?: () => mixed
 }) => Element<any>;
 
 type GetMessages = () => Message[];
