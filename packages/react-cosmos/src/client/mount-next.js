@@ -9,20 +9,27 @@ import { fixtures, decorators } from './user-modules-next';
 
 const rendererId = getRendererId();
 
-export function mount() {
+type Opts = {
+  onFixtureChange?: () => mixed
+};
+
+export function mount(opts: Opts) {
   render(
-    isInsideIframe() ? (
-      <PostMessage>{renderFixtureConnect}</PostMessage>
-    ) : (
-      // TODO: Allow user to input URL
-      <WebSockets url={location.origin}>{renderFixtureConnect}</WebSockets>
-    ),
+    wrapSuitableAdaptor(createFixtureConnectRenderCb(opts)),
     getDomContainer()
   );
 }
 
-function renderFixtureConnect({ subscribe, unsubscribe, postMessage }) {
-  return (
+function wrapSuitableAdaptor(element) {
+  if (isInsideIframe()) {
+    return <PostMessage>{element}</PostMessage>;
+  }
+
+  return <WebSockets url={getWebSocketsUrl()}>{element}</WebSockets>;
+}
+
+function createFixtureConnectRenderCb({ onFixtureChange }: Opts) {
+  return ({ subscribe, unsubscribe, postMessage }) => (
     <FixtureConnect
       rendererId={rendererId}
       fixtures={fixtures}
@@ -30,6 +37,7 @@ function renderFixtureConnect({ subscribe, unsubscribe, postMessage }) {
       subscribe={subscribe}
       unsubscribe={unsubscribe}
       postMessage={postMessage}
+      onFixtureChange={onFixtureChange}
     />
   );
 }
@@ -55,4 +63,9 @@ function getRendererId() {
   }
 
   return rendererId;
+}
+
+function getWebSocketsUrl() {
+  // TODO: Allow user to input URL
+  return location.origin;
 }

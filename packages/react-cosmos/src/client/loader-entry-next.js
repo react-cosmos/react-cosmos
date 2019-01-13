@@ -4,7 +4,9 @@ import { initErrorOverlay, dismissErrorOverlay } from './errorOverlay-next';
 
 function mount() {
   // Use dynamic import to load updated modules upon hot reloading
-  require('./mount-next').mount();
+  require('./mount-next').mount({
+    onFixtureChange: dismissErrorOverlay
+  });
 }
 
 initErrorOverlay();
