@@ -119,32 +119,51 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
       this.fireChangeCallback();
     }
 
-    if (msg.type === 'selectFixture') {
-      const { fixturePath, fixtureState } = msg.payload;
-
-      this.setState({
-        fixturePath,
-        fixtureState,
-        renderKey: this.state.renderKey + 1
-      });
-    } else if (msg.type === 'unselectFixture') {
-      this.setState({
-        fixturePath: null,
-        fixtureState: null,
-        renderKey: 0
-      });
-    } else if (msg.type === 'setFixtureState') {
-      const { fixturePath, fixtureState } = msg.payload;
-
-      // Ensure fixture state applies to currently selected fixture
-      if (fixturePath === this.state.fixturePath) {
-        this.setState({
-          fixtureState,
-          syncedFixtureState: fixtureState
-        });
-      }
+    switch (msg.type) {
+      case 'selectFixture':
+        return this.handleSelectFixtureRequest(msg);
+      case 'unselectFixture':
+        return this.handleUnselectFixtureRequest();
+      case 'setFixtureState':
+        return this.handleSelectFixtureStateRequest(msg);
+      default:
+      // This Is Fine™
+      // Actually, we can't be angry about getting unrelated messages here
+      // because we don't do any preliminary message filtering to ignore stuff
+      // like browser devtools communication, nor do we have any message
+      // metadata conventions in place to perform such filtering at the moment
     }
   };
+
+  handleSelectFixtureRequest({ payload }: SelectFixtureRequest) {
+    const { fixturePath, fixtureState } = payload;
+
+    this.setState({
+      fixturePath,
+      fixtureState,
+      renderKey: this.state.renderKey + 1
+    });
+  }
+
+  handleUnselectFixtureRequest() {
+    this.setState({
+      fixturePath: null,
+      fixtureState: null,
+      renderKey: 0
+    });
+  }
+
+  handleSelectFixtureStateRequest({ payload }: SetFixtureStateRequest) {
+    const { fixturePath, fixtureState } = payload;
+
+    // Ensure fixture state applies to currently selected fixture
+    if (fixturePath === this.state.fixturePath) {
+      this.setState({
+        fixtureState,
+        syncedFixtureState: fixtureState
+      });
+    }
+  }
 
   postReadyState() {
     const { rendererId, postMessage } = this.props;
