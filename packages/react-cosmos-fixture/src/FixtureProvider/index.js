@@ -10,10 +10,10 @@ import type {
   FixtureState,
   SetFixtureState
 } from 'react-cosmos-shared2/fixtureState';
-import type { Decorators, FixtureContextValue } from '../index.js.flow';
+import type { DecoratorType, FixtureContextValue } from '../index.js.flow';
 
 type Props = {
-  decorators: Decorators,
+  decorators: DecoratorType[],
   children: Node
 } & FixtureContextValue;
 
@@ -45,34 +45,30 @@ export class FixtureProvider extends PureComponent<Props> {
 
   // NOTE: This is more than an optimization! Computing the element tree on
   // every fixtureState change would cause an infinite update loop
-  getComputedElementTree = memoize((decorators: Decorators, leaf: Node) =>
+  getComputedElementTree = memoize((decorators: DecoratorType[], leaf: Node) =>
     createComputedElementTree(decorators, leaf)
   );
 }
 
-function createComputedElementTree(decorators: Decorators, leaf: Node) {
+function createComputedElementTree(decorators: DecoratorType[], leaf: Node) {
   const fixtureElement = (
     <FixtureCapture decoratorId="root">{leaf}</FixtureCapture>
   );
 
-  return sortPathsByDepthDesc(Object.keys(decorators)).reduce(
-    (prevElement, decoratorPath) => {
-      const Decorator = decorators[decoratorPath];
-      // The prevElement isn't set as the current decorator's children directly
-      // because it lead to duplication of fixture element prop/state capture.
-      // Why? When using <FixtureCapture> inside a decorator it captures
-      // children elements too, which would've included the selected fixture
-      // (and inner decorators) had we not taken this precaution.
-      const NextDecorator = hideChildrenUnderType(prevElement);
+  return [...decorators].reverse().reduce((prevElement, Decorator) => {
+    // The prevElement isn't set as the current decorator's children directly
+    // because it leads to duplication of fixture element prop/state capture.
+    // Why? When using <FixtureCapture> inside a decorator it captures
+    // children elements too, which would've included the selected fixture
+    // (and inner decorators) had we not taken this precaution.
+    const NextDecorator = hideChildrenUnderType(prevElement);
 
-      return (
-        <Decorator>
-          <NextDecorator />
-        </Decorator>
-      );
-    },
-    fixtureElement
-  );
+    return (
+      <Decorator>
+        <NextDecorator />
+      </Decorator>
+    );
+  }, fixtureElement);
 }
 
 function hideChildrenUnderType(children) {
@@ -80,15 +76,4 @@ function hideChildrenUnderType(children) {
   NextDecorator.cosmosCapture = false;
 
   return NextDecorator;
-}
-
-function sortPathsByDepthDesc(paths) {
-  return [...paths].sort(
-    (a, b) =>
-      getPathNestingLevel(b) - getPathNestingLevel(a) || b.localeCompare(a)
-  );
-}
-
-function getPathNestingLevel(path) {
-  return path.split('/').length;
 }

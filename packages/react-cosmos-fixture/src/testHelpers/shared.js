@@ -8,14 +8,14 @@ import type {
   RendererRequest,
   RendererResponse
 } from 'react-cosmos-shared2/renderer';
-import type { Fixtures, Decorators } from '../index.js.flow';
+import type { Fixtures, DecoratorsByPath } from '../index.js.flow';
 
 type Message = RendererResponse | RendererRequest;
 
 type GetTestElement = ({
-  fixtures: Fixtures,
-  decorators: Decorators,
   rendererId: RendererId,
+  fixtures: Fixtures,
+  decorators: DecoratorsByPath,
   onFixtureChange?: () => mixed
 }) => Element<any>;
 

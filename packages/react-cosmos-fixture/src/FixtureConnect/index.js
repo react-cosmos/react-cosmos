@@ -3,8 +3,8 @@
 import React, { Component } from 'react';
 import { isEqual } from 'lodash';
 import memoize from 'memoize-one';
-import { FixtureProvider } from '../FixtureProvider';
 import { updateState } from 'react-cosmos-shared2/util';
+import { FixtureProvider } from '../FixtureProvider';
 
 import type {
   FixtureState,
@@ -15,7 +15,11 @@ import type {
   SelectFixtureRequest,
   SetFixtureStateRequest
 } from 'react-cosmos-shared2/renderer';
-import type { Decorators, FixtureConnectProps } from '../index.js.flow';
+import type {
+  DecoratorType,
+  DecoratorsByPath,
+  FixtureConnectProps
+} from '../index.js.flow';
 
 type State = {
   fixturePath: null | string,
@@ -76,7 +80,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
   }
 
   render() {
-    const { fixtures, decorators } = this.props;
+    const { fixtures, systemDecorators, userDecorators } = this.props;
     const { fixturePath, fixtureState, renderKey } = this.state;
 
     if (!fixturePath) {
@@ -91,10 +95,13 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
 
     return (
       <FixtureProvider
-        // Ensure no state leaks between fixture selections, even though under
-        // normal circumstances f(fixture, fixtureState) is deterministic.
+        // renderKey controls whether to reuse previous instances (and
+        // transition props) or rebuild render tree from scratch
         key={renderKey}
-        decorators={this.getDecoratorsForFixturePath(decorators, fixturePath)}
+        decorators={[
+          ...systemDecorators,
+          ...this.getSortedDecoratorsForFixturePath(userDecorators, fixturePath)
+        ]}
         fixtureState={fixtureState}
         setFixtureState={this.setFixtureState}
       >
@@ -104,9 +111,9 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
   }
 
   // Prevent FixtureProvider from thinking decorators changed when they haven't
-  getDecoratorsForFixturePath = memoize(
-    (decorators: Decorators, fixturePath: string) =>
-      getDecoratorsForFixturePath(decorators, fixturePath)
+  getSortedDecoratorsForFixturePath = memoize(
+    (decorators: DecoratorsByPath, fixturePath: string) =>
+      getSortedDecorators(getDecoratorsForFixturePath(decorators, fixturePath))
   );
 
   handleRequest = (msg: RendererRequest) => {
@@ -246,6 +253,23 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
   }
 }
 
+function getSortedDecorators(decoratorsByPath): DecoratorType[] {
+  return sortPathsByDepthAsc(Object.keys(decoratorsByPath)).map(
+    decoratorPath => decoratorsByPath[decoratorPath]
+  );
+}
+
+function sortPathsByDepthAsc(paths) {
+  return [...paths].sort(
+    (a, b) =>
+      getPathNestingLevel(a) - getPathNestingLevel(b) || a.localeCompare(b)
+  );
+}
+
+function getPathNestingLevel(path) {
+  return path.split('/').length;
+}
+
 function getDecoratorsForFixturePath(decorators, fixturePath) {
   return Object.keys(decorators)
     .filter(decPath => fixturePath.indexOf(`${getParentPath(decPath)}/`) === 0)
@@ -253,8 +277,9 @@ function getDecoratorsForFixturePath(decorators, fixturePath) {
 }
 
 function getParentPath(nestedPath) {
-  // Remove everything right of the right-most forward slash
-  return nestedPath.replace(/^(.+)\/.+$/, '$1');
+  // Remove everything right of the right-most forward slash, or return an
+  // empty string if path has no forward slash
+  return nestedPath.replace(/^((.+)\/)?.+$/, '$2');
 }
 
 function doesRequestChangeFixture(r: RendererRequest) {

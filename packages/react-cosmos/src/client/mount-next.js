@@ -33,7 +33,8 @@ function createFixtureConnectRenderCb({ onFixtureChange }: Opts) {
     <FixtureConnect
       rendererId={rendererId}
       fixtures={fixtures}
-      decorators={decorators}
+      systemDecorators={[]}
+      userDecorators={decorators}
       subscribe={subscribe}
       unsubscribe={unsubscribe}
       postMessage={postMessage}

@@ -1,7 +1,7 @@
 // @flow
 // This file is populated with user data at compile-time
 
-import type { Fixtures, Decorators } from 'react-cosmos-fixture';
+import type { Fixtures, DecoratorsByPath } from 'react-cosmos-fixture';
 
 // Global imports used to be added as bundle entry points but they were moved
 // here to make them hot reload-able, which works because the file that imports
@@ -9,7 +9,7 @@ import type { Fixtures, Decorators } from 'react-cosmos-fixture';
 /* __INJECT_GLOBAL_IMPORTS__ */
 
 declare var __COSMOS_FIXTURES: Fixtures;
-declare var __COSMOS_DECORATORS: Decorators;
+declare var __COSMOS_DECORATORS: DecoratorsByPath;
 
 export const fixtures = __COSMOS_FIXTURES;
 export const decorators = __COSMOS_DECORATORS;

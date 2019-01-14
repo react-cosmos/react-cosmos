@@ -74,12 +74,16 @@ export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
   }
 }
 
-function getElement(props) {
+function getElement({ rendererId, fixtures, decorators, onFixtureChange }) {
   return (
     <PostMessage>
       {({ subscribe, unsubscribe, postMessage }) => (
         <FixtureConnect
-          {...props}
+          rendererId={rendererId}
+          fixtures={fixtures}
+          systemDecorators={[]}
+          userDecorators={decorators}
+          onFixtureChange={onFixtureChange}
           subscribe={subscribe}
           unsubscribe={unsubscribe}
           postMessage={postMessage}
