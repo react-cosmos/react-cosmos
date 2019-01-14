@@ -1,18 +1,13 @@
 // @flow
 
 import { uuid } from 'react-cosmos-shared2/util';
-import { mockConnect as mockPostMessage } from '../testHelpers/postMessage';
-import { mockConnect as mockWebSockets } from '../testHelpers/webSockets';
-import { mount } from '../testHelpers/mount';
+import { runTests, mount } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = { first: null, second: null };
 const decorators = {};
 
-tests(mockPostMessage);
-tests(mockWebSockets);
-
-function tests(mockConnect) {
+runTests(mockConnect => {
   it('renders blank state message', async () => {
     await mockConnect(async ({ getElement }) => {
       await mount(
@@ -105,4 +100,4 @@ function tests(mockConnect) {
       );
     });
   });
-}
+});

@@ -8,7 +8,7 @@ import type {
   RendererRequest,
   RendererResponse
 } from 'react-cosmos-shared2/renderer';
-import type { Fixtures, Decorators } from '../../index.js.flow';
+import type { Fixtures, Decorators } from '../index.js.flow';
 
 type Message = RendererResponse | RendererRequest;
 

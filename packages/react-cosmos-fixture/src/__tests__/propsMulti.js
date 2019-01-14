@@ -1,47 +1,39 @@
 // @flow
 
 import React from 'react';
-import { StateMock } from '@react-mock/state';
 import {
   getCompFixtureStates,
   updateCompFixtureState
 } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from 'react-cosmos-shared2/util';
-import { Counter } from '../testHelpers/components';
+import { HelloMessage } from '../testHelpers/components';
 import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
-import { mockConnect as mockPostMessage } from '../testHelpers/postMessage';
-import { mockConnect as mockWebSockets } from '../testHelpers/webSockets';
-import { mount } from '../testHelpers/mount';
+import { runTests, mount } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = {
   first: (
     <>
-      <StateMock state={{ count: 5 }}>
-        <Counter />
-      </StateMock>
-      <StateMock state={{ count: 10 }}>
-        <Counter />
-      </StateMock>
+      <HelloMessage name="Bianca" />
+      <HelloMessage name="B" />
     </>
   )
 };
 const decorators = {};
 
-tests(mockPostMessage);
-tests(mockWebSockets);
-
-function tests(mockConnect) {
-  it('captures mocked state from multiple instances', async () => {
+runTests(mockConnect => {
+  it('captures multiple props instances', async () => {
     await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
       await mount(
         getElement({ rendererId, fixtures, decorators }),
-        async () => {
+        async renderer => {
           await selectFixture({
             rendererId,
             fixturePath: 'first',
             fixtureState: null
           });
+
+          expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B']);
 
           await untilMessage({
             type: 'fixtureStateChange',
@@ -51,12 +43,14 @@ function tests(mockConnect) {
               fixtureState: {
                 components: [
                   createCompFxState({
-                    props: [],
-                    state: createFxValues({ count: 5 })
+                    componentName: 'HelloMessage',
+                    elPath: 'props.children[0]',
+                    props: createFxValues({ name: 'Bianca' })
                   }),
                   createCompFxState({
-                    props: [],
-                    state: createFxValues({ count: 10 })
+                    componentName: 'HelloMessage',
+                    elPath: 'props.children[1]',
+                    props: createFxValues({ name: 'B' })
                   })
                 ]
               }
@@ -67,7 +61,7 @@ function tests(mockConnect) {
     });
   });
 
-  it('overwrites mocked state in second instances', async () => {
+  it('overwrites prop in second instance', async () => {
     await mockConnect(
       async ({
         getElement,
@@ -88,7 +82,6 @@ function tests(mockConnect) {
             const [, { decoratorId, elPath }] = getCompFixtureStates(
               fixtureState
             );
-
             await setFixtureState({
               rendererId,
               fixturePath: 'first',
@@ -97,15 +90,15 @@ function tests(mockConnect) {
                   fixtureState,
                   decoratorId,
                   elPath,
-                  state: createFxValues({ count: 100 })
+                  props: createFxValues({ name: 'Petec' })
                 })
               }
             });
 
-            expect(renderer.toJSON()).toEqual(['5 times', '100 times']);
+            expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello Petec']);
           }
         );
       }
     );
   });
-}
+});

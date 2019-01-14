@@ -8,9 +8,7 @@ import {
 import { uuid } from 'react-cosmos-shared2/util';
 import { Counter } from '../testHelpers/components';
 import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
-import { mockConnect as mockPostMessage } from '../testHelpers/postMessage';
-import { mockConnect as mockWebSockets } from '../testHelpers/webSockets';
-import { mount } from '../testHelpers/mount';
+import { runTests, mount } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = {
@@ -18,10 +16,7 @@ const fixtures = {
 };
 const decorators = {};
 
-tests(mockPostMessage);
-tests(mockWebSockets);
-
-function tests(mockConnect) {
+runTests(mockConnect => {
   it('captures initial state', async () => {
     await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
       await mount(
@@ -193,4 +188,4 @@ function tests(mockConnect) {
       }
     );
   });
-}
+});

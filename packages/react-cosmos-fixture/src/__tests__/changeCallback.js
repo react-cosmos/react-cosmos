@@ -1,18 +1,13 @@
 // @flow
 
 import { uuid } from 'react-cosmos-shared2/util';
-import { mockConnect as mockPostMessage } from '../testHelpers/postMessage';
-import { mockConnect as mockWebSockets } from '../testHelpers/webSockets';
-import { mount } from '../testHelpers/mount';
+import { runTests, mount } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = { first: 'First' };
 const decorators = {};
 
-tests(mockPostMessage);
-tests(mockWebSockets);
-
-function tests(mockConnect) {
+runTests(mockConnect => {
   it('fires change callback when selecting fixture', async () => {
     await mockConnect(async ({ getElement, selectFixture }) => {
       const onFixtureChange = jest.fn();
@@ -51,4 +46,4 @@ function tests(mockConnect) {
       }
     );
   });
-}
+});

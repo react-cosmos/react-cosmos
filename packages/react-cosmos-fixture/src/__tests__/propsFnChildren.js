@@ -2,12 +2,10 @@
 
 import React from 'react';
 import { uuid } from 'react-cosmos-shared2/util';
-import { FixtureCapture } from '../../FixtureCapture';
+import { FixtureCapture } from '../FixtureCapture';
 import { HelloMessage } from '../testHelpers/components';
 import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
-import { mockConnect as mockPostMessage } from '../testHelpers/postMessage';
-import { mockConnect as mockWebSockets } from '../testHelpers/webSockets';
-import { mount } from '../testHelpers/mount';
+import { runTests, mount } from '../testHelpers';
 
 function Wrap({ children }) {
   return children();
@@ -32,10 +30,7 @@ const fixtures = {
 };
 const decorators = {};
 
-tests(mockPostMessage);
-tests(mockWebSockets);
-
-function tests(mockConnect) {
+runTests(mockConnect => {
   it('captures props from render callback', async () => {
     await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
       await mount(
@@ -68,4 +63,4 @@ function tests(mockConnect) {
       );
     });
   });
-}
+});

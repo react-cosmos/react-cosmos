@@ -1,4 +1,3 @@
-/* eslint-env browser */
 // @flow
 
 import React from 'react';
@@ -9,32 +8,23 @@ import {
   postUnselectFixture,
   postSetFixtureState
 } from '../testHelpers/shared';
-import { PostMessage } from '../PostMessage';
-import { FixtureConnect } from '..';
+import {
+  mockUrl,
+  getMessages,
+  postMessage,
+  resetMessages
+} from './webSocketsMock';
+import { WebSockets, FixtureConnect } from '..';
 
 import type { ConnectMockApi } from './shared';
 
 export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
-  const onMessage = jest.fn();
-
-  function getMessages() {
-    return onMessage.mock.calls.map(call => call[0].data);
-  }
-
   async function getFxStateFromLastChange() {
     return getFixtureStateFromLastChange(getMessages);
   }
 
   async function untilMessage(msg) {
-    return untilLastMessageEquals(getMessages, msg);
-  }
-
-  async function postMessage(msg) {
-    parent.postMessage(msg, '*');
-
-    // This is very convenient because we don't have to await manually for each
-    // dispatched event to be fulfilled inside test cases
-    await untilMessage(msg);
+    return untilLastMessageEquals(() => getMessages(), msg);
   }
 
   async function selectFixture({ rendererId, fixturePath, fixtureState }) {
@@ -59,7 +49,6 @@ export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
     });
   }
 
-  window.addEventListener('message', onMessage, false);
   try {
     await children({
       getElement,
@@ -71,13 +60,13 @@ export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
       setFixtureState
     });
   } finally {
-    window.removeEventListener('message', onMessage);
+    resetMessages();
   }
 }
 
 function getElement(props) {
   return (
-    <PostMessage>
+    <WebSockets url={mockUrl}>
       {({ subscribe, unsubscribe, postMessage }) => (
         <FixtureConnect
           {...props}
@@ -86,6 +75,6 @@ function getElement(props) {
           postMessage={postMessage}
         />
       )}
-    </PostMessage>
+    </WebSockets>
   );
 }

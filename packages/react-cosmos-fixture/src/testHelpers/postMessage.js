@@ -1,7 +1,7 @@
+/* eslint-env browser */
 // @flow
 
 import React from 'react';
-import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
 import {
   getFixtureStateFromLastChange,
   untilLastMessageEquals,
@@ -9,40 +9,15 @@ import {
   postUnselectFixture,
   postSetFixtureState
 } from '../testHelpers/shared';
-import { WebSockets } from '../WebSockets';
-import { FixtureConnect } from '..';
+import { PostMessage, FixtureConnect } from '..';
 
 import type { ConnectMockApi } from './shared';
 
-const mockUrl = 'ws://localhost:8080';
-const handlers = {};
-let messages = [];
-
-const mockSocket = {
-  on: jest.fn((evt, cb) => {
-    handlers[evt] = cb;
-  }),
-  off: jest.fn(),
-  emit: jest.fn((path, msg) => {
-    if (path === RENDERER_MESSAGE_EVENT_NAME) {
-      messages.push(msg);
-    }
-  })
-};
-
-// FYI: Tried using https://github.com/thoov/mock-socket but at the time it
-// didn't capture events as expected
-jest.mock('socket.io-client', () =>
-  jest.fn(url => {
-    expect(url).toBe(mockUrl);
-
-    return mockSocket;
-  })
-);
-
 export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
+  const onMessage = jest.fn();
+
   function getMessages() {
-    return messages;
+    return onMessage.mock.calls.map(call => call[0].data);
   }
 
   async function getFxStateFromLastChange() {
@@ -50,12 +25,15 @@ export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
   }
 
   async function untilMessage(msg) {
-    return untilLastMessageEquals(() => messages, msg);
+    return untilLastMessageEquals(getMessages, msg);
   }
 
   async function postMessage(msg) {
-    messages.push(msg);
-    handlers[RENDERER_MESSAGE_EVENT_NAME](msg);
+    parent.postMessage(msg, '*');
+
+    // This is very convenient because we don't have to await manually for each
+    // dispatched event to be fulfilled inside test cases
+    await untilMessage(msg);
   }
 
   async function selectFixture({ rendererId, fixturePath, fixtureState }) {
@@ -80,6 +58,7 @@ export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
     });
   }
 
+  window.addEventListener('message', onMessage, false);
   try {
     await children({
       getElement,
@@ -91,13 +70,13 @@ export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
       setFixtureState
     });
   } finally {
-    messages = [];
+    window.removeEventListener('message', onMessage);
   }
 }
 
 function getElement(props) {
   return (
-    <WebSockets url={mockUrl}>
+    <PostMessage>
       {({ subscribe, unsubscribe, postMessage }) => (
         <FixtureConnect
           {...props}
@@ -106,6 +85,6 @@ function getElement(props) {
           postMessage={postMessage}
         />
       )}
-    </WebSockets>
+    </PostMessage>
   );
 }

@@ -1,9 +1,7 @@
 // @flow
 
 import { uuid } from 'react-cosmos-shared2/util';
-import { mockConnect as mockPostMessage } from '../testHelpers/postMessage';
-import { mockConnect as mockWebSockets } from '../testHelpers/webSockets';
-import { mount } from '../testHelpers/mount';
+import { runTests, mount } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = {
@@ -15,10 +13,7 @@ const decorators = {
   'src/bar/decorator.js': ({ children }) => ['Decorated at src/bar', children]
 };
 
-tests(mockPostMessage);
-tests(mockWebSockets);
-
-function tests(mockConnect) {
+runTests(mockConnect => {
   it('renders selected fixture inside decorator', async () => {
     await mockConnect(async ({ getElement, selectFixture }) => {
       await mount(
@@ -42,4 +37,4 @@ function tests(mockConnect) {
       );
     });
   });
-}
+});

@@ -9,9 +9,7 @@ import {
 import { uuid } from 'react-cosmos-shared2/util';
 import { SuffixCounter } from '../testHelpers/components';
 import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
-import { mockConnect as mockPostMessage } from '../testHelpers/postMessage';
-import { mockConnect as mockWebSockets } from '../testHelpers/webSockets';
-import { mount } from '../testHelpers/mount';
+import { runTests, mount } from '../testHelpers';
 
 import type { ElementRef } from 'react';
 
@@ -29,10 +27,7 @@ const fixtures = {
 };
 const decorators = {};
 
-tests(mockPostMessage);
-tests(mockWebSockets);
-
-function tests(mockConnect) {
+runTests(mockConnect => {
   it('keeps state when resetting props', async () => {
     await mockConnect(
       async ({
@@ -336,4 +331,4 @@ function tests(mockConnect) {
       );
     });
   });
-}
+});
