@@ -23,7 +23,7 @@ export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
   }
 
   async function untilMessage(msg) {
-    return untilLastMessageEquals(() => getMessages(), msg);
+    return untilLastMessageEquals(getMessages, msg);
   }
 
   async function selectFixture({ rendererId, fixturePath, fixtureState }) {
