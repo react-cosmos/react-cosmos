@@ -32,7 +32,7 @@ export function register() {
 
       setState({ urlParams }, () => {
         if (hasFixtureChanged) {
-          selectCurrentFixture(context);
+          emitFixtureChangeEvent(context);
         }
       });
     });
@@ -47,7 +47,7 @@ function handleSetUrlParams(context, nextUrlParams: UrlParams) {
   context.setState({ urlParams: nextUrlParams }, () => {
     // Setting identical url params is considered a "reset" request
     if (hasFixtureChanged || areUrlParamsEqual) {
-      selectCurrentFixture(context);
+      emitFixtureChangeEvent(context);
     }
 
     if (!areUrlParamsEqual) {
@@ -56,15 +56,11 @@ function handleSetUrlParams(context, nextUrlParams: UrlParams) {
   });
 }
 
-function selectCurrentFixture(context) {
-  const { callMethod } = context;
+function emitFixtureChangeEvent(context) {
+  const { emitEvent } = context;
   const { fixturePath } = getUrlParams(context);
 
-  if (!fixturePath) {
-    return callMethod('renderer.unselectFixture');
-  }
-
-  callMethod('renderer.selectFixture', fixturePath);
+  emitEvent('fixtureChange', fixturePath);
 }
 
 function getUrlParams(context) {
