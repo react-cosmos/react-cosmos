@@ -53,7 +53,7 @@ export default function enhanceWebpackConfig({
     next
       ? {
           loader: require.resolve('./embed-modules-webpack-loader-next'),
-          include: require.resolve('../../../client/user-modules-next')
+          include: require.resolve('../../../client/next/userModules')
         }
       : {
           loader: require.resolve('./embed-modules-webpack-loader'),
@@ -133,7 +133,7 @@ function getEntry({ next, globalImports, hot }, shouldExport) {
 
   return [
     ...entry,
-    resolveClientPath(next ? 'loader-entry-next' : 'loader-entry')
+    resolveClientPath(next ? 'next/loaderEntry' : 'loader-entry')
   ];
 }
 

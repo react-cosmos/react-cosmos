@@ -5,7 +5,8 @@ import { render } from 'react-dom';
 import { uuid } from 'react-cosmos-shared2/util';
 import { getDomContainer } from 'react-cosmos-shared2/dom';
 import { PostMessage, WebSockets, FixtureConnect } from 'react-cosmos-fixture';
-import { fixtures, decorators } from './user-modules-next';
+import { fixtures, decorators } from './userModules';
+import { ErrorCatch } from './ErrorCatch';
 
 const rendererId = getRendererId();
 
@@ -33,7 +34,7 @@ function createFixtureConnectRenderCb({ onFixtureChange }: Opts) {
     <FixtureConnect
       rendererId={rendererId}
       fixtures={fixtures}
-      systemDecorators={[]}
+      systemDecorators={[ErrorCatch]}
       userDecorators={decorators}
       subscribe={subscribe}
       unsubscribe={unsubscribe}
