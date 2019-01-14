@@ -1,5 +1,6 @@
 // @flow
 
+import './mockSocketIo';
 import { mockConnect as mockPostMessage } from './postMessage';
 import { mockConnect as mockWebSockets } from './webSockets';
 export { mount } from './mount';

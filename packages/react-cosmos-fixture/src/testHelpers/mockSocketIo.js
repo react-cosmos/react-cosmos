@@ -2,14 +2,16 @@
 
 import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
 
-export const WS_URL = 'ws://localhost:8080';
+const WS_URL = 'ws://localhost:8080';
 
 let handlers = {};
 let messages = [];
 
 // FYI: Tried using https://github.com/thoov/mock-socket but at the time it
 // didn't capture events as expected
-export default (url: string) => {
+jest.mock('socket.io-client', () => mockSocketIo);
+
+function mockSocketIo(url: string) {
   expect(url).toBe(WS_URL);
 
   return {
@@ -17,7 +19,14 @@ export default (url: string) => {
     off: () => {},
     emit
   };
-};
+}
+
+mockSocketIo.__getMockApi = () => ({
+  WS_URL,
+  getMessages,
+  postMessage,
+  resetMessages
+});
 
 function on(evt: string, cb: Function) {
   handlers[evt] = cb;
@@ -27,15 +36,6 @@ function emit(path: string, msg: Object) {
   if (path === RENDERER_MESSAGE_EVENT_NAME) {
     messages.push(msg);
   }
-}
-
-export function __getMockApi() {
-  return {
-    WS_URL,
-    getMessages,
-    postMessage,
-    resetMessages
-  };
 }
 
 function getMessages() {
