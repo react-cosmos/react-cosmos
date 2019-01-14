@@ -10,7 +10,11 @@ import type {
   FixtureState,
   SetFixtureState
 } from 'react-cosmos-shared2/fixtureState';
-import type { RendererRequest } from 'react-cosmos-shared2/renderer';
+import type {
+  RendererRequest,
+  SelectFixtureRequest,
+  SetFixtureStateRequest
+} from 'react-cosmos-shared2/renderer';
 import type { Decorators, FixtureConnectProps } from '../index.js.flow';
 
 type State = {
