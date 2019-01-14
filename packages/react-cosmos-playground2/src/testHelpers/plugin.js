@@ -20,6 +20,10 @@ export function getPluginState(pluginName: string) {
   return getPluginContext(pluginName).getState();
 }
 
+export function mockPlugin(pluginName: string) {
+  ensurePlugin(pluginName);
+}
+
 export function mockConfig(pluginName: string, config: {}) {
   ensurePlugin(pluginName).defaultConfig = config;
 }

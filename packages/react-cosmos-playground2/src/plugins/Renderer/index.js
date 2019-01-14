@@ -25,7 +25,7 @@ const DEFAULT_RENDERER_STATE = {
 };
 
 export function register() {
-  const { method } = registerPlugin<RendererConfig, RendererState>({
+  const { on, method } = registerPlugin<RendererConfig, RendererState>({
     name: 'renderer',
     defaultConfig: {
       webUrl: null,
@@ -37,24 +37,45 @@ export function register() {
     }
   });
 
-  // TODO: Break down methods into files before adding more
+  // TODO: Break down event handlers and methods into files before adding more
+  on('router.fixtureChange', handleRouterFixtureChange);
+
   method('getPrimaryRendererState', handleGetPrimaryRendererState);
   method('isReady', handleIsReady);
   method('isValidFixtureSelected', handleIsValidFixtureSelected);
   method('isFixtureLoaded', handleIsFixtureLoaded);
-  method('selectFixture', handleSelectFixture);
-  method('unselectFixture', handleUnselectFixture);
   method('setFixtureState', handleSetFixtureState);
   method('selectPrimaryRenderer', handleSelectPrimaryRenderer);
   method('receiveResponse', handleReceiveResponse);
 }
 
-function handleIsReady({ getState }) {
-  return getPrimaryRendererState(getState()) !== null;
+function handleRouterFixtureChange(context, fixturePath) {
+  if (!fixturePath) {
+    return resetRendererState(context, () => {
+      forEachRenderer(context, rendererId =>
+        postUnselectFixtureRequest(context, rendererId)
+      );
+    });
+  }
+
+  // NOTE: The fixture state used to be reset in the local renderer state
+  // before posting the "selectFixture" request, but that no longer happens.
+  // Resetting renderer state when selecting a fixture makes sense in
+  // abstract, but it creates an unnecessary flash of layout whenever
+  // reselecting the current fixture, or when selecting a fixture of the same
+  // component. By keeping the fixture state until the new fixture state is
+  // received from the renderer the transition between fixtures is smoother.
+  forEachRenderer(context, rendererId =>
+    postSelectFixtureRequest(context, rendererId, fixturePath, null)
+  );
 }
 
 function handleGetPrimaryRendererState({ getState }) {
   return getPrimaryRendererState(getState());
+}
+
+function handleIsReady({ getState }) {
+  return getPrimaryRendererState(getState()) !== null;
 }
 
 function handleIsValidFixtureSelected(context) {
@@ -77,27 +98,6 @@ function handleIsFixtureLoaded({ getState }) {
   return primaryRendererState
     ? primaryRendererState.fixtureState !== null
     : false;
-}
-
-function handleSelectFixture(context, fixturePath: string) {
-  // NOTE: The fixture state used to be reset in the local renderer state
-  // before posting the "selectFixture" request, but that no longer happens.
-  // Resetting renderer state when selecting a fixture makes sense in
-  // abstract, but it creates an unnecessary flash of layout whenever
-  // reselecting the current fixture, or when selecting a fixture of the same
-  // component. By keeping the fixture state until the new fixture state is
-  // received from the renderer the transition between fixtures is smoother.
-  forEachRenderer(context, rendererId =>
-    postSelectFixtureRequest(context, rendererId, fixturePath, null)
-  );
-}
-
-function handleUnselectFixture(context) {
-  resetRendererState(context, () => {
-    forEachRenderer(context, rendererId =>
-      postUnselectFixtureRequest(context, rendererId)
-    );
-  });
 }
 
 function handleSetFixtureState(context, stateChange, cb) {

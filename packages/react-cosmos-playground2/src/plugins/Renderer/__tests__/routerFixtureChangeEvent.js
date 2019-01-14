@@ -4,9 +4,10 @@ import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
 import {
   cleanup,
-  getPluginState,
+  mockPlugin,
   mockEvent,
-  mockCall
+  mockEmit,
+  getPluginState
 } from '../../../testHelpers/plugin';
 import { mockFixtures, mockFixtureState } from '../testHelpers';
 import { register } from '..';
@@ -27,14 +28,55 @@ const initialRendererState = {
   }
 };
 
-function loadTestPlugins() {
-  loadPlugins({ state: { renderer: initialRendererState } });
-  mockCall('renderer.unselectFixture');
+function registerTestPlugins() {
+  register();
+  mockPlugin('router');
 }
 
-it('resets fixture state for all renderers', async () => {
-  register();
+function loadTestPlugins() {
+  loadPlugins({ state: { renderer: initialRendererState } });
+}
+
+function emitRouterFixtureChange(fixturePath) {
+  mockEmit('router.fixtureChange', fixturePath);
+}
+
+it('posts "selectFixture" renderer requests', async () => {
+  registerTestPlugins();
+
+  const handleRendererRequest = jest.fn();
+  mockEvent('renderer.request', handleRendererRequest);
+
   loadTestPlugins();
+  emitRouterFixtureChange('fixtures/zwei.js');
+
+  await wait(() =>
+    expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {
+      type: 'selectFixture',
+      payload: {
+        rendererId: 'foo-renderer',
+        fixturePath: 'fixtures/zwei.js',
+        fixtureState: null
+      }
+    })
+  );
+
+  await wait(() =>
+    expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {
+      type: 'selectFixture',
+      payload: {
+        rendererId: 'bar-renderer',
+        fixturePath: 'fixtures/zwei.js',
+        fixtureState: null
+      }
+    })
+  );
+});
+
+it('resets fixture state for all renderers', async () => {
+  registerTestPlugins();
+  loadTestPlugins();
+  emitRouterFixtureChange(undefined);
 
   await wait(() =>
     expect(getPluginState('renderer')).toEqual({
@@ -52,12 +94,13 @@ it('resets fixture state for all renderers', async () => {
 });
 
 it('posts "unselectFixture" renderer requests', async () => {
-  register();
+  registerTestPlugins();
 
   const handleRendererRequest = jest.fn();
   mockEvent('renderer.request', handleRendererRequest);
 
   loadTestPlugins();
+  emitRouterFixtureChange(undefined);
 
   await wait(() =>
     expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {
