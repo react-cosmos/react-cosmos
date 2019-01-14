@@ -1,12 +1,9 @@
 // @flow
 
 import React from 'react';
-import {
-  mockUrl,
-  getMessages,
-  postMessage,
-  resetMessages
-} from './webSocketsMock';
+// $FlowFixMe __getMockApi is defined in __mocks__/socket.io-client
+import { __getMockApi } from 'socket.io-client';
+import { WebSockets } from '..';
 import {
   createFixtureConnectRenderCallback,
   getFixtureStateFromLastChange,
@@ -15,9 +12,10 @@ import {
   postUnselectFixture,
   postSetFixtureState
 } from './shared';
-import { WebSockets } from '..';
 
 import type { ConnectMockApi } from './shared';
+
+const { WS_URL, getMessages, postMessage, resetMessages } = __getMockApi();
 
 export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
   async function getFxStateFromLastChange() {
@@ -67,7 +65,7 @@ export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
 
 function getElement(userProps) {
   return (
-    <WebSockets url={mockUrl}>
+    <WebSockets url={WS_URL}>
       {createFixtureConnectRenderCallback(userProps)}
     </WebSockets>
   );

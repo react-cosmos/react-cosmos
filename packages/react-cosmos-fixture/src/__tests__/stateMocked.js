@@ -269,7 +269,7 @@ runTests(mockConnect => {
             counterRef.setState({ count: 7 });
             try {
               await until(async () => (await getCount()) === 7, { timeout });
-            } catch (err) {
+            } finally {
               expect(await getCount()).toBe(7);
             }
 
@@ -279,7 +279,7 @@ runTests(mockConnect => {
             counterRef.setState({ count: 13 });
             try {
               await until(async () => (await getCount()) === 13, { timeout });
-            } catch (err) {
+            } finally {
               expect(await getCount()).toBe(13);
             }
           }

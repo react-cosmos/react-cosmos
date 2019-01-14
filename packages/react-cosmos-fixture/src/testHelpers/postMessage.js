@@ -2,6 +2,7 @@
 // @flow
 
 import React from 'react';
+import { PostMessage } from '..';
 import {
   createFixtureConnectRenderCallback,
   getFixtureStateFromLastChange,
@@ -10,7 +11,6 @@ import {
   postUnselectFixture,
   postSetFixtureState
 } from './shared';
-import { PostMessage } from '..';
 
 import type { ConnectMockApi } from './shared';
 
