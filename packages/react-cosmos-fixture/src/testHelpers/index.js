@@ -2,7 +2,7 @@
 
 // NOTE: webSockets MUST be imported before postMessage, otherwise
 // "socket.io-client" will fail to be mocked because the real module will be
-// imported before the mock file
+// imported before the mock module
 import { mockConnect as mockWebSockets } from './webSockets';
 import { mockConnect as mockPostMessage } from './postMessage';
 export { mount } from './mount';
