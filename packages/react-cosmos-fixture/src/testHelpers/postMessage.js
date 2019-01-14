@@ -3,13 +3,14 @@
 
 import React from 'react';
 import {
+  createFixtureConnectRenderCallback,
   getFixtureStateFromLastChange,
   untilLastMessageEquals,
   postSelectFixture,
   postUnselectFixture,
   postSetFixtureState
-} from '../testHelpers/shared';
-import { PostMessage, FixtureConnect } from '..';
+} from './shared';
+import { PostMessage } from '..';
 
 import type { ConnectMockApi } from './shared';
 
@@ -74,21 +75,8 @@ export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
   }
 }
 
-function getElement({ rendererId, fixtures, decorators, onFixtureChange }) {
+function getElement(userProps) {
   return (
-    <PostMessage>
-      {({ subscribe, unsubscribe, postMessage }) => (
-        <FixtureConnect
-          rendererId={rendererId}
-          fixtures={fixtures}
-          systemDecorators={[]}
-          userDecorators={decorators}
-          onFixtureChange={onFixtureChange}
-          subscribe={subscribe}
-          unsubscribe={unsubscribe}
-          postMessage={postMessage}
-        />
-      )}
-    </PostMessage>
+    <PostMessage>{createFixtureConnectRenderCallback(userProps)}</PostMessage>
   );
 }

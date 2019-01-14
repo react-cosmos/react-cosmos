@@ -1,6 +1,9 @@
 // @flow
 
+import React from 'react';
 import until from 'async-until';
+import { FixtureConnect } from '..';
+
 import type { Element } from 'react';
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type {
@@ -8,16 +11,22 @@ import type {
   RendererRequest,
   RendererResponse
 } from 'react-cosmos-shared2/renderer';
-import type { Fixtures, DecoratorsByPath } from '../index.js.flow';
+import type {
+  Fixtures,
+  DecoratorsByPath,
+  RemoteRendererApi
+} from '../index.js.flow';
 
 type Message = RendererResponse | RendererRequest;
 
-type GetTestElement = ({
+type UserProps = {
   rendererId: RendererId,
   fixtures: Fixtures,
   decorators: DecoratorsByPath,
   onFixtureChange?: () => mixed
-}) => Element<any>;
+};
+
+type GetTestElement = UserProps => Element<any>;
 
 type GetMessages = () => Message[];
 
@@ -42,6 +51,24 @@ export type ConnectMockApi = {
 };
 
 const timeout = 1000;
+
+export function createFixtureConnectRenderCallback({
+  rendererId,
+  fixtures,
+  decorators,
+  onFixtureChange
+}: UserProps) {
+  return (remoteRendererApiProps: RemoteRendererApi) => (
+    <FixtureConnect
+      rendererId={rendererId}
+      fixtures={fixtures}
+      systemDecorators={[]}
+      userDecorators={decorators}
+      onFixtureChange={onFixtureChange}
+      {...remoteRendererApiProps}
+    />
+  );
+}
 
 export async function getFixtureStateFromLastChange(getMessages: GetMessages) {
   const msgType = 'fixtureStateChange';

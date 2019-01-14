@@ -2,19 +2,20 @@
 
 import React from 'react';
 import {
-  getFixtureStateFromLastChange,
-  untilLastMessageEquals,
-  postSelectFixture,
-  postUnselectFixture,
-  postSetFixtureState
-} from '../testHelpers/shared';
-import {
   mockUrl,
   getMessages,
   postMessage,
   resetMessages
 } from './webSocketsMock';
-import { WebSockets, FixtureConnect } from '..';
+import {
+  createFixtureConnectRenderCallback,
+  getFixtureStateFromLastChange,
+  untilLastMessageEquals,
+  postSelectFixture,
+  postUnselectFixture,
+  postSetFixtureState
+} from './shared';
+import { WebSockets } from '..';
 
 import type { ConnectMockApi } from './shared';
 
@@ -64,21 +65,10 @@ export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
   }
 }
 
-function getElement({ rendererId, fixtures, decorators, onFixtureChange }) {
+function getElement(userProps) {
   return (
     <WebSockets url={mockUrl}>
-      {({ subscribe, unsubscribe, postMessage }) => (
-        <FixtureConnect
-          rendererId={rendererId}
-          fixtures={fixtures}
-          systemDecorators={[]}
-          userDecorators={decorators}
-          onFixtureChange={onFixtureChange}
-          subscribe={subscribe}
-          unsubscribe={unsubscribe}
-          postMessage={postMessage}
-        />
-      )}
+      {createFixtureConnectRenderCallback(userProps)}
     </WebSockets>
   );
 }
