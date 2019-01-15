@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import { isEqual } from 'lodash';
-import memoize from 'memoize-one';
 import { updateState } from 'react-cosmos-shared2/util';
 import { FixtureProvider } from '../FixtureProvider';
 
@@ -98,10 +97,11 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
         // renderKey controls whether to reuse previous instances (and
         // transition props) or rebuild render tree from scratch
         key={renderKey}
-        decorators={[
-          ...systemDecorators,
-          ...this.getSortedDecoratorsForFixturePath(userDecorators, fixturePath)
-        ]}
+        decorators={getSortedDecoratorsForFixturePath(
+          systemDecorators,
+          userDecorators,
+          fixturePath
+        )}
         fixtureState={fixtureState}
         setFixtureState={this.setFixtureState}
       >
@@ -109,12 +109,6 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
       </FixtureProvider>
     );
   }
-
-  // Prevent FixtureProvider from thinking decorators changed when they haven't
-  getSortedDecoratorsForFixturePath = memoize(
-    (decorators: DecoratorsByPath, fixturePath: string) =>
-      getSortedDecorators(getDecoratorsForFixturePath(decorators, fixturePath))
-  );
 
   handleRequest = (msg: RendererRequest) => {
     if (msg.type === 'pingRenderers') {
@@ -251,6 +245,17 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
       onFixtureChange();
     }
   }
+}
+
+function getSortedDecoratorsForFixturePath(
+  systemDecorators: DecoratorType[],
+  decorators: DecoratorsByPath,
+  fixturePath: string
+) {
+  return [
+    ...systemDecorators,
+    ...getSortedDecorators(getDecoratorsForFixturePath(decorators, fixturePath))
+  ];
 }
 
 function getSortedDecorators(decoratorsByPath): DecoratorType[] {
