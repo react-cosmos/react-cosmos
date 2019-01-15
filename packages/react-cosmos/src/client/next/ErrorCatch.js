@@ -3,8 +3,6 @@
 
 import React, { Component } from 'react';
 
-declare var __DEV__: boolean;
-
 type Props = {
   children: React$Node
 };
@@ -25,7 +23,6 @@ export class ErrorCatch extends Component<Props, State> {
       errored: true,
       errorMessage: `${error.message}\n${info.componentStack}`
     });
-    reportRuntimeErrorsToParentWindow();
   }
 
   render() {
@@ -45,19 +42,5 @@ export class ErrorCatch extends Component<Props, State> {
         <p>Check console for more info.</p>
       </>
     );
-  }
-}
-
-function reportRuntimeErrorsToParentWindow() {
-  // NOTE: react-error-overlay calls onRendererRuntimeError in dev mode, for
-  // both errors caught by this boundary as well as global unhandled exceptions.
-  // But react-error-overlay is not included in static exports, so we
-  // compensate by calling onRendererRuntimeError here instead. This also means
-  // that global unhandled exceptions must be treated separately in static
-  // exports.
-  if (!__DEV__) {
-    if (typeof parent.onRendererRuntimeError === 'function') {
-      parent.onRendererRuntimeError();
-    }
   }
 }

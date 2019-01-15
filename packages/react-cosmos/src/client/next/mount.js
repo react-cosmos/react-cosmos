@@ -2,15 +2,15 @@
 
 import React from 'react';
 import { render } from 'react-dom';
-import { uuid } from 'react-cosmos-shared2/util';
 import { getDomContainer } from 'react-cosmos-shared2/dom';
 import { PostMessage, WebSockets, FixtureConnect } from 'react-cosmos-fixture';
 import { fixtures, decorators } from './userModules';
 import { ErrorCatch } from './ErrorCatch';
 
-const rendererId = getRendererId();
+import type { RendererId } from 'react-cosmos-shared2/renderer';
 
 type Opts = {
+  rendererId: RendererId,
   onFixtureChange?: () => mixed
 };
 
@@ -29,7 +29,7 @@ function wrapSuitableAdaptor(element) {
   return <WebSockets url={getWebSocketsUrl()}>{element}</WebSockets>;
 }
 
-function createFixtureConnectRenderCb({ onFixtureChange }: Opts) {
+function createFixtureConnectRenderCb({ rendererId, onFixtureChange }: Opts) {
   return ({ subscribe, unsubscribe, postMessage }) => (
     <FixtureConnect
       rendererId={rendererId}
@@ -50,21 +50,6 @@ function isInsideIframe() {
   } catch (e) {
     return true;
   }
-}
-
-// Renderer ID is remembered to avoid announcing a new renderer when reloading
-// the renderer window. Note that each tab has creates a new session and thus
-// a new rendererId.
-// https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage
-function getRendererId() {
-  let rendererId = sessionStorage.getItem('cosmosRendererId');
-
-  if (!rendererId) {
-    rendererId = uuid();
-    sessionStorage.setItem('cosmosRendererId', rendererId);
-  }
-
-  return rendererId;
 }
 
 function getWebSocketsUrl() {

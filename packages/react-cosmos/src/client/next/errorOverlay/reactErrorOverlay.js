@@ -7,7 +7,6 @@ const LAUNCH_EDITOR_ENDPOINT = '/__open-stack-frame-in-editor';
 
 export function init() {
   ErrorOverlay.startReportingRuntimeErrors({
-    onError: reportRuntimeErrorsToParentWindow,
     filename: process.env.PUBLIC_URL + '/main.js'
   });
 
@@ -20,12 +19,6 @@ export function init() {
 
 export function dismiss() {
   ErrorOverlay.dismissRuntimeErrors();
-}
-
-function reportRuntimeErrorsToParentWindow() {
-  if (typeof parent.onRendererRuntimeError === 'function') {
-    parent.onRendererRuntimeError();
-  }
 }
 
 function getLaunchEditorUrl(errorLocation) {
