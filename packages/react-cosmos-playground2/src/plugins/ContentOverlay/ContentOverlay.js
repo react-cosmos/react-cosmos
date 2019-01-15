@@ -7,7 +7,8 @@ import {
   EmptyIllustration,
   DreamerIllustration
 } from '../../shared/illustrations';
-import { RendererPreviewUrlError } from './RendererPreviewUrlError';
+import { RendererNotRespondingScreen } from './RendererNotRespondingScreen';
+import { IllustrationContainer } from './shared';
 
 import type { RendererPreviewUrlStatus } from '../RendererPreview';
 
@@ -32,8 +33,8 @@ export function ContentOverlay({
 
   if (rendererPreviewUrlStatus === 'error') {
     return (
-      <Container data-testid="rendererPreviewError">
-        <RendererPreviewUrlError />
+      <Container data-testid="rendererNotResponding">
+        <RendererNotRespondingScreen />
       </Container>
     );
   }
@@ -87,13 +88,6 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   background: var(--grey6);
-`;
-
-const IllustrationContainer = styled.div`
-  --size: 256px;
-  display: flex;
-  width: var(--size);
-  height: var(--size);
 `;
 
 const Delay = styled.div`
