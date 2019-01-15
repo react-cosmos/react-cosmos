@@ -131,10 +131,7 @@ function getEntry({ next, globalImports, hot }, shouldExport) {
     ];
   }
 
-  return [
-    ...entry,
-    resolveClientPath(next ? 'next/loaderEntry' : 'loader-entry')
-  ];
+  return [...entry, resolveClientPath(next ? 'next' : 'loader-entry')];
 }
 
 function resolveClientPath(p) {
