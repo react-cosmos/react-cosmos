@@ -10,7 +10,7 @@ export function RendererNotRespondingScreen() {
     <Container>
       <Content>
         <Header>Renderer not responding</Header>
-        <Paragraph>Something is wrong...</Paragraph>
+        <Paragraph>It's usually one of the following...</Paragraph>
         <List>
           <li>
             <No>1</No>
