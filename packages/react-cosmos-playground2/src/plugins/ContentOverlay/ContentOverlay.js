@@ -45,7 +45,7 @@ export function ContentOverlay({
       <Container data-testid="waiting">
         <IllustrationContainer>
           <Delay>
-            <DreamerIllustration />
+            <DreamerIllustration title="waiting" />
           </Delay>
         </IllustrationContainer>
       </Container>
@@ -56,7 +56,7 @@ export function ContentOverlay({
     return (
       <Container data-testid="blank">
         <IllustrationContainer>
-          <BlankCanvasIllustration />
+          <BlankCanvasIllustration title="blank canvas" />
         </IllustrationContainer>
       </Container>
     );
@@ -64,9 +64,9 @@ export function ContentOverlay({
 
   if (!validFixtureSelected) {
     return (
-      <Container data-testid="empty">
+      <Container data-testid="notFound">
         <IllustrationContainer>
-          <EmptyIllustration />
+          <EmptyIllustration title="not found" />
         </IllustrationContainer>
       </Container>
     );

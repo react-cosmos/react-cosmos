@@ -23,9 +23,9 @@ function loadTestPlugins() {
   return render(<Slot name="contentOverlay" />);
 }
 
-it('renders "empty" state', () => {
+it('renders "notFound" state', () => {
   registerTestPlugins();
   const { queryByTestId } = loadTestPlugins();
 
-  expect(queryByTestId('empty')).not.toBeNull();
+  expect(queryByTestId('notFound')).not.toBeNull();
 });

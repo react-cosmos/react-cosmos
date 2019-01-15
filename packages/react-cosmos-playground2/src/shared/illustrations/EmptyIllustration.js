@@ -5,7 +5,7 @@ import { Illustration } from '../svg';
 
 const primary4 = 'var(--primary4)';
 
-export const EmptyIllustration = () => (
+export const EmptyIllustration = ({ title }: { title: string }) => (
   <Illustration viewBox="0 0 1009.54 789.93">
     <defs>
       <linearGradient
@@ -21,7 +21,7 @@ export const EmptyIllustration = () => (
         <stop offset="1" stopColor="gray" stopOpacity="0.1" />
       </linearGradient>
     </defs>
-    <title>empty</title>
+    <title>{title}</title>
     <ellipse
       cx="354.13"
       cy="741.27"
