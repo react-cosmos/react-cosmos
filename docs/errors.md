@@ -1,17 +1,11 @@
-### Error handling
+# Error handling
 
-Make a table with all error scenarios possible in Cosmos
+This is an overview of the error types Cosmos users might have to deal with. All these errors are related to the user's build, which contains only a thin layer of Cosmos communication code. The Cosmos UI (aka _Playground_) is precompiled and runs in a parent frame (or a different environment for React Native users) and, bugs aside, is unlikely to cause errors.
 
-1. User code cannot compile, renderer iframe not responding
-2. Hot module replacement with invalid syntax, fall back on working build and show compilation error
-3. Module-level runtime error that breaks Cosmos’ thin layer of communication, show renderer iframe even if no fixture is selected
-4. Render-level runtime error that allows Cosmos usage to render the unaffected components
-5. Static export: Same as 3 and 4, except react-dev-overlay is missing. Rely solely on componentDidCatch
-
-|     | Cause | Action | Details |
-| --- | ----- | ------ | ------- |
-| 1   | foo   | foo    | foo     |
-| 2   | foo   | foo    | foo     |
-| 3   | foo   | foo    | foo     |
-| 4   | foo   | foo    | foo     |
-| 5   | foo   | foo    | foo     |
+|     | Error type                                                                                            | Support strategy                                                                    | Other details                                                                  |
+| --- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| 1   | Renderer iframe URL not responding (user build is either broken or fails to yield an index.html page) | Show custom error message with popular causes and support link                      | User has to refresh the page after rebuilding                                  |
+| 2   | Hot module replacement with invalid syntax                                                            | Fall back on working build and show compilation error                               | webpack-hot-middleware prevents applying broken patches and reports the errors |
+| 3   | Module-level runtime error that breaks communication with Cosmos UI                                   | Reveal renderer iframe even if no fixture is selected                               | react-error-overlay displays error nicely once visible                         |
+| 4   | Render-level runtime error caught by Cosmos' error boundary                                           | Allow regular usage and dismiss error overlay when changing fixture for convenience | -                                                                              |
+| 5   | **Static export:** Either 3 or 4, but without react-dev-overlay bundled                               | Rely solely on componentDidCatch and render rudimentary error state                 | -                                                                              |
