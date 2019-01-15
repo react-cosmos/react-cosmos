@@ -78,23 +78,18 @@ export type FixtureStateChangeResponse = {
   }
 };
 
-// Announce an error caught inside a renderer, which is useful when the
-// renderer is remote or if it errors before dispatching `fixtureList`
-// TODO: Integrate
-// export type RendererErrorResponse = {
-//   type: 'rendererError',
-//   payload: {
-//     rendererId: RendererId
-//     // TODO: Including error payload might be useful for remotes which
-//     // aren't running alongside renderers (eg. Browser UI with React Native
-//     // renderer)
-//   }
-// };
+export type RuntimeErrorResponse = {
+  type: 'runtimeError',
+  payload: {
+    rendererId: RendererId
+  }
+};
 
 export type RendererResponse =
   | RendererReadyResponse
   | FixtureListUpdateResponse
-  | FixtureStateChangeResponse;
+  | FixtureStateChangeResponse
+  | RuntimeErrorResponse;
 
 export type OnRendererResponse = RendererResponse => mixed;
 

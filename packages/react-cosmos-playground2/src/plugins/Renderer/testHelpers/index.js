@@ -1,5 +1,7 @@
 // @flow
 
+import { DEFAULT_RENDERER_STATE } from '../shared';
+
 import type { RendererId } from 'react-cosmos-shared2/renderer';
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 
@@ -33,14 +35,14 @@ export function getFxListUpdateRes(rendererId: RendererId, fixtures: string[]) {
   };
 }
 
-export function getRendererState({
-  fixtureState
-}: {
-  fixtureState: null | FixtureState
+export function getRendererState(opts: {
+  fixtureState?: null | FixtureState,
+  runtimeError?: boolean
 }) {
   return {
+    ...DEFAULT_RENDERER_STATE,
     fixtures: mockFixtures,
-    fixtureState
+    ...opts
   };
 }
 

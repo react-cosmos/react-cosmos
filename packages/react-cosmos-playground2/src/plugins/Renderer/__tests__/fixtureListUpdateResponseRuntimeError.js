@@ -6,7 +6,8 @@ import {
   cleanup,
   mockState,
   mockEvent,
-  mockCall
+  mockCall,
+  getPluginState
 } from '../../../testHelpers/plugin';
 import {
   mockFixtures,
@@ -31,13 +32,30 @@ function loadTestPlugins({ fixtureState }) {
         renderers: {
           'foo-renderer': {
             fixtures: mockFixtures,
-            fixtureState
+            fixtureState,
+            runtimeError: true
           }
         }
       }
     }
   });
 }
+
+it('clears runtime error state flag', async () => {
+  const handleRendererRequest = jest.fn();
+  registerTestPlugins({ handleRendererRequest });
+  loadTestPlugins({ fixtureState: null });
+
+  mockCall(
+    'renderer.receiveResponse',
+    getFxListUpdateRes('foo-renderer', mockFixtures)
+  );
+
+  await wait(() => {
+    const { renderers } = getPluginState('renderer');
+    expect(renderers['foo-renderer'].runtimeError).toBe(false);
+  });
+});
 
 it('posts "selectFixture" renderer request', async () => {
   const handleRendererRequest = jest.fn();

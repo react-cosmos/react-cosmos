@@ -9,7 +9,8 @@ import type { RendererConfig } from '../../../index.js.flow';
 
 export type RendererItemState = {
   fixtures: FixtureNames,
-  fixtureState: null | FixtureState
+  fixtureState: null | FixtureState,
+  runtimeError: boolean
 };
 
 export type RendererState = {
@@ -22,10 +23,11 @@ export type RendererState = {
 export type RendererContext = IPluginContext<RendererConfig, RendererState>;
 
 export const DEFAULT_RENDERER_STATE = {
-  fixtureState: null
+  fixtureState: null,
+  runtimeError: false
 };
 
-export function getRendererState(
+export function getRendererItemState(
   { getState }: RendererContext,
   rendererId: RendererId
 ) {
@@ -76,6 +78,22 @@ export function setRendererState(
       ...prevState,
       renderers: mapValues(prevState.renderers, updater)
     }),
+    cb
+  );
+}
+
+export function setRendererItemState(
+  context: RendererContext,
+  rendererId: RendererId,
+  updater: RendererItemState => RendererItemState,
+  cb?: () => mixed
+) {
+  setRendererState(
+    context,
+    (rendererItemState, curRendererId) =>
+      curRendererId === rendererId
+        ? updater(rendererItemState)
+        : rendererItemState,
     cb
   );
 }

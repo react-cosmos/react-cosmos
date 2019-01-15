@@ -1,7 +1,11 @@
 // @flow
 
 import { isEqual } from 'lodash';
-import { getRendererState, setRendererState, forEachRenderer } from '../shared';
+import {
+  getRendererItemState,
+  setRendererState,
+  forEachRenderer
+} from '../shared';
 import { getUrlParams } from '../shared/router';
 import { postSetFixtureStateRequest } from '../shared/postRequest';
 
@@ -14,7 +18,7 @@ export function handleFixtureStateChangeResponse(
 ) {
   const { rendererId, fixturePath, fixtureState } = payload;
   const urlParams = getUrlParams(context);
-  const rendererItemState = getRendererState(context, rendererId);
+  const rendererItemState = getRendererItemState(context, rendererId);
 
   if (isEqual(fixtureState, rendererItemState.fixtureState)) {
     console.info(
