@@ -3,7 +3,7 @@
 import { loadPlugins } from 'react-plugin';
 
 // Statefulness alert!
-import './register-plugins';
+import './registerPlugins';
 
 loadPlugins({
   config: {
