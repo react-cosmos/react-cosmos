@@ -3,8 +3,6 @@
 import type { RendererRequest } from 'react-cosmos-shared2/renderer';
 import type { RendererPreviewContext } from './shared';
 
-export type { RendererPreviewUrlStatus, RendererPreviewState } from './shared';
-
 export function createRendererRequestHandler() {
   let iframeRef: null | window = null;
 

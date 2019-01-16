@@ -24,6 +24,7 @@ function registerTestPlugins() {
   register();
   mockConfig('renderer', { webUrl: 'mockRendererUrl' });
   mockMethod('renderer.isFixtureLoaded', () => false);
+  mockMethod('renderer.isRendererBroken', () => false);
 }
 
 function loadTestPlugins() {
@@ -82,21 +83,21 @@ it('posts renderer request message to iframe', async () => {
   });
 });
 
-it('broadcasts renderer response message from iframe', async () => {
+const rendererReadyMsg = {
+  type: 'rendererReady',
+  payload: {
+    rendererId: 'foo-renderer',
+    fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js']
+  }
+};
+
+it('broadcasts renderer response message', async () => {
   registerTestPlugins();
 
   const handleReceiveResponse = jest.fn();
   mockMethod('renderer.receiveResponse', handleReceiveResponse);
 
   loadTestPlugins();
-
-  const rendererReadyMsg = {
-    type: 'rendererReady',
-    payload: {
-      rendererId: 'foo-renderer',
-      fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js']
-    }
-  };
   window.postMessage(rendererReadyMsg, '*');
 
   await wait(() =>
@@ -104,5 +105,19 @@ it('broadcasts renderer response message from iframe', async () => {
       expect.any(Object),
       rendererReadyMsg
     )
+  );
+});
+
+it('stores renderer ID from response message', async () => {
+  registerTestPlugins();
+
+  const handleReceiveResponse = jest.fn();
+  mockMethod('renderer.receiveResponse', handleReceiveResponse);
+
+  loadTestPlugins();
+  window.postMessage(rendererReadyMsg, '*');
+
+  await wait(() =>
+    expect(getPluginState('rendererPreview').rendererId).toBe('foo-renderer')
   );
 });

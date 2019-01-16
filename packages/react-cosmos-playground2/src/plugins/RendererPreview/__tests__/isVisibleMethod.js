@@ -25,43 +25,44 @@ function registerTestPlugins() {
   mockConfig('renderer', { webUrl: 'mockRendererUrl' });
 }
 
-function loadTestPlugins({ runtimeError }) {
+function loadTestPlugins({ rendererId }) {
   fakeSuccessfulFetchCalls();
-  loadPlugins({ state: { rendererPreview: { runtimeError } } });
+  loadPlugins({ state: { rendererPreview: { urlStatus: 'ok', rendererId } } });
 
   return render(<Slot name="rendererPreview" />);
 }
 
-it('return false', async () => {
+it('return false when fixture is not loaded nor the renderer broken', async () => {
   registerTestPlugins();
   mockMethod('renderer.isFixtureLoaded', () => false);
-  loadTestPlugins({ runtimeError: false });
+  mockMethod('renderer.isRendererBroken', () => false);
+  loadTestPlugins({ rendererId: 'foo-renderer' });
 
   expect(mockCall('rendererPreview.isVisible')).toBe(false);
 });
 
-it('return true on loaded fixture', async () => {
+it('return true when fixture is loaded', async () => {
   registerTestPlugins();
   mockMethod('renderer.isFixtureLoaded', () => true);
-  loadTestPlugins({ runtimeError: false });
+  loadTestPlugins({ rendererId: 'foo-renderer' });
 
   expect(mockCall('rendererPreview.isVisible')).toBe(true);
 });
 
-it('return false on runtime error with renderer ready', async () => {
+it('return true when renderer is broken', async () => {
   registerTestPlugins();
-  mockMethod('renderer.isReady', () => true);
   mockMethod('renderer.isFixtureLoaded', () => false);
-  loadTestPlugins({ runtimeError: true });
+  mockMethod('renderer.isRendererBroken', () => true);
+  loadTestPlugins({ rendererId: 'foo-renderer' });
+
+  expect(mockCall('rendererPreview.isVisible')).toBe(true);
+});
+
+it('return false when renderer is broken but rendererId is missing', async () => {
+  registerTestPlugins();
+  mockMethod('renderer.isFixtureLoaded', () => false);
+  mockMethod('renderer.isRendererBroken', () => true);
+  loadTestPlugins({ rendererId: null });
 
   expect(mockCall('rendererPreview.isVisible')).toBe(false);
-});
-
-it('return true on runtime error with renderer NOT ready', async () => {
-  registerTestPlugins();
-  mockMethod('renderer.isReady', () => false);
-  mockMethod('renderer.isFixtureLoaded', () => false);
-  loadTestPlugins({ runtimeError: true });
-
-  expect(mockCall('rendererPreview.isVisible')).toBe(true);
 });

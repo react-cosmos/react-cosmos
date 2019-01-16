@@ -5,7 +5,6 @@ import { checkRendererStatus } from './checkRendererStatus';
 import { createRendererRequestHandler } from './handleRendererRequest';
 import { handleWindowMessages } from './handleWindowMessages';
 import { isVisible } from './isVisible';
-import { handleRendererRuntimeErrors } from './handleRendererRuntimeErrors';
 import { RendererPreview } from './RendererPreview';
 
 import type { RendererConfig } from '../Renderer';
@@ -23,7 +22,7 @@ export function register() {
     name: 'rendererPreview',
     initialState: {
       urlStatus: 'unknown',
-      runtimeError: false
+      rendererId: null
     }
   });
 
@@ -39,8 +38,7 @@ export function register() {
     if (rendererUrl) {
       return [
         checkRendererStatus(context, rendererUrl),
-        handleWindowMessages(context),
-        handleRendererRuntimeErrors(context)
+        handleWindowMessages(context)
       ];
     }
   });
