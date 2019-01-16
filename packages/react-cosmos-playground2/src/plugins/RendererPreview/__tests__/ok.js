@@ -24,7 +24,7 @@ function registerTestPlugins() {
   register();
   mockConfig('renderer', { webUrl: 'mockRendererUrl' });
   mockMethod('renderer.isFixtureLoaded', () => false);
-  mockMethod('renderer.isRendererBroken', () => false);
+  mockMethod('renderer.hasRendererErrors', () => false);
 }
 
 function loadTestPlugins() {

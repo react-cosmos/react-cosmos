@@ -7,7 +7,6 @@ import { loadPlugins, Slot } from 'react-plugin';
 import {
   cleanup,
   mockConfig,
-  mockState,
   mockMethod,
   mockCall
 } from '../../../testHelpers/plugin';
@@ -21,22 +20,21 @@ function fakeSuccessfulFetchCalls() {
 
 function registerTestPlugins() {
   register();
-  mockState('router', { urlParams: {} });
   mockConfig('renderer', { webUrl: 'mockRendererUrl' });
 }
 
-function loadTestPlugins({ rendererId }) {
+function loadTestPlugins(rendererId) {
   fakeSuccessfulFetchCalls();
   loadPlugins({ state: { rendererPreview: { urlStatus: 'ok', rendererId } } });
 
   return render(<Slot name="rendererPreview" />);
 }
 
-it('return false when fixture is not loaded nor the renderer broken', async () => {
+it('return false when fixture is not loaded nor does the renderer have errors', async () => {
   registerTestPlugins();
   mockMethod('renderer.isFixtureLoaded', () => false);
-  mockMethod('renderer.isRendererBroken', () => false);
-  loadTestPlugins({ rendererId: 'foo-renderer' });
+  mockMethod('renderer.hasRendererErrors', () => false);
+  loadTestPlugins('foo-renderer');
 
   expect(mockCall('rendererPreview.isVisible')).toBe(false);
 });
@@ -44,25 +42,25 @@ it('return false when fixture is not loaded nor the renderer broken', async () =
 it('return true when fixture is loaded', async () => {
   registerTestPlugins();
   mockMethod('renderer.isFixtureLoaded', () => true);
-  loadTestPlugins({ rendererId: 'foo-renderer' });
+  loadTestPlugins('foo-renderer');
 
   expect(mockCall('rendererPreview.isVisible')).toBe(true);
 });
 
-it('return true when renderer is broken', async () => {
+it('return true when renderer has errors', async () => {
   registerTestPlugins();
   mockMethod('renderer.isFixtureLoaded', () => false);
-  mockMethod('renderer.isRendererBroken', () => true);
-  loadTestPlugins({ rendererId: 'foo-renderer' });
+  mockMethod('renderer.hasRendererErrors', () => true);
+  loadTestPlugins('foo-renderer');
 
   expect(mockCall('rendererPreview.isVisible')).toBe(true);
 });
 
-it('return false when renderer is broken but rendererId is missing', async () => {
+it('return false when renderer has errors but rendererId is missing', async () => {
   registerTestPlugins();
   mockMethod('renderer.isFixtureLoaded', () => false);
-  mockMethod('renderer.isRendererBroken', () => true);
-  loadTestPlugins({ rendererId: null });
+  mockMethod('renderer.hasRendererErrors', () => true);
+  loadTestPlugins(null);
 
   expect(mockCall('rendererPreview.isVisible')).toBe(false);
 });

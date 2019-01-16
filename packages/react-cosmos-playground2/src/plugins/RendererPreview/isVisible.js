@@ -12,13 +12,13 @@ export function isVisible(context: RendererPreviewContext) {
   // host runtime already crashed. Without showing the renderer iframe
   // immediately, users would be stuck with a blank Playground UI state, with
   // no information on what's going on inside the renderer iframe.
-  return fixtureLoaded || isRendererBroken(context);
+  return fixtureLoaded || hasRendererErrors(context);
 }
 
-function isRendererBroken({ getState, callMethod }) {
+function hasRendererErrors({ getState, callMethod }) {
   const { rendererId } = getState();
 
   return rendererId
-    ? callMethod('renderer.isRendererBroken', rendererId)
+    ? callMethod('renderer.hasRendererErrors', rendererId)
     : false;
 }
