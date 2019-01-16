@@ -4,7 +4,7 @@ import { registerPlugin } from 'react-plugin';
 import { handleRouterFixtureChange } from './handleRouterFixtureChange';
 import { handleGetPrimaryRendererState } from './handleGetPrimaryRendererState';
 import { handleIsRendererConnected } from './handleIsRendererConnected';
-import { handleIsRendererBroken } from './handleIsRendererBroken';
+import { handleHasRendererErrors } from './handleHasRendererErrors';
 import { handleIsValidFixtureSelected } from './handleIsValidFixtureSelected';
 import { handleIsFixtureLoaded } from './handleIsFixtureLoaded';
 import { handleSetFixtureState } from './handleSetFixtureState';
@@ -15,11 +15,16 @@ import type { RendererConfig } from '../../index.js.flow';
 import type { RendererState } from './shared';
 
 export type { RendererConfig } from '../../index.js.flow';
-export type { RendererItemState, RendererState } from './shared';
+export type {
+  RendererStatus,
+  RendererItemState,
+  RendererState
+} from './shared';
 
 export function register() {
   const { on, method } = registerPlugin<RendererConfig, RendererState>({
     name: 'renderer',
+    // FIXME: Move config to rendererPreview and rendererRemote
     defaultConfig: {
       webUrl: null,
       enableRemote: false
@@ -33,7 +38,7 @@ export function register() {
   on('router.fixtureChange', handleRouterFixtureChange);
 
   method('isRendererConnected', handleIsRendererConnected);
-  method('isRendererBroken', handleIsRendererBroken);
+  method('hasRendererErrors', handleHasRendererErrors);
   method('getPrimaryRendererState', handleGetPrimaryRendererState);
   method('isValidFixtureSelected', handleIsValidFixtureSelected);
   method('isFixtureLoaded', handleIsFixtureLoaded);
