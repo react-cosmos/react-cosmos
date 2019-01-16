@@ -55,6 +55,13 @@ export type RendererReadyResponse = {
   }
 };
 
+export type RendererErrorResponse = {
+  type: 'rendererError',
+  payload: {
+    rendererId: RendererId
+  }
+};
+
 export type FixtureListUpdateResponse = {
   type: 'fixtureListUpdate',
   payload: {
@@ -78,18 +85,11 @@ export type FixtureStateChangeResponse = {
   }
 };
 
-export type RuntimeErrorResponse = {
-  type: 'runtimeError',
-  payload: {
-    rendererId: RendererId
-  }
-};
-
 export type RendererResponse =
   | RendererReadyResponse
+  | RendererErrorResponse
   | FixtureListUpdateResponse
-  | FixtureStateChangeResponse
-  | RuntimeErrorResponse;
+  | FixtureStateChangeResponse;
 
 export type OnRendererResponse = RendererResponse => mixed;
 

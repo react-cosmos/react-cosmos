@@ -2,18 +2,18 @@
 
 import type {
   RendererId,
-  RuntimeErrorResponse
+  RendererErrorResponse
 } from 'react-cosmos-shared2/renderer';
 
 export function initGlobalErrorHandler(rendererId: RendererId) {
   window.addEventListener('error', () => {
     postMessageToParentWindow({
-      type: 'runtimeError',
+      type: 'rendererError',
       payload: { rendererId }
     });
   });
 }
 
-function postMessageToParentWindow(msg: RuntimeErrorResponse) {
+function postMessageToParentWindow(msg: RendererErrorResponse) {
   parent.postMessage(msg, '*');
 }
