@@ -1,7 +1,7 @@
 // @flow
 
 import { mapValues } from 'lodash';
-import { DEFAULT_RENDERER_STATE, getPrimaryRendererState } from '../shared';
+import { getPrimaryRendererState } from '../shared';
 import { selectFixtureFromUrlParams } from './shared';
 
 import type { RendererReadyResponse } from 'react-cosmos-shared2/renderer';
@@ -32,7 +32,7 @@ export function handleRendererReadyResponse(
       renderers: {
         ...prevRenderers,
         [rendererId]: {
-          ...DEFAULT_RENDERER_STATE,
+          status: 'ok',
           fixtures,
           fixtureState: isPrimaryRenderer
             ? null

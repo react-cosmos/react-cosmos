@@ -1,7 +1,5 @@
 // @flow
 
-import { DEFAULT_RENDERER_STATE } from '../shared';
-
 import type { RendererId } from 'react-cosmos-shared2/renderer';
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { RendererStatus } from '../shared';
@@ -26,6 +24,13 @@ export function getReadyRes(rendererId: RendererId) {
   };
 }
 
+export function getErrorRes(rendererId: RendererId) {
+  return {
+    type: 'rendererError',
+    payload: { rendererId }
+  };
+}
+
 export function getFxListUpdateRes(rendererId: RendererId, fixtures: string[]) {
   return {
     type: 'fixtureListUpdate',
@@ -41,9 +46,9 @@ export function getRendererState(overrides: {
   fixtureState?: null | FixtureState
 }) {
   return {
-    ...DEFAULT_RENDERER_STATE,
+    status: overrides.status || 'ok',
     fixtures: mockFixtures,
-    ...overrides
+    fixtureState: overrides.fixtureState || null
   };
 }
 

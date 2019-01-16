@@ -1,10 +1,6 @@
 // @flow
 
-import {
-  DEFAULT_RENDERER_STATE,
-  forEachRenderer,
-  setRendererState
-} from './shared';
+import { forEachRenderer, setRendererState } from './shared';
 import {
   postSelectFixtureRequest,
   postUnselectFixtureRequest
@@ -17,7 +13,7 @@ export function handleRouterFixtureChange(
   fixturePath: void | string
 ) {
   if (fixturePath === undefined) {
-    return resetRendererState(context, () => {
+    return resetRendererFixtureState(context, () => {
       forEachRenderer(context, rendererId =>
         postUnselectFixtureRequest(context, rendererId)
       );
@@ -37,12 +33,12 @@ export function handleRouterFixtureChange(
   );
 }
 
-function resetRendererState(context: RendererContext, cb?: () => mixed) {
+function resetRendererFixtureState(context: RendererContext, cb?: () => mixed) {
   setRendererState(
     context,
     rendererItemState => ({
       ...rendererItemState,
-      ...DEFAULT_RENDERER_STATE
+      fixtureState: null
     }),
     cb
   );

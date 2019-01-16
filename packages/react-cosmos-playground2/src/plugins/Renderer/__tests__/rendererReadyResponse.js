@@ -138,7 +138,7 @@ it('resets renderer status', async () => {
       primaryRendererId: 'foo-renderer',
       renderers: {
         'foo-renderer': getRendererState({
-          status: 'error'
+          status: 'initError'
         })
       }
     }
