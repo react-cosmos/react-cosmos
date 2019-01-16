@@ -4,6 +4,7 @@ import { DEFAULT_RENDERER_STATE } from '../shared';
 
 import type { RendererId } from 'react-cosmos-shared2/renderer';
 import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
+import type { RendererStatus } from '../shared';
 
 export const mockFixtures = [
   'fixtures/ein.js',
@@ -35,14 +36,14 @@ export function getFxListUpdateRes(rendererId: RendererId, fixtures: string[]) {
   };
 }
 
-export function getRendererState(opts: {
-  fixtureState?: null | FixtureState,
-  runtimeError?: boolean
+export function getRendererState(overrides: {
+  status?: RendererStatus,
+  fixtureState?: null | FixtureState
 }) {
   return {
     ...DEFAULT_RENDERER_STATE,
     fixtures: mockFixtures,
-    ...opts
+    ...overrides
   };
 }
 

@@ -31,9 +31,9 @@ function loadTestPlugins({ fixtureState }) {
         primaryRendererId: 'foo-renderer',
         renderers: {
           'foo-renderer': {
+            status: 'error',
             fixtures: mockFixtures,
-            fixtureState,
-            runtimeError: true
+            fixtureState
           }
         }
       }
@@ -41,7 +41,7 @@ function loadTestPlugins({ fixtureState }) {
   });
 }
 
-it('clears runtime error state flag', async () => {
+it('resets renderer status', async () => {
   const handleRendererRequest = jest.fn();
   registerTestPlugins({ handleRendererRequest });
   loadTestPlugins({ fixtureState: null });
@@ -53,7 +53,7 @@ it('clears runtime error state flag', async () => {
 
   await wait(() => {
     const { renderers } = getPluginState('renderer');
-    expect(renderers['foo-renderer'].runtimeError).toBe(false);
+    expect(renderers['foo-renderer'].status).toBe('ok');
   });
 });
 

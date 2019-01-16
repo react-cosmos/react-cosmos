@@ -11,7 +11,7 @@ export function handleFixtureListUpdateResponse(
   { payload }: FixtureListUpdateResponse
 ) {
   const { rendererId, fixtures } = payload;
-  const { runtimeError } = getRendererItemState(context, rendererId);
+  const { status } = getRendererItemState(context, rendererId);
 
   setRendererItemState(
     context,
@@ -21,13 +21,13 @@ export function handleFixtureListUpdateResponse(
       fixtures,
       // We assume any previous error was resolved because we were able to
       // receive the "fixtureListUpdate" response
-      runtimeError: false
+      status: 'ok'
     }),
     () => {
       // Re-select fixture when transitioning from error => non-error state.
       // Important to keep this condition, otherwise any hot reloading patch
       // will reset fixture state!
-      if (runtimeError) {
+      if (status === 'error') {
         selectFixtureFromUrlParams(context, rendererId);
       }
     }

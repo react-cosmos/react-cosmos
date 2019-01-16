@@ -18,26 +18,26 @@ function registerTestPlugins() {
   mockState('router', { urlParams: {} });
 }
 
-function loadTestPlugins() {
+function loadTestPlugins(rendererState) {
   loadPlugins({
     state: {
-      renderer: {
-        primaryRendererId: 'foo-renderer',
-        renderers: {
-          'foo-renderer': {
-            fixtures: mockFixtures,
-            fixtureState: null,
-            runtimeError: false
-          }
-        }
-      }
+      renderer: rendererState
     }
   });
 }
 
-it('sets runtime error flag in renderer state', async () => {
+it('sets error status in existing renderer state', async () => {
   registerTestPlugins();
-  loadTestPlugins();
+  loadTestPlugins({
+    primaryRendererId: 'foo-renderer',
+    renderers: {
+      'foo-renderer': {
+        status: 'ok',
+        fixtures: mockFixtures,
+        fixtureState: null
+      }
+    }
+  });
 
   mockCall('renderer.receiveResponse', {
     type: 'runtimeError',
@@ -46,6 +46,24 @@ it('sets runtime error flag in renderer state', async () => {
 
   await wait(() => {
     const { renderers } = getPluginState('renderer');
-    expect(renderers['foo-renderer'].runtimeError).toBe(true);
+    expect(renderers['foo-renderer'].status).toBe('error');
+  });
+});
+
+it('creates renderer state with error status', async () => {
+  registerTestPlugins();
+  loadTestPlugins({
+    primaryRendererId: null,
+    renderers: {}
+  });
+
+  mockCall('renderer.receiveResponse', {
+    type: 'runtimeError',
+    payload: { rendererId: 'foo-renderer' }
+  });
+
+  await wait(() => {
+    const { renderers } = getPluginState('renderer');
+    expect(renderers['foo-renderer'].status).toBe('error');
   });
 });

@@ -38,9 +38,9 @@ it('creates renderer state', async () => {
       primaryRendererId: 'foo-renderer',
       renderers: {
         'foo-renderer': {
+          status: 'ok',
           fixtures: mockFixtures,
-          fixtureState: null,
-          runtimeError: false
+          fixtureState: null
         }
       }
     })
@@ -131,14 +131,14 @@ it('resets fixture state in all renderer states', async () => {
   );
 });
 
-it('clears runtime error state flag', async () => {
+it('resets renderer status', async () => {
   registerTestPlugins();
   loadTestPlugins({
     rendererState: {
       primaryRendererId: 'foo-renderer',
       renderers: {
         'foo-renderer': getRendererState({
-          runtimeError: true
+          status: 'error'
         })
       }
     }
@@ -151,7 +151,7 @@ it('clears runtime error state flag', async () => {
       primaryRendererId: 'foo-renderer',
       renderers: expect.objectContaining({
         'foo-renderer': expect.objectContaining({
-          runtimeError: false
+          status: 'ok'
         })
       })
     })

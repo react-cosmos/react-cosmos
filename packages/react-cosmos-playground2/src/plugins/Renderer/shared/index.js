@@ -7,10 +7,12 @@ import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { RendererId, FixtureNames } from 'react-cosmos-shared2/renderer';
 import type { RendererConfig } from '../../../index.js.flow';
 
+export type RendererStatus = 'ok' | 'error';
+
 export type RendererItemState = {
+  status: RendererStatus,
   fixtures: FixtureNames,
-  fixtureState: null | FixtureState,
-  runtimeError: boolean
+  fixtureState: null | FixtureState
 };
 
 export type RendererState = {
@@ -23,8 +25,9 @@ export type RendererState = {
 export type RendererContext = IPluginContext<RendererConfig, RendererState>;
 
 export const DEFAULT_RENDERER_STATE = {
-  fixtureState: null,
-  runtimeError: false
+  status: 'ok',
+  fixtures: [],
+  fixtureState: null
 };
 
 export function getRendererItemState(
