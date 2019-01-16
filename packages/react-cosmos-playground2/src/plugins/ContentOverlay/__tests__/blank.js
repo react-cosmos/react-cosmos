@@ -12,7 +12,7 @@ function registerTestPlugins() {
   register();
   mockState('router', { urlParams: {} });
   mockState('rendererPreview', { urlStatus: 'unknown' });
-  mockMethod('renderer.isReady', () => true);
+  mockMethod('renderer.isRendererConnected', () => true);
   mockMethod('renderer.isValidFixtureSelected', () => false);
   mockMethod('rendererPreview.isVisible', () => false);
 }

@@ -2,26 +2,26 @@
 
 import { loadPlugins } from 'react-plugin';
 import { cleanup, mockCall } from '../../../testHelpers/plugin';
-import { mockFixtures } from '../testHelpers';
 import { register } from '..';
 
 afterEach(cleanup);
 
-it('returns false on missing fixture', async () => {
+it('returns false', async () => {
   const rendererState = { primaryRendererId: null, renderers: {} };
 
   register();
   loadPlugins({ state: { renderer: rendererState } });
 
-  expect(mockCall('renderer.isReady')).toBe(false);
+  expect(mockCall('renderer.isRendererConnected')).toBe(false);
 });
 
-it('returns true on existing fixture', async () => {
+it('returns true', async () => {
   const rendererState = {
     primaryRendererId: 'foo-renderer',
     renderers: {
       'foo-renderer': {
-        fixtures: mockFixtures,
+        status: 'ok',
+        fixtures: [],
         fixtureState: null
       }
     }
@@ -30,5 +30,5 @@ it('returns true on existing fixture', async () => {
   register();
   loadPlugins({ state: { renderer: rendererState } });
 
-  expect(mockCall('renderer.isReady')).toBe(true);
+  expect(mockCall('renderer.isRendererConnected')).toBe(true);
 });

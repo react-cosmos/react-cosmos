@@ -15,7 +15,7 @@ import type { RendererPreviewUrlStatus } from '../RendererPreview';
 type Props = {
   fixtureSelected: boolean,
   validFixtureSelected: boolean,
-  rendererReady: boolean,
+  rendererConnected: boolean,
   rendererPreviewUrlStatus: RendererPreviewUrlStatus,
   rendererPreviewVisible: boolean
 };
@@ -23,7 +23,7 @@ type Props = {
 export function ContentOverlay({
   fixtureSelected,
   validFixtureSelected,
-  rendererReady,
+  rendererConnected,
   rendererPreviewUrlStatus,
   rendererPreviewVisible
 }: Props) {
@@ -39,7 +39,7 @@ export function ContentOverlay({
     );
   }
 
-  if (!rendererReady) {
+  if (!rendererConnected) {
     // Delay "waiting for renderer" state to avoid rapidly changing visual
     // states when renderer is already compiled and will respond immediately
     return (

@@ -15,7 +15,7 @@ import type { UrlParams } from '../Router';
 
 type Props = {
   urlParams: UrlParams,
-  rendererReady: boolean,
+  rendererConnected: boolean,
   validFixtureSelected: boolean,
   setUrlParams: UrlParams => void
 };
@@ -23,7 +23,7 @@ type Props = {
 // TODO: Improve UX of refresh button, which seems like it's not doing anything
 export function RendererHeader({
   urlParams,
-  rendererReady,
+  rendererConnected,
   validFixtureSelected,
   setUrlParams
 }: Props) {
@@ -33,7 +33,7 @@ export function RendererHeader({
     return null;
   }
 
-  if (!rendererReady) {
+  if (!rendererConnected) {
     return (
       <Container>
         <Left>

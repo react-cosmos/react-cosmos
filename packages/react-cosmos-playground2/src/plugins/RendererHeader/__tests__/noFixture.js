@@ -11,7 +11,7 @@ afterEach(cleanup);
 function registerTestPlugins() {
   register();
   mockState('router', { urlParams: {} });
-  mockMethod('renderer.isReady', () => true);
+  mockMethod('renderer.isRendererConnected', () => true);
   mockMethod('renderer.isValidFixtureSelected', () => false);
 }
 

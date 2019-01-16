@@ -16,7 +16,7 @@ export function register() {
 
       return {
         urlParams,
-        rendererReady: callMethod('renderer.isReady'),
+        rendererConnected: callMethod('renderer.isRendererConnected'),
         validFixtureSelected: callMethod('renderer.isValidFixtureSelected'),
         setUrlParams: newUrlParams =>
           callMethod('router.setUrlParams', newUrlParams)

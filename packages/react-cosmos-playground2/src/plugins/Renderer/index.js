@@ -3,7 +3,8 @@
 import { registerPlugin } from 'react-plugin';
 import { handleRouterFixtureChange } from './handleRouterFixtureChange';
 import { handleGetPrimaryRendererState } from './handleGetPrimaryRendererState';
-import { handleIsReady } from './handleIsReady';
+import { handleIsRendererConnected } from './handleIsRendererConnected';
+import { handleIsRendererBroken } from './handleIsRendererBroken';
 import { handleIsValidFixtureSelected } from './handleIsValidFixtureSelected';
 import { handleIsFixtureLoaded } from './handleIsFixtureLoaded';
 import { handleSetFixtureState } from './handleSetFixtureState';
@@ -31,8 +32,9 @@ export function register() {
 
   on('router.fixtureChange', handleRouterFixtureChange);
 
+  method('isRendererConnected', handleIsRendererConnected);
+  method('isRendererBroken', handleIsRendererBroken);
   method('getPrimaryRendererState', handleGetPrimaryRendererState);
-  method('isReady', handleIsReady);
   method('isValidFixtureSelected', handleIsValidFixtureSelected);
   method('isFixtureLoaded', handleIsFixtureLoaded);
   method('setFixtureState', handleSetFixtureState);

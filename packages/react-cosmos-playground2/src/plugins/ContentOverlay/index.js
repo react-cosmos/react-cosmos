@@ -22,14 +22,14 @@ function getContentOverlayProps({ getStateOf, callMethod }) {
   const fixtureSelected = fixturePath !== undefined;
   const validFixtureSelected =
     fixtureSelected && callMethod('renderer.isValidFixtureSelected');
-  const rendererReady = callMethod('renderer.isReady');
+  const rendererConnected = callMethod('renderer.isRendererConnected');
   const { urlStatus }: RendererPreviewState = getStateOf('rendererPreview');
   const rendererPreviewVisible = callMethod('rendererPreview.isVisible');
 
   return {
     fixtureSelected,
     validFixtureSelected,
-    rendererReady,
+    rendererConnected,
     rendererPreviewUrlStatus: urlStatus,
     rendererPreviewVisible
   };
