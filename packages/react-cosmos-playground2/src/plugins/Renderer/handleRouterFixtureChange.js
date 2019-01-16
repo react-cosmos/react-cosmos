@@ -12,8 +12,13 @@ export function handleRouterFixtureChange(
   context: RendererContext,
   fixturePath: void | string
 ) {
+  setRendererState(context, rendererItemState => ({
+    ...rendererItemState,
+    status: resetFixtureErrorStatus(rendererItemState.status)
+  }));
+
   if (fixturePath === undefined) {
-    return resetRendererFixtureState(context, () => {
+    return resetFixtureState(context, () => {
       forEachRenderer(context, rendererId =>
         postUnselectFixtureRequest(context, rendererId)
       );
@@ -33,7 +38,7 @@ export function handleRouterFixtureChange(
   );
 }
 
-function resetRendererFixtureState(context: RendererContext, cb?: () => mixed) {
+function resetFixtureState(context: RendererContext, cb?: () => mixed) {
   setRendererState(
     context,
     rendererItemState => ({
@@ -42,4 +47,8 @@ function resetRendererFixtureState(context: RendererContext, cb?: () => mixed) {
     }),
     cb
   );
+}
+
+function resetFixtureErrorStatus(status) {
+  return status === 'fixtureError' ? 'ok' : status;
 }
