@@ -1,8 +1,8 @@
 // @flow
 /* eslint-env browser */
 
-import { isEqual } from 'lodash';
 import React, { Component } from 'react';
+import { areNodesEqual } from 'react-cosmos-shared2/react';
 
 type Props = {
   children: React$Node
@@ -27,7 +27,10 @@ export class ErrorCatch extends Component<Props, State> {
     // A change in children signifies that the problem that caused the current
     // error might've been solved. If the error persists, it will organically
     // trigger the error state again in the next update
-    if (this.state.error && !isEqual(this.props.children, prevProps.children)) {
+    if (
+      this.state.error &&
+      !areNodesEqual(this.props.children, prevProps.children)
+    ) {
       this.setState({
         error: null
       });

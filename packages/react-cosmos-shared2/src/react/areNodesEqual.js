@@ -11,7 +11,7 @@ export function areNodesEqual(a: Node, b: Node): boolean {
 
 // Don't compare private element attrs like _owner and _store, which hold
 // internal details and have auto increment-type attrs
-function stripInternalElementAttrs(node: mixed) {
+function stripInternalElementAttrs(node: Node) {
   if (Array.isArray(node)) {
     return node.map(n => stripInternalElementAttrs(n));
   }
