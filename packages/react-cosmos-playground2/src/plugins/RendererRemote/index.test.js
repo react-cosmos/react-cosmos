@@ -25,8 +25,8 @@ it('posts renderer request message via websockets', async () => {
   const selectFixtureMsg = {
     type: 'selectFixture',
     payload: {
-      rendererId: 'foo-renderer',
-      fixturePath: 'bar-fixturePath'
+      rendererId: 'mockRendererId',
+      fixturePath: 'mockFixturePath'
     }
   };
   mockEmit('renderer.request', selectFixtureMsg);
@@ -48,8 +48,8 @@ it('broadcasts renderer response message from websocket event', async () => {
     const rendererReadyMsg = {
       type: 'rendererReady',
       payload: {
-        rendererId: 'foo-renderer',
-        fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js']
+        rendererId: 'mockRendererId',
+        fixtures: ['ein.js', 'zwei.js', 'drei.js']
       }
     };
     postMessage(rendererReadyMsg);

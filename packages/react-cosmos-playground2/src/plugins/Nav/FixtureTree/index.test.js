@@ -15,11 +15,7 @@ afterEach(cleanup);
 const projectId = 'mockProjectId';
 const fixturesDir = 'fixtures';
 const fixtureFileSuffix = 'fixture';
-const fixtures = [
-  'fixtures/ein.js',
-  'fixtures/zwei.js',
-  'fixtures/nested/drei.js'
-];
+const fixtures = ['ein.js', 'zwei.js', 'nested/drei.js'];
 const treeExpansionStorageKey = `cosmos-treeExpansion-${projectId}`;
 
 it('hides nested fixture', async () => {

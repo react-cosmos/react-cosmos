@@ -22,12 +22,9 @@ it('emits "selectFixture" event on "fixturePath" URL param change', () => {
 
   loadPlugins();
 
-  popUrlParams({ fixturePath: 'fixtures/zwei.js' });
+  popUrlParams({ fixturePath: 'zwei.js' });
 
-  expect(handleFixtureChange).toBeCalledWith(
-    expect.any(Object),
-    'fixtures/zwei.js'
-  );
+  expect(handleFixtureChange).toBeCalledWith(expect.any(Object), 'zwei.js');
 });
 
 it('emits "selectFixture" event on removed "fixturePath" URL param', async () => {
@@ -36,7 +33,7 @@ it('emits "selectFixture" event on removed "fixturePath" URL param', async () =>
   const handleFixtureChange = jest.fn();
   mockEvent('router.fixtureChange', handleFixtureChange);
 
-  pushUrlParams({ fixturePath: 'fixtures/zwei.js' });
+  pushUrlParams({ fixturePath: 'zwei.js' });
   loadPlugins();
 
   // This simulation is akin to going back home after selecting a fixture

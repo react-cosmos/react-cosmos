@@ -17,7 +17,7 @@ afterEach(() => {
 });
 
 function mockSetUrlParamsCall() {
-  mockCall('router.setUrlParams', { fixturePath: 'fixtures/zwei.js' });
+  mockCall('router.setUrlParams', { fixturePath: 'zwei.js' });
 }
 
 it('sets "router" state', async () => {
@@ -27,7 +27,7 @@ it('sets "router" state', async () => {
 
   await wait(() =>
     expect(getPluginState('router').urlParams).toEqual({
-      fixturePath: 'fixtures/zwei.js'
+      fixturePath: 'zwei.js'
     })
   );
 });
@@ -37,9 +37,7 @@ it('sets URL params', async () => {
   loadPlugins();
   mockSetUrlParamsCall();
 
-  await wait(() =>
-    expect(getUrlParams()).toEqual({ fixturePath: 'fixtures/zwei.js' })
-  );
+  await wait(() => expect(getUrlParams()).toEqual({ fixturePath: 'zwei.js' }));
 });
 
 it('emits "fixtureChange" event', async () => {
@@ -52,9 +50,6 @@ it('emits "fixtureChange" event', async () => {
   mockSetUrlParamsCall();
 
   await wait(() =>
-    expect(handleFixtureChange).toBeCalledWith(
-      expect.any(Object),
-      'fixtures/zwei.js'
-    )
+    expect(handleFixtureChange).toBeCalledWith(expect.any(Object), 'zwei.js')
   );
 });
