@@ -2,7 +2,7 @@
 
 import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
-import { mockWebSockets } from '../../testHelpers/mockWebSockets';
+import { mockWebSockets } from './testHelpers/mockWebSockets';
 import {
   cleanup,
   mockConfig,

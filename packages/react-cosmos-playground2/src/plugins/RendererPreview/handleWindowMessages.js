@@ -21,8 +21,6 @@ function createMessageHandler(context) {
 
     const response: RendererResponse = msg.data;
     context.callMethod('renderer.receiveResponse', response);
-
-    storeOwnRendererId(context, response);
   };
 }
 
@@ -36,12 +34,4 @@ function isValidResponse(msg) {
     msg.data.type &&
     msg.data.payload
   );
-}
-
-function storeOwnRendererId({ getState, setState }, response) {
-  const { rendererId } = response.payload;
-
-  if (getState().rendererId !== rendererId) {
-    setState(state => ({ ...state, rendererId }));
-  }
 }

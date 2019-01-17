@@ -6,7 +6,7 @@ import type { RendererPreviewContext } from './shared';
 export function createRendererRequestHandler() {
   let iframeRef: null | window = null;
 
-  function handleRendererRequest(
+  function onRendererRequest(
     context: RendererPreviewContext,
     msg: RendererRequest
   ) {
@@ -19,5 +19,5 @@ export function createRendererRequestHandler() {
     iframeRef = ref;
   }
 
-  return { handleRendererRequest, setIframeRef };
+  return { onRendererRequest, setIframeRef };
 }

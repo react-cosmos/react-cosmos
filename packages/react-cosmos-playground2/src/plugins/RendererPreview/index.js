@@ -2,7 +2,7 @@
 
 import { registerPlugin } from 'react-plugin';
 import { checkRendererStatus } from './checkRendererStatus';
-import { createRendererRequestHandler } from './handleRendererRequest';
+import { createRendererRequestHandler } from './onRendererRequest';
 import { handleWindowMessages } from './handleWindowMessages';
 import { isVisible } from './isVisible';
 import { RendererPreview } from './RendererPreview';
@@ -10,23 +10,20 @@ import { RendererPreview } from './RendererPreview';
 import type { RendererConfig } from '../Renderer';
 import type { RendererPreviewState } from './shared';
 
-export type { RendererPreviewUrlStatus, RendererPreviewState } from './shared';
+export type { UrlStatus, RendererPreviewState } from './shared';
 
 export function register() {
-  const {
-    handleRendererRequest,
-    setIframeRef
-  } = createRendererRequestHandler();
+  const { onRendererRequest, setIframeRef } = createRendererRequestHandler();
 
   const { init, on, method, plug } = registerPlugin<{}, RendererPreviewState>({
     name: 'rendererPreview',
     initialState: {
       urlStatus: 'unknown',
-      rendererId: null
+      runtimeStatus: 'pending'
     }
   });
 
-  on('renderer.request', handleRendererRequest);
+  on('renderer.request', onRendererRequest);
 
   // This method lets plugins that overlay the "rendererPreview" slot know when
   // to get out of the way

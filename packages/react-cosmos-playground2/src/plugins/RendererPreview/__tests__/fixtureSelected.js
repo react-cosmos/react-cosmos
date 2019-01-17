@@ -1,26 +1,22 @@
-/* eslint-env browser */
 // @flow
 
 import React from 'react';
 import { render } from 'react-testing-library';
 import { loadPlugins, Slot } from 'react-plugin';
-import { cleanup, mockConfig, mockMethod } from '../../../testHelpers/plugin';
+import { cleanup, mockConfig, mockState } from '../../../testHelpers/plugin';
+import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { register } from '..';
 
 afterEach(cleanup);
 
-function fakeSuccessfulFetchCalls() {
-  global.fetch = jest.fn(() => Promise.resolve({ status: 200 }));
-}
-
 function registerTestPlugins() {
   register();
   mockConfig('renderer', { webUrl: 'mockRendererUrl' });
-  mockMethod('renderer.isFixtureLoaded', () => true);
+  mockState('router', { urlParams: { fixturePath: 'ein.js' } });
 }
 
 function loadTestPlugins() {
-  fakeSuccessfulFetchCalls();
+  fakeFetchResponseStatus(200);
   loadPlugins();
 
   return render(<Slot name="rendererPreview" />);

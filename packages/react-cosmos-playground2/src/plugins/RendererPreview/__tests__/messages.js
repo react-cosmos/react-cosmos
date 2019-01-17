@@ -4,31 +4,27 @@
 import React from 'react';
 import { wait, render } from 'react-testing-library';
 import { loadPlugins, Slot } from 'react-plugin';
-import { mockIframeMessage } from '../../../testHelpers/mockIframeMessage';
+import { mockIframeMessage } from '../testHelpers/mockIframeMessage';
 import {
   cleanup,
   mockConfig,
+  mockState,
   mockMethod,
-  mockEmit,
-  getPluginState
+  mockEmit
 } from '../../../testHelpers/plugin';
+import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { register } from '..';
 
 afterEach(cleanup);
 
-function fakeSuccessfulFetchCalls() {
-  global.fetch = jest.fn(() => Promise.resolve({ status: 200 }));
-}
-
 function registerTestPlugins() {
   register();
   mockConfig('renderer', { webUrl: 'mockRendererUrl' });
-  mockMethod('renderer.isFixtureLoaded', () => false);
-  mockMethod('renderer.hasRendererErrors', () => false);
+  mockState('router', { urlParams: {} });
 }
 
 function loadTestPlugins() {
-  fakeSuccessfulFetchCalls();
+  fakeFetchResponseStatus(200);
   loadPlugins();
 
   return render(<Slot name="rendererPreview" />);
@@ -37,29 +33,6 @@ function loadTestPlugins() {
 function getIframe({ getByTestId }) {
   return getByTestId('previewIframe');
 }
-
-it('sets "ok" status', async () => {
-  registerTestPlugins();
-  loadTestPlugins();
-
-  await wait(() =>
-    expect(getPluginState('rendererPreview').urlStatus).toBe('ok')
-  );
-});
-
-it('renders iframe with config.renderer.webUrl src', () => {
-  registerTestPlugins();
-  const renderer = loadTestPlugins();
-
-  expect(getIframe(renderer).src).toMatch('mockRendererUrl');
-});
-
-it(`hides iframe when fixture isn't loaded`, () => {
-  registerTestPlugins();
-  const renderer = loadTestPlugins();
-
-  expect(getIframe(renderer).style.display).toBe('none');
-});
 
 it('posts renderer request message to iframe', async () => {
   registerTestPlugins();
@@ -105,19 +78,5 @@ it('broadcasts renderer response message', async () => {
       expect.any(Object),
       rendererReadyMsg
     )
-  );
-});
-
-it('stores renderer ID from response message', async () => {
-  registerTestPlugins();
-
-  const handleReceiveResponse = jest.fn();
-  mockMethod('renderer.receiveResponse', handleReceiveResponse);
-
-  loadTestPlugins();
-  window.postMessage(rendererReadyMsg, '*');
-
-  await wait(() =>
-    expect(getPluginState('rendererPreview').rendererId).toBe('foo-renderer')
   );
 });

@@ -1,4 +1,3 @@
-/* eslint-env browser */
 // @flow
 
 import React from 'react';
@@ -7,33 +6,39 @@ import { loadPlugins, Slot } from 'react-plugin';
 import {
   cleanup,
   mockConfig,
-  mockMethod,
+  mockState,
   getPluginState
 } from '../../../testHelpers/plugin';
+import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { register } from '..';
 
 afterEach(cleanup);
 
-function fakeFailedFetchCalls() {
-  global.fetch = jest.fn(() => Promise.resolve({ status: 404 }));
-}
-
 function registerTestPlugins() {
   register();
   mockConfig('renderer', { webUrl: 'mockRendererUrl' });
-  mockMethod('renderer.isFixtureLoaded', () => false);
+  mockState('router', { urlParams: { fixturePath: 'ein.js' } });
 }
 
-function loadTestPlugins() {
-  fakeFailedFetchCalls();
+function loadTestPlugins(status: number) {
+  fakeFetchResponseStatus(status);
   loadPlugins();
 
   return render(<Slot name="rendererPreview" />);
 }
 
+it('sets "ok" status', async () => {
+  registerTestPlugins();
+  loadTestPlugins(200);
+
+  await wait(() =>
+    expect(getPluginState('rendererPreview').urlStatus).toBe('ok')
+  );
+});
+
 it('sets "notResponding" status', async () => {
   registerTestPlugins();
-  loadTestPlugins();
+  loadTestPlugins(404);
 
   await wait(() =>
     expect(getPluginState('rendererPreview').urlStatus).toBe('error')
