@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import React, { Component } from 'react';
 import { FixtureTree } from './FixtureTree';
 
-import type { RendererItemState } from '../Renderer';
 import type { UrlParams } from '../Router';
 import type { Storage } from '../Storage';
 
@@ -13,7 +12,8 @@ type Props = {
   fixturesDir: string,
   fixtureFileSuffix: string,
   urlParams: UrlParams,
-  primaryRendererState: null | RendererItemState,
+  rendererConnected: boolean,
+  fixtures: string[],
   setUrlParams: (urlParams: UrlParams) => void,
   storage: Storage
 };
@@ -25,7 +25,8 @@ export class Nav extends Component<Props> {
       fixturesDir,
       fixtureFileSuffix,
       urlParams,
-      primaryRendererState,
+      rendererConnected,
+      fixtures,
       storage
     } = this.props;
     const { fixturePath, fullScreen } = urlParams;
@@ -34,11 +35,9 @@ export class Nav extends Component<Props> {
       return null;
     }
 
-    if (!primaryRendererState) {
+    if (!rendererConnected) {
       return <Container />;
     }
-
-    const { fixtures } = primaryRendererState;
 
     return (
       <Container data-testid="nav">
