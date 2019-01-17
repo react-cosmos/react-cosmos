@@ -7,15 +7,18 @@ import { PluginsConsumer } from 'react-plugin';
 import { PropsState } from './PropsState';
 
 import type { RendererId } from 'react-cosmos-shared2/renderer';
-import type { ComponentFixtureState } from 'react-cosmos-shared2/fixtureState';
+import type {
+  FixtureState,
+  ComponentFixtureState
+} from 'react-cosmos-shared2/fixtureState';
 import type { UrlParams } from '../Router';
-import type { RendererState, RendererItemState } from '../Renderer';
 
 type Props = {
   webUrl: null | string,
   urlParams: UrlParams,
-  rendererState: RendererState,
-  primaryRendererState: null | RendererItemState,
+  connectedRendererIds: RendererId[],
+  primaryRendererId: null | RendererId,
+  fixtureState: null | FixtureState,
   setComponentsFixtureState: (components: ComponentFixtureState[]) => void,
   selectPrimaryRenderer: (rendererId: RendererId) => void
 };
@@ -25,20 +28,13 @@ export class ControlPanel extends Component<Props> {
     const {
       webUrl,
       urlParams,
-      rendererState,
-      primaryRendererState
+      connectedRendererIds,
+      primaryRendererId,
+      fixtureState
     } = this.props;
-    const { primaryRendererId, renderers } = rendererState;
-
-    if (!primaryRendererState) {
-      return null;
-    }
-
-    const rendererIds = Object.keys(renderers);
-    const { fixtureState } = primaryRendererState;
     const { fixturePath, fullScreen } = urlParams;
 
-    if (fullScreen || !fixturePath) {
+    if (!primaryRendererId || fullScreen || !fixturePath) {
       return null;
     }
 
@@ -59,11 +55,11 @@ export class ControlPanel extends Component<Props> {
             setFixtureState={this.setComponentsFixtureState}
           />
         )}
-        {rendererIds.length > 1 && (
+        {connectedRendererIds.length > 1 && (
           <div>
-            <p>Renderers ({rendererIds.length})</p>
+            <p>Renderers ({connectedRendererIds.length})</p>
             <ul>
-              {rendererIds.map(rendererId => (
+              {connectedRendererIds.map(rendererId => (
                 <li key={rendererId}>
                   <small
                     onClick={this.createRendererSelectHandler(rendererId)}
