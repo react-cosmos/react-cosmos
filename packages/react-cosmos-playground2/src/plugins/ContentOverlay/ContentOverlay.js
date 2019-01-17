@@ -10,13 +10,13 @@ import {
 import { RendererNotRespondingScreen } from './RendererNotRespondingScreen';
 import { IllustrationContainer } from './shared';
 
-import type { RendererPreviewUrlStatus } from '../RendererPreview';
+import type { UrlStatus } from '../RendererPreview';
 
 type Props = {
   fixtureSelected: boolean,
   validFixtureSelected: boolean,
   rendererConnected: boolean,
-  rendererPreviewUrlStatus: RendererPreviewUrlStatus,
+  rendererPreviewUrlStatus: UrlStatus,
   rendererPreviewVisible: boolean
 };
 
