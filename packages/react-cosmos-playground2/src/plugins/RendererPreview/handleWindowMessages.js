@@ -21,6 +21,8 @@ function createMessageHandler(context) {
 
     const response: RendererResponse = msg.data;
     context.callMethod('renderer.receiveResponse', response);
+
+    updateRuntimeStatus(context, response);
   };
 }
 
@@ -34,4 +36,32 @@ function isValidResponse(msg) {
     msg.data.type &&
     msg.data.payload
   );
+}
+
+function updateRuntimeStatus({ getState, setState }, response) {
+  const { runtimeStatus } = getState();
+
+  // Errors are not of interest anymore after renderer connectivity has been
+  // established. Errors that occur after renderer is connected are likely
+  // errors related to specific fixtures that the user can navigate away from.
+  if (runtimeStatus === 'connected') {
+    return;
+  }
+
+  switch (response.type) {
+    case 'rendererReady': {
+      return setState(prevState => ({
+        ...prevState,
+        runtimeStatus: 'connected'
+      }));
+    }
+    case 'rendererError': {
+      return setState(prevState => ({
+        ...prevState,
+        runtimeStatus: 'error'
+      }));
+    }
+    default:
+    // The rest of the responses are handled by the renderer coordinator
+  }
 }

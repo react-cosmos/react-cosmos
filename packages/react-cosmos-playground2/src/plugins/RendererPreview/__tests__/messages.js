@@ -15,6 +15,8 @@ import {
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { register } from '..';
 
+import type { SelectFixtureRequest } from 'react-cosmos-shared2/renderer';
+
 afterEach(cleanup);
 
 function registerTestPlugins() {
@@ -38,11 +40,12 @@ it('posts renderer request message to iframe', async () => {
   registerTestPlugins();
   const renderer = loadTestPlugins();
 
-  const selectFixtureMsg = {
+  const selectFixtureMsg: SelectFixtureRequest = {
     type: 'selectFixture',
     payload: {
-      rendererId: 'foo-renderer',
-      fixturePath: 'bar-fixturePath'
+      rendererId: 'mockRendererId',
+      fixturePath: 'mockFixturePath',
+      fixtureState: null
     }
   };
   mockEmit('renderer.request', selectFixtureMsg);
@@ -59,8 +62,8 @@ it('posts renderer request message to iframe', async () => {
 const rendererReadyMsg = {
   type: 'rendererReady',
   payload: {
-    rendererId: 'foo-renderer',
-    fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js']
+    rendererId: 'mockRendererId',
+    fixtures: ['ein.js', 'zwei.js', 'drei.js']
   }
 };
 
