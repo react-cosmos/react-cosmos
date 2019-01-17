@@ -1,48 +1,45 @@
 // @flow
 
 import { registerPlugin } from 'react-plugin';
-import { handleRouterFixtureChange } from './handleRouterFixtureChange';
-import { handleGetPrimaryRendererState } from './handleGetPrimaryRendererState';
-import { handleIsRendererConnected } from './handleIsRendererConnected';
-import { handleHasRendererErrors } from './handleHasRendererErrors';
-import { handleIsValidFixtureSelected } from './handleIsValidFixtureSelected';
-import { handleIsFixtureLoaded } from './handleIsFixtureLoaded';
-import { handleSetFixtureState } from './handleSetFixtureState';
-import { handleSelectPrimaryRenderer } from './handleSelectPrimaryRenderer';
-import { handleReceiveResponse } from './handleReceiveResponse';
+import { isRendererConnected } from './isRendererConnected';
+import { isValidFixtureSelected } from './isValidFixtureSelected';
+import { setFixtureState } from './setFixtureState';
+import { selectPrimaryRenderer } from './selectPrimaryRenderer';
+import { receiveResponse } from './receiveResponse';
+import { onRouterFixtureChange } from './onRouterFixtureChange';
 
 import type { RendererConfig } from '../../index.js.flow';
-import type { RendererState } from './shared';
+import type { RendererCoordinatorState } from './shared';
 
 export type { RendererConfig } from '../../index.js.flow';
-export type {
-  RendererStatus,
-  RendererItemState,
-  RendererState
-} from './shared';
+export type { RendererCoordinatorState } from './shared';
 
 export function register() {
-  const { on, method } = registerPlugin<RendererConfig, RendererState>({
+  const { on, method } = registerRendererCoordinatorPlugin({
+    // TODO: Rename to rendererCoordinator
     name: 'renderer',
-    // FIXME: Move config to rendererPreview and rendererRemote
+    // FIXME: Split config between rendererPreview and rendererRemote
     defaultConfig: {
       webUrl: null,
       enableRemote: false
     },
     initialState: {
+      connectedRendererIds: [],
       primaryRendererId: null,
-      renderers: {}
+      fixtures: [],
+      fixtureState: null
     }
   });
 
-  on('router.fixtureChange', handleRouterFixtureChange);
+  method('isRendererConnected', isRendererConnected);
+  method('isValidFixtureSelected', isValidFixtureSelected);
+  method('setFixtureState', setFixtureState);
+  method('selectPrimaryRenderer', selectPrimaryRenderer);
+  method('receiveResponse', receiveResponse);
 
-  method('isRendererConnected', handleIsRendererConnected);
-  method('hasRendererErrors', handleHasRendererErrors);
-  method('getPrimaryRendererState', handleGetPrimaryRendererState);
-  method('isValidFixtureSelected', handleIsValidFixtureSelected);
-  method('isFixtureLoaded', handleIsFixtureLoaded);
-  method('setFixtureState', handleSetFixtureState);
-  method('selectPrimaryRenderer', handleSelectPrimaryRenderer);
-  method('receiveResponse', handleReceiveResponse);
+  on('router.fixtureChange', onRouterFixtureChange);
+}
+
+function registerRendererCoordinatorPlugin(args) {
+  return registerPlugin<RendererConfig, RendererCoordinatorState>(args);
 }

@@ -1,6 +1,5 @@
 // @flow
 
-import { forEachRenderer, setRendererState } from './shared';
 import {
   postSelectFixtureRequest,
   postUnselectFixtureRequest
@@ -8,18 +7,13 @@ import {
 
 import type { RendererContext } from './shared';
 
-export function handleRouterFixtureChange(
+export function onRouterFixtureChange(
   context: RendererContext,
   fixturePath: void | string
 ) {
-  setRendererState(context, rendererItemState => ({
-    ...rendererItemState,
-    status: resetFixtureErrorStatus(rendererItemState.status)
-  }));
-
   if (fixturePath === undefined) {
-    return resetFixtureState(context, () => {
-      forEachRenderer(context, rendererId =>
+    return context.setState(emptyFixtureState, () => {
+      getConnectedRendererIds(context).forEach(rendererId =>
         postUnselectFixtureRequest(context, rendererId)
       );
     });
@@ -33,22 +27,15 @@ export function handleRouterFixtureChange(
   // component. By keeping the fixture state until the new fixture state is
   // received from the renderer the transition between fixtures is smoother.
   const selFixturePath = fixturePath;
-  forEachRenderer(context, rendererId =>
+  getConnectedRendererIds(context).forEach(rendererId =>
     postSelectFixtureRequest(context, rendererId, selFixturePath, null)
   );
 }
 
-function resetFixtureState(context: RendererContext, cb?: () => mixed) {
-  setRendererState(
-    context,
-    rendererItemState => ({
-      ...rendererItemState,
-      fixtureState: null
-    }),
-    cb
-  );
+function getConnectedRendererIds(context) {
+  return context.getState().connectedRendererIds;
 }
 
-function resetFixtureErrorStatus(status) {
-  return status === 'fixtureError' ? 'ok' : status;
+function emptyFixtureState(prevState) {
+  return { ...prevState, fixtureState: null };
 }
