@@ -7,14 +7,14 @@ import { SmartphoneIcon } from '../../../shared/icons';
 import { Button } from '../../../shared/components';
 
 import type { SetState } from 'react-cosmos-shared2/util';
-import type { RendererItemState } from '../../Renderer';
+import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { Storage } from '../../Storage';
 import type { ResponsivePreviewState } from '../shared';
 
 export type Props = {
   state: ResponsivePreviewState,
   projectId: string,
-  primaryRendererState: null | RendererItemState,
+  fixtureState: null | FixtureState,
   validFixtureSelected: boolean,
   setState: SetState<ResponsivePreviewState>,
   setFixtureStateViewport: () => void,
@@ -23,7 +23,7 @@ export type Props = {
 
 export class ToggleButton extends Component<Props> {
   render() {
-    const { state, primaryRendererState, validFixtureSelected } = this.props;
+    const { state, fixtureState, validFixtureSelected } = this.props;
 
     if (!validFixtureSelected) {
       return <Button icon={<SmartphoneIcon />} label="responsive" disabled />;
@@ -33,7 +33,7 @@ export class ToggleButton extends Component<Props> {
       <Button
         icon={<SmartphoneIcon />}
         label="responsive"
-        selected={isResponsiveModeOn(state.enabled, primaryRendererState)}
+        selected={isResponsiveModeOn(state.enabled, fixtureState)}
         onClick={this.handleToggle}
       />
     );
@@ -42,7 +42,7 @@ export class ToggleButton extends Component<Props> {
   handleToggle = async () => {
     const {
       projectId,
-      primaryRendererState,
+      fixtureState,
       setFixtureStateViewport,
       storage
     } = this.props;
@@ -50,7 +50,7 @@ export class ToggleButton extends Component<Props> {
 
     this.props.setState(
       ({ enabled, viewport }) =>
-        isResponsiveModeOn(enabled, primaryRendererState)
+        isResponsiveModeOn(enabled, fixtureState)
           ? // https://github.com/facebook/flow/issues/2892#issuecomment-263055197
             // $FlowFixMe
             { enabled: false, viewport }
@@ -64,7 +64,7 @@ export class ToggleButton extends Component<Props> {
 
 function isResponsiveModeOn(
   enabled: boolean,
-  primaryRendererState: null | RendererItemState
+  fixtureState: null | FixtureState
 ): boolean {
-  return getFixtureViewport(primaryRendererState) ? true : enabled;
+  return getFixtureViewport(fixtureState) ? true : enabled;
 }

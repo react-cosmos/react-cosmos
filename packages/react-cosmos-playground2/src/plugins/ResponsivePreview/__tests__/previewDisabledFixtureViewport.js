@@ -13,27 +13,16 @@ import { register } from '..';
 
 afterEach(cleanup);
 
-const primaryRendererState = {
-  fixtures: ['fooFixture.js'],
-  fixtureState: {
-    components: [],
-    viewport: { width: 420, height: 420 }
-  }
-};
-const initialRendererState = {
-  primaryRendererId: 'fooRendererId',
-  renderers: {
-    fooRendererId: primaryRendererState
-  }
+const fixtureState = {
+  components: [],
+  viewport: { width: 420, height: 420 }
 };
 
 function registerTestPlugins() {
   register();
   mockConfig('core', { projectId: 'mockProjectId' });
-  mockConfig('renderer', { webUrl: 'mockRendererUrl' });
   mockState('router', { urlParams: { fixturePath: 'fooFixture.js' } });
-  mockState('renderer', initialRendererState);
-  mockMethod('renderer.getPrimaryRendererState', () => primaryRendererState);
+  mockState('renderer', { fixtureState });
   mockMethod('renderer.isValidFixtureSelected', () => true);
 }
 

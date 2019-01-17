@@ -24,10 +24,8 @@ function registerTestPlugins({
 }: { urlParams?: Object, handleSetFixtureState?: Function } = {}) {
   register();
   mockConfig('core', { projectId: 'mockProjectId' });
-  mockConfig('renderer', { webUrl: 'mockRendererUrl' });
   mockState('router', { urlParams });
-  mockState('renderer', { primaryRendererId: null, renderers: {} });
-  mockMethod('renderer.getPrimaryRendererState', () => null);
+  mockState('renderer', { fixtureState: null });
   mockMethod('renderer.isValidFixtureSelected', () =>
     Boolean(urlParams.fixturePath)
   );

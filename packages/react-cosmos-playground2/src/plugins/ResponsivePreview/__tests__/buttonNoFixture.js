@@ -16,9 +16,7 @@ afterEach(cleanup);
 it('renders disabled button', async () => {
   register();
   mockConfig('core', { projectId: 'mockProjectId' });
-  mockState('router', { urlParams: {} });
-  mockState('renderer', { primaryRendererId: null, renderers: {} });
-  mockMethod('renderer.getPrimaryRendererState', () => null);
+  mockState('renderer', { fixtureState: null });
   mockMethod('renderer.isValidFixtureSelected', () => false);
 
   loadPlugins();

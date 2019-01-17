@@ -8,6 +8,7 @@ import { DEFAULT_DEVICES } from './shared';
 
 import type { CoreConfig } from '../Core';
 import type { RouterState } from '../Router';
+import type { RendererCoordinatorState } from '../Renderer';
 import type { ResponsivePreviewConfig, ResponsivePreviewState } from './shared';
 
 export function register() {
@@ -49,14 +50,15 @@ export function register() {
 }
 
 function getCommonProps(context) {
-  const { getConfigOf, getState, setState, callMethod } = context;
+  const { getConfigOf, getState, getStateOf, setState, callMethod } = context;
   const { projectId }: CoreConfig = getConfigOf('core');
+  const { fixtureState }: RendererCoordinatorState = getStateOf('renderer');
 
   return {
     state: getState(),
     projectId,
-    primaryRendererState: callMethod('renderer.getPrimaryRendererState'),
-    validFixtureSelected: context.callMethod('renderer.isValidFixtureSelected'),
+    fixtureState,
+    validFixtureSelected: callMethod('renderer.isValidFixtureSelected'),
     setState,
     setFixtureStateViewport: () => setFixtureStateViewport(context),
     storage: getStorageApi(context)

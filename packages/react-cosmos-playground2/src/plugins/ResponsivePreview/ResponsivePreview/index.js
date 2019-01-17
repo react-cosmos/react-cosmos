@@ -11,8 +11,8 @@ import { stretchStyle, getStyles } from './style';
 
 import type { Node } from 'react';
 import type { SetState } from 'react-cosmos-shared2/util';
+import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { Storage } from '../../Storage';
-import type { RendererItemState } from '../../Renderer';
 import type {
   Viewport,
   ResponsivePreviewConfig,
@@ -25,7 +25,7 @@ type Props = {
   state: ResponsivePreviewState,
   projectId: string,
   fullScreen: boolean,
-  primaryRendererState: null | RendererItemState,
+  fixtureState: null | FixtureState,
   validFixtureSelected: boolean,
   setState: SetState<ResponsivePreviewState>,
   setFixtureStateViewport: () => void,
@@ -54,11 +54,11 @@ export class ResponsivePreview extends Component<Props, State> {
       config,
       state,
       fullScreen,
-      primaryRendererState,
+      fixtureState,
       validFixtureSelected
     } = this.props;
     const { container, scale } = this.state;
-    const viewport = getViewport(state, primaryRendererState);
+    const viewport = getViewport(state, fixtureState);
 
     // We don't simply do `return children` because it would cause a flicker
     // whenever switching between responsive and non responsive mode. By
@@ -173,11 +173,10 @@ function getContainerSize(containerEl: ?HTMLElement) {
 
 function getViewport(
   state: ResponsivePreviewState,
-  primaryRendererState: null | RendererItemState
+  fixtureState: null | FixtureState
 ): null | Viewport {
   return (
-    getFixtureViewport(primaryRendererState) ||
-    (state.enabled ? state.viewport : null)
+    getFixtureViewport(fixtureState) || (state.enabled ? state.viewport : null)
   );
 }
 

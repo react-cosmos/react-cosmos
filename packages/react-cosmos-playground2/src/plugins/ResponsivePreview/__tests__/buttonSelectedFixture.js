@@ -18,23 +18,10 @@ afterEach(cleanup);
 
 const storageKey = getResponsiveViewportStorageKey('mockProjectId');
 
-const primaryRendererState = {
-  fixtures: ['fooFixture.js'],
-  fixtureState: {}
-};
-const mockRendererState = {
-  primaryRendererId: 'fooRendererId',
-  renderers: {
-    fooRendererId: primaryRendererState
-  }
-};
-
 function registerTestPlugins() {
   register();
   mockConfig('core', { projectId: 'mockProjectId' });
-  mockState('renderer', mockRendererState);
-  mockState('router', { urlParams: { fixturePath: 'fooFixture.js' } });
-  mockMethod('renderer.getPrimaryRendererState', () => primaryRendererState);
+  mockState('renderer', { fixtureState: null });
   mockMethod('renderer.isValidFixtureSelected', () => true);
 }
 
