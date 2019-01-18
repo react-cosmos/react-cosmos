@@ -42,14 +42,14 @@ it('renders iframe with config.renderer.webUrl src', async () => {
   await wait(() => expect(getIframe(renderer).src).toMatch('mockRendererUrl'));
 });
 
-it('shows iframe', async () => {
+it('shows iframe when fixture is selected', async () => {
   registerTestPlugins({ fixturePath: 'ein.js' });
   const renderer = loadTestPlugins();
 
   await wait(() => expect(getIframe(renderer).style.display).toBe('block'));
 });
 
-it('hides iframe', async () => {
+it('hides iframe when fixture is not selected', async () => {
   registerTestPlugins({});
   const renderer = loadTestPlugins();
 
