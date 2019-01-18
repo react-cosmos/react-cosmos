@@ -92,21 +92,9 @@ export function createConnectMock(init: ConnectMockCreator) {
     }
 
     async function getLastFixtureState() {
-      const msgType = 'fixtureStateChange';
+      const msg = await getLastMessageOfType('fixtureStateChange');
 
-      await until(() => {
-        const lastMsg = getLastMessage();
-
-        return lastMsg && lastMsg.type === msgType;
-      });
-
-      const lastMsg = getLastMessage();
-
-      if (!lastMsg || lastMsg.type !== msgType) {
-        throw new Error(`Last message type should be "${msgType}"`);
-      }
-
-      return lastMsg.payload.fixtureState;
+      return msg.payload.fixtureState;
     }
 
     async function untilMessage(msg) {
@@ -166,6 +154,24 @@ export function createConnectMock(init: ConnectMockCreator) {
       }
 
       return messages[messages.length - 1];
+    }
+
+    async function getLastMessageOfType(msgType) {
+      let lastMsg;
+
+      try {
+        await until(() => {
+          lastMsg = getLastMessage();
+          return lastMsg && lastMsg.type === msgType;
+        });
+      } finally {
+        if (!lastMsg || lastMsg.type !== msgType) {
+          // eslint-disable-next-line
+          throw new Error(`"${msgType}" message never arrived`);
+        }
+      }
+
+      return lastMsg;
     }
   };
 }
