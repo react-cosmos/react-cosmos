@@ -63,7 +63,7 @@ runTests(mockConnect => {
       async ({
         getElement,
         selectFixture,
-        getFxStateFromLastChange,
+        getLastFixtureState,
         setFixtureState
       }) => {
         await mount(
@@ -75,7 +75,7 @@ runTests(mockConnect => {
               fixtureState: null
             });
 
-            const fixtureState = await getFxStateFromLastChange();
+            const fixtureState = await getLastFixtureState();
             const [{ decoratorId, elPath }] = getCompFixtureStates(
               fixtureState
             );
@@ -121,7 +121,7 @@ runTests(mockConnect => {
       async ({
         getElement,
         selectFixture,
-        getFxStateFromLastChange,
+        getLastFixtureState,
         setFixtureState
       }) => {
         await mount(
@@ -133,7 +133,7 @@ runTests(mockConnect => {
               fixtureState: null
             });
 
-            const fixtureState = await getFxStateFromLastChange();
+            const fixtureState = await getLastFixtureState();
             const [{ decoratorId, elPath }] = getCompFixtureStates(
               fixtureState
             );
@@ -163,7 +163,7 @@ runTests(mockConnect => {
         getElement,
         selectFixture,
         untilMessage,
-        getFxStateFromLastChange,
+        getLastFixtureState,
         setFixtureState
       }) => {
         await mount(
@@ -175,7 +175,7 @@ runTests(mockConnect => {
               fixtureState: null
             });
 
-            const fixtureState = await getFxStateFromLastChange();
+            const fixtureState = await getLastFixtureState();
             const [{ decoratorId, elPath }] = getCompFixtureStates(
               fixtureState
             );
@@ -251,7 +251,7 @@ runTests(mockConnect => {
     };
 
     await mockConnect(
-      async ({ getElement, selectFixture, getFxStateFromLastChange }) => {
+      async ({ getElement, selectFixture, getLastFixtureState }) => {
         await mount(
           getElement({ rendererId, fixtures, decorators }),
           async () => {
@@ -286,7 +286,7 @@ runTests(mockConnect => {
         );
 
         async function getCount() {
-          const fixtureState = await getFxStateFromLastChange();
+          const fixtureState = await getLastFixtureState();
           const [{ state }] = getCompFixtureStates(fixtureState);
 
           return state ? JSON.parse(state[0].stringified) : null;
@@ -300,7 +300,7 @@ runTests(mockConnect => {
       async ({
         getElement,
         selectFixture,
-        getFxStateFromLastChange,
+        getLastFixtureState,
         setFixtureState
       }) => {
         await mount(
@@ -312,7 +312,7 @@ runTests(mockConnect => {
               fixtureState: null
             });
 
-            const fixtureState = await getFxStateFromLastChange();
+            const fixtureState = await getLastFixtureState();
             const [{ decoratorId, elPath }] = getCompFixtureStates(
               fixtureState
             );
@@ -358,7 +358,7 @@ runTests(mockConnect => {
         getElement,
         selectFixture,
         untilMessage,
-        getFxStateFromLastChange,
+        getLastFixtureState,
         setFixtureState
       }) => {
         await mount(
@@ -370,7 +370,7 @@ runTests(mockConnect => {
               fixtureState: null
             });
 
-            const fixtureState = await getFxStateFromLastChange();
+            const fixtureState = await getLastFixtureState();
             const [{ decoratorId, elPath }] = getCompFixtureStates(
               fixtureState
             );

@@ -1,8 +1,8 @@
 // @flow
 
 import './mockSocketIo';
-import { mockConnect as mockPostMessage } from './postMessage';
-import { mockConnect as mockWebSockets } from './webSockets';
+import { mockPostMessage } from './postMessage';
+import { mockWebSockets } from './webSockets';
 export { mount } from './mount';
 
 import type { ConnectMockApi } from './shared';

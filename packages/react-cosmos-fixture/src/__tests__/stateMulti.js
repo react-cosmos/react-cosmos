@@ -67,7 +67,7 @@ runTests(mockConnect => {
       async ({
         getElement,
         selectFixture,
-        getFxStateFromLastChange,
+        getLastFixtureState,
         setFixtureState
       }) => {
         await mount(
@@ -79,7 +79,7 @@ runTests(mockConnect => {
               fixtureState: null
             });
 
-            const fixtureState = await getFxStateFromLastChange();
+            const fixtureState = await getLastFixtureState();
             const [, { decoratorId, elPath }] = getCompFixtureStates(
               fixtureState
             );

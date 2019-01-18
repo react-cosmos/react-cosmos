@@ -42,15 +42,12 @@ function getMessages() {
   return messages;
 }
 
-function postMessage(msg: Object): Promise<void> {
+function postMessage(msg: Object) {
   messages.push(msg);
 
   // Fake async delay
-  return new Promise(res => {
-    setTimeout(() => {
-      handlers[RENDERER_MESSAGE_EVENT_NAME](msg);
-      res();
-    });
+  setTimeout(() => {
+    handlers[RENDERER_MESSAGE_EVENT_NAME](msg);
   });
 }
 

@@ -5,75 +5,32 @@ import React from 'react';
 import { PostMessage } from '..';
 import {
   createFixtureConnectRenderCallback,
-  getFixtureStateFromLastChange,
-  untilLastMessageEquals,
-  postSelectFixture,
-  postUnselectFixture,
-  postSetFixtureState
+  createConnectMock
 } from './shared';
 
-import type { ConnectMockApi } from './shared';
-
-export async function mockConnect(children: ConnectMockApi => Promise<mixed>) {
+export const mockPostMessage = createConnectMock(() => {
   const onMessage = jest.fn();
+  window.addEventListener('message', onMessage, false);
 
   function getMessages() {
     return onMessage.mock.calls.map(call => call[0].data);
   }
 
-  async function getFxStateFromLastChange() {
-    return getFixtureStateFromLastChange(getMessages);
-  }
-
-  async function untilMessage(msg) {
-    return untilLastMessageEquals(getMessages, msg);
-  }
-
-  async function postMessage(msg) {
+  function postMessage(msg) {
     parent.postMessage(msg, '*');
-
-    // This is very convenient because we don't have to await manually for each
-    // dispatched event to be fulfilled inside test cases
-    await untilMessage(msg);
   }
 
-  async function selectFixture({ rendererId, fixturePath, fixtureState }) {
-    return postSelectFixture(postMessage, {
-      rendererId,
-      fixturePath,
-      fixtureState
-    });
-  }
-
-  async function unselectFixture({ rendererId }) {
-    return postUnselectFixture(postMessage, {
-      rendererId
-    });
-  }
-
-  async function setFixtureState({ rendererId, fixturePath, fixtureState }) {
-    return postSetFixtureState(postMessage, {
-      rendererId,
-      fixturePath,
-      fixtureState
-    });
-  }
-
-  window.addEventListener('message', onMessage, false);
-  try {
-    await children({
-      getElement,
-      untilMessage,
-      getFxStateFromLastChange,
-      postMessage,
-      selectFixture,
-      unselectFixture,
-      setFixtureState
-    });
-  } finally {
+  function cleanup() {
     window.removeEventListener('message', onMessage);
   }
-}
+
+  return {
+    getElement,
+    getMessages,
+    postMessage,
+    cleanup
+  };
+});
 
 function getElement(userProps) {
   return (

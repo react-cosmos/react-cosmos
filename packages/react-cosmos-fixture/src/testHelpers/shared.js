@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import delay from 'delay';
 import until from 'async-until';
 import { FixtureConnect } from '..';
 
@@ -19,22 +20,31 @@ import type {
 
 type Message = RendererResponse | RendererRequest;
 
-type UserProps = {
+type FixtureConnectUserProps = {
   rendererId: RendererId,
   fixtures: Fixtures,
   decorators: DecoratorsByPath,
   onFixtureChange?: () => mixed
 };
 
-type GetTestElement = UserProps => Element<any>;
+type GetTestElement = FixtureConnectUserProps => Element<any>;
 
 type GetMessages = () => Message[];
+
+type ConnectMockCreatorApi = {
+  getElement: GetTestElement,
+  getMessages: GetMessages,
+  postMessage: (msg: Message) => mixed,
+  cleanup: () => mixed
+};
+
+type ConnectMockCreator = () => ConnectMockCreatorApi;
 
 export type ConnectMockApi = {
   getElement: GetTestElement,
   postMessage: (msg: RendererRequest) => Promise<mixed>,
   untilMessage: (msg: {}) => Promise<mixed>,
-  getFxStateFromLastChange: () => Promise<null | FixtureState>,
+  getLastFixtureState: () => Promise<null | FixtureState>,
   selectFixture: ({
     rendererId: RendererId,
     fixturePath: string,
@@ -50,14 +60,122 @@ export type ConnectMockApi = {
   }) => Promise<mixed>
 };
 
-const timeout = 1000;
+export function createConnectMock(init: ConnectMockCreator) {
+  return async function mockConnect(
+    children: ConnectMockApi => Promise<mixed>
+  ) {
+    const api = init();
+    const { getElement, cleanup, getMessages } = api;
+
+    async function postMessage(msg) {
+      api.postMessage(msg);
+      // This is very convenient because we don't have to await manually for
+      // each dispatched event to be fulfilled inside test cases
+      await untilMessage(msg);
+      // Allow render tree to update. Having this here isn't great, but to
+      // remove it we need to turn a convert of plain expects into async expects
+      await delay(0);
+    }
+
+    try {
+      await children({
+        getElement,
+        untilMessage,
+        getLastFixtureState,
+        postMessage,
+        selectFixture,
+        unselectFixture,
+        setFixtureState
+      });
+    } finally {
+      cleanup();
+    }
+
+    async function getLastFixtureState() {
+      const msgType = 'fixtureStateChange';
+
+      await until(() => {
+        const lastMsg = getLastMessage();
+
+        return lastMsg && lastMsg.type === msgType;
+      });
+
+      const lastMsg = getLastMessage();
+
+      if (!lastMsg || lastMsg.type !== msgType) {
+        throw new Error(`Last message type should be "${msgType}"`);
+      }
+
+      return lastMsg.payload.fixtureState;
+    }
+
+    async function untilMessage(msg) {
+      try {
+        await until(() => {
+          try {
+            // Support expect.any(constructor) matches
+            // https://jestjs.io/docs/en/expect#expectanyconstructor
+            expect(getLastMessage()).toEqual(msg);
+
+            return true;
+          } catch (err) {
+            return false;
+          }
+        });
+      } catch (err) {
+        expect(getLastMessage()).toEqual(msg);
+      }
+    }
+
+    async function selectFixture({ rendererId, fixturePath, fixtureState }) {
+      return postMessage({
+        type: 'selectFixture',
+        payload: {
+          rendererId,
+          fixturePath,
+          fixtureState
+        }
+      });
+    }
+
+    async function unselectFixture({ rendererId }) {
+      return postMessage({
+        type: 'unselectFixture',
+        payload: {
+          rendererId
+        }
+      });
+    }
+
+    async function setFixtureState({ rendererId, fixturePath, fixtureState }) {
+      return postMessage({
+        type: 'setFixtureState',
+        payload: {
+          rendererId,
+          fixturePath,
+          fixtureState
+        }
+      });
+    }
+
+    function getLastMessage() {
+      const messages = getMessages();
+
+      if (messages.length === 0) {
+        return null;
+      }
+
+      return messages[messages.length - 1];
+    }
+  };
+}
 
 export function createFixtureConnectRenderCallback({
   rendererId,
   fixtures,
   decorators,
   onFixtureChange
-}: UserProps) {
+}: FixtureConnectUserProps) {
   return (remoteRendererApiProps: RemoteRendererApi) => (
     <FixtureConnect
       rendererId={rendererId}
@@ -68,113 +186,4 @@ export function createFixtureConnectRenderCallback({
       {...remoteRendererApiProps}
     />
   );
-}
-
-export async function getFixtureStateFromLastChange(getMessages: GetMessages) {
-  const msgType = 'fixtureStateChange';
-
-  await until(
-    () => {
-      const lastMsg = getLastMessage(getMessages());
-
-      return lastMsg && lastMsg.type === msgType;
-    },
-    { timeout }
-  );
-
-  const lastMsg = getLastMessage(getMessages());
-
-  if (!lastMsg || lastMsg.type !== msgType) {
-    throw new Error(`Last message type should be "${msgType}"`);
-  }
-
-  return lastMsg.payload.fixtureState;
-}
-
-export async function untilLastMessageEquals(
-  getMessages: GetMessages,
-  msg: {}
-) {
-  try {
-    await until(
-      () => {
-        try {
-          // Support expect.any(constructor) matches
-          // https://jestjs.io/docs/en/expect#expectanyconstructor
-          expect(getLastMessage(getMessages())).toEqual(msg);
-
-          return true;
-        } catch (err) {
-          return false;
-        }
-      },
-      { timeout }
-    );
-  } catch (err) {
-    expect(getLastMessage(getMessages())).toEqual(msg);
-  }
-}
-
-export async function postSelectFixture(
-  postMessage: Message => mixed,
-  {
-    rendererId,
-    fixturePath,
-    fixtureState
-  }: {
-    rendererId: RendererId,
-    fixturePath: string,
-    fixtureState: null | FixtureState
-  }
-) {
-  return postMessage({
-    type: 'selectFixture',
-    payload: {
-      rendererId,
-      fixturePath,
-      fixtureState
-    }
-  });
-}
-
-export async function postUnselectFixture(
-  postMessage: Message => mixed,
-  { rendererId }: { rendererId: RendererId }
-) {
-  return postMessage({
-    type: 'unselectFixture',
-    payload: {
-      rendererId
-    }
-  });
-}
-
-export async function postSetFixtureState(
-  postMessage: Message => mixed,
-  {
-    rendererId,
-    fixturePath,
-    fixtureState
-  }: {
-    rendererId: RendererId,
-    fixturePath: string,
-    fixtureState: null | FixtureState
-  }
-) {
-  return postMessage({
-    type: 'setFixtureState',
-    payload: {
-      rendererId,
-      fixturePath,
-      fixtureState
-    }
-  });
-}
-
-function getLastMessage(messages: Message[]) {
-  if (messages.length === 0) {
-    return null;
-  }
-
-  return messages[messages.length - 1];
 }
