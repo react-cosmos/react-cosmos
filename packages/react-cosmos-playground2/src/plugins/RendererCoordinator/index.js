@@ -8,17 +8,16 @@ import { selectPrimaryRenderer } from './selectPrimaryRenderer';
 import { receiveResponse } from './receiveResponse';
 import { onRouterFixtureChange } from './onRouterFixtureChange';
 
-import type { RendererConfig } from '../../index.js.flow';
+import type { RendererCoordinatorConfig } from '../../index.js.flow';
 import type { RendererCoordinatorState } from './shared';
 
-export type { RendererConfig } from '../../index.js.flow';
+export type { RendererCoordinatorConfig } from '../../index.js.flow';
 export type { RendererCoordinatorState } from './shared';
 
 export function register() {
   const { on, method } = registerRendererCoordinatorPlugin({
     // "coordinator: someone whose task is to see that work goes harmoniously"
     name: 'rendererCoordinator',
-    // FIXME: Split config between rendererPreview and rendererRemote
     defaultConfig: {
       webUrl: null,
       enableRemote: false
@@ -41,5 +40,7 @@ export function register() {
 }
 
 function registerRendererCoordinatorPlugin(args) {
-  return registerPlugin<RendererConfig, RendererCoordinatorState>(args);
+  return registerPlugin<RendererCoordinatorConfig, RendererCoordinatorState>(
+    args
+  );
 }

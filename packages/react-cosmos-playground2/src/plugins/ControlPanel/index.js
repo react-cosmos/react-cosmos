@@ -6,7 +6,7 @@ import { ControlPanel } from './ControlPanel';
 import type { RendererId } from 'react-cosmos-shared2/renderer';
 import type { RouterState } from '../Router';
 import type {
-  RendererConfig,
+  RendererCoordinatorConfig,
   RendererCoordinatorState
 } from '../RendererCoordinator';
 
@@ -20,7 +20,9 @@ export function register() {
     render: ControlPanel,
     getProps: ({ getConfigOf, getStateOf, callMethod }) => {
       const { urlParams }: RouterState = getStateOf('router');
-      const { webUrl }: RendererConfig = getConfigOf('rendererCoordinator');
+      const { webUrl }: RendererCoordinatorConfig = getConfigOf(
+        'rendererCoordinator'
+      );
       const {
         connectedRendererIds,
         primaryRendererId,

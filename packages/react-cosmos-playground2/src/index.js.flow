@@ -6,12 +6,12 @@ export type CoreConfig = {
   fixtureFileSuffix: string
 };
 
-export type RendererConfig = {
+export type RendererCoordinatorConfig = {
   webUrl: null | string,
   enableRemote: boolean
 };
 
 export type PlaygroundConfig = {
   core: CoreConfig,
-  renderer?: RendererConfig
+  rendererCoordinator: RendererCoordinatorConfig
 };

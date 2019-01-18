@@ -7,7 +7,7 @@ import { handleWindowMessages } from './handleWindowMessages';
 import { isVisible } from './isVisible';
 import { RendererPreview } from './RendererPreview';
 
-import type { RendererConfig } from '../RendererCoordinator';
+import type { RendererCoordinatorConfig } from '../RendererCoordinator';
 import type { RendererPreviewState } from './shared';
 
 export type { UrlStatus, RendererPreviewState } from './shared';
@@ -56,7 +56,9 @@ function getRendererPreviewProps(context, onIframeRef) {
 }
 
 function getRendererUrl({ getConfigOf }) {
-  const { webUrl }: RendererConfig = getConfigOf('rendererCoordinator');
+  const { webUrl }: RendererCoordinatorConfig = getConfigOf(
+    'rendererCoordinator'
+  );
 
   return webUrl;
 }
