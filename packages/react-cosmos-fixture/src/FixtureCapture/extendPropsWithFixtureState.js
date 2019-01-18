@@ -39,6 +39,7 @@ export function extendPropsWithFixtureState(
 
       // Prevent overriding child elements with outdated "children" prop values
       // stored in fixture state
+      // See https://github.com/react-cosmos/react-cosmos/pull/920 for context
       const originalProps = element.props;
       const extendedProps = extendObjWithValues(
         originalProps,
