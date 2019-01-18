@@ -8,7 +8,7 @@ import { DEFAULT_DEVICES } from './shared';
 
 import type { CoreConfig } from '../Core';
 import type { RouterState } from '../Router';
-import type { RendererCoordinatorState } from '../Renderer';
+import type { RendererCoordinatorState } from '../RendererCoordinator';
 import type { ResponsivePreviewConfig, ResponsivePreviewState } from './shared';
 
 export function register() {
@@ -52,13 +52,17 @@ export function register() {
 function getCommonProps(context) {
   const { getConfigOf, getState, getStateOf, setState, callMethod } = context;
   const { projectId }: CoreConfig = getConfigOf('core');
-  const { fixtureState }: RendererCoordinatorState = getStateOf('renderer');
+  const { fixtureState }: RendererCoordinatorState = getStateOf(
+    'rendererCoordinator'
+  );
 
   return {
     state: getState(),
     projectId,
     fixtureState,
-    validFixtureSelected: callMethod('renderer.isValidFixtureSelected'),
+    validFixtureSelected: callMethod(
+      'rendererCoordinator.isValidFixtureSelected'
+    ),
     setState,
     setFixtureStateViewport: () => setFixtureStateViewport(context),
     storage: getStorageApi(context)
@@ -75,7 +79,7 @@ function getStorageApi({ callMethod }) {
 function setFixtureStateViewport({ getState, callMethod }) {
   const { enabled, viewport } = getState();
 
-  callMethod('renderer.setFixtureState', fixtureState => ({
+  callMethod('rendererCoordinator.setFixtureState', fixtureState => ({
     ...fixtureState,
     viewport: enabled ? viewport : null
   }));

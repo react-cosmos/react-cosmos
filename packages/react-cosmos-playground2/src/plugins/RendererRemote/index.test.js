@@ -15,7 +15,7 @@ afterEach(cleanup);
 
 function registerTestPlugins() {
   register();
-  mockConfig('renderer', { enableRemote: true });
+  mockConfig('rendererCoordinator', { enableRemote: true });
 }
 
 it('posts renderer request message via websockets', async () => {
@@ -29,7 +29,7 @@ it('posts renderer request message via websockets', async () => {
       fixturePath: 'mockFixturePath'
     }
   };
-  mockEmit('renderer.request', selectFixtureMsg);
+  mockEmit('rendererCoordinator.request', selectFixtureMsg);
 
   await mockWebSockets(async ({ onMessage }) => {
     await wait(() => expect(onMessage).toBeCalledWith(selectFixtureMsg));
@@ -40,7 +40,7 @@ it('broadcasts renderer response message from websocket event', async () => {
   registerTestPlugins();
 
   const handleReceiveResponse = jest.fn();
-  mockMethod('renderer.receiveResponse', handleReceiveResponse);
+  mockMethod('rendererCoordinator.receiveResponse', handleReceiveResponse);
 
   loadPlugins();
 

@@ -12,8 +12,8 @@ function registerTestPlugins() {
   register();
   mockState('router', { urlParams: {} });
   mockState('rendererPreview', { urlStatus: 'unknown' });
-  mockMethod('renderer.isRendererConnected', () => true);
-  mockMethod('renderer.isValidFixtureSelected', () => false);
+  mockMethod('rendererCoordinator.isRendererConnected', () => true);
+  mockMethod('rendererCoordinator.isValidFixtureSelected', () => false);
   mockMethod('rendererPreview.isVisible', () => false);
 }
 

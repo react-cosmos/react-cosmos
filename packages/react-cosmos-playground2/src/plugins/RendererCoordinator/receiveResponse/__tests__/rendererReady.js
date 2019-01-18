@@ -24,13 +24,13 @@ function registerTestPlugins() {
   mockState('router', { urlParams: {} });
 }
 
-function loadTestPlugins(rendererState?: RendererCoordinatorState) {
-  loadPlugins({ state: { renderer: rendererState } });
+function loadTestPlugins(state?: RendererCoordinatorState) {
+  loadPlugins({ state: { rendererCoordinator: state } });
 }
 
 function mockRendererReadyResponse(rendererId: RendererId) {
   mockCall(
-    'renderer.receiveResponse',
+    'rendererCoordinator.receiveResponse',
     createRendererReadyResponse(rendererId, fixtures)
   );
 }
@@ -42,7 +42,7 @@ it('creates renderer state', async () => {
   mockRendererReadyResponse('mockRendererId1');
 
   await wait(() =>
-    expect(getPluginState('renderer')).toEqual({
+    expect(getPluginState('rendererCoordinator')).toEqual({
       connectedRendererIds: ['mockRendererId1'],
       primaryRendererId: 'mockRendererId1',
       fixtures,
@@ -59,7 +59,7 @@ it('creates multi-renderer state', async () => {
   mockRendererReadyResponse('mockRendererId2');
 
   await wait(() =>
-    expect(getPluginState('renderer')).toEqual({
+    expect(getPluginState('rendererCoordinator')).toEqual({
       connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
       primaryRendererId: 'mockRendererId1',
       fixtures,
@@ -80,7 +80,7 @@ it('keeps fixtures state when secondary renderer connects', async () => {
   mockRendererReadyResponse('mockRendererId2');
 
   await wait(() =>
-    expect(getPluginState('renderer')).toEqual({
+    expect(getPluginState('rendererCoordinator')).toEqual({
       connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
       primaryRendererId: 'mockRendererId1',
       fixtures,
@@ -101,7 +101,7 @@ it('resets fixtures state when primary renderer re-connects', async () => {
   mockRendererReadyResponse('mockRendererId1');
 
   await wait(() =>
-    expect(getPluginState('renderer')).toEqual({
+    expect(getPluginState('rendererCoordinator')).toEqual({
       connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
       primaryRendererId: 'mockRendererId1',
       fixtures,

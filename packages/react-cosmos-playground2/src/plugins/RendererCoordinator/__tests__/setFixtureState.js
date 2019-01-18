@@ -15,7 +15,7 @@ import type { RendererCoordinatorState } from '..';
 
 afterEach(cleanup);
 
-const rendererState: RendererCoordinatorState = {
+const state: RendererCoordinatorState = {
   connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
   primaryRendererId: 'mockRendererId1',
   fixtures: ['ein.js', 'zwei.js', 'drei.js'],
@@ -31,11 +31,11 @@ function mockSelectedFixture() {
 }
 
 function loadTestPlugins() {
-  loadPlugins({ state: { renderer: rendererState } });
+  loadPlugins({ state: { rendererCoordinator: state } });
 }
 
 function mockSetFixtureStateCall() {
-  mockCall('renderer.setFixtureState', prevState => ({
+  mockCall('rendererCoordinator.setFixtureState', prevState => ({
     ...prevState,
     viewport: { width: 640, height: 480 }
   }));
@@ -49,7 +49,7 @@ it('sets fixture state in plugin state', async () => {
   mockSetFixtureStateCall();
 
   await wait(() =>
-    expect(getPluginState('renderer').fixtureState).toEqual(
+    expect(getPluginState('rendererCoordinator').fixtureState).toEqual(
       expectedFixtureState
     )
   );
@@ -60,7 +60,7 @@ it('posts "setFixtureState" renderer requests', async () => {
   mockSelectedFixture();
 
   const handleRendererRequest = jest.fn();
-  mockEvent('renderer.request', handleRendererRequest);
+  mockEvent('rendererCoordinator.request', handleRendererRequest);
 
   loadTestPlugins();
   mockSetFixtureStateCall();

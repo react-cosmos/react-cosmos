@@ -21,7 +21,7 @@ afterEach(cleanup);
 
 function registerTestPlugins() {
   register();
-  mockConfig('renderer', { webUrl: 'mockRendererUrl' });
+  mockConfig('rendererCoordinator', { webUrl: 'mockRendererUrl' });
   mockState('router', { urlParams: {} });
 }
 
@@ -48,7 +48,7 @@ it('posts renderer request message to iframe', async () => {
       fixtureState: null
     }
   };
-  mockEmit('renderer.request', selectFixtureMsg);
+  mockEmit('rendererCoordinator.request', selectFixtureMsg);
 
   await mockIframeMessage(getIframe(renderer), async ({ onMessage }) => {
     await wait(() =>
@@ -71,7 +71,7 @@ it('broadcasts renderer response message', async () => {
   registerTestPlugins();
 
   const handleReceiveResponse = jest.fn();
-  mockMethod('renderer.receiveResponse', handleReceiveResponse);
+  mockMethod('rendererCoordinator.receiveResponse', handleReceiveResponse);
 
   loadTestPlugins();
   window.postMessage(rendererReadyMsg, '*');

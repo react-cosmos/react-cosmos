@@ -6,8 +6,7 @@ import {
   cleanup,
   mockPlugin,
   mockEvent,
-  mockEmit,
-  getPluginState
+  mockEmit
 } from '../../../testHelpers/plugin';
 import { register } from '..';
 
@@ -15,7 +14,7 @@ import type { RendererCoordinatorState } from '..';
 
 afterEach(cleanup);
 
-const rendererState: RendererCoordinatorState = {
+const state: RendererCoordinatorState = {
   connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
   primaryRendererId: 'mockRendererId1',
   fixtures: [],
@@ -28,46 +27,40 @@ function registerTestPlugins() {
 }
 
 function loadTestPlugins() {
-  loadPlugins({ state: { renderer: rendererState } });
+  loadPlugins({ state: { rendererCoordinator: state } });
 }
 
 function emitRouterFixtureChange() {
-  mockEmit('router.fixtureChange', undefined);
+  mockEmit('router.fixtureChange', 'zwei.js');
 }
 
-it('resets fixture state', async () => {
-  registerTestPlugins();
-  loadTestPlugins();
-  emitRouterFixtureChange();
-
-  await wait(() =>
-    expect(getPluginState('renderer').fixtureState).toEqual(null)
-  );
-});
-
-it('posts "unselectFixture" renderer requests', async () => {
+it('posts "selectFixture" renderer requests', async () => {
   registerTestPlugins();
 
   const handleRendererRequest = jest.fn();
-  mockEvent('renderer.request', handleRendererRequest);
+  mockEvent('rendererCoordinator.request', handleRendererRequest);
 
   loadTestPlugins();
   emitRouterFixtureChange();
 
   await wait(() =>
     expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {
-      type: 'unselectFixture',
+      type: 'selectFixture',
       payload: {
-        rendererId: 'mockRendererId1'
+        rendererId: 'mockRendererId1',
+        fixturePath: 'zwei.js',
+        fixtureState: null
       }
     })
   );
 
   await wait(() =>
     expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {
-      type: 'unselectFixture',
+      type: 'selectFixture',
       payload: {
-        rendererId: 'mockRendererId2'
+        rendererId: 'mockRendererId2',
+        fixturePath: 'zwei.js',
+        fixtureState: null
       }
     })
   );

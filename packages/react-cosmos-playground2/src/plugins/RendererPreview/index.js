@@ -7,7 +7,7 @@ import { handleWindowMessages } from './handleWindowMessages';
 import { isVisible } from './isVisible';
 import { RendererPreview } from './RendererPreview';
 
-import type { RendererConfig } from '../Renderer';
+import type { RendererConfig } from '../RendererCoordinator';
 import type { RendererPreviewState } from './shared';
 
 export type { UrlStatus, RendererPreviewState } from './shared';
@@ -23,7 +23,7 @@ export function register() {
     }
   });
 
-  on('renderer.request', onRendererRequest);
+  on('rendererCoordinator.request', onRendererRequest);
 
   // This method lets plugins that overlay the "rendererPreview" slot know when
   // to get out of the way
@@ -56,7 +56,7 @@ function getRendererPreviewProps(context, onIframeRef) {
 }
 
 function getRendererUrl({ getConfigOf }) {
-  const { webUrl }: RendererConfig = getConfigOf('renderer');
+  const { webUrl }: RendererConfig = getConfigOf('rendererCoordinator');
 
   return webUrl;
 }

@@ -23,16 +23,16 @@ const fixtureState = { components: [] };
 function registerTestPlugins(handleRendererRequest) {
   register();
   mockState('router', { urlParams: { fixturePath } });
-  mockEvent('renderer.request', handleRendererRequest);
+  mockEvent('rendererCoordinator.request', handleRendererRequest);
 }
 
-function loadTestPlugins(rendererState?: RendererCoordinatorState) {
-  loadPlugins({ state: { renderer: rendererState } });
+function loadTestPlugins(state?: RendererCoordinatorState) {
+  loadPlugins({ state: { rendererCoordinator: state } });
 }
 
 function mockRendererReadyResponse(rendererId: RendererId) {
   mockCall(
-    'renderer.receiveResponse',
+    'rendererCoordinator.receiveResponse',
     createRendererReadyResponse(rendererId, fixtures)
   );
 }

@@ -25,11 +25,11 @@ function registerTestPlugins({
   register();
   mockConfig('core', { projectId: 'mockProjectId' });
   mockState('router', { urlParams });
-  mockState('renderer', { fixtureState: null });
-  mockMethod('renderer.isValidFixtureSelected', () =>
+  mockState('rendererCoordinator', { fixtureState: null });
+  mockMethod('rendererCoordinator.isValidFixtureSelected', () =>
     Boolean(urlParams.fixturePath)
   );
-  mockMethod('renderer.setFixtureState', handleSetFixtureState);
+  mockMethod('rendererCoordinator.setFixtureState', handleSetFixtureState);
 }
 
 function loadTestPlugins() {

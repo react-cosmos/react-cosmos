@@ -18,18 +18,18 @@ export function register() {
     }
   }
 
-  on('renderer.request', (context, msg: RendererRequest) => {
+  on('rendererCoordinator.request', (context, msg: RendererRequest) => {
     postMessage(msg);
   });
 
   init(({ getConfigOf, callMethod }) => {
-    if (!getConfigOf('renderer').enableRemote) {
+    if (!getConfigOf('rendererCoordinator').enableRemote) {
       return;
     }
 
     function handleMessage(msg: Object) {
       // TODO: Validate message payload
-      callMethod('renderer.receiveResponse', msg);
+      callMethod('rendererCoordinator.receiveResponse', msg);
     }
 
     socket = io();

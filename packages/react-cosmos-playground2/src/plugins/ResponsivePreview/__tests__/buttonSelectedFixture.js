@@ -21,8 +21,8 @@ const storageKey = getResponsiveViewportStorageKey('mockProjectId');
 function registerTestPlugins() {
   register();
   mockConfig('core', { projectId: 'mockProjectId' });
-  mockState('renderer', { fixtureState: null });
-  mockMethod('renderer.isValidFixtureSelected', () => true);
+  mockState('rendererCoordinator', { fixtureState: null });
+  mockMethod('rendererCoordinator.isValidFixtureSelected', () => true);
 }
 
 function loadTestPlugins() {
@@ -34,7 +34,7 @@ function loadTestPlugins() {
 it('sets enabled state', async () => {
   registerTestPlugins();
   mockMethod('storage.getItem', () => {});
-  mockMethod('renderer.setFixtureState', () => {});
+  mockMethod('rendererCoordinator.setFixtureState', () => {});
 
   const { getByText } = loadTestPlugins();
   fireEvent.click(getByText(/responsive/i));
@@ -49,7 +49,7 @@ it('sets enabled state', async () => {
 
 it('sets enabled state with stored viewport', async () => {
   registerTestPlugins();
-  mockMethod('renderer.setFixtureState', () => {});
+  mockMethod('rendererCoordinator.setFixtureState', () => {});
 
   const storage = {
     [storageKey]: { width: 420, height: 420 }
@@ -77,7 +77,7 @@ it('sets viewport in fixture state', async () => {
   const handleSetFixtureState = (context, stateChange) => {
     fixtureState = updateState(fixtureState, stateChange);
   };
-  mockMethod('renderer.setFixtureState', handleSetFixtureState);
+  mockMethod('rendererCoordinator.setFixtureState', handleSetFixtureState);
 
   const { getByText } = loadTestPlugins();
   fireEvent.click(getByText(/responsive/i));
@@ -88,7 +88,7 @@ it('sets viewport in fixture state', async () => {
 it('sets disabled state', async () => {
   registerTestPlugins();
   mockMethod('storage.getItem', () => {});
-  mockMethod('renderer.setFixtureState', () => {});
+  mockMethod('rendererCoordinator.setFixtureState', () => {});
 
   const { getByText } = loadTestPlugins();
 
@@ -106,7 +106,7 @@ it('sets disabled state', async () => {
 
 it('sets disabled state with stored viewport', async () => {
   registerTestPlugins();
-  mockMethod('renderer.setFixtureState', () => {});
+  mockMethod('rendererCoordinator.setFixtureState', () => {});
 
   const storage = {
     [storageKey]: { width: 420, height: 420 }
@@ -136,7 +136,7 @@ it('clears viewport in fixture state', async () => {
   const handleSetFixtureState = (context, stateChange) => {
     fixtureState = updateState(fixtureState, stateChange);
   };
-  mockMethod('renderer.setFixtureState', handleSetFixtureState);
+  mockMethod('rendererCoordinator.setFixtureState', handleSetFixtureState);
 
   const { getByText } = loadTestPlugins();
   const getButton = getByText(/responsive/i);

@@ -9,7 +9,7 @@ import type { RendererCoordinatorState } from '..';
 afterEach(cleanup);
 
 const rendererId = 'mockRendererId';
-const rendererState: RendererCoordinatorState = {
+const state: RendererCoordinatorState = {
   connectedRendererIds: [rendererId],
   primaryRendererId: rendererId,
   fixtures: ['ein.js', 'zwei.js', 'drei.js'],
@@ -21,7 +21,7 @@ function mockFixturePath(fixturePath) {
 }
 
 function loadTestPlugins() {
-  loadPlugins({ state: { renderer: rendererState } });
+  loadPlugins({ state: { rendererCoordinator: state } });
 }
 
 it('returns false on missing fixture', async () => {
@@ -29,7 +29,7 @@ it('returns false on missing fixture', async () => {
   mockFixturePath('sechs.js');
   loadTestPlugins();
 
-  expect(mockCall('renderer.isValidFixtureSelected')).toBe(false);
+  expect(mockCall('rendererCoordinator.isValidFixtureSelected')).toBe(false);
 });
 
 it('returns true on existing fixture', async () => {
@@ -37,5 +37,5 @@ it('returns true on existing fixture', async () => {
   mockFixturePath('drei.js');
   loadTestPlugins();
 
-  expect(mockCall('renderer.isValidFixtureSelected')).toBe(true);
+  expect(mockCall('rendererCoordinator.isValidFixtureSelected')).toBe(true);
 });

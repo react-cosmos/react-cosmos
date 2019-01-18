@@ -11,7 +11,7 @@ afterEach(cleanup);
 
 function registerTestPlugins() {
   register();
-  mockConfig('renderer', { webUrl: 'mockRendererUrl' });
+  mockConfig('rendererCoordinator', { webUrl: 'mockRendererUrl' });
   mockState('router', { urlParams: { fixturePath: 'ein.js' } });
 }
 

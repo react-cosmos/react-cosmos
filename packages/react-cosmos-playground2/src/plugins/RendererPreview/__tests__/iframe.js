@@ -11,7 +11,7 @@ afterEach(cleanup);
 
 function registerTestPlugins(urlParams: {}) {
   register();
-  mockConfig('renderer', { webUrl: 'mockRendererUrl' });
+  mockConfig('rendererCoordinator', { webUrl: 'mockRendererUrl' });
   mockState('router', { urlParams });
 }
 

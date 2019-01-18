@@ -9,7 +9,7 @@ import type { RendererCoordinatorState } from '..';
 
 afterEach(cleanup);
 
-const rendererState: RendererCoordinatorState = {
+const state: RendererCoordinatorState = {
   connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
   primaryRendererId: 'mockRendererId1',
   fixtures: [],
@@ -18,12 +18,12 @@ const rendererState: RendererCoordinatorState = {
 
 it('sets primary renderer ID in state', async () => {
   register();
-  loadPlugins({ state: { renderer: rendererState } });
+  loadPlugins({ state: { rendererCoordinator: state } });
 
-  mockCall('renderer.selectPrimaryRenderer', 'mockRendererId2');
+  mockCall('rendererCoordinator.selectPrimaryRenderer', 'mockRendererId2');
 
   await wait(() =>
-    expect(getPluginState('renderer').primaryRendererId).toEqual(
+    expect(getPluginState('rendererCoordinator').primaryRendererId).toEqual(
       'mockRendererId2'
     )
   );

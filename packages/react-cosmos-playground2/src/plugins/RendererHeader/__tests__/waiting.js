@@ -11,8 +11,8 @@ afterEach(cleanup);
 function registerTestPlugins() {
   register();
   mockState('router', { urlParams: {} });
-  mockMethod('renderer.isRendererConnected', () => false);
-  mockMethod('renderer.isValidFixtureSelected', () => false);
+  mockMethod('rendererCoordinator.isRendererConnected', () => false);
+  mockMethod('rendererCoordinator.isValidFixtureSelected', () => false);
 }
 
 function loadTestPlugins() {

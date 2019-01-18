@@ -8,15 +8,15 @@ import type { RendererCoordinatorState } from '..';
 
 afterEach(cleanup);
 
-function loadTestPlugins(rendererState?: RendererCoordinatorState) {
-  loadPlugins({ state: { renderer: rendererState } });
+function loadTestPlugins(state?: RendererCoordinatorState) {
+  loadPlugins({ state: { rendererCoordinator: state } });
 }
 
 it('returns false', async () => {
   register();
   loadTestPlugins();
 
-  expect(mockCall('renderer.isRendererConnected')).toBe(false);
+  expect(mockCall('rendererCoordinator.isRendererConnected')).toBe(false);
 });
 
 it('returns true', async () => {
@@ -30,5 +30,5 @@ it('returns true', async () => {
     fixtureState: null
   });
 
-  expect(mockCall('renderer.isRendererConnected')).toBe(true);
+  expect(mockCall('rendererCoordinator.isRendererConnected')).toBe(true);
 });

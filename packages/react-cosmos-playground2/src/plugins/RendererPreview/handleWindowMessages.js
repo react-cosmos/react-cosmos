@@ -20,7 +20,7 @@ function createMessageHandler(context) {
     }
 
     const response: RendererResponse = msg.data;
-    context.callMethod('renderer.receiveResponse', response);
+    context.callMethod('rendererCoordinator.receiveResponse', response);
 
     updateRuntimeStatus(context, response);
   };

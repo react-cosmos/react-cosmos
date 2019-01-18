@@ -6,7 +6,8 @@ import {
   cleanup,
   mockPlugin,
   mockEvent,
-  mockEmit
+  mockEmit,
+  getPluginState
 } from '../../../testHelpers/plugin';
 import { register } from '..';
 
@@ -14,7 +15,7 @@ import type { RendererCoordinatorState } from '..';
 
 afterEach(cleanup);
 
-const rendererState: RendererCoordinatorState = {
+const state: RendererCoordinatorState = {
   connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
   primaryRendererId: 'mockRendererId1',
   fixtures: [],
@@ -27,40 +28,46 @@ function registerTestPlugins() {
 }
 
 function loadTestPlugins() {
-  loadPlugins({ state: { renderer: rendererState } });
+  loadPlugins({ state: { rendererCoordinator: state } });
 }
 
 function emitRouterFixtureChange() {
-  mockEmit('router.fixtureChange', 'zwei.js');
+  mockEmit('router.fixtureChange', undefined);
 }
 
-it('posts "selectFixture" renderer requests', async () => {
+it('resets fixture state', async () => {
+  registerTestPlugins();
+  loadTestPlugins();
+  emitRouterFixtureChange();
+
+  await wait(() =>
+    expect(getPluginState('rendererCoordinator').fixtureState).toEqual(null)
+  );
+});
+
+it('posts "unselectFixture" renderer requests', async () => {
   registerTestPlugins();
 
   const handleRendererRequest = jest.fn();
-  mockEvent('renderer.request', handleRendererRequest);
+  mockEvent('rendererCoordinator.request', handleRendererRequest);
 
   loadTestPlugins();
   emitRouterFixtureChange();
 
   await wait(() =>
     expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {
-      type: 'selectFixture',
+      type: 'unselectFixture',
       payload: {
-        rendererId: 'mockRendererId1',
-        fixturePath: 'zwei.js',
-        fixtureState: null
+        rendererId: 'mockRendererId1'
       }
     })
   );
 
   await wait(() =>
     expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {
-      type: 'selectFixture',
+      type: 'unselectFixture',
       payload: {
-        rendererId: 'mockRendererId2',
-        fixturePath: 'zwei.js',
-        fixtureState: null
+        rendererId: 'mockRendererId2'
       }
     })
   );

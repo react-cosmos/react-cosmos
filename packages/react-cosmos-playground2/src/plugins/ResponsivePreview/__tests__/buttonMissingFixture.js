@@ -16,8 +16,8 @@ afterEach(cleanup);
 it('renders disabled button', async () => {
   register();
   mockConfig('core', { projectId: 'mockProjectId' });
-  mockState('renderer', { fixtureState: null });
-  mockMethod('renderer.isValidFixtureSelected', () => false);
+  mockState('rendererCoordinator', { fixtureState: null });
+  mockMethod('rendererCoordinator.isValidFixtureSelected', () => false);
 
   loadPlugins();
   const { getByText } = render(<Slot name="fixtureActions" />);

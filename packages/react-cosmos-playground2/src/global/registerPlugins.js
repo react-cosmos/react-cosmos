@@ -10,7 +10,7 @@ unregisterPlugins();
 require('../plugins/Storage').register();
 require('../plugins/Core').register();
 require('../plugins/Router').register();
-require('../plugins/Renderer').register();
+require('../plugins/RendererCoordinator').register();
 require('../plugins/RendererHeader').register();
 require('../plugins/RendererRemote').register();
 require('../plugins/RendererPreview').register();

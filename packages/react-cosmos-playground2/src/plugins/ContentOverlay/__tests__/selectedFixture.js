@@ -12,8 +12,8 @@ function registerTestPlugins({ rendererPreviewVisible }) {
   register();
   mockState('router', { urlParams: { fixturePath: 'foo.js' } });
   mockState('rendererPreview', { urlStatus: 'unknown' });
-  mockMethod('renderer.isRendererConnected', () => true);
-  mockMethod('renderer.isValidFixtureSelected', () => true);
+  mockMethod('rendererCoordinator.isRendererConnected', () => true);
+  mockMethod('rendererCoordinator.isValidFixtureSelected', () => true);
   mockMethod('rendererPreview.isVisible', () => rendererPreviewVisible);
 }
 

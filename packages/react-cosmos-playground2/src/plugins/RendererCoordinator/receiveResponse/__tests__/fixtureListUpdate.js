@@ -17,7 +17,7 @@ import type { RendererCoordinatorState } from '../..';
 afterEach(cleanup);
 
 const fixtures = ['ein.js', 'zwei.js', 'drei.js'];
-const rendererState: RendererCoordinatorState = {
+const state: RendererCoordinatorState = {
   connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
   primaryRendererId: 'mockRendererId1',
   fixtures: ['ein.js', 'zwei.js', 'drei.js'],
@@ -30,12 +30,12 @@ function registerTestPlugins() {
 }
 
 function loadTestPlugins() {
-  loadPlugins({ state: { renderer: rendererState } });
+  loadPlugins({ state: { rendererCoordinator: state } });
 }
 
 function mockFixtureListUpdateResponse(rendererId: RendererId) {
   mockCall(
-    'renderer.receiveResponse',
+    'rendererCoordinator.receiveResponse',
     createFixtureListUpdateResponse(rendererId, [...fixtures, 'vier.js'])
   );
 }
@@ -47,7 +47,7 @@ it('updates fixtures in renderer state', async () => {
   mockFixtureListUpdateResponse('mockRendererId1');
 
   await wait(() =>
-    expect(getPluginState('renderer').fixtures).toEqual([
+    expect(getPluginState('rendererCoordinator').fixtures).toEqual([
       ...fixtures,
       'vier.js'
     ])
@@ -61,6 +61,6 @@ it('ignores update from secondary renderer', async () => {
   mockFixtureListUpdateResponse('mockRendererId2');
 
   await wait(() =>
-    expect(getPluginState('renderer').fixtures).toEqual(fixtures)
+    expect(getPluginState('rendererCoordinator').fixtures).toEqual(fixtures)
   );
 });

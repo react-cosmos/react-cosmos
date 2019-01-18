@@ -33,9 +33,9 @@ const rendererErrorMsg: RendererErrorResponse = {
 
 function registerTestPlugins() {
   register();
-  mockConfig('renderer', { webUrl: 'mockRendererUrl' });
+  mockConfig('rendererCoordinator', { webUrl: 'mockRendererUrl' });
   mockState('router', { urlParams: {} });
-  mockMethod('renderer.receiveResponse', () => {});
+  mockMethod('rendererCoordinator.receiveResponse', () => {});
 }
 
 function loadTestPlugins() {

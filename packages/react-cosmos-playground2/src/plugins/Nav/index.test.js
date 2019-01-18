@@ -21,9 +21,9 @@ function registerTestPlugins({ urlParams = {} } = {}) {
 
   mockConfig('core', { fixturesDir: 'fixtures', fixtureFileSuffix: 'fixture' });
   mockState('router', { urlParams });
-  mockState('renderer', { fixtures });
+  mockState('rendererCoordinator', { fixtures });
 
-  mockMethod('renderer.isRendererConnected', () => true);
+  mockMethod('rendererCoordinator.isRendererConnected', () => true);
   mockMethod('storage.getItem', () => Promise.resolve(null));
   mockMethod('storage.setItem', () => Promise.resolve(undefined));
 }

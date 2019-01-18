@@ -5,7 +5,10 @@ import { ControlPanel } from './ControlPanel';
 
 import type { RendererId } from 'react-cosmos-shared2/renderer';
 import type { RouterState } from '../Router';
-import type { RendererConfig, RendererCoordinatorState } from '../Renderer';
+import type {
+  RendererConfig,
+  RendererCoordinatorState
+} from '../RendererCoordinator';
 
 export function register() {
   const { plug } = registerPlugin({
@@ -17,12 +20,12 @@ export function register() {
     render: ControlPanel,
     getProps: ({ getConfigOf, getStateOf, callMethod }) => {
       const { urlParams }: RouterState = getStateOf('router');
-      const { webUrl }: RendererConfig = getConfigOf('renderer');
+      const { webUrl }: RendererConfig = getConfigOf('rendererCoordinator');
       const {
         connectedRendererIds,
         primaryRendererId,
         fixtureState
-      }: RendererCoordinatorState = getStateOf('renderer');
+      }: RendererCoordinatorState = getStateOf('rendererCoordinator');
 
       return {
         webUrl,
@@ -31,13 +34,13 @@ export function register() {
         primaryRendererId,
         fixtureState,
         setComponentsFixtureState: components => {
-          callMethod('renderer.setFixtureState', fixtureState => ({
+          callMethod('rendererCoordinator.setFixtureState', fixtureState => ({
             ...fixtureState,
             components
           }));
         },
         selectPrimaryRenderer: (rendererId: RendererId) => {
-          callMethod('renderer.selectPrimaryRenderer', rendererId);
+          callMethod('rendererCoordinator.selectPrimaryRenderer', rendererId);
         }
       };
     }

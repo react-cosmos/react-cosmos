@@ -16,8 +16,12 @@ export function register() {
 
       return {
         urlParams,
-        rendererConnected: callMethod('renderer.isRendererConnected'),
-        validFixtureSelected: callMethod('renderer.isValidFixtureSelected'),
+        rendererConnected: callMethod(
+          'rendererCoordinator.isRendererConnected'
+        ),
+        validFixtureSelected: callMethod(
+          'rendererCoordinator.isValidFixtureSelected'
+        ),
         setUrlParams: newUrlParams =>
           callMethod('router.setUrlParams', newUrlParams)
       };

@@ -19,7 +19,7 @@ afterEach(cleanup);
 
 const fixturePath = 'zwei.js';
 const fixtureState = { components: [] };
-const rendererState: RendererCoordinatorState = {
+const state: RendererCoordinatorState = {
   connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
   primaryRendererId: 'mockRendererId1',
   fixtures: ['ein.js', 'zwei.js', 'drei.js'],
@@ -29,16 +29,16 @@ const rendererState: RendererCoordinatorState = {
 function registerTestPlugins(handleRendererRequest = () => {}) {
   register();
   mockState('router', { urlParams: { fixturePath } });
-  mockEvent('renderer.request', handleRendererRequest);
+  mockEvent('rendererCoordinator.request', handleRendererRequest);
 }
 
 function loadTestPlugins() {
-  loadPlugins({ state: { renderer: rendererState } });
+  loadPlugins({ state: { rendererCoordinator: state } });
 }
 
 function mockFixtureStateChangeResponse(rendererId: RendererId) {
   mockCall(
-    'renderer.receiveResponse',
+    'rendererCoordinator.receiveResponse',
     getFixtureStateChangeResponse(rendererId, fixturePath, fixtureState)
   );
 }
@@ -50,7 +50,9 @@ it('sets fixtureState in renderer state', async () => {
   mockFixtureStateChangeResponse('mockRendererId1');
 
   await wait(() =>
-    expect(getPluginState('renderer').fixtureState).toEqual(fixtureState)
+    expect(getPluginState('rendererCoordinator').fixtureState).toEqual(
+      fixtureState
+    )
   );
 });
 
@@ -61,7 +63,7 @@ it('ignores update from secondary renderer', async () => {
   mockFixtureStateChangeResponse('mockRendererId2');
 
   await wait(() =>
-    expect(getPluginState('renderer').fixtureState).toEqual(null)
+    expect(getPluginState('rendererCoordinator').fixtureState).toEqual(null)
   );
 });
 

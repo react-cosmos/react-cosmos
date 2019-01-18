@@ -17,8 +17,8 @@ function registerTestPlugins() {
   register();
   mockConfig('core', { projectId: 'mockProjectId' });
   mockState('router', { urlParams: { fixturePath: 'fooFixture.js' } });
-  mockState('renderer', { fixtureState: null });
-  mockMethod('renderer.isValidFixtureSelected', () => false);
+  mockState('rendererCoordinator', { fixtureState: null });
+  mockMethod('rendererCoordinator.isValidFixtureSelected', () => false);
 }
 
 function loadTestPlugins() {

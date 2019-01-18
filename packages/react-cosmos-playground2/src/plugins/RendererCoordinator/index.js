@@ -16,8 +16,8 @@ export type { RendererCoordinatorState } from './shared';
 
 export function register() {
   const { on, method } = registerRendererCoordinatorPlugin({
-    // TODO: Rename to rendererCoordinator
-    name: 'renderer',
+    // "coordinator: someone whose task is to see that work goes harmoniously"
+    name: 'rendererCoordinator',
     // FIXME: Split config between rendererPreview and rendererRemote
     defaultConfig: {
       webUrl: null,
