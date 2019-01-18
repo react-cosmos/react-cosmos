@@ -16,17 +16,25 @@ const state: RendererCoordinatorState = {
   fixtureState: null
 };
 
-function mockFixturePath(fixturePath) {
-  mockState('router', { urlParams: { fixturePath } });
+function mockUrlParams(urlParams) {
+  mockState('router', { urlParams });
 }
 
 function loadTestPlugins() {
   loadPlugins({ state: { rendererCoordinator: state } });
 }
 
+it('returns false on no fixture selected', async () => {
+  register();
+  mockUrlParams({});
+  loadTestPlugins();
+
+  expect(mockCall('rendererCoordinator.isValidFixtureSelected')).toBe(false);
+});
+
 it('returns false on missing fixture', async () => {
   register();
-  mockFixturePath('sechs.js');
+  mockUrlParams({ fixturePath: 'sechs.js' });
   loadTestPlugins();
 
   expect(mockCall('rendererCoordinator.isValidFixtureSelected')).toBe(false);
@@ -34,7 +42,7 @@ it('returns false on missing fixture', async () => {
 
 it('returns true on existing fixture', async () => {
   register();
-  mockFixturePath('drei.js');
+  mockUrlParams({ fixturePath: 'drei.js' });
   loadTestPlugins();
 
   expect(mockCall('rendererCoordinator.isValidFixtureSelected')).toBe(true);
