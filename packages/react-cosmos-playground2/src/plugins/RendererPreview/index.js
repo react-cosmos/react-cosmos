@@ -10,7 +10,7 @@ import { RendererPreview } from './RendererPreview';
 import type { RendererCoordinatorConfig } from '../RendererCoordinator';
 import type { RendererPreviewState } from './shared';
 
-export type { UrlStatus, RendererPreviewState } from './shared';
+export type { UrlStatus, RuntimeStatus, RendererPreviewState } from './shared';
 
 export function register() {
   const { onRendererRequest, setIframeRef } = createRendererRequestHandler();

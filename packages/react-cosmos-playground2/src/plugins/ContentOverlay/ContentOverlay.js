@@ -10,14 +10,14 @@ import {
 import { RendererNotRespondingScreen } from './RendererNotRespondingScreen';
 import { IllustrationContainer } from './shared';
 
-import type { UrlStatus } from '../RendererPreview';
+import type { UrlStatus, RuntimeStatus } from '../RendererPreview';
 
 type Props = {
   fixtureSelected: boolean,
   validFixtureSelected: boolean,
   rendererConnected: boolean,
   rendererPreviewUrlStatus: UrlStatus,
-  rendererPreviewVisible: boolean
+  rendererPreviewRuntimeStatus: RuntimeStatus
 };
 
 export function ContentOverlay({
@@ -25,18 +25,18 @@ export function ContentOverlay({
   validFixtureSelected,
   rendererConnected,
   rendererPreviewUrlStatus,
-  rendererPreviewVisible
+  rendererPreviewRuntimeStatus
 }: Props) {
-  if (rendererPreviewVisible) {
-    return null;
-  }
-
   if (rendererPreviewUrlStatus === 'error') {
     return (
       <Container data-testid="rendererNotResponding">
         <RendererNotRespondingScreen />
       </Container>
     );
+  }
+
+  if (validFixtureSelected || rendererPreviewRuntimeStatus === 'error') {
+    return null;
   }
 
   if (!rendererConnected) {
@@ -53,17 +53,7 @@ export function ContentOverlay({
     );
   }
 
-  if (!fixtureSelected) {
-    return (
-      <Container data-testid="blank">
-        <IllustrationContainer>
-          <BlankCanvasIllustration title="blank canvas" />
-        </IllustrationContainer>
-      </Container>
-    );
-  }
-
-  if (!validFixtureSelected) {
+  if (fixtureSelected) {
     return (
       <Container data-testid="notFound">
         <IllustrationContainer>
@@ -73,8 +63,13 @@ export function ContentOverlay({
     );
   }
 
-  // Nothing to show, whatever's underneath will be visible
-  return null;
+  return (
+    <Container data-testid="blank">
+      <IllustrationContainer>
+        <BlankCanvasIllustration title="blank canvas" />
+      </IllustrationContainer>
+    </Container>
+  );
 }
 
 const Container = styled.div`

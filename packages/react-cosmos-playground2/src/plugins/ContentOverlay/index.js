@@ -25,14 +25,15 @@ function getContentOverlayProps({ getStateOf, callMethod }) {
   const rendererConnected = callMethod(
     'rendererCoordinator.isRendererConnected'
   );
-  const { urlStatus }: RendererPreviewState = getStateOf('rendererPreview');
-  const rendererPreviewVisible = callMethod('rendererPreview.isVisible');
+  const { urlStatus, runtimeStatus }: RendererPreviewState = getStateOf(
+    'rendererPreview'
+  );
 
   return {
     fixtureSelected,
     validFixtureSelected,
     rendererConnected,
     rendererPreviewUrlStatus: urlStatus,
-    rendererPreviewVisible
+    rendererPreviewRuntimeStatus: runtimeStatus
   };
 }

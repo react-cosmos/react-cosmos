@@ -11,10 +11,12 @@ afterEach(cleanup);
 function registerTestPlugins() {
   register();
   mockState('router', { urlParams: {} });
-  mockState('rendererPreview', { urlStatus: 'error' });
-  mockMethod('rendererCoordinator.isRendererConnected', () => true);
-  mockMethod('rendererCoordinator.isValidFixtureSelected', () => true);
-  mockMethod('rendererPreview.isVisible', () => false);
+  mockState('rendererPreview', {
+    urlStatus: 'error',
+    runtimeStatus: 'unknown'
+  });
+  mockMethod('rendererCoordinator.isRendererConnected', () => false);
+  mockMethod('rendererCoordinator.isValidFixtureSelected', () => false);
 }
 
 function loadTestPlugins() {

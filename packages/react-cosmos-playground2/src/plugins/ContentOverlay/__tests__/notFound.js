@@ -11,10 +11,9 @@ afterEach(cleanup);
 function registerTestPlugins() {
   register();
   mockState('router', { urlParams: { fixturePath: 'foo.js' } });
-  mockState('rendererPreview', { urlStatus: 'unknown' });
+  mockState('rendererPreview', { urlStatus: 'ok', runtimeStatus: 'connected' });
   mockMethod('rendererCoordinator.isRendererConnected', () => true);
   mockMethod('rendererCoordinator.isValidFixtureSelected', () => false);
-  mockMethod('rendererPreview.isVisible', () => false);
 }
 
 function loadTestPlugins() {
