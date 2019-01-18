@@ -11,3 +11,4 @@
 export { findElementPaths } from './findElementPaths';
 export { getElementAtPath, getExpectedElementAtPath } from './getElementAtPath';
 export { setElementAtPath } from './setElementAtPath';
+export { getChildrenPath } from './shared';
