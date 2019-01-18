@@ -15,7 +15,10 @@ export type { RendererCoordinatorConfig } from '../../index.js.flow';
 export type { RendererCoordinatorState } from './shared';
 
 export function register() {
-  const { on, method } = registerRendererCoordinatorPlugin({
+  const { on, method } = registerPlugin<
+    RendererCoordinatorConfig,
+    RendererCoordinatorState
+  >({
     // "coordinator: someone whose task is to see that work goes harmoniously"
     name: 'rendererCoordinator',
     defaultConfig: {
@@ -37,10 +40,4 @@ export function register() {
   method('receiveResponse', receiveResponse);
 
   on('router.fixtureChange', onRouterFixtureChange);
-}
-
-function registerRendererCoordinatorPlugin(args) {
-  return registerPlugin<RendererCoordinatorConfig, RendererCoordinatorState>(
-    args
-  );
 }
