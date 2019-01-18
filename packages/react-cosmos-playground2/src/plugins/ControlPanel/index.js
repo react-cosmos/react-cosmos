@@ -5,10 +5,13 @@ import { ControlPanel } from './ControlPanel';
 
 import type { RendererId } from 'react-cosmos-shared2/renderer';
 import type { RouterState } from '../Router';
-import type { RendererConfig, RendererState } from '../Renderer';
+import type {
+  RendererCoordinatorConfig,
+  RendererCoordinatorState
+} from '../RendererCoordinator';
 
 export function register() {
-  const { plug } = registerPlugin<RendererConfig, RendererState>({
+  const { plug } = registerPlugin({
     name: 'controlPanel'
   });
 
@@ -17,22 +20,29 @@ export function register() {
     render: ControlPanel,
     getProps: ({ getConfigOf, getStateOf, callMethod }) => {
       const { urlParams }: RouterState = getStateOf('router');
-      const { webUrl }: RendererConfig = getConfigOf('renderer');
-      const rendererState: RendererState = getStateOf('renderer');
+      const { webUrl }: RendererCoordinatorConfig = getConfigOf(
+        'rendererCoordinator'
+      );
+      const {
+        connectedRendererIds,
+        primaryRendererId,
+        fixtureState
+      }: RendererCoordinatorState = getStateOf('rendererCoordinator');
 
       return {
         webUrl,
         urlParams,
-        rendererState,
-        primaryRendererState: callMethod('renderer.getPrimaryRendererState'),
+        connectedRendererIds,
+        primaryRendererId,
+        fixtureState,
         setComponentsFixtureState: components => {
-          callMethod('renderer.setFixtureState', fixtureState => ({
+          callMethod('rendererCoordinator.setFixtureState', fixtureState => ({
             ...fixtureState,
             components
           }));
         },
         selectPrimaryRenderer: (rendererId: RendererId) => {
-          callMethod('renderer.selectPrimaryRenderer', rendererId);
+          callMethod('rendererCoordinator.selectPrimaryRenderer', rendererId);
         }
       };
     }

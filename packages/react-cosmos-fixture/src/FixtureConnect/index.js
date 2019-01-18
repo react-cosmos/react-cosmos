@@ -2,16 +2,23 @@
 
 import React, { Component } from 'react';
 import { isEqual } from 'lodash';
-import memoize from 'memoize-one';
-import { FixtureProvider } from '../FixtureProvider';
 import { updateState } from 'react-cosmos-shared2/util';
+import { FixtureProvider } from '../FixtureProvider';
 
 import type {
   FixtureState,
   SetFixtureState
 } from 'react-cosmos-shared2/fixtureState';
-import type { RendererRequest } from 'react-cosmos-shared2/renderer';
-import type { Decorators, FixtureConnectProps } from '../index.js.flow';
+import type {
+  RendererRequest,
+  SelectFixtureRequest,
+  SetFixtureStateRequest
+} from 'react-cosmos-shared2/renderer';
+import type {
+  DecoratorType,
+  DecoratorsByPath,
+  FixtureConnectProps
+} from '../index.js.flow';
 
 type State = {
   fixturePath: null | string,
@@ -50,7 +57,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     const { fixturePath, fixtureState, syncedFixtureState } = this.state;
 
     if (!isEqual(fixtures, prevProps.fixtures)) {
-      this.postFixtureListChange();
+      this.postFixtureListUpdate();
     }
 
     if (fixturePath && !isEqual(fixtureState, syncedFixtureState)) {
@@ -72,7 +79,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
   }
 
   render() {
-    const { fixtures, decorators } = this.props;
+    const { fixtures, systemDecorators, userDecorators } = this.props;
     const { fixturePath, fixtureState, renderKey } = this.state;
 
     if (!fixturePath) {
@@ -87,10 +94,14 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
 
     return (
       <FixtureProvider
-        // Ensure no state leaks between fixture selections, even though under
-        // normal circumstances f(fixture, fixtureState) is deterministic.
+        // renderKey controls whether to reuse previous instances (and
+        // transition props) or rebuild render tree from scratch
         key={renderKey}
-        decorators={this.getDecoratorsForFixturePath(decorators, fixturePath)}
+        decorators={getSortedDecoratorsForFixturePath(
+          systemDecorators,
+          userDecorators,
+          fixturePath
+        )}
         fixtureState={fixtureState}
         setFixtureState={this.setFixtureState}
       >
@@ -98,12 +109,6 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
       </FixtureProvider>
     );
   }
-
-  // Prevent FixtureProvider from thinking decorators changed when they haven't
-  getDecoratorsForFixturePath = memoize(
-    (decorators: Decorators, fixturePath: string) =>
-      getDecoratorsForFixturePath(decorators, fixturePath)
-  );
 
   handleRequest = (msg: RendererRequest) => {
     if (msg.type === 'pingRenderers') {
@@ -115,32 +120,55 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
       return;
     }
 
-    if (msg.type === 'selectFixture') {
-      const { fixturePath, fixtureState } = msg.payload;
+    if (doesRequestChangeFixture(msg)) {
+      this.fireChangeCallback();
+    }
 
-      this.setState({
-        fixturePath,
-        fixtureState,
-        renderKey: this.state.renderKey + 1
-      });
-    } else if (msg.type === 'unselectFixture') {
-      this.setState({
-        fixturePath: null,
-        fixtureState: null,
-        renderKey: 0
-      });
-    } else if (msg.type === 'setFixtureState') {
-      const { fixturePath, fixtureState } = msg.payload;
-
-      // Ensure fixture state applies to currently selected fixture
-      if (fixturePath === this.state.fixturePath) {
-        this.setState({
-          fixtureState,
-          syncedFixtureState: fixtureState
-        });
-      }
+    switch (msg.type) {
+      case 'selectFixture':
+        return this.handleSelectFixtureRequest(msg);
+      case 'unselectFixture':
+        return this.handleUnselectFixtureRequest();
+      case 'setFixtureState':
+        return this.handleSelectFixtureStateRequest(msg);
+      default:
+      // This Is Fine™
+      // Actually, we can't be angry about getting unrelated messages here
+      // because we don't do any preliminary message filtering to ignore stuff
+      // like browser devtools communication, nor do we have any message
+      // metadata conventions in place to perform such filtering at the moment
     }
   };
+
+  handleSelectFixtureRequest({ payload }: SelectFixtureRequest) {
+    const { fixturePath, fixtureState } = payload;
+
+    this.setState({
+      fixturePath,
+      fixtureState,
+      renderKey: this.state.renderKey + 1
+    });
+  }
+
+  handleUnselectFixtureRequest() {
+    this.setState({
+      fixturePath: null,
+      fixtureState: null,
+      renderKey: 0
+    });
+  }
+
+  handleSelectFixtureStateRequest({ payload }: SetFixtureStateRequest) {
+    const { fixturePath, fixtureState } = payload;
+
+    // Ensure fixture state applies to currently selected fixture
+    if (fixturePath === this.state.fixturePath) {
+      this.setState({
+        fixtureState,
+        syncedFixtureState: fixtureState
+      });
+    }
+  }
 
   postReadyState() {
     const { rendererId, postMessage } = this.props;
@@ -154,11 +182,11 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     });
   }
 
-  postFixtureListChange() {
+  postFixtureListUpdate() {
     const { rendererId, postMessage } = this.props;
 
     postMessage({
-      type: 'fixtureListChange',
+      type: 'fixtureListUpdate',
       payload: {
         rendererId,
         fixtures: this.getFixtureNames()
@@ -209,6 +237,42 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
   getFixtureNames(): string[] {
     return Object.keys(this.props.fixtures);
   }
+
+  fireChangeCallback() {
+    const { onFixtureChange } = this.props;
+
+    if (typeof onFixtureChange === 'function') {
+      onFixtureChange();
+    }
+  }
+}
+
+function getSortedDecoratorsForFixturePath(
+  systemDecorators: DecoratorType[],
+  decorators: DecoratorsByPath,
+  fixturePath: string
+) {
+  return [
+    ...systemDecorators,
+    ...getSortedDecorators(getDecoratorsForFixturePath(decorators, fixturePath))
+  ];
+}
+
+function getSortedDecorators(decoratorsByPath): DecoratorType[] {
+  return sortPathsByDepthAsc(Object.keys(decoratorsByPath)).map(
+    decoratorPath => decoratorsByPath[decoratorPath]
+  );
+}
+
+function sortPathsByDepthAsc(paths) {
+  return [...paths].sort(
+    (a, b) =>
+      getPathNestingLevel(a) - getPathNestingLevel(b) || a.localeCompare(b)
+  );
+}
+
+function getPathNestingLevel(path) {
+  return path.split('/').length;
 }
 
 function getDecoratorsForFixturePath(decorators, fixturePath) {
@@ -218,6 +282,11 @@ function getDecoratorsForFixturePath(decorators, fixturePath) {
 }
 
 function getParentPath(nestedPath) {
-  // Remove everything right of the right-most forward slash
-  return nestedPath.replace(/^(.+)\/.+$/, '$1');
+  // Remove everything right of the right-most forward slash, or return an
+  // empty string if path has no forward slash
+  return nestedPath.replace(/^((.+)\/)?.+$/, '$2');
+}
+
+function doesRequestChangeFixture(r: RendererRequest) {
+  return r.type === 'selectFixture' || r.type === 'unselectFixture';
 }

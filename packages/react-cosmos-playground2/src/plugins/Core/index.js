@@ -23,10 +23,10 @@ export function register() {
       <Container>
         <Slot name="left" />
         <Center>
-          <Slot name="fixtureHeader" />
+          <Slot name="rendererHeader" />
           <PreviewContainer>
-            <Slot name="rendererPreviewOverlay" />
             <Slot name="rendererPreview" />
+            <Slot name="contentOverlay" />
           </PreviewContainer>
         </Center>
         <Slot name="right" />

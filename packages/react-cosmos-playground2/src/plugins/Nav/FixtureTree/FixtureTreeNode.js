@@ -20,6 +20,7 @@ type Props = {
   onToggleExpansion: (nodePath: string, expanded: boolean) => mixed
 };
 
+// TODO: Make fixture buttons <a>nchors to enable "open in new tab" clicks
 export class FixtureTreeNode extends Component<Props> {
   render() {
     const {

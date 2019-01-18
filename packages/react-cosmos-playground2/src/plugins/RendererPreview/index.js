@@ -1,79 +1,58 @@
 // @flow
 
-import React from 'react';
-import { registerPlugin, Slot } from 'react-plugin';
+import { registerPlugin } from 'react-plugin';
+import { checkRendererStatus } from './checkRendererStatus';
+import { createRendererRequestHandler } from './handleRendererRequests';
+import { handleWindowMessages } from './handleWindowMessages';
 import { RendererPreview } from './RendererPreview';
 
-import type { RendererRequest } from 'react-cosmos-shared2/renderer';
-import type { RendererConfig } from '../Renderer';
+import type { RendererCoordinatorConfig } from '../RendererCoordinator';
+import type { RendererPreviewState } from './shared';
 
-let iframeRef: null | window = null;
+export type { UrlStatus, RuntimeStatus, RendererPreviewState } from './shared';
 
 export function register() {
-  const { init, on, plug } = registerPlugin({ name: 'rendererPreview' });
+  const { onRendererRequest, setIframeRef } = createRendererRequestHandler();
 
-  on('renderer.request', handleRendererRequest);
+  const { init, on, plug } = registerPlugin<{}, RendererPreviewState>({
+    name: 'rendererPreview',
+    initialState: {
+      urlStatus: 'unknown',
+      runtimeStatus: 'pending'
+    }
+  });
+
+  on('rendererCoordinator.request', onRendererRequest);
 
   init(context => {
-    if (!getRendererUrl(context)) {
-      return;
+    const rendererUrl = getRendererUrl(context);
+
+    if (rendererUrl) {
+      return [
+        checkRendererStatus(context, rendererUrl),
+        handleWindowMessages(context)
+      ];
     }
-
-    function handleWindowMsg(msg: Object) {
-      // TODO: Create convention to filter out alien messages reliably (eg.
-      // maybe tag msgs with source: "cosmos")
-      // TODO: https://github.com/facebook/react-devtools/issues/812#issuecomment-308827334
-      if (msg.data.source) {
-        return;
-      }
-
-      context.callMethod('renderer.receiveResponse', msg.data);
-    }
-
-    window.addEventListener('message', handleWindowMsg, false);
-
-    return () => {
-      window.removeEventListener('message', handleWindowMsg, false);
-    };
   });
 
   plug({
     slotName: 'rendererPreview',
-    render: ({ rendererUrl, isFixtureLoaded }) =>
-      rendererUrl && (
-        <Slot name="rendererPreviewOuter">
-          <RendererPreview
-            rendererUrl={rendererUrl}
-            isFixtureLoaded={isFixtureLoaded}
-            onIframeRef={elRef => {
-              iframeRef = elRef;
-            }}
-          />
-        </Slot>
-      ),
-    getProps: context => {
-      return {
-        rendererUrl: getRendererUrl(context),
-        isFixtureLoaded: isFixtureloaded(context)
-      };
-    }
+    render: RendererPreview,
+    getProps: context => getRendererPreviewProps(context, setIframeRef)
   });
 }
 
+function getRendererPreviewProps(context, onIframeRef) {
+  return {
+    rendererUrl: getRendererUrl(context),
+    onIframeRef
+  };
+}
+
 function getRendererUrl({ getConfigOf }) {
-  const { webUrl }: RendererConfig = getConfigOf('renderer');
+  const { webUrl }: RendererCoordinatorConfig = getConfigOf(
+    'rendererCoordinator'
+  );
 
   return webUrl;
-}
-
-function isFixtureloaded({ callMethod }) {
-  const primaryRendererState = callMethod('renderer.getPrimaryRendererState');
-
-  return Boolean(primaryRendererState && primaryRendererState.fixtureState);
-}
-
-function handleRendererRequest(context, msg: RendererRequest) {
-  if (iframeRef) {
-    iframeRef.contentWindow.postMessage(msg, '*');
-  }
 }

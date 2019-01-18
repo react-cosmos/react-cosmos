@@ -15,8 +15,10 @@ export type Fixtures = {
   [path: string]: Node
 };
 
-export type Decorators = {
-  [path: string]: ComponentType<any>
+export type DecoratorType = ComponentType<{ children: Node }>;
+
+export type DecoratorsByPath = {
+  [path: string]: DecoratorType
 };
 
 export type RemoteRendererApi = {
@@ -28,7 +30,9 @@ export type RemoteRendererApi = {
 export type FixtureConnectProps = {
   rendererId: string,
   fixtures: Fixtures,
-  decorators: Decorators
+  systemDecorators: DecoratorType[],
+  userDecorators: DecoratorsByPath,
+  onFixtureChange?: () => mixed
 } & RemoteRendererApi;
 
 export type PostMessageProps = {

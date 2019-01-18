@@ -14,22 +14,16 @@ import { register } from '.';
 
 afterEach(cleanup);
 
-const primaryRendererState = {
-  fixtures: ['fixtures/ein.js', 'fixtures/zwei.js', 'fixtures/drei.js'],
-  fixtureState: null
-};
+const fixtures = ['ein.js', 'zwei.js', 'drei.js'];
 
 function registerTestPlugins({ urlParams = {} } = {}) {
   register();
 
   mockConfig('core', { fixturesDir: 'fixtures', fixtureFileSuffix: 'fixture' });
   mockState('router', { urlParams });
-  mockState('renderer', {
-    primaryRendererId: 'foo-renderer',
-    renderers: { 'foo-renderer': primaryRendererState }
-  });
+  mockState('rendererCoordinator', { fixtures });
 
-  mockMethod('renderer.getPrimaryRendererState', () => primaryRendererState);
+  mockMethod('rendererCoordinator.isRendererConnected', () => true);
   mockMethod('storage.getItem', () => Promise.resolve(null));
   mockMethod('storage.setItem', () => Promise.resolve(undefined));
 }
@@ -59,7 +53,7 @@ it('sets "fixturePath" router param on fixture click', async () => {
   fireEvent.click(getByText(/zwei/i));
 
   expect(handleSetUrlParams).toBeCalledWith(expect.any(Object), {
-    fixturePath: 'fixtures/zwei.js'
+    fixturePath: 'zwei.js'
   });
 });
 
@@ -74,7 +68,7 @@ it('renders nav element', async () => {
 
 it('does not render nav element in full screen mode', async () => {
   registerTestPlugins({
-    urlParams: { fixturePath: 'fixtures/zwei.js', fullScreen: true }
+    urlParams: { fixturePath: 'zwei.js', fullScreen: true }
   });
   const { queryByTestId } = loadTestPlugins();
 

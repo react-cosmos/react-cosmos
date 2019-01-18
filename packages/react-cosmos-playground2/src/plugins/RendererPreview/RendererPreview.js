@@ -2,28 +2,27 @@
 
 import styled from 'styled-components';
 import React from 'react';
+import { Slot } from 'react-plugin';
 
 type Props = {
-  rendererUrl: string,
-  isFixtureLoaded: boolean,
+  rendererUrl: null | string,
   onIframeRef: (elRef: null | window) => void
 };
 
-export function RendererPreview({
-  rendererUrl,
-  isFixtureLoaded,
-  onIframeRef
-}: Props) {
+export function RendererPreview({ rendererUrl, onIframeRef }: Props) {
   return (
-    <Container>
-      <Iframe
-        data-testid="previewIframe"
-        ref={onIframeRef}
-        src={rendererUrl}
-        frameBorder={0}
-        style={{ display: isFixtureLoaded ? 'block' : 'none' }}
-      />
-    </Container>
+    rendererUrl && (
+      <Slot name="rendererPreviewOuter">
+        <Container>
+          <Iframe
+            data-testid="previewIframe"
+            ref={onIframeRef}
+            src={rendererUrl}
+            frameBorder={0}
+          />
+        </Container>
+      </Slot>
+    )
   );
 }
 

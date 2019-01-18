@@ -13,15 +13,12 @@ import { register } from '..';
 
 afterEach(cleanup);
 
-const initialRendererState = { primaryRendererId: null, renderers: {} };
-
 function registerTestPlugins() {
   register();
   mockConfig('core', { projectId: 'mockProjectId' });
-  mockConfig('renderer', { webUrl: 'mockRendererUrl' });
   mockState('router', { urlParams: { fixturePath: 'fooFixture.js' } });
-  mockState('renderer', initialRendererState);
-  mockMethod('renderer.getPrimaryRendererState', () => null);
+  mockState('rendererCoordinator', { fixtureState: null });
+  mockMethod('rendererCoordinator.isValidFixtureSelected', () => false);
 }
 
 function loadTestPlugins() {

@@ -11,4 +11,3 @@
 export { findElementPaths } from './findElementPaths';
 export { getElementAtPath, getExpectedElementAtPath } from './getElementAtPath';
 export { setElementAtPath } from './setElementAtPath';
-export { areNodesEqual } from './areNodesEqual';

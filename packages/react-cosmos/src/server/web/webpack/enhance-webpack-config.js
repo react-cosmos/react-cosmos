@@ -53,7 +53,7 @@ export default function enhanceWebpackConfig({
     next
       ? {
           loader: require.resolve('./embed-modules-webpack-loader-next'),
-          include: require.resolve('../../../client/user-modules-next')
+          include: require.resolve('../../../client/next/userModules')
         }
       : {
           loader: require.resolve('./embed-modules-webpack-loader'),
@@ -64,6 +64,9 @@ export default function enhanceWebpackConfig({
   let plugins = [
     ...getExistingPlugins(webpackConfig),
     new webpack.DefinePlugin({
+      // Having __DEV__ as boolean is useful because if (__DEV__) blocks will
+      // get stripped automatically when compiling a static export build
+      __DEV__: JSON.stringify(!shouldExport),
       'process.env': {
         NODE_ENV: JSON.stringify(shouldExport ? 'production' : 'development'),
         PUBLIC_URL: JSON.stringify(removeTrailingSlash(publicUrl))
@@ -128,10 +131,7 @@ function getEntry({ next, globalImports, hot }, shouldExport) {
     ];
   }
 
-  return [
-    ...entry,
-    resolveClientPath(next ? 'loader-entry-next' : 'loader-entry')
-  ];
+  return [...entry, resolveClientPath(next ? 'next' : 'loader-entry')];
 }
 
 function resolveClientPath(p) {

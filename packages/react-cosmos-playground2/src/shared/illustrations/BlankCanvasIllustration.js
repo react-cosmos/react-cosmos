@@ -5,7 +5,7 @@ import { Illustration } from '../svg';
 
 const primary4 = 'var(--primary4)';
 
-export const BlankCanvasIllustration = () => (
+export const BlankCanvasIllustration = ({ title }: { title: string }) => (
   <Illustration viewBox="0 0 998.95 833.99">
     <defs>
       <linearGradient
@@ -21,7 +21,7 @@ export const BlankCanvasIllustration = () => (
         <stop offset="1" stopColor="gray" stopOpacity="0.1" />
       </linearGradient>
     </defs>
-    <title>blank canvas</title>
+    <title>{title}</title>
     <path
       d="M424.35,62.67c29.21-26,75.06-31.33,116.8-29.26,131.09,6.52,249.42,69.8,351.78,141.39,37.06,25.91,73.54,53.84,97.59,89.53,49,72.65,34.44,173.29-33.64,233.14-23.17,20.36-51.25,36-80.08,49.81-51.26,24.6-106.57,44.35-164.75,50-41.48,4-83.48.75-124.73-4.84C472.09,576.78,359,542.22,264.17,483.1,222.59,457.17,183.4,424.93,166.26,383S160.09,287.87,202.55,263c17.56-10.27,38.56-14.91,59.11-19.27,30.26-6.41,61-12.73,88.3-25.76,28.21-13.46,61.6-39.49,56-69.29C400,116.75,395.18,88.67,424.35,62.67Z"
       transform="translate(-100.52 -33.01)"

@@ -1,5 +1,5 @@
 module.exports = {
   next: true,
-  globalImports: ['src/cosmosLoadPlugins'],
+  globalImports: ['src/global/cosmos.loadPlugins'],
   port: 8091
 };

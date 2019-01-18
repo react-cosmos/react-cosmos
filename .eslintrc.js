@@ -78,9 +78,7 @@ module.exports = {
       'packages/react-cosmos-telescope/src/**/*.js'
     ]),
     cypressEnv(['cypress/**/*.js']),
-    enableProcessEnv([
-      'packages/react-cosmos/src/client/{react-error-overlay,react-devtools-hook,loader-entry}.js'
-    ])
+    userBuildEnv(['packages/react-cosmos/src/client/**/*.js'])
   ]
 };
 
@@ -124,10 +122,11 @@ function cypressEnv(files) {
   };
 }
 
-function enableProcessEnv(files) {
+function userBuildEnv(files) {
   return {
     files,
     globals: {
+      __DEV__: true,
       // Enable use of process.env.NODE_ENV
       process: true
     }

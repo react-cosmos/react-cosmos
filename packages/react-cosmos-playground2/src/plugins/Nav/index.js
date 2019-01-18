@@ -5,6 +5,7 @@ import { Nav } from './Nav';
 
 import type { CoreConfig } from '../Core';
 import type { RouterState } from '../Router';
+import type { RendererCoordinatorState } from '../RendererCoordinator';
 
 export function register() {
   const { plug } = registerPlugin({ name: 'nav' });
@@ -19,13 +20,19 @@ export function register() {
         fixtureFileSuffix
       }: CoreConfig = getConfigOf('core');
       const { urlParams }: RouterState = getStateOf('router');
+      const { fixtures }: RendererCoordinatorState = getStateOf(
+        'rendererCoordinator'
+      );
 
       return {
         projectId,
         fixturesDir,
         fixtureFileSuffix,
         urlParams,
-        primaryRendererState: callMethod('renderer.getPrimaryRendererState'),
+        rendererConnected: callMethod(
+          'rendererCoordinator.isRendererConnected'
+        ),
+        fixtures,
         setUrlParams: newUrlParams => {
           callMethod('router.setUrlParams', newUrlParams);
         },

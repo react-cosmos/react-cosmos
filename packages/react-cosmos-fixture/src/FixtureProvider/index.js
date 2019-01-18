@@ -10,10 +10,10 @@ import type {
   FixtureState,
   SetFixtureState
 } from 'react-cosmos-shared2/fixtureState';
-import type { Decorators, FixtureContextValue } from '../index.js.flow';
+import type { DecoratorType, FixtureContextValue } from '../index.js.flow';
 
 type Props = {
-  decorators: Decorators,
+  decorators: DecoratorType[],
   children: Node
 } & FixtureContextValue;
 
@@ -29,7 +29,7 @@ export class FixtureProvider extends PureComponent<Props> {
       <FixtureContext.Provider
         value={this.getFixtureContextValue(fixtureState, setFixtureState)}
       >
-        {this.getComputedElementTree(decorators, children)}
+        {getComputedElementTree(decorators, children)}
       </FixtureContext.Provider>
     );
   }
@@ -42,53 +42,17 @@ export class FixtureProvider extends PureComponent<Props> {
       setFixtureState
     })
   );
-
-  // NOTE: This is more than an optimization! Computing the element tree on
-  // every fixtureState change would cause an infinite update loop
-  getComputedElementTree = memoize((decorators: Decorators, leaf: Node) =>
-    createComputedElementTree(decorators, leaf)
-  );
 }
 
-function createComputedElementTree(decorators: Decorators, leaf: Node) {
+function getComputedElementTree(decorators: DecoratorType[], leaf: Node) {
   const fixtureElement = (
     <FixtureCapture decoratorId="root">{leaf}</FixtureCapture>
   );
 
-  return sortPathsByDepthDesc(Object.keys(decorators)).reduce(
-    (prevElement, decoratorPath) => {
-      const Decorator = decorators[decoratorPath];
-      // The prevElement isn't set as the current decorator's children directly
-      // because it lead to duplication of fixture element prop/state capture.
-      // Why? When using <FixtureCapture> inside a decorator it captures
-      // children elements too, which would've included the selected fixture
-      // (and inner decorators) had we not taken this precaution.
-      const NextDecorator = hideChildrenUnderType(prevElement);
-
-      return (
-        <Decorator>
-          <NextDecorator />
-        </Decorator>
-      );
-    },
-    fixtureElement
-  );
-}
-
-function hideChildrenUnderType(children) {
-  const NextDecorator = () => children;
-  NextDecorator.cosmosCapture = false;
-
-  return NextDecorator;
-}
-
-function sortPathsByDepthDesc(paths) {
-  return [...paths].sort(
-    (a, b) =>
-      getPathNestingLevel(b) - getPathNestingLevel(a) || b.localeCompare(a)
-  );
-}
-
-function getPathNestingLevel(path) {
-  return path.split('/').length;
+  return [...decorators]
+    .reverse()
+    .reduce(
+      (prevElement, Decorator) => <Decorator>{prevElement}</Decorator>,
+      fixtureElement
+    );
 }

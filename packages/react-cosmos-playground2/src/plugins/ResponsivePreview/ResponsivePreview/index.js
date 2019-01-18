@@ -11,9 +11,8 @@ import { stretchStyle, getStyles } from './style';
 
 import type { Node } from 'react';
 import type { SetState } from 'react-cosmos-shared2/util';
+import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type { Storage } from '../../Storage';
-import type { UrlParams } from '../../Router';
-import type { RendererItemState } from '../../Renderer';
 import type {
   Viewport,
   ResponsivePreviewConfig,
@@ -25,8 +24,9 @@ type Props = {
   config: ResponsivePreviewConfig,
   state: ResponsivePreviewState,
   projectId: string,
-  urlParams: UrlParams,
-  primaryRendererState: null | RendererItemState,
+  fullScreen: boolean,
+  fixtureState: null | FixtureState,
+  validFixtureSelected: boolean,
   setState: SetState<ResponsivePreviewState>,
   setFixtureStateViewport: () => void,
   storage: Storage
@@ -53,18 +53,18 @@ export class ResponsivePreview extends Component<Props, State> {
       children,
       config,
       state,
-      urlParams,
-      primaryRendererState
+      fullScreen,
+      fixtureState,
+      validFixtureSelected
     } = this.props;
     const { container, scale } = this.state;
-    const { fixturePath, fullScreen } = urlParams;
-    const viewport = getViewport(state, primaryRendererState);
+    const viewport = getViewport(state, fixtureState);
 
     // We don't simply do `return children` because it would cause a flicker
     // whenever switching between responsive and non responsive mode. By
     // returning the same element nesting between states for Preview the
     // component instances are preserved and the transition is seamless.
-    if (!fixturePath || fullScreen || !viewport || !container) {
+    if (!validFixtureSelected || fullScreen || !viewport || !container) {
       return (
         <Container>
           <div key="preview" ref={this.handleContainerRef} style={stretchStyle}>
@@ -173,11 +173,10 @@ function getContainerSize(containerEl: ?HTMLElement) {
 
 function getViewport(
   state: ResponsivePreviewState,
-  primaryRendererState: null | RendererItemState
+  fixtureState: null | FixtureState
 ): null | Viewport {
   return (
-    getFixtureViewport(primaryRendererState) ||
-    (state.enabled ? state.viewport : null)
+    getFixtureViewport(fixtureState) || (state.enabled ? state.viewport : null)
   );
 }
 

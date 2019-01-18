@@ -1,7 +1,7 @@
 // @flow
 
 import type { IPluginContext } from 'react-plugin';
-import type { RendererItemState } from '../Renderer';
+import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 
 export type Viewport = { width: number, height: number };
 
@@ -57,11 +57,7 @@ export function getResponsiveViewportStorageKey(projectId: string) {
 }
 
 export function getFixtureViewport(
-  primaryRendererState: null | RendererItemState
+  fixtureState: null | FixtureState
 ): null | Viewport {
-  return (
-    primaryRendererState &&
-    primaryRendererState.fixtureState &&
-    primaryRendererState.fixtureState.viewport
-  );
+  return fixtureState && fixtureState.viewport;
 }

@@ -4,10 +4,10 @@ import React from 'react';
 import { render } from 'react-dom';
 import { getDomContainer } from 'react-cosmos-shared2/dom';
 import * as ReactPlugin from 'react-plugin';
-import { GlobalStyle } from './globalStyle';
+import { GlobalStyle } from './global/style';
 
 // Statefulness alert!
-import './register-plugins';
+import './global/registerPlugins';
 
 import type { PlaygroundConfig } from './index.js.flow';
 

@@ -58,7 +58,7 @@ module.exports = {
     '!**/react-cosmos-voyager/src/use-cases/**',
     // Ignore coverage from dark launched APIs
     '!**/react-cosmos-playground2/src/plugins/ControlPanel/**',
-    '!**/react-cosmos/src/client/*-next.js',
+    '!**/react-cosmos/src/client/next/**',
     '!**/react-cosmos/src/server/web/webpack/embed-modules-webpack-loader-next.js',
     '!**/react-cosmos-shared2/src/server/findUserModulePaths.js'
   ],

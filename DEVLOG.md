@@ -1,3 +1,12 @@
+Q: Decisions made to overcome the never-ending https://github.com/react-cosmos/react-cosmos/pull/918
+
+- [x] No longer keep separate states for each connected renderer. Renderers are meant to mirror each other, and any deviation in states (aside from slight delays) represents a coordination error---something we should avoid to begin with. So `fixtures` and `fixtureState` should be stored only once and updated by the primary renderer, to which the `primaryRendererId` state attribute points to. Responses from secondary renderers will be discarded. We'll still keep a list of all connected renderer IDs to know which renderers to send requests for.
+- [x] We don't support generic error states for remote renderers, so the error flag should be put back into the `rendererPreview` plugin for convenience (meaning closer to the modules that require this information).
+- [x] Give up hiding the renderer preview until the fixture is "loaded". It's a minor visual detail that requires a state model that is near impossible to obtain: Knowing when a renderer error has been resolved (thru hot reloading). We can tell at the global level when a renderer is broken, because no response comes from it aside from the error one. But once the renderer is interactive it becomes impossible to track when the renderers goes in and out of error states. So to simplify this matter we'll show the renderer iframe as soon as a fixture is selected, without requiring renderer feedback.
+- [x] Rename `renderer` plugin to `rendererCoordinator` for clarity
+
+---
+
 Q: How to structure responsive-preview's state type?
 
 It has three possible states:

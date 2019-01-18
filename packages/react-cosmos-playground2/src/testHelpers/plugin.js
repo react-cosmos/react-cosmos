@@ -20,6 +20,10 @@ export function getPluginState(pluginName: string) {
   return getPluginContext(pluginName).getState();
 }
 
+export function mockPlugin(pluginName: string) {
+  ensurePlugin(pluginName);
+}
+
 export function mockConfig(pluginName: string, config: {}) {
   ensurePlugin(pluginName).defaultConfig = config;
 }
@@ -37,27 +41,22 @@ export function mockMethod(methodPath: string, handler: Function) {
   ensurePluginApi(pluginName).method(methodName, handler);
 }
 
-export function mockInit(pluginName: string, handler: Function) {
-  ensurePluginApi(pluginName).init(handler);
-}
-
 export function mockPlug(plug: Object) {
   registerFreshPlugin().plug(plug);
 }
 
-export function mockInitCall(methodPath: string, ...args: any[]): Promise<any> {
-  return new Promise(resolve => {
-    registerFreshPlugin().init(({ callMethod }) => {
-      resolve(callMethod(methodPath, ...args));
-    });
-  });
+export function mockCall(methodPath: string, ...args: any[]): Promise<any> {
+  const [pluginName] = methodPath.split('.');
+  const { callMethod } = getPluginContext(pluginName);
+
+  return callMethod(methodPath, ...args);
 }
 
-export function mockInitEmit(eventPath: string, ...args: any[]) {
+export function mockEmit(eventPath: string, ...args: any[]) {
   const [pluginName, eventName] = eventPath.split('.');
-  ensurePluginApi(pluginName).init(({ emitEvent }) => {
-    emitEvent(eventName, ...args);
-  });
+  const { emitEvent } = getPluginContext(pluginName);
+
+  emitEvent(eventName, ...args);
 }
 
 function registerFreshPlugin() {

@@ -11,12 +11,9 @@ import {
   createCompFixtureState,
   updateCompFixtureState
 } from 'react-cosmos-shared2/fixtureState';
+import { areNodesEqual } from 'react-cosmos-shared2/react';
 import { FixtureContext } from '../FixtureContext';
-import {
-  getElementAtPath,
-  getExpectedElementAtPath,
-  areNodesEqual
-} from './nodeTree';
+import { getElementAtPath, getExpectedElementAtPath } from './nodeTree';
 import { getComponentName } from './getComponentName';
 import { getElementRefType } from './getElementRefType';
 import { findRelevantElementPaths } from './findRelevantElementPaths';
