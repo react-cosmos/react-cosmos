@@ -12,24 +12,10 @@ import {
   getPluginState
 } from '../../../testHelpers/plugin';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
+import { rendererReadyMsg, rendererErrorMsg } from '../testHelpers/responses';
 import { register } from '..';
 
-import type {
-  RendererReadyResponse,
-  RendererErrorResponse
-} from 'react-cosmos-shared2/renderer';
-
 afterEach(cleanup);
-
-const rendererReadyMsg: RendererReadyResponse = {
-  type: 'rendererReady',
-  payload: { rendererId: 'mockRendererId', fixtures: [] }
-};
-
-const rendererErrorMsg: RendererErrorResponse = {
-  type: 'rendererError',
-  payload: { rendererId: 'mockRendererId' }
-};
 
 function registerTestPlugins() {
   register();
