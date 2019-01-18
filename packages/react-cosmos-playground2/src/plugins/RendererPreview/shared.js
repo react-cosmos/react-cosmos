@@ -3,7 +3,7 @@
 import type { IPluginContext } from 'react-plugin';
 
 export type UrlStatus = 'unknown' | 'ok' | 'error';
-export type RuntimeStatus = 'pending' | 'error' | 'connected';
+export type RuntimeStatus = 'pending' | 'connected' | 'error';
 
 export type RendererPreviewState = {
   urlStatus: UrlStatus,
