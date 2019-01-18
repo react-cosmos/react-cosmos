@@ -5,7 +5,8 @@ import {
   extendObjWithValues,
   findCompFixtureState
 } from 'react-cosmos-shared2/fixtureState';
-import { setElementAtPath } from './nodeTree';
+import { setElementAtPath, getChildrenPath } from './nodeTree';
+import { getComponentName } from './getComponentName';
 import { findRelevantElementPaths } from './findRelevantElementPaths';
 
 import type { Node } from 'react';
@@ -21,16 +22,29 @@ export function extendPropsWithFixtureState(
 ): Node {
   const elPaths = findRelevantElementPaths(node);
 
-  return elPaths.reduce((extendedChildren, elPath): Node => {
+  return elPaths.reduce((extendedNode, elPath): Node => {
     const compFxState = findCompFixtureState(fixtureState, decoratorId, elPath);
 
-    return setElementAtPath(extendedChildren, elPath, element => {
-      if (!compFxState || !compFxState.props) {
+    return setElementAtPath(extendedNode, elPath, element => {
+      if (
+        !compFxState ||
+        !compFxState.props ||
+        componentTypeChanged(compFxState.componentName)
+      ) {
         return {
           ...element,
           key: getElRenderKey(elPath, DEFAULT_RENDER_KEY)
         };
       }
+
+      // Prevent overriding child elements with outdated "children" prop values
+      // stored in fixture state
+      // See https://github.com/react-cosmos/react-cosmos/pull/920 for context
+      const originalProps = element.props;
+      const extendedProps = extendObjWithValues(
+        originalProps,
+        compFxState.props
+      );
 
       // HACK alert: Editing React Element by hand
       // This is blasphemy, but there are two reasons why React.cloneElement
@@ -46,17 +60,25 @@ export function extendPropsWithFixtureState(
       // Useful links:
       //   - https://reactjs.org/docs/react-api.html#cloneelement
       //   - https://github.com/facebook/react/blob/15a8f031838a553e41c0b66eb1bcf1da8448104d/packages/react/src/ReactElement.js#L293-L362
-      const { props } = element;
-
       return {
         ...element,
-        props: extendObjWithValues(props, compFxState.props),
+        props: hasChildElPaths(elPaths, elPath)
+          ? { ...extendedProps, children: originalProps.children }
+          : extendedProps,
         key: getElRenderKey(elPath, compFxState.renderKey)
       };
+
+      function componentTypeChanged(componentName) {
+        return componentName !== getComponentName(element.type);
+      }
     });
   }, node);
 }
 
 function getElRenderKey(elPath, renderKey) {
   return `${elPath}-${renderKey}`;
+}
+
+function hasChildElPaths(elPaths, elPath) {
+  return elPaths.some(p => p.indexOf(getChildrenPath(elPath)) === 0);
 }

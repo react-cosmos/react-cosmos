@@ -160,6 +160,8 @@ class FixtureCaptureInner extends Component<InnerProps> {
 
     // Remove fixture state for removed child elements (likely via HMR)
     getCompFixtureStates(fixtureState, decoratorId).forEach(({ elPath }) => {
+      // FIXME: Also reset fixture state at this element path if the component
+      // component type of the corresponding element changed
       if (elPaths.indexOf(elPath) === -1) {
         this.removeFixtureState(elPath);
         this.flushEl(elPath);

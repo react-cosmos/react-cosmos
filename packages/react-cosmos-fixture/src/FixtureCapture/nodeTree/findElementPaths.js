@@ -3,7 +3,7 @@
 import { flatten } from 'lodash';
 import { isElement } from 'react-is';
 import { Fragment } from 'react';
-import { isRootPath } from './shared';
+import { getChildrenPath } from './shared';
 
 import type { Node, Element } from 'react';
 
@@ -32,8 +32,4 @@ export function findElementPaths(node: Node, curPath: string = ''): string[] {
 
   // Ignore Fragment elements, but include their children
   return element.type === Fragment ? childElPaths : [curPath, ...childElPaths];
-}
-
-function getChildrenPath(curPath) {
-  return isRootPath(curPath) ? 'props.children' : `${curPath}.props.children`;
 }
