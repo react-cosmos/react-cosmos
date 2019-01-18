@@ -6,7 +6,6 @@ import { loadPlugins, Slot } from 'react-plugin';
 import {
   cleanup,
   mockConfig,
-  mockState,
   getPluginState
 } from '../../../testHelpers/plugin';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
@@ -17,7 +16,6 @@ afterEach(cleanup);
 function registerTestPlugins() {
   register();
   mockConfig('rendererCoordinator', { webUrl: 'mockRendererUrl' });
-  mockState('router', { urlParams: { fixturePath: 'ein.js' } });
 }
 
 function loadTestPlugins(status: number) {
@@ -27,7 +25,7 @@ function loadTestPlugins(status: number) {
   return render(<Slot name="rendererPreview" />);
 }
 
-it('sets "ok" status', async () => {
+it('sets "ok" url status', async () => {
   registerTestPlugins();
   loadTestPlugins(200);
 
@@ -36,7 +34,7 @@ it('sets "ok" status', async () => {
   );
 });
 
-it('sets "notResponding" status', async () => {
+it('sets "notResponding" url status', async () => {
   registerTestPlugins();
   loadTestPlugins(404);
 

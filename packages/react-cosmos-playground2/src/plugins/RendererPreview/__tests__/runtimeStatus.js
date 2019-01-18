@@ -7,7 +7,6 @@ import { loadPlugins, Slot } from 'react-plugin';
 import {
   cleanup,
   mockConfig,
-  mockState,
   mockMethod,
   getPluginState
 } from '../../../testHelpers/plugin';
@@ -20,7 +19,6 @@ afterEach(cleanup);
 function registerTestPlugins() {
   register();
   mockConfig('rendererCoordinator', { webUrl: 'mockRendererUrl' });
-  mockState('router', { urlParams: {} });
   mockMethod('rendererCoordinator.receiveResponse', () => {});
 }
 
@@ -31,7 +29,7 @@ function loadTestPlugins() {
   return render(<Slot name="rendererPreview" />);
 }
 
-it('sets "error" status', async () => {
+it('sets "error" runtime status', async () => {
   registerTestPlugins();
   loadTestPlugins();
 
@@ -42,7 +40,7 @@ it('sets "error" status', async () => {
   );
 });
 
-it('sets "connected" status', async () => {
+it('sets "connected" runtime status', async () => {
   registerTestPlugins();
   loadTestPlugins();
 
@@ -54,7 +52,7 @@ it('sets "connected" status', async () => {
   );
 });
 
-it('keeps "connected" status once set', async () => {
+it('keeps "connected" runtime status once set', async () => {
   registerTestPlugins();
   loadTestPlugins();
 

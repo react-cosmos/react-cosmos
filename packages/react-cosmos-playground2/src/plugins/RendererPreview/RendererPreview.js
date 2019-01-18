@@ -6,15 +6,10 @@ import { Slot } from 'react-plugin';
 
 type Props = {
   rendererUrl: null | string,
-  isVisible: boolean,
   onIframeRef: (elRef: null | window) => void
 };
 
-export function RendererPreview({
-  rendererUrl,
-  isVisible,
-  onIframeRef
-}: Props) {
+export function RendererPreview({ rendererUrl, onIframeRef }: Props) {
   return (
     rendererUrl && (
       <Slot name="rendererPreviewOuter">
@@ -24,9 +19,6 @@ export function RendererPreview({
             ref={onIframeRef}
             src={rendererUrl}
             frameBorder={0}
-            style={{
-              display: isVisible ? 'block' : 'none'
-            }}
           />
         </Container>
       </Slot>

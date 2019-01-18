@@ -8,7 +8,6 @@ import { mockIframeMessage } from '../testHelpers/mockIframeMessage';
 import {
   cleanup,
   mockConfig,
-  mockState,
   mockMethod,
   mockEmit
 } from '../../../testHelpers/plugin';
@@ -22,7 +21,6 @@ afterEach(cleanup);
 function registerTestPlugins() {
   register();
   mockConfig('rendererCoordinator', { webUrl: 'mockRendererUrl' });
-  mockState('router', { urlParams: {} });
 }
 
 function loadTestPlugins() {
