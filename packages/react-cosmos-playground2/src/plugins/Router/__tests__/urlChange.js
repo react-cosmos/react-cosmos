@@ -14,7 +14,7 @@ afterEach(() => {
   resetUrl();
 });
 
-it('emits "selectFixture" event on "fixturePath" URL param change', () => {
+it('emits "fixtureChange" event on "fixturePath" URL param change', () => {
   register();
 
   const handleFixtureChange = jest.fn();
@@ -27,7 +27,7 @@ it('emits "selectFixture" event on "fixturePath" URL param change', () => {
   expect(handleFixtureChange).toBeCalledWith(expect.any(Object), 'zwei.js');
 });
 
-it('emits "selectFixture" event on removed "fixturePath" URL param', async () => {
+it('emits "fixtureChange" event on removed "fixturePath" URL param', async () => {
   register();
 
   const handleFixtureChange = jest.fn();
