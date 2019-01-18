@@ -2,7 +2,7 @@
 
 import { registerPlugin } from 'react-plugin';
 import { checkRendererStatus } from './checkRendererStatus';
-import { createRendererRequestHandler } from './onRendererRequest';
+import { createRendererRequestHandler } from './handleRendererRequests';
 import { handleWindowMessages } from './handleWindowMessages';
 import { RendererPreview } from './RendererPreview';
 
