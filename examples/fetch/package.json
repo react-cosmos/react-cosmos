@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-fetch-example",
-  "version": "4.7.0-24",
+  "version": "4.7.0",
   "description": "Example of mocking the fetch API",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples",
   "license": "MIT",
@@ -8,7 +8,7 @@
     "start": "cosmos"
   },
   "dependencies": {
-    "react-cosmos": "^4.7.0-24",
+    "react-cosmos": "^4.7.0",
     "react-cosmos-fetch-proxy": "^4.7.0-24"
   },
   "private": true
