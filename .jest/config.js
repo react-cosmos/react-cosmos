@@ -53,6 +53,7 @@ module.exports = {
   collectCoverageFrom: [
     '**/src/**/*.{js,jsx}',
     '!**/{__fixtures__,__jsxfixtures__}/**',
+    '!**/*.{fixture,jsxfixture}.js',
     '!**/cosmos.decorator.js',
     '!**/testHelpers/**',
     '!**/react-cosmos-voyager/src/use-cases/**',
