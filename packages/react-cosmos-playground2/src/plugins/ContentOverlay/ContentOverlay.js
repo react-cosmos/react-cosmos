@@ -8,6 +8,7 @@ import {
   DreamerIllustration
 } from '../../shared/illustrations';
 import { RendererNotResponding } from './RendererNotResponding';
+import { WelcomeCosmosNext } from './WelcomeCosmosNext';
 import { IllustrationContainer } from './shared';
 
 import type { UrlStatus, RuntimeStatus } from '../RendererPreview';
@@ -65,9 +66,7 @@ export function ContentOverlay({
 
   return (
     <Container data-testid="blank">
-      <IllustrationContainer>
-        <BlankCanvasIllustration title="blank canvas" />
-      </IllustrationContainer>
+      <WelcomeCosmosNext />
     </Container>
   );
 }
