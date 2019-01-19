@@ -2,45 +2,50 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import { ArtificialIntelligenceIllustration } from '../../shared/illustrations';
+import { AstronautIllustration } from '../../shared/illustrations';
 import { IllustrationContainer } from './shared';
 
-export function RendererNotRespondingScreen() {
+export function WelcomeCosmosNext() {
   return (
     <Container>
       <Content>
-        <Header>Renderer not responding</Header>
-        <Paragraph>It's usually one of the following...</Paragraph>
+        <Header>Welcome to Cosmos Next</Header>
         <List>
           <li>
-            <No>1</No>
+            <Bullet />
             <span>
-              <strong>Please check your terminal for errors.</strong> Your build
-              might be broken.
+              New to Cosmos or a long time user, make sure to{' '}
+              <Link
+                href="https://github.com/react-cosmos/react-cosmos/blob/master/NEXT.md"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <strong>check out the docs on getting started</strong>
+              </Link>
+              .
             </span>
           </li>
           <li>
-            <No>2</No>
+            <Bullet />
             <span>
-              If you use a custom webpack config,{' '}
-              <strong>
-                make sure your build is generating an index.html page.
-              </strong>
+              The Cosmos Next platform is still early days, but with your help
+              it will become <em>the</em> dev platform for UI developers!
             </span>
           </li>
         </List>
         <Paragraph>
-          <HelpLink
+          <ActionLink
             href="https://join-react-cosmos.now.sh"
             rel="noopener noreferrer"
             target="_blank"
           >
-            ask for help
-          </HelpLink>
+            share your feedback
+          </ActionLink>
         </Paragraph>
+        <Footnote>PS. The stable version isn’t going anywhere</Footnote>
       </Content>
       <IllustrationContainer>
-        <ArtificialIntelligenceIllustration title="robot" />
+        <AstronautIllustration title="astronaut" />
       </IllustrationContainer>
     </Container>
   );
@@ -58,6 +63,7 @@ const Content = styled.div`
   padding: 0 64px 0 32px;
   font-size: 16px;
   line-height: 1.5em;
+  color: var(--grey1);
 
   strong {
     font-weight: 600;
@@ -89,6 +95,10 @@ const Paragraph = styled.p`
   margin: 16px 0;
 `;
 
+const Footnote = styled(Paragraph)`
+  color: var(--grey3);
+`;
+
 const List = styled.ul`
   margin: 0 0 48px 0;
   padding: 0;
@@ -102,16 +112,17 @@ const List = styled.ul`
   }
 `;
 
-const No = styled.span`
+const Bullet = styled.span`
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   box-sizing: border-box;
+  position: relative;
   width: 32px;
   height: 32px;
-  margin: 4px 16px 0 0;
-  padding: 0 6px 0 0;
+  margin: 6px 16px 0 0;
+  padding: 0 0 0 0;
   border-radius: 100%;
   font-size: 18px;
   font-weight: 600;
@@ -119,11 +130,23 @@ const No = styled.span`
   color: var(--grey3);
 
   ::after {
-    content: '.';
+    position: absolute;
+    content: '';
+    width: 6px;
+    height: 6px;
+    top: 13px;
+    left: 13px;
+    border-radius: 100%;
+    background: var(--grey3);
+    transform: rotate(0deg);
   }
 `;
 
-const HelpLink = styled.a`
+const Link = styled.a`
+  color: inherit;
+`;
+
+const ActionLink = styled.a`
   display: inline-block;
   --size: 36px;
   height: var(--size);

@@ -7,7 +7,7 @@ import {
   EmptyIllustration,
   DreamerIllustration
 } from '../../shared/illustrations';
-import { RendererNotRespondingScreen } from './RendererNotRespondingScreen';
+import { RendererNotResponding } from './RendererNotResponding';
 import { IllustrationContainer } from './shared';
 
 import type { UrlStatus, RuntimeStatus } from '../RendererPreview';
@@ -30,7 +30,7 @@ export function ContentOverlay({
   if (rendererPreviewUrlStatus === 'error') {
     return (
       <Container data-testid="rendererNotResponding">
-        <RendererNotRespondingScreen />
+        <RendererNotResponding />
       </Container>
     );
   }
