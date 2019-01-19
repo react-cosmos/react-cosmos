@@ -12,6 +12,6 @@
     "react-cosmos-shared": "^4.7.0-24",
     "react-cosmos-state-proxy": "^4.7.0-24",
     "react-cosmos-voyager2": "^4.7.0-24",
-    "react-test-renderer": "^16.6.3"
+    "react-test-renderer": "^16.7.0"
   }
 }

@@ -10,7 +10,7 @@
     "lodash": "^4.17.11",
     "memoize-one": "^5.0.0",
     "react-cosmos-shared2": "^4.7.0-24",
-    "react-is": "^16.6.3",
+    "react-is": "^16.7.0",
     "socket.io-client": "^2.2.0"
   }
 }

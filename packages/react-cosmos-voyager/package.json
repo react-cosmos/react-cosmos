@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "mkdirp": "^0.5.1",
-    "rimraf": "^2.5.4",
+    "rimraf": "^2.6.3",
     "touch": "^3.1.0"
   },
   "dependencies": {
