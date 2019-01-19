@@ -90,6 +90,8 @@ export default ({ children }) => <Provider store={store}>{children}</Provider>;
 
 > A decorator file only applies to fixture files that are contained in the decorator file's directory. Multiple decorator files can be composed, in the order of their position in the file system hierarchy (from outer to inner).
 
+Here's a [basic Redux decorator example](https://github.com/skidding/flatris/blob/b87634a69feb9baf8347e90cdf034704e457e88c/web/components/FlatrisGame/cosmos.decorator.js#L24-L30).
+
 ## UI plugins
 
 A main feature of the Cosmos Next redesign is the brand-new UI plugin architecture. While the new UI is created 100% from plugins, the plugin API is not yet documented. This is the next step.
