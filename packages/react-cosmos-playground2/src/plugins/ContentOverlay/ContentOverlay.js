@@ -3,7 +3,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import {
-  BlankCanvasIllustration,
   EmptyIllustration,
   DreamerIllustration
 } from '../../shared/illustrations';
