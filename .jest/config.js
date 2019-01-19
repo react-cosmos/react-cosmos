@@ -57,6 +57,7 @@ module.exports = {
     '!**/cosmos.decorator.js',
     '!**/testHelpers/**',
     '!**/react-cosmos-voyager/src/use-cases/**',
+    '!**/react-cosmos-playground2/src/shared/illustrations/**',
     // Ignore coverage from dark launched APIs
     '!**/react-cosmos-playground2/src/plugins/ControlPanel/**',
     '!**/react-cosmos/src/client/next/**',
