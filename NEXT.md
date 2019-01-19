@@ -2,7 +2,7 @@
 
 _Cosmos Next_ is available for beta testers! 🎉
 
-**Install `react-cosmos@next` to get started.**
+**Install `react-cosmos` to get started.**
 
 > The [jsx-fixtures](examples/jsx-fixtures) example is a useful complement to this guide.
 
