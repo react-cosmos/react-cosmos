@@ -3,11 +3,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import {
-  BlankCanvasIllustration,
   EmptyIllustration,
   DreamerIllustration
 } from '../../shared/illustrations';
-import { RendererNotRespondingScreen } from './RendererNotRespondingScreen';
+import { RendererNotResponding } from './RendererNotResponding';
+import { WelcomeCosmosNext } from './WelcomeCosmosNext';
 import { IllustrationContainer } from './shared';
 
 import type { UrlStatus, RuntimeStatus } from '../RendererPreview';
@@ -30,7 +30,7 @@ export function ContentOverlay({
   if (rendererPreviewUrlStatus === 'error') {
     return (
       <Container data-testid="rendererNotResponding">
-        <RendererNotRespondingScreen />
+        <RendererNotResponding />
       </Container>
     );
   }
@@ -65,9 +65,7 @@ export function ContentOverlay({
 
   return (
     <Container data-testid="blank">
-      <IllustrationContainer>
-        <BlankCanvasIllustration title="blank canvas" />
-      </IllustrationContainer>
+      <WelcomeCosmosNext />
     </Container>
   );
 }
