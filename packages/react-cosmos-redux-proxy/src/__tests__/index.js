@@ -1,5 +1,8 @@
+jest.mock('redux');
+
 import React from 'react';
 import { shallow } from 'enzyme';
+import { createStore } from 'redux';
 import { createReduxProxy } from '..';
 
 const NextProxy = () => {};
@@ -13,11 +16,6 @@ const onFixtureUpdate = jest.fn();
 
 let fixture;
 let componentRef;
-let storeUnsubscribeMock;
-let storeMock;
-let storeHandler;
-let storeState;
-let createStore;
 let ReduxProxy;
 let wrapper;
 let childWrapper;
@@ -26,21 +24,12 @@ let childProps;
 const renderProxy = (f, options) => {
   fixture = f;
   componentRef = {};
-
-  jest.resetAllMocks();
-
-  storeUnsubscribeMock = jest.fn();
-  storeMock = {
-    subscribe: jest.fn(handler => {
-      storeHandler = handler;
-      return storeUnsubscribeMock;
-    }),
-    getState: () => storeState
-  };
-  createStore = jest.fn(() => storeMock);
+  jest.clearAllMocks();
+  createStore.mockReturnValue({
+    store: { subscribe: jest.fn() }
+  });
   ReduxProxy = createReduxProxy({
-    ...options,
-    createStore
+    ...options
   });
   wrapper = shallow(
     <ReduxProxy
@@ -51,22 +40,30 @@ const renderProxy = (f, options) => {
     />
   );
   childWrapper = wrapper.at(0);
-  childProps = childWrapper.props();
+  childProps = childWrapper.find('NextProxy').props();
   // Simulate rendering
-  childProps.onComponentRef(componentRef);
+  if (childProps.onComponentRef !== undefined) {
+    childProps.onComponentRef(componentRef);
+  }
 };
 
 const commonTests = () => {
   test('renders next proxy in line', () => {
-    expect(childWrapper.type()).toBe(NextProxy);
+    expect(wrapper.find('NextProxy').exists()).toBe(true);
   });
 
   test('sends nextProxy.next() to next proxy', () => {
-    expect(childProps.nextProxy).toBe(nextProxyNext);
+    expect(wrapper.find('NextProxy').props()).toHaveProperty(
+      'nextProxy',
+      nextProxyNext
+    );
   });
 
   test('sends fixture props to next proxy', () => {
-    expect(childProps.fixture.foo).toEqual('bar');
+    expect(wrapper.find('NextProxy').props().fixture).toHaveProperty(
+      'foo',
+      'bar'
+    );
   });
 
   test('bubbles up component ref', () => {
@@ -76,10 +73,6 @@ const commonTests = () => {
   test('bubbles up fixture updates', () => {
     childProps.onFixtureUpdate({});
     expect(onFixtureUpdate.mock.calls).toHaveLength(1);
-  });
-
-  test('sets the key to 0', () => {
-    expect(childWrapper.key()).toBe('0');
   });
 };
 
@@ -96,27 +89,8 @@ describe('fixture without Redux state', () => {
     expect(createStore).not.toHaveBeenCalled();
   });
 
-  test('does not disable local state', () => {
-    expect(childProps.disableLocalState).toBe(false);
-  });
-});
-
-describe('fixture without Redux state with alwaysCreateStore', () => {
-  beforeAll(() => {
-    renderProxy(
-      {
-        foo: 'bar'
-      },
-      {
-        alwaysCreateStore: true
-      }
-    );
-  });
-
-  commonTests();
-
-  test('creates Redux store', () => {
-    expect(createStore).toHaveBeenCalled();
+  test('does not render provider', () => {
+    expect(wrapper.find('Provider').exists()).toBe(false);
   });
 });
 
@@ -133,35 +107,21 @@ describe('fixture with Redux state', () => {
   commonTests();
 
   test('omits reduxState from fixture props sent to next proxy', () => {
-    expect(childProps.reduxState).toBe(undefined);
+    expect(wrapper.find('NextProxy').props().fixture.reduxState).toBe(
+      undefined
+    );
   });
 
   test('creates Redux store', () => {
     expect(createStore).toHaveBeenCalled();
   });
 
-  test('puts Redux store instance in context', () => {
-    expect(wrapper.instance().getChildContext().store).toBe(storeMock);
+  test('passes initial state from reduxState to store', () => {
+    expect(createStore.mock.calls[0][1]).toEqual({ counter: 6 });
   });
 
-  test('subscribes to Redux store', () => {
-    expect(storeMock.subscribe).toHaveBeenCalled();
-  });
-
-  test('sends fixture update on Redux store change', () => {
-    storeState = {
-      counter: 10
-    };
-    storeHandler();
-    expect(onFixtureUpdate.mock.calls[1][0]).toEqual({
-      reduxState: {
-        counter: 10
-      }
-    });
-  });
-
-  test('disables local state', () => {
-    expect(childProps.disableLocalState).toBe(true);
+  test('renders the Provider', () => {
+    expect(wrapper.find('Provider').exists()).toBe(true);
   });
 
   describe('on receiving new props', () => {
@@ -174,52 +134,9 @@ describe('fixture with Redux state', () => {
         }
       });
     });
-    it('unsubscribes from current store', () => {
-      expect(storeUnsubscribeMock).toHaveBeenCalled();
-    });
 
     it('creates a new store with updated state', () => {
       expect(createStore.mock.calls.length).toBe(2);
     });
-
-    it('subscribes to new store', () => {
-      expect(storeMock.subscribe.mock.calls.length).toBe(2);
-    });
-
-    it('increments the key of the rendered component', () => {
-      expect(wrapper.key()).toBe('1');
-    });
-  });
-
-  describe('on unmount', () => {
-    beforeAll(() => {
-      wrapper.unmount();
-    });
-
-    test('unsubscribes from store changes', () => {
-      expect(storeUnsubscribeMock).toHaveBeenCalled();
-    });
-  });
-});
-
-describe('fixture with Redux state and enabled local state', () => {
-  beforeAll(() => {
-    renderProxy(
-      {
-        foo: 'bar',
-        reduxState: {
-          counter: 6
-        }
-      },
-      {
-        disableLocalState: false
-      }
-    );
-  });
-
-  commonTests();
-
-  test('does not disable local state', () => {
-    expect(childProps.disableLocalState).toBe(false);
   });
 });
