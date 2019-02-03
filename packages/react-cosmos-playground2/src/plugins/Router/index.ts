@@ -5,9 +5,9 @@ import {
   pushUrlParamsToHistory,
   subscribeToLocationChanges
 } from './window';
-import { UrlParams, RouterSpec } from './spec';
+import { UrlParams, RouterSpec } from './public';
 
-type RouterContext = IPluginContext<RouterSpec>;
+type Context = IPluginContext<RouterSpec>;
 
 const { onLoad, register } = createPlugin<RouterSpec>({
   name: 'router',
@@ -41,11 +41,11 @@ onLoad(context => {
 
 export { register };
 
-function getUrlParams(context: RouterContext) {
+function getUrlParams(context: Context) {
   return context.getState().urlParams;
 }
 
-function setUrlParams(context: RouterContext, nextUrlParams: UrlParams) {
+function setUrlParams(context: Context, nextUrlParams: UrlParams) {
   const urlParams = getUrlParams(context);
   const hasFixtureChanged = nextUrlParams.fixturePath !== urlParams.fixturePath;
   const areUrlParamsEqual = isEqual(nextUrlParams, urlParams);
@@ -62,7 +62,7 @@ function setUrlParams(context: RouterContext, nextUrlParams: UrlParams) {
   });
 }
 
-function emitFixtureChangeEvent(context: RouterContext) {
+function emitFixtureChangeEvent(context: Context) {
   const { emit } = context;
   const { fixturePath } = getUrlParams(context);
 

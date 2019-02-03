@@ -1,14 +1,14 @@
 import { wait } from 'react-testing-library';
 import { loadPlugins, getPluginContext } from 'react-plugin';
 import { cleanup, on, mockMethods } from '../../../testHelpers/plugin2';
-import { RouterSpec } from '../../Router/spec';
-import { RendererCoordinatorSpec } from '../spec';
-import { RendererCoordinatorState } from '../shared';
+import { RouterSpec } from '../../Router/public';
+import { RendererCoordinatorSpec } from '../public';
+import { State } from '../shared';
 import { register } from '..';
 
 afterEach(cleanup);
 
-const state: RendererCoordinatorState = {
+const state: State = {
   connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
   primaryRendererId: 'mockRendererId1',
   fixtures: [],
@@ -18,8 +18,7 @@ const state: RendererCoordinatorState = {
 function registerTestPlugins() {
   register();
   mockMethods<RouterSpec>('router', {
-    getUrlParams: () => ({}),
-    setUrlParams: () => undefined
+    getUrlParams: () => ({})
   });
 }
 

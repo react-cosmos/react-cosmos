@@ -1,9 +1,9 @@
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { RendererId, RendererRequest } from 'react-cosmos-shared2/renderer';
-import { RendererCoordinatorContext } from '../shared';
+import { Context } from '../shared';
 
 export function postSelectFixtureRequest(
-  context: RendererCoordinatorContext,
+  context: Context,
   rendererId: RendererId,
   fixturePath: string,
   fixtureState: null | FixtureState
@@ -19,7 +19,7 @@ export function postSelectFixtureRequest(
 }
 
 export function postUnselectFixtureRequest(
-  context: RendererCoordinatorContext,
+  context: Context,
   rendererId: RendererId
 ) {
   postRendererRequest(context, {
@@ -31,7 +31,7 @@ export function postUnselectFixtureRequest(
 }
 
 export function postSetFixtureStateRequest(
-  context: RendererCoordinatorContext,
+  context: Context,
   rendererId: RendererId,
   fixturePath: string,
   fixtureState: null | FixtureState
@@ -46,9 +46,6 @@ export function postSetFixtureStateRequest(
   });
 }
 
-function postRendererRequest(
-  { emit }: RendererCoordinatorContext,
-  msg: RendererRequest
-) {
+function postRendererRequest({ emit }: Context, msg: RendererRequest) {
   emit('request', msg);
 }

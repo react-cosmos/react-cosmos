@@ -1,12 +1,12 @@
 import { loadPlugins } from 'react-plugin';
 import { cleanup, getMethodsOf } from '../../../testHelpers/plugin2';
-import { RendererCoordinatorSpec } from '../spec';
-import { RendererCoordinatorState } from '../shared';
+import { RendererCoordinatorSpec } from '../public';
+import { State } from '../shared';
 import { register } from '..';
 
 afterEach(cleanup);
 
-function loadTestPlugins(state?: RendererCoordinatorState) {
+function loadTestPlugins(state?: State) {
   loadPlugins({ state: { rendererCoordinator: state } });
 }
 

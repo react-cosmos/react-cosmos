@@ -7,10 +7,10 @@ import {
   getMethodsOf,
   mockMethods
 } from '../../../../testHelpers/plugin2';
-import { RouterSpec } from '../../../Router/spec';
+import { RouterSpec } from '../../../Router/public';
 import { createRendererReadyResponse } from '../../testHelpers';
-import { RendererCoordinatorState } from '../../shared';
-import { RendererCoordinatorSpec } from '../../spec';
+import { State } from '../../shared';
+import { RendererCoordinatorSpec } from '../../public';
 import { register } from '../..';
 
 afterEach(cleanup);
@@ -21,12 +21,11 @@ const fixtureState = { components: [] };
 function registerTestPlugins() {
   register();
   mockMethods<RouterSpec>('router', {
-    getUrlParams: () => ({}),
-    setUrlParams: () => undefined
+    getUrlParams: () => ({})
   });
 }
 
-function loadTestPlugins(state?: RendererCoordinatorState) {
+function loadTestPlugins(state?: State) {
   loadPlugins({ state: { rendererCoordinator: state } });
 }
 

@@ -1,6 +1,6 @@
-import { RouterSpec } from '../../Router/spec';
-import { RendererCoordinatorContext } from '../shared';
+import { RouterSpec } from '../../Router/public';
+import { Context } from '../shared';
 
-export function getUrlParams({ getMethodsOf }: RendererCoordinatorContext) {
+export function getUrlParams({ getMethodsOf }: Context) {
   return getMethodsOf<RouterSpec>('router').getUrlParams();
 }

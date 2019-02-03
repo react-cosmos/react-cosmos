@@ -1,13 +1,13 @@
 import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
 import { cleanup, getState, getMethodsOf } from '../../../testHelpers/plugin2';
-import { RendererCoordinatorSpec } from '../spec';
-import { RendererCoordinatorState } from '../shared';
+import { RendererCoordinatorSpec } from '../public';
+import { State } from '../shared';
 import { register } from '..';
 
 afterEach(cleanup);
 
-const state: RendererCoordinatorState = {
+const state: State = {
   connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
   primaryRendererId: 'mockRendererId1',
   fixtures: [],

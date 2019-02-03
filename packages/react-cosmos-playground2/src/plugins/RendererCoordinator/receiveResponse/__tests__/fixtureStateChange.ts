@@ -8,17 +8,17 @@ import {
   getMethodsOf,
   mockMethods
 } from '../../../../testHelpers/plugin2';
-import { RouterSpec } from '../../../Router/spec';
+import { RouterSpec } from '../../../Router/public';
 import { createFixtureStateChangeResponse } from '../../testHelpers';
-import { RendererCoordinatorState } from '../../shared';
-import { RendererCoordinatorSpec } from '../../spec';
+import { State } from '../../shared';
+import { RendererCoordinatorSpec } from '../../public';
 import { register } from '../..';
 
 afterEach(cleanup);
 
 const fixturePath = 'zwei.js';
 const fixtureState = { components: [] };
-const state: RendererCoordinatorState = {
+const state: State = {
   connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
   primaryRendererId: 'mockRendererId1',
   fixtures: ['ein.js', 'zwei.js', 'drei.js'],
@@ -28,8 +28,7 @@ const state: RendererCoordinatorState = {
 function registerTestPlugins() {
   register();
   mockMethods<RouterSpec>('router', {
-    getUrlParams: () => ({ fixturePath }),
-    setUrlParams: () => undefined
+    getUrlParams: () => ({ fixturePath })
   });
 }
 

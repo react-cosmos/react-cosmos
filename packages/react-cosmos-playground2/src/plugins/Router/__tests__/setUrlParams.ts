@@ -7,7 +7,7 @@ import {
   getMethodsOf,
   on
 } from '../../../testHelpers/plugin2';
-import { RouterSpec } from '../spec';
+import { RouterSpec } from '../public';
 import { register } from '..';
 
 afterEach(() => {

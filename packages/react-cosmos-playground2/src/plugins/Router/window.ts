@@ -1,7 +1,7 @@
 /* eslint-env browser */
 
 import * as qs from 'query-string';
-import { UrlParams } from './spec';
+import { UrlParams } from './public';
 
 export function getUrlParamsFromLocation() {
   return qs.parse(location.search);

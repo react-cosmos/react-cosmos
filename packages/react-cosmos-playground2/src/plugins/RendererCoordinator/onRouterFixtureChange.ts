@@ -2,10 +2,10 @@ import {
   postSelectFixtureRequest,
   postUnselectFixtureRequest
 } from './shared/postRequest';
-import { RendererCoordinatorContext, RendererCoordinatorState } from './shared';
+import { Context, State } from './shared';
 
 export function onRouterFixtureChange(
-  context: RendererCoordinatorContext,
+  context: Context,
   fixturePath: null | string
 ) {
   if (fixturePath === null) {
@@ -29,10 +29,10 @@ export function onRouterFixtureChange(
   );
 }
 
-function getConnectedRendererIds(context: RendererCoordinatorContext) {
+function getConnectedRendererIds(context: Context) {
   return context.getState().connectedRendererIds;
 }
 
-function emptyFixtureState(prevState: RendererCoordinatorState) {
+function emptyFixtureState(prevState: State) {
   return { ...prevState, fixtureState: null };
 }

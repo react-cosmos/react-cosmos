@@ -4,15 +4,15 @@ import {
   getMethodsOf,
   mockMethods
 } from '../../../testHelpers/plugin2';
-import { UrlParams, RouterSpec } from '../../Router/spec';
-import { RendererCoordinatorSpec } from '../spec';
-import { RendererCoordinatorState } from '../shared';
+import { UrlParams, RouterSpec } from '../../Router/public';
+import { RendererCoordinatorSpec } from '../public';
+import { State } from '../shared';
 import { register } from '..';
 
 afterEach(cleanup);
 
 const rendererId = 'mockRendererId';
-const state: RendererCoordinatorState = {
+const state: State = {
   connectedRendererIds: [rendererId],
   primaryRendererId: rendererId,
   fixtures: ['ein.js', 'zwei.js', 'drei.js'],
@@ -21,8 +21,7 @@ const state: RendererCoordinatorState = {
 
 function mockUrlParams(urlParams: UrlParams) {
   mockMethods<RouterSpec>('router', {
-    getUrlParams: () => urlParams,
-    setUrlParams: () => undefined
+    getUrlParams: () => urlParams
   });
 }
 

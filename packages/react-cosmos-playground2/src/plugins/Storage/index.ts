@@ -1,6 +1,6 @@
 import * as localForage from 'localforage';
 import { createPlugin } from 'react-plugin';
-import { StorageSpec } from './spec';
+import { StorageSpec } from './public';
 
 const { register } = createPlugin<StorageSpec>({
   name: 'storage',

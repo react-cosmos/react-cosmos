@@ -1,8 +1,8 @@
 import { FixtureListUpdateResponse } from 'react-cosmos-shared2/renderer';
-import { RendererCoordinatorContext } from '../shared';
+import { Context } from '../shared';
 
 export function receiveFixtureListUpdateResponse(
-  context: RendererCoordinatorContext,
+  context: Context,
   { payload }: FixtureListUpdateResponse
 ) {
   const { rendererId, fixtures } = payload;

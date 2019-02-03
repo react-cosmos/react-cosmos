@@ -4,20 +4,17 @@ import {
   RendererReadyResponse
 } from 'react-cosmos-shared2/renderer';
 import { postSelectFixtureRequest } from '../shared/postRequest';
-import {
-  RendererCoordinatorContext,
-  RendererCoordinatorState
-} from '../shared';
+import { Context, State } from '../shared';
 
 export function receiveRendererReadyResponse(
-  context: RendererCoordinatorContext,
+  context: Context,
   { payload }: RendererReadyResponse
 ) {
   const { rendererId, fixtures } = payload;
 
   context.setState(stateUpdater, afterStateChanged);
 
-  function stateUpdater(prevState: RendererCoordinatorState) {
+  function stateUpdater(prevState: State) {
     // The first announced renderer becomes the primary one
     const primaryRendererId = prevState.primaryRendererId || rendererId;
     const isPrimaryRenderer = rendererId === primaryRendererId;
@@ -37,10 +34,7 @@ export function receiveRendererReadyResponse(
   }
 }
 
-function selectFixtureFromUrlParams(
-  context: RendererCoordinatorContext,
-  rendererId: RendererId
-) {
+function selectFixtureFromUrlParams(context: Context, rendererId: RendererId) {
   const { fixturePath } = getUrlParams(context);
 
   if (fixturePath) {

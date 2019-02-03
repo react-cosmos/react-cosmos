@@ -1,5 +1,5 @@
 import { IPluginContext, createPlugin } from 'react-plugin';
-import { CoreSpec } from './spec';
+import { CoreSpec } from './public';
 import { layout } from './layout';
 
 type CoreContext = IPluginContext<CoreSpec>;

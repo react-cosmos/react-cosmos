@@ -2,10 +2,10 @@ import { StateUpdater, updateState } from 'react-cosmos-shared2/util';
 import { getUrlParams } from './shared/router';
 import { postSetFixtureStateRequest } from './shared/postRequest';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import { RendererCoordinatorContext, RendererCoordinatorState } from './shared';
+import { Context, State } from './shared';
 
 export function setFixtureState(
-  context: RendererCoordinatorContext,
+  context: Context,
   stateChange: StateUpdater<null | FixtureState>
 ) {
   const { fixturePath } = getUrlParams(context);
@@ -21,7 +21,7 @@ export function setFixtureState(
     postRendererRequest(fixturePath);
   });
 
-  function stateUpdater(prevState: RendererCoordinatorState) {
+  function stateUpdater(prevState: State) {
     return {
       ...prevState,
       fixtureState: updateState(prevState.fixtureState, stateChange)

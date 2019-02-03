@@ -5,8 +5,8 @@ import {
   RendererResponse,
   RENDERER_MESSAGE_EVENT_NAME
 } from 'react-cosmos-shared2/renderer';
-import { RendererCoordinatorSpec } from '../RendererCoordinator/spec';
-import { RendererRemoteSpec } from './spec';
+import { RendererCoordinatorSpec } from '../RendererCoordinator/public';
+import { RendererRemoteSpec } from './public';
 
 type Context = IPluginContext<RendererRemoteSpec>;
 

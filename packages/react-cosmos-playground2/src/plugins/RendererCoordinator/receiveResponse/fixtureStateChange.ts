@@ -2,10 +2,10 @@ import { isEqual } from 'lodash';
 import { FixtureStateChangeResponse } from 'react-cosmos-shared2/renderer';
 import { getUrlParams } from '../shared/router';
 import { postSetFixtureStateRequest } from '../shared/postRequest';
-import { RendererCoordinatorContext } from '../shared';
+import { Context } from '../shared';
 
 export function receiveFixtureStateChangeResponse(
-  context: RendererCoordinatorContext,
+  context: Context,
   { payload }: FixtureStateChangeResponse
 ) {
   const { rendererId, fixturePath, fixtureState } = payload;

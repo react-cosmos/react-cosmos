@@ -1,8 +1,6 @@
 import { IPluginContext } from 'react-plugin';
-import { RendererCoordinatorSpec } from '../spec';
+import { RendererCoordinatorSpec } from '../public';
 
-export type RendererCoordinatorState = RendererCoordinatorSpec['state'];
+export type State = RendererCoordinatorSpec['state'];
 
-export type RendererCoordinatorContext = IPluginContext<
-  RendererCoordinatorSpec
->;
+export type Context = IPluginContext<RendererCoordinatorSpec>;

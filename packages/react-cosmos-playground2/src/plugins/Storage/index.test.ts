@@ -1,6 +1,6 @@
 import { loadPlugins } from 'react-plugin';
 import { cleanup, getMethodsOf } from '../../testHelpers/plugin2';
-import { StorageSpec } from './spec';
+import { StorageSpec } from './public';
 import { register } from '.';
 
 const mockSetItem = jest.fn();

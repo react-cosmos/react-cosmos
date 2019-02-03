@@ -2,12 +2,9 @@ import { receiveRendererReadyResponse } from './rendererReady';
 import { RendererResponse } from 'react-cosmos-shared2/renderer';
 import { receiveFixtureListUpdateResponse } from './fixtureListUpdate';
 import { receiveFixtureStateChangeResponse } from './fixtureStateChange';
-import { RendererCoordinatorContext } from '../shared';
+import { Context } from '../shared';
 
-export function receiveResponse(
-  context: RendererCoordinatorContext,
-  msg: RendererResponse
-) {
+export function receiveResponse(context: Context, msg: RendererResponse) {
   switch (msg.type) {
     case 'rendererReady':
       return receiveRendererReadyResponse(context, msg);

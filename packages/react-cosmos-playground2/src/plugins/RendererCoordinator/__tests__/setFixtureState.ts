@@ -8,14 +8,14 @@ import {
   getMethodsOf,
   mockMethods
 } from '../../../testHelpers/plugin2';
-import { RouterSpec } from '../../Router/spec';
-import { RendererCoordinatorSpec } from '../spec';
-import { RendererCoordinatorState } from '../shared';
+import { RouterSpec } from '../../Router/public';
+import { RendererCoordinatorSpec } from '../public';
+import { State } from '../shared';
 import { register } from '..';
 
 afterEach(cleanup);
 
-const state: RendererCoordinatorState = {
+const state: State = {
   connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
   primaryRendererId: 'mockRendererId1',
   fixtures: ['ein.js', 'zwei.js', 'drei.js'],
@@ -28,8 +28,7 @@ const expectedFixtureState = {
 
 function mockSelectedFixture() {
   mockMethods<RouterSpec>('router', {
-    getUrlParams: () => ({ fixturePath: 'zwei.js' }),
-    setUrlParams: () => undefined
+    getUrlParams: () => ({ fixturePath: 'zwei.js' })
   });
 }
 
