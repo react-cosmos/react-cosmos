@@ -1,5 +1,6 @@
 import {
   IPluginSpec,
+  IPlugArgs,
   MethodHandlers,
   EventHandlers,
   resetPlugins,
@@ -41,6 +42,13 @@ export function mockMethods<PluginSpec extends IPluginSpec>(
   methods: MethodHandlers<PluginSpec>
 ) {
   createPlugin<any>({ name: pluginName, methods }).register();
+}
+
+export function mockPlug(plug: IPlugArgs<any, {}>) {
+  const name = getNewPluginName();
+  const testPlugin = createPlugin({ name });
+  testPlugin.plug(plug);
+  testPlugin.register();
 }
 
 let pluginId: number = 0;

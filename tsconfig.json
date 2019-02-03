@@ -3,6 +3,7 @@
     "lib": ["dom", "es2015"],
     "declaration": true,
     "forceConsistentCasingInFileNames": true,
+    "jsx": "react",
     "noEmitOnError": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,

@@ -2249,7 +2249,7 @@
   resolved "https://registry.yarnpkg.com/@types/query-string/-/query-string-6.2.0.tgz#ac1903ab175de7fd4a7bb703964c297eebddc8f7"
   integrity sha512-dnYqKg7eZ+t7ZhCuBtwLxjqON8yXr27hiu3zXfPqxfJSbWUZNwwISE0BJUxghlcKsk4lZSp7bdFSJBJVNWBfmA==
 
-"@types/react@^16.8.1":
+"@types/react@*", "@types/react@^16.8.1":
   version "16.8.1"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.1.tgz#b431b104ecc6febda170b718caa9f50be66a6750"
   integrity sha512-tD1ETKJcuhANOejRc/p7OgQ16DKnbGi0M3LccelKlPnUCDp2a5koVxZFoRN9HN+A+m84HB5VGN7I+r3nNhS3PA==
@@ -2274,6 +2274,15 @@
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@types/sinon/-/sinon-7.0.0.tgz#84e707e157ec17d3e4c2a137f41fc3f416c0551e"
   integrity sha512-kcYoPw0uKioFVC/oOqafk2yizSceIQXCYnkYts9vJIwQklFRsMubTObTDrjQamUyBRd47332s85074cd/hCwxg==
+
+"@types/styled-components@^4.1.6":
+  version "4.1.6"
+  resolved "https://registry.yarnpkg.com/@types/styled-components/-/styled-components-4.1.6.tgz#9aa1d47dbc6bae540083869bcc6c639c6e9af0fe"
+  integrity sha512-w/ra/Tk9oPMvWpWId7esZNY1MOa6E9BYUPLl4scVJdYnrYuy5ITLbku8dGDCVH/vjjuegrHBCRYvFLQOYJ+uHg==
+  dependencies:
+    "@types/node" "*"
+    "@types/react" "*"
+    csstype "^2.2.0"
 
 "@types/zen-observable@0.5.3":
   version "0.5.3"

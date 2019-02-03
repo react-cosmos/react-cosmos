@@ -54,6 +54,7 @@
     "@types/lodash": "^4.14.120",
     "@types/query-string": "^6.2.0",
     "@types/react": "^16.8.1",
+    "@types/styled-components": "^4.1.6",
     "after-pending-promises": "^0.0.1",
     "after-pending-timers": "^0.0.1",
     "async-until": "^1.2.2",
