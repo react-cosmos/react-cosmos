@@ -1,20 +1,21 @@
-// @flow
-/* eslint-env browser */
-
-import React from 'react';
+import * as React from 'react';
 import { wait, render } from 'react-testing-library';
 import { loadPlugins, Slot } from 'react-plugin';
-import { cleanup, mockConfig, mockMethod } from '../../../testHelpers/plugin';
+import { RendererCoordinatorSpec } from '../../RendererCoordinator/public';
+import { cleanup, mockMethods } from '../../../testHelpers/plugin2';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
-import { rendererReadyMsg } from '../testHelpers/responses';
+import { rendererReadyMsg } from '../testHelpers/messages';
+import { getIframe } from '../testHelpers/iframe';
 import { register } from '..';
 
 afterEach(cleanup);
 
 function registerTestPlugins() {
   register();
-  mockConfig('rendererCoordinator', { webUrl: 'mockRendererUrl' });
-  mockMethod('rendererCoordinator.receiveResponse', () => {});
+  mockMethods<RendererCoordinatorSpec>('rendererCoordinator', {
+    getWebUrl: () => 'mockRendererUrl',
+    receiveResponse: () => {}
+  });
 }
 
 function loadTestPlugins() {
@@ -25,11 +26,7 @@ function loadTestPlugins() {
   return render(<Slot name="rendererPreview" />);
 }
 
-function getIframe({ getByTestId }) {
-  return getByTestId('previewIframe');
-}
-
-it('renders iframe with config.renderer.webUrl src', async () => {
+it('renders iframe with src set to renderer web url', async () => {
   registerTestPlugins();
   const renderer = loadTestPlugins();
 

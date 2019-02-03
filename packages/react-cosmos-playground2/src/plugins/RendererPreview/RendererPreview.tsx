@@ -1,28 +1,30 @@
-// @flow
-
 import styled from 'styled-components';
-import React from 'react';
+import * as React from 'react';
 import { Slot } from 'react-plugin';
 
+export type OnIframeRef = (elRef: null | HTMLIFrameElement) => void;
+
 type Props = {
-  rendererUrl: null | string,
-  onIframeRef: (elRef: null | window) => void
+  rendererUrl: null | string;
+  onIframeRef: OnIframeRef;
 };
 
 export function RendererPreview({ rendererUrl, onIframeRef }: Props) {
+  if (!rendererUrl) {
+    return null;
+  }
+
   return (
-    rendererUrl && (
-      <Slot name="rendererPreviewOuter">
-        <Container>
-          <Iframe
-            data-testid="previewIframe"
-            ref={onIframeRef}
-            src={rendererUrl}
-            frameBorder={0}
-          />
-        </Container>
-      </Slot>
-    )
+    <Slot name="rendererPreviewOuter">
+      <Container>
+        <Iframe
+          data-testid="previewIframe"
+          ref={onIframeRef}
+          src={rendererUrl}
+          frameBorder={0}
+        />
+      </Container>
+    </Slot>
   );
 }
 

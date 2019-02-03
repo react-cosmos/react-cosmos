@@ -1,12 +1,15 @@
-// @flow
+import { RenderResult } from 'react-testing-library';
 
 export async function mockIframeMessage(
   iframe: HTMLIFrameElement,
-  children: ({ onMessage: Function }) => Promise<mixed>
+  children: (args: { onMessage: jest.Mock }) => Promise<unknown>
 ) {
   const { contentWindow } = iframe;
-  const onMessage = jest.fn();
+  if (!contentWindow) {
+    throw new Error('iframe contentWindow missing');
+  }
 
+  const onMessage = jest.fn();
   try {
     contentWindow.addEventListener('message', onMessage, false);
     await children({ onMessage });
@@ -16,4 +19,8 @@ export async function mockIframeMessage(
   } finally {
     contentWindow.removeEventListener('message', onMessage);
   }
+}
+
+export function getIframe({ getByTestId }: RenderResult) {
+  return getByTestId('previewIframe') as HTMLIFrameElement;
 }

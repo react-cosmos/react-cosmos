@@ -1,10 +1,11 @@
-// @flow
-/* eslint-env browser */
+import { RendererResponse } from 'react-cosmos-shared2/renderer';
+import { RendererCoordinatorSpec } from '../RendererCoordinator/public';
+import { Context } from './shared';
+import { getMethodsOf } from '../../testHelpers/plugin2';
 
-import type { RendererResponse } from 'react-cosmos-shared2/renderer';
-import type { RendererPreviewContext } from './shared';
+type WindowMsg = { data: { [key: string]: unknown } };
 
-export function handleWindowMessages(context: RendererPreviewContext) {
+export function handleWindowMessages(context: Context) {
   const handler = createMessageHandler(context);
   window.addEventListener('message', handler, false);
 
@@ -13,20 +14,22 @@ export function handleWindowMessages(context: RendererPreviewContext) {
   };
 }
 
-function createMessageHandler(context) {
-  return msg => {
+function createMessageHandler(context: Context) {
+  return (msg: WindowMsg) => {
     if (!isValidResponse(msg)) {
       return;
     }
 
-    const response: RendererResponse = msg.data;
-    context.callMethod('rendererCoordinator.receiveResponse', response);
+    const response = msg.data as RendererResponse;
+    getMethodsOf<RendererCoordinatorSpec>(
+      'rendererCoordinator'
+    ).receiveResponse(response);
 
     updateRuntimeStatus(context, response);
   };
 }
 
-function isValidResponse(msg) {
+function isValidResponse(msg: WindowMsg) {
   return (
     // TODO: Create convention to filter out alien messages reliably (eg.
     // maybe tag msgs with source: "cosmos")
@@ -38,7 +41,10 @@ function isValidResponse(msg) {
   );
 }
 
-function updateRuntimeStatus({ getState, setState }, response) {
+function updateRuntimeStatus(
+  { getState, setState }: Context,
+  response: RendererResponse
+) {
   const { runtimeStatus } = getState();
 
   // Errors are not of interest anymore after renderer connectivity has been

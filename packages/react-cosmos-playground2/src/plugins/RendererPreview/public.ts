@@ -1,16 +1,14 @@
-// @flow
-
 export type UrlStatus = 'unknown' | 'ok' | 'error';
 export type RuntimeStatus = 'pending' | 'connected' | 'error';
 
 export type RendererPreviewSpec = {
-  name: 'rendererPreview',
+  name: 'rendererPreview';
   state: {
-    urlStatus: UrlStatus,
-    runtimeStatus: RuntimeStatus
-  },
+    urlStatus: UrlStatus;
+    runtimeStatus: RuntimeStatus;
+  };
   methods: {
-    getUrlStatus(): UrlStatus,
-    getRuntimeStatus(): RuntimeStatus
-  }
+    getUrlStatus(): UrlStatus;
+    getRuntimeStatus(): RuntimeStatus;
+  };
 };

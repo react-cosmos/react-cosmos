@@ -1,25 +1,21 @@
-/* eslint-env browser */
-// @flow
-
-import React from 'react';
+import * as React from 'react';
 import { wait, render } from 'react-testing-library';
 import { loadPlugins, Slot } from 'react-plugin';
-import {
-  cleanup,
-  mockConfig,
-  mockMethod,
-  getPluginState
-} from '../../../testHelpers/plugin';
+import { RendererCoordinatorSpec } from '../../RendererCoordinator/public';
+import { cleanup, getState, mockMethods } from '../../../testHelpers/plugin2';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
-import { rendererReadyMsg, rendererErrorMsg } from '../testHelpers/responses';
+import { rendererReadyMsg, rendererErrorMsg } from '../testHelpers/messages';
+import { RendererPreviewSpec } from '../public';
 import { register } from '..';
 
 afterEach(cleanup);
 
 function registerTestPlugins() {
   register();
-  mockConfig('rendererCoordinator', { webUrl: 'mockRendererUrl' });
-  mockMethod('rendererCoordinator.receiveResponse', () => {});
+  mockMethods<RendererCoordinatorSpec>('rendererCoordinator', {
+    getWebUrl: () => 'mockRendererUrl',
+    receiveResponse: () => ({})
+  });
 }
 
 function loadTestPlugins() {
@@ -29,15 +25,17 @@ function loadTestPlugins() {
   return render(<Slot name="rendererPreview" />);
 }
 
+function getRuntimeStatus() {
+  return getState<RendererPreviewSpec>('rendererPreview').runtimeStatus;
+}
+
 it('sets "error" runtime status', async () => {
   registerTestPlugins();
   loadTestPlugins();
 
   window.postMessage(rendererErrorMsg, '*');
 
-  await wait(() =>
-    expect(getPluginState('rendererPreview').runtimeStatus).toBe('error')
-  );
+  await wait(() => expect(getRuntimeStatus()).toBe('error'));
 });
 
 it('sets "connected" runtime status', async () => {
@@ -47,9 +45,7 @@ it('sets "connected" runtime status', async () => {
   window.postMessage(rendererErrorMsg, '*');
   window.postMessage(rendererReadyMsg, '*');
 
-  await wait(() =>
-    expect(getPluginState('rendererPreview').runtimeStatus).toBe('connected')
-  );
+  await wait(() => expect(getRuntimeStatus()).toBe('connected'));
 });
 
 it('keeps "connected" runtime status once set', async () => {
@@ -59,7 +55,5 @@ it('keeps "connected" runtime status once set', async () => {
   window.postMessage(rendererReadyMsg, '*');
   window.postMessage(rendererErrorMsg, '*');
 
-  await wait(() =>
-    expect(getPluginState('rendererPreview').runtimeStatus).toBe('connected')
-  );
+  await wait(() => expect(getRuntimeStatus()).toBe('connected'));
 });
