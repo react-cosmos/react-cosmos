@@ -21,6 +21,7 @@ export type RendererCoordinatorSpec = {
   };
   methods: {
     getWebUrl(): null | string;
+    remoteRenderersEnabled(): boolean;
     getConnectedRendererIds(): RendererId[];
     getFixtures(): FixtureNames;
     getFixtureState(): null | FixtureState;
