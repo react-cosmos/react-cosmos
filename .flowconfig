@@ -1,6 +1,8 @@
 [ignore]
 ; Mock files don't need to be type checked
 .*/react-cosmos-voyager/src/use-cases/.*
+; TypeScript packages
+.*/react-cosmos-playground2/src/.*
 
 ; React Native 🙄
 ; https://github.com/facebook/react-native/issues/19797

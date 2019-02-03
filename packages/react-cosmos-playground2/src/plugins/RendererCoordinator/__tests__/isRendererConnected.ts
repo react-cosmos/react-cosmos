@@ -1,0 +1,38 @@
+import { loadPlugins } from 'react-plugin';
+import { cleanup, getMethodsOf } from '../../../testHelpers/plugin2';
+import { RendererCoordinatorSpec } from '../spec';
+import { RendererCoordinatorState } from '../shared';
+import { register } from '..';
+
+afterEach(cleanup);
+
+function loadTestPlugins(state?: RendererCoordinatorState) {
+  loadPlugins({ state: { rendererCoordinator: state } });
+}
+
+function isRendererConnected() {
+  return getMethodsOf<RendererCoordinatorSpec>(
+    'rendererCoordinator'
+  ).isRendererConnected();
+}
+
+it('returns false', async () => {
+  register();
+  loadTestPlugins();
+
+  expect(isRendererConnected()).toBe(false);
+});
+
+it('returns true', async () => {
+  register();
+
+  const rendererId = 'mockRendererId';
+  loadTestPlugins({
+    connectedRendererIds: [rendererId],
+    primaryRendererId: rendererId,
+    fixtures: [],
+    fixtureState: null
+  });
+
+  expect(isRendererConnected()).toBe(true);
+});
