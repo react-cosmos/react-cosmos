@@ -2,7 +2,7 @@ import { IPluginContext, createPlugin } from 'react-plugin';
 import { CoreSpec } from './public';
 import { layout } from './layout';
 
-type CoreContext = IPluginContext<CoreSpec>;
+type Context = IPluginContext<CoreSpec>;
 
 const { plug, register } = createPlugin<CoreSpec>({
   name: 'core',
@@ -21,11 +21,11 @@ plug({ slotName: 'root', render: layout });
 
 export { register };
 
-function getProjectId({ getConfig }: CoreContext) {
+function getProjectId({ getConfig }: Context) {
   return getConfig().projectId;
 }
 
-function getFixtureFileVars({ getConfig }: CoreContext) {
+function getFixtureFileVars({ getConfig }: Context) {
   const { fixturesDir, fixtureFileSuffix } = getConfig();
   return { fixturesDir, fixtureFileSuffix };
 }
