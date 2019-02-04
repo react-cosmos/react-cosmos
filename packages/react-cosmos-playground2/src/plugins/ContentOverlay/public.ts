@@ -1,5 +1,3 @@
-// @flow
-
 export type ContentOverlaySpec = {
-  name: 'contentOverlay'
+  name: 'contentOverlay';
 };

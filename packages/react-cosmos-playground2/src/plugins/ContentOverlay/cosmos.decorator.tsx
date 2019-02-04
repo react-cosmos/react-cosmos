@@ -1,9 +1,7 @@
-// @flow
-
-import React from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
 
-export default ({ children }: { children: React$Node }) => (
+export default ({ children }: { children: React.ReactNode }) => (
   <Wrapper>{children}</Wrapper>
 );
 

@@ -1,5 +1,3 @@
-// @flow
-
 export { BlankCanvasIllustration } from './BlankCanvas';
 export { EmptyIllustration } from './Empty';
 export { DreamerIllustration } from './Dreamer';

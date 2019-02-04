@@ -1,6 +1,4 @@
-// @flow
-
-import React from 'react';
+import * as React from 'react';
 import { Illustration } from '../svg';
 
 const primary4 = 'var(--primary4)';

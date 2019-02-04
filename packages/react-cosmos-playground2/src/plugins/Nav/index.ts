@@ -15,22 +15,18 @@ plug({
     const storage = getMethodsOf<StorageSpec>('storage');
     const router = getMethodsOf<RouterSpec>('router');
     const core = getMethodsOf<CoreSpec>('core');
+    const { fixturesDir, fixtureFileSuffix } = core.getFixtureFileVars();
     const rendererCoordinator = getMethodsOf<RendererCoordinatorSpec>(
       'rendererCoordinator'
     );
 
-    const projectId = core.getProjectId();
-    const { fixturesDir, fixtureFileSuffix } = core.getFixtureFileVars();
-    const urlParams = router.getUrlParams();
-    const fixtures = rendererCoordinator.getFixtures();
-
     return {
-      projectId,
+      projectId: core.getProjectId(),
       fixturesDir,
       fixtureFileSuffix,
-      urlParams,
+      urlParams: router.getUrlParams(),
       rendererConnected: rendererCoordinator.isRendererConnected(),
-      fixtures,
+      fixtures: rendererCoordinator.getFixtures(),
       setUrlParams: (newUrlParams: UrlParams) => {
         router.setUrlParams(newUrlParams);
       },

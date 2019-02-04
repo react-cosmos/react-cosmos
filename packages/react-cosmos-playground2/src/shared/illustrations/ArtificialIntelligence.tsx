@@ -1,6 +1,4 @@
-// @flow
-
-import React from 'react';
+import * as React from 'react';
 import { Illustration } from '../svg';
 
 // const accent4 = 'var(--accent4)';
@@ -12,7 +10,7 @@ const primary4 = 'var(--primary4)';
 export const ArtificialIntelligenceIllustration = ({
   title
 }: {
-  title: string
+  title: string;
 }) => (
   <Illustration viewBox="0 0 1028.53 752.52">
     <defs>

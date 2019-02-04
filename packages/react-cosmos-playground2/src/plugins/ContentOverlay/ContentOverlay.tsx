@@ -1,6 +1,4 @@
-// @flow
-
-import React from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
 import {
   EmptyIllustration,
@@ -8,16 +6,15 @@ import {
 } from '../../shared/illustrations';
 import { RendererNotResponding } from './RendererNotResponding';
 import { WelcomeCosmosNext } from './WelcomeCosmosNext';
+import { UrlStatus, RuntimeStatus } from '../RendererPreview/public';
 import { IllustrationContainer } from './shared';
 
-import type { UrlStatus, RuntimeStatus } from '../RendererPreview';
-
 type Props = {
-  fixtureSelected: boolean,
-  validFixtureSelected: boolean,
-  rendererConnected: boolean,
-  rendererPreviewUrlStatus: UrlStatus,
-  rendererPreviewRuntimeStatus: RuntimeStatus
+  fixtureSelected: boolean;
+  validFixtureSelected: boolean;
+  rendererConnected: boolean;
+  rendererPreviewUrlStatus: UrlStatus;
+  rendererPreviewRuntimeStatus: RuntimeStatus;
 };
 
 export function ContentOverlay({
