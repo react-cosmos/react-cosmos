@@ -1,9 +1,7 @@
-// @flow
-
-import React from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
 
-type SvgElementType = React$Element<
+type SvgElementType = React.ReactElement<
   | 'path'
   | 'polyline'
   | 'line'
@@ -39,8 +37,8 @@ export function Illustration({
   children,
   viewBox
 }: {
-  children: SvgChildren,
-  viewBox: string
+  children: SvgChildren;
+  viewBox: string;
 }) {
   return <BaseSvg viewBox={viewBox}>{children}</BaseSvg>;
 }
@@ -49,8 +47,8 @@ function BaseSvg({
   children,
   ...attrs
 }: {
-  children: SvgChildren,
-  [string]: string
+  children: SvgChildren;
+  [attr: string]: unknown;
 }) {
   return (
     <StyledSvg xmlns="http://www.w3.org/2000/svg" {...attrs}>

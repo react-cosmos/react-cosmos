@@ -1,3 +1,4 @@
+import * as rtl from 'react-testing-library';
 import {
   IPluginSpec,
   IPlugArgs,
@@ -9,6 +10,7 @@ import {
 } from 'react-plugin';
 
 export function cleanup() {
+  rtl.cleanup();
   resetPlugins();
 }
 

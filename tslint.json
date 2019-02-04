@@ -9,7 +9,8 @@
     "no-console": false,
     "ordered-imports": false,
     "interface-over-type-literal": false,
-    "no-empty": false
+    "no-empty": false,
+    "member-access": false
   },
   "jsRules": {}
 }

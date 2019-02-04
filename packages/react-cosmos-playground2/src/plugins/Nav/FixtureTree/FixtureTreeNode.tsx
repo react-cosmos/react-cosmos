@@ -1,6 +1,4 @@
-// @flow
-
-import React, { Component } from 'react';
+import * as React from 'react';
 import { map } from 'lodash';
 import styled from 'styled-components';
 import {
@@ -8,20 +6,19 @@ import {
   ChevronDownIcon,
   FolderIcon
 } from '../../../shared/icons';
-
-import type { TreeNode, TreeExpansion } from './shared';
+import { TreeNode, TreeExpansion } from './shared';
 
 type Props = {
-  node: TreeNode,
-  parents: string[],
-  treeExpansion: TreeExpansion,
-  selectedFixturePath: null | string,
-  onSelect: (path: string) => mixed,
-  onToggleExpansion: (nodePath: string, expanded: boolean) => mixed
+  node: TreeNode;
+  parents: string[];
+  treeExpansion: TreeExpansion;
+  selectedFixturePath: null | string;
+  onSelect: (path: string) => unknown;
+  onToggleExpansion: (nodePath: string, expanded: boolean) => unknown;
 };
 
 // TODO: Make fixture buttons <a>nchors to enable "open in new tab" clicks
-export class FixtureTreeNode extends Component<Props> {
+export class FixtureTreeNode extends React.Component<Props> {
   render() {
     const {
       node,
@@ -88,15 +85,19 @@ export class FixtureTreeNode extends Component<Props> {
     );
   }
 
-  createSelectHandler = (path: string) => (
-    e: SyntheticEvent<HTMLAnchorElement>
-  ) => {
+  createSelectHandler = (path: string) => (e: React.SyntheticEvent) => {
     e.preventDefault();
     this.props.onSelect(path);
   };
 }
 
-const ListItem = styled.div`
+type ListItemProps = {
+  indentLevel: number;
+  selected?: boolean;
+  onClick: (e: React.SyntheticEvent) => void;
+};
+
+const ListItem = styled.div<ListItemProps>`
   --height: 28px;
   --hover-bg: hsl(var(--hue-primary), 19%, 21%);
 
@@ -142,7 +143,7 @@ const FolderContainer = styled(IconContainer)`
   padding-right: 6px;
 `;
 
-function getLeftPadding(depth) {
+function getLeftPadding(depth: number) {
   return 8 + depth * 16;
 }
 

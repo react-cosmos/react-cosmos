@@ -1,7 +1,8 @@
-// @flow
-
 import styled from 'styled-components';
-import React, { Component } from 'react';
+import * as React from 'react';
+import { FixtureNames } from 'react-cosmos-shared2/renderer';
+import { StorageSpec } from '../../Storage/public';
+import { TreeExpansion } from './shared';
 import {
   getPathTree,
   collapsePathTreeDirs,
@@ -10,25 +11,21 @@ import {
 } from './pathTree';
 import { FixtureTreeNode } from './FixtureTreeNode';
 
-import type { FixtureNames } from 'react-cosmos-shared2/renderer';
-import type { Storage } from '../../Storage';
-import type { TreeExpansion } from './shared';
-
 type Props = {
-  projectId: string,
-  fixturesDir: string,
-  fixtureFileSuffix: string,
-  fixtures: FixtureNames,
-  selectedFixturePath: null | string,
-  onSelect: (path: string) => mixed,
-  storage: Storage
+  projectId: string;
+  fixturesDir: string;
+  fixtureFileSuffix: string;
+  fixtures: FixtureNames;
+  selectedFixturePath: null | string;
+  onSelect: (path: string) => unknown;
+  storage: StorageSpec['methods'];
 };
 
 type State = {
-  treeExpansion: TreeExpansion
+  treeExpansion: TreeExpansion;
 };
 
-export class FixtureTree extends Component<Props, State> {
+export class FixtureTree extends React.Component<Props, State> {
   state = {
     treeExpansion: {}
   };
@@ -53,11 +50,11 @@ export class FixtureTree extends Component<Props, State> {
     } = this.props;
     const { treeExpansion } = this.state;
 
-    const rootNode = getTreeFromFixtures({
+    const rootNode = getTreeFromFixtures(
       fixtures,
       fixturesDir,
       fixtureFileSuffix
-    });
+    );
 
     return (
       <Container>
@@ -103,7 +100,11 @@ export class FixtureTree extends Component<Props, State> {
   }
 }
 
-function getTreeFromFixtures({ fixtures, fixturesDir, fixtureFileSuffix }) {
+function getTreeFromFixtures(
+  fixtures: FixtureNames,
+  fixturesDir: string,
+  fixtureFileSuffix: string
+) {
   let rootNode = getPathTree(fixtures);
   rootNode = collapsePathTreeDirs(rootNode, fixturesDir);
   rootNode = hideFixtureSuffix(rootNode, fixtureFileSuffix);

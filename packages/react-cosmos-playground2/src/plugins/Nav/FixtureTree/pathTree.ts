@@ -1,8 +1,5 @@
-// @flow
-
 import { get, set, forEach, mapValues, mapKeys } from 'lodash';
-
-import type { TreeNode } from './shared';
+import { TreeNodeDirs, TreeNode } from './shared';
 
 export function getPathTree(paths: string[]): TreeNode {
   const rootNode = getBlankNode();
@@ -16,7 +13,7 @@ export function collapsePathTreeDirs(
   collapsedDirName: string
 ): TreeNode {
   let fixtures = { ...treeNode.fixtures };
-  let dirs = {};
+  const dirs: TreeNodeDirs = {};
 
   forEach(treeNode.dirs, (dirNode, dirName) => {
     if (dirName !== collapsedDirName) {
@@ -55,8 +52,8 @@ export function hideFixtureSuffix(
 }
 
 export function collapseSoloIndexes(treeNode: TreeNode): TreeNode {
-  let fixtures = { ...treeNode.fixtures };
-  let dirs = {};
+  const fixtures = { ...treeNode.fixtures };
+  const dirs: TreeNodeDirs = {};
 
   forEach(treeNode.dirs, (dirNode, dirName) => {
     const dirFixtures = dirNode.fixtures || {};
@@ -75,7 +72,13 @@ export function collapseSoloIndexes(treeNode: TreeNode): TreeNode {
 
 function addFixtureToTree(rootNode: TreeNode, fixturePath: string) {
   const namespace = fixturePath.split('/');
-  const fixtureName = removeFixtureNameExtension(namespace.pop());
+  const rawFixtureName = namespace.pop();
+
+  if (!rawFixtureName) {
+    throw new Error('Fixture name is empty');
+  }
+
+  const fixtureName = removeFixtureNameExtension(rawFixtureName);
 
   if (namespace.length === 0) {
     rootNode.fixtures[fixtureName] = fixturePath;
@@ -108,10 +111,13 @@ function getBlankNode(): TreeNode {
   };
 }
 
-function removeFixtureNameExtension(fixtureName) {
+function removeFixtureNameExtension(fixtureName: string) {
   return fixtureName.replace(/\.(j|t)sx?$/, '');
 }
 
-function removeFixtureNameSuffix(fixtureNameWithoutExtension, suffix) {
+function removeFixtureNameSuffix(
+  fixtureNameWithoutExtension: string,
+  suffix: string
+) {
   return fixtureNameWithoutExtension.replace(new RegExp(`\\.${suffix}$`), '');
 }

@@ -1,24 +1,21 @@
-// @flow
-
 import styled from 'styled-components';
-import React, { Component } from 'react';
+import * as React from 'react';
+import { StorageSpec } from '../Storage/public';
+import { UrlParams } from '../Router/public';
 import { FixtureTree } from './FixtureTree';
 
-import type { UrlParams } from '../Router';
-import type { Storage } from '../Storage';
-
 type Props = {
-  projectId: string,
-  fixturesDir: string,
-  fixtureFileSuffix: string,
-  urlParams: UrlParams,
-  rendererConnected: boolean,
-  fixtures: string[],
-  setUrlParams: (urlParams: UrlParams) => void,
-  storage: Storage
+  projectId: string;
+  fixturesDir: string;
+  fixtureFileSuffix: string;
+  urlParams: UrlParams;
+  rendererConnected: boolean;
+  fixtures: string[];
+  setUrlParams: (urlParams: UrlParams) => void;
+  storage: StorageSpec['methods'];
 };
 
-export class Nav extends Component<Props> {
+export class Nav extends React.Component<Props> {
   render() {
     const {
       projectId,

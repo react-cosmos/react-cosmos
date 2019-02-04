@@ -1,6 +1,4 @@
-// @flow
-
-import React from 'react';
+import * as React from 'react';
 import {
   render,
   cleanup,
@@ -106,7 +104,8 @@ it('loads persistent tree expansion state', async () => {
 });
 
 it('persists tree expansion state', async () => {
-  let storage = {
+  type Storage = { [attr: string]: Storage };
+  const storage: Storage = {
     [treeExpansionStorageKey]: {}
   };
 
