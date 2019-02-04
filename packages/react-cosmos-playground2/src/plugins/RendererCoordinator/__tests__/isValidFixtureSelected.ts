@@ -2,7 +2,7 @@ import { loadPlugins } from 'react-plugin';
 import {
   cleanup,
   getMethodsOf,
-  mockMethods
+  mockMethodsOf
 } from '../../../testHelpers/plugin2';
 import { UrlParams, RouterSpec } from '../../Router/public';
 import { RendererCoordinatorSpec } from '../public';
@@ -20,7 +20,7 @@ const state: State = {
 };
 
 function mockUrlParams(urlParams: UrlParams) {
-  mockMethods<RouterSpec>('router', {
+  mockMethodsOf<RouterSpec>('router', {
     getUrlParams: () => urlParams
   });
 }

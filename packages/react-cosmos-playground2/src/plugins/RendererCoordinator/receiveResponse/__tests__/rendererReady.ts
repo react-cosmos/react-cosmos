@@ -5,7 +5,7 @@ import {
   cleanup,
   getState,
   getMethodsOf,
-  mockMethods
+  mockMethodsOf
 } from '../../../../testHelpers/plugin2';
 import { RouterSpec } from '../../../Router/public';
 import { createRendererReadyResponse } from '../../testHelpers';
@@ -20,7 +20,7 @@ const fixtureState = { components: [] };
 
 function registerTestPlugins() {
   register();
-  mockMethods<RouterSpec>('router', {
+  mockMethodsOf<RouterSpec>('router', {
     getUrlParams: () => ({})
   });
 }

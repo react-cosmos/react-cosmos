@@ -2,7 +2,7 @@ import * as React from 'react';
 import { wait, render } from 'react-testing-library';
 import { loadPlugins, Slot, getPluginContext } from 'react-plugin';
 import { RendererCoordinatorSpec } from '../../RendererCoordinator/public';
-import { cleanup, mockMethods } from '../../../testHelpers/plugin2';
+import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin2';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { mockIframeMessage, getIframe } from '../testHelpers/iframe';
 import { selectFixtureMsg, rendererReadyMsg } from '../testHelpers/messages';
@@ -20,7 +20,7 @@ function loadTestPlugins() {
 it('posts renderer request message to iframe', async () => {
   register();
 
-  mockMethods<RendererCoordinatorSpec>('rendererCoordinator', {
+  mockMethodsOf<RendererCoordinatorSpec>('rendererCoordinator', {
     getWebUrl: () => 'mockRendererUrl'
   });
 
@@ -43,7 +43,7 @@ it('broadcasts renderer response message', async () => {
   register();
 
   const receiveResponse = jest.fn();
-  mockMethods<RendererCoordinatorSpec>('rendererCoordinator', {
+  mockMethodsOf<RendererCoordinatorSpec>('rendererCoordinator', {
     getWebUrl: () => 'mockRendererUrl',
     receiveResponse
   });

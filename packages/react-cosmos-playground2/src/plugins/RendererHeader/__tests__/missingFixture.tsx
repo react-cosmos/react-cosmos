@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { render, fireEvent, waitForElement } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
-import { cleanup, mockMethods } from '../../../testHelpers/plugin2';
+import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin2';
 import { RouterSpec } from '../../Router/public';
 import { RendererCoordinatorSpec } from '../../RendererCoordinator/public';
 import { register } from '..';
@@ -10,11 +10,11 @@ afterEach(cleanup);
 
 function registerTestPlugins(handleSetUrlParams = () => {}) {
   register();
-  mockMethods<RouterSpec>('router', {
+  mockMethodsOf<RouterSpec>('router', {
     getUrlParams: () => ({ fixturePath: 'foo' }),
     setUrlParams: handleSetUrlParams
   });
-  mockMethods<RendererCoordinatorSpec>('rendererCoordinator', {
+  mockMethodsOf<RendererCoordinatorSpec>('rendererCoordinator', {
     isRendererConnected: () => true,
     isValidFixtureSelected: () => false
   });

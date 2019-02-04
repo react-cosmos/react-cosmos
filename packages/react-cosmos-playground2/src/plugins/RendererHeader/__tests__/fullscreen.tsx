@@ -2,7 +2,7 @@ import * as React from 'react';
 import delay from 'delay';
 import { render } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
-import { cleanup, mockMethods, mockPlug } from '../../../testHelpers/plugin2';
+import { cleanup, mockMethodsOf, mockPlug } from '../../../testHelpers/plugin2';
 import { RouterSpec } from '../../Router/public';
 import { RendererCoordinatorSpec } from '../../RendererCoordinator/public';
 import { register } from '..';
@@ -11,10 +11,10 @@ afterEach(cleanup);
 
 function registerTestPlugins() {
   register();
-  mockMethods<RouterSpec>('router', {
+  mockMethodsOf<RouterSpec>('router', {
     getUrlParams: () => ({ fixturePath: 'foo', fullScreen: true })
   });
-  mockMethods<RendererCoordinatorSpec>('rendererCoordinator', {
+  mockMethodsOf<RendererCoordinatorSpec>('rendererCoordinator', {
     isRendererConnected: () => false,
     isValidFixtureSelected: () => true
   });

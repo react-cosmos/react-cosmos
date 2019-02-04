@@ -2,7 +2,7 @@ import * as React from 'react';
 import delay from 'delay';
 import { render, waitForElement, fireEvent } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
-import { cleanup, mockMethods } from '../../testHelpers/plugin2';
+import { cleanup, mockMethodsOf } from '../../testHelpers/plugin2';
 import { StorageSpec } from '../Storage/public';
 import { UrlParams, RouterSpec } from '../Router/public';
 import { CoreSpec } from '../Core/public';
@@ -15,18 +15,18 @@ const fixtures = ['ein.js', 'zwei.js', 'drei.js'];
 
 function registerTestPlugins() {
   register();
-  mockMethods<StorageSpec>('storage', {
+  mockMethodsOf<StorageSpec>('storage', {
     getItem: () => Promise.resolve(null),
     setItem: () => Promise.resolve(undefined)
   });
-  mockMethods<CoreSpec>('core', {
+  mockMethodsOf<CoreSpec>('core', {
     getProjectId: () => 'mockProjectId',
     getFixtureFileVars: () => ({
       fixturesDir: 'fixtures',
       fixtureFileSuffix: 'fixture'
     })
   });
-  mockMethods<RendererCoordinatorSpec>('rendererCoordinator', {
+  mockMethodsOf<RendererCoordinatorSpec>('rendererCoordinator', {
     isRendererConnected: () => true,
     getFixtures: () => fixtures
   });
@@ -36,7 +36,7 @@ function mockRouter(
   urlParams: UrlParams,
   setUrlParams: RouterSpec['methods']['getUrlParams'] = jest.fn()
 ) {
-  mockMethods<RouterSpec>('router', {
+  mockMethodsOf<RouterSpec>('router', {
     getUrlParams: () => urlParams,
     setUrlParams
   });

@@ -4,7 +4,7 @@ import {
   cleanup,
   getState,
   on,
-  mockMethods
+  mockMethodsOf
 } from '../../../testHelpers/plugin2';
 import { RouterSpec } from '../../Router/public';
 import { RendererCoordinatorSpec } from '../public';
@@ -22,7 +22,7 @@ const state: State = {
 
 function registerTestPlugins() {
   register();
-  mockMethods<RouterSpec>('router', {
+  mockMethodsOf<RouterSpec>('router', {
     getUrlParams: () => ({})
   });
 }

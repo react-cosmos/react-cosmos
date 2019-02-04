@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { render } from 'react-testing-library';
 import { loadPlugins, Slot } from 'react-plugin';
-import { cleanup, mockMethods } from '../../../testHelpers/plugin2';
+import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin2';
 import { RouterSpec } from '../../Router/public';
 import { RendererCoordinatorSpec } from '../../RendererCoordinator/public';
 import { RendererPreviewSpec } from '../../RendererPreview/public';
@@ -11,14 +11,14 @@ afterEach(cleanup);
 
 function registerTestPlugins() {
   register();
-  mockMethods<RouterSpec>('router', {
+  mockMethodsOf<RouterSpec>('router', {
     getUrlParams: () => ({})
   });
-  mockMethods<RendererCoordinatorSpec>('rendererCoordinator', {
+  mockMethodsOf<RendererCoordinatorSpec>('rendererCoordinator', {
     isRendererConnected: () => false,
     isValidFixtureSelected: () => false
   });
-  mockMethods<RendererPreviewSpec>('rendererPreview', {
+  mockMethodsOf<RendererPreviewSpec>('rendererPreview', {
     getUrlStatus: () => 'unknown',
     getRuntimeStatus: () => 'pending'
   });

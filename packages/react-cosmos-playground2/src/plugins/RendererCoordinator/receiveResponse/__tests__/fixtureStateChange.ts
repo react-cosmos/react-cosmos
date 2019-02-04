@@ -6,7 +6,7 @@ import {
   getState,
   on,
   getMethodsOf,
-  mockMethods
+  mockMethodsOf
 } from '../../../../testHelpers/plugin2';
 import { RouterSpec } from '../../../Router/public';
 import { createFixtureStateChangeResponse } from '../../testHelpers';
@@ -27,7 +27,7 @@ const state: State = {
 
 function registerTestPlugins() {
   register();
-  mockMethods<RouterSpec>('router', {
+  mockMethodsOf<RouterSpec>('router', {
     getUrlParams: () => ({ fixturePath })
   });
 }

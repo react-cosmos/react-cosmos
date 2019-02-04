@@ -6,7 +6,7 @@ import {
   getState,
   on,
   getMethodsOf,
-  mockMethods
+  mockMethodsOf
 } from '../../../testHelpers/plugin2';
 import { RouterSpec } from '../../Router/public';
 import { RendererCoordinatorSpec } from '../public';
@@ -27,7 +27,7 @@ const expectedFixtureState = {
 };
 
 function mockSelectedFixture() {
-  mockMethods<RouterSpec>('router', {
+  mockMethodsOf<RouterSpec>('router', {
     getUrlParams: () => ({ fixturePath: 'zwei.js' })
   });
 }
