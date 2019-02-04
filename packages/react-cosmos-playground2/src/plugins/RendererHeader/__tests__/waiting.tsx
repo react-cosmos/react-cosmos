@@ -1,18 +1,22 @@
-// @flow
-
-import React from 'react';
+import * as React from 'react';
 import { render, waitForElement } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
-import { cleanup, mockState, mockMethod } from '../../../testHelpers/plugin';
+import { cleanup, mockMethods } from '../../../testHelpers/plugin2';
+import { RouterSpec } from '../../Router/public';
+import { RendererCoordinatorSpec } from '../../RendererCoordinator/public';
 import { register } from '..';
 
 afterEach(cleanup);
 
 function registerTestPlugins() {
   register();
-  mockState('router', { urlParams: {} });
-  mockMethod('rendererCoordinator.isRendererConnected', () => false);
-  mockMethod('rendererCoordinator.isValidFixtureSelected', () => false);
+  mockMethods<RouterSpec>('router', {
+    getUrlParams: () => ({})
+  });
+  mockMethods<RendererCoordinatorSpec>('rendererCoordinator', {
+    isRendererConnected: () => false,
+    isValidFixtureSelected: () => false
+  });
 }
 
 function loadTestPlugins() {

@@ -1,6 +1,4 @@
-// @flow
-
-import React from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
 import { Slot } from 'react-plugin';
 import {
@@ -10,14 +8,13 @@ import {
   HomeIcon
 } from '../../shared/icons';
 import { Button } from '../../shared/components';
-
-import type { UrlParams } from '../Router';
+import { UrlParams } from '../Router/public';
 
 type Props = {
-  urlParams: UrlParams,
-  rendererConnected: boolean,
-  validFixtureSelected: boolean,
-  setUrlParams: UrlParams => void
+  urlParams: UrlParams;
+  rendererConnected: boolean;
+  validFixtureSelected: boolean;
+  setUrlParams: (urlParams: UrlParams) => void;
 };
 
 // TODO: Improve UX of refresh button, which seems like it's not doing anything
