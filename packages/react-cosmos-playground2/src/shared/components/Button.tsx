@@ -1,14 +1,12 @@
-// @flow
-
-import React from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
 
 type Props = {
-  label: React$Node,
-  icon?: React$Node,
-  disabled?: boolean,
-  selected?: boolean,
-  onClick?: () => mixed
+  label: React.ReactNode;
+  icon?: React.ReactNode;
+  disabled?: boolean;
+  selected?: boolean;
+  onClick?: () => unknown;
 };
 
 export function Button({
@@ -26,7 +24,12 @@ export function Button({
   );
 }
 
-const StyledButton = styled.button`
+type StyledButtonProps = {
+  selected: boolean;
+  disabled: boolean;
+};
+
+const StyledButton = styled.button<StyledButtonProps>`
   --selected-bg: var(--grey5);
   --hover-bg: hsl(var(--hue-primary), 25%, 95%);
   --press-bg: hsl(var(--hue-primary), 25%, 93%);
