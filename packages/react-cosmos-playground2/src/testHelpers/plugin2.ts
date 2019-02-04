@@ -39,7 +39,7 @@ export function on<PluginSpec extends IPluginSpec>(
   testPlugin.register();
 }
 
-export function mockMethods<PluginSpec extends IPluginSpec>(
+export function mockMethodsOf<PluginSpec extends IPluginSpec>(
   pluginName: PluginSpec['name'],
   methods: Partial<MethodHandlers<PluginSpec>>
 ) {
