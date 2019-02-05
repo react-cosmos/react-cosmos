@@ -1,52 +1,42 @@
-// @flow
-/* eslint-env browser */
-
-import React, { Component } from 'react';
+import * as React from 'react';
 import { isEqual } from 'lodash';
 import styled from 'styled-components';
-import { getFixtureViewport } from '../shared';
+import { SetState } from 'react-cosmos-shared2/util';
+import { FixtureState } from 'react-cosmos-shared2/fixtureState';
+import { StorageMethods, getFixtureViewport } from '../shared';
 import { storeViewport } from '../storage';
 import { Header } from './Header';
 import { stretchStyle, getStyles } from './style';
-
-import type { Node } from 'react';
-import type { SetState } from 'react-cosmos-shared2/util';
-import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import type { Storage } from '../../Storage';
-import type {
-  Viewport,
-  ResponsivePreviewConfig,
-  ResponsivePreviewState
-} from '../shared';
+import { Viewport, ResponsivePreviewSpec } from '../public';
 
 type Props = {
-  children: Node,
-  config: ResponsivePreviewConfig,
-  state: ResponsivePreviewState,
-  projectId: string,
-  fullScreen: boolean,
-  fixtureState: null | FixtureState,
-  validFixtureSelected: boolean,
-  setState: SetState<ResponsivePreviewState>,
-  setFixtureStateViewport: () => void,
-  storage: Storage
+  children?: React.ReactNode;
+  config: ResponsivePreviewSpec['config'];
+  state: ResponsivePreviewSpec['state'];
+  projectId: string;
+  fullScreen: boolean;
+  fixtureState: null | FixtureState;
+  validFixtureSelected: boolean;
+  setState: SetState<ResponsivePreviewSpec['state']>;
+  setFixtureStateViewport: () => void;
+  storage: StorageMethods;
 };
 
 type State = {
   container: null | {
-    width: number,
-    height: number
-  },
-  scale: boolean
+    width: number;
+    height: number;
+  };
+  scale: boolean;
 };
 
-export class ResponsivePreview extends Component<Props, State> {
+export class ResponsivePreview extends React.Component<Props, State> {
   state = {
     container: null,
     scale: true
   };
 
-  containerEl: ?HTMLElement;
+  containerEl: null | HTMLElement = null;
 
   render() {
     const {
@@ -111,7 +101,7 @@ export class ResponsivePreview extends Component<Props, State> {
     );
   }
 
-  handleContainerRef = (el: ?HTMLElement) => {
+  handleContainerRef = (el: null | HTMLElement) => {
     this.containerEl = el;
   };
 
@@ -161,7 +151,7 @@ export class ResponsivePreview extends Component<Props, State> {
   }
 }
 
-function getContainerSize(containerEl: ?HTMLElement) {
+function getContainerSize(containerEl: null | HTMLElement) {
   if (!containerEl) {
     return null;
   }
@@ -172,7 +162,7 @@ function getContainerSize(containerEl: ?HTMLElement) {
 }
 
 function getViewport(
-  state: ResponsivePreviewState,
+  state: ResponsivePreviewSpec['state'],
   fixtureState: null | FixtureState
 ): null | Viewport {
   return (

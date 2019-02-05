@@ -1,20 +1,16 @@
 import * as React from 'react';
 import { Slot } from 'react-plugin';
 
-type Children = { children: React.ReactNode };
-type ExcludeChildren<Props extends Children> = Pick<
-  Props,
-  Exclude<keyof Props, 'children'>
->;
+type Children = { children?: React.ReactNode };
 
-// Rendering children preserves other plugins that already plugged into the
-// "fixtureActions" slot.
-// Rendering <Slot name="fixtureActions"> allows more plugins to further plug
-// into the "fixtureActions" slot.
-export function createFixtureAction<Props extends Children>(
+type ExcludeChildren<Props> = Pick<Props, Exclude<keyof Props, 'children'>>;
+
+type PlugProps<ComponentProps> = ComponentProps & Children;
+
+export function createFixtureAction<Props>(
   BtnComponent: React.ComponentType<ExcludeChildren<Props>>
-): React.ComponentType<Props> {
-  return ({ children, ...otherProps }: Props) => (
+): React.ComponentType<PlugProps<Props>> {
+  return ({ children, ...otherProps }: PlugProps<Props>) => (
     <>
       {children}
       <BtnComponent {...otherProps} />

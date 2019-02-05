@@ -1,6 +1,4 @@
-// @flow
-
-import type { Viewport } from '../shared';
+import { Viewport } from '../public';
 
 const PADDING = [4, 12, 12, 12];
 const BORDER_WIDTH = 1;
@@ -12,9 +10,9 @@ export function getStyles({
   viewport,
   scale
 }: {
-  container: Viewport,
-  viewport: Viewport,
-  scale: boolean
+  container: Viewport;
+  viewport: Viewport;
+  scale: boolean;
 }) {
   const { width, height } = viewport;
 
@@ -26,21 +24,10 @@ export function getStyles({
   const scaledHeight = height * scaleFactor;
 
   return {
-    maskContainerStyle: getMaskContainerStyle({
-      scale,
-      widthScale,
-      heightScale
-    }),
+    maskContainerStyle: getMaskContainerStyle(scale, widthScale, heightScale),
     padContainerStyle: getPadContainerStyle(),
-    alignContainerStyle: getAlignContainerStyle({
-      scaledWidth,
-      scaledHeight
-    }),
-    scaleContainerStyle: getScaleContainerStyle({
-      width,
-      height,
-      scaleFactor
-    })
+    alignContainerStyle: getAlignContainerStyle(scaledWidth, scaledHeight),
+    scaleContainerStyle: getScaleContainerStyle(width, height, scaleFactor)
   };
 }
 
@@ -51,7 +38,11 @@ export function getAvailableViewport(container: Viewport) {
   };
 }
 
-function getMaskContainerStyle({ scale, widthScale, heightScale }) {
+function getMaskContainerStyle(
+  scale: boolean,
+  widthScale: number,
+  heightScale: number
+) {
   return {
     flex: 1,
     display: 'flex',
@@ -72,7 +63,7 @@ function getPadContainerStyle() {
   };
 }
 
-function getAlignContainerStyle({ scaledWidth, scaledHeight }) {
+function getAlignContainerStyle(scaledWidth: number, scaledHeight: number) {
   return {
     width: scaledWidth,
     height: scaledHeight,
@@ -82,7 +73,11 @@ function getAlignContainerStyle({ scaledWidth, scaledHeight }) {
   };
 }
 
-function getScaleContainerStyle({ width, height, scaleFactor }) {
+function getScaleContainerStyle(
+  width: number,
+  height: number,
+  scaleFactor: number
+) {
   return {
     width,
     height,

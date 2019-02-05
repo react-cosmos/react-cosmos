@@ -1,23 +1,20 @@
-// @flow
-
-import React, { Component } from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
 import { Minimize2Icon } from '../../../shared/icons';
 import { Button } from '../../../shared/components';
+import { Viewport, Device } from '../public';
 import { getAvailableViewport } from './style';
 
-import type { Viewport, Device } from '../shared';
-
 type Props = {
-  devices: Device[],
-  viewport: Viewport,
-  container: Viewport,
-  scale: boolean,
-  createSelectViewportHandler: Viewport => () => mixed,
-  toggleScale: () => mixed
+  devices: Device[];
+  viewport: Viewport;
+  container: Viewport;
+  scale: boolean;
+  createSelectViewportHandler: (viewport: Viewport) => () => unknown;
+  toggleScale: () => unknown;
 };
 
-export class Header extends Component<Props> {
+export class Header extends React.Component<Props> {
   render() {
     const {
       devices,

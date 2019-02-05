@@ -1,27 +1,23 @@
-// @flow
-
-import React, { Component } from 'react';
-import { getFixtureViewport } from '../shared';
-import { getDefaultViewport } from '../storage';
+import * as React from 'react';
+import { SetState } from 'react-cosmos-shared2/util';
+import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { SmartphoneIcon } from '../../../shared/icons';
 import { Button } from '../../../shared/components';
-
-import type { SetState } from 'react-cosmos-shared2/util';
-import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import type { Storage } from '../../Storage';
-import type { ResponsivePreviewState } from '../shared';
+import { StorageMethods, getFixtureViewport } from '../shared';
+import { getDefaultViewport } from '../storage';
+import { ResponsivePreviewSpec } from '../public';
 
 export type Props = {
-  state: ResponsivePreviewState,
-  projectId: string,
-  fixtureState: null | FixtureState,
-  validFixtureSelected: boolean,
-  setState: SetState<ResponsivePreviewState>,
-  setFixtureStateViewport: () => void,
-  storage: Storage
+  state: ResponsivePreviewSpec['state'];
+  projectId: string;
+  fixtureState: null | FixtureState;
+  validFixtureSelected: boolean;
+  setState: SetState<ResponsivePreviewSpec['state']>;
+  setFixtureStateViewport: () => void;
+  storage: StorageMethods;
 };
 
-export class ToggleButton extends Component<Props> {
+export class ToggleButton extends React.Component<Props> {
   render() {
     const { state, fixtureState, validFixtureSelected } = this.props;
 
@@ -51,9 +47,7 @@ export class ToggleButton extends Component<Props> {
     this.props.setState(
       ({ enabled, viewport }) =>
         isResponsiveModeOn(enabled, fixtureState)
-          ? // https://github.com/facebook/flow/issues/2892#issuecomment-263055197
-            // $FlowFixMe
-            { enabled: false, viewport }
+          ? { enabled: false, viewport }
           : { enabled: true, viewport: viewport || defaultViewport },
       () => {
         setFixtureStateViewport();

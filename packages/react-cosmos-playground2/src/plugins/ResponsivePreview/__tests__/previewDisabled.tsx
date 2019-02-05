@@ -1,24 +1,28 @@
-// @flow
-
-import React from 'react';
+import * as React from 'react';
 import { render } from 'react-testing-library';
 import { loadPlugins, Slot } from 'react-plugin';
-import {
-  cleanup,
-  mockConfig,
-  mockState,
-  mockMethod
-} from '../../../testHelpers/plugin';
+import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin2';
+import { StorageSpec } from '../../Storage/public';
+import { RouterSpec } from '../../Router/public';
+import { CoreSpec } from '../../Core/public';
+import { RendererCoordinatorSpec } from '../../RendererCoordinator/public';
 import { register } from '..';
 
 afterEach(cleanup);
 
 function registerTestPlugins() {
   register();
-  mockConfig('core', { projectId: 'mockProjectId' });
-  mockState('router', { urlParams: { fixturePath: 'fooFixture.js' } });
-  mockState('rendererCoordinator', { fixtureState: null });
-  mockMethod('rendererCoordinator.isValidFixtureSelected', () => false);
+  mockMethodsOf<StorageSpec>('storage', {});
+  mockMethodsOf<CoreSpec>('core', {
+    getProjectId: () => 'mockProjectId'
+  });
+  mockMethodsOf<RouterSpec>('router', {
+    getUrlParams: () => ({ fixturePath: 'foo.js' })
+  });
+  mockMethodsOf<RendererCoordinatorSpec>('rendererCoordinator', {
+    getFixtureState: () => null,
+    isValidFixtureSelected: () => false
+  });
 }
 
 function loadTestPlugins() {
