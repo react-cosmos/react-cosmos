@@ -23,6 +23,7 @@ export type RendererCoordinatorSpec = {
     getWebUrl(): null | string;
     remoteRenderersEnabled(): boolean;
     getConnectedRendererIds(): RendererId[];
+    getPrimaryRendererId(): null | RendererId;
     getFixtures(): FixtureNames;
     getFixtureState(): null | FixtureState;
     isRendererConnected(): boolean;

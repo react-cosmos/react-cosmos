@@ -1,22 +1,20 @@
-// @flow
-
+import * as React from 'react';
 import styled from 'styled-components';
-import React, { createElement, Component } from 'react';
 
 type Props = {
-  id: string,
-  label: string,
-  value: string,
-  disabled: boolean,
-  onChange: (value: string) => mixed
+  id: string;
+  label: string;
+  value: string;
+  disabled: boolean;
+  onChange: (value: string) => unknown;
 };
 
 type State = {
-  confirmedValue: string,
-  localValue: string
+  confirmedValue: string;
+  localValue: string;
 };
 
-export class ValueInput extends Component<Props, State> {
+export class ValueInput extends React.Component<Props, State> {
   static getDerivedStateFromProps(props: Props, state: State) {
     if (props.value === state.confirmedValue) {
       return null;
@@ -38,22 +36,29 @@ export class ValueInput extends Component<Props, State> {
     const { localValue } = this.state;
 
     const type = localValue.indexOf(`\n`) !== -1 ? 'textarea' : 'input';
-    let props = this.getInputProps(type);
+    const props = this.getInputProps(type);
 
     return (
       <div>
         <Label htmlFor={id}>{label}</Label>
-        {createElement(type, props)}
+        {React.createElement(type, props)}
       </div>
     );
   }
 
-  getInputProps(type: 'input' | 'textarea') {
+  getInputProps = (type: 'input' | 'textarea') => {
     const { id, disabled } = this.props;
     const { localValue } = this.state;
 
-    let props = {
-      id: id,
+    type InputProps = {
+      id: string;
+      value: string;
+      disabled: boolean;
+      type?: string;
+      onChange?: (e: React.SyntheticEvent<HTMLInputElement>) => void;
+    };
+    let props: InputProps = {
+      id,
       value: localValue,
       disabled
     };
@@ -65,9 +70,9 @@ export class ValueInput extends Component<Props, State> {
     }
 
     return props;
-  }
+  };
 
-  handleChange = (e: SyntheticEvent<HTMLInputElement>) => {
+  handleChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
     const { onChange } = this.props;
 

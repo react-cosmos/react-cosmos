@@ -25,6 +25,7 @@ const { on, register } = createPlugin<RendererCoordinatorSpec>({
     getWebUrl,
     remoteRenderersEnabled,
     getConnectedRendererIds,
+    getPrimaryRendererId,
     getFixtures,
     getFixtureState,
     isRendererConnected,
@@ -49,6 +50,10 @@ function remoteRenderersEnabled({ getConfig }: Context) {
 
 function getConnectedRendererIds({ getState }: Context) {
   return getState().connectedRendererIds;
+}
+
+function getPrimaryRendererId({ getState }: Context) {
+  return getState().primaryRendererId;
 }
 
 function getFixtures({ getState }: Context) {

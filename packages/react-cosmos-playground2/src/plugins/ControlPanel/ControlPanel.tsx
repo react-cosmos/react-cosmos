@@ -1,29 +1,25 @@
-// @flow
-/* eslint-env browser */
-
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import * as React from 'react';
+import {
+  ComponentFixtureState,
+  FixtureState
+} from 'react-cosmos-shared2/fixtureState';
+import { RendererId } from 'react-cosmos-shared2/renderer';
 import { PluginsConsumer } from 'react-plugin';
+import styled from 'styled-components';
+import { UrlParams } from '../Router/public';
 import { PropsState } from './PropsState';
 
-import type { RendererId } from 'react-cosmos-shared2/renderer';
-import type {
-  FixtureState,
-  ComponentFixtureState
-} from 'react-cosmos-shared2/fixtureState';
-import type { UrlParams } from '../Router';
-
 type Props = {
-  webUrl: null | string,
-  urlParams: UrlParams,
-  connectedRendererIds: RendererId[],
-  primaryRendererId: null | RendererId,
-  fixtureState: null | FixtureState,
-  setComponentsFixtureState: (components: ComponentFixtureState[]) => void,
-  selectPrimaryRenderer: (rendererId: RendererId) => void
+  webUrl: null | string;
+  urlParams: UrlParams;
+  connectedRendererIds: RendererId[];
+  primaryRendererId: null | RendererId;
+  fixtureState: null | FixtureState;
+  setComponentsFixtureState: (components: ComponentFixtureState[]) => void;
+  selectPrimaryRenderer: (rendererId: RendererId) => void;
 };
 
-export class ControlPanel extends Component<Props> {
+export class ControlPanel extends React.Component<Props> {
   render() {
     const {
       webUrl,
@@ -120,12 +116,25 @@ const Container = styled.div`
   overflow-y: auto;
 `;
 
-function getFullUrl(relativeUrl) {
+function getFullUrl(relativeUrl: string) {
   return `${location.origin}${relativeUrl}`;
 }
 
-async function copyToClipboard(text) {
-  const { permissions, clipboard } = navigator;
+interface IExtendedNavigator extends Navigator {
+  clipboard: {
+    writeText(newClipText: string): Promise<void>;
+  };
+  permissions: {
+    query(descriptor: {
+      name: 'clipboard-write';
+    }): Promise<{
+      state: 'granted' | 'denied' | 'prompt';
+    }>;
+  };
+}
+
+async function copyToClipboard(text: string) {
+  const { permissions, clipboard } = navigator as IExtendedNavigator;
 
   const { state } = await permissions.query({ name: 'clipboard-write' });
   if (state !== 'granted' && state !== 'prompt') {

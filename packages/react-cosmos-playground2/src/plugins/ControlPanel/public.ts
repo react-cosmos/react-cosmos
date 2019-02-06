@@ -1,5 +1,3 @@
-// @flow
-
 export type ControlPanelSpec = {
-  name: 'controlPanel'
+  name: 'controlPanel';
 };

@@ -1,27 +1,20 @@
-// @flow
-
-// import styled from 'styled-components';
-import React, { Component } from 'react';
-import { replaceOrAddItem } from 'react-cosmos-shared2/util';
+import * as React from 'react';
 import {
+  ComponentFixtureState,
   findCompFixtureState,
-  updateCompFixtureState
-} from 'react-cosmos-shared2/fixtureState';
-import { ValueInput } from './ValueInput';
-
-import type { Element } from 'react';
-import type {
   FixtureDecoratorId,
   FixtureState,
-  ComponentFixtureState
+  updateCompFixtureState
 } from 'react-cosmos-shared2/fixtureState';
+import { replaceOrAddItem } from 'react-cosmos-shared2/util';
+import { ValueInput } from './ValueInput';
 
 type Props = {
-  fixtureState: FixtureState,
-  setFixtureState: (components: ComponentFixtureState[]) => mixed
+  fixtureState: FixtureState;
+  setFixtureState: (components: ComponentFixtureState[]) => unknown;
 };
 
-export class PropsState extends Component<Props> {
+export class PropsState extends React.Component<Props> {
   render() {
     const { fixtureState } = this.props;
     const { components } = fixtureState;
@@ -30,7 +23,7 @@ export class PropsState extends Component<Props> {
       return null;
     }
 
-    return components.map<Element<any>>(
+    return components.map<React.ReactElement<any>>(
       ({ decoratorId, elPath, componentName, props, state }) => (
         <div key={`${decoratorId}-${elPath}`}>
           <p>
@@ -97,7 +90,7 @@ export class PropsState extends Component<Props> {
       fixtureState,
       decoratorId,
       elPath,
-      props: replaceOrAddItem(props, value => value.key === key, {
+      props: replaceOrAddItem(props, propVal => propVal.key === key, {
         serializable: true,
         key,
         stringified: value
@@ -125,7 +118,7 @@ export class PropsState extends Component<Props> {
       fixtureState,
       decoratorId,
       elPath,
-      state: replaceOrAddItem(state, value => value.key === key, {
+      state: replaceOrAddItem(state, stateVal => stateVal.key === key, {
         serializable: true,
         key,
         stringified: value
