@@ -1,7 +1,6 @@
 import { RendererResponse } from 'react-cosmos-shared2/renderer';
 import { RendererCoordinatorSpec } from '../RendererCoordinator/public';
 import { Context } from './shared';
-import { getMethodsOf } from '../../testHelpers/plugin2';
 
 type WindowMsg = { data: { [key: string]: unknown } };
 
@@ -21,9 +20,9 @@ function createMessageHandler(context: Context) {
     }
 
     const response = msg.data as RendererResponse;
-    getMethodsOf<RendererCoordinatorSpec>(
-      'rendererCoordinator'
-    ).receiveResponse(response);
+    context
+      .getMethodsOf<RendererCoordinatorSpec>('rendererCoordinator')
+      .receiveResponse(response);
 
     updateRuntimeStatus(context, response);
   };
