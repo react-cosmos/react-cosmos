@@ -909,7 +909,7 @@ module.exports = {
 };
 ```
 
-> Note: For older versions than `react-scripts@2.1.2` the `webpackConfigPath` has to be set to `'react-scripts/config/webpack.config.dev'`
+> Note: When using an older version than `react-scripts@2.1.2` the `webpackConfigPath` has to be set to `'react-scripts/config/webpack.config.dev'`
 
 If you are using the `NODE_PATH` environment variable for absolute imports, make sure to include that as part of the cosmos script:
 
