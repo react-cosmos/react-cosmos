@@ -83,6 +83,7 @@ Jump to:
 - [Integration with popular tools](#integration-with-popular-tools)
   - [Create React App](#create-react-app)
     - [With react-app-rewired](#with-react-app-rewired)
+  - [Github Pages](#github-pages-and-jekyll)
   - [Next.js](#nextjs)
   - [React Boilerplate](#react-boilerplate)
   - [React Redux Starter Kit](#react-redux-starter-kit)
@@ -941,6 +942,15 @@ module.exports = {
   proxiesPath: 'src/cosmos.proxies'
 };
 ```
+
+
+#### Github Pages and Jekyll
+
+You can publish Cosmos publicly using Github pages by [using `cosmos-export`](#exporting). Commit the exported files to a `/docs/` folder in the root of your project and you should be good to go.
+
+When you deploy to Github pages, it defaults to using [Jekyll](https://jekyllrb.com/) and this will cause problems for Cosmos because Jekyll [filters out files that start with an underscore](https://help.github.com/articles/files-that-start-with-an-underscore-are-missing/) so `_playground.js` and other files will be gone when `index.html` needs them
+
+The solution is to put an empty `.nojekyll` file in your `/public/` folder. This will turn off Jekyll rendering and Cosmos should work just fine.
 
 #### Next.js
 
