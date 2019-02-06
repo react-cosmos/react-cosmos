@@ -902,12 +902,14 @@ Add `react-cosmos` to dev dependencies and create `cosmos.config.js`.
 // cosmos.config.js
 module.exports = {
   containerQuerySelector: '#root',
-  webpackConfigPath: 'react-scripts/config/webpack.config.dev',
+  webpackConfigPath: 'react-scripts/config/webpack.config',
   publicPath: 'public',
   // Optional: Add this when you start using proxies
   proxiesPath: 'src/cosmos.proxies'
 };
 ```
+
+> Note: For older versions than `react-scripts@2.1.2` the `webpackConfigPath` has to be set to `'react-scripts/config/webpack.config.dev'`
 
 If you are using the `NODE_PATH` environment variable for absolute imports, make sure to include that as part of the cosmos script:
 
