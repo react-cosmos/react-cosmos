@@ -10,23 +10,26 @@ export type SetState<T> = (
 ) => unknown;
 
 export declare function updateItem<T>(
-  items: Readonly<T>,
+  items: Readonly<Array<T>>,
   item: T,
   update: Partial<T>
 ): Array<T>;
 
 export declare function replaceOrAddItem<T>(
-  items: Readonly<T>,
+  items: Readonly<Array<T>>,
   matcher: ListIteratee<T>,
   item: T
 ): Array<T>;
 
 export declare function removeItemMatch<T>(
-  items: Readonly<T>,
+  items: Readonly<Array<T>>,
   matcher: ListIteratee<T>
 ): Array<T>;
 
-export declare function removeItem<T>(items: Readonly<T>, item: T): Array<T>;
+export declare function removeItem<T>(
+  items: Readonly<Array<T>>,
+  item: T
+): Array<T>;
 
 export declare function updateState<T>(
   prevState: T,
