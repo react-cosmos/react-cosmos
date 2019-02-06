@@ -1,10 +1,9 @@
-// @flow
-
-import { unregisterPlugins, enablePlugin } from 'react-plugin';
+/* tslint:disable no-var-requires */
+import { resetPlugins, enablePlugin } from 'react-plugin';
 
 // Unregistering plugins first makes this file hot-reloadable because a plugin
 // can only be registered once with a given name
-unregisterPlugins();
+resetPlugins();
 
 // TODO: Discover plugins in codebase automatically
 require('../plugins/Storage').register();
