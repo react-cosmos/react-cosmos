@@ -6,7 +6,7 @@ import {
   getState,
   getMethodsOf,
   mockMethodsOf
-} from '../../../../testHelpers/plugin2';
+} from '../../../../testHelpers/plugin';
 import { RouterSpec } from '../../../Router/public';
 import { createRendererReadyResponse } from '../../testHelpers';
 import { State } from '../../shared';

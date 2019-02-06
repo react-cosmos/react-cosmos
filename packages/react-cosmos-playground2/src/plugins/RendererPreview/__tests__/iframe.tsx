@@ -2,7 +2,7 @@ import * as React from 'react';
 import { wait, render } from 'react-testing-library';
 import { loadPlugins, Slot } from 'react-plugin';
 import { RendererCoordinatorSpec } from '../../RendererCoordinator/public';
-import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin2';
+import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { rendererReadyMsg } from '../testHelpers/messages';
 import { getIframe } from '../testHelpers/iframe';

@@ -2,7 +2,7 @@ import * as React from 'react';
 import delay from 'delay';
 import { render } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
-import { cleanup, mockMethodsOf, mockPlug } from '../../../testHelpers/plugin2';
+import { cleanup, mockMethodsOf, mockPlug } from '../../../testHelpers/plugin';
 import { RouterSpec } from '../../Router/public';
 import { RendererCoordinatorSpec } from '../../RendererCoordinator/public';
 import { register } from '..';

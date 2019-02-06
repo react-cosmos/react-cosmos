@@ -1,6 +1,6 @@
 import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
-import { cleanup, getState, getMethodsOf } from '../../../testHelpers/plugin2';
+import { cleanup, getState, getMethodsOf } from '../../../testHelpers/plugin';
 import { RendererCoordinatorSpec } from '../public';
 import { State } from '../shared';
 import { register } from '..';

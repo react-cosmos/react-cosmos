@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { render } from 'react-testing-library';
 import { loadPlugins, Slot } from 'react-plugin';
-import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin2';
+import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
 import { StorageSpec } from '../../Storage/public';
 import { RouterSpec } from '../../Router/public';
 import { CoreSpec } from '../../Core/public';

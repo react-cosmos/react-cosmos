@@ -1,6 +1,6 @@
 import { wait } from 'react-testing-library';
 import { loadPlugins, getPluginContext } from 'react-plugin';
-import { cleanup, on, mockMethodsOf } from '../../../testHelpers/plugin2';
+import { cleanup, on, mockMethodsOf } from '../../../testHelpers/plugin';
 import { RouterSpec } from '../../Router/public';
 import { RendererCoordinatorSpec } from '../public';
 import { State } from '../shared';

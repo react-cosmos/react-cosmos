@@ -3,7 +3,7 @@ import {
   cleanup,
   getMethodsOf,
   mockMethodsOf
-} from '../../../testHelpers/plugin2';
+} from '../../../testHelpers/plugin';
 import { UrlParams, RouterSpec } from '../../Router/public';
 import { RendererCoordinatorSpec } from '../public';
 import { State } from '../shared';

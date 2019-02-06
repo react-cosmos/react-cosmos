@@ -2,7 +2,7 @@ import { wait } from 'react-testing-library';
 import { loadPlugins, getPluginContext } from 'react-plugin';
 import { SelectFixtureRequest } from 'react-cosmos-shared2/renderer';
 import { mockWebSockets } from './testHelpers/mockWebSockets';
-import { cleanup, mockMethodsOf } from '../../testHelpers/plugin2';
+import { cleanup, mockMethodsOf } from '../../testHelpers/plugin';
 import { RendererCoordinatorSpec } from '../RendererCoordinator/public';
 import { register } from '.';
 

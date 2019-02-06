@@ -5,7 +5,7 @@ import {
   getState,
   on,
   mockMethodsOf
-} from '../../../testHelpers/plugin2';
+} from '../../../testHelpers/plugin';
 import { RouterSpec } from '../../Router/public';
 import { RendererCoordinatorSpec } from '../public';
 import { State } from '../shared';

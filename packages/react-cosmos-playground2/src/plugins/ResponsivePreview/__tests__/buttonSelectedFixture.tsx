@@ -3,7 +3,7 @@ import { wait, render, fireEvent } from 'react-testing-library';
 import { loadPlugins, Slot } from 'react-plugin';
 import { updateState } from 'react-cosmos-shared2/util';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import { cleanup, getState, mockMethodsOf } from '../../../testHelpers/plugin2';
+import { cleanup, getState, mockMethodsOf } from '../../../testHelpers/plugin';
 import { StorageSpec } from '../../Storage/public';
 import { CoreSpec } from '../../Core/public';
 import { RendererCoordinatorSpec } from '../../RendererCoordinator/public';

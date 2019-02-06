@@ -1,5 +1,5 @@
 import { loadPlugins } from 'react-plugin';
-import { cleanup, getMethodsOf } from '../../../testHelpers/plugin2';
+import { cleanup, getMethodsOf } from '../../../testHelpers/plugin';
 import { RendererCoordinatorSpec } from '../public';
 import { State } from '../shared';
 import { register } from '..';

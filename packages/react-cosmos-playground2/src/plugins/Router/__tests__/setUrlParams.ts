@@ -6,7 +6,7 @@ import {
   getState,
   getMethodsOf,
   on
-} from '../../../testHelpers/plugin2';
+} from '../../../testHelpers/plugin';
 import { RouterSpec } from '../public';
 import { register } from '..';
 
