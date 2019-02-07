@@ -33,7 +33,7 @@ jobs:
 
       # Test source (with cross-package coverage)
       - run: yarn link-entries src
-      - run: yarn flow --retries 12 --timeout 30
+      - run: yarn flow --retries 12 --timeout 300
       - run: yarn lint
 
       # JS unit tests
