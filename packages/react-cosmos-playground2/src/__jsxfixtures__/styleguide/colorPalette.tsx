@@ -1,6 +1,4 @@
-// @flow
-
-import React from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
 
 const Colors = styled.div`
@@ -8,7 +6,7 @@ const Colors = styled.div`
   padding: 24px 24px 0 0;
 `;
 
-const Color = styled.div`
+const Color = styled.div<{ backgroundColor: string }>`
   --size: 48px;
   width: var(--size);
   height: var(--size);

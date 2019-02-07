@@ -1,5 +1,3 @@
-// @flow
-
 import { loadPlugins } from 'react-plugin';
 
 // Statefulness alert!
