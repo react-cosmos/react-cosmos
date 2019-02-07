@@ -21,55 +21,49 @@ const { join } = require('path');
 
 module.exports = {
   rootDir: join(__dirname, '..'),
-  preset: 'ts-jest',
-  testEnvironment: 'jsdom'
+  preset: 'react-native',
+  // Test environment is sometimes set to 'node' in specific test files
+  testEnvironment: 'jsdom',
+  testMatch: ['**/__tests__/**/*.js', '**/?(*.)test.js'],
+  testPathIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    '/__fsmocks__/',
+    '/_shared'
+  ],
+  watchPathIgnorePatterns: ['jestnowatch'],
+  transformIgnorePatterns: [
+    // Ignore node_modules compilation except for
+    // - src/ paths from other packages in the monorepo
+    // - node_modules/react-native/
+    '/node_modules/(?!((react-cosmos[a-z0-9-]*|react-querystring-router)/src|react-native/))'
+  ],
+  moduleNameMapper: {
+    '\\.(css|less)$': 'identity-obj-proxy',
+    '\\.(jpg|png)$': '<rootDir>/packages/react-cosmos-playground/img-stub.js'
+  },
+  setupFiles: ['<rootDir>/.jest/setup-enzyme-adapter-react.js'],
+  setupTestFrameworkScriptFile: '<rootDir>/.jest/setup-framework.js',
+  testURL: 'http://foo.bar/',
+  globals: {
+    fetch: '__GLOBAL_FETCH_MOCK__',
+    COSMOS_CONFIG: {
+      containerQuerySelector: '__mock__containerQuerySelector'
+    }
+  },
+  collectCoverageFrom: [
+    '**/src/**/*.{js,jsx}',
+    '!**/{__fixtures__,__jsxfixtures__}/**',
+    '!**/*.{fixture,jsxfixture}.js',
+    '!**/cosmos.decorator.js',
+    '!**/testHelpers/**',
+    '!**/react-cosmos-voyager/src/use-cases/**',
+    '!**/react-cosmos-playground2/src/shared/illustrations/**',
+    // Ignore coverage from dark launched APIs
+    '!**/react-cosmos-playground2/src/plugins/ControlPanel/**',
+    '!**/react-cosmos/src/client/next/**',
+    '!**/react-cosmos/src/server/web/webpack/embed-modules-webpack-loader-next.js',
+    '!**/react-cosmos-shared2/src/server/findUserModulePaths.js'
+  ],
+  coverageDirectory: '<rootDir>/coverage',
+  coverageReporters: ['lcov', 'text']
 };
-
-// module.exports = {
-//   rootDir: join(__dirname, '..'),
-//   preset: 'react-native',
-//   // Test environment is sometimes set to 'node' in specific test files
-//   testEnvironment: 'jsdom',
-//   testMatch: ['**/__tests__/**/*.js', '**/?(*.)test.js'],
-//   testPathIgnorePatterns: [
-//     '<rootDir>/node_modules/',
-//     '/__fsmocks__/',
-//     '/_shared'
-//   ],
-//   watchPathIgnorePatterns: ['jestnowatch'],
-//   transformIgnorePatterns: [
-//     // Ignore node_modules compilation except for
-//     // - src/ paths from other packages in the monorepo
-//     // - node_modules/react-native/
-//     '/node_modules/(?!((react-cosmos[a-z0-9-]*|react-querystring-router)/src|react-native/))'
-//   ],
-//   moduleNameMapper: {
-//     '\\.(css|less)$': 'identity-obj-proxy',
-//     '\\.(jpg|png)$': '<rootDir>/packages/react-cosmos-playground/img-stub.js'
-//   },
-//   setupFiles: ['<rootDir>/.jest/setup-enzyme-adapter-react.js'],
-//   setupTestFrameworkScriptFile: '<rootDir>/.jest/setup-framework.js',
-//   testURL: 'http://foo.bar/',
-//   globals: {
-//     fetch: '__GLOBAL_FETCH_MOCK__',
-//     COSMOS_CONFIG: {
-//       containerQuerySelector: '__mock__containerQuerySelector'
-//     }
-//   },
-//   collectCoverageFrom: [
-//     '**/src/**/*.{js,jsx}',
-//     '!**/{__fixtures__,__jsxfixtures__}/**',
-//     '!**/*.{fixture,jsxfixture}.js',
-//     '!**/cosmos.decorator.js',
-//     '!**/testHelpers/**',
-//     '!**/react-cosmos-voyager/src/use-cases/**',
-//     '!**/react-cosmos-playground2/src/shared/illustrations/**',
-//     // Ignore coverage from dark launched APIs
-//     '!**/react-cosmos-playground2/src/plugins/ControlPanel/**',
-//     '!**/react-cosmos/src/client/next/**',
-//     '!**/react-cosmos/src/server/web/webpack/embed-modules-webpack-loader-next.js',
-//     '!**/react-cosmos-shared2/src/server/findUserModulePaths.js'
-//   ],
-//   coverageDirectory: '<rootDir>/coverage',
-//   coverageReporters: ['lcov', 'text']
-// };

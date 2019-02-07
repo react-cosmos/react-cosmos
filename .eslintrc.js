@@ -48,7 +48,7 @@ module.exports = {
   },
   overrides: [
     nodeEnv([
-      '.jest/config.js',
+      '.jest/config{,.ts}.js',
       'scripts/**/*.js',
       'packages/{react-cosmos-config,react-cosmos-scripts,react-cosmos-telescope}/src/**/*.js',
       'packages/{react-cosmos-shared,react-cosmos,react-cosmos-voyager2}/src/server/**/*.js',
