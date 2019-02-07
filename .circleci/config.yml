@@ -36,12 +36,12 @@ jobs:
       - run: yarn flow --retries 12 --timeout 300
       - run: yarn lint
 
-      # JS unit tests
-      - run: yarn test:unit --maxWorkers=1 --coverage
+      # TS unit tests
+      - run: yarn test:ts:unit --maxWorkers=2 --coverage
       - run: yarn codecov
 
-      # TS unit tests
-      - run: yarn test:ts:unit --coverage
+      # JS unit tests
+      - run: yarn test:unit --maxWorkers=1 --coverage
       - run: yarn codecov
 
       # Test build
