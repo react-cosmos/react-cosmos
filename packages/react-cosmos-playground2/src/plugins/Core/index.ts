@@ -1,8 +1,8 @@
-import { IPluginContext, createPlugin } from 'react-plugin';
+import { PluginContext, createPlugin } from 'react-plugin';
 import { CoreSpec } from './public';
 import { layout } from './layout';
 
-type Context = IPluginContext<CoreSpec>;
+type Context = PluginContext<CoreSpec>;
 
 const { plug, register } = createPlugin<CoreSpec>({
   name: 'core',

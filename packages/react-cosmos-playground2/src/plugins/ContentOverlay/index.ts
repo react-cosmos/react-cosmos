@@ -1,11 +1,11 @@
-import { IPluginContext, createPlugin } from 'react-plugin';
+import { PluginContext, createPlugin } from 'react-plugin';
 import { ContentOverlay } from './ContentOverlay';
 import { RouterSpec } from '../Router/public';
 import { RendererCoordinatorSpec } from '../RendererCoordinator/public';
 import { RendererPreviewSpec } from '../RendererPreview/public';
 import { ContentOverlaySpec } from './public';
 
-type Context = IPluginContext<ContentOverlaySpec>;
+type Context = PluginContext<ContentOverlaySpec>;
 
 const { plug, register } = createPlugin<ContentOverlaySpec>({
   name: 'contentOverlay'

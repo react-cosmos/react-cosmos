@@ -1,5 +1,5 @@
 import { wait } from 'react-testing-library';
-import { IPluginContext, loadPlugins } from 'react-plugin';
+import { PluginContext, loadPlugins } from 'react-plugin';
 import { RendererId, RendererRequest } from 'react-cosmos-shared2/renderer';
 import {
   cleanup,
@@ -21,7 +21,7 @@ const fixtureState = { components: [] };
 
 function registerTestPlugins(
   handleRendererRequest: (
-    context: IPluginContext<any>,
+    context: PluginContext<any>,
     msg: RendererRequest
   ) => void
 ) {

@@ -1,5 +1,5 @@
 import { isEqual } from 'lodash';
-import { IPluginContext, createPlugin } from 'react-plugin';
+import { PluginContext, createPlugin } from 'react-plugin';
 import {
   getUrlParamsFromLocation,
   pushUrlParamsToHistory,
@@ -7,7 +7,7 @@ import {
 } from './window';
 import { UrlParams, RouterSpec } from './public';
 
-type Context = IPluginContext<RouterSpec>;
+type Context = PluginContext<RouterSpec>;
 
 const { onLoad, register } = createPlugin<RouterSpec>({
   name: 'router',

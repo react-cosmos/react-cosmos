@@ -1,4 +1,4 @@
-import { IPluginContext } from 'react-plugin';
+import { PluginContext } from 'react-plugin';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { RendererCoordinatorSpec } from '../../RendererCoordinator/public';
@@ -11,6 +11,6 @@ export interface IFixtureStateWithViewport extends FixtureState {
 }
 
 export type SetFixtureStateHandler = (
-  context: IPluginContext<RendererCoordinatorSpec>,
+  context: PluginContext<RendererCoordinatorSpec>,
   stateChange: StateUpdater<null | FixtureState>
 ) => void;

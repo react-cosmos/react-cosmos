@@ -1,9 +1,9 @@
-import { IPluginContext } from 'react-plugin';
+import { PluginContext } from 'react-plugin';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { StorageSpec } from '../Storage/public';
 import { Viewport, ResponsivePreviewSpec } from './public';
 
-export type Context = IPluginContext<ResponsivePreviewSpec>;
+export type Context = PluginContext<ResponsivePreviewSpec>;
 
 export type StorageMethods = StorageSpec['methods'];
 

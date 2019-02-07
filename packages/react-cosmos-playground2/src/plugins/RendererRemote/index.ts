@@ -1,5 +1,5 @@
 import * as io from 'socket.io-client';
-import { IPluginContext, createPlugin } from 'react-plugin';
+import { PluginContext, createPlugin } from 'react-plugin';
 import {
   RendererRequest,
   RendererResponse,
@@ -8,7 +8,7 @@ import {
 import { RendererCoordinatorSpec } from '../RendererCoordinator/public';
 import { RendererRemoteSpec } from './public';
 
-type Context = IPluginContext<RendererRemoteSpec>;
+type Context = PluginContext<RendererRemoteSpec>;
 
 const { onLoad, on, register } = createPlugin<RendererRemoteSpec>({
   name: 'rendererRemote'

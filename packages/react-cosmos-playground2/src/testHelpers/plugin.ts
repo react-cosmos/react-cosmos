@@ -1,7 +1,7 @@
 import * as rtl from 'react-testing-library';
 import {
-  IPluginSpec,
-  IPlugArgs,
+  PluginSpec,
+  PlugArgs,
   MethodHandlers,
   EventHandlers,
   resetPlugins,
@@ -14,39 +14,37 @@ export function cleanup() {
   resetPlugins();
 }
 
-export function getState<PluginSpec extends IPluginSpec>(
-  pluginName: PluginSpec['name']
-) {
-  return getPluginContext<PluginSpec>(pluginName).getState();
+export function getState<Spec extends PluginSpec>(pluginName: Spec['name']) {
+  return getPluginContext<Spec>(pluginName).getState();
 }
 
-export function getMethodsOf<PluginSpec extends IPluginSpec>(
-  pluginName: PluginSpec['name']
+export function getMethodsOf<Spec extends PluginSpec>(
+  pluginName: Spec['name']
 ) {
   const name = getNewPluginName();
   createPlugin({ name }).register();
 
-  return getPluginContext(name).getMethodsOf<PluginSpec>(pluginName);
+  return getPluginContext(name).getMethodsOf<Spec>(pluginName);
 }
 
-export function on<PluginSpec extends IPluginSpec>(
-  pluginName: PluginSpec['name'],
-  handlers: EventHandlers<any, PluginSpec>
+export function on<Spec extends PluginSpec>(
+  pluginName: Spec['name'],
+  handlers: EventHandlers<any, Spec>
 ) {
   const name = getNewPluginName();
   const testPlugin = createPlugin({ name });
-  testPlugin.on<PluginSpec>(pluginName, handlers);
+  testPlugin.on<Spec>(pluginName, handlers);
   testPlugin.register();
 }
 
-export function mockMethodsOf<PluginSpec extends IPluginSpec>(
-  pluginName: PluginSpec['name'],
-  methods: Partial<MethodHandlers<PluginSpec>>
+export function mockMethodsOf<Spec extends PluginSpec>(
+  pluginName: Spec['name'],
+  methods: Partial<MethodHandlers<Spec>>
 ) {
   createPlugin<any>({ name: pluginName, methods }).register();
 }
 
-export function mockPlug(plug: IPlugArgs<any, {}>) {
+export function mockPlug(plug: PlugArgs<any, {}>) {
   const name = getNewPluginName();
   const testPlugin = createPlugin({ name });
   testPlugin.plug(plug);

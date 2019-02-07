@@ -1,4 +1,4 @@
-import { IPluginContext } from 'react-plugin';
+import { PluginContext } from 'react-plugin';
 import { RendererPreviewSpec } from './public';
 
 export type UrlStatus = 'unknown' | 'ok' | 'error';
@@ -9,4 +9,4 @@ export type State = {
   runtimeStatus: RuntimeStatus;
 };
 
-export type Context = IPluginContext<RendererPreviewSpec>;
+export type Context = PluginContext<RendererPreviewSpec>;
