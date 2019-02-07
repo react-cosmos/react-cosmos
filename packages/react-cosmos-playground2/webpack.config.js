@@ -33,17 +33,18 @@ module.exports = {
     filename: 'index.js'
   },
   resolve: {
-    extensions: ['.js']
+    extensions: ['.ts', '.tsx', '.js']
   },
   module: {
     rules: [
       {
+        test: /\.tsx?$/,
+        use: 'ts-loader'
+      },
+      // Allow building playground from uncompiled monorepo deps
+      {
         test: /\.jsx?$/,
-        include: [
-          src,
-          // Allow building playground from uncompiled monorepo deps
-          /(react-cosmos[a-z0-9-]*|react-querystring-router)(\/|\\)src/
-        ],
+        include: [/(react-cosmos[a-z0-9-]*)(\/|\\)src/],
         use: 'babel-loader'
       }
     ]
