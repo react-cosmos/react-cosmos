@@ -12,7 +12,7 @@
     "install-react:15": "yarn install-react -- react@^15.5.4 react-dom@^15.5.4",
     "precommit": "yarn check-babel-runtime && yarn dist && lint-staged",
     "prettify": "prettier --write \"{{packages/*/src,examples,cypress,scripts}/**/,}*.{js,jsx,ts,tsx,css,less,md}\"",
-    "lint": "eslint \"**/*.js\"",
+    "lint": "eslint \"**/*.js\" && tslint --project tsconfig.json",
     "test:unit": "jest --config .jest/config.js",
     "test:watch": "yarn test:unit --watch",
     "test:ts:unit": "jest --config .jest/config.ts.js",
