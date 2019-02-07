@@ -9,12 +9,8 @@
 .*/node_modules/react-native/Libraries/react-native/react-native-implementation.js
 .*/node_modules/xdl/build/detach/AndroidShellApp.js.flow
 
-[include]
-
 [libs]
 flow-typed
-
-[lints]
 
 [options]
 module.ignore_non_literal_requires=true
