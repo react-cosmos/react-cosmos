@@ -31,14 +31,15 @@ jobs:
       # react-cosmos-playground to be built
       - run: yarn build
 
+      # TS unit tests
+      # TODO: Get cross-package coverage for TS tests
+      - run: yarn test:ts:unit --maxWorkers=2 --coverage
+      - run: yarn codecov
+
       # Test source (with cross-package coverage)
       - run: yarn link-entries src
       - run: yarn flow --retries 12 --timeout 300
       - run: yarn lint
-
-      # TS unit tests
-      - run: yarn test:ts:unit --maxWorkers=2 --coverage
-      - run: yarn codecov
 
       # JS unit tests
       - run: yarn test:unit --maxWorkers=1 --coverage

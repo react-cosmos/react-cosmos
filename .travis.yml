@@ -13,11 +13,13 @@ script:
   # Building upfront because some react-cosmos/server unit tests require
   # react-cosmos-playground to be built
   - yarn build
+  # Test TS unit tests
+  # TODO: Get cross-package coverage for TS tests
+  - yarn test:ts:unit --maxWorkers=2
   # Test source (with cross-package coverage)
   - yarn link-entries src
   - yarn flow --retries 12
   - yarn lint
-  - yarn test:ts:unit --maxWorkers=2
   - yarn test:unit --maxWorkers=2
   # Test build
   - yarn link-entries dist
