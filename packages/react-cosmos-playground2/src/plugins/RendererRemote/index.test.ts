@@ -3,7 +3,7 @@ import { loadPlugins, getPluginContext } from 'react-plugin';
 import { SelectFixtureRequest } from 'react-cosmos-shared2/renderer';
 import { mockWebSockets } from './testHelpers/mockWebSockets';
 import { cleanup, mockMethodsOf } from '../../testHelpers/plugin';
-import { RendererCoordinatorSpec } from '../RendererCoordinator/public';
+import { RendererCoreSpec } from '../RendererCore/public';
 import { register } from '.';
 
 afterEach(cleanup);
@@ -11,7 +11,7 @@ afterEach(cleanup);
 it('posts renderer request message via websockets', async () => {
   register();
 
-  mockMethodsOf<RendererCoordinatorSpec>('rendererCoordinator', {
+  mockMethodsOf<RendererCoreSpec>('rendererCore', {
     remoteRenderersEnabled: () => true
   });
 
@@ -25,7 +25,7 @@ it('posts renderer request message via websockets', async () => {
       fixtureState: null
     }
   };
-  getPluginContext<RendererCoordinatorSpec>('rendererCoordinator').emit(
+  getPluginContext<RendererCoreSpec>('rendererCore').emit(
     'request',
     selectFixtureMsg
   );
@@ -39,7 +39,7 @@ it('broadcasts renderer response message from websocket event', async () => {
   register();
 
   const receiveResponse = jest.fn();
-  mockMethodsOf<RendererCoordinatorSpec>('rendererCoordinator', {
+  mockMethodsOf<RendererCoreSpec>('rendererCore', {
     remoteRenderersEnabled: () => true,
     receiveResponse
   });
@@ -68,7 +68,7 @@ it('broadcasts renderer response message from websocket event', async () => {
 it('posts "requestFixtureList" renderer request on mount', async () => {
   register();
 
-  mockMethodsOf<RendererCoordinatorSpec>('rendererCoordinator', {
+  mockMethodsOf<RendererCoreSpec>('rendererCore', {
     remoteRenderersEnabled: () => true
   });
 

@@ -4,13 +4,12 @@ import { RouterSpec } from '../Router/public';
 import { setFixtureState } from './setFixtureState';
 import { receiveResponse } from './receiveResponse';
 import { onRouterFixtureChange } from './onRouterFixtureChange';
-import { RendererCoordinatorSpec } from './public';
+import { RendererCoreSpec } from './public';
 import { Context } from './shared';
 import { getUrlParams } from './shared/router';
 
-const { on, register } = createPlugin<RendererCoordinatorSpec>({
-  // "coordinator: someone whose task is to see that work goes harmoniously"
-  name: 'rendererCoordinator',
+const { on, register } = createPlugin<RendererCoreSpec>({
+  name: 'rendererCore',
   defaultConfig: {
     webUrl: null,
     enableRemote: false

@@ -4,7 +4,7 @@ import { loadPlugins, Slot } from 'react-plugin';
 import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
 import { StorageSpec } from '../../Storage/public';
 import { CoreSpec } from '../../Core/public';
-import { RendererCoordinatorSpec } from '../../RendererCoordinator/public';
+import { RendererCoreSpec } from '../../RendererCore/public';
 import { register } from '..';
 
 afterEach(cleanup);
@@ -15,7 +15,7 @@ it('renders disabled button', async () => {
   mockMethodsOf<CoreSpec>('core', {
     getProjectId: () => 'mockProjectId'
   });
-  mockMethodsOf<RendererCoordinatorSpec>('rendererCoordinator', {
+  mockMethodsOf<RendererCoreSpec>('rendererCore', {
     getFixtureState: () => null,
     isValidFixtureSelected: () => false
   });

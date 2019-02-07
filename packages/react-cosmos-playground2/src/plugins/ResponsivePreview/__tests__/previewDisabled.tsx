@@ -5,7 +5,7 @@ import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
 import { StorageSpec } from '../../Storage/public';
 import { RouterSpec } from '../../Router/public';
 import { CoreSpec } from '../../Core/public';
-import { RendererCoordinatorSpec } from '../../RendererCoordinator/public';
+import { RendererCoreSpec } from '../../RendererCore/public';
 import { register } from '..';
 
 afterEach(cleanup);
@@ -19,7 +19,7 @@ function registerTestPlugins() {
   mockMethodsOf<RouterSpec>('router', {
     getUrlParams: () => ({ fixturePath: 'foo.js' })
   });
-  mockMethodsOf<RendererCoordinatorSpec>('rendererCoordinator', {
+  mockMethodsOf<RendererCoreSpec>('rendererCore', {
     getFixtureState: () => null,
     isValidFixtureSelected: () => false
   });

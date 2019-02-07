@@ -7,7 +7,7 @@ import { cleanup, getState, mockMethodsOf } from '../../../testHelpers/plugin';
 import { StorageSpec } from '../../Storage/public';
 import { UrlParams, RouterSpec } from '../../Router/public';
 import { CoreSpec } from '../../Core/public';
-import { RendererCoordinatorSpec } from '../../RendererCoordinator/public';
+import { RendererCoreSpec } from '../../RendererCore/public';
 import { ResponsivePreviewSpec } from '../public';
 import { DEFAULT_DEVICES, getResponsiveViewportStorageKey } from '../shared';
 import {
@@ -43,11 +43,11 @@ function mockRouter(urlParams: UrlParams = {}) {
   });
 }
 
-function mockRendererCoordinator(
+function mockRendererCore(
   validFixtureSelected: boolean,
   setFixtureState: SetFixtureStateHandler = () => {}
 ) {
-  mockMethodsOf<RendererCoordinatorSpec>('rendererCoordinator', {
+  mockMethodsOf<RendererCoreSpec>('rendererCore', {
     getFixtureState: () => null,
     isValidFixtureSelected: () => validFixtureSelected,
     setFixtureState
@@ -75,7 +75,7 @@ it('renders children of "rendererPreviewOuter" slot', () => {
   registerTestPlugins();
   mockStorage();
   mockRouter();
-  mockRendererCoordinator(false);
+  mockRendererCore(false);
 
   const { getByTestId } = loadTestPlugins();
   getByTestId('previewMock');
@@ -85,7 +85,7 @@ it('does not render responsive header when no fixture is selected', () => {
   registerTestPlugins();
   mockStorage();
   mockRouter();
-  mockRendererCoordinator(false);
+  mockRendererCore(false);
 
   const { queryByTestId } = loadTestPlugins();
   expect(queryByTestId('responsiveHeader')).toBeNull();
@@ -95,7 +95,7 @@ it('does not render responsive header in full screen mode', () => {
   registerTestPlugins();
   mockStorage();
   mockRouter({ fixturePath: 'foo.js', fullScreen: true });
-  mockRendererCoordinator(true);
+  mockRendererCore(true);
 
   const { queryByTestId } = loadTestPlugins();
   expect(queryByTestId('responsiveHeader')).toBeNull();
@@ -105,7 +105,7 @@ it('renders responsive header', () => {
   registerTestPlugins();
   mockStorage();
   mockRouter({ fixturePath: 'foo.js' });
-  mockRendererCoordinator(true);
+  mockRendererCore(true);
 
   const { getByTestId } = loadTestPlugins();
   getByTestId('responsiveHeader');
@@ -115,7 +115,7 @@ it('renders responsive device labels', () => {
   registerTestPlugins();
   mockStorage();
   mockRouter({ fixturePath: 'foo.js' });
-  mockRendererCoordinator(true);
+  mockRendererCore(true);
 
   const { getByText } = loadTestPlugins();
   DEFAULT_DEVICES.forEach(({ label }) => {
@@ -128,7 +128,7 @@ describe('on device select', () => {
     registerTestPlugins();
     mockStorage();
     mockRouter({ fixturePath: 'foo.js' });
-    mockRendererCoordinator(true);
+    mockRendererCore(true);
 
     const { getByText } = loadTestPlugins();
     fireEvent.click(getByText(/iphone 6 plus/i));
@@ -145,10 +145,10 @@ describe('on device select', () => {
     registerTestPlugins();
     mockStorage();
     mockRouter({ fixturePath: 'foo.js' });
-    mockRendererCoordinator(true);
+    mockRendererCore(true);
 
     let fixtureState: null | FixtureState = null;
-    mockRendererCoordinator(true, (context, stateChange) => {
+    mockRendererCore(true, (context, stateChange) => {
       fixtureState = updateState(fixtureState, stateChange);
     });
 
@@ -170,7 +170,7 @@ describe('on device select', () => {
     mockStorage(storage);
 
     mockRouter({ fixturePath: 'fooFixture.js' });
-    mockRendererCoordinator(true);
+    mockRendererCore(true);
 
     const { getByText } = loadTestPlugins();
     fireEvent.click(getByText(/iphone 6 plus/i));

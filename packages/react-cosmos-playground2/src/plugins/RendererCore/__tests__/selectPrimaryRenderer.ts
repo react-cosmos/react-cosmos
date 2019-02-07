@@ -1,7 +1,7 @@
 import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
 import { cleanup, getState, getMethodsOf } from '../../../testHelpers/plugin';
-import { RendererCoordinatorSpec } from '../public';
+import { RendererCoreSpec } from '../public';
 import { State } from '../shared';
 import { register } from '..';
 
@@ -16,14 +16,14 @@ const state: State = {
 
 it('sets primary renderer ID in state', async () => {
   register();
-  loadPlugins({ state: { rendererCoordinator: state } });
+  loadPlugins({ state: { rendererCore: state } });
 
-  const methods = getMethodsOf<RendererCoordinatorSpec>('rendererCoordinator');
+  const methods = getMethodsOf<RendererCoreSpec>('rendererCore');
   methods.selectPrimaryRenderer('mockRendererId2');
 
   await wait(() =>
     expect(
-      getState<RendererCoordinatorSpec>('rendererCoordinator').primaryRendererId
+      getState<RendererCoreSpec>('rendererCore').primaryRendererId
     ).toEqual('mockRendererId2')
   );
 });

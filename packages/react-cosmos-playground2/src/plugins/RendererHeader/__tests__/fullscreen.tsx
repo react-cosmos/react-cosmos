@@ -4,7 +4,7 @@ import { render } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
 import { cleanup, mockMethodsOf, mockPlug } from '../../../testHelpers/plugin';
 import { RouterSpec } from '../../Router/public';
-import { RendererCoordinatorSpec } from '../../RendererCoordinator/public';
+import { RendererCoreSpec } from '../../RendererCore/public';
 import { register } from '..';
 
 afterEach(cleanup);
@@ -14,7 +14,7 @@ function registerTestPlugins() {
   mockMethodsOf<RouterSpec>('router', {
     getUrlParams: () => ({ fixturePath: 'foo', fullScreen: true })
   });
-  mockMethodsOf<RendererCoordinatorSpec>('rendererCoordinator', {
+  mockMethodsOf<RendererCoreSpec>('rendererCore', {
     isRendererConnected: () => false,
     isValidFixtureSelected: () => true
   });

@@ -7,8 +7,8 @@ import {
   RendererResponse
 } from 'react-cosmos-shared2/renderer';
 
-export type RendererCoordinatorSpec = {
-  name: 'rendererCoordinator';
+export type RendererCoreSpec = {
+  name: 'rendererCore';
   config: {
     webUrl: null | string;
     enableRemote: boolean;

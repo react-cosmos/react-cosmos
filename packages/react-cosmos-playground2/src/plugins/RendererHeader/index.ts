@@ -1,6 +1,6 @@
 import { createPlugin } from 'react-plugin';
 import { RouterSpec } from '../Router/public';
-import { RendererCoordinatorSpec } from '../RendererCoordinator/public';
+import { RendererCoreSpec } from '../RendererCore/public';
 import { RendererHeaderSpec } from './public';
 import { RendererHeader } from './RendererHeader';
 
@@ -13,14 +13,12 @@ plug({
   render: RendererHeader,
   getProps: ({ getMethodsOf }) => {
     const router = getMethodsOf<RouterSpec>('router');
-    const rendererCoordinator = getMethodsOf<RendererCoordinatorSpec>(
-      'rendererCoordinator'
-    );
+    const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
 
     return {
       urlParams: router.getUrlParams(),
-      rendererConnected: rendererCoordinator.isRendererConnected(),
-      validFixtureSelected: rendererCoordinator.isValidFixtureSelected(),
+      rendererConnected: rendererCore.isRendererConnected(),
+      validFixtureSelected: rendererCore.isValidFixtureSelected(),
       setUrlParams: router.setUrlParams
     };
   }

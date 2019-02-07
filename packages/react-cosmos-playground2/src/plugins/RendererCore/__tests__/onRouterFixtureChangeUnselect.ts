@@ -1,8 +1,13 @@
 import { wait } from 'react-testing-library';
 import { loadPlugins, getPluginContext } from 'react-plugin';
-import { cleanup, on, mockMethodsOf } from '../../../testHelpers/plugin';
+import {
+  cleanup,
+  getState,
+  on,
+  mockMethodsOf
+} from '../../../testHelpers/plugin';
 import { RouterSpec } from '../../Router/public';
-import { RendererCoordinatorSpec } from '../public';
+import { RendererCoreSpec } from '../public';
 import { State } from '../shared';
 import { register } from '..';
 
@@ -23,40 +28,48 @@ function registerTestPlugins() {
 }
 
 function loadTestPlugins() {
-  loadPlugins({ state: { rendererCoordinator: state } });
+  loadPlugins({ state: { rendererCore: state } });
 }
 
 function emitRouterFixtureChange() {
-  getPluginContext<RouterSpec>('router').emit('fixtureChange', 'zwei.js');
+  getPluginContext<RouterSpec>('router').emit('fixtureChange', null);
 }
 
-it('posts "selectFixture" renderer requests', async () => {
+it('resets fixture state', async () => {
+  registerTestPlugins();
+  loadTestPlugins();
+  emitRouterFixtureChange();
+
+  await wait(() =>
+    expect(getState<RendererCoreSpec>('rendererCore').fixtureState).toEqual(
+      null
+    )
+  );
+});
+
+it('posts "unselectFixture" renderer requests', async () => {
   registerTestPlugins();
 
   const request = jest.fn();
-  on<RendererCoordinatorSpec>('rendererCoordinator', { request });
+  on<RendererCoreSpec>('rendererCore', { request });
 
   loadTestPlugins();
   emitRouterFixtureChange();
 
   await wait(() =>
     expect(request).toBeCalledWith(expect.any(Object), {
-      type: 'selectFixture',
+      type: 'unselectFixture',
       payload: {
-        rendererId: 'mockRendererId1',
-        fixturePath: 'zwei.js',
-        fixtureState: null
+        rendererId: 'mockRendererId1'
       }
     })
   );
 
   await wait(() =>
     expect(request).toBeCalledWith(expect.any(Object), {
-      type: 'selectFixture',
+      type: 'unselectFixture',
       payload: {
-        rendererId: 'mockRendererId2',
-        fixturePath: 'zwei.js',
-        fixtureState: null
+        rendererId: 'mockRendererId2'
       }
     })
   );

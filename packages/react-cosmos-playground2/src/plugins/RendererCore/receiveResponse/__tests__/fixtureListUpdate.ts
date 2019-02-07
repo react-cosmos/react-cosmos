@@ -10,7 +10,7 @@ import {
 import { RouterSpec } from '../../../Router/public';
 import { createFixtureListUpdateResponse } from '../../testHelpers';
 import { State } from '../../shared';
-import { RendererCoordinatorSpec } from '../../public';
+import { RendererCoreSpec } from '../../public';
 import { register } from '../..';
 
 afterEach(cleanup);
@@ -31,18 +31,18 @@ function registerTestPlugins() {
 }
 
 function loadTestPlugins() {
-  loadPlugins({ state: { rendererCoordinator: state } });
+  loadPlugins({ state: { rendererCore: state } });
 }
 
 function mockFixtureListUpdateResponse(rendererId: RendererId) {
-  const methods = getMethodsOf<RendererCoordinatorSpec>('rendererCoordinator');
+  const methods = getMethodsOf<RendererCoreSpec>('rendererCore');
   methods.receiveResponse(
     createFixtureListUpdateResponse(rendererId, [...fixtures, 'vier.js'])
   );
 }
 
-function getRendererCoordinatorState() {
-  return getState<RendererCoordinatorSpec>('rendererCoordinator');
+function getRendererCoreState() {
+  return getState<RendererCoreSpec>('rendererCore');
 }
 
 it('updates fixtures in renderer state', async () => {
@@ -52,10 +52,7 @@ it('updates fixtures in renderer state', async () => {
   mockFixtureListUpdateResponse('mockRendererId1');
 
   await wait(() =>
-    expect(getRendererCoordinatorState().fixtures).toEqual([
-      ...fixtures,
-      'vier.js'
-    ])
+    expect(getRendererCoreState().fixtures).toEqual([...fixtures, 'vier.js'])
   );
 });
 
@@ -65,7 +62,5 @@ it('ignores update from secondary renderer', async () => {
 
   mockFixtureListUpdateResponse('mockRendererId2');
 
-  await wait(() =>
-    expect(getRendererCoordinatorState().fixtures).toEqual(fixtures)
-  );
+  await wait(() => expect(getRendererCoreState().fixtures).toEqual(fixtures));
 });

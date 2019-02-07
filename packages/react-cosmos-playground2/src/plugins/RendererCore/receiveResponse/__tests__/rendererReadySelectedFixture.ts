@@ -10,7 +10,7 @@ import {
 import { RouterSpec } from '../../../Router/public';
 import { createRendererReadyResponse } from '../../testHelpers';
 import { State } from '../../shared';
-import { RendererCoordinatorSpec } from '../../public';
+import { RendererCoreSpec } from '../../public';
 import { register } from '../..';
 
 afterEach(cleanup);
@@ -29,17 +29,17 @@ function registerTestPlugins(
   mockMethodsOf<RouterSpec>('router', {
     getUrlParams: () => ({ fixturePath })
   });
-  on<RendererCoordinatorSpec>('rendererCoordinator', {
+  on<RendererCoreSpec>('rendererCore', {
     request: handleRendererRequest
   });
 }
 
 function loadTestPlugins(state?: State) {
-  loadPlugins({ state: { rendererCoordinator: state } });
+  loadPlugins({ state: { rendererCore: state } });
 }
 
 function mockRendererReadyResponse(rendererId: RendererId) {
-  const methods = getMethodsOf<RendererCoordinatorSpec>('rendererCoordinator');
+  const methods = getMethodsOf<RendererCoreSpec>('rendererCore');
   methods.receiveResponse(createRendererReadyResponse(rendererId, fixtures));
 }
 

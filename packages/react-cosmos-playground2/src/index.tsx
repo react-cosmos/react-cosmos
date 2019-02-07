@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import * as ReactPlugin from 'react-plugin';
 import { getDomContainer } from 'react-cosmos-shared2/dom';
 import { CoreSpec } from './plugins/Core/public';
-import { RendererCoordinatorSpec } from './plugins/RendererCoordinator/public';
+import { RendererCoreSpec } from './plugins/RendererCore/public';
 import { GlobalStyle } from './global/style';
 
 // Statefulness alert!
@@ -11,7 +11,7 @@ import './global/registerPlugins';
 
 type Config = {
   core: CoreSpec['config'];
-  rendererCoordinator: RendererCoordinatorSpec['config'];
+  rendererCore: RendererCoreSpec['config'];
 };
 
 // Enable external plugins to use a shared copy of react-plugin. Also enable

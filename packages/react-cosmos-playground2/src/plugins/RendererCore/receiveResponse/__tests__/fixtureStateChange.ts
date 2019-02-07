@@ -11,7 +11,7 @@ import {
 import { RouterSpec } from '../../../Router/public';
 import { createFixtureStateChangeResponse } from '../../testHelpers';
 import { State } from '../../shared';
-import { RendererCoordinatorSpec } from '../../public';
+import { RendererCoreSpec } from '../../public';
 import { register } from '../..';
 
 afterEach(cleanup);
@@ -33,18 +33,18 @@ function registerTestPlugins() {
 }
 
 function loadTestPlugins() {
-  loadPlugins({ state: { rendererCoordinator: state } });
+  loadPlugins({ state: { rendererCore: state } });
 }
 
 function mockFixtureStateChangeResponse(rendererId: RendererId) {
-  const methods = getMethodsOf<RendererCoordinatorSpec>('rendererCoordinator');
+  const methods = getMethodsOf<RendererCoreSpec>('rendererCore');
   methods.receiveResponse(
     createFixtureStateChangeResponse(rendererId, fixturePath, fixtureState)
   );
 }
 
-function getRendererCoordinatorState() {
-  return getState<RendererCoordinatorSpec>('rendererCoordinator');
+function getRendererCoreState() {
+  return getState<RendererCoreSpec>('rendererCore');
 }
 
 it('sets fixtureState in renderer state', async () => {
@@ -54,7 +54,7 @@ it('sets fixtureState in renderer state', async () => {
   mockFixtureStateChangeResponse('mockRendererId1');
 
   await wait(() =>
-    expect(getRendererCoordinatorState().fixtureState).toEqual(fixtureState)
+    expect(getRendererCoreState().fixtureState).toEqual(fixtureState)
   );
 });
 
@@ -64,16 +64,14 @@ it('ignores update from secondary renderer', async () => {
 
   mockFixtureStateChangeResponse('mockRendererId2');
 
-  await wait(() =>
-    expect(getRendererCoordinatorState().fixtureState).toEqual(null)
-  );
+  await wait(() => expect(getRendererCoreState().fixtureState).toEqual(null));
 });
 
 it('posts "setFixtureState" request to secondary renderer', async () => {
   registerTestPlugins();
 
   const request = jest.fn();
-  on<RendererCoordinatorSpec>('rendererCoordinator', { request });
+  on<RendererCoreSpec>('rendererCore', { request });
 
   loadTestPlugins();
 

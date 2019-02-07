@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { wait, render } from 'react-testing-library';
 import { loadPlugins, Slot, getPluginContext } from 'react-plugin';
-import { RendererCoordinatorSpec } from '../../RendererCoordinator/public';
+import { RendererCoreSpec } from '../../RendererCore/public';
 import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { mockIframeMessage, getIframe } from '../testHelpers/iframe';
@@ -20,12 +20,12 @@ function loadTestPlugins() {
 it('posts renderer request message to iframe', async () => {
   register();
 
-  mockMethodsOf<RendererCoordinatorSpec>('rendererCoordinator', {
+  mockMethodsOf<RendererCoreSpec>('rendererCore', {
     getWebUrl: () => 'mockRendererUrl'
   });
 
   const renderer = loadTestPlugins();
-  getPluginContext<RendererCoordinatorSpec>('rendererCoordinator').emit(
+  getPluginContext<RendererCoreSpec>('rendererCore').emit(
     'request',
     selectFixtureMsg
   );
@@ -43,7 +43,7 @@ it('broadcasts renderer response message', async () => {
   register();
 
   const receiveResponse = jest.fn();
-  mockMethodsOf<RendererCoordinatorSpec>('rendererCoordinator', {
+  mockMethodsOf<RendererCoreSpec>('rendererCore', {
     getWebUrl: () => 'mockRendererUrl',
     receiveResponse
   });

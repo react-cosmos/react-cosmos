@@ -1,7 +1,7 @@
 import { PluginContext, createPlugin } from 'react-plugin';
 import { ContentOverlay } from './ContentOverlay';
 import { RouterSpec } from '../Router/public';
-import { RendererCoordinatorSpec } from '../RendererCoordinator/public';
+import { RendererCoreSpec } from '../RendererCore/public';
 import { RendererPreviewSpec } from '../RendererPreview/public';
 import { ContentOverlaySpec } from './public';
 
@@ -24,12 +24,10 @@ function getContentOverlayProps({ getMethodsOf }: Context) {
   const { fixturePath } = getUrlParams();
   const fixtureSelected = fixturePath !== undefined;
 
-  const rendererCoordinator = getMethodsOf<RendererCoordinatorSpec>(
-    'rendererCoordinator'
-  );
-  const rendererConnected = rendererCoordinator.isRendererConnected();
+  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
+  const rendererConnected = rendererCore.isRendererConnected();
   const validFixtureSelected =
-    fixtureSelected && rendererCoordinator.isValidFixtureSelected();
+    fixtureSelected && rendererCore.isValidFixtureSelected();
 
   const rendererPreview = getMethodsOf<RendererPreviewSpec>('rendererPreview');
   const urlStatus = rendererPreview.getUrlStatus();

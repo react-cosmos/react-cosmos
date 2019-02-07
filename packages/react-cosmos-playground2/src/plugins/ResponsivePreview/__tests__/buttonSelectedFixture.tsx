@@ -6,7 +6,7 @@ import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { cleanup, getState, mockMethodsOf } from '../../../testHelpers/plugin';
 import { StorageSpec } from '../../Storage/public';
 import { CoreSpec } from '../../Core/public';
-import { RendererCoordinatorSpec } from '../../RendererCoordinator/public';
+import { RendererCoreSpec } from '../../RendererCore/public';
 import { ResponsivePreviewSpec } from '../public';
 import { DEFAULT_VIEWPORT, getResponsiveViewportStorageKey } from '../shared';
 import {
@@ -33,10 +33,8 @@ function mockStorage(storage: StorageMock = {}) {
   });
 }
 
-function mockRendererCoordinator(
-  setFixtureState: SetFixtureStateHandler = () => {}
-) {
-  mockMethodsOf<RendererCoordinatorSpec>('rendererCoordinator', {
+function mockRendererCore(setFixtureState: SetFixtureStateHandler = () => {}) {
+  mockMethodsOf<RendererCoreSpec>('rendererCore', {
     getFixtureState: () => null,
     isValidFixtureSelected: () => true,
     setFixtureState
@@ -56,7 +54,7 @@ function getResponsivePreviewState() {
 it('sets enabled state', async () => {
   registerTestPlugins();
   mockStorage();
-  mockRendererCoordinator();
+  mockRendererCore();
 
   const { getByText } = loadTestPlugins();
   fireEvent.click(getByText(/responsive/i));
@@ -72,7 +70,7 @@ it('sets enabled state', async () => {
 it('sets enabled state with stored viewport', async () => {
   registerTestPlugins();
   mockStorage({ [storageKey]: { width: 420, height: 420 } });
-  mockRendererCoordinator();
+  mockRendererCore();
 
   const { getByText } = loadTestPlugins();
   fireEvent.click(getByText(/responsive/i));
@@ -90,7 +88,7 @@ it('sets viewport in fixture state', async () => {
   mockStorage();
 
   let fixtureState: null | FixtureState = null;
-  mockRendererCoordinator((context, stateChange) => {
+  mockRendererCore((context, stateChange) => {
     fixtureState = updateState(fixtureState, stateChange);
   });
 
@@ -107,7 +105,7 @@ it('sets viewport in fixture state', async () => {
 it('sets disabled state', async () => {
   registerTestPlugins();
   mockStorage();
-  mockRendererCoordinator();
+  mockRendererCore();
 
   const { getByText } = loadTestPlugins();
 
@@ -126,7 +124,7 @@ it('sets disabled state', async () => {
 it('sets disabled state with stored viewport', async () => {
   registerTestPlugins();
   mockStorage({ [storageKey]: { width: 420, height: 420 } });
-  mockRendererCoordinator();
+  mockRendererCore();
 
   const { getByText } = loadTestPlugins();
   const getButton = getByText(/responsive/i);
@@ -146,7 +144,7 @@ it('clears viewport in fixture state', async () => {
   mockStorage();
 
   let fixtureState: null | FixtureState = null;
-  mockRendererCoordinator((context, stateChange) => {
+  mockRendererCore((context, stateChange) => {
     fixtureState = updateState(fixtureState, stateChange);
   });
 

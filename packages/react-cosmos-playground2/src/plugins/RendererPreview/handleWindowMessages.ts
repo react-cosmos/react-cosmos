@@ -1,5 +1,5 @@
 import { RendererResponse } from 'react-cosmos-shared2/renderer';
-import { RendererCoordinatorSpec } from '../RendererCoordinator/public';
+import { RendererCoreSpec } from '../RendererCore/public';
 import { Context } from './shared';
 
 type WindowMsg = { data: { [key: string]: unknown } };
@@ -21,7 +21,7 @@ function createMessageHandler(context: Context) {
 
     const response = msg.data as RendererResponse;
     context
-      .getMethodsOf<RendererCoordinatorSpec>('rendererCoordinator')
+      .getMethodsOf<RendererCoreSpec>('rendererCore')
       .receiveResponse(response);
 
     updateRuntimeStatus(context, response);
@@ -67,6 +67,6 @@ function updateRuntimeStatus(
       }));
     }
     default:
-    // The rest of the responses are handled by the renderer coordinator
+    // The rest of the responses are handled by the renderer core plugin
   }
 }

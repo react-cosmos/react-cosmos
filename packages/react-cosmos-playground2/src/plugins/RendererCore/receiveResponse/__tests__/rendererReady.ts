@@ -10,7 +10,7 @@ import {
 import { RouterSpec } from '../../../Router/public';
 import { createRendererReadyResponse } from '../../testHelpers';
 import { State } from '../../shared';
-import { RendererCoordinatorSpec } from '../../public';
+import { RendererCoreSpec } from '../../public';
 import { register } from '../..';
 
 afterEach(cleanup);
@@ -26,16 +26,16 @@ function registerTestPlugins() {
 }
 
 function loadTestPlugins(state?: State) {
-  loadPlugins({ state: { rendererCoordinator: state } });
+  loadPlugins({ state: { rendererCore: state } });
 }
 
 function mockRendererReadyResponse(rendererId: RendererId) {
-  const methods = getMethodsOf<RendererCoordinatorSpec>('rendererCoordinator');
+  const methods = getMethodsOf<RendererCoreSpec>('rendererCore');
   methods.receiveResponse(createRendererReadyResponse(rendererId, fixtures));
 }
 
-function getRendererCoordinatorState() {
-  return getState<RendererCoordinatorSpec>('rendererCoordinator');
+function getRendererCoreState() {
+  return getState<RendererCoreSpec>('rendererCore');
 }
 
 it('creates renderer state', async () => {
@@ -45,7 +45,7 @@ it('creates renderer state', async () => {
   mockRendererReadyResponse('mockRendererId1');
 
   await wait(() =>
-    expect(getRendererCoordinatorState()).toEqual({
+    expect(getRendererCoreState()).toEqual({
       connectedRendererIds: ['mockRendererId1'],
       primaryRendererId: 'mockRendererId1',
       fixtures,
@@ -62,7 +62,7 @@ it('creates multi-renderer state', async () => {
   mockRendererReadyResponse('mockRendererId2');
 
   await wait(() =>
-    expect(getRendererCoordinatorState()).toEqual({
+    expect(getRendererCoreState()).toEqual({
       connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
       primaryRendererId: 'mockRendererId1',
       fixtures,
@@ -83,7 +83,7 @@ it('keeps fixtures state when secondary renderer connects', async () => {
   mockRendererReadyResponse('mockRendererId2');
 
   await wait(() =>
-    expect(getRendererCoordinatorState()).toEqual({
+    expect(getRendererCoreState()).toEqual({
       connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
       primaryRendererId: 'mockRendererId1',
       fixtures,
@@ -104,7 +104,7 @@ it('resets fixtures state when primary renderer re-connects', async () => {
   mockRendererReadyResponse('mockRendererId1');
 
   await wait(() =>
-    expect(getRendererCoordinatorState()).toEqual({
+    expect(getRendererCoreState()).toEqual({
       connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
       primaryRendererId: 'mockRendererId1',
       fixtures,

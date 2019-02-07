@@ -5,7 +5,7 @@ import {
   mockMethodsOf
 } from '../../../testHelpers/plugin';
 import { UrlParams, RouterSpec } from '../../Router/public';
-import { RendererCoordinatorSpec } from '../public';
+import { RendererCoreSpec } from '../public';
 import { State } from '../shared';
 import { register } from '..';
 
@@ -26,12 +26,12 @@ function mockUrlParams(urlParams: UrlParams) {
 }
 
 function loadTestPlugins() {
-  loadPlugins({ state: { rendererCoordinator: state } });
+  loadPlugins({ state: { rendererCore: state } });
 }
 
 function isValidFixtureSelected() {
-  return getMethodsOf<RendererCoordinatorSpec>(
-    'rendererCoordinator'
+  return getMethodsOf<RendererCoreSpec>(
+    'rendererCore'
   ).isValidFixtureSelected();
 }
 

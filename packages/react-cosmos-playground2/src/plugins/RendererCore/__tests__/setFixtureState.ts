@@ -9,7 +9,7 @@ import {
   mockMethodsOf
 } from '../../../testHelpers/plugin';
 import { RouterSpec } from '../../Router/public';
-import { RendererCoordinatorSpec } from '../public';
+import { RendererCoreSpec } from '../public';
 import { State } from '../shared';
 import { register } from '..';
 
@@ -33,11 +33,11 @@ function mockSelectedFixture() {
 }
 
 function loadTestPlugins() {
-  loadPlugins({ state: { rendererCoordinator: state } });
+  loadPlugins({ state: { rendererCore: state } });
 }
 
 function mockSetFixtureStateCall() {
-  const methods = getMethodsOf<RendererCoordinatorSpec>('rendererCoordinator');
+  const methods = getMethodsOf<RendererCoreSpec>('rendererCore');
   methods.setFixtureState((prevState: null | FixtureState) => ({
     ...prevState,
     components: prevState ? prevState.components : [],
@@ -53,9 +53,9 @@ it('sets fixture state in plugin state', async () => {
   mockSetFixtureStateCall();
 
   await wait(() =>
-    expect(
-      getState<RendererCoordinatorSpec>('rendererCoordinator').fixtureState
-    ).toEqual(expectedFixtureState)
+    expect(getState<RendererCoreSpec>('rendererCore').fixtureState).toEqual(
+      expectedFixtureState
+    )
   );
 });
 
@@ -64,7 +64,7 @@ it('posts "setFixtureState" renderer requests', async () => {
   mockSelectedFixture();
 
   const request = jest.fn();
-  on<RendererCoordinatorSpec>('rendererCoordinator', { request });
+  on<RendererCoreSpec>('rendererCore', { request });
 
   loadTestPlugins();
   mockSetFixtureStateCall();

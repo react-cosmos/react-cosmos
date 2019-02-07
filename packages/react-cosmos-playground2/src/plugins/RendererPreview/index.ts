@@ -1,5 +1,5 @@
 import { createPlugin } from 'react-plugin';
-import { RendererCoordinatorSpec } from '../RendererCoordinator/public';
+import { RendererCoreSpec } from '../RendererCore/public';
 import { checkRendererStatus } from './checkRendererStatus';
 import { createRendererRequestHandler } from './handleRendererRequests';
 import { handleWindowMessages } from './handleWindowMessages';
@@ -21,7 +21,7 @@ const { onLoad, on, plug, register } = createPlugin<RendererPreviewSpec>({
   }
 });
 
-on<RendererCoordinatorSpec>('rendererCoordinator', {
+on<RendererCoreSpec>('rendererCore', {
   request: onRendererRequest
 });
 
@@ -62,7 +62,5 @@ function getRendererPreviewProps(context: Context, onIframeRef: OnIframeRef) {
 }
 
 function getRendererUrl({ getMethodsOf }: Context) {
-  return getMethodsOf<RendererCoordinatorSpec>(
-    'rendererCoordinator'
-  ).getWebUrl();
+  return getMethodsOf<RendererCoreSpec>('rendererCore').getWebUrl();
 }

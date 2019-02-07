@@ -1,19 +1,17 @@
 import { loadPlugins } from 'react-plugin';
 import { cleanup, getMethodsOf } from '../../../testHelpers/plugin';
-import { RendererCoordinatorSpec } from '../public';
+import { RendererCoreSpec } from '../public';
 import { State } from '../shared';
 import { register } from '..';
 
 afterEach(cleanup);
 
 function loadTestPlugins(state?: State) {
-  loadPlugins({ state: { rendererCoordinator: state } });
+  loadPlugins({ state: { rendererCore: state } });
 }
 
 function isRendererConnected() {
-  return getMethodsOf<RendererCoordinatorSpec>(
-    'rendererCoordinator'
-  ).isRendererConnected();
+  return getMethodsOf<RendererCoreSpec>('rendererCore').isRendererConnected();
 }
 
 it('returns false', async () => {

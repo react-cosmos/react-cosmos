@@ -5,7 +5,7 @@ import {
   RendererResponse,
   RENDERER_MESSAGE_EVENT_NAME
 } from 'react-cosmos-shared2/renderer';
-import { RendererCoordinatorSpec } from '../RendererCoordinator/public';
+import { RendererCoreSpec } from '../RendererCore/public';
 import { RendererRemoteSpec } from './public';
 
 type Context = PluginContext<RendererRemoteSpec>;
@@ -22,24 +22,22 @@ function postMessage(msg: RendererRequest) {
   }
 }
 
-on<RendererCoordinatorSpec>('rendererCoordinator', {
+on<RendererCoreSpec>('rendererCore', {
   request: (context: Context, msg: RendererRequest) => {
     postMessage(msg);
   }
 });
 
 onLoad(({ getMethodsOf }: Context) => {
-  const { remoteRenderersEnabled, receiveResponse } = getMethodsOf<
-    RendererCoordinatorSpec
-  >('rendererCoordinator');
+  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
 
-  if (!remoteRenderersEnabled()) {
+  if (!rendererCore.remoteRenderersEnabled()) {
     return;
   }
 
   function handleMessage(msg: {}) {
     // TODO: Validate message payload
-    receiveResponse(msg as RendererResponse);
+    rendererCore.receiveResponse(msg as RendererResponse);
   }
 
   socket = io();

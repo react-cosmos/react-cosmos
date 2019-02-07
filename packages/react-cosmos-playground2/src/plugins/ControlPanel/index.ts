@@ -1,7 +1,7 @@
 import { ComponentFixtureState } from 'react-cosmos-shared2/fixtureState';
 import { RendererId } from 'react-cosmos-shared2/renderer';
 import { createPlugin } from 'react-plugin';
-import { RendererCoordinatorSpec } from '../RendererCoordinator/public';
+import { RendererCoreSpec } from '../RendererCore/public';
 import { RouterSpec } from '../Router/public';
 import { ControlPanel } from './ControlPanel';
 import { ControlPanelSpec } from './public';
@@ -15,24 +15,22 @@ plug({
   render: ControlPanel,
   getProps: ({ getMethodsOf }) => {
     const router = getMethodsOf<RouterSpec>('router');
-    const rendererCoordinator = getMethodsOf<RendererCoordinatorSpec>(
-      'rendererCoordinator'
-    );
+    const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
 
     return {
-      webUrl: rendererCoordinator.getWebUrl(),
+      webUrl: rendererCore.getWebUrl(),
       urlParams: router.getUrlParams(),
-      connectedRendererIds: rendererCoordinator.getConnectedRendererIds(),
-      primaryRendererId: rendererCoordinator.getPrimaryRendererId(),
-      fixtureState: rendererCoordinator.getFixtureState(),
+      connectedRendererIds: rendererCore.getConnectedRendererIds(),
+      primaryRendererId: rendererCore.getPrimaryRendererId(),
+      fixtureState: rendererCore.getFixtureState(),
       setComponentsFixtureState: (components: ComponentFixtureState[]) => {
-        rendererCoordinator.setFixtureState(fixtureState => ({
+        rendererCore.setFixtureState(fixtureState => ({
           ...fixtureState,
           components
         }));
       },
       selectPrimaryRenderer: (rendererId: RendererId) => {
-        rendererCoordinator.selectPrimaryRenderer(rendererId);
+        rendererCore.selectPrimaryRenderer(rendererId);
       }
     };
   }

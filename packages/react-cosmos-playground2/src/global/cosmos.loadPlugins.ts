@@ -9,7 +9,7 @@ loadPlugins({
       projectId: 'testProjectId',
       fixturesDir: '__jsxfixtures__'
     },
-    rendererCoordinator: {
+    rendererCore: {
       webUrl: '/_loader.html',
       enableRemote: false
     }

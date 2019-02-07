@@ -4,7 +4,7 @@ import { ResponsivePreview } from './ResponsivePreview';
 import { Props as ToggleButtonProps, ToggleButton } from './ToggleButton';
 import { CoreSpec } from '../Core/public';
 import { RouterSpec } from '../Router/public';
-import { RendererCoordinatorSpec } from '../RendererCoordinator/public';
+import { RendererCoreSpec } from '../RendererCore/public';
 import { DEFAULT_DEVICES, Context } from './shared';
 import { ResponsivePreviewSpec } from './public';
 import { StorageSpec } from '../Storage/public';
@@ -48,15 +48,13 @@ function getCommonProps(context: Context) {
   const { getState, setState, getMethodsOf } = context;
 
   const core = getMethodsOf<CoreSpec>('core');
-  const rendererCoordinator = getMethodsOf<RendererCoordinatorSpec>(
-    'rendererCoordinator'
-  );
+  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
 
   return {
     state: getState(),
     projectId: core.getProjectId(),
-    fixtureState: rendererCoordinator.getFixtureState(),
-    validFixtureSelected: rendererCoordinator.isValidFixtureSelected(),
+    fixtureState: rendererCore.getFixtureState(),
+    validFixtureSelected: rendererCore.isValidFixtureSelected(),
     setState,
     setFixtureStateViewport: () => setFixtureStateViewport(context),
     storage: getStorageApi(context)
@@ -69,11 +67,9 @@ function getStorageApi({ getMethodsOf }: Context) {
 
 function setFixtureStateViewport({ getState, getMethodsOf }: Context) {
   const { enabled, viewport } = getState();
-  const rendererCoordinator = getMethodsOf<RendererCoordinatorSpec>(
-    'rendererCoordinator'
-  );
+  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
 
-  rendererCoordinator.setFixtureState(fixtureState => ({
+  rendererCore.setFixtureState(fixtureState => ({
     ...fixtureState,
     // TODO: Make fixtureState.components optional and remove this
     components: fixtureState ? fixtureState.components : [],
