@@ -1,13 +1,13 @@
 import { createPlugin } from 'react-plugin';
-import { createFixtureAction } from '../RendererHeader/createFixtureAction';
-import { ResponsivePreview } from './ResponsivePreview';
-import { Props as ToggleButtonProps, ToggleButton } from './ToggleButton';
 import { CoreSpec } from '../Core/public';
-import { RouterSpec } from '../Router/public';
 import { RendererCoreSpec } from '../RendererCore/public';
-import { DEFAULT_DEVICES, Context } from './shared';
-import { ResponsivePreviewSpec } from './public';
+import { createFixtureAction } from '../RendererHeader/public';
+import { RouterSpec } from '../Router/public';
 import { StorageSpec } from '../Storage/public';
+import { ResponsivePreviewSpec } from './public';
+import { ResponsivePreview } from './ResponsivePreview';
+import { Context, DEFAULT_DEVICES } from './shared';
+import { Props as ToggleButtonProps, ToggleButton } from './ToggleButton';
 
 const { plug, register } = createPlugin<ResponsivePreviewSpec>({
   name: 'responsivePreview',
