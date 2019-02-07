@@ -16,17 +16,16 @@ script:
   # Test TS unit tests
   # TODO: Get cross-package coverage for TS tests
   - yarn test:ts:unit --maxWorkers=2
+  - yarn codecov
   # Test source (with cross-package coverage)
   - yarn link-entries src
   - yarn flow --retries 12
   - yarn lint
   - yarn test:unit --maxWorkers=2
+  - yarn codecov
   # Test build
   - yarn link-entries dist
   - yarn start & yarn test:e2e
-after_success:
-  # Report coverage
-  - yarn codecov
 cache:
   yarn: true
   directories:
