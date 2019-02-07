@@ -35,14 +35,18 @@ jobs:
       - run: yarn link-entries src
       - run: yarn flow --retries 12
       - run: yarn lint
+
+      # JS unit tests
       - run: yarn test:unit --maxWorkers=1 --coverage
+      - run: yarn codecov
+
+      # TS unit tests
+      - run: yarn test:ts:unit --coverage
+      - run: yarn codecov
 
       # Test build
       - run: yarn link-entries dist
       - run: yarn start & yarn test:e2e
-
-      # Report coverage
-      - run: yarn codecov
 
   node-v6:
     <<: *node-base
