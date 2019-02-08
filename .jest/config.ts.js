@@ -6,6 +6,9 @@ module.exports = {
   testEnvironment: 'jsdom',
   testMatch: ['**/__tests__/**/*.{ts,tsx}', '**/?(*.)test.{ts,tsx}'],
   setupTestFrameworkScriptFile: '<rootDir>/.jest/setup-framework.ts',
+  transform: {
+    '^.+\\.js$': 'babel-jest'
+  },
   collectCoverageFrom: [
     '**/src/**/*.{ts,tsx}',
     '!**/{__fixtures__,__jsxfixtures__}/**',

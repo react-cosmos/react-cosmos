@@ -10,6 +10,6 @@
     "noUnusedLocals": true,
     "strict": true
   },
-  "include": ["packages/react-cosmos-playground2/src/**/*"],
+  "include": ["packages/*/src/**/*"],
   "exclude": ["node_modules"]
 }

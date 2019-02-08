@@ -32,17 +32,14 @@ jobs:
       - run: yarn build
       # Test source (with cross-package coverage)
       - run: yarn link-entries src
-      - run: yarn flow --retries 30
+      - run: yarn flow --retries 12
       - run: yarn lint
-      # JS unit tests
+      - run: yarn test:ts:unit --maxWorkers=2 --coverage
+      - run: yarn codecov
       - run: yarn test:unit --maxWorkers=1 --coverage
       - run: yarn codecov
       # Test build
       - run: yarn link-entries dist
-      # TS unit tests
-      # TODO: Get cross-package coverage for TS tests
-      - run: yarn test:ts:unit --maxWorkers=2 --coverage
-      - run: yarn codecov
       - run: yarn start & yarn test:e2e
 
   node-v6:
