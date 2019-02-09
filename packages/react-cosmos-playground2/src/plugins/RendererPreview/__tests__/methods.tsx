@@ -36,16 +36,14 @@ function getRendererPreviewMethods() {
   return getMethodsOf<RendererPreviewSpec>('rendererPreview');
 }
 
-it('returns url status', async () => {
+it('returns url status', () => {
   registerTestPlugins();
   loadTestPlugins();
-
   expect(getRendererPreviewMethods().getUrlStatus()).toBe('ok');
 });
 
-it('returns runtime status', async () => {
+it('returns runtime status', () => {
   registerTestPlugins();
   loadTestPlugins();
-
   expect(getRendererPreviewMethods().getRuntimeStatus()).toBe('connected');
 });

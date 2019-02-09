@@ -23,17 +23,15 @@ function getCoreMethods() {
   return getMethodsOf<CoreSpec>('core');
 }
 
-it('returns project ID', async () => {
+it('returns project ID', () => {
   register();
   loadTestPlugins();
-
   expect(getCoreMethods().getProjectId()).toBe('mockProjectId');
 });
 
-it('returns fixture file vars', async () => {
+it('returns fixture file vars', () => {
   register();
   loadTestPlugins();
-
   expect(getCoreMethods().getFixtureFileVars()).toEqual({
     fixturesDir: 'mockFixturesDir',
     fixtureFileSuffix: 'mockFixturesFileSuffix'
