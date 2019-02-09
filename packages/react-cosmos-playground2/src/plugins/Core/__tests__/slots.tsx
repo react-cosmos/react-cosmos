@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { render, waitForElement } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
-import { cleanup, mockPlug } from '../../testHelpers/plugin';
-import { register } from '.';
+import { cleanup, mockPlug } from '../../../testHelpers/plugin';
+import { register } from '..';
 
 afterEach(cleanup);
 
