@@ -20,24 +20,17 @@ plug({
 export { register };
 
 function getContentOverlayProps({ getMethodsOf }: Context) {
-  const { getUrlParams } = getMethodsOf<RouterSpec>('router');
-  const { fixturePath } = getUrlParams();
-  const fixtureSelected = fixturePath !== undefined;
-
+  const router = getMethodsOf<RouterSpec>('router');
+  const fixtureSelected = router.getUrlParams().fixturePath !== undefined;
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
-  const rendererConnected = rendererCore.isRendererConnected();
-  const validFixtureSelected =
-    fixtureSelected && rendererCore.isValidFixtureSelected();
-
   const rendererPreview = getMethodsOf<RendererPreviewSpec>('rendererPreview');
-  const urlStatus = rendererPreview.getUrlStatus();
-  const runtimeStatus = rendererPreview.getRuntimeStatus();
 
   return {
     fixtureSelected,
-    validFixtureSelected,
-    rendererConnected,
-    rendererPreviewUrlStatus: urlStatus,
-    rendererPreviewRuntimeStatus: runtimeStatus
+    validFixtureSelected:
+      fixtureSelected && rendererCore.isValidFixtureSelected(),
+    rendererConnected: rendererCore.isRendererConnected(),
+    rendererPreviewUrlStatus: rendererPreview.getUrlStatus(),
+    rendererPreviewRuntimeStatus: rendererPreview.getRuntimeStatus()
   };
 }
