@@ -32,7 +32,7 @@ jobs:
       - run: yarn build
       # Test source (with cross-package coverage)
       - run: yarn link-entries src
-      - run: yarn flow --retries 12
+      # - run: yarn flow --retries 12 Flow times out in CircleCI too often nowadays
       - run: yarn lint
       - run: yarn test:ts:unit --maxWorkers=2 --coverage
       - run: yarn codecov
