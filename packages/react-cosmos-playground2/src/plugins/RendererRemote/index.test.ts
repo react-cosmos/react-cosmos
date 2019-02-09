@@ -35,7 +35,7 @@ it('posts renderer request message via websockets', async () => {
   });
 });
 
-it('broadcasts renderer response message from websocket event', async () => {
+it('sends renderer response message from websocket event to renderer core', async () => {
   register();
 
   const receiveResponse = jest.fn();

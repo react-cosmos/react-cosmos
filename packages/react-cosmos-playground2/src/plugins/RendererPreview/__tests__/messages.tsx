@@ -39,7 +39,7 @@ it('posts renderer request message to iframe', async () => {
   });
 });
 
-it('broadcasts renderer response message', async () => {
+it('sends renderer response message to renderer core', async () => {
   register();
 
   const receiveResponse = jest.fn();
