@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
-    "@babel/runtime-corejs2": "^7.2.0",
+    "@babel/runtime-corejs2": "^7.3.1",
     "@skidding/linked-list": "^1.0.2",
     "async-until": "^1.2.2",
     "deep-equal": "^1.0.1",
@@ -15,7 +15,7 @@
     "react-cosmos-shared": "^4.7.0-24",
     "react-cosmos-state-proxy": "^4.7.0-24",
     "react-cosmos-voyager2": "^4.7.0-24",
-    "react-is": "^16.7.0",
+    "react-is": "^16.8.1",
     "socket.io-client": "^2.2.0",
     "url-parse": "^1.4.4"
   }

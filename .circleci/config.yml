@@ -30,19 +30,17 @@ jobs:
       # Building upfront because some react-cosmos/server unit tests require
       # react-cosmos-playground to be built
       - run: yarn build
-
       # Test source (with cross-package coverage)
       - run: yarn link-entries src
-      - run: yarn flow --retries 12
+      # - run: yarn flow --retries 12 Flow times out in CircleCI too often nowadays
       - run: yarn lint
+      - run: yarn test:ts:unit --maxWorkers=2 --coverage
+      - run: yarn codecov
       - run: yarn test:unit --maxWorkers=1 --coverage
-
+      - run: yarn codecov
       # Test build
       - run: yarn link-entries dist
       - run: yarn start & yarn test:e2e
-
-      # Report coverage
-      - run: yarn codecov
 
   node-v6:
     <<: *node-base

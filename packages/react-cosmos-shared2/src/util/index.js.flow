@@ -2,7 +2,7 @@
 
 import type { Predicate } from 'lodash';
 
-export type StateUpdater<T> = T | ((prevState: T) => T);
+export type StateUpdater<T: null | {}> = T | ((prevState: T) => T);
 
 export type SetState<T> = (
   updater: StateUpdater<T>,

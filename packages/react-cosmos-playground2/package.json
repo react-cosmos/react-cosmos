@@ -9,10 +9,10 @@
     "localforage": "^1.7.3",
     "lodash": "^4.17.11",
     "query-string": "^6.2.0",
-    "react": "^16.7.0",
+    "react": "^16.8.1",
     "react-cosmos-shared2": "^4.7.0",
-    "react-dom": "^16.7.0",
-    "react-plugin": "^1.0.0-alpha.17",
+    "react-dom": "^16.8.1",
+    "react-plugin": "^2.0.0-alpha.1",
     "socket.io-client": "^2.2.0",
     "styled-components": "^4.1.3"
   }

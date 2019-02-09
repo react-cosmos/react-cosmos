@@ -23,7 +23,7 @@ export function getPlaygroundConfig({
       fixturesDir: FIXTURES_DIR,
       fixtureFileSuffix: FIXTURE_FILE_SUFFIX
     },
-    rendererCoordinator: {
+    rendererCore: {
       webUrl:
         playgroundOpts.platform === 'web' ? playgroundOpts.loaderUri : null,
       enableRemote: enableRemoteRenderers
