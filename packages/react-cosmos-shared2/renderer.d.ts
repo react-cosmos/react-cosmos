@@ -6,7 +6,14 @@ import { FixtureState } from './fixtureState';
 // cannot be established by consensus
 export type RendererId = string;
 
-export type FixtureNames = string[];
+export type FixtureNamesByPath = {
+  [fixturePath: string]: null | string[];
+};
+
+export type FixtureId = {
+  path: string;
+  name: null | string;
+};
 
 export type pingRenderersRequest = {
   type: 'pingRenderers';
@@ -16,7 +23,7 @@ export type SelectFixtureRequest = {
   type: 'selectFixture';
   payload: {
     rendererId: RendererId;
-    fixturePath: string;
+    fixtureId: FixtureId;
     fixtureState: null | FixtureState;
   };
 };
@@ -32,9 +39,9 @@ export type SetFixtureStateRequest = {
   type: 'setFixtureState';
   payload: {
     rendererId: RendererId;
-    // The fixture path is sent alongside the fixture state change to ensure
+    // The fixture ID is sent alongside the fixture state change to ensure
     // that the fixture state is only paired with its corresponding fixture
-    fixturePath: string;
+    fixtureId: FixtureId;
     fixtureState: null | FixtureState;
   };
 };
@@ -51,7 +58,7 @@ export type RendererReadyResponse = {
   type: 'rendererReady';
   payload: {
     rendererId: RendererId;
-    fixtures: FixtureNames;
+    fixtures: FixtureNamesByPath;
   };
 };
 
@@ -66,7 +73,7 @@ export type FixtureListUpdateResponse = {
   type: 'fixtureListUpdate';
   payload: {
     rendererId: RendererId;
-    fixtures: FixtureNames;
+    fixtures: FixtureNamesByPath;
   };
 };
 
@@ -77,9 +84,9 @@ export type FixtureStateChangeResponse = {
   type: 'fixtureStateChange';
   payload: {
     rendererId: RendererId;
-    // The fixture path is sent alongside the fixture state to ensure that the
+    // The fixture ID is sent alongside the fixture state to ensure that the
     // fixture state is only paired with its corresponding fixture
-    fixturePath: string;
+    fixtureId: FixtureId;
     // Entire fixture state is included
     fixtureState: null | FixtureState;
   };
