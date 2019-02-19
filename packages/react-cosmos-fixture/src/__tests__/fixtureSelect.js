@@ -17,7 +17,7 @@ runTests(mockConnect => {
         async renderer => {
           await selectFixture({
             rendererId,
-            fixturePath: 'second',
+            fixtureId: { path: 'second', name: null },
             fixtureState: null
           });
 
@@ -34,7 +34,7 @@ runTests(mockConnect => {
         async () => {
           await selectFixture({
             rendererId,
-            fixturePath: 'second',
+            fixtureId: { path: 'second', name: null },
             fixtureState: null
           });
 
@@ -42,7 +42,7 @@ runTests(mockConnect => {
             type: 'fixtureStateChange',
             payload: {
               rendererId,
-              fixturePath: 'second',
+              fixtureId: { path: 'second', name: null },
               fixtureState: {
                 components: []
               }
@@ -61,7 +61,7 @@ runTests(mockConnect => {
           async renderer => {
             await selectFixture({
               rendererId,
-              fixturePath: 'second',
+              fixtureId: { path: 'second', name: null },
               fixtureState: null
             });
 
@@ -83,7 +83,7 @@ runTests(mockConnect => {
         async renderer => {
           await selectFixture({
             rendererId: 'foobar',
-            fixturePath: 'second',
+            fixtureId: { path: 'second', name: null },
             fixtureState: null
           });
 
@@ -100,7 +100,7 @@ runTests(mockConnect => {
         async renderer => {
           await selectFixture({
             rendererId,
-            fixturePath: 'third',
+            fixtureId: { path: 'third', name: null },
             fixtureState: null
           });
 

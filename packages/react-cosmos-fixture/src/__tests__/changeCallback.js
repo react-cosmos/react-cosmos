@@ -16,7 +16,7 @@ runTests(mockConnect => {
         async () => {
           await selectFixture({
             rendererId,
-            fixturePath: 'first',
+            fixtureId: { path: 'first', name: null },
             fixtureState: null
           });
 
@@ -35,7 +35,7 @@ runTests(mockConnect => {
           async () => {
             await selectFixture({
               rendererId,
-              fixturePath: 'first',
+              fixtureId: { path: 'first', name: null },
               fixtureState: null
             });
             await unselectFixture({ rendererId });

@@ -11,8 +11,12 @@ import type {
   OnRendererResponse
 } from 'react-cosmos-shared2/renderer';
 
-export type Fixtures = {
-  [path: string]: Node
+export type NodeMap = { [fixtureName: string]: Node };
+
+export type FixtureExport = Node | NodeMap;
+
+export type FixturesByPath = {
+  [path: string]: FixtureExport
 };
 
 export type DecoratorType = ComponentType<{ children: Node }>;
@@ -29,7 +33,7 @@ export type RemoteRendererApi = {
 
 export type FixtureConnectProps = {
   rendererId: string,
-  fixtures: Fixtures,
+  fixtures: FixturesByPath,
   systemDecorators: DecoratorType[],
   userDecorators: DecoratorsByPath,
   onFixtureChange?: () => mixed

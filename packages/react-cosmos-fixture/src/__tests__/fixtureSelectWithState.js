@@ -21,7 +21,7 @@ runTests(mockConnect => {
         async renderer => {
           await selectFixture({
             rendererId,
-            fixturePath: 'first',
+            fixtureId: { path: 'first', name: null },
             fixtureState: {
               components: createCompFixtureState({
                 fixtureState: null,
