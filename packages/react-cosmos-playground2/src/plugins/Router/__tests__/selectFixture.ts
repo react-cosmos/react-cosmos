@@ -15,18 +15,25 @@ afterEach(() => {
   resetUrl();
 });
 
-function mockSetUrlParams() {
-  getMethodsOf<RouterSpec>('router').setUrlParams({ fixturePath: 'zwei.js' });
+const fixtureId = { path: 'zwei.js', name: null };
+
+function getRouterMethods() {
+  return getMethodsOf<RouterSpec>('router');
+}
+
+function getRouterState() {
+  return getState<RouterSpec>('router');
 }
 
 it('sets "router" state', async () => {
   register();
   loadPlugins();
-  mockSetUrlParams();
+  getRouterMethods().selectFixture(fixtureId, false);
 
   await wait(() =>
-    expect(getState<RouterSpec>('router').urlParams).toEqual({
-      fixturePath: 'zwei.js'
+    expect(getRouterState().urlParams).toEqual({
+      fixtureId,
+      fullScreen: false
     })
   );
 });
@@ -34,9 +41,11 @@ it('sets "router" state', async () => {
 it('sets URL params', async () => {
   register();
   loadPlugins();
-  mockSetUrlParams();
+  getRouterMethods().selectFixture(fixtureId, false);
 
-  await wait(() => expect(getUrlParams()).toEqual({ fixturePath: 'zwei.js' }));
+  await wait(() =>
+    expect(getUrlParams()).toEqual({ fixtureId: JSON.stringify(fixtureId) })
+  );
 });
 
 it('emits "fixtureChange" event', async () => {
@@ -46,9 +55,9 @@ it('emits "fixtureChange" event', async () => {
   on<RouterSpec>('router', { fixtureChange });
 
   loadPlugins();
-  mockSetUrlParams();
+  getRouterMethods().selectFixture(fixtureId, false);
 
   await wait(() =>
-    expect(fixtureChange).toBeCalledWith(expect.any(Object), 'zwei.js')
+    expect(fixtureChange).toBeCalledWith(expect.any(Object), fixtureId)
   );
 });
