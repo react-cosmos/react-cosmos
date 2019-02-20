@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Slot } from 'react-plugin';
+import { FixtureId } from 'react-cosmos-shared2/renderer';
 import {
   XCircleIcon,
   RefreshCwIcon,
@@ -8,24 +9,25 @@ import {
   HomeIcon
 } from '../../shared/icons';
 import { Button } from '../../shared/components';
-import { UrlParams } from '../Router/public';
 
 type Props = {
-  urlParams: UrlParams;
+  selectedFixtureId: null | FixtureId;
+  fullScreen: boolean;
   rendererConnected: boolean;
   validFixtureSelected: boolean;
-  setUrlParams: (urlParams: UrlParams) => void;
+  selectFixture: (fixtureId: FixtureId, fullScreen: boolean) => void;
+  unselectFixture: () => void;
 };
 
 // TODO: Improve UX of refresh button, which seems like it's not doing anything
 export function RendererHeader({
-  urlParams,
+  selectedFixtureId,
+  fullScreen,
   rendererConnected,
   validFixtureSelected,
-  setUrlParams
+  selectFixture,
+  unselectFixture
 }: Props) {
-  const { fixturePath, fullScreen } = urlParams;
-
   if (fullScreen) {
     return null;
   }
@@ -40,7 +42,7 @@ export function RendererHeader({
     );
   }
 
-  if (!fixturePath) {
+  if (!selectedFixtureId) {
     return (
       <Container>
         <Left>
@@ -62,7 +64,7 @@ export function RendererHeader({
           <Button
             icon={<HomeIcon />}
             label="home"
-            onClick={() => setUrlParams({})}
+            onClick={() => unselectFixture()}
           />
         </Left>
         <Right>
@@ -79,12 +81,12 @@ export function RendererHeader({
         <Button
           icon={<XCircleIcon />}
           label="close"
-          onClick={() => setUrlParams({})}
+          onClick={() => unselectFixture()}
         />
         <Button
           icon={<RefreshCwIcon />}
           label="refresh"
-          onClick={() => setUrlParams({ fixturePath })}
+          onClick={() => selectFixture(selectedFixtureId, false)}
         />
       </Left>
       <Right>
@@ -92,7 +94,7 @@ export function RendererHeader({
         <Button
           icon={<MaximizeIcon />}
           label="fullscreen"
-          onClick={() => setUrlParams({ fixturePath, fullScreen: true })}
+          onClick={() => selectFixture(selectedFixtureId, true)}
         />
       </Right>
     </Container>

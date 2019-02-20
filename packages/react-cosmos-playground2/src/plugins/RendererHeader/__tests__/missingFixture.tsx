@@ -8,11 +8,12 @@ import { register } from '..';
 
 afterEach(cleanup);
 
-function registerTestPlugins(handleSetUrlParams = () => {}) {
+function registerTestPlugins(unselectFixture = () => {}) {
   register();
   mockMethodsOf<RouterSpec>('router', {
-    getUrlParams: () => ({ fixturePath: 'foo' }),
-    setUrlParams: handleSetUrlParams
+    getSelectedFixtureId: () => ({ path: 'foo', name: null }),
+    isFullScreen: () => false,
+    unselectFixture
   });
   mockMethodsOf<RendererCoreSpec>('rendererCore', {
     isRendererConnected: () => true,
@@ -34,13 +35,13 @@ it('renders missing state message', async () => {
 });
 
 it('renders home button', async () => {
-  const handleSetUrlParams = jest.fn();
-  registerTestPlugins(handleSetUrlParams);
+  const unselectFixture = jest.fn();
+  registerTestPlugins(unselectFixture);
 
   const { getByText } = loadTestPlugins();
   fireEvent.click(getByText(/home/));
 
-  expect(handleSetUrlParams).toBeCalledWith(expect.any(Object), {});
+  expect(unselectFixture).toBeCalledWith(expect.any(Object));
 });
 
 it('renders disabled fullscreen button', async () => {

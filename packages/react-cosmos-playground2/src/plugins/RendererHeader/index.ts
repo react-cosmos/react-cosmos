@@ -16,10 +16,12 @@ plug({
     const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
 
     return {
-      urlParams: router.getUrlParams(),
+      selectedFixtureId: router.getSelectedFixtureId(),
+      fullScreen: router.isFullScreen(),
       rendererConnected: rendererCore.isRendererConnected(),
       validFixtureSelected: rendererCore.isValidFixtureSelected(),
-      setUrlParams: router.setUrlParams
+      selectFixture: router.selectFixture,
+      unselectFixture: router.unselectFixture
     };
   }
 });
