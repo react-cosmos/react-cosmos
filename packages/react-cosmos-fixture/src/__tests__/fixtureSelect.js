@@ -5,7 +5,7 @@ import { runTests, mount } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = {
-  first: 'First',
+  first: { one: 'First' },
   second: 'Second'
 };
 
@@ -22,6 +22,23 @@ runTests(mockConnect => {
           });
 
           expect(renderer.toJSON()).toBe('Second');
+        }
+      );
+    });
+  });
+
+  it('renders selected named fixture', async () => {
+    await mockConnect(async ({ getElement, selectFixture }) => {
+      await mount(
+        getElement({ rendererId, fixtures, decorators: {} }),
+        async renderer => {
+          await selectFixture({
+            rendererId,
+            fixtureId: { path: 'first', name: 'one' },
+            fixtureState: null
+          });
+
+          expect(renderer.toJSON()).toBe('First');
         }
       );
     });

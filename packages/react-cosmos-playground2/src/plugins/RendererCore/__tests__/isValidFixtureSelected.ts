@@ -16,7 +16,7 @@ const rendererId = 'mockRendererId';
 const state: State = {
   connectedRendererIds: [rendererId],
   primaryRendererId: rendererId,
-  fixtures: { 'ein.js': null, 'zwei.js': null, 'drei.js': null },
+  fixtures: { 'ein.js': ['a', 'b', 'c'], 'zwei.js': null, 'drei.js': null },
   fixtureState: null
 };
 
@@ -55,6 +55,22 @@ it('returns false on missing fixture', async () => {
 it('returns true on existing fixture', async () => {
   register();
   mockFixtureId({ path: 'drei.js', name: null });
+  loadTestPlugins();
+
+  expect(isValidFixtureSelected()).toBe(true);
+});
+
+it('returns false on missing named fixture', async () => {
+  register();
+  mockFixtureId({ path: 'ein.js', name: 'd' });
+  loadTestPlugins();
+
+  expect(isValidFixtureSelected()).toBe(false);
+});
+
+it('returns true on existing named fixture', async () => {
+  register();
+  mockFixtureId({ path: 'ein.js', name: 'a' });
   loadTestPlugins();
 
   expect(isValidFixtureSelected()).toBe(true);
