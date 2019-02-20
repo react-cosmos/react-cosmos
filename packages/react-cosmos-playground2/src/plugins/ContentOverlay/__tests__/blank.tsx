@@ -12,7 +12,7 @@ afterEach(cleanup);
 function registerTestPlugins() {
   register();
   mockMethodsOf<RouterSpec>('router', {
-    getUrlParams: () => ({})
+    getSelectedFixtureId: () => null
   });
   mockMethodsOf<RendererCoreSpec>('rendererCore', {
     isRendererConnected: () => true,
