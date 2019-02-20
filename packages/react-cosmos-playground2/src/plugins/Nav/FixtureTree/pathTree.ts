@@ -1,8 +1,8 @@
 import { get, set, forEach, mapKeys } from 'lodash';
 import { FixtureNamesByPath, FixtureId } from 'react-cosmos-shared2/renderer';
-import { FixtureTreeNode, FixtureTreeNodeDirs } from './shared';
+import { FixtureNode, FixtureNodeDirs } from './shared';
 
-export function getPathTree(fixtures: FixtureNamesByPath): FixtureTreeNode {
+export function getPathTree(fixtures: FixtureNamesByPath): FixtureNode {
   const rootNode = getBlankNode();
   Object.keys(fixtures).forEach(fixturePath =>
     addFixturePathToTree(rootNode, fixturePath, fixtures[fixturePath])
@@ -12,11 +12,11 @@ export function getPathTree(fixtures: FixtureNamesByPath): FixtureTreeNode {
 }
 
 export function collapsePathTreeDirs(
-  treeNode: FixtureTreeNode,
+  treeNode: FixtureNode,
   collapsedDirName: string
-): FixtureTreeNode {
+): FixtureNode {
   let items = { ...treeNode.items };
-  const dirs: FixtureTreeNodeDirs = {};
+  const dirs: FixtureNodeDirs = {};
 
   forEach(treeNode.dirs, (dirNode, dirName) => {
     if (dirName !== collapsedDirName) {
@@ -41,9 +41,9 @@ export function collapsePathTreeDirs(
 }
 
 export function hideFixtureSuffix(
-  treeNode: FixtureTreeNode,
+  treeNode: FixtureNode,
   suffix: string
-): FixtureTreeNode {
+): FixtureNode {
   // The fixture name suffix can be found in both dir and item names
   const dirs = Object.keys(treeNode.dirs).reduce((prev, dirName) => {
     const cleanDirName = removeFixtureNameSuffix(dirName, suffix);
@@ -59,9 +59,7 @@ export function hideFixtureSuffix(
   return { items, dirs };
 }
 
-export function collapseSoloIndexes(
-  treeNode: FixtureTreeNode
-): FixtureTreeNode {
+export function collapseSoloIndexes(treeNode: FixtureNode): FixtureNode {
   const containsSoloIndexDir =
     Object.keys(treeNode.dirs).length === 1 && treeNode.dirs.index;
 
@@ -75,7 +73,7 @@ export function collapseSoloIndexes(
   }
 
   const items = { ...treeNode.items };
-  const dirs: FixtureTreeNodeDirs = {};
+  const dirs: FixtureNodeDirs = {};
 
   forEach(treeNode.dirs, (dirNode, dirName) => {
     const dirItems = dirNode.items || {};
@@ -93,7 +91,7 @@ export function collapseSoloIndexes(
 }
 
 function addFixturePathToTree(
-  rootNode: FixtureTreeNode,
+  rootNode: FixtureNode,
   fixturePath: string,
   fixtureNames: null | string[]
 ) {
@@ -122,7 +120,7 @@ function addFixturePathToTree(
 }
 
 function addItemToFixtureTree(
-  rootNode: FixtureTreeNode,
+  rootNode: FixtureNode,
   namespace: string[],
   itemName: string,
   fixtureId: FixtureId
@@ -133,7 +131,7 @@ function addItemToFixtureTree(
   }
 
   let curNodeDepth = 1;
-  let curNode: FixtureTreeNode;
+  let curNode: FixtureNode;
   do {
     const partialNamespace = namespace.slice(0, curNodeDepth);
     const partialPath = partialNamespace.map(p => `dirs["${p}"]`).join('.');
@@ -150,7 +148,7 @@ function addItemToFixtureTree(
   curNode.items[itemName] = fixtureId;
 }
 
-function getBlankNode(): FixtureTreeNode {
+function getBlankNode(): FixtureNode {
   return {
     items: {},
     dirs: {}
