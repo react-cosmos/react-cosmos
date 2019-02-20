@@ -24,14 +24,14 @@ plug({
   slotName: 'rendererPreviewOuter',
   render: ResponsivePreview,
   getProps: context => {
-    const { fullScreen } = context
+    const fullScreen = context
       .getMethodsOf<RouterSpec>('router')
-      .getUrlParams();
+      .isFullScreen();
 
     return {
       ...getCommonProps(context),
       config: context.getConfig(),
-      fullScreen: fullScreen !== undefined
+      fullScreen
     };
   }
 });

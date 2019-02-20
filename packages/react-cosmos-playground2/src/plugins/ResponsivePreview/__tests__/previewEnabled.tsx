@@ -5,7 +5,7 @@ import { updateState } from 'react-cosmos-shared2/util';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { cleanup, getState, mockMethodsOf } from '../../../testHelpers/plugin';
 import { StorageSpec } from '../../Storage/public';
-import { UrlParams, RouterSpec } from '../../Router/public';
+import { RouterSpec } from '../../Router/public';
 import { CoreSpec } from '../../Core/public';
 import { RendererCoreSpec } from '../../RendererCore/public';
 import { ResponsivePreviewSpec } from '../public';
@@ -37,9 +37,9 @@ function mockStorage(storage: StorageMock = {}) {
   });
 }
 
-function mockRouter(urlParams: UrlParams = {}) {
+function mockRouter(fullScreen: boolean = false) {
   mockMethodsOf<RouterSpec>('router', {
-    getUrlParams: () => urlParams
+    isFullScreen: () => fullScreen
   });
 }
 
@@ -94,7 +94,7 @@ it('does not render responsive header when no fixture is selected', () => {
 it('does not render responsive header in full screen mode', () => {
   registerTestPlugins();
   mockStorage();
-  mockRouter({ fixturePath: 'foo.js', fullScreen: true });
+  mockRouter(true);
   mockRendererCore(true);
 
   const { queryByTestId } = loadTestPlugins();
@@ -104,7 +104,7 @@ it('does not render responsive header in full screen mode', () => {
 it('renders responsive header', () => {
   registerTestPlugins();
   mockStorage();
-  mockRouter({ fixturePath: 'foo.js' });
+  mockRouter();
   mockRendererCore(true);
 
   const { getByTestId } = loadTestPlugins();
@@ -114,7 +114,7 @@ it('renders responsive header', () => {
 it('renders responsive device labels', () => {
   registerTestPlugins();
   mockStorage();
-  mockRouter({ fixturePath: 'foo.js' });
+  mockRouter();
   mockRendererCore(true);
 
   const { getByText } = loadTestPlugins();
@@ -127,7 +127,7 @@ describe('on device select', () => {
   it('sets "responsive-preview" state', async () => {
     registerTestPlugins();
     mockStorage();
-    mockRouter({ fixturePath: 'foo.js' });
+    mockRouter();
     mockRendererCore(true);
 
     const { getByText } = loadTestPlugins();
@@ -144,7 +144,7 @@ describe('on device select', () => {
   it('sets viewport in fixture state', async () => {
     registerTestPlugins();
     mockStorage();
-    mockRouter({ fixturePath: 'foo.js' });
+    mockRouter();
     mockRendererCore(true);
 
     let fixtureState: null | FixtureState = null;
@@ -169,7 +169,7 @@ describe('on device select', () => {
     const storage: StorageMock = {};
     mockStorage(storage);
 
-    mockRouter({ fixturePath: 'fooFixture.js' });
+    mockRouter();
     mockRendererCore(true);
 
     const { getByText } = loadTestPlugins();
