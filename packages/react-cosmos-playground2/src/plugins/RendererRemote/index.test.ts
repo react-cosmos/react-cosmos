@@ -1,6 +1,9 @@
 import { wait } from 'react-testing-library';
 import { loadPlugins, getPluginContext } from 'react-plugin';
-import { SelectFixtureRequest } from 'react-cosmos-shared2/renderer';
+import {
+  SelectFixtureRequest,
+  RendererReadyResponse
+} from 'react-cosmos-shared2/renderer';
 import { mockWebSockets } from './testHelpers/mockWebSockets';
 import { cleanup, mockMethodsOf } from '../../testHelpers/plugin';
 import { RendererCoreSpec } from '../RendererCore/public';
@@ -21,7 +24,7 @@ it('posts renderer request message via websockets', async () => {
     type: 'selectFixture',
     payload: {
       rendererId: 'mockRendererId',
-      fixturePath: 'mockFixturePath',
+      fixtureId: { path: 'mockFixturePath', name: null },
       fixtureState: null
     }
   };
@@ -47,11 +50,11 @@ it('sends renderer response message from websocket event to renderer core', asyn
   loadPlugins();
 
   await mockWebSockets(async ({ postMessage }) => {
-    const rendererReadyMsg = {
+    const rendererReadyMsg: RendererReadyResponse = {
       type: 'rendererReady',
       payload: {
         rendererId: 'mockRendererId',
-        fixtures: ['ein.js', 'zwei.js', 'drei.js']
+        fixtures: { 'ein.js': null, 'zwei.js': null, 'drei.js': null }
       }
     };
     postMessage(rendererReadyMsg);
