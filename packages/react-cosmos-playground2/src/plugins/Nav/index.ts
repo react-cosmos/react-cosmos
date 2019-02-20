@@ -1,6 +1,6 @@
 import { createPlugin } from 'react-plugin';
 import { StorageSpec } from '../Storage/public';
-import { UrlParams, RouterSpec } from '../Router/public';
+import { RouterSpec } from '../Router/public';
 import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { NavSpec } from './public';
@@ -22,12 +22,11 @@ plug({
       projectId: core.getProjectId(),
       fixturesDir,
       fixtureFileSuffix,
-      urlParams: router.getUrlParams(),
+      selectedFixtureId: router.getSelectedFixtureId(),
+      fullScreen: router.isFullScreen(),
       rendererConnected: rendererCore.isRendererConnected(),
       fixtures: rendererCore.getFixtures(),
-      setUrlParams: (newUrlParams: UrlParams) => {
-        router.setUrlParams(newUrlParams);
-      },
+      selectFixture: router.selectFixture,
       storage
     };
   }

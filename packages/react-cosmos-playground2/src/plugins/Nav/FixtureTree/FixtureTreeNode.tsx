@@ -1,19 +1,20 @@
 import * as React from 'react';
-import { map } from 'lodash';
+import { map, isEqual } from 'lodash';
 import styled from 'styled-components';
+import { FixtureId } from 'react-cosmos-shared2/renderer';
 import {
   ChevronRightIcon,
   ChevronDownIcon,
   FolderIcon
 } from '../../../shared/icons';
-import { TreeNode, TreeExpansion } from './shared';
+import { FixtureNode, TreeExpansion } from './shared';
 
 type Props = {
-  node: TreeNode;
+  node: FixtureNode;
   parents: string[];
   treeExpansion: TreeExpansion;
-  selectedFixturePath: null | string;
-  onSelect: (path: string) => unknown;
+  selectedFixtureId: null | FixtureId;
+  onSelect: (fixtureId: FixtureId) => unknown;
   onToggleExpansion: (nodePath: string, expanded: boolean) => unknown;
 };
 
@@ -24,11 +25,11 @@ export class FixtureTreeNode extends React.Component<Props> {
       node,
       parents,
       treeExpansion,
-      selectedFixturePath,
+      selectedFixtureId,
       onSelect,
       onToggleExpansion
     } = this.props;
-    const { fixtures, dirs } = node;
+    const { items, dirs } = node;
     const dirNames = Object.keys(dirs);
     const nodePath = getNodePath(parents);
     const isRootNode = parents.length === 0;
@@ -54,12 +55,12 @@ export class FixtureTreeNode extends React.Component<Props> {
         )}
         {isExpanded && (
           <>
-            {map(fixtures, (fixturePath, fixtureName) => (
+            {map(items, (fixtureId, fixtureName) => (
               <ListItem
-                key={fixturePath}
+                key={`${fixtureId.path}-${fixtureName}`}
                 indentLevel={parents.length}
-                selected={fixturePath === selectedFixturePath}
-                onClick={this.createSelectHandler(fixturePath)}
+                selected={isEqual(fixtureId, selectedFixtureId)}
+                onClick={this.createSelectHandler(fixtureId)}
               >
                 <Label>{fixtureName}</Label>
               </ListItem>
@@ -73,7 +74,7 @@ export class FixtureTreeNode extends React.Component<Props> {
                   node={dirs[dirName]}
                   parents={nextParents}
                   treeExpansion={treeExpansion}
-                  selectedFixturePath={selectedFixturePath}
+                  selectedFixtureId={selectedFixtureId}
                   onSelect={onSelect}
                   onToggleExpansion={onToggleExpansion}
                 />
@@ -85,9 +86,9 @@ export class FixtureTreeNode extends React.Component<Props> {
     );
   }
 
-  createSelectHandler = (path: string) => (e: React.SyntheticEvent) => {
+  createSelectHandler = (fixtureId: FixtureId) => (e: React.SyntheticEvent) => {
     e.preventDefault();
-    this.props.onSelect(path);
+    this.props.onSelect(fixtureId);
   };
 }
 

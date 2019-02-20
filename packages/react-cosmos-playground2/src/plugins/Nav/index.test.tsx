@@ -1,17 +1,17 @@
 import * as React from 'react';
 import delay from 'delay';
 import { render, waitForElement, fireEvent } from 'react-testing-library';
-import { Slot, loadPlugins } from 'react-plugin';
+import { Slot, loadPlugins, MethodHandlers } from 'react-plugin';
 import { cleanup, mockMethodsOf } from '../../testHelpers/plugin';
 import { StorageSpec } from '../Storage/public';
-import { UrlParams, RouterSpec } from '../Router/public';
+import { RouterSpec } from '../Router/public';
 import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { register } from '.';
 
 afterEach(cleanup);
 
-const fixtures = ['ein.js', 'zwei.js', 'drei.js'];
+const fixtures = { 'ein.js': null, 'zwei.js': null, 'drei.js': null };
 
 function registerTestPlugins() {
   register();
@@ -32,14 +32,8 @@ function registerTestPlugins() {
   });
 }
 
-function mockRouter(
-  urlParams: UrlParams,
-  setUrlParams: RouterSpec['methods']['getUrlParams'] = jest.fn()
-) {
-  mockMethodsOf<RouterSpec>('router', {
-    getUrlParams: () => urlParams,
-    setUrlParams
-  });
+function mockRouter(methods: Partial<MethodHandlers<RouterSpec>> = {}) {
+  mockMethodsOf<RouterSpec>('router', methods);
 }
 
 function loadTestPlugins() {
@@ -50,7 +44,10 @@ function loadTestPlugins() {
 
 it('renders fixture list from renderer state', async () => {
   registerTestPlugins();
-  mockRouter({});
+  mockRouter({
+    getSelectedFixtureId: () => null,
+    isFullScreen: () => false
+  });
   const { getByText } = loadTestPlugins();
 
   await waitForElement(() => getByText(/ein/i));
@@ -61,22 +58,31 @@ it('renders fixture list from renderer state', async () => {
 it('sets "fixturePath" router param on fixture click', async () => {
   registerTestPlugins();
 
-  const handleSetUrlParams = jest.fn();
-  mockRouter({}, handleSetUrlParams);
+  const selectFixture = jest.fn();
+  mockRouter({
+    getSelectedFixtureId: () => null,
+    isFullScreen: () => false,
+    selectFixture
+  });
 
   const { getByText } = loadTestPlugins();
   fireEvent.click(getByText(/zwei/i));
 
-  expect(handleSetUrlParams).toBeCalledWith(expect.any(Object), {
-    fixturePath: 'zwei.js'
-  });
+  expect(selectFixture).toBeCalledWith(
+    expect.any(Object),
+    { path: 'zwei.js', name: null },
+    false
+  );
 });
 
 // This test confirms the existence of the "nav" element under normal
 // conditions, and thus the validity of the "full screen" test
 it('renders nav element', async () => {
   registerTestPlugins();
-  mockRouter({});
+  mockRouter({
+    getSelectedFixtureId: () => null,
+    isFullScreen: () => false
+  });
   const { getByTestId } = loadTestPlugins();
 
   await waitForElement(() => getByTestId('nav'));
@@ -84,7 +90,10 @@ it('renders nav element', async () => {
 
 it('does not render nav element in full screen mode', async () => {
   registerTestPlugins();
-  mockRouter({ fixturePath: 'zwei.js', fullScreen: true });
+  mockRouter({
+    getSelectedFixtureId: () => ({ path: 'zwei.js', name: null }),
+    isFullScreen: () => true
+  });
   const { queryByTestId } = loadTestPlugins();
 
   // Make sure the nav element doesn't appear async in the next event loops

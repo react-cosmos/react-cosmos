@@ -9,8 +9,8 @@ type TreeNodeDirs<Item> = {
   [dirName: string]: TreeNode<Item>;
 };
 
-export type FixtureTreeNode = TreeNode<FixtureId>;
-export type FixtureTreeNodeDirs = TreeNodeDirs<FixtureId>;
+export type FixtureNode = TreeNode<FixtureId>;
+export type FixtureNodeDirs = TreeNodeDirs<FixtureId>;
 
 export type TreeExpansion = {
   [nodePath: string]: boolean;
