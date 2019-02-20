@@ -11,14 +11,14 @@ afterEach(cleanup);
 const state: State = {
   connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
   primaryRendererId: 'mockRendererId1',
-  fixtures: [],
+  fixtures: {},
   fixtureState: { components: [] }
 };
 
 function registerTestPlugins() {
   register();
   mockMethodsOf<RouterSpec>('router', {
-    getUrlParams: () => ({})
+    getSelectedFixtureId: () => null
   });
 }
 
@@ -27,7 +27,10 @@ function loadTestPlugins() {
 }
 
 function emitRouterFixtureChange() {
-  getPluginContext<RouterSpec>('router').emit('fixtureChange', 'zwei.js');
+  getPluginContext<RouterSpec>('router').emit('fixtureChange', {
+    path: 'zwei.js',
+    name: null
+  });
 }
 
 it('posts "selectFixture" renderer requests', async () => {
@@ -44,7 +47,7 @@ it('posts "selectFixture" renderer requests', async () => {
       type: 'selectFixture',
       payload: {
         rendererId: 'mockRendererId1',
-        fixturePath: 'zwei.js',
+        fixtureId: { path: 'zwei.js', name: null },
         fixtureState: null
       }
     })
@@ -55,7 +58,7 @@ it('posts "selectFixture" renderer requests', async () => {
       type: 'selectFixture',
       payload: {
         rendererId: 'mockRendererId2',
-        fixturePath: 'zwei.js',
+        fixtureId: { path: 'zwei.js', name: null },
         fixtureState: null
       }
     })

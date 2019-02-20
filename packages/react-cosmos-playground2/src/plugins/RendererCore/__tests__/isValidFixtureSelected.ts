@@ -1,10 +1,11 @@
 import { loadPlugins } from 'react-plugin';
+import { FixtureId } from 'react-cosmos-shared2/renderer';
 import {
   cleanup,
   getMethodsOf,
   mockMethodsOf
 } from '../../../testHelpers/plugin';
-import { UrlParams, RouterSpec } from '../../Router/public';
+import { RouterSpec } from '../../Router/public';
 import { RendererCoreSpec } from '../public';
 import { State } from '../shared';
 import { register } from '..';
@@ -15,13 +16,13 @@ const rendererId = 'mockRendererId';
 const state: State = {
   connectedRendererIds: [rendererId],
   primaryRendererId: rendererId,
-  fixtures: ['ein.js', 'zwei.js', 'drei.js'],
+  fixtures: { 'ein.js': null, 'zwei.js': null, 'drei.js': null },
   fixtureState: null
 };
 
-function mockUrlParams(urlParams: UrlParams) {
+function mockFixtureId(fixtureId: null | FixtureId = null) {
   mockMethodsOf<RouterSpec>('router', {
-    getUrlParams: () => urlParams
+    getSelectedFixtureId: () => fixtureId
   });
 }
 
@@ -37,7 +38,7 @@ function isValidFixtureSelected() {
 
 it('returns false on no fixture selected', async () => {
   register();
-  mockUrlParams({});
+  mockFixtureId();
   loadTestPlugins();
 
   expect(isValidFixtureSelected()).toBe(false);
@@ -45,7 +46,7 @@ it('returns false on no fixture selected', async () => {
 
 it('returns false on missing fixture', async () => {
   register();
-  mockUrlParams({ fixturePath: 'sechs.js' });
+  mockFixtureId({ path: 'sechs.js', name: null });
   loadTestPlugins();
 
   expect(isValidFixtureSelected()).toBe(false);
@@ -53,7 +54,7 @@ it('returns false on missing fixture', async () => {
 
 it('returns true on existing fixture', async () => {
   register();
-  mockUrlParams({ fixturePath: 'drei.js' });
+  mockFixtureId({ path: 'drei.js', name: null });
   loadTestPlugins();
 
   expect(isValidFixtureSelected()).toBe(true);

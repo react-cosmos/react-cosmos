@@ -13,7 +13,7 @@ const rendererCoreConfig: RendererCoreSpec['config'] = {
 const rendererCoreState: RendererCoreSpec['state'] = {
   connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
   primaryRendererId: 'mockRendererId2',
-  fixtures: ['ein.js', 'zwei.js', 'drei.js'],
+  fixtures: { 'ein.js': null, 'zwei.js': null, 'drei.js': null },
   fixtureState: { components: [] }
 };
 
@@ -60,11 +60,11 @@ it('returns primary renderer ID', () => {
 it('returns fixtures', () => {
   register();
   loadTestPlugins();
-  expect(getRendererCoreMethods().getFixtures()).toEqual([
-    'ein.js',
-    'zwei.js',
-    'drei.js'
-  ]);
+  expect(getRendererCoreMethods().getFixtures()).toEqual({
+    'ein.js': null,
+    'zwei.js': null,
+    'drei.js': null
+  });
 });
 
 it('returns fixture state', () => {

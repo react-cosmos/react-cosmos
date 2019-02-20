@@ -15,13 +15,13 @@ import { register } from '../..';
 
 afterEach(cleanup);
 
-const fixtures = ['ein.js'];
+const fixtures = { 'ein.js': null };
 const fixtureState = { components: [] };
 
 function registerTestPlugins() {
   register();
   mockMethodsOf<RouterSpec>('router', {
-    getUrlParams: () => ({})
+    getSelectedFixtureId: () => null
   });
 }
 

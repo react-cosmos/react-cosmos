@@ -16,19 +16,19 @@ import { register } from '../..';
 
 afterEach(cleanup);
 
-const fixturePath = 'zwei.js';
+const fixtureId = { path: 'zwei.js', name: null };
 const fixtureState = { components: [] };
 const state: State = {
   connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
   primaryRendererId: 'mockRendererId1',
-  fixtures: ['ein.js', 'zwei.js', 'drei.js'],
+  fixtures: { 'ein.js': null, 'zwei.js': null, 'drei.js': null },
   fixtureState: null
 };
 
 function registerTestPlugins() {
   register();
   mockMethodsOf<RouterSpec>('router', {
-    getUrlParams: () => ({ fixturePath })
+    getSelectedFixtureId: () => fixtureId
   });
 }
 
@@ -39,7 +39,7 @@ function loadTestPlugins() {
 function mockFixtureStateChangeResponse(rendererId: RendererId) {
   const methods = getMethodsOf<RendererCoreSpec>('rendererCore');
   methods.receiveResponse(
-    createFixtureStateChangeResponse(rendererId, fixturePath, fixtureState)
+    createFixtureStateChangeResponse(rendererId, fixtureId, fixtureState)
   );
 }
 
@@ -82,7 +82,7 @@ it('posts "setFixtureState" request to secondary renderer', async () => {
       type: 'setFixtureState',
       payload: {
         rendererId: 'mockRendererId2',
-        fixturePath,
+        fixtureId,
         fixtureState
       }
     })

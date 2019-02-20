@@ -28,7 +28,7 @@ it('returns true', async () => {
   loadTestPlugins({
     connectedRendererIds: [rendererId],
     primaryRendererId: rendererId,
-    fixtures: [],
+    fixtures: {},
     fixtureState: null
   });
 
