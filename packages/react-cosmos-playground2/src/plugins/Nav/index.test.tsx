@@ -55,7 +55,7 @@ it('renders fixture list from renderer state', async () => {
   await waitForElement(() => getByText(/drei/i));
 });
 
-it('sets "fixturePath" router param on fixture click', async () => {
+it('sends fixtureId to router on fixture click', async () => {
   registerTestPlugins();
 
   const selectFixture = jest.fn();

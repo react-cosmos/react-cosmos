@@ -15,7 +15,7 @@ afterEach(() => {
 
 const fixtureId = { path: 'zwei.js', name: null };
 
-it('emits "fixtureChange" event on "fixturePath" URL param change', () => {
+it('emits "fixtureChange" event on "fixtureId" URL param change', () => {
   register();
 
   const fixtureChange = jest.fn();
@@ -27,7 +27,7 @@ it('emits "fixtureChange" event on "fixturePath" URL param change', () => {
   expect(fixtureChange).toBeCalledWith(expect.any(Object), fixtureId);
 });
 
-it('emits "fixtureChange" event on removed "fixturePath" URL param', async () => {
+it('emits "fixtureChange" event on removed "fixtureId" URL param', async () => {
   register();
 
   const fixtureChange = jest.fn();
