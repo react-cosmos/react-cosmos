@@ -30,7 +30,9 @@ export class FixtureTreeNode extends React.Component<Props> {
       onToggleExpansion
     } = this.props;
     const { items, dirs } = node;
-    const dirNames = Object.keys(dirs);
+    const dirNames = Object.keys(dirs)
+      .slice()
+      .sort();
     const nodePath = getNodePath(parents);
     const isRootNode = parents.length === 0;
     const isExpanded = isRootNode || treeExpansion[nodePath];
