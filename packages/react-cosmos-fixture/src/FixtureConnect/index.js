@@ -136,7 +136,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
       case 'unselectFixture':
         return this.handleUnselectFixtureRequest();
       case 'setFixtureState':
-        return this.handleSelectFixtureStateRequest(msg);
+        return this.handleSetFixtureStateRequest(msg);
       default:
       // This Is Fine™
       // Actually, we can't be angry about getting unrelated messages here
@@ -164,7 +164,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     });
   }
 
-  handleSelectFixtureStateRequest({ payload }: SetFixtureStateRequest) {
+  handleSetFixtureStateRequest({ payload }: SetFixtureStateRequest) {
     const { fixtureId, fixtureState } = payload;
 
     // Ensure fixture state applies to currently selected fixture
