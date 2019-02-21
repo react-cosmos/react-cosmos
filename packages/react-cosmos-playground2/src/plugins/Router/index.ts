@@ -32,10 +32,10 @@ onLoad(context => {
 
   return subscribeToLocationChanges((urlParams: UrlParams) => {
     const { fixtureId } = context.getState().urlParams;
-    const hasFixtureChanged = urlParams.fixtureId !== fixtureId;
+    const fixtureChanged = !isEqual(urlParams.fixtureId, fixtureId);
 
     setState({ urlParams }, () => {
-      if (hasFixtureChanged) {
+      if (fixtureChanged) {
         emitFixtureChangeEvent(context);
       }
     });
