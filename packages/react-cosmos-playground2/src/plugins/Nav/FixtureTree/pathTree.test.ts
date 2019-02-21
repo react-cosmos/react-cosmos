@@ -9,7 +9,7 @@ import {
 const fixtures: FixtureNamesByPath = {
   'helloWorld.jsxfixture.js': null,
   'components/Counter/__jsxfixtures__/mockedState/largeNumber.js': null,
-  'components/Counter/__jsxfixtures__/mockedState/smallNumber.js': [
+  'components/Counter/__jsxfixtures__/mockedState/smallNumbers.js': [
     'five',
     'fiftyFive'
   ],
@@ -50,16 +50,16 @@ const tree = {
                     }
                   },
                   dirs: {
-                    smallNumber: {
+                    smallNumbers: {
                       items: {
                         five: {
                           path:
-                            'components/Counter/__jsxfixtures__/mockedState/smallNumber.js',
+                            'components/Counter/__jsxfixtures__/mockedState/smallNumbers.js',
                           name: 'five'
                         },
                         fiftyFive: {
                           path:
-                            'components/Counter/__jsxfixtures__/mockedState/smallNumber.js',
+                            'components/Counter/__jsxfixtures__/mockedState/smallNumbers.js',
                           name: 'fiftyFive'
                         }
                       },
@@ -136,16 +136,16 @@ const collapsedTree = {
                 }
               },
               dirs: {
-                smallNumber: {
+                smallNumbers: {
                   items: {
                     five: {
                       path:
-                        'components/Counter/__jsxfixtures__/mockedState/smallNumber.js',
+                        'components/Counter/__jsxfixtures__/mockedState/smallNumbers.js',
                       name: 'five'
                     },
                     fiftyFive: {
                       path:
-                        'components/Counter/__jsxfixtures__/mockedState/smallNumber.js',
+                        'components/Counter/__jsxfixtures__/mockedState/smallNumbers.js',
                       name: 'fiftyFive'
                     }
                   },
@@ -220,16 +220,16 @@ const suffixHiddenTree = {
                 }
               },
               dirs: {
-                smallNumber: {
+                smallNumbers: {
                   items: {
                     five: {
                       path:
-                        'components/Counter/__jsxfixtures__/mockedState/smallNumber.js',
+                        'components/Counter/__jsxfixtures__/mockedState/smallNumbers.js',
                       name: 'five'
                     },
                     fiftyFive: {
                       path:
-                        'components/Counter/__jsxfixtures__/mockedState/smallNumber.js',
+                        'components/Counter/__jsxfixtures__/mockedState/smallNumbers.js',
                       name: 'fiftyFive'
                     }
                   },
@@ -309,16 +309,16 @@ const collapsedIndexTree = {
                 }
               },
               dirs: {
-                smallNumber: {
+                smallNumbers: {
                   items: {
                     five: {
                       path:
-                        'components/Counter/__jsxfixtures__/mockedState/smallNumber.js',
+                        'components/Counter/__jsxfixtures__/mockedState/smallNumbers.js',
                       name: 'five'
                     },
                     fiftyFive: {
                       path:
-                        'components/Counter/__jsxfixtures__/mockedState/smallNumber.js',
+                        'components/Counter/__jsxfixtures__/mockedState/smallNumbers.js',
                       name: 'fiftyFive'
                     }
                   },
