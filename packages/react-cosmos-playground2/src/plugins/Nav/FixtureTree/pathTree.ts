@@ -63,11 +63,10 @@ export function collapseSoloIndexes(treeNode: FixtureNode): FixtureNode {
   const containsSoloIndexDir =
     Object.keys(treeNode.dirs).length === 1 && treeNode.dirs.index;
 
-  if (containsSoloIndexDir) {
+  if (containsSoloIndexDir && Object.keys(treeNode.items).length === 0) {
     const indexDirNode = treeNode.dirs.index;
     return collapseSoloIndexes({
-      // Warning: Items can disappear here because of name collisions
-      items: { ...treeNode.items, ...indexDirNode.items },
+      items: indexDirNode.items,
       dirs: indexDirNode.dirs
     });
   }
@@ -80,7 +79,7 @@ export function collapseSoloIndexes(treeNode: FixtureNode): FixtureNode {
     const containsSoloIndexItem =
       Object.keys(dirItems).length === 1 && dirItems.index;
 
-    if (containsSoloIndexItem) {
+    if (containsSoloIndexItem && !items[dirName]) {
       items[dirName] = dirItems.index;
     } else {
       dirs[dirName] = collapseSoloIndexes(dirNode);

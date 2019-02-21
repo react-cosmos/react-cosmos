@@ -15,8 +15,7 @@ const fixtures: FixtureNamesByPath = {
   ],
   'components/Counter/defaultState.jsxfixture.js': null,
   'components/SuccessMessage/index.jsxfixture.js': null,
-  'components/WelcomeMessage/index.jsxfixture.js': ['Susan', 'Sarah'],
-  'components/WelcomeMessage/Sandra.jsxfixture.js': null
+  'components/WelcomeMessage/index.jsxfixture.js': ['Susan', 'Sarah']
 };
 
 const tree = {
@@ -81,12 +80,7 @@ const tree = {
           dirs: {}
         },
         WelcomeMessage: {
-          items: {
-            'Sandra.jsxfixture': {
-              path: 'components/WelcomeMessage/Sandra.jsxfixture.js',
-              name: null
-            }
-          },
+          items: {},
           dirs: {
             'index.jsxfixture': {
               items: {
@@ -165,12 +159,7 @@ const collapsedTree = {
           dirs: {}
         },
         WelcomeMessage: {
-          items: {
-            'Sandra.jsxfixture': {
-              path: 'components/WelcomeMessage/Sandra.jsxfixture.js',
-              name: null
-            }
-          },
+          items: {},
           dirs: {
             'index.jsxfixture': {
               items: {
@@ -249,12 +238,7 @@ const suffixHiddenTree = {
           dirs: {}
         },
         WelcomeMessage: {
-          items: {
-            Sandra: {
-              path: 'components/WelcomeMessage/Sandra.jsxfixture.js',
-              name: null
-            }
-          },
+          items: {},
           dirs: {
             index: {
               items: {
@@ -330,10 +314,6 @@ const collapsedIndexTree = {
         },
         WelcomeMessage: {
           items: {
-            Sandra: {
-              path: 'components/WelcomeMessage/Sandra.jsxfixture.js',
-              name: null
-            },
             Susan: {
               path: 'components/WelcomeMessage/index.jsxfixture.js',
               name: 'Susan'
