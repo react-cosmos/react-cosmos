@@ -55,16 +55,6 @@ export class FixtureTreeNode extends React.Component<Props> {
         )}
         {isExpanded && (
           <>
-            {map(items, (fixtureId, fixtureName) => (
-              <ListItem
-                key={`${fixtureId.path}-${fixtureName}`}
-                indentLevel={parents.length}
-                selected={isEqual(fixtureId, selectedFixtureId)}
-                onClick={this.createSelectHandler(fixtureId)}
-              >
-                <Label>{fixtureName}</Label>
-              </ListItem>
-            ))}
             {dirNames.map(dirName => {
               const nextParents = [...parents, dirName];
 
@@ -80,6 +70,16 @@ export class FixtureTreeNode extends React.Component<Props> {
                 />
               );
             })}
+            {map(items, (fixtureId, fixtureName) => (
+              <ListItem
+                key={`${fixtureId.path}-${fixtureName}`}
+                indentLevel={parents.length}
+                selected={isEqual(fixtureId, selectedFixtureId)}
+                onClick={this.createSelectHandler(fixtureId)}
+              >
+                <Label>{fixtureName}</Label>
+              </ListItem>
+            ))}
           </>
         )}
       </>
