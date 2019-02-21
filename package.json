@@ -29,10 +29,10 @@
     "check-babel-runtime": "babel-node ./scripts/checkBabelRuntime.js",
     "src": "yarn link-entries src",
     "dist": "yarn link-entries dist",
-    "release:check": "yarn build:clear && yarn build && yarn link-entries src && yarn flow && yarn lint && yarn link-entries dist && yarn test:unit",
+    "release:check": "yarn build:clear && yarn build && yarn link-entries src && yarn flow && yarn lint && yarn link-entries dist && yarn test:ts:unit && yarn test:unit",
     "release:lerna": "lerna publish --registry=https://registry.npmjs.org/",
     "release": "yarn release:check && yarn release:lerna",
-    "release:next": "yarn release:check && yarn release:lerna --npm-tag=next"
+    "release:next": "yarn release:check && yarn release:lerna --dist-tag=next"
   },
   "lint-staged": {
     "*.{js,jsx,css,less}": [
