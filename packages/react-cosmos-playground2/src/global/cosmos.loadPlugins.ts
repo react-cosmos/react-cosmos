@@ -7,7 +7,8 @@ loadPlugins({
   config: {
     core: {
       projectId: 'testProjectId',
-      fixturesDir: '__jsxfixtures__'
+      fixturesDir: '__jsxfixtures__',
+      fixtureFileSuffix: 'jsxfixture'
     },
     rendererCore: {
       webUrl: '/_loader.html',
