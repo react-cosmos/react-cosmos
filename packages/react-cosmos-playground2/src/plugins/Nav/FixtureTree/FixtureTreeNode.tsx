@@ -79,7 +79,7 @@ export class FixtureTreeNode extends React.Component<Props> {
                 selected={isEqual(fixtureId, selectedFixtureId)}
                 onClick={this.createSelectHandler(fixtureId)}
               >
-                <Label>{fixtureName}</Label>
+                <FixtureLabel>{fixtureName}</FixtureLabel>
               </ListItem>
             ))}
           </>
@@ -128,6 +128,10 @@ const Unshirinkable = styled.span`
 
 const Label = styled(Unshirinkable)`
   white-space: nowrap;
+`;
+
+const FixtureLabel = styled(Label)`
+  padding-left: 16px;
 `;
 
 const IconContainer = styled(Unshirinkable)`
