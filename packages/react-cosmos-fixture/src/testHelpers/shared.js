@@ -10,10 +10,13 @@ import type { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import type {
   RendererId,
   RendererRequest,
-  RendererResponse
+  RendererResponse,
+  SelectFixtureRequest,
+  UnselectFixtureRequest,
+  SetFixtureStateRequest
 } from 'react-cosmos-shared2/renderer';
 import type {
-  Fixtures,
+  FixturesByPath,
   DecoratorsByPath,
   RemoteRendererApi
 } from '../index.js.flow';
@@ -22,7 +25,7 @@ type Message = RendererResponse | RendererRequest;
 
 type FixtureConnectUserProps = {
   rendererId: RendererId,
-  fixtures: Fixtures,
+  fixtures: FixturesByPath,
   decorators: DecoratorsByPath,
   onFixtureChange?: () => mixed
 };
@@ -45,19 +48,15 @@ export type ConnectMockApi = {
   postMessage: (msg: RendererRequest) => Promise<mixed>,
   untilMessage: (msg: {}) => Promise<mixed>,
   getLastFixtureState: () => Promise<null | FixtureState>,
-  selectFixture: ({
-    rendererId: RendererId,
-    fixturePath: string,
-    fixtureState: null | FixtureState
-  }) => Promise<mixed>,
-  unselectFixture: ({
-    rendererId: RendererId
-  }) => Promise<mixed>,
-  setFixtureState: ({
-    rendererId: RendererId,
-    fixturePath: string,
-    fixtureState: null | FixtureState
-  }) => Promise<mixed>
+  selectFixture: (
+    $PropertyType<SelectFixtureRequest, 'payload'>
+  ) => Promise<mixed>,
+  unselectFixture: (
+    $PropertyType<UnselectFixtureRequest, 'payload'>
+  ) => Promise<mixed>,
+  setFixtureState: (
+    $PropertyType<SetFixtureStateRequest, 'payload'>
+  ) => Promise<mixed>
 };
 
 export function createConnectMock(init: ConnectMockCreator) {
@@ -115,12 +114,12 @@ export function createConnectMock(init: ConnectMockCreator) {
       }
     }
 
-    async function selectFixture({ rendererId, fixturePath, fixtureState }) {
+    async function selectFixture({ rendererId, fixtureId, fixtureState }) {
       return postMessage({
         type: 'selectFixture',
         payload: {
           rendererId,
-          fixturePath,
+          fixtureId,
           fixtureState
         }
       });
@@ -135,12 +134,12 @@ export function createConnectMock(init: ConnectMockCreator) {
       });
     }
 
-    async function setFixtureState({ rendererId, fixturePath, fixtureState }) {
+    async function setFixtureState({ rendererId, fixtureId, fixtureState }) {
       return postMessage({
         type: 'setFixtureState',
         payload: {
           rendererId,
-          fixturePath,
+          fixtureId,
           fixtureState
         }
       });

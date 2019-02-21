@@ -1,5 +1,7 @@
+import { FixtureId } from 'react-cosmos-shared2/renderer';
+
 export type UrlParams = {
-  fixturePath?: string;
+  fixtureId?: FixtureId;
   fullScreen?: boolean;
 };
 
@@ -9,10 +11,12 @@ export type RouterSpec = {
     urlParams: UrlParams;
   };
   methods: {
-    getUrlParams(): UrlParams;
-    setUrlParams(urlParams: UrlParams): void;
+    getSelectedFixtureId(): null | FixtureId;
+    isFullScreen(): boolean;
+    selectFixture(fixtureId: FixtureId, fullScreen: boolean): void;
+    unselectFixture(): void;
   };
   events: {
-    fixtureChange(fixturePath: null | string): void;
+    fixtureChange(fixtureId: null | FixtureId): void;
   };
 };

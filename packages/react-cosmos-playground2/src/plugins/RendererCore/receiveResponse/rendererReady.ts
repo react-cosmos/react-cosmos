@@ -1,4 +1,4 @@
-import { getUrlParams } from '../shared/router';
+import { getSelectedFixtureId } from '../shared/router';
 import {
   RendererId,
   RendererReadyResponse
@@ -35,11 +35,11 @@ export function receiveRendererReadyResponse(
 }
 
 function selectFixtureFromUrlParams(context: Context, rendererId: RendererId) {
-  const { fixturePath } = getUrlParams(context);
+  const fixtureId = getSelectedFixtureId(context);
 
-  if (fixturePath) {
+  if (fixtureId) {
     const { fixtureState } = context.getState();
-    postSelectFixtureRequest(context, rendererId, fixturePath, fixtureState);
+    postSelectFixtureRequest(context, rendererId, fixtureId, fixtureState);
   }
 }
 

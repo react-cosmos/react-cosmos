@@ -4,12 +4,15 @@ import React, { Component } from 'react';
 import { isEqual } from 'lodash';
 import { updateState } from 'react-cosmos-shared2/util';
 import { FixtureProvider } from '../FixtureProvider';
+import { getFixtureNames, getFixtureNode } from './fixtureHelpers';
 
 import type {
   FixtureState,
   SetFixtureState
 } from 'react-cosmos-shared2/fixtureState';
 import type {
+  FixtureNamesByPath,
+  FixtureId,
   RendererRequest,
   SelectFixtureRequest,
   SetFixtureStateRequest
@@ -21,7 +24,7 @@ import type {
 } from '../index.js.flow';
 
 type State = {
-  fixturePath: null | string,
+  fixtureId: null | FixtureId,
   fixtureState: null | FixtureState,
   syncedFixtureState: null | FixtureState,
   renderKey: number
@@ -31,7 +34,7 @@ type State = {
 // `getMissingState`
 export class FixtureConnect extends Component<FixtureConnectProps, State> {
   state = {
-    fixturePath: null,
+    fixtureId: null,
     fixtureState: null,
     // Why is this copy of the fixtureState needed? Two reasons:
     // - To avoid posting fixtureStateChange messages with no changes from
@@ -54,14 +57,14 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
 
   componentDidUpdate(prevProps: FixtureConnectProps) {
     const { fixtures } = this.props;
-    const { fixturePath, fixtureState, syncedFixtureState } = this.state;
+    const { fixtureId, fixtureState, syncedFixtureState } = this.state;
 
     if (!isEqual(fixtures, prevProps.fixtures)) {
       this.postFixtureListUpdate();
     }
 
-    if (fixturePath && !isEqual(fixtureState, syncedFixtureState)) {
-      this.postFixtureStateChange(fixturePath, fixtureState);
+    if (fixtureId && !isEqual(fixtureState, syncedFixtureState)) {
+      this.postFixtureStateChange(fixtureId, fixtureState);
       this.setState({
         syncedFixtureState: fixtureState
       });
@@ -80,17 +83,20 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
 
   render() {
     const { fixtures, systemDecorators, userDecorators } = this.props;
-    const { fixturePath, fixtureState, renderKey } = this.state;
+    const { fixtureId, fixtureState, renderKey } = this.state;
 
-    if (!fixturePath) {
+    if (!fixtureId) {
       return 'No fixture loaded.';
     }
 
     // Falsy check doesn't do because fixtures can be any Node, including
     // null or undefined.
-    if (!(fixturePath in fixtures)) {
-      return `Fixture path not found: ${fixturePath}`;
+    if (!fixtures.hasOwnProperty(fixtureId.path)) {
+      return `Fixture path not found: ${fixtureId.path}`;
     }
+
+    const fixtureExport = fixtures[fixtureId.path];
+    const fixture = getFixtureNode(fixtureExport, fixtureId.name);
 
     return (
       <FixtureProvider
@@ -100,12 +106,12 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
         decorators={getSortedDecoratorsForFixturePath(
           systemDecorators,
           userDecorators,
-          fixturePath
+          fixtureId.path
         )}
         fixtureState={fixtureState}
         setFixtureState={this.setFixtureState}
       >
-        {fixtures[fixturePath]}
+        {fixture}
       </FixtureProvider>
     );
   }
@@ -130,7 +136,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
       case 'unselectFixture':
         return this.handleUnselectFixtureRequest();
       case 'setFixtureState':
-        return this.handleSelectFixtureStateRequest(msg);
+        return this.handleSetFixtureStateRequest(msg);
       default:
       // This Is Fine™
       // Actually, we can't be angry about getting unrelated messages here
@@ -141,10 +147,10 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
   };
 
   handleSelectFixtureRequest({ payload }: SelectFixtureRequest) {
-    const { fixturePath, fixtureState } = payload;
+    const { fixtureId, fixtureState } = payload;
 
     this.setState({
-      fixturePath,
+      fixtureId,
       fixtureState,
       renderKey: this.state.renderKey + 1
     });
@@ -152,17 +158,17 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
 
   handleUnselectFixtureRequest() {
     this.setState({
-      fixturePath: null,
+      fixtureId: null,
       fixtureState: null,
       renderKey: 0
     });
   }
 
-  handleSelectFixtureStateRequest({ payload }: SetFixtureStateRequest) {
-    const { fixturePath, fixtureState } = payload;
+  handleSetFixtureStateRequest({ payload }: SetFixtureStateRequest) {
+    const { fixtureId, fixtureState } = payload;
 
     // Ensure fixture state applies to currently selected fixture
-    if (fixturePath === this.state.fixturePath) {
+    if (isEqual(fixtureId, this.state.fixtureId)) {
       this.setState({
         fixtureState,
         syncedFixtureState: fixtureState
@@ -195,9 +201,9 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
   }
 
   setFixtureState: SetFixtureState = (fixtureStateChange, cb) => {
-    const { fixturePath } = this.state;
+    const { fixtureId } = this.state;
 
-    if (!fixturePath) {
+    if (!fixtureId) {
       console.warn(
         '[FixtureConnect] Trying to set fixture state with no fixture selected'
       );
@@ -219,7 +225,7 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
   };
 
   postFixtureStateChange = (
-    fixturePath: string,
+    fixtureId: FixtureId,
     fixtureState: null | FixtureState
   ) => {
     const { rendererId, postMessage } = this.props;
@@ -228,14 +234,14 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
       type: 'fixtureStateChange',
       payload: {
         rendererId,
-        fixturePath,
+        fixtureId,
         fixtureState
       }
     });
   };
 
-  getFixtureNames(): string[] {
-    return Object.keys(this.props.fixtures);
+  getFixtureNames(): FixtureNamesByPath {
+    return getFixtureNames(this.props.fixtures);
   }
 
   fireChangeCallback() {

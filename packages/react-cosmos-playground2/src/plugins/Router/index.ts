@@ -1,5 +1,6 @@
 import { isEqual } from 'lodash';
 import { PluginContext, createPlugin } from 'react-plugin';
+import { FixtureId } from 'react-cosmos-shared2/renderer';
 import {
   getUrlParamsFromLocation,
   pushUrlParamsToHistory,
@@ -15,8 +16,10 @@ const { onLoad, register } = createPlugin<RouterSpec>({
     urlParams: {}
   },
   methods: {
-    getUrlParams,
-    setUrlParams
+    getSelectedFixtureId,
+    isFullScreen,
+    selectFixture,
+    unselectFixture
   }
 });
 
@@ -28,11 +31,11 @@ onLoad(context => {
   });
 
   return subscribeToLocationChanges((urlParams: UrlParams) => {
-    const { fixturePath } = getUrlParams(context);
-    const hasFixtureChanged = urlParams.fixturePath !== fixturePath;
+    const { fixtureId } = context.getState().urlParams;
+    const fixtureChanged = !isEqual(urlParams.fixtureId, fixtureId);
 
     setState({ urlParams }, () => {
-      if (hasFixtureChanged) {
+      if (fixtureChanged) {
         emitFixtureChangeEvent(context);
       }
     });
@@ -41,30 +44,43 @@ onLoad(context => {
 
 export { register };
 
-function getUrlParams(context: Context) {
-  return context.getState().urlParams;
+function getSelectedFixtureId({ getState }: Context) {
+  return getState().urlParams.fixtureId || null;
+}
+
+function isFullScreen({ getState }: Context) {
+  return getState().urlParams.fullScreen || false;
+}
+
+function selectFixture(
+  context: Context,
+  fixtureId: FixtureId,
+  fullScreen: boolean
+) {
+  setUrlParams(context, { fixtureId, fullScreen });
+}
+
+function unselectFixture(context: Context) {
+  setUrlParams(context, {});
 }
 
 function setUrlParams(context: Context, nextUrlParams: UrlParams) {
-  const urlParams = getUrlParams(context);
-  const hasFixtureChanged = nextUrlParams.fixturePath !== urlParams.fixturePath;
-  const areUrlParamsEqual = isEqual(nextUrlParams, urlParams);
+  const { urlParams } = context.getState();
+  const fixtureChanged = !isEqual(nextUrlParams.fixtureId, urlParams.fixtureId);
+  const urlParamsEqual = isEqual(nextUrlParams, urlParams);
 
   context.setState({ urlParams: nextUrlParams }, () => {
     // Setting identical url params is considered a "reset" request
-    if (hasFixtureChanged || areUrlParamsEqual) {
+    if (fixtureChanged || urlParamsEqual) {
       emitFixtureChangeEvent(context);
     }
 
-    if (!areUrlParamsEqual) {
-      pushUrlParamsToHistory(getUrlParams(context));
+    if (!urlParamsEqual) {
+      pushUrlParamsToHistory(context.getState().urlParams);
     }
   });
 }
 
 function emitFixtureChangeEvent(context: Context) {
-  const { emit } = context;
-  const { fixturePath } = getUrlParams(context);
-
-  emit('fixtureChange', fixturePath || null);
+  context.emit('fixtureChange', getSelectedFixtureId(context));
 }

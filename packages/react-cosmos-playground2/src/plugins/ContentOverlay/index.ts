@@ -21,7 +21,7 @@ export { register };
 
 function getContentOverlayProps({ getMethodsOf }: Context) {
   const router = getMethodsOf<RouterSpec>('router');
-  const fixtureSelected = router.getUrlParams().fixturePath !== undefined;
+  const fixtureSelected = router.getSelectedFixtureId() !== null;
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const rendererPreview = getMethodsOf<RendererPreviewSpec>('rendererPreview');
 

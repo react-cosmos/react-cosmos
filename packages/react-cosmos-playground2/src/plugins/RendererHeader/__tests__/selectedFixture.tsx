@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { render, fireEvent, waitForElement } from 'react-testing-library';
-import { Slot, loadPlugins } from 'react-plugin';
+import { Slot, loadPlugins, MethodHandlers } from 'react-plugin';
 import { cleanup, mockMethodsOf, mockPlug } from '../../../testHelpers/plugin';
 import { RouterSpec } from '../../Router/public';
 import { RendererCoreSpec } from '../../RendererCore/public';
@@ -8,11 +8,16 @@ import { register } from '..';
 
 afterEach(cleanup);
 
-function registerTestPlugins(handleSetUrlParams = () => {}) {
+function registerTestPlugins({
+  selectFixture = jest.fn(),
+  unselectFixture = jest.fn()
+}: Partial<MethodHandlers<RouterSpec>> = {}) {
   register();
   mockMethodsOf<RouterSpec>('router', {
-    getUrlParams: () => ({ fixturePath: 'foo' }),
-    setUrlParams: handleSetUrlParams
+    getSelectedFixtureId: () => ({ path: 'foo', name: null }),
+    isFullScreen: () => false,
+    selectFixture,
+    unselectFixture
   });
   mockMethodsOf<RendererCoreSpec>('rendererCore', {
     isRendererConnected: () => true,
@@ -27,38 +32,41 @@ function loadTestPlugins() {
 }
 
 it('renders close button', async () => {
-  const handleSetUrlParams = jest.fn();
-  registerTestPlugins(handleSetUrlParams);
+  const unselectFixture = jest.fn();
+  registerTestPlugins({ unselectFixture });
 
   const { getByText } = loadTestPlugins();
   fireEvent.click(getByText(/close/));
 
-  expect(handleSetUrlParams).toBeCalledWith(expect.any(Object), {});
+  expect(unselectFixture).toBeCalled();
 });
 
 it('renders refresh button', async () => {
-  const handleSetUrlParams = jest.fn();
-  registerTestPlugins(handleSetUrlParams);
+  const selectFixture = jest.fn();
+  registerTestPlugins({ selectFixture });
 
   const { getByText } = loadTestPlugins();
   fireEvent.click(getByText(/refresh/));
 
-  expect(handleSetUrlParams).toBeCalledWith(expect.any(Object), {
-    fixturePath: 'foo'
-  });
+  expect(selectFixture).toBeCalledWith(
+    expect.any(Object),
+    { path: 'foo', name: null },
+    false
+  );
 });
 
 it('renders fullscreen button', async () => {
-  const handleSetUrlParams = jest.fn();
-  registerTestPlugins(handleSetUrlParams);
+  const selectFixture = jest.fn();
+  registerTestPlugins({ selectFixture });
 
   const { getByText } = loadTestPlugins();
   fireEvent.click(getByText(/fullscreen/));
 
-  expect(handleSetUrlParams).toBeCalledWith(expect.any(Object), {
-    fixturePath: 'foo',
-    fullScreen: true
-  });
+  expect(selectFixture).toBeCalledWith(
+    expect.any(Object),
+    { path: 'foo', name: null },
+    true
+  );
 });
 
 it('renders "fixtureActions" slot', async () => {

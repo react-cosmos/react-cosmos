@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import * as React from 'react';
-import { FixtureNames } from 'react-cosmos-shared2/renderer';
+import { FixtureNamesByPath, FixtureId } from 'react-cosmos-shared2/renderer';
 import { StorageSpec } from '../../Storage/public';
 import { TreeExpansion } from './shared';
 import {
@@ -15,9 +15,9 @@ type Props = {
   projectId: string;
   fixturesDir: string;
   fixtureFileSuffix: string;
-  fixtures: FixtureNames;
-  selectedFixturePath: null | string;
-  onSelect: (path: string) => unknown;
+  fixtures: FixtureNamesByPath;
+  selectedFixtureId: null | FixtureId;
+  onSelect: (path: FixtureId) => unknown;
   storage: StorageSpec['methods'];
 };
 
@@ -45,7 +45,7 @@ export class FixtureTree extends React.Component<Props, State> {
       fixturesDir,
       fixtureFileSuffix,
       fixtures,
-      selectedFixturePath,
+      selectedFixtureId,
       onSelect
     } = this.props;
     const { treeExpansion } = this.state;
@@ -62,7 +62,7 @@ export class FixtureTree extends React.Component<Props, State> {
           node={rootNode}
           parents={[]}
           treeExpansion={treeExpansion}
-          selectedFixturePath={selectedFixturePath}
+          selectedFixtureId={selectedFixtureId}
           onSelect={onSelect}
           onToggleExpansion={this.handleToggleExpansion}
         />
@@ -101,7 +101,7 @@ export class FixtureTree extends React.Component<Props, State> {
 }
 
 function getTreeFromFixtures(
-  fixtures: FixtureNames,
+  fixtures: FixtureNamesByPath,
   fixturesDir: string,
   fixtureFileSuffix: string
 ) {

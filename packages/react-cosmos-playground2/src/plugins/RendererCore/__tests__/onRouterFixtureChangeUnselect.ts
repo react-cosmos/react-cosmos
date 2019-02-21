@@ -16,14 +16,14 @@ afterEach(cleanup);
 const state: State = {
   connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
   primaryRendererId: 'mockRendererId1',
-  fixtures: [],
+  fixtures: {},
   fixtureState: { components: [] }
 };
 
 function registerTestPlugins() {
   register();
   mockMethodsOf<RouterSpec>('router', {
-    getUrlParams: () => ({})
+    getSelectedFixtureId: () => null
   });
 }
 

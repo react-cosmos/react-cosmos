@@ -41,7 +41,7 @@ runTests(mockConnect => {
           async renderer => {
             await selectFixture({
               rendererId,
-              fixturePath: 'first',
+              fixtureId: { path: 'first', name: null },
               fixtureState: null
             });
 
@@ -60,7 +60,7 @@ runTests(mockConnect => {
             };
             await setFixtureState({
               rendererId,
-              fixturePath: 'first',
+              fixtureId: { path: 'first', name: null },
               fixtureState
             });
 
@@ -68,7 +68,7 @@ runTests(mockConnect => {
 
             await setFixtureState({
               rendererId,
-              fixturePath: 'first',
+              fixtureId: { path: 'first', name: null },
               fixtureState: {
                 components: updateCompFixtureState({
                   fixtureState,
@@ -100,7 +100,7 @@ runTests(mockConnect => {
           async renderer => {
             await selectFixture({
               rendererId,
-              fixturePath: 'first',
+              fixtureId: { path: 'first', name: null },
               fixtureState: null
             });
 
@@ -119,7 +119,7 @@ runTests(mockConnect => {
             };
             await setFixtureState({
               rendererId,
-              fixturePath: 'first',
+              fixtureId: { path: 'first', name: null },
               fixtureState
             });
 
@@ -127,7 +127,7 @@ runTests(mockConnect => {
 
             await setFixtureState({
               rendererId,
-              fixturePath: 'first',
+              fixtureId: { path: 'first', name: null },
               fixtureState: {
                 components: updateCompFixtureState({
                   fixtureState,
@@ -158,7 +158,7 @@ runTests(mockConnect => {
           async renderer => {
             await selectFixture({
               rendererId,
-              fixturePath: 'first',
+              fixtureId: { path: 'first', name: null },
               fixtureState: null
             });
 
@@ -177,7 +177,7 @@ runTests(mockConnect => {
             };
             await setFixtureState({
               rendererId,
-              fixturePath: 'first',
+              fixtureId: { path: 'first', name: null },
               fixtureState
             });
 
@@ -185,7 +185,7 @@ runTests(mockConnect => {
 
             await setFixtureState({
               rendererId,
-              fixturePath: 'first',
+              fixtureId: { path: 'first', name: null },
               fixtureState: {
                 components: updateCompFixtureState({
                   fixtureState,
@@ -232,7 +232,7 @@ runTests(mockConnect => {
           async renderer => {
             await selectFixture({
               rendererId,
-              fixturePath: 'first',
+              fixtureId: { path: 'first', name: null },
               fixtureState: null
             });
 
@@ -243,7 +243,7 @@ runTests(mockConnect => {
 
             await setFixtureState({
               rendererId,
-              fixturePath: 'first',
+              fixtureId: { path: 'first', name: null },
               fixtureState: {
                 components: updateCompFixtureState({
                   fixtureState,
@@ -272,7 +272,7 @@ runTests(mockConnect => {
               type: 'fixtureStateChange',
               payload: {
                 rendererId,
-                fixturePath: 'first',
+                fixtureId: { path: 'first', name: null },
                 fixtureState: {
                   components: [
                     createCompFxState({
@@ -296,7 +296,7 @@ runTests(mockConnect => {
         async renderer => {
           await selectFixture({
             rendererId,
-            fixturePath: 'first',
+            fixtureId: { path: 'first', name: null },
             fixtureState: null
           });
 
@@ -316,7 +316,7 @@ runTests(mockConnect => {
             type: 'fixtureStateChange',
             payload: {
               rendererId,
-              fixturePath: 'first',
+              fixtureId: { path: 'first', name: null },
               fixtureState: {
                 components: [
                   createCompFxState({

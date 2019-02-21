@@ -1,6 +1,6 @@
 import { isEqual } from 'lodash';
 import { FixtureStateChangeResponse } from 'react-cosmos-shared2/renderer';
-import { getUrlParams } from '../shared/router';
+import { getSelectedFixtureId } from '../shared/router';
 import { postSetFixtureStateRequest } from '../shared/postRequest';
 import { Context } from '../shared';
 
@@ -8,14 +8,14 @@ export function receiveFixtureStateChangeResponse(
   context: Context,
   { payload }: FixtureStateChangeResponse
 ) {
-  const { rendererId, fixturePath, fixtureState } = payload;
-  const urlParams = getUrlParams(context);
+  const { rendererId, fixtureId, fixtureState } = payload;
+  const selectedFixtureId = getSelectedFixtureId(context);
   const {
     primaryRendererId,
     fixtureState: prevFixtureState
   } = context.getState();
 
-  if (fixturePath !== urlParams.fixturePath) {
+  if (!isEqual(fixtureId, selectedFixtureId)) {
     console.warn(
       '[Renderer] fixtureStateChange response ignored ' +
         `because it doesn't match the selected fixture`
@@ -49,7 +49,7 @@ export function receiveFixtureStateChangeResponse(
         postSetFixtureStateRequest(
           context,
           curRendererId,
-          fixturePath,
+          fixtureId,
           fixtureState
         );
       }

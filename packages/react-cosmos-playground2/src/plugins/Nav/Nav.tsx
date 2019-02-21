@@ -1,17 +1,18 @@
 import styled from 'styled-components';
 import * as React from 'react';
+import { FixtureNamesByPath, FixtureId } from 'react-cosmos-shared2/renderer';
 import { StorageSpec } from '../Storage/public';
-import { UrlParams } from '../Router/public';
 import { FixtureTree } from './FixtureTree';
 
 type Props = {
   projectId: string;
   fixturesDir: string;
   fixtureFileSuffix: string;
-  urlParams: UrlParams;
+  selectedFixtureId: null | FixtureId;
+  fullScreen: boolean;
   rendererConnected: boolean;
-  fixtures: string[];
-  setUrlParams: (urlParams: UrlParams) => void;
+  fixtures: FixtureNamesByPath;
+  selectFixture: (fixtureId: FixtureId, fullScreen: boolean) => void;
   storage: StorageSpec['methods'];
 };
 
@@ -21,12 +22,12 @@ export class Nav extends React.Component<Props> {
       projectId,
       fixturesDir,
       fixtureFileSuffix,
-      urlParams,
+      selectedFixtureId,
+      fullScreen,
       rendererConnected,
       fixtures,
       storage
     } = this.props;
-    const { fixturePath, fullScreen } = urlParams;
 
     if (fullScreen) {
       return null;
@@ -43,17 +44,13 @@ export class Nav extends React.Component<Props> {
           fixturesDir={fixturesDir}
           fixtureFileSuffix={fixtureFileSuffix}
           fixtures={fixtures}
-          selectedFixturePath={fixturePath || null}
-          onSelect={this.handleFixtureSelect}
+          selectedFixtureId={selectedFixtureId}
+          onSelect={fixtureId => this.props.selectFixture(fixtureId, false)}
           storage={storage}
         />
       </Container>
     );
   }
-
-  handleFixtureSelect = (fixturePath: string) => {
-    this.props.setUrlParams({ fixturePath });
-  };
 }
 
 const Container = styled.div`

@@ -15,18 +15,18 @@ import { register } from '../..';
 
 afterEach(cleanup);
 
-const fixtures = ['ein.js', 'zwei.js', 'drei.js'];
+const fixtures = { 'ein.js': null, 'zwei.js': null, 'drei.js': null };
 const state: State = {
   connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
   primaryRendererId: 'mockRendererId1',
-  fixtures: ['ein.js', 'zwei.js', 'drei.js'],
+  fixtures,
   fixtureState: null
 };
 
 function registerTestPlugins() {
   register();
   mockMethodsOf<RouterSpec>('router', {
-    getUrlParams: () => ({})
+    getSelectedFixtureId: () => null
   });
 }
 
@@ -37,7 +37,10 @@ function loadTestPlugins() {
 function mockFixtureListUpdateResponse(rendererId: RendererId) {
   const methods = getMethodsOf<RendererCoreSpec>('rendererCore');
   methods.receiveResponse(
-    createFixtureListUpdateResponse(rendererId, [...fixtures, 'vier.js'])
+    createFixtureListUpdateResponse(rendererId, {
+      ...fixtures,
+      'vier.js': null
+    })
   );
 }
 
@@ -52,7 +55,10 @@ it('updates fixtures in renderer state', async () => {
   mockFixtureListUpdateResponse('mockRendererId1');
 
   await wait(() =>
-    expect(getRendererCoreState().fixtures).toEqual([...fixtures, 'vier.js'])
+    expect(getRendererCoreState().fixtures).toEqual({
+      ...fixtures,
+      'vier.js': null
+    })
   );
 });
 

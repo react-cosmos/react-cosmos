@@ -15,8 +15,8 @@ import { register } from '../..';
 
 afterEach(cleanup);
 
-const fixturePath = 'ein.js';
-const fixtures = [fixturePath];
+const fixtureId = { path: 'ein.js', name: null };
+const fixtures = { [fixtureId.path]: null };
 const fixtureState = { components: [] };
 
 function registerTestPlugins(
@@ -27,7 +27,7 @@ function registerTestPlugins(
 ) {
   register();
   mockMethodsOf<RouterSpec>('router', {
-    getUrlParams: () => ({ fixturePath })
+    getSelectedFixtureId: () => fixtureId
   });
   on<RendererCoreSpec>('rendererCore', {
     request: handleRendererRequest
@@ -55,7 +55,7 @@ it('posts "selectFixture" renderer request', async () => {
       type: 'selectFixture',
       payload: {
         rendererId: 'mockRendererId',
-        fixturePath,
+        fixtureId,
         fixtureState: null
       }
     })
@@ -79,7 +79,7 @@ it('posts "selectFixture" renderer request with fixture state', async () => {
       type: 'selectFixture',
       payload: {
         rendererId: 'mockRendererId2',
-        fixturePath,
+        fixtureId,
         fixtureState
       }
     })

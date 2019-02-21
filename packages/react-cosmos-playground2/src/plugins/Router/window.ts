@@ -3,13 +3,18 @@
 import * as qs from 'query-string';
 import { UrlParams } from './public';
 
-export function getUrlParamsFromLocation() {
-  return qs.parse(location.search);
+type EncodedUrlParams = {
+  fixtureId?: string;
+  fullScreen?: 'true';
+};
+
+export function getUrlParamsFromLocation(): UrlParams {
+  return decodeUrlParams(qs.parse(location.search));
 }
 
 // IDEA: Store fixtureState in history object and apply it on `popstate` event
 export function pushUrlParamsToHistory(urlParams: UrlParams) {
-  const query = qs.stringify(urlParams);
+  const query = qs.stringify(encodeUrlParams(urlParams));
 
   // Refresh page completely when pushState isn't supported
   if (!history.pushState) {
@@ -38,4 +43,30 @@ export function subscribeToLocationChanges(
   return () => {
     window.removeEventListener('popstate', handler);
   };
+}
+
+function encodeUrlParams(decoded: UrlParams) {
+  const encoded: EncodedUrlParams = {};
+
+  if (decoded.fixtureId) {
+    encoded.fixtureId = JSON.stringify(decoded.fixtureId);
+  }
+  if (decoded.fullScreen) {
+    encoded.fullScreen = 'true';
+  }
+
+  return encoded;
+}
+
+function decodeUrlParams(encoded: EncodedUrlParams): UrlParams {
+  const decoded: UrlParams = {};
+
+  if (encoded.fixtureId) {
+    decoded.fixtureId = JSON.parse(encoded.fixtureId);
+  }
+  if (encoded.fullScreen) {
+    decoded.fullScreen = true;
+  }
+
+  return decoded;
 }

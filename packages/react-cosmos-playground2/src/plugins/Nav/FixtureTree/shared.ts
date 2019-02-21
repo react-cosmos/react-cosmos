@@ -1,15 +1,16 @@
-type Fixtures = {
-  [fixtureName: string]: string;
+import { FixtureId } from 'react-cosmos-shared2/renderer';
+
+type TreeNode<Item> = {
+  items: { [itemName: string]: Item };
+  dirs: TreeNodeDirs<Item>;
 };
 
-export type TreeNodeDirs = {
-  [dirName: string]: TreeNode;
+type TreeNodeDirs<Item> = {
+  [dirName: string]: TreeNode<Item>;
 };
 
-export type TreeNode = {
-  fixtures: Fixtures;
-  dirs: TreeNodeDirs;
-};
+export type FixtureNode = TreeNode<FixtureId>;
+export type FixtureNodeDirs = TreeNodeDirs<FixtureId>;
 
 export type TreeExpansion = {
   [nodePath: string]: boolean;

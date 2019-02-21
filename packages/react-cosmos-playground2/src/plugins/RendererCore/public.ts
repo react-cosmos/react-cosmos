@@ -2,7 +2,7 @@ import { StateUpdater } from 'react-cosmos-shared2/util';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import {
   RendererId,
-  FixtureNames,
+  FixtureNamesByPath,
   RendererRequest,
   RendererResponse
 } from 'react-cosmos-shared2/renderer';
@@ -16,7 +16,7 @@ export type RendererCoreSpec = {
   state: {
     connectedRendererIds: RendererId[];
     primaryRendererId: null | RendererId;
-    fixtures: FixtureNames;
+    fixtures: FixtureNamesByPath;
     fixtureState: null | FixtureState;
   };
   methods: {
@@ -24,7 +24,7 @@ export type RendererCoreSpec = {
     remoteRenderersEnabled(): boolean;
     getConnectedRendererIds(): RendererId[];
     getPrimaryRendererId(): null | RendererId;
-    getFixtures(): FixtureNames;
+    getFixtures(): FixtureNamesByPath;
     getFixtureState(): null | FixtureState;
     isRendererConnected(): boolean;
     isValidFixtureSelected(): boolean;

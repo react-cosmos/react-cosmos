@@ -28,7 +28,7 @@ runTests(mockConnect => {
             type: 'rendererReady',
             payload: {
               rendererId,
-              fixtures: ['first', 'second']
+              fixtures: { first: null, second: null }
             }
           });
         }
@@ -45,7 +45,7 @@ runTests(mockConnect => {
             type: 'rendererReady',
             payload: {
               rendererId,
-              fixtures: ['first', 'second']
+              fixtures: { first: null, second: null }
             }
           });
 
@@ -57,7 +57,7 @@ runTests(mockConnect => {
             type: 'rendererReady',
             payload: {
               rendererId,
-              fixtures: ['first', 'second']
+              fixtures: { first: null, second: null }
             }
           });
         }
@@ -74,7 +74,7 @@ runTests(mockConnect => {
             type: 'rendererReady',
             payload: {
               rendererId,
-              fixtures: ['first', 'second']
+              fixtures: { first: null, second: null }
             }
           });
 
@@ -93,7 +93,7 @@ runTests(mockConnect => {
             type: 'fixtureListUpdate',
             payload: {
               rendererId,
-              fixtures: ['first', 'second', 'third']
+              fixtures: { first: null, second: null, third: null }
             }
           });
         }

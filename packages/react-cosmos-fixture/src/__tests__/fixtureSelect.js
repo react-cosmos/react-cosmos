@@ -5,7 +5,7 @@ import { runTests, mount } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = {
-  first: 'First',
+  first: { one: 'First' },
   second: 'Second'
 };
 
@@ -17,11 +17,28 @@ runTests(mockConnect => {
         async renderer => {
           await selectFixture({
             rendererId,
-            fixturePath: 'second',
+            fixtureId: { path: 'second', name: null },
             fixtureState: null
           });
 
           expect(renderer.toJSON()).toBe('Second');
+        }
+      );
+    });
+  });
+
+  it('renders selected named fixture', async () => {
+    await mockConnect(async ({ getElement, selectFixture }) => {
+      await mount(
+        getElement({ rendererId, fixtures, decorators: {} }),
+        async renderer => {
+          await selectFixture({
+            rendererId,
+            fixtureId: { path: 'first', name: 'one' },
+            fixtureState: null
+          });
+
+          expect(renderer.toJSON()).toBe('First');
         }
       );
     });
@@ -34,7 +51,7 @@ runTests(mockConnect => {
         async () => {
           await selectFixture({
             rendererId,
-            fixturePath: 'second',
+            fixtureId: { path: 'second', name: null },
             fixtureState: null
           });
 
@@ -42,7 +59,7 @@ runTests(mockConnect => {
             type: 'fixtureStateChange',
             payload: {
               rendererId,
-              fixturePath: 'second',
+              fixtureId: { path: 'second', name: null },
               fixtureState: {
                 components: []
               }
@@ -61,7 +78,7 @@ runTests(mockConnect => {
           async renderer => {
             await selectFixture({
               rendererId,
-              fixturePath: 'second',
+              fixtureId: { path: 'second', name: null },
               fixtureState: null
             });
 
@@ -83,7 +100,7 @@ runTests(mockConnect => {
         async renderer => {
           await selectFixture({
             rendererId: 'foobar',
-            fixturePath: 'second',
+            fixtureId: { path: 'second', name: null },
             fixtureState: null
           });
 
@@ -100,7 +117,7 @@ runTests(mockConnect => {
         async renderer => {
           await selectFixture({
             rendererId,
-            fixturePath: 'third',
+            fixtureId: { path: 'third', name: null },
             fixtureState: null
           });
 

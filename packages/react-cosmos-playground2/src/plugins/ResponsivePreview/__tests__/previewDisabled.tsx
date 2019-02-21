@@ -17,7 +17,7 @@ function registerTestPlugins() {
     getProjectId: () => 'mockProjectId'
   });
   mockMethodsOf<RouterSpec>('router', {
-    getUrlParams: () => ({ fixturePath: 'foo.js' })
+    isFullScreen: () => false
   });
   mockMethodsOf<RendererCoreSpec>('rendererCore', {
     getFixtureState: () => null,

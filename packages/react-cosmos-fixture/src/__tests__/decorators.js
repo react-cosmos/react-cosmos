@@ -19,10 +19,10 @@ runTests(mockConnect => {
       await mount(
         getElement({ rendererId, fixtures, decorators }),
         async renderer => {
-          const [fixturePath] = Object.keys(fixtures);
+          const [path] = Object.keys(fixtures);
           await selectFixture({
             rendererId,
-            fixturePath,
+            fixtureId: { path, name: null },
             fixtureState: null
           });
 

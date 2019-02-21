@@ -77,6 +77,22 @@ Examples:
 
 > In the beta testing period the file name convention is fixed to allow old and _next_ Cosmos setups to coexist. In the future it will be configurable.
 
+## Multi fixture files
+
+A fixture file can also export multiple fixtures if the default export is an object.
+
+```jsx
+// buttons.jsxfixture.js
+export default {
+  primary: <PrimaryButton>Click me</PrimaryButton>,
+  primaryDisabled: <PrimaryButton disabled>Click me</PrimaryButton>,
+  secondary: <SecondaryButton>Click me</SecondaryButton>,
+  secondaryDisabled: <SecondaryButton disabled>Click me</SecondaryButton>
+};
+```
+
+The object property names will show up as fixture names in the Cosmos UI.
+
 ## Decorators
 
 Wrapping components inside fixtures is now easy, but can become repetitive. _Decorators_ can be used to apply one or more component wrappers to a group of fixtures automatically.

@@ -18,7 +18,7 @@ afterEach(cleanup);
 const state: State = {
   connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
   primaryRendererId: 'mockRendererId1',
-  fixtures: ['ein.js', 'zwei.js', 'drei.js'],
+  fixtures: { 'ein.js': null, 'zwei.js': null, 'drei.js': null },
   fixtureState: { components: [] }
 };
 const expectedFixtureState = {
@@ -28,7 +28,7 @@ const expectedFixtureState = {
 
 function mockSelectedFixture() {
   mockMethodsOf<RouterSpec>('router', {
-    getUrlParams: () => ({ fixturePath: 'zwei.js' })
+    getSelectedFixtureId: () => ({ path: 'zwei.js', name: null })
   });
 }
 
@@ -74,7 +74,7 @@ it('posts "setFixtureState" renderer requests', async () => {
       type: 'setFixtureState',
       payload: {
         rendererId: 'mockRendererId1',
-        fixturePath: 'zwei.js',
+        fixtureId: { path: 'zwei.js', name: null },
         fixtureState: expectedFixtureState
       }
     })
@@ -85,7 +85,7 @@ it('posts "setFixtureState" renderer requests', async () => {
       type: 'setFixtureState',
       payload: {
         rendererId: 'mockRendererId2',
-        fixturePath: 'zwei.js',
+        fixtureId: { path: 'zwei.js', name: null },
         fixtureState: expectedFixtureState
       }
     })

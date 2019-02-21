@@ -10,7 +10,7 @@ afterEach(cleanup);
 const state: State = {
   connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
   primaryRendererId: 'mockRendererId1',
-  fixtures: [],
+  fixtures: {},
   fixtureState: null
 };
 

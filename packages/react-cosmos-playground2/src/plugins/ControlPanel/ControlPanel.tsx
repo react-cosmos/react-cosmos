@@ -3,15 +3,15 @@ import {
   ComponentFixtureState,
   FixtureState
 } from 'react-cosmos-shared2/fixtureState';
-import { RendererId } from 'react-cosmos-shared2/renderer';
+import { RendererId, FixtureId } from 'react-cosmos-shared2/renderer';
 import { PluginsConsumer } from 'react-plugin';
 import styled from 'styled-components';
-import { UrlParams } from '../Router/public';
 import { PropsState } from './PropsState';
 
 type Props = {
   webUrl: null | string;
-  urlParams: UrlParams;
+  selectedFixtureId: null | FixtureId;
+  fullScreen: boolean;
   connectedRendererIds: RendererId[];
   primaryRendererId: null | RendererId;
   fixtureState: null | FixtureState;
@@ -23,14 +23,14 @@ export class ControlPanel extends React.Component<Props> {
   render() {
     const {
       webUrl,
-      urlParams,
+      selectedFixtureId,
+      fullScreen,
       connectedRendererIds,
       primaryRendererId,
       fixtureState
     } = this.props;
-    const { fixturePath, fullScreen } = urlParams;
 
-    if (!primaryRendererId || fullScreen || !fixturePath) {
+    if (!primaryRendererId || fullScreen || !selectedFixtureId) {
       return null;
     }
 

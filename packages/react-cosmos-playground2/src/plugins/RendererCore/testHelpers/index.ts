@@ -1,4 +1,6 @@
 import {
+  FixtureNamesByPath,
+  FixtureId,
   RendererId,
   RendererReadyResponse,
   FixtureListUpdateResponse,
@@ -8,7 +10,7 @@ import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 
 export function createRendererReadyResponse(
   rendererId: RendererId,
-  fixtures: string[]
+  fixtures: FixtureNamesByPath
 ): RendererReadyResponse {
   return {
     type: 'rendererReady',
@@ -21,7 +23,7 @@ export function createRendererReadyResponse(
 
 export function createFixtureListUpdateResponse(
   rendererId: RendererId,
-  fixtures: string[]
+  fixtures: FixtureNamesByPath
 ): FixtureListUpdateResponse {
   return {
     type: 'fixtureListUpdate',
@@ -34,14 +36,14 @@ export function createFixtureListUpdateResponse(
 
 export function createFixtureStateChangeResponse(
   rendererId: RendererId,
-  fixturePath: string,
+  fixtureId: FixtureId,
   fixtureState: null | FixtureState
 ): FixtureStateChangeResponse {
   return {
     type: 'fixtureStateChange',
     payload: {
       rendererId,
-      fixturePath,
+      fixtureId,
       fixtureState
     }
   };

@@ -1,5 +1,6 @@
 import { StateUpdater, updateState } from 'react-cosmos-shared2/util';
-import { getUrlParams } from './shared/router';
+import { FixtureId } from 'react-cosmos-shared2/renderer';
+import { getSelectedFixtureId } from './shared/router';
 import { postSetFixtureStateRequest } from './shared/postRequest';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { Context, State } from './shared';
@@ -8,9 +9,9 @@ export function setFixtureState(
   context: Context,
   stateChange: StateUpdater<null | FixtureState>
 ) {
-  const { fixturePath } = getUrlParams(context);
+  const fixtureId = getSelectedFixtureId(context);
 
-  if (!fixturePath) {
+  if (!fixtureId) {
     console.warn(
       '[Renderer] Trying to set fixture state with no fixture selected'
     );
@@ -18,7 +19,7 @@ export function setFixtureState(
   }
 
   context.setState(stateUpdater, () => {
-    postRendererRequest(fixturePath);
+    postRendererRequest(fixtureId);
   });
 
   function stateUpdater(prevState: State) {
@@ -28,13 +29,13 @@ export function setFixtureState(
     };
   }
 
-  function postRendererRequest(selectedFixturePath: string) {
+  function postRendererRequest(selectedFixtureId: FixtureId) {
     const { connectedRendererIds, fixtureState } = context.getState();
     connectedRendererIds.forEach(rendererId =>
       postSetFixtureStateRequest(
         context,
         rendererId,
-        selectedFixturePath,
+        selectedFixtureId,
         fixtureState
       )
     );

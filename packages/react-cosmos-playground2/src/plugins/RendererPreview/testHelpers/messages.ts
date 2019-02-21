@@ -8,7 +8,7 @@ export const selectFixtureMsg: SelectFixtureRequest = {
   type: 'selectFixture',
   payload: {
     rendererId: 'mockRendererId',
-    fixturePath: 'mockFixturePath',
+    fixtureId: { path: 'mockFixturePath', name: null },
     fixtureState: null
   }
 };
@@ -17,7 +17,7 @@ export const rendererReadyMsg: RendererReadyResponse = {
   type: 'rendererReady',
   payload: {
     rendererId: 'mockRendererId',
-    fixtures: ['ein.js', 'zwei.js', 'drei.js']
+    fixtures: { 'ein.js': null, 'zwei.js': null, 'drei.js': null }
   }
 };
 

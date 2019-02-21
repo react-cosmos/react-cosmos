@@ -1,12 +1,12 @@
 import { createPlugin } from 'react-plugin';
 import { RendererId } from 'react-cosmos-shared2/renderer';
 import { RouterSpec } from '../Router/public';
+import { isValidFixtureSelected } from './isValidFixtureSelected';
 import { setFixtureState } from './setFixtureState';
 import { receiveResponse } from './receiveResponse';
 import { onRouterFixtureChange } from './onRouterFixtureChange';
 import { RendererCoreSpec } from './public';
 import { Context } from './shared';
-import { getUrlParams } from './shared/router';
 
 const { on, register } = createPlugin<RendererCoreSpec>({
   name: 'rendererCore',
@@ -17,7 +17,7 @@ const { on, register } = createPlugin<RendererCoreSpec>({
   initialState: {
     connectedRendererIds: [],
     primaryRendererId: null,
-    fixtures: [],
+    fixtures: {},
     fixtureState: null
   },
   methods: {
@@ -65,15 +65,6 @@ function getFixtureState({ getState }: Context) {
 
 function isRendererConnected({ getState }: Context) {
   return getState().connectedRendererIds.length > 0;
-}
-
-function isValidFixtureSelected(context: Context) {
-  const { fixturePath } = getUrlParams(context);
-
-  return (
-    fixturePath !== undefined &&
-    context.getState().fixtures.indexOf(fixturePath) !== -1
-  );
 }
 
 function selectPrimaryRenderer(
