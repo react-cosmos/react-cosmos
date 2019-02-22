@@ -7,7 +7,7 @@ import { OnIframeRef, RendererPreview } from './RendererPreview';
 import { RendererPreviewSpec } from './public';
 import { Context } from './shared';
 
-const { onRendererRequest, setIframeRef } = createRendererRequestHandler();
+const { postRendererRequest, setIframeRef } = createRendererRequestHandler();
 
 const { onLoad, on, plug, register } = createPlugin<RendererPreviewSpec>({
   name: 'rendererPreview',
@@ -22,7 +22,7 @@ const { onLoad, on, plug, register } = createPlugin<RendererPreviewSpec>({
 });
 
 on<RendererCoreSpec>('rendererCore', {
-  request: onRendererRequest
+  request: postRendererRequest
 });
 
 onLoad((context: Context) => {
