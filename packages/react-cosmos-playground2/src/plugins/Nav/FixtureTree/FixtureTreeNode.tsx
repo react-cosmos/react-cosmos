@@ -30,7 +30,9 @@ export class FixtureTreeNode extends React.Component<Props> {
       onToggleExpansion
     } = this.props;
     const { items, dirs } = node;
-    const dirNames = Object.keys(dirs);
+    const dirNames = Object.keys(dirs)
+      .slice()
+      .sort();
     const nodePath = getNodePath(parents);
     const isRootNode = parents.length === 0;
     const isExpanded = isRootNode || treeExpansion[nodePath];
@@ -55,16 +57,6 @@ export class FixtureTreeNode extends React.Component<Props> {
         )}
         {isExpanded && (
           <>
-            {map(items, (fixtureId, fixtureName) => (
-              <ListItem
-                key={`${fixtureId.path}-${fixtureName}`}
-                indentLevel={parents.length}
-                selected={isEqual(fixtureId, selectedFixtureId)}
-                onClick={this.createSelectHandler(fixtureId)}
-              >
-                <Label>{fixtureName}</Label>
-              </ListItem>
-            ))}
             {dirNames.map(dirName => {
               const nextParents = [...parents, dirName];
 
@@ -80,6 +72,16 @@ export class FixtureTreeNode extends React.Component<Props> {
                 />
               );
             })}
+            {map(items, (fixtureId, fixtureName) => (
+              <ListItem
+                key={`${fixtureId.path}-${fixtureName}`}
+                indentLevel={parents.length}
+                selected={isEqual(fixtureId, selectedFixtureId)}
+                onClick={this.createSelectHandler(fixtureId)}
+              >
+                <FixtureLabel>{fixtureName}</FixtureLabel>
+              </ListItem>
+            ))}
           </>
         )}
       </>
@@ -126,6 +128,10 @@ const Unshirinkable = styled.span`
 
 const Label = styled(Unshirinkable)`
   white-space: nowrap;
+`;
+
+const FixtureLabel = styled(Label)`
+  padding-left: 16px;
 `;
 
 const IconContainer = styled(Unshirinkable)`

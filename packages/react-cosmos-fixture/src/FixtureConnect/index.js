@@ -98,6 +98,10 @@ export class FixtureConnect extends Component<FixtureConnectProps, State> {
     const fixtureExport = fixtures[fixtureId.path];
     const fixture = getFixtureNode(fixtureExport, fixtureId.name);
 
+    if (typeof fixture === 'undefined') {
+      return `Invalid fixture ID: ${JSON.stringify(fixtureId)}`;
+    }
+
     return (
       <FixtureProvider
         // renderKey controls whether to reuse previous instances (and

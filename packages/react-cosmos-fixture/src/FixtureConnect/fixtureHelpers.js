@@ -4,7 +4,7 @@ import { isElement } from 'react-is';
 
 import type { Node } from 'react';
 import type { FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
-import type { FixtureExport, FixturesByPath } from '../index.js.flow';
+import type { NodeMap, FixtureExport, FixturesByPath } from '../index.js.flow';
 
 export function getFixtureNames(fixtures: FixturesByPath): FixtureNamesByPath {
   return Object.keys(fixtures).reduce((prev, fixturePath) => {
@@ -22,7 +22,7 @@ export function getFixtureNames(fixtures: FixturesByPath): FixtureNamesByPath {
 export function getFixtureNode(
   fixtureExport: FixtureExport,
   fixtureName: null | string
-): Node {
+): void | Node {
   if (fixtureName === null) {
     if (isNodeMap(fixtureExport)) {
       throw new Error(`Fixture name missing in multi fixture`);
@@ -34,11 +34,8 @@ export function getFixtureNode(
   if (!isNodeMap(fixtureExport)) {
     throw new Error(`Fixture name not found in single fixture: ${fixtureName}`);
   }
-  if (!fixtureExport.hasOwnProperty(fixtureName)) {
-    throw new Error(`Fixture name not found in multi fixture: ${fixtureName}`);
-  }
 
-  return ((fixtureExport: any)[fixtureName]: Node);
+  return ((fixtureExport: any): NodeMap)[fixtureName];
 }
 
 function isNodeMap(fixtureExport: FixtureExport): boolean %checks {
