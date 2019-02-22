@@ -9,7 +9,6 @@ import styled from 'styled-components';
 import { PropsState } from './PropsState';
 
 type Props = {
-  webUrl: null | string;
   selectedFixtureId: null | FixtureId;
   fullScreen: boolean;
   connectedRendererIds: RendererId[];
@@ -22,7 +21,6 @@ type Props = {
 export class ControlPanel extends React.Component<Props> {
   render() {
     const {
-      webUrl,
       selectedFixtureId,
       fullScreen,
       connectedRendererIds,
@@ -36,15 +34,6 @@ export class ControlPanel extends React.Component<Props> {
 
     return (
       <Container>
-        {webUrl && (
-          <button
-            onClick={() => {
-              copyToClipboard(getFullUrl(webUrl));
-            }}
-          >
-            Copy rendererer URL
-          </button>
-        )}
         {fixtureState && (
           <PropsState
             fixtureState={fixtureState}
@@ -115,37 +104,3 @@ const Container = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
 `;
-
-function getFullUrl(relativeUrl: string) {
-  return `${location.origin}${relativeUrl}`;
-}
-
-interface IExtendedNavigator extends Navigator {
-  clipboard: {
-    writeText(newClipText: string): Promise<void>;
-  };
-  permissions: {
-    query(descriptor: {
-      name: 'clipboard-write';
-    }): Promise<{
-      state: 'granted' | 'denied' | 'prompt';
-    }>;
-  };
-}
-
-async function copyToClipboard(text: string) {
-  const { permissions, clipboard } = navigator as IExtendedNavigator;
-
-  const { state } = await permissions.query({ name: 'clipboard-write' });
-  if (state !== 'granted' && state !== 'prompt') {
-    // clipboard permission denied
-    return;
-  }
-
-  try {
-    await clipboard.writeText(text);
-    // clipboard successfully set
-  } catch (err) {
-    // clipboard write failed
-  }
-}

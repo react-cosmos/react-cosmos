@@ -18,7 +18,6 @@ plug({
     const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
 
     return {
-      webUrl: rendererCore.getWebUrl(),
       selectedFixtureId: router.getSelectedFixtureId(),
       fullScreen: router.isFullScreen(),
       connectedRendererIds: rendererCore.getConnectedRendererIds(),
