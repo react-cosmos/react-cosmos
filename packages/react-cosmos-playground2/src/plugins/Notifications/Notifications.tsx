@@ -19,8 +19,8 @@ export function Notifications({ notifications }: NotificationsProps) {
 
 const Container = styled.div`
   position: absolute;
-  top: 55px;
-  right: 16px;
+  top: 47px;
+  right: 8px;
   z-index: 1;
 `;
 
