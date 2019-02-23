@@ -4,10 +4,10 @@ import {
   SelectFixtureRequest,
   RendererReadyResponse
 } from 'react-cosmos-shared2/renderer';
-import { mockWebSockets } from './testHelpers/mockWebSockets';
-import { cleanup, mockMethodsOf } from '../../testHelpers/plugin';
-import { RendererCoreSpec } from '../RendererCore/public';
-import { register } from '.';
+import { mockWebSockets } from '../testHelpers/mockWebSockets';
+import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
+import { RendererCoreSpec } from '../../RendererCore/public';
+import { register } from '..';
 
 afterEach(cleanup);
 

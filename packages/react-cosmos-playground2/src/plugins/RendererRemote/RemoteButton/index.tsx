@@ -1,16 +1,19 @@
 import * as React from 'react';
 import { Button } from '../../../shared/components';
 import { CastIcon } from '../../../shared/icons';
+import { NotificationsSpec } from './../../Notifications/public';
 import { copyToClipboard } from './copyToClipboard';
 
 export type RemoteButtonProps = {
   remoteRenderersEnabled: boolean;
   webRendererUrl: null | string;
+  pushNotification: NotificationsSpec['methods']['pushNotification'];
 };
 
 export function RemoteButton({
   remoteRenderersEnabled,
-  webRendererUrl
+  webRendererUrl,
+  pushNotification
 }: RemoteButtonProps) {
   if (!remoteRenderersEnabled || !webRendererUrl) {
     return null;
@@ -28,9 +31,15 @@ export function RemoteButton({
     const fullUrl = getFullUrl(url);
     try {
       await copyToClipboard(fullUrl);
-      // TODO: Notify success
+      pushNotification({
+        type: 'success',
+        content: `Renderer URL copied to clipboard`
+      });
     } catch (err) {
-      // TODO: Notify error (err.message)
+      pushNotification({
+        type: 'error',
+        content: `Failed to copy renderer URL to clipboard`
+      });
     }
   }
 }
