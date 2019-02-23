@@ -1,27 +1,69 @@
 import * as React from 'react';
-import { loadPlugins, Slot } from 'react-plugin';
+import { loadPlugins, Slot, MethodHandlers } from 'react-plugin';
 import { render, waitForElement, fireEvent, wait } from 'react-testing-library';
-import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
+import { cleanup, mockMethodsOf, mockPlug } from '../../../testHelpers/plugin';
 import { NotificationsSpec } from '../../Notifications/public';
 import { RendererCoreSpec } from '../../RendererCore/public';
+import { createFixtureAction } from '../../RendererHeader/public';
 import { register } from '..';
 
 afterEach(cleanup);
 
-function registerTestPlugins() {
-  register();
+function mockRendererCore(
+  webUrl: null | string,
+  remoteRenderersEnabled: boolean
+) {
   mockMethodsOf<RendererCoreSpec>('rendererCore', {
-    getWebUrl: () => 'mockWebUrl',
-    remoteRenderersEnabled: () => true
+    getWebUrl: () => webUrl,
+    remoteRenderersEnabled: () => remoteRenderersEnabled
   });
 }
 
-it('renders button', async () => {
-  registerTestPlugins();
+type PushNotification = MethodHandlers<NotificationsSpec>['pushNotification'];
 
+function mockNotifications(pushNotification: PushNotification = () => {}) {
   mockMethodsOf<NotificationsSpec>('notifications', {
-    pushNotification: () => {}
+    pushNotification
   });
+}
+
+function mockFixtureAction() {
+  mockPlug({
+    slotName: 'fixtureActions',
+    render: createFixtureAction(() => <>fooFixtureAction</>)
+  });
+}
+
+it(`doesn't render button when webUrl is empty`, async () => {
+  register();
+  mockRendererCore(null, true);
+  mockNotifications();
+  mockFixtureAction();
+
+  loadPlugins();
+  const { getByText, queryByText } = render(<Slot name="fixtureActions" />);
+
+  await waitForElement(() => getByText(/fooFixtureAction/i));
+  expect(queryByText(/remote/i)).toBeNull();
+});
+
+it(`doesn't render button when remote renderers are disabled`, async () => {
+  register();
+  mockRendererCore('mockWebUrl', false);
+  mockNotifications();
+  mockFixtureAction();
+
+  loadPlugins();
+  const { getByText, queryByText } = render(<Slot name="fixtureActions" />);
+
+  await waitForElement(() => getByText(/fooFixtureAction/i));
+  expect(queryByText(/remote/i)).toBeNull();
+});
+
+it('renders button', async () => {
+  register();
+  mockRendererCore('mockWebUrl', true);
+  mockNotifications();
 
   loadPlugins();
   const { getByText } = render(<Slot name="fixtureActions" />);
@@ -30,12 +72,11 @@ it('renders button', async () => {
 });
 
 it('notifies copy error on button click', async () => {
-  registerTestPlugins();
+  register();
+  mockRendererCore('mockWebUrl', true);
 
   const pushNotification = jest.fn();
-  mockMethodsOf<NotificationsSpec>('notifications', {
-    pushNotification
-  });
+  mockNotifications(pushNotification);
 
   loadPlugins();
   const { getByText } = render(<Slot name="fixtureActions" />);
