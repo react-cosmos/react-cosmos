@@ -1,10 +1,11 @@
-import { getSelectedFixtureId } from '../shared/router';
 import {
   RendererId,
   RendererReadyResponse
 } from 'react-cosmos-shared2/renderer';
-import { postSelectFixtureRequest } from '../shared/postRequest';
+import { NotificationsSpec } from '../../Notifications/public';
 import { Context, State } from '../shared';
+import { postSelectFixtureRequest } from '../shared/postRequest';
+import { getSelectedFixtureId } from '../shared/router';
 
 export function receiveRendererReadyResponse(
   context: Context,
@@ -31,6 +32,7 @@ export function receiveRendererReadyResponse(
 
   function afterStateChanged() {
     selectFixtureFromUrlParams(context, rendererId);
+    notifyRendererConnection(context);
   }
 }
 
@@ -41,6 +43,14 @@ function selectFixtureFromUrlParams(context: Context, rendererId: RendererId) {
     const { fixtureState } = context.getState();
     postSelectFixtureRequest(context, rendererId, fixtureId, fixtureState);
   }
+}
+
+function notifyRendererConnection({ getMethodsOf }: Context) {
+  const notifications = getMethodsOf<NotificationsSpec>('notifications');
+  notifications.pushNotification({
+    type: 'success',
+    content: 'Renderer connected'
+  });
 }
 
 function addToSet<T>(set: T[], item: T) {

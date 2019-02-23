@@ -1,17 +1,18 @@
-import { wait } from 'react-testing-library';
-import { loadPlugins } from 'react-plugin';
 import { RendererId } from 'react-cosmos-shared2/renderer';
+import { loadPlugins } from 'react-plugin';
+import { wait } from 'react-testing-library';
+import { register } from '../..';
 import {
   cleanup,
-  getState,
   getMethodsOf,
+  getState,
   mockMethodsOf
 } from '../../../../testHelpers/plugin';
+import { NotificationsSpec } from '../../../Notifications/public';
 import { RouterSpec } from '../../../Router/public';
-import { createRendererReadyResponse } from '../../testHelpers';
-import { State } from '../../shared';
 import { RendererCoreSpec } from '../../public';
-import { register } from '../..';
+import { State } from '../../shared';
+import { createRendererReadyResponse } from '../../testHelpers';
 
 afterEach(cleanup);
 
@@ -22,6 +23,9 @@ function registerTestPlugins() {
   register();
   mockMethodsOf<RouterSpec>('router', {
     getSelectedFixtureId: () => null
+  });
+  mockMethodsOf<NotificationsSpec>('notifications', {
+    pushNotification: () => {}
   });
 }
 
