@@ -14,7 +14,8 @@ function registerTestPlugins() {
   register();
   mockMethodsOf<RendererCoreSpec>('rendererCore', {
     getWebUrl: () => 'mockRendererUrl',
-    receiveResponse: () => {}
+    receiveResponse: () => {},
+    selectPrimaryRenderer: () => {}
   });
 }
 

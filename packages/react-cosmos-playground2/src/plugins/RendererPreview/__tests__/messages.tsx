@@ -45,7 +45,8 @@ it('sends renderer response message to renderer core', async () => {
   const receiveResponse = jest.fn();
   mockMethodsOf<RendererCoreSpec>('rendererCore', {
     getWebUrl: () => 'mockRendererUrl',
-    receiveResponse
+    receiveResponse,
+    selectPrimaryRenderer: () => {}
   });
 
   loadTestPlugins();
@@ -53,5 +54,24 @@ it('sends renderer response message to renderer core', async () => {
 
   await wait(() =>
     expect(receiveResponse).toBeCalledWith(expect.any(Object), rendererReadyMsg)
+  );
+});
+
+it('makes connected renderer the primary renderer', async () => {
+  register();
+
+  const selectPrimaryRenderer = jest.fn();
+  mockMethodsOf<RendererCoreSpec>('rendererCore', {
+    getWebUrl: () => 'mockRendererUrl',
+    receiveResponse: () => {},
+    selectPrimaryRenderer
+  });
+
+  loadTestPlugins();
+  window.postMessage(rendererReadyMsg, '*');
+
+  const { rendererId } = rendererReadyMsg.payload;
+  await wait(() =>
+    expect(selectPrimaryRenderer).toBeCalledWith(expect.any(Object), rendererId)
   );
 });

@@ -19,12 +19,15 @@ function createMessageHandler(context: Context) {
       return;
     }
 
+    const rendererCore = context.getMethodsOf<RendererCoreSpec>('rendererCore');
     const response = msg.data as RendererResponse;
-    context
-      .getMethodsOf<RendererCoreSpec>('rendererCore')
-      .receiveResponse(response);
+    rendererCore.receiveResponse(response);
 
     updateRuntimeStatus(context, response);
+
+    if (response.type === 'rendererReady') {
+      rendererCore.selectPrimaryRenderer(response.payload.rendererId);
+    }
   };
 }
 
