@@ -40,5 +40,6 @@ export const layout = (
       </PreviewContainer>
     </Center>
     <Slot name="right" />
+    <Slot name="global" />
   </Container>
 );

@@ -1,15 +1,10 @@
 import * as React from 'react';
 import { Slot } from 'react-plugin';
+import { ExcludeChildren, PlugProps } from '../../shared/slot';
 
 export type RendererHeaderSpec = {
   name: 'rendererHeader';
 };
-
-type Children = { children?: React.ReactNode };
-
-type ExcludeChildren<Props> = Pick<Props, Exclude<keyof Props, 'children'>>;
-
-type PlugProps<ComponentProps> = ComponentProps & Children;
 
 // TODO: Add support for array slots in react-plugin (eg.
 // <Slot name="fixtureActions[]" />)
