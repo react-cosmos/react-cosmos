@@ -1,16 +1,22 @@
 import * as React from 'react';
 import { render, waitForElement } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
+import { createArrayPlug } from '../../../shared/slot';
 import { cleanup, mockPlug } from '../../../testHelpers/plugin';
-import { createGlobalPlug } from '../public';
 import { register } from '..';
 
 afterEach(cleanup);
 
 function loadTestPlugins() {
   loadPlugins();
-
   return render(<Slot name="root" />);
+}
+
+function createGlobalPlug(element: React.ReactElement<any>) {
+  mockPlug({
+    slotName: 'global',
+    render: createArrayPlug('global', () => element)
+  });
 }
 
 it('renders "left" slot', async () => {
@@ -55,9 +61,10 @@ it('renders "right" slot', async () => {
 
 it('renders "global" plugs', async () => {
   register();
-  mockPlug({ slotName: 'global', render: createGlobalPlug(() => <>first</>) });
-  mockPlug({ slotName: 'global', render: createGlobalPlug(() => <>second</>) });
-  mockPlug({ slotName: 'global', render: createGlobalPlug(() => <>third</>) });
+
+  createGlobalPlug(<>first</>);
+  createGlobalPlug(<>second</>);
+  createGlobalPlug(<>third</>);
   const { getByText } = loadTestPlugins();
 
   await waitForElement(() => getByText(/first/i));

@@ -1,5 +1,5 @@
 import { createPlugin } from 'react-plugin';
-import { createGlobalPlug } from '../Core/public';
+import { createArrayPlug } from '../../shared/slot';
 import { Notifications, NotificationsProps } from './Notifications';
 import { NotificationsSpec } from './public';
 import { pushNotification } from './pushNotification';
@@ -23,7 +23,7 @@ onLoad(context => {
 
 plug({
   slotName: 'global',
-  render: createGlobalPlug<NotificationsProps>(Notifications),
+  render: createArrayPlug<NotificationsProps>('global', Notifications),
   getProps: ({ getState }) => {
     const { notifications } = getState();
     return { notifications };

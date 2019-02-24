@@ -2,9 +2,9 @@ import * as React from 'react';
 import { loadPlugins, Slot, MethodHandlers } from 'react-plugin';
 import { render, waitForElement, fireEvent, wait } from 'react-testing-library';
 import { cleanup, mockMethodsOf, mockPlug } from '../../../testHelpers/plugin';
+import { createArrayPlug } from '../../../shared/slot';
 import { NotificationsSpec } from '../../Notifications/public';
 import { RendererCoreSpec } from '../../RendererCore/public';
-import { createFixtureAction } from '../../RendererHeader/public';
 import { register } from '..';
 
 afterEach(cleanup);
@@ -30,7 +30,7 @@ function mockNotifications(pushNotification: PushNotification = () => {}) {
 function mockFixtureAction() {
   mockPlug({
     slotName: 'fixtureActions',
-    render: createFixtureAction(() => <>fooFixtureAction</>)
+    render: createArrayPlug('fixtureActions', () => <>fooFixtureAction</>)
   });
 }
 
