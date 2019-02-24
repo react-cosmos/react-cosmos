@@ -61,7 +61,6 @@ it('renders "right" slot', async () => {
 
 it('renders "global" plugs', async () => {
   register();
-
   createGlobalPlug(<>first</>);
   createGlobalPlug(<>second</>);
   createGlobalPlug(<>third</>);

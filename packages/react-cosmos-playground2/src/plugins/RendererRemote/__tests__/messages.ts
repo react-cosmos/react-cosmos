@@ -12,12 +12,15 @@ import { register } from '..';
 
 afterEach(cleanup);
 
-it('posts renderer request message via websockets', async () => {
-  register();
-
+function mockCore() {
   mockMethodsOf<CoreSpec>('core', {
     isDevServerOn: () => true
   });
+}
+
+it('posts renderer request message via websockets', async () => {
+  register();
+  mockCore();
   mockMethodsOf<RendererCoreSpec>('rendererCore', {});
 
   loadPlugins();
@@ -42,10 +45,7 @@ it('posts renderer request message via websockets', async () => {
 
 it('sends renderer response message from websocket event to renderer core', async () => {
   register();
-
-  mockMethodsOf<CoreSpec>('core', {
-    isDevServerOn: () => true
-  });
+  mockCore();
 
   const receiveResponse = jest.fn();
   mockMethodsOf<RendererCoreSpec>('rendererCore', {
@@ -75,11 +75,7 @@ it('sends renderer response message from websocket event to renderer core', asyn
 
 it('posts "requestFixtureList" renderer request on mount', async () => {
   register();
-
-  mockMethodsOf<CoreSpec>('core', {
-    isDevServerOn: () => true
-  });
-
+  mockCore();
   loadPlugins();
 
   await mockWebSockets(async ({ onMessage }) => {
