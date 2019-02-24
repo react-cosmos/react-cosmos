@@ -4,7 +4,7 @@ import {
   getMethodsOf,
   mockMethodsOf
 } from '../../../testHelpers/plugin';
-import { RendererCoreSpec } from '../../RendererCore/public';
+import { CoreSpec } from '../../Core/public';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { RendererPreviewSpec } from '../public';
 import { register } from '..';
@@ -19,8 +19,8 @@ const rendererPreviewState: RendererPreviewSpec['state'] = {
 function registerTestPlugins() {
   fakeFetchResponseStatus(200);
   register();
-  mockMethodsOf<RendererCoreSpec>('rendererCore', {
-    getWebUrl: () => 'mockRendererUrl'
+  mockMethodsOf<CoreSpec>('core', {
+    getWebRendererUrl: () => 'mockRendererUrl'
   });
 }
 

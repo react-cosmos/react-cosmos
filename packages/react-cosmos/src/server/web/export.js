@@ -33,7 +33,7 @@ const exportPlaygroundFiles = (cosmosConfig, outputPath) => {
     ? getPlaygroundHtmlNext(
         getPlaygroundConfig({
           playgroundOpts,
-          enableRemoteRenderers: false
+          devServerOn: false
         })
       )
     : getPlaygroundHtml(playgroundOpts);

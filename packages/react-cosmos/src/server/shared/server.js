@@ -31,7 +31,7 @@ export function createServerApp({
     ? getPlaygroundHtmlNext(
         getPlaygroundConfig({
           playgroundOpts,
-          enableRemoteRenderers: true
+          devServerOn: true
         })
       )
     : getPlaygroundHtml(playgroundOpts);

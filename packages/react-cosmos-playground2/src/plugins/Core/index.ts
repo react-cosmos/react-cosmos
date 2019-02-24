@@ -9,11 +9,15 @@ const { plug, register } = createPlugin<CoreSpec>({
   defaultConfig: {
     projectId: 'defaultProjectId',
     fixturesDir: '__fixtures__',
-    fixtureFileSuffix: 'fixture'
+    fixtureFileSuffix: 'fixture',
+    devServerOn: false,
+    webRendererUrl: null
   },
   methods: {
     getProjectId,
-    getFixtureFileVars
+    getFixtureFileVars,
+    isDevServerOn,
+    getWebRendererUrl
   }
 });
 
@@ -28,4 +32,12 @@ function getProjectId({ getConfig }: Context) {
 function getFixtureFileVars({ getConfig }: Context) {
   const { fixturesDir, fixtureFileSuffix } = getConfig();
   return { fixturesDir, fixtureFileSuffix };
+}
+
+function isDevServerOn({ getConfig }: Context) {
+  return getConfig().devServerOn;
+}
+
+function getWebRendererUrl({ getConfig }: Context) {
+  return getConfig().webRendererUrl;
 }

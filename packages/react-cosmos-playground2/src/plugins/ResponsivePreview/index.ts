@@ -1,7 +1,7 @@
 import { createPlugin } from 'react-plugin';
+import { createArrayPlug } from '../../shared/slot';
 import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';
-import { createFixtureAction } from '../RendererHeader/public';
 import { RouterSpec } from '../Router/public';
 import { StorageSpec } from '../Storage/public';
 import { ResponsivePreviewSpec } from './public';
@@ -38,7 +38,7 @@ plug({
 
 plug({
   slotName: 'fixtureActions',
-  render: createFixtureAction<ToggleButtonProps>(ToggleButton),
+  render: createArrayPlug<ToggleButtonProps>('fixtureActions', ToggleButton),
   getProps: context => getCommonProps(context)
 });
 

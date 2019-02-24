@@ -5,11 +5,6 @@ import { register } from '..';
 
 afterEach(cleanup);
 
-const rendererCoreConfig: RendererCoreSpec['config'] = {
-  webUrl: 'mockWebUrl',
-  enableRemote: true
-};
-
 const rendererCoreState: RendererCoreSpec['state'] = {
   connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
   primaryRendererId: 'mockRendererId2',
@@ -19,7 +14,6 @@ const rendererCoreState: RendererCoreSpec['state'] = {
 
 function loadTestPlugins() {
   loadPlugins({
-    config: { rendererCore: rendererCoreConfig },
     state: { rendererCore: rendererCoreState }
   });
 }
@@ -27,18 +21,6 @@ function loadTestPlugins() {
 function getRendererCoreMethods() {
   return getMethodsOf<RendererCoreSpec>('rendererCore');
 }
-
-it('returns web URL', () => {
-  register();
-  loadTestPlugins();
-  expect(getRendererCoreMethods().getWebUrl()).toBe('mockWebUrl');
-});
-
-it('returns remote renderes enabled flag', () => {
-  register();
-  loadTestPlugins();
-  expect(getRendererCoreMethods().remoteRenderersEnabled()).toBe(true);
-});
 
 it('returns connected renderer IDs', () => {
   register();

@@ -3,10 +3,11 @@ import { loadPlugins } from 'react-plugin';
 import { RendererId } from 'react-cosmos-shared2/renderer';
 import {
   cleanup,
-  getState,
   getMethodsOf,
+  getState,
   mockMethodsOf
 } from '../../../../testHelpers/plugin';
+import { NotificationsSpec } from '../../../Notifications/public';
 import { RouterSpec } from '../../../Router/public';
 import { createRendererReadyResponse } from '../../testHelpers';
 import { State } from '../../shared';
@@ -22,6 +23,9 @@ function registerTestPlugins() {
   register();
   mockMethodsOf<RouterSpec>('router', {
     getSelectedFixtureId: () => null
+  });
+  mockMethodsOf<NotificationsSpec>('notifications', {
+    pushNotification: () => {}
   });
 }
 

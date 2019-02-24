@@ -1,4 +1,5 @@
 import { createPlugin } from 'react-plugin';
+import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { checkRendererStatus } from './checkRendererStatus';
 import { createRendererRequestHandler } from './handleRendererRequests';
@@ -7,7 +8,7 @@ import { OnIframeRef, RendererPreview } from './RendererPreview';
 import { RendererPreviewSpec } from './public';
 import { Context } from './shared';
 
-const { onRendererRequest, setIframeRef } = createRendererRequestHandler();
+const { postRendererRequest, setIframeRef } = createRendererRequestHandler();
 
 const { onLoad, on, plug, register } = createPlugin<RendererPreviewSpec>({
   name: 'rendererPreview',
@@ -22,7 +23,7 @@ const { onLoad, on, plug, register } = createPlugin<RendererPreviewSpec>({
 });
 
 on<RendererCoreSpec>('rendererCore', {
-  request: onRendererRequest
+  request: postRendererRequest
 });
 
 onLoad((context: Context) => {
@@ -62,5 +63,5 @@ function getRendererPreviewProps(context: Context, onIframeRef: OnIframeRef) {
 }
 
 function getRendererUrl({ getMethodsOf }: Context) {
-  return getMethodsOf<RendererCoreSpec>('rendererCore').getWebUrl();
+  return getMethodsOf<CoreSpec>('core').getWebRendererUrl();
 }

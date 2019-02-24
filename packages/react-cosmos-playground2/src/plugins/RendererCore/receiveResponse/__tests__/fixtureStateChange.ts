@@ -3,10 +3,10 @@ import { loadPlugins } from 'react-plugin';
 import { RendererId } from 'react-cosmos-shared2/renderer';
 import {
   cleanup,
-  getState,
-  on,
   getMethodsOf,
-  mockMethodsOf
+  getState,
+  mockMethodsOf,
+  on
 } from '../../../../testHelpers/plugin';
 import { RouterSpec } from '../../../Router/public';
 import { createFixtureStateChangeResponse } from '../../testHelpers';

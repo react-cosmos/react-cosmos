@@ -12,21 +12,19 @@ export const FIXTURE_FILE_SUFFIX = 'jsxfixture';
 
 export function getPlaygroundConfig({
   playgroundOpts,
-  enableRemoteRenderers
+  devServerOn
 }: {
   playgroundOpts: PlaygroundOpts,
-  enableRemoteRenderers: boolean
+  devServerOn: boolean
 }): PlaygroundConfig {
   return {
     core: {
       projectId: playgroundOpts.projectKey,
       fixturesDir: FIXTURES_DIR,
-      fixtureFileSuffix: FIXTURE_FILE_SUFFIX
-    },
-    rendererCore: {
-      webUrl:
-        playgroundOpts.platform === 'web' ? playgroundOpts.loaderUri : null,
-      enableRemote: enableRemoteRenderers
+      fixtureFileSuffix: FIXTURE_FILE_SUFFIX,
+      devServerOn,
+      webRendererUrl:
+        playgroundOpts.platform === 'web' ? playgroundOpts.loaderUri : null
     }
   };
 }

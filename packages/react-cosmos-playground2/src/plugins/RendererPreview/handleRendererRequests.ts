@@ -4,7 +4,7 @@ import { Context } from './shared';
 export function createRendererRequestHandler() {
   let iframeRef: null | HTMLIFrameElement = null;
 
-  function onRendererRequest(context: Context, msg: RendererRequest) {
+  function postRendererRequest(context: Context, msg: RendererRequest) {
     if (iframeRef && iframeRef.contentWindow) {
       iframeRef.contentWindow.postMessage(msg, '*');
     }
@@ -14,5 +14,5 @@ export function createRendererRequestHandler() {
     iframeRef = ref;
   }
 
-  return { onRendererRequest, setIframeRef };
+  return { postRendererRequest, setIframeRef };
 }
