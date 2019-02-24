@@ -53,7 +53,7 @@ it('renders "right" slot', async () => {
   await waitForElement(() => getByText(/we are the robots/i));
 });
 
-it('renders "global" plug', async () => {
+it('renders "global" plugs', async () => {
   register();
   mockPlug({ slotName: 'global', render: createGlobalPlug(() => <>first</>) });
   mockPlug({ slotName: 'global', render: createGlobalPlug(() => <>second</>) });

@@ -3,8 +3,8 @@ import { loadPlugins } from 'react-plugin';
 import { RendererId } from 'react-cosmos-shared2/renderer';
 import {
   cleanup,
-  getState,
   getMethodsOf,
+  getState,
   mockMethodsOf
 } from '../../../../testHelpers/plugin';
 import { RouterSpec } from '../../../Router/public';

@@ -6,8 +6,7 @@ export type RendererHeaderSpec = {
   name: 'rendererHeader';
 };
 
-// TODO: Add support for array slots in react-plugin (eg.
-// <Slot name="fixtureActions[]" />)
+// TODO: Add support for array slots in react-plugin
 export function createFixtureAction<Props>(
   BtnComponent: React.ComponentType<ExcludeChildren<Props>>
 ): React.ComponentType<PlugProps<Props>> {

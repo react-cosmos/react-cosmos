@@ -1,7 +1,6 @@
-import { RendererId, RendererRequest } from 'react-cosmos-shared2/renderer';
-import { loadPlugins, PluginContext } from 'react-plugin';
 import { wait } from 'react-testing-library';
-import { register } from '../..';
+import { loadPlugins, PluginContext } from 'react-plugin';
+import { RendererId, RendererRequest } from 'react-cosmos-shared2/renderer';
 import {
   cleanup,
   getMethodsOf,
@@ -10,9 +9,10 @@ import {
 } from '../../../../testHelpers/plugin';
 import { NotificationsSpec } from '../../../Notifications/public';
 import { RouterSpec } from '../../../Router/public';
-import { RendererCoreSpec } from '../../public';
-import { State } from '../../shared';
 import { createRendererReadyResponse } from '../../testHelpers';
+import { State } from '../../shared';
+import { RendererCoreSpec } from '../../public';
+import { register } from '../..';
 
 afterEach(cleanup);
 

@@ -15,8 +15,7 @@ export type CoreSpec = {
   };
 };
 
-// TODO: Add support for array slots in react-plugin (eg.
-// <Slot name="global[]" />)
+// TODO: Add support for array slots in react-plugin
 export function createGlobalPlug<Props>(
   Component: React.ComponentType<ExcludeChildren<Props>>
 ): React.ComponentType<PlugProps<Props>> {

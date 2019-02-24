@@ -1,6 +1,6 @@
 import { removeItemMatch } from 'react-cosmos-shared2/util';
 import { PluginContext } from 'react-plugin';
-import { NotificationsSpec, NotificationType } from './public';
+import { NotificationsSpec, PushNotificationArgs } from './public';
 
 type Context = PluginContext<NotificationsSpec>;
 
@@ -8,7 +8,7 @@ const TIMEOUT = 3000;
 
 export function pushNotification(
   context: Context,
-  { type, content }: { type: NotificationType; content: string }
+  { type, content }: PushNotificationArgs
 ) {
   const { notifications } = context.getState();
   const id = createNotificationId();

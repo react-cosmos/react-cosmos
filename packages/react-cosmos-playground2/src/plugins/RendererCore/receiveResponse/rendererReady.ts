@@ -3,9 +3,9 @@ import {
   RendererReadyResponse
 } from 'react-cosmos-shared2/renderer';
 import { NotificationsSpec } from '../../Notifications/public';
-import { Context, State } from '../shared';
 import { postSelectFixtureRequest } from '../shared/postRequest';
 import { getSelectedFixtureId } from '../shared/router';
+import { Context, State } from '../shared';
 
 export function receiveRendererReadyResponse(
   context: Context,

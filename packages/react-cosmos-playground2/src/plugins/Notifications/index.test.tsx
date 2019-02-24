@@ -43,7 +43,7 @@ it('clears pushed notification after timeout expires', async () => {
   expect(queryByText(/renderer connected/i)).toBeNull();
 });
 
-it('behaves peacefully after unload when timeout expires', async () => {
+it('behaves peacefully when timeout expires after plugin unloads', async () => {
   register();
   loadTestPlugins();
 

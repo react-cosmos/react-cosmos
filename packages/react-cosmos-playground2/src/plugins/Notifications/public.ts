@@ -1,5 +1,7 @@
 export type NotificationType = 'success' | 'error';
 
+export type PushNotificationArgs = { type: NotificationType; content: string };
+
 export type Notification = {
   id: number;
   type: NotificationType;
@@ -13,6 +15,6 @@ export type NotificationsSpec = {
     notifications: Notification[];
   };
   methods: {
-    pushNotification(args: { type: NotificationType; content: string }): void;
+    pushNotification(args: PushNotificationArgs): void;
   };
 };

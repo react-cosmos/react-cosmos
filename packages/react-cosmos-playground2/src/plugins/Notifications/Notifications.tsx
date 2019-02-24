@@ -30,7 +30,6 @@ const Item = styled.div`
   padding: 8px 16px 8px 12px;
   border-radius: 3px;
   line-height: 20px;
-  will-change: opacity;
 `;
 
 const SuccessItem = styled(Item)`
