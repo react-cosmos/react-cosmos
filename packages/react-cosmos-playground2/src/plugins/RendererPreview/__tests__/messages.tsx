@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { wait, render } from 'react-testing-library';
 import { loadPlugins, Slot, getPluginContext } from 'react-plugin';
+import { CoreSpec } from '../../Core/public';
 import { RendererCoreSpec } from '../../RendererCore/public';
 import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
@@ -17,12 +18,16 @@ function loadTestPlugins() {
   return render(<Slot name="rendererPreview" />);
 }
 
+function mockCore() {
+  mockMethodsOf<CoreSpec>('core', {
+    getWebRendererUrl: () => 'mockRendererUrl'
+  });
+}
+
 it('posts renderer request message to iframe', async () => {
   register();
-
-  mockMethodsOf<RendererCoreSpec>('rendererCore', {
-    getWebUrl: () => 'mockRendererUrl'
-  });
+  mockCore();
+  mockMethodsOf<RendererCoreSpec>('rendererCore', {});
 
   const renderer = loadTestPlugins();
   getPluginContext<RendererCoreSpec>('rendererCore').emit(
@@ -41,10 +46,10 @@ it('posts renderer request message to iframe', async () => {
 
 it('sends renderer response message to renderer core', async () => {
   register();
+  mockCore();
 
   const receiveResponse = jest.fn();
   mockMethodsOf<RendererCoreSpec>('rendererCore', {
-    getWebUrl: () => 'mockRendererUrl',
     receiveResponse,
     selectPrimaryRenderer: () => {}
   });
@@ -59,10 +64,10 @@ it('sends renderer response message to renderer core', async () => {
 
 it('makes connected renderer the primary renderer', async () => {
   register();
+  mockCore();
 
   const selectPrimaryRenderer = jest.fn();
   mockMethodsOf<RendererCoreSpec>('rendererCore', {
-    getWebUrl: () => 'mockRendererUrl',
     receiveResponse: () => {},
     selectPrimaryRenderer
   });

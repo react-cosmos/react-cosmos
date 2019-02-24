@@ -5,17 +5,17 @@ import { NotificationsSpec } from './../../Notifications/public';
 import { copyToClipboard } from './copyToClipboard';
 
 export type RemoteButtonProps = {
-  remoteRenderersEnabled: boolean;
+  devServerOn: boolean;
   webRendererUrl: null | string;
   pushNotification: NotificationsSpec['methods']['pushNotification'];
 };
 
 export function RemoteButton({
-  remoteRenderersEnabled,
+  devServerOn,
   webRendererUrl,
   pushNotification
 }: RemoteButtonProps) {
-  if (!remoteRenderersEnabled || !webRendererUrl) {
+  if (!devServerOn || !webRendererUrl) {
     return null;
   }
 

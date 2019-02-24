@@ -3,19 +3,16 @@ import { loadPlugins, Slot, MethodHandlers } from 'react-plugin';
 import { render, waitForElement, fireEvent, wait } from 'react-testing-library';
 import { cleanup, mockMethodsOf, mockPlug } from '../../../testHelpers/plugin';
 import { createArrayPlug } from '../../../shared/slot';
+import { CoreSpec } from '../../Core/public';
 import { NotificationsSpec } from '../../Notifications/public';
-import { RendererCoreSpec } from '../../RendererCore/public';
 import { register } from '..';
 
 afterEach(cleanup);
 
-function mockRendererCore(
-  webUrl: null | string,
-  remoteRenderersEnabled: boolean
-) {
-  mockMethodsOf<RendererCoreSpec>('rendererCore', {
-    getWebUrl: () => webUrl,
-    remoteRenderersEnabled: () => remoteRenderersEnabled
+function mockCore(devServerOn: boolean, webRendererUrl: null | string) {
+  mockMethodsOf<CoreSpec>('core', {
+    isDevServerOn: () => devServerOn,
+    getWebRendererUrl: () => webRendererUrl
   });
 }
 
@@ -34,9 +31,9 @@ function mockFixtureAction() {
   });
 }
 
-it(`doesn't render button when webUrl is empty`, async () => {
+it(`doesn't render button when web renderer url is empty`, async () => {
   register();
-  mockRendererCore(null, true);
+  mockCore(true, null);
   mockNotifications();
   mockFixtureAction();
 
@@ -47,9 +44,9 @@ it(`doesn't render button when webUrl is empty`, async () => {
   expect(queryByText(/remote/i)).toBeNull();
 });
 
-it(`doesn't render button when remote renderers are disabled`, async () => {
+it(`doesn't render button when dev server is off`, async () => {
   register();
-  mockRendererCore('mockWebUrl', false);
+  mockCore(false, 'mockWebUrl');
   mockNotifications();
   mockFixtureAction();
 
@@ -62,7 +59,7 @@ it(`doesn't render button when remote renderers are disabled`, async () => {
 
 it('renders button', async () => {
   register();
-  mockRendererCore('mockWebUrl', true);
+  mockCore(true, 'mockWebUrl');
   mockNotifications();
 
   loadPlugins();
@@ -73,7 +70,7 @@ it('renders button', async () => {
 
 it('notifies copy error on button click', async () => {
   register();
-  mockRendererCore('mockWebUrl', true);
+  mockCore(true, 'mockWebUrl');
 
   const pushNotification = jest.fn();
   mockNotifications(pushNotification);

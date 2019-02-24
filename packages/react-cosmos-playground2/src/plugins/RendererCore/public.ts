@@ -9,10 +9,6 @@ import {
 
 export type RendererCoreSpec = {
   name: 'rendererCore';
-  config: {
-    webUrl: null | string;
-    enableRemote: boolean;
-  };
   state: {
     connectedRendererIds: RendererId[];
     primaryRendererId: null | RendererId;
@@ -20,8 +16,6 @@ export type RendererCoreSpec = {
     fixtureState: null | FixtureState;
   };
   methods: {
-    getWebUrl(): null | string;
-    remoteRenderersEnabled(): boolean;
     getConnectedRendererIds(): RendererId[];
     getPrimaryRendererId(): null | RendererId;
     getFixtures(): FixtureNamesByPath;

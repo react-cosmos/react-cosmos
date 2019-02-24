@@ -6,6 +6,7 @@ import {
 } from 'react-cosmos-shared2/renderer';
 import { mockWebSockets } from '../testHelpers/mockWebSockets';
 import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
+import { CoreSpec } from '../../Core/public';
 import { RendererCoreSpec } from '../../RendererCore/public';
 import { register } from '..';
 
@@ -14,9 +15,10 @@ afterEach(cleanup);
 it('posts renderer request message via websockets', async () => {
   register();
 
-  mockMethodsOf<RendererCoreSpec>('rendererCore', {
-    remoteRenderersEnabled: () => true
+  mockMethodsOf<CoreSpec>('core', {
+    isDevServerOn: () => true
   });
+  mockMethodsOf<RendererCoreSpec>('rendererCore', {});
 
   loadPlugins();
 
@@ -41,9 +43,12 @@ it('posts renderer request message via websockets', async () => {
 it('sends renderer response message from websocket event to renderer core', async () => {
   register();
 
+  mockMethodsOf<CoreSpec>('core', {
+    isDevServerOn: () => true
+  });
+
   const receiveResponse = jest.fn();
   mockMethodsOf<RendererCoreSpec>('rendererCore', {
-    remoteRenderersEnabled: () => true,
     receiveResponse
   });
 
@@ -71,8 +76,8 @@ it('sends renderer response message from websocket event to renderer core', asyn
 it('posts "requestFixtureList" renderer request on mount', async () => {
   register();
 
-  mockMethodsOf<RendererCoreSpec>('rendererCore', {
-    remoteRenderersEnabled: () => true
+  mockMethodsOf<CoreSpec>('core', {
+    isDevServerOn: () => true
   });
 
   loadPlugins();

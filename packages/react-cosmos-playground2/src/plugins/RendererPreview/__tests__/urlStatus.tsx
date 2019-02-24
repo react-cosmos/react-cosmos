@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { wait, render } from 'react-testing-library';
 import { loadPlugins, Slot } from 'react-plugin';
-import { RendererCoreSpec } from '../../RendererCore/public';
+import { CoreSpec } from '../../Core/public';
 import { cleanup, getState, mockMethodsOf } from '../../../testHelpers/plugin';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { RendererPreviewSpec } from '../public';
@@ -11,8 +11,8 @@ afterEach(cleanup);
 
 function registerTestPlugins() {
   register();
-  mockMethodsOf<RendererCoreSpec>('rendererCore', {
-    getWebUrl: () => 'mockRendererUrl'
+  mockMethodsOf<CoreSpec>('core', {
+    getWebRendererUrl: () => 'mockRendererUrl'
   });
 }
 

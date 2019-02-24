@@ -1,5 +1,6 @@
 import { createPlugin } from 'react-plugin';
 import { createArrayPlug } from '../../shared/slot';
+import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { NotificationsSpec } from './../Notifications/public';
 import { RendererRemoteSpec } from './public';
@@ -20,11 +21,11 @@ plug({
   slotName: 'fixtureActions',
   render: createArrayPlug<RemoteButtonProps>('fixtureActions', RemoteButton),
   getProps: ({ getMethodsOf }) => {
-    const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
+    const core = getMethodsOf<CoreSpec>('core');
     const notifications = getMethodsOf<NotificationsSpec>('notifications');
     return {
-      remoteRenderersEnabled: rendererCore.remoteRenderersEnabled(),
-      webRendererUrl: rendererCore.getWebUrl(),
+      devServerOn: core.isDevServerOn(),
+      webRendererUrl: core.getWebRendererUrl(),
       pushNotification: notifications.pushNotification
     };
   }

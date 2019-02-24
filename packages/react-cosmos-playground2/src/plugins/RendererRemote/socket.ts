@@ -4,6 +4,7 @@ import {
   RENDERER_MESSAGE_EVENT_NAME
 } from 'react-cosmos-shared2/renderer';
 import * as io from 'socket.io-client';
+import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { Context } from './shared';
 
@@ -14,9 +15,9 @@ export function onRendererRequest(context: Context, msg: RendererRequest) {
 }
 
 export function initSocket({ getMethodsOf }: Context) {
-  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
+  const core = getMethodsOf<CoreSpec>('core');
 
-  if (!rendererCore.remoteRenderersEnabled()) {
+  if (!core.isDevServerOn()) {
     return;
   }
 
@@ -37,6 +38,7 @@ export function initSocket({ getMethodsOf }: Context) {
 
   function handleMessage(msg: {}) {
     // TODO: Validate message payload
+    const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
     rendererCore.receiveResponse(msg as RendererResponse);
   }
 }

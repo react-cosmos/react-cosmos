@@ -10,10 +10,6 @@ import { Context } from './shared';
 
 const { on, register } = createPlugin<RendererCoreSpec>({
   name: 'rendererCore',
-  defaultConfig: {
-    webUrl: null,
-    enableRemote: false
-  },
   initialState: {
     connectedRendererIds: [],
     primaryRendererId: null,
@@ -21,8 +17,6 @@ const { on, register } = createPlugin<RendererCoreSpec>({
     fixtureState: null
   },
   methods: {
-    getWebUrl,
-    remoteRenderersEnabled,
     getConnectedRendererIds,
     getPrimaryRendererId,
     getFixtures,
@@ -38,14 +32,6 @@ const { on, register } = createPlugin<RendererCoreSpec>({
 on<RouterSpec>('router', { fixtureChange: onRouterFixtureChange });
 
 export { register };
-
-function getWebUrl({ getConfig }: Context) {
-  return getConfig().webUrl;
-}
-
-function remoteRenderersEnabled({ getConfig }: Context) {
-  return getConfig().enableRemote;
-}
 
 function getConnectedRendererIds({ getState }: Context) {
   return getState().connectedRendererIds;

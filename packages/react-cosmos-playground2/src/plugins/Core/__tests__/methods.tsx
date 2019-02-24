@@ -8,7 +8,9 @@ afterEach(cleanup);
 const coreConfig: CoreSpec['config'] = {
   projectId: 'mockProjectId',
   fixturesDir: 'mockFixturesDir',
-  fixtureFileSuffix: 'mockFixturesFileSuffix'
+  fixtureFileSuffix: 'mockFixturesFileSuffix',
+  devServerOn: true,
+  webRendererUrl: 'mockWebUrl'
 };
 
 function loadTestPlugins() {
@@ -36,4 +38,16 @@ it('returns fixture file vars', () => {
     fixturesDir: 'mockFixturesDir',
     fixtureFileSuffix: 'mockFixturesFileSuffix'
   });
+});
+
+it('returns dev server on flag', () => {
+  register();
+  loadTestPlugins();
+  expect(getCoreMethods().isDevServerOn()).toBe(true);
+});
+
+it('returns web renderer URL', () => {
+  register();
+  loadTestPlugins();
+  expect(getCoreMethods().getWebRendererUrl()).toBe('mockWebUrl');
 });

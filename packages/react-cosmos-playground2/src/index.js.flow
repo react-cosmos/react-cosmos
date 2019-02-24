@@ -1,17 +1,11 @@
 // @flow
 
-export type CoreConfig = {
-  projectId: string,
-  fixturesDir: string,
-  fixtureFileSuffix: string
-};
-
-export type RendererCoreConfig = {
-  webUrl: null | string,
-  enableRemote: boolean
-};
-
 export type PlaygroundConfig = {
-  core: CoreConfig,
-  rendererCore: RendererCoreConfig
+  core: {
+    projectId: string,
+    fixturesDir: string,
+    fixtureFileSuffix: string,
+    devServerOn: boolean,
+    webRendererUrl: null | string
+  }
 };

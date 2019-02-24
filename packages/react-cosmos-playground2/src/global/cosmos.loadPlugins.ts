@@ -8,11 +8,9 @@ loadPlugins({
     core: {
       projectId: 'testProjectId',
       fixturesDir: '__jsxfixtures__',
-      fixtureFileSuffix: 'jsxfixture'
-    },
-    rendererCore: {
-      webUrl: '/_loader.html',
-      enableRemote: false
+      fixtureFileSuffix: 'jsxfixture',
+      devServerOn: false,
+      webRendererUrl: '/_loader.html'
     }
   }
 });

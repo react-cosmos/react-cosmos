@@ -1,4 +1,5 @@
 import { createPlugin } from 'react-plugin';
+import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { checkRendererStatus } from './checkRendererStatus';
 import { createRendererRequestHandler } from './handleRendererRequests';
@@ -62,5 +63,5 @@ function getRendererPreviewProps(context: Context, onIframeRef: OnIframeRef) {
 }
 
 function getRendererUrl({ getMethodsOf }: Context) {
-  return getMethodsOf<RendererCoreSpec>('rendererCore').getWebUrl();
+  return getMethodsOf<CoreSpec>('core').getWebRendererUrl();
 }
