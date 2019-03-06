@@ -2,7 +2,7 @@ import { createPlugin } from 'react-plugin';
 import { createArrayPlug } from '../../shared/slot';
 import { Notifications, NotificationsProps } from './Notifications';
 import { NotificationsSpec } from './public';
-import { pushNotification } from './pushNotification';
+import { pushNotification, cancelNotification } from './pushNotification';
 
 const { register, onLoad, plug } = createPlugin<NotificationsSpec>({
   name: 'notifications',
@@ -17,7 +17,9 @@ const { register, onLoad, plug } = createPlugin<NotificationsSpec>({
 onLoad(context => {
   return () => {
     const { notifications } = context.getState();
-    notifications.forEach(({ timeoutId }) => clearTimeout(timeoutId));
+    notifications.forEach(notification =>
+      cancelNotification(context, notification)
+    );
   };
 });
 
