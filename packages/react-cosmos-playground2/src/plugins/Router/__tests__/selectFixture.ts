@@ -1,12 +1,7 @@
 import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
 import { getUrlParams, resetUrl } from '../../../testHelpers/url';
-import {
-  cleanup,
-  getState,
-  getMethodsOf,
-  on
-} from '../../../testHelpers/plugin';
+import { cleanup, getMethodsOf, on } from '../../../testHelpers/plugin';
 import { RouterSpec } from '../public';
 import { register } from '..';
 
@@ -21,21 +16,22 @@ function getRouterMethods() {
   return getMethodsOf<RouterSpec>('router');
 }
 
-function getRouterState() {
-  return getState<RouterSpec>('router');
-}
-
-it('sets "router" state', async () => {
+it('updates selected fixture ID', async () => {
   register();
   loadPlugins();
-  getRouterMethods().selectFixture(fixtureId, false);
+  const router = getRouterMethods();
+  router.selectFixture(fixtureId, false);
 
-  await wait(() =>
-    expect(getRouterState().urlParams).toEqual({
-      fixtureId,
-      fullScreen: false
-    })
-  );
+  await wait(() => expect(router.getSelectedFixtureId()).toBe(fixtureId));
+});
+
+it('updates fullscreen state', async () => {
+  register();
+  loadPlugins();
+  const router = getRouterMethods();
+  router.selectFixture(fixtureId, false);
+
+  await wait(() => expect(router.isFullScreen()).toBe(false));
 });
 
 it('sets URL params', async () => {

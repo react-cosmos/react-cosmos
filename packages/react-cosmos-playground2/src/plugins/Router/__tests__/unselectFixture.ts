@@ -5,12 +5,7 @@ import {
   pushUrlParams,
   resetUrl
 } from '../../../testHelpers/url';
-import {
-  cleanup,
-  getState,
-  getMethodsOf,
-  on
-} from '../../../testHelpers/plugin';
+import { cleanup, getMethodsOf, on } from '../../../testHelpers/plugin';
 import { RouterSpec } from '../public';
 import { register } from '..';
 
@@ -30,16 +25,13 @@ function getRouterMethods() {
   return getMethodsOf<RouterSpec>('router');
 }
 
-function getRouterState() {
-  return getState<RouterSpec>('router');
-}
-
-it('sets "router" state', async () => {
+it('updates selected fixture ID', async () => {
   register();
   loadTestPlugins();
-  getRouterMethods().unselectFixture();
+  const router = getRouterMethods();
+  router.unselectFixture();
 
-  await wait(() => expect(getRouterState().urlParams).toEqual({}));
+  await wait(() => expect(router.getSelectedFixtureId()).toEqual(null));
 });
 
 it('sets URL params', async () => {
