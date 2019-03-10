@@ -76,7 +76,7 @@ async function waitForMainPlug({ getByTestId }: RenderResult) {
   await waitForElement(() => getByTestId('responsivePreview'));
 }
 
-async function enableResponsiveMode({ getByText }: RenderResult) {
+async function toggleResponsiveMode({ getByText }: RenderResult) {
   fireEvent.click(await waitForElement(() => getByText(/responsive/i)));
 }
 
@@ -91,7 +91,7 @@ it('renders children of "rendererPreviewOuter" slot', async () => {
   mockRendererCore(true);
 
   const renderer = loadTestPlugins();
-  await enableResponsiveMode(renderer);
+  await toggleResponsiveMode(renderer);
   await wait(() => renderer.getByTestId('previewMock'));
 });
 
@@ -124,7 +124,7 @@ it('renders responsive header', async () => {
   mockRendererCore(true);
 
   const renderer = loadTestPlugins();
-  await enableResponsiveMode(renderer);
+  await toggleResponsiveMode(renderer);
   await waitForElement(() => renderer.getByTestId('responsiveHeader'));
 });
 
@@ -135,7 +135,7 @@ it('renders responsive device labels', async () => {
   mockRendererCore(true);
 
   const renderer = loadTestPlugins();
-  await enableResponsiveMode(renderer);
+  await toggleResponsiveMode(renderer);
   for (const device of DEFAULT_DEVICES) {
     await waitForElement(() => renderer.getByText(device.label));
   }
@@ -154,7 +154,7 @@ describe('on device select', () => {
     });
 
     const renderer = loadTestPlugins();
-    await enableResponsiveMode(renderer);
+    await toggleResponsiveMode(renderer);
     await selectViewport(renderer, /iphone 6 plus/i);
 
     await wait(() =>
@@ -175,11 +175,32 @@ describe('on device select', () => {
     mockRendererCore(true);
 
     const renderer = loadTestPlugins();
-    await enableResponsiveMode(renderer);
+    await toggleResponsiveMode(renderer);
     await selectViewport(renderer, /iphone 6 plus/i);
 
     await wait(() =>
       expect(storage[storageKey]).toEqual({ width: 414, height: 736 })
     );
   });
+});
+
+it('clears viewport in fixture states on untoggle', async () => {
+  registerTestPlugins();
+  mockStorage();
+  mockRouter();
+  mockRendererCore(true);
+
+  let fixtureState: null | FixtureState = null;
+  mockRendererCore(true, (context, stateChange) => {
+    fixtureState = updateState(fixtureState, stateChange);
+  });
+
+  const renderer = loadTestPlugins();
+  await toggleResponsiveMode(renderer);
+  await selectViewport(renderer, /iphone 6 plus/i);
+  await toggleResponsiveMode(renderer);
+
+  await wait(() =>
+    expect((fixtureState as IFixtureStateWithViewport).viewport).toEqual(null)
+  );
 });
