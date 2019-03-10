@@ -1,6 +1,10 @@
 import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
-import { getUrlParams, resetUrl } from '../../../testHelpers/url';
+import {
+  getUrlParams,
+  pushUrlParams,
+  resetUrl
+} from '../../../testHelpers/url';
 import {
   cleanup,
   getState,
@@ -16,14 +20,10 @@ afterEach(() => {
 });
 
 const fixtureId = { path: 'zwei.js', name: null };
-const routerState: RouterSpec['state'] = { urlParams: { fixtureId } };
 
 function loadTestPlugins() {
-  loadPlugins({
-    state: {
-      router: routerState
-    }
-  });
+  pushUrlParams({ fixtureId: JSON.stringify(fixtureId) });
+  loadPlugins();
 }
 
 function getRouterMethods() {
