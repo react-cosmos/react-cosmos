@@ -1,118 +1,133 @@
 import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
-import { RendererId } from 'react-cosmos-shared2/renderer';
-import {
-  cleanup,
-  getMethodsOf,
-  getState,
-  mockMethodsOf
-} from '../../../../testHelpers/plugin';
+import { cleanup, mockMethodsOf } from '../../../../testHelpers/plugin';
 import { NotificationsSpec } from '../../../Notifications/public';
 import { RouterSpec } from '../../../Router/public';
-import { createRendererReadyResponse } from '../../testHelpers';
-import { State } from '../../shared';
-import { RendererCoreSpec } from '../../public';
+import {
+  getRendererCoreMethods,
+  connectRenderer,
+  changeFixtureState
+} from '../../testHelpers';
 import { register } from '../..';
 
 afterEach(cleanup);
 
 const fixtures = { 'ein.js': null };
+const fixtureId = { path: 'zwei.js', name: null };
 const fixtureState = { components: [] };
 
 function registerTestPlugins() {
   register();
   mockMethodsOf<RouterSpec>('router', {
-    getSelectedFixtureId: () => null
+    getSelectedFixtureId: () => fixtureId
   });
   mockMethodsOf<NotificationsSpec>('notifications', {
     pushNotification: () => {}
   });
 }
 
-function loadTestPlugins(state?: State) {
-  loadPlugins({ state: { rendererCore: state } });
+function loadTestPlugins() {
+  loadPlugins();
 }
 
-function mockRendererReadyResponse(rendererId: RendererId) {
-  const methods = getMethodsOf<RendererCoreSpec>('rendererCore');
-  methods.receiveResponse(createRendererReadyResponse(rendererId, fixtures));
-}
+describe('single renderer', () => {
+  function setup() {
+    registerTestPlugins();
+    loadTestPlugins();
+    connectRenderer('mockRendererId1', fixtures);
+  }
 
-function getRendererCoreState() {
-  return getState<RendererCoreSpec>('rendererCore');
-}
-
-it('creates renderer state', async () => {
-  registerTestPlugins();
-  loadTestPlugins();
-
-  mockRendererReadyResponse('mockRendererId1');
-
-  await wait(() =>
-    expect(getRendererCoreState()).toEqual({
-      connectedRendererIds: ['mockRendererId1'],
-      primaryRendererId: 'mockRendererId1',
-      fixtures,
-      fixtureState: null
-    })
-  );
-});
-
-it('creates multi-renderer state', async () => {
-  registerTestPlugins();
-  loadTestPlugins();
-
-  mockRendererReadyResponse('mockRendererId1');
-  mockRendererReadyResponse('mockRendererId2');
-
-  await wait(() =>
-    expect(getRendererCoreState()).toEqual({
-      connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
-      primaryRendererId: 'mockRendererId1',
-      fixtures,
-      fixtureState: null
-    })
-  );
-});
-
-it('keeps fixtures state when secondary renderer connects', async () => {
-  registerTestPlugins();
-  loadTestPlugins({
-    connectedRendererIds: ['mockRendererId1'],
-    primaryRendererId: 'mockRendererId1',
-    fixtures,
-    fixtureState
+  it('sets connected renderer IDs', async () => {
+    setup();
+    await wait(() =>
+      expect(getRendererCoreMethods().getConnectedRendererIds()).toEqual([
+        'mockRendererId1'
+      ])
+    );
   });
 
-  mockRendererReadyResponse('mockRendererId2');
-
-  await wait(() =>
-    expect(getRendererCoreState()).toEqual({
-      connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
-      primaryRendererId: 'mockRendererId1',
-      fixtures,
-      fixtureState
-    })
-  );
-});
-
-it('resets fixtures state when primary renderer re-connects', async () => {
-  registerTestPlugins();
-  loadTestPlugins({
-    connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
-    primaryRendererId: 'mockRendererId1',
-    fixtures,
-    fixtureState
+  it('sets primary renderer ID', async () => {
+    setup();
+    await wait(() =>
+      expect(getRendererCoreMethods().getPrimaryRendererId()).toEqual(
+        'mockRendererId1'
+      )
+    );
   });
 
-  mockRendererReadyResponse('mockRendererId1');
+  it('sets fixtures', async () => {
+    setup();
+    await wait(() =>
+      expect(getRendererCoreMethods().getFixtures()).toEqual(fixtures)
+    );
+  });
 
-  await wait(() =>
-    expect(getRendererCoreState()).toEqual({
-      connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
-      primaryRendererId: 'mockRendererId1',
-      fixtures,
-      fixtureState: null
-    })
-  );
+  it('sets null fixture state', async () => {
+    setup();
+    await wait(() =>
+      expect(getRendererCoreMethods().getFixtureState()).toBeNull()
+    );
+  });
+
+  it('keeps fixtures state when secondary renderer connects', async () => {
+    setup();
+    changeFixtureState('mockRendererId1', fixtureId, fixtureState);
+    connectRenderer('mockRendererId2', fixtures);
+
+    await wait(() =>
+      expect(getRendererCoreMethods().getFixtureState()).toEqual(fixtureState)
+    );
+  });
+});
+
+describe('multi renderers', () => {
+  function setup() {
+    registerTestPlugins();
+    loadTestPlugins();
+    connectRenderer('mockRendererId1', fixtures);
+    connectRenderer('mockRendererId2', fixtures);
+    changeFixtureState('mockRendererId1', fixtureId, fixtureState);
+  }
+
+  it('sets connected renderer IDs', async () => {
+    setup();
+    await wait(() =>
+      expect(getRendererCoreMethods().getConnectedRendererIds()).toEqual([
+        'mockRendererId1',
+        'mockRendererId2'
+      ])
+    );
+  });
+
+  it('sets primary renderer ID', async () => {
+    setup();
+    await wait(() =>
+      expect(getRendererCoreMethods().getPrimaryRendererId()).toEqual(
+        'mockRendererId1'
+      )
+    );
+  });
+
+  it('sets fixtures', async () => {
+    setup();
+    await wait(() =>
+      expect(getRendererCoreMethods().getFixtures()).toEqual(fixtures)
+    );
+  });
+
+  it('sets fixture state', async () => {
+    setup();
+    await wait(() =>
+      expect(getRendererCoreMethods().getFixtureState()).toEqual(fixtureState)
+    );
+  });
+
+  it('resets fixtures state when primary renderer re-connects', async () => {
+    setup();
+    connectRenderer('mockRendererId1', fixtures);
+
+    await wait(() =>
+      expect(getRendererCoreMethods().getFixtureState()).toBeNull()
+    );
+  });
 });

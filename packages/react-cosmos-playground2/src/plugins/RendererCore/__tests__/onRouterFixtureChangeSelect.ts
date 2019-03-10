@@ -1,29 +1,31 @@
+import { NotificationsSpec } from './../../Notifications/public';
 import { wait } from 'react-testing-library';
 import { loadPlugins, getPluginContext } from 'react-plugin';
 import { cleanup, on, mockMethodsOf } from '../../../testHelpers/plugin';
 import { RouterSpec } from '../../Router/public';
+import { connectRenderer, getRendererCoreMethods } from '../testHelpers';
 import { RendererCoreSpec } from '../public';
-import { State } from '../shared';
 import { register } from '..';
 
 afterEach(cleanup);
 
-const state: State = {
-  connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
-  primaryRendererId: 'mockRendererId1',
-  fixtures: {},
-  fixtureState: { components: [] }
-};
+const fixtures = {};
 
 function registerTestPlugins() {
   register();
   mockMethodsOf<RouterSpec>('router', {
     getSelectedFixtureId: () => null
   });
+  mockMethodsOf<NotificationsSpec>('notifications', {
+    pushNotification: () => {}
+  });
 }
 
 function loadTestPlugins() {
-  loadPlugins({ state: { rendererCore: state } });
+  loadPlugins();
+  connectRenderer('mockRendererId1', fixtures);
+  connectRenderer('mockRendererId2', fixtures);
+  getRendererCoreMethods().selectPrimaryRenderer('mockRendererId2');
 }
 
 function emitRouterFixtureChange() {

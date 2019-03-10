@@ -1,15 +1,9 @@
 import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
-import { RendererId } from 'react-cosmos-shared2/renderer';
-import {
-  cleanup,
-  getMethodsOf,
-  mockMethodsOf
-} from '../../../../testHelpers/plugin';
+import { cleanup, mockMethodsOf } from '../../../../testHelpers/plugin';
 import { RouterSpec } from '../../../Router/public';
 import { NotificationsSpec } from '../../../Notifications/public';
-import { createRendererReadyResponse } from '../../testHelpers';
-import { RendererCoreSpec } from '../../public';
+import { connectRenderer } from '../../testHelpers';
 import { register } from '../..';
 
 afterEach(cleanup);
@@ -21,11 +15,6 @@ function registerTestPlugins() {
   });
 }
 
-function mockRendererReadyResponse(rendererId: RendererId) {
-  const methods = getMethodsOf<RendererCoreSpec>('rendererCore');
-  methods.receiveResponse(createRendererReadyResponse(rendererId, {}));
-}
-
 it('notifies renderer connection', async () => {
   registerTestPlugins();
 
@@ -35,7 +24,7 @@ it('notifies renderer connection', async () => {
   });
 
   loadPlugins();
-  mockRendererReadyResponse('mockRendererId1');
+  connectRenderer('mockRendererId1', {});
 
   await wait(() =>
     expect(pushNotification).toBeCalledWith(expect.any(Object), {

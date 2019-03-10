@@ -1,30 +1,39 @@
+import { NotificationsSpec } from './../../Notifications/public';
 import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import {
   cleanup,
-  getState,
   on,
   getMethodsOf,
   mockMethodsOf
 } from '../../../testHelpers/plugin';
 import { RouterSpec } from '../../Router/public';
+import {
+  connectRenderer,
+  getRendererCoreMethods,
+  changeFixtureState
+} from '../testHelpers';
 import { RendererCoreSpec } from '../public';
-import { State } from '../shared';
 import { register } from '..';
 
 afterEach(cleanup);
 
-const state: State = {
-  connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
-  primaryRendererId: 'mockRendererId1',
-  fixtures: { 'ein.js': null, 'zwei.js': null, 'drei.js': null },
-  fixtureState: { components: [] }
-};
+const fixtures = { 'ein.js': null, 'zwei.js': null, 'drei.js': null };
+const fixtureId = { path: 'zwei.js', name: null };
+const fixtureState = { components: [] };
 const expectedFixtureState = {
   components: [],
   viewport: { width: 640, height: 480 }
 };
+
+function registerTestPlugins() {
+  register();
+  mockSelectedFixture();
+  mockMethodsOf<NotificationsSpec>('notifications', {
+    pushNotification: () => {}
+  });
+}
 
 function mockSelectedFixture() {
   mockMethodsOf<RouterSpec>('router', {
@@ -33,7 +42,10 @@ function mockSelectedFixture() {
 }
 
 function loadTestPlugins() {
-  loadPlugins({ state: { rendererCore: state } });
+  loadPlugins();
+  connectRenderer('mockRendererId2', fixtures);
+  connectRenderer('mockRendererId1', fixtures);
+  changeFixtureState('mockRendererId2', fixtureId, fixtureState);
 }
 
 function mockSetFixtureStateCall() {
@@ -46,22 +58,19 @@ function mockSetFixtureStateCall() {
 }
 
 it('sets fixture state in plugin state', async () => {
-  register();
-  mockSelectedFixture();
-
+  registerTestPlugins();
   loadTestPlugins();
   mockSetFixtureStateCall();
 
   await wait(() =>
-    expect(getState<RendererCoreSpec>('rendererCore').fixtureState).toEqual(
+    expect(getRendererCoreMethods().getFixtureState()).toEqual(
       expectedFixtureState
     )
   );
 });
 
 it('posts "setFixtureState" renderer requests', async () => {
-  register();
-  mockSelectedFixture();
+  registerTestPlugins();
 
   const request = jest.fn();
   on<RendererCoreSpec>('rendererCore', { request });

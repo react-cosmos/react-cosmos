@@ -1,29 +1,40 @@
 import { loadPlugins } from 'react-plugin';
-import { cleanup, getMethodsOf } from '../../../testHelpers/plugin';
-import { RendererCoreSpec } from '../public';
+import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
+import { NotificationsSpec } from '../../Notifications/public';
+import {
+  connectRenderer,
+  getRendererCoreMethods,
+  changeFixtureState
+} from '../testHelpers';
+import { RouterSpec } from '../../Router/public';
 import { register } from '..';
 
 afterEach(cleanup);
 
-const rendererCoreState: RendererCoreSpec['state'] = {
-  connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
-  primaryRendererId: 'mockRendererId2',
-  fixtures: { 'ein.js': null, 'zwei.js': null, 'drei.js': null },
-  fixtureState: { components: [] }
-};
+const fixtures = { 'ein.js': null, 'zwei.js': null, 'drei.js': null };
+const fixtureId = { path: 'foo.js', name: null };
+const fixtureState = { components: [] };
 
-function loadTestPlugins() {
-  loadPlugins({
-    state: { rendererCore: rendererCoreState }
+function registerTestPlugins() {
+  register();
+  mockMethodsOf<RouterSpec>('router', {
+    getSelectedFixtureId: () => fixtureId
+  });
+  mockMethodsOf<NotificationsSpec>('notifications', {
+    pushNotification: () => {}
   });
 }
 
-function getRendererCoreMethods() {
-  return getMethodsOf<RendererCoreSpec>('rendererCore');
+function loadTestPlugins() {
+  loadPlugins();
+  connectRenderer('mockRendererId1', fixtures);
+  connectRenderer('mockRendererId2', fixtures);
+  getRendererCoreMethods().selectPrimaryRenderer('mockRendererId2');
+  changeFixtureState('mockRendererId2', fixtureId, fixtureState);
 }
 
 it('returns connected renderer IDs', () => {
-  register();
+  registerTestPlugins();
   loadTestPlugins();
   expect(getRendererCoreMethods().getConnectedRendererIds()).toEqual([
     'mockRendererId1',
@@ -32,7 +43,7 @@ it('returns connected renderer IDs', () => {
 });
 
 it('returns primary renderer ID', () => {
-  register();
+  registerTestPlugins();
   loadTestPlugins();
   expect(getRendererCoreMethods().getPrimaryRendererId()).toEqual(
     'mockRendererId2'
@@ -40,7 +51,7 @@ it('returns primary renderer ID', () => {
 });
 
 it('returns fixtures', () => {
-  register();
+  registerTestPlugins();
   loadTestPlugins();
   expect(getRendererCoreMethods().getFixtures()).toEqual({
     'ein.js': null,
@@ -50,7 +61,7 @@ it('returns fixtures', () => {
 });
 
 it('returns fixture state', () => {
-  register();
+  registerTestPlugins();
   loadTestPlugins();
   expect(getRendererCoreMethods().getFixtureState()).toEqual({
     components: []
