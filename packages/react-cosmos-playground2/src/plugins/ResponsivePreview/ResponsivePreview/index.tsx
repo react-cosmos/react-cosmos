@@ -170,7 +170,7 @@ function getViewport(
   );
 }
 
-const Container = styled.div`
+const Container = styled.div.attrs({ 'data-testid': 'responsivePreview' })`
   flex: 1;
   display: flex;
   flex-direction: column;

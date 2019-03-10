@@ -1,5 +1,11 @@
 import * as React from 'react';
-import { wait, render, fireEvent } from 'react-testing-library';
+import {
+  wait,
+  render,
+  waitForElement,
+  fireEvent,
+  RenderResult
+} from 'react-testing-library';
 import { loadPlugins, Slot } from 'react-plugin';
 import { updateState } from 'react-cosmos-shared2/util';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
@@ -30,6 +36,7 @@ function registerTestPlugins() {
 
 function mockStorage(storage: StorageMock = {}) {
   mockMethodsOf<StorageSpec>('storage', {
+    getItem: (context, key) => Promise.resolve(storage[key]),
     setItem: (context, key, value) => {
       storage[key] = value;
       return Promise.resolve();
@@ -55,72 +62,84 @@ function mockRendererCore(
 }
 
 function loadTestPlugins() {
-  loadPlugins({
-    state: {
-      responsivePreview: {
-        enabled: true,
-        viewport: { width: 320, height: 480 }
-      }
-    }
-  });
-
+  loadPlugins();
   return render(
-    <Slot name="rendererPreviewOuter">
-      <div data-testid="previewMock" />
-    </Slot>
+    <>
+      <Slot name="fixtureActions" />
+      <Slot name="rendererPreviewOuter">
+        <div data-testid="previewMock" />
+      </Slot>
+    </>
   );
 }
 
-it('renders children of "rendererPreviewOuter" slot', () => {
+async function waitForMainPlug({ getByTestId }: RenderResult) {
+  await waitForElement(() => getByTestId('responsivePreview'));
+}
+
+async function enableResponsiveMode({ getByText }: RenderResult) {
+  fireEvent.click(await waitForElement(() => getByText(/responsive/i)));
+}
+
+async function selectViewport({ getByText }: RenderResult, match: RegExp) {
+  fireEvent.click(await waitForElement(() => getByText(match)));
+}
+
+it('renders children of "rendererPreviewOuter" slot', async () => {
+  registerTestPlugins();
+  mockStorage();
+  mockRouter();
+  mockRendererCore(true);
+
+  const renderer = loadTestPlugins();
+  await enableResponsiveMode(renderer);
+  await wait(() => renderer.getByTestId('previewMock'));
+});
+
+it('does not render responsive header when no fixture is selected', async () => {
   registerTestPlugins();
   mockStorage();
   mockRouter();
   mockRendererCore(false);
 
-  const { getByTestId } = loadTestPlugins();
-  getByTestId('previewMock');
+  const renderer = loadTestPlugins();
+  await waitForMainPlug(renderer);
+  expect(renderer.queryByTestId('responsiveHeader')).toBeNull();
 });
 
-it('does not render responsive header when no fixture is selected', () => {
-  registerTestPlugins();
-  mockStorage();
-  mockRouter();
-  mockRendererCore(false);
-
-  const { queryByTestId } = loadTestPlugins();
-  expect(queryByTestId('responsiveHeader')).toBeNull();
-});
-
-it('does not render responsive header in full screen mode', () => {
+it('does not render responsive header in full screen mode', async () => {
   registerTestPlugins();
   mockStorage();
   mockRouter(true);
   mockRendererCore(true);
 
-  const { queryByTestId } = loadTestPlugins();
-  expect(queryByTestId('responsiveHeader')).toBeNull();
+  const renderer = loadTestPlugins();
+  await waitForMainPlug(renderer);
+  expect(renderer.queryByTestId('responsiveHeader')).toBeNull();
 });
 
-it('renders responsive header', () => {
+it('renders responsive header', async () => {
   registerTestPlugins();
   mockStorage();
   mockRouter();
   mockRendererCore(true);
 
-  const { getByTestId } = loadTestPlugins();
-  getByTestId('responsiveHeader');
+  const renderer = loadTestPlugins();
+  await enableResponsiveMode(renderer);
+  await waitForElement(() => renderer.getByTestId('responsiveHeader'));
 });
 
-it('renders responsive device labels', () => {
+it('renders responsive device labels', async () => {
   registerTestPlugins();
   mockStorage();
   mockRouter();
   mockRendererCore(true);
 
-  const { getByText } = loadTestPlugins();
-  DEFAULT_DEVICES.forEach(({ label }) => {
-    getByText(label);
-  });
+  const renderer = loadTestPlugins();
+  await enableResponsiveMode(renderer);
+  for (const device of DEFAULT_DEVICES) {
+    await waitForElement(() => renderer.getByText(device.label));
+  }
 });
 
 describe('on device select', () => {
@@ -130,8 +149,9 @@ describe('on device select', () => {
     mockRouter();
     mockRendererCore(true);
 
-    const { getByText } = loadTestPlugins();
-    fireEvent.click(getByText(/iphone 6 plus/i));
+    const renderer = loadTestPlugins();
+    await enableResponsiveMode(renderer);
+    await selectViewport(renderer, /iphone 6 plus/i);
 
     await wait(() =>
       expect(getState<ResponsivePreviewSpec>('responsivePreview')).toEqual({
@@ -152,8 +172,9 @@ describe('on device select', () => {
       fixtureState = updateState(fixtureState, stateChange);
     });
 
-    const { getByText } = loadTestPlugins();
-    fireEvent.click(getByText(/iphone 6 plus/i));
+    const renderer = loadTestPlugins();
+    await enableResponsiveMode(renderer);
+    await selectViewport(renderer, /iphone 6 plus/i);
 
     await wait(() =>
       expect((fixtureState as IFixtureStateWithViewport).viewport).toEqual({
@@ -172,8 +193,9 @@ describe('on device select', () => {
     mockRouter();
     mockRendererCore(true);
 
-    const { getByText } = loadTestPlugins();
-    fireEvent.click(getByText(/iphone 6 plus/i));
+    const renderer = loadTestPlugins();
+    await enableResponsiveMode(renderer);
+    await selectViewport(renderer, /iphone 6 plus/i);
 
     await wait(() =>
       expect(storage[storageKey]).toEqual({ width: 414, height: 736 })
