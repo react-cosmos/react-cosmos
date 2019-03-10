@@ -14,10 +14,6 @@ export function cleanup() {
   resetPlugins();
 }
 
-export function getState<Spec extends PluginSpec>(pluginName: Spec['name']) {
-  return getPluginContext<Spec>(pluginName).getState();
-}
-
 export function getMethodsOf<Spec extends PluginSpec>(
   pluginName: Spec['name']
 ) {

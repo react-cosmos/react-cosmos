@@ -1,36 +1,37 @@
+import { NotificationsSpec } from './../../Notifications/public';
 import { loadPlugins } from 'react-plugin';
-import { cleanup, getMethodsOf } from '../../../testHelpers/plugin';
-import { RendererCoreSpec } from '../public';
-import { State } from '../shared';
+import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
+import { getRendererCoreMethods, connectRenderer } from '../testHelpers';
 import { register } from '..';
+import { RouterSpec } from '../../Router/public';
 
 afterEach(cleanup);
 
-function loadTestPlugins(state?: State) {
-  loadPlugins({ state: { rendererCore: state } });
+function registerTestPlugins() {
+  register();
+  mockMethodsOf<RouterSpec>('router', {
+    getSelectedFixtureId: () => null
+  });
+  mockMethodsOf<NotificationsSpec>('notifications', {
+    pushNotification: () => {}
+  });
 }
 
 function isRendererConnected() {
-  return getMethodsOf<RendererCoreSpec>('rendererCore').isRendererConnected();
+  return getRendererCoreMethods().isRendererConnected();
 }
 
 it('returns false', async () => {
-  register();
-  loadTestPlugins();
+  registerTestPlugins();
+  loadPlugins();
 
   expect(isRendererConnected()).toBe(false);
 });
 
 it('returns true', async () => {
-  register();
-
-  const rendererId = 'mockRendererId';
-  loadTestPlugins({
-    connectedRendererIds: [rendererId],
-    primaryRendererId: rendererId,
-    fixtures: {},
-    fixtureState: null
-  });
+  registerTestPlugins();
+  loadPlugins();
+  connectRenderer('mockRendererId', {});
 
   expect(isRendererConnected()).toBe(true);
 });
