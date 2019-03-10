@@ -9,12 +9,11 @@ import {
 import { loadPlugins, Slot } from 'react-plugin';
 import { updateState } from 'react-cosmos-shared2/util';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import { cleanup, getState, mockMethodsOf } from '../../../testHelpers/plugin';
+import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
 import { StorageSpec } from '../../Storage/public';
 import { RouterSpec } from '../../Router/public';
 import { CoreSpec } from '../../Core/public';
 import { RendererCoreSpec } from '../../RendererCore/public';
-import { ResponsivePreviewSpec } from '../public';
 import { DEFAULT_DEVICES, getResponsiveViewportStorageKey } from '../shared';
 import {
   IFixtureStateWithViewport,
@@ -143,24 +142,6 @@ it('renders responsive device labels', async () => {
 });
 
 describe('on device select', () => {
-  it('sets "responsive-preview" state', async () => {
-    registerTestPlugins();
-    mockStorage();
-    mockRouter();
-    mockRendererCore(true);
-
-    const renderer = loadTestPlugins();
-    await enableResponsiveMode(renderer);
-    await selectViewport(renderer, /iphone 6 plus/i);
-
-    await wait(() =>
-      expect(getState<ResponsivePreviewSpec>('responsivePreview')).toEqual({
-        enabled: true,
-        viewport: { width: 414, height: 736 }
-      })
-    );
-  });
-
   it('sets viewport in fixture state', async () => {
     registerTestPlugins();
     mockStorage();

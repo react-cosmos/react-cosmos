@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render } from 'react-testing-library';
+import { render, waitForElement } from 'react-testing-library';
 import { loadPlugins, Slot } from 'react-plugin';
 import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
 import { StorageSpec } from '../../Storage/public';
@@ -31,9 +31,7 @@ function registerTestPlugins() {
 }
 
 function loadTestPlugins() {
-  loadPlugins({
-    state: { responsivePreview: { enabled: false, viewport: null } }
-  });
+  loadPlugins();
 
   return render(
     <Slot name="rendererPreviewOuter">
@@ -42,9 +40,9 @@ function loadTestPlugins() {
   );
 }
 
-it('renders responsive header', () => {
+it('renders responsive header', async () => {
   registerTestPlugins();
 
   const { getByTestId } = loadTestPlugins();
-  getByTestId('responsiveHeader');
+  await waitForElement(() => getByTestId('responsiveHeader'));
 });
