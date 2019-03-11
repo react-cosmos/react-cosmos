@@ -13,7 +13,7 @@ export type FixtureId = {
   name: null | string;
 };
 
-export type pingRenderersRequest = {
+export type PingRenderersRequest = {
   type: 'pingRenderers';
 };
 
@@ -45,7 +45,7 @@ export type SetFixtureStateRequest = {
 };
 
 export type RendererRequest =
-  | pingRenderersRequest
+  | PingRenderersRequest
   | SelectFixtureRequest
   | UnselectFixtureRequest
   | SetFixtureStateRequest;
