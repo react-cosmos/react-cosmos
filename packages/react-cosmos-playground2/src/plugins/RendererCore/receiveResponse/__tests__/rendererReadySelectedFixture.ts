@@ -4,7 +4,7 @@ import { RendererRequest } from 'react-cosmos-shared2/renderer';
 import { cleanup, mockMethodsOf, on } from '../../../../testHelpers/plugin';
 import { NotificationsSpec } from '../../../Notifications/public';
 import { RouterSpec } from '../../../Router/public';
-import { connectRenderer, changeFixtureState } from '../../testHelpers';
+import { mockRendererReady, mockFixtureStateChange } from '../../testHelpers';
 import { RendererCoreSpec } from '../../public';
 import { register } from '../..';
 
@@ -41,7 +41,7 @@ it('posts "selectFixture" renderer request', async () => {
   registerTestPlugins(handleRendererRequest);
 
   loadTestPlugins();
-  connectRenderer('mockRendererId', fixtures);
+  mockRendererReady('mockRendererId', fixtures);
 
   await wait(() =>
     expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {
@@ -60,9 +60,9 @@ it('posts "selectFixture" renderer request with fixture state', async () => {
   registerTestPlugins(handleRendererRequest);
 
   loadTestPlugins();
-  connectRenderer('mockRendererId1', fixtures);
-  changeFixtureState('mockRendererId1', fixtureId, fixtureState);
-  connectRenderer('mockRendererId2', fixtures);
+  mockRendererReady('mockRendererId1', fixtures);
+  mockFixtureStateChange('mockRendererId1', fixtureId, fixtureState);
+  mockRendererReady('mockRendererId2', fixtures);
 
   await wait(() =>
     expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {

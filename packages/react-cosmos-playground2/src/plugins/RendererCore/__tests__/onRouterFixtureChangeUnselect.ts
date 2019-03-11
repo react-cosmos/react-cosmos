@@ -3,7 +3,7 @@ import { wait } from 'react-testing-library';
 import { loadPlugins, getPluginContext } from 'react-plugin';
 import { cleanup, on, mockMethodsOf } from '../../../testHelpers/plugin';
 import { RouterSpec } from '../../Router/public';
-import { connectRenderer, getRendererCoreMethods } from '../testHelpers';
+import { mockRendererReady, getRendererCoreMethods } from '../testHelpers';
 import { RendererCoreSpec } from '../public';
 import { register } from '..';
 
@@ -23,8 +23,8 @@ function registerTestPlugins() {
 
 function loadTestPlugins() {
   loadPlugins();
-  connectRenderer('mockRendererId1', fixtures);
-  connectRenderer('mockRendererId2', fixtures);
+  mockRendererReady('mockRendererId1', fixtures);
+  mockRendererReady('mockRendererId2', fixtures);
   getRendererCoreMethods().selectPrimaryRenderer('mockRendererId2');
 }
 

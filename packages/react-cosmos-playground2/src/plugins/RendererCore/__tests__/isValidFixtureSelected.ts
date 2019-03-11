@@ -3,7 +3,7 @@ import { loadPlugins } from 'react-plugin';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
 import { RouterSpec } from '../../Router/public';
-import { connectRenderer, getRendererCoreMethods } from '../testHelpers';
+import { mockRendererReady, getRendererCoreMethods } from '../testHelpers';
 import { register } from '..';
 
 afterEach(cleanup);
@@ -26,7 +26,7 @@ function mockFixtureId(fixtureId: null | FixtureId = null) {
 
 function loadTestPlugins() {
   loadPlugins();
-  connectRenderer(rendererId, fixtures);
+  mockRendererReady(rendererId, fixtures);
 }
 
 function isValidFixtureSelected() {

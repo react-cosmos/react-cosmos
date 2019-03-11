@@ -3,7 +3,7 @@ import { loadPlugins } from 'react-plugin';
 import { cleanup, mockMethodsOf } from '../../../../testHelpers/plugin';
 import { RouterSpec } from '../../../Router/public';
 import { NotificationsSpec } from '../../../Notifications/public';
-import { connectRenderer } from '../../testHelpers';
+import { mockRendererReady } from '../../testHelpers';
 import { register } from '../..';
 
 afterEach(cleanup);
@@ -24,7 +24,7 @@ it('notifies renderer connection', async () => {
   });
 
   loadPlugins();
-  connectRenderer('mockRendererId1', {});
+  mockRendererReady('mockRendererId1', {});
 
   await wait(() =>
     expect(pushNotification).toBeCalledWith(expect.any(Object), {

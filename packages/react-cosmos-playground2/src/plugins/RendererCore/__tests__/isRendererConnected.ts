@@ -1,7 +1,7 @@
 import { NotificationsSpec } from './../../Notifications/public';
 import { loadPlugins } from 'react-plugin';
 import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
-import { getRendererCoreMethods, connectRenderer } from '../testHelpers';
+import { getRendererCoreMethods, mockRendererReady } from '../testHelpers';
 import { register } from '..';
 import { RouterSpec } from '../../Router/public';
 
@@ -31,7 +31,7 @@ it('returns false', async () => {
 it('returns true', async () => {
   registerTestPlugins();
   loadPlugins();
-  connectRenderer('mockRendererId', {});
+  mockRendererReady('mockRendererId', {});
 
   expect(isRendererConnected()).toBe(true);
 });

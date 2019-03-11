@@ -5,8 +5,8 @@ import { NotificationsSpec } from '../../../Notifications/public';
 import { RouterSpec } from '../../../Router/public';
 import {
   getRendererCoreMethods,
-  connectRenderer,
-  changeFixtureState
+  mockRendererReady,
+  mockFixtureStateChange
 } from '../../testHelpers';
 import { register } from '../..';
 
@@ -34,7 +34,7 @@ describe('single renderer', () => {
   function setup() {
     registerTestPlugins();
     loadTestPlugins();
-    connectRenderer('mockRendererId1', fixtures);
+    mockRendererReady('mockRendererId1', fixtures);
   }
 
   it('sets connected renderer IDs', async () => {
@@ -71,8 +71,8 @@ describe('single renderer', () => {
 
   it('keeps fixtures state when secondary renderer connects', async () => {
     setup();
-    changeFixtureState('mockRendererId1', fixtureId, fixtureState);
-    connectRenderer('mockRendererId2', fixtures);
+    mockFixtureStateChange('mockRendererId1', fixtureId, fixtureState);
+    mockRendererReady('mockRendererId2', fixtures);
 
     await wait(() =>
       expect(getRendererCoreMethods().getFixtureState()).toEqual(fixtureState)
@@ -84,9 +84,9 @@ describe('multi renderers', () => {
   function setup() {
     registerTestPlugins();
     loadTestPlugins();
-    connectRenderer('mockRendererId1', fixtures);
-    connectRenderer('mockRendererId2', fixtures);
-    changeFixtureState('mockRendererId1', fixtureId, fixtureState);
+    mockRendererReady('mockRendererId1', fixtures);
+    mockRendererReady('mockRendererId2', fixtures);
+    mockFixtureStateChange('mockRendererId1', fixtureId, fixtureState);
   }
 
   it('sets connected renderer IDs', async () => {
@@ -124,7 +124,7 @@ describe('multi renderers', () => {
 
   it('resets fixtures state when primary renderer re-connects', async () => {
     setup();
-    connectRenderer('mockRendererId1', fixtures);
+    mockRendererReady('mockRendererId1', fixtures);
 
     await wait(() =>
       expect(getRendererCoreMethods().getFixtureState()).toBeNull()

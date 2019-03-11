@@ -10,9 +10,9 @@ import {
 } from '../../../testHelpers/plugin';
 import { RouterSpec } from '../../Router/public';
 import {
-  connectRenderer,
+  mockRendererReady,
   getRendererCoreMethods,
-  changeFixtureState
+  mockFixtureStateChange
 } from '../testHelpers';
 import { RendererCoreSpec } from '../public';
 import { register } from '..';
@@ -43,9 +43,9 @@ function mockSelectedFixture() {
 
 function loadTestPlugins() {
   loadPlugins();
-  connectRenderer('mockRendererId2', fixtures);
-  connectRenderer('mockRendererId1', fixtures);
-  changeFixtureState('mockRendererId2', fixtureId, fixtureState);
+  mockRendererReady('mockRendererId2', fixtures);
+  mockRendererReady('mockRendererId1', fixtures);
+  mockFixtureStateChange('mockRendererId2', fixtureId, fixtureState);
 }
 
 function mockSetFixtureStateCall() {

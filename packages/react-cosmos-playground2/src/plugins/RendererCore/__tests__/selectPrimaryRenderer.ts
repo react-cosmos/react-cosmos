@@ -3,7 +3,7 @@ import { loadPlugins } from 'react-plugin';
 import { NotificationsSpec } from './../../Notifications/public';
 import { RouterSpec } from '../../Router/public';
 import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
-import { getRendererCoreMethods, connectRenderer } from '../testHelpers';
+import { getRendererCoreMethods, mockRendererReady } from '../testHelpers';
 import { register } from '..';
 
 afterEach(cleanup);
@@ -22,8 +22,8 @@ function registerTestPlugins() {
 
 function loadTestPlugins() {
   loadPlugins();
-  connectRenderer('mockRendererId1', fixtures);
-  connectRenderer('mockRendererId2', fixtures);
+  mockRendererReady('mockRendererId1', fixtures);
+  mockRendererReady('mockRendererId2', fixtures);
   getRendererCoreMethods().selectPrimaryRenderer('mockRendererId2');
 }
 

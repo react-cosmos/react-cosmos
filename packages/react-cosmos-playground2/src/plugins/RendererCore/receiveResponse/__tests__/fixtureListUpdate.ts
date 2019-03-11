@@ -11,7 +11,7 @@ import { NotificationsSpec } from './../../../Notifications/public';
 import {
   createFixtureListUpdateResponse,
   getRendererCoreMethods,
-  connectRenderer
+  mockRendererReady
 } from '../../testHelpers';
 import { RendererCoreSpec } from '../../public';
 import { register } from '../..';
@@ -32,8 +32,8 @@ function registerTestPlugins() {
 
 function loadTestPlugins() {
   loadPlugins();
-  connectRenderer('mockRendererId1', fixtures);
-  connectRenderer('mockRendererId2', fixtures);
+  mockRendererReady('mockRendererId1', fixtures);
+  mockRendererReady('mockRendererId2', fixtures);
 }
 
 function mockFixtureListUpdateResponse(rendererId: RendererId) {

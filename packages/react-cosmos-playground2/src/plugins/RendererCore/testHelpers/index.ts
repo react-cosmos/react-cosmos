@@ -55,7 +55,7 @@ export function getRendererCoreMethods() {
   return getMethodsOf<RendererCoreSpec>('rendererCore');
 }
 
-export function connectRenderer(
+export function mockRendererReady(
   rendererId: RendererId,
   fixtures: FixtureNamesByPath
 ) {
@@ -64,7 +64,7 @@ export function connectRenderer(
   );
 }
 
-export function changeFixtureState(
+export function mockFixtureStateChange(
   rendererId: RendererId,
   fixtureId: FixtureId,
   fixtureState: null | FixtureState

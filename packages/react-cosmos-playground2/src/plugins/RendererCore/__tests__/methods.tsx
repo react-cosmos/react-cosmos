@@ -2,9 +2,9 @@ import { loadPlugins } from 'react-plugin';
 import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
 import { NotificationsSpec } from '../../Notifications/public';
 import {
-  connectRenderer,
+  mockRendererReady,
   getRendererCoreMethods,
-  changeFixtureState
+  mockFixtureStateChange
 } from '../testHelpers';
 import { RouterSpec } from '../../Router/public';
 import { register } from '..';
@@ -27,10 +27,10 @@ function registerTestPlugins() {
 
 function loadTestPlugins() {
   loadPlugins();
-  connectRenderer('mockRendererId1', fixtures);
-  connectRenderer('mockRendererId2', fixtures);
+  mockRendererReady('mockRendererId1', fixtures);
+  mockRendererReady('mockRendererId2', fixtures);
   getRendererCoreMethods().selectPrimaryRenderer('mockRendererId2');
-  changeFixtureState('mockRendererId2', fixtureId, fixtureState);
+  mockFixtureStateChange('mockRendererId2', fixtureId, fixtureState);
 }
 
 it('returns connected renderer IDs', () => {

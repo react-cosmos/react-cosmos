@@ -11,7 +11,7 @@ import {
 import { RouterSpec } from '../../../Router/public';
 import {
   createFixtureStateChangeResponse,
-  connectRenderer,
+  mockRendererReady,
   getRendererCoreMethods
 } from '../../testHelpers';
 import { RendererCoreSpec } from '../../public';
@@ -35,8 +35,8 @@ function registerTestPlugins() {
 
 function loadTestPlugins() {
   loadPlugins();
-  connectRenderer('mockRendererId1', fixtures);
-  connectRenderer('mockRendererId2', fixtures);
+  mockRendererReady('mockRendererId1', fixtures);
+  mockRendererReady('mockRendererId2', fixtures);
 }
 
 function mockFixtureStateChangeResponse(rendererId: RendererId) {
