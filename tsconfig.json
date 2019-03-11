@@ -14,7 +14,8 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
-    "strict": true
+    "strict": true,
+    "skipLibCheck": true
   },
   "include": ["packages/*/src/**/*"],
   "exclude": ["node_modules"]

@@ -1,15 +1,17 @@
-// @flow
-
 import { findIndex } from 'lodash';
 
-import type { Predicate } from 'lodash';
-import type { StateUpdater } from './index.js.flow';
+export type StateUpdater<T extends null | {}> = T | ((prevState: T) => T);
+
+export type SetState<T> = (
+  updater: StateUpdater<T>,
+  callback?: () => unknown
+) => unknown;
 
 export function updateItem<T>(
-  items: $ReadOnlyArray<T>,
+  items: Readonly<T[]>,
   item: T,
-  update: $Shape<T>
-): Array<T> {
+  update: Partial<T>
+): T[] {
   const index = items.indexOf(item);
 
   return [
@@ -20,10 +22,10 @@ export function updateItem<T>(
 }
 
 export function replaceOrAddItem<T>(
-  items: $ReadOnlyArray<T>,
-  matcher: Predicate<T>,
+  items: Readonly<T[]>,
+  matcher: (item: T) => boolean,
   item: T
-): Array<T> {
+): T[] {
   const index = findIndex(items, matcher);
 
   return index !== -1
@@ -32,9 +34,9 @@ export function replaceOrAddItem<T>(
 }
 
 export function removeItemMatch<T>(
-  items: $ReadOnlyArray<T>,
-  matcher: Predicate<T>
-): Array<T> {
+  items: Readonly<T[]>,
+  matcher: (item: T) => boolean
+): T[] {
   const index = findIndex(items, matcher);
 
   return index === -1
@@ -42,7 +44,7 @@ export function removeItemMatch<T>(
     : [...items.slice(0, index), ...items.slice(index + 1)];
 }
 
-export function removeItem<T>(items: $ReadOnlyArray<T>, item: T): Array<T> {
+export function removeItem<T>(items: Readonly<T[]>, item: T): T[] {
   const index = items.indexOf(item);
 
   if (index === -1) {
@@ -52,7 +54,7 @@ export function removeItem<T>(items: $ReadOnlyArray<T>, item: T): Array<T> {
   return [...items.slice(0, index), ...items.slice(index + 1)];
 }
 
-export function updateState<T: null | {}>(
+export function updateState<T extends null | {}>(
   prevState: T,
   updater: StateUpdater<T>
 ): T {

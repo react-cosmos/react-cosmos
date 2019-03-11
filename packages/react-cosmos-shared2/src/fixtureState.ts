@@ -1,20 +1,41 @@
-// @flow
-
 import { isEqual, find } from 'lodash';
 import { isElement } from 'react-is';
 import reactElementToJSXString from 'react-element-to-jsx-string';
 import { updateItem, replaceOrAddItem } from './util';
 
-import type {
-  KeyValue,
-  FixtureDecoratorId,
-  FixtureStateValue,
-  FixtureStateValues,
-  ComponentFixtureState,
-  FixtureState
-} from './fixtureState.js.flow';
+import { SetState } from './util';
 
-export const DEFAULT_RENDER_KEY = 0;
+export type KeyValue = { [key: string]: unknown };
+
+export type FixtureRenderKey = number;
+
+export type FixtureDecoratorId = string;
+
+export type FixtureStateValue = {
+  serializable: boolean;
+  key: string;
+  stringified: string;
+};
+
+export type FixtureStateValues = FixtureStateValue[];
+
+export type ComponentFixtureState = {
+  decoratorId: FixtureDecoratorId;
+  elPath: string;
+  componentName: string;
+  renderKey: FixtureRenderKey;
+  props: null | FixtureStateValues;
+  state: null | FixtureStateValues;
+};
+
+export type FixtureState = {
+  components: ComponentFixtureState[];
+  [key: string]: any;
+};
+
+export type SetFixtureState = SetState<null | FixtureState>;
+
+export const DEFAULT_RENDER_KEY: FixtureRenderKey = 0;
 
 // Why store unserializable values in fixture state?
 // - Because they still provides value in the Cosmos UI. They let the user know
@@ -67,7 +88,7 @@ export function findCompFixtureState(
   fixtureState: null | FixtureState,
   decoratorId: FixtureDecoratorId,
   elPath: string
-): ?ComponentFixtureState {
+): void | ComponentFixtureState {
   return find(
     getCompFixtureStates(fixtureState),
     c => c.decoratorId === decoratorId && c.elPath === elPath
@@ -82,12 +103,12 @@ export function createCompFixtureState({
   props,
   state
 }: {
-  fixtureState: null | FixtureState,
-  decoratorId: FixtureDecoratorId,
-  elPath: string,
-  componentName: string,
-  props: null | FixtureStateValues,
-  state: null | FixtureStateValues
+  fixtureState: null | FixtureState;
+  decoratorId: FixtureDecoratorId;
+  elPath: string;
+  componentName: string;
+  props: null | FixtureStateValues;
+  state: null | FixtureStateValues;
 }): ComponentFixtureState[] {
   return replaceOrAddItem(
     getCompFixtureStates(fixtureState),
@@ -104,12 +125,12 @@ export function updateCompFixtureState({
   state,
   resetInstance = false
 }: {
-  fixtureState: null | FixtureState,
-  decoratorId: FixtureDecoratorId,
-  elPath: string,
-  props?: null | FixtureStateValues,
-  state?: null | FixtureStateValues,
-  resetInstance?: boolean
+  fixtureState: null | FixtureState;
+  decoratorId: FixtureDecoratorId;
+  elPath: string;
+  props?: null | FixtureStateValues;
+  state?: null | FixtureStateValues;
+  resetInstance?: boolean;
 }): ComponentFixtureState[] {
   const compFxState = findCompFixtureState(fixtureState, decoratorId, elPath);
 
@@ -135,6 +156,12 @@ function createCompFxState({
   componentName,
   props,
   state
+}: {
+  decoratorId: string;
+  elPath: string;
+  componentName: string;
+  props: null | FixtureStateValues;
+  state: null | FixtureStateValues;
 }) {
   return {
     decoratorId,
@@ -146,11 +173,12 @@ function createCompFxState({
   };
 }
 
-function createFxStateMatcher(decoratorId, elPath) {
-  return s => s.decoratorId === decoratorId && s.elPath === elPath;
+function createFxStateMatcher(decoratorId: string, elPath: string) {
+  return (s: ComponentFixtureState) =>
+    s.decoratorId === decoratorId && s.elPath === elPath;
 }
 
-function stringifyValue(key: string, value: mixed): FixtureStateValue {
+function stringifyValue(key: string, value: unknown): FixtureStateValue {
   try {
     // NOTE: Is this optimal?
     if (!isEqual(JSON.parse(JSON.stringify(value)), value)) {
@@ -162,8 +190,7 @@ function stringifyValue(key: string, value: mixed): FixtureStateValue {
       key,
       // TODO: Enable custom stringifiers to plug in
       stringified: isElement(value)
-        ? // $FlowFixMe No static way to show that value is React.Element
-          reactElementToJSXString(value)
+        ? reactElementToJSXString(value)
         : String(value)
     };
   }

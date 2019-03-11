@@ -1,11 +1,18 @@
-// @flow
-
-import glob from 'glob';
-import micromatch from 'micromatch';
-import promisify from 'util.promisify';
+import * as glob from 'glob';
+import * as micromatch from 'micromatch';
+import * as promisify from 'util.promisify';
 import { replaceKeys } from '../util';
 
-import type { FindUserModulePathsArgs, UserModulePaths } from './index.js.flow';
+type FindUserModulePathsArgs = {
+  rootDir: string;
+  fixturesDir: string;
+  fixtureFileSuffix: string;
+};
+
+type UserModulePaths = {
+  fixturePaths: string[];
+  decoratorPaths: string[];
+};
 
 const globAsync = promisify(glob);
 
@@ -37,11 +44,17 @@ export async function findUserModulePaths({
   return { fixturePaths, decoratorPaths };
 }
 
-function getMatchingPaths(paths, pattern): string[] {
-  return micromatch(paths, pattern, { dot: true });
+function getMatchingPaths(paths: string[], patterns: string[]): string[] {
+  return micromatch(paths, patterns, { dot: true });
 }
 
-function getFixturePatterns({ fixturesDir, fixtureFileSuffix }): string[] {
+function getFixturePatterns({
+  fixturesDir,
+  fixtureFileSuffix
+}: {
+  fixturesDir: string;
+  fixtureFileSuffix: string;
+}): string[] {
   return FIXTURE_PATTERNS.map(pattern =>
     replaceKeys(pattern, {
       '<fixturesDir>': fixturesDir,

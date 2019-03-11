@@ -1,6 +1,3 @@
-/* eslint-env browser */
-// @flow
-
 const CONTAINER_ID = 'root';
 
 export function getDomContainer() {

@@ -1,5 +1,0 @@
-// @flow
-
-import type { Node } from 'react';
-
-declare export function areNodesEqual(a: Node, b: Node): boolean;

@@ -1,5 +1,3 @@
-// @flow
-
 import { FixtureState } from './fixtureState';
 
 // FYI: Renderer ids are self assigned in remote environments, so uniqueness
@@ -100,4 +98,4 @@ export type RendererResponse =
 
 export type OnRendererResponse = (msg: RendererResponse) => unknown;
 
-export declare var RENDERER_MESSAGE_EVENT_NAME: string;
+export const RENDERER_MESSAGE_EVENT_NAME = 'cosmos-cmd';
