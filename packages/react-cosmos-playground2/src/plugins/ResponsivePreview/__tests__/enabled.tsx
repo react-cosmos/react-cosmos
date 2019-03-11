@@ -92,7 +92,7 @@ it('renders children of "rendererPreviewOuter" slot', async () => {
 
   const renderer = loadTestPlugins();
   await toggleResponsiveMode(renderer);
-  await wait(() => renderer.getByTestId('previewMock'));
+  await waitForElement(() => renderer.getByTestId('previewMock'));
 });
 
 it('does not render responsive header when no fixture is selected', async () => {
