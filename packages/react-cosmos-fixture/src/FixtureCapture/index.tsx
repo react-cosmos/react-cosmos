@@ -9,7 +9,9 @@ import {
   createCompFixtureState,
   updateCompFixtureState,
   FixtureDecoratorId,
-  ComponentFixtureState
+  ComponentFixtureState,
+  FixtureState,
+  SetFixtureState
 } from 'react-cosmos-shared2/fixtureState';
 import { areNodesEqual } from 'react-cosmos-shared2/react';
 import { FixtureContext } from '../FixtureContext';
@@ -24,11 +26,6 @@ import {
   deleteRefHandlers
 } from './attachChildRefs';
 import { replaceState } from './replaceState';
-
-import {
-  FixtureState,
-  SetFixtureState
-} from 'react-cosmos-shared2/fixtureState';
 
 export type Props = {
   children: React.ReactNode;
