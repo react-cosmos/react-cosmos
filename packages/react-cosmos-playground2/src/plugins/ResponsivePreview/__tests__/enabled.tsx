@@ -184,7 +184,7 @@ describe('on device select', () => {
   });
 });
 
-it('clears viewport in fixture states on untoggle', async () => {
+it('clears viewport in fixture state on untoggle', async () => {
   registerTestPlugins();
   mockStorage();
   mockRouter();
