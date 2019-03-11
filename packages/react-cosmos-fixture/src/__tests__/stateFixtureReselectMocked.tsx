@@ -1,0 +1,63 @@
+import * as React from 'react';
+import { uuid } from 'react-cosmos-shared2/util';
+import { StateMock } from '@react-mock/state';
+import { Counter } from '../testHelpers/components';
+import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
+import { runTests, mount } from '../testHelpers';
+
+const rendererId = uuid();
+const fixtures = {
+  first: (
+    <StateMock state={{ count: 5 }}>
+      <Counter />
+    </StateMock>
+  )
+};
+const decorators = {};
+
+runTests(mockConnect => {
+  // NOTE: This is a regression test that was created for a bug that initally
+  // slipped unnoticed in https://github.com/react-cosmos/react-cosmos/pull/893.
+  // Because element refs from unmounted FixtureCapture instances were
+  // incorrectly reused, component state was no longer picked up after
+  // FixtureCapture remounted. This was related to the refactor of
+  // FixtureCapture/attachChildRefs in
+  // https://github.com/react-cosmos/react-cosmos/commit/56494b6ea10785cc3db8dda7a7fbcad62c8e1c12
+  it('captures initial state after re-selecting fixture', async () => {
+    await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
+      await mount(
+        getElement({ rendererId, fixtures, decorators }),
+        async () => {
+          await selectFixture({
+            rendererId,
+            fixtureId: { path: 'first', name: null },
+            fixtureState: null
+          });
+
+          await selectFixture({
+            rendererId,
+            fixtureId: { path: 'first', name: null },
+            fixtureState: null
+          });
+
+          await untilMessage({
+            type: 'fixtureStateChange',
+            payload: {
+              rendererId,
+              fixtureId: { path: 'first', name: null },
+              fixtureState: {
+                components: [
+                  createCompFxState({
+                    componentName: 'Counter',
+                    props: [],
+                    state: createFxValues({ count: 5 })
+                  })
+                ]
+              }
+            }
+          });
+        }
+      );
+    });
+  });
+});

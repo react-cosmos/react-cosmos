@@ -1,6 +1,6 @@
 import { isEqual, find } from 'lodash';
 import { isElement } from 'react-is';
-import reactElementToJSXString from 'react-element-to-jsx-string';
+import * as reactElementToJSXString from 'react-element-to-jsx-string';
 import { updateItem, replaceOrAddItem } from './util';
 
 import { SetState } from './util';
