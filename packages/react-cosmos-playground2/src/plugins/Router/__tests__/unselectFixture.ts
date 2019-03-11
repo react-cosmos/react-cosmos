@@ -1,12 +1,11 @@
 import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
-import { getUrlParams, resetUrl } from '../../../testHelpers/url';
 import {
-  cleanup,
-  getState,
-  getMethodsOf,
-  on
-} from '../../../testHelpers/plugin';
+  getUrlParams,
+  pushUrlParams,
+  resetUrl
+} from '../../../testHelpers/url';
+import { cleanup, getMethodsOf, on } from '../../../testHelpers/plugin';
 import { RouterSpec } from '../public';
 import { register } from '..';
 
@@ -16,30 +15,23 @@ afterEach(() => {
 });
 
 const fixtureId = { path: 'zwei.js', name: null };
-const routerState: RouterSpec['state'] = { urlParams: { fixtureId } };
 
 function loadTestPlugins() {
-  loadPlugins({
-    state: {
-      router: routerState
-    }
-  });
+  pushUrlParams({ fixtureId: JSON.stringify(fixtureId) });
+  loadPlugins();
 }
 
 function getRouterMethods() {
   return getMethodsOf<RouterSpec>('router');
 }
 
-function getRouterState() {
-  return getState<RouterSpec>('router');
-}
-
-it('sets "router" state', async () => {
+it('updates selected fixture ID', async () => {
   register();
   loadTestPlugins();
-  getRouterMethods().unselectFixture();
+  const router = getRouterMethods();
+  router.unselectFixture();
 
-  await wait(() => expect(getRouterState().urlParams).toEqual({}));
+  await wait(() => expect(router.getSelectedFixtureId()).toEqual(null));
 });
 
 it('sets URL params', async () => {

@@ -4,34 +4,36 @@ import { RendererId } from 'react-cosmos-shared2/renderer';
 import {
   cleanup,
   getMethodsOf,
-  getState,
   mockMethodsOf
 } from '../../../../testHelpers/plugin';
 import { RouterSpec } from '../../../Router/public';
-import { createFixtureListUpdateResponse } from '../../testHelpers';
-import { State } from '../../shared';
+import { NotificationsSpec } from './../../../Notifications/public';
+import {
+  createFixtureListUpdateResponse,
+  getRendererCoreMethods,
+  mockRendererReady
+} from '../../testHelpers';
 import { RendererCoreSpec } from '../../public';
 import { register } from '../..';
 
 afterEach(cleanup);
 
 const fixtures = { 'ein.js': null, 'zwei.js': null, 'drei.js': null };
-const state: State = {
-  connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
-  primaryRendererId: 'mockRendererId1',
-  fixtures,
-  fixtureState: null
-};
 
 function registerTestPlugins() {
   register();
   mockMethodsOf<RouterSpec>('router', {
     getSelectedFixtureId: () => null
   });
+  mockMethodsOf<NotificationsSpec>('notifications', {
+    pushNotification: () => {}
+  });
 }
 
 function loadTestPlugins() {
-  loadPlugins({ state: { rendererCore: state } });
+  loadPlugins();
+  mockRendererReady('mockRendererId1', fixtures);
+  mockRendererReady('mockRendererId2', fixtures);
 }
 
 function mockFixtureListUpdateResponse(rendererId: RendererId) {
@@ -44,10 +46,6 @@ function mockFixtureListUpdateResponse(rendererId: RendererId) {
   );
 }
 
-function getRendererCoreState() {
-  return getState<RendererCoreSpec>('rendererCore');
-}
-
 it('updates fixtures in renderer state', async () => {
   registerTestPlugins();
   loadTestPlugins();
@@ -55,7 +53,7 @@ it('updates fixtures in renderer state', async () => {
   mockFixtureListUpdateResponse('mockRendererId1');
 
   await wait(() =>
-    expect(getRendererCoreState().fixtures).toEqual({
+    expect(getRendererCoreMethods().getFixtures()).toEqual({
       ...fixtures,
       'vier.js': null
     })
@@ -68,5 +66,7 @@ it('ignores update from secondary renderer', async () => {
 
   mockFixtureListUpdateResponse('mockRendererId2');
 
-  await wait(() => expect(getRendererCoreState().fixtures).toEqual(fixtures));
+  await wait(() =>
+    expect(getRendererCoreMethods().getFixtures()).toEqual(fixtures)
+  );
 });

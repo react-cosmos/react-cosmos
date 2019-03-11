@@ -2,7 +2,11 @@ import * as React from 'react';
 import { wait, render } from 'react-testing-library';
 import { loadPlugins, Slot } from 'react-plugin';
 import { CoreSpec } from '../../Core/public';
-import { cleanup, getState, mockMethodsOf } from '../../../testHelpers/plugin';
+import {
+  cleanup,
+  mockMethodsOf,
+  getMethodsOf
+} from '../../../testHelpers/plugin';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { RendererPreviewSpec } from '../public';
 import { register } from '..';
@@ -24,7 +28,8 @@ function loadTestPlugins(status: number) {
 }
 
 function getUrlStatus() {
-  return getState<RendererPreviewSpec>('rendererPreview').urlStatus;
+  const rendererPreview = getMethodsOf<RendererPreviewSpec>('rendererPreview');
+  return rendererPreview.getUrlStatus();
 }
 
 it('sets "ok" url status', async () => {

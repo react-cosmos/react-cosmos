@@ -1,29 +1,39 @@
 import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
-import { cleanup, getState, getMethodsOf } from '../../../testHelpers/plugin';
-import { RendererCoreSpec } from '../public';
-import { State } from '../shared';
+import { NotificationsSpec } from './../../Notifications/public';
+import { RouterSpec } from '../../Router/public';
+import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
+import { getRendererCoreMethods, mockRendererReady } from '../testHelpers';
 import { register } from '..';
 
 afterEach(cleanup);
 
-const state: State = {
-  connectedRendererIds: ['mockRendererId1', 'mockRendererId2'],
-  primaryRendererId: 'mockRendererId1',
-  fixtures: {},
-  fixtureState: null
-};
+const fixtures = {};
+
+function registerTestPlugins() {
+  register();
+  mockMethodsOf<RouterSpec>('router', {
+    getSelectedFixtureId: () => null
+  });
+  mockMethodsOf<NotificationsSpec>('notifications', {
+    pushNotification: () => {}
+  });
+}
+
+function loadTestPlugins() {
+  loadPlugins();
+  mockRendererReady('mockRendererId1', fixtures);
+  mockRendererReady('mockRendererId2', fixtures);
+  getRendererCoreMethods().selectPrimaryRenderer('mockRendererId2');
+}
 
 it('sets primary renderer ID in state', async () => {
-  register();
-  loadPlugins({ state: { rendererCore: state } });
-
-  const methods = getMethodsOf<RendererCoreSpec>('rendererCore');
-  methods.selectPrimaryRenderer('mockRendererId2');
+  registerTestPlugins();
+  loadTestPlugins();
 
   await wait(() =>
-    expect(
-      getState<RendererCoreSpec>('rendererCore').primaryRendererId
-    ).toEqual('mockRendererId2')
+    expect(getRendererCoreMethods().getPrimaryRendererId()).toEqual(
+      'mockRendererId2'
+    )
   );
 });

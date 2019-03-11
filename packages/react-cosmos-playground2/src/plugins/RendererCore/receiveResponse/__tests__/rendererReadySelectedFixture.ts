@@ -1,16 +1,10 @@
 import { wait } from 'react-testing-library';
 import { loadPlugins, PluginContext } from 'react-plugin';
-import { RendererId, RendererRequest } from 'react-cosmos-shared2/renderer';
-import {
-  cleanup,
-  getMethodsOf,
-  mockMethodsOf,
-  on
-} from '../../../../testHelpers/plugin';
+import { RendererRequest } from 'react-cosmos-shared2/renderer';
+import { cleanup, mockMethodsOf, on } from '../../../../testHelpers/plugin';
 import { NotificationsSpec } from '../../../Notifications/public';
 import { RouterSpec } from '../../../Router/public';
-import { createRendererReadyResponse } from '../../testHelpers';
-import { State } from '../../shared';
+import { mockRendererReady, mockFixtureStateChange } from '../../testHelpers';
 import { RendererCoreSpec } from '../../public';
 import { register } from '../..';
 
@@ -38,13 +32,8 @@ function registerTestPlugins(
   });
 }
 
-function loadTestPlugins(state?: State) {
-  loadPlugins({ state: { rendererCore: state } });
-}
-
-function mockRendererReadyResponse(rendererId: RendererId) {
-  const methods = getMethodsOf<RendererCoreSpec>('rendererCore');
-  methods.receiveResponse(createRendererReadyResponse(rendererId, fixtures));
+function loadTestPlugins() {
+  loadPlugins();
 }
 
 it('posts "selectFixture" renderer request', async () => {
@@ -52,7 +41,7 @@ it('posts "selectFixture" renderer request', async () => {
   registerTestPlugins(handleRendererRequest);
 
   loadTestPlugins();
-  mockRendererReadyResponse('mockRendererId');
+  mockRendererReady('mockRendererId', fixtures);
 
   await wait(() =>
     expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {
@@ -70,13 +59,10 @@ it('posts "selectFixture" renderer request with fixture state', async () => {
   const handleRendererRequest = jest.fn();
   registerTestPlugins(handleRendererRequest);
 
-  loadTestPlugins({
-    connectedRendererIds: ['mockRendererId1'],
-    primaryRendererId: 'mockRendererId1',
-    fixtures,
-    fixtureState
-  });
-  mockRendererReadyResponse('mockRendererId2');
+  loadTestPlugins();
+  mockRendererReady('mockRendererId1', fixtures);
+  mockFixtureStateChange('mockRendererId1', fixtureId, fixtureState);
+  mockRendererReady('mockRendererId2', fixtures);
 
   await wait(() =>
     expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {

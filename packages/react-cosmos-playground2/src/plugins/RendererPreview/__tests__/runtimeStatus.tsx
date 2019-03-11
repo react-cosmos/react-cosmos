@@ -3,7 +3,11 @@ import { wait, render } from 'react-testing-library';
 import { loadPlugins, Slot } from 'react-plugin';
 import { CoreSpec } from '../../Core/public';
 import { RendererCoreSpec } from '../../RendererCore/public';
-import { cleanup, getState, mockMethodsOf } from '../../../testHelpers/plugin';
+import {
+  cleanup,
+  mockMethodsOf,
+  getMethodsOf
+} from '../../../testHelpers/plugin';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { rendererReadyMsg, rendererErrorMsg } from '../testHelpers/messages';
 import { RendererPreviewSpec } from '../public';
@@ -30,7 +34,8 @@ function loadTestPlugins() {
 }
 
 function getRuntimeStatus() {
-  return getState<RendererPreviewSpec>('rendererPreview').runtimeStatus;
+  const rendererPreview = getMethodsOf<RendererPreviewSpec>('rendererPreview');
+  return rendererPreview.getRuntimeStatus();
 }
 
 it('sets "error" runtime status', async () => {

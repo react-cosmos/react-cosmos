@@ -1,5 +1,10 @@
 import * as React from 'react';
-import { render } from 'react-testing-library';
+import {
+  render,
+  waitForElement,
+  RenderResult,
+  wait
+} from 'react-testing-library';
 import { loadPlugins, Slot } from 'react-plugin';
 import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
 import { StorageSpec } from '../../Storage/public';
@@ -26,27 +31,42 @@ function registerTestPlugins() {
 }
 
 function loadTestPlugins() {
-  loadPlugins({
-    state: { responsivePreview: { enabled: false, viewport: null } }
-  });
+  loadPlugins();
 
   return render(
-    <Slot name="rendererPreviewOuter">
-      <div data-testid="previewMock" />
-    </Slot>
+    <>
+      <Slot name="fixtureActions" />
+      <Slot name="rendererPreviewOuter">
+        <div data-testid="previewMock" />
+      </Slot>
+    </>
   );
 }
 
-it('renders children of "rendererPreviewOuter" slot', () => {
+async function waitForMainPlug({ getByTestId }: RenderResult) {
+  await waitForElement(() => getByTestId('responsivePreview'));
+}
+
+it('renders disabled button', async () => {
+  registerTestPlugins();
+
+  const { getByText } = loadTestPlugins();
+  await wait(() =>
+    expect(getByText(/responsive/i)).toHaveAttribute('disabled')
+  );
+});
+
+it('renders children of "rendererPreviewOuter" slot', async () => {
   registerTestPlugins();
 
   const { getByTestId } = loadTestPlugins();
-  getByTestId('previewMock');
+  await waitForElement(() => getByTestId('previewMock'));
 });
 
-it('does not render responsive header', () => {
+it('does not render responsive header', async () => {
   registerTestPlugins();
 
-  const { queryByTestId } = loadTestPlugins();
-  expect(queryByTestId('responsiveHeader')).toBeNull();
+  const renderer = loadTestPlugins();
+  await waitForMainPlug(renderer);
+  expect(renderer.queryByTestId('responsiveHeader')).toBeNull();
 });

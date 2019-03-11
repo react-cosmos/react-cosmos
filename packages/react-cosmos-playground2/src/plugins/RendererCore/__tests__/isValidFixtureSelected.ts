@@ -1,39 +1,36 @@
+import { NotificationsSpec } from './../../Notifications/public';
 import { loadPlugins } from 'react-plugin';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import {
-  cleanup,
-  getMethodsOf,
-  mockMethodsOf
-} from '../../../testHelpers/plugin';
+import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
 import { RouterSpec } from '../../Router/public';
-import { RendererCoreSpec } from '../public';
-import { State } from '../shared';
+import { mockRendererReady, getRendererCoreMethods } from '../testHelpers';
 import { register } from '..';
 
 afterEach(cleanup);
 
 const rendererId = 'mockRendererId';
-const state: State = {
-  connectedRendererIds: [rendererId],
-  primaryRendererId: rendererId,
-  fixtures: { 'ein.js': ['a', 'b', 'c'], 'zwei.js': null, 'drei.js': null },
-  fixtureState: null
+const fixtures = {
+  'ein.js': ['a', 'b', 'c'],
+  'zwei.js': null,
+  'drei.js': null
 };
 
 function mockFixtureId(fixtureId: null | FixtureId = null) {
   mockMethodsOf<RouterSpec>('router', {
     getSelectedFixtureId: () => fixtureId
   });
+  mockMethodsOf<NotificationsSpec>('notifications', {
+    pushNotification: () => {}
+  });
 }
 
 function loadTestPlugins() {
-  loadPlugins({ state: { rendererCore: state } });
+  loadPlugins();
+  mockRendererReady(rendererId, fixtures);
 }
 
 function isValidFixtureSelected() {
-  return getMethodsOf<RendererCoreSpec>(
-    'rendererCore'
-  ).isValidFixtureSelected();
+  return getRendererCoreMethods().isValidFixtureSelected();
 }
 
 it('returns false on no fixture selected', async () => {
