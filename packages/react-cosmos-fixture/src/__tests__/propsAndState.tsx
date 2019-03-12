@@ -201,7 +201,7 @@ runTests(mockConnect => {
   });
 
   it('keeps props when state changes', async () => {
-    let counterRef: null | React.Component;
+    let counterRef: null | SuffixCounter;
 
     const fixturesNew = {
       first: (
