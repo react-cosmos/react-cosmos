@@ -6,9 +6,11 @@ import { compose } from './compose';
 import { isRefSupported } from './isRefSupported';
 import { createRefHandler } from './createRefHandler';
 
-interface IElementWithRef extends React.ReactElement {
+type ElementWithRef = React.ReactElement & {
   ref: null | React.Ref<any>;
-}
+};
+
+type OnRef = (elPath: string, elRef: null | React.Component) => unknown;
 
 type RefWrapper = {
   origRef: null | React.Ref<any>;
@@ -18,8 +20,6 @@ type RefWrapper = {
 type RefWrappers = {
   [elPath: string]: RefWrapper;
 };
-
-type OnRef = (elPath: string, elRef: null | React.Component) => unknown;
 
 // Ref handlers are reused because every time we pass a new ref handler to
 // a React element it gets called in the next render loop, even when the
@@ -48,7 +48,7 @@ export function attachChildRefs({
 
       return React.cloneElement(element, {
         ref: getWrappedRefHandler({
-          origRef: (element as IElementWithRef).ref,
+          origRef: (element as ElementWithRef).ref,
           onRef,
           decoratorElRef,
           decoratorId,
