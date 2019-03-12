@@ -6,8 +6,9 @@ import { bold, italic } from 'chalk';
 import cpy from 'cpy';
 import {
   AS_IS_PACKAGES,
-  getNodePackages,
-  getTsPackages,
+  SHARED_TS_PACKAGE,
+  getBabelNodePackages,
+  getTsNodePackages,
   getBrowserPackages,
   getFormattedPackageList,
   getUnnamedArg,
@@ -24,12 +25,13 @@ const watch = getBoolArg('watch');
 run();
 
 async function run() {
-  const tsPackages = await getTsPackages();
-  const nodePackages = await getNodePackages();
+  const tsNodePackages = await getTsNodePackages();
+  const babelNodePackages = await getBabelNodePackages();
   const browserPackages = await getBrowserPackages();
   const buildablePackages = [
-    ...tsPackages,
-    ...nodePackages,
+    SHARED_TS_PACKAGE,
+    ...tsNodePackages,
+    ...babelNodePackages,
     ...browserPackages
   ];
   const pkgName = getUnnamedArg();
@@ -63,9 +65,12 @@ async function run() {
       `${watch ? 'Build-watching' : 'Building'} ${bold(pkgName)}...\n`
     );
 
-    if (tsPackages.indexOf(pkgName) !== -1) {
+    if (
+      pkgName === 'SHARED_TS_PACKAGE' ||
+      tsNodePackages.indexOf(pkgName) !== -1
+    ) {
       await buildTsPackage(pkgName);
-    } else if (nodePackages.indexOf(pkgName) !== -1) {
+    } else if (babelNodePackages.indexOf(pkgName) !== -1) {
       await buildNodePackage(pkgName);
     } else {
       await buildBrowserPackage(pkgName);
@@ -86,13 +91,14 @@ async function run() {
       return;
     }
 
-    stdout.write(`Building TS packages...\n`);
-    await Promise.all(tsPackages.map(buildTsPackage));
+    stdout.write(`Building universal packages with TypeScript...\n`);
+    await buildTsPackage(SHARED_TS_PACKAGE);
+    await Promise.all(tsNodePackages.map(buildTsPackage));
 
-    stdout.write(`Building packages...\n`);
-    await Promise.all(nodePackages.map(buildNodePackage));
+    stdout.write(`Building universal packages with Babel...\n`);
+    await Promise.all(babelNodePackages.map(buildNodePackage));
 
-    stdout.write(`Building browser packages...\n`);
+    stdout.write(`Building browser packages with webpack...\n`);
     await Promise.all(browserPackages.map(buildBrowserPackage));
 
     stdout.write(`Built ${buildablePackages.length} packages successfully.\n`);
