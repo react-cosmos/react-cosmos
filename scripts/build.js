@@ -91,11 +91,11 @@ async function run() {
       return;
     }
 
-    stdout.write(`Building universal packages with TypeScript...\n`);
+    stdout.write(`Building Node packages with TypeScript...\n`);
     await buildTsPackage(SHARED_TS_PACKAGE);
     await Promise.all(tsNodePackages.map(buildTsPackage));
 
-    stdout.write(`Building universal packages with Babel...\n`);
+    stdout.write(`Building Node packages with Babel...\n`);
     await Promise.all(babelNodePackages.map(buildNodePackage));
 
     stdout.write(`Building browser packages with webpack...\n`);
