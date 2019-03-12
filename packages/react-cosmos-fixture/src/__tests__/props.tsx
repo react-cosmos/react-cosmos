@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { uniq } from 'lodash';
 import retry from '@skidding/async-retry';
 import {
   getCompFixtureStates,
@@ -217,21 +218,26 @@ runTests(mockConnect => {
         getLastFixtureState,
         setFixtureState
       }) => {
-        // const rendererId = uuid();
-        const getFixtures = (ref: React.Ref<any>) => ({
-          first: <HelloMessageCls ref={ref} name="Bianca" />
+        const refs: React.Component[] = [];
+        // Intentionally create new ref function on every update to get the ref
+        // to be called more than once even if the component instance is reused
+        const getFixtures = () => ({
+          first: (
+            <HelloMessageCls
+              ref={elRef => {
+                if (elRef) {
+                  refs.push(elRef);
+                }
+              }}
+              name="Bianca"
+            />
+          )
         });
-        let ref1: null | React.Component;
-        let ref2: null | React.Component;
 
         await mount(
           getElement({
             rendererId,
-            fixtures: getFixtures((elRef: null | React.Component) => {
-              if (elRef && !ref1) {
-                ref1 = elRef;
-              }
-            }),
+            fixtures: getFixtures(),
             decorators
           }),
           async renderer => {
@@ -262,17 +268,15 @@ runTests(mockConnect => {
             renderer.update(
               getElement({
                 rendererId,
-                fixtures: getFixtures(elRef => {
-                  if (elRef) {
-                    ref2 = elRef;
-                  }
-                }),
+                fixtures: getFixtures(),
                 decorators
               })
             );
 
-            expect(ref2).toBeTruthy();
-            expect(ref2).toBe(ref1);
+            await retry(() => {
+              expect(refs.length).toBeGreaterThanOrEqual(2);
+              expect(uniq(refs).length).toBe(1);
+            });
           }
         );
       }
@@ -287,21 +291,26 @@ runTests(mockConnect => {
         getLastFixtureState,
         setFixtureState
       }) => {
-        // const rendererId = uuid();
-        const getFixtures = (ref: React.Ref<any>) => ({
-          first: <HelloMessageCls ref={ref} name="Bianca" />
+        const refs: React.Component[] = [];
+        // Intentionally create new ref function on every update to get the ref
+        // to be called more than once even if the component instance is reused
+        const getFixtures = () => ({
+          first: (
+            <HelloMessageCls
+              ref={elRef => {
+                if (elRef) {
+                  refs.push(elRef);
+                }
+              }}
+              name="Bianca"
+            />
+          )
         });
-        let ref1: null | React.Component;
-        let ref2: null | React.Component;
 
         await mount(
           getElement({
             rendererId,
-            fixtures: getFixtures((elRef: null | React.Component) => {
-              if (elRef && !ref1) {
-                ref1 = elRef;
-              }
-            }),
+            fixtures: getFixtures(),
             decorators
           }),
           async renderer => {
@@ -333,17 +342,15 @@ runTests(mockConnect => {
             renderer.update(
               getElement({
                 rendererId,
-                fixtures: getFixtures(elRef => {
-                  if (elRef) {
-                    ref2 = elRef;
-                  }
-                }),
+                fixtures: getFixtures(),
                 decorators
               })
             );
 
-            await retry(() => expect(ref1).toBeTruthy());
-            await retry(() => expect(ref2).not.toBe(ref1));
+            await retry(() => {
+              expect(refs.length).toBeGreaterThanOrEqual(2);
+              expect(uniq(refs).length).toBe(2);
+            });
           }
         );
       }
