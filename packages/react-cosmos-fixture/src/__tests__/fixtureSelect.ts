@@ -1,5 +1,3 @@
-//
-
 import { uuid } from 'react-cosmos-shared2/util';
 import retry from '@skidding/async-retry';
 import { runTests, mount } from '../testHelpers';
