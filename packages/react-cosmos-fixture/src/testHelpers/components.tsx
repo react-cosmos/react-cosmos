@@ -6,10 +6,8 @@ export function HelloMessage({ name }: { name?: string }) {
   return <>{`Hello ${name || 'Stranger'}`}</>;
 }
 
-export class Wrapper extends React.Component<{ children?: React.ReactNode }> {
-  render() {
-    return this.props.children;
-  }
+export function Wrapper({ children }: { children?: React.ReactNode }) {
+  return <>children</>;
 }
 
 // This one is meant for attaching refs
