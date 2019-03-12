@@ -2147,10 +2147,10 @@
     node-fetch "^2.1.1"
     url-template "^2.0.8"
 
-"@react-mock/state@^0.1.7":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@react-mock/state/-/state-0.1.7.tgz#073752397b1bd15c87c7fd120b88fd64a15c2c32"
-  integrity sha512-6XvLPXAceZ7vQS9S5vJOBzxbchwxl3XYALRdGZIklyRp/wFdZbZ3UTN6Dd95kg62Wt/rIZ4qjS1ddkNOEkhYEw==
+"@react-mock/state@^0.1.8":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@react-mock/state/-/state-0.1.8.tgz#5c579570964e0254ee27a5aad72e09b0c0ea40e8"
+  integrity sha512-oX16w3FKhfF2+nQE+C4frrfVddzwhF4YEYxF8frXzboEDZsxCRpFuQC0za3T59ZxI4ygBarBqDrhYzipGsD9TQ==
   dependencies:
     "@babel/runtime" "^7.1.2"
     lodash "^4.17.11"
