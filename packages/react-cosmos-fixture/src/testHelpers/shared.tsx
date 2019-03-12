@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import * as delay from 'delay';
 import until from 'async-until';
 import { FixtureConnect } from '..';
 import {
