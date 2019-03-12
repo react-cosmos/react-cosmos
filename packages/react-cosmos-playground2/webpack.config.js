@@ -39,13 +39,12 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
+        include: [
+          /packages\/react-cosmos-playground2/,
+          // Allow building Playground from uncompiled TS monorepo deps
+          /(react-cosmos[a-z0-9-]*)(\/|\\)src/
+        ],
         use: 'ts-loader'
-      },
-      // Allow building playground from uncompiled monorepo deps
-      {
-        test: /\.jsx?$/,
-        include: [/(react-cosmos[a-z0-9-]*)(\/|\\)src/],
-        use: 'babel-loader'
       }
     ]
   },
