@@ -1,9 +1,7 @@
 import { isEqual, find } from 'lodash';
 import { isElement } from 'react-is';
 import * as reactElementToJSXString from 'react-element-to-jsx-string';
-import { updateItem, replaceOrAddItem } from './util';
-
-import { SetState } from './util';
+import { updateItem, replaceOrAddItem, SetState } from './util';
 
 export type KeyValue = { [key: string]: unknown };
 
