@@ -17,7 +17,7 @@ module.exports = {
     '!**/testHelpers/**',
     '!**/react-cosmos-playground2/src/shared/illustrations/**',
     // Ignore coverage from dark launched APIs
-    '!**/react-cosmos-shared2/src/server/findUserModulePaths.js',
+    '!**/react-cosmos-shared2/src/server/findUserModulePaths.ts',
     '!**/react-cosmos-playground2/src/plugins/ControlPanel/**'
   ]
 };
