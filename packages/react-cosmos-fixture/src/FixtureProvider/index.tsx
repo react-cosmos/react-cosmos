@@ -1,5 +1,5 @@
 import * as React from 'react';
-// import { default as memoize } from 'memoize-one';
+import * as memoize from 'memoize-one';
 import {
   FixtureState,
   SetFixtureState
@@ -20,19 +20,12 @@ type Props = {
 export class FixtureProvider extends React.PureComponent<Props> {
   // Provider value is memoized as an object with reference identity to prevent
   // unintentional renders https://reactjs.org/docs/context.html#caveats
-  // getFixtureContextValue = memoize(
-  //   (fixtureState: null | FixtureState, setFixtureState: SetFixtureState) => ({
-  //     fixtureState,
-  //     setFixtureState
-  //   })
-  // );
-  getFixtureContextValue = (
-    fixtureState: null | FixtureState,
-    setFixtureState: SetFixtureState
-  ) => ({
-    fixtureState,
-    setFixtureState
-  });
+  getFixtureContextValue = memoize(
+    (fixtureState: null | FixtureState, setFixtureState: SetFixtureState) => ({
+      fixtureState,
+      setFixtureState
+    })
+  );
 
   render() {
     const { decorators, children, fixtureState, setFixtureState } = this.props;

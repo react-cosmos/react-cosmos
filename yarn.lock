@@ -2285,11 +2285,6 @@
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.122.tgz#3e31394c38cf1e5949fb54c1192cbc406f152c6c"
   integrity sha512-9IdED8wU93ty8gP06ninox+42SBSJHp2IAamsSYMUY76mshRTeUsid/gtbl8ovnOwy8im41ib4cxTiIYMXGKew==
 
-"@types/memoize-one@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@types/memoize-one/-/memoize-one-4.1.0.tgz#62119f26055b3193ae43ca1882c5b29b88b71ece"
-  integrity sha512-cmSgi6JMX/yBwgpVm4GooNWIH+vEeJoa8FAa6ExOhpJbC0Juq32/uYKiKb3VPSqrEA0aOnjvwZanla3O1WZMbw==
-
 "@types/micromatch@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@types/micromatch/-/micromatch-3.1.0.tgz#514c8a3d24b2680a9b838eeb80e6d7d724545433"
