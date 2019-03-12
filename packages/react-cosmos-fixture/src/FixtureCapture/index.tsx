@@ -398,7 +398,11 @@ class FixtureCaptureInner extends React.Component<InnerProps> {
           elPath
         );
 
-        if (state && !doesFixtureStateMatchState(state, compFxState)) {
+        if (
+          state &&
+          compFxState &&
+          !doesFixtureStateMatchState(state, compFxState)
+        ) {
           await this.updateFixtureState({ elPath, state });
         }
       })
@@ -419,10 +423,9 @@ class FixtureCaptureInner extends React.Component<InnerProps> {
 
 function doesFixtureStateMatchState(
   state: {},
-  compFxState: void | ComponentFixtureState
+  compFxState: ComponentFixtureState
 ) {
   return (
-    compFxState &&
     compFxState.state &&
     isEqual(state, extendObjWithValues(state, compFxState.state))
   );
