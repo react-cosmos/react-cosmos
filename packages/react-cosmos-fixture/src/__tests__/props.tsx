@@ -1,4 +1,5 @@
 import * as React from 'react';
+import retry from '@skidding/async-retry';
 import {
   getCompFixtureStates,
   updateCompFixtureState
@@ -7,7 +8,6 @@ import { uuid } from 'react-cosmos-shared2/util';
 import { HelloMessage, HelloMessageCls } from '../testHelpers/components';
 import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
 import { runTests, mount } from '../testHelpers';
-import retry from '@skidding/async-retry';
 
 const rendererId = uuid();
 const fixtures = {
