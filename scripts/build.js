@@ -27,7 +27,11 @@ async function run() {
   const tsPackages = await getTsPackages();
   const nodePackages = await getNodePackages();
   const browserPackages = await getBrowserPackages();
-  const buildablePackages = [...nodePackages, ...browserPackages];
+  const buildablePackages = [
+    ...tsPackages,
+    ...nodePackages,
+    ...browserPackages
+  ];
   const pkgName = getUnnamedArg();
 
   if (pkgName) {
