@@ -4,7 +4,7 @@ import {
   OnRendererRequest,
   RendererResponse
 } from 'react-cosmos-shared2/renderer';
-import { PostMessageProps } from '../types';
+import { PostMessageProps } from '../shared';
 
 export class PostMessage extends React.Component<PostMessageProps> {
   onMessage: null | OnRendererRequest = null;

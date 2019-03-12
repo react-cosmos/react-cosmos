@@ -6,7 +6,7 @@ import {
   OnRendererRequest,
   RendererResponse
 } from 'react-cosmos-shared2/renderer';
-import { WebSocketsProps } from '../types';
+import { WebSocketsProps } from '../shared';
 
 export class WebSockets extends React.Component<WebSocketsProps> {
   socket: null | typeof io.Socket = null;

@@ -6,7 +6,7 @@ import {
 } from 'react-cosmos-shared2/fixtureState';
 import { FixtureCapture } from '../FixtureCapture';
 import { FixtureContext } from '../FixtureContext';
-import { DecoratorType, FixtureContextValue } from '../types';
+import { DecoratorType, FixtureContextValue } from '../shared';
 
 type Props = {
   decorators: DecoratorType[];

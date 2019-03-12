@@ -17,7 +17,7 @@ import {
   DecoratorsByPath,
   RemoteRendererApi,
   FixturesByPath
-} from '../types';
+} from '../shared';
 import { FixtureProvider } from '../FixtureProvider';
 import { getFixtureNames, getFixtureNode } from './fixtureHelpers';
 

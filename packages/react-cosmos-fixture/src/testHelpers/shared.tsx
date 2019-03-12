@@ -12,7 +12,7 @@ import {
   FixtureStateChangeResponse
 } from 'react-cosmos-shared2/renderer';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import { FixturesByPath, DecoratorsByPath, RemoteRendererApi } from '../types';
+import { FixturesByPath, DecoratorsByPath, RemoteRendererApi } from '../shared';
 
 export type Message = RendererResponse | RendererRequest;
 

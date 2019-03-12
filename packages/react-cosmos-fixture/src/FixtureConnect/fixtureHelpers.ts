@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { isElement } from 'react-is';
 import { FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
-import { NodeMap, FixtureExport, FixturesByPath } from '../types';
+import { NodeMap, FixtureExport, FixturesByPath } from '../shared';
 
 export function getFixtureNames(fixtures: FixturesByPath): FixtureNamesByPath {
   return Object.keys(fixtures).reduce((prev, fixturePath) => {
