@@ -15,6 +15,7 @@ export const writeFileAsync = asyncify(writeFile);
 export const rimrafAsync = asyncify(rimraf);
 
 export const AS_IS_PACKAGES = ['react-cosmos-flow'];
+export const TS_PACKAGES = ['react-cosmos-shared2', 'react-cosmos-fixture'];
 export const BROWSER_PACKAGES = [
   'react-cosmos-playground',
   'react-cosmos-playground2'
@@ -22,9 +23,15 @@ export const BROWSER_PACKAGES = [
 
 export async function getNodePackages(): Promise<PackageNames> {
   const allPackages = await getAllPackages();
-  const exclude = [...AS_IS_PACKAGES, ...BROWSER_PACKAGES];
+  const exclude = [...AS_IS_PACKAGES, ...TS_PACKAGES, ...BROWSER_PACKAGES];
 
   return allPackages.filter(p => exclude.indexOf(p) === -1);
+}
+
+export async function getTsPackages(): Promise<PackageNames> {
+  const allPackages = await getAllPackages();
+
+  return allPackages.filter(p => TS_PACKAGES.indexOf(p) !== -1);
 }
 
 export async function getBrowserPackages(): Promise<PackageNames> {

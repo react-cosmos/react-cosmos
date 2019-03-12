@@ -7,6 +7,7 @@ import cpy from 'cpy';
 import {
   AS_IS_PACKAGES,
   getNodePackages,
+  getTsPackages,
   getBrowserPackages,
   getFormattedPackageList,
   getUnnamedArg,
@@ -23,6 +24,7 @@ const watch = getBoolArg('watch');
 run();
 
 async function run() {
+  const tsPackages = await getTsPackages();
   const nodePackages = await getNodePackages();
   const browserPackages = await getBrowserPackages();
   const buildablePackages = [...nodePackages, ...browserPackages];
@@ -57,7 +59,9 @@ async function run() {
       `${watch ? 'Build-watching' : 'Building'} ${bold(pkgName)}...\n`
     );
 
-    if (nodePackages.indexOf(pkgName) !== -1) {
+    if (tsPackages.indexOf(pkgName) !== -1) {
+      await buildTsPackage(pkgName);
+    } else if (nodePackages.indexOf(pkgName) !== -1) {
       await buildNodePackage(pkgName);
     } else {
       await buildBrowserPackage(pkgName);
@@ -78,6 +82,9 @@ async function run() {
       return;
     }
 
+    stdout.write(`Building TS packages...\n`);
+    await Promise.all(tsPackages.map(buildTsPackage));
+
     stdout.write(`Building packages...\n`);
     await Promise.all(nodePackages.map(buildNodePackage));
 
@@ -86,6 +93,14 @@ async function run() {
 
     stdout.write(`Built ${buildablePackages.length} packages successfully.\n`);
   }
+}
+
+async function buildTsPackage(pkgName) {
+  await runBuildTask({
+    pkgName,
+    cmd: 'tsc',
+    args: getTsCliArgs(pkgName)
+  });
 }
 
 async function buildNodePackage(pkgName) {
@@ -144,6 +159,16 @@ async function runBuildTask({ pkgName, cmd, args, env = {} }: BuildTaskArgs) {
   });
 
   return promise;
+}
+
+function getTsCliArgs(pkgName) {
+  let args = ['-b', `packages/${pkgName}/tsconfig.json`];
+
+  if (watch) {
+    args = [...args, '--watch'];
+  }
+
+  return args;
 }
 
 function getBabelCliArgs(pkgName) {
