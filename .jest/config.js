@@ -58,8 +58,7 @@ module.exports = {
     '!**/testHelpers/**',
     '!**/react-cosmos-voyager/src/use-cases/**',
     '!**/react-cosmos/src/client/next/**',
-    '!**/react-cosmos/src/server/web/webpack/embed-modules-webpack-loader-next.js',
-    '!**/react-cosmos-shared2/src/server/findUserModulePaths.js'
+    '!**/react-cosmos/src/server/web/webpack/embed-modules-webpack-loader-next.js'
   ],
   coverageDirectory: '<rootDir>/coverage',
   coverageReporters: ['lcov', 'text']
