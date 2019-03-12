@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { findElementPaths, getExpectedElementAtPath } from './nodeTree';
 
-interface IExtendedComponentClass extends React.ComponentClass {
+type ExtendedComponentClass = React.ComponentClass & {
   cosmosCapture?: boolean;
-}
+};
 
 export function findRelevantElementPaths(node: React.ReactNode): string[] {
   const elPaths = findElementPaths(node);
@@ -15,7 +15,7 @@ export function findRelevantElementPaths(node: React.ReactNode): string[] {
       return isInterestingTag(type);
     }
 
-    const classType = type as IExtendedComponentClass;
+    const classType = type as ExtendedComponentClass;
     return classType.cosmosCapture !== false && isInterestingClass(classType);
   });
 }
