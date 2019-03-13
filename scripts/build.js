@@ -66,7 +66,7 @@ async function run() {
     );
 
     if (
-      pkgName === 'SHARED_TS_PACKAGE' ||
+      pkgName === SHARED_TS_PACKAGE ||
       tsNodePackages.indexOf(pkgName) !== -1
     ) {
       await buildTsPackage(pkgName);
@@ -172,7 +172,7 @@ async function runBuildTask({ pkgName, cmd, args, env = {} }: BuildTaskArgs) {
 }
 
 function getTsCliArgs(pkgName) {
-  let args = ['-b', `packages/${pkgName}/tsconfig.json`];
+  let args = ['-b', `packages/${pkgName}/tsconfig.build.json`];
 
   if (watch) {
     args = [...args, '--watch'];
