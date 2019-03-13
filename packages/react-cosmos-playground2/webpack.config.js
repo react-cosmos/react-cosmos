@@ -39,11 +39,7 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        include: [
-          /packages\/react-cosmos-playground2/,
-          // Allow building Playground from uncompiled TS monorepo deps
-          /(react-cosmos[a-z0-9-]*)(\/|\\)src/
-        ],
+        include: [/packages\/react-cosmos-playground2/],
         use: 'ts-loader'
       }
     ]
