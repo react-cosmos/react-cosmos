@@ -1,14 +1,11 @@
 import './mockSocketIo';
-import { ConnectMockApi } from './shared';
-import { mockPostMessage } from './postMessage';
-import { mockWebSockets } from './webSockets';
-export { mount } from './mount';
+import { mountPostMessage } from './postMessage';
+import { mountWebSockets } from './webSockets';
+import { MountFixtureConnect } from './shared';
 
-type ConnectMock = (
-  cb: (children: ConnectMockApi) => Promise<unknown>
-) => Promise<void>;
+type TestsCallback = (mount: MountFixtureConnect) => void;
 
-export function runTests(tests: (mockConnect: ConnectMock) => void) {
-  tests(mockPostMessage);
-  tests(mockWebSockets);
+export function runFixtureConnectTests(cb: TestsCallback) {
+  cb(mountPostMessage);
+  cb(mountWebSockets);
 }

@@ -12,33 +12,22 @@ import {
 } from 'react-cosmos-shared2/renderer';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { FixturesByPath, DecoratorsByPath, RemoteRendererApi } from '../shared';
+import { ReactTestRenderer } from 'react-test-renderer';
 
 export type Message = RendererResponse | RendererRequest;
 
-export type FixtureConnectUserProps = {
+type GetMessages = () => Message[];
+
+export type MountFixtureConnectArgs = {
   rendererId: RendererId;
   fixtures: FixturesByPath;
   decorators: DecoratorsByPath;
   onFixtureChange?: () => unknown;
 };
 
-type GetTestElement = (
-  props: FixtureConnectUserProps
-) => React.ReactElement<any>;
-
-type GetMessages = () => Message[];
-
-type ConnectMockCreatorApi = {
-  getElement: GetTestElement;
-  getMessages: GetMessages;
-  postMessage: (msg: Message) => unknown;
-  cleanup: () => unknown;
-};
-
-type ConnectMockCreator = () => ConnectMockCreatorApi;
-
-export type ConnectMockApi = {
-  getElement: GetTestElement;
+export type FixtureConnectTestApi = {
+  renderer: ReactTestRenderer;
+  update: (args: MountFixtureConnectArgs) => void;
   postMessage: (msg: RendererRequest) => Promise<unknown>;
   untilMessage: (msg: {}) => Promise<unknown>;
   getLastFixtureState: () => Promise<null | FixtureState>;
@@ -51,138 +40,22 @@ export type ConnectMockApi = {
   ) => Promise<unknown>;
 };
 
-export function createConnectMock(init: ConnectMockCreator) {
-  return async function mockConnect(
-    children: (api: ConnectMockApi) => Promise<unknown>
-  ) {
-    const api = init();
-    const { getElement, cleanup, getMessages } = api;
+export type MountFixtureConnect = (
+  args: MountFixtureConnectArgs,
+  cb: (api: FixtureConnectTestApi) => void
+) => Promise<void>;
 
-    async function postMessage(msg: RendererRequest) {
-      api.postMessage(msg);
-      // This is very convenient because we don't have to await manually for
-      // each dispatched event to be fulfilled inside test cases
-      await untilMessage(msg);
-    }
+type FixtureConnectMockArgs = {
+  getMessages: GetMessages;
+  postMessage: (msg: Message) => unknown;
+};
 
-    try {
-      await children({
-        getElement,
-        untilMessage,
-        getLastFixtureState,
-        postMessage,
-        selectFixture,
-        unselectFixture,
-        setFixtureState
-      });
-    } finally {
-      cleanup();
-    }
-
-    async function getLastFixtureState() {
-      const msg = await getLastMessageOfType<FixtureStateChangeResponse>(
-        'fixtureStateChange'
-      );
-      return msg.payload.fixtureState;
-    }
-
-    async function untilMessage(msg: {}) {
-      try {
-        await until(() => {
-          try {
-            // Support expect.any(constructor) matches
-            // https://jestjs.io/docs/en/expect#expectanyconstructor
-            expect(getLastMessage()).toEqual(msg);
-            return true;
-          } catch (err) {
-            return false;
-          }
-        });
-      } catch (err) {
-        expect(getLastMessage()).toEqual(msg);
-      }
-    }
-
-    async function selectFixture({
-      rendererId,
-      fixtureId,
-      fixtureState
-    }: SelectFixtureRequest['payload']) {
-      return postMessage({
-        type: 'selectFixture',
-        payload: {
-          rendererId,
-          fixtureId,
-          fixtureState
-        }
-      });
-    }
-
-    async function unselectFixture({
-      rendererId
-    }: UnselectFixtureRequest['payload']) {
-      return postMessage({
-        type: 'unselectFixture',
-        payload: {
-          rendererId
-        }
-      });
-    }
-
-    async function setFixtureState({
-      rendererId,
-      fixtureId,
-      fixtureState
-    }: SetFixtureStateRequest['payload']) {
-      return postMessage({
-        type: 'setFixtureState',
-        payload: {
-          rendererId,
-          fixtureId,
-          fixtureState
-        }
-      });
-    }
-
-    function getLastMessage(): null | Message {
-      const messages = getMessages();
-
-      if (messages.length === 0) {
-        return null;
-      }
-
-      return messages[messages.length - 1];
-    }
-
-    async function getLastMessageOfType<M extends Message>(
-      msgType: string
-    ): Promise<M> {
-      let lastMsg = null as null | Message;
-
-      try {
-        await until(() => {
-          lastMsg = getLastMessage();
-          return lastMsg && lastMsg.type === msgType;
-        });
-      } finally {
-        if (!lastMsg || lastMsg.type !== msgType) {
-          /* tslint:disable:no-unsafe-finally */
-          throw new Error(`"${msgType}" message never arrived`);
-          /* tslint:enable:no-unsafe-finally */
-        }
-      }
-
-      return lastMsg as M;
-    }
-  };
-}
-
-export function createFixtureConnectRenderCallback({
+export function createFixtureConnectRenderCb({
   rendererId,
   fixtures,
   decorators,
   onFixtureChange
-}: FixtureConnectUserProps) {
+}: MountFixtureConnectArgs) {
   return (remoteRendererApiProps: RemoteRendererApi) => (
     <FixtureConnect
       rendererId={rendererId}
@@ -193,4 +66,113 @@ export function createFixtureConnectRenderCallback({
       {...remoteRendererApiProps}
     />
   );
+}
+
+export function createFixtureConnectMockApi(args: FixtureConnectMockArgs) {
+  return {
+    postMessage,
+    untilMessage,
+    getLastFixtureState,
+    selectFixture,
+    unselectFixture,
+    setFixtureState
+  };
+
+  async function postMessage(msg: RendererRequest) {
+    args.postMessage(msg);
+    // This is very convenient because we don't have to await manually for
+    // each dispatched event to be fulfilled inside test cases
+    await untilMessage(msg);
+  }
+
+  async function getLastFixtureState() {
+    const msg = await getLastMessageOfType<FixtureStateChangeResponse>(
+      'fixtureStateChange'
+    );
+    return msg.payload.fixtureState;
+  }
+
+  async function untilMessage(msg: {}) {
+    try {
+      await until(() => {
+        try {
+          // Support expect.any(constructor) matches
+          // https://jestjs.io/docs/en/expect#expectanyconstructor
+          expect(getLastMessage()).toEqual(msg);
+          return true;
+        } catch (err) {
+          return false;
+        }
+      });
+    } catch (err) {
+      expect(getLastMessage()).toEqual(msg);
+    }
+  }
+
+  async function selectFixture({
+    rendererId,
+    fixtureId,
+    fixtureState
+  }: SelectFixtureRequest['payload']) {
+    return postMessage({
+      type: 'selectFixture',
+      payload: {
+        rendererId,
+        fixtureId,
+        fixtureState
+      }
+    });
+  }
+
+  async function unselectFixture({
+    rendererId
+  }: UnselectFixtureRequest['payload']) {
+    return postMessage({
+      type: 'unselectFixture',
+      payload: {
+        rendererId
+      }
+    });
+  }
+
+  async function setFixtureState({
+    rendererId,
+    fixtureId,
+    fixtureState
+  }: SetFixtureStateRequest['payload']) {
+    return postMessage({
+      type: 'setFixtureState',
+      payload: {
+        rendererId,
+        fixtureId,
+        fixtureState
+      }
+    });
+  }
+
+  function getLastMessage(): null | Message {
+    const messages = args.getMessages();
+    return messages.length === 0 ? null : messages[messages.length - 1];
+  }
+
+  async function getLastMessageOfType<M extends Message>(
+    msgType: string
+  ): Promise<M> {
+    let lastMsg = null as null | Message;
+
+    try {
+      await until(() => {
+        lastMsg = getLastMessage();
+        return lastMsg && lastMsg.type === msgType;
+      });
+    } finally {
+      if (!lastMsg || lastMsg.type !== msgType) {
+        /* tslint:disable:no-unsafe-finally */
+        throw new Error(`"${msgType}" message never arrived`);
+        /* tslint:enable:no-unsafe-finally */
+      }
+    }
+
+    return lastMsg as M;
+  }
 }

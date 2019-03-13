@@ -1,7 +1,7 @@
 import * as React from 'react';
 import retry from '@skidding/async-retry';
 import { uuid } from 'react-cosmos-shared2/util';
-import { runTests, mount } from '../testHelpers';
+import { runFixtureConnectTests } from '../testHelpers';
 
 type Props = {
   children: React.ReactNode;
@@ -21,30 +21,27 @@ const decorators = {
   )
 };
 
-runTests(mockConnect => {
+runFixtureConnectTests(mount => {
   it('renders selected fixture inside decorator', async () => {
-    await mockConnect(async ({ getElement, selectFixture }) => {
-      await mount(
-        getElement({ rendererId, fixtures, decorators }),
-        async renderer => {
-          const [path] = Object.keys(fixtures);
-          await selectFixture({
-            rendererId,
-            fixtureId: { path, name: null },
-            fixtureState: null
-          });
-
-          // "src/bar/decorator" should be omitted because it's not a placed in
-          // a parent directory of the selected fixture
-          await retry(() =>
-            expect(renderer.toJSON()).toEqual([
-              'Decorated at src',
-              'Decorated at src/foo',
-              'Hello!'
-            ])
-          );
-        }
-      );
-    });
+    await mount(
+      { rendererId, fixtures, decorators },
+      async ({ renderer, selectFixture }) => {
+        const [path] = Object.keys(fixtures);
+        await selectFixture({
+          rendererId,
+          fixtureId: { path, name: null },
+          fixtureState: null
+        });
+        // "src/bar/decorator" should be omitted because it's not a placed in
+        // a parent directory of the selected fixture
+        await retry(() =>
+          expect(renderer.toJSON()).toEqual([
+            'Decorated at src',
+            'Decorated at src/foo',
+            'Hello!'
+          ])
+        );
+      }
+    );
   });
 });

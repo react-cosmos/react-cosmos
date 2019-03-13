@@ -2,10 +2,12 @@ import * as React from 'react';
 import * as io from 'socket.io-client';
 import { WebSockets } from '..';
 import {
-  FixtureConnectUserProps,
-  createFixtureConnectRenderCallback,
-  createConnectMock
+  MountFixtureConnectArgs,
+  FixtureConnectTestApi,
+  createFixtureConnectRenderCb,
+  createFixtureConnectMockApi
 } from './shared';
+import { create } from 'react-test-renderer';
 
 // __getMockApi is defined in mockSocketIo.js
 const {
@@ -15,19 +17,26 @@ const {
   resetMessages
 } = (io as any).__getMockApi();
 
-export const mockWebSockets = createConnectMock(() => {
-  return {
-    getElement,
-    getMessages,
-    postMessage,
-    cleanup: resetMessages
-  };
-});
+export async function mountWebSockets(
+  args: MountFixtureConnectArgs,
+  cb: (api: FixtureConnectTestApi) => void
+) {
+  expect.hasAssertions();
+  const renderer = create(getElement(args));
+  try {
+    await cb({
+      renderer,
+      update: newArgs => renderer.update(getElement(newArgs)),
+      ...createFixtureConnectMockApi({ getMessages, postMessage })
+    });
+  } finally {
+    renderer.unmount();
+    resetMessages();
+  }
+}
 
-function getElement(userProps: FixtureConnectUserProps) {
+function getElement(args: MountFixtureConnectArgs) {
   return (
-    <WebSockets url={WS_URL}>
-      {createFixtureConnectRenderCallback(userProps)}
-    </WebSockets>
+    <WebSockets url={WS_URL}>{createFixtureConnectRenderCb(args)}</WebSockets>
   );
 }

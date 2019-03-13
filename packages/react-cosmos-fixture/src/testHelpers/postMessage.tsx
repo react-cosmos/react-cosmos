@@ -1,13 +1,18 @@
 import * as React from 'react';
+import { create } from 'react-test-renderer';
 import { PostMessage } from '..';
 import {
   Message,
-  createFixtureConnectRenderCallback,
-  createConnectMock,
-  FixtureConnectUserProps
+  MountFixtureConnectArgs,
+  FixtureConnectTestApi,
+  createFixtureConnectMockApi,
+  createFixtureConnectRenderCb
 } from './shared';
 
-export const mockPostMessage = createConnectMock(() => {
+export async function mountPostMessage(
+  args: MountFixtureConnectArgs,
+  cb: (api: FixtureConnectTestApi) => void
+) {
   const onMessage = jest.fn();
   window.addEventListener('message', onMessage, false);
 
@@ -23,16 +28,20 @@ export const mockPostMessage = createConnectMock(() => {
     window.removeEventListener('message', onMessage);
   }
 
-  return {
-    getElement,
-    getMessages,
-    postMessage,
-    cleanup
-  };
-});
+  expect.hasAssertions();
+  const renderer = create(getElement(args));
+  try {
+    await cb({
+      renderer,
+      update: newArgs => renderer.update(getElement(newArgs)),
+      ...createFixtureConnectMockApi({ getMessages, postMessage })
+    });
+  } finally {
+    renderer.unmount();
+    cleanup();
+  }
+}
 
-function getElement(userProps: FixtureConnectUserProps) {
-  return (
-    <PostMessage>{createFixtureConnectRenderCallback(userProps)}</PostMessage>
-  );
+function getElement(args: MountFixtureConnectArgs) {
+  return <PostMessage>{createFixtureConnectRenderCb(args)}</PostMessage>;
 }

@@ -2167,10 +2167,10 @@
   resolved "https://registry.yarnpkg.com/@sheerun/mutationobserver-shim/-/mutationobserver-shim-0.3.2.tgz#8013f2af54a2b7d735f71560ff360d3a8176a87b"
   integrity sha512-vTCdPp/T/Q3oSqwHmZ5Kpa9oI7iLtGl3RQaA/NyLHikvcrPxACkkKVr/XzkSPJWXHRhKGzVvb0urJsbMlRxi1Q==
 
-"@skidding/async-retry@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@skidding/async-retry/-/async-retry-1.0.4.tgz#220ca3852283f27e191fbc8c7899a6ffb8042744"
-  integrity sha512-pZWXYgB5NnXosaGu3G8euc+poYIjKLYrVtystBjoD5wWC57VLRKXmMdMmfoHHqClNbaR/gRm3/Vo0M+tAgpWhA==
+"@skidding/async-retry@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@skidding/async-retry/-/async-retry-2.0.0.tgz#839830725d78b6ef45ac76700d7a472e755617e0"
+  integrity sha512-Ff2SQhD6qxU11yI4jdf3UHY8M1fhcGrZcUdP9tMwgwDw1kNegVSiP5OP5AHE0T+TR7z5KBJrVH0wf52kmj6WUg==
   dependencies:
     "@babel/runtime" "^7.0.0"
     async-until "^1.2.2"

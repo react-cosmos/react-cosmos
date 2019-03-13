@@ -1,47 +1,40 @@
 import { uuid } from 'react-cosmos-shared2/util';
 import retry from '@skidding/async-retry';
-import { runTests, mount } from '../testHelpers';
+import { runFixtureConnectTests } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = { first: 'First' };
 const decorators = {};
+const fixtureId = { path: 'first', name: null };
 
-runTests(mockConnect => {
+runFixtureConnectTests(mount => {
   it('fires change callback when selecting fixture', async () => {
-    await mockConnect(async ({ getElement, selectFixture }) => {
-      const onFixtureChange = jest.fn();
-      await mount(
-        getElement({ rendererId, fixtures, decorators, onFixtureChange }),
-        async () => {
-          await selectFixture({
-            rendererId,
-            fixtureId: { path: 'first', name: null },
-            fixtureState: null
-          });
-
-          await retry(() => expect(onFixtureChange).toBeCalledTimes(1));
-        }
-      );
-    });
+    const onFixtureChange = jest.fn();
+    await mount(
+      { rendererId, fixtures, decorators, onFixtureChange },
+      async ({ selectFixture }) => {
+        await selectFixture({
+          rendererId,
+          fixtureId,
+          fixtureState: null
+        });
+        await retry(() => expect(onFixtureChange).toBeCalledTimes(1));
+      }
+    );
   });
 
   it('fires change callback when unselecting fixture', async () => {
-    await mockConnect(
-      async ({ getElement, selectFixture, unselectFixture }) => {
-        const onFixtureChange = jest.fn();
-        await mount(
-          getElement({ rendererId, fixtures, decorators, onFixtureChange }),
-          async () => {
-            await selectFixture({
-              rendererId,
-              fixtureId: { path: 'first', name: null },
-              fixtureState: null
-            });
-            await unselectFixture({ rendererId });
-
-            await retry(() => expect(onFixtureChange).toBeCalledTimes(2));
-          }
-        );
+    const onFixtureChange = jest.fn();
+    await mount(
+      { rendererId, fixtures, decorators, onFixtureChange },
+      async ({ selectFixture, unselectFixture }) => {
+        await selectFixture({
+          rendererId,
+          fixtureId,
+          fixtureState: null
+        });
+        await unselectFixture({ rendererId });
+        await retry(() => expect(onFixtureChange).toBeCalledTimes(2));
       }
     );
   });

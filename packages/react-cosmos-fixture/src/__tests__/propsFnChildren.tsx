@@ -3,13 +3,12 @@ import retry from '@skidding/async-retry';
 import { uuid } from 'react-cosmos-shared2/util';
 import { HelloMessage } from '../testHelpers/components';
 import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
-import { runTests, mount } from '../testHelpers';
+import { runFixtureConnectTests } from '../testHelpers';
 import { FixtureCapture } from '..';
 
 function Wrap({ children }: { children: () => React.ReactNode }) {
   return <>{children()}</>;
 }
-
 Wrap.cosmosCapture = false;
 
 const rendererId = uuid();
@@ -28,40 +27,37 @@ const fixtures = {
   )
 };
 const decorators = {};
+const fixtureId = { path: 'first', name: null };
 
-runTests(mockConnect => {
+runFixtureConnectTests(mount => {
   it('captures props from render callback', async () => {
-    await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
-      await mount(
-        getElement({ rendererId, fixtures, decorators }),
-        async renderer => {
-          await selectFixture({
+    await mount(
+      { rendererId, fixtures, decorators },
+      async ({ renderer, selectFixture, untilMessage }) => {
+        await selectFixture({
+          rendererId,
+          fixtureId,
+          fixtureState: null
+        });
+        await retry(() =>
+          expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B'])
+        );
+        await untilMessage({
+          type: 'fixtureStateChange',
+          payload: {
             rendererId,
-            fixtureId: { path: 'first', name: null },
-            fixtureState: null
-          });
-
-          await retry(() =>
-            expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B'])
-          );
-
-          await untilMessage({
-            type: 'fixtureStateChange',
-            payload: {
-              rendererId,
-              fixtureId: { path: 'first', name: null },
-              fixtureState: {
-                components: [
-                  createCompFxState({
-                    decoratorId: 'mockDecoratorId',
-                    props: createFxValues({ name: 'B' })
-                  })
-                ]
-              }
+            fixtureId,
+            fixtureState: {
+              components: [
+                createCompFxState({
+                  decoratorId: 'mockDecoratorId',
+                  props: createFxValues({ name: 'B' })
+                })
+              ]
             }
-          });
-        }
-      );
-    });
+          }
+        });
+      }
+    );
   });
 });

@@ -7,7 +7,7 @@ import {
 import { uuid } from 'react-cosmos-shared2/util';
 import { HelloMessage } from '../testHelpers/components';
 import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
-import { runTests, mount } from '../testHelpers';
+import { runFixtureConnectTests } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = {
@@ -19,87 +19,76 @@ const fixtures = {
   )
 };
 const decorators = {};
+const fixtureId = { path: 'first', name: null };
 
-runTests(mockConnect => {
+runFixtureConnectTests(mount => {
   it('captures multiple props instances', async () => {
-    await mockConnect(async ({ getElement, selectFixture, untilMessage }) => {
-      await mount(
-        getElement({ rendererId, fixtures, decorators }),
-        async renderer => {
-          await selectFixture({
+    await mount(
+      { rendererId, fixtures, decorators },
+      async ({ renderer, selectFixture, untilMessage }) => {
+        await selectFixture({
+          rendererId,
+          fixtureId,
+          fixtureState: null
+        });
+        await retry(() =>
+          expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B'])
+        );
+        await untilMessage({
+          type: 'fixtureStateChange',
+          payload: {
             rendererId,
-            fixtureId: { path: 'first', name: null },
-            fixtureState: null
-          });
-
-          await retry(() =>
-            expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B'])
-          );
-
-          await untilMessage({
-            type: 'fixtureStateChange',
-            payload: {
-              rendererId,
-              fixtureId: { path: 'first', name: null },
-              fixtureState: {
-                components: [
-                  createCompFxState({
-                    componentName: 'HelloMessage',
-                    elPath: 'props.children[0]',
-                    props: createFxValues({ name: 'Bianca' })
-                  }),
-                  createCompFxState({
-                    componentName: 'HelloMessage',
-                    elPath: 'props.children[1]',
-                    props: createFxValues({ name: 'B' })
-                  })
-                ]
-              }
+            fixtureId,
+            fixtureState: {
+              components: [
+                createCompFxState({
+                  componentName: 'HelloMessage',
+                  elPath: 'props.children[0]',
+                  props: createFxValues({ name: 'Bianca' })
+                }),
+                createCompFxState({
+                  componentName: 'HelloMessage',
+                  elPath: 'props.children[1]',
+                  props: createFxValues({ name: 'B' })
+                })
+              ]
             }
-          });
-        }
-      );
-    });
+          }
+        });
+      }
+    );
   });
 
   it('overwrites prop in second instance', async () => {
-    await mockConnect(
+    await mount(
+      { rendererId, fixtures, decorators },
       async ({
-        getElement,
+        renderer,
         selectFixture,
-        getLastFixtureState,
-        setFixtureState
+        setFixtureState,
+        getLastFixtureState
       }) => {
-        await mount(
-          getElement({ rendererId, fixtures, decorators }),
-          async renderer => {
-            await selectFixture({
-              rendererId,
-              fixtureId: { path: 'first', name: null },
-              fixtureState: null
-            });
-
-            const fixtureState = await getLastFixtureState();
-            const [, { decoratorId, elPath }] = getCompFixtureStates(
-              fixtureState
-            );
-            await setFixtureState({
-              rendererId,
-              fixtureId: { path: 'first', name: null },
-              fixtureState: {
-                components: updateCompFixtureState({
-                  fixtureState,
-                  decoratorId,
-                  elPath,
-                  props: createFxValues({ name: 'Petec' })
-                })
-              }
-            });
-
-            await retry(() =>
-              expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello Petec'])
-            );
+        await selectFixture({
+          rendererId,
+          fixtureId,
+          fixtureState: null
+        });
+        const fixtureState = await getLastFixtureState();
+        const [, { decoratorId, elPath }] = getCompFixtureStates(fixtureState);
+        await setFixtureState({
+          rendererId,
+          fixtureId,
+          fixtureState: {
+            components: updateCompFixtureState({
+              fixtureState,
+              decoratorId,
+              elPath,
+              props: createFxValues({ name: 'Petec' })
+            })
           }
+        });
+        await retry(() =>
+          expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello Petec'])
         );
       }
     );
