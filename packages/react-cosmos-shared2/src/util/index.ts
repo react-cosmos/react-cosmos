@@ -7,7 +7,7 @@ export type SetState<T> = (
   callback?: () => unknown
 ) => unknown;
 
-export function updateState<T extends { call?: never; [key: string]: any }>(
+export function updateState<T extends { call?: never } & Record<string, any>>(
   prevState: T,
   update: StateUpdate<T>
 ): T {

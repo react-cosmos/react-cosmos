@@ -3,7 +3,7 @@ import { isElement } from 'react-is';
 import * as reactElementToJSXString from 'react-element-to-jsx-string';
 import { updateItem, replaceOrAddItem, SetState } from './util';
 
-export type KeyValue = { [key: string]: unknown };
+export type KeyValue = Record<string, unknown>;
 
 export type FixtureRenderKey = number;
 
