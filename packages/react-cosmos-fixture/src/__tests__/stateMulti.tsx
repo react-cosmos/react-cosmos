@@ -30,29 +30,26 @@ runFixtureConnectTests(mount => {
   it('captures mocked state from multiple instances', async () => {
     await mount(
       { rendererId, fixtures, decorators },
-      async ({ selectFixture, untilMessage }) => {
+      async ({ selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
           fixtureId,
           fixtureState: null
         });
-        await untilMessage({
-          type: 'fixtureStateChange',
-          payload: {
-            rendererId,
-            fixtureId,
-            fixtureState: {
-              components: [
-                createCompFxState({
-                  props: [],
-                  state: createFxValues({ count: 5 })
-                }),
-                createCompFxState({
-                  props: [],
-                  state: createFxValues({ count: 10 })
-                })
-              ]
-            }
+        await fixtureStateChange({
+          rendererId,
+          fixtureId,
+          fixtureState: {
+            components: [
+              createCompFxState({
+                props: [],
+                state: createFxValues({ count: 5 })
+              }),
+              createCompFxState({
+                props: [],
+                state: createFxValues({ count: 10 })
+              })
+            ]
           }
         });
       }

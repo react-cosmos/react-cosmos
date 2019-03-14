@@ -41,20 +41,17 @@ runFixtureConnectTests(mount => {
   it('creates empty fixture state', async () => {
     await mount(
       { rendererId, fixtures, decorators },
-      async ({ selectFixture, untilMessage }) => {
+      async ({ selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
           fixtureId: { path: 'second', name: null },
           fixtureState: null
         });
-        await untilMessage({
-          type: 'fixtureStateChange',
-          payload: {
-            rendererId,
-            fixtureId: { path: 'second', name: null },
-            fixtureState: {
-              components: []
-            }
+        await fixtureStateChange({
+          rendererId,
+          fixtureId: { path: 'second', name: null },
+          fixtureState: {
+            components: []
           }
         });
       }

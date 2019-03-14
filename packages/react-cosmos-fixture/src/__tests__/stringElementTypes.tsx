@@ -14,25 +14,22 @@ runFixtureConnectTests(mount => {
     };
     await mount(
       { rendererId, fixtures, decorators },
-      async ({ selectFixture, untilMessage }) => {
+      async ({ selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
           fixtureId,
           fixtureState: null
         });
-        await untilMessage({
-          type: 'fixtureStateChange',
-          payload: {
-            rendererId,
-            fixtureId,
-            fixtureState: {
-              components: [
-                createCompFxState({
-                  componentName: 'input',
-                  props: createFxValues({ type: 'text' })
-                })
-              ]
-            }
+        await fixtureStateChange({
+          rendererId,
+          fixtureId,
+          fixtureState: {
+            components: [
+              createCompFxState({
+                componentName: 'input',
+                props: createFxValues({ type: 'text' })
+              })
+            ]
           }
         });
       }
@@ -45,20 +42,17 @@ runFixtureConnectTests(mount => {
     };
     await mount(
       { rendererId, fixtures, decorators },
-      async ({ selectFixture, untilMessage }) => {
+      async ({ selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
           fixtureId,
           fixtureState: null
         });
-        await untilMessage({
-          type: 'fixtureStateChange',
-          payload: {
-            rendererId,
-            fixtureId,
-            fixtureState: {
-              components: []
-            }
+        await fixtureStateChange({
+          rendererId,
+          fixtureId,
+          fixtureState: {
+            components: []
           }
         });
       }

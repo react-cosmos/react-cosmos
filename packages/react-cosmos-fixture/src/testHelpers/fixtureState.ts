@@ -1,7 +1,8 @@
 import {
   FixtureDecoratorId,
   KeyValue,
-  FixtureStateValues
+  FixtureStateValues,
+  ComponentFixtureState
 } from 'react-cosmos-shared2/fixtureState';
 
 export function createCompFxState(args: {
@@ -10,7 +11,7 @@ export function createCompFxState(args: {
   componentName?: string;
   props?: FixtureStateValues;
   state?: FixtureStateValues;
-}) {
+}): ComponentFixtureState {
   const {
     decoratorId = expect.any(String),
     elPath = expect.any(String),

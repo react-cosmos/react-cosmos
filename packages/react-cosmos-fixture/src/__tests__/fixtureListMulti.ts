@@ -9,13 +9,10 @@ runFixtureConnectTests(mount => {
   it('posts ready response on mount', async () => {
     await mount(
       { rendererId, fixtures, decorators },
-      async ({ untilMessage }) => {
-        await untilMessage({
-          type: 'rendererReady',
-          payload: {
-            rendererId,
-            fixtures: { first: ['a', 'b', 'c'], second: null }
-          }
+      async ({ rendererReady }) => {
+        await rendererReady({
+          rendererId,
+          fixtures: { first: ['a', 'b', 'c'], second: null }
         });
       }
     );

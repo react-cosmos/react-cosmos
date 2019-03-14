@@ -22,7 +22,7 @@ runFixtureConnectTests(mount => {
   it('transitions Fragment from single to multi children', async () => {
     await mount(
       { rendererId, fixtures, decorators },
-      async ({ update, selectFixture, untilMessage }) => {
+      async ({ update, selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
           fixtureId,
@@ -55,23 +55,20 @@ runFixtureConnectTests(mount => {
         // Do not remove this line: It captures a regression regarding an error
         // that occurred when component state was read asynchronously
         await new Promise(res => setTimeout(res, 500));
-        await untilMessage({
-          type: 'fixtureStateChange',
-          payload: {
-            rendererId,
-            fixtureId,
-            fixtureState: {
-              components: [
-                createCompFxState({
-                  props: [],
-                  state: createFxValues({ count: 5 })
-                }),
-                createCompFxState({
-                  props: [],
-                  state: createFxValues({ count: 10 })
-                })
-              ]
-            }
+        await fixtureStateChange({
+          rendererId,
+          fixtureId,
+          fixtureState: {
+            components: [
+              createCompFxState({
+                props: [],
+                state: createFxValues({ count: 5 })
+              }),
+              createCompFxState({
+                props: [],
+                state: createFxValues({ count: 10 })
+              })
+            ]
           }
         });
       }

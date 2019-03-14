@@ -27,26 +27,23 @@ runFixtureConnectTests(mount => {
   it('captures mocked state', async () => {
     await mount(
       { rendererId, fixtures, decorators },
-      async ({ renderer, selectFixture, untilMessage }) => {
+      async ({ renderer, selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
           fixtureId,
           fixtureState: null
         });
         await retry(() => expect(renderer.toJSON()).toBe('5 times'));
-        await untilMessage({
-          type: 'fixtureStateChange',
-          payload: {
-            rendererId,
-            fixtureId,
-            fixtureState: {
-              components: [
-                createCompFxState({
-                  props: [],
-                  state: createFxValues({ count: 5 })
-                })
-              ]
-            }
+        await fixtureStateChange({
+          rendererId,
+          fixtureId,
+          fixtureState: {
+            components: [
+              createCompFxState({
+                props: [],
+                state: createFxValues({ count: 5 })
+              })
+            ]
           }
         });
       }
@@ -141,7 +138,7 @@ runFixtureConnectTests(mount => {
         renderer,
         selectFixture,
         setFixtureState,
-        untilMessage,
+        fixtureStateChange,
         getLastFixtureState
       }) => {
         await selectFixture({
@@ -179,19 +176,16 @@ runFixtureConnectTests(mount => {
         await retry(() => expect(renderer.toJSON()).toBe('5 times'));
         // After the state is removed from the fixture state, the original
         // state is added back through a fixtureStateChange message
-        await untilMessage({
-          type: 'fixtureStateChange',
-          payload: {
-            rendererId,
-            fixtureId,
-            fixtureState: {
-              components: [
-                createCompFxState({
-                  props: [],
-                  state: createFxValues({ count: 5 })
-                })
-              ]
-            }
+        await fixtureStateChange({
+          rendererId,
+          fixtureId,
+          fixtureState: {
+            components: [
+              createCompFxState({
+                props: [],
+                state: createFxValues({ count: 5 })
+              })
+            ]
           }
         });
       }
@@ -294,7 +288,7 @@ runFixtureConnectTests(mount => {
         update,
         selectFixture,
         setFixtureState,
-        untilMessage,
+        fixtureStateChange,
         getLastFixtureState
       }) => {
         await selectFixture({
@@ -329,19 +323,16 @@ runFixtureConnectTests(mount => {
           },
           decorators
         });
-        await untilMessage({
-          type: 'fixtureStateChange',
-          payload: {
-            rendererId,
-            fixtureId,
-            fixtureState: {
-              components: [
-                createCompFxState({
-                  props: [],
-                  state: createFxValues({ count: 50 })
-                })
-              ]
-            }
+        await fixtureStateChange({
+          rendererId,
+          fixtureId,
+          fixtureState: {
+            components: [
+              createCompFxState({
+                props: [],
+                state: createFxValues({ count: 50 })
+              })
+            ]
           }
         });
         expect(renderer.toJSON()).toBe('50 times');
@@ -352,25 +343,22 @@ runFixtureConnectTests(mount => {
   it('clears fixture state for removed fixture element', async () => {
     await mount(
       { rendererId, fixtures, decorators },
-      async ({ renderer, update, selectFixture, untilMessage }) => {
+      async ({ renderer, update, selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
           fixtureId,
           fixtureState: null
         });
-        await untilMessage({
-          type: 'fixtureStateChange',
-          payload: {
-            rendererId,
-            fixtureId,
-            fixtureState: {
-              components: [
-                createCompFxState({
-                  props: [],
-                  state: createFxValues({ count: 5 })
-                })
-              ]
-            }
+        await fixtureStateChange({
+          rendererId,
+          fixtureId,
+          fixtureState: {
+            components: [
+              createCompFxState({
+                props: [],
+                state: createFxValues({ count: 5 })
+              })
+            ]
           }
         });
         update({
@@ -383,14 +371,11 @@ runFixtureConnectTests(mount => {
           decorators
         });
         expect(renderer.toJSON()).toBe('No counts for you.');
-        await untilMessage({
-          type: 'fixtureStateChange',
-          payload: {
-            rendererId,
-            fixtureId,
-            fixtureState: {
-              components: []
-            }
+        await fixtureStateChange({
+          rendererId,
+          fixtureId,
+          fixtureState: {
+            components: []
           }
         });
       }

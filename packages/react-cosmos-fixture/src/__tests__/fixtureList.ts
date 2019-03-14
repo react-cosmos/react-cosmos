@@ -15,13 +15,10 @@ runFixtureConnectTests(mount => {
   it('posts ready response on mount', async () => {
     await mount(
       { rendererId, fixtures, decorators },
-      async ({ untilMessage }) => {
-        await untilMessage({
-          type: 'rendererReady',
-          payload: {
-            rendererId,
-            fixtures: { first: null, second: null }
-          }
+      async ({ rendererReady }) => {
+        await rendererReady({
+          rendererId,
+          fixtures
         });
       }
     );
@@ -30,23 +27,15 @@ runFixtureConnectTests(mount => {
   it('posts ready response again on ping request', async () => {
     await mount(
       { rendererId, fixtures, decorators },
-      async ({ untilMessage, postMessage }) => {
-        await untilMessage({
-          type: 'rendererReady',
-          payload: {
-            rendererId,
-            fixtures: { first: null, second: null }
-          }
+      async ({ rendererReady, pingRenderers }) => {
+        await rendererReady({
+          rendererId,
+          fixtures
         });
-        await postMessage({
-          type: 'pingRenderers'
-        });
-        await untilMessage({
-          type: 'rendererReady',
-          payload: {
-            rendererId,
-            fixtures: { first: null, second: null }
-          }
+        await pingRenderers();
+        await rendererReady({
+          rendererId,
+          fixtures
         });
       }
     );
@@ -55,28 +44,19 @@ runFixtureConnectTests(mount => {
   it('posts fixture list on "fixtures" prop change', async () => {
     await mount(
       { rendererId, fixtures, decorators },
-      async ({ update, untilMessage }) => {
-        await untilMessage({
-          type: 'rendererReady',
-          payload: {
-            rendererId,
-            fixtures: { first: null, second: null }
-          }
+      async ({ update, rendererReady, fixtureListUpdate }) => {
+        await rendererReady({
+          rendererId,
+          fixtures
         });
         update({
           rendererId,
-          fixtures: {
-            ...fixtures,
-            third: null
-          },
+          fixtures: { ...fixtures, third: null },
           decorators
         });
-        await untilMessage({
-          type: 'fixtureListUpdate',
-          payload: {
-            rendererId,
-            fixtures: { first: null, second: null, third: null }
-          }
+        await fixtureListUpdate({
+          rendererId,
+          fixtures: { ...fixtures, third: null }
         });
       }
     );

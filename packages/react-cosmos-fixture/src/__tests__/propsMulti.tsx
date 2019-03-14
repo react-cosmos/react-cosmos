@@ -25,7 +25,7 @@ runFixtureConnectTests(mount => {
   it('captures multiple props instances', async () => {
     await mount(
       { rendererId, fixtures, decorators },
-      async ({ renderer, selectFixture, untilMessage }) => {
+      async ({ renderer, selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
           fixtureId,
@@ -34,25 +34,22 @@ runFixtureConnectTests(mount => {
         await retry(() =>
           expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B'])
         );
-        await untilMessage({
-          type: 'fixtureStateChange',
-          payload: {
-            rendererId,
-            fixtureId,
-            fixtureState: {
-              components: [
-                createCompFxState({
-                  componentName: 'HelloMessage',
-                  elPath: 'props.children[0]',
-                  props: createFxValues({ name: 'Bianca' })
-                }),
-                createCompFxState({
-                  componentName: 'HelloMessage',
-                  elPath: 'props.children[1]',
-                  props: createFxValues({ name: 'B' })
-                })
-              ]
-            }
+        await fixtureStateChange({
+          rendererId,
+          fixtureId,
+          fixtureState: {
+            components: [
+              createCompFxState({
+                componentName: 'HelloMessage',
+                elPath: 'props.children[0]',
+                props: createFxValues({ name: 'Bianca' })
+              }),
+              createCompFxState({
+                componentName: 'HelloMessage',
+                elPath: 'props.children[1]',
+                props: createFxValues({ name: 'B' })
+              })
+            ]
           }
         });
       }

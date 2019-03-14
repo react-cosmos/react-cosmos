@@ -188,7 +188,7 @@ runFixtureConnectTests(mount => {
         renderer,
         selectFixture,
         setFixtureState,
-        untilMessage,
+        fixtureStateChange,
         getLastFixtureState
       }) => {
         await selectFixture({
@@ -216,19 +216,16 @@ runFixtureConnectTests(mount => {
         counterRef!.setState({ count: 7 });
 
         await retry(() => expect(renderer.toJSON()).toBe('7 timez'));
-        await untilMessage({
-          type: 'fixtureStateChange',
-          payload: {
-            rendererId,
-            fixtureId,
-            fixtureState: {
-              components: [
-                createCompFxState({
-                  props: createFxValues({ suffix: 'timez' }),
-                  state: createFxValues({ count: 7 })
-                })
-              ]
-            }
+        await fixtureStateChange({
+          rendererId,
+          fixtureId,
+          fixtureState: {
+            components: [
+              createCompFxState({
+                props: createFxValues({ suffix: 'timez' }),
+                state: createFxValues({ count: 7 })
+              })
+            ]
           }
         });
       }
@@ -238,7 +235,7 @@ runFixtureConnectTests(mount => {
   it('updates props on fixture change', async () => {
     await mount(
       { rendererId, fixtures, decorators },
-      async ({ renderer, update, selectFixture, untilMessage }) => {
+      async ({ renderer, update, selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
           fixtureId,
@@ -252,19 +249,16 @@ runFixtureConnectTests(mount => {
           decorators
         });
         await retry(() => expect(renderer.toJSON()).toBe('0 timez'));
-        await untilMessage({
-          type: 'fixtureStateChange',
-          payload: {
-            rendererId,
-            fixtureId,
-            fixtureState: {
-              components: [
-                createCompFxState({
-                  props: createFxValues({ suffix: 'timez' }),
-                  state: createFxValues({ count: 0 })
-                })
-              ]
-            }
+        await fixtureStateChange({
+          rendererId,
+          fixtureId,
+          fixtureState: {
+            components: [
+              createCompFxState({
+                props: createFxValues({ suffix: 'timez' }),
+                state: createFxValues({ count: 0 })
+              })
+            ]
           }
         });
       }

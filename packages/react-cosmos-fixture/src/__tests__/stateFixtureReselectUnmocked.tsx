@@ -22,7 +22,7 @@ runFixtureConnectTests(mount => {
   it('captures initial state after re-selecting fixture', async () => {
     await mount(
       { rendererId, fixtures, decorators },
-      async ({ selectFixture, untilMessage }) => {
+      async ({ selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
           fixtureId,
@@ -33,20 +33,17 @@ runFixtureConnectTests(mount => {
           fixtureId,
           fixtureState: null
         });
-        await untilMessage({
-          type: 'fixtureStateChange',
-          payload: {
-            rendererId,
-            fixtureId,
-            fixtureState: {
-              components: [
-                createCompFxState({
-                  componentName: 'Counter',
-                  props: [],
-                  state: createFxValues({ count: 0 })
-                })
-              ]
-            }
+        await fixtureStateChange({
+          rendererId,
+          fixtureId,
+          fixtureState: {
+            components: [
+              createCompFxState({
+                componentName: 'Counter',
+                props: [],
+                state: createFxValues({ count: 0 })
+              })
+            ]
           }
         });
       }
