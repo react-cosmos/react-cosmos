@@ -3,7 +3,7 @@ import { isEqual } from 'lodash';
 import styled from 'styled-components';
 import { SetState } from 'react-cosmos-shared2/util';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import { StorageMethods, getFixtureViewport } from '../shared';
+import { StorageMethods } from '../shared';
 import { storeViewport } from '../storage';
 import { Header } from './Header';
 import { stretchStyle, getStyles } from './style';
@@ -165,9 +165,7 @@ function getViewport(
   state: ResponsivePreviewSpec['state'],
   fixtureState: FixtureState
 ): null | Viewport {
-  return (
-    getFixtureViewport(fixtureState) || (state.enabled ? state.viewport : null)
-  );
+  return fixtureState.viewport || (state.enabled ? state.viewport : null);
 }
 
 const Container = styled.div.attrs({ 'data-testid': 'responsivePreview' })`

@@ -3,7 +3,7 @@ import { SetState } from 'react-cosmos-shared2/util';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { SmartphoneIcon } from '../../../shared/icons';
 import { Button } from '../../../shared/components';
-import { StorageMethods, getFixtureViewport } from '../shared';
+import { StorageMethods } from '../shared';
 import { getDefaultViewport } from '../storage';
 import { ResponsivePreviewSpec } from '../public';
 
@@ -60,5 +60,5 @@ function isResponsiveModeOn(
   enabled: boolean,
   fixtureState: FixtureState
 ): boolean {
-  return getFixtureViewport(fixtureState) ? true : enabled;
+  return fixtureState.viewport ? true : enabled;
 }

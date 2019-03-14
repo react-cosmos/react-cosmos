@@ -34,7 +34,7 @@ export class ControlPanel extends React.Component<Props> {
 
     return (
       <Container>
-        {fixtureState && (
+        {fixtureState.components && (
           <PropsState
             fixtureState={fixtureState}
             setFixtureState={this.setComponentsFixtureState}

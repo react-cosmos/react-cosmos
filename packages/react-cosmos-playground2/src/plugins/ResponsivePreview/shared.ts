@@ -24,9 +24,3 @@ export const DEFAULT_VIEWPORT = {
 export function getResponsiveViewportStorageKey(projectId: string) {
   return `cosmos-responsiveViewport-${projectId}`;
 }
-
-export function getFixtureViewport(
-  fixtureState: FixtureState
-): null | Viewport {
-  return fixtureState && fixtureState.viewport;
-}
