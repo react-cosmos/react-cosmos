@@ -54,7 +54,7 @@ function mockRendererCore(
   setFixtureState: SetFixtureStateHandler = () => {}
 ) {
   mockMethodsOf<RendererCoreSpec>('rendererCore', {
-    getFixtureState: () => null,
+    getFixtureState: () => ({}),
     isValidFixtureSelected: () => validFixtureSelected,
     setFixtureState
   });
@@ -148,9 +148,9 @@ describe('on device select', () => {
     mockRouter();
     mockRendererCore(true);
 
-    let fixtureState: null | FixtureState = null;
-    mockRendererCore(true, (context, stateChange) => {
-      fixtureState = updateState(fixtureState, stateChange);
+    let fixtureState: FixtureState = {};
+    mockRendererCore(true, (context, stateUpdate) => {
+      fixtureState = updateState(fixtureState, stateUpdate);
     });
 
     const renderer = loadTestPlugins();
@@ -190,9 +190,9 @@ it('clears viewport in fixture state on untoggle', async () => {
   mockRouter();
   mockRendererCore(true);
 
-  let fixtureState: null | FixtureState = null;
-  mockRendererCore(true, (context, stateChange) => {
-    fixtureState = updateState(fixtureState, stateChange);
+  let fixtureState: FixtureState = {};
+  mockRendererCore(true, (context, stateUpdate) => {
+    fixtureState = updateState(fixtureState, stateUpdate);
   });
 
   const renderer = loadTestPlugins();

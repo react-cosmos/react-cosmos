@@ -10,7 +10,7 @@ import { ResponsivePreviewSpec } from '../public';
 export type Props = {
   state: ResponsivePreviewSpec['state'];
   projectId: string;
-  fixtureState: null | FixtureState;
+  fixtureState: FixtureState;
   validFixtureSelected: boolean;
   setState: SetState<ResponsivePreviewSpec['state']>;
   setFixtureStateViewport: () => void;
@@ -58,7 +58,7 @@ export class ToggleButton extends React.Component<Props> {
 
 function isResponsiveModeOn(
   enabled: boolean,
-  fixtureState: null | FixtureState
+  fixtureState: FixtureState
 ): boolean {
   return getFixtureViewport(fixtureState) ? true : enabled;
 }

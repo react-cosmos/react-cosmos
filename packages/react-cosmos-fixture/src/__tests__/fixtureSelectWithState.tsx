@@ -23,7 +23,7 @@ runFixtureConnectTests(mount => {
           fixtureId,
           fixtureState: {
             components: createCompFixtureState({
-              fixtureState: null,
+              fixtureState: {},
               decoratorId: 'root',
               elPath: '',
               componentName: 'HelloMessage',

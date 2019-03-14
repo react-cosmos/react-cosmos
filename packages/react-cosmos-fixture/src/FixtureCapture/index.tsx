@@ -50,7 +50,7 @@ export function FixtureCapture({ children, decoratorId }: Props) {
 }
 
 type InnerProps = Props & {
-  fixtureState: null | FixtureState;
+  fixtureState: FixtureState;
   setFixtureState: SetFixtureState;
 };
 
@@ -94,12 +94,10 @@ class FixtureCaptureInner extends React.Component<InnerProps> {
     if (elPaths.length === 0) {
       // Create empty fixture state (edge-case: but only if another
       // FixtureCapture instance hasn't created any fixture state)
-      setFixtureState(
-        (fxState: null | FixtureState) =>
-          fxState || {
-            components: []
-          }
-      );
+      setFixtureState((prevFixtureState: FixtureState) => ({
+        ...prevFixtureState,
+        components: prevFixtureState.components || []
+      }));
     } else {
       elPaths.forEach(elPath => {
         const compFxState = findCompFixtureState(

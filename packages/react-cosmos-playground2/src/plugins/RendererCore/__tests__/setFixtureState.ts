@@ -50,7 +50,7 @@ function loadTestPlugins() {
 
 function mockSetFixtureStateCall() {
   const methods = getMethodsOf<RendererCoreSpec>('rendererCore');
-  methods.setFixtureState((prevState: null | FixtureState) => ({
+  methods.setFixtureState((prevState: FixtureState) => ({
     ...prevState,
     components: prevState ? prevState.components : [],
     viewport: { width: 640, height: 480 }

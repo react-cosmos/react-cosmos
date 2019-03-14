@@ -26,7 +26,7 @@ export function receiveRendererReadyResponse(
       connectedRendererIds: addToSet(connectedRendererIds, rendererId),
       primaryRendererId,
       fixtures,
-      fixtureState: isPrimaryRenderer ? null : fixtureState
+      fixtureState: isPrimaryRenderer ? {} : fixtureState
     };
   }
 

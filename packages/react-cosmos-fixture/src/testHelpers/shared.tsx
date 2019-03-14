@@ -45,7 +45,7 @@ export type FixtureConnectMockApi = {
   fixtureStateChange: (
     payload: FixtureStateChangeResponse['payload']
   ) => Promise<unknown>;
-  getLastFixtureState: () => Promise<null | FixtureState>;
+  getLastFixtureState: () => Promise<FixtureState>;
 };
 
 export type FixtureConnectTestApi = {

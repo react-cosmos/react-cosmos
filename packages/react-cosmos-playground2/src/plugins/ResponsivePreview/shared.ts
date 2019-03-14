@@ -26,7 +26,7 @@ export function getResponsiveViewportStorageKey(projectId: string) {
 }
 
 export function getFixtureViewport(
-  fixtureState: null | FixtureState
+  fixtureState: FixtureState
 ): null | Viewport {
   return fixtureState && fixtureState.viewport;
 }

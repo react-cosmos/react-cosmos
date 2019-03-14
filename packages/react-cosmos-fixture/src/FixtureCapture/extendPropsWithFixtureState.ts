@@ -12,7 +12,7 @@ import { findRelevantElementPaths } from './findRelevantElementPaths';
 
 export function extendPropsWithFixtureState(
   node: React.ReactNode,
-  fixtureState: null | FixtureState,
+  fixtureState: FixtureState,
   decoratorId: FixtureDecoratorId
 ): React.ReactNode {
   const elPaths = findRelevantElementPaths(node);

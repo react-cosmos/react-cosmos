@@ -15,7 +15,7 @@ type Props = {
   state: ResponsivePreviewSpec['state'];
   projectId: string;
   fullScreen: boolean;
-  fixtureState: null | FixtureState;
+  fixtureState: FixtureState;
   validFixtureSelected: boolean;
   setState: SetState<ResponsivePreviewSpec['state']>;
   setFixtureStateViewport: () => void;
@@ -163,7 +163,7 @@ function getContainerSize(containerEl: null | HTMLElement) {
 
 function getViewport(
   state: ResponsivePreviewSpec['state'],
-  fixtureState: null | FixtureState
+  fixtureState: FixtureState
 ): null | Viewport {
   return (
     getFixtureViewport(fixtureState) || (state.enabled ? state.viewport : null)

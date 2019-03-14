@@ -13,7 +13,7 @@ type Props = {
   fullScreen: boolean;
   connectedRendererIds: RendererId[];
   primaryRendererId: null | RendererId;
-  fixtureState: null | FixtureState;
+  fixtureState: FixtureState;
   setComponentsFixtureState: (components: ComponentFixtureState[]) => void;
   selectPrimaryRenderer: (rendererId: RendererId) => void;
 };

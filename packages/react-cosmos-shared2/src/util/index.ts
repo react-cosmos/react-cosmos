@@ -1,11 +1,18 @@
 import { findIndex } from 'lodash';
 
-export type StateUpdater<T extends null | {}> = T | ((prevState: T) => T);
+export type StateUpdate<T> = T | ((prevState: T) => T);
 
 export type SetState<T> = (
-  updater: StateUpdater<T>,
+  update: StateUpdate<T>,
   callback?: () => unknown
 ) => unknown;
+
+export function updateState<T extends { call?: never; [key: string]: any }>(
+  prevState: T,
+  update: StateUpdate<T>
+): T {
+  return typeof update === 'function' ? update(prevState) : update;
+}
 
 export function updateItem<T>(
   items: Readonly<T[]>,
@@ -52,13 +59,6 @@ export function removeItem<T>(items: Readonly<T[]>, item: T): T[] {
   }
 
   return [...items.slice(0, index), ...items.slice(index + 1)];
-}
-
-export function updateState<T extends null | {}>(
-  prevState: T,
-  updater: StateUpdater<T>
-): T {
-  return typeof updater === 'function' ? updater(prevState) : updater;
 }
 
 export function replaceKeys(str: string, map: { [key: string]: string }) {

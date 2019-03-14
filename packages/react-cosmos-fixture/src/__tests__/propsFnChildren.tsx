@@ -37,7 +37,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId,
-          fixtureState: null
+          fixtureState: {}
         });
         await retry(() =>
           expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B'])

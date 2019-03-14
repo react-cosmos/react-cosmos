@@ -10,7 +10,7 @@ export function postSelectFixtureRequest(
   context: Context,
   rendererId: RendererId,
   fixtureId: FixtureId,
-  fixtureState: null | FixtureState
+  fixtureState: FixtureState
 ) {
   postRendererRequest(context, {
     type: 'selectFixture',
@@ -38,7 +38,7 @@ export function postSetFixtureStateRequest(
   context: Context,
   rendererId: RendererId,
   fixtureId: FixtureId,
-  fixtureState: null | FixtureState
+  fixtureState: FixtureState
 ) {
   postRendererRequest(context, {
     type: 'setFixtureState',

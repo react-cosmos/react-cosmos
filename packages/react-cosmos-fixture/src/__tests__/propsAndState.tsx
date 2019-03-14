@@ -38,7 +38,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId,
-          fixtureState: null
+          fixtureState: {}
         });
         let fixtureState = await getLastFixtureState();
         const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
@@ -86,7 +86,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId,
-          fixtureState: null
+          fixtureState: {}
         });
         let fixtureState = await getLastFixtureState();
         const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
@@ -133,7 +133,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId,
-          fixtureState: null
+          fixtureState: {}
         });
         let fixtureState = await getLastFixtureState();
         const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
@@ -194,7 +194,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId,
-          fixtureState: null
+          fixtureState: {}
         });
         const fixtureState = await getLastFixtureState();
         const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
@@ -239,7 +239,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId,
-          fixtureState: null
+          fixtureState: {}
         });
         update({
           rendererId,

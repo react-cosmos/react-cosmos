@@ -14,7 +14,7 @@ const { on, register } = createPlugin<RendererCoreSpec>({
     connectedRendererIds: [],
     primaryRendererId: null,
     fixtures: {},
-    fixtureState: null
+    fixtureState: {}
   },
   methods: {
     getConnectedRendererIds,

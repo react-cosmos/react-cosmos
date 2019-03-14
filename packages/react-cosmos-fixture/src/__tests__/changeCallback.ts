@@ -16,7 +16,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId,
-          fixtureState: null
+          fixtureState: {}
         });
         await retry(() => expect(onFixtureChange).toBeCalledTimes(1));
       }
@@ -31,7 +31,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId,
-          fixtureState: null
+          fixtureState: {}
         });
         await unselectFixture({ rendererId });
         await retry(() => expect(onFixtureChange).toBeCalledTimes(2));

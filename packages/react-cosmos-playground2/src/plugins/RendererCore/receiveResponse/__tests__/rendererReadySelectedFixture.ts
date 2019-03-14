@@ -49,7 +49,7 @@ it('posts "selectFixture" renderer request', async () => {
       payload: {
         rendererId: 'mockRendererId',
         fixtureId,
-        fixtureState: null
+        fixtureState: {}
       }
     })
   );

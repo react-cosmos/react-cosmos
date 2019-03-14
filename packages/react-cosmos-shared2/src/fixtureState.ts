@@ -27,11 +27,11 @@ export type ComponentFixtureState = {
 };
 
 export type FixtureState = {
-  components: ComponentFixtureState[];
+  components?: ComponentFixtureState[];
   [key: string]: any;
 };
 
-export type SetFixtureState = SetState<null | FixtureState>;
+export type SetFixtureState = SetState<FixtureState>;
 
 export const DEFAULT_RENDER_KEY: FixtureRenderKey = 0;
 
@@ -66,7 +66,7 @@ export function extendObjWithValues(
 }
 
 export function getCompFixtureStates(
-  fixtureState: null | FixtureState,
+  fixtureState: FixtureState,
   decoratorId?: FixtureDecoratorId
 ): ComponentFixtureState[] {
   if (!fixtureState || !fixtureState.components) {
@@ -83,7 +83,7 @@ export function getCompFixtureStates(
 }
 
 export function findCompFixtureState(
-  fixtureState: null | FixtureState,
+  fixtureState: FixtureState,
   decoratorId: FixtureDecoratorId,
   elPath: string
 ): void | ComponentFixtureState {
@@ -101,7 +101,7 @@ export function createCompFixtureState({
   props,
   state
 }: {
-  fixtureState: null | FixtureState;
+  fixtureState: FixtureState;
   decoratorId: FixtureDecoratorId;
   elPath: string;
   componentName: string;
@@ -123,7 +123,7 @@ export function updateCompFixtureState({
   state,
   resetInstance = false
 }: {
-  fixtureState: null | FixtureState;
+  fixtureState: FixtureState;
   decoratorId: FixtureDecoratorId;
   elPath: string;
   props?: null | FixtureStateValues;

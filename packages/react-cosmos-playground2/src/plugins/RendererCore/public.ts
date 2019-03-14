@@ -1,4 +1,4 @@
-import { StateUpdater } from 'react-cosmos-shared2/util';
+import { StateUpdate } from 'react-cosmos-shared2/util';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import {
   RendererId,
@@ -13,16 +13,16 @@ export type RendererCoreSpec = {
     connectedRendererIds: RendererId[];
     primaryRendererId: null | RendererId;
     fixtures: FixtureNamesByPath;
-    fixtureState: null | FixtureState;
+    fixtureState: FixtureState;
   };
   methods: {
     getConnectedRendererIds(): RendererId[];
     getPrimaryRendererId(): null | RendererId;
     getFixtures(): FixtureNamesByPath;
-    getFixtureState(): null | FixtureState;
+    getFixtureState(): FixtureState;
     isRendererConnected(): boolean;
     isValidFixtureSelected(): boolean;
-    setFixtureState(stateChange: StateUpdater<null | FixtureState>): void;
+    setFixtureState(stateUpdate: StateUpdate<FixtureState>): void;
     selectPrimaryRenderer(primaryRendererId: RendererId): void;
     receiveResponse(msg: RendererResponse): void;
   };

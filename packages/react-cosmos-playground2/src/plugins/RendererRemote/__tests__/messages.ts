@@ -30,7 +30,7 @@ it('posts renderer request message via websockets', async () => {
     payload: {
       rendererId: 'mockRendererId',
       fixtureId: { path: 'mockFixturePath', name: null },
-      fixtureState: null
+      fixtureState: {}
     }
   };
   getPluginContext<RendererCoreSpec>('rendererCore').emit(

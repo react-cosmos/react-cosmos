@@ -50,7 +50,7 @@ it('posts "selectFixture" renderer requests', async () => {
       payload: {
         rendererId: 'mockRendererId1',
         fixtureId: { path: 'zwei.js', name: null },
-        fixtureState: null
+        fixtureState: {}
       }
     })
   );
@@ -61,7 +61,7 @@ it('posts "selectFixture" renderer requests', async () => {
       payload: {
         rendererId: 'mockRendererId2',
         fixtureId: { path: 'zwei.js', name: null },
-        fixtureState: null
+        fixtureState: {}
       }
     })
   );

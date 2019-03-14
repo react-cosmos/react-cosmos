@@ -25,7 +25,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId,
-          fixtureState: null
+          fixtureState: {}
         });
         await retry(() => expect(renderer.toJSON()).toBe('Hello Bianca'));
         await fixtureStateChange({
@@ -56,7 +56,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId,
-          fixtureState: null
+          fixtureState: {}
         });
         const fixtureState = await getLastFixtureState();
         const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
@@ -89,7 +89,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId,
-          fixtureState: null
+          fixtureState: {}
         });
         const fixtureState = await getLastFixtureState();
         const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
@@ -123,7 +123,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId,
-          fixtureState: null
+          fixtureState: {}
         });
         const fixtureState = await getLastFixtureState();
         const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
@@ -198,7 +198,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId,
-          fixtureState: null
+          fixtureState: {}
         });
         const fixtureState = await getLastFixtureState();
         const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
@@ -254,7 +254,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId,
-          fixtureState: null
+          fixtureState: {}
         });
         const fixtureState = await getLastFixtureState();
         const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
@@ -298,7 +298,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId,
-          fixtureState: null
+          fixtureState: {}
         });
         const fixtureState = await getLastFixtureState();
         const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
@@ -346,7 +346,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId,
-          fixtureState: null
+          fixtureState: {}
         });
         await fixtureStateChange({
           rendererId,

@@ -59,11 +59,11 @@ it('returns fixtures', async () => {
   );
 });
 
-it('returns null fixture state', async () => {
+it('returns empty fixture state', async () => {
   registerTestPlugins();
   loadTestPlugins();
   await wait(() =>
-    expect(getRendererCoreMethods().getFixtureState()).toBeNull()
+    expect(getRendererCoreMethods().getFixtureState()).toEqual({})
   );
 });
 

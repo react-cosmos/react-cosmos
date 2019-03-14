@@ -75,6 +75,6 @@ it('resets fixtures state when primary renderer re-connects', async () => {
   loadTestPlugins();
   mockRendererReady('mockRendererId1', fixtures);
   await wait(() =>
-    expect(getRendererCoreMethods().getFixtureState()).toBeNull()
+    expect(getRendererCoreMethods().getFixtureState()).toEqual({})
   );
 });

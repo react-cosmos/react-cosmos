@@ -25,14 +25,13 @@ function registerTestPlugins() {
     isFullScreen: () => false
   });
   mockMethodsOf<RendererCoreSpec>('rendererCore', {
-    getFixtureState: () => null,
+    getFixtureState: () => ({}),
     isValidFixtureSelected: () => false
   });
 }
 
 function loadTestPlugins() {
   loadPlugins();
-
   return render(
     <>
       <Slot name="fixtureActions" />
@@ -49,7 +48,6 @@ async function waitForMainPlug({ getByTestId }: RenderResult) {
 
 it('renders disabled button', async () => {
   registerTestPlugins();
-
   const { getByText } = loadTestPlugins();
   await wait(() =>
     expect(getByText(/responsive/i)).toHaveAttribute('disabled')
@@ -58,14 +56,12 @@ it('renders disabled button', async () => {
 
 it('renders children of "rendererPreviewOuter" slot', async () => {
   registerTestPlugins();
-
   const { getByTestId } = loadTestPlugins();
   await waitForElement(() => getByTestId('previewMock'));
 });
 
 it('does not render responsive header', async () => {
   registerTestPlugins();
-
   const renderer = loadTestPlugins();
   await waitForMainPlug(renderer);
   expect(renderer.queryByTestId('responsiveHeader')).toBeNull();

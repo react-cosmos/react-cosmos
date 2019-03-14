@@ -30,7 +30,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId: { path, name: null },
-          fixtureState: null
+          fixtureState: {}
         });
         // "src/bar/decorator" should be omitted because it's not a placed in
         // a parent directory of the selected fixture

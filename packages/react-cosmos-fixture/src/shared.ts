@@ -29,6 +29,6 @@ export type RemoteRendererApi = {
 };
 
 export type FixtureContextValue = {
-  fixtureState: null | FixtureState;
+  fixtureState: FixtureState;
   setFixtureState: SetFixtureState;
 };

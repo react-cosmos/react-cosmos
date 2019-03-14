@@ -1,4 +1,4 @@
-import { StateUpdater, updateState } from 'react-cosmos-shared2/util';
+import { StateUpdate, updateState } from 'react-cosmos-shared2/util';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { getSelectedFixtureId } from './shared/router';
 import { postSetFixtureStateRequest } from './shared/postRequest';
@@ -7,7 +7,7 @@ import { Context, State } from './shared';
 
 export function setFixtureState(
   context: Context,
-  stateChange: StateUpdater<null | FixtureState>
+  stateUpdate: StateUpdate<FixtureState>
 ) {
   const fixtureId = getSelectedFixtureId(context);
 
@@ -18,14 +18,14 @@ export function setFixtureState(
     return;
   }
 
-  context.setState(stateUpdater, () => {
+  context.setState(change, () => {
     postRendererRequest(fixtureId);
   });
 
-  function stateUpdater(prevState: State) {
+  function change(prevState: State) {
     return {
       ...prevState,
-      fixtureState: updateState(prevState.fixtureState, stateChange)
+      fixtureState: updateState(prevState.fixtureState, stateUpdate)
     };
   }
 

@@ -49,7 +49,6 @@ function mockFixtureListUpdateResponse(rendererId: RendererId) {
 it('updates fixtures in renderer state', async () => {
   registerTestPlugins();
   loadTestPlugins();
-
   mockFixtureListUpdateResponse('mockRendererId1');
 
   await wait(() =>
@@ -63,7 +62,6 @@ it('updates fixtures in renderer state', async () => {
 it('ignores update from secondary renderer', async () => {
   registerTestPlugins();
   loadTestPlugins();
-
   mockFixtureListUpdateResponse('mockRendererId2');
 
   await wait(() =>
