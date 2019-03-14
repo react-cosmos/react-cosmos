@@ -69,12 +69,11 @@ export function getCompFixtureStates(
   fixtureState: FixtureState,
   decoratorId?: FixtureDecoratorId
 ): ComponentFixtureState[] {
-  if (!fixtureState || !fixtureState.components) {
+  if (!fixtureState.components) {
     return [];
   }
 
   const { components } = fixtureState;
-
   if (typeof decoratorId === 'undefined') {
     return components;
   }
