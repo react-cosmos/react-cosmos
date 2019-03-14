@@ -2,10 +2,12 @@
 
 import { bold } from 'chalk';
 import {
+  SHARED_TS_PACKAGE,
   globAsync,
   readFileAsync,
   writeFileAsync,
-  getNodePackages,
+  getTsNodePackages,
+  getBabelNodePackages,
   getFormattedPackageList,
   getUnnamedArg,
   done,
@@ -20,11 +22,13 @@ type TargetDir = typeof SRC_DIR | typeof DIST_DIR;
 run();
 
 async function run() {
-  const nodePackages = await getNodePackages();
+  const tsPackages = await getTsNodePackages();
+  const nodePackages = await getBabelNodePackages();
+  const packages = [SHARED_TS_PACKAGE, ...tsPackages, ...nodePackages];
 
   try {
     const targetDir = getTargetDir();
-    const targetPackages = getTargetPackages(nodePackages);
+    const targetPackages = getTargetPackages(packages);
 
     const entryPoints = await getPackageEntryPoints(targetPackages);
     await Promise.all(
@@ -59,11 +63,8 @@ async function linkFileRequiresToDir(filePath, targetDir: TargetDir) {
   // NOTE: Use Babel transform + Prettier if future requires it.
   // For now this is JustFine™
   const prevContents = await readFileAsync(filePath, 'utf8');
-  const regExp = new RegExp(
-    `require\\('(\\.{1,2})/(${SRC_DIR}|${DIST_DIR})`,
-    'g'
-  );
-  const nextContents = prevContents.replace(regExp, `require('$1/${targetDir}`);
+  const regExp = new RegExp(`'(\\.{1,2})/(${SRC_DIR}|${DIST_DIR})`, 'g');
+  const nextContents = prevContents.replace(regExp, `'$1/${targetDir}`);
 
   writeFileAsync(filePath, nextContents, 'utf8');
 }
@@ -76,7 +77,7 @@ async function getPackageEntryPoints(packages) {
   const pkgMatch =
     packages.length > 1 ? `{${packages.join(',')}}` : packages[0];
 
-  return globAsync(`./packages/${pkgMatch}/{*,bin/*}.js`);
+  return globAsync(`./packages/${pkgMatch}/{*,bin/*}.{js,d.ts}`);
 }
 
 function getTargetDir(): TargetDir {

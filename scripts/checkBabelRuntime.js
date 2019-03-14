@@ -3,7 +3,7 @@
 import { join } from 'path';
 import {
   globAsync,
-  getNodePackages,
+  getBabelNodePackages,
   getFormattedPackageList,
   done,
   error
@@ -14,7 +14,7 @@ run();
 const BABEL_RUNTIME = '@babel/runtime-corejs2';
 
 async function run() {
-  const nodePackages = await getNodePackages();
+  const nodePackages = await getBabelNodePackages();
   const pkgs = await globAsync(
     `./packages/{${nodePackages.join(',')}}/package.json`
   );

@@ -19,7 +19,16 @@ export default function getDefaultWebpackConfig(rootPath: string) {
     rules.push({
       test: /\.jsx?$/,
       loader: babelLoaderPath,
-      exclude: /node_modules/
+      exclude: [
+        /node_modules/,
+        // The following rules only apply in the monorepo. In a user codebase
+        // all react cosmos packages will match the node_modules pattern above
+        // TODO: Source files are still compiled by Babel when compiling
+        // renderer build inside Jest tests. In the future we should extract
+        // those high-level tests and always run them against built packages.
+        /packages(\/|\\)react-cosmos([a-z0-9-]*)(\/|\\)dist/,
+        /packages(\/|\\)react-cosmos([a-z0-9-]*)(\/|\\)[a-z0-9-]+.js$/
+      ]
     });
 
     // This only applies to users who install `react-cosmos-flow`, which

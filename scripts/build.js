@@ -6,7 +6,9 @@ import { bold, italic } from 'chalk';
 import cpy from 'cpy';
 import {
   AS_IS_PACKAGES,
-  getNodePackages,
+  SHARED_TS_PACKAGE,
+  getBabelNodePackages,
+  getTsNodePackages,
   getBrowserPackages,
   getFormattedPackageList,
   getUnnamedArg,
@@ -23,9 +25,15 @@ const watch = getBoolArg('watch');
 run();
 
 async function run() {
-  const nodePackages = await getNodePackages();
+  const tsNodePackages = await getTsNodePackages();
+  const babelNodePackages = await getBabelNodePackages();
   const browserPackages = await getBrowserPackages();
-  const buildablePackages = [...nodePackages, ...browserPackages];
+  const buildablePackages = [
+    SHARED_TS_PACKAGE,
+    ...tsNodePackages,
+    ...babelNodePackages,
+    ...browserPackages
+  ];
   const pkgName = getUnnamedArg();
 
   if (pkgName) {
@@ -57,7 +65,12 @@ async function run() {
       `${watch ? 'Build-watching' : 'Building'} ${bold(pkgName)}...\n`
     );
 
-    if (nodePackages.indexOf(pkgName) !== -1) {
+    if (
+      pkgName === SHARED_TS_PACKAGE ||
+      tsNodePackages.indexOf(pkgName) !== -1
+    ) {
+      await buildTsPackage(pkgName);
+    } else if (babelNodePackages.indexOf(pkgName) !== -1) {
       await buildNodePackage(pkgName);
     } else {
       await buildBrowserPackage(pkgName);
@@ -78,14 +91,26 @@ async function run() {
       return;
     }
 
-    stdout.write(`Building packages...\n`);
-    await Promise.all(nodePackages.map(buildNodePackage));
+    stdout.write(`Building Node packages with TypeScript...\n`);
+    await buildTsPackage(SHARED_TS_PACKAGE);
+    await Promise.all(tsNodePackages.map(buildTsPackage));
 
-    stdout.write(`Building browser packages...\n`);
+    stdout.write(`Building Node packages with Babel...\n`);
+    await Promise.all(babelNodePackages.map(buildNodePackage));
+
+    stdout.write(`Building browser packages with webpack...\n`);
     await Promise.all(browserPackages.map(buildBrowserPackage));
 
     stdout.write(`Built ${buildablePackages.length} packages successfully.\n`);
   }
+}
+
+async function buildTsPackage(pkgName) {
+  await runBuildTask({
+    pkgName,
+    cmd: 'tsc',
+    args: getTsCliArgs(pkgName)
+  });
 }
 
 async function buildNodePackage(pkgName) {
@@ -144,6 +169,16 @@ async function runBuildTask({ pkgName, cmd, args, env = {} }: BuildTaskArgs) {
   });
 
   return promise;
+}
+
+function getTsCliArgs(pkgName) {
+  let args = ['-b', `packages/${pkgName}/tsconfig.build.json`];
+
+  if (watch) {
+    args = [...args, '--watch'];
+  }
+
+  return args;
 }
 
 function getBabelCliArgs(pkgName) {

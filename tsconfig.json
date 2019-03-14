@@ -1,9 +1,11 @@
-// This config is currently being used ony by react-cosmos-playground2, the
-// first TS package from the monorepo. The Playground is bundled by webpack,
-// which is why this config doesn't have an "outDir" specified. In the future,
-// when converting other non-bundled packages to TS, we'll have to point the
-// output directory to the package's respective "dist" dir. This will likely
-// require a separate tsconfig.json per package, possibly extending a root one.
+// This config is used in three ways:
+// 1. Extended by configs used to build TS modules for Node. Those configs have
+//    an "outDir" defined to point to their respective monorepo packages.
+// 2. Used by ts-loader to build TS modules for the browser using webpack. No
+//    "outDir" is required in this case because webpack takes care of the
+//    bundle output.
+// 3. Used by code editors and test runners to build TS modules on the fly. All
+//    TS configuration, aside from build parameters, should be placed here.
 {
   "compilerOptions": {
     "lib": ["dom", "es2015"],
@@ -14,8 +16,8 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
-    "strict": true
+    "strict": true,
+    "skipLibCheck": true
   },
-  "include": ["packages/*/src/**/*"],
   "exclude": ["node_modules"]
 }

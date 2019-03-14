@@ -22,7 +22,7 @@ jest.mock('import-from', () => ({
 it('includes babel-loader for src', () => {
   const config = getDefaultWebpackConfig('/foo/path');
   expect(config.module.rules).toContainEqual({
-    exclude: /node_modules/,
+    exclude: expect.arrayContaining([/node_modules/]),
     loader: '/babel/path',
     test: /\.jsx?$/
   });

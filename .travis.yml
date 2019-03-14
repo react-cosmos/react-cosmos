@@ -19,6 +19,8 @@ script:
   - yarn lint
   - yarn test:ts:unit --maxWorkers=2
   - yarn codecov
+  # TS source code cannot be ran by Babel-powered test suite
+  - yarn link-entries dist react-cosmos-shared2 react-cosmos-fixture
   - yarn test:unit --maxWorkers=2
   - yarn codecov
   # Test build

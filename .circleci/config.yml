@@ -36,6 +36,8 @@ jobs:
       - run: yarn lint
       - run: yarn test:ts:unit --maxWorkers=2 --coverage
       - run: yarn codecov
+      # TS source code cannot be ran by Babel-powered test suite
+      - run: yarn link-entries dist react-cosmos-shared2 react-cosmos-fixture
       - run: yarn test:unit --maxWorkers=1 --coverage
       - run: yarn codecov
       # Test build

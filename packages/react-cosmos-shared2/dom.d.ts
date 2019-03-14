@@ -1,1 +1,1 @@
-export declare function getDomContainer(): HTMLElement;
+export * from './dist/dom';
