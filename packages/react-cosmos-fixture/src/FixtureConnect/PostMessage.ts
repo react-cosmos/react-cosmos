@@ -4,9 +4,13 @@ import {
   OnRendererRequest,
   RendererResponse
 } from 'react-cosmos-shared2/renderer';
-import { PostMessageProps } from '../shared';
+import { RemoteRendererApi } from '../shared';
 
-export class PostMessage extends React.Component<PostMessageProps> {
+export type Props = {
+  children: (api: RemoteRendererApi) => React.ReactElement<any>;
+};
+
+export class PostMessage extends React.Component<Props> {
   onMessage: null | OnRendererRequest = null;
 
   render() {

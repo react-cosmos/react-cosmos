@@ -6,9 +6,14 @@ import {
   OnRendererRequest,
   RendererResponse
 } from 'react-cosmos-shared2/renderer';
-import { WebSocketsProps } from '../shared';
+import { RemoteRendererApi } from '../shared';
 
-export class WebSockets extends React.Component<WebSocketsProps> {
+export type Props = {
+  children: (api: RemoteRendererApi) => React.ReactElement<any>;
+  url: string;
+};
+
+export class WebSockets extends React.Component<Props> {
   socket: null | typeof io.Socket = null;
   onMessage: null | OnRendererRequest = null;
 

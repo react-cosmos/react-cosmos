@@ -28,15 +28,6 @@ export type RemoteRendererApi = {
   postMessage: OnRendererResponse;
 };
 
-export type PostMessageProps = {
-  children: (api: RemoteRendererApi) => React.ReactElement<any>;
-};
-
-export type WebSocketsProps = {
-  children: (api: RemoteRendererApi) => React.ReactElement<any>;
-  url: string;
-};
-
 export type FixtureContextValue = {
   fixtureState: null | FixtureState;
   setFixtureState: SetFixtureState;
