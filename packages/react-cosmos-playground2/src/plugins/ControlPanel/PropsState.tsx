@@ -21,13 +21,12 @@ type Props = {
 export class PropsState extends React.Component<Props> {
   render() {
     const { fixtureState } = this.props;
-    const { props } = fixtureState;
 
-    if (!props) {
+    if (!fixtureState.props) {
       return null;
     }
 
-    return props.map<React.ReactElement<any>>(
+    return fixtureState.props.map<React.ReactElement<any>>(
       ({ elementId, componentName, values }) => {
         const { decoratorId, elPath } = elementId;
         const classState = findFixtureStateClassState(fixtureState, elementId);
@@ -78,14 +77,14 @@ export class PropsState extends React.Component<Props> {
     value: string
   ) => {
     const { fixtureState, setFixtureStateProps } = this.props;
-    const fxStateProps = findFixtureStateProps(fixtureState, elementId);
+    const fsProps = findFixtureStateProps(fixtureState, elementId);
 
-    if (!fxStateProps) {
+    if (!fsProps) {
       console.warn(`Element id ${elementId} no longer exists`);
       return;
     }
 
-    const { values } = fxStateProps;
+    const { values } = fsProps;
     setFixtureStateProps(
       updateFixtureStateProps({
         fixtureState,
@@ -104,17 +103,14 @@ export class PropsState extends React.Component<Props> {
     key: string
   ) => (value: string) => {
     const { fixtureState, setFixtureStateClassState } = this.props;
-    const fxStateClassState = findFixtureStateClassState(
-      fixtureState,
-      elementId
-    );
+    const fsClassState = findFixtureStateClassState(fixtureState, elementId);
 
-    if (!fxStateClassState) {
+    if (!fsClassState) {
       console.warn(`Decorator id ${elementId} no longer exists`);
       return;
     }
 
-    const { values } = fxStateClassState;
+    const { values } = fsClassState;
     setFixtureStateClassState(
       updateFixtureStateClassState({
         fixtureState,

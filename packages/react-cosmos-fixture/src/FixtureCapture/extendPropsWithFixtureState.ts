@@ -19,10 +19,10 @@ export function extendPropsWithFixtureState(
 
   return elPaths.reduce((extendedNode, elPath): React.ReactNode => {
     const elementId = { decoratorId, elPath };
-    const fxStateProps = findFixtureStateProps(fixtureState, elementId);
+    const fsProps = findFixtureStateProps(fixtureState, elementId);
 
     return setElementAtPath(extendedNode, elPath, element => {
-      if (!fxStateProps || componentTypeChanged(fxStateProps.componentName)) {
+      if (!fsProps || componentTypeChanged(fsProps.componentName)) {
         return {
           ...element,
           key: getElRenderKey(elPath, DEFAULT_RENDER_KEY)
@@ -33,10 +33,7 @@ export function extendPropsWithFixtureState(
       // stored in fixture state
       // See https://github.com/react-cosmos/react-cosmos/pull/920 for context
       const originalProps = element.props;
-      const extendedProps = extendWithValues(
-        originalProps,
-        fxStateProps.values
-      );
+      const extendedProps = extendWithValues(originalProps, fsProps.values);
 
       // HACK alert: Editing React Element by hand
       // This is blasphemy, but there are two reasons why React.cloneElement
@@ -57,7 +54,7 @@ export function extendPropsWithFixtureState(
         props: hasChildElPaths(elPaths, elPath)
           ? { ...extendedProps, children: originalProps.children }
           : extendedProps,
-        key: getElRenderKey(elPath, fxStateProps.renderKey)
+        key: getElRenderKey(elPath, fsProps.renderKey)
       };
 
       function componentTypeChanged(componentName: string) {

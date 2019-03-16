@@ -99,9 +99,9 @@ class FixtureCaptureInner extends React.Component<InnerProps> {
     if (elPaths.length === 0) {
       // Create empty fixture state (edge-case: whilst making sure not to
       // override any pending fixture state update
-      setFixtureState((prevFxState: FixtureState) => ({
-        ...prevFxState,
-        props: prevFxState.props || []
+      setFixtureState((prevFixtureState: FixtureState) => ({
+        ...prevFixtureState,
+        props: prevFixtureState.props || []
       }));
     } else {
       elPaths.forEach(elPath => {
@@ -189,12 +189,9 @@ class FixtureCaptureInner extends React.Component<InnerProps> {
         return this.createFixtureStateProps(elPath);
       }
 
-      const fxStateClassState = findFixtureStateClassState(
-        fixtureState,
-        elementId
-      );
-      if (fxStateClassState) {
-        this.transitionState(elPath, fxStateClassState, prevProps);
+      const fsClassState = findFixtureStateClassState(fixtureState, elementId);
+      if (fsClassState) {
+        this.transitionState(elPath, fsClassState, prevProps);
       } else {
         if (this.initialStates[elPath]) {
           const { state } = this.initialStates[elPath];
@@ -217,7 +214,7 @@ class FixtureCaptureInner extends React.Component<InnerProps> {
 
   transitionState(
     elPath: string,
-    fxStateClassState: FixtureStateClassState,
+    fsClassState: FixtureStateClassState,
     prevProps: InnerProps
   ) {
     const elRef = this.elRefs[elPath];
@@ -232,7 +229,7 @@ class FixtureCaptureInner extends React.Component<InnerProps> {
       return;
     }
 
-    // if (!stateFxState) {
+    // if (!fsState) {
     //   const { state } = this.initialStates[elPath];
 
     //   return replaceState(elRef, state, () => {
@@ -246,17 +243,14 @@ class FixtureCaptureInner extends React.Component<InnerProps> {
     //   2. The fixture state changed
     // Here we're interested in the second scenario. In the first scenario
     // we want to let the component state override the fixture state.
-    const prevFxStateClassState = findFixtureStateClassState(
+    const prevFsClassState = findFixtureStateClassState(
       prevProps.fixtureState,
       { decoratorId: this.props.decoratorId, elPath }
     );
-    if (
-      prevFxStateClassState &&
-      !isEqual(prevFxStateClassState.values, fxStateClassState)
-    ) {
+    if (prevFsClassState && !isEqual(prevFsClassState.values, fsClassState)) {
       return replaceState(
         elRef,
-        extendWithValues(elRef.state, fxStateClassState.values)
+        extendWithValues(elRef.state, fsClassState.values)
       );
     }
   }
@@ -278,15 +272,12 @@ class FixtureCaptureInner extends React.Component<InnerProps> {
 
     const { decoratorId, fixtureState } = this.props;
     const fixtureId = { decoratorId, elPath };
-    const fxStateClassState = findFixtureStateClassState(
-      fixtureState,
-      fixtureId
-    );
-    if (!fxStateClassState) {
+    const fsClassState = findFixtureStateClassState(fixtureState, fixtureId);
+    if (!fsClassState) {
       return this.createFixtureStateClassState(elPath, state);
     }
 
-    replaceState(elRef, extendWithValues(state, fxStateClassState.values));
+    replaceState(elRef, extendWithValues(state, fsClassState.values));
   };
 
   createFixtureStateProps(elPath: string) {
@@ -417,15 +408,15 @@ class FixtureCaptureInner extends React.Component<InnerProps> {
 
         const { state } = this.elRefs[elPath];
         const elementId = { decoratorId, elPath };
-        const fxStateClassState = findFixtureStateClassState(
+        const fsClassState = findFixtureStateClassState(
           fixtureState,
           elementId
         );
 
         if (
-          fxStateClassState &&
+          fsClassState &&
           state &&
-          !doesFixtureStateMatchClassState(fxStateClassState, state)
+          !doesFixtureStateMatchClassState(fsClassState, state)
         ) {
           await new Promise(resolve => {
             this.updateFixtureStateClassState(elPath, state, resolve);
@@ -448,8 +439,8 @@ class FixtureCaptureInner extends React.Component<InnerProps> {
 }
 
 function doesFixtureStateMatchClassState(
-  fxStateClassState: FixtureStateClassState,
+  fsClassState: FixtureStateClassState,
   state: {}
 ) {
-  return isEqual(state, extendWithValues(state, fxStateClassState.values));
+  return isEqual(state, extendWithValues(state, fsClassState.values));
 }
