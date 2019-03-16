@@ -1,7 +1,6 @@
 import { isEqual } from 'lodash';
 import { isElement } from 'react-is';
 import * as reactElementToJSXString from 'react-element-to-jsx-string';
-import { StateUpdater, SetState } from '../util';
 
 export type KeyValue = Record<string, unknown>;
 
@@ -36,8 +35,6 @@ export type FixtureState = {
   props?: FixtureStateProps[];
   classState?: FixtureStateClassState[];
 } & Record<string, any>;
-
-export type SetFixtureState = SetState<StateUpdater<FixtureState>>;
 
 // Why store unserializable values in fixture state?
 // - Because they still provides value in the Cosmos UI. They let the user know

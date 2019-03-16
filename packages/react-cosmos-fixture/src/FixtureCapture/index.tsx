@@ -3,7 +3,6 @@ import { isEqual } from 'lodash';
 import {
   FixtureDecoratorId,
   FixtureState,
-  SetFixtureState,
   FixtureStateClassState,
   createValues,
   extendWithValues,
@@ -19,6 +18,7 @@ import {
   removeFixtureStateClassState
 } from 'react-cosmos-shared2/fixtureState';
 import { areNodesEqual } from 'react-cosmos-shared2/react';
+import { SetFixtureState } from '../shared';
 import { FixtureContext } from '../FixtureContext';
 import { getElementAtPath, getExpectedElementAtPath } from './nodeTree';
 import { getComponentName } from './getComponentName';

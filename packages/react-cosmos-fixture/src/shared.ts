@@ -1,8 +1,6 @@
 import * as React from 'react';
-import {
-  FixtureState,
-  SetFixtureState
-} from 'react-cosmos-shared2/fixtureState';
+import { StateUpdater, SetStateAsync } from 'react-cosmos-shared2/util';
+import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import {
   OnRendererRequest,
   OnRendererResponse
@@ -32,3 +30,5 @@ export type FixtureContextValue = {
   fixtureState: FixtureState;
   setFixtureState: SetFixtureState;
 };
+
+export type SetFixtureState = SetStateAsync<StateUpdater<FixtureState>>;

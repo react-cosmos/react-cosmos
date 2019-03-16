@@ -4,7 +4,6 @@ export {
   FixtureElementId,
   FixtureStateValue,
   FixtureState,
-  SetFixtureState,
   FixtureStateProps,
   FixtureStateClassState,
   createValues,

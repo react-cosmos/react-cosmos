@@ -2,7 +2,7 @@ import { findIndex } from 'lodash';
 
 export type StateUpdater<T> = (prevState: T) => T;
 
-export type SetState<StateUpdate> = (
+export type SetStateAsync<StateUpdate> = (
   update: StateUpdate,
   callback?: () => unknown
 ) => unknown;

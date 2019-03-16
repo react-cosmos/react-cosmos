@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { isEqual } from 'lodash';
 import styled from 'styled-components';
-import { StateUpdater, SetState } from 'react-cosmos-shared2/util';
+import { StateUpdater, SetStateAsync } from 'react-cosmos-shared2/util';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { StorageMethods } from '../shared';
 import { storeViewport } from '../storage';
@@ -19,7 +19,7 @@ type Props = {
   fullScreen: boolean;
   fixtureState: FixtureState;
   validFixtureSelected: boolean;
-  setState: SetState<PluginState | StateUpdater<PluginState>>;
+  setState: SetStateAsync<PluginState | StateUpdater<PluginState>>;
   setFixtureStateViewport: () => void;
   storage: StorageMethods;
 };

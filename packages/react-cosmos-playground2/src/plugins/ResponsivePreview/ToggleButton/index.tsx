@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StateUpdater, SetState } from 'react-cosmos-shared2/util';
+import { StateUpdater, SetStateAsync } from 'react-cosmos-shared2/util';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { SmartphoneIcon } from '../../../shared/icons';
 import { Button } from '../../../shared/components';
@@ -14,7 +14,7 @@ export type Props = {
   projectId: string;
   fixtureState: FixtureState;
   validFixtureSelected: boolean;
-  setState: SetState<PluginState | StateUpdater<PluginState>>;
+  setState: SetStateAsync<PluginState | StateUpdater<PluginState>>;
   setFixtureStateViewport: () => void;
   storage: StorageMethods;
 };

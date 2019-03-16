@@ -1,9 +1,6 @@
 import * as React from 'react';
 import { isEqual } from 'lodash';
-import {
-  FixtureState,
-  SetFixtureState
-} from 'react-cosmos-shared2/fixtureState';
+import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import {
   FixtureNamesByPath,
   FixtureId,
@@ -15,7 +12,8 @@ import {
   DecoratorType,
   DecoratorsByPath,
   RemoteRendererApi,
-  FixturesByPath
+  FixturesByPath,
+  SetFixtureState
 } from '../shared';
 import { FixtureProvider } from '../FixtureProvider';
 import { getFixtureNames, getFixtureNode } from './fixtureHelpers';
