@@ -1,21 +1,18 @@
 import * as React from 'react';
+import { StateUpdater, replaceOrAddItem } from 'react-cosmos-shared2/util';
 import {
   FixtureElementId,
   FixtureState,
-  FixtureStateProps,
-  FixtureStateClassState,
   findFixtureStateProps,
   updateFixtureStateProps,
   findFixtureStateClassState,
   updateFixtureStateClassState
 } from 'react-cosmos-shared2/fixtureState';
-import { replaceOrAddItem } from 'react-cosmos-shared2/util';
 import { ValueInput } from './ValueInput';
 
 type Props = {
   fixtureState: FixtureState;
-  setFixtureStateProps: (props: FixtureStateProps[]) => unknown;
-  setFixtureStateClassState: (classState: FixtureStateClassState[]) => unknown;
+  setFixtureState: (stateUpdater: StateUpdater<FixtureState>) => void;
 };
 
 export class PropsState extends React.Component<Props> {
@@ -76,51 +73,55 @@ export class PropsState extends React.Component<Props> {
   createPropValueChangeHandler = (elementId: FixtureElementId, key: string) => (
     value: string
   ) => {
-    const { fixtureState, setFixtureStateProps } = this.props;
-    const fsProps = findFixtureStateProps(fixtureState, elementId);
+    const { setFixtureState } = this.props;
+    setFixtureState(fixtureState => {
+      const fsProps = findFixtureStateProps(fixtureState, elementId);
+      if (!fsProps) {
+        console.warn(`Element id ${elementId} no longer exists`);
+        return fixtureState;
+      }
 
-    if (!fsProps) {
-      console.warn(`Element id ${elementId} no longer exists`);
-      return;
-    }
-
-    const { values } = fsProps;
-    setFixtureStateProps(
-      updateFixtureStateProps({
-        fixtureState,
-        elementId,
-        values: replaceOrAddItem(values, propVal => propVal.key === key, {
-          serializable: true,
-          key,
-          stringified: value
+      const { values } = fsProps;
+      return {
+        ...fixtureState,
+        props: updateFixtureStateProps({
+          fixtureState,
+          elementId,
+          values: replaceOrAddItem(values, propVal => propVal.key === key, {
+            serializable: true,
+            key,
+            stringified: value
+          })
         })
-      })
-    );
+      };
+    });
   };
 
   createStateValueChangeHandler = (
     elementId: FixtureElementId,
     key: string
   ) => (value: string) => {
-    const { fixtureState, setFixtureStateClassState } = this.props;
-    const fsClassState = findFixtureStateClassState(fixtureState, elementId);
+    const { setFixtureState } = this.props;
+    setFixtureState(fixtureState => {
+      const fsClassState = findFixtureStateClassState(fixtureState, elementId);
+      if (!fsClassState) {
+        console.warn(`Decorator id ${elementId} no longer exists`);
+        return fixtureState;
+      }
 
-    if (!fsClassState) {
-      console.warn(`Decorator id ${elementId} no longer exists`);
-      return;
-    }
-
-    const { values } = fsClassState;
-    setFixtureStateClassState(
-      updateFixtureStateClassState({
-        fixtureState,
-        elementId,
-        values: replaceOrAddItem(values, stateVal => stateVal.key === key, {
-          serializable: true,
-          key,
-          stringified: value
+      const { values } = fsClassState;
+      return {
+        ...fixtureState,
+        classState: updateFixtureStateClassState({
+          fixtureState,
+          elementId,
+          values: replaceOrAddItem(values, stateVal => stateVal.key === key, {
+            serializable: true,
+            key,
+            stringified: value
+          })
         })
-      })
-    );
+      };
+    });
   };
 }

@@ -1,9 +1,6 @@
 import * as React from 'react';
-import {
-  FixtureStateProps,
-  FixtureStateClassState,
-  FixtureState
-} from 'react-cosmos-shared2/fixtureState';
+import { StateUpdater } from 'react-cosmos-shared2/util';
+import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { RendererId, FixtureId } from 'react-cosmos-shared2/renderer';
 import { PluginsConsumer } from 'react-plugin';
 import styled from 'styled-components';
@@ -15,8 +12,7 @@ type Props = {
   connectedRendererIds: RendererId[];
   primaryRendererId: null | RendererId;
   fixtureState: FixtureState;
-  setFixtureStateProps: (props: FixtureStateProps[]) => unknown;
-  setFixtureStateClassState: (classState: FixtureStateClassState[]) => unknown;
+  setFixtureState: (stateUpdater: StateUpdater<FixtureState>) => void;
   selectPrimaryRenderer: (rendererId: RendererId) => void;
 };
 
@@ -38,8 +34,7 @@ export class ControlPanel extends React.Component<Props> {
       <Container>
         <PropsState
           fixtureState={fixtureState}
-          setFixtureStateProps={this.props.setFixtureStateProps}
-          setFixtureStateClassState={this.props.setFixtureStateClassState}
+          setFixtureState={this.props.setFixtureState}
         />
         {connectedRendererIds.length > 1 && (
           <div>
