@@ -1,130 +1,130 @@
 import * as React from 'react';
 import {
-  ComponentFixtureState,
-  findCompFixtureState,
-  FixtureDecoratorId,
+  FixtureElementId,
   FixtureState,
-  updateCompFixtureState
+  FixtureStateProps,
+  FixtureStateClassState,
+  findFixtureStateProps,
+  updateFixtureStateProps,
+  findFixtureStateClassState,
+  updateFixtureStateClassState
 } from 'react-cosmos-shared2/fixtureState';
 import { replaceOrAddItem } from 'react-cosmos-shared2/util';
 import { ValueInput } from './ValueInput';
 
 type Props = {
   fixtureState: FixtureState;
-  setFixtureState: (components: ComponentFixtureState[]) => unknown;
+  setFixtureStateProps: (props: FixtureStateProps[]) => unknown;
+  setFixtureStateClassState: (classState: FixtureStateClassState[]) => unknown;
 };
 
 export class PropsState extends React.Component<Props> {
   render() {
     const { fixtureState } = this.props;
-    const { components } = fixtureState;
+    const { props } = fixtureState;
 
-    if (!components) {
+    if (!props) {
       return null;
     }
 
-    return components.map<React.ReactElement<any>>(
-      ({ decoratorId, elPath, componentName, props, state }) => (
-        <div key={`${decoratorId}-${elPath}`}>
-          <p>
-            <strong>{componentName}</strong>
-          </p>
-          {props && (
+    return props.map<React.ReactElement<any>>(
+      ({ elementId, componentName, values }) => {
+        const { decoratorId, elPath } = elementId;
+        const classState = findFixtureStateClassState(fixtureState, elementId);
+
+        return (
+          <div key={`${decoratorId}-${elPath}`}>
+            <p>
+              <strong>{componentName}</strong>
+            </p>
             <div>
               <p>Props</p>
-              {props.map(({ key, serializable, stringified }) => (
+              {values.map(({ key, serializable, stringified }) => (
                 <ValueInput
                   key={key}
                   id={`${decoratorId}-${elPath}-${key}`}
                   label={key}
                   value={stringified}
                   disabled={!serializable}
-                  onChange={this.createPropValueChangeHandler(
-                    decoratorId,
-                    elPath,
-                    key
-                  )}
+                  onChange={this.createPropValueChangeHandler(elementId, key)}
                 />
               ))}
             </div>
-          )}
-          {state && (
-            <div>
-              <p>State</p>
-              {state.map(({ key, serializable, stringified }) => (
-                <ValueInput
-                  key={key}
-                  id={`${decoratorId}-${elPath}-${key}`}
-                  label={key}
-                  value={stringified}
-                  disabled={!serializable}
-                  onChange={this.createStateValueChangeHandler(
-                    decoratorId,
-                    elPath,
-                    key
-                  )}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      )
+            {classState && (
+              <div>
+                <p>State</p>
+                {classState.values.map(({ key, serializable, stringified }) => (
+                  <ValueInput
+                    key={key}
+                    id={`${decoratorId}-${elPath}-${key}`}
+                    label={key}
+                    value={stringified}
+                    disabled={!serializable}
+                    onChange={this.createStateValueChangeHandler(
+                      elementId,
+                      key
+                    )}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      }
     );
   }
 
-  createPropValueChangeHandler = (
-    decoratorId: FixtureDecoratorId,
-    elPath: string,
-    key: string
-  ) => (value: string) => {
-    const { fixtureState, setFixtureState } = this.props;
-    const compFxState = findCompFixtureState(fixtureState, decoratorId, elPath);
+  createPropValueChangeHandler = (elementId: FixtureElementId, key: string) => (
+    value: string
+  ) => {
+    const { fixtureState, setFixtureStateProps } = this.props;
+    const fxStateProps = findFixtureStateProps(fixtureState, elementId);
 
-    if (!compFxState || !compFxState.props) {
-      console.warn(`Decorator instance id ${decoratorId} no longer exists`);
+    if (!fxStateProps) {
+      console.warn(`Element id ${elementId} no longer exists`);
       return;
     }
 
-    const { props } = compFxState;
-    const components = updateCompFixtureState({
-      fixtureState,
-      decoratorId,
-      elPath,
-      props: replaceOrAddItem(props, propVal => propVal.key === key, {
-        serializable: true,
-        key,
-        stringified: value
+    const { values } = fxStateProps;
+    setFixtureStateProps(
+      updateFixtureStateProps({
+        fixtureState,
+        elementId,
+        values: replaceOrAddItem(values, propVal => propVal.key === key, {
+          serializable: true,
+          key,
+          stringified: value
+        })
       })
-    });
-
-    setFixtureState(components);
+    );
   };
 
   createStateValueChangeHandler = (
-    decoratorId: FixtureDecoratorId,
-    elPath: string,
+    elementId: FixtureElementId,
     key: string
   ) => (value: string) => {
-    const { fixtureState, setFixtureState } = this.props;
-    const compFxState = findCompFixtureState(fixtureState, decoratorId, elPath);
+    const { fixtureState, setFixtureStateClassState } = this.props;
+    const fxStateClassState = findFixtureStateClassState(
+      fixtureState,
+      elementId
+    );
 
-    if (!compFxState || !compFxState.state) {
-      console.warn(`Decorator id ${decoratorId} no longer exists`);
+    if (!fxStateClassState) {
+      console.warn(`Decorator id ${elementId} no longer exists`);
       return;
     }
 
-    const { state } = compFxState;
-    const components = updateCompFixtureState({
-      fixtureState,
-      decoratorId,
-      elPath,
-      state: replaceOrAddItem(state, stateVal => stateVal.key === key, {
-        serializable: true,
-        key,
-        stringified: value
+    const { values } = fxStateClassState;
+    setFixtureStateClassState(
+      updateFixtureStateClassState({
+        fixtureState,
+        elementId,
+        values: replaceOrAddItem(values, stateVal => stateVal.key === key, {
+          serializable: true,
+          key,
+          stringified: value
+        })
       })
-    });
-
-    setFixtureState(components);
+    );
   };
 }

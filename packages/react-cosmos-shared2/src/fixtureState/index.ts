@@ -1,6 +1,7 @@
 export {
   KeyValue,
   FixtureDecoratorId,
+  FixtureElementId,
   FixtureStateValue,
   FixtureState,
   SetFixtureState,

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {
-  ComponentFixtureState,
+  FixtureStateProps,
+  FixtureStateClassState,
   FixtureState
 } from 'react-cosmos-shared2/fixtureState';
 import { RendererId, FixtureId } from 'react-cosmos-shared2/renderer';
@@ -14,7 +15,8 @@ type Props = {
   connectedRendererIds: RendererId[];
   primaryRendererId: null | RendererId;
   fixtureState: FixtureState;
-  setComponentsFixtureState: (components: ComponentFixtureState[]) => void;
+  setFixtureStateProps: (props: FixtureStateProps[]) => unknown;
+  setFixtureStateClassState: (classState: FixtureStateClassState[]) => unknown;
   selectPrimaryRenderer: (rendererId: RendererId) => void;
 };
 
@@ -34,12 +36,11 @@ export class ControlPanel extends React.Component<Props> {
 
     return (
       <Container>
-        {fixtureState.components && (
-          <PropsState
-            fixtureState={fixtureState}
-            setFixtureState={this.setComponentsFixtureState}
-          />
-        )}
+        <PropsState
+          fixtureState={fixtureState}
+          setFixtureStateProps={this.props.setFixtureStateProps}
+          setFixtureStateClassState={this.props.setFixtureStateClassState}
+        />
         {connectedRendererIds.length > 1 && (
           <div>
             <p>Renderers ({connectedRendererIds.length})</p>
@@ -85,10 +86,6 @@ export class ControlPanel extends React.Component<Props> {
       </Container>
     );
   }
-
-  setComponentsFixtureState = (components: ComponentFixtureState[]) => {
-    this.props.setComponentsFixtureState(components);
-  };
 
   createRendererSelectHandler = (rendererId: RendererId) => () => {
     this.props.selectPrimaryRenderer(rendererId);
