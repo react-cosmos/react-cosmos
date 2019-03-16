@@ -38,7 +38,7 @@ runFixtureConnectTests(mount => {
     );
   });
 
-  it('creates empty fixture state', async () => {
+  it('creates fixture state', async () => {
     await mount(
       { rendererId, fixtures, decorators },
       async ({ selectFixture, fixtureStateChange }) => {
@@ -51,7 +51,7 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId: { path: 'second', name: null },
           fixtureState: {
-            components: []
+            props: []
           }
         });
       }

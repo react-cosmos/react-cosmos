@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { uuid } from 'react-cosmos-shared2/util';
+import { createValues } from 'react-cosmos-shared2/fixtureState';
 import { Counter } from '../testHelpers/components';
-import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
+import { anyProps, anyClassState } from '../testHelpers/fixtureState';
 import { runFixtureConnectTests } from '../testHelpers';
 
 const rendererId = uuid();
@@ -37,11 +38,10 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            components: [
-              createCompFxState({
-                componentName: 'Counter',
-                props: [],
-                state: createFxValues({ count: 0 })
+            props: [anyProps()],
+            classState: [
+              anyClassState({
+                values: createValues({ count: 0 })
               })
             ]
           }

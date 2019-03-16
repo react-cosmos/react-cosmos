@@ -72,12 +72,7 @@ export class FixtureConnect extends React.Component<Props, State> {
       const { fixtureId, fixtureState, syncedFixtureState } = selectedFixture;
       if (fixtureId && !isEqual(fixtureState, syncedFixtureState)) {
         this.postFixtureStateChange(fixtureId, fixtureState);
-        this.setState({
-          selectedFixture: {
-            ...selectedFixture,
-            syncedFixtureState: fixtureState
-          }
-        });
+        this.updateSyncedFixtureState(syncedFixtureState);
       }
     }
   }
@@ -269,6 +264,25 @@ export class FixtureConnect extends React.Component<Props, State> {
     if (typeof onFixtureChange === 'function') {
       onFixtureChange();
     }
+  }
+
+  updateSyncedFixtureState(syncedFixtureState: FixtureState) {
+    this.setState(({ selectedFixture }) => {
+      if (!selectedFixture) {
+        return null;
+      }
+
+      // Other updates that alter state.selectedFixture can be pending when this
+      // update is submitted. Those updates will be applied first. With this in
+      // mind, we use a state setter callback to only override syncedFixtureState
+      // and keep the latest values of other state parts.
+      return {
+        selectedFixture: {
+          ...selectedFixture,
+          syncedFixtureState
+        }
+      };
+    });
   }
 }
 

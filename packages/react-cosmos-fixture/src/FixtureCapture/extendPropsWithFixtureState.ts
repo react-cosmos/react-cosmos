@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {
-  DEFAULT_RENDER_KEY,
-  extendObjWithValues,
-  findCompFixtureState,
   FixtureDecoratorId,
-  FixtureState
+  FixtureState,
+  DEFAULT_RENDER_KEY,
+  extendWithValues,
+  findFixtureStateProps
 } from 'react-cosmos-shared2/fixtureState';
 import { setElementAtPath, getChildrenPath } from './nodeTree';
 import { getComponentName } from './getComponentName';
@@ -18,14 +18,11 @@ export function extendPropsWithFixtureState(
   const elPaths = findRelevantElementPaths(node);
 
   return elPaths.reduce((extendedNode, elPath): React.ReactNode => {
-    const compFxState = findCompFixtureState(fixtureState, decoratorId, elPath);
+    const elementId = { decoratorId, elPath };
+    const fxStateProps = findFixtureStateProps(fixtureState, elementId);
 
     return setElementAtPath(extendedNode, elPath, element => {
-      if (
-        !compFxState ||
-        !compFxState.props ||
-        componentTypeChanged(compFxState.componentName)
-      ) {
+      if (!fxStateProps || componentTypeChanged(fxStateProps.componentName)) {
         return {
           ...element,
           key: getElRenderKey(elPath, DEFAULT_RENDER_KEY)
@@ -36,9 +33,9 @@ export function extendPropsWithFixtureState(
       // stored in fixture state
       // See https://github.com/react-cosmos/react-cosmos/pull/920 for context
       const originalProps = element.props;
-      const extendedProps = extendObjWithValues(
+      const extendedProps = extendWithValues(
         originalProps,
-        compFxState.props
+        fxStateProps.values
       );
 
       // HACK alert: Editing React Element by hand
@@ -60,7 +57,7 @@ export function extendPropsWithFixtureState(
         props: hasChildElPaths(elPaths, elPath)
           ? { ...extendedProps, children: originalProps.children }
           : extendedProps,
-        key: getElRenderKey(elPath, compFxState.renderKey)
+        key: getElRenderKey(elPath, fxStateProps.renderKey)
       };
 
       function componentTypeChanged(componentName: string) {

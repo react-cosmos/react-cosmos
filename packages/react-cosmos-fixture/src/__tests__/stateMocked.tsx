@@ -4,12 +4,17 @@ import until from 'async-until';
 import retry from '@skidding/async-retry';
 import { StateMock } from '@react-mock/state';
 import {
-  getCompFixtureStates,
-  updateCompFixtureState
+  createValues,
+  updateFixtureStateClassState,
+  removeFixtureStateClassState
 } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from 'react-cosmos-shared2/util';
 import { Counter, CoolCounter } from '../testHelpers/components';
-import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
+import {
+  anyProps,
+  anyClassState,
+  getClassState
+} from '../testHelpers/fixtureState';
 import { runFixtureConnectTests } from '../testHelpers';
 
 const rendererId = uuid();
@@ -38,10 +43,10 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            components: [
-              createCompFxState({
-                props: [],
-                state: createFxValues({ count: 5 })
+            props: [anyProps()],
+            classState: [
+              anyClassState({
+                values: createValues({ count: 5 })
               })
             ]
           }
@@ -65,16 +70,15 @@ runFixtureConnectTests(mount => {
           fixtureState: {}
         });
         const fixtureState = await getLastFixtureState();
-        const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
+        const [{ elementId }] = getClassState(fixtureState);
         await setFixtureState({
           rendererId,
           fixtureId,
           fixtureState: {
-            components: updateCompFixtureState({
+            classState: updateFixtureStateClassState({
               fixtureState,
-              decoratorId,
-              elPath,
-              state: createFxValues({ count: 100 })
+              elementId,
+              values: createValues({ count: 100 })
             })
           }
         });
@@ -85,11 +89,10 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            components: updateCompFixtureState({
+            classState: updateFixtureStateClassState({
               fixtureState,
-              decoratorId,
-              elPath,
-              state: createFxValues({ count: 200 })
+              elementId,
+              values: createValues({ count: 200 })
             })
           }
         });
@@ -113,16 +116,15 @@ runFixtureConnectTests(mount => {
           fixtureState: {}
         });
         const fixtureState = await getLastFixtureState();
-        const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
+        const [{ elementId }] = getClassState(fixtureState);
         await setFixtureState({
           rendererId,
           fixtureId,
           fixtureState: {
-            components: updateCompFixtureState({
+            classState: updateFixtureStateClassState({
               fixtureState,
-              decoratorId,
-              elPath,
-              state: []
+              elementId,
+              values: []
             })
           }
         });
@@ -147,16 +149,15 @@ runFixtureConnectTests(mount => {
           fixtureState: {}
         });
         const fixtureState = await getLastFixtureState();
-        const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
+        const [{ elementId }] = getClassState(fixtureState);
         await setFixtureState({
           rendererId,
           fixtureId,
           fixtureState: {
-            components: updateCompFixtureState({
+            classState: updateFixtureStateClassState({
               fixtureState,
-              decoratorId,
-              elPath,
-              state: createFxValues({ count: 10 })
+              elementId,
+              values: createValues({ count: 10 })
             })
           }
         });
@@ -165,12 +166,7 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            components: updateCompFixtureState({
-              fixtureState,
-              decoratorId,
-              elPath,
-              state: null
-            })
+            classState: removeFixtureStateClassState(fixtureState, elementId)
           }
         });
         await retry(() => expect(renderer.toJSON()).toBe('5 times'));
@@ -180,10 +176,10 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            components: [
-              createCompFxState({
-                props: [],
-                state: createFxValues({ count: 5 })
+            props: [anyProps()],
+            classState: [
+              anyClassState({
+                values: createValues({ count: 5 })
               })
             ]
           }
@@ -227,8 +223,8 @@ runFixtureConnectTests(mount => {
 
         async function getCount() {
           const fixtureState = await getLastFixtureState();
-          const [{ state }] = getCompFixtureStates(fixtureState);
-          return state ? JSON.parse(state[0].stringified) : null;
+          const [{ values }] = getClassState(fixtureState);
+          return values ? JSON.parse(values[0].stringified) : null;
         }
       }
     );
@@ -250,16 +246,15 @@ runFixtureConnectTests(mount => {
           fixtureState: {}
         });
         const fixtureState = await getLastFixtureState();
-        const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
+        const [{ elementId }] = getClassState(fixtureState);
         await setFixtureState({
           rendererId,
           fixtureId,
           fixtureState: {
-            components: updateCompFixtureState({
+            classState: updateFixtureStateClassState({
               fixtureState,
-              decoratorId,
-              elPath,
-              state: createFxValues({ count: 50 })
+              elementId,
+              values: createValues({ count: 50 })
             })
           }
         });
@@ -297,16 +292,15 @@ runFixtureConnectTests(mount => {
           fixtureState: {}
         });
         const fixtureState = await getLastFixtureState();
-        const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
+        const [{ elementId }] = getClassState(fixtureState);
         await setFixtureState({
           rendererId,
           fixtureId,
           fixtureState: {
-            components: updateCompFixtureState({
+            classState: updateFixtureStateClassState({
               fixtureState,
-              decoratorId,
-              elPath,
-              state: createFxValues({ count: 6 })
+              elementId,
+              values: createValues({ count: 6 })
             })
           }
         });
@@ -327,10 +321,10 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            components: [
-              createCompFxState({
-                props: [],
-                state: createFxValues({ count: 50 })
+            props: [anyProps()],
+            classState: [
+              anyClassState({
+                values: createValues({ count: 50 })
               })
             ]
           }
@@ -353,10 +347,10 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            components: [
-              createCompFxState({
-                props: [],
-                state: createFxValues({ count: 5 })
+            props: [anyProps()],
+            classState: [
+              anyClassState({
+                values: createValues({ count: 5 })
               })
             ]
           }
@@ -375,7 +369,8 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            components: []
+            props: [],
+            classState: []
           }
         });
       }

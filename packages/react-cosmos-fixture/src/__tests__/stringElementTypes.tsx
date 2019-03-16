@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { uuid } from 'react-cosmos-shared2/util';
+import { createValues } from 'react-cosmos-shared2/fixtureState';
 import { runFixtureConnectTests } from '../testHelpers';
-import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
+import { anyProps } from '../testHelpers/fixtureState';
 
 const rendererId = uuid();
 const decorators = {};
@@ -24,10 +25,10 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            components: [
-              createCompFxState({
+            props: [
+              anyProps({
                 componentName: 'input',
-                props: createFxValues({ type: 'text' })
+                values: createValues({ type: 'text' })
               })
             ]
           }
@@ -52,7 +53,7 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            components: []
+            props: []
           }
         });
       }

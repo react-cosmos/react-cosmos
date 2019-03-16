@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { uuid } from 'react-cosmos-shared2/util';
-import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
+import { createValues } from 'react-cosmos-shared2/fixtureState';
+import { anyProps } from '../testHelpers/fixtureState';
 import { Wrapper } from '../testHelpers/components';
 import { runFixtureConnectTests } from '../testHelpers';
 
@@ -25,9 +26,9 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            components: [
-              createCompFxState({
-                props: createFxValues({ children: 'yo' })
+            props: [
+              anyProps({
+                values: createValues({ children: 'yo' })
               })
             ]
           }
@@ -47,9 +48,9 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            components: [
-              createCompFxState({
-                props: [
+            props: [
+              anyProps({
+                values: [
                   {
                     key: 'children',
                     serializable: false,
@@ -57,8 +58,8 @@ runFixtureConnectTests(mount => {
                   }
                 ]
               }),
-              createCompFxState({
-                props: createFxValues({ children: 'brah' })
+              anyProps({
+                values: createValues({ children: 'brah' })
               })
             ]
           }

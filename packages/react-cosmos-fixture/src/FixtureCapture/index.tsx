@@ -1,17 +1,22 @@
 import * as React from 'react';
 import { isEqual } from 'lodash';
-import { removeItemMatch } from 'react-cosmos-shared2/util';
 import {
-  extractValuesFromObj,
-  extendObjWithValues,
-  getCompFixtureStates,
-  findCompFixtureState,
-  createCompFixtureState,
-  updateCompFixtureState,
   FixtureDecoratorId,
-  ComponentFixtureState,
   FixtureState,
-  SetFixtureState
+  SetFixtureState,
+  FixtureStateClassState,
+  createValues,
+  extendWithValues,
+  getFixtureStateProps,
+  findFixtureStateProps,
+  createFixtureStateProps,
+  updateFixtureStateProps,
+  removeFixtureStateProps,
+  getFixtureStateClassState,
+  findFixtureStateClassState,
+  createFixtureStateClassState,
+  updateFixtureStateClassState,
+  removeFixtureStateClassState
 } from 'react-cosmos-shared2/fixtureState';
 import { areNodesEqual } from 'react-cosmos-shared2/react';
 import { FixtureContext } from '../FixtureContext';
@@ -92,25 +97,19 @@ class FixtureCaptureInner extends React.Component<InnerProps> {
     const elPaths = findRelevantElementPaths(children);
 
     if (elPaths.length === 0) {
-      // Create empty fixture state (edge-case: but only if another
-      // FixtureCapture instance hasn't created any fixture state)
-      setFixtureState((prevFixtureState: FixtureState) => ({
-        ...prevFixtureState,
-        components: prevFixtureState.components || []
+      // Create empty fixture state (edge-case: whilst making sure not to
+      // override any pending fixture state update
+      setFixtureState((prevFxState: FixtureState) => ({
+        ...prevFxState,
+        props: prevFxState.props || []
       }));
     } else {
       elPaths.forEach(elPath => {
-        const compFxState = findCompFixtureState(
-          fixtureState,
-          decoratorId,
-          elPath
-        );
-
         // Component fixture state can be provided before the fixture mounts (eg.
         // a previous snapshot of a fixture state or the current fixture state
         // from another renderer)
-        if (!compFxState) {
-          this.createFixtureState(elPath);
+        if (!findFixtureStateProps(fixtureState, { decoratorId, elPath })) {
+          this.createFixtureStateProps(elPath);
         }
       });
     }
@@ -146,10 +145,15 @@ class FixtureCaptureInner extends React.Component<InnerProps> {
     }
 
     // No need to update unless children and/or fixture state values changed.
-    return !isEqual(
-      getCompFixtureStates(nextProps.fixtureState, decoratorId),
-      getCompFixtureStates(fixtureState, decoratorId)
+    const propsChanged = !isEqual(
+      getFixtureStateProps(nextProps.fixtureState, decoratorId),
+      getFixtureStateProps(fixtureState, decoratorId)
     );
+    const classStateChanged = !isEqual(
+      getFixtureStateClassState(nextProps.fixtureState, decoratorId),
+      getFixtureStateClassState(fixtureState, decoratorId)
+    );
+    return propsChanged || classStateChanged;
   }
 
   componentDidUpdate(prevProps: InnerProps) {
@@ -157,65 +161,65 @@ class FixtureCaptureInner extends React.Component<InnerProps> {
     const elPaths = findRelevantElementPaths(children);
 
     // Remove fixture state for removed child elements (likely via HMR)
-    getCompFixtureStates(fixtureState, decoratorId).forEach(({ elPath }) => {
-      // FIXME: Also reset fixture state at this element path if the component
-      // component type of the corresponding element changed
+    // FIXME: Also reset fixture state at this element path if the component
+    // component type of the corresponding element changed
+    getFixtureStateProps(fixtureState, decoratorId).forEach(({ elementId }) => {
+      const { elPath } = elementId;
       if (elPaths.indexOf(elPath) === -1) {
-        this.removeFixtureState(elPath);
-        this.flushEl(elPath);
+        this.removeFixtureStateProps(elPath);
       }
     });
+    getFixtureStateClassState(fixtureState, decoratorId).forEach(
+      ({ elementId }) => {
+        const { elPath } = elementId;
+        if (elPaths.indexOf(elPath) === -1) {
+          this.removeFixtureStateClassState(elPath);
+          this.flushEl(elPath);
+        }
+      }
+    );
 
     // Update fixture state and component state at remaining child paths
     elPaths.forEach(elPath => {
-      const compFxState = findCompFixtureState(
-        fixtureState,
-        decoratorId,
-        elPath
-      );
-      if (!compFxState) {
-        return this.createFixtureState(elPath);
+      const elementId = { decoratorId, elPath };
+
+      if (findFixtureStateProps(fixtureState, elementId)) {
+        this.transitionProps(elPath, prevProps);
+      } else {
+        return this.createFixtureStateProps(elPath);
       }
 
-      this.transitionElProps({ elPath, compFxState, prevProps });
-      this.transitionElState({ elPath, compFxState, prevProps });
+      const fxStateClassState = findFixtureStateClassState(
+        fixtureState,
+        elementId
+      );
+      if (fxStateClassState) {
+        this.transitionState(elPath, fxStateClassState, prevProps);
+      } else {
+        if (this.initialStates[elPath]) {
+          const { state } = this.initialStates[elPath];
+          const elRef = this.elRefs[elPath];
+          if (!isEqual(elRef.state, state)) {
+            replaceState(elRef, state);
+          }
+          this.createFixtureStateClassState(elPath, state);
+        }
+      }
     });
   }
 
-  transitionElProps({
-    elPath,
-    compFxState,
-    prevProps
-  }: {
-    elPath: string;
-    compFxState: ComponentFixtureState;
-    prevProps: InnerProps;
-  }) {
-    const { children } = this.props;
-    const childEl = getExpectedElementAtPath(children, elPath);
-
-    // Reset props fixture state when...
-    if (
-      // a) the props fixture state for this element have been emptied
-      // deliberately. Happens when user discards the fixture state to reload
-      // the fixture.
-      !compFxState.props ||
-      // b) mocked props from fixture elemented changed (likely via HMR).
-      !areNodesEqual(childEl, getElementAtPath(prevProps.children, elPath))
-    ) {
-      this.updateFixtureState({ elPath, props: childEl.props });
+  transitionProps(elPath: string, prevProps: InnerProps) {
+    const childEl = getExpectedElementAtPath(this.props.children, elPath);
+    if (!areNodesEqual(childEl, getElementAtPath(prevProps.children, elPath))) {
+      this.updateFixtureStateProps(elPath, childEl.props);
     }
   }
 
-  transitionElState({
-    elPath,
-    compFxState: { state: stateFxState },
-    prevProps
-  }: {
-    elPath: string;
-    compFxState: ComponentFixtureState;
-    prevProps: InnerProps;
-  }) {
+  transitionState(
+    elPath: string,
+    fxStateClassState: FixtureStateClassState,
+    prevProps: InnerProps
+  ) {
     const elRef = this.elRefs[elPath];
 
     // The el ref can be missing for three reasons:
@@ -228,13 +232,13 @@ class FixtureCaptureInner extends React.Component<InnerProps> {
       return;
     }
 
-    if (!stateFxState) {
-      const { state } = this.initialStates[elPath];
+    // if (!stateFxState) {
+    //   const { state } = this.initialStates[elPath];
 
-      return replaceState(elRef, state, () => {
-        this.updateFixtureState({ elPath, state });
-      });
-    }
+    //   return replaceState(elRef, state, () => {
+    //     this.updateFixtureState({ elPath, state });
+    //   });
+    // }
 
     // The child's state can be out of sync with the fixture state for two
     // reasons:
@@ -242,15 +246,17 @@ class FixtureCaptureInner extends React.Component<InnerProps> {
     //   2. The fixture state changed
     // Here we're interested in the second scenario. In the first scenario
     // we want to let the component state override the fixture state.
-    const prevCompFxState = findCompFixtureState(
+    const prevFxStateClassState = findFixtureStateClassState(
       prevProps.fixtureState,
-      this.props.decoratorId,
-      elPath
+      { decoratorId: this.props.decoratorId, elPath }
     );
-    if (prevCompFxState && !isEqual(prevCompFxState.state, stateFxState)) {
+    if (
+      prevFxStateClassState &&
+      !isEqual(prevFxStateClassState.values, fxStateClassState)
+    ) {
       return replaceState(
         elRef,
-        extendObjWithValues(elRef.state, stateFxState)
+        extendWithValues(elRef.state, fxStateClassState.values)
       );
     }
   }
@@ -271,88 +277,108 @@ class FixtureCaptureInner extends React.Component<InnerProps> {
     this.setElInitialState(elPath, elRef);
 
     const { decoratorId, fixtureState } = this.props;
-    const compFxState = findCompFixtureState(fixtureState, decoratorId, elPath);
-
-    if (!compFxState) {
-      return this.createFixtureState(elPath);
+    const fixtureId = { decoratorId, elPath };
+    const fxStateClassState = findFixtureStateClassState(
+      fixtureState,
+      fixtureId
+    );
+    if (!fxStateClassState) {
+      return this.createFixtureStateClassState(elPath, state);
     }
 
-    const { state: stateFxState } = compFxState;
-
-    if (!stateFxState) {
-      this.updateFixtureState({ elPath, state });
-    } else {
-      replaceState(elRef, extendObjWithValues(state, stateFxState));
-    }
+    replaceState(elRef, extendWithValues(state, fxStateClassState.values));
   };
 
-  createFixtureState(elPath: string) {
+  createFixtureStateProps(elPath: string) {
     const { children, decoratorId, setFixtureState } = this.props;
     const { type, props } = getExpectedElementAtPath(children, elPath);
+    const elementId = { decoratorId, elPath };
     const componentName = getComponentName(type);
-    const elRef = this.elRefs[elPath];
-
     // Use state updater callback to ensure concurrent setFixtureState calls
     // don't cancel out each other.
     setFixtureState(fixtureState => ({
       ...fixtureState,
-      components: createCompFixtureState({
+      props: createFixtureStateProps({
         fixtureState,
-        decoratorId,
-        elPath,
-        componentName,
-        props: extractValuesFromObj(props),
-        state: elRef && elRef.state ? extractValuesFromObj(elRef.state) : null
+        elementId,
+        values: createValues(props),
+        componentName
       })
     }));
   }
 
-  updateFixtureState({
-    elPath,
-    props,
-    state
-  }: {
-    elPath: string;
-    props?: {};
-    state?: {};
-  }) {
+  createFixtureStateClassState(elPath: string, state: {}) {
     const { decoratorId, setFixtureState } = this.props;
-
-    // Make method await-able
-    return new Promise(res => {
-      // Use state updater callback to ensure concurrent setFixtureState calls
-      // don't cancel out each other.
-      setFixtureState(
-        fixtureState => ({
-          ...fixtureState,
-          components: updateCompFixtureState({
-            fixtureState,
-            decoratorId,
-            elPath,
-            // Returning undefined for props or state will not override the
-            // previous values
-            props: props && extractValuesFromObj(props),
-            state: state && extractValuesFromObj(state)
-          })
-        }),
-        res
-      );
-    });
+    const elementId = { decoratorId, elPath };
+    // Use state updater callback to ensure concurrent setFixtureState calls
+    // don't cancel out each other.
+    setFixtureState(fixtureState => ({
+      ...fixtureState,
+      classState: createFixtureStateClassState({
+        fixtureState,
+        elementId,
+        values: createValues(state)
+      })
+    }));
   }
 
-  removeFixtureState(elPath: string) {
+  updateFixtureStateProps(elPath: string, props: {}) {
     const { decoratorId, setFixtureState } = this.props;
-    const matcher = elPath
-      ? (s: ComponentFixtureState) =>
-          s.decoratorId === decoratorId && s.elPath === elPath
-      : (s: ComponentFixtureState) => s.decoratorId === decoratorId;
+    const elementId = { decoratorId, elPath };
+    // Use state updater callback to ensure concurrent setFixtureState calls
+    // don't cancel out each other.
+    setFixtureState(fixtureState => ({
+      ...fixtureState,
+      props: updateFixtureStateProps({
+        fixtureState,
+        elementId,
+        values: createValues(props)
+      })
+    }));
+  }
 
+  updateFixtureStateClassState(elPath: string, state: {}, cb?: () => unknown) {
+    const { decoratorId, setFixtureState } = this.props;
+    const elementId = { decoratorId, elPath };
+    // Use state updater callback to ensure concurrent setFixtureState calls
+    // don't cancel out each other.
+    setFixtureState(
+      fixtureState => ({
+        ...fixtureState,
+        classState: updateFixtureStateClassState({
+          fixtureState,
+          elementId,
+          values: createValues(state)
+        })
+      }),
+      cb
+    );
+  }
+
+  removeFixtureStateProps(elPath: string) {
+    const { decoratorId, setFixtureState } = this.props;
+    const elementId = { decoratorId, elPath };
     // Use state updater callback to ensure concurrent setFixtureState calls
     // don't cancel out each other.
     setFixtureState(fixtureState => {
       return {
         ...fixtureState,
-        components: removeItemMatch(getCompFixtureStates(fixtureState), matcher)
+        props: removeFixtureStateProps(fixtureState, elementId)
+      };
+    });
+  }
+
+  removeFixtureStateClassState(elPath: string) {
+    const { decoratorId, setFixtureState } = this.props;
+    // Use state updater callback to ensure concurrent setFixtureState calls
+    // don't cancel out each other.
+    setFixtureState(fixtureState => {
+      return {
+        ...fixtureState,
+        classState: removeFixtureStateClassState(fixtureState, {
+          decoratorId,
+          elPath
+        })
       };
     });
   }
@@ -390,18 +416,20 @@ class FixtureCaptureInner extends React.Component<InnerProps> {
         }
 
         const { state } = this.elRefs[elPath];
-        const compFxState = findCompFixtureState(
+        const elementId = { decoratorId, elPath };
+        const fxStateClassState = findFixtureStateClassState(
           fixtureState,
-          decoratorId,
-          elPath
+          elementId
         );
 
         if (
+          fxStateClassState &&
           state &&
-          compFxState &&
-          !doesFixtureStateMatchState(state, compFxState)
+          !doesFixtureStateMatchClassState(fxStateClassState, state)
         ) {
-          await this.updateFixtureState({ elPath, state });
+          await new Promise(resolve => {
+            this.updateFixtureStateClassState(elPath, state, resolve);
+          });
         }
       })
     );
@@ -419,12 +447,9 @@ class FixtureCaptureInner extends React.Component<InnerProps> {
   }
 }
 
-function doesFixtureStateMatchState(
-  state: {},
-  compFxState: ComponentFixtureState
+function doesFixtureStateMatchClassState(
+  fxStateClassState: FixtureStateClassState,
+  state: {}
 ) {
-  return (
-    compFxState.state &&
-    isEqual(state, extendObjWithValues(state, compFxState.state))
-  );
+  return isEqual(state, extendWithValues(state, fxStateClassState.values));
 }

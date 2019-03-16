@@ -2,12 +2,13 @@ import * as React from 'react';
 import until from 'async-until';
 import retry from '@skidding/async-retry';
 import {
-  getCompFixtureStates,
-  updateCompFixtureState
+  createValues,
+  updateFixtureStateProps,
+  updateFixtureStateClassState
 } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from 'react-cosmos-shared2/util';
 import { SuffixCounter } from '../testHelpers/components';
-import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
+import { anyProps, anyClassState, getProps } from '../testHelpers/fixtureState';
 import { runFixtureConnectTests } from '../testHelpers';
 
 const rendererId = uuid();
@@ -41,13 +42,13 @@ runFixtureConnectTests(mount => {
           fixtureState: {}
         });
         let fixtureState = await getLastFixtureState();
-        const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
+        const [{ elementId }] = getProps(fixtureState);
         fixtureState = {
-          components: updateCompFixtureState({
+          ...fixtureState,
+          classState: updateFixtureStateClassState({
             fixtureState,
-            elPath,
-            decoratorId,
-            state: createFxValues({ count: 5 })
+            elementId,
+            values: createValues({ count: 5 })
           })
         };
         await setFixtureState({
@@ -60,12 +61,11 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            components: updateCompFixtureState({
+            ...fixtureState,
+            props: updateFixtureStateProps({
               fixtureState,
-              decoratorId,
-              elPath,
-              props: createFxValues({ suffix: 'timez' }),
-              resetInstance: false
+              elementId,
+              values: createValues({ suffix: 'timez' })
             })
           }
         });
@@ -89,13 +89,13 @@ runFixtureConnectTests(mount => {
           fixtureState: {}
         });
         let fixtureState = await getLastFixtureState();
-        const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
+        const [{ elementId }] = getProps(fixtureState);
         fixtureState = {
-          components: updateCompFixtureState({
+          ...fixtureState,
+          classState: updateFixtureStateClassState({
             fixtureState,
-            decoratorId,
-            elPath,
-            state: createFxValues({ count: 5 })
+            elementId,
+            values: createValues({ count: 5 })
           })
         };
         await setFixtureState({
@@ -108,11 +108,11 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            components: updateCompFixtureState({
+            ...fixtureState,
+            props: updateFixtureStateProps({
               fixtureState,
-              decoratorId,
-              elPath,
-              props: createFxValues({ suffix: 'timez' })
+              elementId,
+              values: createValues({ suffix: 'timez' })
             })
           }
         });
@@ -136,13 +136,13 @@ runFixtureConnectTests(mount => {
           fixtureState: {}
         });
         let fixtureState = await getLastFixtureState();
-        const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
+        const [{ elementId }] = getProps(fixtureState);
         fixtureState = {
-          components: updateCompFixtureState({
+          ...fixtureState,
+          props: updateFixtureStateProps({
             fixtureState,
-            decoratorId,
-            elPath,
-            props: createFxValues({ suffix: 'timez' })
+            elementId,
+            values: createValues({ suffix: 'timez' })
           })
         };
         await setFixtureState({
@@ -155,11 +155,11 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            components: updateCompFixtureState({
+            ...fixtureState,
+            classState: updateFixtureStateClassState({
               fixtureState,
-              decoratorId,
-              elPath,
-              state: createFxValues({ count: 5 })
+              elementId,
+              values: createValues({ count: 5 })
             })
           }
         });
@@ -197,16 +197,16 @@ runFixtureConnectTests(mount => {
           fixtureState: {}
         });
         const fixtureState = await getLastFixtureState();
-        const [{ decoratorId, elPath }] = getCompFixtureStates(fixtureState);
+        const [{ elementId }] = getProps(fixtureState);
         await setFixtureState({
           rendererId,
           fixtureId,
           fixtureState: {
-            components: updateCompFixtureState({
+            ...fixtureState,
+            props: updateFixtureStateProps({
               fixtureState,
-              decoratorId,
-              elPath,
-              props: createFxValues({ suffix: 'timez' })
+              elementId,
+              values: createValues({ suffix: 'timez' })
             })
           }
         });
@@ -220,10 +220,14 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            components: [
-              createCompFxState({
-                props: createFxValues({ suffix: 'timez' }),
-                state: createFxValues({ count: 7 })
+            props: [
+              anyProps({
+                values: createValues({ suffix: 'timez' })
+              })
+            ],
+            classState: [
+              anyClassState({
+                values: createValues({ count: 7 })
               })
             ]
           }
@@ -253,10 +257,14 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            components: [
-              createCompFxState({
-                props: createFxValues({ suffix: 'timez' }),
-                state: createFxValues({ count: 0 })
+            props: [
+              anyProps({
+                values: createValues({ suffix: 'timez' })
+              })
+            ],
+            classState: [
+              anyClassState({
+                values: createValues({ count: 0 })
               })
             ]
           }
