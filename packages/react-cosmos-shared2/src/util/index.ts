@@ -1,18 +1,11 @@
 import { findIndex } from 'lodash';
 
-export type StateUpdate<T> = T | ((prevState: T) => T);
+export type StateUpdater<T> = (prevState: T) => T;
 
-export type SetState<T> = (
-  update: StateUpdate<T>,
+export type SetState<StateUpdate> = (
+  update: StateUpdate,
   callback?: () => unknown
 ) => unknown;
-
-export function updateState<T extends { call?: never } & Record<string, any>>(
-  prevState: T,
-  update: StateUpdate<T>
-): T {
-  return typeof update === 'function' ? update(prevState) : update;
-}
 
 export function updateItem<T>(
   items: Readonly<T[]>,

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SetState } from 'react-cosmos-shared2/util';
+import { StateUpdater, SetState } from 'react-cosmos-shared2/util';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { SmartphoneIcon } from '../../../shared/icons';
 import { Button } from '../../../shared/components';
@@ -7,12 +7,14 @@ import { StorageMethods } from '../shared';
 import { getDefaultViewport } from '../storage';
 import { ResponsivePreviewSpec } from '../public';
 
+type PluginState = ResponsivePreviewSpec['state'];
+
 export type Props = {
-  state: ResponsivePreviewSpec['state'];
+  state: PluginState;
   projectId: string;
   fixtureState: FixtureState;
   validFixtureSelected: boolean;
-  setState: SetState<ResponsivePreviewSpec['state']>;
+  setState: SetState<PluginState | StateUpdater<PluginState>>;
   setFixtureStateViewport: () => void;
   storage: StorageMethods;
 };

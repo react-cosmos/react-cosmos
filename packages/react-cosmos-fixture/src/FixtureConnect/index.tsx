@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { isEqual } from 'lodash';
-import { updateState } from 'react-cosmos-shared2/util';
 import {
   FixtureState,
   SetFixtureState
@@ -234,7 +233,7 @@ export class FixtureConnect extends React.Component<Props, State> {
       return {
         selectedFixture: {
           ...selectedFixture,
-          fixtureState: updateState(selectedFixture.fixtureState, stateUpdate)
+          fixtureState: stateUpdate(selectedFixture.fixtureState)
         }
       };
     }, cb);
