@@ -21,9 +21,9 @@ afterEach(cleanup);
 
 const fixtures = { 'ein.js': null, 'zwei.js': null, 'drei.js': null };
 const fixtureId = { path: 'zwei.js', name: null };
-const fixtureState = { components: [] };
+const fixtureState = { props: [] };
 const expectedFixtureState = {
-  components: [],
+  props: [],
   viewport: { width: 640, height: 480 }
 };
 
@@ -52,7 +52,6 @@ function mockSetFixtureStateCall() {
   const methods = getMethodsOf<RendererCoreSpec>('rendererCore');
   methods.setFixtureState((prevState: FixtureState) => ({
     ...prevState,
-    components: prevState ? prevState.components : [],
     viewport: { width: 640, height: 480 }
   }));
 }

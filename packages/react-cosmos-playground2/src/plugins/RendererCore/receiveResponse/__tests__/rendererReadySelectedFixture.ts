@@ -12,7 +12,7 @@ afterEach(cleanup);
 
 const fixtureId = { path: 'ein.js', name: null };
 const fixtures = { [fixtureId.path]: null };
-const fixtureState = { components: [] };
+const fixtureState = { props: [] };
 
 function registerTestPlugins(
   handleRendererRequest: (

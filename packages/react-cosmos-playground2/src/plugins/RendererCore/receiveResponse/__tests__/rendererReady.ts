@@ -14,7 +14,7 @@ afterEach(cleanup);
 
 const fixtures = { 'ein.js': null };
 const fixtureId = { path: 'zwei.js', name: null };
-const fixtureState = { components: [] };
+const fixtureState = { props: [] };
 
 function registerTestPlugins() {
   register();

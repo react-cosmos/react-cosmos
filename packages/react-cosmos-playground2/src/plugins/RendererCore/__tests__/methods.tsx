@@ -13,7 +13,7 @@ afterEach(cleanup);
 
 const fixtures = { 'ein.js': null, 'zwei.js': null, 'drei.js': null };
 const fixtureId = { path: 'foo.js', name: null };
-const fixtureState = { components: [] };
+const fixtureState = { props: [] };
 
 function registerTestPlugins() {
   register();
@@ -64,6 +64,6 @@ it('returns fixture state', () => {
   registerTestPlugins();
   loadTestPlugins();
   expect(getRendererCoreMethods().getFixtureState()).toEqual({
-    components: []
+    props: []
   });
 });
