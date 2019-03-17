@@ -12,6 +12,6 @@ export function FixtureCapture({ children, decoratorId }: Props) {
   let fixture = usePropsCapture(children, decoratorId);
   fixture = useClassStateCapture(fixture, decoratorId);
 
-  // TODO: Explain <>
+  // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/18051
   return <>{fixture}</>;
 }
