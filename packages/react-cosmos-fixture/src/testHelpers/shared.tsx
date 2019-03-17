@@ -53,9 +53,13 @@ export type FixtureConnectTestApi = {
   update: (args: MountFixtureConnectArgs) => void;
 } & FixtureConnectMockApi;
 
+export type MountFixtureCallback = (
+  api: FixtureConnectTestApi
+) => Promise<void>;
+
 export type MountFixtureConnect = (
   args: MountFixtureConnectArgs,
-  cb: (api: FixtureConnectTestApi) => void
+  cb: MountFixtureCallback
 ) => Promise<void>;
 
 type FixtureConnectMockArgs = {

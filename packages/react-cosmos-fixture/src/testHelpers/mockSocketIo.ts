@@ -1,3 +1,4 @@
+import { act } from 'react-test-renderer';
 import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
 
 type MsgHandler = (msg: {}) => {};
@@ -47,7 +48,9 @@ function postMessage(msg: {}) {
 
   // Fake async delay
   setTimeout(() => {
-    handlers[RENDERER_MESSAGE_EVENT_NAME](msg);
+    act(() => {
+      handlers[RENDERER_MESSAGE_EVENT_NAME](msg);
+    });
   });
 }
 

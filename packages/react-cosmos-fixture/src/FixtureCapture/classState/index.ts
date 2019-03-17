@@ -44,8 +44,7 @@ export function useClassStateCapture(
 
   // Make latest fixture state accessible in hook callbacks
   const fixtureStateRef = React.useRef(fixtureState);
-  // TODO: Make it work with useEffect (React.act?)
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     fixtureStateRef.current = fixtureState;
   });
 
@@ -60,8 +59,7 @@ export function useClassStateCapture(
   // resetting fixture state
   const initialStates = React.useRef<InitialStates>({});
 
-  // TODO: Make it work with useEffect (React.act?)
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     // Remove fixture state for removed child elements (likely via HMR)
     // FIXME: Also reset fixture state at this element path if the component
     // component type of the corresponding element changed
@@ -138,8 +136,7 @@ export function useClassStateCapture(
 
   const timeoutId = React.useRef<null | number>(null);
 
-  // TODO: Make it work with useEffect (React.act?)
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     // The check should run even if no element paths are found at mount, because
     // the fixture can change during the lifecycle of a FixtureCapture instance
     // and the updated fixture might contain elements of stateful components
@@ -158,8 +155,7 @@ export function useClassStateCapture(
     };
   });
 
-  // TODO: Make it work with useEffect (React.act?)
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     prevFixtureStateRef.current = fixtureState;
   });
 

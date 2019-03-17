@@ -23,8 +23,7 @@ export function usePropsCapture(
   const prevFixtureRef = React.useRef(fixture);
   const elPaths = findRelevantElementPaths(fixture);
 
-  // TODO: Make it work with useEffect (React.act?)
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     // Create empty fixture state
     if (!fixtureState.props && elPaths.length === 0) {
       // Make sure not to override any (currently pending) fixture state props
@@ -81,8 +80,7 @@ export function usePropsCapture(
     // TODO: Explore improving perf
   }, [fixture, fixtureState]);
 
-  // TODO: Make it work with useEffect (React.act?)
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     prevFixtureRef.current = fixture;
   });
 

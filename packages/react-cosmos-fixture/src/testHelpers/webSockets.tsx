@@ -1,13 +1,13 @@
 import * as React from 'react';
 import * as io from 'socket.io-client';
+import { create, act } from 'react-test-renderer';
 import { WebSockets } from '..';
 import {
   MountFixtureConnectArgs,
-  FixtureConnectTestApi,
+  MountFixtureCb,
   createFixtureConnectRenderCb,
   createFixtureConnectMockApi
 } from './shared';
-import { create } from 'react-test-renderer';
 
 // __getMockApi is defined in mockSocketIo.js
 const {
@@ -19,14 +19,17 @@ const {
 
 export async function mountWebSockets(
   args: MountFixtureConnectArgs,
-  cb: (api: FixtureConnectTestApi) => void
+  cb: MountFixtureCb
 ) {
   expect.hasAssertions();
   const renderer = create(getElement(args));
   try {
     await cb({
       renderer,
-      update: newArgs => renderer.update(getElement(newArgs)),
+      update: newArgs =>
+        act(() => {
+          renderer.update(getElement(newArgs));
+        }),
       ...createFixtureConnectMockApi({ getMessages, postMessage })
     });
   } finally {
