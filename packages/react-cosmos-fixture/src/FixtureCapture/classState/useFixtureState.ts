@@ -11,8 +11,14 @@ import {
 } from 'react-cosmos-shared2/fixtureState';
 import { FixtureContext } from '../../FixtureContext';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';
-import { replaceState } from './replaceState';
 import { ElRefs, InitialStates } from './shared';
+import {
+  attachChildRefs
+  // deleteRefHandler,
+  // deleteRefHandlers
+} from './attachChildRefs';
+import { replaceState } from './replaceState';
+import { useFixtureStateRef } from './useFixtureStateRef';
 
 export function useFixtureState(
   children: React.ReactNode,
@@ -22,7 +28,8 @@ export function useFixtureState(
 ) {
   const elPaths = findRelevantElementPaths(children);
   const { fixtureState, setFixtureState } = React.useContext(FixtureContext);
-
+  const decoratorRef = React.useRef({});
+  const fixtureStateRef = useFixtureStateRef(fixtureState);
   // Keep a copy of the previous fixture state to observe changes
   const prevFixtureStateRef = React.useRef(fixtureState);
 
@@ -103,7 +110,66 @@ export function useFixtureState(
     // TODO: Explore improving perf
   }, [children, fixtureState]);
 
+  // Update prev fixture state ref *after* running effects that reference it
   React.useEffect(() => {
     prevFixtureStateRef.current = fixtureState;
   });
+
+  return attachChildRefs({
+    node: children,
+    onRef: handleRef,
+    decoratorRef,
+    decoratorId
+  });
+
+  function handleRef(elPath: string, elRef: null | React.Component) {
+    if (!elRef) {
+      delete elRefs.current[elPath];
+      return;
+    }
+
+    // Only track instances with state
+    const { state } = elRef;
+    if (!state) {
+      return;
+    }
+    elRefs.current[elPath] = elRef;
+    initialStates.current[elPath] = {
+      type: elRef.constructor as React.ComponentClass,
+      state
+    };
+    // this.setElInitialState(elPath, elRef);
+    //   setElInitialState(elPath: string, elRef: React.Component) {
+    //     const found = this.initialStates[elPath];
+    //     const type = getElementRefType(elRef);
+
+    //     // Keep the first state recevied for this type
+    //     if (found && found.type === type) {
+    //       return;
+    //     }
+
+    //     const { state } = elRef;
+    //     if (state) {
+    //       this.initialStates[elPath] = { type, state };
+    //     }
+    //   }
+
+    const elementId = { decoratorId, elPath };
+    const fsClassState = findFixtureStateClassState(
+      fixtureStateRef.current,
+      elementId
+    );
+    if (!fsClassState) {
+      setFixtureState(prevFs => ({
+        ...prevFs,
+        classState: createFixtureStateClassState({
+          fixtureState: prevFs,
+          elementId,
+          values: createValues(state)
+        })
+      }));
+    } else {
+      replaceState(elRef, extendWithValues(state, fsClassState.values));
+    }
+  }
 }
