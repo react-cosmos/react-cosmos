@@ -27,6 +27,7 @@ type RefWrappers = {
 // on every render loop results in unwanted operations and race conditions.
 const refHandlers: WeakMap<object, RefWrappers> = new WeakMap();
 
+// TODO: Receive RefWrappers as arg
 export function attachChildRefs({
   node,
   onRef,

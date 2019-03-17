@@ -78,7 +78,6 @@ export function usePropsCapture(
       }
     });
     // TODO: Explore improving perf
-    // ^ Explore using React devtools
   }, [fixture, fixtureState]);
 
   React.useEffect(() => {
