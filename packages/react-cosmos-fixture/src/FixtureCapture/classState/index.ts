@@ -35,7 +35,7 @@ type InitialStates = {
 // state if it changed
 const REFRESH_INTERVAL = 200;
 
-export function useCaptureClassState(
+export function useClassStateCapture(
   children: React.ReactNode,
   decoratorId: FixtureDecoratorId
 ) {

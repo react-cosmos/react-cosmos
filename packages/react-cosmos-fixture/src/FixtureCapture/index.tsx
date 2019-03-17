@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FixtureDecoratorId } from 'react-cosmos-shared2/fixtureState';
-import { useCaptureProps } from './props';
-import { useCaptureClassState } from './classState';
+import { usePropsCapture } from './props';
+import { useClassStateCapture } from './classState';
 
 export type Props = {
   children: React.ReactNode;
@@ -9,8 +9,8 @@ export type Props = {
 };
 
 export function FixtureCapture({ children, decoratorId }: Props) {
-  let fixture = useCaptureProps(children, decoratorId);
-  fixture = useCaptureClassState(fixture, decoratorId);
+  let fixture = usePropsCapture(children, decoratorId);
+  fixture = useClassStateCapture(fixture, decoratorId);
 
   // TODO: Explain <>
   return <>{fixture}</>;

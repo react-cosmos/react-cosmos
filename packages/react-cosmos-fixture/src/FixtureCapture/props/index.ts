@@ -15,7 +15,7 @@ import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';
 import { getComponentName } from './componentName';
 import { extendFixtureProps } from './extendFixtureProps';
 
-export function useCaptureProps(
+export function usePropsCapture(
   fixture: React.ReactNode,
   decoratorId: FixtureDecoratorId
 ) {
