@@ -6,16 +6,16 @@ import {
   extendWithValues,
   findFixtureStateProps
 } from 'react-cosmos-shared2/fixtureState';
-import { setElementAtPath, getChildrenPath } from './nodeTree';
-import { getComponentName } from './getComponentName';
-import { findRelevantElementPaths } from './findRelevantElementPaths';
+import { setElementAtPath, getChildrenPath } from '../shared/nodeTree';
+import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';
+import { getComponentName } from './componentName';
 
-export function extendPropsWithFixtureState(
-  node: React.ReactNode,
+export function extendFixtureProps(
+  fixture: React.ReactNode,
   fixtureState: FixtureState,
   decoratorId: FixtureDecoratorId
 ): React.ReactNode {
-  const elPaths = findRelevantElementPaths(node);
+  const elPaths = findRelevantElementPaths(fixture);
 
   return elPaths.reduce((extendedNode, elPath): React.ReactNode => {
     const elementId = { decoratorId, elPath };
@@ -61,7 +61,7 @@ export function extendPropsWithFixtureState(
         return componentName !== getComponentName(element.type);
       }
     });
-  }, node);
+  }, fixture);
 }
 
 function getElRenderKey(elPath: string, renderKey: number) {

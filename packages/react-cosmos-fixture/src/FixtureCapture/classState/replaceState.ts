@@ -9,7 +9,6 @@ export function replaceState(
   cb?: () => unknown
 ) {
   const fullState = resetOriginalKeys(elRef.state, nextState);
-
   if (!isEqual(fullState, elRef.state)) {
     elRef.setState(fullState, cb);
   }
