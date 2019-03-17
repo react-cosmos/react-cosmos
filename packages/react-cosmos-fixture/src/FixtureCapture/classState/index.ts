@@ -2,13 +2,12 @@ import * as React from 'react';
 import { isEqual } from 'lodash';
 import {
   FixtureDecoratorId,
-  FixtureStateClassState,
+  FixtureState,
   createValues,
   extendWithValues,
   getFixtureStateClassState,
   findFixtureStateClassState,
   createFixtureStateClassState,
-  updateFixtureStateClassState,
   removeFixtureStateClassState
 } from 'react-cosmos-shared2/fixtureState';
 import { FixtureContext } from '../../FixtureContext';
@@ -19,8 +18,8 @@ import {
   // deleteRefHandlers
 } from './attachChildRefs';
 import { replaceState } from './replaceState';
-
-type ElRefs = { [elPath: string]: React.Component };
+import { ElRefs } from './shared';
+import { useReadState } from './useReadState';
 
 type InitialStates = {
   [elPath: string]: {
@@ -31,30 +30,18 @@ type InitialStates = {
   };
 };
 
-// How often to check the state of the loaded component and update the fixture
-// state if it changed
-const REFRESH_INTERVAL = 200;
-
 export function useClassStateCapture(
   children: React.ReactNode,
   decoratorId: FixtureDecoratorId
 ) {
   const { fixtureState, setFixtureState } = React.useContext(FixtureContext);
   const elPaths = findRelevantElementPaths(children);
-
   // Make latest fixture state accessible in hook callbacks
-  const fixtureStateRef = React.useRef(fixtureState);
-  React.useEffect(() => {
-    fixtureStateRef.current = fixtureState;
-  });
-
+  const fixtureStateRef = useFixtureStateRef(fixtureState);
   // Keep a copy of the previous fixture state to observe changes
   const prevFixtureStateRef = React.useRef(fixtureState);
-
   const decoratorRef = React.useRef({});
-
   const elRefs = React.useRef<ElRefs>({});
-
   // Remember initial state of child components to use as a default when
   // resetting fixture state
   const initialStates = React.useRef<InitialStates>({});
@@ -89,9 +76,11 @@ export function useClassStateCapture(
         if (initialStates.current[elPath]) {
           const { state } = initialStates.current[elPath];
           const elRef = elRefs.current[elPath];
+
           if (!isEqual(elRef.state, state)) {
             replaceState(elRef, state);
           }
+
           setFixtureState(prevFs => ({
             ...prevFs,
             classState: createFixtureStateClassState({
@@ -134,30 +123,13 @@ export function useClassStateCapture(
     // TODO: Explore improving perf
   }, [children, fixtureState]);
 
-  const timeoutId = React.useRef<null | number>(null);
-
-  React.useEffect(() => {
-    // The check should run even if no element paths are found at mount, because
-    // the fixture can change during the lifecycle of a FixtureCapture instance
-    // and the updated fixture might contain elements of stateful components
-    scheduleStateCheck();
-
-    return () => {
-      if (timeoutId.current) {
-        clearTimeout(timeoutId.current);
-      }
-
-      // Take out the trash
-      // TODO: Is this necessary with hooks?
-      // this.elRefs = {};
-      // this.initialStates = {};
-      // deleteRefHandlers(this);
-    };
-  });
+  useReadState(decoratorId, elPaths, elRefs, fixtureStateRef);
 
   React.useEffect(() => {
     prevFixtureStateRef.current = fixtureState;
   });
+
+  useCleanup(elRefs, initialStates);
 
   return attachChildRefs({
     node: children,
@@ -216,54 +188,27 @@ export function useClassStateCapture(
       replaceState(elRef, extendWithValues(state, fsClassState.values));
     }
   }
-
-  function scheduleStateCheck() {
-    // Is there a better way to listen to component state changes?
-    timeoutId.current = setTimeout(checkState, REFRESH_INTERVAL);
-  }
-
-  function checkState() {
-    let fixtureStateChangeScheduled = false;
-    Object.keys(elRefs.current).map(async elPath => {
-      if (elPaths.indexOf(elPath) === -1) {
-        throw new Error(
-          `[FixtureCapture] Child ref exists for missing element path "${elPath}"`
-        );
-      }
-
-      const { state } = elRefs.current[elPath];
-      const elementId = { decoratorId, elPath };
-      const fsClassState = findFixtureStateClassState(
-        fixtureStateRef.current,
-        elementId
-      );
-
-      if (
-        fsClassState &&
-        state &&
-        !doesFixtureStateMatchClassState(fsClassState, state)
-      ) {
-        fixtureStateChangeScheduled = true;
-        setFixtureState(prevFs => ({
-          ...prevFs,
-          classState: updateFixtureStateClassState({
-            fixtureState: prevFs,
-            elementId,
-            values: createValues(state)
-          })
-        }));
-      }
-    });
-
-    if (!fixtureStateChangeScheduled) {
-      scheduleStateCheck();
-    }
-  }
 }
 
-function doesFixtureStateMatchClassState(
-  fsClassState: FixtureStateClassState,
-  state: {}
+function useFixtureStateRef(fixtureState: FixtureState) {
+  const fixtureStateRef = React.useRef(fixtureState);
+  React.useEffect(() => {
+    fixtureStateRef.current = fixtureState;
+  });
+  return fixtureStateRef;
+}
+
+function useCleanup(
+  elRefs: React.MutableRefObject<ElRefs>,
+  initialStates: React.MutableRefObject<InitialStates>
 ) {
-  return isEqual(state, extendWithValues(state, fsClassState.values));
+  React.useEffect(
+    () => () => {
+      // Take out the trash
+      elRefs.current = {};
+      initialStates.current = {};
+      // deleteRefHandlers(this);
+    },
+    []
+  );
 }
