@@ -4,7 +4,7 @@ import { create, act } from 'react-test-renderer';
 import { WebSockets } from '..';
 import {
   MountFixtureConnectArgs,
-  MountFixtureCb,
+  MountFixtureCallback,
   createFixtureConnectRenderCb,
   createFixtureConnectMockApi
 } from './shared';
@@ -19,7 +19,7 @@ const {
 
 export async function mountWebSockets(
   args: MountFixtureConnectArgs,
-  cb: MountFixtureCb
+  cb: MountFixtureCallback
 ) {
   expect.hasAssertions();
   const renderer = create(getElement(args));
