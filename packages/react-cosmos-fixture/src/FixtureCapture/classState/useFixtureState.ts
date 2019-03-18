@@ -167,8 +167,8 @@ export function useFixtureState(
     const type = elRef.constructor as React.ComponentClass;
 
     // Keep the first state recevied for this type
-    const typeInitialState = found && found.type === type;
-    if (!typeInitialState && elRef.state) {
+    const initialStateExists = found && found.type === type;
+    if (!initialStateExists && elRef.state) {
       initialStates.current[elPath] = { type, state: elRef.state };
     }
   }
