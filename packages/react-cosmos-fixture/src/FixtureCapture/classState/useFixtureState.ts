@@ -141,25 +141,7 @@ export function useFixtureState(
       return;
     }
     elRefs.current[elPath] = elRef;
-    initialStates.current[elPath] = {
-      type: elRef.constructor as React.ComponentClass,
-      state
-    };
-    // this.setElInitialState(elPath, elRef);
-    //   setElInitialState(elPath: string, elRef: React.Component) {
-    //     const found = this.initialStates[elPath];
-    //     const type = getElementRefType(elRef);
-
-    //     // Keep the first state recevied for this type
-    //     if (found && found.type === type) {
-    //       return;
-    //     }
-
-    //     const { state } = elRef;
-    //     if (state) {
-    //       this.initialStates[elPath] = { type, state };
-    //     }
-    //   }
+    setInitialState(elPath, elRef);
 
     const elementId = { decoratorId, elPath };
     const fsClassState = findFixtureStateClassState(
@@ -177,6 +159,17 @@ export function useFixtureState(
       }));
     } else {
       replaceState(elRef, extendWithValues(state, fsClassState.values));
+    }
+  }
+
+  function setInitialState(elPath: string, elRef: React.Component) {
+    const found = initialStates.current[elPath];
+    const type = elRef.constructor as React.ComponentClass;
+
+    // Keep the first state recevied for this type
+    const typeInitialState = found && found.type === type;
+    if (!typeInitialState && elRef.state) {
+      initialStates.current[elPath] = { type, state: elRef.state };
     }
   }
 }
