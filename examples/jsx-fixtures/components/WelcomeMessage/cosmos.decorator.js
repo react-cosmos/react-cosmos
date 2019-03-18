@@ -1,12 +1,9 @@
 // @flow
 
 import React from 'react';
-import { FixtureCapture } from 'react-cosmos-fixture';
 
 export default ({ children }: { children: React$Node }) => (
-  <FixtureCapture decoratorId="bgDecorator">
-    <BgDecorator backgroundColor="lightgrey">{children}</BgDecorator>
-  </FixtureCapture>
+  <BgDecorator backgroundColor="lightgrey">{children}</BgDecorator>
 );
 
 function BgDecorator({
