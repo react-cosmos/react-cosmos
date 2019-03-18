@@ -37,14 +37,10 @@ export function useUnmount(cb: () => void) {
 
 // We need to do this because React doesn't provide a replaceState method
 // (anymore) https://reactjs.org/docs/react-component.html#setstate
-export function replaceState(
-  elRef: React.Component,
-  nextState: {},
-  cb?: () => unknown
-) {
+export function replaceState(elRef: React.Component, nextState: {}) {
   const fullState = resetOriginalKeys(elRef.state, nextState);
   if (!isEqual(fullState, elRef.state)) {
-    elRef.setState(fullState, cb);
+    elRef.setState(fullState);
   }
 }
 
