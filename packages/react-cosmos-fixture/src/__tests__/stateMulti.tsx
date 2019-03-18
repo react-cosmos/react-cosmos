@@ -2,12 +2,16 @@ import * as React from 'react';
 import retry from '@skidding/async-retry';
 import { StateMock } from '@react-mock/state';
 import {
-  getCompFixtureStates,
-  updateCompFixtureState
+  createValues,
+  updateFixtureStateClassState
 } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from 'react-cosmos-shared2/util';
 import { Counter } from '../testHelpers/components';
-import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
+import {
+  anyProps,
+  anyClassState,
+  getClassState
+} from '../testHelpers/fixtureState';
 import { runFixtureConnectTests } from '../testHelpers';
 
 const rendererId = uuid();
@@ -34,20 +38,19 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId,
-          fixtureState: null
+          fixtureState: {}
         });
         await fixtureStateChange({
           rendererId,
           fixtureId,
           fixtureState: {
-            components: [
-              createCompFxState({
-                props: [],
-                state: createFxValues({ count: 5 })
+            props: [anyProps(), anyProps()],
+            classState: [
+              anyClassState({
+                values: createValues({ count: 5 })
               }),
-              createCompFxState({
-                props: [],
-                state: createFxValues({ count: 10 })
+              anyClassState({
+                values: createValues({ count: 10 })
               })
             ]
           }
@@ -68,19 +71,18 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId,
-          fixtureState: null
+          fixtureState: {}
         });
         const fixtureState = await getLastFixtureState();
-        const [, { decoratorId, elPath }] = getCompFixtureStates(fixtureState);
+        const [, { elementId }] = getClassState(fixtureState, 2);
         await setFixtureState({
           rendererId,
           fixtureId,
           fixtureState: {
-            components: updateCompFixtureState({
+            classState: updateFixtureStateClassState({
               fixtureState,
-              decoratorId,
-              elPath,
-              state: createFxValues({ count: 100 })
+              elementId,
+              values: createValues({ count: 100 })
             })
           }
         });

@@ -26,7 +26,7 @@ export function onRouterFixtureChange(
   // received from the renderer the transition between fixtures is smoother.
   const selFixtureId = fixtureId;
   getConnectedRendererIds(context).forEach(rendererId =>
-    postSelectFixtureRequest(context, rendererId, selFixtureId, null)
+    postSelectFixtureRequest(context, rendererId, selFixtureId, {})
   );
 }
 
@@ -35,5 +35,5 @@ function getConnectedRendererIds(context: Context) {
 }
 
 function emptyFixtureState(prevState: State) {
-  return { ...prevState, fixtureState: null };
+  return { ...prevState, fixtureState: {} };
 }

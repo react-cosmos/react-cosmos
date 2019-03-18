@@ -1,18 +1,20 @@
 import * as React from 'react';
-import { SetState } from 'react-cosmos-shared2/util';
+import { StateUpdater, SetStateAsync } from 'react-cosmos-shared2/util';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { SmartphoneIcon } from '../../../shared/icons';
 import { Button } from '../../../shared/components';
-import { StorageMethods, getFixtureViewport } from '../shared';
+import { StorageMethods } from '../shared';
 import { getDefaultViewport } from '../storage';
 import { ResponsivePreviewSpec } from '../public';
 
+type PluginState = ResponsivePreviewSpec['state'];
+
 export type Props = {
-  state: ResponsivePreviewSpec['state'];
+  state: PluginState;
   projectId: string;
-  fixtureState: null | FixtureState;
+  fixtureState: FixtureState;
   validFixtureSelected: boolean;
-  setState: SetState<ResponsivePreviewSpec['state']>;
+  setState: SetStateAsync<PluginState | StateUpdater<PluginState>>;
   setFixtureStateViewport: () => void;
   storage: StorageMethods;
 };
@@ -58,7 +60,7 @@ export class ToggleButton extends React.Component<Props> {
 
 function isResponsiveModeOn(
   enabled: boolean,
-  fixtureState: null | FixtureState
+  fixtureState: FixtureState
 ): boolean {
-  return getFixtureViewport(fixtureState) ? true : enabled;
+  return fixtureState.viewport ? true : enabled;
 }

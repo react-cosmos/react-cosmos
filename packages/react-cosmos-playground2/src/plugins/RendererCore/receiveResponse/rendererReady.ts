@@ -12,7 +12,6 @@ export function receiveRendererReadyResponse(
   { payload }: RendererReadyResponse
 ) {
   const { rendererId, fixtures } = payload;
-
   context.setState(stateUpdater, afterStateChanged);
 
   function stateUpdater(prevState: State) {
@@ -26,7 +25,7 @@ export function receiveRendererReadyResponse(
       connectedRendererIds: addToSet(connectedRendererIds, rendererId),
       primaryRendererId,
       fixtures,
-      fixtureState: isPrimaryRenderer ? null : fixtureState
+      fixtureState: isPrimaryRenderer ? {} : fixtureState
     };
   }
 
@@ -38,7 +37,6 @@ export function receiveRendererReadyResponse(
 
 function selectFixtureFromUrlParams(context: Context, rendererId: RendererId) {
   const fixtureId = getSelectedFixtureId(context);
-
   if (fixtureId) {
     const { fixtureState } = context.getState();
     postSelectFixtureRequest(context, rendererId, fixtureId, fixtureState);

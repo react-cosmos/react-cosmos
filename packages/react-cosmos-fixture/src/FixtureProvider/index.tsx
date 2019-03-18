@@ -1,12 +1,9 @@
 import * as React from 'react';
 import * as memoize from 'memoize-one/dist/memoize-one.cjs';
-import {
-  FixtureState,
-  SetFixtureState
-} from 'react-cosmos-shared2/fixtureState';
+import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { FixtureCapture } from '../FixtureCapture';
 import { FixtureContext } from '../FixtureContext';
-import { DecoratorType, FixtureContextValue } from '../shared';
+import { DecoratorType, FixtureContextValue, SetFixtureState } from '../shared';
 
 type Props = {
   decorators: DecoratorType[];
@@ -21,7 +18,7 @@ export class FixtureProvider extends React.PureComponent<Props> {
   // Provider value is memoized as an object with reference identity to prevent
   // unintentional renders https://reactjs.org/docs/context.html#caveats
   getFixtureContextValue = memoize(
-    (fixtureState: null | FixtureState, setFixtureState: SetFixtureState) => ({
+    (fixtureState: FixtureState, setFixtureState: SetFixtureState) => ({
       fixtureState,
       setFixtureState
     })

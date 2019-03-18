@@ -45,7 +45,7 @@ export type FixtureConnectMockApi = {
   fixtureStateChange: (
     payload: FixtureStateChangeResponse['payload']
   ) => Promise<unknown>;
-  getLastFixtureState: () => Promise<null | FixtureState>;
+  getLastFixtureState: () => Promise<FixtureState>;
 };
 
 export type FixtureConnectTestApi = {
@@ -53,9 +53,13 @@ export type FixtureConnectTestApi = {
   update: (args: MountFixtureConnectArgs) => void;
 } & FixtureConnectMockApi;
 
+export type MountFixtureCallback = (
+  api: FixtureConnectTestApi
+) => Promise<void>;
+
 export type MountFixtureConnect = (
   args: MountFixtureConnectArgs,
-  cb: (api: FixtureConnectTestApi) => void
+  cb: MountFixtureCallback
 ) => Promise<void>;
 
 type FixtureConnectMockArgs = {
@@ -199,16 +203,19 @@ export function createFixtureConnectMockApi(
 
   async function untilMessage(msg: Message) {
     try {
-      await until(() => {
-        try {
-          // Support expect.any(constructor) matches
-          // https://jestjs.io/docs/en/expect#expectanyconstructor
-          expect(getLastMessage()).toEqual(msg);
-          return true;
-        } catch (err) {
-          return false;
-        }
-      });
+      await until(
+        () => {
+          try {
+            // Support expect.any(constructor) matches
+            // https://jestjs.io/docs/en/expect#expectanyconstructor
+            expect(getLastMessage()).toEqual(msg);
+            return true;
+          } catch (err) {
+            return false;
+          }
+        },
+        { timeout: 1000 }
+      );
     } catch (err) {
       expect(getLastMessage()).toEqual(msg);
     }

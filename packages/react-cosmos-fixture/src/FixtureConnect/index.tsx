@@ -1,10 +1,6 @@
 import * as React from 'react';
 import { isEqual } from 'lodash';
-import { updateState } from 'react-cosmos-shared2/util';
-import {
-  FixtureState,
-  SetFixtureState
-} from 'react-cosmos-shared2/fixtureState';
+import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import {
   FixtureNamesByPath,
   FixtureId,
@@ -16,7 +12,8 @@ import {
   DecoratorType,
   DecoratorsByPath,
   RemoteRendererApi,
-  FixturesByPath
+  FixturesByPath,
+  SetFixtureState
 } from '../shared';
 import { FixtureProvider } from '../FixtureProvider';
 import { getFixtureNames, getFixtureNode } from './fixtureHelpers';
@@ -30,18 +27,9 @@ export type Props = {
 } & RemoteRendererApi;
 
 type State = {
-  fixtureId: null | FixtureId;
-  fixtureState: null | FixtureState;
-  syncedFixtureState: null | FixtureState;
-  renderKey: number;
-};
-
-// TODO: Add props for customizing blank/missing states: `getBlankState` and
-// `getMissingState`
-export class FixtureConnect extends React.Component<Props, State> {
-  state: State = {
-    fixtureId: null,
-    fixtureState: null,
+  selectedFixture: null | {
+    fixtureId: FixtureId;
+    fixtureState: FixtureState;
     // Why is this copy of the fixtureState needed? Two reasons:
     // - To avoid posting fixtureStateChange messages with no changes from
     //   the last message
@@ -49,8 +37,17 @@ export class FixtureConnect extends React.Component<Props, State> {
     //   fixtureStateChange message when FixtureConnect updates (via cDU),
     //   instead of posting messages in rapid succession as fixture state
     //   changes are dispatched by fixture plugins
-    syncedFixtureState: null,
-    // Used to reset FixtureProvider instance on fixturePath change
+    syncedFixtureState: FixtureState;
+  };
+  // Used to reset FixtureProvider instance on fixturePath change
+  renderKey: number;
+};
+
+// TODO: Add props for customizing blank/missing states: `getBlankState` and
+// `getMissingState`
+export class FixtureConnect extends React.Component<Props, State> {
+  state: State = {
+    selectedFixture: null,
     renderKey: 0
   };
 
@@ -63,17 +60,17 @@ export class FixtureConnect extends React.Component<Props, State> {
 
   componentDidUpdate(prevProps: Props) {
     const { fixtures } = this.props;
-    const { fixtureId, fixtureState, syncedFixtureState } = this.state;
-
     if (!isEqual(fixtures, prevProps.fixtures)) {
       this.postFixtureListUpdate();
     }
 
-    if (fixtureId && !isEqual(fixtureState, syncedFixtureState)) {
-      this.postFixtureStateChange(fixtureId, fixtureState);
-      this.setState({
-        syncedFixtureState: fixtureState
-      });
+    const { selectedFixture } = this.state;
+    if (selectedFixture) {
+      const { fixtureId, fixtureState, syncedFixtureState } = selectedFixture;
+      if (fixtureId && !isEqual(fixtureState, syncedFixtureState)) {
+        this.postFixtureStateChange(fixtureId, fixtureState);
+        this.updateSyncedFixtureState(syncedFixtureState);
+      }
     }
   }
 
@@ -88,13 +85,13 @@ export class FixtureConnect extends React.Component<Props, State> {
   }
 
   render() {
-    const { fixtures, systemDecorators, userDecorators } = this.props;
-    const { fixtureId, fixtureState, renderKey } = this.state;
-
-    if (!fixtureId) {
+    const { selectedFixture } = this.state;
+    if (!selectedFixture) {
       return 'No fixture loaded.';
     }
 
+    const { fixtures } = this.props;
+    const { fixtureId, fixtureState } = selectedFixture;
     // Falsy check doesn't do because fixtures can be any Node, including
     // null or undefined.
     if (!fixtures.hasOwnProperty(fixtureId.path)) {
@@ -103,11 +100,12 @@ export class FixtureConnect extends React.Component<Props, State> {
 
     const fixtureExport = fixtures[fixtureId.path];
     const fixture = getFixtureNode(fixtureExport, fixtureId.name);
-
     if (typeof fixture === 'undefined') {
       return `Invalid fixture ID: ${JSON.stringify(fixtureId)}`;
     }
 
+    const { systemDecorators, userDecorators } = this.props;
+    const { renderKey } = this.state;
     return (
       <FixtureProvider
         // renderKey controls whether to reuse previous instances (and
@@ -157,37 +155,40 @@ export class FixtureConnect extends React.Component<Props, State> {
 
   handleSelectFixtureRequest({ payload }: SelectFixtureRequest) {
     const { fixtureId, fixtureState } = payload;
-
     this.setState({
-      fixtureId,
-      fixtureState,
+      selectedFixture: {
+        fixtureId,
+        fixtureState,
+        syncedFixtureState: fixtureState
+      },
       renderKey: this.state.renderKey + 1
     });
   }
 
   handleUnselectFixtureRequest() {
     this.setState({
-      fixtureId: null,
-      fixtureState: null,
+      selectedFixture: null,
       renderKey: 0
     });
   }
 
   handleSetFixtureStateRequest({ payload }: SetFixtureStateRequest) {
     const { fixtureId, fixtureState } = payload;
-
+    const { selectedFixture } = this.state;
     // Ensure fixture state applies to currently selected fixture
-    if (isEqual(fixtureId, this.state.fixtureId)) {
+    if (selectedFixture && isEqual(fixtureId, selectedFixture.fixtureId)) {
       this.setState({
-        fixtureState,
-        syncedFixtureState: fixtureState
+        selectedFixture: {
+          fixtureId,
+          fixtureState,
+          syncedFixtureState: fixtureState
+        }
       });
     }
   }
 
   postReadyState() {
     const { rendererId, postMessage } = this.props;
-
     postMessage({
       type: 'rendererReady',
       payload: {
@@ -199,7 +200,6 @@ export class FixtureConnect extends React.Component<Props, State> {
 
   postFixtureListUpdate() {
     const { rendererId, postMessage } = this.props;
-
     postMessage({
       type: 'fixtureListUpdate',
       payload: {
@@ -209,10 +209,8 @@ export class FixtureConnect extends React.Component<Props, State> {
     });
   }
 
-  setFixtureState: SetFixtureState = (fixtureStateChange, cb) => {
-    const { fixtureId } = this.state;
-
-    if (!fixtureId) {
+  setFixtureState: SetFixtureState = (stateUpdate, cb) => {
+    if (!this.state.selectedFixture) {
       console.warn(
         '[FixtureConnect] Trying to set fixture state with no fixture selected'
       );
@@ -225,20 +223,25 @@ export class FixtureConnect extends React.Component<Props, State> {
     // it can result in cancelling previous state changes that are queued.
     // Using an updater function like ({ prevState }) => nextState ensures
     // every state change is honored, regardless of timing.
-    this.setState(
-      ({ fixtureState }) => ({
-        fixtureState: updateState(fixtureState, fixtureStateChange)
-      }),
-      cb
-    );
+    this.setState(({ selectedFixture }: State) => {
+      if (!selectedFixture) {
+        return null;
+      }
+
+      return {
+        selectedFixture: {
+          ...selectedFixture,
+          fixtureState: stateUpdate(selectedFixture.fixtureState)
+        }
+      };
+    }, cb);
   };
 
   postFixtureStateChange = (
     fixtureId: FixtureId,
-    fixtureState: null | FixtureState
+    fixtureState: FixtureState
   ) => {
     const { rendererId, postMessage } = this.props;
-
     postMessage({
       type: 'fixtureStateChange',
       payload: {
@@ -255,10 +258,28 @@ export class FixtureConnect extends React.Component<Props, State> {
 
   fireChangeCallback() {
     const { onFixtureChange } = this.props;
-
     if (typeof onFixtureChange === 'function') {
       onFixtureChange();
     }
+  }
+
+  updateSyncedFixtureState(syncedFixtureState: FixtureState) {
+    this.setState(({ selectedFixture }) => {
+      if (!selectedFixture) {
+        return null;
+      }
+
+      // Other updates that alter state.selectedFixture can be pending when this
+      // update is submitted. Those updates will be applied first. With this in
+      // mind, we use a state setter callback to only override syncedFixtureState
+      // and keep the latest values of other state parts.
+      return {
+        selectedFixture: {
+          ...selectedFixture,
+          syncedFixtureState
+        }
+      };
+    });
   }
 }
 

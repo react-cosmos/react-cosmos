@@ -11,7 +11,6 @@ import { register } from '..';
 afterEach(cleanup);
 
 const fixtureState = {
-  components: [],
   viewport: { width: 420, height: 420 }
 };
 

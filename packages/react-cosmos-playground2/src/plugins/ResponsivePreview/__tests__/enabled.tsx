@@ -7,7 +7,6 @@ import {
   RenderResult
 } from 'react-testing-library';
 import { loadPlugins, Slot } from 'react-plugin';
-import { updateState } from 'react-cosmos-shared2/util';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
 import { StorageSpec } from '../../Storage/public';
@@ -54,7 +53,7 @@ function mockRendererCore(
   setFixtureState: SetFixtureStateHandler = () => {}
 ) {
   mockMethodsOf<RendererCoreSpec>('rendererCore', {
-    getFixtureState: () => null,
+    getFixtureState: () => ({}),
     isValidFixtureSelected: () => validFixtureSelected,
     setFixtureState
   });
@@ -148,9 +147,9 @@ describe('on device select', () => {
     mockRouter();
     mockRendererCore(true);
 
-    let fixtureState: null | FixtureState = null;
-    mockRendererCore(true, (context, stateChange) => {
-      fixtureState = updateState(fixtureState, stateChange);
+    let fixtureState: FixtureState = {};
+    mockRendererCore(true, (context, stateUpdater) => {
+      fixtureState = stateUpdater(fixtureState);
     });
 
     const renderer = loadTestPlugins();
@@ -190,9 +189,9 @@ it('clears viewport in fixture state on untoggle', async () => {
   mockRouter();
   mockRendererCore(true);
 
-  let fixtureState: null | FixtureState = null;
-  mockRendererCore(true, (context, stateChange) => {
-    fixtureState = updateState(fixtureState, stateChange);
+  let fixtureState: FixtureState = {};
+  mockRendererCore(true, (context, stateUpdater) => {
+    fixtureState = stateUpdater(fixtureState);
   });
 
   const renderer = loadTestPlugins();

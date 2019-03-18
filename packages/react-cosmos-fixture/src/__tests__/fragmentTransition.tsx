@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { StateMock } from '@react-mock/state';
 import { uuid } from 'react-cosmos-shared2/util';
+import { createValues } from 'react-cosmos-shared2/fixtureState';
 import { Counter } from '../testHelpers/components';
-import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
+import { anyProps, anyClassState } from '../testHelpers/fixtureState';
 import { runFixtureConnectTests } from '../testHelpers';
 
 const rendererId = uuid();
@@ -26,7 +27,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId,
-          fixtureState: null
+          fixtureState: {}
         });
         update({
           rendererId,
@@ -59,14 +60,16 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            components: [
-              createCompFxState({
-                props: [],
-                state: createFxValues({ count: 5 })
+            props: [
+              anyProps({ values: createValues({}) }),
+              anyProps({ values: createValues({}) })
+            ],
+            classState: [
+              anyClassState({
+                values: createValues({ count: 5 })
               }),
-              createCompFxState({
-                props: [],
-                state: createFxValues({ count: 10 })
+              anyClassState({
+                values: createValues({ count: 10 })
               })
             ]
           }

@@ -14,7 +14,7 @@ afterEach(cleanup);
 
 const fixtures = { 'ein.js': null };
 const fixtureId = { path: 'zwei.js', name: null };
-const fixtureState = { components: [] };
+const fixtureState = { props: [] };
 
 function registerTestPlugins() {
   register();
@@ -75,6 +75,6 @@ it('resets fixtures state when primary renderer re-connects', async () => {
   loadTestPlugins();
   mockRendererReady('mockRendererId1', fixtures);
   await wait(() =>
-    expect(getRendererCoreMethods().getFixtureState()).toBeNull()
+    expect(getRendererCoreMethods().getFixtureState()).toEqual({})
   );
 });

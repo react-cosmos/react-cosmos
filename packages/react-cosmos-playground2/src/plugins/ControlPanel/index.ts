@@ -1,4 +1,3 @@
-import { ComponentFixtureState } from 'react-cosmos-shared2/fixtureState';
 import { RendererId } from 'react-cosmos-shared2/renderer';
 import { createPlugin } from 'react-plugin';
 import { RendererCoreSpec } from '../RendererCore/public';
@@ -23,12 +22,7 @@ plug({
       connectedRendererIds: rendererCore.getConnectedRendererIds(),
       primaryRendererId: rendererCore.getPrimaryRendererId(),
       fixtureState: rendererCore.getFixtureState(),
-      setComponentsFixtureState: (components: ComponentFixtureState[]) => {
-        rendererCore.setFixtureState(fixtureState => ({
-          ...fixtureState,
-          components
-        }));
-      },
+      setFixtureState: rendererCore.setFixtureState,
       selectPrimaryRenderer: (rendererId: RendererId) => {
         rendererCore.selectPrimaryRenderer(rendererId);
       }

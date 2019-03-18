@@ -71,8 +71,6 @@ function setFixtureStateViewport({ getState, getMethodsOf }: Context) {
 
   rendererCore.setFixtureState(fixtureState => ({
     ...fixtureState,
-    // TODO: Make fixtureState.components optional and remove this
-    components: fixtureState ? fixtureState.components : [],
     viewport: enabled ? viewport : null
   }));
 }

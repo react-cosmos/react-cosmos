@@ -1,31 +1,28 @@
 import * as React from 'react';
 import {
-  DEFAULT_RENDER_KEY,
-  extendObjWithValues,
-  findCompFixtureState,
   FixtureDecoratorId,
-  FixtureState
+  FixtureState,
+  DEFAULT_RENDER_KEY,
+  extendWithValues,
+  findFixtureStateProps
 } from 'react-cosmos-shared2/fixtureState';
-import { setElementAtPath, getChildrenPath } from './nodeTree';
-import { getComponentName } from './getComponentName';
-import { findRelevantElementPaths } from './findRelevantElementPaths';
+import { setElementAtPath, getChildrenPath } from '../shared/nodeTree';
+import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';
+import { getComponentName } from './componentName';
 
-export function extendPropsWithFixtureState(
-  node: React.ReactNode,
-  fixtureState: null | FixtureState,
+export function extendFixtureProps(
+  fixture: React.ReactNode,
+  fixtureState: FixtureState,
   decoratorId: FixtureDecoratorId
 ): React.ReactNode {
-  const elPaths = findRelevantElementPaths(node);
+  const elPaths = findRelevantElementPaths(fixture);
 
-  return elPaths.reduce((extendedNode, elPath): React.ReactNode => {
-    const compFxState = findCompFixtureState(fixtureState, decoratorId, elPath);
+  return elPaths.reduce((extendedFixture, elPath): React.ReactNode => {
+    const elementId = { decoratorId, elPath };
+    const fsProps = findFixtureStateProps(fixtureState, elementId);
 
-    return setElementAtPath(extendedNode, elPath, element => {
-      if (
-        !compFxState ||
-        !compFxState.props ||
-        componentTypeChanged(compFxState.componentName)
-      ) {
+    return setElementAtPath(extendedFixture, elPath, element => {
+      if (!fsProps || componentTypeChanged(fsProps.componentName)) {
         return {
           ...element,
           key: getElRenderKey(elPath, DEFAULT_RENDER_KEY)
@@ -36,10 +33,7 @@ export function extendPropsWithFixtureState(
       // stored in fixture state
       // See https://github.com/react-cosmos/react-cosmos/pull/920 for context
       const originalProps = element.props;
-      const extendedProps = extendObjWithValues(
-        originalProps,
-        compFxState.props
-      );
+      const extendedProps = extendWithValues(originalProps, fsProps.values);
 
       // HACK alert: Editing React Element by hand
       // This is blasphemy, but there are two reasons why React.cloneElement
@@ -60,14 +54,14 @@ export function extendPropsWithFixtureState(
         props: hasChildElPaths(elPaths, elPath)
           ? { ...extendedProps, children: originalProps.children }
           : extendedProps,
-        key: getElRenderKey(elPath, compFxState.renderKey)
+        key: getElRenderKey(elPath, fsProps.renderKey)
       };
 
       function componentTypeChanged(componentName: string) {
         return componentName !== getComponentName(element.type);
       }
     });
-  }, node);
+  }, fixture);
 }
 
 function getElRenderKey(elPath: string, renderKey: number) {

@@ -1,9 +1,11 @@
 import * as React from 'react';
 import retry from '@skidding/async-retry';
 import { uuid } from 'react-cosmos-shared2/util';
-import { createCompFixtureState } from 'react-cosmos-shared2/fixtureState';
+import {
+  createValues,
+  createFixtureStateProps
+} from 'react-cosmos-shared2/fixtureState';
 import { HelloMessage } from '../testHelpers/components';
-import { createFxValues } from '../testHelpers/fixtureState';
 import { runFixtureConnectTests } from '../testHelpers';
 
 const rendererId = uuid();
@@ -22,13 +24,11 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            components: createCompFixtureState({
-              fixtureState: null,
-              decoratorId: 'root',
-              elPath: '',
-              componentName: 'HelloMessage',
-              props: createFxValues({ name: 'B' }),
-              state: null
+            props: createFixtureStateProps({
+              fixtureState: {},
+              elementId: { decoratorId: 'root', elPath: '' },
+              values: createValues({ name: 'B' }),
+              componentName: 'HelloMessage'
             })
           }
         });

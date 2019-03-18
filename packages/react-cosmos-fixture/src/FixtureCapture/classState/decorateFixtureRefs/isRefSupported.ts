@@ -13,7 +13,6 @@ export function isRefSupported(elementType: ElementType): boolean {
   }
 
   const { $$typeof, prototype } = elementType as ExtendedComponentType;
-
   return (
     $$typeof === ForwardRef ||
     // Warning: Some functions don't have the .prototype property

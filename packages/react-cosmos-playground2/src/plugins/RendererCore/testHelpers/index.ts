@@ -39,7 +39,7 @@ export function createFixtureListUpdateResponse(
 export function createFixtureStateChangeResponse(
   rendererId: RendererId,
   fixtureId: FixtureId,
-  fixtureState: null | FixtureState
+  fixtureState: FixtureState
 ): FixtureStateChangeResponse {
   return {
     type: 'fixtureStateChange',
@@ -67,7 +67,7 @@ export function mockRendererReady(
 export function mockFixtureStateChange(
   rendererId: RendererId,
   fixtureId: FixtureId,
-  fixtureState: null | FixtureState
+  fixtureState: FixtureState
 ) {
   return getRendererCoreMethods().receiveResponse(
     createFixtureStateChangeResponse(rendererId, fixtureId, fixtureState)

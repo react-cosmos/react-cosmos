@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { uuid } from 'react-cosmos-shared2/util';
-import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
+import { createValues } from 'react-cosmos-shared2/fixtureState';
+import { anyProps } from '../testHelpers/fixtureState';
 import { Wrapper } from '../testHelpers/components';
 import { runFixtureConnectTests } from '../testHelpers';
 
@@ -19,15 +20,15 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId,
-          fixtureState: null
+          fixtureState: {}
         });
         await fixtureStateChange({
           rendererId,
           fixtureId,
           fixtureState: {
-            components: [
-              createCompFxState({
-                props: createFxValues({ children: 'yo' })
+            props: [
+              anyProps({
+                values: createValues({ children: 'yo' })
               })
             ]
           }
@@ -47,9 +48,9 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            components: [
-              createCompFxState({
-                props: [
+            props: [
+              anyProps({
+                values: [
                   {
                     key: 'children',
                     serializable: false,
@@ -57,8 +58,67 @@ runFixtureConnectTests(mount => {
                   }
                 ]
               }),
-              createCompFxState({
-                props: createFxValues({ children: 'brah' })
+              anyProps({
+                values: createValues({ children: 'brah' })
+              })
+            ]
+          }
+        });
+      }
+    );
+  });
+
+  it('transitions string children into an element with multiple children', async () => {
+    await mount(
+      { rendererId, fixtures, decorators },
+      async ({ update, selectFixture, fixtureStateChange }) => {
+        await selectFixture({
+          rendererId,
+          fixtureId,
+          fixtureState: {}
+        });
+        await fixtureStateChange({
+          rendererId,
+          fixtureId,
+          fixtureState: {
+            props: [
+              anyProps({
+                values: createValues({ children: 'yo' })
+              })
+            ]
+          }
+        });
+        update({
+          rendererId,
+          fixtures: {
+            first: (
+              <Wrapper>
+                <Wrapper>brah</Wrapper>
+                <Wrapper>brah</Wrapper>
+              </Wrapper>
+            )
+          },
+          decorators
+        });
+        await fixtureStateChange({
+          rendererId,
+          fixtureId,
+          fixtureState: {
+            props: [
+              anyProps({
+                values: [
+                  {
+                    key: 'children',
+                    serializable: false,
+                    stringified: `[object Object],[object Object]`
+                  }
+                ]
+              }),
+              anyProps({
+                values: createValues({ children: 'brah' })
+              }),
+              anyProps({
+                values: createValues({ children: 'brah' })
               })
             ]
           }

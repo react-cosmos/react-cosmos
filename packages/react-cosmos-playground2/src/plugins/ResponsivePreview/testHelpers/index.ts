@@ -12,5 +12,5 @@ export interface IFixtureStateWithViewport extends FixtureState {
 
 export type SetFixtureStateHandler = (
   context: PluginContext<RendererCoreSpec>,
-  stateChange: StateUpdater<null | FixtureState>
+  stateUpdater: StateUpdater<FixtureState>
 ) => void;

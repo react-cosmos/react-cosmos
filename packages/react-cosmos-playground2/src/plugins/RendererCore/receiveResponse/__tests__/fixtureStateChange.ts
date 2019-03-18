@@ -21,7 +21,7 @@ afterEach(cleanup);
 
 const fixtures = { 'ein.js': null, 'zwei.js': null, 'drei.js': null };
 const fixtureId = { path: 'zwei.js', name: null };
-const fixtureState = { components: [] };
+const fixtureState = { props: [] };
 
 function registerTestPlugins() {
   register();
@@ -49,7 +49,6 @@ function mockFixtureStateChangeResponse(rendererId: RendererId) {
 it('sets fixtureState in renderer state', async () => {
   registerTestPlugins();
   loadTestPlugins();
-
   mockFixtureStateChangeResponse('mockRendererId1');
 
   await wait(() =>
@@ -60,11 +59,10 @@ it('sets fixtureState in renderer state', async () => {
 it('ignores update from secondary renderer', async () => {
   registerTestPlugins();
   loadTestPlugins();
-
   mockFixtureStateChangeResponse('mockRendererId2');
 
   await wait(() =>
-    expect(getRendererCoreMethods().getFixtureState()).toEqual(null)
+    expect(getRendererCoreMethods().getFixtureState()).toEqual({})
   );
 });
 
@@ -75,7 +73,6 @@ it('posts "setFixtureState" request to secondary renderer', async () => {
   on<RendererCoreSpec>('rendererCore', { request });
 
   loadTestPlugins();
-
   mockFixtureStateChangeResponse('mockRendererId1');
 
   await wait(() =>

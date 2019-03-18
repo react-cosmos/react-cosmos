@@ -11,6 +11,7 @@ const rendererId = uuid();
 const fixtures = {
   'src/foo/__fixtures__/default.js': 'Hello!'
 };
+// https://github.com/DefinitelyTyped/DefinitelyTyped/issues/18051
 const decorators = {
   'src/decorator.js': ({ children }: Props) => <>Decorated at src{children}</>,
   'src/foo/decorator.js': ({ children }: Props) => (
@@ -30,7 +31,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId: { path, name: null },
-          fixtureState: null
+          fixtureState: {}
         });
         // "src/bar/decorator" should be omitted because it's not a placed in
         // a parent directory of the selected fixture

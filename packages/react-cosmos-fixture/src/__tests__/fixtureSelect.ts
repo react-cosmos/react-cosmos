@@ -17,7 +17,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId: { path: 'second', name: null },
-          fixtureState: null
+          fixtureState: {}
         });
         await retry(() => expect(renderer.toJSON()).toBe('Second'));
       }
@@ -31,27 +31,27 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId: { path: 'first', name: 'one' },
-          fixtureState: null
+          fixtureState: {}
         });
         await retry(() => expect(renderer.toJSON()).toBe('First'));
       }
     );
   });
 
-  it('creates empty fixture state', async () => {
+  it('creates fixture state', async () => {
     await mount(
       { rendererId, fixtures, decorators },
       async ({ selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
           fixtureId: { path: 'second', name: null },
-          fixtureState: null
+          fixtureState: {}
         });
         await fixtureStateChange({
           rendererId,
           fixtureId: { path: 'second', name: null },
           fixtureState: {
-            components: []
+            props: []
           }
         });
       }
@@ -65,7 +65,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId: { path: 'second', name: null },
-          fixtureState: null
+          fixtureState: {}
         });
         await unselectFixture({
           rendererId
@@ -82,7 +82,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId: 'foobar',
           fixtureId: { path: 'second', name: null },
-          fixtureState: null
+          fixtureState: {}
         });
         expect(renderer.toJSON()).toBe('No fixture loaded.');
       }
@@ -96,7 +96,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId: { path: 'third', name: null },
-          fixtureState: null
+          fixtureState: {}
         });
         await retry(() =>
           expect(renderer.toJSON()).toBe('Fixture path not found: third')

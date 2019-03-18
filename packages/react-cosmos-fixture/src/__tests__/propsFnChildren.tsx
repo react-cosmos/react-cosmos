@@ -1,8 +1,9 @@
 import * as React from 'react';
 import retry from '@skidding/async-retry';
 import { uuid } from 'react-cosmos-shared2/util';
+import { createValues } from 'react-cosmos-shared2/fixtureState';
 import { HelloMessage } from '../testHelpers/components';
-import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
+import { anyProps } from '../testHelpers/fixtureState';
 import { runFixtureConnectTests } from '../testHelpers';
 import { FixtureCapture } from '..';
 
@@ -37,7 +38,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId,
-          fixtureState: null
+          fixtureState: {}
         });
         await retry(() =>
           expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B'])
@@ -46,10 +47,10 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            components: [
-              createCompFxState({
+            props: [
+              anyProps({
                 decoratorId: 'mockDecoratorId',
-                props: createFxValues({ name: 'B' })
+                values: createValues({ name: 'B' })
               })
             ]
           }

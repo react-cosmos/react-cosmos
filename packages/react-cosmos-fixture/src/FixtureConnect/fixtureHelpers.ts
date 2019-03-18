@@ -6,7 +6,6 @@ import { NodeMap, FixtureExport, FixturesByPath } from '../shared';
 export function getFixtureNames(fixtures: FixturesByPath): FixtureNamesByPath {
   return Object.keys(fixtures).reduce((prev, fixturePath) => {
     const fixtureExport = fixtures[fixturePath];
-
     return {
       ...prev,
       [fixturePath]: isNodeMap(fixtureExport)

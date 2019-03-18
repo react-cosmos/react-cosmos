@@ -1,23 +1,25 @@
 import * as React from 'react';
 import { isEqual } from 'lodash';
 import styled from 'styled-components';
-import { SetState } from 'react-cosmos-shared2/util';
+import { StateUpdater, SetStateAsync } from 'react-cosmos-shared2/util';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import { StorageMethods, getFixtureViewport } from '../shared';
+import { StorageMethods } from '../shared';
 import { storeViewport } from '../storage';
 import { Header } from './Header';
 import { stretchStyle, getStyles } from './style';
 import { Viewport, ResponsivePreviewSpec } from '../public';
 
+type PluginState = ResponsivePreviewSpec['state'];
+
 type Props = {
   children?: React.ReactNode;
   config: ResponsivePreviewSpec['config'];
-  state: ResponsivePreviewSpec['state'];
+  state: PluginState;
   projectId: string;
   fullScreen: boolean;
-  fixtureState: null | FixtureState;
+  fixtureState: FixtureState;
   validFixtureSelected: boolean;
-  setState: SetState<ResponsivePreviewSpec['state']>;
+  setState: SetStateAsync<PluginState | StateUpdater<PluginState>>;
   setFixtureStateViewport: () => void;
   storage: StorageMethods;
 };
@@ -163,11 +165,9 @@ function getContainerSize(containerEl: null | HTMLElement) {
 
 function getViewport(
   state: ResponsivePreviewSpec['state'],
-  fixtureState: null | FixtureState
+  fixtureState: FixtureState
 ): null | Viewport {
-  return (
-    getFixtureViewport(fixtureState) || (state.enabled ? state.viewport : null)
-  );
+  return fixtureState.viewport || (state.enabled ? state.viewport : null);
 }
 
 const Container = styled.div.attrs({ 'data-testid': 'responsivePreview' })`

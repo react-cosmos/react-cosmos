@@ -1,12 +1,12 @@
 import * as React from 'react';
 import retry from '@skidding/async-retry';
 import {
-  getCompFixtureStates,
-  updateCompFixtureState
+  createValues,
+  updateFixtureStateProps
 } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from 'react-cosmos-shared2/util';
 import { HelloMessage } from '../testHelpers/components';
-import { createCompFxState, createFxValues } from '../testHelpers/fixtureState';
+import { anyProps, getProps } from '../testHelpers/fixtureState';
 import { runFixtureConnectTests } from '../testHelpers';
 
 const rendererId = uuid();
@@ -29,7 +29,7 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId,
-          fixtureState: null
+          fixtureState: {}
         });
         await retry(() =>
           expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B'])
@@ -38,16 +38,16 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            components: [
-              createCompFxState({
+            props: [
+              anyProps({
                 componentName: 'HelloMessage',
                 elPath: 'props.children[0]',
-                props: createFxValues({ name: 'Bianca' })
+                values: createValues({ name: 'Bianca' })
               }),
-              createCompFxState({
+              anyProps({
                 componentName: 'HelloMessage',
                 elPath: 'props.children[1]',
-                props: createFxValues({ name: 'B' })
+                values: createValues({ name: 'B' })
               })
             ]
           }
@@ -68,19 +68,18 @@ runFixtureConnectTests(mount => {
         await selectFixture({
           rendererId,
           fixtureId,
-          fixtureState: null
+          fixtureState: {}
         });
         const fixtureState = await getLastFixtureState();
-        const [, { decoratorId, elPath }] = getCompFixtureStates(fixtureState);
+        const [, { elementId }] = getProps(fixtureState, 2);
         await setFixtureState({
           rendererId,
           fixtureId,
           fixtureState: {
-            components: updateCompFixtureState({
+            props: updateFixtureStateProps({
               fixtureState,
-              decoratorId,
-              elPath,
-              props: createFxValues({ name: 'Petec' })
+              elementId,
+              values: createValues({ name: 'Petec' })
             })
           }
         });

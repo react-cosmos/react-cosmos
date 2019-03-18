@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { create } from 'react-test-renderer';
+import { create, act } from 'react-test-renderer';
 import { PostMessage } from '..';
 import {
   Message,
   MountFixtureConnectArgs,
-  FixtureConnectTestApi,
+  MountFixtureCallback,
   createFixtureConnectMockApi,
   createFixtureConnectRenderCb
 } from './shared';
 
 export async function mountPostMessage(
   args: MountFixtureConnectArgs,
-  cb: (api: FixtureConnectTestApi) => void
+  cb: MountFixtureCallback
 ) {
   const onMessage = jest.fn();
   window.addEventListener('message', onMessage, false);
@@ -22,6 +22,12 @@ export async function mountPostMessage(
 
   function postMessage(msg: Message) {
     parent.postMessage(msg, '*');
+    // window message events are received in the next
+    // frame, which is why we have to skip a loop before
+    // executing React updates
+    setTimeout(() => {
+      act(() => {});
+    });
   }
 
   function cleanup() {
@@ -33,7 +39,10 @@ export async function mountPostMessage(
   try {
     await cb({
       renderer,
-      update: newArgs => renderer.update(getElement(newArgs)),
+      update: newArgs =>
+        act(() => {
+          renderer.update(getElement(newArgs));
+        }),
       ...createFixtureConnectMockApi({ getMessages, postMessage })
     });
   } finally {

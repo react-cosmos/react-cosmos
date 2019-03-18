@@ -1,7 +1,6 @@
 import { PluginContext } from 'react-plugin';
-import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { StorageSpec } from '../Storage/public';
-import { Viewport, ResponsivePreviewSpec } from './public';
+import { ResponsivePreviewSpec } from './public';
 
 export type Context = PluginContext<ResponsivePreviewSpec>;
 
@@ -23,10 +22,4 @@ export const DEFAULT_VIEWPORT = {
 
 export function getResponsiveViewportStorageKey(projectId: string) {
   return `cosmos-responsiveViewport-${projectId}`;
-}
-
-export function getFixtureViewport(
-  fixtureState: null | FixtureState
-): null | Viewport {
-  return fixtureState && fixtureState.viewport;
 }

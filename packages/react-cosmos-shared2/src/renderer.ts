@@ -22,7 +22,7 @@ export type SelectFixtureRequest = {
   payload: {
     rendererId: RendererId;
     fixtureId: FixtureId;
-    fixtureState: null | FixtureState;
+    fixtureState: FixtureState;
   };
 };
 
@@ -40,7 +40,7 @@ export type SetFixtureStateRequest = {
     // The fixture ID is sent alongside the fixture state change to ensure
     // that the fixture state is only paired with its corresponding fixture
     fixtureId: FixtureId;
-    fixtureState: null | FixtureState;
+    fixtureState: FixtureState;
   };
 };
 
@@ -86,7 +86,7 @@ export type FixtureStateChangeResponse = {
     // fixture state is only paired with its corresponding fixture
     fixtureId: FixtureId;
     // Entire fixture state is included
-    fixtureState: null | FixtureState;
+    fixtureState: FixtureState;
   };
 };
 
