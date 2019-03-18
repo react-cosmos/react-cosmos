@@ -67,4 +67,63 @@ runFixtureConnectTests(mount => {
       }
     );
   });
+
+  it('transitions string children into an element with multiple children', async () => {
+    await mount(
+      { rendererId, fixtures, decorators },
+      async ({ update, selectFixture, fixtureStateChange }) => {
+        await selectFixture({
+          rendererId,
+          fixtureId,
+          fixtureState: {}
+        });
+        await fixtureStateChange({
+          rendererId,
+          fixtureId,
+          fixtureState: {
+            props: [
+              anyProps({
+                values: createValues({ children: 'yo' })
+              })
+            ]
+          }
+        });
+        update({
+          rendererId,
+          fixtures: {
+            first: (
+              <Wrapper>
+                <Wrapper>brah</Wrapper>
+                <Wrapper>brah</Wrapper>
+              </Wrapper>
+            )
+          },
+          decorators
+        });
+        await fixtureStateChange({
+          rendererId,
+          fixtureId,
+          fixtureState: {
+            props: [
+              anyProps({
+                values: [
+                  {
+                    key: 'children',
+                    serializable: false,
+                    stringified: `[object Object],[object Object]`
+                  }
+                ]
+              }),
+              anyProps({
+                values: createValues({ children: 'brah' })
+              }),
+              anyProps({
+                values: createValues({ children: 'brah' })
+              })
+            ]
+          }
+        });
+      }
+    );
+  });
 });
