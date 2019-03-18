@@ -8,3 +8,6 @@ export { FixtureContext } from './FixtureContext';
 
 // Advanced: Use in fixtures to capture elements in render callback
 export { FixtureCapture } from './FixtureCapture';
+
+// Use in fixtures
+export { Viewport } from './Viewport';

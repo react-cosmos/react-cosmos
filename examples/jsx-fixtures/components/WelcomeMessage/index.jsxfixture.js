@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { Viewport } from '../../decorators/Viewport';
+import { Viewport } from 'react-cosmos-fixture';
 import { Hello } from '.';
 
 export default (

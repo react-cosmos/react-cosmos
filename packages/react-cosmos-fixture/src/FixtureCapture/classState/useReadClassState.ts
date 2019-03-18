@@ -10,7 +10,7 @@ import {
 } from 'react-cosmos-shared2/fixtureState';
 import { FixtureContext } from '../../FixtureContext';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';
-import { ElRefs, useFixtureStateRef } from './shared';
+import { ElRefs } from './shared';
 
 // How often to check the state of the loaded component and update the fixture
 // state if it changed
@@ -23,7 +23,6 @@ export function useReadClassState(
 ) {
   const elPaths = findRelevantElementPaths(children);
   const { fixtureState, setFixtureState } = React.useContext(FixtureContext);
-  const lastFixtureState = useFixtureStateRef(fixtureState);
   const timeoutId = React.useRef<null | number>(null);
 
   React.useEffect(() => {
@@ -54,11 +53,7 @@ export function useReadClassState(
 
       const { state } = elRefs.current[elPath];
       const elementId = { decoratorId, elPath };
-      const fsClassState = findFixtureStateClassState(
-        lastFixtureState.current,
-        elementId
-      );
-
+      const fsClassState = findFixtureStateClassState(fixtureState, elementId);
       if (
         fsClassState &&
         state &&

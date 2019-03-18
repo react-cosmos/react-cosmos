@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { isEqual } from 'lodash';
-import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 
 export type ElRefs = { [elPath: string]: React.Component };
 
@@ -21,15 +20,6 @@ export type CachedRefHandler = {
 export type CachedRefHandlers = {
   [elPath: string]: CachedRefHandler;
 };
-
-// Make latest fixture state accessible in hooks callbacks
-export function useFixtureStateRef(fixtureState: FixtureState) {
-  const ref = React.useRef(fixtureState);
-  React.useEffect(() => {
-    ref.current = fixtureState;
-  });
-  return ref;
-}
 
 export function useUnmount(cb: () => void) {
   React.useEffect(() => cb, []);

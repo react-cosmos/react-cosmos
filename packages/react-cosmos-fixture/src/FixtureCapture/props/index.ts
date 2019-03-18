@@ -77,7 +77,7 @@ export function usePropsCapture(
         }));
       }
     });
-  }, [fixture, fixtureState.props]);
+  }, [setFixtureState, fixture, fixtureState.props]);
 
   React.useEffect(() => {
     prevFixtureRef.current = fixture;
