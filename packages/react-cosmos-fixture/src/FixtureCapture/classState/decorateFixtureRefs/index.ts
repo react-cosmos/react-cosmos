@@ -66,7 +66,7 @@ function decorateRefWithSpy(
 
 function callOriginalRef(ref: React.Ref<any>, elRef: null | React.Component) {
   if (typeof ref === 'string') {
-    console.warn('[createRefAdaptor] String refs are not supported');
+    console.warn('[decorateFixtureRefs] String refs are not supported');
     return;
   }
 
