@@ -24,7 +24,7 @@ export function useReadClassState(
 ) {
   const elPaths = findRelevantElementPaths(children);
   const { fixtureState, setFixtureState } = React.useContext(FixtureContext);
-  const fixtureStateRef = useFixtureStateRef(fixtureState);
+  const lastFixtureState = useFixtureStateRef(fixtureState);
   const timeoutId = React.useRef<null | number>(null);
 
   React.useEffect(() => {
@@ -56,7 +56,7 @@ export function useReadClassState(
       const { state } = elRefs.current[elPath];
       const elementId = { decoratorId, elPath };
       const fsClassState = findFixtureStateClassState(
-        fixtureStateRef.current,
+        lastFixtureState.current,
         elementId
       );
 

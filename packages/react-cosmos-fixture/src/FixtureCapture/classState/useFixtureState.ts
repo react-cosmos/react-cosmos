@@ -29,9 +29,9 @@ export function useFixtureState(
   const elPaths = findRelevantElementPaths(children);
   const { fixtureState, setFixtureState } = React.useContext(FixtureContext);
   const decoratorRef = React.useRef({});
-  const fixtureStateRef = useFixtureStateRef(fixtureState);
+  const lastFixtureState = useFixtureStateRef(fixtureState);
   // Keep a copy of the previous fixture state to observe changes
-  const prevFixtureStateRef = React.useRef(fixtureState);
+  const prevFixtureState = React.useRef(fixtureState);
 
   React.useEffect(() => {
     // Remove fixture state for removed child elements (likely via HMR)
@@ -96,7 +96,7 @@ export function useFixtureState(
         // Here we're interested in the second scenario. In the first scenario
         // we want to let the component state override the fixture state.
         const prevFsClassState = findFixtureStateClassState(
-          prevFixtureStateRef.current,
+          prevFixtureState.current,
           elementId
         );
         if (prevFsClassState && !isEqual(prevFsClassState, fsClassState)) {
@@ -112,7 +112,7 @@ export function useFixtureState(
 
   // Update prev fixture state ref *after* running effects that reference it
   React.useEffect(() => {
-    prevFixtureStateRef.current = fixtureState;
+    prevFixtureState.current = fixtureState;
   });
 
   return attachChildRefs({
@@ -156,7 +156,7 @@ export function useFixtureState(
 
     const elementId = { decoratorId, elPath };
     const fsClassState = findFixtureStateClassState(
-      fixtureStateRef.current,
+      lastFixtureState.current,
       elementId
     );
     if (!fsClassState) {

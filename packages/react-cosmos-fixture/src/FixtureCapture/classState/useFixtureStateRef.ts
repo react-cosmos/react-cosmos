@@ -3,9 +3,9 @@ import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 
 // Make latest fixture state accessible in hooks callbacks
 export function useFixtureStateRef(fixtureState: FixtureState) {
-  const fixtureStateRef = React.useRef(fixtureState);
+  const ref = React.useRef(fixtureState);
   React.useEffect(() => {
-    fixtureStateRef.current = fixtureState;
+    ref.current = fixtureState;
   });
-  return fixtureStateRef;
+  return ref;
 }
