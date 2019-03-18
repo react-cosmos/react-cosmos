@@ -17,5 +17,6 @@ export function Viewport({ children, width, height }: Props) {
     }));
   }, [setFixtureState, width, height]);
 
-  return children;
+  // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/18051
+  return <>{children}</>;
 }
