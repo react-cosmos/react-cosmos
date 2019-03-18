@@ -2,14 +2,11 @@ import * as React from 'react';
 import { setElementAtPath } from '../../shared/nodeTree';
 import { findRelevantElementPaths } from '../../shared/findRelevantElementPaths';
 import { CachedRefHandlers } from '../shared';
-import { compose } from './compose';
 import { isRefSupported } from './isRefSupported';
 
 type ElementWithRef = React.ReactElement & {
   ref: null | React.Ref<any>;
 };
-
-type FnRef = (elRef: null | React.Component) => unknown;
 
 type SpyRef = (elPath: string, elRef: null | React.Component) => unknown;
 
@@ -27,9 +24,9 @@ export function decorateFixtureRefs(
 
       return React.cloneElement(element, {
         ref: getDecoratedRef(
-          elPath,
           (element as ElementWithRef).ref,
           spyRef,
+          elPath,
           cachedRefHandlers
         )
       });
@@ -38,9 +35,9 @@ export function decorateFixtureRefs(
 }
 
 function getDecoratedRef(
-  elPath: string,
   origRef: null | React.Ref<any>,
   spyRef: SpyRef,
+  elPath: string,
   cachedRefHandlers: CachedRefHandlers
 ) {
   const found = cachedRefHandlers[elPath];
@@ -48,36 +45,36 @@ function getDecoratedRef(
     return found.handler;
   }
 
-  const spyHandler: FnRef = elRef => spyRef(elPath, elRef);
-  const handler = origRef
-    ? compose(
-        spyHandler,
-        createRefAdaptor(origRef)
-      )
-    : spyHandler;
-
+  const handler = decorateRefWithSpy(origRef, spyRef, elPath);
   cachedRefHandlers[elPath] = { origRef, handler };
+
   return handler;
 }
 
-// Create a (composable) handler for both function refs and refs created using
-// React.createRef.
-export function createRefAdaptor(origRef: React.Ref<any>) {
-  if (typeof origRef === 'string') {
-    // No need to throw exception, because it would make Cosmos unusable for
-    // users of string refs.
+function decorateRefWithSpy(
+  origRef: null | React.Ref<any>,
+  spyRef: SpyRef,
+  elPath: string
+) {
+  return (elRef: null | React.Component) => {
+    if (origRef) {
+      callOriginalRef(origRef, elRef);
+    }
+    spyRef(elPath, elRef);
+  };
+}
+
+function callOriginalRef(ref: React.Ref<any>, elRef: null | React.Component) {
+  if (typeof ref === 'string') {
     console.warn('[createRefAdaptor] String refs are not supported');
+    return;
   }
 
-  return (elRef: null | React.Component) => {
-    // https://reactjs.org/docs/refs-and-the-dom.html#creating-refs
-    if (typeof origRef === 'function') {
-      origRef(elRef);
-    } else if (origRef && typeof origRef === 'object') {
-      (origRef as React.MutableRefObject<any>).current = elRef;
-    }
+  if (typeof ref === 'function') {
+    ref(elRef);
+    return;
+  }
 
-    // Return element ref to make the ref handler composable
-    return elRef;
-  };
+  const refObj = ref as React.MutableRefObject<any>;
+  refObj.current = elRef;
 }
