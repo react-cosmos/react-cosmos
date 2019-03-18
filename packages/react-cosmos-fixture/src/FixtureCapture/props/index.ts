@@ -77,8 +77,7 @@ export function usePropsCapture(
         }));
       }
     });
-    // TODO: Explore improving perf
-  }, [fixture, fixtureState]);
+  }, [fixture, fixtureState.props]);
 
   React.useEffect(() => {
     prevFixtureRef.current = fixture;

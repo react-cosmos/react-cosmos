@@ -119,8 +119,7 @@ export function useFixtureState(
         }
       }
     });
-    // TODO: Explore improving perf
-  }, [children, fixtureState]);
+  }, [children, fixtureState.classState]);
 
   // Update prev fixture state ref *after* running effects that reference it
   React.useEffect(() => {
@@ -140,6 +139,7 @@ export function useFixtureState(
     if (!state) {
       return;
     }
+
     elRefs.current[elPath] = elRef;
     setInitialState(elPath, elRef);
 
