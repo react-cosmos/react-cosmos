@@ -51,4 +51,36 @@ runFixtureConnectTests(mount => {
       }
     );
   });
+
+  it('updates viewport fixture state', async () => {
+    await mount(
+      { rendererId, fixtures, decorators },
+      async ({ update, selectFixture, fixtureStateChange }) => {
+        await selectFixture({
+          rendererId,
+          fixtureId,
+          fixtureState: {}
+        });
+        update({
+          rendererId,
+          fixtures: {
+            first: (
+              <Viewport width={640} height={480}>
+                yo
+              </Viewport>
+            )
+          },
+          decorators
+        });
+        await fixtureStateChange({
+          rendererId,
+          fixtureId,
+          fixtureState: {
+            props: [anyProps()],
+            viewport: { width: 640, height: 480 }
+          }
+        });
+      }
+    );
+  });
 });
