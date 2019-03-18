@@ -2,6 +2,7 @@ import * as React from 'react';
 import { isEqual } from 'lodash';
 import {
   FixtureDecoratorId,
+  FixtureState,
   createValues,
   extendWithValues,
   getFixtureStateClassState,
@@ -15,7 +16,6 @@ import {
   ElRefs,
   InitialStates,
   CachedRefHandlers,
-  useFixtureStateRef,
   useUnmount,
   replaceState
 } from './shared';
@@ -119,7 +119,7 @@ export function useFixtureState(
         }
       }
     });
-  }, [children, fixtureState.classState]);
+  }, [setFixtureState, children, fixtureState.classState]);
 
   // Update prev fixture state ref *after* running effects that reference it
   React.useEffect(() => {
@@ -141,7 +141,7 @@ export function useFixtureState(
     }
 
     elRefs.current[elPath] = elRef;
-    setInitialState(elPath, elRef);
+    setInitialState(initialStates.current, elPath, elRef);
 
     const elementId = { decoratorId, elPath };
     const fsClassState = findFixtureStateClassState(
@@ -161,15 +161,28 @@ export function useFixtureState(
       replaceState(elRef, extendWithValues(state, fsClassState.values));
     }
   }
+}
 
-  function setInitialState(elPath: string, elRef: React.Component) {
-    const found = initialStates.current[elPath];
-    const type = elRef.constructor as React.ComponentClass;
+// Make latest fixture state accessible in ref callback
+function useFixtureStateRef(fixtureState: FixtureState) {
+  const ref = React.useRef(fixtureState);
+  React.useEffect(() => {
+    ref.current = fixtureState;
+  });
+  return ref;
+}
 
-    // Keep the first state recevied for this type
-    const initialStateExists = found && found.type === type;
-    if (!initialStateExists && elRef.state) {
-      initialStates.current[elPath] = { type, state: elRef.state };
-    }
+function setInitialState(
+  initialStates: InitialStates,
+  elPath: string,
+  elRef: React.Component
+) {
+  const found = initialStates[elPath];
+  const type = elRef.constructor as React.ComponentClass;
+
+  // Keep the first state recevied for this type
+  const initialStateExists = found && found.type === type;
+  if (!initialStateExists && elRef.state) {
+    initialStates[elPath] = { type, state: elRef.state };
   }
 }
