@@ -32,7 +32,7 @@ export function usePropsCapture(
     }
 
     // Remove fixture state for removed child elements (likely via HMR)
-    // FIXME: Also reset fixture state at this element path if the component
+    // FIXME: Also invalidate fixture state at this element path if the
     // component type of the corresponding element changed
     const fsProps = getFixtureStateProps(fixtureState, decoratorId);
     fsProps.forEach(({ elementId }) => {

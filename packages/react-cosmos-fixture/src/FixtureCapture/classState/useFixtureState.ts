@@ -11,31 +11,43 @@ import {
 } from 'react-cosmos-shared2/fixtureState';
 import { FixtureContext } from '../../FixtureContext';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';
-import { ElRefs, InitialStates } from './shared';
 import {
-  attachChildRefs
-  // deleteRefHandler,
-  // deleteRefHandlers
-} from './attachChildRefs';
-import { replaceState } from './replaceState';
-import { useFixtureStateRef } from './useFixtureStateRef';
+  ElRefs,
+  InitialStates,
+  CachedRefHandlers,
+  useFixtureStateRef,
+  useUnmount,
+  replaceState
+} from './shared';
+import { decorateFixtureRefs } from './decorateFixtureRefs';
 
 export function useFixtureState(
   children: React.ReactNode,
   decoratorId: FixtureDecoratorId,
-  elRefs: React.MutableRefObject<ElRefs>,
-  initialStates: React.MutableRefObject<InitialStates>
+  elRefs: React.MutableRefObject<ElRefs>
 ) {
   const elPaths = findRelevantElementPaths(children);
   const { fixtureState, setFixtureState } = React.useContext(FixtureContext);
-  const decoratorRef = React.useRef({});
   const lastFixtureState = useFixtureStateRef(fixtureState);
   // Keep a copy of the previous fixture state to observe changes
   const prevFixtureState = React.useRef(fixtureState);
+  // Remember initial state of child components to use as a default when
+  // resetting fixture state
+  const initialStates = React.useRef<InitialStates>({});
+  // Ref handlers are reused because every time we pass a new ref handler to
+  // a React element it gets called in the next render loop, even when the
+  // associated element instance has been preserved. Having ref handlers fire
+  // on every render loop results in unwanted operations and race conditions.
+  const cachedRefHandlers = React.useRef<CachedRefHandlers>({});
+
+  useUnmount(() => {
+    initialStates.current = {};
+    cachedRefHandlers.current = {};
+  });
 
   React.useEffect(() => {
     // Remove fixture state for removed child elements (likely via HMR)
-    // FIXME: Also reset fixture state at this element path if the component
+    // FIXME: Also invalidate fixture state at this element path if the
     // component type of the corresponding element changed
     const fsProps = getFixtureStateClassState(fixtureState, decoratorId);
     fsProps.forEach(({ elementId }) => {
@@ -48,7 +60,7 @@ export function useFixtureState(
         if (elRefs.current[elPath]) {
           delete elRefs.current[elPath];
           delete initialStates.current[elPath];
-          // deleteRefHandler(this, this.props.decoratorId, elPath);
+          delete cachedRefHandlers.current[elPath];
         }
       }
     });
@@ -115,12 +127,7 @@ export function useFixtureState(
     prevFixtureState.current = fixtureState;
   });
 
-  return attachChildRefs({
-    node: children,
-    onRef: handleRef,
-    decoratorRef,
-    decoratorId
-  });
+  return decorateFixtureRefs(children, handleRef, cachedRefHandlers.current);
 
   function handleRef(elPath: string, elRef: null | React.Component) {
     if (!elRef) {

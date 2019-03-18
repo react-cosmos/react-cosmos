@@ -10,8 +10,7 @@ import {
 } from 'react-cosmos-shared2/fixtureState';
 import { FixtureContext } from '../../FixtureContext';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';
-import { ElRefs } from './shared';
-import { useFixtureStateRef } from './useFixtureStateRef';
+import { ElRefs, useFixtureStateRef } from './shared';
 
 // How often to check the state of the loaded component and update the fixture
 // state if it changed

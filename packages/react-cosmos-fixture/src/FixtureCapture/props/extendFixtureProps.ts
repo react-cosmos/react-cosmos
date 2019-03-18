@@ -17,11 +17,11 @@ export function extendFixtureProps(
 ): React.ReactNode {
   const elPaths = findRelevantElementPaths(fixture);
 
-  return elPaths.reduce((extendedNode, elPath): React.ReactNode => {
+  return elPaths.reduce((extendedFixture, elPath): React.ReactNode => {
     const elementId = { decoratorId, elPath };
     const fsProps = findFixtureStateProps(fixtureState, elementId);
 
-    return setElementAtPath(extendedNode, elPath, element => {
+    return setElementAtPath(extendedFixture, elPath, element => {
       if (!fsProps || componentTypeChanged(fsProps.componentName)) {
         return {
           ...element,
