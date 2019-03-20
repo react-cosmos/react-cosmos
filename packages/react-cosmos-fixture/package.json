@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-fixture",
-  "version": "4.8.0-alpha.2",
+  "version": "4.8.0-alpha.3",
   "description": "APIs for loading React Cosmos fixtures",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-fixture",
   "license": "MIT",
