@@ -106,11 +106,9 @@ export default ({ children }) => <Provider store={store}>{children}</Provider>;
 
 > A decorator file only applies to fixture files that are contained in the decorator file's directory. Multiple decorator files can be composed, in the order of their position in the file system hierarchy (from outer to inner).
 
-Here's a [basic Redux decorator example](https://github.com/skidding/flatris/blob/b87634a69feb9baf8347e90cdf034704e457e88c/web/components/FlatrisGame/cosmos.decorator.js#L24-L30).
-
 ### Redux state mock
 
-Check out [react-cosmos-redux](https://github.com/skidding/react-cosmos-redux) if you'd like to see what a Cosmos Next decorator looks like. It works with the latest `react-redux` version and it's written with _hooks_ 💃.
+Check out [react-cosmos-redux](https://github.com/skidding/react-cosmos-redux) to see what a Cosmos Next decorator looks like. It works with the latest `react-redux` version and it's written in _hooks_ 💃.
 
 ## UI plugins
 
