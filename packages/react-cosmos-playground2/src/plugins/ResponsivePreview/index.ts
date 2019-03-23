@@ -37,8 +37,8 @@ plug({
 });
 
 plug({
-  slotName: 'fixtureActions',
-  render: createArrayPlug<ToggleButtonProps>('fixtureActions', ToggleButton),
+  slotName: 'rendererActions',
+  render: createArrayPlug<ToggleButtonProps>('rendererActions', ToggleButton),
   getProps: context => getCommonProps(context)
 });
 

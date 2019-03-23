@@ -29,7 +29,7 @@ function loadTestPlugins() {
 
 it('does not render close button', async () => {
   registerTestPlugins();
-  mockPlug({ slotName: 'fixtureActions', render: 'pluggable actions' });
+  mockPlug({ slotName: 'rendererActions', render: 'pluggable actions' });
   const { queryByText } = loadTestPlugins();
 
   // Make sure the element doesn't appear async in the next event loops
@@ -37,9 +37,9 @@ it('does not render close button', async () => {
   expect(queryByText(/close/i)).toBeNull();
 });
 
-it('does not render "fixtureActions" slot', async () => {
+it('does not render "rendererActions" slot', async () => {
   registerTestPlugins();
-  mockPlug({ slotName: 'fixtureActions', render: 'pluggable actions' });
+  mockPlug({ slotName: 'rendererActions', render: 'pluggable actions' });
   const { queryByText } = loadTestPlugins();
 
   // Make sure the element doesn't appear async in the next event loops

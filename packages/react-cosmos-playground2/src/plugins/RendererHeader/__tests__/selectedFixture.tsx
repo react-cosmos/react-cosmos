@@ -69,9 +69,9 @@ it('renders fullscreen button', async () => {
   );
 });
 
-it('renders "fixtureActions" slot', async () => {
+it('renders "rendererActions" slot', async () => {
   registerTestPlugins();
-  mockPlug({ slotName: 'fixtureActions', render: 'pluggable actions' });
+  mockPlug({ slotName: 'rendererActions', render: 'pluggable actions' });
 
   const { getByText } = loadTestPlugins();
   await waitForElement(() => getByText(/pluggable actions/i));

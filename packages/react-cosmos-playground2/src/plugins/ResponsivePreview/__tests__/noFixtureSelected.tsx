@@ -34,7 +34,7 @@ function loadTestPlugins() {
   loadPlugins();
   return render(
     <>
-      <Slot name="fixtureActions" />
+      <Slot name="rendererActions" />
       <Slot name="rendererPreviewOuter">
         <div data-testid="previewMock" />
       </Slot>

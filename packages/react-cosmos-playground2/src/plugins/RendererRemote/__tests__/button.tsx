@@ -24,10 +24,10 @@ function mockNotifications(pushNotification: PushNotification = () => {}) {
   });
 }
 
-function mockFixtureAction() {
+function mockRendererAction() {
   mockPlug({
-    slotName: 'fixtureActions',
-    render: createArrayPlug('fixtureActions', () => <>fooFixtureAction</>)
+    slotName: 'rendererActions',
+    render: createArrayPlug('rendererActions', () => <>fooAction</>)
   });
 }
 
@@ -35,12 +35,12 @@ it(`doesn't render button when web renderer url is empty`, async () => {
   register();
   mockCore(true, null);
   mockNotifications();
-  mockFixtureAction();
+  mockRendererAction();
 
   loadPlugins();
-  const { getByText, queryByText } = render(<Slot name="fixtureActions" />);
+  const { getByText, queryByText } = render(<Slot name="rendererActions" />);
 
-  await waitForElement(() => getByText(/fooFixtureAction/i));
+  await waitForElement(() => getByText(/fooAction/i));
   expect(queryByText(/remote/i)).toBeNull();
 });
 
@@ -48,12 +48,12 @@ it(`doesn't render button when dev server is off`, async () => {
   register();
   mockCore(false, 'mockWebUrl');
   mockNotifications();
-  mockFixtureAction();
+  mockRendererAction();
 
   loadPlugins();
-  const { getByText, queryByText } = render(<Slot name="fixtureActions" />);
+  const { getByText, queryByText } = render(<Slot name="rendererActions" />);
 
-  await waitForElement(() => getByText(/fooFixtureAction/i));
+  await waitForElement(() => getByText(/fooAction/i));
   expect(queryByText(/remote/i)).toBeNull();
 });
 
@@ -63,7 +63,7 @@ it('renders button', async () => {
   mockNotifications();
 
   loadPlugins();
-  const { getByText } = render(<Slot name="fixtureActions" />);
+  const { getByText } = render(<Slot name="rendererActions" />);
 
   await waitForElement(() => getByText(/remote/i));
 });
@@ -76,7 +76,7 @@ it('notifies copy error on button click', async () => {
   mockNotifications(pushNotification);
 
   loadPlugins();
-  const { getByText } = render(<Slot name="fixtureActions" />);
+  const { getByText } = render(<Slot name="rendererActions" />);
 
   const button = getByText(/remote/i);
   fireEvent.click(button);
