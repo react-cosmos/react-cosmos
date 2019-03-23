@@ -11,8 +11,8 @@ function mount() {
   // Use dynamic import to load updated modules upon hot reloading
   require('./mount').mount({
     rendererId,
-    onFixtureChange: dismissErrorOverlay,
-    config: rendererConfig
+    rendererConfig,
+    onFixtureChange: dismissErrorOverlay
   });
 }
 

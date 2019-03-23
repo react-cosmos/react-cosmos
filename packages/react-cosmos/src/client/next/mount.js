@@ -12,20 +12,20 @@ import type { RendererId } from 'react-cosmos-shared2/renderer';
 
 type RendererOptions = {
   rendererId: RendererId,
-  onFixtureChange?: () => mixed,
-  config: RendererConfig
+  rendererConfig: RendererConfig,
+  onFixtureChange?: () => mixed
 };
 
 export function mount({
   rendererId,
-  config,
+  rendererConfig,
   onFixtureChange
 }: RendererOptions) {
   render(
     wrapSuitableAdaptor(
       createFixtureConnectRenderCb(rendererId, onFixtureChange)
     ),
-    getDomContainer(config.containerQuerySelector)
+    getDomContainer(rendererConfig.containerQuerySelector)
   );
 }
 
