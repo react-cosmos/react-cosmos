@@ -3,6 +3,7 @@
 import { getRendererId } from './rendererId';
 import { initErrorOverlay, dismissErrorOverlay } from './errorOverlay';
 import { initGlobalErrorHandler } from './globalErrorHandler';
+import { rendererConfig } from './shared';
 
 const rendererId = getRendererId();
 
@@ -10,6 +11,7 @@ function mount() {
   // Use dynamic import to load updated modules upon hot reloading
   require('./mount').mount({
     rendererId,
+    rendererConfig,
     onFixtureChange: dismissErrorOverlay
   });
 }
