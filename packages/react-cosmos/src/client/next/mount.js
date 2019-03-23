@@ -7,17 +7,25 @@ import { PostMessage, WebSockets, FixtureConnect } from 'react-cosmos-fixture';
 import { fixtures, decorators } from './userModules';
 import { ErrorCatch } from './ErrorCatch';
 
+import type { RendererConfig } from './shared';
 import type { RendererId } from 'react-cosmos-shared2/renderer';
 
-type Opts = {
+type RendererOptions = {
   rendererId: RendererId,
-  onFixtureChange?: () => mixed
+  onFixtureChange?: () => mixed,
+  config: RendererConfig
 };
 
-export function mount(opts: Opts) {
+export function mount({
+  rendererId,
+  config,
+  onFixtureChange
+}: RendererOptions) {
   render(
-    wrapSuitableAdaptor(createFixtureConnectRenderCb(opts)),
-    getDomContainer()
+    wrapSuitableAdaptor(
+      createFixtureConnectRenderCb(rendererId, onFixtureChange)
+    ),
+    getDomContainer(config.containerQuerySelector)
   );
 }
 
@@ -29,7 +37,10 @@ function wrapSuitableAdaptor(element) {
   return <WebSockets url={getWebSocketsUrl()}>{element}</WebSockets>;
 }
 
-function createFixtureConnectRenderCb({ rendererId, onFixtureChange }: Opts) {
+function createFixtureConnectRenderCb(
+  rendererId: RendererId,
+  onFixtureChange?: () => mixed
+) {
   return ({ subscribe, unsubscribe, postMessage }) => (
     <FixtureConnect
       rendererId={rendererId}
