@@ -1,14 +1,18 @@
 import * as React from 'react';
+import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { Button } from '../../shared/components';
 import { EditIcon } from '../../shared/icons';
 
 export type EditFixtureButtonProps = {
   devServerOn: boolean;
-  // TODO: Selected fixture path
+  selectedFixtureId: FixtureId | null;
 };
 
-export function EditFixtureButton({ devServerOn }: EditFixtureButtonProps) {
-  if (!devServerOn) {
+export function EditFixtureButton({
+  devServerOn,
+  selectedFixtureId
+}: EditFixtureButtonProps) {
+  if (!devServerOn || !selectedFixtureId) {
     return null;
   }
 
@@ -16,9 +20,11 @@ export function EditFixtureButton({ devServerOn }: EditFixtureButtonProps) {
     <Button
       icon={<EditIcon />}
       label="edit"
-      onClick={() =>
-        console.log('TODO Call server endpoint with selected fixture path')
-      }
+      onClick={() => openFile(selectedFixtureId.path)}
     />
   );
+}
+
+function openFile(filePath: string) {
+  fetch(`/_open?filePath=${filePath}`, { credentials: 'same-origin' });
 }
