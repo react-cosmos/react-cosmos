@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button } from '../../shared/components';
-import { CastIcon } from '../../shared/icons';
+import { EditIcon } from '../../shared/icons';
 
 export type EditFixtureButtonProps = {
   devServerOn: boolean;
@@ -14,7 +14,7 @@ export function EditFixtureButton({ devServerOn }: EditFixtureButtonProps) {
 
   return (
     <Button
-      icon={<CastIcon />}
+      icon={<EditIcon />}
       label="edit"
       onClick={() =>
         console.log('TODO Call server endpoint with selected fixture path')
