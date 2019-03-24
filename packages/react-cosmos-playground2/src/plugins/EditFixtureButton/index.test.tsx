@@ -23,6 +23,7 @@ function mockFixtureAction() {
 }
 
 async function loadTestPlugins() {
+  mockSelectedFixtureId();
   mockFixtureAction();
   register();
   loadPlugins();
@@ -38,7 +39,6 @@ it(`doesn't render button when dev server is off`, async () => {
   mockCore({
     isDevServerOn: () => false
   });
-  mockSelectedFixtureId();
   const { queryByText } = await loadTestPlugins();
   expect(queryByText(/edit/i)).toBeNull();
 });
@@ -47,7 +47,6 @@ it('renders button', async () => {
   mockCore({
     isDevServerOn: () => true
   });
-  mockSelectedFixtureId();
   const { getByText } = await loadTestPlugins();
   await waitForElement(() => getByText(/edit/i));
 });
@@ -57,7 +56,6 @@ it('calls server endpoint on button click', async () => {
     mockCore({
       isDevServerOn: () => true
     });
-    mockSelectedFixtureId();
     const { getByText } = await loadTestPlugins();
 
     const editBtn = await waitForElement(() => getByText(/edit/i));
