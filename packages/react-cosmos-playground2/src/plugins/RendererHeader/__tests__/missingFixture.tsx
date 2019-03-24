@@ -23,14 +23,12 @@ function registerTestPlugins(unselectFixture = () => {}) {
 
 function loadTestPlugins() {
   loadPlugins();
-
   return render(<Slot name="rendererHeader" />);
 }
 
 it('renders missing state message', async () => {
   registerTestPlugins();
   const { getByText } = loadTestPlugins();
-
   await waitForElement(() => getByText(/fixture not found/i));
 });
 
@@ -47,6 +45,5 @@ it('renders home button', async () => {
 it('renders disabled fullscreen button', async () => {
   registerTestPlugins();
   const { getByText } = loadTestPlugins();
-
   expect(getByText(/fullscreen/i)).toHaveAttribute('disabled');
 });

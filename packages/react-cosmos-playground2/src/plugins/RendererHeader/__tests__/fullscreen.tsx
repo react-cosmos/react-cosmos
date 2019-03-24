@@ -28,16 +28,32 @@ async function loadTestPlugins() {
   return renderer;
 }
 
+const RENDERER_ACTION = 'foo action';
+function mockRendererAction() {
+  mockPlug({ slotName: 'rendererActions', render: RENDERER_ACTION });
+}
+
+const FIXTURE_ACTION = 'bar action';
+function mockFixtureAction() {
+  mockPlug({ slotName: 'fixtureActions', render: FIXTURE_ACTION });
+}
+
 it('does not render close button', async () => {
   registerTestPlugins();
-  mockPlug({ slotName: 'rendererActions', render: 'pluggable actions' });
   const { queryByText } = await loadTestPlugins();
   expect(queryByText(/close/i)).toBeNull();
 });
 
-it('does not render "rendererActions" slot', async () => {
+it('does not render renderer actions', async () => {
   registerTestPlugins();
-  mockPlug({ slotName: 'rendererActions', render: 'pluggable actions' });
+  mockRendererAction();
   const { queryByText } = await loadTestPlugins();
-  expect(queryByText(/pluggable actions/i)).toBeNull();
+  expect(queryByText(RENDERER_ACTION)).toBeNull();
+});
+
+it('does not render fixture actions', async () => {
+  registerTestPlugins();
+  mockFixtureAction();
+  const { queryByText } = await loadTestPlugins();
+  expect(queryByText(FIXTURE_ACTION)).toBeNull();
 });

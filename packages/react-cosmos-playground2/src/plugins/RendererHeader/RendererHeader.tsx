@@ -88,6 +88,7 @@ export function RendererHeader({
           label="refresh"
           onClick={() => selectFixture(selectedFixtureId, false)}
         />
+        <Slot name="fixtureActions" />
       </Left>
       <Right>
         <Slot name="rendererActions" />
