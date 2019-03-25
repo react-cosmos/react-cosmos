@@ -22,13 +22,11 @@ function registerTestPlugins() {
 
 function loadTestPlugins() {
   loadPlugins();
-
   return render(<Slot name="rendererHeader" />);
 }
 
 it('renders waiting state message', async () => {
   registerTestPlugins();
   const { getByText } = loadTestPlugins();
-
   await waitForElement(() => getByText(/waiting for renderer/i));
 });

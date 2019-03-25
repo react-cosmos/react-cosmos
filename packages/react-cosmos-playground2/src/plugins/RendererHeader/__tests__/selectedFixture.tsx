@@ -27,8 +27,17 @@ function registerTestPlugins({
 
 function loadTestPlugins() {
   loadPlugins();
-
   return render(<Slot name="rendererHeader" />);
+}
+
+const RENDERER_ACTION = 'foo action';
+function mockRendererAction() {
+  mockPlug({ slotName: 'rendererActions', render: RENDERER_ACTION });
+}
+
+const FIXTURE_ACTION = 'bar action';
+function mockFixtureAction() {
+  mockPlug({ slotName: 'fixtureActions', render: FIXTURE_ACTION });
 }
 
 it('renders close button', async () => {
@@ -69,10 +78,16 @@ it('renders fullscreen button', async () => {
   );
 });
 
-it('renders "fixtureActions" slot', async () => {
+it('renders renderer actions', async () => {
   registerTestPlugins();
-  mockPlug({ slotName: 'fixtureActions', render: 'pluggable actions' });
-
+  mockRendererAction();
   const { getByText } = loadTestPlugins();
-  await waitForElement(() => getByText(/pluggable actions/i));
+  await waitForElement(() => getByText(RENDERER_ACTION));
+});
+
+it('renders fixture actions', async () => {
+  registerTestPlugins();
+  mockFixtureAction();
+  const { getByText } = loadTestPlugins();
+  await waitForElement(() => getByText(FIXTURE_ACTION));
 });

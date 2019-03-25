@@ -18,8 +18,8 @@ on<RendererCoreSpec>('rendererCore', {
 });
 
 plug({
-  slotName: 'fixtureActions',
-  render: createArrayPlug<RemoteButtonProps>('fixtureActions', RemoteButton),
+  slotName: 'rendererActions',
+  render: createArrayPlug<RemoteButtonProps>('rendererActions', RemoteButton),
   getProps: ({ getMethodsOf }) => {
     const core = getMethodsOf<CoreSpec>('core');
     const notifications = getMethodsOf<NotificationsSpec>('notifications');

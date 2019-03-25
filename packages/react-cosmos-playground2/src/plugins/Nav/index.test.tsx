@@ -1,5 +1,5 @@
 import * as React from 'react';
-import delay from 'delay';
+import retry from '@skidding/async-retry';
 import { render, waitForElement, fireEvent } from 'react-testing-library';
 import { Slot, loadPlugins, MethodHandlers } from 'react-plugin';
 import { cleanup, mockMethodsOf } from '../../testHelpers/plugin';
@@ -36,10 +36,11 @@ function mockRouter(methods: Partial<MethodHandlers<RouterSpec>> = {}) {
   mockMethodsOf<RouterSpec>('router', methods);
 }
 
-function loadTestPlugins() {
+async function loadTestPlugins() {
   loadPlugins();
-
-  return render(<Slot name="left" />);
+  const renderer = render(<Slot name="left">replace me</Slot>);
+  await retry(() => expect(renderer.queryByText('replace me')).toBeNull());
+  return renderer;
 }
 
 it('renders fixture list from renderer state', async () => {
@@ -48,8 +49,7 @@ it('renders fixture list from renderer state', async () => {
     getSelectedFixtureId: () => null,
     isFullScreen: () => false
   });
-  const { getByText } = loadTestPlugins();
-
+  const { getByText } = await loadTestPlugins();
   await waitForElement(() => getByText(/ein/i));
   await waitForElement(() => getByText(/zwei/i));
   await waitForElement(() => getByText(/drei/i));
@@ -65,7 +65,7 @@ it('sends fixtureId to router on fixture click', async () => {
     selectFixture
   });
 
-  const { getByText } = loadTestPlugins();
+  const { getByText } = await loadTestPlugins();
   fireEvent.click(getByText(/zwei/i));
 
   expect(selectFixture).toBeCalledWith(
@@ -83,8 +83,7 @@ it('renders nav element', async () => {
     getSelectedFixtureId: () => null,
     isFullScreen: () => false
   });
-  const { getByTestId } = loadTestPlugins();
-
+  const { getByTestId } = await loadTestPlugins();
   await waitForElement(() => getByTestId('nav'));
 });
 
@@ -94,10 +93,6 @@ it('does not render nav element in full screen mode', async () => {
     getSelectedFixtureId: () => ({ path: 'zwei.js', name: null }),
     isFullScreen: () => true
   });
-  const { queryByTestId } = loadTestPlugins();
-
-  // Make sure the nav element doesn't appear async in the next event loops
-  await delay(100);
-
+  const { queryByTestId } = await loadTestPlugins();
   expect(queryByTestId('nav')).toBeNull();
 });

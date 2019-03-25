@@ -1,6 +1,6 @@
 import * as React from 'react';
-import delay from 'delay';
 import { render } from 'react-testing-library';
+import retry from '@skidding/async-retry';
 import { Slot, loadPlugins } from 'react-plugin';
 import { cleanup, mockMethodsOf, mockPlug } from '../../../testHelpers/plugin';
 import { RouterSpec } from '../../Router/public';
@@ -21,28 +21,39 @@ function registerTestPlugins() {
   });
 }
 
-function loadTestPlugins() {
+async function loadTestPlugins() {
   loadPlugins();
+  const renderer = render(<Slot name="rendererHeader">replace me</Slot>);
+  await retry(() => expect(renderer.queryByText('replace me')).toBeNull());
+  return renderer;
+}
 
-  return render(<Slot name="rendererHeader" />);
+const RENDERER_ACTION = 'foo action';
+function mockRendererAction() {
+  mockPlug({ slotName: 'rendererActions', render: RENDERER_ACTION });
+}
+
+const FIXTURE_ACTION = 'bar action';
+function mockFixtureAction() {
+  mockPlug({ slotName: 'fixtureActions', render: FIXTURE_ACTION });
 }
 
 it('does not render close button', async () => {
   registerTestPlugins();
-  mockPlug({ slotName: 'fixtureActions', render: 'pluggable actions' });
-  const { queryByText } = loadTestPlugins();
-
-  // Make sure the element doesn't appear async in the next event loops
-  await delay(100);
+  const { queryByText } = await loadTestPlugins();
   expect(queryByText(/close/i)).toBeNull();
 });
 
-it('does not render "fixtureActions" slot', async () => {
+it('does not render renderer actions', async () => {
   registerTestPlugins();
-  mockPlug({ slotName: 'fixtureActions', render: 'pluggable actions' });
-  const { queryByText } = loadTestPlugins();
+  mockRendererAction();
+  const { queryByText } = await loadTestPlugins();
+  expect(queryByText(RENDERER_ACTION)).toBeNull();
+});
 
-  // Make sure the element doesn't appear async in the next event loops
-  await delay(100);
-  expect(queryByText(/pluggable actions/i)).toBeNull();
+it('does not render fixture actions', async () => {
+  registerTestPlugins();
+  mockFixtureAction();
+  const { queryByText } = await loadTestPlugins();
+  expect(queryByText(FIXTURE_ACTION)).toBeNull();
 });

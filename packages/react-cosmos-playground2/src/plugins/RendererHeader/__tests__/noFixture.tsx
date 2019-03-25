@@ -22,20 +22,17 @@ function registerTestPlugins() {
 
 function loadTestPlugins() {
   loadPlugins();
-
   return render(<Slot name="rendererHeader" />);
 }
 
 it('renders blank state message', async () => {
   registerTestPlugins();
   const { getByText } = loadTestPlugins();
-
   await waitForElement(() => getByText(/no fixture selected/i));
 });
 
 it('renders disabled fullscreen button', async () => {
   registerTestPlugins();
   const { getByText } = loadTestPlugins();
-
   expect(getByText(/fullscreen/i)).toHaveAttribute('disabled');
 });

@@ -18,6 +18,7 @@ require('../plugins/Nav').register();
 require('../plugins/ContentOverlay').register();
 require('../plugins/ControlPanel').register();
 require('../plugins/ResponsivePreview').register();
+require('../plugins/EditFixtureButton').register();
 
 // TODO: Read list of disabled plugins from user config
 enablePlugin('controlPanel', false);

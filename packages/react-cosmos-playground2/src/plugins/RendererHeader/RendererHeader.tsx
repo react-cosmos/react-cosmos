@@ -19,7 +19,7 @@ type Props = {
   unselectFixture: () => void;
 };
 
-// TODO: Improve UX of refresh button, which seems like it's not doing anything
+// TODO: Improve UX of refresh button, which can seem like it's not doing anything
 export function RendererHeader({
   selectedFixtureId,
   fullScreen,
@@ -49,7 +49,7 @@ export function RendererHeader({
           <Message>No fixture selected</Message>
         </Left>
         <Right>
-          <Slot name="fixtureActions" />
+          <Slot name="rendererActions" />
           <Button disabled icon={<MaximizeIcon />} label="fullscreen" />
         </Right>
       </Container>
@@ -68,7 +68,7 @@ export function RendererHeader({
           />
         </Left>
         <Right>
-          <Slot name="fixtureActions" />
+          <Slot name="rendererActions" />
           <Button disabled icon={<MaximizeIcon />} label="fullscreen" />
         </Right>
       </Container>
@@ -88,9 +88,10 @@ export function RendererHeader({
           label="refresh"
           onClick={() => selectFixture(selectedFixtureId, false)}
         />
+        <Slot name="fixtureActions" />
       </Left>
       <Right>
-        <Slot name="fixtureActions" />
+        <Slot name="rendererActions" />
         <Button
           icon={<MaximizeIcon />}
           label="fullscreen"

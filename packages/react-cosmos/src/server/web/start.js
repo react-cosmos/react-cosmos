@@ -15,6 +15,7 @@ import {
 } from '../shared/server';
 import { attachSockets } from '../shared/socket';
 import { attachWebpack } from './webpack/attach-webpack';
+import openFilePlugin from './plugins/openFile';
 import { getPlaygroundOpts } from './playground-opts';
 
 export async function startServer() {
@@ -57,6 +58,10 @@ export async function startServer() {
   }
 
   attachStackFrameEditorLauncher(app);
+
+  if (next) {
+    openFilePlugin({ app, cosmosConfig });
+  }
 
   const { onWebpackDone, stopWebpack } = attachWebpack({
     cosmosConfig,
