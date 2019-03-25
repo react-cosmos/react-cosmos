@@ -40,7 +40,7 @@ it(`doesn't render button when web renderer url is empty`, async () => {
   loadPlugins();
   const { getByText, queryByText } = render(<Slot name="rendererActions" />);
 
-  await waitForElement(() => getByText(/fooAction/i));
+  await waitForElement(() => getByText('fooAction'));
   expect(queryByText(/remote/i)).toBeNull();
 });
 
@@ -53,7 +53,7 @@ it(`doesn't render button when dev server is off`, async () => {
   loadPlugins();
   const { getByText, queryByText } = render(<Slot name="rendererActions" />);
 
-  await waitForElement(() => getByText(/fooAction/i));
+  await waitForElement(() => getByText('fooAction'));
   expect(queryByText(/remote/i)).toBeNull();
 });
 

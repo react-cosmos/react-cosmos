@@ -19,7 +19,6 @@ plug({
   getProps: () => {
     const core = getMethodsOf<CoreSpec>('core');
     const router = getMethodsOf<RouterSpec>('router');
-
     return {
       devServerOn: core.isDevServerOn(),
       selectedFixtureId: router.getSelectedFixtureId()

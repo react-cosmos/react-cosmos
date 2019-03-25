@@ -39,7 +39,7 @@ function mockRouter(methods: Partial<MethodHandlers<RouterSpec>> = {}) {
 async function loadTestPlugins() {
   loadPlugins();
   const renderer = render(<Slot name="left">replace me</Slot>);
-  await retry(() => expect(renderer.queryByText(/replace me/i)).toBeNull());
+  await retry(() => expect(renderer.queryByText('replace me')).toBeNull());
   return renderer;
 }
 

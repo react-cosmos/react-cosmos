@@ -1,6 +1,11 @@
 import * as React from 'react';
 import { loadPlugins, Slot } from 'react-plugin';
-import { render, waitForElement, fireEvent } from 'react-testing-library';
+import {
+  render,
+  waitForElement,
+  fireEvent,
+  RenderResult
+} from 'react-testing-library';
 import { register } from '.';
 import { createArrayPlug } from '../../shared/slot';
 import { cleanup, mockPlug } from '../../testHelpers/plugin';
@@ -22,16 +27,17 @@ function mockFixtureAction() {
   });
 }
 
+function waitForMockFixtureAction({ getByText }: RenderResult) {
+  return waitForElement(() => getByText('fooAction'));
+}
+
 async function loadTestPlugins() {
   mockSelectedFixtureId();
   mockFixtureAction();
   register();
   loadPlugins();
   const renderer = render(<Slot name="fixtureActions" />);
-
-  // Wait for the mock button to render before running assertions
-  await waitForElement(() => renderer.getByText('fooAction'));
-
+  await waitForMockFixtureAction(renderer);
   return renderer;
 }
 
