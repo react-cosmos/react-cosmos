@@ -27,7 +27,7 @@
   </a>
 </p>
 
-> **[Cosmos 4.7—the version that shows you the future](https://medium.com/@skidding/cosmos-4-7-the-version-that-shows-you-the-future-dc5e41578449)** (Cosmos Next is available for beta testers) 🎉
+> **[Cosmos 4.8 — the version that keeps on giving](https://medium.com/@skidding/cosmos-4-8-the-version-that-keeps-on-giving-746d6265f81d)** (Cosmos Next has new exciting features) 🎉
 
 Cosmos scans your project for components and enables you to:
 
