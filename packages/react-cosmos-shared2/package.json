@@ -9,7 +9,7 @@
     "lodash": "^4.17.11",
     "micromatch": "^3.1.10",
     "react-element-to-jsx-string": "^14.0.2",
-    "react-is": "^16.8.1",
+    "react-is": "^16.8.6",
     "util.promisify": "^1.0.0"
   }
 }

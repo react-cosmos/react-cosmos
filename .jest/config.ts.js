@@ -1,14 +1,13 @@
 const { join } = require('path');
+const { defaults: tsjPreset } = require('ts-jest/presets');
 
 module.exports = {
-  rootDir: join(__dirname, '..'),
   preset: 'ts-jest',
+  transform: { ...tsjPreset.transform },
   testEnvironment: 'jsdom',
+  rootDir: join(__dirname, '..'),
   testMatch: ['**/__tests__/**/*.{ts,tsx}', '**/?(*.)test.{ts,tsx}'],
-  setupTestFrameworkScriptFile: '<rootDir>/.jest/setup-framework.ts',
-  transform: {
-    '^.+\\.js$': 'babel-jest'
-  },
+  setupFilesAfterEnv: ['<rootDir>/.jest/setup-framework.ts'],
   collectCoverageFrom: [
     '**/src/**/*.{ts,tsx}',
     '!**/{__fixtures__,__jsxfixtures__}/**',
@@ -17,7 +16,6 @@ module.exports = {
     '!**/testHelpers/**',
     '!**/react-cosmos-playground2/src/shared/illustrations/**',
     // Ignore coverage from dark launched APIs
-    '!**/react-cosmos-shared2/src/server/findUserModulePaths.ts',
     '!**/react-cosmos-playground2/src/plugins/ControlPanel/**'
   ]
 };
