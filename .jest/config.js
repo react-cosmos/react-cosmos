@@ -14,6 +14,7 @@ module.exports = {
     '!**/*.{fixture,jsxfixture}.{js,ts,tsx}',
     '!**/cosmos.decorator.{js,ts,tsx}',
     '!**/testHelpers/**',
+    '!**/@types/**',
     '!**/react-cosmos-playground2/src/shared/illustrations/**',
     // Ignore coverage from dark launched APIs
     '!**/react-cosmos-playground2/src/plugins/ControlPanel/**'
