@@ -4,10 +4,10 @@ import {
   OnRendererRequest,
   RendererResponse
 } from 'react-cosmos-shared2/renderer';
-import { RemoteRendererApi } from '../shared';
+import { ConnectRenderCb } from '../shared';
 
 export type Props = {
-  children: (api: RemoteRendererApi) => React.ReactElement<any>;
+  children: ConnectRenderCb;
 };
 
 export class PostMessage extends React.Component<Props> {

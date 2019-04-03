@@ -1,7 +1,7 @@
 import { readFile, writeFile } from 'fs';
 import * as path from 'path';
-import * as glob from 'glob';
-import * as rimraf from 'rimraf';
+import glob from 'glob';
+import rimraf from 'rimraf';
 import { argv } from 'yargs';
 import chalk from 'chalk';
 

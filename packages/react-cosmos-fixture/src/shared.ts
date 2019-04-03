@@ -26,6 +26,10 @@ export type RemoteRendererApi = {
   postMessage: OnRendererResponse;
 };
 
+export type ConnectRenderCb = (
+  api: RemoteRendererApi
+) => React.ReactElement<any>;
+
 export type FixtureContextValue = {
   fixtureState: FixtureState;
   setFixtureState: SetFixtureState;

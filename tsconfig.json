@@ -9,6 +9,7 @@
 {
   "compilerOptions": {
     "lib": ["dom", "es2015"],
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
     "noEmitOnError": true,
