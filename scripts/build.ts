@@ -28,6 +28,7 @@ async function run() {
     ...nodePackages,
     ...browserPackages
   ];
+  // TODO: Allow shorthand names (shared => react-cosmos-shared2, etc.)
   const pkgName = getUnnamedArg();
 
   if (pkgName) {

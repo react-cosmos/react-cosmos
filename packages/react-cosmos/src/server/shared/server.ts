@@ -2,56 +2,53 @@ import { join, relative } from 'path';
 import { createServer as createHttpServer } from 'http';
 import promisify from 'util.promisify';
 import express from 'express';
+import { PlaygroundConfig } from 'react-cosmos-playground2';
 // IDEA: Maybe replace react-dev-utils with https://github.com/yyx990803/launch-editor
 import launchEditor from 'react-dev-utils/launchEditor';
+import { CosmosConfig } from '../shared/config';
 import { getPlaygroundHtml, getPlaygroundHtmlNext } from './playground-html';
 import { setupHttpProxy } from './http-proxy';
 import { getPlaygroundConfig } from './config-next';
-
-import { PlaygroundConfig } from 'react-cosmos-playground2';
 
 export function createServerApp({
   cosmosConfig,
   playgroundOpts
 }: {
-  cosmosConfig: Config;
-  playgroundOpts: PlaygroundOpts;
+  cosmosConfig: CosmosConfig;
+  playgroundOpts: PlaygroundConfig;
 }) {
-  const { next, httpProxy } = cosmosConfig;
+  const { httpProxy } = cosmosConfig;
   const app = express();
 
   if (httpProxy) {
     setupHttpProxy(app, httpProxy);
   }
 
-  const playgroundHtml = next
-    ? getPlaygroundHtmlNext(
-        getPlaygroundConfig({
-          playgroundOpts,
-          devServerOn: true
-        })
-      )
-    : getPlaygroundHtml(playgroundOpts);
-  app.get('/', (req: express$Request, res: express$Response) => {
+  const playgroundHtml = getPlaygroundHtmlNext(
+    getPlaygroundConfig({
+      playgroundOpts,
+      devServerOn: true
+    })
+  );
+  app.get('/', (req: express.Request, res: express.Response) => {
     res.send(playgroundHtml);
   });
 
-  app.get('/_playground.js', (req: express$Request, res: express$Response) => {
-    res.sendFile(
-      require.resolve(
-        next ? 'react-cosmos-playground2' : 'react-cosmos-playground'
-      )
-    );
+  app.get('/_playground.js', (req: express.Request, res: express.Response) => {
+    res.sendFile(require.resolve('react-cosmos-playground2'));
   });
 
-  app.get('/_cosmos.ico', (req: express$Request, res: express$Response) => {
+  app.get('/_cosmos.ico', (req: express.Request, res: express.Response) => {
     res.sendFile(join(__dirname, 'static/favicon.ico'));
   });
 
   return app;
 }
 
-export function createServer(cosmosConfig: Config, app: express$Application) {
+export function createServer(
+  cosmosConfig: CosmosConfig,
+  app: express.Application
+) {
   const { port, hostname } = cosmosConfig;
   const server = createHttpServer(app);
 
@@ -71,7 +68,7 @@ export function createServer(cosmosConfig: Config, app: express$Application) {
 }
 
 export function serveStaticDir(
-  app: express$Application,
+  app: express.Application,
   publicUrl: string,
   publicPath: string
 ) {
@@ -88,10 +85,10 @@ export function serveStaticDir(
   );
 }
 
-export function attachStackFrameEditorLauncher(app: express$Application) {
+export function attachStackFrameEditorLauncher(app: express.Application) {
   app.get(
     '/__open-stack-frame-in-editor',
-    (req: express$Request, res: express$Response) => {
+    (req: express.Request, res: express.Response) => {
       const lineNumber = parseInt(req.query.lineNumber, 10) || 1;
       const colNumber = parseInt(req.query.colNumber, 10) || 1;
       launchEditor(req.query.fileName, lineNumber, colNumber);
