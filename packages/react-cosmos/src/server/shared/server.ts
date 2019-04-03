@@ -1,5 +1,3 @@
-// @flow
-
 import { join, relative } from 'path';
 import { createServer as createHttpServer } from 'http';
 import promisify from 'util.promisify';
@@ -10,15 +8,14 @@ import { getPlaygroundHtml, getPlaygroundHtmlNext } from './playground-html';
 import { setupHttpProxy } from './http-proxy';
 import { getPlaygroundConfig } from './config-next';
 
-import type { Config } from 'react-cosmos-flow/config';
-import type { PlaygroundOpts } from 'react-cosmos-flow/playground';
+import { PlaygroundConfig } from 'react-cosmos-playground2';
 
 export function createServerApp({
   cosmosConfig,
   playgroundOpts
 }: {
-  cosmosConfig: Config,
-  playgroundOpts: PlaygroundOpts
+  cosmosConfig: Config;
+  playgroundOpts: PlaygroundOpts;
 }) {
   const { next, httpProxy } = cosmosConfig;
   const app = express();

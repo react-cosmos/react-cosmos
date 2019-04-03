@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as io from 'socket.io-client';
+import io from 'socket.io-client';
 import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
 import {
   RendererRequest,

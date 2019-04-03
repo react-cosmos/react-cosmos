@@ -1,6 +1,6 @@
 import { isEqual } from 'lodash';
 import { isElement } from 'react-is';
-import * as reactElementToJSXString from 'react-element-to-jsx-string';
+import reactElementToJSXString from 'react-element-to-jsx-string';
 
 export type KeyValue = Record<string, unknown>;
 

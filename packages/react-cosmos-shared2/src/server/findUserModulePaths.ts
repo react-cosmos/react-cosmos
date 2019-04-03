@@ -1,6 +1,6 @@
-import * as glob from 'glob';
-import * as micromatch from 'micromatch';
-import * as promisify from 'util.promisify';
+import glob from 'glob';
+import micromatch from 'micromatch';
+import promisify from 'util.promisify';
 import { replaceKeys } from '../util';
 
 type FindUserModulePathsArgs = {

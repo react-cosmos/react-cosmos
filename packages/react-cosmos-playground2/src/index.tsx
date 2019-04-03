@@ -9,7 +9,7 @@ import { GlobalStyle } from './global/style';
 import './global/registerPlugins';
 
 // Config can also contain keys for 3rd party plugins
-type Config = {
+export type PlaygroundConfig = {
   core: CoreSpec['config'];
 };
 
@@ -17,7 +17,7 @@ type Config = {
 // fiddling with plugins from browser console :D.
 (window as any).ReactPlugin = ReactPlugin;
 
-export default function mount(config: Config) {
+export default function mount(config: PlaygroundConfig) {
   const { loadPlugins, Slot } = ReactPlugin;
 
   loadPlugins({ config });

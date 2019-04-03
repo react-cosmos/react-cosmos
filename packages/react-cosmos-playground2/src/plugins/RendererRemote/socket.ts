@@ -3,7 +3,7 @@ import {
   RendererResponse,
   RENDERER_MESSAGE_EVENT_NAME
 } from 'react-cosmos-shared2/renderer';
-import * as io from 'socket.io-client';
+import io from 'socket.io-client';
 import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { Context } from './shared';
