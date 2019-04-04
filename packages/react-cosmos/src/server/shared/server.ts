@@ -1,22 +1,19 @@
-import { join, relative } from 'path';
+import path from 'path';
 import { createServer as createHttpServer } from 'http';
 import promisify from 'util.promisify';
 import express from 'express';
-import { PlaygroundConfig } from 'react-cosmos-playground2';
 // IDEA: Maybe replace react-dev-utils with https://github.com/yyx990803/launch-editor
 import launchEditor from 'react-dev-utils/launchEditor';
+import { PlaygroundConfig } from 'react-cosmos-playground2';
 import { CosmosConfig } from '../shared/config';
-import { getPlaygroundHtml, getPlaygroundHtmlNext } from './playground-html';
-import { setupHttpProxy } from './http-proxy';
-import { getPlaygroundConfig } from './config-next';
+import { getPlaygroundHtml } from './playground';
+import { setupHttpProxy } from './httpProxy';
 
-export function createServerApp({
-  cosmosConfig,
-  playgroundOpts
-}: {
-  cosmosConfig: CosmosConfig;
-  playgroundOpts: PlaygroundConfig;
-}) {
+// TODO: Move to own file
+export function createApp(
+  cosmosConfig: CosmosConfig,
+  playgroundConfig: PlaygroundConfig
+) {
   const { httpProxy } = cosmosConfig;
   const app = express();
 
@@ -24,12 +21,7 @@ export function createServerApp({
     setupHttpProxy(app, httpProxy);
   }
 
-  const playgroundHtml = getPlaygroundHtmlNext(
-    getPlaygroundConfig({
-      playgroundOpts,
-      devServerOn: true
-    })
-  );
+  const playgroundHtml = getPlaygroundHtml(playgroundConfig);
   app.get('/', (req: express.Request, res: express.Response) => {
     res.send(playgroundHtml);
   });
@@ -39,7 +31,7 @@ export function createServerApp({
   });
 
   app.get('/_cosmos.ico', (req: express.Request, res: express.Response) => {
-    res.sendFile(join(__dirname, 'static/favicon.ico'));
+    res.sendFile(path.join(__dirname, 'static/favicon.ico'));
   });
 
   return app;
@@ -72,7 +64,7 @@ export function serveStaticDir(
   publicUrl: string,
   publicPath: string
 ) {
-  const relPublicPath = relative(process.cwd(), publicPath);
+  const relPublicPath = path.relative(process.cwd(), publicPath);
   console.log(`[Cosmos] Serving static files from ${relPublicPath}`);
 
   app.use(
@@ -85,6 +77,7 @@ export function serveStaticDir(
   );
 }
 
+// TODO: Make plugin
 export function attachStackFrameEditorLauncher(app: express.Application) {
   app.get(
     '/__open-stack-frame-in-editor',

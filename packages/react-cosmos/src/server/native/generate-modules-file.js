@@ -1,6 +1,4 @@
-// @flow
-
-import { relative } from 'path';
+import path from 'path';
 import { writeFile } from 'fs';
 import promisify from 'util.promisify';
 import { moduleExists } from 'react-cosmos-shared/server';
@@ -30,7 +28,7 @@ export async function generateModulesFile(cosmosConfig: Config) {
   const modules = await generateModuleImports(cosmosConfig);
   await writeFileAsync(modulesPath, modules, 'utf8');
 
-  const relModulesPath = relative(process.cwd(), modulesPath);
+  const relModulesPath = path.relative(process.cwd(), modulesPath);
   console.log(`[Cosmos] Generated ${relModulesPath}`);
 }
 

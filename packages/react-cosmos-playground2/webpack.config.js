@@ -1,6 +1,3 @@
-/* eslint-env node */
-// @flow
-
 const { join } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 

@@ -1,5 +1,5 @@
 import { spawn } from 'child-process-promise';
-import { join } from 'path';
+import path from 'path';
 import chalk from 'chalk';
 import cpy from 'cpy';
 import {
@@ -118,7 +118,7 @@ type BuildTaskArgs = {
 
 async function runBuildTask({ pkgName, cmd, args, env = {} }: BuildTaskArgs) {
   const promise = spawn(cmd, args, {
-    cwd: join(__dirname, '..'),
+    cwd: path.join(__dirname, '..'),
     env: {
       ...process.env,
       ...env
@@ -172,7 +172,7 @@ function getWebpackCliArgs(pkgName: string) {
 async function copyStaticAssets(pkgName: string) {
   if (pkgName === 'react-cosmos') {
     return cpy('src/server/shared/static/**', `dist/server/shared/static`, {
-      cwd: join(__dirname, `../packages/react-cosmos`),
+      cwd: path.join(__dirname, `../packages/react-cosmos`),
       parents: false
     });
   }

@@ -128,7 +128,7 @@ Add package.json scripts
 }
 ```
 
-Run `npm run cosmos` or `yarn cosmos` and go to [localhost:8989](http://localhost:8989) 🎉
+Run `npm run cosmos` or `yarn cosmos` and go to [localhost:5000](http://localhost:5000) 🎉
 
 > If you rely on the default webpack config, make sure to install the Babel and webpack plugins yourself. Depending on your needs, you'll probably want `@babel/core @babel/preset-env @babel/preset-react babel-loader style-loader css-loader html-webpack-plugin`. Finally, add `.babelrc` to your project root.
 >
@@ -943,7 +943,6 @@ module.exports = {
 };
 ```
 
-
 #### Github Pages and Jekyll
 
 You can publish Cosmos publicly using Github pages by [using `cosmos-export`](#exporting). Commit the exported files to a `/docs/` folder in the root of your project and you should be good to go.
@@ -1140,7 +1139,7 @@ module.exports = {
 
   // Customize dev server
   hostname: 'localhost',
-  port: 8989
+  port: 5000
 };
 ```
 
@@ -1325,7 +1324,7 @@ export default class App extends Component {
 }
 ```
 
-Start your native app's dev server, and in another terminal run `npm run cosmos-native` or `yarn cosmos-native` and go to [localhost:8989](http://localhost:8989) 🔥
+Start your native app's dev server, and in another terminal run `npm run cosmos-native` or `yarn cosmos-native` and go to [localhost:5000](http://localhost:5000) 🔥
 
 > Since \_\_\_fixtures\_\_\_ dirs are [blacklisted by default in RN](https://github.com/facebook/react-native/blob/9176fc00b59d1a384008f26d72ba57a2a08e0726/local-cli/util/Config.js#L55-L57), **you may need to override the `getBlacklistRE` setting.**
 

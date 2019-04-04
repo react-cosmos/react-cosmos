@@ -1,5 +1,3 @@
-// @flow
-
 import chokidar from 'chokidar';
 import { debounce } from 'lodash';
 import { getCosmosConfig } from 'react-cosmos-config';

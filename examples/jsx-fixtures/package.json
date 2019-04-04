@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "jsx-fixtures-example",
   "version": "4.8.1",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples",
@@ -9,5 +10,10 @@
   "dependencies": {
     "react-cosmos": "^4.8.1"
   },
-  "private": true
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5"
+  }
 }

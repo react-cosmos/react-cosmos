@@ -1,8 +1,6 @@
-// @flow
-
 import path from 'path';
 import fs from 'fs-extra';
-import { silent as silentImport } from 'import-from';
+import importFrom from 'import-from';
 import { getCosmosConfig } from 'react-cosmos-config';
 import {
   getPlaygroundHtml,
@@ -61,7 +59,7 @@ export async function generateExport() {
   const cosmosConfig = getCosmosConfig();
   const { rootPath, outputPath, publicPath, publicUrl } = cosmosConfig;
 
-  const webpack = silentImport(rootPath, 'webpack');
+  const webpack = importFrom.silent(rootPath, 'webpack');
   if (!webpack) {
     console.warn('[Cosmos] webpack dependency missing!');
     console.log('Install using "yarn add webpack" or "npm install webpack"');

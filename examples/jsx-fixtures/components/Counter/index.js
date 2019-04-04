@@ -1,8 +1,6 @@
-// @flow
-
 import React, { Component } from 'react';
 
-export class Counter extends Component<{ suffix: string }, { count: number }> {
+export class Counter extends Component {
   state = { count: 0 };
 
   render() {

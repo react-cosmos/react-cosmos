@@ -1,5 +1,4 @@
 node_modules
-flow-typed/**
 
 packages/*/dist
 examples/*/cosmos-export
