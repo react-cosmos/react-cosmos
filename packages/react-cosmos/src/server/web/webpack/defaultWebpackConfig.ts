@@ -21,8 +21,13 @@ export default function getDefaultWebpackConfig(
   if (babelLoaderPath) {
     rules.push({
       test: /\.jsx?$/,
-      loader: babelLoaderPath,
-      exclude: /node_modules/
+      exclude: /node_modules/,
+      use: {
+        loader: babelLoaderPath,
+        options: {
+          root: rootDir
+        }
+      }
     });
   }
 

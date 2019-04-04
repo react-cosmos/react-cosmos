@@ -13,7 +13,8 @@
     "test:watch": "yarn test:unit --watch",
     "test": "yarn lint && yarn test:unit --coverage",
     "test:e2e": "cypress run --record false",
-    "start": "ts-node ./packages/react-cosmos/bin/cosmos.js --config packages/react-cosmos-playground2/cosmos.config.js",
+    "start": "ts-node ./packages/react-cosmos/bin/cosmos.js --config examples/jsx-fixtures/cosmos.config.js",
+    "start:playground": "ts-node ./packages/react-cosmos/bin/cosmos.js --config packages/react-cosmos-playground2/cosmos.config.js",
     "build:clear": "ts-node ./scripts/clearBuild.ts",
     "build": "ts-node ./scripts/build.ts",
     "link-entries": "ts-node ./scripts/linkEntries.ts",
@@ -23,12 +24,6 @@
     "release:lerna": "lerna publish --registry=https://registry.npmjs.org/",
     "release": "yarn release:check && yarn release:lerna",
     "release:next": "yarn release:check && yarn release:lerna --dist-tag=next"
-  },
-  "lint-staged": {
-    "*.{js,jsx,css,less}": [
-      "prettier --single-quote --write",
-      "git add"
-    ]
   },
   "devDependencies": {
     "@react-mock/state": "^0.1.8",
@@ -106,6 +101,12 @@
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",
     "yargs": "^12.0.5"
+  },
+  "lint-staged": {
+    "*.{js,jsx,css,less}": [
+      "prettier --single-quote --write",
+      "git add"
+    ]
   },
   "husky": {
     "hooks": {
