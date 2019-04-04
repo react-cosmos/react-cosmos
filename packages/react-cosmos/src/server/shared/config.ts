@@ -2,20 +2,24 @@ import path from 'path';
 import { argv } from 'yargs';
 import webpack from 'webpack';
 import { HttpProxyConfig } from './httpProxy';
+import { slash } from './slash';
 
 // TODO: Group options
+// Eg.
 // {
-//   fixtureFileSuffix,
-//   fixturesDir,
-//   renderer: {
-//     globalImports,
+//   dom: {
 //     containerQuerySelector,
 //   },
+//   renderer: {
+//     globalImports,
+//   },
 //   server: {
-//     rootDir,
+//     fixtureFileSuffix,
+//     fixturesDir,
 //     hostname,
 //     httpProxy,
 //     port,
+//     rootDir,
 //     watchDirs,
 //     webpack: {
 //       configPath,
@@ -80,6 +84,18 @@ export function getPublicUrl({ publicUrl }: CosmosConfig) {
   return publicUrl || '/';
 }
 
-export function getExportPath({ exportPath }: CosmosConfig) {
-  return exportPath || 'cosmos-export';
+export function getExportPath(cosmosConfig: CosmosConfig) {
+  const { exportPath } = cosmosConfig;
+  const rootDir = getRootDir(cosmosConfig);
+  return slash(path.resolve(rootDir, exportPath || 'cosmos-export'));
+}
+
+export function getPublicPath(cosmosConfig: CosmosConfig) {
+  const { publicPath } = cosmosConfig;
+  if (!publicPath) {
+    return null;
+  }
+
+  const rootDir = getRootDir(cosmosConfig);
+  return slash(path.resolve(rootDir, publicPath));
 }

@@ -6,7 +6,7 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { CosmosConfig, getPublicUrl } from '../../shared/config';
 import { getRootUrl } from '../../shared/server';
-import enhanceWebpackConfig from './enhanceWebpackConfig';
+import { enhanceWebpackConfig } from './enhanceWebpackConfig';
 
 export function attachWebpack({
   cosmosConfig,
@@ -19,13 +19,13 @@ export function attachWebpack({
   userWebpack: typeof webpack;
   userWebpackConfig: webpack.Configuration;
 }) {
-  const loaderWebpackConfig = enhanceWebpackConfig({
+  const webpackConfig = enhanceWebpackConfig({
     cosmosConfig,
     userWebpack,
     userWebpackConfig,
     staticBuild: false
   });
-  const webpackCompiler = userWebpack(loaderWebpackConfig);
+  const webpackCompiler = userWebpack(webpackConfig);
 
   webpackCompiler.hooks.invalid.tap('Cosmos', filePath => {
     const relFilePath = path.relative(process.cwd(), filePath);

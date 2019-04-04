@@ -2,27 +2,27 @@ import path from 'path';
 import { readFileSync } from 'fs';
 import { replaceKeys } from 'react-cosmos-shared2/util';
 import { PlaygroundConfig } from 'react-cosmos-playground2';
-import { CosmosConfig } from './config';
+import { CosmosConfig, getRootDir, getPublicUrl } from './config';
+import { slash } from './slash';
 
 export function getPlaygroundConfig({
   cosmosConfig,
-  devServerOn,
-  projectId,
-  webRendererUrl
+  devServerOn
 }: {
   cosmosConfig: CosmosConfig;
   devServerOn: boolean;
-  projectId: string;
-  webRendererUrl: string | null;
 }): PlaygroundConfig {
+  const rootDir = getRootDir(cosmosConfig);
+  const publicUrl = getPublicUrl(cosmosConfig);
   const { fixturesDir, fixtureFileSuffix } = cosmosConfig;
+
   return {
     core: {
-      projectId,
+      projectId: rootDir,
       fixturesDir,
       fixtureFileSuffix,
       devServerOn,
-      webRendererUrl
+      webRendererUrl: slash(publicUrl, '_loader.html')
     }
   };
 }

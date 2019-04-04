@@ -1,11 +1,12 @@
 // TODO: Test if a webpack import (require) is kept in the compiled file
 import webpack from 'webpack';
-import { CosmosConfig } from '../../shared/config';
+import { CosmosConfig, getPublicPath } from '../../shared/config';
 
-export function getPublicPath(
-  { publicPath }: CosmosConfig,
+export function getWebpackPublicPath(
+  cosmosConfig: CosmosConfig,
   { devServer }: webpack.Configuration
 ) {
+  const publicPath = getPublicPath(cosmosConfig);
   if (publicPath) {
     return publicPath;
   }

@@ -8,10 +8,9 @@ import {
   getWebpack,
   getUserWebpackConfig,
   attachWebpack,
-  getPublicPath
+  getWebpackPublicPath
 } from './webpack';
 import { COSMOS_CONFIG, getRootDir, getPublicUrl } from '../shared/config';
-import { slash } from '../shared/slash';
 import { attachSockets } from '../shared/socket';
 import { getPlaygroundConfig } from '../shared/playground';
 import openFilePlugin from './plugins/openFile';
@@ -39,16 +38,13 @@ export async function startCosmosServer() {
 
   const playgroundConfig = getPlaygroundConfig({
     cosmosConfig,
-    devServerOn: true,
-    projectId: rootDir,
-    webRendererUrl: slash(publicUrl, '_loader.html')
+    devServerOn: true
   });
-
   const app = createApp(cosmosConfig, playgroundConfig);
   const { server, startServer, stopServer } = createServer(cosmosConfig, app);
 
   const userWebpackConfig = getUserWebpackConfig(cosmosConfig, userWebpack);
-  const publicPath = getPublicPath(cosmosConfig, userWebpackConfig);
+  const publicPath = getWebpackPublicPath(cosmosConfig, userWebpackConfig);
   if (publicPath) {
     serveStaticDir(app, publicUrl, publicPath);
   }

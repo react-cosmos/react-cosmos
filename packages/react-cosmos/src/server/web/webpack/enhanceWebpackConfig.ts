@@ -31,7 +31,7 @@ type Args = {
   staticBuild: boolean;
 };
 
-export default function enhanceWebpackConfig({
+export function enhanceWebpackConfig({
   cosmosConfig,
   userWebpack,
   userWebpackConfig,

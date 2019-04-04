@@ -4,7 +4,6 @@
   "description": "CLI for running React Cosmos inside webpack-powered apps",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos",
   "license": "MIT",
-  "main": "index.js",
   "dependencies": {
     "chokidar": "^2.0.4",
     "express": "^4.16.4",
