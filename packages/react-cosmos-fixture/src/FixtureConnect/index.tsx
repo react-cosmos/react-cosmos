@@ -24,6 +24,7 @@ export type Props = {
   systemDecorators: DecoratorType[];
   userDecorators: DecoratorsByPath;
   onFixtureChange?: () => unknown;
+  // TODO: Receive single RendererConnectApi prop
 } & RemoteRendererApi;
 
 type State = {
@@ -45,6 +46,7 @@ type State = {
 
 // TODO: Add props for customizing blank/missing states: `getBlankState` and
 // `getMissingState`
+// TODO: FixtureConnect/FixtureLoader
 export class FixtureConnect extends React.Component<Props, State> {
   state: State = {
     selectedFixture: null,
