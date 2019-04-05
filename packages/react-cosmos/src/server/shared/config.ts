@@ -43,6 +43,12 @@ export type CosmosConfig = {
   hostname: null | string;
   hotReload: boolean;
   httpProxy?: HttpProxyConfig;
+  // Only used by the React Native server, modulesPath specifies where to
+  // generate the file with imports to all user fixtures and decorators.
+  // Whereas most of the other paths are used to import modules, modulesPath is
+  // used as an output file path and it requires a file extension.
+  // TODO: Control using additional boolean flag writeModulesFile?
+  modulesPath: string;
   port: number;
   publicPath?: string;
   publicUrl?: string;
@@ -60,13 +66,15 @@ export type CosmosConfig = {
 // promotes designing of good defaults.
 // Related https://github.com/react-cosmos/react-cosmos/issues/488
 export const COSMOS_CONFIG: CosmosConfig = {
+  // TODO: Move (most of) these values into defaults
   fixtureFileSuffix: 'jsxfixture',
   fixturesDir: '__jsxfixtures__',
   globalImports: [],
   hostname: null,
   hotReload: true,
   port: 5000,
-  watchDirs: ['.']
+  watchDirs: ['.'],
+  modulesPath: 'cosmos.modules.js'
 };
 
 export function getRootDir({ rootDir }: CosmosConfig): string {

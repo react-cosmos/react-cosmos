@@ -4,6 +4,6 @@
 process.env.BABEL_ENV = process.env.BABEL_ENV || 'development';
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-const { startServer } = require('../dist/server/native/start');
+const { startCosmosServer } = require('../dist/server/native/start');
 
-startServer();
+startCosmosServer();

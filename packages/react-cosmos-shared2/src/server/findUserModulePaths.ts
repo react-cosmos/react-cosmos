@@ -24,6 +24,7 @@ const FIXTURE_PATTERNS = [
 ];
 const DECORATOR_PATTERNS = ['**/cosmos.decorator.{js,jsx,ts,tsx}'];
 
+// TODO: Move this into react-cosmos package?
 export async function findUserModulePaths({
   rootDir,
   fixturesDir,

@@ -14,10 +14,10 @@ module.exports = async function embedModules(source: string) {
 
   const cosmosConfig = COSMOS_CONFIG;
   const {
-    watchDirs,
-    globalImports,
     fixturesDir,
-    fixtureFileSuffix
+    fixtureFileSuffix,
+    watchDirs,
+    globalImports
   } = COSMOS_CONFIG;
   const rootDir = getRootDir(cosmosConfig);
 
@@ -39,6 +39,7 @@ module.exports = async function embedModules(source: string) {
   });
 
   const res = source
+    // TODO: Resolve global imports
     .replace(
       `/* __INJECT_GLOBAL_IMPORTS__ */`,
       globalImports.map(importPath => `require('${importPath}');`).join(`\n`)
