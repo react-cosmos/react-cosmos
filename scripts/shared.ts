@@ -1,5 +1,4 @@
 import { readFile, writeFile } from 'fs';
-import * as path from 'path';
 import glob from 'glob';
 import rimraf from 'rimraf';
 import { argv } from 'yargs';
@@ -14,29 +13,20 @@ export const readFileAsync = asyncify(readFile);
 export const writeFileAsync = asyncify(writeFile);
 export const rimrafAsync = asyncify(rimraf);
 
-export const SHARED_PACKAGE = 'react-cosmos-shared2';
-export const NODE_PACKAGES = ['react-cosmos-fixture', 'react-cosmos'];
+// NOTE: Order is important!
+export const NODE_PACKAGES = [
+  'react-cosmos-shared2',
+  'react-cosmos-fixture',
+  'react-cosmos'
+];
 export const BROWSER_PACKAGES = ['react-cosmos-playground2'];
 
 export async function getNodePackages(): Promise<PackageNames> {
-  const allPackages = await getAllPackages();
-  return allPackages.filter(p => NODE_PACKAGES.indexOf(p) !== -1);
+  return NODE_PACKAGES;
 }
 
 export async function getBrowserPackages(): Promise<PackageNames> {
-  const allPackages = await getAllPackages();
-  return allPackages.filter(p => BROWSER_PACKAGES.indexOf(p) !== -1);
-}
-
-// TODO: Remove and simplify
-export async function getAllPackages(): Promise<PackageNames> {
-  const files: string[] = await globAsync('./packages/react-*');
-  return files.map(f => path.basename(f));
-}
-
-export async function getExamples(): Promise<PackageNames> {
-  const files: string[] = await globAsync('./examples/*/');
-  return files.map(f => path.basename(f));
+  return BROWSER_PACKAGES;
 }
 
 export function getFormattedPackageList(pkgNames: PackageNames) {

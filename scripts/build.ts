@@ -3,7 +3,6 @@ import path from 'path';
 import chalk from 'chalk';
 import cpy from 'cpy';
 import {
-  SHARED_PACKAGE,
   getNodePackages,
   getBrowserPackages,
   getFormattedPackageList,
@@ -23,11 +22,7 @@ run();
 async function run() {
   const nodePackages = await getNodePackages();
   const browserPackages = await getBrowserPackages();
-  const buildablePackages = [
-    SHARED_PACKAGE,
-    ...nodePackages,
-    ...browserPackages
-  ];
+  const buildablePackages = [...nodePackages, ...browserPackages];
   // TODO: Allow shorthand names (shared => react-cosmos-shared2, etc.)
   const pkgName = getUnnamedArg();
 
@@ -58,7 +53,7 @@ async function run() {
       `${watch ? 'Build-watching' : 'Building'} ${chalk.bold(pkgName)}...\n`
     );
 
-    if (pkgName === SHARED_PACKAGE || nodePackages.indexOf(pkgName) !== -1) {
+    if (nodePackages.indexOf(pkgName) !== -1) {
       await buildTsPackage(pkgName);
     } else {
       await buildBrowserPackage(pkgName);
@@ -80,8 +75,11 @@ async function run() {
     }
 
     stdout.write(`Building Node packages with TypeScript...\n`);
-    await buildTsPackage(SHARED_PACKAGE);
-    await Promise.all(nodePackages.map(buildTsPackage));
+    // Node packages are built serially because they depend on each other and
+    // this way TypeScript ensures their interfaces are compatible
+    for (const pkg of nodePackages) {
+      await buildTsPackage(pkg);
+    }
 
     stdout.write(`Building browser packages with webpack...\n`);
     await Promise.all(browserPackages.map(buildBrowserPackage));

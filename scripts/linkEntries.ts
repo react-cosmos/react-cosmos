@@ -1,7 +1,6 @@
 import chalk from 'chalk';
 import {
   PackageNames,
-  SHARED_PACKAGE,
   globAsync,
   readFileAsync,
   writeFileAsync,
@@ -20,9 +19,7 @@ type TargetDir = typeof SRC_DIR | typeof DIST_DIR;
 run();
 
 async function run() {
-  const nodePackages = await getNodePackages();
-  const packages = [SHARED_PACKAGE, ...nodePackages];
-
+  const packages = await getNodePackages();
   try {
     const targetDir = getTargetDir();
     const targetPackages = getTargetPackages(packages);
@@ -45,9 +42,7 @@ async function run() {
     } else if (err instanceof InvalidTargetPackage) {
       console.log(
         error(
-          `${err.message}\nNode packages: ${getFormattedPackageList(
-            nodePackages
-          )}`
+          `${err.message}\nNode packages: ${getFormattedPackageList(packages)}`
         )
       );
     } else {
