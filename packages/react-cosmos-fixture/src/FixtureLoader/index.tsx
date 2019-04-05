@@ -22,11 +22,11 @@ import { getFixtureNames, getFixtureNode } from './fixtureHelpers';
 
 export type Props = {
   rendererId: string;
+  rendererConnect: RendererConnect;
   fixtures: FixturesByPath;
   systemDecorators: DecoratorType[];
   userDecorators: DecoratorsByPath;
   onFixtureChange?: () => unknown;
-  connect: RendererConnect;
 };
 
 type State = {
@@ -54,18 +54,17 @@ export class FixtureLoader extends React.Component<Props, State> {
     renderKey: 0
   };
 
-  connectApi: null | RendererConnectApi = null;
+  rendererConnectApi: null | RendererConnectApi = null;
 
   componentDidMount() {
-    const { connect } = this.props;
-
-    this.connectApi = connect(this.handleRequest);
+    const { rendererConnect } = this.props;
+    this.rendererConnectApi = rendererConnect(this.handleRequest);
     this.postReadyState();
   }
 
   componentWillUnmount() {
-    if (this.connectApi) {
-      this.connectApi.off();
+    if (this.rendererConnectApi) {
+      this.rendererConnectApi.off();
     }
   }
 
@@ -290,8 +289,8 @@ export class FixtureLoader extends React.Component<Props, State> {
   }
 
   postMessage(msg: RendererResponse) {
-    if (this.connectApi) {
-      this.connectApi.postMessage(msg);
+    if (this.rendererConnectApi) {
+      this.rendererConnectApi.postMessage(msg);
     }
   }
 }

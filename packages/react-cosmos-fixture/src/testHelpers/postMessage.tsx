@@ -59,11 +59,11 @@ function getElement({
   return (
     <FixtureLoader
       rendererId={rendererId}
+      rendererConnect={createPostMessageConnect()}
       fixtures={fixtures}
       systemDecorators={[]}
       userDecorators={decorators}
       onFixtureChange={onFixtureChange}
-      connect={createPostMessageConnect()}
     />
   );
 }

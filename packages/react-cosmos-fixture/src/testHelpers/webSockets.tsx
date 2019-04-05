@@ -46,11 +46,11 @@ function getElement({
   return (
     <FixtureLoader
       rendererId={rendererId}
+      rendererConnect={createWebSocketsConnect(WS_URL)}
       fixtures={fixtures}
       systemDecorators={[]}
       userDecorators={decorators}
       onFixtureChange={onFixtureChange}
-      connect={createWebSocketsConnect(WS_URL)}
     />
   );
 }
