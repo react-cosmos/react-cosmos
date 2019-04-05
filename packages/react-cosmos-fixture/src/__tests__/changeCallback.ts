@@ -1,13 +1,13 @@
 import { uuid } from 'react-cosmos-shared2/util';
 import retry from '@skidding/async-retry';
-import { runFixtureConnectTests } from '../testHelpers';
+import { runFixtureLoaderTests } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = { first: 'First' };
 const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
-runFixtureConnectTests(mount => {
+runFixtureLoaderTests(mount => {
   it('fires change callback when selecting fixture', async () => {
     const onFixtureChange = jest.fn();
     await mount(

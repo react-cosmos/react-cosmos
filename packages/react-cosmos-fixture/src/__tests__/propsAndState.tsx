@@ -9,7 +9,7 @@ import {
 import { uuid } from 'react-cosmos-shared2/util';
 import { SuffixCounter } from '../testHelpers/components';
 import { anyProps, anyClassState, getProps } from '../testHelpers/fixtureState';
-import { runFixtureConnectTests } from '../testHelpers';
+import { runFixtureLoaderTests } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = {
@@ -26,7 +26,7 @@ const fixtures = {
 const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
-runFixtureConnectTests(mount => {
+runFixtureLoaderTests(mount => {
   it('keeps state when resetting props', async () => {
     await mount(
       { rendererId, fixtures, decorators },

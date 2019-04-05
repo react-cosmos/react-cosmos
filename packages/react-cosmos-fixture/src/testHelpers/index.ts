@@ -1,11 +1,11 @@
 import './mockSocketIo';
 import { mountPostMessage } from './postMessage';
 import { mountWebSockets } from './webSockets';
-import { MountFixtureConnect } from './shared';
+import { MountFixtureLoader } from './shared';
 
-type TestsCallback = (mount: MountFixtureConnect) => void;
+type TestsCallback = (mount: MountFixtureLoader) => void;
 
-export function runFixtureConnectTests(cb: TestsCallback) {
+export function runFixtureLoaderTests(cb: TestsCallback) {
   cb(mountPostMessage);
   cb(mountWebSockets);
 }

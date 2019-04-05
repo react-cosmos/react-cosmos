@@ -1,7 +1,7 @@
 import * as React from 'react';
 import retry from '@skidding/async-retry';
 import { uuid } from 'react-cosmos-shared2/util';
-import { runFixtureConnectTests } from '../testHelpers';
+import { runFixtureLoaderTests } from '../testHelpers';
 
 type Props = {
   children: React.ReactNode;
@@ -22,7 +22,7 @@ const decorators = {
   )
 };
 
-runFixtureConnectTests(mount => {
+runFixtureLoaderTests(mount => {
   it('renders selected fixture inside decorator', async () => {
     await mount(
       { rendererId, fixtures, decorators },

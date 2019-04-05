@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { uuid } from 'react-cosmos-shared2/util';
 import { createValues } from 'react-cosmos-shared2/fixtureState';
-import { runFixtureConnectTests } from '../testHelpers';
+import { runFixtureLoaderTests } from '../testHelpers';
 import { anyProps } from '../testHelpers/fixtureState';
 
 const rendererId = uuid();
 const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
-runFixtureConnectTests(mount => {
+runFixtureLoaderTests(mount => {
   it('collects fixture state for interesting string element type', async () => {
     const fixtures = {
       first: <input type="text" />

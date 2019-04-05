@@ -7,7 +7,7 @@ import {
 import { uuid } from 'react-cosmos-shared2/util';
 import { HelloMessage } from '../testHelpers/components';
 import { anyProps, getProps } from '../testHelpers/fixtureState';
-import { runFixtureConnectTests } from '../testHelpers';
+import { runFixtureLoaderTests } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = {
@@ -21,7 +21,7 @@ const fixtures = {
 const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
-runFixtureConnectTests(mount => {
+runFixtureLoaderTests(mount => {
   it('captures multiple props instances', async () => {
     await mount(
       { rendererId, fixtures, decorators },

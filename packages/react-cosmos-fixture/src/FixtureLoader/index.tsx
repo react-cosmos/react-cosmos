@@ -37,7 +37,7 @@ type State = {
     // - To avoid posting fixtureStateChange messages with no changes from
     //   the last message
     // - To piggy back on React's setState batching and only send a
-    //   fixtureStateChange message when FixtureConnect updates (via cDU),
+    //   fixtureStateChange message when FixtureLoader updates (via cDU),
     //   instead of posting messages in rapid succession as fixture state
     //   changes are dispatched by fixture plugins
     syncedFixtureState: FixtureState;
@@ -48,8 +48,7 @@ type State = {
 
 // TODO: Add props for customizing blank/missing states: `getBlankState` and
 // `getMissingState`
-// TODO: FixtureConnect/FixtureLoader
-export class FixtureConnect extends React.Component<Props, State> {
+export class FixtureLoader extends React.Component<Props, State> {
   state: State = {
     selectedFixture: null,
     renderKey: 0
@@ -235,7 +234,7 @@ export class FixtureConnect extends React.Component<Props, State> {
   setFixtureState: SetFixtureState = stateUpdate => {
     if (!this.state.selectedFixture) {
       console.warn(
-        '[FixtureConnect] Trying to set fixture state with no fixture selected'
+        '[FixtureLoader] Trying to set fixture state with no fixture selected'
       );
       return;
     }

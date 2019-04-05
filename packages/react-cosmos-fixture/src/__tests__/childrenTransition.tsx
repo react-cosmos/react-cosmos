@@ -3,7 +3,7 @@ import { uuid } from 'react-cosmos-shared2/util';
 import { createValues } from 'react-cosmos-shared2/fixtureState';
 import { anyProps } from '../testHelpers/fixtureState';
 import { Wrapper } from '../testHelpers/components';
-import { runFixtureConnectTests } from '../testHelpers';
+import { runFixtureLoaderTests } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = {
@@ -12,7 +12,7 @@ const fixtures = {
 const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
-runFixtureConnectTests(mount => {
+runFixtureLoaderTests(mount => {
   it('transitions string children into an element with children', async () => {
     await mount(
       { rendererId, fixtures, decorators },

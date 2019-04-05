@@ -1,7 +1,7 @@
 // Use in custom integrations
-export { FixtureConnect } from './FixtureConnect';
-export { createPostMessageConnect } from './FixtureConnect/postMessage';
-export { createWebSocketsConnect } from './FixtureConnect/webSockets';
+export { FixtureLoader } from './FixtureLoader';
+export { createPostMessageConnect } from './FixtureLoader/postMessage';
+export { createWebSocketsConnect } from './FixtureLoader/webSockets';
 
 // Use in decorators
 export { FixtureState } from 'react-cosmos-shared2/fixtureState';
