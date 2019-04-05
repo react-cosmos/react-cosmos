@@ -1,6 +1,4 @@
-import * as React from 'react';
 import until from 'async-until';
-import { FixtureConnect } from '..';
 import {
   RendererId,
   RendererRequest,
@@ -13,7 +11,7 @@ import {
   FixtureStateChangeResponse
 } from 'react-cosmos-shared2/renderer';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import { FixturesByPath, DecoratorsByPath, RemoteRendererApi } from '../shared';
+import { FixturesByPath, DecoratorsByPath } from '../shared';
 import { ReactTestRenderer } from 'react-test-renderer';
 
 export type Message = RendererResponse | RendererRequest;
@@ -66,24 +64,6 @@ type FixtureConnectMockArgs = {
   getMessages: GetMessages;
   postMessage: (msg: Message) => unknown;
 };
-
-export function createFixtureConnectRenderCb({
-  rendererId,
-  fixtures,
-  decorators,
-  onFixtureChange
-}: MountFixtureConnectArgs) {
-  return (remoteRendererApiProps: RemoteRendererApi) => (
-    <FixtureConnect
-      rendererId={rendererId}
-      fixtures={fixtures}
-      systemDecorators={[]}
-      userDecorators={decorators}
-      onFixtureChange={onFixtureChange}
-      {...remoteRendererApiProps}
-    />
-  );
-}
 
 export function createFixtureConnectMockApi(
   args: FixtureConnectMockArgs

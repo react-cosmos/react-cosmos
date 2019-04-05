@@ -1,11 +1,10 @@
 import * as React from 'react';
 import * as io from 'socket.io-client';
 import { create, act } from 'react-test-renderer';
-import { WebSockets } from '..';
+import { FixtureConnect, createWebSocketsConnect } from '..';
 import {
   MountFixtureConnectArgs,
   MountFixtureCallback,
-  createFixtureConnectRenderCb,
   createFixtureConnectMockApi
 } from './shared';
 
@@ -38,8 +37,20 @@ export async function mountWebSockets(
   }
 }
 
-function getElement(args: MountFixtureConnectArgs) {
+function getElement({
+  rendererId,
+  fixtures,
+  decorators,
+  onFixtureChange
+}: MountFixtureConnectArgs) {
   return (
-    <WebSockets url={WS_URL}>{createFixtureConnectRenderCb(args)}</WebSockets>
+    <FixtureConnect
+      rendererId={rendererId}
+      fixtures={fixtures}
+      systemDecorators={[]}
+      userDecorators={decorators}
+      onFixtureChange={onFixtureChange}
+      connect={createWebSocketsConnect(WS_URL)}
+    />
   );
 }

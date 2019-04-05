@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { create, act } from 'react-test-renderer';
-import { PostMessage } from '..';
+import { FixtureConnect, createPostMessageConnect } from '..';
 import {
   Message,
   MountFixtureConnectArgs,
   MountFixtureCallback,
-  createFixtureConnectMockApi,
-  createFixtureConnectRenderCb
+  createFixtureConnectMockApi
 } from './shared';
 
 export async function mountPostMessage(
@@ -51,6 +50,20 @@ export async function mountPostMessage(
   }
 }
 
-function getElement(args: MountFixtureConnectArgs) {
-  return <PostMessage>{createFixtureConnectRenderCb(args)}</PostMessage>;
+function getElement({
+  rendererId,
+  fixtures,
+  decorators,
+  onFixtureChange
+}: MountFixtureConnectArgs) {
+  return (
+    <FixtureConnect
+      rendererId={rendererId}
+      fixtures={fixtures}
+      systemDecorators={[]}
+      userDecorators={decorators}
+      onFixtureChange={onFixtureChange}
+      connect={createPostMessageConnect()}
+    />
+  );
 }

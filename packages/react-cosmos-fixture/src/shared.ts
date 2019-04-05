@@ -20,15 +20,14 @@ export type DecoratorsByPath = {
   [path: string]: DecoratorType;
 };
 
-export type RemoteRendererApi = {
-  subscribe: (request: OnRendererRequest) => unknown;
-  unsubscribe: () => unknown;
+export type RendererConnectApi = {
   postMessage: OnRendererResponse;
+  off: () => unknown;
 };
 
-export type ConnectRenderCb = (
-  api: RemoteRendererApi
-) => React.ReactElement<any>;
+export type RendererConnect = (
+  onMessage: OnRendererRequest
+) => RendererConnectApi;
 
 export type FixtureContextValue = {
   fixtureState: FixtureState;

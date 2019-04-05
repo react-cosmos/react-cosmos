@@ -6,13 +6,15 @@ import {
   FixtureId,
   RendererRequest,
   SelectFixtureRequest,
-  SetFixtureStateRequest
+  SetFixtureStateRequest,
+  RendererResponse
 } from 'react-cosmos-shared2/renderer';
 import {
   DecoratorType,
   DecoratorsByPath,
-  RemoteRendererApi,
   FixturesByPath,
+  RendererConnectApi,
+  RendererConnect,
   SetFixtureState
 } from '../shared';
 import { FixtureProvider } from '../FixtureProvider';
@@ -24,8 +26,8 @@ export type Props = {
   systemDecorators: DecoratorType[];
   userDecorators: DecoratorsByPath;
   onFixtureChange?: () => unknown;
-  // TODO: Receive single RendererConnectApi prop
-} & RemoteRendererApi;
+  connect: RendererConnect;
+};
 
 type State = {
   selectedFixture: null | {
@@ -53,11 +55,19 @@ export class FixtureConnect extends React.Component<Props, State> {
     renderKey: 0
   };
 
-  componentDidMount() {
-    const { subscribe } = this.props;
+  connectApi: null | RendererConnectApi = null;
 
-    subscribe(this.handleRequest);
+  componentDidMount() {
+    const { connect } = this.props;
+
+    this.connectApi = connect(this.handleRequest);
     this.postReadyState();
+  }
+
+  componentWillUnmount() {
+    if (this.connectApi) {
+      this.connectApi.off();
+    }
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -74,10 +84,6 @@ export class FixtureConnect extends React.Component<Props, State> {
         this.updateSyncedFixtureState(syncedFixtureState);
       }
     }
-  }
-
-  componentWillUnmount() {
-    this.props.unsubscribe();
   }
 
   shouldComponentUpdate(prevProps: Props, prevState: State) {
@@ -190,8 +196,8 @@ export class FixtureConnect extends React.Component<Props, State> {
   }
 
   postReadyState() {
-    const { rendererId, postMessage } = this.props;
-    postMessage({
+    const { rendererId } = this.props;
+    this.postMessage({
       type: 'rendererReady',
       payload: {
         rendererId,
@@ -201,8 +207,8 @@ export class FixtureConnect extends React.Component<Props, State> {
   }
 
   postFixtureListUpdate() {
-    const { rendererId, postMessage } = this.props;
-    postMessage({
+    const { rendererId } = this.props;
+    this.postMessage({
       type: 'fixtureListUpdate',
       payload: {
         rendererId,
@@ -210,6 +216,21 @@ export class FixtureConnect extends React.Component<Props, State> {
       }
     });
   }
+
+  postFixtureStateChange = (
+    fixtureId: FixtureId,
+    fixtureState: FixtureState
+  ) => {
+    const { rendererId } = this.props;
+    this.postMessage({
+      type: 'fixtureStateChange',
+      payload: {
+        rendererId,
+        fixtureId,
+        fixtureState
+      }
+    });
+  };
 
   setFixtureState: SetFixtureState = stateUpdate => {
     if (!this.state.selectedFixture) {
@@ -236,21 +257,6 @@ export class FixtureConnect extends React.Component<Props, State> {
           fixtureState: stateUpdate(selectedFixture.fixtureState)
         }
       };
-    });
-  };
-
-  postFixtureStateChange = (
-    fixtureId: FixtureId,
-    fixtureState: FixtureState
-  ) => {
-    const { rendererId, postMessage } = this.props;
-    postMessage({
-      type: 'fixtureStateChange',
-      payload: {
-        rendererId,
-        fixtureId,
-        fixtureState
-      }
     });
   };
 
@@ -282,6 +288,12 @@ export class FixtureConnect extends React.Component<Props, State> {
         }
       };
     });
+  }
+
+  postMessage(msg: RendererResponse) {
+    if (this.connectApi) {
+      this.connectApi.postMessage(msg);
+    }
   }
 }
 
