@@ -209,7 +209,7 @@ export class FixtureConnect extends React.Component<Props, State> {
     });
   }
 
-  setFixtureState: SetFixtureState = (stateUpdate, cb) => {
+  setFixtureState: SetFixtureState = stateUpdate => {
     if (!this.state.selectedFixture) {
       console.warn(
         '[FixtureConnect] Trying to set fixture state with no fixture selected'
@@ -234,7 +234,7 @@ export class FixtureConnect extends React.Component<Props, State> {
           fixtureState: stateUpdate(selectedFixture.fixtureState)
         }
       };
-    }, cb);
+    });
   };
 
   postFixtureStateChange = (
