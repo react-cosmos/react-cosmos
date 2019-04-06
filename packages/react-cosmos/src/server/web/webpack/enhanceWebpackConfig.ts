@@ -51,7 +51,7 @@ export function enhanceWebpackConfig({
   const rules = (webpackConfig.module && webpackConfig.module.rules) || [];
   rules.push({
     loader: require.resolve('./embedModulesWebpackLoader'),
-    include: resolveClientPath('userModules')
+    include: resolveClientPath('index')
   });
 
   const cleanPublicUrl = removeTrailingSlash(getPublicUrl(cosmosConfig));

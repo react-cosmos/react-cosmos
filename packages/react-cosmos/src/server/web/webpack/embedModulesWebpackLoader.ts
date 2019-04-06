@@ -38,21 +38,16 @@ module.exports = async function embedModules(source: string) {
     fixtureFileSuffix
   });
 
-  const res = source
+  const compiledModules = getCompiledModules({
     // TODO: Resolve global imports
-    .replace(
-      `/* __INJECT_GLOBAL_IMPORTS__ */`,
-      globalImports.map(importPath => `require('${importPath}');`).join(`\n`)
-    )
-    .replace(
-      '= __COSMOS_FIXTURES',
-      `= ${genModuleMapStr(fixturePaths, rootDir)}`
-    )
-    .replace(
-      '= __COSMOS_DECORATORS',
-      `= ${genModuleMapStr(decoratorPaths, rootDir)}`
-    );
+    globalImports: globalImports
+      .map(importPath => `require('${importPath}');`)
+      .join(`\n`),
+    fixtures: genModuleMapStr(fixturePaths, rootDir),
+    decorators: genModuleMapStr(decoratorPaths, rootDir)
+  });
 
+  const res = source.replace('= __COSMOS_MODULES', `= ${compiledModules}`);
   callback(null, res);
 };
 
@@ -68,4 +63,28 @@ function getModuleStr(p: string, rootDir: string) {
   const relPath = slash(path.relative(rootDir, p));
   return `
   '${relPath}': require('${p}').default`;
+}
+
+type ModulesTemplateArgs = {
+  globalImports: string;
+  fixtures: string;
+  decorators: string;
+};
+
+function getCompiledModules({
+  globalImports,
+  fixtures,
+  decorators
+}: ModulesTemplateArgs) {
+  return `(function() {
+    // Global imports used to be added as bundle entry points but they were moved
+    // here to make them hot reload-able, which works because the file that imports
+    // this file knows how to accept hot reload patches
+    ${globalImports}
+  
+    return {
+      fixtures: ${fixtures},
+      decorators: ${decorators}
+    };
+  })()`;
 }
