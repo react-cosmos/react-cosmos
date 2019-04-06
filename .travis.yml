@@ -20,7 +20,7 @@ script:
   - yarn codecov
   # Test build
   - yarn link-entries dist
-  - yarn start & yarn test:e2e
+  - yarn start & yarn test:smoke
 cache:
   yarn: true
   directories:

@@ -36,7 +36,7 @@ jobs:
       - run: yarn codecov
       # Test build
       - run: yarn link-entries dist
-      - run: yarn start & yarn test:e2e
+      - run: yarn start & yarn test:smoke
 
   node-v6:
     <<: *node-base
