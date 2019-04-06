@@ -13,21 +13,12 @@ export const readFileAsync = asyncify(readFile);
 export const writeFileAsync = asyncify(writeFile);
 export const rimrafAsync = asyncify(rimraf);
 
-// NOTE: Order is important!
 export const NODE_PACKAGES = [
   'react-cosmos-shared2',
   'react-cosmos-fixture',
   'react-cosmos'
 ];
 export const BROWSER_PACKAGES = ['react-cosmos-playground2'];
-
-export async function getNodePackages(): Promise<PackageNames> {
-  return NODE_PACKAGES;
-}
-
-export async function getBrowserPackages(): Promise<PackageNames> {
-  return BROWSER_PACKAGES;
-}
 
 export function getFormattedPackageList(pkgNames: PackageNames) {
   return ['', ...pkgNames].join('\n - ');

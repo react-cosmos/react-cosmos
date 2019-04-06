@@ -3,8 +3,8 @@ import path from 'path';
 import chalk from 'chalk';
 import cpy from 'cpy';
 import {
-  getNodePackages,
-  getBrowserPackages,
+  NODE_PACKAGES,
+  BROWSER_PACKAGES,
   getFormattedPackageList,
   getUnnamedArg,
   getBoolArg,
@@ -17,12 +17,17 @@ const { stdout, stderr } = process;
 // NOTE: The watch flag is used as a global in this script
 const watch = getBoolArg('watch');
 
+const BUILD_ORDER = [
+  'react-cosmos-shared2',
+  'react-cosmos-fixture',
+  'react-cosmos-playground2',
+  'react-cosmos'
+];
+
 run();
 
 async function run() {
-  const nodePackages = await getNodePackages();
-  const browserPackages = await getBrowserPackages();
-  const buildablePackages = [...nodePackages, ...browserPackages];
+  const buildablePackages = [...NODE_PACKAGES, ...BROWSER_PACKAGES];
   // TODO: Allow shorthand names (shared => react-cosmos-shared2, etc.)
   const pkgName = getUnnamedArg();
 
@@ -53,11 +58,7 @@ async function run() {
       `${watch ? 'Build-watching' : 'Building'} ${chalk.bold(pkgName)}...\n`
     );
 
-    if (nodePackages.indexOf(pkgName) !== -1) {
-      await buildTsPackage(pkgName);
-    } else {
-      await buildBrowserPackage(pkgName);
-    }
+    await buildPackage(pkgName);
   } else {
     if (watch) {
       // The limitation here is that we need to build browser packages after
@@ -74,18 +75,20 @@ async function run() {
       return;
     }
 
-    stdout.write(`Building Node packages with TypeScript...\n`);
-    // Node packages are built serially because they depend on each other and
+    // Packages are built serially because they depend on each other and
     // this way TypeScript ensures their interfaces are compatible
-    for (const pkg of nodePackages) {
-      await buildTsPackage(pkg);
+    for (const curPkgName of BUILD_ORDER) {
+      await buildPackage(curPkgName);
     }
-
-    stdout.write(`Building browser packages with webpack...\n`);
-    await Promise.all(browserPackages.map(buildBrowserPackage));
 
     stdout.write(`Built ${buildablePackages.length} packages successfully.\n`);
   }
+}
+
+async function buildPackage(pkgName: string) {
+  return BROWSER_PACKAGES.indexOf(pkgName) !== -1
+    ? buildBrowserPackage(pkgName)
+    : buildTsPackage(pkgName);
 }
 
 async function buildTsPackage(pkgName: string) {

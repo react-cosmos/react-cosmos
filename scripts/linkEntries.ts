@@ -1,10 +1,10 @@
 import chalk from 'chalk';
 import {
   PackageNames,
+  NODE_PACKAGES,
   globAsync,
   readFileAsync,
   writeFileAsync,
-  getNodePackages,
   getFormattedPackageList,
   getUnnamedArg,
   done,
@@ -19,7 +19,7 @@ type TargetDir = typeof SRC_DIR | typeof DIST_DIR;
 run();
 
 async function run() {
-  const packages = await getNodePackages();
+  const packages = NODE_PACKAGES;
   try {
     const targetDir = getTargetDir();
     const targetPackages = getTargetPackages(packages);
