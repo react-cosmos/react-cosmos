@@ -1,8 +1,9 @@
 import { clearTreeViewState } from '../support/localStorage';
 
 describe('Example', () => {
-  beforeEach(() => {
-    cy.visit('/').then(() => clearTreeViewState());
+  // WARNING: These tests are serial and share state
+  before(() => {
+    return clearTreeViewState().then(() => cy.visit('/'));
   });
 
   context('homepage', () => {
@@ -35,17 +36,14 @@ describe('Example', () => {
   });
 
   context('select fixture', () => {
-    it('renders selected fixture', () => {
+    it('renders selected fixtures', () => {
       cy.contains('hello world').click();
       getRendererBody()
         .find('#root')
         .should('have.text', 'Hello World!');
     });
-  });
 
-  context('fixture state', () => {
-    it('preseves state after HMR update', () => {
-      cy.contains('Counter').click();
+    it('renders updated fixture', () => {
       cy.contains('large number').click();
       getRendererBody()
         .find('button')
@@ -55,20 +53,10 @@ describe('Example', () => {
         .click()
         .click()
         .should('have.text', '555555557 times');
-      getRendererWindow().then(rendererWindow => {
-        rendererWindow.__fakeHotReload();
-      });
-      getRendererBody()
-        .find('button')
-        .should('have.text', '555555557 times');
     });
   });
 });
 
 function getRendererBody() {
   return cy.get('iframe').then($iframe => $iframe.contents().find('body'));
-}
-
-function getRendererWindow() {
-  return cy.get('iframe').then($iframe => $iframe[0].contentWindow);
 }
