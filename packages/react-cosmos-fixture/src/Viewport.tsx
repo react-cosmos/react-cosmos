@@ -20,3 +20,5 @@ export function Viewport({ children, width, height }: Props) {
   // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/18051
   return <>{children}</>;
 }
+
+Viewport.cosmosCapture = false;
