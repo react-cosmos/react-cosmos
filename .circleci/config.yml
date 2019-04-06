@@ -27,14 +27,14 @@ jobs:
             - ~/.cache
 
       # Test source (with cross-package coverage)
-      - run: yarn link-entries src
+      - run: yarn src
       - run: yarn lint
       - run: yarn test:coverage --maxWorkers=2
       - run: yarn codecov
 
       # Test build
+      - run: yarn dist
       - run: yarn build
-      - run: yarn link-entries dist
       - run: yarn start & yarn test:smoke
 
       - store_artifacts:

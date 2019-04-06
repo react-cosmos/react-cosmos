@@ -11,14 +11,14 @@ before_install:
 install: 'yarn install --ignore-engines'
 script:
   # Test source (with cross-package coverage)
-  - yarn link-entries src
+  - yarn src
   - yarn lint
   - yarn test:coverage --maxWorkers=2
   - yarn codecov
 
   # Test build
+  - yarn dist
   - yarn build
-  - yarn link-entries dist
   - yarn start & yarn test:smoke
 cache:
   yarn: true
