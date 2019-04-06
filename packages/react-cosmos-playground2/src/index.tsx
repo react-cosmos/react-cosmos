@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import * as ReactPlugin from 'react-plugin';
-import { getDomContainer } from 'react-cosmos-shared2/dom';
 import { CoreSpec } from './plugins/Core/public';
 import { GlobalStyle } from './global/style';
 
@@ -26,6 +25,6 @@ export default function mount(config: PlaygroundConfig) {
       <GlobalStyle />
       <Slot name="root" />
     </>,
-    getDomContainer()
+    document.getElementById('root')
   );
 }

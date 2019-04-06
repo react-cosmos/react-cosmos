@@ -1,32 +1,35 @@
 import * as React from 'react';
 import { render } from 'react-dom';
-import { getDomContainer } from 'react-cosmos-shared2/dom';
-import { RendererId } from 'react-cosmos-shared2/renderer';
 import {
   FixtureLoader,
   FixturesByPath,
+  DecoratorsByPath,
   createPostMessageConnect,
   createWebSocketsConnect
 } from 'react-cosmos-fixture';
 import { RendererConfig } from '../shared';
+import { isInsideIframe } from './shared';
+import { getDomContainer } from './container';
 import { ErrorCatch } from './ErrorCatch';
-import { DecoratorsByPath } from 'react-cosmos-fixture/src';
+import { getRendererId } from './rendererId';
+import { addGlobalErrorHandler } from './globalErrorHandler';
 
 type RendererOptions = {
-  rendererId: RendererId;
   rendererConfig: RendererConfig;
   fixtures: FixturesByPath;
   decorators: DecoratorsByPath;
   onFixtureChange?: () => unknown;
 };
 
+const rendererId = getRendererId();
+
 export function mount({
-  rendererId,
   fixtures,
   decorators,
   rendererConfig,
   onFixtureChange
 }: RendererOptions) {
+  addGlobalErrorHandler(rendererId);
   render(
     <FixtureLoader
       rendererId={rendererId}
@@ -44,14 +47,6 @@ function getRendererConnect() {
   return isInsideIframe()
     ? createPostMessageConnect()
     : createWebSocketsConnect(getWebSocketsUrl());
-}
-
-function isInsideIframe() {
-  try {
-    return window.self !== window.top;
-  } catch (e) {
-    return true;
-  }
 }
 
 function getWebSocketsUrl() {
