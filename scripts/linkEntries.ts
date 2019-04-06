@@ -2,6 +2,7 @@ import chalk from 'chalk';
 import {
   PackageNames,
   NODE_PACKAGES,
+  BROWSER_PACKAGES,
   globAsync,
   readFileAsync,
   writeFileAsync,
@@ -19,7 +20,7 @@ type TargetDir = typeof SRC_DIR | typeof DIST_DIR;
 run();
 
 async function run() {
-  const packages = NODE_PACKAGES;
+  const packages = [...NODE_PACKAGES, ...BROWSER_PACKAGES];
   try {
     const targetDir = getTargetDir();
     const targetPackages = getTargetPackages(packages);
