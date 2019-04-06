@@ -77,6 +77,7 @@ export const COSMOS_CONFIG: CosmosConfig = {
   modulesPath: 'cosmos.modules.js'
 };
 
+// TODO: Cache?
 export function getRootDir({ rootDir }: CosmosConfig): string {
   // TODO: Add support for --root-dir
   const currentDir = process.cwd();
@@ -106,4 +107,10 @@ export function getPublicPath(cosmosConfig: CosmosConfig) {
 
   const rootDir = getRootDir(cosmosConfig);
   return slash(path.resolve(rootDir, publicPath));
+}
+
+export function getWatchDirs(cosmosConfig: CosmosConfig) {
+  const { watchDirs } = cosmosConfig;
+  const rootDir = getRootDir(cosmosConfig);
+  return watchDirs.map(dirPath => slash(path.resolve(rootDir, dirPath)));
 }

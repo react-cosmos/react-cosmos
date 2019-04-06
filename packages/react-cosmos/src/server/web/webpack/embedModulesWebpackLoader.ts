@@ -1,7 +1,7 @@
 import path from 'path';
 import { findUserModulePaths } from 'react-cosmos-shared2/server';
 import { slash } from '../../shared/slash';
-import { COSMOS_CONFIG, getRootDir } from '../../shared/config';
+import { COSMOS_CONFIG, getRootDir, getWatchDirs } from '../../shared/config';
 
 type WebpackLoaderContext = {
   async(): (error: Error | null, result: string | Buffer) => unknown;
@@ -13,13 +13,9 @@ module.exports = async function embedModules(source: string) {
   const callback = webpackLoaderContext.async();
 
   const cosmosConfig = COSMOS_CONFIG;
-  const {
-    fixturesDir,
-    fixtureFileSuffix,
-    watchDirs,
-    globalImports
-  } = COSMOS_CONFIG;
+  const { fixturesDir, fixtureFileSuffix, globalImports } = COSMOS_CONFIG;
   const rootDir = getRootDir(cosmosConfig);
+  const watchDirs = getWatchDirs(cosmosConfig);
 
   // This ensures this loader is invalidated whenever a new file is added to or
   // removed from user's project, which in turn triggers react-cosmos-voyager2
