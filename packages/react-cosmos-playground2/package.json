@@ -6,9 +6,10 @@
   "license": "MIT",
   "main": "dist/index.js",
   "devDependencies": {
+    "html-webpack-plugin": "^3.2.0",
     "localforage": "^1.7.3",
     "lodash": "^4.17.11",
-    "query-string": "^6.2.0",
+    "query-string": "^6.4.2",
     "react": "^16.8.6",
     "react-cosmos-shared2": "^4.8.1",
     "react-dom": "^16.8.6",

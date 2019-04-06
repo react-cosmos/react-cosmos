@@ -16,7 +16,7 @@ script:
   # Test source (with cross-package coverage)
   - yarn link-entries src
   - yarn lint
-  - yarn test:unit --maxWorkers=2
+  - yarn test:coverage --maxWorkers=2
   - yarn codecov
   # Test build
   - yarn link-entries dist

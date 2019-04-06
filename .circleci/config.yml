@@ -32,7 +32,7 @@ jobs:
       # Test source (with cross-package coverage)
       - run: yarn link-entries src
       - run: yarn lint
-      - run: yarn test:unit --maxWorkers=2 --coverage
+      - run: yarn test:coverage --maxWorkers=2
       - run: yarn codecov
       # Test build
       - run: yarn link-entries dist
