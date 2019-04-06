@@ -10,15 +10,14 @@ before_install:
   - export PATH=$HOME/.yarn/bin:$PATH
 install: 'yarn install --ignore-engines'
 script:
-  # Building upfront because some react-cosmos/server unit tests require
-  # react-cosmos-playground2 to be built
-  - yarn build
   # Test source (with cross-package coverage)
   - yarn link-entries src
   - yarn lint
   - yarn test:coverage --maxWorkers=2
   - yarn codecov
+
   # Test build
+  - yarn build
   - yarn link-entries dist
   - yarn start & yarn test:smoke
 cache:
