@@ -1,5 +1,6 @@
 import resolveFrom from 'resolve-from';
 import webpack from 'webpack';
+import { RENDERER_FILENAME } from '../../shared/playground';
 import { getHtmlWebpackPlugin } from './htmlWebpackPlugin';
 
 // This config doesn't have entry and output set up because it's not meant to
@@ -61,7 +62,10 @@ export default function getDefaultWebpackConfig(
   const htmlWebpackPlugin = getHtmlWebpackPlugin(rootDir);
   if (htmlWebpackPlugin) {
     plugins.push(
-      new htmlWebpackPlugin({ title: 'React Cosmos', filename: '_loader.html' })
+      new htmlWebpackPlugin({
+        title: 'React Cosmos',
+        filename: RENDERER_FILENAME
+      })
     );
   }
 

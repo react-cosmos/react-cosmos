@@ -5,6 +5,8 @@ import { PlaygroundConfig } from 'react-cosmos-playground2';
 import { CosmosConfig, getRootDir, getPublicUrl } from './config';
 import { slash } from './slash';
 
+export const RENDERER_FILENAME = '_renderer.html';
+
 export function getPlaygroundConfig({
   cosmosConfig,
   devServerOn
@@ -22,7 +24,7 @@ export function getPlaygroundConfig({
       fixturesDir,
       fixtureFileSuffix,
       devServerOn,
-      webRendererUrl: slash(publicUrl, '_loader.html')
+      webRendererUrl: slash(publicUrl, RENDERER_FILENAME)
     }
   };
 }

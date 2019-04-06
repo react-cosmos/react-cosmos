@@ -1,6 +1,7 @@
 import importFrom from 'import-from';
 // TODO: Test if a webpack import (require) is kept in the compiled file
 import webpack from 'webpack';
+import { RENDERER_FILENAME } from '../../shared/playground';
 import { isInstanceOf } from './shared';
 
 type HtmlWebpackPlugin = webpack.Plugin & {
@@ -36,6 +37,6 @@ export function changeHtmlPluginFilename(htmlPlugin: HtmlWebpackPlugin) {
 
   return new htmlPlugin.constructor({
     ...htmlPlugin.options,
-    filename: '_loader.html'
+    filename: RENDERER_FILENAME
   });
 }

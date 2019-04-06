@@ -7,6 +7,7 @@ import {
   getPublicUrl,
   getExportPath
 } from '../../shared/config';
+import { RENDERER_FILENAME } from '../../shared/playground';
 import { hasPlugin } from './shared';
 import {
   getHtmlWebpackPlugin,
@@ -81,7 +82,7 @@ export function enhanceWebpackConfig({
         ...plugins,
         new htmlWebpackPlugin({
           title: 'React Cosmos',
-          filename: '_loader.html'
+          filename: RENDERER_FILENAME
         })
       ];
     }
