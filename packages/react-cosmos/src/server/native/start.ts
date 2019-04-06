@@ -44,8 +44,8 @@ export async function startCosmosServer() {
 
 // TODO: Add to config
 const FILE_MATCH = [
-  '**/__jsxfixture?(s)__/**/*.{js,jsx,ts,tsx}',
-  '**/?(*.)jsxfixture?(s).{js,jsx,ts,tsx}'
+  '**/__fixture?(s)__/**/*.{js,jsx,ts,tsx}',
+  '**/?(*.)fixture?(s).{js,jsx,ts,tsx}'
 ];
 const FILE_MATCH_IGNORE = '**/node_modules/**';
 

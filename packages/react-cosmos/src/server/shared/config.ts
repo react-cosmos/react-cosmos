@@ -67,8 +67,8 @@ export type CosmosConfig = {
 // Related https://github.com/react-cosmos/react-cosmos/issues/488
 export const COSMOS_CONFIG: CosmosConfig = {
   // TODO: Move (most of) these values into defaults
-  fixtureFileSuffix: 'jsxfixture',
-  fixturesDir: '__jsxfixtures__',
+  fixtureFileSuffix: 'fixture',
+  fixturesDir: '__fixtures__',
   globalImports: [],
   hostname: null,
   hotReload: true,

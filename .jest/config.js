@@ -10,8 +10,8 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/.jest/setup-framework.ts'],
   collectCoverageFrom: [
     '**/src/**/*.{ts,tsx}',
-    '!**/{__fixtures__,__jsxfixtures__}/**',
-    '!**/*.{fixture,jsxfixture}.{js,ts,tsx}',
+    '!**/__fixtures__/**',
+    '!**/*.fixture}.{js,ts,tsx}',
     '!**/cosmos.decorator.{js,ts,tsx}',
     '!**/testHelpers/**',
     '!**/@types/**',
