@@ -26,3 +26,6 @@ if ((module as any).hot) {
     mount();
   });
 }
+
+// Hook for Cypress to simulate a HMR update
+(window as any).__fakeHotReload = mount;
