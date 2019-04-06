@@ -21,14 +21,16 @@ export function getFixtureNode(
 ): void | React.ReactNode {
   if (fixtureName === null) {
     if (isNodeMap(fixtureExport)) {
-      throw new Error(`Fixture name missing in multi fixture`);
+      // Fixture name missing in multi fixture
+      return;
     }
 
     return fixtureExport;
   }
 
   if (!isNodeMap(fixtureExport)) {
-    throw new Error(`Fixture name not found in single fixture: ${fixtureName}`);
+    // Fixture name not found in single fixture
+    return;
   }
 
   return (fixtureExport as NodeMap)[fixtureName];
