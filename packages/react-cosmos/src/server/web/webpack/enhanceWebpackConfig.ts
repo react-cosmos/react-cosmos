@@ -1,6 +1,5 @@
 import path from 'path';
 import webpack from 'webpack';
-import { DomRendererConfig } from '../../../dom';
 import {
   CosmosConfig,
   getRootDir,
@@ -16,11 +15,10 @@ import {
 } from './htmlWebpackPlugin';
 
 /**
- * Enhance the user config to create the Loader config. Namely,
+ * Enhance the user config to create the Renderer webpack config. Namely,
  * - Replace the entry and output
  * - Enable hot reloading
- * - Embed the user module require calls via embedModulesWebpackLoader
- * - Embed the playground options to use in the client-side bundle
+ * - Embed the user config & modules via injectRendererDataLoader
  *
  * It's crucial for Cosmos to not depend on user-installed loaders. All
  * internal loaders and entries must have absolute path (via require.resolve)
@@ -51,7 +49,7 @@ export function enhanceWebpackConfig({
 
   const rules = (webpackConfig.module && webpackConfig.module.rules) || [];
   rules.push({
-    loader: require.resolve('./embedModulesWebpackLoader'),
+    loader: require.resolve('./injectRendererDataLoader'),
     include: resolveClientPath('index')
   });
 
@@ -66,11 +64,6 @@ export function enhanceWebpackConfig({
         NODE_ENV: JSON.stringify(staticBuild ? 'production' : 'development'),
         PUBLIC_URL: JSON.stringify(cleanPublicUrl)
       }
-    }),
-    new userWebpack.DefinePlugin({
-      // Config options that are available inside the client bundle. Warning:
-      // Must be serializable!
-      RENDERER_CONFIG: JSON.stringify(getRendererConfig(cosmosConfig))
     }),
     new userWebpack.NoEmitOnErrorsPlugin()
   ];
@@ -162,12 +155,6 @@ function getExistingPlugins(webpackConfig: webpack.Configuration) {
   return plugins.map(plugin =>
     isHtmlWebpackPlugin(plugin) ? changeHtmlPluginFilename(plugin) : plugin
   );
-}
-
-function getRendererConfig({
-  containerQuerySelector
-}: CosmosConfig): DomRendererConfig {
-  return { containerQuerySelector };
 }
 
 function removeTrailingSlash(url: string) {

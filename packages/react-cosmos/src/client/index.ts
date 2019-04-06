@@ -2,20 +2,17 @@ import { FixturesByPath, DecoratorsByPath } from 'react-cosmos-fixture';
 import { DomRendererConfig } from '../dom';
 import { initErrorOverlay, dismissErrorOverlay } from './errorOverlay';
 
-// TODO: Merge injected config with modules
-declare var RENDERER_CONFIG: DomRendererConfig;
-declare var __COSMOS_MODULES: {
+export type DomRendererData = {
+  rendererConfig: DomRendererConfig;
   fixtures: FixturesByPath;
   decorators: DecoratorsByPath;
 };
 
-// NOTE: Renderer config is injected at compile-time
-export const rendererConfig: DomRendererConfig = RENDERER_CONFIG;
+// NOTE: Renderer data is statically injected at compile time
+declare var __COSMOS_DATA: DomRendererData;
 
-// NOTE: Cosmos modules are statically injected at compile time
-const cosmosModules = __COSMOS_MODULES;
-
-const { fixtures, decorators } = cosmosModules;
+const rendererData = __COSMOS_DATA;
+const { rendererConfig, fixtures, decorators } = rendererData;
 
 function mount() {
   // Use dynamic import to load updated modules upon hot reloading
