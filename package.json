@@ -84,7 +84,7 @@
     "ts-node": "^8.0.3",
     "tslint": "^5.15.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "3.3.3333",
+    "typescript": "3.4.2",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
     "yargs": "^13.2.2"

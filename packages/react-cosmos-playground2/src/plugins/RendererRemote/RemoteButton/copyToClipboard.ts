@@ -1,7 +1,4 @@
 interface IExtendedNavigator extends Navigator {
-  clipboard: {
-    writeText(newClipText: string): Promise<void>;
-  };
   permissions: {
     query(descriptor: {
       name: 'clipboard-write';
