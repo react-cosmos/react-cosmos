@@ -1,16 +1,16 @@
 import { FixturesByPath, DecoratorsByPath } from 'react-cosmos-fixture';
-import { RendererConfig } from '../shared';
+import { DomRendererConfig } from '../dom';
 import { initErrorOverlay, dismissErrorOverlay } from './errorOverlay';
 
 // TODO: Merge injected config with modules
-declare var RENDERER_CONFIG: RendererConfig;
+declare var RENDERER_CONFIG: DomRendererConfig;
 declare var __COSMOS_MODULES: {
   fixtures: FixturesByPath;
   decorators: DecoratorsByPath;
 };
 
 // NOTE: Renderer config is injected at compile-time
-export const rendererConfig: RendererConfig = RENDERER_CONFIG;
+export const rendererConfig: DomRendererConfig = RENDERER_CONFIG;
 
 // NOTE: Cosmos modules are statically injected at compile time
 const cosmosModules = __COSMOS_MODULES;

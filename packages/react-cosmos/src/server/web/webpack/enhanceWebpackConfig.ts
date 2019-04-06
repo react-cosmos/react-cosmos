@@ -1,6 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
-import { RendererConfig } from '../../../shared';
+import { DomRendererConfig } from '../../../dom';
 import {
   CosmosConfig,
   getRootDir,
@@ -109,13 +109,17 @@ export function enhanceWebpackConfig({
 function getEntry({ hotReload }: CosmosConfig, staticBuild: boolean) {
   // The React devtools hook needs to be imported before any other module which
   // might import React
-  const entry = [resolveClientPath('reactDevtoolsHook')];
+  const entry = [resolveSrcPath('dom/reactDevtoolsHook')];
 
   if (hotReload && !staticBuild) {
     entry.push(getHotMiddlewareEntry());
   }
 
   return [...entry, resolveClientPath('index')];
+}
+
+function resolveSrcPath(relPath: string) {
+  return require.resolve(`../../../${relPath}`);
 }
 
 function resolveClientPath(relPath: string) {
@@ -162,7 +166,7 @@ function getExistingPlugins(webpackConfig: webpack.Configuration) {
 
 function getRendererConfig({
   containerQuerySelector
-}: CosmosConfig): RendererConfig {
+}: CosmosConfig): DomRendererConfig {
   return { containerQuerySelector };
 }
 

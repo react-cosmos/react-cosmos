@@ -7,15 +7,16 @@ import {
   createPostMessageConnect,
   createWebSocketsConnect
 } from 'react-cosmos-fixture';
-import { RendererConfig } from '../shared';
-import { isInsideIframe } from './shared';
+import { DomRendererConfig, isInsideIframe } from './shared';
 import { getDomContainer } from './container';
 import { ErrorCatch } from './ErrorCatch';
 import { getRendererId } from './rendererId';
 import { addGlobalErrorHandler } from './globalErrorHandler';
 
-type RendererOptions = {
-  rendererConfig: RendererConfig;
+export { DomRendererConfig } from './shared';
+
+type MountDomRendererOpts = {
+  rendererConfig: DomRendererConfig;
   fixtures: FixturesByPath;
   decorators: DecoratorsByPath;
   onFixtureChange?: () => unknown;
@@ -28,7 +29,7 @@ export function mount({
   decorators,
   rendererConfig,
   onFixtureChange
-}: RendererOptions) {
+}: MountDomRendererOpts) {
   addGlobalErrorHandler(rendererId);
   render(
     <FixtureLoader
