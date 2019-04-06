@@ -11,7 +11,7 @@ module.exports = {
   collectCoverageFrom: [
     '**/src/**/*.{ts,tsx}',
     '!**/__fixtures__/**',
-    '!**/*.fixture}.{js,ts,tsx}',
+    '!**/*.fixture.{js,ts,tsx}',
     '!**/cosmos.decorator.{js,ts,tsx}',
     '!**/testHelpers/**',
     '!**/@types/**',
