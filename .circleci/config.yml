@@ -38,8 +38,6 @@ jobs:
       - run: yarn start & yarn test:smoke
 
       - store_artifacts:
-          path: /root/app/cypress/screenshots
-      - store_artifacts:
           path: /root/app/cypress/videos
 
   node-v6:
