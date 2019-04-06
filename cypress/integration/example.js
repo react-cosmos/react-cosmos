@@ -43,7 +43,7 @@ describe('Example', () => {
     });
   });
 
-  context.only('fixture state', () => {
+  context('fixture state', () => {
     it('preseves state after HMR update', () => {
       cy.contains('Counter').click();
       cy.contains('large number').click();
