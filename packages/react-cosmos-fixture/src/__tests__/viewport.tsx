@@ -2,7 +2,6 @@ import * as React from 'react';
 import retry from '@skidding/async-retry';
 import { uuid } from 'react-cosmos-shared2/util';
 import { runFixtureLoaderTests } from '../testHelpers';
-import { anyProps } from '../testHelpers/fixtureState';
 import { Viewport } from '..';
 
 const rendererId = uuid();
@@ -44,7 +43,7 @@ runFixtureLoaderTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            props: [anyProps()],
+            props: [],
             viewport: { width: 320, height: 240 }
           }
         });
@@ -76,7 +75,7 @@ runFixtureLoaderTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            props: [anyProps()],
+            props: [],
             viewport: { width: 640, height: 480 }
           }
         });
