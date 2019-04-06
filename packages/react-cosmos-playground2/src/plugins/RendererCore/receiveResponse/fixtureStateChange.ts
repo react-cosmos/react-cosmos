@@ -29,10 +29,6 @@ export function receiveFixtureStateChangeResponse(
   }
 
   if (isEqual(fixtureState, prevFixtureState)) {
-    console.info(
-      '[Renderer] fixtureStateChange response ignored ' +
-        'because existing fixture state is identical'
-    );
     return;
   }
 
