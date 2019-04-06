@@ -27,7 +27,7 @@ export function createApp(
   });
 
   app.get('/_playground.js', (req: express.Request, res: express.Response) => {
-    res.sendFile(require.resolve('react-cosmos-playground2'));
+    res.sendFile(require.resolve('react-cosmos-playground2/dist'));
   });
 
   app.get('/_cosmos.ico', (req: express.Request, res: express.Response) => {
