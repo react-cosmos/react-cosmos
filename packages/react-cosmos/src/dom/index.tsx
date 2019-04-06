@@ -7,13 +7,15 @@ import {
   createPostMessageConnect,
   createWebSocketsConnect
 } from 'react-cosmos-fixture';
-import { DomRendererConfig, isInsideIframe } from './shared';
+import { isInsideIframe } from './shared';
 import { getDomContainer } from './container';
 import { ErrorCatch } from './ErrorCatch';
 import { getRendererId } from './rendererId';
 import { addGlobalErrorHandler } from './globalErrorHandler';
 
-export { DomRendererConfig } from './shared';
+export type DomRendererConfig = {
+  containerQuerySelector?: string;
+};
 
 type MountDomRendererOpts = {
   rendererConfig: DomRendererConfig;
