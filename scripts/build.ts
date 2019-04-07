@@ -92,7 +92,9 @@ async function buildPackage(pkgName: string) {
 }
 
 async function buildTsPackage(pkgName: string) {
-  await copyStaticAssets(pkgName);
+  if (pkgName === 'react-cosmos') {
+    await copyAppStaticAssets();
+  }
 
   await runBuildTask({
     pkgName,
@@ -170,11 +172,10 @@ function getWebpackCliArgs(pkgName: string) {
   return args;
 }
 
-async function copyStaticAssets(pkgName: string) {
-  if (pkgName === 'react-cosmos') {
-    return cpy('src/server/shared/static/**', `dist/server/shared/static`, {
-      cwd: path.join(__dirname, `../packages/react-cosmos`),
-      parents: false
-    });
-  }
+async function copyAppStaticAssets() {
+  const staticPath = 'shared/static';
+  return cpy(`src/${staticPath}/**`, `dist/${staticPath}`, {
+    cwd: path.join(__dirname, `../packages/react-cosmos`),
+    parents: false
+  });
 }

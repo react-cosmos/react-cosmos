@@ -49,8 +49,4 @@ export function removeItem<T>(items: Readonly<T[]>, item: T): T[] {
   return [...items.slice(0, index), ...items.slice(index + 1)];
 }
 
-export function replaceKeys(str: string, map: { [key: string]: string }) {
-  return Object.keys(map).reduce((res, key) => res.replace(key, map[key]), str);
-}
-
 export { uuid } from './uuid';
