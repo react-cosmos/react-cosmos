@@ -8,7 +8,6 @@ export function updateItem<T>(
   update: Partial<T>
 ): T[] {
   const index = items.indexOf(item);
-
   return [
     ...items.slice(0, index),
     { ...item, ...update },
@@ -22,7 +21,6 @@ export function replaceOrAddItem<T>(
   item: T
 ): T[] {
   const index = findIndex(items, matcher);
-
   return index !== -1
     ? [...items.slice(0, index), item, ...items.slice(index + 1)]
     : [...items, item];
@@ -33,20 +31,9 @@ export function removeItemMatch<T>(
   matcher: (item: T) => boolean
 ): T[] {
   const index = findIndex(items, matcher);
-
   return index === -1
     ? [...items]
     : [...items.slice(0, index), ...items.slice(index + 1)];
-}
-
-export function removeItem<T>(items: Readonly<T[]>, item: T): T[] {
-  const index = items.indexOf(item);
-
-  if (index === -1) {
-    throw new Error(`Trying to remove missing list item`);
-  }
-
-  return [...items.slice(0, index), ...items.slice(index + 1)];
 }
 
 export { uuid } from './uuid';
