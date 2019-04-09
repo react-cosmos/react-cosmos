@@ -1,16 +1,25 @@
 import * as ErrorOverlay from 'react-error-overlay';
 
+type WebpackHotMiddlewareReporter = {
+  useCustomOverlay: (args: {
+    showProblems(type: string, object: any[]): unknown;
+    clear(): unknown;
+  }) => unknown;
+};
+
+type WebpackHotClientWindow = Window & {
+  __webpack_hot_middleware_reporter__?: WebpackHotMiddlewareReporter;
+};
+
 const LAUNCH_EDITOR_ENDPOINT = '/__open-stack-frame-in-editor';
 
 export function init() {
   ErrorOverlay.startReportingRuntimeErrors({
     filename: process.env.PUBLIC_URL + '/main.js'
   });
-
   ErrorOverlay.setEditorHandler(errorLocation =>
     window.fetch(getLaunchEditorUrl(errorLocation))
   );
-
   setUpBuildErrorReporting();
 }
 
@@ -27,12 +36,13 @@ function getLaunchEditorUrl(errorLocation: ErrorOverlay.ErrorLocation) {
 }
 
 function setUpBuildErrorReporting() {
-  if ((window as any).__webpack_hot_middleware_reporter__ === undefined) {
+  const clientWindow = window as WebpackHotClientWindow;
+  if (clientWindow.__webpack_hot_middleware_reporter__ === undefined) {
     return;
   }
 
-  (window as any).__webpack_hot_middleware_reporter__.useCustomOverlay({
-    showProblems(type: string, obj: any[]) {
+  clientWindow.__webpack_hot_middleware_reporter__.useCustomOverlay({
+    showProblems(type, obj) {
       if (type !== 'errors') {
         // We might've went from errors -> warnings
         ErrorOverlay.dismissBuildError();
