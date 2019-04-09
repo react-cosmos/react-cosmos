@@ -1,5 +1,6 @@
 import debug from 'debug';
 import socketIo from 'socket.io';
+import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
 import { DevServerPluginArgs } from '../shared';
 
 const d = debug('cosmos:server:socket');
@@ -13,9 +14,9 @@ export function socketConnect({ httpServer }: DevServerPluginArgs) {
     // Forward commands between connected clients. Parties involved can be the
     // - The Cosmos UI, which acts as a remote control
     // - The web iframe or the React Native component renderers
-    socket.on('cosmos-cmd', msg => {
+    socket.on(RENDERER_MESSAGE_EVENT_NAME, msg => {
       d('command %o', msg);
-      socket.broadcast.emit('cosmos-cmd', msg);
+      socket.broadcast.emit(RENDERER_MESSAGE_EVENT_NAME, msg);
     });
   });
 
