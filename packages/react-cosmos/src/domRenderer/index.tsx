@@ -14,7 +14,7 @@ import { getRendererId } from './rendererId';
 import { addGlobalErrorHandler } from './globalErrorHandler';
 
 export type DomRendererConfig = {
-  containerQuerySelector?: string;
+  containerQuerySelector: null | string;
 };
 
 type MountDomRendererOpts = {

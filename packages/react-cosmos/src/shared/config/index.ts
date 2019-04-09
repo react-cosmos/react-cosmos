@@ -14,6 +14,8 @@ export type RawCosmosConfig = {
   containerQuerySelector?: string;
   watchDirs?: string[];
   userDepsPath?: string;
+  staticPath?: string;
+  exportPath?: string;
 };
 
 export type CosmosConfig = {
@@ -23,11 +25,13 @@ export type CosmosConfig = {
   publicUrl: string;
   fixtureFileSuffix: string;
   fixturesDir: string;
-  webpackConfigPath?: string;
+  webpackConfigPath: null | string;
   globalImports: string[];
-  containerQuerySelector?: string;
+  containerQuerySelector: null | string;
   watchDirs: string[];
   userDepsPath: string;
+  staticPath: null | string;
+  exportPath: string;
 };
 
 export function getCosmosConfig() {
@@ -47,10 +51,19 @@ function getComputedCosmosConfig(
     publicUrl: rawCosmosConfig.publicUrl || '/',
     fixtureFileSuffix: rawCosmosConfig.fixtureFileSuffix || 'fixture',
     fixturesDir: rawCosmosConfig.fixturesDir || '__fixtures__',
-    webpackConfigPath: rawCosmosConfig.webpackConfigPath,
+    webpackConfigPath:
+      typeof rawCosmosConfig.webpackConfigPath === 'string'
+        ? rawCosmosConfig.webpackConfigPath
+        : null,
     globalImports: rawCosmosConfig.globalImports || [],
+    containerQuerySelector:
+      typeof rawCosmosConfig.containerQuerySelector === 'string'
+        ? rawCosmosConfig.containerQuerySelector
+        : null,
     watchDirs: getWatchDirs(rawCosmosConfig),
-    userDepsPath: rawCosmosConfig.userDepsPath || 'cosmos.userdeps.js'
+    userDepsPath: rawCosmosConfig.userDepsPath || 'cosmos.userdeps.js',
+    staticPath: getStaticPath(rawCosmosConfig),
+    exportPath: getExportPath(rawCosmosConfig)
   };
 }
 
@@ -71,27 +84,21 @@ export function getWatchDirs(cosmosConfig: RawCosmosConfig) {
   return watchDirs.map(dirPath => slash(path.resolve(rootDir, dirPath)));
 }
 
-// export function getExportPath(cosmosConfig: CosmosConfig) {
-//   const { exportPath } = cosmosConfig;
-//   const rootDir = getRootDir(cosmosConfig);
-//   return slash(path.resolve(rootDir, exportPath || 'cosmos-export'));
-// }
+export function getStaticPath(cosmosConfig: RawCosmosConfig) {
+  const { staticPath } = cosmosConfig;
+  if (!staticPath) {
+    return null;
+  }
 
-// export function getPublicPath(cosmosConfig: CosmosConfig) {
-//   const { publicPath } = cosmosConfig;
-//   if (!publicPath) {
-//     return null;
-//   }
+  const rootDir = getRootDir(cosmosConfig);
+  return slash(path.resolve(rootDir, staticPath));
+}
 
-//   const rootDir = getRootDir(cosmosConfig);
-//   return slash(path.resolve(rootDir, publicPath));
-// }
-
-// export function getWatchDirs(cosmosConfig: CosmosConfig) {
-//   const { watchDirs } = cosmosConfig;
-//   const rootDir = getRootDir(cosmosConfig);
-//   return watchDirs.map(dirPath => slash(path.resolve(rootDir, dirPath)));
-// }
+export function getExportPath(cosmosConfig: RawCosmosConfig) {
+  const { exportPath = 'cosmos-export' } = cosmosConfig;
+  const rootDir = getRootDir(cosmosConfig);
+  return slash(path.resolve(rootDir, exportPath));
+}
 
 // TODO: Group options
 // Eg.

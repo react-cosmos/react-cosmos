@@ -122,15 +122,16 @@ function resolveClientPath(relPath: string) {
 function getOutput(cosmosConfig: CosmosConfig, staticBuild: boolean) {
   const filename = '[name].js';
 
-  // if (staticBuild) {
-  //   return {
-  //     // Most paths are created using forward slashes regardless of the OS for
-  //     // consistency, but this one needs to have backslashes on Windows!
-  //     path: path.join(cosmosConfig.exportPath, publicUrl),
-  //     filename,
-  //     publicPath: publicUrl
-  //   };
-  // }
+  if (staticBuild) {
+    const { exportPath, publicUrl } = cosmosConfig;
+    return {
+      // Most paths are created using forward slashes regardless of the OS for
+      // consistency, but this one needs to have backslashes on Windows!
+      path: path.join(exportPath, publicUrl),
+      filename,
+      publicPath: publicUrl
+    };
+  }
 
   return {
     // Setting path to `/` in development (where files are saved in memory and
