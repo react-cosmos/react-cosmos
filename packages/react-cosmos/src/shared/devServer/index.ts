@@ -7,6 +7,7 @@ import { createApp } from './app';
 // import launchEditor from 'react-dev-utils/launchEditor';
 
 type PluginCleanupCallback = () => unknown;
+type PluginReturn = void | null | PluginCleanupCallback;
 
 export type DevServerPluginArgs = {
   cosmosConfig: CosmosConfig;
@@ -16,7 +17,7 @@ export type DevServerPluginArgs = {
 
 export type DevServerPlugin = (
   args: DevServerPluginArgs
-) => void | null | PluginCleanupCallback;
+) => PluginReturn | Promise<PluginReturn>;
 
 export async function startDevServer(plugins: DevServerPlugin[] = []) {
   // TODO: Bring back config generation
@@ -39,9 +40,8 @@ export async function startDevServer(plugins: DevServerPlugin[] = []) {
   await httpServer.start();
 
   const pluginCleanupCallbacks: PluginCleanupCallback[] = [];
-  // TODO: await on each plugin
-  plugins.forEach(plugin => {
-    const pluginReturn = plugin({
+  for (const plugin of plugins) {
+    const pluginReturn = await plugin({
       cosmosConfig,
       httpServer: httpServer.server,
       expressApp: app
@@ -49,7 +49,7 @@ export async function startDevServer(plugins: DevServerPlugin[] = []) {
     if (typeof pluginReturn === 'function') {
       pluginCleanupCallbacks.push(pluginReturn);
     }
-  });
+  }
 
   // attachStackFrameEditorLauncher(app);
 

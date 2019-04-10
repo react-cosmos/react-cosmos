@@ -27,9 +27,9 @@ export async function webpackDevServer({
     const relFilePath = path.relative(process.cwd(), filePath);
     console.log('[Cosmos] webpack build invalidated by', relFilePath);
   });
-  // const onCompilationDone: Promise<void> = new Promise(resolve => {
-  //   webpackCompiler.hooks.done.tap('Cosmos', () => resolve());
-  // });
+  const onCompilationDone: Promise<void> = new Promise(resolve => {
+    webpackCompiler.hooks.done.tap('Cosmos', () => resolve());
+  });
 
   console.log('[Cosmos] Building webpack...');
   const wdmInst = webpackDevMiddleware(webpackCompiler, {
@@ -42,11 +42,11 @@ export async function webpackDevServer({
   expressApp.use(wdmInst);
 
   // if (cosmosConfig.hotReload) {
-  //   app.use(webpackHotMiddleware(webpackCompiler));
+  //   expressApp.use(webpackHotMiddleware(webpackCompiler));
   // }
 
-  // TODO: Bring back await
-  // await onCompilationDone;
+  await onCompilationDone;
+  console.log(`[Cosmos] Server ready!`);
 
   return async () => {
     await promisify(wdmInst.close.bind(wdmInst))();
