@@ -1,5 +1,4 @@
 import importFrom from 'import-from';
-// TODO: Test if a webpack import (require) is kept in the compiled file
 import webpack from 'webpack';
 
 // TODO

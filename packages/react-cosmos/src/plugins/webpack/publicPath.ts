@@ -1,5 +1,4 @@
 // TODO: Split regular publicPath logic from devServer.contentBase
-// // TODO: Test if a webpack import (require) is kept in the compiled file
 // import webpack from 'webpack';
 // import { CosmosConfig, getPublicPath } from '../../config';
 

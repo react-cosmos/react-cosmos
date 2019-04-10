@@ -39,7 +39,7 @@ export async function startDevServer(plugins: DevServerPlugin[] = []) {
   await httpServer.start();
 
   const pluginCleanupCallbacks: PluginCleanupCallback[] = [];
-  // TODO: await on each plugin?
+  // TODO: await on each plugin
   plugins.forEach(plugin => {
     const pluginReturn = plugin({
       cosmosConfig,
@@ -56,7 +56,7 @@ export async function startDevServer(plugins: DevServerPlugin[] = []) {
   // const closeSockets = attachSockets(server);
 
   return async () => {
-    pluginCleanupCallbacks.forEach(cleanup => cleanup());
+    await pluginCleanupCallbacks.map(cleanup => cleanup());
     // closeSockets();
     await httpServer.stop();
   };

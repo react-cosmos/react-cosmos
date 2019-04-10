@@ -69,7 +69,7 @@ export function getDefaultWebpackConfig(
     );
   }
 
-  let config: webpack.Configuration = {
+  const config: webpack.Configuration = {
     // Besides other advantages, cheap-module-source-map is compatible with
     // React.componentDidCatch https://github.com/facebook/react/issues/10441
     devtool: 'cheap-module-source-map',
@@ -85,25 +85,24 @@ export function getDefaultWebpackConfig(
     plugins
   };
 
-  const supportsMode =
+  const webpack4 =
     userWebpack.version && parseInt(userWebpack.version, 10) >= 4;
-  if (supportsMode) {
-    // Disallow non dev/prod environments, like "test" inside Jest, because
-    // they are not supported by webpack
-    const mode =
-      process.env.NODE_ENV === 'production' ? 'production' : 'development';
-
-    config = {
-      ...config,
-      mode,
-      optimization: {
-        // Cosmos reads component names at run-time, so it is crucial to not
-        // minify even when building with production env (ie. when exporting)
-        // https://github.com/react-cosmos/react-cosmos/issues/701
-        minimize: false
-      }
-    };
+  if (!webpack4) {
+    return config;
   }
 
-  return config;
+  // Disallow non dev/prod environments, like "test" inside Jest, because
+  // they are not supported by webpack
+  const mode =
+    process.env.NODE_ENV === 'production' ? 'production' : 'development';
+  return {
+    ...config,
+    mode,
+    optimization: {
+      // Cosmos reads component names at run-time, so it is crucial to not
+      // minify even when building with production env (ie. when exporting)
+      // https://github.com/react-cosmos/react-cosmos/issues/701
+      minimize: false
+    }
+  };
 }

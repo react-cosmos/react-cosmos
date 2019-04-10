@@ -151,10 +151,6 @@ export function getExportPath(cosmosConfig: RawCosmosConfig) {
 //   rootDir?: string;
 //   watchDirs: string[];
 //   webpackConfigPath?: string;
-//   webpackOverride?: (
-//     config: webpack.Configuration,
-//     opts: { env: string }
-//   ) => webpack.Configuration;
 // };
 // export const COSMOS_CONFIG: CosmosConfig = {
 //   // TODO: Move (most of) these values into defaults
