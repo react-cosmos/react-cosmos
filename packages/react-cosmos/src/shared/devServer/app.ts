@@ -1,7 +1,7 @@
 import express from 'express';
 import { getStaticPath } from '../static';
 import { CosmosConfig } from '../config';
-import { getPlaygroundHtml } from '../playgroundHtml';
+import { getDevPlaygroundHtml } from '../playgroundHtml';
 // import { setupHttpProxy } from '../shared/httpProxy';
 
 export function createApp(cosmosConfig: CosmosConfig) {
@@ -13,7 +13,7 @@ export function createApp(cosmosConfig: CosmosConfig) {
   //   setupHttpProxy(app, httpProxy);
   // }
 
-  const playgroundHtml = getPlaygroundHtml(cosmosConfig, true);
+  const playgroundHtml = getDevPlaygroundHtml(cosmosConfig);
   app.get('/', (req: express.Request, res: express.Response) => {
     res.send(playgroundHtml);
   });

@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs-extra';
 import { CosmosConfig, getCosmosConfig } from './config';
 import { getStaticPath } from './static';
-import { getPlaygroundHtml } from './playgroundHtml';
+import { getStaticPlaygroundHtml } from './playgroundHtml';
 
 export type ExportPluginArgs = {
   cosmosConfig: CosmosConfig;
@@ -66,6 +66,6 @@ function exportPlaygroundFiles(cosmosConfig: CosmosConfig) {
   );
   fs.copySync(getStaticPath('favicon.ico'), `${exportPath}/_cosmos.ico`);
 
-  const playgroundHtml = getPlaygroundHtml(cosmosConfig, false);
+  const playgroundHtml = getStaticPlaygroundHtml(cosmosConfig);
   fs.writeFileSync(`${exportPath}/index.html`, playgroundHtml);
 }

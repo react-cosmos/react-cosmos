@@ -7,13 +7,16 @@ import { getStaticPath } from './static';
 
 export const RENDERER_FILENAME = '_renderer.html';
 
-export function getPlaygroundHtml(
-  cosmosConfig: CosmosConfig,
-  devServerOn: boolean
-) {
+export function getDevPlaygroundHtml(cosmosConfig: CosmosConfig) {
+  return replaceKeys(getPlaygroundHtmlTemplate(), {
+    __PLAYGROUND_CONFIG: JSON.stringify(getPlaygroundConfig(cosmosConfig, true))
+  });
+}
+
+export function getStaticPlaygroundHtml(cosmosConfig: CosmosConfig) {
   return replaceKeys(getPlaygroundHtmlTemplate(), {
     __PLAYGROUND_CONFIG: JSON.stringify(
-      getPlaygroundConfig(cosmosConfig, devServerOn)
+      getPlaygroundConfig(cosmosConfig, false)
     )
   });
 }
