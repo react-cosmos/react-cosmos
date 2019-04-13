@@ -16,13 +16,12 @@ type UserModulePaths = {
 
 const globAsync = promisify(glob);
 
-// TODO: Make paths configurable
-const FILE_PATH_IGNORE = '**/node_modules/**';
-const FIXTURE_PATTERNS = [
+export const FILE_PATH_IGNORE = '**/node_modules/**';
+export const FIXTURE_PATTERNS = [
   '**/<fixturesDir>/**/*.{js,jsx,ts,tsx}',
   '**/*.<fixtureFileSuffix>.{js,jsx,ts,tsx}'
 ];
-const DECORATOR_PATTERNS = ['**/cosmos.decorator.{js,jsx,ts,tsx}'];
+export const DECORATOR_PATTERNS = ['**/cosmos.decorator.{js,jsx,ts,tsx}'];
 
 export async function findUserModulePaths({
   rootDir,

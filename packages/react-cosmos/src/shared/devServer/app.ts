@@ -1,19 +1,23 @@
 import express from 'express';
 import { getStaticPath } from '../static';
 import { CosmosConfig } from '../config';
+import { PlatformType } from '../shared';
 import { getDevPlaygroundHtml } from '../playgroundHtml';
 // import { setupHttpProxy } from '../shared/httpProxy';
 
-export function createApp(cosmosConfig: CosmosConfig) {
+export function createApp(
+  platformType: PlatformType,
+  cosmosConfig: CosmosConfig
+) {
   const app = express();
 
-  // TODO: Create plugin
+  // TODO: Create plugin for httpProxy
   // const { httpProxy } = cosmosConfig;
   // if (httpProxy) {
   //   setupHttpProxy(app, httpProxy);
   // }
 
-  const playgroundHtml = getDevPlaygroundHtml(cosmosConfig);
+  const playgroundHtml = getDevPlaygroundHtml(platformType, cosmosConfig);
   app.get('/', (req: express.Request, res: express.Response) => {
     res.send(playgroundHtml);
   });

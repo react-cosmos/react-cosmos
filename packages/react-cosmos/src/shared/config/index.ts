@@ -46,7 +46,7 @@ function getComputedCosmosConfig(
   return {
     // TODO: Make this transformation smarter
     rootDir: getRootDir(rawCosmosConfig),
-    port: rawCosmosConfig.port || 5000,
+    port: getPort(rawCosmosConfig),
     hostname: rawCosmosConfig.hostname || null,
     publicUrl: rawCosmosConfig.publicUrl || '/',
     fixtureFileSuffix: rawCosmosConfig.fixtureFileSuffix || 'fixture',
@@ -55,13 +55,14 @@ function getComputedCosmosConfig(
       typeof rawCosmosConfig.webpackConfigPath === 'string'
         ? rawCosmosConfig.webpackConfigPath
         : null,
+    // TODO: Resolve global imports
     globalImports: rawCosmosConfig.globalImports || [],
     containerQuerySelector:
       typeof rawCosmosConfig.containerQuerySelector === 'string'
         ? rawCosmosConfig.containerQuerySelector
         : null,
     watchDirs: getWatchDirs(rawCosmosConfig),
-    userDepsPath: rawCosmosConfig.userDepsPath || 'cosmos.userdeps.js',
+    userDepsPath: getUserDepsPath(rawCosmosConfig),
     staticPath: getStaticPath(rawCosmosConfig),
     exportPath: getExportPath(rawCosmosConfig)
   };
@@ -78,10 +79,24 @@ function getRootDir({ rootDir }: RawCosmosConfig): string {
   return rootDir ? path.resolve(projectDir, rootDir) : projectDir;
 }
 
+export function getPort(cosmosConfig: RawCosmosConfig) {
+  if (typeof argv.port === 'number') {
+    return argv.port;
+  }
+
+  return cosmosConfig.port || 5000;
+}
+
 export function getWatchDirs(cosmosConfig: RawCosmosConfig) {
   const { watchDirs = ['.'] } = cosmosConfig;
   const rootDir = getRootDir(cosmosConfig);
   return watchDirs.map(dirPath => slash(path.resolve(rootDir, dirPath)));
+}
+
+export function getUserDepsPath(cosmosConfig: RawCosmosConfig) {
+  const { userDepsPath = 'cosmos.userdeps.js' } = cosmosConfig;
+  const rootDir = getRootDir(cosmosConfig);
+  return slash(path.resolve(rootDir, userDepsPath));
 }
 
 export function getStaticPath(cosmosConfig: RawCosmosConfig) {

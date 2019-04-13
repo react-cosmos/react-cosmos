@@ -1,8 +1,8 @@
-import { startDevServer } from '../shared/devServer';
-// import { userDepsFile } from '../plugins/userDeps' ???
-// import { openFile } from '../plugins/openFile'
+import { socketConnect } from '../plugins/socketConnect';
+import { openFile } from '../plugins/openFile';
+import { startDevServer } from '../shared';
+import { userDepsFile } from './userDepsFile';
 
 export async function startNativeServer() {
-  await startDevServer();
-  // await startDevServer([webpackServer, openFile]);
+  await startDevServer('native', [userDepsFile, socketConnect, openFile]);
 }

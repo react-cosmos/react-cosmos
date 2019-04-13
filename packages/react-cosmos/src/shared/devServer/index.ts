@@ -1,5 +1,6 @@
 import http from 'http';
 import express from 'express';
+import { PlatformType } from './../shared';
 import { CosmosConfig, getCosmosConfig } from '../config';
 import { createHttpServer } from './httpServer';
 import { createApp } from './app';
@@ -19,7 +20,10 @@ export type DevServerPlugin = (
   args: DevServerPluginArgs
 ) => PluginReturn | Promise<PluginReturn>;
 
-export async function startDevServer(plugins: DevServerPlugin[] = []) {
+export async function startDevServer(
+  platformType: PlatformType,
+  plugins: DevServerPlugin[] = []
+) {
   // TODO: Bring back config generation
   // if (!hasUserCosmosConfig()) {
   //   const generatedConfigFor = generateCosmosConfig();
@@ -30,9 +34,10 @@ export async function startDevServer(plugins: DevServerPlugin[] = []) {
   // }
   const cosmosConfig = getCosmosConfig();
 
-  const app = createApp(cosmosConfig);
+  const app = createApp(platformType, cosmosConfig);
   const httpServer = createHttpServer(cosmosConfig, app);
 
+  // TODO: Bring back publicPath
   // if (cosmos.publicPath) {
   //   serveStaticDir(app, cosmosConfig.publicUrl, cosmos.publicPath);
   // }
@@ -51,13 +56,11 @@ export async function startDevServer(plugins: DevServerPlugin[] = []) {
     }
   }
 
+  // TODO: Bring back attachStackFrameEditorLauncher
   // attachStackFrameEditorLauncher(app);
-
-  // const closeSockets = attachSockets(server);
 
   return async () => {
     await pluginCleanupCallbacks.map(cleanup => cleanup());
-    // closeSockets();
     await httpServer.stop();
   };
 }

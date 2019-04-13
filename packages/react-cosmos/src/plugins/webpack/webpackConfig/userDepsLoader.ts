@@ -1,5 +1,8 @@
 import { CosmosConfig, getCosmosConfig } from '../../../shared/config';
-import { getCompiledUserDeps } from '../../../shared/userDeps';
+import {
+  StringifiedUserDeps,
+  getStringifiedUserDeps
+} from '../../../shared/userDeps';
 import { DomRendererConfig } from '../../../domRenderer';
 
 type WebpackLoaderContext = {
@@ -24,14 +27,13 @@ module.exports = async function injectUserDeps(source: string) {
     webpackLoaderContext.addContextDependency(watchDir)
   );
 
-  const compiledUserDeps = await getCompiledUserDeps(
+  const stringifiedUserDeps = await getStringifiedUserDeps(
     cosmosConfig,
     getRendererConfig(cosmosConfig)
   );
-
   const result = source.replace(
     '= __COSMOS_DATA',
-    `= ${getWrappedUserDeps(compiledUserDeps)}`
+    `= ${getWrappedUserDeps(stringifiedUserDeps)}`
   );
   callback(null, result);
 };
@@ -42,8 +44,18 @@ function getRendererConfig({
   return { containerQuerySelector };
 }
 
-function getWrappedUserDeps(userDeps: string) {
+function getWrappedUserDeps({
+  globalImports,
+  rendererConfig,
+  fixtures,
+  decorators
+}: StringifiedUserDeps) {
   return `(function() {
-${userDeps}
+${globalImports}
+return {
+  rendererConfig: ${rendererConfig},
+  fixtures: ${fixtures},
+  decorators: ${decorators}
+};
 })()`;
 }

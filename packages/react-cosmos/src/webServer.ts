@@ -4,5 +4,5 @@ import { webpackDevServer } from './plugins/webpack';
 import { startDevServer } from './shared';
 
 export async function startWebServer() {
-  await startDevServer([socketConnect, openFile, webpackDevServer]);
+  await startDevServer('web', [socketConnect, openFile, webpackDevServer]);
 }
