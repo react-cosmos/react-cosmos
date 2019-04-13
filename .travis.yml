@@ -19,8 +19,7 @@ script:
   # Test build
   - yarn dist
   - yarn build
-  - yarn start-test:dev
-  - yarn start-test:export
+  - yarn test:ci
 cache:
   yarn: true
   directories:
