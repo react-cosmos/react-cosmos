@@ -35,6 +35,7 @@ jobs:
       # Test build
       - run: yarn dist
       - run: yarn build
+      - run: yarn export
       - run: yarn test:ci
 
       - store_artifacts:

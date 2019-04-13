@@ -19,6 +19,7 @@ script:
   # Test build
   - yarn dist
   - yarn build
+  - yarn export
   - yarn test:ci
 cache:
   yarn: true
