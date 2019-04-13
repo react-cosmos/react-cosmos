@@ -2,5 +2,6 @@
   "baseUrl": "http://localhost:5000",
   "integrationFolder": "cypress/tests",
   "projectId": "7gsfa8",
-  "chromeWebSecurity": false
+  "chromeWebSecurity": false,
+  "modifyObstructiveCode": false
 }

@@ -2,7 +2,7 @@ import {
   RendererId,
   RendererErrorResponse
 } from 'react-cosmos-shared2/renderer';
-import { isInsideIframe } from './shared';
+import { isInsideCosmosPreviewIframe } from './shared';
 
 let alreadyAdded = false;
 
@@ -23,7 +23,7 @@ export function addGlobalErrorHandler(rendererId: RendererId) {
 function postMessageToParentWindow(msg: RendererErrorResponse) {
   // NOTE: Error messages are not sent from remote renderers, only from
   // iframe preview renderers
-  if (isInsideIframe()) {
+  if (isInsideCosmosPreviewIframe()) {
     parent.postMessage(msg, '*');
   }
 }

@@ -7,7 +7,7 @@ import {
   createPostMessageConnect,
   createWebSocketsConnect
 } from 'react-cosmos-fixture';
-import { isInsideIframe } from './shared';
+import { isInsideCosmosPreviewIframe } from './shared';
 import { getDomContainer } from './container';
 import { ErrorCatch } from './ErrorCatch';
 import { getRendererId } from './rendererId';
@@ -47,7 +47,7 @@ export function mountDomRenderer({
 }
 
 function getRendererConnect() {
-  return isInsideIframe()
+  return isInsideCosmosPreviewIframe()
     ? createPostMessageConnect()
     : createWebSocketsConnect(getWebSocketsUrl());
 }
