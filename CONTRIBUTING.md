@@ -192,7 +192,7 @@ yarn
 yarn build
 
 # Build example from source and test React Cosmos end to end
-cd examples/context
+cd example
 yarn start
 
 # Load Playground source inside compiled Playground #inception

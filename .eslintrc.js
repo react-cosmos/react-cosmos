@@ -54,11 +54,7 @@ module.exports = {
       'packages/{react-cosmos-shared,react-cosmos,react-cosmos-voyager2}/src/server/**/*.js',
       'packages/react-cosmos/bin/**/*.js',
       'packages/react-cosmos-voyager/scripts/generate-use-cases.js',
-      'packages/react-cosmos-playground/webpack.config.js',
-      'examples/apollo/server.js',
-      'examples/browserify/server.js',
-      'examples/mixed-paths/webpack.config.js',
-      'examples/webpack-dll/{webpack.config,webpack.vendor.config}.js'
+      'packages/react-cosmos-playground/webpack.config.js'
     ]),
     browserEnv([
       `packages/{${[

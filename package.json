@@ -2,7 +2,7 @@
   "private": true,
   "workspaces": [
     "packages/*",
-    "examples/*"
+    "example"
   ],
   "repository": "https://github.com/react-cosmos/react-cosmos",
   "license": "MIT",
@@ -13,7 +13,7 @@
     "test:watch": "yarn test:unit --watch",
     "test:coverage": "yarn test:unit --coverage",
     "test:smoke": "cypress run --record false",
-    "start": "ts-node ./packages/react-cosmos/bin/cosmos.js --config examples/jsx-fixtures/cosmos.config.js",
+    "start": "ts-node ./packages/react-cosmos/bin/cosmos.js --config example/cosmos.config.js",
     "start:playground": "ts-node ./packages/react-cosmos/bin/cosmos.js --config packages/react-cosmos-playground2/cosmos.config.js",
     "build:clear": "ts-node ./scripts/clearBuild.ts",
     "build": "ts-node ./scripts/build.ts",

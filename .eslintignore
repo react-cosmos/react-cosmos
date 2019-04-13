@@ -1,8 +1,7 @@
 node_modules
 
 packages/*/dist
-examples/*/cosmos-export
-examples/webpack-dll/build
+example/cosmos-export
 
 **/__fsmocks__/**
 coverage
