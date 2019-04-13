@@ -1,9 +1,9 @@
 import { clearTreeViewState } from '../support/localStorage';
 
-describe('Example', () => {
+describe('Dev server', () => {
   // WARNING: These tests are serial and share state
   before(() => {
-    return clearTreeViewState().then(() => cy.visit('/'));
+    return clearTreeViewState().then(() => cy.visit('http://localhost:5000'));
   });
 
   context('homepage', () => {

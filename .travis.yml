@@ -19,7 +19,8 @@ script:
   # Test build
   - yarn dist
   - yarn build
-  - yarn start & yarn test:smoke
+  - yarn start-test:dev
+  - yarn start-test:export
 cache:
   yarn: true
   directories:

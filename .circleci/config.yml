@@ -35,7 +35,8 @@ jobs:
       # Test build
       - run: yarn dist
       - run: yarn build
-      - run: yarn start & yarn test:smoke
+      - run: yarn start-test:dev
+      - run: yarn start-test:export
 
       - store_artifacts:
           path: /root/app/cypress/videos
