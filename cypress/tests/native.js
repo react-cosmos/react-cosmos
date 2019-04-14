@@ -16,4 +16,30 @@ describe('Export', () => {
       cy.contains('Waiting for renderer...');
     });
   });
+
+  context('user deps file', () => {
+    it('has port option', () => {
+      getUserDepsFile().should('contain', `"port": 5002`);
+    });
+
+    it('has fixture paths', () => {
+      userDepsContainsModule('__fixtures__/hello world.js');
+      userDepsContainsModule('Counter/__fixtures__/default.js');
+      userDepsContainsModule('Counter/__fixtures__/large number.js');
+      userDepsContainsModule('Counter/__fixtures__/small numbers.js');
+      userDepsContainsModule('WelcomeMessage/index.fixture.js');
+    });
+
+    it('has decorator paths', () => {
+      userDepsContainsModule('WelcomeMessage/cosmos.decorator.js');
+    });
+  });
 });
+
+function getUserDepsFile() {
+  return cy.readFile('example/cosmos.userdeps.js');
+}
+
+function userDepsContainsModule(moduleName) {
+  getUserDepsFile().should('contain', `'${moduleName}': require(`);
+}
