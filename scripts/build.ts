@@ -47,7 +47,7 @@ async function run() {
             pkgName
           )} doesn't exist!\nPackages: ${getFormattedPackageList(
             buildablePackages
-          )}`
+          )}\n`
         )
       );
       process.exit(1);
