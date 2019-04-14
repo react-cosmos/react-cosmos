@@ -5,9 +5,9 @@ import { watch, FSWatcher } from 'chokidar';
 import { debounce } from 'lodash';
 import { CosmosConfig, DevServerPluginArgs } from '../shared';
 import {
-  FILE_PATH_IGNORE,
-  FIXTURE_PATTERNS,
-  DECORATOR_PATTERNS,
+  getFixturePatterns,
+  getDecoratorPatterns,
+  getIgnorePatterns,
   StringifiedUserDeps,
   getStringifiedUserDeps
 } from '../shared/userDeps';
@@ -22,15 +22,19 @@ export async function userDepsFile({ cosmosConfig }: DevServerPluginArgs) {
   };
 }
 
-const FILE_PATTERNS = [...FIXTURE_PATTERNS, ...DECORATOR_PATTERNS];
 const DEBOUNCE_INTERVAL = 50;
 
 async function startFixtureFileWatcher(
   cosmosConfig: CosmosConfig
 ): Promise<FSWatcher> {
+  const { fixturesDir, fixtureFileSuffix } = cosmosConfig;
+  const FILE_PATTERNS = [
+    ...getFixturePatterns(fixturesDir, fixtureFileSuffix),
+    ...getDecoratorPatterns()
+  ];
   return new Promise(resolve => {
     const watcher: FSWatcher = watch(FILE_PATTERNS, {
-      ignored: FILE_PATH_IGNORE,
+      ignored: getIgnorePatterns(),
       ignoreInitial: true,
       cwd: cosmosConfig.rootDir
     })

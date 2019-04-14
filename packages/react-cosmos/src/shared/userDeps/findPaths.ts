@@ -1,7 +1,11 @@
 import glob from 'glob';
 import micromatch from 'micromatch';
 import promisify from 'util.promisify';
-import { replaceKeys } from '../shared';
+import {
+  getFixturePatterns,
+  getDecoratorPatterns,
+  getIgnorePatterns
+} from './shared';
 
 type FindUserModulePathsArgs = {
   rootDir: string;
@@ -16,13 +20,6 @@ type UserModulePaths = {
 
 const globAsync = promisify(glob);
 
-export const FILE_PATH_IGNORE = '**/node_modules/**';
-export const FIXTURE_PATTERNS = [
-  '**/<fixturesDir>/**/*.{js,jsx,ts,tsx}',
-  '**/*.<fixtureFileSuffix>.{js,jsx,ts,tsx}'
-];
-export const DECORATOR_PATTERNS = ['**/cosmos.decorator.{js,jsx,ts,tsx}'];
-
 export async function findUserModulePaths({
   rootDir,
   fixturesDir,
@@ -31,12 +28,12 @@ export async function findUserModulePaths({
   const paths = await globAsync('**/*', {
     cwd: rootDir,
     absolute: true,
-    ignore: FILE_PATH_IGNORE
+    ignore: getIgnorePatterns()
   });
 
-  const patterns = getFixturePatterns(fixturesDir, fixtureFileSuffix);
-  const fixturePaths = getMatchingPaths(paths, patterns);
-  const decoratorPaths = getMatchingPaths(paths, DECORATOR_PATTERNS);
+  const fixturePatterns = getFixturePatterns(fixturesDir, fixtureFileSuffix);
+  const fixturePaths = getMatchingPaths(paths, fixturePatterns);
+  const decoratorPaths = getMatchingPaths(paths, getDecoratorPatterns());
 
   // IDEA: Omit fixture paths that are also decorator paths. Relevant only if
   // it becomes useful to put decorator files inside fixture dirs.
@@ -45,16 +42,4 @@ export async function findUserModulePaths({
 
 function getMatchingPaths(paths: string[], patterns: string[]): string[] {
   return micromatch(paths, patterns, { dot: true });
-}
-
-function getFixturePatterns(
-  fixturesDir: string,
-  fixtureFileSuffix: string
-): string[] {
-  return FIXTURE_PATTERNS.map(pattern =>
-    replaceKeys(pattern, {
-      '<fixturesDir>': fixturesDir,
-      '<fixtureFileSuffix>': fixtureFileSuffix
-    })
-  );
 }

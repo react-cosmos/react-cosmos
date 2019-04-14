@@ -3,10 +3,10 @@ import { slash } from '../slash';
 import { CosmosConfig } from '../config';
 import { findUserModulePaths } from './findPaths';
 export {
-  FILE_PATH_IGNORE,
-  FIXTURE_PATTERNS,
-  DECORATOR_PATTERNS
-} from './findPaths';
+  getFixturePatterns,
+  getDecoratorPatterns,
+  getIgnorePatterns
+} from './shared';
 
 export type StringifiedUserDeps = {
   globalImports: string;
