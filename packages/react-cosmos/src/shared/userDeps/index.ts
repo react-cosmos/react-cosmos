@@ -35,7 +35,7 @@ export async function getStringifiedUserDeps(
 
   return {
     globalImports: genGlobalRequires(globalImports),
-    rendererConfig: JSON.stringify(rendererConfig),
+    rendererConfig: stringifyRendererConfig(rendererConfig),
     fixtures: genRequireMap(fixturePaths, rootDir),
     decorators: genRequireMap(decoratorPaths, rootDir)
   };
@@ -47,9 +47,11 @@ function genGlobalRequires(paths: string[]) {
   }
 
   return [
-    `// Keeping global imports here is superior to making them bundle entry points`,
-    `// because this way they become hot-reloadable`,
-    ...paths.map(importPath => `require('${importPath}');`)
+    '',
+    '// Keeping global imports here is superior to making them bundle entry points',
+    '// because this way they become hot-reloadable',
+    ...paths.map(importPath => `require('${importPath}');`),
+    ''
   ].join(`\n`);
 }
 
@@ -61,8 +63,15 @@ function genRequireMap(paths: string[], rootDir: string) {
   const requireRows = paths.map(p => {
     const relPath = slash(path.relative(rootDir, p));
     return `
-  '${relPath}': require('${p}').default`;
+    '${relPath}': require('${p}').default`;
   });
 
-  return `{${requireRows.join(', ')}\n}`;
+  return `{${requireRows.join(', ')}\n  }`;
+}
+
+function stringifyRendererConfig(rendererConfig: {}) {
+  return JSON.stringify(rendererConfig, null, 2)
+    .split(`\n`)
+    .map((line, idx) => (idx === 0 ? line : `  ${line}`))
+    .join(`\n`);
 }
