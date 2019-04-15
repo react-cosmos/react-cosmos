@@ -25,6 +25,13 @@ it('throws on invalid --config path', () => {
   );
 });
 
+it('throws on invalid --config file extension', () => {
+  mockCliArgs({ config: 'subdir/cosmos.config.js' });
+  expect(() => getCosmosConfig()).toThrow(
+    '[Cosmos] Invalid config file type: subdir/cosmos.config.js (must be .json)'
+  );
+});
+
 it('returns cosmos config at --root-dir path', () => {
   const cosmosConfig = {};
   mockCosmosConfig('subdir/cosmos.config.json', cosmosConfig);

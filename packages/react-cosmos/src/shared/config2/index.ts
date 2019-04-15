@@ -13,11 +13,11 @@ export function getRootDir() {
     return getRootDirAtPath(cliArgs.rootDir);
   }
 
-  const projectDir = path.dirname(getCosmosConfigPath());
+  const configDir = path.dirname(getCosmosConfigPath());
   const cosmosConfig = getCosmosConfig();
   return cosmosConfig.rootDir
-    ? path.resolve(projectDir, cosmosConfig.rootDir)
-    : projectDir;
+    ? path.resolve(configDir, cosmosConfig.rootDir)
+    : configDir;
 }
 
 function getCosmosConfigPath() {
@@ -25,7 +25,11 @@ function getCosmosConfigPath() {
 
   // CLI suppport for --config relative/path/to/cosmos.config.json
   if (typeof cliArgs.config === 'string') {
-    // TODO: Throw if file extension is not JSON
+    if (path.extname(cliArgs.config) !== '.json') {
+      throw new Error(
+        `[Cosmos] Invalid config file type: ${cliArgs.config} (must be .json)`
+      );
+    }
 
     const absPath = path.resolve(getCurrentDir(), cliArgs.config);
     if (!fileExistsAtPath(absPath)) {
@@ -36,11 +40,11 @@ function getCosmosConfigPath() {
   }
 
   // CLI suppport for --root-dir relative/path/project
-  const projectDir =
+  const configDir =
     typeof cliArgs.rootDir === 'string'
       ? getRootDirAtPath(cliArgs.rootDir)
       : getCurrentDir();
-  return path.join(projectDir, 'cosmos.config.json');
+  return path.join(configDir, 'cosmos.config.json');
 }
 
 function getRootDirAtPath(dirPath: string) {
