@@ -1,6 +1,7 @@
+// NOTE: This file has been extracted to be easily mocked inside tests
+import { existsSync } from 'fs';
 import { CosmosConfig } from './shared';
 
-// NOTE: This file has been extracted to be easily mocked inside tests
 export function readCosmosConfigFile(
   cosmosConfigPath: string
 ): null | CosmosConfig {
@@ -9,4 +10,8 @@ export function readCosmosConfigFile(
   } catch (err) {
     return null;
   }
+}
+
+export function cosmosConfigFileExists(cosmosConfigPath: string) {
+  return existsSync(cosmosConfigPath);
 }

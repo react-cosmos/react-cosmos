@@ -10,6 +10,14 @@ it('returns cosmos config at --config path', () => {
   });
 });
 
+it('throws on invalid --config path', () => {
+  mockCliArgs({ config: 'subdir/cosmos.config.json' }, () => {
+    expect(() => getCosmosConfig()).toThrow(
+      '[Cosmos] No file found at path: subdir/cosmos.config.json'
+    );
+  });
+});
+
 it('returns cosmos config at --root-dir path', () => {
   const cosmosConfig = {};
   mockCosmosConfig('subdir/cosmos.config.json', cosmosConfig, () => {

@@ -1,7 +1,10 @@
 import path from 'path';
 import yargs from 'yargs';
 import { CosmosConfig } from './shared';
-import { readCosmosConfigFile } from './readCosmosConfigFile';
+import {
+  readCosmosConfigFile,
+  cosmosConfigFileExists
+} from './readCosmosConfigFile';
 
 export function getCosmosConfig(): CosmosConfig {
   return readCosmosConfigFile(getCosmosConfigPath()) || {};
@@ -29,9 +32,13 @@ function getCosmosConfigPath() {
 
   // CLI suppport for --config relative/path/to/cosmos.config.json
   if (typeof cliArgs.config === 'string') {
-    // TODO: Throw if file isn't found at path
+    const absPath = path.resolve(currentDir, cliArgs.config);
+    if (!cosmosConfigFileExists(absPath)) {
+      throw new Error(`[Cosmos] No file found at path: ${cliArgs.config}`);
+    }
+
     // TODO: Throw if file is found but has extension other than .json
-    return path.resolve(currentDir, cliArgs.config);
+    return absPath;
   }
 
   // CLI suppport for --root-dir relative/path/project

@@ -6,17 +6,20 @@ export {
 } from '../readCosmosConfigFile';
 
 jest.mock('../readCosmosConfigFile', () => {
-  let cosmosConfigsPerPath: { [path: string]: {} } = {};
-  const readCosmosConfigFile = jest.fn(
-    (cosmosConfigPath: string) => cosmosConfigsPerPath[cosmosConfigPath]
-  );
+  let configMocks: { [path: string]: {} } = {};
   return {
-    readCosmosConfigFile,
+    readCosmosConfigFile: (cosmosConfigPath: string) =>
+      configMocks[cosmosConfigPath] || null,
+
+    cosmosConfigFileExists: (cosmosConfigPath: string) =>
+      configMocks.hasOwnProperty(cosmosConfigPath),
+
     __mock: (cosmosConfigPath: string, cosmosConfig: {}) => {
-      cosmosConfigsPerPath = { [cosmosConfigPath]: cosmosConfig };
+      configMocks = { [cosmosConfigPath]: cosmosConfig };
     },
+
     __unmock: () => {
-      cosmosConfigsPerPath = {};
+      configMocks = {};
     }
   };
 });
