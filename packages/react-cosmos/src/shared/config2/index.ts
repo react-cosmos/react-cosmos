@@ -1,5 +1,6 @@
-import { slash } from '../slash';
 import path from 'path';
+import resolveFrom from 'resolve-from';
+import { slash } from '../slash';
 import { RawCosmosConfig, getCliArgs, getRootDirAtPath } from './shared';
 import { requireFileAtPath } from './fs';
 import { BaseCosmosConfig } from './BaseCosmosConfig';
@@ -24,40 +25,36 @@ export class CosmosConfig extends BaseCosmosConfig<RawCosmosConfig> {
 
   getExportPath() {
     const { exportPath } = this.getRawConfig();
-    const relExportPath = this.getDefault<string>(exportPath, 'cosmos-export');
-    return slash(path.resolve(this.getRootDir(), relExportPath));
+    const relExportPath = this.default<string>(exportPath, 'cosmos-export');
+    return this.resolvePath(relExportPath);
   }
 
   getFixtureFileSuffix() {
-    const { fixtureFileSuffix } = this.getRawConfig();
-    return this.getDefault<string>(fixtureFileSuffix, 'fixture');
+    const rawConfig = this.getRawConfig();
+    return this.default<string>(rawConfig.fixtureFileSuffix, 'fixture');
   }
 
   getFixturesDir() {
-    const { fixturesDir } = this.getRawConfig();
-    return this.getDefault<string>(fixturesDir, '__fixtures__');
+    const rawConfig = this.getRawConfig();
+    return this.default<string>(rawConfig.fixturesDir, '__fixtures__');
   }
 
   getWatchDirs() {
-    const { watchDirs } = this.getRawConfig();
-    const dirs = this.getDefault<string[]>(watchDirs, ['.']);
-    const rootDir = this.getRootDir();
-    return dirs.map(dirPath => slash(path.resolve(rootDir, dirPath)));
+    const rawConfig = this.getRawConfig();
+    const watchDirs = this.default<string[]>(rawConfig.watchDirs, ['.']);
+    return watchDirs.map(watchDir => this.resolvePath(watchDir));
   }
 
   getUserDepsFilePath() {
     const { userDepsFilePath } = this.getRawConfig();
-    return slash(
-      path.resolve(
-        this.getRootDir(),
-        this.getDefault<string>(userDepsFilePath, 'cosmos.userdeps.js')
-      )
+    return this.resolvePath(
+      this.default<string>(userDepsFilePath, 'cosmos.userdeps.js')
     );
   }
 
   getHostname() {
     const { hostname } = this.getRawConfig();
-    return this.getDefault<null | string>(hostname, null);
+    return this.default<null | string>(hostname, null);
   }
 
   getPort() {
@@ -67,6 +64,35 @@ export class CosmosConfig extends BaseCosmosConfig<RawCosmosConfig> {
     }
 
     const { port } = this.getRawConfig();
-    return this.getDefault<number>(port, 5000);
+    return this.default<number>(port, 5000);
   }
+
+  getGlobalImports() {
+    const rawConfig = this.getRawConfig();
+    const globalImports = this.default<string[]>(rawConfig.globalImports, []);
+    return globalImports.map(importPath => this.resolveModule(importPath));
+  }
+
+  protected resolvePath(filePath: string) {
+    // Use when dealing strictly with file paths
+    return slash(path.resolve(this.getRootDir(), filePath));
+  }
+
+  protected resolveModule(moduleId: string) {
+    // Use when dealing with file paths and module names interchangeably
+    return resolveModule(this.getRootDir(), moduleId);
+  }
+}
+
+function resolveModule(rootDir: string, moduleId: string) {
+  return slash(
+    // An absolute path is already resolved
+    path.isAbsolute(moduleId)
+      ? moduleId
+      : resolveFrom.silent(rootDir, moduleId) ||
+          // Final attempt: Resolve relative paths that don't either
+          // 1. Don't start with ./
+          // 2. Don't point to an existing file
+          path.join(rootDir, moduleId)
+  );
 }

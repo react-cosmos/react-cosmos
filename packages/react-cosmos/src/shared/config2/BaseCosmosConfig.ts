@@ -11,7 +11,7 @@ export abstract class BaseCosmosConfig<RawConfig extends RawCosmosConfig> {
     return this.rawConfig;
   }
 
-  protected getDefault<T>(rawValue: void | T, defaultValue: T): T {
+  protected default<T>(rawValue: void | T, defaultValue: T): T {
     return typeof rawValue === 'undefined' ? defaultValue : rawValue;
   }
 }

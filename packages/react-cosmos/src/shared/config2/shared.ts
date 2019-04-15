@@ -6,6 +6,7 @@ export type RawCosmosConfig = {
   exportPath?: string;
   fixtureFileSuffix?: string;
   fixturesDir?: string;
+  globalImports?: string[];
   // From Node.js docs: If host is omitted, the server will accept connections
   // https://github.com/react-cosmos/react-cosmos/issues/639
   // on the unspecified IPv6 address (::) when IPv6 is available, or the
