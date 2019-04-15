@@ -10,14 +10,9 @@ export function getBaseWebpackConfig(
   userWebpack: typeof webpack
 ) {
   const { rootDir, webpackConfigPath } = cosmosConfig;
-  if (!webpackConfigPath) {
+  if (!webpackConfigPath || !moduleExists(webpackConfigPath)) {
     console.log('[Cosmos] Using default webpack config');
     return getDefaultWebpackConfig(userWebpack, rootDir);
-  }
-
-  // TODO: Ensure path is absolute
-  if (!moduleExists(webpackConfigPath)) {
-    throw new Error(`Invalid webpack config path: ${webpackConfigPath}`);
   }
 
   const relPath = path.relative(process.cwd(), webpackConfigPath);

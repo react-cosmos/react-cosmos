@@ -17,6 +17,7 @@ export class WebpackCosmosConfig extends CosmosConfig<RawDomCosmosConfig> {
   }
 
   get webpackConfigPath() {
+    // TODO: Throw if config path is defined and invalid
     const { webpack = {} } = this.getRawConfig();
     const webpackConfigPath = this.default<string>(
       webpack.configPath,
