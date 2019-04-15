@@ -1,31 +1,17 @@
-import {
-  getCwdPath,
-  mockCwd,
-  unmockCwd,
-  mockCosmosConfig,
-  unmockFs
-} from '../testHelpers';
-import { getExportPath } from '..';
-
-beforeEach(() => {
-  mockCwd();
-});
-
-afterEach(() => {
-  unmockCwd();
-  unmockFs();
-});
+import { getCwdPath } from '../testHelpers';
+import { CosmosConfig } from '..';
 
 it('returns default export path', () => {
-  expect(getExportPath()).toBe(getCwdPath('cosmos-export'));
+  const cosmosConfig = new CosmosConfig({});
+  expect(cosmosConfig.getExportPath()).toBe(getCwdPath('cosmos-export'));
 });
 
 it('returns default export path from custom root dir', () => {
-  mockCosmosConfig('cosmos.config.json', { rootDir: 'subdir' });
-  expect(getExportPath()).toBe(getCwdPath('subdir/cosmos-export'));
+  const cosmosConfig = new CosmosConfig({ rootDir: 'subdir' });
+  expect(cosmosConfig.getExportPath()).toBe(getCwdPath('subdir/cosmos-export'));
 });
 
 it('returns custom export path', () => {
-  mockCosmosConfig('cosmos.config.json', { exportPath: 'my-export-path' });
-  expect(getExportPath()).toBe(getCwdPath('my-export-path'));
+  const cosmosConfig = new CosmosConfig({ exportPath: 'my-export-path' });
+  expect(cosmosConfig.getExportPath()).toBe(getCwdPath('my-export-path'));
 });

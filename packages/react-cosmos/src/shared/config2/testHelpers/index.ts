@@ -1,20 +1,11 @@
 import path from 'path';
 import { slash } from '../../slash';
-import { CosmosConfig } from '../shared';
-import { mockProcessCwd, unmockProcessCwd } from './mockProcessCwd';
+import { RawCosmosConfig } from '../shared';
 import { mockArgv } from './mockYargs';
 import { __mockFile, __mockDir, __unmockFs } from './fs';
 
 export function getCwdPath(relPath?: string) {
-  return relPath ? slash(getMockCwd(), relPath) : getMockCwd();
-}
-
-export function mockCwd() {
-  mockProcessCwd(getMockCwd());
-}
-
-export function unmockCwd() {
-  unmockProcessCwd();
+  return relPath ? slash(process.cwd(), relPath) : process.cwd();
 }
 
 export function mockCliArgs(cliArgs: {}) {
@@ -27,7 +18,7 @@ export function unmockCliArgs() {
 
 export function mockCosmosConfig(
   cosmosConfigPath: string,
-  cosmosConfig: CosmosConfig
+  cosmosConfig: RawCosmosConfig
 ) {
   const absPath = getCwdPath(cosmosConfigPath);
   __mockFile(absPath, cosmosConfig);
@@ -40,8 +31,4 @@ export function mockDir(dirPath: string) {
 
 export function unmockFs() {
   __unmockFs();
-}
-
-function getMockCwd() {
-  return __dirname;
 }
