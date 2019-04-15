@@ -27,4 +27,31 @@ export class CosmosConfig extends BaseCosmosConfig<RawCosmosConfig> {
     const relExportPath = this.getDefault<string>(exportPath, 'cosmos-export');
     return slash(path.resolve(this.getRootDir(), relExportPath));
   }
+
+  getFixtureFileSuffix() {
+    const { fixtureFileSuffix } = this.getRawConfig();
+    return this.getDefault<string>(fixtureFileSuffix, 'fixture');
+  }
+
+  getFixturesDir() {
+    const { fixturesDir } = this.getRawConfig();
+    return this.getDefault<string>(fixturesDir, '__fixtures__');
+  }
+
+  getWatchDirs() {
+    const { watchDirs } = this.getRawConfig();
+    const dirs = this.getDefault<string[]>(watchDirs, ['.']);
+    const rootDir = this.getRootDir();
+    return dirs.map(dirPath => slash(path.resolve(rootDir, dirPath)));
+  }
+
+  getUserDepsFilePath() {
+    const { userDepsFilePath } = this.getRawConfig();
+    return slash(
+      path.resolve(
+        this.getRootDir(),
+        this.getDefault<string>(userDepsFilePath, 'cosmos.userdeps.js')
+      )
+    );
+  }
 }
