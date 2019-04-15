@@ -7,6 +7,7 @@ module.exports = {
   testEnvironment: 'jsdom',
   rootDir: join(__dirname, '..'),
   testMatch: ['**/__tests__/**/*.{ts,tsx}', '**/?(*.)test.{ts,tsx}'],
+  testPathIgnorePatterns: ['<rootDir>/node_modules/', '/__fsmocks__/'],
   setupFilesAfterEnv: ['<rootDir>/.jest/setup-framework.ts'],
   collectCoverageFrom: [
     '**/src/**/*.{ts,tsx}',
