@@ -34,7 +34,8 @@ function getCosmosConfigPath() {
 
   // CLI suppport for --config relative/path/to/cosmos.config.json
   if (typeof cliArgs.config === 'string') {
-    // TODO: Add .json extension if missing
+    // TODO: Throw if extension is other than .json
+    // QUESTION: Does Node resolve .json files without explicit extension?
     return path.resolve(currentDir, cliArgs.config);
   }
 

@@ -1,3 +1,9 @@
+const actualProcessCwd = process.cwd;
+
 export function mockProcessCwd(currentDir: string) {
-  global.process.cwd = () => currentDir;
+  process.cwd = () => currentDir;
+}
+
+export function unmockProcessCwd() {
+  process.cwd = actualProcessCwd;
 }

@@ -1,31 +1,35 @@
 import { slash } from '../../slash';
-import { mockProcessCwd } from '../testHelpers/mockProcessCwd';
-import { mockArgv } from '../testHelpers/mockYargs';
+import { mockConfigInputs } from '../testHelpers';
 import { getCosmosConfig } from '..';
 
 it('returns cosmos config at --config path', () => {
-  mockProcessCwd(slash(__dirname, '__fsmocks__'));
-  mockArgv({ config: 'config/cosmos.config.json' });
+  const cwd = slash(__dirname, '__fsmocks__');
+  const cliArgs = { config: 'config/cosmos.config.json' };
 
-  expect(getCosmosConfig()).toBe(
-    require('./__fsmocks__/config/cosmos.config.json')
-  );
+  mockConfigInputs({ cwd, cliArgs }, () => {
+    expect(getCosmosConfig()).toBe(
+      require('./__fsmocks__/config/cosmos.config.json')
+    );
+  });
 });
 
 it('returns cosmos config at --root-dir path', () => {
-  mockProcessCwd(slash(__dirname, '__fsmocks__'));
-  mockArgv({ rootDir: 'config' });
+  const cwd = slash(__dirname, '__fsmocks__');
+  const cliArgs = { rootDir: 'config' };
 
-  expect(getCosmosConfig()).toBe(
-    require('./__fsmocks__/config/cosmos.config.json')
-  );
+  mockConfigInputs({ cwd, cliArgs }, () => {
+    expect(getCosmosConfig()).toBe(
+      require('./__fsmocks__/config/cosmos.config.json')
+    );
+  });
 });
 
 it('returns cosmos config at cwd', () => {
-  mockProcessCwd(slash(__dirname, '__fsmocks__/config'));
-  mockArgv({});
+  const cwd = slash(__dirname, '__fsmocks__/config');
 
-  expect(getCosmosConfig()).toBe(
-    require('./__fsmocks__/config/cosmos.config.json')
-  );
+  mockConfigInputs({ cwd }, () => {
+    expect(getCosmosConfig()).toBe(
+      require('./__fsmocks__/config/cosmos.config.json')
+    );
+  });
 });
