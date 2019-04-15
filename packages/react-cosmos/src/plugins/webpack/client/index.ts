@@ -1,18 +1,5 @@
-import { FixturesByPath, DecoratorsByPath } from 'react-cosmos-fixture';
-import { DomRendererConfig } from '../../../domRenderer';
 import { initErrorOverlay, dismissErrorOverlay } from './errorOverlay';
-
-export type DomRendererData = {
-  rendererConfig: DomRendererConfig;
-  fixtures: FixturesByPath;
-  decorators: DecoratorsByPath;
-};
-
-// NOTE: Renderer data is statically injected at compile time
-declare var __COSMOS_DATA: DomRendererData;
-
-const rendererData = __COSMOS_DATA;
-const { rendererConfig, fixtures, decorators } = rendererData;
+import { rendererConfig, fixtures, decorators } from './userDeps';
 
 function mount() {
   // Use dynamic import to load updated modules upon hot reloading

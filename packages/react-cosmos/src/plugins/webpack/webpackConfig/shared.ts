@@ -40,7 +40,7 @@ export function resolveClientPath(relPath: string) {
 export function getUserDepsLoaderRule() {
   return {
     loader: require.resolve('./userDepsLoader'),
-    include: resolveClientPath('index')
+    include: resolveClientPath('userDeps')
   };
 }
 
