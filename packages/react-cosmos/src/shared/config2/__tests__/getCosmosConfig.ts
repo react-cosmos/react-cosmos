@@ -20,3 +20,12 @@ it('returns cosmos config at --root-dir path', () => {
     require('./__fsmocks__/config/cosmos.config.json')
   );
 });
+
+it('returns cosmos config at cwd', () => {
+  mockProcessCwd(slash(__dirname, '__fsmocks__/config'));
+  mockArgv({});
+
+  expect(getCosmosConfig()).toBe(
+    require('./__fsmocks__/config/cosmos.config.json')
+  );
+});
