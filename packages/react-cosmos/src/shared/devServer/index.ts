@@ -1,7 +1,7 @@
 import http from 'http';
 import express from 'express';
+import { CosmosConfig, getCosmosConfig } from '../../config';
 import { PlatformType } from './../shared';
-import { CosmosConfig, getCosmosConfig } from '../config';
 import { createHttpServer } from './httpServer';
 import { createApp } from './app';
 // IDEA: Maybe replace react-dev-utils with https://github.com/yyx990803/launch-editor

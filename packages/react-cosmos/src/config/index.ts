@@ -6,12 +6,16 @@ import { requireFileAtPath } from './fs';
 import { BaseCosmosConfig } from './BaseCosmosConfig';
 import { getCosmosConfigPath } from './cosmosConfigPath';
 
-export function getCosmosConfig(): CosmosConfig {
+export { RawCosmosConfig } from './shared';
+
+export function getCosmosConfig<Config extends CosmosConfig>() {
   const rawCosmosConfig = requireFileAtPath(getCosmosConfigPath()) || {};
-  return new CosmosConfig(rawCosmosConfig);
+  return new CosmosConfig(rawCosmosConfig) as Config;
 }
 
-export class CosmosConfig extends BaseCosmosConfig<RawCosmosConfig> {
+export class CosmosConfig<
+  RawConfig extends RawCosmosConfig = RawCosmosConfig
+> extends BaseCosmosConfig<RawConfig> {
   get rootDir() {
     const cliArgs = getCliArgs();
     if (typeof cliArgs.rootDir === 'string') {

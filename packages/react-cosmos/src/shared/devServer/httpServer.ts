@@ -1,6 +1,6 @@
 import http from 'http';
 import promisify from 'util.promisify';
-import { CosmosConfig } from '../config';
+import { CosmosConfig } from '../../config';
 
 type RequestListener = (
   request: http.IncomingMessage,

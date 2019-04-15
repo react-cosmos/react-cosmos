@@ -1,8 +1,8 @@
 import fs from 'fs';
 import { PlaygroundConfig } from 'react-cosmos-playground2';
+import { CosmosConfig } from '../config';
 import { replaceKeys, PlatformType } from './shared';
 import { slash } from './slash';
-import { CosmosConfig } from './config';
 import { getStaticPath } from './static';
 
 export const RENDERER_FILENAME = '_renderer.html';
@@ -15,12 +15,9 @@ export function getDevPlaygroundHtml(
 }
 
 export function getStaticPlaygroundHtml(cosmosConfig: CosmosConfig) {
-  const { fixturesDir, fixtureFileSuffix } = cosmosConfig;
   return getPlaygroundHtml({
     core: {
-      projectId: cosmosConfig.rootDir,
-      fixturesDir,
-      fixtureFileSuffix,
+      ...getSharedConfig(cosmosConfig),
       devServerOn: false,
       webRendererUrl: getWebRendererUrl(cosmosConfig)
     }
@@ -31,14 +28,11 @@ function getDevPlaygroungConfig(
   platformType: PlatformType,
   cosmosConfig: CosmosConfig
 ): PlaygroundConfig {
-  const { fixturesDir, fixtureFileSuffix } = cosmosConfig;
   switch (platformType) {
     case 'native':
       return {
         core: {
-          projectId: cosmosConfig.rootDir,
-          fixturesDir,
-          fixtureFileSuffix,
+          ...getSharedConfig(cosmosConfig),
           devServerOn: true,
           webRendererUrl: null
         }
@@ -46,9 +40,7 @@ function getDevPlaygroungConfig(
     case 'web':
       return {
         core: {
-          projectId: cosmosConfig.rootDir,
-          fixturesDir,
-          fixtureFileSuffix,
+          ...getSharedConfig(cosmosConfig),
           devServerOn: true,
           webRendererUrl: getWebRendererUrl(cosmosConfig)
         }
@@ -56,6 +48,11 @@ function getDevPlaygroungConfig(
     default:
       throw new Error(`Invalid platform type: ${platformType}`);
   }
+}
+
+function getSharedConfig(cosmosConfig: CosmosConfig) {
+  const { rootDir, fixturesDir, fixtureFileSuffix } = cosmosConfig;
+  return { projectId: rootDir, fixturesDir, fixtureFileSuffix };
 }
 
 function getWebRendererUrl({ publicUrl }: CosmosConfig) {

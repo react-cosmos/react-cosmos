@@ -1,6 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
-import { CosmosConfig } from '../../../shared';
+import { WebpackCosmosConfig } from './../config';
 import {
   getBaseWebpackConfig,
   resolveDomRendererPath,
@@ -11,7 +11,7 @@ import {
 import { ensureHtmlWebackPlugin } from './htmlPlugin';
 
 export function getDevWebpackConfig(
-  cosmosConfig: CosmosConfig,
+  cosmosConfig: WebpackCosmosConfig,
   userWebpack: typeof webpack
 ) {
   const baseWebpackConfig = getBaseWebpackConfig(cosmosConfig, userWebpack);
@@ -27,7 +27,7 @@ export function getDevWebpackConfig(
   };
 }
 
-function getEntry(cosmosConfig: CosmosConfig) {
+function getEntry(cosmosConfig: WebpackCosmosConfig) {
   // The React devtools hook needs to be imported before any other module that
   // might import React
   const devtoolsHook = resolveDomRendererPath('reactDevtoolsHook');
@@ -40,7 +40,7 @@ function getEntry(cosmosConfig: CosmosConfig) {
   return [devtoolsHook, clientIndex];
 }
 
-function getOutput({ publicUrl }: CosmosConfig) {
+function getOutput({ publicUrl }: WebpackCosmosConfig) {
   const filename = '[name].js';
   return {
     // Setting path to `/` in development (where files are saved in memory and
@@ -61,7 +61,7 @@ function getRules(baseWebpackConfig: webpack.Configuration) {
 }
 
 function getPlugins(
-  cosmosConfig: CosmosConfig,
+  cosmosConfig: WebpackCosmosConfig,
   baseWebpackConfig: webpack.Configuration,
   userWebpack: typeof webpack
 ) {

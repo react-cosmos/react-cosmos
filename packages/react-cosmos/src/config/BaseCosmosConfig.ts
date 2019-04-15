@@ -1,6 +1,6 @@
 import { RawCosmosConfig } from './shared';
 
-export abstract class BaseCosmosConfig<RawConfig extends RawCosmosConfig> {
+export class BaseCosmosConfig<RawConfig extends RawCosmosConfig> {
   private rawConfig: RawConfig;
 
   constructor(rawConfig: RawConfig) {

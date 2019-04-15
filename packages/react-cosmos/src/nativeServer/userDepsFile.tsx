@@ -3,7 +3,8 @@ import { writeFile } from 'fs';
 import promisify from 'util.promisify';
 import { watch, FSWatcher } from 'chokidar';
 import { debounce } from 'lodash';
-import { CosmosConfig, DevServerPluginArgs } from '../shared';
+import { CosmosConfig } from '../config';
+import { DevServerPluginArgs } from '../shared';
 import {
   getFixturePatterns,
   getDecoratorPatterns,
@@ -50,15 +51,15 @@ type NativeRendererConfig = {
 };
 
 async function generateUserDepsFile(cosmosConfig: CosmosConfig) {
-  const { userDepsPath, port } = cosmosConfig;
+  const { userDepsFilePath, port } = cosmosConfig;
 
   const rendererConfig: NativeRendererConfig = { port };
   const userDepsModule = await generateUserDepsModule(
     cosmosConfig,
     rendererConfig
   );
-  await writeFileAsync(userDepsPath, userDepsModule, 'utf8');
+  await writeFileAsync(userDepsFilePath, userDepsModule, 'utf8');
 
-  const relUserDepsPath = path.relative(process.cwd(), userDepsPath);
-  console.log(`[Cosmos] Generated ${relUserDepsPath}`);
+  const relUserDepsFilePath = path.relative(process.cwd(), userDepsFilePath);
+  console.log(`[Cosmos] Generated ${relUserDepsFilePath}`);
 }

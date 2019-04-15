@@ -1,11 +1,6 @@
 import importFrom from 'import-from';
 import webpack from 'webpack';
 
-// TODO
-// type WebpackCosmosConfig = {
-//   hotReload: boolean
-// }
-
 export function getWebpack(rootDir: string) {
   const userWebpack = importFrom.silent<typeof webpack>(rootDir, 'webpack');
   if (!userWebpack) {

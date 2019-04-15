@@ -1,12 +1,12 @@
 import path from 'path';
 import { argv } from 'yargs';
 import webpack from 'webpack';
-import { CosmosConfig } from '../../../shared';
+import { WebpackCosmosConfig } from '../config';
 import { getDefaultWebpackConfig } from './default';
 import { moduleExists, getDefaultExport } from './module';
 
 export function getBaseWebpackConfig(
-  cosmosConfig: CosmosConfig,
+  cosmosConfig: WebpackCosmosConfig,
   userWebpack: typeof webpack
 ) {
   const { rootDir, webpackConfigPath } = cosmosConfig;
@@ -45,7 +45,7 @@ export function getUserDepsLoaderRule() {
 }
 
 export function getEnvVarPlugin(
-  { publicUrl }: CosmosConfig,
+  { publicUrl }: WebpackCosmosConfig,
   userWebpack: typeof webpack,
   isDev: boolean
 ) {

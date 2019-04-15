@@ -6,7 +6,7 @@ const FIXTURE_PATTERNS = [
   '**/*.<fixtureFileSuffix>.{js,jsx,ts,tsx}'
 ];
 const DECORATOR_PATTERNS = ['**/cosmos.decorator.{js,jsx,ts,tsx}'];
-const IGNORE_PATTERNS = '**/node_modules/**';
+const IGNORE_PATTERNS = ['**/node_modules/**', '**/dist/**'];
 
 export function getFixturePatterns(
   fixturesDir: string,

@@ -1,6 +1,6 @@
 import path from 'path';
+import { CosmosConfig } from '../../config';
 import { slash } from '../slash';
-import { CosmosConfig } from '../config';
 import { findUserModulePaths } from './findPaths';
 export {
   getFixturePatterns,

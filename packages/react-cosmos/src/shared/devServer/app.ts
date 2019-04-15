@@ -1,6 +1,6 @@
 import express from 'express';
+import { CosmosConfig } from '../../config';
 import { getStaticPath } from '../static';
-import { CosmosConfig } from '../config';
 import { PlatformType } from '../shared';
 import { getDevPlaygroundHtml } from '../playgroundHtml';
 // import { setupHttpProxy } from '../shared/httpProxy';

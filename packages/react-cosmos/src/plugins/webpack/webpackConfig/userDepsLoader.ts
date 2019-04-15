@@ -1,6 +1,7 @@
-import { CosmosConfig, getCosmosConfig } from '../../../shared/config';
 import { generateUserDepsModule } from '../../../shared/userDeps';
+import { getCosmosConfig } from '../../../config';
 import { DomRendererConfig } from '../../../domRenderer';
+import { WebpackCosmosConfig } from '../config';
 
 type WebpackLoaderContext = {
   async(): (error: Error | null, result: string | Buffer) => unknown;
@@ -8,7 +9,7 @@ type WebpackLoaderContext = {
 };
 
 module.exports = async function injectUserDeps(source: string) {
-  const cosmosConfig = getCosmosConfig();
+  const cosmosConfig = getCosmosConfig<WebpackCosmosConfig>();
   const webpackLoaderContext = (this as any) as WebpackLoaderContext;
   const callback = webpackLoaderContext.async();
 
@@ -24,16 +25,11 @@ module.exports = async function injectUserDeps(source: string) {
     webpackLoaderContext.addContextDependency(watchDir)
   );
 
-  const rendererConfig = getDomRendererConfig(cosmosConfig);
+  const { containerQuerySelector } = cosmosConfig;
+  const rendererConfig: DomRendererConfig = { containerQuerySelector };
   const userDepsModule = await generateUserDepsModule(
     cosmosConfig,
     rendererConfig
   );
   callback(null, userDepsModule);
 };
-
-function getDomRendererConfig({
-  containerQuerySelector
-}: CosmosConfig): DomRendererConfig {
-  return { containerQuerySelector };
-}

@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs-extra';
-import { CosmosConfig, getCosmosConfig } from './config';
+import { CosmosConfig, getCosmosConfig } from '../config';
 import { getStaticPath } from './static';
 import { getStaticPlaygroundHtml } from './playgroundHtml';
 
