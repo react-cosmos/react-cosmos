@@ -12,7 +12,7 @@ export function getCosmosConfig(): CosmosConfig {
 }
 
 export class CosmosConfig extends BaseCosmosConfig<RawCosmosConfig> {
-  getRootDir() {
+  get rootDir() {
     const cliArgs = getCliArgs();
     if (typeof cliArgs.rootDir === 'string') {
       return getRootDirAtPath(cliArgs.rootDir);
@@ -23,41 +23,41 @@ export class CosmosConfig extends BaseCosmosConfig<RawCosmosConfig> {
     return rootDir ? path.resolve(configDir, rootDir) : configDir;
   }
 
-  getExportPath() {
+  get exportPath() {
     const { exportPath } = this.getRawConfig();
     const relExportPath = this.default<string>(exportPath, 'cosmos-export');
     return this.resolvePath(relExportPath);
   }
 
-  getFixtureFileSuffix() {
+  get fixtureFileSuffix() {
     const rawConfig = this.getRawConfig();
     return this.default<string>(rawConfig.fixtureFileSuffix, 'fixture');
   }
 
-  getFixturesDir() {
+  get fixturesDir() {
     const rawConfig = this.getRawConfig();
     return this.default<string>(rawConfig.fixturesDir, '__fixtures__');
   }
 
-  getWatchDirs() {
+  get watchDirs() {
     const rawConfig = this.getRawConfig();
     const watchDirs = this.default<string[]>(rawConfig.watchDirs, ['.']);
     return watchDirs.map(watchDir => this.resolvePath(watchDir));
   }
 
-  getUserDepsFilePath() {
+  get userDepsFilePath() {
     const { userDepsFilePath } = this.getRawConfig();
     return this.resolvePath(
       this.default<string>(userDepsFilePath, 'cosmos.userdeps.js')
     );
   }
 
-  getHostname() {
+  get hostname() {
     const { hostname } = this.getRawConfig();
     return this.default<null | string>(hostname, null);
   }
 
-  getPort() {
+  get port() {
     const cliArgs = getCliArgs();
     if (typeof cliArgs.port === 'number') {
       return cliArgs.port;
@@ -67,7 +67,7 @@ export class CosmosConfig extends BaseCosmosConfig<RawCosmosConfig> {
     return this.default<number>(port, 5000);
   }
 
-  getGlobalImports() {
+  get globalImports() {
     const rawConfig = this.getRawConfig();
     const globalImports = this.default<string[]>(rawConfig.globalImports, []);
     return globalImports.map(importPath => this.resolveModule(importPath));
@@ -75,12 +75,12 @@ export class CosmosConfig extends BaseCosmosConfig<RawCosmosConfig> {
 
   protected resolvePath(filePath: string) {
     // Use when dealing strictly with file paths
-    return slash(path.resolve(this.getRootDir(), filePath));
+    return slash(path.resolve(this.rootDir, filePath));
   }
 
   protected resolveModule(moduleId: string) {
     // Use when dealing with file paths and module names interchangeably
-    return resolveModule(this.getRootDir(), moduleId);
+    return resolveModule(this.rootDir, moduleId);
   }
 }
 

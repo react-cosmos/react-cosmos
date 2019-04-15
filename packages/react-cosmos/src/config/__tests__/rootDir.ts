@@ -13,26 +13,26 @@ afterEach(() => {
 });
 
 it('returns root dir from --root-dir', () => {
-  const cosmosConfig = new CosmosConfig({});
   mockDir('subdir');
   mockCliArgs({ rootDir: 'subdir' });
-  expect(cosmosConfig.getRootDir()).toBe(getCwdPath('subdir'));
+  const { rootDir } = new CosmosConfig({});
+  expect(rootDir).toBe(getCwdPath('subdir'));
 });
 
 it('throws on invalid --root-dir path', () => {
-  const cosmosConfig = new CosmosConfig({});
   mockCliArgs({ rootDir: 'subdir' });
-  expect(() => cosmosConfig.getRootDir()).toThrow(
+  const cosmosConfig = new CosmosConfig({});
+  expect(() => cosmosConfig.rootDir).toThrow(
     '[Cosmos] Dir not found at path: subdir'
   );
 });
 
 it('returns root dir from cwd', () => {
-  const cosmosConfig = new CosmosConfig({});
-  expect(cosmosConfig.getRootDir()).toBe(getCwdPath());
+  const { rootDir } = new CosmosConfig({});
+  expect(rootDir).toBe(getCwdPath());
 });
 
-it('returns root dir from cosmosConfig.rootDir', () => {
-  const cosmosConfig = new CosmosConfig({ rootDir: '..' });
-  expect(cosmosConfig.getRootDir()).toBe(getCwdPath('..'));
+it('returns root dir from config', () => {
+  const { rootDir } = new CosmosConfig({ rootDir: '..' });
+  expect(rootDir).toBe(getCwdPath('..'));
 });
