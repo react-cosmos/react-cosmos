@@ -29,6 +29,17 @@ export class CosmosConfig extends BaseCosmosConfig<RawCosmosConfig> {
     return this.resolvePath(relExportPath);
   }
 
+  get staticPath() {
+    const { staticPath } = this.getRawConfig();
+    const relStaticPath = this.default<null | string>(staticPath, null);
+    return relStaticPath && this.resolvePath(relStaticPath);
+  }
+
+  get publicUrl() {
+    const { publicUrl } = this.getRawConfig();
+    return this.default<string>(publicUrl, '/');
+  }
+
   get fixtureFileSuffix() {
     const rawConfig = this.getRawConfig();
     return this.default<string>(rawConfig.fixtureFileSuffix, 'fixture');
