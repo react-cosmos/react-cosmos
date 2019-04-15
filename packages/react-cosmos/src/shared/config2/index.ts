@@ -4,9 +4,7 @@ import { CosmosConfig } from './shared';
 import { readCosmosConfigFile } from './readCosmosConfigFile';
 
 export function getCosmosConfig(): CosmosConfig {
-  const { /*explicit,*/ cosmosConfigPath } = getCosmosConfigPath();
-  // TODO: Throw if "explicit" and cosmosConfigPath does not exist
-  return readCosmosConfigFile(cosmosConfigPath) || {};
+  return readCosmosConfigFile(getCosmosConfigPath()) || {};
 }
 
 export function getRootDir() {
@@ -18,41 +16,31 @@ export function getRootDir() {
     return path.resolve(currentDir, cliArgs.rootDir);
   }
 
-  const { cosmosConfigPath } = getCosmosConfigPath();
-  const projectDir = path.dirname(cosmosConfigPath);
+  const projectDir = path.dirname(getCosmosConfigPath());
   const cosmosConfig = getCosmosConfig();
   return cosmosConfig.rootDir
     ? path.resolve(projectDir, cosmosConfig.rootDir)
     : projectDir;
 }
 
-function getCosmosConfigPath(): {
-  explicit: boolean;
-  cosmosConfigPath: string;
-} {
+function getCosmosConfigPath() {
   const currentDir = process.cwd();
   const cliArgs = getCliArgs();
 
   // CLI suppport for --config relative/path/to/cosmos.config.json
   if (typeof cliArgs.config === 'string') {
-    // TODO: Throw if path has extension other than .json
-    return {
-      explicit: true,
-      cosmosConfigPath: path.resolve(currentDir, cliArgs.config)
-    };
+    // TODO: Throw if file isn't found at path
+    // TODO: Throw if file is found but has extension other than .json
+    return path.resolve(currentDir, cliArgs.config);
   }
 
   // CLI suppport for --root-dir relative/path/project
-  // TODO: Throw if projectDir isn't a directory
+  // TODO: Throw if cliArgs.rootDir exists and doesn't point to a dir
   const projectDir =
     typeof cliArgs.rootDir === 'string'
       ? path.resolve(currentDir, cliArgs.rootDir)
       : currentDir;
-
-  return {
-    explicit: false,
-    cosmosConfigPath: path.join(projectDir, 'cosmos.config.json')
-  };
+  return path.join(projectDir, 'cosmos.config.json');
 }
 
 function getCliArgs() {
