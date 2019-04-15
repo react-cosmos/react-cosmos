@@ -19,7 +19,7 @@ it('returns root dir from --root-dir', () => {
   expect(getRootDir()).toBe(getCwdPath('subdir'));
 });
 
-it('throws on invalid --config path', () => {
+it('throws on invalid --root-dir path', () => {
   mockCliArgs({ rootDir: 'subdir' });
   expect(() => getRootDir()).toThrow('[Cosmos] Dir not found at path: subdir');
 });

@@ -1,3 +1,4 @@
+import path from 'path';
 import { slash } from '../../slash';
 import { CosmosConfig } from '../shared';
 import { mockProcessCwd, unmockProcessCwd } from './mockProcessCwd';
@@ -22,7 +23,9 @@ export function mockCosmosConfig(
   cosmosConfigPath: string,
   cosmosConfig: CosmosConfig
 ) {
-  __mockFile(getCwdPath(cosmosConfigPath), cosmosConfig);
+  const absPath = getCwdPath(cosmosConfigPath);
+  __mockFile(absPath, cosmosConfig);
+  __mockDir(path.dirname(absPath));
 }
 
 export function mockDir(dirPath: string) {

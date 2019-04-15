@@ -8,16 +8,9 @@ export function getCosmosConfig(): CosmosConfig {
 }
 
 export function getRootDir() {
-  const currentDir = process.cwd();
   const cliArgs = getCliArgs();
-
   if (typeof cliArgs.rootDir === 'string') {
-    const absPath = path.resolve(currentDir, cliArgs.rootDir);
-    if (!dirExistsAtPath(absPath)) {
-      throw new Error(`[Cosmos] Dir not found at path: ${cliArgs.rootDir}`);
-    }
-
-    return absPath;
+    return getRootDirAtPath(cliArgs.rootDir);
   }
 
   const projectDir = path.dirname(getCosmosConfigPath());
@@ -28,27 +21,39 @@ export function getRootDir() {
 }
 
 function getCosmosConfigPath() {
-  const currentDir = process.cwd();
   const cliArgs = getCliArgs();
 
   // CLI suppport for --config relative/path/to/cosmos.config.json
   if (typeof cliArgs.config === 'string') {
-    const absPath = path.resolve(currentDir, cliArgs.config);
+    // TODO: Throw if file extension is not JSON
+
+    const absPath = path.resolve(getCurrentDir(), cliArgs.config);
     if (!fileExistsAtPath(absPath)) {
       throw new Error(`[Cosmos] Config not found at path: ${cliArgs.config}`);
     }
 
-    // TODO: Throw if file is found but has extension other than .json
     return absPath;
   }
 
   // CLI suppport for --root-dir relative/path/project
-  // TODO: Throw if cliArgs.rootDir exists and doesn't point to a dir
   const projectDir =
     typeof cliArgs.rootDir === 'string'
-      ? path.resolve(currentDir, cliArgs.rootDir)
-      : currentDir;
+      ? getRootDirAtPath(cliArgs.rootDir)
+      : getCurrentDir();
   return path.join(projectDir, 'cosmos.config.json');
+}
+
+function getRootDirAtPath(dirPath: string) {
+  const absPath = path.resolve(getCurrentDir(), dirPath);
+  if (!dirExistsAtPath(absPath)) {
+    throw new Error(`[Cosmos] Dir not found at path: ${dirPath}`);
+  }
+
+  return absPath;
+}
+
+function getCurrentDir() {
+  return process.cwd();
 }
 
 function getCliArgs() {

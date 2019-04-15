@@ -32,6 +32,13 @@ it('returns cosmos config at --root-dir path', () => {
   expect(getCosmosConfig()).toBe(cosmosConfig);
 });
 
+it('throws on invalid --root-dir path', () => {
+  mockCliArgs({ rootDir: 'subdir' });
+  expect(() => getCosmosConfig()).toThrow(
+    '[Cosmos] Dir not found at path: subdir'
+  );
+});
+
 it('returns cosmos config at cwd', () => {
   const cosmosConfig = {};
   mockCosmosConfig('cosmos.config.json', cosmosConfig);
