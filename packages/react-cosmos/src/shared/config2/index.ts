@@ -1,15 +1,12 @@
 import path from 'path';
 import yargs from 'yargs';
-// import { slash } from '../slash';
-
-export type CosmosConfig = {
-  rootDir?: string;
-};
+import { CosmosConfig } from './shared';
+import { readCosmosConfigFile } from './readCosmosConfigFile';
 
 export function getCosmosConfig(): CosmosConfig {
-  const cosmosConfigPath = getCosmosConfigPath();
-  // TODO: Enforce .json file extension
-  return require(cosmosConfigPath);
+  const { /*explicit,*/ cosmosConfigPath } = getCosmosConfigPath();
+  // TODO: Throw if "explicit" and cosmosConfigPath does not exist
+  return readCosmosConfigFile(cosmosConfigPath) || {};
 }
 
 export function getRootDir() {
@@ -18,25 +15,31 @@ export function getRootDir() {
 
   if (typeof cliArgs.rootDir === 'string') {
     // TODO: Throw if projectDir isn't a directory
-    return path.resolve(currentDir, cliArgs.projectDir);
+    return path.resolve(currentDir, cliArgs.rootDir);
   }
 
-  const projectDir = path.dirname(getCosmosConfigPath());
+  const { cosmosConfigPath } = getCosmosConfigPath();
+  const projectDir = path.dirname(cosmosConfigPath);
   const cosmosConfig = getCosmosConfig();
   return cosmosConfig.rootDir
     ? path.resolve(projectDir, cosmosConfig.rootDir)
     : projectDir;
 }
 
-function getCosmosConfigPath() {
+function getCosmosConfigPath(): {
+  explicit: boolean;
+  cosmosConfigPath: string;
+} {
   const currentDir = process.cwd();
   const cliArgs = getCliArgs();
 
   // CLI suppport for --config relative/path/to/cosmos.config.json
   if (typeof cliArgs.config === 'string') {
-    // TODO: Throw if extension is other than .json
-    // QUESTION: Does Node resolve .json files without explicit extension?
-    return path.resolve(currentDir, cliArgs.config);
+    // TODO: Throw if path has extension other than .json
+    return {
+      explicit: true,
+      cosmosConfigPath: path.resolve(currentDir, cliArgs.config)
+    };
   }
 
   // CLI suppport for --root-dir relative/path/project
@@ -46,7 +49,10 @@ function getCosmosConfigPath() {
       ? path.resolve(currentDir, cliArgs.rootDir)
       : currentDir;
 
-  return path.join(projectDir, 'cosmos.config.json');
+  return {
+    explicit: false,
+    cosmosConfigPath: path.join(projectDir, 'cosmos.config.json')
+  };
 }
 
 function getCliArgs() {
