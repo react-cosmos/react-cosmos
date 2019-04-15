@@ -2,10 +2,7 @@ import { slash } from '../../slash';
 import { CosmosConfig } from '../shared';
 import { mockProcessCwd, unmockProcessCwd } from './mockProcessCwd';
 import { mockArgv } from './mockYargs';
-import {
-  mockCosmosConfigFile,
-  unmockCosmosConfigFile
-} from './mockCosmosConfigFile';
+import { __mockFile, __unmockFs } from './fs';
 
 export function getCwdPath(relPath?: string) {
   return relPath ? slash(getMockCwd(), relPath) : getMockCwd();
@@ -26,9 +23,9 @@ export function mockCosmosConfig(
   cb: () => unknown
 ) {
   expect.hasAssertions();
-  mockCosmosConfigFile(getCwdPath(cosmosConfigPath), cosmosConfig);
+  __mockFile(getCwdPath(cosmosConfigPath), cosmosConfig);
   cb();
-  unmockCosmosConfigFile();
+  __unmockFs();
 }
 
 function getMockCwd() {
