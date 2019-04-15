@@ -1,5 +1,5 @@
 import path from 'path';
-import { slash } from '../../slash';
+import { slash } from '../../shared/slash';
 import { RawCosmosConfig } from '../shared';
 import { mockArgv } from './mockYargs';
 import { __mockFile, __mockDir, __unmockFs } from './fs';

@@ -14,7 +14,6 @@ export type RawCosmosConfig = {
   // unspecified IPv4 address (0.0.0.0) otherwise.
   hostname?: null | string;
   port?: number;
-  publicUrl?: string;
   rootDir?: string;
   staticPath?: string;
   // Only used by the React Native server, userDepsFilePath specifies where to

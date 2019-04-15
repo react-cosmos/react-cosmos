@@ -1,6 +1,6 @@
 import path from 'path';
 import resolveFrom from 'resolve-from';
-import { slash } from '../slash';
+import { slash } from '../shared/slash';
 import { RawCosmosConfig, getCliArgs, getRootDirAtPath } from './shared';
 import { requireFileAtPath } from './fs';
 import { BaseCosmosConfig } from './BaseCosmosConfig';
