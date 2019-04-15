@@ -9,13 +9,19 @@ export function getCwdPath(relPath?: string) {
   return relPath ? slash(getMockCwd(), relPath) : getMockCwd();
 }
 
-export function mockCliArgs(cliArgs: {}) {
+export function mockCwd() {
   mockProcessCwd(getMockCwd());
+}
+
+export function unmockCwd() {
+  unmockProcessCwd();
+}
+
+export function mockCliArgs(cliArgs: {}) {
   mockArgv(cliArgs);
 }
 
 export function unmockCliArgs() {
-  unmockProcessCwd();
   mockArgv({});
 }
 

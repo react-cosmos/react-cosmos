@@ -1,14 +1,21 @@
 import {
   getCwdPath,
+  mockCwd,
+  unmockCwd,
   mockCliArgs,
+  unmockCliArgs,
   mockCosmosConfig,
   mockDir,
-  unmockCliArgs,
   unmockFs
 } from '../testHelpers';
 import { getRootDir } from '..';
 
+beforeEach(() => {
+  mockCwd();
+});
+
 afterEach(() => {
+  unmockCwd();
   unmockCliArgs();
   unmockFs();
 });

@@ -1,12 +1,19 @@
 import {
+  mockCwd,
+  unmockCwd,
   mockCliArgs,
-  mockCosmosConfig,
   unmockCliArgs,
+  mockCosmosConfig,
   unmockFs
 } from '../testHelpers';
 import { getCosmosConfig } from '..';
 
+beforeEach(() => {
+  mockCwd();
+});
+
 afterEach(() => {
+  unmockCwd();
   unmockCliArgs();
   unmockFs();
 });
