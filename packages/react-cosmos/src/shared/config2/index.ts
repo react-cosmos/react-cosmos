@@ -1,7 +1,7 @@
 import path from 'path';
 import yargs from 'yargs';
 import { CosmosConfig } from './shared';
-import { requireFileAtPath, fileExistsAtPath } from './fs';
+import { requireFileAtPath, fileExistsAtPath, dirExistsAtPath } from './fs';
 
 export function getCosmosConfig(): CosmosConfig {
   return requireFileAtPath(getCosmosConfigPath()) || {};
@@ -12,8 +12,12 @@ export function getRootDir() {
   const cliArgs = getCliArgs();
 
   if (typeof cliArgs.rootDir === 'string') {
-    // TODO: Throw if projectDir isn't a directory
-    return path.resolve(currentDir, cliArgs.rootDir);
+    const absPath = path.resolve(currentDir, cliArgs.rootDir);
+    if (!dirExistsAtPath(absPath)) {
+      throw new Error(`[Cosmos] Dir not found at path: ${cliArgs.rootDir}`);
+    }
+
+    return absPath;
   }
 
   const projectDir = path.dirname(getCosmosConfigPath());
@@ -31,7 +35,7 @@ function getCosmosConfigPath() {
   if (typeof cliArgs.config === 'string') {
     const absPath = path.resolve(currentDir, cliArgs.config);
     if (!fileExistsAtPath(absPath)) {
-      throw new Error(`[Cosmos] No file found at path: ${cliArgs.config}`);
+      throw new Error(`[Cosmos] Config not found at path: ${cliArgs.config}`);
     }
 
     // TODO: Throw if file is found but has extension other than .json

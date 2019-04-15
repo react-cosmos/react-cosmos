@@ -10,9 +10,9 @@ export function requireFileAtPath(modulePath: string) {
 }
 
 export function fileExistsAtPath(filePath: string) {
-  if (!fs.existsSync(filePath)) {
-    return false;
-  }
+  return fs.existsSync(filePath) && fs.lstatSync(filePath).isFile();
+}
 
-  return fs.lstatSync(filePath).isFile();
+export function dirExistsAtPath(dirPath: string) {
+  return fs.existsSync(dirPath) && fs.lstatSync(dirPath).isDirectory();
 }
