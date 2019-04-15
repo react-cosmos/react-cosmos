@@ -54,4 +54,19 @@ export class CosmosConfig extends BaseCosmosConfig<RawCosmosConfig> {
       )
     );
   }
+
+  getHostname() {
+    const { hostname } = this.getRawConfig();
+    return this.getDefault<null | string>(hostname, null);
+  }
+
+  getPort() {
+    const cliArgs = getCliArgs();
+    if (typeof cliArgs.port === 'number') {
+      return cliArgs.port;
+    }
+
+    const { port } = this.getRawConfig();
+    return this.getDefault<number>(port, 5000);
+  }
 }
