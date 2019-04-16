@@ -1,7 +1,7 @@
 import importFrom from 'import-from';
 import webpack from 'webpack';
 import { RENDERER_FILENAME } from '../../../shared';
-import { WebpackCosmosConfig } from '../config';
+import { CosmosConfig } from '../../../config';
 import { hasPlugin, isInstanceOfPlugin } from './shared';
 
 type HtmlWebpackPlugin = webpack.Plugin & {
@@ -18,7 +18,7 @@ type HtmlWebpackPluginConstructor = new (args: {
 }) => HtmlWebpackPlugin;
 
 export function ensureHtmlWebackPlugin(
-  { rootDir }: WebpackCosmosConfig,
+  { rootDir }: CosmosConfig,
   plugins: webpack.Plugin[]
 ): webpack.Plugin[] {
   if (hasPlugin(plugins, 'HtmlWebpackPlugin')) {

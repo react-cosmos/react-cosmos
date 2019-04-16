@@ -1,14 +1,9 @@
 import webpack from 'webpack';
 import { ExportPluginArgs } from '../../shared';
 import { getWebpack } from './shared';
-import { WebpackCosmosConfig } from './config';
 import { getExportWebpackConfig } from './webpackConfig';
 
-export async function webpackExport({
-  cosmosConfig: coreCosmosConfig
-}: ExportPluginArgs) {
-  const cosmosConfig = new WebpackCosmosConfig(coreCosmosConfig.getRawConfig());
-
+export async function webpackExport({ cosmosConfig }: ExportPluginArgs) {
   const userWebpack = getWebpack(cosmosConfig.rootDir);
   if (!userWebpack) {
     return;

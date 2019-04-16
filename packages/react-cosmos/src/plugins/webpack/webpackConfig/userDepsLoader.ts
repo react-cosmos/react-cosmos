@@ -1,7 +1,7 @@
 import { generateUserDepsModule } from '../../../shared/userDeps';
 import { getCosmosConfig } from '../../../config';
 import { DomRendererConfig } from '../../../domRenderer';
-import { WebpackCosmosConfig } from '../config';
+import { createDomCosmosConfig } from '../cosmosConfig/dom';
 
 type WebpackLoaderContext = {
   async(): (error: Error | null, result: string | Buffer) => unknown;
@@ -9,7 +9,7 @@ type WebpackLoaderContext = {
 };
 
 module.exports = async function injectUserDeps(source: string) {
-  const cosmosConfig = getCosmosConfig<WebpackCosmosConfig>();
+  const cosmosConfig = getCosmosConfig();
   const webpackLoaderContext = (this as any) as WebpackLoaderContext;
   const callback = webpackLoaderContext.async();
 
@@ -25,7 +25,7 @@ module.exports = async function injectUserDeps(source: string) {
     webpackLoaderContext.addContextDependency(watchDir)
   );
 
-  const { containerQuerySelector } = cosmosConfig;
+  const { containerQuerySelector } = createDomCosmosConfig(cosmosConfig);
   const rendererConfig: DomRendererConfig = { containerQuerySelector };
   const userDepsModule = await generateUserDepsModule(
     cosmosConfig,

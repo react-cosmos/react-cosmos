@@ -24,7 +24,7 @@ export type CosmosConfig = {
   userDepsFilePath: string;
   watchDirs: string[];
   // Allow for plugin config
-  [option: string]: any;
+  [option: string]: unknown;
 };
 
 export function getCliArgs() {

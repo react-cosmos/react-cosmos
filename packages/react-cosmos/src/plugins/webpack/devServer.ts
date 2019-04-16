@@ -5,15 +5,12 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import { DevServerPluginArgs } from '../../shared';
 import { getRootUrl } from '../../shared/static';
 import { getWebpack } from './shared';
-import { WebpackCosmosConfig } from './config';
 import { getDevWebpackConfig } from './webpackConfig';
 
 export async function webpackDevServer({
-  cosmosConfig: coreCosmosConfig,
+  cosmosConfig,
   expressApp
 }: DevServerPluginArgs) {
-  const cosmosConfig = new WebpackCosmosConfig(coreCosmosConfig.getRawConfig());
-
   const userWebpack = getWebpack(cosmosConfig.rootDir);
   if (!userWebpack) {
     return;

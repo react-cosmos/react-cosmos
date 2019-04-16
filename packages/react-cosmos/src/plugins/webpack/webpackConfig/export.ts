@@ -1,6 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
-import { WebpackCosmosConfig } from './../config';
+import { CosmosConfig } from '../../../config';
 import {
   getBaseWebpackConfig,
   resolveDomRendererPath,
@@ -11,7 +11,7 @@ import {
 import { ensureHtmlWebackPlugin } from './htmlPlugin';
 
 export function getExportWebpackConfig(
-  cosmosConfig: WebpackCosmosConfig,
+  cosmosConfig: CosmosConfig,
   userWebpack: typeof webpack
 ) {
   const baseWebpackConfig = getBaseWebpackConfig(cosmosConfig, userWebpack);
@@ -35,7 +35,7 @@ function getEntry() {
   return [devtoolsHook, clientIndex];
 }
 
-function getOutput({ exportPath, publicUrl }: WebpackCosmosConfig) {
+function getOutput({ exportPath, publicUrl }: CosmosConfig) {
   const filename = '[name].js';
   return {
     // Most paths are created using forward slashes regardless of the OS for
@@ -53,7 +53,7 @@ function getRules(baseWebpackConfig: webpack.Configuration) {
 }
 
 function getPlugins(
-  cosmosConfig: WebpackCosmosConfig,
+  cosmosConfig: CosmosConfig,
   baseWebpackConfig: webpack.Configuration,
   userWebpack: typeof webpack
 ) {

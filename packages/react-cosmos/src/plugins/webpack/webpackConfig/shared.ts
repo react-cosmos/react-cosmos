@@ -1,24 +1,26 @@
 import path from 'path';
 import { argv } from 'yargs';
 import webpack from 'webpack';
-import { WebpackCosmosConfig } from '../config';
+import { CosmosConfig } from '../../../config';
+import { createWebpackCosmosConfig } from '../cosmosConfig/webpack';
 import { getDefaultWebpackConfig } from './default';
 import { moduleExists, getDefaultExport } from './module';
 
 export function getBaseWebpackConfig(
-  cosmosConfig: WebpackCosmosConfig,
+  cosmosConfig: CosmosConfig,
   userWebpack: typeof webpack
 ) {
-  const { rootDir, webpackConfigPath } = cosmosConfig;
-  if (!webpackConfigPath || !moduleExists(webpackConfigPath)) {
+  const { rootDir } = cosmosConfig;
+  const { configPath } = createWebpackCosmosConfig(cosmosConfig);
+  if (!configPath || !moduleExists(configPath)) {
     console.log('[Cosmos] Using default webpack config');
     return getDefaultWebpackConfig(userWebpack, rootDir);
   }
 
-  const relPath = path.relative(process.cwd(), webpackConfigPath);
+  const relPath = path.relative(process.cwd(), configPath);
   console.log(`[Cosmos] Using webpack config found at ${relPath}`);
 
-  const userConfig = getDefaultExport(require(webpackConfigPath));
+  const userConfig = getDefaultExport(require(configPath));
   return typeof userConfig === 'function'
     ? userConfig(process.env.NODE_ENV, argv)
     : userConfig;
@@ -40,7 +42,7 @@ export function getUserDepsLoaderRule() {
 }
 
 export function getEnvVarPlugin(
-  { publicUrl }: WebpackCosmosConfig,
+  { publicUrl }: CosmosConfig,
   userWebpack: typeof webpack,
   isDev: boolean
 ) {
