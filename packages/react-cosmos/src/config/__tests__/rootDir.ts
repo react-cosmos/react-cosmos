@@ -5,7 +5,7 @@ import {
   mockDir,
   unmockFs
 } from '../testHelpers';
-import { CosmosConfig } from '..';
+import { createCosmosConfig } from '..';
 
 afterEach(() => {
   unmockCliArgs();
@@ -15,24 +15,23 @@ afterEach(() => {
 it('returns root dir from --root-dir', () => {
   mockDir('subdir');
   mockCliArgs({ rootDir: 'subdir' });
-  const { rootDir } = new CosmosConfig({});
+  const { rootDir } = createCosmosConfig({});
   expect(rootDir).toBe(getCwdPath('subdir'));
 });
 
 it('throws on invalid --root-dir path', () => {
   mockCliArgs({ rootDir: 'subdir' });
-  const cosmosConfig = new CosmosConfig({});
-  expect(() => cosmosConfig.rootDir).toThrow(
+  expect(() => createCosmosConfig({})).toThrow(
     '[Cosmos] Dir not found at path: subdir'
   );
 });
 
 it('returns root dir from cwd', () => {
-  const { rootDir } = new CosmosConfig({});
+  const { rootDir } = createCosmosConfig({});
   expect(rootDir).toBe(getCwdPath());
 });
 
 it('returns root dir from config', () => {
-  const { rootDir } = new CosmosConfig({ rootDir: '..' });
+  const { rootDir } = createCosmosConfig({ rootDir: '..' });
   expect(rootDir).toBe(getCwdPath('..'));
 });

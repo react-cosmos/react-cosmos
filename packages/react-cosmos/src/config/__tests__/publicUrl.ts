@@ -1,11 +1,11 @@
-import { CosmosConfig } from '..';
+import { createCosmosConfig } from '..';
 
 it('returns default publicUrl', () => {
-  const { publicUrl } = new CosmosConfig({});
+  const { publicUrl } = createCosmosConfig({});
   expect(publicUrl).toBe('/');
 });
 
 it('returns custom publicUrl', () => {
-  const { publicUrl } = new CosmosConfig({ publicUrl: '/path/' });
+  const { publicUrl } = createCosmosConfig({ publicUrl: '/path/' });
   expect(publicUrl).toBe('/path/');
 });

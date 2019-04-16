@@ -1,11 +1,11 @@
-import { CosmosConfig } from '..';
+import { createCosmosConfig } from '..';
 
 it('returns default fixtureFileSuffix', () => {
-  const cosmosConfig = new CosmosConfig({});
+  const cosmosConfig = createCosmosConfig({});
   expect(cosmosConfig.fixtureFileSuffix).toBe('fixture');
 });
 
 it('returns custom fixtureFileSuffix', () => {
-  const cosmosConfig = new CosmosConfig({ fixtureFileSuffix: 'jsxfixture' });
+  const cosmosConfig = createCosmosConfig({ fixtureFileSuffix: 'jsxfixture' });
   expect(cosmosConfig.fixtureFileSuffix).toBe('jsxfixture');
 });

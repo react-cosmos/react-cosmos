@@ -1,6 +1,6 @@
 import path from 'path';
 import { slash } from '../../shared/slash';
-import { RawCosmosConfig } from '../shared';
+import { CosmosConfig } from '../shared';
 import { mockArgv } from './mockYargs';
 import { __mockFile, __mockDir, __unmockFs } from './fs';
 
@@ -18,7 +18,7 @@ export function unmockCliArgs() {
 
 export function mockCosmosConfig(
   cosmosConfigPath: string,
-  cosmosConfig: RawCosmosConfig
+  cosmosConfig: Partial<CosmosConfig>
 ) {
   const absPath = getCwdPath(cosmosConfigPath);
   __mockFile(absPath, cosmosConfig);
