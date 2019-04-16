@@ -54,6 +54,16 @@ export function selectFixtureTests() {
   });
 }
 
+export function staticTests() {
+  context('static path', () => {
+    it('server static asset', () => {
+      cy.request('/cookie.txt')
+        .its('body')
+        .should('include', 'nom nom nom');
+    });
+  });
+}
+
 function getRendererBody() {
   return cy.get('iframe').then($iframe => $iframe.contents().find('body'));
 }

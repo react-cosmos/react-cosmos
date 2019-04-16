@@ -2,7 +2,8 @@ import { clearTreeViewState } from '../support/localStorage';
 import {
   homepageTests,
   navTests,
-  selectFixtureTests
+  selectFixtureTests,
+  staticTests
 } from '../support/testBlocks';
 
 describe('Dev server', () => {
@@ -14,4 +15,5 @@ describe('Dev server', () => {
   homepageTests();
   navTests();
   selectFixtureTests();
+  staticTests();
 });

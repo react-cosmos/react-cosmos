@@ -1,3 +1,4 @@
 {
-  "globalImports": ["./globalStyle.css"]
+  "globalImports": ["./globalStyle.css"],
+  "staticPath": "static"
 }

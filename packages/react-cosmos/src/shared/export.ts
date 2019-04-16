@@ -53,8 +53,8 @@ function copyStaticAssets(cosmosConfig: CosmosConfig) {
   }
 
   const { publicUrl } = cosmosConfig;
-  const exportPublicPath = path.join(exportPath, publicUrl);
-  fs.copySync(staticPath, exportPublicPath);
+  const exportStaticPath = path.join(exportPath, publicUrl);
+  fs.copySync(staticPath, exportStaticPath);
 }
 
 function exportPlaygroundFiles(cosmosConfig: CosmosConfig) {

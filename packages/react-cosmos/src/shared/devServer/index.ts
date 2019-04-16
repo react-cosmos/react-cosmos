@@ -1,7 +1,8 @@
 import http from 'http';
 import express from 'express';
 import { CosmosConfig, getCosmosConfig } from '../../config';
-import { PlatformType } from './../shared';
+import { PlatformType } from '../shared';
+import { serveStaticDir } from '../static';
 import { createHttpServer } from './httpServer';
 import { createApp } from './app';
 // IDEA: Maybe replace react-dev-utils with https://github.com/yyx990803/launch-editor
@@ -37,10 +38,9 @@ export async function startDevServer(
   const app = createApp(platformType, cosmosConfig);
   const httpServer = createHttpServer(cosmosConfig, app);
 
-  // TODO: Bring back publicPath
-  // if (cosmos.publicPath) {
-  //   serveStaticDir(app, cosmosConfig.publicUrl, cosmos.publicPath);
-  // }
+  if (cosmosConfig.staticPath) {
+    serveStaticDir(app, cosmosConfig.staticPath, cosmosConfig.publicUrl);
+  }
 
   await httpServer.start();
 
