@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import open from 'open';
 import express from 'express';
-import { DevServerPluginArgs } from '../shared';
+import { DevServerPluginArgs } from '../shared/devServer';
 
 export function openFile({ cosmosConfig, expressApp }: DevServerPluginArgs) {
   expressApp.get('/_open', (req: express.Request, res: express.Response) => {

@@ -1,7 +1,7 @@
 import debug from 'debug';
 import socketIo from 'socket.io';
 import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
-import { DevServerPluginArgs } from '../shared';
+import { DevServerPluginArgs } from '../shared/devServer';
 
 const d = debug('cosmos:server:socket');
 

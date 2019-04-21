@@ -4,7 +4,7 @@ import promisify from 'util.promisify';
 import { watch, FSWatcher } from 'chokidar';
 import { debounce } from 'lodash';
 import { CosmosConfig } from '../config';
-import { DevServerPluginArgs } from '../shared';
+import { DevServerPluginArgs } from '../shared/devServer';
 import {
   getFixturePatterns,
   getDecoratorPatterns,
