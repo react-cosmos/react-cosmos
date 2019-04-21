@@ -13,7 +13,7 @@ import { ensureHtmlWebackPlugin } from './htmlPlugin';
 export function getExportWebpackConfig(
   cosmosConfig: CosmosConfig,
   userWebpack: typeof webpack
-) {
+): webpack.Configuration {
   const baseWebpackConfig = getBaseWebpackConfig(cosmosConfig, userWebpack);
   return {
     ...baseWebpackConfig,

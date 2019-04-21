@@ -1,4 +1,4 @@
-import { getCwdPath } from '../testHelpers';
+import { getCwdPath } from '../../testHelpers/cwd';
 import { createCosmosConfig } from '..';
 
 it('returns resolved default getUserDepsFilePath', () => {

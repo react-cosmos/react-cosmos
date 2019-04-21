@@ -1,5 +1,5 @@
 import path from 'path';
-import { getCwdPath } from '../testHelpers';
+import { getCwdPath } from '../../testHelpers/cwd';
 import { createCosmosConfig } from '..';
 
 it('returns default empty globalImports', () => {

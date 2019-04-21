@@ -1,4 +1,4 @@
-import { mockCliArgs, unmockCliArgs } from '../../../testHelpers/mockYargs';
+import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs';
 import { mockCosmosConfig, unmockFs } from '../testHelpers';
 // NOTE: This is the only config test file where the config file is mocked.
 // Mocking the config file provides extra coverage, but the rest of the test
