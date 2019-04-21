@@ -1,6 +1,6 @@
 import path from 'path';
 import yargs from 'yargs';
-import { dirExistsAtPath } from './fs';
+import { dirExists } from '../shared/fs';
 
 export type CosmosConfig = {
   exportPath: string;
@@ -37,7 +37,7 @@ export function getCurrentDir() {
 
 export function getRootDirAtPath(dirPath: string) {
   const absPath = path.resolve(getCurrentDir(), dirPath);
-  if (!dirExistsAtPath(absPath)) {
+  if (!dirExists(absPath)) {
     throw new Error(`[Cosmos] Dir not found at path: ${dirPath}`);
   }
 

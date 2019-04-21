@@ -1,7 +1,7 @@
 import importFrom from 'import-from';
 import webpack from 'webpack';
-import { RENDERER_FILENAME } from '../../../shared';
 import { CosmosConfig } from '../../../config';
+import { RENDERER_FILENAME } from '../../../shared/playgroundHtml';
 import { hasPlugin, isInstanceOfPlugin } from './shared';
 
 export type HtmlWebpackPlugin = webpack.Plugin & {

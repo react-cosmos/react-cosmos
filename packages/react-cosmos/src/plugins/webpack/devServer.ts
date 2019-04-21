@@ -2,7 +2,7 @@ import path from 'path';
 import promisify from 'util.promisify';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import { DevServerPluginArgs } from '../../shared';
+import { DevServerPluginArgs } from '../../shared/devServer';
 import { getRootUrl } from '../../shared/static';
 import { getWebpack } from './shared';
 import { createWebpackCosmosConfig } from './cosmosConfig/webpack';

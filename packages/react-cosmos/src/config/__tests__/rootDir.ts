@@ -1,6 +1,6 @@
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs';
 import { getCwdPath } from '../../testHelpers/cwd';
-import { mockDir, unmockFs } from '../testHelpers';
+import { mockDir, unmockFs } from '../../testHelpers/mockFs';
 import { createCosmosConfig } from '..';
 
 afterEach(() => {

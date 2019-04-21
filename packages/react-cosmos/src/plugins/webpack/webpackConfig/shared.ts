@@ -2,9 +2,10 @@ import path from 'path';
 import { argv } from 'yargs';
 import webpack from 'webpack';
 import { CosmosConfig } from '../../../config';
+import { moduleExists, requireModule } from '../../../shared/fs';
 import { createWebpackCosmosConfig } from '../cosmosConfig/webpack';
 import { getDefaultWebpackConfig } from './default';
-import { moduleExists, getDefaultExport } from './module';
+import { getDefaultExport } from './module';
 
 export function getBaseWebpackConfig(
   cosmosConfig: CosmosConfig,
@@ -20,7 +21,7 @@ export function getBaseWebpackConfig(
   const relPath = path.relative(process.cwd(), configPath);
   console.log(`[Cosmos] Using webpack config found at ${relPath}`);
 
-  const userConfig = getDefaultExport(require(configPath));
+  const userConfig = getDefaultExport(requireModule(configPath));
   return typeof userConfig === 'function'
     ? userConfig(process.env.NODE_ENV, argv)
     : userConfig;

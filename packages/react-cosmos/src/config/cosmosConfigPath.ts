@@ -1,11 +1,11 @@
 import path from 'path';
+import { fileExists } from '../shared/fs';
 import { getCliArgs, getCurrentDir, getRootDirAtPath } from './shared';
-import { fileExistsAtPath } from './fs';
 
 export function getCosmosConfigPath() {
   const cliArgs = getCliArgs();
 
-  // CLI suppport for --config relative/path/to/cosmos.config.json
+  // CLI support for --config relative/path/to/cosmos.config.json
   if (typeof cliArgs.config === 'string') {
     if (path.extname(cliArgs.config) !== '.json') {
       throw new Error(
@@ -14,7 +14,7 @@ export function getCosmosConfigPath() {
     }
 
     const absPath = path.resolve(getCurrentDir(), cliArgs.config);
-    if (!fileExistsAtPath(absPath)) {
+    if (!fileExists(absPath)) {
       throw new Error(`[Cosmos] Config not found at path: ${cliArgs.config}`);
     }
 

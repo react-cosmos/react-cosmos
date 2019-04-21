@@ -1,4 +1,4 @@
-import { requireFileAtPath } from './fs';
+import { requireModule } from '../shared/fs';
 import { createCosmosConfig } from './createCosmosConfig';
 import { getCosmosConfigPath } from './cosmosConfigPath';
 
@@ -8,6 +8,6 @@ export { resolvePath, resolveModule } from './resolve';
 
 export function getCosmosConfig() {
   const cosmosConfigPath = getCosmosConfigPath();
-  const cosmosConfigInput = requireFileAtPath(cosmosConfigPath) || {};
+  const cosmosConfigInput = requireModule(cosmosConfigPath) || {};
   return createCosmosConfig(cosmosConfigInput);
 }

@@ -3,42 +3,64 @@ import webpack from 'webpack';
 import { mockCliArgs, unmockCliArgs } from '../../../../testHelpers/mockYargs';
 import { getCwdPath } from '../../../../testHelpers/cwd';
 import { mockConsole } from '../../../../testHelpers/mockConsole';
+import { mockFile } from '../../../../testHelpers/mockFs';
 import { createCosmosConfig } from '../../../../config';
 import { RENDERER_FILENAME } from '../../../../shared/playgroundHtml';
 import { HtmlWebpackPlugin } from './../htmlPlugin';
 import { getExportWebpackConfig } from '..';
 
 beforeAll(() => {
-  // Prevent Cosmos from intercepting the --config arg passed to Jest
+  // Prevent Cosmos from interceptisng the --config arg passed to Jest
   mockCliArgs({});
+  mockFile('mywebpack.config.js', {
+    module: { rules: [MY_RULE] },
+    plugins: [MY_PLUGIN]
+  });
 });
 
 afterAll(() => {
   unmockCliArgs();
 });
 
-async function getDefaultExportWebpackConfig() {
+const MY_RULE = {};
+const MY_PLUGIN = {};
+
+async function getCustomExportWebpackConfig() {
   return mockConsole(async ({ expectLog }) => {
-    expectLog('[Cosmos] Using default webpack config');
-    const cosmosConfig = createCosmosConfig();
+    expectLog('[Cosmos] Using webpack config found at mywebpack.config.js');
+    const cosmosConfig = createCosmosConfig({
+      webpack: {
+        configPath: 'mywebpack.config.js'
+      }
+    });
     return getExportWebpackConfig(cosmosConfig, webpack);
   });
 }
 
+it('includes user rule', async () => {
+  const { module } = await getCustomExportWebpackConfig();
+  expect(module!.rules).toContain(MY_RULE);
+});
+
+it('includes user plugin', async () => {
+  const { plugins } = await getCustomExportWebpackConfig();
+  expect(plugins).toContain(MY_PLUGIN);
+});
+
 it('includes client entry', async () => {
-  const { entry } = await getDefaultExportWebpackConfig();
+  const { entry } = await getCustomExportWebpackConfig();
   expect(entry).toContain(require.resolve('../../client'));
 });
 
 it('includes DOM devtooks hook entry', async () => {
-  const { entry } = await getDefaultExportWebpackConfig();
+  const { entry } = await getCustomExportWebpackConfig();
   expect(entry).toContain(
     require.resolve('../../../../domRenderer/reactDevtoolsHook')
   );
 });
 
 it('does not include webpack-hot-middleware entry', async () => {
-  const { entry } = await getDefaultExportWebpackConfig();
+  const { entry } = await getCustomExportWebpackConfig();
   expect(entry).not.toContain(
     `${require.resolve(
       'webpack-hot-middleware/client'
@@ -47,7 +69,7 @@ it('does not include webpack-hot-middleware entry', async () => {
 });
 
 it('create output', async () => {
-  const { output } = await getDefaultExportWebpackConfig();
+  const { output } = await getCustomExportWebpackConfig();
   expect(output).toEqual(
     expect.objectContaining({
       filename: '[name].js',
@@ -58,7 +80,7 @@ it('create output', async () => {
 });
 
 it('includes user deps loader', async () => {
-  const { module } = await getDefaultExportWebpackConfig();
+  const { module } = await getCustomExportWebpackConfig();
   expect(module!.rules).toContainEqual({
     loader: require.resolve('../userDepsLoader'),
     include: require.resolve('../../client/userDeps')
@@ -66,7 +88,7 @@ it('includes user deps loader', async () => {
 });
 
 it('includes HtmlWebpackPlugin', async () => {
-  const { plugins } = await getDefaultExportWebpackConfig();
+  const { plugins } = await getCustomExportWebpackConfig();
   const htmlWebpackPlugin = plugins!.find(
     p => p.constructor.name === 'HtmlWebpackPlugin'
   ) as HtmlWebpackPlugin;
@@ -75,7 +97,7 @@ it('includes HtmlWebpackPlugin', async () => {
 });
 
 it('does not include HotModuleReplacementPlugin', async () => {
-  const { plugins } = await getDefaultExportWebpackConfig();
+  const { plugins } = await getCustomExportWebpackConfig();
   const hotModuleReplacementPlugin = plugins!.find(
     p => p.constructor.name === 'HotModuleReplacementPlugin'
   );

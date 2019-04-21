@@ -1,5 +1,5 @@
 import webpack from 'webpack';
-import { ExportPluginArgs } from '../../shared';
+import { ExportPluginArgs } from '../../shared/export';
 import { getWebpack } from './shared';
 import { getExportWebpackConfig } from './webpackConfig';
 
