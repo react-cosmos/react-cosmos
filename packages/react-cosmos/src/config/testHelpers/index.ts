@@ -1,19 +1,10 @@
 import path from 'path';
 import { slash } from '../../shared/slash';
 import { CosmosConfig } from '../shared';
-import { mockArgv } from './mockYargs';
 import { __mockFile, __mockDir, __unmockFs } from './fs';
 
 export function getCwdPath(relPath?: string) {
   return relPath ? slash(process.cwd(), relPath) : process.cwd();
-}
-
-export function mockCliArgs(cliArgs: {}) {
-  mockArgv(cliArgs);
-}
-
-export function unmockCliArgs() {
-  mockArgv({});
 }
 
 export function mockCosmosConfig(

@@ -6,7 +6,7 @@ import { resolvePath, resolveModule } from './resolve';
 type CosmosConfigInput = Partial<CosmosConfig>;
 
 export function createCosmosConfig(
-  cosmosConfigInput: CosmosConfigInput
+  cosmosConfigInput: CosmosConfigInput = {}
 ): CosmosConfig {
   const cosmosConfigPath = getCosmosConfigPath();
   const rootDir = getRootDir(cosmosConfigInput, cosmosConfigPath);

@@ -4,7 +4,7 @@ import { RENDERER_FILENAME } from '../../../shared';
 import { CosmosConfig } from '../../../config';
 import { hasPlugin, isInstanceOfPlugin } from './shared';
 
-type HtmlWebpackPlugin = webpack.Plugin & {
+export type HtmlWebpackPlugin = webpack.Plugin & {
   constructor: HtmlWebpackPluginConstructor;
   options: {
     title: string;

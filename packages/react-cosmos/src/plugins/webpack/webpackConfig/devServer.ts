@@ -1,19 +1,21 @@
 import path from 'path';
 import webpack from 'webpack';
 import { CosmosConfig } from '../../../config';
+import { createWebpackCosmosConfig } from '../cosmosConfig/webpack';
 import {
   getBaseWebpackConfig,
   resolveDomRendererPath,
   resolveClientPath,
   getUserDepsLoaderRule,
-  getEnvVarPlugin
+  getEnvVarPlugin,
+  hasPlugin
 } from './shared';
 import { ensureHtmlWebackPlugin } from './htmlPlugin';
 
 export function getDevWebpackConfig(
   cosmosConfig: CosmosConfig,
   userWebpack: typeof webpack
-) {
+): webpack.Configuration {
   const baseWebpackConfig = getBaseWebpackConfig(cosmosConfig, userWebpack);
   return {
     ...baseWebpackConfig,
@@ -28,16 +30,15 @@ export function getDevWebpackConfig(
 }
 
 function getEntry(cosmosConfig: CosmosConfig) {
+  const { hotReload } = createWebpackCosmosConfig(cosmosConfig);
   // The React devtools hook needs to be imported before any other module that
   // might import React
   const devtoolsHook = resolveDomRendererPath('reactDevtoolsHook');
   const clientIndex = resolveClientPath('index');
 
-  // TODO: Bring back hotReload
-  // return hotReload
-  //   ? [devtoolsHook, getHotMiddlewareEntry(), clientIndex]
-  //   : [devtoolsHook, clientIndex];
-  return [devtoolsHook, clientIndex];
+  return hotReload
+    ? [devtoolsHook, getHotMiddlewareEntry(), clientIndex]
+    : [devtoolsHook, clientIndex];
 }
 
 function getOutput({ publicUrl }: CosmosConfig) {
@@ -68,18 +69,18 @@ function getPlugins(
   const existingPlugins = baseWebpackConfig.plugins || [];
   const envVarPlugin = getEnvVarPlugin(cosmosConfig, userWebpack, true);
   const noEmitErrorsPlugin = new userWebpack.NoEmitOnErrorsPlugin();
-  const plugins = [...existingPlugins, envVarPlugin, noEmitErrorsPlugin];
+  let plugins = [...existingPlugins, envVarPlugin, noEmitErrorsPlugin];
 
-  // TODO: Bring back hotReload
-  // if (hotReload && !hasPlugin(plugins, 'HotModuleReplacementPlugin')) {
-  //   const hmrPlugin = new userWebpack.HotModuleReplacementPlugin();
-  //   plugins = [...plugins, hmrPlugin];
-  // }
+  const { hotReload } = createWebpackCosmosConfig(cosmosConfig);
+  if (hotReload && !hasPlugin(plugins, 'HotModuleReplacementPlugin')) {
+    const hmrPlugin = new userWebpack.HotModuleReplacementPlugin();
+    plugins = [...plugins, hmrPlugin];
+  }
 
   return ensureHtmlWebackPlugin(cosmosConfig, plugins);
 }
 
-// function getHotMiddlewareEntry() {
-//   const clientPath = require.resolve('webpack-hot-middleware/client');
-//   return `${clientPath}?reload=true&overlay=false`;
-// }
+function getHotMiddlewareEntry() {
+  const clientPath = require.resolve('webpack-hot-middleware/client');
+  return `${clientPath}?reload=true&overlay=false`;
+}

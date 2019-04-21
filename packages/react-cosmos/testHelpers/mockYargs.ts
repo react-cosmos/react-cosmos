@@ -1,5 +1,5 @@
 // @ts-ignore
-export { __mockArgsv as mockArgv } from 'yargs';
+import { __mockArgsv } from 'yargs';
 
 jest.mock('yargs', () => {
   const yargs = {
@@ -10,3 +10,11 @@ jest.mock('yargs', () => {
   };
   return yargs;
 });
+
+export function mockCliArgs(cliArgs: {}) {
+  __mockArgsv(cliArgs);
+}
+
+export function unmockCliArgs() {
+  __mockArgsv({});
+}

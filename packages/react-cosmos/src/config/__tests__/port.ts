@@ -1,4 +1,4 @@
-import { mockCliArgs, unmockCliArgs } from '../testHelpers';
+import { mockCliArgs, unmockCliArgs } from '../../../testHelpers/mockYargs';
 import { createCosmosConfig } from '..';
 
 afterEach(() => {
