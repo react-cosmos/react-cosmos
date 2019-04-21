@@ -1,10 +1,11 @@
 import path from 'path';
 import promisify from 'util.promisify';
 import webpackDevMiddleware from 'webpack-dev-middleware';
-// import webpackHotMiddleware from 'webpack-hot-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
 import { DevServerPluginArgs } from '../../shared';
 import { getRootUrl } from '../../shared/static';
 import { getWebpack } from './shared';
+import { createWebpackCosmosConfig } from './cosmosConfig/webpack';
 import { getDevWebpackConfig } from './webpackConfig';
 
 export async function webpackDevServer({
@@ -41,9 +42,10 @@ export async function webpackDevServer({
 
   expressApp.use(wdmInst);
 
-  // if (cosmosConfig.hotReload) {
-  //   expressApp.use(webpackHotMiddleware(webpackCompiler));
-  // }
+  const { hotReload } = createWebpackCosmosConfig(cosmosConfig);
+  if (hotReload) {
+    expressApp.use(webpackHotMiddleware(webpackCompiler));
+  }
 
   await onCompilationDone;
   console.log(`[Cosmos] Server ready!`);

@@ -1,9 +1,10 @@
+import { mountDomRenderer } from '../../../domRenderer';
 import { initErrorOverlay, dismissErrorOverlay } from './errorOverlay';
-import { rendererConfig, fixtures, decorators } from './userDeps';
 
 function mount() {
   // Use dynamic import to load updated modules upon hot reloading
-  require('../../../domRenderer').mountDomRenderer({
+  const { rendererConfig, fixtures, decorators } = require('./userDeps');
+  mountDomRenderer({
     rendererConfig,
     fixtures,
     decorators,
@@ -15,7 +16,7 @@ initErrorOverlay();
 mount();
 
 if ((module as any).hot) {
-  (module as any).hot.accept('../../../domRenderer', () => {
+  (module as any).hot.accept('./userDeps', () => {
     // If a previous error has been solved, the error overlay auto-closes nicely.
     // If the error persists, however, the overlay will pop up again on its own
     dismissErrorOverlay();
