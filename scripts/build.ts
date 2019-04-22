@@ -24,9 +24,7 @@ const BUILD_ORDER = [
   'react-cosmos'
 ];
 
-run();
-
-async function run() {
+(async () => {
   const buildablePackages = [...NODE_PACKAGES, ...BROWSER_PACKAGES];
   // TODO: Allow shorthand names (shared => react-cosmos-shared2, etc.)
   const pkgName = getUnnamedArg();
@@ -83,7 +81,7 @@ async function run() {
 
     stdout.write(`Built ${buildablePackages.length} packages successfully.\n`);
   }
-}
+})();
 
 async function buildPackage(pkgName: string) {
   return BROWSER_PACKAGES.indexOf(pkgName) !== -1

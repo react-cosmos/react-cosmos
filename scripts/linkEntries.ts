@@ -14,12 +14,9 @@ import {
 
 const SRC_DIR = 'src';
 const DIST_DIR = 'dist';
-
 type TargetDir = typeof SRC_DIR | typeof DIST_DIR;
 
-run();
-
-async function run() {
+(async () => {
   const packages = [...NODE_PACKAGES, ...BROWSER_PACKAGES];
   try {
     const targetDir = getTargetDir();
@@ -50,7 +47,7 @@ async function run() {
       throw err;
     }
   }
-}
+})();
 
 async function linkFileRequiresToDir(filePath: string, targetDir: TargetDir) {
   // NOTE: Use static transform + pretty format if future requires it.
