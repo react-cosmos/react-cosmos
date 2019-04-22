@@ -1,6 +1,8 @@
-Hello, fellow human!
+Hello, earthling!
 
-You seem to be interested in the inner workings of Cosmos. Good news, we've been expecting you. Before continuing, we kindly ask you to respect the terms of the [Contributor Code of Conduct](CODE_OF_CONDUCT.md). Thanks!
+So you're interested in the inner workings of React Cosmos. _Excellent._
+
+> Before continuing, we kindly ask you to respect our [Code of Conduct](CODE_OF_CONDUCT.md).
 
 Jump to:
 
@@ -8,10 +10,8 @@ Jump to:
 - [Roadmap](#roadmap)
 - [Architecture](#architecture)
   - [Monorepo](#monorepo)
-  - [Playground & Loader](#playground--loader-communication)
+  - [Playground & Renderer](#playground--renderer-communication)
   - [webpack](#webpack)
-- [Proxy boilerplate](#proxy-boilerplate)
-  - [Testing proxies](#testing-proxies)
 - [How to contribute](#how-to-contribute)
 
 ## Mission
@@ -48,7 +48,7 @@ React Cosmos is a [monorepo](packages) powered by [Yarn Workspaces](https://yarn
 
 Important to note:
 
-- **Test and build tools are installed globally in the root node_modules.** This includes Jest, Babel, webpack, and their corresponding plugins and loaders. ESLint is also applied globally. Creating a new package has less overhead because of this.
+- **Test and build tools are installed globally in the root node_modules.** This includes Jest, TypeScript, webpack, and their corresponding plugins. ESLint is also applied globally. Creating a new package has less overhead because of this.
 
 - **React and webpack deps are installed globally in the root node_modules.** The linked packages and examples are sibling directories, so they each have a separate node_modules dir. But, when Cosmos packages are installed in a user codebase, they all share a common node_modules. We simulate the real life scenario by deduplicate these dependencies.
 
@@ -71,8 +71,6 @@ The main benefit of this structure is that **we can at any time choose to link p
 - **In watch-mode, one change triggers tests across multiple packages.** Change something in `react-cosmos-shared` and a dozen packages are influenced. Because monorepo dependencies link to _src_, and because Jest is awesome, tests from all related packages are ran.
 - **Test coverage is calculated correctly.** Cross-package integration tests count coverage in all the packages they touch, not just in the package the tests start from.
 
-> 📢 The Cosmos monorepo is being migrated to TypeScript. In the interim, linking entries to `src` doesn't work in some cases because Babel source cannot reference TypeScript source.
-
 ```bash
 # Link entry points to compiled output
 # Make sure to run `yarn build` beforehand
@@ -88,23 +86,9 @@ yarn link-entries src
 
 To understand `link-entries` better, see how it's used in the context of the [release](https://github.com/react-cosmos/react-cosmos/blob/7f860e355bd25f03c1af496b2e31c071ec15e8a1/package.json#L27) and [CI](https://github.com/react-cosmos/react-cosmos/blob/7f860e355bd25f03c1af496b2e31c071ec15e8a1/.travis.yml#L11-L21) flows.
 
-#### Flow
+### Playground ⇆ Renderer communication
 
-The Cosmos monorepo is typed using [Flow](https://github.com/facebook/flow). Most types, especially ones reused, are found in the [react-cosmos-flow](https://github.com/react-cosmos/react-cosmos/tree/e5ed43681969890d5d29bb32bdaab3630cce9ca5/packages/react-cosmos-flow) package. This package is useful in two ways:
-
-- Cosmos packages can easily share types and import them using convenient `react-cosmos-flow/*` paths
-
-  ```js
-  import type { Config } from 'react-cosmos-flow/config';
-  ```
-
-- 3rd party projects can also benefit from Cosmos types by adding `react-cosmos-flow` to their dev dependencies. Useful when writing a [custom proxy](#proxy-boilerplate).
-
-> Cosmos packages mustn't add `react-cosmos-flow` to their `dependencies`, because Flow annotations shouldn't be published along with the compiled output. Let us know if you ever find unwanted Flow types in your node_modules because of Cosmos deps!
-
-### Playground ⇆ Loader communication
-
-The Cosmos UI is made out of two frames. Components are loaded inside an `iframe` for full encapsulation. Because the Playground and the Loader aren't part of the same frame, we use `postMessage` to communicate back and forth.
+The Cosmos UI is made out of two remote components. User code runs inside an _iframe_ for full encapsulation. Because the Playground and the Renderer are not in the same page, they communicate using window.postMessage and WebSockets, depending on where the Renderer runs.
 
 Read about all event payloads and their order [here](docs/playground-loader.md).
 
@@ -112,56 +96,11 @@ Read about all event payloads and their order [here](docs/playground-loader.md).
 
 The `react-cosmos` CLI extends the user's webpack config or fallbacks to a default config, which automatically detects and includes the user's Babel and CSS loaders.
 
-The entry file of the resulting webpack config mounts `Loader` via `loaderConnect`, together with all the user components, fixtures and proxies. **The component and fixture paths are injected statically in the Loader bundle** via [embed-modules-webpack-loader.js](packages/react-cosmos/src/server/embed-modules-webpack-loader.js).
+The entry file of the resulting webpack config mounts the Cosmos Renderer, together with all the user's component fixtures and decorators. **The user file paths are injected statically in the Renderer bundle** via [userDepsLoader.ts](packages/react-cosmos/src/plugins/webpack/webpackConfig/userDepsLoader.ts).
 
-Using webpack-dev-middleware, the webpack config is attached to an Express server, which serves the Playground bundle at `/index.html` and the Loader bundle at `/_loader.html`. The server will also serve a static directory when the `publicPath` option is used.
+Using webpack-dev-middleware, the webpack config is attached to an Express server, which serves the Playground bundle at `/index.html` and the Renderer bundle at `/_renderer_.html`. The server will also serve a static directory when the `staticPath` option is used.
 
 Static exporting is almost identical to development mode, except that it saves the webpack build to disk instead of attaching it to a running Express server.
-
-## Proxy boilerplate
-
-Start from this when creating a new proxy.
-
-```js
-import React from 'react';
-
-import type { ProxyProps } from 'react-cosmos-flow/proxy';
-
-const defaults = {
-  // Add option defaults here...
-};
-
-export default () => {
-  const {
-    /* Expand options here... */
-  } = { ...defaults, ...options };
-
-  const NoopProxy = (props: ProxyProps) => {
-    const { nextProxy, ...rest } = props;
-    const { value: NextProxy, next } = nextProxy;
-
-    return <NextProxy {...rest} nextProxy={next()} />;
-  };
-
-  return NoopProxy;
-};
-```
-
-Notice the core requirements of a proxy:
-
-- Renders next proxy with same props
-- Advances the proxy chain – sends `props.nextProxy.next()` to next proxy
-- Implements or extends default proxy PropTypes
-
-This is a very basic example. Here's what proxies might also do:
-
-- Implement lifecycle methods (mock stuff in constructor, revert it in componentWillUnmount)
-- Add extra DOM markup around NextProxy
-- Transform props of props.fixture (careful, tho.)
-
-### Testing proxies
-
-Writing tests for a new proxy often takes more than its implementation. Extend this [proxy test boilerplate](docs/proxy-test-boilerplate.md) and most of the pain will go away.
 
 ## How to contribute
 
@@ -192,7 +131,7 @@ yarn
 yarn build
 
 # Build example from source and test React Cosmos end to end
-cd examples/context
+cd example
 yarn start
 
 # Load Playground source inside compiled Playground #inception

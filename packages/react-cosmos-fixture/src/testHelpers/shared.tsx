@@ -1,6 +1,4 @@
-import * as React from 'react';
 import until from 'async-until';
-import { FixtureConnect } from '..';
 import {
   RendererId,
   RendererRequest,
@@ -13,21 +11,21 @@ import {
   FixtureStateChangeResponse
 } from 'react-cosmos-shared2/renderer';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import { FixturesByPath, DecoratorsByPath, RemoteRendererApi } from '../shared';
+import { FixturesByPath, DecoratorsByPath } from '../shared';
 import { ReactTestRenderer } from 'react-test-renderer';
 
 export type Message = RendererResponse | RendererRequest;
 
 type GetMessages = () => Message[];
 
-export type MountFixtureConnectArgs = {
+export type MountFixtureLoaderArgs = {
   rendererId: RendererId;
   fixtures: FixturesByPath;
   decorators: DecoratorsByPath;
   onFixtureChange?: () => unknown;
 };
 
-export type FixtureConnectMockApi = {
+export type RendererConnectMockApi = {
   pingRenderers: () => Promise<unknown>;
   selectFixture: (payload: SelectFixtureRequest['payload']) => Promise<unknown>;
   unselectFixture: (
@@ -48,46 +46,26 @@ export type FixtureConnectMockApi = {
   getLastFixtureState: () => Promise<FixtureState>;
 };
 
-export type FixtureConnectTestApi = {
+export type FixtureLoaderTestApi = {
   renderer: ReactTestRenderer;
-  update: (args: MountFixtureConnectArgs) => void;
-} & FixtureConnectMockApi;
+  update: (args: MountFixtureLoaderArgs) => void;
+} & RendererConnectMockApi;
 
-export type MountFixtureCallback = (
-  api: FixtureConnectTestApi
-) => Promise<void>;
+export type MountFixtureCallback = (api: FixtureLoaderTestApi) => Promise<void>;
 
-export type MountFixtureConnect = (
-  args: MountFixtureConnectArgs,
+export type MountFixtureLoader = (
+  args: MountFixtureLoaderArgs,
   cb: MountFixtureCallback
 ) => Promise<void>;
 
-type FixtureConnectMockArgs = {
+type RendererConnectMockArgs = {
   getMessages: GetMessages;
   postMessage: (msg: Message) => unknown;
 };
 
-export function createFixtureConnectRenderCb({
-  rendererId,
-  fixtures,
-  decorators,
-  onFixtureChange
-}: MountFixtureConnectArgs) {
-  return (remoteRendererApiProps: RemoteRendererApi) => (
-    <FixtureConnect
-      rendererId={rendererId}
-      fixtures={fixtures}
-      systemDecorators={[]}
-      userDecorators={decorators}
-      onFixtureChange={onFixtureChange}
-      {...remoteRendererApiProps}
-    />
-  );
-}
-
-export function createFixtureConnectMockApi(
-  args: FixtureConnectMockArgs
-): FixtureConnectMockApi {
+export function createRendererConnectMockApi(
+  args: RendererConnectMockArgs
+): RendererConnectMockApi {
   return {
     pingRenderers,
     selectFixture,
@@ -233,9 +211,7 @@ export function createFixtureConnectMockApi(
       });
     } finally {
       if (!lastMsg || lastMsg.type !== msgType) {
-        /* tslint:disable:no-unsafe-finally */
         throw new Error(`"${msgType}" message never arrived`);
-        /* tslint:enable:no-unsafe-finally */
       }
     }
 

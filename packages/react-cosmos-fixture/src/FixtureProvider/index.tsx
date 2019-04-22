@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as memoize from 'memoize-one/dist/memoize-one.cjs';
+import memoize from 'memoize-one/dist/memoize-one.cjs';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { FixtureCapture } from '../FixtureCapture';
 import { FixtureContext } from '../FixtureContext';

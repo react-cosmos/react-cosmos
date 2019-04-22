@@ -11,11 +11,13 @@ export function createArrayPlug<Props>(
   slotName: string,
   Component: React.ComponentType<ExcludeChildren<Props>>
 ): React.ComponentType<PlugProps<Props>> {
-  return ({ children, ...otherProps }: PlugProps<Props>) => (
-    <>
-      {children}
-      <Component {...otherProps} />
-      <Slot name={slotName} />
-    </>
-  );
+  return function ArrayPlug({ children, ...otherProps }: PlugProps<Props>) {
+    return (
+      <>
+        {children}
+        <Component {...otherProps} />
+        <Slot name={slotName} />
+      </>
+    );
+  };
 }

@@ -4,7 +4,7 @@ import { uuid } from 'react-cosmos-shared2/util';
 import { createValues } from 'react-cosmos-shared2/fixtureState';
 import { Counter } from '../testHelpers/components';
 import { anyProps, anyClassState } from '../testHelpers/fixtureState';
-import { runFixtureConnectTests } from '../testHelpers';
+import { runFixtureLoaderTests } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = {
@@ -19,7 +19,7 @@ const fixtures = {
 const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
-runFixtureConnectTests(mount => {
+runFixtureLoaderTests(mount => {
   it('transitions Fragment from single to multi children', async () => {
     await mount(
       { rendererId, fixtures, decorators },

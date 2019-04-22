@@ -20,20 +20,12 @@ export function isValidFixtureSelected(context: Context) {
 }
 
 function doesFixtureIdMatchUnnamedFixture(fixtureId: FixtureId) {
-  if (fixtureId.name !== null) {
-    throw new Error(`Named fixture ID doesn't match unnamed fixtures at path`);
-  }
-
-  return true;
+  return fixtureId.name === null;
 }
 
 function doesFixtureIdMatchNamedFixtures(
   fixtureId: FixtureId,
   fixtureNames: string[]
 ) {
-  if (fixtureId.name === null) {
-    throw new Error(`Unnamed fixtureId doesn't match named fixtures at path`);
-  }
-
-  return fixtureNames.indexOf(fixtureId.name) !== -1;
+  return fixtureId.name !== null && fixtureNames.indexOf(fixtureId.name) !== -1;
 }

@@ -1,16 +1,15 @@
 import * as React from 'react';
 import { create, act } from 'react-test-renderer';
-import { PostMessage } from '..';
+import { FixtureLoader, createPostMessageConnect } from '..';
 import {
   Message,
-  MountFixtureConnectArgs,
+  MountFixtureLoaderArgs,
   MountFixtureCallback,
-  createFixtureConnectMockApi,
-  createFixtureConnectRenderCb
+  createRendererConnectMockApi
 } from './shared';
 
 export async function mountPostMessage(
-  args: MountFixtureConnectArgs,
+  args: MountFixtureLoaderArgs,
   cb: MountFixtureCallback
 ) {
   const onMessage = jest.fn();
@@ -43,7 +42,7 @@ export async function mountPostMessage(
         act(() => {
           renderer.update(getElement(newArgs));
         }),
-      ...createFixtureConnectMockApi({ getMessages, postMessage })
+      ...createRendererConnectMockApi({ getMessages, postMessage })
     });
   } finally {
     renderer.unmount();
@@ -51,6 +50,20 @@ export async function mountPostMessage(
   }
 }
 
-function getElement(args: MountFixtureConnectArgs) {
-  return <PostMessage>{createFixtureConnectRenderCb(args)}</PostMessage>;
+function getElement({
+  rendererId,
+  fixtures,
+  decorators,
+  onFixtureChange
+}: MountFixtureLoaderArgs) {
+  return (
+    <FixtureLoader
+      rendererId={rendererId}
+      rendererConnect={createPostMessageConnect()}
+      fixtures={fixtures}
+      systemDecorators={[]}
+      userDecorators={decorators}
+      onFixtureChange={onFixtureChange}
+    />
+  );
 }

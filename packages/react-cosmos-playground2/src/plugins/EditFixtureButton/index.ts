@@ -1,6 +1,5 @@
 import { createPlugin } from 'react-plugin';
 import { createArrayPlug } from '../../shared/slot';
-import { getMethodsOf } from '../../testHelpers/plugin';
 import { CoreSpec } from './../Core/public';
 import { RouterSpec } from './../Router/public';
 import { EditFixtureButton, EditFixtureButtonProps } from './EditFixtureButton';
@@ -16,7 +15,7 @@ plug({
     'fixtureActions',
     EditFixtureButton
   ),
-  getProps: () => {
+  getProps: ({ getMethodsOf }) => {
     const core = getMethodsOf<CoreSpec>('core');
     const router = getMethodsOf<RouterSpec>('router');
     return {

@@ -1,6 +1,6 @@
 import { uuid } from 'react-cosmos-shared2/util';
 import retry from '@skidding/async-retry';
-import { runFixtureConnectTests } from '../testHelpers';
+import { runFixtureLoaderTests } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = {
@@ -9,7 +9,7 @@ const fixtures = {
 };
 const decorators = {};
 
-runFixtureConnectTests(mount => {
+runFixtureLoaderTests(mount => {
   it('renders selected fixture', async () => {
     await mount(
       { rendererId, fixtures, decorators },

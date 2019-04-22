@@ -1,11 +1,11 @@
 import { uuid } from 'react-cosmos-shared2/util';
-import { runFixtureConnectTests } from '../testHelpers';
+import { runFixtureLoaderTests } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = { first: null, second: null };
 const decorators = {};
 
-runFixtureConnectTests(mount => {
+runFixtureLoaderTests(mount => {
   it('renders blank state message', async () => {
     await mount({ rendererId, fixtures, decorators }, async ({ renderer }) => {
       expect(renderer.toJSON()).toEqual('No fixture loaded.');

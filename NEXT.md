@@ -4,7 +4,7 @@ _Cosmos Next_ is available for beta testers! 🎉
 
 **Install `react-cosmos` to get started.**
 
-> The [jsx-fixtures](examples/jsx-fixtures) example is a useful complement to this guide.
+> The [example package](example) is a useful complement to this guide.
 
 ![Cosmos Next](next.png)
 
@@ -49,7 +49,7 @@ Cosmos Next introduces a more natural format for component fixtures: **React ele
 > Think of JSX fixtures as the return value of a render function, or the first argument to `React.render`.
 
 ```jsx
-// __jsxfixtures__/disabled.js
+// __fixtures__/disabled.js
 export default <Button disabled>Click me</Button>;
 ```
 
@@ -67,13 +67,13 @@ The JSX fixture format also comes with a minor drawback: `React` must be importe
 
 Two options:
 
-1. End fixture file names with `.jsxfixture.{js,jsx,ts,tsx}`
-2. Put fixture files inside `__jsxfixtures__`
+1. End fixture file names with `.fixture.{js,jsx,ts,tsx}`
+2. Put fixture files inside `__fixtures__`
 
 Examples:
 
-1. `blankState.jsxfixture.js`
-2. `__jsxfixtures__/blankState.js`
+1. `blankState.fixture.js`
+2. `__fixtures__/blankState.js`
 
 > In the beta testing period the file name convention is fixed to allow old and _next_ Cosmos setups to coexist. In the future it will be configurable.
 
@@ -82,7 +82,7 @@ Examples:
 A fixture file can also export multiple fixtures if the default export is an object.
 
 ```jsx
-// buttons.jsxfixture.js
+// buttons.fixture.js
 export default {
   primary: <PrimaryButton>Click me</PrimaryButton>,
   primaryDisabled: <PrimaryButton disabled>Click me</PrimaryButton>,

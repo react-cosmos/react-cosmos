@@ -1,12 +1,11 @@
 import * as React from 'react';
 import * as io from 'socket.io-client';
 import { create, act } from 'react-test-renderer';
-import { WebSockets } from '..';
+import { FixtureLoader, createWebSocketsConnect } from '..';
 import {
-  MountFixtureConnectArgs,
+  MountFixtureLoaderArgs,
   MountFixtureCallback,
-  createFixtureConnectRenderCb,
-  createFixtureConnectMockApi
+  createRendererConnectMockApi
 } from './shared';
 
 // __getMockApi is defined in mockSocketIo.js
@@ -18,7 +17,7 @@ const {
 } = (io as any).__getMockApi();
 
 export async function mountWebSockets(
-  args: MountFixtureConnectArgs,
+  args: MountFixtureLoaderArgs,
   cb: MountFixtureCallback
 ) {
   expect.hasAssertions();
@@ -30,7 +29,7 @@ export async function mountWebSockets(
         act(() => {
           renderer.update(getElement(newArgs));
         }),
-      ...createFixtureConnectMockApi({ getMessages, postMessage })
+      ...createRendererConnectMockApi({ getMessages, postMessage })
     });
   } finally {
     renderer.unmount();
@@ -38,8 +37,20 @@ export async function mountWebSockets(
   }
 }
 
-function getElement(args: MountFixtureConnectArgs) {
+function getElement({
+  rendererId,
+  fixtures,
+  decorators,
+  onFixtureChange
+}: MountFixtureLoaderArgs) {
   return (
-    <WebSockets url={WS_URL}>{createFixtureConnectRenderCb(args)}</WebSockets>
+    <FixtureLoader
+      rendererId={rendererId}
+      rendererConnect={createWebSocketsConnect(WS_URL)}
+      fixtures={fixtures}
+      systemDecorators={[]}
+      userDecorators={decorators}
+      onFixtureChange={onFixtureChange}
+    />
   );
 }

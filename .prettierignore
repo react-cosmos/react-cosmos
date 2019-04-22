@@ -1,8 +1,5 @@
 package.json
 lerna.json
-
-examples/*/package.json
-examples/*/cosmos-export
-examples/webpack-dll/build
-
 packages/*/package.json
+example/package.json
+example/cosmos-export

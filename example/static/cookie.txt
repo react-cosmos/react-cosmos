@@ -1,0 +1,2 @@
+nom nom nom
+This file exists just to test that `staticPath` config works

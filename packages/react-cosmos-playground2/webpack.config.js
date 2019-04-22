@@ -1,6 +1,3 @@
-/* eslint-env node */
-// @flow
-
 const { join } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -39,8 +36,13 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        include: [/packages\/react-cosmos-playground2/],
-        use: 'ts-loader'
+        include: [/packages\/react-cosmos-playground2\/src/],
+        use: {
+          loader: 'ts-loader',
+          options: {
+            configFile: require.resolve('./tsconfig.build.json')
+          }
+        }
       }
     ]
   },

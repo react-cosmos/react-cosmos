@@ -17,32 +17,29 @@ jobs:
 
       # Download and cache dependencies
       - restore_cache:
-          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
-          key: v1-deps-{{ .Branch }}
-          key: v1-deps
+          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+          key: dependency-cache-{{ checksum "package.json" }}
       - run: yarn install --ignore-engines
       - save_cache:
-          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+          key: dependency-cache-{{ checksum "package.json" }}
           paths:
             # Cache both yarn and Cypress
             - ~/.cache
 
-      # Building upfront because some react-cosmos/server unit tests require
-      # react-cosmos-playground to be built
-      - run: yarn build
       # Test source (with cross-package coverage)
-      - run: yarn link-entries src
-      # - run: yarn flow --retries 12 Flow times out in CircleCI too often nowadays
+      - run: yarn src
       - run: yarn lint
-      - run: yarn test:ts:unit --maxWorkers=2 --coverage
+      - run: yarn test:coverage --maxWorkers=2
       - run: yarn codecov
-      # TS source code cannot be ran by Babel-powered test suite
-      - run: yarn link-entries dist react-cosmos-shared2 react-cosmos-fixture
-      - run: yarn test:unit --maxWorkers=1 --coverage
-      - run: yarn codecov
+
       # Test build
-      - run: yarn link-entries dist
-      - run: yarn start & yarn test:e2e
+      - run: yarn dist
+      - run: yarn build
+      - run: yarn export
+      - run: yarn test:ci
+
+      - store_artifacts:
+          path: /root/app/cypress/videos
 
   node-v6:
     <<: *node-base
@@ -62,8 +59,7 @@ workflows:
   version: 2
   node-multi-build:
     jobs:
-      # TEMP: Limitting CircleCI usage
-      # TODO: Bring back before merging jsx-fixture branch.
-      #- node-v6
-      #- node-v8
+      # Limitting CircleCI usage
+      # - node-v6
+      # - node-v8
       - node-v10

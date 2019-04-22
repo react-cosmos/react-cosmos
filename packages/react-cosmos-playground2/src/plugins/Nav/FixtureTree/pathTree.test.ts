@@ -7,21 +7,21 @@ import {
 } from './pathTree';
 
 const fixtures: FixtureNamesByPath = {
-  'helloWorld.jsxfixture.js': null,
-  'components/Counter/__jsxfixtures__/mockedState/largeNumber.js': null,
-  'components/Counter/__jsxfixtures__/mockedState/smallNumbers.js': [
+  'helloWorld.fixture.js': null,
+  'components/Counter/__fixtures__/mockedState/largeNumber.js': null,
+  'components/Counter/__fixtures__/mockedState/smallNumbers.js': [
     'five',
     'fiftyFive'
   ],
-  'components/Counter/defaultState.jsxfixture.js': null,
-  'components/SuccessMessage/index.jsxfixture.js': null,
-  'components/WelcomeMessage/index.jsxfixture.js': ['Susan', 'Sarah']
+  'components/Counter/defaultState.fixture.js': null,
+  'components/SuccessMessage/index.fixture.js': null,
+  'components/WelcomeMessage/index.fixture.js': ['Susan', 'Sarah']
 };
 
 const tree = {
   items: {
-    'helloWorld.jsxfixture': {
-      path: 'helloWorld.jsxfixture.js',
+    'helloWorld.fixture': {
+      path: 'helloWorld.fixture.js',
       name: null
     }
   },
@@ -31,20 +31,20 @@ const tree = {
       dirs: {
         Counter: {
           items: {
-            'defaultState.jsxfixture': {
-              path: 'components/Counter/defaultState.jsxfixture.js',
+            'defaultState.fixture': {
+              path: 'components/Counter/defaultState.fixture.js',
               name: null
             }
           },
           dirs: {
-            __jsxfixtures__: {
+            __fixtures__: {
               items: {},
               dirs: {
                 mockedState: {
                   items: {
                     largeNumber: {
                       path:
-                        'components/Counter/__jsxfixtures__/mockedState/largeNumber.js',
+                        'components/Counter/__fixtures__/mockedState/largeNumber.js',
                       name: null
                     }
                   },
@@ -53,12 +53,12 @@ const tree = {
                       items: {
                         five: {
                           path:
-                            'components/Counter/__jsxfixtures__/mockedState/smallNumbers.js',
+                            'components/Counter/__fixtures__/mockedState/smallNumbers.js',
                           name: 'five'
                         },
                         fiftyFive: {
                           path:
-                            'components/Counter/__jsxfixtures__/mockedState/smallNumbers.js',
+                            'components/Counter/__fixtures__/mockedState/smallNumbers.js',
                           name: 'fiftyFive'
                         }
                       },
@@ -72,8 +72,8 @@ const tree = {
         },
         SuccessMessage: {
           items: {
-            'index.jsxfixture': {
-              path: 'components/SuccessMessage/index.jsxfixture.js',
+            'index.fixture': {
+              path: 'components/SuccessMessage/index.fixture.js',
               name: null
             }
           },
@@ -82,14 +82,14 @@ const tree = {
         WelcomeMessage: {
           items: {},
           dirs: {
-            'index.jsxfixture': {
+            'index.fixture': {
               items: {
                 Susan: {
-                  path: 'components/WelcomeMessage/index.jsxfixture.js',
+                  path: 'components/WelcomeMessage/index.fixture.js',
                   name: 'Susan'
                 },
                 Sarah: {
-                  path: 'components/WelcomeMessage/index.jsxfixture.js',
+                  path: 'components/WelcomeMessage/index.fixture.js',
                   name: 'Sarah'
                 }
               },
@@ -104,8 +104,8 @@ const tree = {
 
 const collapsedTree = {
   items: {
-    'helloWorld.jsxfixture': {
-      path: 'helloWorld.jsxfixture.js',
+    'helloWorld.fixture': {
+      path: 'helloWorld.fixture.js',
       name: null
     }
   },
@@ -115,8 +115,8 @@ const collapsedTree = {
       dirs: {
         Counter: {
           items: {
-            'defaultState.jsxfixture': {
-              path: 'components/Counter/defaultState.jsxfixture.js',
+            'defaultState.fixture': {
+              path: 'components/Counter/defaultState.fixture.js',
               name: null
             }
           },
@@ -125,7 +125,7 @@ const collapsedTree = {
               items: {
                 largeNumber: {
                   path:
-                    'components/Counter/__jsxfixtures__/mockedState/largeNumber.js',
+                    'components/Counter/__fixtures__/mockedState/largeNumber.js',
                   name: null
                 }
               },
@@ -134,12 +134,12 @@ const collapsedTree = {
                   items: {
                     five: {
                       path:
-                        'components/Counter/__jsxfixtures__/mockedState/smallNumbers.js',
+                        'components/Counter/__fixtures__/mockedState/smallNumbers.js',
                       name: 'five'
                     },
                     fiftyFive: {
                       path:
-                        'components/Counter/__jsxfixtures__/mockedState/smallNumbers.js',
+                        'components/Counter/__fixtures__/mockedState/smallNumbers.js',
                       name: 'fiftyFive'
                     }
                   },
@@ -151,8 +151,8 @@ const collapsedTree = {
         },
         SuccessMessage: {
           items: {
-            'index.jsxfixture': {
-              path: 'components/SuccessMessage/index.jsxfixture.js',
+            'index.fixture': {
+              path: 'components/SuccessMessage/index.fixture.js',
               name: null
             }
           },
@@ -161,14 +161,14 @@ const collapsedTree = {
         WelcomeMessage: {
           items: {},
           dirs: {
-            'index.jsxfixture': {
+            'index.fixture': {
               items: {
                 Susan: {
-                  path: 'components/WelcomeMessage/index.jsxfixture.js',
+                  path: 'components/WelcomeMessage/index.fixture.js',
                   name: 'Susan'
                 },
                 Sarah: {
-                  path: 'components/WelcomeMessage/index.jsxfixture.js',
+                  path: 'components/WelcomeMessage/index.fixture.js',
                   name: 'Sarah'
                 }
               },
@@ -184,7 +184,7 @@ const collapsedTree = {
 const suffixHiddenTree = {
   items: {
     helloWorld: {
-      path: 'helloWorld.jsxfixture.js',
+      path: 'helloWorld.fixture.js',
       name: null
     }
   },
@@ -195,7 +195,7 @@ const suffixHiddenTree = {
         Counter: {
           items: {
             defaultState: {
-              path: 'components/Counter/defaultState.jsxfixture.js',
+              path: 'components/Counter/defaultState.fixture.js',
               name: null
             }
           },
@@ -204,7 +204,7 @@ const suffixHiddenTree = {
               items: {
                 largeNumber: {
                   path:
-                    'components/Counter/__jsxfixtures__/mockedState/largeNumber.js',
+                    'components/Counter/__fixtures__/mockedState/largeNumber.js',
                   name: null
                 }
               },
@@ -213,12 +213,12 @@ const suffixHiddenTree = {
                   items: {
                     five: {
                       path:
-                        'components/Counter/__jsxfixtures__/mockedState/smallNumbers.js',
+                        'components/Counter/__fixtures__/mockedState/smallNumbers.js',
                       name: 'five'
                     },
                     fiftyFive: {
                       path:
-                        'components/Counter/__jsxfixtures__/mockedState/smallNumbers.js',
+                        'components/Counter/__fixtures__/mockedState/smallNumbers.js',
                       name: 'fiftyFive'
                     }
                   },
@@ -231,7 +231,7 @@ const suffixHiddenTree = {
         SuccessMessage: {
           items: {
             index: {
-              path: 'components/SuccessMessage/index.jsxfixture.js',
+              path: 'components/SuccessMessage/index.fixture.js',
               name: null
             }
           },
@@ -243,11 +243,11 @@ const suffixHiddenTree = {
             index: {
               items: {
                 Susan: {
-                  path: 'components/WelcomeMessage/index.jsxfixture.js',
+                  path: 'components/WelcomeMessage/index.fixture.js',
                   name: 'Susan'
                 },
                 Sarah: {
-                  path: 'components/WelcomeMessage/index.jsxfixture.js',
+                  path: 'components/WelcomeMessage/index.fixture.js',
                   name: 'Sarah'
                 }
               },
@@ -263,7 +263,7 @@ const suffixHiddenTree = {
 const collapsedIndexTree = {
   items: {
     helloWorld: {
-      path: 'helloWorld.jsxfixture.js',
+      path: 'helloWorld.fixture.js',
       name: null
     }
   },
@@ -271,7 +271,7 @@ const collapsedIndexTree = {
     components: {
       items: {
         SuccessMessage: {
-          path: 'components/SuccessMessage/index.jsxfixture.js',
+          path: 'components/SuccessMessage/index.fixture.js',
           name: null
         }
       },
@@ -279,7 +279,7 @@ const collapsedIndexTree = {
         Counter: {
           items: {
             defaultState: {
-              path: 'components/Counter/defaultState.jsxfixture.js',
+              path: 'components/Counter/defaultState.fixture.js',
               name: null
             }
           },
@@ -288,7 +288,7 @@ const collapsedIndexTree = {
               items: {
                 largeNumber: {
                   path:
-                    'components/Counter/__jsxfixtures__/mockedState/largeNumber.js',
+                    'components/Counter/__fixtures__/mockedState/largeNumber.js',
                   name: null
                 }
               },
@@ -297,12 +297,12 @@ const collapsedIndexTree = {
                   items: {
                     five: {
                       path:
-                        'components/Counter/__jsxfixtures__/mockedState/smallNumbers.js',
+                        'components/Counter/__fixtures__/mockedState/smallNumbers.js',
                       name: 'five'
                     },
                     fiftyFive: {
                       path:
-                        'components/Counter/__jsxfixtures__/mockedState/smallNumbers.js',
+                        'components/Counter/__fixtures__/mockedState/smallNumbers.js',
                       name: 'fiftyFive'
                     }
                   },
@@ -315,11 +315,11 @@ const collapsedIndexTree = {
         WelcomeMessage: {
           items: {
             Susan: {
-              path: 'components/WelcomeMessage/index.jsxfixture.js',
+              path: 'components/WelcomeMessage/index.fixture.js',
               name: 'Susan'
             },
             Sarah: {
-              path: 'components/WelcomeMessage/index.jsxfixture.js',
+              path: 'components/WelcomeMessage/index.fixture.js',
               name: 'Sarah'
             }
           },
@@ -334,14 +334,12 @@ it('creates path tree', () => {
   expect(getPathTree(fixtures)).toEqual(tree);
 });
 
-it('collapses __jsxfixtures__ dirs', () => {
-  expect(collapsePathTreeDirs(tree, '__jsxfixtures__')).toEqual(collapsedTree);
+it('collapses __fixtures__ dirs', () => {
+  expect(collapsePathTreeDirs(tree, '__fixtures__')).toEqual(collapsedTree);
 });
 
-it('hides .jsxfixture suffix', () => {
-  expect(hideFixtureSuffix(collapsedTree, 'jsxfixture')).toEqual(
-    suffixHiddenTree
-  );
+it('hides .fixture suffix', () => {
+  expect(hideFixtureSuffix(collapsedTree, 'fixture')).toEqual(suffixHiddenTree);
 });
 
 it('collapses solo index fixture', () => {

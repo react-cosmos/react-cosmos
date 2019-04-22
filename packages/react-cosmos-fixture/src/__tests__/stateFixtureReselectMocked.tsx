@@ -4,7 +4,7 @@ import { createValues } from 'react-cosmos-shared2/fixtureState';
 import { StateMock } from '@react-mock/state';
 import { Counter } from '../testHelpers/components';
 import { anyProps, anyClassState } from '../testHelpers/fixtureState';
-import { runFixtureConnectTests } from '../testHelpers';
+import { runFixtureLoaderTests } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = {
@@ -17,7 +17,7 @@ const fixtures = {
 const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
-runFixtureConnectTests(mount => {
+runFixtureLoaderTests(mount => {
   // NOTE: This is a regression test that was created for a bug that initally
   // slipped unnoticed in https://github.com/react-cosmos/react-cosmos/pull/893.
   // Because element refs from unmounted FixtureCapture instances were

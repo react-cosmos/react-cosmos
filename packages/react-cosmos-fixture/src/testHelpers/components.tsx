@@ -1,5 +1,3 @@
-/* tslint:disable:max-classes-per-file */
-
 import * as React from 'react';
 
 export function HelloMessage({ name }: { name?: string }) {

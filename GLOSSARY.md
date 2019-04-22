@@ -16,13 +16,13 @@ State related to a rendered fixture, like component props, state or other data p
 
 Hosts fixture state and provides the required context for a fixture (and its decorators) to render.
 
-#### FixtureConnect
+#### FixtureLoader
 
 Manages a list of fixtures and the state of the selected fixture. Controlled remotely via `WebSockets` or `window.postMessage`. Platform agnostic.
 
 #### Fixture renderer
 
-Renders _FixtureConnect_ in an isolated environment. Bundled using the user's source code and configuration. Platform specific.
+Renders _FixtureLoader_ in an isolated environment. Bundled using the user's source code and configuration. Platform specific.
 
 #### Playground
 

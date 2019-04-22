@@ -77,7 +77,14 @@ export function usePropsCapture(
         }));
       }
     });
-  }, [setFixtureState, fixture, fixtureState.props]);
+  }, [
+    fixture,
+    decoratorId,
+    elPaths,
+    fixtureState,
+    fixtureState.props,
+    setFixtureState
+  ]);
 
   React.useEffect(() => {
     prevFixtureRef.current = fixture;

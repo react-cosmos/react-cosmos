@@ -1,8 +1,7 @@
 import * as React from 'react';
 import retry from '@skidding/async-retry';
 import { uuid } from 'react-cosmos-shared2/util';
-import { runFixtureConnectTests } from '../testHelpers';
-import { anyProps } from '../testHelpers/fixtureState';
+import { runFixtureLoaderTests } from '../testHelpers';
 import { Viewport } from '..';
 
 const rendererId = uuid();
@@ -16,7 +15,7 @@ const fixtures = {
 const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
-runFixtureConnectTests(mount => {
+runFixtureLoaderTests(mount => {
   it('renders children', async () => {
     await mount(
       { rendererId, fixtures, decorators },
@@ -44,7 +43,7 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            props: [anyProps()],
+            props: [],
             viewport: { width: 320, height: 240 }
           }
         });
@@ -76,7 +75,7 @@ runFixtureConnectTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            props: [anyProps()],
+            props: [],
             viewport: { width: 640, height: 480 }
           }
         });

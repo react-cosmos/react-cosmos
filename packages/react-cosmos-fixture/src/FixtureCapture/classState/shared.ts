@@ -22,7 +22,7 @@ export type CachedRefHandlers = {
 };
 
 export function useUnmount(cb: () => void) {
-  React.useEffect(() => cb, []);
+  React.useEffect(React.useCallback(cb, []), []);
 }
 
 // We need to do this because React doesn't provide a replaceState method

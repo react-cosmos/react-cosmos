@@ -8,7 +8,7 @@ export function RendererNotResponding() {
     <Container>
       <Content>
         <Header>Renderer not responding</Header>
-        <Paragraph>It's usually one of the following...</Paragraph>
+        <Paragraph>{`It's usually one of the following...`}</Paragraph>
         <List>
           <li>
             <No>1</No>

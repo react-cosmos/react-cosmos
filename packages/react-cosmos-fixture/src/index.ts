@@ -1,11 +1,16 @@
 // Use in custom integrations
-export { FixtureConnect } from './FixtureConnect';
-export { PostMessage } from './FixtureConnect/PostMessage';
-export { WebSockets } from './FixtureConnect/WebSockets';
+export { FixtureLoader } from './FixtureLoader';
+export { createPostMessageConnect } from './FixtureLoader/postMessage';
+export { createWebSocketsConnect } from './FixtureLoader/webSockets';
 
 // Use in decorators
 export { FixtureState } from 'react-cosmos-shared2/fixtureState';
-export { SetFixtureState } from './shared';
+export {
+  SetFixtureState,
+  RendererConnectApi,
+  FixturesByPath,
+  DecoratorsByPath
+} from './shared';
 export { FixtureContext } from './FixtureContext';
 
 // Advanced: Use in fixtures to capture elements in render callback

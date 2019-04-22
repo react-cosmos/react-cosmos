@@ -7,10 +7,10 @@ loadPlugins({
   config: {
     core: {
       projectId: 'testProjectId',
-      fixturesDir: '__jsxfixtures__',
-      fixtureFileSuffix: 'jsxfixture',
+      fixturesDir: '__fixtures__',
+      fixtureFileSuffix: 'fixture',
       devServerOn: false,
-      webRendererUrl: '/_loader.html'
+      webRendererUrl: '/_renderer.html'
     }
   }
 });

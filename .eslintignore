@@ -1,9 +1,7 @@
 node_modules
-flow-typed/**
 
 packages/*/dist
-examples/*/cosmos-export
-examples/webpack-dll/build
+example/cosmos-export
 
 **/__fsmocks__/**
 coverage

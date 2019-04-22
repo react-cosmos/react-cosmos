@@ -5,7 +5,7 @@ import { useFixtureState } from './useFixtureState';
 import { useReadClassState } from './useReadClassState';
 
 export function useClassStateCapture(
-  children: React.ReactNode,
+  fixture: React.ReactNode,
   decoratorId: FixtureDecoratorId
 ) {
   const elRefs = React.useRef<ElRefs>({});
@@ -13,6 +13,6 @@ export function useClassStateCapture(
     elRefs.current = {};
   });
 
-  useReadClassState(children, decoratorId, elRefs);
-  return useFixtureState(children, decoratorId, elRefs);
+  useReadClassState(fixture, decoratorId, elRefs);
+  return useFixtureState(fixture, decoratorId, elRefs);
 }

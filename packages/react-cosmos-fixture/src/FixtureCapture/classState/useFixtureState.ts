@@ -22,11 +22,11 @@ import {
 import { decorateFixtureRefs } from './decorateFixtureRefs';
 
 export function useFixtureState(
-  children: React.ReactNode,
+  fixture: React.ReactNode,
   decoratorId: FixtureDecoratorId,
   elRefs: React.MutableRefObject<ElRefs>
 ) {
-  const elPaths = findRelevantElementPaths(children);
+  const elPaths = findRelevantElementPaths(fixture);
   const { fixtureState, setFixtureState } = React.useContext(FixtureContext);
   const lastFixtureState = useFixtureStateRef(fixtureState);
   // Keep a copy of the previous fixture state to observe changes
@@ -119,14 +119,21 @@ export function useFixtureState(
         }
       }
     });
-  }, [setFixtureState, children, fixtureState.classState]);
+  }, [
+    decoratorId,
+    elPaths,
+    elRefs,
+    fixtureState,
+    fixtureState.classState,
+    setFixtureState
+  ]);
 
   // Update prev fixture state ref *after* running effects that reference it
   React.useEffect(() => {
     prevFixtureState.current = fixtureState;
   });
 
-  return decorateFixtureRefs(children, handleRef, cachedRefHandlers.current);
+  return decorateFixtureRefs(fixture, handleRef, cachedRefHandlers.current);
 
   function handleRef(elPath: string, elRef: null | React.Component) {
     if (!elRef) {

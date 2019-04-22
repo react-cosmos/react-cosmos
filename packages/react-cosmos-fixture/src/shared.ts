@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StateUpdater, SetStateAsync } from 'react-cosmos-shared2/util';
+import { StateUpdater } from 'react-cosmos-shared2/util';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import {
   OnRendererRequest,
@@ -20,15 +20,18 @@ export type DecoratorsByPath = {
   [path: string]: DecoratorType;
 };
 
-export type RemoteRendererApi = {
-  subscribe: (request: OnRendererRequest) => unknown;
-  unsubscribe: () => unknown;
+export type RendererConnectApi = {
   postMessage: OnRendererResponse;
+  off: () => unknown;
 };
+
+export type RendererConnect = (
+  onMessage: OnRendererRequest
+) => RendererConnectApi;
 
 export type FixtureContextValue = {
   fixtureState: FixtureState;
   setFixtureState: SetFixtureState;
 };
 
-export type SetFixtureState = SetStateAsync<StateUpdater<FixtureState>>;
+export type SetFixtureState = (update: StateUpdater<FixtureState>) => unknown;
