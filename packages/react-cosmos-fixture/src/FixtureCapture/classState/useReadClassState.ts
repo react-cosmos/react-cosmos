@@ -17,11 +17,11 @@ import { ElRefs } from './shared';
 const REFRESH_INTERVAL = 200;
 
 export function useReadClassState(
-  children: React.ReactNode,
+  fixture: React.ReactNode,
   decoratorId: FixtureDecoratorId,
   elRefs: React.MutableRefObject<ElRefs>
 ) {
-  const elPaths = findRelevantElementPaths(children);
+  const elPaths = findRelevantElementPaths(fixture);
   const { fixtureState, setFixtureState } = React.useContext(FixtureContext);
   const timeoutId = React.useRef<null | number>(null);
 
