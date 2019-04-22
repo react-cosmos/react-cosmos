@@ -12,20 +12,15 @@ export type ExportPlugin = (args: ExportPluginArgs) => unknown;
 
 export async function generateExport(plugins: ExportPlugin[] = []) {
   const cosmosConfig = getCosmosConfig();
-  try {
-    // Copy static assets first, so that the built index.html overrides the its
-    // template file (in case the static assets are served from the root path)
-    copyStaticAssets(cosmosConfig);
-    await Promise.all(plugins.map(plugin => plugin({ cosmosConfig })));
-    exportPlaygroundFiles(cosmosConfig);
 
-    console.log('[Cosmos] Export Complete! Find the exported files here:');
-    console.log(cosmosConfig.exportPath);
-  } catch (err) {
-    console.error('[Cosmos] Export Failed!');
-    console.error(err);
-    process.exit(1);
-  }
+  // Copy static assets first, so that the built index.html overrides the its
+  // template file (in case the static assets are served from the root path)
+  copyStaticAssets(cosmosConfig);
+  await Promise.all(plugins.map(plugin => plugin({ cosmosConfig })));
+  exportPlaygroundFiles(cosmosConfig);
+
+  console.log('[Cosmos] Export Complete! Find the exported files here:');
+  console.log(cosmosConfig.exportPath);
 }
 
 function copyStaticAssets(cosmosConfig: CosmosConfig) {

@@ -24,29 +24,36 @@ export async function startDevServer(
   plugins: DevServerPlugin[] = []
 ) {
   const cosmosConfig = getCosmosConfig();
-  const app = createApp(platformType, cosmosConfig);
-  const httpServer = createHttpServer(cosmosConfig, app);
 
+  const app = createApp(platformType, cosmosConfig);
   if (cosmosConfig.staticPath) {
     serveStaticDir(app, cosmosConfig.staticPath, cosmosConfig.publicUrl);
   }
 
+  const pluginCleanupCallbacks: PluginCleanupCallback[] = [];
+  const httpServer = createHttpServer(cosmosConfig, app);
   await httpServer.start();
 
-  const pluginCleanupCallbacks: PluginCleanupCallback[] = [];
-  for (const plugin of plugins) {
-    const pluginReturn = await plugin({
-      cosmosConfig,
-      httpServer: httpServer.server,
-      expressApp: app
-    });
-    if (typeof pluginReturn === 'function') {
-      pluginCleanupCallbacks.push(pluginReturn);
-    }
-  }
-
-  return async () => {
+  async function cleanUp() {
     await pluginCleanupCallbacks.map(cleanup => cleanup());
     await httpServer.stop();
-  };
+  }
+
+  try {
+    for (const plugin of plugins) {
+      const pluginReturn = await plugin({
+        cosmosConfig,
+        httpServer: httpServer.server,
+        expressApp: app
+      });
+      if (typeof pluginReturn === 'function') {
+        pluginCleanupCallbacks.push(pluginReturn);
+      }
+    }
+  } catch (err) {
+    cleanUp();
+    throw err;
+  }
+
+  return cleanUp;
 }

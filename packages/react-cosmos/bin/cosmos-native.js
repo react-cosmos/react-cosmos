@@ -6,4 +6,9 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 const { startNativeServer } = require('../dist/nativeServer');
 
-startNativeServer();
+startNativeServer().catch(err => {
+  console.log('[Cosmos] Server crashed...');
+  console.log(`\n  (╯°□°)╯︵ ┻━┻\n`);
+  console.log(err);
+  process.exit(1);
+});
