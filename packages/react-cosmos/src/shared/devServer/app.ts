@@ -3,7 +3,6 @@ import { CosmosConfig } from '../../config';
 import { getStaticPath } from '../static';
 import { PlatformType } from '../shared';
 import { getDevPlaygroundHtml } from '../playgroundHtml';
-// import { setupHttpProxy } from '../shared/httpProxy';
 
 export function createApp(
   platformType: PlatformType,

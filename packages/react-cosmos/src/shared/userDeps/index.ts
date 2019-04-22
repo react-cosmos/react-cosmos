@@ -2,11 +2,13 @@ import path from 'path';
 import { CosmosConfig } from '../../config';
 import { slash } from '../slash';
 import { findUserModulePaths } from './findPaths';
+
 export {
   getFixturePatterns,
   getDecoratorPatterns,
   getIgnorePatterns
 } from './shared';
+export { findUserModulePaths } from './findPaths';
 
 // Warning: Renderer config must be serializable!
 export async function generateUserDepsModule(
