@@ -1,9 +1,11 @@
 import path from 'path';
 import promisify from 'util.promisify';
+import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
+import { resolvePath } from '../../config';
 import { DevServerPluginArgs } from '../../shared/devServer';
-import { getRootUrl } from '../../shared/static';
+import { getRootUrl, serveStaticDir } from '../../shared/static';
 import { getWebpack } from './shared';
 import { createWebpackCosmosConfig } from './cosmosConfig/webpack';
 import { getDevWebpackConfig } from './webpackConfig';
@@ -18,10 +20,18 @@ export async function webpackDevServer({
   }
 
   const webpackConfig = getDevWebpackConfig(cosmosConfig, userWebpack);
-  // const publicPath = getWebpackPublicPath(cosmosConfig, userWebpackConfig);
-  // if (publicPath) {
-  //   serveStaticDir(app, cosmosConfig.publicUrl, publicPath);
-  // }
+
+  // Serve static path derived from devServer.contentBase webpack config
+  if (cosmosConfig.staticPath === null) {
+    const staticPath = getWebpackStaticPath(webpackConfig);
+    if (staticPath !== null) {
+      serveStaticDir(
+        expressApp,
+        resolvePath(cosmosConfig.rootDir, staticPath),
+        cosmosConfig.publicUrl
+      );
+    }
+  }
 
   const webpackCompiler = userWebpack(webpackConfig);
   webpackCompiler.hooks.invalid.tap('Cosmos', filePath => {
@@ -53,4 +63,10 @@ export async function webpackDevServer({
   return async () => {
     await promisify(wdmInst.close.bind(wdmInst))();
   };
+}
+
+function getWebpackStaticPath({ devServer }: webpack.Configuration) {
+  return devServer && typeof devServer.contentBase === 'string'
+    ? devServer.contentBase
+    : null;
 }
