@@ -11,12 +11,6 @@ export function createApp(
 ) {
   const app = express();
 
-  // TODO: Create plugin for httpProxy
-  // const { httpProxy } = cosmosConfig;
-  // if (httpProxy) {
-  //   setupHttpProxy(app, httpProxy);
-  // }
-
   const playgroundHtml = getDevPlaygroundHtml(platformType, cosmosConfig);
   app.get('/', (req: express.Request, res: express.Response) => {
     res.send(playgroundHtml);

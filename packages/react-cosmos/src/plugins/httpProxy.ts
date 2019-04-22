@@ -1,30 +1,22 @@
-// TODO: Make this a plugin
-// import express from 'express';
-// import httpProxyMiddleware from 'http-proxy-middleware';
+import { CosmosConfig } from './../config/shared';
+import httpProxyMiddleware from 'http-proxy-middleware';
+import { DevServerPluginArgs } from '../shared/devServer';
 
-// export type HttpProxyConfig = {
-//   [contextKey: string]:
-//     | string
-//     | string[]
-//     | httpProxyMiddleware.Filter
-//     | httpProxyMiddleware.Config;
-// };
+// TODO: Support advanced configuration
+// See https://github.com/react-cosmos/react-cosmos/pull/875 for context
+// Supporting all httpProxy options isn't as easy anymore, because the Cosmos
+// config is now JSON. We can either support a serializable subset of useful
+// options (like "pathRewrite") or optionally support an external config module.
+type HttpProxyConfig = { [context: string]: string };
 
-// export function setupHttpProxy(
-//   app: express.Application,
-//   httpProxy: HttpProxyConfig
-// ) {
-//   Object.keys(httpProxy).forEach(contextKey => {
-//     const config = httpProxy[contextKey];
-//     // TypeScript: For whatever reason we just can't call
-//     // httpProxyMiddleware(config) when config matches parameters from multiple
-//     // fn overload signatures
-//     const proxy =
-//       typeof config === 'string' ||
-//       typeof config === 'function' ||
-//       Array.isArray(config)
-//         ? httpProxyMiddleware(config)
-//         : httpProxyMiddleware(config);
-//     app.use(contextKey, proxy);
-//   });
-// }
+export function httpProxy({ cosmosConfig, expressApp }: DevServerPluginArgs) {
+  const httpProxyConfig = getHttpProxyCosmosConfig(cosmosConfig);
+  Object.keys(httpProxyConfig).forEach(context => {
+    const target = httpProxyConfig[context];
+    expressApp.use(context, httpProxyMiddleware(context, { target }));
+  });
+}
+
+function getHttpProxyCosmosConfig(cosmosConfig: CosmosConfig) {
+  return (cosmosConfig.httpProxy || {}) as HttpProxyConfig;
+}
