@@ -25,16 +25,7 @@ export async function startDevServer(
   platformType: PlatformType,
   plugins: DevServerPlugin[] = []
 ) {
-  // TODO: Bring back config generation
-  // if (!hasUserCosmosConfig()) {
-  //   const generatedConfigFor = generateCosmosConfig();
-  //   if (generatedConfigFor) {
-  //     console.log(`[Cosmos] Nice! You're using ${generatedConfigFor}`);
-  //     console.log('[Cosmos] Generated a tailored config file for your setup');
-  //   }
-  // }
   const cosmosConfig = getCosmosConfig();
-
   const app = createApp(platformType, cosmosConfig);
   const httpServer = createHttpServer(cosmosConfig, app);
 
