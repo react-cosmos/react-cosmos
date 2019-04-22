@@ -1,14 +1,14 @@
 {
   "private": true,
   "name": "react-cosmos-example",
-  "version": "4.8.1",
+  "version": "5.0.0-alpha.0",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/examples",
   "license": "MIT",
   "scripts": {
     "start": "cosmos"
   },
   "dependencies": {
-    "react-cosmos": "^4.8.1"
+    "react-cosmos": "^5.0.0-alpha.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
