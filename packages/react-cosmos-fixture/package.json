@@ -7,7 +7,7 @@
   "main": "index.js",
   "dependencies": {
     "lodash": "^4.17.11",
-    "memoize-one": "^5.0.2",
+    "memoize-one": "^5.0.4",
     "react-cosmos-shared2": "^5.0.0-alpha.0",
     "react-is": "^16.8.6",
     "socket.io-client": "^2.2.0"
