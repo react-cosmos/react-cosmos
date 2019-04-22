@@ -175,8 +175,6 @@ export default {
 };
 ```
 
-> Check out this [quick hack](docs/fixtures.md) for getting started with fixtures.
-
 #### Where to put fixtures?
 
 Cosmos looks for `*.fixture.js` named files and files inside `__fixtures__` dirs by default. See [custom fixture paths](#custom-fixture-paths) for further customization.
