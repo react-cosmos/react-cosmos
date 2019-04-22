@@ -5,8 +5,6 @@ import { PlatformType } from '../shared';
 import { serveStaticDir } from '../static';
 import { createHttpServer } from './httpServer';
 import { createApp } from './app';
-// IDEA: Maybe replace react-dev-utils with https://github.com/yyx990803/launch-editor
-// import launchEditor from 'react-dev-utils/launchEditor';
 
 type PluginCleanupCallback = () => unknown;
 type PluginReturn = void | null | PluginCleanupCallback;
@@ -47,24 +45,8 @@ export async function startDevServer(
     }
   }
 
-  // TODO: Bring back attachStackFrameEditorLauncher
-  // attachStackFrameEditorLauncher(app);
-
   return async () => {
     await pluginCleanupCallbacks.map(cleanup => cleanup());
     await httpServer.stop();
   };
 }
-
-// TODO: Make plugin
-// export function attachStackFrameEditorLauncher(app: express.Application) {
-//   app.get(
-//     '/__open-stack-frame-in-editor',
-//     (req: express.Request, res: express.Response) => {
-//       const lineNumber = parseInt(req.query.lineNumber, 10) || 1;
-//       const colNumber = parseInt(req.query.colNumber, 10) || 1;
-//       launchEditor(req.query.fileName, lineNumber, colNumber);
-//       res.end();
-//     }
-//   );
-// }

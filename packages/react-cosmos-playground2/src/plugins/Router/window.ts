@@ -1,6 +1,6 @@
 /* eslint-env browser */
 
-import * as qs from 'query-string';
+import qs from 'query-string';
 import { UrlParams } from './public';
 
 type EncodedUrlParams = {

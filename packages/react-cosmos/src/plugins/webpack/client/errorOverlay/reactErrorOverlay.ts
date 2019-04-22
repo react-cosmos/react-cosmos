@@ -1,3 +1,4 @@
+import qs from 'query-string';
 import * as ErrorOverlay from 'react-error-overlay';
 
 type WebpackHotMiddlewareReporter = {
@@ -11,7 +12,7 @@ type WebpackHotClientWindow = Window & {
   __webpack_hot_middleware_reporter__?: WebpackHotMiddlewareReporter;
 };
 
-const LAUNCH_EDITOR_ENDPOINT = '/__open-stack-frame-in-editor';
+const LAUNCH_EDITOR_ENDPOINT = '/_open';
 
 export function init() {
   ErrorOverlay.startReportingRuntimeErrors({
@@ -28,11 +29,11 @@ export function dismiss() {
 }
 
 function getLaunchEditorUrl(errorLocation: ErrorOverlay.ErrorLocation) {
-  const fileName = encodeURIComponent(errorLocation.fileName);
-  const lineNumber = encodeURIComponent(String(errorLocation.lineNumber || 1));
-  const colNumber = encodeURIComponent(String(errorLocation.colNumber || 1));
-
-  return `${LAUNCH_EDITOR_ENDPOINT}?fileName=${fileName}&lineNumber=${lineNumber}&colNumber=${colNumber}`;
+  return `${LAUNCH_EDITOR_ENDPOINT}?${qs.stringify({
+    filePath: errorLocation.fileName,
+    line: errorLocation.lineNumber || 1,
+    column: errorLocation.colNumber || 1
+  })}`;
 }
 
 function setUpBuildErrorReporting() {
