@@ -211,9 +211,7 @@ export function createRendererConnectMockApi(
       });
     } finally {
       if (!lastMsg || lastMsg.type !== msgType) {
-        /* tslint:disable:no-unsafe-finally */
         throw new Error(`"${msgType}" message never arrived`);
-        /* tslint:enable:no-unsafe-finally */
       }
     }
 

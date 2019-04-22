@@ -1,5 +1,3 @@
-/* eslint-env browser */
-
 import qs from 'query-string';
 import { UrlParams } from './public';
 
