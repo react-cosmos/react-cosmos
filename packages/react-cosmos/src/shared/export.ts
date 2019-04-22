@@ -19,8 +19,8 @@ export async function generateExport(plugins: ExportPlugin[] = []) {
   await Promise.all(plugins.map(plugin => plugin({ cosmosConfig })));
   exportPlaygroundFiles(cosmosConfig);
 
-  console.log('[Cosmos] Export Complete! Find the exported files here:');
-  console.log(cosmosConfig.exportPath);
+  console.log('[Cosmos] Export complete!');
+  console.log(`Export path: ${cosmosConfig.exportPath}`);
 }
 
 function copyStaticAssets(cosmosConfig: CosmosConfig) {

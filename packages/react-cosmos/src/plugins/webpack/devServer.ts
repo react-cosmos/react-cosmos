@@ -58,7 +58,7 @@ export async function webpackDevServer({
   }
 
   await onCompilationDone;
-  console.log(`[Cosmos] Server ready!`);
+  console.log(`[Cosmos] All good. Have fun!`);
 
   return async () => {
     await promisify(wdmInst.close.bind(wdmInst))();
