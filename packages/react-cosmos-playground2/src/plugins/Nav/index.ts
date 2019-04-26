@@ -27,6 +27,7 @@ plug({
       rendererConnected: rendererCore.isRendererConnected(),
       fixtures: rendererCore.getFixtures(),
       selectFixture: router.selectFixture,
+      createFixtureUrl: router.createFixtureUrl,
       storage
     };
   }

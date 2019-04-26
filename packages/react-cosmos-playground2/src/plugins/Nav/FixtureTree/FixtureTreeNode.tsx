@@ -15,11 +15,11 @@ type Props = {
   parents: string[];
   treeExpansion: TreeExpansion;
   selectedFixtureId: null | FixtureId;
+  createFixtureUrl: (fixtureId: FixtureId) => string;
   onSelect: (fixtureId: FixtureId) => unknown;
   onToggleExpansion: (nodePath: string, expanded: boolean) => unknown;
 };
 
-// TODO: Make fixture buttons <a>nchors to enable "open in new tab" clicks
 export class FixtureTreeNode extends React.Component<Props> {
   render() {
     const {
@@ -27,6 +27,7 @@ export class FixtureTreeNode extends React.Component<Props> {
       parents,
       treeExpansion,
       selectedFixtureId,
+      createFixtureUrl,
       onSelect,
       onToggleExpansion
     } = this.props;
@@ -38,20 +39,17 @@ export class FixtureTreeNode extends React.Component<Props> {
     return (
       <>
         {!isRootNode && (
-          <ListItem
-            indentLevel={parents.length - 1}
-            onClick={() => {
-              onToggleExpansion(nodePath, !isExpanded);
-            }}
-          >
-            <CevronContainer>
-              {isExpanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
-            </CevronContainer>
-            <FolderContainer>
-              <FolderIcon />
-            </FolderContainer>
-            <Label>{parents[parents.length - 1]}</Label>
-          </ListItem>
+          <DirButton onClick={() => onToggleExpansion(nodePath, !isExpanded)}>
+            <ListItem indentLevel={parents.length - 1}>
+              <CevronContainer>
+                {isExpanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
+              </CevronContainer>
+              <FolderContainer>
+                <FolderIcon />
+              </FolderContainer>
+              <Label>{parents[parents.length - 1]}</Label>
+            </ListItem>
+          </DirButton>
         )}
         {isExpanded && (
           <>
@@ -64,20 +62,25 @@ export class FixtureTreeNode extends React.Component<Props> {
                   parents={nextParents}
                   treeExpansion={treeExpansion}
                   selectedFixtureId={selectedFixtureId}
+                  createFixtureUrl={createFixtureUrl}
                   onSelect={onSelect}
                   onToggleExpansion={onToggleExpansion}
                 />
               );
             })}
             {map(items, (fixtureId, fixtureName) => (
-              <ListItem
+              <FixtureLink
                 key={`${fixtureId.path}-${fixtureName}`}
-                indentLevel={parents.length}
-                selected={isEqual(fixtureId, selectedFixtureId)}
+                href={createFixtureUrl(fixtureId)}
                 onClick={this.createSelectHandler(fixtureId)}
               >
-                <FixtureLabel>{fixtureName}</FixtureLabel>
-              </ListItem>
+                <ListItem
+                  indentLevel={parents.length}
+                  selected={isEqual(fixtureId, selectedFixtureId)}
+                >
+                  <FixtureLabel>{fixtureName}</FixtureLabel>
+                </ListItem>
+              </FixtureLink>
             ))}
           </>
         )}
@@ -85,9 +88,14 @@ export class FixtureTreeNode extends React.Component<Props> {
     );
   }
 
-  createSelectHandler = (fixtureId: FixtureId) => (e: React.SyntheticEvent) => {
+  createSelectHandler = (fixtureId: FixtureId) => (e: React.MouseEvent) => {
     e.preventDefault();
-    this.props.onSelect(fixtureId);
+    if (e.metaKey) {
+      // Allow users to cmd+click to open fixtures in new tab
+      window.open((e.currentTarget as HTMLAnchorElement).href, '_blank');
+    } else {
+      this.props.onSelect(fixtureId);
+    }
   };
 }
 
@@ -113,13 +121,39 @@ function calcNodeDepth(node: FixtureNode): 0 | 1 {
   return hasDirs ? 1 : 0;
 }
 
+const DirButton = styled.button`
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+
+  :focus {
+    outline: none;
+    > span {
+      box-shadow: inset 4px 0px 0 0 var(--primary3);
+    }
+  }
+`;
+
+const FixtureLink = styled.a`
+  display: block;
+  width: 100%;
+  text-decoration: none;
+
+  :focus {
+    outline: none;
+    > span {
+      box-shadow: inset 4px 0px 0 0 var(--primary3);
+    }
+  }
+`;
+
 type ListItemProps = {
   indentLevel: number;
   selected?: boolean;
-  onClick: (e: React.SyntheticEvent) => void;
 };
 
-const ListItem = styled.div<ListItemProps>`
+const ListItem = styled.span<ListItemProps>`
   --height: 28px;
   --hover-bg: hsl(var(--hue-primary), 19%, 21%);
 

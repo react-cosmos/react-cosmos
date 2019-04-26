@@ -4,7 +4,8 @@ import { FixtureId } from 'react-cosmos-shared2/renderer';
 import {
   getUrlParamsFromLocation,
   pushUrlParamsToHistory,
-  subscribeToLocationChanges
+  subscribeToLocationChanges,
+  createUrl
 } from './window';
 import { UrlParams, RouterSpec } from './public';
 
@@ -19,7 +20,8 @@ const { onLoad, register } = createPlugin<RouterSpec>({
     getSelectedFixtureId,
     isFullScreen,
     selectFixture,
-    unselectFixture
+    unselectFixture,
+    createFixtureUrl
   }
 });
 
@@ -62,6 +64,10 @@ function selectFixture(
 
 function unselectFixture(context: Context) {
   setUrlParams(context, {});
+}
+
+function createFixtureUrl(context: Context, fixtureId: FixtureId) {
+  return createUrl({ fixtureId });
 }
 
 function setUrlParams(context: Context, nextUrlParams: UrlParams) {

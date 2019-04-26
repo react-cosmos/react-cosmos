@@ -15,6 +15,7 @@ export type RouterSpec = {
     isFullScreen(): boolean;
     selectFixture(fixtureId: FixtureId, fullScreen: boolean): void;
     unselectFixture(): void;
+    createFixtureUrl(fixtureId: FixtureId): string;
   };
   events: {
     fixtureChange(fixtureId: null | FixtureId): void;

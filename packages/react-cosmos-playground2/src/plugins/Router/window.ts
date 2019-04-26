@@ -10,6 +10,10 @@ export function getUrlParamsFromLocation(): UrlParams {
   return decodeUrlParams(qs.parse(location.search));
 }
 
+export function createUrl(urlParams: UrlParams) {
+  return createUrlWithQuery(qs.stringify(encodeUrlParams(urlParams)));
+}
+
 // IDEA: Store fixtureState in history object and apply it on `popstate` event
 export function pushUrlParamsToHistory(urlParams: UrlParams) {
   const query = qs.stringify(encodeUrlParams(urlParams));
@@ -20,13 +24,8 @@ export function pushUrlParamsToHistory(urlParams: UrlParams) {
     return;
   }
 
-  // NOTE: "./" is used to return to the home URL. Passing an empty string
-  // doesn't do anything. And passing "/" doesn't work if Cosmos is not hosted
-  // at root (sub)domain level.
-  const nextUrl = query.length > 0 ? `?${query}` : './';
-
   // Update URL without refreshing page
-  history.pushState({}, '', nextUrl);
+  history.pushState({}, '', createUrlWithQuery(query));
 }
 
 export function subscribeToLocationChanges(
@@ -67,4 +66,11 @@ function decodeUrlParams(encoded: EncodedUrlParams): UrlParams {
   }
 
   return decoded;
+}
+
+function createUrlWithQuery(query: string) {
+  // NOTE: "./" is used to return to the home URL. Passing an empty string
+  // doesn't do anything. And passing "/" doesn't work if Cosmos is not hosted
+  // at root (sub)domain level.
+  return query.length > 0 ? `?${query}` : './';
 }
