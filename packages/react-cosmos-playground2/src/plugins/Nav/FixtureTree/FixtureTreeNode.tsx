@@ -31,9 +31,6 @@ export class FixtureTreeNode extends React.Component<Props> {
       onToggleExpansion
     } = this.props;
     const { items, dirs } = node;
-    const dirNames = Object.keys(dirs)
-      .slice()
-      .sort();
     const nodePath = getNodePath(parents);
     const isRootNode = parents.length === 0;
     const isExpanded = isRootNode || treeExpansion[nodePath];
@@ -58,9 +55,8 @@ export class FixtureTreeNode extends React.Component<Props> {
         )}
         {isExpanded && (
           <>
-            {dirNames.map(dirName => {
+            {getSortedNodeDirNames(node).map(dirName => {
               const nextParents = [...parents, dirName];
-
               return (
                 <FixtureTreeNode
                   key={getNodePath(nextParents)}
@@ -93,6 +89,28 @@ export class FixtureTreeNode extends React.Component<Props> {
     e.preventDefault();
     this.props.onSelect(fixtureId);
   };
+}
+
+function getSortedNodeDirNames(node: FixtureNode): string[] {
+  return (
+    Object.keys(node.dirs)
+      .slice()
+      // Sort alphabetically first
+      .sort()
+      .sort((dirName1, dirName2) => {
+        return (
+          calcNodeDepth(node.dirs[dirName2]) -
+          calcNodeDepth(node.dirs[dirName1])
+        );
+      })
+  );
+}
+
+// Only differentiate between nodes with and without subdirs and ignore
+// depth level in the latter
+function calcNodeDepth(node: FixtureNode): 0 | 1 {
+  const hasDirs = Object.keys(node.dirs).length > 0;
+  return hasDirs ? 1 : 0;
 }
 
 type ListItemProps = {
