@@ -20,12 +20,12 @@
     "react-cosmos-fixture": "^5.0.0-alpha.1",
     "react-cosmos-playground2": "^5.0.0-alpha.1",
     "react-cosmos-shared2": "^5.0.0-alpha.1",
-    "react-error-overlay": "^5.1.4",
+    "react-error-overlay": "^5.1.5",
     "resolve-from": "^5.0.0",
     "socket.io": "^2.2.0",
     "util.promisify": "^1.0.0",
     "webpack-dev-middleware": "^3.6.2",
-    "webpack-hot-middleware": "^2.24.3",
+    "webpack-hot-middleware": "^2.24.4",
     "yargs": "^13.2.2"
   },
   "devDependencies": {
