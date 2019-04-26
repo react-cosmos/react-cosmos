@@ -7,7 +7,8 @@ import {
   ChevronDownIcon,
   FolderIcon
 } from '../../../shared/icons';
-import { FixtureNode, TreeExpansion } from './shared';
+import { FixtureNode } from './fixtureTree';
+import { TreeExpansion } from './shared';
 
 type Props = {
   node: FixtureNode;
