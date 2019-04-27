@@ -7,7 +7,7 @@ import {
   ChevronDownIcon,
   FolderIcon
 } from '../../../shared/icons';
-import { createUrl } from '../../../shared/router';
+import { createUrl } from '../../../shared/url';
 import { FixtureNode } from './fixtureTree';
 import { TreeExpansion } from './shared';
 
