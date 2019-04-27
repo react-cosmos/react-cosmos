@@ -1,6 +1,7 @@
 import * as React from 'react';
 
-type DragHandleProps = {
+type Draggable = {
+  children: React.ReactNode;
   value: number;
   onChange: (value: number) => unknown;
 };
@@ -10,7 +11,7 @@ type DragState = {
   startX: number;
 };
 
-export function DragHandle({ value, onChange }: DragHandleProps) {
+export function Draggable({ children, value, onChange }: Draggable) {
   const [dragState, setDragState] = React.useState<null | DragState>(null);
 
   const handleDrag = React.useCallback(
@@ -52,5 +53,5 @@ export function DragHandle({ value, onChange }: DragHandleProps) {
     };
   }, [dragState, handleDrag, handleDragEnd]);
 
-  return <div onMouseDown={handleDragStart}>ooooooooooo</div>;
+  return <div onMouseDown={handleDragStart}>{children}</div>;
 }

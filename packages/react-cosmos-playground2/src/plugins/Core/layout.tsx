@@ -29,9 +29,12 @@ const PreviewContainer = styled.div`
   overflow: hidden;
 `;
 
+// TODO: Centralize knowledge about competing z-indexes
 export const layout = (
   <Container>
-    <Slot name="left" />
+    <div style={{ zIndex: 2 }}>
+      <Slot name="left" />
+    </div>
     <Center>
       <Slot name="rendererHeader" />
       <PreviewContainer>
