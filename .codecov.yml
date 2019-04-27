@@ -3,7 +3,8 @@ comment: off
 coverage:
   status:
     project:
-      target: auto
-      threshold: 1%
-      base: auto
+      default:
+        target: auto
+        threshold: 1%
+        base: auto
     patch: no
