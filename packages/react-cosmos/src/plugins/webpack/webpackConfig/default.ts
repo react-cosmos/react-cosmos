@@ -11,6 +11,7 @@ export function getDefaultWebpackConfig(
 ) {
   // react-cosmos doesn't directly depend on any webpack loader.
   // Instead, it includes the ones already installed by the user.
+  const tsLoaderPath = resolveFrom.silent(rootDir, 'ts-loader');
   const babelLoaderPath = resolveFrom.silent(rootDir, 'babel-loader');
   const styleLoaderPath = resolveFrom.silent(rootDir, 'style-loader');
   const cssLoaderPath = resolveFrom.silent(rootDir, 'css-loader');
@@ -18,6 +19,13 @@ export function getDefaultWebpackConfig(
   const jsonLoaderPath = resolveFrom.silent(rootDir, 'json-loader');
   const rules: webpack.RuleSetRule[] = [];
   const plugins: webpack.Plugin[] = [];
+
+  if (tsLoaderPath) {
+    rules.push({
+      test: /\.tsx?$/,
+      loader: tsLoaderPath
+    });
+  }
 
   if (babelLoaderPath) {
     rules.push({
