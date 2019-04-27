@@ -15,22 +15,22 @@
     "import-from": "^3.0.0",
     "launch-editor": "^2.2.1",
     "lodash": "^4.17.11",
-    "object.values": "^1.1.0",
+    "micromatch": "^4.0.2",
     "query-string": "^6.4.2",
     "react-cosmos-fixture": "^5.0.0-alpha.1",
     "react-cosmos-playground2": "^5.0.0-alpha.1",
     "react-cosmos-shared2": "^5.0.0-alpha.1",
     "react-error-overlay": "^5.1.5",
+    "react-is": "^16.8.6",
     "resolve-from": "^5.0.0",
+    "slash": "^2.0.0",
     "socket.io": "^2.2.0",
     "util.promisify": "^1.0.0",
     "webpack-dev-middleware": "^3.6.2",
     "webpack-hot-middleware": "^2.24.4",
     "yargs": "^13.2.2"
   },
-  "devDependencies": {
-    "socket.io-client": "^2.2.0"
-  },
+  "devDependencies": {},
   "bin": {
     "cosmos": "./bin/cosmos.js",
     "cosmos-export": "./bin/cosmos-export.js",
