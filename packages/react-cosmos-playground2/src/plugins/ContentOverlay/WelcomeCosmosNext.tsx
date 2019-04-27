@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { AstronautIllustration } from '../../shared/illustrations';
 import { IllustrationContainer } from './shared';
 
+// TODO: Make "Cosmos Next" unbreakable
 export function WelcomeCosmosNext() {
   return (
     <Container>
