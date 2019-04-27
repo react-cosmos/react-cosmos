@@ -12,7 +12,8 @@ import {
 import {
   ReactDecorator,
   ReactFixturesByPath,
-  ReactDecoratorsByPath
+  ReactDecoratorsByPath,
+  getFixtureNames
 } from 'react-cosmos-shared2/react';
 import {
   RendererConnectApi,
@@ -20,7 +21,7 @@ import {
   SetFixtureState
 } from '../shared';
 import { FixtureProvider } from '../FixtureProvider';
-import { getFixtureNames, getFixtureNode } from './fixtureHelpers';
+import { getFixture } from './fixtureHelpers';
 
 export type Props = {
   rendererId: string;
@@ -107,7 +108,7 @@ export class FixtureLoader extends React.Component<Props, State> {
     }
 
     const fixtureExport = fixtures[fixtureId.path];
-    const fixture = getFixtureNode(fixtureExport, fixtureId.name);
+    const fixture = getFixture(fixtureExport, fixtureId.name);
     if (typeof fixture === 'undefined') {
       return `Invalid fixture ID: ${JSON.stringify(fixtureId)}`;
     }

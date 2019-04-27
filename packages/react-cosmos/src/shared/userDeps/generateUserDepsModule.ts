@@ -1,7 +1,7 @@
 import path from 'path';
 import { CosmosConfig } from '../../config';
 import { slash } from '../slash';
-import { findUserModulePaths } from './userModulePaths';
+import { findUserModulePaths } from './findUserModulePaths';
 
 // Warning: Renderer config must be serializable!
 export async function generateUserDepsModule(

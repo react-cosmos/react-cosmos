@@ -21,7 +21,6 @@
     "react-cosmos-playground2": "^5.0.0-alpha.1",
     "react-cosmos-shared2": "^5.0.0-alpha.1",
     "react-error-overlay": "^5.1.5",
-    "react-is": "^16.8.6",
     "resolve-from": "^5.0.0",
     "slash": "^2.0.0",
     "socket.io": "^2.2.0",
