@@ -12,7 +12,6 @@ type Props = {
   fixtureFileSuffix: string;
   fixtures: FixtureNamesByPath;
   selectedFixtureId: null | FixtureId;
-  createFixtureUrl: (fixtureId: FixtureId) => string;
   onSelect: (path: FixtureId) => unknown;
   storage: StorageSpec['methods'];
 };
@@ -42,7 +41,6 @@ export class FixtureTree extends React.Component<Props, State> {
       fixtureFileSuffix,
       fixtures,
       selectedFixtureId,
-      createFixtureUrl,
       onSelect
     } = this.props;
     const { treeExpansion } = this.state;
@@ -60,7 +58,6 @@ export class FixtureTree extends React.Component<Props, State> {
           parents={[]}
           treeExpansion={treeExpansion}
           selectedFixtureId={selectedFixtureId}
-          createFixtureUrl={createFixtureUrl}
           onSelect={onSelect}
           onToggleExpansion={this.handleToggleExpansion}
         />

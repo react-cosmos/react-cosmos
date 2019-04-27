@@ -2,12 +2,12 @@ import { isEqual } from 'lodash';
 import { PluginContext, createPlugin } from 'react-plugin';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import {
-  getUrlParamsFromLocation,
-  pushUrlParamsToHistory,
-  subscribeToLocationChanges,
-  createUrl
-} from './window';
-import { UrlParams, RouterSpec } from './public';
+  UrlParams,
+  getUrlParams,
+  pushUrlParams,
+  subscribeToLocationChanges
+} from '../../shared/router';
+import { RouterSpec } from './public';
 
 type Context = PluginContext<RouterSpec>;
 
@@ -20,17 +20,13 @@ const { onLoad, register } = createPlugin<RouterSpec>({
     getSelectedFixtureId,
     isFullScreen,
     selectFixture,
-    unselectFixture,
-    createFixtureUrl
+    unselectFixture
   }
 });
 
 onLoad(context => {
   const { setState } = context;
-
-  setState({
-    urlParams: getUrlParamsFromLocation()
-  });
+  setState({ urlParams: getUrlParams() });
 
   return subscribeToLocationChanges((urlParams: UrlParams) => {
     const { fixtureId } = context.getState().urlParams;
@@ -66,10 +62,6 @@ function unselectFixture(context: Context) {
   setUrlParams(context, {});
 }
 
-function createFixtureUrl(context: Context, fixtureId: FixtureId) {
-  return createUrl({ fixtureId });
-}
-
 function setUrlParams(context: Context, nextUrlParams: UrlParams) {
   const { urlParams } = context.getState();
   const fixtureChanged = !isEqual(nextUrlParams.fixtureId, urlParams.fixtureId);
@@ -82,7 +74,7 @@ function setUrlParams(context: Context, nextUrlParams: UrlParams) {
     }
 
     if (!urlParamsEqual) {
-      pushUrlParamsToHistory(context.getState().urlParams);
+      pushUrlParams(context.getState().urlParams);
     }
   });
 }

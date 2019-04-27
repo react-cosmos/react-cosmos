@@ -7,6 +7,7 @@ import {
   ChevronDownIcon,
   FolderIcon
 } from '../../../shared/icons';
+import { createUrl } from '../../../shared/router';
 import { FixtureNode } from './fixtureTree';
 import { TreeExpansion } from './shared';
 
@@ -15,7 +16,6 @@ type Props = {
   parents: string[];
   treeExpansion: TreeExpansion;
   selectedFixtureId: null | FixtureId;
-  createFixtureUrl: (fixtureId: FixtureId) => string;
   onSelect: (fixtureId: FixtureId) => unknown;
   onToggleExpansion: (nodePath: string, expanded: boolean) => unknown;
 };
@@ -27,7 +27,6 @@ export class FixtureTreeNode extends React.Component<Props> {
       parents,
       treeExpansion,
       selectedFixtureId,
-      createFixtureUrl,
       onSelect,
       onToggleExpansion
     } = this.props;
@@ -62,7 +61,6 @@ export class FixtureTreeNode extends React.Component<Props> {
                   parents={nextParents}
                   treeExpansion={treeExpansion}
                   selectedFixtureId={selectedFixtureId}
-                  createFixtureUrl={createFixtureUrl}
                   onSelect={onSelect}
                   onToggleExpansion={onToggleExpansion}
                 />
@@ -71,7 +69,7 @@ export class FixtureTreeNode extends React.Component<Props> {
             {map(items, (fixtureId, fixtureName) => (
               <FixtureLink
                 key={`${fixtureId.path}-${fixtureName}`}
-                href={createFixtureUrl(fixtureId)}
+                href={createUrl({ fixtureId })}
                 onClick={this.createSelectHandler(fixtureId)}
               >
                 <ListItem

@@ -47,8 +47,7 @@ it('renders fixture list from renderer state', async () => {
   registerTestPlugins();
   mockRouter({
     getSelectedFixtureId: () => null,
-    isFullScreen: () => false,
-    createFixtureUrl: () => ''
+    isFullScreen: () => false
   });
   const { getByText } = await loadTestPlugins();
   await waitForElement(() => getByText(/ein/i));
@@ -63,8 +62,7 @@ it('sends fixtureId to router on fixture click', async () => {
   mockRouter({
     getSelectedFixtureId: () => null,
     isFullScreen: () => false,
-    selectFixture,
-    createFixtureUrl: () => ''
+    selectFixture
   });
 
   const { getByText } = await loadTestPlugins();
@@ -83,8 +81,7 @@ it('renders nav element', async () => {
   registerTestPlugins();
   mockRouter({
     getSelectedFixtureId: () => null,
-    isFullScreen: () => false,
-    createFixtureUrl: () => ''
+    isFullScreen: () => false
   });
   const { getByTestId } = await loadTestPlugins();
   await waitForElement(() => getByTestId('nav'));
@@ -94,8 +91,7 @@ it('does not render nav element in full screen mode', async () => {
   registerTestPlugins();
   mockRouter({
     getSelectedFixtureId: () => ({ path: 'zwei.js', name: null }),
-    isFullScreen: () => true,
-    createFixtureUrl: () => ''
+    isFullScreen: () => true
   });
   const { queryByTestId } = await loadTestPlugins();
   expect(queryByTestId('nav')).toBeNull();

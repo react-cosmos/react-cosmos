@@ -13,7 +13,6 @@ type Props = {
   rendererConnected: boolean;
   fixtures: FixtureNamesByPath;
   selectFixture: (fixtureId: FixtureId, fullScreen: boolean) => void;
-  createFixtureUrl: (fixtureId: FixtureId) => string;
   storage: StorageSpec['methods'];
 };
 
@@ -28,7 +27,6 @@ export class Nav extends React.Component<Props> {
       rendererConnected,
       fixtures,
       selectFixture,
-      createFixtureUrl,
       storage
     } = this.props;
 
@@ -48,7 +46,6 @@ export class Nav extends React.Component<Props> {
           fixtureFileSuffix={fixtureFileSuffix}
           fixtures={fixtures}
           selectedFixtureId={selectedFixtureId}
-          createFixtureUrl={createFixtureUrl}
           onSelect={fixtureId => selectFixture(fixtureId, false)}
           storage={storage}
         />
