@@ -17,6 +17,7 @@ type Props = {
   storage: StorageSpec['methods'];
 };
 
+// TODO: Show overlay over renderer preview while dragging
 export function Nav({
   projectId,
   fixturesDir,
