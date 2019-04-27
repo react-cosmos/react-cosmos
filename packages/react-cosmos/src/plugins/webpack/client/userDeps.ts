@@ -5,6 +5,8 @@ import {
 import { DomRendererConfig } from '../../../domRenderer';
 
 // NOTE: Renderer data is statically injected at compile time
-export const rendererConfig = {} as DomRendererConfig;
-export const fixtures = {} as ReactFixturesByPath;
-export const decorators = {} as ReactDecoratorsByPath;
+export const rendererConfig: DomRendererConfig = {
+  containerQuerySelector: null
+};
+export const fixtures: ReactFixturesByPath = {};
+export const decorators: ReactDecoratorsByPath = {};
