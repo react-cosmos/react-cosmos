@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import {
+  ReactFixturesByPath,
+  ReactDecoratorsByPath
+} from 'react-cosmos-shared2/react';
+import {
   FixtureLoader,
-  FixturesByPath,
-  DecoratorsByPath,
   createPostMessageConnect,
   createWebSocketsConnect
 } from 'react-cosmos-fixture';
@@ -19,8 +21,8 @@ export type DomRendererConfig = {
 
 type MountDomRendererOpts = {
   rendererConfig: DomRendererConfig;
-  fixtures: FixturesByPath;
-  decorators: DecoratorsByPath;
+  fixtures: ReactFixturesByPath;
+  decorators: ReactDecoratorsByPath;
   onFixtureChange?: () => unknown;
 };
 
