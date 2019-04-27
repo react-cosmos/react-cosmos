@@ -1,12 +1,13 @@
 import * as React from 'react';
 import memoize from 'memoize-one/dist/memoize-one.cjs';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
+import { ReactDecorator } from 'react-cosmos-shared2/react';
 import { FixtureCapture } from '../FixtureCapture';
 import { FixtureContext } from '../FixtureContext';
-import { DecoratorType, FixtureContextValue, SetFixtureState } from '../shared';
+import { FixtureContextValue, SetFixtureState } from '../shared';
 
 type Props = {
-  decorators: DecoratorType[];
+  decorators: ReactDecorator[];
   children: React.ReactNode;
 } & FixtureContextValue;
 
@@ -38,7 +39,7 @@ export class FixtureProvider extends React.PureComponent<Props> {
 }
 
 function getComputedElementTree(
-  decorators: DecoratorType[],
+  decorators: ReactDecorator[],
   leaf: React.ReactNode
 ) {
   const fixtureElement = (

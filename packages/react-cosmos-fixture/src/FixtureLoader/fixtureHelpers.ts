@@ -1,14 +1,20 @@
 import * as React from 'react';
 import { isElement } from 'react-is';
 import { FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
-import { NodeMap, FixtureExport, FixturesByPath } from '../shared';
+import {
+  ReactFixtureMap,
+  ReactFixtureExport,
+  ReactFixturesByPath
+} from 'react-cosmos-shared2/react';
 
-export function getFixtureNames(fixtures: FixturesByPath): FixtureNamesByPath {
+export function getFixtureNames(
+  fixtures: ReactFixturesByPath
+): FixtureNamesByPath {
   return Object.keys(fixtures).reduce((prev, fixturePath) => {
     const fixtureExport = fixtures[fixturePath];
     return {
       ...prev,
-      [fixturePath]: isNodeMap(fixtureExport)
+      [fixturePath]: isMultiFixture(fixtureExport)
         ? Object.keys(fixtureExport)
         : null
     };
@@ -16,11 +22,11 @@ export function getFixtureNames(fixtures: FixturesByPath): FixtureNamesByPath {
 }
 
 export function getFixtureNode(
-  fixtureExport: FixtureExport,
+  fixtureExport: ReactFixtureExport,
   fixtureName: null | string
 ): void | React.ReactNode {
   if (fixtureName === null) {
-    if (isNodeMap(fixtureExport)) {
+    if (isMultiFixture(fixtureExport)) {
       // Fixture name missing in multi fixture
       return;
     }
@@ -28,15 +34,17 @@ export function getFixtureNode(
     return fixtureExport;
   }
 
-  if (!isNodeMap(fixtureExport)) {
+  if (!isMultiFixture(fixtureExport)) {
     // Fixture name not found in single fixture
     return;
   }
 
-  return (fixtureExport as NodeMap)[fixtureName];
+  return (fixtureExport as ReactFixtureMap)[fixtureName];
 }
 
-function isNodeMap(fixtureExport: FixtureExport): fixtureExport is NodeMap {
+function isMultiFixture(
+  fixtureExport: ReactFixtureExport
+): fixtureExport is ReactFixtureMap {
   return (
     fixtureExport !== null &&
     typeof fixtureExport === 'object' &&

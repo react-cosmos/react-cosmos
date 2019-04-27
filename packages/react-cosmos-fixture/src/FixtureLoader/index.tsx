@@ -10,9 +10,11 @@ import {
   RendererResponse
 } from 'react-cosmos-shared2/renderer';
 import {
-  DecoratorType,
-  DecoratorsByPath,
-  FixturesByPath,
+  ReactDecorator,
+  ReactFixturesByPath,
+  ReactDecoratorsByPath
+} from 'react-cosmos-shared2/react';
+import {
   RendererConnectApi,
   RendererConnect,
   SetFixtureState
@@ -23,9 +25,9 @@ import { getFixtureNames, getFixtureNode } from './fixtureHelpers';
 export type Props = {
   rendererId: string;
   rendererConnect: RendererConnect;
-  fixtures: FixturesByPath;
-  systemDecorators: DecoratorType[];
-  userDecorators: DecoratorsByPath;
+  fixtures: ReactFixturesByPath;
+  systemDecorators: ReactDecorator[];
+  userDecorators: ReactDecoratorsByPath;
   onFixtureChange?: () => unknown;
 };
 
@@ -296,8 +298,8 @@ export class FixtureLoader extends React.Component<Props, State> {
 }
 
 function getSortedDecoratorsForFixturePath(
-  systemDecorators: DecoratorType[],
-  decorators: DecoratorsByPath,
+  systemDecorators: ReactDecorator[],
+  decorators: ReactDecoratorsByPath,
   fixturePath: string
 ) {
   return [
@@ -306,7 +308,9 @@ function getSortedDecoratorsForFixturePath(
   ];
 }
 
-function getSortedDecorators(decorators: DecoratorsByPath): DecoratorType[] {
+function getSortedDecorators(
+  decorators: ReactDecoratorsByPath
+): ReactDecorator[] {
   return sortPathsByDepthAsc(Object.keys(decorators)).map(
     decoratorPath => decorators[decoratorPath]
   );
@@ -324,7 +328,7 @@ function getPathNestingLevel(path: string) {
 }
 
 function getDecoratorsForFixturePath(
-  decorators: DecoratorsByPath,
+  decorators: ReactDecoratorsByPath,
   fixturePath: string
 ) {
   return Object.keys(decorators)
