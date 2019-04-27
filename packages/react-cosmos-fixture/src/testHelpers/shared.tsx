@@ -11,7 +11,10 @@ import {
   FixtureStateChangeResponse
 } from 'react-cosmos-shared2/renderer';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import { FixturesByPath, DecoratorsByPath } from '../shared';
+import {
+  ReactFixturesByPath,
+  ReactDecoratorsByPath
+} from 'react-cosmos-shared2/react';
 import { ReactTestRenderer } from 'react-test-renderer';
 
 export type Message = RendererResponse | RendererRequest;
@@ -20,8 +23,8 @@ type GetMessages = () => Message[];
 
 export type MountFixtureLoaderArgs = {
   rendererId: RendererId;
-  fixtures: FixturesByPath;
-  decorators: DecoratorsByPath;
+  fixtures: ReactFixturesByPath;
+  decorators: ReactDecoratorsByPath;
   onFixtureChange?: () => unknown;
 };
 
