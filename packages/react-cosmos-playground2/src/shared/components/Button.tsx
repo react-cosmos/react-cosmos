@@ -32,7 +32,6 @@ type StyledButtonProps = {
 const StyledButton = styled.button<StyledButtonProps>`
   --selected-bg: var(--grey5);
   --hover-bg: hsl(var(--hue-primary), 25%, 95%);
-  --press-bg: hsl(var(--hue-primary), 25%, 93%);
 
   display: flex;
   flex-direction: row;
@@ -59,9 +58,8 @@ const StyledButton = styled.button<StyledButtonProps>`
       props.selected ? 'var(--selected-bg)' : 'var(--hover-bg)'};
   }
 
-  :active {
-    background: ${props =>
-      props.selected ? 'var(--selected-bg)' : 'var(--press-bg)'};
+  :focus {
+    box-shadow: 0px 0px 1px 1px var(--primary4);
   }
 
   :disabled {
