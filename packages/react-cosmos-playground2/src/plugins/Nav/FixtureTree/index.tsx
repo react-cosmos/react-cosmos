@@ -3,12 +3,7 @@ import * as React from 'react';
 import { FixtureNamesByPath, FixtureId } from 'react-cosmos-shared2/renderer';
 import { StorageSpec } from '../../Storage/public';
 import { TreeExpansion } from './shared';
-import {
-  getPathTree,
-  collapsePathTreeDirs,
-  hideFixtureSuffix,
-  collapseSoloIndexes
-} from './pathTree';
+import { getFixtureTree } from './fixtureTree';
 import { FixtureTreeNode } from './FixtureTreeNode';
 
 type Props = {
@@ -50,11 +45,11 @@ export class FixtureTree extends React.Component<Props, State> {
     } = this.props;
     const { treeExpansion } = this.state;
 
-    const rootNode = getTreeFromFixtures(
+    const rootNode = getFixtureTree({
       fixtures,
       fixturesDir,
       fixtureFileSuffix
-    );
+    });
 
     return (
       <Container>
@@ -98,19 +93,6 @@ export class FixtureTree extends React.Component<Props, State> {
   getStorageKey() {
     return `cosmos-treeExpansion-${this.props.projectId}`;
   }
-}
-
-function getTreeFromFixtures(
-  fixtures: FixtureNamesByPath,
-  fixturesDir: string,
-  fixtureFileSuffix: string
-) {
-  let rootNode = getPathTree(fixtures);
-  rootNode = collapsePathTreeDirs(rootNode, fixturesDir);
-  rootNode = hideFixtureSuffix(rootNode, fixtureFileSuffix);
-  rootNode = collapseSoloIndexes(rootNode);
-
-  return rootNode;
 }
 
 // Reason for inline-block: https://stackoverflow.com/a/53895622/128816

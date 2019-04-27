@@ -2,11 +2,12 @@ import { isEqual } from 'lodash';
 import { PluginContext, createPlugin } from 'react-plugin';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import {
-  getUrlParamsFromLocation,
-  pushUrlParamsToHistory,
+  UrlParams,
+  getUrlParams,
+  pushUrlParams,
   subscribeToLocationChanges
-} from './window';
-import { UrlParams, RouterSpec } from './public';
+} from '../../shared/url';
+import { RouterSpec } from './public';
 
 type Context = PluginContext<RouterSpec>;
 
@@ -25,10 +26,7 @@ const { onLoad, register } = createPlugin<RouterSpec>({
 
 onLoad(context => {
   const { setState } = context;
-
-  setState({
-    urlParams: getUrlParamsFromLocation()
-  });
+  setState({ urlParams: getUrlParams() });
 
   return subscribeToLocationChanges((urlParams: UrlParams) => {
     const { fixtureId } = context.getState().urlParams;
@@ -76,7 +74,7 @@ function setUrlParams(context: Context, nextUrlParams: UrlParams) {
     }
 
     if (!urlParamsEqual) {
-      pushUrlParamsToHistory(context.getState().urlParams);
+      pushUrlParams(context.getState().urlParams);
     }
   });
 }

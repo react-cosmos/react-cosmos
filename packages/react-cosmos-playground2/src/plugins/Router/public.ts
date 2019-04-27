@@ -1,9 +1,5 @@
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-
-export type UrlParams = {
-  fixtureId?: FixtureId;
-  fullScreen?: boolean;
-};
+import { UrlParams } from '../../shared/url';
 
 export type RouterSpec = {
   name: 'router';

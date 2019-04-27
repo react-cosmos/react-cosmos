@@ -39,7 +39,7 @@ export function useReadClassState(
 
   function scheduleStateCheck() {
     // Is there a better way to listen to component state changes?
-    timeoutId.current = setTimeout(checkState, REFRESH_INTERVAL);
+    timeoutId.current = window.setTimeout(checkState, REFRESH_INTERVAL);
   }
 
   function checkState() {

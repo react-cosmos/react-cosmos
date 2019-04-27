@@ -26,6 +26,7 @@ export class Nav extends React.Component<Props> {
       fullScreen,
       rendererConnected,
       fixtures,
+      selectFixture,
       storage
     } = this.props;
 
@@ -45,7 +46,7 @@ export class Nav extends React.Component<Props> {
           fixtureFileSuffix={fixtureFileSuffix}
           fixtures={fixtures}
           selectedFixtureId={selectedFixtureId}
-          onSelect={fixtureId => this.props.selectFixture(fixtureId, false)}
+          onSelect={fixtureId => selectFixture(fixtureId, false)}
           storage={storage}
         />
       </Container>
