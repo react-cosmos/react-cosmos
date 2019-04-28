@@ -98,6 +98,6 @@ Cosmos Classic isn't going anywhere. First, it will take months before a release
 
 ---
 
-**Thanks for your help in shaping the future of Cosmos! 🙏**
+**Thanks for your help in shaping the future of React Cosmos! 🙏**
 
 For feedback [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new) or [go on Slack](https://join-react-cosmos.now.sh/).
