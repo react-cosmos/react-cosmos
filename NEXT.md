@@ -88,16 +88,16 @@ Check out [react-cosmos-redux](https://github.com/skidding/react-cosmos-redux) t
 
 ## UI plugins
 
-A main feature of the Cosmos Next redesign is the brand-new UI plugin architecture. While the new UI is created 100% from plugins, the plugin API is not yet documented. This is the next step.
+A main feature of the Cosmos Next redesign is the brand-new UI plugin architecture. While the new UI is created 100% from plugins, the plugin API is not yet documented nor made accessible. It will take a few big steps to get there, but this is the future.
 
 While we get feedback for the new JSX fixtures and decorators, I will continue to add feature parity with the old Cosmos UI and gradually release the powerful plugin API for mass consumption. Exciting things ahead!
 
 ## Where is my old Cosmos?
 
-Cosmos Classic isn't going anywhere. First, it will take months before a release candidate for v5 (Cosmos Next) will be ready. Second, the classic packages have been moved to [a dedicated repo](https://github.com/react-cosmos/react-cosmos-classic), which means we can continue to maintain Cosmos Classic or even run it alongside Cosmos Next in the same project (during the migration period).
+Cosmos Classic isn't going anywhere. First, it will take months before a release candidate for v5 (Cosmos Next) is ready. Second, the classic packages have been moved to [a dedicated repo](https://github.com/react-cosmos/react-cosmos-classic), which means we can continue to maintain Cosmos Classic or even run it alongside Cosmos Next in the same project (during the migration period).
 
 ---
 
-**Thanks for taking the time to try out the Cosmos Next preview! 🙏**
+**Thanks for your help in shaping the future of Cosmos! 🙏**
 
 For feedback [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new) or [go on Slack](https://join-react-cosmos.now.sh/).
