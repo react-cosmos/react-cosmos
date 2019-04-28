@@ -4,9 +4,9 @@
 
 **Install `react-cosmos@next` to get started.**
 
-The [example package](example) is a useful complement to this guide.
-
 ![Cosmos Next](next.png)
+
+The [example package](example) is a useful complement to this guide.
 
 ## Config
 
