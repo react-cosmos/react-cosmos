@@ -25,32 +25,28 @@ export function Draggable({ children, value, onChange }: Draggable) {
   );
 
   const handleDragEnd = React.useCallback(() => {
-    document.removeEventListener('mousemove', handleDrag);
-    document.removeEventListener('mouseup', handleDragEnd);
     setDragState(null);
-  }, [handleDrag]);
+  }, []);
 
   const handleDragStart = React.useCallback(
     (e: React.MouseEvent) => {
-      document.addEventListener('mousemove', handleDrag);
-      document.addEventListener('mouseup', handleDragEnd);
       setDragState({
         startValue: value,
         startX: e.clientX
       });
     },
-    [handleDrag, handleDragEnd, value]
+    [value]
   );
 
-  React.useEffect(() => {
+  React.useEffect((): void | (() => void) => {
     if (dragState) {
       document.addEventListener('mousemove', handleDrag);
       document.addEventListener('mouseup', handleDragEnd);
+      return () => {
+        document.removeEventListener('mousemove', handleDrag);
+        document.removeEventListener('mouseup', handleDragEnd);
+      };
     }
-    return () => {
-      document.removeEventListener('mousemove', handleDrag);
-      document.removeEventListener('mouseup', handleDragEnd);
-    };
   }, [dragState, handleDrag, handleDragEnd]);
 
   return <div onMouseDown={handleDragStart}>{children}</div>;

@@ -41,7 +41,7 @@ export function Nav({
   }
 
   function handleWidthChange(newWidth: number) {
-    const validWidth = Math.max(64, newWidth);
+    const validWidth = Math.min(512, Math.max(64, newWidth));
     // TODO: Persist width from storage
     setWidth(validWidth);
   }
