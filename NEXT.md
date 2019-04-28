@@ -1,46 +1,22 @@
-# Welcome to future of React Cosmos!
+# Welcome to future of React Cosmos! 🎉
 
-_Cosmos Next_ is available for beta testers! 🎉
+> Latest update: [Cosmos 4.8 — the version that keeps on giving](https://medium.com/@skidding/cosmos-4-8-the-version-that-keeps-on-giving-746d6265f81d)
 
-**Install `react-cosmos` to get started.**
-
-> The [example package](example) is a useful complement to this guide.
+**Install `react-cosmos@next` to get started.**
 
 ![Cosmos Next](next.png)
 
+The [example package](example) is a useful complement to this guide.
+
 ## Config
 
-Add `next: true` to your existing Cosmos config (or to an empty config file). This will run Cosmos Next.
+No config is required to start. If you have custom needs or would like to convert a Cosmos Classic config, here's what you need to know.
 
-```js
-// cosmos.config.js
-module.exports = {
-  next: true
-  // ...other Cosmos options
-};
-```
+The Cosmos Next config is a **JSON** file, so it can only host serializable values. This design decision is meant to discourage complex configuration, make it easy to embed config options into the UI, and enable visual config management in the future.
 
-### Hybrid setup (for existing Cosmos users)
+By default, Cosmos reads `cosmos.config.json` from your root directory. You can pass a `--config` CLI arg for a custom config path.
 
-Old fixtures don't work with Cosmos Next (at least for now), and JSX fixtures don't work with the old Cosmos setup. But this doesn't mean you have to upgrade at once. You can create two Cosmos configs with different ports to keep your existing Cosmos setup as you experiment with Cosmos Next.
-
-```js
-// cosmos-next.config.js
-const cosmosConfig = require('./cosmos.config');
-
-module.exports = {
-  ...cosmosConfig,
-  next: true,
-  port: 9999
-};
-```
-
-Finally, you can create different package.json scripts to target each Cosmos config separately:
-
-```
-"cosmos": "cosmos --config cosmos.config.js",
-"cosmos:next": "cosmos --config cosmos-next.config.js"
-```
+> Most Cosmos Classic config options are still supported in the new JSON format. [Let me know](https://join-react-cosmos.now.sh/) if you need old config options that no longer work.
 
 ## JSX fixtures
 
@@ -75,7 +51,7 @@ Examples:
 1. `blankState.fixture.js`
 2. `__fixtures__/blankState.js`
 
-> In the beta testing period the file name convention is fixed to allow old and _next_ Cosmos setups to coexist. In the future it will be configurable.
+> File name conventions can be configured using the `fixturesDir` and `fixtureFileSuffix` options.
 
 ## Multi fixture files
 
@@ -108,16 +84,20 @@ export default ({ children }) => <Provider store={store}>{children}</Provider>;
 
 ### Redux state mock
 
-Check out [react-cosmos-redux](https://github.com/skidding/react-cosmos-redux) to see what a Cosmos Next decorator looks like. It works with the latest `react-redux` version and it's written in _hooks_ 💃.
+Check out [react-cosmos-redux](https://github.com/skidding/react-cosmos-redux) to see what a Cosmos Next decorator looks like. It works with the latest `react-redux` version and it's written in _Hooks_ 💃.
 
 ## UI plugins
 
-A main feature of the Cosmos Next redesign is the brand-new UI plugin architecture. While the new UI is created 100% from plugins, the plugin API is not yet documented. This is the next step.
+A main feature of the Cosmos Next redesign is the brand-new UI plugin architecture. While the new UI is created 100% from plugins, the plugin API is not yet documented nor made accessible. It will take a few big steps to get there, but this is the future.
 
 While we get feedback for the new JSX fixtures and decorators, I will continue to add feature parity with the old Cosmos UI and gradually release the powerful plugin API for mass consumption. Exciting things ahead!
 
+## Where is my old Cosmos?
+
+Cosmos Classic isn't going anywhere. First, it will take months before a release candidate for v5 (Cosmos Next) is ready. Second, the classic packages have been moved to [a dedicated repo](https://github.com/react-cosmos/react-cosmos-classic), which means we can continue to maintain Cosmos Classic or even run it alongside Cosmos Next in the same project (during the migration period).
+
 ---
 
-**Thanks for taking the time to try out the Cosmos Next preview! 🙏**
+**Thanks for your help in shaping the future of React Cosmos! 🙏**
 
-For feedback [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new), [start a Spectrum thread](https://spectrum.chat/cosmos) or [go on Slack](https://join-react-cosmos.now.sh/).
+For feedback [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new) or [go on Slack](https://join-react-cosmos.now.sh/).
