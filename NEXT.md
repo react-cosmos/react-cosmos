@@ -1,10 +1,10 @@
-# Welcome to future of React Cosmos!
+# Welcome to future of React Cosmos! 🎉
 
-_Cosmos Next_ is available for early adopters! 🎉
+> Latest update: [Cosmos 4.8 — the version that keeps on giving](https://medium.com/@skidding/cosmos-4-8-the-version-that-keeps-on-giving-746d6265f81d)
 
 **Install `react-cosmos@next` to get started.**
 
-> The [example package](example) is a useful complement to this guide.
+The [example package](example) is a useful complement to this guide.
 
 ![Cosmos Next](next.png)
 
