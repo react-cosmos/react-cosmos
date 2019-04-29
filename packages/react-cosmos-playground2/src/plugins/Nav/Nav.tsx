@@ -3,7 +3,7 @@ import React from 'react';
 import { FixtureNamesByPath, FixtureId } from 'react-cosmos-shared2/renderer';
 import { StorageSpec } from '../Storage/public';
 import { FixtureTree } from './FixtureTree';
-import { Draggable } from './Draggable';
+import { useDrag } from './useDrag';
 
 type Props = {
   projectId: string;
@@ -32,18 +32,20 @@ export function Nav({
   // TODO: Read previous width from storage
   const [width, setWidth] = React.useState(256);
 
+  const handleWidthChange = React.useCallback((newWidth: number) => {
+    const validWidth = Math.min(512, Math.max(64, newWidth));
+    // TODO: Persist width from storage
+    setWidth(validWidth);
+  }, []);
+
+  const dragElRef = useDrag({ value: width, onChange: handleWidthChange });
+
   if (fullScreen) {
     return null;
   }
 
   if (!rendererConnected) {
     return <Container />;
-  }
-
-  function handleWidthChange(newWidth: number) {
-    const validWidth = Math.min(512, Math.max(64, newWidth));
-    // TODO: Persist width from storage
-    setWidth(validWidth);
   }
 
   return (
@@ -59,9 +61,7 @@ export function Nav({
           storage={storage}
         />
       </Scrollable>
-      <Draggable value={width} onChange={handleWidthChange}>
-        <DragHandle />
-      </Draggable>
+      <DragHandle ref={dragElRef} />
     </Container>
   );
 }
