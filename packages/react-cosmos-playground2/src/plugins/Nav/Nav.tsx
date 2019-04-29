@@ -17,7 +17,16 @@ type Props = {
   storage: StorageSpec['methods'];
 };
 
+const DEFAULT_WIDTH = 256;
+const MIN_WIDTH = 64;
+const MAX_WIDTH = 512;
+
 // TODO: Show overlay over renderer preview while dragging
+// IDEA: Split into two components (NavContainer and Nav)
+// TODO: Make Storage sync by using a local mirror that is only loaded async
+// once when the Core plugin loads. Also keep all settings for a project
+// together, and not have to concat projectId with each key. Ideally, this
+// component would receive "lastNavWidth: number" and "setLastNavWidth"
 export function Nav({
   projectId,
   fixturesDir,
@@ -29,14 +38,26 @@ export function Nav({
   selectFixture,
   storage
 }: Props) {
-  // TODO: Read previous width from storage
-  const [width, setWidth] = React.useState(256);
+  const storageKey = React.useMemo(() => getStorageKey(projectId), [projectId]);
+  const [width, setWidth] = React.useState(DEFAULT_WIDTH);
 
-  const handleWidthChange = React.useCallback((newWidth: number) => {
-    const validWidth = Math.min(512, Math.max(64, newWidth));
-    // TODO: Persist width from storage
-    setWidth(validWidth);
-  }, []);
+  // Read previous width from storage (usePreviousWidth)
+  React.useEffect(() => {
+    storage.getItem(storageKey).then(prevWidth => {
+      if (prevWidth) {
+        setWidth(prevWidth);
+      }
+    });
+  }, [storageKey, storage]);
+
+  const handleWidthChange = React.useCallback(
+    (newWidth: number) => {
+      const validWidth = Math.min(MAX_WIDTH, Math.max(MIN_WIDTH, newWidth));
+      setWidth(validWidth);
+      storage.setItem(storageKey, validWidth);
+    },
+    [storageKey, storage]
+  );
 
   const dragElRef = useDrag({ value: width, onChange: handleWidthChange });
 
@@ -45,7 +66,7 @@ export function Nav({
   }
 
   if (!rendererConnected) {
-    return <Container />;
+    return <Container style={{ width }} />;
   }
 
   return (
@@ -64,6 +85,10 @@ export function Nav({
       <DragHandle ref={dragElRef} />
     </Container>
   );
+}
+
+function getStorageKey(projectId: string) {
+  return `cosmos-navWidth-${projectId}`;
 }
 
 const Container = styled.div`
