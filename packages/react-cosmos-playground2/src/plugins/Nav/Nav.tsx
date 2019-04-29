@@ -3,7 +3,7 @@ import React from 'react';
 import { FixtureNamesByPath, FixtureId } from 'react-cosmos-shared2/renderer';
 import { StorageSpec } from '../Storage/public';
 import { FixtureTree } from './FixtureTree';
-import { useDrag } from './useDrag';
+import { useDrag } from '../../shared/ui';
 
 type Props = {
   projectId: string;

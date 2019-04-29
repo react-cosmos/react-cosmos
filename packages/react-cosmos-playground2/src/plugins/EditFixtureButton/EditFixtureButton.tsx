@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { Button } from '../../shared/components';
+import { Button } from '../../shared/ui';
 import { EditIcon } from '../../shared/icons';
 
 export type EditFixtureButtonProps = {

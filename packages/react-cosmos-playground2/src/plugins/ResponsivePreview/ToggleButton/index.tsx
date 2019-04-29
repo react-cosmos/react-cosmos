@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { SmartphoneIcon } from '../../../shared/icons';
-import { Button } from '../../../shared/components';
+import { Button } from '../../../shared/ui';
 import { StorageMethods } from '../shared';
 import { getDefaultViewport } from '../storage';
 import { ResponsivePreviewSpec } from '../public';

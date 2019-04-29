@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Minimize2Icon } from '../../../shared/icons';
-import { Button } from '../../../shared/components';
+import { Button } from '../../../shared/ui';
 import { Viewport, Device } from '../public';
 import { getAvailableViewport } from './style';
 
