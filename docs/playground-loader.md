@@ -39,7 +39,7 @@ Includes user fixture list. Happens once per full browser refresh.
 }
 ```
 
-##### Fixture list updats due to changes on disk
+##### Fixture list updates due to changes on disk
 
 webpack HMR updates Loader with the latest fixture list.
 
