@@ -1,7 +1,16 @@
+type Cache = {
+  projectId: string;
+  items: { [key: string]: any };
+};
+
 export type StorageSpec = {
   name: 'storage';
+  state: {
+    cache: null | Cache;
+  };
   methods: {
-    getItem(key: string): Promise<any>;
-    setItem(key: string, value: any): Promise<void>;
+    loadCache(projectId: string): Promise<unknown>;
+    getItem(key: string): any;
+    setItem(key: string, value: any): void;
   };
 };
