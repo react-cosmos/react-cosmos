@@ -81,7 +81,7 @@ export { register };
 function getActiveViewport(context: Context, responsiveModeEnabled: boolean) {
   const storage = context.getMethodsOf<StorageSpec>('storage');
   return responsiveModeEnabled
-    ? storage.getItem(STORAGE_KEY) || DEFAULT_VIEWPORT
+    ? storage.getItem<Viewport>(STORAGE_KEY) || DEFAULT_VIEWPORT
     : null;
 }
 

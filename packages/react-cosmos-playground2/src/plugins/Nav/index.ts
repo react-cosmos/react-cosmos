@@ -6,7 +6,8 @@ import { RendererCoreSpec } from '../RendererCore/public';
 import {
   TreeExpansion,
   NAV_WIDTH_STORAGE_KEY,
-  TREE_EXPANSION_STORAGE_KEY
+  TREE_EXPANSION_STORAGE_KEY,
+  NAV_WIDTH_DEFAULT
 } from './shared';
 import { NavSpec } from './public';
 import { Nav } from './Nav';
@@ -22,8 +23,6 @@ plug({
     const core = getMethodsOf<CoreSpec>('core');
     const { fixturesDir, fixtureFileSuffix } = core.getFixtureFileVars();
     const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
-    const width = storage.getItem(NAV_WIDTH_STORAGE_KEY);
-    const treeExpansion = storage.getItem(TREE_EXPANSION_STORAGE_KEY);
 
     return {
       fixturesDir,
@@ -32,8 +31,10 @@ plug({
       fullScreen: router.isFullScreen(),
       rendererConnected: rendererCore.isRendererConnected(),
       fixtures: rendererCore.getFixtures(),
-      width,
-      treeExpansion,
+      width:
+        storage.getItem<number>(NAV_WIDTH_STORAGE_KEY) || NAV_WIDTH_DEFAULT,
+      treeExpansion:
+        storage.getItem<TreeExpansion>(TREE_EXPANSION_STORAGE_KEY) || {},
       selectFixture: router.selectFixture,
       setWidth: (newWidth: number) =>
         storage.setItem(NAV_WIDTH_STORAGE_KEY, newWidth),

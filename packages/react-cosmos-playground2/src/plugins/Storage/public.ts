@@ -10,7 +10,7 @@ export type StorageSpec = {
   };
   methods: {
     loadCache(projectId: string): Promise<unknown>;
-    getItem(key: string): any;
-    setItem(key: string, value: any): void;
+    getItem<T>(key: string): undefined | T;
+    setItem<T>(key: string, value: T): void;
   };
 };
