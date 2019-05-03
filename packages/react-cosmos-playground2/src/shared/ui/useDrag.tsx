@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 type UseDragArgs = {
   value: number;
@@ -16,7 +16,8 @@ export function useDrag({ value, onChange }: UseDragArgs) {
   const handleDrag = React.useCallback(
     (e: MouseEvent) => {
       if (dragState) {
-        const curValue = dragState.startValue + (e.clientX - dragState.startX);
+        const { startValue, startX } = dragState;
+        const curValue = startValue + (e.clientX - startX);
         onChange(curValue);
       }
     },
