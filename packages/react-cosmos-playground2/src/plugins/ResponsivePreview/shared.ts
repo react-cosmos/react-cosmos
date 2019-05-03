@@ -20,6 +20,4 @@ export const DEFAULT_VIEWPORT = {
   height: 568
 };
 
-export function getResponsiveViewportStorageKey(projectId: string) {
-  return `cosmos-responsiveViewport-${projectId}`;
-}
+export const STORAGE_KEY = 'responsiveViewport';

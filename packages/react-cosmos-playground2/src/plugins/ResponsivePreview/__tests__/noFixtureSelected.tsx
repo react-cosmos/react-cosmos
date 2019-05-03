@@ -6,25 +6,23 @@ import {
   wait
 } from 'react-testing-library';
 import { loadPlugins, Slot } from 'react-plugin';
-import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
-import { StorageSpec } from '../../Storage/public';
-import { RouterSpec } from '../../Router/public';
-import { CoreSpec } from '../../Core/public';
-import { RendererCoreSpec } from '../../RendererCore/public';
+import { cleanup } from '../../../testHelpers/plugin';
 import { register } from '..';
+import {
+  mockStorage,
+  mockRouter,
+  mockRendererCore
+} from '../../../testHelpers/pluginMocks';
 
 afterEach(cleanup);
 
 function registerTestPlugins() {
   register();
-  mockMethodsOf<StorageSpec>('storage', {});
-  mockMethodsOf<CoreSpec>('core', {
-    getProjectId: () => 'mockProjectId'
-  });
-  mockMethodsOf<RouterSpec>('router', {
+  mockStorage({});
+  mockRouter({
     isFullScreen: () => false
   });
-  mockMethodsOf<RendererCoreSpec>('rendererCore', {
+  mockRendererCore({
     getFixtureState: () => ({}),
     isValidFixtureSelected: () => false
   });

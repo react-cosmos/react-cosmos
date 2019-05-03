@@ -6,7 +6,7 @@ import { Viewport } from '../public';
 
 export type StorageMock = { [key: string]: any };
 
-export interface IFixtureStateWithViewport extends FixtureState {
+export interface FixtureStateWithViewport extends FixtureState {
   viewport?: Viewport;
 }
 
