@@ -10,7 +10,6 @@ import { FixtureTree } from '.';
 
 afterEach(cleanup);
 
-const projectId = 'mockProjectId';
 const fixturesDir = 'fixtures';
 const fixtureFileSuffix = 'fixture';
 const fixtures = {
@@ -19,117 +18,67 @@ const fixtures = {
   'nested/drei.js': null,
   'deeply/nested/vier.js': null
 };
-const treeExpansionStorageKey = `cosmos-treeExpansion-${projectId}`;
 
-it('hides nested fixture', async () => {
+it('hides fixture under non-expanded dir', async () => {
   const { queryByText } = render(
     <FixtureTree
-      projectId={projectId}
       fixturesDir={fixturesDir}
       fixtureFileSuffix={fixtureFileSuffix}
       fixtures={fixtures}
       selectedFixtureId={null}
+      treeExpansion={{}}
       onSelect={jest.fn()}
-      storage={{
-        getItem: () => Promise.resolve(null),
-        setItem: () => Promise.resolve(undefined)
-      }}
+      setTreeExpansion={jest.fn()}
     />
   );
-
   await wait(() => expect(queryByText('drei')).toBeNull());
 });
 
-it('shows nested fixture upon expanding dir', async () => {
+it('shows fixture under expanded dir', async () => {
   const { getByText } = render(
     <FixtureTree
-      projectId={projectId}
       fixturesDir={fixturesDir}
       fixtureFileSuffix={fixtureFileSuffix}
       fixtures={fixtures}
       selectedFixtureId={null}
+      treeExpansion={{ nested: true }}
       onSelect={jest.fn()}
-      storage={{
-        getItem: () => Promise.resolve(null),
-        setItem: () => Promise.resolve(undefined)
-      }}
+      setTreeExpansion={jest.fn()}
     />
   );
-
-  fireEvent.click(getByText(/nested/i));
-
   await waitForElement(() => getByText('drei'));
 });
 
-it('hides nested fixture upon collapsing dir', async () => {
-  const { queryByText, getByText } = render(
-    <FixtureTree
-      projectId={projectId}
-      fixturesDir={fixturesDir}
-      fixtureFileSuffix={fixtureFileSuffix}
-      fixtures={fixtures}
-      selectedFixtureId={null}
-      onSelect={jest.fn()}
-      storage={{
-        getItem: () => Promise.resolve(null),
-        setItem: () => Promise.resolve(undefined)
-      }}
-    />
-  );
-
-  fireEvent.click(getByText(/nested/i));
-  fireEvent.click(getByText(/nested/i));
-
-  await wait(() => expect(queryByText('drei')).toBeNull());
-});
-
-it('loads persistent tree expansion state', async () => {
-  const storage = {
-    [treeExpansionStorageKey]: {
-      nested: true
-    }
-  };
-
+it('expands hidden dir on click', async () => {
+  const setTreeExpansion = jest.fn();
   const { getByText } = render(
     <FixtureTree
-      projectId={projectId}
       fixturesDir={fixturesDir}
       fixtureFileSuffix={fixtureFileSuffix}
       fixtures={fixtures}
       selectedFixtureId={null}
+      treeExpansion={{}}
       onSelect={jest.fn()}
-      storage={{
-        getItem: key => Promise.resolve(storage[key]),
-        setItem: () => Promise.resolve(undefined)
-      }}
+      setTreeExpansion={setTreeExpansion}
     />
   );
-
-  await waitForElement(() => getByText('drei'));
+  fireEvent.click(getByText(/nested/i));
+  expect(setTreeExpansion).toBeCalledWith({ nested: true });
 });
 
-it('persists tree expansion state', async () => {
-  type Storage = { [attr: string]: Storage };
-  const storage: Storage = {
-    [treeExpansionStorageKey]: {}
-  };
-
+it('collapses expanded dir on click', async () => {
+  const setTreeExpansion = jest.fn();
   const { getByText } = render(
     <FixtureTree
-      projectId={projectId}
       fixturesDir={fixturesDir}
       fixtureFileSuffix={fixtureFileSuffix}
       fixtures={fixtures}
       selectedFixtureId={null}
+      treeExpansion={{ nested: true }}
       onSelect={jest.fn()}
-      storage={{
-        getItem: () => Promise.resolve(null),
-        setItem: (key, value) => Promise.resolve((storage[key] = value))
-      }}
+      setTreeExpansion={setTreeExpansion}
     />
   );
-
   fireEvent.click(getByText(/nested/i));
-
-  await wait(() => expect(storage[treeExpansionStorageKey].nested).toBe(true));
+  expect(setTreeExpansion).toBeCalledWith({ nested: false });
 });

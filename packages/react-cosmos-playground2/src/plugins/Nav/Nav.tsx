@@ -1,64 +1,43 @@
 import styled from 'styled-components';
 import React from 'react';
 import { FixtureNamesByPath, FixtureId } from 'react-cosmos-shared2/renderer';
-import { StorageSpec } from '../Storage/public';
 import { FixtureTree } from './FixtureTree';
 import { useDrag } from '../../shared/ui';
+import { TreeExpansion, restrictNavWidth } from './shared';
 
 type Props = {
-  projectId: string;
   fixturesDir: string;
   fixtureFileSuffix: string;
   selectedFixtureId: null | FixtureId;
   fullScreen: boolean;
   rendererConnected: boolean;
   fixtures: FixtureNamesByPath;
+  width: number;
+  treeExpansion: TreeExpansion;
   selectFixture: (fixtureId: FixtureId, fullScreen: boolean) => void;
-  storage: StorageSpec['methods'];
+  setWidth: (width: number) => unknown;
+  setTreeExpansion: (treeExpansion: TreeExpansion) => unknown;
 };
-
-const DEFAULT_WIDTH = 256;
-const MIN_WIDTH = 64;
-const MAX_WIDTH = 512;
 
 // TODO: Show overlay over renderer preview while dragging
 // IDEA: Split into two components (NavContainer and Nav)
-// TODO: Make Storage sync by using a local mirror that is only loaded async
-// once when the Core plugin loads. Also keep all settings for a project
-// together, and not have to concat projectId with each key. Ideally, this
-// component would receive "lastNavWidth: number" and "setLastNavWidth"
 export function Nav({
-  projectId,
   fixturesDir,
   fixtureFileSuffix,
   selectedFixtureId,
   fullScreen,
   rendererConnected,
   fixtures,
+  width,
+  treeExpansion,
   selectFixture,
-  storage
+  setWidth,
+  setTreeExpansion
 }: Props) {
-  const storageKey = React.useMemo(() => getStorageKey(projectId), [projectId]);
-  const [width, setWidth] = React.useState(DEFAULT_WIDTH);
-
-  // Read previous width from storage (usePreviousWidth)
-  React.useEffect(() => {
-    storage.getItem(storageKey).then(prevWidth => {
-      if (prevWidth) {
-        setWidth(prevWidth);
-      }
-    });
-  }, [storageKey, storage]);
-
   const handleWidthChange = React.useCallback(
-    (newWidth: number) => {
-      const validWidth = Math.min(MAX_WIDTH, Math.max(MIN_WIDTH, newWidth));
-      setWidth(validWidth);
-      storage.setItem(storageKey, validWidth);
-    },
-    [storageKey, storage]
+    (newWidth: number) => setWidth(restrictNavWidth(newWidth)),
+    [setWidth]
   );
-
   const dragElRef = useDrag({ value: width, onChange: handleWidthChange });
 
   if (fullScreen) {
@@ -73,22 +52,18 @@ export function Nav({
     <Container data-testid="nav" style={{ width }}>
       <Scrollable>
         <FixtureTree
-          projectId={projectId}
           fixturesDir={fixturesDir}
           fixtureFileSuffix={fixtureFileSuffix}
           fixtures={fixtures}
           selectedFixtureId={selectedFixtureId}
+          treeExpansion={treeExpansion}
           onSelect={fixtureId => selectFixture(fixtureId, false)}
-          storage={storage}
+          setTreeExpansion={setTreeExpansion}
         />
       </Scrollable>
       <DragHandle ref={dragElRef} />
     </Container>
   );
-}
-
-function getStorageKey(projectId: string) {
-  return `cosmos-navWidth-${projectId}`;
 }
 
 const Container = styled.div`

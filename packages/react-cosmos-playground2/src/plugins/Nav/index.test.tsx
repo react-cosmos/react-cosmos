@@ -3,10 +3,12 @@ import retry from '@skidding/async-retry';
 import { render, waitForElement, fireEvent } from 'react-testing-library';
 import { Slot, loadPlugins, MethodHandlers } from 'react-plugin';
 import { cleanup, mockMethodsOf } from '../../testHelpers/plugin';
-import { StorageSpec } from '../Storage/public';
+import {
+  mockStorage,
+  mockCore,
+  mockRendererCore
+} from '../../testHelpers/pluginMocks';
 import { RouterSpec } from '../Router/public';
-import { CoreSpec } from '../Core/public';
-import { RendererCoreSpec } from '../RendererCore/public';
 import { register } from '.';
 
 afterEach(cleanup);
@@ -15,18 +17,17 @@ const fixtures = { 'ein.js': null, 'zwei.js': null, 'drei.js': null };
 
 function registerTestPlugins() {
   register();
-  mockMethodsOf<StorageSpec>('storage', {
-    getItem: () => Promise.resolve(null),
-    setItem: () => Promise.resolve(undefined)
+  mockStorage({
+    getItem: () => null,
+    setItem: () => undefined
   });
-  mockMethodsOf<CoreSpec>('core', {
-    getProjectId: () => 'mockProjectId',
+  mockCore({
     getFixtureFileVars: () => ({
       fixturesDir: 'fixtures',
       fixtureFileSuffix: 'fixture'
     })
   });
-  mockMethodsOf<RendererCoreSpec>('rendererCore', {
+  mockRendererCore({
     isRendererConnected: () => true,
     getFixtures: () => fixtures
   });

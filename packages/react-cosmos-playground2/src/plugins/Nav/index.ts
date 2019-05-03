@@ -3,6 +3,11 @@ import { StorageSpec } from '../Storage/public';
 import { RouterSpec } from '../Router/public';
 import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';
+import {
+  TreeExpansion,
+  NAV_WIDTH_STORAGE_KEY,
+  TREE_EXPANSION_STORAGE_KEY
+} from './shared';
 import { NavSpec } from './public';
 import { Nav } from './Nav';
 
@@ -17,17 +22,23 @@ plug({
     const core = getMethodsOf<CoreSpec>('core');
     const { fixturesDir, fixtureFileSuffix } = core.getFixtureFileVars();
     const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
+    const width = storage.getItem(NAV_WIDTH_STORAGE_KEY);
+    const treeExpansion = storage.getItem(TREE_EXPANSION_STORAGE_KEY);
 
     return {
-      projectId: core.getProjectId(),
       fixturesDir,
       fixtureFileSuffix,
       selectedFixtureId: router.getSelectedFixtureId(),
       fullScreen: router.isFullScreen(),
       rendererConnected: rendererCore.isRendererConnected(),
       fixtures: rendererCore.getFixtures(),
+      width,
+      treeExpansion,
       selectFixture: router.selectFixture,
-      storage
+      setWidth: (newWidth: number) =>
+        storage.setItem(NAV_WIDTH_STORAGE_KEY, newWidth),
+      setTreeExpansion: (newTreeExpansion: TreeExpansion) =>
+        storage.setItem(TREE_EXPANSION_STORAGE_KEY, newTreeExpansion)
     };
   }
 });

@@ -8,14 +8,14 @@ import {
   FolderIcon
 } from '../../../shared/icons';
 import { createUrl } from '../../../shared/url';
+import { TreeExpansion } from '../shared';
 import { FixtureNode } from './fixtureTree';
-import { TreeExpansion } from './shared';
 
 type Props = {
   node: FixtureNode;
   parents: string[];
-  treeExpansion: TreeExpansion;
   selectedFixtureId: null | FixtureId;
+  treeExpansion: TreeExpansion;
   onSelect: (fixtureId: FixtureId) => unknown;
   onToggleExpansion: (nodePath: string, expanded: boolean) => unknown;
 };
