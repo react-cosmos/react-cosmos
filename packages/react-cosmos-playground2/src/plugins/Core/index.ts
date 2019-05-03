@@ -1,7 +1,7 @@
 import { PluginContext, createPlugin } from 'react-plugin';
 import { StorageSpec } from '../Storage/public';
 import { CoreSpec } from './public';
-import { Layout } from './Layouts';
+import { Layout } from './Layout';
 
 type Context = PluginContext<CoreSpec>;
 
