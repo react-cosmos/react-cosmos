@@ -3,9 +3,17 @@ import { render, waitForElement } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
 import { createArrayPlug } from '../../../shared/slot';
 import { cleanup, mockPlug } from '../../../testHelpers/plugin';
+import { mockStorage } from '../../../testHelpers/pluginMocks';
 import { register } from '..';
 
 afterEach(cleanup);
+
+function registerTestPlugins() {
+  mockStorage({
+    loadCache: () => Promise.resolve(null)
+  });
+  register();
+}
 
 function loadTestPlugins() {
   loadPlugins();
@@ -20,52 +28,52 @@ function createGlobalPlug(element: React.ReactElement<any>) {
 }
 
 it('renders "left" slot', async () => {
-  register();
+  registerTestPlugins();
   mockPlug({ slotName: 'left', render: 'we are the robots' });
-  const { getByText } = loadTestPlugins();
 
+  const { getByText } = loadTestPlugins();
   await waitForElement(() => getByText(/we are the robots/i));
 });
 
 it('renders "rendererHeader" slot', async () => {
-  register();
+  registerTestPlugins();
   mockPlug({ slotName: 'rendererHeader', render: 'we are the robots' });
-  const { getByText } = loadTestPlugins();
 
+  const { getByText } = loadTestPlugins();
   await waitForElement(() => getByText(/we are the robots/i));
 });
 
 it('renders "rendererPreview" slot', async () => {
-  register();
+  registerTestPlugins();
   mockPlug({ slotName: 'rendererPreview', render: 'we are the robots' });
-  const { getByText } = loadTestPlugins();
 
+  const { getByText } = loadTestPlugins();
   await waitForElement(() => getByText(/we are the robots/i));
 });
 
 it('renders "contentOverlay" slot', async () => {
-  register();
+  registerTestPlugins();
   mockPlug({ slotName: 'contentOverlay', render: 'we are the robots' });
-  const { getByText } = loadTestPlugins();
 
+  const { getByText } = loadTestPlugins();
   await waitForElement(() => getByText(/we are the robots/i));
 });
 
 it('renders "right" slot', async () => {
-  register();
+  registerTestPlugins();
   mockPlug({ slotName: 'right', render: 'we are the robots' });
-  const { getByText } = loadTestPlugins();
 
+  const { getByText } = loadTestPlugins();
   await waitForElement(() => getByText(/we are the robots/i));
 });
 
 it('renders "global" plugs', async () => {
-  register();
   createGlobalPlug(<>first</>);
   createGlobalPlug(<>second</>);
   createGlobalPlug(<>third</>);
-  const { getByText } = loadTestPlugins();
+  registerTestPlugins();
 
+  const { getByText } = loadTestPlugins();
   await waitForElement(() => getByText(/first/i));
   await waitForElement(() => getByText(/second/i));
   await waitForElement(() => getByText(/third/i));
