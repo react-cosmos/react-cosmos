@@ -18,7 +18,7 @@ const fixtures = { 'ein.js': null, 'zwei.js': null, 'drei.js': null };
 function registerTestPlugins() {
   register();
   mockStorage({
-    getItem: () => null,
+    getItem: () => {},
     setItem: () => undefined
   });
   mockCore({
