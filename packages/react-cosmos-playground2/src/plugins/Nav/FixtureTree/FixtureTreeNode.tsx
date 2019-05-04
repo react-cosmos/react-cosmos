@@ -130,6 +130,10 @@ const DirButton = styled.button`
       box-shadow: inset 4px 0px 0 0 var(--primary3);
     }
   }
+
+  ::-moz-focus-inner {
+    border: 0;
+  }
 `;
 
 const FixtureLink = styled.a`
@@ -142,6 +146,10 @@ const FixtureLink = styled.a`
     > span {
       box-shadow: inset 4px 0px 0 0 var(--primary3);
     }
+  }
+
+  ::-moz-focus-inner {
+    border: 0;
   }
 `;
 

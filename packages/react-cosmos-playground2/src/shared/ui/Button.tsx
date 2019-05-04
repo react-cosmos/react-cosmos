@@ -68,6 +68,10 @@ const StyledButton = styled.button<StyledButtonProps>`
     cursor: default;
     opacity: 0.5;
   }
+
+  ::-moz-focus-inner {
+    border: 0;
+  }
 `;
 
 const Icon = styled.span`
