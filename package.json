@@ -7,7 +7,7 @@
   "repository": "https://github.com/react-cosmos/react-cosmos",
   "license": "MIT",
   "scripts": {
-    "prettify": "prettier --write \"{{packages/*/src,examples,cypress,scripts}/**/,}*.{js,jsx,ts,tsx,css,less,md}\"",
+    "prettify": "prettier --write \"{{packages/*/src,examples,cypress,scripts}/**/,}*.{js,jsx,ts,tsx,css,md}\"",
     "lint": "eslint '**/*.{ts,tsx}'",
     "test:unit": "jest --config .jest/config.js",
     "test:watch": "yarn test:unit --watch",
@@ -94,7 +94,7 @@
     "yargs": "^13.2.2"
   },
   "lint-staged": {
-    "*.{js,jsx,css,less}": [
+    "*.{js,jsx,ts,tsx,css,md}": [
       "prettier --single-quote --write",
       "git add"
     ]
