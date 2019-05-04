@@ -10,7 +10,8 @@ afterEach(cleanup);
 
 function registerTestPlugins() {
   mockStorage({
-    loadCache: () => Promise.resolve(null)
+    loadCache: () => Promise.resolve(null),
+    getItem: () => {}
   });
   register();
 }
