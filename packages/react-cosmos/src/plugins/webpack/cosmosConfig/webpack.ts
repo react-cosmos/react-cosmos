@@ -1,5 +1,5 @@
 import path from 'path';
-import { CosmosConfig, resolvePath } from '../../../config';
+import { CosmosConfig, resolveModule } from '../../../config';
 import { fileExists } from '../../../shared/fs';
 
 type WebpackCosmosConfig = {
@@ -26,7 +26,7 @@ function getWebpackConfigPath(
   rootDir: string
 ) {
   if (typeof configPath === 'undefined') {
-    return resolvePath(rootDir, 'webpack.config.js');
+    return resolveModule(rootDir, 'webpack.config.js');
   }
 
   // User can choose to prevent automatical use of an existing webpack.config.js
@@ -35,7 +35,7 @@ function getWebpackConfigPath(
     return null;
   }
 
-  const absPath = resolvePath(rootDir, configPath);
+  const absPath = resolveModule(rootDir, configPath);
   if (!fileExists(absPath)) {
     const relPath = path.relative(process.cwd(), absPath);
     throw new Error(`webpack config not found at path: ${relPath}`);
