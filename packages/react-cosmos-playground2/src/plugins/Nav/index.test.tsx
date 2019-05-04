@@ -19,7 +19,7 @@ function registerTestPlugins() {
   register();
   mockStorage({
     getItem: () => {},
-    setItem: () => undefined
+    setItem: () => {}
   });
   mockCore({
     getFixtureFileVars: () => ({
