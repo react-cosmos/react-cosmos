@@ -1,6 +1,6 @@
 import webpack from 'webpack';
 // NOTE: Mock files need to imported before modules that use the mocked APIs
-import { mockCliArgs, unmockCliArgs } from '../../../../testHelpers/mockYargs';
+import { unmockCliArgs } from '../../../../testHelpers/mockYargs';
 import { mockConsole } from '../../../../testHelpers/mockConsole';
 import { mockFile } from '../../../../testHelpers/mockFs';
 import { createCosmosConfig } from '../../../../config';
@@ -9,8 +9,6 @@ import { HtmlWebpackPlugin } from './../htmlPlugin';
 import { getDevWebpackConfig } from '..';
 
 beforeAll(() => {
-  // Prevent Cosmos from intercepting the --config arg passed to Jest
-  mockCliArgs({});
   mockFile('mywebpack.config.js', {
     module: { rules: [MY_RULE] },
     plugins: [MY_PLUGIN]
