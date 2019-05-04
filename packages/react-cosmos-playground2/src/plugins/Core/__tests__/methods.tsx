@@ -1,5 +1,6 @@
 import { loadPlugins } from 'react-plugin';
 import { cleanup, getMethodsOf } from '../../../testHelpers/plugin';
+import { mockStorage } from '../../../testHelpers/pluginMocks';
 import { CoreSpec } from '../public';
 import { register } from '..';
 
@@ -13,6 +14,13 @@ const coreConfig: CoreSpec['config'] = {
   webRendererUrl: 'mockWebUrl'
 };
 
+function registerTestPlugins() {
+  mockStorage({
+    loadCache: () => Promise.resolve(null)
+  });
+  register();
+}
+
 function loadTestPlugins() {
   loadPlugins({
     config: {
@@ -25,14 +33,8 @@ function getCoreMethods() {
   return getMethodsOf<CoreSpec>('core');
 }
 
-it('returns project ID', () => {
-  register();
-  loadTestPlugins();
-  expect(getCoreMethods().getProjectId()).toBe('mockProjectId');
-});
-
 it('returns fixture file vars', () => {
-  register();
+  registerTestPlugins();
   loadTestPlugins();
   expect(getCoreMethods().getFixtureFileVars()).toEqual({
     fixturesDir: 'mockFixturesDir',
@@ -41,13 +43,13 @@ it('returns fixture file vars', () => {
 });
 
 it('returns dev server on flag', () => {
-  register();
+  registerTestPlugins();
   loadTestPlugins();
   expect(getCoreMethods().isDevServerOn()).toBe(true);
 });
 
 it('returns web renderer URL', () => {
-  register();
+  registerTestPlugins();
   loadTestPlugins();
   expect(getCoreMethods().getWebRendererUrl()).toBe('mockWebUrl');
 });

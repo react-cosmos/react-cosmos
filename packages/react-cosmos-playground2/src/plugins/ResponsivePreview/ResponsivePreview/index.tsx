@@ -1,30 +1,17 @@
 import * as React from 'react';
 import { isEqual } from 'lodash';
 import styled from 'styled-components';
-import { StateUpdater } from 'react-cosmos-shared2/util';
-import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import { StorageMethods } from '../shared';
-import { storeViewport } from '../storage';
 import { Header } from './Header';
 import { stretchStyle, getStyles } from './style';
-import { Viewport, ResponsivePreviewSpec } from '../public';
-
-type PluginState = ResponsivePreviewSpec['state'];
+import { Viewport, Device } from '../public';
 
 type Props = {
   children?: React.ReactNode;
-  config: ResponsivePreviewSpec['config'];
-  state: PluginState;
-  projectId: string;
+  devices: Device[];
+  viewport: null | Viewport;
   fullScreen: boolean;
-  fixtureState: FixtureState;
   validFixtureSelected: boolean;
-  setState: (
-    update: PluginState | StateUpdater<PluginState>,
-    cb: () => unknown
-  ) => unknown;
-  setFixtureStateViewport: () => void;
-  storage: StorageMethods;
+  setViewport(viewport: Viewport): unknown;
 };
 
 type State = {
@@ -46,14 +33,12 @@ export class ResponsivePreview extends React.Component<Props, State> {
   render() {
     const {
       children,
-      config,
-      state,
+      devices,
+      viewport,
       fullScreen,
-      fixtureState,
       validFixtureSelected
     } = this.props;
     const { container, scale } = this.state;
-    const viewport = getViewport(state, fixtureState);
 
     // We don't simply do `return children` because it would cause a flicker
     // whenever switching between responsive and non responsive mode. By
@@ -73,14 +58,12 @@ export class ResponsivePreview extends React.Component<Props, State> {
       );
     }
 
-    const { devices } = config;
     const {
       maskContainerStyle,
       padContainerStyle,
       alignContainerStyle,
       scaleContainerStyle
     } = getStyles({ container, viewport, scale });
-
     return (
       <Container>
         <Header
@@ -128,17 +111,7 @@ export class ResponsivePreview extends React.Component<Props, State> {
   };
 
   createSelectViewportHandler = (viewport: Viewport) => () => {
-    const {
-      projectId,
-      setState,
-      setFixtureStateViewport,
-      storage
-    } = this.props;
-
-    setState({ enabled: true, viewport }, () => {
-      setFixtureStateViewport();
-      storeViewport(projectId, viewport, storage);
-    });
+    this.props.setViewport(viewport);
   };
 
   toggleScale = () => {
@@ -162,15 +135,7 @@ function getContainerSize(containerEl: null | HTMLElement) {
   }
 
   const { width, height } = containerEl.getBoundingClientRect();
-
   return { width, height };
-}
-
-function getViewport(
-  state: ResponsivePreviewSpec['state'],
-  fixtureState: FixtureState
-): null | Viewport {
-  return fixtureState.viewport || (state.enabled ? state.viewport : null);
 }
 
 const Container = styled.div.attrs({ 'data-testid': 'responsivePreview' })`

@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { render, waitForElement } from 'react-testing-library';
 import { loadPlugins, Slot } from 'react-plugin';
-import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
-import { StorageSpec } from '../../Storage/public';
-import { RouterSpec } from '../../Router/public';
-import { CoreSpec } from '../../Core/public';
-import { RendererCoreSpec } from '../../RendererCore/public';
+import { cleanup } from '../../../testHelpers/plugin';
+import {
+  mockStorage,
+  mockRouter,
+  mockRendererCore
+} from '../../../testHelpers/pluginMocks';
 import { register } from '..';
 
 afterEach(cleanup);
@@ -16,14 +17,11 @@ const fixtureState = {
 
 function registerTestPlugins() {
   register();
-  mockMethodsOf<StorageSpec>('storage', {});
-  mockMethodsOf<CoreSpec>('core', {
-    getProjectId: () => 'mockProjectId'
-  });
-  mockMethodsOf<RouterSpec>('router', {
+  mockStorage({});
+  mockRouter({
     isFullScreen: () => false
   });
-  mockMethodsOf<RendererCoreSpec>('rendererCore', {
+  mockRendererCore({
     getFixtureState: () => fixtureState,
     isValidFixtureSelected: () => true
   });
@@ -31,7 +29,6 @@ function registerTestPlugins() {
 
 function loadTestPlugins() {
   loadPlugins();
-
   return render(
     <Slot name="rendererPreviewOuter">
       <div data-testid="previewMock" />

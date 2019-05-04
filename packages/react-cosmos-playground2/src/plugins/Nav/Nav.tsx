@@ -1,63 +1,58 @@
 import styled from 'styled-components';
-import * as React from 'react';
+import React from 'react';
 import { FixtureNamesByPath, FixtureId } from 'react-cosmos-shared2/renderer';
-import { StorageSpec } from '../Storage/public';
 import { FixtureTree } from './FixtureTree';
+import { TreeExpansion } from './shared';
 
 type Props = {
-  projectId: string;
   fixturesDir: string;
   fixtureFileSuffix: string;
   selectedFixtureId: null | FixtureId;
   fullScreen: boolean;
   rendererConnected: boolean;
   fixtures: FixtureNamesByPath;
+  treeExpansion: TreeExpansion;
   selectFixture: (fixtureId: FixtureId, fullScreen: boolean) => void;
-  storage: StorageSpec['methods'];
+  setTreeExpansion: (treeExpansion: TreeExpansion) => unknown;
 };
 
-export class Nav extends React.Component<Props> {
-  render() {
-    const {
-      projectId,
-      fixturesDir,
-      fixtureFileSuffix,
-      selectedFixtureId,
-      fullScreen,
-      rendererConnected,
-      fixtures,
-      selectFixture,
-      storage
-    } = this.props;
-
-    if (fullScreen) {
-      return null;
-    }
-
-    if (!rendererConnected) {
-      return <Container />;
-    }
-
-    return (
-      <Container data-testid="nav">
-        <FixtureTree
-          projectId={projectId}
-          fixturesDir={fixturesDir}
-          fixtureFileSuffix={fixtureFileSuffix}
-          fixtures={fixtures}
-          selectedFixtureId={selectedFixtureId}
-          onSelect={fixtureId => selectFixture(fixtureId, false)}
-          storage={storage}
-        />
-      </Container>
-    );
+export function Nav({
+  fixturesDir,
+  fixtureFileSuffix,
+  selectedFixtureId,
+  fullScreen,
+  rendererConnected,
+  fixtures,
+  treeExpansion,
+  selectFixture,
+  setTreeExpansion
+}: Props) {
+  if (fullScreen) {
+    return null;
   }
+
+  if (!rendererConnected) {
+    return <Container />;
+  }
+
+  return (
+    <Container data-testid="nav">
+      <FixtureTree
+        fixturesDir={fixturesDir}
+        fixtureFileSuffix={fixtureFileSuffix}
+        fixtures={fixtures}
+        selectedFixtureId={selectedFixtureId}
+        treeExpansion={treeExpansion}
+        onSelect={fixtureId => selectFixture(fixtureId, false)}
+        setTreeExpansion={setTreeExpansion}
+      />
+    </Container>
+  );
 }
 
 const Container = styled.div`
-  flex-shrink: 0;
-  width: 256px;
+  width: 100%;
+  height: 100%;
   background: var(--grey1);
-  border-right: 1px solid var(--darkest);
   overflow: auto;
 `;

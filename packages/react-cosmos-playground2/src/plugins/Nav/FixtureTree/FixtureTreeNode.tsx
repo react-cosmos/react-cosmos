@@ -8,93 +8,92 @@ import {
   FolderIcon
 } from '../../../shared/icons';
 import { createUrl } from '../../../shared/url';
+import { TreeExpansion } from '../shared';
 import { FixtureNode } from './fixtureTree';
-import { TreeExpansion } from './shared';
 
 type Props = {
   node: FixtureNode;
   parents: string[];
-  treeExpansion: TreeExpansion;
   selectedFixtureId: null | FixtureId;
+  treeExpansion: TreeExpansion;
   onSelect: (fixtureId: FixtureId) => unknown;
   onToggleExpansion: (nodePath: string, expanded: boolean) => unknown;
 };
 
-export class FixtureTreeNode extends React.Component<Props> {
-  render() {
-    const {
-      node,
-      parents,
-      treeExpansion,
-      selectedFixtureId,
-      onSelect,
-      onToggleExpansion
-    } = this.props;
-    const { items, dirs } = node;
-    const nodePath = getNodePath(parents);
-    const isRootNode = parents.length === 0;
-    const isExpanded = isRootNode || treeExpansion[nodePath];
+export function FixtureTreeNode({
+  node,
+  parents,
+  treeExpansion,
+  selectedFixtureId,
+  onSelect,
+  onToggleExpansion
+}: Props) {
+  const { items, dirs } = node;
+  const nodePath = getNodePath(parents);
+  const isRootNode = parents.length === 0;
+  const isExpanded = isRootNode || treeExpansion[nodePath];
 
-    return (
-      <>
-        {!isRootNode && (
-          <DirButton onClick={() => onToggleExpansion(nodePath, !isExpanded)}>
-            <ListItem indentLevel={parents.length - 1}>
-              <CevronContainer>
-                {isExpanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
-              </CevronContainer>
-              <FolderContainer>
-                <FolderIcon />
-              </FolderContainer>
-              <Label>{parents[parents.length - 1]}</Label>
-            </ListItem>
-          </DirButton>
-        )}
-        {isExpanded && (
-          <>
-            {getSortedNodeDirNames(node).map(dirName => {
-              const nextParents = [...parents, dirName];
-              return (
-                <FixtureTreeNode
-                  key={getNodePath(nextParents)}
-                  node={dirs[dirName]}
-                  parents={nextParents}
-                  treeExpansion={treeExpansion}
-                  selectedFixtureId={selectedFixtureId}
-                  onSelect={onSelect}
-                  onToggleExpansion={onToggleExpansion}
-                />
-              );
-            })}
-            {map(items, (fixtureId, fixtureName) => (
-              <FixtureLink
-                key={`${fixtureId.path}-${fixtureName}`}
-                href={createUrl({ fixtureId })}
-                onClick={this.createSelectHandler(fixtureId)}
-              >
-                <ListItem
-                  indentLevel={parents.length}
-                  selected={isEqual(fixtureId, selectedFixtureId)}
-                >
-                  <FixtureLabel>{fixtureName}</FixtureLabel>
-                </ListItem>
-              </FixtureLink>
-            ))}
-          </>
-        )}
-      </>
-    );
-  }
-
-  createSelectHandler = (fixtureId: FixtureId) => (e: React.MouseEvent) => {
+  const createSelectHandler = (fixtureId: FixtureId) => (
+    e: React.MouseEvent
+  ) => {
     e.preventDefault();
     if (e.metaKey) {
       // Allow users to cmd+click to open fixtures in new tab
       window.open((e.currentTarget as HTMLAnchorElement).href, '_blank');
     } else {
-      this.props.onSelect(fixtureId);
+      onSelect(fixtureId);
     }
   };
+
+  return (
+    <>
+      {!isRootNode && (
+        <DirButton onClick={() => onToggleExpansion(nodePath, !isExpanded)}>
+          <ListItem indentLevel={parents.length - 1}>
+            <CevronContainer>
+              {isExpanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
+            </CevronContainer>
+            <FolderContainer>
+              <FolderIcon />
+            </FolderContainer>
+            <Label>{parents[parents.length - 1]}</Label>
+          </ListItem>
+        </DirButton>
+      )}
+      {isExpanded && (
+        <>
+          {getSortedNodeDirNames(node).map(dirName => {
+            const nextParents = [...parents, dirName];
+            return (
+              <FixtureTreeNode
+                key={getNodePath(nextParents)}
+                node={dirs[dirName]}
+                parents={nextParents}
+                treeExpansion={treeExpansion}
+                selectedFixtureId={selectedFixtureId}
+                onSelect={onSelect}
+                onToggleExpansion={onToggleExpansion}
+              />
+            );
+          })}
+          {map(items, (fixtureId, fixtureName) => (
+            <FixtureLink
+              key={`${fixtureId.path}-${fixtureName}`}
+              href={createUrl({ fixtureId })}
+              onClick={createSelectHandler(fixtureId)}
+            >
+              <ListItem
+                indentLevel={parents.length}
+                selected={isEqual(fixtureId, selectedFixtureId)}
+              >
+                <FixtureLabel>{fixtureName}</FixtureLabel>
+              </ListItem>
+            </FixtureLink>
+          ))}
+        </>
+      )}
+    </>
+  );
 }
 
 function getSortedNodeDirNames(node: FixtureNode): string[] {

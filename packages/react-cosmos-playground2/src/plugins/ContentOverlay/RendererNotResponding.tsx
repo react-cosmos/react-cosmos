@@ -1,13 +1,15 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { ArtificialIntelligenceIllustration } from '../../shared/illustrations';
-import { IllustrationContainer } from './shared';
+import { IllustrationContainer, Unbreakable } from './shared';
 
 export function RendererNotResponding() {
   return (
     <Container>
       <Content>
-        <Header>Renderer not responding</Header>
+        <Header>
+          Renderer <Unbreakable>not responding</Unbreakable>
+        </Header>
         <Paragraph>{`It's usually one of the following...`}</Paragraph>
         <List>
           <li>
@@ -53,13 +55,13 @@ const Container = styled.div`
 
 const Content = styled.div`
   max-width: 512px;
-  padding: 0 64px 0 32px;
+  padding: 0 32px;
   font-size: 16px;
   line-height: 1.5em;
   color: var(--grey1);
 
   strong {
-    font-weight: 600;
+    font-weight: 500;
   }
 `;
 

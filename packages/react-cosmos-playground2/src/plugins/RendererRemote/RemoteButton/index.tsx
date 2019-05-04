@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button } from '../../../shared/components';
+import { Button } from '../../../shared/ui';
 import { CastIcon } from '../../../shared/icons';
 import { NotificationsSpec } from './../../Notifications/public';
 import { copyToClipboard } from './copyToClipboard';

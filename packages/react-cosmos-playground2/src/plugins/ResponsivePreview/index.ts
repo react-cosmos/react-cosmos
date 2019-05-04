@@ -1,12 +1,17 @@
 import { createPlugin } from 'react-plugin';
+import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { createArrayPlug } from '../../shared/slot';
-import { CoreSpec } from '../Core/public';
+import { StorageSpec } from '../Storage/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { RouterSpec } from '../Router/public';
-import { StorageSpec } from '../Storage/public';
-import { ResponsivePreviewSpec } from './public';
+import { ResponsivePreviewSpec, Viewport } from './public';
+import {
+  Context,
+  DEFAULT_DEVICES,
+  DEFAULT_VIEWPORT,
+  STORAGE_KEY
+} from './shared';
 import { ResponsivePreview } from './ResponsivePreview';
-import { Context, DEFAULT_DEVICES } from './shared';
 import { Props as ToggleButtonProps, ToggleButton } from './ToggleButton';
 
 const { plug, register } = createPlugin<ResponsivePreviewSpec>({
@@ -24,14 +29,25 @@ plug({
   slotName: 'rendererPreviewOuter',
   render: ResponsivePreview,
   getProps: context => {
-    const fullScreen = context
-      .getMethodsOf<RouterSpec>('router')
-      .isFullScreen();
+    const { devices } = context.getConfig();
+    const { enabled } = context.getState();
+    const storage = context.getMethodsOf<StorageSpec>('storage');
+    const router = context.getMethodsOf<RouterSpec>('router');
+    const rendererCore = context.getMethodsOf<RendererCoreSpec>('rendererCore');
+    const fixtureState = rendererCore.getFixtureState();
+    const viewport =
+      fixtureState.viewport || getActiveViewport(context, enabled);
 
     return {
-      ...getCommonProps(context),
-      config: context.getConfig(),
-      fullScreen
+      devices,
+      viewport,
+      fullScreen: router.isFullScreen(),
+      validFixtureSelected: rendererCore.isValidFixtureSelected(),
+      setViewport(newViewport: Viewport) {
+        storage.setItem(STORAGE_KEY, newViewport);
+        setFixtureStateViewport(context, newViewport);
+        context.setState({ enabled: true });
+      }
     };
   }
 });
@@ -39,38 +55,44 @@ plug({
 plug({
   slotName: 'rendererActions',
   render: createArrayPlug<ToggleButtonProps>('rendererActions', ToggleButton),
-  getProps: context => getCommonProps(context)
+  getProps: context => {
+    const { enabled } = context.getState();
+    const rendererCore = context.getMethodsOf<RendererCoreSpec>('rendererCore');
+    const fixtureState = rendererCore.getFixtureState();
+    const responsiveModeOn = isResponsiveModeOn(enabled, fixtureState);
+
+    return {
+      validFixtureSelected: rendererCore.isValidFixtureSelected(),
+      responsiveModeOn,
+      toggleViewportState() {
+        const nextEnabled = !responsiveModeOn;
+        context.setState({ enabled: nextEnabled });
+        setFixtureStateViewport(
+          context,
+          getActiveViewport(context, nextEnabled)
+        );
+      }
+    };
+  }
 });
 
 export { register };
 
-function getCommonProps(context: Context) {
-  const { getState, setState, getMethodsOf } = context;
-
-  const core = getMethodsOf<CoreSpec>('core');
-  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
-
-  return {
-    state: getState(),
-    projectId: core.getProjectId(),
-    fixtureState: rendererCore.getFixtureState(),
-    validFixtureSelected: rendererCore.isValidFixtureSelected(),
-    setState,
-    setFixtureStateViewport: () => setFixtureStateViewport(context),
-    storage: getStorageApi(context)
-  };
+function getActiveViewport(context: Context, responsiveModeEnabled: boolean) {
+  const storage = context.getMethodsOf<StorageSpec>('storage');
+  return responsiveModeEnabled
+    ? storage.getItem<Viewport>(STORAGE_KEY) || DEFAULT_VIEWPORT
+    : null;
 }
 
-function getStorageApi({ getMethodsOf }: Context) {
-  return getMethodsOf<StorageSpec>('storage');
+function setFixtureStateViewport(context: Context, viewport: null | Viewport) {
+  const rendererCore = context.getMethodsOf<RendererCoreSpec>('rendererCore');
+  rendererCore.setFixtureState(fixtureState => ({ ...fixtureState, viewport }));
 }
 
-function setFixtureStateViewport({ getState, getMethodsOf }: Context) {
-  const { enabled, viewport } = getState();
-  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
-
-  rendererCore.setFixtureState(fixtureState => ({
-    ...fixtureState,
-    viewport: enabled ? viewport : null
-  }));
+function isResponsiveModeOn(
+  responsiveModeEnabled: boolean,
+  fixtureState: FixtureState
+): boolean {
+  return fixtureState.viewport ? true : responsiveModeEnabled;
 }

@@ -1,98 +1,50 @@
 import styled from 'styled-components';
 import * as React from 'react';
 import { FixtureNamesByPath, FixtureId } from 'react-cosmos-shared2/renderer';
-import { StorageSpec } from '../../Storage/public';
-import { TreeExpansion } from './shared';
+import { TreeExpansion } from '../shared';
 import { getFixtureTree } from './fixtureTree';
 import { FixtureTreeNode } from './FixtureTreeNode';
 
 type Props = {
-  projectId: string;
   fixturesDir: string;
   fixtureFileSuffix: string;
   fixtures: FixtureNamesByPath;
   selectedFixtureId: null | FixtureId;
-  onSelect: (path: FixtureId) => unknown;
-  storage: StorageSpec['methods'];
-};
-
-type State = {
   treeExpansion: TreeExpansion;
+  onSelect: (path: FixtureId) => unknown;
+  setTreeExpansion: (treeExpansion: TreeExpansion) => unknown;
 };
 
-export class FixtureTree extends React.Component<Props, State> {
-  state = {
-    treeExpansion: {}
-  };
-
-  unmounted = false;
-
-  componentDidMount() {
-    this.restoreTreeExpansion();
-  }
-
-  componentWillUnmount() {
-    this.unmounted = true;
-  }
-
-  render() {
-    const {
-      fixturesDir,
-      fixtureFileSuffix,
-      fixtures,
-      selectedFixtureId,
-      onSelect
-    } = this.props;
-    const { treeExpansion } = this.state;
-
-    const rootNode = getFixtureTree({
-      fixtures,
-      fixturesDir,
-      fixtureFileSuffix
-    });
-
-    return (
-      <Container>
-        <FixtureTreeNode
-          node={rootNode}
-          parents={[]}
-          treeExpansion={treeExpansion}
-          selectedFixtureId={selectedFixtureId}
-          onSelect={onSelect}
-          onToggleExpansion={this.handleToggleExpansion}
-        />
-      </Container>
-    );
-  }
-
-  handleToggleExpansion = (nodePath: string, expanded: boolean) => {
-    this.setState(
-      ({ treeExpansion }) => ({
-        treeExpansion: { ...treeExpansion, [nodePath]: expanded }
-      }),
-      this.persistTreeExpansion
-    );
-  };
-
-  async restoreTreeExpansion() {
-    const { storage } = this.props;
-    const treeExpansion = (await storage.getItem(this.getStorageKey())) || {};
-
-    if (!this.unmounted) {
-      this.setState({ treeExpansion });
-    }
-  }
-
-  persistTreeExpansion() {
-    const { storage } = this.props;
-    const { treeExpansion } = this.state;
-
-    storage.setItem(this.getStorageKey(), treeExpansion);
-  }
-
-  getStorageKey() {
-    return `cosmos-treeExpansion-${this.props.projectId}`;
-  }
+export function FixtureTree({
+  fixturesDir,
+  fixtureFileSuffix,
+  fixtures,
+  selectedFixtureId,
+  treeExpansion,
+  onSelect,
+  setTreeExpansion
+}: Props) {
+  const handleToggleExpansion = React.useCallback(
+    (nodePath: string, expanded: boolean) =>
+      setTreeExpansion({ ...treeExpansion, [nodePath]: expanded }),
+    [setTreeExpansion, treeExpansion]
+  );
+  const rootNode = React.useMemo(
+    () => getFixtureTree({ fixtures, fixturesDir, fixtureFileSuffix }),
+    [fixtures, fixturesDir, fixtureFileSuffix]
+  );
+  return (
+    <Container>
+      <FixtureTreeNode
+        node={rootNode}
+        parents={[]}
+        treeExpansion={treeExpansion}
+        selectedFixtureId={selectedFixtureId}
+        onSelect={onSelect}
+        onToggleExpansion={handleToggleExpansion}
+      />
+    </Container>
+  );
 }
 
 // Reason for inline-block: https://stackoverflow.com/a/53895622/128816

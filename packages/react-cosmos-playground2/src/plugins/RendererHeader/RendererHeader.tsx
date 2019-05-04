@@ -8,7 +8,7 @@ import {
   MaximizeIcon,
   HomeIcon
 } from '../../shared/icons';
-import { Button } from '../../shared/components';
+import { Button } from '../../shared/ui';
 
 type Props = {
   selectedFixtureId: null | FixtureId;
