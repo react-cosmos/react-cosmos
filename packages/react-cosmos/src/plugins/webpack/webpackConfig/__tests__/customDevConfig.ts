@@ -15,6 +15,10 @@ beforeAll(() => {
     module: { rules: [MY_RULE] },
     plugins: [MY_PLUGIN]
   });
+  mockFile('mywebpack.override.js', (webpackConfig: webpack.Configuration) => ({
+    ...webpackConfig,
+    plugins: [...(webpackConfig.plugins || []), MY_PLUGIN2]
+  }));
 });
 
 afterAll(() => {
@@ -23,13 +27,15 @@ afterAll(() => {
 
 const MY_RULE = {};
 const MY_PLUGIN = {};
+const MY_PLUGIN2 = {};
 
 async function getCustomDevWebpackConfig() {
   return mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Using webpack config found at mywebpack.config.js');
     const cosmosConfig = createCosmosConfig({
       webpack: {
-        configPath: 'mywebpack.config.js'
+        configPath: 'mywebpack.config.js',
+        overridePath: 'mywebpack.override.js'
       }
     });
     return getDevWebpackConfig(cosmosConfig, webpack);
@@ -41,9 +47,14 @@ it('includes user rule', async () => {
   expect(module!.rules).toContain(MY_RULE);
 });
 
-it('includes user plugin', async () => {
+it('includes plugin from user config', async () => {
   const { plugins } = await getCustomDevWebpackConfig();
   expect(plugins).toContain(MY_PLUGIN);
+});
+
+it('includes plugin from user override', async () => {
+  const { plugins } = await getCustomDevWebpackConfig();
+  expect(plugins).toContain(MY_PLUGIN2);
 });
 
 it('includes client entry', async () => {

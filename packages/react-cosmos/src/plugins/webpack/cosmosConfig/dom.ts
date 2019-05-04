@@ -9,9 +9,9 @@ type DomCosmosConfigInput = Partial<DomCosmosConfig>;
 export function createDomCosmosConfig(
   cosmosConfig: CosmosConfig
 ): DomCosmosConfig {
-  const domCosmosConfigInput = (cosmosConfig.dom || {}) as DomCosmosConfigInput;
+  const configInput = (cosmosConfig.dom || {}) as DomCosmosConfigInput;
   return {
-    containerQuerySelector: getContainerQuerySelector(domCosmosConfigInput)
+    containerQuerySelector: getContainerQuerySelector(configInput)
   };
 }
 

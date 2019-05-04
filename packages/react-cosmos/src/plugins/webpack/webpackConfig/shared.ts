@@ -7,12 +7,43 @@ import { createWebpackCosmosConfig } from '../cosmosConfig/webpack';
 import { getDefaultWebpackConfig } from './default';
 import { getDefaultExport } from './module';
 
+type WebpackConfigExport =
+  | webpack.Configuration
+  // TODO: Compy with webpack API
+  // https://webpack.js.org/configuration/configuration-types/#exporting-a-function
+  | ((env: string, argv: {}) => webpack.Configuration);
+
+type WebpackOverride = (
+  baseConfig: webpack.Configuration
+) => webpack.Configuration;
+
+export function getUserWebpackConfig(
+  cosmosConfig: CosmosConfig,
+  userWebpack: typeof webpack
+) {
+  const baseWebpackConfig = getBaseWebpackConfig(cosmosConfig, userWebpack);
+  const { overridePath } = createWebpackCosmosConfig(cosmosConfig);
+
+  if (!overridePath || !moduleExists(overridePath)) {
+    return baseWebpackConfig;
+  }
+
+  const relPath = path.relative(process.cwd(), overridePath);
+  console.log(`[Cosmos] Overriding webpack config at ${relPath}`);
+  const webpackOverride = getDefaultExport(
+    requireModule(overridePath)
+  ) as WebpackOverride;
+
+  return webpackOverride(baseWebpackConfig);
+}
+
 export function getBaseWebpackConfig(
   cosmosConfig: CosmosConfig,
   userWebpack: typeof webpack
 ) {
   const { rootDir } = cosmosConfig;
   const { configPath } = createWebpackCosmosConfig(cosmosConfig);
+
   if (!configPath || !moduleExists(configPath)) {
     console.log('[Cosmos] Using default webpack config');
     return getDefaultWebpackConfig(userWebpack, rootDir);
@@ -21,10 +52,12 @@ export function getBaseWebpackConfig(
   const relPath = path.relative(process.cwd(), configPath);
   console.log(`[Cosmos] Using webpack config found at ${relPath}`);
 
-  const userConfig = getDefaultExport(requireModule(configPath));
-  return typeof userConfig === 'function'
-    ? userConfig(process.env.NODE_ENV, argv)
-    : userConfig;
+  const userConfigExport = getDefaultExport(
+    requireModule(configPath)
+  ) as WebpackConfigExport;
+  return typeof userConfigExport === 'function'
+    ? userConfigExport(process.env.NODE_ENV || 'development', argv)
+    : userConfigExport;
 }
 
 export function resolveDomRendererPath(relPath: string) {

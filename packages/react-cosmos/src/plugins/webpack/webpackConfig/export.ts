@@ -2,7 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import { CosmosConfig } from '../../../config';
 import {
-  getBaseWebpackConfig,
+  getUserWebpackConfig,
   resolveDomRendererPath,
   resolveClientPath,
   getUserDepsLoaderRule,
@@ -14,7 +14,7 @@ export function getExportWebpackConfig(
   cosmosConfig: CosmosConfig,
   userWebpack: typeof webpack
 ): webpack.Configuration {
-  const baseWebpackConfig = getBaseWebpackConfig(cosmosConfig, userWebpack);
+  const baseWebpackConfig = getUserWebpackConfig(cosmosConfig, userWebpack);
   return {
     ...baseWebpackConfig,
     entry: getEntry(),

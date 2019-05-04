@@ -8,7 +8,7 @@ import { getHtmlWebpackPlugin } from './htmlPlugin';
 export function getDefaultWebpackConfig(
   userWebpack: typeof webpack,
   rootDir: string
-) {
+): webpack.Configuration {
   // react-cosmos doesn't directly depend on any webpack loader.
   // Instead, it includes the ones already installed by the user.
   const tsLoaderPath = resolveFrom.silent(rootDir, 'ts-loader');
