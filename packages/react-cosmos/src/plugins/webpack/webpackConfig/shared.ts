@@ -9,9 +9,9 @@ import { getDefaultExport } from './module';
 
 type WebpackConfigExport =
   | webpack.Configuration
-  // TODO: Compy with webpack API
+  // Mirror webpack API for config functions
   // https://webpack.js.org/configuration/configuration-types/#exporting-a-function
-  | ((env: string, argv: {}) => webpack.Configuration);
+  | ((env: unknown, argv: {}) => webpack.Configuration);
 
 type WebpackOverride = (
   baseConfig: webpack.Configuration
@@ -56,7 +56,7 @@ export function getBaseWebpackConfig(
     requireModule(configPath)
   ) as WebpackConfigExport;
   return typeof userConfigExport === 'function'
-    ? userConfigExport(process.env.NODE_ENV || 'development', argv)
+    ? userConfigExport(argv.env, argv)
     : userConfigExport;
 }
 

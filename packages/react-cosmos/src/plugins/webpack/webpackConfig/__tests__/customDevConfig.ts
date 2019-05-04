@@ -1,6 +1,6 @@
 import webpack from 'webpack';
 // NOTE: Mock files need to imported before modules that use the mocked APIs
-import { unmockCliArgs } from '../../../../testHelpers/mockYargs';
+import { unmockCliArgs, mockCliArgs } from '../../../../testHelpers/mockYargs';
 import { mockConsole } from '../../../../testHelpers/mockConsole';
 import { mockFile } from '../../../../testHelpers/mockFs';
 import { createCosmosConfig } from '../../../../config';
@@ -8,11 +8,15 @@ import { RENDERER_FILENAME } from '../../../../shared/playgroundHtml';
 import { HtmlWebpackPlugin } from './../htmlPlugin';
 import { getDevWebpackConfig } from '..';
 
+const mockWebpackConfig = jest.fn(() => ({
+  module: { rules: [MY_RULE] },
+  plugins: [MY_PLUGIN]
+}));
+
 beforeAll(() => {
-  mockFile('mywebpack.config.js', {
-    module: { rules: [MY_RULE] },
-    plugins: [MY_PLUGIN]
-  });
+  mockWebpackConfig.mockClear();
+  mockCliArgs({ env: { prod: true }, fooEnvVar: true });
+  mockFile('mywebpack.config.js', mockWebpackConfig);
   mockFile('mywebpack.override.js', (webpackConfig: webpack.Configuration) => ({
     ...webpackConfig,
     plugins: [...(webpackConfig.plugins || []), MY_PLUGIN2]
@@ -39,6 +43,13 @@ async function getCustomDevWebpackConfig() {
     return getDevWebpackConfig(cosmosConfig, webpack);
   });
 }
+
+it('calls webpack config function with correct args', async () => {
+  await getCustomDevWebpackConfig();
+  const [env, argv] = mockWebpackConfig.mock.calls[0] as any[];
+  expect(env.prod).toBe(true);
+  expect(argv.fooEnvVar).toBe(true);
+});
 
 it('includes user rule', async () => {
   const { module } = await getCustomDevWebpackConfig();
