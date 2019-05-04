@@ -34,7 +34,8 @@ it('renders "error" message', () => {
   registerTestPlugins();
   const { getByText } = loadTestPlugins();
 
-  getByText(/renderer not responding/i);
+  getByText(/renderer/i);
+  getByText(/not responding/i);
 });
 
 it('renders "help" link', () => {
