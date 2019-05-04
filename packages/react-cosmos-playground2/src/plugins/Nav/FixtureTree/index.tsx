@@ -29,11 +29,10 @@ export function FixtureTree({
       setTreeExpansion({ ...treeExpansion, [nodePath]: expanded }),
     [setTreeExpansion, treeExpansion]
   );
-  const rootNode = getFixtureTree({
-    fixtures,
-    fixturesDir,
-    fixtureFileSuffix
-  });
+  const rootNode = React.useMemo(
+    () => getFixtureTree({ fixtures, fixturesDir, fixtureFileSuffix }),
+    [fixtures, fixturesDir, fixtureFileSuffix]
+  );
   return (
     <Container>
       <FixtureTreeNode
