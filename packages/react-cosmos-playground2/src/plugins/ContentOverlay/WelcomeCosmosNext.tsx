@@ -3,12 +3,13 @@ import styled from 'styled-components';
 import { AstronautIllustration } from '../../shared/illustrations';
 import { IllustrationContainer } from './shared';
 
-// TODO: Make "Cosmos Next" unbreakable
 export function WelcomeCosmosNext() {
   return (
     <Container>
       <Content>
-        <Header>Welcome to Cosmos Next</Header>
+        <Header>
+          Welcome to <Unbreakable>Cosmos Next</Unbreakable>
+        </Header>
         <List>
           <li>
             <Bullet />
@@ -159,4 +160,8 @@ const ActionLink = styled.a`
   text-transform: uppercase;
   letter-spacing: 0.1em;
   text-decoration: none;
+`;
+
+const Unbreakable = styled.span`
+  white-space: nowrap;
 `;
