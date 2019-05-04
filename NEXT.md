@@ -69,6 +69,8 @@ export default {
 
 The object property names will show up as fixture names in the Cosmos UI.
 
+> [See this comment](https://github.com/react-cosmos/react-cosmos/issues/924#issuecomment-462082405) for the reasoning behind this solution (vs named exports).
+
 ## Decorators
 
 Wrapping components inside fixtures is now easy, but can become repetitive. _Decorators_ can be used to apply one or more component wrappers to a group of fixtures automatically.
