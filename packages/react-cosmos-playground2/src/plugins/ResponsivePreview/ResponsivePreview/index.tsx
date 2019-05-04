@@ -22,7 +22,6 @@ type State = {
   scale: boolean;
 };
 
-// TODO: Update container size on left nav resize
 export class ResponsivePreview extends React.Component<Props, State> {
   state = {
     container: null,

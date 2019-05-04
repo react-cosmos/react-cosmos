@@ -10,13 +10,12 @@ type Props = {
   setNavWidth: (width: number) => unknown;
 };
 
-// TODO: Show overlay over renderer preview while dragging
 export function Layout({ storageCacheReady, navWidth, setNavWidth }: Props) {
   const handleNavWidthChange = React.useCallback(
     (newWidth: number) => setNavWidth(restrictNavWidth(newWidth)),
     [setNavWidth]
   );
-  const dragElRef = useDrag({
+  const { dragElRef, dragging } = useDrag({
     value: navWidth,
     onChange: handleNavWidthChange
   });
@@ -38,6 +37,7 @@ export function Layout({ storageCacheReady, navWidth, setNavWidth }: Props) {
           <Slot name="rendererPreview" />
           <Slot name="contentOverlay" />
         </PreviewContainer>
+        {dragging && <CenterDragOverlay />}
       </Center>
       <div style={{ zIndex: 3 }}>
         <Slot name="right" />
@@ -66,6 +66,7 @@ const Left = styled.div`
 `;
 
 const Center = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -79,6 +80,17 @@ const PreviewContainer = styled.div`
   display: flex;
   position: relative;
   overflow: hidden;
+`;
+
+// The purpose of CenterDragOverlay is to cover the content area, which can
+// contain the renderer preview iframe, while dragging because document
+// 'mousemove' events are no longer captured while hovering over an iframe
+const CenterDragOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 `;
 
 const DragHandle = styled.div`

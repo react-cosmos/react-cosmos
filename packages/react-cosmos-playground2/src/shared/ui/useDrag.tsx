@@ -59,7 +59,7 @@ export function useDrag({ value, onChange }: UseDragArgs) {
   // concern, we can make handleDragStart depend on a constant ref that stays
   // in sync with "value".
   const onUnmount = React.useRef<(() => unknown) | null>(null);
-  return React.useCallback(
+  const dragElRef = React.useCallback(
     (elRef: HTMLElement | null) => {
       if (elRef) {
         elRef.addEventListener('mousedown', handleDragStart);
@@ -72,4 +72,6 @@ export function useDrag({ value, onChange }: UseDragArgs) {
     },
     [handleDragStart]
   );
+
+  return { dragElRef, dragging: dragState !== null };
 }
