@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { AstronautIllustration } from '../../shared/illustrations';
-import { IllustrationContainer } from './shared';
+import { IllustrationContainer, Unbreakable } from './shared';
 
 export function WelcomeCosmosNext() {
   return (
@@ -60,13 +60,13 @@ const Container = styled.div`
 
 const Content = styled.div`
   max-width: 512px;
-  padding: 0 64px 0 32px;
+  padding: 0 32px;
   font-size: 16px;
   line-height: 1.5em;
   color: var(--grey1);
 
   strong {
-    font-weight: 600;
+    font-weight: 500;
   }
 `;
 
@@ -160,8 +160,4 @@ const ActionLink = styled.a`
   text-transform: uppercase;
   letter-spacing: 0.1em;
   text-decoration: none;
-`;
-
-const Unbreakable = styled.span`
-  white-space: nowrap;
 `;
