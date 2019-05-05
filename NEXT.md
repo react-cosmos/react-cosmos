@@ -24,7 +24,7 @@ Configuring webpack is the least romantic aspect of the Cosmos setup. Luckily, y
 
 ### Default webpack config
 
-If you're lucky, Cosmos manages to get webpack working without human intervention. Try it: Run Cosmos and cover your face in case the terminal explodes.
+In many cases Cosmos manages to get webpack working without human intervention. Try running Cosmos as is first.
 
 ### Custom webpack config
 
