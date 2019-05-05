@@ -28,7 +28,7 @@ In many cases Cosmos manages to get webpack working without human intervention. 
 
 ### Custom webpack config
 
-Probably the most common scenario. Most of us end up with a hairy custom config sooner or later. Use the `webpack.configPath` setting to point to an existing webpack config.
+Probably the most common scenario. Most of us end up with a hairy webpack config sooner or later. Use the `webpack.configPath` setting to point to an existing webpack config.
 
 You can also point to a module inside a dependency, like in the following Create React App example.
 
