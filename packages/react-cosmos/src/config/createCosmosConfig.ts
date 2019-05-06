@@ -22,7 +22,8 @@ export function createCosmosConfig(
     userDepsFilePath: getUserDepsFilePath(cosmosConfigInput, rootDir),
     hostname: getHostname(cosmosConfigInput),
     port: getPort(cosmosConfigInput),
-    globalImports: getGlobalImports(cosmosConfigInput, rootDir)
+    globalImports: getGlobalImports(cosmosConfigInput, rootDir),
+    ui: cosmosConfigInput.ui || {}
   };
 }
 
