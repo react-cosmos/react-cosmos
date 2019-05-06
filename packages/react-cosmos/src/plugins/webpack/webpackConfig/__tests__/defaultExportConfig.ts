@@ -1,17 +1,12 @@
 import webpack from 'webpack';
 // NOTE: Mock files need to imported before modules that use the mocked APIs
-import { mockCliArgs, unmockCliArgs } from '../../../../testHelpers/mockYargs';
+import { unmockCliArgs } from '../../../../testHelpers/mockYargs';
 import { getCwdPath } from '../../../../testHelpers/cwd';
 import { mockConsole } from '../../../../testHelpers/mockConsole';
 import { createCosmosConfig } from '../../../../config';
 import { RENDERER_FILENAME } from '../../../../shared/playgroundHtml';
 import { HtmlWebpackPlugin } from './../htmlPlugin';
 import { getExportWebpackConfig } from '..';
-
-beforeAll(() => {
-  // Prevent Cosmos from intercepting the --config arg passed to Jest
-  mockCliArgs({});
-});
 
 afterAll(() => {
   unmockCliArgs();

@@ -34,7 +34,7 @@ jest.mock('../shared/fs', () => {
     dirExists,
 
     __mockFile(filePath: string, fileMock: any) {
-      fileMocks = { [filePath]: fileMock };
+      fileMocks = { ...fileMocks, [filePath]: fileMock };
     },
 
     __mockDir(dirPath: string) {

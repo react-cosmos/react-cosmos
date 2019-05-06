@@ -3,11 +3,11 @@ import webpack from 'webpack';
 import { CosmosConfig } from '../../../config';
 import { createWebpackCosmosConfig } from '../cosmosConfig/webpack';
 import {
-  getBaseWebpackConfig,
+  getUserWebpackConfig,
   resolveDomRendererPath,
   resolveClientPath,
   getUserDepsLoaderRule,
-  getEnvVarPlugin,
+  getGlobalsPlugin,
   hasPlugin
 } from './shared';
 import { ensureHtmlWebackPlugin } from './htmlPlugin';
@@ -16,7 +16,7 @@ export function getDevWebpackConfig(
   cosmosConfig: CosmosConfig,
   userWebpack: typeof webpack
 ): webpack.Configuration {
-  const baseWebpackConfig = getBaseWebpackConfig(cosmosConfig, userWebpack);
+  const baseWebpackConfig = getUserWebpackConfig(cosmosConfig, userWebpack);
   return {
     ...baseWebpackConfig,
     entry: getEntry(cosmosConfig),
@@ -67,9 +67,9 @@ function getPlugins(
   userWebpack: typeof webpack
 ) {
   const existingPlugins = baseWebpackConfig.plugins || [];
-  const envVarPlugin = getEnvVarPlugin(cosmosConfig, userWebpack, true);
+  const globalsPlugin = getGlobalsPlugin(cosmosConfig, userWebpack, true);
   const noEmitErrorsPlugin = new userWebpack.NoEmitOnErrorsPlugin();
-  let plugins = [...existingPlugins, envVarPlugin, noEmitErrorsPlugin];
+  let plugins = [...existingPlugins, globalsPlugin, noEmitErrorsPlugin];
 
   const { hotReload } = createWebpackCosmosConfig(cosmosConfig);
   if (hotReload && !hasPlugin(plugins, 'HotModuleReplacementPlugin')) {

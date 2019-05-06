@@ -2,11 +2,11 @@ import path from 'path';
 import webpack from 'webpack';
 import { CosmosConfig } from '../../../config';
 import {
-  getBaseWebpackConfig,
+  getUserWebpackConfig,
   resolveDomRendererPath,
   resolveClientPath,
   getUserDepsLoaderRule,
-  getEnvVarPlugin
+  getGlobalsPlugin
 } from './shared';
 import { ensureHtmlWebackPlugin } from './htmlPlugin';
 
@@ -14,7 +14,7 @@ export function getExportWebpackConfig(
   cosmosConfig: CosmosConfig,
   userWebpack: typeof webpack
 ): webpack.Configuration {
-  const baseWebpackConfig = getBaseWebpackConfig(cosmosConfig, userWebpack);
+  const baseWebpackConfig = getUserWebpackConfig(cosmosConfig, userWebpack);
   return {
     ...baseWebpackConfig,
     entry: getEntry(),
@@ -58,12 +58,12 @@ function getPlugins(
   userWebpack: typeof webpack
 ) {
   const existingPlugins = baseWebpackConfig.plugins || [];
-  const envVarPlugin = getEnvVarPlugin(cosmosConfig, userWebpack, false);
+  const globalsPlugin = getGlobalsPlugin(cosmosConfig, userWebpack, false);
   const noEmitErrorsPlugin = new userWebpack.NoEmitOnErrorsPlugin();
 
   return ensureHtmlWebackPlugin(cosmosConfig, [
     ...existingPlugins,
-    envVarPlugin,
+    globalsPlugin,
     noEmitErrorsPlugin
   ]);
 }
