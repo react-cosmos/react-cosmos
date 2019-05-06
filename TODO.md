@@ -1,4 +1,40 @@
+# Roadmap: Cosmos 5
+
+Cosmos Next becomes _Cosmos_. The included features are meant to exceed everything Cosmos Classic offered and make use of the powerful new Cosmos platform.
+
+- [ ] Try: Function fixtures
+- [ ] Notifications facelift
+- [ ] Try: Notifications for fixture create/remove/rename
+- [ ] Try: Resize responsive viewport
+- [ ] Fixture search
+- [ ] Command API with search
+- [ ] Keyboard shortcuts
+- [ ] react-plugin enhancements
+  - [ ] Simplified plug API (Instead of getProps, the assigned component gets the plugin context API as props)
+  - [ ] Plug API for Slot arrays
+- [ ] Auto props panel
+  - [ ] Option to reset or transition props
+- [ ] Controls panel with Hooks API in (function) fixtures
+- [ ] Try: Multi fixture select
+- [ ] Improve React Native integration
+- [ ] Refresh docs
+- [ ] Maybe: Marketing website
+- [ ] Migration aids (eg. code transforms and support)
+
+Plugin APIs will be released later, under minor versions.
+
+## Backlog
+
+Not part of v5, but the most notable features to pursue after.
+
+- [ ] "Check all" button to detect broken fixtures
+- [ ] UI-generated fixture variations
+- [ ] Pin fixture
+- [ ] VSCode extension (simpler UI without nav but with control panel)
+
 # Roadmap: Cosmos Next
+
+> **May 6, 2019:** JSX fixtures have been well received and already adopted by some, even though they're released under an early alpha version. The new UI has slowly evolved and will soon outgrow Cosmos Classic. Lots of exciting ideas in the pipeline for the new Cosmos platform, some including the latest addition to React: Hooks. Old packages have been moved to [a dedicated repo](http://github.com/react-cosmos/react-cosmos-classic) and the Cosmos repo is now 100% fresh TypeScript code. Cosmos Next is here to stay, time to focus on a public release!
 
 The innovations included in the next generation of Cosmos have already been designed, tested and implemented for the most part. This roadmap will put the the all-new **JSX fixtures** and **Pluggable UI** into the user's hands.
 
