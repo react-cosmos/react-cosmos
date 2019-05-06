@@ -56,7 +56,7 @@ The override function receives a base webpack config — the default one generat
 
 ```js
 // webpack.override.js
-module.exports = webpackConfig => {
+module.exports = (webpackConfig, env) => {
   return { ...webpackConfig /* do your thing */ };
 };
 ```
