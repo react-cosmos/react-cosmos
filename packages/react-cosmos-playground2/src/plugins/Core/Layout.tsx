@@ -49,9 +49,10 @@ export function Layout({
 
   // z indexes are set here on purpose to show the layer hierarchy at a glance
   return (
-    <Container>
+    <Container draggingNav={dragging}>
       <Left style={{ zIndex: 2, width: navWidth }}>
         <Slot name="left" />
+        {dragging && <DragOverlay />}
         <DragHandle ref={dragElRef} />
       </Left>
       <Center key="center" style={{ zIndex: 1 }}>
@@ -60,7 +61,7 @@ export function Layout({
           <Slot name="rendererPreview" />
           <Slot name="contentOverlay" />
         </PreviewContainer>
-        {dragging && <CenterDragOverlay />}
+        {dragging && <DragOverlay />}
       </Center>
       <div style={{ zIndex: 3 }}>
         <Slot name="right" />
@@ -72,13 +73,14 @@ export function Layout({
   );
 }
 
-const Container = styled.div`
+const Container = styled.div<{ draggingNav?: boolean }>`
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   display: flex;
+  cursor: ${props => (props.draggingNav ? 'col-resize' : 'default')};
 `;
 
 const Left = styled.div`
@@ -105,17 +107,6 @@ const PreviewContainer = styled.div`
   overflow: hidden;
 `;
 
-// The purpose of CenterDragOverlay is to cover the content area, which can
-// contain the renderer preview iframe, while dragging because document
-// 'mousemove' events are no longer captured while hovering over an iframe
-const CenterDragOverlay = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-`;
-
 const DragHandle = styled.div`
   position: absolute;
   top: 0;
@@ -124,4 +115,15 @@ const DragHandle = styled.div`
   height: 100%;
   cursor: col-resize;
   user-select: none;
+`;
+
+// The purpose of DragOverlay is to cover other elements while dragging, such
+// as the renderer preview iframe, which sucks up `mousemove` events, or the
+// links in the fixture tree view which change the mouse cursor.
+const DragOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 `;
