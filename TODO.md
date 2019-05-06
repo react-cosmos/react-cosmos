@@ -4,7 +4,8 @@ Cosmos Next becomes _Cosmos_. The included features are meant to exceed everythi
 
 - [ ] Try: Function fixtures
 - [ ] Notifications facelift
-- [ ] Try: Notifications for fixture create/remove/rename
+  - [ ] Try: Notifications for fixture create/remove/rename
+  - [ ] Try: Notification on HMR [#522](https://github.com/react-cosmos/react-cosmos/issues/522)
 - [ ] Try: Resize responsive viewport
 - [ ] Fixture search
 - [ ] Command API with search
