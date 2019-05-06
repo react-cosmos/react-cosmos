@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render, waitForElement } from 'react-testing-library';
+import { render, waitForElement, wait } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
 import { createArrayPlug } from '../../../shared/slot';
 import { cleanup, mockPlug } from '../../../testHelpers/plugin';
@@ -14,7 +14,7 @@ function registerTestPlugins() {
     getItem: () => {}
   });
   mockRouter({
-    isFullScreen: () => false
+    isFullScreen: () => true
   });
   register();
 }
@@ -31,20 +31,20 @@ function createGlobalPlug(element: React.ReactElement<any>) {
   });
 }
 
-it('renders "left" slot', async () => {
+it('does not render "left" slot', async () => {
   registerTestPlugins();
   mockPlug({ slotName: 'left', render: 'we are the robots' });
 
-  const { getByText } = loadTestPlugins();
-  await waitForElement(() => getByText(/we are the robots/i));
+  const { queryByText } = loadTestPlugins();
+  await wait(() => expect(queryByText(/we are the robots/i)).toBeNull());
 });
 
-it('renders "rendererHeader" slot', async () => {
+it('does not render "rendererHeader" slot', async () => {
   registerTestPlugins();
   mockPlug({ slotName: 'rendererHeader', render: 'we are the robots' });
 
-  const { getByText } = loadTestPlugins();
-  await waitForElement(() => getByText(/we are the robots/i));
+  const { queryByText } = loadTestPlugins();
+  await wait(() => expect(queryByText(/we are the robots/i)).toBeNull());
 });
 
 it('renders "rendererPreview" slot', async () => {
@@ -63,12 +63,12 @@ it('renders "contentOverlay" slot', async () => {
   await waitForElement(() => getByText(/we are the robots/i));
 });
 
-it('renders "right" slot', async () => {
+it('does not render "right" slot', async () => {
   registerTestPlugins();
   mockPlug({ slotName: 'right', render: 'we are the robots' });
 
-  const { getByText } = loadTestPlugins();
-  await waitForElement(() => getByText(/we are the robots/i));
+  const { queryByText } = loadTestPlugins();
+  await wait(() => expect(queryByText(/we are the robots/i)).toBeNull());
 });
 
 it('renders "global" plugs', async () => {

@@ -15,7 +15,6 @@ function registerTestPlugins({
   register();
   mockMethodsOf<RouterSpec>('router', {
     getSelectedFixtureId: () => ({ path: 'foo', name: null }),
-    isFullScreen: () => false,
     selectFixture,
     unselectFixture
   });

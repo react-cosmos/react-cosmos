@@ -82,7 +82,7 @@ const Container = styled.div`
 
 const Delay = styled.div`
   opacity: 0;
-  animation: fadeIn var(--quick) linear 0.3s forwards;
+  animation: fadeIn var(--quick) linear 0.5s forwards;
 
   @keyframes fadeIn {
     0% {

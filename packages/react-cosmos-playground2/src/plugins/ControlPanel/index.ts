@@ -18,7 +18,6 @@ plug({
 
     return {
       selectedFixtureId: router.getSelectedFixtureId(),
-      fullScreen: router.isFullScreen(),
       connectedRendererIds: rendererCore.getConnectedRendererIds(),
       primaryRendererId: rendererCore.getPrimaryRendererId(),
       fixtureState: rendererCore.getFixtureState(),

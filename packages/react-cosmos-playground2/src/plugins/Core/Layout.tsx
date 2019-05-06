@@ -6,11 +6,18 @@ import { NAV_WIDTH_DEFAULT, restrictNavWidth } from './shared';
 
 type Props = {
   storageCacheReady: boolean;
+  fullScreen: boolean;
   navWidth: number;
   setNavWidth: (width: number) => unknown;
 };
 
-export function Layout({ storageCacheReady, navWidth, setNavWidth }: Props) {
+// TODO: Create slot inside previewContainer for notifications
+export function Layout({
+  storageCacheReady,
+  fullScreen,
+  navWidth,
+  setNavWidth
+}: Props) {
   const handleNavWidthChange = React.useCallback(
     (newWidth: number) => setNavWidth(restrictNavWidth(newWidth)),
     [setNavWidth]
@@ -24,6 +31,22 @@ export function Layout({ storageCacheReady, navWidth, setNavWidth }: Props) {
     return <Container />;
   }
 
+  if (fullScreen) {
+    return (
+      <Container>
+        <Center key="center" style={{ zIndex: 1 }}>
+          <PreviewContainer key="previewContainer">
+            <Slot name="rendererPreview" />
+            <Slot name="contentOverlay" />
+          </PreviewContainer>
+        </Center>
+        <div style={{ zIndex: 2 }}>
+          <Slot name="global" />
+        </div>
+      </Container>
+    );
+  }
+
   // z indexes are set here on purpose to show the layer hierarchy at a glance
   return (
     <Container>
@@ -31,9 +54,9 @@ export function Layout({ storageCacheReady, navWidth, setNavWidth }: Props) {
         <Slot name="left" />
         <DragHandle ref={dragElRef} />
       </Left>
-      <Center style={{ zIndex: 1 }}>
+      <Center key="center" style={{ zIndex: 1 }}>
         <Slot name="rendererHeader" />
-        <PreviewContainer>
+        <PreviewContainer key="previewContainer">
           <Slot name="rendererPreview" />
           <Slot name="contentOverlay" />
         </PreviewContainer>

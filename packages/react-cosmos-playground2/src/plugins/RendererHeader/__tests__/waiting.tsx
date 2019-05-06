@@ -11,8 +11,7 @@ afterEach(cleanup);
 function registerTestPlugins() {
   register();
   mockMethodsOf<RouterSpec>('router', {
-    getSelectedFixtureId: () => null,
-    isFullScreen: () => false
+    getSelectedFixtureId: () => null
   });
   mockMethodsOf<RendererCoreSpec>('rendererCore', {
     isRendererConnected: () => false,

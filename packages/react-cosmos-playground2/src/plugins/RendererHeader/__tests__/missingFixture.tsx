@@ -12,7 +12,6 @@ function registerTestPlugins(unselectFixture = () => {}) {
   register();
   mockMethodsOf<RouterSpec>('router', {
     getSelectedFixtureId: () => ({ path: 'foo', name: null }),
-    isFullScreen: () => false,
     unselectFixture
   });
   mockMethodsOf<RendererCoreSpec>('rendererCore', {

@@ -8,7 +8,6 @@ import { PropsState } from './PropsState';
 
 type Props = {
   selectedFixtureId: null | FixtureId;
-  fullScreen: boolean;
   connectedRendererIds: RendererId[];
   primaryRendererId: null | RendererId;
   fixtureState: FixtureState;
@@ -20,13 +19,12 @@ export class ControlPanel extends React.Component<Props> {
   render() {
     const {
       selectedFixtureId,
-      fullScreen,
       connectedRendererIds,
       primaryRendererId,
       fixtureState
     } = this.props;
 
-    if (!primaryRendererId || fullScreen || !selectedFixtureId) {
+    if (!primaryRendererId || !selectedFixtureId) {
       return null;
     }
 
