@@ -137,6 +137,27 @@ A main feature of the Cosmos Next redesign is the brand-new UI plugin architectu
 
 While we get feedback for the new JSX fixtures and decorators, I will continue to add feature parity with the old Cosmos UI and gradually release the powerful plugin API for mass consumption. Exciting things ahead!
 
+### Custom responsive viewports
+
+`responsivePreview` is a plugin included by default, and you can customize it through the Cosmos config.
+
+```json
+{
+  "ui": {
+    "responsivePreview": {
+      "devices": [
+        { "label": "iPhone 5", "width": 320, "height": 568 },
+        { "label": "iPhone 6", "width": 375, "height": 667 },
+        { "label": "iPhone 6 Plus", "width": 414, "height": 736 },
+        { "label": "Medium", "width": 1024, "height": 768 },
+        { "label": "Large", "width": 1440, "height": 900 },
+        { "label": "1080p", "width": 1920, "height": 1080 }
+      ]
+    }
+  }
+}
+```
+
 ## Where is my old Cosmos?
 
 Cosmos Classic isn't going anywhere. First, it will take months before a release candidate for v5 (Cosmos Next) is ready. Second, the classic packages have been moved to [a dedicated repo](https://github.com/react-cosmos/react-cosmos-classic), which means we can continue to maintain Cosmos Classic or even run it alongside Cosmos Next in the same project (during the migration period).
