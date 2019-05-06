@@ -8,7 +8,6 @@ type Props = {
   fixturesDir: string;
   fixtureFileSuffix: string;
   selectedFixtureId: null | FixtureId;
-  fullScreen: boolean;
   rendererConnected: boolean;
   fixtures: FixtureNamesByPath;
   treeExpansion: TreeExpansion;
@@ -20,17 +19,12 @@ export function Nav({
   fixturesDir,
   fixtureFileSuffix,
   selectedFixtureId,
-  fullScreen,
   rendererConnected,
   fixtures,
   treeExpansion,
   selectFixture,
   setTreeExpansion
 }: Props) {
-  if (fullScreen) {
-    return null;
-  }
-
   if (!rendererConnected) {
     return <Container />;
   }

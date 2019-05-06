@@ -23,7 +23,6 @@ plug({
       fixturesDir,
       fixtureFileSuffix,
       selectedFixtureId: router.getSelectedFixtureId(),
-      fullScreen: router.isFullScreen(),
       rendererConnected: rendererCore.isRendererConnected(),
       fixtures: rendererCore.getFixtures(),
       treeExpansion:

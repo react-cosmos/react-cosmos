@@ -3,6 +3,7 @@ import { StorageSpec } from '../Storage/public';
 import { CoreSpec } from './public';
 import { Layout } from './Layout';
 import { NAV_WIDTH_STORAGE_KEY, NAV_WIDTH_DEFAULT } from './shared';
+import { RouterSpec } from '../Router/public';
 
 type Context = PluginContext<CoreSpec>;
 
@@ -40,14 +41,18 @@ plug({
     if (!storageCacheReady) {
       return {
         storageCacheReady: false,
+        fullScreen: false,
         navWidth: 0,
         setNavWidth: () => {}
       };
     }
 
     const storage = context.getMethodsOf<StorageSpec>('storage');
+    const router = context.getMethodsOf<RouterSpec>('router');
+
     return {
       storageCacheReady: true,
+      fullScreen: router.isFullScreen(),
       navWidth:
         storage.getItem<number>(NAV_WIDTH_STORAGE_KEY) || NAV_WIDTH_DEFAULT,
       setNavWidth: (newNavWidth: number) =>

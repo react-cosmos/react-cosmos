@@ -12,7 +12,6 @@ import { Button } from '../../shared/ui';
 
 type Props = {
   selectedFixtureId: null | FixtureId;
-  fullScreen: boolean;
   rendererConnected: boolean;
   validFixtureSelected: boolean;
   selectFixture: (fixtureId: FixtureId, fullScreen: boolean) => void;
@@ -22,16 +21,11 @@ type Props = {
 // TODO: Improve UX of refresh button, which can seem like it's not doing anything
 export function RendererHeader({
   selectedFixtureId,
-  fullScreen,
   rendererConnected,
   validFixtureSelected,
   selectFixture,
   unselectFixture
 }: Props) {
-  if (fullScreen) {
-    return null;
-  }
-
   if (!rendererConnected) {
     return (
       <Container>
