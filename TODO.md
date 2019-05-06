@@ -9,9 +9,6 @@ Cosmos Next becomes _Cosmos_. The included features are meant to exceed everythi
 - [ ] Fixture search
 - [ ] Command API with search
 - [ ] Keyboard shortcuts
-- [ ] react-plugin enhancements
-  - [ ] Simplified plug API (Instead of getProps, the assigned component gets the plugin context API as props)
-  - [ ] Plug API for Slot arrays
 - [ ] Auto props panel
   - [ ] Option to reset or transition props
 - [ ] Controls panel with Hooks API in (function) fixtures
@@ -22,6 +19,11 @@ Cosmos Next becomes _Cosmos_. The included features are meant to exceed everythi
 - [ ] Migration aids (eg. code transforms and support)
 
 Plugin APIs will be released later, under minor versions.
+
+`react-plugin` enhancements:
+
+- [ ] Simplify plug API (instead of getProps, the component gets the plugin context API as props)
+- [ ] Plug API for Slot arrays
 
 ## Backlog
 
