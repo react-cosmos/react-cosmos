@@ -59,7 +59,7 @@ export function getBaseWebpackConfig(
     requireModule(configPath)
   ) as WebpackConfigExport;
   return typeof userConfigExport === 'function'
-    ? userConfigExport(argv.env, argv)
+    ? userConfigExport(argv.env || getNodeEnv(), argv)
     : userConfigExport;
 }
 
@@ -114,6 +114,8 @@ function removeTrailingSlash(url: string) {
   return url.replace(/\/$/, '');
 }
 
-function getNodeEnv() {
-  return process.env.NODE_ENV || 'development';
+export function getNodeEnv() {
+  // Disallow non dev/prod environments, like "test" inside Jest, because
+  // they are not supported by webpack
+  return process.env.NODE_ENV === 'production' ? 'production' : 'development';
 }
