@@ -6,7 +6,7 @@ import {
   resolveDomRendererPath,
   resolveClientPath,
   getUserDepsLoaderRule,
-  getEnvVarPlugin
+  getGlobalsPlugin
 } from './shared';
 import { ensureHtmlWebackPlugin } from './htmlPlugin';
 
@@ -58,12 +58,12 @@ function getPlugins(
   userWebpack: typeof webpack
 ) {
   const existingPlugins = baseWebpackConfig.plugins || [];
-  const envVarPlugin = getEnvVarPlugin(cosmosConfig, userWebpack, false);
+  const globalsPlugin = getGlobalsPlugin(cosmosConfig, userWebpack, false);
   const noEmitErrorsPlugin = new userWebpack.NoEmitOnErrorsPlugin();
 
   return ensureHtmlWebackPlugin(cosmosConfig, [
     ...existingPlugins,
-    envVarPlugin,
+    globalsPlugin,
     noEmitErrorsPlugin
   ]);
 }

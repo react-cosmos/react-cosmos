@@ -7,7 +7,7 @@ import {
   resolveDomRendererPath,
   resolveClientPath,
   getUserDepsLoaderRule,
-  getEnvVarPlugin,
+  getGlobalsPlugin,
   hasPlugin
 } from './shared';
 import { ensureHtmlWebackPlugin } from './htmlPlugin';
@@ -67,9 +67,9 @@ function getPlugins(
   userWebpack: typeof webpack
 ) {
   const existingPlugins = baseWebpackConfig.plugins || [];
-  const envVarPlugin = getEnvVarPlugin(cosmosConfig, userWebpack, true);
+  const globalsPlugin = getGlobalsPlugin(cosmosConfig, userWebpack, true);
   const noEmitErrorsPlugin = new userWebpack.NoEmitOnErrorsPlugin();
-  let plugins = [...existingPlugins, envVarPlugin, noEmitErrorsPlugin];
+  let plugins = [...existingPlugins, globalsPlugin, noEmitErrorsPlugin];
 
   const { hotReload } = createWebpackCosmosConfig(cosmosConfig);
   if (hotReload && !hasPlugin(plugins, 'HotModuleReplacementPlugin')) {

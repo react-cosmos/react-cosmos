@@ -37,10 +37,7 @@ export function getUserWebpackConfig(
     requireModule(overridePath)
   ) as WebpackOverride;
 
-  return webpackOverride(
-    baseWebpackConfig,
-    process.env.NODE_ENV || 'development'
-  );
+  return webpackOverride(baseWebpackConfig, getNodeEnv());
 }
 
 export function getBaseWebpackConfig(
@@ -81,18 +78,17 @@ export function getUserDepsLoaderRule() {
   };
 }
 
-export function getEnvVarPlugin(
+export function getGlobalsPlugin(
   { publicUrl }: CosmosConfig,
   userWebpack: typeof webpack,
-  isDev: boolean
+  devServerOn: boolean
 ) {
   const cleanPublicUrl = removeTrailingSlash(publicUrl);
   return new userWebpack.DefinePlugin({
-    // Having __DEV__ as boolean is useful because "if (__DEV__)" blocks can
-    // get stripped automatically when compiling a static export build
-    __DEV__: JSON.stringify(isDev),
+    // "if (__DEV__)" blocks get stripped when compiling a static export build
+    __DEV__: JSON.stringify(devServerOn),
     'process.env': {
-      NODE_ENV: JSON.stringify(isDev ? 'development' : 'production'),
+      NODE_ENV: JSON.stringify(getNodeEnv()),
       PUBLIC_URL: JSON.stringify(cleanPublicUrl)
     }
   });
@@ -116,4 +112,8 @@ export function isInstanceOfPlugin(
 
 function removeTrailingSlash(url: string) {
   return url.replace(/\/$/, '');
+}
+
+function getNodeEnv() {
+  return process.env.NODE_ENV || 'development';
 }
