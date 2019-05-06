@@ -13,8 +13,11 @@ type WebpackConfigExport =
   // https://webpack.js.org/configuration/configuration-types/#exporting-a-function
   | ((env: unknown, argv: {}) => webpack.Configuration);
 
+// Override arguments are inspired by react-app-rewired
+// https://github.com/timarney/react-app-rewired/blob/b673379d32fe7b57c71667f4827f3b16e3717363/scripts/start.js#L22
 type WebpackOverride = (
-  baseConfig: webpack.Configuration
+  baseConfig: webpack.Configuration,
+  env: string
 ) => webpack.Configuration;
 
 export function getUserWebpackConfig(
@@ -34,7 +37,10 @@ export function getUserWebpackConfig(
     requireModule(overridePath)
   ) as WebpackOverride;
 
-  return webpackOverride(baseWebpackConfig);
+  return webpackOverride(
+    baseWebpackConfig,
+    process.env.NODE_ENV || 'development'
+  );
 }
 
 export function getBaseWebpackConfig(

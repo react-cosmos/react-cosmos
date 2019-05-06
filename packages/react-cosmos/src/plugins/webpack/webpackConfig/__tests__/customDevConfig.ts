@@ -13,14 +13,16 @@ const mockWebpackConfig = jest.fn(() => ({
   plugins: [MY_PLUGIN]
 }));
 
+const mockWebpackOverride = jest.fn((webpackConfig: webpack.Configuration) => ({
+  ...webpackConfig,
+  plugins: [...(webpackConfig.plugins || []), MY_PLUGIN2]
+}));
+
 beforeAll(() => {
   mockWebpackConfig.mockClear();
   mockCliArgs({ env: { prod: true }, fooEnvVar: true });
   mockFile('mywebpack.config.js', mockWebpackConfig);
-  mockFile('mywebpack.override.js', (webpackConfig: webpack.Configuration) => ({
-    ...webpackConfig,
-    plugins: [...(webpackConfig.plugins || []), MY_PLUGIN2]
-  }));
+  mockFile('mywebpack.override.js', mockWebpackOverride);
 });
 
 afterAll(() => {
@@ -59,6 +61,14 @@ it('includes user rule', async () => {
 it('includes plugin from user config', async () => {
   const { plugins } = await getCustomDevWebpackConfig();
   expect(plugins).toContain(MY_PLUGIN);
+});
+
+it('calls override function with env', async () => {
+  await getCustomDevWebpackConfig();
+  expect(mockWebpackOverride).toBeCalledWith(
+    expect.any(Object),
+    process.env.NODE_ENV || 'development'
+  );
 });
 
 it('includes plugin from user override', async () => {
