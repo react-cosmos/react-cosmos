@@ -65,10 +65,7 @@ it('includes plugin from user config', async () => {
 
 it('calls override function with env', async () => {
   await getCustomDevWebpackConfig();
-  expect(mockWebpackOverride).toBeCalledWith(
-    expect.any(Object),
-    process.env.NODE_ENV || 'development'
-  );
+  expect(mockWebpackOverride).toBeCalledWith(expect.any(Object), 'development');
 });
 
 it('includes plugin from user override', async () => {
