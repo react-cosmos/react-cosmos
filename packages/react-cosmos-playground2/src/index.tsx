@@ -10,6 +10,7 @@ import './global/registerPlugins';
 // Config can also contain keys for 3rd party plugins
 export type PlaygroundConfig = {
   core: CoreSpec['config'];
+  [pluginName: string]: {};
 };
 
 // Enable external plugins to use a shared copy of react-plugin. Also enable

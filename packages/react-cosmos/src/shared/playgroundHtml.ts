@@ -11,46 +11,54 @@ export function getDevPlaygroundHtml(
   platformType: PlatformType,
   cosmosConfig: CosmosConfig
 ) {
-  return getPlaygroundHtml(getDevPlaygroungConfig(platformType, cosmosConfig));
-}
-
-export function getStaticPlaygroundHtml(cosmosConfig: CosmosConfig) {
+  const { ui } = cosmosConfig;
   return getPlaygroundHtml({
-    core: {
-      ...getSharedConfig(cosmosConfig),
-      devServerOn: false,
-      webRendererUrl: getWebRendererUrl(cosmosConfig)
-    }
+    ...ui,
+    core: getDevCoreConfig(platformType, cosmosConfig)
   });
 }
 
-function getDevPlaygroungConfig(
+export function getExportPlaygroundHtml(cosmosConfig: CosmosConfig) {
+  const { ui } = cosmosConfig;
+  return getPlaygroundHtml({
+    ...ui,
+    core: getExportCoreConfig(cosmosConfig)
+  });
+}
+
+function getDevCoreConfig(
   platformType: PlatformType,
   cosmosConfig: CosmosConfig
-): PlaygroundConfig {
+): PlaygroundConfig['core'] {
   switch (platformType) {
     case 'native':
       return {
-        core: {
-          ...getSharedConfig(cosmosConfig),
-          devServerOn: true,
-          webRendererUrl: null
-        }
+        ...getSharedCoreConfig(cosmosConfig),
+        devServerOn: true,
+        webRendererUrl: null
       };
     case 'web':
       return {
-        core: {
-          ...getSharedConfig(cosmosConfig),
-          devServerOn: true,
-          webRendererUrl: getWebRendererUrl(cosmosConfig)
-        }
+        ...getSharedCoreConfig(cosmosConfig),
+        devServerOn: true,
+        webRendererUrl: getWebRendererUrl(cosmosConfig)
       };
     default:
       throw new Error(`Invalid platform type: ${platformType}`);
   }
 }
 
-function getSharedConfig(cosmosConfig: CosmosConfig) {
+function getExportCoreConfig(
+  cosmosConfig: CosmosConfig
+): PlaygroundConfig['core'] {
+  return {
+    ...getSharedCoreConfig(cosmosConfig),
+    devServerOn: false,
+    webRendererUrl: getWebRendererUrl(cosmosConfig)
+  };
+}
+
+function getSharedCoreConfig(cosmosConfig: CosmosConfig) {
   const { rootDir, fixturesDir, fixtureFileSuffix } = cosmosConfig;
   return { projectId: rootDir, fixturesDir, fixtureFileSuffix };
 }
