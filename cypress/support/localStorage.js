@@ -1,8 +1,8 @@
 import localForage from 'localforage';
 
 const EXAMPLE_PATH = '/Users/ovidiu/Work/@react-cosmos/react-cosmos/example';
-const TREE_VIEW_STORAGE_KEY = `cosmos-treeExpansion-${EXAMPLE_PATH}`;
+const STORAGE_KEY = `cosmos-${EXAMPLE_PATH}`;
 
-export function clearTreeViewState() {
-  return localForage.removeItem(TREE_VIEW_STORAGE_KEY);
+export function clearStorage() {
+  return localForage.removeItem(STORAGE_KEY);
 }
