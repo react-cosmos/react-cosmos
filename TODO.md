@@ -23,8 +23,8 @@ Plugin APIs will be released later, under minor versions.
 
 `react-plugin` enhancements:
 
-- [ ] Simplify plug API (instead of getProps, the component gets the plugin context API as props)
-- [ ] Plug API for Slot arrays
+- [x] Simplify plug API (instead of getProps, the component gets the plugin context API as props)
+- [x] Plug API for Slot arrays
 
 ## Backlog
 

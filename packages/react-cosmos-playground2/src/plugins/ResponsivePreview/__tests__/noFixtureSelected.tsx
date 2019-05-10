@@ -5,7 +5,7 @@ import {
   RenderResult,
   wait
 } from 'react-testing-library';
-import { loadPlugins, Slot } from 'react-plugin';
+import { loadPlugins, Slot, ArraySlot } from 'react-plugin';
 import { cleanup } from '../../../testHelpers/plugin';
 import { register } from '..';
 import {
@@ -32,7 +32,7 @@ function loadTestPlugins() {
   loadPlugins();
   return render(
     <>
-      <Slot name="rendererActions" />
+      <ArraySlot name="rendererActions" />
       <Slot name="rendererPreviewOuter">
         <div data-testid="previewMock" />
       </Slot>

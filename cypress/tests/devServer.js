@@ -1,4 +1,3 @@
-import { clearTreeViewState } from '../support/localStorage';
 import {
   homepageTests,
   navTests,
@@ -9,7 +8,8 @@ import {
 describe('Dev server', () => {
   // WARNING: These tests are serial and share state
   before(() => {
-    return clearTreeViewState().then(() => cy.visit('http://localhost:5000'));
+    cy.clearStorage();
+    cy.visit('http://localhost:5000');
   });
 
   homepageTests();

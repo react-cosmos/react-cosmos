@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Slot } from 'react-plugin';
+import { ArraySlot } from 'react-plugin';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import {
   XCircleIcon,
@@ -19,7 +19,7 @@ type Props = {
 };
 
 // TODO: Improve UX of refresh button, which can seem like it's not doing anything
-export function RendererHeader({
+export const RendererHeader = React.memo(function RendererHeader({
   selectedFixtureId,
   rendererConnected,
   validFixtureSelected,
@@ -43,7 +43,7 @@ export function RendererHeader({
           <Message>No fixture selected</Message>
         </Left>
         <Right>
-          <Slot name="rendererActions" />
+          <ArraySlot name="rendererActions" />
           <Button disabled icon={<MaximizeIcon />} label="fullscreen" />
         </Right>
       </Container>
@@ -62,7 +62,7 @@ export function RendererHeader({
           />
         </Left>
         <Right>
-          <Slot name="rendererActions" />
+          <ArraySlot name="rendererActions" />
           <Button disabled icon={<MaximizeIcon />} label="fullscreen" />
         </Right>
       </Container>
@@ -82,10 +82,10 @@ export function RendererHeader({
           label="refresh"
           onClick={() => selectFixture(selectedFixtureId, false)}
         />
-        <Slot name="fixtureActions" />
+        <ArraySlot name="fixtureActions" />
       </Left>
       <Right>
-        <Slot name="rendererActions" />
+        <ArraySlot name="rendererActions" />
         <Button
           icon={<MaximizeIcon />}
           label="fullscreen"
@@ -94,7 +94,7 @@ export function RendererHeader({
       </Right>
     </Container>
   );
-}
+});
 
 const Container = styled.div`
   flex-shrink: 0;

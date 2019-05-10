@@ -1,7 +1,7 @@
 import * as rtl from 'react-testing-library';
 import {
   PluginSpec,
-  PlugArgs,
+  PlugComponentType,
   MethodHandlers,
   EventHandlers,
   resetPlugins,
@@ -40,10 +40,13 @@ export function mockMethodsOf<Spec extends PluginSpec>(
   createPlugin<any>({ name: pluginName, methods }).register();
 }
 
-export function mockPlug(plug: PlugArgs<any, {}>) {
+export function mockPlug(
+  slotName: string,
+  component: PlugComponentType<any, any>
+) {
   const name = getNewPluginName();
   const testPlugin = createPlugin({ name });
-  testPlugin.plug(plug);
+  testPlugin.plug(slotName, component);
   testPlugin.register();
 }
 

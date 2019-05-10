@@ -25,6 +25,11 @@ export function Nav({
   selectFixture,
   setTreeExpansion
 }: Props) {
+  const onSelect = React.useCallback(
+    fixtureId => selectFixture(fixtureId, false),
+    [selectFixture]
+  );
+
   if (!rendererConnected) {
     return <Container />;
   }
@@ -37,7 +42,7 @@ export function Nav({
         fixtures={fixtures}
         selectedFixtureId={selectedFixtureId}
         treeExpansion={treeExpansion}
-        onSelect={fixtureId => selectFixture(fixtureId, false)}
+        onSelect={onSelect}
         setTreeExpansion={setTreeExpansion}
       />
     </Container>

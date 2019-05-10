@@ -3,15 +3,12 @@ import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { Button } from '../../shared/ui';
 import { EditIcon } from '../../shared/icons';
 
-export type EditFixtureButtonProps = {
+type Props = {
   devServerOn: boolean;
   selectedFixtureId: FixtureId | null;
 };
 
-export function EditFixtureButton({
-  devServerOn,
-  selectedFixtureId
-}: EditFixtureButtonProps) {
+export function EditFixtureButton({ devServerOn, selectedFixtureId }: Props) {
   if (!devServerOn || !selectedFixtureId) {
     return null;
   }

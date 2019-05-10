@@ -31,12 +31,12 @@ function loadTestPlugins() {
 
 const RENDERER_ACTION = 'foo action';
 function mockRendererAction() {
-  mockPlug({ slotName: 'rendererActions', render: RENDERER_ACTION });
+  mockPlug('rendererActions', () => <>{RENDERER_ACTION}</>);
 }
 
 const FIXTURE_ACTION = 'bar action';
 function mockFixtureAction() {
-  mockPlug({ slotName: 'fixtureActions', render: FIXTURE_ACTION });
+  mockPlug('fixtureActions', () => <>{FIXTURE_ACTION}</>);
 }
 
 it('renders close button', async () => {
