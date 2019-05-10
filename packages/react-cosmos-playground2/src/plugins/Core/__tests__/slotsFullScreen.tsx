@@ -23,10 +23,6 @@ function loadTestPlugins() {
   return render(<Slot name="root" />);
 }
 
-function createGlobalPlug(element: React.ReactElement<any>) {
-  mockPlug('global', () => element);
-}
-
 it('does not render "left" slot', async () => {
   registerTestPlugins();
   mockPlug('left', () => <>we are the robots</>);
@@ -68,9 +64,9 @@ it('does not render "right" slot', async () => {
 });
 
 it('renders "global" plugs', async () => {
-  createGlobalPlug(<>first</>);
-  createGlobalPlug(<>second</>);
-  createGlobalPlug(<>third</>);
+  mockPlug('global', () => <>first</>);
+  mockPlug('global', () => <>second</>);
+  mockPlug('global', () => <>third</>);
   registerTestPlugins();
 
   const { getByText } = loadTestPlugins();
