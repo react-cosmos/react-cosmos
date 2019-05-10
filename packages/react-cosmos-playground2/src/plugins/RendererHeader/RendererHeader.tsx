@@ -19,7 +19,7 @@ type Props = {
 };
 
 // TODO: Improve UX of refresh button, which can seem like it's not doing anything
-export function RendererHeader({
+export const RendererHeader = React.memo(function RendererHeader({
   selectedFixtureId,
   rendererConnected,
   validFixtureSelected,
@@ -94,7 +94,7 @@ export function RendererHeader({
       </Right>
     </Container>
   );
-}
+});
 
 const Container = styled.div`
   flex-shrink: 0;
