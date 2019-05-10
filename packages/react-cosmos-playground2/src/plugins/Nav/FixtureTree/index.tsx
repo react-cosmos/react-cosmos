@@ -15,7 +15,7 @@ type Props = {
   setTreeExpansion: (treeExpansion: TreeExpansion) => unknown;
 };
 
-export function FixtureTree({
+export const FixtureTree = React.memo(function FixtureTree({
   fixturesDir,
   fixtureFileSuffix,
   fixtures,
@@ -45,7 +45,7 @@ export function FixtureTree({
       />
     </Container>
   );
-}
+});
 
 // Reason for inline-block: https://stackoverflow.com/a/53895622/128816
 const Container = styled.div`

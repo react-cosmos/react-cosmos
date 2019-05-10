@@ -9,7 +9,10 @@ type Props = {
   onIframeRef: OnIframeRef;
 };
 
-export function RendererPreview({ rendererUrl, onIframeRef }: Props) {
+export const RendererPreview = React.memo(function RendererPreview({
+  rendererUrl,
+  onIframeRef
+}: Props) {
   if (!rendererUrl) {
     return null;
   }
@@ -26,7 +29,7 @@ export function RendererPreview({ rendererUrl, onIframeRef }: Props) {
       </Container>
     </Slot>
   );
-}
+});
 
 const Container = styled.div`
   width: 100%;

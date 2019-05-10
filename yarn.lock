@@ -9392,26 +9392,20 @@ react-is@^16.6.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.6.0.tgz#456645144581a6e99f6816ae2bd24ee94bdd0c01"
   integrity sha512-q8U7k0Fi7oxF1HvQgyBjPwDXeMplEsArnKt2iYhuIF86+GBbgLHdAmokL3XUFjTd7Q363OSNG55FOGUdONVn1g==
 
-react-is@^16.6.3:
-  version "16.6.3"
-  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.6.3.tgz#d2d7462fcfcbe6ec0da56ad69047e47e56e7eac0"
-  integrity sha512-u7FDWtthB4rWibG/+mFbVd5FvdI20yde86qKGx4lVUTWmPlSWQ4QxbBIrrs+HnXGbxOUlUzTAP/VDmvCwaP2yA==
-
 react-is@^16.8.4, react-is@^16.8.6:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.6.tgz#5bbc1e2d29141c9fbdfed456343fe2bc430a6a16"
   integrity sha512-aUk3bHfZ2bRSVFFbbeVS4i+lNPZr3/WM5jT2J5omUVV1zzcs1nAaf3l51ctA5FFvCRbhrH0bdAsRRQddFJZPtA==
 
-react-plugin@^2.0.0-alpha.2:
-  version "2.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/react-plugin/-/react-plugin-2.0.0-alpha.2.tgz#f304f1b2f65ddffb5a85efa3dee0cbf05b4d1718"
-  integrity sha512-VJs/qKi1JeXSMg16p2YjdYY+4TE2Fsq0IEPKozf3oj3xwpK3xga6qfSwLUahCDdqkGz7mhf7Sr18gVkTIqVXLQ==
+react-plugin@^2.0.0-alpha.3:
+  version "2.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/react-plugin/-/react-plugin-2.0.0-alpha.3.tgz#5b9308590b454dddc7d41b4385b3b1d9e08c785a"
+  integrity sha512-RMWtKnhZFSxtV/b25bdQ8FAGX7Q3cI/puy6YjpwkOT1mNROnyTfIu4fIn5PkZz1ovWZhsilYWS/yuaMJgg4PdQ==
   dependencies:
     "@skidding/linked-list" "^1.0.2"
     array-find-index "^1.0.2"
     lodash "^4.17.11"
-    react-is "^16.6.3"
-    ui-plugin "^2.0.0-alpha.2"
+    ui-plugin "^2.0.0-alpha.3"
 
 react-test-renderer@^16.8.6:
   version "16.8.6"
@@ -11233,10 +11227,10 @@ uglify-js@^3.1.4:
     commander "~2.17.1"
     source-map "~0.6.1"
 
-ui-plugin@^2.0.0-alpha.2:
-  version "2.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/ui-plugin/-/ui-plugin-2.0.0-alpha.2.tgz#966bd666d24e037a8da591346e0cb9d75bacf823"
-  integrity sha512-2jAvwG6Fe0UJjD+692yjeuoF+NefRB4yVBMFpN388zm/Y8k6l1XuekbXXdY2yH6g3zPsU1DzQ3+UIfJLUgVMhg==
+ui-plugin@^2.0.0-alpha.3:
+  version "2.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/ui-plugin/-/ui-plugin-2.0.0-alpha.3.tgz#207255ffe20d66b93325a2c3516b9154b18760e8"
+  integrity sha512-q0SRMrNLCzib2FIhRbBhzLM9I0STbRr6G1V/Y8MPXPDszBxSKdPXTffg4y+BeNGXHbkfWZJqvgG+EGEQCxbwjQ==
   dependencies:
     lodash "^4.17.11"
 

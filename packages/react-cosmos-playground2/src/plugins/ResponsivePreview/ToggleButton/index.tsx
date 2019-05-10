@@ -2,7 +2,7 @@ import * as React from 'react';
 import { SmartphoneIcon } from '../../../shared/icons';
 import { Button } from '../../../shared/ui';
 
-export type Props = {
+type Props = {
   validFixtureSelected: boolean;
   responsiveModeOn: boolean;
   toggleViewportState: () => unknown;

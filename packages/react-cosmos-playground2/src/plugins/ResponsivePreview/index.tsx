@@ -1,7 +1,6 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import { createArrayPlug } from '../../shared/slot';
 import { StorageSpec } from '../Storage/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { RouterSpec } from '../Router/public';
@@ -13,7 +12,7 @@ import {
   STORAGE_KEY
 } from './shared';
 import { ResponsivePreview } from './ResponsivePreview';
-import { Props as ToggleButtonProps, ToggleButton } from './ToggleButton';
+import { ToggleButton } from './ToggleButton';
 
 const { plug, register } = createPlugin<ResponsivePreviewSpec>({
   name: 'responsivePreview',
@@ -54,11 +53,6 @@ plug('rendererPreviewOuter', ({ children, pluginContext }) => {
   );
 });
 
-const RendererActionsPlug = createArrayPlug<ToggleButtonProps>(
-  'rendererActions',
-  ToggleButton
-);
-
 plug('rendererActions', ({ pluginContext }) => {
   const { getState, setState, getMethodsOf } = pluginContext;
   const { enabled } = getState();
@@ -67,7 +61,7 @@ plug('rendererActions', ({ pluginContext }) => {
   const responsiveModeOn = isResponsiveModeOn(enabled, fixtureState);
 
   return (
-    <RendererActionsPlug
+    <ToggleButton
       validFixtureSelected={rendererCore.isValidFixtureSelected()}
       responsiveModeOn={responsiveModeOn}
       toggleViewportState={() => {

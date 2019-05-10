@@ -1,7 +1,6 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { createArrayPlug } from '../../shared/slot';
-import { Notifications, NotificationsProps } from './Notifications';
+import { Notifications } from './Notifications';
 import { NotificationsSpec } from './public';
 import { pushNotification, cancelNotification } from './pushNotification';
 
@@ -24,14 +23,9 @@ onLoad(context => {
   };
 });
 
-const ContentOverlayPlug = createArrayPlug<NotificationsProps>(
-  'global',
-  Notifications
-);
-
 plug('global', ({ pluginContext: { getState } }) => {
   const { notifications } = getState();
-  return <ContentOverlayPlug notifications={notifications} />;
+  return <Notifications notifications={notifications} />;
 });
 
 export { register };

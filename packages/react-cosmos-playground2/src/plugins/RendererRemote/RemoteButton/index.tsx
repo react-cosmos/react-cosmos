@@ -4,7 +4,7 @@ import { CastIcon } from '../../../shared/icons';
 import { NotificationsSpec } from './../../Notifications/public';
 import { copyToClipboard } from './copyToClipboard';
 
-export type RemoteButtonProps = {
+type Props = {
   devServerOn: boolean;
   webRendererUrl: null | string;
   pushNotification: NotificationsSpec['methods']['pushNotification'];
@@ -14,7 +14,7 @@ export function RemoteButton({
   devServerOn,
   webRendererUrl,
   pushNotification
-}: RemoteButtonProps) {
+}: Props) {
   if (!devServerOn || !webRendererUrl) {
     return null;
   }

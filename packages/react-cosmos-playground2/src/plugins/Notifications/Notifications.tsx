@@ -2,11 +2,11 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Notification, NotificationType } from './public';
 
-export type NotificationsProps = {
+type Props = {
   notifications: Notification[];
 };
 
-export function Notifications({ notifications }: NotificationsProps) {
+export function Notifications({ notifications }: Props) {
   return (
     <Container>
       {notifications.map(({ id, type, content }) => {
