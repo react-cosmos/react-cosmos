@@ -1,5 +1,5 @@
 import React from 'react';
-import { Slot } from 'react-plugin';
+import { Slot, ArraySlot } from 'react-plugin';
 import styled from 'styled-components';
 import { useDrag } from '../../shared/ui';
 import { NAV_WIDTH_DEFAULT, restrictNavWidth } from './shared';
@@ -41,7 +41,7 @@ export function Layout({
           </PreviewContainer>
         </Center>
         <div style={{ zIndex: 2 }}>
-          <Slot name="global" />
+          <ArraySlot name="global" />
         </div>
       </Container>
     );
@@ -67,7 +67,7 @@ export function Layout({
         <Slot name="right" />
       </div>
       <div style={{ zIndex: 4 }}>
-        <Slot name="global" />
+        <ArraySlot name="global" />
       </div>
     </Container>
   );

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { loadPlugins, Slot } from 'react-plugin';
+import { loadPlugins, ArraySlot } from 'react-plugin';
 import {
   render,
   waitForElement,
@@ -7,7 +7,6 @@ import {
   RenderResult
 } from 'react-testing-library';
 import { register } from '.';
-import { createArrayPlug } from '../../shared/slot';
 import { cleanup, mockPlug } from '../../testHelpers/plugin';
 import { mockCore, mockRouter } from '../../testHelpers/pluginMocks';
 import { mockFetch } from './testHelpers';
@@ -21,10 +20,7 @@ function mockSelectedFixtureId() {
 }
 
 function mockFixtureAction() {
-  mockPlug({
-    slotName: 'fixtureActions',
-    render: createArrayPlug('fixtureActions', () => <>fooAction</>)
-  });
+  mockPlug('fixtureActions', () => <>fooAction</>);
 }
 
 function waitForMockFixtureAction({ getByText }: RenderResult) {
@@ -36,7 +32,7 @@ async function loadTestPlugins() {
   mockFixtureAction();
   register();
   loadPlugins();
-  const renderer = render(<Slot name="fixtureActions" />);
+  const renderer = render(<ArraySlot name="fixtureActions" />);
   await waitForMockFixtureAction(renderer);
   return renderer;
 }

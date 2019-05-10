@@ -6,7 +6,7 @@ import {
   fireEvent,
   RenderResult
 } from 'react-testing-library';
-import { loadPlugins, Slot } from 'react-plugin';
+import { loadPlugins, Slot, ArraySlot } from 'react-plugin';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { cleanup } from '../../../testHelpers/plugin';
 import {
@@ -24,7 +24,7 @@ function loadTestPlugins() {
   loadPlugins();
   return render(
     <>
-      <Slot name="rendererActions" />
+      <ArraySlot name="rendererActions" />
       <Slot name="rendererPreviewOuter">
         <div data-testid="previewMock" />
       </Slot>

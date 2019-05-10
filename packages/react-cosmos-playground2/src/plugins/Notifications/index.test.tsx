@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { render, waitForElement } from 'react-testing-library';
-import { Slot, loadPlugins, enablePlugin } from 'react-plugin';
+import { ArraySlot, loadPlugins, enablePlugin } from 'react-plugin';
 import { cleanup, getMethodsOf } from '../../testHelpers/plugin';
 import { NotificationsSpec } from './public';
 import { register } from '.';
@@ -11,7 +11,7 @@ jest.useFakeTimers();
 
 function loadTestPlugins() {
   loadPlugins();
-  return render(<Slot name="global" />);
+  return render(<ArraySlot name="global" />);
 }
 
 function getNotificationsMethods() {
