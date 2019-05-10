@@ -6,7 +6,7 @@ import { stretchStyle, getStyles } from './style';
 import { Viewport, Device } from '../public';
 
 type Props = {
-  children?: React.ReactNode;
+  children: React.ReactNode;
   devices: Device[];
   viewport: null | Viewport;
   fullScreen: boolean;

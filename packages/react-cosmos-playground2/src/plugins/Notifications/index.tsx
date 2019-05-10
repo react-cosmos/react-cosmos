@@ -1,3 +1,4 @@
+import React from 'react';
 import { createPlugin } from 'react-plugin';
 import { createArrayPlug } from '../../shared/slot';
 import { Notifications, NotificationsProps } from './Notifications';
@@ -23,13 +24,14 @@ onLoad(context => {
   };
 });
 
-plug({
-  slotName: 'global',
-  render: createArrayPlug<NotificationsProps>('global', Notifications),
-  getProps: ({ getState }) => {
-    const { notifications } = getState();
-    return { notifications };
-  }
+const ContentOverlayPlug = createArrayPlug<NotificationsProps>(
+  'global',
+  Notifications
+);
+
+plug('global', ({ pluginContext: { getState } }) => {
+  const { notifications } = getState();
+  return <ContentOverlayPlug notifications={notifications} />;
 });
 
 export { register };

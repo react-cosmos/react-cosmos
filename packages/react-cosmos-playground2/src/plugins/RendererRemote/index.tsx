@@ -1,3 +1,4 @@
+import React from 'react';
 import { createPlugin } from 'react-plugin';
 import { createArrayPlug } from '../../shared/slot';
 import { CoreSpec } from '../Core/public';
@@ -17,18 +18,21 @@ on<RendererCoreSpec>('rendererCore', {
   request: onRendererRequest
 });
 
-plug({
-  slotName: 'rendererActions',
-  render: createArrayPlug<RemoteButtonProps>('rendererActions', RemoteButton),
-  getProps: ({ getMethodsOf }) => {
-    const core = getMethodsOf<CoreSpec>('core');
-    const notifications = getMethodsOf<NotificationsSpec>('notifications');
-    return {
-      devServerOn: core.isDevServerOn(),
-      webRendererUrl: core.getWebRendererUrl(),
-      pushNotification: notifications.pushNotification
-    };
-  }
+const ContentOverlayPlug = createArrayPlug<RemoteButtonProps>(
+  'rendererActions',
+  RemoteButton
+);
+
+plug('rendererActions', ({ pluginContext: { getMethodsOf } }) => {
+  const core = getMethodsOf<CoreSpec>('core');
+  const notifications = getMethodsOf<NotificationsSpec>('notifications');
+  return (
+    <ContentOverlayPlug
+      devServerOn={core.isDevServerOn()}
+      webRendererUrl={core.getWebRendererUrl()}
+      pushNotification={notifications.pushNotification}
+    />
+  );
 });
 
 export { register };
