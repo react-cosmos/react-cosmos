@@ -18,15 +18,16 @@ export function navTests() {
   context('nav', () => {
     it('renders tree view root items', () => {
       cy.contains('Counter');
+      cy.contains('CounterButton');
       cy.contains('WelcomeMessage');
-      cy.contains('hello world');
+      cy.contains('Hello World');
     });
 
     it('expands tree view items', () => {
       cy.contains('Counter').click();
-      cy.contains('small numbers').click();
-      cy.contains('fifty');
-      cy.contains('fifty five');
+      cy.contains('default');
+      cy.contains('small number').click();
+      cy.contains('large number').click();
     });
   });
 }
@@ -34,7 +35,7 @@ export function navTests() {
 export function selectFixtureTests() {
   context('select fixture', () => {
     it('renders selected fixtures', () => {
-      cy.contains('hello world').click();
+      cy.contains('Hello World').click();
       getRendererBody()
         .find('#root')
         .should('have.text', 'Hello World!');

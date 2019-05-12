@@ -1,15 +1,18 @@
 import React from 'react';
 import { StateMock } from '@react-mock/state';
-import { Counter } from '..';
+import { Counter } from '.';
 
 export default {
-  five: (
+  default: <Counter suffix="times" />,
+
+  'small number': (
     <StateMock state={{ count: 5 }}>
       <Counter suffix="times" />
     </StateMock>
   ),
-  'fifty five': (
-    <StateMock state={{ count: 55 }}>
+
+  'large number': (
+    <StateMock state={{ count: 555555555 }}>
       <Counter suffix="times" />
     </StateMock>
   )

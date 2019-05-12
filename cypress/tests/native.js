@@ -23,10 +23,8 @@ describe('Export', () => {
     });
 
     it('has fixture paths', () => {
-      userDepsContainsModule('__fixtures__/hello world.js');
-      userDepsContainsModule('Counter/__fixtures__/default.js');
-      userDepsContainsModule('Counter/__fixtures__/large number.js');
-      userDepsContainsModule('Counter/__fixtures__/small numbers.js');
+      userDepsContainsModule('__fixtures__/Hello World.ts');
+      userDepsContainsModule('Counter/index.fixture.tsx');
       userDepsContainsModule('WelcomeMessage/index.fixture.js');
     });
 

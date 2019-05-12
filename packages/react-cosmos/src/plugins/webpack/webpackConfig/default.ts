@@ -84,7 +84,7 @@ export function getDefaultWebpackConfig(
     devtool: 'cheap-module-source-map',
     resolve: {
       // Warning: webpack 1.x expects ['', '.js', '.jsx']
-      extensions: ['.js', '.jsx']
+      extensions: ['.js', '.jsx', '.ts', '.tsx']
     },
     module: {
       // Note: `module.rules` only works with webpack >=2.x. For 1.x
