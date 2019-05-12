@@ -1,5 +1,5 @@
 import { uuid } from 'react-cosmos-shared2/util';
-import { runFixtureLoaderTests } from '../testHelpers';
+import { runFixtureLoaderTests } from '../../testHelpers';
 
 const rendererId = uuid();
 const fixtures = { first: null, second: null };

@@ -1,13 +1,18 @@
 import * as React from 'react';
 import { uuid } from 'react-cosmos-shared2/util';
 import { createValues } from 'react-cosmos-shared2/fixtureState';
-import { Counter } from '../testHelpers/components';
-import { anyProps, anyClassState } from '../testHelpers/fixtureState';
-import { runFixtureLoaderTests } from '../testHelpers';
+import { StateMock } from '@react-mock/state';
+import { Counter } from '../../testHelpers/components';
+import { anyProps, anyClassState } from '../../testHelpers/fixtureState';
+import { runFixtureLoaderTests } from '../../testHelpers';
 
 const rendererId = uuid();
 const fixtures = {
-  first: <Counter />
+  first: (
+    <StateMock state={{ count: 5 }}>
+      <Counter />
+    </StateMock>
+  )
 };
 const decorators = {};
 const fixtureId = { path: 'first', name: null };
@@ -41,7 +46,7 @@ runFixtureLoaderTests(mount => {
             props: [anyProps()],
             classState: [
               anyClassState({
-                values: createValues({ count: 0 })
+                values: createValues({ count: 5 })
               })
             ]
           }

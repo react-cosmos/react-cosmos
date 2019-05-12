@@ -1,20 +1,29 @@
 import * as React from 'react';
 import retry from '@skidding/async-retry';
+import { StateMock } from '@react-mock/state';
 import {
   createValues,
-  updateFixtureStateProps
+  updateFixtureStateClassState
 } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from 'react-cosmos-shared2/util';
-import { HelloMessage } from '../testHelpers/components';
-import { anyProps, getProps } from '../testHelpers/fixtureState';
-import { runFixtureLoaderTests } from '../testHelpers';
+import { Counter } from '../../testHelpers/components';
+import {
+  anyProps,
+  anyClassState,
+  getClassState
+} from '../../testHelpers/fixtureState';
+import { runFixtureLoaderTests } from '../../testHelpers';
 
 const rendererId = uuid();
 const fixtures = {
   first: (
     <>
-      <HelloMessage name="Bianca" />
-      <HelloMessage name="B" />
+      <StateMock state={{ count: 5 }}>
+        <Counter />
+      </StateMock>
+      <StateMock state={{ count: 10 }}>
+        <Counter />
+      </StateMock>
     </>
   )
 };
@@ -22,32 +31,26 @@ const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
 runFixtureLoaderTests(mount => {
-  it('captures multiple props instances', async () => {
+  it('captures mocked state from multiple instances', async () => {
     await mount(
       { rendererId, fixtures, decorators },
-      async ({ renderer, selectFixture, fixtureStateChange }) => {
+      async ({ selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
           fixtureId,
           fixtureState: {}
         });
-        await retry(() =>
-          expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B'])
-        );
         await fixtureStateChange({
           rendererId,
           fixtureId,
           fixtureState: {
-            props: [
-              anyProps({
-                componentName: 'HelloMessage',
-                elPath: 'props.children[0]',
-                values: createValues({ name: 'Bianca' })
+            props: [anyProps(), anyProps()],
+            classState: [
+              anyClassState({
+                values: createValues({ count: 5 })
               }),
-              anyProps({
-                componentName: 'HelloMessage',
-                elPath: 'props.children[1]',
-                values: createValues({ name: 'B' })
+              anyClassState({
+                values: createValues({ count: 10 })
               })
             ]
           }
@@ -56,7 +59,7 @@ runFixtureLoaderTests(mount => {
     );
   });
 
-  it('overwrites prop in second instance', async () => {
+  it('overwrites mocked state in second instances', async () => {
     await mount(
       { rendererId, fixtures, decorators },
       async ({
@@ -71,20 +74,20 @@ runFixtureLoaderTests(mount => {
           fixtureState: {}
         });
         const fixtureState = await getLastFixtureState();
-        const [, { elementId }] = getProps(fixtureState, 2);
+        const [, { elementId }] = getClassState(fixtureState, 2);
         await setFixtureState({
           rendererId,
           fixtureId,
           fixtureState: {
-            props: updateFixtureStateProps({
+            classState: updateFixtureStateClassState({
               fixtureState,
               elementId,
-              values: createValues({ name: 'Petec' })
+              values: createValues({ count: 100 })
             })
           }
         });
         await retry(() =>
-          expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello Petec'])
+          expect(renderer.toJSON()).toEqual(['5 times', '100 times'])
         );
       }
     );

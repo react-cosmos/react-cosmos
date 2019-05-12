@@ -1,8 +1,8 @@
 import * as React from 'react';
 import retry from '@skidding/async-retry';
 import { uuid } from 'react-cosmos-shared2/util';
-import { runFixtureLoaderTests } from '../testHelpers';
-import { Viewport } from '..';
+import { runFixtureLoaderTests } from '../../testHelpers';
+import { Viewport } from '../..';
 
 const rendererId = uuid();
 const fixtures = {

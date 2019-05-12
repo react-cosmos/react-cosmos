@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { uuid } from 'react-cosmos-shared2/util';
 import { createValues } from 'react-cosmos-shared2/fixtureState';
-import { anyProps } from '../testHelpers/fixtureState';
-import { Wrapper } from '../testHelpers/components';
-import { runFixtureLoaderTests } from '../testHelpers';
+import { anyProps } from '../../testHelpers/fixtureState';
+import { Wrapper } from '../../testHelpers/components';
+import { runFixtureLoaderTests } from '../../testHelpers';
 
 const rendererId = uuid();
 const fixtures = {

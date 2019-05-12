@@ -2,9 +2,10 @@ import * as React from 'react';
 import memoize from 'memoize-one/dist/memoize-one.cjs';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { ReactDecorator } from 'react-cosmos-shared2/react';
+import { FixtureContextValue, SetFixtureState } from '../shared';
 import { FixtureCapture } from '../FixtureCapture';
 import { FixtureContext } from '../FixtureContext';
-import { FixtureContextValue, SetFixtureState } from '../shared';
+import { FixtureElement } from './FixtureElement';
 
 type Props = {
   decorators: ReactDecorator[];
@@ -40,10 +41,12 @@ export class FixtureProvider extends React.PureComponent<Props> {
 
 function getComputedElementTree(
   decorators: ReactDecorator[],
-  leaf: React.ReactNode
+  leafNode: React.ReactNode
 ) {
   const fixtureElement = (
-    <FixtureCapture decoratorId="root">{leaf}</FixtureCapture>
+    <FixtureCapture decoratorId="root">
+      {getFixtureElement(leafNode)}
+    </FixtureCapture>
   );
 
   return [...decorators]
@@ -52,4 +55,12 @@ function getComputedElementTree(
       (prevElement, Decorator) => <Decorator>{prevElement}</Decorator>,
       fixtureElement
     );
+}
+
+function getFixtureElement(leafNode: React.ReactNode) {
+  return typeof leafNode === 'function' ? (
+    <FixtureElement ElementType={leafNode} />
+  ) : (
+    leafNode
+  );
 }

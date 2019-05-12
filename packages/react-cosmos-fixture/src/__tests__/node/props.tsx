@@ -1,35 +1,26 @@
 import * as React from 'react';
-import delay from 'delay';
-import until from 'async-until';
+import { uniq } from 'lodash';
 import retry from '@skidding/async-retry';
-import { StateMock } from '@react-mock/state';
 import {
   createValues,
-  updateFixtureStateClassState,
-  removeFixtureStateClassState
+  updateFixtureStateProps,
+  resetFixtureStateProps,
+  removeFixtureStateProps
 } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from 'react-cosmos-shared2/util';
-import { Counter, CoolCounter } from '../testHelpers/components';
-import {
-  anyProps,
-  anyClassState,
-  getClassState
-} from '../testHelpers/fixtureState';
-import { runFixtureLoaderTests } from '../testHelpers';
+import { HelloMessage, HelloMessageCls } from '../../testHelpers/components';
+import { anyProps, getProps } from '../../testHelpers/fixtureState';
+import { runFixtureLoaderTests } from '../../testHelpers';
 
 const rendererId = uuid();
 const fixtures = {
-  first: (
-    <StateMock state={{ count: 5 }}>
-      <Counter />
-    </StateMock>
-  )
+  first: <HelloMessage name="Bianca" />
 };
 const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
 runFixtureLoaderTests(mount => {
-  it('captures mocked state', async () => {
+  it('captures props', async () => {
     await mount(
       { rendererId, fixtures, decorators },
       async ({ renderer, selectFixture, fixtureStateChange }) => {
@@ -38,15 +29,15 @@ runFixtureLoaderTests(mount => {
           fixtureId,
           fixtureState: {}
         });
-        await retry(() => expect(renderer.toJSON()).toBe('5 times'));
+        await retry(() => expect(renderer.toJSON()).toBe('Hello Bianca'));
         await fixtureStateChange({
           rendererId,
           fixtureId,
           fixtureState: {
-            props: [anyProps()],
-            classState: [
-              anyClassState({
-                values: createValues({ count: 5 })
+            props: [
+              anyProps({
+                componentName: 'HelloMessage',
+                values: createValues({ name: 'Bianca' })
               })
             ]
           }
@@ -55,7 +46,7 @@ runFixtureLoaderTests(mount => {
     );
   });
 
-  it('overwrites mocked state', async () => {
+  it('overwrites prop', async () => {
     await mount(
       { rendererId, fixtures, decorators },
       async ({
@@ -70,38 +61,24 @@ runFixtureLoaderTests(mount => {
           fixtureState: {}
         });
         const fixtureState = await getLastFixtureState();
-        const [{ elementId }] = getClassState(fixtureState);
+        const [{ elementId }] = getProps(fixtureState);
         await setFixtureState({
           rendererId,
           fixtureId,
           fixtureState: {
-            classState: updateFixtureStateClassState({
+            props: updateFixtureStateProps({
               fixtureState,
               elementId,
-              values: createValues({ count: 100 })
+              values: createValues({ name: 'B' })
             })
           }
         });
-        await retry(() => expect(renderer.toJSON()).toBe('100 times'));
-        // A second update will provide code coverage for a different branch:
-        // the transition between fixture state values
-        await setFixtureState({
-          rendererId,
-          fixtureId,
-          fixtureState: {
-            classState: updateFixtureStateClassState({
-              fixtureState,
-              elementId,
-              values: createValues({ count: 200 })
-            })
-          }
-        });
-        await retry(() => expect(renderer.toJSON()).toBe('200 times'));
+        await retry(() => expect(renderer.toJSON()).toBe('Hello B'));
       }
     );
   });
 
-  it('removes mocked state property', async () => {
+  it('removes prop', async () => {
     await mount(
       { rendererId, fixtures, decorators },
       async ({
@@ -116,24 +93,24 @@ runFixtureLoaderTests(mount => {
           fixtureState: {}
         });
         const fixtureState = await getLastFixtureState();
-        const [{ elementId }] = getClassState(fixtureState);
+        const [{ elementId }] = getProps(fixtureState);
         await setFixtureState({
           rendererId,
           fixtureId,
           fixtureState: {
-            classState: updateFixtureStateClassState({
+            props: updateFixtureStateProps({
               fixtureState,
               elementId,
               values: []
             })
           }
         });
-        await retry(() => expect(renderer.toJSON()).toBe('Missing count'));
+        await retry(() => expect(renderer.toJSON()).toBe('Hello Stranger'));
       }
     );
   });
 
-  it('reverts to mocked state', async () => {
+  it('clears props', async () => {
     await mount(
       { rendererId, fixtures, decorators },
       async ({
@@ -149,37 +126,37 @@ runFixtureLoaderTests(mount => {
           fixtureState: {}
         });
         const fixtureState = await getLastFixtureState();
-        const [{ elementId }] = getClassState(fixtureState);
+        const [{ elementId }] = getProps(fixtureState);
         await setFixtureState({
           rendererId,
           fixtureId,
           fixtureState: {
-            classState: updateFixtureStateClassState({
+            props: updateFixtureStateProps({
               fixtureState,
               elementId,
-              values: createValues({ count: 10 })
+              values: createValues({ name: 'B' })
             })
           }
         });
-        await retry(() => expect(renderer.toJSON()).toBe('10 times'));
+        await retry(() => expect(renderer.toJSON()).toBe('Hello B'));
         await setFixtureState({
           rendererId,
           fixtureId,
           fixtureState: {
-            classState: removeFixtureStateClassState(fixtureState, elementId)
+            props: removeFixtureStateProps(fixtureState, elementId)
           }
         });
-        await retry(() => expect(renderer.toJSON()).toBe('5 times'));
-        // After the state is removed from the fixture state, the original
-        // state is added back through a fixtureStateChange message
+        await retry(() => expect(renderer.toJSON()).toBe('Hello Bianca'));
+        // After the props are removed from the fixture state, the original
+        // props are added back through a fixtureStateChange message
         await fixtureStateChange({
           rendererId,
           fixtureId,
           fixtureState: {
-            props: [anyProps()],
-            classState: [
-              anyClassState({
-                values: createValues({ count: 5 })
+            props: [
+              anyProps({
+                componentName: 'HelloMessage',
+                values: createValues({ name: 'Bianca' })
               })
             ]
           }
@@ -188,53 +165,25 @@ runFixtureLoaderTests(mount => {
     );
   });
 
-  it('captures component state changes', async () => {
-    let counterRef: null | Counter;
-    const fixturesNew = {
+  it('transitions props (reuses component instance)', async () => {
+    const refs: React.Component[] = [];
+    // Intentionally create new ref function on every update to get the ref
+    // to be called more than once even if the component instance is reused
+    const getFixtures = () => ({
       first: (
-        <StateMock state={{ count: 5 }}>
-          <Counter
-            ref={elRef => {
-              if (elRef) {
-                counterRef = elRef;
-              }
-            }}
-          />
-        </StateMock>
+        <HelloMessageCls
+          ref={elRef => {
+            if (elRef) {
+              refs.push(elRef);
+            }
+          }}
+          name="Bianca"
+        />
       )
-    };
+    });
     await mount(
-      { rendererId, fixtures: fixturesNew, decorators },
-      async ({ selectFixture, getLastFixtureState }) => {
-        await selectFixture({
-          rendererId,
-          fixtureId,
-          fixtureState: {}
-        });
-        await until(() => counterRef);
-        counterRef!.setState({ count: 7 });
-        await retry(async () => expect(await getCount()).toBe(7));
-
-        // Simulate a small pause between updates
-        await delay(500);
-
-        counterRef!.setState({ count: 13 });
-        await retry(async () => expect(await getCount()).toBe(13));
-
-        async function getCount() {
-          const fixtureState = await getLastFixtureState();
-          const [{ values }] = getClassState(fixtureState);
-          return values ? JSON.parse(values[0].stringified) : null;
-        }
-      }
-    );
-  });
-
-  it('applies fixture state to replaced component type', async () => {
-    await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures: getFixtures(), decorators },
       async ({
-        renderer,
         update,
         selectFixture,
         setFixtureState,
@@ -246,31 +195,82 @@ runFixtureLoaderTests(mount => {
           fixtureState: {}
         });
         const fixtureState = await getLastFixtureState();
-        const [{ elementId }] = getClassState(fixtureState);
+        const [{ elementId }] = getProps(fixtureState);
         await setFixtureState({
           rendererId,
           fixtureId,
           fixtureState: {
-            classState: updateFixtureStateClassState({
+            props: updateFixtureStateProps({
               fixtureState,
               elementId,
-              values: createValues({ count: 50 })
+              values: createValues({ name: 'B' })
             })
           }
         });
-        await retry(() => expect(renderer.toJSON()).toBe('50 times'));
         update({
           rendererId,
-          fixtures: {
-            first: (
-              <StateMock state={{ count: 5 }}>
-                <CoolCounter />
-              </StateMock>
-            )
-          },
+          fixtures: getFixtures(),
           decorators
         });
-        expect(renderer.toJSON()).toBe('50 timez');
+        await retry(() => {
+          expect(refs.length).toBeGreaterThanOrEqual(2);
+          expect(uniq(refs).length).toBe(1);
+        });
+      }
+    );
+  });
+
+  it('resets props (creates new component instance)', async () => {
+    const refs: React.Component[] = [];
+    // Intentionally create new ref function on every update to get the ref
+    // to be called more than once even if the component instance is reused
+    const getFixtures = () => ({
+      first: (
+        <HelloMessageCls
+          ref={elRef => {
+            if (elRef) {
+              refs.push(elRef);
+            }
+          }}
+          name="Bianca"
+        />
+      )
+    });
+    await mount(
+      { rendererId, fixtures: getFixtures(), decorators },
+      async ({
+        update,
+        selectFixture,
+        setFixtureState,
+        getLastFixtureState
+      }) => {
+        await selectFixture({
+          rendererId,
+          fixtureId,
+          fixtureState: {}
+        });
+        const fixtureState = await getLastFixtureState();
+        const [{ elementId }] = getProps(fixtureState);
+        await setFixtureState({
+          rendererId,
+          fixtureId,
+          fixtureState: {
+            props: resetFixtureStateProps({
+              fixtureState,
+              elementId,
+              values: createValues({ name: 'B' })
+            })
+          }
+        });
+        update({
+          rendererId,
+          fixtures: getFixtures(),
+          decorators
+        });
+        await retry(() => {
+          expect(refs.length).toBeGreaterThanOrEqual(2);
+          expect(uniq(refs).length).toBe(2);
+        });
       }
     );
   });
@@ -292,28 +292,23 @@ runFixtureLoaderTests(mount => {
           fixtureState: {}
         });
         const fixtureState = await getLastFixtureState();
-        const [{ elementId }] = getClassState(fixtureState);
+        const [{ elementId }] = getProps(fixtureState);
         await setFixtureState({
           rendererId,
           fixtureId,
           fixtureState: {
-            classState: updateFixtureStateClassState({
+            props: updateFixtureStateProps({
               fixtureState,
               elementId,
-              values: createValues({ count: 6 })
+              values: createValues({ name: 'B' })
             })
           }
         });
-        await retry(() => expect(renderer.toJSON()).toBe('6 times'));
-        // When the fixture changes the fixture state follows along
+        await retry(() => expect(renderer.toJSON()).toBe('Hello B'));
         update({
           rendererId,
           fixtures: {
-            first: (
-              <StateMock state={{ count: 50 }}>
-                <Counter />
-              </StateMock>
-            )
+            first: <HelloMessage name="Petec" />
           },
           decorators
         });
@@ -321,15 +316,15 @@ runFixtureLoaderTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            props: [anyProps()],
-            classState: [
-              anyClassState({
-                values: createValues({ count: 50 })
+            props: [
+              anyProps({
+                componentName: 'HelloMessage',
+                values: createValues({ name: 'Petec' })
               })
             ]
           }
         });
-        expect(renderer.toJSON()).toBe('50 times');
+        await retry(() => expect(renderer.toJSON()).toBe('Hello Petec'));
       }
     );
   });
@@ -347,10 +342,10 @@ runFixtureLoaderTests(mount => {
           rendererId,
           fixtureId,
           fixtureState: {
-            props: [anyProps()],
-            classState: [
-              anyClassState({
-                values: createValues({ count: 5 })
+            props: [
+              anyProps({
+                componentName: 'HelloMessage',
+                values: createValues({ name: 'Bianca' })
               })
             ]
           }
@@ -358,19 +353,18 @@ runFixtureLoaderTests(mount => {
         update({
           rendererId,
           fixtures: {
-            // Counter element from fixture is gone, and so should the
+            // HelloMessage element from fixture is gone, and so should the
             // fixture state related to it.
-            first: 'No counts for you.'
+            first: 'Hello all'
           },
           decorators
         });
-        expect(renderer.toJSON()).toBe('No counts for you.');
+        expect(renderer.toJSON()).toBe('Hello all');
         await fixtureStateChange({
           rendererId,
           fixtureId,
           fixtureState: {
-            props: [],
-            classState: []
+            props: []
           }
         });
       }

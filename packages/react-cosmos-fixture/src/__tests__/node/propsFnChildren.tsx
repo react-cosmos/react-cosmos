@@ -2,10 +2,10 @@ import * as React from 'react';
 import retry from '@skidding/async-retry';
 import { uuid } from 'react-cosmos-shared2/util';
 import { createValues } from 'react-cosmos-shared2/fixtureState';
-import { HelloMessage } from '../testHelpers/components';
-import { anyProps } from '../testHelpers/fixtureState';
-import { runFixtureLoaderTests } from '../testHelpers';
-import { FixtureCapture } from '..';
+import { HelloMessage } from '../../testHelpers/components';
+import { anyProps } from '../../testHelpers/fixtureState';
+import { runFixtureLoaderTests } from '../../testHelpers';
+import { FixtureCapture } from '../..';
 
 function Wrap({ children }: { children: () => React.ReactNode }) {
   return <>{children()}</>;
