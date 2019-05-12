@@ -2,7 +2,7 @@
 
 Cosmos Next becomes _Cosmos_. The included features are meant to exceed everything Cosmos Classic offered and make use of the powerful new Cosmos platform.
 
-- [ ] Try: Function fixtures
+- [x] Function fixtures
 - [ ] Notifications facelift
   - [ ] Try: Notifications for fixture create/remove/rename
   - [ ] Try: Notification on HMR [#522](https://github.com/react-cosmos/react-cosmos/issues/522)
