@@ -63,16 +63,9 @@ module.exports = (webpackConfig, env) => {
 
 ## JSX fixtures
 
-Cosmos Next introduces a more natural format for component fixtures: **React elements.**
+Cosmos Next introduces a more natural format for component fixtures: **React elements** and **React functions.**
 
-> Think of JSX fixtures as the return value of a render function, or the first argument to `React.render`. [Fixtures can also be functions](#function-fixtures).
-
-```jsx
-// __fixtures__/disabled.js
-export default <Button disabled>Click me</Button>;
-```
-
-The JSX fixture format has a few advantages compared to the old format:
+Some advantages compared to the old format in Cosmos Classic:
 
 - Fixtures are no longer bound to a single component
 - Adding one or more component wrappers per fixture is easy
@@ -80,21 +73,28 @@ The JSX fixture format has a few advantages compared to the old format:
 - Props are easier to type-check
 - Writing fixtures doesn't feel like writing code for Cosmos
 
-The JSX fixture format also comes with a minor drawback: `React` must be imported in every fixture file.
+The new fixtures formats also come with a minor drawback: `React` must be imported in every fixture file.
 
-## How to create fixture files
+## Element fixtures
 
-Two options:
+> Think of Element fixtures as the return value of a render function, or the first argument to `React.render`.
 
-1. End fixture file names with `.fixture.{js,jsx,ts,tsx}`
-2. Put fixture files inside `__fixtures__`
+```jsx
+// __fixtures__/disabled.js
+export default <Button disabled>Click me</Button>;
+```
 
-Examples:
+## Function fixtures
 
-1. `blankState.fixture.js`
-2. `__fixtures__/blankState.js`
+Function fixtures are like component with no props. They enable using Hooks inside fixtures, which is powerful for simulating state with stateless components.
 
-> File name conventions can be configured using the `fixturesDir` and `fixtureFileSuffix` options.
+```jsx
+// CounterButton.fixture.js
+export default () => {
+  const [count, setCount] = React.useState(0);
+  return <CounterButton count={count} increment={() => setCount(count + 1)} />;
+};
+```
 
 ## Multi fixture files
 
@@ -114,17 +114,19 @@ The object property names will show up as fixture names in the Cosmos UI.
 
 > [See this comment](https://github.com/react-cosmos/react-cosmos/issues/924#issuecomment-462082405) for the reasoning behind this solution (vs named exports).
 
-## Function fixtures
+## How to create fixture files
 
-In some cases it's more useful to return a component instead of an element. Function fixtures are like a component with no props. They enable using Hooks inside fixtures, which is very powerful for simulating state with stateless components.
+Two options:
 
-```jsx
-// CounterButton.fixture.js
-export default () => {
-  const [count, setCount] = React.useState(0);
-  return <CounterButton count={count} increment={() => setCount(count + 1)} />;
-};
-```
+1. End fixture file names with `.fixture.{js,jsx,ts,tsx}`
+2. Put fixture files inside `__fixtures__`
+
+Examples:
+
+1. `blankState.fixture.js`
+2. `__fixtures__/blankState.js`
+
+> File name conventions can be configured using the `fixturesDir` and `fixtureFileSuffix` options.
 
 ## Decorators
 
