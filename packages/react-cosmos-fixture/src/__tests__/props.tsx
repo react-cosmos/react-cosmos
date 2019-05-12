@@ -8,9 +8,9 @@ import {
   removeFixtureStateProps
 } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from 'react-cosmos-shared2/util';
-import { HelloMessage, HelloMessageCls } from '../../testHelpers/components';
-import { anyProps, getProps } from '../../testHelpers/fixtureState';
-import { runFixtureLoaderTests } from '../../testHelpers';
+import { HelloMessage, HelloMessageCls } from '../testHelpers/components';
+import { anyProps, getProps } from '../testHelpers/fixtureState';
+import { runFixtureLoaderTests } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = {

@@ -5,8 +5,8 @@ import {
   createValues,
   createFixtureStateProps
 } from 'react-cosmos-shared2/fixtureState';
-import { HelloMessage } from '../../testHelpers/components';
-import { runFixtureLoaderTests } from '../../testHelpers';
+import { HelloMessage } from '../testHelpers/components';
+import { runFixtureLoaderTests } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = {

@@ -7,13 +7,9 @@ import {
   updateFixtureStateClassState
 } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from 'react-cosmos-shared2/util';
-import { SuffixCounter } from '../../testHelpers/components';
-import {
-  anyProps,
-  anyClassState,
-  getProps
-} from '../../testHelpers/fixtureState';
-import { runFixtureLoaderTests } from '../../testHelpers';
+import { SuffixCounter } from '../testHelpers/components';
+import { anyProps, anyClassState, getProps } from '../testHelpers/fixtureState';
+import { runFixtureLoaderTests } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = {
