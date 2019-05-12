@@ -65,7 +65,7 @@ module.exports = (webpackConfig, env) => {
 
 Cosmos Next introduces a more natural format for component fixtures: **React elements.**
 
-> Think of JSX fixtures as the return value of a render function, or the first argument to `React.render`.
+> Think of JSX fixtures as the return value of a render function, or the first argument to `React.render`. [Fixtures can also be functions](#function-fixtures).
 
 ```jsx
 // __fixtures__/disabled.js
@@ -113,6 +113,18 @@ export default {
 The object property names will show up as fixture names in the Cosmos UI.
 
 > [See this comment](https://github.com/react-cosmos/react-cosmos/issues/924#issuecomment-462082405) for the reasoning behind this solution (vs named exports).
+
+## Function fixtures
+
+In some cases it's more useful to return a component instead of an element. Function fixtures are like a component with no props. They enable using Hooks inside fixtures, which is very powerful for simulating state with stateless components.
+
+```jsx
+// CounterButton.fixture.js
+export default () => {
+  const [count, setCount] = React.useState(0);
+  return <CounterButton count={count} increment={() => setCount(count + 1)} />;
+};
+```
 
 ## Decorators
 
