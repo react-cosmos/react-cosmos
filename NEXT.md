@@ -86,7 +86,7 @@ export default <Button disabled>Click me</Button>;
 
 ## Function fixtures
 
-Function fixtures are like component with no props. They enable using Hooks inside fixtures, which is powerful for simulating state with stateless components.
+Function fixtures are like a component with no props. They enable using Hooks inside fixtures, which is powerful for simulating state with stateless components.
 
 ```jsx
 // CounterButton.fixture.js
