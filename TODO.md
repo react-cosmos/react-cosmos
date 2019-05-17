@@ -3,7 +3,7 @@
 Cosmos Next becomes _Cosmos_. The included features are meant to exceed everything Cosmos Classic offered and make use of the powerful new Cosmos platform.
 
 - [x] Function fixtures
-- [ ] Notifications facelift
+- [ ] Notifications redesign
   - [ ] Try: Notifications for fixture create/remove/rename
   - [ ] Try: Notification on HMR [#522](https://github.com/react-cosmos/react-cosmos/issues/522)
 - [ ] Try: Resize responsive viewport
@@ -26,7 +26,7 @@ Plugin APIs will be released later, under minor versions.
 - [x] Simplify plug API (instead of getProps, the component gets the plugin context API as props)
 - [x] Plug API for Slot arrays
 
-Notification enhancements
+Notification redesign
 
 - [x] Make all notifications dissapear at once
 - [x] Move notifications _slot_ to inside the preview area
