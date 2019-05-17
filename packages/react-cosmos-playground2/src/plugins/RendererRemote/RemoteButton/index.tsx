@@ -42,7 +42,7 @@ export function RemoteButton({
         id: 'renderer-url-copy',
         type: 'error',
         title: `Failed to copy renderer URL to clipboard`,
-        info: 'Check the browser console for errors.'
+        info: 'Make sure your browser supports clipboard operations.'
       });
     }
   }

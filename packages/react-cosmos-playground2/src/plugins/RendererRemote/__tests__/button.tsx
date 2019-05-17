@@ -87,7 +87,7 @@ it('notifies copy error on button click', async () => {
       id: 'renderer-url-copy',
       type: 'error',
       title: 'Failed to copy renderer URL to clipboard',
-      info: 'Check the browser console for errors.'
+      info: 'Make sure your browser supports clipboard operations.'
     })
   );
 });

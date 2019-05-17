@@ -15,7 +15,7 @@ export async function copyToClipboard(text: string): Promise<void> {
   try {
     const { state } = await permissions.query({ name: 'clipboard-write' });
     permissionDenied = state !== 'granted' && state !== 'prompt';
-  } catch (e) {
+  } catch (err) {
     // Some browsers (eg. Firefox 66) don't support the 'clipboard-write'
     // PermissionDescriptor but support clipboard.writeText. So unless
     // permission is explicitly denied, we try to copy to clipboard even if the
