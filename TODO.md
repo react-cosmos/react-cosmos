@@ -32,7 +32,7 @@ Notification redesign
 - [x] Move notifications _slot_ to inside the preview area
 - [x] Redesign notification look and allow for more information
 - [x] Allow clients to specific notification ID to avoid duplicating a message
-- [ ] Transition notifications when they appear
+- [x] Transition notifications when they appear
 
 ## Backlog
 

@@ -14,44 +14,58 @@ const Background = styled.div`
   background: var(--grey6);
 `;
 
-export default (
-  <Background>
+export default {
+  single: (
     <Notifications
       notifications={[
-        createSuccessNotification({
-          id: 'renderer-url-copy',
-          title: 'Renderer URL copied to clipboard',
-          info: 'Paste the renderer URL in the address bar of another browser.'
-        }),
         createInfoNotification({
           id: 'renderer-connect-$RENDERER_ID1',
           title: 'Renderer connected',
           info: 'Your fixtures are ready to use.'
-        }),
-        createInfoNotification({
-          id: 'renderer-connect-$RENDERER_ID2',
-          title: 'Renderer connected',
-          info: 'Your fixtures are ready to use.'
-        }),
-        createLoadingNotification({
-          id: 'hot-reload-$RENDERER_ID1',
-          title: 'Hot reloading...',
-          info: 'Your code is updating.'
-        }),
-        createErrorNotification({
-          id: 'hot-reload-$RENDERER_ID2',
-          title: 'Hot reload failed',
-          info: 'Check the browser console for more information.'
-        }),
-        createSuccessNotification({
-          id: 'hot-reload-$RENDERER_ID3',
-          title: 'Hot reloaded successfully',
-          info: 'Your code is up to date.'
         })
       ]}
     />
-  </Background>
-);
+  ),
+  multiple: (
+    <Background>
+      <Notifications
+        notifications={[
+          createSuccessNotification({
+            id: 'renderer-url-copy',
+            title: 'Renderer URL copied to clipboard',
+            info:
+              'Paste the renderer URL in the address bar of another browser.'
+          }),
+          createInfoNotification({
+            id: 'renderer-connect-$RENDERER_ID1',
+            title: 'Renderer connected',
+            info: 'Your fixtures are ready to use.'
+          }),
+          createInfoNotification({
+            id: 'renderer-connect-$RENDERER_ID2',
+            title: 'Renderer connected',
+            info: 'Your fixtures are ready to use.'
+          }),
+          createLoadingNotification({
+            id: 'hot-reload-$RENDERER_ID1',
+            title: 'Hot reloading...',
+            info: 'Your code is updating.'
+          }),
+          createErrorNotification({
+            id: 'hot-reload-$RENDERER_ID2',
+            title: 'Hot reload failed',
+            info: 'Check the browser console for more information.'
+          }),
+          createSuccessNotification({
+            id: 'hot-reload-$RENDERER_ID3',
+            title: 'Hot reloaded successfully',
+            info: 'Your code is up to date.'
+          })
+        ]}
+      />
+    </Background>
+  )
+};
 
 function createSuccessNotification({ id, title, info }: Args): Notification {
   return { id, type: 'success', title, info };

@@ -19,9 +19,9 @@ export function Notifications({ notifications }: Props) {
         const Icon = IconTypes[type];
         return (
           <Item key={id}>
-            <ItemContainer>
+            <IconContainer>
               <Icon />
-            </ItemContainer>
+            </IconContainer>
             <Content>
               <Title>{title}</Title>
               <Info>{info}</Info>
@@ -50,9 +50,23 @@ const Item = styled.div`
   background: hsla(var(--hue-primary), 17%, 98%, 0.95);
   box-shadow: 0 2px 10px -4px var(--grey1);
   line-height: 20px;
+  opacity: 0;
+  transform: scale(0.8);
+  animation: fadeIn var(--slow) forwards;
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
 `;
 
-const ItemContainer = styled.div`
+const IconContainer = styled.div`
   --size: 20px;
   width: var(--size);
   height: var(--size);
