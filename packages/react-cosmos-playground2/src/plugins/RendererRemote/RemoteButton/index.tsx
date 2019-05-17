@@ -32,13 +32,17 @@ export function RemoteButton({
     try {
       await copyToClipboard(fullUrl);
       pushNotification({
+        id: 'renderer-url-copy',
         type: 'success',
-        content: `Renderer URL copied to clipboard`
+        title: `Renderer URL copied to clipboard`,
+        info: 'Paste the renderer URL in the address bar of another browser.'
       });
     } catch (err) {
       pushNotification({
+        id: 'renderer-url-copy',
         type: 'error',
-        content: `Failed to copy renderer URL to clipboard`
+        title: `Failed to copy renderer URL to clipboard`,
+        info: 'Check the browser console for errors.'
       });
     }
   }

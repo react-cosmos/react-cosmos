@@ -11,7 +11,7 @@ jest.useFakeTimers();
 
 function loadTestPlugins() {
   loadPlugins();
-  return render(<ArraySlot name="global" />);
+  return render(<ArraySlot name="previewGlobal" />);
 }
 
 function getNotificationsMethods() {
@@ -20,8 +20,10 @@ function getNotificationsMethods() {
 
 function pushNotification() {
   getNotificationsMethods().pushNotification({
+    id: 'renderer-connect',
     type: 'success',
-    content: 'Renderer connected'
+    title: 'Renderer connected',
+    info: 'Your fixtures are ready to use.'
   });
 }
 

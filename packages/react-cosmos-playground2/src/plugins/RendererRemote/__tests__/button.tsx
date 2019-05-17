@@ -84,8 +84,10 @@ it('notifies copy error on button click', async () => {
   // Clipboard API isn't available in jsdom so we only test the error path
   await wait(() =>
     expect(pushNotification).toBeCalledWith(expect.any(Object), {
+      id: 'renderer-url-copy',
       type: 'error',
-      content: `Failed to copy renderer URL to clipboard`
+      title: 'Failed to copy renderer URL to clipboard',
+      info: 'Check the browser console for errors.'
     })
   );
 });

@@ -31,7 +31,7 @@ export function receiveRendererReadyResponse(
 
   function afterStateChanged() {
     selectFixtureFromUrlParams(context, rendererId);
-    notifyRendererConnection(context);
+    notifyRendererConnection(context, rendererId);
   }
 }
 
@@ -43,11 +43,16 @@ function selectFixtureFromUrlParams(context: Context, rendererId: RendererId) {
   }
 }
 
-function notifyRendererConnection({ getMethodsOf }: Context) {
+function notifyRendererConnection(
+  { getMethodsOf }: Context,
+  rendererId: RendererId
+) {
   const notifications = getMethodsOf<NotificationsSpec>('notifications');
   notifications.pushNotification({
-    type: 'success',
-    content: 'Renderer connected'
+    id: `renderer-connect-${rendererId}`,
+    type: 'info',
+    title: 'Renderer connected',
+    info: 'Your fixtures are ready to use.'
   });
 }
 

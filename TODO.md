@@ -26,6 +26,14 @@ Plugin APIs will be released later, under minor versions.
 - [x] Simplify plug API (instead of getProps, the component gets the plugin context API as props)
 - [x] Plug API for Slot arrays
 
+Notification enhancements
+
+- [x] Make all notifications dissapear at once
+- [x] Move notifications _slot_ to inside the preview area
+- [x] Redesign notification look and allow for more information
+- [x] Allow clients to specific notification ID to avoid duplicating a message
+- [ ] Transition notifications when they appear
+
 ## Backlog
 
 Not part of v5, but the most notable features to pursue after.

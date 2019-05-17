@@ -2,13 +2,12 @@ import React from 'react';
 import { createPlugin } from 'react-plugin';
 import { Notifications } from './Notifications';
 import { NotificationsSpec } from './public';
-import { pushNotification, cancelNotification } from './pushNotification';
+import { pushNotification } from './pushNotification';
+import { getNotifications } from './shared';
 
 const { register, onLoad, plug } = createPlugin<NotificationsSpec>({
   name: 'notifications',
-  initialState: {
-    notifications: []
-  },
+  initialState: null,
   methods: {
     pushNotification
   }
@@ -16,16 +15,17 @@ const { register, onLoad, plug } = createPlugin<NotificationsSpec>({
 
 onLoad(context => {
   return () => {
-    const { notifications } = context.getState();
-    notifications.forEach(notification =>
-      cancelNotification(context, notification)
-    );
+    // Clean up notifications when plugin unloads
+    const state = context.getState();
+    if (state) {
+      window.clearInterval(state.timeoutId);
+      context.setState(null);
+    }
   };
 });
 
-plug('global', ({ pluginContext: { getState } }) => {
-  const { notifications } = getState();
-  return <Notifications notifications={notifications} />;
-});
+plug('previewGlobal', ({ pluginContext }) => (
+  <Notifications notifications={getNotifications(pluginContext)} />
+));
 
 export { register };

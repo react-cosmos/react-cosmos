@@ -55,6 +55,16 @@ it('renders "contentOverlay" slot', async () => {
   await waitForElement(() => getByText(/we are the robots/i));
 });
 
+it('renders "previewGlobal" slot', async () => {
+  registerTestPlugins();
+  mockPlug('previewGlobal', () => <>we are the robots1</>);
+  mockPlug('previewGlobal', () => <>we are the robots2</>);
+
+  const { getByText } = loadTestPlugins();
+  await waitForElement(() => getByText(/we are the robots1/i));
+  await waitForElement(() => getByText(/we are the robots2/i));
+});
+
 it('does not render "right" slot', async () => {
   registerTestPlugins();
   mockPlug('right', () => <>we are the robots</>);

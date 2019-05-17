@@ -28,8 +28,10 @@ it('notifies renderer connection', async () => {
 
   await wait(() =>
     expect(pushNotification).toBeCalledWith(expect.any(Object), {
-      type: 'success',
-      content: 'Renderer connected'
+      id: 'renderer-connect-mockRendererId1',
+      type: 'info',
+      title: 'Renderer connected',
+      info: 'Your fixtures are ready to use.'
     })
   );
 });

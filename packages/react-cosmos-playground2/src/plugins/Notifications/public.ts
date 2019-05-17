@@ -1,20 +1,19 @@
-export type NotificationType = 'success' | 'error';
-
-export type PushNotificationArgs = { type: NotificationType; content: string };
+export type NotificationType = 'success' | 'error' | 'info' | 'loading';
 
 export type Notification = {
-  id: number;
+  id: string;
   type: NotificationType;
-  content: string;
-  timeoutId: number;
+  title: string;
+  info: string;
 };
 
 export type NotificationsSpec = {
   name: 'notifications';
-  state: {
+  state: null | {
+    timeoutId: number;
     notifications: Notification[];
   };
   methods: {
-    pushNotification(args: PushNotificationArgs): void;
+    pushNotification(args: Notification): void;
   };
 };
