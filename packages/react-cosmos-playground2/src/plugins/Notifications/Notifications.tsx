@@ -50,11 +50,9 @@ const Item = styled.div`
   background: hsla(var(--hue-primary), 17%, 98%, 0.95);
   box-shadow: 0 2px 10px -4px var(--grey1);
   line-height: 20px;
-  opacity: 0;
-  transform: scale(0.8);
-  animation: fadeIn var(--slow) forwards;
+  animation: fadeScaleIn var(--quick) forwards;
 
-  @keyframes fadeIn {
+  @keyframes fadeScaleIn {
     0% {
       opacity: 0;
       transform: scale(0.8);
@@ -70,7 +68,7 @@ const IconContainer = styled.div`
   --size: 20px;
   width: var(--size);
   height: var(--size);
-  padding: 18px 16px;
+  margin: 18px 16px;
   color: var(--grey3);
 `;
 
