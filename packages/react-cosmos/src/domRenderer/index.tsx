@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { render } from 'react-dom';
+import { RendererId } from 'react-cosmos-shared2/renderer';
 import {
   ReactFixturesByPath,
   ReactDecoratorsByPath
@@ -12,29 +13,29 @@ import {
 import { isInsideCosmosPreviewIframe } from './shared';
 import { getDomContainer } from './container';
 import { ErrorCatch } from './ErrorCatch';
-import { getRendererId } from './rendererId';
-import { addGlobalErrorHandler } from './globalErrorHandler';
 
 export type DomRendererConfig = {
   containerQuerySelector: null | string;
 };
 
 type MountDomRendererOpts = {
+  rendererId: RendererId;
   rendererConfig: DomRendererConfig;
   fixtures: ReactFixturesByPath;
   decorators: ReactDecoratorsByPath;
   onFixtureChange?: () => unknown;
 };
 
-const rendererId = getRendererId();
+export { getRendererId } from './rendererId';
+export { addGlobalErrorHandler } from './globalErrorHandler';
 
 export function mountDomRenderer({
+  rendererId,
   fixtures,
   decorators,
   rendererConfig,
   onFixtureChange
 }: MountDomRendererOpts) {
-  addGlobalErrorHandler(rendererId);
   render(
     <FixtureLoader
       rendererId={rendererId}

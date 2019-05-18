@@ -4,9 +4,8 @@ Cosmos Next becomes _Cosmos_. The included features are meant to exceed everythi
 
 - [x] Function fixtures
 - [ ] Notifications redesign
+  - [ ] Build notification [#522](https://github.com/react-cosmos/react-cosmos/issues/522)
   - [ ] Try: Notifications for fixture create/remove/rename
-  - [ ] Try: Notification on HMR [#522](https://github.com/react-cosmos/react-cosmos/issues/522)
-- [ ] Try: Resize responsive viewport
 - [ ] Fixture search
 - [ ] Command API with search
 - [ ] Keyboard shortcuts
@@ -14,6 +13,7 @@ Cosmos Next becomes _Cosmos_. The included features are meant to exceed everythi
   - [ ] Option to reset or transition props
 - [ ] Controls panel with Hooks API in (function) fixtures
 - [ ] Try: Multi fixture select
+- [ ] Try: Resize responsive viewport
 - [ ] Improve React Native integration
 - [ ] Refresh docs
 - [ ] Maybe: Marketing website
@@ -21,10 +21,13 @@ Cosmos Next becomes _Cosmos_. The included features are meant to exceed everythi
 
 Plugin APIs will be released later, under minor versions.
 
-`react-plugin` enhancements:
+Build notifications
 
-- [x] Simplify plug API (instead of getProps, the component gets the plugin context API as props)
-- [x] Plug API for Slot arrays
+- [x] Fix catching of module-level exception
+- [ ] Add sticky notifications
+- [ ] Design build notification types
+- [ ] Design build renderer messages
+- [ ] Style `loading` notification
 
 Notification redesign
 
@@ -33,6 +36,11 @@ Notification redesign
 - [x] Redesign notification look and allow for more information
 - [x] Allow clients to specific notification ID to avoid duplicating a message
 - [x] Transition notifications when they appear
+
+`react-plugin` enhancements
+
+- [x] Simplify plug API (instead of getProps, the component gets the plugin context API as props)
+- [x] Plug API for Slot arrays
 
 ## Backlog
 
