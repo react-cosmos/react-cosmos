@@ -24,10 +24,10 @@ Plugin APIs will be released later, under minor versions.
 Build notifications
 
 - [x] Fix catching of module-level exception
+- [x] Design build notification types
+- [ ] Create server messages
+  - [ ] Integrate with webpack server-side hooks
 - [ ] Add sticky notifications
-- [ ] Design build notification types
-- [ ] Design build renderer messages
-- [ ] Style `loading` notification
 
 Notification redesign
 

@@ -47,19 +47,15 @@ export default {
             info: 'Your fixtures are ready to use.'
           }),
           createLoadingNotification({
-            id: 'hot-reload-$RENDERER_ID1',
-            title: 'Hot reloading...',
+            id: 'build',
+            title: 'Rebuilding...',
             info: 'Your code is updating.'
           }),
           createErrorNotification({
-            id: 'hot-reload-$RENDERER_ID2',
-            title: 'Hot reload failed',
-            info: 'Check the browser console for more information.'
-          }),
-          createSuccessNotification({
-            id: 'hot-reload-$RENDERER_ID3',
-            title: 'Hot reloaded successfully',
-            info: 'Your code is up to date.'
+            id: 'build',
+            title: 'Build failed',
+            info:
+              'Open the browser console or check your terminal for more information.'
           })
         ]}
       />
