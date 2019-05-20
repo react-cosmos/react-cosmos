@@ -1,7 +1,4 @@
-import {
-  RendererId,
-  RendererErrorResponse
-} from 'react-cosmos-shared2/renderer';
+import { RendererId, RendererResponse } from 'react-cosmos-shared2/renderer';
 import { isInsideCosmosPreviewIframe } from './shared';
 
 let alreadyAdded = false;
@@ -18,9 +15,15 @@ export function addGlobalErrorHandler(rendererId: RendererId) {
       payload: { rendererId }
     });
   });
+
+  (window as any).onHotReloadError = () =>
+    postMessageToParentWindow({
+      type: 'rendererHmrFail',
+      payload: { rendererId }
+    });
 }
 
-function postMessageToParentWindow(msg: RendererErrorResponse) {
+function postMessageToParentWindow(msg: RendererResponse) {
   // NOTE: Error messages are not sent from remote renderers, only from
   // iframe preview renderers
   if (isInsideCosmosPreviewIframe()) {

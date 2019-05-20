@@ -67,6 +67,13 @@ export type RendererErrorResponse = {
   };
 };
 
+export type RendererHmrFailResponse = {
+  type: 'rendererHmrFail';
+  payload: {
+    rendererId: RendererId;
+  };
+};
+
 export type FixtureListUpdateResponse = {
   type: 'fixtureListUpdate';
   payload: {
@@ -93,6 +100,7 @@ export type FixtureStateChangeResponse = {
 export type RendererResponse =
   | RendererReadyResponse
   | RendererErrorResponse
+  | RendererHmrFailResponse
   | FixtureListUpdateResponse
   | FixtureStateChangeResponse;
 

@@ -55,7 +55,6 @@
     "@types/webpack": "4.4.27",
     "@types/webpack-dev-middleware": "^2.0.2",
     "@types/webpack-dev-server": "^3.1.5",
-    "@types/webpack-hot-middleware": "^2.16.5",
     "@types/yargs": "^13.0.0",
     "@typescript-eslint/parser": "^1.9.0",
     "async-until": "^2.0.0",
