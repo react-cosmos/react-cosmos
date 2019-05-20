@@ -15,6 +15,7 @@ export type DevServerPluginArgs = {
   cosmosConfig: CosmosConfig;
   httpServer: http.Server;
   expressApp: express.Express;
+  // TODO: Replace with something more general purpose
   sendBuildMessage(msg: BuildMessage): unknown;
 };
 
