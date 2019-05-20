@@ -16,7 +16,7 @@ function mockCore() {
   });
 }
 
-it('sends renderer request message to message handler', async () => {
+it('sends renderer request to message handler', async () => {
   register();
   mockCore();
   pluginMocks.mockRendererCore({});
