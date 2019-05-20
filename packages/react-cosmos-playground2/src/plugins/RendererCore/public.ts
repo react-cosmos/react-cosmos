@@ -28,5 +28,6 @@ export type RendererCoreSpec = {
   };
   events: {
     request: (msg: RendererRequest) => void;
+    response: (msg: RendererResponse) => void;
   };
 };

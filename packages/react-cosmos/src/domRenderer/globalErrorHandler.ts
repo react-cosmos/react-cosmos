@@ -1,4 +1,5 @@
-import { RendererId, RendererResponse } from 'react-cosmos-shared2/renderer';
+import { RendererId } from 'react-cosmos-shared2/renderer';
+import { WebpackRendererResponse } from 'react-cosmos-shared2/webpack';
 import { isInsideCosmosPreviewIframe } from './shared';
 
 let alreadyAdded = false;
@@ -23,7 +24,7 @@ export function addGlobalErrorHandler(rendererId: RendererId) {
     });
 }
 
-function postMessageToParentWindow(msg: RendererResponse) {
+function postMessageToParentWindow(msg: WebpackRendererResponse) {
   // NOTE: Error messages are not sent from remote renderers, only from
   // iframe preview renderers
   if (isInsideCosmosPreviewIframe()) {
