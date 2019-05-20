@@ -7,6 +7,7 @@ resetPlugins();
 // TODO: Discover plugins in codebase automatically
 require('../plugins/Storage').register();
 require('../plugins/Core').register();
+require('../plugins/MessageHandler').register();
 require('../plugins/Notifications').register();
 require('../plugins/Router').register();
 require('../plugins/RendererCore').register();
