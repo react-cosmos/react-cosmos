@@ -43,7 +43,7 @@ plug('rendererActions', ({ pluginContext: { getMethodsOf } }) => {
     <RemoteButton
       devServerOn={core.isDevServerOn()}
       webRendererUrl={core.getWebRendererUrl()}
-      pushNotification={notifications.pushNotification}
+      pushNotification={notifications.pushTimedNotification}
     />
   );
 });

@@ -27,6 +27,10 @@ export function getMessageHandlerMethods() {
   return getMethodsOf<MessageHandlerSpec>('messageHandler');
 }
 
+export function getNotificationsMethods() {
+  return getMethodsOf<NotificationsSpec>('notifications');
+}
+
 export function mockStorage(methods: MethodsOf<StorageSpec>) {
   mockMethodsOf<StorageSpec>('storage', methods);
 }

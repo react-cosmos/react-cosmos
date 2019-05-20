@@ -20,7 +20,7 @@ function mockFixtureId(fixtureId: null | FixtureId = null) {
     getSelectedFixtureId: () => fixtureId
   });
   mockMethodsOf<NotificationsSpec>('notifications', {
-    pushNotification: () => {}
+    pushTimedNotification: () => {}
   });
 }
 

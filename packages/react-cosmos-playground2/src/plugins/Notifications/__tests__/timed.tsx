@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { render, waitForElement } from 'react-testing-library';
 import { ArraySlot, loadPlugins, enablePlugin } from 'react-plugin';
-import { cleanup, getMethodsOf } from '../../testHelpers/plugin';
-import { NotificationsSpec } from './public';
-import { register } from '.';
+import { cleanup } from '../../../testHelpers/plugin';
+import { getNotificationsMethods } from '../../../testHelpers/pluginMocks';
+import { register } from '..';
 
 afterEach(cleanup);
 
@@ -14,12 +14,8 @@ function loadTestPlugins() {
   return render(<ArraySlot name="previewGlobal" />);
 }
 
-function getNotificationsMethods() {
-  return getMethodsOf<NotificationsSpec>('notifications');
-}
-
-function pushNotification() {
-  getNotificationsMethods().pushNotification({
+function pushTimedNotification() {
+  getNotificationsMethods().pushTimedNotification({
     id: 'renderer-connect',
     type: 'success',
     title: 'Renderer connected',
@@ -27,29 +23,29 @@ function pushNotification() {
   });
 }
 
-it('renders pushed notification', async () => {
+it('renders timed notification', async () => {
   register();
   const { getByText } = loadTestPlugins();
 
-  pushNotification();
-  await waitForElement(() => getByText(/renderer connected/i));
+  pushTimedNotification();
+  await waitForElement(() => getByText('Renderer connected'));
 });
 
-it('clears pushed notification after timeout expires', async () => {
+it('clears timed notification after timeout expires', async () => {
   register();
   const { queryByText } = loadTestPlugins();
 
-  pushNotification();
+  pushTimedNotification();
   jest.runAllTimers();
 
-  expect(queryByText(/renderer connected/i)).toBeNull();
+  expect(queryByText('Renderer connected')).toBeNull();
 });
 
 it('behaves peacefully when timeout expires after plugin unloads', async () => {
   register();
   loadTestPlugins();
 
-  pushNotification();
+  pushTimedNotification();
   enablePlugin('notifications', false);
   jest.runAllTimers();
 });

@@ -48,7 +48,7 @@ function notifyRendererConnection(
   rendererId: RendererId
 ) {
   const notifications = getMethodsOf<NotificationsSpec>('notifications');
-  notifications.pushNotification({
+  notifications.pushTimedNotification({
     id: `renderer-connect-${rendererId}`,
     type: 'info',
     title: 'Renderer connected',

@@ -9,11 +9,16 @@ export type Notification = {
 
 export type NotificationsSpec = {
   name: 'notifications';
-  state: null | {
-    timeoutId: number;
-    notifications: Notification[];
+  state: {
+    stickyNotifications: Notification[];
+    timedNotifications: null | {
+      timeoutId: number;
+      items: Notification[];
+    };
   };
   methods: {
-    pushNotification(args: Notification): void;
+    pushStickyNotification(notification: Notification): void;
+    removeStickyNotification(notificationId: string): void;
+    pushTimedNotification(notification: Notification): void;
   };
 };

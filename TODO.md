@@ -25,9 +25,9 @@ Build notifications
 
 - [x] Fix catching of module-level exception
 - [x] Design build notification types
-- [ ] Create server messages
-  - [ ] Integrate with webpack server-side hooks
-- [ ] Add sticky notifications
+- [x] Create sticky notifications
+- [ ] Send build messages from server to Playground
+  - [x] Integrate with webpack server-side hooks
 
 Notification redesign
 

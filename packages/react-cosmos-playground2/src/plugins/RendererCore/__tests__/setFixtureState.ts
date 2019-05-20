@@ -31,7 +31,7 @@ function registerTestPlugins() {
   register();
   mockSelectedFixture();
   mockMethodsOf<NotificationsSpec>('notifications', {
-    pushNotification: () => {}
+    pushTimedNotification: () => {}
   });
 }
 

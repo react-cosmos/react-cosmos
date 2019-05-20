@@ -29,7 +29,7 @@ function registerTestPlugins() {
     getSelectedFixtureId: () => fixtureId
   });
   mockMethodsOf<NotificationsSpec>('notifications', {
-    pushNotification: () => {}
+    pushTimedNotification: () => {}
   });
 }
 

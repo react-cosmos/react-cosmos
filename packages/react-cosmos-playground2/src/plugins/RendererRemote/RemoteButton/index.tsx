@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { Button } from '../../../shared/ui';
 import { CastIcon } from '../../../shared/icons';
-import { NotificationsSpec } from '../../Notifications/public';
+import { Notification } from '../../Notifications/public';
 import { copyToClipboard } from './copyToClipboard';
 
 type Props = {
   devServerOn: boolean;
   webRendererUrl: null | string;
-  pushNotification: NotificationsSpec['methods']['pushNotification'];
+  pushNotification: (notification: Notification) => unknown;
 };
 
 export function RemoteButton({

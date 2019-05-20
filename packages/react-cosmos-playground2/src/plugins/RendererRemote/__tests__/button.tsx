@@ -1,14 +1,11 @@
 import * as React from 'react';
-import { loadPlugins, ArraySlot, MethodHandlers } from 'react-plugin';
+import { loadPlugins, ArraySlot } from 'react-plugin';
 import { render, waitForElement, fireEvent, wait } from 'react-testing-library';
 import { cleanup, mockPlug } from '../../../testHelpers/plugin';
 import * as pluginMocks from '../../../testHelpers/pluginMocks';
-import { NotificationsSpec } from '../../Notifications/public';
 import { register } from '..';
 
 afterEach(cleanup);
-
-type PushNotification = MethodHandlers<NotificationsSpec>['pushNotification'];
 
 function mockCore(devServerOn: boolean, webRendererUrl: null | string) {
   pluginMocks.mockCore({
@@ -21,8 +18,8 @@ function mockMessageHandler() {
   pluginMocks.mockMessageHandler({ postRendererRequest: () => {} });
 }
 
-function mockNotifications(pushNotification: PushNotification = () => {}) {
-  pluginMocks.mockNotifications({ pushNotification });
+function mockNotifications(pushTimedNotification = () => {}) {
+  pluginMocks.mockNotifications({ pushTimedNotification });
 }
 
 function mockRendererAction() {
