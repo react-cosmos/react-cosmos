@@ -4,8 +4,8 @@ Cosmos Next becomes _Cosmos_. The included features are meant to exceed everythi
 
 - [x] Function fixtures
 - [ ] Notifications redesign
-  - [ ] Build notification [#522](https://github.com/react-cosmos/react-cosmos/issues/522)
-  - [ ] Try: Notifications for fixture create/remove/rename
+  - [x] Build notification [#522](https://github.com/react-cosmos/react-cosmos/issues/522)
+  - [ ] ~~Try: Notifications for fixture create/remove/rename~~ Too much info to display inside a notification
 - [ ] Fixture search
 - [ ] Command API with search
 - [ ] Keyboard shortcuts
@@ -28,6 +28,7 @@ Build notifications
 - [x] Create sticky notifications
 - [x] Send build messages from server to Playground
   - [x] Integrate with webpack server-side hooks
+- [ ] HMR fail messages
 
 Notification redesign
 
