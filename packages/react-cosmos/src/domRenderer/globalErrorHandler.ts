@@ -17,6 +17,7 @@ export function addGlobalErrorHandler(rendererId: RendererId) {
     });
   });
 
+  // TODO: Move to packages/react-cosmos/src/plugins/webpack/client/index.ts
   (window as any).onHotReloadError = () =>
     postMessageToParentWindow({
       type: 'rendererHmrFail',
