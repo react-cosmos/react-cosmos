@@ -22,7 +22,7 @@ function mockCore() {
   });
 }
 
-it('posts renderer request', async () => {
+it('emits renderer request externally', async () => {
   register();
   mockCore();
   loadPlugins();
@@ -45,7 +45,7 @@ it('posts renderer request', async () => {
   });
 });
 
-it('emits renderer response', async () => {
+it('emits renderer response internally', async () => {
   register();
   mockCore();
   loadPlugins();
@@ -72,7 +72,7 @@ it('emits renderer response', async () => {
   });
 });
 
-it('emits server message', async () => {
+it('emits server message internally', async () => {
   register();
   mockCore();
   loadPlugins();
