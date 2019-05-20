@@ -1,8 +1,7 @@
-import { socketConnect } from './plugins/socketConnect';
 import { openFile } from './plugins/openFile';
 import { userDepsFile } from './plugins/userDepsFile';
 import { startDevServer } from './shared/devServer';
 
 export async function startNativeServer() {
-  await startDevServer('native', [userDepsFile, socketConnect, openFile]);
+  await startDevServer('native', [userDepsFile, openFile]);
 }

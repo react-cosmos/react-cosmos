@@ -1,13 +1,17 @@
+import http from 'http';
 import debug from 'debug';
-import socketIo from 'socket.io';
+import ioServer from 'socket.io';
+import {
+  BuildMessage,
+  BUILD_MESSAGE_EVENT_NAME
+} from 'react-cosmos-shared2/build';
 import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
-import { DevServerPluginArgs } from '../shared/devServer';
 
-const d = debug('cosmos:server:socket');
+const d = debug('cosmos:message');
 
-export function socketConnect({ httpServer }: DevServerPluginArgs) {
+export function createMessageHandler(httpServer: http.Server) {
   d('init');
-  const io = socketIo(httpServer);
+  const io = ioServer(httpServer);
 
   io.on('connection', socket => {
     d('connection');
@@ -15,15 +19,22 @@ export function socketConnect({ httpServer }: DevServerPluginArgs) {
     // - The Cosmos UI, which acts as a remote control
     // - The web iframe or the React Native component renderers
     socket.on(RENDERER_MESSAGE_EVENT_NAME, msg => {
-      d('command %o', msg);
+      d('on renderer message %o', msg);
       socket.broadcast.emit(RENDERER_MESSAGE_EVENT_NAME, msg);
     });
   });
 
-  return () => {
+  function sendBuildMessage(msg: BuildMessage) {
+    d('send build message %o', msg);
+    io.emit(BUILD_MESSAGE_EVENT_NAME, msg);
+  }
+
+  function cleanUp() {
     const { sockets } = io.sockets;
     Object.keys(sockets).forEach(id => {
       sockets[id].disconnect(true);
     });
-  };
+  }
+
+  return { sendBuildMessage, cleanUp };
 }

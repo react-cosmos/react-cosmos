@@ -12,7 +12,8 @@ import { getDevWebpackConfig } from './webpackConfig';
 
 export async function webpackDevServer({
   cosmosConfig,
-  expressApp
+  expressApp,
+  sendBuildMessage
 }: DevServerPluginArgs) {
   const userWebpack = getWebpack(cosmosConfig.rootDir);
   if (!userWebpack) {
@@ -37,9 +38,20 @@ export async function webpackDevServer({
   webpackCompiler.hooks.invalid.tap('Cosmos', filePath => {
     const relFilePath = path.relative(process.cwd(), filePath);
     console.log('[Cosmos] webpack build invalidated by', relFilePath);
+    sendBuildMessage({ type: 'buildStart' });
+  });
+  webpackCompiler.hooks.failed.tap('Cosmos', () => {
+    sendBuildMessage({ type: 'buildError' });
   });
   const onCompilationDone: Promise<void> = new Promise(resolve => {
-    webpackCompiler.hooks.done.tap('Cosmos', () => resolve());
+    webpackCompiler.hooks.done.tap('Cosmos', stats => {
+      resolve();
+      if (stats.hasErrors()) {
+        sendBuildMessage({ type: 'buildError' });
+      } else {
+        sendBuildMessage({ type: 'buildDone' });
+      }
+    });
   });
 
   console.log('[Cosmos] Building webpack...');
@@ -58,7 +70,6 @@ export async function webpackDevServer({
   }
 
   await onCompilationDone;
-  console.log(`[Cosmos] All good. Have fun!`);
 
   return async () => {
     await promisify(wdmInst.close.bind(wdmInst))();
