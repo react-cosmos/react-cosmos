@@ -1,31 +1,32 @@
+import { loadPlugins } from 'react-plugin';
 import { wait } from 'react-testing-library';
-import { loadPlugins, getPluginContext } from 'react-plugin';
 import {
   SelectFixtureRequest,
   RendererReadyResponse
 } from 'react-cosmos-shared2/renderer';
-import { mockWebSockets } from '../testHelpers/mockWebSockets';
-import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
-import { CoreSpec } from '../../Core/public';
-import { RendererCoreSpec } from '../../RendererCore/public';
+import { cleanup } from '../../../testHelpers/plugin';
+import * as pluginMocks from '../../../testHelpers/pluginMocks';
 import { register } from '..';
 
 afterEach(cleanup);
 
 function mockCore() {
-  mockMethodsOf<CoreSpec>('core', {
+  pluginMocks.mockCore({
     isDevServerOn: () => true
   });
 }
 
-it('posts renderer request message via websockets', async () => {
+it('sends renderer request to message handler', async () => {
   register();
   mockCore();
-  mockMethodsOf<RendererCoreSpec>('rendererCore', {});
+  pluginMocks.mockRendererCore({});
+
+  const postRendererRequest = jest.fn();
+  pluginMocks.mockMessageHandler({ postRendererRequest });
 
   loadPlugins();
 
-  const selectFixtureMsg: SelectFixtureRequest = {
+  const selectFixtureReq: SelectFixtureRequest = {
     type: 'selectFixture',
     payload: {
       rendererId: 'mockRendererId',
@@ -33,56 +34,54 @@ it('posts renderer request message via websockets', async () => {
       fixtureState: {}
     }
   };
-  getPluginContext<RendererCoreSpec>('rendererCore').emit(
-    'request',
-    selectFixtureMsg
-  );
+  pluginMocks.getRendererCoreContext().emit('request', selectFixtureReq);
 
-  await mockWebSockets(async ({ onMessage }) => {
-    await wait(() => expect(onMessage).toBeCalledWith(selectFixtureMsg));
-  });
+  await wait(() =>
+    expect(postRendererRequest).toBeCalledWith(
+      expect.any(Object),
+      selectFixtureReq
+    )
+  );
 });
 
-it('sends renderer response message from websocket event to renderer core', async () => {
+it('sends renderer response to renderer core', async () => {
   register();
   mockCore();
+  pluginMocks.mockMessageHandler({ postRendererRequest: () => {} });
 
   const receiveResponse = jest.fn();
-  mockMethodsOf<RendererCoreSpec>('rendererCore', {
-    receiveResponse
-  });
+  pluginMocks.mockRendererCore({ receiveResponse });
 
   loadPlugins();
 
-  await mockWebSockets(async ({ postMessage }) => {
-    const rendererReadyMsg: RendererReadyResponse = {
-      type: 'rendererReady',
-      payload: {
-        rendererId: 'mockRendererId',
-        fixtures: { 'ein.js': null, 'zwei.js': null, 'drei.js': null }
-      }
-    };
-    postMessage(rendererReadyMsg);
+  const rendererReadyRes: RendererReadyResponse = {
+    type: 'rendererReady',
+    payload: {
+      rendererId: 'mockRendererId',
+      fixtures: { 'ein.js': null, 'zwei.js': null, 'drei.js': null }
+    }
+  };
+  pluginMocks
+    .getMessageHandlerContext()
+    .emit('rendererResponse', rendererReadyRes);
 
-    await wait(() =>
-      expect(receiveResponse).toBeCalledWith(
-        expect.any(Object),
-        rendererReadyMsg
-      )
-    );
-  });
+  await wait(() =>
+    expect(receiveResponse).toBeCalledWith(expect.any(Object), rendererReadyRes)
+  );
 });
 
-it('posts "requestFixtureList" renderer request on mount', async () => {
+it('posts "pingRenderers" renderer request on load', async () => {
   register();
   mockCore();
+
+  const postRendererRequest = jest.fn();
+  pluginMocks.mockMessageHandler({ postRendererRequest });
+
   loadPlugins();
 
-  await mockWebSockets(async ({ onMessage }) => {
-    await wait(() =>
-      expect(onMessage).toBeCalledWith({
-        type: 'pingRenderers'
-      })
-    );
-  });
+  await wait(() =>
+    expect(postRendererRequest).toBeCalledWith(expect.any(Object), {
+      type: 'pingRenderers'
+    })
+  );
 });

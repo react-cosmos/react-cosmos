@@ -5,7 +5,7 @@ import { getCwdPath } from '../../../../testHelpers/cwd';
 import { mockConsole } from '../../../../testHelpers/mockConsole';
 import { createCosmosConfig } from '../../../../config';
 import { RENDERER_FILENAME } from '../../../../shared/playgroundHtml';
-import { HtmlWebpackPlugin } from './../htmlPlugin';
+import { HtmlWebpackPlugin } from '../htmlPlugin';
 import { getExportWebpackConfig } from '..';
 
 afterAll(() => {

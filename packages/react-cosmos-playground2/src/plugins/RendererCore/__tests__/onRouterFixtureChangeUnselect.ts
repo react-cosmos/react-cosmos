@@ -1,4 +1,4 @@
-import { NotificationsSpec } from './../../Notifications/public';
+import { NotificationsSpec } from '../../Notifications/public';
 import { wait } from 'react-testing-library';
 import { loadPlugins, getPluginContext } from 'react-plugin';
 import { cleanup, on, mockMethodsOf } from '../../../testHelpers/plugin';
@@ -17,7 +17,7 @@ function registerTestPlugins() {
     getSelectedFixtureId: () => null
   });
   mockMethodsOf<NotificationsSpec>('notifications', {
-    pushNotification: () => {}
+    pushTimedNotification: () => {}
   });
 }
 

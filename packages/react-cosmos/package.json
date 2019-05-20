@@ -8,8 +8,8 @@
   "dependencies": {
     "chokidar": "^3.0.0",
     "debug": "^4.1.1",
-    "express": "^4.16.4",
-    "fs-extra": "^7.0.1",
+    "express": "^4.17.0",
+    "fs-extra": "^8.0.1",
     "glob": "^7.1.4",
     "http-proxy-middleware": "^0.19.1",
     "import-from": "^3.0.0",
@@ -25,9 +25,9 @@
     "slash": "^3.0.0",
     "socket.io": "^2.2.0",
     "util.promisify": "^1.0.0",
-    "webpack-dev-middleware": "^3.6.2",
-    "webpack-hot-middleware": "^2.24.4",
-    "yargs": "^13.2.2"
+    "webpack-dev-middleware": "^3.7.0",
+    "webpack-hot-middleware": "^2.25.0",
+    "yargs": "^13.2.4"
   },
   "bin": {
     "cosmos": "./bin/cosmos.js",

@@ -18,18 +18,20 @@ function registerTestPlugins() {
 it('notifies renderer connection', async () => {
   registerTestPlugins();
 
-  const pushNotification = jest.fn();
+  const pushTimedNotification = jest.fn();
   mockMethodsOf<NotificationsSpec>('notifications', {
-    pushNotification
+    pushTimedNotification
   });
 
   loadPlugins();
   mockRendererReady('mockRendererId1', {});
 
   await wait(() =>
-    expect(pushNotification).toBeCalledWith(expect.any(Object), {
-      type: 'success',
-      content: 'Renderer connected'
+    expect(pushTimedNotification).toBeCalledWith(expect.any(Object), {
+      id: 'renderer-connect-mockRendererId1',
+      type: 'info',
+      title: 'Renderer connected',
+      info: 'Your fixtures are ready to use.'
     })
   );
 });

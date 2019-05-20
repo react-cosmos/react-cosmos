@@ -1,4 +1,4 @@
-import { NotificationsSpec } from './../../Notifications/public';
+import { NotificationsSpec } from '../../Notifications/public';
 import { loadPlugins } from 'react-plugin';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
@@ -20,7 +20,7 @@ function mockFixtureId(fixtureId: null | FixtureId = null) {
     getSelectedFixtureId: () => fixtureId
   });
   mockMethodsOf<NotificationsSpec>('notifications', {
-    pushNotification: () => {}
+    pushTimedNotification: () => {}
   });
 }
 

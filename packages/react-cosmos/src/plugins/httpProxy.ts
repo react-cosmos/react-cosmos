@@ -1,4 +1,4 @@
-import { CosmosConfig } from './../config/shared';
+import { CosmosConfig } from '../config/shared';
 import httpProxyMiddleware from 'http-proxy-middleware';
 import { DevServerPluginArgs } from '../shared/devServer';
 

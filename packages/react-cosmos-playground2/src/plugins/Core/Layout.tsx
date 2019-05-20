@@ -31,14 +31,19 @@ export function Layout({
     return <Container />;
   }
 
+  const previewContainer = (
+    <PreviewContainer key="previewContainer">
+      <Slot name="rendererPreview" />
+      <Slot name="contentOverlay" />
+      <ArraySlot name="previewGlobal" />
+    </PreviewContainer>
+  );
+
   if (fullScreen) {
     return (
       <Container>
         <Center key="center" style={{ zIndex: 1 }}>
-          <PreviewContainer key="previewContainer">
-            <Slot name="rendererPreview" />
-            <Slot name="contentOverlay" />
-          </PreviewContainer>
+          {previewContainer}
         </Center>
         <div style={{ zIndex: 2 }}>
           <ArraySlot name="global" />
@@ -57,10 +62,7 @@ export function Layout({
       </Left>
       <Center key="center" style={{ zIndex: 1 }}>
         <Slot name="rendererHeader" />
-        <PreviewContainer key="previewContainer">
-          <Slot name="rendererPreview" />
-          <Slot name="contentOverlay" />
-        </PreviewContainer>
+        {previewContainer}
         {dragging && <DragOverlay />}
       </Center>
       <div style={{ zIndex: 3 }}>

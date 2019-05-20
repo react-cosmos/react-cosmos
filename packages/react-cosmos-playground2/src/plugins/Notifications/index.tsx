@@ -2,29 +2,44 @@ import React from 'react';
 import { createPlugin } from 'react-plugin';
 import { Notifications } from './Notifications';
 import { NotificationsSpec } from './public';
-import { pushNotification, cancelNotification } from './pushNotification';
+import {
+  pushStickyNotification,
+  removeStickyNotification,
+  pushTimedNotification,
+  clearTimedNotification
+} from './pushNotification';
 
 const { register, onLoad, plug } = createPlugin<NotificationsSpec>({
   name: 'notifications',
   initialState: {
-    notifications: []
+    stickyNotifications: [],
+    timedNotifications: null
   },
   methods: {
-    pushNotification
+    pushStickyNotification,
+    removeStickyNotification,
+    pushTimedNotification
   }
 });
 
 onLoad(context => {
   return () => {
-    const { notifications } = context.getState();
-    notifications.forEach(notification =>
-      cancelNotification(context, notification)
-    );
+    // Clean up timed notifications when plugin unloads
+    const { timedNotifications } = context.getState();
+    if (timedNotifications) {
+      window.clearInterval(timedNotifications.timeoutId);
+      clearTimedNotification(context);
+    }
   };
 });
 
-plug('global', ({ pluginContext: { getState } }) => {
-  const { notifications } = getState();
+plug('previewGlobal', ({ pluginContext }) => {
+  const { stickyNotifications, timedNotifications } = pluginContext.getState();
+  const notifications =
+    timedNotifications === null
+      ? stickyNotifications
+      : [...stickyNotifications, ...timedNotifications.items];
+
   return <Notifications notifications={notifications} />;
 });
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { CoreSpec } from './../Core/public';
-import { RouterSpec } from './../Router/public';
+import { CoreSpec } from '../Core/public';
+import { RouterSpec } from '../Router/public';
 import { EditFixtureButton } from './EditFixtureButton';
 import { EditFixtureButtonSpec } from './public';
 

@@ -1,51 +1,70 @@
-import { removeItemMatch } from 'react-cosmos-shared2/util';
-import { PluginContext } from 'react-plugin';
-import {
-  NotificationsSpec,
-  Notification,
-  PushNotificationArgs
-} from './public';
-
-type Context = PluginContext<NotificationsSpec>;
+import { replaceOrAddItem, removeItemMatch } from 'react-cosmos-shared2/util';
+import { Notification, NotificationsSpec } from './public';
+import { Context } from './shared';
 
 const TIMEOUT = 3000;
 
-export function pushNotification(
+export function pushStickyNotification(
   context: Context,
-  { type, content }: PushNotificationArgs
+  notification: Notification
 ) {
-  const { notifications } = context.getState();
-  const id = createNotificationId();
-  const timeoutId = createClearTimeoutHandler(context, id);
-  context.setState({
-    notifications: [...notifications, { id, type, content, timeoutId }]
-  });
+  context.setState(prevState => ({
+    ...prevState,
+    stickyNotifications: replaceOrAddItem(
+      prevState.stickyNotifications,
+      i => i.id === notification.id,
+      notification
+    )
+  }));
 }
 
-export function cancelNotification(
+export function removeStickyNotification(
   context: Context,
-  { id, timeoutId }: Notification
+  notificationId: string
 ) {
-  clearNotification(context, id);
-  clearTimeout(timeoutId);
+  context.setState(prevState => ({
+    ...prevState,
+    stickyNotifications: removeItemMatch(
+      prevState.stickyNotifications,
+      i => i.id === notificationId
+    )
+  }));
 }
 
-let lastNotificationId = 0;
+export function pushTimedNotification(
+  context: Context,
+  notification: Notification
+) {
+  const { timedNotifications } = context.getState();
+  if (timedNotifications !== null) {
+    window.clearTimeout(timedNotifications.timeoutId);
+  }
 
-function createNotificationId() {
-  return ++lastNotificationId;
+  context.setState(prevState => ({
+    ...prevState,
+    timedNotifications: {
+      timeoutId: createNotificationTimeout(context),
+      items: replaceOrAddItem(
+        getTimedNotifications(prevState),
+        i => i.id === notification.id,
+        notification
+      )
+    }
+  }));
 }
 
-function createClearTimeoutHandler(context: Context, notificationId: number) {
-  return window.setTimeout(
-    () => clearNotification(context, notificationId),
-    TIMEOUT
-  );
+export function clearTimedNotification(context: Context) {
+  context.setState(prevState => ({
+    ...prevState,
+    timedNotifications: null
+  }));
 }
 
-function clearNotification(context: Context, notificationId: number) {
-  const { notifications } = context.getState();
-  context.setState({
-    notifications: removeItemMatch(notifications, n => n.id === notificationId)
-  });
+function createNotificationTimeout(context: Context) {
+  return window.setTimeout(() => clearTimedNotification(context), TIMEOUT);
+}
+
+function getTimedNotifications(prevState: NotificationsSpec['state']) {
+  const { timedNotifications } = prevState;
+  return timedNotifications !== null ? timedNotifications.items : [];
 }

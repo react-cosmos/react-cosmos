@@ -7,6 +7,7 @@ resetPlugins();
 // TODO: Discover plugins in codebase automatically
 require('../plugins/Storage').register();
 require('../plugins/Core').register();
+require('../plugins/MessageHandler').register();
 require('../plugins/Notifications').register();
 require('../plugins/Router').register();
 require('../plugins/RendererCore').register();
@@ -18,6 +19,7 @@ require('../plugins/ContentOverlay').register();
 require('../plugins/ControlPanel').register();
 require('../plugins/ResponsivePreview').register();
 require('../plugins/EditFixtureButton').register();
+require('../plugins/BuildNotifications').register();
 
 // TODO: Read list of disabled plugins from user config
 enablePlugin('controlPanel', false);

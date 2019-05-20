@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { Button } from '../../../shared/ui';
 import { CastIcon } from '../../../shared/icons';
-import { NotificationsSpec } from './../../Notifications/public';
+import { Notification } from '../../Notifications/public';
 import { copyToClipboard } from './copyToClipboard';
 
 type Props = {
   devServerOn: boolean;
   webRendererUrl: null | string;
-  pushNotification: NotificationsSpec['methods']['pushNotification'];
+  pushNotification: (notification: Notification) => unknown;
 };
 
 export function RemoteButton({
@@ -32,13 +32,17 @@ export function RemoteButton({
     try {
       await copyToClipboard(fullUrl);
       pushNotification({
+        id: 'renderer-url-copy',
         type: 'success',
-        content: `Renderer URL copied to clipboard`
+        title: `Renderer URL copied to clipboard`,
+        info: 'Paste the renderer URL in the address bar of another browser.'
       });
     } catch (err) {
       pushNotification({
+        id: 'renderer-url-copy',
         type: 'error',
-        content: `Failed to copy renderer URL to clipboard`
+        title: `Failed to copy renderer URL to clipboard`,
+        info: 'Make sure your browser supports clipboard operations.'
       });
     }
   }

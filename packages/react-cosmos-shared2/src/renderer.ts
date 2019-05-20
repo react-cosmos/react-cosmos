@@ -98,4 +98,4 @@ export type RendererResponse =
 
 export type OnRendererResponse = (msg: RendererResponse) => unknown;
 
-export const RENDERER_MESSAGE_EVENT_NAME = 'cosmos-cmd';
+export const RENDERER_MESSAGE_EVENT_NAME = 'cosmos-renderer-message';

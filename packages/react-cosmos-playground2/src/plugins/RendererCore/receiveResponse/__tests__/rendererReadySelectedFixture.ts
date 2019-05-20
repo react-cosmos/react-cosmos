@@ -25,7 +25,7 @@ function registerTestPlugins(
     getSelectedFixtureId: () => fixtureId
   });
   mockMethodsOf<NotificationsSpec>('notifications', {
-    pushNotification: () => {}
+    pushTimedNotification: () => {}
   });
   on<RendererCoreSpec>('rendererCore', {
     request: handleRendererRequest

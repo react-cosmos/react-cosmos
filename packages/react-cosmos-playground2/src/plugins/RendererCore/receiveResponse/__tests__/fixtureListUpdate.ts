@@ -7,7 +7,7 @@ import {
   mockMethodsOf
 } from '../../../../testHelpers/plugin';
 import { RouterSpec } from '../../../Router/public';
-import { NotificationsSpec } from './../../../Notifications/public';
+import { NotificationsSpec } from '../../../Notifications/public';
 import {
   createFixtureListUpdateResponse,
   getRendererCoreMethods,
@@ -26,7 +26,7 @@ function registerTestPlugins() {
     getSelectedFixtureId: () => null
   });
   mockMethodsOf<NotificationsSpec>('notifications', {
-    pushNotification: () => {}
+    pushTimedNotification: () => {}
   });
 }
 
