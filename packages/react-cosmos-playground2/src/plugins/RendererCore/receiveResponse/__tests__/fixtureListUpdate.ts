@@ -7,7 +7,7 @@ import {
   mockMethodsOf
 } from '../../../../testHelpers/plugin';
 import { RouterSpec } from '../../../Router/public';
-import { NotificationsSpec } from './../../../Notifications/public';
+import { NotificationsSpec } from '../../../Notifications/public';
 import {
   createFixtureListUpdateResponse,
   getRendererCoreMethods,

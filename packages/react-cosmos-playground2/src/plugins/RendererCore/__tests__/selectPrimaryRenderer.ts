@@ -1,6 +1,6 @@
 import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
-import { NotificationsSpec } from './../../Notifications/public';
+import { NotificationsSpec } from '../../Notifications/public';
 import { RouterSpec } from '../../Router/public';
 import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
 import { getRendererCoreMethods, mockRendererReady } from '../testHelpers';

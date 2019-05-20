@@ -5,7 +5,7 @@ import { mockConsole } from '../../../../testHelpers/mockConsole';
 import { mockFile } from '../../../../testHelpers/mockFs';
 import { createCosmosConfig } from '../../../../config';
 import { RENDERER_FILENAME } from '../../../../shared/playgroundHtml';
-import { HtmlWebpackPlugin } from './../htmlPlugin';
+import { HtmlWebpackPlugin } from '../htmlPlugin';
 import { getDevWebpackConfig } from '..';
 
 const mockWebpackConfig = jest.fn(() => ({

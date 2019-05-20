@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import launchEditor from 'launch-editor';
 import express from 'express';
-import { CosmosConfig } from './../config/shared';
+import { CosmosConfig } from '../config/shared';
 import { DevServerPluginArgs } from '../shared/devServer';
 
 type ReqQuery = { filePath: void | string; line: number; column: number };

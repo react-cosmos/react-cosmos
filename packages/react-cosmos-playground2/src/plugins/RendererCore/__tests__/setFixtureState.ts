@@ -1,4 +1,4 @@
-import { NotificationsSpec } from './../../Notifications/public';
+import { NotificationsSpec } from '../../Notifications/public';
 import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';

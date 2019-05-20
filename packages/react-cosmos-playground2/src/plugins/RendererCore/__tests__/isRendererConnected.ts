@@ -1,4 +1,4 @@
-import { NotificationsSpec } from './../../Notifications/public';
+import { NotificationsSpec } from '../../Notifications/public';
 import { loadPlugins } from 'react-plugin';
 import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
 import { getRendererCoreMethods, mockRendererReady } from '../testHelpers';
