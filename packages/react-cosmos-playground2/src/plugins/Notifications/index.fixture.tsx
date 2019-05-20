@@ -52,7 +52,7 @@ export default {
             info: 'Your code is updating.'
           }),
           createErrorNotification({
-            id: 'build',
+            id: 'build-error',
             title: 'Build failed',
             info:
               'Open the browser console or check your terminal for more information.'
