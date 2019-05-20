@@ -81,6 +81,6 @@ function getPlugins(
 }
 
 function getHotMiddlewareEntry() {
-  const clientPath = require.resolve('webpack-hot-middleware/client');
+  const clientPath = require.resolve('@skidding/webpack-hot-middleware/client');
   return `${clientPath}?reload=true&overlay=false`;
 }

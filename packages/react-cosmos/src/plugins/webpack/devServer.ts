@@ -2,7 +2,7 @@ import path from 'path';
 import promisify from 'util.promisify';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
+import webpackHotMiddleware from '@skidding/webpack-hot-middleware';
 import { resolvePath } from '../../config';
 import { DevServerPluginArgs } from '../../shared/devServer';
 import { getRootUrl, serveStaticDir } from '../../shared/static';

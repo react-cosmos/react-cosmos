@@ -35,7 +35,7 @@ it('includes webpack-hot-middleware entry', async () => {
   const { entry } = await getDefaultDevWebpackConfig();
   expect(entry).toContain(
     `${require.resolve(
-      'webpack-hot-middleware/client'
+      '@skidding/webpack-hot-middleware/client'
     )}?reload=true&overlay=false`
   );
 });

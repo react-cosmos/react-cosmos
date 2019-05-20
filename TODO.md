@@ -3,7 +3,7 @@
 Cosmos Next becomes _Cosmos_. The included features are meant to exceed everything Cosmos Classic offered and make use of the powerful new Cosmos platform.
 
 - [x] Function fixtures
-- [ ] Notifications redesign
+- [x] Notifications redesign
   - [x] Build notification [#522](https://github.com/react-cosmos/react-cosmos/issues/522)
   - [ ] ~~Try: Notifications for fixture create/remove/rename~~ Too much info to display inside a notification
 - [ ] Fixture search
@@ -23,12 +23,12 @@ Plugin APIs will be released later, under minor versions.
 
 Build notifications
 
-- [x] Fix catching of module-level exception
+- [x] Fix catching of module-level exceptions
 - [x] Design build notification types
 - [x] Create sticky notifications
 - [x] Send build messages from server to Playground
   - [x] Integrate with webpack server-side hooks
-- [ ] HMR fail messages
+- [x] HMR fail notification
 
 Notification redesign
 
