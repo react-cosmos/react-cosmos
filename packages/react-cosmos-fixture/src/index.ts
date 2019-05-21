@@ -5,7 +5,7 @@ export { createWebSocketsConnect } from './FixtureLoader/webSockets';
 
 // Use in decorators
 export { FixtureState } from 'react-cosmos-shared2/fixtureState';
-export { SetFixtureState, RendererConnectApi } from './shared';
+export { SetFixtureState, RendererConnect } from './shared';
 export { FixtureContext } from './FixtureContext';
 
 // Advanced: Use in fixtures to capture elements in render callback

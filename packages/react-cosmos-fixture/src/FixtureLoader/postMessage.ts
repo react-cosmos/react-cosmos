@@ -6,19 +6,17 @@ import {
 import { RendererConnect } from '../shared';
 
 export function createPostMessageConnect(): RendererConnect {
-  return (onMessage: OnRendererRequest) => {
-    function handleMessage(msg: { data: RendererRequest }) {
-      onMessage(msg.data);
-    }
-    window.addEventListener('message', handleMessage, false);
+  return {
+    postMessage(msg: RendererResponse) {
+      parent.postMessage(msg, '*');
+    },
 
-    return {
-      postMessage(msg: RendererResponse) {
-        parent.postMessage(msg, '*');
-      },
-      off() {
-        window.removeEventListener('message', handleMessage);
+    onMessage(onMessage: OnRendererRequest) {
+      function handleMessage(msg: { data: RendererRequest }) {
+        onMessage(msg.data);
       }
-    };
+      window.addEventListener('message', handleMessage, false);
+      return () => window.removeEventListener('message', handleMessage);
+    }
   };
 }

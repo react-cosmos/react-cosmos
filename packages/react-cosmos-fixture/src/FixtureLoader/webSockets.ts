@@ -7,17 +7,16 @@ import {
 import { RendererConnect } from '../shared';
 
 export function createWebSocketsConnect(url: string): RendererConnect {
-  return (onMessage: OnRendererRequest) => {
-    const socket = io(url);
-    socket.on(RENDERER_MESSAGE_EVENT_NAME, onMessage);
+  const socket = io(url);
 
-    return {
-      postMessage(msg: RendererResponse) {
-        socket.emit(RENDERER_MESSAGE_EVENT_NAME, msg);
-      },
-      off() {
-        socket.off(RENDERER_MESSAGE_EVENT_NAME, onMessage);
-      }
-    };
+  return {
+    postMessage(msg: RendererResponse) {
+      socket.emit(RENDERER_MESSAGE_EVENT_NAME, msg);
+    },
+
+    onMessage(onMessage: OnRendererRequest) {
+      socket.on(RENDERER_MESSAGE_EVENT_NAME, onMessage);
+      return () => socket.off(RENDERER_MESSAGE_EVENT_NAME, onMessage);
+    }
   };
 }

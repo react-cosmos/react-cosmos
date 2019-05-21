@@ -15,11 +15,7 @@ import {
   ReactDecoratorsByPath,
   getFixtureNames
 } from 'react-cosmos-shared2/react';
-import {
-  RendererConnectApi,
-  RendererConnect,
-  SetFixtureState
-} from '../shared';
+import { RendererConnect, SetFixtureState } from '../shared';
 import { FixtureProvider } from '../FixtureProvider';
 import { getFixture } from './fixtureHelpers';
 
@@ -57,17 +53,17 @@ export class FixtureLoader extends React.Component<Props, State> {
     renderKey: 0
   };
 
-  rendererConnectApi: null | RendererConnectApi = null;
+  unsubscribe: null | (() => unknown) = null;
 
   componentDidMount() {
     const { rendererConnect } = this.props;
-    this.rendererConnectApi = rendererConnect(this.handleRequest);
+    this.unsubscribe = rendererConnect.onMessage(this.handleRequest);
     this.postReadyState();
   }
 
   componentWillUnmount() {
-    if (this.rendererConnectApi) {
-      this.rendererConnectApi.off();
+    if (this.unsubscribe) {
+      this.unsubscribe();
     }
   }
 
@@ -292,9 +288,7 @@ export class FixtureLoader extends React.Component<Props, State> {
   }
 
   postMessage(msg: RendererResponse) {
-    if (this.rendererConnectApi) {
-      this.rendererConnectApi.postMessage(msg);
-    }
+    this.props.rendererConnect.postMessage(msg);
   }
 }
 

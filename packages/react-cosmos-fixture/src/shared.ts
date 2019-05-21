@@ -5,14 +5,10 @@ import {
   OnRendererResponse
 } from 'react-cosmos-shared2/renderer';
 
-export type RendererConnectApi = {
+export type RendererConnect = {
   postMessage: OnRendererResponse;
-  off: () => unknown;
+  onMessage(handler: OnRendererRequest): () => unknown;
 };
-
-export type RendererConnect = (
-  onMessage: OnRendererRequest
-) => RendererConnectApi;
 
 export type FixtureContextValue = {
   fixtureState: FixtureState;
