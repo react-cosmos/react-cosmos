@@ -1,21 +1,15 @@
-import {
-  getRendererId,
-  addGlobalErrorHandler,
-  mountDomRenderer
-} from '../../../domRenderer';
+import { mountDomRenderer } from '../../../domRenderer';
 import { initErrorOverlay, dismissErrorOverlay } from './errorOverlay';
+import { initHmrErrorHandler } from './hmrErrorHandler';
 
-const rendererId = getRendererId();
-
-addGlobalErrorHandler(rendererId);
 initErrorOverlay();
+initHmrErrorHandler();
 mount();
 
 function mount() {
   // Use dynamic import to load updated modules upon hot reloading
   const { rendererConfig, fixtures, decorators } = require('./userDeps');
   mountDomRenderer({
-    rendererId,
     rendererConfig,
     fixtures,
     decorators,

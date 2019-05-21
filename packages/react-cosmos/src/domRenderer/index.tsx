@@ -1,17 +1,14 @@
 import * as React from 'react';
 import { render } from 'react-dom';
-import { RendererId } from 'react-cosmos-shared2/renderer';
+import { FixtureLoader } from 'react-cosmos-fixture';
 import {
-  ReactFixturesByPath,
-  ReactDecoratorsByPath
+  ReactDecoratorsByPath,
+  ReactFixturesByPath
 } from 'react-cosmos-shared2/react';
-import {
-  FixtureLoader,
-  createPostMessageConnect,
-  createWebSocketsConnect
-} from 'react-cosmos-fixture';
-import { isInsideCosmosPreviewIframe } from './shared';
+import { getRendererId } from './rendererId';
+import { getRendererConnect } from './rendererConnect';
 import { getDomContainer } from './container';
+import { addGlobalErrorHandler } from './globalErrorHandler';
 import { ErrorCatch } from './ErrorCatch';
 
 export type DomRendererConfig = {
@@ -19,7 +16,6 @@ export type DomRendererConfig = {
 };
 
 type MountDomRendererOpts = {
-  rendererId: RendererId;
   rendererConfig: DomRendererConfig;
   fixtures: ReactFixturesByPath;
   decorators: ReactDecoratorsByPath;
@@ -27,19 +23,21 @@ type MountDomRendererOpts = {
 };
 
 export { getRendererId } from './rendererId';
-export { addGlobalErrorHandler } from './globalErrorHandler';
+export { getRendererConnect } from './rendererConnect';
 
 export function mountDomRenderer({
-  rendererId,
+  rendererConfig,
   fixtures,
   decorators,
-  rendererConfig,
   onFixtureChange
 }: MountDomRendererOpts) {
+  const rendererId = getRendererId();
+  const rendererConnect = getRendererConnect();
+  addGlobalErrorHandler(rendererId, rendererConnect);
   render(
     <FixtureLoader
       rendererId={rendererId}
-      rendererConnect={getRendererConnect()}
+      rendererConnect={rendererConnect}
       fixtures={fixtures}
       systemDecorators={[ErrorCatch]}
       userDecorators={decorators}
@@ -47,15 +45,4 @@ export function mountDomRenderer({
     />,
     getDomContainer(rendererConfig.containerQuerySelector)
   );
-}
-
-function getRendererConnect() {
-  return isInsideCosmosPreviewIframe()
-    ? createPostMessageConnect()
-    : createWebSocketsConnect(getWebSocketsUrl());
-}
-
-function getWebSocketsUrl() {
-  // TODO: Allow user to input URL
-  return location.origin;
 }

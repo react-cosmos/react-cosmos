@@ -50,8 +50,6 @@ export type RendererRequest =
   | UnselectFixtureRequest
   | SetFixtureStateRequest;
 
-export type OnRendererRequest = (msg: RendererRequest) => unknown;
-
 export type RendererReadyResponse = {
   type: 'rendererReady';
   payload: {
@@ -95,7 +93,5 @@ export type RendererResponse =
   | RendererErrorResponse
   | FixtureListUpdateResponse
   | FixtureStateChangeResponse;
-
-export type OnRendererResponse = (msg: RendererResponse) => unknown;
 
 export const RENDERER_MESSAGE_EVENT_NAME = 'cosmos-renderer-message';

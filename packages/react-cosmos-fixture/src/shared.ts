@@ -1,13 +1,16 @@
-import { StateUpdater } from 'react-cosmos-shared2/util';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
+import { StateUpdater } from 'react-cosmos-shared2/util';
 import {
-  OnRendererRequest,
-  OnRendererResponse
+  RendererRequest,
+  RendererResponse
 } from 'react-cosmos-shared2/renderer';
 
-export type RendererConnect = {
-  postMessage: OnRendererResponse;
-  onMessage(handler: OnRendererRequest): () => unknown;
+export type RendererConnect<
+  Request = RendererRequest,
+  Response = RendererResponse
+> = {
+  postMessage: (msg: Response) => unknown;
+  onMessage(handler: (msg: Request) => unknown): () => unknown;
 };
 
 export type FixtureContextValue = {
