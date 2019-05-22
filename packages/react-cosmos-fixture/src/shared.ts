@@ -1,5 +1,5 @@
-import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
+import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import {
   RendererRequest,
   RendererResponse
