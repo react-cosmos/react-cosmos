@@ -27,6 +27,10 @@ export function getMessageHandlerMethods() {
   return getMethodsOf<MessageHandlerSpec>('messageHandler');
 }
 
+export function getRendererCoreMethods() {
+  return getMethodsOf<RendererCoreSpec>('rendererCore');
+}
+
 export function getNotificationsMethods() {
   return getMethodsOf<NotificationsSpec>('notifications');
 }

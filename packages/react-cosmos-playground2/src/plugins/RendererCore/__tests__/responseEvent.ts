@@ -3,12 +3,10 @@ import { loadPlugins } from 'react-plugin';
 import { cleanup, on } from '../../../testHelpers/plugin';
 import {
   mockRouter,
-  mockNotifications
-} from '../../../testHelpers/pluginMocks';
-import {
-  createRendererReadyResponse,
+  mockNotifications,
   getRendererCoreMethods
-} from '../testHelpers';
+} from '../../../testHelpers/pluginMocks';
+import { createRendererReadyResponse } from '../testHelpers';
 import { RendererCoreSpec } from '../public';
 import { register } from '..';
 

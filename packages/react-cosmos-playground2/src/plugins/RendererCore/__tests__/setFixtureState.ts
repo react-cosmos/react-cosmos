@@ -8,12 +8,9 @@ import {
   getMethodsOf,
   mockMethodsOf
 } from '../../../testHelpers/plugin';
+import { getRendererCoreMethods } from '../../../testHelpers/pluginMocks';
 import { RouterSpec } from '../../Router/public';
-import {
-  mockRendererReady,
-  getRendererCoreMethods,
-  mockFixtureStateChange
-} from '../testHelpers';
+import { mockRendererReady, mockFixtureStateChange } from '../testHelpers';
 import { RendererCoreSpec } from '../public';
 import { register } from '..';
 

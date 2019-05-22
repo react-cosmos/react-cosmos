@@ -2,8 +2,9 @@ import { NotificationsSpec } from '../../Notifications/public';
 import { wait } from 'react-testing-library';
 import { loadPlugins, getPluginContext } from 'react-plugin';
 import { cleanup, on, mockMethodsOf } from '../../../testHelpers/plugin';
+import { getRendererCoreMethods } from '../../../testHelpers/pluginMocks';
 import { RouterSpec } from '../../Router/public';
-import { mockRendererReady, getRendererCoreMethods } from '../testHelpers';
+import { mockRendererReady } from '../testHelpers';
 import { RendererCoreSpec } from '../public';
 import { register } from '..';
 

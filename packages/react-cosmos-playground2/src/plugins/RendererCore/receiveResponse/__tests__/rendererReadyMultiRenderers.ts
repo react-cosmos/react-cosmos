@@ -1,13 +1,10 @@
 import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
 import { cleanup, mockMethodsOf } from '../../../../testHelpers/plugin';
+import { getRendererCoreMethods } from '../../../../testHelpers/pluginMocks';
 import { NotificationsSpec } from '../../../Notifications/public';
 import { RouterSpec } from '../../../Router/public';
-import {
-  getRendererCoreMethods,
-  mockRendererReady,
-  mockFixtureStateChange
-} from '../../testHelpers';
+import { mockRendererReady, mockFixtureStateChange } from '../../testHelpers';
 import { register } from '../..';
 
 afterEach(cleanup);

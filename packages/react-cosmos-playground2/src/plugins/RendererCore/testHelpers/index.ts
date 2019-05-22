@@ -7,8 +7,7 @@ import {
   FixtureStateChangeResponse
 } from 'react-cosmos-shared2/renderer';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import { getMethodsOf } from '../../../testHelpers/plugin';
-import { RendererCoreSpec } from '../public';
+import { getRendererCoreMethods } from '../../../testHelpers/pluginMocks';
 
 export function createRendererReadyResponse(
   rendererId: RendererId,
@@ -49,10 +48,6 @@ export function createFixtureStateChangeResponse(
       fixtureState
     }
   };
-}
-
-export function getRendererCoreMethods() {
-  return getMethodsOf<RendererCoreSpec>('rendererCore');
 }
 
 export function mockRendererReady(

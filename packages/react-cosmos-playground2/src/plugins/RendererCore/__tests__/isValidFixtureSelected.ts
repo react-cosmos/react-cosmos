@@ -2,8 +2,9 @@ import { NotificationsSpec } from '../../Notifications/public';
 import { loadPlugins } from 'react-plugin';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
+import { getRendererCoreMethods } from '../../../testHelpers/pluginMocks';
 import { RouterSpec } from '../../Router/public';
-import { mockRendererReady, getRendererCoreMethods } from '../testHelpers';
+import { mockRendererReady } from '../testHelpers';
 import { register } from '..';
 
 afterEach(cleanup);

@@ -6,11 +6,11 @@ import {
   getMethodsOf,
   mockMethodsOf
 } from '../../../../testHelpers/plugin';
+import { getRendererCoreMethods } from '../../../../testHelpers/pluginMocks';
 import { RouterSpec } from '../../../Router/public';
 import { NotificationsSpec } from '../../../Notifications/public';
 import {
   createFixtureListUpdateResponse,
-  getRendererCoreMethods,
   mockRendererReady
 } from '../../testHelpers';
 import { RendererCoreSpec } from '../../public';
