@@ -5,6 +5,8 @@ import { receiveFixtureStateChangeResponse } from './fixtureStateChange';
 import { Context } from '../shared';
 
 export function receiveResponse(context: Context, msg: RendererResponse) {
+  context.emit('response', msg);
+
   switch (msg.type) {
     case 'rendererReady':
       return receiveRendererReadyResponse(context, msg);
@@ -15,7 +17,4 @@ export function receiveResponse(context: Context, msg: RendererResponse) {
     default:
     // No need to handle every message. Maybe some plugin cares about it.
   }
-
-  // TODO: Test
-  context.emit('response', msg);
 }
