@@ -1,5 +1,7 @@
-import { RendererRequest } from 'react-cosmos-shared2/renderer';
-import { RendererConnect } from '../shared';
+import {
+  RendererRequest,
+  RendererConnect
+} from 'react-cosmos-shared2/renderer';
 
 export function createPostMessageConnect(): RendererConnect {
   return {

@@ -1,5 +1,5 @@
+import { RendererConnect } from 'react-cosmos-shared2/renderer';
 import {
-  RendererConnect,
   createPostMessageConnect,
   createWebSocketsConnect
 } from 'react-cosmos-fixture';

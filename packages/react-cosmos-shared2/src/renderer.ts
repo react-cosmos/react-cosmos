@@ -94,4 +94,12 @@ export type RendererResponse =
   | FixtureListUpdateResponse
   | FixtureStateChangeResponse;
 
+export type RendererConnect<
+  Request = RendererRequest,
+  Response = RendererResponse
+> = {
+  postMessage: (msg: Response) => unknown;
+  onMessage(handler: (msg: Request) => unknown): () => unknown;
+};
+
 export const RENDERER_MESSAGE_EVENT_NAME = 'cosmos-renderer-message';

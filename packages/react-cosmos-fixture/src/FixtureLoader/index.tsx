@@ -7,7 +7,8 @@ import {
   RendererRequest,
   SelectFixtureRequest,
   SetFixtureStateRequest,
-  RendererResponse
+  RendererResponse,
+  RendererConnect
 } from 'react-cosmos-shared2/renderer';
 import {
   ReactDecorator,
@@ -15,7 +16,7 @@ import {
   ReactDecoratorsByPath,
   getFixtureNames
 } from 'react-cosmos-shared2/react';
-import { RendererConnect, SetFixtureState } from '../shared';
+import { SetFixtureState } from '../shared';
 import { FixtureProvider } from '../FixtureProvider';
 import { getFixture } from './fixtureHelpers';
 

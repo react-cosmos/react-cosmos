@@ -1,17 +1,5 @@
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import {
-  RendererRequest,
-  RendererResponse
-} from 'react-cosmos-shared2/renderer';
-
-export type RendererConnect<
-  Request = RendererRequest,
-  Response = RendererResponse
-> = {
-  postMessage: (msg: Response) => unknown;
-  onMessage(handler: (msg: Request) => unknown): () => unknown;
-};
 
 export type FixtureContextValue = {
   fixtureState: FixtureState;
