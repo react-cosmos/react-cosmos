@@ -1,20 +1,14 @@
-import {
-  RendererRequest,
-  RendererResponse
-} from 'react-cosmos-shared2/renderer';
+import { RendererRequest } from 'react-cosmos-shared2/renderer';
 import { RendererConnect } from '../shared';
 
-export function createPostMessageConnect<
-  Request = RendererRequest,
-  Response = RendererResponse
->(): RendererConnect<Request, Response> {
+export function createPostMessageConnect(): RendererConnect {
   return {
     postMessage(msg) {
       parent.postMessage(msg, '*');
     },
 
     onMessage(onMessage) {
-      function handleMessage(msg: { data: Request }) {
+      function handleMessage(msg: { data: RendererRequest }) {
         onMessage(msg.data);
       }
       window.addEventListener('message', handleMessage, false);

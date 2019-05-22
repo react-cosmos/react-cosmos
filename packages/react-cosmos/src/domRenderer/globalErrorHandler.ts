@@ -1,5 +1,5 @@
-import { RendererConnect } from 'react-cosmos-fixture';
 import { RendererId } from 'react-cosmos-shared2/renderer';
+import { RendererConnect } from 'react-cosmos-fixture';
 
 let alreadyAdded = false;
 
