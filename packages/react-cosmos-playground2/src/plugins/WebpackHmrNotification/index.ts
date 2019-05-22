@@ -23,12 +23,12 @@ function onRendererResponse(context: Context, msg: WebpackRendererResponse) {
   // TODO: Test
   switch (msg.type) {
     case 'rendererHmrFail':
-      const { rendererId } = msg.payload;
       notifications.pushTimedNotification({
-        // TODO: Make id unique (use "build"?). 99% all renderers will crash in
-        // the same way. Otherwise when we'll have multiple renderers loaded
-        // side by side we will see duplicate notifications whenever hmr fails.
-        id: `renderer-hmr-fail-${rendererId}`,
+        // This event could potentially be triggered by multiple renderers at
+        // once, but it only makes sense that hot reloading should fail the same
+        // in all of them. To prevent duplicating this error in such cases the
+        // notification ID is _not_ unique per renderer.
+        id: 'renderer-hmr-fail',
         type: 'error',
         title: 'Hot reload failed',
         info:
