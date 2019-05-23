@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { wait, render } from 'react-testing-library';
-import { loadPlugins, Slot, getPluginContext } from 'react-plugin';
-import { CoreSpec } from '../../Core/public';
-import { RendererCoreSpec } from '../../RendererCore/public';
-import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
+import { loadPlugins, Slot } from 'react-plugin';
+import { cleanup } from '../../../testHelpers/plugin';
+import * as pluginMocks from '../../../testHelpers/pluginMocks';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { mockIframeMessage, getIframe } from '../testHelpers/iframe';
 import { selectFixtureMsg, rendererReadyMsg } from '../testHelpers/messages';
@@ -19,7 +18,7 @@ function loadTestPlugins() {
 }
 
 function mockCore() {
-  mockMethodsOf<CoreSpec>('core', {
+  pluginMocks.mockCore({
     getWebRendererUrl: () => 'mockRendererUrl'
   });
 }
@@ -27,13 +26,10 @@ function mockCore() {
 it('posts renderer request message to iframe', async () => {
   register();
   mockCore();
-  mockMethodsOf<RendererCoreSpec>('rendererCore', {});
+  pluginMocks.mockRendererCore({});
 
   const renderer = loadTestPlugins();
-  getPluginContext<RendererCoreSpec>('rendererCore').emit(
-    'request',
-    selectFixtureMsg
-  );
+  pluginMocks.getRendererCoreContext().emit('request', selectFixtureMsg);
 
   await mockIframeMessage(getIframe(renderer), async ({ onMessage }) => {
     await wait(() =>
@@ -49,7 +45,7 @@ it('sends renderer response message to renderer core', async () => {
   mockCore();
 
   const receiveResponse = jest.fn();
-  mockMethodsOf<RendererCoreSpec>('rendererCore', {
+  pluginMocks.mockRendererCore({
     receiveResponse,
     selectPrimaryRenderer: () => {}
   });
@@ -67,7 +63,7 @@ it('makes connected renderer the primary renderer', async () => {
   mockCore();
 
   const selectPrimaryRenderer = jest.fn();
-  mockMethodsOf<RendererCoreSpec>('rendererCore', {
+  pluginMocks.mockRendererCore({
     receiveResponse: () => {},
     selectPrimaryRenderer
   });
