@@ -11,7 +11,7 @@
     <img alt="Build" src="https://travis-ci.org/react-cosmos/react-cosmos.svg?branch=master">
   </a>
   <a href="https://twitter.com/ReactCosmos">
-    <img alt="@ReactCosmos" src="https://img.shields.io/twitter/follow/ReactCosmos.svg?style=flat&label=Follow">
+    <img alt="@ReactCosmos" src="https://img.shields.io/twitter/follow/ReactCosmos.svg?color=%2338A1F3&label=follow&style=flat">
   </a>
   <a href="https://join-react-cosmos.now.sh/">
     <img alt="Slack" src="https://join-react-cosmos.now.sh/badge.svg">
