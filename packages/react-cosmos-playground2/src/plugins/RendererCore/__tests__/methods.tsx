@@ -1,9 +1,11 @@
 import { loadPlugins } from 'react-plugin';
-import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
-import { getRendererCoreMethods } from '../../../testHelpers/pluginMocks';
-import { NotificationsSpec } from '../../Notifications/public';
+import { cleanup } from '../../../testHelpers/plugin';
+import {
+  getRendererCoreMethods,
+  mockRouter,
+  mockNotifications
+} from '../../../testHelpers/pluginMocks';
 import { mockRendererReady, mockFixtureStateChange } from '../testHelpers';
-import { RouterSpec } from '../../Router/public';
 import { register } from '..';
 
 afterEach(cleanup);
@@ -14,10 +16,10 @@ const fixtureState = { props: [] };
 
 function registerTestPlugins() {
   register();
-  mockMethodsOf<RouterSpec>('router', {
+  mockRouter({
     getSelectedFixtureId: () => fixtureId
   });
-  mockMethodsOf<NotificationsSpec>('notifications', {
+  mockNotifications({
     pushTimedNotification: () => {}
   });
 }

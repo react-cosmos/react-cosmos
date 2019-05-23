@@ -1,19 +1,16 @@
 import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
 import { RendererId } from 'react-cosmos-shared2/renderer';
+import { cleanup } from '../../../../testHelpers/plugin';
 import {
-  cleanup,
-  getMethodsOf,
-  mockMethodsOf
-} from '../../../../testHelpers/plugin';
-import { getRendererCoreMethods } from '../../../../testHelpers/pluginMocks';
-import { RouterSpec } from '../../../Router/public';
-import { NotificationsSpec } from '../../../Notifications/public';
+  getRendererCoreMethods,
+  mockRouter,
+  mockNotifications
+} from '../../../../testHelpers/pluginMocks';
 import {
   createFixtureListUpdateResponse,
   mockRendererReady
 } from '../../testHelpers';
-import { RendererCoreSpec } from '../../public';
 import { register } from '../..';
 
 afterEach(cleanup);
@@ -22,10 +19,10 @@ const fixtures = { 'ein.js': null, 'zwei.js': null, 'drei.js': null };
 
 function registerTestPlugins() {
   register();
-  mockMethodsOf<RouterSpec>('router', {
+  mockRouter({
     getSelectedFixtureId: () => null
   });
-  mockMethodsOf<NotificationsSpec>('notifications', {
+  mockNotifications({
     pushTimedNotification: () => {}
   });
 }
@@ -37,7 +34,7 @@ function loadTestPlugins() {
 }
 
 function mockFixtureListUpdateResponse(rendererId: RendererId) {
-  const methods = getMethodsOf<RendererCoreSpec>('rendererCore');
+  const methods = getRendererCoreMethods();
   methods.receiveResponse(
     createFixtureListUpdateResponse(rendererId, {
       ...fixtures,

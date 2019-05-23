@@ -1,19 +1,21 @@
-import { NotificationsSpec } from '../../Notifications/public';
 import { loadPlugins } from 'react-plugin';
-import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
-import { getRendererCoreMethods } from '../../../testHelpers/pluginMocks';
+import { cleanup } from '../../../testHelpers/plugin';
+import {
+  getRendererCoreMethods,
+  mockRouter,
+  mockNotifications
+} from '../../../testHelpers/pluginMocks';
 import { mockRendererReady } from '../testHelpers';
 import { register } from '..';
-import { RouterSpec } from '../../Router/public';
 
 afterEach(cleanup);
 
 function registerTestPlugins() {
   register();
-  mockMethodsOf<RouterSpec>('router', {
+  mockRouter({
     getSelectedFixtureId: () => null
   });
-  mockMethodsOf<NotificationsSpec>('notifications', {
+  mockNotifications({
     pushTimedNotification: () => {}
   });
 }

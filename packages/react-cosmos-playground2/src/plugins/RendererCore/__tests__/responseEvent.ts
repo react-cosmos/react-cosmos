@@ -1,13 +1,13 @@
 import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
-import { cleanup, on } from '../../../testHelpers/plugin';
+import { cleanup } from '../../../testHelpers/plugin';
 import {
   mockRouter,
   mockNotifications,
-  getRendererCoreMethods
+  getRendererCoreMethods,
+  onRendererCore
 } from '../../../testHelpers/pluginMocks';
 import { createRendererReadyResponse } from '../testHelpers';
-import { RendererCoreSpec } from '../public';
 import { register } from '..';
 
 afterEach(cleanup);
@@ -30,7 +30,7 @@ it('emits response event', async () => {
   registerTestPlugins();
 
   const response = jest.fn();
-  on<RendererCoreSpec>('rendererCore', { response });
+  onRendererCore({ response });
 
   loadPlugins();
   getRendererCoreMethods().receiveResponse(rendererReadyMsg);

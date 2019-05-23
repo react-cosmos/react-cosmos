@@ -1,15 +1,13 @@
-import { NotificationsSpec } from '../../Notifications/public';
 import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
+import { cleanup, getMethodsOf } from '../../../testHelpers/plugin';
 import {
-  cleanup,
-  on,
-  getMethodsOf,
-  mockMethodsOf
-} from '../../../testHelpers/plugin';
-import { getRendererCoreMethods } from '../../../testHelpers/pluginMocks';
-import { RouterSpec } from '../../Router/public';
+  getRendererCoreMethods,
+  mockNotifications,
+  mockRouter,
+  onRendererCore
+} from '../../../testHelpers/pluginMocks';
 import { mockRendererReady, mockFixtureStateChange } from '../testHelpers';
 import { RendererCoreSpec } from '../public';
 import { register } from '..';
@@ -27,13 +25,13 @@ const expectedFixtureState = {
 function registerTestPlugins() {
   register();
   mockSelectedFixture();
-  mockMethodsOf<NotificationsSpec>('notifications', {
+  mockNotifications({
     pushTimedNotification: () => {}
   });
 }
 
 function mockSelectedFixture() {
-  mockMethodsOf<RouterSpec>('router', {
+  mockRouter({
     getSelectedFixtureId: () => ({ path: 'zwei.js', name: null })
   });
 }
@@ -69,7 +67,7 @@ it('posts "setFixtureState" renderer requests', async () => {
   registerTestPlugins();
 
   const request = jest.fn();
-  on<RendererCoreSpec>('rendererCore', { request });
+  onRendererCore({ request });
 
   loadTestPlugins();
   mockSetFixtureStateCall();

@@ -1,20 +1,17 @@
-import { NotificationsSpec } from '../../../Notifications/public';
 import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
 import { RendererId } from 'react-cosmos-shared2/renderer';
+import { cleanup } from '../../../../testHelpers/plugin';
 import {
-  cleanup,
-  getMethodsOf,
-  mockMethodsOf,
-  on
-} from '../../../../testHelpers/plugin';
-import { getRendererCoreMethods } from '../../../../testHelpers/pluginMocks';
-import { RouterSpec } from '../../../Router/public';
+  getRendererCoreMethods,
+  mockNotifications,
+  mockRouter,
+  onRendererCore
+} from '../../../../testHelpers/pluginMocks';
 import {
   createFixtureStateChangeResponse,
   mockRendererReady
 } from '../../testHelpers';
-import { RendererCoreSpec } from '../../public';
 import { register } from '../..';
 
 afterEach(cleanup);
@@ -25,10 +22,10 @@ const fixtureState = { props: [] };
 
 function registerTestPlugins() {
   register();
-  mockMethodsOf<RouterSpec>('router', {
+  mockRouter({
     getSelectedFixtureId: () => fixtureId
   });
-  mockMethodsOf<NotificationsSpec>('notifications', {
+  mockNotifications({
     pushTimedNotification: () => {}
   });
 }
@@ -40,7 +37,7 @@ function loadTestPlugins() {
 }
 
 function mockFixtureStateChangeResponse(rendererId: RendererId) {
-  const methods = getMethodsOf<RendererCoreSpec>('rendererCore');
+  const methods = getRendererCoreMethods();
   methods.receiveResponse(
     createFixtureStateChangeResponse(rendererId, fixtureId, fixtureState)
   );
@@ -70,7 +67,7 @@ it('posts "setFixtureState" request to secondary renderer', async () => {
   registerTestPlugins();
 
   const request = jest.fn();
-  on<RendererCoreSpec>('rendererCore', { request });
+  onRendererCore({ request });
 
   loadTestPlugins();
   mockFixtureStateChangeResponse('mockRendererId1');

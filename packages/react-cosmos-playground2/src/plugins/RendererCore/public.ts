@@ -1,11 +1,6 @@
-import { StateUpdater } from 'react-cosmos-shared2/util';
+import { StateUpdater, Message } from 'react-cosmos-shared2/util';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import {
-  RendererId,
-  FixtureNamesByPath,
-  RendererRequest,
-  RendererResponse
-} from 'react-cosmos-shared2/renderer';
+import { RendererId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 
 export type RendererCoreSpec = {
   name: 'rendererCore';
@@ -24,10 +19,10 @@ export type RendererCoreSpec = {
     isValidFixtureSelected(): boolean;
     setFixtureState(stateUpdater: StateUpdater<FixtureState>): void;
     selectPrimaryRenderer(primaryRendererId: RendererId): void;
-    receiveResponse(msg: RendererResponse): void;
+    receiveResponse(msg: Message): void;
   };
   events: {
-    request: (msg: RendererRequest) => void;
-    response: (msg: RendererResponse) => void;
+    request: (msg: Message) => void;
+    response: (msg: Message) => void;
   };
 };
