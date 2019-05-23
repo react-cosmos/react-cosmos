@@ -5,11 +5,11 @@ import {
   ReactDecoratorsByPath,
   ReactFixturesByPath
 } from 'react-cosmos-shared2/react';
-import { getRendererId } from './rendererId';
-import { getRendererConnect } from './rendererConnect';
+import { rendererId } from './rendererId';
+import { rendererConnect } from './rendererConnect';
 import { getDomContainer } from './container';
-import { addGlobalErrorHandler } from './globalErrorHandler';
 import { ErrorCatch } from './ErrorCatch';
+import './globalErrorHandler';
 
 export type DomRendererConfig = {
   containerQuerySelector: null | string;
@@ -22,8 +22,7 @@ type MountDomRendererOpts = {
   onFixtureChange?: () => unknown;
 };
 
-export { getRendererId } from './rendererId';
-export { getRendererConnect } from './rendererConnect';
+export { rendererId, rendererConnect };
 
 export function mountDomRenderer({
   rendererConfig,
@@ -31,9 +30,6 @@ export function mountDomRenderer({
   decorators,
   onFixtureChange
 }: MountDomRendererOpts) {
-  const rendererId = getRendererId();
-  const rendererConnect = getRendererConnect();
-  addGlobalErrorHandler(rendererId, rendererConnect);
   render(
     <FixtureLoader
       rendererId={rendererId}

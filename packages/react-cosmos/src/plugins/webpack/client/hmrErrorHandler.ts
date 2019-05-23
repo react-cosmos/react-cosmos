@@ -3,7 +3,7 @@ import {
   RendererConnect
 } from 'react-cosmos-shared2/renderer';
 import { WebpackRendererResponse } from 'react-cosmos-shared2/webpack';
-import { getRendererId, getRendererConnect } from '../../../domRenderer';
+import { rendererId, rendererConnect } from '../../../domRenderer';
 
 declare var __DEV__: boolean;
 
@@ -12,14 +12,11 @@ type WebpackRendererConnect = RendererConnect<
   WebpackRendererResponse
 >;
 
-export function initHmrErrorHandler() {
-  if (__DEV__) {
-    const rendererId = getRendererId();
-    const rendererConnect = getRendererConnect() as WebpackRendererConnect;
-    (window as any).onHotReloadError = () =>
-      rendererConnect.postMessage({
-        type: 'rendererHmrFail',
-        payload: { rendererId }
-      });
-  }
+if (__DEV__) {
+  const webpackRendererConnect = rendererConnect as WebpackRendererConnect;
+  (window as any).onHotReloadError = () =>
+    webpackRendererConnect.postMessage({
+      type: 'rendererHmrFail',
+      payload: { rendererId }
+    });
 }

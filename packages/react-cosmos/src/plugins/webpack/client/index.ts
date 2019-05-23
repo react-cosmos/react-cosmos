@@ -1,9 +1,7 @@
 import { mountDomRenderer } from '../../../domRenderer';
-import { initErrorOverlay, dismissErrorOverlay } from './errorOverlay';
-import { initHmrErrorHandler } from './hmrErrorHandler';
+import { dismissErrorOverlay } from './errorOverlay';
+import './hmrErrorHandler';
 
-initErrorOverlay();
-initHmrErrorHandler();
 mount();
 
 function mount() {
