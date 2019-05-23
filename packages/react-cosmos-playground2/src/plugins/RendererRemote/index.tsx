@@ -1,9 +1,6 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import {
-  RendererRequest,
-  RendererResponse
-} from 'react-cosmos-shared2/renderer';
+import { Message } from 'react-cosmos-shared2/util';
 import { CoreSpec } from '../Core/public';
 import { MessageHandlerSpec } from '../MessageHandler/public';
 import { RendererCoreSpec } from '../RendererCore/public';
@@ -17,14 +14,14 @@ const { onLoad, on, plug, register } = createPlugin<RendererRemoteSpec>({
 });
 
 on<MessageHandlerSpec>('messageHandler', {
-  rendererResponse: (context: Context, msg: RendererResponse) => {
+  rendererResponse: (context: Context, msg: Message) => {
     const rendererCore = context.getMethodsOf<RendererCoreSpec>('rendererCore');
     rendererCore.receiveResponse(msg);
   }
 });
 
 on<RendererCoreSpec>('rendererCore', {
-  request: (context: Context, msg: RendererRequest) => {
+  request: (context: Context, msg: Message) => {
     postRendererRequest(context, msg);
   }
 });
@@ -50,7 +47,7 @@ plug('rendererActions', ({ pluginContext: { getMethodsOf } }) => {
 
 export { register };
 
-function postRendererRequest(context: Context, msg: RendererRequest) {
+function postRendererRequest(context: Context, msg: Message) {
   const msgHandler = context.getMethodsOf<MessageHandlerSpec>('messageHandler');
   msgHandler.postRendererRequest(msg);
 }

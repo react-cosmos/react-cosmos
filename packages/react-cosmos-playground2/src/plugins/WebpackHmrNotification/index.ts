@@ -1,4 +1,5 @@
 import { createPlugin, PluginContext } from 'react-plugin';
+import { Message } from 'react-cosmos-shared2/util';
 import { WebpackRendererResponse } from 'react-cosmos-shared2/webpack';
 import { RendererCoreSpec } from './../RendererCore/public';
 import { NotificationsSpec } from './../Notifications/public';
@@ -16,12 +17,13 @@ on<RendererCoreSpec>('rendererCore', {
 
 export { register };
 
-function onRendererResponse(context: Context, msg: WebpackRendererResponse) {
+function onRendererResponse(context: Context, msg: Message) {
   const { getMethodsOf } = context;
   const notifications = getMethodsOf<NotificationsSpec>('notifications');
 
   // TODO: Test
-  switch (msg.type) {
+  const rendererResponse = msg as WebpackRendererResponse;
+  switch (rendererResponse.type) {
     case 'rendererHmrFail':
       notifications.pushTimedNotification({
         // This event could potentially be triggered by multiple renderers at

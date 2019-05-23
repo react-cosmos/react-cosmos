@@ -1,10 +1,6 @@
 import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
-import {
-  SelectFixtureRequest,
-  RendererReadyResponse,
-  RENDERER_MESSAGE_EVENT_NAME
-} from 'react-cosmos-shared2/renderer';
+import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
 import {
   BuildErrorMessage,
   BUILD_MESSAGE_EVENT_NAME
@@ -27,7 +23,7 @@ it('emits renderer request externally', async () => {
   mockCore();
   loadPlugins();
 
-  const selectFixtureReq: SelectFixtureRequest = {
+  const selectFixtureReq = {
     type: 'selectFixture',
     payload: {
       rendererId: 'mockRendererId',
@@ -51,7 +47,7 @@ it('emits renderer response internally', async () => {
   loadPlugins();
 
   await mockSocketIo(async ({ fakeEvent }) => {
-    const rendererReadyRes: RendererReadyResponse = {
+    const rendererReadyRes = {
       type: 'rendererReady',
       payload: {
         rendererId: 'mockRendererId',
