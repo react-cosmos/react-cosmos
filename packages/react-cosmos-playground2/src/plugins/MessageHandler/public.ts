@@ -6,7 +6,7 @@ export type MessageHandlerSpec = {
     postRendererRequest(msg: Message): unknown;
   };
   events: {
-    buildMessage(msg: Message): void;
+    serverMessage(msg: Message): void;
     rendererResponse(msg: Message): void;
   };
 };

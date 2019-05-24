@@ -15,4 +15,4 @@ export type BuildMessage =
   | BuildErrorMessage
   | BuildDoneMessage;
 
-export const BUILD_MESSAGE_EVENT_NAME = 'cosmos-build-message';
+export const SERVER_MESSAGE_EVENT_NAME = 'cosmos-build-message';

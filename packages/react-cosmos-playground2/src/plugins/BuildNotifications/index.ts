@@ -12,12 +12,12 @@ const { on, register } = createPlugin<BuildNotificationsSpec>({
 });
 
 on<MessageHandlerSpec>('messageHandler', {
-  buildMessage: onBuildMessage
+  serverMessage: onServerMessage
 });
 
 export { register };
 
-function onBuildMessage(context: Context, msg: Message) {
+function onServerMessage(context: Context, msg: Message) {
   const { getMethodsOf } = context;
   const notifications = getMethodsOf<NotificationsSpec>('notifications');
 

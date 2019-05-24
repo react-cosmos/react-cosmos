@@ -3,7 +3,7 @@ import debug from 'debug';
 import ioServer from 'socket.io';
 import {
   BuildMessage,
-  BUILD_MESSAGE_EVENT_NAME
+  SERVER_MESSAGE_EVENT_NAME
 } from 'react-cosmos-shared2/build';
 import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
 
@@ -24,9 +24,9 @@ export function createMessageHandler(httpServer: http.Server) {
     });
   });
 
-  function sendBuildMessage(msg: BuildMessage) {
-    d('send build message %o', msg);
-    io.emit(BUILD_MESSAGE_EVENT_NAME, msg);
+  function sendMessage(msg: BuildMessage) {
+    d('send server message %o', msg);
+    io.emit(SERVER_MESSAGE_EVENT_NAME, msg);
   }
 
   function cleanUp() {
@@ -36,5 +36,5 @@ export function createMessageHandler(httpServer: http.Server) {
     });
   }
 
-  return { sendBuildMessage, cleanUp };
+  return { sendMessage, cleanUp };
 }

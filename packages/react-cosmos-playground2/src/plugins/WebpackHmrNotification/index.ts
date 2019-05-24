@@ -21,7 +21,6 @@ function onRendererResponse(context: Context, msg: Message) {
   const { getMethodsOf } = context;
   const notifications = getMethodsOf<NotificationsSpec>('notifications');
 
-  // TODO: Test
   const rendererResponse = msg as WebpackRendererResponse;
   switch (rendererResponse.type) {
     case 'rendererHmrFail':

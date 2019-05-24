@@ -3,6 +3,7 @@ import promisify from 'util.promisify';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from '@skidding/webpack-hot-middleware';
+import { BuildMessage } from 'react-cosmos-shared2/build';
 import { resolvePath } from '../../config';
 import { DevServerPluginArgs } from '../../shared/devServer';
 import { getRootUrl, serveStaticDir } from '../../shared/static';
@@ -13,7 +14,7 @@ import { getDevWebpackConfig } from './webpackConfig';
 export async function webpackDevServer({
   cosmosConfig,
   expressApp,
-  sendBuildMessage
+  sendMessage
 }: DevServerPluginArgs) {
   const userWebpack = getWebpack(cosmosConfig.rootDir);
   if (!userWebpack) {
@@ -32,6 +33,10 @@ export async function webpackDevServer({
         cosmosConfig.publicUrl
       );
     }
+  }
+
+  function sendBuildMessage(msg: BuildMessage) {
+    sendMessage(msg);
   }
 
   const webpackCompiler = userWebpack(webpackConfig);
