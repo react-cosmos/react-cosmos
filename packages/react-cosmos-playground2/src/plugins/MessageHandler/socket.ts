@@ -1,13 +1,7 @@
 import io from 'socket.io-client';
-import {
-  BUILD_MESSAGE_EVENT_NAME,
-  BuildMessage
-} from 'react-cosmos-shared2/build';
-import {
-  RendererRequest,
-  RendererResponse,
-  RENDERER_MESSAGE_EVENT_NAME
-} from 'react-cosmos-shared2/renderer';
+import { Message } from 'react-cosmos-shared2/util';
+import { SERVER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/build';
+import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
 import { CoreSpec } from '../Core/public';
 import { Context } from './shared';
 
@@ -20,27 +14,27 @@ export function initSocket(context: Context) {
   }
 
   socket = io();
-  socket.on(BUILD_MESSAGE_EVENT_NAME, handleBuildMessage);
+  socket.on(SERVER_MESSAGE_EVENT_NAME, handleServerMessage);
   socket.on(RENDERER_MESSAGE_EVENT_NAME, handleRendererMessage);
 
   return () => {
     if (socket) {
-      socket.off(BUILD_MESSAGE_EVENT_NAME, handleBuildMessage);
+      socket.off(SERVER_MESSAGE_EVENT_NAME, handleServerMessage);
       socket.off(RENDERER_MESSAGE_EVENT_NAME, handleRendererMessage);
       socket = undefined;
     }
   };
 
-  function handleBuildMessage(msg: BuildMessage) {
-    context.emit('buildMessage', msg);
+  function handleServerMessage(msg: Message) {
+    context.emit('serverMessage', msg);
   }
 
-  function handleRendererMessage(msg: RendererResponse) {
+  function handleRendererMessage(msg: Message) {
     context.emit('rendererResponse', msg);
   }
 }
 
-export function postRendererRequest(context: Context, msg: RendererRequest) {
+export function postRendererRequest(context: Context, msg: Message) {
   if (socket) {
     socket.emit(RENDERER_MESSAGE_EVENT_NAME, msg);
   }

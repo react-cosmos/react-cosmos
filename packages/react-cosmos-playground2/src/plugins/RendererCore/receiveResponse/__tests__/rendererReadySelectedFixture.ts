@@ -1,12 +1,14 @@
 import { wait } from 'react-testing-library';
 import { loadPlugins, PluginContext } from 'react-plugin';
-import { RendererRequest } from 'react-cosmos-shared2/renderer';
-import { cleanup, mockMethodsOf, on } from '../../../../testHelpers/plugin';
-import { NotificationsSpec } from '../../../Notifications/public';
-import { RouterSpec } from '../../../Router/public';
+import { Message } from 'react-cosmos-shared2/util';
+import { cleanup } from '../../../../testHelpers/plugin';
 import { mockRendererReady, mockFixtureStateChange } from '../../testHelpers';
-import { RendererCoreSpec } from '../../public';
 import { register } from '../..';
+import {
+  mockRouter,
+  mockNotifications,
+  onRendererCore
+} from '../../../../testHelpers/pluginMocks';
 
 afterEach(cleanup);
 
@@ -15,19 +17,16 @@ const fixtures = { [fixtureId.path]: null };
 const fixtureState = { props: [] };
 
 function registerTestPlugins(
-  handleRendererRequest: (
-    context: PluginContext<any>,
-    msg: RendererRequest
-  ) => void
+  handleRendererRequest: (context: PluginContext<any>, msg: Message) => void
 ) {
   register();
-  mockMethodsOf<RouterSpec>('router', {
+  mockRouter({
     getSelectedFixtureId: () => fixtureId
   });
-  mockMethodsOf<NotificationsSpec>('notifications', {
+  mockNotifications({
     pushTimedNotification: () => {}
   });
-  on<RendererCoreSpec>('rendererCore', {
+  onRendererCore({
     request: handleRendererRequest
   });
 }

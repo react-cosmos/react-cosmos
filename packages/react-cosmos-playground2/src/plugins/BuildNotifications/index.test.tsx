@@ -7,7 +7,7 @@ import { register } from '.';
 afterEach(cleanup);
 
 function emitBuildMessage(msg: BuildMessage) {
-  pluginMocks.getMessageHandlerContext().emit('buildMessage', msg);
+  pluginMocks.getMessageHandlerContext().emit('serverMessage', msg);
 }
 
 it('pushes build start notification', () => {

@@ -50,8 +50,6 @@ export type RendererRequest =
   | UnselectFixtureRequest
   | SetFixtureStateRequest;
 
-export type OnRendererRequest = (msg: RendererRequest) => unknown;
-
 export type RendererReadyResponse = {
   type: 'rendererReady';
   payload: {
@@ -62,13 +60,6 @@ export type RendererReadyResponse = {
 
 export type RendererErrorResponse = {
   type: 'rendererError';
-  payload: {
-    rendererId: RendererId;
-  };
-};
-
-export type RendererHmrFailResponse = {
-  type: 'rendererHmrFail';
   payload: {
     rendererId: RendererId;
   };
@@ -100,10 +91,15 @@ export type FixtureStateChangeResponse = {
 export type RendererResponse =
   | RendererReadyResponse
   | RendererErrorResponse
-  | RendererHmrFailResponse
   | FixtureListUpdateResponse
   | FixtureStateChangeResponse;
 
-export type OnRendererResponse = (msg: RendererResponse) => unknown;
+export type RendererConnect<
+  Request = RendererRequest,
+  Response = RendererResponse
+> = {
+  postMessage: (msg: Response) => unknown;
+  onMessage(handler: (msg: Request) => unknown): () => unknown;
+};
 
 export const RENDERER_MESSAGE_EVENT_NAME = 'cosmos-renderer-message';

@@ -1,26 +1,24 @@
 import * as React from 'react';
 import { wait, render } from 'react-testing-library';
 import { loadPlugins, Slot } from 'react-plugin';
-import { CoreSpec } from '../../Core/public';
-import { RendererCoreSpec } from '../../RendererCore/public';
+import { cleanup } from '../../../testHelpers/plugin';
 import {
-  cleanup,
-  mockMethodsOf,
-  getMethodsOf
-} from '../../../testHelpers/plugin';
+  mockCore,
+  mockRendererCore,
+  getRendererPreviewMethods
+} from '../../../testHelpers/pluginMocks';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { rendererReadyMsg, rendererErrorMsg } from '../testHelpers/messages';
-import { RendererPreviewSpec } from '../public';
 import { register } from '..';
 
 afterEach(cleanup);
 
 function registerTestPlugins() {
   register();
-  mockMethodsOf<CoreSpec>('core', {
+  mockCore({
     getWebRendererUrl: () => 'mockRendererUrl'
   });
-  mockMethodsOf<RendererCoreSpec>('rendererCore', {
+  mockRendererCore({
     receiveResponse: () => {},
     selectPrimaryRenderer: () => {}
   });
@@ -34,7 +32,7 @@ function loadTestPlugins() {
 }
 
 function getRuntimeStatus() {
-  const rendererPreview = getMethodsOf<RendererPreviewSpec>('rendererPreview');
+  const rendererPreview = getRendererPreviewMethods();
   return rendererPreview.getRuntimeStatus();
 }
 

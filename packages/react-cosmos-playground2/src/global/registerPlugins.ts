@@ -20,6 +20,7 @@ require('../plugins/ControlPanel').register();
 require('../plugins/ResponsivePreview').register();
 require('../plugins/EditFixtureButton').register();
 require('../plugins/BuildNotifications').register();
+require('../plugins/WebpackHmrNotification').register();
 
 // TODO: Read list of disabled plugins from user config
 enablePlugin('controlPanel', false);

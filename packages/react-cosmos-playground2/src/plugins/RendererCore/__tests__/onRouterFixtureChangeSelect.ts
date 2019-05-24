@@ -1,10 +1,14 @@
-import { NotificationsSpec } from '../../Notifications/public';
 import { wait } from 'react-testing-library';
-import { loadPlugins, getPluginContext } from 'react-plugin';
-import { cleanup, on, mockMethodsOf } from '../../../testHelpers/plugin';
-import { RouterSpec } from '../../Router/public';
-import { mockRendererReady, getRendererCoreMethods } from '../testHelpers';
-import { RendererCoreSpec } from '../public';
+import { loadPlugins } from 'react-plugin';
+import { cleanup } from '../../../testHelpers/plugin';
+import {
+  getRendererCoreMethods,
+  mockRouter,
+  mockNotifications,
+  getRouterContext,
+  onRendererCore
+} from '../../../testHelpers/pluginMocks';
+import { mockRendererReady } from '../testHelpers';
 import { register } from '..';
 
 afterEach(cleanup);
@@ -13,10 +17,10 @@ const fixtures = {};
 
 function registerTestPlugins() {
   register();
-  mockMethodsOf<RouterSpec>('router', {
+  mockRouter({
     getSelectedFixtureId: () => null
   });
-  mockMethodsOf<NotificationsSpec>('notifications', {
+  mockNotifications({
     pushTimedNotification: () => {}
   });
 }
@@ -29,7 +33,7 @@ function loadTestPlugins() {
 }
 
 function emitRouterFixtureChange() {
-  getPluginContext<RouterSpec>('router').emit('fixtureChange', {
+  getRouterContext().emit('fixtureChange', {
     path: 'zwei.js',
     name: null
   });
@@ -39,7 +43,7 @@ it('posts "selectFixture" renderer requests', async () => {
   registerTestPlugins();
 
   const request = jest.fn();
-  on<RendererCoreSpec>('rendererCore', { request });
+  onRendererCore({ request });
 
   loadTestPlugins();
   emitRouterFixtureChange();

@@ -1,6 +1,6 @@
 import http from 'http';
 import express from 'express';
-import { BuildMessage } from 'react-cosmos-shared2/build';
+import { Message } from 'react-cosmos-shared2/util';
 import { CosmosConfig, getCosmosConfig } from '../../config';
 import { PlatformType } from '../shared';
 import { serveStaticDir } from '../static';
@@ -15,8 +15,7 @@ export type DevServerPluginArgs = {
   cosmosConfig: CosmosConfig;
   httpServer: http.Server;
   expressApp: express.Express;
-  // TODO: Replace with something more general purpose
-  sendBuildMessage(msg: BuildMessage): unknown;
+  sendMessage(msg: Message): unknown;
 };
 
 export type DevServerPlugin = (
@@ -52,7 +51,7 @@ export async function startDevServer(
         cosmosConfig,
         httpServer: httpServer.server,
         expressApp: app,
-        sendBuildMessage: msgHandler.sendBuildMessage
+        sendMessage: msgHandler.sendMessage
       });
       if (typeof pluginReturn === 'function') {
         pluginCleanupCallbacks.push(pluginReturn);

@@ -1,20 +1,21 @@
 import { receiveRendererReadyResponse } from './rendererReady';
+import { Message } from 'react-cosmos-shared2/util';
 import { RendererResponse } from 'react-cosmos-shared2/renderer';
 import { receiveFixtureListUpdateResponse } from './fixtureListUpdate';
 import { receiveFixtureStateChangeResponse } from './fixtureStateChange';
-import { receiveRendererHmrFailResponse } from './rendererHmrFail';
 import { Context } from '../shared';
 
-export function receiveResponse(context: Context, msg: RendererResponse) {
-  switch (msg.type) {
+export function receiveResponse(context: Context, msg: Message) {
+  context.emit('response', msg);
+
+  const rendererResponse = msg as RendererResponse;
+  switch (rendererResponse.type) {
     case 'rendererReady':
-      return receiveRendererReadyResponse(context, msg);
+      return receiveRendererReadyResponse(context, rendererResponse);
     case 'fixtureListUpdate':
-      return receiveFixtureListUpdateResponse(context, msg);
+      return receiveFixtureListUpdateResponse(context, rendererResponse);
     case 'fixtureStateChange':
-      return receiveFixtureStateChangeResponse(context, msg);
-    case 'rendererHmrFail':
-      return receiveRendererHmrFailResponse(context, msg);
+      return receiveFixtureStateChangeResponse(context, rendererResponse);
     default:
     // No need to handle every message. Maybe some plugin cares about it.
   }

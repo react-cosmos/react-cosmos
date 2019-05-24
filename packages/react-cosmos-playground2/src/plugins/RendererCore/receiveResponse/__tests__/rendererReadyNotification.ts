@@ -1,16 +1,18 @@
 import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
-import { cleanup, mockMethodsOf } from '../../../../testHelpers/plugin';
-import { RouterSpec } from '../../../Router/public';
-import { NotificationsSpec } from '../../../Notifications/public';
+import { cleanup } from '../../../../testHelpers/plugin';
 import { mockRendererReady } from '../../testHelpers';
 import { register } from '../..';
+import {
+  mockRouter,
+  mockNotifications
+} from '../../../../testHelpers/pluginMocks';
 
 afterEach(cleanup);
 
 function registerTestPlugins() {
   register();
-  mockMethodsOf<RouterSpec>('router', {
+  mockRouter({
     getSelectedFixtureId: () => null
   });
 }
@@ -19,7 +21,7 @@ it('notifies renderer connection', async () => {
   registerTestPlugins();
 
   const pushTimedNotification = jest.fn();
-  mockMethodsOf<NotificationsSpec>('notifications', {
+  mockNotifications({
     pushTimedNotification
   });
 

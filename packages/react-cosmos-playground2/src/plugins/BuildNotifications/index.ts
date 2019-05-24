@@ -1,4 +1,5 @@
 import { createPlugin, PluginContext } from 'react-plugin';
+import { Message } from 'react-cosmos-shared2/util';
 import { BuildMessage } from 'react-cosmos-shared2/build';
 import { MessageHandlerSpec } from './../MessageHandler/public';
 import { NotificationsSpec } from './../Notifications/public';
@@ -11,16 +12,17 @@ const { on, register } = createPlugin<BuildNotificationsSpec>({
 });
 
 on<MessageHandlerSpec>('messageHandler', {
-  buildMessage: onBuildMessage
+  serverMessage: onServerMessage
 });
 
 export { register };
 
-function onBuildMessage(context: Context, msg: BuildMessage) {
+function onServerMessage(context: Context, msg: Message) {
   const { getMethodsOf } = context;
   const notifications = getMethodsOf<NotificationsSpec>('notifications');
 
-  switch (msg.type) {
+  const buildMsg = msg as BuildMessage;
+  switch (buildMsg.type) {
     case 'buildStart':
       return notifications.pushStickyNotification({
         id: 'build',

@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { wait, render } from 'react-testing-library';
 import { loadPlugins, Slot } from 'react-plugin';
-import { CoreSpec } from '../../Core/public';
-import { RendererCoreSpec } from '../../RendererCore/public';
-import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
+import { cleanup } from '../../../testHelpers/plugin';
+import { mockCore, mockRendererCore } from '../../../testHelpers/pluginMocks';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { rendererReadyMsg } from '../testHelpers/messages';
 import { getIframe } from '../testHelpers/iframe';
@@ -13,10 +12,10 @@ afterEach(cleanup);
 
 function registerTestPlugins() {
   register();
-  mockMethodsOf<CoreSpec>('core', {
+  mockCore({
     getWebRendererUrl: () => 'mockRendererUrl'
   });
-  mockMethodsOf<RendererCoreSpec>('rendererCore', {
+  mockRendererCore({
     receiveResponse: () => {},
     selectPrimaryRenderer: () => {}
   });

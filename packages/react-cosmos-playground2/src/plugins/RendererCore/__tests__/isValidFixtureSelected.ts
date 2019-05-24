@@ -1,9 +1,12 @@
-import { NotificationsSpec } from '../../Notifications/public';
 import { loadPlugins } from 'react-plugin';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
-import { RouterSpec } from '../../Router/public';
-import { mockRendererReady, getRendererCoreMethods } from '../testHelpers';
+import { cleanup } from '../../../testHelpers/plugin';
+import {
+  getRendererCoreMethods,
+  mockRouter,
+  mockNotifications
+} from '../../../testHelpers/pluginMocks';
+import { mockRendererReady } from '../testHelpers';
 import { register } from '..';
 
 afterEach(cleanup);
@@ -16,10 +19,10 @@ const fixtures = {
 };
 
 function mockFixtureId(fixtureId: null | FixtureId = null) {
-  mockMethodsOf<RouterSpec>('router', {
+  mockRouter({
     getSelectedFixtureId: () => fixtureId
   });
-  mockMethodsOf<NotificationsSpec>('notifications', {
+  mockNotifications({
     pushTimedNotification: () => {}
   });
 }
