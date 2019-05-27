@@ -6,12 +6,11 @@ Cosmos Next becomes _Cosmos_. The included features are meant to exceed everythi
 - [x] Notifications redesign
   - [x] Build notification [#522](https://github.com/react-cosmos/react-cosmos/issues/522)
   - [ ] ~~Try: Notifications for fixture create/remove/rename~~ Too much info to display inside a notification
+- [ ] Control panel
+- [ ] Try: UI-generated fixture variants
 - [ ] Fixture search
 - [ ] Command API with search
 - [ ] Keyboard shortcuts
-- [ ] Auto props panel
-  - [ ] Option to reset or transition props
-- [ ] Controls panel with Hooks API in (function) fixtures
 - [ ] Try: Multi fixture select
 - [ ] Try: Resize responsive viewport
 - [ ] Improve React Native integration
@@ -20,6 +19,13 @@ Cosmos Next becomes _Cosmos_. The included features are meant to exceed everythi
 - [ ] Migration aids (eg. code transforms and support)
 
 Plugin APIs will be released later, under minor versions.
+
+Control panel
+
+- [ ] Props panel
+  - [ ] Option to reset or transition props
+- [ ] Class state panel
+- [ ] Custom controls with Hooks API in (function) fixtures
 
 Build notifications
 
@@ -48,7 +54,6 @@ Notification redesign
 Not part of v5, but the most notable features to pursue after.
 
 - [ ] "Check all" button to detect broken fixtures
-- [ ] UI-generated fixture variations
 - [ ] Pin fixture
 - [ ] VSCode extension (simpler UI without nav but with control panel)
 
