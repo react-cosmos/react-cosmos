@@ -89,7 +89,6 @@ const Left = styled.div`
   flex-shrink: 0;
   position: relative;
   width: ${NAV_WIDTH_DEFAULT}px;
-  border-right: 1px solid var(--darkest);
   background: var(--grey1);
 `;
 
@@ -113,9 +112,12 @@ const PreviewContainer = styled.div`
 const DragHandle = styled.div`
   position: absolute;
   top: 0;
-  right: -3px;
-  width: 5px;
+  right: -2px;
+  width: 2px;
   height: 100%;
+  padding: 0 2px 0 1px;
+  background: rgba(0, 0, 0, 0.5);
+  background-clip: content-box;
   cursor: col-resize;
   user-select: none;
 `;
