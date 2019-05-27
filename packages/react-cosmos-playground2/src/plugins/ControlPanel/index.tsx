@@ -1,29 +1,29 @@
 import React from 'react';
-import { RendererId } from 'react-cosmos-shared2/renderer';
 import { createPlugin } from 'react-plugin';
-import { RendererCoreSpec } from '../RendererCore/public';
-import { RouterSpec } from '../Router/public';
+import { Button } from '../../shared/ui';
+import { SlidersIcon } from '../../shared/icons';
 import { ControlPanel } from './ControlPanel';
 import { ControlPanelSpec } from './public';
+import { isOpen, useOpenToggle } from './shared';
 
 const { plug, register } = createPlugin<ControlPanelSpec>({
   name: 'controlPanel'
 });
 
-plug('right', ({ pluginContext: { getMethodsOf } }) => {
-  const router = getMethodsOf<RouterSpec>('router');
-  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
+plug('right', ({ pluginContext }) => {
+  return isOpen(pluginContext) ? <ControlPanel /> : null;
+});
+
+plug('rendererActions', ({ pluginContext }) => {
+  const open = isOpen(pluginContext);
+  const toggleOpen = useOpenToggle(pluginContext);
 
   return (
-    <ControlPanel
-      selectedFixtureId={router.getSelectedFixtureId()}
-      connectedRendererIds={rendererCore.getConnectedRendererIds()}
-      primaryRendererId={rendererCore.getPrimaryRendererId()}
-      fixtureState={rendererCore.getFixtureState()}
-      setFixtureState={rendererCore.setFixtureState}
-      selectPrimaryRenderer={(rendererId: RendererId) => {
-        rendererCore.selectPrimaryRenderer(rendererId);
-      }}
+    <Button
+      icon={<SlidersIcon />}
+      label="controls"
+      selected={open}
+      onClick={toggleOpen}
     />
   );
 });

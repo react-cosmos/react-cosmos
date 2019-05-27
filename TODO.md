@@ -24,6 +24,7 @@ Control panel
 
 - [ ] Props panel
   - [ ] Option to reset or transition props
+- [ ] Blank state
 - [ ] Class state panel
 - [ ] Custom controls with Hooks API in (function) fixtures
 

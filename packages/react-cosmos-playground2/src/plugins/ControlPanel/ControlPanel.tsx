@@ -1,96 +1,32 @@
 import * as React from 'react';
-import { StateUpdater } from 'react-cosmos-shared2/util';
-import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import { RendererId, FixtureId } from 'react-cosmos-shared2/renderer';
-import { PluginsConsumer } from 'react-plugin';
 import styled from 'styled-components';
-import { PropsState } from './PropsState';
+import { ArraySlot } from 'react-plugin';
 
-type Props = {
-  selectedFixtureId: null | FixtureId;
-  connectedRendererIds: RendererId[];
-  primaryRendererId: null | RendererId;
-  fixtureState: FixtureState;
-  setFixtureState: (stateUpdater: StateUpdater<FixtureState>) => void;
-  selectPrimaryRenderer: (rendererId: RendererId) => void;
-};
-
-export class ControlPanel extends React.Component<Props> {
-  render() {
-    const {
-      selectedFixtureId,
-      connectedRendererIds,
-      primaryRendererId,
-      fixtureState
-    } = this.props;
-
-    if (!primaryRendererId || !selectedFixtureId) {
-      return null;
-    }
-
-    return (
-      <Container>
-        <PropsState
-          fixtureState={fixtureState}
-          setFixtureState={this.props.setFixtureState}
-        />
-        {connectedRendererIds.length > 1 && (
-          <div>
-            <p>Renderers ({connectedRendererIds.length})</p>
-            <ul>
-              {connectedRendererIds.map(rendererId => (
-                <li key={rendererId}>
-                  <small
-                    onClick={this.createRendererSelectHandler(rendererId)}
-                    style={{
-                      cursor: 'pointer',
-                      fontWeight:
-                        rendererId === primaryRendererId ? 'bold' : 'normal'
-                    }}
-                  >
-                    {rendererId}
-                  </small>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-        <div>
-          <p>Plugins</p>
-          <ul>
-            <PluginsConsumer>
-              {({ plugins, enable }) =>
-                plugins.map(({ name, enabled }) => (
-                  <li key={name}>
-                    <label
-                      onMouseDown={() => {
-                        enable(name, !enabled);
-                      }}
-                    >
-                      <input type="checkbox" checked={enabled} readOnly />{' '}
-                      {name}
-                    </label>
-                  </li>
-                ))
-              }
-            </PluginsConsumer>
-          </ul>
-        </div>
-      </Container>
-    );
-  }
-
-  createRendererSelectHandler = (rendererId: RendererId) => () => {
-    this.props.selectPrimaryRenderer(rendererId);
-  };
+export function ControlPanel() {
+  return (
+    <Container>
+      <Content>
+        <ArraySlot name="controlPanelRow" />
+      </Content>
+    </Container>
+  );
 }
 
 const Container = styled.div`
   flex-shrink: 0;
-  width: 256px;
-  background: var(--grey1);
+  width: 288px;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  box-shadow: inset 2px 0px 0 rgba(0, 0, 0, 0.3);
+  background: var(--grey2);
+  color: var(--grey6);
+`;
+
+const Content = styled.div`
+  width: 100%;
+  max-height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
 `;
