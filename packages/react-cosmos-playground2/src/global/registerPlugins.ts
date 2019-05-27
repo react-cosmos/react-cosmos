@@ -16,9 +16,10 @@ require('../plugins/RendererRemote').register();
 require('../plugins/RendererPreview').register();
 require('../plugins/Nav').register();
 require('../plugins/ContentOverlay').register();
-require('../plugins/ControlPanel').register();
 require('../plugins/ResponsivePreview').register();
 require('../plugins/EditFixtureButton').register();
+require('../plugins/FullScreenButton').register();
+require('../plugins/ControlPanel').register();
 require('../plugins/BuildNotifications').register();
 require('../plugins/WebpackHmrNotification').register();
 

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { render, fireEvent, waitForElement } from 'react-testing-library';
 import { Slot, loadPlugins, MethodHandlers } from 'react-plugin';
-import { cleanup, mockMethodsOf, mockPlug } from '../../../testHelpers/plugin';
+import { cleanup, mockPlug } from '../../../testHelpers/plugin';
+import { mockRouter, mockRendererCore } from '../../../testHelpers/pluginMocks';
 import { RouterSpec } from '../../Router/public';
-import { RendererCoreSpec } from '../../RendererCore/public';
 import { register } from '..';
 
 afterEach(cleanup);
@@ -13,12 +13,12 @@ function registerTestPlugins({
   unselectFixture = jest.fn()
 }: Partial<MethodHandlers<RouterSpec>> = {}) {
   register();
-  mockMethodsOf<RouterSpec>('router', {
+  mockRouter({
     getSelectedFixtureId: () => ({ path: 'foo', name: null }),
     selectFixture,
     unselectFixture
   });
-  mockMethodsOf<RendererCoreSpec>('rendererCore', {
+  mockRendererCore({
     isRendererConnected: () => true,
     isValidFixtureSelected: () => true
   });
@@ -60,20 +60,6 @@ it('renders refresh button', async () => {
     expect.any(Object),
     { path: 'foo', name: null },
     false
-  );
-});
-
-it('renders fullscreen button', async () => {
-  const selectFixture = jest.fn();
-  registerTestPlugins({ selectFixture });
-
-  const { getByText } = loadTestPlugins();
-  fireEvent.click(getByText(/fullscreen/));
-
-  expect(selectFixture).toBeCalledWith(
-    expect.any(Object),
-    { path: 'foo', name: null },
-    true
   );
 });
 

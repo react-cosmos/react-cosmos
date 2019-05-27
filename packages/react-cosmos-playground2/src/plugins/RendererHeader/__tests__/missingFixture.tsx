@@ -1,20 +1,19 @@
 import * as React from 'react';
 import { render, fireEvent, waitForElement } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
-import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
-import { RouterSpec } from '../../Router/public';
-import { RendererCoreSpec } from '../../RendererCore/public';
+import { cleanup } from '../../../testHelpers/plugin';
+import { mockRouter, mockRendererCore } from '../../../testHelpers/pluginMocks';
 import { register } from '..';
 
 afterEach(cleanup);
 
 function registerTestPlugins(unselectFixture = () => {}) {
   register();
-  mockMethodsOf<RouterSpec>('router', {
+  mockRouter({
     getSelectedFixtureId: () => ({ path: 'foo', name: null }),
     unselectFixture
   });
-  mockMethodsOf<RendererCoreSpec>('rendererCore', {
+  mockRendererCore({
     isRendererConnected: () => true,
     isValidFixtureSelected: () => false
   });
@@ -39,10 +38,4 @@ it('renders home button', async () => {
   fireEvent.click(getByText(/home/));
 
   expect(unselectFixture).toBeCalledWith(expect.any(Object));
-});
-
-it('renders disabled fullscreen button', async () => {
-  registerTestPlugins();
-  const { getByText } = loadTestPlugins();
-  expect(getByText(/fullscreen/i)).toHaveAttribute('disabled');
 });
