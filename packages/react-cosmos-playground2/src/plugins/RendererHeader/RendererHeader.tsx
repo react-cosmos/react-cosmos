@@ -91,7 +91,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 40px;
-  padding: 0 12px;
+  padding: 0 8px;
   border-bottom: 1px solid var(--grey5);
   background: var(--grey6);
   color: var(--grey3);

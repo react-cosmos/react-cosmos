@@ -90,7 +90,7 @@ const Container = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 4px 12px 8px 12px;
+  padding: 4px 8px 8px 8px;
   white-space: nowrap;
   overflow-x: auto;
 `;
