@@ -90,6 +90,7 @@ const Left = styled.div`
   position: relative;
   width: ${NAV_WIDTH_DEFAULT}px;
   border-right: 1px solid var(--darkest);
+  background: var(--grey1);
 `;
 
 const Center = styled.div`
