@@ -2,13 +2,17 @@ export {
   KeyValue,
   FixtureDecoratorId,
   FixtureElementId,
+  FixtureStateUnserializableValue,
+  FixtureStateSimpleValue,
+  FixtureStateObjectValue,
   FixtureStateValue,
+  FixtureStateValues,
   FixtureState,
   FixtureStateProps,
-  FixtureStateClassState,
-  createValues,
-  extendWithValues
+  FixtureStateClassState
 } from './shared';
+export { createValues } from './createValues';
+export { extendWithValues } from './extendWithValues';
 export {
   DEFAULT_RENDER_KEY,
   getFixtureStateProps,
