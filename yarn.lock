@@ -1689,12 +1689,10 @@
   dependencies:
     source-map "^0.6.1"
 
-"@types/util.promisify@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@types/util.promisify/-/util.promisify-1.0.1.tgz#96ee7f37ec2550de9a53c66aafa57aff50141018"
-  integrity sha512-lLNDkakHXqDV7wJD8lJPtp99r3nzsJuKVucLrdwjO8PAe9ddUFOuw6YUusW8cXDCyOvwCOzDm7HNzH9wUsoRpA==
-  dependencies:
-    "@types/node" "*"
+"@types/util.promisify@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/util.promisify/-/util.promisify-1.0.0.tgz#26a77d9b210e937430fa549b922d34f8e51185a0"
+  integrity sha512-JK7Ecs9ETHfYSoG5ZILe30Ar9fmMT7vZTirfZQQ9OAZDB8TfPVV6aQkYPtfx2MFfB+yrSY4jCfrvMdemv/9VHw==
 
 "@types/webpack-dev-middleware@^2.0.2":
   version "2.0.2"
@@ -1717,21 +1715,10 @@
     "@types/serve-static" "*"
     "@types/webpack" "*"
 
-"@types/webpack@*":
+"@types/webpack@*", "@types/webpack@4.4.27":
   version "4.4.27"
   resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.4.27.tgz#8bb9429185977a6b3b9e6e6132f561066aa7e7c2"
   integrity sha512-xSll/4UXnLQ0xjdAoTRIFxA6NPC2abJ8nHxRH6SqTymHrfGCc8er7qH0npwCP8q3VFoJh2Hjz1wH8oTjwx9/jQ==
-  dependencies:
-    "@types/anymatch" "*"
-    "@types/node" "*"
-    "@types/tapable" "*"
-    "@types/uglify-js" "*"
-    source-map "^0.6.0"
-
-"@types/webpack@4.4.32":
-  version "4.4.32"
-  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.4.32.tgz#2d460cd33a15e568e93f38de5e628cf846396c51"
-  integrity sha512-mNARoaSJTzbiHxtZbf9NULFilu2frqD+g9Iyl9V2jPYJWXi+AC3Hz8lQWPZ5LLtgUm7iF4SDDMB/1bPrbRQgFw==
   dependencies:
     "@types/anymatch" "*"
     "@types/node" "*"
