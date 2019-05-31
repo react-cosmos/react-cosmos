@@ -103,7 +103,7 @@ runFixtureLoaderTests(mount => {
             classState: updateFixtureStateClassState({
               fixtureState,
               elementId,
-              values: []
+              values: {}
             })
           }
         });

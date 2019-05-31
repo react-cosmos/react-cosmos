@@ -1,6 +1,6 @@
 import {
   FixtureDecoratorId,
-  FixtureStateValue,
+  FixtureStateValues,
   FixtureStateProps,
   FixtureStateClassState,
   FixtureState
@@ -11,14 +11,14 @@ export function anyProps(
     decoratorId?: FixtureDecoratorId;
     elPath?: string;
     componentName?: string;
-    values?: FixtureStateValue[];
+    values?: FixtureStateValues;
   } = {}
 ): FixtureStateProps {
   const {
     decoratorId = expect.any(String),
     elPath = expect.any(String),
     componentName = expect.any(String),
-    values = expect.any(Array)
+    values = expect.any(Object)
   } = args;
   return {
     elementId: { decoratorId, elPath },
@@ -31,7 +31,7 @@ export function anyProps(
 export function anyClassState(args: {
   decoratorId?: FixtureDecoratorId;
   elPath?: string;
-  values: FixtureStateValue[];
+  values: FixtureStateValues;
 }): FixtureStateClassState {
   const {
     decoratorId = expect.any(String),
