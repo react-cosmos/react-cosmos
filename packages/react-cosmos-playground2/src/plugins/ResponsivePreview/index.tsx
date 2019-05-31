@@ -45,7 +45,7 @@ plug('rendererPreviewOuter', ({ children, pluginContext }) => {
       setViewport={(newViewport: Viewport) => {
         storage.setItem(STORAGE_KEY, newViewport);
         setFixtureStateViewport(pluginContext, newViewport);
-        setState({ enabled: true });
+        setState({ enabled: true, viewport: newViewport });
       }}
     >
       {children}
@@ -66,7 +66,7 @@ plug('rendererActions', ({ pluginContext }) => {
       responsiveModeOn={responsiveModeOn}
       toggleViewportState={() => {
         const nextEnabled = !responsiveModeOn;
-        setState({ enabled: nextEnabled });
+        setState(prevState => ({ ...prevState, enabled: nextEnabled }));
         setFixtureStateViewport(
           pluginContext,
           getActiveViewport(pluginContext, nextEnabled)
