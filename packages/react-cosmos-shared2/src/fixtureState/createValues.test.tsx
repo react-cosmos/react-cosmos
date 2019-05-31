@@ -1,3 +1,4 @@
+import React from 'react';
 import { createValues } from './createValues';
 
 it('creates string value', () => {
@@ -61,6 +62,16 @@ it('creates unserializable regexp value', () => {
     myProp: {
       type: 'unserializable',
       stringifiedValue: '/impossible/g'
+    }
+  });
+});
+
+it('creates unserializable React element value', () => {
+  const values = createValues({ myProp: <div /> });
+  expect(values).toEqual({
+    myProp: {
+      type: 'unserializable',
+      stringifiedValue: '<div />'
     }
   });
 });

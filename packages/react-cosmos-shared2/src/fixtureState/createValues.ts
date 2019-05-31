@@ -45,7 +45,7 @@ function createValue(key: string, value: unknown): FixtureStateValue {
 }
 
 function isSerializableObject(value: unknown): value is KeyValue {
-  return isPlainObject(value);
+  return isPlainObject(value) && !isElement(value);
 }
 
 function stringifyUnserializableValue(value: unknown) {
