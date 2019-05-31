@@ -1,97 +1,90 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { FixtureStateValue } from 'react-cosmos-shared2/fixtureState';
 
 type Props = {
   id: string;
-  label: string;
-  value: string;
-  disabled: boolean;
-  onChange: (value: string) => unknown;
+  valueKey: string;
+  value: FixtureStateValue;
+  onChange: (value: FixtureStateValue) => unknown;
 };
 
-type State = {
-  confirmedValue: string;
-  localValue: string;
-};
-
-export class ValueInput extends React.Component<Props, State> {
-  static getDerivedStateFromProps(props: Props, state: State) {
-    if (props.value === state.confirmedValue) {
-      return null;
-    }
-
-    return {
-      confirmedValue: props.value,
-      localValue: props.value
-    };
+export function ValueInput({ id, valueKey, value, onChange }: Props) {
+  if (value.type === 'unserializable') {
+    return (
+      <RowContainer>
+        <Label htmlFor={id}>{valueKey}</Label>
+        <InputContainer>
+          <input id={id} type="text" disabled value={value.stringifiedValue} />
+        </InputContainer>
+      </RowContainer>
+    );
   }
 
-  state = {
-    confirmedValue: this.props.value,
-    localValue: this.props.value
-  };
-
-  render() {
-    const { id, label } = this.props;
-    const { localValue } = this.state;
-
-    const type = localValue.indexOf(`\n`) !== -1 ? 'textarea' : 'input';
-    const props = this.getInputProps(type);
-
+  if (value.type === 'object') {
     return (
-      <div>
-        <Label htmlFor={id}>{label}</Label>
-        {React.createElement(type, props)}
+      <div style={{ paddingLeft: 16 }}>
+        {Object.keys(value.values).map(key => (
+          <ValueInput
+            key={key}
+            id={`${id}-${key}`}
+            valueKey={key}
+            value={value.values[key]}
+            onChange={() => {
+              // TODO: Implement this
+            }}
+          />
+        ))}
       </div>
     );
   }
 
-  getInputProps = (type: 'input' | 'textarea') => {
-    const { id, disabled } = this.props;
-    const { localValue } = this.state;
-
-    type InputProps = {
-      id: string;
-      value: string;
-      disabled: boolean;
-      type?: string;
-      onChange?: (e: React.SyntheticEvent<HTMLInputElement>) => void;
-    };
-    let props: InputProps = {
-      id,
-      value: localValue,
-      disabled
-    };
-    if (type === 'input') {
-      props = { ...props, type: 'text' };
-    }
-    if (!disabled) {
-      props = { ...props, onChange: this.handleChange };
-    }
-
-    return props;
-  };
-
-  handleChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
-    const { value } = e.currentTarget;
-    const { onChange } = this.props;
-
-    this.setState({
-      localValue: value
-    });
-
-    try {
-      JSON.parse(value);
-    } catch (err) {
-      console.warn(`Not a valid JSON value: ${value}`);
-      return;
-    }
-
-    onChange(value);
-  };
+  return (
+    <RowContainer>
+      <Label htmlFor={id}>{valueKey}</Label>
+      <InputContainer>
+        <input
+          type="text"
+          id={id}
+          value={JSON.stringify(value.value)}
+          onChange={(e: React.SyntheticEvent<HTMLInputElement>) => {
+            try {
+              onChange({
+                type: 'simple',
+                value: JSON.parse(e.currentTarget.value)
+              });
+            } catch (err) {
+              console.warn(`Not a valid JSON value: ${value}`);
+              return;
+            }
+          }}
+        />
+      </InputContainer>
+    </RowContainer>
+  );
 }
 
+const RowContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin: 8px 0;
+`;
+
 const Label = styled.label`
+  flex-shrink: 0;
   display: block;
+  max-width: 50%;
+  box-sizing: border-box;
+  padding: 0 6px 0 0;
   font-size: 14px;
+`;
+
+const InputContainer = styled.div`
+  flex: auto;
+
+  input,
+  textarea {
+    width: 100%;
+    box-sizing: border-box;
+  }
 `;

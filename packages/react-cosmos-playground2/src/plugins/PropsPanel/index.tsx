@@ -12,8 +12,6 @@ const { plug, register } = createPlugin<PropsPanelSpec>({
 
 plug('controlPanelRow', ({ pluginContext: { getMethodsOf } }) => {
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
-  const primaryRendererId = rendererCore.getPrimaryRendererId();
-  const validFixtureSelected = rendererCore.isValidFixtureSelected();
   const fixtureState = rendererCore.getFixtureState();
 
   const setFixtureState = React.useCallback(
@@ -21,10 +19,6 @@ plug('controlPanelRow', ({ pluginContext: { getMethodsOf } }) => {
       rendererCore.setFixtureState(fixtureStateUpdater),
     [rendererCore]
   );
-
-  if (!primaryRendererId || !validFixtureSelected) {
-    return null;
-  }
 
   return (
     <PropsPanel fixtureState={fixtureState} setFixtureState={setFixtureState} />

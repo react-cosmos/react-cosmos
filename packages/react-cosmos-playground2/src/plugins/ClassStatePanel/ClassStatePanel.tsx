@@ -1,13 +1,14 @@
-import * as React from 'react';
-import { StateUpdater, replaceOrAddItem } from 'react-cosmos-shared2/util';
+import React from 'react';
+import styled from 'styled-components';
+import { StateUpdater } from 'react-cosmos-shared2/util';
 import {
   FixtureElementId,
   FixtureState,
+  FixtureStateValue,
   findFixtureStateClassState,
   updateFixtureStateClassState
 } from 'react-cosmos-shared2/fixtureState';
 import { ValueInput } from '../../shared/ui';
-import styled from 'styled-components';
 
 type Props = {
   fixtureState: FixtureState;
@@ -15,41 +16,44 @@ type Props = {
 };
 
 // TODO: Get component name from fixtureState.props (Maybe)
-export class ClassStatePanel extends React.Component<Props> {
-  render() {
-    const { fixtureState } = this.props;
+export function ClassStatePanel({ fixtureState, setFixtureState }: Props) {
+  if (!fixtureState.classState) {
+    return null;
+  }
 
-    if (!fixtureState.classState) {
-      return null;
-    }
-
-    return fixtureState.classState.map(({ elementId, values }) => {
-      const { decoratorId, elPath } = elementId;
-      return (
-        <Container key={`${decoratorId}-${elPath}`}>
-          <p>State</p>
-          <div>
-            {values.map(({ key, serializable, stringified }) => (
+  return (
+    <Container>
+      {fixtureState.classState.map(({ elementId, values }) => {
+        const { decoratorId, elPath } = elementId;
+        return (
+          <React.Fragment key={`${decoratorId}-${elPath}`}>
+            <div>State</div>
+            {Object.keys(values).map(key => (
               <ValueInput
                 key={key}
                 id={`${decoratorId}-${elPath}-${key}`}
-                label={key}
-                value={stringified}
-                disabled={!serializable}
-                onChange={this.createStateValueChangeHandler(elementId, key)}
+                valueKey={key}
+                value={values[key]}
+                onChange={createStateValueChangeHandler(
+                  setFixtureState,
+                  elementId,
+                  key
+                )}
               />
             ))}
-          </div>
-        </Container>
-      );
-    });
-  }
+          </React.Fragment>
+        );
+      })}
+    </Container>
+  );
+}
 
-  createStateValueChangeHandler = (
-    elementId: FixtureElementId,
-    key: string
-  ) => (value: string) => {
-    const { setFixtureState } = this.props;
+function createStateValueChangeHandler(
+  setFixtureState: (stateUpdater: StateUpdater<FixtureState>) => void,
+  elementId: FixtureElementId,
+  key: string
+) {
+  return (value: FixtureStateValue) => {
     setFixtureState(fixtureState => {
       const fsClassState = findFixtureStateClassState(fixtureState, elementId);
       if (!fsClassState) {
@@ -63,11 +67,10 @@ export class ClassStatePanel extends React.Component<Props> {
         classState: updateFixtureStateClassState({
           fixtureState,
           elementId,
-          values: replaceOrAddItem(values, stateVal => stateVal.key === key, {
-            serializable: true,
-            key,
-            stringified: value
-          })
+          values: {
+            ...values,
+            [key]: value
+          }
         })
       };
     });

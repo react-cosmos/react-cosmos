@@ -22,6 +22,8 @@ Plugin APIs will be released later, under minor versions.
 
 Control panel
 
+- [ ] Redesign fixture state values (into recursive union types)
+- [ ] Reusable TreeView
 - [ ] Props panel
   - [ ] Option to reset or transition props
 - [ ] Blank state
