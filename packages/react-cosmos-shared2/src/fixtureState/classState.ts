@@ -2,7 +2,7 @@ import { isEqual, find } from 'lodash';
 import { updateItem, replaceOrAddItem, removeItemMatch } from '../util';
 import {
   FixtureDecoratorId,
-  FixtureStateValue,
+  FixtureStateValues,
   FixtureElementId,
   FixtureStateClassState,
   FixtureState
@@ -29,7 +29,7 @@ export function findFixtureStateClassState(
 type CreateFixtureStateClassStateArgs = {
   fixtureState: FixtureState;
   elementId: FixtureElementId;
-  values: FixtureStateValue[];
+  values: FixtureStateValues;
 };
 export function createFixtureStateClassState({
   fixtureState,
@@ -46,7 +46,7 @@ export function createFixtureStateClassState({
 type UpdateFixtureStateClassStateArgs = {
   fixtureState: FixtureState;
   elementId: FixtureElementId;
-  values: FixtureStateValue[];
+  values: FixtureStateValues;
 };
 export function updateFixtureStateClassState({
   fixtureState,

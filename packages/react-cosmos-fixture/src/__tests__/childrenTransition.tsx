@@ -50,13 +50,12 @@ runFixtureLoaderTests(mount => {
           fixtureState: {
             props: [
               anyProps({
-                values: [
-                  {
-                    key: 'children',
-                    serializable: false,
-                    stringified: `<Wrapper>\n  brah\n</Wrapper>`
+                values: {
+                  children: {
+                    type: 'unserializable',
+                    stringifiedValue: `<Wrapper>\n  brah\n</Wrapper>`
                   }
-                ]
+                }
               }),
               anyProps({
                 values: createValues({ children: 'brah' })
@@ -106,13 +105,12 @@ runFixtureLoaderTests(mount => {
           fixtureState: {
             props: [
               anyProps({
-                values: [
-                  {
-                    key: 'children',
-                    serializable: false,
-                    stringified: `[object Object],[object Object]`
+                values: {
+                  children: {
+                    type: 'unserializable',
+                    stringifiedValue: `[object Object],[object Object]`
                   }
-                ]
+                }
               }),
               anyProps({
                 values: createValues({ children: 'brah' })

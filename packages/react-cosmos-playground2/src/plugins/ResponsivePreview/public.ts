@@ -11,5 +11,6 @@ export type ResponsivePreviewSpec = {
   };
   state: {
     enabled: boolean;
+    viewport: null | Viewport;
   };
 };

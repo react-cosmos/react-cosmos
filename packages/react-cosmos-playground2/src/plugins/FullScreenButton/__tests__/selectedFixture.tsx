@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render, waitForElement } from 'react-testing-library';
+import { render, fireEvent } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
 import { cleanup } from '../../../testHelpers/plugin';
 import { mockRouter, mockRendererCore } from '../../../testHelpers/pluginMocks';
@@ -9,22 +9,32 @@ afterEach(cleanup);
 
 function registerTestPlugins() {
   register();
-  mockRouter({
-    getSelectedFixtureId: () => null
-  });
   mockRendererCore({
     isRendererConnected: () => true,
-    isValidFixtureSelected: () => false
+    isValidFixtureSelected: () => true
   });
 }
 
 function loadTestPlugins() {
   loadPlugins();
-  return render(<Slot name="rendererHeader" />);
+  return render(<Slot name="rendererActions" />);
 }
 
-it('renders blank state message', async () => {
+it('renders fullscreen button', async () => {
   registerTestPlugins();
+
+  const selectFixture = jest.fn();
+  mockRouter({
+    getSelectedFixtureId: () => ({ path: 'foo', name: null }),
+    selectFixture
+  });
+
   const { getByText } = loadTestPlugins();
-  await waitForElement(() => getByText(/no fixture selected/i));
+  fireEvent.click(getByText(/fullscreen/i));
+
+  expect(selectFixture).toBeCalledWith(
+    expect.any(Object),
+    { path: 'foo', name: null },
+    true
+  );
 });

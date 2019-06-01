@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render, waitForElement } from 'react-testing-library';
+import { render } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
 import { cleanup } from '../../../testHelpers/plugin';
 import { mockRouter, mockRendererCore } from '../../../testHelpers/pluginMocks';
@@ -10,7 +10,7 @@ afterEach(cleanup);
 function registerTestPlugins() {
   register();
   mockRouter({
-    getSelectedFixtureId: () => null
+    getSelectedFixtureId: () => ({ path: 'foo', name: null })
   });
   mockRendererCore({
     isRendererConnected: () => true,
@@ -20,11 +20,11 @@ function registerTestPlugins() {
 
 function loadTestPlugins() {
   loadPlugins();
-  return render(<Slot name="rendererHeader" />);
+  return render(<Slot name="rendererActions" />);
 }
 
-it('renders blank state message', async () => {
+it('renders disabled fullscreen button', async () => {
   registerTestPlugins();
   const { getByText } = loadTestPlugins();
-  await waitForElement(() => getByText(/no fixture selected/i));
+  expect(getByText(/fullscreen/i)).toHaveAttribute('disabled');
 });

@@ -1,19 +1,18 @@
 import * as React from 'react';
 import { render, waitForElement } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
-import { cleanup, mockMethodsOf } from '../../../testHelpers/plugin';
-import { RouterSpec } from '../../Router/public';
-import { RendererCoreSpec } from '../../RendererCore/public';
+import { cleanup } from '../../../testHelpers/plugin';
+import { mockRouter, mockRendererCore } from '../../../testHelpers/pluginMocks';
 import { register } from '..';
 
 afterEach(cleanup);
 
 function registerTestPlugins() {
   register();
-  mockMethodsOf<RouterSpec>('router', {
+  mockRouter({
     getSelectedFixtureId: () => null
   });
-  mockMethodsOf<RendererCoreSpec>('rendererCore', {
+  mockRendererCore({
     isRendererConnected: () => false,
     isValidFixtureSelected: () => false
   });

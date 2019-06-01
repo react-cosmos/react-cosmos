@@ -3,7 +3,7 @@ import { updateItem, replaceOrAddItem, removeItemMatch } from '../util';
 import {
   FixtureDecoratorId,
   FixtureElementId,
-  FixtureStateValue,
+  FixtureStateValues,
   FixtureRenderKey,
   FixtureStateProps,
   FixtureState
@@ -32,7 +32,7 @@ export function findFixtureStateProps(
 type CreateFixtureStatePropsArgs = {
   fixtureState: FixtureState;
   elementId: FixtureElementId;
-  values: FixtureStateValue[];
+  values: FixtureStateValues;
   componentName: string;
 };
 export function createFixtureStateProps({
@@ -53,7 +53,7 @@ export function createFixtureStateProps({
 type ResetFixtureStatePropsArgs = {
   fixtureState: FixtureState;
   elementId: FixtureElementId;
-  values: FixtureStateValue[];
+  values: FixtureStateValues;
 };
 export function resetFixtureStateProps({
   fixtureState,
@@ -70,7 +70,7 @@ export function resetFixtureStateProps({
 type UpdateFixtureStatePropsArgs = {
   fixtureState: FixtureState;
   elementId: FixtureElementId;
-  values: FixtureStateValue[];
+  values: FixtureStateValues;
 };
 export function updateFixtureStateProps({
   fixtureState,

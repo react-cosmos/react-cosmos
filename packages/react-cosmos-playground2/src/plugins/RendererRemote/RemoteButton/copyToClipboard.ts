@@ -1,22 +1,12 @@
-interface IExtendedNavigator extends Navigator {
-  permissions: {
-    query(descriptor: {
-      name: 'clipboard-write';
-    }): Promise<{
-      state: 'granted' | 'denied' | 'prompt';
-    }>;
-  };
-}
-
 export async function copyToClipboard(text: string): Promise<void> {
-  const { permissions, clipboard } = navigator as IExtendedNavigator;
+  const { permissions, clipboard } = navigator;
 
   let permissionDenied = false;
   try {
-    const { state } = await permissions.query({ name: 'clipboard-write' });
+    const { state } = await permissions.query({ name: 'clipboard' });
     permissionDenied = state !== 'granted' && state !== 'prompt';
   } catch (err) {
-    // Some browsers (eg. Firefox 66) don't support the 'clipboard-write'
+    // Some browsers (eg. Firefox 66) don't support the 'clipboard'
     // PermissionDescriptor but support clipboard.writeText. So unless
     // permission is explicitly denied, we try to copy to clipboard even if the
     // permission check failed.

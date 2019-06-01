@@ -15,15 +15,12 @@ type Props = {
 };
 
 type State = {
-  container: null | {
-    width: number;
-    height: number;
-  };
+  container: null | Viewport;
   scale: boolean;
 };
 
 export class ResponsivePreview extends React.Component<Props, State> {
-  state = {
+  state: State = {
     container: null,
     scale: true
   };

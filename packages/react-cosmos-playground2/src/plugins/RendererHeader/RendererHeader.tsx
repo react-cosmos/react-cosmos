@@ -2,12 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { ArraySlot } from 'react-plugin';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import {
-  XCircleIcon,
-  RefreshCwIcon,
-  MaximizeIcon,
-  HomeIcon
-} from '../../shared/icons';
+import { XCircleIcon, RefreshCwIcon, HomeIcon } from '../../shared/icons';
 import { Button } from '../../shared/ui';
 
 type Props = {
@@ -44,7 +39,6 @@ export const RendererHeader = React.memo(function RendererHeader({
         </Left>
         <Right>
           <ArraySlot name="rendererActions" />
-          <Button disabled icon={<MaximizeIcon />} label="fullscreen" />
         </Right>
       </Container>
     );
@@ -63,7 +57,6 @@ export const RendererHeader = React.memo(function RendererHeader({
         </Left>
         <Right>
           <ArraySlot name="rendererActions" />
-          <Button disabled icon={<MaximizeIcon />} label="fullscreen" />
         </Right>
       </Container>
     );
@@ -86,11 +79,6 @@ export const RendererHeader = React.memo(function RendererHeader({
       </Left>
       <Right>
         <ArraySlot name="rendererActions" />
-        <Button
-          icon={<MaximizeIcon />}
-          label="fullscreen"
-          onClick={() => selectFixture(selectedFixtureId, true)}
-        />
       </Right>
     </Container>
   );
@@ -103,7 +91,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 40px;
-  padding: 0 12px;
+  padding: 0 8px;
   border-bottom: 1px solid var(--grey5);
   background: var(--grey6);
   color: var(--grey3);

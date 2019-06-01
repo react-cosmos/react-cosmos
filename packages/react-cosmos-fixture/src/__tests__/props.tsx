@@ -101,7 +101,7 @@ runFixtureLoaderTests(mount => {
             props: updateFixtureStateProps({
               fixtureState,
               elementId,
-              values: []
+              values: {}
             })
           }
         });
