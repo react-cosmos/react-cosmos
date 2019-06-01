@@ -21,10 +21,8 @@ function emitRendererCoreResponse() {
 
 it('notifies HMR fail', async () => {
   register();
-  mockRendererCore({});
-
-  const pushTimedNotification = jest.fn();
-  mockNotifications({ pushTimedNotification });
+  mockRendererCore();
+  const { pushTimedNotification } = mockNotifications();
 
   loadPlugins();
   emitRendererCoreResponse();

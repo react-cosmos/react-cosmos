@@ -46,15 +46,11 @@ async function selectViewport({ getByText }: RenderResult, match: RegExp) {
 
 it('renders children of "rendererPreviewOuter" slot', async () => {
   register();
-  mockStorage({
-    getItem: () => {},
-    setItem: () => {}
-  });
+  mockStorage();
   mockRouter({ isFullScreen: () => false });
   mockRendererCore({
     getFixtureState: () => ({}),
-    isValidFixtureSelected: () => true,
-    setFixtureState: () => {}
+    isValidFixtureSelected: () => true
   });
 
   const renderer = loadTestPlugins();
@@ -64,15 +60,11 @@ it('renders children of "rendererPreviewOuter" slot', async () => {
 
 it('does not render responsive header when no fixture is selected', async () => {
   register();
-  mockStorage({
-    getItem: () => {},
-    setItem: () => {}
-  });
+  mockStorage();
   mockRouter({ isFullScreen: () => false });
   mockRendererCore({
     getFixtureState: () => ({}),
-    isValidFixtureSelected: () => false,
-    setFixtureState: () => {}
+    isValidFixtureSelected: () => false
   });
 
   const renderer = loadTestPlugins();
@@ -82,15 +74,11 @@ it('does not render responsive header when no fixture is selected', async () => 
 
 it('does not render responsive header in full screen mode', async () => {
   register();
-  mockStorage({
-    getItem: () => {},
-    setItem: () => {}
-  });
+  mockStorage();
   mockRouter({ isFullScreen: () => true });
   mockRendererCore({
     getFixtureState: () => ({}),
-    isValidFixtureSelected: () => true,
-    setFixtureState: () => {}
+    isValidFixtureSelected: () => true
   });
 
   const renderer = loadTestPlugins();
@@ -100,15 +88,11 @@ it('does not render responsive header in full screen mode', async () => {
 
 it('renders responsive header', async () => {
   register();
-  mockStorage({
-    getItem: () => {},
-    setItem: () => {}
-  });
+  mockStorage();
   mockRouter({ isFullScreen: () => false });
   mockRendererCore({
     getFixtureState: () => ({}),
-    isValidFixtureSelected: () => true,
-    setFixtureState: () => {}
+    isValidFixtureSelected: () => true
   });
 
   const renderer = loadTestPlugins();
@@ -118,15 +102,11 @@ it('renders responsive header', async () => {
 
 it('renders responsive device labels', async () => {
   register();
-  mockStorage({
-    getItem: () => {},
-    setItem: () => {}
-  });
+  mockStorage();
   mockRouter({ isFullScreen: () => false });
   mockRendererCore({
     getFixtureState: () => ({}),
-    isValidFixtureSelected: () => true,
-    setFixtureState: () => {}
+    isValidFixtureSelected: () => true
   });
 
   const renderer = loadTestPlugins();
@@ -139,10 +119,7 @@ it('renders responsive device labels', async () => {
 describe('on device select', () => {
   it('sets viewport in fixture state', async () => {
     register();
-    mockStorage({
-      getItem: () => {},
-      setItem: () => {}
-    });
+    mockStorage();
     mockRouter({ isFullScreen: () => false });
 
     let fixtureState: FixtureState = {};
@@ -171,7 +148,6 @@ describe('on device select', () => {
 
     const storage: StorageMock = {};
     mockStorage({
-      getItem: () => {},
       setItem: (context, key, value) => {
         storage[key] = value;
       }
@@ -180,8 +156,7 @@ describe('on device select', () => {
     mockRouter({ isFullScreen: () => false });
     mockRendererCore({
       getFixtureState: () => ({}),
-      isValidFixtureSelected: () => true,
-      setFixtureState: () => {}
+      isValidFixtureSelected: () => true
     });
 
     const renderer = loadTestPlugins();
@@ -196,10 +171,7 @@ describe('on device select', () => {
 
 it('clears viewport in fixture state on untoggle', async () => {
   register();
-  mockStorage({
-    getItem: () => {},
-    setItem: () => {}
-  });
+  mockStorage();
   mockRouter({ isFullScreen: () => false });
 
   let fixtureState: FixtureState = {};

@@ -9,8 +9,7 @@ afterEach(cleanup);
 
 function registerTestPlugins() {
   mockStorage({
-    loadCache: () => Promise.resolve(null),
-    getItem: () => {}
+    loadCache: () => Promise.resolve(null)
   });
   mockRouter({
     isFullScreen: () => false

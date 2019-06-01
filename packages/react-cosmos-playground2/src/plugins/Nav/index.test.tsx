@@ -1,14 +1,14 @@
 import * as React from 'react';
 import retry from '@skidding/async-retry';
 import { render, waitForElement, fireEvent } from 'react-testing-library';
-import { Slot, loadPlugins, MethodHandlers } from 'react-plugin';
-import { cleanup, mockMethodsOf } from '../../testHelpers/plugin';
+import { Slot, loadPlugins } from 'react-plugin';
+import { cleanup } from '../../testHelpers/plugin';
 import {
   mockStorage,
   mockCore,
-  mockRendererCore
+  mockRendererCore,
+  mockRouter
 } from '../../testHelpers/pluginMocks';
-import { RouterSpec } from '../Router/public';
 import { register } from '.';
 
 afterEach(cleanup);
@@ -17,10 +17,7 @@ const fixtures = { 'ein.js': null, 'zwei.js': null, 'drei.js': null };
 
 function registerTestPlugins() {
   register();
-  mockStorage({
-    getItem: () => {},
-    setItem: () => {}
-  });
+  mockStorage();
   mockCore({
     getFixtureFileVars: () => ({
       fixturesDir: 'fixtures',
@@ -31,10 +28,6 @@ function registerTestPlugins() {
     isRendererConnected: () => true,
     getFixtures: () => fixtures
   });
-}
-
-function mockRouter(methods: Partial<MethodHandlers<RouterSpec>> = {}) {
-  mockMethodsOf<RouterSpec>('router', methods);
 }
 
 async function loadTestPlugins() {
@@ -49,6 +42,7 @@ it('renders fixture list from renderer state', async () => {
   mockRouter({
     getSelectedFixtureId: () => null
   });
+
   const { getByText } = await loadTestPlugins();
   await waitForElement(() => getByText(/ein/i));
   await waitForElement(() => getByText(/zwei/i));
@@ -57,11 +51,8 @@ it('renders fixture list from renderer state', async () => {
 
 it('sends fixtureId to router on fixture click', async () => {
   registerTestPlugins();
-
-  const selectFixture = jest.fn();
-  mockRouter({
-    getSelectedFixtureId: () => null,
-    selectFixture
+  const { selectFixture } = mockRouter({
+    getSelectedFixtureId: () => null
   });
 
   const { getByText } = await loadTestPlugins();

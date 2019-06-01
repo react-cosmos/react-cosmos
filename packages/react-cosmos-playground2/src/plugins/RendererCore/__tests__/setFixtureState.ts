@@ -25,9 +25,7 @@ const expectedFixtureState = {
 function registerTestPlugins() {
   register();
   mockSelectedFixture();
-  mockNotifications({
-    pushTimedNotification: () => {}
-  });
+  mockNotifications();
 }
 
 function mockSelectedFixture() {

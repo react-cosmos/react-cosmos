@@ -22,11 +22,8 @@ function loadTestPlugins() {
 
 it('renders fullscreen button', async () => {
   registerTestPlugins();
-
-  const selectFixture = jest.fn();
-  mockRouter({
-    getSelectedFixtureId: () => ({ path: 'foo', name: null }),
-    selectFixture
+  const { selectFixture } = mockRouter({
+    getSelectedFixtureId: () => ({ path: 'foo', name: null })
   });
 
   const { getByText } = loadTestPlugins();

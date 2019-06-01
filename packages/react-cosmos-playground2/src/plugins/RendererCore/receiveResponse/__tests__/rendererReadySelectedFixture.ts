@@ -23,9 +23,7 @@ function registerTestPlugins(
   mockRouter({
     getSelectedFixtureId: () => fixtureId
   });
-  mockNotifications({
-    pushTimedNotification: () => {}
-  });
+  mockNotifications();
   onRendererCore({
     request: handleRendererRequest
   });

@@ -22,9 +22,7 @@ function mockFixtureId(fixtureId: null | FixtureId = null) {
   mockRouter({
     getSelectedFixtureId: () => fixtureId
   });
-  mockNotifications({
-    pushTimedNotification: () => {}
-  });
+  mockNotifications();
 }
 
 function loadTestPlugins() {

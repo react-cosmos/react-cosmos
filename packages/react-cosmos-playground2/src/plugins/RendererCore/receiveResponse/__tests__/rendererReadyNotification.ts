@@ -19,11 +19,7 @@ function registerTestPlugins() {
 
 it('notifies renderer connection', async () => {
   registerTestPlugins();
-
-  const pushTimedNotification = jest.fn();
-  mockNotifications({
-    pushTimedNotification
-  });
+  const { pushTimedNotification } = mockNotifications();
 
   loadPlugins();
   mockRendererReady('mockRendererId1', {});

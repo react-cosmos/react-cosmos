@@ -18,10 +18,7 @@ function registerTestPlugins() {
   mockCore({
     getWebRendererUrl: () => 'mockRendererUrl'
   });
-  mockRendererCore({
-    receiveResponse: () => {},
-    selectPrimaryRenderer: () => {}
-  });
+  mockRendererCore();
 }
 
 function loadTestPlugins() {
