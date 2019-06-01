@@ -222,12 +222,12 @@ runFixtureLoaderTests(mount => {
         counterRef!.setState({ count: 13 });
         await retry(async () => expect(await getCount()).toBe(13));
 
-        async function getCount() {
+        async function getCount(): Promise<null | number> {
           const fixtureState = await getLastFixtureState();
           const [{ values }] = getClassState(fixtureState);
-          return values
-            ? (values.count as FixtureStateSimpleValue).value
-            : null;
+          if (!values) return null;
+          const countValue = values.count as FixtureStateSimpleValue;
+          return countValue.value as number;
         }
       }
     );
