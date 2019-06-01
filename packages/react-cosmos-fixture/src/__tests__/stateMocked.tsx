@@ -4,7 +4,7 @@ import until from 'async-until';
 import retry from '@skidding/async-retry';
 import { StateMock } from '@react-mock/state';
 import {
-  FixtureStateSimpleValue,
+  FixtureStatePrimitiveValue,
   createValues,
   updateFixtureStateClassState,
   removeFixtureStateClassState
@@ -226,7 +226,7 @@ runFixtureLoaderTests(mount => {
           const fixtureState = await getLastFixtureState();
           const [{ values }] = getClassState(fixtureState);
           if (!values) return null;
-          const countValue = values.count as FixtureStateSimpleValue;
+          const countValue = values.count as FixtureStatePrimitiveValue;
           return countValue.value as number;
         }
       }

@@ -15,7 +15,7 @@ export function extendWithValues(
 function extendWithValue(baseValue: unknown, value: FixtureStateValue) {
   return value.type === 'unserializable'
     ? baseValue
-    : value.type === 'object'
+    : value.type === 'composite'
     ? extendWithValues((baseValue as KeyValue) || {}, value.values)
     : value.value;
 }

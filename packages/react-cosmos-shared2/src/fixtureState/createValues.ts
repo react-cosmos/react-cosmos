@@ -22,7 +22,7 @@ function createValue(key: string, value: unknown): FixtureStateValue {
     typeof value === 'boolean' ||
     value === null
   ) {
-    return { type: 'simple', value };
+    return { type: 'primitive', value };
   }
 
   if (!isSerializableObject(value)) {
@@ -39,7 +39,7 @@ function createValue(key: string, value: unknown): FixtureStateValue {
   }
 
   return {
-    type: 'object',
+    type: 'composite',
     values: createValues(value)
   };
 }

@@ -5,7 +5,7 @@ it('creates string value', () => {
   const values = createValues({ myProp: 'foo' });
   expect(values).toEqual({
     myProp: {
-      type: 'simple',
+      type: 'primitive',
       value: 'foo'
     }
   });
@@ -15,7 +15,7 @@ it('creates number value', () => {
   const values = createValues({ myProp: 56 });
   expect(values).toEqual({
     myProp: {
-      type: 'simple',
+      type: 'primitive',
       value: 56
     }
   });
@@ -25,7 +25,7 @@ it('creates boolean value', () => {
   const values = createValues({ myProp: false });
   expect(values).toEqual({
     myProp: {
-      type: 'simple',
+      type: 'primitive',
       value: false
     }
   });
@@ -40,7 +40,7 @@ it('creates null value', () => {
   const values = createValues({ myProp: null });
   expect(values).toEqual({
     myProp: {
-      type: 'simple',
+      type: 'primitive',
       value: null
     }
   });
@@ -80,7 +80,7 @@ it('creates empty object value', () => {
   const values = createValues({ myProp: {} });
   expect(values).toEqual({
     myProp: {
-      type: 'object',
+      type: 'composite',
       values: {}
     }
   });
@@ -92,18 +92,18 @@ it('creates serializable object value', () => {
   });
   expect(values).toEqual({
     myProp: {
-      type: 'object',
+      type: 'composite',
       values: {
         strProp: {
-          type: 'simple',
+          type: 'primitive',
           value: 'foo'
         },
         numProp: {
-          type: 'simple',
+          type: 'primitive',
           value: 56
         },
         boolProp: {
-          type: 'simple',
+          type: 'primitive',
           value: false
         }
       }
@@ -117,10 +117,10 @@ it('creates partially serializable object value', () => {
   });
   expect(values).toEqual({
     myProp: {
-      type: 'object',
+      type: 'composite',
       values: {
         strProp: {
-          type: 'simple',
+          type: 'primitive',
           value: 'foo'
         },
         fnProp: {

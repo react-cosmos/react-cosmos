@@ -12,13 +12,13 @@ export type FixtureStateUnserializableValue = {
   stringifiedValue: string;
 };
 
-export type FixtureStateSimpleValue = {
-  type: 'simple';
+export type FixtureStatePrimitiveValue = {
+  type: 'primitive';
   value: string | number | boolean | null;
 };
 
-export type FixtureStateObjectValue = {
-  type: 'object';
+export type FixtureStateCompositeValue = {
+  type: 'composite';
   values: FixtureStateValues;
 };
 
@@ -26,8 +26,8 @@ export type FixtureStateObjectValue = {
 // serializable)
 export type FixtureStateValue =
   | FixtureStateUnserializableValue
-  | FixtureStateSimpleValue
-  | FixtureStateObjectValue;
+  | FixtureStatePrimitiveValue
+  | FixtureStateCompositeValue;
 
 export type FixtureStateValues = Record<string, FixtureStateValue>;
 

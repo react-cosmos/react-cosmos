@@ -22,7 +22,7 @@ export function ValueInput({ id, valueKey, value, onChange }: Props) {
     );
   }
 
-  if (value.type === 'object') {
+  if (value.type === 'composite') {
     return (
       <div style={{ paddingLeft: 16 }}>
         {Object.keys(value.values).map(key => (
@@ -33,7 +33,7 @@ export function ValueInput({ id, valueKey, value, onChange }: Props) {
             value={value.values[key]}
             onChange={value2 => {
               onChange({
-                type: 'object',
+                type: 'composite',
                 values: {
                   ...value.values,
                   [key]: value2
@@ -57,7 +57,7 @@ export function ValueInput({ id, valueKey, value, onChange }: Props) {
           onChange={(e: React.SyntheticEvent<HTMLInputElement>) => {
             try {
               onChange({
-                type: 'simple',
+                type: 'primitive',
                 value: JSON.parse(e.currentTarget.value)
               });
             } catch (err) {

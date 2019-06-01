@@ -5,7 +5,7 @@ it('extends string key', () => {
   const obj = { myProp: 'foo' };
   const values: FixtureStateValues = {
     myProp: {
-      type: 'simple',
+      type: 'primitive',
       value: 'bar'
     }
   };
@@ -16,7 +16,7 @@ it('extends number key', () => {
   const obj = { myProp: 56 };
   const values: FixtureStateValues = {
     myProp: {
-      type: 'simple',
+      type: 'primitive',
       value: 57
     }
   };
@@ -27,7 +27,7 @@ it('extends boolean key', () => {
   const obj = { myProp: false };
   const values: FixtureStateValues = {
     myProp: {
-      type: 'simple',
+      type: 'primitive',
       value: true
     }
   };
@@ -44,7 +44,7 @@ it('keeps null key', () => {
   const obj = { myProp: null };
   const values: FixtureStateValues = {
     myProp: {
-      type: 'simple',
+      type: 'primitive',
       value: null
     }
   };
@@ -77,7 +77,7 @@ it('keeps empty object key', () => {
   const obj = { myProp: {} };
   const values: FixtureStateValues = {
     myProp: {
-      type: 'object',
+      type: 'composite',
       values: {}
     }
   };
@@ -90,18 +90,18 @@ it('extends serializable object key', () => {
   };
   const values: FixtureStateValues = {
     myProp: {
-      type: 'object',
+      type: 'composite',
       values: {
         strProp: {
-          type: 'simple',
+          type: 'primitive',
           value: 'bar'
         },
         numProp: {
-          type: 'simple',
+          type: 'primitive',
           value: 57
         },
         boolProp: {
-          type: 'simple',
+          type: 'primitive',
           value: true
         }
       }
@@ -118,10 +118,10 @@ it('extends partially serializable object key', () => {
   };
   const values: FixtureStateValues = {
     myProp: {
-      type: 'object',
+      type: 'composite',
       values: {
         strProp: {
-          type: 'simple',
+          type: 'primitive',
           value: 'bar'
         },
         fnProp: {
