@@ -23,8 +23,10 @@ Plugin APIs will be released later, under minor versions.
 Control panel
 
 - [x] Redesign fixture state values (into recursive union types)
-- [ ] Reusable TreeView
+- [x] Reusable TreeView
 - [ ] Props panel
+  - [ ] Reset all fixture state values
+  - [ ] Reset individual fixture state value
   - [ ] Option to reset or transition props
 - [ ] Blank state
 - [ ] Class state panel
