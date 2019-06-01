@@ -129,14 +129,31 @@ export function mockNotifications(methods: PartOf<NotificationsSpec> = {}) {
   return allMethods;
 }
 
-export function onRouter(events: EventsOf<RouterSpec>) {
-  on<RouterSpec>('router', events);
+export function onRouter(events: EventsOf<RouterSpec> = {}) {
+  const allEvents = {
+    fixtureChange: jest.fn(),
+    ...events
+  };
+  on<RouterSpec>('router', allEvents);
+  return allEvents;
 }
 
-export function onMessageHandler(events: EventsOf<MessageHandlerSpec>) {
-  on<MessageHandlerSpec>('messageHandler', events);
+export function onMessageHandler(events: EventsOf<MessageHandlerSpec> = {}) {
+  const allEvents = {
+    serverMessage: jest.fn(),
+    rendererResponse: jest.fn(),
+    ...events
+  };
+  on<MessageHandlerSpec>('messageHandler', allEvents);
+  return allEvents;
 }
 
-export function onRendererCore(events: EventsOf<RendererCoreSpec>) {
-  on<RendererCoreSpec>('rendererCore', events);
+export function onRendererCore(events: EventsOf<RendererCoreSpec> = {}) {
+  const allEvents = {
+    request: jest.fn(),
+    response: jest.fn(),
+    ...events
+  };
+  on<RendererCoreSpec>('rendererCore', allEvents);
+  return allEvents;
 }

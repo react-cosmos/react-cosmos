@@ -63,9 +63,7 @@ it('ignores update from secondary renderer', async () => {
 
 it('posts "setFixtureState" request to secondary renderer', async () => {
   registerTestPlugins();
-
-  const request = jest.fn();
-  onRendererCore({ request });
+  const { request } = onRendererCore();
 
   loadTestPlugins();
   mockFixtureStateChangeResponse('mockRendererId1');

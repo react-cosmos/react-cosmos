@@ -26,9 +26,7 @@ function registerTestPlugins() {
 
 it('emits response event', async () => {
   registerTestPlugins();
-
-  const response = jest.fn();
-  onRendererCore({ response });
+  const { response } = onRendererCore();
 
   loadPlugins();
   getRendererCoreMethods().receiveResponse(rendererReadyMsg);

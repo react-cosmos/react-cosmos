@@ -39,9 +39,7 @@ function emitRouterFixtureChange() {
 
 it('posts "selectFixture" renderer requests', async () => {
   registerTestPlugins();
-
-  const request = jest.fn();
-  onRendererCore({ request });
+  const { request } = onRendererCore();
 
   loadTestPlugins();
   emitRouterFixtureChange();

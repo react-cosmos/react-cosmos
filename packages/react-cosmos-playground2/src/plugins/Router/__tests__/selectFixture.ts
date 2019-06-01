@@ -42,9 +42,7 @@ it('sets URL params', async () => {
 
 it('emits "fixtureChange" event', async () => {
   register();
-
-  const fixtureChange = jest.fn();
-  onRouter({ fixtureChange });
+  const { fixtureChange } = onRouter();
 
   loadPlugins();
   getRouterMethods().selectFixture(fixtureId, false);

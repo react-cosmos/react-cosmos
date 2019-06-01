@@ -1,6 +1,5 @@
 import { wait } from 'react-testing-library';
-import { loadPlugins, PluginContext } from 'react-plugin';
-import { Message } from 'react-cosmos-shared2/util';
+import { loadPlugins } from 'react-plugin';
 import { cleanup } from '../../../../testHelpers/plugin';
 import { mockRendererReady, mockFixtureStateChange } from '../../testHelpers';
 import { register } from '../..';
@@ -16,17 +15,14 @@ const fixtureId = { path: 'ein.js', name: null };
 const fixtures = { [fixtureId.path]: null };
 const fixtureState = { props: [] };
 
-function registerTestPlugins(
-  handleRendererRequest: (context: PluginContext<any>, msg: Message) => void
-) {
+function registerTestPlugins() {
   register();
   mockRouter({
     getSelectedFixtureId: () => fixtureId
   });
   mockNotifications();
-  onRendererCore({
-    request: handleRendererRequest
-  });
+  const { request } = onRendererCore();
+  return { request };
 }
 
 function loadTestPlugins() {
@@ -34,14 +30,13 @@ function loadTestPlugins() {
 }
 
 it('posts "selectFixture" renderer request', async () => {
-  const handleRendererRequest = jest.fn();
-  registerTestPlugins(handleRendererRequest);
+  const { request } = registerTestPlugins();
 
   loadTestPlugins();
   mockRendererReady('mockRendererId', fixtures);
 
   await wait(() =>
-    expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {
+    expect(request).toBeCalledWith(expect.any(Object), {
       type: 'selectFixture',
       payload: {
         rendererId: 'mockRendererId',
@@ -53,8 +48,7 @@ it('posts "selectFixture" renderer request', async () => {
 });
 
 it('posts "selectFixture" renderer request with fixture state', async () => {
-  const handleRendererRequest = jest.fn();
-  registerTestPlugins(handleRendererRequest);
+  const { request } = registerTestPlugins();
 
   loadTestPlugins();
   mockRendererReady('mockRendererId1', fixtures);
@@ -62,7 +56,7 @@ it('posts "selectFixture" renderer request with fixture state', async () => {
   mockRendererReady('mockRendererId2', fixtures);
 
   await wait(() =>
-    expect(handleRendererRequest).toBeCalledWith(expect.any(Object), {
+    expect(request).toBeCalledWith(expect.any(Object), {
       type: 'selectFixture',
       payload: {
         rendererId: 'mockRendererId2',

@@ -58,8 +58,7 @@ it('emits renderer response internally', async () => {
       }
     };
 
-    const rendererResponse = jest.fn();
-    onMessageHandler({ rendererResponse });
+    const { rendererResponse } = onMessageHandler();
     fakeEvent(RENDERER_MESSAGE_EVENT_NAME, rendererReadyRes);
 
     await wait(() =>
@@ -80,8 +79,7 @@ it('emits server message internally', async () => {
       type: 'buildError'
     };
 
-    const serverMessage = jest.fn();
-    onMessageHandler({ serverMessage });
+    const { serverMessage } = onMessageHandler();
     fakeEvent(SERVER_MESSAGE_EVENT_NAME, buildErrorMsg);
 
     await wait(() =>
