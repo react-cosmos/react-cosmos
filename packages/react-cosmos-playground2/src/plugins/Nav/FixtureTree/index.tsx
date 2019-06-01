@@ -30,14 +30,14 @@ export const FixtureTree = React.memo(function FixtureTree({
   onSelect,
   setTreeExpansion
 }: Props) {
+  const rootNode = React.useMemo(
+    () => getFixtureTree({ fixtures, fixturesDir, fixtureFileSuffix }),
+    [fixtures, fixturesDir, fixtureFileSuffix]
+  );
   const handleToggleExpansion = React.useCallback(
     (nodePath: string, expanded: boolean) =>
       setTreeExpansion({ ...treeExpansion, [nodePath]: expanded }),
     [setTreeExpansion, treeExpansion]
-  );
-  const rootNode = React.useMemo(
-    () => getFixtureTree({ fixtures, fixturesDir, fixtureFileSuffix }),
-    [fixtures, fixturesDir, fixtureFileSuffix]
   );
   return (
     <Container>
@@ -45,52 +45,40 @@ export const FixtureTree = React.memo(function FixtureTree({
         node={rootNode}
         parents={[]}
         treeExpansion={treeExpansion}
-        renderDir={({ parents }) => {
-          const nodePath = getNodePath(parents);
-          const isRootNode = parents.length === 0;
-          const isExpanded = isRootNode || treeExpansion[nodePath];
-          return (
-            !isRootNode && (
-              <DirButton
-                onClick={() => handleToggleExpansion(nodePath, !isExpanded)}
-              >
-                <ListItem indentLevel={parents.length - 1}>
-                  <CevronContainer>
-                    {isExpanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
-                  </CevronContainer>
-                  <FolderContainer>
-                    <FolderIcon />
-                  </FolderContainer>
-                  <Label>{parents[parents.length - 1]}</Label>
-                </ListItem>
-              </DirButton>
-            )
-          );
-        }}
-        renderItem={({ parents, item: fixtureId, itemName: fixtureName }) => {
-          return (
-            <FixtureLink
-              key={`${fixtureId.path}-${fixtureName}`}
-              href={createUrl({ fixtureId })}
-              onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                e.preventDefault();
-                if (e.metaKey) {
-                  // Allow users to cmd+click to open fixtures in new tab
-                  window.open(e.currentTarget.href, '_blank');
-                } else {
-                  onSelect(fixtureId);
-                }
-              }}
+        renderDir={({ parents, isExpanded, onToggle }) => (
+          <DirButton onClick={onToggle}>
+            <ListItem indentLevel={parents.length - 1}>
+              <CevronContainer>
+                {isExpanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
+              </CevronContainer>
+              <FolderContainer>
+                <FolderIcon />
+              </FolderContainer>
+              <Label>{parents[parents.length - 1]}</Label>
+            </ListItem>
+          </DirButton>
+        )}
+        renderItem={({ parents, item, itemName }) => (
+          <FixtureLink
+            key={`${item.path}-${itemName}`}
+            href={createUrl({ fixtureId: item })}
+            onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+              e.preventDefault();
+              if (e.metaKey) {
+                openAnchorInNewTab(e.currentTarget);
+              } else {
+                onSelect(item);
+              }
+            }}
+          >
+            <ListItem
+              indentLevel={parents.length}
+              selected={isEqual(item, selectedFixtureId)}
             >
-              <ListItem
-                indentLevel={parents.length}
-                selected={isEqual(fixtureId, selectedFixtureId)}
-              >
-                <FixtureLabel>{fixtureName}</FixtureLabel>
-              </ListItem>
-            </FixtureLink>
-          );
-        }}
+              <FixtureLabel>{itemName}</FixtureLabel>
+            </ListItem>
+          </FixtureLink>
+        )}
         onToggleExpansion={handleToggleExpansion}
       />
     </Container>
@@ -101,8 +89,9 @@ function getLeftPadding(depth: number) {
   return 8 + depth * 16;
 }
 
-function getNodePath(nodeParents: string[]) {
-  return nodeParents.join('/');
+function openAnchorInNewTab(anchorEl: HTMLAnchorElement) {
+  // Allow users to cmd+click to open fixtures in new tab
+  window.open(anchorEl.href, '_blank');
 }
 
 // Reason for inline-block: https://stackoverflow.com/a/53895622/128816

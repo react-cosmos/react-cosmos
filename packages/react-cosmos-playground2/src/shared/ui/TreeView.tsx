@@ -18,7 +18,11 @@ type Props<Item> = {
   node: TreeNode<Item>;
   parents: string[];
   treeExpansion: TreeExpansion;
-  renderDir: (args: { parents: string[] }) => React.ReactNode;
+  renderDir: (args: {
+    parents: string[];
+    isExpanded: boolean;
+    onToggle: () => unknown;
+  }) => React.ReactNode;
   renderItem: (args: {
     parents: string[];
     item: Item;
@@ -39,10 +43,14 @@ export function TreeView<Item>({
   const nodePath = getNodePath(parents);
   const isRootNode = parents.length === 0;
   const isExpanded = isRootNode || treeExpansion[nodePath];
+  const onToggle = React.useCallback(
+    () => onToggleExpansion(nodePath, !isExpanded),
+    [isExpanded, nodePath, onToggleExpansion]
+  );
 
   return (
     <>
-      {!isRootNode && renderDir({ parents })}
+      {!isRootNode && renderDir({ parents, isExpanded, onToggle })}
       {isExpanded && (
         <>
           {getSortedNodeDirNames(node).map(dirName => {
