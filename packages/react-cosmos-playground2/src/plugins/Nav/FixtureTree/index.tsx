@@ -34,16 +34,10 @@ export const FixtureTree = React.memo(function FixtureTree({
     () => getFixtureTree({ fixtures, fixturesDir, fixtureFileSuffix }),
     [fixtures, fixturesDir, fixtureFileSuffix]
   );
-  const handleToggleExpansion = React.useCallback(
-    (nodePath: string, expanded: boolean) =>
-      setTreeExpansion({ ...treeExpansion, [nodePath]: expanded }),
-    [setTreeExpansion, treeExpansion]
-  );
   return (
     <Container>
       <TreeView
         node={rootNode}
-        parents={[]}
         treeExpansion={treeExpansion}
         renderDir={({ parents, isExpanded, onToggle }) => (
           <DirButton onClick={onToggle}>
@@ -79,7 +73,7 @@ export const FixtureTree = React.memo(function FixtureTree({
             </ListItem>
           </FixtureLink>
         )}
-        onToggleExpansion={handleToggleExpansion}
+        onTreeExpansionChange={setTreeExpansion}
       />
     </Container>
   );

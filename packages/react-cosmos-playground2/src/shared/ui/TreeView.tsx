@@ -16,7 +16,7 @@ export type TreeExpansion = {
 
 type Props<Item> = {
   node: TreeNode<Item>;
-  parents: string[];
+  parents?: string[];
   treeExpansion: TreeExpansion;
   renderDir: (args: {
     parents: string[];
@@ -28,24 +28,24 @@ type Props<Item> = {
     item: Item;
     itemName: string;
   }) => React.ReactNode;
-  onToggleExpansion: (nodePath: string, expanded: boolean) => unknown;
+  onTreeExpansionChange: (newTreeExpansion: TreeExpansion) => unknown;
 };
 
 export function TreeView<Item>({
   node,
-  parents,
+  parents = [],
   treeExpansion,
   renderDir,
   renderItem,
-  onToggleExpansion
+  onTreeExpansionChange
 }: Props<Item>) {
   const { items, dirs } = node;
   const nodePath = getNodePath(parents);
   const isRootNode = parents.length === 0;
   const isExpanded = isRootNode || treeExpansion[nodePath];
   const onToggle = React.useCallback(
-    () => onToggleExpansion(nodePath, !isExpanded),
-    [isExpanded, nodePath, onToggleExpansion]
+    () => onTreeExpansionChange({ ...treeExpansion, [nodePath]: !isExpanded }),
+    [onTreeExpansionChange, treeExpansion, nodePath, isExpanded]
   );
 
   return (
@@ -63,13 +63,15 @@ export function TreeView<Item>({
                 treeExpansion={treeExpansion}
                 renderDir={renderDir}
                 renderItem={renderItem}
-                onToggleExpansion={onToggleExpansion}
+                onTreeExpansionChange={onTreeExpansionChange}
               />
             );
           })}
-          {map(items, (item, itemName) =>
-            renderItem({ parents, item, itemName })
-          )}
+          {map(items, (item, itemName) => (
+            <React.Fragment key={itemName}>
+              {renderItem({ parents, item, itemName })}
+            </React.Fragment>
+          ))}
         </>
       )}
     </>
