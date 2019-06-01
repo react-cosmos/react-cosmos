@@ -25,9 +25,7 @@ const expectedFixtureState = {
 function registerTestPlugins() {
   register();
   mockSelectedFixture();
-  mockNotifications({
-    pushTimedNotification: () => {}
-  });
+  mockNotifications();
 }
 
 function mockSelectedFixture() {
@@ -65,9 +63,7 @@ it('sets fixture state in plugin state', async () => {
 
 it('posts "setFixtureState" renderer requests', async () => {
   registerTestPlugins();
-
-  const request = jest.fn();
-  onRendererCore({ request });
+  const { request } = onRendererCore();
 
   loadTestPlugins();
   mockSetFixtureStateCall();

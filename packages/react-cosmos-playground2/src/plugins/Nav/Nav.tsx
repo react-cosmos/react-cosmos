@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import React from 'react';
 import { FixtureNamesByPath, FixtureId } from 'react-cosmos-shared2/renderer';
+import { TreeExpansion } from '../../shared/ui';
 import { FixtureTree } from './FixtureTree';
-import { TreeExpansion } from './shared';
 
 type Props = {
   fixturesDir: string;

@@ -1,21 +1,23 @@
 import { loadPlugins } from 'react-plugin';
 import { BuildMessage } from 'react-cosmos-shared2/build';
 import { cleanup } from '../../testHelpers/plugin';
-import * as pluginMocks from '../../testHelpers/pluginMocks';
+import {
+  mockMessageHandler,
+  mockNotifications,
+  getMessageHandlerContext
+} from '../../testHelpers/pluginMocks';
 import { register } from '.';
 
 afterEach(cleanup);
 
 function emitBuildMessage(msg: BuildMessage) {
-  pluginMocks.getMessageHandlerContext().emit('serverMessage', msg);
+  getMessageHandlerContext().emit('serverMessage', msg);
 }
 
 it('pushes build start notification', () => {
   register();
-  pluginMocks.mockMessageHandler({});
-
-  const pushStickyNotification = jest.fn();
-  pluginMocks.mockNotifications({ pushStickyNotification });
+  mockMessageHandler();
+  const { pushStickyNotification } = mockNotifications();
 
   loadPlugins();
   emitBuildMessage({ type: 'buildStart' });
@@ -30,10 +32,8 @@ it('pushes build start notification', () => {
 
 it('pushes build error notification', () => {
   register();
-  pluginMocks.mockMessageHandler({});
-
-  const pushStickyNotification = jest.fn();
-  pluginMocks.mockNotifications({ pushStickyNotification });
+  mockMessageHandler();
+  const { pushStickyNotification } = mockNotifications();
 
   loadPlugins();
   emitBuildMessage({ type: 'buildError' });
@@ -48,10 +48,8 @@ it('pushes build error notification', () => {
 
 it('clears build notification', () => {
   register();
-  pluginMocks.mockMessageHandler({});
-
-  const removeStickyNotification = jest.fn();
-  pluginMocks.mockNotifications({ removeStickyNotification });
+  mockMessageHandler();
+  const { removeStickyNotification } = mockNotifications();
 
   loadPlugins();
   emitBuildMessage({ type: 'buildDone' });

@@ -6,21 +6,25 @@ import {
   SERVER_MESSAGE_EVENT_NAME
 } from 'react-cosmos-shared2/build';
 import { cleanup } from '../../../testHelpers/plugin';
-import * as pluginMocks from '../../../testHelpers/pluginMocks';
+import {
+  mockCore,
+  getMessageHandlerMethods,
+  onMessageHandler
+} from '../../../testHelpers/pluginMocks';
 import { mockSocketIo } from '../testHelpers/mockSocketIo';
 import { register } from '..';
 
 afterEach(cleanup);
 
-function mockCore() {
-  pluginMocks.mockCore({
+function registerTestPlugins() {
+  register();
+  mockCore({
     isDevServerOn: () => true
   });
 }
 
 it('emits renderer request externally', async () => {
-  register();
-  mockCore();
+  registerTestPlugins();
   loadPlugins();
 
   const selectFixtureReq = {
@@ -31,7 +35,7 @@ it('emits renderer request externally', async () => {
       fixtureState: {}
     }
   };
-  const messageHandler = pluginMocks.getMessageHandlerMethods();
+  const messageHandler = getMessageHandlerMethods();
   messageHandler.postRendererRequest(selectFixtureReq);
 
   await mockSocketIo(async ({ emit }) => {
@@ -42,8 +46,7 @@ it('emits renderer request externally', async () => {
 });
 
 it('emits renderer response internally', async () => {
-  register();
-  mockCore();
+  registerTestPlugins();
   loadPlugins();
 
   await mockSocketIo(async ({ fakeEvent }) => {
@@ -55,8 +58,7 @@ it('emits renderer response internally', async () => {
       }
     };
 
-    const rendererResponse = jest.fn();
-    pluginMocks.onMessageHandler({ rendererResponse });
+    const { rendererResponse } = onMessageHandler();
     fakeEvent(RENDERER_MESSAGE_EVENT_NAME, rendererReadyRes);
 
     await wait(() =>
@@ -69,8 +71,7 @@ it('emits renderer response internally', async () => {
 });
 
 it('emits server message internally', async () => {
-  register();
-  mockCore();
+  registerTestPlugins();
   loadPlugins();
 
   await mockSocketIo(async ({ fakeEvent }) => {
@@ -78,8 +79,7 @@ it('emits server message internally', async () => {
       type: 'buildError'
     };
 
-    const serverMessage = jest.fn();
-    pluginMocks.onMessageHandler({ serverMessage });
+    const { serverMessage } = onMessageHandler();
     fakeEvent(SERVER_MESSAGE_EVENT_NAME, buildErrorMsg);
 
     await wait(() =>

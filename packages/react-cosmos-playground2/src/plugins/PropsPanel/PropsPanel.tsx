@@ -4,11 +4,11 @@ import { StateUpdater } from 'react-cosmos-shared2/util';
 import {
   FixtureElementId,
   FixtureState,
-  FixtureStateValue,
+  FixtureStateValues,
   findFixtureStateProps,
   updateFixtureStateProps
 } from 'react-cosmos-shared2/fixtureState';
-import { ValueInput } from '../../shared/ui';
+import { ValueInputTree } from '../../shared/ui/ValueInputTree';
 
 type Props = {
   fixtureState: FixtureState;
@@ -24,24 +24,20 @@ export function PropsPanel({ fixtureState, setFixtureState }: Props) {
     <Container>
       {fixtureState.props.map(({ elementId, componentName, values }) => {
         const { decoratorId, elPath } = elementId;
+        const id = elPath ? `${decoratorId}-${elPath}` : decoratorId;
         return (
-          <React.Fragment key={`${decoratorId}-${elPath}`}>
+          <React.Fragment key={id}>
             <div>
-              <strong>{componentName}</strong> props
+              <strong>PROPS</strong> ({componentName})
             </div>
-            {Object.keys(values).map(key => (
-              <ValueInput
-                key={key}
-                id={`${decoratorId}-${elPath}-${key}`}
-                valueKey={key}
-                value={values[key]}
-                onChange={createPropValueChangeHandler(
-                  setFixtureState,
-                  elementId,
-                  key
-                )}
-              />
-            ))}
+            <ValueInputTree
+              id={id}
+              values={values}
+              onChange={createPropValueChangeHandler(
+                setFixtureState,
+                elementId
+              )}
+            />
           </React.Fragment>
         );
       })}
@@ -51,27 +47,22 @@ export function PropsPanel({ fixtureState, setFixtureState }: Props) {
 
 function createPropValueChangeHandler(
   setFixtureState: (stateUpdater: StateUpdater<FixtureState>) => void,
-  elementId: FixtureElementId,
-  key: string
+  elementId: FixtureElementId
 ) {
-  return (value: FixtureStateValue) => {
-    setFixtureState(prevFixtureState => {
-      const fsProps = findFixtureStateProps(prevFixtureState, elementId);
+  return (values: FixtureStateValues) => {
+    setFixtureState(prevFs => {
+      const fsProps = findFixtureStateProps(prevFs, elementId);
       if (!fsProps) {
         console.warn(`Element id ${elementId} no longer exists`);
-        return prevFixtureState;
+        return prevFs;
       }
 
-      const { values } = fsProps;
       return {
-        ...prevFixtureState,
+        ...prevFs,
         props: updateFixtureStateProps({
-          fixtureState: prevFixtureState,
+          fixtureState: prevFs,
           elementId,
-          values: {
-            ...values,
-            [key]: value
-          }
+          values
         })
       };
     });

@@ -7,16 +7,16 @@ import { register } from '..';
 
 afterEach(cleanup);
 
-function registerTestPlugins(unselectFixture = () => {}) {
+function registerTestPlugins() {
   register();
-  mockRouter({
-    getSelectedFixtureId: () => ({ path: 'foo', name: null }),
-    unselectFixture
+  const { unselectFixture } = mockRouter({
+    getSelectedFixtureId: () => ({ path: 'foo', name: null })
   });
   mockRendererCore({
     isRendererConnected: () => true,
     isValidFixtureSelected: () => false
   });
+  return { unselectFixture };
 }
 
 function loadTestPlugins() {
@@ -31,11 +31,8 @@ it('renders missing state message', async () => {
 });
 
 it('renders home button', async () => {
-  const unselectFixture = jest.fn();
-  registerTestPlugins(unselectFixture);
-
+  const { unselectFixture } = registerTestPlugins();
   const { getByText } = loadTestPlugins();
   fireEvent.click(getByText(/home/));
-
   expect(unselectFixture).toBeCalledWith(expect.any(Object));
 });

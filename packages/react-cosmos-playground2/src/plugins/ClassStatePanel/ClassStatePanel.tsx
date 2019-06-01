@@ -4,11 +4,11 @@ import { StateUpdater } from 'react-cosmos-shared2/util';
 import {
   FixtureElementId,
   FixtureState,
-  FixtureStateValue,
+  FixtureStateValues,
   findFixtureStateClassState,
   updateFixtureStateClassState
 } from 'react-cosmos-shared2/fixtureState';
-import { ValueInput } from '../../shared/ui';
+import { ValueInputTree } from '../../shared/ui';
 
 type Props = {
   fixtureState: FixtureState;
@@ -25,22 +25,20 @@ export function ClassStatePanel({ fixtureState, setFixtureState }: Props) {
     <Container>
       {fixtureState.classState.map(({ elementId, values }) => {
         const { decoratorId, elPath } = elementId;
+        const id = elPath ? `${decoratorId}-${elPath}` : decoratorId;
         return (
-          <React.Fragment key={`${decoratorId}-${elPath}`}>
-            <div>State</div>
-            {Object.keys(values).map(key => (
-              <ValueInput
-                key={key}
-                id={`${decoratorId}-${elPath}-${key}`}
-                valueKey={key}
-                value={values[key]}
-                onChange={createStateValueChangeHandler(
-                  setFixtureState,
-                  elementId,
-                  key
-                )}
-              />
-            ))}
+          <React.Fragment key={id}>
+            <div>
+              <strong>CLASS STATE</strong>
+            </div>
+            <ValueInputTree
+              id={id}
+              values={values}
+              onChange={createStateValueChangeHandler(
+                setFixtureState,
+                elementId
+              )}
+            />
           </React.Fragment>
         );
       })}
@@ -50,27 +48,22 @@ export function ClassStatePanel({ fixtureState, setFixtureState }: Props) {
 
 function createStateValueChangeHandler(
   setFixtureState: (stateUpdater: StateUpdater<FixtureState>) => void,
-  elementId: FixtureElementId,
-  key: string
+  elementId: FixtureElementId
 ) {
-  return (value: FixtureStateValue) => {
-    setFixtureState(fixtureState => {
-      const fsClassState = findFixtureStateClassState(fixtureState, elementId);
+  return (values: FixtureStateValues) => {
+    setFixtureState(prevFs => {
+      const fsClassState = findFixtureStateClassState(prevFs, elementId);
       if (!fsClassState) {
         console.warn(`Decorator id ${elementId} no longer exists`);
-        return fixtureState;
+        return prevFs;
       }
 
-      const { values } = fsClassState;
       return {
-        ...fixtureState,
+        ...prevFs,
         classState: updateFixtureStateClassState({
-          fixtureState,
+          fixtureState: prevFs,
           elementId,
-          values: {
-            ...values,
-            [key]: value
-          }
+          values
         })
       };
     });

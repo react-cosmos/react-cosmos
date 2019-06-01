@@ -2,25 +2,14 @@ import * as React from 'react';
 import { loadPlugins, ArraySlot } from 'react-plugin';
 import { render, waitForElement, fireEvent, wait } from 'react-testing-library';
 import { cleanup, mockPlug } from '../../../testHelpers/plugin';
-import * as pluginMocks from '../../../testHelpers/pluginMocks';
+import {
+  mockCore,
+  mockMessageHandler,
+  mockNotifications
+} from '../../../testHelpers/pluginMocks';
 import { register } from '..';
 
 afterEach(cleanup);
-
-function mockCore(devServerOn: boolean, webRendererUrl: null | string) {
-  pluginMocks.mockCore({
-    isDevServerOn: () => devServerOn,
-    getWebRendererUrl: () => webRendererUrl
-  });
-}
-
-function mockMessageHandler() {
-  pluginMocks.mockMessageHandler({ postRendererRequest: () => {} });
-}
-
-function mockNotifications(pushTimedNotification = () => {}) {
-  pluginMocks.mockNotifications({ pushTimedNotification });
-}
 
 function mockRendererAction() {
   mockPlug('rendererActions', () => <>fooAction</>);
@@ -28,7 +17,10 @@ function mockRendererAction() {
 
 it(`doesn't render button when web renderer url is empty`, async () => {
   register();
-  mockCore(true, null);
+  mockCore({
+    isDevServerOn: () => true,
+    getWebRendererUrl: () => null
+  });
   mockMessageHandler();
   mockNotifications();
   mockRendererAction();
@@ -44,7 +36,10 @@ it(`doesn't render button when web renderer url is empty`, async () => {
 
 it(`doesn't render button when dev server is off`, async () => {
   register();
-  mockCore(false, 'mockWebUrl');
+  mockCore({
+    isDevServerOn: () => false,
+    getWebRendererUrl: () => 'mockWebUrl'
+  });
   mockMessageHandler();
   mockNotifications();
   mockRendererAction();
@@ -60,7 +55,10 @@ it(`doesn't render button when dev server is off`, async () => {
 
 it('renders button', async () => {
   register();
-  mockCore(true, 'mockWebUrl');
+  mockCore({
+    isDevServerOn: () => true,
+    getWebRendererUrl: () => 'mockWebUrl'
+  });
   mockMessageHandler();
   mockNotifications();
 
@@ -72,11 +70,12 @@ it('renders button', async () => {
 
 it('notifies copy error on button click', async () => {
   register();
-  mockCore(true, 'mockWebUrl');
+  mockCore({
+    isDevServerOn: () => true,
+    getWebRendererUrl: () => 'mockWebUrl'
+  });
   mockMessageHandler();
-
-  const pushNotification = jest.fn();
-  mockNotifications(pushNotification);
+  const { pushTimedNotification } = mockNotifications();
 
   loadPlugins();
   const { getByText } = render(<ArraySlot name="rendererActions" />);
@@ -86,7 +85,7 @@ it('notifies copy error on button click', async () => {
 
   // Clipboard API isn't available in jsdom so we only test the error path
   await wait(() =>
-    expect(pushNotification).toBeCalledWith(expect.any(Object), {
+    expect(pushTimedNotification).toBeCalledWith(expect.any(Object), {
       id: 'renderer-url-copy',
       type: 'error',
       title: 'Failed to copy renderer URL to clipboard',

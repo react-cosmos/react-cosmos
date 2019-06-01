@@ -5,24 +5,28 @@ import {
   RendererReadyResponse
 } from 'react-cosmos-shared2/renderer';
 import { cleanup } from '../../../testHelpers/plugin';
-import * as pluginMocks from '../../../testHelpers/pluginMocks';
+import {
+  mockCore,
+  mockRendererCore,
+  mockMessageHandler,
+  getMessageHandlerContext,
+  getRendererCoreContext
+} from '../../../testHelpers/pluginMocks';
 import { register } from '..';
 
 afterEach(cleanup);
 
-function mockCore() {
-  pluginMocks.mockCore({
+function registerTestPlugins() {
+  register();
+  mockCore({
     isDevServerOn: () => true
   });
 }
 
 it('sends renderer request to message handler', async () => {
-  register();
-  mockCore();
-  pluginMocks.mockRendererCore({});
-
-  const postRendererRequest = jest.fn();
-  pluginMocks.mockMessageHandler({ postRendererRequest });
+  registerTestPlugins();
+  mockRendererCore();
+  const { postRendererRequest } = mockMessageHandler();
 
   loadPlugins();
 
@@ -34,7 +38,7 @@ it('sends renderer request to message handler', async () => {
       fixtureState: {}
     }
   };
-  pluginMocks.getRendererCoreContext().emit('request', selectFixtureReq);
+  getRendererCoreContext().emit('request', selectFixtureReq);
 
   await wait(() =>
     expect(postRendererRequest).toBeCalledWith(
@@ -45,12 +49,9 @@ it('sends renderer request to message handler', async () => {
 });
 
 it('sends renderer response to renderer core', async () => {
-  register();
-  mockCore();
-  pluginMocks.mockMessageHandler({ postRendererRequest: () => {} });
-
-  const receiveResponse = jest.fn();
-  pluginMocks.mockRendererCore({ receiveResponse });
+  registerTestPlugins();
+  mockMessageHandler();
+  const { receiveResponse } = mockRendererCore();
 
   loadPlugins();
 
@@ -61,9 +62,7 @@ it('sends renderer response to renderer core', async () => {
       fixtures: { 'ein.js': null, 'zwei.js': null, 'drei.js': null }
     }
   };
-  pluginMocks
-    .getMessageHandlerContext()
-    .emit('rendererResponse', rendererReadyRes);
+  getMessageHandlerContext().emit('rendererResponse', rendererReadyRes);
 
   await wait(() =>
     expect(receiveResponse).toBeCalledWith(expect.any(Object), rendererReadyRes)
@@ -71,11 +70,8 @@ it('sends renderer response to renderer core', async () => {
 });
 
 it('posts "pingRenderers" renderer request on load', async () => {
-  register();
-  mockCore();
-
-  const postRendererRequest = jest.fn();
-  pluginMocks.mockMessageHandler({ postRendererRequest });
+  registerTestPlugins();
+  const { postRendererRequest } = mockMessageHandler();
 
   loadPlugins();
 

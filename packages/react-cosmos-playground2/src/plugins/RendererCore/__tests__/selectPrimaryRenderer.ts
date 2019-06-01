@@ -18,9 +18,7 @@ function registerTestPlugins() {
   mockRouter({
     getSelectedFixtureId: () => null
   });
-  mockNotifications({
-    pushTimedNotification: () => {}
-  });
+  mockNotifications();
 }
 
 function loadTestPlugins() {

@@ -22,7 +22,7 @@ export type RendererCoreSpec = {
     receiveResponse(msg: Message): void;
   };
   events: {
-    request: (msg: Message) => void;
-    response: (msg: Message) => void;
+    request(msg: Message): void;
+    response(msg: Message): void;
   };
 };

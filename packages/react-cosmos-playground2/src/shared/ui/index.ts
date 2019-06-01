@@ -1,3 +1,4 @@
 export { Button } from './Button';
-export { ValueInput } from './ValueInput';
+export { TreeNode, TreeNodeDirs, TreeExpansion, TreeView } from './TreeView';
+export { ValueInputTree } from './ValueInputTree';
 export { useDrag } from './useDrag';

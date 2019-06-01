@@ -18,7 +18,7 @@ afterEach(cleanup);
 
 function registerTestPlugins() {
   register();
-  mockStorage({});
+  mockStorage();
   mockRouter({
     isFullScreen: () => false
   });

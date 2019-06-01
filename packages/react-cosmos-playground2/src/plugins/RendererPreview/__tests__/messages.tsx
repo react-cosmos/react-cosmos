@@ -2,7 +2,11 @@ import * as React from 'react';
 import { wait, render } from 'react-testing-library';
 import { loadPlugins, Slot } from 'react-plugin';
 import { cleanup } from '../../../testHelpers/plugin';
-import * as pluginMocks from '../../../testHelpers/pluginMocks';
+import {
+  mockCore,
+  mockRendererCore,
+  getRendererCoreContext
+} from '../../../testHelpers/pluginMocks';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { mockIframeMessage, getIframe } from '../testHelpers/iframe';
 import { selectFixtureMsg, rendererReadyMsg } from '../testHelpers/messages';
@@ -13,23 +17,22 @@ afterEach(cleanup);
 function loadTestPlugins() {
   fakeFetchResponseStatus(200);
   loadPlugins();
-
   return render(<Slot name="rendererPreview" />);
 }
 
-function mockCore() {
-  pluginMocks.mockCore({
+function mockRendererUrl() {
+  mockCore({
     getWebRendererUrl: () => 'mockRendererUrl'
   });
 }
 
 it('posts renderer request message to iframe', async () => {
   register();
-  mockCore();
-  pluginMocks.mockRendererCore({});
+  mockRendererUrl();
+  mockRendererCore();
 
   const renderer = loadTestPlugins();
-  pluginMocks.getRendererCoreContext().emit('request', selectFixtureMsg);
+  getRendererCoreContext().emit('request', selectFixtureMsg);
 
   await mockIframeMessage(getIframe(renderer), async ({ onMessage }) => {
     await wait(() =>
@@ -42,13 +45,8 @@ it('posts renderer request message to iframe', async () => {
 
 it('sends renderer response message to renderer core', async () => {
   register();
-  mockCore();
-
-  const receiveResponse = jest.fn();
-  pluginMocks.mockRendererCore({
-    receiveResponse,
-    selectPrimaryRenderer: () => {}
-  });
+  mockRendererUrl();
+  const { receiveResponse } = mockRendererCore();
 
   loadTestPlugins();
   window.postMessage(rendererReadyMsg, '*');
@@ -60,13 +58,8 @@ it('sends renderer response message to renderer core', async () => {
 
 it('makes connected renderer the primary renderer', async () => {
   register();
-  mockCore();
-
-  const selectPrimaryRenderer = jest.fn();
-  pluginMocks.mockRendererCore({
-    receiveResponse: () => {},
-    selectPrimaryRenderer
-  });
+  mockRendererUrl();
+  const { selectPrimaryRenderer } = mockRendererCore();
 
   loadTestPlugins();
   window.postMessage(rendererReadyMsg, '*');

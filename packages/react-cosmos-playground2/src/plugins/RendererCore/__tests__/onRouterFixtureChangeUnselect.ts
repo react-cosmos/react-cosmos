@@ -20,9 +20,7 @@ function registerTestPlugins() {
   mockRouter({
     getSelectedFixtureId: () => null
   });
-  mockNotifications({
-    pushTimedNotification: () => {}
-  });
+  mockNotifications();
 }
 
 function loadTestPlugins() {
@@ -48,9 +46,7 @@ it('resets fixture state', async () => {
 
 it('posts "unselectFixture" renderer requests', async () => {
   registerTestPlugins();
-
-  const request = jest.fn();
-  onRendererCore({ request });
+  const { request } = onRendererCore();
 
   loadTestPlugins();
   emitRouterFixtureChange();

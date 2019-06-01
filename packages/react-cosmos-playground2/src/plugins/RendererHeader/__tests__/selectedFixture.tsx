@@ -1,27 +1,22 @@
 import * as React from 'react';
 import { render, fireEvent, waitForElement } from 'react-testing-library';
-import { Slot, loadPlugins, MethodHandlers } from 'react-plugin';
+import { Slot, loadPlugins } from 'react-plugin';
 import { cleanup, mockPlug } from '../../../testHelpers/plugin';
 import { mockRouter, mockRendererCore } from '../../../testHelpers/pluginMocks';
-import { RouterSpec } from '../../Router/public';
 import { register } from '..';
 
 afterEach(cleanup);
 
-function registerTestPlugins({
-  selectFixture = jest.fn(),
-  unselectFixture = jest.fn()
-}: Partial<MethodHandlers<RouterSpec>> = {}) {
+function registerTestPlugins() {
   register();
-  mockRouter({
-    getSelectedFixtureId: () => ({ path: 'foo', name: null }),
-    selectFixture,
-    unselectFixture
+  const { selectFixture, unselectFixture } = mockRouter({
+    getSelectedFixtureId: () => ({ path: 'foo', name: null })
   });
   mockRendererCore({
     isRendererConnected: () => true,
     isValidFixtureSelected: () => true
   });
+  return { selectFixture, unselectFixture };
 }
 
 function loadTestPlugins() {
@@ -40,8 +35,7 @@ function mockFixtureAction() {
 }
 
 it('renders close button', async () => {
-  const unselectFixture = jest.fn();
-  registerTestPlugins({ unselectFixture });
+  const { unselectFixture } = registerTestPlugins();
 
   const { getByText } = loadTestPlugins();
   fireEvent.click(getByText(/close/));
@@ -50,8 +44,7 @@ it('renders close button', async () => {
 });
 
 it('renders refresh button', async () => {
-  const selectFixture = jest.fn();
-  registerTestPlugins({ selectFixture });
+  const { selectFixture } = registerTestPlugins();
 
   const { getByText } = loadTestPlugins();
   fireEvent.click(getByText(/refresh/));
