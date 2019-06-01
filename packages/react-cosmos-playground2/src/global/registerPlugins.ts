@@ -17,9 +17,9 @@ require('../plugins/RendererPreview').register();
 require('../plugins/Nav').register();
 require('../plugins/ContentOverlay').register();
 require('../plugins/EditFixtureButton').register();
+require('../plugins/RendererRemote').register();
 require('../plugins/ResponsivePreview').register();
 require('../plugins/FullScreenButton').register();
-require('../plugins/RendererRemote').register();
 require('../plugins/ControlPanel').register();
 require('../plugins/PropsPanel').register();
 require('../plugins/ClassStatePanel').register();
@@ -29,6 +29,7 @@ require('../plugins/BuildNotifications').register();
 require('../plugins/WebpackHmrNotification').register();
 
 // TODO: Read list of disabled plugins from user config
+enablePlugin('controlPanel', false);
 enablePlugin('classStatePanel', false);
 enablePlugin('rendererSelect', false);
 enablePlugin('pluginList', false);
