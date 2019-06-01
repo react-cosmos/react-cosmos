@@ -37,7 +37,10 @@ export function mockMethodsOf<Spec extends PluginSpec>(
   pluginName: Spec['name'],
   methods: Partial<MethodHandlers<Spec>>
 ) {
-  createPlugin<any>({ name: pluginName, methods }).register();
+  // TypeScript is right to complain about only registering a part of the
+  // plugin's methods, but we allow it anyways for convenience in tests
+  const pluginMethods = methods as MethodHandlers<Spec>;
+  createPlugin<any>({ name: pluginName, methods: pluginMethods }).register();
 }
 
 export function mockPlug(
