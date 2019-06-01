@@ -1,10 +1,11 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
+import { TreeExpansion } from '../../shared/ui';
 import { StorageSpec } from '../Storage/public';
 import { RouterSpec } from '../Router/public';
 import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';
-import { TreeExpansion, TREE_EXPANSION_STORAGE_KEY } from './shared';
+import { TREE_EXPANSION_STORAGE_KEY } from './shared';
 import { NavSpec } from './public';
 import { Nav } from './Nav';
 
