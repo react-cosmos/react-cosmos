@@ -9,6 +9,7 @@ type Props = {
   onChange: (value: FixtureStateValue) => unknown;
 };
 
+// TODO: Keep value copy locally in case of invalid user input
 export function ValueInput({ id, valueKey, value, onChange }: Props) {
   if (value.type === 'unserializable') {
     return (
@@ -30,8 +31,14 @@ export function ValueInput({ id, valueKey, value, onChange }: Props) {
             id={`${id}-${key}`}
             valueKey={key}
             value={value.values[key]}
-            onChange={() => {
-              // TODO: Implement this
+            onChange={value2 => {
+              onChange({
+                type: 'object',
+                values: {
+                  ...value.values,
+                  [key]: value2
+                }
+              });
             }}
           />
         ))}
