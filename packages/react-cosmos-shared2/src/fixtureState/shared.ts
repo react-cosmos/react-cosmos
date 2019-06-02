@@ -1,3 +1,5 @@
+import { StateUpdater } from '../util';
+
 export type KeyValue = Record<string, unknown>;
 
 export type FixtureDecoratorId = string;
@@ -55,3 +57,5 @@ export type FixtureState = {
   props?: FixtureStateProps[];
   classState?: FixtureStateClassState[];
 } & Record<string, any>;
+
+export type SetFixtureState = (update: StateUpdater<FixtureState>) => unknown;

@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { isEqual } from 'lodash';
-import { FixtureState } from 'react-cosmos-shared2/fixtureState';
+import {
+  FixtureState,
+  SetFixtureState
+} from 'react-cosmos-shared2/fixtureState';
 import {
   FixtureNamesByPath,
   FixtureId,
@@ -16,7 +19,6 @@ import {
   ReactDecoratorsByPath,
   getFixtureNames
 } from 'react-cosmos-shared2/react';
-import { SetFixtureState } from '../shared';
 import { FixtureProvider } from '../FixtureProvider';
 import { getFixture } from './fixtureHelpers';
 
@@ -26,7 +28,7 @@ export type Props = {
   fixtures: ReactFixturesByPath;
   systemDecorators: ReactDecorator[];
   userDecorators: ReactDecoratorsByPath;
-  onFixtureChange?: () => unknown;
+  onErrorReset?: () => unknown;
 };
 
 type State = {
@@ -110,7 +112,7 @@ export class FixtureLoader extends React.Component<Props, State> {
       return `Invalid fixture ID: ${JSON.stringify(fixtureId)}`;
     }
 
-    const { systemDecorators, userDecorators } = this.props;
+    const { systemDecorators, userDecorators, onErrorReset } = this.props;
     const { renderKey } = this.state;
     return (
       <FixtureProvider
@@ -124,6 +126,7 @@ export class FixtureLoader extends React.Component<Props, State> {
         )}
         fixtureState={fixtureState}
         setFixtureState={this.setFixtureState}
+        onErrorReset={onErrorReset || noop}
       >
         {fixture}
       </FixtureProvider>
@@ -263,9 +266,9 @@ export class FixtureLoader extends React.Component<Props, State> {
   }
 
   fireChangeCallback() {
-    const { onFixtureChange } = this.props;
-    if (typeof onFixtureChange === 'function') {
-      onFixtureChange();
+    const { onErrorReset } = this.props;
+    if (typeof onErrorReset === 'function') {
+      onErrorReset();
     }
   }
 
@@ -341,3 +344,5 @@ function getParentPath(nestedPath: string) {
 function doesRequestChangeFixture(r: RendererRequest) {
   return r.type === 'selectFixture' || r.type === 'unselectFixture';
 }
+
+function noop() {}

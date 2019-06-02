@@ -1,8 +1,14 @@
 import * as React from 'react';
 import memoize from 'memoize-one/dist/memoize-one.cjs';
-import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import { ReactDecorator } from 'react-cosmos-shared2/react';
-import { FixtureContextValue, SetFixtureState } from '../shared';
+import {
+  FixtureState,
+  SetFixtureState
+} from 'react-cosmos-shared2/fixtureState';
+import {
+  ReactDecoratorProps,
+  ReactDecorator
+} from 'react-cosmos-shared2/react';
+import { FixtureContextValue } from '../shared';
 import { FixtureCapture } from '../FixtureCapture';
 import { FixtureContext } from '../FixtureContext';
 import { FixtureElement } from './FixtureElement';
@@ -10,6 +16,7 @@ import { FixtureElement } from './FixtureElement';
 type Props = {
   decorators: ReactDecorator[];
   children: React.ReactNode;
+  onErrorReset: () => unknown;
 } & FixtureContextValue;
 
 // IDEA: Maybe open up Fixture component for naming and other customization. Eg.
@@ -27,13 +34,20 @@ export class FixtureProvider extends React.PureComponent<Props> {
   );
 
   render() {
-    const { decorators, children, fixtureState, setFixtureState } = this.props;
+    const {
+      decorators,
+      children,
+      fixtureState,
+      setFixtureState,
+      onErrorReset
+    } = this.props;
+    const decoratorProps = { fixtureState, setFixtureState, onErrorReset };
 
     return (
       <FixtureContext.Provider
         value={this.getFixtureContextValue(fixtureState, setFixtureState)}
       >
-        {getComputedElementTree(decorators, children)}
+        {getComputedElementTree(decorators, children, decoratorProps)}
       </FixtureContext.Provider>
     );
   }
@@ -41,7 +55,8 @@ export class FixtureProvider extends React.PureComponent<Props> {
 
 function getComputedElementTree(
   decorators: ReactDecorator[],
-  leafNode: React.ReactNode
+  leafNode: React.ReactNode,
+  decoratorProps: Omit<ReactDecoratorProps, 'children'>
 ) {
   const fixtureElement = (
     <FixtureCapture decoratorId="root">
@@ -52,7 +67,9 @@ function getComputedElementTree(
   return [...decorators]
     .reverse()
     .reduce(
-      (prevElement, Decorator) => <Decorator>{prevElement}</Decorator>,
+      (prevElement, Decorator) => (
+        <Decorator {...decoratorProps}>{prevElement}</Decorator>
+      ),
       fixtureElement
     );
 }

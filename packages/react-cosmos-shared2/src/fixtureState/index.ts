@@ -8,9 +8,10 @@ export {
   FixtureStateArrayValue,
   FixtureStateValue,
   FixtureStateValues,
-  FixtureState,
   FixtureStateProps,
-  FixtureStateClassState
+  FixtureStateClassState,
+  FixtureState,
+  SetFixtureState
 } from './shared';
 export { createValues, createValue } from './createValues';
 export { extendWithValues } from './extendWithValues';
