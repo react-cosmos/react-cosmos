@@ -15,7 +15,7 @@ export function createValues(obj: KeyValue): FixtureStateValues {
   return values;
 }
 
-function createValue(value: unknown): FixtureStateValue {
+export function createValue(value: unknown): FixtureStateValue {
   if (
     typeof value === 'string' ||
     typeof value === 'number' ||

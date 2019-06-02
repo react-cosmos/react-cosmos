@@ -12,7 +12,7 @@ export {
   FixtureStateProps,
   FixtureStateClassState
 } from './shared';
-export { createValues } from './createValues';
+export { createValues, createValue } from './createValues';
 export { extendWithValues } from './extendWithValues';
 export {
   DEFAULT_RENDER_KEY,
