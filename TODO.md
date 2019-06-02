@@ -25,6 +25,7 @@ Control panel
 - [x] Redesign fixture state values (into recursive union types)
 - [x] Reusable TreeView
 - [ ] Props panel
+  - [ ] Resizable control panel
   - [ ] Reset all fixture state values
   - [ ] Reset individual fixture state value
   - [ ] Option to reset or transition props

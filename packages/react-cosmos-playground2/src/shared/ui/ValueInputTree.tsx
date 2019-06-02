@@ -22,11 +22,17 @@ export function ValueInputTree({ id, values, onChange }: Props) {
   return (
     <TreeView
       node={rootNode}
-      renderDir={({ parents, onToggle }) => (
-        <RowContainer style={{ paddingLeft: (parents.length - 1) * 16 }}>
-          <button onClick={onToggle}>{parents[parents.length - 1]}</button>
-        </RowContainer>
-      )}
+      renderDir={({ node, parents, onToggle }) => {
+        const itemNames = Object.keys(node.items);
+        return (
+          <RowContainer style={{ paddingLeft: (parents.length - 1) * 16 }}>
+            <button onClick={onToggle}>
+              {parents[parents.length - 1]}
+              {itemNames.length > 0 && ` { ${itemNames.join(', ')} }`}
+            </button>
+          </RowContainer>
+        );
+      }}
       renderItem={({ parents, item, itemName }) => {
         const itemId = `${id}-${[...parents, itemName].join('-')}`;
 

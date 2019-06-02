@@ -59,6 +59,7 @@ function createPropValueChangeHandler(
 
       return {
         ...prevFs,
+        // TOOD: Or resetFixtureStateProps
         props: updateFixtureStateProps({
           fixtureState: prevFs,
           elementId,
