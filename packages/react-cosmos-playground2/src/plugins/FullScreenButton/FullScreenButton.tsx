@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { Button } from '../../shared/ui';
 import { MaximizeIcon } from '../../shared/icons';

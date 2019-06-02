@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import * as React from 'react';
+import React from 'react';
 import { Slot } from 'react-plugin';
 
 export type OnIframeRef = (elRef: null | HTMLIFrameElement) => void;

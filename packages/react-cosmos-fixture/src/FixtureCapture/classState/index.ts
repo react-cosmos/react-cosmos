@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { FixtureDecoratorId } from 'react-cosmos-shared2/fixtureState';
 import { ElRefs, useUnmount } from './shared';
 import { useFixtureState } from './useFixtureState';

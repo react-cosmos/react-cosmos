@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { SmartphoneIcon } from '../../../shared/icons';
 import { Button } from '../../../shared/ui';
 

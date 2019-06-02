@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { AstronautIllustration } from '../../shared/illustrations';
 import { IllustrationContainer, Unbreakable } from './shared';

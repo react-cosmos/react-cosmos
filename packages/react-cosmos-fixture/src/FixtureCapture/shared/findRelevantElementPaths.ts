@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { findElementPaths, getExpectedElementAtPath } from './nodeTree';
 
 type ExtendedComponentClass = React.ComponentClass & {

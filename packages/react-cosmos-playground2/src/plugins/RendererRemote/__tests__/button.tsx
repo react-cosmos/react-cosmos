@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { loadPlugins, ArraySlot } from 'react-plugin';
 import { render, waitForElement, fireEvent, wait } from 'react-testing-library';
 import { cleanup, mockPlug } from '../../../testHelpers/plugin';

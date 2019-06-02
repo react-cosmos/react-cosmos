@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Illustration } from '../svg';
 
 const grey1 = 'var(--grey1)';

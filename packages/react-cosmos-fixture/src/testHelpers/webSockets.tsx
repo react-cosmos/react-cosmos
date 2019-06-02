@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import * as io from 'socket.io-client';
 import { create, act } from 'react-test-renderer';
 import { FixtureLoader, createWebSocketsConnect } from '..';

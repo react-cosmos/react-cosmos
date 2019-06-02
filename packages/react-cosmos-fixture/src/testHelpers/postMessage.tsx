@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { create, act } from 'react-test-renderer';
 import { FixtureLoader, createPostMessageConnect } from '..';
 import {

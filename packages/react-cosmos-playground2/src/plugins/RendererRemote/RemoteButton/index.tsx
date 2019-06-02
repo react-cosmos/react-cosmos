@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Button } from '../../../shared/ui';
 import { CastIcon } from '../../../shared/icons';
 import { Notification } from '../../Notifications/public';

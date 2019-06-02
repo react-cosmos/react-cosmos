@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Illustration } from '../svg';
 
 // const accent4 = 'var(--accent4)';

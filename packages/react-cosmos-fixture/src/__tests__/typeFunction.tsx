@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { uuid } from 'react-cosmos-shared2/util';
 import { runFixtureLoaderTests } from '../testHelpers';
 

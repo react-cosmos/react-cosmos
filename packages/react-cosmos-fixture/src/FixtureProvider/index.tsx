@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import memoize from 'memoize-one/dist/memoize-one.cjs';
 import {
   FixtureState,

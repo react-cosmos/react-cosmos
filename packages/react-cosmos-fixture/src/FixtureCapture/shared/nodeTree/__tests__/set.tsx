@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { setElementAtPath } from '..';
 
 it('sets root child', () => {

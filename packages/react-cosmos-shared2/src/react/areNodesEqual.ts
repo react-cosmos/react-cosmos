@@ -1,6 +1,6 @@
 import { isEqual, pick, mapValues } from 'lodash';
 import { isElement } from 'react-is';
-import * as React from 'react';
+import React from 'react';
 
 export function areNodesEqual(a: React.ReactNode, b: React.ReactNode): boolean {
   return isEqual(stripInternalElementAttrs(a), stripInternalElementAttrs(b));

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import retry from '@skidding/async-retry';
 import {
   createValues,
