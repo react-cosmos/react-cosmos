@@ -18,8 +18,14 @@ export function getFixtureStateValueTree(
 
   Object.keys(values).forEach(key => {
     const value = values[key];
-    if (value.type === 'composite') {
+    if (value.type === 'object') {
       dirs[key] = getFixtureStateValueTree(value.values);
+    } else if (value.type === 'array') {
+      const objValues: FixtureStateValues = {};
+      value.values.forEach((v, idx) => {
+        objValues[idx] = v;
+      });
+      dirs[key] = getFixtureStateValueTree(objValues);
     } else {
       items[key] = value;
     }

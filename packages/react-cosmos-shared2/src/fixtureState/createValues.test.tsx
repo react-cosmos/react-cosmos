@@ -80,7 +80,7 @@ it('creates empty object value', () => {
   const values = createValues({ myProp: {} });
   expect(values).toEqual({
     myProp: {
-      type: 'composite',
+      type: 'object',
       values: {}
     }
   });
@@ -92,7 +92,7 @@ it('creates serializable object value', () => {
   });
   expect(values).toEqual({
     myProp: {
-      type: 'composite',
+      type: 'object',
       values: {
         strProp: {
           type: 'primitive',
@@ -117,7 +117,7 @@ it('creates partially serializable object value', () => {
   });
   expect(values).toEqual({
     myProp: {
-      type: 'composite',
+      type: 'object',
       values: {
         strProp: {
           type: 'primitive',
@@ -128,6 +128,27 @@ it('creates partially serializable object value', () => {
           stringifiedValue: 'function () { }'
         }
       }
+    }
+  });
+});
+
+it('creates array value', () => {
+  const values = createValues({
+    myProp: ['foo', () => {}]
+  });
+  expect(values).toEqual({
+    myProp: {
+      type: 'array',
+      values: [
+        {
+          type: 'primitive',
+          value: 'foo'
+        },
+        {
+          type: 'unserializable',
+          stringifiedValue: 'function () { }'
+        }
+      ]
     }
   });
 });

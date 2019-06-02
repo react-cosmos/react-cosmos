@@ -17,9 +17,14 @@ export type FixtureStatePrimitiveValue = {
   value: string | number | boolean | null;
 };
 
-export type FixtureStateCompositeValue = {
-  type: 'composite';
+export type FixtureStateObjectValue = {
+  type: 'object';
   values: FixtureStateValues;
+};
+
+export type FixtureStateArrayValue = {
+  type: 'array';
+  values: FixtureStateValue[];
 };
 
 // TODO: 'select' type with specific options (that may or may not be
@@ -27,7 +32,8 @@ export type FixtureStateCompositeValue = {
 export type FixtureStateValue =
   | FixtureStateUnserializableValue
   | FixtureStatePrimitiveValue
-  | FixtureStateCompositeValue;
+  | FixtureStateObjectValue
+  | FixtureStateArrayValue;
 
 export type FixtureStateValues = Record<string, FixtureStateValue>;
 

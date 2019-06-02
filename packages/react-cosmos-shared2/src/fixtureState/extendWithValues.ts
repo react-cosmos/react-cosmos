@@ -12,10 +12,25 @@ export function extendWithValues(
   return extendedObj;
 }
 
-function extendWithValue(baseValue: unknown, value: FixtureStateValue) {
-  return value.type === 'unserializable'
-    ? baseValue
-    : value.type === 'composite'
-    ? extendWithValues((baseValue as KeyValue) || {}, value.values)
-    : value.value;
+function extendWithValue(
+  baseValue: unknown,
+  value: FixtureStateValue
+): unknown {
+  if (value.type === 'unserializable') {
+    return baseValue;
+  }
+
+  if (value.type === 'object') {
+    // TODO: Throw if baseValue doesn't match keys of value.values (and each type)
+    const baseObjValue = (baseValue || {}) as KeyValue;
+    return extendWithValues(baseObjValue, value.values);
+  }
+
+  if (value.type === 'array') {
+    // TODO: Throw if baseValue doesn't match length of value.values (and each type)
+    const baseArrValue = (baseValue || []) as unknown[];
+    return value.values.map((v, idx) => extendWithValue(baseArrValue[idx], v));
+  }
+
+  return value.value;
 }

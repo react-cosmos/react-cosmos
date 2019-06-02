@@ -77,7 +77,7 @@ it('keeps empty object key', () => {
   const obj = { myProp: {} };
   const values: FixtureStateValues = {
     myProp: {
-      type: 'composite',
+      type: 'object',
       values: {}
     }
   };
@@ -90,7 +90,7 @@ it('extends serializable object key', () => {
   };
   const values: FixtureStateValues = {
     myProp: {
-      type: 'composite',
+      type: 'object',
       values: {
         strProp: {
           type: 'primitive',
@@ -118,7 +118,7 @@ it('extends partially serializable object key', () => {
   };
   const values: FixtureStateValues = {
     myProp: {
-      type: 'composite',
+      type: 'object',
       values: {
         strProp: {
           type: 'primitive',
@@ -133,5 +133,29 @@ it('extends partially serializable object key', () => {
   };
   expect(extendWithValues(obj, values)).toEqual({
     myProp: { strProp: 'bar', fnProp: obj.myProp.fnProp }
+  });
+});
+
+it('extends partially serializable array key', () => {
+  const obj = {
+    myProp: ['foo', () => {}]
+  };
+  const values: FixtureStateValues = {
+    myProp: {
+      type: 'array',
+      values: [
+        {
+          type: 'primitive',
+          value: 'bar'
+        },
+        {
+          type: 'unserializable',
+          stringifiedValue: 'function () { }'
+        }
+      ]
+    }
+  };
+  expect(extendWithValues(obj, values)).toEqual({
+    myProp: ['bar', obj.myProp[1]]
   });
 });
