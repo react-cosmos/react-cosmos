@@ -41,16 +41,16 @@ it(`doesn't render button when dev server is off`, async () => {
   mockCore({
     isDevServerOn: () => false
   });
-  const { queryByText } = await loadTestPlugins();
-  expect(queryByText(/edit/i)).toBeNull();
+  const { queryByTitle } = await loadTestPlugins();
+  expect(queryByTitle(/open fixture source/i)).toBeNull();
 });
 
 it('renders button', async () => {
   mockCore({
     isDevServerOn: () => true
   });
-  const { getByText } = await loadTestPlugins();
-  await waitForElement(() => getByText(/edit/i));
+  const { getByTitle } = await loadTestPlugins();
+  await waitForElement(() => getByTitle(/open fixture source/i));
 });
 
 it('calls server endpoint on button click', async () => {
@@ -58,9 +58,11 @@ it('calls server endpoint on button click', async () => {
     mockCore({
       isDevServerOn: () => true
     });
-    const { getByText } = await loadTestPlugins();
+    const { getByTitle } = await loadTestPlugins();
 
-    const editBtn = await waitForElement(() => getByText(/edit/i));
+    const editBtn = await waitForElement(() =>
+      getByTitle(/open fixture source/i)
+    );
     fireEvent.click(editBtn);
 
     const openFileUrl = '/_open?filePath=foo.js';

@@ -32,7 +32,7 @@ it('renders missing state message', async () => {
 
 it('renders home button', async () => {
   const { unselectFixture } = registerTestPlugins();
-  const { getByText } = loadTestPlugins();
-  fireEvent.click(getByText(/home/));
+  const { getByTitle } = loadTestPlugins();
+  fireEvent.click(getByTitle(/go home/i));
   expect(unselectFixture).toBeCalledWith(expect.any(Object));
 });

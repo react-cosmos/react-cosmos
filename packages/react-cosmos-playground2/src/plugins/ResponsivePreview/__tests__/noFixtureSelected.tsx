@@ -46,9 +46,9 @@ async function waitForMainPlug({ getByTestId }: RenderResult) {
 
 it('renders disabled button', async () => {
   registerTestPlugins();
-  const { getByText } = loadTestPlugins();
+  const { getByTitle } = loadTestPlugins();
   await wait(() =>
-    expect(getByText(/responsive/i)).toHaveAttribute('disabled')
+    expect(getByTitle(/toggle responsive mode/i)).toHaveAttribute('disabled')
   );
 });
 

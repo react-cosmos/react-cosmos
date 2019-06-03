@@ -37,8 +37,8 @@ function mockFixtureAction() {
 it('renders close button', async () => {
   const { unselectFixture } = registerTestPlugins();
 
-  const { getByText } = loadTestPlugins();
-  fireEvent.click(getByText(/close/));
+  const { getByTitle } = loadTestPlugins();
+  fireEvent.click(getByTitle(/close fixture/i));
 
   expect(unselectFixture).toBeCalled();
 });
@@ -46,8 +46,8 @@ it('renders close button', async () => {
 it('renders refresh button', async () => {
   const { selectFixture } = registerTestPlugins();
 
-  const { getByText } = loadTestPlugins();
-  fireEvent.click(getByText(/refresh/));
+  const { getByTitle } = loadTestPlugins();
+  fireEvent.click(getByTitle(/reload fixture/i));
 
   expect(selectFixture).toBeCalledWith(
     expect.any(Object),

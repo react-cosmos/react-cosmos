@@ -26,12 +26,12 @@ it(`doesn't render button when web renderer url is empty`, async () => {
   mockRendererAction();
 
   loadPlugins();
-  const { getByText, queryByText } = render(
+  const { getByText, queryByTitle } = render(
     <ArraySlot name="rendererActions" />
   );
 
   await waitForElement(() => getByText('fooAction'));
-  expect(queryByText(/remote/i)).toBeNull();
+  expect(queryByTitle(/copy remote renderer url/i)).toBeNull();
 });
 
 it(`doesn't render button when dev server is off`, async () => {
@@ -45,12 +45,12 @@ it(`doesn't render button when dev server is off`, async () => {
   mockRendererAction();
 
   loadPlugins();
-  const { getByText, queryByText } = render(
+  const { getByText, queryByTitle } = render(
     <ArraySlot name="rendererActions" />
   );
 
   await waitForElement(() => getByText('fooAction'));
-  expect(queryByText(/remote/i)).toBeNull();
+  expect(queryByTitle(/copy remote renderer url/i)).toBeNull();
 });
 
 it('renders button', async () => {
@@ -63,9 +63,9 @@ it('renders button', async () => {
   mockNotifications();
 
   loadPlugins();
-  const { getByText } = render(<ArraySlot name="rendererActions" />);
+  const { getByTitle } = render(<ArraySlot name="rendererActions" />);
 
-  await waitForElement(() => getByText(/remote/i));
+  await waitForElement(() => getByTitle(/copy remote renderer url/i));
 });
 
 it('notifies copy error on button click', async () => {
@@ -78,9 +78,9 @@ it('notifies copy error on button click', async () => {
   const { pushTimedNotification } = mockNotifications();
 
   loadPlugins();
-  const { getByText } = render(<ArraySlot name="rendererActions" />);
+  const { getByTitle } = render(<ArraySlot name="rendererActions" />);
 
-  const button = getByText(/remote/i);
+  const button = getByTitle(/copy remote renderer url/i);
   fireEvent.click(button);
 
   // Clipboard API isn't available in jsdom so we only test the error path

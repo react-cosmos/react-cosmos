@@ -26,8 +26,8 @@ it('renders fullscreen button', async () => {
     getSelectedFixtureId: () => ({ path: 'foo', name: null })
   });
 
-  const { getByText } = loadTestPlugins();
-  fireEvent.click(getByText(/fullscreen/i));
+  const { getByTitle } = loadTestPlugins();
+  fireEvent.click(getByTitle(/go fullscreen/i));
 
   expect(selectFixture).toBeCalledWith(
     expect.any(Object),

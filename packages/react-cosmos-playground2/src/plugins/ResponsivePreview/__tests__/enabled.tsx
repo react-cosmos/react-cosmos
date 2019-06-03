@@ -36,8 +36,10 @@ async function waitForMainPlug({ getByTestId }: RenderResult) {
   await waitForElement(() => getByTestId('responsivePreview'));
 }
 
-async function toggleResponsiveMode({ getByText }: RenderResult) {
-  fireEvent.click(await waitForElement(() => getByText(/responsive/i)));
+async function toggleResponsiveMode({ getByTitle }: RenderResult) {
+  fireEvent.click(
+    await waitForElement(() => getByTitle(/toggle responsive mode/i))
+  );
 }
 
 async function selectViewport({ getByText }: RenderResult, match: RegExp) {
@@ -133,7 +135,7 @@ describe('on device select', () => {
 
     const renderer = loadTestPlugins();
     await toggleResponsiveMode(renderer);
-    await selectViewport(renderer, /iphone 6 plus/i);
+    await selectViewport(renderer, /iphone 6\+/i);
 
     await wait(() =>
       expect((fixtureState as FixtureStateWithViewport).viewport).toEqual({
@@ -161,7 +163,7 @@ describe('on device select', () => {
 
     const renderer = loadTestPlugins();
     await toggleResponsiveMode(renderer);
-    await selectViewport(renderer, /iphone 6 plus/i);
+    await selectViewport(renderer, /iphone 6\+/i);
 
     await wait(() =>
       expect(storage[STORAGE_KEY]).toEqual({ width: 414, height: 736 })
@@ -185,7 +187,7 @@ it('clears viewport in fixture state on untoggle', async () => {
 
   const renderer = loadTestPlugins();
   await toggleResponsiveMode(renderer);
-  await selectViewport(renderer, /iphone 6 plus/i);
+  await selectViewport(renderer, /iphone 6\+/i);
   await toggleResponsiveMode(renderer);
 
   await wait(() =>

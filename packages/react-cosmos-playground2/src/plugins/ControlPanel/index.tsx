@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { Button } from '../../shared/ui';
+import { IconButton } from '../../shared/ui';
 import { SlidersIcon } from '../../shared/icons';
 import { ControlPanel } from './ControlPanel';
 import { ControlPanelSpec } from './public';
@@ -19,9 +19,9 @@ plug('rendererActions', ({ pluginContext }) => {
   const toggleOpen = useOpenToggle(pluginContext);
 
   return (
-    <Button
+    <IconButton
       icon={<SlidersIcon />}
-      label="controls"
+      title="Open control panel"
       selected={open}
       onClick={toggleOpen}
     />

@@ -25,6 +25,6 @@ function loadTestPlugins() {
 
 it('renders disabled fullscreen button', async () => {
   registerTestPlugins();
-  const { getByText } = loadTestPlugins();
-  expect(getByText(/fullscreen/i)).toHaveAttribute('disabled');
+  const { getByTitle } = loadTestPlugins();
+  expect(getByTitle(/go fullscreen/i)).toHaveAttribute('disabled');
 });

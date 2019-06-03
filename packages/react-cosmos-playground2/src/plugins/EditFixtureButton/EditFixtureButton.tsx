@@ -1,6 +1,6 @@
 import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { Button } from '../../shared/ui';
+import { IconButton } from '../../shared/ui';
 import { EditIcon } from '../../shared/icons';
 
 type Props = {
@@ -14,9 +14,9 @@ export function EditFixtureButton({ devServerOn, selectedFixtureId }: Props) {
   }
 
   return (
-    <Button
+    <IconButton
       icon={<EditIcon />}
-      label="edit"
+      title="Open fixture source"
       onClick={() => openFile(selectedFixtureId.path)}
     />
   );
