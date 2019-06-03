@@ -1,8 +1,8 @@
 import { loadPlugins } from 'react-plugin';
-import { cleanup, getMethodsOf } from '../../../testHelpers/plugin';
-import { mockStorage } from '../../../testHelpers/pluginMocks';
-import { CoreSpec } from '../public';
-import { register } from '..';
+import { cleanup } from '../../testHelpers/plugin';
+import { mockStorage, getCoreMethods } from '../../testHelpers/pluginMocks';
+import { CoreSpec } from './public';
+import { register } from '.';
 
 afterEach(cleanup);
 
@@ -29,9 +29,11 @@ function loadTestPlugins() {
   });
 }
 
-function getCoreMethods() {
-  return getMethodsOf<CoreSpec>('core');
-}
+it('returns project ID', () => {
+  registerTestPlugins();
+  loadTestPlugins();
+  expect(getCoreMethods().getProjectId()).toBe('mockProjectId');
+});
 
 it('returns fixture file vars', () => {
   registerTestPlugins();

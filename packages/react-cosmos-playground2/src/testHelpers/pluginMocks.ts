@@ -36,6 +36,10 @@ export function getMessageHandlerMethods() {
   return getMethodsOf<MessageHandlerSpec>('messageHandler');
 }
 
+export function getCoreMethods() {
+  return getMethodsOf<CoreSpec>('core');
+}
+
 export function getRendererCoreMethods() {
   return getMethodsOf<RendererCoreSpec>('rendererCore');
 }
@@ -73,6 +77,7 @@ export function mockRouter(methods: PartOf<RouterSpec> = {}) {
 
 export function mockCore(methods: PartOf<CoreSpec> = {}) {
   const allMethods = {
+    getProjectId: jest.fn(),
     getFixtureFileVars: jest.fn(),
     isDevServerOn: jest.fn(),
     getWebRendererUrl: jest.fn(),
