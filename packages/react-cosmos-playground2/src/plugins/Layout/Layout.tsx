@@ -51,25 +51,25 @@ export function Layout({
   }
 
   const dragging = navDrag.dragging || panelDrag.dragging;
-  // z indexes are set here on purpose to show the layer hierarchy at a glance
+  // z-indexes are set here on purpose to show the layer hierarchy at a glance
   return (
     <Container dragging={dragging}>
-      <Left width={navWidth} zIndex={2}>
-        <Slot name="left" />
+      <NavContainer width={navWidth} zIndex={2}>
+        <Slot name="nav" />
         {navDrag.dragging && <DragOverlay />}
         <NavDragHandle ref={navDrag.dragElRef} />
-      </Left>
+      </NavContainer>
       <Center key="center" zIndex={1}>
         <Slot name="rendererHeader" />
         <Preview />
         {dragging && <DragOverlay />}
       </Center>
       {panelOpen && (
-        <Right width={panelWidth} zIndex={3}>
-          <Slot name="right" />
+        <PanelContainer width={panelWidth} zIndex={3}>
+          <Slot name="panel" />
           {panelDrag.dragging && <DragOverlay />}
           <PanelDragHandle ref={panelDrag.dragElRef} />
-        </Right>
+        </PanelContainer>
       )}
       <Layer zIndex={4}>
         <ArraySlot name="global" />
@@ -108,11 +108,11 @@ const Draggable = styled(Layer)<{ width: number }>`
   width: ${props => props.width}px;
 `;
 
-const Left = styled(Draggable)`
+const NavContainer = styled(Draggable)`
   background: var(--grey1);
 `;
 
-const Right = styled(Draggable)`
+const PanelContainer = styled(Draggable)`
   background: var(--grey2);
 `;
 

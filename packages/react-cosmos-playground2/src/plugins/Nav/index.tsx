@@ -13,7 +13,7 @@ const DEFAULT_TREE_EXPANSION = {};
 
 const { plug, register } = createPlugin<NavSpec>({ name: 'nav' });
 
-plug('left', ({ pluginContext }) => {
+plug('nav', ({ pluginContext }) => {
   const { getMethodsOf } = pluginContext;
   const storage = getMethodsOf<StorageSpec>('storage');
   const router = getMethodsOf<RouterSpec>('router');

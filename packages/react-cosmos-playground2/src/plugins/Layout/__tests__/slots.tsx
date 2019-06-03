@@ -31,9 +31,9 @@ function loadTestPlugins() {
   return render(<Slot name="root" />);
 }
 
-it('renders "left" slot', async () => {
+it('renders "nav" slot', async () => {
   registerTestPlugins();
-  mockPlug('left', () => <>we are the robots</>);
+  mockPlug('nav', () => <>we are the robots</>);
 
   const { getByText } = loadTestPlugins();
   await waitForElement(() => getByText(/we are the robots/i));
@@ -73,9 +73,9 @@ it('renders "previewGlobal" slot', async () => {
   await waitForElement(() => getByText(/we are the robots2/i));
 });
 
-it('renders "right" slot', async () => {
+it('renders "panel" slot', async () => {
   registerTestPlugins();
-  mockPlug('right', () => <>we are the robots</>);
+  mockPlug('panel', () => <>we are the robots</>);
 
   const { getByText } = loadTestPlugins();
   await waitForElement(() => getByText(/we are the robots/i));

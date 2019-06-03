@@ -11,7 +11,7 @@ const { plug, register } = createPlugin<ControlPanelSpec>({
   name: 'controlPanel'
 });
 
-plug('right', ({ pluginContext }) => {
+plug('panel', ({ pluginContext }) => {
   const layout = pluginContext.getMethodsOf<LayoutSpec>('layout');
   return layout.isPanelOpen() ? <ControlPanel /> : null;
 });
