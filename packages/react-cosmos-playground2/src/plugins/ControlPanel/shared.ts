@@ -1,6 +1,7 @@
 import React from 'react';
 import { PluginContext } from 'react-plugin';
 import { StorageSpec } from '../Storage/public';
+import { RendererCoreSpec } from '../RendererCore/public';
 import { ControlPanelSpec } from './public';
 
 export type Context = PluginContext<ControlPanelSpec>;
@@ -22,4 +23,9 @@ export function useOpenToggle(context: Context) {
   return React.useCallback(() => {
     storage.setItem(CONTROL_PANEL_OPEN, !open);
   }, [storage, open]);
+}
+
+export function isValidFixtureSelected(context: Context) {
+  const rendererCore = context.getMethodsOf<RendererCoreSpec>('rendererCore');
+  return rendererCore.isValidFixtureSelected();
 }
