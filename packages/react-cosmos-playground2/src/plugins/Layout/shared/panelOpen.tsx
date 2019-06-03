@@ -2,7 +2,7 @@ import { RendererCoreSpec } from '../../RendererCore/public';
 import { StorageSpec } from '../../Storage/public';
 import { Context } from './shared';
 
-const PANEL_OPEN_STORAGE_KEY = 'controlPanelOpen';
+export const PANEL_OPEN_STORAGE_KEY = 'controlPanelOpen';
 const PANEL_OPEN_DEFAULT = true;
 
 export function isPanelOpen(context: Context) {

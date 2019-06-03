@@ -1,4 +1,4 @@
 export { Context } from './shared';
 export { getNavWidthApi } from './navWidth';
 export { getPanelWidthApi } from './panelWidth';
-export { isPanelOpen, openPanel } from './panelOpen';
+export { PANEL_OPEN_STORAGE_KEY, isPanelOpen, openPanel } from './panelOpen';

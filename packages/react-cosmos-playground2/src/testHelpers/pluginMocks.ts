@@ -9,6 +9,7 @@ import { RouterSpec } from '../plugins/Router/public';
 import { CoreSpec } from '../plugins/Core/public';
 import { MessageHandlerSpec } from '../plugins/MessageHandler/public';
 import { RendererCoreSpec } from '../plugins/RendererCore/public';
+import { LayoutSpec } from '../plugins/Layout/public';
 import { NotificationsSpec } from '../plugins/Notifications/public';
 import { RendererPreviewSpec } from '../plugins/RendererPreview/public';
 import { getMethodsOf, mockMethodsOf, on } from './plugin';
@@ -42,6 +43,10 @@ export function getCoreMethods() {
 
 export function getRendererCoreMethods() {
   return getMethodsOf<RendererCoreSpec>('rendererCore');
+}
+
+export function getLayoutMethods() {
+  return getMethodsOf<LayoutSpec>('layout');
 }
 
 export function getNotificationsMethods() {
