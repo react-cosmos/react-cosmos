@@ -3,4 +3,8 @@ export type LayoutSpec = {
   state: {
     storageCacheReady: boolean;
   };
+  methods: {
+    isPanelOpen(): boolean;
+    openPanel(open: boolean): unknown;
+  };
 };

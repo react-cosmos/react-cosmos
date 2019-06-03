@@ -5,12 +5,21 @@ import { RouterSpec } from '../Router/public';
 import { CoreSpec } from '../Core/public';
 import { LayoutSpec } from './public';
 import { Layout } from './Layout';
-import { getNavWidthApi, getPanelWidthApi } from './shared';
+import {
+  getNavWidthApi,
+  getPanelWidthApi,
+  isPanelOpen,
+  openPanel
+} from './shared';
 
 const { onLoad, plug, register } = createPlugin<LayoutSpec>({
   name: 'layout',
   initialState: {
     storageCacheReady: false
+  },
+  methods: {
+    isPanelOpen,
+    openPanel
   }
 });
 
@@ -30,6 +39,7 @@ plug('root', ({ pluginContext }) => {
       <Layout
         storageCacheReady={false}
         fullScreen={false}
+        panelOpen={false}
         navWidth={0}
         panelWidth={0}
         setNavWidth={() => {}}
@@ -45,6 +55,7 @@ plug('root', ({ pluginContext }) => {
     <Layout
       storageCacheReady={true}
       fullScreen={router.isFullScreen()}
+      panelOpen={isPanelOpen(pluginContext)}
       navWidth={navWidth}
       panelWidth={panelWidth}
       setNavWidth={setNavWidth}

@@ -6,16 +6,17 @@ import { useDrag } from '../../shared/ui';
 type Props = {
   storageCacheReady: boolean;
   fullScreen: boolean;
+  panelOpen: boolean;
   navWidth: number;
   panelWidth: number;
   setNavWidth: (width: number) => unknown;
   setPanelWidth: (width: number) => unknown;
 };
 
-// TODO: Only show "right" side if valid fixture is selected
 export function Layout({
   storageCacheReady,
   fullScreen,
+  panelOpen,
   navWidth,
   panelWidth,
   setNavWidth,
@@ -36,19 +37,11 @@ export function Layout({
     return <Container />;
   }
 
-  const previewContainer = (
-    <PreviewContainer key="previewContainer">
-      <Slot name="rendererPreview" />
-      <Slot name="contentOverlay" />
-      <ArraySlot name="previewGlobal" />
-    </PreviewContainer>
-  );
-
   if (fullScreen) {
     return (
       <Container>
         <Center key="center" zIndex={1}>
-          {previewContainer}
+          <Preview />
         </Center>
         <Layer zIndex={2}>
           <ArraySlot name="global" />
@@ -68,18 +61,30 @@ export function Layout({
       </Left>
       <Center key="center" zIndex={1}>
         <Slot name="rendererHeader" />
-        {previewContainer}
+        <Preview />
         {dragging && <DragOverlay />}
       </Center>
-      <Right width={panelWidth} zIndex={3}>
-        <Slot name="right" />
-        {panelDrag.dragging && <DragOverlay />}
-        <PanelDragHandle ref={panelDrag.dragElRef} />
-      </Right>
+      {panelOpen && (
+        <Right width={panelWidth} zIndex={3}>
+          <Slot name="right" />
+          {panelDrag.dragging && <DragOverlay />}
+          <PanelDragHandle ref={panelDrag.dragElRef} />
+        </Right>
+      )}
       <Layer zIndex={4}>
         <ArraySlot name="global" />
       </Layer>
     </Container>
+  );
+}
+
+function Preview() {
+  return (
+    <PreviewContainer key="previewContainer">
+      <Slot name="rendererPreview" />
+      <Slot name="contentOverlay" />
+      <ArraySlot name="previewGlobal" />
+    </PreviewContainer>
   );
 }
 

@@ -2,25 +2,24 @@ import React from 'react';
 import { createPlugin } from 'react-plugin';
 import { IconButton } from '../../shared/ui';
 import { SlidersIcon } from '../../shared/icons';
+import { RendererCoreSpec } from '../RendererCore/public';
+import { LayoutSpec } from '../Layout/public';
 import { ControlPanel } from './ControlPanel';
 import { ControlPanelSpec } from './public';
-import { isOpen, useOpenToggle, isValidFixtureSelected } from './shared';
 
 const { plug, register } = createPlugin<ControlPanelSpec>({
   name: 'controlPanel'
 });
 
 plug('right', ({ pluginContext }) => {
-  return isValidFixtureSelected(pluginContext) && isOpen(pluginContext) ? (
-    <ControlPanel />
-  ) : null;
+  const layout = pluginContext.getMethodsOf<LayoutSpec>('layout');
+  return layout.isPanelOpen() ? <ControlPanel /> : null;
 });
 
 plug('rendererActions', ({ pluginContext }) => {
-  const open = isOpen(pluginContext);
-  const toggleOpen = useOpenToggle(pluginContext);
-
-  if (!isValidFixtureSelected(pluginContext)) {
+  const { getMethodsOf } = pluginContext;
+  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
+  if (!rendererCore.isValidFixtureSelected()) {
     return (
       <IconButton
         icon={<SlidersIcon />}
@@ -31,12 +30,14 @@ plug('rendererActions', ({ pluginContext }) => {
     );
   }
 
+  const layout = pluginContext.getMethodsOf<LayoutSpec>('layout');
+  const panelOpen = layout.isPanelOpen();
   return (
     <IconButton
       icon={<SlidersIcon />}
       title="Open control panel"
-      selected={open}
-      onClick={toggleOpen}
+      selected={panelOpen}
+      onClick={() => layout.openPanel(!panelOpen)}
     />
   );
 });

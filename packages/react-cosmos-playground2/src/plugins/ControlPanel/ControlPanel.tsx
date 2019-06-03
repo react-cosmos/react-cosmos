@@ -13,13 +13,10 @@ export function ControlPanel() {
 }
 
 const Container = styled.div`
-  flex-shrink: 0;
-  width: 288px;
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  box-shadow: inset 2px 0px 0 rgba(0, 0, 0, 0.3);
+  justify-content: flex-start;
   background: var(--grey2);
   color: var(--grey6);
 `;

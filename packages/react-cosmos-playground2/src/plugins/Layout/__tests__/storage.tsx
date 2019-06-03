@@ -1,6 +1,10 @@
 import { loadPlugins } from 'react-plugin';
 import { cleanup } from '../../../testHelpers/plugin';
-import { mockStorage, mockCore } from '../../../testHelpers/pluginMocks';
+import {
+  mockStorage,
+  mockCore,
+  mockRendererCore
+} from '../../../testHelpers/pluginMocks';
 import { register } from '..';
 
 afterEach(cleanup);
@@ -10,6 +14,9 @@ it('loads storage cache', () => {
   mockStorage({ loadCache: mockLoadCache });
   mockCore({
     getProjectId: () => 'mockProjectId'
+  });
+  mockRendererCore({
+    isValidFixtureSelected: () => false
   });
   register();
   loadPlugins();

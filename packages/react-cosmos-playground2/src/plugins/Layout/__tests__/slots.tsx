@@ -5,7 +5,8 @@ import { cleanup, mockPlug } from '../../../testHelpers/plugin';
 import {
   mockStorage,
   mockRouter,
-  mockCore
+  mockCore,
+  mockRendererCore
 } from '../../../testHelpers/pluginMocks';
 import { register } from '..';
 
@@ -19,6 +20,9 @@ function registerTestPlugins() {
     isFullScreen: () => false
   });
   mockCore();
+  mockRendererCore({
+    isValidFixtureSelected: () => true
+  });
   register();
 }
 
