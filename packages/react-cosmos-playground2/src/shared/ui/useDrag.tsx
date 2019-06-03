@@ -2,6 +2,7 @@ import React from 'react';
 
 type UseDragArgs = {
   value: number;
+  reverse: boolean;
   onChange: (value: number) => unknown;
 };
 
@@ -10,18 +11,19 @@ type DragState = {
   startX: number;
 };
 
-export function useDrag({ value, onChange }: UseDragArgs) {
+export function useDrag({ value, reverse, onChange }: UseDragArgs) {
   const [dragState, setDragState] = React.useState<null | DragState>(null);
 
   const handleDrag = React.useCallback(
     (e: MouseEvent) => {
       if (dragState) {
         const { startValue, startX } = dragState;
-        const curValue = startValue + (e.clientX - startX);
+        const diff = e.clientX - startX;
+        const curValue = startValue + (reverse ? -diff : diff);
         onChange(curValue);
       }
     },
-    [onChange, dragState]
+    [reverse, onChange, dragState]
   );
 
   const handleDragEnd = React.useCallback(() => {

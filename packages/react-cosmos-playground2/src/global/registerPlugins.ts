@@ -5,13 +5,14 @@ import { resetPlugins, enablePlugin } from 'react-plugin';
 resetPlugins();
 
 // TODO: Discover plugins in codebase automatically
-// TODO: Sort alphabetically after SlotArrays support user sorting
+// TODO: Sort alphabetically after SlotArray supports user sorting
 require('../plugins/Storage').register();
 require('../plugins/Core').register();
 require('../plugins/MessageHandler').register();
-require('../plugins/Notifications').register();
 require('../plugins/Router').register();
+require('../plugins/Notifications').register();
 require('../plugins/RendererCore').register();
+require('../plugins/Layout').register();
 require('../plugins/RendererHeader').register();
 require('../plugins/RendererPreview').register();
 require('../plugins/Nav').register();

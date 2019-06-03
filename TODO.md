@@ -9,6 +9,7 @@ Cosmos Next becomes _Cosmos_. The included features are meant to exceed everythi
 - [ ] Control panel
 - [ ] Try: UI-generated fixture variants
 - [ ] Fixture search
+  - [ ] Minimize left nav
 - [ ] Command API with search
 - [ ] Keyboard shortcuts
 - [ ] Try: Multi fixture select
