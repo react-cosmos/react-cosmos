@@ -1,22 +1,28 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ArtificialIntelligenceIllustration } from '../../shared/illustrations';
-import { IllustrationContainer, Unbreakable } from './shared';
+import {
+  ContentContainer,
+  TextContainer,
+  IllustrationContainer,
+  NoWrap
+} from './shared';
 
 export function RendererNotResponding() {
   return (
-    <Container>
-      <Content>
+    <ContentContainer>
+      <TextContainer>
         <Header>
-          Renderer <Unbreakable>not responding</Unbreakable>
+          Renderer <NoWrap>not responding</NoWrap>
         </Header>
         <Paragraph>{`It's usually one of the following...`}</Paragraph>
         <List>
           <li>
             <No>1</No>
             <span>
-              <strong>Please check your terminal for errors.</strong> Your build
-              might be broken.
+              <strong>Please check your terminal for errors.</strong>
+              <br />
+              Your build might be broken.
             </span>
           </li>
           <li>
@@ -24,7 +30,9 @@ export function RendererNotResponding() {
             <span>
               If you use a custom webpack config,{' '}
               <strong>
-                make sure your build is generating an index.html page.
+                make sure
+                <br />
+                your build is generating an index.html page.
               </strong>
             </span>
           </li>
@@ -38,32 +46,13 @@ export function RendererNotResponding() {
             ask for help
           </ActionLink>
         </Paragraph>
-      </Content>
+      </TextContainer>
       <IllustrationContainer>
         <ArtificialIntelligenceIllustration title="robot" />
       </IllustrationContainer>
-    </Container>
+    </ContentContainer>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Content = styled.div`
-  max-width: 512px;
-  padding: 0 32px;
-  font-size: 16px;
-  line-height: 1.5em;
-  color: var(--grey1);
-
-  strong {
-    font-weight: 500;
-  }
-`;
 
 const Header = styled.h1`
   position: relative;

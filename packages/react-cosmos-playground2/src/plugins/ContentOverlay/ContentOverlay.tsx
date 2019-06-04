@@ -7,7 +7,7 @@ import {
 import { RendererNotResponding } from './RendererNotResponding';
 import { WelcomeCosmosNext } from './WelcomeCosmosNext';
 import { UrlStatus, RuntimeStatus } from '../RendererPreview/public';
-import { IllustrationContainer } from './shared';
+import { IllustrationContainer, Container } from './shared';
 
 type Props = {
   fixtureSelected: boolean;
@@ -66,19 +66,6 @@ export function ContentOverlay({
     </Container>
   );
 }
-
-const Container = styled.div`
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--grey6);
-`;
 
 const Delay = styled.div`
   opacity: 0;
