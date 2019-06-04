@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import {
   EmptyIllustration,
   DreamerIllustration
@@ -7,7 +6,12 @@ import {
 import { RendererNotResponding } from './RendererNotResponding';
 import { WelcomeCosmosNext } from './WelcomeCosmosNext';
 import { UrlStatus, RuntimeStatus } from '../RendererPreview/public';
-import { IllustrationContainer, Container } from './shared';
+import {
+  IllustrationContainer,
+  Container,
+  ContentContainer,
+  Delay
+} from './shared';
 
 type Props = {
   fixtureSelected: boolean;
@@ -41,11 +45,13 @@ export function ContentOverlay({
     // states when renderer is already compiled and will respond immediately
     return (
       <Container data-testid="waiting">
-        <IllustrationContainer>
-          <Delay>
-            <DreamerIllustration title="waiting" />
-          </Delay>
-        </IllustrationContainer>
+        <ContentContainer>
+          <IllustrationContainer>
+            <Delay>
+              <DreamerIllustration title="waiting" />
+            </Delay>
+          </IllustrationContainer>
+        </ContentContainer>
       </Container>
     );
   }
@@ -53,9 +59,11 @@ export function ContentOverlay({
   if (fixtureSelected) {
     return (
       <Container data-testid="notFound">
-        <IllustrationContainer>
-          <EmptyIllustration title="not found" />
-        </IllustrationContainer>
+        <ContentContainer>
+          <IllustrationContainer>
+            <EmptyIllustration title="not found" />
+          </IllustrationContainer>
+        </ContentContainer>
       </Container>
     );
   }
@@ -66,17 +74,3 @@ export function ContentOverlay({
     </Container>
   );
 }
-
-const Delay = styled.div`
-  opacity: 0;
-  animation: fadeIn var(--quick) linear 0.5s forwards;
-
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-`;

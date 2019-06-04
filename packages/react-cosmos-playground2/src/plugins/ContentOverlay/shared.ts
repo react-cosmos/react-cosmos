@@ -20,8 +20,7 @@ export const ContentContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  min-width: 736px;
+  min-width: 100%;
   padding: 0 32px;
   box-sizing: border-box;
 `;
@@ -48,4 +47,18 @@ export const IllustrationContainer = styled.div`
 
 export const NoWrap = styled.span`
   white-space: nowrap;
+`;
+
+export const Delay = styled.div`
+  opacity: 0;
+  animation: fadeIn var(--quick) linear 0.5s forwards;
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 `;
