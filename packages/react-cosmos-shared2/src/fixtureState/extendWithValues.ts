@@ -21,15 +21,19 @@ function extendWithValue(
   }
 
   if (value.type === 'object') {
-    // TODO: Throw if baseValue doesn't match keys of value.values (and each type)
-    const baseObjValue = (baseValue || {}) as KeyValue;
-    return extendWithValues(baseObjValue, value.values);
+    // This works (for now) because users can't add/remove object keys nor can
+    // they change the type of any value. If any of these requirements show up
+    // in the future this will need to be redesign to handle merge conflicts
+    const baseObj = baseValue as KeyValue;
+    return extendWithValues(baseObj, value.values);
   }
 
   if (value.type === 'array') {
-    // TODO: Throw if baseValue doesn't match length of value.values (and each type)
-    const baseArrValue = (baseValue || []) as unknown[];
-    return value.values.map((v, idx) => extendWithValue(baseArrValue[idx], v));
+    // This works (for now) because users can't add/remove array items nor can
+    // they change the type of any value. If any of these requirements show up
+    // in the future this will need to be redesign to handle merge conflicts
+    const baseArr = baseValue as unknown[];
+    return value.values.map((v, idx) => extendWithValue(baseArr[idx], v));
   }
 
   return value.value;
