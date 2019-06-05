@@ -17,57 +17,50 @@ type Props = {
 
 // TODO: Get component name from fixtureState.props (Maybe)
 export function ClassStatePanel({ fixtureState, setFixtureState }: Props) {
+  const onValueChange = React.useCallback(
+    (elementId: FixtureElementId, values: FixtureStateValues) => {
+      setFixtureState(prevFs => {
+        const fsClassState = findFixtureStateClassState(prevFs, elementId);
+        if (!fsClassState) {
+          console.warn(`Decorator id ${elementId} no longer exists`);
+          return prevFs;
+        }
+
+        return {
+          ...prevFs,
+          classState: updateFixtureStateClassState({
+            fixtureState: prevFs,
+            elementId,
+            values
+          })
+        };
+      });
+    },
+    [setFixtureState]
+  );
+
   if (!fixtureState.classState) {
     return null;
   }
 
   return (
     <Container>
-      {fixtureState.classState.map(({ elementId, values }) => {
-        const { decoratorId, elPath } = elementId;
-        const id = elPath ? `${decoratorId}-${elPath}` : decoratorId;
+      {fixtureState.classState.map(({ elementId, values }, idx) => {
         return (
-          <React.Fragment key={id}>
+          <React.Fragment key={idx}>
             <div>
               <strong>CLASS STATE</strong>
             </div>
             <ValueInputTree
-              id={id}
+              elementId={elementId}
               values={values}
-              onChange={createStateValueChangeHandler(
-                setFixtureState,
-                elementId
-              )}
+              onChange={onValueChange}
             />
           </React.Fragment>
         );
       })}
     </Container>
   );
-}
-
-function createStateValueChangeHandler(
-  setFixtureState: (stateUpdater: StateUpdater<FixtureState>) => void,
-  elementId: FixtureElementId
-) {
-  return (values: FixtureStateValues) => {
-    setFixtureState(prevFs => {
-      const fsClassState = findFixtureStateClassState(prevFs, elementId);
-      if (!fsClassState) {
-        console.warn(`Decorator id ${elementId} no longer exists`);
-        return prevFs;
-      }
-
-      return {
-        ...prevFs,
-        classState: updateFixtureStateClassState({
-          fixtureState: prevFs,
-          elementId,
-          values
-        })
-      };
-    });
-  };
 }
 
 const Container = styled.div`

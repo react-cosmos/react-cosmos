@@ -2,6 +2,7 @@ import React from 'react';
 import { clone, setWith } from 'lodash';
 import styled from 'styled-components';
 import {
+  FixtureElementId,
   FixtureStateValue,
   FixtureStateValues
 } from 'react-cosmos-shared2/fixtureState';
@@ -9,14 +10,22 @@ import { TreeView, TreeExpansion } from './TreeView';
 import { getFixtureStateValueTree } from './valueTree';
 
 type Props = {
-  id: string;
+  elementId: FixtureElementId;
   values: FixtureStateValues;
-  onChange: (values: FixtureStateValues) => unknown;
+  onChange: (
+    elementId: FixtureElementId,
+    values: FixtureStateValues
+  ) => unknown;
 };
 
 // TODO: Keep value copy locally in case of invalid user input
-export function ValueInputTree({ id, values, onChange }: Props) {
+export const ValueInputTree = React.memo(function ValueInputTree({
+  elementId,
+  values,
+  onChange
+}: Props) {
   const [treeExpansion, setTreeExpansion] = React.useState<TreeExpansion>({});
+  const id = createStringId(elementId);
   const rootNode = getFixtureStateValueTree(values);
 
   return (
@@ -67,7 +76,10 @@ export function ValueInputTree({ id, values, onChange }: Props) {
                       value: JSON.parse(e.currentTarget.value)
                     };
                     const valuePath = getValuePath(itemName, parents);
-                    onChange(setValueAtPath(values, newValue, valuePath));
+                    onChange(
+                      elementId,
+                      setValueAtPath(values, newValue, valuePath)
+                    );
                   } catch (err) {
                     console.warn(`Not a valid JSON value: ${item}`);
                     return;
@@ -82,7 +94,7 @@ export function ValueInputTree({ id, values, onChange }: Props) {
       onTreeExpansionChange={setTreeExpansion}
     />
   );
-}
+});
 
 function getValuePath(valueKey: string, parentKeys: string[]) {
   return [...parentKeys.map(p => `${p}.values`), valueKey].join('.');
@@ -95,6 +107,11 @@ function setValueAtPath(
 ) {
   // Inspired by https://github.com/lodash/lodash/issues/1696#issuecomment-328335502
   return setWith(clone(values), valuePath, newValue, clone);
+}
+
+function createStringId(elementId: FixtureElementId) {
+  const { decoratorId, elPath } = elementId;
+  return elPath ? `${decoratorId}-${elPath}` : decoratorId;
 }
 
 const RowContainer = styled.div`
