@@ -40,12 +40,12 @@ export function Layout({
   if (fullScreen) {
     return (
       <Container>
-        <Center key="center" zIndex={1}>
+        <Center key="center" style={{ zIndex: 1 }}>
           <Preview />
         </Center>
-        <Layer zIndex={2}>
+        <div style={{ zIndex: 2 }}>
           <ArraySlot name="global" />
-        </Layer>
+        </div>
       </Container>
     );
   }
@@ -54,26 +54,26 @@ export function Layout({
   // z-indexes are set here on purpose to show the layer hierarchy at a glance
   return (
     <Container dragging={dragging}>
-      <NavContainer width={navWidth} zIndex={2}>
+      <NavContainer style={{ width: navWidth, zIndex: 2 }}>
         <Slot name="nav" />
         {navDrag.dragging && <DragOverlay />}
         <NavDragHandle ref={navDrag.dragElRef} />
       </NavContainer>
-      <Center key="center" zIndex={1}>
+      <Center key="center" style={{ zIndex: 1 }}>
         <Slot name="rendererHeader" />
         <Preview />
         {dragging && <DragOverlay />}
       </Center>
       {panelOpen && (
-        <PanelContainer width={panelWidth} zIndex={3}>
+        <PanelContainer style={{ width: panelWidth, zIndex: 3 }}>
           <Slot name="panel" />
           {panelDrag.dragging && <DragOverlay />}
           <PanelDragHandle ref={panelDrag.dragElRef} />
         </PanelContainer>
       )}
-      <Layer zIndex={4}>
+      <div style={{ zIndex: 4 }}>
         <ArraySlot name="global" />
-      </Layer>
+      </div>
     </Container>
   );
 }
@@ -98,14 +98,9 @@ const Container = styled.div<{ dragging?: boolean }>`
   cursor: ${props => (props.dragging ? 'col-resize' : 'default')};
 `;
 
-const Layer = styled.div<{ zIndex: number }>`
-  z-index: ${props => props.zIndex};
-`;
-
-const Draggable = styled(Layer)<{ width: number }>`
+const Draggable = styled.div`
   flex-shrink: 0;
   position: relative;
-  width: ${props => props.width}px;
 `;
 
 const NavContainer = styled(Draggable)`
@@ -116,7 +111,7 @@ const PanelContainer = styled(Draggable)`
   background: var(--grey2);
 `;
 
-const Center = styled(Layer)`
+const Center = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
