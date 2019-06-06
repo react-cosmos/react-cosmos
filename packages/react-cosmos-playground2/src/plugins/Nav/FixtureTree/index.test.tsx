@@ -5,7 +5,7 @@ import {
   waitForElement,
   wait,
   fireEvent
-} from 'react-testing-library';
+} from '@testing-library/react';
 import { FixtureTree } from '.';
 
 afterEach(cleanup);

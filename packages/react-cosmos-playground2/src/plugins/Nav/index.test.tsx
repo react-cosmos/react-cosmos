@@ -1,6 +1,6 @@
 import React from 'react';
 import retry from '@skidding/async-retry';
-import { render, waitForElement, fireEvent } from 'react-testing-library';
+import { render, waitForElement, fireEvent } from '@testing-library/react';
 import { Slot, loadPlugins } from 'react-plugin';
 import { cleanup } from '../../testHelpers/plugin';
 import {

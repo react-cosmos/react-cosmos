@@ -5,7 +5,7 @@ import {
   waitForElement,
   fireEvent,
   RenderResult
-} from 'react-testing-library';
+} from '@testing-library/react';
 import { loadPlugins, Slot, ArraySlot } from 'react-plugin';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { cleanup } from '../../../testHelpers/plugin';

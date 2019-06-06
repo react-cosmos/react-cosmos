@@ -1,6 +1,6 @@
 import React from 'react';
 import { loadPlugins, ArraySlot } from 'react-plugin';
-import { render, fireEvent } from 'react-testing-library';
+import { render, fireEvent } from '@testing-library/react';
 import { register } from '.';
 import { cleanup } from '../../testHelpers/plugin';
 import { mockCore, mockRouter } from '../../testHelpers/pluginMocks';

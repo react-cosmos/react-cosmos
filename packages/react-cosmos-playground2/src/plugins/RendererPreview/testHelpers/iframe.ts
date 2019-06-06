@@ -1,4 +1,4 @@
-import { RenderResult } from 'react-testing-library';
+import { RenderResult } from '@testing-library/react';
 
 export async function mockIframeMessage(
   iframe: HTMLIFrameElement,

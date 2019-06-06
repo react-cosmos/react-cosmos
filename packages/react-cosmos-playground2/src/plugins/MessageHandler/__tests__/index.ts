@@ -1,4 +1,4 @@
-import { wait } from 'react-testing-library';
+import { wait } from '@testing-library/react';
 import { loadPlugins } from 'react-plugin';
 import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
 import {

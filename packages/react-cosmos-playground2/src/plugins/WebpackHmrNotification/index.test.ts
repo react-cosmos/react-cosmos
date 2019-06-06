@@ -1,4 +1,4 @@
-import { wait } from 'react-testing-library';
+import { wait } from '@testing-library/react';
 import { loadPlugins } from 'react-plugin';
 import { cleanup } from '../../testHelpers/plugin';
 import {

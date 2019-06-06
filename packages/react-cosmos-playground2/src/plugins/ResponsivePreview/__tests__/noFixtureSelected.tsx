@@ -4,7 +4,7 @@ import {
   waitForElement,
   RenderResult,
   wait
-} from 'react-testing-library';
+} from '@testing-library/react';
 import { loadPlugins, Slot, ArraySlot } from 'react-plugin';
 import { cleanup } from '../../../testHelpers/plugin';
 import { register } from '..';
