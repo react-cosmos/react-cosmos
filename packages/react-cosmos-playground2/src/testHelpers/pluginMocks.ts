@@ -127,6 +127,7 @@ export function mockLayout(methods: MethodsOf<LayoutSpec> = {}) {
     ...methods
   };
   mockMethodsOf<LayoutSpec>('layout', allMethods);
+  return allMethods;
 }
 
 export function mockRendererPreview(
