@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, waitForElement } from 'react-testing-library';
+import { render, fireEvent } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
 import { cleanup, mockPlug } from '../../../testHelpers/plugin';
 import { mockRouter, mockRendererCore } from '../../../testHelpers/pluginMocks';
@@ -60,12 +60,12 @@ it('renders renderer actions', async () => {
   registerTestPlugins();
   mockRendererAction();
   const { getByText } = loadTestPlugins();
-  await waitForElement(() => getByText(RENDERER_ACTION));
+  getByText(RENDERER_ACTION);
 });
 
 it('renders fixture actions', async () => {
   registerTestPlugins();
   mockFixtureAction();
   const { getByText } = loadTestPlugins();
-  await waitForElement(() => getByText(FIXTURE_ACTION));
+  getByText(FIXTURE_ACTION);
 });

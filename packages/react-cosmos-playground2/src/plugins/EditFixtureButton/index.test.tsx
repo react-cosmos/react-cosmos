@@ -1,13 +1,8 @@
 import React from 'react';
 import { loadPlugins, ArraySlot } from 'react-plugin';
-import {
-  render,
-  waitForElement,
-  fireEvent,
-  RenderResult
-} from 'react-testing-library';
+import { render, fireEvent } from 'react-testing-library';
 import { register } from '.';
-import { cleanup, mockPlug } from '../../testHelpers/plugin';
+import { cleanup } from '../../testHelpers/plugin';
 import { mockCore, mockRouter } from '../../testHelpers/pluginMocks';
 import { mockFetch } from './testHelpers';
 
@@ -19,50 +14,43 @@ function mockSelectedFixtureId() {
   });
 }
 
-function mockFixtureAction() {
-  mockPlug('fixtureActions', () => <>fooAction</>);
-}
-
-function waitForMockFixtureAction({ getByText }: RenderResult) {
-  return waitForElement(() => getByText('fooAction'));
-}
-
 async function loadTestPlugins() {
-  mockSelectedFixtureId();
-  mockFixtureAction();
-  register();
   loadPlugins();
-  const renderer = render(<ArraySlot name="fixtureActions" />);
-  await waitForMockFixtureAction(renderer);
-  return renderer;
+  return render(<ArraySlot name="fixtureActions" />);
 }
 
 it(`doesn't render button when dev server is off`, async () => {
+  register();
+  mockSelectedFixtureId();
   mockCore({
     isDevServerOn: () => false
   });
+
   const { queryByTitle } = await loadTestPlugins();
   expect(queryByTitle(/open fixture source/i)).toBeNull();
 });
 
 it('renders button', async () => {
+  register();
+  mockSelectedFixtureId();
   mockCore({
     isDevServerOn: () => true
   });
+
   const { getByTitle } = await loadTestPlugins();
-  await waitForElement(() => getByTitle(/open fixture source/i));
+  getByTitle(/open fixture source/i);
 });
 
 it('calls server endpoint on button click', async () => {
   await mockFetch(async fetchMock => {
+    register();
+    mockSelectedFixtureId();
     mockCore({
       isDevServerOn: () => true
     });
-    const { getByTitle } = await loadTestPlugins();
 
-    const editBtn = await waitForElement(() =>
-      getByTitle(/open fixture source/i)
-    );
+    const { getByTitle } = await loadTestPlugins();
+    const editBtn = getByTitle(/open fixture source/i);
     fireEvent.click(editBtn);
 
     const openFileUrl = '/_open?filePath=foo.js';

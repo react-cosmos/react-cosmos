@@ -88,7 +88,9 @@ function Preview() {
   );
 }
 
-const Container = styled.div<{ dragging?: boolean }>`
+const Container = styled.div.attrs({ 'data-testid': 'layout' })<{
+  dragging?: boolean;
+}>`
   position: absolute;
   top: 0;
   bottom: 0;
