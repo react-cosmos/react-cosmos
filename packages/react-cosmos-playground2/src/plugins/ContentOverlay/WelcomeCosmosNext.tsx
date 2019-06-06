@@ -1,20 +1,26 @@
-import * as React from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { AstronautIllustration } from '../../shared/illustrations';
-import { IllustrationContainer, Unbreakable } from './shared';
+import {
+  ContentContainer,
+  TextContainer,
+  IllustrationContainer,
+  NoWrap
+} from './shared';
 
 export function WelcomeCosmosNext() {
   return (
-    <Container>
-      <Content>
+    <ContentContainer>
+      <TextContainer>
         <Header>
-          Welcome to <Unbreakable>Cosmos Next</Unbreakable>
+          Welcome to <NoWrap>Cosmos Next</NoWrap>
         </Header>
         <List>
           <li>
             <Bullet />
             <span>
-              New to Cosmos or a long time user, make sure to{' '}
+              New to Cosmos or a long time user, make sure to
+              <br />
               <Link
                 href="https://github.com/react-cosmos/react-cosmos/blob/master/NEXT.md"
                 rel="noopener noreferrer"
@@ -28,8 +34,8 @@ export function WelcomeCosmosNext() {
           <li>
             <Bullet />
             <span>
-              The Cosmos Next platform is still early days, but with your help
-              it will become <em>the</em> dev platform for UI developers!
+              {`It's`} still early days, but with your help Cosmos Next will
+              become <em>the</em> dev platform for React developers!
             </span>
           </li>
         </List>
@@ -43,32 +49,13 @@ export function WelcomeCosmosNext() {
           </ActionLink>
         </Paragraph>
         <Footnote>PS. The stable version isn’t going anywhere</Footnote>
-      </Content>
+      </TextContainer>
       <IllustrationContainer>
         <AstronautIllustration title="astronaut" />
       </IllustrationContainer>
-    </Container>
+    </ContentContainer>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Content = styled.div`
-  max-width: 512px;
-  padding: 0 32px;
-  font-size: 16px;
-  line-height: 1.5em;
-  color: var(--grey1);
-
-  strong {
-    font-weight: 500;
-  }
-`;
 
 const Header = styled.h1`
   position: relative;

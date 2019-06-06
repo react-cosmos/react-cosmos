@@ -8,25 +8,25 @@ const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
 runFixtureLoaderTests(mount => {
-  it('fires change callback when selecting fixture', async () => {
-    const onFixtureChange = jest.fn();
+  it('fires error reset callback when selecting fixture', async () => {
+    const onErrorReset = jest.fn();
     await mount(
-      { rendererId, fixtures, decorators, onFixtureChange },
+      { rendererId, fixtures, decorators, onErrorReset },
       async ({ selectFixture }) => {
         await selectFixture({
           rendererId,
           fixtureId,
           fixtureState: {}
         });
-        await retry(() => expect(onFixtureChange).toBeCalledTimes(1));
+        await retry(() => expect(onErrorReset).toBeCalledTimes(1));
       }
     );
   });
 
-  it('fires change callback when unselecting fixture', async () => {
-    const onFixtureChange = jest.fn();
+  it('fires error reset callback when unselecting fixture', async () => {
+    const onErrorReset = jest.fn();
     await mount(
-      { rendererId, fixtures, decorators, onFixtureChange },
+      { rendererId, fixtures, decorators, onErrorReset },
       async ({ selectFixture, unselectFixture }) => {
         await selectFixture({
           rendererId,
@@ -34,7 +34,7 @@ runFixtureLoaderTests(mount => {
           fixtureState: {}
         });
         await unselectFixture({ rendererId });
-        await retry(() => expect(onFixtureChange).toBeCalledTimes(2));
+        await retry(() => expect(onErrorReset).toBeCalledTimes(2));
       }
     );
   });

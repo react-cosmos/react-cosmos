@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { render, fireEvent } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
 import { cleanup } from '../../../testHelpers/plugin';
@@ -26,8 +26,8 @@ it('renders fullscreen button', async () => {
     getSelectedFixtureId: () => ({ path: 'foo', name: null })
   });
 
-  const { getByText } = loadTestPlugins();
-  fireEvent.click(getByText(/fullscreen/i));
+  const { getByTitle } = loadTestPlugins();
+  fireEvent.click(getByTitle(/go fullscreen/i));
 
   expect(selectFixture).toBeCalledWith(
     expect.any(Object),

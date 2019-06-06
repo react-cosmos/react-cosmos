@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { Button } from '../../shared/ui';
+import { IconButton } from '../../shared/ui';
 import { MaximizeIcon } from '../../shared/icons';
 
 type Props = {
@@ -15,13 +15,15 @@ export function FullScreenButton({
   validFixtureSelected
 }: Props) {
   if (!selectedFixtureId || !validFixtureSelected) {
-    return <Button disabled icon={<MaximizeIcon />} label="fullscreen" />;
+    return (
+      <IconButton disabled icon={<MaximizeIcon />} title="Go fullscreen" />
+    );
   }
 
   return (
-    <Button
+    <IconButton
       icon={<MaximizeIcon />}
-      label="fullscreen"
+      title="Go fullscreen"
       onClick={() => selectFixture(selectedFixtureId, true)}
     />
   );

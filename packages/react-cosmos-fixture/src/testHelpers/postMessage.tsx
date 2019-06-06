@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { create, act } from 'react-test-renderer';
 import { FixtureLoader, createPostMessageConnect } from '..';
 import {
@@ -54,7 +54,7 @@ function getElement({
   rendererId,
   fixtures,
   decorators,
-  onFixtureChange
+  onErrorReset
 }: MountFixtureLoaderArgs) {
   return (
     <FixtureLoader
@@ -63,7 +63,7 @@ function getElement({
       fixtures={fixtures}
       systemDecorators={[]}
       userDecorators={decorators}
-      onFixtureChange={onFixtureChange}
+      onErrorReset={onErrorReset}
     />
   );
 }

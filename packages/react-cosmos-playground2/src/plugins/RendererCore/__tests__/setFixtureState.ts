@@ -1,7 +1,7 @@
 import { wait } from 'react-testing-library';
 import { loadPlugins } from 'react-plugin';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import { cleanup, getMethodsOf } from '../../../testHelpers/plugin';
+import { cleanup } from '../../../testHelpers/plugin';
 import {
   getRendererCoreMethods,
   mockNotifications,
@@ -9,7 +9,6 @@ import {
   onRendererCore
 } from '../../../testHelpers/pluginMocks';
 import { mockRendererReady, mockFixtureStateChange } from '../testHelpers';
-import { RendererCoreSpec } from '../public';
 import { register } from '..';
 
 afterEach(cleanup);
@@ -42,7 +41,7 @@ function loadTestPlugins() {
 }
 
 function mockSetFixtureStateCall() {
-  const methods = getMethodsOf<RendererCoreSpec>('rendererCore');
+  const methods = getRendererCoreMethods();
   methods.setFixtureState((prevState: FixtureState) => ({
     ...prevState,
     viewport: { width: 640, height: 480 }

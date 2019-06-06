@@ -16,57 +16,51 @@ type Props = {
 };
 
 export function PropsPanel({ fixtureState, setFixtureState }: Props) {
+  const onValueChange = React.useCallback(
+    (elementId: FixtureElementId, values: FixtureStateValues) => {
+      setFixtureState(prevFs => {
+        const fsProps = findFixtureStateProps(prevFs, elementId);
+        if (!fsProps) {
+          console.warn(`Element id ${elementId} no longer exists`);
+          return prevFs;
+        }
+
+        return {
+          ...prevFs,
+          // TOOD: Or resetFixtureStateProps
+          props: updateFixtureStateProps({
+            fixtureState: prevFs,
+            elementId,
+            values
+          })
+        };
+      });
+    },
+    [setFixtureState]
+  );
+
   if (!fixtureState.props) {
     return null;
   }
 
   return (
     <Container>
-      {fixtureState.props.map(({ elementId, componentName, values }) => {
-        const { decoratorId, elPath } = elementId;
-        const id = elPath ? `${decoratorId}-${elPath}` : decoratorId;
+      {fixtureState.props.map(({ elementId, componentName, values }, idx) => {
         return (
-          <React.Fragment key={id}>
+          <React.Fragment key={idx}>
             <div>
               <strong>PROPS</strong> ({componentName})
             </div>
             <ValueInputTree
-              id={id}
+              elementId={elementId}
               values={values}
-              onChange={createPropValueChangeHandler(
-                setFixtureState,
-                elementId
-              )}
+              onChange={onValueChange}
             />
           </React.Fragment>
         );
       })}
     </Container>
   );
-}
-
-function createPropValueChangeHandler(
-  setFixtureState: (stateUpdater: StateUpdater<FixtureState>) => void,
-  elementId: FixtureElementId
-) {
-  return (values: FixtureStateValues) => {
-    setFixtureState(prevFs => {
-      const fsProps = findFixtureStateProps(prevFs, elementId);
-      if (!fsProps) {
-        console.warn(`Element id ${elementId} no longer exists`);
-        return prevFs;
-      }
-
-      return {
-        ...prevFs,
-        props: updateFixtureStateProps({
-          fixtureState: prevFs,
-          elementId,
-          values
-        })
-      };
-    });
-  };
 }
 
 const Container = styled.div`

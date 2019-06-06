@@ -5,21 +5,22 @@ import { resetPlugins, enablePlugin } from 'react-plugin';
 resetPlugins();
 
 // TODO: Discover plugins in codebase automatically
-// TODO: Sort alphabetically after SlotArrays support user sorting
+// TODO: Sort alphabetically after SlotArray supports user sorting
 require('../plugins/Storage').register();
 require('../plugins/Core').register();
 require('../plugins/MessageHandler').register();
-require('../plugins/Notifications').register();
 require('../plugins/Router').register();
+require('../plugins/Notifications').register();
 require('../plugins/RendererCore').register();
+require('../plugins/Layout').register();
 require('../plugins/RendererHeader').register();
 require('../plugins/RendererPreview').register();
 require('../plugins/Nav').register();
 require('../plugins/ContentOverlay').register();
 require('../plugins/EditFixtureButton').register();
 require('../plugins/RendererRemote').register();
-require('../plugins/ResponsivePreview').register();
 require('../plugins/FullScreenButton').register();
+require('../plugins/ResponsivePreview').register();
 require('../plugins/ControlPanel').register();
 require('../plugins/PropsPanel').register();
 require('../plugins/ClassStatePanel').register();
@@ -29,7 +30,6 @@ require('../plugins/BuildNotifications').register();
 require('../plugins/WebpackHmrNotification').register();
 
 // TODO: Read list of disabled plugins from user config
-enablePlugin('controlPanel', false);
 enablePlugin('propsPanel', false);
 enablePlugin('classStatePanel', false);
 enablePlugin('rendererSelect', false);

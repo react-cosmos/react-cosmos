@@ -25,7 +25,7 @@ export type MountFixtureLoaderArgs = {
   rendererId: RendererId;
   fixtures: ReactFixturesByPath;
   decorators: ReactDecoratorsByPath;
-  onFixtureChange?: () => unknown;
+  onErrorReset?: () => unknown;
 };
 
 export type RendererConnectMockApi = {

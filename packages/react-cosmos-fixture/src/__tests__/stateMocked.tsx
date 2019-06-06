@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import delay from 'delay';
 import until from 'async-until';
 import retry from '@skidding/async-retry';

@@ -1,6 +1,7 @@
 export {
   ReactFixtureMap,
   ReactFixtureExport,
+  ReactDecoratorProps,
   ReactDecorator,
   ReactFixturesByPath,
   ReactDecoratorsByPath

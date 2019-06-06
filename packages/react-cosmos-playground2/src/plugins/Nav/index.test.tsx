@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import retry from '@skidding/async-retry';
 import { render, waitForElement, fireEvent } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
@@ -32,7 +32,7 @@ function registerTestPlugins() {
 
 async function loadTestPlugins() {
   loadPlugins();
-  const renderer = render(<Slot name="left">replace me</Slot>);
+  const renderer = render(<Slot name="nav">replace me</Slot>);
   await retry(() => expect(renderer.queryByText('replace me')).toBeNull());
   return renderer;
 }

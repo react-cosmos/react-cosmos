@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 export function HelloMessage({ name }: { name?: string }) {
   return <>{`Hello ${name || 'Stranger'}`}</>;

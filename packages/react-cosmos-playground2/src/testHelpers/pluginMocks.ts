@@ -9,11 +9,12 @@ import { RouterSpec } from '../plugins/Router/public';
 import { CoreSpec } from '../plugins/Core/public';
 import { MessageHandlerSpec } from '../plugins/MessageHandler/public';
 import { RendererCoreSpec } from '../plugins/RendererCore/public';
+import { LayoutSpec } from '../plugins/Layout/public';
 import { NotificationsSpec } from '../plugins/Notifications/public';
 import { RendererPreviewSpec } from '../plugins/RendererPreview/public';
 import { getMethodsOf, mockMethodsOf, on } from './plugin';
 
-type PartOf<Spec extends PluginSpec> = Partial<MethodHandlers<Spec>>;
+type MethodsOf<Spec extends PluginSpec> = Partial<MethodHandlers<Spec>>;
 type EventsOf<Spec extends PluginSpec> = EventHandlers<any, Spec>;
 
 export function getRouterContext() {
@@ -36,8 +37,16 @@ export function getMessageHandlerMethods() {
   return getMethodsOf<MessageHandlerSpec>('messageHandler');
 }
 
+export function getCoreMethods() {
+  return getMethodsOf<CoreSpec>('core');
+}
+
 export function getRendererCoreMethods() {
   return getMethodsOf<RendererCoreSpec>('rendererCore');
+}
+
+export function getLayoutMethods() {
+  return getMethodsOf<LayoutSpec>('layout');
 }
 
 export function getNotificationsMethods() {
@@ -48,7 +57,7 @@ export function getRendererPreviewMethods() {
   return getMethodsOf<RendererPreviewSpec>('rendererPreview');
 }
 
-export function mockStorage(methods: PartOf<StorageSpec> = {}) {
+export function mockStorage(methods: MethodsOf<StorageSpec> = {}) {
   const allMethods = {
     loadCache: jest.fn(),
     getItem: jest.fn(),
@@ -59,7 +68,7 @@ export function mockStorage(methods: PartOf<StorageSpec> = {}) {
   return allMethods;
 }
 
-export function mockRouter(methods: PartOf<RouterSpec> = {}) {
+export function mockRouter(methods: MethodsOf<RouterSpec> = {}) {
   const allMethods = {
     getSelectedFixtureId: jest.fn(),
     isFullScreen: jest.fn(),
@@ -71,8 +80,9 @@ export function mockRouter(methods: PartOf<RouterSpec> = {}) {
   return allMethods;
 }
 
-export function mockCore(methods: PartOf<CoreSpec> = {}) {
+export function mockCore(methods: MethodsOf<CoreSpec> = {}) {
   const allMethods = {
+    getProjectId: jest.fn(),
     getFixtureFileVars: jest.fn(),
     isDevServerOn: jest.fn(),
     getWebRendererUrl: jest.fn(),
@@ -82,7 +92,9 @@ export function mockCore(methods: PartOf<CoreSpec> = {}) {
   return allMethods;
 }
 
-export function mockMessageHandler(methods: PartOf<MessageHandlerSpec> = {}) {
+export function mockMessageHandler(
+  methods: MethodsOf<MessageHandlerSpec> = {}
+) {
   const allMethods = {
     postRendererRequest: jest.fn(),
     ...methods
@@ -91,7 +103,7 @@ export function mockMessageHandler(methods: PartOf<MessageHandlerSpec> = {}) {
   return allMethods;
 }
 
-export function mockRendererCore(methods: PartOf<RendererCoreSpec> = {}) {
+export function mockRendererCore(methods: MethodsOf<RendererCoreSpec> = {}) {
   const allMethods = {
     getConnectedRendererIds: jest.fn(),
     getPrimaryRendererId: jest.fn(),
@@ -108,7 +120,19 @@ export function mockRendererCore(methods: PartOf<RendererCoreSpec> = {}) {
   return allMethods;
 }
 
-export function mockRendererPreview(methods: PartOf<RendererPreviewSpec> = {}) {
+export function mockLayout(methods: MethodsOf<LayoutSpec> = {}) {
+  const allMethods = {
+    isPanelOpen: jest.fn(),
+    openPanel: jest.fn(),
+    ...methods
+  };
+  mockMethodsOf<LayoutSpec>('layout', allMethods);
+  return allMethods;
+}
+
+export function mockRendererPreview(
+  methods: MethodsOf<RendererPreviewSpec> = {}
+) {
   const allMethods = {
     getUrlStatus: jest.fn(),
     getRuntimeStatus: jest.fn(),
@@ -118,7 +142,7 @@ export function mockRendererPreview(methods: PartOf<RendererPreviewSpec> = {}) {
   return allMethods;
 }
 
-export function mockNotifications(methods: PartOf<NotificationsSpec> = {}) {
+export function mockNotifications(methods: MethodsOf<NotificationsSpec> = {}) {
   const allMethods = {
     pushStickyNotification: jest.fn(),
     removeStickyNotification: jest.fn(),

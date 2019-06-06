@@ -4,14 +4,16 @@ export {
   FixtureElementId,
   FixtureStateUnserializableValue,
   FixtureStatePrimitiveValue,
-  FixtureStateCompositeValue,
+  FixtureStateObjectValue,
+  FixtureStateArrayValue,
   FixtureStateValue,
   FixtureStateValues,
-  FixtureState,
   FixtureStateProps,
-  FixtureStateClassState
+  FixtureStateClassState,
+  FixtureState,
+  SetFixtureState
 } from './shared';
-export { createValues } from './createValues';
+export { createValues, createValue } from './createValues';
 export { extendWithValues } from './extendWithValues';
 export {
   DEFAULT_RENDER_KEY,

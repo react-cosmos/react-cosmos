@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { render } from 'react-dom';
 import { FixtureLoader } from 'react-cosmos-fixture';
 import {
@@ -19,7 +19,7 @@ type MountDomRendererOpts = {
   rendererConfig: DomRendererConfig;
   fixtures: ReactFixturesByPath;
   decorators: ReactDecoratorsByPath;
-  onFixtureChange?: () => unknown;
+  onErrorReset?: () => unknown;
 };
 
 export { rendererId, rendererConnect };
@@ -28,7 +28,7 @@ export function mountDomRenderer({
   rendererConfig,
   fixtures,
   decorators,
-  onFixtureChange
+  onErrorReset
 }: MountDomRendererOpts) {
   render(
     <FixtureLoader
@@ -37,7 +37,7 @@ export function mountDomRenderer({
       fixtures={fixtures}
       systemDecorators={[ErrorCatch]}
       userDecorators={decorators}
-      onFixtureChange={onFixtureChange}
+      onErrorReset={onErrorReset}
     />,
     getDomContainer(rendererConfig.containerQuerySelector)
   );

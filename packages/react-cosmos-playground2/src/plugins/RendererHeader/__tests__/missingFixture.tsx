@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { render, fireEvent, waitForElement } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
 import { cleanup } from '../../../testHelpers/plugin';
@@ -32,7 +32,7 @@ it('renders missing state message', async () => {
 
 it('renders home button', async () => {
   const { unselectFixture } = registerTestPlugins();
-  const { getByText } = loadTestPlugins();
-  fireEvent.click(getByText(/home/));
+  const { getByTitle } = loadTestPlugins();
+  fireEvent.click(getByTitle(/go home/i));
   expect(unselectFixture).toBeCalledWith(expect.any(Object));
 });

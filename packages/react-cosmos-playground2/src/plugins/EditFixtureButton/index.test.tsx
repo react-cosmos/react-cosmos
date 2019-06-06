@@ -1,13 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import { loadPlugins, ArraySlot } from 'react-plugin';
-import {
-  render,
-  waitForElement,
-  fireEvent,
-  RenderResult
-} from 'react-testing-library';
+import { render, fireEvent } from 'react-testing-library';
 import { register } from '.';
-import { cleanup, mockPlug } from '../../testHelpers/plugin';
+import { cleanup } from '../../testHelpers/plugin';
 import { mockCore, mockRouter } from '../../testHelpers/pluginMocks';
 import { mockFetch } from './testHelpers';
 
@@ -19,48 +14,43 @@ function mockSelectedFixtureId() {
   });
 }
 
-function mockFixtureAction() {
-  mockPlug('fixtureActions', () => <>fooAction</>);
-}
-
-function waitForMockFixtureAction({ getByText }: RenderResult) {
-  return waitForElement(() => getByText('fooAction'));
-}
-
 async function loadTestPlugins() {
-  mockSelectedFixtureId();
-  mockFixtureAction();
-  register();
   loadPlugins();
-  const renderer = render(<ArraySlot name="fixtureActions" />);
-  await waitForMockFixtureAction(renderer);
-  return renderer;
+  return render(<ArraySlot name="fixtureActions" />);
 }
 
 it(`doesn't render button when dev server is off`, async () => {
+  register();
+  mockSelectedFixtureId();
   mockCore({
     isDevServerOn: () => false
   });
-  const { queryByText } = await loadTestPlugins();
-  expect(queryByText(/edit/i)).toBeNull();
+
+  const { queryByTitle } = await loadTestPlugins();
+  expect(queryByTitle(/open fixture source/i)).toBeNull();
 });
 
 it('renders button', async () => {
+  register();
+  mockSelectedFixtureId();
   mockCore({
     isDevServerOn: () => true
   });
-  const { getByText } = await loadTestPlugins();
-  await waitForElement(() => getByText(/edit/i));
+
+  const { getByTitle } = await loadTestPlugins();
+  getByTitle(/open fixture source/i);
 });
 
 it('calls server endpoint on button click', async () => {
   await mockFetch(async fetchMock => {
+    register();
+    mockSelectedFixtureId();
     mockCore({
       isDevServerOn: () => true
     });
-    const { getByText } = await loadTestPlugins();
 
-    const editBtn = await waitForElement(() => getByText(/edit/i));
+    const { getByTitle } = await loadTestPlugins();
+    const editBtn = getByTitle(/open fixture source/i);
     fireEvent.click(editBtn);
 
     const openFileUrl = '/_open?filePath=foo.js';

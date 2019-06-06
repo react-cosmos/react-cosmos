@@ -1,15 +1,12 @@
-import * as React from 'react';
-import { areNodesEqual } from 'react-cosmos-shared2/react';
-
-type Props = {
-  children: React.ReactNode;
-};
+import React from 'react';
+import { isEqual } from 'lodash';
+import { ReactDecoratorProps, areNodesEqual } from 'react-cosmos-shared2/react';
 
 type State = {
   error: null | string;
 };
 
-export class ErrorCatch extends React.Component<Props, State> {
+export class ErrorCatch extends React.Component<ReactDecoratorProps, State> {
   state: State = {
     error: null
   };
@@ -20,17 +17,18 @@ export class ErrorCatch extends React.Component<Props, State> {
     });
   }
 
-  componentDidUpdate(prevProps: Props) {
-    // A change in children signifies that the problem that caused the current
-    // error might've been solved. If the error persists, it will organically
-    // trigger the error state again in the next update
+  componentDidUpdate(prevProps: ReactDecoratorProps) {
+    // A change in fixture (children) or fixture state signifies that the
+    // problem that caused the current error might've been solved. If the error
+    // persists, it will organically trigger the error state again in the next
+    // update
     if (
       this.state.error &&
-      !areNodesEqual(this.props.children, prevProps.children)
+      (fixtureChanged(this.props.children, prevProps.children) ||
+        fixtureStateChanged(this.props.fixtureState, prevProps.fixtureState))
     ) {
-      this.setState({
-        error: null
-      });
+      this.setState({ error: null });
+      this.props.onErrorReset();
     }
   }
 
@@ -54,4 +52,12 @@ export class ErrorCatch extends React.Component<Props, State> {
       </>
     );
   }
+}
+
+function fixtureChanged(f1: React.ReactNode, f2: React.ReactNode) {
+  return !areNodesEqual(f1, f2);
+}
+
+function fixtureStateChanged(fS1: React.ReactNode, fS2: React.ReactNode) {
+  return !isEqual(fS1, fS2);
 }

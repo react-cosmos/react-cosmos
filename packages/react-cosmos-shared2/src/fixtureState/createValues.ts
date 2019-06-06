@@ -10,12 +10,12 @@ export function createValues(obj: KeyValue): FixtureStateValues {
     // often `undefined` if element has no children)
     .filter(key => obj[key] !== undefined)
     .forEach(key => {
-      values[key] = createValue(key, obj[key]);
+      values[key] = createValue(obj[key]);
     });
   return values;
 }
 
-function createValue(key: string, value: unknown): FixtureStateValue {
+export function createValue(value: unknown): FixtureStateValue {
   if (
     typeof value === 'string' ||
     typeof value === 'number' ||
@@ -23,6 +23,13 @@ function createValue(key: string, value: unknown): FixtureStateValue {
     value === null
   ) {
     return { type: 'primitive', value };
+  }
+
+  if (Array.isArray(value)) {
+    return {
+      type: 'array',
+      values: (value as unknown[]).map(v => createValue(v))
+    };
   }
 
   if (!isSerializableObject(value)) {
@@ -39,7 +46,7 @@ function createValue(key: string, value: unknown): FixtureStateValue {
   }
 
   return {
-    type: 'composite',
+    type: 'object',
     values: createValues(value)
   };
 }

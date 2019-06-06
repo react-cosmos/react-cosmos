@@ -2,48 +2,46 @@ import React from 'react';
 import { Slot, ArraySlot } from 'react-plugin';
 import styled from 'styled-components';
 import { useDrag } from '../../shared/ui';
-import { NAV_WIDTH_DEFAULT, restrictNavWidth } from './shared';
 
 type Props = {
   storageCacheReady: boolean;
   fullScreen: boolean;
+  panelOpen: boolean;
   navWidth: number;
+  panelWidth: number;
   setNavWidth: (width: number) => unknown;
+  setPanelWidth: (width: number) => unknown;
 };
 
-// TODO: Create slot inside previewContainer for notifications
 export function Layout({
   storageCacheReady,
   fullScreen,
+  panelOpen,
   navWidth,
-  setNavWidth
+  panelWidth,
+  setNavWidth,
+  setPanelWidth
 }: Props) {
-  const handleNavWidthChange = React.useCallback(
-    (newWidth: number) => setNavWidth(restrictNavWidth(newWidth)),
-    [setNavWidth]
-  );
-  const { dragElRef, dragging } = useDrag({
+  const navDrag = useDrag({
     value: navWidth,
-    onChange: handleNavWidthChange
+    reverse: false,
+    onChange: setNavWidth
+  });
+  const panelDrag = useDrag({
+    value: panelWidth,
+    reverse: true,
+    onChange: setPanelWidth
   });
 
   if (!storageCacheReady) {
     return <Container />;
   }
 
-  const previewContainer = (
-    <PreviewContainer key="previewContainer">
-      <Slot name="rendererPreview" />
-      <Slot name="contentOverlay" />
-      <ArraySlot name="previewGlobal" />
-    </PreviewContainer>
-  );
-
   if (fullScreen) {
     return (
       <Container>
         <Center key="center" style={{ zIndex: 1 }}>
-          {previewContainer}
+          <Preview />
         </Center>
         <div style={{ zIndex: 2 }}>
           <ArraySlot name="global" />
@@ -52,22 +50,27 @@ export function Layout({
     );
   }
 
-  // z indexes are set here on purpose to show the layer hierarchy at a glance
+  const dragging = navDrag.dragging || panelDrag.dragging;
+  // z-indexes are set here on purpose to show the layer hierarchy at a glance
   return (
-    <Container draggingNav={dragging}>
-      <Left style={{ zIndex: 2, width: navWidth }}>
-        <Slot name="left" />
-        {dragging && <DragOverlay />}
-        <DragHandle ref={dragElRef} />
-      </Left>
+    <Container dragging={dragging}>
+      <NavContainer style={{ width: navWidth, zIndex: 2 }}>
+        <Slot name="nav" />
+        {navDrag.dragging && <DragOverlay />}
+        <NavDragHandle ref={navDrag.dragElRef} />
+      </NavContainer>
       <Center key="center" style={{ zIndex: 1 }}>
         <Slot name="rendererHeader" />
-        {previewContainer}
+        <Preview />
         {dragging && <DragOverlay />}
       </Center>
-      <div style={{ zIndex: 3 }}>
-        <Slot name="right" />
-      </div>
+      {panelOpen && (
+        <PanelContainer style={{ width: panelWidth, zIndex: 3 }}>
+          <Slot name="panel" />
+          {panelDrag.dragging && <DragOverlay />}
+          <PanelDragHandle ref={panelDrag.dragElRef} />
+        </PanelContainer>
+      )}
       <div style={{ zIndex: 4 }}>
         <ArraySlot name="global" />
       </div>
@@ -75,21 +78,39 @@ export function Layout({
   );
 }
 
-const Container = styled.div<{ draggingNav?: boolean }>`
+function Preview() {
+  return (
+    <PreviewContainer key="previewContainer">
+      <Slot name="rendererPreview" />
+      <Slot name="contentOverlay" />
+      <ArraySlot name="previewGlobal" />
+    </PreviewContainer>
+  );
+}
+
+const Container = styled.div.attrs({ 'data-testid': 'layout' })<{
+  dragging?: boolean;
+}>`
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   display: flex;
-  cursor: ${props => (props.draggingNav ? 'col-resize' : 'default')};
+  cursor: ${props => (props.dragging ? 'col-resize' : 'default')};
 `;
 
-const Left = styled.div`
+const Draggable = styled.div`
   flex-shrink: 0;
   position: relative;
-  width: ${NAV_WIDTH_DEFAULT}px;
+`;
+
+const NavContainer = styled(Draggable)`
   background: var(--grey1);
+`;
+
+const PanelContainer = styled(Draggable)`
+  background: var(--grey2);
 `;
 
 const Center = styled.div`
@@ -112,14 +133,23 @@ const PreviewContainer = styled.div`
 const DragHandle = styled.div`
   position: absolute;
   top: 0;
-  right: -2px;
   width: 2px;
   height: 100%;
-  padding: 0 2px 0 1px;
-  background: rgba(0, 0, 0, 0.5);
   background-clip: content-box;
   cursor: col-resize;
   user-select: none;
+`;
+
+const NavDragHandle = styled(DragHandle)`
+  right: -2px;
+  padding: 0 2px 0 1px;
+  background-color: rgba(0, 0, 0, 0.5);
+`;
+
+const PanelDragHandle = styled(DragHandle)`
+  left: -2px;
+  padding: 0 1px 0 2px;
+  background-color: rgba(0, 0, 0, 0.3);
 `;
 
 // The purpose of DragOverlay is to cover other elements while dragging, such

@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import { loadPlugins, ArraySlot } from 'react-plugin';
-import { render, waitForElement, fireEvent, wait } from 'react-testing-library';
-import { cleanup, mockPlug } from '../../../testHelpers/plugin';
+import { render, fireEvent, wait } from 'react-testing-library';
+import { cleanup } from '../../../testHelpers/plugin';
 import {
   mockCore,
   mockMessageHandler,
@@ -11,8 +11,9 @@ import { register } from '..';
 
 afterEach(cleanup);
 
-function mockRendererAction() {
-  mockPlug('rendererActions', () => <>fooAction</>);
+function lostTestPlugins() {
+  loadPlugins();
+  return render(<ArraySlot name="rendererActions" />);
 }
 
 it(`doesn't render button when web renderer url is empty`, async () => {
@@ -23,15 +24,9 @@ it(`doesn't render button when web renderer url is empty`, async () => {
   });
   mockMessageHandler();
   mockNotifications();
-  mockRendererAction();
 
-  loadPlugins();
-  const { getByText, queryByText } = render(
-    <ArraySlot name="rendererActions" />
-  );
-
-  await waitForElement(() => getByText('fooAction'));
-  expect(queryByText(/remote/i)).toBeNull();
+  const { queryByTitle } = lostTestPlugins();
+  expect(queryByTitle(/copy remote renderer url/i)).toBeNull();
 });
 
 it(`doesn't render button when dev server is off`, async () => {
@@ -42,15 +37,9 @@ it(`doesn't render button when dev server is off`, async () => {
   });
   mockMessageHandler();
   mockNotifications();
-  mockRendererAction();
 
-  loadPlugins();
-  const { getByText, queryByText } = render(
-    <ArraySlot name="rendererActions" />
-  );
-
-  await waitForElement(() => getByText('fooAction'));
-  expect(queryByText(/remote/i)).toBeNull();
+  const { queryByTitle } = lostTestPlugins();
+  expect(queryByTitle(/copy remote renderer url/i)).toBeNull();
 });
 
 it('renders button', async () => {
@@ -63,9 +52,9 @@ it('renders button', async () => {
   mockNotifications();
 
   loadPlugins();
-  const { getByText } = render(<ArraySlot name="rendererActions" />);
+  const { getByTitle } = render(<ArraySlot name="rendererActions" />);
 
-  await waitForElement(() => getByText(/remote/i));
+  getByTitle(/copy remote renderer url/i);
 });
 
 it('notifies copy error on button click', async () => {
@@ -77,13 +66,11 @@ it('notifies copy error on button click', async () => {
   mockMessageHandler();
   const { pushTimedNotification } = mockNotifications();
 
-  loadPlugins();
-  const { getByText } = render(<ArraySlot name="rendererActions" />);
-
-  const button = getByText(/remote/i);
-  fireEvent.click(button);
+  const { getByTitle } = lostTestPlugins();
+  const button = getByTitle(/copy remote renderer url/i);
 
   // Clipboard API isn't available in jsdom so we only test the error path
+  fireEvent.click(button);
   await wait(() =>
     expect(pushTimedNotification).toBeCalledWith(expect.any(Object), {
       id: 'renderer-url-copy',

@@ -1,5 +1,4 @@
-import * as React from 'react';
-import styled from 'styled-components';
+import React from 'react';
 import {
   EmptyIllustration,
   DreamerIllustration
@@ -7,7 +6,12 @@ import {
 import { RendererNotResponding } from './RendererNotResponding';
 import { WelcomeCosmosNext } from './WelcomeCosmosNext';
 import { UrlStatus, RuntimeStatus } from '../RendererPreview/public';
-import { IllustrationContainer } from './shared';
+import {
+  IllustrationContainer,
+  Container,
+  ContentContainer,
+  Delay
+} from './shared';
 
 type Props = {
   fixtureSelected: boolean;
@@ -41,11 +45,13 @@ export function ContentOverlay({
     // states when renderer is already compiled and will respond immediately
     return (
       <Container data-testid="waiting">
-        <IllustrationContainer>
-          <Delay>
-            <DreamerIllustration title="waiting" />
-          </Delay>
-        </IllustrationContainer>
+        <ContentContainer>
+          <IllustrationContainer>
+            <Delay>
+              <DreamerIllustration title="waiting" />
+            </Delay>
+          </IllustrationContainer>
+        </ContentContainer>
       </Container>
     );
   }
@@ -53,9 +59,11 @@ export function ContentOverlay({
   if (fixtureSelected) {
     return (
       <Container data-testid="notFound">
-        <IllustrationContainer>
-          <EmptyIllustration title="not found" />
-        </IllustrationContainer>
+        <ContentContainer>
+          <IllustrationContainer>
+            <EmptyIllustration title="not found" />
+          </IllustrationContainer>
+        </ContentContainer>
       </Container>
     );
   }
@@ -66,30 +74,3 @@ export function ContentOverlay({
     </Container>
   );
 }
-
-const Container = styled.div`
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--grey6);
-`;
-
-const Delay = styled.div`
-  opacity: 0;
-  animation: fadeIn var(--quick) linear 0.5s forwards;
-
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-`;

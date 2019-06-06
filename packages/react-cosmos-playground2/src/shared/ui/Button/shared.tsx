@@ -1,35 +1,11 @@
-import * as React from 'react';
 import styled from 'styled-components';
-
-type Props = {
-  label: React.ReactNode;
-  icon?: React.ReactNode;
-  disabled?: boolean;
-  selected?: boolean;
-  onClick?: () => unknown;
-};
-
-export function Button({
-  icon,
-  label,
-  disabled = false,
-  selected = false,
-  onClick
-}: Props) {
-  return (
-    <StyledButton selected={selected} disabled={disabled} onClick={onClick}>
-      {icon && <Icon>{icon}</Icon>}
-      {label}
-    </StyledButton>
-  );
-}
 
 type StyledButtonProps = {
   selected: boolean;
   disabled: boolean;
 };
 
-const StyledButton = styled.button<StyledButtonProps>`
+export const StyledButton = styled.button<StyledButtonProps>`
   --selected-bg: var(--grey5);
   --hover-bg: hsl(var(--hue-primary), 25%, 95%);
 
@@ -74,10 +50,14 @@ const StyledButton = styled.button<StyledButtonProps>`
   }
 `;
 
-const Icon = styled.span`
+export const Icon = styled.span`
   --size: 16px;
   width: var(--size);
   height: var(--size);
-  padding: 2px 6px 0 0;
+  padding: 2px 0 0 0;
   color: var(--grey3);
+`;
+
+export const Label = styled.span`
+  padding: 0 0 0 6px;
 `;

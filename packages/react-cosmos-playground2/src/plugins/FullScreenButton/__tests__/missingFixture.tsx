@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { render } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
 import { cleanup } from '../../../testHelpers/plugin';
@@ -25,6 +25,6 @@ function loadTestPlugins() {
 
 it('renders disabled fullscreen button', async () => {
   registerTestPlugins();
-  const { getByText } = loadTestPlugins();
-  expect(getByText(/fullscreen/i)).toHaveAttribute('disabled');
+  const { getByTitle } = loadTestPlugins();
+  expect(getByTitle(/go fullscreen/i)).toHaveAttribute('disabled');
 });

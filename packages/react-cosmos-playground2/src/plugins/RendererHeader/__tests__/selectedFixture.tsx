@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { render, fireEvent, waitForElement } from 'react-testing-library';
+import React from 'react';
+import { render, fireEvent } from 'react-testing-library';
 import { Slot, loadPlugins } from 'react-plugin';
 import { cleanup, mockPlug } from '../../../testHelpers/plugin';
 import { mockRouter, mockRendererCore } from '../../../testHelpers/pluginMocks';
@@ -37,8 +37,8 @@ function mockFixtureAction() {
 it('renders close button', async () => {
   const { unselectFixture } = registerTestPlugins();
 
-  const { getByText } = loadTestPlugins();
-  fireEvent.click(getByText(/close/));
+  const { getByTitle } = loadTestPlugins();
+  fireEvent.click(getByTitle(/close fixture/i));
 
   expect(unselectFixture).toBeCalled();
 });
@@ -46,8 +46,8 @@ it('renders close button', async () => {
 it('renders refresh button', async () => {
   const { selectFixture } = registerTestPlugins();
 
-  const { getByText } = loadTestPlugins();
-  fireEvent.click(getByText(/refresh/));
+  const { getByTitle } = loadTestPlugins();
+  fireEvent.click(getByTitle(/reload fixture/i));
 
   expect(selectFixture).toBeCalledWith(
     expect.any(Object),
@@ -60,12 +60,12 @@ it('renders renderer actions', async () => {
   registerTestPlugins();
   mockRendererAction();
   const { getByText } = loadTestPlugins();
-  await waitForElement(() => getByText(RENDERER_ACTION));
+  getByText(RENDERER_ACTION);
 });
 
 it('renders fixture actions', async () => {
   registerTestPlugins();
   mockFixtureAction();
   const { getByText } = loadTestPlugins();
-  await waitForElement(() => getByText(FIXTURE_ACTION));
+  getByText(FIXTURE_ACTION);
 });

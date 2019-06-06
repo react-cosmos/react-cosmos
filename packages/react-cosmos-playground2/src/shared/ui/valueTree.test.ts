@@ -36,15 +36,19 @@ const jsx: FixtureStateValue = {
 
 const values: FixtureStateValues = {
   str1,
-  nested1: {
-    type: 'composite',
+  object1: {
+    type: 'object',
     values: {
       str2,
       num,
       bool,
-      nested2: {
-        type: 'composite',
+      object2: {
+        type: 'object',
         values: { str3, jsx }
+      },
+      array1: {
+        type: 'array',
+        values: [num, bool]
       }
     }
   }
@@ -53,11 +57,15 @@ const values: FixtureStateValues = {
 const rootNode: ValueNode = {
   items: { str1 },
   dirs: {
-    nested1: {
+    object1: {
       items: { str2, num, bool },
       dirs: {
-        nested2: {
+        object2: {
           items: { str3, jsx },
+          dirs: {}
+        },
+        array1: {
+          items: { 0: num, 1: bool },
           dirs: {}
         }
       }

@@ -1,29 +1,43 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { Button } from '../../shared/ui';
+import { IconButton } from '../../shared/ui';
 import { SlidersIcon } from '../../shared/icons';
+import { RendererCoreSpec } from '../RendererCore/public';
+import { LayoutSpec } from '../Layout/public';
 import { ControlPanel } from './ControlPanel';
 import { ControlPanelSpec } from './public';
-import { isOpen, useOpenToggle } from './shared';
 
 const { plug, register } = createPlugin<ControlPanelSpec>({
   name: 'controlPanel'
 });
 
-plug('right', ({ pluginContext }) => {
-  return isOpen(pluginContext) ? <ControlPanel /> : null;
+plug('panel', ({ pluginContext }) => {
+  const layout = pluginContext.getMethodsOf<LayoutSpec>('layout');
+  return layout.isPanelOpen() ? <ControlPanel /> : null;
 });
 
 plug('rendererActions', ({ pluginContext }) => {
-  const open = isOpen(pluginContext);
-  const toggleOpen = useOpenToggle(pluginContext);
+  const { getMethodsOf } = pluginContext;
+  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
+  if (!rendererCore.isValidFixtureSelected()) {
+    return (
+      <IconButton
+        icon={<SlidersIcon />}
+        title="Open control panel"
+        disabled
+        selected={false}
+      />
+    );
+  }
 
+  const layout = pluginContext.getMethodsOf<LayoutSpec>('layout');
+  const panelOpen = layout.isPanelOpen();
   return (
-    <Button
+    <IconButton
       icon={<SlidersIcon />}
-      label="controls"
-      selected={open}
-      onClick={toggleOpen}
+      title="Open control panel"
+      selected={panelOpen}
+      onClick={() => layout.openPanel(!panelOpen)}
     />
   );
 });

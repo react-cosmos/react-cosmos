@@ -1,8 +1,5 @@
 export type CoreSpec = {
   name: 'core';
-  state: {
-    storageCacheReady: boolean;
-  };
   config: {
     projectId: string;
     fixturesDir: string;
@@ -11,6 +8,7 @@ export type CoreSpec = {
     webRendererUrl: null | string;
   };
   methods: {
+    getProjectId(): string;
     getFixtureFileVars(): { fixturesDir: string; fixtureFileSuffix: string };
     isDevServerOn(): boolean;
     getWebRendererUrl(): null | string;

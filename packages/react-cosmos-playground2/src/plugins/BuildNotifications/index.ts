@@ -1,8 +1,8 @@
 import { createPlugin, PluginContext } from 'react-plugin';
 import { Message } from 'react-cosmos-shared2/util';
 import { BuildMessage } from 'react-cosmos-shared2/build';
-import { MessageHandlerSpec } from './../MessageHandler/public';
-import { NotificationsSpec } from './../Notifications/public';
+import { MessageHandlerSpec } from '../MessageHandler/public';
+import { NotificationsSpec } from '../Notifications/public';
 import { BuildNotificationsSpec } from './public';
 
 type Context = PluginContext<BuildNotificationsSpec>;

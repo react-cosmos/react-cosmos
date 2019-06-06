@@ -12,10 +12,29 @@ export function extendWithValues(
   return extendedObj;
 }
 
-function extendWithValue(baseValue: unknown, value: FixtureStateValue) {
-  return value.type === 'unserializable'
-    ? baseValue
-    : value.type === 'composite'
-    ? extendWithValues((baseValue as KeyValue) || {}, value.values)
-    : value.value;
+function extendWithValue(
+  baseValue: unknown,
+  value: FixtureStateValue
+): unknown {
+  if (value.type === 'unserializable') {
+    return baseValue;
+  }
+
+  if (value.type === 'object') {
+    // This works (for now) because users can't add/remove object keys nor can
+    // they change the type of any value. If any of these requirements show up
+    // in the future this will need to be redesign to handle merge conflicts
+    const baseObj = baseValue as KeyValue;
+    return extendWithValues(baseObj, value.values);
+  }
+
+  if (value.type === 'array') {
+    // This works (for now) because users can't add/remove array items nor can
+    // they change the type of any value. If any of these requirements show up
+    // in the future this will need to be redesign to handle merge conflicts
+    const baseArr = baseValue as unknown[];
+    return value.values.map((v, idx) => extendWithValue(baseArr[idx], v));
+  }
+
+  return value.value;
 }

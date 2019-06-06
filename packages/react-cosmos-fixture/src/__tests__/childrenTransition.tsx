@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import { uuid } from 'react-cosmos-shared2/util';
-import { createValues } from 'react-cosmos-shared2/fixtureState';
+import { createValues, createValue } from 'react-cosmos-shared2/fixtureState';
 import { anyProps } from '../testHelpers/fixtureState';
 import { Wrapper } from '../testHelpers/components';
 import { runFixtureLoaderTests } from '../testHelpers';
@@ -107,8 +107,11 @@ runFixtureLoaderTests(mount => {
               anyProps({
                 values: {
                   children: {
-                    type: 'unserializable',
-                    stringifiedValue: `[object Object],[object Object]`
+                    type: 'array',
+                    values: [
+                      createValue(<Wrapper>brah</Wrapper>),
+                      createValue(<Wrapper>brah</Wrapper>)
+                    ]
                   }
                 }
               }),

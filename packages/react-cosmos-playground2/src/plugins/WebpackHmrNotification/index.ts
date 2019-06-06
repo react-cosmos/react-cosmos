@@ -1,8 +1,8 @@
 import { createPlugin, PluginContext } from 'react-plugin';
 import { Message } from 'react-cosmos-shared2/util';
 import { WebpackRendererResponse } from 'react-cosmos-shared2/webpack';
-import { RendererCoreSpec } from './../RendererCore/public';
-import { NotificationsSpec } from './../Notifications/public';
+import { RendererCoreSpec } from '../RendererCore/public';
+import { NotificationsSpec } from '../Notifications/public';
 import { WebpackHmrNotificationSpec } from './public';
 
 type Context = PluginContext<WebpackHmrNotificationSpec>;
