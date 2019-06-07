@@ -18,7 +18,6 @@ module.exports = {
     '!**/@types/**',
     '!**/react-cosmos-playground2/src/shared/illustrations/**',
     // Ignore coverage from dark launched plugins
-    '!**/react-cosmos-playground2/src/plugins/PropsPanel/**',
     '!**/react-cosmos-playground2/src/plugins/ClassStatePanel/**',
     '!**/react-cosmos-playground2/src/plugins/PluginList/**',
     '!**/react-cosmos-playground2/src/plugins/RendererSelect/**'
