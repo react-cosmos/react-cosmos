@@ -32,12 +32,13 @@ export const ValueInputTree = React.memo(function ValueInputTree({
     <TreeView
       node={rootNode}
       renderDir={({ node, parents, onToggle }) => {
-        const itemNames = Object.keys(node.items);
+        const { dirs, items } = node;
+        const childNames = [...Object.keys(dirs), ...Object.keys(items)];
         return (
           <RowContainer style={{ paddingLeft: (parents.length - 1) * 16 }}>
-            <button onClick={onToggle}>
+            <button disabled={childNames.length === 0} onClick={onToggle}>
               {parents[parents.length - 1]}
-              {itemNames.length > 0 && ` { ${itemNames.join(', ')} }`}
+              {childNames.length > 0 ? ` { ${childNames.join(', ')} }` : '{}'}
             </button>
           </RowContainer>
         );
