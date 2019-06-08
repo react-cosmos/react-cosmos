@@ -34,6 +34,7 @@ Control panel
     - [ ] Text value
     - [ ] Number value
     - [ ] Boolean value
+    - [ ] Null value
 - [ ] Blank state
 - [ ] Class state panel
 - [ ] Custom controls with Hooks API in (function) fixtures

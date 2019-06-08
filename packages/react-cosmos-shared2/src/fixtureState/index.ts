@@ -3,6 +3,7 @@ export {
   FixtureDecoratorId,
   FixtureElementId,
   FixtureStateUnserializableValue,
+  FixtureStatePrimitiveValueType,
   FixtureStatePrimitiveValue,
   FixtureStateObjectValue,
   FixtureStateArrayValue,

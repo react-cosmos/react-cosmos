@@ -1,19 +1,13 @@
-import { TreeNode, TreeNodeDirs } from '../TreeView';
-import {
-  FixtureStatePrimitiveValue,
-  FixtureStateUnserializableValue,
-  FixtureStateValues
-} from 'react-cosmos-shared2/fixtureState';
+import { FixtureStateValues } from 'react-cosmos-shared2/fixtureState';
+import { TreeNodeDirs } from '../TreeView';
+import { TreeItemValue, ValueNode } from './shared';
 
-type ItemValue = FixtureStatePrimitiveValue | FixtureStateUnserializableValue;
-
-export type ValueNode = TreeNode<ItemValue>;
-export type ValueNodeDirs = TreeNodeDirs<ItemValue>;
+export type ValueNodeDirs = TreeNodeDirs<TreeItemValue>;
 
 export function getFixtureStateValueTree(
   values: FixtureStateValues
 ): ValueNode {
-  const items: Record<string, ItemValue> = {};
+  const items: Record<string, TreeItemValue> = {};
   const dirs: ValueNodeDirs = {};
 
   Object.keys(values).forEach(key => {
