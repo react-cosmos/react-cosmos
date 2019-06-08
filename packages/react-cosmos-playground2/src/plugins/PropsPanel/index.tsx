@@ -34,6 +34,7 @@ plug('controlPanelRow', ({ pluginContext: { getMethodsOf } }) => {
     (elementId: FixtureElementId, newTreeExpansion: TreeExpansion) => {
       storage.setItem(PROPS_TREE_EXPANSION_STORAGE_KEY, {
         ...treeExpansion,
+        // TODO: Prefix key by selectedFixtureId!
         [stringifyElementId(elementId)]: newTreeExpansion
       });
     },
