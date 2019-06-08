@@ -11,6 +11,7 @@ export default (
       object: {
         number: 555
       },
+      null: null,
       unserializable: /findmeifukanye/g
     }}
     unserializable={() => 'yes'}
