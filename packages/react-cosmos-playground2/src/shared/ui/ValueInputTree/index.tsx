@@ -5,7 +5,7 @@ import {
   FixtureStateValue,
   FixtureStateValues
 } from 'react-cosmos-shared2/fixtureState';
-import { TreeView, TreeExpansion } from './TreeView';
+import { TreeView, TreeExpansion } from '../TreeView';
 import { getFixtureStateValueTree } from './valueTree';
 
 type Props = {

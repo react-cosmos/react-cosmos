@@ -1,5 +1,5 @@
 import React from 'react';
-import { ValueInputTree } from './ValueInputTree';
+import { ValueInputTree } from '.';
 
 export default (
   <ValueInputTree

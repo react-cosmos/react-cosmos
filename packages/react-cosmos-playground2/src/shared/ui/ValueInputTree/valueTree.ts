@@ -1,4 +1,4 @@
-import { TreeNode, TreeNodeDirs } from './TreeView';
+import { TreeNode, TreeNodeDirs } from '../TreeView';
 import {
   FixtureStatePrimitiveValue,
   FixtureStateUnserializableValue,
