@@ -9,6 +9,7 @@ import {
 import { TreeItemValue, RowContainer } from '../shared';
 import { StringInput } from './StringInput';
 import { NumberInput } from './NumberInput';
+import { BooleanInput } from './BooleanInput';
 
 type Props = {
   treeId: string;
@@ -75,6 +76,21 @@ export function ValueInputTreeItem({
         <Label htmlFor={itemId}>{itemName}</Label>
         <InputContainer>
           <NumberInput
+            id={itemId}
+            value={item.value}
+            onChange={onInputChange}
+          />
+        </InputContainer>
+      </RowContainer>
+    );
+  }
+
+  if (typeof item.value === 'boolean') {
+    return (
+      <RowContainer style={{ paddingLeft: parents.length * 16 }}>
+        <Label htmlFor={itemId}>{itemName}</Label>
+        <InputContainer>
+          <BooleanInput
             id={itemId}
             value={item.value}
             onChange={onInputChange}

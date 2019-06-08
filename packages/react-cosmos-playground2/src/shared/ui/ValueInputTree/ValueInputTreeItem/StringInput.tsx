@@ -8,9 +8,8 @@ type Props = {
 
 export function StringInput({ id, value, onChange }: Props) {
   const onInputChange = React.useCallback(
-    (e: React.SyntheticEvent<HTMLInputElement>) => {
-      onChange(e.currentTarget.value);
-    },
+    (e: React.SyntheticEvent<HTMLInputElement>) =>
+      onChange(e.currentTarget.value),
     [onChange]
   );
 

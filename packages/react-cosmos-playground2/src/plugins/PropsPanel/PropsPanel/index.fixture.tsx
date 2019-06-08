@@ -18,6 +18,10 @@ export default () => {
           number: {
             type: 'primitive',
             value: 1337
+          },
+          boolean: {
+            type: 'primitive',
+            value: false
           }
         }
       },

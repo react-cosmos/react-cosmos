@@ -6,6 +6,7 @@ type Props = {
   onChange: (newValue: number) => unknown;
 };
 
+// TODO: Allow user to enter "" (empty value)
 export function NumberInput({ id, value, onChange }: Props) {
   const onInputChange = React.useCallback(
     (e: React.SyntheticEvent<HTMLInputElement>) => {
