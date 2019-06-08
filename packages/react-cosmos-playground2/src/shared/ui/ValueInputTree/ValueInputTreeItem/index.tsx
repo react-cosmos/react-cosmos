@@ -39,7 +39,8 @@ export function ValueInputTreeItem({
     [itemName, onValueChange, parents, values]
   );
 
-  // Use switch or map instead if IFs
+  // TODO: Use switch or map instead if IFs
+  // TODO: Reuse RowContainer/Label/InputContainer (compose inside each input?)
   if (item.type === 'unserializable') {
     return (
       <RowContainer style={{ paddingLeft: parents.length * 16 }}>
