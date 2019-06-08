@@ -6,8 +6,9 @@ import {
   FixtureStateValue,
   FixtureStateValues
 } from 'react-cosmos-shared2/fixtureState';
-import { TreeItemValue, RowContainer } from './shared';
+import { TreeItemValue, RowContainer } from '../shared';
 import { StringInput } from './StringInput';
+import { NumberInput } from './NumberInput';
 
 type Props = {
   treeId: string;
@@ -59,6 +60,21 @@ export function ValueInputTreeItem({
         <Label htmlFor={itemId}>{itemName}</Label>
         <InputContainer>
           <StringInput
+            id={itemId}
+            value={item.value}
+            onChange={onInputChange}
+          />
+        </InputContainer>
+      </RowContainer>
+    );
+  }
+
+  if (typeof item.value === 'number') {
+    return (
+      <RowContainer style={{ paddingLeft: parents.length * 16 }}>
+        <Label htmlFor={itemId}>{itemName}</Label>
+        <InputContainer>
+          <NumberInput
             id={itemId}
             value={item.value}
             onChange={onInputChange}
