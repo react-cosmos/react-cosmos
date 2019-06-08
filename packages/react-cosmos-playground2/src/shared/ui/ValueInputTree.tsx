@@ -2,7 +2,6 @@ import React from 'react';
 import { clone, setWith } from 'lodash';
 import styled from 'styled-components';
 import {
-  FixtureElementId,
   FixtureStateValue,
   FixtureStateValues
 } from 'react-cosmos-shared2/fixtureState';
@@ -10,22 +9,22 @@ import { TreeView, TreeExpansion } from './TreeView';
 import { getFixtureStateValueTree } from './valueTree';
 
 type Props = {
-  elementId: FixtureElementId;
+  id: string;
   values: FixtureStateValues;
-  onChange: (
-    elementId: FixtureElementId,
-    values: FixtureStateValues
-  ) => unknown;
+  treeExpansion: TreeExpansion;
+  onValueChange: (values: FixtureStateValues) => unknown;
+  onTreeExpansionChange: (treeExpansion: TreeExpansion) => unknown;
 };
 
 // TODO: Keep value copy locally in case of invalid user input
+// https://github.com/react-cosmos/react-cosmos/blob/07a8fe65df55337a6f8b72542e0ccd1cd03ec148/packages/react-cosmos-playground2/src/plugins/ControlPanel/ValueInput.tsx
 export const ValueInputTree = React.memo(function ValueInputTree({
-  elementId,
+  id,
   values,
-  onChange
+  treeExpansion,
+  onTreeExpansionChange,
+  onValueChange
 }: Props) {
-  const [treeExpansion, setTreeExpansion] = React.useState<TreeExpansion>({});
-  const id = createStringId(elementId);
   const rootNode = getFixtureStateValueTree(values);
 
   return (
@@ -77,10 +76,7 @@ export const ValueInputTree = React.memo(function ValueInputTree({
                       value: JSON.parse(e.currentTarget.value)
                     };
                     const valuePath = getValuePath(itemName, parents);
-                    onChange(
-                      elementId,
-                      setValueAtPath(values, newValue, valuePath)
-                    );
+                    onValueChange(setValueAtPath(values, newValue, valuePath));
                   } catch (err) {
                     console.warn(`Not a valid JSON value: ${item}`);
                     return;
@@ -92,7 +88,7 @@ export const ValueInputTree = React.memo(function ValueInputTree({
         );
       }}
       treeExpansion={treeExpansion}
-      onTreeExpansionChange={setTreeExpansion}
+      onTreeExpansionChange={onTreeExpansionChange}
     />
   );
 });
@@ -108,11 +104,6 @@ function setValueAtPath(
 ) {
   // Inspired by https://github.com/lodash/lodash/issues/1696#issuecomment-328335502
   return setWith(clone(values), valuePath, newValue, clone);
-}
-
-function createStringId(elementId: FixtureElementId) {
-  const { decoratorId, elPath } = elementId;
-  return elPath ? `${decoratorId}-${elPath}` : decoratorId;
 }
 
 const RowContainer = styled.div`

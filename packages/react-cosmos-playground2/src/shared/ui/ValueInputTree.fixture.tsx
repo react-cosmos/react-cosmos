@@ -3,11 +3,17 @@ import { ValueInputTree } from './ValueInputTree';
 
 export default (
   <ValueInputTree
-    elementId={{
-      decoratorId: 'root',
-      elPath: ''
-    }}
+    id="root"
     values={{
+      object: {
+        type: 'object',
+        values: {
+          element: {
+            type: 'unserializable',
+            stringifiedValue: '<div />'
+          }
+        }
+      },
       string: {
         type: 'primitive',
         value: 'hello world'
@@ -17,6 +23,10 @@ export default (
         value: 1337
       }
     }}
-    onChange={(elementId, values) => console.log('on change', values)}
+    treeExpansion={{ object: true }}
+    onValueChange={values => console.log('on change', values)}
+    onTreeExpansionChange={newTreeExpansion =>
+      console.log('set tree expansion', newTreeExpansion)
+    }
   />
 );

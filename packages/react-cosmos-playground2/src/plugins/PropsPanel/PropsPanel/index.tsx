@@ -10,17 +10,25 @@ import {
   updateFixtureStateProps,
   removeFixtureStateProps
 } from 'react-cosmos-shared2/fixtureState';
-import { ValueInputTree } from '../../shared/ui/ValueInputTree';
+import { TreeExpansionGroup, OnElementTreeExpansion } from '../shared';
+import { ComponentProps } from './ComponentProps';
 
 type Props = {
   fixtureState: FixtureState;
-  setFixtureState: (stateUpdater: StateUpdater<FixtureState>) => void;
+  treeExpansion: TreeExpansionGroup;
+  onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
+  onTreeExpansionChange: OnElementTreeExpansion;
 };
 
-export function PropsPanel({ fixtureState, setFixtureState }: Props) {
+export function PropsPanel({
+  fixtureState,
+  treeExpansion,
+  onFixtureStateChange,
+  onTreeExpansionChange
+}: Props) {
   const onValueChange = React.useCallback(
     (elementId: FixtureElementId, values: FixtureStateValues) => {
-      setFixtureState(
+      onFixtureStateChange(
         createPropsFsUpdater(elementId, prevFs =>
           // TODO: Or resetFixtureStateProps
           updateFixtureStateProps({
@@ -31,18 +39,18 @@ export function PropsPanel({ fixtureState, setFixtureState }: Props) {
         )
       );
     },
-    [setFixtureState]
+    [onFixtureStateChange]
   );
 
   const onResetValues = React.useCallback(
     (elementId: FixtureElementId) => {
-      setFixtureState(
+      onFixtureStateChange(
         createPropsFsUpdater(elementId, prevFs =>
           removeFixtureStateProps(prevFs, elementId)
         )
       );
     },
-    [setFixtureState]
+    [onFixtureStateChange]
   );
 
   if (!fixtureState.props) {
@@ -52,19 +60,16 @@ export function PropsPanel({ fixtureState, setFixtureState }: Props) {
   // TODO: Sort by elementId
   return (
     <Container>
-      {fixtureState.props.map(({ elementId, componentName, values }, idx) => {
+      {fixtureState.props.map((fsProps, idx) => {
         return (
-          <React.Fragment key={idx}>
-            <div>
-              <strong>PROPS</strong> ({componentName})
-              <button onClick={() => onResetValues(elementId)}>reset</button>
-            </div>
-            <ValueInputTree
-              elementId={elementId}
-              values={values}
-              onChange={onValueChange}
-            />
-          </React.Fragment>
+          <ComponentProps
+            key={idx}
+            fsProps={fsProps}
+            treeExpansion={treeExpansion}
+            onValueChange={onValueChange}
+            onResetValues={onResetValues}
+            onTreeExpansionChange={onTreeExpansionChange}
+          />
         );
       })}
     </Container>
