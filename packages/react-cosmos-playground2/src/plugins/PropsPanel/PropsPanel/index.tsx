@@ -63,7 +63,7 @@ export function PropsPanel({
 
   return (
     <Container>
-      {sortFsProps(fixtureState.props).map((fsProps, idx) => {
+      {sortFsProps(fixtureState.props.filter(hasProps)).map((fsProps, idx) => {
         return (
           <ComponentProps
             key={idx}
@@ -95,6 +95,10 @@ function createPropsFsUpdater(
       props: cb(prevFs)
     };
   };
+}
+
+function hasProps(fsProps: FixtureStateProps) {
+  return Object.keys(fsProps.values).length > 0;
 }
 
 function sortFsProps(fsProps: FixtureStateProps[]) {
