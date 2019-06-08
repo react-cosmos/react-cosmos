@@ -10,7 +10,11 @@ import {
   updateFixtureStateProps,
   removeFixtureStateProps
 } from 'react-cosmos-shared2/fixtureState';
-import { TreeExpansionGroup, OnElementTreeExpansion } from '../shared';
+import {
+  TreeExpansionGroup,
+  OnElementTreeExpansion,
+  stringifyElementId
+} from '../shared';
 import { ComponentProps } from './ComponentProps';
 
 type Props = {
@@ -57,10 +61,9 @@ export function PropsPanel({
     return null;
   }
 
-  // TODO: Sort by elementId
   return (
     <Container>
-      {fixtureState.props.map((fsProps, idx) => {
+      {sortFsProps(fixtureState.props).map((fsProps, idx) => {
         return (
           <ComponentProps
             key={idx}
@@ -92,6 +95,17 @@ function createPropsFsUpdater(
       props: cb(prevFs)
     };
   };
+}
+
+function sortFsProps(fsProps: FixtureStateProps[]) {
+  // Sort by elementId
+  return fsProps
+    .slice()
+    .sort((props1, props2) =>
+      stringifyElementId(props1.elementId).localeCompare(
+        stringifyElementId(props2.elementId)
+      )
+    );
 }
 
 const Container = styled.div`
