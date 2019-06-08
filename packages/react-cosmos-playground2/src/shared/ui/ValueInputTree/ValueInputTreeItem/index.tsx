@@ -39,6 +39,7 @@ export function ValueInputTreeItem({
     [itemName, onValueChange, parents, values]
   );
 
+  // Use switch or map instead if IFs
   if (item.type === 'unserializable') {
     return (
       <RowContainer style={{ paddingLeft: parents.length * 16 }}>
@@ -100,34 +101,16 @@ export function ValueInputTreeItem({
     );
   }
 
-  // TODO: Different components, no more JSON.parse/stringify
-  // Keep value copy locally in case of invalid user input?
-  // https://github.com/react-cosmos/react-cosmos/blob/07a8fe65df55337a6f8b72542e0ccd1cd03ec148/packages/react-cosmos-playground2/src/plugins/ControlPanel/ValueInput.tsx
-  return (
-    <RowContainer style={{ paddingLeft: parents.length * 16 }}>
-      <Label htmlFor={itemId}>{itemName}</Label>
-      <InputContainer>
-        <input
-          type="text"
-          id={itemId}
-          value={JSON.stringify(item.value)}
-          onChange={(e: React.SyntheticEvent<HTMLInputElement>) => {
-            try {
-              const newValue: FixtureStateValue = {
-                type: 'primitive',
-                value: JSON.parse(e.currentTarget.value)
-              };
-              const valuePath = getValuePath(itemName, parents);
-              onValueChange(setValueAtPath(values, newValue, valuePath));
-            } catch (err) {
-              console.warn(`Not a valid JSON value: ${item}`);
-              return;
-            }
-          }}
-        />
-      </InputContainer>
-    </RowContainer>
-  );
+  if (item.value === null) {
+    return (
+      <RowContainer style={{ paddingLeft: parents.length * 16 }}>
+        {itemName}
+        <InputContainer>null</InputContainer>
+      </RowContainer>
+    );
+  }
+
+  throw new Error(`Invalid primitive value: ${item.value}`);
 }
 
 function getValuePath(valueKey: string, parentKeys: string[]) {

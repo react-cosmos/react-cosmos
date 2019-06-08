@@ -22,6 +22,10 @@ export default () => {
           boolean: {
             type: 'primitive',
             value: false
+          },
+          null: {
+            type: 'primitive',
+            value: null
           }
         }
       },
