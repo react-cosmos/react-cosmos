@@ -41,7 +41,8 @@ export function ComponentProps({
   return (
     <>
       <div>
-        <strong>PROPS</strong> ({componentName})
+        <strong>PROPS</strong> (
+        {componentName ? componentName : <em>Unnamed</em>})
         <button onClick={callbacks.onResetValues}>reset</button>
       </div>
       <ValueInputTree
