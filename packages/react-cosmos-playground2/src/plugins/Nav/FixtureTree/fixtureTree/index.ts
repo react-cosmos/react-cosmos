@@ -3,6 +3,7 @@ import { createFixtureTree } from './createFixtureTree';
 import { collapseDirs } from './collapseDirs';
 import { hideFixtureSuffix } from './hideFixtureSuffix';
 import { collapseSoloIndexes } from './collapseSoloIndexes';
+import { hideSingleChildDirs } from './hideSingleChildDirs';
 import { FixtureNode } from './shared';
 
 export { FixtureNode } from './shared';
@@ -20,5 +21,6 @@ export function getFixtureTree({
   tree = collapseDirs(tree, fixturesDir);
   tree = hideFixtureSuffix(tree, fixtureFileSuffix);
   tree = collapseSoloIndexes(tree);
+  tree = hideSingleChildDirs(tree);
   return tree;
 }
