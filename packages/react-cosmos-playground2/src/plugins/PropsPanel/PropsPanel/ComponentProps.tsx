@@ -10,8 +10,8 @@ import {
 import { ValueInputTree } from '../../../shared/ui/ValueInputTree';
 import { TreeExpansion } from '../../../shared/ui';
 import {
-  OnElementTreeExpansion,
-  TreeExpansionGroup,
+  FixtureExpansion,
+  OnElementExpansionChange,
   stringifyElementId
 } from '../shared';
 import { createPropsFsUpdater } from './shared';
@@ -20,19 +20,19 @@ type OnFixtureStateChange = (stateUpdater: StateUpdater<FixtureState>) => void;
 
 type Props = {
   fsProps: FixtureStateProps;
-  treeExpansion: TreeExpansionGroup;
+  fixtureExpansion: FixtureExpansion;
   onFixtureStateChange: OnFixtureStateChange;
-  onTreeExpansionChange: OnElementTreeExpansion;
+  onElementExpansionChange: OnElementExpansionChange;
 };
 
 export function ComponentProps({
   fsProps,
-  treeExpansion,
+  fixtureExpansion,
   onFixtureStateChange,
-  onTreeExpansionChange
+  onElementExpansionChange
 }: Props) {
   const { componentName, elementId, values } = fsProps;
-  const id = stringifyElementId(elementId);
+  const strElementId = stringifyElementId(elementId);
 
   const [reset, setReset] = React.useState(false);
   const onResetChange = React.useCallback(() => setReset(!reset), [reset]);
@@ -68,10 +68,10 @@ export function ComponentProps({
     [elementId, reset, onFixtureStateChange]
   );
 
-  const onElementTreeExpansionChange = React.useCallback(
+  const onTreeExpansionChange = React.useCallback(
     (newTreeExpansion: TreeExpansion) =>
-      onTreeExpansionChange(elementId, newTreeExpansion),
-    [elementId, onTreeExpansionChange]
+      onElementExpansionChange(elementId, newTreeExpansion),
+    [elementId, onElementExpansionChange]
   );
 
   return (
@@ -84,11 +84,11 @@ export function ComponentProps({
         </button>
       </div>
       <ValueInputTree
-        id={id}
+        id={strElementId}
         values={values}
-        treeExpansion={treeExpansion[id] || {}}
+        treeExpansion={fixtureExpansion[strElementId] || {}}
         onValueChange={onValueChange}
-        onTreeExpansionChange={onElementTreeExpansionChange}
+        onTreeExpansionChange={onTreeExpansionChange}
       />
       <div>
         <label>

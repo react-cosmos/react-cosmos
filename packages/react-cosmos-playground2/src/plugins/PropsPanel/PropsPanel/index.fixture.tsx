@@ -51,19 +51,19 @@ export default () => {
       }
     ]
   });
-  const [treeExpansion, setTreeExpansion] = React.useState({});
+  const [fixtureExpansion, setFixtureExpansion] = React.useState({});
 
   return (
     <PropsPanel
       fixtureState={fixtureState}
-      treeExpansion={treeExpansion}
+      fixtureExpansion={fixtureExpansion}
       onFixtureStateChange={setFixtureState}
-      onTreeExpansionChange={(elementId, newTreeExpansion) =>
-        setTreeExpansion({
-          ...treeExpansion,
-          [stringifyElementId(elementId)]: newTreeExpansion
-        })
-      }
+      onElementExpansionChange={(elementId, treeExpansion) => {
+        setFixtureExpansion({
+          ...fixtureExpansion,
+          [stringifyElementId(elementId)]: treeExpansion
+        });
+      }}
     />
   );
 };

@@ -6,39 +6,41 @@ import {
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import styled from 'styled-components';
 import {
-  OnElementTreeExpansion,
+  OnElementExpansionChange,
   stringifyElementId,
-  TreeExpansionGroup
+  FixtureExpansion
 } from '../shared';
 import { ComponentProps } from './ComponentProps';
 
 type Props = {
   fixtureState: FixtureState;
-  treeExpansion: TreeExpansionGroup;
+  fixtureExpansion: FixtureExpansion;
   onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
-  onTreeExpansionChange: OnElementTreeExpansion;
+  onElementExpansionChange: OnElementExpansionChange;
 };
 
 export function PropsPanel({
   fixtureState,
-  treeExpansion,
+  fixtureExpansion,
   onFixtureStateChange,
-  onTreeExpansionChange
+  onElementExpansionChange
 }: Props) {
   if (!fixtureState.props) {
     return null;
   }
 
+  const withProps = fixtureState.props.filter(hasProps);
   return (
     <Container>
-      {sortFsProps(fixtureState.props.filter(hasProps)).map(fsProps => {
+      {sortFsProps(withProps).map(fsProps => {
+        const strElementId = stringifyElementId(fsProps.elementId);
         return (
           <ComponentProps
-            key={stringifyElementId(fsProps.elementId)}
+            key={strElementId}
             fsProps={fsProps}
-            treeExpansion={treeExpansion}
+            fixtureExpansion={fixtureExpansion}
             onFixtureStateChange={onFixtureStateChange}
-            onTreeExpansionChange={onTreeExpansionChange}
+            onElementExpansionChange={onElementExpansionChange}
           />
         );
       })}

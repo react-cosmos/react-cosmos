@@ -25,7 +25,7 @@ function MyComponent(props: Record<string, any>) {
       console.log('Props change');
     } else {
       mounted.current = true;
-      console.log('New props');
+      console.log('New instance');
     }
   });
 
