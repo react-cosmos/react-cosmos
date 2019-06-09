@@ -28,7 +28,7 @@ Control panel
 - [ ] Props panel
   - [x] Resizable control panel
   - [x] Reset all fixture state values
-    - [ ] Store initial values
+    - [x] Store initial values
   - [x] Store value tree expansion state
   - [x] Option to reset or transition props
   - Inputs

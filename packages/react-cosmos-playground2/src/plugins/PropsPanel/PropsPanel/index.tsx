@@ -1,9 +1,7 @@
 import React from 'react';
 import {
-  FixtureElementId,
   FixtureState,
-  FixtureStateProps,
-  removeFixtureStateProps
+  FixtureStateProps
 } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import styled from 'styled-components';
@@ -13,7 +11,6 @@ import {
   TreeExpansionGroup
 } from '../shared';
 import { ComponentProps } from './ComponentProps';
-import { createPropsFsUpdater } from './shared';
 
 type Props = {
   fixtureState: FixtureState;
@@ -28,31 +25,19 @@ export function PropsPanel({
   onFixtureStateChange,
   onTreeExpansionChange
 }: Props) {
-  const onResetValues = React.useCallback(
-    (elementId: FixtureElementId) => {
-      onFixtureStateChange(
-        createPropsFsUpdater(elementId, prevFs =>
-          removeFixtureStateProps(prevFs, elementId)
-        )
-      );
-    },
-    [onFixtureStateChange]
-  );
-
   if (!fixtureState.props) {
     return null;
   }
 
   return (
     <Container>
-      {sortFsProps(fixtureState.props.filter(hasProps)).map((fsProps, idx) => {
+      {sortFsProps(fixtureState.props.filter(hasProps)).map(fsProps => {
         return (
           <ComponentProps
-            key={idx}
+            key={stringifyElementId(fsProps.elementId)}
             fsProps={fsProps}
             treeExpansion={treeExpansion}
             onFixtureStateChange={onFixtureStateChange}
-            onResetValues={onResetValues}
             onTreeExpansionChange={onTreeExpansionChange}
           />
         );
