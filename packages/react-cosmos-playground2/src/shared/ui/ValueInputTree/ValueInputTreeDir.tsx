@@ -8,14 +8,19 @@ type Props = {
 };
 
 export function ValueInputTreeDir({ node, parents, onToggle }: Props) {
-  const { dirs, items } = node;
-  const childNames = [...Object.keys(dirs), ...Object.keys(items)];
+  const dirName = parents[parents.length - 1];
+  const childNames = getChildNames(node);
   return (
     <RowContainer style={{ paddingLeft: (parents.length - 1) * 16 }}>
       <button disabled={childNames.length === 0} onClick={onToggle}>
-        {parents[parents.length - 1]}
+        {dirName}
         {childNames.length > 0 ? ` { ${childNames.join(', ')} }` : '{}'}
       </button>
     </RowContainer>
   );
+}
+
+function getChildNames(node: ValueNode): string[] {
+  const { dirs, items } = node;
+  return [...Object.keys(dirs), ...Object.keys(items)];
 }

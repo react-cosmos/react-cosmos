@@ -13,7 +13,6 @@ type Props = {
   unselectFixture: () => void;
 };
 
-// TODO: Improve UX of refresh button, which can seem like it's not doing anything
 export const RendererHeader = React.memo(function RendererHeader({
   selectedFixtureId,
   rendererConnected,

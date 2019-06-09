@@ -32,9 +32,10 @@ export function FixtureTreeItem({
     [item, onSelect]
   );
 
+  const itemKey = stringifyFixtureId(item);
   return (
     <FixtureLink
-      key={`${item.path}-${itemName}`}
+      key={itemKey}
       href={createUrl({ fixtureId: item })}
       onClick={onClick}
     >
@@ -46,6 +47,12 @@ export function FixtureTreeItem({
       </ListItem>
     </FixtureLink>
   );
+}
+
+function stringifyFixtureId(fixtureId: FixtureId) {
+  return fixtureId.name
+    ? `${fixtureId.path}-${fixtureId.name}`
+    : fixtureId.path;
 }
 
 function openAnchorInNewTab(anchorEl: HTMLAnchorElement) {

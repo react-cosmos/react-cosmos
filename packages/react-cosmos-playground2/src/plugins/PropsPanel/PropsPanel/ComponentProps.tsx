@@ -16,12 +16,10 @@ import {
 } from '../shared';
 import { createPropsFsUpdater } from './shared';
 
-type OnFixtureStateChange = (stateUpdater: StateUpdater<FixtureState>) => void;
-
 type Props = {
   fsProps: FixtureStateProps;
   fixtureExpansion: FixtureExpansion;
-  onFixtureStateChange: OnFixtureStateChange;
+  onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
   onElementExpansionChange: OnElementExpansionChange;
 };
 

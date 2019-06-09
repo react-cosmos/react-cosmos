@@ -14,6 +14,7 @@ type Props = {
 };
 
 export function FixtureTreeDir({ parents, isExpanded, onToggle }: Props) {
+  const dirName = parents[parents.length - 1];
   return (
     <DirButton onClick={onToggle}>
       <ListItem indentLevel={parents.length - 1}>
@@ -23,7 +24,7 @@ export function FixtureTreeDir({ parents, isExpanded, onToggle }: Props) {
         <FolderContainer>
           <FolderIcon />
         </FolderContainer>
-        <Label>{parents[parents.length - 1]}</Label>
+        <Label>{dirName}</Label>
       </ListItem>
     </DirButton>
   );
