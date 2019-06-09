@@ -1,4 +1,5 @@
 import React from 'react';
+import { isEqual } from 'lodash';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import {
   FixtureState,
@@ -77,7 +78,10 @@ export function ComponentProps({
       <div>
         <strong>PROPS</strong> (
         {componentName ? componentName : <em>Unnamed</em>})
-        <button onClick={onResetValues} disabled={values === initialValues}>
+        <button
+          onClick={onResetValues}
+          disabled={isEqual(values, initialValues)}
+        >
           reset
         </button>
       </div>
