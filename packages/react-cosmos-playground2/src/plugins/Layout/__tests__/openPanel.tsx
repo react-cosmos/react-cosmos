@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'react-testing-library';
+import { render } from '@testing-library/react';
 import { Slot, loadPlugins } from 'react-plugin';
 import { cleanup } from '../../../testHelpers/plugin';
 import {

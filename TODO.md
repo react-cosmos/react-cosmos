@@ -27,12 +27,20 @@ Control panel
 - [x] Reusable TreeView
 - [ ] Props panel
   - [x] Resizable control panel
-  - [ ] Reset all fixture state values
-  - [ ] Reset individual fixture state value
-  - [ ] Option to reset or transition props
+  - [x] Reset all fixture state values
+    - [x] Store initial values
+  - [x] Store value tree expansion state
+  - [x] Option to reset or transition props
+  - Inputs
+    - [x] Text value
+    - [x] Number value
+    - [x] Boolean value
+    - [x] Null value
+  - [ ] Style
 - [ ] Blank state
 - [ ] Class state panel
 - [ ] Custom controls with Hooks API in (function) fixtures
+- [ ] Reset individual fixture state value
 
 Build notifications
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from 'react-testing-library';
+import { render, fireEvent } from '@testing-library/react';
 import { Slot, loadPlugins } from 'react-plugin';
 import { cleanup, mockPlug } from '../../../testHelpers/plugin';
 import { mockRouter, mockRendererCore } from '../../../testHelpers/pluginMocks';

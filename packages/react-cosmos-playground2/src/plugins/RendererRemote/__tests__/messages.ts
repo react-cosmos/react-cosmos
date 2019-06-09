@@ -1,5 +1,5 @@
 import { loadPlugins } from 'react-plugin';
-import { wait } from 'react-testing-library';
+import { wait } from '@testing-library/react';
 import {
   SelectFixtureRequest,
   RendererReadyResponse

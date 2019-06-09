@@ -14,9 +14,11 @@ export type FixtureStateUnserializableValue = {
   stringifiedValue: string;
 };
 
+export type FixtureStatePrimitiveValueType = string | number | boolean | null;
+
 export type FixtureStatePrimitiveValue = {
   type: 'primitive';
-  value: string | number | boolean | null;
+  value: FixtureStatePrimitiveValueType;
 };
 
 export type FixtureStateObjectValue = {

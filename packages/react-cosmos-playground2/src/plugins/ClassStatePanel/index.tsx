@@ -14,7 +14,7 @@ plug('controlPanelRow', ({ pluginContext: { getMethodsOf } }) => {
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const fixtureState = rendererCore.getFixtureState();
 
-  const setFixtureState = React.useCallback(
+  const onFixtureStateChange = React.useCallback(
     (fixtureStateUpdater: StateUpdater<FixtureState>) =>
       rendererCore.setFixtureState(fixtureStateUpdater),
     [rendererCore]
@@ -23,7 +23,7 @@ plug('controlPanelRow', ({ pluginContext: { getMethodsOf } }) => {
   return (
     <ClassStatePanel
       fixtureState={fixtureState}
-      setFixtureState={setFixtureState}
+      onFixtureStateChange={onFixtureStateChange}
     />
   );
 });

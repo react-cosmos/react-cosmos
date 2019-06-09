@@ -12,32 +12,32 @@ import { ValueInputTree } from '../../shared/ui';
 
 type Props = {
   fixtureState: FixtureState;
-  setFixtureState: (stateUpdater: StateUpdater<FixtureState>) => void;
+  onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
 };
 
-// TODO: Get component name from fixtureState.props (Maybe)
-export function ClassStatePanel({ fixtureState, setFixtureState }: Props) {
-  const onValueChange = React.useCallback(
-    (elementId: FixtureElementId, values: FixtureStateValues) => {
-      setFixtureState(prevFs => {
-        const fsClassState = findFixtureStateClassState(prevFs, elementId);
-        if (!fsClassState) {
-          console.warn(`Decorator id ${elementId} no longer exists`);
-          return prevFs;
-        }
+// TODO: Get component name from fixtureState.props (or store it in the 1st place)
+export function ClassStatePanel({ fixtureState, onFixtureStateChange }: Props) {
+  const onValueChange = (
+    elementId: FixtureElementId,
+    values: FixtureStateValues
+  ) => {
+    onFixtureStateChange(prevFs => {
+      const fsClassState = findFixtureStateClassState(prevFs, elementId);
+      if (!fsClassState) {
+        console.warn(`Decorator id ${elementId} no longer exists`);
+        return prevFs;
+      }
 
-        return {
-          ...prevFs,
-          classState: updateFixtureStateClassState({
-            fixtureState: prevFs,
-            elementId,
-            values
-          })
-        };
-      });
-    },
-    [setFixtureState]
-  );
+      return {
+        ...prevFs,
+        classState: updateFixtureStateClassState({
+          fixtureState: prevFs,
+          elementId,
+          values
+        })
+      };
+    });
+  };
 
   if (!fixtureState.classState) {
     return null;
@@ -52,15 +52,22 @@ export function ClassStatePanel({ fixtureState, setFixtureState }: Props) {
               <strong>CLASS STATE</strong>
             </div>
             <ValueInputTree
-              elementId={elementId}
+              id={stringifyElementId(elementId)}
               values={values}
-              onChange={onValueChange}
+              treeExpansion={{}}
+              onValueChange={newValues => onValueChange(elementId, newValues)}
+              onTreeExpansionChange={() => {}}
             />
           </React.Fragment>
         );
       })}
     </Container>
   );
+}
+
+function stringifyElementId(elementId: FixtureElementId) {
+  const { decoratorId, elPath } = elementId;
+  return elPath ? `${decoratorId}-${elPath}` : decoratorId;
 }
 
 const Container = styled.div`
