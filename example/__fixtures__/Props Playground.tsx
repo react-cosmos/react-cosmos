@@ -19,5 +19,15 @@ export default (
 );
 
 function MyComponent(props: Record<string, any>) {
+  const mounted = React.useRef(false);
+  React.useEffect(() => {
+    if (mounted.current) {
+      console.log('Props change');
+    } else {
+      mounted.current = true;
+      console.log('New props');
+    }
+  });
+
   return <pre>{JSON.stringify(props, null, 2)}</pre>;
 }

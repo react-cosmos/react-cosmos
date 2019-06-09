@@ -1,21 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
-import { StateUpdater } from 'react-cosmos-shared2/util';
 import {
   FixtureElementId,
   FixtureState,
-  FixtureStateValues,
   FixtureStateProps,
-  findFixtureStateProps,
-  updateFixtureStateProps,
   removeFixtureStateProps
 } from 'react-cosmos-shared2/fixtureState';
+import { StateUpdater } from 'react-cosmos-shared2/util';
+import styled from 'styled-components';
 import {
-  TreeExpansionGroup,
   OnElementTreeExpansion,
-  stringifyElementId
+  stringifyElementId,
+  TreeExpansionGroup
 } from '../shared';
 import { ComponentProps } from './ComponentProps';
+import { createPropsFsUpdater } from './shared';
 
 type Props = {
   fixtureState: FixtureState;
@@ -30,22 +28,6 @@ export function PropsPanel({
   onFixtureStateChange,
   onTreeExpansionChange
 }: Props) {
-  const onValueChange = React.useCallback(
-    (elementId: FixtureElementId, values: FixtureStateValues) => {
-      onFixtureStateChange(
-        createPropsFsUpdater(elementId, prevFs =>
-          // TODO: Or resetFixtureStateProps
-          updateFixtureStateProps({
-            fixtureState: prevFs,
-            elementId,
-            values
-          })
-        )
-      );
-    },
-    [onFixtureStateChange]
-  );
-
   const onResetValues = React.useCallback(
     (elementId: FixtureElementId) => {
       onFixtureStateChange(
@@ -69,7 +51,7 @@ export function PropsPanel({
             key={idx}
             fsProps={fsProps}
             treeExpansion={treeExpansion}
-            onValueChange={onValueChange}
+            onFixtureStateChange={onFixtureStateChange}
             onResetValues={onResetValues}
             onTreeExpansionChange={onTreeExpansionChange}
           />
@@ -77,24 +59,6 @@ export function PropsPanel({
       })}
     </Container>
   );
-}
-
-function createPropsFsUpdater(
-  elementId: FixtureElementId,
-  cb: (prevFs: FixtureState) => FixtureStateProps[]
-): StateUpdater<FixtureState> {
-  return prevFs => {
-    const fsProps = findFixtureStateProps(prevFs, elementId);
-    if (!fsProps) {
-      console.warn(`Element id ${elementId} no longer exists`);
-      return prevFs;
-    }
-
-    return {
-      ...prevFs,
-      props: cb(prevFs)
-    };
-  };
 }
 
 function hasProps(fsProps: FixtureStateProps) {

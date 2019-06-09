@@ -29,7 +29,7 @@ Control panel
   - [x] Resizable control panel
   - [x] Reset all fixture state values
   - [x] Store value tree expansion state
-  - [ ] Option to reset or transition props
+  - [x] Option to reset or transition props
   - [ ] Style
     - [ ] Text value
     - [ ] Number value

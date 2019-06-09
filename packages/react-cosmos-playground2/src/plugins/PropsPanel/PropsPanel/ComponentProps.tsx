@@ -1,24 +1,26 @@
 import React from 'react';
+import { StateUpdater } from 'react-cosmos-shared2/util';
 import {
   FixtureElementId,
+  FixtureState,
   FixtureStateValues,
-  FixtureStateProps
+  FixtureStateProps,
+  updateFixtureStateProps,
+  resetFixtureStateProps
 } from 'react-cosmos-shared2/fixtureState';
 import { ValueInputTree } from '../../../shared/ui/ValueInputTree';
 import { TreeExpansion } from '../../../shared/ui';
 import { OnElementTreeExpansion, TreeExpansionGroup } from '../shared';
+import { createPropsFsUpdater } from './shared';
 
-type OnValueChange = (
-  elementId: FixtureElementId,
-  values: FixtureStateValues
-) => unknown;
+type OnFixtureStateChange = (stateUpdater: StateUpdater<FixtureState>) => void;
 
 type OnResetValues = (elementId: FixtureElementId) => unknown;
 
 type Props = {
   fsProps: FixtureStateProps;
   treeExpansion: TreeExpansionGroup;
-  onValueChange: OnValueChange;
+  onFixtureStateChange: OnFixtureStateChange;
   onResetValues: OnResetValues;
   onTreeExpansionChange: OnElementTreeExpansion;
 };
@@ -26,18 +28,22 @@ type Props = {
 export function ComponentProps({
   fsProps,
   treeExpansion,
-  onValueChange,
+  onFixtureStateChange,
   onResetValues,
   onTreeExpansionChange
 }: Props) {
+  const [reset, setReset] = React.useState(false);
   const { componentName, elementId, values } = fsProps;
+  const id = createStringId(elementId);
   const callbacks = useElementBoundCallbacks({
     elementId,
-    onValueChange,
+    reset,
+    onFixtureStateChange,
     onResetValues,
     onTreeExpansionChange
   });
-  const id = createStringId(elementId);
+  const onResetChange = React.useCallback(() => setReset(!reset), [reset]);
+
   return (
     <>
       <div>
@@ -52,25 +58,46 @@ export function ComponentProps({
         onValueChange={callbacks.onValueChange}
         onTreeExpansionChange={callbacks.onTreeExpansionChange}
       />
+      <div>
+        <label>
+          <input type="checkbox" checked={reset} onChange={onResetChange} />{' '}
+          Reset
+        </label>
+      </div>
     </>
   );
 }
 
 function useElementBoundCallbacks({
   elementId,
-  onValueChange,
+  reset,
+  onFixtureStateChange,
   onResetValues,
   onTreeExpansionChange
 }: {
   elementId: FixtureElementId;
-  onValueChange: OnValueChange;
+  reset: boolean;
+  onFixtureStateChange: OnFixtureStateChange;
   onResetValues: OnResetValues;
   onTreeExpansionChange: OnElementTreeExpansion;
 }) {
   return {
     onValueChange: React.useCallback(
-      (newValues: FixtureStateValues) => onValueChange(elementId, newValues),
-      [elementId, onValueChange]
+      (values: FixtureStateValues) => {
+        const changeFn = reset
+          ? resetFixtureStateProps
+          : updateFixtureStateProps;
+        onFixtureStateChange(
+          createPropsFsUpdater(elementId, prevFs =>
+            changeFn({
+              fixtureState: prevFs,
+              elementId,
+              values
+            })
+          )
+        );
+      },
+      [elementId, reset, onFixtureStateChange]
     ),
     onResetValues: React.useCallback(() => onResetValues(elementId), [
       elementId,
