@@ -1,7 +1,6 @@
 import React from 'react';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import {
-  FixtureElementId,
   FixtureState,
   FixtureStateValues,
   FixtureStateProps,
@@ -36,26 +35,51 @@ export function ComponentProps({
   const id = stringifyElementId(elementId);
 
   const [reset, setReset] = React.useState(false);
-  const [initialValues] = React.useState(() => values);
-
-  const callbacks = useElementBoundCallbacks({
-    elementId,
-    reset,
-    initialValues,
-    onFixtureStateChange,
-    onTreeExpansionChange
-  });
   const onResetChange = React.useCallback(() => setReset(!reset), [reset]);
+
+  const [initialValues] = React.useState(() => values);
+  const onResetValues = React.useCallback(
+    () =>
+      onFixtureStateChange(
+        createPropsFsUpdater(elementId, prevFs =>
+          resetFixtureStateProps({
+            fixtureState: prevFs,
+            elementId,
+            values: initialValues
+          })
+        )
+      ),
+    [elementId, initialValues, onFixtureStateChange]
+  );
+
+  const onValueChange = React.useCallback(
+    (newValues: FixtureStateValues) => {
+      const changeFn = reset ? resetFixtureStateProps : updateFixtureStateProps;
+      onFixtureStateChange(
+        createPropsFsUpdater(elementId, prevFs =>
+          changeFn({
+            fixtureState: prevFs,
+            elementId,
+            values: newValues
+          })
+        )
+      );
+    },
+    [elementId, reset, onFixtureStateChange]
+  );
+
+  const onElementTreeExpansionChange = React.useCallback(
+    (newTreeExpansion: TreeExpansion) =>
+      onTreeExpansionChange(elementId, newTreeExpansion),
+    [elementId, onTreeExpansionChange]
+  );
 
   return (
     <>
       <div>
         <strong>PROPS</strong> (
         {componentName ? componentName : <em>Unnamed</em>})
-        <button
-          onClick={callbacks.onResetValues}
-          disabled={values === initialValues}
-        >
+        <button onClick={onResetValues} disabled={values === initialValues}>
           reset
         </button>
       </div>
@@ -63,8 +87,8 @@ export function ComponentProps({
         id={id}
         values={values}
         treeExpansion={treeExpansion[id] || {}}
-        onValueChange={callbacks.onValueChange}
-        onTreeExpansionChange={callbacks.onTreeExpansionChange}
+        onValueChange={onValueChange}
+        onTreeExpansionChange={onElementTreeExpansionChange}
       />
       <div>
         <label>
@@ -74,56 +98,4 @@ export function ComponentProps({
       </div>
     </>
   );
-}
-
-function useElementBoundCallbacks({
-  elementId,
-  reset,
-  initialValues,
-  onFixtureStateChange,
-  onTreeExpansionChange
-}: {
-  elementId: FixtureElementId;
-  reset: boolean;
-  initialValues: FixtureStateValues;
-  onFixtureStateChange: OnFixtureStateChange;
-  onTreeExpansionChange: OnElementTreeExpansion;
-}) {
-  return {
-    onValueChange: React.useCallback(
-      (values: FixtureStateValues) => {
-        const changeFn = reset
-          ? resetFixtureStateProps
-          : updateFixtureStateProps;
-        onFixtureStateChange(
-          createPropsFsUpdater(elementId, prevFs =>
-            changeFn({
-              fixtureState: prevFs,
-              elementId,
-              values
-            })
-          )
-        );
-      },
-      [elementId, reset, onFixtureStateChange]
-    ),
-    onResetValues: React.useCallback(
-      () =>
-        onFixtureStateChange(
-          createPropsFsUpdater(elementId, prevFs =>
-            resetFixtureStateProps({
-              fixtureState: prevFs,
-              elementId,
-              values: initialValues
-            })
-          )
-        ),
-      [elementId, initialValues, onFixtureStateChange]
-    ),
-    onTreeExpansionChange: React.useCallback(
-      (newTreeExpansion: TreeExpansion) =>
-        onTreeExpansionChange(elementId, newTreeExpansion),
-      [elementId, onTreeExpansionChange]
-    )
-  };
 }
