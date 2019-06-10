@@ -35,7 +35,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   }
 
   :focus {
-    box-shadow: 0px 0px 1px 1px var(--primary4);
+    box-shadow: 0 0 1px 1px var(--primary4);
   }
 
   :disabled {
@@ -63,6 +63,10 @@ export const DarkStyledButton = styled(StyledButton)`
       props.selected ? 'var(--selected-bg)' : 'var(--hover-bg)'};
   }
 
+  :focus {
+    box-shadow: 0 0 0.5px 1px var(--primary4);
+  }
+
   :disabled {
     background: ${props =>
       props.selected ? 'var(--selected-bg)' : 'transparent'};
@@ -83,4 +87,5 @@ export const DarkIcon = styled(Icon)`
 
 export const Label = styled.span`
   padding: 0 0 0 6px;
+  line-height: 14px;
 `;

@@ -9,8 +9,13 @@ import {
   updateFixtureStateProps,
   resetFixtureStateProps
 } from 'react-cosmos-shared2/fixtureState';
-import { ValueInputTree } from '../../../shared/ui/ValueInputTree';
-import { TreeExpansion } from '../../../shared/ui';
+import {
+  TreeExpansion,
+  DarkButton,
+  DarkIconButton,
+  ValueInputTree
+} from '../../../shared/ui';
+import { RefreshCwIcon, CopyIcon } from '../../../shared/icons';
 import {
   FixtureExpansion,
   OnElementExpansionChange,
@@ -81,12 +86,12 @@ export function ComponentProps({
           <strong>PROPS</strong> (
           {componentName ? componentName : <em>Unnamed</em>})
         </Title>
-        <button
-          onClick={onResetValues}
+        <DarkIconButton
+          title="Reset to initial values"
+          icon={<RefreshCwIcon />}
           disabled={isEqual(values, initialValues)}
-        >
-          reset
-        </button>
+          onClick={onResetValues}
+        />
       </Header>
       <Body>
         <ValueInputTree
@@ -98,10 +103,14 @@ export function ComponentProps({
         />
       </Body>
       <Footer>
-        <label>
-          <input type="checkbox" checked={reset} onChange={onResetChange} />{' '}
-          Reset
-        </label>
+        <DarkButton
+          title="Reuse instances on prop changes"
+          label={'reuse instances'}
+          icon={<CopyIcon />}
+          selected={!reset}
+          disabled={false}
+          onClick={onResetChange}
+        />
       </Footer>
     </Container>
   );
@@ -120,15 +129,19 @@ const Header = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  line-height: 40px;
+  padding: 8px 0 0 0;
+  line-height: 32px;
 `;
 
 const Title = styled.div``;
 
-const Body = styled.div``;
+const Body = styled.div`
+  padding: 4px 0;
+`;
 
 const Footer = styled.div`
   display: flow;
   justify-content: flex-end;
   line-height: 40px;
+  padding: 0 0 8px 0;
 `;

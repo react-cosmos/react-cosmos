@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { RefreshCwIcon, RotateCwIcon } from '../../../shared/icons';
+import { RefreshCwIcon, CopyIcon } from '../../../shared/icons';
 import { Button, DarkButton, IconButton, DarkIconButton } from '.';
 
 const Row = styled.div`
@@ -84,33 +84,33 @@ export default (
     </DarkBg>
     <LightBg>
       <Button
-        title="Reset instance on every change"
-        label="reset instance"
-        icon={<RotateCwIcon />}
+        title="Reuse instances on prop changes"
+        label={'reuse instances'}
+        icon={<CopyIcon />}
         selected={false}
         disabled={false}
         onClick={() => {}}
       />
       <Button
-        title="Reset instance on every change"
-        label="reset instance"
-        icon={<RotateCwIcon />}
+        title="Reuse instances on prop changes"
+        label={'reuse instances'}
+        icon={<CopyIcon />}
         selected={false}
         disabled={true}
         onClick={() => {}}
       />
       <Button
-        title="Reset instance on every change"
-        label="reset instance"
-        icon={<RotateCwIcon />}
+        title="Reuse instances on prop changes"
+        label={'reuse instances'}
+        icon={<CopyIcon />}
         selected={true}
         disabled={false}
         onClick={() => {}}
       />
       <Button
-        title="Reset instance on every change"
-        label="reset instance"
-        icon={<RotateCwIcon />}
+        title="Reuse instances on prop changes"
+        label={'reuse instances'}
+        icon={<CopyIcon />}
         selected={true}
         disabled={true}
         onClick={() => {}}
@@ -118,33 +118,33 @@ export default (
     </LightBg>
     <DarkBg>
       <DarkButton
-        title="Reset instance on every change"
-        label="reset instance"
-        icon={<RotateCwIcon />}
+        title="Reuse instances on prop changes"
+        label={'reuse instances'}
+        icon={<CopyIcon />}
         selected={false}
         disabled={false}
         onClick={() => {}}
       />
       <DarkButton
-        title="Reset instance on every change"
-        label="reset instance"
-        icon={<RotateCwIcon />}
+        title="Reuse instances on prop changes"
+        label={'reuse instances'}
+        icon={<CopyIcon />}
         selected={false}
         disabled={true}
         onClick={() => {}}
       />
       <DarkButton
-        title="Reset instance on every change"
-        label="reset instance"
-        icon={<RotateCwIcon />}
+        title="Reuse instances on prop changes"
+        label={'reuse instances'}
+        icon={<CopyIcon />}
         selected={true}
         disabled={false}
         onClick={() => {}}
       />
       <DarkButton
-        title="Reset instance on every change"
-        label="reset instance"
-        icon={<RotateCwIcon />}
+        title="Reuse instances on prop changes"
+        label={'reuse instances'}
+        icon={<CopyIcon />}
         selected={true}
         disabled={true}
         onClick={() => {}}
