@@ -26,6 +26,10 @@ export default () => {
           null: {
             type: 'primitive',
             value: null
+          },
+          unserializable: {
+            type: 'unserializable',
+            stringifiedValue: '<div />'
           }
         }
       },
