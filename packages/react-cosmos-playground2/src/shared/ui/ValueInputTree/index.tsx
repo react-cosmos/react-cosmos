@@ -27,10 +27,11 @@ export const ValueInputTree = React.memo(function ValueInputTree({
     <Container>
       <TreeView
         node={rootNode}
-        renderDir={({ node, parents, onToggle }) => (
+        renderDir={({ node, parents, isExpanded, onToggle }) => (
           <ValueInputTreeDir
             node={node}
             parents={parents}
+            isExpanded={isExpanded}
             onToggle={onToggle}
           />
         )}

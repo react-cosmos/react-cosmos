@@ -52,7 +52,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
 
 export const DarkStyledButton = styled(StyledButton)`
   --selected-bg: hsl(var(--hue-primary), 19%, 22%);
-  --hover-bg: rgba(255, 255, 255, 0.06);
+  --hover-bg: rgba(255, 255, 255, 0.05);
 
   background: ${props =>
     props.selected ? 'var(--selected-bg)' : 'transparent'};
@@ -82,7 +82,7 @@ export const Icon = styled.span`
 `;
 
 export const DarkIcon = styled(Icon)`
-  color: var(--grey5);
+  color: var(--grey4);
 `;
 
 export const Label = styled.span`

@@ -1,11 +1,12 @@
 import React from 'react';
+import styled from 'styled-components';
 import { clone, setWith } from 'lodash';
 import {
   FixtureStatePrimitiveValueType,
   FixtureStateValue,
   FixtureStateValues
 } from 'react-cosmos-shared2/fixtureState';
-import { TreeItemValue, TreeRowContainer } from '../shared';
+import { TreeItemValue, TreeItemContainer } from '../shared';
 import { UnserializableInput } from './UnserializableInput';
 import { StringInput } from './StringInput';
 import { NumberInput } from './NumberInput';
@@ -41,11 +42,22 @@ export function ValueInputTreeItem({
   );
 
   return (
-    <TreeRowContainer style={{ paddingLeft: parents.length * 16 }}>
-      {getInput(item, itemId, itemName, onInputChange)}
-    </TreeRowContainer>
+    <TreeItemContainer indentLevel={parents.length}>
+      <InputContainer>
+        {getInput(item, itemId, itemName, onInputChange)}
+      </InputContainer>
+    </TreeItemContainer>
   );
 }
+
+export const InputContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  min-height: 28px;
+  line-height: 28px;
+  padding: 0;
+`;
 
 function getInput(
   item: TreeItemValue,

@@ -11,7 +11,6 @@ type Props = {
 
 export function StringInput({ id, label, value, onChange }: Props) {
   const [focused, setFocused] = React.useState(false);
-
   const onFocus = React.useCallback(() => setFocused(true), []);
   const onBlur = React.useCallback(() => setFocused(false), []);
 
@@ -29,7 +28,7 @@ export function StringInput({ id, label, value, onChange }: Props) {
       <InputContainer focused={focused}>
         <TextContainer>
           <TextMirror>{mirrorText}</TextMirror>
-          <Textarea
+          <TextField
             rows={1}
             id={id}
             value={value}
@@ -44,7 +43,7 @@ export function StringInput({ id, label, value, onChange }: Props) {
 }
 
 export const InputContainer = styled.div<{ focused: boolean }>`
-  margin-top: 4px;
+  margin-top: 2px;
   padding: 2px 4px;
   border-radius: 3px;
   background: ${props => (props.focused ? 'var(--grey1)' : 'transparent')};
@@ -54,9 +53,9 @@ export const TextContainer = styled.div`
   position: relative;
 `;
 
-const Textarea = styled.textarea`
+const TextField = styled.textarea`
   position: absolute;
-  box-sizing: border-box;
+  z-index: 1;
   top: 0;
   left: 0;
   width: 100%;
@@ -65,11 +64,10 @@ const Textarea = styled.textarea`
   background: none;
   color: var(--grey6);
   line-height: 20px;
+  white-space: pre;
+  overflow: hidden;
   outline: none;
   resize: none;
-  overflow: hidden;
-  white-space: pre;
-  z-index: 1;
 `;
 
 const TextMirror = styled.div`
