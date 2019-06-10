@@ -5,12 +5,13 @@ export const Label = styled.label`
   display: block;
   max-width: 50%;
   box-sizing: border-box;
-  padding: 0 6px 0 0;
+  padding: 0 2px 0 0;
   color: var(--grey4);
   font-size: 14px;
   user-select: none;
 `;
 
+// TODO: Remove
 export const InputContainer = styled.div`
   flex: auto;
 

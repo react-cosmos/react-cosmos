@@ -34,7 +34,7 @@ export default () => {
         }
       },
       {
-        componentName: 'BarComponent',
+        componentName: '',
         elementId: { decoratorId: 'root', elPath: 'props.children[1]' },
         renderKey: 0,
         values: {
@@ -50,6 +50,18 @@ export default () => {
                 value: 1337
               }
             }
+          },
+          string: {
+            type: 'primitive',
+            value: 'hello world'
+          },
+          number: {
+            type: 'primitive',
+            value: 1337
+          },
+          boolean: {
+            type: 'primitive',
+            value: false
           }
         }
       }

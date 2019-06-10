@@ -10,9 +10,7 @@ export function NullInput({ id, label }: Props) {
   return (
     <>
       <Label htmlFor={id}>{label}</Label>
-      <InputContainer>
-        <em>null</em>
-      </InputContainer>
+      <InputContainer>null</InputContainer>
     </>
   );
 }

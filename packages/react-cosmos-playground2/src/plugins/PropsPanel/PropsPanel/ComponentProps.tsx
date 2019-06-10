@@ -15,7 +15,7 @@ import {
   DarkIconButton,
   ValueInputTree
 } from '../../../shared/ui';
-import { RefreshCwIcon, CopyIcon } from '../../../shared/icons';
+import { RotateCcwIcon, CopyIcon } from '../../../shared/icons';
 import {
   FixtureExpansion,
   OnElementExpansionChange,
@@ -83,12 +83,14 @@ export function ComponentProps({
     <Container>
       <Header>
         <Title>
-          <strong>PROPS</strong> (
-          {componentName ? componentName : <em>Unnamed</em>})
+          <strong>PROPS</strong>
+          <ComponentName>
+            {componentName ? componentName : <em>Unnamed</em>}
+          </ComponentName>
         </Title>
         <DarkIconButton
           title="Reset to initial values"
-          icon={<RefreshCwIcon />}
+          icon={<RotateCcwIcon />}
           disabled={isEqual(values, initialValues)}
           onClick={onResetValues}
         />
@@ -117,7 +119,7 @@ export function ComponentProps({
 }
 
 const Container = styled.div`
-  padding: 0 12px;
+  padding: 0 16px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 
   :first-child {
@@ -133,10 +135,19 @@ const Header = styled.div`
   line-height: 32px;
 `;
 
-const Title = styled.div``;
+const Title = styled.div`
+  strong {
+    font-weight: 500;
+  }
+`;
+
+const ComponentName = styled.span`
+  padding: 0 0 0 6px;
+  color: var(--grey4);
+`;
 
 const Body = styled.div`
-  padding: 4px 0;
+  padding: 8px 0 4px 0;
 `;
 
 const Footer = styled.div`

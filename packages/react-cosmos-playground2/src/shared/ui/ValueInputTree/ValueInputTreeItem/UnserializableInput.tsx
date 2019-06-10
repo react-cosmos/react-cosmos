@@ -12,9 +12,7 @@ export function UnserializableInput({ id, label, value }: Props) {
   return (
     <>
       <Label htmlFor={id}>{label}</Label>
-      <InputContainer>
-        <em>{value}</em>
-      </InputContainer>
+      <InputContainer>{value}</InputContainer>
     </>
   );
 }

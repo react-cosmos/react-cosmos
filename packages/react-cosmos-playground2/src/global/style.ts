@@ -62,11 +62,11 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
-  input {
+  input, textarea {
     font-family: var(--font-family);
   }
 
-  input, button {
+  input, textarea, button {
     font-size: 14px;
   }
 
