@@ -64,5 +64,6 @@ function sortFsProps(fsProps: FixtureStateProps[]) {
 }
 
 const Container = styled.div`
-  padding: 8px 12px;
+  background: var(--grey2);
+  color: var(--grey6);
 `;

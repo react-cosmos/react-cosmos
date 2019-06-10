@@ -1,5 +1,6 @@
 import React from 'react';
 import { isEqual } from 'lodash';
+import styled from 'styled-components';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import {
   FixtureState,
@@ -33,7 +34,7 @@ export function ComponentProps({
   const { componentName, elementId, values } = fsProps;
   const strElementId = stringifyElementId(elementId);
 
-  const [reset, setReset] = React.useState(false);
+  const [reset, setReset] = React.useState(true);
   const onResetChange = React.useCallback(() => setReset(!reset), [reset]);
 
   const [initialValues] = React.useState(() => values);
@@ -74,30 +75,60 @@ export function ComponentProps({
   );
 
   return (
-    <>
-      <div>
-        <strong>PROPS</strong> (
-        {componentName ? componentName : <em>Unnamed</em>})
+    <Container>
+      <Header>
+        <Title>
+          <strong>PROPS</strong> (
+          {componentName ? componentName : <em>Unnamed</em>})
+        </Title>
         <button
           onClick={onResetValues}
           disabled={isEqual(values, initialValues)}
         >
           reset
         </button>
-      </div>
-      <ValueInputTree
-        id={strElementId}
-        values={values}
-        treeExpansion={fixtureExpansion[strElementId] || {}}
-        onValueChange={onValueChange}
-        onTreeExpansionChange={onTreeExpansionChange}
-      />
-      <div>
+      </Header>
+      <Body>
+        <ValueInputTree
+          id={strElementId}
+          values={values}
+          treeExpansion={fixtureExpansion[strElementId] || {}}
+          onValueChange={onValueChange}
+          onTreeExpansionChange={onTreeExpansionChange}
+        />
+      </Body>
+      <Footer>
         <label>
           <input type="checkbox" checked={reset} onChange={onResetChange} />{' '}
           Reset
         </label>
-      </div>
-    </>
+      </Footer>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  padding: 0 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  :first-child {
+    border-top: none;
+  }
+`;
+
+const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  line-height: 40px;
+`;
+
+const Title = styled.div``;
+
+const Body = styled.div``;
+
+const Footer = styled.div`
+  display: flow;
+  justify-content: flex-end;
+  line-height: 40px;
+`;

@@ -11,8 +11,9 @@ export type TreeItemValue =
 
 export type ValueNode = TreeNode<TreeItemValue>;
 
-export const RowContainer = styled.div`
+export const TreeRowContainer = styled.div`
   display: flex;
   flex-direction: row;
-  margin: 8px 0;
+  min-height: 28px;
+  line-height: 28px;
 `;

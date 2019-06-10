@@ -1,5 +1,5 @@
 import React from 'react';
-import { RowContainer, ValueNode } from './shared';
+import { TreeRowContainer, ValueNode } from './shared';
 
 type Props = {
   node: ValueNode;
@@ -11,12 +11,12 @@ export function ValueInputTreeDir({ node, parents, onToggle }: Props) {
   const dirName = parents[parents.length - 1];
   const childNames = getChildNames(node);
   return (
-    <RowContainer style={{ paddingLeft: (parents.length - 1) * 16 }}>
+    <TreeRowContainer style={{ paddingLeft: (parents.length - 1) * 16 }}>
       <button disabled={childNames.length === 0} onClick={onToggle}>
         {dirName}
         {childNames.length > 0 ? ` { ${childNames.join(', ')} }` : '{}'}
       </button>
-    </RowContainer>
+    </TreeRowContainer>
   );
 }
 

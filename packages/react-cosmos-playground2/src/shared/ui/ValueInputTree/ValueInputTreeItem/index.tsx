@@ -1,15 +1,16 @@
 import React from 'react';
-import styled from 'styled-components';
 import { clone, setWith } from 'lodash';
 import {
   FixtureStatePrimitiveValueType,
   FixtureStateValue,
   FixtureStateValues
 } from 'react-cosmos-shared2/fixtureState';
-import { TreeItemValue, RowContainer } from '../shared';
+import { TreeItemValue, TreeRowContainer } from '../shared';
+import { UnserializableInput } from './UnserializableInput';
 import { StringInput } from './StringInput';
 import { NumberInput } from './NumberInput';
 import { BooleanInput } from './BooleanInput';
+import { NullInput } from './NullInput';
 
 type Props = {
   treeId: string;
@@ -39,76 +40,64 @@ export function ValueInputTreeItem({
     [itemName, onValueChange, parents, values]
   );
 
-  // TODO: Use switch or map instead if IFs
-  // TODO: Reuse RowContainer/Label/InputContainer (compose inside each input?)
+  return (
+    <TreeRowContainer style={{ paddingLeft: parents.length * 16 }}>
+      {getInput(item, itemId, itemName, onInputChange)}
+    </TreeRowContainer>
+  );
+}
+
+function getInput(
+  item: TreeItemValue,
+  id: string,
+  label: string,
+  onInputChange: (value: FixtureStatePrimitiveValueType) => unknown
+) {
   if (item.type === 'unserializable') {
     return (
-      <RowContainer style={{ paddingLeft: parents.length * 16 }}>
-        <Label htmlFor={itemId}>{itemName}</Label>
-        <InputContainer>
-          <input
-            id={itemId}
-            type="text"
-            disabled
-            value={item.stringifiedValue}
-          />
-        </InputContainer>
-      </RowContainer>
+      <UnserializableInput
+        id={id}
+        label={label}
+        value={item.stringifiedValue}
+      />
     );
   }
 
   if (typeof item.value === 'string') {
     return (
-      <RowContainer style={{ paddingLeft: parents.length * 16 }}>
-        <Label htmlFor={itemId}>{itemName}</Label>
-        <InputContainer>
-          <StringInput
-            id={itemId}
-            value={item.value}
-            onChange={onInputChange}
-          />
-        </InputContainer>
-      </RowContainer>
+      <StringInput
+        id={id}
+        label={label}
+        value={item.value}
+        onChange={onInputChange}
+      />
     );
   }
 
   if (typeof item.value === 'number') {
     return (
-      <RowContainer style={{ paddingLeft: parents.length * 16 }}>
-        <Label htmlFor={itemId}>{itemName}</Label>
-        <InputContainer>
-          <NumberInput
-            id={itemId}
-            value={item.value}
-            onChange={onInputChange}
-          />
-        </InputContainer>
-      </RowContainer>
+      <NumberInput
+        id={id}
+        label={label}
+        value={item.value}
+        onChange={onInputChange}
+      />
     );
   }
 
   if (typeof item.value === 'boolean') {
     return (
-      <RowContainer style={{ paddingLeft: parents.length * 16 }}>
-        <Label htmlFor={itemId}>{itemName}</Label>
-        <InputContainer>
-          <BooleanInput
-            id={itemId}
-            value={item.value}
-            onChange={onInputChange}
-          />
-        </InputContainer>
-      </RowContainer>
+      <BooleanInput
+        id={id}
+        label={label}
+        value={item.value}
+        onChange={onInputChange}
+      />
     );
   }
 
   if (item.value === null) {
-    return (
-      <RowContainer style={{ paddingLeft: parents.length * 16 }}>
-        {itemName}
-        <InputContainer>null</InputContainer>
-      </RowContainer>
-    );
+    return <NullInput id={id} label={label} />;
   }
 
   throw new Error(`Invalid primitive value: ${item.value}`);
@@ -130,22 +119,3 @@ function setValueAtPath(
 function getItemId(treeId: string, parents: string[], itemName: string) {
   return `${treeId}-${[...parents, itemName].join('-')}`;
 }
-
-const Label = styled.label`
-  flex-shrink: 0;
-  display: block;
-  max-width: 50%;
-  box-sizing: border-box;
-  padding: 0 6px 0 0;
-  font-size: 14px;
-`;
-
-const InputContainer = styled.div`
-  flex: auto;
-
-  input,
-  textarea {
-    width: 100%;
-    box-sizing: border-box;
-  }
-`;
