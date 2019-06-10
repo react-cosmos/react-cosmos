@@ -62,6 +62,11 @@ export const DarkStyledButton = styled(StyledButton)`
     background: ${props =>
       props.selected ? 'var(--selected-bg)' : 'var(--hover-bg)'};
   }
+
+  :disabled {
+    background: ${props =>
+      props.selected ? 'var(--selected-bg)' : 'transparent'};
+  }
 `;
 
 export const Icon = styled.span`
