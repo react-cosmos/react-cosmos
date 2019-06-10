@@ -50,12 +50,30 @@ export const StyledButton = styled.button<StyledButtonProps>`
   }
 `;
 
+export const DarkStyledButton = styled(StyledButton)`
+  --selected-bg: hsl(var(--hue-primary), 19%, 22%);
+  --hover-bg: rgba(255, 255, 255, 0.06);
+
+  background: ${props =>
+    props.selected ? 'var(--selected-bg)' : 'transparent'};
+  color: ${props => (props.selected ? 'var(--grey6)' : 'var(--grey5)')};
+
+  :hover {
+    background: ${props =>
+      props.selected ? 'var(--selected-bg)' : 'var(--hover-bg)'};
+  }
+`;
+
 export const Icon = styled.span`
   --size: 16px;
   width: var(--size);
   height: var(--size);
   padding: 2px 0 0 0;
   color: var(--grey3);
+`;
+
+export const DarkIcon = styled(Icon)`
+  color: var(--grey5);
 `;
 
 export const Label = styled.span`

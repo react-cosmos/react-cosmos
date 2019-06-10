@@ -57,6 +57,13 @@ export const RefreshCwIcon = () => (
   </Icon>
 );
 
+export const RotateCwIcon = () => (
+  <Icon>
+    <polyline points="23 4 23 10 17 10"></polyline>
+    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+  </Icon>
+);
+
 export const HomeIcon = () => (
   <Icon>
     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
