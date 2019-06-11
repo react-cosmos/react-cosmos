@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Label } from './shared';
 
 type Props = {
   id: string;
@@ -9,38 +10,36 @@ type Props = {
 };
 
 export function BooleanInput({ id, label, value, onChange }: Props) {
-  const onInputChange = React.useCallback(() => onChange(!value), [
+  const onInputToggle = React.useCallback(() => onChange(!value), [
     onChange,
     value
   ]);
 
   return (
-    <Container>
-      <LabelText>label</LabelText>
-      <input
-        type="checkbox"
-        name={id}
-        checked={value}
-        onChange={onInputChange}
-      />
-    </Container>
+    <>
+      <Label as="span" onClick={onInputToggle}>
+        {label}
+      </Label>
+      <BooleanButton onClick={onInputToggle}>
+        {value ? 'true' : 'false'}
+      </BooleanButton>
+    </>
   );
 }
 
-export const Container = styled.label`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-`;
-
-const LabelText = styled.span`
-  flex-shrink: 0;
-  display: block;
-  max-width: 50%;
-  box-sizing: border-box;
-  padding: 0 6px 0 0;
-  color: var(--grey4);
-  font-size: 14px;
+const BooleanButton = styled.button`
+  height: 24px;
+  margin-top: 2px;
+  padding: 0 4px;
+  border: none;
+  border-radius: 3px;
+  background: transparent;
+  color: var(--grey6);
+  line-height: 24px;
+  outline: none;
   user-select: none;
+
+  :focus {
+    box-shadow: 0 0 0.5px 1px var(--primary4);
+  }
 `;
