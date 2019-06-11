@@ -1,6 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
-import { Label } from './shared';
+import {
+  Label,
+  TextInputContainer,
+  TextContainer,
+  TextField,
+  TextMirror
+} from './shared';
 
 type Props = {
   id: string;
@@ -29,7 +34,7 @@ export function NumberInput({ id, label, value, onChange }: Props) {
   return (
     <>
       <Label htmlFor={id}>{label}</Label>
-      <InputContainer focused={focused}>
+      <TextInputContainer focused={focused}>
         <TextContainer>
           <TextMirror>{value}</TextMirror>
           <TextField
@@ -41,45 +46,7 @@ export function NumberInput({ id, label, value, onChange }: Props) {
             onBlur={onBlur}
           />
         </TextContainer>
-      </InputContainer>
+      </TextInputContainer>
     </>
   );
 }
-
-export const InputContainer = styled.div<{ focused: boolean }>`
-  margin-top: 2px;
-  padding: 2px 4px;
-  border-radius: 3px;
-  background: ${props => (props.focused ? 'var(--grey1)' : 'transparent')};
-`;
-
-export const TextContainer = styled.div`
-  position: relative;
-`;
-
-const TextField = styled.textarea`
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-  background: none;
-  color: var(--grey6);
-  line-height: 20px;
-  white-space: pre;
-  overflow: hidden;
-  outline: none;
-  resize: none;
-`;
-
-const TextMirror = styled.div`
-  min-width: 32px;
-  max-width: 192px;
-  min-height: 20px;
-  line-height: 20px;
-  white-space: pre;
-  overflow: hidden;
-  opacity: 0;
-`;

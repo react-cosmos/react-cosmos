@@ -1,5 +1,5 @@
 import React from 'react';
-import { Label, InputContainer } from './shared';
+import { Label } from './shared';
 
 type Props = {
   id: string;
@@ -12,7 +12,7 @@ export function UnserializableInput({ id, label, value }: Props) {
   return (
     <>
       <Label htmlFor={id}>{label}</Label>
-      <InputContainer>{value}</InputContainer>
+      {value}
     </>
   );
 }
