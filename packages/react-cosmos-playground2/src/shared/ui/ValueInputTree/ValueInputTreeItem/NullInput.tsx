@@ -1,5 +1,5 @@
 import React from 'react';
-import { Label } from './shared';
+import { Label, UneditableInput } from './shared';
 
 type Props = {
   id: string;
@@ -10,7 +10,7 @@ export function NullInput({ id, label }: Props) {
   return (
     <>
       <Label htmlFor={id}>{label}</Label>
-      null
+      <UneditableInput>null</UneditableInput>
     </>
   );
 }

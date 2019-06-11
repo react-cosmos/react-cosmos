@@ -29,7 +29,7 @@ export function BooleanInput({ id, label, value, onChange }: Props) {
 
 const BooleanButton = styled.button`
   height: 24px;
-  margin-top: 2px;
+  margin: 2px 0 0 0;
   padding: 0 4px;
   border: none;
   border-radius: 3px;

@@ -9,7 +9,7 @@ export const Label = styled.label`
 `;
 
 export const TextInputContainer = styled.div<{ focused: boolean }>`
-  margin-top: 2px;
+  margin: 2px 0 0 0;
   padding: 2px 4px;
   border-radius: 3px;
   background: ${props => (props.focused ? 'var(--grey1)' : 'transparent')};
@@ -46,4 +46,13 @@ export const TextMirror = styled.div`
   white-space: pre;
   overflow: hidden;
   opacity: 0;
+`;
+
+export const UneditableInput = styled.span`
+  height: 24px;
+  margin: 2px 0 0 0;
+  padding: 0 4px;
+  line-height: 24px;
+  font-style: italic;
+  cursor: not-allowed;
 `;

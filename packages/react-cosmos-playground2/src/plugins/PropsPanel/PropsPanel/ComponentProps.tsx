@@ -142,12 +142,12 @@ const Title = styled.div`
 `;
 
 const ComponentName = styled.span`
-  padding: 0 0 0 6px;
+  padding: 0 0 0 8px;
   color: var(--grey4);
 `;
 
 const Body = styled.div`
-  padding: 8px 0 4px 0;
+  padding: 4px 0 4px 0;
 `;
 
 const Footer = styled.div`

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Label } from './shared';
+import { Label, UneditableInput } from './shared';
 
 type Props = {
   id: string;
@@ -8,11 +8,12 @@ type Props = {
 };
 
 // TODO: Handle multiline values
+// TODO: Truncate on small widths
 export function UnserializableInput({ id, label, value }: Props) {
   return (
     <>
       <Label htmlFor={id}>{label}</Label>
-      {value}
+      <UneditableInput>{value}</UneditableInput>
     </>
   );
 }
