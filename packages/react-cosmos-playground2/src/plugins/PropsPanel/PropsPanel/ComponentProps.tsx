@@ -11,7 +11,6 @@ import {
 } from 'react-cosmos-shared2/fixtureState';
 import {
   TreeExpansion,
-  DarkButton,
   DarkIconButton,
   ValueInputTree
 } from '../../../shared/ui';
@@ -88,12 +87,21 @@ export function ComponentProps({
             {componentName ? componentName : <em>Unnamed</em>}
           </ComponentName>
         </Title>
-        <DarkIconButton
-          title="Reset to initial values"
-          icon={<RotateCcwIcon />}
-          disabled={isEqual(values, initialValues)}
-          onClick={onResetValues}
-        />
+        <Actions>
+          <DarkIconButton
+            title="Reset to initial values"
+            icon={<RotateCcwIcon />}
+            disabled={isEqual(values, initialValues)}
+            onClick={onResetValues}
+          />
+          <DarkIconButton
+            title="Reuse instances on prop changes"
+            icon={<CopyIcon />}
+            selected={!reset}
+            disabled={false}
+            onClick={onResetChange}
+          />
+        </Actions>
       </Header>
       <Body>
         <ValueInputTree
@@ -104,16 +112,6 @@ export function ComponentProps({
           onTreeExpansionChange={onTreeExpansionChange}
         />
       </Body>
-      <Footer>
-        <DarkButton
-          title="Reuse instances on prop changes"
-          label={'reuse instances'}
-          icon={<CopyIcon />}
-          selected={!reset}
-          disabled={false}
-          onClick={onResetChange}
-        />
-      </Footer>
     </Container>
   );
 }
@@ -141,18 +139,16 @@ const Title = styled.div`
   }
 `;
 
+const Actions = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 const ComponentName = styled.span`
   padding: 0 0 0 8px;
   color: var(--grey4);
 `;
 
 const Body = styled.div`
-  padding: 4px 0 4px 0;
-`;
-
-const Footer = styled.div`
-  display: flow;
-  justify-content: flex-end;
-  line-height: 40px;
-  padding: 0 0 8px 0;
+  padding: 4px 0 8px 0;
 `;
