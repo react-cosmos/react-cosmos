@@ -39,8 +39,8 @@ Control panel
   - [ ] Style
 - [ ] Blank state
 - [ ] Class state panel
+- [ ] Viewport panel
 - [ ] Custom controls with Hooks API in (function) fixtures
-- [ ] Reset individual fixture state value
 
 Build notifications
 
