@@ -54,5 +54,6 @@ export const UneditableInput = styled.span`
   padding: 0 4px;
   line-height: 24px;
   font-style: italic;
+  white-space: pre;
   cursor: not-allowed;
 `;

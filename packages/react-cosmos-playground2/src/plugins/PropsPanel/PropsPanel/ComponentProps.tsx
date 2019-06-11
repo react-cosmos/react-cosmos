@@ -117,7 +117,7 @@ export function ComponentProps({
 }
 
 const Container = styled.div`
-  padding: 0 16px;
+  padding: 0 12px 0 16px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 
   :first-child {
@@ -134,19 +134,22 @@ const Header = styled.div`
 `;
 
 const Title = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+
   strong {
     font-weight: 500;
   }
 `;
 
+const ComponentName = styled.span`
+  padding: 0 8px;
+  color: var(--grey4);
+`;
+
 const Actions = styled.div`
   display: flex;
   flex-direction: row;
-`;
-
-const ComponentName = styled.span`
-  padding: 0 0 0 8px;
-  color: var(--grey4);
 `;
 
 const Body = styled.div`
