@@ -25,11 +25,11 @@ describe('Export', () => {
     it('has fixture paths', () => {
       userDepsContainsModule('__fixtures__/Hello World.ts');
       userDepsContainsModule('Counter/index.fixture.tsx');
-      userDepsContainsModule('WelcomeMessage/index.fixture.js');
+      userDepsContainsModule('WelcomeMessage/index.fixture.tsx');
     });
 
     it('has decorator paths', () => {
-      userDepsContainsModule('WelcomeMessage/cosmos.decorator.js');
+      userDepsContainsModule('WelcomeMessage/cosmos.decorator.tsx');
     });
   });
 });
