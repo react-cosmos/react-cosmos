@@ -49,14 +49,21 @@ const Button = styled.button`
   flex-direction: row;
   align-items: center;
   max-width: 100%;
-  height: 28px;
+  height: 24px;
+  margin: 0 0 0 -5px;
+  padding: 0 4px;
   border: none;
+  border-radius: 3px;
   background: transparent;
   color: var(--grey4);
-  line-height: 28px;
+  line-height: 24px;
   text-align: left;
   outline: none;
   white-space: nowrap;
+
+  :focus {
+    box-shadow: 0 0 0.5px 1px var(--primary4);
+  }
 `;
 
 const ChevronContainer = styled.span`
@@ -65,8 +72,8 @@ const ChevronContainer = styled.span`
   flex-shrink: 0;
   width: var(--size);
   height: var(--size);
-  margin: 0 0 0 -2px;
-  padding: 2px 2px 0 0;
+  margin: 0 0 0 -3px;
+  padding: 2px 0 0 0;
 `;
 
 const Text = styled.span`

@@ -117,7 +117,6 @@ export function ComponentProps({
 }
 
 const Container = styled.div`
-  padding: 0 12px 0 16px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 
   :first-child {
@@ -129,7 +128,7 @@ const Header = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 8px 0 0 0;
+  padding: 8px 12px 0 16px;
   line-height: 32px;
 `;
 
@@ -153,5 +152,5 @@ const Actions = styled.div`
 `;
 
 const Body = styled.div`
-  padding: 4px 0 8px 0;
+  padding: 4px 12px 8px 16px;
 `;

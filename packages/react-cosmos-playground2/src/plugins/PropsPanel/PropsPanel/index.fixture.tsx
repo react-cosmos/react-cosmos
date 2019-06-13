@@ -1,5 +1,6 @@
 import React from 'react';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
+import { Viewport } from 'react-cosmos-fixture';
 import { stringifyElementId } from '../shared';
 import { PropsPanel } from '.';
 
@@ -48,6 +49,10 @@ export default () => {
               number: {
                 type: 'primitive',
                 value: 1337
+              },
+              boolean: {
+                type: 'primitive',
+                value: false
               }
             }
           },
@@ -70,16 +75,18 @@ export default () => {
   const [fixtureExpansion, setFixtureExpansion] = React.useState({});
 
   return (
-    <PropsPanel
-      fixtureState={fixtureState}
-      fixtureExpansion={fixtureExpansion}
-      onFixtureStateChange={setFixtureState}
-      onElementExpansionChange={(elementId, treeExpansion) => {
-        setFixtureExpansion({
-          ...fixtureExpansion,
-          [stringifyElementId(elementId)]: treeExpansion
-        });
-      }}
-    />
+    <Viewport width={224} height={400}>
+      <PropsPanel
+        fixtureState={fixtureState}
+        fixtureExpansion={fixtureExpansion}
+        onFixtureStateChange={setFixtureState}
+        onElementExpansionChange={(elementId, treeExpansion) => {
+          setFixtureExpansion({
+            ...fixtureExpansion,
+            [stringifyElementId(elementId)]: treeExpansion
+          });
+        }}
+      />
+    </Viewport>
   );
 };
