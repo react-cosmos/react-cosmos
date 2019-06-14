@@ -9,8 +9,8 @@ type Props = {
 
 // This awkward declaration is required because of the cosmosCapture static
 // property, which makes TS generate a declaration for Viewport that doesn't
-// conform to the React's component interface. Without this TS would accept any
-// props for Viewport.
+// conform to React's component interface. Without this explicit type TS would
+// allow clients to pass any props to Viewport.
 export const Viewport: React.FC<Props> = function Viewport({
   children,
   width,
