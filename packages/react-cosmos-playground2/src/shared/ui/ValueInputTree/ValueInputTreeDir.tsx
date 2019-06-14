@@ -18,25 +18,28 @@ export function ValueInputTreeDir({
 }: Props) {
   const dirName = parents[parents.length - 1];
   const childNames = getChildNames(node);
+  const disabled = childNames.length === 0;
   return (
     <TreeItemContainer indentLevel={parents.length - 1}>
       <ButtonContainer>
-        <Button disabled={childNames.length === 0} onClick={onToggle}>
+        <Button disabled={disabled} onClick={onToggle}>
           <>
-            <ChevronContainer>
+            <ChevronContainer disabled={disabled}>
               {isExpanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
             </ChevronContainer>
             <Text>
               {dirName}
-              <ChildNames>
-                {childNames.length > 0 ? `{ ${childNames.join(', ')} }` : `{}`}
-              </ChildNames>
+              <ChildrenInfo>{getChildInfo(childNames)}</ChildrenInfo>
             </Text>
           </>
         </Button>
       </ButtonContainer>
     </TreeItemContainer>
   );
+}
+
+function getChildInfo(childNames: string[]): string {
+  return childNames.length > 0 ? `{ ${childNames.join(', ')} }` : `{}`;
 }
 
 function getChildNames(node: ValueNode): string[] {
@@ -69,12 +72,16 @@ const Button = styled.button`
     box-shadow: 0 0 0.5px 1px var(--primary4);
   }
 
+  :disabled {
+    color: var(--grey4);
+  }
+
   ::-moz-focus-inner {
     border: 0;
   }
 `;
 
-const ChevronContainer = styled.span`
+const ChevronContainer = styled.span<{ disabled: boolean }>`
   --size: 16px;
 
   flex-shrink: 0;
@@ -82,7 +89,7 @@ const ChevronContainer = styled.span`
   height: var(--size);
   margin: 0 0 0 -3px;
   padding: 2px 2px 0 0;
-  color: var(--grey4);
+  color: ${props => (props.disabled ? 'var(--grey3)' : 'var(--grey4)')};
 `;
 
 const Text = styled.span`
@@ -90,7 +97,7 @@ const Text = styled.span`
   text-overflow: ellipsis;
 `;
 
-const ChildNames = styled.span`
+const ChildrenInfo = styled.span`
   padding: 0 0 0 6px;
   color: var(--grey4);
 `;

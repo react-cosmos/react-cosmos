@@ -43,6 +43,23 @@ export default () => {
         elementId: { decoratorId: 'root', elPath: 'props.children[1]' },
         renderKey: 0,
         values: {
+          array: {
+            type: 'array',
+            values: [
+              {
+                type: 'primitive',
+                value: 'hello world'
+              },
+              {
+                type: 'primitive',
+                value: 1337
+              },
+              {
+                type: 'primitive',
+                value: false
+              }
+            ]
+          },
           object: {
             type: 'object',
             values: {
@@ -59,6 +76,14 @@ export default () => {
                 value: false
               }
             }
+          },
+          emptyObject: {
+            type: 'object',
+            values: {}
+          },
+          emptyArray: {
+            type: 'array',
+            values: []
           },
           string: {
             type: 'primitive',
