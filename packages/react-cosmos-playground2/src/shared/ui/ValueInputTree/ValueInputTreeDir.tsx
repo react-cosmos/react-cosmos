@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ValueNode } from './shared';
 import { ChevronRightIcon, ChevronDownIcon } from '../../icons';
-import { TreeItemContainer } from './shared';
+import { ValueNode, TreeItemContainer } from './shared';
 
 type Props = {
   node: ValueNode;
@@ -11,7 +10,6 @@ type Props = {
   onToggle: () => unknown;
 };
 
-// TODO: Focus state
 export function ValueInputTreeDir({
   node,
   parents,
@@ -22,19 +20,21 @@ export function ValueInputTreeDir({
   const childNames = getChildNames(node);
   return (
     <TreeItemContainer indentLevel={parents.length - 1}>
-      <Button disabled={childNames.length === 0} onClick={onToggle}>
-        <>
-          <ChevronContainer>
-            {isExpanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
-          </ChevronContainer>
-          <Text>
-            {dirName}
-            <ChildNames>
-              {childNames.length > 0 ? `{ ${childNames.join(', ')} }` : `{}`}
-            </ChildNames>
-          </Text>
-        </>
-      </Button>
+      <ButtonContainer>
+        <Button disabled={childNames.length === 0} onClick={onToggle}>
+          <>
+            <ChevronContainer>
+              {isExpanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
+            </ChevronContainer>
+            <Text>
+              {dirName}
+              <ChildNames>
+                {childNames.length > 0 ? `{ ${childNames.join(', ')} }` : `{}`}
+              </ChildNames>
+            </Text>
+          </>
+        </Button>
+      </ButtonContainer>
     </TreeItemContainer>
   );
 }
@@ -43,6 +43,10 @@ function getChildNames(node: ValueNode): string[] {
   const { dirs, items } = node;
   return [...Object.keys(dirs), ...Object.keys(items)];
 }
+
+const ButtonContainer = styled.div`
+  padding: 2px 0;
+`;
 
 const Button = styled.button`
   display: flex;
@@ -63,6 +67,10 @@ const Button = styled.button`
 
   :focus {
     box-shadow: 0 0 0.5px 1px var(--primary4);
+  }
+
+  ::-moz-focus-inner {
+    border: 0;
   }
 `;
 

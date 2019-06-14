@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Label } from './shared';
+import { Label, ValueContainer } from './shared';
 
 type Props = {
   id: string;
@@ -17,19 +17,21 @@ export function BooleanInput({ id, label, value, onChange }: Props) {
 
   return (
     <>
-      <Label as="span" onClick={onInputToggle}>
+      <Label title={label} as="span" onClick={onInputToggle}>
         {label}
       </Label>
-      <BooleanButton onClick={onInputToggle}>
-        {value ? 'true' : 'false'}
-      </BooleanButton>
+      <ValueContainer>
+        <BooleanButton onClick={onInputToggle}>
+          {value ? 'true' : 'false'}
+        </BooleanButton>
+      </ValueContainer>
     </>
   );
 }
 
 const BooleanButton = styled.button`
   height: 24px;
-  margin: 2px 0 0 0;
+  margin: 0;
   padding: 0 4px;
   border: none;
   border-radius: 3px;
@@ -41,5 +43,9 @@ const BooleanButton = styled.button`
 
   :focus {
     box-shadow: 0 0 0.5px 1px var(--primary4);
+  }
+
+  ::-moz-focus-inner {
+    border: 0;
   }
 `;
