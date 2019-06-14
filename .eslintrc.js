@@ -16,13 +16,5 @@ module.exports = {
     'react/display-name': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn'
-  },
-  overrides: [
-    {
-      files: ['**/__tests__/**', '**/cosmos.decorator.tsx'],
-      rules: {
-        'react/display-name': 'off'
-      }
-    }
-  ]
+  }
 };

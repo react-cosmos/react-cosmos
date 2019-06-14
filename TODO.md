@@ -8,12 +8,12 @@ Cosmos Next becomes _Cosmos_. The included features are meant to exceed everythi
   - [ ] ~~Try: Notifications for fixture create/remove/rename~~ Too much info to display inside a notification
 - [ ] Control panel
 - [ ] Try: UI-generated fixture variants
+- [ ] Try: Resize responsive viewport
 - [ ] Fixture search
   - [ ] Minimize left nav
 - [ ] Command API with search
 - [ ] Keyboard shortcuts
 - [ ] Try: Multi fixture select
-- [ ] Try: Resize responsive viewport
 - [ ] Improve React Native integration
 - [ ] Refresh docs
 - [ ] Maybe: Marketing website
@@ -36,11 +36,12 @@ Control panel
     - [x] Number value
     - [x] Boolean value
     - [x] Null value
-  - [ ] Style
+  - [x] Style
 - [ ] Blank state
 - [ ] Class state panel
+- [ ] Viewport panel
 - [ ] Custom controls with Hooks API in (function) fixtures
-- [ ] Reset individual fixture state value
+  - [ ] Dropdown component
 
 Build notifications
 

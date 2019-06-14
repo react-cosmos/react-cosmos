@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledButton, Icon } from './shared';
+import { StyledButton, DarkStyledButton, Icon, DarkIcon } from './shared';
 
 type Props = {
   icon: React.ReactNode;
@@ -25,5 +25,24 @@ export function IconButton({
     >
       <Icon>{icon}</Icon>
     </StyledButton>
+  );
+}
+
+export function DarkIconButton({
+  icon,
+  title,
+  disabled = false,
+  selected = false,
+  onClick
+}: Props) {
+  return (
+    <DarkStyledButton
+      title={title}
+      selected={selected}
+      disabled={disabled}
+      onClick={onClick}
+    >
+      <DarkIcon>{icon}</DarkIcon>
+    </DarkStyledButton>
   );
 }

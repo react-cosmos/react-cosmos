@@ -1,5 +1,6 @@
 import React from 'react';
 import { isEqual } from 'lodash';
+import styled from 'styled-components';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import {
   FixtureState,
@@ -8,8 +9,12 @@ import {
   updateFixtureStateProps,
   resetFixtureStateProps
 } from 'react-cosmos-shared2/fixtureState';
-import { ValueInputTree } from '../../../shared/ui/ValueInputTree';
-import { TreeExpansion } from '../../../shared/ui';
+import {
+  TreeExpansion,
+  DarkIconButton,
+  ValueInputTree
+} from '../../../shared/ui';
+import { RotateCcwIcon, CopyIcon } from '../../../shared/icons';
 import {
   FixtureExpansion,
   OnElementExpansionChange,
@@ -33,7 +38,7 @@ export function ComponentProps({
   const { componentName, elementId, values } = fsProps;
   const strElementId = stringifyElementId(elementId);
 
-  const [reset, setReset] = React.useState(false);
+  const [reset, setReset] = React.useState(true);
   const onResetChange = React.useCallback(() => setReset(!reset), [reset]);
 
   const [initialValues] = React.useState(() => values);
@@ -74,30 +79,79 @@ export function ComponentProps({
   );
 
   return (
-    <>
-      <div>
-        <strong>PROPS</strong> (
-        {componentName ? componentName : <em>Unnamed</em>})
-        <button
-          onClick={onResetValues}
-          disabled={isEqual(values, initialValues)}
-        >
-          reset
-        </button>
-      </div>
-      <ValueInputTree
-        id={strElementId}
-        values={values}
-        treeExpansion={fixtureExpansion[strElementId] || {}}
-        onValueChange={onValueChange}
-        onTreeExpansionChange={onTreeExpansionChange}
-      />
-      <div>
-        <label>
-          <input type="checkbox" checked={reset} onChange={onResetChange} />{' '}
-          Reset
-        </label>
-      </div>
-    </>
+    <Container>
+      <Header>
+        <Title>
+          <strong>PROPS</strong>
+          <ComponentName>
+            {componentName ? componentName : <em>Unnamed</em>}
+          </ComponentName>
+        </Title>
+        <Actions>
+          <DarkIconButton
+            title="Reset to initial values"
+            icon={<RotateCcwIcon />}
+            disabled={isEqual(values, initialValues)}
+            onClick={onResetValues}
+          />
+          <DarkIconButton
+            title="Reuse instances on prop changes"
+            icon={<CopyIcon />}
+            selected={!reset}
+            disabled={false}
+            onClick={onResetChange}
+          />
+        </Actions>
+      </Header>
+      <Body>
+        <ValueInputTree
+          id={strElementId}
+          values={values}
+          treeExpansion={fixtureExpansion[strElementId] || {}}
+          onValueChange={onValueChange}
+          onTreeExpansionChange={onTreeExpansionChange}
+        />
+      </Body>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  :first-child {
+    border-top: none;
+  }
+`;
+
+const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 8px 12px 0 16px;
+  line-height: 32px;
+`;
+
+const Title = styled.div`
+  color: var(--grey4);
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  strong {
+    font-weight: 500;
+    color: var(--grey5);
+  }
+`;
+
+const ComponentName = styled.span`
+  padding: 0 8px;
+`;
+
+const Actions = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const Body = styled.div`
+  padding: 4px 12px 8px 16px;
+`;

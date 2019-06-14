@@ -11,8 +11,14 @@ export type TreeItemValue =
 
 export type ValueNode = TreeNode<TreeItemValue>;
 
-export const RowContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin: 8px 0;
+type TreeItemContainerProps = {
+  indentLevel: number;
+};
+
+export const TreeItemContainer = styled.div<TreeItemContainerProps>`
+  padding: 0 0 0 ${props => getLeftPadding(props.indentLevel)}px;
 `;
+
+function getLeftPadding(depth: number) {
+  return depth * 16;
+}
