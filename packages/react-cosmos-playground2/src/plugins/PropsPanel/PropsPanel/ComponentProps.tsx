@@ -133,18 +133,18 @@ const Header = styled.div`
 `;
 
 const Title = styled.div`
+  color: var(--grey4);
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--grey5);
 
   strong {
     font-weight: 500;
+    color: var(--grey5);
   }
 `;
 
 const ComponentName = styled.span`
   padding: 0 8px;
-  color: var(--grey4);
 `;
 
 const Actions = styled.div`
