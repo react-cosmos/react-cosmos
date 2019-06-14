@@ -36,7 +36,7 @@ Control panel
     - [x] Number value
     - [x] Boolean value
     - [x] Null value
-  - [ ] Style
+  - [x] Style
 - [ ] Blank state
 - [ ] Class state panel
 - [ ] Viewport panel
