@@ -62,10 +62,13 @@ export const TextMirror = styled.div`
 `;
 
 export const UneditableInput = styled.span`
+  box-sizing: border-box;
   height: 24px;
-  padding: 0 4px;
-  line-height: 24px;
+  padding: 2px 4px;
+  line-height: 20px;
   font-style: italic;
   white-space: pre;
+  overflow: hidden;
+  text-overflow: ellipsis;
   cursor: not-allowed;
 `;

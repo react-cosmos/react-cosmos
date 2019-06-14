@@ -7,8 +7,6 @@ type Props = {
   value: string;
 };
 
-// TODO: Handle multiline values
-// TODO: Truncate on small widths
 export function UnserializableInput({ id, label, value }: Props) {
   return (
     <>
@@ -16,7 +14,7 @@ export function UnserializableInput({ id, label, value }: Props) {
         {label}
       </Label>
       <ValueContainer>
-        <UneditableInput>{value}</UneditableInput>
+        <UneditableInput title={value}>{value}</UneditableInput>
       </ValueContainer>
     </>
   );
