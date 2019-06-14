@@ -27,7 +27,7 @@ export function StringInput({ id, label, value, onChange }: Props) {
   );
 
   // Mirror textarea behavior and add an extra row after user adds a new line
-  const mirrorText = value.replace(/\n$/, `\n `);
+  const mirrorText = focused ? value.replace(/\n$/, `\n `) : value;
   return (
     <>
       <Label title={label} htmlFor={id}>
