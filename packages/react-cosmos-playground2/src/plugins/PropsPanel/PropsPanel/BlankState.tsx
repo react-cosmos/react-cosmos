@@ -1,16 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-import { EmptyIllustration } from '../../../shared/illustrations';
+import { SlidersIcon } from '../../../shared/icons';
 
 export function BlankState() {
   return (
     <Container>
       <IllustrationContainer>
-        <EmptyIllustration title="empty props panel" />
+        <SlidersIcon />
       </IllustrationContainer>
-      <Title>No visible props in selected fixture</Title>
+      <Title>
+        No visible props in <NoWrap>selected fixture</NoWrap>
+      </Title>
       <Description>
-        Props of exported JSX elements from your fixtures will appear here.
+        Props of exported JSX <NoWrap>elements from</NoWrap> your fixtures{' '}
+        <NoWrap>will appear here.</NoWrap>
       </Description>
     </Container>
   );
@@ -24,22 +27,30 @@ const Container = styled.div`
 `;
 
 export const IllustrationContainer = styled.div`
-  --size: 128px;
+  --size: 32px;
 
-  margin: 0 auto;
+  margin: 8px auto 16px auto;
   display: flex;
   width: var(--size);
   height: var(--size);
-  mix-blend-mode: luminosity;
+  color: var(--grey3);
 `;
 
 const Title = styled.div`
-  margin: 4px 0;
+  margin: 0 0 4px 0;
   color: var(--grey6);
+  text-align: center;
 `;
 
 const Description = styled.div`
+  margin: 0 auto;
+  max-width: 232px;
   color: var(--grey4);
   font-size: 13px;
   line-height: 20px;
+  text-align: center;
+`;
+
+export const NoWrap = styled.span`
+  white-space: nowrap;
 `;
