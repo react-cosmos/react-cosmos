@@ -19,7 +19,7 @@ export default {
     <Notifications
       notifications={[
         createInfoNotification({
-          id: 'renderer-connect-$RENDERER_ID1',
+          id: 'renderer-connect-1',
           title: 'Renderer connected',
           info: 'Your fixtures are ready to use.'
         })
@@ -37,12 +37,12 @@ export default {
               'Paste the renderer URL in the address bar of another browser.'
           }),
           createInfoNotification({
-            id: 'renderer-connect-$RENDERER_ID1',
+            id: 'renderer-connect-1',
             title: 'Renderer connected',
             info: 'Your fixtures are ready to use.'
           }),
           createInfoNotification({
-            id: 'renderer-connect-$RENDERER_ID2',
+            id: 'renderer-connect-2',
             title: 'Renderer connected',
             info: 'Your fixtures are ready to use.'
           }),
