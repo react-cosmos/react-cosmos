@@ -15,7 +15,6 @@ export const ValueContainer = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   min-width: 44px;
-  max-width: 198px;
   min-height: 28px;
   box-sizing: border-box;
   padding: 2px;
