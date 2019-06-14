@@ -13,7 +13,9 @@ export function NullInput({ id, label }: Props) {
         {label}
       </Label>
       <ValueContainer>
-        <UneditableInput>null</UneditableInput>
+        <UneditableInput>
+          <em>null</em>
+        </UneditableInput>
       </ValueContainer>
     </>
   );

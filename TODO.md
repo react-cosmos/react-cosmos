@@ -25,7 +25,7 @@ Control panel
 
 - [x] Redesign fixture state values (into recursive union types)
 - [x] Reusable TreeView
-- [ ] Props panel
+- [x] Props panel
   - [x] Resizable control panel
   - [x] Reset all fixture state values
     - [x] Store initial values
@@ -37,9 +37,10 @@ Control panel
     - [x] Boolean value
     - [x] Null value
   - [x] Style
-- [ ] Blank state
+  - [x] Blank state
 - [ ] Class state panel
 - [ ] Viewport panel
+  - [ ] Agnostic panel blank state
 - [ ] Custom controls with Hooks API in (function) fixtures
   - [ ] Dropdown component
 
