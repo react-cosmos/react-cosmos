@@ -14,7 +14,7 @@ export const ValueContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  min-width: 36px;
+  min-width: 44px;
   max-width: 198px;
   min-height: 28px;
   box-sizing: border-box;
@@ -54,11 +54,12 @@ export const TextField = styled.textarea`
 `;
 
 export const TextMirror = styled.div`
+  min-width: 32px;
   min-height: 20px;
   line-height: 20px;
   white-space: pre;
   overflow: hidden;
-  opacity: 0;
+  text-overflow: ellipsis;
 `;
 
 export const UneditableInput = styled.span`

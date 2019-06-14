@@ -36,7 +36,9 @@ export function StringInput({ id, label, value, onChange }: Props) {
       <ValueContainer>
         <TextInputContainer focused={focused}>
           <TextContainer>
-            <TextMirror>{mirrorText}</TextMirror>
+            <TextMirror style={{ opacity: focused ? 0 : 1 }}>
+              {mirrorText}
+            </TextMirror>
             <TextField
               rows={1}
               id={id}
@@ -44,6 +46,7 @@ export function StringInput({ id, label, value, onChange }: Props) {
               onChange={onInputChange}
               onFocus={onFocus}
               onBlur={onBlur}
+              style={{ opacity: focused ? 1 : 0 }}
             />
           </TextContainer>
         </TextInputContainer>

@@ -40,7 +40,9 @@ export function NumberInput({ id, label, value, onChange }: Props) {
       <ValueContainer>
         <TextInputContainer focused={focused}>
           <TextContainer>
-            <TextMirror>{value}</TextMirror>
+            <TextMirror style={{ opacity: focused ? 0 : 1 }}>
+              {value}
+            </TextMirror>
             <TextField
               rows={1}
               id={id}
@@ -48,6 +50,7 @@ export function NumberInput({ id, label, value, onChange }: Props) {
               onChange={onInputChange}
               onFocus={onFocus}
               onBlur={onBlur}
+              style={{ opacity: focused ? 1 : 0 }}
             />
           </TextContainer>
         </TextInputContainer>
