@@ -14,8 +14,14 @@ export function UnserializableInput({ id, label, value }: Props) {
         {label}
       </Label>
       <ValueContainer>
-        <UneditableInput title={value}>{value}</UneditableInput>
+        <UneditableInput title={value}>
+          {trimMultilineValue(value)}
+        </UneditableInput>
       </ValueContainer>
     </>
   );
+}
+
+function trimMultilineValue(value: string) {
+  return value.indexOf(`\n`) !== -1 ? `${value.split(`\n`)[0]}...` : value;
 }
