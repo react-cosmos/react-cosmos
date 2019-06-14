@@ -8,6 +8,9 @@ import {
   TextMirror
 } from './shared';
 
+const KEY_UP = 38;
+const KEY_DOWN = 40;
+
 type Props = {
   id: string;
   label: string;
@@ -15,8 +18,6 @@ type Props = {
   onChange: (newValue: number) => unknown;
 };
 
-// TODO: Allow user to enter "" (empty value)
-// TODO: Increase/decrease with up/down keys
 export function NumberInput({ id, label, value, onChange }: Props) {
   const [focused, setFocused] = React.useState(false);
   const onFocus = React.useCallback(() => setFocused(true), []);
@@ -30,6 +31,22 @@ export function NumberInput({ id, label, value, onChange }: Props) {
       }
     },
     [onChange]
+  );
+
+  const onKeyDown = React.useCallback(
+    (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      switch (e.keyCode) {
+        case KEY_UP:
+          e.preventDefault();
+          return onChange(value + 1);
+        case KEY_DOWN:
+          e.preventDefault();
+          return onChange(value - 1);
+        default:
+        // Nada
+      }
+    },
+    [value, onChange]
   );
 
   return (
@@ -50,6 +67,7 @@ export function NumberInput({ id, label, value, onChange }: Props) {
               onChange={onInputChange}
               onFocus={onFocus}
               onBlur={onBlur}
+              onKeyDown={onKeyDown}
               style={{ opacity: focused ? 1 : 0 }}
             />
           </TextContainer>
