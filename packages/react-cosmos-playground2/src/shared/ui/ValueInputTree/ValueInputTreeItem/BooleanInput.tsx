@@ -36,7 +36,7 @@ const BooleanButton = styled.button`
   border: none;
   border-radius: 3px;
   background: transparent;
-  color: var(--grey6);
+  color: var(--grey7);
   line-height: 24px;
   outline: none;
   user-select: none;

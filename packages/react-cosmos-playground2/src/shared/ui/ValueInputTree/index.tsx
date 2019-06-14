@@ -54,5 +54,5 @@ export const ValueInputTree = React.memo(function ValueInputTree({
 
 const Container = styled.div`
   background: var(--grey2);
-  color: var(--grey6);
+  color: var(--grey7);
 `;

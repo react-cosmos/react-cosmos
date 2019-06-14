@@ -44,7 +44,7 @@ export const TextField = styled.textarea`
   height: 100%;
   border: 0;
   background: none;
-  color: var(--grey6);
+  color: var(--grey7);
   line-height: 20px;
   white-space: pre;
   overflow: hidden;
@@ -66,6 +66,7 @@ export const UneditableInput = styled.span`
   height: 24px;
   padding: 2px 4px;
   line-height: 20px;
+  color: var(--grey4);
   font-style: italic;
   white-space: pre;
   overflow: hidden;

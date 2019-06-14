@@ -59,7 +59,7 @@ const Button = styled.button`
   border: none;
   border-radius: 3px;
   background: transparent;
-  color: var(--grey4);
+  color: var(--grey7);
   line-height: 24px;
   text-align: left;
   outline: none;
@@ -81,7 +81,8 @@ const ChevronContainer = styled.span`
   width: var(--size);
   height: var(--size);
   margin: 0 0 0 -3px;
-  padding: 2px 0 0 0;
+  padding: 2px 2px 0 0;
+  color: var(--grey4);
 `;
 
 const Text = styled.span`
@@ -91,5 +92,5 @@ const Text = styled.span`
 
 const ChildNames = styled.span`
   padding: 0 0 0 6px;
-  color: var(--grey5);
+  color: var(--grey4);
 `;
