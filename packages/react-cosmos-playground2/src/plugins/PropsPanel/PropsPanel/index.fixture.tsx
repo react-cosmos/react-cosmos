@@ -30,7 +30,11 @@ export default () => {
           },
           unserializable: {
             type: 'unserializable',
-            stringifiedValue: '<div />'
+            stringifiedValue: `<div>\n  <div />\n  <div />\n</div>`
+          },
+          unserializable2: {
+            type: 'unserializable',
+            stringifiedValue: `/whatyouseeiswhatyougetsometimes/i`
           }
         }
       },
@@ -58,9 +62,9 @@ export default () => {
           },
           string: {
             type: 'primitive',
-            value: 'hello world'
+            value: 'hello world hello world hello world hello world'
           },
-          number: {
+          numberWithAVeryVeryVeeeryLongName: {
             type: 'primitive',
             value: 1337
           },
@@ -75,7 +79,7 @@ export default () => {
   const [fixtureExpansion, setFixtureExpansion] = React.useState({});
 
   return (
-    <Viewport width={224} height={400}>
+    <Viewport width={320} height={400}>
       <PropsPanel
         fixtureState={fixtureState}
         fixtureExpansion={fixtureExpansion}
