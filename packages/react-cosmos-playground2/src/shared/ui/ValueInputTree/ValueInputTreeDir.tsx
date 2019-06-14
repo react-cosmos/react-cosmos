@@ -28,7 +28,7 @@ export function ValueInputTreeDir({
               {isExpanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
             </ChevronContainer>
             <Text>
-              {dirName}
+              <DirName disabled={disabled}>{dirName}</DirName>
               <ChildrenInfo>{getChildInfo(childNames)}</ChildrenInfo>
             </Text>
           </>
@@ -62,7 +62,6 @@ const Button = styled.button`
   border: none;
   border-radius: 3px;
   background: transparent;
-  color: var(--grey7);
   line-height: 24px;
   text-align: left;
   outline: none;
@@ -70,10 +69,6 @@ const Button = styled.button`
 
   :focus {
     box-shadow: 0 0 0.5px 1px var(--primary4);
-  }
-
-  :disabled {
-    color: var(--grey4);
   }
 
   ::-moz-focus-inner {
@@ -93,11 +88,15 @@ const ChevronContainer = styled.span<{ disabled: boolean }>`
 `;
 
 const Text = styled.span`
+  color: var(--grey4);
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 
+const DirName = styled.span<{ disabled: boolean }>`
+  color: ${props => (props.disabled ? 'var(--grey4)' : 'var(--grey7)')};
+`;
+
 const ChildrenInfo = styled.span`
   padding: 0 0 0 6px;
-  color: var(--grey4);
 `;

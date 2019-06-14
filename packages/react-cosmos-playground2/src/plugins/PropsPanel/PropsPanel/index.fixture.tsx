@@ -104,7 +104,7 @@ export default () => {
   const [fixtureExpansion, setFixtureExpansion] = React.useState({});
 
   return (
-    <Viewport width={320} height={400}>
+    <Viewport width={220} height={400}>
       <PropsPanel
         fixtureState={fixtureState}
         fixtureExpansion={fixtureExpansion}
