@@ -21,8 +21,16 @@ export function openFile({ cosmosConfig, expressApp }: DevServerPluginArgs) {
       return;
     }
 
-    launchEditor(`${absFilePath}:${line}:${column}`);
-    res.send();
+    new Promise((resolve, reject) => {
+      const file = `${absFilePath}:${line}:${column}`;
+      launchEditor(file, (fileName, errorMsg) => reject(errorMsg));
+      // If launchEditor doesn't report error within 500ms we assume it worked
+      setTimeout(resolve, 500);
+    })
+      .then(() => res.send())
+      .catch(err => {
+        res.status(500).send('Failed to open file');
+      });
   });
 }
 
