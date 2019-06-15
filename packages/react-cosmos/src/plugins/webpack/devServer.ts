@@ -1,7 +1,7 @@
 import path from 'path';
-import promisify from 'util.promisify';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
+import { NextHandleFunction } from 'connect';
 import webpackHotMiddleware from '@skidding/webpack-hot-middleware';
 import { BuildMessage } from 'react-cosmos-shared2/build';
 import { resolvePath } from '../../config';
@@ -10,6 +10,22 @@ import { getRootUrl, serveStaticDir } from '../../shared/static';
 import { getWebpack } from './shared';
 import { createWebpackCosmosConfig } from './cosmosConfig/webpack';
 import { getDevWebpackConfig } from './webpackConfig';
+
+type WebpackConfig = webpack.Configuration & {
+  // webpack-dev-server options (no need to install WDS just for these types)
+  devServer: {
+    contentBase: string;
+  };
+};
+
+type WebpackDevMiddlewareInstance = NextHandleFunction & {
+  close: (callback?: () => void) => unknown;
+};
+
+type WebpackDevMiddleware = (
+  compiler: webpack.ICompiler,
+  options?: webpackDevMiddleware.Options
+) => WebpackDevMiddlewareInstance;
 
 export async function webpackDevServer({
   cosmosConfig,
@@ -21,7 +37,10 @@ export async function webpackDevServer({
     return;
   }
 
-  const webpackConfig = getDevWebpackConfig(cosmosConfig, userWebpack);
+  const webpackConfig = getDevWebpackConfig(
+    cosmosConfig,
+    userWebpack
+  ) as WebpackConfig;
 
   // Serve static path derived from devServer.contentBase webpack config
   if (cosmosConfig.staticPath === null) {
@@ -60,7 +79,15 @@ export async function webpackDevServer({
   });
 
   console.log('[Cosmos] Building webpack...');
-  const wdmInst = webpackDevMiddleware(webpackCompiler, {
+
+  // Why import WDM here instead of at module level? Because it imports webpack,
+  // which might not be installed in the user's codebase. If this were to happen
+  // the Cosmos server would crash with a cryptic import error. See import here:
+  // https://github.com/webpack/webpack-dev-middleware/blob/eb2e32bab57df11bdfbbac19474eb16817d504fe/lib/fs.js#L8
+  // Instead, prior to importing WDM we check if webpack is installed and fail
+  // gracefully if not.
+  const wdm: WebpackDevMiddleware = require('webpack-dev-middleware');
+  const wdmInst = wdm(webpackCompiler, {
     // publicPath is the base path for the webpack assets and has to match
     // webpack.output.path
     publicPath: getRootUrl(cosmosConfig.publicUrl),
@@ -77,11 +104,11 @@ export async function webpackDevServer({
   await onCompilationDone;
 
   return async () => {
-    await promisify(wdmInst.close.bind(wdmInst))();
+    await new Promise(res => wdmInst.close(res));
   };
 }
 
-function getWebpackStaticPath({ devServer }: webpack.Configuration) {
+function getWebpackStaticPath({ devServer }: WebpackConfig) {
   return devServer && typeof devServer.contentBase === 'string'
     ? devServer.contentBase
     : null;
