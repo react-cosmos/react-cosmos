@@ -24,10 +24,6 @@ function registerTestPlugins() {
       fixtureFileSuffix: 'fixture'
     })
   });
-  mockRendererCore({
-    isRendererConnected: () => true,
-    getFixtures: () => fixtures
-  });
 }
 
 async function loadTestPlugins() {
@@ -42,6 +38,10 @@ it('renders fixture list from renderer state', async () => {
   mockRouter({
     getSelectedFixtureId: () => null
   });
+  mockRendererCore({
+    isRendererConnected: () => true,
+    getFixtures: () => fixtures
+  });
 
   const { getByText } = await loadTestPlugins();
   await waitForElement(() => getByText(/ein/i));
@@ -54,6 +54,10 @@ it('sends fixtureId to router on fixture click', async () => {
   const { selectFixture } = mockRouter({
     getSelectedFixtureId: () => null
   });
+  mockRendererCore({
+    isRendererConnected: () => true,
+    getFixtures: () => fixtures
+  });
 
   const { getByText } = await loadTestPlugins();
   fireEvent.click(getByText(/zwei/i));
@@ -63,4 +67,18 @@ it('sends fixtureId to router on fixture click', async () => {
     { path: 'zwei.js', name: null },
     false
   );
+});
+
+it('renders blank state', async () => {
+  registerTestPlugins();
+  mockRouter({
+    getSelectedFixtureId: () => null
+  });
+  mockRendererCore({
+    isRendererConnected: () => true,
+    getFixtures: () => ({})
+  });
+
+  const { getByTestId } = await loadTestPlugins();
+  getByTestId('nav-blank-state');
 });

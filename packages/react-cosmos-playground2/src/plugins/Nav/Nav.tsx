@@ -3,6 +3,7 @@ import React from 'react';
 import { FixtureNamesByPath, FixtureId } from 'react-cosmos-shared2/renderer';
 import { TreeExpansion } from '../../shared/ui';
 import { FixtureTree } from './FixtureTree';
+import { BlankState } from './BlankState';
 
 type Props = {
   fixturesDir: string;
@@ -32,6 +33,17 @@ export function Nav({
 
   if (!rendererConnected) {
     return <Container />;
+  }
+
+  if (Object.keys(fixtures).length === 0) {
+    return (
+      <Container>
+        <BlankState
+          fixturesDir={fixturesDir}
+          fixtureFileSuffix={fixtureFileSuffix}
+        />
+      </Container>
+    );
   }
 
   return (
