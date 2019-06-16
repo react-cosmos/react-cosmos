@@ -20,7 +20,7 @@ export function BlankState({ fixturesDir, fixtureFileSuffix }: Props) {
         <ol>
           <li>
             Place fixture files under <code>{fixturesDir}</code> dirs or add the{' '}
-            <code>.{fixtureFileSuffix}</code> suffix in{' '}
+            <code>.{fixtureFileSuffix}</code> suffix to{' '}
             <NoWrap>their name</NoWrap>
           </li>
           <li>
