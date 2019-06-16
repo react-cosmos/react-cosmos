@@ -57,7 +57,7 @@ export const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
   }
 
-  body, p, ul, li, h1, h2, h3, button, input, textarea, select {
+  body, p, ul, ol, li, h1, h2, h3, button, input, textarea, select {
     margin: 0;
     padding: 0;
   }

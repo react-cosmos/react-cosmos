@@ -5,9 +5,9 @@ import { SlidersIcon } from '../../../shared/icons';
 export function BlankState() {
   return (
     <Container>
-      <IllustrationContainer>
+      <IconContainer>
         <SlidersIcon />
-      </IllustrationContainer>
+      </IconContainer>
       <Title>
         No visible props in <NoWrap>selected fixture</NoWrap>
       </Title>
@@ -26,7 +26,7 @@ const Container = styled.div`
   line-height: 22px;
 `;
 
-export const IllustrationContainer = styled.div`
+export const IconContainer = styled.div`
   --size: 32px;
 
   margin: 8px auto 16px auto;

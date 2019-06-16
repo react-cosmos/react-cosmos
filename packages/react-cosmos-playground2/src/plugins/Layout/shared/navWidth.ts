@@ -4,7 +4,7 @@ import { Context } from './shared';
 const NAV_WIDTH_STORAGE_KEY = 'navWidth';
 const NAV_WIDTH_DEFAULT = 256;
 
-const NAV_WIDTH_MIN = 64;
+const NAV_WIDTH_MIN = 224;
 const NAV_WIDTH_MAX = 512;
 
 export function getNavWidthApi({ getMethodsOf }: Context) {
