@@ -9,7 +9,7 @@ type Props = {
 
 export function BlankState({ fixturesDir, fixtureFileSuffix }: Props) {
   return (
-    <Container>
+    <Container data-testid="nav-blank-state">
       <IconContainer>
         <FileIcon />
       </IconContainer>
