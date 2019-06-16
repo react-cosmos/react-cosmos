@@ -1,5 +1,4 @@
 import http from 'http';
-import promisify from 'util.promisify';
 import { CosmosConfig } from '../../config';
 
 type RequestListener = (
@@ -15,15 +14,20 @@ export function createHttpServer(
   const server = http.createServer(requestListener);
 
   async function start() {
-    const listen = promisify(server.listen.bind(server));
-    await listen(port, hostname);
+    await new Promise(resolve => {
+      if (hostname === null) {
+        server.listen(port, resolve);
+      } else {
+        server.listen(port, hostname, resolve);
+      }
+    });
 
     const hostnameDisplay = hostname || 'localhost';
     console.log(`[Cosmos] See you at http://${hostnameDisplay}:${port}`);
   }
 
   async function stop() {
-    await promisify(server.close.bind(server))();
+    await new Promise(resolve => server.close(resolve));
   }
 
   return { server, start, stop };
