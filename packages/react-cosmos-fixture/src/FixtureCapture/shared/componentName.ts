@@ -7,12 +7,10 @@ export function getComponentName(type: string | React.ComponentType): string {
     return type;
   }
 
-  if (componentNames.has(type)) {
-    return componentNames.get(type) as string;
+  if (!componentNames.has(type)) {
+    const name = type.displayName || type.name || '';
+    componentNames.set(type, name);
   }
 
-  const name = type.displayName || type.name || '';
-  componentNames.set(type, name);
-
-  return name;
+  return componentNames.get(type) as string;
 }
