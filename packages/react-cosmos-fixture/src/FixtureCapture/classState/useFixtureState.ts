@@ -12,6 +12,7 @@ import {
 } from 'react-cosmos-shared2/fixtureState';
 import { FixtureContext } from '../../FixtureContext';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';
+import { getComponentName } from '../shared/componentName';
 import {
   ElRefs,
   InitialStates,
@@ -85,7 +86,10 @@ export function useFixtureState(
             classState: createFixtureStateClassState({
               fixtureState: prevFs,
               elementId,
-              values: createValues(state)
+              values: createValues(state),
+              componentName: getComponentName(
+                elRef.constructor as React.ComponentType
+              )
             })
           }));
         }
@@ -161,7 +165,10 @@ export function useFixtureState(
         classState: createFixtureStateClassState({
           fixtureState: prevFs,
           elementId,
-          values: createValues(state)
+          values: createValues(state),
+          componentName: getComponentName(
+            elRef.constructor as React.ComponentType
+          )
         })
       }));
     } else {

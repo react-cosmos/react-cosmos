@@ -47,7 +47,8 @@ runFixtureLoaderTests(mount => {
             props: [anyProps()],
             classState: [
               anyClassState({
-                values: createValues({ count: 5 })
+                values: createValues({ count: 5 }),
+                componentName: 'Counter'
               })
             ]
           }
@@ -180,7 +181,8 @@ runFixtureLoaderTests(mount => {
             props: [anyProps()],
             classState: [
               anyClassState({
-                values: createValues({ count: 5 })
+                values: createValues({ count: 5 }),
+                componentName: 'Counter'
               })
             ]
           }
@@ -327,7 +329,8 @@ runFixtureLoaderTests(mount => {
             props: [anyProps()],
             classState: [
               anyClassState({
-                values: createValues({ count: 50 })
+                values: createValues({ count: 50 }),
+                componentName: 'Counter'
               })
             ]
           }
@@ -353,7 +356,8 @@ runFixtureLoaderTests(mount => {
             props: [anyProps()],
             classState: [
               anyClassState({
-                values: createValues({ count: 5 })
+                values: createValues({ count: 5 }),
+                componentName: 'Counter'
               })
             ]
           }
