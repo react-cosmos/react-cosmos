@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { Viewport } from 'react-cosmos-fixture';
-import { stringifyElementId } from '../shared';
+import { stringifyElementId } from '../../../shared/ui/valueInputTree';
 import { PropsPanel } from '.';
 
 const Container = styled.div`

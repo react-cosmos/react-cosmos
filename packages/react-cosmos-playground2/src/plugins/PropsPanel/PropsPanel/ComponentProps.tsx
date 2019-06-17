@@ -11,13 +11,13 @@ import {
 } from 'react-cosmos-shared2/fixtureState';
 import { TreeExpansion } from '../../../shared/ui/TreeView';
 import { DarkIconButton } from '../../../shared/ui/buttons';
-import { ValueInputTree } from '../../../shared/ui/valueInputTree';
-import { RotateCcwIcon, CopyIcon } from '../../../shared/icons';
 import {
+  ValueInputTree,
   FixtureExpansion,
   OnElementExpansionChange,
   stringifyElementId
-} from '../shared';
+} from '../../../shared/ui/valueInputTree';
+import { RotateCcwIcon, CopyIcon } from '../../../shared/icons';
 import { createPropsFsUpdater } from './shared';
 
 type Props = {

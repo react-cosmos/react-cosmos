@@ -5,10 +5,10 @@ import {
 } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import {
+  FixtureExpansion,
   OnElementExpansionChange,
-  stringifyElementId,
-  FixtureExpansion
-} from '../shared';
+  stringifyElementId
+} from '../../../shared/ui/valueInputTree';
 import { ComponentProps } from './ComponentProps';
 import { BlankState } from './BlankState';
 
