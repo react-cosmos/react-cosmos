@@ -24,7 +24,7 @@ Cosmos Next becomes _Cosmos_. The included features are meant to exceed everythi
 
 Plugin APIs will be released later, under minor versions.
 
-### Control panel
+Control panel
 
 - [x] Redesign fixture state values (into recursive union types)
 - [x] Reusable TreeView
@@ -46,7 +46,7 @@ Plugin APIs will be released later, under minor versions.
   - [ ] Dropdown component
   - [ ] Generic panel blank state
 
-### Build notifications
+Build notifications
 
 - [x] Fix catching of module-level exceptions
 - [x] Design build notification types
@@ -55,7 +55,7 @@ Plugin APIs will be released later, under minor versions.
   - [x] Integrate with webpack server-side hooks
 - [x] HMR fail notification
 
-### Notification redesign
+Notification redesign
 
 - [x] Make all notifications dissapear at once
 - [x] Move notifications _slot_ to inside the preview area
@@ -63,13 +63,13 @@ Plugin APIs will be released later, under minor versions.
 - [x] Allow clients to specific notification ID to avoid duplicating a message
 - [x] Transition notifications when they appear
 
-### `react-plugin` enhancements
+`react-plugin` enhancements
 
 - [x] Simplify plug API (instead of getProps, the component gets the plugin context API as props)
 - [x] Plug API for Slot arrays
 - [ ] Sort API for ArraySlot props
 
-### UI-generated fixture variants
+UI-generated fixture variants
 
 - [ ] Maybe: Store initialFixtureState in RendererCore (forgot the main benefit behind this)
   - [ ] Build each part incrementally as it arrives
