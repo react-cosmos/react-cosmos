@@ -1,6 +1,5 @@
 import React from 'react';
 import { isEqual } from 'lodash';
-import styled from 'styled-components';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import {
   FixtureState,
@@ -14,7 +13,12 @@ import {
   ValueInputTree,
   FixtureExpansion,
   OnElementExpansionChange,
-  stringifyElementId
+  stringifyElementId,
+  Container,
+  Header,
+  Title,
+  Actions,
+  Body
 } from '../../../shared/ui/valueInputTree';
 import { RotateCcwIcon } from '../../../shared/icons';
 import { createClassStateFsUpdater } from './shared';
@@ -74,12 +78,7 @@ export function ComponentClassState({
   return (
     <Container>
       <Header>
-        <Title>
-          <strong>CLASS STATE</strong>
-          <ComponentName>
-            {componentName ? componentName : <em>Unnamed</em>}
-          </ComponentName>
-        </Title>
+        <Title label="CLASS STATE" componentName={componentName} />
         <Actions>
           <DarkIconButton
             title="Reset to initial values"
@@ -101,44 +100,3 @@ export function ComponentClassState({
     </Container>
   );
 }
-
-const Container = styled.div`
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-
-  :first-child {
-    border-top: none;
-  }
-`;
-
-const Header = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 8px 12px 0 16px;
-  line-height: 32px;
-`;
-
-const Title = styled.div`
-  color: var(--grey4);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  strong {
-    font-weight: 500;
-    color: var(--grey5);
-  }
-`;
-
-const ComponentName = styled.span`
-  padding: 0 8px;
-`;
-
-const Actions = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-const Body = styled.div`
-  padding: 4px 12px 8px 16px;
-`;
