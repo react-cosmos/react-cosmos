@@ -30,6 +30,5 @@ require('../plugins/BuildNotifications').register();
 require('../plugins/WebpackHmrNotification').register();
 
 // TODO: Read list of disabled plugins from user config
-enablePlugin('classStatePanel', false);
 enablePlugin('rendererSelect', false);
 enablePlugin('pluginList', false);
