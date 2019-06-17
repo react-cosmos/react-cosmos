@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { RefreshCwIcon, CopyIcon } from '../../../shared/icons';
+import { RefreshCwIcon, CopyIcon } from '../../icons';
 import { Button, DarkButton, IconButton, DarkIconButton } from '.';
 
 const Row = styled.div`

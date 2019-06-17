@@ -1,7 +1,7 @@
 import React from 'react';
 import { Slot, ArraySlot } from 'react-plugin';
 import styled from 'styled-components';
-import { useDrag } from '../../shared/ui';
+import { useDrag } from '../../shared/ui/useDrag';
 
 type Props = {
   storageCacheReady: boolean;

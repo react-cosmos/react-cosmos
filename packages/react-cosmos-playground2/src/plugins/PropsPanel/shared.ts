@@ -1,6 +1,6 @@
 import { FixtureElementId } from 'react-cosmos-shared2/fixtureState';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { TreeExpansion } from '../../shared/ui';
+import { TreeExpansion } from '../../shared/ui/TreeView';
 
 export type FixtureExpansion = Record<string, void | TreeExpansion>;
 

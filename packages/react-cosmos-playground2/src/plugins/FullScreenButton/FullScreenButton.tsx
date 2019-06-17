@@ -1,6 +1,6 @@
 import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { IconButton } from '../../shared/ui';
+import { IconButton } from '../../shared/ui/buttons';
 import { MaximizeIcon } from '../../shared/icons';
 
 type Props = {

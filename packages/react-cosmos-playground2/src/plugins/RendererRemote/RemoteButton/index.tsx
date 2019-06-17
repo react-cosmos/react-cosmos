@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconButton } from '../../../shared/ui';
+import { IconButton } from '../../../shared/ui/buttons';
 import { CastIcon } from '../../../shared/icons';
 import { Notification } from '../../Notifications/public';
 import { copyToClipboard } from './copyToClipboard';

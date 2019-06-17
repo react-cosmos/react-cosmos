@@ -1,6 +1,6 @@
 import React from 'react';
 import { SmartphoneIcon } from '../../../shared/icons';
-import { IconButton } from '../../../shared/ui';
+import { IconButton } from '../../../shared/ui/buttons';
 
 type Props = {
   validFixtureSelected: boolean;
