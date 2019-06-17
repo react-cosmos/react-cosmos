@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SlidersIcon } from '../../../shared/icons';
+import { SlidersIcon } from '../../shared/icons';
 
 export function BlankState() {
   return (
