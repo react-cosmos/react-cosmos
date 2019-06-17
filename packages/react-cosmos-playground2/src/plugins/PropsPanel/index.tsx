@@ -82,7 +82,7 @@ plug('controlPanelRow', ({ pluginContext: { getMethodsOf } }) => {
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const fixtureState = rendererCore.getFixtureState();
 
-  // Don't show blank state until props (empty or not) have been received
+  // Don't show blank state until props (empty or not) have been read
   if (!fixtureState.props) {
     return null;
   }
