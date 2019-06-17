@@ -5,6 +5,7 @@ import {
   FixtureStateClassState
 } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
+import { stringifyElementId } from '../../../shared/ui/valueInputTree';
 
 export function createClassStateFsUpdater(
   elementId: FixtureElementId,
@@ -13,7 +14,8 @@ export function createClassStateFsUpdater(
   return prevFs => {
     const fsClassState = findFixtureStateClassState(prevFs, elementId);
     if (!fsClassState) {
-      console.warn(`Element id ${elementId} no longer exists`);
+      const elId = stringifyElementId(elementId);
+      console.warn(`Trying to update missing element with ID: ${elId}`);
       return prevFs;
     }
 
