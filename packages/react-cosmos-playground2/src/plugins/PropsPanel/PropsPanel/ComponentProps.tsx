@@ -9,11 +9,8 @@ import {
   updateFixtureStateProps,
   resetFixtureStateProps
 } from 'react-cosmos-shared2/fixtureState';
-import {
-  TreeExpansion,
-  DarkIconButton,
-  ValueInputTree
-} from '../../../shared/ui';
+import { TreeExpansion, DarkIconButton } from '../../../shared/ui';
+import { ValueInputTree } from '../../../shared/ui/valueInputTree';
 import { RotateCcwIcon, CopyIcon } from '../../../shared/icons';
 import {
   FixtureExpansion,
