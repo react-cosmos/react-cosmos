@@ -1,13 +1,12 @@
 import React from 'react';
-import {
-  FixtureState,
-  FixtureStateProps
-} from 'react-cosmos-shared2/fixtureState';
+import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import {
   FixtureExpansion,
   OnElementExpansionChange,
-  stringifyElementId
+  stringifyElementId,
+  hasFsValues,
+  sortFsValueGroups
 } from '../../../shared/ui/valueInputTree';
 import { ComponentProps } from './ComponentProps';
 import { BlankState } from './BlankState';
@@ -40,10 +39,10 @@ export function PropsPanel({
     return <BlankState />;
   }
 
-  const withProps = fixtureState.props.filter(hasProps);
+  const withProps = fixtureState.props.filter(hasFsValues);
   return (
     <>
-      {sortFsProps(withProps).map(fsProps => {
+      {sortFsValueGroups(withProps).map(fsProps => {
         const strElementId = stringifyElementId(fsProps.elementId);
         return (
           <ComponentProps
@@ -57,19 +56,4 @@ export function PropsPanel({
       })}
     </>
   );
-}
-
-function hasProps(fsProps: FixtureStateProps) {
-  return Object.keys(fsProps.values).length > 0;
-}
-
-function sortFsProps(fsProps: FixtureStateProps[]) {
-  // Sort by elementId
-  return fsProps
-    .slice()
-    .sort((props1, props2) =>
-      stringifyElementId(props1.elementId).localeCompare(
-        stringifyElementId(props2.elementId)
-      )
-    );
 }
