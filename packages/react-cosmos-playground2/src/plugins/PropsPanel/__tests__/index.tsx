@@ -74,18 +74,64 @@ it('updates string value', async () => {
   registerTestPlugins();
   mockStorage();
   const { updatedFixtureState } = mockFsPropsValues({
-    myValue: { type: 'primitive', value: 'foo' }
+    myStrValue: { type: 'primitive', value: 'foo' }
   });
 
   const { getByLabelText } = loadTestPlugins();
-  const input = getByLabelText('myValue');
+  const input = getByLabelText('myStrValue');
 
   fireEvent.change(input, { target: { value: 'bar' } });
   await wait(() =>
     expect(updatedFixtureState.props![0].values).toEqual({
-      myValue: { type: 'primitive', value: 'bar' }
+      myStrValue: { type: 'primitive', value: 'bar' }
     })
   );
+});
+
+it('updates boolean value', async () => {
+  registerTestPlugins();
+  mockStorage();
+  const { updatedFixtureState } = mockFsPropsValues({
+    myBoolValue: { type: 'primitive', value: false }
+  });
+
+  const { getByText } = loadTestPlugins();
+  getByText('myBoolValue');
+  const button = getByText('false');
+
+  fireEvent.click(button);
+  await wait(() =>
+    expect(updatedFixtureState.props![0].values).toEqual({
+      myBoolValue: { type: 'primitive', value: true }
+    })
+  );
+});
+
+it('renders null value', async () => {
+  registerTestPlugins();
+  mockStorage();
+  mockFsPropsValues({
+    myNullValue: { type: 'primitive', value: null }
+  });
+
+  const { getByText } = loadTestPlugins();
+  getByText('myNullValue');
+  getByText('null');
+});
+
+it('renders unserializable value', async () => {
+  registerTestPlugins();
+  mockStorage();
+  mockFsPropsValues({
+    myRegexpValue: {
+      type: 'unserializable',
+      stringifiedValue: '/canttouchthis/i'
+    }
+  });
+
+  const { getByText } = loadTestPlugins();
+  getByText('myRegexpValue');
+  getByText('/canttouchthis/i');
 });
 
 it('toggles nested object', async () => {
