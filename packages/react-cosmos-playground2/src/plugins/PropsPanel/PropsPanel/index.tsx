@@ -4,7 +4,6 @@ import {
   FixtureStateProps
 } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
-import styled from 'styled-components';
 import {
   OnElementExpansionChange,
   stringifyElementId,
@@ -43,7 +42,7 @@ export function PropsPanel({
 
   const withProps = fixtureState.props.filter(hasProps);
   return (
-    <Container>
+    <>
       {sortFsProps(withProps).map(fsProps => {
         const strElementId = stringifyElementId(fsProps.elementId);
         return (
@@ -56,7 +55,7 @@ export function PropsPanel({
           />
         );
       })}
-    </Container>
+    </>
   );
 }
 
@@ -74,8 +73,3 @@ function sortFsProps(fsProps: FixtureStateProps[]) {
       )
     );
 }
-
-const Container = styled.div`
-  background: var(--grey2);
-  color: var(--grey6);
-`;
