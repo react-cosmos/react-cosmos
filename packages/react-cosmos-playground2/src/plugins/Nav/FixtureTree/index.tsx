@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FixtureNamesByPath, FixtureId } from 'react-cosmos-shared2/renderer';
-import { TreeExpansion, TreeView } from '../../../shared/ui';
+import { TreeExpansion, TreeView } from '../../../shared/ui/TreeView';
 import { getFixtureTree } from './fixtureTree';
 import { FixtureTreeDir } from './FixtureTreeDir';
 import { FixtureTreeItem } from './FixtureTreeItem';

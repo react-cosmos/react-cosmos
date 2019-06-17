@@ -4,9 +4,8 @@ import { StateUpdater } from 'react-cosmos-shared2/util';
 import {
   FixtureState,
   FixtureStateValues,
-  FixtureStateProps,
-  updateFixtureStateProps,
-  resetFixtureStateProps
+  FixtureStateClassState,
+  updateFixtureStateClassState
 } from 'react-cosmos-shared2/fixtureState';
 import { TreeExpansion } from '../../../shared/ui/TreeView';
 import { DarkIconButton } from '../../../shared/ui/buttons';
@@ -21,34 +20,31 @@ import {
   Actions,
   Body
 } from '../../../shared/ui/valueInputTree';
-import { RotateCcwIcon, CopyIcon } from '../../../shared/icons';
-import { createPropsFsUpdater } from './shared';
+import { RotateCcwIcon } from '../../../shared/icons';
+import { createClassStateFsUpdater } from './shared';
 
 type Props = {
-  fsProps: FixtureStateProps;
+  fsClassState: FixtureStateClassState;
   fixtureExpansion: FixtureExpansion;
   onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
   onElementExpansionChange: OnElementExpansionChange;
 };
 
-export function ComponentProps({
-  fsProps,
+export function ComponentClassState({
+  fsClassState,
   fixtureExpansion,
   onFixtureStateChange,
   onElementExpansionChange
 }: Props) {
-  const { componentName, elementId, values } = fsProps;
+  const { componentName, elementId, values } = fsClassState;
   const strElementId = stringifyElementId(elementId);
-
-  const [reset, setReset] = React.useState(true);
-  const onResetChange = React.useCallback(() => setReset(!reset), [reset]);
 
   const [initialValues] = React.useState(() => values);
   const onResetValues = React.useCallback(
     () =>
       onFixtureStateChange(
-        createPropsFsUpdater(elementId, prevFs =>
-          resetFixtureStateProps({
+        createClassStateFsUpdater(elementId, prevFs =>
+          updateFixtureStateClassState({
             fixtureState: prevFs,
             elementId,
             values: initialValues
@@ -60,10 +56,9 @@ export function ComponentProps({
 
   const onValueChange = React.useCallback(
     (newValues: FixtureStateValues) => {
-      const changeFn = reset ? resetFixtureStateProps : updateFixtureStateProps;
       onFixtureStateChange(
-        createPropsFsUpdater(elementId, prevFs =>
-          changeFn({
+        createClassStateFsUpdater(elementId, prevFs =>
+          updateFixtureStateClassState({
             fixtureState: prevFs,
             elementId,
             values: newValues
@@ -71,7 +66,7 @@ export function ComponentProps({
         )
       );
     },
-    [elementId, reset, onFixtureStateChange]
+    [elementId, onFixtureStateChange]
   );
 
   const onTreeExpansionChange = React.useCallback(
@@ -83,20 +78,13 @@ export function ComponentProps({
   return (
     <Container>
       <Header>
-        <Title label="PROPS" componentName={componentName} />
+        <Title label="CLASS STATE" componentName={componentName} />
         <Actions>
           <DarkIconButton
             title="Reset to initial values"
             icon={<RotateCcwIcon />}
             disabled={isEqual(values, initialValues)}
             onClick={onResetValues}
-          />
-          <DarkIconButton
-            title="Reuse instances on prop changes"
-            icon={<CopyIcon />}
-            selected={!reset}
-            disabled={false}
-            onClick={onResetChange}
           />
         </Actions>
       </Header>

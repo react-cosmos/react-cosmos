@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { ArraySlot } from 'react-plugin';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { XCircleIcon, RefreshCwIcon, HomeIcon } from '../../shared/icons';
-import { IconButton } from '../../shared/ui';
+import { IconButton } from '../../shared/ui/buttons';
 
 type Props = {
   selectedFixtureId: null | FixtureId;

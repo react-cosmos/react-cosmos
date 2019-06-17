@@ -1,7 +1,7 @@
 import React from 'react';
 import { ForwardRef } from 'react-is';
 
-type ElementType = string | React.ComponentType<any>;
+type ElementType = string | React.ComponentType;
 
 type ExtendedComponentType = React.ComponentType & {
   $$typeof: any;

@@ -53,6 +53,7 @@ export type FixtureStateProps = {
 export type FixtureStateClassState = {
   elementId: FixtureElementId;
   values: FixtureStateValues;
+  componentName: string;
 };
 
 export type FixtureState = {

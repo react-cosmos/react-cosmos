@@ -1,19 +1,19 @@
 import {
-  findFixtureStateProps,
+  findFixtureStateClassState,
   FixtureElementId,
   FixtureState,
-  FixtureStateProps
+  FixtureStateClassState
 } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import { stringifyElementId } from '../../../shared/ui/valueInputTree';
 
-export function createPropsFsUpdater(
+export function createClassStateFsUpdater(
   elementId: FixtureElementId,
-  cb: (prevFs: FixtureState) => FixtureStateProps[]
+  cb: (prevFs: FixtureState) => FixtureStateClassState[]
 ): StateUpdater<FixtureState> {
   return prevFs => {
-    const fsProps = findFixtureStateProps(prevFs, elementId);
-    if (!fsProps) {
+    const fsClassState = findFixtureStateClassState(prevFs, elementId);
+    if (!fsClassState) {
       const elId = stringifyElementId(elementId);
       console.warn(`Trying to update missing element with ID: ${elId}`);
       return prevFs;
@@ -21,7 +21,7 @@ export function createPropsFsUpdater(
 
     return {
       ...prevFs,
-      props: cb(prevFs)
+      classState: cb(prevFs)
     };
   };
 }

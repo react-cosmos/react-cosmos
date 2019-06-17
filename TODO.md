@@ -7,14 +7,17 @@ Cosmos Next becomes _Cosmos_. The included features are meant to exceed everythi
   - [x] Build notification [#522](https://github.com/react-cosmos/react-cosmos/issues/522)
   - [ ] ~~Try: Notifications for fixture create/remove/rename~~ Too much info to display inside a notification
 - [ ] Control panel
-- [ ] Try: UI-generated fixture variants
-- [ ] Try: Resize responsive viewport
+- [ ] Official React Native integration
+  - [ ] FixtureLoader facades: DomFixtureLoader & NativeFixtureLoader
+- [ ] Resize responsive viewport
+  - [ ] Put viewports in dropdown
+- [ ] Multi fixture viewports
 - [ ] Fixture search
   - [ ] Minimize left nav
+- [ ] Try: UI-generated fixture variants
 - [ ] Command API with search
 - [ ] Keyboard shortcuts
-- [ ] Try: Multi fixture select
-- [ ] Improve React Native integration
+- [ ] Try: "Check all" button/API to detect broken fixtures
 - [ ] Refresh docs
 - [ ] Maybe: Marketing website
 - [ ] Migration aids (eg. code transforms and support)
@@ -38,11 +41,10 @@ Control panel
     - [x] Null value
   - [x] Style
   - [x] Blank state
-- [ ] Class state panel
-- [ ] Viewport panel
-  - [ ] Agnostic panel blank state
+- [x] Class state panel
 - [ ] Custom controls with Hooks API in (function) fixtures
   - [ ] Dropdown component
+  - [ ] Generic panel blank state
 
 Build notifications
 
@@ -67,11 +69,17 @@ Notification redesign
 - [x] Plug API for Slot arrays
 - [ ] Sort API for ArraySlot props
 
+UI-generated fixture variants
+
+- [ ] Maybe: Store initialFixtureState in RendererCore (forgot the main benefit behind this)
+  - [ ] Build each part incrementally as it arrives
+  - [ ] Store it together with fixtureState to avoid race conditions (eg. { initial, current })
+  - [ ] Expose separate methods for client plugins (eg. getInitialFixtureState)
+
 ## Backlog
 
 Not part of v5, but the most notable features to pursue after.
 
-- [ ] "Check all" button to detect broken fixtures
 - [ ] Pin fixture
 - [ ] VSCode extension (simpler UI without nav but with control panel)
 

@@ -30,16 +30,19 @@ type CreateFixtureStateClassStateArgs = {
   fixtureState: FixtureState;
   elementId: FixtureElementId;
   values: FixtureStateValues;
+  componentName: string;
 };
 export function createFixtureStateClassState({
   fixtureState,
   elementId,
-  values
+  values,
+  componentName
 }: CreateFixtureStateClassStateArgs) {
   const { classState = [] } = fixtureState;
   return replaceOrAddItem(classState, createClassStateMatcher(elementId), {
     elementId,
-    values
+    values,
+    componentName
   });
 }
 

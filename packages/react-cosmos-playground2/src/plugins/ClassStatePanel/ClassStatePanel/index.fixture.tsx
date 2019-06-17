@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { Viewport } from 'react-cosmos-fixture';
 import { stringifyElementId } from '../../../shared/ui/valueInputTree';
-import { PropsPanel } from '.';
+import { ClassStatePanel } from '.';
 
 const Container = styled.div`
   background: var(--grey2);
@@ -11,11 +11,10 @@ const Container = styled.div`
 
 export default () => {
   const [fixtureState, setFixtureState] = React.useState<FixtureState>({
-    props: [
+    classState: [
       {
         componentName: 'FooComponent',
         elementId: { decoratorId: 'root', elPath: 'props.children[0]' },
-        renderKey: 0,
         values: {
           string: {
             type: 'primitive',
@@ -46,7 +45,6 @@ export default () => {
       {
         componentName: '',
         elementId: { decoratorId: 'root', elPath: 'props.children[1]' },
-        renderKey: 0,
         values: {
           array: {
             type: 'array',
@@ -111,7 +109,7 @@ export default () => {
   return (
     <Container>
       <Viewport width={220} height={400}>
-        <PropsPanel
+        <ClassStatePanel
           fixtureState={fixtureState}
           fixtureExpansion={fixtureExpansion}
           onFixtureStateChange={setFixtureState}

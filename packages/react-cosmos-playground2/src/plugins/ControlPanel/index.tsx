@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { IconButton } from '../../shared/ui';
+import { IconButton } from '../../shared/ui/buttons';
 import { SlidersIcon } from '../../shared/icons';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { LayoutSpec } from '../Layout/public';

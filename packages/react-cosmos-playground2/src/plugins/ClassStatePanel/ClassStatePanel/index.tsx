@@ -8,7 +8,7 @@ import {
   hasFsValues,
   sortFsValueGroups
 } from '../../../shared/ui/valueInputTree';
-import { ComponentProps } from './ComponentProps';
+import { ComponentClassState } from './ComponentClassState';
 
 type Props = {
   fixtureState: FixtureState;
@@ -17,25 +17,25 @@ type Props = {
   onElementExpansionChange: OnElementExpansionChange;
 };
 
-export function PropsPanel({
+export function ClassStatePanel({
   fixtureState,
   fixtureExpansion,
   onFixtureStateChange,
   onElementExpansionChange
 }: Props) {
-  if (!fixtureState.props) {
+  if (!fixtureState.classState) {
     return null;
   }
 
-  const withProps = fixtureState.props.filter(hasFsValues);
+  const withState = fixtureState.classState.filter(hasFsValues);
   return (
     <>
-      {sortFsValueGroups(withProps).map(fsProps => {
-        const strElementId = stringifyElementId(fsProps.elementId);
+      {sortFsValueGroups(withState).map(fsClassState => {
+        const strElementId = stringifyElementId(fsClassState.elementId);
         return (
-          <ComponentProps
+          <ComponentClassState
             key={strElementId}
-            fsProps={fsProps}
+            fsClassState={fsClassState}
             fixtureExpansion={fixtureExpansion}
             onFixtureStateChange={onFixtureStateChange}
             onElementExpansionChange={onElementExpansionChange}

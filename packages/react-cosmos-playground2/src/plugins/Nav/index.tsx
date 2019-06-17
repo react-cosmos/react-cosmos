@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { TreeExpansion } from '../../shared/ui';
+import { TreeExpansion } from '../../shared/ui/TreeView';
 import { StorageSpec } from '../Storage/public';
 import { RouterSpec } from '../Router/public';
 import { CoreSpec } from '../Core/public';

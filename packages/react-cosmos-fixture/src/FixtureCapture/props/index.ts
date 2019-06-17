@@ -12,7 +12,7 @@ import { areNodesEqual } from 'react-cosmos-shared2/react';
 import { FixtureContext } from '../../FixtureContext';
 import { getElementAtPath, getExpectedElementAtPath } from '../shared/nodeTree';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';
-import { getComponentName } from './componentName';
+import { getComponentName } from '../shared/componentName';
 import { extendFixtureProps } from './extendFixtureProps';
 
 export function usePropsCapture(

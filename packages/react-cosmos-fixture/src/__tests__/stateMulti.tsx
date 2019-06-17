@@ -47,10 +47,12 @@ runFixtureLoaderTests(mount => {
             props: [anyProps(), anyProps()],
             classState: [
               anyClassState({
-                values: createValues({ count: 5 })
+                values: createValues({ count: 5 }),
+                componentName: 'Counter'
               }),
               anyClassState({
-                values: createValues({ count: 10 })
+                values: createValues({ count: 10 }),
+                componentName: 'Counter'
               })
             ]
           }

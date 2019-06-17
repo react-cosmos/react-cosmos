@@ -31,15 +31,18 @@ export function anyProps(
 export function anyClassState(args: {
   decoratorId?: FixtureDecoratorId;
   elPath?: string;
+  componentName?: string;
   values: FixtureStateValues;
 }): FixtureStateClassState {
   const {
     decoratorId = expect.any(String),
+    componentName = expect.any(String),
     elPath = expect.any(String),
     values
   } = args;
   return {
     elementId: { decoratorId, elPath },
+    componentName,
     values
   };
 }
