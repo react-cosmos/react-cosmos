@@ -8,7 +8,7 @@ import {
   findFixtureStateClassState,
   updateFixtureStateClassState
 } from 'react-cosmos-shared2/fixtureState';
-import { ValueInputTree } from '../../shared/ui';
+import { ValueInputTree } from '../../shared/ui/valueInputTree';
 
 type Props = {
   fixtureState: FixtureState;
