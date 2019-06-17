@@ -8,15 +8,15 @@ import {
   FixtureStateClassState,
   updateFixtureStateClassState
 } from 'react-cosmos-shared2/fixtureState';
-import { TreeExpansion } from '../../shared/ui/TreeView';
-import { DarkIconButton } from '../../shared/ui/buttons';
+import { TreeExpansion } from '../../../shared/ui/TreeView';
+import { DarkIconButton } from '../../../shared/ui/buttons';
 import {
   ValueInputTree,
   FixtureExpansion,
   OnElementExpansionChange,
   stringifyElementId
-} from '../../shared/ui/valueInputTree';
-import { RotateCcwIcon } from '../../shared/icons';
+} from '../../../shared/ui/valueInputTree';
+import { RotateCcwIcon } from '../../../shared/icons';
 import { createClassStateFsUpdater } from './shared';
 
 type Props = {

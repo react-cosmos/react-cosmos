@@ -7,7 +7,7 @@ import {
   stringifyElementId,
   hasFsValues,
   sortFsValueGroups
-} from '../../shared/ui/valueInputTree';
+} from '../../../shared/ui/valueInputTree';
 import { ComponentClassState } from './ComponentClassState';
 
 type Props = {
