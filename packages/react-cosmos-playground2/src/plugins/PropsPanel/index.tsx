@@ -1,10 +1,10 @@
 import React from 'react';
+import { createPlugin } from 'react-plugin';
+import { StateUpdater } from 'react-cosmos-shared2/util';
 import {
   FixtureElementId,
   FixtureState
 } from 'react-cosmos-shared2/fixtureState';
-import { StateUpdater } from 'react-cosmos-shared2/util';
-import { createPlugin } from 'react-plugin';
 import { TreeExpansion } from '../../shared/ui/TreeView';
 import {
   FixtureExpansionGroup,
