@@ -131,6 +131,7 @@ const Header = styled.div`
 
 const Title = styled.div`
   color: var(--grey4);
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 
