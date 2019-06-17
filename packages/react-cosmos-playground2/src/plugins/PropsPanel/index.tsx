@@ -16,11 +16,10 @@ import { PropsPanelSpec } from './public';
 import {
   PropsExpansion,
   FixtureExpansion,
+  PROPS_TREE_EXPANSION_STORAGE_KEY,
   stringifyFixtureId,
   stringifyElementId
 } from './shared';
-
-const PROPS_TREE_EXPANSION_STORAGE_KEY = 'propsTreeExpansion';
 
 const { plug, register } = createPlugin<PropsPanelSpec>({
   name: 'propsPanel'

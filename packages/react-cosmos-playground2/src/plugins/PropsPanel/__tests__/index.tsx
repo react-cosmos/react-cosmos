@@ -11,13 +11,14 @@ import {
   mockRouter,
   mockStorage
 } from '../../../testHelpers/pluginMocks';
+import { getParentButton } from '../../../testHelpers/selectors';
+import { PROPS_TREE_EXPANSION_STORAGE_KEY } from '../shared';
 import { register } from '..';
 
 afterEach(cleanup);
 
 function registerTestPlugins() {
   register();
-  mockStorage();
   mockRouter({
     getSelectedFixtureId: () => ({ path: 'foo.js', name: null })
   });
@@ -51,6 +52,7 @@ function mockFsPropsValues(values: FixtureStateValues) {
 
 it('renders blank state', async () => {
   registerTestPlugins();
+  mockStorage();
   mockFsPropsValues({});
 
   const { getByText } = loadTestPlugins();
@@ -59,6 +61,7 @@ it('renders blank state', async () => {
 
 it('renders component name', async () => {
   registerTestPlugins();
+  mockStorage();
   mockFsPropsValues({
     myValue: { type: 'primitive', value: 'foo' }
   });
@@ -67,19 +70,9 @@ it('renders component name', async () => {
   getByText('MyComponent');
 });
 
-it('renders string input', async () => {
-  registerTestPlugins();
-  mockFsPropsValues({
-    myValue: { type: 'primitive', value: 'foo' }
-  });
-
-  const { getByLabelText } = loadTestPlugins();
-  const input = getByLabelText('myValue');
-  expect((input as HTMLTextAreaElement).value).toBe('foo');
-});
-
 it('updates string value', async () => {
   registerTestPlugins();
+  mockStorage();
   const { updatedFixtureState } = mockFsPropsValues({
     myValue: { type: 'primitive', value: 'foo' }
   });
@@ -91,6 +84,61 @@ it('updates string value', async () => {
   await wait(() =>
     expect(updatedFixtureState.props![0].values).toEqual({
       myValue: { type: 'primitive', value: 'bar' }
+    })
+  );
+});
+
+it('toggles nested object', async () => {
+  registerTestPlugins();
+  const { setItem } = mockStorage();
+  mockFsPropsValues({
+    myObjValue: {
+      type: 'object',
+      values: {
+        myNumValue: { type: 'primitive', value: 1234 }
+      }
+    }
+  });
+
+  const { getByText } = loadTestPlugins();
+  fireEvent.click(getParentButton(getByText('myObjValue')));
+
+  expect(setItem).toBeCalledWith(
+    expect.any(Object),
+    PROPS_TREE_EXPANSION_STORAGE_KEY,
+    { 'foo.js': { root: { myObjValue: true } } }
+  );
+});
+
+it('updates number input nested in object', async () => {
+  registerTestPlugins();
+  mockStorage({
+    getItem: (context, key) =>
+      key === PROPS_TREE_EXPANSION_STORAGE_KEY
+        ? { 'foo.js': { root: { myObjValue: true } } }
+        : null
+  });
+  const { updatedFixtureState } = mockFsPropsValues({
+    myObjValue: {
+      type: 'object',
+      values: {
+        myNumValue: { type: 'primitive', value: 1234 }
+      }
+    }
+  });
+
+  const { getByLabelText } = loadTestPlugins();
+  const input = getByLabelText('myNumValue');
+
+  fireEvent.change(input, { target: { value: 6789 } });
+  await wait(() =>
+    expect(updatedFixtureState.props![0].values).toEqual({
+      myObjValue: {
+        type: 'object',
+        values: {
+          myNumValue: { type: 'primitive', value: 6789 }
+        }
+      }
     })
   );
 });

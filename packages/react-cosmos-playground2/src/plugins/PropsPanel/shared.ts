@@ -11,6 +11,8 @@ export type OnElementExpansionChange = (
   treeExpansion: TreeExpansion
 ) => unknown;
 
+export const PROPS_TREE_EXPANSION_STORAGE_KEY = 'propsTreeExpansion';
+
 export function stringifyElementId(elementId: FixtureElementId) {
   const { decoratorId, elPath } = elementId;
   return elPath ? `${decoratorId}-${elPath}` : decoratorId;
