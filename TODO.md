@@ -7,16 +7,16 @@ Cosmos Next becomes _Cosmos_. The included features are meant to exceed everythi
   - [x] Build notification [#522](https://github.com/react-cosmos/react-cosmos/issues/522)
   - [ ] ~~Try: Notifications for fixture create/remove/rename~~ Too much info to display inside a notification
 - [ ] Control panel
+- [ ] Official React Native integration
+  - [ ] FixtureLoader facades: DomFixtureLoader & NativeFixtureLoader
 - [ ] Resize responsive viewport
   - [ ] Put viewports in dropdown
+- [ ] Multi fixture viewports
 - [ ] Fixture search
   - [ ] Minimize left nav
-- [ ] Multi fixture viewports
+- [ ] Try: UI-generated fixture variants
 - [ ] Command API with search
 - [ ] Keyboard shortcuts
-- [ ] Try: UI-generated fixture variants
-- [ ] Improve React Native integration
-  - [ ] FixtureLoader facades: DomFixtureLoader & NativeFixtureLoader
 - [ ] Try: "Check all" button/API to detect broken fixtures
 - [ ] Refresh docs
 - [ ] Maybe: Marketing website
