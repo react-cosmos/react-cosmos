@@ -9,12 +9,12 @@
     "html-webpack-plugin": "^3.2.0",
     "localforage": "^1.7.3",
     "lodash": "^4.17.11",
-    "query-string": "^6.7.0",
+    "query-string": "^6.8.1",
     "react": "16.9.0-alpha.0",
     "react-cosmos-shared2": "^5.0.0-alpha.12",
     "react-dom": "16.9.0-alpha.0",
     "react-plugin": "^2.0.0-alpha.6",
     "socket.io-client": "^2.2.0",
-    "styled-components": "^4.3.1"
+    "styled-components": "^4.3.2"
   }
 }
