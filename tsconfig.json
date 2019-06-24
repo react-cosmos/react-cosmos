@@ -19,7 +19,8 @@
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "sourceMap": true
   },
   "exclude": ["node_modules"]
 }

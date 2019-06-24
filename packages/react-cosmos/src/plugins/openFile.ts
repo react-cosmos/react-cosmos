@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import launchEditor from 'launch-editor';
+import open from 'open';
+import launchEditor from '@skidding/launch-editor';
 import express from 'express';
 import { CosmosConfig } from '../config/shared';
 import { DevServerPluginArgs } from '../shared/devServer';
@@ -27,10 +28,12 @@ export function openFile({ cosmosConfig, expressApp }: DevServerPluginArgs) {
       // If launchEditor doesn't report error within 500ms we assume it worked
       setTimeout(resolve, 500);
     })
-      .then(() => res.send())
-      .catch(err => {
-        res.status(500).send('Failed to open file');
-      });
+      // Fall back to open in case launchEditor fails. launchEditor only works
+      // when the editor app is already open, but is favorable because it can
+      // open a code file on a specific line & column.
+      .catch(err => open(absFilePath))
+      .catch(err => res.status(500).send('Failed to open file'))
+      .then(() => res.send());
   });
 }
 
