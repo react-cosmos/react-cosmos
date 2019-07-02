@@ -38,10 +38,7 @@ module.exports = {
         test: /\.tsx?$/,
         include: [/packages\/react-cosmos-playground2\/src/],
         use: {
-          loader: 'ts-loader',
-          options: {
-            configFile: require.resolve('./tsconfig.build.json')
-          }
+          loader: 'babel-loader'
         }
       }
     ]
