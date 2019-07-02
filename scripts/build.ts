@@ -134,6 +134,7 @@ async function watchNodePackage(pkgName: string) {
 }
 
 async function buildBrowserPackage(pkgName: string) {
+  await clearPreviousBuild(pkgName);
   await Promise.all([
     await buildBrowserPackageSource(pkgName),
     await buildPackageHeaders(pkgName)
@@ -141,6 +142,7 @@ async function buildBrowserPackage(pkgName: string) {
 }
 
 async function watchBrowserPackage(pkgName: string) {
+  await clearPreviousBuild(pkgName);
   // Don't await on returned promises because watch tasks hang indefinitely
   watchBrowserPackageSource(pkgName);
   watchPackageHeaders(pkgName);
