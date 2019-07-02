@@ -26,8 +26,11 @@ const SOURCE_IGNORE_PATHS = [
   '**/@types/**/*',
   '**/__tests__/**/*',
   '**/__mocks__/**/*',
+  '**/__fixtures__/**/*',
   '**/*.test.ts',
   '**/*.test.tsx',
+  '**/*.fixture.ts',
+  '**/*.fixture.tsx',
   '**/testHelpers/**'
 ];
 

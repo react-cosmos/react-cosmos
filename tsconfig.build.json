@@ -4,8 +4,11 @@
     "node_modules",
     "**/__tests__/**/*",
     "**/__mocks__/**/*",
+    "**/__fixtures__/**/*",
     "**/*.test.ts",
     "**/*.test.tsx",
+    "**/*.fixture.ts",
+    "**/*.fixture.tsx",
     "**/testHelpers/**"
   ]
 }
