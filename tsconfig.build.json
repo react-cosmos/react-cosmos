@@ -5,8 +5,7 @@
     // Babel for Node modules and by webpack + babel-loader for browser modules
     "noEmit": false,
     "emitDeclarationOnly": true,
-    "declaration": true,
-    "sourceMap": true
+    "declaration": true
   },
   "exclude": [
     "node_modules",
