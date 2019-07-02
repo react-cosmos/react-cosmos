@@ -1,5 +1,13 @@
 {
   "extends": "./tsconfig.json",
+  "compilerOptions": {
+    // The TS compiler will only emit declaration files. Source is built by
+    // Babel for Node modules and by webpack + babel-loader for browser modules
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "sourceMap": true
+  },
   "exclude": [
     "node_modules",
     "**/__tests__/**/*",
