@@ -16,6 +16,7 @@ export function getDefaultWebpackConfig(
   const babelLoaderPath = resolveFrom.silent(rootDir, 'babel-loader');
   const styleLoaderPath = resolveFrom.silent(rootDir, 'style-loader');
   const cssLoaderPath = resolveFrom.silent(rootDir, 'css-loader');
+  const postcssLoaderPath = resolveFrom.silent(rootDir, 'postcss-loader');
   // Note: Since webpack >= v2.0.0, importing of JSON files will work by default
   const jsonLoaderPath = resolveFrom.silent(rootDir, 'json-loader');
   const rules: webpack.RuleSetRule[] = [];
@@ -40,20 +41,28 @@ export function getDefaultWebpackConfig(
   }
 
   if (styleLoaderPath && cssLoaderPath) {
-    rules.push({
-      test: /\.css$/,
-      loader: cssLoaderPath
-        ? `${styleLoaderPath}!${cssLoaderPath}`
-        : styleLoaderPath,
-      exclude: /node_modules/
-    });
+    if (postcssLoaderPath) {
+      rules.push({
+        test: /\.css$/,
+        use: [
+          styleLoaderPath,
+          { loader: cssLoaderPath, options: { importLoaders: 1 } },
+          postcssLoaderPath
+        ],
+        exclude: /node_modules/
+      });
+    } else {
+      rules.push({
+        test: /\.css$/,
+        loader: `${styleLoaderPath}!${cssLoaderPath}`,
+        exclude: /node_modules/
+      });
+    }
 
     // Preprocess 3rd party .css files located in node_modules
     rules.push({
       test: /\.css$/,
-      loader: cssLoaderPath
-        ? `${styleLoaderPath}!${cssLoaderPath}`
-        : styleLoaderPath,
+      loader: `${styleLoaderPath}!${cssLoaderPath}`,
       include: /node_modules/
     });
   }
