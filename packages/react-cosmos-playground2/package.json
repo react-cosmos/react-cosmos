@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-playground2",
-  "version": "5.0.0-alpha.13",
+  "version": "5.0.0-alpha.14",
   "description": "Visual interface for browsing React Cosmos fixtures",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-playground2",
   "license": "MIT",
@@ -11,7 +11,7 @@
     "lodash": "^4.17.11",
     "query-string": "^6.8.1",
     "react": "16.9.0-alpha.0",
-    "react-cosmos-shared2": "^5.0.0-alpha.12",
+    "react-cosmos-shared2": "^5.0.0-alpha.14",
     "react-dom": "16.9.0-alpha.0",
     "react-plugin": "^2.0.0-alpha.6",
     "socket.io-client": "^2.2.0",
