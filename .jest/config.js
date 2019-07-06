@@ -1,9 +1,6 @@
 const { join } = require('path');
-const { defaults: tsjPreset } = require('ts-jest/presets');
 
 module.exports = {
-  preset: 'ts-jest',
-  transform: { ...tsjPreset.transform },
   testEnvironment: 'jsdom',
   rootDir: join(__dirname, '..'),
   testMatch: ['**/__tests__/**/*.{ts,tsx}', '**/?(*.)test.{ts,tsx}'],

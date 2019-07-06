@@ -12,6 +12,7 @@ install: 'yarn install --ignore-engines'
 script:
   # Test source (with cross-package coverage)
   - yarn src
+  - yarn type-check
   - yarn lint
   - yarn test:coverage --maxWorkers=2
   - yarn codecov

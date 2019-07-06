@@ -5,11 +5,11 @@ import {
   staticTests
 } from '../support/testBlocks';
 
-describe('Dev server', () => {
+describe('DOM export', () => {
   // WARNING: These tests are serial and share state
   before(() => {
     cy.clearStorage();
-    cy.visit('http://localhost:5000');
+    cy.visit('http://localhost:5001');
   });
 
   homepageTests();

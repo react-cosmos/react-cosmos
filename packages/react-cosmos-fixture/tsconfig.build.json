@@ -1,16 +1,7 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.build.json",
   "compilerOptions": {
-    "declaration": true,
     "outDir": "dist"
   },
-  "include": ["src/**/*"],
-  "exclude": [
-    "node_modules",
-    "**/__tests__/**/*",
-    "**/__mocks__/**/*",
-    "**/*.test.ts",
-    "**/*.test.tsx",
-    "**/testHelpers/**"
-  ]
+  "include": ["src/**/*"]
 }

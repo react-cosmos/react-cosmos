@@ -1,11 +1,9 @@
-// This config is used in three ways:
-// 1. Extended by configs used to build TS modules for Node. Those configs have
-//    an "outDir" defined to point to their respective monorepo packages.
-// 2. Used by ts-loader to build TS modules for the browser using webpack. No
-//    "outDir" is required in this case because webpack takes care of the
-//    bundle output.
-// 3. Used by code editors and test runners to build TS modules on the fly. All
-//    TS configuration, aside from build parameters, should be placed here.
+// This config is used in multiple ways:
+// 1. Used by code editors. All TS config, aside from build parameters, should
+//    be placed here.
+// 2. Extended by specific package build configs used to generate TS
+//    declarations. Those configs have an "outDir" defined.
+// 3. Used by global type-check command (which runs in CI)
 {
   "compilerOptions": {
     "lib": ["dom", "es2015"],
@@ -13,14 +11,22 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
-    "noEmitOnError": true,
+    "noEmit": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "strict": true,
     "skipLibCheck": true,
-    "sourceMap": true
+    // Make modules work in isolation. Required because we're building packages
+    // with Babel, which doesn't have the cross-module knowledge tsc has. This
+    // is a drawback (eg. can't use const enums or re-export types), but is
+    // worth it because building with Babel provides a better DX: Faster build
+    // & test times, and the ability to build before fixing all type errors,
+    // like removing unused imports, which aren't important while prototyping.
+    // https://github.com/facebook/create-react-app/issues/6054
+    // https://github.com/webpack/webpack/issues/7378
+    "isolatedModules": true
   },
   "exclude": ["node_modules"]
 }

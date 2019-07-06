@@ -26,11 +26,9 @@ export function getDefaultWebpackConfig(
       test: /\.tsx?$/,
       loader: tsLoaderPath
     });
-  }
-
-  if (babelLoaderPath) {
+  } else if (babelLoaderPath) {
     rules.push({
-      test: /\.jsx?$/,
+      test: /\.(js|ts)x?$/,
       exclude: /node_modules/,
       use: {
         loader: babelLoaderPath,

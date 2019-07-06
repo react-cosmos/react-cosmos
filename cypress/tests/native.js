@@ -1,6 +1,6 @@
 import { homepageTests } from '../support/testBlocks';
 
-describe('Export', () => {
+describe('Native', () => {
   // WARNING: These tests are serial and share state
   before(() => {
     cy.clearStorage();

@@ -6,7 +6,8 @@ import { collapseSoloIndexes } from './collapseSoloIndexes';
 import { hideSingleChildDirs } from './hideSingleChildDirs';
 import { FixtureNode } from './shared';
 
-export { FixtureNode } from './shared';
+// Types can't be re-exported because Babel (see root tsconfig.json)
+export type FixtureNode = FixtureNode;
 
 export function getFixtureTree({
   fixtures,
