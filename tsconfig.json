@@ -17,7 +17,16 @@
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    // Make modules work in isolation. Required because we're building packages
+    // with Babel, which doesn't have the cross-module knowledge tsc has. This
+    // is a drawback (eg. can't use const enums or re-export types), but is
+    // worth it because building with Babel provides a better DX: Faster build
+    // & test times, and the ability to build before fixing all type errors,
+    // like removing unused imports, which aren't important while prototyping.
+    // https://github.com/facebook/create-react-app/issues/6054
+    // https://github.com/webpack/webpack/issues/7378
+    "isolatedModules": true
   },
   "exclude": ["node_modules"]
 }

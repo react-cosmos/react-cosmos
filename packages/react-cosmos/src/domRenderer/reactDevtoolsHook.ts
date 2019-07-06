@@ -5,6 +5,7 @@
 // point (because the user's global imports have to take effect before we
 // import fixture and decorator modules). For this reason this file has to be
 // imported by hand in each renderer implementation.
+// @ts-ignore
 if (process.env.NODE_ENV === 'development') {
   // Accessing the parent window can throw when loading a static export without
   // a web server (i.e. via file:/// protocol)
