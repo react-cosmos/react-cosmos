@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "title": "JSON schema for React Cosmos configs",
+  "type": "object",
+  // Additional properties can be used by plugins (although their schema will
+  // be unknown).
+  "additionalProperties": true,
+  // No properties should ever be required in order for the Cosmos config to
+  // remain optional and for Cosmos to know how to run solely by convention!
+  "required": [],
+  "properties": {
+    "rootDir": {
+      "description": "The root directory that all others paths in this config are relative to. Usually the root of your repo. If omitted, rootDir is equal to the directory containing your Cosmos config. When you don't use a Cosmos config, rootDir defaults to the current working directory.",
+      "type": "string"
+    },
+    "exportPath": {
+      "description": "Where to generate static exports on disk. [default: \"cosmos-export\"]",
+      "type": "string"
+    },
+    "staticPath": {
+      "description": "Dir path to serve static assets from.",
+      "type": "string"
+    },
+    "publicUrl": {
+      "description": "Base URL for static assets. [default: \"/\"]",
+      "type": "string"
+    },
+    "fixturesDir": {
+      "description": "Name for directories that contain fixtures (eg. __fixtures__/example.jsx). [default: \"__fixtures__\"]",
+      "type": "string"
+    },
+    "fixtureFileSuffix": {
+      "description": "Suffix for fixture files (eg. example.fixture.jsx). [default: \"fixture\"]",
+      "type": "string"
+    },
+    "watchDirs": {
+      "description": "Directories where the Cosmos server watches for fixture files changes while running. [default: \".\"]",
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "userDepsFilePath": {
+      "description": "Where to generate a file that contains a map to all fixtures and other Cosmos-related user modules. Only used in setups where Cosmos can't piggyback on the user's build (eg. React Native setups). [default: \"cosmos.userdeps.js\"]",
+      "type": "string"
+    },
+    "hostname": {
+      "description": "Dev server hostname. [default: null]",
+      "type": ["string", "null"]
+    },
+    "port": {
+      "description": "Dev server port. [default: 5000]",
+      "type": ["number"]
+    },
+    "globalImports": {
+      "description": "Modules to be imported before loading components. Stuff like reset.css, polyfills, etc.",
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "dom": {
+      "description": "DOM-related options",
+      "type": "object",
+      "properties": {
+        // TODO: containerQuerySelector: null | string; [default: null]
+      }
+    },
+    "webpack": {
+      "description": "Webpack-related options",
+      "type": "object",
+      "properties": {
+        // TODO: configPath: null | string; [default \"webpack.config.js\"]
+        // TODO: overridePath: null | string; [default \"webpack.override.js\"]
+        // TODO: hotReload: boolean; [default: true]
+      }
+    }
+    // TODO: ui: cosmosConfigInput.ui
+  }
+}
