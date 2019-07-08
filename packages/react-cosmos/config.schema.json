@@ -11,15 +11,18 @@
   "properties": {
     "rootDir": {
       "description": "The root directory that all others paths in this config are relative to. Usually the root of your repo. If omitted, rootDir is equal to the directory containing your Cosmos config. When you don't use a Cosmos config, rootDir defaults to the current working directory.",
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "exportPath": {
       "description": "Where to generate static exports on disk. [default: \"cosmos-export\"]",
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "staticPath": {
       "description": "Dir path to serve static assets from.",
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "publicUrl": {
       "description": "Base URL for static assets. [default: \"/\"]",
@@ -27,25 +30,28 @@
     },
     "fixturesDir": {
       "description": "Name for directories that contain fixtures (eg. __fixtures__/example.jsx). [default: \"__fixtures__\"]",
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "fixtureFileSuffix": {
       "description": "Suffix for fixture files (eg. example.fixture.jsx). [default: \"fixture\"]",
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "watchDirs": {
       "description": "Directories where the Cosmos server watches for fixture files changes while running. [default: \".\"]",
       "type": "array",
-      "items": { "type": "string" },
+      "items": { "type": "string", "minLength": 1 },
       "uniqueItems": true
     },
     "userDepsFilePath": {
       "description": "Where to generate a file that contains a map to all fixtures and other Cosmos-related user modules. Only used in setups where Cosmos can't piggyback on the user's build (eg. React Native setups). [default: \"cosmos.userdeps.js\"]",
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "hostname": {
       "description": "Dev server hostname. [default: null]",
-      "type": ["string", "null"]
+      "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
     },
     "port": {
       "description": "Dev server port. [default: 5000]",
@@ -54,25 +60,38 @@
     "globalImports": {
       "description": "Modules to be imported before loading components. Stuff like reset.css, polyfills, etc.",
       "type": "array",
-      "items": { "type": "string" },
+      "items": { "type": "string", "minLength": 1 },
       "uniqueItems": true
     },
     "dom": {
       "description": "DOM-related options",
       "type": "object",
       "properties": {
-        // TODO: containerQuerySelector: null | string; [default: null]
+        "containerQuerySelector": {
+          "description": "Document selector for existing element to use as component parent (eg. #root). A blank container element is created from scratch if no selector is provided. [default: null]",
+          "type": ["string", "null"],
+          "minLength": 1
+        }
       }
     },
     "webpack": {
       "description": "Webpack-related options",
       "type": "object",
       "properties": {
-        // TODO: configPath: null | string; [default \"webpack.config.js\"]
-        // TODO: overridePath: null | string; [default \"webpack.override.js\"]
-        // TODO: hotReload: boolean; [default: true]
+        "configPath": {
+          "description": "Path to an existing webpack config, which Cosmos will reuse to build your code. Set to null to disable this behavior. [default \"webpack.config.js\"]",
+          "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
+        },
+        "overridePath": {
+          "description": "Path to a user module that customizes the webpack config used by Cosmos. Set to null to disable this behavior. [default \"webpack.override.js\"]",
+          "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
+        },
+        "hotReload": {
+          "description": "Enable webpack's Hot Module Replacement. [default: true]",
+          "type": "boolean"
+        }
       }
     }
-    // TODO: ui: cosmosConfigInput.ui
+    // TODO: responsivePreview
   }
 }
