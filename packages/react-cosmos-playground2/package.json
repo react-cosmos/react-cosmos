@@ -16,5 +16,8 @@
     "react-plugin": "^2.0.0-alpha.6",
     "socket.io-client": "^2.2.0",
     "styled-components": "^4.3.2"
+  },
+  "peerDependencies": {
+    "webpack": "^4.0.0"
   }
 }

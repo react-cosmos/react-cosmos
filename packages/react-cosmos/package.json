@@ -30,6 +30,11 @@
     "webpack-dev-middleware": "^3.7.0",
     "yargs": "^13.2.4"
   },
+  "peerDependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "webpack": "^4.0.0"
+  },
   "bin": {
     "cosmos": "./bin/cosmos.js",
     "cosmos-export": "./bin/cosmos-export.js",

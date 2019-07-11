@@ -8,5 +8,9 @@
     "lodash": "^4.17.11",
     "react-element-to-jsx-string": "^14.0.2",
     "react-is": "^16.8.6"
+  },
+  "peerDependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
   }
 }

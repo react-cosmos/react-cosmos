@@ -11,5 +11,9 @@
     "react-cosmos-shared2": "^5.0.0-alpha.14",
     "react-is": "^16.8.6",
     "socket.io-client": "^2.2.0"
+  },
+  "peerDependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
   }
 }
