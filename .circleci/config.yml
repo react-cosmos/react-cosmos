@@ -19,7 +19,7 @@ jobs:
       - restore_cache:
           # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
           key: dependency-cache-{{ checksum "package.json" }}
-      - run: yarn install --ignore-engines
+      - run: yarn install --ignore-engines --frozen-lockfile
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
