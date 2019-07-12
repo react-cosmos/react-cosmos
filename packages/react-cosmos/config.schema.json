@@ -3,8 +3,6 @@
   "title": "JSON schema for React Cosmos configs",
   "type": "object",
   "additionalProperties": false,
-  // No properties should ever be required in order for the Cosmos config to
-  // remain optional and for Cosmos to know how to run solely by convention!
   "required": [],
   "properties": {
     "rootDir": {
@@ -94,8 +92,6 @@
     "ui": {
       "description": "UI plugin options",
       "type": "object",
-      // Additional properties can be used by plugins (although their schema will
-      // be unknown).
       "additionalProperties": true,
       "properties": {
         "responsivePreview": {
