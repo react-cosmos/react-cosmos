@@ -13,7 +13,7 @@ afterEach(cleanup);
 
 function lostTestPlugins() {
   loadPlugins();
-  return render(<ArraySlot name="rendererActions" />);
+  return render(<ArraySlot name="rendererAction" />);
 }
 
 it(`doesn't render button when web renderer url is empty`, async () => {
@@ -52,7 +52,7 @@ it('renders button', async () => {
   mockNotifications();
 
   loadPlugins();
-  const { getByTitle } = render(<ArraySlot name="rendererActions" />);
+  const { getByTitle } = render(<ArraySlot name="rendererAction" />);
 
   getByTitle(/copy remote renderer url/i);
 });

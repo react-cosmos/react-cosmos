@@ -3,7 +3,8 @@ export async function copyToClipboard(text: string): Promise<void> {
 
   let permissionDenied = false;
   try {
-    const { state } = await permissions.query({ name: 'clipboard' });
+    // @ts-ignore Sorry, TS, MDN begs to differ https://developer.mozilla.org/en-US/docs/Web/API/Permissions/query#Parameters
+    const { state } = await permissions.query({ name: 'clipboard-write' });
     permissionDenied = state !== 'granted' && state !== 'prompt';
   } catch (err) {
     // Some browsers (eg. Firefox 66) don't support the 'clipboard'

@@ -2,11 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import { ArraySlot } from 'react-plugin';
 
-export function ControlPanel() {
+type Props = {
+  controlPanelRowOrder: string[];
+};
+
+export function ControlPanel({ controlPanelRowOrder }: Props) {
   return (
     <Container>
       <Content>
-        <ArraySlot name="controlPanelRow" />
+        <ArraySlot name="controlPanelRow" plugOrder={controlPanelRowOrder} />
       </Content>
     </Container>
   );

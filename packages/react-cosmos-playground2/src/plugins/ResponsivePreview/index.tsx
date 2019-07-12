@@ -14,7 +14,7 @@ import {
 import { ResponsivePreview } from './ResponsivePreview';
 import { ToggleButton } from './ToggleButton';
 
-const { plug, register } = createPlugin<ResponsivePreviewSpec>({
+const { plug, namedPlug, register } = createPlugin<ResponsivePreviewSpec>({
   name: 'responsivePreview',
   defaultConfig: {
     devices: DEFAULT_DEVICES
@@ -53,7 +53,7 @@ plug('rendererPreviewOuter', ({ children, pluginContext }) => {
   );
 });
 
-plug('rendererActions', ({ pluginContext }) => {
+namedPlug('rendererAction', 'responsivePreview', ({ pluginContext }) => {
   const { getState, setState, getMethodsOf } = pluginContext;
   const { enabled } = getState();
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');

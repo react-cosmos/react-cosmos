@@ -6,6 +6,7 @@ import { XCircleIcon, RefreshCwIcon, HomeIcon } from '../../shared/icons';
 import { IconButton } from '../../shared/ui/buttons';
 
 type Props = {
+  rendererActionOrder: string[];
   selectedFixtureId: null | FixtureId;
   rendererConnected: boolean;
   validFixtureSelected: boolean;
@@ -14,6 +15,7 @@ type Props = {
 };
 
 export const RendererHeader = React.memo(function RendererHeader({
+  rendererActionOrder,
   selectedFixtureId,
   rendererConnected,
   validFixtureSelected,
@@ -30,15 +32,17 @@ export const RendererHeader = React.memo(function RendererHeader({
     );
   }
 
+  const rendererActionSlot = (
+    <ArraySlot name="rendererAction" plugOrder={rendererActionOrder} />
+  );
+
   if (!selectedFixtureId) {
     return (
       <Container>
         <Left>
           <Message>No fixture selected</Message>
         </Left>
-        <Right>
-          <ArraySlot name="rendererActions" />
-        </Right>
+        <Right>{rendererActionSlot}</Right>
       </Container>
     );
   }
@@ -54,9 +58,7 @@ export const RendererHeader = React.memo(function RendererHeader({
             onClick={() => unselectFixture()}
           />
         </Left>
-        <Right>
-          <ArraySlot name="rendererActions" />
-        </Right>
+        <Right>{rendererActionSlot}</Right>
       </Container>
     );
   }
@@ -74,11 +76,9 @@ export const RendererHeader = React.memo(function RendererHeader({
           title="Reload fixture"
           onClick={() => selectFixture(selectedFixtureId, false)}
         />
-        <ArraySlot name="fixtureActions" />
+        <ArraySlot name="fixtureAction" />
       </Left>
-      <Right>
-        <ArraySlot name="rendererActions" />
-      </Right>
+      <Right>{rendererActionSlot}</Right>
     </Container>
   );
 });

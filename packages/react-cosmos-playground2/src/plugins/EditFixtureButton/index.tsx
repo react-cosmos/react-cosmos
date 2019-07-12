@@ -6,13 +6,14 @@ import { NotificationsSpec } from '../Notifications/public';
 import { EditFixtureButton } from './EditFixtureButton';
 import { EditFixtureButtonSpec } from './public';
 
-const { plug, register } = createPlugin<EditFixtureButtonSpec>({
+const { namedPlug, register } = createPlugin<EditFixtureButtonSpec>({
   name: 'editFixtureButton'
 });
 
 const ERORR_TITLE = 'Failed to open fixture';
 
-plug('fixtureActions', ({ pluginContext: { getMethodsOf } }) => {
+namedPlug('fixtureAction', 'editFixture', ({ pluginContext }) => {
+  const { getMethodsOf } = pluginContext;
   const core = getMethodsOf<CoreSpec>('core');
   const router = getMethodsOf<RouterSpec>('router');
 

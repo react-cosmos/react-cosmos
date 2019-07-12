@@ -26,12 +26,12 @@ function loadTestPlugins() {
 
 const RENDERER_ACTION = 'foo action';
 function mockRendererAction() {
-  mockPlug('rendererActions', () => <>{RENDERER_ACTION}</>);
+  mockPlug('rendererAction', () => <>{RENDERER_ACTION}</>);
 }
 
 const FIXTURE_ACTION = 'bar action';
 function mockFixtureAction() {
-  mockPlug('fixtureActions', () => <>{FIXTURE_ACTION}</>);
+  mockPlug('fixtureAction', () => <>{FIXTURE_ACTION}</>);
 }
 
 it('renders close button', async () => {

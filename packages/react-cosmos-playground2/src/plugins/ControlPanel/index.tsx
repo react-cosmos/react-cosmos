@@ -7,16 +7,22 @@ import { LayoutSpec } from '../Layout/public';
 import { ControlPanel } from './ControlPanel';
 import { ControlPanelSpec } from './public';
 
-const { plug, register } = createPlugin<ControlPanelSpec>({
-  name: 'controlPanel'
+const { plug, namedPlug, register } = createPlugin<ControlPanelSpec>({
+  name: 'controlPanel',
+  defaultConfig: {
+    controlPanelRowOrder: []
+  }
 });
 
 plug('panel', ({ pluginContext }) => {
+  const { controlPanelRowOrder } = pluginContext.getConfig();
   const layout = pluginContext.getMethodsOf<LayoutSpec>('layout');
-  return layout.isPanelOpen() ? <ControlPanel /> : null;
+  return layout.isPanelOpen() ? (
+    <ControlPanel controlPanelRowOrder={controlPanelRowOrder} />
+  ) : null;
 });
 
-plug('rendererActions', ({ pluginContext }) => {
+namedPlug('rendererAction', 'controlPanel', ({ pluginContext }) => {
   const { getMethodsOf } = pluginContext;
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   if (!rendererCore.isValidFixtureSelected()) {
