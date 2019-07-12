@@ -17,9 +17,24 @@ export type PlaygroundConfig = {
 // fiddling with plugins from browser console :D.
 (window as any).ReactPlugin = ReactPlugin;
 
-export default function mount(config: PlaygroundConfig) {
+const DEFAULT_CONFIG = {
+  rendererHeader: {
+    rendererActionsOrder: [
+      'remoteRenderer',
+      'fullScreen',
+      'responsivePreview',
+      'controlPanel'
+    ]
+  },
+  controlPanel: {
+    controlPanelRowOrder: ['props', 'classState']
+  }
+};
+
+export default function mount(userConfig: PlaygroundConfig) {
   const { loadPlugins, Slot } = ReactPlugin;
 
+  const config = { ...DEFAULT_CONFIG, ...userConfig };
   loadPlugins({ config });
   render(
     <>

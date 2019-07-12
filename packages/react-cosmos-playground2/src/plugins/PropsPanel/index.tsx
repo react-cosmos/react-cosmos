@@ -20,11 +20,12 @@ import { PropsPanelSpec } from './public';
 import { PROPS_TREE_EXPANSION_STORAGE_KEY } from './shared';
 import { BlankState } from './BlankState';
 
-const { plug, register } = createPlugin<PropsPanelSpec>({
+const { namedPlug, register } = createPlugin<PropsPanelSpec>({
   name: 'propsPanel'
 });
 
-plug('controlPanelRow', ({ pluginContext: { getMethodsOf } }) => {
+namedPlug('controlPanelRow', 'props', ({ pluginContext }) => {
+  const { getMethodsOf } = pluginContext;
   const routerCore = getMethodsOf<RouterSpec>('router');
   const selectedFixtureId = routerCore.getSelectedFixtureId();
   if (selectedFixtureId === null) {
@@ -72,7 +73,8 @@ plug('controlPanelRow', ({ pluginContext: { getMethodsOf } }) => {
 // when none is available
 // TODO: Replace this with a more generic blank state (controls in general not
 // just props)
-plug('controlPanelRow', ({ pluginContext: { getMethodsOf } }) => {
+namedPlug('controlPanelRow', 'blankState', ({ pluginContext }) => {
+  const { getMethodsOf } = pluginContext;
   const routerCore = getMethodsOf<RouterSpec>('router');
   const selectedFixtureId = routerCore.getSelectedFixtureId();
   if (selectedFixtureId === null) {

@@ -5,11 +5,12 @@ import { RendererCoreSpec } from '../RendererCore/public';
 import { FullScreenButton } from './FullScreenButton';
 import { FullScreenButtonSpec } from './public';
 
-const { plug, register } = createPlugin<FullScreenButtonSpec>({
+const { namedPlug, register } = createPlugin<FullScreenButtonSpec>({
   name: 'fullScreenButton'
 });
 
-plug('rendererActions', ({ pluginContext: { getMethodsOf } }) => {
+namedPlug('rendererActions', 'fullScreen', ({ pluginContext }) => {
+  const { getMethodsOf } = pluginContext;
   const router = getMethodsOf<RouterSpec>('router');
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
 

@@ -18,11 +18,12 @@ import { ClassStatePanel } from './ClassStatePanel';
 import { ClassStatePanelSpec } from './public';
 import { CLASS_STATE_TREE_EXPANSION_STORAGE_KEY } from './shared';
 
-const { plug, register } = createPlugin<ClassStatePanelSpec>({
+const { namedPlug, register } = createPlugin<ClassStatePanelSpec>({
   name: 'classStatePanel'
 });
 
-plug('controlPanelRow', ({ pluginContext: { getMethodsOf } }) => {
+namedPlug('controlPanelRow', 'classState', ({ pluginContext }) => {
+  const { getMethodsOf } = pluginContext;
   const routerCore = getMethodsOf<RouterSpec>('router');
   const selectedFixtureId = routerCore.getSelectedFixtureId();
   if (selectedFixtureId === null) {

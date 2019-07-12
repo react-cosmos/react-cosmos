@@ -9,7 +9,7 @@ import { RendererRemoteSpec } from './public';
 import { Context } from './shared';
 import { RemoteButton } from './RemoteButton';
 
-const { onLoad, on, plug, register } = createPlugin<RendererRemoteSpec>({
+const { onLoad, on, namedPlug, register } = createPlugin<RendererRemoteSpec>({
   name: 'rendererRemote'
 });
 
@@ -33,7 +33,8 @@ onLoad(context => {
   });
 });
 
-plug('rendererActions', ({ pluginContext: { getMethodsOf } }) => {
+namedPlug('rendererActions', 'remoteRenderer', ({ pluginContext }) => {
+  const { getMethodsOf } = pluginContext;
   const core = getMethodsOf<CoreSpec>('core');
   const notifications = getMethodsOf<NotificationsSpec>('notifications');
   return (

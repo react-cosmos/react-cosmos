@@ -10266,10 +10266,10 @@ react-is@^16.9.0-alpha.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0-alpha.0.tgz#af943642da49460f9fe98630182b0a62db3e9e6a"
   integrity sha512-psl0ePLTFliYfwcbwvimLgTNN156ZdeWB4zvP7dV/6lTAqWMHFfidg/mSZ2fFgE1LMNN8ZJOLl2DfZ8yg+3ETA==
 
-react-plugin@^2.0.0-alpha.6:
-  version "2.0.0-alpha.6"
-  resolved "https://registry.yarnpkg.com/react-plugin/-/react-plugin-2.0.0-alpha.6.tgz#45a7f0afb1276f79618a11e60c75200f7cf26b0b"
-  integrity sha512-7NFyWwwwK79TyRuV3Gkh7At8V7Ga+IxtEOGykEs+C6pUooh9SlXM0q9U7yqpDeODsE3/+1VUKwh+jPn0x9QASQ==
+react-plugin@^2.0.0-alpha.7:
+  version "2.0.0-alpha.7"
+  resolved "https://registry.yarnpkg.com/react-plugin/-/react-plugin-2.0.0-alpha.7.tgz#f62fb3aadfd9d11f8793d1aca1c3412c47213be8"
+  integrity sha512-DTJZXmyywV4fpkUhlCu4z3X0bgbC4bnX59OPjl5bO25tXLEB9yROFFxre8lDLrkI5UXBbkFIDcCde2Vn9Dc76A==
   dependencies:
     "@skidding/linked-list" "^1.0.2"
     array-find-index "^1.0.2"
