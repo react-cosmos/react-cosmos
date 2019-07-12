@@ -21,5 +21,6 @@ script:
   # - yarn build
   # - yarn export
 cache:
+  yarn: false
   directories:
     - ~/.cache
