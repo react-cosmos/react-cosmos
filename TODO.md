@@ -2,27 +2,31 @@
 
 Cosmos Next becomes _Cosmos_. The included features are meant to exceed everything Cosmos Classic offered and make use of the powerful new Cosmos platform.
 
+Alpha
+
 - [x] Function fixtures
 - [x] Notifications redesign
   - [x] Build notification [#522](https://github.com/react-cosmos/react-cosmos/issues/522)
   - [ ] ~~Try: Notifications for fixture create/remove/rename~~ Too much info to display inside a notification
 - [ ] Control panel
+- [ ] Fixture search
+  - [ ] Minimize left nav
 - [ ] Official React Native integration
+  - [ ] react-native-web synced cross-platform renderers
   - [ ] FixtureLoader facades: DomFixtureLoader & NativeFixtureLoader
 - [ ] Resize responsive viewport
   - [ ] Put viewports in dropdown
-- [ ] Multi fixture viewports
-- [ ] Fixture search
-  - [ ] Minimize left nav
-- [ ] Try: UI-generated fixture variants
+- [ ] Multi fixture select
 - [ ] Command API with search
 - [ ] Keyboard shortcuts
-- [ ] Try: "Check all" button/API to detect broken fixtures
 - [ ] Refresh docs
+
+Beta
+
 - [ ] Maybe: Marketing website
 - [ ] Migration aids (eg. code transforms and support)
 
-Plugin APIs will be released later, under minor versions.
+> Plugin APIs will be released later, under minor versions.
 
 Control panel
 
@@ -67,21 +71,16 @@ Notification redesign
 
 - [x] Simplify plug API (instead of getProps, the component gets the plugin context API as props)
 - [x] Plug API for Slot arrays
-- [ ] Sort API for ArraySlot props
-
-UI-generated fixture variants
-
-- [ ] Maybe: Store initialFixtureState in RendererCore (forgot the main benefit behind this)
-  - [ ] Build each part incrementally as it arrives
-  - [ ] Store it together with fixtureState to avoid race conditions (eg. { initial, current })
-  - [ ] Expose separate methods for client plugins (eg. getInitialFixtureState)
+- [ ] Sort API for ArraySlot
 
 ## Backlog
 
 Not part of v5, but the most notable features to pursue after.
 
-- [ ] Pin fixture
+- [ ] "Check all" button/API to detect broken fixtures
+- [ ] UI-generated fixtures
 - [ ] VSCode extension (simpler UI without nav but with control panel)
+- [ ] Pin fixture
 
 # Roadmap: Cosmos Next
 

@@ -44,11 +44,11 @@ export async function webpackDevServer({
 
   // Serve static path derived from devServer.contentBase webpack config
   if (cosmosConfig.staticPath === null) {
-    const staticPath = getWebpackStaticPath(webpackConfig);
-    if (staticPath !== null) {
+    const webpackDerivedStaticPath = getWebpackStaticPath(webpackConfig);
+    if (webpackDerivedStaticPath !== null) {
       serveStaticDir(
         expressApp,
-        resolvePath(cosmosConfig.rootDir, staticPath),
+        resolvePath(cosmosConfig.rootDir, webpackDerivedStaticPath),
         cosmosConfig.publicUrl
       );
     }
