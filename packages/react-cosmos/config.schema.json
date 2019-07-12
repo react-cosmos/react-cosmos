@@ -35,7 +35,7 @@
       "minLength": 1
     },
     "watchDirs": {
-      "description": "Directories where the Cosmos server watches for fixture files changes while running. [default: \".\"]",
+      "description": "Directories where the Cosmos server watches for fixture files changes while running. [default: [\".\"]]",
       "type": "array",
       "items": { "type": "string", "minLength": 1 },
       "uniqueItems": true
@@ -46,7 +46,7 @@
       "minLength": 1
     },
     "hostname": {
-      "description": "Dev server hostname. [default: null]",
+      "description": "Dev server hostname. Set to null to accept connections with any hostname. [default: null]",
       "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
     },
     "port": {
@@ -106,9 +106,9 @@
                 "additionalProperties": false,
                 "required": ["label", "width", "height"],
                 "properties": {
-                  "label": { "type": "string" },
-                  "width": { "type": "number" },
-                  "height": { "type": "number" }
+                  "label": { "type": "string", "minLength": 1 },
+                  "width": { "type": "number", "minimum": 1 },
+                  "height": { "type": "number", "minimum": 1 }
                 }
               }
             }
