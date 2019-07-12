@@ -62,5 +62,5 @@ workflows:
     jobs:
       # Limitting CircleCI usage
       # - node-v6
-      # - node-v8
+      - node-v8
       - node-v10
