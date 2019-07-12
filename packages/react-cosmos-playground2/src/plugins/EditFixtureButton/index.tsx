@@ -12,7 +12,7 @@ const { namedPlug, register } = createPlugin<EditFixtureButtonSpec>({
 
 const ERORR_TITLE = 'Failed to open fixture';
 
-namedPlug('fixtureActions', 'editFixture', ({ pluginContext }) => {
+namedPlug('fixtureAction', 'editFixture', ({ pluginContext }) => {
   const { getMethodsOf } = pluginContext;
   const core = getMethodsOf<CoreSpec>('core');
   const router = getMethodsOf<RouterSpec>('router');

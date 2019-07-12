@@ -20,7 +20,7 @@ function mockSelectedFixtureId() {
 
 async function loadTestPlugins() {
   loadPlugins();
-  return render(<ArraySlot name="fixtureActions" />);
+  return render(<ArraySlot name="fixtureAction" />);
 }
 
 function clickButton({ getByTitle }: RenderResult) {

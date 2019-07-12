@@ -9,7 +9,7 @@ afterEach(cleanup);
 
 function loadTestPlugins() {
   loadPlugins();
-  return render(<Slot name="rendererActions" />);
+  return render(<Slot name="rendererAction" />);
 }
 
 it('renders disabled button when no valid fixture is selected', async () => {

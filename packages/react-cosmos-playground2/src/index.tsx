@@ -19,7 +19,7 @@ export type PlaygroundConfig = {
 
 const DEFAULT_CONFIG = {
   rendererHeader: {
-    rendererActionsOrder: [
+    rendererActionOrder: [
       'remoteRenderer',
       'fullScreen',
       'responsivePreview',

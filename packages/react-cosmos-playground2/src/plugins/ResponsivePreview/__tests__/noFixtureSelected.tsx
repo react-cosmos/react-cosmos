@@ -32,7 +32,7 @@ function loadTestPlugins() {
   loadPlugins();
   return render(
     <>
-      <ArraySlot name="rendererActions" />
+      <ArraySlot name="rendererAction" />
       <Slot name="rendererPreviewOuter">
         <div data-testid="previewMock" />
       </Slot>

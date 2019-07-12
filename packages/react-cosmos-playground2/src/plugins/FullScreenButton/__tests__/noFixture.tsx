@@ -20,7 +20,7 @@ function registerTestPlugins() {
 
 function loadTestPlugins() {
   loadPlugins();
-  return render(<Slot name="rendererActions" />);
+  return render(<Slot name="rendererAction" />);
 }
 
 it('renders disabled fullscreen button', async () => {

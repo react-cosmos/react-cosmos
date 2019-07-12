@@ -33,7 +33,7 @@ onLoad(context => {
   });
 });
 
-namedPlug('rendererActions', 'remoteRenderer', ({ pluginContext }) => {
+namedPlug('rendererAction', 'remoteRenderer', ({ pluginContext }) => {
   const { getMethodsOf } = pluginContext;
   const core = getMethodsOf<CoreSpec>('core');
   const notifications = getMethodsOf<NotificationsSpec>('notifications');

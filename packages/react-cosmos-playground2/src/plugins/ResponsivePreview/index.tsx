@@ -53,7 +53,7 @@ plug('rendererPreviewOuter', ({ children, pluginContext }) => {
   );
 });
 
-namedPlug('rendererActions', 'responsivePreview', ({ pluginContext }) => {
+namedPlug('rendererAction', 'responsivePreview', ({ pluginContext }) => {
   const { getState, setState, getMethodsOf } = pluginContext;
   const { enabled } = getState();
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');

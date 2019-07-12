@@ -22,7 +22,7 @@ plug('panel', ({ pluginContext }) => {
   ) : null;
 });
 
-namedPlug('rendererActions', 'controlPanel', ({ pluginContext }) => {
+namedPlug('rendererAction', 'controlPanel', ({ pluginContext }) => {
   const { getMethodsOf } = pluginContext;
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   if (!rendererCore.isValidFixtureSelected()) {

@@ -9,7 +9,7 @@ const { namedPlug, register } = createPlugin<FullScreenButtonSpec>({
   name: 'fullScreenButton'
 });
 
-namedPlug('rendererActions', 'fullScreen', ({ pluginContext }) => {
+namedPlug('rendererAction', 'fullScreen', ({ pluginContext }) => {
   const { getMethodsOf } = pluginContext;
   const router = getMethodsOf<RouterSpec>('router');
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
