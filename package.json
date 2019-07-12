@@ -32,12 +32,12 @@
     "release:next": "yarn release:check && yarn release:lerna --dist-tag=next"
   },
   "devDependencies": {
-    "@babel/cli": "^7.5.0",
-    "@babel/core": "^7.5.4",
-    "@babel/node": "^7.5.0",
-    "@babel/plugin-proposal-class-properties": "^7.5.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.5.4",
-    "@babel/preset-env": "^7.5.4",
+    "@babel/cli": "7.5.0",
+    "@babel/core": "7.5.0",
+    "@babel/node": "7.5.0",
+    "@babel/plugin-proposal-class-properties": "7.5.0",
+    "@babel/plugin-proposal-object-rest-spread": "7.5.0",
+    "@babel/preset-env": "7.5.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
     "@react-mock/state": "^0.1.8",
