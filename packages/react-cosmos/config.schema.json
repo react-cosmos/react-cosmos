@@ -2,9 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema",
   "title": "JSON schema for React Cosmos configs",
   "type": "object",
-  // Additional properties can be used by plugins (although their schema will
-  // be unknown).
-  "additionalProperties": true,
+  "additionalProperties": false,
   // No properties should ever be required in order for the Cosmos config to
   // remain optional and for Cosmos to know how to run solely by convention!
   "required": [],
@@ -77,6 +75,7 @@
     "webpack": {
       "description": "Webpack-related options",
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "configPath": {
           "description": "Path to an existing webpack config, which Cosmos will reuse to build your code. Set to null to disable this behavior. [default \"webpack.config.js\"]",
@@ -91,7 +90,35 @@
           "type": "boolean"
         }
       }
+    },
+    "ui": {
+      "description": "UI plugin options",
+      "type": "object",
+      // Additional properties can be used by plugins (although their schema will
+      // be unknown).
+      "additionalProperties": true,
+      "properties": {
+        "responsivePreview": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "devices": {
+              "description": "List of device viewports",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["label", "width", "height"],
+                "properties": {
+                  "label": { "type": "string" },
+                  "width": { "type": "number" },
+                  "height": { "type": "number" }
+                }
+              }
+            }
+          }
+        }
+      }
     }
-    // TODO: responsivePreview
   }
 }
