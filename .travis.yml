@@ -25,4 +25,4 @@ script:
 cache:
   yarn: true
   directories:
-    - ~/.cache/Cypress
+    - ~/.cache
