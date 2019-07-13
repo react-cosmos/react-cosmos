@@ -1,5 +1,6 @@
 import React from 'react';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
+import styled from 'styled-components';
 import { TreeExpansion } from '../../shared/ui/TreeView';
 import { BlankState } from './BlankState';
 import { FixtureTree } from './FixtureTree';
@@ -31,27 +32,37 @@ export function FixtureTreeContainer({
   );
 
   if (!rendererConnected) {
-    return null;
+    return <Container />;
   }
 
   if (Object.keys(fixtures).length === 0) {
     return (
-      <BlankState
-        fixturesDir={fixturesDir}
-        fixtureFileSuffix={fixtureFileSuffix}
-      />
+      <Container>
+        <BlankState
+          fixturesDir={fixturesDir}
+          fixtureFileSuffix={fixtureFileSuffix}
+        />
+      </Container>
     );
   }
 
   return (
-    <FixtureTree
-      fixturesDir={fixturesDir}
-      fixtureFileSuffix={fixtureFileSuffix}
-      fixtures={fixtures}
-      selectedFixtureId={selectedFixtureId}
-      treeExpansion={treeExpansion}
-      onSelect={onSelect}
-      setTreeExpansion={setTreeExpansion}
-    />
+    <Container>
+      <FixtureTree
+        fixturesDir={fixturesDir}
+        fixtureFileSuffix={fixtureFileSuffix}
+        fixtures={fixtures}
+        selectedFixtureId={selectedFixtureId}
+        treeExpansion={treeExpansion}
+        onSelect={onSelect}
+        setTreeExpansion={setTreeExpansion}
+      />
+    </Container>
   );
 }
+
+const Container = styled.div`
+  flex: 1;
+  background: var(--grey1);
+  overflow: auto;
+`;

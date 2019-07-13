@@ -23,5 +23,6 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   background: var(--grey1);
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
 `;
