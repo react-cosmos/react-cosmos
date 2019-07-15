@@ -61,7 +61,7 @@ export function FixtureSearchOverlay({
           newSearchText
         );
         setMatchingFixturePaths(newMatchingFixturePaths);
-        // Reset active fixture ID to first matching fixture Id when search changes
+        // Reset active fixture to first matching fixture when search changes
         setActiveFixturePath(getFirstFixturePath(newMatchingFixturePaths));
       }
     },
