@@ -174,7 +174,7 @@ export function FixtureSearchOverlay({
     <Overlay data-testid="fixtureSearchOverlay" onClick={onClose}>
       <Content data-testid="fixtureSearchContent" onClick={onContentClick}>
         <InputContainer>
-          <input
+          <SearchInput
             ref={inputRef}
             type="text"
             placeholder="Fixture search"
@@ -260,7 +260,25 @@ const Content = styled.div`
 
 const InputContainer = styled.div`
   flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
   height: 48px;
+  padding: 8px 16px;
+`;
+
+const SearchInput = styled.input`
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--grey6);
+  outline: none;
+  font-size: 16px;
+  line-height: 32px;
+
+  ::placeholder {
+    color: var(--grey3);
+  }
 `;
 
 const Results = styled.div`
