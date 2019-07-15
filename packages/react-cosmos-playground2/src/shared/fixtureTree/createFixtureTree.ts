@@ -1,6 +1,5 @@
 import { get, set } from 'lodash';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
-import { removeFixtureNameExtension } from '../../../../shared/fixture';
 import { FixtureNode } from './shared';
 
 export function createFixtureTree(fixtures: FixtureNamesByPath): FixtureNode {
@@ -74,4 +73,8 @@ function addFixtureIdToTree(
   } while (curNodeDepth <= namespace.length);
 
   curNode.items[nodeName] = fixtureId;
+}
+
+function removeFixtureNameExtension(fixtureName: string) {
+  return fixtureName.replace(/\.(j|t)sx?$/, '');
 }

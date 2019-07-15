@@ -2,6 +2,7 @@ import { filter } from 'fuzzaldrin-plus';
 import React from 'react';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
+import { createFixtureTree } from '../../shared/fixtureTree';
 import {
   KEY_DOWN,
   KEY_ENTER,
@@ -9,7 +10,6 @@ import {
   KEY_TAB,
   KEY_UP
 } from '../../shared/keys';
-import { getFixtureTree } from '../FixtureTree/FixtureTree/fixtureTree';
 import { FixtureSearchResult } from './FixtureSearchResult';
 import { FixtureIdsByPath, flattenFixtureTree } from './flattenFixtureTree';
 
@@ -33,7 +33,7 @@ export function FixtureSearchOverlay({
 }: Props) {
   // Flattened fixture IDs are memoized purely to minimize computation
   const fixtureIds = React.useMemo(() => {
-    const fixtureTree = getFixtureTree({
+    const fixtureTree = createFixtureTree({
       fixtures,
       fixturesDir,
       fixtureFileSuffix

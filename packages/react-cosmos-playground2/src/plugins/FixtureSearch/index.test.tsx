@@ -50,13 +50,13 @@ it('open fixture list and selects fixture', async () => {
 
   // Shows (cleaned up) fixture list
   getByTestId('fixtureSearchContent');
-  getByText('src fixture1');
-  getByText('src fixture2');
-  getByText('src foobar index fixture3a');
-  getByText('src foobar index fixture3b');
+  getByText('fixture1');
+  getByText('fixture2');
+  getByText('foobar fixture3a');
+  getByText('foobar fixture3b');
 
   // Selects fixture
-  fireEvent.click(getByText('src foobar index fixture3b'));
+  fireEvent.click(getByText('foobar fixture3b'));
   const fixtureId = {
     path: 'src/foobar/index.fixture.ts',
     name: 'fixture3b'
@@ -95,8 +95,8 @@ it('filters fixture list', async () => {
   });
 
   // Shows only matching fixtures
-  expect(queryByText('src fixture1')).toBeNull();
-  expect(queryByText('src fixture2')).toBeNull();
-  getByText('src foobar index fixture3a');
-  getByText('src foobar index fixture3b');
+  expect(queryByText('fixture1')).toBeNull();
+  expect(queryByText('fixture2')).toBeNull();
+  getByText('foobar fixture3a');
+  getByText('foobar fixture3b');
 });

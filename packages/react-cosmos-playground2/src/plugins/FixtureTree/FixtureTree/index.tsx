@@ -1,8 +1,8 @@
 import React from 'react';
+import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
-import { FixtureNamesByPath, FixtureId } from 'react-cosmos-shared2/renderer';
+import { createFixtureTree } from '../../../shared/fixtureTree';
 import { TreeExpansion, TreeView } from '../../../shared/ui/TreeView';
-import { getFixtureTree } from './fixtureTree';
 import { FixtureTreeDir } from './FixtureTreeDir';
 import { FixtureTreeItem } from './FixtureTreeItem';
 
@@ -26,7 +26,7 @@ export const FixtureTree = React.memo(function FixtureTree({
   setTreeExpansion
 }: Props) {
   const rootNode = React.useMemo(
-    () => getFixtureTree({ fixtures, fixturesDir, fixtureFileSuffix }),
+    () => createFixtureTree({ fixtures, fixturesDir, fixtureFileSuffix }),
     [fixtures, fixturesDir, fixtureFileSuffix]
   );
   return (

@@ -1,4 +1,4 @@
-import { getFixtureTree } from '../FixtureTree/FixtureTree/fixtureTree';
+import { createFixtureTree } from '../../shared/fixtureTree';
 import { flattenFixtureTree } from './flattenFixtureTree';
 
 const fixtures = {
@@ -7,7 +7,7 @@ const fixtures = {
   'src/foobar/index.fixture.ts': ['fixture3a', 'fixture3b']
 };
 
-const fixtureTree = getFixtureTree({
+const fixtureTree = createFixtureTree({
   fixtures,
   fixturesDir: '__fixtures__',
   fixtureFileSuffix: 'fixture'

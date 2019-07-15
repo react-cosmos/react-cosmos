@@ -1,5 +1,5 @@
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { TreeNode } from '../../shared/ui/TreeView';
+import { TreeNode } from '../../shared/tree';
 
 export type FixtureIdsByPath = Record<string, FixtureId>;
 

@@ -1,5 +1,4 @@
 import { mapKeys } from 'lodash';
-import { removeFixtureNameSuffix } from '../../../../shared/fixture';
 import { FixtureNode } from './shared';
 
 export function hideFixtureSuffix(
@@ -20,4 +19,11 @@ export function hideFixtureSuffix(
   );
 
   return { items, dirs };
+}
+
+function removeFixtureNameSuffix(
+  fixtureNameWithoutExtension: string,
+  suffix: string
+) {
+  return fixtureNameWithoutExtension.replace(new RegExp(`\\.${suffix}$`), '');
 }
