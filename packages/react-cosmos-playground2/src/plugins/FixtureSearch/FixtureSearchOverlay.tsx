@@ -174,6 +174,9 @@ export function FixtureSearchOverlay({
     <Overlay data-testid="fixtureSearchOverlay" onClick={onClose}>
       <Content data-testid="fixtureSearchContent" onClick={onContentClick}>
         <InputContainer>
+          <SearchIconContainer>
+            <SearchIcon />
+          </SearchIconContainer>
           <SearchInput
             ref={inputRef}
             type="text"
@@ -183,17 +186,19 @@ export function FixtureSearchOverlay({
             onKeyDown={onInputKeyDown}
           />
         </InputContainer>
-        <Results>
-          {matchingFixturePaths.map(cleanFixturePath => (
-            <FixtureSearchResult
-              key={cleanFixturePath}
-              cleanFixturePath={cleanFixturePath}
-              fixtureId={fixtureIds[cleanFixturePath]}
-              active={cleanFixturePath === activeFixturePath}
-              onSelect={onSelect}
-            />
-          ))}
-        </Results>
+        <ResultsViewport>
+          <ResultsContainer>
+            {matchingFixturePaths.map(cleanFixturePath => (
+              <FixtureSearchResult
+                key={cleanFixturePath}
+                cleanFixturePath={cleanFixturePath}
+                fixtureId={fixtureIds[cleanFixturePath]}
+                active={cleanFixturePath === activeFixturePath}
+                onSelect={onSelect}
+              />
+            ))}
+          </ResultsContainer>
+        </ResultsViewport>
       </Content>
     </Overlay>
   );
@@ -235,7 +240,7 @@ const Overlay = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.48);
 `;
 
 const Content = styled.div`
@@ -245,16 +250,11 @@ const Content = styled.div`
   transform: translate(-50%, 0);
   width: 80%;
   max-width: 512px;
-  max-height: 452px;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-  padding: 1px;
-  background: hsla(var(--hue-primary), 20%, 24%, 1);
-  box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.32),
-    0px 0px 0px 1px hsla(var(--hue-primary), 21%, 16%, 1),
-    0 2px 16px 1px var(--grey1);
-  color: var(--grey5);
+  background: var(--grey7);
+  color: var(--grey2);
   overflow: hidden;
 `;
 
@@ -265,25 +265,39 @@ const InputContainer = styled.div`
   box-sizing: border-box;
   height: 48px;
   padding: 8px 16px;
+  cursor: text;
+`;
+
+const SearchIconContainer = styled.div`
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  padding: 7px 12px 0 2px;
+  color: var(--grey4);
 `;
 
 const SearchInput = styled.input`
   flex: 1;
   border: none;
   background: transparent;
-  color: var(--grey6);
+  color: var(--grey2);
   outline: none;
   font-size: 16px;
   line-height: 32px;
 
   ::placeholder {
-    color: var(--grey3);
+    color: var(--grey4);
   }
 `;
 
-const Results = styled.div`
+const ResultsViewport = styled.div`
   flex: 1;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--grey5);
   overflow-x: hidden;
   overflow-y: auto;
+  max-height: 336px;
+`;
+
+const ResultsContainer = styled.div`
+  padding: 8px 0;
 `;

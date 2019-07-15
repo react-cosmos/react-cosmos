@@ -43,7 +43,7 @@ function scrollIntoView(node: HTMLElement) {
 }
 
 const Container = styled.div<{ active: boolean }>`
-  padding: 0 16px;
+  padding: 0 24px 0 48px;
   line-height: 32px;
   font-size: 14px;
   white-space: nowrap;
@@ -51,5 +51,6 @@ const Container = styled.div<{ active: boolean }>`
   text-overflow: ellipsis;
   cursor: default;
   user-select: none;
-  background: ${props => (props.active ? 'rgba(0, 0, 0, 0.3)' : 'transparent')};
+  background: ${props => (props.active ? 'var(--accent3)' : 'transparent')};
+  color: ${props => (props.active ? 'var(--accent7)' : 'var(--grey2)')};
 `;
