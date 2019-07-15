@@ -12,6 +12,7 @@ import {
 } from '../../shared/keys';
 import { FixtureSearchResult } from './FixtureSearchResult';
 import { FixtureIdsByPath, flattenFixtureTree } from './flattenFixtureTree';
+import { SearchIcon } from '../../shared/icons';
 
 type Props = {
   fixturesDir: string;
