@@ -1,33 +1,20 @@
 import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
-import {
-  removeFixtureNameExtension,
-  removeFixtureNameSuffix
-} from '../../shared/fixture';
 
 type Props = {
-  fixturesDir: string;
-  fixtureFileSuffix: string;
+  cleanFixturePath: string;
   fixtureId: FixtureId;
   active: boolean;
   onSelect: (fixtureId: FixtureId) => unknown;
 };
 
 export function FixtureSearchResult({
-  fixturesDir,
-  fixtureFileSuffix,
+  cleanFixturePath,
   fixtureId,
   active,
   onSelect
 }: Props) {
-  const { path, name } = fixtureId;
-  const { dirs, fileName } = parseFixturePath(
-    path,
-    fixturesDir,
-    fixtureFileSuffix
-  );
-
   // Scroll to results when they become active
   const elRef = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
@@ -39,27 +26,8 @@ export function FixtureSearchResult({
 
   return (
     <Container ref={elRef} active={active} onClick={() => onSelect(fixtureId)}>
-      {[...dirs, fileName].join(' ')}
-      {name !== null && ` ${name}`}
+      {cleanFixturePath}
     </Container>
-  );
-}
-
-function parseFixturePath(
-  fixturePath: string,
-  fixturesDir: string,
-  fixtureFileSuffix: string
-) {
-  const pathParts = fixturePath.split('/');
-  const fileName = getCleanFileName(pathParts.pop()!, fixtureFileSuffix);
-  const dirs = pathParts.filter(dir => dir !== fixturesDir);
-  return { dirs, fileName };
-}
-
-function getCleanFileName(fileName: string, fixtureFileSuffix: string) {
-  return removeFixtureNameSuffix(
-    removeFixtureNameExtension(fileName),
-    fixtureFileSuffix
   );
 }
 

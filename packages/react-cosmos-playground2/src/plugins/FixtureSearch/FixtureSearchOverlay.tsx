@@ -1,15 +1,17 @@
-import React from 'react';
 import { filter } from 'fuzzaldrin-plus';
+import React from 'react';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
 import {
   KEY_DOWN,
   KEY_ENTER,
   KEY_ESC,
-  KEY_UP,
-  KEY_TAB
+  KEY_TAB,
+  KEY_UP
 } from '../../shared/keys';
+import { getFixtureTree } from '../FixtureTree/FixtureTree/fixtureTree';
 import { FixtureSearchResult } from './FixtureSearchResult';
+import { FixtureIdsByPath, flattenFixtureTree } from './flattenFixtureTree';
 
 type Props = {
   fixturesDir: string;
@@ -19,6 +21,8 @@ type Props = {
   onSelect: (fixtureId: FixtureId) => unknown;
 };
 
+type ActiveFixturePath = null | string;
+
 // TODO: Try Slack's light search box design
 export function FixtureSearchOverlay({
   fixturesDir,
@@ -27,31 +31,38 @@ export function FixtureSearchOverlay({
   onClose,
   onSelect
 }: Props) {
-  const fixtureIds = React.useMemo(() => createFixtureIds(fixtures), [
-    fixtures
-  ]);
+  // Flattened fixture IDs are memoized purely to minimize computation
+  const fixtureIds = React.useMemo(() => {
+    const fixtureTree = getFixtureTree({
+      fixtures,
+      fixturesDir,
+      fixtureFileSuffix
+    });
+    return flattenFixtureTree(fixtureTree);
+  }, [fixtures, fixturesDir, fixtureFileSuffix]);
 
   const [searchText, setSearchText] = React.useState('');
-  const [matchingFixtureIds, setMatchingFixtureIds] = React.useState(
-    fixtureIds
+
+  const [matchingFixturePaths, setMatchingFixturePaths] = React.useState(
+    Object.keys(fixtureIds)
   );
-  const [
-    activeFixtureId,
-    setActiveFixtureId
-  ] = React.useState<null | FixtureId>(getFirstFixtureId(fixtureIds));
+
+  const [activeFixturePath, setActiveFixturePath] = React.useState<
+    ActiveFixturePath
+  >(getFirstFixturePath(matchingFixturePaths));
 
   const onInputChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const newSearchText = e.currentTarget.value;
       if (newSearchText !== searchText) {
         setSearchText(newSearchText);
-        const newMatchingFixtureIds = getMatchingFixtureIds(
+        const newMatchingFixturePaths = getMatchingFixturePaths(
           fixtureIds,
           newSearchText
         );
-        setMatchingFixtureIds(newMatchingFixtureIds);
+        setMatchingFixturePaths(newMatchingFixturePaths);
         // Reset active fixture ID to first matching fixture Id when search changes
-        setActiveFixtureId(getFirstFixtureId(newMatchingFixtureIds));
+        setActiveFixturePath(getFirstFixturePath(newMatchingFixturePaths));
       }
     },
     [fixtureIds, searchText]
@@ -59,58 +70,60 @@ export function FixtureSearchOverlay({
 
   const onInputKeyDown = React.useMemo(() => {
     function handleEnter() {
-      if (activeFixtureId !== null) {
-        onSelect(activeFixtureId);
+      if (activeFixturePath !== null) {
+        onSelect(fixtureIds[activeFixturePath]);
       }
     }
 
     function handleUp() {
-      if (activeFixtureId) {
-        const fixtureIndex = matchingFixtureIds.indexOf(activeFixtureId);
+      if (activeFixturePath) {
+        const fixtureIndex = matchingFixturePaths.indexOf(activeFixturePath);
         if (fixtureIndex > 0) {
-          setActiveFixtureId(matchingFixtureIds[fixtureIndex - 1]);
+          setActiveFixturePath(matchingFixturePaths[fixtureIndex - 1]);
         }
       }
     }
 
     function handleDown() {
-      if (activeFixtureId) {
-        const fixtureIndex = matchingFixtureIds.indexOf(activeFixtureId);
-        if (fixtureIndex < matchingFixtureIds.length - 1) {
-          setActiveFixtureId(matchingFixtureIds[fixtureIndex + 1]);
+      if (activeFixturePath) {
+        const fixtureIndex = matchingFixturePaths.indexOf(activeFixturePath);
+        if (fixtureIndex < matchingFixturePaths.length - 1) {
+          setActiveFixturePath(matchingFixturePaths[fixtureIndex + 1]);
         }
       }
     }
 
     function handleTab() {
-      const matchingFixtureCount = matchingFixtureIds.length;
+      const matchingFixtureCount = matchingFixturePaths.length;
       if (matchingFixtureCount > 0) {
-        if (!activeFixtureId) {
-          setActiveFixtureId(matchingFixtureIds[0]);
+        if (!activeFixturePath) {
+          setActiveFixturePath(matchingFixturePaths[0]);
         } else {
-          const fixtureIndex = matchingFixtureIds.indexOf(activeFixtureId);
+          const fixtureIndex = matchingFixturePaths.indexOf(activeFixturePath);
           const lastMatch = fixtureIndex === matchingFixtureCount - 1;
           if (lastMatch) {
-            setActiveFixtureId(matchingFixtureIds[0]);
+            setActiveFixturePath(matchingFixturePaths[0]);
           } else {
-            setActiveFixtureId(matchingFixtureIds[fixtureIndex + 1]);
+            setActiveFixturePath(matchingFixturePaths[fixtureIndex + 1]);
           }
         }
       }
     }
 
     function handleTabReverse() {
-      const matchingFixtureCount = matchingFixtureIds.length;
+      const matchingFixtureCount = matchingFixturePaths.length;
       if (matchingFixtureCount > 0) {
-        if (!activeFixtureId) {
-          setActiveFixtureId(matchingFixtureIds[matchingFixtureCount - 1]);
+        if (!activeFixturePath) {
+          setActiveFixturePath(matchingFixturePaths[matchingFixtureCount - 1]);
         } else {
-          const fixtureIndex = matchingFixtureIds.indexOf(activeFixtureId);
+          const fixtureIndex = matchingFixturePaths.indexOf(activeFixturePath);
           const lastMatch = fixtureIndex === 0;
           if (lastMatch) {
-            setActiveFixtureId(matchingFixtureIds[matchingFixtureCount - 1]);
+            setActiveFixturePath(
+              matchingFixturePaths[matchingFixtureCount - 1]
+            );
           } else {
-            setActiveFixtureId(matchingFixtureIds[fixtureIndex - 1]);
+            setActiveFixturePath(matchingFixturePaths[fixtureIndex - 1]);
           }
         }
       }
@@ -137,7 +150,7 @@ export function FixtureSearchOverlay({
         // Nada
       }
     };
-  }, [activeFixtureId, matchingFixtureIds, onClose, onSelect]);
+  }, [fixtureIds, matchingFixturePaths, activeFixturePath, onClose, onSelect]);
 
   const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -171,13 +184,12 @@ export function FixtureSearchOverlay({
           />
         </InputContainer>
         <Results>
-          {matchingFixtureIds.map((fixtureId, idx) => (
+          {matchingFixturePaths.map(cleanFixturePath => (
             <FixtureSearchResult
-              key={idx}
-              fixturesDir={fixturesDir}
-              fixtureFileSuffix={fixtureFileSuffix}
-              fixtureId={fixtureId}
-              active={fixtureId === activeFixtureId}
+              key={cleanFixturePath}
+              cleanFixturePath={cleanFixturePath}
+              fixtureId={fixtureIds[cleanFixturePath]}
+              active={cleanFixturePath === activeFixturePath}
               onSelect={onSelect}
             />
           ))}
@@ -187,38 +199,34 @@ export function FixtureSearchOverlay({
   );
 }
 
-function createFixtureIds(fixturesByPath: FixtureNamesByPath): FixtureId[] {
-  const fixtureIds: FixtureId[] = [];
-  Object.keys(fixturesByPath).forEach(fixturePath => {
-    const fixtureNames = fixturesByPath[fixturePath];
-    if (fixtureNames === null) {
-      fixtureIds.push({ path: fixturePath, name: null });
-    } else {
-      fixtureNames.forEach(fixtureName => {
-        fixtureIds.push({ path: fixturePath, name: fixtureName });
-      });
-    }
-  });
-  return fixtureIds;
+function getFirstFixturePath(fixturePaths: string[]): null | string {
+  return fixturePaths.length > 0 ? fixturePaths[0] : null;
 }
 
-function getFirstFixtureId(fixtureIds: FixtureId[]): null | FixtureId {
-  return fixtureIds.length > 0 ? fixtureIds[0] : null;
-}
+function getMatchingFixturePaths(
+  fixtureIds: FixtureIdsByPath,
+  searchText: string
+): string[] {
+  const fixturePaths = Object.keys(fixtureIds);
 
-function getMatchingFixtureIds(fixtureIds: FixtureId[], searchText: string) {
   if (searchText === '') {
-    return fixtureIds;
+    return fixturePaths;
   }
 
-  const fixtureTexts: string[] = [];
-  fixtureIds.forEach(fixtureId => {
+  const fixtureSearchTexts: string[] = [];
+  fixturePaths.forEach(cleanFixturePath => {
+    const fixtureId = fixtureIds[cleanFixturePath];
     const { path, name } = fixtureId;
-    fixtureTexts.push(name !== null ? `${path} ${name}` : path);
+    // Allow fixtures to be searched by their entire file path, suffixed by
+    // their name in the case of named fixtures.
+    fixtureSearchTexts.push(name !== null ? `${path} ${name}` : path);
   });
 
-  const results = filter(fixtureTexts, searchText);
-  return results.map(r => fixtureIds[fixtureTexts.indexOf(r)]);
+  const machingFixtureSearchTexts = filter(fixtureSearchTexts, searchText);
+  return machingFixtureSearchTexts.map(fixtureSearchText => {
+    const fixtureIndex = fixtureSearchTexts.indexOf(fixtureSearchText);
+    return fixturePaths[fixtureIndex];
+  });
 }
 
 const Overlay = styled.div`
