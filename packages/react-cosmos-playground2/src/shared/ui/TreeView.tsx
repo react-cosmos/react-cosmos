@@ -1,14 +1,6 @@
-import React from 'react';
 import { map } from 'lodash';
-
-export type TreeNode<Item> = {
-  items: { [itemName: string]: Item };
-  dirs: TreeNodeDirs<Item>;
-};
-
-export type TreeNodeDirs<Item> = {
-  [dirName: string]: TreeNode<Item>;
-};
+import React from 'react';
+import { TreeNode } from '../tree';
 
 export type TreeExpansion = {
   [nodePath: string]: boolean;

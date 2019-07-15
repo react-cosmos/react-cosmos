@@ -1,15 +1,13 @@
 import React from 'react';
+import { KEY_DOWN, KEY_UP } from '../../../../shared/keys';
 import {
   Label,
-  ValueContainer,
-  TextInputContainer,
   TextContainer,
   TextField,
-  TextMirror
+  TextInputContainer,
+  TextMirror,
+  ValueContainer
 } from './shared';
-
-const KEY_UP = 38;
-const KEY_DOWN = 40;
 
 type Props = {
   id: string;

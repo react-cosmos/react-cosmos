@@ -11,6 +11,8 @@ require('../plugins/ContentOverlay').register();
 require('../plugins/ControlPanel').register();
 require('../plugins/Core').register();
 require('../plugins/EditFixtureButton').register();
+require('../plugins/FixtureSearch').register();
+require('../plugins/FixtureTree').register();
 require('../plugins/FullScreenButton').register();
 require('../plugins/Layout').register();
 require('../plugins/MessageHandler').register();

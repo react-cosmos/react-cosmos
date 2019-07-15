@@ -1,11 +1,11 @@
-import styled from 'styled-components';
 import {
   FixtureElementId,
   FixtureStatePrimitiveValue,
   FixtureStateUnserializableValue
 } from 'react-cosmos-shared2/fixtureState';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { TreeNode } from '../TreeView';
+import styled from 'styled-components';
+import { TreeNode } from '../../tree';
 
 export type TreeItemValue =
   | FixtureStatePrimitiveValue

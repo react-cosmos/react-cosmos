@@ -1,8 +1,10 @@
 import { get, set } from 'lodash';
-import { FixtureNamesByPath, FixtureId } from 'react-cosmos-shared2/renderer';
+import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import { FixtureNode } from './shared';
 
-export function createFixtureTree(fixtures: FixtureNamesByPath): FixtureNode {
+export function createRawFixtureTree(
+  fixtures: FixtureNamesByPath
+): FixtureNode {
   const rootNode = getBlankNode();
   Object.keys(fixtures).forEach(fixturePath =>
     addFixturePathToTree(rootNode, fixturePath, fixtures[fixturePath])
@@ -46,10 +48,6 @@ function addFixturePathToTree(
   });
 }
 
-function removeFixtureNameExtension(fixtureName: string) {
-  return fixtureName.replace(/\.(j|t)sx?$/, '');
-}
-
 function addFixtureIdToTree(
   rootNode: FixtureNode,
   namespace: string[],
@@ -77,4 +75,8 @@ function addFixtureIdToTree(
   } while (curNodeDepth <= namespace.length);
 
   curNode.items[nodeName] = fixtureId;
+}
+
+function removeFixtureNameExtension(fixtureName: string) {
+  return fixtureName.replace(/\.(j|t)sx?$/, '');
 }

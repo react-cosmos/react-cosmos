@@ -1,15 +1,14 @@
+import { fireEvent, render, waitForElement } from '@testing-library/react';
 import React from 'react';
-import retry from '@skidding/async-retry';
-import { render, waitForElement, fireEvent } from '@testing-library/react';
-import { Slot, loadPlugins } from 'react-plugin';
+import { loadPlugins, Slot } from 'react-plugin';
+import { register } from '.';
 import { cleanup } from '../../testHelpers/plugin';
 import {
-  mockStorage,
   mockCore,
   mockRendererCore,
-  mockRouter
+  mockRouter,
+  mockStorage
 } from '../../testHelpers/pluginMocks';
-import { register } from '.';
 
 afterEach(cleanup);
 
@@ -28,9 +27,7 @@ function registerTestPlugins() {
 
 async function loadTestPlugins() {
   loadPlugins();
-  const renderer = render(<Slot name="nav">replace me</Slot>);
-  await retry(() => expect(renderer.queryByText('replace me')).toBeNull());
-  return renderer;
+  return render(<Slot name="navRow" />);
 }
 
 it('renders fixture list from renderer state', async () => {

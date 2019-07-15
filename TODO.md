@@ -9,7 +9,7 @@ Alpha
   - [x] Build notification [#522](https://github.com/react-cosmos/react-cosmos/issues/522)
   - [ ] ~~Try: Notifications for fixture create/remove/rename~~ Too much info to display inside a notification
 - [ ] Control panel
-- [ ] Fixture search
+- [x] Fixture search
   - [ ] Minimize left nav
 - [ ] Official React Native integration
   - [ ] react-native-web synced cross-platform renderers
@@ -17,8 +17,6 @@ Alpha
 - [ ] Resize responsive viewport
   - [ ] Put viewports in dropdown
 - [ ] Multi fixture select
-- [ ] Command API with search
-- [ ] Keyboard shortcuts
 - [ ] Refresh docs
 
 Beta
@@ -71,7 +69,7 @@ Notification redesign
 
 - [x] Simplify plug API (instead of getProps, the component gets the plugin context API as props)
 - [x] Plug API for Slot arrays
-- [ ] Sort API for ArraySlot
+- [x] Sort API for ArraySlot
 
 ## Backlog
 
@@ -80,6 +78,8 @@ Not part of v5, but the most notable features to pursue after.
 - [ ] "Check all" button/API to detect broken fixtures
 - [ ] UI-generated fixtures
 - [ ] VSCode extension (simpler UI without nav but with control panel)
+- [ ] Command API with search
+- [ ] Keyboard shortcuts
 - [ ] Pin fixture
 
 # Roadmap: Cosmos Next
