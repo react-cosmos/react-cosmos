@@ -1,7 +1,7 @@
 import React from 'react';
-import { KEY_P } from '../../shared/keys';
 import styled from 'styled-components';
 import { SearchIcon } from '../../shared/icons';
+import { KEY_P } from '../../shared/keys';
 
 type Props = {
   onOpen: () => unknown;
