@@ -50,13 +50,13 @@ it('open fixture list and selects fixture', async () => {
 
   // Shows (cleaned up) fixture list
   getByTestId('fixtureSearchContent');
-  getByText('src/fixture1');
-  getByText('src/fixture2');
-  getByText('src/foobar/fixture3 fixture3a');
-  getByText('src/foobar/fixture3 fixture3b');
+  getByText('src fixture1');
+  getByText('src fixture2');
+  getByText('src foobar fixture3 fixture3a');
+  getByText('src foobar fixture3 fixture3b');
 
   // Selects fixture
-  fireEvent.click(getByText('src/foobar/fixture3 fixture3b'));
+  fireEvent.click(getByText('src foobar fixture3 fixture3b'));
   const fixtureId = {
     path: 'src/foobar/fixture3.fixture.ts',
     name: 'fixture3b'

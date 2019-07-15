@@ -40,8 +40,11 @@ plug('global', ({ pluginContext }) => {
     setState
   ]);
   const onSelect = React.useCallback(
-    (fixtureId: FixtureId) => router.selectFixture(fixtureId, false),
-    [router]
+    (fixtureId: FixtureId) => {
+      router.selectFixture(fixtureId, false);
+      setState({ open: false });
+    },
+    [router, setState]
   );
 
   if (!open) {

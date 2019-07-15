@@ -1,6 +1,13 @@
 import React from 'react';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
+import {
+  KEY_DOWN,
+  KEY_ENTER,
+  KEY_ESC,
+  KEY_UP,
+  KEY_TAB
+} from '../../shared/keys';
 import { FixtureSearchResult } from './FixtureSearchResult';
 
 type Props = {
@@ -11,6 +18,7 @@ type Props = {
   onSelect: (fixtureId: FixtureId) => unknown;
 };
 
+// TODO: Try Slack's light search box design
 export function FixtureSearchOverlay({
   fixturesDir,
   fixtureFileSuffix,
@@ -21,17 +29,144 @@ export function FixtureSearchOverlay({
   const fixtureIds = React.useMemo(() => createFixtureIds(fixtures), [
     fixtures
   ]);
+
+  const [searchText, setSearchText] = React.useState('');
+
+  const [
+    activeFixtureId,
+    setActiveFixtureId
+  ] = React.useState<null | FixtureId>(getFirstFixtureId(fixtureIds));
+
+  const matchingFixtureIds = React.useMemo(
+    () => fixtureIds.filter(fixtureId => matchFixtureId(fixtureId, searchText)),
+    [fixtureIds, searchText]
+  );
+
+  // Reset active fixture ID to first matching fixture Id when search changes
+  React.useEffect(() => {
+    setActiveFixtureId(getFirstFixtureId(matchingFixtureIds));
+  }, [matchingFixtureIds]);
+
+  const onInputKeyDown = React.useMemo(() => {
+    function handleEnter() {
+      if (activeFixtureId !== null) {
+        onSelect(activeFixtureId);
+      }
+    }
+
+    function handleUp() {
+      if (activeFixtureId) {
+        const fixtureIndex = matchingFixtureIds.indexOf(activeFixtureId);
+        if (fixtureIndex > 0) {
+          setActiveFixtureId(matchingFixtureIds[fixtureIndex - 1]);
+        }
+      }
+    }
+
+    function handleDown() {
+      if (activeFixtureId) {
+        const fixtureIndex = matchingFixtureIds.indexOf(activeFixtureId);
+        if (fixtureIndex < matchingFixtureIds.length - 1) {
+          setActiveFixtureId(matchingFixtureIds[fixtureIndex + 1]);
+        }
+      }
+    }
+
+    function handleTab() {
+      const matchingFixtureCount = matchingFixtureIds.length;
+      if (matchingFixtureCount > 0) {
+        if (!activeFixtureId) {
+          setActiveFixtureId(matchingFixtureIds[0]);
+        } else {
+          const fixtureIndex = matchingFixtureIds.indexOf(activeFixtureId);
+          const lastMatch = fixtureIndex === matchingFixtureCount - 1;
+          if (lastMatch) {
+            setActiveFixtureId(matchingFixtureIds[0]);
+          } else {
+            setActiveFixtureId(matchingFixtureIds[fixtureIndex + 1]);
+          }
+        }
+      }
+    }
+
+    function handleTabReverse() {
+      const matchingFixtureCount = matchingFixtureIds.length;
+      if (matchingFixtureCount > 0) {
+        if (!activeFixtureId) {
+          setActiveFixtureId(matchingFixtureIds[matchingFixtureCount - 1]);
+        } else {
+          const fixtureIndex = matchingFixtureIds.indexOf(activeFixtureId);
+          const lastMatch = fixtureIndex === 0;
+          if (lastMatch) {
+            setActiveFixtureId(matchingFixtureIds[matchingFixtureCount - 1]);
+          } else {
+            setActiveFixtureId(matchingFixtureIds[fixtureIndex - 1]);
+          }
+        }
+      }
+    }
+
+    return (e: React.KeyboardEvent<HTMLInputElement>) => {
+      switch (e.keyCode) {
+        case KEY_ESC:
+          e.preventDefault();
+          return onClose();
+        case KEY_ENTER:
+          e.preventDefault();
+          return handleEnter();
+        case KEY_UP:
+          e.preventDefault();
+          return handleUp();
+        case KEY_DOWN:
+          e.preventDefault();
+          return handleDown();
+        case KEY_TAB:
+          e.preventDefault();
+          return e.shiftKey ? handleTabReverse() : handleTab();
+        default:
+        // Nada
+      }
+    };
+  }, [activeFixtureId, matchingFixtureIds, onClose, onSelect]);
+
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
+  // Auto focus when search input is created
+  React.useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
+
+  // 1. Prevent click propagation to overlay element (which calls onClose)
+  // 2. Keep user focused on search input while search is open
+  const onContentClick = React.useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
+
   return (
-    <Overlay onClick={onClose} data-testid="fixtureSearchOverlay">
-      <Content data-testid="fixtureSearchContent">
-        <InputContainer />
+    <Overlay data-testid="fixtureSearchOverlay" onClick={onClose}>
+      <Content data-testid="fixtureSearchContent" onClick={onContentClick}>
+        <InputContainer>
+          <input
+            type="text"
+            ref={inputRef}
+            value={searchText}
+            onChange={e => setSearchText(e.target.value)}
+            onKeyDown={onInputKeyDown}
+          />
+        </InputContainer>
         <Results>
-          {fixtureIds.map((fixtureId, idx) => (
+          {matchingFixtureIds.map((fixtureId, idx) => (
             <FixtureSearchResult
               key={idx}
               fixturesDir={fixturesDir}
               fixtureFileSuffix={fixtureFileSuffix}
               fixtureId={fixtureId}
+              active={fixtureId === activeFixtureId}
               onSelect={onSelect}
             />
           ))}
@@ -54,6 +189,20 @@ function createFixtureIds(fixturesByPath: FixtureNamesByPath): FixtureId[] {
     }
   });
   return fixtureIds;
+}
+
+function getFirstFixtureId(fixtureIds: FixtureId[]): null | FixtureId {
+  return fixtureIds.length > 0 ? fixtureIds[0] : null;
+}
+
+function matchFixtureId(fixtureId: FixtureId, searchText: string) {
+  if (searchText.length === 0) {
+    return true;
+  }
+
+  const { path, name } = fixtureId;
+  const fixtureText = name !== null ? `${path} ${name}` : path;
+  return fixtureText.toLowerCase().indexOf(searchText.toLowerCase()) !== -1;
 }
 
 const Overlay = styled.div`
