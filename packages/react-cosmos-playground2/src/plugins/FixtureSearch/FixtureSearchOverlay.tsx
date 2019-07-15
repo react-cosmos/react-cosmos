@@ -44,7 +44,7 @@ export function FixtureSearchOverlay({
   const [searchText, setSearchText] = React.useState('');
 
   const [matchingFixturePaths, setMatchingFixturePaths] = React.useState(
-    Object.keys(fixtureIds)
+    getMatchingFixturePaths(fixtureIds, searchText)
   );
 
   const [activeFixturePath, setActiveFixturePath] = React.useState<
