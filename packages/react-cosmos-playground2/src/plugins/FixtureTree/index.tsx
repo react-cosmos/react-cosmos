@@ -11,11 +11,11 @@ import { FixtureTreeContainer } from './FixtureTreeContainer';
 
 const DEFAULT_TREE_EXPANSION = {};
 
-const { plug, register } = createPlugin<FixtureTreeSpec>({
+const { namedPlug, register } = createPlugin<FixtureTreeSpec>({
   name: 'fixtureTree'
 });
 
-plug('navRow', ({ pluginContext }) => {
+namedPlug('navRow', 'fixtureTree', ({ pluginContext }) => {
   const { getMethodsOf } = pluginContext;
   const router = getMethodsOf<RouterSpec>('router');
   const core = getMethodsOf<CoreSpec>('core');

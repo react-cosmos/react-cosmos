@@ -8,14 +8,14 @@ import { FixtureSearchButton } from './FixtureSearchButton';
 import { FixtureSearchOverlay } from './FixtureSearchOverlay';
 import { FixtureSearchSpec } from './public';
 
-const { plug, register } = createPlugin<FixtureSearchSpec>({
+const { namedPlug, register } = createPlugin<FixtureSearchSpec>({
   name: 'fixtureSearch',
   initialState: {
     open: false
   }
 });
 
-plug('navRow', ({ pluginContext }) => {
+namedPlug('navRow', 'fixtureSearch', ({ pluginContext }) => {
   const { getMethodsOf, setState } = pluginContext;
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const fixtures = rendererCore.getFixtures();
@@ -28,7 +28,7 @@ plug('navRow', ({ pluginContext }) => {
   return <FixtureSearchButton onOpen={onOpen} />;
 });
 
-plug('global', ({ pluginContext }) => {
+namedPlug('global', 'fixtureSearch', ({ pluginContext }) => {
   const { getState, setState, getMethodsOf } = pluginContext;
   const { open } = getState();
   const core = getMethodsOf<CoreSpec>('core');

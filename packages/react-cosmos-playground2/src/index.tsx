@@ -18,6 +18,9 @@ export type PlaygroundConfig = {
 (window as any).ReactPlugin = ReactPlugin;
 
 const DEFAULT_CONFIG = {
+  core: {
+    globalOrder: ['fixtureSearch']
+  },
   nav: {
     navRowOrder: ['fixtureSearch', 'fixtureTree']
   },
