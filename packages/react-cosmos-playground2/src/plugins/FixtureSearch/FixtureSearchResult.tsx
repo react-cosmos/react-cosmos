@@ -44,7 +44,6 @@ const Container = styled.div<{ active: boolean }>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  cursor: default;
   user-select: none;
   background: ${props => (props.active ? 'var(--accent3)' : 'transparent')};
   color: ${props => (props.active ? 'var(--accent7)' : 'var(--grey2)')};

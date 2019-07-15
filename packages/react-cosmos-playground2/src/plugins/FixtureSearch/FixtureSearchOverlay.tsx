@@ -24,7 +24,6 @@ type Props = {
 
 type ActiveFixturePath = null | string;
 
-// TODO: Try Slack's light search box design
 export function FixtureSearchOverlay({
   fixturesDir,
   fixtureFileSuffix,
@@ -198,6 +197,9 @@ export function FixtureSearchOverlay({
                 onSelect={onSelect}
               />
             ))}
+            {matchingFixturePaths.length === 0 && (
+              <NoResults>No results</NoResults>
+            )}
           </ResultsContainer>
         </ResultsViewport>
       </Content>
@@ -293,12 +295,24 @@ const SearchInput = styled.input`
 
 const ResultsViewport = styled.div`
   flex: 1;
+  max-height: 336px;
   border-top: 1px solid var(--grey5);
+  background: var(--grey6);
   overflow-x: hidden;
   overflow-y: auto;
-  max-height: 336px;
 `;
 
 const ResultsContainer = styled.div`
   padding: 8px 0;
+`;
+
+const NoResults = styled.div`
+  padding: 0 24px 0 48px;
+  line-height: 32px;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: none;
+  color: var(--grey3);
 `;
