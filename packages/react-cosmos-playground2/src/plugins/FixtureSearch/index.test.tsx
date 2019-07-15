@@ -14,7 +14,7 @@ afterEach(cleanup);
 const fixtures = {
   'src/__fixtures__/fixture1.ts': null,
   'src/__fixtures__/fixture2.ts': null,
-  'src/foobar/fixture3.fixture.ts': ['fixture3a', 'fixture3b']
+  'src/foobar/index.fixture.ts': ['fixture3a', 'fixture3b']
 };
 
 function registerTestPlugins() {
@@ -52,13 +52,13 @@ it('open fixture list and selects fixture', async () => {
   getByTestId('fixtureSearchContent');
   getByText('src fixture1');
   getByText('src fixture2');
-  getByText('src foobar fixture3 fixture3a');
-  getByText('src foobar fixture3 fixture3b');
+  getByText('src foobar index fixture3a');
+  getByText('src foobar index fixture3b');
 
   // Selects fixture
-  fireEvent.click(getByText('src foobar fixture3 fixture3b'));
+  fireEvent.click(getByText('src foobar index fixture3b'));
   const fixtureId = {
-    path: 'src/foobar/fixture3.fixture.ts',
+    path: 'src/foobar/index.fixture.ts',
     name: 'fixture3b'
   };
   expect(selectFixture).toBeCalledWith(expect.any(Object), fixtureId, false);
