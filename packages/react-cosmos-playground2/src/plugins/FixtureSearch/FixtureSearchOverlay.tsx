@@ -106,7 +106,7 @@ export function FixtureSearchOverlay({
       }
     }
 
-    return (e: React.KeyboardEvent<HTMLInputElement>) => {
+    return (e: React.KeyboardEvent) => {
       switch (e.keyCode) {
         case KEY_ESC:
           e.preventDefault();

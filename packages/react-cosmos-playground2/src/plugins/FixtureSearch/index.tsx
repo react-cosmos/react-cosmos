@@ -4,6 +4,7 @@ import { createPlugin } from 'react-plugin';
 import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { RouterSpec } from '../Router/public';
+import { FixtureSearchButton } from './FixtureSearchButton';
 import { FixtureSearchOverlay } from './FixtureSearchOverlay';
 import { FixtureSearchSpec } from './public';
 
@@ -18,14 +19,13 @@ plug('navRow', ({ pluginContext }) => {
   const { getMethodsOf, setState } = pluginContext;
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const fixtures = rendererCore.getFixtures();
+  const onOpen = React.useCallback(() => setState({ open: true }), [setState]);
 
   if (Object.keys(fixtures).length === 0) {
     return null;
   }
 
-  return (
-    <button onClick={() => setState({ open: true })}>Search fixtures</button>
-  );
+  return <FixtureSearchButton onOpen={onOpen} />;
 });
 
 plug('global', ({ pluginContext }) => {
