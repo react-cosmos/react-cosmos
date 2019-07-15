@@ -9,7 +9,7 @@ Alpha
   - [x] Build notification [#522](https://github.com/react-cosmos/react-cosmos/issues/522)
   - [ ] ~~Try: Notifications for fixture create/remove/rename~~ Too much info to display inside a notification
 - [ ] Control panel
-- [ ] Fixture search
+- [x] Fixture search
   - [ ] Minimize left nav
 - [ ] Official React Native integration
   - [ ] react-native-web synced cross-platform renderers
