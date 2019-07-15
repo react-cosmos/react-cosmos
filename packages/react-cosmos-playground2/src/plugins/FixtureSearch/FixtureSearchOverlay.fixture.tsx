@@ -26,7 +26,7 @@ export default (
     fixturesDir="__fixtures__"
     fixtureFileSuffix="fixture"
     fixtures={fixtures}
-    onClose={() => console.log('Close fixture overlay')}
+    onClose={() => console.log('Close fixture search overlay')}
     onSelect={fixtureId => console.log('Select fixture', fixtureId)}
   />
 );

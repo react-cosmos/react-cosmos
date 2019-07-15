@@ -4,7 +4,7 @@ import { createPlugin } from 'react-plugin';
 import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { RouterSpec } from '../Router/public';
-import { FixtureSearchButton } from './FixtureSearchButton';
+import { FixtureSearchHeader } from './FixtureSearchHeader';
 import { FixtureSearchOverlay } from './FixtureSearchOverlay';
 import { FixtureSearchSpec } from './public';
 
@@ -25,7 +25,7 @@ namedPlug('navRow', 'fixtureSearch', ({ pluginContext }) => {
     return null;
   }
 
-  return <FixtureSearchButton onOpen={onOpen} />;
+  return <FixtureSearchHeader onOpen={onOpen} />;
 });
 
 namedPlug('global', 'fixtureSearch', ({ pluginContext }) => {

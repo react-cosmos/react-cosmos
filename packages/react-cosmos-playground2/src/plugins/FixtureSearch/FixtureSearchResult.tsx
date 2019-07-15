@@ -32,13 +32,8 @@ export function FixtureSearchResult({
 }
 
 function scrollIntoView(node: HTMLElement) {
-  // https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoViewIfNeeded
-  // @ts-ignore
-  if (typeof node.scrollIntoViewIfNeeded === 'function') {
-    // @ts-ignore
-    node.scrollIntoViewIfNeeded();
-  } else if (typeof node.scrollIntoView === 'function') {
-    node.scrollIntoView(false);
+  if (typeof node.scrollIntoView === 'function') {
+    node.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 }
 

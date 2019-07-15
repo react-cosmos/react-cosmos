@@ -60,4 +60,5 @@ export const FixtureTree = React.memo(function FixtureTree({
 const Container = styled.div`
   display: inline-block;
   min-width: 100%;
+  padding: 8px 0;
 `;
