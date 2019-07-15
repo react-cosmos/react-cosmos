@@ -1,11 +1,10 @@
 {
   "name": "react-cosmos-playground2",
-  "version": "5.0.0-alpha.16",
+  "version": "5.0.0-alpha.17",
   "description": "Visual interface for browsing React Cosmos fixtures",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-playground2",
   "license": "MIT",
   "main": "index.js",
-  "dependencies": {},
   "devDependencies": {
     "fuzzaldrin-plus": "^0.6.0",
     "html-webpack-plugin": "^3.2.0",
