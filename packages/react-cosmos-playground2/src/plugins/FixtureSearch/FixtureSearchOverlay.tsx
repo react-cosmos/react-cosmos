@@ -22,8 +22,8 @@ export function FixtureSearchOverlay({
     fixtures
   ]);
   return (
-    <Overlay onClick={onClose}>
-      <Content>
+    <Overlay onClick={onClose} data-testid="fixtureSearchOverlay">
+      <Content data-testid="fixtureSearchContent">
         <InputContainer />
         <Results>
           {fixtureIds.map((fixtureId, idx) => (

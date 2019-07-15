@@ -1,4 +1,4 @@
-import { fireEvent, render, waitForElement } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, Slot } from 'react-plugin';
 import { register } from '.';
@@ -40,19 +40,20 @@ function loadTestPlugins() {
   );
 }
 
-it('open fixture list and select fixture', async () => {
+it('open fixture list and selects fixture', async () => {
   const { selectFixture } = mockRouter();
   registerTestPlugins();
-  const { getByText } = loadTestPlugins();
+  const { getByText, getByTestId, queryByTestId } = loadTestPlugins();
 
   // Opens fixture search overlay
   fireEvent.click(getByText(/search fixtures/i));
 
   // Shows (cleaned up) fixture list
-  await waitForElement(() => getByText('src/fixture1'));
-  await waitForElement(() => getByText('src/fixture2'));
-  await waitForElement(() => getByText('src/foobar/fixture3 fixture3a'));
-  await waitForElement(() => getByText('src/foobar/fixture3 fixture3b'));
+  getByTestId('fixtureSearchContent');
+  getByText('src/fixture1');
+  getByText('src/fixture2');
+  getByText('src/foobar/fixture3 fixture3a');
+  getByText('src/foobar/fixture3 fixture3b');
 
   // Selects fixture
   fireEvent.click(getByText('src/foobar/fixture3 fixture3b'));
@@ -61,4 +62,21 @@ it('open fixture list and select fixture', async () => {
     name: 'fixture3b'
   };
   expect(selectFixture).toBeCalledWith(expect.any(Object), fixtureId, false);
+
+  // Also closes fixture search overlay
+  expect(queryByTestId('fixtureSearchContent')).toBeNull();
+});
+
+it('closes fixture list on outside click', async () => {
+  mockRouter();
+  registerTestPlugins();
+  const { getByText, getByTestId, queryByTestId } = loadTestPlugins();
+
+  // Opens fixture search overlay
+  fireEvent.click(getByText(/search fixtures/i));
+  getByTestId('fixtureSearchContent');
+
+  // Closes fixture search overlay
+  fireEvent.click(getByTestId('fixtureSearchOverlay'));
+  expect(queryByTestId('fixtureSearchContent')).toBeNull();
 });
