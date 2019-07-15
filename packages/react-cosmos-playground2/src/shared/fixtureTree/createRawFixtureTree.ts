@@ -2,7 +2,9 @@ import { get, set } from 'lodash';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import { FixtureNode } from './shared';
 
-export function createFixtureTree(fixtures: FixtureNamesByPath): FixtureNode {
+export function createRawFixtureTree(
+  fixtures: FixtureNamesByPath
+): FixtureNode {
   const rootNode = getBlankNode();
   Object.keys(fixtures).forEach(fixturePath =>
     addFixturePathToTree(rootNode, fixturePath, fixtures[fixturePath])

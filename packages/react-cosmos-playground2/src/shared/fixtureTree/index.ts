@@ -1,5 +1,5 @@
 import { FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
-import { createFixtureTree as createRawFixtureTree } from './createFixtureTree';
+import { createRawFixtureTree } from './createRawFixtureTree';
 import { collapseDirs } from './collapseDirs';
 import { hideFixtureSuffix } from './hideFixtureSuffix';
 import { collapseSoloIndexes } from './collapseSoloIndexes';

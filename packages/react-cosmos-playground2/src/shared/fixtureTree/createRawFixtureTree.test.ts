@@ -1,4 +1,4 @@
-import { createFixtureTree } from './createFixtureTree';
+import { createRawFixtureTree } from './createRawFixtureTree';
 
 it('create tree with single fixture', () => {
   const paths = {
@@ -13,7 +13,7 @@ it('create tree with single fixture', () => {
       }
     }
   };
-  expect(createFixtureTree(paths)).toEqual(tree);
+  expect(createRawFixtureTree(paths)).toEqual(tree);
 });
 
 it('create tree with multi fixture', () => {
@@ -38,5 +38,5 @@ it('create tree with multi fixture', () => {
     },
     items: {}
   };
-  expect(createFixtureTree(paths)).toEqual(tree);
+  expect(createRawFixtureTree(paths)).toEqual(tree);
 });
