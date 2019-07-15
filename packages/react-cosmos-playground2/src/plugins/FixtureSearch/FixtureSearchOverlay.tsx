@@ -1,4 +1,5 @@
 import React from 'react';
+import { filter } from 'fuzzaldrin-plus';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
 import {
@@ -31,21 +32,30 @@ export function FixtureSearchOverlay({
   ]);
 
   const [searchText, setSearchText] = React.useState('');
-
+  const [matchingFixtureIds, setMatchingFixtureIds] = React.useState(
+    fixtureIds
+  );
   const [
     activeFixtureId,
     setActiveFixtureId
   ] = React.useState<null | FixtureId>(getFirstFixtureId(fixtureIds));
 
-  const matchingFixtureIds = React.useMemo(
-    () => fixtureIds.filter(fixtureId => matchFixtureId(fixtureId, searchText)),
+  const onInputChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newSearchText = e.currentTarget.value;
+      if (newSearchText !== searchText) {
+        setSearchText(newSearchText);
+        const newMatchingFixtureIds = getMatchingFixtureIds(
+          fixtureIds,
+          newSearchText
+        );
+        setMatchingFixtureIds(newMatchingFixtureIds);
+        // Reset active fixture ID to first matching fixture Id when search changes
+        setActiveFixtureId(getFirstFixtureId(newMatchingFixtureIds));
+      }
+    },
     [fixtureIds, searchText]
   );
-
-  // Reset active fixture ID to first matching fixture Id when search changes
-  React.useEffect(() => {
-    setActiveFixtureId(getFirstFixtureId(matchingFixtureIds));
-  }, [matchingFixtureIds]);
 
   const onInputKeyDown = React.useMemo(() => {
     function handleEnter() {
@@ -152,10 +162,11 @@ export function FixtureSearchOverlay({
       <Content data-testid="fixtureSearchContent" onClick={onContentClick}>
         <InputContainer>
           <input
-            type="text"
             ref={inputRef}
+            type="text"
+            placeholder="Fixture search"
             value={searchText}
-            onChange={e => setSearchText(e.target.value)}
+            onChange={onInputChange}
             onKeyDown={onInputKeyDown}
           />
         </InputContainer>
@@ -195,14 +206,19 @@ function getFirstFixtureId(fixtureIds: FixtureId[]): null | FixtureId {
   return fixtureIds.length > 0 ? fixtureIds[0] : null;
 }
 
-function matchFixtureId(fixtureId: FixtureId, searchText: string) {
-  if (searchText.length === 0) {
-    return true;
+function getMatchingFixtureIds(fixtureIds: FixtureId[], searchText: string) {
+  if (searchText === '') {
+    return fixtureIds;
   }
 
-  const { path, name } = fixtureId;
-  const fixtureText = name !== null ? `${path} ${name}` : path;
-  return fixtureText.toLowerCase().indexOf(searchText.toLowerCase()) !== -1;
+  const fixtureTexts: string[] = [];
+  fixtureIds.forEach(fixtureId => {
+    const { path, name } = fixtureId;
+    fixtureTexts.push(name !== null ? `${path} ${name}` : path);
+  });
+
+  const results = filter(fixtureTexts, searchText);
+  return results.map(r => fixtureIds[fixtureTexts.indexOf(r)]);
 }
 
 const Overlay = styled.div`
