@@ -43,7 +43,7 @@
     "@react-mock/state": "^0.1.8",
     "@skidding/async-retry": "^2.0.0",
     "@testing-library/jest-dom": "^4.0.0",
-    "@testing-library/react": "^8.0.4",
+    "@testing-library/react": "^8.0.5",
     "@types/debug": "^4.1.4",
     "@types/express": "^4.17.0",
     "@types/fs-extra": "^8.0.0",
@@ -64,7 +64,7 @@
     "@types/socket.io-client": "^1.4.32",
     "@types/styled-components": "4.1.18",
     "@types/util.promisify": "1.0.1",
-    "@types/webpack": "4.4.34",
+    "@types/webpack": "4.4.35",
     "@types/webpack-dev-middleware": "^2.0.3",
     "@types/webpack-dev-server": "^3.1.7",
     "@types/yargs": "^13.0.0",
@@ -96,7 +96,7 @@
     "style-loader": "^0.23.1",
     "typescript": "^3.5.3",
     "webpack": "^4.35.3",
-    "webpack-cli": "^3.3.5",
+    "webpack-cli": "^3.3.6",
     "yargs": "^13.2.4"
   },
   "lint-staged": {
