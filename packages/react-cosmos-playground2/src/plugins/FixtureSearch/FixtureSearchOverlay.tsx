@@ -21,7 +21,7 @@ type Props = {
   fixtures: FixtureNamesByPath;
   selectedFixtureId: null | FixtureId;
   onClose: () => unknown;
-  onSelect: (fixtureId: FixtureId) => unknown;
+  onSelect: (fixtureId: FixtureId, revealFixture: boolean) => unknown;
 };
 
 type ActiveFixturePath = null | string;
@@ -77,9 +77,10 @@ export function FixtureSearchOverlay({
   );
 
   const onInputKeyDown = React.useMemo(() => {
-    function handleEnter() {
+    function handleEnter(revealFixture: boolean) {
       if (activeFixturePath !== null) {
-        onSelect(fixtureIds[activeFixturePath]);
+        const fixtureId = fixtureIds[activeFixturePath];
+        onSelect(fixtureId, revealFixture);
       }
     }
 
@@ -144,7 +145,7 @@ export function FixtureSearchOverlay({
           return onClose();
         case KEY_ENTER:
           e.preventDefault();
-          return handleEnter();
+          return handleEnter(e.shiftKey);
         case KEY_UP:
           e.preventDefault();
           return handleUp();

@@ -6,7 +6,7 @@ type Props = {
   cleanFixturePath: string;
   fixtureId: FixtureId;
   active: boolean;
-  onSelect: (fixtureId: FixtureId) => unknown;
+  onSelect: (fixtureId: FixtureId, revealFixture: boolean) => unknown;
 };
 
 export function FixtureSearchResult({
@@ -26,7 +26,7 @@ export function FixtureSearchResult({
     <Container
       ref={containerRef}
       active={active}
-      onClick={() => onSelect(fixtureId)}
+      onClick={() => onSelect(fixtureId, false)}
     >
       {cleanFixturePath}
     </Container>
