@@ -23,7 +23,7 @@ const fixtures = {
 };
 
 export default {
-  'from scratch': createFixtureSearchOverlay(),
+  'no fixure selected': createFixtureSearchOverlay(),
 
   'fixture selected': createFixtureSearchOverlay({
     path: 'src/plugins/Notifications/index.fixture.tsx',
