@@ -16,16 +16,18 @@ export function FixtureSearchResult({
   onSelect
 }: Props) {
   // Scroll to results when they become active
-  const elRef = React.useRef<HTMLDivElement>(null);
-  React.useEffect(() => {
-    const containerNode = elRef.current;
-    if (active && containerNode) {
+  const containerRef = (containerNode: HTMLDivElement | null) => {
+    if (containerNode && active) {
       scrollIntoView(containerNode);
     }
-  }, [active]);
+  };
 
   return (
-    <Container ref={elRef} active={active} onClick={() => onSelect(fixtureId)}>
+    <Container
+      ref={containerRef}
+      active={active}
+      onClick={() => onSelect(fixtureId)}
+    >
       {cleanFixturePath}
     </Container>
   );

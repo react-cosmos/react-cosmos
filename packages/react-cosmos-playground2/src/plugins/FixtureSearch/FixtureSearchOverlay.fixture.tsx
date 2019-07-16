@@ -1,4 +1,5 @@
 import React from 'react';
+import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { FixtureSearchOverlay } from './FixtureSearchOverlay';
 
 const fixtures = {
@@ -21,12 +22,26 @@ const fixtures = {
   'src/shared/ui/valueInputTree/index.fixture.tsx': null
 };
 
-export default (
-  <FixtureSearchOverlay
-    fixturesDir="__fixtures__"
-    fixtureFileSuffix="fixture"
-    fixtures={fixtures}
-    onClose={() => console.log('Close fixture search overlay')}
-    onSelect={fixtureId => console.log('Select fixture', fixtureId)}
-  />
-);
+export default {
+  'from scratch': createFixtureSearchOverlay(),
+
+  'fixture selected': createFixtureSearchOverlay({
+    path: 'src/plugins/Notifications/index.fixture.tsx',
+    name: 'multiple'
+  })
+};
+
+function createFixtureSearchOverlay(fixtureId: null | FixtureId = null) {
+  return (
+    <FixtureSearchOverlay
+      fixturesDir="__fixtures__"
+      fixtureFileSuffix="fixture"
+      fixtures={fixtures}
+      selectedFixtureId={fixtureId}
+      onClose={() => console.log('Close fixture search overlay')}
+      onSelect={selectedFixtureId =>
+        console.log('Select fixture', selectedFixtureId)
+      }
+    />
+  );
+}

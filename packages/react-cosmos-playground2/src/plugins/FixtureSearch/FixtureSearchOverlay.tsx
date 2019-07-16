@@ -1,5 +1,6 @@
 import { filter } from 'fuzzaldrin-plus';
 import React from 'react';
+import { isEqual } from 'lodash';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
 import { createFixtureTree } from '../../shared/fixtureTree';
@@ -18,6 +19,7 @@ type Props = {
   fixturesDir: string;
   fixtureFileSuffix: string;
   fixtures: FixtureNamesByPath;
+  selectedFixtureId: null | FixtureId;
   onClose: () => unknown;
   onSelect: (fixtureId: FixtureId) => unknown;
 };
@@ -28,6 +30,7 @@ export function FixtureSearchOverlay({
   fixturesDir,
   fixtureFileSuffix,
   fixtures,
+  selectedFixtureId,
   onClose,
   onSelect
 }: Props) {
@@ -49,7 +52,12 @@ export function FixtureSearchOverlay({
 
   const [activeFixturePath, setActiveFixturePath] = React.useState<
     ActiveFixturePath
-  >(getFirstFixturePath(matchingFixturePaths));
+  >(() => {
+    return (
+      (selectedFixtureId && getFixturePath(fixtureIds, selectedFixtureId)) ||
+      getFirstFixturePath(matchingFixturePaths)
+    );
+  });
 
   const onInputChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -204,6 +212,13 @@ export function FixtureSearchOverlay({
         </ResultsViewport>
       </Content>
     </Overlay>
+  );
+}
+
+function getFixturePath(fixtureIds: FixtureIdsByPath, fixtureId: FixtureId) {
+  const fixturePaths = Object.keys(fixtureIds);
+  return fixturePaths.find(fixturePath =>
+    isEqual(fixtureIds[fixturePath], fixtureId)
   );
 }
 

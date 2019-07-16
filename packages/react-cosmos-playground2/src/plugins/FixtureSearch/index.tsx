@@ -56,6 +56,7 @@ namedPlug('global', 'fixtureSearch', ({ pluginContext }) => {
       fixturesDir={fixturesDir}
       fixtureFileSuffix={fixtureFileSuffix}
       fixtures={fixtures}
+      selectedFixtureId={router.getSelectedFixtureId()}
       onClose={onClose}
       onSelect={onSelect}
     />
