@@ -1,23 +1,39 @@
 import React from 'react';
+import { isEqual } from 'lodash';
+import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
+import { FixtureNode } from '../../../shared/fixtureTree';
 import {
   ChevronDownIcon,
   ChevronRightIcon,
   FolderIcon
 } from '../../../shared/icons';
-import { ListItem, Unshirinkable, Label } from './shared';
+import { Label, ListItem, Unshirinkable } from './shared';
 
 type Props = {
+  node: FixtureNode;
   parents: string[];
   isExpanded: boolean;
+  selectedFixtureId: null | FixtureId;
   onToggle: () => unknown;
 };
 
-export function FixtureTreeDir({ parents, isExpanded, onToggle }: Props) {
+export function FixtureTreeDir({
+  node,
+  parents,
+  selectedFixtureId,
+  isExpanded,
+  onToggle
+}: Props) {
   const dirName = parents[parents.length - 1];
+  const containsSelectedFixture =
+    selectedFixtureId !== null && treeContainsFixture(node, selectedFixtureId);
   return (
     <DirButton onClick={onToggle}>
-      <ListItem indentLevel={parents.length - 1}>
+      <ListItem
+        indentLevel={parents.length - 1}
+        selected={!isExpanded && containsSelectedFixture}
+      >
         <CevronContainer>
           {isExpanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
         </CevronContainer>
@@ -27,6 +43,21 @@ export function FixtureTreeDir({ parents, isExpanded, onToggle }: Props) {
         <Label>{dirName}</Label>
       </ListItem>
     </DirButton>
+  );
+}
+
+function treeContainsFixture(
+  { dirs, items }: FixtureNode,
+  fixtureId: FixtureId
+): boolean {
+  const itemNames = Object.keys(items);
+  if (itemNames.some(itemName => isEqual(items[itemName], fixtureId))) {
+    return true;
+  }
+
+  const dirNames = Object.keys(dirs);
+  return dirNames.some(dirName =>
+    treeContainsFixture(dirs[dirName], fixtureId)
   );
 }
 
