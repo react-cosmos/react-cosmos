@@ -1,17 +1,18 @@
 import {
-  PluginSpec,
-  MethodHandlers,
   EventHandlers,
-  getPluginContext
+  getPluginContext,
+  MethodHandlers,
+  PluginSpec
 } from 'react-plugin';
-import { StorageSpec } from '../plugins/Storage/public';
-import { RouterSpec } from '../plugins/Router/public';
 import { CoreSpec } from '../plugins/Core/public';
-import { MessageHandlerSpec } from '../plugins/MessageHandler/public';
-import { RendererCoreSpec } from '../plugins/RendererCore/public';
+import { FixtureTreeSpec } from '../plugins/FixtureTree/public';
 import { LayoutSpec } from '../plugins/Layout/public';
+import { MessageHandlerSpec } from '../plugins/MessageHandler/public';
 import { NotificationsSpec } from '../plugins/Notifications/public';
+import { RendererCoreSpec } from '../plugins/RendererCore/public';
 import { RendererPreviewSpec } from '../plugins/RendererPreview/public';
+import { RouterSpec } from '../plugins/Router/public';
+import { StorageSpec } from '../plugins/Storage/public';
 import { getMethodsOf, mockMethodsOf, on } from './plugin';
 
 type MethodsOf<Spec extends PluginSpec> = Partial<MethodHandlers<Spec>>;
@@ -150,6 +151,15 @@ export function mockNotifications(methods: MethodsOf<NotificationsSpec> = {}) {
     ...methods
   };
   mockMethodsOf<NotificationsSpec>('notifications', allMethods);
+  return allMethods;
+}
+
+export function mockFixtureTree(methods: MethodsOf<FixtureTreeSpec> = {}) {
+  const allMethods = {
+    revealFixture: jest.fn(),
+    ...methods
+  };
+  mockMethodsOf<FixtureTreeSpec>('fixtureTree', allMethods);
   return allMethods;
 }
 

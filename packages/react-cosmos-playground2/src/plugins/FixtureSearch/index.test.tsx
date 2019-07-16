@@ -5,6 +5,7 @@ import { register } from '.';
 import { cleanup } from '../../testHelpers/plugin';
 import {
   mockCore,
+  mockFixtureTree,
   mockRendererCore,
   mockRouter
 } from '../../testHelpers/pluginMocks';
@@ -28,6 +29,7 @@ function registerTestPlugins() {
   mockRendererCore({
     getFixtures: () => fixtures
   });
+  mockFixtureTree();
 }
 
 function loadTestPlugins() {
