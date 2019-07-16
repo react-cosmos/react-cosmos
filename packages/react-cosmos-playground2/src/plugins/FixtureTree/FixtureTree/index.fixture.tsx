@@ -42,7 +42,7 @@ function createFixtureTree(
       treeExpansion={treeExpansion}
       onSelect={selectedFixtureId => console.log('select', selectedFixtureId)}
       setTreeExpansion={newTreeExpansion =>
-        console.log('set tree expansion', treeExpansion)
+        console.log('set tree expansion', newTreeExpansion)
       }
     />
   );
