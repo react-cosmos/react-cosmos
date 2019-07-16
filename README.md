@@ -52,7 +52,7 @@ Requirements:
 - [x] webpack or Browserify (or roll your own integration)
 - [ ] [Fixtures](#fixtures) (you'll create them after getting started)
 
-React Cosmos works best with webpack. Making it work with other bundlers takes extra work, but both a [Browserify example](examples/browserify) and a [Parcel example](https://github.com/react-cosmos/parcel-ts-example) are available.
+React Cosmos works best with webpack. Making it work with other bundlers takes extra work, but both a [Browserify example](https://github.com/react-cosmos/react-cosmos-classic/tree/master/examples/browserify) and a [Parcel example](https://github.com/react-cosmos/parcel-ts-example) are available.
 
 Jump to:
 
@@ -428,7 +428,7 @@ export default {
 };
 ```
 
-Check out the [context example](examples/context) to see the proxy in action.
+Check out the [context example](https://github.com/react-cosmos/react-cosmos-classic/tree/master/examples/context) to see the proxy in action.
 
 #### Redux
 
@@ -520,7 +520,7 @@ export default {
 };
 ```
 
-Check out the [React Router example](examples/react-router) to see the proxy in action.
+Check out the [React Router example](https://github.com/react-cosmos/react-cosmos-classic/tree/master/examples/react-router) to see the proxy in action.
 
 #### React Apollo (GraphQL)
 
@@ -582,7 +582,7 @@ The proxy will look for a `resolveWith` or a `failWith` key in order to return t
 - a function returning an object
 - a function that returns a Promise that either resolves or rejects with an object
 
-See examples below or check [the fixtures defined in the Apollo example](examples/apollo/components/__fixtures__/Author).
+See examples below or check [the fixtures defined in the Apollo example](https://github.com/react-cosmos/react-cosmos-classic/tree/master/examples/apollo/components/__fixtures__/Author).
 
 ##### Static response
 
@@ -750,7 +750,7 @@ export default {
 };
 ```
 
-Check out the [Apollo example](examples/apollo) to see `react-cosmos-apollo-proxy` in action! 🚀
+Check out the [Apollo example](https://github.com/react-cosmos/react-cosmos-classic/tree/master/examples/apollo) to see `react-cosmos-apollo-proxy` in action! 🚀
 
 #### Fetch
 
@@ -796,7 +796,7 @@ export default {
 };
 ```
 
-Built on top of [fetch-mock](http://www.wheresrhys.co.uk/fetch-mock). Check out the [Fetch example](examples/fetch) to see the proxy in action.
+Built on top of [fetch-mock](http://www.wheresrhys.co.uk/fetch-mock). Check out the [Fetch example](https://github.com/react-cosmos/react-cosmos-classic/tree/master/examples/fetch) to see the proxy in action.
 
 #### XHR
 
@@ -843,7 +843,7 @@ export default {
 };
 ```
 
-Built on top of [xhr-proxy](https://github.com/jameslnewell/xhr-mock). Check out the [Axios example](examples/axios) to see the proxy in action.
+Built on top of [xhr-proxy](https://github.com/jameslnewell/xhr-mock). Check out the [Axios example](https://github.com/react-cosmos/react-cosmos-classic/tree/master/examples/axios) to see the proxy in action.
 
 #### LocalStorage
 
