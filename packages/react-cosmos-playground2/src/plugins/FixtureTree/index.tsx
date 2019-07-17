@@ -1,27 +1,35 @@
 import React from 'react';
-import { createPlugin, PluginContext } from 'react-plugin';
+import { createPlugin } from 'react-plugin';
 import { TreeExpansion } from '../../shared/ui/TreeView';
-import { StorageSpec } from '../Storage/public';
-import { RouterSpec } from '../Router/public';
 import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';
-import { TREE_EXPANSION_STORAGE_KEY } from './shared';
-import { FixtureTreeSpec } from './public';
+import { RouterSpec } from '../Router/public';
+import { StorageSpec } from '../Storage/public';
 import { FixtureTreeContainer } from './FixtureTreeContainer';
-
-const DEFAULT_TREE_EXPANSION = {};
+import { FixtureTreeSpec } from './public';
+import { revealFixture } from './revealFixture';
+import { getTreeExpansion, setTreeExpansion } from './shared';
 
 const { namedPlug, register } = createPlugin<FixtureTreeSpec>({
-  name: 'fixtureTree'
+  name: 'fixtureTree',
+  methods: {
+    revealFixture
+  }
 });
 
 namedPlug('navRow', 'fixtureTree', ({ pluginContext }) => {
   const { getMethodsOf } = pluginContext;
+  const storage = pluginContext.getMethodsOf<StorageSpec>('storage');
   const router = getMethodsOf<RouterSpec>('router');
   const core = getMethodsOf<CoreSpec>('core');
   const { fixturesDir, fixtureFileSuffix } = core.getFixtureFileVars();
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
-  const { treeExpansion, setTreeExpansion } = useTreeExpansion(pluginContext);
+  const treeExpansion = getTreeExpansion(storage);
+  const setTreeExpansionMemo = React.useCallback(
+    (newTreeExpansion: TreeExpansion) =>
+      setTreeExpansion(storage, newTreeExpansion),
+    [storage]
+  );
 
   return (
     <FixtureTreeContainer
@@ -32,22 +40,9 @@ namedPlug('navRow', 'fixtureTree', ({ pluginContext }) => {
       fixtures={rendererCore.getFixtures()}
       treeExpansion={treeExpansion}
       selectFixture={router.selectFixture}
-      setTreeExpansion={setTreeExpansion}
+      setTreeExpansion={setTreeExpansionMemo}
     />
   );
 });
 
 export { register };
-
-function useTreeExpansion(pluginContext: PluginContext<FixtureTreeSpec>) {
-  const storage = pluginContext.getMethodsOf<StorageSpec>('storage');
-  const treeExpansion =
-    storage.getItem<TreeExpansion>(TREE_EXPANSION_STORAGE_KEY) ||
-    DEFAULT_TREE_EXPANSION;
-  const setTreeExpansion = React.useCallback(
-    (newTreeExpansion: TreeExpansion) =>
-      storage.setItem(TREE_EXPANSION_STORAGE_KEY, newTreeExpansion),
-    [storage]
-  );
-  return { treeExpansion, setTreeExpansion };
-}

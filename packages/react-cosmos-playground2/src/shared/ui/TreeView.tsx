@@ -1,6 +1,6 @@
 import { map } from 'lodash';
 import React from 'react';
-import { TreeNode } from '../tree';
+import { getSortedNodeDirNames, TreeNode } from '../tree';
 
 export type TreeExpansion = {
   [nodePath: string]: boolean;
@@ -46,7 +46,7 @@ export function TreeView<Item>({
       {!isRootNode && renderDir({ node, parents, isExpanded, onToggle })}
       {isExpanded && (
         <>
-          {getSortedNodeDirNames(node).map(dirName => {
+          {getSortedNodeDirNames(dirs).map(dirName => {
             const nextParents = [...parents, dirName];
             return (
               <TreeView
@@ -69,28 +69,6 @@ export function TreeView<Item>({
       )}
     </>
   );
-}
-
-function getSortedNodeDirNames(node: TreeNode<any>): string[] {
-  return (
-    Object.keys(node.dirs)
-      .slice()
-      // Sort alphabetically first
-      .sort()
-      .sort((dirName1, dirName2) => {
-        return (
-          calcNodeDepth(node.dirs[dirName2]) -
-          calcNodeDepth(node.dirs[dirName1])
-        );
-      })
-  );
-}
-
-// Only differentiate between nodes with and without subdirs and ignore
-// depth level in the latter
-function calcNodeDepth(node: TreeNode<any>): 0 | 1 {
-  const hasDirs = Object.keys(node.dirs).length > 0;
-  return hasDirs ? 1 : 0;
 }
 
 function getNodePath(nodeParents: string[]) {

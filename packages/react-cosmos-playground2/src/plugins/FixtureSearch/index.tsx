@@ -2,6 +2,7 @@ import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { createPlugin } from 'react-plugin';
 import { CoreSpec } from '../Core/public';
+import { FixtureTreeSpec } from '../FixtureTree/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { RouterSpec } from '../Router/public';
 import { FixtureSearchHeader } from './FixtureSearchHeader';
@@ -35,16 +36,20 @@ namedPlug('global', 'fixtureSearch', ({ pluginContext }) => {
   const router = getMethodsOf<RouterSpec>('router');
   const { fixturesDir, fixtureFileSuffix } = core.getFixtureFileVars();
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
+  const fixtureTree = getMethodsOf<FixtureTreeSpec>('fixtureTree');
   const fixtures = rendererCore.getFixtures();
   const onClose = React.useCallback(() => setState({ open: false }), [
     setState
   ]);
   const onSelect = React.useCallback(
-    (fixtureId: FixtureId) => {
+    (fixtureId: FixtureId, revealFixture: boolean) => {
       router.selectFixture(fixtureId, false);
+      if (revealFixture) {
+        fixtureTree.revealFixture(fixtureId);
+      }
       setState({ open: false });
     },
-    [router, setState]
+    [fixtureTree, router, setState]
   );
 
   if (!open) {
@@ -56,6 +61,7 @@ namedPlug('global', 'fixtureSearch', ({ pluginContext }) => {
       fixturesDir={fixturesDir}
       fixtureFileSuffix={fixtureFileSuffix}
       fixtures={fixtures}
+      selectedFixtureId={router.getSelectedFixtureId()}
       onClose={onClose}
       onSelect={onSelect}
     />

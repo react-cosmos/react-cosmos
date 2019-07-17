@@ -1,5 +1,5 @@
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { TreeNode } from '../../shared/tree';
+import { getSortedNodeDirNames, TreeNode } from '../../shared/tree';
 
 export type FixtureIdsByPath = Record<string, FixtureId>;
 
@@ -9,17 +9,17 @@ export function flattenFixtureTree(
 ): FixtureIdsByPath {
   const fixtureIds: FixtureIdsByPath = {};
 
-  Object.keys(fixtureTree.items).forEach(itemName => {
-    const cleanPath = [...parents, itemName].join(' ');
-    fixtureIds[cleanPath] = fixtureTree.items[itemName];
-  });
-
-  Object.keys(fixtureTree.dirs).forEach(dirName => {
+  getSortedNodeDirNames(fixtureTree.dirs).forEach(dirName => {
     const dir = fixtureTree.dirs[dirName];
     const dirFlatItems = flattenFixtureTree(dir, [...parents, dirName]);
     Object.keys(dirFlatItems).forEach(dirItemCleanPath => {
       fixtureIds[dirItemCleanPath] = dirFlatItems[dirItemCleanPath];
     });
+  });
+
+  Object.keys(fixtureTree.items).forEach(itemName => {
+    const cleanPath = [...parents, itemName].join(' ');
+    fixtureIds[cleanPath] = fixtureTree.items[itemName];
   });
 
   return fixtureIds;

@@ -5,6 +5,6 @@ coverage:
     project:
       default:
         target: auto
-        threshold: 1%
+        threshold: 3%
         base: auto
     patch: no

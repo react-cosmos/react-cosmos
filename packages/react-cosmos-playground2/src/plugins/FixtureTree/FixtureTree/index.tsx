@@ -34,10 +34,12 @@ export const FixtureTree = React.memo(function FixtureTree({
       <TreeView
         node={rootNode}
         treeExpansion={treeExpansion}
-        renderDir={({ parents, isExpanded, onToggle }) => (
+        renderDir={({ node, parents, isExpanded, onToggle }) => (
           <FixtureTreeDir
+            node={node}
             parents={parents}
             isExpanded={isExpanded}
+            selectedFixtureId={selectedFixtureId}
             onToggle={onToggle}
           />
         )}
@@ -61,4 +63,5 @@ const Container = styled.div`
   display: inline-block;
   min-width: 100%;
   padding: 8px 0;
+  background: var(--grey1);
 `;

@@ -6,7 +6,7 @@ type Props = {
   cleanFixturePath: string;
   fixtureId: FixtureId;
   active: boolean;
-  onSelect: (fixtureId: FixtureId) => unknown;
+  onSelect: (fixtureId: FixtureId, revealFixture: boolean) => unknown;
 };
 
 export function FixtureSearchResult({
@@ -15,25 +15,36 @@ export function FixtureSearchResult({
   active,
   onSelect
 }: Props) {
-  // Scroll to results when they become active
-  const elRef = React.useRef<HTMLDivElement>(null);
-  React.useEffect(() => {
-    const containerNode = elRef.current;
-    if (active && containerNode) {
-      scrollIntoView(containerNode);
-    }
-  }, [active]);
+  const containerRef = useScrollToActive(cleanFixturePath, active);
+  const onClick = React.useCallback(() => onSelect(fixtureId, false), [
+    fixtureId,
+    onSelect
+  ]);
 
   return (
-    <Container ref={elRef} active={active} onClick={() => onSelect(fixtureId)}>
+    <Container ref={containerRef} active={active} onClick={onClick}>
       {cleanFixturePath}
     </Container>
   );
 }
 
+function useScrollToActive(cleanFixturePath: string, active: boolean) {
+  const containerRef = React.useRef<HTMLDivElement | null>(null);
+
+  // Scroll to results when they become active
+  React.useLayoutEffect(() => {
+    const containerNode = containerRef.current;
+    if (active && containerNode) {
+      scrollIntoView(containerNode);
+    }
+  }, [cleanFixturePath, active]);
+
+  return containerRef;
+}
+
 function scrollIntoView(node: HTMLElement) {
   if (typeof node.scrollIntoView === 'function') {
-    node.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    node.scrollIntoView({ block: 'center' });
   }
 }
 

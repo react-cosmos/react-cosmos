@@ -18,7 +18,7 @@ export function FixtureSearchHeader({ onOpen }: Props) {
     }
     window.addEventListener('keydown', handleWindowKeyDown);
     return () => window.removeEventListener('keydown', handleWindowKeyDown);
-  });
+  }, [onOpen]);
 
   return (
     <Container>
