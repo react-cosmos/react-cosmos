@@ -4,6 +4,9 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "$schema": {
+      "type": "string"
+    },
     "rootDir": {
       "description": "The root directory that all others paths in this config are relative to. Usually the root of your repo. If omitted, rootDir is equal to the directory containing your Cosmos config. When you don't use a Cosmos config, rootDir defaults to the current working directory.",
       "type": "string",
