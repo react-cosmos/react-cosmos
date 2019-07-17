@@ -15,7 +15,7 @@ export function FixtureSearchResult({
   active,
   onSelect
 }: Props) {
-  const containerRef = useContainerRef(cleanFixturePath, active);
+  const containerRef = useScrollToActive(cleanFixturePath, active);
   const onClick = React.useCallback(() => onSelect(fixtureId, false), [
     fixtureId,
     onSelect
@@ -28,9 +28,10 @@ export function FixtureSearchResult({
   );
 }
 
-function useContainerRef(cleanFixturePath: string, active: boolean) {
+function useScrollToActive(cleanFixturePath: string, active: boolean) {
   const containerRef = React.useRef<HTMLDivElement | null>(null);
 
+  // Scroll to results when they become active
   React.useEffect((): ReturnType<React.EffectCallback> => {
     const containerNode = containerRef.current;
     if (active && containerNode) {
