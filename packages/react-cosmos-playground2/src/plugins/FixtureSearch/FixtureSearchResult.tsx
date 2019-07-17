@@ -15,22 +15,31 @@ export function FixtureSearchResult({
   active,
   onSelect
 }: Props) {
-  // Scroll to results when they become active
-  const containerRef = (containerNode: HTMLDivElement | null) => {
-    if (containerNode && active) {
-      scrollIntoView(containerNode);
-    }
-  };
+  const containerRef = useContainerRef(cleanFixturePath, active);
+  const onClick = React.useCallback(() => onSelect(fixtureId, false), [
+    fixtureId,
+    onSelect
+  ]);
 
   return (
-    <Container
-      ref={containerRef}
-      active={active}
-      onClick={() => onSelect(fixtureId, false)}
-    >
+    <Container ref={containerRef} active={active} onClick={onClick}>
       {cleanFixturePath}
     </Container>
   );
+}
+
+function useContainerRef(cleanFixturePath: string, active: boolean) {
+  const containerRef = React.useRef<HTMLDivElement | null>(null);
+
+  React.useEffect((): ReturnType<React.EffectCallback> => {
+    const containerNode = containerRef.current;
+    if (active && containerNode) {
+      const timeoutId = setTimeout(() => scrollIntoView(containerNode), 0);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [cleanFixturePath, active]);
+
+  return containerRef;
 }
 
 function scrollIntoView(node: HTMLElement) {
