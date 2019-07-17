@@ -32,11 +32,10 @@ function useScrollToActive(cleanFixturePath: string, active: boolean) {
   const containerRef = React.useRef<HTMLDivElement | null>(null);
 
   // Scroll to results when they become active
-  React.useEffect((): ReturnType<React.EffectCallback> => {
+  React.useLayoutEffect(() => {
     const containerNode = containerRef.current;
     if (active && containerNode) {
-      const timeoutId = setTimeout(() => scrollIntoView(containerNode), 0);
-      return () => clearTimeout(timeoutId);
+      scrollIntoView(containerNode);
     }
   }, [cleanFixturePath, active]);
 
@@ -45,7 +44,7 @@ function useScrollToActive(cleanFixturePath: string, active: boolean) {
 
 function scrollIntoView(node: HTMLElement) {
   if (typeof node.scrollIntoView === 'function') {
-    node.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    node.scrollIntoView({ block: 'center' });
   }
 }
 
