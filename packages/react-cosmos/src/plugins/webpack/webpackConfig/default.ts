@@ -22,12 +22,10 @@ export function getDefaultWebpackConfig(
   const rules: webpack.RuleSetRule[] = [];
   const plugins: webpack.Plugin[] = [];
 
-  if (tsLoaderPath) {
-    rules.push({
-      test: /\.tsx?$/,
-      loader: tsLoaderPath
-    });
-  } else if (babelLoaderPath) {
+  // Prefer babel-loader over ts-loader if user has both installed. If user
+  // has babel-loader installed then most likely they won't want ts-loader
+  // to handle module transformation.
+  if (babelLoaderPath) {
     rules.push({
       test: /\.(js|ts)x?$/,
       exclude: /node_modules/,
@@ -37,6 +35,11 @@ export function getDefaultWebpackConfig(
           root: rootDir
         }
       }
+    });
+  } else if (tsLoaderPath) {
+    rules.push({
+      test: /\.tsx?$/,
+      loader: tsLoaderPath
     });
   }
 
