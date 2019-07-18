@@ -176,6 +176,13 @@ While we get feedback for the new JSX fixtures and decorators, I will continue t
 
 Cosmos Classic isn't going anywhere. First, it will take months before a release candidate for v5 (Cosmos Next) is ready. Second, the classic packages have been moved to [a dedicated repo](https://github.com/react-cosmos/react-cosmos-classic), which means we can continue to maintain Cosmos Classic or even run it alongside Cosmos Next in the same project (during the migration period).
 
+## Troubleshooting
+
+### Using Next.js?
+
+- [Make sure you have html-webpack-plugin installed](https://github.com/react-cosmos/react-cosmos/issues/995#issuecomment-511883135)
+- [Override your webpack config with ProvidePlugin to support JSX without importing React](https://github.com/react-cosmos/react-cosmos/issues/1000#issuecomment-512575593)
+
 ---
 
 **Thanks for your help in shaping the future of React Cosmos! 🙏**
