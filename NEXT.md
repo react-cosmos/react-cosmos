@@ -39,7 +39,7 @@ And if you use VS Code you can map the Cosmos config schema globally by [extendi
     "fileMatch": ["cosmos.config.json"],
     "url": "http://json.schemastore.org/cosmos-config"
   }
-],
+]
 ```
 
 ## Webpack
