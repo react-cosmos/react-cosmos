@@ -18,7 +18,7 @@ By default, Cosmos reads `cosmos.config.json` from your root directory. You can 
 
 The best way to learn about the available options in the Cosmos config is to use [config.schema.json](packages/react-cosmos/config.schema.json). It's human readable, but you can also enhance your config with autocomplete in code editors like VS Code.
 
-```json
+```jsonc
 {
   "$schema": "http://json.schemastore.org/cosmos-config"
   // your options...
@@ -28,10 +28,12 @@ The best way to learn about the available options in the Cosmos config is to use
 And if you use VS Code you can add the Cosmos config schema [in your user settings](https://code.visualstudio.com/docs/languages/json#_mapping-in-the-user-settings).
 
 ```json
-"json.schemas": [{
-  "fileMatch": ["cosmos.config.json"],
-  "url": "http://json.schemastore.org/cosmos-config"
-}],
+"json.schemas": [
+  {
+    "fileMatch": ["cosmos.config.json"],
+    "url": "http://json.schemastore.org/cosmos-config"
+  }
+],
 ```
 
 > Most Cosmos Classic config options are still supported in the new JSON format. [Let me know](https://join-react-cosmos.now.sh/) if you need old config options that no longer work.
