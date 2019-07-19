@@ -53,7 +53,7 @@
     },
     "port": {
       "description": "Dev server port. [default: 5000]",
-      "type": ["number"]
+      "type": "number"
     },
     "globalImports": {
       "description": "Modules to be imported before loading components. Stuff like reset.css, polyfills, etc.",
