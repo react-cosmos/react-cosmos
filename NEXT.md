@@ -22,7 +22,7 @@ By default, Cosmos reads `cosmos.config.json` from your root directory. You can 
 
 The best way to learn about the available options in the Cosmos config is to use [config.schema.json](packages/react-cosmos/config.schema.json).
 
-The JSON schema is human readable, but you can also enhance your config with autocomplete in code editors like VS Code.
+The schema is human readable, but you can also enhance your config with autocomplete in code editors like VS Code.
 
 ```jsonc
 {
