@@ -178,6 +178,10 @@ Cosmos Classic isn't going anywhere. First, it will take months before a release
 
 ## Troubleshooting
 
+### Failed to execute `postMessage` [...]?
+
+- [You may have a URL instance in your state](https://github.com/react-cosmos/react-cosmos/issues/1002)
+
 ### Using Next.js?
 
 - [Make sure you have html-webpack-plugin installed](https://github.com/react-cosmos/react-cosmos/issues/995#issuecomment-511883135)
