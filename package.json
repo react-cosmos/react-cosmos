@@ -32,12 +32,12 @@
     "release:next": "yarn release:check && yarn release:lerna --dist-tag=next"
   },
   "devDependencies": {
-    "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.5",
-    "@babel/node": "^7.4.5",
-    "@babel/plugin-proposal-class-properties": "^7.4.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
-    "@babel/preset-env": "^7.4.5",
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
     "@react-mock/state": "^0.1.8",
@@ -59,7 +59,7 @@
     "@types/react-is": "^16.7.1",
     "@types/react-test-renderer": "^16.8.2",
     "@types/rimraf": "^2.0.2",
-    "@types/slash": "^2.0.0",
+    "@types/slash": "^3.0.0",
     "@types/socket.io": "^2.1.2",
     "@types/socket.io-client": "^1.4.32",
     "@types/styled-components": "4.1.18",
@@ -75,7 +75,7 @@
     "codecov": "^3.5.0",
     "cpy": "^7.3.0",
     "create-react-class": "^15.6.3",
-    "css-loader": "^3.0.0",
+    "css-loader": "^3.1.0",
     "cypress": "^3.4.0",
     "delay": "^4.3.0",
     "eslint": "^6.0.1",
@@ -95,9 +95,9 @@
     "rimraf": "^2.6.3",
     "style-loader": "^0.23.1",
     "typescript": "^3.5.3",
-    "webpack": "^4.35.3",
+    "webpack": "^4.36.1",
     "webpack-cli": "^3.3.6",
-    "yargs": "^13.2.4"
+    "yargs": "^13.3.0"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,css,md}": [
