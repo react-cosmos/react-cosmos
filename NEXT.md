@@ -16,7 +16,13 @@ The Cosmos Next config is a **JSON** file, so it can only host serializable valu
 
 By default, Cosmos reads `cosmos.config.json` from your root directory. You can pass a `--config` CLI arg for a custom config path.
 
-The best way to learn about the available options in the Cosmos config is to use [config.schema.json](packages/react-cosmos/config.schema.json). It's human readable, but you can also enhance your config with autocomplete in code editors like VS Code.
+> Most Cosmos Classic config options are still supported in the new JSON format. [Let me know](https://join-react-cosmos.now.sh/) if you need old config options that no longer work.
+
+### Available options
+
+The best way to learn about the available options in the Cosmos config is to use [config.schema.json](packages/react-cosmos/config.schema.json).
+
+The JSON schema is human readable, but you can also enhance your config with autocomplete in code editors like VS Code.
 
 ```jsonc
 {
@@ -25,7 +31,7 @@ The best way to learn about the available options in the Cosmos config is to use
 }
 ```
 
-And if you use VS Code you can add the Cosmos config schema [in your user settings](https://code.visualstudio.com/docs/languages/json#_mapping-in-the-user-settings).
+And if you use VS Code you can map the Cosmos config schema globally by [extending your user settings](https://code.visualstudio.com/docs/languages/json#_mapping-in-the-user-settings).
 
 ```json
 "json.schemas": [
@@ -35,8 +41,6 @@ And if you use VS Code you can add the Cosmos config schema [in your user settin
   }
 ],
 ```
-
-> Most Cosmos Classic config options are still supported in the new JSON format. [Let me know](https://join-react-cosmos.now.sh/) if you need old config options that no longer work.
 
 ## Webpack
 
