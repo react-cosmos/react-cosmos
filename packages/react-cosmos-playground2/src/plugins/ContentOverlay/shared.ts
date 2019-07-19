@@ -18,17 +18,18 @@ export const Container = styled.div`
 export const ContentContainer = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap-reverse;
   align-items: center;
   justify-content: center;
   min-width: 100%;
-  padding: 0 32px;
+  padding: 0 16px;
   box-sizing: border-box;
 `;
 
 export const TextContainer = styled.div`
   flex-shrink: 0;
   width: 480px;
-  padding: 0 32px 0 0;
+  padding: 32px;
   font-size: 16px;
   line-height: 1.5em;
   color: var(--grey1);
