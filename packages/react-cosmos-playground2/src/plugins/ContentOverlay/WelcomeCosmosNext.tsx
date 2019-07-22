@@ -26,13 +26,12 @@ export function WelcomeCosmosNext({ onDismissWelcome }: Props) {
             <span>
               New to Cosmos or a long time user, make sure to
               <br />
-              check out the{' '}
               <Link
                 href="https://github.com/react-cosmos/react-cosmos/blob/master/NEXT.md"
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                <strong>docs on getting started</strong>
+                <strong>check out the docs on getting started</strong>
               </Link>
               .
             </span>
