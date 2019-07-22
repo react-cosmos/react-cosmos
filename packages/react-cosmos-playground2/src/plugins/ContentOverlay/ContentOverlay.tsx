@@ -1,17 +1,18 @@
 import React from 'react';
 import {
-  EmptyIllustration,
-  DreamerIllustration
+  DreamerIllustration,
+  EmptyIllustration
 } from '../../shared/illustrations';
+import { RuntimeStatus, UrlStatus } from '../RendererPreview/public';
+import { NoFixtureSelected } from './NoFixtureSelected';
 import { RendererNotResponding } from './RendererNotResponding';
-import { WelcomeCosmosNext } from './WelcomeCosmosNext';
-import { UrlStatus, RuntimeStatus } from '../RendererPreview/public';
 import {
-  IllustrationContainer,
-  Container,
   ContentContainer,
-  Delay
+  Delay,
+  IllustrationContainer,
+  OverlayContainer
 } from './shared';
+import { WelcomeCosmosNext } from './WelcomeCosmosNext';
 
 type Props = {
   fixtureSelected: boolean;
@@ -19,6 +20,9 @@ type Props = {
   rendererConnected: boolean;
   rendererPreviewUrlStatus: UrlStatus;
   rendererPreviewRuntimeStatus: RuntimeStatus;
+  welcomeDismissed: boolean;
+  onDismissWelcome: () => unknown;
+  onShowWelcome: () => unknown;
 };
 
 export function ContentOverlay({
@@ -26,13 +30,16 @@ export function ContentOverlay({
   validFixtureSelected,
   rendererConnected,
   rendererPreviewUrlStatus,
-  rendererPreviewRuntimeStatus
+  rendererPreviewRuntimeStatus,
+  welcomeDismissed,
+  onDismissWelcome,
+  onShowWelcome
 }: Props) {
   if (rendererPreviewUrlStatus === 'error') {
     return (
-      <Container data-testid="rendererNotResponding">
+      <OverlayContainer data-testid="rendererNotResponding">
         <RendererNotResponding />
-      </Container>
+      </OverlayContainer>
     );
   }
 
@@ -44,7 +51,7 @@ export function ContentOverlay({
     // Delay "waiting for renderer" state to avoid rapidly changing visual
     // states when renderer is already compiled and will respond immediately
     return (
-      <Container data-testid="waiting">
+      <OverlayContainer data-testid="waiting">
         <ContentContainer>
           <IllustrationContainer>
             <Delay>
@@ -52,25 +59,33 @@ export function ContentOverlay({
             </Delay>
           </IllustrationContainer>
         </ContentContainer>
-      </Container>
+      </OverlayContainer>
     );
   }
 
   if (fixtureSelected) {
     return (
-      <Container data-testid="notFound">
+      <OverlayContainer data-testid="notFound">
         <ContentContainer>
           <IllustrationContainer>
             <EmptyIllustration title="not found" />
           </IllustrationContainer>
         </ContentContainer>
-      </Container>
+      </OverlayContainer>
+    );
+  }
+
+  if (welcomeDismissed) {
+    return (
+      <OverlayContainer data-testid="blank">
+        <NoFixtureSelected onShowWelcome={onShowWelcome} />
+      </OverlayContainer>
     );
   }
 
   return (
-    <Container data-testid="blank">
-      <WelcomeCosmosNext />
-    </Container>
+    <OverlayContainer data-testid="welcome">
+      <WelcomeCosmosNext onDismissWelcome={onDismissWelcome} />
+    </OverlayContainer>
   );
 }

@@ -3,12 +3,17 @@ import styled from 'styled-components';
 import { AstronautIllustration } from '../../shared/illustrations';
 import {
   ContentContainer,
-  TextContainer,
   IllustrationContainer,
-  NoWrap
+  NoWrap,
+  SecondaryButton,
+  TextContainer
 } from './shared';
 
-export function WelcomeCosmosNext() {
+type Props = {
+  onDismissWelcome: () => unknown;
+};
+
+export function WelcomeCosmosNext({ onDismissWelcome }: Props) {
   return (
     <ContentContainer>
       <TextContainer>
@@ -21,12 +26,13 @@ export function WelcomeCosmosNext() {
             <span>
               New to Cosmos or a long time user, make sure to
               <br />
+              check out the{' '}
               <Link
                 href="https://github.com/react-cosmos/react-cosmos/blob/master/NEXT.md"
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                <strong>check out the docs on getting started</strong>
+                <strong>docs on getting started</strong>
               </Link>
               .
             </span>
@@ -41,12 +47,15 @@ export function WelcomeCosmosNext() {
         </List>
         <Paragraph>
           <ActionLink
-            href="https://join-react-cosmos.now.sh"
+            href="https://forms.gle/yvoie73Rfo6Zy7no7"
             rel="noopener noreferrer"
             target="_blank"
           >
             share your feedback
           </ActionLink>
+          <SecondaryButton onClick={onDismissWelcome}>
+            hide this screen
+          </SecondaryButton>
         </Paragraph>
         <Footnote>PS. The stable version isn’t going anywhere</Footnote>
       </TextContainer>
@@ -130,7 +139,7 @@ const Bullet = styled.span`
 `;
 
 const Link = styled.a`
-  color: inherit;
+  color: var(--grey1);
 `;
 
 const ActionLink = styled.a`
@@ -147,4 +156,45 @@ const ActionLink = styled.a`
   text-transform: uppercase;
   letter-spacing: 0.1em;
   text-decoration: none;
+  transform: translate3d(0, 0, 0);
+  animation: needy 6.4s ease-out infinite;
+  outline: none;
+
+  :focus {
+    box-shadow: 0 0 0px 2px var(--primary2);
+  }
+
+  ::-moz-focus-inner {
+    border: 0;
+  }
+
+  @keyframes needy {
+    21.25% {
+      transform: translate3d(1px, -0.5px, 0);
+      background: var(--primary4);
+    }
+    22.5% {
+      transform: translate3d(-2px, 1px, 0);
+    }
+    23.75% {
+      transform: translate3d(2px, -2px, 0);
+    }
+    25% {
+      transform: translate3d(-2px, 2px, 0);
+      background: var(--primary3);
+    }
+    26.25% {
+      transform: translate3d(1px, -2px, 0);
+    }
+    27.5% {
+      transform: translate3d(-0.5px, 1px, 0);
+    }
+    28.75% {
+      transform: translate3d(-0.5px, -0.5px, 0);
+    }
+    30% {
+      transform: translate3d(1px, -0.5px, 0);
+      background: var(--primary4);
+    }
+  }
 `;

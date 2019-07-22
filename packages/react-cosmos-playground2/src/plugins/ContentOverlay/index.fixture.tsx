@@ -3,18 +3,19 @@ import {
   DreamerIllustration,
   EmptyIllustration
 } from '../../shared/illustrations';
+import { NoFixtureSelected } from './NoFixtureSelected';
 import { RendererNotResponding } from './RendererNotResponding';
-import { WelcomeCosmosNext } from './WelcomeCosmosNext';
 import {
-  Container,
-  IllustrationContainer,
   ContentContainer,
-  Delay
+  Delay,
+  IllustrationContainer,
+  OverlayContainer
 } from './shared';
+import { WelcomeCosmosNext } from './WelcomeCosmosNext';
 
 export default {
   waiting: (
-    <Container>
+    <OverlayContainer>
       <ContentContainer>
         <IllustrationContainer>
           <Delay>
@@ -22,28 +23,36 @@ export default {
           </Delay>
         </IllustrationContainer>
       </ContentContainer>
-    </Container>
+    </OverlayContainer>
   ),
 
   'not found': (
-    <Container>
+    <OverlayContainer>
       <ContentContainer>
         <IllustrationContainer>
           <EmptyIllustration title="not found" />
         </IllustrationContainer>
       </ContentContainer>
-    </Container>
+    </OverlayContainer>
   ),
 
   welcome: (
-    <Container>
-      <WelcomeCosmosNext />
-    </Container>
+    <OverlayContainer>
+      <WelcomeCosmosNext
+        onDismissWelcome={() => console.log('dismiss welcome')}
+      />
+    </OverlayContainer>
+  ),
+
+  'no fixture selected': (
+    <OverlayContainer>
+      <NoFixtureSelected onShowWelcome={() => console.log('show welcome')} />
+    </OverlayContainer>
   ),
 
   'renderer not responding': (
-    <Container>
+    <OverlayContainer>
       <RendererNotResponding />
-    </Container>
+    </OverlayContainer>
   )
 };
