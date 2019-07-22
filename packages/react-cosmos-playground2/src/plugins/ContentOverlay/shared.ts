@@ -1,6 +1,10 @@
+import { PluginContext } from 'react-plugin';
 import styled from 'styled-components';
+import { ContentOverlaySpec } from './public';
 
-export const Container = styled.div`
+export type Context = PluginContext<ContentOverlaySpec>;
+
+export const OverlayContainer = styled.div`
   position: absolute;
   z-index: 1;
   top: 0;
@@ -9,26 +13,27 @@ export const Container = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-items: flex-start;
   align-items: flex-start;
   background: var(--grey6);
-  overflow-x: auto;
+  overflow: auto;
 `;
 
 export const ContentContainer = styled.div`
+  flex-shrink: 0;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   min-width: 100%;
-  padding: 0 32px;
+  min-height: 100%;
   box-sizing: border-box;
 `;
 
 export const TextContainer = styled.div`
   flex-shrink: 0;
   width: 480px;
-  padding: 0 32px 0 0;
+  padding: 32px;
   font-size: 16px;
   line-height: 1.5em;
   color: var(--grey1);
@@ -39,10 +44,40 @@ export const TextContainer = styled.div`
 `;
 
 export const IllustrationContainer = styled.div`
+  flex-shrink: 0;
   --size: 320px;
   display: flex;
   width: var(--size);
   height: var(--size);
+  padding: 0 16px;
+`;
+
+export const SecondaryButton = styled.button`
+  display: inline-block;
+  --size: 36px;
+  height: var(--size);
+  margin: 0 0 0 16px;
+  padding: 0 16px;
+  border: 0;
+  background: var(--grey5);
+  color: var(--grey2);
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: var(--size);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  outline: none;
+
+  :focus {
+    color: var(--primary3);
+    box-shadow: 0 0 0px 2px var(--primary4);
+  }
+
+  ::-moz-focus-inner {
+    border: 0;
+  }
 `;
 
 export const NoWrap = styled.span`

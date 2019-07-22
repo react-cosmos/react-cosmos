@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { SearchIcon } from '../../shared/icons';
-import { KEY_P } from '../../shared/keys';
+import { KEY_K, KEY_P } from '../../shared/keys';
 
 type Props = {
   onOpen: () => unknown;
@@ -11,7 +11,7 @@ export function FixtureSearchHeader({ onOpen }: Props) {
   React.useEffect(() => {
     function handleWindowKeyDown(e: KeyboardEvent) {
       const metaKey = e.metaKey || e.ctrlKey;
-      if (metaKey && e.keyCode === KEY_P) {
+      if (metaKey && (e.keyCode === KEY_P || e.keyCode === KEY_K)) {
         e.preventDefault();
         onOpen();
       }
