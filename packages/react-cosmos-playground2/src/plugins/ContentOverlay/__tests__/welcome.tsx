@@ -19,12 +19,12 @@ function registerTestPlugins() {
     getSelectedFixtureId: () => null
   });
   mockRendererCore({
-    isRendererConnected: () => false,
+    isRendererConnected: () => true,
     isValidFixtureSelected: () => false
   });
   mockRendererPreview({
-    getUrlStatus: () => 'error',
-    getRuntimeStatus: () => 'pending'
+    getUrlStatus: () => 'ok',
+    getRuntimeStatus: () => 'connected'
   });
 }
 
@@ -33,18 +33,8 @@ function loadTestPlugins() {
   return render(<Slot name="contentOverlay" />);
 }
 
-it('renders "error" message', () => {
+it('renders "welcome" state', () => {
   registerTestPlugins();
-  const { getByText } = loadTestPlugins();
-
-  getByText(/renderer/i);
-  getByText(/not responding/i);
-});
-
-it('renders "help" link', () => {
-  registerTestPlugins();
-  const { getByText } = loadTestPlugins();
-
-  const helpLink = getByText(/ask for help/i) as HTMLAnchorElement;
-  expect(helpLink.href).toMatch('https://join-react-cosmos.now.sh');
+  const { queryByTestId } = loadTestPlugins();
+  expect(queryByTestId('welcome')).not.toBeNull();
 });

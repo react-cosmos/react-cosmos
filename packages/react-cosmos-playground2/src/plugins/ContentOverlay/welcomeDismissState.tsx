@@ -1,7 +1,7 @@
 import { StorageSpec } from '../Storage/public';
 import { Context } from './shared';
 
-const DISMISS_STATE_STORAGE_KEY = 'welcomeDismissed';
+export const DISMISS_STATE_STORAGE_KEY = 'welcomeDismissed';
 const DISMISS_STATE_DEFAULT = false;
 
 export function getWelcomeDismissState({ getMethodsOf }: Context) {

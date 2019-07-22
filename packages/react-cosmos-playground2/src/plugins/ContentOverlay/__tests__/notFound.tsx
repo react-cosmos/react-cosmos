@@ -1,18 +1,20 @@
-import React from 'react';
 import { render } from '@testing-library/react';
+import React from 'react';
 import { loadPlugins, Slot } from 'react-plugin';
+import { register } from '..';
 import { cleanup } from '../../../testHelpers/plugin';
 import {
-  mockRouter,
   mockRendererCore,
-  mockRendererPreview
+  mockRendererPreview,
+  mockRouter,
+  mockStorage
 } from '../../../testHelpers/pluginMocks';
-import { register } from '..';
 
 afterEach(cleanup);
 
 function registerTestPlugins() {
   register();
+  mockStorage();
   mockRouter({
     getSelectedFixtureId: () => ({ path: 'foo.js', name: null })
   });

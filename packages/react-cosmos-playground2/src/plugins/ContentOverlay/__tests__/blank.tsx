@@ -1,18 +1,26 @@
-import React from 'react';
 import { render } from '@testing-library/react';
+import React from 'react';
 import { loadPlugins, Slot } from 'react-plugin';
+import { register } from '..';
 import { cleanup } from '../../../testHelpers/plugin';
 import {
-  mockRouter,
   mockRendererCore,
-  mockRendererPreview
+  mockRendererPreview,
+  mockRouter,
+  mockStorage
 } from '../../../testHelpers/pluginMocks';
-import { register } from '..';
+import { DISMISS_STATE_STORAGE_KEY } from '../welcomeDismissState';
 
 afterEach(cleanup);
 
 function registerTestPlugins() {
   register();
+  const storage: Record<string, unknown> = {
+    [DISMISS_STATE_STORAGE_KEY]: true
+  };
+  mockStorage({
+    getItem: (context, key: string) => storage[key]
+  });
   mockRouter({
     getSelectedFixtureId: () => null
   });
