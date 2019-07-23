@@ -4,7 +4,9 @@ export type LayoutSpec = {
     storageCacheReady: boolean;
   };
   methods: {
+    isNavOpen(): boolean;
     isPanelOpen(): boolean;
+    openNav(open: boolean): unknown;
     openPanel(open: boolean): unknown;
   };
 };

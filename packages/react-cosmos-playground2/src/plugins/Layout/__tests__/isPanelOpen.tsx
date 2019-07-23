@@ -44,7 +44,7 @@ function loadTestPlugins() {
 }
 
 it('returns closed panel when no valid fixture is selected', async () => {
-  mockPanelStorage();
+  mockPanelStorage(true);
   mockValidFixtureSelected(false);
   registerTestPlugins();
   loadTestPlugins();
@@ -63,7 +63,7 @@ it('returns open panel by default', async () => {
   expect(layout.isPanelOpen()).toBe(true);
 });
 
-it('returns closed panel closed panel if previously so', async () => {
+it('returns closed panel', async () => {
   mockPanelStorage(false);
   mockValidFixtureSelected(true);
   registerTestPlugins();
@@ -73,7 +73,7 @@ it('returns closed panel closed panel if previously so', async () => {
   expect(layout.isPanelOpen()).toBe(false);
 });
 
-it('returns open panel closed panel if previously so', async () => {
+it('returns open panel', async () => {
   mockPanelStorage(true);
   mockValidFixtureSelected(true);
   registerTestPlugins();

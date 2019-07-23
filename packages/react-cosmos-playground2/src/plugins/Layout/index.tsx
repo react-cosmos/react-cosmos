@@ -11,6 +11,7 @@ import {
   isPanelOpen,
   openPanel
 } from './shared';
+import { isNavOpen, openNav } from './navOpen';
 
 const { onLoad, plug, register } = createPlugin<LayoutSpec>({
   name: 'layout',
@@ -18,8 +19,10 @@ const { onLoad, plug, register } = createPlugin<LayoutSpec>({
     storageCacheReady: false
   },
   methods: {
+    isNavOpen,
     isPanelOpen,
-    openPanel
+    openPanel,
+    openNav
   }
 });
 
