@@ -1,16 +1,16 @@
-import React from 'react';
 import { render } from '@testing-library/react';
-import { Slot, loadPlugins } from 'react-plugin';
+import React from 'react';
+import { loadPlugins, Slot } from 'react-plugin';
+import { register } from '..';
 import { cleanup } from '../../../testHelpers/plugin';
 import {
-  mockStorage,
-  mockRouter,
+  getLayoutMethods,
   mockCore,
   mockRendererCore,
-  getLayoutMethods
+  mockRouter,
+  mockStorage
 } from '../../../testHelpers/pluginMocks';
-import { PANEL_OPEN_STORAGE_KEY } from '../shared';
-import { register } from '..';
+import { PANEL_OPEN_STORAGE_KEY } from '../panelOpen';
 
 afterEach(cleanup);
 

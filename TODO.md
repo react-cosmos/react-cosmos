@@ -10,7 +10,7 @@ Alpha
   - [ ] ~~Try: Notifications for fixture create/remove/rename~~ Too much info to display inside a notification
 - [ ] Control panel
 - [x] Fixture search
-  - [ ] Minimize left nav
+  - [x] Minimize left nav
 - [ ] Official React Native integration
   - [ ] react-native-web synced cross-platform renderers
   - [ ] FixtureLoader facades: DomFixtureLoader & NativeFixtureLoader

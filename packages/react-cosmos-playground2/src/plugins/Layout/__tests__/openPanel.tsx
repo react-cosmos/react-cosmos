@@ -10,7 +10,7 @@ import {
   mockRouter,
   mockStorage
 } from '../../../testHelpers/pluginMocks';
-import { PANEL_OPEN_STORAGE_KEY } from '../shared';
+import { PANEL_OPEN_STORAGE_KEY } from '../panelOpen';
 
 afterEach(cleanup);
 
