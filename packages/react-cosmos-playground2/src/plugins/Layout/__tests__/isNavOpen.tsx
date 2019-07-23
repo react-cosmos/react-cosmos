@@ -15,9 +15,7 @@ import { NAV_OPEN_STORAGE_KEY } from '../navOpen';
 afterEach(cleanup);
 
 function registerTestPlugins() {
-  mockRouter({
-    isFullScreen: () => false
-  });
+  mockRouter();
   mockCore();
   mockRendererCore();
   register();

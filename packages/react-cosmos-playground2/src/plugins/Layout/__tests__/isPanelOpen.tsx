@@ -15,9 +15,7 @@ import { PANEL_OPEN_STORAGE_KEY } from '../panelOpen';
 afterEach(cleanup);
 
 function registerTestPlugins() {
-  mockRouter({
-    isFullScreen: () => false
-  });
+  mockRouter();
   mockCore();
   register();
 }
