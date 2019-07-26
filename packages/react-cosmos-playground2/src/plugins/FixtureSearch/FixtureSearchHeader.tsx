@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SearchIcon } from '../../shared/icons';
+import { SearchIcon, ChevronLeftIcon } from '../../shared/icons';
 import { KEY_K, KEY_P } from '../../shared/keys';
+import { DarkIconButton } from '../../shared/ui/buttons';
 
 type Props = {
   onOpen: () => unknown;
@@ -23,12 +24,19 @@ export function FixtureSearchHeader({ onOpen, onMinimizeNav }: Props) {
 
   return (
     <Container>
-      <Button onClick={onOpen}>
+      <SearchButton onClick={onOpen}>
         <SearchIconContainer>
           <SearchIcon />
         </SearchIconContainer>
         <SearchLabel>Search fixtures</SearchLabel>
-      </Button>
+      </SearchButton>
+      <MinimizeButtonContainer>
+        <DarkIconButton
+          title="Minimize nav bar"
+          icon={<ChevronLeftIcon />}
+          onClick={onMinimizeNav}
+        />
+      </MinimizeButtonContainer>
     </Container>
   );
 }
@@ -40,7 +48,7 @@ const Container = styled.div`
   background: var(--grey1);
 `;
 
-const Button = styled.button`
+const SearchButton = styled.button`
   flex: 1;
   display: flex;
   flex-direction: row;
@@ -75,4 +83,10 @@ const SearchLabel = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: left;
+`;
+
+const MinimizeButtonContainer = styled.div`
+  width: 32px;
+  height: 32px;
+  padding: 4px;
 `;
