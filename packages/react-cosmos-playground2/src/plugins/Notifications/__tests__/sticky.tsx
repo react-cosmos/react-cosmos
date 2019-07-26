@@ -1,9 +1,9 @@
+import { act, render, waitForElement } from '@testing-library/react';
 import React from 'react';
-import { render, waitForElement } from '@testing-library/react';
 import { ArraySlot, loadPlugins } from 'react-plugin';
+import { register } from '..';
 import { cleanup } from '../../../testHelpers/plugin';
 import { getNotificationsMethods } from '../../../testHelpers/pluginMocks';
-import { register } from '..';
 
 afterEach(cleanup);
 
@@ -25,7 +25,7 @@ it('renders sticky notification', async () => {
   register();
   const { getByText } = loadTestPlugins();
 
-  pushStickyNotification();
+  act(() => pushStickyNotification());
   await waitForElement(() => getByText('Rebuilding...'));
 });
 
@@ -33,9 +33,9 @@ it('removes sticky notification', async () => {
   register();
   const { getByText, queryByText } = loadTestPlugins();
 
-  pushStickyNotification();
+  act(() => pushStickyNotification());
   await waitForElement(() => getByText('Rebuilding...'));
 
-  getNotificationsMethods().removeStickyNotification('build');
+  act(() => getNotificationsMethods().removeStickyNotification('build'));
   expect(queryByText('Rebuilding...')).toBeNull();
 });

@@ -1,9 +1,9 @@
+import { act, render, waitForElement } from '@testing-library/react';
 import React from 'react';
-import { render, waitForElement } from '@testing-library/react';
-import { ArraySlot, loadPlugins, enablePlugin } from 'react-plugin';
+import { ArraySlot, enablePlugin, loadPlugins } from 'react-plugin';
+import { register } from '..';
 import { cleanup } from '../../../testHelpers/plugin';
 import { getNotificationsMethods } from '../../../testHelpers/pluginMocks';
-import { register } from '..';
 
 afterEach(cleanup);
 
@@ -15,12 +15,14 @@ function loadTestPlugins() {
 }
 
 function pushTimedNotification() {
-  getNotificationsMethods().pushTimedNotification({
-    id: 'renderer-connect',
-    type: 'success',
-    title: 'Renderer connected',
-    info: 'Your fixtures are ready to use.'
-  });
+  act(() =>
+    getNotificationsMethods().pushTimedNotification({
+      id: 'renderer-connect',
+      type: 'success',
+      title: 'Renderer connected',
+      info: 'Your fixtures are ready to use.'
+    })
+  );
 }
 
 it('renders timed notification', async () => {
@@ -36,7 +38,7 @@ it('clears timed notification after timeout expires', async () => {
   const { queryByText } = loadTestPlugins();
 
   pushTimedNotification();
-  jest.runAllTimers();
+  act(() => jest.runAllTimers());
 
   expect(queryByText('Renderer connected')).toBeNull();
 });
@@ -46,6 +48,8 @@ it('behaves peacefully when timeout expires after plugin unloads', async () => {
   loadTestPlugins();
 
   pushTimedNotification();
-  enablePlugin('notifications', false);
-  jest.runAllTimers();
+  act(() => {
+    enablePlugin('notifications', false);
+    jest.runAllTimers();
+  });
 });

@@ -1,15 +1,15 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { Slot, loadPlugins } from 'react-plugin';
+import { loadPlugins, Slot } from 'react-plugin';
+import { register } from '..';
 import { cleanup } from '../../../testHelpers/plugin';
 import {
-  mockStorage,
-  mockRouter,
+  getLayoutMethods,
   mockCore,
   mockRendererCore,
-  getLayoutMethods
+  mockRouter,
+  mockStorage
 } from '../../../testHelpers/pluginMocks';
-import { register } from '..';
+import { renderAsync } from '../../../testHelpers/render';
 import { NAV_OPEN_STORAGE_KEY } from '../navOpen';
 
 afterEach(cleanup);
@@ -31,15 +31,15 @@ function mockNavStorage(navOpen: void | boolean) {
   });
 }
 
-function loadTestPlugins() {
+async function loadTestPlugins() {
   loadPlugins();
-  return render(<Slot name="root" />);
+  return renderAsync(<Slot name="root" />);
 }
 
 it('returns open nav by default', async () => {
   mockNavStorage();
   registerTestPlugins();
-  loadTestPlugins();
+  await loadTestPlugins();
 
   const layout = getLayoutMethods();
   expect(layout.isNavOpen()).toBe(true);
@@ -48,7 +48,7 @@ it('returns open nav by default', async () => {
 it('returns closed nav', async () => {
   mockNavStorage(false);
   registerTestPlugins();
-  loadTestPlugins();
+  await loadTestPlugins();
 
   const layout = getLayoutMethods();
   expect(layout.isNavOpen()).toBe(false);
@@ -57,7 +57,7 @@ it('returns closed nav', async () => {
 it('returns open nav', async () => {
   mockNavStorage(true);
   registerTestPlugins();
-  loadTestPlugins();
+  await loadTestPlugins();
 
   const layout = getLayoutMethods();
   expect(layout.isNavOpen()).toBe(true);

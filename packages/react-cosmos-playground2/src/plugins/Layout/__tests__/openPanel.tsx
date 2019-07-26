@@ -1,4 +1,3 @@
-import { render } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, Slot } from 'react-plugin';
 import { register } from '..';
@@ -10,6 +9,7 @@ import {
   mockRouter,
   mockStorage
 } from '../../../testHelpers/pluginMocks';
+import { renderAsync } from '../../../testHelpers/render';
 import { PANEL_OPEN_STORAGE_KEY } from '../panelOpen';
 
 afterEach(cleanup);
@@ -27,15 +27,15 @@ function mockStorageCache() {
   });
 }
 
-function loadTestPlugins() {
+async function loadTestPlugins() {
   loadPlugins();
-  return render(<Slot name="root" />);
+  return await renderAsync(<Slot name="root" />);
 }
 
 it('stores closed panel state', async () => {
   registerTestPlugins();
   const { setItem } = mockStorageCache();
-  loadTestPlugins();
+  await loadTestPlugins();
 
   const layout = getLayoutMethods();
   layout.openPanel(false);
@@ -49,7 +49,7 @@ it('stores closed panel state', async () => {
 it('stores open panel state', async () => {
   registerTestPlugins();
   const { setItem } = mockStorageCache();
-  loadTestPlugins();
+  await loadTestPlugins();
 
   const layout = getLayoutMethods();
   layout.openPanel(true);

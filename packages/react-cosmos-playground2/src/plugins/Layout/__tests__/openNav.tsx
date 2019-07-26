@@ -1,4 +1,3 @@
-import { render } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, Slot } from 'react-plugin';
 import { register } from '..';
@@ -10,6 +9,7 @@ import {
   mockRouter,
   mockStorage
 } from '../../../testHelpers/pluginMocks';
+import { renderAsync } from '../../../testHelpers/render';
 import { NAV_OPEN_STORAGE_KEY } from '../navOpen';
 
 afterEach(cleanup);
@@ -27,15 +27,15 @@ function mockStorageCache() {
   });
 }
 
-function loadTestPlugins() {
+async function loadTestPlugins() {
   loadPlugins();
-  return render(<Slot name="root" />);
+  return renderAsync(<Slot name="root" />);
 }
 
 it('stores closed nav state', async () => {
   registerTestPlugins();
   const { setItem } = mockStorageCache();
-  loadTestPlugins();
+  await loadTestPlugins();
 
   const layout = getLayoutMethods();
   layout.openNav(false);
@@ -49,7 +49,7 @@ it('stores closed nav state', async () => {
 it('stores open nav state', async () => {
   registerTestPlugins();
   const { setItem } = mockStorageCache();
-  loadTestPlugins();
+  await loadTestPlugins();
 
   const layout = getLayoutMethods();
   layout.openNav(true);
