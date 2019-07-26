@@ -6,6 +6,7 @@ import { useDrag } from '../../shared/ui/useDrag';
 type Props = {
   storageCacheReady: boolean;
   fullScreen: boolean;
+  navOpen: boolean;
   panelOpen: boolean;
   navWidth: number;
   panelWidth: number;
@@ -16,6 +17,7 @@ type Props = {
 export function Layout({
   storageCacheReady,
   fullScreen,
+  navOpen,
   panelOpen,
   navWidth,
   panelWidth,
@@ -54,10 +56,14 @@ export function Layout({
   // z-indexes are set here on purpose to show the layer hierarchy at a glance
   return (
     <Container dragging={dragging}>
-      <NavContainer style={{ width: navWidth, zIndex: 2 }}>
-        <Slot name="nav" />
-        {navDrag.dragging && <DragOverlay />}
-        <NavDragHandle ref={navDrag.dragElRef} />
+      <NavContainer
+        style={{ width: navOpen ? navWidth : undefined, zIndex: 2 }}
+      >
+        <Nav
+          navOpen={navOpen}
+          dragging={navDrag.dragging}
+          dragElRef={navDrag.dragElRef}
+        />
       </NavContainer>
       <Center key="center" style={{ zIndex: 1 }}>
         <Slot name="rendererHeader" />
@@ -78,7 +84,34 @@ export function Layout({
   );
 }
 
-function Preview({ showGlobals }: { showGlobals: boolean }) {
+type NavProps = {
+  navOpen: boolean;
+  dragging: boolean;
+  dragElRef: (elRef: HTMLElement | null) => void;
+};
+
+function Nav({ navOpen, dragging, dragElRef }: NavProps) {
+  if (navOpen) {
+    return (
+      <>
+        <Slot name="nav" />
+        {dragging && <DragOverlay />}
+        <NavDragHandle ref={dragElRef} />
+      </>
+    );
+  }
+
+  return (
+    <>
+      <Slot name="miniNav" />
+      <MiniNavShadow />
+    </>
+  );
+}
+
+type PreviewProps = { showGlobals: boolean };
+
+function Preview({ showGlobals }: PreviewProps) {
   return (
     <PreviewContainer>
       <Slot name="rendererPreview" />
@@ -130,11 +163,14 @@ const PreviewContainer = styled.div`
   overflow: hidden;
 `;
 
-const DragHandle = styled.div`
+const SideShadow = styled.div`
   position: absolute;
   top: 0;
   width: 2px;
   height: 100%;
+`;
+
+const DragHandle = styled(SideShadow)`
   background-clip: content-box;
   cursor: col-resize;
   user-select: none;
@@ -143,6 +179,11 @@ const DragHandle = styled.div`
 const NavDragHandle = styled(DragHandle)`
   right: -2px;
   padding: 0 2px 0 1px;
+  background-color: rgba(0, 0, 0, 0.5);
+`;
+
+const MiniNavShadow = styled(SideShadow)`
+  right: 0;
   background-color: rgba(0, 0, 0, 0.5);
 `;
 

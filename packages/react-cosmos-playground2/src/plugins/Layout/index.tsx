@@ -39,6 +39,7 @@ plug('root', ({ pluginContext }) => {
       <Layout
         storageCacheReady={false}
         fullScreen={false}
+        navOpen={false}
         panelOpen={false}
         navWidth={0}
         panelWidth={0}
@@ -55,6 +56,7 @@ plug('root', ({ pluginContext }) => {
     <Layout
       storageCacheReady={true}
       fullScreen={router.isFullScreen()}
+      navOpen={isNavOpen(pluginContext)}
       panelOpen={isPanelOpen(pluginContext)}
       navWidth={navWidth}
       panelWidth={panelWidth}
