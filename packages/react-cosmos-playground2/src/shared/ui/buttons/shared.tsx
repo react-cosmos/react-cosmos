@@ -12,7 +12,6 @@ export const StyledButton = styled.button<StyledButtonProps>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 0 0 0 4px;
   padding: 0 8px;
   min-height: 32px;
   border: 0;
@@ -24,10 +23,6 @@ export const StyledButton = styled.button<StyledButtonProps>`
   user-select: none;
   outline: none;
   transition: background var(--quick), color var(--quick), opacity var(--quick);
-
-  :first-child {
-    margin-left: 0;
-  }
 
   :hover {
     background: ${props =>
@@ -86,6 +81,10 @@ export const DarkIcon = styled(Icon)`
 `;
 
 export const Label = styled.span`
-  padding: 0 0 0 6px;
+  padding-left: 6px;
   line-height: 14px;
+
+  :first-child {
+    padding-left: 0;
+  }
 `;

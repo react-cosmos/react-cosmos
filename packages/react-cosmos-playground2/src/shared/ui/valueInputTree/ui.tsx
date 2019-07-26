@@ -53,6 +53,14 @@ const ComponentName = styled.span`
 export const Actions = styled.div`
   display: flex;
   flex-direction: row;
+
+  > button {
+    margin-left: 4px;
+
+    :first-child {
+      margin-left: 0;
+    }
+  }
 `;
 
 export const Body = styled.div`
