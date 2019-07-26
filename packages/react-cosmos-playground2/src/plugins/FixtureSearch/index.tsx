@@ -3,6 +3,7 @@ import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { createPlugin } from 'react-plugin';
 import { CoreSpec } from '../Core/public';
 import { FixtureTreeSpec } from '../FixtureTree/public';
+import { LayoutSpec } from '../Layout/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { RouterSpec } from '../Router/public';
 import { FixtureSearchHeader } from './FixtureSearchHeader';
@@ -18,15 +19,19 @@ const { namedPlug, register } = createPlugin<FixtureSearchSpec>({
 
 namedPlug('navRow', 'fixtureSearch', ({ pluginContext }) => {
   const { getMethodsOf, setState } = pluginContext;
+  const layout = getMethodsOf<LayoutSpec>('layout');
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const fixtures = rendererCore.getFixtures();
   const onOpen = React.useCallback(() => setState({ open: true }), [setState]);
+  const onMinimizeNav = React.useCallback(() => layout.openNav(false), [
+    layout
+  ]);
 
   if (Object.keys(fixtures).length === 0) {
     return null;
   }
 
-  return <FixtureSearchHeader onOpen={onOpen} />;
+  return <FixtureSearchHeader onOpen={onOpen} onMinimizeNav={onMinimizeNav} />;
 });
 
 namedPlug('global', 'fixtureSearch', ({ pluginContext }) => {

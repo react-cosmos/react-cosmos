@@ -5,9 +5,10 @@ import { KEY_K, KEY_P } from '../../shared/keys';
 
 type Props = {
   onOpen: () => unknown;
+  onMinimizeNav: () => unknown;
 };
 
-export function FixtureSearchHeader({ onOpen }: Props) {
+export function FixtureSearchHeader({ onOpen, onMinimizeNav }: Props) {
   React.useEffect(() => {
     function handleWindowKeyDown(e: KeyboardEvent) {
       const metaKey = e.metaKey || e.ctrlKey;
