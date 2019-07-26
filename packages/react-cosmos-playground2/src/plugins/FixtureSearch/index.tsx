@@ -1,7 +1,9 @@
 import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { createPlugin } from 'react-plugin';
+import { SearchIcon } from '../../shared/icons';
 import { KEY_K, KEY_P } from '../../shared/keys';
+import { DarkIconButton } from '../../shared/ui/buttons';
 import { CoreSpec } from '../Core/public';
 import { FixtureTreeSpec } from '../FixtureTree/public';
 import { LayoutSpec } from '../Layout/public';
@@ -40,11 +42,25 @@ namedPlug('navRow', 'fixtureSearch', ({ pluginContext }) => {
     layout
   ]);
 
+  // No point in showing fixture search button unless user has fixtures
   if (Object.keys(fixtures).length === 0) {
     return null;
   }
 
   return <FixtureSearchHeader onOpen={onOpen} onMinimizeNav={onMinimizeNav} />;
+});
+
+namedPlug('miniNavAction', 'fixtureSearch', ({ pluginContext }) => {
+  const { setState } = pluginContext;
+  const onOpen = React.useCallback(() => setState({ open: true }), [setState]);
+
+  return (
+    <DarkIconButton
+      title="Search fixtures"
+      icon={<SearchIcon />}
+      onClick={onOpen}
+    />
+  );
 });
 
 namedPlug('global', 'fixtureSearch', ({ pluginContext }) => {

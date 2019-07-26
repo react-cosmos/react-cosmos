@@ -7,7 +7,8 @@ import { NavSpec } from './public';
 const { plug, register } = createPlugin<NavSpec>({
   name: 'nav',
   defaultConfig: {
-    navRowOrder: []
+    navRowOrder: [],
+    miniNavActionOrder: []
   }
 });
 
