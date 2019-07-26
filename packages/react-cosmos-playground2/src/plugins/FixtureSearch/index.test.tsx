@@ -6,6 +6,7 @@ import { cleanup } from '../../testHelpers/plugin';
 import {
   mockCore,
   mockFixtureTree,
+  mockLayout,
   mockRendererCore,
   mockRouter
 } from '../../testHelpers/pluginMocks';
@@ -26,6 +27,7 @@ function registerTestPlugins() {
       fixtureFileSuffix: 'fixture'
     })
   });
+  mockLayout();
   mockRendererCore({
     getFixtures: () => fixtures
   });
