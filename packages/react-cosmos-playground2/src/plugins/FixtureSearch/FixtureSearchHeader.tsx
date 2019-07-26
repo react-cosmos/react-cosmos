@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SearchIcon, ChevronLeftIcon } from '../../shared/icons';
-import { KEY_K, KEY_P } from '../../shared/keys';
+import { ChevronLeftIcon, SearchIcon } from '../../shared/icons';
 import { DarkIconButton } from '../../shared/ui/buttons';
 
 type Props = {
@@ -10,18 +9,6 @@ type Props = {
 };
 
 export function FixtureSearchHeader({ onOpen, onMinimizeNav }: Props) {
-  React.useEffect(() => {
-    function handleWindowKeyDown(e: KeyboardEvent) {
-      const metaKey = e.metaKey || e.ctrlKey;
-      if (metaKey && (e.keyCode === KEY_P || e.keyCode === KEY_K)) {
-        e.preventDefault();
-        onOpen();
-      }
-    }
-    window.addEventListener('keydown', handleWindowKeyDown);
-    return () => window.removeEventListener('keydown', handleWindowKeyDown);
-  }, [onOpen]);
-
   return (
     <Container>
       <SearchButton onClick={onOpen}>
