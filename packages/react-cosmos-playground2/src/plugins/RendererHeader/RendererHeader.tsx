@@ -121,7 +121,7 @@ const Right = styled(Actions)`
 `;
 
 const Message = styled.span`
-  margin: 0 4px;
+  margin: 0 8px;
 
   strong {
     font-weight: 600;
