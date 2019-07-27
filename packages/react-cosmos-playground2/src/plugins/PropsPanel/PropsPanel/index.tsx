@@ -17,7 +17,7 @@ type Props = {
   onElementExpansionChange: OnElementExpansionChange;
 };
 
-export function PropsPanel({
+export const PropsPanel = React.memo(function PropsPanel({
   fixtureState,
   fixtureExpansion,
   onFixtureStateChange,
@@ -44,4 +44,4 @@ export function PropsPanel({
       })}
     </>
   );
-}
+});
