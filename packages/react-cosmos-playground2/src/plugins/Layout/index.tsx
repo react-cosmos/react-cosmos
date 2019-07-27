@@ -1,16 +1,14 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { StorageSpec } from '../Storage/public';
-import { RouterSpec } from '../Router/public';
 import { CoreSpec } from '../Core/public';
-import { LayoutSpec } from './public';
+import { RouterSpec } from '../Router/public';
+import { StorageSpec } from '../Storage/public';
 import { Layout } from './Layout';
-import {
-  getNavWidthApi,
-  getPanelWidthApi,
-  isPanelOpen,
-  openPanel
-} from './shared';
+import { isNavOpen, openNav } from './navOpen';
+import { getNavWidthApi } from './navWidth';
+import { isPanelOpen, openPanel } from './panelOpen';
+import { getPanelWidthApi } from './panelWidth';
+import { LayoutSpec } from './public';
 
 const { onLoad, plug, register } = createPlugin<LayoutSpec>({
   name: 'layout',
@@ -18,7 +16,9 @@ const { onLoad, plug, register } = createPlugin<LayoutSpec>({
     storageCacheReady: false
   },
   methods: {
+    isNavOpen,
     isPanelOpen,
+    openNav,
     openPanel
   }
 });
@@ -39,6 +39,7 @@ plug('root', ({ pluginContext }) => {
       <Layout
         storageCacheReady={false}
         fullScreen={false}
+        navOpen={false}
         panelOpen={false}
         navWidth={0}
         panelWidth={0}
@@ -55,6 +56,7 @@ plug('root', ({ pluginContext }) => {
     <Layout
       storageCacheReady={true}
       fullScreen={router.isFullScreen()}
+      navOpen={isNavOpen(pluginContext)}
       panelOpen={isPanelOpen(pluginContext)}
       navWidth={navWidth}
       panelWidth={panelWidth}

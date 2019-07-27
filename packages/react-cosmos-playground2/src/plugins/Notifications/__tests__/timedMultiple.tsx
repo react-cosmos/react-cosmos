@@ -1,9 +1,9 @@
+import { act, render, waitForElement } from '@testing-library/react';
 import React from 'react';
-import { render, waitForElement } from '@testing-library/react';
 import { ArraySlot, loadPlugins } from 'react-plugin';
+import { register } from '..';
 import { cleanup } from '../../../testHelpers/plugin';
 import { getNotificationsMethods } from '../../../testHelpers/pluginMocks';
-import { register } from '..';
 
 afterEach(cleanup);
 
@@ -16,17 +16,19 @@ function loadTestPlugins() {
 
 function pushTimedNotifications() {
   const { pushTimedNotification } = getNotificationsMethods();
-  pushTimedNotification({
-    id: 'one',
-    type: 'info',
-    title: 'Check this out',
-    info: 'Lorem ipsum.'
-  });
-  pushTimedNotification({
-    id: 'two',
-    type: 'info',
-    title: 'Take a look at this',
-    info: 'Lorem ipsum.'
+  act(() => {
+    pushTimedNotification({
+      id: 'one',
+      type: 'info',
+      title: 'Check this out',
+      info: 'Lorem ipsum.'
+    });
+    pushTimedNotification({
+      id: 'two',
+      type: 'info',
+      title: 'Take a look at this',
+      info: 'Lorem ipsum.'
+    });
   });
 }
 
@@ -44,7 +46,7 @@ it('clears all timed notifications after timeout expires', async () => {
   const { queryByText } = loadTestPlugins();
 
   pushTimedNotifications();
-  jest.runAllTimers();
+  act(() => jest.runAllTimers());
 
   expect(queryByText('Check this out')).toBeNull();
   expect(queryByText('Take a look at this')).toBeNull();

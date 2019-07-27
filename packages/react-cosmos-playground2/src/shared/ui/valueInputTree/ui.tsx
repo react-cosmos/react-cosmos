@@ -13,7 +13,7 @@ export const Header = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 8px 12px 0 16px;
+  padding: 8px 8px 0 16px;
   line-height: 32px;
 `;
 
@@ -34,6 +34,7 @@ export function Title({ label, componentName }: TitleProps) {
 }
 
 const TitleContainer = styled.div`
+  padding-right: 8px;
   color: var(--grey4);
   white-space: nowrap;
   overflow: hidden;
@@ -46,14 +47,22 @@ const TitleContainer = styled.div`
 `;
 
 const ComponentName = styled.span`
-  padding: 0 8px;
+  padding-left: 8px;
 `;
 
 export const Actions = styled.div`
   display: flex;
   flex-direction: row;
+
+  > button {
+    margin-left: 4px;
+
+    :first-child {
+      margin-left: 0;
+    }
+  }
 `;
 
 export const Body = styled.div`
-  padding: 4px 12px 8px 16px;
+  padding: 4px 8px 8px 16px;
 `;

@@ -1,6 +1,12 @@
 import React from 'react';
 import { Icon } from '../svg';
 
+export const ChevronLeftIcon = () => (
+  <Icon>
+    <polyline points="15 18 9 12 15 6"></polyline>
+  </Icon>
+);
+
 export const ChevronRightIcon = () => (
   <Icon>
     <polyline points="9 18 15 12 9 6" />

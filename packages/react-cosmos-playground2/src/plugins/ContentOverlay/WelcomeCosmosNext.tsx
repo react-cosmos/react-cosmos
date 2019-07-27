@@ -31,7 +31,7 @@ export function WelcomeCosmosNext({ onDismissWelcome }: Props) {
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                <strong>check out the docs on getting started</strong>
+                check out the docs on getting started
               </Link>
               .
             </span>
@@ -56,7 +56,6 @@ export function WelcomeCosmosNext({ onDismissWelcome }: Props) {
             hide this screen
           </SecondaryButton>
         </Paragraph>
-        <Footnote>PS. The stable version isn’t going anywhere</Footnote>
       </TextContainer>
       <IllustrationContainer>
         <AstronautIllustration title="astronaut" />
@@ -88,10 +87,6 @@ const Header = styled.h1`
 
 const Paragraph = styled.p`
   margin: 16px 0;
-`;
-
-const Footnote = styled(Paragraph)`
-  color: var(--grey3);
 `;
 
 const List = styled.ul`

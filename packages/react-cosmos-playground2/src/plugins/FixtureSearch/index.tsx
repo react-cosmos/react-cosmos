@@ -1,32 +1,66 @@
 import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { createPlugin } from 'react-plugin';
+import { SearchIcon } from '../../shared/icons';
+import { KEY_K, KEY_P } from '../../shared/keys';
+import { DarkIconButton } from '../../shared/ui/buttons';
 import { CoreSpec } from '../Core/public';
 import { FixtureTreeSpec } from '../FixtureTree/public';
+import { LayoutSpec } from '../Layout/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { RouterSpec } from '../Router/public';
 import { FixtureSearchHeader } from './FixtureSearchHeader';
 import { FixtureSearchOverlay } from './FixtureSearchOverlay';
 import { FixtureSearchSpec } from './public';
 
-const { namedPlug, register } = createPlugin<FixtureSearchSpec>({
+const { onLoad, namedPlug, register } = createPlugin<FixtureSearchSpec>({
   name: 'fixtureSearch',
   initialState: {
     open: false
   }
 });
 
+onLoad(({ setState }) => {
+  function handleWindowKeyDown(e: KeyboardEvent) {
+    const metaKey = e.metaKey || e.ctrlKey;
+    if (metaKey && (e.keyCode === KEY_P || e.keyCode === KEY_K)) {
+      e.preventDefault();
+      setState({ open: true });
+    }
+  }
+  window.addEventListener('keydown', handleWindowKeyDown);
+  return () => window.removeEventListener('keydown', handleWindowKeyDown);
+});
+
 namedPlug('navRow', 'fixtureSearch', ({ pluginContext }) => {
   const { getMethodsOf, setState } = pluginContext;
+  const layout = getMethodsOf<LayoutSpec>('layout');
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const fixtures = rendererCore.getFixtures();
   const onOpen = React.useCallback(() => setState({ open: true }), [setState]);
+  const onMinimizeNav = React.useCallback(() => layout.openNav(false), [
+    layout
+  ]);
 
+  // No point in showing fixture search button unless user has fixtures
   if (Object.keys(fixtures).length === 0) {
     return null;
   }
 
-  return <FixtureSearchHeader onOpen={onOpen} />;
+  return <FixtureSearchHeader onOpen={onOpen} onMinimizeNav={onMinimizeNav} />;
+});
+
+namedPlug('miniNavAction', 'fixtureSearch', ({ pluginContext }) => {
+  const { setState } = pluginContext;
+  const onOpen = React.useCallback(() => setState({ open: true }), [setState]);
+
+  return (
+    <DarkIconButton
+      title="Search fixtures"
+      icon={<SearchIcon />}
+      onClick={onOpen}
+    />
+  );
 });
 
 namedPlug('global', 'fixtureSearch', ({ pluginContext }) => {

@@ -1,4 +1,4 @@
-import { StorageSpec } from '../../Storage/public';
+import { StorageSpec } from '../Storage/public';
 import { Context } from './shared';
 
 const NAV_WIDTH_STORAGE_KEY = 'navWidth';

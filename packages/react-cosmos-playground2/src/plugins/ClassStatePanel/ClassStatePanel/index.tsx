@@ -17,7 +17,7 @@ type Props = {
   onElementExpansionChange: OnElementExpansionChange;
 };
 
-export function ClassStatePanel({
+export const ClassStatePanel = React.memo(function ClassStatePanel({
   fixtureState,
   fixtureExpansion,
   onFixtureStateChange,
@@ -44,4 +44,4 @@ export function ClassStatePanel({
       })}
     </>
   );
-}
+});

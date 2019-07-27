@@ -10,7 +10,7 @@ import {
   mockStorage
 } from '../../../testHelpers/pluginMocks';
 import { renderAsync } from '../../../testHelpers/render';
-import { PANEL_OPEN_STORAGE_KEY } from '../panelOpen';
+import { NAV_OPEN_STORAGE_KEY } from '../navOpen';
 
 afterEach(cleanup);
 
@@ -29,33 +29,33 @@ function mockStorageCache() {
 
 async function loadTestPlugins() {
   loadPlugins();
-  return await renderAsync(<Slot name="root" />);
+  return renderAsync(<Slot name="root" />);
 }
 
-it('stores closed panel state', async () => {
+it('stores closed nav state', async () => {
   registerTestPlugins();
   const { setItem } = mockStorageCache();
   await loadTestPlugins();
 
   const layout = getLayoutMethods();
-  layout.openPanel(false);
+  layout.openNav(false);
   expect(setItem).toBeCalledWith(
     expect.any(Object),
-    PANEL_OPEN_STORAGE_KEY,
+    NAV_OPEN_STORAGE_KEY,
     false
   );
 });
 
-it('stores open panel state', async () => {
+it('stores open nav state', async () => {
   registerTestPlugins();
   const { setItem } = mockStorageCache();
   await loadTestPlugins();
 
   const layout = getLayoutMethods();
-  layout.openPanel(true);
+  layout.openNav(true);
   expect(setItem).toBeCalledWith(
     expect.any(Object),
-    PANEL_OPEN_STORAGE_KEY,
+    NAV_OPEN_STORAGE_KEY,
     true
   );
 });

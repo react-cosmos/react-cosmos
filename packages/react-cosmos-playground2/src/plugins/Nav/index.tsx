@@ -1,13 +1,16 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
+import { LayoutSpec } from '../Layout/public';
 import { RendererCoreSpec } from '../RendererCore/public';
+import { MiniNav } from './MiniNav';
 import { Nav } from './Nav';
 import { NavSpec } from './public';
 
 const { plug, register } = createPlugin<NavSpec>({
   name: 'nav',
   defaultConfig: {
-    navRowOrder: []
+    navRowOrder: [],
+    miniNavActionOrder: []
   }
 });
 
@@ -21,6 +24,17 @@ plug('nav', ({ pluginContext }) => {
       rendererConnected={rendererCore.isRendererConnected()}
       navRowOrder={navRowOrder}
     />
+  );
+});
+
+plug('miniNav', ({ pluginContext }) => {
+  const { getConfig, getMethodsOf } = pluginContext;
+  const { miniNavActionOrder } = getConfig();
+  const layout = getMethodsOf<LayoutSpec>('layout');
+  const onOpenNav = React.useCallback(() => layout.openNav(true), [layout]);
+
+  return (
+    <MiniNav miniNavActionOrder={miniNavActionOrder} onOpenNav={onOpenNav} />
   );
 });
 

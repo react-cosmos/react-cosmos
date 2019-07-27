@@ -28,6 +28,6 @@ export function NoFixtureSelected({ onShowWelcome }: Props) {
 
 const ShowWelcomeButton = styled(SecondaryButton)`
   position: absolute;
-  bottom: 16px;
-  right: 16px;
+  bottom: 8px;
+  right: 8px;
 `;

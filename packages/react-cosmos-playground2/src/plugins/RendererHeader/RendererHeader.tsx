@@ -90,7 +90,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 40px;
-  padding: 0 8px;
+  padding: 0 4px;
   border-bottom: 1px solid var(--grey5);
   background: var(--grey6);
   color: var(--grey3);
@@ -98,20 +98,30 @@ const Container = styled.div`
   overflow-x: auto;
 `;
 
-const Left = styled.div`
+const Actions = styled.div`
+  > button {
+    margin-left: 4px;
+
+    :first-child {
+      margin-left: 0;
+    }
+  }
+`;
+
+const Left = styled(Actions)`
   display: flex;
   flex-direction: row;
   align-items: center;
 `;
 
-const Right = styled.div`
+const Right = styled(Actions)`
   display: flex;
   flex-direction: row;
   align-items: center;
 `;
 
 const Message = styled.span`
-  margin: 0 4px;
+  margin: 0 8px;
 
   strong {
     font-weight: 600;

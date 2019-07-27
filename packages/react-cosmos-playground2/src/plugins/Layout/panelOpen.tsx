@@ -1,5 +1,5 @@
-import { RendererCoreSpec } from '../../RendererCore/public';
-import { StorageSpec } from '../../Storage/public';
+import { RendererCoreSpec } from '../RendererCore/public';
+import { StorageSpec } from '../Storage/public';
 import { Context } from './shared';
 
 export const PANEL_OPEN_STORAGE_KEY = 'controlPanelOpen';

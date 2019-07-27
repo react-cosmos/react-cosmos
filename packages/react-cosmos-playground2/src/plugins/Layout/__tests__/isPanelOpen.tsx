@@ -1,23 +1,21 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { Slot, loadPlugins } from 'react-plugin';
+import { loadPlugins, Slot } from 'react-plugin';
+import { register } from '..';
 import { cleanup } from '../../../testHelpers/plugin';
 import {
-  mockStorage,
-  mockRouter,
+  getLayoutMethods,
   mockCore,
   mockRendererCore,
-  getLayoutMethods
+  mockRouter,
+  mockStorage
 } from '../../../testHelpers/pluginMocks';
-import { PANEL_OPEN_STORAGE_KEY } from '../shared';
-import { register } from '..';
+import { renderAsync } from '../../../testHelpers/render';
+import { PANEL_OPEN_STORAGE_KEY } from '../panelOpen';
 
 afterEach(cleanup);
 
 function registerTestPlugins() {
-  mockRouter({
-    isFullScreen: () => false
-  });
+  mockRouter();
   mockCore();
   register();
 }
@@ -38,16 +36,16 @@ function mockValidFixtureSelected(validFixtureSelected: boolean) {
   });
 }
 
-function loadTestPlugins() {
+async function loadTestPlugins() {
   loadPlugins();
-  return render(<Slot name="root" />);
+  return renderAsync(<Slot name="root" />);
 }
 
 it('returns closed panel when no valid fixture is selected', async () => {
-  mockPanelStorage();
+  mockPanelStorage(true);
   mockValidFixtureSelected(false);
   registerTestPlugins();
-  loadTestPlugins();
+  await loadTestPlugins();
 
   const layout = getLayoutMethods();
   expect(layout.isPanelOpen()).toBe(false);
@@ -57,27 +55,27 @@ it('returns open panel by default', async () => {
   mockPanelStorage();
   mockValidFixtureSelected(true);
   registerTestPlugins();
-  loadTestPlugins();
+  await loadTestPlugins();
 
   const layout = getLayoutMethods();
   expect(layout.isPanelOpen()).toBe(true);
 });
 
-it('returns closed panel closed panel if previously so', async () => {
+it('returns closed panel', async () => {
   mockPanelStorage(false);
   mockValidFixtureSelected(true);
   registerTestPlugins();
-  loadTestPlugins();
+  await loadTestPlugins();
 
   const layout = getLayoutMethods();
   expect(layout.isPanelOpen()).toBe(false);
 });
 
-it('returns open panel closed panel if previously so', async () => {
+it('returns open panel', async () => {
   mockPanelStorage(true);
   mockValidFixtureSelected(true);
   registerTestPlugins();
-  loadTestPlugins();
+  await loadTestPlugins();
 
   const layout = getLayoutMethods();
   expect(layout.isPanelOpen()).toBe(true);

@@ -14,7 +14,7 @@
     "react": "16.9.0-alpha.0",
     "react-cosmos-shared2": "^5.0.0-alpha.20",
     "react-dom": "16.9.0-alpha.0",
-    "react-plugin": "^2.0.0-alpha.7",
+    "react-plugin": "^2.0.0-alpha.8",
     "socket.io-client": "^2.2.0",
     "styled-components": "^4.3.2"
   }

@@ -48,9 +48,7 @@ export class Header extends React.Component<Props> {
           })}
         </Devices>
         <Right>
-          <ViewportSize>
-            {`${viewport.width} × ${viewport.height}`}
-          </ViewportSize>
+          <ViewportSize>{`${viewport.width}×${viewport.height}`}</ViewportSize>
           <Button
             icon={<Minimize2Icon />}
             label={
@@ -90,7 +88,7 @@ const Container = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 4px 8px 8px 8px;
+  padding: 4px 4px 8px 4px;
   white-space: nowrap;
   overflow-x: auto;
 `;
@@ -100,6 +98,14 @@ const Devices = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  > button {
+    margin-left: 4px;
+
+    :first-child {
+      margin-left: 0;
+    }
+  }
 `;
 
 const Right = styled.div`
@@ -107,6 +113,14 @@ const Right = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+
+  > button {
+    margin-left: 4px;
+
+    :first-child {
+      margin-left: 0;
+    }
+  }
 `;
 
 const ViewportSize = styled.div`
