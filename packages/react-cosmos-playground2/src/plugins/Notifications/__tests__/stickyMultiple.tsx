@@ -34,7 +34,7 @@ it('renders multiple sticky notifications', async () => {
   register();
   const { getByText } = loadTestPlugins();
 
-  act(() => pushStickyNotifications());
+  pushStickyNotifications();
   await waitForElement(() => getByText('Check this out'));
   await waitForElement(() => getByText('Take a look at this'));
 });

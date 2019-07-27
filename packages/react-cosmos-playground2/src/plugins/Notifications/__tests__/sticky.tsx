@@ -13,19 +13,21 @@ function loadTestPlugins() {
 }
 
 function pushStickyNotification() {
-  getNotificationsMethods().pushStickyNotification({
-    id: 'build',
-    type: 'loading',
-    title: 'Rebuilding...',
-    info: 'Your code is updating.'
-  });
+  act(() =>
+    getNotificationsMethods().pushStickyNotification({
+      id: 'build',
+      type: 'loading',
+      title: 'Rebuilding...',
+      info: 'Your code is updating.'
+    })
+  );
 }
 
 it('renders sticky notification', async () => {
   register();
   const { getByText } = loadTestPlugins();
 
-  act(() => pushStickyNotification());
+  pushStickyNotification();
   await waitForElement(() => getByText('Rebuilding...'));
 });
 
@@ -33,7 +35,7 @@ it('removes sticky notification', async () => {
   register();
   const { getByText, queryByText } = loadTestPlugins();
 
-  act(() => pushStickyNotification());
+  pushStickyNotification();
   await waitForElement(() => getByText('Rebuilding...'));
 
   act(() => getNotificationsMethods().removeStickyNotification('build'));

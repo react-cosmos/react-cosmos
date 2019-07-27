@@ -45,10 +45,8 @@ it('clears all timed notifications after timeout expires', async () => {
   register();
   const { queryByText } = loadTestPlugins();
 
-  act(() => {
-    pushTimedNotifications();
-    jest.runAllTimers();
-  });
+  pushTimedNotifications();
+  act(() => jest.runAllTimers());
 
   expect(queryByText('Check this out')).toBeNull();
   expect(queryByText('Take a look at this')).toBeNull();
