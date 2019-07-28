@@ -58,11 +58,14 @@ You can also point to a module inside a dependency, like in the following Create
 
 ```json
 {
+  "watchDirs": ["src"],
   "webpack": {
     "configPath": "react-scripts/config/webpack.config"
   }
 }
 ```
+
+**Note:** It is important to set both `watchDirs` and `webpack.configPath` options to seamlessly integrate with Create React App.
 
 ### Webpack config override
 
@@ -151,6 +154,8 @@ Examples:
 2. `__fixtures__/blankState.js`
 
 > File name conventions can be configured using the `fixturesDir` and `fixtureFileSuffix` options.
+
+**IMPORTANT NOTE:** For fixtures to work with Create React App, the fixtures must be placed in the `src` directory, in order for Cosmos to bundle in the exact same environment as Create React App's.
 
 ## Decorators
 
