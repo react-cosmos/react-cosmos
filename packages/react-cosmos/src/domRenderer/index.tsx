@@ -1,15 +1,16 @@
 import React from 'react';
-import { render } from 'react-dom';
 import { FixtureLoader } from 'react-cosmos-fixture';
 import {
   ReactDecoratorsByPath,
   ReactFixturesByPath
 } from 'react-cosmos-shared2/react';
-import { rendererId } from './rendererId';
-import { rendererConnect } from './rendererConnect';
+import { render } from 'react-dom';
 import { getDomContainer } from './container';
 import { ErrorCatch } from './ErrorCatch';
 import './globalErrorHandler';
+import { rendererConnect } from './rendererConnect';
+import { rendererId } from './rendererId';
+import { renderMessage } from './renderMessage';
 
 export type DomRendererConfig = {
   containerQuerySelector: null | string;
@@ -37,6 +38,7 @@ export function mountDomRenderer({
       fixtures={fixtures}
       systemDecorators={[ErrorCatch]}
       userDecorators={decorators}
+      renderMessage={renderMessage}
       onErrorReset={onErrorReset}
     />,
     getDomContainer(rendererConfig.containerQuerySelector)

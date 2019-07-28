@@ -28,6 +28,7 @@ export type Props = {
   fixtures: ReactFixturesByPath;
   systemDecorators: ReactDecorator[];
   userDecorators: ReactDecoratorsByPath;
+  renderMessage?: (args: { msg: string }) => React.ReactNode;
   onErrorReset?: () => unknown;
 };
 
@@ -48,8 +49,6 @@ type State = {
   renderKey: number;
 };
 
-// TODO: Add props for customizing blank/missing states: `getBlankState` and
-// `getMissingState`
 export class FixtureLoader extends React.Component<Props, State> {
   state: State = {
     selectedFixture: null,
@@ -95,7 +94,7 @@ export class FixtureLoader extends React.Component<Props, State> {
   render() {
     const { selectedFixture } = this.state;
     if (!selectedFixture) {
-      return 'No fixture loaded.';
+      return this.renderMessage('No fixture selected.');
     }
 
     const { fixtures } = this.props;
@@ -103,13 +102,15 @@ export class FixtureLoader extends React.Component<Props, State> {
     // Falsy check doesn't do because fixtures can be any Node, including
     // null or undefined.
     if (!fixtures.hasOwnProperty(fixtureId.path)) {
-      return `Fixture path not found: ${fixtureId.path}`;
+      return this.renderMessage(`Fixture path not found: ${fixtureId.path}`);
     }
 
     const fixtureExport = fixtures[fixtureId.path];
     const fixture = getFixture(fixtureExport, fixtureId.name);
     if (typeof fixture === 'undefined') {
-      return `Invalid fixture ID: ${JSON.stringify(fixtureId)}`;
+      return this.renderMessage(
+        `Invalid fixture ID: ${JSON.stringify(fixtureId)}`
+      );
     }
 
     const { systemDecorators, userDecorators, onErrorReset } = this.props;
@@ -293,6 +294,12 @@ export class FixtureLoader extends React.Component<Props, State> {
 
   postMessage(msg: RendererResponse) {
     this.props.rendererConnect.postMessage(msg);
+  }
+
+  renderMessage(msg: string) {
+    return typeof this.props.renderMessage !== 'undefined'
+      ? this.props.renderMessage({ msg })
+      : msg;
   }
 }
 
