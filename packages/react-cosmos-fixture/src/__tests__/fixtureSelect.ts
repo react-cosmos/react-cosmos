@@ -70,7 +70,7 @@ runFixtureLoaderTests(mount => {
         await unselectFixture({
           rendererId
         });
-        expect(renderer.toJSON()).toBe('No fixture loaded.');
+        expect(renderer.toJSON()).toBe('No fixture selected.');
       }
     );
   });
@@ -84,7 +84,7 @@ runFixtureLoaderTests(mount => {
           fixtureId: { path: 'second', name: null },
           fixtureState: {}
         });
-        expect(renderer.toJSON()).toBe('No fixture loaded.');
+        expect(renderer.toJSON()).toBe('No fixture selected.');
       }
     );
   });
