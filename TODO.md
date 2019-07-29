@@ -12,8 +12,8 @@ Alpha
 - [x] Fixture search
   - [x] Minimize left nav
 - [ ] Official React Native integration
+  - [x] NativeFixtureLoader facade
   - [ ] react-native-web synced cross-platform renderers
-  - [ ] NativeFixtureLoader facade
 - [ ] Resize responsive viewport
   - [ ] Put viewports in dropdown
   - [ ] Make width/height inputs
