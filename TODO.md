@@ -13,7 +13,7 @@ Alpha
   - [x] Minimize left nav
 - [ ] Official React Native integration
   - [x] NativeFixtureLoader facade
-  - [ ] react-native-web synced cross-platform renderers
+  - [x] Hybrid Cosmos: Mirror dom and native renderers
 - [ ] Resize responsive viewport
   - [ ] Put viewports in dropdown
   - [ ] Make width/height inputs

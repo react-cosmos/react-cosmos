@@ -1,7 +1,8 @@
 import path from 'path';
-import { CosmosConfig, getCliArgs, getRootDirAtPath } from './shared';
+import { getCliArgs } from '../shared/cli';
 import { getCosmosConfigPath } from './cosmosConfigPath';
-import { resolvePath, resolveModule } from './resolve';
+import { resolveModule, resolvePath } from './resolve';
+import { CosmosConfig, getRootDirAtPath } from './shared';
 
 type CosmosConfigInput = Partial<CosmosConfig>;
 

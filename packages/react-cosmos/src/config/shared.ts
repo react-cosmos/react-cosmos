@@ -1,5 +1,4 @@
 import path from 'path';
-import yargs from 'yargs';
 import { dirExists } from '../shared/fs';
 
 export type CosmosConfig = {
@@ -30,10 +29,6 @@ export type CosmosConfig = {
     [pluginName: string]: {};
   };
 };
-
-export function getCliArgs() {
-  return yargs.argv;
-}
 
 export function getCurrentDir() {
   return process.cwd();
