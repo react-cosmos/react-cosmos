@@ -11,7 +11,7 @@ Alpha
 - [x] Control panel
 - [x] Fixture search
   - [x] Minimize left nav
-- [ ] Official React Native integration
+- [x] Official React Native integration
   - [x] NativeFixtureLoader facade
   - [x] Hybrid Cosmos: Mirror dom and native renderers
 - [ ] Resize responsive viewport

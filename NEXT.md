@@ -4,6 +4,10 @@
 
 **Install `react-cosmos@next` to get started.**
 
+```
+npm run cosmos
+```
+
 ![Cosmos Next](next.png)
 
 The [example package](example) is a useful complement to this guide.
@@ -195,6 +199,43 @@ While we get feedback for the new JSX fixtures and decorators, I will continue t
   }
 }
 ```
+
+## React Native
+
+```
+npm run cosmos-native
+```
+
+Cosmos Next works great with React Native. Put the following inside `App.js` to get started.
+
+```jsx
+import React, { Component } from 'react';
+import { NativeFixtureLoader } from 'react-cosmos/native';
+// You generate cosmos.userdeps.js when you start the Cosmos server
+import { decorators, fixtures, rendererConfig } from './cosmos.userdeps';
+
+export default class App extends Component {
+  render() {
+    return (
+      <NativeFixtureLoader
+        rendererConfig={rendererConfig}
+        fixtures={fixtures}
+        decorators={decorators}
+      />
+    );
+  }
+}
+```
+
+Once your fixtures are loading properly, you'll probably want to split your App entry point to load Cosmos in development and your root component in production. Something like this:
+
+```js
+module.exports = global.__DEV__
+  ? require('./App.cosmos')
+  : require('./App.main');
+```
+
+> Using React Native for Web? Run `cosmos --external-userdeps` instead of `cosmos-native` and Cosmos will mirror your fixtures on both DOM and Native renderers.
 
 ## Where is my old Cosmos?
 
