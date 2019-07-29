@@ -4,7 +4,7 @@ import {
   ReactDecoratorsByPath,
   ReactFixturesByPath
 } from 'react-cosmos-shared2/react';
-import { NativeModules, YellowBox } from 'react-native';
+import { StyleSheet, View, Text, NativeModules, YellowBox } from 'react-native';
 import parse from 'url-parse';
 import { NativeRendererConfig } from '../shared/rendererConfig';
 
@@ -32,6 +32,7 @@ export function NativeFixtureLoader({
       fixtures={fixtures}
       systemDecorators={[]}
       userDecorators={decorators}
+      renderMessage={renderMessage}
     />
   );
 }
@@ -40,3 +41,20 @@ function getSocketUrl(port: number) {
   const host = parse(NativeModules.SourceCode.scriptURL).hostname;
   return `ws://${host}:${port}`;
 }
+
+function renderMessage({ msg }: { msg: string }) {
+  return (
+    <View style={styles.container}>
+      <Text>{msg}</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+});
