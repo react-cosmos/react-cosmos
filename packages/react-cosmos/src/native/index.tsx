@@ -13,6 +13,9 @@ YellowBox.ignoreWarnings([
   'Unrecognized WebSocket connection option(s) `agent`, `perMessageDeflate`, `pfx`, `key`, `passphrase`, `cert`, `ca`, `ciphers`, `rejectUnauthorized`. Did you mean to put these under `headers`?'
 ]);
 
+// TODO: Generate unique ID per device
+const rendererId = 'native-renderer';
+
 type Props = {
   rendererConfig: NativeRendererConfig;
   fixtures: ReactFixturesByPath;
@@ -27,7 +30,7 @@ export function NativeFixtureLoader({
   const socketUrl = getSocketUrl(port);
   return (
     <FixtureLoader
-      rendererId="native-renderer"
+      rendererId={rendererId}
       rendererConnect={createWebSocketsConnect(socketUrl)}
       fixtures={fixtures}
       systemDecorators={[]}
