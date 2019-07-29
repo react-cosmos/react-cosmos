@@ -8,7 +8,7 @@ const decorators = {};
 runFixtureLoaderTests(mount => {
   it('renders blank state message', async () => {
     await mount({ rendererId, fixtures, decorators }, async ({ renderer }) => {
-      expect(renderer.toJSON()).toEqual('No fixture loaded.');
+      expect(renderer.toJSON()).toEqual('No fixture selected.');
     });
   });
 

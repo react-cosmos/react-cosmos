@@ -1,6 +1,7 @@
 import path from 'path';
+import { getCliArgs } from '../shared/cli';
 import { fileExists } from '../shared/fs';
-import { getCliArgs, getCurrentDir, getRootDirAtPath } from './shared';
+import { getCurrentDir, getRootDirAtPath } from './shared';
 
 export function getCosmosConfigPath() {
   const cliArgs = getCliArgs();
@@ -21,7 +22,7 @@ export function getCosmosConfigPath() {
     return absPath;
   }
 
-  // CLI suppport for --root-dir relative/path/project
+  // CLI support for --root-dir relative/path/project
   const configDir =
     typeof cliArgs.rootDir === 'string'
       ? getRootDirAtPath(cliArgs.rootDir)

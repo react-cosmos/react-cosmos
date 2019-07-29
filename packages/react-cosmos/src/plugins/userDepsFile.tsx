@@ -11,6 +11,7 @@ import {
   getIgnorePatterns,
   generateUserDepsModule
 } from '../shared/userDeps';
+import { NativeRendererConfig } from '../shared/rendererConfig';
 
 const writeFileAsync = promisify(writeFile);
 
@@ -45,10 +46,6 @@ async function startFixtureFileWatcher(
       );
   });
 }
-
-type NativeRendererConfig = {
-  port: number;
-};
 
 async function generateUserDepsFile(cosmosConfig: CosmosConfig) {
   const { userDepsFilePath, port } = cosmosConfig;
