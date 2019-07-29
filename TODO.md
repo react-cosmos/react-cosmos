@@ -17,6 +17,7 @@ Alpha
 - [ ] Resize responsive viewport
   - [ ] Put viewports in dropdown
   - [ ] Make width/height inputs
+- [ ] Mass fixture snapshots
 - [ ] Refresh docs
 
 Beta
