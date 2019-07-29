@@ -212,7 +212,7 @@ Cosmos Next works great with React Native. Put the following inside `App.js` to 
 import React, { Component } from 'react';
 import { NativeFixtureLoader } from 'react-cosmos/native';
 // You generate cosmos.userdeps.js when you start the Cosmos server
-import { decorators, fixtures, rendererConfig } from './cosmos.userdeps';
+import { rendererConfig, fixtures, decorators } from './cosmos.userdeps';
 
 export default class App extends Component {
   render() {
