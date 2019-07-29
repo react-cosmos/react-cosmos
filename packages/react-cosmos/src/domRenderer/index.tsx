@@ -5,16 +5,13 @@ import {
   ReactFixturesByPath
 } from 'react-cosmos-shared2/react';
 import { render } from 'react-dom';
+import { DomRendererConfig } from '../shared/rendererConfig';
 import { getDomContainer } from './container';
 import { ErrorCatch } from './ErrorCatch';
 import './globalErrorHandler';
 import { rendererConnect } from './rendererConnect';
 import { rendererId } from './rendererId';
 import { renderMessage } from './renderMessage';
-
-export type DomRendererConfig = {
-  containerQuerySelector: null | string;
-};
 
 type MountDomRendererOpts = {
   rendererConfig: DomRendererConfig;
