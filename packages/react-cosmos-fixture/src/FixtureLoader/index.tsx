@@ -80,7 +80,7 @@ export class FixtureLoader extends React.Component<Props, State> {
       const { fixtureId, fixtureState, syncedFixtureState } = selectedFixture;
       if (fixtureId && !isEqual(fixtureState, syncedFixtureState)) {
         this.postFixtureStateChange(fixtureId, fixtureState);
-        this.updateSyncedFixtureState(syncedFixtureState);
+        this.updateSyncedFixtureState(fixtureState);
       }
     }
   }
