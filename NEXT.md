@@ -163,7 +163,7 @@ Examples:
 
 Notes:
 
-- **IMPORTANT:** For fixtures to work with Create React App, the fixtures must be placed in the `src` directory, in order for Cosmos to bundle in the exact same environment as Create React App's.
+- **IMPORTANT:** Fixture files must be placed in the `src` directory when using Create React App, in order for Cosmos to bundle in the exact same environment as Create React App's.
 
 ## Decorators
 
