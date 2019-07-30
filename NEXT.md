@@ -69,7 +69,9 @@ You can also point to a module inside a dependency, like in the following Create
 }
 ```
 
-**Note:** It is important to set both `watchDirs` and `webpack.configPath` options to seamlessly integrate with Create React App.
+Notes:
+
+- It's important to set both `watchDirs` and `webpack.configPath` options to seamlessly integrate with Create React App.
 
 ### Webpack config override
 
@@ -159,7 +161,9 @@ Examples:
 
 > File name conventions can be configured using the `fixturesDir` and `fixtureFileSuffix` options.
 
-**IMPORTANT NOTE:** For fixtures to work with Create React App, the fixtures must be placed in the `src` directory, in order for Cosmos to bundle in the exact same environment as Create React App's.
+Notes:
+
+- **IMPORTANT:** Fixture files must be placed in the `src` directory when using Create React App, in order for Cosmos to bundle in the exact same environment as Create React App's.
 
 ## Decorators
 
@@ -241,6 +245,10 @@ module.exports = global.__DEV__
 ```
 
 > Using React Native for Web? Run `cosmos --external-userdeps` instead of `cosmos-native` and Cosmos will mirror your fixtures on both DOM and Native renderers.
+
+Notes:
+
+- React Native blacklists `__fixtures__` dirs by default. Unless you configure Cosmos to use a different directory pattern, you need to [override `getBlacklistRE` in the React Native CLI config](https://github.com/skidding/jobs-done/blob/585b1c472a123c9221dfec9018c9fa1e976d715e/rn-cli.config.js).
 
 ## Where is my old Cosmos?
 
