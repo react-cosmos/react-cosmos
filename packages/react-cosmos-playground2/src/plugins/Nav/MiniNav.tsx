@@ -5,11 +5,20 @@ import { DarkIconButton } from '../../shared/ui/buttons';
 import { ArraySlot } from 'react-plugin';
 
 type Props = {
+  rendererConnected: boolean;
   miniNavActionOrder: string[];
   onOpenNav: () => unknown;
 };
 
-export function MiniNav({ onOpenNav, miniNavActionOrder }: Props) {
+export function MiniNav({
+  rendererConnected,
+  onOpenNav,
+  miniNavActionOrder
+}: Props) {
+  if (!rendererConnected) {
+    return <Container />;
+  }
+
   return (
     <Container>
       <DarkIconButton
