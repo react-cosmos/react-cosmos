@@ -32,18 +32,12 @@ function loadTestPlugins() {
   );
 }
 
-async function waitForMainPlug({ getByTestId }: RenderResult) {
-  await waitForElement(() => getByTestId('responsivePreview'));
-}
-
 async function toggleResponsiveMode({ getByTitle }: RenderResult) {
-  fireEvent.click(
-    await waitForElement(() => getByTitle(/toggle responsive mode/i))
-  );
+  fireEvent.click(getByTitle(/toggle responsive mode/i));
 }
 
-async function selectViewport({ getByText }: RenderResult, match: RegExp) {
-  fireEvent.click(await waitForElement(() => getByText(match)));
+async function selectViewport({ getByTestId }: RenderResult, value: string) {
+  fireEvent.change(getByTestId('viewportSelect'), { target: { value } });
 }
 
 it('renders children of "rendererPreviewOuter" slot', async () => {
@@ -70,7 +64,6 @@ it('does not render responsive header when no fixture is selected', async () => 
   });
 
   const renderer = loadTestPlugins();
-  await waitForMainPlug(renderer);
   expect(renderer.queryByTestId('responsiveHeader')).toBeNull();
 });
 
@@ -84,7 +77,6 @@ it('does not render responsive header in full screen mode', async () => {
   });
 
   const renderer = loadTestPlugins();
-  await waitForMainPlug(renderer);
   expect(renderer.queryByTestId('responsiveHeader')).toBeNull();
 });
 
@@ -135,7 +127,7 @@ describe('on device select', () => {
 
     const renderer = loadTestPlugins();
     await toggleResponsiveMode(renderer);
-    await selectViewport(renderer, /iphone 6\+/i);
+    await selectViewport(renderer, '414x736');
 
     await wait(() =>
       expect((fixtureState as FixtureStateWithViewport).viewport).toEqual({
@@ -163,7 +155,7 @@ describe('on device select', () => {
 
     const renderer = loadTestPlugins();
     await toggleResponsiveMode(renderer);
-    await selectViewport(renderer, /iphone 6\+/i);
+    await selectViewport(renderer, '414x736');
 
     await wait(() =>
       expect(storage[STORAGE_KEY]).toEqual({ width: 414, height: 736 })
@@ -187,7 +179,7 @@ it('clears viewport in fixture state on untoggle', async () => {
 
   const renderer = loadTestPlugins();
   await toggleResponsiveMode(renderer);
-  await selectViewport(renderer, /iphone 6\+/i);
+  await selectViewport(renderer, '414x736');
   await toggleResponsiveMode(renderer);
 
   await wait(() =>

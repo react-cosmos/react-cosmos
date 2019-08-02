@@ -24,11 +24,11 @@ export class Header extends React.Component<Props> {
       toggleScale
     } = this.props;
     const canScale = scaleFactor < 1;
-
     return (
       <Container data-testid="responsiveHeader">
         <Left>
           <select
+            data-testid="viewportSelect"
             value={stringifyViewport(selectedViewport)}
             onChange={e => selectViewport(parseViewport(e.target.value))}
           >
@@ -74,11 +74,11 @@ export class Header extends React.Component<Props> {
 }
 
 function stringifyViewport({ width, height }: Viewport) {
-  return `${width}-${height}`;
+  return `${width}x${height}`;
 }
 
 function parseViewport(str: string) {
-  const [width, height] = str.split('-');
+  const [width, height] = str.split('x');
   return { width: Number(width), height: Number(height) };
 }
 
