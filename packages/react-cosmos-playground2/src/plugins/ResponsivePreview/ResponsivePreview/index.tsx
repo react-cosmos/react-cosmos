@@ -1,28 +1,29 @@
-import React from 'react';
 import { isEqual } from 'lodash';
+import React from 'react';
 import styled from 'styled-components';
+import { Device, Viewport } from '../public';
 import { Header } from './Header';
-import { stretchStyle, getStyles, getAvailableViewport } from './style';
-import { Viewport, Device } from '../public';
+import { getAvailableViewport, getStyles, stretchStyle } from './style';
 
 type Props = {
   children: React.ReactNode;
   devices: Device[];
-  viewport: null | Viewport;
+  enabled: boolean;
+  viewport: Viewport;
+  scaled: boolean;
   fullScreen: boolean;
   validFixtureSelected: boolean;
   setViewport(viewport: Viewport): unknown;
+  setScaled(scaled: boolean): unknown;
 };
 
 type State = {
   container: null | Viewport;
-  scaled: boolean;
 };
 
 export class ResponsivePreview extends React.Component<Props, State> {
   state: State = {
-    container: null,
-    scaled: true
+    container: null
   };
 
   containerEl: null | HTMLElement = null;
@@ -31,17 +32,19 @@ export class ResponsivePreview extends React.Component<Props, State> {
     const {
       children,
       devices,
+      enabled,
       viewport,
+      scaled,
       fullScreen,
       validFixtureSelected
     } = this.props;
-    const { container, scaled } = this.state;
+    const { container } = this.state;
 
     // We don't simply do `return children` because it would cause a flicker
     // whenever switching between responsive and non responsive mode. By
     // returning the same element nesting between states for Preview the
     // component instances are preserved and the transition is seamless.
-    if (!validFixtureSelected || fullScreen || !viewport || !container) {
+    if (!validFixtureSelected || fullScreen || !enabled || !container) {
       return (
         <Container>
           <div key="preview" ref={this.handleContainerRef} style={stretchStyle}>
@@ -109,7 +112,7 @@ export class ResponsivePreview extends React.Component<Props, State> {
   };
 
   toggleScale = () => {
-    this.setState(({ scaled }) => ({ scaled: !scaled }));
+    this.props.setScaled(!this.props.scaled);
   };
 
   updateContainerSize() {

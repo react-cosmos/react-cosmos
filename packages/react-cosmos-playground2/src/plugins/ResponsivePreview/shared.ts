@@ -8,6 +8,7 @@ export type StorageMethods = StorageSpec['methods'];
 
 export type ViewportState = {
   enabled: boolean;
+  scaled: boolean;
   viewport: Viewport;
 };
 
@@ -24,5 +25,6 @@ export const VIEWPORT_STORAGE_KEY = 'responsiveViewportState';
 
 export const DEFAULT_VIEWPORT_STATE: ViewportState = {
   enabled: false,
+  scaled: true,
   viewport: { width: 320, height: 568 }
 };

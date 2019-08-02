@@ -166,6 +166,7 @@ it('saves viewport in storage on device select', async () => {
 
   expect(storageMock[VIEWPORT_STORAGE_KEY]).toEqual({
     enabled: true,
+    scaled: true,
     viewport: { width: 414, height: 736 }
   });
 });

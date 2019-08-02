@@ -28,23 +28,26 @@ plug('rendererPreviewOuter', ({ children, pluginContext }) => {
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const fixtureState = rendererCore.getFixtureState();
   const viewportState = getViewportState(pluginContext);
-  const viewport =
-    fixtureState.viewport ||
-    (viewportState.enabled ? viewportState.viewport : null);
 
   return (
     <ResponsivePreview
       devices={devices}
-      viewport={viewport}
+      enabled={Boolean(fixtureState.viewport) || viewportState.enabled}
+      viewport={fixtureState.viewport || viewportState.viewport}
+      scaled={viewportState.scaled}
       fullScreen={router.isFullScreen()}
       validFixtureSelected={rendererCore.isValidFixtureSelected()}
-      setViewport={(newViewport: Viewport) => {
+      setViewport={newViewport => {
         setViewportState(pluginContext, {
+          ...viewportState,
           enabled: true,
           viewport: newViewport
         });
         setFixtureStateViewport(pluginContext, newViewport);
       }}
+      setScaled={scaled =>
+        setViewportState(pluginContext, { ...viewportState, scaled })
+      }
     >
       {children}
     </ResponsivePreview>
