@@ -9,8 +9,4 @@ export type ResponsivePreviewSpec = {
   config: {
     devices: Device[];
   };
-  state: {
-    enabled: boolean;
-    viewport: null | Viewport;
-  };
 };
