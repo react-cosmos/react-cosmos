@@ -31,10 +31,15 @@ plug('miniNav', ({ pluginContext }) => {
   const { getConfig, getMethodsOf } = pluginContext;
   const { miniNavActionOrder } = getConfig();
   const layout = getMethodsOf<LayoutSpec>('layout');
+  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const onOpenNav = React.useCallback(() => layout.openNav(true), [layout]);
 
   return (
-    <MiniNav miniNavActionOrder={miniNavActionOrder} onOpenNav={onOpenNav} />
+    <MiniNav
+      rendererConnected={rendererCore.isRendererConnected()}
+      miniNavActionOrder={miniNavActionOrder}
+      onOpenNav={onOpenNav}
+    />
   );
 });
 
