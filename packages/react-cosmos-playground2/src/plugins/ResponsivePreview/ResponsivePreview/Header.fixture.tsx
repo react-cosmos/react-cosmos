@@ -2,7 +2,8 @@ import React from 'react';
 import { DEFAULT_DEVICES } from '../shared';
 import { Header } from './Header';
 
-const initialViewport = { width: 1240, height: 1360 };
+const { width, height } = DEFAULT_DEVICES[0];
+const initialViewport = { width, height };
 
 export default {
   stateless: (
