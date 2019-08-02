@@ -2,15 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { Minimize2Icon } from '../../../shared/icons';
 import { Button } from '../../../shared/ui/buttons';
-import { Viewport, Device } from '../public';
-import { getAvailableViewport } from './style';
+import { Device, Viewport } from '../public';
 
 type Props = {
   devices: Device[];
-  viewport: Viewport;
-  container: Viewport;
-  scale: boolean;
-  createSelectViewportHandler: (viewport: Viewport) => () => unknown;
+  selectedViewport: Viewport;
+  scaleFactor: number;
+  scaled: boolean;
+  selectViewport: (viewport: Viewport) => unknown;
   toggleScale: () => unknown;
 };
 
@@ -18,49 +17,54 @@ export class Header extends React.Component<Props> {
   render() {
     const {
       devices,
-      viewport,
-      container,
-      scale,
-      createSelectViewportHandler,
+      selectedViewport,
+      scaleFactor,
+      scaled,
+      selectViewport,
       toggleScale
     } = this.props;
-    const scaleFactor = getViewportScaleFactor(viewport, container);
-    const isScalable = scaleFactor < 1;
+    const canScale = scaleFactor < 1;
 
     return (
       <Container data-testid="responsiveHeader">
-        <Devices>
-          {devices.map(({ label, width, height }, idx) => {
-            const isSelected =
-              viewport &&
-              viewport.width === width &&
-              viewport.height === height;
-
-            return (
-              <Button
-                key={idx}
-                label={label}
-                disabled={isSelected}
-                selected={isSelected}
-                onClick={createSelectViewportHandler({ width, height })}
-              />
-            );
-          })}
-        </Devices>
+        <Left>
+          <select
+            value={stringifyViewport(selectedViewport)}
+            onChange={e => selectViewport(parseViewport(e.target.value))}
+          >
+            {devices.map(({ label, width, height }, idx) => {
+              const isSelected =
+                selectedViewport &&
+                selectedViewport.width === width &&
+                selectedViewport.height === height;
+              return (
+                <option
+                  key={idx}
+                  value={stringifyViewport({ width, height })}
+                  disabled={isSelected}
+                >
+                  {label}
+                </option>
+              );
+            })}
+          </select>
+        </Left>
         <Right>
-          <ViewportSize>{`${viewport.width}×${viewport.height}`}</ViewportSize>
+          <ViewportSize>
+            {`${selectedViewport.width}×${selectedViewport.height}`}
+          </ViewportSize>
           <Button
             icon={<Minimize2Icon />}
             label={
               <>
                 scale
-                {isScalable && (
+                {canScale && (
                   <ScaleDegree>{getScalePercent(scaleFactor)}</ScaleDegree>
                 )}
               </>
             }
-            disabled={!isScalable}
-            selected={isScalable && scale}
+            disabled={!canScale}
+            selected={canScale && scaled}
             onClick={toggleScale}
           />
         </Right>
@@ -69,13 +73,13 @@ export class Header extends React.Component<Props> {
   }
 }
 
-function getViewportScaleFactor(viewport: Viewport, container: Viewport) {
-  const { width, height } = getAvailableViewport(container);
+function stringifyViewport({ width, height }: Viewport) {
+  return `${width}-${height}`;
+}
 
-  return Math.min(
-    Math.min(1, width / viewport.width),
-    Math.min(1, height / viewport.height)
-  );
+function parseViewport(str: string) {
+  const [width, height] = str.split('-');
+  return { width: Number(width), height: Number(height) };
 }
 
 function getScalePercent(scaleFactor: number) {
@@ -93,19 +97,11 @@ const Container = styled.div`
   overflow-x: auto;
 `;
 
-const Devices = styled.div`
+const Left = styled.div`
   height: 32px;
   display: flex;
   flex-direction: row;
   align-items: center;
-
-  > button {
-    margin-left: 4px;
-
-    :first-child {
-      margin-left: 0;
-    }
-  }
 `;
 
 const Right = styled.div`

@@ -2,7 +2,7 @@ import React from 'react';
 import { isEqual } from 'lodash';
 import styled from 'styled-components';
 import { Header } from './Header';
-import { stretchStyle, getStyles } from './style';
+import { stretchStyle, getStyles, getAvailableViewport } from './style';
 import { Viewport, Device } from '../public';
 
 type Props = {
@@ -16,13 +16,13 @@ type Props = {
 
 type State = {
   container: null | Viewport;
-  scale: boolean;
+  scaled: boolean;
 };
 
 export class ResponsivePreview extends React.Component<Props, State> {
   state: State = {
     container: null,
-    scale: true
+    scaled: true
   };
 
   containerEl: null | HTMLElement = null;
@@ -35,7 +35,7 @@ export class ResponsivePreview extends React.Component<Props, State> {
       fullScreen,
       validFixtureSelected
     } = this.props;
-    const { container, scale } = this.state;
+    const { container, scaled } = this.state;
 
     // We don't simply do `return children` because it would cause a flicker
     // whenever switching between responsive and non responsive mode. By
@@ -55,20 +55,21 @@ export class ResponsivePreview extends React.Component<Props, State> {
       );
     }
 
+    const scaleFactor = getViewportScaleFactor(viewport, container);
     const {
       maskContainerStyle,
       padContainerStyle,
       alignContainerStyle,
       scaleContainerStyle
-    } = getStyles({ container, viewport, scale });
+    } = getStyles({ container, viewport, scaled });
     return (
       <Container>
         <Header
           devices={devices}
-          viewport={viewport}
-          container={container}
-          scale={scale}
-          createSelectViewportHandler={this.createSelectViewportHandler}
+          selectedViewport={viewport}
+          scaleFactor={scaleFactor}
+          scaled={scaled}
+          selectViewport={this.props.setViewport}
           toggleScale={this.toggleScale}
         />
         <div
@@ -107,12 +108,8 @@ export class ResponsivePreview extends React.Component<Props, State> {
     this.updateContainerSize();
   };
 
-  createSelectViewportHandler = (viewport: Viewport) => () => {
-    this.props.setViewport(viewport);
-  };
-
   toggleScale = () => {
-    this.setState(({ scale }) => ({ scale: !scale }));
+    this.setState(({ scaled }) => ({ scaled: !scaled }));
   };
 
   updateContainerSize() {
@@ -124,6 +121,14 @@ export class ResponsivePreview extends React.Component<Props, State> {
       });
     }
   }
+}
+
+function getViewportScaleFactor(viewport: Viewport, container: Viewport) {
+  const containerViewport = getAvailableViewport(container);
+  return Math.min(
+    Math.min(1, containerViewport.width / viewport.width),
+    Math.min(1, containerViewport.height / viewport.height)
+  );
 }
 
 function getContainerSize(containerEl: null | HTMLElement) {

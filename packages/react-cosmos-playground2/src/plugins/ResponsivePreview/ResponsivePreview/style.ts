@@ -8,23 +8,23 @@ export const stretchStyle = { display: 'flex', flex: 1 };
 export function getStyles({
   container,
   viewport,
-  scale
+  scaled
 }: {
   container: Viewport;
   viewport: Viewport;
-  scale: boolean;
+  scaled: boolean;
 }) {
   const { width, height } = viewport;
 
   const availableViewport = getAvailableViewport(container);
   const widthScale = Math.min(1, availableViewport.width / width);
   const heightScale = Math.min(1, availableViewport.height / height);
-  const scaleFactor = scale ? Math.min(widthScale, heightScale) : 1;
+  const scaleFactor = scaled ? Math.min(widthScale, heightScale) : 1;
   const scaledWidth = width * scaleFactor;
   const scaledHeight = height * scaleFactor;
 
   return {
-    maskContainerStyle: getMaskContainerStyle(scale, widthScale, heightScale),
+    maskContainerStyle: getMaskContainerStyle(scaled, widthScale, heightScale),
     padContainerStyle: getPadContainerStyle(),
     alignContainerStyle: getAlignContainerStyle(scaledWidth, scaledHeight),
     scaleContainerStyle: getScaleContainerStyle(width, height, scaleFactor)
