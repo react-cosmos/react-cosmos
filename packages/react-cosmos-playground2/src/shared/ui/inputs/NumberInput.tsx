@@ -15,6 +15,7 @@ type Props = {
   onChange: (newValue: number) => unknown;
 };
 
+// TODO: Support decimals
 export function NumberInput({
   id,
   value,
