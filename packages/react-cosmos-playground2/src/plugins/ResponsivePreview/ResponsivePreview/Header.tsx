@@ -55,12 +55,16 @@ export class Header extends React.Component<Props> {
             <NumberInput
               id="viewport-width"
               value={selectedViewport.width}
+              minValue={1}
+              maxValue={5120}
               onChange={width => selectViewport({ ...selectedViewport, width })}
             />
             <ViewportX>×</ViewportX>
             <NumberInput
               id="viewport-width"
               value={selectedViewport.height}
+              minValue={1}
+              maxValue={5120}
               onChange={height =>
                 selectViewport({ ...selectedViewport, height })
               }
