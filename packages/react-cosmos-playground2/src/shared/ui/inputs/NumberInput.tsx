@@ -7,11 +7,18 @@ import {
   TextMirror
 } from './shared';
 
+type Styles = {
+  focusedColor: string;
+  focusedBg: string;
+  focusedBoxShadow: string;
+};
+
 type Props = {
   id: string;
   value: number;
   minValue?: number;
   maxValue?: number;
+  styles: Styles;
   onChange: (newValue: number) => unknown;
 };
 
@@ -21,6 +28,7 @@ export function NumberInput({
   value,
   minValue = -Infinity,
   maxValue = Infinity,
+  styles,
   onChange
 }: Props) {
   const [focused, setFocused] = React.useState(false);
@@ -63,7 +71,11 @@ export function NumberInput({
   );
 
   return (
-    <TextInputContainer focused={focused}>
+    <TextInputContainer
+      focused={focused}
+      focusedBg={styles.focusedBg}
+      focusedBoxShadow={styles.focusedBoxShadow}
+    >
       <TextContainer>
         <TextMirror minWidth={8} focused={focused}>
           {value}
@@ -72,11 +84,12 @@ export function NumberInput({
           rows={1}
           id={id}
           value={value}
+          focused={focused}
+          color={styles.focusedColor}
           onChange={onInputChange}
           onFocus={onFocus}
           onBlur={onBlur}
           onKeyDown={onKeyDown}
-          style={{ opacity: focused ? 1 : 0 }}
         />
       </TextContainer>
     </TextInputContainer>

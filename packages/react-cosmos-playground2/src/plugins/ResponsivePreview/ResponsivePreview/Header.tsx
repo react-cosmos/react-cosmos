@@ -14,6 +14,12 @@ type Props = {
   toggleScale: () => unknown;
 };
 
+const numberInputStypes = {
+  focusedColor: 'var(--grey2)',
+  focusedBg: 'var(--grey7)',
+  focusedBoxShadow: '0 0 1px 1px var(--primary4)'
+};
+
 export class Header extends React.Component<Props> {
   render() {
     const {
@@ -57,6 +63,7 @@ export class Header extends React.Component<Props> {
               value={selectedViewport.width}
               minValue={1}
               maxValue={5120}
+              styles={numberInputStypes}
               onChange={width => selectViewport({ ...selectedViewport, width })}
             />
             <ViewportX>×</ViewportX>
@@ -65,6 +72,7 @@ export class Header extends React.Component<Props> {
               value={selectedViewport.height}
               minValue={1}
               maxValue={5120}
+              styles={numberInputStypes}
               onChange={height =>
                 selectViewport({ ...selectedViewport, height })
               }
@@ -141,13 +149,14 @@ const ViewportSize = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: 8px;
-  color: var(--grey3);
+  margin: 0 2px;
+  color: var(--grey2);
 `;
 
 const ViewportX = styled.div`
   padding: 0 1px;
   line-height: 32px;
+  color: var(--grey3);
 `;
 
 const ScaleDegree = styled.span`

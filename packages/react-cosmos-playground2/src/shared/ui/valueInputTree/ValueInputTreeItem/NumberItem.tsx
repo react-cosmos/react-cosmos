@@ -16,7 +16,16 @@ export function NumberItem({ id, label, value, onChange }: Props) {
         {label}
       </Label>
       <ValueContainer>
-        <NumberInput id={id} value={value} onChange={onChange} />
+        <NumberInput
+          id={id}
+          value={value}
+          styles={{
+            focusedColor: 'var(--grey7)',
+            focusedBg: 'var(--grey1)',
+            focusedBoxShadow: '0 0 0.5px 1px var(--primary4)'
+          }}
+          onChange={onChange}
+        />
       </ValueContainer>
     </>
   );

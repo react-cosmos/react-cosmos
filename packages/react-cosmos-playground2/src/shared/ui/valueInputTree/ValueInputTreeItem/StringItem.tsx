@@ -33,7 +33,11 @@ export function StringItem({ id, label, value, onChange }: Props) {
         {label}
       </Label>
       <ValueContainer>
-        <TextInputContainer focused={focused}>
+        <TextInputContainer
+          focused={focused}
+          focusedBg="var(--grey1)"
+          focusedBoxShadow="0 0 0.5px 1px var(--primary4)"
+        >
           <TextContainer>
             <TextMirror minWidth={24} focused={focused}>
               {mirrorText}
@@ -42,10 +46,11 @@ export function StringItem({ id, label, value, onChange }: Props) {
               rows={1}
               id={id}
               value={value}
+              focused={focused}
+              color="var(--grey7)"
               onChange={onInputChange}
               onFocus={onFocus}
               onBlur={onBlur}
-              style={{ opacity: focused ? 1 : 0 }}
             />
           </TextContainer>
         </TextInputContainer>
