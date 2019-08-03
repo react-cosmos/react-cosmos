@@ -6,7 +6,7 @@ type Props = {
   label: string;
 };
 
-export function NullInput({ id, label }: Props) {
+export function NullItem({ id, label }: Props) {
   return (
     <>
       <Label title={label} htmlFor={id}>

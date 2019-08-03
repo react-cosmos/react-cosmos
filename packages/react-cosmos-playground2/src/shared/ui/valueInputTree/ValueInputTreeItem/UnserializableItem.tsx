@@ -7,7 +7,7 @@ type Props = {
   value: string;
 };
 
-export function UnserializableInput({ id, label, value }: Props) {
+export function UnserializableItem({ id, label, value }: Props) {
   return (
     <>
       <Label title={label} htmlFor={id}>

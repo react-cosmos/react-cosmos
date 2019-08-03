@@ -1,33 +1,52 @@
 import React from 'react';
+import { KEY_DOWN, KEY_UP } from '../../../keys';
 import {
   Label,
-  ValueContainer,
-  TextInputContainer,
   TextContainer,
   TextField,
-  TextMirror
+  TextInputContainer,
+  TextMirror,
+  ValueContainer
 } from './shared';
 
 type Props = {
   id: string;
   label: string;
-  value: string;
-  onChange: (newValue: string) => unknown;
+  value: number;
+  onChange: (newValue: number) => unknown;
 };
 
-export function StringInput({ id, label, value, onChange }: Props) {
+export function NumberItem({ id, label, value, onChange }: Props) {
   const [focused, setFocused] = React.useState(false);
   const onFocus = React.useCallback(() => setFocused(true), []);
   const onBlur = React.useCallback(() => setFocused(false), []);
 
   const onInputChange = React.useCallback(
-    (e: React.SyntheticEvent<HTMLTextAreaElement>) =>
-      onChange(e.currentTarget.value),
+    (e: React.SyntheticEvent<HTMLTextAreaElement>) => {
+      const newValue = +e.currentTarget.value;
+      if (isFinite(newValue)) {
+        onChange(newValue);
+      }
+    },
     [onChange]
   );
 
-  // Mirror textarea behavior and add an extra row after user adds a new line
-  const mirrorText = focused ? value.replace(/\n$/, `\n `) : value;
+  const onKeyDown = React.useCallback(
+    (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      switch (e.keyCode) {
+        case KEY_UP:
+          e.preventDefault();
+          return onChange(value + 1);
+        case KEY_DOWN:
+          e.preventDefault();
+          return onChange(value - 1);
+        default:
+        // Nada
+      }
+    },
+    [value, onChange]
+  );
+
   return (
     <>
       <Label title={label} htmlFor={id}>
@@ -37,7 +56,7 @@ export function StringInput({ id, label, value, onChange }: Props) {
         <TextInputContainer focused={focused}>
           <TextContainer>
             <TextMirror style={{ opacity: focused ? 0 : 1 }}>
-              {mirrorText}
+              {value}
             </TextMirror>
             <TextField
               rows={1}
@@ -46,6 +65,7 @@ export function StringInput({ id, label, value, onChange }: Props) {
               onChange={onInputChange}
               onFocus={onFocus}
               onBlur={onBlur}
+              onKeyDown={onKeyDown}
               style={{ opacity: focused ? 1 : 0 }}
             />
           </TextContainer>

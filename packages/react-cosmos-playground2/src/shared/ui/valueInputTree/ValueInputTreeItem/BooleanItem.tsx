@@ -9,19 +9,16 @@ type Props = {
   onChange: (newValue: boolean) => unknown;
 };
 
-export function BooleanInput({ id, label, value, onChange }: Props) {
-  const onInputToggle = React.useCallback(() => onChange(!value), [
-    onChange,
-    value
-  ]);
+export function BooleanItem({ id, label, value, onChange }: Props) {
+  const onToggle = React.useCallback(() => onChange(!value), [onChange, value]);
 
   return (
     <>
-      <Label title={label} as="span" onClick={onInputToggle}>
+      <Label title={label} as="span" onClick={onToggle}>
         {label}
       </Label>
       <ValueContainer>
-        <BooleanButton onClick={onInputToggle}>
+        <BooleanButton onClick={onToggle}>
           {value ? 'true' : 'false'}
         </BooleanButton>
       </ValueContainer>
