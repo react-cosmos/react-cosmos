@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Label, ValueContainer } from './shared';
+import { ValueContainer, Label } from './shared';
 
 type Props = {
   id: string;

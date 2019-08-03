@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Minimize2Icon } from '../../../shared/icons';
 import { Button } from '../../../shared/ui/buttons';
 import { Device, Viewport } from '../public';
+import { NumberInput } from '../../../shared/ui/inputs/NumberInput';
 
 type Props = {
   devices: Device[];
@@ -51,7 +52,19 @@ export class Header extends React.Component<Props> {
         </Left>
         <Right>
           <ViewportSize>
-            {`${selectedViewport.width}×${selectedViewport.height}`}
+            <NumberInput
+              id="viewport-width"
+              value={selectedViewport.width}
+              onChange={width => selectViewport({ ...selectedViewport, width })}
+            />
+            <ViewportX>×</ViewportX>
+            <NumberInput
+              id="viewport-width"
+              value={selectedViewport.height}
+              onChange={height =>
+                selectViewport({ ...selectedViewport, height })
+              }
+            />
           </ViewportSize>
           <Button
             icon={<Minimize2Icon />}
@@ -105,6 +118,7 @@ const Left = styled.div`
 `;
 
 const Right = styled.div`
+  height: 32px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -120,8 +134,16 @@ const Right = styled.div`
 `;
 
 const ViewportSize = styled.div`
-  margin: 0 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 8px;
   color: var(--grey3);
+`;
+
+const ViewportX = styled.div`
+  padding: 0 1px;
+  line-height: 32px;
 `;
 
 const ScaleDegree = styled.span`

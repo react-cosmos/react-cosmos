@@ -1,12 +1,11 @@
 import React from 'react';
 import {
-  Label,
-  ValueContainer,
-  TextInputContainer,
   TextContainer,
   TextField,
+  TextInputContainer,
   TextMirror
-} from './shared';
+} from '../../inputs/shared';
+import { ValueContainer, Label } from './shared';
 
 type Props = {
   id: string;
