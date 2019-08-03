@@ -31,7 +31,18 @@ export function getStyles({
   };
 }
 
-export function getAvailableViewport(container: Viewport) {
+export function getViewportScaleFactor(
+  viewport: Viewport,
+  container: Viewport
+) {
+  const containerViewport = getAvailableViewport(container);
+  return Math.min(
+    Math.min(1, containerViewport.width / viewport.width),
+    Math.min(1, containerViewport.height / viewport.height)
+  );
+}
+
+function getAvailableViewport(container: Viewport) {
   return {
     width: container.width - getHorPadding(),
     height: container.height - getVerPadding()

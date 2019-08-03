@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Device, Viewport } from '../public';
 import { Header } from './Header';
-import { getAvailableViewport, getStyles, stretchStyle } from './style';
+import { getViewportScaleFactor, getStyles, stretchStyle } from './style';
 
 type Props = {
   children: React.ReactNode;
@@ -124,14 +124,6 @@ export class ResponsivePreview extends React.Component<Props, State> {
       });
     }
   }
-}
-
-function getViewportScaleFactor(viewport: Viewport, container: Viewport) {
-  const containerViewport = getAvailableViewport(container);
-  return Math.min(
-    Math.min(1, containerViewport.width / viewport.width),
-    Math.min(1, containerViewport.height / viewport.height)
-  );
 }
 
 function getContainerSize(containerEl: null | HTMLElement) {
