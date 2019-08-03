@@ -110,19 +110,17 @@ export default () => {
 
   return (
     <Container>
-      <Viewport width={220} height={400}>
-        <PropsPanel
-          fixtureState={fixtureState}
-          fixtureExpansion={fixtureExpansion}
-          onFixtureStateChange={setFixtureState}
-          onElementExpansionChange={(elementId, treeExpansion) => {
-            setFixtureExpansion({
-              ...fixtureExpansion,
-              [stringifyElementId(elementId)]: treeExpansion
-            });
-          }}
-        />
-      </Viewport>
+      <PropsPanel
+        fixtureState={fixtureState}
+        fixtureExpansion={fixtureExpansion}
+        onFixtureStateChange={setFixtureState}
+        onElementExpansionChange={(elementId, treeExpansion) => {
+          setFixtureExpansion({
+            ...fixtureExpansion,
+            [stringifyElementId(elementId)]: treeExpansion
+          });
+        }}
+      />
     </Container>
   );
 };
