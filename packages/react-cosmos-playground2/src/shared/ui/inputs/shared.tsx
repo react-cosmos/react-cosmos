@@ -31,7 +31,9 @@ export const TextField = styled.textarea`
   resize: none;
 `;
 
-export const TextMirror = styled.div`
+export const TextMirror = styled.div<{ focused: boolean; minWidth: number }>`
+  opacity: ${props => (props.focused ? 0 : 1)};
+  min-width: ${props => props.minWidth}px;
   min-height: 20px;
   line-height: 20px;
   white-space: pre;

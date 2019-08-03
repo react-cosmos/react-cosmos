@@ -65,7 +65,9 @@ export function NumberInput({
   return (
     <TextInputContainer focused={focused}>
       <TextContainer>
-        <TextMirror style={{ opacity: focused ? 0 : 1 }}>{value}</TextMirror>
+        <TextMirror minWidth={8} focused={focused}>
+          {value}
+        </TextMirror>
         <TextField
           rows={1}
           id={id}

@@ -35,7 +35,7 @@ export function StringItem({ id, label, value, onChange }: Props) {
       <ValueContainer>
         <TextInputContainer focused={focused}>
           <TextContainer>
-            <TextMirror style={{ opacity: focused ? 0 : 1 }}>
+            <TextMirror minWidth={24} focused={focused}>
               {mirrorText}
             </TextMirror>
             <TextField
