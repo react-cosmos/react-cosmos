@@ -133,7 +133,7 @@ it('renders responsive device labels', async () => {
 
   const renderer = loadTestPlugins();
   for (const device of DEFAULT_DEVICES) {
-    renderer.getByText(device.label);
+    renderer.getByText(device.label, { selector: 'option' });
   }
 });
 
