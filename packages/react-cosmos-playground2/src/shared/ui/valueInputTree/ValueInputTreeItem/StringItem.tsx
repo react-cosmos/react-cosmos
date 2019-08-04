@@ -20,7 +20,7 @@ export function StringItem({ id, label, value, onChange }: Props) {
   const onBlur = React.useCallback(() => setFocused(false), []);
 
   const onInputChange = React.useCallback(
-    (e: React.SyntheticEvent<HTMLTextAreaElement>) =>
+    (e: React.ChangeEvent<HTMLTextAreaElement>) =>
       onChange(e.currentTarget.value),
     [onChange]
   );

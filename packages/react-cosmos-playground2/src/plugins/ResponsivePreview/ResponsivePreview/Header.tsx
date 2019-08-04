@@ -4,6 +4,7 @@ import { Minimize2Icon } from '../../../shared/icons';
 import { Button } from '../../../shared/ui/buttons';
 import { Device, Viewport } from '../public';
 import { NumberInput } from '../../../shared/ui/inputs/NumberInput';
+import { Select } from '../../../shared/ui/inputs/Select';
 
 type Props = {
   devices: Device[];
@@ -31,30 +32,22 @@ export class Header extends React.Component<Props> {
       toggleScale
     } = this.props;
     const canScale = scaleFactor < 1;
+
+    const options = devices.map(({ width, height, label }) => {
+      const value = stringifyViewport({ width, height });
+      return { value, label, width, height };
+    });
     return (
       <Container data-testid="responsiveHeader">
         <Left>
-          <select
-            data-testid="viewportSelect"
+          <Select
+            testId="viewportSelect"
+            options={options}
             value={stringifyViewport(selectedViewport)}
-            onChange={e => selectViewport(parseViewport(e.target.value))}
-          >
-            {devices.map(({ label, width, height }, idx) => {
-              const isSelected =
-                selectedViewport &&
-                selectedViewport.width === width &&
-                selectedViewport.height === height;
-              return (
-                <option
-                  key={idx}
-                  value={stringifyViewport({ width, height })}
-                  disabled={isSelected}
-                >
-                  {label}
-                </option>
-              );
-            })}
-          </select>
+            onChange={option =>
+              selectViewport({ width: option.width, height: option.height })
+            }
+          />
         </Left>
         <Right>
           <ViewportSize>
@@ -100,11 +93,6 @@ export class Header extends React.Component<Props> {
 
 function stringifyViewport({ width, height }: Viewport) {
   return `${width}x${height}`;
-}
-
-function parseViewport(str: string) {
-  const [width, height] = str.split('x');
-  return { width: Number(width), height: Number(height) };
 }
 
 function getScalePercent(scaleFactor: number) {

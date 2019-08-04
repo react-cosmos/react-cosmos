@@ -45,7 +45,7 @@ export function NumberInput({
   );
 
   const onInputChange = React.useCallback(
-    (e: React.SyntheticEvent<HTMLTextAreaElement>) => {
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       const newValue = +e.currentTarget.value;
       if (isFinite(newValue)) {
         onChange(trimValue(newValue));
