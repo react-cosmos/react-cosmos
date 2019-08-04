@@ -4,7 +4,8 @@ import {
   TextContainer,
   TextField,
   TextInputContainer,
-  TextMirror
+  TextMirror,
+  useFocus
 } from './shared';
 
 type Styles = {
@@ -31,9 +32,7 @@ export function NumberInput({
   styles,
   onChange
 }: Props) {
-  const [focused, setFocused] = React.useState(false);
-  const onFocus = React.useCallback(() => setFocused(true), []);
-  const onBlur = React.useCallback(() => setFocused(false), []);
+  const { focused, onFocus, onBlur } = useFocus();
 
   const trimValue = React.useCallback(
     (rawValue: number) => {

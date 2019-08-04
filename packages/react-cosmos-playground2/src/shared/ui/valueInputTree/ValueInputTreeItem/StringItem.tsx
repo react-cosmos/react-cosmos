@@ -3,7 +3,8 @@ import {
   TextContainer,
   TextField,
   TextInputContainer,
-  TextMirror
+  TextMirror,
+  useFocus
 } from '../../inputs/shared';
 import { ValueContainer, Label } from './shared';
 
@@ -15,9 +16,7 @@ type Props = {
 };
 
 export function StringItem({ id, label, value, onChange }: Props) {
-  const [focused, setFocused] = React.useState(false);
-  const onFocus = React.useCallback(() => setFocused(true), []);
-  const onBlur = React.useCallback(() => setFocused(false), []);
+  const { focused, onFocus, onBlur } = useFocus();
 
   const onInputChange = React.useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) =>
