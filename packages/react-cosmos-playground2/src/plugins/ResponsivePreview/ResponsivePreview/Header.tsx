@@ -21,74 +21,72 @@ const numberInputStypes = {
   focusedBoxShadow: '0 0 1px 1px var(--primary4)'
 };
 
-export class Header extends React.Component<Props> {
-  render() {
-    const {
-      devices,
-      selectedViewport,
-      scaleFactor,
-      scaled,
-      selectViewport,
-      toggleScale
-    } = this.props;
-    const canScale = scaleFactor < 1;
-
-    const options = devices.map(({ width, height, label }) => {
-      const value = stringifyViewport({ width, height });
-      return { value, label, width, height };
-    });
-    return (
-      <Container data-testid="responsiveHeader">
-        <Left>
-          <Select
-            testId="viewportSelect"
-            options={options}
-            value={stringifyViewport(selectedViewport)}
-            onChange={option =>
-              selectViewport({ width: option.width, height: option.height })
-            }
+export function Header({
+  devices,
+  selectedViewport,
+  scaleFactor,
+  scaled,
+  selectViewport,
+  toggleScale
+}: Props) {
+  const options = React.useMemo(
+    () =>
+      devices.map(({ width, height, label }) => {
+        const value = stringifyViewport({ width, height });
+        return { value, label, width, height };
+      }),
+    [devices]
+  );
+  const canScale = scaleFactor < 1;
+  return (
+    <Container data-testid="responsiveHeader">
+      <Left>
+        <Select
+          testId="viewportSelect"
+          options={options}
+          value={stringifyViewport(selectedViewport)}
+          onChange={option =>
+            selectViewport({ width: option.width, height: option.height })
+          }
+        />
+      </Left>
+      <Right>
+        <ViewportSize>
+          <NumberInput
+            id="viewport-width"
+            value={selectedViewport.width}
+            minValue={1}
+            maxValue={5120}
+            styles={numberInputStypes}
+            onChange={width => selectViewport({ ...selectedViewport, width })}
           />
-        </Left>
-        <Right>
-          <ViewportSize>
-            <NumberInput
-              id="viewport-width"
-              value={selectedViewport.width}
-              minValue={1}
-              maxValue={5120}
-              styles={numberInputStypes}
-              onChange={width => selectViewport({ ...selectedViewport, width })}
-            />
-            <ViewportX>×</ViewportX>
-            <NumberInput
-              id="viewport-width"
-              value={selectedViewport.height}
-              minValue={1}
-              maxValue={5120}
-              styles={numberInputStypes}
-              onChange={height =>
-                selectViewport({ ...selectedViewport, height })
-              }
-            />
-          </ViewportSize>
-          <Button
-            icon={<Minimize2Icon />}
-            label={
-              <>
-                scale
-                {canScale && (
-                  <ScaleDegree>{getScalePercent(scaleFactor)}</ScaleDegree>
-                )}
-              </>
-            }
-            disabled={!canScale}
-            selected={canScale && scaled}
-            onClick={toggleScale}
+          <ViewportX>×</ViewportX>
+          <NumberInput
+            id="viewport-width"
+            value={selectedViewport.height}
+            minValue={1}
+            maxValue={5120}
+            styles={numberInputStypes}
+            onChange={height => selectViewport({ ...selectedViewport, height })}
           />
-        </Right>
-      </Container>
-    );
-  }
+        </ViewportSize>
+        <Button
+          icon={<Minimize2Icon />}
+          label={
+            <>
+              scale
+              {canScale && (
+                <ScaleDegree>{getScalePercent(scaleFactor)}</ScaleDegree>
+              )}
+            </>
+          }
+          disabled={!canScale}
+          selected={canScale && scaled}
+          onClick={toggleScale}
+        />
+      </Right>
+    </Container>
+  );
 }
 
 function stringifyViewport({ width, height }: Viewport) {
