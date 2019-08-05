@@ -39,6 +39,7 @@ Control panel
   - Inputs
     - [x] Text value
     - [x] Number value
+      - [ ] Support decimals
     - [x] Boolean value
     - [x] Null value
   - [x] Style
