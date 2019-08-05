@@ -53,7 +53,6 @@ export function Header({
       <Right>
         <ViewportSize>
           <NumberInput
-            id="viewport-width"
             value={selectedViewport.width}
             minValue={1}
             maxValue={5120}
@@ -62,7 +61,6 @@ export function Header({
           />
           <ViewportX>×</ViewportX>
           <NumberInput
-            id="viewport-width"
             value={selectedViewport.height}
             minValue={1}
             maxValue={5120}

@@ -15,7 +15,7 @@ type Styles = {
 };
 
 type Props = {
-  id: string;
+  id?: string;
   value: number;
   minValue?: number;
   maxValue?: number;
