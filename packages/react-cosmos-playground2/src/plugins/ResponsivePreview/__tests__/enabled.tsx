@@ -183,7 +183,7 @@ it('clears viewport in fixture state on untoggle', async () => {
   expect(mocks.fixtureState.viewport).toEqual(null);
 });
 
-it('clears storage viewport state on untoggle', async () => {
+it('sets disabled viewport state on untoggle', async () => {
   register();
   const storageMock = mockEnabledViewportStorage();
   mockRouter({ isFullScreen: () => false });
