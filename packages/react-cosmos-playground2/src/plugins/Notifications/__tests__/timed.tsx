@@ -1,4 +1,4 @@
-import { act, render, waitForElement } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import React from 'react';
 import { ArraySlot, enablePlugin, loadPlugins } from 'react-plugin';
 import { register } from '..';
@@ -34,7 +34,7 @@ it('renders timed notification', async () => {
   const { getByText } = loadTestPlugins();
 
   pushTimedNotification();
-  await waitForElement(() => getByText('Renderer connected'));
+  getByText('Renderer connected');
 });
 
 it('clears timed notification after timeout expires', async () => {

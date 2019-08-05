@@ -1,4 +1,4 @@
-import { act, render, waitForElement } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import React from 'react';
 import { ArraySlot, loadPlugins } from 'react-plugin';
 import { register } from '..';
@@ -39,6 +39,6 @@ it('renders multiple sticky notifications', async () => {
   const { getByText } = loadTestPlugins();
 
   pushStickyNotifications();
-  await waitForElement(() => getByText('Check this out'));
-  await waitForElement(() => getByText('Take a look at this'));
+  getByText('Check this out');
+  getByText('Take a look at this');
 });
