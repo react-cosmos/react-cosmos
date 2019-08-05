@@ -26,23 +26,11 @@ function pushStickyNotification() {
   );
 }
 
-it('renders sticky notification', async () => {
-  mockRouter();
+it('does not render sticky notification', async () => {
+  mockRouter({ isFullScreen: () => true });
   register();
-  const { getByText } = loadTestPlugins();
+  const { queryByText } = loadTestPlugins();
 
   pushStickyNotification();
-  getByText('Rebuilding...');
-});
-
-it('removes sticky notification', async () => {
-  mockRouter();
-  register();
-  const { getByText, queryByText } = loadTestPlugins();
-
-  pushStickyNotification();
-  getByText('Rebuilding...');
-
-  act(() => getNotificationsMethods().removeStickyNotification('build'));
   expect(queryByText('Rebuilding...')).toBeNull();
 });

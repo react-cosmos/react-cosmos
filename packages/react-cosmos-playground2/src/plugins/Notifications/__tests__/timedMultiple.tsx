@@ -1,9 +1,12 @@
-import { act, render, waitForElement } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import React from 'react';
 import { ArraySlot, loadPlugins } from 'react-plugin';
 import { register } from '..';
 import { cleanup } from '../../../testHelpers/plugin';
-import { getNotificationsMethods } from '../../../testHelpers/pluginMocks';
+import {
+  getNotificationsMethods,
+  mockRouter
+} from '../../../testHelpers/pluginMocks';
 
 afterEach(cleanup);
 
@@ -11,7 +14,7 @@ jest.useFakeTimers();
 
 function loadTestPlugins() {
   loadPlugins();
-  return render(<ArraySlot name="previewGlobal" />);
+  return render(<ArraySlot name="global" />);
 }
 
 function pushTimedNotifications() {
@@ -33,15 +36,17 @@ function pushTimedNotifications() {
 }
 
 it('renders multiple timed notifications', async () => {
+  mockRouter();
   register();
   const { getByText } = loadTestPlugins();
 
   pushTimedNotifications();
-  await waitForElement(() => getByText('Check this out'));
-  await waitForElement(() => getByText('Take a look at this'));
+  getByText('Check this out');
+  getByText('Take a look at this');
 });
 
 it('clears all timed notifications after timeout expires', async () => {
+  mockRouter();
   register();
   const { queryByText } = loadTestPlugins();
 

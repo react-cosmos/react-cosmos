@@ -18,7 +18,7 @@
     "lodash": "^4.17.15",
     "micromatch": "^4.0.2",
     "open": "^6.4.0",
-    "query-string": "^6.8.1",
+    "query-string": "^6.8.2",
     "react-cosmos-fixture": "^5.0.0-alpha.22",
     "react-cosmos-playground2": "^5.0.0-alpha.21",
     "react-cosmos-shared2": "^5.0.0-alpha.20",

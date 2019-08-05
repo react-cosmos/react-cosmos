@@ -1,15 +1,16 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
+import { RouterSpec } from '../Router/public';
 import { Notifications } from './Notifications';
 import { NotificationsSpec } from './public';
 import {
+  clearTimedNotification,
   pushStickyNotification,
-  removeStickyNotification,
   pushTimedNotification,
-  clearTimedNotification
+  removeStickyNotification
 } from './pushNotification';
 
-const { register, onLoad, plug } = createPlugin<NotificationsSpec>({
+const { register, onLoad, namedPlug } = createPlugin<NotificationsSpec>({
   name: 'notifications',
   initialState: {
     stickyNotifications: [],
@@ -33,7 +34,12 @@ onLoad(context => {
   };
 });
 
-plug('previewGlobal', ({ pluginContext }) => {
+namedPlug('global', 'notifications', ({ pluginContext }) => {
+  const router = pluginContext.getMethodsOf<RouterSpec>('router');
+  if (router.isFullScreen()) {
+    return null;
+  }
+
   const { stickyNotifications, timedNotifications } = pluginContext.getState();
   const notifications =
     timedNotifications === null

@@ -65,16 +65,6 @@ it('renders "contentOverlay" slot', async () => {
   getByText(/we are the robots/i);
 });
 
-it('renders "previewGlobal" slot', async () => {
-  registerTestPlugins();
-  mockPlug('previewGlobal', () => <>we are the robots1</>);
-  mockPlug('previewGlobal', () => <>we are the robots2</>);
-
-  const { getByText } = await loadTestPlugins();
-  getByText(/we are the robots1/i);
-  getByText(/we are the robots2/i);
-});
-
 it('renders "panel" slot', async () => {
   registerTestPlugins();
   mockPlug('panel', () => <>we are the robots</>);

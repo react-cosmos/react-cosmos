@@ -1,9 +1,12 @@
-import { act, render, waitForElement } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import React from 'react';
 import { ArraySlot, enablePlugin, loadPlugins } from 'react-plugin';
 import { register } from '..';
 import { cleanup } from '../../../testHelpers/plugin';
-import { getNotificationsMethods } from '../../../testHelpers/pluginMocks';
+import {
+  getNotificationsMethods,
+  mockRouter
+} from '../../../testHelpers/pluginMocks';
 
 afterEach(cleanup);
 
@@ -11,7 +14,7 @@ jest.useFakeTimers();
 
 function loadTestPlugins() {
   loadPlugins();
-  return render(<ArraySlot name="previewGlobal" />);
+  return render(<ArraySlot name="global" />);
 }
 
 function pushTimedNotification() {
@@ -26,14 +29,16 @@ function pushTimedNotification() {
 }
 
 it('renders timed notification', async () => {
+  mockRouter();
   register();
   const { getByText } = loadTestPlugins();
 
   pushTimedNotification();
-  await waitForElement(() => getByText('Renderer connected'));
+  getByText('Renderer connected');
 });
 
 it('clears timed notification after timeout expires', async () => {
+  mockRouter();
   register();
   const { queryByText } = loadTestPlugins();
 
@@ -44,6 +49,7 @@ it('clears timed notification after timeout expires', async () => {
 });
 
 it('behaves peacefully when timeout expires after plugin unloads', async () => {
+  mockRouter();
   register();
   loadTestPlugins();
 

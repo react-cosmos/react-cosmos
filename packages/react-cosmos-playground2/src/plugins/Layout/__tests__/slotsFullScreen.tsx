@@ -65,14 +65,6 @@ it('renders "contentOverlay" slot', async () => {
   getByText(/we are the robots/i);
 });
 
-it('does not render "previewGlobal" slot', async () => {
-  registerTestPlugins();
-  mockPlug('previewGlobal', () => <>we are the robots1</>);
-
-  const { queryByText } = await loadTestPlugins();
-  expect(queryByText(/we are the robots/i)).toBeNull();
-});
-
 it('does not render "panel" slot', async () => {
   registerTestPlugins();
   mockPlug('panel', () => <>we are the robots</>);
