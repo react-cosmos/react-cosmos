@@ -1,4 +1,4 @@
-import { act, render, waitForElement } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import React from 'react';
 import { ArraySlot, loadPlugins } from 'react-plugin';
 import { register } from '..';
