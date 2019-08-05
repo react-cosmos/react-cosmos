@@ -9,7 +9,7 @@ import {
   clearTimedNotification
 } from './pushNotification';
 
-const { register, onLoad, plug } = createPlugin<NotificationsSpec>({
+const { register, onLoad, namedPlug } = createPlugin<NotificationsSpec>({
   name: 'notifications',
   initialState: {
     stickyNotifications: [],
@@ -33,7 +33,7 @@ onLoad(context => {
   };
 });
 
-plug('previewGlobal', ({ pluginContext }) => {
+namedPlug('global', 'notifications', ({ pluginContext }) => {
   const { stickyNotifications, timedNotifications } = pluginContext.getState();
   const notifications =
     timedNotifications === null

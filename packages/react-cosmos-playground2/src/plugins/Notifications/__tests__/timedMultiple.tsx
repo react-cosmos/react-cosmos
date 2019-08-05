@@ -11,7 +11,7 @@ jest.useFakeTimers();
 
 function loadTestPlugins() {
   loadPlugins();
-  return render(<ArraySlot name="previewGlobal" />);
+  return render(<ArraySlot name="global" />);
 }
 
 function pushTimedNotifications() {

@@ -35,7 +35,7 @@ export function Notifications({ notifications }: Props) {
 
 const Container = styled.div`
   position: absolute;
-  top: 8px;
+  bottom: 8px;
   right: 8px;
   z-index: 1;
 `;
@@ -45,12 +45,16 @@ const Item = styled.div`
   flex-direction: row;
   align-items: flex-start;
   min-height: 56px;
-  margin: 0 0 6px 0;
+  margin-top: 6px;
   border-radius: 6px;
   background: hsla(var(--hue-primary), 17%, 98%, 0.95);
   box-shadow: 0 2px 10px -4px var(--grey1);
   line-height: 20px;
   animation: fadeScaleIn var(--quick) forwards;
+
+  :first-child {
+    margin-top: 0;
+  }
 
   @keyframes fadeScaleIn {
     0% {

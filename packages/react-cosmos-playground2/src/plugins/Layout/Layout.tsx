@@ -43,7 +43,7 @@ export function Layout({
     return (
       <Container>
         <Center key="center" style={{ zIndex: 1 }}>
-          <Preview key="preview" showGlobals={false} />
+          <Preview key="preview" />
         </Center>
         <div style={{ zIndex: 2 }}>
           <ArraySlot name="global" />
@@ -67,7 +67,7 @@ export function Layout({
       </NavContainer>
       <Center key="center" style={{ zIndex: 1 }}>
         <Slot name="rendererHeader" />
-        <Preview key="preview" showGlobals={true} />
+        <Preview key="preview" />
         {dragging && <DragOverlay />}
       </Center>
       {panelOpen && (
@@ -109,14 +109,11 @@ function Nav({ navOpen, dragging, dragElRef }: NavProps) {
   );
 }
 
-type PreviewProps = { showGlobals: boolean };
-
-function Preview({ showGlobals }: PreviewProps) {
+function Preview() {
   return (
     <PreviewContainer>
       <Slot name="rendererPreview" />
       <Slot name="contentOverlay" />
-      {showGlobals && <ArraySlot name="previewGlobal" />}
     </PreviewContainer>
   );
 }

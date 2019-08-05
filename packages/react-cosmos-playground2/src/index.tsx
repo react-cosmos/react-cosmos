@@ -19,7 +19,7 @@ export type PlaygroundConfig = {
 
 const DEFAULT_CONFIG = {
   core: {
-    globalOrder: ['fixtureSearch']
+    globalOrder: ['fixtureSearch', 'notifications']
   },
   nav: {
     navRowOrder: ['fixtureSearch', 'fixtureTree'],
