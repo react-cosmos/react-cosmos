@@ -13,6 +13,8 @@ type Props<Option extends BaseOption> = {
   onChange: (newValue: Option) => unknown;
 };
 
+const CUSTOM_LABEL = 'Custom';
+
 export function Select<Option extends BaseOption>({
   id,
   testId,
@@ -34,7 +36,7 @@ export function Select<Option extends BaseOption>({
   );
 
   const selectedOption = options.find(o => o.value === value);
-  const selectedLabel = selectedOption ? selectedOption.label : 'Custom';
+  const selectedLabel = selectedOption ? selectedOption.label : CUSTOM_LABEL;
   return (
     <Container focused={focused}>
       <VisibleButton>
@@ -51,10 +53,14 @@ export function Select<Option extends BaseOption>({
         onBlur={onBlur}
         onChange={onInputChange}
       >
+        {!selectedOption && (
+          <option key="custom-option" value={value}>
+            {CUSTOM_LABEL}
+          </option>
+        )}
         {options.map((option, idx) => {
-          const isSelected = value === option.value;
           return (
-            <option key={idx} value={option.value} disabled={isSelected}>
+            <option key={idx} value={option.value}>
               {option.label}
             </option>
           );
