@@ -3,7 +3,10 @@ import React from 'react';
 import { ArraySlot, loadPlugins } from 'react-plugin';
 import { register } from '..';
 import { cleanup } from '../../../testHelpers/plugin';
-import { getNotificationsMethods } from '../../../testHelpers/pluginMocks';
+import {
+  getNotificationsMethods,
+  mockRouter
+} from '../../../testHelpers/pluginMocks';
 
 afterEach(cleanup);
 
@@ -24,6 +27,7 @@ function pushStickyNotification() {
 }
 
 it('renders sticky notification', async () => {
+  mockRouter();
   register();
   const { getByText } = loadTestPlugins();
 
@@ -32,6 +36,7 @@ it('renders sticky notification', async () => {
 });
 
 it('removes sticky notification', async () => {
+  mockRouter();
   register();
   const { getByText, queryByText } = loadTestPlugins();
 

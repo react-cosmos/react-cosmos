@@ -3,7 +3,10 @@ import React from 'react';
 import { ArraySlot, enablePlugin, loadPlugins } from 'react-plugin';
 import { register } from '..';
 import { cleanup } from '../../../testHelpers/plugin';
-import { getNotificationsMethods } from '../../../testHelpers/pluginMocks';
+import {
+  getNotificationsMethods,
+  mockRouter
+} from '../../../testHelpers/pluginMocks';
 
 afterEach(cleanup);
 
@@ -26,6 +29,7 @@ function pushTimedNotification() {
 }
 
 it('renders timed notification', async () => {
+  mockRouter();
   register();
   const { getByText } = loadTestPlugins();
 
@@ -34,6 +38,7 @@ it('renders timed notification', async () => {
 });
 
 it('clears timed notification after timeout expires', async () => {
+  mockRouter();
   register();
   const { queryByText } = loadTestPlugins();
 
@@ -44,6 +49,7 @@ it('clears timed notification after timeout expires', async () => {
 });
 
 it('behaves peacefully when timeout expires after plugin unloads', async () => {
+  mockRouter();
   register();
   loadTestPlugins();
 
