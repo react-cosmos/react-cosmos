@@ -1,10 +1,16 @@
 import { PluginContext } from 'react-plugin';
 import { StorageSpec } from '../Storage/public';
-import { ResponsivePreviewSpec } from './public';
+import { ResponsivePreviewSpec, Viewport } from './public';
 
 export type Context = PluginContext<ResponsivePreviewSpec>;
 
 export type StorageMethods = StorageSpec['methods'];
+
+export type ViewportState = {
+  enabled: boolean;
+  scaled: boolean;
+  viewport: Viewport;
+};
 
 export const DEFAULT_DEVICES = [
   { label: 'iPhone 5', width: 320, height: 568 },
@@ -15,9 +21,10 @@ export const DEFAULT_DEVICES = [
   { label: '1080p', width: 1920, height: 1080 }
 ];
 
-export const DEFAULT_VIEWPORT = {
-  width: 320,
-  height: 568
-};
+export const VIEWPORT_STORAGE_KEY = 'responsiveViewportState';
 
-export const STORAGE_KEY = 'responsiveViewport';
+export const DEFAULT_VIEWPORT_STATE: ViewportState = {
+  enabled: false,
+  scaled: true,
+  viewport: { width: 320, height: 568 }
+};

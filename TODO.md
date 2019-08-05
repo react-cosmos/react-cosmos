@@ -8,15 +8,15 @@ Alpha
 - [x] Notifications redesign
   - [x] Build notification [#522](https://github.com/react-cosmos/react-cosmos/issues/522)
   - [x] ~~Try: Notifications for fixture create/remove/rename~~ Too much info to display inside a notification
-- [x] Control panel
+- [ ] Control panel
 - [x] Fixture search
   - [x] Minimize left nav
 - [x] Official React Native integration
   - [x] NativeFixtureLoader facade
   - [x] Hybrid Cosmos: Mirror dom and native renderers
-- [ ] Resize responsive viewport
-  - [ ] Put viewports in dropdown
-  - [ ] Make width/height inputs
+- [x] Resize responsive viewport
+  - [x] Put viewports in dropdown
+  - [x] Make width/height inputs
 - [ ] Mass fixture snapshots
 - [ ] Refresh docs
 
@@ -39,6 +39,7 @@ Control panel
   - Inputs
     - [x] Text value
     - [x] Number value
+      - [ ] Support decimals
     - [x] Boolean value
     - [x] Null value
   - [x] Style

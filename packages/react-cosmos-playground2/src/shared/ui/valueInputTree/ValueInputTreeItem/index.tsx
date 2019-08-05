@@ -7,11 +7,11 @@ import {
   FixtureStateValues
 } from 'react-cosmos-shared2/fixtureState';
 import { TreeItemValue, TreeItemContainer } from '../shared';
-import { UnserializableInput } from './UnserializableInput';
-import { StringInput } from './StringInput';
-import { NumberInput } from './NumberInput';
-import { BooleanInput } from './BooleanInput';
-import { NullInput } from './NullInput';
+import { UnserializableItem } from './UnserializableItem';
+import { StringItem } from './StringItem';
+import { NumberItem } from './NumberItem';
+import { BooleanItem } from './BooleanItem';
+import { NullItem } from './NullItem';
 
 type Props = {
   treeId: string;
@@ -43,14 +43,14 @@ export function ValueInputTreeItem({
 
   return (
     <TreeItemContainer indentLevel={parents.length}>
-      <InputContainer>
-        {getInput(item, itemId, itemName, onInputChange)}
-      </InputContainer>
+      <ItemContainer>
+        {getItem(item, itemId, itemName, onInputChange)}
+      </ItemContainer>
     </TreeItemContainer>
   );
 }
 
-export const InputContainer = styled.div`
+export const ItemContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -59,7 +59,7 @@ export const InputContainer = styled.div`
   padding: 0;
 `;
 
-function getInput(
+function getItem(
   item: TreeItemValue,
   id: string,
   label: string,
@@ -67,17 +67,13 @@ function getInput(
 ) {
   if (item.type === 'unserializable') {
     return (
-      <UnserializableInput
-        id={id}
-        label={label}
-        value={item.stringifiedValue}
-      />
+      <UnserializableItem id={id} label={label} value={item.stringifiedValue} />
     );
   }
 
   if (typeof item.value === 'string') {
     return (
-      <StringInput
+      <StringItem
         id={id}
         label={label}
         value={item.value}
@@ -88,7 +84,7 @@ function getInput(
 
   if (typeof item.value === 'number') {
     return (
-      <NumberInput
+      <NumberItem
         id={id}
         label={label}
         value={item.value}
@@ -99,7 +95,7 @@ function getInput(
 
   if (typeof item.value === 'boolean') {
     return (
-      <BooleanInput
+      <BooleanItem
         id={id}
         label={label}
         value={item.value}
@@ -109,7 +105,7 @@ function getInput(
   }
 
   if (item.value === null) {
-    return <NullInput id={id} label={label} />;
+    return <NullItem id={id} label={label} />;
   }
 
   throw new Error(`Invalid primitive value: ${item.value}`);

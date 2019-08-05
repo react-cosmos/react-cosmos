@@ -1,12 +1,12 @@
 import React from 'react';
 import {
-  Label,
-  ValueContainer,
-  TextInputContainer,
   TextContainer,
   TextField,
-  TextMirror
-} from './shared';
+  TextInputContainer,
+  TextMirror,
+  useFocus
+} from '../../inputs/shared';
+import { ValueContainer, Label } from './shared';
 
 type Props = {
   id: string;
@@ -15,13 +15,11 @@ type Props = {
   onChange: (newValue: string) => unknown;
 };
 
-export function StringInput({ id, label, value, onChange }: Props) {
-  const [focused, setFocused] = React.useState(false);
-  const onFocus = React.useCallback(() => setFocused(true), []);
-  const onBlur = React.useCallback(() => setFocused(false), []);
+export function StringItem({ id, label, value, onChange }: Props) {
+  const { focused, onFocus, onBlur } = useFocus();
 
   const onInputChange = React.useCallback(
-    (e: React.SyntheticEvent<HTMLTextAreaElement>) =>
+    (e: React.ChangeEvent<HTMLTextAreaElement>) =>
       onChange(e.currentTarget.value),
     [onChange]
   );
@@ -34,19 +32,24 @@ export function StringInput({ id, label, value, onChange }: Props) {
         {label}
       </Label>
       <ValueContainer>
-        <TextInputContainer focused={focused}>
+        <TextInputContainer
+          focused={focused}
+          focusedBg="var(--grey1)"
+          focusedBoxShadow="0 0 0.5px 1px var(--primary4)"
+        >
           <TextContainer>
-            <TextMirror style={{ opacity: focused ? 0 : 1 }}>
+            <TextMirror minWidth={24} focused={focused}>
               {mirrorText}
             </TextMirror>
             <TextField
               rows={1}
               id={id}
               value={value}
+              focused={focused}
+              color="var(--grey7)"
               onChange={onInputChange}
               onFocus={onFocus}
               onBlur={onBlur}
-              style={{ opacity: focused ? 1 : 0 }}
             />
           </TextContainer>
         </TextInputContainer>

@@ -2,80 +2,93 @@ import React from 'react';
 import styled from 'styled-components';
 import { Minimize2Icon } from '../../../shared/icons';
 import { Button } from '../../../shared/ui/buttons';
-import { Viewport, Device } from '../public';
-import { getAvailableViewport } from './style';
+import { Device, Viewport } from '../public';
+import { NumberInput } from '../../../shared/ui/inputs/NumberInput';
+import { Select } from '../../../shared/ui/inputs/Select';
 
 type Props = {
   devices: Device[];
-  viewport: Viewport;
-  container: Viewport;
-  scale: boolean;
-  createSelectViewportHandler: (viewport: Viewport) => () => unknown;
+  selectedViewport: Viewport;
+  scaleFactor: number;
+  scaled: boolean;
+  selectViewport: (viewport: Viewport) => unknown;
   toggleScale: () => unknown;
 };
 
-export class Header extends React.Component<Props> {
-  render() {
-    const {
-      devices,
-      viewport,
-      container,
-      scale,
-      createSelectViewportHandler,
-      toggleScale
-    } = this.props;
-    const scaleFactor = getViewportScaleFactor(viewport, container);
-    const isScalable = scaleFactor < 1;
+const numberInputStypes = {
+  focusedColor: 'var(--grey2)',
+  focusedBg: 'var(--grey7)',
+  focusedBoxShadow: '0 0 1px 1px var(--primary4)'
+};
 
-    return (
-      <Container data-testid="responsiveHeader">
-        <Devices>
-          {devices.map(({ label, width, height }, idx) => {
-            const isSelected =
-              viewport &&
-              viewport.width === width &&
-              viewport.height === height;
-
-            return (
-              <Button
-                key={idx}
-                label={label}
-                disabled={isSelected}
-                selected={isSelected}
-                onClick={createSelectViewportHandler({ width, height })}
-              />
-            );
-          })}
-        </Devices>
-        <Right>
-          <ViewportSize>{`${viewport.width}×${viewport.height}`}</ViewportSize>
-          <Button
-            icon={<Minimize2Icon />}
-            label={
-              <>
-                scale
-                {isScalable && (
-                  <ScaleDegree>{getScalePercent(scaleFactor)}</ScaleDegree>
-                )}
-              </>
-            }
-            disabled={!isScalable}
-            selected={isScalable && scale}
-            onClick={toggleScale}
+export function Header({
+  devices,
+  selectedViewport,
+  scaleFactor,
+  scaled,
+  selectViewport,
+  toggleScale
+}: Props) {
+  const options = React.useMemo(
+    () =>
+      devices.map(({ width, height, label }) => {
+        const value = stringifyViewport({ width, height });
+        return { value, label, width, height };
+      }),
+    [devices]
+  );
+  const canScale = scaleFactor < 1;
+  return (
+    <Container data-testid="responsiveHeader">
+      <Left>
+        <Select
+          testId="viewportSelect"
+          options={options}
+          value={stringifyViewport(selectedViewport)}
+          onChange={option =>
+            selectViewport({ width: option.width, height: option.height })
+          }
+        />
+      </Left>
+      <Right>
+        <ViewportSize>
+          <NumberInput
+            value={selectedViewport.width}
+            minValue={1}
+            maxValue={5120}
+            styles={numberInputStypes}
+            onChange={width => selectViewport({ ...selectedViewport, width })}
           />
-        </Right>
-      </Container>
-    );
-  }
+          <ViewportX>×</ViewportX>
+          <NumberInput
+            value={selectedViewport.height}
+            minValue={1}
+            maxValue={5120}
+            styles={numberInputStypes}
+            onChange={height => selectViewport({ ...selectedViewport, height })}
+          />
+        </ViewportSize>
+        <Button
+          icon={<Minimize2Icon />}
+          label={
+            <>
+              scale
+              {canScale && (
+                <ScaleDegree>{getScalePercent(scaleFactor)}</ScaleDegree>
+              )}
+            </>
+          }
+          disabled={!canScale}
+          selected={canScale && scaled}
+          onClick={toggleScale}
+        />
+      </Right>
+    </Container>
+  );
 }
 
-function getViewportScaleFactor(viewport: Viewport, container: Viewport) {
-  const { width, height } = getAvailableViewport(container);
-
-  return Math.min(
-    Math.min(1, width / viewport.width),
-    Math.min(1, height / viewport.height)
-  );
+function stringifyViewport({ width, height }: Viewport) {
+  return `${width}x${height}`;
 }
 
 function getScalePercent(scaleFactor: number) {
@@ -93,22 +106,15 @@ const Container = styled.div`
   overflow-x: auto;
 `;
 
-const Devices = styled.div`
+const Left = styled.div`
   height: 32px;
   display: flex;
   flex-direction: row;
   align-items: center;
-
-  > button {
-    margin-left: 4px;
-
-    :first-child {
-      margin-left: 0;
-    }
-  }
 `;
 
 const Right = styled.div`
+  height: 32px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -124,7 +130,16 @@ const Right = styled.div`
 `;
 
 const ViewportSize = styled.div`
-  margin: 0 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 2px;
+  color: var(--grey2);
+`;
+
+const ViewportX = styled.div`
+  padding: 0 1px;
+  line-height: 32px;
   color: var(--grey3);
 `;
 

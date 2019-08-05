@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  render,
-  waitForElement,
-  RenderResult,
-  wait
-} from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { loadPlugins, Slot, ArraySlot } from 'react-plugin';
 import { cleanup } from '../../../testHelpers/plugin';
 import { register } from '..';
@@ -40,27 +35,21 @@ function loadTestPlugins() {
   );
 }
 
-async function waitForMainPlug({ getByTestId }: RenderResult) {
-  await waitForElement(() => getByTestId('responsivePreview'));
-}
-
 it('renders disabled button', async () => {
   registerTestPlugins();
   const { getByTitle } = loadTestPlugins();
-  await wait(() =>
-    expect(getByTitle(/toggle responsive mode/i)).toHaveAttribute('disabled')
-  );
+  expect(getByTitle(/toggle responsive mode/i)).toHaveAttribute('disabled');
 });
 
 it('renders children of "rendererPreviewOuter" slot', async () => {
   registerTestPlugins();
   const { getByTestId } = loadTestPlugins();
-  await waitForElement(() => getByTestId('previewMock'));
+  getByTestId('previewMock');
 });
 
 it('does not render responsive header', async () => {
   registerTestPlugins();
   const renderer = loadTestPlugins();
-  await waitForMainPlug(renderer);
+  renderer.getByTestId('responsivePreview');
   expect(renderer.queryByTestId('responsiveHeader')).toBeNull();
 });

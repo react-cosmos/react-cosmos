@@ -1,12 +1,12 @@
 import React from 'react';
-import { Label, ValueContainer, UneditableInput } from './shared';
+import { ValueContainer, Label, UneditableInput } from './shared';
 
 type Props = {
   id: string;
   label: string;
 };
 
-export function NullInput({ id, label }: Props) {
+export function NullItem({ id, label }: Props) {
   return (
     <>
       <Label title={label} htmlFor={id}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitForElement } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { loadPlugins, Slot } from 'react-plugin';
 import { cleanup } from '../../../testHelpers/plugin';
 import {
@@ -40,5 +40,5 @@ it('renders responsive header', async () => {
   registerTestPlugins();
 
   const { getByTestId } = loadTestPlugins();
-  await waitForElement(() => getByTestId('responsiveHeader'));
+  getByTestId('responsiveHeader');
 });
