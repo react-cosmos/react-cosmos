@@ -32,7 +32,7 @@ plug('rendererPreviewOuter', ({ children, pluginContext }) => {
   return (
     <ResponsivePreview
       devices={devices}
-      enabled={Boolean(fixtureState.viewport) || viewportState.enabled}
+      enabled={fixtureState.viewport ? true : viewportState.enabled}
       viewport={fixtureState.viewport || viewportState.viewport}
       scaled={viewportState.scaled}
       fullScreen={router.isFullScreen()}
@@ -59,14 +59,14 @@ namedPlug('rendererAction', 'responsivePreview', ({ pluginContext }) => {
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const fixtureState = rendererCore.getFixtureState();
   const viewportState = getViewportState(pluginContext);
-  const responsiveModeOn = fixtureState.viewport ? true : viewportState.enabled;
+  const enabled = fixtureState.viewport ? true : viewportState.enabled;
 
   return (
     <ToggleButton
       validFixtureSelected={rendererCore.isValidFixtureSelected()}
-      responsiveModeOn={responsiveModeOn}
+      enabled={enabled}
       toggleViewportState={() => {
-        if (responsiveModeOn) {
+        if (enabled) {
           setViewportState(pluginContext, { ...viewportState, enabled: false });
           setFixtureStateViewport(pluginContext, null);
         } else {

@@ -4,13 +4,13 @@ import { IconButton } from '../../../shared/ui/buttons';
 
 type Props = {
   validFixtureSelected: boolean;
-  responsiveModeOn: boolean;
+  enabled: boolean;
   toggleViewportState: () => unknown;
 };
 
 export function ToggleButton({
   validFixtureSelected,
-  responsiveModeOn,
+  enabled,
   toggleViewportState
 }: Props) {
   if (!validFixtureSelected) {
@@ -27,7 +27,7 @@ export function ToggleButton({
     <IconButton
       icon={<SmartphoneIcon />}
       title="Toggle responsive mode"
-      selected={responsiveModeOn}
+      selected={enabled}
       onClick={toggleViewportState}
     />
   );
