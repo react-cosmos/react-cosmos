@@ -55,6 +55,14 @@
       "description": "Dev server port. [default: 5000]",
       "type": "number"
     },
+    "httpProxy": {
+      "description": "Proxy some URLs to a different HTTP server (eg. an API backend dev server). Similar to devServer.proxy in webpack config.",
+      "type": "object",
+      "additionalProperties": true,
+      "patternProperties": {
+        ".*": { "type": "string" }
+      }
+    },
     "globalImports": {
       "description": "Modules to be imported before loading components. Stuff like reset.css, polyfills, etc.",
       "type": "array",
