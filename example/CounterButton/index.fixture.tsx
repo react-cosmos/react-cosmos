@@ -4,7 +4,7 @@ import * as Cosmos from './useNumber';
 
 export default () => {
   const [count, setCount] = Cosmos.useNumber({
-    inputName: 'button',
+    inputName: 'count',
     defaultValue: 0
   });
   return (

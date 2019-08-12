@@ -2,11 +2,7 @@
 import React from 'react';
 import { isEqual, omit } from 'lodash';
 import { FixtureContext } from 'react-cosmos-fixture';
-import {
-  findFixtureStateCustomState,
-  FixtureStatePrimitiveValue2,
-  FixtureStateValue2
-} from 'react-cosmos-shared2/fixtureState';
+import { findFixtureStateCustomState } from 'react-cosmos-shared2/fixtureState';
 
 type UseNumberArgs = {
   defaultValue: number;
@@ -21,32 +17,8 @@ export function useNumber({
 }: UseNumberArgs): [number, SetNumber] {
   const { fixtureState, setFixtureState } = React.useContext(FixtureContext);
 
-  useCleanFixtureState(inputName);
-
-  // Create fixture state
-  React.useEffect(() => {
-    setFixtureState(prevFsState => {
-      const prevFsValue = findFixtureStateCustomState(prevFsState, inputName);
-      if (prevFsValue) {
-        if (isEqual(prevFsValue.defaultValue, defaultValue)) {
-          return prevFsState;
-        }
-      }
-
-      const nextFsValue: FixtureStateValue2 = {
-        type: 'primitive',
-        defaultValue,
-        currentValue: defaultValue
-      };
-      return {
-        ...prevFsState,
-        customState: {
-          ...prevFsState.customState,
-          [inputName]: nextFsValue
-        }
-      };
-    });
-  }, [inputName, defaultValue, fixtureState, setFixtureState]);
+  useCleanFixtureStateOnInputRename(inputName);
+  useCreateOrResetFixtureState(inputName, defaultValue);
 
   const setValue: SetNumber = React.useCallback(
     // TODO: Refactor (DRY) *after* tests
@@ -67,31 +39,29 @@ export function useNumber({
             return prevFsState;
           }
 
-          const nextFsValue: FixtureStateValue2 = {
-            type: 'primitive',
-            defaultValue,
-            currentValue: stateChange(prevFsValue.currentValue)
-          };
           return {
             ...prevFsState,
             customState: {
               ...prevFsState.customState,
-              [inputName]: nextFsValue
+              [inputName]: {
+                type: 'primitive',
+                defaultValue,
+                currentValue: stateChange(prevFsValue.currentValue)
+              }
             }
           };
         });
       } else {
         setFixtureState(prevFsState => {
-          const nextFsValue: FixtureStatePrimitiveValue2 = {
-            type: 'primitive',
-            defaultValue,
-            currentValue: stateChange
-          };
           return {
             ...prevFsState,
             customState: {
               ...prevFsState.customState,
-              [inputName]: nextFsValue
+              [inputName]: {
+                type: 'primitive',
+                defaultValue,
+                currentValue: stateChange
+              }
             }
           };
         });
@@ -109,7 +79,7 @@ export function useNumber({
   ];
 }
 
-function useCleanFixtureState(inputName: string) {
+function useCleanFixtureStateOnInputRename(inputName: string) {
   const { setFixtureState } = React.useContext(FixtureContext);
   const prevInputName = React.useRef<string>(inputName);
   React.useEffect(() => {
@@ -121,4 +91,28 @@ function useCleanFixtureState(inputName: string) {
       }));
     };
   }, [inputName, setFixtureState]);
+}
+
+function useCreateOrResetFixtureState(inputName: string, defaultValue: number) {
+  const { fixtureState, setFixtureState } = React.useContext(FixtureContext);
+  React.useEffect(() => {
+    setFixtureState(prevFsState => {
+      const prevFsValue = findFixtureStateCustomState(prevFsState, inputName);
+      if (prevFsValue && isEqual(prevFsValue.defaultValue, defaultValue)) {
+        return prevFsState;
+      }
+
+      return {
+        ...prevFsState,
+        customState: {
+          ...prevFsState.customState,
+          [inputName]: {
+            type: 'primitive',
+            defaultValue,
+            currentValue: defaultValue
+          }
+        }
+      };
+    });
+  }, [inputName, defaultValue, fixtureState, setFixtureState]);
 }
