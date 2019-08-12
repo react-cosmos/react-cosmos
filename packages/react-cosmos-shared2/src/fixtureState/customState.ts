@@ -1,9 +1,9 @@
 import { FixtureState, FixtureStateValue2 } from './shared';
 
-export function findFixtureStateInputState(
+export function findFixtureStateCustomState(
   fixtureState: FixtureState,
   inputName: string
 ): void | FixtureStateValue2 {
-  const { inputState } = fixtureState;
-  return inputState && inputState[inputName];
+  const { customState } = fixtureState;
+  return customState && customState[inputName];
 }

@@ -30,28 +30,28 @@ export const ClassStatePanel = React.memo(function ClassStatePanel({
   onFixtureStateChange,
   onElementExpansionChange
 }: Props) {
-  if (!fixtureState.classState && !fixtureState.inputState) {
+  if (!fixtureState.classState && !fixtureState.customState) {
     return null;
   }
   const withClassState = fixtureState.classState
     ? fixtureState.classState.filter(hasFsValues)
     : [];
 
-  const { inputState = {} } = fixtureState;
-  const inputStateCurrentValues: FixtureStateValues = {};
-  Object.keys(inputState).forEach(inputName => {
-    inputStateCurrentValues[inputName] = {
-      type: inputState[inputName].type,
-      value: inputState[inputName].currentValue
+  const { customState = {} } = fixtureState;
+  const customStateCurrentValues: FixtureStateValues = {};
+  Object.keys(customState).forEach(inputName => {
+    customStateCurrentValues[inputName] = {
+      type: customState[inputName].type,
+      value: customState[inputName].currentValue
     };
   });
 
-  function onInputStateChange(newValues: Record<string, FixtureStateValue>) {
+  function onCustomStateChange(newValues: Record<string, FixtureStateValue>) {
     onFixtureStateChange(prevFsState => {
-      const prevInputState = fixtureState.inputState || {};
-      const newInputState: FixtureStateValues2 = {};
+      const prevCustomStateValues = fixtureState.customState || {};
+      const nextCustomStateValues: FixtureStateValues2 = {};
       Object.keys(newValues).forEach(inputName => {
-        if (!prevInputState[inputName]) {
+        if (!prevCustomStateValues[inputName]) {
           // TODO: Warn about state inconsistency?
           return;
         }
@@ -62,15 +62,15 @@ export const ClassStatePanel = React.memo(function ClassStatePanel({
           return;
         }
 
-        newInputState[inputName] = {
-          ...prevInputState[inputName],
+        nextCustomStateValues[inputName] = {
+          ...prevCustomStateValues[inputName],
           currentValue: fixtureStateValue.value
         };
       });
 
       return {
         ...prevFsState,
-        inputState: newInputState
+        customState: nextCustomStateValues
       };
     });
   }
@@ -91,9 +91,9 @@ export const ClassStatePanel = React.memo(function ClassStatePanel({
       })}
       <ValueInputTree
         id="input-state"
-        values={inputStateCurrentValues}
+        values={customStateCurrentValues}
         treeExpansion={{}}
-        onValueChange={onInputStateChange}
+        onValueChange={onCustomStateChange}
         onTreeExpansionChange={() => {}}
       />
     </>

@@ -9,7 +9,7 @@ function MyComponent() {
   const { setFixtureState } = React.useContext(FixtureContext);
 
   function setCustomState() {
-    setFixtureState(() => ({ props: [], customState: true }));
+    setFixtureState(() => ({ props: [], customFixtureState: true }));
   }
 
   function clearCustomState() {
@@ -46,7 +46,7 @@ runFixtureLoaderTests(mount => {
         await fixtureStateChange({
           rendererId,
           fixtureId: { path: 'first', name: null },
-          fixtureState: { props: [], customState: true }
+          fixtureState: { props: [], customFixtureState: true }
         });
 
         // Catches regression where changed state wouldn't be properly handled

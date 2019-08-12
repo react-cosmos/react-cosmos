@@ -1,9 +1,11 @@
 // TODO: Extract (and test) useNumber into react-cosmos-fixture package
 import React from 'react';
+import { isEqual } from 'lodash';
 import { FixtureContext } from 'react-cosmos-fixture';
 import {
-  findFixtureStateInputState,
-  FixtureStatePrimitiveValue2
+  findFixtureStateCustomState,
+  FixtureStatePrimitiveValue2,
+  FixtureStateValue2
 } from 'react-cosmos-shared2/fixtureState';
 
 type UseNumberArgs = {
@@ -19,43 +21,30 @@ export function useNumber({
 }: UseNumberArgs): [number, SetNumber] {
   const { fixtureState, setFixtureState } = React.useContext(FixtureContext);
 
-  const existingInputState = findFixtureStateInputState(
-    fixtureState,
-    inputName
-  );
-
   // Create fixture state
+  // TODO: Remove fixture state (effect with "inputName" dep)
   React.useEffect(() => {
     setFixtureState(prevFsState => {
-      const { inputState = {} } = prevFsState;
-      if (inputState[inputName]) {
-        const fsInputState = inputState[inputName];
-        // FIXME: This only works for primitive values
-        if (
-          fsInputState.type === 'primitive' &&
-          fsInputState.defaultValue === defaultValue
-        ) {
+      const prevFsValue = findFixtureStateCustomState(prevFsState, inputName);
+      if (prevFsValue) {
+        if (isEqual(prevFsValue.defaultValue, defaultValue)) {
           return prevFsState;
         }
       }
 
-      const newInputState: FixtureStatePrimitiveValue2 = {
+      const nextFsValue: FixtureStateValue2 = {
         type: 'primitive',
         defaultValue,
         currentValue: defaultValue
       };
-
       return {
         ...prevFsState,
-        inputState: {
-          ...prevFsState.inputState,
-          [inputName]: newInputState
+        customState: {
+          ...prevFsState.customState,
+          [inputName]: nextFsValue
         }
       };
     });
-    return () => {
-      // TODO: Remove fixture state?
-    };
   }, [inputName, defaultValue, fixtureState, setFixtureState]);
 
   const setValue: SetNumber = React.useCallback(
@@ -63,46 +52,45 @@ export function useNumber({
     stateChange => {
       if (typeof stateChange === 'function') {
         setFixtureState(prevFsState => {
-          const prevInputState = findFixtureStateInputState(
+          const prevFsValue = findFixtureStateCustomState(
             prevFsState,
             inputName
           );
-
-          if (!prevInputState) {
+          if (!prevFsValue) {
             // TODO: Warn?
             return prevFsState;
           }
 
-          if (typeof prevInputState.currentValue !== 'number') {
+          if (typeof prevFsValue.currentValue !== 'number') {
             // TODO: Warn?
             return prevFsState;
           }
 
-          const inputState: FixtureStatePrimitiveValue2 = {
+          const nextFsValue: FixtureStateValue2 = {
             type: 'primitive',
             defaultValue,
-            currentValue: stateChange(prevInputState.currentValue)
+            currentValue: stateChange(prevFsValue.currentValue)
           };
           return {
             ...prevFsState,
-            inputState: {
-              ...prevFsState.inputState,
-              [inputName]: inputState
+            customState: {
+              ...prevFsState.customState,
+              [inputName]: nextFsValue
             }
           };
         });
       } else {
         setFixtureState(prevFsState => {
-          const inputState: FixtureStatePrimitiveValue2 = {
+          const nextFsValue: FixtureStatePrimitiveValue2 = {
             type: 'primitive',
             defaultValue,
             currentValue: stateChange
           };
           return {
             ...prevFsState,
-            inputState: {
-              ...prevFsState.inputState,
-              [inputName]: inputState
+            customState: {
+              ...prevFsState.customState,
+              [inputName]: nextFsValue
             }
           };
         });
@@ -110,9 +98,11 @@ export function useNumber({
     },
     [defaultValue, inputName, setFixtureState]
   );
+
+  const fsValue = findFixtureStateCustomState(fixtureState, inputName);
   return [
-    existingInputState && typeof existingInputState.currentValue === 'number'
-      ? existingInputState.currentValue
+    fsValue && typeof fsValue.currentValue === 'number'
+      ? fsValue.currentValue
       : defaultValue,
     setValue
   ];

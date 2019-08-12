@@ -69,7 +69,7 @@ export type FixtureStateValues2 = Record<string, FixtureStateValue2>;
 export type FixtureState = {
   props?: FixtureStateProps[];
   classState?: FixtureStateClassState[];
-  inputState?: FixtureStateValues2;
+  customState?: FixtureStateValues2;
 } & Record<string, any>;
 
 export type SetFixtureState = (update: StateUpdater<FixtureState>) => unknown;
