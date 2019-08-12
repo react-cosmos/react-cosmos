@@ -1,9 +1,9 @@
 import React from 'react';
+import { useNumber } from 'react-cosmos-fixture';
 import { CounterButton } from '.';
-import * as Cosmos from './useNumber';
 
 export default () => {
-  const [count, setCount] = Cosmos.useNumber({
+  const [count, setCount] = useNumber({
     inputName: 'count',
     defaultValue: 0
   });
@@ -12,7 +12,6 @@ export default () => {
       suffix="times"
       count={count}
       increment={() => setCount(prevCount => prevCount + 1)}
-      // TODO: Test this as well: increment={() => setCount(count + 1)}
     />
   );
 };
