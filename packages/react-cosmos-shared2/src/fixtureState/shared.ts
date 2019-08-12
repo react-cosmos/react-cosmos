@@ -56,15 +56,20 @@ export type FixtureStateClassState = {
   componentName: string;
 };
 
-export type FixtureStateInputState<Value extends FixtureStateValue> = {
-  defaultValue: Value;
-  currentValue: Value;
+export type FixtureStatePrimitiveValue2 = {
+  type: 'primitive';
+  defaultValue: FixtureStatePrimitiveValueType;
+  currentValue: FixtureStatePrimitiveValueType;
 };
+
+export type FixtureStateValue2 = FixtureStatePrimitiveValue2;
+
+export type FixtureStateValues2 = Record<string, FixtureStateValue2>;
 
 export type FixtureState = {
   props?: FixtureStateProps[];
   classState?: FixtureStateClassState[];
-  inputState?: Record<string, FixtureStateInputState<FixtureStateValue>>;
+  inputState?: FixtureStateValues2;
 } & Record<string, any>;
 
 export type SetFixtureState = (update: StateUpdater<FixtureState>) => unknown;

@@ -1,17 +1,17 @@
 import React from 'react';
 import {
   FixtureState,
-  FixtureStateInputState,
   FixtureStateValue,
-  FixtureStateValues
+  FixtureStateValues,
+  FixtureStateValues2
 } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import {
   FixtureExpansion,
-  OnElementExpansionChange,
-  stringifyElementId,
   hasFsValues,
+  OnElementExpansionChange,
   sortFsValueGroups,
+  stringifyElementId,
   ValueInputTree
 } from '../../../shared/ui/valueInputTree';
 import { ComponentClassState } from './ComponentClassState';
@@ -40,13 +40,16 @@ export const ClassStatePanel = React.memo(function ClassStatePanel({
   const { inputState = {} } = fixtureState;
   const inputStateCurrentValues: FixtureStateValues = {};
   Object.keys(inputState).forEach(inputName => {
-    inputStateCurrentValues[inputName] = inputState[inputName].currentValue;
+    inputStateCurrentValues[inputName] = {
+      type: inputState[inputName].type,
+      value: inputState[inputName].currentValue
+    };
   });
 
   function onInputStateChange(newValues: Record<string, FixtureStateValue>) {
     onFixtureStateChange(prevFsState => {
       const prevInputState = fixtureState.inputState || {};
-      const newInputState: Record<string, FixtureStateInputState<any>> = {};
+      const newInputState: FixtureStateValues2 = {};
       Object.keys(newValues).forEach(inputName => {
         if (!prevInputState[inputName]) {
           // TODO: Warn about state inconsistency?
@@ -60,11 +63,8 @@ export const ClassStatePanel = React.memo(function ClassStatePanel({
         }
 
         newInputState[inputName] = {
-          defaultValue: prevInputState[inputName].defaultValue,
-          currentValue: {
-            ...prevInputState[inputName].currentValue,
-            value: fixtureStateValue.value
-          }
+          ...prevInputState[inputName],
+          currentValue: fixtureStateValue.value
         };
       });
 
