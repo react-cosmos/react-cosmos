@@ -19,16 +19,18 @@ export const Header = styled.div`
 
 type TitleProps = {
   label: string;
-  componentName: string;
+  componentName?: string;
 };
 
 export function Title({ label, componentName }: TitleProps) {
   return (
     <TitleContainer>
       <strong>{label}</strong>
-      <ComponentName>
-        {componentName ? componentName : <em>Unnamed</em>}
-      </ComponentName>
+      {typeof componentName === 'string' && (
+        <ComponentName>
+          {componentName ? componentName : <em>Unnamed</em>}
+        </ComponentName>
+      )}
     </TitleContainer>
   );
 }
