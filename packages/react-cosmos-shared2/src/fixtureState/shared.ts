@@ -2,6 +2,8 @@ import { StateUpdater } from '../util';
 
 export type KeyValue = Record<string, unknown>;
 
+export type InputStateType = number | string | boolean;
+
 export type FixtureDecoratorId = string;
 
 export type FixtureElementId = {
@@ -56,9 +58,15 @@ export type FixtureStateClassState = {
   componentName: string;
 };
 
+export type FixtureStateInputState<T extends InputStateType> = {
+  defaultValue: T;
+  value: T;
+};
+
 export type FixtureState = {
   props?: FixtureStateProps[];
   classState?: FixtureStateClassState[];
+  inputState?: Record<string, FixtureStateInputState<any>>;
 } & Record<string, any>;
 
 export type SetFixtureState = (update: StateUpdater<FixtureState>) => unknown;

@@ -1,5 +1,6 @@
 import {
   KeyValue,
+  InputStateType,
   FixtureDecoratorId,
   FixtureElementId,
   FixtureStateUnserializableValue,
@@ -11,12 +12,14 @@ import {
   FixtureStateValues,
   FixtureStateProps,
   FixtureStateClassState,
+  FixtureStateInputState,
   FixtureState,
   SetFixtureState
 } from './shared';
 
 // Types can't be re-exported because Babel (see root tsconfig.json)
 export type KeyValue = KeyValue;
+export type InputStateType = InputStateType;
 export type FixtureDecoratorId = FixtureDecoratorId;
 export type FixtureElementId = FixtureElementId;
 export type FixtureStateUnserializableValue = FixtureStateUnserializableValue;
@@ -28,6 +31,9 @@ export type FixtureStateValue = FixtureStateValue;
 export type FixtureStateValues = FixtureStateValues;
 export type FixtureStateProps = FixtureStateProps;
 export type FixtureStateClassState = FixtureStateClassState;
+export type FixtureStateInputState<
+  T extends InputStateType
+> = FixtureStateInputState<T>;
 export type FixtureState = FixtureState;
 export type SetFixtureState = SetFixtureState;
 
@@ -49,3 +55,4 @@ export {
   updateFixtureStateClassState,
   removeFixtureStateClassState
 } from './classState';
+export { findFixtureStateInputState } from './inputState';
