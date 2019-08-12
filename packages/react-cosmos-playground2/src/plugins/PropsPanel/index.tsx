@@ -92,7 +92,13 @@ namedPlug('controlPanelRow', 'blankState', ({ pluginContext }) => {
   const propValues = fixtureState.props.some(hasFsValues);
   const stateValues =
     fixtureState.classState && fixtureState.classState.some(hasFsValues);
-  return !propValues && !stateValues ? <BlankState /> : null;
+  // FIXME: Replace temporary code
+  const inputStateValues = Boolean(
+    fixtureState.inputState && Object.keys(fixtureState.inputState).length > 0
+  );
+  return !propValues && !stateValues && !inputStateValues ? (
+    <BlankState />
+  ) : null;
 });
 
 export { register };

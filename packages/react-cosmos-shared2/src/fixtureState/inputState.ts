@@ -1,10 +1,9 @@
-import { FixtureState, FixtureStateInputState, InputStateType } from './shared';
+import { FixtureState, FixtureStateInputState } from './shared';
 
-export function findFixtureStateInputState<T extends InputStateType>(
+export function findFixtureStateInputState(
   fixtureState: FixtureState,
-  inputName: string,
-  defaultValue: number
-): FixtureStateInputState<T> {
-  const { inputState = {} } = fixtureState;
-  return inputState[inputName] || { defaultValue, value: defaultValue };
+  inputName: string
+): void | FixtureStateInputState<any> {
+  const { inputState } = fixtureState;
+  return inputState && inputState[inputName];
 }
