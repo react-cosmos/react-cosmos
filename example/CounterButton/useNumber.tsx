@@ -1,6 +1,6 @@
 // TODO: Extract (and test) useNumber into react-cosmos-fixture package
 import React from 'react';
-import { isEqual } from 'lodash';
+import { isEqual, omit } from 'lodash';
 import { FixtureContext } from 'react-cosmos-fixture';
 import {
   findFixtureStateCustomState,
@@ -21,8 +21,9 @@ export function useNumber({
 }: UseNumberArgs): [number, SetNumber] {
   const { fixtureState, setFixtureState } = React.useContext(FixtureContext);
 
+  useCleanFixtureState(inputName);
+
   // Create fixture state
-  // TODO: Remove fixture state (effect with "inputName" dep)
   React.useEffect(() => {
     setFixtureState(prevFsState => {
       const prevFsValue = findFixtureStateCustomState(prevFsState, inputName);
@@ -106,4 +107,18 @@ export function useNumber({
       : defaultValue,
     setValue
   ];
+}
+
+function useCleanFixtureState(inputName: string) {
+  const { setFixtureState } = React.useContext(FixtureContext);
+  const prevInputName = React.useRef<string>(inputName);
+  React.useEffect(() => {
+    prevInputName.current = inputName;
+    return () => {
+      setFixtureState(prevFsState => ({
+        ...prevFsState,
+        customState: omit(prevFsState.customState || {}, prevInputName.current)
+      }));
+    };
+  }, [inputName, setFixtureState]);
 }
