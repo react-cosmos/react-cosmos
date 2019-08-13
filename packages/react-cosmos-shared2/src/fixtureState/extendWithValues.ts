@@ -24,7 +24,10 @@ function extendWithValue(
     // This works (for now) because users can't add/remove object keys nor can
     // they change the type of any value. If any of these requirements show up
     // in the future this will need to be redesign to handle merge conflicts
-    const baseObj = baseValue as KeyValue;
+    const baseObj =
+      typeof baseValue === 'object' && baseValue !== null
+        ? (baseValue as KeyValue)
+        : {};
     return extendWithValues(baseObj, value.values);
   }
 
@@ -32,7 +35,7 @@ function extendWithValue(
     // This works (for now) because users can't add/remove array items nor can
     // they change the type of any value. If any of these requirements show up
     // in the future this will need to be redesign to handle merge conflicts
-    const baseArr = baseValue as unknown[];
+    const baseArr: unknown[] = Array.isArray(baseValue) ? baseValue : [];
     return value.values.map((v, idx) => extendWithValue(baseArr[idx], v));
   }
 

@@ -159,3 +159,37 @@ it('extends partially serializable array key', () => {
     myProp: ['bar', obj.myProp[1]]
   });
 });
+
+it('extends partial array of objects', () => {
+  const obj = {
+    myProp: [{ key: 'foo' }]
+  };
+  const values: FixtureStateValues = {
+    myProp: {
+      type: 'array',
+      values: [
+        {
+          type: 'object',
+          values: {
+            key: {
+              type: 'primitive',
+              value: 'bar'
+            }
+          }
+        },
+        {
+          type: 'object',
+          values: {
+            key: {
+              type: 'primitive',
+              value: 'baz'
+            }
+          }
+        }
+      ]
+    }
+  };
+  expect(extendWithValues(obj, values)).toEqual({
+    myProp: [{ key: 'bar' }, { key: 'baz' }]
+  });
+});
