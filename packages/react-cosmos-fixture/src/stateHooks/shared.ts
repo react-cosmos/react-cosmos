@@ -2,28 +2,23 @@ import { isEqual, omit } from 'lodash';
 import React from 'react';
 import {
   findFixtureStateCustomState,
-  FixtureStateValue2,
-  FixtureState
+  FixtureState,
+  FixtureStatePrimitiveValueType,
+  FixtureStateValue2
 } from 'react-cosmos-shared2/fixtureState';
-import { FixtureContext } from '.';
+import { FixtureContext } from '../FixtureContext';
 
-type Args = {
-  defaultValue: number;
-  inputName: string;
-};
+export type SetValue<Value> = React.Dispatch<React.SetStateAction<Value>>;
+export type UseValueReturn<Value> = [Value, SetValue<Value>];
 
-type SetNumber = React.Dispatch<React.SetStateAction<number>>;
-type ReturnVal = [number, SetNumber];
+export type IsType<Value extends FixtureStatePrimitiveValueType> = (
+  value: unknown
+) => value is Value;
 
-export function useNumber({ defaultValue, inputName }: Args): ReturnVal {
-  useSyncFixtureState(inputName, defaultValue);
-  useCleanFixtureState(inputName);
-  const value = useNumberValue(inputName, defaultValue);
-  const setValue = useSetNumberValue(inputName, defaultValue);
-  return [value, setValue];
-}
-
-function useSyncFixtureState(inputName: string, defaultValue: number) {
+export function useSyncFixtureStateValue<Value>(
+  inputName: string,
+  defaultValue: Value
+) {
   const { fixtureState, setFixtureState } = React.useContext(FixtureContext);
   React.useEffect(() => {
     setFixtureState(prevFsState => {
@@ -47,7 +42,7 @@ function useSyncFixtureState(inputName: string, defaultValue: number) {
   }, [inputName, defaultValue, fixtureState, setFixtureState]);
 }
 
-function useCleanFixtureState(inputName: string) {
+export function useCleanFixtureStateValue(inputName: string) {
   const { setFixtureState } = React.useContext(FixtureContext);
   const prevInputName = React.useRef<string>(inputName);
   React.useEffect(() => {
@@ -64,22 +59,30 @@ function useCleanFixtureState(inputName: string) {
   }, [inputName, setFixtureState]);
 }
 
-function useNumberValue(inputName: string, defaultValue: number): number {
+export function useValue<Value extends FixtureStatePrimitiveValueType>(
+  inputName: string,
+  defaultValue: Value,
+  isType: IsType<Value>
+): Value {
   const { fixtureState } = React.useContext(FixtureContext);
   const fsValue = findFixtureStateCustomState(fixtureState, inputName);
-  return fsValue && typeof fsValue.currentValue === 'number'
+  return fsValue && isType(fsValue.currentValue)
     ? fsValue.currentValue
     : defaultValue;
 }
 
-function useSetNumberValue(inputName: string, defaultValue: number): SetNumber {
+export function useSetValue<Value extends FixtureStatePrimitiveValueType>(
+  inputName: string,
+  defaultValue: Value,
+  isType: IsType<Value>
+): SetValue<Value> {
   const { setFixtureState } = React.useContext(FixtureContext);
   return React.useCallback(
     stateChange => {
       setFixtureState(prevFsState => {
-        const currentValue: number =
+        const currentValue: Value =
           typeof stateChange === 'function'
-            ? stateChange(getCurrentValue(prevFsState, inputName))
+            ? stateChange(getCurrentValue(prevFsState, inputName, isType))
             : stateChange;
         const newFsValue: FixtureStateValue2 = {
           type: 'primitive',
@@ -92,17 +95,22 @@ function useSetNumberValue(inputName: string, defaultValue: number): SetNumber {
         };
       });
     },
-    [defaultValue, inputName, setFixtureState]
+    [defaultValue, inputName, isType, setFixtureState]
   );
 }
 
-function getCurrentValue(fsState: FixtureState, inputName: string): number {
+function getCurrentValue<Value extends FixtureStatePrimitiveValueType>(
+  fsState: FixtureState,
+  inputName: string,
+  isType: IsType<Value>
+): Value {
   const fsValue = findFixtureStateCustomState(fsState, inputName);
   if (!fsValue) {
     throw new Error(`Fixture state value missing for input name: ${inputName}`);
   }
-  if (typeof fsValue.currentValue !== 'number') {
-    throw new Error(`Expected number type for input name: ${inputName}`);
+  if (!isType(fsValue.currentValue)) {
+    const typeOf = typeof fsValue.currentValue;
+    throw new Error(`Invalid ${typeOf} type for input name: ${inputName}`);
   }
   return fsValue.currentValue;
 }

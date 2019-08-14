@@ -4,15 +4,17 @@ import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer } from 'react-test-renderer';
 // Warning: Import test helpers before tested source to mock Socket.IO
 import { runFixtureLoaderTests } from '../testHelpers';
-import { useNumber } from '..';
+import { useString } from '..';
 
-function createFixtures(inputName: string, defaultValue: number) {
+function createFixtures(inputName: string, defaultValue: string) {
   const MyComponent = () => {
-    const [count, onClick] = useNumber({ inputName, defaultValue });
+    const [value, setValue] = useString({ inputName, defaultValue });
     return (
-      <button onClick={() => onClick(prevCount => prevCount + 1)}>
-        {count} clicks
-      </button>
+      <input
+        type="text"
+        value={value}
+        onChange={e => setValue(e.target.value)}
+      />
     );
   };
   return {
@@ -21,7 +23,7 @@ function createFixtures(inputName: string, defaultValue: number) {
 }
 
 const rendererId = uuid();
-const fixtures = createFixtures('count', 0);
+const fixtures = createFixtures('name', 'Fu Barr');
 const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
@@ -31,7 +33,7 @@ runFixtureLoaderTests(mount => {
       { rendererId, fixtures, decorators },
       async ({ renderer, selectFixture }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-        await rendered(renderer, '0 clicks');
+        await rendered(renderer, 'Fu Barr');
       }
     );
   });
@@ -47,10 +49,10 @@ runFixtureLoaderTests(mount => {
           fixtureState: {
             props: expect.any(Array),
             customState: {
-              count: {
+              name: {
                 type: 'primitive',
-                defaultValue: 0,
-                currentValue: 0
+                defaultValue: 'Fu Barr',
+                currentValue: 'Fu Barr'
               }
             }
           }
@@ -64,19 +66,18 @@ runFixtureLoaderTests(mount => {
       { rendererId, fixtures, decorators },
       async ({ renderer, selectFixture, fixtureStateChange }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-        await rendered(renderer, '0 clicks');
-        clickButton(renderer);
-        clickButton(renderer);
+        await rendered(renderer, 'Fu Barr');
+        changeInput(renderer, 'Fu Barr Beaz');
         await fixtureStateChange({
           rendererId,
           fixtureId,
           fixtureState: {
             props: expect.any(Array),
             customState: {
-              count: {
+              name: {
                 type: 'primitive',
-                defaultValue: 0,
-                currentValue: 2
+                defaultValue: 'Fu Barr',
+                currentValue: 'Fu Barr Beaz'
               }
             }
           }
@@ -90,12 +91,12 @@ runFixtureLoaderTests(mount => {
       { rendererId, fixtures, decorators },
       async ({ renderer, update, selectFixture, fixtureStateChange }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-        await rendered(renderer, '0 clicks');
-        clickButton(renderer);
-        await rendered(renderer, '1 clicks');
+        await rendered(renderer, 'Fu Barr');
+        changeInput(renderer, 'Fu Barr Beaz');
+        await rendered(renderer, 'Fu Barr Beaz');
         update({
           rendererId,
-          fixtures: createFixtures('count', 5),
+          fixtures: createFixtures('name', 'Fu Barr Beaz Cooks'),
           decorators
         });
         await fixtureStateChange({
@@ -104,10 +105,10 @@ runFixtureLoaderTests(mount => {
           fixtureState: {
             props: expect.any(Array),
             customState: {
-              count: {
+              name: {
                 type: 'primitive',
-                defaultValue: 5,
-                currentValue: 5
+                defaultValue: 'Fu Barr Beaz Cooks',
+                currentValue: 'Fu Barr Beaz Cooks'
               }
             }
           }
@@ -118,7 +119,7 @@ runFixtureLoaderTests(mount => {
 });
 
 function getButtonText(renderer: ReactTestRenderer) {
-  return renderer.toJSON()!.children!.join('');
+  return renderer.toJSON()!.props.value;
 }
 
 async function rendered(renderer: ReactTestRenderer, text: string) {
@@ -126,6 +127,6 @@ async function rendered(renderer: ReactTestRenderer, text: string) {
   await retry(() => expect(getButtonText(renderer)).toEqual(text));
 }
 
-function clickButton(renderer: ReactTestRenderer) {
-  renderer.toJSON()!.props.onClick();
+function changeInput(renderer: ReactTestRenderer, value: string) {
+  renderer.toJSON()!.props.onChange({ target: { value } });
 }
