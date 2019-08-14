@@ -18,3 +18,4 @@ export { FixtureCapture } from './FixtureCapture';
 export { Viewport } from './Viewport';
 export { useNumber } from './stateHooks/useNumber';
 export { useString } from './stateHooks/useString';
+export { useBoolean } from './stateHooks/useBoolean';
