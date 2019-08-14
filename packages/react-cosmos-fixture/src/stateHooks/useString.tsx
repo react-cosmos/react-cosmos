@@ -1,11 +1,10 @@
 import { usePrimitiveValue } from './shared';
 
-type Args = {
-  defaultValue: string;
-  inputName: string;
+type Opts = {
+  defaultValue?: string;
 };
 
-export function useString({ defaultValue, inputName }: Args) {
+export function useString(inputName: string, { defaultValue = '' }: Opts = {}) {
   return usePrimitiveValue(inputName, defaultValue, isString);
 }
 

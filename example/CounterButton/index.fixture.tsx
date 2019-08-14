@@ -3,7 +3,7 @@ import { useNumber } from 'react-cosmos/fixture';
 import { CounterButton } from '.';
 
 export default () => {
-  const [count, setCount] = useNumber({ inputName: 'count', defaultValue: 0 });
+  const [count, setCount] = useNumber('count');
   return (
     <CounterButton
       suffix="times"

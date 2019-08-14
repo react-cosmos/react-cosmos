@@ -8,7 +8,7 @@ import { useBoolean } from '..';
 
 function createFixtures(inputName: string, defaultValue: boolean) {
   const MyComponent = () => {
-    const [toggled, setToggled] = useBoolean({ inputName, defaultValue });
+    const [toggled, setToggled] = useBoolean(inputName, { defaultValue });
     return (
       <button onClick={() => setToggled(!toggled)}>{String(toggled)}</button>
     );

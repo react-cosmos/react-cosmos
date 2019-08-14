@@ -1,11 +1,13 @@
 import { usePrimitiveValue } from './shared';
 
-type Args = {
-  defaultValue: boolean;
-  inputName: string;
+type Opts = {
+  defaultValue?: boolean;
 };
 
-export function useBoolean({ defaultValue, inputName }: Args) {
+export function useBoolean(
+  inputName: string,
+  { defaultValue = false }: Opts = {}
+) {
   return usePrimitiveValue(inputName, defaultValue, isBoolean);
 }
 

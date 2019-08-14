@@ -8,7 +8,7 @@ import { useString } from '..';
 
 function createFixtures(inputName: string, defaultValue: string) {
   const MyComponent = () => {
-    const [value, setValue] = useString({ inputName, defaultValue });
+    const [value, setValue] = useString(inputName, { defaultValue });
     return (
       <input
         type="text"

@@ -8,7 +8,7 @@ import { useNumber } from '..';
 
 function createFixtures(inputName: string, defaultValue: number) {
   const MyComponent = () => {
-    const [count, onClick] = useNumber({ inputName, defaultValue });
+    const [count, onClick] = useNumber(inputName, { defaultValue });
     return (
       <button onClick={() => onClick(prevCount => prevCount + 1)}>
         {count} clicks
