@@ -49,87 +49,18 @@ const fixtureId = { path: 'first', name: null };
 afterEach(resetPersistentValues);
 
 runFixtureLoaderTests(mount => {
-  it('renders fixture', async () => {
-    await mount(
-      { rendererId, fixtures, decorators },
-      async ({ renderer, selectFixture }) => {
-        await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-        await rendered(renderer, { countText: '0', toggledText: 'false' });
-      }
-    );
-  });
-
-  it('creates fixture state', async () => {
-    await mount(
-      { rendererId, fixtures, decorators },
-      async ({ selectFixture, fixtureStateChange }) => {
-        await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-        await fixtureStateChange({
-          rendererId,
-          fixtureId,
-          fixtureState: {
-            props: expect.any(Array),
-            customState: {
-              count: {
-                type: 'primitive',
-                defaultValue: 0,
-                currentValue: 0
-              },
-              toggled: {
-                type: 'primitive',
-                defaultValue: false,
-                currentValue: false
-              }
-            }
-          }
-        });
-      }
-    );
-  });
-
-  it('updates fixture state via setters', async () => {
-    await mount(
-      { rendererId, fixtures, decorators },
-      async ({ renderer, selectFixture, fixtureStateChange }) => {
-        await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-        await rendered(renderer, { countText: '0', toggledText: 'false' });
-        clickCountButton(renderer);
-        clickCountButton(renderer);
-        clickToggledButton(renderer);
-        await fixtureStateChange({
-          rendererId,
-          fixtureId,
-          fixtureState: {
-            props: expect.any(Array),
-            customState: {
-              count: {
-                type: 'primitive',
-                defaultValue: 0,
-                currentValue: 2
-              },
-              toggled: {
-                type: 'primitive',
-                defaultValue: false,
-                currentValue: true
-              }
-            }
-          }
-        });
-      }
-    );
-  });
-
-  it('preserves fixture state changes (via setter) on default value change', async () => {
+  it('preserves fixture state change (via setter) on default value change', async () => {
     await mount(
       { rendererId, fixtures, decorators },
       async ({ renderer, update, selectFixture, fixtureStateChange }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
         await rendered(renderer, { countText: '0', toggledText: 'false' });
         clickCountButton(renderer);
-        await rendered(renderer, { countText: '1', toggledText: 'false' });
+        clickToggledButton(renderer);
+        await rendered(renderer, { countText: '1', toggledText: 'true' });
         update({
           rendererId,
-          fixtures: createFixtures({ defaultCount: 0, defaultToggled: true }),
+          fixtures: createFixtures({ defaultCount: 2, defaultToggled: false }),
           decorators
         });
         await fixtureStateChange({
@@ -138,17 +69,15 @@ runFixtureLoaderTests(mount => {
           fixtureState: {
             props: expect.any(Array),
             customState: {
-              // `count` default value has remained 0, and so the current value
-              // was preserved at 1. On the other hand, the `toggled` default
-              // value has changed to true, which also reset its current value.
+              // `count` was reset, `toggled` was preserved
               count: {
                 type: 'primitive',
-                defaultValue: 0,
-                currentValue: 1
+                defaultValue: 2,
+                currentValue: 2
               },
               toggled: {
                 type: 'primitive',
-                defaultValue: true,
+                defaultValue: false,
                 currentValue: true
               }
             }
@@ -199,9 +128,7 @@ runFixtureLoaderTests(mount => {
           fixtureState: {
             props: expect.any(Array),
             customState: {
-              // `count` default value has remained 0, and so the current value
-              // was preserved at 1. On the other hand, the `toggled` default
-              // value has changed to true, which also reset its current value.
+              // `count` was preserved, `toggled` was reset
               count: {
                 type: 'primitive',
                 defaultValue: 0,
@@ -219,13 +146,32 @@ runFixtureLoaderTests(mount => {
     );
   });
 
-  it('removes fixture state on component unmount', async () => {
+  it('cleans up fixture state on input rename', async () => {
     await mount(
       { rendererId, fixtures, decorators },
       async ({ renderer, update, selectFixture, fixtureStateChange }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
         await rendered(renderer, { countText: '0', toggledText: 'false' });
         clickCountButton(renderer);
+        await fixtureStateChange({
+          rendererId,
+          fixtureId,
+          fixtureState: {
+            props: expect.any(Array),
+            customState: {
+              count: {
+                type: 'primitive',
+                defaultValue: 0,
+                currentValue: 1
+              },
+              toggled: {
+                type: 'primitive',
+                defaultValue: false,
+                currentValue: false
+              }
+            }
+          }
+        });
         update({
           rendererId,
           fixtures: createFixtures({
@@ -246,6 +192,7 @@ runFixtureLoaderTests(mount => {
                 defaultValue: 0,
                 currentValue: 1
               },
+              // `toggled` was replaced by `confirmed`
               confirmed: {
                 type: 'primitive',
                 defaultValue: true,
