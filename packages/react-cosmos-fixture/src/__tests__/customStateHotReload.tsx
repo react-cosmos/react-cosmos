@@ -119,7 +119,7 @@ runFixtureLoaderTests(mount => {
     );
   });
 
-  it('preserves (organic) fixture state on default value change', async () => {
+  it('preserves fixture state changes (via setter) on default value change', async () => {
     await mount(
       { rendererId, fixtures, decorators },
       async ({ renderer, update, selectFixture, fixtureStateChange }) => {
@@ -158,7 +158,7 @@ runFixtureLoaderTests(mount => {
     );
   });
 
-  it('preserves (set) fixture state on default value change', async () => {
+  it('preserves fixture state change (via setFixtureState) on default value change', async () => {
     await mount(
       { rendererId, fixtures, decorators },
       async ({
