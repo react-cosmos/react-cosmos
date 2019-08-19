@@ -56,13 +56,11 @@ export type FixtureStateClassState = {
   componentName: string;
 };
 
-export type FixtureStatePrimitiveValue2 = {
+export type FixtureStateValue2 = {
   type: 'primitive';
   defaultValue: FixtureStatePrimitiveValueType;
   currentValue: FixtureStatePrimitiveValueType;
 };
-
-export type FixtureStateValue2 = FixtureStatePrimitiveValue2;
 
 export type FixtureStateValues2 = Record<string, FixtureStateValue2>;
 

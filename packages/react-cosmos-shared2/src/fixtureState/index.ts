@@ -11,7 +11,6 @@ import {
   FixtureStateValues,
   FixtureStateProps,
   FixtureStateClassState,
-  FixtureStatePrimitiveValue2,
   FixtureStateValue2,
   FixtureStateValues2,
   FixtureState,
@@ -31,7 +30,6 @@ export type FixtureStateValue = FixtureStateValue;
 export type FixtureStateValues = FixtureStateValues;
 export type FixtureStateProps = FixtureStateProps;
 export type FixtureStateClassState = FixtureStateClassState;
-export type FixtureStatePrimitiveValue2 = FixtureStatePrimitiveValue2;
 export type FixtureStateValue2 = FixtureStateValue2;
 export type FixtureStateValues2 = FixtureStateValues2;
 export type FixtureState = FixtureState;
