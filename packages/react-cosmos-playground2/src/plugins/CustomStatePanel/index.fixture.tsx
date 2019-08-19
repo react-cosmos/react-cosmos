@@ -1,7 +1,6 @@
 import React from 'react';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import styled from 'styled-components';
-import { stringifyElementId } from '../../shared/ui/valueInputTree';
 import { CustomStatePanel } from './CustomStatePanel';
 
 const Container = styled.div`
@@ -33,20 +32,12 @@ export default () => {
       }
     }
   });
-  const [fixtureExpansion, setFixtureExpansion] = React.useState({});
 
   return (
     <Container>
       <CustomStatePanel
         fixtureState={fixtureState}
-        fixtureExpansion={fixtureExpansion}
         onFixtureStateChange={setFixtureState}
-        onElementExpansionChange={(elementId, treeExpansion) => {
-          setFixtureExpansion({
-            ...fixtureExpansion,
-            [stringifyElementId(elementId)]: treeExpansion
-          });
-        }}
       />
     </Container>
   );

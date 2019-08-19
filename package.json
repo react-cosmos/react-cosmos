@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "prettify": "prettier --write \"{{packages/*/src,examples,cypress,scripts}/**/,}*.{js,jsx,ts,tsx,css,md}\"",
-    "type-check": "tsc",
+    "check-types": "tsc",
     "lint": "eslint '**/*.{ts,tsx}'",
     "test:unit": "jest --config .jest/config.js",
     "test:watch": "yarn test:unit --watch",
