@@ -83,22 +83,34 @@ namedPlug('controlPanelRow', 'blankState', ({ pluginContext }) => {
 
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const fixtureState = rendererCore.getFixtureState();
-
-  // Don't show blank state until props (empty or not) have been read
-  if (!fixtureState.props) {
-    return null;
-  }
-
-  const propValues = fixtureState.props.some(hasFsValues);
-  const stateValues =
-    fixtureState.classState && fixtureState.classState.some(hasFsValues);
-  const customStateValues =
-    fixtureState.customState &&
-    Object.keys(fixtureState.customState).length > 0;
-
-  return !propValues && !stateValues && !customStateValues ? (
-    <BlankState />
-  ) : null;
+  return shouldShowBlankState(fixtureState) ? <BlankState /> : null;
 });
 
 export { register };
+
+function shouldShowBlankState(fixtureState: FixtureState) {
+  // Don't show blank state until props (empty or not) have been read
+  if (!fixtureState.props) {
+    return false;
+  }
+
+  const hasProps = fixtureState.props.some(hasFsValues);
+  if (hasProps) {
+    return false;
+  }
+
+  const hasClassState =
+    fixtureState.classState && fixtureState.classState.some(hasFsValues);
+  if (hasClassState) {
+    return false;
+  }
+
+  const hasCustomState =
+    fixtureState.customState &&
+    Object.keys(fixtureState.customState).length > 0;
+  if (hasCustomState) {
+    return false;
+  }
+
+  return true;
+}
