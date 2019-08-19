@@ -19,7 +19,7 @@ export function usePrimitiveValue<Value extends FixtureStatePrimitiveValueType>(
   defaultValue: Value,
   isType: IsType<Value>
 ): UseValueReturn<Value> {
-  useCreateFixtureState(inputName, defaultValue, isType);
+  useCreateOrResetFixtureState(inputName, defaultValue, isType);
   useCleanUpFixtureState(inputName);
   usePersistFixtureState();
   const currentValue = useCurrentValue(inputName, defaultValue, isType);
@@ -27,11 +27,9 @@ export function usePrimitiveValue<Value extends FixtureStatePrimitiveValueType>(
   return [currentValue, setValue];
 }
 
-function useCreateFixtureState<Value extends FixtureStatePrimitiveValueType>(
-  inputName: string,
-  defaultValue: Value,
-  isType: IsType<Value>
-) {
+function useCreateOrResetFixtureState<
+  Value extends FixtureStatePrimitiveValueType
+>(inputName: string, defaultValue: Value, isType: IsType<Value>) {
   const { setFixtureState } = React.useContext(FixtureContext);
   React.useEffect(() => {
     setFixtureState(prevFsState => {
