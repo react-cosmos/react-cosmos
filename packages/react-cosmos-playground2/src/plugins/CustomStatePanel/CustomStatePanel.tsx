@@ -59,7 +59,7 @@ export const CustomStatePanel = React.memo(function ClassStatePanel({
       </Header>
       <Body>
         <ValueInputTree
-          id="input-state"
+          id="custom-state"
           values={convertValues2ToValues1(fsValues)}
           treeExpansion={{}}
           onValueChange={onCustomStateChange}
