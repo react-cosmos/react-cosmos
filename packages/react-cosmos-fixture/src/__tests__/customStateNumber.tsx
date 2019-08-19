@@ -7,9 +7,9 @@ import { runFixtureLoaderTests } from '../testHelpers';
 import { resetPersistentValues } from '../stateHooks/shared/persistentValueStore';
 import { useNumber } from '..';
 
-function createFixtures(inputName: string, defaultValue: number) {
+function createFixtures({ defaultValue }: { defaultValue: number }) {
   const MyComponent = () => {
-    const [count, setCount] = useNumber(inputName, { defaultValue });
+    const [count, setCount] = useNumber('count', { defaultValue });
     return (
       <button onClick={() => setCount(prevCount => prevCount + 1)}>
         {count} clicks
@@ -22,7 +22,7 @@ function createFixtures(inputName: string, defaultValue: number) {
 }
 
 const rendererId = uuid();
-const fixtures = createFixtures('count', 0);
+const fixtures = createFixtures({ defaultValue: 0 });
 const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
@@ -96,7 +96,7 @@ runFixtureLoaderTests(mount => {
         await rendered(renderer, '0 clicks');
         update({
           rendererId,
-          fixtures: createFixtures('count', 5),
+          fixtures: createFixtures({ defaultValue: 5 }),
           decorators
         });
         await fixtureStateChange({

@@ -7,9 +7,9 @@ import { runFixtureLoaderTests } from '../testHelpers';
 import { resetPersistentValues } from '../stateHooks/shared/persistentValueStore';
 import { useString } from '..';
 
-function createFixtures(inputName: string, defaultValue: string) {
+function createFixtures({ defaultValue }: { defaultValue: string }) {
   const MyComponent = () => {
-    const [value, setValue] = useString(inputName, { defaultValue });
+    const [value, setValue] = useString('name', { defaultValue });
     return (
       <input
         type="text"
@@ -24,7 +24,7 @@ function createFixtures(inputName: string, defaultValue: string) {
 }
 
 const rendererId = uuid();
-const fixtures = createFixtures('name', 'Fu Barr');
+const fixtures = createFixtures({ defaultValue: 'Fu Barr' });
 const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
@@ -97,7 +97,7 @@ runFixtureLoaderTests(mount => {
         await rendered(renderer, 'Fu Barr');
         update({
           rendererId,
-          fixtures: createFixtures('name', 'Fu Barr Beaz Cooks'),
+          fixtures: createFixtures({ defaultValue: 'Fu Barr Beaz Cooks' }),
           decorators
         });
         await fixtureStateChange({

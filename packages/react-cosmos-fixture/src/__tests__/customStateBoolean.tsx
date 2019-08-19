@@ -7,9 +7,9 @@ import { runFixtureLoaderTests } from '../testHelpers';
 import { resetPersistentValues } from '../stateHooks/shared/persistentValueStore';
 import { useBoolean } from '..';
 
-function createFixtures(inputName: string, defaultValue: boolean) {
+function createFixtures({ defaultValue }: { defaultValue: boolean }) {
   const MyComponent = () => {
-    const [toggled, setToggled] = useBoolean(inputName, { defaultValue });
+    const [toggled, setToggled] = useBoolean('toggled', { defaultValue });
     return (
       <button onClick={() => setToggled(!toggled)}>{String(toggled)}</button>
     );
@@ -20,7 +20,7 @@ function createFixtures(inputName: string, defaultValue: boolean) {
 }
 
 const rendererId = uuid();
-const fixtures = createFixtures('toggled', false);
+const fixtures = createFixtures({ defaultValue: false });
 const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
@@ -93,7 +93,7 @@ runFixtureLoaderTests(mount => {
         await rendered(renderer, 'false');
         update({
           rendererId,
-          fixtures: createFixtures('toggled', true),
+          fixtures: createFixtures({ defaultValue: true }),
           decorators
         });
         await fixtureStateChange({
