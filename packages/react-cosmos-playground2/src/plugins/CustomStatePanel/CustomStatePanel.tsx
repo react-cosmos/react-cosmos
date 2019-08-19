@@ -59,7 +59,7 @@ export const CustomStatePanel = React.memo(function ClassStatePanel({
       </Header>
       <Body>
         <ValueInputTree
-          id="custom-state"
+          id="input-state"
           values={convertValues2ToValues1(fsValues)}
           treeExpansion={{}}
           onValueChange={onCustomStateChange}
@@ -88,7 +88,7 @@ function updateValues2WithValues1(
   fsValues1: FixtureStateValues
 ) {
   const prevFsValues = fixtureState.customState || {};
-  const fsValues: FixtureStateValues2 = {};
+  const nextFsValues: FixtureStateValues2 = {};
   Object.keys(fsValues1).forEach(inputName => {
     if (!prevFsValues[inputName]) {
       console.warn(`Matching fixture state not value found for "${inputName}"`);
@@ -101,12 +101,12 @@ function updateValues2WithValues1(
       return;
     }
 
-    fsValues[inputName] = {
+    nextFsValues[inputName] = {
       ...prevFsValues[inputName],
       currentValue: fsValue.value
     };
   });
-  return { ...fixtureState, customState: fsValues };
+  return { ...fixtureState, customState: nextFsValues };
 }
 
 function resetCustomStateValues(fixtureState: FixtureState) {
