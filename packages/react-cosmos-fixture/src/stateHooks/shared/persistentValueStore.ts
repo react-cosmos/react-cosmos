@@ -1,3 +1,4 @@
+import { isEqual } from 'lodash';
 import { FixtureStatePrimitiveValueType } from 'react-cosmos-shared2/fixtureState';
 import { IsType } from './shared';
 
@@ -42,7 +43,7 @@ export function getPersistedValue<
   const persistedValue = persistedValues[inputName];
   return persistedValue &&
     isType(persistedValue.currentValue) &&
-    persistedValue.defaultValue === defaultValue
+    isEqual(persistedValue.defaultValue, defaultValue)
     ? persistedValue.currentValue
     : defaultValue;
 }
