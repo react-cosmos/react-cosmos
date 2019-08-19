@@ -88,7 +88,7 @@ runFixtureLoaderTests(mount => {
     );
   });
 
-  it('resets fixture state on default value change in component', async () => {
+  it('resets fixture state on default value change', async () => {
     await mount(
       { rendererId, fixtures, decorators },
       async ({ renderer, update, selectFixture, fixtureStateChange }) => {
