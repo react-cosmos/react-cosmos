@@ -70,7 +70,7 @@ runFixtureLoaderTests(mount => {
       async ({ renderer, selectFixture, fixtureStateChange }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
         await rendered(renderer, 'Fu Barr');
-        changeInput(renderer, 'Fu Barr Beaz');
+        changeInput(renderer, 'Fu Barr Bhaz');
         await fixtureStateChange({
           rendererId,
           fixtureId,
@@ -80,7 +80,7 @@ runFixtureLoaderTests(mount => {
               name: {
                 type: 'primitive',
                 defaultValue: 'Fu Barr',
-                currentValue: 'Fu Barr Beaz'
+                currentValue: 'Fu Barr Bhaz'
               }
             }
           }
@@ -97,7 +97,7 @@ runFixtureLoaderTests(mount => {
         await rendered(renderer, 'Fu Barr');
         update({
           rendererId,
-          fixtures: createFixtures({ defaultValue: 'Fu Barr Beaz Cooks' }),
+          fixtures: createFixtures({ defaultValue: 'Fu Barr Bhaz Cooks' }),
           decorators
         });
         await fixtureStateChange({
@@ -108,8 +108,8 @@ runFixtureLoaderTests(mount => {
             customState: {
               name: {
                 type: 'primitive',
-                defaultValue: 'Fu Barr Beaz Cooks',
-                currentValue: 'Fu Barr Beaz Cooks'
+                defaultValue: 'Fu Barr Bhaz Cooks',
+                currentValue: 'Fu Barr Bhaz Cooks'
               }
             }
           }
