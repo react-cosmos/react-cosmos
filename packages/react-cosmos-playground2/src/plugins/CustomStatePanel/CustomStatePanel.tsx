@@ -91,11 +91,11 @@ function updateValues2WithValues1(
   const nextFsValues: FixtureStateValues2 = {};
   Object.keys(fsValues1).forEach(inputName => {
     if (!prevFsValues[inputName]) {
-      console.warn(`Matching fixture state not value found for "${inputName}"`);
+      console.warn(`Matching fixture state value not found for "${inputName}"`);
       return;
     }
 
-    // TODO: Support all fixture state values
+    // TODO: Support all fixture state value types
     const fsValue = fsValues1[inputName];
     if (fsValue.type !== 'primitive') {
       return;
