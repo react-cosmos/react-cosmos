@@ -1,4 +1,4 @@
-import { usePrimitiveValue } from './shared';
+import { usePrimitiveValue } from './shared/getPrimitiveValue';
 
 type Opts = {
   defaultValue?: boolean;

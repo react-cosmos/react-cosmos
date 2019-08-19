@@ -4,6 +4,7 @@ import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer } from 'react-test-renderer';
 // Warning: Import test helpers before tested source to mock Socket.IO
 import { runFixtureLoaderTests } from '../testHelpers';
+import { resetPersistentValues } from '../stateHooks/shared/persistentValueStore';
 import { useBoolean } from '..';
 
 function createFixtures(inputName: string, defaultValue: boolean) {
@@ -22,6 +23,8 @@ const rendererId = uuid();
 const fixtures = createFixtures('toggled', false);
 const decorators = {};
 const fixtureId = { path: 'first', name: null };
+
+afterEach(resetPersistentValues);
 
 runFixtureLoaderTests(mount => {
   it('renders fixture', async () => {
@@ -82,7 +85,7 @@ runFixtureLoaderTests(mount => {
     );
   });
 
-  it('resets fixture state on component change', async () => {
+  it('resets fixture state on default value change in component', async () => {
     await mount(
       { rendererId, fixtures, decorators },
       async ({ renderer, update, selectFixture, fixtureStateChange }) => {

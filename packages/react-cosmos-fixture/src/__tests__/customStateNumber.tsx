@@ -4,13 +4,14 @@ import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer } from 'react-test-renderer';
 // Warning: Import test helpers before tested source to mock Socket.IO
 import { runFixtureLoaderTests } from '../testHelpers';
+import { resetPersistentValues } from '../stateHooks/shared/persistentValueStore';
 import { useNumber } from '..';
 
 function createFixtures(inputName: string, defaultValue: number) {
   const MyComponent = () => {
-    const [count, onClick] = useNumber(inputName, { defaultValue });
+    const [count, setCount] = useNumber(inputName, { defaultValue });
     return (
-      <button onClick={() => onClick(prevCount => prevCount + 1)}>
+      <button onClick={() => setCount(prevCount => prevCount + 1)}>
         {count} clicks
       </button>
     );
@@ -24,6 +25,8 @@ const rendererId = uuid();
 const fixtures = createFixtures('count', 0);
 const decorators = {};
 const fixtureId = { path: 'first', name: null };
+
+afterEach(resetPersistentValues);
 
 runFixtureLoaderTests(mount => {
   it('renders fixture', async () => {
@@ -85,7 +88,7 @@ runFixtureLoaderTests(mount => {
     );
   });
 
-  it('resets fixture state on component change', async () => {
+  it('resets fixture state on default value change in component', async () => {
     await mount(
       { rendererId, fixtures, decorators },
       async ({ renderer, update, selectFixture, fixtureStateChange }) => {
