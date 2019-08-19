@@ -9,6 +9,7 @@ const { namedPlug, register } = createPlugin<CustomStatePanelSpec>({
   name: 'customStatePanel'
 });
 
+// TODO: Persist tree expansion state
 namedPlug('controlPanelRow', 'customState', ({ pluginContext }) => {
   const { getMethodsOf } = pluginContext;
   const routerCore = getMethodsOf<RouterSpec>('router');
@@ -22,9 +23,7 @@ namedPlug('controlPanelRow', 'customState', ({ pluginContext }) => {
   return (
     <CustomStatePanel
       fixtureState={fixtureState}
-      fixtureExpansion={{}}
       onFixtureStateChange={rendererCore.setFixtureState}
-      onElementExpansionChange={() => {}}
     />
   );
 });

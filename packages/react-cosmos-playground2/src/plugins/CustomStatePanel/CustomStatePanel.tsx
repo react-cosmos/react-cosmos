@@ -12,85 +12,36 @@ import {
   Actions,
   Body,
   Container,
-  FixtureExpansion,
   Header,
-  OnElementExpansionChange,
   Title,
   ValueInputTree
 } from '../../shared/ui/valueInputTree';
 
 type Props = {
   fixtureState: FixtureState;
-  fixtureExpansion: FixtureExpansion;
   onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
-  onElementExpansionChange: OnElementExpansionChange;
 };
 
 export const CustomStatePanel = React.memo(function ClassStatePanel({
   fixtureState,
-  fixtureExpansion,
-  onFixtureStateChange,
-  onElementExpansionChange
+  onFixtureStateChange
 }: Props) {
-  const customStateValues2 = fixtureState.customState || {};
-  if (Object.keys(customStateValues2).length === 0) {
+  const onCustomStateChange = React.useCallback(
+    newValues => {
+      onFixtureStateChange(prevFsState =>
+        updateValues2WithValues1(prevFsState, newValues)
+      );
+    },
+    [onFixtureStateChange]
+  );
+
+  const onResetValues = React.useCallback(() => {
+    onFixtureStateChange(resetCustomStateValues);
+  }, [onFixtureStateChange]);
+
+  const fsValues = fixtureState.customState || {};
+  if (Object.keys(fsValues).length === 0) {
     return null;
-  }
-
-  const customStateValues1: FixtureStateValues = {};
-  Object.keys(customStateValues2).forEach(inputName => {
-    customStateValues1[inputName] = {
-      type: customStateValues2[inputName].type,
-      value: customStateValues2[inputName].currentValue
-    };
-  });
-
-  function onCustomStateChange(newValues: FixtureStateValues) {
-    onFixtureStateChange(prevFsState => {
-      const prevCustomStateValues = fixtureState.customState || {};
-      const nextCustomStateValues: FixtureStateValues2 = {};
-      Object.keys(newValues).forEach(inputName => {
-        if (!prevCustomStateValues[inputName]) {
-          // TODO: Warn about state inconsistency?
-          return;
-        }
-
-        // TODO: Support all fixture state values
-        const fixtureStateValue = newValues[inputName];
-        if (fixtureStateValue.type !== 'primitive') {
-          return;
-        }
-
-        nextCustomStateValues[inputName] = {
-          ...prevCustomStateValues[inputName],
-          currentValue: fixtureStateValue.value
-        };
-      });
-
-      return {
-        ...prevFsState,
-        customState: nextCustomStateValues
-      };
-    });
-  }
-
-  function onResetValues() {
-    onFixtureStateChange(prevFsState => {
-      const prevCustomStateValues = fixtureState.customState || {};
-      const nextCustomStateValues: FixtureStateValues2 = {};
-      Object.keys(prevCustomStateValues).forEach(inputName => {
-        const fsValue = prevCustomStateValues[inputName];
-        nextCustomStateValues[inputName] = {
-          ...fsValue,
-          currentValue: fsValue.defaultValue
-        };
-      });
-
-      return {
-        ...prevFsState,
-        customState: nextCustomStateValues
-      };
-    });
   }
 
   return (
@@ -101,12 +52,7 @@ export const CustomStatePanel = React.memo(function ClassStatePanel({
           <DarkIconButton
             title="Reset to default values"
             icon={<RotateCcwIcon />}
-            disabled={Object.keys(customStateValues2).every(fsValue =>
-              isEqual(
-                customStateValues2[fsValue].currentValue,
-                customStateValues2[fsValue].defaultValue
-              )
-            )}
+            disabled={didValuesChange(fsValues)}
             onClick={onResetValues}
           />
         </Actions>
@@ -114,7 +60,7 @@ export const CustomStatePanel = React.memo(function ClassStatePanel({
       <Body>
         <ValueInputTree
           id="input-state"
-          values={customStateValues1}
+          values={convertValues2ToValues1(fsValues)}
           treeExpansion={{}}
           onValueChange={onCustomStateChange}
           onTreeExpansionChange={() => {}}
@@ -123,3 +69,62 @@ export const CustomStatePanel = React.memo(function ClassStatePanel({
     </Container>
   );
 });
+
+function convertValues2ToValues1(
+  fsValues2: FixtureStateValues2
+): FixtureStateValues {
+  const fsValues1: FixtureStateValues = {};
+  Object.keys(fsValues2).forEach(inputName => {
+    fsValues1[inputName] = {
+      type: fsValues2[inputName].type,
+      value: fsValues2[inputName].currentValue
+    };
+  });
+  return fsValues1;
+}
+
+function updateValues2WithValues1(
+  fixtureState: FixtureState,
+  fsValues1: FixtureStateValues
+) {
+  const prevFsValues = fixtureState.customState || {};
+  const fsValues: FixtureStateValues2 = {};
+  Object.keys(fsValues1).forEach(inputName => {
+    if (!prevFsValues[inputName]) {
+      console.warn(`Matching fixture state not value found for "${inputName}"`);
+      return;
+    }
+
+    // TODO: Support all fixture state values
+    const fsValue = fsValues1[inputName];
+    if (fsValue.type !== 'primitive') {
+      return;
+    }
+
+    fsValues[inputName] = {
+      ...prevFsValues[inputName],
+      currentValue: fsValue.value
+    };
+  });
+  return { ...fixtureState, customState: fsValues };
+}
+
+function resetCustomStateValues(fixtureState: FixtureState) {
+  const prevFsValues = fixtureState.customState || {};
+  const nextFsValues: FixtureStateValues2 = {};
+  Object.keys(prevFsValues).forEach(inputName => {
+    const fsValue = prevFsValues[inputName];
+    nextFsValues[inputName] = {
+      ...fsValue,
+      currentValue: fsValue.defaultValue
+    };
+  });
+
+  return { ...fixtureState, customState: nextFsValues };
+}
+
+function didValuesChange(fsValues: FixtureStateValues2) {
+  return Object.keys(fsValues).every(fsValue =>
+    isEqual(fsValues[fsValue].currentValue, fsValues[fsValue].defaultValue)
+  );
+}
