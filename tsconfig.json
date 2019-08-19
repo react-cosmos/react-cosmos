@@ -3,7 +3,7 @@
 //    be placed here.
 // 2. Extended by specific package build configs used to generate TS
 //    declarations. Those configs have an "outDir" defined.
-// 3. Used by global type-check command (which runs in CI)
+// 3. Used by global check-types command (which runs in CI)
 {
   "compilerOptions": {
     "lib": ["dom", "es2015"],

@@ -38,8 +38,8 @@ export function StringItem({ id, label, value, onChange }: Props) {
           focusedBoxShadow="0 0 0.5px 1px var(--primary4)"
         >
           <TextContainer>
-            <TextMirror minWidth={24} focused={focused}>
-              {mirrorText}
+            <TextMirror minWidth={64} focused={focused}>
+              {value.length > 0 || focused ? mirrorText : <em>empty</em>}
             </TextMirror>
             <TextField
               rows={1}

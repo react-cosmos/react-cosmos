@@ -1,1 +1,6 @@
-export { Viewport } from 'react-cosmos-fixture';
+export {
+  Viewport,
+  useNumber,
+  useString,
+  useBoolean
+} from 'react-cosmos-fixture';

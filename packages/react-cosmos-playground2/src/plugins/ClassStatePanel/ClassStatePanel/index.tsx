@@ -3,10 +3,10 @@ import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import {
   FixtureExpansion,
-  OnElementExpansionChange,
-  stringifyElementId,
   hasFsValues,
-  sortFsValueGroups
+  OnElementExpansionChange,
+  sortFsValueGroups,
+  stringifyElementId
 } from '../../../shared/ui/valueInputTree';
 import { ComponentClassState } from './ComponentClassState';
 
@@ -27,10 +27,10 @@ export const ClassStatePanel = React.memo(function ClassStatePanel({
     return null;
   }
 
-  const withState = fixtureState.classState.filter(hasFsValues);
+  const withClassState = fixtureState.classState.filter(hasFsValues);
   return (
     <>
-      {sortFsValueGroups(withState).map(fsClassState => {
+      {sortFsValueGroups(withClassState).map(fsClassState => {
         const strElementId = stringifyElementId(fsClassState.elementId);
         return (
           <ComponentClassState

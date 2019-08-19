@@ -11,6 +11,8 @@ import {
   FixtureStateValues,
   FixtureStateProps,
   FixtureStateClassState,
+  FixtureStateValue2,
+  FixtureStateValues2,
   FixtureState,
   SetFixtureState
 } from './shared';
@@ -28,6 +30,8 @@ export type FixtureStateValue = FixtureStateValue;
 export type FixtureStateValues = FixtureStateValues;
 export type FixtureStateProps = FixtureStateProps;
 export type FixtureStateClassState = FixtureStateClassState;
+export type FixtureStateValue2 = FixtureStateValue2;
+export type FixtureStateValues2 = FixtureStateValues2;
 export type FixtureState = FixtureState;
 export type SetFixtureState = SetFixtureState;
 
@@ -49,3 +53,4 @@ export {
   updateFixtureStateClassState,
   removeFixtureStateClassState
 } from './classState';
+export { findFixtureStateCustomState } from './customState';
