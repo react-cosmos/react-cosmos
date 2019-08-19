@@ -54,7 +54,7 @@ runFixtureLoaderTests(mount => {
       { rendererId, fixtures, decorators },
       async ({ renderer, selectFixture }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-        await rendered(renderer, '0', 'false');
+        await rendered(renderer, { countText: '0', toggledText: 'false' });
       }
     );
   });
@@ -92,7 +92,7 @@ runFixtureLoaderTests(mount => {
       { rendererId, fixtures, decorators },
       async ({ renderer, selectFixture, fixtureStateChange }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-        await rendered(renderer, '0', 'false');
+        await rendered(renderer, { countText: '0', toggledText: 'false' });
         clickCountButton(renderer);
         clickCountButton(renderer);
         clickToggledButton(renderer);
@@ -119,14 +119,14 @@ runFixtureLoaderTests(mount => {
     );
   });
 
-  it('preserves (organic) fixture state on default value change in component', async () => {
+  it('preserves (organic) fixture state on default value change', async () => {
     await mount(
       { rendererId, fixtures, decorators },
       async ({ renderer, update, selectFixture, fixtureStateChange }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-        await rendered(renderer, '0', 'false');
+        await rendered(renderer, { countText: '0', toggledText: 'false' });
         clickCountButton(renderer);
-        await rendered(renderer, '1', 'false');
+        await rendered(renderer, { countText: '1', toggledText: 'false' });
         update({
           rendererId,
           fixtures: createFixtures({ defaultCount: 0, defaultToggled: true }),
@@ -158,7 +158,7 @@ runFixtureLoaderTests(mount => {
     );
   });
 
-  it('preserves (set) fixture state on default value change in component', async () => {
+  it('preserves (set) fixture state on default value change', async () => {
     await mount(
       { rendererId, fixtures, decorators },
       async ({
@@ -170,7 +170,7 @@ runFixtureLoaderTests(mount => {
         fixtureStateChange
       }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-        await rendered(renderer, '0', 'false');
+        await rendered(renderer, { countText: '0', toggledText: 'false' });
         const fixtureState = await getLastFixtureState();
         await setFixtureState({
           rendererId,
@@ -187,7 +187,7 @@ runFixtureLoaderTests(mount => {
             }
           }
         });
-        await rendered(renderer, '1', 'false');
+        await rendered(renderer, { countText: '1', toggledText: 'false' });
         update({
           rendererId,
           fixtures: createFixtures({ defaultCount: 0, defaultToggled: true }),
@@ -224,7 +224,7 @@ runFixtureLoaderTests(mount => {
       { rendererId, fixtures, decorators },
       async ({ renderer, update, selectFixture, fixtureStateChange }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-        await rendered(renderer, '0', 'false');
+        await rendered(renderer, { countText: '0', toggledText: 'false' });
         clickCountButton(renderer);
         update({
           rendererId,
@@ -234,7 +234,7 @@ runFixtureLoaderTests(mount => {
           }),
           decorators
         });
-        await rendered(renderer, '1', 'true');
+        await rendered(renderer, { countText: '1', toggledText: 'true' });
         await fixtureStateChange({
           rendererId,
           fixtureId,
@@ -261,8 +261,7 @@ runFixtureLoaderTests(mount => {
 
 async function rendered(
   renderer: ReactTestRenderer,
-  countText: string,
-  toggledText: string
+  { countText, toggledText }: { countText: string; toggledText: string }
 ) {
   await retry(() => Boolean(renderer.toJSON()));
   await retry(() =>
