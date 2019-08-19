@@ -91,8 +91,6 @@ runFixtureLoaderTests(mount => {
       async ({ renderer, update, selectFixture, fixtureStateChange }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
         await rendered(renderer, 'false');
-        toggleButton(renderer);
-        await rendered(renderer, 'true');
         update({
           rendererId,
           fixtures: createFixtures('toggled', true),

@@ -95,8 +95,6 @@ runFixtureLoaderTests(mount => {
       async ({ renderer, update, selectFixture, fixtureStateChange }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
         await rendered(renderer, 'Fu Barr');
-        changeInput(renderer, 'Fu Barr Beaz');
-        await rendered(renderer, 'Fu Barr Beaz');
         update({
           rendererId,
           fixtures: createFixtures('name', 'Fu Barr Beaz Cooks'),

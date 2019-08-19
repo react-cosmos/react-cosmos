@@ -94,8 +94,6 @@ runFixtureLoaderTests(mount => {
       async ({ renderer, update, selectFixture, fixtureStateChange }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
         await rendered(renderer, '0 clicks');
-        clickButton(renderer);
-        await rendered(renderer, '1 clicks');
         update({
           rendererId,
           fixtures: createFixtures('count', 5),
