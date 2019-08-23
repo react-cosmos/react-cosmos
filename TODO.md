@@ -76,7 +76,6 @@ Notification redesign
 
 Not part of v5, but the most notable features to pursue after.
 
-- [ ] useSelect, useNumber, useString, useBoolean fixture controls
 - [ ] Multi fixture select
 - [ ] Marketing website
 - [ ] "Check all" button/API to detect broken fixtures

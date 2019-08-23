@@ -4,15 +4,18 @@ import {
   FixtureElementId,
   FixtureStateUnserializableValue,
   FixtureStatePrimitiveValueType,
+  FixtureStateObjectValueType,
+  FixtureStateArrayValueType,
+  FixtureStateValueType,
   FixtureStatePrimitiveValue,
   FixtureStateObjectValue,
   FixtureStateArrayValue,
   FixtureStateValue,
   FixtureStateValues,
+  FixtureStateValueGroup,
+  FixtureStateValueGroups,
   FixtureStateProps,
   FixtureStateClassState,
-  FixtureStateValue2,
-  FixtureStateValues2,
   FixtureState,
   SetFixtureState
 } from './shared';
@@ -23,15 +26,18 @@ export type FixtureDecoratorId = FixtureDecoratorId;
 export type FixtureElementId = FixtureElementId;
 export type FixtureStateUnserializableValue = FixtureStateUnserializableValue;
 export type FixtureStatePrimitiveValueType = FixtureStatePrimitiveValueType;
+export type FixtureStateObjectValueType = FixtureStateObjectValueType;
+export type FixtureStateArrayValueType = FixtureStateArrayValueType;
+export type FixtureStateValueType = FixtureStateValueType;
 export type FixtureStatePrimitiveValue = FixtureStatePrimitiveValue;
 export type FixtureStateObjectValue = FixtureStateObjectValue;
 export type FixtureStateArrayValue = FixtureStateArrayValue;
 export type FixtureStateValue = FixtureStateValue;
 export type FixtureStateValues = FixtureStateValues;
+export type FixtureStateValueGroup = FixtureStateValueGroup;
+export type FixtureStateValueGroups = FixtureStateValueGroups;
 export type FixtureStateProps = FixtureStateProps;
 export type FixtureStateClassState = FixtureStateClassState;
-export type FixtureStateValue2 = FixtureStateValue2;
-export type FixtureStateValues2 = FixtureStateValues2;
 export type FixtureState = FixtureState;
 export type SetFixtureState = SetFixtureState;
 

@@ -1,5 +1,6 @@
 import { StateUpdater } from '../util';
 
+// TODO: Deprecate in favor of FixtureStateObjectValueType
 export type KeyValue = Record<string, unknown>;
 
 export type FixtureDecoratorId = string;
@@ -16,6 +17,15 @@ export type FixtureStateUnserializableValue = {
 
 export type FixtureStatePrimitiveValueType = string | number | boolean | null;
 
+export type FixtureStateObjectValueType = Record<string, unknown>;
+
+export type FixtureStateArrayValueType = unknown[];
+
+export type FixtureStateValueType =
+  | FixtureStatePrimitiveValueType
+  | FixtureStateObjectValueType
+  | FixtureStateArrayValueType;
+
 export type FixtureStatePrimitiveValue = {
   type: 'primitive';
   value: FixtureStatePrimitiveValueType;
@@ -31,8 +41,6 @@ export type FixtureStateArrayValue = {
   values: FixtureStateValue[];
 };
 
-// TODO: 'select' type with specific options (that may or may not be
-// serializable)
 export type FixtureStateValue =
   | FixtureStateUnserializableValue
   | FixtureStatePrimitiveValue
@@ -40,6 +48,16 @@ export type FixtureStateValue =
   | FixtureStateArrayValue;
 
 export type FixtureStateValues = Record<string, FixtureStateValue>;
+
+export type FixtureStateValueGroup = {
+  defaultValue: FixtureStateValue;
+  currentValue: FixtureStateValue;
+};
+
+export type FixtureStateValueGroups = Record<string, FixtureStateValueGroup>;
+
+// TODO: 'select' type with specific options (that may or may not be
+// serializable)
 
 export type FixtureRenderKey = number;
 
@@ -56,18 +74,10 @@ export type FixtureStateClassState = {
   componentName: string;
 };
 
-export type FixtureStateValue2 = {
-  type: 'primitive';
-  defaultValue: FixtureStatePrimitiveValueType;
-  currentValue: FixtureStatePrimitiveValueType;
-};
-
-export type FixtureStateValues2 = Record<string, FixtureStateValue2>;
-
 export type FixtureState = {
   props?: FixtureStateProps[];
   classState?: FixtureStateClassState[];
-  customState?: FixtureStateValues2;
+  customState?: FixtureStateValueGroups;
 } & Record<string, any>;
 
 export type SetFixtureState = (update: StateUpdater<FixtureState>) => unknown;

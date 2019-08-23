@@ -1,9 +1,9 @@
 import React from 'react';
-import { useNumber } from 'react-cosmos/fixture';
+import { useState } from 'react-cosmos/fixture';
 import { CounterButton } from '.';
 
 export default () => {
-  const [count, setCount] = useNumber('count');
+  const [count, setCount] = useState('count', { defaultValue: 0 });
   return (
     <CounterButton
       suffix="times"

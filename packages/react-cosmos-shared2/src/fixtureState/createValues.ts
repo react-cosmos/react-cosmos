@@ -1,9 +1,15 @@
 import { isPlainObject } from 'lodash';
-import { isElement } from 'react-is';
 import reactElementToJSXString from 'react-element-to-jsx-string';
-import { KeyValue, FixtureStateValue, FixtureStateValues } from './shared';
+import { isElement } from 'react-is';
+import {
+  FixtureStateObjectValueType,
+  FixtureStateValue,
+  FixtureStateValues
+} from './shared';
 
-export function createValues(obj: KeyValue): FixtureStateValues {
+export function createValues(
+  obj: FixtureStateObjectValueType
+): FixtureStateValues {
   const values: FixtureStateValues = {};
   Object.keys(obj)
     // Ignore noise from attrs defined as undefined (eg. props.children is
@@ -51,7 +57,9 @@ export function createValue(value: unknown): FixtureStateValue {
   };
 }
 
-function isSerializableObject(value: unknown): value is KeyValue {
+function isSerializableObject(
+  value: unknown
+): value is FixtureStateObjectValueType {
   return isPlainObject(value) && !isElement(value);
 }
 

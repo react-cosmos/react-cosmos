@@ -3,7 +3,7 @@ import React from 'react';
 import {
   FixtureState,
   FixtureStateValues,
-  FixtureStateValues2
+  FixtureStateValueGroups
 } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import { RotateCcwIcon } from '../../shared/icons';
@@ -71,14 +71,11 @@ export const CustomStatePanel = React.memo(function ClassStatePanel({
 });
 
 function convertValues2ToValues1(
-  fsValues2: FixtureStateValues2
+  fsValues2: FixtureStateValueGroups
 ): FixtureStateValues {
   const fsValues1: FixtureStateValues = {};
   Object.keys(fsValues2).forEach(inputName => {
-    fsValues1[inputName] = {
-      type: fsValues2[inputName].type,
-      value: fsValues2[inputName].currentValue
-    };
+    fsValues1[inputName] = fsValues2[inputName].currentValue;
   });
   return fsValues1;
 }
@@ -88,7 +85,7 @@ function updateValues2WithValues1(
   fsValues1: FixtureStateValues
 ) {
   const prevFsValues = fixtureState.customState || {};
-  const nextFsValues: FixtureStateValues2 = {};
+  const nextFsValues: FixtureStateValueGroups = {};
   Object.keys(fsValues1).forEach(inputName => {
     if (!prevFsValues[inputName]) {
       console.warn(`Matching fixture state value not found for "${inputName}"`);
@@ -103,7 +100,7 @@ function updateValues2WithValues1(
 
     nextFsValues[inputName] = {
       ...prevFsValues[inputName],
-      currentValue: fsValue.value
+      currentValue: fsValue
     };
   });
   return { ...fixtureState, customState: nextFsValues };
@@ -111,7 +108,7 @@ function updateValues2WithValues1(
 
 function resetCustomStateValues(fixtureState: FixtureState) {
   const prevFsValues = fixtureState.customState || {};
-  const nextFsValues: FixtureStateValues2 = {};
+  const nextFsValues: FixtureStateValueGroups = {};
   Object.keys(prevFsValues).forEach(inputName => {
     const fsValue = prevFsValues[inputName];
     nextFsValues[inputName] = {
@@ -123,7 +120,7 @@ function resetCustomStateValues(fixtureState: FixtureState) {
   return { ...fixtureState, customState: nextFsValues };
 }
 
-function didValuesChange(fsValues: FixtureStateValues2) {
+function didValuesChange(fsValues: FixtureStateValueGroups) {
   return Object.keys(fsValues).every(fsValue =>
     isEqual(fsValues[fsValue].currentValue, fsValues[fsValue].defaultValue)
   );

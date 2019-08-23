@@ -4,12 +4,12 @@ import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer } from 'react-test-renderer';
 // Warning: Import test helpers before tested source to mock Socket.IO
 import { runFixtureLoaderTests } from '../testHelpers';
-import { resetPersistentValues } from '../stateHooks/shared/persistentValueStore';
-import { useString } from '..';
+import { resetPersistentValues } from '../useState/shared/persistentValueStore';
+import { useState } from '..';
 
 function createFixtures({ defaultValue }: { defaultValue: string }) {
   const MyComponent = () => {
-    const [value, setValue] = useString('name', { defaultValue });
+    const [value, setValue] = useState('name', { defaultValue });
     return (
       <input
         type="text"
@@ -53,9 +53,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               name: {
-                type: 'primitive',
-                defaultValue: 'Fu Barr',
-                currentValue: 'Fu Barr'
+                defaultValue: { type: 'primitive', value: 'Fu Barr' },
+                currentValue: { type: 'primitive', value: 'Fu Barr' }
               }
             }
           }
@@ -78,9 +77,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               name: {
-                type: 'primitive',
-                defaultValue: 'Fu Barr',
-                currentValue: 'Fu Barr Bhaz'
+                defaultValue: { type: 'primitive', value: 'Fu Barr' },
+                currentValue: { type: 'primitive', value: 'Fu Barr Bhaz' }
               }
             }
           }
@@ -97,7 +95,7 @@ runFixtureLoaderTests(mount => {
         await rendered(renderer, 'Fu Barr');
         update({
           rendererId,
-          fixtures: createFixtures({ defaultValue: 'Fu Barr Bhaz Cooks' }),
+          fixtures: createFixtures({ defaultValue: 'Fu Barr Bhaz' }),
           decorators
         });
         await fixtureStateChange({
@@ -107,9 +105,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               name: {
-                type: 'primitive',
-                defaultValue: 'Fu Barr Bhaz Cooks',
-                currentValue: 'Fu Barr Bhaz Cooks'
+                defaultValue: { type: 'primitive', value: 'Fu Barr Bhaz' },
+                currentValue: { type: 'primitive', value: 'Fu Barr Bhaz' }
               }
             }
           }

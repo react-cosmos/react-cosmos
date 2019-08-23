@@ -4,8 +4,8 @@ import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
 // Warning: Import test helpers before tested source to mock Socket.IO
 import { runFixtureLoaderTests } from '../testHelpers';
-import { resetPersistentValues } from '../stateHooks/shared/persistentValueStore';
-import { useNumber, useBoolean } from '..';
+import { resetPersistentValues } from '../useState/shared/persistentValueStore';
+import { useState } from '..';
 
 type CreateFixtureArgs = {
   countName?: string;
@@ -21,10 +21,10 @@ function createFixtures({
   defaultToggled = false
 }: CreateFixtureArgs = {}) {
   const MyComponent = () => {
-    const [count, setCount] = useNumber(countName, {
+    const [count, setCount] = useState(countName, {
       defaultValue: defaultCount
     });
-    const [toggled, setToggled] = useBoolean(toggledName, {
+    const [toggled, setToggled] = useState(toggledName, {
       defaultValue: defaultToggled
     });
     return (
@@ -71,14 +71,12 @@ runFixtureLoaderTests(mount => {
             customState: {
               // `count` was reset, `toggled` was preserved
               count: {
-                type: 'primitive',
-                defaultValue: 2,
-                currentValue: 2
+                defaultValue: { type: 'primitive', value: 2 },
+                currentValue: { type: 'primitive', value: 2 }
               },
               toggled: {
-                type: 'primitive',
-                defaultValue: false,
-                currentValue: true
+                defaultValue: { type: 'primitive', value: false },
+                currentValue: { type: 'primitive', value: true }
               }
             }
           }
@@ -109,9 +107,8 @@ runFixtureLoaderTests(mount => {
             customState: {
               ...fixtureState.customState,
               count: {
-                type: 'primitive',
-                defaultValue: 0,
-                currentValue: 1
+                defaultValue: { type: 'primitive', value: 0 },
+                currentValue: { type: 'primitive', value: 1 }
               }
             }
           }
@@ -130,14 +127,12 @@ runFixtureLoaderTests(mount => {
             customState: {
               // `count` was preserved, `toggled` was reset
               count: {
-                type: 'primitive',
-                defaultValue: 0,
-                currentValue: 1
+                defaultValue: { type: 'primitive', value: 0 },
+                currentValue: { type: 'primitive', value: 1 }
               },
               toggled: {
-                type: 'primitive',
-                defaultValue: true,
-                currentValue: true
+                defaultValue: { type: 'primitive', value: true },
+                currentValue: { type: 'primitive', value: true }
               }
             }
           }
@@ -160,14 +155,12 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               count: {
-                type: 'primitive',
-                defaultValue: 0,
-                currentValue: 1
+                defaultValue: { type: 'primitive', value: 0 },
+                currentValue: { type: 'primitive', value: 1 }
               },
               toggled: {
-                type: 'primitive',
-                defaultValue: false,
-                currentValue: false
+                defaultValue: { type: 'primitive', value: false },
+                currentValue: { type: 'primitive', value: false }
               }
             }
           }
@@ -188,15 +181,13 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               count: {
-                type: 'primitive',
-                defaultValue: 0,
-                currentValue: 1
+                defaultValue: { type: 'primitive', value: 0 },
+                currentValue: { type: 'primitive', value: 1 }
               },
               // `toggled` was replaced by `confirmed`
               confirmed: {
-                type: 'primitive',
-                defaultValue: true,
-                currentValue: true
+                defaultValue: { type: 'primitive', value: true },
+                currentValue: { type: 'primitive', value: true }
               }
             }
           }

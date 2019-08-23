@@ -4,12 +4,12 @@ import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer } from 'react-test-renderer';
 // Warning: Import test helpers before tested source to mock Socket.IO
 import { runFixtureLoaderTests } from '../testHelpers';
-import { resetPersistentValues } from '../stateHooks/shared/persistentValueStore';
-import { useNumber } from '..';
+import { resetPersistentValues } from '../useState/shared/persistentValueStore';
+import { useState } from '..';
 
 function createFixtures({ defaultValue }: { defaultValue: number }) {
   const MyComponent = () => {
-    const [count, setCount] = useNumber('count', { defaultValue });
+    const [count, setCount] = useState('count', { defaultValue });
     return (
       <button onClick={() => setCount(prevCount => prevCount + 1)}>
         {count} clicks
@@ -51,9 +51,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               count: {
-                type: 'primitive',
-                defaultValue: 0,
-                currentValue: 0
+                defaultValue: { type: 'primitive', value: 0 },
+                currentValue: { type: 'primitive', value: 0 }
               }
             }
           }
@@ -77,9 +76,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               count: {
-                type: 'primitive',
-                defaultValue: 0,
-                currentValue: 2
+                defaultValue: { type: 'primitive', value: 0 },
+                currentValue: { type: 'primitive', value: 2 }
               }
             }
           }
@@ -106,9 +104,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               count: {
-                type: 'primitive',
-                defaultValue: 5,
-                currentValue: 5
+                defaultValue: { type: 'primitive', value: 5 },
+                currentValue: { type: 'primitive', value: 5 }
               }
             }
           }

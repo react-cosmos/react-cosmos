@@ -4,12 +4,12 @@ import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer } from 'react-test-renderer';
 // Warning: Import test helpers before tested source to mock Socket.IO
 import { runFixtureLoaderTests } from '../testHelpers';
-import { resetPersistentValues } from '../stateHooks/shared/persistentValueStore';
-import { useBoolean } from '..';
+import { resetPersistentValues } from '../useState/shared/persistentValueStore';
+import { useState } from '..';
 
 function createFixtures({ defaultValue }: { defaultValue: boolean }) {
   const MyComponent = () => {
-    const [toggled, setToggled] = useBoolean('toggled', { defaultValue });
+    const [toggled, setToggled] = useState('toggled', { defaultValue });
     return (
       <button onClick={() => setToggled(!toggled)}>{String(toggled)}</button>
     );
@@ -49,9 +49,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               toggled: {
-                type: 'primitive',
-                defaultValue: false,
-                currentValue: false
+                defaultValue: { type: 'primitive', value: false },
+                currentValue: { type: 'primitive', value: false }
               }
             }
           }
@@ -74,9 +73,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               toggled: {
-                type: 'primitive',
-                defaultValue: false,
-                currentValue: true
+                defaultValue: { type: 'primitive', value: false },
+                currentValue: { type: 'primitive', value: true }
               }
             }
           }
@@ -103,9 +101,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               toggled: {
-                type: 'primitive',
-                defaultValue: true,
-                currentValue: true
+                defaultValue: { type: 'primitive', value: true },
+                currentValue: { type: 'primitive', value: true }
               }
             }
           }

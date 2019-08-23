@@ -11,24 +11,20 @@ export default () => {
   const [fixtureState, setFixtureState] = React.useState<FixtureState>({
     customState: {
       string: {
-        type: 'primitive',
-        defaultValue: 'hello world',
-        currentValue: 'hello world'
+        defaultValue: { type: 'primitive', value: 'hello world' },
+        currentValue: { type: 'primitive', value: 'hello world' }
       },
       number: {
-        type: 'primitive',
-        defaultValue: 1337,
-        currentValue: 1337
+        defaultValue: { type: 'primitive', value: 1337 },
+        currentValue: { type: 'primitive', value: 1337 }
       },
       boolean: {
-        type: 'primitive',
-        defaultValue: false,
-        currentValue: false
+        defaultValue: { type: 'primitive', value: false },
+        currentValue: { type: 'primitive', value: false }
       },
       null: {
-        type: 'primitive',
-        defaultValue: null,
-        currentValue: null
+        defaultValue: { type: 'primitive', value: null },
+        currentValue: { type: 'primitive', value: null }
       }
     }
   });
