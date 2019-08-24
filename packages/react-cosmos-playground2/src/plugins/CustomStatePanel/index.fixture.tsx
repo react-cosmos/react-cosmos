@@ -25,6 +25,24 @@ export default () => {
       null: {
         defaultValue: { type: 'primitive', value: null },
         currentValue: { type: 'primitive', value: null }
+      },
+      object: {
+        defaultValue: {
+          type: 'object',
+          values: {
+            isAdmin: { type: 'primitive', value: true },
+            name: { type: 'primitive', value: 'Pat D' },
+            age: { type: 'primitive', value: 45 }
+          }
+        },
+        currentValue: {
+          type: 'object',
+          values: {
+            isAdmin: { type: 'primitive', value: true },
+            name: { type: 'primitive', value: 'Pat D' },
+            age: { type: 'primitive', value: 45 }
+          }
+        }
       }
     }
   });

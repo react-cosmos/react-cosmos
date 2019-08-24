@@ -92,12 +92,7 @@ function updateValues2WithValues1(
       return;
     }
 
-    // TODO: Support all fixture state value types
     const fsValue = fsValues1[inputName];
-    if (fsValue.type !== 'primitive') {
-      return;
-    }
-
     nextFsValues[inputName] = {
       ...prevFsValues[inputName],
       currentValue: fsValue
