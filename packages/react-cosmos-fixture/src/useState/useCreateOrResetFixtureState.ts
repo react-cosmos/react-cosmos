@@ -1,8 +1,6 @@
 import React from 'react';
 import {
-  createValues,
   findFixtureStateCustomState,
-  FixtureStateValueGroup,
   FixtureStateValueType,
   isPrimitiveValue
 } from 'react-cosmos-shared2/fixtureState';
