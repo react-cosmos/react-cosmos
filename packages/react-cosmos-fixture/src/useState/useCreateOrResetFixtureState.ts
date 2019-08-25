@@ -1,7 +1,10 @@
 import React from 'react';
 import {
+  createValues,
   findFixtureStateCustomState,
+  FixtureStateValueGroup,
   FixtureStateValueType,
+  isObject,
   isPrimitiveValue
 } from 'react-cosmos-shared2/fixtureState';
 import { FixtureContext } from '../FixtureContext';
@@ -48,6 +51,26 @@ export function useCreateOrResetFixtureState(
                 value: getCurrentValue(prevFsState, inputName, defaultValue)
               }
             }
+          };
+        }
+
+        if (isObject(defaultValue)) {
+          const fsValueGroup: FixtureStateValueGroup = {
+            defaultValue: {
+              type: 'object',
+              values: createValues(defaultValue)
+            },
+            currentValue: {
+              type: 'object',
+              values: createValues(
+                getCurrentValue(prevFsState, inputName, defaultValue)
+              )
+            }
+          };
+
+          return {
+            ...customState,
+            [inputName]: fsValueGroup
           };
         }
 

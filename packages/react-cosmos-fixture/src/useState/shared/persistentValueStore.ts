@@ -1,10 +1,9 @@
 import { isEqual } from 'lodash';
-import { FixtureStateValueType } from 'react-cosmos-shared2/fixtureState';
 
 type PersistentValues = {
   [inputName: string]: {
-    defaultValue: FixtureStateValueType;
-    currentValue: FixtureStateValueType;
+    defaultValue: unknown;
+    currentValue: unknown;
   };
 };
 
@@ -20,8 +19,8 @@ export function persistValue({
   currentValue
 }: {
   inputName: string;
-  defaultValue: FixtureStateValueType;
-  currentValue: FixtureStateValueType;
+  defaultValue: unknown;
+  currentValue: unknown;
 }) {
   persistedValues[inputName] = { defaultValue, currentValue };
 }
@@ -31,8 +30,8 @@ export function getPersistedValue({
   defaultValue
 }: {
   inputName: string;
-  defaultValue: FixtureStateValueType;
-}): FixtureStateValueType {
+  defaultValue: unknown;
+}): unknown {
   const persistedValue = persistedValues[inputName];
   return persistedValue && isEqual(persistedValue.defaultValue, defaultValue)
     ? persistedValue.currentValue

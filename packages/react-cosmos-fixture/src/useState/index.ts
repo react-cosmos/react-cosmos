@@ -16,7 +16,7 @@ export function useState<T extends FixtureStateValueType>(
 ): [T, SetValue<T>] {
   useCreateOrResetFixtureState(inputName, defaultValue);
   useCleanUpFixtureState(inputName);
-  usePersistFixtureState();
+  usePersistFixtureState(defaultValue);
   const currentValue = useCurrentValue(inputName, defaultValue);
   const setValue = useSetValue(inputName, defaultValue);
   return [currentValue, setValue];

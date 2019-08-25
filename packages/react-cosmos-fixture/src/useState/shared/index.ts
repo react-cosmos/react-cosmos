@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  extendWithValue,
   findFixtureStateCustomState,
   FixtureState,
   FixtureStateValueGroups,
@@ -18,9 +19,11 @@ export function getCurrentValue<T extends FixtureStateValueType>(
 ): T {
   const fsValue = findFixtureStateCustomState(fixtureState, inputName);
   return fsValue
-    ? // FIXME: Ensure current value in fixture state is of `T` type
-      ((fsValue.currentValue as any).value as T)
-    : // FIXME: Ensure current value in fixture state is of `T` type
+    ? // Types cannot be enforced in fixture state values, which means that
+      // tampering with the fixture state can cause runtime errors
+      (extendWithValue(defaultValue, fsValue.currentValue) as T)
+    : // Types cannot be enforced in persisted values cache, which means that
+      // tampering with the persisted values cache can cause runtime errors
       (getPersistedValue({ inputName, defaultValue }) as T);
 }
 
