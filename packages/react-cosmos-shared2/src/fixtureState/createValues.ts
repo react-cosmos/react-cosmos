@@ -4,7 +4,9 @@ import { isElement } from 'react-is';
 import {
   FixtureStateObjectValueType,
   FixtureStateValue,
-  FixtureStateValues
+  FixtureStateValues,
+  isArray,
+  isPrimitiveValue
 } from './shared';
 
 export function createValues(
@@ -22,38 +24,33 @@ export function createValues(
 }
 
 export function createValue(value: unknown): FixtureStateValue {
-  if (
-    typeof value === 'string' ||
-    typeof value === 'number' ||
-    typeof value === 'boolean' ||
-    value === null
-  ) {
+  if (isPrimitiveValue(value)) {
     return { type: 'primitive', value };
   }
 
-  if (Array.isArray(value)) {
+  if (isArray(value)) {
     return {
       type: 'array',
       values: (value as unknown[]).map(v => createValue(v))
     };
   }
 
-  if (!isSerializableObject(value)) {
-    // Why store unserializable values in fixture state?
-    // - Because they still provides value in the Cosmos UI. They let the user know
-    //   that, eg. a prop, is present and see the read-only stringified value.
-    // - More importantly, because the fixture state controls which props to render.
-    //   This way, if a prop is read-only and cannot be edited in the UI, it can
-    //   still be removed.
+  if (isSerializableObject(value)) {
     return {
-      type: 'unserializable',
-      stringifiedValue: stringifyUnserializableValue(value)
+      type: 'object',
+      values: createValues(value)
     };
   }
 
+  // Why store unserializable values in fixture state?
+  // - Because they still provides value in the Cosmos UI. They let the user know
+  //   that, eg. a prop, is present and see the read-only stringified value.
+  // - More importantly, because the fixture state controls which props to render.
+  //   This way, if a prop is read-only and cannot be edited in the UI, it can
+  //   still be removed.
   return {
-    type: 'object',
-    values: createValues(value)
+    type: 'unserializable',
+    stringifiedValue: stringifyUnserializableValue(value)
   };
 }
 

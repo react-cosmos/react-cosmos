@@ -1,8 +1,5 @@
 import { StateUpdater } from '../util';
 
-// TODO: Deprecate in favor of FixtureStateObjectValueType
-export type KeyValue = Record<string, unknown>;
-
 export type FixtureDecoratorId = string;
 
 export type FixtureElementId = {
@@ -81,3 +78,35 @@ export type FixtureState = {
 } & Record<string, any>;
 
 export type SetFixtureState = (update: StateUpdater<FixtureState>) => unknown;
+
+export function isString(value: unknown): value is string {
+  return typeof value === 'string';
+}
+
+export function isNumber(value: unknown): value is number {
+  return typeof value === 'number';
+}
+
+export function isBoolean(value: unknown): value is boolean {
+  return typeof value === 'boolean';
+}
+
+export function isNull(value: unknown): value is null {
+  return value === null;
+}
+
+export function isPrimitiveValue(
+  value: unknown
+): value is FixtureStatePrimitiveValueType {
+  return (
+    isString(value) || isNumber(value) || isBoolean(value) || isNull(value)
+  );
+}
+
+export function isObject(value: unknown): value is FixtureStateObjectValueType {
+  return value !== null && typeof value === 'object';
+}
+
+export function isArray(value: unknown): value is FixtureStateArrayValueType {
+  return Array.isArray(value);
+}

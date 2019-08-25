@@ -3,36 +3,13 @@ import {
   findFixtureStateCustomState,
   FixtureState,
   FixtureStateValueGroups,
-  FixtureStateValueType,
-  FixtureStateObjectValueType
+  FixtureStateValueType
 } from 'react-cosmos-shared2/fixtureState';
 import { getPersistedValue } from './persistentValueStore';
 
 export type SetValue<T extends FixtureStateValueType> = React.Dispatch<
   React.SetStateAction<T>
 >;
-
-export function isString(value: unknown): value is string {
-  return typeof value === 'string';
-}
-
-export function isNumber(value: unknown): value is number {
-  return typeof value === 'number';
-}
-
-export function isBoolean(value: unknown): value is boolean {
-  return typeof value === 'boolean';
-}
-
-export function isNull(value: unknown): value is null {
-  return value === null;
-}
-
-export function isObject(value: unknown): value is FixtureStateObjectValueType {
-  return value !== null && typeof value === 'object';
-}
-
-// TODO: isArray
 
 export function getCurrentValue<T extends FixtureStateValueType>(
   fixtureState: FixtureState,

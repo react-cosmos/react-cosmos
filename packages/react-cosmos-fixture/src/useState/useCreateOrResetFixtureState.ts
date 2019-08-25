@@ -1,17 +1,13 @@
 import React from 'react';
 import {
+  createValues,
   findFixtureStateCustomState,
-  FixtureStateValueType
+  FixtureStateValueGroup,
+  FixtureStateValueType,
+  isPrimitiveValue
 } from 'react-cosmos-shared2/fixtureState';
 import { FixtureContext } from '../FixtureContext';
-import {
-  getCurrentValue,
-  isBoolean,
-  isNull,
-  isNumber,
-  isString,
-  updateCustomState
-} from './shared';
+import { getCurrentValue, updateCustomState } from './shared';
 
 export function useCreateOrResetFixtureState(
   inputName: string,
@@ -41,16 +37,14 @@ export function useCreateOrResetFixtureState(
       }
 
       return updateCustomState(prevFsState, customState => {
-        if (
-          isString(defaultValue) ||
-          isNumber(defaultValue) ||
-          isBoolean(defaultValue) ||
-          isNull(defaultValue)
-        ) {
+        if (isPrimitiveValue(defaultValue)) {
           return {
             ...customState,
             [inputName]: {
-              defaultValue: { type: 'primitive', value: defaultValue },
+              defaultValue: {
+                type: 'primitive',
+                value: defaultValue
+              },
               currentValue: {
                 type: 'primitive',
                 value: getCurrentValue(prevFsState, inputName, defaultValue)

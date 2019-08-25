@@ -1,5 +1,4 @@
 import {
-  KeyValue,
   FixtureDecoratorId,
   FixtureElementId,
   FixtureStateUnserializableValue,
@@ -21,7 +20,6 @@ import {
 } from './shared';
 
 // Types can't be re-exported because Babel (see root tsconfig.json)
-export type KeyValue = KeyValue;
 export type FixtureDecoratorId = FixtureDecoratorId;
 export type FixtureElementId = FixtureElementId;
 export type FixtureStateUnserializableValue = FixtureStateUnserializableValue;
@@ -41,6 +39,15 @@ export type FixtureStateClassState = FixtureStateClassState;
 export type FixtureState = FixtureState;
 export type SetFixtureState = SetFixtureState;
 
+export {
+  isString,
+  isNumber,
+  isBoolean,
+  isNull,
+  isPrimitiveValue,
+  isObject,
+  isArray
+} from './shared';
 export { createValues, createValue } from './createValues';
 export { extendWithValues, extendWithValue } from './extendWithValues';
 export {
