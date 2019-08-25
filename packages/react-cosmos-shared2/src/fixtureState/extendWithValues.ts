@@ -1,6 +1,7 @@
 import { FixtureStateValue, FixtureStateValues, KeyValue } from './shared';
 
 // Use fixture state for serializable values and fall back to base values
+// TODO: s/KeyValue/FixtureStateObjectValueType
 export function extendWithValues(
   obj: KeyValue,
   values: FixtureStateValues
@@ -12,7 +13,7 @@ export function extendWithValues(
   return extendedObj;
 }
 
-function extendWithValue(
+export function extendWithValue(
   baseValue: unknown,
   value: FixtureStateValue
 ): unknown {

@@ -42,7 +42,7 @@ export type FixtureState = FixtureState;
 export type SetFixtureState = SetFixtureState;
 
 export { createValues, createValue } from './createValues';
-export { extendWithValues } from './extendWithValues';
+export { extendWithValues, extendWithValue } from './extendWithValues';
 export {
   DEFAULT_RENDER_KEY,
   getFixtureStateProps,
