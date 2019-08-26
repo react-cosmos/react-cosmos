@@ -1,4 +1,3 @@
-import { isPlainObject } from 'lodash';
 import reactElementToJSXString from 'react-element-to-jsx-string';
 import { isElement } from 'react-is';
 import {
@@ -6,6 +5,7 @@ import {
   FixtureStateValue,
   FixtureStateValues,
   isArray,
+  isObject,
   isPrimitiveValue
 } from './shared';
 
@@ -35,7 +35,7 @@ export function createValue(value: unknown): FixtureStateValue {
     };
   }
 
-  if (isSerializableObject(value)) {
+  if (isObject(value)) {
     return {
       type: 'object',
       values: createValues(value)
@@ -52,12 +52,6 @@ export function createValue(value: unknown): FixtureStateValue {
     type: 'unserializable',
     stringifiedValue: stringifyUnserializableValue(value)
   };
-}
-
-function isSerializableObject(
-  value: unknown
-): value is FixtureStateObjectValueType {
-  return isPlainObject(value) && !isElement(value);
 }
 
 function stringifyUnserializableValue(value: unknown) {

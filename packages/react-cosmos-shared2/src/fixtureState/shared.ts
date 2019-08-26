@@ -1,3 +1,4 @@
+import { isElement } from 'react-is';
 import { StateUpdater } from '../util';
 
 export type FixtureDecoratorId = string;
@@ -104,7 +105,12 @@ export function isPrimitiveValue(
 }
 
 export function isObject(value: unknown): value is FixtureStateObjectValueType {
-  return value !== null && typeof value === 'object';
+  return (
+    value !== null &&
+    typeof value === 'object' &&
+    !Array.isArray(value) &&
+    !isElement(value)
+  );
 }
 
 export function isArray(value: unknown): value is FixtureStateArrayValueType {

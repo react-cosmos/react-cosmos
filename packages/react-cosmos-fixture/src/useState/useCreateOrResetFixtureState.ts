@@ -1,11 +1,8 @@
 import React from 'react';
 import {
-  createValues,
+  createValue,
   findFixtureStateCustomState,
-  FixtureStateValueGroup,
-  FixtureStateValueType,
-  isObject,
-  isPrimitiveValue
+  FixtureStateValueType
 } from 'react-cosmos-shared2/fixtureState';
 import { FixtureContext } from '../FixtureContext';
 import { getCurrentValue, updateCustomState } from './shared';
@@ -37,45 +34,15 @@ export function useCreateOrResetFixtureState(
         // );
       }
 
-      return updateCustomState(prevFsState, customState => {
-        if (isPrimitiveValue(defaultValue)) {
-          return {
-            ...customState,
-            [inputName]: {
-              defaultValue: {
-                type: 'primitive',
-                value: defaultValue
-              },
-              currentValue: {
-                type: 'primitive',
-                value: getCurrentValue(prevFsState, inputName, defaultValue)
-              }
-            }
-          };
+      return updateCustomState(prevFsState, customState => ({
+        ...customState,
+        [inputName]: {
+          defaultValue: createValue(defaultValue),
+          currentValue: createValue(
+            getCurrentValue(prevFsState, inputName, defaultValue)
+          )
         }
-
-        if (isObject(defaultValue)) {
-          const fsValueGroup: FixtureStateValueGroup = {
-            defaultValue: {
-              type: 'object',
-              values: createValues(defaultValue)
-            },
-            currentValue: {
-              type: 'object',
-              values: createValues(
-                getCurrentValue(prevFsState, inputName, defaultValue)
-              )
-            }
-          };
-
-          return {
-            ...customState,
-            [inputName]: fsValueGroup
-          };
-        }
-
-        return customState;
-      });
+      }));
     });
   }, [setFixtureState, inputName, defaultValue]);
 }
