@@ -11,9 +11,9 @@
     "localforage": "^1.7.3",
     "lodash": "^4.17.15",
     "query-string": "^6.8.2",
-    "react": "16.9.0-alpha.0",
+    "react": "16.9.0",
     "react-cosmos-shared2": "^5.0.0-alpha.25",
-    "react-dom": "16.9.0-alpha.0",
+    "react-dom": "16.9.0",
     "react-plugin": "^2.0.0-alpha.8",
     "socket.io-client": "^2.2.0",
     "styled-components": "^4.3.2"
