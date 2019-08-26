@@ -17,6 +17,7 @@ Alpha
 - [x] Resize responsive viewport
   - [x] Put viewports in dropdown
   - [x] Make width/height inputs
+- [ ] UI controls from state hooks
 - [ ] Mass fixture snapshots
 - [ ] Refresh docs
 
@@ -45,9 +46,10 @@ Control panel
   - [x] Style
   - [x] Blank state
 - [x] Class state panel
-- [ ] Custom controls with Hooks API in (function) fixtures
-  - [ ] Dropdown component
-  - [ ] Generic panel blank state
+- [ ] UI controls from state hooks
+  - [x] State hook for primitive, object and array values
+  - [ ] Select state hook with predefined options
+  - [ ] Update panel blank state
 
 Build notifications
 
