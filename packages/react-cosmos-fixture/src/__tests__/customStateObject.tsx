@@ -11,6 +11,7 @@ type Profile = {
   isAdmin: boolean;
   name: string;
   age: number;
+  onClick: () => unknown;
 };
 
 function createFixtures({ defaultValue }: { defaultValue: Profile }) {
@@ -34,7 +35,7 @@ function createFixtures({ defaultValue }: { defaultValue: Profile }) {
 
 const rendererId = uuid();
 const fixtures = createFixtures({
-  defaultValue: { isAdmin: true, name: 'Pat D', age: 45 }
+  defaultValue: { isAdmin: true, name: 'Pat D', age: 45, onClick: () => {} }
 });
 const decorators = {};
 const fixtureId = { path: 'first', name: null };
@@ -69,7 +70,11 @@ runFixtureLoaderTests(mount => {
                   values: {
                     isAdmin: { type: 'primitive', value: true },
                     name: { type: 'primitive', value: 'Pat D' },
-                    age: { type: 'primitive', value: 45 }
+                    age: { type: 'primitive', value: 45 },
+                    onClick: {
+                      type: 'unserializable',
+                      stringifiedValue: '() => {}'
+                    }
                   }
                 },
                 currentValue: {
@@ -77,7 +82,11 @@ runFixtureLoaderTests(mount => {
                   values: {
                     isAdmin: { type: 'primitive', value: true },
                     name: { type: 'primitive', value: 'Pat D' },
-                    age: { type: 'primitive', value: 45 }
+                    age: { type: 'primitive', value: 45 },
+                    onClick: {
+                      type: 'unserializable',
+                      stringifiedValue: '() => {}'
+                    }
                   }
                 }
               }
@@ -107,7 +116,11 @@ runFixtureLoaderTests(mount => {
                   values: {
                     isAdmin: { type: 'primitive', value: true },
                     name: { type: 'primitive', value: 'Pat D' },
-                    age: { type: 'primitive', value: 45 }
+                    age: { type: 'primitive', value: 45 },
+                    onClick: {
+                      type: 'unserializable',
+                      stringifiedValue: '() => {}'
+                    }
                   }
                 },
                 currentValue: {
@@ -115,7 +128,11 @@ runFixtureLoaderTests(mount => {
                   values: {
                     isAdmin: { type: 'primitive', value: false },
                     name: { type: 'primitive', value: 'Pat D' },
-                    age: { type: 'primitive', value: 45 }
+                    age: { type: 'primitive', value: 45 },
+                    onClick: {
+                      type: 'unserializable',
+                      stringifiedValue: '() => {}'
+                    }
                   }
                 }
               }
@@ -135,7 +152,12 @@ runFixtureLoaderTests(mount => {
         update({
           rendererId,
           fixtures: createFixtures({
-            defaultValue: { isAdmin: false, name: 'Pat D', age: 45 }
+            defaultValue: {
+              isAdmin: false,
+              name: 'Pat D',
+              age: 45,
+              onClick: () => {}
+            }
           }),
           decorators
         });
@@ -151,7 +173,11 @@ runFixtureLoaderTests(mount => {
                   values: {
                     isAdmin: { type: 'primitive', value: false },
                     name: { type: 'primitive', value: 'Pat D' },
-                    age: { type: 'primitive', value: 45 }
+                    age: { type: 'primitive', value: 45 },
+                    onClick: {
+                      type: 'unserializable',
+                      stringifiedValue: '() => {}'
+                    }
                   }
                 },
                 currentValue: {
@@ -159,7 +185,11 @@ runFixtureLoaderTests(mount => {
                   values: {
                     isAdmin: { type: 'primitive', value: false },
                     name: { type: 'primitive', value: 'Pat D' },
-                    age: { type: 'primitive', value: 45 }
+                    age: { type: 'primitive', value: 45 },
+                    onClick: {
+                      type: 'unserializable',
+                      stringifiedValue: '() => {}'
+                    }
                   }
                 }
               }
@@ -171,7 +201,10 @@ runFixtureLoaderTests(mount => {
   });
 });
 
-async function rendered(renderer: ReactTestRenderer, profile: Profile) {
+async function rendered(
+  renderer: ReactTestRenderer,
+  profile: Partial<Profile>
+) {
   await retry(() => Boolean(renderer.toJSON()));
   await retry(() => {
     const profileText = getProfileText(getProfileNode(renderer));
