@@ -117,7 +117,6 @@ function getButtonText(renderer: ReactTestRenderer) {
 }
 
 async function rendered(renderer: ReactTestRenderer, text: string) {
-  await retry(() => Boolean(renderer.toJSON()));
   await retry(() => expect(getButtonText(renderer)).toEqual(text));
 }
 

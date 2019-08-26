@@ -201,7 +201,6 @@ async function rendered(
   renderer: ReactTestRenderer,
   { countText, toggledText }: { countText: string; toggledText: string }
 ) {
-  await retry(() => Boolean(renderer.toJSON()));
   await retry(() =>
     expect(getButtonText(getCountButton(renderer))).toEqual(countText)
   );

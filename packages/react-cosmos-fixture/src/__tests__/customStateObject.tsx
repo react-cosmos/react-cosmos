@@ -203,9 +203,8 @@ runFixtureLoaderTests(mount => {
 
 async function rendered(
   renderer: ReactTestRenderer,
-  profile: Partial<Profile>
+  profile: Pick<Profile, 'isAdmin' | 'name' | 'age'>
 ) {
-  await retry(() => Boolean(renderer.toJSON()));
   await retry(() => {
     const profileText = getProfileText(getProfileNode(renderer));
     expect(profileText).toMatch(`"isAdmin": ${profile.isAdmin}`);
