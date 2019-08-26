@@ -3,7 +3,8 @@ import {
   createValue,
   findFixtureStateCustomState,
   FixtureState,
-  FixtureStateValueType
+  FixtureStateValueType,
+  extendWithValue
 } from 'react-cosmos-shared2/fixtureState';
 import { FixtureContext } from '../FixtureContext';
 import { SetValue } from './shared';
@@ -19,8 +20,14 @@ export function useSetValue<T extends FixtureStateValueType>(
         const currentValue: FixtureStateValueType =
           typeof stateChange === 'function'
             ? stateChange(
-                // FIXME: Ensure current value in fixture state is of `T` type
-                getCurrentValueFromFixtureState(prevFsState, inputName) as T
+                // Types of fixture state values cannot be guaranteed at read
+                // time, which means that tampering with the fixture state can
+                // cause runtime errors
+                getCurrentValueFromFixtureState(
+                  prevFsState,
+                  inputName,
+                  defaultValue
+                ) as T
               )
             : stateChange;
         return {
@@ -41,25 +48,12 @@ export function useSetValue<T extends FixtureStateValueType>(
 
 function getCurrentValueFromFixtureState(
   fsState: FixtureState,
-  inputName: string
-): FixtureStateValueType {
+  inputName: string,
+  defaultValue: FixtureStateValueType
+): unknown {
   const fsValue = findFixtureStateCustomState(fsState, inputName);
-  if (!fsValue) {
+  if (!fsValue)
     throw new Error(`Fixture state value missing for input name: ${inputName}`);
-  }
-  // if (!isType(fsValue.currentValue)) {
-  //   const typeOf = typeof fsValue.currentValue;
-  //   throw new Error(`Invalid ${typeOf} type for input name: ${inputName}`);
-  // }
-  const { currentValue } = fsValue;
 
-  if (currentValue.type === 'unserializable') {
-    throw new Error('asd');
-  }
-
-  if (currentValue.type === 'object' || currentValue.type === 'array') {
-    return currentValue.values;
-  }
-
-  return currentValue.value;
+  return extendWithValue(defaultValue, fsValue.currentValue);
 }

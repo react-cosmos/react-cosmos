@@ -19,11 +19,11 @@ export function getCurrentValue<T extends FixtureStateValueType>(
 ): T {
   const fsValue = findFixtureStateCustomState(fixtureState, inputName);
   return fsValue
-    ? // Types cannot be enforced in fixture state values, which means that
-      // tampering with the fixture state can cause runtime errors
+    ? // Types of fixture state values cannot be guaranteed at read time, which
+      // means that tampering with the fixture state can cause runtime errors
       (extendWithValue(defaultValue, fsValue.currentValue) as T)
-    : // Types cannot be enforced in persisted values cache, which means that
-      // tampering with the persisted values cache can cause runtime errors
+    : // Types of persisted values cannot be guaranteed at read time, which
+      // means that tampering with the persisted cache can cause runtime errors
       (getPersistedValue({ inputName, defaultValue }) as T);
 }
 
