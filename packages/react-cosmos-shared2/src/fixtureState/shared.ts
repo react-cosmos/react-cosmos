@@ -1,3 +1,4 @@
+import { isPlainObject } from 'lodash';
 import { isElement } from 'react-is';
 import { StateUpdater } from '../util';
 
@@ -47,15 +48,14 @@ export type FixtureStateValue =
 
 export type FixtureStateValues = Record<string, FixtureStateValue>;
 
+// TODO: Support options (with serializable label and any value type, which
+// lives in the user land)
 export type FixtureStateValueGroup = {
   defaultValue: FixtureStateValue;
   currentValue: FixtureStateValue;
 };
 
 export type FixtureStateValueGroups = Record<string, FixtureStateValueGroup>;
-
-// TODO: 'select' type with specific options (that may or may not be
-// serializable)
 
 export type FixtureRenderKey = number;
 
@@ -105,12 +105,7 @@ export function isPrimitiveValue(
 }
 
 export function isObject(value: unknown): value is FixtureStateObjectValueType {
-  return (
-    value !== null &&
-    typeof value === 'object' &&
-    !Array.isArray(value) &&
-    !isElement(value)
-  );
+  return isPlainObject(value) && !isElement(value);
 }
 
 export function isArray(value: unknown): value is FixtureStateArrayValueType {
