@@ -46,12 +46,15 @@ export default () => {
       }
     }
   });
+  const [treeExpansion, setTreeExpansion] = React.useState({});
 
   return (
     <Container>
       <CustomStatePanel
         fixtureState={fixtureState}
+        treeExpansion={treeExpansion}
         onFixtureStateChange={setFixtureState}
+        onTreeExpansionChange={setTreeExpansion}
       />
     </Container>
   );

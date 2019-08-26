@@ -16,15 +16,20 @@ import {
   Title,
   ValueInputTree
 } from '../../shared/ui/valueInputTree';
+import { TreeExpansion } from '../../shared/ui/TreeView';
 
 type Props = {
   fixtureState: FixtureState;
+  treeExpansion: TreeExpansion;
   onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
+  onTreeExpansionChange: (treeExpansion: TreeExpansion) => unknown;
 };
 
 export const CustomStatePanel = React.memo(function ClassStatePanel({
   fixtureState,
-  onFixtureStateChange
+  treeExpansion,
+  onFixtureStateChange,
+  onTreeExpansionChange
 }: Props) {
   const onCustomStateChange = React.useCallback(
     newValues => {
@@ -61,9 +66,9 @@ export const CustomStatePanel = React.memo(function ClassStatePanel({
         <ValueInputTree
           id="custom-state"
           values={convertValues2ToValues1(fsValues)}
-          treeExpansion={{}}
+          treeExpansion={treeExpansion}
           onValueChange={onCustomStateChange}
-          onTreeExpansionChange={() => {}}
+          onTreeExpansionChange={onTreeExpansionChange}
         />
       </Body>
     </Container>
