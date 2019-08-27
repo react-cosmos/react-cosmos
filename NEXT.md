@@ -192,6 +192,8 @@ export default () => {
 };
 ```
 
+> Hint: `Cosmos.useState` works great with TypeScript.
+
 ### Redux state mock
 
 Check out [react-cosmos-redux](https://github.com/skidding/react-cosmos-redux) to see what a Cosmos Next decorator looks like. It works with the latest `react-redux` version and it's written in _Hooks_ 💃.
