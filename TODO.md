@@ -17,7 +17,7 @@ Alpha
 - [x] Resize responsive viewport
   - [x] Put viewports in dropdown
   - [x] Make width/height inputs
-- [ ] UI controls from state hooks
+- [x] UI controls from state hooks
 - [ ] Mass fixture snapshots
 - [ ] Refresh docs
 
@@ -49,7 +49,6 @@ Control panel
 - [ ] UI controls from state hooks
   - [x] State hook for primitive, object and array values
   - [ ] Select state hook with predefined options
-  - [ ] Update panel blank state
 
 Build notifications
 
@@ -78,6 +77,7 @@ Notification redesign
 
 Not part of v5, but the most notable features to pursue after.
 
+- [ ] `useSelect` hook for UI controls with predefined options
 - [ ] Multi fixture select
 - [ ] Marketing website
 - [ ] "Check all" button/API to detect broken fixtures
