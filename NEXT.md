@@ -178,6 +178,20 @@ export default ({ children }) => <Provider store={store}>{children}</Provider>;
 
 > A decorator file only applies to fixture files that are contained in the decorator file's directory. Multiple decorator files can be composed, in the order of their position in the file system hierarchy (from outer to inner).
 
+## State panel
+
+The _props panel_ allows you to manipulate component props visually by default. But you can also get a _state panel_ with minimal work.
+
+```jsx
+// CounterButton.fixture.js
+import { useState } from 'react-cosmos/fixture';
+
+export default () => {
+  const [count, setCount] = useState(0);
+  return <CounterButton count={count} increment={() => setCount(count + 1)} />;
+};
+```
+
 ### Redux state mock
 
 Check out [react-cosmos-redux](https://github.com/skidding/react-cosmos-redux) to see what a Cosmos Next decorator looks like. It works with the latest `react-redux` version and it's written in _Hooks_ 💃.
