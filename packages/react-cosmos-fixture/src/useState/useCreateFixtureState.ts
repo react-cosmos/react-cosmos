@@ -1,10 +1,12 @@
 import React from 'react';
 import {
   createValue,
+  findFixtureStateCustomState,
   FixtureStateValueType
 } from 'react-cosmos-shared2/fixtureState';
 import { FixtureContext } from '../FixtureContext';
-import { getCurrentValue, updateCustomState } from './shared';
+import { fsValueExtendsBaseValue, updateCustomState } from './shared';
+import { getPersistedValue } from './shared/persistentValueStore';
 
 export function useCreateFixtureState(
   inputName: string,
@@ -14,11 +16,18 @@ export function useCreateFixtureState(
   React.useEffect(() => {
     setFixtureState(prevFsState => {
       return updateCustomState(prevFsState, customState => {
-        const currentValue = getCurrentValue(
+        const fsValueGroup = findFixtureStateCustomState(
           prevFsState,
-          inputName,
-          defaultValue
+          inputName
         );
+        if (
+          fsValueGroup &&
+          fsValueExtendsBaseValue(fsValueGroup.defaultValue, defaultValue)
+        ) {
+          return customState;
+        }
+
+        const currentValue = getPersistedValue({ inputName, defaultValue });
         return {
           ...customState,
           [inputName]: {

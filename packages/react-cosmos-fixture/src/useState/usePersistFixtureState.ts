@@ -1,22 +1,29 @@
 import React from 'react';
 import {
-  FixtureStateValueType,
-  extendWithValue
+  extendWithValue,
+  findFixtureStateCustomState,
+  FixtureStateValueType
 } from 'react-cosmos-shared2/fixtureState';
 import { FixtureContext } from '../FixtureContext';
+import { fsValueExtendsBaseValue } from './shared';
 import { persistValue } from './shared/persistentValueStore';
 
-export function usePersistFixtureState(defaultValue: FixtureStateValueType) {
+export function usePersistFixtureState(
+  inputName: string,
+  defaultValue: FixtureStateValueType
+) {
   const { fixtureState } = React.useContext(FixtureContext);
+  const fsValueGroup = findFixtureStateCustomState(fixtureState, inputName);
   React.useEffect(() => {
-    const { customState = {} } = fixtureState;
-    Object.keys(customState).forEach(inputName => {
-      const fsValueGroup = customState[inputName];
+    if (
+      fsValueGroup &&
+      fsValueExtendsBaseValue(fsValueGroup.defaultValue, defaultValue)
+    ) {
       persistValue({
         inputName,
-        defaultValue: extendWithValue(defaultValue, fsValueGroup.defaultValue),
+        defaultValue,
         currentValue: extendWithValue(defaultValue, fsValueGroup.currentValue)
       });
-    });
-  }, [defaultValue, fixtureState]);
+    }
+  }, [inputName, defaultValue, fsValueGroup]);
 }
