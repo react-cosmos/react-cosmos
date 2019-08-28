@@ -1,5 +1,6 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
+import { createValue } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
 // Warning: Import test helpers before tested source to mock Socket.IO
@@ -65,30 +66,18 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               profile: {
-                defaultValue: {
-                  type: 'object',
-                  values: {
-                    isAdmin: { type: 'primitive', value: true },
-                    name: { type: 'primitive', value: 'Pat D' },
-                    age: { type: 'primitive', value: 45 },
-                    onClick: {
-                      type: 'unserializable',
-                      stringifiedValue: '() => {}'
-                    }
-                  }
-                },
-                currentValue: {
-                  type: 'object',
-                  values: {
-                    isAdmin: { type: 'primitive', value: true },
-                    name: { type: 'primitive', value: 'Pat D' },
-                    age: { type: 'primitive', value: 45 },
-                    onClick: {
-                      type: 'unserializable',
-                      stringifiedValue: '() => {}'
-                    }
-                  }
-                }
+                defaultValue: createValue({
+                  isAdmin: true,
+                  name: 'Pat D',
+                  age: 45,
+                  onClick: () => {}
+                }),
+                currentValue: createValue({
+                  isAdmin: true,
+                  name: 'Pat D',
+                  age: 45,
+                  onClick: () => {}
+                })
               }
             }
           }
@@ -111,30 +100,18 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               profile: {
-                defaultValue: {
-                  type: 'object',
-                  values: {
-                    isAdmin: { type: 'primitive', value: true },
-                    name: { type: 'primitive', value: 'Pat D' },
-                    age: { type: 'primitive', value: 45 },
-                    onClick: {
-                      type: 'unserializable',
-                      stringifiedValue: '() => {}'
-                    }
-                  }
-                },
-                currentValue: {
-                  type: 'object',
-                  values: {
-                    isAdmin: { type: 'primitive', value: false },
-                    name: { type: 'primitive', value: 'Pat D' },
-                    age: { type: 'primitive', value: 45 },
-                    onClick: {
-                      type: 'unserializable',
-                      stringifiedValue: '() => {}'
-                    }
-                  }
-                }
+                defaultValue: createValue({
+                  isAdmin: true,
+                  name: 'Pat D',
+                  age: 45,
+                  onClick: () => {}
+                }),
+                currentValue: createValue({
+                  isAdmin: false,
+                  name: 'Pat D',
+                  age: 45,
+                  onClick: () => {}
+                })
               }
             }
           }
@@ -168,30 +145,18 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               profile: {
-                defaultValue: {
-                  type: 'object',
-                  values: {
-                    isAdmin: { type: 'primitive', value: false },
-                    name: { type: 'primitive', value: 'Pat D' },
-                    age: { type: 'primitive', value: 45 },
-                    onClick: {
-                      type: 'unserializable',
-                      stringifiedValue: '() => {}'
-                    }
-                  }
-                },
-                currentValue: {
-                  type: 'object',
-                  values: {
-                    isAdmin: { type: 'primitive', value: false },
-                    name: { type: 'primitive', value: 'Pat D' },
-                    age: { type: 'primitive', value: 45 },
-                    onClick: {
-                      type: 'unserializable',
-                      stringifiedValue: '() => {}'
-                    }
-                  }
-                }
+                defaultValue: createValue({
+                  isAdmin: false,
+                  name: 'Pat D',
+                  age: 45,
+                  onClick: () => {}
+                }),
+                currentValue: createValue({
+                  isAdmin: false,
+                  name: 'Pat D',
+                  age: 45,
+                  onClick: () => {}
+                })
               }
             }
           }

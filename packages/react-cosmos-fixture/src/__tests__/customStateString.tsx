@@ -1,5 +1,6 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
+import { createValue } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer } from 'react-test-renderer';
 // Warning: Import test helpers before tested source to mock Socket.IO
@@ -53,8 +54,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               name: {
-                defaultValue: { type: 'primitive', value: 'Fu Barr' },
-                currentValue: { type: 'primitive', value: 'Fu Barr' }
+                defaultValue: createValue('Fu Barr'),
+                currentValue: createValue('Fu Barr')
               }
             }
           }
@@ -77,8 +78,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               name: {
-                defaultValue: { type: 'primitive', value: 'Fu Barr' },
-                currentValue: { type: 'primitive', value: 'Fu Barr Bhaz' }
+                defaultValue: createValue('Fu Barr'),
+                currentValue: createValue('Fu Barr Bhaz')
               }
             }
           }
@@ -105,8 +106,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               name: {
-                defaultValue: { type: 'primitive', value: 'Fu Barr Bhaz' },
-                currentValue: { type: 'primitive', value: 'Fu Barr Bhaz' }
+                defaultValue: createValue('Fu Barr Bhaz'),
+                currentValue: createValue('Fu Barr Bhaz')
               }
             }
           }

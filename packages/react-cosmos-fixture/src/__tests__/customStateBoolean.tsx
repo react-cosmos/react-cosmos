@@ -1,5 +1,6 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
+import { createValue } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer } from 'react-test-renderer';
 // Warning: Import test helpers before tested source to mock Socket.IO
@@ -49,8 +50,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               toggled: {
-                defaultValue: { type: 'primitive', value: false },
-                currentValue: { type: 'primitive', value: false }
+                defaultValue: createValue(false),
+                currentValue: createValue(false)
               }
             }
           }
@@ -73,8 +74,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               toggled: {
-                defaultValue: { type: 'primitive', value: false },
-                currentValue: { type: 'primitive', value: true }
+                defaultValue: createValue(false),
+                currentValue: createValue(true)
               }
             }
           }
@@ -101,8 +102,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               toggled: {
-                defaultValue: { type: 'primitive', value: true },
-                currentValue: { type: 'primitive', value: true }
+                defaultValue: createValue(true),
+                currentValue: createValue(true)
               }
             }
           }

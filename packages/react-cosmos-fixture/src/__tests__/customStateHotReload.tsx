@@ -1,5 +1,6 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
+import { createValue } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
 // Warning: Import test helpers before tested source to mock Socket.IO
@@ -71,12 +72,12 @@ runFixtureLoaderTests(mount => {
             customState: {
               // `count` was reset, `toggled` was preserved
               count: {
-                defaultValue: { type: 'primitive', value: 2 },
-                currentValue: { type: 'primitive', value: 2 }
+                defaultValue: createValue(2),
+                currentValue: createValue(2)
               },
               toggled: {
-                defaultValue: { type: 'primitive', value: false },
-                currentValue: { type: 'primitive', value: true }
+                defaultValue: createValue(false),
+                currentValue: createValue(true)
               }
             }
           }
@@ -107,8 +108,8 @@ runFixtureLoaderTests(mount => {
             customState: {
               ...fixtureState.customState,
               count: {
-                defaultValue: { type: 'primitive', value: 0 },
-                currentValue: { type: 'primitive', value: 1 }
+                defaultValue: createValue(0),
+                currentValue: createValue(1)
               }
             }
           }
@@ -127,12 +128,12 @@ runFixtureLoaderTests(mount => {
             customState: {
               // `count` was preserved, `toggled` was reset
               count: {
-                defaultValue: { type: 'primitive', value: 0 },
-                currentValue: { type: 'primitive', value: 1 }
+                defaultValue: createValue(0),
+                currentValue: createValue(1)
               },
               toggled: {
-                defaultValue: { type: 'primitive', value: true },
-                currentValue: { type: 'primitive', value: true }
+                defaultValue: createValue(true),
+                currentValue: createValue(true)
               }
             }
           }
@@ -155,12 +156,12 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               count: {
-                defaultValue: { type: 'primitive', value: 0 },
-                currentValue: { type: 'primitive', value: 1 }
+                defaultValue: createValue(0),
+                currentValue: createValue(1)
               },
               toggled: {
-                defaultValue: { type: 'primitive', value: false },
-                currentValue: { type: 'primitive', value: false }
+                defaultValue: createValue(false),
+                currentValue: createValue(false)
               }
             }
           }
@@ -181,13 +182,13 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               count: {
-                defaultValue: { type: 'primitive', value: 0 },
-                currentValue: { type: 'primitive', value: 1 }
+                defaultValue: createValue(0),
+                currentValue: createValue(1)
               },
               // `toggled` was replaced by `confirmed`
               confirmed: {
-                defaultValue: { type: 'primitive', value: true },
-                currentValue: { type: 'primitive', value: true }
+                defaultValue: createValue(true),
+                currentValue: createValue(true)
               }
             }
           }
