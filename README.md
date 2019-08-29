@@ -1055,6 +1055,31 @@ module.exports = {
 };
 ```
 
+Or to add typescript support:
+
+```js
+const merge = require('webpack-merge');
+
+const tsSupportConfig = {
+  resolve: {
+    extensions: ['.ts', '.tsx'],
+  },
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader'
+      }
+    ]
+  }
+};
+
+module.exports = {
+  webpack: config => merge(config, tsSupportConfig)
+};
+
+```
+
 #### Custom fixture paths
 
 The `fileMatch`, `fileMatchIgnore` and `exclude` options are used to detect fixture files. The default `fileMatch` value is meant to accommodate most needs out of the box:
