@@ -12,7 +12,11 @@ import {
   mockRouter
 } from '../../../testHelpers/pluginMocks';
 
-afterEach(resetPlugins);
+afterEach(() => {
+  act(() => {
+    resetPlugins();
+  });
+});
 
 jest.useFakeTimers();
 
@@ -47,7 +51,9 @@ it('clears timed notification after timeout expires', async () => {
   const { queryByText } = loadTestPlugins();
 
   pushTimedNotification();
-  act(() => jest.runAllTimers());
+  act(() => {
+    jest.runAllTimers();
+  });
 
   expect(queryByText('Renderer connected')).toBeNull();
 });

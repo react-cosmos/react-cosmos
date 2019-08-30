@@ -7,7 +7,11 @@ import {
   mockRouter
 } from '../../../testHelpers/pluginMocks';
 
-afterEach(resetPlugins);
+afterEach(() => {
+  act(() => {
+    resetPlugins();
+  });
+});
 
 jest.useFakeTimers();
 
@@ -50,7 +54,9 @@ it('clears all timed notifications after timeout expires', async () => {
   const { queryByText } = loadTestPlugins();
 
   pushTimedNotifications();
-  act(() => jest.runAllTimers());
+  act(() => {
+    jest.runAllTimers();
+  });
 
   expect(queryByText('Check this out')).toBeNull();
   expect(queryByText('Take a look at this')).toBeNull();
