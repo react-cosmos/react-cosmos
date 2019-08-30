@@ -6,6 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.15",
+    "query-string": "^6.8.2",
     "react-element-to-jsx-string": "^14.0.3",
     "react-is": "^16.9.0"
   }

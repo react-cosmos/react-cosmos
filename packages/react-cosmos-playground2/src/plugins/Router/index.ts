@@ -1,8 +1,8 @@
 import { isEqual } from 'lodash';
 import { PluginContext, createPlugin } from 'react-plugin';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
+import { PlaygroundUrlParams } from 'react-cosmos-shared2/url';
 import {
-  UrlParams,
   getUrlParams,
   pushUrlParams,
   subscribeToLocationChanges
@@ -28,7 +28,7 @@ onLoad(context => {
   const { setState } = context;
   setState({ urlParams: getUrlParams() });
 
-  return subscribeToLocationChanges((urlParams: UrlParams) => {
+  return subscribeToLocationChanges((urlParams: PlaygroundUrlParams) => {
     const { fixtureId } = context.getState().urlParams;
     const fixtureChanged = !isEqual(urlParams.fixtureId, fixtureId);
 
@@ -62,7 +62,7 @@ function unselectFixture(context: Context) {
   setUrlParams(context, {});
 }
 
-function setUrlParams(context: Context, nextUrlParams: UrlParams) {
+function setUrlParams(context: Context, nextUrlParams: PlaygroundUrlParams) {
   const { urlParams } = context.getState();
   const fixtureChanged = !isEqual(nextUrlParams.fixtureId, urlParams.fixtureId);
   const urlParamsEqual = isEqual(nextUrlParams, urlParams);

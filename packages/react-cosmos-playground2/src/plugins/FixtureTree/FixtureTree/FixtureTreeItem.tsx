@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { isEqual } from 'lodash';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { createUrl } from '../../../shared/url';
+import { createRelativePlaygroundUrl } from '../../../shared/url';
 import { ListItem, Label } from './shared';
 
 type Props = {
@@ -36,7 +36,7 @@ export function FixtureTreeItem({
   return (
     <FixtureLink
       key={itemKey}
-      href={createUrl({ fixtureId: item })}
+      href={createRelativePlaygroundUrl({ fixtureId: item })}
       onClick={onClick}
     >
       <ListItem

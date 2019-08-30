@@ -10,7 +10,6 @@
     "html-webpack-plugin": "^3.2.0",
     "localforage": "^1.7.3",
     "lodash": "^4.17.15",
-    "query-string": "^6.8.2",
     "react": "16.9.0",
     "react-cosmos-shared2": "^5.0.0-alpha.26",
     "react-dom": "16.9.0",
