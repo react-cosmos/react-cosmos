@@ -6,7 +6,6 @@ import {
 } from 'react-cosmos-shared2/fixtureState';
 import { FixtureContext } from '../FixtureContext';
 import { fsValueExtendsBaseValue, updateCustomState } from './shared';
-import { getPersistedValue } from './shared/persistentValueStore';
 
 export function useCreateFixtureState(
   inputName: string,
@@ -27,12 +26,11 @@ export function useCreateFixtureState(
           return customState;
         }
 
-        const currentValue = getPersistedValue({ inputName, defaultValue });
         return {
           ...customState,
           [inputName]: {
             defaultValue: createValue(defaultValue),
-            currentValue: createValue(currentValue)
+            currentValue: createValue(defaultValue)
           }
         };
       });

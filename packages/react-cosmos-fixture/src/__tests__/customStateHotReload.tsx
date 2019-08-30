@@ -5,7 +5,6 @@ import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
 // Warning: Import test helpers before tested source to mock Socket.IO
 import { runFixtureLoaderTests } from '../testHelpers';
-import { resetPersistentValues } from '../useState/shared/persistentValueStore';
 import { useState } from '..';
 
 type CreateFixtureArgs = {
@@ -46,8 +45,6 @@ const rendererId = uuid();
 const fixtures = createFixtures();
 const decorators = {};
 const fixtureId = { path: 'first', name: null };
-
-afterEach(resetPersistentValues);
 
 runFixtureLoaderTests(mount => {
   it('preserves fixture state change (via setter) on default value change', async () => {
@@ -185,10 +182,15 @@ runFixtureLoaderTests(mount => {
                 defaultValue: createValue(0),
                 currentValue: createValue(1)
               },
-              // `toggled` was replaced by `confirmed`
               confirmed: {
                 defaultValue: createValue(true),
                 currentValue: createValue(true)
+              },
+              // KNOWN LIMITATION: `toggled` is still present in the fixture
+              // state until the user resets the fixture state.
+              toggled: {
+                defaultValue: createValue(false),
+                currentValue: createValue(false)
               }
             }
           }

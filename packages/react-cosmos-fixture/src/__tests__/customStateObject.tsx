@@ -5,7 +5,6 @@ import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
 // Warning: Import test helpers before tested source to mock Socket.IO
 import { runFixtureLoaderTests } from '../testHelpers';
-import { resetPersistentValues } from '../useState/shared/persistentValueStore';
 import { useState } from '..';
 
 type Profile = {
@@ -40,8 +39,6 @@ const fixtures = createFixtures({
 });
 const decorators = {};
 const fixtureId = { path: 'first', name: null };
-
-afterEach(resetPersistentValues);
 
 runFixtureLoaderTests(mount => {
   it('renders fixture', async () => {

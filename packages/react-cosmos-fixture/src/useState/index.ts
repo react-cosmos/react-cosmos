@@ -1,8 +1,6 @@
 import { FixtureStateValueType } from 'react-cosmos-shared2/fixtureState';
-import { useCleanUpFixtureState } from './useCleanUpFixtureState';
 import { useCreateFixtureState } from './useCreateFixtureState';
 import { useCurrentValue } from './useCurrentValue';
-import { usePersistFixtureState } from './usePersistFixtureState';
 import { useSetValue } from './useSetValue';
 import { SetValue } from './shared';
 
@@ -15,8 +13,6 @@ export function useState<T extends FixtureStateValueType>(
   { defaultValue }: Opts<T>
 ): [T, SetValue<T>] {
   useCreateFixtureState(inputName, defaultValue);
-  useCleanUpFixtureState(inputName);
-  usePersistFixtureState(inputName, defaultValue);
   const currentValue = useCurrentValue(inputName, defaultValue);
   const setValue = useSetValue(inputName, defaultValue);
   return [currentValue, setValue];
