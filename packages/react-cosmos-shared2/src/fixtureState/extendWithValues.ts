@@ -1,18 +1,24 @@
-import { FixtureStateValue, FixtureStateValues, KeyValue } from './shared';
+import {
+  FixtureStateObjectValueType,
+  FixtureStateValue,
+  FixtureStateValues,
+  isArray,
+  isObject
+} from './shared';
 
 // Use fixture state for serializable values and fall back to base values
 export function extendWithValues(
-  obj: KeyValue,
+  obj: FixtureStateObjectValueType,
   values: FixtureStateValues
-): KeyValue {
-  const extendedObj: KeyValue = {};
+): FixtureStateObjectValueType {
+  const extendedObj: FixtureStateObjectValueType = {};
   Object.keys(values).forEach(key => {
     extendedObj[key] = extendWithValue(obj[key], values[key]);
   });
   return extendedObj;
 }
 
-function extendWithValue(
+export function extendWithValue(
   baseValue: unknown,
   value: FixtureStateValue
 ): unknown {
@@ -21,21 +27,12 @@ function extendWithValue(
   }
 
   if (value.type === 'object') {
-    // This works (for now) because users can't add/remove object keys nor can
-    // they change the type of any value. If any of these requirements show up
-    // in the future this will need to be redesign to handle merge conflicts
-    const baseObj =
-      typeof baseValue === 'object' && baseValue !== null
-        ? (baseValue as KeyValue)
-        : {};
+    const baseObj = isObject(baseValue) ? baseValue : {};
     return extendWithValues(baseObj, value.values);
   }
 
   if (value.type === 'array') {
-    // This works (for now) because users can't add/remove array items nor can
-    // they change the type of any value. If any of these requirements show up
-    // in the future this will need to be redesign to handle merge conflicts
-    const baseArr: unknown[] = Array.isArray(baseValue) ? baseValue : [];
+    const baseArr = isArray(baseValue) ? baseValue : [];
     return value.values.map((v, idx) => extendWithValue(baseArr[idx], v));
   }
 

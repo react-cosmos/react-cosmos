@@ -16,6 +16,4 @@ export { FixtureCapture } from './FixtureCapture';
 
 // Use in fixtures
 export { Viewport } from './Viewport';
-export { useNumber } from './stateHooks/useNumber';
-export { useString } from './stateHooks/useString';
-export { useBoolean } from './stateHooks/useBoolean';
+export { useState } from './useState';

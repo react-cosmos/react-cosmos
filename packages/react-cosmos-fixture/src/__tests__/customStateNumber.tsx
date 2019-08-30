@@ -1,15 +1,15 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
+import { createValue } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer } from 'react-test-renderer';
 // Warning: Import test helpers before tested source to mock Socket.IO
 import { runFixtureLoaderTests } from '../testHelpers';
-import { resetPersistentValues } from '../stateHooks/shared/persistentValueStore';
-import { useNumber } from '..';
+import { useState } from '..';
 
 function createFixtures({ defaultValue }: { defaultValue: number }) {
   const MyComponent = () => {
-    const [count, setCount] = useNumber('count', { defaultValue });
+    const [count, setCount] = useState('count', { defaultValue });
     return (
       <button onClick={() => setCount(prevCount => prevCount + 1)}>
         {count} clicks
@@ -25,8 +25,6 @@ const rendererId = uuid();
 const fixtures = createFixtures({ defaultValue: 0 });
 const decorators = {};
 const fixtureId = { path: 'first', name: null };
-
-afterEach(resetPersistentValues);
 
 runFixtureLoaderTests(mount => {
   it('renders fixture', async () => {
@@ -51,9 +49,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               count: {
-                type: 'primitive',
-                defaultValue: 0,
-                currentValue: 0
+                defaultValue: createValue(0),
+                currentValue: createValue(0)
               }
             }
           }
@@ -77,9 +74,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               count: {
-                type: 'primitive',
-                defaultValue: 0,
-                currentValue: 2
+                defaultValue: createValue(0),
+                currentValue: createValue(2)
               }
             }
           }
@@ -106,9 +102,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               count: {
-                type: 'primitive',
-                defaultValue: 5,
-                currentValue: 5
+                defaultValue: createValue(5),
+                currentValue: createValue(5)
               }
             }
           }
@@ -123,7 +118,6 @@ function getButtonText(renderer: ReactTestRenderer) {
 }
 
 async function rendered(renderer: ReactTestRenderer, text: string) {
-  await retry(() => Boolean(renderer.toJSON()));
   await retry(() => expect(getButtonText(renderer)).toEqual(text));
 }
 

@@ -1,15 +1,15 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
+import { createValue } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer } from 'react-test-renderer';
 // Warning: Import test helpers before tested source to mock Socket.IO
 import { runFixtureLoaderTests } from '../testHelpers';
-import { resetPersistentValues } from '../stateHooks/shared/persistentValueStore';
-import { useString } from '..';
+import { useState } from '..';
 
 function createFixtures({ defaultValue }: { defaultValue: string }) {
   const MyComponent = () => {
-    const [value, setValue] = useString('name', { defaultValue });
+    const [value, setValue] = useState('name', { defaultValue });
     return (
       <input
         type="text"
@@ -27,8 +27,6 @@ const rendererId = uuid();
 const fixtures = createFixtures({ defaultValue: 'Fu Barr' });
 const decorators = {};
 const fixtureId = { path: 'first', name: null };
-
-afterEach(resetPersistentValues);
 
 runFixtureLoaderTests(mount => {
   it('renders fixture', async () => {
@@ -53,9 +51,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               name: {
-                type: 'primitive',
-                defaultValue: 'Fu Barr',
-                currentValue: 'Fu Barr'
+                defaultValue: createValue('Fu Barr'),
+                currentValue: createValue('Fu Barr')
               }
             }
           }
@@ -78,9 +75,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               name: {
-                type: 'primitive',
-                defaultValue: 'Fu Barr',
-                currentValue: 'Fu Barr Bhaz'
+                defaultValue: createValue('Fu Barr'),
+                currentValue: createValue('Fu Barr Bhaz')
               }
             }
           }
@@ -97,7 +93,7 @@ runFixtureLoaderTests(mount => {
         await rendered(renderer, 'Fu Barr');
         update({
           rendererId,
-          fixtures: createFixtures({ defaultValue: 'Fu Barr Bhaz Cooks' }),
+          fixtures: createFixtures({ defaultValue: 'Fu Barr Bhaz' }),
           decorators
         });
         await fixtureStateChange({
@@ -107,9 +103,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               name: {
-                type: 'primitive',
-                defaultValue: 'Fu Barr Bhaz Cooks',
-                currentValue: 'Fu Barr Bhaz Cooks'
+                defaultValue: createValue('Fu Barr Bhaz'),
+                currentValue: createValue('Fu Barr Bhaz')
               }
             }
           }
@@ -124,7 +119,6 @@ function getButtonText(renderer: ReactTestRenderer) {
 }
 
 async function rendered(renderer: ReactTestRenderer, text: string) {
-  await retry(() => Boolean(renderer.toJSON()));
   await retry(() => expect(getButtonText(renderer)).toEqual(text));
 }
 

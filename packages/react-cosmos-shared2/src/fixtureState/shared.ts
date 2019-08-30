@@ -1,6 +1,6 @@
+import { isPlainObject } from 'lodash';
+import { isElement } from 'react-is';
 import { StateUpdater } from '../util';
-
-export type KeyValue = Record<string, unknown>;
 
 export type FixtureDecoratorId = string;
 
@@ -15,6 +15,15 @@ export type FixtureStateUnserializableValue = {
 };
 
 export type FixtureStatePrimitiveValueType = string | number | boolean | null;
+
+export type FixtureStateObjectValueType = Record<string, unknown>;
+
+export type FixtureStateArrayValueType = unknown[];
+
+export type FixtureStateValueType =
+  | FixtureStatePrimitiveValueType
+  | FixtureStateObjectValueType
+  | FixtureStateArrayValueType;
 
 export type FixtureStatePrimitiveValue = {
   type: 'primitive';
@@ -31,8 +40,6 @@ export type FixtureStateArrayValue = {
   values: FixtureStateValue[];
 };
 
-// TODO: 'select' type with specific options (that may or may not be
-// serializable)
 export type FixtureStateValue =
   | FixtureStateUnserializableValue
   | FixtureStatePrimitiveValue
@@ -40,6 +47,15 @@ export type FixtureStateValue =
   | FixtureStateArrayValue;
 
 export type FixtureStateValues = Record<string, FixtureStateValue>;
+
+// TODO: Support options (with serializable label and any value type, which
+// lives in the user land)
+export type FixtureStateValueGroup = {
+  defaultValue: FixtureStateValue;
+  currentValue: FixtureStateValue;
+};
+
+export type FixtureStateValueGroups = Record<string, FixtureStateValueGroup>;
 
 export type FixtureRenderKey = number;
 
@@ -56,18 +72,42 @@ export type FixtureStateClassState = {
   componentName: string;
 };
 
-export type FixtureStateValue2 = {
-  type: 'primitive';
-  defaultValue: FixtureStatePrimitiveValueType;
-  currentValue: FixtureStatePrimitiveValueType;
-};
-
-export type FixtureStateValues2 = Record<string, FixtureStateValue2>;
-
 export type FixtureState = {
   props?: FixtureStateProps[];
   classState?: FixtureStateClassState[];
-  customState?: FixtureStateValues2;
+  customState?: FixtureStateValueGroups;
 } & Record<string, any>;
 
 export type SetFixtureState = (update: StateUpdater<FixtureState>) => unknown;
+
+export function isString(value: unknown): value is string {
+  return typeof value === 'string';
+}
+
+export function isNumber(value: unknown): value is number {
+  return typeof value === 'number';
+}
+
+export function isBoolean(value: unknown): value is boolean {
+  return typeof value === 'boolean';
+}
+
+export function isNull(value: unknown): value is null {
+  return value === null;
+}
+
+export function isPrimitiveValue(
+  value: unknown
+): value is FixtureStatePrimitiveValueType {
+  return (
+    isString(value) || isNumber(value) || isBoolean(value) || isNull(value)
+  );
+}
+
+export function isObject(value: unknown): value is FixtureStateObjectValueType {
+  return isPlainObject(value) && !isElement(value);
+}
+
+export function isArray(value: unknown): value is FixtureStateArrayValueType {
+  return Array.isArray(value);
+}

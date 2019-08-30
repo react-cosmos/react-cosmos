@@ -1,15 +1,15 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
+import { createValue } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer } from 'react-test-renderer';
 // Warning: Import test helpers before tested source to mock Socket.IO
 import { runFixtureLoaderTests } from '../testHelpers';
-import { resetPersistentValues } from '../stateHooks/shared/persistentValueStore';
-import { useBoolean } from '..';
+import { useState } from '..';
 
 function createFixtures({ defaultValue }: { defaultValue: boolean }) {
   const MyComponent = () => {
-    const [toggled, setToggled] = useBoolean('toggled', { defaultValue });
+    const [toggled, setToggled] = useState('toggled', { defaultValue });
     return (
       <button onClick={() => setToggled(!toggled)}>{String(toggled)}</button>
     );
@@ -23,8 +23,6 @@ const rendererId = uuid();
 const fixtures = createFixtures({ defaultValue: false });
 const decorators = {};
 const fixtureId = { path: 'first', name: null };
-
-afterEach(resetPersistentValues);
 
 runFixtureLoaderTests(mount => {
   it('renders fixture', async () => {
@@ -49,9 +47,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               toggled: {
-                type: 'primitive',
-                defaultValue: false,
-                currentValue: false
+                defaultValue: createValue(false),
+                currentValue: createValue(false)
               }
             }
           }
@@ -74,9 +71,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               toggled: {
-                type: 'primitive',
-                defaultValue: false,
-                currentValue: true
+                defaultValue: createValue(false),
+                currentValue: createValue(true)
               }
             }
           }
@@ -103,9 +99,8 @@ runFixtureLoaderTests(mount => {
             props: expect.any(Array),
             customState: {
               toggled: {
-                type: 'primitive',
-                defaultValue: true,
-                currentValue: true
+                defaultValue: createValue(true),
+                currentValue: createValue(true)
               }
             }
           }
@@ -120,7 +115,6 @@ function getButtonText(renderer: ReactTestRenderer) {
 }
 
 async function rendered(renderer: ReactTestRenderer, text: string) {
-  await retry(() => Boolean(renderer.toJSON()));
   await retry(() => expect(getButtonText(renderer)).toEqual(text));
 }
 
