@@ -1,6 +1,5 @@
 import { wait } from '@testing-library/react';
-import { loadPlugins } from 'react-plugin';
-import { cleanup } from '../../../testHelpers/plugin';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   mockRouter,
   mockNotifications,
@@ -10,7 +9,7 @@ import {
 import { createRendererReadyResponse } from '../testHelpers';
 import { register } from '..';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 const rendererId = 'mockRendererId1';
 const fixtures = { 'ein.js': null, 'zwei.js': null, 'drei.js': null };

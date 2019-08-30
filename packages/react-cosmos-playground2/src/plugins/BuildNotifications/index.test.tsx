@@ -1,6 +1,5 @@
-import { loadPlugins } from 'react-plugin';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import { BuildMessage } from 'react-cosmos-shared2/build';
-import { cleanup } from '../../testHelpers/plugin';
 import {
   mockMessageHandler,
   mockNotifications,
@@ -8,7 +7,7 @@ import {
 } from '../../testHelpers/pluginMocks';
 import { register } from '.';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 function emitBuildMessage(msg: BuildMessage) {
   getMessageHandlerContext().emit('serverMessage', msg);

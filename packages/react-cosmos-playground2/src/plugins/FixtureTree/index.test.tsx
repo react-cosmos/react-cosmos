@@ -1,8 +1,7 @@
 import { fireEvent, render, waitForElement } from '@testing-library/react';
 import React from 'react';
-import { loadPlugins, Slot } from 'react-plugin';
+import { loadPlugins, Slot, resetPlugins } from 'react-plugin';
 import { register } from '.';
-import { cleanup } from '../../testHelpers/plugin';
 import {
   mockCore,
   mockRendererCore,
@@ -10,7 +9,7 @@ import {
   mockStorage
 } from '../../testHelpers/pluginMocks';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 const fixtures = { 'ein.js': null, 'zwei.js': null, 'drei.js': null };
 

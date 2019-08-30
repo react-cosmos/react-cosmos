@@ -1,7 +1,6 @@
 import { wait } from '@testing-library/react';
-import { loadPlugins } from 'react-plugin';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import { RendererId } from 'react-cosmos-shared2/renderer';
-import { cleanup } from '../../../../testHelpers/plugin';
 import {
   getRendererCoreMethods,
   mockRouter,
@@ -13,7 +12,7 @@ import {
 } from '../../testHelpers';
 import { register } from '../..';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 const fixtures = { 'ein.js': null, 'zwei.js': null, 'drei.js': null };
 

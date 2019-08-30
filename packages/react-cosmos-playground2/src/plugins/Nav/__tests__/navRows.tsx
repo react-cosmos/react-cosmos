@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react';
 import React from 'react';
-import { loadPlugins, Slot } from 'react-plugin';
+import { loadPlugins, Slot, resetPlugins } from 'react-plugin';
 import { register } from '..';
-import { cleanup, mockPlug } from '../../../testHelpers/plugin';
+import { mockPlug } from '../../../testHelpers/plugin';
 import { mockRendererCore } from '../../../testHelpers/pluginMocks';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 function loadTestPlugins() {
   loadPlugins();

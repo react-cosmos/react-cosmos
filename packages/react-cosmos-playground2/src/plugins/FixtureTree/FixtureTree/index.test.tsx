@@ -1,14 +1,11 @@
 import React from 'react';
 import {
   render,
-  cleanup,
   waitForElement,
   wait,
   fireEvent
 } from '@testing-library/react';
 import { FixtureTree } from '.';
-
-afterEach(cleanup);
 
 const fixturesDir = 'fixtures';
 const fixtureFileSuffix = 'fixture';

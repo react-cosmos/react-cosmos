@@ -1,6 +1,5 @@
 import { wait } from '@testing-library/react';
-import { loadPlugins } from 'react-plugin';
-import { cleanup } from '../../../testHelpers/plugin';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
   mockRouter,
@@ -11,7 +10,7 @@ import {
 import { mockRendererReady } from '../testHelpers';
 import { register } from '..';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 const fixtures = {};
 

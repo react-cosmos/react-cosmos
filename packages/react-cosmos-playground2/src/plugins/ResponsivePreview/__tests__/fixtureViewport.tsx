@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { loadPlugins, Slot } from 'react-plugin';
-import { cleanup } from '../../../testHelpers/plugin';
+import { loadPlugins, Slot, resetPlugins } from 'react-plugin';
 import {
   mockStorage,
   mockRouter,
@@ -9,7 +8,7 @@ import {
 } from '../../../testHelpers/pluginMocks';
 import { register } from '..';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 const fixtureState = {
   viewport: { width: 420, height: 420 }

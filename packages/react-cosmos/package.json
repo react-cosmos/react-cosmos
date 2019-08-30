@@ -22,13 +22,13 @@
     "react-cosmos-fixture": "^5.0.0-alpha.25",
     "react-cosmos-playground2": "^5.0.0-alpha.25",
     "react-cosmos-shared2": "^5.0.0-alpha.25",
-    "react-error-overlay": "^5.1.6",
+    "react-error-overlay": "^6.0.1",
     "resolve-from": "^5.0.0",
     "slash": "^3.0.0",
     "socket.io": "^2.2.0",
     "util.promisify": "^1.0.0",
     "webpack-dev-middleware": "^3.7.0",
-    "yargs": "^13.3.0"
+    "yargs": "^14.0.0"
   },
   "bin": {
     "cosmos": "./bin/cosmos.js",

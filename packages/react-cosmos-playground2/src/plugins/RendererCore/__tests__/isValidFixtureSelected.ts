@@ -1,6 +1,5 @@
-import { loadPlugins } from 'react-plugin';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { cleanup } from '../../../testHelpers/plugin';
 import {
   getRendererCoreMethods,
   mockRouter,
@@ -9,7 +8,7 @@ import {
 import { mockRendererReady } from '../testHelpers';
 import { register } from '..';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 const rendererId = 'mockRendererId';
 const fixtures = {

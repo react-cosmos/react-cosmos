@@ -1,8 +1,7 @@
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { loadPlugins, Slot } from 'react-plugin';
+import { loadPlugins, Slot, resetPlugins } from 'react-plugin';
 import { register } from '.';
-import { cleanup } from '../../testHelpers/plugin';
 import {
   mockCore,
   mockFixtureTree,
@@ -11,7 +10,7 @@ import {
   mockRouter
 } from '../../testHelpers/pluginMocks';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 const fixtures = {
   'src/__fixtures__/fixture1.ts': null,

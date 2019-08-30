@@ -1,6 +1,5 @@
 import { wait } from '@testing-library/react';
-import { loadPlugins } from 'react-plugin';
-import { cleanup } from '../../testHelpers/plugin';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   mockNotifications,
   getRendererCoreContext,
@@ -8,7 +7,7 @@ import {
 } from '../../testHelpers/pluginMocks';
 import { register } from '.';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 function emitRendererCoreResponse() {
   getRendererCoreContext().emit('response', {

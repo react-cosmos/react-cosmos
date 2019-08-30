@@ -1,6 +1,5 @@
 import { wait } from '@testing-library/react';
-import { loadPlugins } from 'react-plugin';
-import { cleanup } from '../../../../testHelpers/plugin';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import { mockRendererReady, mockFixtureStateChange } from '../../testHelpers';
 import { register } from '../..';
 import {
@@ -9,7 +8,7 @@ import {
   onRendererCore
 } from '../../../../testHelpers/pluginMocks';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 const fixtureId = { path: 'ein.js', name: null };
 const fixtures = { [fixtureId.path]: null };

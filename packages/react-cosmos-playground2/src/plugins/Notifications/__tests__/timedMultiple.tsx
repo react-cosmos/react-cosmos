@@ -1,14 +1,17 @@
 import { act, render } from '@testing-library/react';
 import React from 'react';
-import { ArraySlot, loadPlugins } from 'react-plugin';
+import { ArraySlot, loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '..';
-import { cleanup } from '../../../testHelpers/plugin';
 import {
   getNotificationsMethods,
   mockRouter
 } from '../../../testHelpers/pluginMocks';
 
-afterEach(cleanup);
+afterEach(() => {
+  act(() => {
+    resetPlugins();
+  });
+});
 
 jest.useFakeTimers();
 
@@ -51,7 +54,9 @@ it('clears all timed notifications after timeout expires', async () => {
   const { queryByText } = loadTestPlugins();
 
   pushTimedNotifications();
-  act(() => jest.runAllTimers());
+  act(() => {
+    jest.runAllTimers();
+  });
 
   expect(queryByText('Check this out')).toBeNull();
   expect(queryByText('Take a look at this')).toBeNull();
