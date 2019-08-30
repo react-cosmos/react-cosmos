@@ -39,16 +39,16 @@ export class ErrorCatch extends React.Component<ReactDecoratorProps, State> {
   }
 
   renderError(error: string) {
-    // We don't render error details here in dev mode because
-    // react-error-overlay takes care of it in a nicer way. We used to render
-    // both for a while but it proved annoying. react-error-overlay has a
-    // slight delay and seeing the same error reported twice feels clumsy.
+    // Don't render error details here in dev mode because react-error-overlay
+    // takes care of it in a nicer way. We used to render both for a while but
+    // it proved annoying. react-error-overlay has a slight delay and seeing
+    // the same error reported twice feels clumsy.
     if (__DEV__) {
       return null;
     }
 
-    // In static exports, however, where react-error-overlay is missing and
-    // rendering error details is superior to showing a blank screen.
+    // In static exports, however, where react-error-overlay is missing,
+    // rendering plain error details is superior to showing a blank screen.
     return (
       <>
         <p>
