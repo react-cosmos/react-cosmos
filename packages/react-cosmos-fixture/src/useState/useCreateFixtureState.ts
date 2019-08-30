@@ -20,7 +20,7 @@ export function useCreateFixtureState(
     setFixtureState(prevFsState => {
       return updateCustomState(prevFsState, customState => {
         // The fixture state for this value is (re)created in two situations:
-        // 1. Initially: No corresponding fixture state values is found
+        // 1. Initially: No corresponding fixture state value is found
         // 2: Default value change: Current value is reset to new default value
         const fsValueGroup = findFixtureStateCustomState(
           prevFsState,
