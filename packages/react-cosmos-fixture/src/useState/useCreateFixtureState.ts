@@ -1,11 +1,15 @@
+import { isEqual } from 'lodash';
 import React from 'react';
 import {
   createValue,
+  extendWithValue,
   findFixtureStateCustomState,
+  FixtureState,
+  FixtureStateValue,
+  FixtureStateValueGroups,
   FixtureStateValueType
 } from 'react-cosmos-shared2/fixtureState';
 import { FixtureContext } from '../FixtureContext';
-import { fsValueExtendsBaseValue, updateCustomState } from './shared';
 
 export function useCreateFixtureState(
   inputName: string,
@@ -39,4 +43,21 @@ export function useCreateFixtureState(
       });
     });
   }, [setFixtureState, inputName, defaultValue]);
+}
+
+function fsValueExtendsBaseValue(
+  fsValue: FixtureStateValue,
+  baseValue: unknown
+) {
+  return isEqual(baseValue, extendWithValue(baseValue, fsValue));
+}
+
+function updateCustomState(
+  fixtureState: FixtureState,
+  updater: (prevCustomState: FixtureStateValueGroups) => FixtureStateValueGroups
+): FixtureState {
+  return {
+    ...fixtureState,
+    customState: updater(fixtureState.customState || {})
+  };
 }
