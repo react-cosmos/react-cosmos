@@ -70,7 +70,7 @@
     "@types/webpack-dev-middleware": "^2.0.3",
     "@types/webpack-dev-server": "^3.1.7",
     "@types/yargs": "^13.0.2",
-    "@typescript-eslint/parser": "^1.13.0",
+    "@typescript-eslint/parser": "^2.0.0",
     "async-until": "^2.0.0",
     "babel-loader": "^8.0.6",
     "chalk": "^2.4.2",
@@ -82,7 +82,7 @@
     "delay": "^4.3.0",
     "eslint": "^6.2.2",
     "eslint-plugin-react": "^7.14.3",
-    "eslint-plugin-react-hooks": "^1.6.1",
+    "eslint-plugin-react-hooks": "^2.0.1",
     "glob": "^7.1.4",
     "http-server": "^0.11.1",
     "husky": "^3.0.4",
@@ -94,12 +94,12 @@
     "react": "16.9.0",
     "react-dom": "16.9.0",
     "react-test-renderer": "16.9.0",
-    "rimraf": "^2.6.3",
-    "style-loader": "^0.23.1",
+    "rimraf": "^3.0.0",
+    "style-loader": "^1.0.0",
     "typescript": "^3.6.2",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.7",
-    "yargs": "^13.3.0"
+    "yargs": "^14.0.0"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,css,md}": [
