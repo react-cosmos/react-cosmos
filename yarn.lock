@@ -2302,10 +2302,10 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.3.tgz#bdfd69d61e464dcc81b25159c270d75a73c1a636"
   integrity sha512-Il2DtDVRGDcqjDtE+rF8iqg1CArehSK84HZJCT7AMITlyXRBpuPhqGLDQMowraqqu1coEaimg4ZOqggt6L6L+A==
 
-"@types/lodash@^4.14.137":
-  version "4.14.137"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.137.tgz#8a4804937dc6462274ffcc088df8f14fc1b368e2"
-  integrity sha512-g4rNK5SRKloO+sUGbuO7aPtwbwzMgjK+bm9BBhLD7jGUiGR7zhwYEhSln/ihgYQBeIJ5j7xjyaYzrWTcu3UotQ==
+"@types/lodash@^4.14.138":
+  version "4.14.138"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.138.tgz#34f52640d7358230308344e579c15b378d91989e"
+  integrity sha512-A4uJgHz4hakwNBdHNPdxOTkYmXNgmUAKLbXZ7PKGslgeV0Mb8P3BlbYfPovExek1qnod4pDfRbxuzcVs3dlFLg==
 
 "@types/memory-fs@*":
   version "0.3.2"
@@ -2380,10 +2380,10 @@
     "@types/prop-types" "*"
     "@types/react" "*"
 
-"@types/react-native@^0.60.8":
-  version "0.60.8"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.60.8.tgz#71f340b4b97ed0b1161f942354e0eebc9fbe5b00"
-  integrity sha512-bk13deCDm/DiNFdrF8Y5je++G9NPaCT/VxkSBY1Rcxu3rWZQIQal9uIH0Qc0Vi9sRX9us32EPevYylbscH3wEg==
+"@types/react-native@^0.60.9":
+  version "0.60.9"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.60.9.tgz#89135a6ac9a71a64837e2100dc8dbc7a71b4fe34"
+  integrity sha512-fsceCFV6UQOoQ/DzLS0ya82mZdGmUhMvkkVIq3pjMmxcxR6ENb0noPw6ssE4aVx61J6ukth+MT2PNFgy6eQ9iQ==
   dependencies:
     "@types/prop-types" "*"
     "@types/react" "*"
@@ -8227,10 +8227,10 @@ lie@3.1.1:
   dependencies:
     immediate "~3.0.5"
 
-lint-staged@^9.2.4:
-  version "9.2.4"
-  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-9.2.4.tgz#7a35839c9c6103ec98eabf43e35657c209509345"
-  integrity sha512-RAt5ogbLRiKy9+T3dKbbPKP6tN2I9VjEtTXQFxdkauUdMjIBsS70ikwwSgsBR8xVVCUSX7sVDyWCyem5xB8YDw==
+lint-staged@^9.2.5:
+  version "9.2.5"
+  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-9.2.5.tgz#5a3e1e0a539a403bd7f88542bc3d34ce52efdbb3"
+  integrity sha512-d99gTBFMJ29159+9iRvaMEQstmNcPAbQbhHSYw6D/1FncvFdIj8lWHztaq3Uq+tbZPABHXQ/fyN7Rp1QwF8HIw==
   dependencies:
     chalk "^2.4.2"
     commander "^2.20.0"
@@ -12528,10 +12528,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@^3.5.3:
-  version "3.5.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.3.tgz#c830f657f93f1ea846819e929092f5fe5983e977"
-  integrity sha512-ACzBtm/PhXBDId6a6sDJfroT2pOWt/oOnk4/dElG5G33ZL776N3Y6/6bKZJBFpd+b05F3Ct9qDjMeJmRWtE2/g==
+typescript@^3.6.2:
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.6.2.tgz#105b0f1934119dde543ac8eb71af3a91009efe54"
+  integrity sha512-lmQ4L+J6mnu3xweP8+rOrUwzmN+MRAj7TgtJtDaXE5PMyX2kCrklhg3rvOsOIfNeAWMQWO2F1GPc1kMD2vLAfw==
 
 ua-parser-js@^0.7.18:
   version "0.7.18"
@@ -12908,10 +12908,10 @@ webpack-sources@^1.4.0, webpack-sources@^1.4.1:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@^4.39.2:
-  version "4.39.2"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.39.2.tgz#c9aa5c1776d7c309d1b3911764f0288c8c2816aa"
-  integrity sha512-AKgTfz3xPSsEibH00JfZ9sHXGUwIQ6eZ9tLN8+VLzachk1Cw2LVmy+4R7ZiwTa9cZZ15tzySjeMui/UnSCAZhA==
+webpack@^4.39.3:
+  version "4.39.3"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.39.3.tgz#a02179d1032156b713b6ec2da7e0df9d037def50"
+  integrity sha512-BXSI9M211JyCVc3JxHWDpze85CvjC842EvpRsVTc/d15YJGlox7GIDd38kJgWrb3ZluyvIjgenbLDMBQPDcxYQ==
   dependencies:
     "@webassemblyjs/ast" "1.8.5"
     "@webassemblyjs/helper-module-context" "1.8.5"
