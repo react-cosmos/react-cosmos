@@ -1,5 +1,4 @@
-import { loadPlugins } from 'react-plugin';
-import { cleanup } from '../../../testHelpers/plugin';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   mockStorage,
   mockCore,
@@ -7,7 +6,7 @@ import {
 } from '../../../testHelpers/pluginMocks';
 import { register } from '..';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 it('loads storage cache', () => {
   const mockLoadCache = jest.fn(() => Promise.resolve(null));

@@ -1,10 +1,9 @@
-import { loadPlugins } from 'react-plugin';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import { wait } from '@testing-library/react';
 import {
   SelectFixtureRequest,
   RendererReadyResponse
 } from 'react-cosmos-shared2/renderer';
-import { cleanup } from '../../../testHelpers/plugin';
 import {
   mockCore,
   mockRendererCore,
@@ -14,7 +13,7 @@ import {
 } from '../../../testHelpers/pluginMocks';
 import { register } from '..';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 function registerTestPlugins() {
   register();

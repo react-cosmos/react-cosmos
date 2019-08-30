@@ -1,16 +1,15 @@
 import { wait } from '@testing-library/react';
-import { loadPlugins } from 'react-plugin';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getUrlParams,
   pushUrlParams,
   resetUrl
 } from '../../../testHelpers/url';
-import { cleanup } from '../../../testHelpers/plugin';
 import { getRouterMethods, onRouter } from '../../../testHelpers/pluginMocks';
 import { register } from '..';
 
 afterEach(() => {
-  cleanup();
+  resetPlugins();
   resetUrl();
 });
 

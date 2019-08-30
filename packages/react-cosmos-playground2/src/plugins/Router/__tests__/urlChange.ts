@@ -1,15 +1,14 @@
-import { loadPlugins } from 'react-plugin';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   pushUrlParams,
   popUrlParams,
   resetUrl
 } from '../../../testHelpers/url';
-import { cleanup } from '../../../testHelpers/plugin';
 import { onRouter } from '../../../testHelpers/pluginMocks';
 import { register } from '..';
 
 afterEach(() => {
-  cleanup();
+  resetPlugins();
   resetUrl();
 });
 

@@ -1,6 +1,5 @@
 import { wait } from '@testing-library/react';
-import { loadPlugins } from 'react-plugin';
-import { cleanup } from '../../../../testHelpers/plugin';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import { mockRendererReady } from '../../testHelpers';
 import { register } from '../..';
 import {
@@ -8,7 +7,7 @@ import {
   mockNotifications
 } from '../../../../testHelpers/pluginMocks';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 function registerTestPlugins() {
   register();

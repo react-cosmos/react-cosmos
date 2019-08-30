@@ -1,10 +1,9 @@
-import { loadPlugins } from 'react-plugin';
-import { cleanup } from '../../testHelpers/plugin';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import { mockStorage, getCoreMethods } from '../../testHelpers/pluginMocks';
 import { CoreSpec } from './public';
 import { register } from '.';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 const coreConfig: CoreSpec['config'] = {
   projectId: 'mockProjectId',

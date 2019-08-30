@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { loadPlugins, Slot, ArraySlot } from 'react-plugin';
-import { cleanup } from '../../../testHelpers/plugin';
+import { loadPlugins, Slot, ArraySlot, resetPlugins } from 'react-plugin';
 import { register } from '..';
 import {
   mockStorage,
@@ -9,7 +8,7 @@ import {
   mockRendererCore
 } from '../../../testHelpers/pluginMocks';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 function registerTestPlugins() {
   register();

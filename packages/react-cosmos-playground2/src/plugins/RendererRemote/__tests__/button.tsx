@@ -1,7 +1,6 @@
 import React from 'react';
-import { loadPlugins, ArraySlot } from 'react-plugin';
+import { loadPlugins, ArraySlot, resetPlugins } from 'react-plugin';
 import { render, fireEvent, wait } from '@testing-library/react';
-import { cleanup } from '../../../testHelpers/plugin';
 import {
   mockCore,
   mockMessageHandler,
@@ -9,7 +8,7 @@ import {
 } from '../../../testHelpers/pluginMocks';
 import { register } from '..';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 function lostTestPlugins() {
   loadPlugins();

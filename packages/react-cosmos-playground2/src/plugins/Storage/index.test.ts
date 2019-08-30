@@ -1,6 +1,6 @@
-import { loadPlugins } from 'react-plugin';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import retry from '@skidding/async-retry';
-import { cleanup, getMethodsOf } from '../../testHelpers/plugin';
+import { getMethodsOf } from '../../testHelpers/plugin';
 import { StorageSpec } from './public';
 import { register } from '.';
 
@@ -25,7 +25,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  cleanup();
+  resetPlugins();
   mockSetItem.mockClear();
 });
 

@@ -1,8 +1,7 @@
 import React from 'react';
-import { loadPlugins, ArraySlot } from 'react-plugin';
+import { loadPlugins, ArraySlot, resetPlugins } from 'react-plugin';
 import { render, fireEvent, wait, RenderResult } from '@testing-library/react';
 import { register } from '.';
-import { cleanup } from '../../testHelpers/plugin';
 import {
   mockCore,
   mockRouter,
@@ -10,7 +9,7 @@ import {
 } from '../../testHelpers/pluginMocks';
 import { mockFetch } from './testHelpers';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 function mockSelectedFixtureId() {
   mockRouter({

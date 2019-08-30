@@ -1,18 +1,11 @@
-import * as rtl from '@testing-library/react';
 import {
   PluginSpec,
   PlugComponentType,
   MethodHandlers,
   EventHandlers,
-  resetPlugins,
   createPlugin,
   getPluginContext
 } from 'react-plugin';
-
-export function cleanup() {
-  rtl.cleanup();
-  resetPlugins();
-}
 
 export function getMethodsOf<Spec extends PluginSpec>(
   pluginName: Spec['name']

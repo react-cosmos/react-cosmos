@@ -1,5 +1,4 @@
-import { loadPlugins } from 'react-plugin';
-import { cleanup } from '../../../testHelpers/plugin';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
   mockRouter,
@@ -8,7 +7,7 @@ import {
 import { mockRendererReady, mockFixtureStateChange } from '../testHelpers';
 import { register } from '..';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 const fixtures = { 'ein.js': null, 'zwei.js': null, 'drei.js': null };
 const fixtureId = { path: 'foo.js', name: null };

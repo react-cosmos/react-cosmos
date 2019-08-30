@@ -1,14 +1,18 @@
 import { act, render } from '@testing-library/react';
 import React from 'react';
-import { ArraySlot, enablePlugin, loadPlugins } from 'react-plugin';
+import {
+  ArraySlot,
+  enablePlugin,
+  loadPlugins,
+  resetPlugins
+} from 'react-plugin';
 import { register } from '..';
-import { cleanup } from '../../../testHelpers/plugin';
 import {
   getNotificationsMethods,
   mockRouter
 } from '../../../testHelpers/pluginMocks';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 jest.useFakeTimers();
 

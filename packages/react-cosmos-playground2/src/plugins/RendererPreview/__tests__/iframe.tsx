@@ -1,14 +1,13 @@
 import React from 'react';
 import { wait, render } from '@testing-library/react';
-import { loadPlugins, Slot } from 'react-plugin';
-import { cleanup } from '../../../testHelpers/plugin';
+import { loadPlugins, Slot, resetPlugins } from 'react-plugin';
 import { mockCore, mockRendererCore } from '../../../testHelpers/pluginMocks';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { rendererReadyMsg } from '../testHelpers/messages';
 import { getIframe } from '../testHelpers/iframe';
 import { register } from '..';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 function registerTestPlugins() {
   register();

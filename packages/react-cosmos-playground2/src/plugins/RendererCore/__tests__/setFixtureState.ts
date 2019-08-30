@@ -1,7 +1,6 @@
 import { wait } from '@testing-library/react';
-import { loadPlugins } from 'react-plugin';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import { cleanup } from '../../../testHelpers/plugin';
 import {
   getRendererCoreMethods,
   mockNotifications,
@@ -11,7 +10,7 @@ import {
 import { mockRendererReady, mockFixtureStateChange } from '../testHelpers';
 import { register } from '..';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 const fixtures = { 'ein.js': null, 'zwei.js': null, 'drei.js': null };
 const fixtureId = { path: 'zwei.js', name: null };

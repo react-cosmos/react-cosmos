@@ -1,11 +1,10 @@
 import { wait } from '@testing-library/react';
-import { loadPlugins } from 'react-plugin';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
 import {
   BuildErrorMessage,
   SERVER_MESSAGE_EVENT_NAME
 } from 'react-cosmos-shared2/build';
-import { cleanup } from '../../../testHelpers/plugin';
 import {
   mockCore,
   getMessageHandlerMethods,
@@ -14,7 +13,7 @@ import {
 import { mockSocketIo } from '../testHelpers/mockSocketIo';
 import { register } from '..';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 function registerTestPlugins() {
   register();

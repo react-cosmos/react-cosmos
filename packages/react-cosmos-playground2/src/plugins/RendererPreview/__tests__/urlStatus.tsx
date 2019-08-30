@@ -1,7 +1,6 @@
 import React from 'react';
 import { wait, render } from '@testing-library/react';
-import { loadPlugins, Slot } from 'react-plugin';
-import { cleanup } from '../../../testHelpers/plugin';
+import { loadPlugins, Slot, resetPlugins } from 'react-plugin';
 import {
   mockCore,
   getRendererPreviewMethods
@@ -9,7 +8,7 @@ import {
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { register } from '..';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 function registerTestPlugins() {
   register();

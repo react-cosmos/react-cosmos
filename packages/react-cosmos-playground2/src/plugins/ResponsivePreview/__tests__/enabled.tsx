@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
-import { loadPlugins, Slot, ArraySlot } from 'react-plugin';
-import { cleanup } from '../../../testHelpers/plugin';
+import { loadPlugins, Slot, ArraySlot, resetPlugins } from 'react-plugin';
 import {
   mockRouter,
   mockStorage,
@@ -16,7 +15,7 @@ import {
 import { FixtureStateWithViewport, StorageMock } from '../testHelpers';
 import { register } from '..';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 function mockEnabledViewportStorage() {
   const viewportState: ViewportState = {

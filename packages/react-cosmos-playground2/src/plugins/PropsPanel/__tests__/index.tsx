@@ -1,11 +1,10 @@
 import React from 'react';
 import { render, fireEvent, wait } from '@testing-library/react';
-import { ArraySlot, loadPlugins } from 'react-plugin';
+import { ArraySlot, loadPlugins, resetPlugins } from 'react-plugin';
 import {
   FixtureStateValues,
   FixtureState
 } from 'react-cosmos-shared2/fixtureState';
-import { cleanup } from '../../../testHelpers/plugin';
 import {
   mockRendererCore,
   mockRouter,
@@ -15,7 +14,7 @@ import { getParentButton } from '../../../testHelpers/selectors';
 import { PROPS_TREE_EXPANSION_STORAGE_KEY } from '../shared';
 import { register } from '..';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 function registerTestPlugins() {
   register();

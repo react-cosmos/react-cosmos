@@ -1,7 +1,6 @@
 import React from 'react';
-import { loadPlugins, Slot } from 'react-plugin';
+import { loadPlugins, Slot, resetPlugins } from 'react-plugin';
 import { register } from '..';
-import { cleanup } from '../../../testHelpers/plugin';
 import {
   getLayoutMethods,
   mockCore,
@@ -12,7 +11,7 @@ import {
 import { renderAsync } from '../../../testHelpers/render';
 import { PANEL_OPEN_STORAGE_KEY } from '../panelOpen';
 
-afterEach(cleanup);
+afterEach(resetPlugins);
 
 function registerTestPlugins() {
   mockRouter();
