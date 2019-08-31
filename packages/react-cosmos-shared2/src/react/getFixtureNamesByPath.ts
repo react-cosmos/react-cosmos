@@ -2,7 +2,7 @@ import { FixtureNamesByPath } from '../renderer';
 import { ReactFixtureExportsByPath } from './shared';
 import { isMultiFixture } from './isMultiFixture';
 
-export function getFixtureNames(
+export function getFixtureNamesByPath(
   fixtureExportsByPath: ReactFixtureExportsByPath
 ): FixtureNamesByPath {
   const fixtureNamesByPath: FixtureNamesByPath = {};

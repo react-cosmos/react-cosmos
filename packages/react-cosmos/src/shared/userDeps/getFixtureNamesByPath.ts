@@ -3,9 +3,9 @@ import * as shared from 'react-cosmos-shared2/react';
 import { CosmosConfig } from '../../config';
 import { getFixtureExports } from './getFixtureExports';
 
-export async function getFixtureNames(
+export async function getFixtureNamesByPath(
   cosmosConfig: CosmosConfig
 ): Promise<FixtureNamesByPath> {
   const fixtureExports = await getFixtureExports(cosmosConfig);
-  return shared.getFixtureNames(fixtureExports);
+  return shared.getFixtureNamesByPath(fixtureExports);
 }

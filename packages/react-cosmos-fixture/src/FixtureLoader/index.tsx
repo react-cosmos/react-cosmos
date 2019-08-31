@@ -17,7 +17,7 @@ import {
   ReactDecorator,
   ReactFixtureExportsByPath,
   ReactDecoratorsByPath,
-  getFixtureNames
+  getFixtureNamesByPath
 } from 'react-cosmos-shared2/react';
 import { FixtureProvider } from '../FixtureProvider';
 import { getFixture } from './fixtureHelpers';
@@ -203,7 +203,7 @@ export class FixtureLoader extends React.Component<Props, State> {
       type: 'rendererReady',
       payload: {
         rendererId,
-        fixtures: this.getFixtureNames()
+        fixtures: this.getFixtureNamesByPath()
       }
     });
   }
@@ -214,7 +214,7 @@ export class FixtureLoader extends React.Component<Props, State> {
       type: 'fixtureListUpdate',
       payload: {
         rendererId,
-        fixtures: this.getFixtureNames()
+        fixtures: this.getFixtureNamesByPath()
       }
     });
   }
@@ -262,8 +262,8 @@ export class FixtureLoader extends React.Component<Props, State> {
     });
   };
 
-  getFixtureNames(): FixtureNamesByPath {
-    return getFixtureNames(this.props.fixtures);
+  getFixtureNamesByPath(): FixtureNamesByPath {
+    return getFixtureNamesByPath(this.props.fixtures);
   }
 
   fireChangeCallback() {
