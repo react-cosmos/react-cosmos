@@ -15,7 +15,7 @@ import {
 } from 'react-cosmos-shared2/renderer';
 import {
   ReactDecorator,
-  ReactFixturesByPath,
+  ReactFixtureExportsByPath,
   ReactDecoratorsByPath,
   getFixtureNames
 } from 'react-cosmos-shared2/react';
@@ -25,7 +25,7 @@ import { getFixture } from './fixtureHelpers';
 export type Props = {
   rendererId: string;
   rendererConnect: RendererConnect;
-  fixtures: ReactFixturesByPath;
+  fixtures: ReactFixtureExportsByPath;
   systemDecorators: ReactDecorator[];
   userDecorators: ReactDecoratorsByPath;
   renderMessage?: (args: { msg: string }) => React.ReactNode;

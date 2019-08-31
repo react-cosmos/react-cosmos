@@ -1,12 +1,12 @@
 import path from 'path';
-import { ReactFixturesByPath } from 'react-cosmos-shared2/react';
+import { ReactFixtureExportsByPath } from 'react-cosmos-shared2/react';
 import { CosmosConfig } from '../../config';
 import { slash } from '../slash';
 import { findUserModulePaths } from './findUserModulePaths';
 
 export async function getFixtureExports(
   cosmosConfig: CosmosConfig
-): Promise<ReactFixturesByPath> {
+): Promise<ReactFixtureExportsByPath> {
   const { rootDir, fixturesDir, fixtureFileSuffix } = cosmosConfig;
   const { fixturePaths } = await findUserModulePaths({
     rootDir,
@@ -14,7 +14,7 @@ export async function getFixtureExports(
     fixtureFileSuffix
   });
 
-  const reactFixturesByPath: ReactFixturesByPath = {};
+  const reactFixturesByPath: ReactFixtureExportsByPath = {};
   fixturePaths.forEach(fixturePath => {
     const relPath = slash(path.relative(rootDir, fixturePath));
     reactFixturesByPath[relPath] = require(fixturePath).default;

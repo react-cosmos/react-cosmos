@@ -3,7 +3,7 @@ import {
   ReactFixtureExport,
   ReactDecoratorProps,
   ReactDecorator,
-  ReactFixturesByPath,
+  ReactFixtureExportsByPath,
   ReactDecoratorsByPath
 } from './shared';
 
@@ -12,7 +12,7 @@ export type ReactFixtureMap = ReactFixtureMap;
 export type ReactFixtureExport = ReactFixtureExport;
 export type ReactDecoratorProps = ReactDecoratorProps;
 export type ReactDecorator = ReactDecorator;
-export type ReactFixturesByPath = ReactFixturesByPath;
+export type ReactFixtureExportsByPath = ReactFixtureExportsByPath;
 export type ReactDecoratorsByPath = ReactDecoratorsByPath;
 
 export { areNodesEqual } from './areNodesEqual';

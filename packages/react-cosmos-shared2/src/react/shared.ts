@@ -19,5 +19,5 @@ type ModuleByPath<ModuleType> = {
   [path: string]: ModuleType;
 };
 
-export type ReactFixturesByPath = ModuleByPath<ReactFixtureExport>;
+export type ReactFixtureExportsByPath = ModuleByPath<ReactFixtureExport>;
 export type ReactDecoratorsByPath = ModuleByPath<ReactDecorator>;

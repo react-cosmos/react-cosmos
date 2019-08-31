@@ -1,13 +1,13 @@
 import { FixtureNamesByPath } from '../renderer';
-import { ReactFixturesByPath } from './shared';
+import { ReactFixtureExportsByPath } from './shared';
 import { isMultiFixture } from './isMultiFixture';
 
 export function getFixtureNames(
-  fixtures: ReactFixturesByPath
+  fixtureExportsByPath: ReactFixtureExportsByPath
 ): FixtureNamesByPath {
   const fixtureNamesByPath: FixtureNamesByPath = {};
-  Object.keys(fixtures).forEach(fixturePath => {
-    const fixtureExport = fixtures[fixturePath];
+  Object.keys(fixtureExportsByPath).forEach(fixturePath => {
+    const fixtureExport = fixtureExportsByPath[fixturePath];
     fixtureNamesByPath[fixturePath] = isMultiFixture(fixtureExport)
       ? Object.keys(fixtureExport)
       : null;
