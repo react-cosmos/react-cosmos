@@ -1,6 +1,6 @@
 import { DomRendererConfig } from '../../../shared/rendererConfig';
 import { generateUserDepsModule } from '../../../shared/userDeps';
-import { getCosmosConfig } from '../../../config';
+import { detectCosmosConfig } from '../../../config';
 import { createDomCosmosConfig } from '../cosmosConfig/dom';
 
 type WebpackLoaderContext = {
@@ -9,7 +9,7 @@ type WebpackLoaderContext = {
 };
 
 module.exports = async function injectUserDeps(source: string) {
-  const cosmosConfig = getCosmosConfig();
+  const cosmosConfig = detectCosmosConfig();
   const webpackLoaderContext = (this as any) as WebpackLoaderContext;
   const callback = webpackLoaderContext.async();
 

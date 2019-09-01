@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs-extra';
-import { CosmosConfig, getCosmosConfig } from '../config';
+import { CosmosConfig, detectCosmosConfig } from '../config';
 import { getStaticPath } from './static';
 import { getExportPlaygroundHtml } from './playgroundHtml';
 
@@ -11,7 +11,7 @@ export type ExportPluginArgs = {
 export type ExportPlugin = (args: ExportPluginArgs) => unknown;
 
 export async function generateExport(plugins: ExportPlugin[] = []) {
-  const cosmosConfig = getCosmosConfig();
+  const cosmosConfig = detectCosmosConfig();
 
   // Copy static assets first, so that the built index.html overrides the its
   // template file (in case the static assets are served from the root path)

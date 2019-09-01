@@ -1,7 +1,7 @@
 import http from 'http';
 import express from 'express';
 import { Message } from 'react-cosmos-shared2/util';
-import { CosmosConfig, getCosmosConfig } from '../../config';
+import { CosmosConfig, detectCosmosConfig } from '../../config';
 import { PlatformType } from '../shared';
 import { serveStaticDir } from '../static';
 import { createHttpServer } from './httpServer';
@@ -26,7 +26,7 @@ export async function startDevServer(
   platformType: PlatformType,
   plugins: DevServerPlugin[] = []
 ) {
-  const cosmosConfig = getCosmosConfig();
+  const cosmosConfig = detectCosmosConfig();
 
   const app = createApp(platformType, cosmosConfig);
   if (cosmosConfig.staticPath) {

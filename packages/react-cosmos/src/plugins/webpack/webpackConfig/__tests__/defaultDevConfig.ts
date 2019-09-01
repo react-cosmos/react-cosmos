@@ -14,7 +14,7 @@ afterAll(() => {
 async function getDefaultDevWebpackConfig() {
   return mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Using default webpack config');
-    const cosmosConfig = createCosmosConfig();
+    const cosmosConfig = createCosmosConfig(process.cwd());
     return getDevWebpackConfig(cosmosConfig, webpack);
   });
 }
