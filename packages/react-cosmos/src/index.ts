@@ -3,6 +3,7 @@ export {
   getCosmosConfigAtPath,
   createCosmosConfig
 } from './config';
+export { getFixtureUrls } from './getFixtureUrls';
 
 // Other potential APIs:
 // - getFixturesByPath() - Server-side API for getting all fixture modules.
