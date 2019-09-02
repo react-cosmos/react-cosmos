@@ -3,7 +3,8 @@ import { getDecoratedFixtureElement } from 'react-cosmos-fixture';
 import {
   isMultiFixture,
   ReactDecorator,
-  ReactFixtureMap
+  ReactFixtureMap,
+  ReactFixture
 } from 'react-cosmos-shared2/react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { CosmosConfig } from './config';
@@ -20,14 +21,8 @@ type RenderableFixture = {
 
 export async function getFixtures({ cosmosConfig }: Args) {
   const { fixtureExportsByPath } = await getUserModules(cosmosConfig);
+
   const fixtures: RenderableFixture[] = [];
-
-  const decoratorProps = {
-    fixtureState: {},
-    setFixtureState: () => {},
-    onErrorReset: () => {}
-  };
-
   Object.keys(fixtureExportsByPath).forEach(fixturePath => {
     const fixtureExport = fixtureExportsByPath[fixturePath];
     if (isMultiFixture(fixtureExport)) {
@@ -36,39 +31,37 @@ export async function getFixtures({ cosmosConfig }: Args) {
       const multiFixtureExport: ReactFixtureMap = fixtureExport;
       Object.keys(fixtureExport).forEach(fixtureName => {
         const fixtureId = { path: fixturePath, name: fixtureName };
-        // TODO: Derive decorators from decoratorsByPath
-        const decorators: ReactDecorator[] = [];
         fixtures.push({
           fixtureId,
-          getElement: () => (
-            <>
-              {getDecoratedFixtureElement(
-                multiFixtureExport[fixtureName],
-                decorators,
-                decoratorProps
-              )}
-            </>
+          getElement: createFixtureElementGetter(
+            multiFixtureExport[fixtureName]
           )
         });
       });
     } else {
       const fixtureId = { path: fixturePath, name: null };
-      // TODO: Derive decorators from decoratorsByPath
-      const decorators: ReactDecorator[] = [];
       fixtures.push({
         fixtureId,
-        getElement: () => (
-          <>
-            {getDecoratedFixtureElement(
-              fixtureExport,
-              decorators,
-              decoratorProps
-            )}
-          </>
-        )
+        getElement: createFixtureElementGetter(fixtureExport)
       });
     }
   });
 
   return fixtures;
+}
+
+function createFixtureElementGetter(
+  fixture: ReactFixture
+): () => React.ReactElement {
+  // TODO: Derive decorators from decoratorsByPath
+  const decorators: ReactDecorator[] = [];
+  const decoratorProps = {
+    fixtureState: {},
+    setFixtureState: () => {},
+    onErrorReset: () => {}
+  };
+
+  return () => (
+    <>{getDecoratedFixtureElement(fixture, decorators, decoratorProps)}</>
+  );
 }
