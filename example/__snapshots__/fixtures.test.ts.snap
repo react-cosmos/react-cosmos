@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`returns fixture URLs: __fixtures__/Hello World.ts 1`] = `"Hello World!"`;
+exports[`returns fixture elements: __fixtures__/Hello World.ts 1`] = `"Hello World!"`;
 
-exports[`returns fixture URLs: __fixtures__/Props Playground.tsx 1`] = `
+exports[`returns fixture elements: __fixtures__/Props Playground.tsx 1`] = `
 <pre>
   {
   "string": "How are you doing?",
@@ -21,7 +21,7 @@ exports[`returns fixture URLs: __fixtures__/Props Playground.tsx 1`] = `
 </pre>
 `;
 
-exports[`returns fixture URLs: __fixtures__/State Playground.tsx 1`] = `
+exports[`returns fixture elements: __fixtures__/State Playground.tsx 1`] = `
 <pre>
   {
   "string": "How are you doing?",
@@ -48,7 +48,7 @@ exports[`returns fixture URLs: __fixtures__/State Playground.tsx 1`] = `
 </pre>
 `;
 
-exports[`returns fixture URLs: Counter/index.fixture.tsx default 1`] = `
+exports[`returns fixture elements: Counter/index.fixture.tsx default 1`] = `
 <button
   onClick={[Function]}
 >
@@ -58,7 +58,7 @@ exports[`returns fixture URLs: Counter/index.fixture.tsx default 1`] = `
 </button>
 `;
 
-exports[`returns fixture URLs: Counter/index.fixture.tsx large number 1`] = `
+exports[`returns fixture elements: Counter/index.fixture.tsx large number 1`] = `
 <button
   onClick={[Function]}
 >
@@ -68,7 +68,7 @@ exports[`returns fixture URLs: Counter/index.fixture.tsx large number 1`] = `
 </button>
 `;
 
-exports[`returns fixture URLs: Counter/index.fixture.tsx small number 1`] = `
+exports[`returns fixture elements: Counter/index.fixture.tsx small number 1`] = `
 <button
   onClick={[Function]}
 >
@@ -78,7 +78,7 @@ exports[`returns fixture URLs: Counter/index.fixture.tsx small number 1`] = `
 </button>
 `;
 
-exports[`returns fixture URLs: CounterButton/index.fixture.tsx 1`] = `
+exports[`returns fixture elements: CounterButton/index.fixture.tsx 1`] = `
 <button
   onClick={[Function]}
 >
@@ -88,7 +88,7 @@ exports[`returns fixture URLs: CounterButton/index.fixture.tsx 1`] = `
 </button>
 `;
 
-exports[`returns fixture URLs: WelcomeMessage/index.fixture.tsx 1`] = `
+exports[`returns fixture elements: WelcomeMessage/index.fixture.tsx 1`] = `
 <div
   style={
     Object {

@@ -69,12 +69,10 @@ function createFixtureElementGetter(
     decoratorsByPath,
     fixturePath
   );
-  const decoratorProps = {
-    fixtureState: {},
-    setFixtureState: () => {},
-    onErrorReset: () => {}
-  };
-  return () => (
-    <>{getDecoratedFixtureElement(fixture, decorators, decoratorProps)}</>
-  );
+  return () =>
+    getDecoratedFixtureElement(fixture, decorators, {
+      fixtureState: {},
+      setFixtureState: () => {},
+      onErrorReset: () => {}
+    });
 }

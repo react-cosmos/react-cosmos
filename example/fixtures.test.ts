@@ -4,7 +4,7 @@ import { create } from 'react-test-renderer';
 
 const cosmosConfig = getCosmosConfigAtPath(require.resolve('./cosmos.config'));
 
-it('returns fixture URLs', async () => {
+it('returns fixture elements', async () => {
   expect.hasAssertions();
   const fixtures = await getFixtures({ cosmosConfig });
   fixtures.forEach(({ fixtureId, getElement }) => {
