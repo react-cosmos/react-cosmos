@@ -13,7 +13,6 @@ it('returns fixture elements', async () => {
   });
 });
 
-function stringifyFixtureId(fixtureId: FixtureId) {
-  const { path, name } = fixtureId;
+function stringifyFixtureId({ path, name }: FixtureId) {
   return name ? `${path} ${name}` : path;
 }
