@@ -14,7 +14,6 @@
     "test:watch": "yarn test:unit --watch",
     "test:coverage": "yarn test:unit --coverage",
     "test:cypress": "cypress run --record false",
-    "test:ci": "yarn start & yarn start:export & yarn start:native & yarn test:cypress",
     "babel-ts-node": "babel-node --extensions \".ts,.tsx\"",
     "link-entries": "yarn babel-ts-node ./scripts/linkEntries.ts",
     "src": "yarn link-entries src",

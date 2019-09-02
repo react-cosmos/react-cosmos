@@ -37,7 +37,16 @@ jobs:
       - run: yarn dist
       - run: yarn build
       - run: yarn export
-      - run: yarn test:ci
+      - run:
+          command: yarn start
+          background: true
+      - run:
+          command: yarn start:export
+          background: true
+      - run:
+          command: yarn start:native
+          background: true
+      - run: yarn test:cypress
 
       - store_artifacts:
           path: /root/app/cypress/videos
