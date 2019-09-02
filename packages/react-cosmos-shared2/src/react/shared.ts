@@ -4,8 +4,9 @@ import { FixtureState, SetFixtureState } from '../fixtureState';
 type FixtureMap<FixtureType> = { [fixtureName: string]: FixtureType };
 type FixtureExport<FixtureType> = FixtureType | FixtureMap<FixtureType>;
 
-export type ReactFixtureMap = FixtureMap<React.ReactNode>;
-export type ReactFixtureExport = FixtureExport<React.ReactNode>;
+export type ReactFixture = React.ReactNode | React.FunctionComponent;
+export type ReactFixtureMap = FixtureMap<ReactFixture>;
+export type ReactFixtureExport = FixtureExport<ReactFixture>;
 
 export type ReactDecoratorProps = {
   children: React.ReactNode;

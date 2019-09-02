@@ -4,6 +4,7 @@ import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 export type FixtureState = FixtureState;
 
 // Use in renderers
+export { getDecoratedFixtureElement } from './getDecoratedFixtureElement';
 export { FixtureLoader } from './FixtureLoader';
 export { createPostMessageConnect } from './FixtureLoader/postMessage';
 export { createWebSocketsConnect } from './FixtureLoader/webSockets';

@@ -1,4 +1,5 @@
 import {
+  ReactFixture,
   ReactFixtureMap,
   ReactFixtureExport,
   ReactDecoratorProps,
@@ -8,6 +9,7 @@ import {
 } from './shared';
 
 // Types can't be re-exported because Babel (see root tsconfig.json)
+export type ReactFixture = ReactFixture;
 export type ReactFixtureMap = ReactFixtureMap;
 export type ReactFixtureExport = ReactFixtureExport;
 export type ReactDecoratorProps = ReactDecoratorProps;
