@@ -337,6 +337,8 @@ console.log(fixtureUrls);
 // ...
 ```
 
+> A common use case for `getFixtureUrls` is to create visual snapshots for each fixture, and potentially diff them between deploys.
+
 ## Where is my old Cosmos?
 
 Cosmos Classic isn't going anywhere. First, it will take months before a release candidate for v5 (Cosmos Next) is ready. Second, the classic packages have been moved to [a dedicated repo](https://github.com/react-cosmos/react-cosmos-classic), which means we can continue to maintain Cosmos Classic or even run it alongside Cosmos Next in the same project (during the migration period).
