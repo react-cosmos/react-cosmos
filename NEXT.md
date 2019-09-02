@@ -268,7 +268,7 @@ Notes:
 
 ## Server-side APIs
 
-> Do **NOT** use any of these APIs in your fixture files, or any of your client code, as they require access to the file system and may bundle unwanted Node code in your client build.
+> Do **NOT** use these APIs in your fixture files, or any of your client code, as they require access to the file system and may bundle unwanted Node code in your client build.
 
 ### Config
 
@@ -313,6 +313,7 @@ import { createCosmosConfig } from 'react-cosmos';
 
 const cosmosConfig = createCosmosConfig(__dirname, {
   // Options...
+  // (TypeScript is your friend)
 });
 ```
 
@@ -324,18 +325,16 @@ A list with one Playground URL for each fixture, optionally in full-screen mode.
 import { getFixtureUrls } from 'react-cosmos';
 
 const urls = await getFixtureUrls({ cosmosConfig, fullScreen: true });
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22\_\_fixtures\_\_%2FHello%20World.ts%22%2C%22name%22%3Anull%7D&fullScreen=true
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22\_\_fixtures\_\_%2FProps%20Playground.tsx%22%2C%22name%22%3Anull%7D&fullScreen=true
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22\_\_fixtures\_\_%2FState%20Playground.tsx%22%2C%22name%22%3Anull%7D&fullScreen=true
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22default%22%7D&fullScreen=true
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22small%20number%22%7D&fullScreen=true
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22large%20number%22%7D&fullScreen=true
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22CounterButton%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D&fullScreen=true
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22WelcomeMessage%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D&fullScreen=true
+// ...
 ```
-
-The output looks like this:
-
-> localhost:5000/?fixtureId=%7B%22path%22%3A%22\_\_fixtures\_\_%2FHello%20World.ts%22%2C%22name%22%3Anull%7D&fullScreen=true
-> localhost:5000/?fixtureId=%7B%22path%22%3A%22\_\_fixtures\_\_%2FProps%20Playground.tsx%22%2C%22name%22%3Anull%7D&fullScreen=true
-> localhost:5000/?fixtureId=%7B%22path%22%3A%22\_\_fixtures\_\_%2FState%20Playground.tsx%22%2C%22name%22%3Anull%7D&fullScreen=true
-> localhost:5000/?fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22default%22%7D&fullScreen=true
-> localhost:5000/?fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22small%20number%22%7D&fullScreen=true
-> localhost:5000/?fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22large%20number%22%7D&fullScreen=true
-> localhost:5000/?fixtureId=%7B%22path%22%3A%22CounterButton%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D&fullScreen=true
-> localhost:5000/?fixtureId=%7B%22path%22%3A%22WelcomeMessage%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D&fullScreen=true
 
 ## Where is my old Cosmos?
 
