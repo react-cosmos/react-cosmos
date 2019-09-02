@@ -318,7 +318,7 @@ const cosmosConfig = createCosmosConfig(__dirname, {
 
 ### Fixture URLs
 
-A list with one Playground URL for each fixture, optionally in full-screen mode. A common use case for `getFixtureUrls` is to create visual snapshots for each fixture, and potentially diff them between deploys.
+A list with one Playground URL for each fixture, optionally in full-screen mode. A common use case for `getFixtureUrls` is to create visual snapshots for each fixture, and potentially to diff them between deploys.
 
 ```js
 import { getFixtureUrls } from 'react-cosmos';
