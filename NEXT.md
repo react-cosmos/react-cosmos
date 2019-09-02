@@ -318,7 +318,7 @@ const cosmosConfig = createCosmosConfig(__dirname, {
 
 ### Fixture URLs
 
-A list with one Playground URL for each fixture, optionally in full-screen mode.
+A list with one Playground URL for each fixture, optionally in full-screen mode. A common use case for `getFixtureUrls` is to create visual snapshots for each fixture, and potentially diff them between deploys.
 
 ```js
 import { getFixtureUrls } from 'react-cosmos';
@@ -337,7 +337,21 @@ console.log(fixtureUrls);
 // ...
 ```
 
-> A common use case for `getFixtureUrls` is to create visual snapshots for each fixture, and potentially diff them between deploys.
+### Fixture elements (rendered anywhere)
+
+A list of fixture elements to render by hand. A common use case for `getFixtures` is to run snapshot tests in alternative environments like jsdom.
+
+```js
+import { getFixtures } from 'react-cosmos';
+
+const fixtures = await getFixtures({ cosmosConfig });
+fixtures.forEach(({ fixtureId, getElement }) => {
+  const renderer = create(getElement());
+  expect(renderer.toJSON()).toMatchSnapshot(stringifyFixtureId(fixtureId));
+});
+```
+
+Check out the [full example](https://github.com/react-cosmos/react-cosmos/blob/41f0b6972fd0cb2951c43839f4c37a6cf1881571/example/fixtures.test.ts) for more details on how to use the `getFixtures` API.
 
 ## Where is my old Cosmos?
 
