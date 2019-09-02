@@ -2,7 +2,7 @@ import React from 'react';
 import { createWebSocketsConnect, FixtureLoader } from 'react-cosmos-fixture';
 import {
   ReactDecoratorsByPath,
-  ReactFixturesByPath
+  ReactFixtureExportsByPath
 } from 'react-cosmos-shared2/react';
 import { StyleSheet, View, Text, NativeModules, YellowBox } from 'react-native';
 import parse from 'url-parse';
@@ -18,7 +18,7 @@ const rendererId = 'native-renderer';
 
 type Props = {
   rendererConfig: NativeRendererConfig;
-  fixtures: ReactFixturesByPath;
+  fixtures: ReactFixtureExportsByPath;
   decorators: ReactDecoratorsByPath;
 };
 

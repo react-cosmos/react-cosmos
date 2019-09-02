@@ -2,7 +2,7 @@ import React from 'react';
 import { FixtureLoader } from 'react-cosmos-fixture';
 import {
   ReactDecoratorsByPath,
-  ReactFixturesByPath
+  ReactFixtureExportsByPath
 } from 'react-cosmos-shared2/react';
 import { render } from 'react-dom';
 import { DomRendererConfig } from '../shared/rendererConfig';
@@ -15,7 +15,7 @@ import { renderMessage } from './renderMessage';
 
 type MountDomRendererOpts = {
   rendererConfig: DomRendererConfig;
-  fixtures: ReactFixturesByPath;
+  fixtures: ReactFixtureExportsByPath;
   decorators: ReactDecoratorsByPath;
   onErrorReset?: () => unknown;
 };

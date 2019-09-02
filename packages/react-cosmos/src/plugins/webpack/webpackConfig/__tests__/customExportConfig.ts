@@ -26,7 +26,7 @@ const MY_PLUGIN = {};
 async function getCustomExportWebpackConfig() {
   return mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Using webpack config found at mywebpack.config.js');
-    const cosmosConfig = createCosmosConfig({
+    const cosmosConfig = createCosmosConfig(process.cwd(), {
       webpack: {
         configPath: 'mywebpack.config.js'
       }

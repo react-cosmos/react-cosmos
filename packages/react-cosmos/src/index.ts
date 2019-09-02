@@ -1,5 +1,9 @@
-export { getCosmosConfig, createCosmosConfig } from './config';
-export { findUserModulePaths, getFixtureNames } from './shared/userDeps';
+export {
+  detectCosmosConfig,
+  getCosmosConfigAtPath,
+  createCosmosConfig
+} from './config';
+export { getFixtureUrls } from './getFixtureUrls';
 
 // Other potential APIs:
 // - getFixturesByPath() - Server-side API for getting all fixture modules.

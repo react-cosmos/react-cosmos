@@ -1,5 +1,4 @@
-import path from 'path';
-import { dirExists } from '../shared/fs';
+import { requireModule } from '../shared/fs';
 
 export type CosmosConfig = {
   exportPath: string;
@@ -30,15 +29,12 @@ export type CosmosConfig = {
   };
 };
 
+export type CosmosConfigInput = Partial<CosmosConfig>;
+
 export function getCurrentDir() {
   return process.cwd();
 }
 
-export function getRootDirAtPath(dirPath: string) {
-  const absPath = path.resolve(getCurrentDir(), dirPath);
-  if (!dirExists(absPath)) {
-    throw new Error(`[Cosmos] Dir not found at path: ${dirPath}`);
-  }
-
-  return absPath;
+export function requireConfigFile(cosmosConfigPath: string): CosmosConfigInput {
+  return requireModule(cosmosConfigPath);
 }

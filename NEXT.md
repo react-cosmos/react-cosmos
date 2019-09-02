@@ -266,6 +266,79 @@ Notes:
 
 - React Native blacklists `__fixtures__` dirs by default. Unless you configure Cosmos to use a different directory pattern, you need to [override `getBlacklistRE` in the React Native CLI config](https://github.com/skidding/jobs-done/blob/585b1c472a123c9221dfec9018c9fa1e976d715e/rn-cli.config.js).
 
+## Server-side APIs
+
+> Do **NOT** use these APIs in your fixture files, or any of your client code, as they require access to the file system and may bundle unwanted Node code in your client build.
+
+### Config
+
+Fetching a Cosmos config can be done in a number of ways, depending on whether or not you have a config file and, in case you do, if you prefer to specify the path manually or to rely on automatic detection.
+
+#### Detect existing config based on cwd
+
+`detectCosmosConfig` uses the same config detection strategy as the `cosmos` command.
+
+```js
+import { detectCosmosConfig } from 'react-cosmos';
+
+const cosmosConfig = detectCosmosConfig();
+```
+
+#### Read existing config at exact path
+
+`getCosmosConfigAtPath` is best when you don't want to care where you run a script from.
+
+```js
+import { getCosmosConfigAtPath } from 'react-cosmos';
+
+const cosmosConfig = getCosmosConfigAtPath(require.resolve('./cosmos.config'));
+```
+
+#### Create default config
+
+The minimum requirement to create a config is a root directory.
+
+```js
+import { createCosmosConfig } from 'react-cosmos';
+
+const cosmosConfig = createCosmosConfig(__dirname);
+```
+
+#### Create custom config
+
+You can also customize your config programatically, without the need for an external config file.
+
+```js
+import { createCosmosConfig } from 'react-cosmos';
+
+const cosmosConfig = createCosmosConfig(__dirname, {
+  // Options... (TypeScript is your friend)
+});
+```
+
+### Fixture URLs
+
+A list with one Playground URL for each fixture, optionally in full-screen mode.
+
+```js
+import { getFixtureUrls } from 'react-cosmos';
+
+const fixtureUrls = await getFixtureUrls({ cosmosConfig, fullScreen: true });
+
+console.log(fixtureUrls);
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22\_\_fixtures\_\_%2FHello%20World.ts%22%2C%22name%22%3Anull%7D&fullScreen=true
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22\_\_fixtures\_\_%2FProps%20Playground.tsx%22%2C%22name%22%3Anull%7D&fullScreen=true
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22\_\_fixtures\_\_%2FState%20Playground.tsx%22%2C%22name%22%3Anull%7D&fullScreen=true
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22default%22%7D&fullScreen=true
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22small%20number%22%7D&fullScreen=true
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22large%20number%22%7D&fullScreen=true
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22CounterButton%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D&fullScreen=true
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22WelcomeMessage%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D&fullScreen=true
+// ...
+```
+
+> A common use case for `getFixtureUrls` is to create visual snapshots for each fixture, and potentially diff them between deploys.
+
 ## Where is my old Cosmos?
 
 Cosmos Classic isn't going anywhere. First, it will take months before a release candidate for v5 (Cosmos Next) is ready. Second, the classic packages have been moved to [a dedicated repo](https://github.com/react-cosmos/react-cosmos-classic), which means we can continue to maintain Cosmos Classic or even run it alongside Cosmos Next in the same project (during the migration period).

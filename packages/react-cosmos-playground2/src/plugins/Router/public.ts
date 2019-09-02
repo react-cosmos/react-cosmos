@@ -1,10 +1,10 @@
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { UrlParams } from '../../shared/url';
+import { PlaygroundUrlParams } from 'react-cosmos-shared2/url';
 
 export type RouterSpec = {
   name: 'router';
   state: {
-    urlParams: UrlParams;
+    urlParams: PlaygroundUrlParams;
   };
   methods: {
     getSelectedFixtureId(): null | FixtureId;

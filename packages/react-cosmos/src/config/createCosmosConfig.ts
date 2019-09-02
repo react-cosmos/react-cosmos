@@ -1,16 +1,11 @@
-import path from 'path';
 import { getCliArgs } from '../shared/cli';
-import { getCosmosConfigPath } from './cosmosConfigPath';
 import { resolveModule, resolvePath } from './resolve';
-import { CosmosConfig, getRootDirAtPath } from './shared';
-
-type CosmosConfigInput = Partial<CosmosConfig>;
+import { CosmosConfig, CosmosConfigInput } from './shared';
 
 export function createCosmosConfig(
+  rootDir: string,
   cosmosConfigInput: CosmosConfigInput = {}
 ): CosmosConfig {
-  const cosmosConfigPath = getCosmosConfigPath();
-  const rootDir = getRootDir(cosmosConfigInput, cosmosConfigPath);
   return {
     ...cosmosConfigInput,
     rootDir,
@@ -26,16 +21,6 @@ export function createCosmosConfig(
     globalImports: getGlobalImports(cosmosConfigInput, rootDir),
     ui: cosmosConfigInput.ui || {}
   };
-}
-
-function getRootDir({ rootDir }: CosmosConfigInput, cosmosConfigPath: string) {
-  const cliArgs = getCliArgs();
-  if (typeof cliArgs.rootDir === 'string') {
-    return getRootDirAtPath(cliArgs.rootDir);
-  }
-
-  const configDir = path.dirname(cosmosConfigPath);
-  return rootDir ? path.resolve(configDir, rootDir) : configDir;
 }
 
 function getExportPath(cosmosConfigInput: CosmosConfigInput, rootDir: string) {

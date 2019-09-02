@@ -1,23 +1,15 @@
-import qs from 'query-string';
-import { FixtureId } from 'react-cosmos-shared2/renderer';
+import {
+  PlaygroundUrlParams,
+  stringifyPlaygroundUrlQuery,
+  parsePlaygroundUrlQuery
+} from 'react-cosmos-shared2/url';
 
-export type UrlParams = {
-  fixtureId?: FixtureId;
-  fullScreen?: boolean;
-};
-
-type EncodedUrlParams = {
-  fixtureId?: string;
-  fullScreen?: 'true';
-};
-
-export function getUrlParams(): UrlParams {
-  return decodeUrlParams(qs.parse(location.search));
+export function getUrlParams(): PlaygroundUrlParams {
+  return parsePlaygroundUrlQuery(location.search);
 }
 
-// IDEA: Store fixtureState in history object and apply it on `popstate` event
-export function pushUrlParams(urlParams: UrlParams) {
-  const query = qs.stringify(encodeUrlParams(urlParams));
+export function pushUrlParams(urlParams: PlaygroundUrlParams) {
+  const query = stringifyPlaygroundUrlQuery(urlParams);
 
   // Refresh page completely when pushState isn't supported
   if (!history.pushState) {
@@ -26,11 +18,11 @@ export function pushUrlParams(urlParams: UrlParams) {
   }
 
   // Update URL without refreshing page
-  history.pushState({}, '', createUrlWithQuery(query));
+  history.pushState({}, '', createRelativeUrlWithQuery(query));
 }
 
 export function subscribeToLocationChanges(
-  userHandler: (urlParams: UrlParams) => unknown
+  userHandler: (urlParams: PlaygroundUrlParams) => unknown
 ) {
   const handler = () => {
     userHandler(getUrlParams());
@@ -41,39 +33,14 @@ export function subscribeToLocationChanges(
   };
 }
 
-export function createUrl(urlParams: UrlParams) {
-  return createUrlWithQuery(qs.stringify(encodeUrlParams(urlParams)));
+export function createRelativePlaygroundUrl(urlParams: PlaygroundUrlParams) {
+  const query = stringifyPlaygroundUrlQuery(urlParams);
+  return createRelativeUrlWithQuery(query);
 }
 
-function createUrlWithQuery(query: string) {
+function createRelativeUrlWithQuery(query: string) {
   // NOTE: "./" is used to return to the home URL. Passing an empty string
   // doesn't do anything. And passing "/" doesn't work if Cosmos is not hosted
   // at root (sub)domain level.
   return query.length > 0 ? `?${query}` : './';
-}
-
-function encodeUrlParams(decoded: UrlParams) {
-  const encoded: EncodedUrlParams = {};
-
-  if (decoded.fixtureId) {
-    encoded.fixtureId = JSON.stringify(decoded.fixtureId);
-  }
-  if (decoded.fullScreen) {
-    encoded.fullScreen = 'true';
-  }
-
-  return encoded;
-}
-
-function decodeUrlParams(encoded: EncodedUrlParams): UrlParams {
-  const decoded: UrlParams = {};
-
-  if (encoded.fixtureId) {
-    decoded.fixtureId = JSON.parse(encoded.fixtureId);
-  }
-  if (encoded.fullScreen) {
-    decoded.fullScreen = true;
-  }
-
-  return decoded;
 }
