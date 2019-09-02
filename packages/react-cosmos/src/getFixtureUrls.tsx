@@ -29,7 +29,7 @@ export async function getFixtureUrls({
   }
 
   const fixtureExportsByPath = await getFixtureExportsByPath(cosmosConfig);
-  const fixtureNamesByPath = await getFixtureNamesByPath(fixtureExportsByPath);
+  const fixtureNamesByPath = getFixtureNamesByPath(fixtureExportsByPath);
   Object.keys(fixtureNamesByPath).forEach(fixturePath => {
     const fixtureNames = fixtureNamesByPath[fixturePath];
     if (fixtureNames === null) {
