@@ -1,17 +1,13 @@
-import React from 'react';
 import memoize from 'memoize-one/dist/memoize-one.cjs';
+import React from 'react';
 import {
   FixtureState,
   SetFixtureState
 } from 'react-cosmos-shared2/fixtureState';
-import {
-  ReactDecoratorProps,
-  ReactDecorator
-} from 'react-cosmos-shared2/react';
-import { FixtureContextValue } from '../shared';
-import { FixtureCapture } from '../FixtureCapture';
+import { ReactDecorator } from 'react-cosmos-shared2/react';
 import { FixtureContext } from '../FixtureContext';
-import { FixtureElement } from './FixtureElement';
+import { getDecoratedFixtureElement } from '../getDecoratedFixtureElement';
+import { FixtureContextValue } from '../shared';
 
 type Props = {
   decorators: ReactDecorator[];
@@ -47,37 +43,8 @@ export class FixtureProvider extends React.PureComponent<Props> {
       <FixtureContext.Provider
         value={this.getFixtureContextValue(fixtureState, setFixtureState)}
       >
-        {getComputedElementTree(decorators, children, decoratorProps)}
+        {getDecoratedFixtureElement(children, decorators, decoratorProps)}
       </FixtureContext.Provider>
     );
   }
-}
-
-function getComputedElementTree(
-  decorators: ReactDecorator[],
-  leafNode: React.ReactNode,
-  decoratorProps: Omit<ReactDecoratorProps, 'children'>
-) {
-  const fixtureElement = (
-    <FixtureCapture decoratorId="root">
-      {getFixtureElement(leafNode)}
-    </FixtureCapture>
-  );
-
-  return [...decorators]
-    .reverse()
-    .reduce(
-      (prevElement, Decorator) => (
-        <Decorator {...decoratorProps}>{prevElement}</Decorator>
-      ),
-      fixtureElement
-    );
-}
-
-function getFixtureElement(leafNode: React.ReactNode) {
-  return typeof leafNode === 'function' ? (
-    <FixtureElement ElementType={leafNode} />
-  ) : (
-    leafNode
-  );
 }

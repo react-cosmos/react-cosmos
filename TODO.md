@@ -18,9 +18,9 @@ Alpha
   - [x] Put viewports in dropdown
   - [x] Make width/height inputs
 - [x] UI controls from state hooks
-- [ ] Server side APIs
+- [x] Server side APIs
   - [x] Get Playground URLs for each fixture (for visual snapshotting)
-  - [ ] Get fixture elements (for JSON snapshotting)
+  - [x] Get fixture elements (for JSON snapshotting)
 - [ ] Refresh docs
 
 Beta

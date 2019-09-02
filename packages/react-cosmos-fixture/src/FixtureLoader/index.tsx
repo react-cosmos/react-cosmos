@@ -1,24 +1,25 @@
-import React from 'react';
 import { isEqual } from 'lodash';
+import React from 'react';
 import {
   FixtureState,
   SetFixtureState
 } from 'react-cosmos-shared2/fixtureState';
 import {
-  FixtureNamesByPath,
-  FixtureId,
-  RendererRequest,
-  SelectFixtureRequest,
-  SetFixtureStateRequest,
-  RendererResponse,
-  RendererConnect
-} from 'react-cosmos-shared2/renderer';
-import {
+  getSortedDecoratorsForFixturePath,
+  getFixtureNamesByPath,
   ReactDecorator,
-  ReactFixtureExportsByPath,
   ReactDecoratorsByPath,
-  getFixtureNamesByPath
+  ReactFixtureExportsByPath
 } from 'react-cosmos-shared2/react';
+import {
+  FixtureId,
+  FixtureNamesByPath,
+  RendererConnect,
+  RendererRequest,
+  RendererResponse,
+  SelectFixtureRequest,
+  SetFixtureStateRequest
+} from 'react-cosmos-shared2/renderer';
 import { FixtureProvider } from '../FixtureProvider';
 import { getFixture } from './fixtureHelpers';
 
@@ -120,11 +121,10 @@ export class FixtureLoader extends React.Component<Props, State> {
         // renderKey controls whether to reuse previous instances (and
         // transition props) or rebuild render tree from scratch
         key={renderKey}
-        decorators={getSortedDecoratorsForFixturePath(
-          systemDecorators,
-          userDecorators,
-          fixtureId.path
-        )}
+        decorators={[
+          ...systemDecorators,
+          ...getSortedDecoratorsForFixturePath(fixtureId.path, userDecorators)
+        ]}
         fixtureState={fixtureState}
         setFixtureState={this.setFixtureState}
         onErrorReset={onErrorReset || noop}
@@ -301,51 +301,6 @@ export class FixtureLoader extends React.Component<Props, State> {
       ? this.props.renderMessage({ msg })
       : msg;
   }
-}
-
-function getSortedDecoratorsForFixturePath(
-  systemDecorators: ReactDecorator[],
-  decorators: ReactDecoratorsByPath,
-  fixturePath: string
-) {
-  return [
-    ...systemDecorators,
-    ...getSortedDecorators(getDecoratorsForFixturePath(decorators, fixturePath))
-  ];
-}
-
-function getSortedDecorators(
-  decorators: ReactDecoratorsByPath
-): ReactDecorator[] {
-  return sortPathsByDepthAsc(Object.keys(decorators)).map(
-    decoratorPath => decorators[decoratorPath]
-  );
-}
-
-function sortPathsByDepthAsc(paths: string[]) {
-  return [...paths].sort(
-    (a, b) =>
-      getPathNestingLevel(a) - getPathNestingLevel(b) || a.localeCompare(b)
-  );
-}
-
-function getPathNestingLevel(path: string) {
-  return path.split('/').length;
-}
-
-function getDecoratorsForFixturePath(
-  decorators: ReactDecoratorsByPath,
-  fixturePath: string
-) {
-  return Object.keys(decorators)
-    .filter(decPath => fixturePath.indexOf(`${getParentPath(decPath)}/`) === 0)
-    .reduce((acc, decPath) => ({ ...acc, [decPath]: decorators[decPath] }), {});
-}
-
-function getParentPath(nestedPath: string) {
-  // Remove everything right of the right-most forward slash, or return an
-  // empty string if path has no forward slash
-  return nestedPath.replace(/^((.+)\/)?.+$/, '$2');
 }
 
 function doesRequestChangeFixture(r: RendererRequest) {

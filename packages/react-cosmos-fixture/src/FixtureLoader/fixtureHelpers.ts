@@ -23,5 +23,8 @@ export function getFixture(
     return;
   }
 
-  return (fixtureExport as ReactFixtureMap)[fixtureName];
+  // FIXME: Why does fixtureExport need to be cast as ReactFixtureMap when
+  // the type predicate returned by isMultiFixture already ensures it?
+  const multiFixtureExport: ReactFixtureMap = fixtureExport;
+  return multiFixtureExport[fixtureName];
 }

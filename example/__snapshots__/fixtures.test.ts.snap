@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`returns fixture elements: __fixtures__/Hello World.ts 1`] = `"Hello World!"`;
+
+exports[`returns fixture elements: __fixtures__/Props Playground.tsx 1`] = `
+<pre>
+  {
+  "string": "How are you doing?",
+  "number": 1989,
+  "boolean": false,
+  "object": {
+    "string": "Pretty good can't complain",
+    "number": 1337,
+    "object": {
+      "number": 555
+    },
+    "null": null,
+    "unserializable": {}
+  }
+}
+</pre>
+`;
+
+exports[`returns fixture elements: __fixtures__/State Playground.tsx 1`] = `
+<pre>
+  {
+  "string": "How are you doing?",
+  "number": 1989,
+  "boolean": true,
+  "object": {
+    "isAdmin": true,
+    "name": "Pat D",
+    "age": 44
+  },
+  "array": [
+    {
+      "isAdmin": true,
+      "name": "Pat D",
+      "age": 44
+    },
+    {
+      "isAdmin": false,
+      "name": "Dan B",
+      "age": 39
+    }
+  ]
+}
+</pre>
+`;
+
+exports[`returns fixture elements: Counter/index.fixture.tsx default 1`] = `
+<button
+  onClick={[Function]}
+>
+  0
+   
+  times
+</button>
+`;
+
+exports[`returns fixture elements: Counter/index.fixture.tsx large number 1`] = `
+<button
+  onClick={[Function]}
+>
+  555555555
+   
+  times
+</button>
+`;
+
+exports[`returns fixture elements: Counter/index.fixture.tsx small number 1`] = `
+<button
+  onClick={[Function]}
+>
+  5
+   
+  times
+</button>
+`;
+
+exports[`returns fixture elements: CounterButton/index.fixture.tsx 1`] = `
+<button
+  onClick={[Function]}
+>
+  0
+   
+  times
+</button>
+`;
+
+exports[`returns fixture elements: WelcomeMessage/index.fixture.tsx 1`] = `
+<div
+  style={
+    Object {
+      "border": "2px dashed #AAA",
+      "borderRadius": 8,
+      "padding": "0 16px",
+    }
+  }
+>
+  <h1>
+    Hi
+     
+    <strong>
+      Maggie
+    </strong>
+    !
+  </h1>
+</div>
+`;
