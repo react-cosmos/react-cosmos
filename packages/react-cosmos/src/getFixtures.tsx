@@ -2,7 +2,7 @@ import React from 'react';
 import { isMultiFixture } from 'react-cosmos-shared2/react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { CosmosConfig } from './config';
-import { getFixtureExportsByPath } from './shared/userDeps';
+import { getUserModules } from './shared/userDeps';
 
 type Args = {
   cosmosConfig: CosmosConfig;
@@ -20,7 +20,7 @@ type RenderableFixture = {
 // structure that maps relevant decorators per fixture path might be useful
 // here. Or a higher level API for rendering a fixture by path.
 export async function getFixtures({ cosmosConfig }: Args) {
-  const fixtureExportsByPath = await getFixtureExportsByPath(cosmosConfig);
+  const { fixtureExportsByPath } = await getUserModules(cosmosConfig);
   const fixtures: RenderableFixture[] = [];
 
   Object.keys(fixtureExportsByPath).forEach(fixturePath => {

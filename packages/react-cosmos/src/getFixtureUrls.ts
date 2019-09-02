@@ -5,7 +5,7 @@ import {
   stringifyPlaygroundUrlQuery
 } from 'react-cosmos-shared2/url';
 import { CosmosConfig } from './config';
-import { getFixtureExportsByPath } from './shared/userDeps';
+import { getUserModules } from './shared/userDeps';
 
 type Args = {
   cosmosConfig: CosmosConfig;
@@ -23,7 +23,7 @@ export async function getFixtureUrls({
     fixtureUrls.push(createFixtureUrl(host, fixtureId, fullScreen));
   }
 
-  const fixtureExportsByPath = await getFixtureExportsByPath(cosmosConfig);
+  const { fixtureExportsByPath } = await getUserModules(cosmosConfig);
   const fixtureNamesByPath = getFixtureNamesByPath(fixtureExportsByPath);
   Object.keys(fixtureNamesByPath).forEach(fixturePath => {
     const fixtureNames = fixtureNamesByPath[fixturePath];
