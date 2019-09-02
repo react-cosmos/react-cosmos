@@ -1,5 +1,10 @@
 import React from 'react';
-import { isMultiFixture, ReactFixtureMap } from 'react-cosmos-shared2/react';
+import { getDecoratedFixtureElement } from 'react-cosmos-fixture';
+import {
+  isMultiFixture,
+  ReactDecorator,
+  ReactFixtureMap
+} from 'react-cosmos-shared2/react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { CosmosConfig } from './config';
 import { getUserModules } from './shared/userDeps';
@@ -13,15 +18,15 @@ type RenderableFixture = {
   getElement: () => React.ReactElement;
 };
 
-// TODO: Decorators need to also be taken into consideration for this API
-// to be useful. Rendering a fixture without its decorators is invalid. And
-// the per-fixture decorator resolution logic is currently kept inside the
-// react-cosmos-fixture/FixtureLoader component. An additional data
-// structure that maps relevant decorators per fixture path might be useful
-// here. Or a higher level API for rendering a fixture by path.
 export async function getFixtures({ cosmosConfig }: Args) {
   const { fixtureExportsByPath } = await getUserModules(cosmosConfig);
   const fixtures: RenderableFixture[] = [];
+
+  const decoratorProps = {
+    fixtureState: {},
+    setFixtureState: () => {},
+    onErrorReset: () => {}
+  };
 
   Object.keys(fixtureExportsByPath).forEach(fixturePath => {
     const fixtureExport = fixtureExportsByPath[fixturePath];
@@ -31,14 +36,37 @@ export async function getFixtures({ cosmosConfig }: Args) {
       const multiFixtureExport: ReactFixtureMap = fixtureExport;
       Object.keys(fixtureExport).forEach(fixtureName => {
         const fixtureId = { path: fixturePath, name: fixtureName };
+        // TODO: Derive decorators from decoratorsByPath
+        const decorators: ReactDecorator[] = [];
         fixtures.push({
           fixtureId,
-          getElement: () => <>{multiFixtureExport[fixtureName]}</>
+          getElement: () => (
+            <>
+              {getDecoratedFixtureElement(
+                multiFixtureExport[fixtureName],
+                decorators,
+                decoratorProps
+              )}
+            </>
+          )
         });
       });
     } else {
       const fixtureId = { path: fixturePath, name: null };
-      fixtures.push({ fixtureId, getElement: () => <>{fixtureExport}</> });
+      // TODO: Derive decorators from decoratorsByPath
+      const decorators: ReactDecorator[] = [];
+      fixtures.push({
+        fixtureId,
+        getElement: () => (
+          <>
+            {getDecoratedFixtureElement(
+              fixtureExport,
+              decorators,
+              decoratorProps
+            )}
+          </>
+        )
+      });
     }
   });
 

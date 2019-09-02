@@ -1,90 +1,100 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`returns fixture URLs: __fixtures__/Hello World.ts 1`] = `
-<React.Fragment>
-  Hello World!
-</React.Fragment>
-`;
+exports[`returns fixture URLs: __fixtures__/Hello World.ts 1`] = `"Hello World!"`;
 
 exports[`returns fixture URLs: __fixtures__/Props Playground.tsx 1`] = `
-<React.Fragment>
-  <MyComponent
-    boolean={false}
-    number={1989}
-    object={
-      Object {
-        "null": null,
-        "number": 1337,
-        "object": Object {
-          "number": 555,
-        },
-        "string": "Pretty good can't complain",
-        "unserializable": /findmeifukanye/g,
-      }
-    }
-    string="How are you doing?"
-    unserializable={[Function]}
-  />
-</React.Fragment>
+<pre>
+  {
+  "string": "How are you doing?",
+  "number": 1989,
+  "boolean": false,
+  "object": {
+    "string": "Pretty good can't complain",
+    "number": 1337,
+    "object": {
+      "number": 555
+    },
+    "null": null,
+    "unserializable": {}
+  }
+}
+</pre>
 `;
 
 exports[`returns fixture URLs: __fixtures__/State Playground.tsx 1`] = `
-<React.Fragment>
-  [Function]
-</React.Fragment>
+<pre>
+  {
+  "string": "How are you doing?",
+  "number": 1989,
+  "boolean": true,
+  "object": {
+    "isAdmin": true,
+    "name": "Pat D",
+    "age": 44
+  },
+  "array": [
+    {
+      "isAdmin": true,
+      "name": "Pat D",
+      "age": 44
+    },
+    {
+      "isAdmin": false,
+      "name": "Dan B",
+      "age": 39
+    }
+  ]
+}
+</pre>
 `;
 
 exports[`returns fixture URLs: Counter/index.fixture.tsx default 1`] = `
-<React.Fragment>
-  <Counter
-    suffix="times"
-  />
-</React.Fragment>
+<button
+  onClick={[Function]}
+>
+  0
+   
+  times
+</button>
 `;
 
 exports[`returns fixture URLs: Counter/index.fixture.tsx large number 1`] = `
-<React.Fragment>
-  <StateMock
-    state={
-      Object {
-        "count": 555555555,
-      }
-    }
-  >
-    <Counter
-      suffix="times"
-    />
-  </StateMock>
-</React.Fragment>
+<button
+  onClick={[Function]}
+>
+  555555555
+   
+  times
+</button>
 `;
 
 exports[`returns fixture URLs: Counter/index.fixture.tsx small number 1`] = `
-<React.Fragment>
-  <StateMock
-    state={
-      Object {
-        "count": 5,
-      }
-    }
-  >
-    <Counter
-      suffix="times"
-    />
-  </StateMock>
-</React.Fragment>
+<button
+  onClick={[Function]}
+>
+  5
+   
+  times
+</button>
 `;
 
 exports[`returns fixture URLs: CounterButton/index.fixture.tsx 1`] = `
-<React.Fragment>
-  [Function]
-</React.Fragment>
+<button
+  onClick={[Function]}
+>
+  0
+   
+  times
+</button>
 `;
 
 exports[`returns fixture URLs: WelcomeMessage/index.fixture.tsx 1`] = `
-<React.Fragment>
-  <Hello
-    greeting="Hi"
-    name="Maggie"
-  />
-</React.Fragment>
+<h1>
+  Hi
+   
+  <strong>
+    Maggie
+  </strong>
+  !
+</h1>
 `;
