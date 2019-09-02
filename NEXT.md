@@ -312,8 +312,7 @@ You can also customize your config programatically, without the need for an exte
 import { createCosmosConfig } from 'react-cosmos';
 
 const cosmosConfig = createCosmosConfig(__dirname, {
-  // Options...
-  // (TypeScript is your friend)
+  // Options... (TypeScript is your friend)
 });
 ```
 
@@ -324,7 +323,9 @@ A list with one Playground URL for each fixture, optionally in full-screen mode.
 ```js
 import { getFixtureUrls } from 'react-cosmos';
 
-const urls = await getFixtureUrls({ cosmosConfig, fullScreen: true });
+const fixtureUrls = await getFixtureUrls({ cosmosConfig, fullScreen: true });
+
+console.log(fixtureUrls);
 // localhost:5000/?fixtureId=%7B%22path%22%3A%22\_\_fixtures\_\_%2FHello%20World.ts%22%2C%22name%22%3Anull%7D&fullScreen=true
 // localhost:5000/?fixtureId=%7B%22path%22%3A%22\_\_fixtures\_\_%2FProps%20Playground.tsx%22%2C%22name%22%3Anull%7D&fullScreen=true
 // localhost:5000/?fixtureId=%7B%22path%22%3A%22\_\_fixtures\_\_%2FState%20Playground.tsx%22%2C%22name%22%3Anull%7D&fullScreen=true
