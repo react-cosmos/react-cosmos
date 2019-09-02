@@ -1,16 +1,11 @@
-import path from 'path';
-import {
-  getFixtureNamesByPath,
-  ReactFixtureExportsByPath
-} from 'react-cosmos-shared2/react';
+import { getFixtureNamesByPath } from 'react-cosmos-shared2/react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import {
   PlaygroundUrlParams,
   stringifyPlaygroundUrlQuery
 } from 'react-cosmos-shared2/url';
 import { CosmosConfig } from './config';
-import { slash } from './shared/slash';
-import { findUserModulePaths } from './shared/userDeps';
+import { getFixtureExportsByPath } from './shared/userDeps';
 
 type Args = {
   cosmosConfig: CosmosConfig;
@@ -59,24 +54,4 @@ function createFixtureUrl(
 
 function getPlaygroundHost({ hostname, port }: CosmosConfig) {
   return `${hostname || 'localhost'}:${port}`;
-}
-
-async function getFixtureExportsByPath({
-  rootDir,
-  fixturesDir,
-  fixtureFileSuffix
-}: CosmosConfig): Promise<ReactFixtureExportsByPath> {
-  const { fixturePaths } = await findUserModulePaths({
-    rootDir,
-    fixturesDir,
-    fixtureFileSuffix
-  });
-
-  const reactFixturesByPath: ReactFixtureExportsByPath = {};
-  fixturePaths.forEach(fixturePath => {
-    const relPath = slash(path.relative(rootDir, fixturePath));
-    reactFixturesByPath[relPath] = require(fixturePath).default;
-  });
-
-  return reactFixturesByPath;
 }
