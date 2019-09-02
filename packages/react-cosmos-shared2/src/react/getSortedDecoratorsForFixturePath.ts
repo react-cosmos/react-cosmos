@@ -1,8 +1,8 @@
 import { ReactDecoratorsByPath, ReactDecorator } from './shared';
 
 export function getSortedDecoratorsForFixturePath(
-  decoratorsByPath: ReactDecoratorsByPath,
-  fixturePath: string
+  fixturePath: string,
+  decoratorsByPath: ReactDecoratorsByPath
 ): ReactDecorator[] {
   return getSortedDecorators(
     getDecoratorsForFixturePath(decoratorsByPath, fixturePath)

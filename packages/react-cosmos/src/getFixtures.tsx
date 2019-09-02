@@ -66,8 +66,8 @@ function createFixtureElementGetter(
   decoratorsByPath: ReactDecoratorsByPath
 ): () => React.ReactElement {
   const decorators: ReactDecorator[] = getSortedDecoratorsForFixturePath(
-    decoratorsByPath,
-    fixturePath
+    fixturePath,
+    decoratorsByPath
   );
   return () =>
     getDecoratedFixtureElement(fixture, decorators, {

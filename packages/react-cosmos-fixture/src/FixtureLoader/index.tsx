@@ -123,7 +123,7 @@ export class FixtureLoader extends React.Component<Props, State> {
         key={renderKey}
         decorators={[
           ...systemDecorators,
-          ...getSortedDecoratorsForFixturePath(userDecorators, fixtureId.path)
+          ...getSortedDecoratorsForFixturePath(fixtureId.path, userDecorators)
         ]}
         fixtureState={fixtureState}
         setFixtureState={this.setFixtureState}
