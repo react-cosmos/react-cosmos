@@ -1,0 +1,146 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`returns fixture URLs: __fixtures__/Hello World.ts 1`] = `
+<React.Fragment>
+  Hello World!
+</React.Fragment>
+`;
+
+exports[`returns fixture URLs: __fixtures__/Props Playground.tsx 1`] = `
+<React.Fragment>
+  <MyComponent
+    boolean={false}
+    number={1989}
+    object={
+      Object {
+        "null": null,
+        "number": 1337,
+        "object": Object {
+          "number": 555,
+        },
+        "string": "Pretty good can't complain",
+        "unserializable": /findmeifukanye/g,
+      }
+    }
+    string="How are you doing?"
+    unserializable={[Function]}
+  />
+</React.Fragment>
+`;
+
+exports[`returns fixture URLs: __fixtures__/State Playground.tsx 1`] = `
+<React.Fragment>
+  [Function]
+</React.Fragment>
+`;
+
+exports[`returns fixture URLs: Counter/index.fixture.tsx default 1`] = `
+<React.Fragment>
+  Object {
+    "default": <Counter
+      suffix="times"
+    />,
+    "large number": <StateMock
+      state={
+        Object {
+          "count": 555555555,
+        }
+      }
+    >
+      <Counter
+        suffix="times"
+      />
+    </StateMock>,
+    "small number": <StateMock
+      state={
+        Object {
+          "count": 5,
+        }
+      }
+    >
+      <Counter
+        suffix="times"
+      />
+    </StateMock>,
+  }
+</React.Fragment>
+`;
+
+exports[`returns fixture URLs: Counter/index.fixture.tsx large number 1`] = `
+<React.Fragment>
+  Object {
+    "default": <Counter
+      suffix="times"
+    />,
+    "large number": <StateMock
+      state={
+        Object {
+          "count": 555555555,
+        }
+      }
+    >
+      <Counter
+        suffix="times"
+      />
+    </StateMock>,
+    "small number": <StateMock
+      state={
+        Object {
+          "count": 5,
+        }
+      }
+    >
+      <Counter
+        suffix="times"
+      />
+    </StateMock>,
+  }
+</React.Fragment>
+`;
+
+exports[`returns fixture URLs: Counter/index.fixture.tsx small number 1`] = `
+<React.Fragment>
+  Object {
+    "default": <Counter
+      suffix="times"
+    />,
+    "large number": <StateMock
+      state={
+        Object {
+          "count": 555555555,
+        }
+      }
+    >
+      <Counter
+        suffix="times"
+      />
+    </StateMock>,
+    "small number": <StateMock
+      state={
+        Object {
+          "count": 5,
+        }
+      }
+    >
+      <Counter
+        suffix="times"
+      />
+    </StateMock>,
+  }
+</React.Fragment>
+`;
+
+exports[`returns fixture URLs: CounterButton/index.fixture.tsx 1`] = `
+<React.Fragment>
+  [Function]
+</React.Fragment>
+`;
+
+exports[`returns fixture URLs: WelcomeMessage/index.fixture.tsx 1`] = `
+<React.Fragment>
+  <Hello
+    greeting="Hi"
+    name="Maggie"
+  />
+</React.Fragment>
+`;
