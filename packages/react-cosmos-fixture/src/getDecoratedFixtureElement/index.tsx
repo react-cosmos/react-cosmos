@@ -8,8 +8,8 @@ import { FixtureCapture } from '../FixtureCapture';
 import { FixtureElement } from './FixtureElement';
 
 export function getDecoratedFixtureElement(
-  decorators: ReactDecorator[],
   fixture: ReactFixture,
+  decorators: ReactDecorator[],
   decoratorProps: Omit<ReactDecoratorProps, 'children'>
 ) {
   const fixtureElement = (

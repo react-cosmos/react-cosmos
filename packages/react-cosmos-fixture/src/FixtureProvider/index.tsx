@@ -43,7 +43,7 @@ export class FixtureProvider extends React.PureComponent<Props> {
       <FixtureContext.Provider
         value={this.getFixtureContextValue(fixtureState, setFixtureState)}
       >
-        {getDecoratedFixtureElement(decorators, children, decoratorProps)}
+        {getDecoratedFixtureElement(children, decorators, decoratorProps)}
       </FixtureContext.Provider>
     );
   }
