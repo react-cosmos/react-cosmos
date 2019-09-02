@@ -345,6 +345,7 @@ A list of fixture elements to render by hand. A common use case for `getFixtures
 import { getFixtures } from 'react-cosmos';
 
 const fixtures = await getFixtures({ cosmosConfig });
+
 fixtures.forEach(({ fixtureId, getElement }) => {
   const renderer = create(getElement());
   expect(renderer.toJSON()).toMatchSnapshot(stringifyFixtureId(fixtureId));
