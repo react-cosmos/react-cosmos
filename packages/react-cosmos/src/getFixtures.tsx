@@ -1,5 +1,5 @@
 import React from 'react';
-import { isMultiFixture } from 'react-cosmos-shared2/react';
+import { isMultiFixture, ReactFixtureMap } from 'react-cosmos-shared2/react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { CosmosConfig } from './config';
 import { getUserModules } from './shared/userDeps';
@@ -26,9 +26,15 @@ export async function getFixtures({ cosmosConfig }: Args) {
   Object.keys(fixtureExportsByPath).forEach(fixturePath => {
     const fixtureExport = fixtureExportsByPath[fixturePath];
     if (isMultiFixture(fixtureExport)) {
+      // FIXME: Why does fixtureExport need to be cast as ReactFixtureMap when
+      // the type predicate returned by isMultiFixture already ensures it?
+      const multiFixtureExport: ReactFixtureMap = fixtureExport;
       Object.keys(fixtureExport).forEach(fixtureName => {
         const fixtureId = { path: fixturePath, name: fixtureName };
-        fixtures.push({ fixtureId, getElement: () => <>{fixtureExport}</> });
+        fixtures.push({
+          fixtureId,
+          getElement: () => <>{multiFixtureExport[fixtureName]}</>
+        });
       });
     } else {
       const fixtureId = { path: fixturePath, name: null };

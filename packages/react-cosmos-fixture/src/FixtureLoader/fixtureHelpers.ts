@@ -23,5 +23,7 @@ export function getFixture(
     return;
   }
 
+  // FIXME: Why does fixtureExport need to be cast as ReactFixtureMap when
+  // the type predicate returned by isMultiFixture already ensures it?
   return (fixtureExport as ReactFixtureMap)[fixtureName];
 }

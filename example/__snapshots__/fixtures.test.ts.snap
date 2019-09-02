@@ -36,97 +36,41 @@ exports[`returns fixture URLs: __fixtures__/State Playground.tsx 1`] = `
 
 exports[`returns fixture URLs: Counter/index.fixture.tsx default 1`] = `
 <React.Fragment>
-  Object {
-    "default": <Counter
-      suffix="times"
-    />,
-    "large number": <StateMock
-      state={
-        Object {
-          "count": 555555555,
-        }
-      }
-    >
-      <Counter
-        suffix="times"
-      />
-    </StateMock>,
-    "small number": <StateMock
-      state={
-        Object {
-          "count": 5,
-        }
-      }
-    >
-      <Counter
-        suffix="times"
-      />
-    </StateMock>,
-  }
+  <Counter
+    suffix="times"
+  />
 </React.Fragment>
 `;
 
 exports[`returns fixture URLs: Counter/index.fixture.tsx large number 1`] = `
 <React.Fragment>
-  Object {
-    "default": <Counter
+  <StateMock
+    state={
+      Object {
+        "count": 555555555,
+      }
+    }
+  >
+    <Counter
       suffix="times"
-    />,
-    "large number": <StateMock
-      state={
-        Object {
-          "count": 555555555,
-        }
-      }
-    >
-      <Counter
-        suffix="times"
-      />
-    </StateMock>,
-    "small number": <StateMock
-      state={
-        Object {
-          "count": 5,
-        }
-      }
-    >
-      <Counter
-        suffix="times"
-      />
-    </StateMock>,
-  }
+    />
+  </StateMock>
 </React.Fragment>
 `;
 
 exports[`returns fixture URLs: Counter/index.fixture.tsx small number 1`] = `
 <React.Fragment>
-  Object {
-    "default": <Counter
+  <StateMock
+    state={
+      Object {
+        "count": 5,
+      }
+    }
+  >
+    <Counter
       suffix="times"
-    />,
-    "large number": <StateMock
-      state={
-        Object {
-          "count": 555555555,
-        }
-      }
-    >
-      <Counter
-        suffix="times"
-      />
-    </StateMock>,
-    "small number": <StateMock
-      state={
-        Object {
-          "count": 5,
-        }
-      }
-    >
-      <Counter
-        suffix="times"
-      />
-    </StateMock>,
-  }
+    />
+  </StateMock>
 </React.Fragment>
 `;
 
