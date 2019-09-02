@@ -89,12 +89,22 @@ exports[`returns fixture URLs: CounterButton/index.fixture.tsx 1`] = `
 `;
 
 exports[`returns fixture URLs: WelcomeMessage/index.fixture.tsx 1`] = `
-<h1>
-  Hi
-   
-  <strong>
-    Maggie
-  </strong>
-  !
-</h1>
+<div
+  style={
+    Object {
+      "border": "2px dashed #AAA",
+      "borderRadius": 8,
+      "padding": "0 16px",
+    }
+  }
+>
+  <h1>
+    Hi
+     
+    <strong>
+      Maggie
+    </strong>
+    !
+  </h1>
+</div>
 `;

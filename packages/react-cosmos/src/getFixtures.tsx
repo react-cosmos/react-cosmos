@@ -1,10 +1,12 @@
 import React from 'react';
 import { getDecoratedFixtureElement } from 'react-cosmos-fixture';
 import {
+  getSortedDecoratorsForFixturePath,
   isMultiFixture,
   ReactDecorator,
-  ReactFixtureMap,
-  ReactFixture
+  ReactDecoratorsByPath,
+  ReactFixture,
+  ReactFixtureMap
 } from 'react-cosmos-shared2/react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { CosmosConfig } from './config';
@@ -20,7 +22,9 @@ type RenderableFixture = {
 };
 
 export async function getFixtures({ cosmosConfig }: Args) {
-  const { fixtureExportsByPath } = await getUserModules(cosmosConfig);
+  const { fixtureExportsByPath, decoratorsByPath } = await getUserModules(
+    cosmosConfig
+  );
 
   const fixtures: RenderableFixture[] = [];
   Object.keys(fixtureExportsByPath).forEach(fixturePath => {
@@ -34,7 +38,9 @@ export async function getFixtures({ cosmosConfig }: Args) {
         fixtures.push({
           fixtureId,
           getElement: createFixtureElementGetter(
-            multiFixtureExport[fixtureName]
+            multiFixtureExport[fixtureName],
+            fixturePath,
+            decoratorsByPath
           )
         });
       });
@@ -42,7 +48,11 @@ export async function getFixtures({ cosmosConfig }: Args) {
       const fixtureId = { path: fixturePath, name: null };
       fixtures.push({
         fixtureId,
-        getElement: createFixtureElementGetter(fixtureExport)
+        getElement: createFixtureElementGetter(
+          fixtureExport,
+          fixturePath,
+          decoratorsByPath
+        )
       });
     }
   });
@@ -51,16 +61,19 @@ export async function getFixtures({ cosmosConfig }: Args) {
 }
 
 function createFixtureElementGetter(
-  fixture: ReactFixture
+  fixture: ReactFixture,
+  fixturePath: string,
+  decoratorsByPath: ReactDecoratorsByPath
 ): () => React.ReactElement {
-  // TODO: Derive decorators from decoratorsByPath
-  const decorators: ReactDecorator[] = [];
+  const decorators: ReactDecorator[] = getSortedDecoratorsForFixturePath(
+    decoratorsByPath,
+    fixturePath
+  );
   const decoratorProps = {
     fixtureState: {},
     setFixtureState: () => {},
     onErrorReset: () => {}
   };
-
   return () => (
     <>{getDecoratedFixtureElement(fixture, decorators, decoratorProps)}</>
   );

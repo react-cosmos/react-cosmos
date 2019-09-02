@@ -20,3 +20,6 @@ export type ReactDecoratorsByPath = ReactDecoratorsByPath;
 export { areNodesEqual } from './areNodesEqual';
 export { isMultiFixture } from './isMultiFixture';
 export { getFixtureNamesByPath } from './getFixtureNamesByPath';
+export {
+  getSortedDecoratorsForFixturePath
+} from './getSortedDecoratorsForFixturePath';
