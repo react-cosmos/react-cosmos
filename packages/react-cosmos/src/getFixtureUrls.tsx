@@ -25,7 +25,7 @@ export async function getFixtureUrls({
   const fixtureUrls: string[] = [];
 
   function pushFixtureUrl(fixtureId: FixtureId) {
-    fixtureUrls.push(createPlaygroundUrl(host, fixtureId, fullScreen));
+    fixtureUrls.push(createFixtureUrl(host, fixtureId, fullScreen));
   }
 
   const fixtureExportsByPath = await getFixtureExportsByPath(cosmosConfig);
@@ -44,7 +44,7 @@ export async function getFixtureUrls({
   return fixtureUrls;
 }
 
-function createPlaygroundUrl(
+function createFixtureUrl(
   host: string,
   fixtureId: FixtureId,
   fullScreen: boolean
