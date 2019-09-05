@@ -22,7 +22,6 @@ export const ValueInputTree = React.memo(function ValueInputTree({
   onValueChange
 }: Props) {
   const rootNode = getFixtureStateValueTree(values);
-
   return (
     <Container>
       <TreeView
