@@ -5,7 +5,7 @@ import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
 // Warning: Import test helpers before tested source to mock Socket.IO
 import { runFixtureLoaderTests } from '../testHelpers';
-import { useState } from '..';
+import { useValue } from '..';
 
 type CreateFixtureArgs = {
   countName?: string;
@@ -21,10 +21,10 @@ function createFixtures({
   defaultToggled = false
 }: CreateFixtureArgs = {}) {
   const MyComponent = () => {
-    const [count, setCount] = useState(countName, {
+    const [count, setCount] = useValue(countName, {
       defaultValue: defaultCount
     });
-    const [toggled, setToggled] = useState(toggledName, {
+    const [toggled, setToggled] = useValue(toggledName, {
       defaultValue: defaultToggled
     });
     return (

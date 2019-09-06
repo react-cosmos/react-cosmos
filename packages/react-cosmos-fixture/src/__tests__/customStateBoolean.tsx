@@ -5,11 +5,11 @@ import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer } from 'react-test-renderer';
 // Warning: Import test helpers before tested source to mock Socket.IO
 import { runFixtureLoaderTests } from '../testHelpers';
-import { useState } from '..';
+import { useValue } from '..';
 
 function createFixtures({ defaultValue }: { defaultValue: boolean }) {
   const MyComponent = () => {
-    const [toggled, setToggled] = useState('toggled', { defaultValue });
+    const [toggled, setToggled] = useValue('toggled', { defaultValue });
     return (
       <button onClick={() => setToggled(!toggled)}>{String(toggled)}</button>
     );

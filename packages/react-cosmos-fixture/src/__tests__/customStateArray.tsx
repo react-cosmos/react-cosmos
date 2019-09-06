@@ -3,7 +3,7 @@ import { createValue } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from 'react-cosmos-shared2/util';
 // Warning: Import test helpers before tested source to mock Socket.IO
 import { runFixtureLoaderTests } from '../testHelpers';
-import { useState } from '..';
+import { useValue } from '..';
 import { ReactTestRenderer } from 'react-test-renderer';
 import retry from '@skidding/async-retry';
 
@@ -16,7 +16,7 @@ type Profile = {
 
 function createFixtures({ defaultValue }: { defaultValue: Profile[] }) {
   const MyComponent = () => {
-    const [profiles] = useState('profiles', { defaultValue });
+    const [profiles] = useValue('profiles', { defaultValue });
     return <>{JSON.stringify(profiles, null, 2)}</>;
   };
   return {

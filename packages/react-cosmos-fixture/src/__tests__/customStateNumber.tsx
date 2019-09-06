@@ -5,11 +5,11 @@ import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer } from 'react-test-renderer';
 // Warning: Import test helpers before tested source to mock Socket.IO
 import { runFixtureLoaderTests } from '../testHelpers';
-import { useState } from '..';
+import { useValue } from '..';
 
 function createFixtures({ defaultValue }: { defaultValue: number }) {
   const MyComponent = () => {
-    const [count, setCount] = useState('count', { defaultValue });
+    const [count, setCount] = useValue('count', { defaultValue });
     return (
       <button onClick={() => setCount(prevCount => prevCount + 1)}>
         {count} clicks

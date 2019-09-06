@@ -5,7 +5,7 @@ import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
 // Warning: Import test helpers before tested source to mock Socket.IO
 import { runFixtureLoaderTests } from '../testHelpers';
-import { useState } from '..';
+import { useValue } from '..';
 
 type Profile = {
   isAdmin: boolean;
@@ -16,7 +16,7 @@ type Profile = {
 
 function createFixtures({ defaultValue }: { defaultValue: Profile }) {
   const MyComponent = () => {
-    const [profile, setProfile] = useState('profile', { defaultValue });
+    const [profile, setProfile] = useValue('profile', { defaultValue });
     return (
       <>
         <p>{JSON.stringify(profile, null, 2)}</p>
