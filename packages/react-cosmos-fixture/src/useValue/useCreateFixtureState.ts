@@ -19,10 +19,10 @@ export function useCreateFixtureState(
     // 1. Initially: No corresponding fixture state value is found
     // 2: Default value change: Current value is reset to new default value
     setFixtureState(prevFsState => {
-      const fsValueGroup = findFixtureStateValue(prevFsState, inputName);
+      const fsValuePair = findFixtureStateValue(prevFsState, inputName);
       if (
-        fsValueGroup &&
-        fsValueExtendsBaseValue(fsValueGroup.defaultValue, defaultValue)
+        fsValuePair &&
+        fsValueExtendsBaseValue(fsValuePair.defaultValue, defaultValue)
       ) {
         return prevFsState;
       }

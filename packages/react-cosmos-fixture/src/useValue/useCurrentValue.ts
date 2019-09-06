@@ -11,10 +11,10 @@ export function useCurrentValue<T extends FixtureStateValueType>(
   defaultValue: T
 ): T {
   const { fixtureState } = React.useContext(FixtureContext);
-  const fsValueGroup = findFixtureStateValue(fixtureState, inputName);
-  return fsValueGroup
+  const fsValuePair = findFixtureStateValue(fixtureState, inputName);
+  return fsValuePair
     ? // Types of fixture state values cannot be guaranteed at read time, which
       // means that tampering with the fixture state can cause runtime errors
-      (extendWithValue(defaultValue, fsValueGroup.currentValue) as T)
+      (extendWithValue(defaultValue, fsValuePair.currentValue) as T)
     : defaultValue;
 }

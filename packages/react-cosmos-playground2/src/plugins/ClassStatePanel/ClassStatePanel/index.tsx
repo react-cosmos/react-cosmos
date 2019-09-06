@@ -27,10 +27,10 @@ export const ClassStatePanel = React.memo(function ClassStatePanel({
     return null;
   }
 
-  const withClassState = fixtureState.classState.filter(hasFsValues);
+  const classStateWithValues = fixtureState.classState.filter(hasFsValues);
   return (
     <>
-      {sortFsValueGroups(withClassState).map(fsClassState => {
+      {sortFsValueGroups(classStateWithValues).map(fsClassState => {
         const strElementId = stringifyElementId(fsClassState.elementId);
         return (
           <ComponentClassState

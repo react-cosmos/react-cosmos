@@ -1,9 +1,9 @@
-import { FixtureState, FixtureStateValueGroup } from './shared';
+import { FixtureState, FixtureStateValuePair } from './shared';
 
 export function findFixtureStateValue(
   fixtureState: FixtureState,
   inputName: string
-): void | FixtureStateValueGroup {
+): void | FixtureStateValuePair {
   const { values } = fixtureState;
   return values && values[inputName];
 }

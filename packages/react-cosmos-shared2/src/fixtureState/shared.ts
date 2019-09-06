@@ -48,12 +48,12 @@ export type FixtureStateValue =
 
 export type FixtureStateValues = Record<string, FixtureStateValue>;
 
-export type FixtureStateValueGroup = {
+export type FixtureStateValuePair = {
   defaultValue: FixtureStateValue;
   currentValue: FixtureStateValue;
 };
 
-export type FixtureStateValueGroups = Record<string, FixtureStateValueGroup>;
+export type FixtureStateValuePairs = Record<string, FixtureStateValuePair>;
 
 export type FixtureRenderKey = number;
 
@@ -75,7 +75,7 @@ export type FixtureStateClassState = {
 export type FixtureState = {
   props?: FixtureStateProps[];
   classState?: FixtureStateClassState[];
-  values?: FixtureStateValueGroups;
+  values?: FixtureStateValuePairs;
 } & Record<string, any>;
 
 export type SetFixtureState = (update: StateUpdater<FixtureState>) => unknown;
