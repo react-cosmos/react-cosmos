@@ -61,7 +61,7 @@ runFixtureLoaderTests(mount => {
           fixtureId,
           fixtureState: {
             props: expect.any(Array),
-            customState: {
+            values: {
               profile: {
                 defaultValue: createValue({
                   isAdmin: true,
@@ -95,7 +95,7 @@ runFixtureLoaderTests(mount => {
           fixtureId,
           fixtureState: {
             props: expect.any(Array),
-            customState: {
+            values: {
               profile: {
                 defaultValue: createValue({
                   isAdmin: true,
@@ -140,7 +140,7 @@ runFixtureLoaderTests(mount => {
           fixtureId,
           fixtureState: {
             props: expect.any(Array),
-            customState: {
+            values: {
               profile: {
                 defaultValue: createValue({
                   isAdmin: false,

@@ -66,4 +66,4 @@ export {
   updateFixtureStateClassState,
   removeFixtureStateClassState
 } from './classState';
-export { findFixtureStateCustomState } from './customState';
+export { findFixtureStateValue } from './values';

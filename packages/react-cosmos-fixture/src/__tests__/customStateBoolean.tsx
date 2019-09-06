@@ -45,7 +45,7 @@ runFixtureLoaderTests(mount => {
           fixtureId,
           fixtureState: {
             props: expect.any(Array),
-            customState: {
+            values: {
               toggled: {
                 defaultValue: createValue(false),
                 currentValue: createValue(false)
@@ -69,7 +69,7 @@ runFixtureLoaderTests(mount => {
           fixtureId,
           fixtureState: {
             props: expect.any(Array),
-            customState: {
+            values: {
               toggled: {
                 defaultValue: createValue(false),
                 currentValue: createValue(true)
@@ -97,7 +97,7 @@ runFixtureLoaderTests(mount => {
           fixtureId,
           fixtureState: {
             props: expect.any(Array),
-            customState: {
+            values: {
               toggled: {
                 defaultValue: createValue(true),
                 currentValue: createValue(true)

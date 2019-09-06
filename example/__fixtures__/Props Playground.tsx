@@ -22,10 +22,10 @@ function MyComponent(props: Record<string, any>) {
   const mounted = React.useRef(false);
   React.useEffect(() => {
     if (mounted.current) {
-      console.log('Props change');
+      // console.log('Props change');
     } else {
       mounted.current = true;
-      console.log('New instance');
+      // console.log('New instance');
     }
   });
 

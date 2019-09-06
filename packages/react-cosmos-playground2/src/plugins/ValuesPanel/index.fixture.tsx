@@ -1,7 +1,7 @@
 import React from 'react';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import styled from 'styled-components';
-import { CustomStatePanel } from './CustomStatePanel';
+import { ValuesPanel } from './ValuesPanel';
 
 const Container = styled.div`
   background: var(--grey2);
@@ -9,7 +9,7 @@ const Container = styled.div`
 
 export default () => {
   const [fixtureState, setFixtureState] = React.useState<FixtureState>({
-    customState: {
+    values: {
       string: {
         defaultValue: { type: 'primitive', value: 'hello world' },
         currentValue: { type: 'primitive', value: 'hello world' }
@@ -50,7 +50,7 @@ export default () => {
 
   return (
     <Container>
-      <CustomStatePanel
+      <ValuesPanel
         fixtureState={fixtureState}
         treeExpansion={treeExpansion}
         onFixtureStateChange={setFixtureState}

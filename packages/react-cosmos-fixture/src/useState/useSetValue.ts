@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   createValue,
-  findFixtureStateCustomState,
+  findFixtureStateValue,
   FixtureState,
   FixtureStateValueType,
   extendWithValue
@@ -32,8 +32,8 @@ export function useSetValue<T extends FixtureStateValueType>(
             : stateChange;
         return {
           ...prevFsState,
-          customState: {
-            ...prevFsState.customState,
+          values: {
+            ...prevFsState.values,
             [inputName]: {
               defaultValue: createValue(defaultValue),
               currentValue: createValue(currentValue)
@@ -51,7 +51,7 @@ function getCurrentValueFromFixtureState(
   inputName: string,
   defaultValue: FixtureStateValueType
 ): unknown {
-  const fsValue = findFixtureStateCustomState(fsState, inputName);
+  const fsValue = findFixtureStateValue(fsState, inputName);
   if (!fsValue)
     throw new Error(`Fixture state value missing for input name: ${inputName}`);
 

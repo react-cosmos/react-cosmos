@@ -48,8 +48,6 @@ export type FixtureStateValue =
 
 export type FixtureStateValues = Record<string, FixtureStateValue>;
 
-// TODO: Support options (with serializable label and any value type, which
-// lives in the user land)
 export type FixtureStateValueGroup = {
   defaultValue: FixtureStateValue;
   currentValue: FixtureStateValue;
@@ -72,10 +70,12 @@ export type FixtureStateClassState = {
   componentName: string;
 };
 
+// TODO: Support options (with serializable label and any value type, which
+// lives in the user land)
 export type FixtureState = {
   props?: FixtureStateProps[];
   classState?: FixtureStateClassState[];
-  customState?: FixtureStateValueGroups;
+  values?: FixtureStateValueGroups;
 } & Record<string, any>;
 
 export type SetFixtureState = (update: StateUpdater<FixtureState>) => unknown;

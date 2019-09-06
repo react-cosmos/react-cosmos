@@ -25,26 +25,24 @@ type Props = {
   onTreeExpansionChange: (treeExpansion: TreeExpansion) => unknown;
 };
 
-export const CustomStatePanel = React.memo(function ClassStatePanel({
+export const ValuesPanel = React.memo(function ClassStatePanel({
   fixtureState,
   treeExpansion,
   onFixtureStateChange,
   onTreeExpansionChange
 }: Props) {
-  const onCustomStateChange = React.useCallback(
+  const onValueChange = React.useCallback(
     newValues => {
-      onFixtureStateChange(prevFsState =>
-        updateCustomState(prevFsState, newValues)
-      );
+      onFixtureStateChange(prevFsState => updateValues(prevFsState, newValues));
     },
     [onFixtureStateChange]
   );
 
   const onResetValues = React.useCallback(() => {
-    onFixtureStateChange(resetCustomStateValues);
+    onFixtureStateChange(resetValues);
   }, [onFixtureStateChange]);
 
-  const fsValueGroups = fixtureState.customState || {};
+  const fsValueGroups = fixtureState.values || {};
   if (Object.keys(fsValueGroups).length === 0) {
     return null;
   }
@@ -52,7 +50,7 @@ export const CustomStatePanel = React.memo(function ClassStatePanel({
   return (
     <Container>
       <Header>
-        <Title label="STATE" />
+        <Title label="VALUES" />
         <Actions>
           <DarkIconButton
             title="Reset to default values"
@@ -64,10 +62,10 @@ export const CustomStatePanel = React.memo(function ClassStatePanel({
       </Header>
       <Body>
         <ValueInputTree
-          id="custom-state"
+          id="values"
           values={extractCurrentValuesFromValueGroups(fsValueGroups)}
           treeExpansion={treeExpansion}
-          onValueChange={onCustomStateChange}
+          onValueChange={onValueChange}
           onTreeExpansionChange={onTreeExpansionChange}
         />
       </Body>
@@ -85,11 +83,11 @@ function extractCurrentValuesFromValueGroups(
   return fsValues;
 }
 
-function updateCustomState(
+function updateValues(
   fixtureState: FixtureState,
   fsValues: FixtureStateValues
 ) {
-  const prevFsValues = fixtureState.customState || {};
+  const prevFsValues = fixtureState.values || {};
   const nextFsValues: FixtureStateValueGroups = {};
   Object.keys(fsValues).forEach(valueName => {
     if (!prevFsValues[valueName]) {
@@ -101,11 +99,11 @@ function updateCustomState(
       currentValue: fsValues[valueName]
     };
   });
-  return { ...fixtureState, customState: nextFsValues };
+  return { ...fixtureState, values: nextFsValues };
 }
 
-function resetCustomStateValues(fixtureState: FixtureState) {
-  const prevFsValueGroups = fixtureState.customState || {};
+function resetValues(fixtureState: FixtureState) {
+  const prevFsValueGroups = fixtureState.values || {};
   const nextFsValueGroups: FixtureStateValueGroups = {};
   Object.keys(prevFsValueGroups).forEach(valueName => {
     const fsValue = prevFsValueGroups[valueName];
@@ -114,7 +112,7 @@ function resetCustomStateValues(fixtureState: FixtureState) {
       currentValue: fsValue.defaultValue
     };
   });
-  return { ...fixtureState, customState: nextFsValueGroups };
+  return { ...fixtureState, values: nextFsValueGroups };
 }
 
 function didValuesChange(fsValueGroups: FixtureStateValueGroups) {

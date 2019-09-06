@@ -47,7 +47,7 @@ runFixtureLoaderTests(mount => {
           fixtureId,
           fixtureState: {
             props: expect.any(Array),
-            customState: {
+            values: {
               count: {
                 defaultValue: createValue(0),
                 currentValue: createValue(0)
@@ -72,7 +72,7 @@ runFixtureLoaderTests(mount => {
           fixtureId,
           fixtureState: {
             props: expect.any(Array),
-            customState: {
+            values: {
               count: {
                 defaultValue: createValue(0),
                 currentValue: createValue(2)
@@ -100,7 +100,7 @@ runFixtureLoaderTests(mount => {
           fixtureId,
           fixtureState: {
             props: expect.any(Array),
-            customState: {
+            values: {
               count: {
                 defaultValue: createValue(5),
                 currentValue: createValue(5)

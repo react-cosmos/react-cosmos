@@ -105,10 +105,9 @@ function shouldShowBlankState(fixtureState: FixtureState) {
     return false;
   }
 
-  const hasCustomState =
-    fixtureState.customState &&
-    Object.keys(fixtureState.customState).length > 0;
-  if (hasCustomState) {
+  const hasValues =
+    fixtureState.values && Object.keys(fixtureState.values).length > 0;
+  if (hasValues) {
     return false;
   }
 

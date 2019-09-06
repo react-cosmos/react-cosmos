@@ -10,7 +10,6 @@ require('../plugins/ClassStatePanel').register();
 require('../plugins/ContentOverlay').register();
 require('../plugins/ControlPanel').register();
 require('../plugins/Core').register();
-require('../plugins/CustomStatePanel').register();
 require('../plugins/EditFixtureButton').register();
 require('../plugins/FixtureSearch').register();
 require('../plugins/FixtureTree').register();
@@ -29,6 +28,7 @@ require('../plugins/RendererSelect').register();
 require('../plugins/ResponsivePreview').register();
 require('../plugins/Router').register();
 require('../plugins/Storage').register();
+require('../plugins/ValuesPanel').register();
 require('../plugins/WebpackHmrNotification').register();
 
 // TODO: Read list of disabled plugins from user config
