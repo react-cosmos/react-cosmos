@@ -1062,7 +1062,7 @@ const merge = require('webpack-merge');
 
 const tsSupportConfig = {
   resolve: {
-    extensions: ['.ts', '.tsx'],
+    extensions: ['.ts', '.tsx']
   },
   module: {
     rules: [
@@ -1077,7 +1077,6 @@ const tsSupportConfig = {
 module.exports = {
   webpack: config => merge(config, tsSupportConfig)
 };
-
 ```
 
 #### Custom fixture paths

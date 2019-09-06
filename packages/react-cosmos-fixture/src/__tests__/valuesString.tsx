@@ -5,11 +5,11 @@ import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer } from 'react-test-renderer';
 // Warning: Import test helpers before tested source to mock Socket.IO
 import { runFixtureLoaderTests } from '../testHelpers';
-import { useState } from '..';
+import { useValue } from '..';
 
 function createFixtures({ defaultValue }: { defaultValue: string }) {
   const MyComponent = () => {
-    const [value, setValue] = useState('name', { defaultValue });
+    const [value, setValue] = useValue('name', { defaultValue });
     return (
       <input
         type="text"
@@ -49,7 +49,7 @@ runFixtureLoaderTests(mount => {
           fixtureId,
           fixtureState: {
             props: expect.any(Array),
-            customState: {
+            values: {
               name: {
                 defaultValue: createValue('Fu Barr'),
                 currentValue: createValue('Fu Barr')
@@ -73,7 +73,7 @@ runFixtureLoaderTests(mount => {
           fixtureId,
           fixtureState: {
             props: expect.any(Array),
-            customState: {
+            values: {
               name: {
                 defaultValue: createValue('Fu Barr'),
                 currentValue: createValue('Fu Barr Bhaz')
@@ -101,7 +101,7 @@ runFixtureLoaderTests(mount => {
           fixtureId,
           fixtureState: {
             props: expect.any(Array),
-            customState: {
+            values: {
               name: {
                 defaultValue: createValue('Fu Barr Bhaz'),
                 currentValue: createValue('Fu Barr Bhaz')

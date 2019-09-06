@@ -1,14 +1,14 @@
 import React from 'react';
-import { useState } from 'react-cosmos/fixture';
+import { useValue } from 'react-cosmos/fixture';
 
 export default () => {
-  const [string] = useState('string', { defaultValue: 'How are you doing?' });
-  const [number] = useState('number', { defaultValue: 1989 });
-  const [boolean] = useState('boolean', { defaultValue: true });
-  const [object] = useState('object', {
+  const [string] = useValue('string', { defaultValue: 'How are you doing?' });
+  const [number] = useValue('number', { defaultValue: 1989 });
+  const [boolean] = useValue('boolean', { defaultValue: true });
+  const [object] = useValue('object', {
     defaultValue: { isAdmin: true, name: 'Pat D', age: 44 }
   });
-  const [array] = useState('array', {
+  const [array] = useValue('array', {
     defaultValue: [
       { isAdmin: true, name: 'Pat D', age: 44 },
       { isAdmin: false, name: 'Dan B', age: 39 }

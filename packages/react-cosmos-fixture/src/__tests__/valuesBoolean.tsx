@@ -5,15 +5,13 @@ import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer } from 'react-test-renderer';
 // Warning: Import test helpers before tested source to mock Socket.IO
 import { runFixtureLoaderTests } from '../testHelpers';
-import { useState } from '..';
+import { useValue } from '..';
 
-function createFixtures({ defaultValue }: { defaultValue: number }) {
+function createFixtures({ defaultValue }: { defaultValue: boolean }) {
   const MyComponent = () => {
-    const [count, setCount] = useState('count', { defaultValue });
+    const [toggled, setToggled] = useValue('toggled', { defaultValue });
     return (
-      <button onClick={() => setCount(prevCount => prevCount + 1)}>
-        {count} clicks
-      </button>
+      <button onClick={() => setToggled(!toggled)}>{String(toggled)}</button>
     );
   };
   return {
@@ -22,7 +20,7 @@ function createFixtures({ defaultValue }: { defaultValue: number }) {
 }
 
 const rendererId = uuid();
-const fixtures = createFixtures({ defaultValue: 0 });
+const fixtures = createFixtures({ defaultValue: false });
 const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
@@ -32,7 +30,7 @@ runFixtureLoaderTests(mount => {
       { rendererId, fixtures, decorators },
       async ({ renderer, selectFixture }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-        await rendered(renderer, '0 clicks');
+        await rendered(renderer, 'false');
       }
     );
   });
@@ -47,10 +45,10 @@ runFixtureLoaderTests(mount => {
           fixtureId,
           fixtureState: {
             props: expect.any(Array),
-            customState: {
-              count: {
-                defaultValue: createValue(0),
-                currentValue: createValue(0)
+            values: {
+              toggled: {
+                defaultValue: createValue(false),
+                currentValue: createValue(false)
               }
             }
           }
@@ -64,18 +62,17 @@ runFixtureLoaderTests(mount => {
       { rendererId, fixtures, decorators },
       async ({ renderer, selectFixture, fixtureStateChange }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-        await rendered(renderer, '0 clicks');
-        clickButton(renderer);
-        clickButton(renderer);
+        await rendered(renderer, 'false');
+        toggleButton(renderer);
         await fixtureStateChange({
           rendererId,
           fixtureId,
           fixtureState: {
             props: expect.any(Array),
-            customState: {
-              count: {
-                defaultValue: createValue(0),
-                currentValue: createValue(2)
+            values: {
+              toggled: {
+                defaultValue: createValue(false),
+                currentValue: createValue(true)
               }
             }
           }
@@ -89,10 +86,10 @@ runFixtureLoaderTests(mount => {
       { rendererId, fixtures, decorators },
       async ({ renderer, update, selectFixture, fixtureStateChange }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-        await rendered(renderer, '0 clicks');
+        await rendered(renderer, 'false');
         update({
           rendererId,
-          fixtures: createFixtures({ defaultValue: 5 }),
+          fixtures: createFixtures({ defaultValue: true }),
           decorators
         });
         await fixtureStateChange({
@@ -100,10 +97,10 @@ runFixtureLoaderTests(mount => {
           fixtureId,
           fixtureState: {
             props: expect.any(Array),
-            customState: {
-              count: {
-                defaultValue: createValue(5),
-                currentValue: createValue(5)
+            values: {
+              toggled: {
+                defaultValue: createValue(true),
+                currentValue: createValue(true)
               }
             }
           }
@@ -121,6 +118,6 @@ async function rendered(renderer: ReactTestRenderer, text: string) {
   await retry(() => expect(getButtonText(renderer)).toEqual(text));
 }
 
-function clickButton(renderer: ReactTestRenderer) {
+function toggleButton(renderer: ReactTestRenderer) {
   renderer.toJSON()!.props.onClick();
 }

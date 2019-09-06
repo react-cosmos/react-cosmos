@@ -8,7 +8,7 @@ type Opts<T extends FixtureStateValueType> = {
   defaultValue: T;
 };
 
-export function useState<T extends FixtureStateValueType>(
+export function useValue<T extends FixtureStateValueType>(
   inputName: string,
   { defaultValue }: Opts<T>
 ): [T, SetValue<T>] {

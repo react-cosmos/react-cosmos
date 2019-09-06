@@ -4,17 +4,16 @@ import { TreeExpansion } from '../../shared/ui/TreeView';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { RouterSpec } from '../Router/public';
 import { StorageSpec } from '../Storage/public';
-import { CustomStatePanel } from './CustomStatePanel';
-import { CustomStatePanelSpec } from './public';
+import { ValuesPanel } from './ValuesPanel';
+import { ValuesPanelSpec } from './public';
 
-export const CUSTOM_STATE_TREE_EXPANSION_STORAGE_KEY =
-  'customStateTreeExpansion';
+export const VALUES_TREE_EXPANSION_STORAGE_KEY = 'valuesTreeExpansion';
 
-const { namedPlug, register } = createPlugin<CustomStatePanelSpec>({
-  name: 'customStatePanel'
+const { namedPlug, register } = createPlugin<ValuesPanelSpec>({
+  name: 'valuesPanel'
 });
 
-namedPlug('controlPanelRow', 'customState', ({ pluginContext }) => {
+namedPlug('controlPanelRow', 'values', ({ pluginContext }) => {
   const { getMethodsOf } = pluginContext;
   const routerCore = getMethodsOf<RouterSpec>('router');
   const selectedFixtureId = routerCore.getSelectedFixtureId();
@@ -28,7 +27,7 @@ namedPlug('controlPanelRow', 'customState', ({ pluginContext }) => {
     pluginContext
   );
   return (
-    <CustomStatePanel
+    <ValuesPanel
       fixtureState={fixtureState}
       treeExpansion={treeExpansion}
       onFixtureStateChange={rendererCore.setFixtureState}
@@ -40,19 +39,15 @@ namedPlug('controlPanelRow', 'customState', ({ pluginContext }) => {
 export { register };
 
 function useTreeExpansionStorage(
-  pluginContext: PluginContext<CustomStatePanelSpec>
+  pluginContext: PluginContext<ValuesPanelSpec>
 ) {
   // TODO: Persist tree expansion state per fixture ID
   const storage = pluginContext.getMethodsOf<StorageSpec>('storage');
   const treeExpansion =
-    storage.getItem<TreeExpansion>(CUSTOM_STATE_TREE_EXPANSION_STORAGE_KEY) ||
-    {};
+    storage.getItem<TreeExpansion>(VALUES_TREE_EXPANSION_STORAGE_KEY) || {};
   const onTreeExpansionChange = React.useCallback(
     (newTreeExpansion: TreeExpansion) => {
-      storage.setItem(
-        CUSTOM_STATE_TREE_EXPANSION_STORAGE_KEY,
-        newTreeExpansion
-      );
+      storage.setItem(VALUES_TREE_EXPANSION_STORAGE_KEY, newTreeExpansion);
     },
     [storage]
   );

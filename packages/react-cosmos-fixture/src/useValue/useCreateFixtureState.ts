@@ -3,7 +3,7 @@ import React from 'react';
 import {
   createValue,
   extendWithValue,
-  findFixtureStateCustomState,
+  findFixtureStateValue,
   FixtureStateValue,
   FixtureStateValueType
 } from 'react-cosmos-shared2/fixtureState';
@@ -19,19 +19,18 @@ export function useCreateFixtureState(
     // 1. Initially: No corresponding fixture state value is found
     // 2: Default value change: Current value is reset to new default value
     setFixtureState(prevFsState => {
-      const fsValueGroup = findFixtureStateCustomState(prevFsState, inputName);
+      const fsValuePair = findFixtureStateValue(prevFsState, inputName);
       if (
-        fsValueGroup &&
-        fsValueExtendsBaseValue(fsValueGroup.defaultValue, defaultValue)
+        fsValuePair &&
+        fsValueExtendsBaseValue(fsValuePair.defaultValue, defaultValue)
       ) {
         return prevFsState;
       }
 
-      const { customState = {} } = prevFsState;
       return {
         ...prevFsState,
-        customState: {
-          ...customState,
+        values: {
+          ...prevFsState.values,
           [inputName]: {
             defaultValue: createValue(defaultValue),
             currentValue: createValue(defaultValue)

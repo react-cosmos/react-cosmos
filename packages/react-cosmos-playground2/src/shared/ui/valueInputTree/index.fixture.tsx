@@ -1,10 +1,12 @@
 import React from 'react';
+import { FixtureStateValues } from 'react-cosmos-shared2/fixtureState';
+import { useValue } from 'react-cosmos/fixture';
 import { ValueInputTree } from '.';
+import { TreeExpansion } from '../TreeView';
 
-export default (
-  <ValueInputTree
-    id="root"
-    values={{
+export default () => {
+  const [values, setValues] = useValue<FixtureStateValues>('values', {
+    defaultValue: {
       object: {
         type: 'object',
         values: {
@@ -22,11 +24,19 @@ export default (
         type: 'primitive',
         value: 1337
       }
-    }}
-    treeExpansion={{ object: true }}
-    onValueChange={values => console.log('on change', values)}
-    onTreeExpansionChange={newTreeExpansion =>
-      console.log('set tree expansion', newTreeExpansion)
     }
-  />
-);
+  });
+  const [treeExpansion, setTreeExpansion] = useValue<TreeExpansion>(
+    'treeExpansion',
+    { defaultValue: { object: true } }
+  );
+  return (
+    <ValueInputTree
+      id="root"
+      values={values}
+      treeExpansion={treeExpansion}
+      onValueChange={setValues}
+      onTreeExpansionChange={setTreeExpansion}
+    />
+  );
+};
