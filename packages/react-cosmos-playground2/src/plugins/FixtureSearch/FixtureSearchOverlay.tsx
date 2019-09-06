@@ -50,12 +50,9 @@ export function FixtureSearchOverlay({
 
   const onInputChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newSearchText = e.currentTarget.value;
-      if (newSearchText !== searchText) {
-        onSetSearchText(newSearchText);
-      }
+      onSetSearchText(e.currentTarget.value);
     },
-    [searchText, onSetSearchText]
+    [onSetSearchText]
   );
 
   const [matchingFixturePaths, setMatchingFixturePaths] = React.useState(
@@ -75,10 +72,13 @@ export function FixtureSearchOverlay({
       fixtureIds,
       searchText
     );
-    setMatchingFixturePaths(newMatchingFixturePaths);
-    // Reset active fixture to first matching fixture when search changes
-    setActiveFixturePath(getFirstFixturePath(newMatchingFixturePaths));
-  }, [fixtureIds, searchText]);
+
+    if (!isEqual(newMatchingFixturePaths, matchingFixturePaths)) {
+      setMatchingFixturePaths(newMatchingFixturePaths);
+      // Reset active fixture to first matching fixture when search changes
+      setActiveFixturePath(getFirstFixturePath(newMatchingFixturePaths));
+    }
+  }, [fixtureIds, matchingFixturePaths, searchText]);
 
   const onInputKeyDown = React.useMemo(() => {
     function handleEscape() {
