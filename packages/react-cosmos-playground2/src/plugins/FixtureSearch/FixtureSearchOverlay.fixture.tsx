@@ -1,5 +1,6 @@
 import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
+import { useValue } from 'react-cosmos/fixture';
 import { FixtureSearchOverlay } from './FixtureSearchOverlay';
 
 const fixtures = {
@@ -32,16 +33,23 @@ export default {
 };
 
 function createFixtureSearchOverlay(fixtureId: null | FixtureId = null) {
-  return (
-    <FixtureSearchOverlay
-      fixturesDir="__fixtures__"
-      fixtureFileSuffix="fixture"
-      fixtures={fixtures}
-      selectedFixtureId={fixtureId}
-      onClose={() => console.log('Close fixture search overlay')}
-      onSelect={selectedFixtureId =>
-        console.log('Select fixture', selectedFixtureId)
-      }
-    />
-  );
+  return () => {
+    const [searchText, setSearchText] = useValue('searchText', {
+      defaultValue: ''
+    });
+    return (
+      <FixtureSearchOverlay
+        searchText={searchText}
+        fixturesDir="__fixtures__"
+        fixtureFileSuffix="fixture"
+        fixtures={fixtures}
+        selectedFixtureId={fixtureId}
+        onSetSearchText={setSearchText}
+        onClose={() => console.log('Close fixture search overlay')}
+        onSelect={selectedFixtureId =>
+          console.log('Select fixture', selectedFixtureId)
+        }
+      />
+    );
+  };
 }

@@ -48,6 +48,16 @@ export function FixtureSearchOverlay({
     return flattenFixtureTree(fixtureTree);
   }, [fixtures, fixturesDir, fixtureFileSuffix]);
 
+  const onInputChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newSearchText = e.currentTarget.value;
+      if (newSearchText !== searchText) {
+        onSetSearchText(newSearchText);
+      }
+    },
+    [searchText, onSetSearchText]
+  );
+
   const [matchingFixturePaths, setMatchingFixturePaths] = React.useState(
     getMatchingFixturePaths(fixtureIds, searchText)
   );
@@ -61,22 +71,15 @@ export function FixtureSearchOverlay({
     );
   });
 
-  const onInputChange = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newSearchText = e.currentTarget.value;
-      if (newSearchText !== searchText) {
-        onSetSearchText(newSearchText);
-        const newMatchingFixturePaths = getMatchingFixturePaths(
-          fixtureIds,
-          newSearchText
-        );
-        setMatchingFixturePaths(newMatchingFixturePaths);
-        // Reset active fixture to first matching fixture when search changes
-        setActiveFixturePath(getFirstFixturePath(newMatchingFixturePaths));
-      }
-    },
-    [fixtureIds, searchText, onSetSearchText]
-  );
+  React.useEffect(() => {
+    const newMatchingFixturePaths = getMatchingFixturePaths(
+      fixtureIds,
+      searchText
+    );
+    setMatchingFixturePaths(newMatchingFixturePaths);
+    // Reset active fixture to first matching fixture when search changes
+    setActiveFixturePath(getFirstFixturePath(newMatchingFixturePaths));
+  }, [fixtureIds, searchText]);
 
   const onInputKeyDown = React.useMemo(() => {
     function handleEscape() {
