@@ -192,7 +192,7 @@ export default () => {
 };
 ```
 
-> Hint: `Cosmos.useState` works great with TypeScript.
+> Heads up: `useValue` works great with TypeScript.
 
 ### Redux state mock
 
