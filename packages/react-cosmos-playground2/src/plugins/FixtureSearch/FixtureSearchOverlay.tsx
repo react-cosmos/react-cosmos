@@ -79,6 +79,15 @@ export function FixtureSearchOverlay({
   );
 
   const onInputKeyDown = React.useMemo(() => {
+    function handleEscape() {
+      // Clear search on first ESC, close overlay on second
+      if (searchText.length > 0) {
+        onSetSearchText('');
+      } else {
+        onClose();
+      }
+    }
+
     function handleEnter(revealFixture: boolean) {
       if (activeFixturePath !== null) {
         const fixtureId = fixtureIds[activeFixturePath];
@@ -144,7 +153,7 @@ export function FixtureSearchOverlay({
       switch (e.keyCode) {
         case KEY_ESC:
           e.preventDefault();
-          return onClose();
+          return handleEscape();
         case KEY_ENTER:
           e.preventDefault();
           return handleEnter(e.shiftKey);
@@ -161,7 +170,15 @@ export function FixtureSearchOverlay({
         // Nada
       }
     };
-  }, [fixtureIds, matchingFixturePaths, activeFixturePath, onClose, onSelect]);
+  }, [
+    searchText.length,
+    onSetSearchText,
+    onClose,
+    activeFixturePath,
+    fixtureIds,
+    onSelect,
+    matchingFixturePaths
+  ]);
 
   const inputRef = React.useRef<HTMLInputElement>(null);
 
