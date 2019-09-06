@@ -16,10 +16,12 @@ import { FixtureIdsByPath, flattenFixtureTree } from './flattenFixtureTree';
 import { SearchIcon } from '../../shared/icons';
 
 type Props = {
+  searchText: string;
   fixturesDir: string;
   fixtureFileSuffix: string;
   fixtures: FixtureNamesByPath;
   selectedFixtureId: null | FixtureId;
+  onSetSearchText: (searchText: string) => unknown;
   onClose: () => unknown;
   onSelect: (fixtureId: FixtureId, revealFixture: boolean) => unknown;
 };
@@ -27,10 +29,12 @@ type Props = {
 type ActiveFixturePath = null | string;
 
 export function FixtureSearchOverlay({
+  searchText,
   fixturesDir,
   fixtureFileSuffix,
   fixtures,
   selectedFixtureId,
+  onSetSearchText,
   onClose,
   onSelect
 }: Props) {
@@ -43,8 +47,6 @@ export function FixtureSearchOverlay({
     });
     return flattenFixtureTree(fixtureTree);
   }, [fixtures, fixturesDir, fixtureFileSuffix]);
-
-  const [searchText, setSearchText] = React.useState('');
 
   const [matchingFixturePaths, setMatchingFixturePaths] = React.useState(
     getMatchingFixturePaths(fixtureIds, searchText)
@@ -63,7 +65,7 @@ export function FixtureSearchOverlay({
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const newSearchText = e.currentTarget.value;
       if (newSearchText !== searchText) {
-        setSearchText(newSearchText);
+        onSetSearchText(newSearchText);
         const newMatchingFixturePaths = getMatchingFixturePaths(
           fixtureIds,
           newSearchText
@@ -73,7 +75,7 @@ export function FixtureSearchOverlay({
         setActiveFixturePath(getFirstFixturePath(newMatchingFixturePaths));
       }
     },
-    [fixtureIds, searchText]
+    [fixtureIds, searchText, onSetSearchText]
   );
 
   const onInputKeyDown = React.useMemo(() => {
