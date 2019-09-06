@@ -18,7 +18,7 @@
     "lodash": "^4.17.15",
     "micromatch": "^4.0.2",
     "open": "^6.4.0",
-    "query-string": "^6.8.2",
+    "query-string": "^6.8.3",
     "react-cosmos-fixture": "^5.0.0-alpha.28",
     "react-cosmos-playground2": "^5.0.0-alpha.28",
     "react-cosmos-shared2": "^5.0.0-alpha.28",
@@ -27,7 +27,7 @@
     "slash": "^3.0.0",
     "socket.io": "^2.2.0",
     "util.promisify": "^1.0.0",
-    "webpack-dev-middleware": "^3.7.0",
+    "webpack-dev-middleware": "^3.7.1",
     "yargs": "^14.0.0"
   },
   "bin": {
