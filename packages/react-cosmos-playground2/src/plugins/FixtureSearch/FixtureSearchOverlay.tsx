@@ -77,7 +77,7 @@ export function FixtureSearchOverlay({
       setMatchingFixturePaths(newMatchingFixturePaths);
       // Reset active fixture to first matching fixture when search changes
       // WARNING: Putting this in a separate effect with only matchingFixturePaths
-      // as a dependency looks nicer, creates a flicker between some renders.
+      // as a dependency looks nicer, but creates a flicker between some renders.
       // On searchText change, the component would first render a new list of
       // matching fixture paths (which may or may not contain the activeFixturePath),
       // and only in the (albeit almost instant) 2nd render would activeFixturePath
