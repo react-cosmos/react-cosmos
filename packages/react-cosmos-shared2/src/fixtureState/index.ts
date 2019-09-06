@@ -13,6 +13,8 @@ import {
   FixtureStateValues,
   FixtureStateValuePair,
   FixtureStateValuePairs,
+  FixtureStateSelect,
+  FixtureStateSelects,
   FixtureStateProps,
   FixtureStateClassState,
   FixtureState,
@@ -34,6 +36,8 @@ export type FixtureStateValue = FixtureStateValue;
 export type FixtureStateValues = FixtureStateValues;
 export type FixtureStateValuePair = FixtureStateValuePair;
 export type FixtureStateValuePairs = FixtureStateValuePairs;
+export type FixtureStateSelect = FixtureStateSelect;
+export type FixtureStateSelects = FixtureStateSelects;
 export type FixtureStateProps = FixtureStateProps;
 export type FixtureStateClassState = FixtureStateClassState;
 export type FixtureState = FixtureState;

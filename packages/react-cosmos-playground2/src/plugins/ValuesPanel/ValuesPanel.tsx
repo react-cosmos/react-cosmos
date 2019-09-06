@@ -3,7 +3,8 @@ import React from 'react';
 import {
   FixtureState,
   FixtureStateValues,
-  FixtureStateValuePairs
+  FixtureStateValuePairs,
+  FixtureStateSelects
 } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import { RotateCcwIcon } from '../../shared/icons';
@@ -17,6 +18,7 @@ import {
   ValueInputTree
 } from '../../shared/ui/valueInputTree';
 import { TreeExpansion } from '../../shared/ui/TreeView';
+import { Select } from '../../shared/ui/inputs/Select';
 
 type Props = {
   fixtureState: FixtureState;
@@ -32,18 +34,33 @@ export const ValuesPanel = React.memo(function ClassStatePanel({
   onTreeExpansionChange
 }: Props) {
   const onValueChange = React.useCallback(
-    newValues => {
+    (newValues: FixtureStateValues) => {
       onFixtureStateChange(prevFsState => updateValues(prevFsState, newValues));
+    },
+    [onFixtureStateChange]
+  );
+
+  const onSelectChange = React.useCallback(
+    (selectName: string, newValue: string) => {
+      onFixtureStateChange(prevFsState =>
+        updateSelect(prevFsState, selectName, newValue)
+      );
     },
     [onFixtureStateChange]
   );
 
   const onResetValues = React.useCallback(() => {
     onFixtureStateChange(resetValues);
+    onFixtureStateChange(resetSelects);
   }, [onFixtureStateChange]);
 
   const fsValuePairs = fixtureState.values || {};
-  if (Object.keys(fsValuePairs).length === 0) {
+  const fsSelects = fixtureState.selects || {};
+
+  if (
+    Object.keys(fsValuePairs).length === 0 &&
+    Object.keys(fsSelects).length === 0
+  ) {
     return null;
   }
 
@@ -55,7 +72,9 @@ export const ValuesPanel = React.memo(function ClassStatePanel({
           <DarkIconButton
             title="Reset to default values"
             icon={<RotateCcwIcon />}
-            disabled={didValuesChange(fsValuePairs)}
+            disabled={
+              areValuesEqual(fsValuePairs) && areSelectsEqual(fsSelects)
+            }
             onClick={onResetValues}
           />
         </Actions>
@@ -68,6 +87,23 @@ export const ValuesPanel = React.memo(function ClassStatePanel({
           onValueChange={onValueChange}
           onTreeExpansionChange={onTreeExpansionChange}
         />
+        {Object.keys(fsSelects).map(selectName => {
+          const select = fsSelects[selectName];
+          const options = select.options.map(option => ({
+            value: option,
+            label: option
+          }));
+          return (
+            <Select
+              key={selectName}
+              options={options}
+              value={select.currentValue}
+              onChange={selectedOption =>
+                onSelectChange(selectName, selectedOption.value)
+              }
+            />
+          );
+        })}
       </Body>
     </Container>
   );
@@ -87,39 +123,73 @@ function updateValues(
   fixtureState: FixtureState,
   fsValues: FixtureStateValues
 ) {
-  const prevFsValues = fixtureState.values || {};
-  const nextFsValues: FixtureStateValuePairs = {};
+  const prevValues = fixtureState.values || {};
+  const values: FixtureStateValuePairs = {};
   Object.keys(fsValues).forEach(valueName => {
-    if (!prevFsValues[valueName]) {
-      console.warn(`Matching fixture state value not found for "${valueName}"`);
+    const fsValue = prevValues[valueName];
+    if (!fsValue) {
+      console.warn(`Matching fixture state value missing for "${valueName}"`);
       return;
     }
-    nextFsValues[valueName] = {
-      ...prevFsValues[valueName],
-      currentValue: fsValues[valueName]
-    };
+    values[valueName] = { ...fsValue, currentValue: fsValues[valueName] };
   });
-  return { ...fixtureState, values: nextFsValues };
+  return { ...fixtureState, values };
+}
+
+function updateSelect(
+  fixtureState: FixtureState,
+  selectName: string,
+  currentValue: string
+) {
+  const prevSelects = fixtureState.selects || {};
+  const fsSelect = prevSelects[selectName];
+  if (!fsSelect) {
+    console.warn(`Matching fixture state select missing for "${selectName}"`);
+    return fixtureState;
+  }
+  return {
+    ...fixtureState,
+    selects: {
+      ...prevSelects,
+      [selectName]: { ...fsSelect, currentValue }
+    }
+  };
 }
 
 function resetValues(fixtureState: FixtureState) {
-  const prevFsValuePairs = fixtureState.values || {};
-  const nextFsValuePairs: FixtureStateValuePairs = {};
-  Object.keys(prevFsValuePairs).forEach(valueName => {
-    const fsValue = prevFsValuePairs[valueName];
-    nextFsValuePairs[valueName] = {
-      ...fsValue,
-      currentValue: fsValue.defaultValue
-    };
+  const prevValues = fixtureState.values || {};
+  const values: FixtureStateValuePairs = {};
+  Object.keys(prevValues).forEach(valueName => {
+    const fsValue = prevValues[valueName];
+    values[valueName] = { ...fsValue, currentValue: fsValue.defaultValue };
   });
-  return { ...fixtureState, values: nextFsValuePairs };
+  return { ...fixtureState, values };
 }
 
-function didValuesChange(fsValuePairs: FixtureStateValuePairs) {
+function resetSelects(fixtureState: FixtureState) {
+  const prevSelects = fixtureState.selects || {};
+  const selects: FixtureStateSelects = {};
+  Object.keys(prevSelects).forEach(selectName => {
+    const fsSelect = prevSelects[selectName];
+    selects[selectName] = { ...fsSelect, currentValue: fsSelect.defaultValue };
+  });
+  return { ...fixtureState, selects };
+}
+
+function areValuesEqual(fsValuePairs: FixtureStateValuePairs) {
   return Object.keys(fsValuePairs).every(valueName =>
     isEqual(
       fsValuePairs[valueName].currentValue,
       fsValuePairs[valueName].defaultValue
+    )
+  );
+}
+
+function areSelectsEqual(fsSelects: FixtureStateSelects) {
+  return Object.keys(fsSelects).every(selectName =>
+    isEqual(
+      fsSelects[selectName].currentValue,
+      fsSelects[selectName].defaultValue
     )
   );
 }
