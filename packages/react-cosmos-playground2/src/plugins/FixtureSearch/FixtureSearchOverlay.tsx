@@ -65,10 +65,9 @@ export function FixtureSearchOverlay({
   const [activeFixturePath, setActiveFixturePath] = React.useState<
     ActiveFixturePath
   >(() => {
-    return (
-      (selectedFixtureId && getFixturePath(fixtureIds, selectedFixtureId)) ||
-      getFirstFixturePath(matchingFixturePaths)
-    );
+    const selectedFixturePath =
+      selectedFixtureId && getFixturePath(fixtureIds, selectedFixtureId);
+    return selectedFixturePath || getFirstFixturePath(matchingFixturePaths);
   });
 
   React.useEffect(() => {
