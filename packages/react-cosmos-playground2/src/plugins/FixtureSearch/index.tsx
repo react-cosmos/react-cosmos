@@ -1,6 +1,6 @@
 import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { createPlugin } from 'react-plugin';
+import { createPlugin, PluginContext } from 'react-plugin';
 import { SearchIcon } from '../../shared/icons';
 import { KEY_K, KEY_P } from '../../shared/keys';
 import { DarkIconButton } from '../../shared/ui/buttons';
@@ -13,10 +13,13 @@ import { FixtureSearchHeader } from './FixtureSearchHeader';
 import { FixtureSearchOverlay } from './FixtureSearchOverlay';
 import { FixtureSearchSpec } from './public';
 
+type FixtureSearchContext = PluginContext<FixtureSearchSpec>;
+
 const { onLoad, namedPlug, register } = createPlugin<FixtureSearchSpec>({
   name: 'fixtureSearch',
   initialState: {
-    open: false
+    open: false,
+    searchText: ''
   }
 });
 
@@ -25,7 +28,7 @@ onLoad(({ setState }) => {
     const metaKey = e.metaKey || e.ctrlKey;
     if (metaKey && (e.keyCode === KEY_P || e.keyCode === KEY_K)) {
       e.preventDefault();
-      setState({ open: true });
+      setState(prevState => ({ ...prevState, open: true }));
     }
   }
   window.addEventListener('keydown', handleWindowKeyDown);
@@ -33,11 +36,11 @@ onLoad(({ setState }) => {
 });
 
 namedPlug('navRow', 'fixtureSearch', ({ pluginContext }) => {
-  const { getMethodsOf, setState } = pluginContext;
+  const { getMethodsOf } = pluginContext;
   const layout = getMethodsOf<LayoutSpec>('layout');
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const fixtures = rendererCore.getFixtures();
-  const onOpen = React.useCallback(() => setState({ open: true }), [setState]);
+  const onOpen = useOnOpen(pluginContext);
   const onMinimizeNav = React.useCallback(() => layout.openNav(false), [
     layout
   ]);
@@ -51,9 +54,7 @@ namedPlug('navRow', 'fixtureSearch', ({ pluginContext }) => {
 });
 
 namedPlug('miniNavAction', 'fixtureSearch', ({ pluginContext }) => {
-  const { setState } = pluginContext;
-  const onOpen = React.useCallback(() => setState({ open: true }), [setState]);
-
+  const onOpen = useOnOpen(pluginContext);
   return (
     <DarkIconButton
       title="Search fixtures"
@@ -64,27 +65,17 @@ namedPlug('miniNavAction', 'fixtureSearch', ({ pluginContext }) => {
 });
 
 namedPlug('global', 'fixtureSearch', ({ pluginContext }) => {
-  const { getState, setState, getMethodsOf } = pluginContext;
-  const { open } = getState();
+  const { getState, getMethodsOf } = pluginContext;
+  const { open, searchText } = getState();
   const core = getMethodsOf<CoreSpec>('core');
   const router = getMethodsOf<RouterSpec>('router');
   const { fixturesDir, fixtureFileSuffix } = core.getFixtureFileVars();
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
-  const fixtureTree = getMethodsOf<FixtureTreeSpec>('fixtureTree');
   const fixtures = rendererCore.getFixtures();
-  const onClose = React.useCallback(() => setState({ open: false }), [
-    setState
-  ]);
-  const onSelect = React.useCallback(
-    (fixtureId: FixtureId, revealFixture: boolean) => {
-      router.selectFixture(fixtureId, false);
-      if (revealFixture) {
-        fixtureTree.revealFixture(fixtureId);
-      }
-      setState({ open: false });
-    },
-    [fixtureTree, router, setState]
-  );
+
+  const onSetSearchText = useOnSetSearchText(pluginContext);
+  const onClose = useOnClose(pluginContext);
+  const onSelect = useOnSelect(pluginContext);
 
   if (!open) {
     return null;
@@ -92,10 +83,12 @@ namedPlug('global', 'fixtureSearch', ({ pluginContext }) => {
 
   return (
     <FixtureSearchOverlay
+      searchText={searchText}
       fixturesDir={fixturesDir}
       fixtureFileSuffix={fixtureFileSuffix}
       fixtures={fixtures}
       selectedFixtureId={router.getSelectedFixtureId()}
+      onSetSearchText={onSetSearchText}
       onClose={onClose}
       onSelect={onSelect}
     />
@@ -103,3 +96,43 @@ namedPlug('global', 'fixtureSearch', ({ pluginContext }) => {
 });
 
 export { register };
+
+function useOnSetSearchText({ setState }: FixtureSearchContext) {
+  return React.useCallback(
+    (newSearchText: string) => {
+      setState(prevState => ({ ...prevState, searchText: newSearchText }));
+    },
+    [setState]
+  );
+}
+
+function useOnOpen({ setState }: FixtureSearchContext) {
+  return React.useCallback(
+    () => setState(prevState => ({ ...prevState, open: true })),
+    [setState]
+  );
+}
+
+function useOnClose({ setState }: FixtureSearchContext) {
+  return React.useCallback(
+    () => setState(prevState => ({ ...prevState, open: false })),
+    [setState]
+  );
+}
+
+function useOnSelect(pluginContext: FixtureSearchContext) {
+  const { setState, getMethodsOf } = pluginContext;
+  const router = getMethodsOf<RouterSpec>('router');
+  const fixtureTree = getMethodsOf<FixtureTreeSpec>('fixtureTree');
+
+  return React.useCallback(
+    (fixtureId: FixtureId, revealFixture: boolean) => {
+      router.selectFixture(fixtureId, false);
+      if (revealFixture) {
+        fixtureTree.revealFixture(fixtureId);
+      }
+      setState(prevState => ({ ...prevState, open: false }));
+    },
+    [setState, fixtureTree, router]
+  );
+}
