@@ -85,7 +85,7 @@ export type FixtureState = {
   classState?: FixtureStateClassState[];
   values?: FixtureStateValuePairs;
   selects?: FixtureStateSelects;
-} & Record<string, any>;
+} & Record<string, unknown>;
 
 export type SetFixtureState = (update: StateUpdater<FixtureState>) => unknown;
 
