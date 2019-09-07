@@ -3,10 +3,10 @@ import {
   TextContainer,
   TextField,
   TextInputContainer,
-  TextMirror,
-  useFocus
+  TextMirror
 } from '../../inputs/shared';
-import { ValueContainer, Label } from './shared';
+import { useFocus } from '../../useFocus';
+import { Label, ValueContainer } from './shared';
 
 type Props = {
   id: string;

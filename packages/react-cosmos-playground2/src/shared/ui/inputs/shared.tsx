@@ -1,12 +1,4 @@
-import React from 'react';
 import styled from 'styled-components';
-
-export function useFocus() {
-  const [focused, setFocused] = React.useState(false);
-  const onFocus = React.useCallback(() => setFocused(true), []);
-  const onBlur = React.useCallback(() => setFocused(false), []);
-  return { focused, onFocus, onBlur };
-}
 
 export const TextInputContainer = styled.div<{
   focused: boolean;

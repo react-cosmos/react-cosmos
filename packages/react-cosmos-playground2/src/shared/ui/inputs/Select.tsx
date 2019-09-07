@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ChevronDownIcon } from '../../icons';
-import { useFocus } from './shared';
+import { useFocus } from '../useFocus';
 
 type BaseOption = { value: string; label: string };
 
@@ -89,12 +89,12 @@ const VisibleButton = styled.div`
   height: 32px;
 `;
 
-export const Label = styled.span`
+const Label = styled.span`
   color: var(--grey2);
   line-height: 32px;
 `;
 
-export const IconContainer = styled.span`
+const IconContainer = styled.span`
   --size: 16px;
   width: var(--size);
   height: var(--size);
