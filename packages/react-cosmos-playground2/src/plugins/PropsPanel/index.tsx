@@ -111,5 +111,11 @@ function shouldShowBlankState(fixtureState: FixtureState) {
     return false;
   }
 
+  const hasSelects =
+    fixtureState.selects && Object.keys(fixtureState.selects).length > 0;
+  if (hasSelects) {
+    return false;
+  }
+
   return true;
 }
