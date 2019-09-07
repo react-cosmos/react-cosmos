@@ -18,7 +18,8 @@ import {
   ValueInputTree
 } from '../../shared/ui/valueInputTree';
 import { TreeExpansion } from '../../shared/ui/TreeView';
-import { Select } from '../../shared/ui/inputs/Select';
+import { SelectItem } from './SelectItem';
+import { ItemContainer } from '../../shared/ui/valueInputTree/ValueInputTreeItem';
 
 type Props = {
   fixtureState: FixtureState;
@@ -89,19 +90,18 @@ export const ValuesPanel = React.memo(function ClassStatePanel({
         />
         {Object.keys(fsSelects).map(selectName => {
           const select = fsSelects[selectName];
-          const options = select.options.map(option => ({
-            value: option,
-            label: option
-          }));
           return (
-            <Select
-              key={selectName}
-              options={options}
-              value={select.currentValue}
-              onChange={selectedOption =>
-                onSelectChange(selectName, selectedOption.value)
-              }
-            />
+            <ItemContainer key={selectName}>
+              <SelectItem
+                label={selectName}
+                id={`select-${selectName}`}
+                options={select.options}
+                value={select.currentValue}
+                onChange={selectedValue =>
+                  onSelectChange(selectName, selectedValue)
+                }
+              />
+            </ItemContainer>
           );
         })}
       </Body>
