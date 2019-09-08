@@ -10,7 +10,7 @@ A tool for ambitious UI developers.
   <img alt="Cosmos" src="cosmos.png">
 </p>
 
-Install `react-cosmos@next` to get started.
+**Install `react-cosmos@next` to get started.**
 
 [![npm version](https://img.shields.io/npm/v/react-cosmos/next.svg?style=flat)](https://www.npmjs.com/package/react-cosmos) [![CircleCI Status](https://circleci.com/gh/react-cosmos/react-cosmos.svg?style=shield)](https://circleci.com/gh/react-cosmos/react-cosmos) [![Twitter](https://img.shields.io/twitter/follow/ReactCosmos.svg?color=%2338A1F3&label=twitter&style=flat)](https://twitter.com/ReactCosmos) [![Slack](https://join-react-cosmos.now.sh/badge.svg)](https://join-react-cosmos.now.sh/) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/react-cosmos/react-cosmos/blob/master/CONTRIBUTING.md#how-to-contribute)
 
