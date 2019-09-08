@@ -1,1 +1,1 @@
-export * from './dist/fixture';
+export * from './dist/native';

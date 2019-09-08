@@ -9,7 +9,8 @@ import {
   DEFAULT_DEVICES,
   VIEWPORT_STORAGE_KEY,
   DEFAULT_VIEWPORT_STATE,
-  ViewportState
+  ViewportState,
+  FixtureStateWithViewport
 } from './shared';
 import { ResponsivePreview } from './ResponsivePreview';
 import { ToggleButton } from './ToggleButton';
@@ -26,7 +27,7 @@ plug('rendererPreviewOuter', ({ children, pluginContext }) => {
   const { devices } = getConfig();
   const router = getMethodsOf<RouterSpec>('router');
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
-  const fixtureState = rendererCore.getFixtureState();
+  const fixtureState = rendererCore.getFixtureState() as FixtureStateWithViewport;
   const viewportState = getViewportState(pluginContext);
 
   return (

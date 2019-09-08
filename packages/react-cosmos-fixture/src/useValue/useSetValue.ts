@@ -53,7 +53,7 @@ function getCurrentValueFromFixtureState(
 ): unknown {
   const fsValue = findFixtureStateValue(fsState, inputName);
   if (!fsValue)
-    throw new Error(`Fixture state value missing for input name: ${inputName}`);
+    throw new Error(`Fixture state value missing for name: ${inputName}`);
 
   return extendWithValue(defaultValue, fsValue.currentValue);
 }

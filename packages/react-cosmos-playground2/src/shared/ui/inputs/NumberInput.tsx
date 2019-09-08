@@ -1,11 +1,11 @@
 import React from 'react';
 import { KEY_DOWN, KEY_UP } from '../../keys';
+import { useFocus } from '../useFocus';
 import {
   TextContainer,
   TextField,
   TextInputContainer,
-  TextMirror,
-  useFocus
+  TextMirror
 } from './shared';
 
 type Styles = {

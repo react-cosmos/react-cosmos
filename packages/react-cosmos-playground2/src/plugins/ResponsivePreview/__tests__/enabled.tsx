@@ -1,19 +1,20 @@
+import { fireEvent, render, RenderResult } from '@testing-library/react';
 import React from 'react';
-import { render, fireEvent, RenderResult } from '@testing-library/react';
-import { loadPlugins, Slot, ArraySlot, resetPlugins } from 'react-plugin';
+import { ArraySlot, loadPlugins, resetPlugins, Slot } from 'react-plugin';
+import { register } from '..';
 import {
+  mockRendererCore,
   mockRouter,
-  mockStorage,
-  mockRendererCore
+  mockStorage
 } from '../../../testHelpers/pluginMocks';
 import {
   DEFAULT_DEVICES,
-  VIEWPORT_STORAGE_KEY,
+  DEFAULT_VIEWPORT_STATE,
+  FixtureStateWithViewport,
   ViewportState,
-  DEFAULT_VIEWPORT_STATE
+  VIEWPORT_STORAGE_KEY
 } from '../shared';
-import { FixtureStateWithViewport, StorageMock } from '../testHelpers';
-import { register } from '..';
+import { StorageMock } from '../testHelpers';
 
 afterEach(resetPlugins);
 
