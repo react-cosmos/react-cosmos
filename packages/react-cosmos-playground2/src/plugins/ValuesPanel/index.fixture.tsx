@@ -48,13 +48,6 @@ export default () => {
               }
             }
           }
-        },
-        selects: {
-          select: {
-            options: ['abc', 'pqr', 'xyz'],
-            defaultValue: 'abc',
-            currentValue: 'abc'
-          }
         }
       }
     }
