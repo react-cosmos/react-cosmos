@@ -78,8 +78,6 @@ export type FixtureStateClassState = {
   componentName: string;
 };
 
-// TODO: Support options (with serializable label and any value type, which
-// lives in the user land)
 export type FixtureState = {
   props?: FixtureStateProps[];
   classState?: FixtureStateClassState[];
