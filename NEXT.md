@@ -2,7 +2,7 @@
 
 A tool for ambitious UI developers.
 
-- **Laser focus.** Isolate the components you're working on and iterate quickly. Works for both UI primitives and complex app sections. Loading your entire app for every change you make is slow!
+- **Laser focus.** Isolate the components you're working on and iterate quickly. Works for both UI primitives and entire app sections. Loading your whole app for every change you make is slow!
 - **Component library.** From blank states to normal states to edge cases, define component states to come back to. Your component library helps you stay organized and makes a great foundation of _test cases_.
 - **Long term design.** Keeping your components decoupled leads to reusable code, a robust architecture, and saves you from having to rewrite your UI every two years.
 
