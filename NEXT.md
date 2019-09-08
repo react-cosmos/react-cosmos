@@ -1,8 +1,12 @@
-# Welcome to future of React Cosmos! 🎉
+# React Cosmos · [![npm version](https://img.shields.io/npm/v/react-cosmos/next.svg?style=flat)](https://www.npmjs.com/package/react-cosmos) [![CircleCI Status](https://circleci.com/gh/react-cosmos/react-cosmos.svg?style=shield)](https://circleci.com/gh/react-cosmos/react-cosmos) [![Twitter](https://img.shields.io/twitter/follow/ReactCosmos.svg?color=%2338A1F3&label=twitter&style=flat)](https://twitter.com/ReactCosmos) [![Slack](https://join-react-cosmos.now.sh/badge.svg)](https://join-react-cosmos.now.sh/) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/react-cosmos/react-cosmos/blob/master/CONTRIBUTING.md#how-to-contribute)
 
-> Latest update: [Cosmos 4.8 — the version that keeps on giving](https://medium.com/@skidding/cosmos-4-8-the-version-that-keeps-on-giving-746d6265f81d)
+A tool for ambitious UI developers.
 
-**Install `react-cosmos@next` to get started.**
+- **Laser focus.** No need to load the entire app for every change you make. From UI primitives to entire app sections, isolate the part you're working on and iterate quickly.
+- **Component library.** From blank states to normal states to edge cases, define component states to come back to. Your component library helps you stay organized and makes a great foundation of _test cases_.
+- **Long term design.** Keeping your components decoupled leads to reusable code, a robust architecture, and saves you from having to rewrite your UI every two years.
+
+Install `react-cosmos@next` to get started.
 
 ```
 npm run cosmos
