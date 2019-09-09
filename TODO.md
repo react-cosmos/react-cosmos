@@ -22,7 +22,7 @@ Alpha
   - [x] Get Playground URLs for each fixture (for visual snapshotting)
   - [x] Get fixture elements (for JSON snapshotting)
 - [x] Refresh docs
-  - [ ] Publish demo
+  - [x] Publish demo
 
 Beta
 
