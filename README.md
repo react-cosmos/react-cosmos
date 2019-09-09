@@ -417,7 +417,7 @@ That said, it's ideal for all Cosmos users to use the latest version. Please [le
 
 Many other component-oriented tools have emerged since Cosmos was conceived. [Storybook](https://github.com/storybookjs/storybook) and [React Styleguidist](https://github.com/styleguidist/react-styleguidist) are good examples, but you can find an exhaustive list [here](https://react-styleguidist.js.org/docs/cookbook.html#are-there-any-other-projects-like-this). Choose the tool that matches your needs the most.
 
-React Cosmos is a dev tool first, made to address all components, big and small, not just the stateless UI bits. It aims to boost developer productivity and lead to robust component APIs that survive the test of time.
+React Cosmos is a dev tool first, made to address all components, big and small, not just the stateless UI bits. It aims to boost productivity and push UI developers into a _Pit of Success,_ to create robust component APIs that survive the test of time.
 
 You can also create a living style guide using React Cosmos, but it's a secondary goal and you might get more value from alternatives if this is your chief concern.
 
