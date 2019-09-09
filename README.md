@@ -2,1392 +2,435 @@
   <img alt="Cosmos" src="cosmos.png">
 </p>
 
-<p align="center">
-  <strong>React Cosmos</strong> ✭ Dev tool for creating reusable <a href="http://facebook.github.io/react/">React</a> components
-</p>
+# React Cosmos
 
-<p align="center">
-  <a href="https://travis-ci.org/react-cosmos/react-cosmos">
-    <img alt="Build" src="https://travis-ci.org/react-cosmos/react-cosmos.svg?branch=master">
-  </a>
-  <a href="https://twitter.com/ReactCosmos">
-    <img alt="@ReactCosmos" src="https://img.shields.io/twitter/follow/ReactCosmos.svg?color=%2338A1F3&label=follow&style=flat">
-  </a>
-  <a href="https://join-react-cosmos.now.sh/">
-    <img alt="Slack" src="https://join-react-cosmos.now.sh/badge.svg">
-  </a>
-  <a href="https://spectrum.chat/cosmos">
-    <img alt="Spectrum" src="https://withspectrum.github.io/badge/badge.svg" />
-  </a>
-  <a href="CONTRIBUTING.md#how-to-contribute">
-    <img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg">
-  </a>
-</p>
+[![npm version](https://img.shields.io/npm/v/react-cosmos/next.svg?style=flat)](https://www.npmjs.com/package/react-cosmos) [![CircleCI Status](https://circleci.com/gh/react-cosmos/react-cosmos.svg?style=shield)](https://circleci.com/gh/react-cosmos/react-cosmos) [![Twitter](https://img.shields.io/twitter/follow/ReactCosmos.svg?color=%2338A1F3&label=twitter&style=flat)](https://twitter.com/ReactCosmos) [![Slack](https://join-react-cosmos.now.sh/badge.svg)](https://join-react-cosmos.now.sh/) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/react-cosmos/react-cosmos/blob/master/CONTRIBUTING.md#how-to-contribute)
 
-> **[Cosmos 5.0 alpha (Cosmos Next) is available for early adopters!](NEXT.md) 🔥**
+> [Become a Sponsor](https://github.com/users/skidding/sponsorship) to invest in the future of React Cosmos
 
-Cosmos scans your project for components and enables you to:
+A tool for ambitious UI developers.
 
-1.  Render components under any combination of props, context and state
-2.  Mock _every_ external dependency (eg. API responses, localStorage, etc)
-3.  See app state evolve in real-time while interacting with running instances
+- **Laser focus.** Isolate the components you're working on and iterate quickly. Works for both UI primitives and entire app sections. Running your whole app on every change is slowing you down!
+- **Component library.** From blank states to normal states to edge cases, define component states to come back to. Your component library helps you stay organized and makes a great foundation of _test cases_.
+- **Long term design.** Keeping your components decoupled leads to reusable code, a robust architecture, and saves you from having to rewrite your UI every two years.
 
-![Component Playground](intro.gif)
+---
 
-> Working with Cosmos improves component design because it surfaces dependencies. Cosmos forces us to define sane component inputs, making our UIs predictable and easier to debug down the road.
+**Install `react-cosmos@next` to get started.**
 
-Read the story of React Cosmos: [Fighting for Component Independence](https://medium.com/@skidding/fighting-for-component-independence-2a762ee53272)
-
-## Why Cosmos?
-
-Many other component explorers emerged in the past years. [Storybook](https://github.com/storybooks/storybook) and [React Styleguidist](https://github.com/styleguidist/react-styleguidist) are good examples, but you can find an extensive list of options [here](https://react-styleguidist.js.org/docs/cookbook.html#are-there-any-other-projects-like-this). Check how much each tool matches your needs to decide which is best for you.
-
-**Cosmos is a dev tool first, made to improve _all_ components, big and small, not just the stateless UI bits.** The [fixture](#fixtures) and [proxy](#proxies) architecture doubles as an [automated testing utility](#headless-testing), providing a complete solution for developing robust and reusable components. Cosmos also makes it easy to create a living style guide, but it's a secondary goal and you might get more value from alternatives if this is your chief concern.
-
-## Usage
-
-Requirements:
-
-- [x] React >=0.14.9
-- [x] webpack or Browserify (or roll your own integration)
-- [ ] [Fixtures](#fixtures) (you'll create them after getting started)
-
-React Cosmos works best with webpack. Making it work with other bundlers takes extra work, but both a [Browserify example](https://github.com/react-cosmos/react-cosmos-classic/tree/master/examples/browserify) and a [Parcel example](https://github.com/react-cosmos/parcel-ts-example) are available.
-
-Jump to:
-
-- **[Getting started](#getting-started)**
-- [Fixtures](#fixtures)
-  - [What's a fixture?](#whats-a-fixture)
-  - [Where to put fixtures?](#where-to-put-fixtures)
-  - [Props](#props)
-  - [Children](#children)
-  - [State](#state)
-  - [Wrapper component](#wrapper-component)
-  - [Init hook](#init-hook)
-  - [Fixture name and namespace](#fixture-name-and-namespace)
-- [Proxies](#proxies)
-  - [What's a proxy?](#whats-a-proxy)
-  - [Where to put proxies?](#where-to-put-proxies)
-  - [Context](#context)
-  - [Redux](#redux)
-  - [React Router](#react-router)
-  - [React Apollo (GraphQL)](#react-apollo-graphql)
-  - [Fetch](#fetch)
-  - [XHR](#xhr)
-  - [LocalStorage](#localstorage)
-  - [More proxies...](#more-proxies)
-- [Integration with popular tools](#integration-with-popular-tools)
-  - [Create React App](#create-react-app)
-    - [With react-app-rewired](#with-react-app-rewired)
-  - [Github Pages](#github-pages-and-jekyll)
-  - [Next.js](#nextjs)
-  - [React Boilerplate](#react-boilerplate)
-  - [React Redux Starter Kit](#react-redux-starter-kit)
-- [Config](#config)
-  - [Custom config path](#custom-config-path)
-  - [Custom webpack config](#custom-webpack-config)
-  - [Custom fixture paths](#custom-fixture-paths)
-  - [Option dump](#option-dump)
-- [Exporting](#exporting)
-- [Headless testing](#headless-testing)
-  - [Using Enzyme](#using-enzyme)
-  - [Using a custom renderer](#using-a-custom-renderer)
-  - [Capturing state changes](#capturing-state-changes)
-  - [Updating fixtures in tests](#updating-fixtures-in-tests)
-  - [createTestContext API](#createtestcontext-api)
-  - [Global Jest snapshot](#global-jest-snapshot)
-- [Beta: React Native](#beta-react-native)
-- [Flow integration](#flow-integration)
-
-_Have a question or idea to share? See you on [Slack](https://join-react-cosmos.now.sh/)._
-
-### Getting started
-
-Install via npm
-
-```bash
-npm install --save-dev react-cosmos
+```
+npm run cosmos
 ```
 
-or Yarn
+![Cosmos Next](next.png)
 
-```bash
-yarn add --dev react-cosmos
-```
+The [example package](example) is a useful complement to this guide.
 
-Add package.json scripts
+## Table of contents
 
-```diff
-"scripts": {
-+  "cosmos": "cosmos",
-+  "cosmos:export": "cosmos-export"
+- Setup: [Requirements](#requirements) · [Config](#config) · [Webpack](#webpack)
+- Usage: [Fixtures](#jsx-fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [UI controls](#ui-controlled-values) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
+- FAQ: [Troubleshooting](#troubleshooting) · [Where's my old Cosmos?](#wheres-my-old-cosmos) · [Why Cosmos?](#why-cosmos) · [Credits](#credits)
+
+## Requirements
+
+The only hard requirements are React 16.8 and Node 6 (or newer).
+
+React Cosmos works best with webpack. It takes extra effort to make it work with other bundlers, but it's not as scary as it might seem. Don’t be afraid to ask for support.
+
+> [Browserify](https://github.com/react-cosmos/react-cosmos-classic/tree/14e1a258f746df401a41ab65429df0d296b910e4/examples/browserify) and [Parcel](https://github.com/react-cosmos/parcel-ts-example) examples are available for Cosmos Classic. Props to whoever adapts them to Cosmos Next!
+
+### Compilation
+
+How you compile your code is 100% your business. React Cosmos jumps through hoops to compile your code using your existing build pipeline, but it doesn't have opinions nor does it install dependencies your setup might require.
+
+Unless you use a framework like Create React App or Next.js, install build dependencies yourself. This include stuff like Babel, TypeScript, webpack loaders, etc. **Cosmos uses build dependencies already installed in your project.**
+
+## Config
+
+No config is required to start. If you have custom needs or would like to convert a Cosmos Classic config, here's what you need to know.
+
+The Cosmos Next config is a **JSON** file, so it can only host serializable values. This design decision is meant to discourage complex configuration, make it easy to embed config options into the UI, and enable visual config management in the future.
+
+By default, Cosmos reads `cosmos.config.json` from your root directory. You can pass a `--config` CLI arg for a custom config path.
+
+> Most Cosmos Classic config options are still supported in the new JSON format. [Let me know](https://join-react-cosmos.now.sh/) if you need old config options that no longer work.
+
+### Available options
+
+The best way to learn about the available options in the Cosmos config is to use [config.schema.json](packages/react-cosmos/config.schema.json).
+
+The schema is human readable, but you can also enhance your config with autocomplete in code editors like VS Code.
+
+```jsonc
+{
+  "$schema": "http://json.schemastore.org/cosmos-config"
+  // your options...
 }
 ```
 
-Run `npm run cosmos` or `yarn cosmos` and go to [localhost:5000](http://localhost:5000) 🎉
+And if you use VS Code you can map the Cosmos config schema globally by [extending your user settings](https://code.visualstudio.com/docs/languages/json#_mapping-in-the-user-settings).
 
-> If you rely on the default webpack config, make sure to install the Babel and webpack plugins yourself. Depending on your needs, you'll probably want `@babel/core @babel/preset-env @babel/preset-react babel-loader style-loader css-loader html-webpack-plugin`. Finally, add `.babelrc` to your project root.
->
-> ```
-> {
->   "presets": ["@babel/env", "@babel/react"]
-> }
-> ```
->
-> _NOTE: The above `.babelrc` and `@babel/*` namespaced packages only apply to [Babel 7.x and above.](https://babeljs.io/docs/en/v7-migration)_
-
-#### Next steps
-
-If everything's working
-
-- **Create your first [fixture](#fixtures)**
-- Configure or create [proxies](#proxies) (e.g. Redux integration)
-
-If something's wrong
-
-- Extend existing [webpack config](#custom-webpack-config)
-- See [popular integrations](#integration-with-popular-tools) (e.g. CRA or Next.js)
-- Extend your [config](#config)
-- Be kind and [report what went wrong](https://github.com/react-cosmos/react-cosmos/issues)
-
-### Fixtures
-
-> **Old fixtures need to be adjusted to work with Cosmos v3**. Check out this [guide for upgrading](docs/fixture-upgrade.md).
-
-#### What's a fixture?
-
-A fixture is a JS object used to mock component input and external dependencies. The input can be [props](#props), [children](#children), [state](#state) and [context](#context). With the help of [proxies](#proxies), fixtures can mock anything else a component depends on, from API responses to localStorage.
-
-```js
-import Input from './Input';
-
-export default {
-  component: Input,
-  props: {
-    value: 'Lorem ipsum',
-    disabled: true,
-    onChange: value => console.log(`Select: ${value}`)
-  }
-};
-```
-
-#### Where to put fixtures?
-
-Cosmos looks for `*.fixture.js` named files and files inside `__fixtures__` dirs by default. See [custom fixture paths](#custom-fixture-paths) for further customization.
-
-It is also possible to export an array of fixtures from a single file. You may want to define the [fixture name and namespace](#fixture-name-and-namespace) in this case.
-
-```js
-export default [
+```json
+"json.schemas": [
   {
-    component: Input,
-    name: 'disabled',
-    props: {
-      disabled: true
-    }
-  },
-  {
-    component: Input,
-    name: 'enabled',
-    props: {
-      disabled: false
-    }
+    "fileMatch": ["cosmos.config.json"],
+    "url": "http://json.schemastore.org/cosmos-config"
   }
-];
+]
 ```
 
-#### Props
+## Webpack
 
-Mocking props is the most basic thing a fixture can do.
+Configuring webpack is the least romantic aspect of the Cosmos setup. Luckily, you only do it once. Depending on your setup, one of the following options will work for you.
 
-```js
-export default {
-  component: Auth,
-  props: {
-    loggedIn: true,
-    user: {
-      name: 'Dan the Man'
-    }
-  }
-};
-```
+### Default webpack config
 
-#### Children
+In many cases Cosmos manages to get webpack working without human intervention. Try running Cosmos as is first.
 
-Composition is the name of the game and many React components expect [children](https://facebook.github.io/react/docs/jsx-in-depth.html#children-in-jsx). You can specify your children just like you would any other prop:
+### Custom webpack config
 
-```jsx
-// React needs to be in scope for JSX to work
-import React from 'react';
+Probably the most common scenario. Most of us end up with a hairy webpack config sooner or later. Use the `webpack.configPath` setting to point to an existing webpack config.
 
-export default {
-  component: Text,
-  props: {
-    someProp: true,
-    children: (
-      <div>
-        <p>Fixture ain't afraid of JSX</p>
-        <p>Fixture ain't afraid of nothin!</p>
-      </div>
-    )
-  }
-};
-```
-
-#### State
-
-Mocking state is where things get interesting. [Component state](https://facebook.github.io/react/docs/react-component.html#state) is private IRL, but Cosmos allows us to inject it and simulate all the various states a component can find itself in.
-
-```js
-export default {
-  component: SearchBox,
-  state: {
-    searchQuery: 'Who let the dogs out?'
-  }
-};
-```
-
-#### Wrapper component
-
-You may identify a component directly, or provide a function. This allows for quick wrapping of components. If you find yourself doing this often with the same component, it might be time to try [proxies](#proxies).
-
-```js
-export default {
-  component: props => (
-    <Well>
-      <SearchBox {...props, placeholder={'What are you looking for?'}} />
-    </Well>
-  ),
-  props: {
-    value: 'apples'
-  }
-};
-```
-
-You may also want to specify a display name for this component. To do so, you can a separate variable for the wrapper component and assign it a `displayName`:
-
-```js
-const WrapperComponent = props => (
-  <Well>
-    <SearchBox {...props, placeholder={'What are you looking for?'}} />
-  </Well>
-);
-
-// The fixture will be shown in the tree as SearchBox
-WrapperComponent.displayName = "SearchBox";
-
-// separating names with a / will make the fixture SearchBox
-// appear in a nested folder called "styleguide".
-// WrapperComponent.displayName = "styleguide/SearchBox";
-
-export default {
-  component: WrapperComponent,
-  props: {
-    value: 'apples'
-  }
-};
-```
-
-#### Init hook
-
-This is an advanced feature and should only be used when a desired state can't be reproduced via [proxies](#proxies).
-
-```js
-export default {
-  component: Dashboard,
-  async init({ compRef }) {
-    // With great power comes great ref-sponsibility...
-  }
-};
-```
-
-#### Fixture name and namespace
-
-The fixture name and namespace are detected automatically from the file name and file path respectively, but they can be overridden with custom values.
-
-```js
-export default {
-  component: SearchBox,
-  name: 'dog search',
-  namespace: 'dashboard/pets'
-};
-```
-
-### Proxies
-
-#### What's a proxy?
-
-Proxies are Cosmos plugins, allowing fixtures to go beyond mocking _props_ and _state_.
-
-We've seen `component = f(props, state)` a hundred times–the seductive promise of React and libs alike. **In reality, however, it's more like `component = f(props, state, context)` and most components are _nothing_ without the context part.** This is still an oversimplification. The ugly truth is components take input from many other places: API responses, localStorage and window size to name a few.
-
-But we know developing components in isolation is _The Way_, so intricate inputs won't stop us! With proxies, we look the devil in the eye and mock anything components depend on. Hell, we might even simplify our components once we're aware of all the crazy things they need to work.
-
-How do proxies work? Well duh, they're _Just Components_. As regular React components, proxies compose in the order they are listed in your config and decorate the loaded component, respecting the contract to render the next proxy in the chain. They can be stateless or have a life cycle, mocking before mounting and unmocking before unmounting.
-
-Proxies have two parts:
-
-1.  **Configuration.** Done once per project, inside [cosmos.proxies.js](#where-to-put-proxies). Import proxy packages, call their default export (always a _create_ function) and add the result to the list of exported proxies. Some proxies require options, others work out of the box.
-2.  **Activation**. Triggered by a special fixture attribute. Eg. The React Router proxy activates when `fixture.url` is defined, otherwise it's a noop. Proxies can also be always-active, but it's a best practice to make proxies opt-in to avoid useless overhead.
-
-#### Where to put proxies?
-
-As soon as you're ready to add proxies to your Cosmos setup, install them using your package manager. For example:
-
-via npm
-
-```bash
-npm install --save-dev react-cosmos-fetch-proxy react-cosmos-redux-proxy react-cosmos-router-proxy
-```
-
-or Yarn
-
-```bash
-yarn add --dev react-cosmos-fetch-proxy react-cosmos-redux-proxy react-cosmos-router-proxy
-```
-
-Then create `cosmos.proxies.js` (in your project's root directory or next to cosmos.config.js) and export a list of proxies in the order they should load–from outermost to innermost.
-
-> `cosmos.proxies.js` requires compilation so you may need to place it next to your source files (eg. if the `src` dir is whitelisted in babel-loader). Use `proxiesPath` option to customize its location.
-
-Here's an example where we mock the Fetch API and add Redux and React Router providers:
-
-```js
-// cosmos.proxies.js
-import createFetchProxy from 'react-cosmos-fetch-proxy';
-import createReduxProxy from 'react-cosmos-redux-proxy';
-import createRouterProxy from 'react-cosmos-router-proxy';
-// We can import app files here
-import configureStore from './configureStore';
-
-// Read more about configuring Redux in the Redux proxy section below
-const ReduxProxy = createReduxProxy({
-  createStore: state => configureStore(state)
-});
-
-// We ensure a specific proxy order
-export default [
-  // Not all proxies have options, and often relying on defaults is good enough
-  createFetchProxy(),
-  ReduxProxy,
-  createRouterProxy()
-];
-```
-
-> For details on _creating_ proxies, see the [Proxy boilerplate](CONTRIBUTING.md#proxy-boilerplate)
-
-Jump to:
-
-- [Context](#context)
-- [Redux](#redux)
-- [React Router](#react-router)
-- [React Apollo (GraphQL)](#react-apollo-graphql)
-- [Fetch](#fetch)
-- [XHR](#xhr)
-- [LocalStorage](#localstorage)
-- [More proxies...](#more-proxies)
-
-#### Context
-
-[React Context](https://facebook.github.io/react/docs/context.html): _With great power comes great responsibility._
-
-> Note: React doesn't recommend using _context_ unless you're a lib, so in most cases we're better off using a higher level proxy like the [Redux](#redux) or [React Router](#react-router) one.
-
-##### Configuration
-
-```js
-// cosmos.proxies.js
-import createContextProxy from 'react-cosmos-context-proxy';
-import PropTypes from 'prop-types';
-
-const ContextProxy = createContextProxy({
-  childContextTypes: {
-    theme: PropTypes.object.isRequired
-  }
-});
-
-export default [
-  ContextProxy
-  // ...other proxies
-];
-```
-
-##### Activation
-
-```js
-// __fixtures__/example.js
-export default {
-  component: MyComponent,
-  context: {
-    theme: {
-      backgroundColor: '#f1f1f1',
-      color: '#222'
-    }
-  }
-};
-```
-
-Check out the [context example](https://github.com/react-cosmos/react-cosmos-classic/tree/master/examples/context) to see the proxy in action.
-
-#### Redux
-
-> `react-cosmos-redux-proxy` doesn't work with react-redux v6 yet. If you'd like to help check out [this thread](https://github.com/react-cosmos/react-cosmos/issues/903).
-
-Most components in a [Redux](http://redux.js.org/) app depend on Redux state, either they're a _container_ or one of their descendants is. This proxy creates a store using initial data from fixtures and puts it in the context, just like the [Provider](http://redux.js.org/docs/basics/UsageWithReact.html#passing-the-store) does.
-
-##### Configuration
-
-```js
-// cosmos.proxies.js
-import createReduxProxy from 'react-cosmos-redux-proxy';
-import configureStore from './configureStore';
-
-const ReduxProxy = createReduxProxy({
-  createStore: state => configureStore(state)
-});
-
-export default [
-  ReduxProxy
-  // ...other proxies
-];
-```
-
-##### Activation
-
-```js
-// __fixtures__/example.js
-export default {
-  component: MyComponent,
-  // An empty object will populate the store with the initial state
-  // returned by reducers. But we can also put any state we want here.
-  reduxState: {}
-};
-```
-
-Writing Redux fixtures almost feels too easy. Because Redux state is global, once we have one state mock we can render any component we want!
-
-#### React Router
-
-> Warning: react-cosmos-router-proxy is designed for React Router **v4** and above
-
-[React Router](https://reacttraining.com/react-router/) is used in most React projects. Wrapping components with `withRouter` makes the Router context an implicit dependency–one we need to mock.
-
-##### Configuration
-
-```js
-// cosmos.proxies.js
-import createRouterProxy from 'react-cosmos-router-proxy';
-
-export default [
-  createRouterProxy()
-  // ...other proxies
-];
-```
-
-##### Activation
-
-Simply adding a `url` to your fixture will wrap the loaded component inside a [Router](https://reacttraining.com/react-router/core/api/Router).
-
-```js
-// __fixtures__/example.js
-export default {
-  component: MyComponent,
-  url: '/about'
-};
-```
-
-Optionally, `route` can be added to also wrap the loaded component inside a [Route](https://reacttraining.com/react-router/core/api/Route).
-
-```js
-// __fixtures__/example.js
-export default {
-  component: MyComponent,
-  url: '/users/5',
-  route: '/users/:userId'
-};
-```
-
-If your component needs props from the `Route` component (history, location, and match), you can enable the `provideRouterProps` flag.
-
-```js
-// __fixtures__/example.js
-export default {
-  component: MyComponent,
-  url: '/users/5',
-  route: '/users/:userId',
-  provideRouterProps: true
-};
-```
-
-Check out the [React Router example](https://github.com/react-cosmos/react-cosmos-classic/tree/master/examples/react-router) to see the proxy in action.
-
-#### React Apollo (GraphQL)
-
-If you use the [React integration](http://dev.apollodata.com/react/) of [Apollo Client](http://dev.apollodata.com/) to provide data in your app, you may want to:
-
-- Work on your data components in isolation
-- Provide static or dynamic mocks to prototype your components
-
-This proxy wraps your components with the `ApolloProvider` so they can render in Cosmos like they would normally in your app. Then, you'll be able to consume directly your API or mock its response.
-
-##### Configuration
-
-Provide:
-
-- The GraphQL `endpoint` you send operations to
-- Or The `client options object` used in your app
-
-```js
-// cosmos.proxies.js
-import createApolloProxy from 'react-cosmos-apollo-proxy';
-
-// option 1: specify a graphql endpoint
-
-export default [
-  createApolloProxy({
-    endpoint: 'https://my.api.xyz/graphql'
-  })
-  // ...other proxies
-];
-```
-
-```js
-// cosmos.proxies.js
-import createApolloProxy from 'react-cosmos-apollo-proxy';
-
-// option 2: use the client from your app
-
-import myConfiguredClientOptions from './src/client.js';
-
-export default [
-  createApolloProxy({
-    clientOptions: myConfiguredClientOptions
-  })
-  // ...other proxies
-];
-```
-
-##### "Live" behavior
-
-Once configured, your components enhanced by `react-apollo` will behave as they would normally in your app, sending operation via your own client options object or to the endpoint passed specified in `cosmos.proxies.js`.
-
-##### Mocking a response with a result or an error
-
-Mocking at the fixture level is done by specifying an `apollo` key in your fixture.
-
-The proxy will look for a `resolveWith` or a `failWith` key in order to return the appropriate mock value. This mocked return can be one of;
-
-- an object
-- a function returning an object
-- a function that returns a Promise that either resolves or rejects with an object
-
-See examples below or check [the fixtures defined in the Apollo example](https://github.com/react-cosmos/react-cosmos-classic/tree/master/examples/apollo/components/__fixtures__/Author).
-
-##### Static response
-
-```js
-export default {
-  component: Author,
-  props: {
-    authorId: 123
-  },
-  apollo: {
-    resolveWith: {
-      author: {
-        __typename: 'Author',
-        id: 123,
-        firstName: 'Ovidiu'
-      }
-    }
-  }
-};
-```
-
-##### Dynamic response
-
-```js
-export default {
-  component: Author,
-  props: {
-    authorId: 123
-  },
-  apollo: {
-    resolveWith: ({ cache, variables, fixture }) => ({
-      author: {
-        __typename: 'Author',
-        id: variables.authorId,
-        firstName: variables.authorId === 123 ? 'Ovidiu' : 'Xavier'
-      }
-    })
-  }
-};
-```
-
-##### Promise response
-
-```js
-export default {
-  component: Author,
-  props: {
-    authorId: 123
-  },
-  apollo: {
-    resolveWith: ({ cache, variables, fixture }) =>
-      Promise.resolve({
-        author: {
-          __typename: 'Author',
-          id: variables.authorId,
-          firstName: variables.authorId === 123 ? 'Ovidiu' : 'Xavier'
-        }
-      })
-  }
-};
-```
-
-##### Named responses
-
-If your fixture's component is enhanced by multiple operations (like a query and a mutation), you can also provide the name of the operation so the proxy knows which response corresponds to which operation.
-
-Below an example with a query & a mutation:
-
-```js
-export default {
-  component: Author,
-
-  props: {
-    authorId: 123
-  },
-  apollo: {
-    // mocked response for the query named PostsForAuthor
-    PostsForAuthor: {
-      resolveWith: {
-        author: {
-          __typename: 'Author',
-          id: 123,
-          firstName: 'Ovidiu',
-          posts: [
-            {
-              __typename: 'Post',
-              id: 456,
-              title: 'Testing React Components',
-              votes: 1234
-            },
-            {
-              __typename: 'Post',
-              id: 789,
-              title: 'When to assert?',
-              votes: 56
-            }
-          ]
-        }
-      }
-    },
-    // mocked response for the mutation named UpvotePost
-    UpvotePost: {
-      resolveWith: ({ cache, variables, fixture }) => {
-        const data = cache.readQuery({
-          query: QUERY,
-          variables: { authorId: fixture.props.authorId }
-        });
-
-        const post = data.author.posts.find(
-          post => post.id === variables.postId
-        );
-
-        return {
-          upvotePost: {
-            ...post,
-            votes: post.votes + 10
-          }
-        };
-      }
-    }
-  }
-};
-```
-
-##### Failing response
-
-You can use the `failWith` option to mock an apollo 'networkError', i.e. you did not get a successful response from the server (perhaps the internet connection is offline, or a 500 response was returned):
-
-```js
-export default {
-  component: Author,
-  props: {
-    authorId: 123
-  },
-  apollo: {
-    failWith: {
-      message: 'Something went bad, please try again!'
-    }
-  }
-};
-```
-
-To mock a valid response from an API which contains an errors object, you can use the following format:
-
-```js
-export default {
-  component: Author,
-  props: {
-    authorId: -1
-  },
-  apollo: {
-    resolveWith: {
-      data: {
-        author: null
-      },
-      errors: [
-        {
-          path: ['author'],
-          message: ['Author id -1 not found'],
-          locations: [{ line: 1, column: 0 }]
-        }
-      ]
-    }
-  }
-};
-```
-
-Check out the [Apollo example](https://github.com/react-cosmos/react-cosmos-classic/tree/master/examples/apollo) to see `react-cosmos-apollo-proxy` in action! 🚀
-
-#### Fetch
-
-Besides client-side state, components also depend on external data. Mocking server responses allows us to completely isolate our components. This proxy makes mocking [Fetch](https://developer.mozilla.org/en/docs/Web/API/Fetch_API) responses a breeze.
-
-##### Configuration
-
-```js
-// cosmos.proxies.js
-import createFetchProxy from 'react-cosmos-fetch-proxy';
-
-export default [
-  createFetchProxy()
-  // ...other proxies
-];
-```
-
-##### Activation
-
-```js
-// __fixtures__/example.js
-export default {
-  component: MyComponent,
-  fetch: [
-    {
-      matcher: '/users',
-      response: [
-        {
-          id: 1,
-          name: 'Prabu'
-        },
-        {
-          id: 2,
-          name: 'Karla'
-        },
-        {
-          id: 3,
-          name: 'Linbaba'
-        }
-      ]
-    }
-  ]
-};
-```
-
-Built on top of [fetch-mock](http://www.wheresrhys.co.uk/fetch-mock). Check out the [Fetch example](https://github.com/react-cosmos/react-cosmos-classic/tree/master/examples/fetch) to see the proxy in action.
-
-#### XHR
-
-Like the [Fetch](#fetch) proxy, but for _XMLHttpRequest_.
-
-##### Configuration
-
-```js
-// cosmos.proxies.js
-import createXhrProxy from 'react-cosmos-xhr-proxy';
-
-export default [
-  createXhrProxy()
-  // ...other proxies
-];
-```
-
-##### Activation
-
-```js
-// __fixtures__/example.js
-export default {
-  component: MyComponent,
-  xhr: [
-    {
-      url: '/users',
-      response: (req, res) =>
-        res.status(200).body([
-          {
-            id: 1,
-            name: 'Blossom'
-          },
-          {
-            id: 2,
-            name: 'Bubbles'
-          },
-          {
-            id: 3,
-            name: 'Buttercup'
-          }
-        ])
-    }
-  ]
-};
-```
-
-Built on top of [xhr-proxy](https://github.com/jameslnewell/xhr-mock). Check out the [Axios example](https://github.com/react-cosmos/react-cosmos-classic/tree/master/examples/axios) to see the proxy in action.
-
-#### LocalStorage
-
-Overrides the global localStorage API with a replica mock.
-
-Mocking localStorage prevents conflicts with existing browser data and enables the localStorage API in test environments like Jest.
-
-##### Configuration
-
-```js
-// cosmos.proxies.js
-import createLocalStorageProxy from 'react-cosmos-localstorage-proxy';
-
-export default [
-  createLocalStorageProxy()
-  // ...other proxies
-];
-```
-
-##### Activation
-
-```js
-// __fixtures__/example.js
-export default {
-  component: MyComponent,
-  localStorage: {
-    userToken: 'foobar-token'
-  }
-};
-```
-
-#### More proxies
-
-Other proxies created by the Cosmos community:
-
-- [alp82/react-cosmos-glamorous-proxy](https://github.com/alp82/react-cosmos-glamorous-proxy) A simple proxy for react-cosmos to load glamorous themes
-- [jozsi/react-cosmos-wrapper-proxy](https://github.com/jozsi/react-cosmos-wrapper-proxy) Easily wrap components using react-cosmos
-- [concept-not-found/react-cosmos-reach-router-proxy](https://github.com/concept-not-found/react-cosmos-reach-router-proxy) A proxy for [@reach/router](https://github.com/reach/router)
-- [react-intl-proxy](https://github.com/react-cosmos/react-cosmos/issues/636#issuecomment-377745222) A proxy for [yahoo/react-intl](https://github.com/yahoo/react-intl)
-- [simeonc/react-cosmos-background-proxy](https://github.com/SimeonC/react-cosmos-background-proxy) A simple proxy for applying global styles and modifying the fixture background (via applying styles on the playground iFrame body)
-- [omarzion/react-cosmos-stateful-proxy](https://github.com/omarzion/react-cosmos-stateful-proxy) A simple proxy wrapper to handle state for stateless components
-
-_What proxy would you create to improve DX?_
-
-### Integration with popular tools
-
-#### Create React App
-
-Add `react-cosmos` to dev dependencies and create `cosmos.config.js`.
-
-```js
-// cosmos.config.js
-module.exports = {
-  containerQuerySelector: '#root',
-  webpackConfigPath: 'react-scripts/config/webpack.config',
-  publicPath: 'public',
-  // Optional: Add this when you start using proxies
-  proxiesPath: 'src/cosmos.proxies'
-};
-```
-
-> Note: When using an older version than `react-scripts@2.1.2` the `webpackConfigPath` has to be set to `'react-scripts/config/webpack.config.dev'`
-
-If you are using the `NODE_PATH` environment variable for absolute imports, make sure to include that as part of the cosmos script:
-
-```js
-// package.json
-"scripts": {
-  "cosmos": "NODE_PATH=./src cosmos"
-}
-```
-
-Also make sure to:
-
-- Put [proxies](#proxies) in the `src` dir–the only place included by the CRA Babel loader
-
-_CRA + Cosmos example: [Flatris](https://github.com/skidding/flatris)_
-
-##### With react-app-rewired
-
-```diff
-// cosmos.config.js
-+const overrides = require('react-app-rewired/config-overrides');
-
-module.exports = {
-  containerQuerySelector: '#root',
-  webpackConfigPath: 'react-scripts/config/webpack.config.dev',
-+  webpack: config => overrides.webpack(config),
-  publicPath: 'public',
-  // Optional: Add this when you start using proxies
-  proxiesPath: 'src/cosmos.proxies'
-};
-```
-
-#### Github Pages and Jekyll
-
-You can publish Cosmos publicly using Github pages by [using `cosmos-export`](#exporting). Commit the exported files to a `/docs/` folder in the root of your project and you should be good to go.
-
-When you deploy to Github pages, it defaults to using [Jekyll](https://jekyllrb.com/) and this will cause problems for Cosmos because Jekyll [filters out files that start with an underscore](https://help.github.com/articles/files-that-start-with-an-underscore-are-missing/) so `_playground.js` and other files will be gone when `index.html` needs them
-
-The solution is to put an empty `.nojekyll` file in your `/public/` folder. This will turn off Jekyll rendering and Cosmos should work just fine.
-
-#### Next.js
-
-Add `react-cosmos` to dev dependencies and create `cosmos.config.js`.
-
-> Next.js apps run on both client & server, so compilation is done via Babel plugins instead of webpack loaders. This means we can rely on Cosmos' default webpack config.
-
-```js
-// cosmos.config.js
-module.exports = {
-  publicPath: 'static',
-  publicUrl: '/static/'
-};
-```
-
-Also make sure to:
-
-- Add `html-webpack-plugin` to your dev dependencies
-- Define `.babelrc` for the Cosmos webpack config to rely on the Next.js preset:
+You can also point to a module inside a dependency, like in the following Create React App example.
 
 ```json
 {
-  "presets": ["next/babel"]
-}
-```
-
-_Next.js + Cosmos example: [Illustrated Algorithms](https://github.com/skidding/illustrated-algorithms)_
-
-#### React Boilerplate
-
-Add `react-cosmos` to dev dependencies and create `cosmos.config.js`.
-
-```js
-// cosmos.config.js
-module.exports = {
-  containerQuerySelector: '#app',
-  webpackConfigPath: './internals/webpack/webpack.dev.babel',
-  globalImports: ['./app/global-styles.js']
-};
-```
-
-#### React Redux Starter Kit
-
-Add `react-cosmos` to dev dependencies and create `cosmos.config.js`.
-
-```js
-// cosmos.config.js
-module.exports = {
-  webpackConfigPath: 'build/webpack.config.js'
-};
-```
-
-Also make sure to:
-
-- Set up the [Redux proxy](#react-cosmos-context-proxy) :)
-
-### Config
-
-The Cosmos config is optional, but it's very likely you'll want to create one at some point to set some custom options. The standard approach is to put a `cosmos.config.js` file in your project root.
-
-#### Custom config path
-
-Use the `--config` CLI arg if you prefer not placing the config in the project root.
-
-```js
-// package.json
-"scripts": {
-  "cosmos": "cosmos --config path/to/cosmos.config.js"
-}
-```
-
-Set the `rootPath` option to match the project root when using a custom config path. All other paths defined in the config are relative to rootPath.
-
-```js
-// cosmos.config.js
-module.exports = {
-  rootPath: '../../'
-};
-```
-
-#### Custom webpack config
-
-The default webpack config included in Cosmos checks to see which packages you have installed and, if found, automatically includes the Babel, CSS and JSON loaders, as well as the HtmlWebpackPlugin.
-
-If you already have a hairy webpack config that you'd like to reuse, set the `webpackConfigPath` option to your webpack config's file path and Cosmos will do its best to extend it.
-
-```js
-// cosmos.config.js
-module.exports = {
-  webpackConfigPath: './config/webpack.config.dev.js'
-};
-```
-
-You can also customize your webpack config specifically for Cosmos. Eg. Omitting one plugin from the Cosmos build.
-
-```js
-// cosmos.config.js
-module.exports = {
-  webpack: (config, { env }) => {
-    // Return customized config
-    return {
-      ...config,
-      plugins: config.plugins.filter(
-        p => !p.constructor || p.constructor.name !== 'OfflinePlugin'
-      )
-    };
+  "watchDirs": ["src"],
+  "webpack": {
+    "configPath": "react-scripts/config/webpack.config"
   }
-};
-```
-
-Or to add typescript support:
-
-```js
-const merge = require('webpack-merge');
-
-const tsSupportConfig = {
-  resolve: {
-    extensions: ['.ts', '.tsx']
-  },
-  module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader'
-      }
-    ]
-  }
-};
-
-module.exports = {
-  webpack: config => merge(config, tsSupportConfig)
-};
-```
-
-#### Custom fixture paths
-
-The `fileMatch`, `fileMatchIgnore` and `exclude` options are used to detect fixture files. The default `fileMatch` value is meant to accommodate most needs out of the box:
-
-```
-'**/__fixture?(s)__/**/*.{js,jsx,ts,tsx}',
-'**/?(*.)fixture?(s).{js,jsx,ts,tsx}'
-```
-
-The default `fileMatchIgnore` value is meant to [ignore node_modules folder](docs/file-match-ignore.md):
-
-```
-'**/node_modules/**'
-```
-
-> Note: Set the `rootPath` to a dir parent to all fixture files when using a [custom config path](#custom-config-path)
-
-TODO: Add `fixtureDir` and `fixtureSuffix` options for easier file match customization [#488](https://github.com/react-cosmos/react-cosmos/issues/488)
-
-#### Option dump
-
-Options supported by `cosmos.config.js`.
-
-```js
-// cosmos.config.js
-module.exports = {
-  // Set all other paths relative this this one. Important when cosmos.config
-  // isn't placed in the project root
-  rootPath: '../',
-
-  // Additional entry points that should be present along with any component
-  // Sad, but inevitable
-  globalImports: ['./reset.css', './global.css', 'babel-polyfill'],
-
-  // Customize pattern(s) for matching fixture files
-  fileMatch: ['**/fixtures-in-here/**/*.js'],
-
-  // Fixtures will not be loaded in the playground if their names match these
-  exclude: [/not-a-fixture/, /its-complicated/, /its-not-me-its-you/],
-
-  // File path to serve static files from. Like --content-base in webpack-dev-server
-  publicPath: 'src/public',
-
-  // Set base URL for both webpack assets and static files from publicPath
-  // Maps to webpack.output.publicPath
-  // https://webpack.js.org/configuration/output/#output-publicpath
-  publicUrl: '/static/',
-
-  // Customize proxies file path. Useful if Babel doesn't compile the root dir
-  proxiesPath: 'src/proxies.cosmos',
-
-  // Render inside custom root element. Useful if that root element already
-  // has styles attached, but bad for encapsulation
-  containerQuerySelector: '#app',
-
-  // Disable hot module replacement
-  hot: false,
-
-  // HTTP proxy specific requests to a different target
-  // For advanced usage see https://github.com/react-cosmos/react-cosmos/pull/875
-  httpProxy: {
-    context: '/api',
-    target: 'http://localhost:4000/api'
-  },
-
-  // Reuse existing webpack config
-  webpackConfigPath: './config/webpack.config.dev',
-
-  // Customize webpack config
-  webpack: (config, { env }) => {
-    // Return customized config
-    return config;
-  },
-
-  // Specify where should webpack watch for fixture files (defaults to rootPath)
-  watchDirs: ['src'],
-
-  // Customize dev server
-  hostname: 'localhost',
-  port: 5000
-};
-```
-
-### Exporting
-
-Static Component Playground? Piece of 🍰!
-
-Add this script and run `npm run cosmos:export` or `yarn cosmos:export`.
-
-```diff
-"scripts": {
-+  "cosmos:export": "cosmos-export"
 }
 ```
 
-Now you can deploy the `cosmos-export` directory to any static hosting service.
+> Both `watchDirs` and `webpack.configPath` options are recommended for a seamless integration with Create React App.
+
+### Webpack config override
+
+Overriding the webpack config gives you complete control. Use the `webpack.overridePath` setting to point to a module that customizes the webpack config used by Cosmos.
+
+```json
+{
+  "webpack": {
+    "overridePath": "./webpack.override.js"
+  }
+}
+```
+
+The override function receives a base webpack config — the default one generated by Cosmos or a custom one loaded from `webpack.configPath`. Extend the input config and return the result.
+
+```js
+// webpack.override.js
+module.exports = (webpackConfig, env) => {
+  return { ...webpackConfig /* do your thing */ };
+};
+```
+
+## JSX fixtures
+
+Cosmos Next introduces a more natural format for component fixtures: **React elements** and **React functions.**
+
+Some advantages compared to the old format in Cosmos Classic:
+
+- Fixtures are no longer bound to a single component
+- Adding one or more component wrappers per fixture is easy
+- Fixtures can be copy pasted inside the project source code
+- Props are easier to type-check
+- Writing fixtures doesn't feel like writing code for Cosmos
+
+The new fixtures formats also come with a minor drawback: `React` must be imported in every fixture file.
+
+### Element fixtures
+
+> Think of Element fixtures as the return value of a render function, or the first argument to `React.render`.
+
+```jsx
+// __fixtures__/disabled.js
+export default <Button disabled>Click me</Button>;
+```
+
+### Function fixtures
+
+Function fixtures are like a component with no props. They enable using Hooks inside fixtures, which is powerful for simulating state with stateless components.
+
+```jsx
+// CounterButton.fixture.js
+export default () => {
+  const [count, setCount] = React.useState(0);
+  return <CounterButton count={count} increment={() => setCount(count + 1)} />;
+};
+```
+
+### Multi fixture files
+
+A fixture file can also export multiple fixtures if the default export is an object.
+
+```jsx
+// buttons.fixture.js
+export default {
+  primary: <PrimaryButton>Click me</PrimaryButton>,
+  primaryDisabled: <PrimaryButton disabled>Click me</PrimaryButton>,
+  secondary: <SecondaryButton>Click me</SecondaryButton>,
+  secondaryDisabled: <SecondaryButton disabled>Click me</SecondaryButton>
+};
+```
+
+The object property names will show up as fixture names in the Cosmos UI.
+
+> [See this comment](https://github.com/react-cosmos/react-cosmos/issues/924#issuecomment-462082405) for the reasoning behind this solution (vs named exports).
+
+### How to create fixture files
+
+Two options:
+
+1. End fixture file names with `.fixture.{js,jsx,ts,tsx}`
+2. Put fixture files inside `__fixtures__`
+
+Examples:
+
+1. `blankState.fixture.js`
+2. `__fixtures__/blankState.js`
+
+> File name conventions can be configured using the `fixturesDir` and `fixtureFileSuffix` options.
+
+**IMPORTANT:** Fixture files must be placed in the `src` directory when using Create React App, in order for Cosmos to bundle in the exact same environment as Create React App's.
+
+## Decorators
+
+Wrapping components inside JSX fixtures is easy, but can become repetitive. _Decorators_ can be used to apply one or more component wrappers to a group of fixtures automatically.
+
+A `cosmos.decorator` file looks like this:
+
+```jsx
+// cosmos.decorator.js
+export default ({ children }) => <Provider store={store}>{children}</Provider>;
+```
+
+> A decorator only applies to fixture files contained in the decorator's directory. Decorators can be composed, in the order of their position in the file system hierarchy (from outer to inner).
+
+### Redux state mock
+
+Check out [react-cosmos-redux](https://github.com/skidding/react-cosmos-redux) to see what a Cosmos Next decorator looks like.
+
+## Declarative mocks
+
+Coming up with dummy prop values is all that's required to create fixtures for many components. In other cases, however, components have _special needs_.
+
+Some components need to be wrapped in certain _contexts_, like a Router provider. Other components fire `fetch` requests willy-nilly. All these implicit dependencies are component inputs and understanding them goes a long way.
+
+The [react-mock](https://github.com/skidding/react-mock) project provides ways for mocking implicit component dependencies and helps you create fixtures for _stubborn_ components.
+
+## UI-controlled values
+
+The [props panel](https://twitter.com/ReactCosmos/status/1139838627976843264) allows you to manipulate component props visually by default. But you can also get a _custom values panel_ with minimal work.
+
+```jsx
+// CounterButton.fixture.js
+import { useValue } from 'react-cosmos/fixture';
+
+export default () => {
+  const [count, setCount] = useValue(0);
+  return <CounterButton count={count} increment={() => setCount(count + 1)} />;
+};
+```
+
+> Heads up: `useValue` (and Cosmos in general) works great with TypeScript.
+
+## UI plugins
+
+A main feature of the Cosmos Next redesign is the brand-new UI plugin architecture. While the new UI is created 100% from plugins, the plugin API is not yet documented nor made accessible. It will take a few big steps to get there, but this is the future.
+
+### Custom [responsive viewports](https://twitter.com/ReactCosmos/status/1158701342208208897)
+
+`responsivePreview` is a plugin included by default, and you can customize it through the Cosmos config.
+
+```json
+{
+  "ui": {
+    "responsivePreview": {
+      "devices": [
+        { "label": "iPhone 5", "width": 320, "height": 568 },
+        { "label": "iPhone 6", "width": 375, "height": 667 },
+        { "label": "iPhone 6 Plus", "width": 414, "height": 736 },
+        { "label": "Medium", "width": 1024, "height": 768 },
+        { "label": "Large", "width": 1440, "height": 900 },
+        { "label": "1080p", "width": 1920, "height": 1080 }
+      ]
+    }
+  }
+}
+```
+
+## Static export
+
+Run `cosmos-export` and get a nice component library that you can deploy to any static hosting service. The exported version won't have all the Cosmos features available in development (like opening the selected fixture in your code editor), but allows anybody with access to the static export URL to browse fixtures and play with component inputs.
 
 > Use [http-server](https://github.com/indexzero/http-server) or any static file server to load the export locally.
 
-### Headless testing
+## React Native
 
-> Add `react-cosmos-test` to your dev dependencies for this API.
-
-Besides showing up in the Playground UI, fixtures can also be used independently to render a component in a mocked environment.
-
-#### Using Enzyme
-
-The test API exposes an entry point specifically designed for [Enzyme](http://airbnb.io/enzyme/).
-
-```js
-import createTestContext from 'react-cosmos-test/enzyme';
-import fixture from './fixture';
-
-const { mount, getWrapper } = createTestContext({ fixture });
-
-beforeEach(mount);
-
-test('renders hello', () => {
-  expect(getWrapper().text()).toContain('Hello World');
-});
+```
+npm run cosmos-native
 ```
 
-> Enzyme v3 requires us to call `wrapper.update` after a component updates, usually in response to an event ([see thread](https://github.com/airbnb/enzyme/issues/1163)). The `react-cosmos-test/enzyme` wrapper tries to alleviate this by updating the wrapper whenever we call `getWrapper()`. If your components don't seem to be updating in tests this may be due to to assigning `getWrapper()` to a variable and expecting it to change.
-
-But this is not the only way. As we'll see below, we can also mount fixtures using a custom renderer.
-
-#### Using a custom renderer
-
-Here's how to render a fixture with good ol' [react-test-renderer](https://reactjs.org/docs/test-renderer.html).
-
-```js
-import { create as renderer } from 'react-test-renderer';
-import createTestContext from 'react-cosmos-test/generic';
-import fixture from './fixture';
-
-const { mount, getWrapper } = createTestContext({
-  renderer,
-  fixture
-});
-
-beforeEach(mount);
-
-test('matches snapshot', () => {
-  // Careful, this is no longer an Enzyme wrapper, but a react-test-renderer wrapper!
-  expect(getWrapper().toJSON()).toMatchSnapshot();
-});
-```
-
-#### Capturing state changes
-
-The fixture does more than just defining component input. Like a sticky fly trap, the fixture captures state changes that occur during the component's lifecycle, which we can then inspect. For example:
-
-- If Redux state changes, the latest state can be read via `get('reduxState')`
-- If Router URL changes, the latest URL can be read via `get('url')`
-
-Instead of polluting our tests with various store and provider initialization, we let the [Proxies](#proxies) take care of it and then collect state changes from the updated fixture.
-
-> The following example assumes `react-cosmos-router-proxy` is configured.
-
-```js
-import createTestContext from 'react-cosmos-test/enzyme';
-import fixture from '../__fixtures__/logged-in';
-
-const { mount, getWrapper, get } = createTestContext({ fixture });
-
-beforeEach(mount);
-
-test('redirects to home page after signing out', () => {
-  getWrapper('.logout-btn').simulate('click');
-
-  expect(get('url')).toBe('/');
-});
-```
-
-#### Updating fixtures in tests
-
-Sometimes we want to test that a component updates correctly in response to _prop_ changes. We can use `setProps` to pass new props to a component. `setProps` merges passed in props with existing props.
-
-```js
-import createTestContext from 'react-cosmos-test/enzyme';
-import fixture from '../__fixtures__/button';
-
-const { mount, getWrapper, setProps } = createTestContext({ fixture });
-
-beforeEach(mount);
-
-test('responds to props being updated', () => {
-  expect(getWrapper('.btn').hasClass('warning')).toBeFalsy();
-  setProps({ warning: true });
-  expect(getWrapper('.btn').hasClass('warning')).toBeTruthy();
-});
-```
-
-#### createTestContext API
-
-The createTestContext API makes use of already configured proxies, which can be included in more ways.
-
-```js
-// Detect proxies automatically by reading cosmos config from cwd (or via --config CLI arg)
-const { mount } = createTestContext({ fixture });
-
-// Or point to a custom config path
-const { mount } = createTestContext({
-  fixture,
-  cosmosConfigPath: '/path/to/my/special/config';
-});
-
-// Or pass proxies directly
-const { mount } = createTestContext({ fixture, proxies });
-
-// By default we auto apply jest.fn to all functions in fixture.props recursively.
-// This makes it possible to do expect(fixture.props.*).toHaveBeenCalled in Jest
-// without wrapping any callback with jest.fn() by hand.
-// If this causes issues you can disable this feature, for example the case in https://github.com/react-cosmos/react-cosmos/issues/658
-const { mount } = createTestContext({ fixture, autoMockProps: false });
-```
-
-##### Context methods
-
-- _async_ `mount` Mounts component via renderer (usually called in `beforeEach`)
-- `unmount` Calls unmount method of wrapper returned by renderer
-- `getWrapper` Returns wrapper returned by renderer
-- `getRef` Get component ref (exclusively for Class components)
-- `getField(fixtureKey)` (or `get` for brevity) Returns updated fixture field
-- `setProps(newProps)` _Merges_ passed in props with existing fixture props (triggers re-render)
-
-#### Global Jest snapshot
-
-You can create a snapshot of all your components with `react-cosmos-telescope`. A single snapshot file for all components isn't ideal, but it makes a difference until you have time to create granular tests.
-
-```js
-import runTests from 'react-cosmos-telescope';
-
-runTests({
-  cosmosConfigPath: require.resolve('./cosmos.config.js')
-});
-```
-
-### Beta: React Native
-
-> Follow these steps once you have `react-cosmos` installed.
-
-Add package.json script
-
-```diff
-"scripts": {
-+  "cosmos-native": "cosmos-native"
-}
-```
-
-(Temporarily) Replace `App.js` (your app's entry point) with this:
+Cosmos Next works great with React Native. Put the following inside `App.js` to get started.
 
 ```jsx
 import React, { Component } from 'react';
-import { CosmosNativeLoader } from 'react-cosmos-loader/native';
-import { options, getUserModules } from './cosmos.modules';
+import { NativeFixtureLoader } from 'react-cosmos/native';
+// You generate cosmos.userdeps.js when you start the Cosmos server
+import { rendererConfig, fixtures, decorators } from './cosmos.userdeps';
 
 export default class App extends Component {
   render() {
-    return <CosmosNativeLoader options={options} modules={getUserModules()} />;
+    return (
+      <NativeFixtureLoader
+        rendererConfig={rendererConfig}
+        fixtures={fixtures}
+        decorators={decorators}
+      />
+    );
   }
 }
 ```
 
-Start your native app's dev server, and in another terminal run `npm run cosmos-native` or `yarn cosmos-native` and go to [localhost:5000](http://localhost:5000) 🔥
-
-> Since \_\_\_fixtures\_\_\_ dirs are [blacklisted by default in RN](https://github.com/facebook/react-native/blob/9176fc00b59d1a384008f26d72ba57a2a08e0726/local-cli/util/Config.js#L55-L57), **you may need to override the `getBlacklistRE` setting.**
+Once your fixtures are loading properly, you'll probably want to split your App entry point to load Cosmos in development and your root component in production. Something like this:
 
 ```js
-// rn-cli.config.js
-const blacklist = require('metro/src/blacklist');
-
-module.exports = {
-  getBlacklistRE() {
-    // __fixtures__ are blacklisted by default
-    return blacklist([]);
-  }
-};
+module.exports = global.__DEV__
+  ? require('./App.cosmos')
+  : require('./App.main');
 ```
 
-Next steps:
+**IMPORTANT:** React Native blacklists `__fixtures__` dirs by default. Unless you configure Cosmos to use a different directory pattern, you need to [override `getBlacklistRE` in the React Native CLI config](https://github.com/skidding/jobs-done/blob/585b1c472a123c9221dfec9018c9fa1e976d715e/rn-cli.config.js).
 
-- Add auto-generated file `cosmos.modules.js` to gitignore
-- Split App.js into `App.cosmos.js` and `App.main.js` — Check out [the CRNA example](https://github.com/react-cosmos/create-react-native-app-example) for inspiration
-- [Report an issue](https://github.com/react-cosmos/react-cosmos/issues/new) or [share some feedback](https://join-react-cosmos.now.sh/)
+### React Native for Web
 
-### Flow integration
+Run `cosmos --external-userdeps` instead of `cosmos-native` and Cosmos will [mirror your fixtures on both DOM and Native renderers](https://twitter.com/ReactCosmos/status/1156147491026472964).
 
-> Note: The `createFixture` helper only type checks _fixture.props_. It's not able to validate other fixture fields that map to custom proxies, but it still provides great value in many cases.
+## Server-side APIs
+
+> Do **NOT** use these APIs in your fixture files, or any of your client code, as they require access to the file system and may bundle unwanted Node code in your client build.
+
+### Config
+
+Fetching a Cosmos config can be done in a number of ways, depending on whether or not you have a config file and, in case you do, if you prefer to specify the path manually or to rely on automatic detection.
+
+#### Detect existing config based on cwd
+
+`detectCosmosConfig` uses the same config detection strategy as the `cosmos` command.
 
 ```js
-import { createFixture } from 'react-cosmos';
-import { Button } from '.';
+import { detectCosmosConfig } from 'react-cosmos';
 
-export default createFixture({
-  component: Button,
-  props: {
-    label: 'Press me',
-    disabled: 'false'
-    // Cannot call createFixture with object literal bound to fixture because
-    // string [1] is incompatible with boolean [2] in property props.disabled.
-  }
+const cosmosConfig = detectCosmosConfig();
+```
+
+#### Read existing config at exact path
+
+`getCosmosConfigAtPath` is best when you don't want to care where you run a script from.
+
+```js
+import { getCosmosConfigAtPath } from 'react-cosmos';
+
+const cosmosConfig = getCosmosConfigAtPath(require.resolve('./cosmos.config'));
+```
+
+#### Create default config
+
+The minimum requirement to create a config is a root directory.
+
+```js
+import { createCosmosConfig } from 'react-cosmos';
+
+const cosmosConfig = createCosmosConfig(__dirname);
+```
+
+#### Create custom config
+
+You can also customize your config programatically, without the need for an external config file.
+
+```js
+import { createCosmosConfig } from 'react-cosmos';
+
+const cosmosConfig = createCosmosConfig(__dirname, {
+  // Options... (TypeScript is your friend)
 });
 ```
 
-> Warning: Prop types are lost when using fixtures for components wrapped in higher order components.
+### Fixture URLs
 
-## Join the component revolution!
+A list with one Playground URL for each fixture, optionally in full-screen mode. A common use case for `getFixtureUrls` is to create visual snapshots for each fixture, and potentially to diff them between deploys.
 
-This project welcomes all. Check out the [Contributing Guide](CONTRIBUTING.md) to read about the project's mission and how to get involved. Ask anything on [Slack](https://join-react-cosmos.now.sh/). Let's make UI development fun!
+```js
+import { getFixtureUrls } from 'react-cosmos';
 
-Thanks to [Kreativa Studio](http://www.kreativa-studio.com/) for the Cosmos logo.
+const fixtureUrls = await getFixtureUrls({ cosmosConfig, fullScreen: true });
+
+console.log(fixtureUrls);
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22\_\_fixtures\_\_%2FHello%20World.ts%22%2C%22name%22%3Anull%7D&fullScreen=true
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22\_\_fixtures\_\_%2FProps%20Playground.tsx%22%2C%22name%22%3Anull%7D&fullScreen=true
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22\_\_fixtures\_\_%2FState%20Playground.tsx%22%2C%22name%22%3Anull%7D&fullScreen=true
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22default%22%7D&fullScreen=true
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22small%20number%22%7D&fullScreen=true
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22large%20number%22%7D&fullScreen=true
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22CounterButton%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D&fullScreen=true
+// localhost:5000/?fixtureId=%7B%22path%22%3A%22WelcomeMessage%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D&fullScreen=true
+// ...
+```
+
+### Fixture elements (rendered anywhere)
+
+A list of fixture elements to render by hand. A common use case for `getFixtures` is to run snapshot tests in alternative environments like jsdom.
+
+```js
+import { getFixtures } from 'react-cosmos';
+
+const fixtures = await getFixtures({ cosmosConfig });
+
+fixtures.forEach(({ fixtureId, getElement }) => {
+  const renderer = create(getElement());
+  expect(renderer.toJSON()).toMatchSnapshot(stringifyFixtureId(fixtureId));
+});
+```
+
+Check out the [full example](https://github.com/react-cosmos/react-cosmos/blob/41f0b6972fd0cb2951c43839f4c37a6cf1881571/example/fixtures.test.ts) for more details on how to use the `getFixtures` API.
+
+## Troubleshooting
+
+#### Failed to execute `postMessage` [...]?
+
+- [You may have a URL instance in your state](https://github.com/react-cosmos/react-cosmos/issues/1002)
+
+#### Using Next.js?
+
+- [Make sure you have html-webpack-plugin installed](https://github.com/react-cosmos/react-cosmos/issues/995#issuecomment-511883135)
+- [Override your webpack config with ProvidePlugin to support JSX without importing React](https://github.com/react-cosmos/react-cosmos/issues/1000#issuecomment-512575593)
+
+## Where's my old Cosmos?
+
+Cosmos Classic packages have been moved to [a dedicated repo](https://github.com/react-cosmos/react-cosmos-classic), which means we can continue to maintain Cosmos Classic or even run it alongside Cosmos Next in the same project (during the migration period).
+
+That said, it's ideal for all Cosmos users to use the latest version. Please [let me know](https://join-react-cosmos.now.sh/) if you need help upgrading.
+
+## Why Cosmos?
+
+Many other component-oriented tools have emerged since Cosmos was conceived. [Storybook](https://github.com/storybookjs/storybook) and [React Styleguidist](https://github.com/styleguidist/react-styleguidist) are good examples, but you can find an exhaustive list [here](https://react-styleguidist.js.org/docs/cookbook.html#are-there-any-other-projects-like-this). Choose the tool that matches your needs the most.
+
+React Cosmos is a dev tool first, made to address all components, big and small, not just the stateless UI bits. It aims to boost productivity and push UI developers into a _Pit of Success,_ to create robust component APIs that survive the test of time.
+
+You can also create a living style guide using React Cosmos, but it's a secondary goal and you might get more value from alternatives if this is your chief concern.
+
+## Credits
+
+Hi, this is [Ovidiu](https://twitter.com/skidding), the core maintainer of React Cosmos. I spend ridiculous amounts of time perfecting this project because I love building user interfaces and making useful stuff.
+
+React Cosmos is licensed as MIT and will always be free. If you want to support me, however, [become a Sponsor](https://github.com/users/skidding/sponsorship) and ensure this journey continues indefinitely!
+
+Special thanks to [@maxsalven](https://github.com/maxsalven) and [@xavxyz](https://github.com/xavxyz) for the long conversations and recurring interest in this project, as well as [@catalinmiron](https://github.com/catalinmiron), [@flaviusone](https://github.com/flaviusone), [@NiGhTTraX](https://github.com/NiGhTTraX), [@ovidiubute](https://github.com/ovidiubute), [@RadValentin](https://github.com/RadValentin), [@tkjone](https://github.com/tkjone), and all the other [contributors](https://github.com/react-cosmos/react-cosmos/graphs/contributors). You're a big reason why React Cosmos is still alive ❤️.
+
+Shout-out to [Kreativa Studio](http://www.kreativa-studio.com/) for offering the Cosmos illustration for free!
+
+---
+
+For feedback [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new) or [join us on Slack](https://join-react-cosmos.now.sh/).

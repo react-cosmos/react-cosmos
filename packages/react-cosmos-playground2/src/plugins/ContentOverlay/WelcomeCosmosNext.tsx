@@ -27,7 +27,7 @@ export function WelcomeCosmosNext({ onDismissWelcome }: Props) {
               New to Cosmos or a long time user, make sure to
               <br />
               <Link
-                href="https://github.com/react-cosmos/react-cosmos/blob/master/NEXT.md"
+                href="https://github.com/react-cosmos/react-cosmos/blob/master/README.md"
                 rel="noopener noreferrer"
                 target="_blank"
               >
@@ -151,7 +151,7 @@ const ActionLink = styled.a`
   letter-spacing: 0.1em;
   text-decoration: none;
   transform: translate3d(0, 0, 0);
-  animation: needy 6.4s ease-out infinite;
+  animation: pulse 10s ease-out infinite;
   outline: none;
 
   :focus {
@@ -162,32 +162,14 @@ const ActionLink = styled.a`
     border: 0;
   }
 
-  @keyframes needy {
+  @keyframes pulse {
     21.25% {
-      transform: translate3d(1px, -0.5px, 0);
       background: var(--primary4);
     }
-    22.5% {
-      transform: translate3d(-2px, 1px, 0);
-    }
-    23.75% {
-      transform: translate3d(2px, -2px, 0);
-    }
     25% {
-      transform: translate3d(-2px, 2px, 0);
       background: var(--primary3);
     }
-    26.25% {
-      transform: translate3d(1px, -2px, 0);
-    }
-    27.5% {
-      transform: translate3d(-0.5px, 1px, 0);
-    }
-    28.75% {
-      transform: translate3d(-0.5px, -0.5px, 0);
-    }
     30% {
-      transform: translate3d(1px, -0.5px, 0);
       background: var(--primary4);
     }
   }

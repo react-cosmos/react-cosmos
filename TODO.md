@@ -8,7 +8,7 @@ Alpha
 - [x] Notifications redesign
   - [x] Build notification [#522](https://github.com/react-cosmos/react-cosmos/issues/522)
   - [x] ~~Try: Notifications for fixture create/remove/rename~~ Too much info to display inside a notification
-- [ ] Control panel
+- [x] Control panel
 - [x] Fixture search
   - [x] Minimize left nav
 - [x] Official React Native integration
@@ -21,7 +21,8 @@ Alpha
 - [x] Server side APIs
   - [x] Get Playground URLs for each fixture (for visual snapshotting)
   - [x] Get fixture elements (for JSON snapshotting)
-- [ ] Refresh docs
+- [x] Refresh docs
+  - [ ] Publish demo
 
 Beta
 
