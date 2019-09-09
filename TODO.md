@@ -21,7 +21,7 @@ Alpha
 - [x] Server side APIs
   - [x] Get Playground URLs for each fixture (for visual snapshotting)
   - [x] Get fixture elements (for JSON snapshotting)
-- [ ] Refresh docs
+- [x] Refresh docs
   - [ ] Publish demo
 
 Beta

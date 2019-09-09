@@ -27,7 +27,7 @@ export function WelcomeCosmosNext({ onDismissWelcome }: Props) {
               New to Cosmos or a long time user, make sure to
               <br />
               <Link
-                href="https://github.com/react-cosmos/react-cosmos/blob/master/NEXT.md"
+                href="https://github.com/react-cosmos/react-cosmos/blob/master/README.md"
                 rel="noopener noreferrer"
                 target="_blank"
               >
