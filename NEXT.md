@@ -24,6 +24,20 @@ npm run cosmos
 
 The [example package](example) is a useful complement to this guide.
 
+## Requirements
+
+The only hard requirements are React 16.8 and Node 6 (or newer).
+
+React Cosmos works best with webpack. It takes extra effort to make it work with other bundlers, but it's not as scary as it might seem. Don’t be afraid to ask for support.
+
+> A [Browserify example](https://github.com/react-cosmos/react-cosmos-classic/tree/14e1a258f746df401a41ab65429df0d296b910e4/examples/browserify) and a [Parcel example](https://github.com/react-cosmos/parcel-ts-example) are available for Cosmos Classic. Props to whoever adapts them to Cosmos Next!
+
+## Compilation
+
+How you compile your code is 100% your business. React Cosmos jumps through hoops to compile your code using your existing build pipeline, but it doesn't have opinions nor does it install dependencies your setup might require.
+
+Unless you use a framework like Create React App or Next.js, install build dependencies yourself. This include stuff like Babel, TypeScript, webpack loaders, etc. **Cosmos detects and uses build dependencies already installed in your project.**
+
 ## Config
 
 No config is required to start. If you have custom needs or would like to convert a Cosmos Classic config, here's what you need to know.
