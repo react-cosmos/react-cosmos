@@ -368,11 +368,11 @@ That said, it's ideal for all Cosmos users to use the latest version. Please [le
 
 ## Troubleshooting
 
-### Failed to execute `postMessage` [...]?
+#### Failed to execute `postMessage` [...]?
 
 - [You may have a URL instance in your state](https://github.com/react-cosmos/react-cosmos/issues/1002)
 
-### Using Next.js?
+#### Using Next.js?
 
 - [Make sure you have html-webpack-plugin installed](https://github.com/react-cosmos/react-cosmos/issues/995#issuecomment-511883135)
 - [Override your webpack config with ProvidePlugin to support JSX without importing React](https://github.com/react-cosmos/react-cosmos/issues/1000#issuecomment-512575593)
