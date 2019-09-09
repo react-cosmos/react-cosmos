@@ -24,7 +24,7 @@ npm run cosmos
 
 [![Cosmos Next](next.png)](https://flatris-playground.now.sh/)
 
-Here's a [live demo](https://flatris-playground.now.sh/). Keep mind that this is static export. The React Cosmos dev environment has more functionality.
+**[Live demo](https://flatris-playground.now.sh/)**. Keep in mind this is a static export. The dev environment, which requires a local server running, has more functionality.
 
 ## Table of contents
 
