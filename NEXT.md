@@ -81,7 +81,7 @@ You can also point to a module inside a dependency, like in the following Create
 }
 ```
 
-Note: Both `watchDirs` and `webpack.configPath` options are recommended for a seamless integration with Create React App.
+> Both `watchDirs` and `webpack.configPath` options are recommended for a seamless integration with Create React App.
 
 ### Webpack config override
 
