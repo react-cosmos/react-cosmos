@@ -206,7 +206,7 @@ A `cosmos.decorator` file looks like this:
 export default ({ children }) => <Provider store={store}>{children}</Provider>;
 ```
 
-> A decorator file only applies to fixture files that are contained in the decorator file's directory. Multiple decorator files can be composed, in the order of their position in the file system hierarchy (from outer to inner).
+> A decorator only applies to fixture files contained in the decorator's directory. Decorators can be composed, in the order of their position in the file system hierarchy (from outer to inner).
 
 ## Declarative mocks
 
