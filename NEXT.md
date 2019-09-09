@@ -24,6 +24,8 @@ npm run cosmos
 
 The [example package](example) is a useful complement to this guide.
 
+- FAQ: [Troubleshooting](#troubleshooting) · [Why Cosmos?](#why-cosmos) · [Where's my old Cosmos?](#wheres-my-old-cosmos) · [Credits](#credits)
+
 ## Requirements
 
 The only hard requirements are React 16.8 and Node 6 (or newer).
@@ -132,7 +134,7 @@ Some advantages compared to the old format in Cosmos Classic:
 
 The new fixtures formats also come with a minor drawback: `React` must be imported in every fixture file.
 
-## Element fixtures
+### Element fixtures
 
 > Think of Element fixtures as the return value of a render function, or the first argument to `React.render`.
 
@@ -141,7 +143,7 @@ The new fixtures formats also come with a minor drawback: `React` must be import
 export default <Button disabled>Click me</Button>;
 ```
 
-## Function fixtures
+### Function fixtures
 
 Function fixtures are like a component with no props. They enable using Hooks inside fixtures, which is powerful for simulating state with stateless components.
 
@@ -153,7 +155,7 @@ export default () => {
 };
 ```
 
-## Multi fixture files
+### Multi fixture files
 
 A fixture file can also export multiple fixtures if the default export is an object.
 
@@ -171,7 +173,7 @@ The object property names will show up as fixture names in the Cosmos UI.
 
 > [See this comment](https://github.com/react-cosmos/react-cosmos/issues/924#issuecomment-462082405) for the reasoning behind this solution (vs named exports).
 
-## How to create fixture files
+### How to create fixture files
 
 Two options:
 
@@ -382,7 +384,18 @@ fixtures.forEach(({ fixtureId, getElement }) => {
 
 Check out the [full example](https://github.com/react-cosmos/react-cosmos/blob/41f0b6972fd0cb2951c43839f4c37a6cf1881571/example/fixtures.test.ts) for more details on how to use the `getFixtures` API.
 
-## Where is my old Cosmos?
+## Troubleshooting
+
+#### Failed to execute `postMessage` [...]?
+
+- [You may have a URL instance in your state](https://github.com/react-cosmos/react-cosmos/issues/1002)
+
+#### Using Next.js?
+
+- [Make sure you have html-webpack-plugin installed](https://github.com/react-cosmos/react-cosmos/issues/995#issuecomment-511883135)
+- [Override your webpack config with ProvidePlugin to support JSX without importing React](https://github.com/react-cosmos/react-cosmos/issues/1000#issuecomment-512575593)
+
+## Where's my old Cosmos?
 
 Cosmos Classic packages have been moved to [a dedicated repo](https://github.com/react-cosmos/react-cosmos-classic), which means we can continue to maintain Cosmos Classic or even run it alongside Cosmos Next in the same project (during the migration period).
 
@@ -395,17 +408,6 @@ Many other component-oriented tools have emerged since Cosmos was conceived. [St
 React Cosmos is a dev tool first, made to address all components, big and small, not just the stateless UI bits. It aims to boost developer productivity and lead to robust component APIs that survive the test of time.
 
 You can also create a living style guide using React Cosmos, but it's a secondary goal and you might get more value from alternatives if this is your chief concern.
-
-## Troubleshooting
-
-#### Failed to execute `postMessage` [...]?
-
-- [You may have a URL instance in your state](https://github.com/react-cosmos/react-cosmos/issues/1002)
-
-#### Using Next.js?
-
-- [Make sure you have html-webpack-plugin installed](https://github.com/react-cosmos/react-cosmos/issues/995#issuecomment-511883135)
-- [Override your webpack config with ProvidePlugin to support JSX without importing React](https://github.com/react-cosmos/react-cosmos/issues/1000#issuecomment-512575593)
 
 ## Credits
 
