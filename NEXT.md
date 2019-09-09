@@ -2,6 +2,8 @@
 
 [![npm version](https://img.shields.io/npm/v/react-cosmos/next.svg?style=flat)](https://www.npmjs.com/package/react-cosmos) [![CircleCI Status](https://circleci.com/gh/react-cosmos/react-cosmos.svg?style=shield)](https://circleci.com/gh/react-cosmos/react-cosmos) [![Twitter](https://img.shields.io/twitter/follow/ReactCosmos.svg?color=%2338A1F3&label=twitter&style=flat)](https://twitter.com/ReactCosmos) [![Slack](https://join-react-cosmos.now.sh/badge.svg)](https://join-react-cosmos.now.sh/) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/react-cosmos/react-cosmos/blob/master/CONTRIBUTING.md#how-to-contribute)
 
+> [Become a Sponsor](https://github.com/users/skidding/sponsorship) to invest in the future of React Cosmos
+
 A tool for ambitious UI developers.
 
 - **Laser focus.** Isolate the components you're working on and iterate quickly. Works for both UI primitives and entire app sections. Running your whole app on every change is slowing you down!
