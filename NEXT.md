@@ -24,6 +24,10 @@ npm run cosmos
 
 The [example package](example) is a useful complement to this guide.
 
+## Table of contents
+
+- Setup: [Requirements](#requirements) · [Compilation](#compilation) · [Config](#config) · [Webpack](#webpack)
+- Usage: [Fixtures](#jsx-fixtures) · [Decorators](#decorators) · [Declarative mocks](#declarative-mocks) · [UI controls](#ui-controlled-values) · [UI plugins](#ui-plugins) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
 - FAQ: [Troubleshooting](#troubleshooting) · [Why Cosmos?](#why-cosmos) · [Where's my old Cosmos?](#wheres-my-old-cosmos) · [Credits](#credits)
 
 ## Requirements
