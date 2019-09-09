@@ -29,7 +29,7 @@ The [example package](example) is a useful complement to this guide.
 ## Table of contents
 
 - Setup: [Requirements](#requirements) · [Config](#config) · [Webpack](#webpack)
-- Usage: [Fixtures](#jsx-fixtures) · [Decorators](#decorators) · [Declarative mocks](#declarative-mocks) · [UI controls](#ui-controlled-values) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
+- Usage: [Fixtures](#jsx-fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [UI controls](#ui-controlled-values) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
 - FAQ: [Troubleshooting](#troubleshooting) · [Where's my old Cosmos?](#wheres-my-old-cosmos) · [Why Cosmos?](#why-cosmos) · [Credits](#credits)
 
 ## Requirements
