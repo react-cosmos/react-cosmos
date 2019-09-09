@@ -379,7 +379,7 @@ That said, it's ideal for all Cosmos users to use the latest version. Please [le
 
 ## Thank you!
 
-Special thanks to [@maxsalven](https://github.com/maxsalven) and [@xavxyz](https://github.com/xavxyz) for the long conversations and recurring interesting in this project, as well as [@catalinmiron](https://github.com/catalinmiron), [@flaviusone](https://github.com/flaviusone), [@NiGhTTraX](https://github.com/NiGhTTraX), [@ovidiubute](https://github.com/ovidiubute), [@RadValentin](https://github.com/RadValentin), [@tkjone](https://github.com/tkjone) and all the other [contributors](https://github.com/react-cosmos/react-cosmos/graphs/contributors). You're a big reason why React Cosmos is still alive.
+Special thanks to [@maxsalven](https://github.com/maxsalven) and [@xavxyz](https://github.com/xavxyz) for the long conversations and recurring interesting in this project, as well as [@catalinmiron](https://github.com/catalinmiron), [@flaviusone](https://github.com/flaviusone), [@NiGhTTraX](https://github.com/NiGhTTraX), [@ovidiubute](https://github.com/ovidiubute), [@RadValentin](https://github.com/RadValentin), [@tkjone](https://github.com/tkjone), and all the other [contributors](https://github.com/react-cosmos/react-cosmos/graphs/contributors). You're a big reason why React Cosmos is still alive.
 
 Shout-out to [Kreativa Studio](http://www.kreativa-studio.com/) for offering the Cosmos illustration for free!
 
