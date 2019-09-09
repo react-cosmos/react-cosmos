@@ -14,6 +14,8 @@ A tool for ambitious UI developers.
 - **Component library.** From blank states to normal states to edge cases, define component states to come back to. Your component library helps you stay organized and makes a great foundation of _test cases_.
 - **Long term design.** Keeping your components decoupled leads to reusable code, a robust architecture, and saves you from having to rewrite your UI every two years.
 
+---
+
 **Install `react-cosmos@next` to get started.**
 
 ```
@@ -27,7 +29,7 @@ The [example package](example) is a useful complement to this guide.
 ## Table of contents
 
 - Setup: [Requirements](#requirements) · [Config](#config) · [Webpack](#webpack)
-- Usage: [Fixtures](#jsx-fixtures) · [Decorators](#decorators) · [Declarative mocks](#declarative-mocks) · [UI controls](#ui-controlled-values) · [UI plugins](#ui-plugins) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
+- Usage: [Fixtures](#jsx-fixtures) · [Decorators](#decorators) · [Declarative mocks](#declarative-mocks) · [UI controls](#ui-controlled-values) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
 - FAQ: [Troubleshooting](#troubleshooting) · [Where's my old Cosmos?](#wheres-my-old-cosmos) · [Why Cosmos?](#why-cosmos) · [Credits](#credits)
 
 ## Requirements
@@ -258,6 +260,12 @@ A main feature of the Cosmos Next redesign is the brand-new UI plugin architectu
   }
 }
 ```
+
+## Static export
+
+Run `cosmos-export` and get a nice component library that you can deploy to any static hosting service. The exported version won't have all the Cosmos features available in development (like opening the selected fixture in your code editor), but allows anybody with access to the static export URL to browse fixtures and play with component inputs.
+
+> Use [http-server](https://github.com/indexzero/http-server) or any static file server to load the export locally.
 
 ## React Native
 
