@@ -26,7 +26,7 @@ The [example package](example) is a useful complement to this guide.
 
 ## Table of contents
 
-- Setup: [Requirements](#requirements) · [Compilation](#compilation) · [Config](#config) · [Webpack](#webpack)
+- Setup: [Requirements](#requirements) · [Config](#config) · [Webpack](#webpack)
 - Usage: [Fixtures](#jsx-fixtures) · [Decorators](#decorators) · [Declarative mocks](#declarative-mocks) · [UI controls](#ui-controlled-values) · [UI plugins](#ui-plugins) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
 - FAQ: [Troubleshooting](#troubleshooting) · [Where's my old Cosmos?](#wheres-my-old-cosmos) · [Why Cosmos?](#why-cosmos) · [Credits](#credits)
 
@@ -38,7 +38,7 @@ React Cosmos works best with webpack. It takes extra effort to make it work with
 
 > [Browserify](https://github.com/react-cosmos/react-cosmos-classic/tree/14e1a258f746df401a41ab65429df0d296b910e4/examples/browserify) and [Parcel](https://github.com/react-cosmos/parcel-ts-example) examples are available for Cosmos Classic. Props to whoever adapts them to Cosmos Next!
 
-## Compilation
+### Compilation
 
 How you compile your code is 100% your business. React Cosmos jumps through hoops to compile your code using your existing build pipeline, but it doesn't have opinions nor does it install dependencies your setup might require.
 
