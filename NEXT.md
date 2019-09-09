@@ -200,7 +200,7 @@ export default () => {
 };
 ```
 
-> Heads up: `useValue` works great with TypeScript.
+> Heads up: `useValue` (and Cosmos in general) works great with TypeScript.
 
 ### Redux state mock
 
@@ -364,7 +364,7 @@ Check out the [full example](https://github.com/react-cosmos/react-cosmos/blob/4
 
 Cosmos Classic packages have been moved to [a dedicated repo](https://github.com/react-cosmos/react-cosmos-classic), which means we can continue to maintain Cosmos Classic or even run it alongside Cosmos Next in the same project (during the migration period).
 
-That said, it's ideal for all Cosmos users to use the latest version. Please [let me know](https://join-react-cosmos.now.sh/) if you need any help upgrading.
+That said, it's ideal for all Cosmos users to use the latest version. Please [let me know](https://join-react-cosmos.now.sh/) if you need help upgrading.
 
 ## Troubleshooting
 
@@ -379,7 +379,7 @@ That said, it's ideal for all Cosmos users to use the latest version. Please [le
 
 ## Thank you!
 
-Special thanks to [@maxsalven](https://github.com/maxsalven) and [@xavxyz](https://github.com/xavxyz) for the long conversations and recurring interesting in this project, as well as [@catalinmiron](https://github.com/catalinmiron), [@flaviusone](https://github.com/flaviusone), [@NiGhTTraX](https://github.com/NiGhTTraX), [@ovidiubute](https://github.com/ovidiubute), [@RadValentin](https://github.com/RadValentin), [@tkjone](https://github.com/tkjone), and all the other [contributors](https://github.com/react-cosmos/react-cosmos/graphs/contributors). You're a big reason why React Cosmos is still alive.
+Special thanks to [@maxsalven](https://github.com/maxsalven) and [@xavxyz](https://github.com/xavxyz) for the long conversations and recurring interesting in this project, as well as [@catalinmiron](https://github.com/catalinmiron), [@flaviusone](https://github.com/flaviusone), [@NiGhTTraX](https://github.com/NiGhTTraX), [@ovidiubute](https://github.com/ovidiubute), [@RadValentin](https://github.com/RadValentin), [@tkjone](https://github.com/tkjone), and all the other [contributors](https://github.com/react-cosmos/react-cosmos/graphs/contributors). You're a big reason why React Cosmos is still alive ❤️.
 
 Shout-out to [Kreativa Studio](http://www.kreativa-studio.com/) for offering the Cosmos illustration for free!
 
