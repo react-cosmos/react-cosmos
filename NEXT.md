@@ -81,9 +81,7 @@ You can also point to a module inside a dependency, like in the following Create
 }
 ```
 
-Notes:
-
-- It's important to set both `watchDirs` and `webpack.configPath` options to seamlessly integrate with Create React App.
+Note: Both `watchDirs` and `webpack.configPath` options are recommended for a seamless integration with Create React App.
 
 ### Webpack config override
 
@@ -173,13 +171,11 @@ Examples:
 
 > File name conventions can be configured using the `fixturesDir` and `fixtureFileSuffix` options.
 
-Notes:
-
-- **IMPORTANT:** Fixture files must be placed in the `src` directory when using Create React App, in order for Cosmos to bundle in the exact same environment as Create React App's.
+**IMPORTANT:** Fixture files must be placed in the `src` directory when using Create React App, in order for Cosmos to bundle in the exact same environment as Create React App's.
 
 ## Decorators
 
-Wrapping components inside fixtures is now easy, but can become repetitive. _Decorators_ can be used to apply one or more component wrappers to a group of fixtures automatically.
+Wrapping components inside JSX fixtures is easy, but can become repetitive. _Decorators_ can be used to apply one or more component wrappers to a group of fixtures automatically.
 
 A `cosmos.decorator` file looks like this:
 
@@ -192,7 +188,7 @@ export default ({ children }) => <Provider store={store}>{children}</Provider>;
 
 ## UI-controlled values
 
-The _props panel_ allows you to manipulate component props visually by default. But you can also get a _custom values panel_ with minimal work.
+The [props panel](https://twitter.com/ReactCosmos/status/1139838627976843264) allows you to manipulate component props visually by default. But you can also get a _custom values panel_ with minimal work.
 
 ```jsx
 // CounterButton.fixture.js
@@ -208,15 +204,13 @@ export default () => {
 
 ### Redux state mock
 
-Check out [react-cosmos-redux](https://github.com/skidding/react-cosmos-redux) to see what a Cosmos Next decorator looks like. It works with the latest `react-redux` version and it's written in _Hooks_ 💃.
+Check out [react-cosmos-redux](https://github.com/skidding/react-cosmos-redux) to see what a Cosmos Next decorator looks like.
 
 ## UI plugins
 
 A main feature of the Cosmos Next redesign is the brand-new UI plugin architecture. While the new UI is created 100% from plugins, the plugin API is not yet documented nor made accessible. It will take a few big steps to get there, but this is the future.
 
-While we get feedback for the new JSX fixtures and decorators, I will continue to add feature parity with the old Cosmos UI and gradually release the powerful plugin API for mass consumption. Exciting things ahead!
-
-### Custom responsive viewports
+### Custom [responsive viewports](https://twitter.com/ReactCosmos/status/1158701342208208897)
 
 `responsivePreview` is a plugin included by default, and you can customize it through the Cosmos config.
 
@@ -272,7 +266,7 @@ module.exports = global.__DEV__
   : require('./App.main');
 ```
 
-> Using React Native for Web? Run `cosmos --external-userdeps` instead of `cosmos-native` and Cosmos will mirror your fixtures on both DOM and Native renderers.
+> Using React Native for Web? Run `cosmos --external-userdeps` instead of `cosmos-native` and Cosmos will [mirror your fixtures on both DOM and Native renderers](https://twitter.com/ReactCosmos/status/1156147491026472964).
 
 Notes:
 
@@ -368,7 +362,9 @@ Check out the [full example](https://github.com/react-cosmos/react-cosmos/blob/4
 
 ## Where is my old Cosmos?
 
-Cosmos Classic isn't going anywhere. First, it will take months before a release candidate for v5 (Cosmos Next) is ready. Second, the classic packages have been moved to [a dedicated repo](https://github.com/react-cosmos/react-cosmos-classic), which means we can continue to maintain Cosmos Classic or even run it alongside Cosmos Next in the same project (during the migration period).
+Cosmos Classic packages have been moved to [a dedicated repo](https://github.com/react-cosmos/react-cosmos-classic), which means we can continue to maintain Cosmos Classic or even run it alongside Cosmos Next in the same project (during the migration period).
+
+That said, it's ideal for all Cosmos users to use the latest version. Please [let me know](https://join-react-cosmos.now.sh/) if you need any help upgrading.
 
 ## Troubleshooting
 
@@ -381,8 +377,12 @@ Cosmos Classic isn't going anywhere. First, it will take months before a release
 - [Make sure you have html-webpack-plugin installed](https://github.com/react-cosmos/react-cosmos/issues/995#issuecomment-511883135)
 - [Override your webpack config with ProvidePlugin to support JSX without importing React](https://github.com/react-cosmos/react-cosmos/issues/1000#issuecomment-512575593)
 
+## Thank you!
+
+Special thanks to [@maxsalven](https://github.com/maxsalven) and [@xavxyz](https://github.com/xavxyz) for the long conversations and recurring interesting in this project, as well as [@catalinmiron](https://github.com/catalinmiron), [@flaviusone](https://github.com/flaviusone), [@NiGhTTraX](https://github.com/NiGhTTraX), [@ovidiubute](https://github.com/ovidiubute), [@RadValentin](https://github.com/RadValentin), [@tkjone](https://github.com/tkjone) and all the other [contributors](https://github.com/react-cosmos/react-cosmos/graphs/contributors). You're a big reason why React Cosmos is still alive.
+
+Shout-out to [Kreativa Studio](http://www.kreativa-studio.com/) for offering the Cosmos illustration for free!
+
 ---
 
-**Thanks for your help in shaping the future of React Cosmos! 🙏**
-
-For feedback [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new) or [go on Slack](https://join-react-cosmos.now.sh/).
+For feedback [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new) or [join us on Slack](https://join-react-cosmos.now.sh/).
