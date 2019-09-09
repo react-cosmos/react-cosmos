@@ -36,7 +36,7 @@ React Cosmos works best with webpack. It takes extra effort to make it work with
 
 How you compile your code is 100% your business. React Cosmos jumps through hoops to compile your code using your existing build pipeline, but it doesn't have opinions nor does it install dependencies your setup might require.
 
-Unless you use a framework like Create React App or Next.js, install build dependencies yourself. This include stuff like Babel, TypeScript, webpack loaders, etc. **Cosmos detects and uses build dependencies already installed in your project.**
+Unless you use a framework like Create React App or Next.js, install build dependencies yourself. This include stuff like Babel, TypeScript, webpack loaders, etc. **Cosmos uses build dependencies already installed in your project.**
 
 ## Config
 
