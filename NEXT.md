@@ -200,6 +200,14 @@ export default ({ children }) => <Provider store={store}>{children}</Provider>;
 
 > A decorator file only applies to fixture files that are contained in the decorator file's directory. Multiple decorator files can be composed, in the order of their position in the file system hierarchy (from outer to inner).
 
+## Declarative mocks
+
+Coming up with dummy prop values is all that's required to create fixtures for many components. In other cases, however, components have _special needs_.
+
+Some components need to be wrapped in certain _contexts_, like a Router provider. Other components fire `fetch` requests willy-nilly. All these implicit dependencies are component inputs and understanding them goes a long way.
+
+The [react-mocks](https://github.com/skidding/react-mock) project provides ways for mocking implicit component dependencies and helps you create fixtures for _stubborn_ components.
+
 ## UI-controlled values
 
 The [props panel](https://twitter.com/ReactCosmos/status/1139838627976843264) allows you to manipulate component props visually by default. But you can also get a _custom values panel_ with minimal work.
