@@ -24,15 +24,15 @@ const fixtures = {
 };
 
 export default {
-  'no fixure selected': createSearchOverlayFixture(),
+  'no fixure selected': createFixture(),
 
-  'fixture selected': createSearchOverlayFixture({
+  'fixture selected': createFixture({
     path: 'src/plugins/Notifications/index.fixture.tsx',
     name: 'multiple'
   })
 };
 
-function createSearchOverlayFixture(fixtureId: null | FixtureId = null) {
+function createFixture(fixtureId: null | FixtureId = null) {
   return () => {
     const [searchText, setSearchText] = useValue('searchText', {
       defaultValue: ''
