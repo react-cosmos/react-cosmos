@@ -24,6 +24,8 @@ npm run cosmos
 
 [![Cosmos Next](next.png)](https://flatris-playground.now.sh/)
 
+> You may also run `npx react-cosmos@next` in your project without installing any deps.
+
 **[Live demo](https://flatris-playground.now.sh/)**. Keep in mind this is a static export. The dev environment, which requires a local server running, has more functionality.
 
 ## Table of contents
