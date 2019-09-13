@@ -2,15 +2,16 @@ import path from 'path';
 import webpack from 'webpack';
 import { CosmosConfig } from '../../../config';
 import { createWebpackCosmosConfig } from '../cosmosConfig/webpack';
-import {
-  getUserWebpackConfig,
-  resolveDomRendererPath,
-  resolveClientPath,
-  getUserDepsLoaderRule,
-  getGlobalsPlugin,
-  hasPlugin
-} from './shared';
 import { ensureHtmlWebackPlugin } from './htmlPlugin';
+import {
+  getGlobalsPlugin,
+  getUserDepsLoaderRule,
+  getUserWebpackConfig,
+  hasPlugin,
+  resolveClientPath,
+  resolveDomRendererPath,
+  resolveLocalReactDeps
+} from './shared';
 
 export function getDevWebpackConfig(
   cosmosConfig: CosmosConfig,
@@ -25,6 +26,7 @@ export function getDevWebpackConfig(
       ...baseWebpackConfig.module,
       rules: getRules(baseWebpackConfig)
     },
+    resolve: resolveLocalReactDeps(cosmosConfig, baseWebpackConfig),
     plugins: getPlugins(cosmosConfig, baseWebpackConfig, userWebpack)
   };
 }
