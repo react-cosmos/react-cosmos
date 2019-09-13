@@ -1,7 +1,8 @@
 import fs from 'fs';
+import pkgUp from 'pkg-up';
 import { PlaygroundConfig } from 'react-cosmos-playground2';
 import { CosmosConfig } from '../config';
-import { replaceKeys, PlatformType } from './shared';
+import { PlatformType, replaceKeys } from './shared';
 import { slash } from './slash';
 import { getStaticPath } from './static';
 
@@ -60,7 +61,17 @@ function getExportCoreConfig(
 
 function getSharedCoreConfig(cosmosConfig: CosmosConfig) {
   const { rootDir, fixturesDir, fixtureFileSuffix } = cosmosConfig;
-  return { projectId: rootDir, fixturesDir, fixtureFileSuffix };
+  return { projectId: getProjectId(rootDir), fixturesDir, fixtureFileSuffix };
+}
+
+function getProjectId(rootDir: string) {
+  const pkgPath = pkgUp.sync({ cwd: rootDir });
+  if (!pkgPath) {
+    return rootDir.split('/').pop();
+  }
+
+  const pkg = require(pkgPath);
+  return pkg.name || '';
 }
 
 function getWebRendererUrl({ publicUrl }: CosmosConfig) {
