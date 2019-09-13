@@ -38,7 +38,7 @@ function genGlobalRequires(paths: string[]) {
     '',
     '// Keeping global imports here is superior to making them bundle entry points',
     '// because this way they become hot-reloadable',
-    ...paths.map(importPath => `import '${importPath}';`),
+    ...paths.map(importPath => `require('${importPath}');`),
     ''
   ].join(`\n`);
 }
