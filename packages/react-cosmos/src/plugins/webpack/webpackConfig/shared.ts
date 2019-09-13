@@ -1,6 +1,7 @@
 import path from 'path';
-import { argv } from 'yargs';
+import resolveFrom from 'resolve-from';
 import webpack from 'webpack';
+import { argv } from 'yargs';
 import { CosmosConfig } from '../../../config';
 import { moduleExists, requireModule } from '../../../shared/fs';
 import { createWebpackCosmosConfig } from '../cosmosConfig/webpack';
@@ -75,6 +76,27 @@ export function getUserDepsLoaderRule() {
   return {
     loader: require.resolve('./userDepsLoader'),
     include: resolveClientPath('userDeps')
+  };
+}
+
+export function resolveLocalReactDeps(
+  cosmosConfig: CosmosConfig,
+  baseWebpackConfig: webpack.Configuration
+) {
+  const { rootDir } = cosmosConfig;
+
+  const reactPath = resolveFrom.silent(rootDir, 'react');
+  if (!reactPath) throw new Error(`[Cosmos] Local dependency not found: react`);
+
+  const reactDomPath = resolveFrom.silent(rootDir, 'react-dom');
+  if (!reactDomPath)
+    throw new Error(`[Cosmos] Local dependency not found: react-dom`);
+
+  const { resolve = {} } = baseWebpackConfig;
+  const { alias = {} } = resolve;
+  return {
+    ...resolve,
+    alias: { ...alias, react: reactPath, reactDom: reactDomPath }
   };
 }
 
