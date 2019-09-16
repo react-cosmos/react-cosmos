@@ -1,8 +1,6 @@
-> **Warning:** These notions refer to the next generation of React Cosmos which is still in the works. Consult the [roadmap](TODO.md) for more information.
-
 #### Fixture
 
-Any React [Node](https://flow.org/en/docs/react/types/#toc-react-node). Describes the state of one or more components.
+Any React [Node](https://flow.org/en/docs/react/types/#toc-react-node) or a React component with no props. Captures the state of one or more components.
 
 #### Fixture decorator
 
@@ -10,11 +8,11 @@ Component wrapper for enhancing a fixture's capabilities.
 
 #### Fixture state
 
-State related to a rendered fixture, like component props, state or other data provided by fixture decorators. Changes to the fixture state alter the fixture elements (and in turn their output).
+State related to a rendered fixture, like component props, state or other data provided by fixture decorators. Changes to the fixture state alter the fixture (and in turn its output).
 
 #### FixtureProvider
 
-Hosts fixture state and provides the required context for a fixture (and its decorators) to render.
+Hosts fixture state and provides the required context for fixtures (and decorators) to render.
 
 #### FixtureLoader
 
