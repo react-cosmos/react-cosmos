@@ -9,7 +9,6 @@ Jump to:
 - [Goals](#goals)
 - [How to contribute](#how-to-contribute)
 - [Repo](#repo)
-- [Conventions](#conventions)
 
 ## Goals
 
@@ -87,8 +86,6 @@ yarn test:watch
 # Single test watch mode
 yarn test:watch path/to/my/testfile
 ```
-
-## Conventions
 
 ### Test your work
 
