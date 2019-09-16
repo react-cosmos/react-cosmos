@@ -1,6 +1,6 @@
 ## Hey there!
 
-So you want to know more about React Cosmos... _Excellent!_
+So you want to know more about React Cosmos... _Sweet!_
 
 > You're probably a nice person and don't need to here this. At the same time, however, you _could_ be one of the assholes roaming the world. So please follow our [Code of Conduct](CODE_OF_CONDUCT.md) and respect the people you interact with.
 
@@ -19,7 +19,7 @@ This is _the_ goal. The means are built on the following insight: Designing comp
 
 **Help UI developers think long term.**
 
-UI development is all fun an games at first. But sooner or later it gets messy. _Massively messy._ Why? Because calling them "components" isn't enough to avoid tight coupling. Developing components in isolation discourages coupling.
+UI development is all fun and games at first. But sooner or later it gets messy. _Massively messy._ Why? Because calling them "components" isn't enough to avoid tight coupling. Developing components in isolation discourages coupling.
 
 **Make UI development fun.**
 
@@ -33,12 +33,12 @@ Here's a list of things you can do to help React Cosmos, sorted by project expri
 
 1. _Use_ the project. Understand its capabilities.
 2. Provide user feedback.
-3. Propose ideas to improve onboarding and user experience – not just features :)
-4. Respond to issues you know how to solve
-5. Engage with the community
-6. Engage in roadmap & design discussions
-7. Fix known bugs
-8. Implement agreed upon changes
+3. Propose ideas to improve onboarding and user experience – not just features :).
+4. Respond to issues you know how to solve.
+5. Engage with the community.
+6. Engage in roadmap & design discussions.
+7. Fix known bugs.
+8. Implement agreed upon changes.
 
 ### Be kind and thoughtful
 
@@ -56,7 +56,7 @@ Open the CI build page. See what went wrong and learn to run the checks locally.
 
 > Working on Cosmos requires Node 8 or newer
 
-The repo is powered by [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) and [Lerna](https://github.com/lerna/lerna). The monorepo structure makes it possible to publish independent packages and still test the project end-to-end.
+[Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) and [Lerna](https://github.com/lerna/lerna) make it possible to publish independent packages and still test the project end-to-end.
 
 Tools are installed globally in the root node_modules. This includes Jest, TypeScript, Webpack, and their corresponding plugins. ESLint is also applied globally. Creating a new package has less overhead because of this. React and Webpack deps are also installed once in the root node_modules to avoid version conflicts or bundling multiple copies of React.
 
@@ -87,10 +87,6 @@ yarn test:watch
 # Single test watch mode
 yarn test:watch path/to/my/testfile
 ```
-
-### Remote renderering
-
-User code runs inside an _iframe_ for complete isolation. The Cosmos UI talks to renderers using window.postMessage or WebSockets. The latter is used with React Native or when controlling a renderer from a separate browser tab.
 
 ## Conventions
 
