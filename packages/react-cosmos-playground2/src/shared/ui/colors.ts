@@ -39,3 +39,12 @@ const colors: Record<ColorType, Record<ColorShade, Color>> = {
     9: { hue: 221, saturation: 68, lightness: 93 }
   }
 };
+
+export function createGreyColor(intensity: number) {
+  return `rgb(${intensity}, ${intensity}, ${intensity})`;
+}
+
+export function selectableColors(defaultColor: string, selectedColor: string) {
+  return (props: { selected?: boolean }) =>
+    props.selected ? selectedColor : defaultColor;
+}

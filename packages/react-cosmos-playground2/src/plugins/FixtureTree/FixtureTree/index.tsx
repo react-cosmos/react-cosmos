@@ -2,6 +2,7 @@ import React from 'react';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
 import { createFixtureTree } from '../../../shared/fixtureTree';
+import { createGreyColor } from '../../../shared/ui/colors';
 import { TreeExpansion, TreeView } from '../../../shared/ui/TreeView';
 import { FixtureTreeDir } from './FixtureTreeDir';
 import { FixtureTreeItem } from './FixtureTreeItem';
@@ -63,5 +64,5 @@ const Container = styled.div`
   display: inline-block;
   min-width: 100%;
   padding: 8px 0;
-  background: var(--grey1);
+  background: ${createGreyColor(32)};
 `;

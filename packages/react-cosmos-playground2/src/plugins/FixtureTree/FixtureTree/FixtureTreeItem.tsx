@@ -4,6 +4,7 @@ import { isEqual } from 'lodash';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { createRelativePlaygroundUrl } from '../../../shared/url';
 import { ListItem, Label } from './shared';
+import { createGreyColor } from '../../../shared/ui/colors';
 
 type Props = {
   parents: string[];
@@ -68,7 +69,7 @@ const FixtureLink = styled.a`
   :focus {
     outline: none;
     > span {
-      box-shadow: inset 4px 0px 0 0 var(--primary3);
+      box-shadow: inset 3px 0px 0 0 #3182ce;
     }
   }
 

@@ -9,6 +9,7 @@ import {
   FolderIcon
 } from '../../../shared/icons';
 import { Label, ListItem, Unshirinkable } from './shared';
+import { createGreyColor } from '../../../shared/ui/colors';
 
 type Props = {
   node: FixtureNode;
@@ -70,7 +71,7 @@ const DirButton = styled.button`
   :focus {
     outline: none;
     > span {
-      box-shadow: inset 4px 0px 0 0 var(--primary3);
+      box-shadow: inset 3px 0px 0 0 #3182ce;
     }
   }
 
@@ -83,7 +84,7 @@ const IconContainer = styled(Unshirinkable)`
   --size: 16px;
   width: var(--size);
   height: var(--size);
-  color: var(--grey3);
+  color: ${createGreyColor(152)};
 `;
 
 const CevronContainer = styled(IconContainer)`
