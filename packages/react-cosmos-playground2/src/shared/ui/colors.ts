@@ -51,6 +51,7 @@ export const grey248 = createGreyColor(248);
 
 export const white10 = createGreyColor(255, 0.1);
 export const white20 = createGreyColor(255, 0.2);
+export const white95 = createGreyColor(255, 0.95);
 
 export const blue = '#3182ce';
 export const lightBlue = '#63b3ed';
