@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import {
   blue,
   grey160,
-  grey216,
+  grey224,
+  grey24,
   grey248,
   grey32,
-  grey48,
   grey8,
   selectedColors
 } from '../colors';
@@ -57,13 +57,13 @@ const StyledButton = styled.button<StyledButtonProps>`
 
 export const DarkStyledButton = styled(StyledButton)`
   --selected-bg: ${grey8};
-  --hover-bg: ${grey48};
+  --hover-bg: ${grey24};
 
   background: ${selectedColors(grey32, grey8)};
-  color: ${selectedColors(grey216, grey248)};
+  color: ${selectedColors(grey224, grey248)};
 
   :hover {
-    background: ${selectedColors(grey48, grey8)};
+    background: ${selectedColors(grey24, grey8)};
   }
 
   :focus {

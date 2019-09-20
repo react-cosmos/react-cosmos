@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ChevronDownIcon, ChevronRightIcon } from '../../icons';
-import { blue, disabledColors, grey136, grey160, grey216 } from '../colors';
+import { blue, disabledColors, grey128, grey160, grey224 } from '../colors';
 import { TreeItemContainer, ValueNode } from './shared';
 
 type Props = {
@@ -91,13 +91,13 @@ const ChevronContainer = styled.span`
 `;
 
 const Text = styled.span`
-  color: ${grey136};
+  color: ${grey128};
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 
 const DirName = styled.span<{ disabled: boolean }>`
-  color: ${disabledColors(grey216, grey136)};
+  color: ${disabledColors(grey224, grey128)};
 `;
 
 const ChildrenInfo = styled.span`

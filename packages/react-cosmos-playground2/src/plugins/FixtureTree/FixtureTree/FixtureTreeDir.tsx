@@ -8,7 +8,7 @@ import {
   ChevronRightIcon,
   FolderIcon
 } from '../../../shared/icons';
-import { blue, grey136 } from '../../../shared/ui/colors';
+import { blue, grey128 } from '../../../shared/ui/colors';
 import { Label, ListItem, Unshirinkable } from './shared';
 
 type Props = {
@@ -84,7 +84,7 @@ const IconContainer = styled(Unshirinkable)`
   --size: 16px;
   width: var(--size);
   height: var(--size);
-  color: ${grey136};
+  color: ${grey128};
 `;
 
 const CevronContainer = styled(IconContainer)`

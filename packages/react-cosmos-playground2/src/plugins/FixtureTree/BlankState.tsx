@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { FileIcon } from '../../shared/icons';
 import {
-  grey112,
   grey160,
-  grey216,
+  grey224,
   grey32,
+  grey64,
   grey8
 } from '../../shared/ui/colors';
 
@@ -54,12 +54,12 @@ export const IconContainer = styled.div`
   display: flex;
   width: var(--size);
   height: var(--size);
-  color: ${grey112};
+  color: ${grey64};
 `;
 
 const Title = styled.div`
   margin: 0 0 24px 0;
-  color: ${grey216};
+  color: ${grey224};
   text-align: center;
   font-weight: 500;
 `;
@@ -82,7 +82,7 @@ const Description = styled.div`
     padding: 0 4px;
     border-radius: 3px;
     background: ${grey8};
-    color: ${grey216};
+    color: ${grey224};
     font-family: 'Dank Mono', Courier, monospace;
   }
 `;

@@ -7,11 +7,11 @@ import {
   LoaderIcon
 } from '../../shared/icons';
 import {
-  white95,
-  grey8,
-  grey136,
+  grey128,
+  grey64,
   grey32,
-  grey48
+  grey8,
+  white95
 } from '../../shared/ui/colors';
 import { Notification, NotificationType } from './public';
 
@@ -80,7 +80,7 @@ const IconContainer = styled.div`
   width: var(--size);
   height: var(--size);
   margin: 18px 16px;
-  color: ${grey136};
+  color: ${grey128};
 `;
 
 const Content = styled.div`
@@ -97,7 +97,7 @@ const Info = styled.div`
   margin: 2px 0 0 0;
   font-size: 12px;
   line-height: 18px;
-  color: ${grey48};
+  color: ${grey64};
 `;
 
 const IconTypes: { [key in NotificationType]: React.ComponentType } = {

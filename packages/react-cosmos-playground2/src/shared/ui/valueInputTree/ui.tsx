@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { grey136, grey160, grey32, white10 } from '../colors';
+import { grey128, grey160, grey32, white10 } from '../colors';
 
 export const Container = styled.div`
   background: ${grey32};
@@ -39,7 +39,7 @@ export function Title({ label, componentName }: TitleProps) {
 
 const TitleContainer = styled.div`
   padding-right: 8px;
-  color: ${grey136};
+  color: ${grey128};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

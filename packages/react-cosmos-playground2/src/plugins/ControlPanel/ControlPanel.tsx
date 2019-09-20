@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArraySlot } from 'react-plugin';
 import styled from 'styled-components';
-import { grey216, grey32 } from '../../shared/ui/colors';
+import { grey32 } from '../../shared/ui/colors';
 
 type Props = {
   controlPanelRowOrder: string[];
@@ -23,7 +23,6 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   background: ${grey32};
-  color: ${grey216};
 `;
 
 const Content = styled.div`

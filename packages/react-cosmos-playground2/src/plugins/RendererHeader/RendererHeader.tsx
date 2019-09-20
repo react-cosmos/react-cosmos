@@ -4,7 +4,7 @@ import { ArraySlot } from 'react-plugin';
 import styled from 'styled-components';
 import { HomeIcon, RefreshCwIcon, XCircleIcon } from '../../shared/icons';
 import { DarkIconButton } from '../../shared/ui/buttons';
-import { grey216, grey32, white10 } from '../../shared/ui/colors';
+import { grey192, grey32, white10 } from '../../shared/ui/colors';
 
 type Props = {
   rendererActionOrder: string[];
@@ -94,7 +94,7 @@ const Container = styled.div`
   padding: 0 4px;
   border-bottom: 1px solid ${white10};
   background: ${grey32};
-  color: ${grey216};
+  color: ${grey192};
   white-space: nowrap;
   overflow-x: auto;
 `;

@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import {
-  grey216,
+  grey224,
+  grey24,
   grey248,
   grey32,
-  grey48,
   grey8,
   selectedColors
 } from '../../../shared/ui/colors';
@@ -16,8 +16,8 @@ type ListItemProps = {
 const colors = {
   bg: grey32,
   bgSelected: grey8,
-  bgHover: grey48,
-  color: grey216,
+  bgHover: grey24,
+  color: grey224,
   colorSelected: grey248
 };
 
