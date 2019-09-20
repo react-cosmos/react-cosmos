@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { grey128, grey224 } from '../../colors';
+import { grey128, grey224, disabledColors } from '../../colors';
 
-export const Label = styled.label`
+export const Label = styled.label<{ disabled?: boolean }>`
   padding: 0;
-  color: ${grey224};
+  color: ${disabledColors(grey224, grey128)};
   font-size: 14px;
   user-select: none;
   overflow: hidden;
