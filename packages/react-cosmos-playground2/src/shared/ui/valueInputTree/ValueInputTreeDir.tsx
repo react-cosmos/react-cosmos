@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ChevronRightIcon, ChevronDownIcon } from '../../icons';
-import { ValueNode, TreeItemContainer } from './shared';
+import { ChevronDownIcon, ChevronRightIcon } from '../../icons';
+import { blue, disabledColors, grey136, grey160, grey216 } from '../colors';
+import { TreeItemContainer, ValueNode } from './shared';
 
 type Props = {
   node: ValueNode;
@@ -24,9 +25,11 @@ export function ValueInputTreeDir({
       <ButtonContainer>
         <Button disabled={disabled} onClick={onToggle}>
           <>
-            <ChevronContainer disabled={disabled}>
-              {isExpanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
-            </ChevronContainer>
+            {!disabled && (
+              <ChevronContainer>
+                {isExpanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
+              </ChevronContainer>
+            )}
             <Text>
               <DirName disabled={disabled}>{dirName}</DirName>
               <ChildrenInfo>{getChildInfo(childNames)}</ChildrenInfo>
@@ -68,7 +71,7 @@ const Button = styled.button`
   white-space: nowrap;
 
   :focus {
-    box-shadow: 0 0 0.5px 1px var(--primary4);
+    box-shadow: 0 0 0.5px 1px ${blue};
   }
 
   ::-moz-focus-inner {
@@ -76,7 +79,7 @@ const Button = styled.button`
   }
 `;
 
-const ChevronContainer = styled.span<{ disabled: boolean }>`
+const ChevronContainer = styled.span`
   --size: 16px;
 
   flex-shrink: 0;
@@ -84,17 +87,17 @@ const ChevronContainer = styled.span<{ disabled: boolean }>`
   height: var(--size);
   margin: 0 0 0 -3px;
   padding: 2px 2px 0 0;
-  color: ${props => (props.disabled ? 'var(--grey3)' : 'var(--grey4)')};
+  color: ${grey160};
 `;
 
 const Text = styled.span`
-  color: var(--grey4);
+  color: ${grey136};
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 
 const DirName = styled.span<{ disabled: boolean }>`
-  color: ${props => (props.disabled ? 'var(--grey4)' : 'var(--grey7)')};
+  color: ${disabledColors(grey216, grey136)};
 `;
 
 const ChildrenInfo = styled.span`

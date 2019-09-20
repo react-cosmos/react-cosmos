@@ -50,7 +50,7 @@ export const ValuesPanel = React.memo(function ClassStatePanel({
   return (
     <Container>
       <Header>
-        <Title label="VALUES" />
+        <Title label="Values" />
         <Actions>
           <DarkIconButton
             title="Reset to default values"

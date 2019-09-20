@@ -1,6 +1,6 @@
 import React from 'react';
 import { SmartphoneIcon } from '../../../shared/icons';
-import { IconButton } from '../../../shared/ui/buttons';
+import { DarkIconButton } from '../../../shared/ui/buttons';
 
 type Props = {
   validFixtureSelected: boolean;
@@ -15,7 +15,7 @@ export function ToggleButton({
 }: Props) {
   if (!validFixtureSelected) {
     return (
-      <IconButton
+      <DarkIconButton
         icon={<SmartphoneIcon />}
         title="Toggle responsive mode"
         disabled
@@ -24,7 +24,7 @@ export function ToggleButton({
   }
 
   return (
-    <IconButton
+    <DarkIconButton
       icon={<SmartphoneIcon />}
       title="Toggle responsive mode"
       selected={enabled}

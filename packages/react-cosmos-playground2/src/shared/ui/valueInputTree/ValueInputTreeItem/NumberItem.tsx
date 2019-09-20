@@ -1,6 +1,7 @@
 import React from 'react';
 import { NumberInput } from '../../inputs/NumberInput';
 import { Label, ValueContainer } from './shared';
+import { grey8, blue, grey248 } from '../../colors';
 
 type Props = {
   id: string;
@@ -20,9 +21,9 @@ export function NumberItem({ id, label, value, onChange }: Props) {
           id={id}
           value={value}
           styles={{
-            focusedColor: 'var(--grey7)',
-            focusedBg: 'var(--grey1)',
-            focusedBoxShadow: '0 0 0.5px 1px var(--primary4)'
+            focusedColor: grey248,
+            focusedBg: grey8,
+            focusedBoxShadow: `0 0 0.5px 1px ${blue}`
           }}
           onChange={onChange}
         />

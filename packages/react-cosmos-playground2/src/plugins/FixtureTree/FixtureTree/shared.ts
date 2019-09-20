@@ -1,5 +1,12 @@
 import styled from 'styled-components';
-import { createGreyColor, selectableColors } from '../../../shared/ui/colors';
+import {
+  grey216,
+  grey248,
+  grey32,
+  grey48,
+  grey8,
+  selectedColors
+} from '../../../shared/ui/colors';
 
 type ListItemProps = {
   indentLevel: number;
@@ -7,11 +14,11 @@ type ListItemProps = {
 };
 
 const colors = {
-  bg: createGreyColor(32),
-  bgSelected: createGreyColor(8),
-  bgHover: createGreyColor(48),
-  color: createGreyColor(216),
-  colorSelected: createGreyColor(248)
+  bg: grey32,
+  bgSelected: grey8,
+  bgHover: grey48,
+  color: grey216,
+  colorSelected: grey248
 };
 
 export const ListItem = styled.span<ListItemProps>`
@@ -22,15 +29,15 @@ export const ListItem = styled.span<ListItemProps>`
   align-items: center;
   height: var(--height);
   padding: 0 16px 0 ${props => getLeftPadding(props.indentLevel)}px;
-  background: ${selectableColors(colors.bg, colors.bgSelected)};
-  color: ${selectableColors(colors.color, colors.colorSelected)};
+  background: ${selectedColors(colors.bg, colors.bgSelected)};
+  color: ${selectedColors(colors.color, colors.colorSelected)};
   line-height: var(--height);
   user-select: none;
   cursor: default;
   transition: background var(--quick), color var(--quick);
 
   :hover {
-    background: ${selectableColors(colors.bgHover, colors.bgSelected)};
+    background: ${selectedColors(colors.bgHover, colors.bgSelected)};
   }
 `;
 

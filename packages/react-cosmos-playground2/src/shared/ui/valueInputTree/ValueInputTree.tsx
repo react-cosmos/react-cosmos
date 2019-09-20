@@ -5,6 +5,7 @@ import { TreeView, TreeExpansion } from '../TreeView';
 import { getFixtureStateValueTree } from './valueTree';
 import { ValueInputTreeItem } from './ValueInputTreeItem';
 import { ValueInputTreeDir } from './ValueInputTreeDir';
+import { grey32, grey248 } from '../colors';
 
 type Props = {
   id: string;
@@ -52,6 +53,6 @@ export const ValueInputTree = React.memo(function ValueInputTree({
 });
 
 const Container = styled.div`
-  background: var(--grey2);
-  color: var(--grey7);
+  background: ${grey32};
+  color: ${grey248};
 `;

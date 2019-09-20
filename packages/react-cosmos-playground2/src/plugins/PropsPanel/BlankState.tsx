@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { SlidersIcon } from '../../shared/icons';
+import { grey112, grey160, grey216, grey32 } from '../../shared/ui/colors';
 
 export function BlankState() {
   return (
@@ -21,7 +22,7 @@ export function BlankState() {
 
 const Container = styled.div`
   padding: 16px 24px;
-  background: var(--grey2);
+  background: ${grey32};
   font-size: 14px;
   line-height: 22px;
 `;
@@ -33,12 +34,12 @@ export const IconContainer = styled.div`
   display: flex;
   width: var(--size);
   height: var(--size);
-  color: var(--grey3);
+  color: ${grey112};
 `;
 
 const Title = styled.div`
   margin: 0 0 16px 0;
-  color: var(--grey5);
+  color: ${grey216};
   text-align: center;
   font-weight: 500;
 `;
@@ -46,7 +47,7 @@ const Title = styled.div`
 const Description = styled.div`
   margin: 0 auto;
   max-width: 256px;
-  color: var(--grey4);
+  color: ${grey160};
   text-align: center;
 `;
 

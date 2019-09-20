@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import { grey136, grey216 } from '../../colors';
 
 export const Label = styled.label`
   padding: 0;
-  color: var(--grey4);
+  color: ${grey216};
   font-size: 14px;
   user-select: none;
   overflow: hidden;
@@ -26,7 +27,7 @@ export const UneditableInput = styled.span`
   height: 24px;
   padding: 2px 4px;
   line-height: 20px;
-  color: var(--grey4);
+  color: ${grey136};
   font-style: italic;
   white-space: pre;
   overflow: hidden;

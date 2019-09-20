@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Minimize2Icon } from '../../../shared/icons';
-import { Button } from '../../../shared/ui/buttons';
+import { DarkButton } from '../../../shared/ui/buttons';
 import { Device, Viewport } from '../public';
 import { NumberInput } from '../../../shared/ui/inputs/NumberInput';
 import { Select } from '../../../shared/ui/inputs/Select';
@@ -68,7 +68,7 @@ export function Header({
             onChange={height => selectViewport({ ...selectedViewport, height })}
           />
         </ViewportSize>
-        <Button
+        <DarkButton
           icon={<Minimize2Icon />}
           label={
             <>

@@ -40,11 +40,33 @@ const colors: Record<ColorType, Record<ColorShade, Color>> = {
   }
 };
 
-export function createGreyColor(intensity: number) {
-  return `rgb(${intensity}, ${intensity}, ${intensity})`;
+export const grey8 = createGreyColor(8);
+export const grey32 = createGreyColor(32);
+export const grey48 = createGreyColor(48);
+export const grey112 = createGreyColor(112);
+export const grey136 = createGreyColor(136);
+export const grey160 = createGreyColor(160);
+export const grey216 = createGreyColor(216);
+export const grey248 = createGreyColor(248);
+
+export const white10 = createGreyColor(255, 0.1);
+export const white20 = createGreyColor(255, 0.2);
+
+export const blue = '#3182ce';
+export const lightBlue = '#63b3ed';
+
+function createGreyColor(intensity: number, alpha: number = 1) {
+  return alpha !== 1
+    ? `rgba(${intensity}, ${intensity}, ${intensity}, ${alpha})`
+    : `rgb(${intensity}, ${intensity}, ${intensity})`;
 }
 
-export function selectableColors(defaultColor: string, selectedColor: string) {
+export function selectedColors(defaultColor: string, selectedColor: string) {
   return (props: { selected?: boolean }) =>
     props.selected ? selectedColor : defaultColor;
+}
+
+export function disabledColors(defaultColor: string, disabledColor: string) {
+  return (props: { disabled?: boolean }) =>
+    props.disabled ? disabledColor : defaultColor;
 }

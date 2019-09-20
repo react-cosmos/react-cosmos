@@ -83,7 +83,7 @@ export function ComponentProps({
   return (
     <Container>
       <Header>
-        <Title label="PROPS" componentName={componentName} />
+        <Title label="Props" componentName={componentName} />
         <Actions>
           <DarkIconButton
             title="Reset to initial values"

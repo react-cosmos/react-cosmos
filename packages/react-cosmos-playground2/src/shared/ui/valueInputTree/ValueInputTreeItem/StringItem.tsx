@@ -7,6 +7,7 @@ import {
 } from '../../inputs/shared';
 import { useFocus } from '../../useFocus';
 import { Label, ValueContainer } from './shared';
+import { grey8, blue } from '../../colors';
 
 type Props = {
   id: string;
@@ -34,8 +35,8 @@ export function StringItem({ id, label, value, onChange }: Props) {
       <ValueContainer>
         <TextInputContainer
           focused={focused}
-          focusedBg="var(--grey1)"
-          focusedBoxShadow="0 0 0.5px 1px var(--primary4)"
+          focusedBg={grey8}
+          focusedBoxShadow={`0 0 0.5px 1px ${blue}`}
         >
           <TextContainer>
             <TextMirror minWidth={64} focused={focused}>

@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { grey136, grey160, grey32, white10 } from '../colors';
 
 export const Container = styled.div`
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: ${grey32};
+  border-top: 1px solid ${white10};
 
   :first-child {
     border-top: none;
@@ -37,14 +39,15 @@ export function Title({ label, componentName }: TitleProps) {
 
 const TitleContainer = styled.div`
   padding-right: 8px;
-  color: var(--grey4);
+  color: ${grey136};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 
   strong {
     font-weight: 500;
-    color: var(--grey5);
+    color: ${grey160};
+    text-transform: uppercase;
   }
 `;
 
@@ -66,5 +69,5 @@ export const Actions = styled.div`
 `;
 
 export const Body = styled.div`
-  padding: 4px 8px 8px 16px;
+  padding: 8px 8px 8px 16px;
 `;

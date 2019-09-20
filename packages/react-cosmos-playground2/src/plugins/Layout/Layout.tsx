@@ -1,6 +1,7 @@
 import React from 'react';
-import { Slot, ArraySlot } from 'react-plugin';
+import { ArraySlot, Slot } from 'react-plugin';
 import styled from 'styled-components';
+import { grey32, white20, white10, grey8 } from '../../shared/ui/colors';
 import { useDrag } from '../../shared/ui/useDrag';
 
 type Props = {
@@ -127,6 +128,7 @@ const Container = styled.div.attrs({ 'data-testid': 'layout' })<{
   left: 0;
   right: 0;
   display: flex;
+  background: ${grey32};
   cursor: ${props => (props.dragging ? 'col-resize' : 'default')};
 `;
 
@@ -135,39 +137,37 @@ const Draggable = styled.div`
   position: relative;
 `;
 
-const NavContainer = styled(Draggable)`
-  background: var(--grey1);
-`;
+const NavContainer = styled(Draggable)``;
 
-const PanelContainer = styled(Draggable)`
-  background: var(--grey2);
-`;
+const PanelContainer = styled(Draggable)``;
 
 const Center = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
   flex: 1;
-  background: var(--grey6);
-  color: var(--grey2);
   overflow: hidden;
+  background: ${grey8};
 `;
 
 const PreviewContainer = styled.div`
   flex: 1;
   display: flex;
   position: relative;
+  margin: 12px;
+  border: 1px solid ${white20};
   overflow: hidden;
 `;
 
-const SideShadow = styled.div`
+const Border = styled.div`
   position: absolute;
   top: 0;
-  width: 2px;
+  width: 1px;
   height: 100%;
+  background-color: ${white10};
 `;
 
-const DragHandle = styled(SideShadow)`
+const DragHandle = styled(Border)`
   background-clip: content-box;
   cursor: col-resize;
   user-select: none;
@@ -176,18 +176,15 @@ const DragHandle = styled(SideShadow)`
 const NavDragHandle = styled(DragHandle)`
   right: -2px;
   padding: 0 2px 0 1px;
-  background-color: rgba(0, 0, 0, 0.5);
 `;
 
-const MiniNavShadow = styled(SideShadow)`
+const MiniNavShadow = styled(Border)`
   right: 0;
-  background-color: rgba(0, 0, 0, 0.5);
 `;
 
 const PanelDragHandle = styled(DragHandle)`
   left: -2px;
   padding: 0 1px 0 2px;
-  background-color: rgba(0, 0, 0, 0.3);
 `;
 
 // The purpose of DragOverlay is to cover other elements while dragging, such

@@ -1,6 +1,7 @@
 import React from 'react';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
+import { grey32 } from '../../shared/ui/colors';
 import { TreeExpansion } from '../../shared/ui/TreeView';
 import { BlankState } from './BlankState';
 import { FixtureTree } from './FixtureTree';
@@ -63,6 +64,6 @@ export function FixtureTreeContainer({
 
 const Container = styled.div`
   flex: 1;
-  background: var(--grey1);
+  background: ${grey32};
   overflow: auto;
 `;

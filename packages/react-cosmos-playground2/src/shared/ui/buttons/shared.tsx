@@ -1,11 +1,21 @@
 import styled from 'styled-components';
+import {
+  blue,
+  grey160,
+  grey216,
+  grey248,
+  grey32,
+  grey48,
+  grey8,
+  selectedColors
+} from '../colors';
 
 type StyledButtonProps = {
   selected: boolean;
   disabled: boolean;
 };
 
-export const StyledButton = styled.button<StyledButtonProps>`
+const StyledButton = styled.button<StyledButtonProps>`
   --selected-bg: var(--grey5);
   --hover-bg: hsl(var(--hue-primary), 25%, 95%);
 
@@ -46,20 +56,18 @@ export const StyledButton = styled.button<StyledButtonProps>`
 `;
 
 export const DarkStyledButton = styled(StyledButton)`
-  --selected-bg: hsl(var(--hue-primary), 19%, 22%);
-  --hover-bg: rgba(255, 255, 255, 0.05);
+  --selected-bg: ${grey8};
+  --hover-bg: ${grey48};
 
-  background: ${props =>
-    props.selected ? 'var(--selected-bg)' : 'transparent'};
-  color: ${props => (props.selected ? 'var(--grey6)' : 'var(--grey5)')};
+  background: ${selectedColors(grey32, grey8)};
+  color: ${selectedColors(grey216, grey248)};
 
   :hover {
-    background: ${props =>
-      props.selected ? 'var(--selected-bg)' : 'var(--hover-bg)'};
+    background: ${selectedColors(grey48, grey8)};
   }
 
   :focus {
-    box-shadow: 0 0 0.5px 1px var(--primary4);
+    box-shadow: 0 0 0.5px 1px ${blue};
   }
 
   :disabled {
@@ -68,7 +76,7 @@ export const DarkStyledButton = styled(StyledButton)`
   }
 `;
 
-export const Icon = styled.span`
+const Icon = styled.span`
   --size: 16px;
   width: var(--size);
   height: var(--size);
@@ -77,7 +85,7 @@ export const Icon = styled.span`
 `;
 
 export const DarkIcon = styled(Icon)`
-  color: var(--grey4);
+  color: ${grey160};
 `;
 
 export const Label = styled.span`

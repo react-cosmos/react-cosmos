@@ -78,7 +78,7 @@ export function ComponentClassState({
   return (
     <Container>
       <Header>
-        <Title label="CLASS STATE" componentName={componentName} />
+        <Title label="Class State" componentName={componentName} />
         <Actions>
           <DarkIconButton
             title="Reset to initial values"

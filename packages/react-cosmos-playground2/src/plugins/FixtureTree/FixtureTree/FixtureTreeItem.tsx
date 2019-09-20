@@ -1,10 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
 import { isEqual } from 'lodash';
+import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
+import styled from 'styled-components';
+import { blue } from '../../../shared/ui/colors';
 import { createRelativePlaygroundUrl } from '../../../shared/url';
-import { ListItem, Label } from './shared';
-import { createGreyColor } from '../../../shared/ui/colors';
+import { Label, ListItem } from './shared';
 
 type Props = {
   parents: string[];
@@ -69,7 +69,7 @@ const FixtureLink = styled.a`
   :focus {
     outline: none;
     > span {
-      box-shadow: inset 3px 0px 0 0 #3182ce;
+      box-shadow: inset 3px 0px 0 0 ${blue};
     }
   }
 

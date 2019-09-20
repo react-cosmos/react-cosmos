@@ -1,9 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
-import { ArraySlot } from 'react-plugin';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { XCircleIcon, RefreshCwIcon, HomeIcon } from '../../shared/icons';
-import { IconButton } from '../../shared/ui/buttons';
+import { ArraySlot } from 'react-plugin';
+import styled from 'styled-components';
+import { HomeIcon, RefreshCwIcon, XCircleIcon } from '../../shared/icons';
+import { DarkIconButton } from '../../shared/ui/buttons';
+import { grey216, grey32, white10 } from '../../shared/ui/colors';
 
 type Props = {
   rendererActionOrder: string[];
@@ -52,7 +53,7 @@ export const RendererHeader = React.memo(function RendererHeader({
       <Container>
         <Left>
           <Message>Fixture not found</Message>
-          <IconButton
+          <DarkIconButton
             icon={<HomeIcon />}
             title="Go home"
             onClick={() => unselectFixture()}
@@ -66,12 +67,12 @@ export const RendererHeader = React.memo(function RendererHeader({
   return (
     <Container>
       <Left>
-        <IconButton
+        <DarkIconButton
           icon={<XCircleIcon />}
           title="Close fixture"
           onClick={() => unselectFixture()}
         />
-        <IconButton
+        <DarkIconButton
           icon={<RefreshCwIcon />}
           title="Reload fixture"
           onClick={() => selectFixture(selectedFixtureId, false)}
@@ -91,9 +92,9 @@ const Container = styled.div`
   justify-content: space-between;
   height: 40px;
   padding: 0 4px;
-  border-bottom: 1px solid var(--grey5);
-  background: var(--grey6);
-  color: var(--grey3);
+  border-bottom: 1px solid ${white10};
+  background: ${grey32};
+  color: ${grey216};
   white-space: nowrap;
   overflow-x: auto;
 `;
