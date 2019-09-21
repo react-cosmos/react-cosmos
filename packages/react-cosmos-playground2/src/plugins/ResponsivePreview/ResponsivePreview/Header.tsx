@@ -7,7 +7,8 @@ import {
   grey128,
   grey248,
   grey32,
-  grey8
+  grey8,
+  white10
 } from '../../../shared/ui/colors';
 import { NumberInput } from '../../../shared/ui/inputs/NumberInput';
 import { Select } from '../../../shared/ui/inputs/Select';
@@ -110,6 +111,7 @@ const Container = styled.div`
   justify-content: space-between;
   padding: 4px;
   background: ${grey32};
+  border-bottom: 1px solid ${white10};
   white-space: nowrap;
   overflow-x: auto;
 `;

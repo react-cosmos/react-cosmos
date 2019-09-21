@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArraySlot, Slot } from 'react-plugin';
 import styled from 'styled-components';
-import { grey32, white20, white10, grey8 } from '../../shared/ui/colors';
+import { grey32, grey8, white10 } from '../../shared/ui/colors';
 import { useDrag } from '../../shared/ui/useDrag';
 
 type Props = {
@@ -154,8 +154,6 @@ const PreviewContainer = styled.div`
   flex: 1;
   display: flex;
   position: relative;
-  margin: 12px;
-  border: 1px solid ${white20};
   overflow: hidden;
 `;
 
