@@ -54,6 +54,7 @@ export const grey248 = createGreyColor(248);
 
 export const black48 = createGreyColor(0, 0.48);
 
+export const white3 = createGreyColor(255, 0.03);
 export const white10 = createGreyColor(255, 0.1);
 export const white20 = createGreyColor(255, 0.2);
 export const white95 = createGreyColor(255, 0.95);
