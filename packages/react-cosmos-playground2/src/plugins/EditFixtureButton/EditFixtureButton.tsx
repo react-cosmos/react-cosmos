@@ -1,6 +1,6 @@
 import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { DarkIconButton } from '../../shared/ui/buttons';
+import { IconButton } from '../../shared/ui/buttons';
 import { EditIcon } from '../../shared/icons';
 
 type Props = {
@@ -36,7 +36,7 @@ export function EditFixtureButton({
   };
 
   return (
-    <DarkIconButton
+    <IconButton
       icon={<EditIcon />}
       title="Open fixture source"
       onClick={handleClick}

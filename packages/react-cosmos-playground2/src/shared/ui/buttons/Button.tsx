@@ -1,5 +1,5 @@
 import React from 'react';
-import { DarkStyledButton, DarkIcon, Label } from './shared';
+import { StyledButton, Icon, Label } from './shared';
 
 type Props = {
   icon?: React.ReactNode;
@@ -10,7 +10,7 @@ type Props = {
   onClick?: () => unknown;
 };
 
-export function DarkButton({
+export function Button({
   icon,
   label,
   title,
@@ -19,14 +19,14 @@ export function DarkButton({
   onClick
 }: Props) {
   return (
-    <DarkStyledButton
+    <StyledButton
       title={title}
       selected={selected}
       disabled={disabled}
       onClick={onClick}
     >
-      {icon && <DarkIcon>{icon}</DarkIcon>}
+      {icon && <Icon>{icon}</Icon>}
       <Label>{label}</Label>
-    </DarkStyledButton>
+    </StyledButton>
   );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ChevronRightIcon } from '../../shared/icons';
-import { DarkIconButton } from '../../shared/ui/buttons';
+import { IconButton } from '../../shared/ui/buttons';
 import { ArraySlot } from 'react-plugin';
 
 type Props = {
@@ -21,7 +21,7 @@ export function MiniNav({
 
   return (
     <Container>
-      <DarkIconButton
+      <IconButton
         title="Open nav bar"
         icon={<ChevronRightIcon />}
         onClick={onOpenNav}

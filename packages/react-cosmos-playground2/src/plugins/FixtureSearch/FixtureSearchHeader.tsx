@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ChevronLeftIcon, SearchIcon } from '../../shared/icons';
-import { DarkIconButton } from '../../shared/ui/buttons';
+import { IconButton } from '../../shared/ui/buttons';
 import { blue, grey160, grey32, white10 } from '../../shared/ui/colors';
 
 type Props = {
@@ -19,7 +19,7 @@ export function FixtureSearchHeader({ onOpen, onMinimizeNav }: Props) {
         <SearchLabel>Search fixtures</SearchLabel>
       </SearchButton>
       <MinimizeButtonContainer>
-        <DarkIconButton
+        <IconButton
           title="Minimize nav bar"
           icon={<ChevronLeftIcon />}
           onClick={onMinimizeNav}

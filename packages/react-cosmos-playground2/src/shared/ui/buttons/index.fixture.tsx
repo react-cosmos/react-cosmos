@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { DarkButton, DarkIconButton } from '.';
+import { Button, IconButton } from '.';
 import { CopyIcon, RefreshCwIcon } from '../../icons';
 import { grey32 } from '../colors';
 
@@ -12,33 +12,37 @@ const Row = styled.div`
 const DarkBg = styled(Row)`
   padding: 8px;
   background: ${grey32};
+
+  > button {
+    margin-right: 8px;
+  }
 `;
 
 export default (
   <>
     <DarkBg>
-      <DarkIconButton
+      <IconButton
         title="Reset to initial values"
         icon={<RefreshCwIcon />}
         selected={false}
         disabled={false}
         onClick={() => {}}
       />
-      <DarkIconButton
+      <IconButton
         title="Reset to initial values"
         icon={<RefreshCwIcon />}
         selected={false}
         disabled={true}
         onClick={() => {}}
       />
-      <DarkIconButton
+      <IconButton
         title="Reset to initial values"
         icon={<RefreshCwIcon />}
         selected={true}
         disabled={false}
         onClick={() => {}}
       />
-      <DarkIconButton
+      <IconButton
         title="Reset to initial values"
         icon={<RefreshCwIcon />}
         selected={true}
@@ -47,7 +51,7 @@ export default (
       />
     </DarkBg>
     <DarkBg>
-      <DarkButton
+      <Button
         title="Reuse instances on prop changes"
         label={'reuse instances'}
         icon={<CopyIcon />}
@@ -55,7 +59,7 @@ export default (
         disabled={false}
         onClick={() => {}}
       />
-      <DarkButton
+      <Button
         title="Reuse instances on prop changes"
         label={'reuse instances'}
         icon={<CopyIcon />}
@@ -63,7 +67,7 @@ export default (
         disabled={true}
         onClick={() => {}}
       />
-      <DarkButton
+      <Button
         title="Reuse instances on prop changes"
         label={'reuse instances'}
         icon={<CopyIcon />}
@@ -71,7 +75,7 @@ export default (
         disabled={false}
         onClick={() => {}}
       />
-      <DarkButton
+      <Button
         title="Reuse instances on prop changes"
         label={'reuse instances'}
         icon={<CopyIcon />}

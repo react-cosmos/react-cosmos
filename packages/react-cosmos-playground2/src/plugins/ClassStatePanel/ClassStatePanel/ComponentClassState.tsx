@@ -8,7 +8,7 @@ import {
   updateFixtureStateClassState
 } from 'react-cosmos-shared2/fixtureState';
 import { TreeExpansion } from '../../../shared/ui/TreeView';
-import { DarkIconButton } from '../../../shared/ui/buttons';
+import { IconButton } from '../../../shared/ui/buttons';
 import {
   ValueInputTree,
   FixtureExpansion,
@@ -80,7 +80,7 @@ export function ComponentClassState({
       <Header>
         <Title label="Class State" componentName={componentName} />
         <Actions>
-          <DarkIconButton
+          <IconButton
             title="Reset to initial values"
             icon={<RotateCcwIcon />}
             disabled={isEqual(values, initialValues)}

@@ -1,2 +1,2 @@
-export { DarkButton } from './Button';
-export { DarkIconButton } from './IconButton';
+export { Button } from './Button';
+export { IconButton } from './IconButton';

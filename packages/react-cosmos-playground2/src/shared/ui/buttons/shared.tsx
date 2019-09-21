@@ -15,10 +15,7 @@ type StyledButtonProps = {
   disabled: boolean;
 };
 
-const StyledButton = styled.button<StyledButtonProps>`
-  --selected-bg: var(--grey5);
-  --hover-bg: hsl(var(--hue-primary), 25%, 95%);
-
+export const StyledButton = styled.button<StyledButtonProps>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -26,41 +23,12 @@ const StyledButton = styled.button<StyledButtonProps>`
   min-height: 32px;
   border: 0;
   border-radius: 3px;
-  background: ${props =>
-    props.selected ? 'var(--selected-bg)' : 'transparent'};
-  color: ${props => (props.selected ? 'var(--grey1)' : 'var(--grey2)')};
+  background: ${selectedColors(grey32, grey8)};
+  color: ${selectedColors(grey224, grey248)};
   white-space: nowrap;
   user-select: none;
   outline: none;
   transition: background var(--quick), color var(--quick), opacity var(--quick);
-
-  :hover {
-    background: ${props =>
-      props.selected ? 'var(--selected-bg)' : 'var(--hover-bg)'};
-  }
-
-  :focus {
-    box-shadow: 0 0 1px 1px var(--primary4);
-  }
-
-  :disabled {
-    background: ${props =>
-      props.selected ? 'var(--selected-bg)' : 'transparent'};
-    cursor: default;
-    opacity: 0.5;
-  }
-
-  ::-moz-focus-inner {
-    border: 0;
-  }
-`;
-
-export const DarkStyledButton = styled(StyledButton)`
-  --selected-bg: ${grey8};
-  --hover-bg: ${grey24};
-
-  background: ${selectedColors(grey32, grey8)};
-  color: ${selectedColors(grey224, grey248)};
 
   :hover {
     background: ${selectedColors(grey24, grey8)};
@@ -71,20 +39,21 @@ export const DarkStyledButton = styled(StyledButton)`
   }
 
   :disabled {
-    background: ${props =>
-      props.selected ? 'var(--selected-bg)' : 'transparent'};
+    background: ${selectedColors(grey32, grey8)};
+    cursor: default;
+    opacity: 0.5;
+  }
+
+  ::-moz-focus-inner {
+    border: 0;
   }
 `;
 
-const Icon = styled.span`
+export const Icon = styled.span`
   --size: 16px;
   width: var(--size);
   height: var(--size);
   padding: 2px 0 0 0;
-  color: var(--grey3);
-`;
-
-export const DarkIcon = styled(Icon)`
   color: ${grey160};
 `;
 
