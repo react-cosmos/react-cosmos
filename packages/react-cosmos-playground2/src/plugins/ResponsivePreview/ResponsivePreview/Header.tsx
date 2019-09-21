@@ -2,7 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { Minimize2Icon } from '../../../shared/icons';
 import { Button } from '../../../shared/ui/buttons';
-import { blue, grey32 } from '../../../shared/ui/colors';
+import {
+  blue,
+  grey128,
+  grey248,
+  grey32,
+  grey8
+} from '../../../shared/ui/colors';
 import { NumberInput } from '../../../shared/ui/inputs/NumberInput';
 import { Select } from '../../../shared/ui/inputs/Select';
 import { Device, Viewport } from '../public';
@@ -17,8 +23,8 @@ type Props = {
 };
 
 const numberInputStypes = {
-  focusedColor: 'var(--grey2)',
-  focusedBg: 'var(--grey7)',
+  focusedColor: grey248,
+  focusedBg: grey8,
   focusedBoxShadow: `0 0 0.5px 1px ${blue}`
 };
 
@@ -136,18 +142,17 @@ const ViewportSize = styled.div`
   flex-direction: row;
   align-items: center;
   margin: 0 2px;
-  color: var(--grey2);
 `;
 
 const ViewportX = styled.div`
   padding: 0 1px;
   line-height: 32px;
-  color: var(--grey3);
+  color: ${grey128};
 `;
 
 const ScaleDegree = styled.span`
   margin-left: 3px;
-  color: var(--grey3);
+  color: ${grey128};
 
   ::before {
     content: '(';
