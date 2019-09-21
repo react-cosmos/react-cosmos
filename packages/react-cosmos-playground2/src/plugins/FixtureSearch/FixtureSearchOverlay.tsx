@@ -203,6 +203,7 @@ export function FixtureSearchOverlay({
     e.stopPropagation();
     if (inputRef.current) {
       inputRef.current.focus();
+      inputRef.current.select();
     }
   }, []);
 
