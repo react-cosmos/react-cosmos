@@ -194,6 +194,7 @@ export function FixtureSearchOverlay({
   React.useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
+      inputRef.current.select();
     }
   }, []);
 
@@ -203,7 +204,6 @@ export function FixtureSearchOverlay({
     e.stopPropagation();
     if (inputRef.current) {
       inputRef.current.focus();
-      inputRef.current.select();
     }
   }, []);
 
