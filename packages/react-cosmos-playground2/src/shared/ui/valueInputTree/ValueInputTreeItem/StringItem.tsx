@@ -1,4 +1,5 @@
 import React from 'react';
+import { blue, grey248, grey8 } from '../../colors';
 import {
   TextContainer,
   TextField,
@@ -7,7 +8,6 @@ import {
 } from '../../inputs/shared';
 import { useFocus } from '../../useFocus';
 import { Label, ValueContainer } from './shared';
-import { grey8, blue } from '../../colors';
 
 type Props = {
   id: string;
@@ -47,7 +47,7 @@ export function StringItem({ id, label, value, onChange }: Props) {
               id={id}
               value={value}
               focused={focused}
-              color="var(--grey7)"
+              color={grey248}
               onChange={onInputChange}
               onFocus={onFocus}
               onBlur={onBlur}
