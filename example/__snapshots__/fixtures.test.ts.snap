@@ -21,7 +21,7 @@ exports[`returns fixture elements: __fixtures__/Props Playground.tsx 1`] = `
 </pre>
 `;
 
-exports[`returns fixture elements: __fixtures__/State Playground.tsx 1`] = `
+exports[`returns fixture elements: __fixtures__/Values Playground.tsx 1`] = `
 <pre>
   {
   "string": "How are you doing?",
