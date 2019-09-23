@@ -5,12 +5,12 @@ import { CoreSpec } from '../Core/public';
 import { MessageHandlerSpec } from '../MessageHandler/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { NotificationsSpec } from '../Notifications/public';
-import { RendererRemoteSpec } from './public';
+import { RemoteRendererSpec } from './public';
 import { Context } from './shared';
 import { RemoteButton } from './RemoteButton';
 
-const { onLoad, on, namedPlug, register } = createPlugin<RendererRemoteSpec>({
-  name: 'rendererRemote'
+const { onLoad, on, namedPlug, register } = createPlugin<RemoteRendererSpec>({
+  name: 'remoteRenderer'
 });
 
 on<MessageHandlerSpec>('messageHandler', {
