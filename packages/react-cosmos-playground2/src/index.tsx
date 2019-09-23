@@ -22,8 +22,7 @@ const DEFAULT_CONFIG = {
     globalOrder: ['fixtureSearch', 'notifications']
   },
   nav: {
-    navRowOrder: ['fixtureSearch', 'fixtureTree'],
-    miniNavActionOrder: ['fixtureSearch']
+    navRowOrder: ['fixtureSearch', 'fixtureTree']
   },
   rendererHeader: {
     rendererActionOrder: [

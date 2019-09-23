@@ -92,20 +92,15 @@ type NavProps = {
 };
 
 function Nav({ navOpen, dragging, dragElRef }: NavProps) {
-  if (navOpen) {
-    return (
-      <>
-        <Slot name="nav" />
-        {dragging && <DragOverlay />}
-        <NavDragHandle ref={dragElRef} />
-      </>
-    );
+  if (!navOpen) {
+    return null;
   }
 
   return (
     <>
-      <Slot name="miniNav" />
-      <MiniNavShadow />
+      <Slot name="nav" />
+      {dragging && <DragOverlay />}
+      <NavDragHandle ref={dragElRef} />
     </>
   );
 }
@@ -157,15 +152,12 @@ const PreviewContainer = styled.div`
   overflow: hidden;
 `;
 
-const Border = styled.div`
+const DragHandle = styled.div`
   position: absolute;
   top: 0;
   width: 1px;
   height: 100%;
   background-color: ${white10};
-`;
-
-const DragHandle = styled(Border)`
   background-clip: content-box;
   cursor: col-resize;
   user-select: none;
@@ -174,10 +166,6 @@ const DragHandle = styled(Border)`
 const NavDragHandle = styled(DragHandle)`
   right: -2px;
   padding: 0 2px;
-`;
-
-const MiniNavShadow = styled(Border)`
-  right: 0;
 `;
 
 const PanelDragHandle = styled(DragHandle)`
