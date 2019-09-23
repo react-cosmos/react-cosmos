@@ -33,7 +33,7 @@ onLoad(context => {
   });
 });
 
-namedPlug('rendererAction', 'remoteRenderer', ({ pluginContext }) => {
+namedPlug('topBarRightAction', 'remoteRenderer', ({ pluginContext }) => {
   const { getMethodsOf } = pluginContext;
   const core = getMethodsOf<CoreSpec>('core');
   const notifications = getMethodsOf<NotificationsSpec>('notifications');

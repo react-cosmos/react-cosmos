@@ -1,17 +1,13 @@
 export const DEFAULT_PLUGIN_CONFIG = {
   layout: {
-    globalOrder: ['fixtureSearch', 'notifications']
+    globalOrder: ['fixtureSearch', 'notifications'],
+    topBarRightActionOrder: ['remoteRenderer', 'responsivePreview']
   },
   nav: {
     navRowOrder: ['fixtureSearch', 'fixtureTree']
   },
   rendererHeader: {
-    rendererActionOrder: [
-      'remoteRenderer',
-      'fullScreen',
-      'responsivePreview',
-      'controlPanel'
-    ]
+    rendererActionOrder: ['fullScreen', 'controlPanel']
   },
   controlPanel: {
     controlPanelRowOrder: ['props', 'classState']

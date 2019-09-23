@@ -55,7 +55,7 @@ plug('rendererPreviewOuter', ({ children, pluginContext }) => {
   );
 });
 
-namedPlug('rendererAction', 'responsivePreview', ({ pluginContext }) => {
+namedPlug('topBarRightAction', 'responsivePreview', ({ pluginContext }) => {
   const { getMethodsOf } = pluginContext;
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const fixtureState = rendererCore.getFixtureState();

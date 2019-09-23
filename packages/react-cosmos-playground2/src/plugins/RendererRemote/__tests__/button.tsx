@@ -10,9 +10,9 @@ import { register } from '..';
 
 afterEach(resetPlugins);
 
-function lostTestPlugins() {
+function loadTestPlugins() {
   loadPlugins();
-  return render(<ArraySlot name="rendererAction" />);
+  return render(<ArraySlot name="topBarRightAction" />);
 }
 
 it(`doesn't render button when web renderer url is empty`, async () => {
@@ -24,7 +24,7 @@ it(`doesn't render button when web renderer url is empty`, async () => {
   mockMessageHandler();
   mockNotifications();
 
-  const { queryByTitle } = lostTestPlugins();
+  const { queryByTitle } = loadTestPlugins();
   expect(queryByTitle(/copy remote renderer url/i)).toBeNull();
 });
 
@@ -37,7 +37,7 @@ it(`doesn't render button when dev server is off`, async () => {
   mockMessageHandler();
   mockNotifications();
 
-  const { queryByTitle } = lostTestPlugins();
+  const { queryByTitle } = loadTestPlugins();
   expect(queryByTitle(/copy remote renderer url/i)).toBeNull();
 });
 
@@ -50,9 +50,7 @@ it('renders button', async () => {
   mockMessageHandler();
   mockNotifications();
 
-  loadPlugins();
-  const { getByTitle } = render(<ArraySlot name="rendererAction" />);
-
+  const { getByTitle } = loadTestPlugins();
   getByTitle(/copy remote renderer url/i);
 });
 
@@ -65,7 +63,7 @@ it('notifies copy error on button click', async () => {
   mockMessageHandler();
   const { pushTimedNotification } = mockNotifications();
 
-  const { getByTitle } = lostTestPlugins();
+  const { getByTitle } = loadTestPlugins();
   const button = getByTitle(/copy remote renderer url/i);
 
   // Clipboard API isn't available in jsdom so we only test the error path

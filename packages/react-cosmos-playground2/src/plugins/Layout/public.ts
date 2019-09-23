@@ -2,6 +2,7 @@ export type LayoutSpec = {
   name: 'layout';
   config: {
     globalOrder: string[];
+    topBarRightActionOrder: string[];
   };
   state: {
     storageCacheReady: boolean;

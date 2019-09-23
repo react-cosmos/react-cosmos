@@ -53,7 +53,7 @@ function loadTestPlugins() {
   loadPlugins();
   return render(
     <>
-      <ArraySlot name="rendererAction" />
+      <ArraySlot name="topBarRightAction" />
       <Slot name="rendererPreviewOuter">
         <div data-testid="previewMock" />
       </Slot>

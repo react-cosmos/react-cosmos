@@ -14,6 +14,7 @@ type Props = {
   navWidth: number;
   panelWidth: number;
   globalOrder: string[];
+  topBarRightActionOrder: string[];
   onToggleNav: () => unknown;
   setNavWidth: (width: number) => unknown;
   setPanelWidth: (width: number) => unknown;
@@ -28,6 +29,7 @@ export function Layout({
   navWidth,
   panelWidth,
   globalOrder,
+  topBarRightActionOrder,
   onToggleNav,
   setNavWidth,
   setPanelWidth
@@ -77,6 +79,7 @@ export function Layout({
         <TopBar
           validFixtureSelected={validFixtureSelected}
           navOpen={navOpen}
+          topBarRightActionOrder={topBarRightActionOrder}
           onToggleNav={onToggleNav}
         />
         <Slot name="rendererHeader" />
