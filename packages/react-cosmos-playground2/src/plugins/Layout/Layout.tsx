@@ -146,8 +146,8 @@ const Center = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  overflow: hidden;
   background: ${grey8};
+  overflow: hidden;
 `;
 
 const PreviewContainer = styled.div`
@@ -173,7 +173,7 @@ const DragHandle = styled(Border)`
 
 const NavDragHandle = styled(DragHandle)`
   right: -2px;
-  padding: 0 2px 0 1px;
+  padding: 0 2px;
 `;
 
 const MiniNavShadow = styled(Border)`
