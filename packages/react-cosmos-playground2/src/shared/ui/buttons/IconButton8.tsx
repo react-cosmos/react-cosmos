@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   grey176,
-  grey160,
+  grey144,
   grey216,
   grey24,
   grey248,
@@ -37,7 +37,7 @@ export function IconButton8({
       disabled={disabled}
       onClick={onClick}
     >
-      <StyledIcon color={selected ? grey176 : grey160}>{icon}</StyledIcon>
+      <StyledIcon color={selected ? grey176 : grey144}>{icon}</StyledIcon>
     </StyledButton>
   );
 }
