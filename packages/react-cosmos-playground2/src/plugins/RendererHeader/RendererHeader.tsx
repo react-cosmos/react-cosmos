@@ -28,11 +28,19 @@ export const RendererHeader = React.memo(function RendererHeader({
   unselectFixture,
   onToggleNav
 }: Props) {
+  const toggleNavButton = (
+    <ToggleNavButton
+      disabled={!validFixtureSelected}
+      selected={navOpen}
+      onToggle={onToggleNav}
+    />
+  );
+
   if (!rendererConnected) {
     return (
       <Container>
         <Left>
-          <ToggleNavButton disabled selected={navOpen} onToggle={() => {}} />
+          {toggleNavButton}
           <Message>Waiting for renderer...</Message>
         </Left>
       </Container>
@@ -47,7 +55,7 @@ export const RendererHeader = React.memo(function RendererHeader({
     return (
       <Container>
         <Left>
-          <ToggleNavButton disabled selected={navOpen} onToggle={() => {}} />
+          {toggleNavButton}
           <Message>No fixture selected</Message>
         </Left>
         <Right>{rendererActionSlot}</Right>
@@ -59,7 +67,7 @@ export const RendererHeader = React.memo(function RendererHeader({
     return (
       <Container>
         <Left>
-          <ToggleNavButton disabled selected={navOpen} onToggle={() => {}} />
+          {toggleNavButton}
           <Message>Fixture not found</Message>
           <IconButton
             icon={<HomeIcon />}
@@ -75,7 +83,7 @@ export const RendererHeader = React.memo(function RendererHeader({
   return (
     <Container>
       <Left>
-        <ToggleNavButton selected={navOpen} onToggle={onToggleNav} />
+        {toggleNavButton}
         <IconButton
           icon={<XCircleIcon />}
           title="Close fixture"

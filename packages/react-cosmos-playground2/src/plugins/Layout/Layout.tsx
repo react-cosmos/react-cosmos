@@ -11,6 +11,7 @@ type Props = {
   panelOpen: boolean;
   navWidth: number;
   panelWidth: number;
+  validFixtureSelected: boolean;
   setNavWidth: (width: number) => unknown;
   setPanelWidth: (width: number) => unknown;
 };
@@ -22,6 +23,7 @@ export function Layout({
   panelOpen,
   navWidth,
   panelWidth,
+  validFixtureSelected,
   setNavWidth,
   setPanelWidth
 }: Props) {
@@ -61,7 +63,7 @@ export function Layout({
         style={{ width: navOpen ? navWidth : undefined, zIndex: 2 }}
       >
         <Nav
-          navOpen={navOpen}
+          navOpen={navOpen || !validFixtureSelected}
           dragging={navDrag.dragging}
           dragElRef={navDrag.dragElRef}
         />

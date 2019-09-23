@@ -9,6 +9,7 @@ import { getNavWidthApi } from './navWidth';
 import { isPanelOpen, openPanel } from './panelOpen';
 import { getPanelWidthApi } from './panelWidth';
 import { LayoutSpec } from './public';
+import { RendererCoreSpec } from '../RendererCore/public';
 
 const { onLoad, plug, register } = createPlugin<LayoutSpec>({
   name: 'layout',
@@ -41,6 +42,7 @@ plug('root', ({ pluginContext }) => {
         fullScreen={false}
         navOpen={false}
         panelOpen={false}
+        validFixtureSelected={false}
         navWidth={0}
         panelWidth={0}
         setNavWidth={() => {}}
@@ -50,6 +52,7 @@ plug('root', ({ pluginContext }) => {
   }
 
   const router = getMethodsOf<RouterSpec>('router');
+  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const { navWidth, setNavWidth } = getNavWidthApi(pluginContext);
   const { panelWidth, setPanelWidth } = getPanelWidthApi(pluginContext);
   return (
@@ -60,6 +63,7 @@ plug('root', ({ pluginContext }) => {
       panelOpen={isPanelOpen(pluginContext)}
       navWidth={navWidth}
       panelWidth={panelWidth}
+      validFixtureSelected={rendererCore.isValidFixtureSelected()}
       setNavWidth={setNavWidth}
       setPanelWidth={setPanelWidth}
     />
