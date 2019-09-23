@@ -3,14 +3,17 @@ import { ArraySlot, Slot } from 'react-plugin';
 import styled from 'styled-components';
 import { grey32, grey8, white10 } from '../../shared/ui/colors';
 import { useDrag } from '../../shared/ui/useDrag';
+import { TopBar } from './TopBar';
 
 type Props = {
   storageCacheReady: boolean;
   fullScreen: boolean;
-  showNav: boolean;
+  validFixtureSelected: boolean;
+  navOpen: boolean;
   panelOpen: boolean;
   navWidth: number;
   panelWidth: number;
+  onToggleNav: () => unknown;
   setNavWidth: (width: number) => unknown;
   setPanelWidth: (width: number) => unknown;
 };
@@ -18,10 +21,12 @@ type Props = {
 export function Layout({
   storageCacheReady,
   fullScreen,
-  showNav,
+  validFixtureSelected,
+  navOpen,
   panelOpen,
   navWidth,
   panelWidth,
+  onToggleNav,
   setNavWidth,
   setPanelWidth
 }: Props) {
@@ -53,7 +58,9 @@ export function Layout({
     );
   }
 
+  const showNav = navOpen || !validFixtureSelected;
   const dragging = navDrag.dragging || panelDrag.dragging;
+
   // z-indexes are set here on purpose to show the layer hierarchy at a glance
   return (
     <Container dragging={dragging}>
@@ -65,6 +72,11 @@ export function Layout({
         </NavContainer>
       )}
       <Center key="center" style={{ zIndex: 1 }}>
+        <TopBar
+          validFixtureSelected={validFixtureSelected}
+          navOpen={navOpen}
+          onToggleNav={onToggleNav}
+        />
         <Slot name="rendererHeader" />
         <Preview key="preview" />
         {dragging && <DragOverlay />}

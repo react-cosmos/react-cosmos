@@ -1,6 +1,7 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
 import { CoreSpec } from '../Core/public';
+import { RendererCoreSpec } from '../RendererCore/public';
 import { RouterSpec } from '../Router/public';
 import { StorageSpec } from '../Storage/public';
 import { Layout } from './Layout';
@@ -9,7 +10,7 @@ import { getNavWidthApi } from './navWidth';
 import { isPanelOpen, openPanel } from './panelOpen';
 import { getPanelWidthApi } from './panelWidth';
 import { LayoutSpec } from './public';
-import { RendererCoreSpec } from '../RendererCore/public';
+import { LayoutContext } from './shared';
 
 const { onLoad, plug, register } = createPlugin<LayoutSpec>({
   name: 'layout',
@@ -34,16 +35,20 @@ onLoad(context => {
 
 plug('root', ({ pluginContext }) => {
   const { getState, getMethodsOf } = pluginContext;
+  const onToggleNav = useOpenNav(pluginContext);
+
   const { storageCacheReady } = getState();
   if (!storageCacheReady) {
     return (
       <Layout
         storageCacheReady={false}
         fullScreen={false}
-        showNav={false}
+        validFixtureSelected={false}
+        navOpen={false}
         panelOpen={false}
         navWidth={0}
         panelWidth={0}
+        onToggleNav={() => {}}
         setNavWidth={() => {}}
         setPanelWidth={() => {}}
       />
@@ -54,16 +59,16 @@ plug('root', ({ pluginContext }) => {
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const { navWidth, setNavWidth } = getNavWidthApi(pluginContext);
   const { panelWidth, setPanelWidth } = getPanelWidthApi(pluginContext);
-  const showNav =
-    isNavOpen(pluginContext) || !rendererCore.isValidFixtureSelected();
   return (
     <Layout
       storageCacheReady={true}
       fullScreen={router.isFullScreen()}
-      showNav={showNav}
+      validFixtureSelected={rendererCore.isValidFixtureSelected()}
+      navOpen={isNavOpen(pluginContext)}
       panelOpen={isPanelOpen(pluginContext)}
       navWidth={navWidth}
       panelWidth={panelWidth}
+      onToggleNav={onToggleNav}
       setNavWidth={setNavWidth}
       setPanelWidth={setPanelWidth}
     />
@@ -71,3 +76,9 @@ plug('root', ({ pluginContext }) => {
 });
 
 export { register };
+
+function useOpenNav(pluginContext: LayoutContext) {
+  return React.useCallback(() => {
+    openNav(pluginContext, !isNavOpen(pluginContext));
+  }, [pluginContext]);
+}

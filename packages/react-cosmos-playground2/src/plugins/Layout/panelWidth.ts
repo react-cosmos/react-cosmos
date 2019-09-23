@@ -1,5 +1,5 @@
 import { StorageSpec } from '../Storage/public';
-import { Context } from './shared';
+import { LayoutContext } from './shared';
 
 const PANEL_WIDTH_STORAGE_KEY = 'panelWidth';
 const PANEL_WIDTH_DEFAULT = 320;
@@ -7,7 +7,7 @@ const PANEL_WIDTH_DEFAULT = 320;
 const PANEL_WIDTH_MIN = 224;
 const PANEL_WIDTH_MAX = 512;
 
-export function getPanelWidthApi({ getMethodsOf }: Context) {
+export function getPanelWidthApi({ getMethodsOf }: LayoutContext) {
   const storage = getMethodsOf<StorageSpec>('storage');
   return {
     panelWidth:

@@ -1,5 +1,5 @@
 import { StorageSpec } from '../Storage/public';
-import { Context } from './shared';
+import { LayoutContext } from './shared';
 
 const NAV_WIDTH_STORAGE_KEY = 'navWidth';
 const NAV_WIDTH_DEFAULT = 320;
@@ -7,7 +7,7 @@ const NAV_WIDTH_DEFAULT = 320;
 const NAV_WIDTH_MIN = 224;
 const NAV_WIDTH_MAX = 512;
 
-export function getNavWidthApi({ getMethodsOf }: Context) {
+export function getNavWidthApi({ getMethodsOf }: LayoutContext) {
   const storage = getMethodsOf<StorageSpec>('storage');
   return {
     navWidth:
