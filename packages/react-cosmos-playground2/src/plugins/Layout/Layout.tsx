@@ -57,15 +57,13 @@ export function Layout({
   // z-indexes are set here on purpose to show the layer hierarchy at a glance
   return (
     <Container dragging={dragging}>
-      <NavContainer
-        style={{ width: showNav ? navWidth : undefined, zIndex: 2 }}
-      >
-        <Nav
-          showNav={showNav}
-          dragging={navDrag.dragging}
-          dragElRef={navDrag.dragElRef}
-        />
-      </NavContainer>
+      {showNav && (
+        <NavContainer style={{ width: navWidth, zIndex: 2 }}>
+          <Slot name="nav" />
+          {navDrag.dragging && <DragOverlay />}
+          <NavDragHandle ref={navDrag.dragElRef} />
+        </NavContainer>
+      )}
       <Center key="center" style={{ zIndex: 1 }}>
         <Slot name="rendererHeader" />
         <Preview key="preview" />
@@ -82,26 +80,6 @@ export function Layout({
         <ArraySlot name="global" />
       </div>
     </Container>
-  );
-}
-
-type NavProps = {
-  showNav: boolean;
-  dragging: boolean;
-  dragElRef: (elRef: HTMLElement | null) => void;
-};
-
-function Nav({ showNav, dragging, dragElRef }: NavProps) {
-  if (!showNav) {
-    return null;
-  }
-
-  return (
-    <>
-      <Slot name="nav" />
-      {dragging && <DragOverlay />}
-      <NavDragHandle ref={dragElRef} />
-    </>
   );
 }
 
