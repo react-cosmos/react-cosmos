@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ChevronDownIcon } from '../../icons';
+import { blue, grey160, grey224, grey24, grey32 } from '../colors';
 import { useFocus } from '../useFocus';
 
 type BaseOption = { value: string; label: string };
@@ -73,11 +74,11 @@ export function Select<Option extends BaseOption>({
 const Container = styled.div<{ focused: boolean }>`
   position: relative;
   border-radius: 3px;
-  box-shadow: ${props =>
-    props.focused ? '0 0 1px 1px var(--primary4)' : 'none'};
+  background: ${grey32};
+  box-shadow: ${props => (props.focused ? `0 0 0.5px 1px ${blue}` : 'none')};
 
   :hover {
-    background: hsl(var(--hue-primary), 25%, 95%);
+    background: ${grey24};
   }
 `;
 
@@ -90,7 +91,7 @@ const VisibleButton = styled.div`
 `;
 
 const Label = styled.span`
-  color: var(--grey2);
+  color: ${grey224};
   line-height: 32px;
 `;
 
@@ -99,7 +100,7 @@ const IconContainer = styled.span`
   width: var(--size);
   height: var(--size);
   padding: 2px 0 0 2px;
-  color: var(--grey3);
+  color: ${grey160};
 `;
 
 const SelectInput = styled.select`

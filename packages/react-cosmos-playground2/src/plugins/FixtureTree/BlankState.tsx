@@ -1,6 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FileIcon } from '../../shared/icons';
+import {
+  grey160,
+  grey224,
+  grey32,
+  grey64,
+  grey8
+} from '../../shared/ui/colors';
 
 type Props = {
   fixturesDir: string;
@@ -35,7 +42,7 @@ export function BlankState({ fixturesDir, fixtureFileSuffix }: Props) {
 
 const Container = styled.div`
   padding: 16px 24px;
-  background: var(--grey1);
+  background: ${grey32};
   font-size: 14px;
   line-height: 22px;
 `;
@@ -47,12 +54,12 @@ export const IconContainer = styled.div`
   display: flex;
   width: var(--size);
   height: var(--size);
-  color: var(--grey3);
+  color: ${grey64};
 `;
 
 const Title = styled.div`
   margin: 0 0 24px 0;
-  color: var(--grey5);
+  color: ${grey224};
   text-align: center;
   font-weight: 500;
 `;
@@ -60,7 +67,7 @@ const Title = styled.div`
 const Description = styled.div`
   margin: 0 auto;
   max-width: 256px;
-  color: var(--grey4);
+  color: ${grey160};
   text-align: left;
 
   ol {
@@ -74,8 +81,8 @@ const Description = styled.div`
   code {
     padding: 0 4px;
     border-radius: 3px;
-    background: rgba(0, 0, 0, 0.2);
-    color: var(--grey5);
+    background: ${grey8};
+    color: ${grey224};
     font-family: 'Dank Mono', Courier, monospace;
   }
 `;

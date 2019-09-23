@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import { grey128, grey224, disabledColors } from '../../colors';
 
-export const Label = styled.label`
+export const Label = styled.label<{ disabled?: boolean }>`
   padding: 0;
-  color: var(--grey4);
+  color: ${disabledColors(grey224, grey128)};
   font-size: 14px;
   user-select: none;
   overflow: hidden;
@@ -26,7 +27,7 @@ export const UneditableInput = styled.span`
   height: 24px;
   padding: 2px 4px;
   line-height: 20px;
-  color: var(--grey4);
+  color: ${grey128};
   font-style: italic;
   white-space: pre;
   overflow: hidden;

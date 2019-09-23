@@ -66,9 +66,7 @@ function getItem(
   onInputChange: (value: FixtureStatePrimitiveValueType) => unknown
 ) {
   if (item.type === 'unserializable') {
-    return (
-      <UnserializableItem id={id} label={label} value={item.stringifiedValue} />
-    );
+    return <UnserializableItem label={label} value={item.stringifiedValue} />;
   }
 
   if (typeof item.value === 'string') {
@@ -105,7 +103,7 @@ function getItem(
   }
 
   if (item.value === null) {
-    return <NullItem id={id} label={label} />;
+    return <NullItem label={label} />;
   }
 
   throw new Error(`Invalid primitive value: ${item.value}`);

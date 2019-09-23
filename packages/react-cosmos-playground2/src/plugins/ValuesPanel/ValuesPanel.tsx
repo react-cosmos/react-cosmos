@@ -7,7 +7,7 @@ import {
 } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import { RotateCcwIcon } from '../../shared/icons';
-import { DarkIconButton } from '../../shared/ui/buttons';
+import { IconButton } from '../../shared/ui/buttons';
 import { TreeExpansion } from '../../shared/ui/TreeView';
 import {
   Actions,
@@ -50,9 +50,9 @@ export const ValuesPanel = React.memo(function ClassStatePanel({
   return (
     <Container>
       <Header>
-        <Title label="VALUES" />
+        <Title label="Values" />
         <Actions>
-          <DarkIconButton
+          <IconButton
             title="Reset to default values"
             icon={<RotateCcwIcon />}
             disabled={areValuesEqual(fsValuePairs)}

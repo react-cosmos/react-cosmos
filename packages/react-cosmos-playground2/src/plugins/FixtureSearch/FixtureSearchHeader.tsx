@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ChevronLeftIcon, SearchIcon } from '../../shared/icons';
-import { DarkIconButton } from '../../shared/ui/buttons';
+import { IconButton } from '../../shared/ui/buttons';
+import { blue, grey160, grey32, white10 } from '../../shared/ui/colors';
 
 type Props = {
   onOpen: () => unknown;
@@ -18,7 +19,7 @@ export function FixtureSearchHeader({ onOpen, onMinimizeNav }: Props) {
         <SearchLabel>Search fixtures</SearchLabel>
       </SearchButton>
       <MinimizeButtonContainer>
-        <DarkIconButton
+        <IconButton
           title="Minimize nav bar"
           icon={<ChevronLeftIcon />}
           onClick={onMinimizeNav}
@@ -31,8 +32,9 @@ export function FixtureSearchHeader({ onOpen, onMinimizeNav }: Props) {
 const Container = styled.div`
   display: flex;
   height: 40px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  background: var(--grey1);
+  margin: 0 1px 0 0;
+  border-bottom: 1px solid ${white10};
+  background: ${grey32};
 `;
 
 const SearchButton = styled.button`
@@ -43,13 +45,13 @@ const SearchButton = styled.button`
   align-items: center;
   border: none;
   background: transparent;
-  color: var(--grey3);
+  color: ${grey160};
   padding: 0 16px;
   cursor: text;
 
   :focus {
     outline: none;
-    box-shadow: inset 4px 0px 0 0 var(--primary3);
+    box-shadow: inset 3px 0px 0 0 ${blue};
   }
 
   ::-moz-focus-inner {

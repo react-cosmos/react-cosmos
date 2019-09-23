@@ -1,12 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Notification, NotificationType } from './public';
 import {
-  CheckCircleIcon,
   AlertCircleIcon,
+  CheckCircleIcon,
   InfoIcon,
   LoaderIcon
 } from '../../shared/icons';
+import {
+  grey128,
+  grey64,
+  grey32,
+  grey8,
+  white95
+} from '../../shared/ui/colors';
+import { Notification, NotificationType } from './public';
 
 type Props = {
   notifications: Notification[];
@@ -47,8 +54,8 @@ const Item = styled.div`
   min-height: 56px;
   margin-top: 6px;
   border-radius: 6px;
-  background: hsla(var(--hue-primary), 17%, 98%, 0.95);
-  box-shadow: 0 2px 10px -4px var(--grey1);
+  background: ${white95};
+  box-shadow: 0 2px 10px -4px ${grey8};
   line-height: 20px;
   animation: fadeScaleIn var(--quick) forwards;
 
@@ -73,7 +80,7 @@ const IconContainer = styled.div`
   width: var(--size);
   height: var(--size);
   margin: 18px 16px;
-  color: var(--grey3);
+  color: ${grey128};
 `;
 
 const Content = styled.div`
@@ -82,7 +89,7 @@ const Content = styled.div`
 `;
 
 const Title = styled.div`
-  color: var(--grey1);
+  color: ${grey32};
   font-weight: 500;
 `;
 
@@ -90,7 +97,7 @@ const Info = styled.div`
   margin: 2px 0 0 0;
   font-size: 12px;
   line-height: 18px;
-  color: var(--grey2);
+  color: ${grey64};
 `;
 
 const IconTypes: { [key in NotificationType]: React.ComponentType } = {

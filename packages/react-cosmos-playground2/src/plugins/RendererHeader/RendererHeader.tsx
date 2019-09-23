@@ -1,9 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
-import { ArraySlot } from 'react-plugin';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { XCircleIcon, RefreshCwIcon, HomeIcon } from '../../shared/icons';
+import { ArraySlot } from 'react-plugin';
+import styled from 'styled-components';
+import { HomeIcon, RefreshCwIcon, XCircleIcon } from '../../shared/icons';
 import { IconButton } from '../../shared/ui/buttons';
+import { grey192, grey32, white10 } from '../../shared/ui/colors';
 
 type Props = {
   rendererActionOrder: string[];
@@ -91,9 +92,9 @@ const Container = styled.div`
   justify-content: space-between;
   height: 40px;
   padding: 0 4px;
-  border-bottom: 1px solid var(--grey5);
-  background: var(--grey6);
-  color: var(--grey3);
+  border-bottom: 1px solid ${white10};
+  background: ${grey32};
+  color: ${grey192};
   white-space: nowrap;
   overflow-x: auto;
 `;

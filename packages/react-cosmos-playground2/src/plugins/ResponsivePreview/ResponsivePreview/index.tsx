@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Device, Viewport } from '../public';
 import { Header } from './Header';
 import { getViewportScaleFactor, getStyles, stretchStyle } from './style';
+import { grey8 } from '../../../shared/ui/colors';
 
 type Props = {
   children: React.ReactNode;
@@ -140,5 +141,5 @@ const Container = styled.div.attrs({ 'data-testid': 'responsivePreview' })`
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  background: var(--grey6);
+  background: ${grey8};
 `;

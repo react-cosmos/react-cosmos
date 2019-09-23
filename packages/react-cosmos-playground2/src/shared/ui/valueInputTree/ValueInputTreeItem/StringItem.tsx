@@ -1,4 +1,5 @@
 import React from 'react';
+import { blue, grey248, grey8 } from '../../colors';
 import {
   TextContainer,
   TextField,
@@ -34,8 +35,8 @@ export function StringItem({ id, label, value, onChange }: Props) {
       <ValueContainer>
         <TextInputContainer
           focused={focused}
-          focusedBg="var(--grey1)"
-          focusedBoxShadow="0 0 0.5px 1px var(--primary4)"
+          focusedBg={grey8}
+          focusedBoxShadow={`0 0 0.5px 1px ${blue}`}
         >
           <TextContainer>
             <TextMirror minWidth={64} focused={focused}>
@@ -46,7 +47,7 @@ export function StringItem({ id, label, value, onChange }: Props) {
               id={id}
               value={value}
               focused={focused}
-              color="var(--grey7)"
+              color={grey248}
               onChange={onInputChange}
               onFocus={onFocus}
               onBlur={onBlur}

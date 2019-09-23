@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { lightBlue } from '../colors';
 
 export const TextInputContainer = styled.div<{
   focused: boolean;
@@ -36,6 +37,7 @@ export const TextField = styled.textarea<{ focused: boolean; color: string }>`
 `;
 
 export const TextMirror = styled.div<{ focused: boolean; minWidth: number }>`
+  color: ${lightBlue};
   opacity: ${props => (props.focused ? 0 : 1)};
   min-width: ${props => props.minWidth}px;
   min-height: 20px;

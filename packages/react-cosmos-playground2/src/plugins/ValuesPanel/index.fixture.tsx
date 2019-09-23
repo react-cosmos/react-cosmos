@@ -1,12 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { useValue } from 'react-cosmos/fixture';
 import { ValuesPanel } from './ValuesPanel';
-
-const Container = styled.div`
-  background: var(--grey2);
-`;
 
 export default () => {
   const [fixtureState, setFixtureState] = useValue<FixtureState>(
@@ -57,13 +52,11 @@ export default () => {
   });
 
   return (
-    <Container>
-      <ValuesPanel
-        fixtureState={fixtureState}
-        treeExpansion={treeExpansion}
-        onFixtureStateChange={setFixtureState}
-        onTreeExpansionChange={setTreeExpansion}
-      />
-    </Container>
+    <ValuesPanel
+      fixtureState={fixtureState}
+      treeExpansion={treeExpansion}
+      onFixtureStateChange={setFixtureState}
+      onTreeExpansionChange={setTreeExpansion}
+    />
   );
 };

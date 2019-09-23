@@ -1,6 +1,7 @@
+import { white20 } from '../../../shared/ui/colors';
 import { Viewport } from '../public';
 
-const PADDING = [4, 12, 12, 12];
+const PADDING = [12, 12, 12, 12];
 const BORDER_WIDTH = 1;
 
 export const stretchStyle = { display: 'flex', flex: 1 };
@@ -78,8 +79,7 @@ function getAlignContainerStyle(scaledWidth: number, scaledHeight: number) {
   return {
     width: scaledWidth,
     height: scaledHeight,
-    border: `${BORDER_WIDTH}px solid var(--grey5)`,
-    boxShadow: '0 2px 10px 0 var(--grey5)',
+    border: `${BORDER_WIDTH}px solid ${white20}`,
     overflow: 'hidden'
   };
 }

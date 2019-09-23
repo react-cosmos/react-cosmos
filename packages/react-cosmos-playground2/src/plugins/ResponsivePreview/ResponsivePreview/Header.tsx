@@ -2,9 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import { Minimize2Icon } from '../../../shared/icons';
 import { Button } from '../../../shared/ui/buttons';
-import { Device, Viewport } from '../public';
+import {
+  blue,
+  grey128,
+  grey248,
+  grey32,
+  grey8,
+  white10
+} from '../../../shared/ui/colors';
 import { NumberInput } from '../../../shared/ui/inputs/NumberInput';
 import { Select } from '../../../shared/ui/inputs/Select';
+import { Device, Viewport } from '../public';
 
 type Props = {
   devices: Device[];
@@ -16,9 +24,9 @@ type Props = {
 };
 
 const numberInputStypes = {
-  focusedColor: 'var(--grey2)',
-  focusedBg: 'var(--grey7)',
-  focusedBoxShadow: '0 0 1px 1px var(--primary4)'
+  focusedColor: grey248,
+  focusedBg: grey8,
+  focusedBoxShadow: `0 0 0.5px 1px ${blue}`
 };
 
 export function Header({
@@ -101,7 +109,9 @@ const Container = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 4px 4px 8px 4px;
+  padding: 4px;
+  background: ${grey32};
+  border-bottom: 1px solid ${white10};
   white-space: nowrap;
   overflow-x: auto;
 `;
@@ -134,18 +144,17 @@ const ViewportSize = styled.div`
   flex-direction: row;
   align-items: center;
   margin: 0 2px;
-  color: var(--grey2);
 `;
 
 const ViewportX = styled.div`
   padding: 0 1px;
   line-height: 32px;
-  color: var(--grey3);
+  color: ${grey128};
 `;
 
 const ScaleDegree = styled.span`
   margin-left: 3px;
-  color: var(--grey3);
+  color: ${grey128};
 
   ::before {
     content: '(';

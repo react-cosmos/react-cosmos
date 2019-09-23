@@ -1,6 +1,7 @@
-import styled from 'styled-components';
 import React from 'react';
 import { Slot } from 'react-plugin';
+import styled from 'styled-components';
+import { grey8, white3 } from '../../shared/ui/colors';
 
 export type OnIframeRef = (elRef: null | HTMLIFrameElement) => void;
 
@@ -34,26 +35,26 @@ export const RendererPreview = React.memo(function RendererPreview({
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: ${grey8};
   /* Checkerboard effect on background */
   background-image: linear-gradient(
       45deg,
-      var(--grey7) 25%,
+      ${white3} 25%,
       transparent 25%,
       transparent 75%,
-      var(--grey7) 75%,
-      var(--grey7) 100%
+      ${white3} 75%,
+      ${white3} 100%
     ),
     linear-gradient(
       45deg,
-      var(--grey7) 25%,
+      ${white3} 25%,
       transparent 25%,
       transparent 75%,
-      var(--grey7) 75%,
-      var(--grey7) 100%
+      ${white3} 75%,
+      ${white3} 100%
     );
-  background-size: 50px 50px;
-  background-position: 0 0, 25px 25px;
+  background-size: 32px 32px;
+  background-position: 0 0, 16px 16px;
 `;
 
 const Iframe = styled.iframe`

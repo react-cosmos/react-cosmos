@@ -1,5 +1,5 @@
-import React from 'react';
 import { isEqual } from 'lodash';
+import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
 import { FixtureNode } from '../../../shared/fixtureTree';
@@ -8,6 +8,7 @@ import {
   ChevronRightIcon,
   FolderIcon
 } from '../../../shared/icons';
+import { blue, grey128 } from '../../../shared/ui/colors';
 import { Label, ListItem, Unshirinkable } from './shared';
 
 type Props = {
@@ -70,7 +71,7 @@ const DirButton = styled.button`
   :focus {
     outline: none;
     > span {
-      box-shadow: inset 4px 0px 0 0 var(--primary3);
+      box-shadow: inset 3px 0px 0 0 ${blue};
     }
   }
 
@@ -83,7 +84,7 @@ const IconContainer = styled(Unshirinkable)`
   --size: 16px;
   width: var(--size);
   height: var(--size);
-  color: var(--grey3);
+  color: ${grey128};
 `;
 
 const CevronContainer = styled(IconContainer)`

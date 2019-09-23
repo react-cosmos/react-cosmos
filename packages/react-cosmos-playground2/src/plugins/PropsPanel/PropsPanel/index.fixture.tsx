@@ -1,12 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import { stringifyElementId } from '../../../shared/ui/valueInputTree';
 import { PropsPanel } from '.';
-
-const Container = styled.div`
-  background: var(--grey2);
-`;
+import { stringifyElementId } from '../../../shared/ui/valueInputTree';
 
 export default () => {
   const [fixtureState, setFixtureState] = React.useState<FixtureState>({
@@ -108,18 +103,16 @@ export default () => {
   const [fixtureExpansion, setFixtureExpansion] = React.useState({});
 
   return (
-    <Container>
-      <PropsPanel
-        fixtureState={fixtureState}
-        fixtureExpansion={fixtureExpansion}
-        onFixtureStateChange={setFixtureState}
-        onElementExpansionChange={(elementId, treeExpansion) => {
-          setFixtureExpansion({
-            ...fixtureExpansion,
-            [stringifyElementId(elementId)]: treeExpansion
-          });
-        }}
-      />
-    </Container>
+    <PropsPanel
+      fixtureState={fixtureState}
+      fixtureExpansion={fixtureExpansion}
+      onFixtureStateChange={setFixtureState}
+      onElementExpansionChange={(elementId, treeExpansion) => {
+        setFixtureExpansion({
+          ...fixtureExpansion,
+          [stringifyElementId(elementId)]: treeExpansion
+        });
+      }}
+    />
   );
 };

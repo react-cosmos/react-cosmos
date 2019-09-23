@@ -1,5 +1,6 @@
 import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
+import { useValue } from 'react-cosmos/fixture';
 import { FixtureTree } from '.';
 import { TreeExpansion } from '../../../shared/ui/TreeView';
 
@@ -30,20 +31,27 @@ export default {
 };
 
 function createFixtureTree(
-  treeExpansion: TreeExpansion = {},
+  initialTreeExpansion: TreeExpansion = {},
   fixtureId: null | FixtureId = null
 ) {
-  return (
-    <FixtureTree
-      fixturesDir="__fixtures__"
-      fixtureFileSuffix="fixture"
-      fixtures={fixtures}
-      selectedFixtureId={fixtureId}
-      treeExpansion={treeExpansion}
-      onSelect={selectedFixtureId => console.log('select', selectedFixtureId)}
-      setTreeExpansion={newTreeExpansion =>
-        console.log('set tree expansion', newTreeExpansion)
-      }
-    />
-  );
+  return () => {
+    const [selectedFixtureId, setSelectedFixtureId] = useValue(
+      'selectedFixtureId',
+      { defaultValue: fixtureId }
+    );
+    const [treeExpansion, setTreeExpansion] = useValue('treeExpansion', {
+      defaultValue: initialTreeExpansion
+    });
+    return (
+      <FixtureTree
+        fixturesDir="__fixtures__"
+        fixtureFileSuffix="fixture"
+        fixtures={fixtures}
+        selectedFixtureId={selectedFixtureId}
+        treeExpansion={treeExpansion}
+        onSelect={setSelectedFixtureId}
+        setTreeExpansion={setTreeExpansion}
+      />
+    );
+  };
 }

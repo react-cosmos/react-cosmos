@@ -1,6 +1,7 @@
 import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
+import { blue, grey64, selectedColors } from '../../shared/ui/colors';
 
 type Props = {
   cleanFixturePath: string;
@@ -22,7 +23,7 @@ export function FixtureSearchResult({
   ]);
 
   return (
-    <Container ref={containerRef} active={active} onClick={onClick}>
+    <Container ref={containerRef} selected={active} onClick={onClick}>
       {cleanFixturePath}
     </Container>
   );
@@ -48,7 +49,7 @@ function scrollIntoView(node: HTMLElement) {
   }
 }
 
-const Container = styled.div<{ active: boolean }>`
+const Container = styled.div<{ selected: boolean }>`
   padding: 0 24px 0 48px;
   line-height: 32px;
   font-size: 14px;
@@ -56,6 +57,6 @@ const Container = styled.div<{ active: boolean }>`
   overflow: hidden;
   text-overflow: ellipsis;
   user-select: none;
-  background: ${props => (props.active ? 'var(--accent3)' : 'transparent')};
-  color: ${props => (props.active ? 'var(--accent7)' : 'var(--grey2)')};
+  background: ${selectedColors('transparent', blue)};
+  color: ${selectedColors(grey64, 'white')};
 `;

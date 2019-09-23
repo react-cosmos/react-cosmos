@@ -1,9 +1,10 @@
 import { filter } from 'fuzzaldrin-plus';
-import React from 'react';
 import { isEqual } from 'lodash';
+import React from 'react';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
 import { createFixtureTree } from '../../shared/fixtureTree';
+import { SearchIcon } from '../../shared/icons';
 import {
   KEY_DOWN,
   KEY_ENTER,
@@ -11,9 +12,18 @@ import {
   KEY_TAB,
   KEY_UP
 } from '../../shared/keys';
+import {
+  black48,
+  grey128,
+  grey160,
+  grey176,
+  grey208,
+  grey224,
+  grey248,
+  grey64
+} from '../../shared/ui/colors';
 import { FixtureSearchResult } from './FixtureSearchResult';
 import { FixtureIdsByPath, flattenFixtureTree } from './flattenFixtureTree';
-import { SearchIcon } from '../../shared/icons';
 
 type Props = {
   searchText: string;
@@ -274,7 +284,7 @@ const Overlay = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.48);
+  background: ${black48};
 `;
 
 const Content = styled.div`
@@ -287,8 +297,7 @@ const Content = styled.div`
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-  background: var(--grey7);
-  color: var(--grey2);
+  background: ${grey248};
   overflow: hidden;
 `;
 
@@ -307,28 +316,28 @@ const SearchIconContainer = styled.div`
   width: 20px;
   height: 20px;
   padding: 7px 12px 0 2px;
-  color: var(--grey4);
+  color: ${grey176};
 `;
 
 const SearchInput = styled.input`
   flex: 1;
   border: none;
   background: transparent;
-  color: var(--grey2);
+  color: ${grey64};
   outline: none;
   font-size: 16px;
   line-height: 32px;
 
   ::placeholder {
-    color: var(--grey4);
+    color: ${grey160};
   }
 `;
 
 const ResultsViewport = styled.div`
   flex: 1;
   max-height: 336px;
-  border-top: 1px solid var(--grey5);
-  background: var(--grey6);
+  border-top: 1px solid ${grey208};
+  background: ${grey224};
   overflow-x: hidden;
   overflow-y: auto;
 `;
@@ -345,5 +354,5 @@ const NoResults = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   user-select: none;
-  color: var(--grey3);
+  color: ${grey128};
 `;

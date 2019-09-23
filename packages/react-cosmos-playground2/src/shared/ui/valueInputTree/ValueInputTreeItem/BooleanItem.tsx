@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ValueContainer, Label } from './shared';
+import { blue, lightBlue } from '../../colors';
+import { Label, ValueContainer } from './shared';
 
 type Props = {
   id: string;
@@ -33,13 +34,13 @@ const BooleanButton = styled.button`
   border: none;
   border-radius: 3px;
   background: transparent;
-  color: var(--grey7);
+  color: ${lightBlue};
   line-height: 24px;
   outline: none;
   user-select: none;
 
   :focus {
-    box-shadow: 0 0 0.5px 1px var(--primary4);
+    box-shadow: 0 0 0.5px 1px ${blue};
   }
 
   ::-moz-focus-inner {

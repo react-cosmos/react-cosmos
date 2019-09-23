@@ -3,7 +3,7 @@ import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { SearchIcon } from '../../shared/icons';
 import { KEY_K, KEY_P } from '../../shared/keys';
-import { DarkIconButton } from '../../shared/ui/buttons';
+import { IconButton } from '../../shared/ui/buttons';
 import { CoreSpec } from '../Core/public';
 import { FixtureTreeSpec } from '../FixtureTree/public';
 import { LayoutSpec } from '../Layout/public';
@@ -56,7 +56,7 @@ namedPlug('navRow', 'fixtureSearch', ({ pluginContext }) => {
 namedPlug('miniNavAction', 'fixtureSearch', ({ pluginContext }) => {
   const onOpen = useOnOpen(pluginContext);
   return (
-    <DarkIconButton
+    <IconButton
       title="Search fixtures"
       icon={<SearchIcon />}
       onClick={onOpen}
