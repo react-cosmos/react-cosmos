@@ -40,9 +40,8 @@ plug('root', ({ pluginContext }) => {
       <Layout
         storageCacheReady={false}
         fullScreen={false}
-        navOpen={false}
+        showNav={false}
         panelOpen={false}
-        validFixtureSelected={false}
         navWidth={0}
         panelWidth={0}
         setNavWidth={() => {}}
@@ -55,15 +54,16 @@ plug('root', ({ pluginContext }) => {
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const { navWidth, setNavWidth } = getNavWidthApi(pluginContext);
   const { panelWidth, setPanelWidth } = getPanelWidthApi(pluginContext);
+  const showNav =
+    isNavOpen(pluginContext) || !rendererCore.isValidFixtureSelected();
   return (
     <Layout
       storageCacheReady={true}
       fullScreen={router.isFullScreen()}
-      navOpen={isNavOpen(pluginContext)}
+      showNav={showNav}
       panelOpen={isPanelOpen(pluginContext)}
       navWidth={navWidth}
       panelWidth={panelWidth}
-      validFixtureSelected={rendererCore.isValidFixtureSelected()}
       setNavWidth={setNavWidth}
       setPanelWidth={setPanelWidth}
     />

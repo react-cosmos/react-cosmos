@@ -7,11 +7,10 @@ import { useDrag } from '../../shared/ui/useDrag';
 type Props = {
   storageCacheReady: boolean;
   fullScreen: boolean;
-  navOpen: boolean;
+  showNav: boolean;
   panelOpen: boolean;
   navWidth: number;
   panelWidth: number;
-  validFixtureSelected: boolean;
   setNavWidth: (width: number) => unknown;
   setPanelWidth: (width: number) => unknown;
 };
@@ -19,11 +18,10 @@ type Props = {
 export function Layout({
   storageCacheReady,
   fullScreen,
-  navOpen,
+  showNav,
   panelOpen,
   navWidth,
   panelWidth,
-  validFixtureSelected,
   setNavWidth,
   setPanelWidth
 }: Props) {
@@ -60,10 +58,10 @@ export function Layout({
   return (
     <Container dragging={dragging}>
       <NavContainer
-        style={{ width: navOpen ? navWidth : undefined, zIndex: 2 }}
+        style={{ width: showNav ? navWidth : undefined, zIndex: 2 }}
       >
         <Nav
-          navOpen={navOpen || !validFixtureSelected}
+          showNav={showNav}
           dragging={navDrag.dragging}
           dragElRef={navDrag.dragElRef}
         />
@@ -88,13 +86,13 @@ export function Layout({
 }
 
 type NavProps = {
-  navOpen: boolean;
+  showNav: boolean;
   dragging: boolean;
   dragElRef: (elRef: HTMLElement | null) => void;
 };
 
-function Nav({ navOpen, dragging, dragElRef }: NavProps) {
-  if (!navOpen) {
+function Nav({ showNav, dragging, dragElRef }: NavProps) {
+  if (!showNav) {
     return null;
   }
 
