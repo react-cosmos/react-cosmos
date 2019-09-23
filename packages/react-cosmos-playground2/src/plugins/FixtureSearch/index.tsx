@@ -1,12 +1,9 @@
 import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { createPlugin, PluginContext } from 'react-plugin';
-import { SearchIcon } from '../../shared/icons';
 import { KEY_K, KEY_P } from '../../shared/keys';
-import { IconButton } from '../../shared/ui/buttons';
 import { CoreSpec } from '../Core/public';
 import { FixtureTreeSpec } from '../FixtureTree/public';
-import { LayoutSpec } from '../Layout/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { RouterSpec } from '../Router/public';
 import { FixtureSearchHeader } from './FixtureSearchHeader';
@@ -37,31 +34,16 @@ onLoad(({ setState }) => {
 
 namedPlug('navRow', 'fixtureSearch', ({ pluginContext }) => {
   const { getMethodsOf } = pluginContext;
-  const layout = getMethodsOf<LayoutSpec>('layout');
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const fixtures = rendererCore.getFixtures();
   const onOpen = useOnOpen(pluginContext);
-  const onMinimizeNav = React.useCallback(() => layout.openNav(false), [
-    layout
-  ]);
 
   // No point in showing fixture search button unless user has fixtures
   if (Object.keys(fixtures).length === 0) {
     return null;
   }
 
-  return <FixtureSearchHeader onOpen={onOpen} onMinimizeNav={onMinimizeNav} />;
-});
-
-namedPlug('miniNavAction', 'fixtureSearch', ({ pluginContext }) => {
-  const onOpen = useOnOpen(pluginContext);
-  return (
-    <IconButton
-      title="Search fixtures"
-      icon={<SearchIcon />}
-      onClick={onOpen}
-    />
-  );
+  return <FixtureSearchHeader onOpen={onOpen} />;
 });
 
 namedPlug('global', 'fixtureSearch', ({ pluginContext }) => {
