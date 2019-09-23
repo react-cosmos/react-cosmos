@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { IconButton } from '../../shared/ui/buttons';
+import { IconButton32 } from '../../shared/ui/buttons';
 import { SlidersIcon } from '../../shared/icons';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { LayoutSpec } from '../Layout/public';
@@ -27,7 +27,7 @@ namedPlug('rendererAction', 'controlPanel', ({ pluginContext }) => {
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   if (!rendererCore.isValidFixtureSelected()) {
     return (
-      <IconButton
+      <IconButton32
         icon={<SlidersIcon />}
         title="Open control panel"
         disabled
@@ -39,7 +39,7 @@ namedPlug('rendererAction', 'controlPanel', ({ pluginContext }) => {
   const layout = pluginContext.getMethodsOf<LayoutSpec>('layout');
   const panelOpen = layout.isPanelOpen();
   return (
-    <IconButton
+    <IconButton32
       icon={<SlidersIcon />}
       title="Open control panel"
       selected={panelOpen}

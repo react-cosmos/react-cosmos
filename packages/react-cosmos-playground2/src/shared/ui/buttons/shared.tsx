@@ -1,16 +1,12 @@
 import styled from 'styled-components';
-import {
-  blue,
-  grey160,
-  grey224,
-  grey24,
-  grey248,
-  grey32,
-  grey8,
-  selectedColors
-} from '../colors';
+import { blue, grey160 } from '../colors';
 
 type StyledButtonProps = {
+  bg: string;
+  bgSelect: string;
+  bgHover: string;
+  color: string;
+  colorSelect: string;
   selected: boolean;
   disabled: boolean;
 };
@@ -23,15 +19,15 @@ export const StyledButton = styled.button<StyledButtonProps>`
   min-height: 32px;
   border: 0;
   border-radius: 3px;
-  background: ${selectedColors(grey32, grey8)};
-  color: ${selectedColors(grey224, grey248)};
+  background: ${props => (props.selected ? props.bgSelect : props.bg)};
+  color: ${props => (props.selected ? props.colorSelect : props.color)};
   white-space: nowrap;
   user-select: none;
   outline: none;
   transition: background var(--quick), color var(--quick), opacity var(--quick);
 
   :hover {
-    background: ${selectedColors(grey24, grey8)};
+    background: ${props => (props.selected ? props.bgSelect : props.bgHover)};
   }
 
   :focus {
@@ -39,7 +35,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   }
 
   :disabled {
-    background: ${selectedColors(grey32, grey8)};
+    background: ${props => (props.selected ? props.bgSelect : props.bg)};
     cursor: default;
     opacity: 0.5;
   }
@@ -49,12 +45,12 @@ export const StyledButton = styled.button<StyledButtonProps>`
   }
 `;
 
-export const Icon = styled.span`
+export const StyledIcon = styled.span<{ color: string }>`
   --size: 16px;
   width: var(--size);
   height: var(--size);
   padding: 2px 0 0 0;
-  color: ${grey160};
+  color: ${props => props.color};
 `;
 
 export const Label = styled.span`

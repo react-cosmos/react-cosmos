@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Minimize2Icon } from '../../../shared/icons';
-import { Button } from '../../../shared/ui/buttons';
+import { Button32 } from '../../../shared/ui/buttons';
 import {
   blue,
   grey128,
@@ -76,7 +76,7 @@ export function Header({
             onChange={height => selectViewport({ ...selectedViewport, height })}
           />
         </ViewportSize>
-        <Button
+        <Button32
           icon={<Minimize2Icon />}
           label={
             <>

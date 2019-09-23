@@ -9,7 +9,7 @@ import {
   resetFixtureStateProps
 } from 'react-cosmos-shared2/fixtureState';
 import { TreeExpansion } from '../../../shared/ui/TreeView';
-import { IconButton } from '../../../shared/ui/buttons';
+import { IconButton32 } from '../../../shared/ui/buttons';
 import {
   ValueInputTree,
   FixtureExpansion,
@@ -85,13 +85,13 @@ export function ComponentProps({
       <Header>
         <Title label="Props" componentName={componentName} />
         <Actions>
-          <IconButton
+          <IconButton32
             title="Reset to initial values"
             icon={<RotateCcwIcon />}
             disabled={isEqual(values, initialValues)}
             onClick={onResetValues}
           />
-          <IconButton
+          <IconButton32
             title="Reuse instances on prop changes"
             icon={<CopyIcon />}
             selected={!reset}

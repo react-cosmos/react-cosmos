@@ -3,7 +3,7 @@ import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { ArraySlot } from 'react-plugin';
 import styled from 'styled-components';
 import { HomeIcon, RefreshCwIcon, XCircleIcon } from '../../shared/icons';
-import { IconButton } from '../../shared/ui/buttons';
+import { IconButton32 } from '../../shared/ui/buttons';
 import { grey192, grey32, white10 } from '../../shared/ui/colors';
 
 type Props = {
@@ -53,7 +53,7 @@ export const RendererHeader = React.memo(function RendererHeader({
       <Container>
         <Left>
           <Message>Fixture not found</Message>
-          <IconButton
+          <IconButton32
             icon={<HomeIcon />}
             title="Go home"
             onClick={() => unselectFixture()}
@@ -67,12 +67,12 @@ export const RendererHeader = React.memo(function RendererHeader({
   return (
     <Container>
       <Left>
-        <IconButton
+        <IconButton32
           icon={<XCircleIcon />}
           title="Close fixture"
           onClick={() => unselectFixture()}
         />
-        <IconButton
+        <IconButton32
           icon={<RefreshCwIcon />}
           title="Reload fixture"
           onClick={() => selectFixture(selectedFixtureId, false)}
