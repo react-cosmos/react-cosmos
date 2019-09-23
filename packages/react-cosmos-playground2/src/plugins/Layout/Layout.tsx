@@ -7,7 +7,7 @@ import { useDrag } from '../../shared/ui/useDrag';
 type Props = {
   storageCacheReady: boolean;
   fullScreen: boolean;
-  navOpen: boolean;
+  showNav: boolean;
   panelOpen: boolean;
   navWidth: number;
   panelWidth: number;
@@ -18,7 +18,7 @@ type Props = {
 export function Layout({
   storageCacheReady,
   fullScreen,
-  navOpen,
+  showNav,
   panelOpen,
   navWidth,
   panelWidth,
@@ -57,15 +57,13 @@ export function Layout({
   // z-indexes are set here on purpose to show the layer hierarchy at a glance
   return (
     <Container dragging={dragging}>
-      <NavContainer
-        style={{ width: navOpen ? navWidth : undefined, zIndex: 2 }}
-      >
-        <Nav
-          navOpen={navOpen}
-          dragging={navDrag.dragging}
-          dragElRef={navDrag.dragElRef}
-        />
-      </NavContainer>
+      {showNav && (
+        <NavContainer style={{ width: navWidth, zIndex: 2 }}>
+          <Slot name="nav" />
+          {navDrag.dragging && <DragOverlay />}
+          <NavDragHandle ref={navDrag.dragElRef} />
+        </NavContainer>
+      )}
       <Center key="center" style={{ zIndex: 1 }}>
         <Slot name="rendererHeader" />
         <Preview key="preview" />
@@ -82,31 +80,6 @@ export function Layout({
         <ArraySlot name="global" />
       </div>
     </Container>
-  );
-}
-
-type NavProps = {
-  navOpen: boolean;
-  dragging: boolean;
-  dragElRef: (elRef: HTMLElement | null) => void;
-};
-
-function Nav({ navOpen, dragging, dragElRef }: NavProps) {
-  if (navOpen) {
-    return (
-      <>
-        <Slot name="nav" />
-        {dragging && <DragOverlay />}
-        <NavDragHandle ref={dragElRef} />
-      </>
-    );
-  }
-
-  return (
-    <>
-      <Slot name="miniNav" />
-      <MiniNavShadow />
-    </>
   );
 }
 
@@ -157,15 +130,12 @@ const PreviewContainer = styled.div`
   overflow: hidden;
 `;
 
-const Border = styled.div`
+const DragHandle = styled.div`
   position: absolute;
   top: 0;
   width: 1px;
   height: 100%;
   background-color: ${white10};
-`;
-
-const DragHandle = styled(Border)`
   background-clip: content-box;
   cursor: col-resize;
   user-select: none;
@@ -174,10 +144,6 @@ const DragHandle = styled(Border)`
 const NavDragHandle = styled(DragHandle)`
   right: -2px;
   padding: 0 2px;
-`;
-
-const MiniNavShadow = styled(Border)`
-  right: 0;
 `;
 
 const PanelDragHandle = styled(DragHandle)`

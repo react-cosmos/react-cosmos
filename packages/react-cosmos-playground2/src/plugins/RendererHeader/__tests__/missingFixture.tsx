@@ -1,8 +1,12 @@
+import { fireEvent, render, waitForElement } from '@testing-library/react';
 import React from 'react';
-import { render, fireEvent, waitForElement } from '@testing-library/react';
-import { Slot, loadPlugins, resetPlugins } from 'react-plugin';
-import { mockRouter, mockRendererCore } from '../../../testHelpers/pluginMocks';
+import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { register } from '..';
+import {
+  mockLayout,
+  mockRendererCore,
+  mockRouter
+} from '../../../testHelpers/pluginMocks';
 
 afterEach(resetPlugins);
 
@@ -11,6 +15,7 @@ function registerTestPlugins() {
   const { unselectFixture } = mockRouter({
     getSelectedFixtureId: () => ({ path: 'foo', name: null })
   });
+  mockLayout();
   mockRendererCore({
     isRendererConnected: () => true,
     isValidFixtureSelected: () => false

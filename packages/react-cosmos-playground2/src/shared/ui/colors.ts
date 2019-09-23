@@ -10,7 +10,7 @@ export const grey208 = createGreyColor(208);
 export const grey224 = createGreyColor(224);
 export const grey248 = createGreyColor(248);
 
-export const black48 = createGreyColor(0, 0.48);
+export const black70 = createGreyColor(0, 0.7);
 
 export const white3 = createGreyColor(255, 0.03);
 export const white10 = createGreyColor(255, 0.1);
